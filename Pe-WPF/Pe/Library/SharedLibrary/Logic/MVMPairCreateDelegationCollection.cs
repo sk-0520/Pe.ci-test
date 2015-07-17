@@ -13,22 +13,31 @@
 		where TModel : ModelBase
 		where TViewModel : ViewModelBase
 	{
-		public MVMPairCreateDelegationCollection(ObservableCollection<TModel> modelList, ObservableCollection<TViewModel> viewModelList, Func<TModel,object,TViewModel> creator)
-			:base(modelList,viewModelList)
+		public MVMPairCreateDelegationCollection(CollectionModel<TModel> modelList, CollectionModel<TViewModel> viewModelList, Func<TModel, object, TViewModel> creator)
+			: base()
 		{
 			ViewModelCreator = creator;
+
+			ModelList = modelList;
+			ViewModelList = viewModelList;
 		}
 
-		public MVMPairCreateDelegationCollection(ObservableCollection<TModel> modelList, IEnumerable<object> dataList, Func<TModel, object, TViewModel> creator)
-			: base(modelList, dataList)
+		public MVMPairCreateDelegationCollection(CollectionModel<TModel> modelList, IEnumerable<object> dataList, Func<TModel, object, TViewModel> creator)
+			: base()
 		{
 			ViewModelCreator = creator;
+
+			ModelList = modelList;
+			ViewModelList = new CollectionModel<TViewModel>(CreateViewModelList(modelList, dataList));
 		}
 
-		public MVMPairCreateDelegationCollection(ObservableCollection<TModel> modelList, object data, Func<TModel, object, TViewModel> creator)
-			: base(modelList, data)
+		public MVMPairCreateDelegationCollection(CollectionModel<TModel> modelList, object data, Func<TModel, object, TViewModel> creator)
+			: base()
 		{
 			ViewModelCreator = creator;
+
+			ModelList = modelList;
+			ViewModelList = new CollectionModel<TViewModel>(CreateViewModelList(modelList, Enumerable.Repeat(data, ModelList.Count)));
 		}
 
 		#region property

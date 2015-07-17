@@ -90,7 +90,7 @@
 										<Button Content="send" Command="{Binding SendItemCommand}" CommandParameter="{Binding ElementName=root}" />
 										<Button Content="copy" Command="{Binding CopyItemCommand}" />
 										<Button Content="up" Command="{Binding DataContext.MoveUpItemCommand, ElementName=root}" CommandParameter="{Binding }" />
-										<Button Content="down" Command="{Binding DataContext.MoveDownItemCommand, ElementName=root}" />
+										<Button Content="down" Command="{Binding DataContext.MoveDownItemCommand, ElementName=root}" CommandParameter="{Binding }" />
 									</StackPanel>
 								</Border>
 							</Grid>

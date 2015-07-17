@@ -20,28 +20,31 @@
 		where TModel : ModelBase
 		where TViewModel : ViewModelBase
 	{
-		public MVMPairCollectionBase(ObservableCollection<TModel> modelList, ObservableCollection<TViewModel> viewModelList)
+		protected MVMPairCollectionBase()
+		{ }
+
+		public MVMPairCollectionBase(CollectionModel<TModel> modelList, CollectionModel<TViewModel> viewModelList)
 		{
 			ModelList = modelList;
 			ViewModelList = viewModelList;
 		}
 
-		public MVMPairCollectionBase(ObservableCollection<TModel> modelList, IEnumerable<object> dataList)
+		public MVMPairCollectionBase(CollectionModel<TModel> modelList, IEnumerable<object> dataList)
 		{
 			ModelList = modelList;
-			ViewModelList = new ObservableCollection<TViewModel>(CreateViewModelList(modelList, dataList));
+			ViewModelList = new CollectionModel<TViewModel>(CreateViewModelList(modelList, dataList));
 		}
 
-		public MVMPairCollectionBase(ObservableCollection<TModel> modelList, object data)
+		public MVMPairCollectionBase(CollectionModel<TModel> modelList, object data)
 		{
 			ModelList = modelList;
-			ViewModelList = new ObservableCollection<TViewModel>(CreateViewModelList(modelList, Enumerable.Repeat(data, ModelList.Count)));
+			ViewModelList = new CollectionModel<TViewModel>(CreateViewModelList(modelList, Enumerable.Repeat(data, ModelList.Count)));
 		}
 
 		#region property
 
-		public ObservableCollection<TModel> ModelList { get; private set; }
-		public ObservableCollection<TViewModel> ViewModelList { get; private set; } 
+		public CollectionModel<TModel> ModelList { get; protected set; }
+		public CollectionModel<TViewModel> ViewModelList { get; protected set; } 
 
 		#endregion
 
@@ -87,6 +90,50 @@
 		{
 			ModelList.RemoveAt(index);
 			ViewModelList.RemoveAt(index);
+		}
+
+		public bool Remove(TModel model)
+		{
+			var index = ModelList.IndexOf(model);
+			if (index != -1) {
+				RemoveAt(index);
+				return true;
+			} else {
+				return false;
+			}
+
+		}
+		public bool Remove(TViewModel viewModel)
+		{
+			var index = ViewModelList.IndexOf(viewModel);
+			if (index != -1) {
+				RemoveAt(index);
+				return true;
+			} else {
+				return false;
+			}
+
+		}
+
+		public MVMPair<TModel, TViewModel> Insert(int index, TModel model, object data)
+		{
+			var viewModel = CreateViewModel(model, data);
+
+			return Insert(index, MVMPair.Create(model, viewModel));
+		}
+
+		public MVMPair<TModel, TViewModel> Insert(int index, MVMPair<TModel, TViewModel> pair)
+		{
+			ModelList.Insert(index, pair.Model);
+			ViewModelList.Insert(index, pair.ViewModel);
+
+			return pair;
+		}
+
+		public void SwapIndex(int indexA, int indexB)
+		{
+			ModelList.SwapIndex(indexA, indexB);
+			ViewModelList.SwapIndex(indexA, indexB);
 		}
 
 		#endregion

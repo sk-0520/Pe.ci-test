@@ -59,5 +59,12 @@
 			return new MVMPair<TModel, TViewModel>(model, viewModel);
 		}
 
+		public static MVMPair<TModel, TViewModel> Create<TModel, TViewModel>(TViewModel viewModel)
+			where TModel : ModelBase
+			where TViewModel : SingleModelWrapperViewModelBase<TModel>
+		{
+			return new MVMPair<TModel, TViewModel>(viewModel.Model, viewModel);
+		}
+
 	}
 }

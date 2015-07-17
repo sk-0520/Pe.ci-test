@@ -10,6 +10,7 @@
 	using System.Windows;
 	using System.Windows.Input;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 	using ContentTypeTextNet.Pe.Library.PeData.Define;
@@ -39,14 +40,16 @@
 			VariableConstants = variableConstants;
 			AppSender = appSender;
 
-			InitializeIndexItemsViewModel();
+			InitializeIndexPairList();
 		}
 
 		#region property
 
 		TemplateIndexSettingModel IndexModel { get; set; }
 
-		public CollectionModel<TemplateItemViewModel> IndexItems { get; set; }
+		MVMPairCreateDelegationCollection<TemplateIndexItemModel, TemplateItemViewModel> IndexPairList { get; set; }
+
+		public ObservableCollection<TemplateItemViewModel> IndexItems { get { return IndexPairList.ViewModelList; } }
 
 		public TemplateItemViewModel SelectedViewModel
 		{
@@ -73,10 +76,8 @@
 				var result = CreateCommand(
 					o => {
 						var indexModel = SettingUtility.CreateTemplateIndexItem(IndexModel.Items, NonProcess);
-						var indexViewModel = CreateIndexViewModel(indexModel);
-						IndexModel.Items.Insert(0, indexModel);
-						IndexItems.Insert(0, indexViewModel);
-						SelectedViewModel = indexViewModel;
+						var pair = IndexPairList.Insert(0, indexModel, null);
+						SelectedViewModel = pair.ViewModel;
 					}
 				);
 
@@ -94,8 +95,10 @@
 						if (nowViewModel == null) {
 							return;
 						}
-						IndexModel.Items.Remove(nowViewModel.Model);
-						IndexItems.Remove(nowViewModel);
+
+						IndexPairList.Remove(nowViewModel);
+						//IndexModel.Items.Remove(nowViewModel.Model);
+						//IndexItems.Remove(nowViewModel);
 					}
 				);
 
@@ -184,20 +187,27 @@
 					}
 					next = +1;
 				}
-				IndexModel.Items.SwapIndex(index, index + next);
-				IndexItems.SwapIndex(index, index + next);
+
+				IndexPairList.SwapIndex(index, index + next);
+				//IndexModel.Items.SwapIndex(index, index + next);
+				//IndexItems.SwapIndex(index, index + next);
+
 				SelectedViewModel = itemViewModel;
 			}
 		}
 
-		void InitializeIndexItemsViewModel()
+		void InitializeIndexPairList()
 		{
-			var items = IndexModel.Items.Select(CreateIndexViewModel);
-
-			IndexItems = new CollectionModel<TemplateItemViewModel>(items);
+			IndexPairList = new MVMPairCreateDelegationCollection<TemplateIndexItemModel, TemplateItemViewModel>(
+				IndexModel.Items,
+				default(object),
+				CreateIndexViewModel
+			);
+			
+			//IndexItems = new CollectionModel<TemplateItemViewModel>(items);
 		}
 
-		TemplateItemViewModel CreateIndexViewModel(TemplateIndexItemModel model)
+		TemplateItemViewModel CreateIndexViewModel(TemplateIndexItemModel model, object data)
 		{
 			var result = new TemplateItemViewModel(
 				model,
