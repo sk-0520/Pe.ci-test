@@ -23,7 +23,7 @@
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 	using ContentTypeTextNet.Pe.PeMain.View;
 
-	public class TemplateViewModel : HavingViewSingleModelWrapperViewModelBase<TemplateSettingModel, TemplateWindow>, IHavingClipboardWatcher, IHavingVariableConstants, IHavingNonProcess, IHavingAppSender
+	public class TemplateViewModel : HavingViewSingleModelWrapperIndexViewModelBase<TemplateSettingModel, TemplateWindow, TemplateIndexItemCollectionModel, TemplateIndexItemModel, TemplateItemViewModel>
 	{
 		#region variable
 
@@ -32,24 +32,10 @@
 		#endregion
 
 		public TemplateViewModel(TemplateSettingModel model, TemplateWindow view, TemplateIndexSettingModel indexModel, INonProcess nonProcess, IClipboardWatcher clipboardWatcher, VariableConstants variableConstants, IAppSender appSender)
-			: base(model, view)
-		{
-			IndexModel = indexModel;
-			NonProcess = nonProcess;
-			ClipboardWatcher = clipboardWatcher;
-			VariableConstants = variableConstants;
-			AppSender = appSender;
-
-			InitializeIndexPairList();
-		}
+			: base(model, view, indexModel, nonProcess, clipboardWatcher, variableConstants, appSender)
+		{ }
 
 		#region property
-
-		TemplateIndexSettingModel IndexModel { get; set; }
-
-		MVMPairCreateDelegationCollection<TemplateIndexItemModel, TemplateItemViewModel> IndexPairList { get; set; }
-
-		public ObservableCollection<TemplateItemViewModel> IndexItems { get { return IndexPairList.ViewModelList; } }
 
 		public TemplateItemViewModel SelectedViewModel
 		{
@@ -196,18 +182,7 @@
 			}
 		}
 
-		void InitializeIndexPairList()
-		{
-			IndexPairList = new MVMPairCreateDelegationCollection<TemplateIndexItemModel, TemplateItemViewModel>(
-				IndexModel.Items,
-				default(object),
-				CreateIndexViewModel
-			);
-			
-			//IndexItems = new CollectionModel<TemplateItemViewModel>(items);
-		}
-
-		TemplateItemViewModel CreateIndexViewModel(TemplateIndexItemModel model, object data)
+		protected override TemplateItemViewModel CreateIndexViewModel(TemplateIndexItemModel model, object data)
 		{
 			var result = new TemplateItemViewModel(
 				model,
@@ -289,31 +264,7 @@
 
 		#endregion
 
-		#region IHavingNonProcess
-
-		public INonProcess NonProcess { get; private set; }
-
-		#endregion
-
-		#region IHavingClipboardWatcher
-
-		public IClipboardWatcher ClipboardWatcher { get; private set; }
-
-		#endregion
-
-		#region IHavingVariableConstants
-
-		public VariableConstants VariableConstants { get; private set; }
-
-		#endregion
-
-		#region IHavingAppSender
-
-		public IAppSender AppSender { get; private set; }
-
-		#endregion
-
-		#region HavingViewSingleModelWrapperViewModelBase
+		#region HavingViewSingleModelWrapperIndexViewModelBase
 
 		protected override void InitializeView()
 		{
@@ -340,6 +291,7 @@
 			e.Cancel = true;
 			Visible = false;
 		}
+
 
 	}
 }
