@@ -73,10 +73,10 @@
 					<ListBox.ItemTemplate>
 						<DataTemplate>
 							<Grid>
-								<Border Padding="2" x:Name="item">
+								<Border x:Name="item" Style="{StaticResource IndexItemsStyleItem}">
 								<StackPanel>
 									<TextBlock Text="{Binding DisplayText}" />
-									<Border Padding="1">
+										<Border Style="{StaticResource IndexItemsStyleInfo}">
 										<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
 											<Image Style="{StaticResource ImageRenderStyle}" Source="{Binding ItemTypeImage}" Margin="0,0,2,0" />
 											<TextBlock Text="{Binding ItemTypeText}" />
@@ -84,7 +84,6 @@
 									</Border>
 								</StackPanel>
 							</Border>
-						<!--<Border BorderThickness="4" BorderBrush="Yellow" Visibility="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType=ListBoxItem}, Mode=OneWay, Converter={StaticResource BooleanVisibility}}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="Auto" Height="Auto">-->
 								<Border Style="{StaticResource IndexItemsStyleItemCommandArea}">
 									<StackPanel Orientation="Horizontal">
 										<Button Content="send" Command="{Binding SendItemCommand}" CommandParameter="{Binding ElementName=root}" />

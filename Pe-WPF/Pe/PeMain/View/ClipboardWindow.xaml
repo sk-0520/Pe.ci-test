@@ -69,17 +69,17 @@
 						<ListBox.ItemTemplate>
 							<DataTemplate>
 								<Grid>
-									<Border Padding="2" x:Name="item">
+									<Border x:Name="item" Style="{StaticResource IndexItemsStyleItem}">
 										<StackPanel>
 											<TextBlock Text="{Binding DisplayText}" />
-											<Border Padding="1">
+											<Border Style="{StaticResource IndexItemsStyleInfo}">
 												<Grid>
 													<Grid.ColumnDefinitions>
 														<ColumnDefinition Width="Auto" />
-														<ColumnDefinition />
+														<ColumnDefinition Width="*" />
 													</Grid.ColumnDefinitions>
 													<Image Grid.Column="0" Style="{StaticResource ImageRenderStyle}" Source="{Binding ItemTypeImage}" />
-													<TextBlock Grid.Column="1" Text="{Binding CreateTimestamp}" />
+													<TextBlock Grid.Column="1" HorizontalAlignment="Right" Text="{Binding CreateTimestamp}" />
 												</Grid>
 											</Border>
 										</StackPanel>
