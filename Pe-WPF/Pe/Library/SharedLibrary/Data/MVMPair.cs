@@ -1,4 +1,4 @@
-﻿namespace ContentTypeTextNet.Library.SharedLibrary.Logic
+﻿namespace ContentTypeTextNet.Library.SharedLibrary.Data
 {
 	using System;
 	using System.Collections;

@@ -7,6 +7,7 @@
 	using System.Linq;
 	using System.Text;
 	using System.Threading.Tasks;
+	using ContentTypeTextNet.Library.SharedLibrary.Data;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 
@@ -91,6 +92,9 @@
 		#endregion
 
 		#region ICollection
+
+		public int Count { get { return ModelList.Count; } }
+		public bool IsReadOnly { get; set; }
 
 		public void Add(MVMPair<TModel, TViewModel> item)
 		{
