@@ -18,7 +18,7 @@
 	using ContentTypeTextNet.Pe.PeMain.Logic.Property;
 	using ContentTypeTextNet.Pe.PeMain.View;
 
-	public class ClipboardViewModel: HavingViewSingleModelWrapperViewModelBase<ClipboardSettingModel, ClipboardWindow>, IHavingClipboardWatcher, IHavingVariableConstants, IHavingNonProcess, IHavingAppSender
+	public class ClipboardViewModel : HavingViewSingleModelWrapperIndexViewModelBase<ClipboardSettingModel, ClipboardWindow, ClipboardIndexItemCollectionModel, ClipboardIndexItemModel, ClipboardItemViewModel>
 	{
 		#region variable
 
@@ -27,22 +27,10 @@
 		#endregion
 
 		public ClipboardViewModel(ClipboardSettingModel model, ClipboardWindow view, ClipboardIndexSettingModel indexModel, INonProcess nonProcess, IClipboardWatcher clipboardWatcher, VariableConstants variableConstants, IAppSender appSender)
-			: base(model, view)
-		{
-			IndexModel = indexModel;
-			NonProcess = nonProcess;
-			ClipboardWatcher = clipboardWatcher;
-			VariableConstants = variableConstants;
-			AppSender = appSender;
-
-			InitializeIndexItemsViewModel();
-		}
+			: base(model, view, indexModel, nonProcess, clipboardWatcher, variableConstants, appSender)
+		{ }
 
 		#region property
-
-		ClipboardIndexSettingModel IndexModel { get; set; }
-
-		public CollectionModel<ClipboardItemViewModel> IndexItems { get; set; }
 
 		public ClipboardItemViewModel SelectedViewModel
 		{
@@ -57,14 +45,7 @@
 
 		#region function
 
-		void InitializeIndexItemsViewModel()
-		{
-			var items = IndexModel.Items.Select(CreateIndexViewModel);
-
-			IndexItems = new CollectionModel<ClipboardItemViewModel>(items);
-		}
-
-		ClipboardItemViewModel CreateIndexViewModel(ClipboardIndexItemModel model)
+		protected override ClipboardItemViewModel CreateIndexViewModel(ClipboardIndexItemModel model, object data)
 		{
 			var result = new ClipboardItemViewModel(
 				model,
@@ -140,31 +121,7 @@
 
 		#endregion
 
-		#region IHavingNonProcess
-
-		public INonProcess NonProcess { get; private set; }
-
-		#endregion
-
-		#region IHavingClipboardWatcher
-
-		public IClipboardWatcher ClipboardWatcher { get; private set; }
-
-		#endregion
-
-		#region IHavingVariableConstants
-
-		public VariableConstants VariableConstants { get; private set; }
-
-		#endregion
-
-		#region IHavingAppSender
-
-		public IAppSender AppSender { get; private set; }
-
-		#endregion
-
-		#region HavingViewSingleModelWrapperViewModelBase
+		#region HavingViewSingleModelWrapperIndexViewModelBase
 
 		protected override void InitializeView()
 		{
