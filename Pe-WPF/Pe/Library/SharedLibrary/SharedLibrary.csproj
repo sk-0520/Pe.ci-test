@@ -112,10 +112,12 @@
     <Compile Include="IF\ILanguage.cs" />
     <Compile Include="IF\IMakeBitmapSource.cs" />
     <Compile Include="IF\INonProcess.cs" />
+    <Compile Include="Logic\MVMPair.cs" />
     <Compile Include="Model\CollectionModel.cs" />
     <Compile Include="Model\FixedSizeCollectionModel.cs" />
     <Compile Include="Model\GuidCollectionBase.cs" />
     <Compile Include="Model\GuidModelBase.cs" />
+    <Compile Include="Logic\MVMPairCollectionBase.cs" />
     <Compile Include="Model\RangeModel.cs" />
     <Compile Include="IF\IRuntimeTextTemplate.cs" />
     <Compile Include="IF\ViewExtend\IWindowHitTestData.cs" />
