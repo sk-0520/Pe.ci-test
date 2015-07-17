@@ -56,6 +56,24 @@
 			return GetEnabledClipboardTypeList(list);
 		}
 
+		public ClipboardType GetSingleClipboardType()
+		{
+			var list = new[] {
+				ClipboardType.Html,
+				ClipboardType.Rtf,
+				ClipboardType.File,
+				ClipboardType.Text,
+				ClipboardType.Image,
+			};
+			/*
+			foreach(var type in list) {
+				if((ClipboardTypes & type) == type) {
+					return type;
+				}
+			}
+			*/
+			return GetEnabledClipboardTypeList(list).First();
+		}
 
 		#endregion
 

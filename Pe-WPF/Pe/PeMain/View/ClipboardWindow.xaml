@@ -79,7 +79,7 @@
 											</Border>
 										</StackPanel>
 									</Border>
-									<Border Style="{StaticResource IndexItemsStyleItemCommandArea}" Visibility="{Binding Binding IsMouseOver, RelativeSource={RelativeSource AncestorType=ListBoxItem}, Mode=OneWay, Converter={StaticResource BooleanVisibility}}">
+									<Border Style="{StaticResource IndexItemsStyleItemCommandArea}" >
 										<StackPanel Orientation="Horizontal">
 											<Button Content="send" />
 											<Button Content="copy" />
