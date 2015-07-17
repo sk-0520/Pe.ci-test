@@ -18,7 +18,7 @@
 		public HistoryItemModel() 
 			: base()
 		{
-			UpdateDateTime = CreateDateTime = DateTime.Now;
+			UpdateTimestamp = CreateTimestamp = DateTime.Now;
 			UpdateCount = 0;
 		}
 
@@ -28,12 +28,12 @@
 		/// 作成日。
 		/// </summary>
 		[DataMember, XmlAttribute]
-		public DateTime CreateDateTime { get; set; }
+		public DateTime CreateTimestamp { get; set; }
 		/// <summary>
 		/// 更新日。
 		/// </summary>
 		[DataMember, XmlAttribute]
-		public DateTime UpdateDateTime { get; set; }
+		public DateTime UpdateTimestamp { get; set; }
 		/// <summary>
 		/// 更新回数。
 		/// </summary>
@@ -47,8 +47,8 @@
 		public virtual IDeepClone DeepClone()
 		{
 			var result = new HistoryItemModel() {
-				CreateDateTime = this.CreateDateTime,
-				UpdateDateTime = this.UpdateDateTime,
+				CreateTimestamp = this.CreateTimestamp,
+				UpdateTimestamp = this.UpdateTimestamp,
 				UpdateCount = this.UpdateCount
 			};
 
@@ -62,7 +62,7 @@
 		public virtual void Update()
 		{
 			UpdateCount += 1;
-			UpdateDateTime = DateTime.Now;
+			UpdateTimestamp = DateTime.Now;
 		}
 
 		#endregion

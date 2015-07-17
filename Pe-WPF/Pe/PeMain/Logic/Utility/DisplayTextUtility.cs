@@ -59,7 +59,8 @@
 
 		public static string MakeClipboardName(ClipboardItem clipboardItem, INonProcess nonProcess) 
 		{
-			var type = clipboardItem.GetSingleClipboardType();
+
+			var type = ClipboardUtility.GetSingleClipboardType(clipboardItem.Type);
 			Debug.Assert(type != ClipboardType.None);
 
 			string result;

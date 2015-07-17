@@ -140,7 +140,7 @@
 					data.SetFileDropList(TextUtility.ToStringCollection(clipboardItem.Body.Files)); 
 				}},
 			};
-			foreach (var type in clipboardItem.GetClipboardTypeList()) {
+			foreach(var type in ClipboardUtility.GetClipboardTypeList(clipboardItem.Type)) {
 				typeFuncs[type]();
 			}
 			CopyDataObject(data, watcher);
@@ -275,5 +275,43 @@
 				SendKeysUtility.Send(outputText);
 			}
 		}
+
+		private static IEnumerable<ClipboardType> GetEnabledClipboardTypeList(ClipboardType types, IEnumerable<ClipboardType> list)
+		{
+			return list.Where(t => types.HasFlag(t));
+		}
+
+		/// <summary>
+		/// このアイテムが保持する有効なデータ種別を列挙する。
+		/// </summary>
+		/// <returns></returns>
+		public static IEnumerable<ClipboardType> GetClipboardTypeList(ClipboardType types)
+		{
+			Debug.Assert(types != ClipboardType.None);
+
+			var list = new[] {
+				ClipboardType.Text,
+				ClipboardType.Rtf,
+				ClipboardType.Html,
+				ClipboardType.Image,
+				ClipboardType.File,
+			};
+
+			return GetEnabledClipboardTypeList(types, list);
+		}
+
+		public static ClipboardType GetSingleClipboardType(ClipboardType types)
+		{
+			var list = new[] {
+				ClipboardType.Html,
+				ClipboardType.Rtf,
+				ClipboardType.File,
+				ClipboardType.Text,
+				ClipboardType.Image,
+			};
+
+			return GetEnabledClipboardTypeList(types, list).First();
+		}
+
 	}
 }

@@ -11,9 +11,7 @@
 	{
 		public TemplateIndexItemModel()
 			: base()
-		{
-			History = new HistoryItemModel();
-		}
+		{ }
 
 		#region property
 
@@ -27,9 +25,6 @@
 		/// </summary>
 		[DataMember]
 		public bool IsProgrammableReplace { get; set; }
-
-		[DataMember]
-		public HistoryItemModel History { get; set; }
 
 		#endregion
 	}

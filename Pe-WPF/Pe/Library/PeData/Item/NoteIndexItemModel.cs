@@ -26,7 +26,6 @@
 			: base()
 		{
 			NoteKind = NoteKind.Plain;
-			History = new HistoryItemModel();
 		}
 
 		#region property
@@ -38,9 +37,6 @@
 		public bool IsLocked { get; set; }
 		[DataMember]
 		public bool IsCompacted { get; set; }
-
-		[DataMember]
-		public HistoryItemModel History { get; set; }
 
 		#endregion
 

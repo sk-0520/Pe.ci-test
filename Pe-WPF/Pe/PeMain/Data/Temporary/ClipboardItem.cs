@@ -23,59 +23,5 @@
 		public ClipboardBodyItemModel Body { get; set; }
 
 		#endregion
-
-		#region function
-
-		private IEnumerable<ClipboardType> GetEnabledClipboardTypeList(IEnumerable<ClipboardType> list)
-		{
-			return list.Where(t => Type.HasFlag(t));
-		}
-
-		/// <summary>
-		/// このアイテムが保持する有効なデータ種別を列挙する。
-		/// </summary>
-		/// <returns></returns>
-		public IEnumerable<ClipboardType> GetClipboardTypeList()
-		{
-			Debug.Assert(Type != ClipboardType.None);
-
-			var list = new[] {
-				ClipboardType.Text,
-				ClipboardType.Rtf,
-				ClipboardType.Html,
-				ClipboardType.Image,
-				ClipboardType.File,
-			};
-			/*
-			foreach(var type in list) {
-				if((ClipboardTypes & type) == type) {
-					yield return type;
-				}
-			}
-			*/
-			return GetEnabledClipboardTypeList(list);
-		}
-
-		public ClipboardType GetSingleClipboardType()
-		{
-			var list = new[] {
-				ClipboardType.Html,
-				ClipboardType.Rtf,
-				ClipboardType.File,
-				ClipboardType.Text,
-				ClipboardType.Image,
-			};
-			/*
-			foreach(var type in list) {
-				if((ClipboardTypes & type) == type) {
-					return type;
-				}
-			}
-			*/
-			return GetEnabledClipboardTypeList(list).First();
-		}
-
-		#endregion
-
 	}
 }

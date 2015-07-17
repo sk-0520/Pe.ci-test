@@ -44,8 +44,8 @@
 		{
 			var result = new LauncherHistoryItemModel() {
 				ExecuteCount = this.ExecuteCount,
-				CreateDateTime = this.CreateDateTime,
-				UpdateDateTime = this.UpdateDateTime,
+				CreateTimestamp = this.CreateTimestamp,
+				UpdateTimestamp = this.UpdateTimestamp,
 				UpdateCount = this.UpdateCount,
 			};
 

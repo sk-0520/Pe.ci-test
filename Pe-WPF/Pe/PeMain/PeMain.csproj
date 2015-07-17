@@ -434,11 +434,18 @@
     <Content Include="etc\style\common.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Image\Clipboard.png" />
+    <Resource Include="Resources\Image\Clipboard\ClipboardCopy.png" />
+    <Resource Include="Resources\Image\Clipboard\ClipboardFile.png" />
+    <Resource Include="Resources\Image\Clipboard\ClipboardHtml.png" />
+    <Resource Include="Resources\Image\Clipboard\ClipboardImage.png" />
+    <Resource Include="Resources\Image\Clipboard\ClipboardRichTextFormat.png" />
+    <Resource Include="Resources\Image\Clipboard\ClipboardText.png" />
     <Resource Include="Resources\Image\Filtering.png" />
     <Resource Include="Resources\Image\Template.png" />
-    <Resource Include="Resources\Image\TemplatePlain.png" />
-    <Resource Include="Resources\Image\TemplateProgrammable.png" />
-    <Resource Include="Resources\Image\TemplateReplace.png" />
+    <Resource Include="Resources\Image\Template\TemplatePlain.png" />
+    <Resource Include="Resources\Image\Template\TemplateProgrammable.png" />
+    <Resource Include="Resources\Image\Template\TemplateReplace.png" />
     <Resource Include="Resources\Icon\LauncherCommand.ico" />
     <Resource Include="Resources\Icon\NotFound.ico" />
     <Resource Include="Resources\Icon\LauncherToolbarMain.ico" />

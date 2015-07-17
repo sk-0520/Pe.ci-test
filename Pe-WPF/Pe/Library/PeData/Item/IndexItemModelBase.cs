@@ -14,12 +14,17 @@
 	{
 		public IndexItemModelBase()
 			: base()
-		{ }
+		{
+			History = new HistoryItemModel();
+		}
 
 		#region IName
 
 		[DataMember, XmlAttribute]
 		public string Name { get; set; }
+
+		[DataMember]
+		public HistoryItemModel History { get; set; }
 
 		#endregion
 	}
