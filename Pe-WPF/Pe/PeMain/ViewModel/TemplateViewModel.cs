@@ -44,7 +44,9 @@
 			{ 
 				var prevViewModel = this._selectedViewModel;
 				if (SetVariableValue(ref this._selectedViewModel, value)) {
-					if (prevViewModel != null) {
+					View.pageSource.IsSelected = true;
+
+					if(prevViewModel != null) {
 						SaveItemViewModel(prevViewModel);
 					}
 				}
@@ -110,21 +112,21 @@
 			}
 		}
 
-		public ICommand ListItemSelectionChangedCommand
-		{
-			get
-			{
-				var result = CreateCommand(
-					o => {
-						if (HasView) {
-							View.pageSource.IsSelected = true;
-						}
-					}
-				);
+		//public ICommand ListItemSelectionChangedCommand
+		//{
+		//	get
+		//	{
+		//		var result = CreateCommand(
+		//			o => {
+		//				if (HasView) {
+		//					View.pageSource.IsSelected = true;
+		//				}
+		//			}
+		//		);
 
-				return result;
-			}
-		}
+		//		return result;
+		//	}
+		//}
 
 		public ICommand WindowDeactivCommnad
 		{

@@ -96,11 +96,11 @@
 					<TextBox />
 				</StackPanel>
 				<ListBox Grid.Row="1" ItemsSource="{Binding IndexItems}" SelectedItem="{Binding SelectedViewModel}" x:Name="itemsList" HorizontalContentAlignment="Stretch">
-					<i:Interaction.Triggers>
+					<!--<i:Interaction.Triggers>
 						<i:EventTrigger EventName="SelectionChanged">
 							<i:InvokeCommandAction Command="{Binding ListItemSelectionChangedCommand}" />
 						</i:EventTrigger>
-					</i:Interaction.Triggers>
+					</i:Interaction.Triggers>-->
 					<ListBox.ItemTemplate>
 						<DataTemplate>
 							<Grid>
