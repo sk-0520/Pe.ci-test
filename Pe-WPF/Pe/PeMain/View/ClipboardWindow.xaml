@@ -92,11 +92,6 @@
 						<TextBox />
 					</StackPanel>
 					<ListBox Grid.Row="1" ItemsSource="{Binding IndexItems, Converter={StaticResource ReverseClipboardItemListConverter}}" SelectedItem="{Binding SelectedViewModel}" x:Name="itemsList" HorizontalContentAlignment="Stretch">
-						<!--<i:Interaction.Triggers>
-							<i:EventTrigger EventName="SelectionChanged">
-								<i:InvokeCommandAction Command="{Binding ListItemSelectionChangedCommand}" />
-							</i:EventTrigger>
-						</i:Interaction.Triggers>-->
 						<ListBox.ItemTemplate>
 							<DataTemplate>
 								<Grid>
@@ -117,6 +112,11 @@
 									</Border>
 									<Border Style="{StaticResource IndexItemsStyleItemCommandArea}" >
 										<StackPanel Orientation="Horizontal">
+											<StackPanel.Resources>
+												<Style TargetType="Button">
+													<Setter Property="Focusable" Value="False" />
+												</Style>
+											</StackPanel.Resources>
 											<Button>
 												<!-- send -->
 												<Image Style="{StaticResource ImageRenderStyle}" Source="{Binding Source={x:Static AM:AppResource.CommonSendImage}}" />
@@ -127,23 +127,23 @@
 											</Button>
 											<Button>
 												<!-- text -->
-												<Image Source="{Binding Source={x:Static AM:AppResource.ClipboardTextFormatImage}}" />
+												<Image Style="{StaticResource ImageRenderStyle}" Source="{Binding Source={x:Static AM:AppResource.ClipboardTextFormatImage}}" />
 											</Button>
 											<Button>
 												<!-- rft -->
-												<Image Source="{Binding Source={x:Static AM:AppResource.ClipboardRichTextFormatImage}}" />
+												<Image Style="{StaticResource ImageRenderStyle}" Source="{Binding Source={x:Static AM:AppResource.ClipboardRichTextFormatImage}}" />
 											</Button>
 											<Button>
 												<!-- html -->
-												<Image Source="{Binding Source={x:Static AM:AppResource.ClipboardHtmlImage}}" />
+												<Image Style="{StaticResource ImageRenderStyle}" Source="{Binding Source={x:Static AM:AppResource.ClipboardHtmlImage}}" />
 											</Button>
 											<Button>
 												<!-- image -->
-												<Image Source="{Binding Source={x:Static AM:AppResource.ClipboardImageImage}}" />
+												<Image Style="{StaticResource ImageRenderStyle}" Source="{Binding Source={x:Static AM:AppResource.ClipboardImageImage}}" />
 											</Button>
 											<Button>
 												<!-- file -->
-												<Image Source="{Binding Source={x:Static AM:AppResource.ClipboardFileImage}}" />
+												<Image Style="{StaticResource ImageRenderStyle}" Source="{Binding Source={x:Static AM:AppResource.ClipboardFileImage}}" />
 											</Button>
 										</StackPanel>
 									</Border>
@@ -163,19 +163,49 @@
 						<TextBox Text="xxx" />
 					</StackPanel>
 					<TabControl Grid.Row="1">
-						<TabItem Header="text">
+						<TabItem>
+							<TabItem.Header>
+								<StackPanel Orientation="Horizontal">
+									<Image Style="{StaticResource ImageRenderStyle}" Source="{Binding Source={x:Static AM:AppResource.ClipboardTextFormatImage}}" />
+									<TextBlock Text="text" />
+								</StackPanel>
+							</TabItem.Header>
 							<TextBox IsReadOnly="True" />
 						</TabItem>
-						<TabItem Header="rft">
+						<TabItem>
+							<TabItem.Header>
+								<StackPanel Orientation="Horizontal">
+									<Image Style="{StaticResource ImageRenderStyle}" Source="{Binding Source={x:Static AM:AppResource.ClipboardRichTextFormatImage}}" />
+									<TextBlock Text="rft" />
+								</StackPanel>
+							</TabItem.Header>
 							<RichTextBox IsReadOnly="True" />
 						</TabItem>
-						<TabItem Header="html">
+						<TabItem>
+							<TabItem.Header>
+								<StackPanel Orientation="Horizontal">
+									<Image Style="{StaticResource ImageRenderStyle}" Source="{Binding Source={x:Static AM:AppResource.ClipboardHtmlImage}}" />
+									<TextBlock Text="html" />
+								</StackPanel>
+							</TabItem.Header>
 							<WebBrowser />
 						</TabItem>
-						<TabItem Header="image">
+						<TabItem>
+							<TabItem.Header>
+								<StackPanel Orientation="Horizontal">
+									<Image Style="{StaticResource ImageRenderStyle}" Source="{Binding Source={x:Static AM:AppResource.ClipboardImageImage}}" />
+									<TextBlock Text="image" />
+								</StackPanel>
+							</TabItem.Header>
 							<Image />
 						</TabItem>
-						<TabItem Header="file">
+						<TabItem>
+							<TabItem.Header>
+								<StackPanel Orientation="Horizontal">
+									<Image Style="{StaticResource ImageRenderStyle}" Source="{Binding Source={x:Static AM:AppResource.ClipboardFileImage}}" />
+									<TextBlock Text="file" />
+								</StackPanel>
+							</TabItem.Header>
 							<ListView />
 						</TabItem>
 					</TabControl>

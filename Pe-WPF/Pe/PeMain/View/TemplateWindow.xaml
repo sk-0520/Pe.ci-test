@@ -117,6 +117,11 @@
 								</Border>
 								<Border Style="{StaticResource IndexItemsStyleItemCommandArea}">
 									<StackPanel Orientation="Horizontal">
+										<StackPanel.Resources>
+											<Style TargetType="Button">
+												<Setter Property="Focusable" Value="False" />
+											</Style>
+										</StackPanel.Resources>
 										<Button Command="{Binding SendItemCommand}" CommandParameter="{Binding ElementName=root}" >
 											<!-- send -->
 											<Image Style="{StaticResource ImageRenderStyle}" Source="{Binding Source={x:Static AM:AppResource.CommonSendImage}}" />
