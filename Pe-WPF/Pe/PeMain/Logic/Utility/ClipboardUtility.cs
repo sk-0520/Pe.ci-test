@@ -194,7 +194,24 @@
 				{ "endfragment", s => result.Fragment.Tail = int.Parse(s) },
 				{ "sourceurl", s => result.SourceURL = new Uri(s) },
 			};
-			var reg = new Regex(@"^\s*(?<KEY>Version|StartHTML|EndHTML|StartFragment|EndFragment|SourceURL)\s*:\s*(?<VALUE>.+?)\s*$", RegexOptions.IgnoreCase | RegexOptions.Multiline);
+			var reg = new Regex(@"
+				^\s*
+				(?<KEY>
+						Version
+						|StartHTML
+						|EndHTML
+						|StartFragment
+						|EndFragment
+						|SourceURL
+				)
+				\s*:\s*
+				(?<VALUE>
+					.+?
+				)
+				\s*$
+				",
+				RegexOptions.IgnoreCase | RegexOptions.Multiline | RegexOptions.IgnorePatternWhitespace
+			);
 			for(var match = reg.Match(rawClipboardHtml); match.Success; match = match.NextMatch()) {
 				var key = match.Groups["KEY"].Value.ToLower();
 				var value = match.Groups["VALUE"].Value;
