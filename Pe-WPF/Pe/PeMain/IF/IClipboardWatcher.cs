@@ -21,5 +21,10 @@
 		/// クリップボード
 		/// </summary>
 		bool ClipboardEnabledApplicationCopy { get; }
+		/// <summary>
+		/// 転送にクリップボードを使用する。
+		/// </summary>
+		bool UsingClipboard { get; set; }
+			 
 	}
 }

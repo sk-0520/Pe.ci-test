@@ -131,6 +131,33 @@
 					</ListBox>
 				</Grid>
 				<GridSplitter Grid.Column="1" Style="{StaticResource IndexItemsStyleDefaultGridSplitterStyle}" />
+				<Grid  Grid.Column="1" Margin="{StaticResource IndexItemsStyleSplitterMargin}" DataContext="{Binding SelectedItem,ElementName=itemsList}" IsEnabled="{Binding DataContext, RelativeSource={RelativeSource Self}, Converter={StaticResource LogicalIsNotNullConverter}}">
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="*" />
+					</Grid.RowDefinitions>
+					<StackPanel Grid.Row="0" Orientation="Horizontal">
+						<TextBlock Text="name" />
+						<TextBox Text="xxx" />
+					</StackPanel>
+					<TabControl Grid.Row="1">
+						<TabItem Header="text">
+							<TextBox IsReadOnly="True" />
+						</TabItem>
+						<TabItem Header="rft">
+							<RichTextBox IsReadOnly="True" />
+						</TabItem>
+						<TabItem Header="html">
+							<WebBrowser />
+						</TabItem>
+						<TabItem Header="image">
+							<Image />
+						</TabItem>
+						<TabItem Header="file">
+							<ListView />
+						</TabItem>
+					</TabControl>
+				</Grid>
 			</Grid>
 			<StatusBar Grid.Row="2" Style="{StaticResource IndexItemsStyleDefaultStatusbarStyle}">
 				<TextBlock Text="now" />

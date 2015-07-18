@@ -696,6 +696,12 @@
 
 		public bool ClipboardEnabledApplicationCopy { get { return CommonData.MainSetting.Clipboard.EnabledApplicationCopy; } }
 
+		public bool UsingClipboard
+		{
+			get { return CommonData.MainSetting.Clipboard.UsingClipboard; }
+			set { SetPropertyValue(CommonData.MainSetting.Clipboard, value); }
+		}
+
 		#endregion
 
 		#region function
