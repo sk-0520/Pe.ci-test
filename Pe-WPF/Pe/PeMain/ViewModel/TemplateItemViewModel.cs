@@ -12,6 +12,7 @@
 	using ContentTypeTextNet.Library.SharedLibrary.CompatibleWindows.Utility;
 	using ContentTypeTextNet.Library.SharedLibrary.Define;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Library.SharedLibrary.View.Window;
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 	using ContentTypeTextNet.Pe.Library.PeData.Define;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
@@ -150,13 +151,11 @@
 			{
 				var result = CreateCommand(
 					o => {
-						var templateWindow = (TemplateWindow)o;
+						var templateWindow = (WindowsAPIWindowBase)o;
 						var hWnd = templateWindow.Handle;
 						// TODO: なんだかなぁ。
-						var usingClipboard = templateWindow.CommonData.MainSetting.Clipboard.UsingClipboard;
-
 						SetReplacedValue();
-						ClipboardUtility.OutputText(hWnd, Replaced, usingClipboard, NonProcess, ClipboardWatcher);
+						ClipboardUtility.OutputText(hWnd, Replaced, NonProcess, ClipboardWatcher);
 					}
 				);
 

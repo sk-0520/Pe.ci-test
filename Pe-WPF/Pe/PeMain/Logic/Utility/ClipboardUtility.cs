@@ -240,7 +240,7 @@
 			return clipboardItem;
 		}
 
-		public static void OutputText(IntPtr hBaseWnd, string outputText, bool usingClipboard, INonProcess nonProcess, IClipboardWatcher clipboardWatcher)
+		public static void OutputText(IntPtr hBaseWnd, string outputText, INonProcess nonProcess, IClipboardWatcher clipboardWatcher)
 		{
 			if (string.IsNullOrEmpty(outputText)) {
 				nonProcess.Logger.Information("empty");
@@ -260,7 +260,7 @@
 			}
 
 			NativeMethods.SetForegroundWindow(hWnd);
-			if (usingClipboard) {
+			if(clipboardWatcher.UsingClipboard) {
 				// 現在クリップボードを一時退避
 				var clipboardItem = ClipboardUtility.CreateClipboardItem(ClipboardType.All, hBaseWnd, nonProcess.Logger);
 				try {

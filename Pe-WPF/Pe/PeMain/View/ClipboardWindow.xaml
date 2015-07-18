@@ -18,6 +18,7 @@
 	Top="{Binding WindowTop, Mode=TwoWay}"
 	Width="{Binding WindowWidth, Mode=TwoWay}"
 	Height="{Binding WindowHeight, Mode=TwoWay}"
+	Topmost="{Binding TopMost}"
 	Style="{DynamicResource IndexItemsStyleDefualtWindowStyle}"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
 	d:DesignWidth="407" d:DesignHeight="222"
@@ -63,13 +64,13 @@
 					</StackPanel>
 				</Button>
 				<Separator />
-				<ToggleButton>
+				<ToggleButton IsChecked="{Binding TopMost}">
 					<StackPanel Orientation="Horizontal">
 						<Image Style="{StaticResource ImageRenderStyle}" Source="{Binding Source={x:Static AM:AppResource.CommonPinImage}}" />
 						<TextBlock Text="topmost" />
 					</StackPanel>
 				</ToggleButton>
-				<ToggleButton>
+				<ToggleButton IsChecked="{Binding ClipboardWatcher.UsingClipboard}">
 					<StackPanel Orientation="Horizontal">
 						<Image Style="{StaticResource ImageRenderStyle}" Source="{Binding Source={x:Static AM:AppResource.CommonUsingClipboardImage}}" />
 						<TextBlock Text="use clipboard" />
@@ -116,13 +117,34 @@
 									</Border>
 									<Border Style="{StaticResource IndexItemsStyleItemCommandArea}" >
 										<StackPanel Orientation="Horizontal">
-											<Button Content="send" />
-											<Button Content="copy" />
-											<Button Content="text" />
-											<Button Content="rtf" />
-											<Button Content="html" />
-											<Button Content="image" />
-											<Button Content="file" />
+											<Button>
+												<!-- send -->
+												<Image Style="{StaticResource ImageRenderStyle}" Source="{Binding Source={x:Static AM:AppResource.CommonSendImage}}" />
+											</Button>
+											<Button>
+												<!-- copy -->
+												<Image Style="{StaticResource ImageRenderStyle}" Source="{Binding Source={x:Static AM:AppResource.CommonClipboardImage}}" />
+											</Button>
+											<Button>
+												<!-- text -->
+												<Image Source="{Binding Source={x:Static AM:AppResource.ClipboardTextFormatImage}}" />
+											</Button>
+											<Button>
+												<!-- rft -->
+												<Image Source="{Binding Source={x:Static AM:AppResource.ClipboardRichTextFormatImage}}" />
+											</Button>
+											<Button>
+												<!-- html -->
+												<Image Source="{Binding Source={x:Static AM:AppResource.ClipboardHtmlImage}}" />
+											</Button>
+											<Button>
+												<!-- image -->
+												<Image Source="{Binding Source={x:Static AM:AppResource.ClipboardImageImage}}" />
+											</Button>
+											<Button>
+												<!-- file -->
+												<Image Source="{Binding Source={x:Static AM:AppResource.ClipboardFileImage}}" />
+											</Button>
 										</StackPanel>
 									</Border>
 								</Grid>

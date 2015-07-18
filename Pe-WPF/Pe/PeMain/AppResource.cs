@@ -102,8 +102,8 @@
 
 		public static BitmapSource ClipboardClearImage { get { return GetImage(ClipboardClearPath); } }
 		public static BitmapSource ClipboardTextFormatImage { get { return GetImage(ClipboardTextFormatPath); } }
-		public static BitmapSource ClipboardHtmlImage { get { return GetImage(ClipboardHtmlPath); } }
 		public static BitmapSource ClipboardRichTextFormatImage { get { return GetImage(ClipboardRichTextFormatPath); } }
+		public static BitmapSource ClipboardHtmlImage { get { return GetImage(ClipboardHtmlPath); } }
 		public static BitmapSource ClipboardImageImage { get { return GetImage(ClipboardImagePath); } }
 		public static BitmapSource ClipboardFileImage { get { return GetImage(ClipboardFilePath); } }
 
