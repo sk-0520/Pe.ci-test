@@ -61,6 +61,8 @@
 		public static string CommonRemovePath { get { return "/Resources/Image/Common/Remove.png"; } }
 		public static string CommonSavePath { get { return "/Resources/Image/Common/Save.png"; } }
 		public static string CommonUsingClipboardPath { get { return "/Resources/Image/Common/UsingClipboard.png"; } }
+		public static string CommonUpPath { get { return "/Resources/Image/Common/Up.png"; } }
+		public static string CommonDownPath { get { return "/Resources/Image/Common/Down.png"; } }
 		
 
 		public static string TemplatePlainPath { get { return "/Resources/Image/Template/TemplatePlain.png"; } }
@@ -90,6 +92,8 @@
 		public static BitmapSource CommonRemoveImage { get { return GetImage(CommonRemovePath); } }
 		public static BitmapSource CommonSaveImage { get { return GetImage(CommonSavePath); } }
 		public static BitmapSource CommonUsingClipboardImage { get { return GetImage(CommonUsingClipboardPath); } }
+		public static BitmapSource CommonUpImage { get { return GetImage(CommonUpPath); } }
+		public static BitmapSource CommonDownImage { get { return GetImage(CommonDownPath); } }
 		
 
 		public static BitmapSource TemplatePlainImage { get { return GetImage(TemplatePlainPath); } }

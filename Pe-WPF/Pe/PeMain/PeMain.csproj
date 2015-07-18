@@ -434,6 +434,8 @@
     <Content Include="etc\style\common.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Image\Common\Down.png" />
+    <Resource Include="Resources\Image\Common\Up.png" />
     <Resource Include="Resources\Image\Clipboard\Clear.png" />
     <Resource Include="Resources\Image\Common\UsingClipboard.png" />
     <Resource Include="Resources\Image\Common\Add.png" />
