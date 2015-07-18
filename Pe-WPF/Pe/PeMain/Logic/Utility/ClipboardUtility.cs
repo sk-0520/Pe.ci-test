@@ -6,6 +6,7 @@
 	using System.Linq;
 	using System.Runtime.InteropServices;
 	using System.Text;
+	using System.Text.RegularExpressions;
 	using System.Threading.Tasks;
 	using System.Windows;
 	using System.Windows.Interop;
@@ -172,6 +173,44 @@
 		static string ConvertStringFromDefaultRawHtml(RangeModel<int> range, byte[] rawHtml)
 		{
 			return ConvertStringFromRawHtml(range, rawHtml, Encoding.UTF8);
+		}
+
+		public static ClipboardHtmlItemModel ConvertClipboardHtmlFromFromRawHtml(string rawClipboardHtml, INonProcess nonProcess)
+		{
+			var result = new ClipboardHtmlItemModel();
+
+			//Version:0.9
+			//StartHTML:00000213
+			//EndHTML:00001173
+			//StartFragment:00000247
+			//EndFragment:00001137
+			//SourceURL:file:///C:/Users/sk/Documents/Programming/SharpDevelop%20Project/Pe/Pe/PeMain/etc/lang/ja-JP.accept.html
+
+			var map = new Dictionary<string, Action<string>>() {
+				{ "version", s => result.Version = decimal.Parse(s) },
+				{ "starthtml", s => result.Html.Head = int.Parse(s) },
+				{ "endhtml", s => result.Html.Tail = int.Parse(s) },
+				{ "startfragment", s => result.Fragment.Head = int.Parse(s) },
+				{ "endfragment", s => result.Fragment.Tail = int.Parse(s) },
+				{ "sourceurl", s => result.SourceURL = new Uri(s) },
+			};
+			var reg = new Regex(@"^\s*(?<KEY>Version|StartHTML|EndHTML|StartFragment|EndFragment|SourceURL)\s*:\s*(?<VALUE>.+?)\s*$", RegexOptions.IgnoreCase | RegexOptions.Multiline);
+			for(var match = reg.Match(rawClipboardHtml); match.Success; match = match.NextMatch()) {
+				var key = match.Groups["KEY"].Value.ToLower();
+				var value = match.Groups["VALUE"].Value;
+				try {
+					map[key](value);
+				} catch(Exception ex) {
+					nonProcess.Logger.Warning(ex);
+				}
+			}
+
+			var rawHtml = Encoding.UTF8.GetBytes(rawClipboardHtml);
+			result.HtmlText = ConvertStringFromDefaultRawHtml(result.Html, rawHtml); ;
+			result.FragmentText = ConvertStringFromDefaultRawHtml(result.Fragment, rawHtml);
+			result.SelectionText = ConvertStringFromDefaultRawHtml(result.Selection, rawHtml);
+
+			return result;
 		}
 
 

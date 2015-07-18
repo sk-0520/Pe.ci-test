@@ -86,6 +86,7 @@
     <Compile Include="IF\IWindowState.cs" />
     <Compile Include="IF\IWindowStatus.cs" />
     <Compile Include="Item\ClipboardBodyItemModel.cs" />
+    <Compile Include="Item\ClipboardHtmlItemModel.cs" />
     <Compile Include="Item\ClipboardIndexItemCollectionModel.cs" />
     <Compile Include="Item\ClipboardIndexItemModel.cs" />
     <Compile Include="Item\IndexBodyItemModelBase.cs" />
