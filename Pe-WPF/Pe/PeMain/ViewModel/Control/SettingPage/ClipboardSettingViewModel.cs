@@ -18,7 +18,7 @@
 		#region variable
 
 		const string defineEnabled = "EnabledClipboardTypes";
-		const string defineSave = "SaveClipboardTypes";
+		//const string defineSave = "SaveClipboardTypes";
 
 		#endregion
 
@@ -60,27 +60,27 @@
 
 		public bool EnabledClipboardTypesText
 		{
-			get { return GetBoolean(Clipboard.EnabledClipboardTypes, ClipboardType.Text); }
+			get { return Clipboard.EnabledClipboardTypes.HasFlag(ClipboardType.Text); }
 			set { SetClipboardType(Clipboard, Clipboard.EnabledClipboardTypes, ClipboardType.Text, defineEnabled); }
 		}
 		public bool EnabledClipboardTypesRtf
 		{
-			get { return GetBoolean(Clipboard.EnabledClipboardTypes, ClipboardType.Rtf); }
+			get { return Clipboard.EnabledClipboardTypes.HasFlag(ClipboardType.Rtf); }
 			set { SetClipboardType(Clipboard, Clipboard.EnabledClipboardTypes, ClipboardType.Rtf, defineEnabled); }
 		}
 		public bool EnabledClipboardTypesHtml
 		{
-			get { return GetBoolean(Clipboard.EnabledClipboardTypes, ClipboardType.Html); }
+			get { return Clipboard.EnabledClipboardTypes.HasFlag(ClipboardType.Html); }
 			set { SetClipboardType(Clipboard, Clipboard.EnabledClipboardTypes, ClipboardType.Html, defineEnabled); }
 		}
 		public bool EnabledClipboardTypesImage
 		{
-			get { return GetBoolean(Clipboard.EnabledClipboardTypes, ClipboardType.Image); }
+			get { return Clipboard.EnabledClipboardTypes.HasFlag(ClipboardType.Image); }
 			set { SetClipboardType(Clipboard, Clipboard.EnabledClipboardTypes, ClipboardType.Image, defineEnabled); }
 		}
 		public bool EnabledClipboardTypesFile
 		{
-			get { return GetBoolean(Clipboard.EnabledClipboardTypes, ClipboardType.File); }
+			get { return Clipboard.EnabledClipboardTypes.HasFlag(ClipboardType.File); }
 			set { SetClipboardType(Clipboard, Clipboard.EnabledClipboardTypes, ClipboardType.File, defineEnabled); }
 		}
 
@@ -126,14 +126,11 @@
 
 		#region function
 
-		bool GetBoolean(ClipboardType clipboardType, ClipboardType value)
-		{
-			return clipboardType.HasFlag(value);
-		}
 		void SetClipboardType(object obj, ClipboardType nowValue, ClipboardType clipboardType, string memberName, [CallerMemberName]string propertyName = "")
 		{
 			SetPropertyValue(obj, nowValue ^ clipboardType, memberName, propertyName);
 		}
+
 		#endregion
 	}
 }

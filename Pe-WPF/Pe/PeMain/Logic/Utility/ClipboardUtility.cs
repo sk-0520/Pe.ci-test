@@ -4,6 +4,7 @@
 	using System.Collections.Generic;
 	using System.Diagnostics;
 	using System.Linq;
+	using System.Runtime.CompilerServices;
 	using System.Runtime.InteropServices;
 	using System.Text;
 	using System.Text.RegularExpressions;
@@ -23,8 +24,8 @@
 	public class ClipboardUtility
 	{
 		#region define
-		
-		class CaseInsensitiveComparer : IComparer<string>
+
+		class CaseInsensitiveComparer: IComparer<string>
 		{
 			public int Compare(string x, string y)
 			{
@@ -44,9 +45,9 @@
 			CheckUtility.DebugEnforceNotNull(watcher);
 
 			bool? enabledWatch = null;
-			if (!watcher.ClipboardEnabledApplicationCopy) {
+			if(!watcher.ClipboardEnabledApplicationCopy) {
 				enabledWatch = watcher.ClipboardWatching;
-				if (enabledWatch.Value) {
+				if(enabledWatch.Value) {
 					watcher.ClipboardWatchingChange(false);
 				}
 			}
@@ -54,11 +55,11 @@
 			try {
 				action();
 			} finally {
-				if (enabledWatch.HasValue) {
+				if(enabledWatch.HasValue) {
 					Debug.Assert(!watcher.ClipboardEnabledApplicationCopy);
 					Debug.Assert(watcher != null);
 
-					if (enabledWatch.Value) {
+					if(enabledWatch.Value) {
 						watcher.ClipboardWatchingChange(true);
 					}
 				}
@@ -237,30 +238,30 @@
 
 			try {
 				var clipboardData = Clipboard.GetDataObject();
-				if (clipboardData != null) {
-					if (enabledTypes.HasFlag(ClipboardType.Text)) {
-						if (clipboardData.GetDataPresent(DataFormats.UnicodeText)) {
+				if(clipboardData != null) {
+					if(enabledTypes.HasFlag(ClipboardType.Text)) {
+						if(clipboardData.GetDataPresent(DataFormats.UnicodeText)) {
 							clipboardItem.Body.Text = (string)clipboardData.GetData(DataFormats.UnicodeText);
 							clipboardItem.Type |= ClipboardType.Text;
-						} else if (clipboardData.GetDataPresent(DataFormats.Text)) {
+						} else if(clipboardData.GetDataPresent(DataFormats.Text)) {
 							clipboardItem.Body.Text = (string)clipboardData.GetData(DataFormats.Text);
 							clipboardItem.Type |= ClipboardType.Text;
 						}
 					}
 
-					if (enabledTypes.HasFlag(ClipboardType.Rtf) && clipboardData.GetDataPresent(DataFormats.Rtf)) {
+					if(enabledTypes.HasFlag(ClipboardType.Rtf) && clipboardData.GetDataPresent(DataFormats.Rtf)) {
 						clipboardItem.Body.Rtf = (string)clipboardData.GetData(DataFormats.Rtf);
 						clipboardItem.Type |= ClipboardType.Rtf;
 					}
 
-					if (enabledTypes.HasFlag(ClipboardType.Html) && clipboardData.GetDataPresent(DataFormats.Html)) {
+					if(enabledTypes.HasFlag(ClipboardType.Html) && clipboardData.GetDataPresent(DataFormats.Html)) {
 						clipboardItem.Body.Html = (string)clipboardData.GetData(DataFormats.Html);
 						clipboardItem.Type |= ClipboardType.Html;
 					}
 
-					if (enabledTypes.HasFlag(ClipboardType.Image) && clipboardData.GetDataPresent(DataFormats.Bitmap)) {
+					if(enabledTypes.HasFlag(ClipboardType.Image) && clipboardData.GetDataPresent(DataFormats.Bitmap)) {
 						var image = clipboardData.GetData(DataFormats.Bitmap) as BitmapSource;
-						if (image != null) {
+						if(image != null) {
 							var bitmap = BitmapFrame.Create(image);
 
 							clipboardItem.Body.Image = bitmap;
@@ -268,9 +269,9 @@
 						}
 					}
 
-					if (enabledTypes.HasFlag(ClipboardType.File) && clipboardData.GetDataPresent(DataFormats.FileDrop)) {
+					if(enabledTypes.HasFlag(ClipboardType.File) && clipboardData.GetDataPresent(DataFormats.FileDrop)) {
 						var files = clipboardData.GetData(DataFormats.FileDrop) as string[];
-						if (files != null) {
+						if(files != null) {
 							var sortedFiles = files.OrderBy(s => s, new CaseInsensitiveComparer());
 							clipboardItem.Body.Files.AddRange(sortedFiles);
 							clipboardItem.Body.Text = string.Join(Environment.NewLine, sortedFiles);
@@ -278,7 +279,7 @@
 						}
 					}
 				}
-			} catch (COMException ex) {
+			} catch(COMException ex) {
 				logger.Error(ex);
 			}
 
@@ -298,7 +299,7 @@
 
 		public static void OutputText(IntPtr hBaseWnd, string outputText, INonProcess nonProcess, IClipboardWatcher clipboardWatcher)
 		{
-			if (string.IsNullOrEmpty(outputText)) {
+			if(string.IsNullOrEmpty(outputText)) {
 				nonProcess.Logger.Information("empty");
 				return;
 			}
@@ -308,9 +309,9 @@
 			do {
 				hWnd = NativeMethods.GetWindow(hWnd, GW.GW_HWNDNEXT);
 				windowHandles.Add(hWnd);
-			} while (!NativeMethods.IsWindowVisible(hWnd));
+			} while(!NativeMethods.IsWindowVisible(hWnd));
 
-			if (hWnd == IntPtr.Zero) {
+			if(hWnd == IntPtr.Zero) {
 				nonProcess.Logger.Warning("notfound");
 				return;
 			}
@@ -323,7 +324,7 @@
 					ClipboardUtility.CopyText(outputText, clipboardWatcher);
 					NativeMethods.SendMessage(hWnd, WM.WM_PASTE, IntPtr.Zero, IntPtr.Zero);
 				} finally {
-					if (clipboardItem.Type != ClipboardType.None) {
+					if(clipboardItem.Type != ClipboardType.None) {
 						ClipboardUtility.CopyClipboardItem(clipboardItem, clipboardWatcher);
 					}
 				}
@@ -368,6 +369,5 @@
 
 			return GetEnabledClipboardTypeList(types, list).First();
 		}
-
 	}
 }

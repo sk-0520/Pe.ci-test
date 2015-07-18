@@ -3,6 +3,7 @@
 	using System;
 	using System.Collections.Generic;
 	using System.Linq;
+	using System.Runtime.CompilerServices;
 	using System.Text;
 	using System.Threading.Tasks;
 	using System.Windows.Media;
@@ -16,6 +17,12 @@
 
 	public class ClipboardItemViewModel : SingleModelWrapperViewModelBase<ClipboardIndexItemModel>, IHavingAppSender, IHavingClipboardWatcher, IHavingNonProcess, IHavingVariableConstants
 	{
+		#region define
+
+		const string defineEnabled = "Type";
+
+		#endregion
+
 		public ClipboardItemViewModel(ClipboardIndexItemModel model, IAppSender appSender, IClipboardWatcher clipboardWatcher, INonProcess nonProcess, VariableConstants variableConstants)
 			:base(model)
 		{
@@ -45,6 +52,45 @@
 		}
 
 		public DateTime CreateTimestamp { get { return Model.History.CreateTimestamp; } }
+
+		#region Type
+
+		public bool EnabledClipboardTypesText
+		{
+			get { return Model.Type.HasFlag(ClipboardType.Text); }
+			set { SetClipboardType(Model, Model.Type, ClipboardType.Text, defineEnabled); }
+		}
+		public bool EnabledClipboardTypesRtf
+		{
+			get { return Model.Type.HasFlag(ClipboardType.Rtf); }
+			set { SetClipboardType(Model, Model.Type, ClipboardType.Rtf, defineEnabled); }
+		}
+		public bool EnabledClipboardTypesHtml
+		{
+			get { return Model.Type.HasFlag(ClipboardType.Html); }
+			set { SetClipboardType(Model, Model.Type, ClipboardType.Html, defineEnabled); }
+		}
+		public bool EnabledClipboardTypesImage
+		{
+			get { return Model.Type.HasFlag(ClipboardType.Image); }
+			set { SetClipboardType(Model, Model.Type, ClipboardType.Image, defineEnabled); }
+		}
+		public bool EnabledClipboardTypesFile
+		{
+			get { return Model.Type.HasFlag(ClipboardType.File); }
+			set { SetClipboardType(Model, Model.Type, ClipboardType.File, defineEnabled); }
+		}
+	
+		#endregion
+
+		#endregion
+
+		#region function
+
+		void SetClipboardType(object obj, ClipboardType nowValue, ClipboardType clipboardType, string memberName, [CallerMemberName]string propertyName = "")
+		{
+			SetPropertyValue(obj, nowValue ^ clipboardType, memberName, propertyName);
+		}
 
 		#endregion
 
