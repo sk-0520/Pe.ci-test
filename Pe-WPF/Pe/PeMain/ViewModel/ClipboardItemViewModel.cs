@@ -6,6 +6,7 @@
 	using System.Runtime.CompilerServices;
 	using System.Text;
 	using System.Threading.Tasks;
+	using System.Windows.Documents;
 	using System.Windows.Media;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
@@ -111,6 +112,22 @@
 		public string Text
 		{
 			get { return BodyModel.Text ?? string.Empty; }
+		}
+
+		//public FlowDocument Rtf
+		//{
+		//	get
+		//	{
+		//		//return BodyModel.Rtf;
+		//		var result = new FlowDocument();
+		//		return result;
+		//	}
+		//}
+
+		public string Rtf
+		{
+			get { return BodyModel.Rtf; }
+			set { /* dummy Mode=OneWay */}
 		}
 
 		#endregion

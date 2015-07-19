@@ -9,6 +9,7 @@
 	xmlns:AC="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Converter"
 	xmlns:AM="clr-namespace:ContentTypeTextNet.Pe.PeMain"
 	xmlns:SC="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=SharedLibrary"
+	xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
 	x:TypeArguments="AVM:ClipboardViewModel"
 	Title="ClipboardWindow" 
 	x:Name="root"
@@ -179,7 +180,13 @@
 									<TextBlock Text="rft" />
 								</StackPanel>
 							</TabItem.Header>
-							<RichTextBox IsReadOnly="True" />
+							<xctk:RichTextBox IsReadOnly="True" Text="{Binding Rtf}" >
+								<xctk:RichTextBox.TextFormatter>
+									<xctk:RtfFormatter  />
+									<!--<xctk:PlainTextFormatter   />-->
+								</xctk:RichTextBox.TextFormatter>
+							</xctk:RichTextBox>
+							<!--<RichTextBox IsReadOnly="True" Document="{Binding Rtf, Mode=OneWay}" />-->
 						</TabItem>
 						<TabItem>
 							<TabItem.Header>
