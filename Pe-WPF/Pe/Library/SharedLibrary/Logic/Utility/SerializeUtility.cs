@@ -336,8 +336,11 @@
 				throw new InvalidOperationException(typeof(T).ToString());
 			}
 
-			using(var reader = XmlDictionaryReader.CreateBinaryReader(stream, XmlDictionaryReaderQuotas.Max)) {
-				reader.Read();
+			var quotas = new XmlDictionaryReaderQuotas() {
+				MaxArrayLength = (int)stream.Length,
+			};
+			using(var reader = XmlDictionaryReader.CreateBinaryReader(stream, null, quotas)) {
+				//reader.Read();
 				var serializer = new DataContractSerializer(typeof(T));
 				var result = (T)serializer.ReadObject(reader);
 				result.Correction();

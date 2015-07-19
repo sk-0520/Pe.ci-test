@@ -160,7 +160,7 @@
 					</Grid.RowDefinitions>
 					<StackPanel Grid.Row="0" Orientation="Horizontal">
 						<TextBlock Text="name" />
-						<TextBox Text="xxx" />
+						<TextBox Text="{Binding Name}" />
 					</StackPanel>
 					<TabControl Grid.Row="1">
 						<TabItem>
@@ -170,7 +170,7 @@
 									<TextBlock Text="text" />
 								</StackPanel>
 							</TabItem.Header>
-							<TextBox IsReadOnly="True" />
+							<TextBox IsReadOnly="True" Text="{Binding Text, Mode=OneWay}" />
 						</TabItem>
 						<TabItem>
 							<TabItem.Header>

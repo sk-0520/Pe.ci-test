@@ -23,6 +23,12 @@
 
 		#endregion
 
+		#region
+		
+		ClipboardBodyItemModel _bodyModel = null;
+
+		#endregion
+
 		public ClipboardItemViewModel(ClipboardIndexItemModel model, IAppSender appSender, IClipboardWatcher clipboardWatcher, INonProcess nonProcess, VariableConstants variableConstants)
 			:base(model)
 		{
@@ -33,6 +39,19 @@
 		}
 
 		#region property
+
+		ClipboardBodyItemModel BodyModel
+		{
+			get
+			{
+				if(this._bodyModel == null) {
+					var body = AppSender.SendGetIndexBody(IndexKind.Clipboard, Model.Id);
+					this._bodyModel = (ClipboardBodyItemModel)body;
+				}
+
+				return this._bodyModel;
+			}
+		}
 
 		public ImageSource ItemTypeImage
 		{
@@ -52,6 +71,12 @@
 		}
 
 		public DateTime CreateTimestamp { get { return Model.History.CreateTimestamp; } }
+
+		public string Name
+		{
+			get { return Model.Name; }
+			set { SetModelValue(value); }
+		}
 
 		#region Type
 
@@ -82,6 +107,11 @@
 		}
 	
 		#endregion
+
+		public string Text
+		{
+			get { return BodyModel.Text ?? string.Empty; }
+		}
 
 		#endregion
 

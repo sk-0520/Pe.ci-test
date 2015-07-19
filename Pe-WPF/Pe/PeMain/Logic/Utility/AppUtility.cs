@@ -39,6 +39,7 @@ using ContentTypeTextNet.Pe.Library.PeData.Item;
 						break;
 
 					case FileType.Binary:
+						result = SerializeUtility.LoadBinaryDataFromFile<T>(path);
 						break;
 
 					default:
