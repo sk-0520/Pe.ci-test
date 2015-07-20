@@ -27,6 +27,7 @@
 		#region
 		
 		ClipboardBodyItemModel _bodyModel = null;
+		ClipboardHtmlItemModel _htmlModel = null;
 
 		#endregion
 
@@ -48,6 +49,11 @@
 				if(this._bodyModel == null) {
 					var body = AppSender.SendGetIndexBody(IndexKind.Clipboard, Model.Id);
 					this._bodyModel = (ClipboardBodyItemModel)body;
+					if(Model.Type.HasFlag(ClipboardType.Html)) {
+						this._htmlModel = ClipboardUtility.ConvertClipboardHtmlFromFromRawHtml(this._bodyModel.Html, NonProcess);
+					} else {
+						this._htmlModel = null;
+					}
 				}
 
 				return this._bodyModel;
@@ -126,7 +132,7 @@
 
 		public string Rtf
 		{
-			get { return BodyModel.Rtf; }
+			get { return BodyModel.Rtf ?? string.Empty; }
 			set { /* dummy Mode=OneWay */}
 		}
 

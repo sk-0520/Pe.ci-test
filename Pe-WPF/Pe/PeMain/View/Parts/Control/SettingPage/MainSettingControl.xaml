@@ -2,6 +2,7 @@
 	x:Class="ContentTypeTextNet.Pe.PeMain.View.Parts.Control.SettingPage.MainSettingControl"
 	xmlns:AV="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Control"
 	xmlns:AP="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
+	xmlns:AA="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Attached"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -11,38 +12,38 @@
 	d:DesignHeight="400"
 >
 	<Grid>
-		<GroupBox AP:XamlTag.LanguageKey="setting/main" Header="main" Height="79" Width="202" Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+		<GroupBox AA:Language.Key="setting/main" Header="main" Height="79" Width="202" Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
 			<StackPanel Orientation="Vertical">
 				<StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Width="190">
-					<Label AP:XamlTag.LanguageKey="using-language" Content="language" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+					<Label AA:Language.Key="using-language" Content="language" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 					<ComboBox HorizontalAlignment="Left" Width="89" Height="27" VerticalAlignment="Top" />
 				</StackPanel>
-				<CheckBox AP:XamlTag.LanguageKey="startup/regist" Content="startup" IsChecked="{Binding Startup}"/>
+				<CheckBox AA:Language.Key="startup/regist" Content="startup" IsChecked="{Binding Startup}"/>
 			</StackPanel>
 		</GroupBox>
 
-		<GroupBox AP:XamlTag.LanguageKey="setting/log" Header="log" Margin="10,94,0,0" HorizontalAlignment="Left" Width="202" Height="182" VerticalAlignment="Top">
+		<GroupBox AA:Language.Key="setting/log" Header="log" Margin="10,94,0,0" HorizontalAlignment="Left" Width="202" Height="182" VerticalAlignment="Top">
 			<StackPanel>
-				<CheckBox AP:XamlTag.LanguageKey="visible" Content="visible" IsChecked="{Binding LogVisible}" />
+				<CheckBox AA:Language.Key="visible" Content="visible" IsChecked="{Binding LogVisible}" />
 				<GroupBox>
 					<GroupBox.Header>
-						<CheckBox AP:XamlTag.LanguageKey="log/add-show" Content="add-show" IsChecked="{Binding LogAddShow}" />
+						<CheckBox AA:Language.Key="log/add-show" Content="add-show" IsChecked="{Binding LogAddShow}" />
 					</GroupBox.Header>
 					<StackPanel Margin="8">
-						<CheckBox AP:XamlTag.LanguageKey="log/debug" Content="debug" IsChecked="{Binding LogTriggerDebug}" />
-						<CheckBox AP:XamlTag.LanguageKey="log/trace" Content="trace" IsChecked="{Binding LogTriggerTrace}" />
-						<CheckBox AP:XamlTag.LanguageKey="log/information" Content="info" IsChecked="{Binding LogTriggerInformation}" />
-						<CheckBox AP:XamlTag.LanguageKey="log/warning" Content="warning" IsChecked="{Binding LogTriggerWarning}" />
-						<CheckBox AP:XamlTag.LanguageKey="log/error" Content="error" IsChecked="{Binding LogTriggerError}" />
-						<CheckBox AP:XamlTag.LanguageKey="log/fatal" Content="fatal" IsChecked="{Binding LogTriggerFatal}" />
+						<CheckBox AA:Language.Key="log/debug" Content="debug" IsChecked="{Binding LogTriggerDebug}" />
+						<CheckBox AA:Language.Key="log/trace" Content="trace" IsChecked="{Binding LogTriggerTrace}" />
+						<CheckBox AA:Language.Key="log/information" Content="info" IsChecked="{Binding LogTriggerInformation}" />
+						<CheckBox AA:Language.Key="log/warning" Content="warning" IsChecked="{Binding LogTriggerWarning}" />
+						<CheckBox AA:Language.Key="log/error" Content="error" IsChecked="{Binding LogTriggerError}" />
+						<CheckBox AA:Language.Key="log/fatal" Content="fatal" IsChecked="{Binding LogTriggerFatal}" />
 					</StackPanel>
 				</GroupBox>
 			</StackPanel>
 		</GroupBox>
-		<GroupBox AP:XamlTag.LanguageKey="setting/running"  Header="update" HorizontalAlignment="Left" Margin="217,10,0,0" VerticalAlignment="Top" Height="70" Width="136">
+		<GroupBox AA:Language.Key="setting/running"  Header="update" HorizontalAlignment="Left" Margin="217,10,0,0" VerticalAlignment="Top" Height="70" Width="136">
 			<StackPanel>
-				<CheckBox AP:XamlTag.LanguageKey="update/check-release" Content="update check" IsChecked="{Binding RunningCheckUpdateRelease}" />
-				<CheckBox AP:XamlTag.LanguageKey="update/check-rc" Content="update check rc" IsChecked="{Binding RunningCheckUpdateRC}" />
+				<CheckBox AA:Language.Key="update/check-release" Content="update check" IsChecked="{Binding RunningCheckUpdateRelease}" />
+				<CheckBox AA:Language.Key="update/check-rc" Content="update check rc" IsChecked="{Binding RunningCheckUpdateRC}" />
 			</StackPanel>
 		</GroupBox>
 		<GroupBox Header="system" HorizontalAlignment="Left" Margin="217,94,0,0" VerticalAlignment="Top" Height="75" Width="136">

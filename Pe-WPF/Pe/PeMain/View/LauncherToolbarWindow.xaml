@@ -11,7 +11,8 @@
 	xmlns:AC="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Converter"
 	x:Class="ContentTypeTextNet.Pe.PeMain.View.LauncherToolbarWindow"
 	x:TypeArguments="AVM:LauncherToolbarViewModel"
-	AP:XamlTag.LanguageKey="window/toolbar"
+	xmlns:AA="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Attached"
+	AA:Language.Key="window/toolbar"
 	Title="ToolbarWindow" 
 	Left="{Binding WindowLeft, Mode=TwoWay}" 
 	Top="{Binding WindowTop, Mode=TwoWay}"
@@ -407,10 +408,10 @@
 						<Button Grid.Row="2" Grid.Column="1" CommandParameter="{x:Static SD:DockType.Bottom}" Style="{StaticResource PopupClose}">↓</Button>
 					</Grid>
 					<Separator />
-					<MenuItem Header="topmost" AP:XamlTag.LanguageKey="topmost" Style="{StaticResource PopupCloseMenu}" IsChecked="{Binding TopMost}" Command="{Binding SwitchTopMostCommand}"  />
-					<MenuItem Header="auto hide" AP:XamlTag.LanguageKey="autohide" Style="{StaticResource PopupCloseMenu}" IsChecked="{Binding AutoHide}" Command="{Binding SwitchAutoHideCommand}"/>
+					<MenuItem Header="topmost" AA:Language.Key="topmost" Style="{StaticResource PopupCloseMenu}" IsChecked="{Binding TopMost}" Command="{Binding SwitchTopMostCommand}"  />
+					<MenuItem Header="auto hide" AA:Language.Key="autohide" Style="{StaticResource PopupCloseMenu}" IsChecked="{Binding AutoHide}" Command="{Binding SwitchAutoHideCommand}"/>
 					<Separator />
-					<MenuItem Header="hide" AP:XamlTag.LanguageKey="hide" Style="{StaticResource PopupCloseMenu}" Command="{Binding ChangeVisibleCommand}" >
+					<MenuItem Header="hide" AA:Language.Key="hide" Style="{StaticResource PopupCloseMenu}" Command="{Binding ChangeVisibleCommand}" >
 						<MenuItem.CommandParameter>
 							<sys:Boolean>false</sys:Boolean>
 						</MenuItem.CommandParameter>

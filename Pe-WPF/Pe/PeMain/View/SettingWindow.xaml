@@ -5,7 +5,8 @@
 	xmlns:W="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Window"
 	xmlns:SP="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Control.SettingPage" 
 	x:Class="ContentTypeTextNet.Pe.PeMain.View.SettingWindow"
-	AP:XamlTag.LanguageKey="window/setting"
+	xmlns:AA="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Attached"
+	AA:Language.Key="window/setting"
 	Title="SettingWindow" 
 	Width="640"
 	Height="480" 
@@ -22,8 +23,8 @@
 		</Grid.RowDefinitions>
 
 		<StackPanel Style="{StaticResource ResourceKey=DialogResultPanel}"  Grid.Row="2">
-			<Button Style="{StaticResource ResourceKey=DialogResultButton}" AP:XamlTag.LanguageKey="common/ok" Content="ok" />
-			<Button Style="{StaticResource ResourceKey=DialogResultButton}" AP:XamlTag.LanguageKey="common/cancel" Content="cancel" Command="{Binding CancelCommand}" />
+			<Button Style="{StaticResource ResourceKey=DialogResultButton}" AA:Language.Key="common/ok" Content="ok" />
+			<Button Style="{StaticResource ResourceKey=DialogResultButton}" AA:Language.Key="common/cancel" Content="cancel" Command="{Binding CancelCommand}" />
 		</StackPanel>
 		<TabControl VerticalAlignment="Stretch">
 			<TabControl.Resources>

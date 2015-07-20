@@ -10,12 +10,13 @@
 	using ContentTypeTextNet.Library.SharedLibrary.Logic;
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 	using ContentTypeTextNet.Pe.PeMain.View.Parts;
+	using ContentTypeTextNet.Pe.PeMain.View.Parts.Attached;
 
 	public static class LanguageExtension
 	{
 		static void SetUI_Impl(DependencyObject ui, LanguageManager language, IReadOnlyDictionary<string, string> map, Action<string> action)
 		{
-			var key = ui.LanguageKey();
+			var key = Language.GetKey(ui);
 			if(!string.IsNullOrWhiteSpace(key)) {
 				action(key);
 			}

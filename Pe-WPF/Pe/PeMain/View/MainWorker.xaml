@@ -4,7 +4,7 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:Taskbar="http://www.hardcodet.net/taskbar"
 	xmlns:AV="clr-namespace:ContentTypeTextNet.Pe.PeMain.ViewModel"
-	xmlns:UI="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
+	xmlns:AA="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Attached"
 	xmlns:SC="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=SharedLibrary"
 >
 	<ContextMenu x:Shared="false" x:Key="ContextMenu" IsOpen="{Binding IsContextMenuOpen}">
@@ -27,9 +27,9 @@
 				<Setter Property="Command" Value="{Binding WindowMenuSelectedCommand}" />
 			</Style>
 		</ContextMenu.Resources>
-		<MenuItem UI:XamlTag.LanguageKey="tasktray/setting" Header="setting" Command="{Binding ShowSettingWindowCommand}" />
+		<MenuItem AA:Language.Key="tasktray/setting" Header="setting" Command="{Binding ShowSettingWindowCommand}" />
 		<Separator />
-		<MenuItem UI:XamlTag.LanguageKey="tasktray/toolbar" Header="toolbar" ItemsSource="{Binding LauncherToolbar}">
+		<MenuItem AA:Language.Key="tasktray/toolbar" Header="toolbar" ItemsSource="{Binding LauncherToolbar}">
 			<MenuItem.ItemContainerStyle>
 				<Style TargetType="MenuItem">
 					<Setter Property="IsChecked" Value="{Binding Visible, Mode=OneWay}"/>
@@ -46,7 +46,7 @@
 				</DataTemplate>
 			</MenuItem.ItemTemplate>
 		</MenuItem>
-		<MenuItem UI:XamlTag.LanguageKey="tasktray/note"    Header="note">
+		<MenuItem AA:Language.Key="tasktray/note"    Header="note">
 			<MenuItem Header="create" Command="{Binding CreateNoteItemCommand}" />
 			<MenuItem Header="compact" Command="{Binding CompactNoteItemCommand}" />
 			<MenuItem Header="hide" Command="{Binding HideNoteItemCommand}" />
@@ -56,11 +56,11 @@
 			<MenuItem Header="show" ItemsSource="{Binding NoteShowItems}" ItemTemplate="{StaticResource ResourceKey=IMenuItemTemplate}" ItemContainerStyle="{StaticResource ResourceKey=NoteMenuItemStyle}" IsEnabled="{Binding ItemsSource,RelativeSource={RelativeSource Self}, Converter={StaticResource IsNotEmptyCollection}}"/>
 			<MenuItem Header="hidden" ItemsSource="{Binding NoteHiddenItems}" ItemTemplate="{StaticResource ResourceKey=IMenuItemTemplate}" ItemContainerStyle="{StaticResource ResourceKey=NoteMenuItemStyle}" IsEnabled="{Binding ItemsSource,RelativeSource={RelativeSource Self}, Converter={StaticResource IsNotEmptyCollection}}"/>
 		</MenuItem>
-		<MenuItem UI:XamlTag.LanguageKey="tasktray/template" Header="template" Command="{Binding SwitchTemplateWindowCommand}" IsChecked="{Binding Template.Visible, Mode=OneWay}" />
-		<MenuItem UI:XamlTag.LanguageKey="tasktray/command" Header="command" Command="{Binding SwitchCommandWindowCommand}" />
-		<MenuItem UI:XamlTag.LanguageKey="tasktray/log"     Header="log" Command="{Binding SwitchLoggingWindowCommand}" IsChecked="{Binding Logging.Visible, Mode=OneWay}" />
+		<MenuItem AA:Language.Key="tasktray/template" Header="template" Command="{Binding SwitchTemplateWindowCommand}" IsChecked="{Binding Template.Visible, Mode=OneWay}" />
+		<MenuItem AA:Language.Key="tasktray/command" Header="command" Command="{Binding SwitchCommandWindowCommand}" />
+		<MenuItem AA:Language.Key="tasktray/log"     Header="log" Command="{Binding SwitchLoggingWindowCommand}" IsChecked="{Binding Logging.Visible, Mode=OneWay}" />
 		<Separator />
-		<MenuItem UI:XamlTag.LanguageKey="tasktray/system-env" Header="system-env">
+		<MenuItem AA:Language.Key="tasktray/system-env" Header="system-env">
 			<MenuItem Header="hide file" Command="{Binding SwitchShellHideFile}" IsChecked="{Binding IsVisibledShellHideFile, Mode=OneWay}" />
 			<MenuItem Header="extension" Command="{Binding SwitchShellExtension}" IsChecked="{Binding IsVisibledShellExtension, Mode=OneWay}" />
 			<Separator />
@@ -72,8 +72,8 @@
 			<MenuItem Header="window - system" ItemsSource="{Binding WindowSystemItems}" ItemTemplate="{StaticResource ResourceKey=IMenuItemTemplate}" ItemContainerStyle="{StaticResource ResourceKey=WindowMenuItemStyle}" IsEnabled="{Binding ItemsSource,RelativeSource={RelativeSource Self}, Converter={StaticResource IsNotEmptyCollection}}" />
 		</MenuItem>
 		<Separator />
-		<MenuItem UI:XamlTag.LanguageKey="tasktray/about" Header="about" />
-		<MenuItem UI:XamlTag.LanguageKey="tasktray/exit" Header="exit" Command="{Binding ExitApplicationCommand}" />
+		<MenuItem AA:Language.Key="tasktray/about" Header="about" />
+		<MenuItem AA:Language.Key="tasktray/exit" Header="exit" Command="{Binding ExitApplicationCommand}" />
 	</ContextMenu>
 
 	<Taskbar:TaskbarIcon 
@@ -106,8 +106,8 @@
 						<Setter Property="Command" Value="{Binding Path=PlacementTarget.MenuSelectedCommand,  RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}" />
 					</Style>
 				</ContextMenu.Resources>
-				<MenuItem UI:XamlTag.LanguageKey="tasktray/setting" Header="setting" Command="{Binding ShowSettingWindowCommand}" />
-				<MenuItem UI:XamlTag.LanguageKey="tasktray/toolbar" Header="toolbar" ItemsSource="{Binding LauncherToolbar}">
+				<MenuItem AA:Language.Key="tasktray/setting" Header="setting" Command="{Binding ShowSettingWindowCommand}" />
+				<MenuItem AA:Language.Key="tasktray/toolbar" Header="toolbar" ItemsSource="{Binding LauncherToolbar}">
 					<MenuItem.ItemContainerStyle>
 						<Style TargetType="MenuItem">
 							<Setter Property="IsChecked" Value="{Binding Visible, Mode=OneWay}"/>
@@ -124,7 +124,7 @@
 						</DataTemplate>
 					</MenuItem.ItemTemplate>
 				</MenuItem>
-				<MenuItem UI:XamlTag.LanguageKey="tasktray/note"    Header="note">
+				<MenuItem AA:Language.Key="tasktray/note"    Header="note">
 					<MenuItem Header="create" Command="{Binding CreateNoteItemCommand}" />
 					<MenuItem Header="compact" />
 					<MenuItem Header="hide" />
@@ -134,13 +134,13 @@
 					<MenuItem Header="show" ItemsSource="{Binding NoteShowItems}" ItemTemplate="{StaticResource ResourceKey=NoteMenuItemTemplate}" ItemContainerStyle="{StaticResource ResourceKey=NoteMenuItemStyle}" />
 					<MenuItem Header="hidden" ItemsSource="{Binding NoteHiddenItems}" ItemTemplate="{StaticResource ResourceKey=NoteMenuItemTemplate}" ItemContainerStyle="{StaticResource ResourceKey=NoteMenuItemStyle}" Command="{Binding MenuSelectedCommand}" />
 				</MenuItem>
-				<MenuItem UI:XamlTag.LanguageKey="tasktray/command" Header="command" />
-				<MenuItem UI:XamlTag.LanguageKey="tasktray/log"     Header="log" Command="{Binding SwitchLoggingWindowCommand}" IsChecked="{Binding Logging.Visible, Mode=OneWay}" />
+				<MenuItem AA:Language.Key="tasktray/command" Header="command" />
+				<MenuItem AA:Language.Key="tasktray/log"     Header="log" Command="{Binding SwitchLoggingWindowCommand}" IsChecked="{Binding Logging.Visible, Mode=OneWay}" />
 				<Separator />
-				<MenuItem UI:XamlTag.LanguageKey="tasktray/log" Header="system-env" />
+				<MenuItem AA:Language.Key="tasktray/log" Header="system-env" />
 				<Separator />
-				<MenuItem UI:XamlTag.LanguageKey="tasktray/about" Header="about" />
-				<MenuItem UI:XamlTag.LanguageKey="tasktray/exit" Header="exit" Command="{Binding ExitApplicationCommand}" />
+				<MenuItem AA:Language.Key="tasktray/about" Header="about" />
+				<MenuItem AA:Language.Key="tasktray/exit" Header="exit" Command="{Binding ExitApplicationCommand}" />
 			</ContextMenu>
 		</Taskbar:TaskbarIcon.ContextMenu>
 		<Taskbar:TaskbarIcon.DataContext>
