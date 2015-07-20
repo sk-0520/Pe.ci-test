@@ -22,7 +22,11 @@
 					Path = this.Path,
 					Index = 0,
 				};
-				return AppUtility.LoadIconDefault(iconPath, IconScale.Small);
+				if(FileUtility.Exists(iconPath.Path)) {
+					return AppUtility.LoadIconDefault(iconPath, IconScale.Small);
+				} else {
+					return AppResource.GetNotFoundIcon(IconScale.Small);
+				}
 			}
 		} 
 	}

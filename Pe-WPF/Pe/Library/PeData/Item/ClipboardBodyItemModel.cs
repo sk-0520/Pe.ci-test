@@ -8,6 +8,7 @@
 	using System.Runtime.Serialization;
 	using System.Text;
 	using System.Threading.Tasks;
+	using System.Windows;
 	using System.Windows.Media.Imaging;
 	using System.Xml.Serialization;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
@@ -89,10 +90,12 @@
 			if(!IsDisposed) {
 				var bitmapImage = Image as BitmapImage;
 				if(bitmapImage != null) {
-					if(bitmapImage.StreamSource != null) {
-						bitmapImage.StreamSource.Dispose();
-						bitmapImage.StreamSource = null;
-					}
+					Application.Current.Dispatcher.Invoke(new Action(() => {
+						if(bitmapImage.StreamSource != null) {
+							bitmapImage.StreamSource.Dispose();
+							bitmapImage.StreamSource = null;
+						}
+					}));
 				}
 			}
 
