@@ -8,8 +8,10 @@
 	using System.Text;
 	using System.Threading.Tasks;
 	using System.Windows.Documents;
+	using System.Windows.Input;
 	using System.Windows.Media;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Library.SharedLibrary.View.Window;
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 	using ContentTypeTextNet.Pe.Library.PeData.Define;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
@@ -188,6 +190,47 @@
 				} else {
 					return null;
 				}
+			}
+		}
+
+
+		#endregion
+
+		#region command
+
+		public ICommand SendItemCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						var apiWindow = (WindowsAPIWindowBase)o;
+						var hWnd = apiWindow.Handle;
+
+						ClipboardUtility.OutputText(hWnd, Text, NonProcess, ClipboardWatcher);
+					}
+				);
+
+				return result;
+			}
+		}
+
+		public ICommand CopyItemCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						var clipboardItem = new ClipboardItem() {
+							Type = Model.Type,
+							Body = BodyModel,
+						};
+
+						ClipboardUtility.CopyClipboardItem(clipboardItem, ClipboardWatcher);
+					}
+				);
+
+				return result;
 			}
 		}
 

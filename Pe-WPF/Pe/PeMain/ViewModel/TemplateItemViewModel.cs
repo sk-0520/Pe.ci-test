@@ -151,8 +151,8 @@
 			{
 				var result = CreateCommand(
 					o => {
-						var templateWindow = (WindowsAPIWindowBase)o;
-						var hWnd = templateWindow.Handle;
+						var apiWindow = (WindowsAPIWindowBase)o;
+						var hWnd = apiWindow.Handle;
 						// TODO: なんだかなぁ。
 						SetReplacedValue();
 						ClipboardUtility.OutputText(hWnd, Replaced, NonProcess, ClipboardWatcher);
