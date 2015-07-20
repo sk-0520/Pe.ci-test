@@ -38,7 +38,15 @@ using ContentTypeTextNet.Pe.PeMain.View;
 		public ClipboardItemViewModel SelectedViewModel
 		{
 			get { return this._selectedViewModel; }
-			set { SetVariableValue(ref this._selectedViewModel, value); }
+			set 
+			{
+				var prevViewModel = this._selectedViewModel;
+				if(SetVariableValue(ref this._selectedViewModel, value)) {
+					if(prevViewModel != null) {
+						prevViewModel.Dispose();
+					}
+				}
+			}
 		}
 
 		/// <summary>

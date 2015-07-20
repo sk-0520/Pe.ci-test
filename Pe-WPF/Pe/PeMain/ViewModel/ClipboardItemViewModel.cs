@@ -190,6 +190,18 @@
 
 		public override string DisplayText { get { return DisplayTextUtility.GetDisplayName(Model); } }
 
+		protected override void Dispose(bool disposing)
+		{
+			if(!IsDisposed) {
+				if(this._bodyModel != null) {
+					this._bodyModel.Dispose();
+					this._bodyModel = null;
+				}
+			}
+
+			base.Dispose(disposing);
+		}
+
 		#endregion
 
 		#region IHavingAppSender

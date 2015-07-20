@@ -22,6 +22,8 @@
 			Files = new CollectionModel<string>();
 		}
 
+		#region ClipboardBodyItemModel
+
 		[DataMember]
 		public string Text { get; set; }
 		[DataMember]
@@ -59,16 +61,16 @@
 						return;
 					}
 
-					var image = new BitmapImage();
-					image.BeginInit();
+					var bitmapImage = new BitmapImage();
+					bitmapImage.BeginInit();
 					try {
-						image.CacheOption = BitmapCacheOption.OnLoad;
-						image.StreamSource = new MemoryStream(value);
+						bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+						bitmapImage.StreamSource = new MemoryStream(value);
 					} finally {
-						image.EndInit();
+						bitmapImage.EndInit();
 					}
 
-					Image = image;
+					Image = bitmapImage;
 				}
 			}
 		}
@@ -76,9 +78,26 @@
 		[DataMember]
 		public CollectionModel<string> Files { get; set; }
 
+		#endregion
+
 		#region IndexBodyItemModelBase
 
 		public override IndexKind IndexKind { get { return IndexKind.Clipboard; } }
+
+		protected override void Dispose(bool disposing)
+		{
+			if(!IsDisposed) {
+				var bitmapImage = Image as BitmapImage;
+				if(bitmapImage != null) {
+					if(bitmapImage.StreamSource != null) {
+						bitmapImage.StreamSource.Dispose();
+						bitmapImage.StreamSource = null;
+					}
+				}
+			}
+
+			base.Dispose(disposing);
+		}
 
 		#endregion
 	}
