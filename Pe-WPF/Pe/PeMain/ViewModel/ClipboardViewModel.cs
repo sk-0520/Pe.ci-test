@@ -41,11 +41,7 @@ using ContentTypeTextNet.Pe.PeMain.View;
 			set 
 			{
 				var prevViewModel = this._selectedViewModel;
-				if(SetVariableValue(ref this._selectedViewModel, value)) {
-					if(prevViewModel != null) {
-						prevViewModel.Dispose();
-					}
-				}
+				SetVariableValue(ref this._selectedViewModel, value);
 			}
 		}
 
