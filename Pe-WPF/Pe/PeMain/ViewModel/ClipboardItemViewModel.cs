@@ -2,6 +2,7 @@
 {
 	using System;
 	using System.Collections.Generic;
+	using System.IO;
 	using System.Linq;
 	using System.Runtime.CompilerServices;
 	using System.Text;
@@ -45,6 +46,7 @@
 		{
 			get
 			{
+				lock(Model)
 				if(this._bodyModel == null) {
 					var body = AppSender.SendGetIndexBody(IndexKind.Clipboard, Model.Id);
 					this._bodyModel = (ClipboardBodyItemModel)body;
@@ -144,6 +146,29 @@
 			{
 				if(HtmlModel != null) {
 					return HtmlModel.ToHtml();
+				} else {
+					return null;
+				}
+			}
+		}
+
+		public string HtmlUri
+		{
+			get 
+			{
+				if(HtmlModel != null && HtmlModel.SourceURL != null) {
+					return HtmlModel.SourceURL.OriginalString;
+				} else {
+					return string.Empty;
+				}
+			}
+		}
+
+		public ImageSource Image
+		{
+			get {
+				if(BodyModel.Image != null) {
+					return BodyModel.Image;
 				} else {
 					return null;
 				}

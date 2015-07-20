@@ -75,6 +75,8 @@
 		public static string ClipboardRichTextFormatPath { get { return "/Resources/Image/Clipboard/ClipboardRichTextFormat.png"; } }
 		public static string ClipboardImagePath { get { return "/Resources/Image/Clipboard/ClipboardImage.png"; } }
 		public static string ClipboardFilePath { get { return "/Resources/Image/Clipboard/ClipboardFile.png"; } }
+		public static string ClipboardImageFitPath { get { return "/Resources/Image/Clipboard/ImageFit.png"; } }
+		public static string ClipboardImageRawPath { get { return "/Resources/Image/Clipboard/ImageRaw.png"; } }
 
 		public static string WindowLoadPath { get { return "/Resources/Image/Window/WindowLoad.png"; } }
 		public static string WindowSavePath { get { return "/Resources/Image/Window/WindowSave.png"; } }
@@ -106,6 +108,8 @@
 		public static BitmapSource ClipboardHtmlImage { get { return GetImage(ClipboardHtmlPath); } }
 		public static BitmapSource ClipboardImageImage { get { return GetImage(ClipboardImagePath); } }
 		public static BitmapSource ClipboardFileImage { get { return GetImage(ClipboardFilePath); } }
+		public static BitmapSource ClipboardImageFitImage { get { return GetImage(ClipboardImageFitPath); } }
+		public static BitmapSource ClipboardImageRawImage { get { return GetImage(ClipboardImageRawPath); } }
 
 		public static BitmapSource WindowSaveImage { get { return GetImage(WindowLoadPath); } }
 		public static BitmapSource WindowLoadImage { get { return GetImage(WindowSavePath); } }

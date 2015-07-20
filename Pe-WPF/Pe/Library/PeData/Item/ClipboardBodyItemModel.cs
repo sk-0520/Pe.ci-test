@@ -37,12 +37,15 @@
 		{
 			get {
 				if (Image != null) {
-					var encoder = new PngBitmapEncoder();
-					encoder.Frames.Add(BitmapFrame.Create(Image));
+					//var encoder = new PngBitmapEncoder();
+					var encoder = new BmpBitmapEncoder();
+					encoder.Frames.Add(BitmapFrame.Create((BitmapSource)Image.Clone()));
+					byte[] array;
 					using (var stream = new MemoryStream()) {
 						encoder.Save(stream);
-						return stream.ToArray();
+						array = stream.ToArray();
 					}
+					return array;
 				} else {
 					return null;
 				}
@@ -52,9 +55,20 @@
 				if (value == null) {
 					Image = null;
 				} else {
-					using(var stream = new MemoryStream(value)) {
-						Image = BitmapFrame.Create(stream);
+					if(Image != null) {
+						return;
 					}
+
+					var image = new BitmapImage();
+					image.BeginInit();
+					try {
+						image.CacheOption = BitmapCacheOption.OnLoad;
+						image.StreamSource = new MemoryStream(value);
+					} finally {
+						image.EndInit();
+					}
+
+					Image = image;
 				}
 			}
 		}
