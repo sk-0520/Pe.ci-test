@@ -37,21 +37,29 @@
 			<SC:LogicalIsNotNullConverter x:Key="LogicalIsNotNullConverter" />
 			<SC:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
 			<SC:DoubleGridLengthConverter x:Key="DoubleGridLengthConverter" />
+			<SC:BooleanVisibilityConverter x:Key="BooleanVisibilityConverter" />
 			<AC:ReverseClipboardItemListConverter x:Key="ReverseClipboardItemListConverter" />
 			<AC:DisplayTextConverter x:Key="DisplayTextConverter" />
-			<Style x:Key="ClipboardText" TargetType="Image" BasedOn="{StaticResource ImageRenderStyle}">
+			<Style x:Key="Clipboard" TargetType="Image" BasedOn="{StaticResource ImageRenderStyle}">
+				<Style.Triggers>
+					<Trigger Property="IsEnabled" Value="False">
+						<Setter Property="Opacity" Value="0.5" />
+					</Trigger>
+				</Style.Triggers>
+			</Style>
+			<Style x:Key="ClipboardText" TargetType="Image" BasedOn="{StaticResource Clipboard}">
 				<Setter Property="Source" Value="{x:Static AM:AppResource.ClipboardTextFormatImage}" />
 			</Style>
-			<Style x:Key="ClipboardRtf" TargetType="Image" BasedOn="{StaticResource ImageRenderStyle}">
+			<Style x:Key="ClipboardRtf" TargetType="Image" BasedOn="{StaticResource Clipboard}">
 				<Setter Property="Source" Value="{x:Static AM:AppResource.ClipboardRichTextFormatImage}" />
 			</Style>
-			<Style x:Key="ClipboardHtml" TargetType="Image" BasedOn="{StaticResource ImageRenderStyle}">
+			<Style x:Key="ClipboardHtml" TargetType="Image" BasedOn="{StaticResource Clipboard}">
 				<Setter Property="Source" Value="{x:Static AM:AppResource.ClipboardHtmlImage}" />
 			</Style>
-			<Style x:Key="ClipboardImage" TargetType="Image" BasedOn="{StaticResource ImageRenderStyle}">
+			<Style x:Key="ClipboardImage" TargetType="Image" BasedOn="{StaticResource Clipboard}">
 				<Setter Property="Source" Value="{x:Static AM:AppResource.ClipboardImageImage}" />
 			</Style>
-			<Style x:Key="ClipboardFiles" TargetType="Image" BasedOn="{StaticResource ImageRenderStyle}">
+			<Style x:Key="ClipboardFiles" TargetType="Image" BasedOn="{StaticResource Clipboard}">
 				<Setter Property="Source" Value="{x:Static AM:AppResource.ClipboardFileImage}" />
 			</Style>
 		</ResourceDictionary>
@@ -63,7 +71,7 @@
 				<RowDefinition Height="*"/>
 				<RowDefinition Height="Auto"/>
 			</Grid.RowDefinitions>
-				<ToolBar Style="{StaticResource IndexItemsStyleDefaultToolbarStyle}" >
+			<ToolBar Style="{StaticResource IndexItemsStyleDefaultToolbarStyle}" >
 				<Button>
 					<StackPanel Orientation="Horizontal">
 						<Image Style="{StaticResource ImageRenderStyle}" Source="{x:Static AM:AppResource.CommonSaveImage}" />
@@ -145,23 +153,23 @@
 												<!-- copy -->
 												<Image Style="{StaticResource ImageRenderStyle}" Source="{Binding Source={x:Static AM:AppResource.CommonClipboardImage}}" />
 											</Button>
-											<Button>
+											<Button IsEnabled="{Binding EnabledClipboardTypesText}">
 												<!-- text -->
 												<Image Style="{StaticResource ClipboardText}" />
 											</Button>
-											<Button>
+											<Button IsEnabled="{Binding EnabledClipboardTypesRtf}">
 												<!-- rft -->
 												<Image Style="{StaticResource ClipboardRtf}" />
 											</Button>
-											<Button>
+											<Button IsEnabled="{Binding EnabledClipboardTypesHtml}">
 												<!-- html -->
 												<Image Style="{StaticResource ClipboardHtml}" />
 											</Button>
-											<Button>
+											<Button IsEnabled="{Binding EnabledClipboardTypesImage}">
 												<!-- image -->
 												<Image Style="{StaticResource ClipboardImage}" />
 											</Button>
-											<Button>
+											<Button IsEnabled="{Binding EnabledClipboardTypesFiles}">
 												<!-- file -->
 												<Image Style="{StaticResource ClipboardFiles}" />
 											</Button>
@@ -182,8 +190,8 @@
 						<TextBlock Text="name" />
 						<TextBox Text="{Binding SelectedViewModel.Name}" />
 					</StackPanel>
-					<TabControl Grid.Row="1">
-						<TabItem>
+					<TabControl x:Name="tabClipboard" Grid.Row="1">
+						<TabItem x:Name="pageText" Visibility="{Binding SelectedViewModel.EnabledClipboardTypesText, Converter={StaticResource BooleanVisibilityConverter}}">
 							<TabItem.Header>
 								<StackPanel Orientation="Horizontal">
 									<Image Style="{StaticResource ClipboardText}" />
@@ -192,7 +200,7 @@
 							</TabItem.Header>
 							<TextBox IsReadOnly="True" Text="{Binding SelectedViewModel.Text, Mode=OneWay}" />
 						</TabItem>
-						<TabItem>
+						<TabItem x:Name="pageRtf" Visibility="{Binding SelectedViewModel.EnabledClipboardTypesRtf, Converter={StaticResource BooleanVisibilityConverter}}">
 							<TabItem.Header>
 								<StackPanel Orientation="Horizontal">
 									<Image Style="{StaticResource ClipboardRtf}" />
@@ -207,7 +215,7 @@
 							</xctk:RichTextBox>
 							<!--<RichTextBox IsReadOnly="True" Document="{Binding Rtf, Mode=OneWay}" />-->
 						</TabItem>
-						<TabItem>
+						<TabItem x:Name="pageHtml" Visibility="{Binding SelectedViewModel.EnabledClipboardTypesHtml, Converter={StaticResource BooleanVisibilityConverter}}">
 							<TabItem.Header>
 								<StackPanel Orientation="Horizontal">
 									<Image Style="{StaticResource ClipboardHtml}" />
@@ -233,7 +241,7 @@
 								<WebBrowser Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" AA:Browser.Html="{Binding SelectedViewModel.HtmlCode}" />
 							</Grid>
 						</TabItem>
-						<TabItem>
+						<TabItem x:Name="pageImage" Visibility="{Binding SelectedViewModel.EnabledClipboardTypesImage, Converter={StaticResource BooleanVisibilityConverter}}">
 							<TabItem.Header>
 								<StackPanel Orientation="Horizontal">
 									<Image Style="{StaticResource ClipboardImage}" />
@@ -262,7 +270,7 @@
 								<Image Grid.Row="1" Style="{StaticResource ImageRenderStyle}" Source="{Binding SelectedViewModel.Image, Mode=OneWay}" />
 							</Grid>
 						</TabItem>
-						<TabItem>
+						<TabItem x:Name="pageFiles" Visibility="{Binding SelectedViewModel.EnabledClipboardTypesFiles, Converter={StaticResource BooleanVisibilityConverter}}">
 							<TabItem.Header>
 								<StackPanel Orientation="Horizontal">
 									<Image Style="{StaticResource ClipboardFiles}" />

@@ -89,7 +89,7 @@
 		{
 			if(!IsDisposed) {
 				var bitmapImage = Image as BitmapImage;
-				if(bitmapImage != null) {
+				if(bitmapImage != null && Application.Current != null) {
 					Application.Current.Dispatcher.Invoke(new Action(() => {
 						if(bitmapImage.StreamSource != null) {
 							bitmapImage.StreamSource.Dispose();

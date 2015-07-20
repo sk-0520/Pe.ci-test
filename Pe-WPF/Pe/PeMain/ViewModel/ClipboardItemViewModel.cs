@@ -112,7 +112,7 @@
 			get { return Model.Type.HasFlag(ClipboardType.Image); }
 			set { SetClipboardType(Model, Model.Type, ClipboardType.Image, defineEnabled); }
 		}
-		public bool EnabledClipboardTypesFile
+		public bool EnabledClipboardTypesFiles
 		{
 			get { return Model.Type.HasFlag(ClipboardType.File); }
 			set { SetClipboardType(Model, Model.Type, ClipboardType.File, defineEnabled); }

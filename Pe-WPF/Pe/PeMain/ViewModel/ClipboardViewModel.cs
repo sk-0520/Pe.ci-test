@@ -1,24 +1,27 @@
 ﻿namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 {
 	using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Media;
-using ContentTypeTextNet.Library.SharedLibrary.IF;
-using ContentTypeTextNet.Library.SharedLibrary.Model;
-using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
-using ContentTypeTextNet.Pe.Library.PeData.Item;
-using ContentTypeTextNet.Pe.Library.PeData.Setting;
-using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
-using ContentTypeTextNet.Pe.PeMain.Data;
-using ContentTypeTextNet.Pe.PeMain.Define;
-using ContentTypeTextNet.Pe.PeMain.IF;
-using ContentTypeTextNet.Pe.PeMain.Logic.Property;
-using ContentTypeTextNet.Pe.PeMain.View;
+	using System.Collections.Generic;
+	using System.Diagnostics;
+	using System.Linq;
+	using System.Text;
+	using System.Threading.Tasks;
+	using System.Windows;
+	using System.Windows.Controls;
+	using System.Windows.Media;
+	using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Library.SharedLibrary.Model;
+	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+	using ContentTypeTextNet.Pe.Library.PeData.Define;
+	using ContentTypeTextNet.Pe.Library.PeData.Item;
+	using ContentTypeTextNet.Pe.Library.PeData.Setting;
+	using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
+	using ContentTypeTextNet.Pe.PeMain.Data;
+	using ContentTypeTextNet.Pe.PeMain.Define;
+	using ContentTypeTextNet.Pe.PeMain.IF;
+	using ContentTypeTextNet.Pe.PeMain.Logic.Property;
+	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
+	using ContentTypeTextNet.Pe.PeMain.View;
 
 	public class ClipboardViewModel: HavingViewSingleModelWrapperIndexViewModelBase<ClipboardSettingModel, ClipboardWindow, ClipboardIndexItemCollectionModel, ClipboardIndexItemModel, ClipboardItemViewModel>
 	{
@@ -38,10 +41,28 @@ using ContentTypeTextNet.Pe.PeMain.View;
 		public ClipboardItemViewModel SelectedViewModel
 		{
 			get { return this._selectedViewModel; }
-			set 
+			set
 			{
 				var prevViewModel = this._selectedViewModel;
-				SetVariableValue(ref this._selectedViewModel, value);
+				if(SetVariableValue(ref this._selectedViewModel, value)) {
+					if(this._selectedViewModel != null) {
+						if(HasView) {
+							// TODO: View依存
+							var map = new Dictionary<ClipboardType, TabItem>() {
+								{ ClipboardType.Text, View.pageText },
+								{ ClipboardType.Rtf, View.pageRtf },
+								{ ClipboardType.Html, View.pageHtml },
+								{ ClipboardType.Image, View.pageImage },
+								{ ClipboardType.File, View.pageFiles },
+							};
+							var type = ClipboardUtility.GetSingleClipboardType(this._selectedViewModel.Model.Type);
+							foreach(var tab in map.Values) {
+								tab.IsSelected = false;
+							}
+							map[type].IsSelected = true;
+						}
+					}
+				}
 			}
 		}
 
