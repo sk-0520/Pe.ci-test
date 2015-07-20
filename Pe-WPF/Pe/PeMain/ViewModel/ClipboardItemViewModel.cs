@@ -27,7 +27,6 @@
 		#region
 		
 		ClipboardBodyItemModel _bodyModel = null;
-		ClipboardHtmlItemModel _htmlModel = null;
 
 		#endregion
 
@@ -50,15 +49,18 @@
 					var body = AppSender.SendGetIndexBody(IndexKind.Clipboard, Model.Id);
 					this._bodyModel = (ClipboardBodyItemModel)body;
 					if(Model.Type.HasFlag(ClipboardType.Html)) {
-						this._htmlModel = ClipboardUtility.ConvertClipboardHtmlFromFromRawHtml(this._bodyModel.Html, NonProcess);
+						HtmlModel = ClipboardUtility.ConvertClipboardHtmlFromFromRawHtml(this._bodyModel.Html, NonProcess);
 					} else {
-						this._htmlModel = null;
+						HtmlModel = null;
 					}
 				}
 
 				return this._bodyModel;
 			}
 		}
+
+		ClipboardHtmlItemModel HtmlModel { get; set; }
+
 
 		public ImageSource ItemTypeImage
 		{
@@ -134,6 +136,18 @@
 		{
 			get { return BodyModel.Rtf ?? string.Empty; }
 			set { /* dummy Mode=OneWay */}
+		}
+
+		public string HtmlCode
+		{
+			get 
+			{
+				if(HtmlModel != null) {
+					return HtmlModel.ToHtml();
+				} else {
+					return null;
+				}
+			}
 		}
 
 		#endregion

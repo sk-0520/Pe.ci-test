@@ -4,6 +4,7 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
 	xmlns:AP="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
+	xmlns:AA="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Attached"
 	xmlns:AW="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Window"
 	xmlns:AVM="clr-namespace:ContentTypeTextNet.Pe.PeMain.ViewModel"
 	xmlns:AC="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Converter"
@@ -195,7 +196,7 @@
 									<TextBlock Text="html" />
 								</StackPanel>
 							</TabItem.Header>
-							<WebBrowser />
+							<WebBrowser AA:Browser.Html="{Binding SelectedViewModel.HtmlCode}" />
 						</TabItem>
 						<TabItem>
 							<TabItem.Header>

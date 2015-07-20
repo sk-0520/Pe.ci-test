@@ -11,7 +11,11 @@
 	{
 		public ClipboardHtmlItemModel()
 			: base()
-		{ }
+		{
+			Html = new RangeModel<int>();
+			Fragment = new RangeModel<int>();
+			Selection = new RangeModel<int>();
+		}
 
 		/// <summary>
 		/// バージョン。

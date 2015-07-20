@@ -224,6 +224,7 @@
     <Compile Include="View\NoteWindow.xaml.cs">
       <DependentUpon>NoteWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Parts\Attached\Browser.cs" />
     <Compile Include="View\Parts\Control\CommonDataUserControl.cs" />
     <Compile Include="View\Parts\Control\EnvironmentVariablesEditControl.xaml.cs">
       <DependentUpon>EnvironmentVariablesEditControl.xaml</DependentUpon>
