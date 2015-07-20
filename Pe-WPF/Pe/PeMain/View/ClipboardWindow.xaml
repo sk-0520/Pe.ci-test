@@ -72,6 +72,12 @@
 				<RowDefinition Height="Auto"/>
 			</Grid.RowDefinitions>
 			<ToolBar Style="{StaticResource IndexItemsStyleDefaultToolbarStyle}" >
+				<ToggleButton IsChecked="{Binding Enabled}">
+					<StackPanel Orientation="Horizontal">
+						<TextBlock Text="enabled" />
+					</StackPanel>
+				</ToggleButton>
+				<Separator />
 				<Button>
 					<StackPanel Orientation="Horizontal">
 						<Image Style="{StaticResource ImageRenderStyle}" Source="{x:Static AM:AppResource.CommonSaveImage}" />

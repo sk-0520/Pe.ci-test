@@ -38,6 +38,12 @@
 
 		#region property
 
+		public bool Enabled
+		{
+			get { return Model.Enabled; }
+			set { SetModelValue(value); }
+		}
+
 		public ClipboardItemViewModel SelectedViewModel
 		{
 			get { return this._selectedViewModel; }
