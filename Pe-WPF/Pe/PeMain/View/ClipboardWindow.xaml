@@ -154,14 +154,14 @@
 					</ListBox>
 				</Grid>
 				<GridSplitter Grid.Column="1" Style="{StaticResource IndexItemsStyleDefaultGridSplitterStyle}" />
-				<Grid  Grid.Column="1" Margin="{StaticResource IndexItemsStyleSplitterMargin}" DataContext="{Binding SelectedItem,ElementName=itemsList}" IsEnabled="{Binding DataContext, RelativeSource={RelativeSource Self}, Converter={StaticResource LogicalIsNotNullConverter}}">
+				<Grid  Grid.Column="1" Margin="{StaticResource IndexItemsStyleSplitterMargin}" IsEnabled="{Binding SelectedViewModel, Converter={StaticResource LogicalIsNotNullConverter}}">
 					<Grid.RowDefinitions>
 						<RowDefinition Height="Auto" />
 						<RowDefinition Height="*" />
 					</Grid.RowDefinitions>
 					<StackPanel Grid.Row="0" Orientation="Horizontal">
 						<TextBlock Text="name" />
-						<TextBox Text="{Binding Name}" />
+						<TextBox Text="{Binding SelectedViewModel.Name}" />
 					</StackPanel>
 					<TabControl Grid.Row="1">
 						<TabItem>
@@ -171,7 +171,7 @@
 									<TextBlock Text="text" />
 								</StackPanel>
 							</TabItem.Header>
-							<TextBox IsReadOnly="True" Text="{Binding Text, Mode=OneWay}" />
+							<TextBox IsReadOnly="True" Text="{Binding SelectedViewModel.Text, Mode=OneWay}" />
 						</TabItem>
 						<TabItem>
 							<TabItem.Header>
@@ -180,7 +180,7 @@
 									<TextBlock Text="rft" />
 								</StackPanel>
 							</TabItem.Header>
-							<xctk:RichTextBox IsReadOnly="True" Text="{Binding Rtf}" >
+							<xctk:RichTextBox IsReadOnly="True" Text="{Binding SelectedViewModel.Rtf}" >
 								<xctk:RichTextBox.TextFormatter>
 									<xctk:RtfFormatter  />
 									<!--<xctk:PlainTextFormatter   />-->

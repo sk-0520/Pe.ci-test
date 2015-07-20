@@ -155,7 +155,7 @@
 				</ListBox>
 			</Grid>
 			<GridSplitter Grid.Column="1" Style="{StaticResource IndexItemsStyleDefaultGridSplitterStyle}" />
-			<TabControl Grid.Column="1" Margin="{StaticResource IndexItemsStyleSplitterMargin}" DataContext="{Binding SelectedItem,ElementName=itemsList}" IsEnabled="{Binding DataContext, RelativeSource={RelativeSource Self}, Converter={StaticResource LogicalIsNotNullConverter}}">
+			<TabControl Grid.Column="1" Margin="{StaticResource IndexItemsStyleSplitterMargin}" IsEnabled="{Binding SelectedViewModel, Converter={StaticResource LogicalIsNotNullConverter}}">
 				<TabItem Header="source" x:Name="pageSource">
 					<Grid>
 						<Grid.RowDefinitions>
@@ -170,23 +170,23 @@
 								<ColumnDefinition Width="Auto"/>
 							</Grid.ColumnDefinitions>
 							<Label Grid.Column="0"  Content="name" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-							<TextBox Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Text="{Binding Name}"  />
-							<CheckBox Grid.Column="2" Content="replace" HorizontalAlignment="Left" VerticalAlignment="Center" IsChecked="{Binding IsReplace}"/>
-							<CheckBox Grid.Column="3" Content="T4" HorizontalAlignment="Left" VerticalAlignment="Center" IsChecked="{Binding IsProgrammableReplace}"/>
+							<TextBox Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Text="{Binding SelectedViewModel.Name}"  />
+							<CheckBox Grid.Column="2" Content="replace" HorizontalAlignment="Left" VerticalAlignment="Center" IsChecked="{Binding SelectedViewModel.IsReplace}"/>
+							<CheckBox Grid.Column="3" Content="T4" HorizontalAlignment="Left" VerticalAlignment="Center" IsChecked="{Binding SelectedViewModel.IsProgrammableReplace}"/>
 						</Grid>
 						<Grid Grid.Row="1">
 							<Grid.ColumnDefinitions>
 								<ColumnDefinition Width="*" />
-								<ColumnDefinition Width="{Binding DataContext.ReplaceListWidth, Converter={StaticResource DoubleGridLengthConverter}, ElementName=root, Mode=TwoWay}" />
+								<ColumnDefinition Width="{Binding ReplaceListWidth, Converter={StaticResource DoubleGridLengthConverter}, Mode=TwoWay}" />
 							</Grid.ColumnDefinitions>
-							<TextBox Grid.Column="0" AcceptsReturn="True" AcceptsTab="True" Text="{Binding Source,UpdateSourceTrigger=PropertyChanged}" />
+							<TextBox Grid.Column="0" AcceptsReturn="True" AcceptsTab="True" Text="{Binding SelectedViewModel.Source, UpdateSourceTrigger=PropertyChanged}" />
 							<GridSplitter Grid.Column="1"  Style="{StaticResource IndexItemsStyleDefaultGridSplitterStyle}" />
 							<ListBox Grid.Column="1" Margin="{StaticResource IndexItemsStyleSplitterMargin}" />
 						</Grid>
 					</Grid>
 				</TabItem>
-				<TabItem Header="replace" IsEnabled="{Binding IsReplace}" IsSelected="{Binding ReplaceViewSelected}">
-					<TextBox Text="{Binding Replaced}" IsReadOnly="True" />
+				<TabItem Header="replace" IsEnabled="{Binding SelectedViewModel.IsReplace}" IsSelected="{Binding SelectedViewModel.ReplaceViewSelected}">
+					<TextBox Text="{Binding SelectedViewModel.Replaced}" IsReadOnly="True" />
 				</TabItem>
 			</TabControl>
 		</Grid>
