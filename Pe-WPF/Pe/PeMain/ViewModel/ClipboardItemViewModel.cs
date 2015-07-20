@@ -14,6 +14,7 @@
 	using ContentTypeTextNet.Pe.Library.PeData.Define;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 	using ContentTypeTextNet.Pe.PeMain.Data;
+	using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
@@ -174,6 +175,22 @@
 				}
 			}
 		}
+
+		public IEnumerable<ClipboardFileItem> Files
+		{
+			get
+			{
+				if(BodyModel.Files != null && BodyModel.Files.Any()) {
+					return BodyModel.Files.Select(f => new ClipboardFileItem() {
+						Path = f,
+						Name = SystemEnvironmentUtility.IsExtensionShow() ? Path.GetFileName(f) : Path.GetFileNameWithoutExtension(f),
+					});
+				} else {
+					return null;
+				}
+			}
+		}
+
 
 		#endregion
 

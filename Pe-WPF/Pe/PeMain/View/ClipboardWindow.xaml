@@ -233,28 +233,44 @@
 								<ToolBar Grid.Row="0">
 									<RadioButton IsChecked="{Binding ImageScale, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static AD:ImageScale.Fit}}" >
 										<StackPanel Orientation="Horizontal">
-											<Image Source="{x:Static AM:AppResource.ClipboardImageFitImage}" />
+											<Image Style="{StaticResource ImageRenderStyle}" Source="{x:Static AM:AppResource.ClipboardImageFitImage}" />
 											<TextBlock Text="fit" />
 										</StackPanel>
 									</RadioButton>
 									<RadioButton IsChecked="{Binding ImageScale, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static AD:ImageScale.Raw}}">
 										<StackPanel Orientation="Horizontal">
-											<Image Source="{x:Static AM:AppResource.ClipboardImageRawImage}" />
+											<Image Style="{StaticResource ImageRenderStyle}" Source="{x:Static AM:AppResource.ClipboardImageRawImage}" />
 											<TextBlock Text="raw" />
 										</StackPanel>
 									</RadioButton>
 								</ToolBar>
-								<Image Grid.Row="1" Source="{Binding SelectedViewModel.Image, Mode=OneWay}" />
+								<Image Grid.Row="1" Style="{StaticResource ImageRenderStyle}" Source="{Binding SelectedViewModel.Image, Mode=OneWay}" />
 							</Grid>
 						</TabItem>
 						<TabItem>
 							<TabItem.Header>
 								<StackPanel Orientation="Horizontal">
 									<Image Style="{StaticResource ImageRenderStyle}" Source="{x:Static AM:AppResource.ClipboardFileImage}" />
-									<TextBlock Text="file" />
+									<TextBlock Text="files" />
 								</StackPanel>
 							</TabItem.Header>
-							<ListView />
+							<ListView ItemsSource="{Binding SelectedViewModel.Files}">
+								<ListView.View>
+									<GridView>
+										<GridViewColumn>
+											<GridViewColumn.CellTemplate>
+												<DataTemplate>
+													<StackPanel Orientation="Horizontal">
+														<Image Style="{StaticResource ImageRenderStyle}" Source="{Binding Image}"/>
+														<TextBlock Text="{Binding Name}"/>
+													</StackPanel>
+												</DataTemplate>
+											</GridViewColumn.CellTemplate>
+										</GridViewColumn>
+										<GridViewColumn Header="path" DisplayMemberBinding="{Binding Path}" />
+									</GridView>
+								</ListView.View>
+							</ListView>
 						</TabItem>
 					</TabControl>
 				</Grid>
