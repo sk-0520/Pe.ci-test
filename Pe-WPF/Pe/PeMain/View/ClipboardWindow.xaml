@@ -280,7 +280,7 @@
 							<ListView ItemsSource="{Binding SelectedViewModel.Files}">
 								<ListView.View>
 									<GridView>
-										<GridViewColumn>
+										<GridViewColumn Header="name">
 											<GridViewColumn.CellTemplate>
 												<DataTemplate>
 													<StackPanel Orientation="Horizontal">
