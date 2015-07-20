@@ -10,8 +10,8 @@
 	using System.Diagnostics;
 	using System.Configuration;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
-using System.Windows;
-using System.Windows.Media;
+	using System.Windows;
+	using System.Windows.Media;
 
 	/// <summary>
 	/// 定数。
@@ -31,17 +31,17 @@ using System.Windows.Media;
 #else
 		public const string shortcutName = programName + ".lnk";
 #endif
-		public const string buildType =
 #if DEBUG
-			"DEBUG";
+		public const string buildType = "DEBUG";
 #elif BETA
-			"β";
+		public const string buildType = "β";
 #else
-			"RELEASE";
+		public const string buildType = "RELEASE";
 #endif
 		public static readonly string buildProcess = Environment.Is64BitProcess ? "64" : "32";
 
 		public const string keyGuidName = "${GUID}";
+		public const string keyIndexExt = "${EXT}";
 
 		public const string binDirectoryName = "bin";
 		public const string sbinDirectoryName = "sbin";
@@ -61,7 +61,7 @@ using System.Windows.Media;
 		public const string launcherItemSettingFileName = "item-setting.json";
 		public const string launcherGroupItemSettingFileName = "group-item.json";
 
-		public const string indexBodyBaseFileName = keyGuidName + ".json";
+		public const string indexBodyBaseFileName = keyGuidName + "." + keyIndexExt;
 
 		public const string noteSaveDirectoryName = "notes";
 		public const string noteIndexFileName = "note-index.json";
@@ -174,7 +174,7 @@ using System.Windows.Media;
 
 		public static double ToolbarTextMinimumLength { get { return toolbarTextLength.minimum; } }
 		public static double ToolbarTextMaximumLength { get { return toolbarTextLength.maximum; } }
-		
+
 		#endregion
 
 		#region clipboardWaitTime

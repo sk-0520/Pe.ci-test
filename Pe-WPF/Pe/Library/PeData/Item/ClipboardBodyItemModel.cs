@@ -40,8 +40,8 @@
 		{
 			get {
 				if (Image != null) {
-					//var encoder = new PngBitmapEncoder();
-					var encoder = new BmpBitmapEncoder();
+					var encoder = new PngBitmapEncoder();
+					//var encoder = new BmpBitmapEncoder();
 					encoder.Frames.Add(BitmapFrame.Create((BitmapSource)Image.Clone()));
 					byte[] array;
 					using (var stream = new MemoryStream()) {

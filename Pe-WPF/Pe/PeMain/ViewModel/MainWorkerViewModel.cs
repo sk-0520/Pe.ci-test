@@ -507,7 +507,7 @@
 				case IndexKind.Note: 
 					{
 						var dirPath = CommonData.VariableConstants.UserSettingNoteDirectoryPath;
-						var fileName = IndexItemUtility.GetIndexBodyFileName(indexKind, guid);
+						var fileName = IndexItemUtility.GetIndexBodyFileName(indexKind, FileType.Json, guid);
 						var path = Environment.ExpandEnvironmentVariables(Path.Combine(dirPath, fileName));
 						return AppUtility.LoadSetting<NoteBodyItemModel>(path, FileType.Json, CommonData.Logger);
 					}
@@ -515,7 +515,7 @@
 				case IndexKind.Template: 
 					{
 						var dirPath = CommonData.VariableConstants.UserSettingTemplateDirectoryPath;
-						var fileName = IndexItemUtility.GetIndexBodyFileName(indexKind, guid);
+						var fileName = IndexItemUtility.GetIndexBodyFileName(indexKind, FileType.Json, guid);
 						var path = Environment.ExpandEnvironmentVariables(Path.Combine(dirPath, fileName));
 						return AppUtility.LoadSetting<TemplateBodyItemModel>(path, FileType.Json, CommonData.Logger);
 					}
@@ -523,7 +523,7 @@
 				case IndexKind.Clipboard: 
 					{
 						var dirPath = CommonData.VariableConstants.UserSettingClipboardDirectoryPath;
-						var fileName = IndexItemUtility.GetIndexBodyFileName(indexKind, guid);
+						var fileName = IndexItemUtility.GetIndexBodyFileName(indexKind, FileType.Binary, guid);
 						var path = Environment.ExpandEnvironmentVariables(Path.Combine(dirPath, fileName));
 						return AppUtility.LoadSetting<ClipboardBodyItemModel>(path, FileType.Binary, CommonData.Logger);
 					}
@@ -539,7 +539,7 @@
 				case IndexKind.Note:
 					{
 						var dirPath = CommonData.VariableConstants.UserSettingNoteDirectoryPath;
-						var fileName = IndexItemUtility.GetIndexBodyFileName(indexBody.IndexKind, guid);
+						var fileName = IndexItemUtility.GetIndexBodyFileName(indexBody.IndexKind, FileType.Json, guid);
 						var path = Environment.ExpandEnvironmentVariables(Path.Combine(dirPath, fileName));
 						AppUtility.SaveSetting(path, (NoteBodyItemModel)indexBody, FileType.Json, CommonData.Logger);
 					}
@@ -548,7 +548,7 @@
 				case IndexKind.Template: 
 					{
 						var dirPath = CommonData.VariableConstants.UserSettingTemplateDirectoryPath;
-						var fileName = IndexItemUtility.GetIndexBodyFileName(indexBody.IndexKind, guid);
+						var fileName = IndexItemUtility.GetIndexBodyFileName(indexBody.IndexKind, FileType.Json, guid);
 						var path = Environment.ExpandEnvironmentVariables(Path.Combine(dirPath, fileName));
 						AppUtility.SaveSetting(path, (TemplateBodyItemModel)indexBody, FileType.Json, CommonData.Logger);
 					}
@@ -557,7 +557,7 @@
 				case IndexKind.Clipboard: 
 					{
 						var dirPath = CommonData.VariableConstants.UserSettingClipboardDirectoryPath;
-						var fileName = IndexItemUtility.GetIndexBodyFileName(indexBody.IndexKind, guid);
+						var fileName = IndexItemUtility.GetIndexBodyFileName(indexBody.IndexKind, FileType.Binary, guid);
 						var path = Environment.ExpandEnvironmentVariables(Path.Combine(dirPath, fileName));
 						AppUtility.SaveSetting(path, (ClipboardBodyItemModel)indexBody, FileType.Binary, CommonData.Logger);
 					}
