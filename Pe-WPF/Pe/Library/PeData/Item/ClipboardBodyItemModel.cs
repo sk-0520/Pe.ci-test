@@ -43,12 +43,10 @@
 					var encoder = new PngBitmapEncoder();
 					//var encoder = new BmpBitmapEncoder();
 					encoder.Frames.Add(BitmapFrame.Create((BitmapSource)Image.Clone()));
-					byte[] array;
 					using (var stream = new MemoryStream()) {
 						encoder.Save(stream);
-						array = stream.ToArray();
+						return stream.ToArray();
 					}
-					return array;
 				} else {
 					return null;
 				}
