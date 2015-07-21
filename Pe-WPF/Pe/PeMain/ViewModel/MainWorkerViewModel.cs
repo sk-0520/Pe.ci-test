@@ -405,24 +405,24 @@
 
 		#region IAppSender
 
-		public void SendWindowAppend(Window window)
+		public void SendAppendWindow(Window window)
 		{
-			ReceiveWindowAppend(window);
+			ReceiveAppendWindow(window);
 		}
 
-		public void SendWindowRemove(Window window)
+		public void SendRemoveWindow(Window window)
 		{
-			ReceiveWindowRemove(window);
+			ReceiveRemoveWindow(window);
 		}
 
-		public void SendIndexRemove(IndexKind indexKind, Guid guid)
+		public void SendRemoveIndex(IndexKind indexKind, Guid guid)
 		{
-			ReceiveIndexRemove(indexKind, guid);
+			ReceiveRemoveIndex(indexKind, guid);
 		}
 
-		public void SendIndexSave(IndexKind indexKind)
+		public void SendSaveIndex(IndexKind indexKind)
 		{
-			ReceiveIndexSave(indexKind);
+			ReceiveSaveIndex(indexKind);
 		}
 
 		public IndexBodyItemModelBase SendGetIndexBody(IndexKind indexKind, Guid guid)
@@ -452,7 +452,7 @@
 
 		#region IAppSender-Implement
 
-		void ReceiveWindowAppend(Window window)
+		void ReceiveAppendWindow(Window window)
 		{
 			var toolbarWindow = window as LauncherToolbarWindow;
 			if(toolbarWindow != null) {
@@ -464,7 +464,7 @@
 			}
 		}
 
-		void ReceiveWindowRemove(Window window)
+		void ReceiveRemoveWindow(Window window)
 		{
 			var noteWindow = window as NoteWindow;
 			if(noteWindow != null) {
@@ -476,27 +476,31 @@
 			}
 		}
 
-		void ReceiveIndexRemove(IndexKind indexKind, Guid guid)
+		void RemoveIndex<TItemModel>(IndexKind indexKind, Guid guid, IndexItemCollectionModel<TItemModel> items)
+			where TItemModel : IndexItemModelBase
+		{
+			items.Remove(guid);
+			SendSaveIndex(indexKind);
+		}
+
+		void ReceiveRemoveIndex(IndexKind indexKind, Guid guid)
 		{
 			switch(indexKind) {
 				case IndexKind.Note: 
 					{
-						CommonData.NoteIndexSetting.Items.Remove(guid);
-						SendIndexSave(indexKind);
+						RemoveIndex(indexKind, guid, CommonData.NoteIndexSetting.Items);
 					}
 					break;
 
 				case IndexKind.Template:
 					{
-						CommonData.TemplateIndexSetting.Items.Remove(guid);
-						SendIndexSave(indexKind);
+						RemoveIndex(indexKind, guid, CommonData.TemplateIndexSetting.Items);
 					}
 					break;
 
 				case IndexKind.Clipboard: 
 					{
-						CommonData.ClipboardIndexSetting.Items.Remove(guid);
-						SendIndexSave(indexKind);
+						RemoveIndex(indexKind, guid, CommonData.ClipboardIndexSetting.Items);
 					}
 					break;
 
@@ -505,29 +509,31 @@
 			}
 		}
 
+		void SaveIndex<TIndexSetting>(IndexKind indexKind, TIndexSetting indexSetting, string filePath)
+			where TIndexSetting : ModelBase
+		{
+			var path = Environment.ExpandEnvironmentVariables(filePath);
+			AppUtility.SaveSetting(path, indexSetting, FileType.Json, CommonData.Logger);
+		}
 
-
-		void ReceiveIndexSave(IndexKind indexKind)
+		void ReceiveSaveIndex(IndexKind indexKind)
 		{
 			switch(indexKind) {
 				case IndexKind.Note:
 					{
-						var path = Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingNoteIndexFilePath);
-						AppUtility.SaveSetting(path, CommonData.NoteIndexSetting, FileType.Json, CommonData.Logger);
+						SaveIndex(indexKind, CommonData.NoteIndexSetting, CommonData.VariableConstants.UserSettingNoteIndexFilePath);
 					}
 					break;
 
 				case IndexKind.Template:
 					{
-						var path = Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingTemplateIndexFilePath);
-						AppUtility.SaveSetting(path, CommonData.TemplateIndexSetting, FileType.Json, CommonData.Logger);
+						SaveIndex(indexKind, CommonData.TemplateIndexSetting, CommonData.VariableConstants.UserSettingTemplateIndexFilePath);
 					}
 					break;
 
 				case IndexKind.Clipboard:
 					{
-						var path = Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingClipboardIndexFilePath);
-						AppUtility.SaveSetting(path, CommonData.ClipboardIndexSetting, FileType.Json, CommonData.Logger);
+						SaveIndex(indexKind, CommonData.ClipboardIndexSetting, CommonData.VariableConstants.UserSettingClipboardIndexFilePath);
 					}
 					break;
 
@@ -778,9 +784,9 @@
 				AppUtility.SaveSetting(CommonData.VariableConstants.UserSettingFileLauncherItemSettingPath, CommonData.LauncherItemSetting, FileType.Json, CommonData.Logger);
 				AppUtility.SaveSetting(CommonData.VariableConstants.UserSettingFileLauncherGroupItemSetting, CommonData.LauncherGroupSetting, FileType.Json, CommonData.Logger);
 
-				SendIndexSave(IndexKind.Note);
-				SendIndexSave(IndexKind.Clipboard);
-				SendIndexSave(IndexKind.Template);
+				SendSaveIndex(IndexKind.Note);
+				SendSaveIndex(IndexKind.Clipboard);
+				SendSaveIndex(IndexKind.Template);
 			}
 		}
 

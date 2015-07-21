@@ -431,7 +431,7 @@
 
 						if(IsChanged) {
 							Model.History.Update();
-							AppSender.SendIndexSave(IndexKind.Note);
+							AppSender.SendSaveIndex(IndexKind.Note);
 							ResetChangeFlag();
 						}
 						if(HasView) {
@@ -500,7 +500,7 @@
 						if (HasView) {
 							View.Close();
 						}
-						AppSender.SendIndexRemove(IndexKind.Note, Model.Id);
+						AppSender.SendRemoveIndex(IndexKind.Note, Model.Id);
 					}
 				);
 
@@ -631,7 +631,7 @@
 		{
 			Visible = false;
 			if (HasView) {
-				AppSender.SendWindowRemove(View);
+				AppSender.SendRemoveWindow(View);
 			}
 		}
 

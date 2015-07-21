@@ -17,7 +17,7 @@ using ContentTypeTextNet.Pe.PeMain.View;
 			var toolbar = new LauncherToolbarWindow();
 			toolbar.SetCommonData(commonData, screen);
 			
-			commonData.AppSender.SendWindowAppend(toolbar);
+			commonData.AppSender.SendAppendWindow(toolbar);
 
 			return toolbar;
 		}
@@ -30,7 +30,7 @@ using ContentTypeTextNet.Pe.PeMain.View;
 			}
 			window.SetCommonData(commonData, noteItem);
 
-			commonData.AppSender.SendWindowAppend(window);
+			commonData.AppSender.SendAppendWindow(window);
 
 			return window;
 		}

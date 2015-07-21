@@ -20,23 +20,23 @@
 		/// ウィンドウを追加。
 		/// </summary>
 		/// <param name="window"></param>
-		void SendWindowAppend(Window window);
+		void SendAppendWindow(Window window);
 		/// <summary>
 		/// ウィンドウを破棄。
 		/// </summary>
 		/// <param name="window"></param>
-		void SendWindowRemove(Window window);
+		void SendRemoveWindow(Window window);
 		/// <summary>
 		/// 対象インデックスから指定IDを削除。
 		/// </summary>
 		/// <param name="guid"></param>
 		/// <param name="indexKind"></param>
-		void SendIndexRemove(IndexKind indexKind, Guid guid);
+		void SendRemoveIndex(IndexKind indexKind, Guid guid);
 		/// <summary>
 		/// 対象インデックスを保存。
 		/// </summary>
 		/// <param name="indexKind"></param>
-		void SendIndexSave(IndexKind indexKind);
+		void SendSaveIndex(IndexKind indexKind);
 		/// <summary>
 		/// 対象インデックスのボディ部を取得。
 		/// </summary>
