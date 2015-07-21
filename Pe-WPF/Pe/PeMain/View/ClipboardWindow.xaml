@@ -152,23 +152,23 @@
 												<!-- copy -->
 												<Image Style="{StaticResource ImageRenderStyle}" Source="{Binding Source={x:Static AM:AppResource.CommonClipboardImage}}" />
 											</Button>
-											<Button IsEnabled="{Binding EnabledClipboardTypesText}">
+											<Button Command="{Binding CopyTextCommand}" IsEnabled="{Binding EnabledClipboardTypesText}">
 												<!-- text -->
 												<Image Style="{StaticResource ClipboardText}" />
 											</Button>
-											<Button IsEnabled="{Binding EnabledClipboardTypesRtf}">
+											<Button Command="{Binding CopyRtfCommand}" IsEnabled="{Binding EnabledClipboardTypesRtf}">
 												<!-- rft -->
 												<Image Style="{StaticResource ClipboardRtf}" />
 											</Button>
-											<Button IsEnabled="{Binding EnabledClipboardTypesHtml}">
+											<Button Command="{Binding CopyHtmlCommand}" IsEnabled="{Binding EnabledClipboardTypesHtml}">
 												<!-- html -->
 												<Image Style="{StaticResource ClipboardHtml}" />
 											</Button>
-											<Button IsEnabled="{Binding EnabledClipboardTypesImage}">
+											<Button Command="{Binding CopyImageCommand}" IsEnabled="{Binding EnabledClipboardTypesImage}">
 												<!-- image -->
 												<Image Style="{StaticResource ClipboardImage}" />
 											</Button>
-											<Button IsEnabled="{Binding EnabledClipboardTypesFiles}">
+											<Button Command="{Binding CopyFilesCommand}" IsEnabled="{Binding EnabledClipboardTypesFiles}">
 												<!-- file -->
 												<Image Style="{StaticResource ClipboardFiles}" />
 											</Button>

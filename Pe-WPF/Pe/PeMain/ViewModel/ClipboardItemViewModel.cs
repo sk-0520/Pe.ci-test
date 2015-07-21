@@ -10,6 +10,7 @@
 	using System.Windows.Documents;
 	using System.Windows.Input;
 	using System.Windows.Media;
+	using System.Windows.Media.Imaging;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.View.Window;
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
@@ -235,6 +236,75 @@
 			}
 		}
 
+		public ICommand CopyTextCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						ClipboardUtility.CopyText(Text, ClipboardWatcher);
+					}
+				);
+
+				return result;
+			}
+		}
+
+		public ICommand CopyRtfCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						ClipboardUtility.CopyRtf(Rtf, ClipboardWatcher);
+					}
+				);
+
+				return result;
+			}
+		}
+
+		public ICommand CopyHtmlCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						ClipboardUtility.CopyHtml(BodyModel.Html, ClipboardWatcher);
+					}
+				);
+
+				return result;
+			}
+		}
+
+		public ICommand CopyImageCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						ClipboardUtility.CopyImage(BodyModel.Image, ClipboardWatcher);
+					}
+				);
+
+				return result;
+			}
+		}
+
+		public ICommand CopyFilesCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						ClipboardUtility.CopyFile(BodyModel.Files, ClipboardWatcher);
+					}
+				);
+
+				return result;
+			}
+		}
 
 		#endregion
 
