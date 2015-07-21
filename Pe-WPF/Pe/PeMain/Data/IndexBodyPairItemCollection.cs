@@ -29,5 +29,18 @@
 
 			return null;
 		}
+
+		public int IndexOf(Guid id)
+		{
+			var result = this
+				.Select((item, i) => new { Item = item, Index = i })
+				.FirstOrDefault(pair => pair.Item.Id == id)
+			;
+			if (result == null) {
+				return -1;
+			}
+
+			return result.Index;
+		}
 	}
 }

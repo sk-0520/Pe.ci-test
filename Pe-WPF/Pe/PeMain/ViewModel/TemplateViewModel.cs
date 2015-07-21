@@ -104,6 +104,8 @@
 						}
 
 						IndexPairList.Remove(nowViewModel);
+						AppSender.SendRemoveIndex(IndexKind.Template, nowViewModel.Model.Id);
+						
 						//IndexModel.Items.Remove(nowViewModel.Model);
 						//IndexItems.Remove(nowViewModel);
 					}

@@ -484,7 +484,16 @@
 			where TItemModel : IndexItemModelBase
 			where TIndexBody : IndexBodyItemModelBase
 		{
+			var index = cachingItems.IndexOf(guid);
+			if (index != -1) {
+				var pair = cachingItems[index];
+				Debug.Assert(pair.Id == guid);
+				cachingItems.RemoveAt(index);
+				CommonData.Logger.Trace("remove cache dispose: " + pair.Id.ToString(), pair.Body);
+				pair.Body.Dispose();
+			}
 			items.Remove(guid);
+
 			SendSaveIndex(indexKind);
 		}
 
