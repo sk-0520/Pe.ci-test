@@ -60,16 +60,21 @@
 						return;
 					}
 
-					var bitmapImage = new BitmapImage();
-					bitmapImage.BeginInit();
-					try {
-						bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
-						bitmapImage.StreamSource = new MemoryStream(value);
-					} finally {
-						bitmapImage.EndInit();
+					using (var stream = new MemoryStream(value)) {
+						var bitmapImage = new BitmapImage();
+						bitmapImage.BeginInit();
+						try {
+							bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+							bitmapImage.CreateOptions = BitmapCreateOptions.None;
+							//bitmapImage.StreamSource = new MemoryStream(value);
+							bitmapImage.StreamSource = stream;
+						} finally {
+							bitmapImage.EndInit();
+							bitmapImage.Freeze();
+						}
+						Image = bitmapImage;
 					}
 
-					Image = bitmapImage;
 				}
 			}
 		}
@@ -86,15 +91,16 @@
 		protected override void Dispose(bool disposing)
 		{
 			if(!IsDisposed) {
-				var bitmapImage = Image as BitmapImage;
-				if(bitmapImage != null && Application.Current != null) {
-					Application.Current.Dispatcher.Invoke(new Action(() => {
-						if(bitmapImage.StreamSource != null) {
-							bitmapImage.StreamSource.Dispose();
-							bitmapImage.StreamSource = null;
-						}
-					}));
-				}
+				//var bitmapImage = Image as BitmapImage;
+				//if(bitmapImage != null && Application.Current != null) {
+				//	Application.Current.Dispatcher.Invoke(new Action(() => {
+				//		if(bitmapImage.StreamSource != null) {
+				//			bitmapImage.StreamSource.Dispose();
+				//			bitmapImage.StreamSource = null;
+				//		}
+				//	}));
+				//}
+				Image = null;
 			}
 
 			base.Dispose(disposing);
