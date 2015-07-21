@@ -61,6 +61,7 @@
 		public const string launcherItemSettingFileName = "item-setting.json";
 		public const string launcherGroupItemSettingFileName = "group-item.json";
 
+		public const int indexBodyCachingSize = 3;
 		public const string indexBodyBaseFileName = keyGuidName + "." + keyIndexExt;
 
 		public const string noteSaveDirectoryName = "notes";

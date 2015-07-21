@@ -69,6 +69,8 @@
 			};
 
 			WindowSaveData = new WindowSaveData();
+
+			IndexBodyCaching = new IndexBodyCaching(Constants.indexBodyCachingSize);
 		}
 		///// <summary>
 		///// dummy init
@@ -154,6 +156,8 @@
 
 		ClipboardWindow ClipboardWindow { get; set; }
 		public ClipboardViewModel Clipboard { get { return ClipboardWindow.ViewModel; } }
+
+		IndexBodyCaching IndexBodyCaching { get; set; }
 
 		#endregion
 
@@ -509,7 +513,9 @@
 						var dirPath = CommonData.VariableConstants.UserSettingNoteDirectoryPath;
 						var fileName = IndexItemUtility.GetIndexBodyFileName(indexKind, FileType.Json, guid);
 						var path = Environment.ExpandEnvironmentVariables(Path.Combine(dirPath, fileName));
-						return AppUtility.LoadSetting<NoteBodyItemModel>(path, FileType.Json, CommonData.Logger);
+						var result = AppUtility.LoadSetting<NoteBodyItemModel>(path, FileType.Json, CommonData.Logger);
+						IndexBodyCaching.NoteItems.Add(result);
+						return result;
 					}
 
 				case IndexKind.Template: 
@@ -517,7 +523,9 @@
 						var dirPath = CommonData.VariableConstants.UserSettingTemplateDirectoryPath;
 						var fileName = IndexItemUtility.GetIndexBodyFileName(indexKind, FileType.Json, guid);
 						var path = Environment.ExpandEnvironmentVariables(Path.Combine(dirPath, fileName));
-						return AppUtility.LoadSetting<TemplateBodyItemModel>(path, FileType.Json, CommonData.Logger);
+						var result = AppUtility.LoadSetting<TemplateBodyItemModel>(path, FileType.Json, CommonData.Logger);
+						IndexBodyCaching.TemplateItems.Add(result);
+						return result;
 					}
 
 				case IndexKind.Clipboard: 
@@ -525,7 +533,9 @@
 						var dirPath = CommonData.VariableConstants.UserSettingClipboardDirectoryPath;
 						var fileName = IndexItemUtility.GetIndexBodyFileName(indexKind, FileType.Binary, guid);
 						var path = Environment.ExpandEnvironmentVariables(Path.Combine(dirPath, fileName));
-						return AppUtility.LoadSetting<ClipboardBodyItemModel>(path, FileType.Binary, CommonData.Logger);
+						var result = AppUtility.LoadSetting<ClipboardBodyItemModel>(path, FileType.Binary, CommonData.Logger);
+						IndexBodyCaching.ClipboardItems.Add(result);
+						return result;
 					}
 
 				default:

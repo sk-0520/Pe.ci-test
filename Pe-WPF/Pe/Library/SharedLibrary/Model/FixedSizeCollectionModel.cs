@@ -15,7 +15,7 @@
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	[Serializable]
-	public class FixedSizeCollectionModel<T> : CollectionModel<T>, LimitSize
+	public class FixedSizeCollectionModel<T> : CollectionModel<T>, ILimitSize
 	{
 		/// <summary>
 		/// 初期値は上限なしでいいや。

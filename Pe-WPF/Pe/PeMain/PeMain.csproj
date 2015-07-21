@@ -161,6 +161,7 @@
     <Compile Include="Logic\AppLanguageManager.cs" />
     <Compile Include="Logic\Extension\LanguageExtension.cs" />
     <Compile Include="Logic\IconCaching.cs" />
+    <Compile Include="Logic\IndexBodyCaching.cs" />
     <Compile Include="Logic\ProgramTemplateProcessor.cs" />
     <Compile Include="Logic\Property\ColorPairProperty.cs" />
     <Compile Include="Logic\Property\WindowAreaProperty.cs" />
