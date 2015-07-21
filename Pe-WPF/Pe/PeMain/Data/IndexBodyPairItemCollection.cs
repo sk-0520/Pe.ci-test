@@ -12,6 +12,9 @@
 	public class IndexBodyPairItemCollection<TIndexBody> : FixedSizeCollectionModel<IndexBodyPairItem<TIndexBody>>
 		where TIndexBody: IndexBodyItemModelBase
 	{
+		public IndexBodyPairItemCollection(int limitSize)
+			: base(limitSize)
+		{ }
 		/// <summary>
 		/// 指定IDのデータを取得。
 		/// </summary>

@@ -71,7 +71,11 @@
 
 			WindowSaveData = new WindowSaveData();
 
-			IndexBodyCaching = new IndexBodyCaching(Constants.indexBodyCachingSize);
+			IndexBodyCaching = new IndexBodyCaching(
+				Constants.CacheIndexNote,
+				Constants.CacheIndexTemplate,
+				Constants.CacheIndexClipboard
+			);
 		}
 		///// <summary>
 		///// dummy init
@@ -476,8 +480,9 @@
 			}
 		}
 
-		void RemoveIndex<TItemModel>(IndexKind indexKind, Guid guid, IndexItemCollectionModel<TItemModel> items)
+		void RemoveIndex<TItemModel, TIndexBody>(IndexKind indexKind, Guid guid, IndexItemCollectionModel<TItemModel> items, IndexBodyPairItemCollection<TIndexBody> cachingItems)
 			where TItemModel : IndexItemModelBase
+			where TIndexBody : IndexBodyItemModelBase
 		{
 			items.Remove(guid);
 			SendSaveIndex(indexKind);
@@ -488,19 +493,19 @@
 			switch(indexKind) {
 				case IndexKind.Note: 
 					{
-						RemoveIndex(indexKind, guid, CommonData.NoteIndexSetting.Items);
+						RemoveIndex(indexKind, guid, CommonData.NoteIndexSetting.Items, IndexBodyCaching.NoteItems);
 					}
 					break;
 
 				case IndexKind.Template:
 					{
-						RemoveIndex(indexKind, guid, CommonData.TemplateIndexSetting.Items);
+						RemoveIndex(indexKind, guid, CommonData.TemplateIndexSetting.Items, IndexBodyCaching.TemplateItems);
 					}
 					break;
 
 				case IndexKind.Clipboard: 
 					{
-						RemoveIndex(indexKind, guid, CommonData.ClipboardIndexSetting.Items);
+						RemoveIndex(indexKind, guid, CommonData.ClipboardIndexSetting.Items, IndexBodyCaching.ClipboardItems);
 					}
 					break;
 
