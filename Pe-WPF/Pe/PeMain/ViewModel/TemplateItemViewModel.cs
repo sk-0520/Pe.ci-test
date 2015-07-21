@@ -210,6 +210,14 @@
 			ResetChangeFlag();
 		}
 
+		void ClearProcessor()
+		{
+			if(Processor != null) {
+				Processor.Dispose();
+				Processor = null;
+			}
+		}
+
 		#endregion
 
 		#region SingleModelWrapperViewModelBase
@@ -219,10 +227,7 @@
 		protected override void Dispose(bool disposing)
 		{
 			if (!IsDisposed) {
-				if (Processor != null) {
-					Processor.Dispose();
-					Processor = null;
-				}
+				ClearProcessor();
 			}
 			base.Dispose(disposing);
 		}
@@ -260,6 +265,7 @@
 		public void Unload()
 		{
 			if (!IsUnloaded) {
+				ClearProcessor();
 				this._bodyModel = null;
 				IsUnloaded = true;
 			}
