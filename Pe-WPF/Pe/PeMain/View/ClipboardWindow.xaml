@@ -185,10 +185,14 @@
 						<RowDefinition Height="Auto" />
 						<RowDefinition Height="*" />
 					</Grid.RowDefinitions>
-					<StackPanel Grid.Row="0" Orientation="Horizontal">
-						<TextBlock Text="name" />
-						<TextBox Text="{Binding SelectedViewModel.Name}" />
-					</StackPanel>
+					<Grid Grid.Row="0" >
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="Auto" />
+							<ColumnDefinition Width="*" />
+						</Grid.ColumnDefinitions>
+						<TextBlock Grid.Column="0" Text="name" />
+						<TextBox Grid.Column="1" Text="{Binding SelectedViewModel.Name}" HorizontalAlignment="Stretch" />
+					</Grid>
 					<TabControl x:Name="tabClipboard" Grid.Row="1">
 						<TabItem x:Name="pageText" Visibility="{Binding SelectedViewModel.EnabledClipboardTypesText, Converter={StaticResource BooleanVisibilityConverter}}">
 							<TabItem.Header>
