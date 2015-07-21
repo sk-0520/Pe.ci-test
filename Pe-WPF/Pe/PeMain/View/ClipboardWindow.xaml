@@ -253,20 +253,46 @@
 									<RowDefinition Height="*" />
 								</Grid.RowDefinitions>
 								<ToolBar Grid.Row="0">
-									<RadioButton IsChecked="{Binding ImageScale, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static AD:ImageScale.Fit}}" >
+									<RadioButton x:Name="imageFit" IsChecked="{Binding ImageScale, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static AD:ImageScale.Fit}}" >
 										<StackPanel Orientation="Horizontal">
 											<Image Style="{StaticResource ImageRenderStyle}" Source="{x:Static AM:AppResource.ClipboardImageFitImage}" />
 											<TextBlock Text="fit" />
 										</StackPanel>
 									</RadioButton>
-									<RadioButton IsChecked="{Binding ImageScale, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static AD:ImageScale.Raw}}">
+									<RadioButton x:Name="imageRaw" IsChecked="{Binding ImageScale, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static AD:ImageScale.Raw}}">
 										<StackPanel Orientation="Horizontal">
 											<Image Style="{StaticResource ImageRenderStyle}" Source="{x:Static AM:AppResource.ClipboardImageRawImage}" />
 											<TextBlock Text="raw" />
 										</StackPanel>
 									</RadioButton>
 								</ToolBar>
-								<Image Grid.Row="1" Style="{StaticResource ImageRenderStyle}" Source="{Binding SelectedViewModel.Image, Mode=OneWay}" />
+								<!-- http://stackoverflow.com/questions/11583735/scroll-fit-image-with-checkbox?answertab=votes#tab-top -->
+								<ScrollViewer Grid.Row="1" >
+									<ScrollViewer.Style>
+										<Style TargetType="ScrollViewer">
+											<Setter Property="HorizontalScrollBarVisibility" Value="Auto" />
+											<Setter Property="VerticalScrollBarVisibility" Value="Auto" />
+											<Style.Triggers>
+												<DataTrigger Binding="{Binding IsChecked,ElementName=imageFit}" Value="True">
+													<Setter Property="HorizontalScrollBarVisibility" Value="Disabled" />
+													<Setter Property="VerticalScrollBarVisibility" Value="Disabled" />
+												</DataTrigger>
+											</Style.Triggers>
+										</Style>
+									</ScrollViewer.Style>
+									<Image Source="{Binding SelectedViewModel.Image, Mode=OneWay}">
+										<Image.Style>
+											<Style TargetType="Image" BasedOn="{StaticResource ImageRenderStyle}">
+												<Setter Property="Stretch" Value="None" />
+												<Style.Triggers>
+													<DataTrigger Binding="{Binding IsChecked,ElementName=imageFit}" Value="True">
+														<Setter Property="Stretch" Value="Uniform" />
+													</DataTrigger>
+												</Style.Triggers>
+											</Style>
+										</Image.Style>
+									</Image>
+								</ScrollViewer>
 							</Grid>
 						</TabItem>
 						<TabItem x:Name="pageFiles" Visibility="{Binding SelectedViewModel.EnabledClipboardTypesFiles, Converter={StaticResource BooleanVisibilityConverter}}">
