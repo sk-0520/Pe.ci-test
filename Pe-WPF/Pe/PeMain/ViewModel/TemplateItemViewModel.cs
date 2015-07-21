@@ -22,7 +22,7 @@
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 	using ContentTypeTextNet.Pe.PeMain.View;
 
-	public class TemplateItemViewModel: SingleModelWrapperViewModelBase<TemplateIndexItemModel>, IHavingAppSender, IHavingClipboardWatcher, IHavingNonProcess, IHavingVariableConstants
+	public class TemplateItemViewModel : SingleModelWrapperViewModelBase<TemplateIndexItemModel>, IHavingAppSender, IHavingClipboardWatcher, IHavingNonProcess, IHavingVariableConstants, IUnload
 	{
 		#region variable
 
@@ -250,6 +250,20 @@
 		#region IHavingVariableConstants
 
 		public VariableConstants VariableConstants { get; private set; }
+
+		#endregion
+
+		#region IUnload
+
+		public bool IsUnloaded { get; private set; }
+
+		public void Unload()
+		{
+			if (!IsUnloaded) {
+				this._bodyModel = null;
+				IsUnloaded = true;
+			}
+		}
 
 		#endregion
 	}

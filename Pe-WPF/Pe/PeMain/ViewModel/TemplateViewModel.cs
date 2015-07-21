@@ -48,6 +48,7 @@
 
 					if(prevViewModel != null) {
 						SaveItemViewModel(prevViewModel);
+						prevViewModel.Unload();
 					}
 				}
 			}
