@@ -48,13 +48,13 @@
 			<RowDefinition Height="Auto"/>
 		</Grid.RowDefinitions>
 		<ToolBar Style="{StaticResource IndexItemsStyleDefaultToolbarStyle}" >
-			<Button>
+			<Button Command="{Binding CreateTemplateItem}">
 				<StackPanel Orientation="Horizontal">
 					<Image Style="{StaticResource ImageRenderStyle}" Source="{Binding Source={x:Static AM:AppResource.CommonAddImage}}" />
 					<TextBlock Text="create" />
 				</StackPanel>
 			</Button>
-			<Button>
+			<Button Command="{Binding RemoveTemplateItem}">
 				<StackPanel Orientation="Horizontal">
 					<Image Style="{StaticResource ImageRenderStyle}" Source="{Binding Source={x:Static AM:AppResource.CommonSaveImage}}" />
 					<TextBlock Text="save" />

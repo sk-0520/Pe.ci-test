@@ -486,24 +486,69 @@
 					}
 					break;
 
-				default:
-					throw new NotImplementedException();
-			}
-		}
-
-		void ReceiveIndexSave(IndexKind indexKind)
-		{
-			switch(indexKind) {
-				case IndexKind.Note: 
+				case IndexKind.Template:
 					{
-						var path = Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingNoteIndexFilePath);
-						AppUtility.SaveSetting(path, CommonData.NoteIndexSetting, FileType.Json, CommonData.Logger);
+						CommonData.TemplateIndexSetting.Items.Remove(guid);
+						SendIndexSave(indexKind);
+					}
+					break;
+
+				case IndexKind.Clipboard: 
+					{
+						CommonData.ClipboardIndexSetting.Items.Remove(guid);
+						SendIndexSave(indexKind);
 					}
 					break;
 
 				default:
 					throw new NotImplementedException();
 			}
+		}
+
+
+
+		void ReceiveIndexSave(IndexKind indexKind)
+		{
+			switch(indexKind) {
+				case IndexKind.Note:
+					{
+						var path = Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingNoteIndexFilePath);
+						AppUtility.SaveSetting(path, CommonData.NoteIndexSetting, FileType.Json, CommonData.Logger);
+					}
+					break;
+
+				case IndexKind.Template:
+					{
+						var path = Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingTemplateIndexFilePath);
+						AppUtility.SaveSetting(path, CommonData.TemplateIndexSetting, FileType.Json, CommonData.Logger);
+					}
+					break;
+
+				case IndexKind.Clipboard:
+					{
+						var path = Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingClipboardIndexFilePath);
+						AppUtility.SaveSetting(path, CommonData.ClipboardIndexSetting, FileType.Json, CommonData.Logger);
+					}
+					break;
+
+				default:
+					throw new NotImplementedException();
+			}
+		}
+
+		IndexBodyItemModelBase GetIndexBody<TIndexBody>(IndexKind indexKind, Guid guid, IndexBodyPairItemCollection<TIndexBody> cachingItems, string dirPath, FileType fileType)
+			where TIndexBody : IndexBodyItemModelBase, new()
+		{
+			var body = cachingItems.GetFromId(guid);
+			if (body != null) {
+				return body;
+			}
+			var fileName = IndexItemUtility.GetIndexBodyFileName(indexKind, fileType, guid);
+			var path = Environment.ExpandEnvironmentVariables(Path.Combine(dirPath, fileName));
+			var result = AppUtility.LoadSetting<TIndexBody>(path, fileType, CommonData.Logger);
+			var pairItem = new IndexBodyPairItem<TIndexBody>(guid, result);
+			cachingItems.Add(pairItem);
+			return result;
 		}
 
 		public IndexBodyItemModelBase ReceiveGetIndexBody(IndexKind indexKind, Guid guid)
@@ -511,47 +556,17 @@
 			switch(indexKind) {
 				case IndexKind.Note: 
 					{
-						var body = IndexBodyCaching.NoteItems.GetFromId(guid);
-						if (body != null) {
-							return body;
-						}
-						var dirPath = CommonData.VariableConstants.UserSettingNoteDirectoryPath;
-						var fileName = IndexItemUtility.GetIndexBodyFileName(indexKind, FileType.Json, guid);
-						var path = Environment.ExpandEnvironmentVariables(Path.Combine(dirPath, fileName));
-						var result = AppUtility.LoadSetting<NoteBodyItemModel>(path, FileType.Json, CommonData.Logger);
-						var pairItem = new IndexBodyPairItem<NoteBodyItemModel>(guid, result);
-						IndexBodyCaching.NoteItems.Add(pairItem);
-						return result;
+						return GetIndexBody<NoteBodyItemModel>(indexKind, guid, IndexBodyCaching.NoteItems, CommonData.VariableConstants.UserSettingNoteDirectoryPath, FileType.Json);
 					}
 
 				case IndexKind.Template: 
 					{
-						var body = IndexBodyCaching.TemplateItems.GetFromId(guid);
-						if (body != null) {
-							return body;
-						}
-						var dirPath = CommonData.VariableConstants.UserSettingTemplateDirectoryPath;
-						var fileName = IndexItemUtility.GetIndexBodyFileName(indexKind, FileType.Json, guid);
-						var path = Environment.ExpandEnvironmentVariables(Path.Combine(dirPath, fileName));
-						var result = AppUtility.LoadSetting<TemplateBodyItemModel>(path, FileType.Json, CommonData.Logger);
-						var pairItem = new IndexBodyPairItem<TemplateBodyItemModel>(guid, result);
-						IndexBodyCaching.TemplateItems.Add(pairItem);
-						return result;
+						return GetIndexBody<TemplateBodyItemModel>(indexKind, guid, IndexBodyCaching.TemplateItems, CommonData.VariableConstants.UserSettingTemplateDirectoryPath, FileType.Json);
 					}
 
 				case IndexKind.Clipboard: 
 					{
-						var body = IndexBodyCaching.ClipboardItems.GetFromId(guid);
-						if (body != null) {
-							return body;
-						}
-						var dirPath = CommonData.VariableConstants.UserSettingClipboardDirectoryPath;
-						var fileName = IndexItemUtility.GetIndexBodyFileName(indexKind, FileType.Binary, guid);
-						var path = Environment.ExpandEnvironmentVariables(Path.Combine(dirPath, fileName));
-						var result = AppUtility.LoadSetting<ClipboardBodyItemModel>(path, FileType.Binary, CommonData.Logger);
-						var pairItem = new IndexBodyPairItem<ClipboardBodyItemModel>(guid, result);
-						IndexBodyCaching.ClipboardItems.Add(pairItem);
-						return result;
+						return GetIndexBody<ClipboardBodyItemModel>(indexKind, guid, IndexBodyCaching.ClipboardItems, CommonData.VariableConstants.UserSettingTemplateDirectoryPath, FileType.Binary);
 					}
 
 				default:
@@ -559,33 +574,32 @@
 			}
 		}
 
+		void SaveIndexBody<TIndexBody>(IndexBodyItemModelBase indexBody, Guid guid, string dirPath, FileType fileType)
+			where TIndexBody : IndexBodyItemModelBase
+		{
+			var fileName = IndexItemUtility.GetIndexBodyFileName(indexBody.IndexKind, fileType, guid);
+			var path = Environment.ExpandEnvironmentVariables(Path.Combine(dirPath, fileName));
+			AppUtility.SaveSetting(path, (TIndexBody)indexBody, fileType, CommonData.Logger);
+		}
+
 		void ReceiveSaveIndexBody(IndexBodyItemModelBase indexBody, Guid guid)
 		{
 			switch (indexBody.IndexKind) {
 				case IndexKind.Note:
 					{
-						var dirPath = CommonData.VariableConstants.UserSettingNoteDirectoryPath;
-						var fileName = IndexItemUtility.GetIndexBodyFileName(indexBody.IndexKind, FileType.Json, guid);
-						var path = Environment.ExpandEnvironmentVariables(Path.Combine(dirPath, fileName));
-						AppUtility.SaveSetting(path, (NoteBodyItemModel)indexBody, FileType.Json, CommonData.Logger);
+						SaveIndexBody<NoteBodyItemModel>(indexBody, guid, CommonData.VariableConstants.UserSettingNoteDirectoryPath, FileType.Json);
 					}
 					break;
 
 				case IndexKind.Template: 
 					{
-						var dirPath = CommonData.VariableConstants.UserSettingTemplateDirectoryPath;
-						var fileName = IndexItemUtility.GetIndexBodyFileName(indexBody.IndexKind, FileType.Json, guid);
-						var path = Environment.ExpandEnvironmentVariables(Path.Combine(dirPath, fileName));
-						AppUtility.SaveSetting(path, (TemplateBodyItemModel)indexBody, FileType.Json, CommonData.Logger);
+						SaveIndexBody<TemplateBodyItemModel>(indexBody, guid, CommonData.VariableConstants.UserSettingTemplateDirectoryPath, FileType.Json);
 					}
 					break;
 
 				case IndexKind.Clipboard: 
 					{
-						var dirPath = CommonData.VariableConstants.UserSettingClipboardDirectoryPath;
-						var fileName = IndexItemUtility.GetIndexBodyFileName(indexBody.IndexKind, FileType.Binary, guid);
-						var path = Environment.ExpandEnvironmentVariables(Path.Combine(dirPath, fileName));
-						AppUtility.SaveSetting(path, (ClipboardBodyItemModel)indexBody, FileType.Binary, CommonData.Logger);
+						SaveIndexBody<ClipboardBodyItemModel>(indexBody, guid, CommonData.VariableConstants.UserSettingClipboardDirectoryPath, FileType.Binary);
 					}
 					break;
 
@@ -764,9 +778,9 @@
 				AppUtility.SaveSetting(CommonData.VariableConstants.UserSettingFileLauncherItemSettingPath, CommonData.LauncherItemSetting, FileType.Json, CommonData.Logger);
 				AppUtility.SaveSetting(CommonData.VariableConstants.UserSettingFileLauncherGroupItemSetting, CommonData.LauncherGroupSetting, FileType.Json, CommonData.Logger);
 
-				AppUtility.SaveSetting(CommonData.VariableConstants.UserSettingNoteIndexFilePath, CommonData.NoteIndexSetting, FileType.Json, CommonData.Logger);
-				AppUtility.SaveSetting(CommonData.VariableConstants.UserSettingClipboardIndexFilePath, CommonData.ClipboardIndexSetting, FileType.Json, CommonData.Logger);
-				AppUtility.SaveSetting(CommonData.VariableConstants.UserSettingTemplateIndexFilePath, CommonData.TemplateIndexSetting, FileType.Json, CommonData.Logger);
+				SendIndexSave(IndexKind.Note);
+				SendIndexSave(IndexKind.Clipboard);
+				SendIndexSave(IndexKind.Template);
 			}
 		}
 
