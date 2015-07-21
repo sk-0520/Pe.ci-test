@@ -445,7 +445,7 @@
 			ReceiveClipboardChanged();
 		}
 
-		public void SendHotKey(HotKeyId hotKeyId, HotKeyModel hotKeyModel)
+		public void SendInputHotKey(HotKeyId hotKeyId, HotKeyModel hotKeyModel)
 		{
 			ReceiveHotKey(hotKeyId, hotKeyModel);
 		}

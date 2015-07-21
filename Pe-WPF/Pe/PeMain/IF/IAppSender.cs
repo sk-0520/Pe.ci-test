@@ -64,6 +64,6 @@
 		/// </summary>
 		/// <param name="hotKeyId"></param>
 		/// <param name="hotKeyModel"></param>
-		void SendHotKey(HotKeyId hotKeyId, HotKeyModel hotKeyModel);
+		void SendInputHotKey(HotKeyId hotKeyId, HotKeyModel hotKeyModel);
 	}
 }

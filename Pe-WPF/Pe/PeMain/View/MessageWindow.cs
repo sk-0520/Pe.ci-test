@@ -77,7 +77,7 @@
 							ModifierKeys = WindowsUtility.ConvertModifierKeysFromLParam(lParam),
 						};
 
-						CommonData.AppSender.SendHotKey(hotKeyId, hotKeyModel);
+						CommonData.AppSender.SendInputHotKey(hotKeyId, hotKeyModel);
 					}
 					break;
 			}
