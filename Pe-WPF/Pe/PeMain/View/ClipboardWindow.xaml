@@ -71,20 +71,20 @@
 					</StackPanel>
 				</ToggleButton>
 				<Separator />
-				<Button>
+				<Button IsEnabled="{Binding IsEnabled,ElementName=content}">
 					<StackPanel Orientation="Horizontal">
 						<Image Style="{StaticResource ImageRenderStyle}" Source="{x:Static AM:AppResource.CommonSaveImage}" />
 						<TextBlock Text="save" />
 					</StackPanel>
 				</Button>
 				<Separator />
-				<Button>
+				<Button Command="{Binding RemoveItemCommand}" IsEnabled="{Binding IsEnabled,ElementName=content}">
 					<StackPanel Orientation="Horizontal">
 						<Image Style="{StaticResource ImageRenderStyle}" Source="{x:Static AM:AppResource.CommonRemoveImage}" />
 						<TextBlock Text="remove" />
 					</StackPanel>
 				</Button>
-				<Button>
+				<Button Command="{Binding ClipboardClearCommand}">
 					<StackPanel Orientation="Horizontal">
 						<Image Style="{StaticResource ImageRenderStyle}" Source="{x:Static AM:AppResource.ClipboardClearImage}" />
 						<TextBlock Text="clipboard clear" />
@@ -180,7 +180,7 @@
 					</ListBox>
 				</Grid>
 				<GridSplitter Grid.Column="1" Style="{StaticResource IndexItemsStyleDefaultGridSplitterStyle}" />
-				<Grid  Grid.Column="1" Margin="{StaticResource IndexItemsStyleSplitterMargin}" IsEnabled="{Binding SelectedViewModel, Converter={StaticResource LogicalIsNotNullConverter}}">
+				<Grid x:Name="content" Grid.Column="1" Margin="{StaticResource IndexItemsStyleSplitterMargin}" IsEnabled="{Binding SelectedViewModel, Converter={StaticResource LogicalIsNotNullConverter}}">
 					<Grid.RowDefinitions>
 						<RowDefinition Height="Auto" />
 						<RowDefinition Height="*" />

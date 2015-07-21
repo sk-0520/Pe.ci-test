@@ -76,7 +76,7 @@
 
 		#region command
 
-		public ICommand CreateTemplateItem
+		public ICommand CreateItemCommand
 		{
 			get
 			{
@@ -92,7 +92,7 @@
 			}
 		}
 
-		public ICommand RemoveTemplateItem
+		public ICommand RemoveItemCommand
 		{
 			get
 			{
