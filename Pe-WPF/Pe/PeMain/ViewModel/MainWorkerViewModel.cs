@@ -36,6 +36,7 @@
 	using System.IO;
 	using System.Windows.Threading;
 	using Microsoft.Win32;
+	using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
 
 	public sealed class MainWorkerViewModel: ViewModelBase, IAppSender, IClipboardWatcher
 	{
@@ -510,31 +511,46 @@
 			switch(indexKind) {
 				case IndexKind.Note: 
 					{
+						var body = IndexBodyCaching.NoteItems.GetFromId(guid);
+						if (body != null) {
+							return body;
+						}
 						var dirPath = CommonData.VariableConstants.UserSettingNoteDirectoryPath;
 						var fileName = IndexItemUtility.GetIndexBodyFileName(indexKind, FileType.Json, guid);
 						var path = Environment.ExpandEnvironmentVariables(Path.Combine(dirPath, fileName));
 						var result = AppUtility.LoadSetting<NoteBodyItemModel>(path, FileType.Json, CommonData.Logger);
-						IndexBodyCaching.NoteItems.Add(result);
+						var pairItem = new IndexBodyPairItem<NoteBodyItemModel>(guid, result);
+						IndexBodyCaching.NoteItems.Add(pairItem);
 						return result;
 					}
 
 				case IndexKind.Template: 
 					{
+						var body = IndexBodyCaching.TemplateItems.GetFromId(guid);
+						if (body != null) {
+							return body;
+						}
 						var dirPath = CommonData.VariableConstants.UserSettingTemplateDirectoryPath;
 						var fileName = IndexItemUtility.GetIndexBodyFileName(indexKind, FileType.Json, guid);
 						var path = Environment.ExpandEnvironmentVariables(Path.Combine(dirPath, fileName));
 						var result = AppUtility.LoadSetting<TemplateBodyItemModel>(path, FileType.Json, CommonData.Logger);
-						IndexBodyCaching.TemplateItems.Add(result);
+						var pairItem = new IndexBodyPairItem<TemplateBodyItemModel>(guid, result);
+						IndexBodyCaching.TemplateItems.Add(pairItem);
 						return result;
 					}
 
 				case IndexKind.Clipboard: 
 					{
+						var body = IndexBodyCaching.ClipboardItems.GetFromId(guid);
+						if (body != null) {
+							return body;
+						}
 						var dirPath = CommonData.VariableConstants.UserSettingClipboardDirectoryPath;
 						var fileName = IndexItemUtility.GetIndexBodyFileName(indexKind, FileType.Binary, guid);
 						var path = Environment.ExpandEnvironmentVariables(Path.Combine(dirPath, fileName));
 						var result = AppUtility.LoadSetting<ClipboardBodyItemModel>(path, FileType.Binary, CommonData.Logger);
-						IndexBodyCaching.ClipboardItems.Add(result);
+						var pairItem = new IndexBodyPairItem<ClipboardBodyItemModel>(guid, result);
+						IndexBodyCaching.ClipboardItems.Add(pairItem);
 						return result;
 					}
 

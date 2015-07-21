@@ -8,6 +8,8 @@
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
+	using ContentTypeTextNet.Pe.PeMain.Data;
+	using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
 
 	public class IndexBodyCaching : ILimitSize
 	{
@@ -19,24 +21,24 @@
 
 		public IndexBodyCaching(int limitSize)
 		{
-			NoteItems = new FixedSizeCollectionModel<NoteBodyItemModel>();
-			ClipboardItems = new FixedSizeCollectionModel<ClipboardBodyItemModel>();
-			TemplateItems = new FixedSizeCollectionModel<TemplateBodyItemModel>();
+			NoteItems = new IndexBodyPairItemCollection<NoteBodyItemModel>();
+			ClipboardItems = new IndexBodyPairItemCollection<ClipboardBodyItemModel>();
+			TemplateItems = new IndexBodyPairItemCollection<TemplateBodyItemModel>();
 
 			LimitSize = limitSize;
 		}
 
 		#region property
 
-		public FixedSizeCollectionModel<NoteBodyItemModel> NoteItems { get; private set; }
-		public FixedSizeCollectionModel<ClipboardBodyItemModel> ClipboardItems { get; private set; }
-		public FixedSizeCollectionModel<TemplateBodyItemModel> TemplateItems { get; private set; }
+		public IndexBodyPairItemCollection<NoteBodyItemModel> NoteItems { get; private set; }
+		public IndexBodyPairItemCollection<ClipboardBodyItemModel> ClipboardItems { get; private set; }
+		public IndexBodyPairItemCollection<TemplateBodyItemModel> TemplateItems { get; private set; }
 
 		#endregion
 
 		#region ILimitSize
 
-		int LimitSize
+		public int LimitSize
 		{
 			get { return this._limitSize; }
 			set

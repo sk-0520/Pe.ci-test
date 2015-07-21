@@ -58,6 +58,7 @@
 					} else {
 						HtmlModel = null;
 					}
+					IsUnloaded = false;
 				}
 
 				return this._bodyModel;
