@@ -4,8 +4,10 @@
 	using System.Collections.Generic;
 	using System.Collections.ObjectModel;
 	using System.Linq;
+	using System.Runtime.Serialization;
 	using System.Text;
 	using System.Threading.Tasks;
+	using System.Xml.Serialization;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 
@@ -17,12 +19,21 @@
 	[Serializable]
 	public class FixedSizeCollectionModel<T> : CollectionModel<T>, ILimitSize
 	{
+		#region define
+
 		/// <summary>
 		/// 初期値は上限なしでいいや。
 		/// </summary>
 		public static int DefaultLimit { get { return 0; } }
 
-		private int _limitSize;
+		#endregion
+
+		#region variable
+
+		[IgnoreDataMember, XmlIgnore]
+		int _limitSize;
+
+		#endregion
 
 		public FixedSizeCollectionModel()
 			: this(DefaultLimit, true)
@@ -37,6 +48,8 @@
 		{
 			IsFIFO = isFifo;
 			LimitSize = limitSize;
+
+			StockItems = new List<T>();
 		}
 
 		public FixedSizeCollectionModel(IEnumerable<T> collection)
@@ -52,6 +65,8 @@
 		{
 			IsFIFO = isFifo;
 			LimitSize = limitSize;
+
+			StockItems = new List<T>();
 		}
 
 		#region property
@@ -82,6 +97,16 @@
 		}
 
 		/// <summary>
+		/// 上限を超えて押し出されるデータを保持リストへ回すか。
+		/// <para>保持リストのデータは本クラスの管理外となる。</para>
+		/// </summary>
+		[IgnoreDataMember, XmlIgnore]
+		public bool StockRemovedItem { get; set; }
+
+		[IgnoreDataMember, XmlIgnore]
+		public IList<T> StockItems { get; private set; }
+
+		/// <summary>
 		/// 上限サイズが有効か。
 		/// </summary>
 		public virtual bool UsingLimit 
@@ -96,15 +121,13 @@
 
 		#endregion
 
+		#region CollectionModel
+
 		public new void Add(T item)
 		{
 			if (UsingLimit) {
 				while (Count >= LimitSize) {
-					if (IsFIFO) {
-						RemoveAt(0);
-					} else {
-						RemoveAt(Count - 1);
-					}
+					RemoveLimit();
 				}
 			}
 
@@ -117,13 +140,29 @@
 
 			if (UsingLimit) {
 				while (Count > LimitSize) {
-					if (IsFIFO) {
-						RemoveAt(0);
-					} else {
-						RemoveAt(Count - 1);
-					}
+					RemoveLimit();
 				}
 			}
 		}
+
+		#endregion
+
+		#region function
+
+		void RemoveLimit()
+		{
+			int removeIndex;
+			if (IsFIFO) {
+				removeIndex = 0;
+			} else {
+				removeIndex = Count - 1;
+			}
+			if (StockRemovedItem) {
+				StockItems.Add(this[removeIndex]);
+			}
+			RemoveAt(removeIndex);
+		}
+
+		#endregion
 	}
 }
