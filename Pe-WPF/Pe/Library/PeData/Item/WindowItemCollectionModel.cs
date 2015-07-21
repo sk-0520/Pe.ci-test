@@ -11,16 +11,10 @@
 	using System.Xml.Serialization;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+	using ContentTypeTextNet.Library.SharedLibrary.Model;
 
-	public class WindowItemCollectionModel: ObservableCollection<WindowItemModel>, IName, IModel
+	public class WindowItemCollectionModel: CollectionModel<WindowItemModel>, IName
 	{
-		#region variable
-
-		[IgnoreDataMember, XmlIgnore]
-		IEnumerable<PropertyInfo> _propertyInfos = null;
-
-		#endregion
-
 		public WindowItemCollectionModel()
 			: base()
 		{ }
@@ -35,38 +29,6 @@
 
 		[DataMember, XmlAttribute]
 		public string Name { get; set; }
-
-		#endregion
-
-		#region IModel
-
-		[IgnoreDataMember, XmlIgnore]
-		public virtual string DisplayText
-		{
-			get { return GetType().FullName; }
-		}
-
-		[IgnoreDataMember, XmlIgnore]
-		public IEnumerable<PropertyInfo> PropertyInfos
-		{
-			get
-			{
-				if(this._propertyInfos == null) {
-					this._propertyInfos = GetType().GetProperties();
-				}
-
-				return this._propertyInfos;
-			}
-		}
-
-		public IEnumerable<string> GetNameValueList()
-		{
-			var nameValueMap = ReflectionUtility.GetMembers(this, PropertyInfos);
-			return ReflectionUtility.GetNameValueStrings(nameValueMap);
-		}
-
-		public virtual void Correction()
-		{ }
 
 		#endregion
 	}

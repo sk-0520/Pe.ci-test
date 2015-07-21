@@ -45,7 +45,7 @@
 			set
 			{
 				var removes = value.SplitLines();
-				Model.Remove = new ObservableCollection<string>(removes);
+				Model.Remove = new CollectionModel<string>(removes);
 			}
 		}
 

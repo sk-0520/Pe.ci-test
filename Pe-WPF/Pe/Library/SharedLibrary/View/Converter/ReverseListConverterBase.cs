@@ -9,13 +9,14 @@
 	using System.Threading.Tasks;
 	using System.Windows.Data;
 	using System.Windows.Markup;
+	using ContentTypeTextNet.Library.SharedLibrary.Model;
 
 	/// <summary>
 	/// <para>http://stackoverflow.com/questions/7405473/reversed-listbox-without-sorting?answertab=votes#tab-top</para>
 	/// </summary>
 	public abstract class ReverseListConverterBase<T>: MarkupExtension, IValueConverter
 	{
-		private ObservableCollection<T> _reversedList;
+		private CollectionModel<T> _reversedList;
 
 		public override object ProvideValue(IServiceProvider serviceProvider)
 		{
@@ -24,9 +25,9 @@
 
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
-			_reversedList = new ObservableCollection<T>();
+			_reversedList = new CollectionModel<T>();
 
-			var data = (ObservableCollection<T>)value;
+			var data = (CollectionModel<T>)value;
 
 			for(var i = data.Count - 1; i >= 0; i--)
 				_reversedList.Add(data[i]);

@@ -9,6 +9,7 @@
 	using System.Threading.Tasks;
 	using System.Xml.Serialization;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Library.SharedLibrary.Model;
 
 	[Serializable]
 	public class LauncherHistoryItemModel: HistoryItemModel, IDeepClone
@@ -16,8 +17,8 @@
 		public LauncherHistoryItemModel()
 			: base()
 		{
-			WorkDirectoryPaths = new ObservableCollection<string>();
-			Options = new ObservableCollection<string>();
+			WorkDirectoryPaths = new CollectionModel<string>();
+			Options = new CollectionModel<string>();
 		}
 
 		/// <summary>
@@ -30,13 +31,13 @@
 		/// 作業ディレクトリ。
 		/// </summary>
 		[DataMember, XmlArray("WorkDirectoryPaths"), XmlArrayItem("Item")]
-		ObservableCollection<string> WorkDirectoryPaths { get; set; }
+		CollectionModel<string> WorkDirectoryPaths { get; set; }
 
 		/// <summary>
 		/// オプション。
 		/// </summary>
 		[DataMember, XmlArray("Options"), XmlArrayItem("Item")]
-		ObservableCollection<string> Options { get; set; }
+		CollectionModel<string> Options { get; set; }
 
 		#region IDeepClone
 
@@ -49,8 +50,8 @@
 				UpdateCount = this.UpdateCount,
 			};
 
-			result.WorkDirectoryPaths = new ObservableCollection<string>(WorkDirectoryPaths);
-			result.Options = new ObservableCollection<string>(Options);
+			result.WorkDirectoryPaths = new CollectionModel<string>(WorkDirectoryPaths);
+			result.Options = new CollectionModel<string>(Options);
 
 			return result;
 		}

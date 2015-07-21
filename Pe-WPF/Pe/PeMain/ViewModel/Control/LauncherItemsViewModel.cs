@@ -7,6 +7,7 @@
 	using System.Text;
 	using System.Threading.Tasks;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Library.SharedLibrary.Model;
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 	using ContentTypeTextNet.Pe.Library.PeData.Setting;
@@ -42,7 +43,7 @@
 
 		#endregion
 
-		public ObservableCollection<LauncherItemModel> Items 
+		public CollectionModel<LauncherItemModel> Items 
 		{ 
 			get
 			{

@@ -7,6 +7,7 @@
 	using System.Text;
 	using System.Threading.Tasks;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Library.SharedLibrary.Model;
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 	using ContentTypeTextNet.Pe.PeMain.Data;
@@ -17,7 +18,7 @@
 	public class GroupRootViewModel: GroupViewModelBase<LauncherGroupItemModel>
 	{
 		#region variable
-		ObservableCollection<GroupItemViewMode> _nodes;
+		CollectionModel<GroupItemViewMode> _nodes;
 		#endregion
 
 		public GroupRootViewModel(LauncherGroupItemModel model, LauncherItemCollectionModel items, LauncherIconCaching launcherIconCaching, INonProcess nonProcess)
@@ -30,7 +31,7 @@
 
 		LauncherItemCollectionModel Items { get; set; }
 
-		public ObservableCollection<GroupItemViewMode> Nodes
+		public CollectionModel<GroupItemViewMode> Nodes
 		{
 			get
 			{
@@ -49,7 +50,7 @@
 						}
 					}
 
-					this._nodes = new ObservableCollection<GroupItemViewMode>(list);
+					this._nodes = new CollectionModel<GroupItemViewMode>(list);
 				}
 				return this._nodes;
 			}

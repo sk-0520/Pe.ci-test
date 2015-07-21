@@ -10,6 +10,7 @@
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+	using ContentTypeTextNet.Library.SharedLibrary.Model;
 	using ContentTypeTextNet.Pe.Library.PeData.Define;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 	using ContentTypeTextNet.Pe.Library.PeData.Setting;
@@ -207,7 +208,7 @@
 			if(!setting.Groups.Any()) {
 				var initGroup = CreateLauncherGroup(setting.Groups, nonProcess);
 				//------------------------
-				initGroup.LauncherItems = new ObservableCollection<Guid>(new[] {
+				initGroup.LauncherItems = new CollectionModel<Guid>(new[] {
 					guidList[0],
 					guidList[1],
 					guidList[2],

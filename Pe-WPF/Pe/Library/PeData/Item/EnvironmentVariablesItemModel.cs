@@ -17,7 +17,7 @@
 			: base()
 		{
 			Update = new EnvironmentVariableUpdateItemCollectionModel();
-			Remove = new ObservableCollection<string>();
+			Remove = new CollectionModel<string>();
 		}
 
 		/// <summary>
@@ -36,7 +36,7 @@
 		/// 削除変数
 		/// </summary>
 		[DataMember]
-		public ObservableCollection<string> Remove { get; set; }
+		public CollectionModel<string> Remove { get; set; }
 
 		#region IDeepClone
 
@@ -49,7 +49,7 @@
 			// 二回も生成するのかー。。。
 			// TODO: clone
 			result.Update = Update;
-			result.Remove = new ObservableCollection<string>(Remove);
+			result.Remove = new CollectionModel<string>(Remove);
 
 			return result;
 		}

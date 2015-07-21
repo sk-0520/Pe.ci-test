@@ -5,9 +5,10 @@
 	using System.Linq;
 	using System.Text;
 	using System.Threading.Tasks;
+	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 
-	public class IndexBodyPairItem<TIndexBody>
+	public class IndexBodyPairItem<TIndexBody>: ViewModelBase
 		where TIndexBody : IndexBodyItemModelBase
 	{
 		public IndexBodyPairItem(Guid id, TIndexBody body)

@@ -9,6 +9,7 @@
 	using System.Windows;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic;
+	using ContentTypeTextNet.Library.SharedLibrary.Model;
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 	using ContentTypeTextNet.Pe.Library.PeData.Setting;
@@ -53,7 +54,7 @@
 
 		public MVMPairCreateDelegationCollection<TItemModel, TItemViewModel> IndexPairList { get; private set; }
 
-		public virtual ObservableCollection<TItemViewModel> IndexItems { get { return IndexPairList.ViewModelList; } }
+		public virtual CollectionModel<TItemViewModel> IndexItems { get { return IndexPairList.ViewModelList; } }
 
 		#endregion
 

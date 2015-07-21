@@ -143,7 +143,7 @@
 		#region variable
 
 		LauncherGroupItemModel _selectedGroup = null;
-		ObservableCollection<LauncherButtonViewModel> _launcherItems = null;
+		CollectionModel<LauncherButtonViewModel> _launcherItems = null;
 		double _captionWidth;
 		Thickness _borderThickness;
 		Brush _borderBrush;
@@ -325,7 +325,7 @@
 						});
 					;
 
-					this._launcherItems = new ObservableCollection<LauncherButtonViewModel>(list);
+					this._launcherItems = new CollectionModel<LauncherButtonViewModel>(list);
 				}
 
 				return this._launcherItems;

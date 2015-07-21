@@ -12,6 +12,7 @@
 	using ContentTypeTextNet.Library.SharedLibrary.CompatibleForms;
 	using ContentTypeTextNet.Library.SharedLibrary.Define;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Library.SharedLibrary.Model;
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 	using ContentTypeTextNet.Pe.Library.PeData.Setting;
@@ -27,7 +28,7 @@
 		#region variable
 
 		LauncherItemsViewModel _launcherItems;
-		ObservableCollection<GroupRootViewModel> _groupTree;
+		CollectionModel<GroupRootViewModel> _groupTree;
 
 		LauncherItemModel _selectedLauncherItem;
 
@@ -89,7 +90,7 @@
 			}
 		}
 
-		public ObservableCollection<GroupRootViewModel> GroupTree
+		public CollectionModel<GroupRootViewModel> GroupTree
 		{
 			get
 			{
@@ -97,7 +98,7 @@
 					var groupVm = GroupSettingModel.Groups
 						.Select(g => new GroupRootViewModel(g, LauncherItemSetting.Items, LauncherIconCaching, NonProcess))
 					;
-					this._groupTree = new ObservableCollection<GroupRootViewModel>(groupVm);
+					this._groupTree = new CollectionModel<GroupRootViewModel>(groupVm);
 				}
 
 				return this._groupTree;

@@ -7,6 +7,7 @@
 	using System.Text;
 	using System.Threading.Tasks;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Library.SharedLibrary.Model;
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 	using ContentTypeTextNet.Pe.PeMain.Data;
@@ -22,7 +23,7 @@
 
 		#region property
 
-		public ObservableCollection<GroupItemViewMode> Nodes
+		public CollectionModel<GroupItemViewMode> Nodes
 		{
 			get { return null; }
 		}

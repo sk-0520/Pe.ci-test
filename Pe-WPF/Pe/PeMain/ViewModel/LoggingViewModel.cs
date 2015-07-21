@@ -27,12 +27,12 @@
 		public LoggingViewModel(LoggingSettingModel model, LoggingWindow view)
 			: base(model, view)
 		{
-			LogItems = new ObservableCollection<LogItemModel>();
+			LogItems = new CollectionModel<LogItemModel>();
 		}
 
 		#region property
 
-		public ObservableCollection<LogItemModel> LogItems { get; set; }
+		public CollectionModel<LogItemModel> LogItems { get; set; }
 
 		#region IWindowStatus
 

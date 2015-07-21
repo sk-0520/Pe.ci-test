@@ -904,7 +904,7 @@
 			WindowSaveTimer = new DispatcherTimer();
 			WindowSaveTimer.Tick += Timer_Tick;
 			WindowSaveTimer.Interval = CommonData.MainSetting.WindowSave.SaveIntervalTime;
-			WindowSaveTimer.Start();
+			//@ WindowSaveTimer.Start();
 		}
 
 		void InitializeSystemEvent()

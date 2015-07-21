@@ -9,6 +9,7 @@
 	using System.Threading.Tasks;
 	using System.Xml.Serialization;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Library.SharedLibrary.Model;
 
 	/// <summary>
 	/// タグを管理。
@@ -19,14 +20,14 @@
 		public TagItemModel() 
 			: base() 
 		{
-			Items = new ObservableCollection<string>();
+			Items = new CollectionModel<string>();
 		}
 
 		/// <summary>
 		/// タグ。
 		/// </summary>
 		[DataMember, XmlArray("Items"), XmlArrayItem("Item")]
-		public ObservableCollection<string> Items { get; set; }
+		public CollectionModel<string> Items { get; set; }
 
 		#region IDeepClone
 		
@@ -34,7 +35,7 @@
 		{
 			var result = new TagItemModel();
 
-			result.Items = new ObservableCollection<string>(Items);
+			result.Items = new CollectionModel<string>(Items);
 
 			return result;
 		}
