@@ -20,7 +20,7 @@
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
-	public class ClipboardItemViewModel : SingleModelWrapperViewModelBase<ClipboardIndexItemModel>, IHavingAppSender, IHavingClipboardWatcher, IHavingNonProcess, IHavingVariableConstants
+	public class ClipboardItemViewModel : SingleModelWrapperViewModelBase<ClipboardIndexItemModel>, IHavingAppSender, IHavingClipboardWatcher, IHavingNonProcess, IHavingVariableConstants, IUnload
 	{
 		#region define
 
@@ -28,7 +28,7 @@
 
 		#endregion
 
-		#region
+		#region varable
 		
 		ClipboardBodyItemModel _bodyModel = null;
 
@@ -275,5 +275,19 @@
 		public VariableConstants VariableConstants { get; private set; }
 
 		#endregion	
+
+		#region IUnload
+
+		public bool IsUnloaded { get; private set; }
+
+		public void Unload()
+		{
+			if (!IsUnloaded) {
+				this._bodyModel = null;
+				IsUnloaded = true;
+			}
+		}
+
+		#endregion
 	}
 }
