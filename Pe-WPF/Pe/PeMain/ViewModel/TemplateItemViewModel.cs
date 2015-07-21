@@ -50,7 +50,7 @@
 			get
 			{
 				if (this._bodyModel == null) {
-					var body = AppSender.SendGetIndexBody(IndexKind.Template, Model.Id);
+					var body = AppSender.SendLoadIndexBody(IndexKind.Template, Model.Id);
 					this._bodyModel = (TemplateBodyItemModel)body;
 				}
 

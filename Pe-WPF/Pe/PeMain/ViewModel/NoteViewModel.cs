@@ -144,7 +144,7 @@
 			get
 			{
 				if(IndexBody == null) {
-					this._indexBody = AppSender.SendGetIndexBody(Library.PeData.Define.IndexKind.Note, Model.Id);
+					this._indexBody = AppSender.SendLoadIndexBody(Library.PeData.Define.IndexKind.Note, Model.Id);
 					if(this._indexBody == null) {
 						this._indexBody = new NoteBodyItemModel();
 					}

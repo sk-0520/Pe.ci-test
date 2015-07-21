@@ -51,7 +51,7 @@
 			{
 				lock(Model)
 				if(this._bodyModel == null) {
-					var body = AppSender.SendGetIndexBody(IndexKind.Clipboard, Model.Id);
+					var body = AppSender.SendLoadIndexBody(IndexKind.Clipboard, Model.Id);
 					this._bodyModel = (ClipboardBodyItemModel)body;
 					if(Model.Type.HasFlag(ClipboardType.Html)) {
 						HtmlModel = ClipboardUtility.ConvertClipboardHtmlFromFromRawHtml(this._bodyModel.Html, NonProcess);

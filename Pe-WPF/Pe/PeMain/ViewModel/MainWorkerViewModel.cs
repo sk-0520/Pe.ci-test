@@ -429,9 +429,9 @@
 			ReceiveSaveIndex(indexKind);
 		}
 
-		public IndexBodyItemModelBase SendGetIndexBody(IndexKind indexKind, Guid guid)
+		public IndexBodyItemModelBase SendLoadIndexBody(IndexKind indexKind, Guid guid)
 		{
-			return ReceiveGetIndexBody(indexKind, guid);
+			return ReceiveLoadIndexBody(indexKind, guid);
 		}
 
 		public void SendSaveIndexBody(IndexBodyItemModelBase indexBody, Guid guid)
@@ -588,7 +588,7 @@
 			return result;
 		}
 
-		public IndexBodyItemModelBase ReceiveGetIndexBody(IndexKind indexKind, Guid guid)
+		public IndexBodyItemModelBase ReceiveLoadIndexBody(IndexKind indexKind, Guid guid)
 		{
 			switch(indexKind) {
 				case IndexKind.Note: 

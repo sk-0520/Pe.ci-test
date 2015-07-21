@@ -43,7 +43,7 @@
 		/// <param name="indexKind"></param>
 		/// <param name="guid"></param>
 		/// <returns></returns>
-		IndexBodyItemModelBase SendGetIndexBody(IndexKind indexKind, Guid guid);
+		IndexBodyItemModelBase SendLoadIndexBody(IndexKind indexKind, Guid guid);
 		/// <summary>
 		/// 対象インデックスのボディ部を保存。
 		/// </summary>
