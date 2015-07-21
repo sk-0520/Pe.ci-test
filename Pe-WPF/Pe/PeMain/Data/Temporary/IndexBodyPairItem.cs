@@ -8,7 +8,7 @@
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 
-	public class IndexBodyPairItem<TIndexBody>: ViewModelBase
+	public class IndexBodyPairItem<TIndexBody>
 		where TIndexBody : IndexBodyItemModelBase
 	{
 		public IndexBodyPairItem(Guid id, TIndexBody body)

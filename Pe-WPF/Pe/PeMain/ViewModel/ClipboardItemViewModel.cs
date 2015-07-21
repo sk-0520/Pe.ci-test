@@ -319,8 +319,6 @@
 
 		#region SingleModelWrapperViewModelBase
 
-		public override string DisplayText { get { return DisplayTextUtility.GetDisplayName(Model); } }
-
 		#endregion
 
 		#region IHavingAppSender

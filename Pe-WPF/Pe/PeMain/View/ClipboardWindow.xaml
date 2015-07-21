@@ -124,7 +124,7 @@
 								<Grid>
 									<Border x:Name="item" Style="{StaticResource IndexItemsStyleItem}">
 										<StackPanel>
-											<TextBlock Text="{Binding DisplayText}" />
+											<TextBlock Text="{Binding Name}" />
 											<Border Style="{StaticResource IndexItemsStyleInfo}">
 												<Grid>
 													<Grid.ColumnDefinitions>
@@ -191,7 +191,7 @@
 							<ColumnDefinition Width="*" />
 						</Grid.ColumnDefinitions>
 						<TextBlock Grid.Column="0" Text="name" />
-						<TextBox Grid.Column="1" Text="{Binding SelectedViewModel.Name}" HorizontalAlignment="Stretch" />
+						<TextBox Grid.Column="1" HorizontalAlignment="Stretch" Text="{Binding SelectedViewModel.Name, UpdateSourceTrigger=PropertyChanged}" />
 					</Grid>
 					<TabControl x:Name="tabClipboard" Grid.Row="1">
 						<TabItem x:Name="pageText" Visibility="{Binding SelectedViewModel.EnabledClipboardTypesText, Converter={StaticResource BooleanVisibilityConverter}}">

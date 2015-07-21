@@ -101,7 +101,7 @@
 							<Grid>
 								<Border x:Name="item" Style="{StaticResource IndexItemsStyleItem}">
 									<StackPanel>
-										<TextBlock Text="{Binding DisplayText}" />
+										<TextBlock Text="{Binding Name}" />
 										<Border Style="{StaticResource IndexItemsStyleInfo}">
 											<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
 												<Image Style="{StaticResource ImageRenderStyle}" Source="{Binding ItemTypeImage}" Margin="0,0,2,0" />
@@ -165,7 +165,7 @@
 								<ColumnDefinition Width="Auto"/>
 							</Grid.ColumnDefinitions>
 							<Label Grid.Column="0"  Content="name" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-							<TextBox Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Text="{Binding SelectedViewModel.Name}"  />
+							<TextBox Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Text="{Binding SelectedViewModel.Name, UpdateSourceTrigger=PropertyChanged}" />
 							<CheckBox Grid.Column="2" Content="replace" HorizontalAlignment="Left" VerticalAlignment="Center" IsChecked="{Binding SelectedViewModel.IsReplace}"/>
 							<CheckBox Grid.Column="3" Content="T4" HorizontalAlignment="Left" VerticalAlignment="Center" IsChecked="{Binding SelectedViewModel.IsProgrammableReplace}"/>
 						</Grid>

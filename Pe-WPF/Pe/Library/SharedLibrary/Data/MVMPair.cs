@@ -11,7 +11,7 @@
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 
-	public struct MVMPair<TModel, TViewModel>: INotifyPropertyChanged
+	public struct MVMPair<TModel, TViewModel>
 		where TModel : ModelBase
 		where TViewModel : ViewModelBase
 	{
@@ -26,7 +26,6 @@
 		{
 			this._model = model;
 			this._viewModel = viewModel;
-			PropertyChanged = delegate { };
 		}
 
 		#region property
@@ -48,25 +47,6 @@
 		}
 
 		#endregion
-
-		#region INotifyPropertyChanged
-
-		/// <summary>
-		/// プロパティが変更された際に発生。
-		/// </summary>
-		public event PropertyChangedEventHandler PropertyChanged;
-
-		/// <summary>
-		/// PropertyChanged呼び出し。
-		/// </summary>
-		/// <param name="propertyName"></param>
-		private void OnPropertyChanged([CallerMemberName] string propertyName = "")
-		{
-			this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-		}
-
-		#endregion
-
 	}
 
 	/// <summary>

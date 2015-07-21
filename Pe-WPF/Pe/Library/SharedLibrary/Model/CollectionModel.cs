@@ -1,6 +1,7 @@
 ﻿namespace ContentTypeTextNet.Library.SharedLibrary.Model
 {
 	using System;
+	using System.Collections;
 	using System.Collections.Generic;
 	using System.Collections.ObjectModel;
 	using System.Collections.Specialized;
@@ -35,16 +36,12 @@
 			: base()
 		{
 			IsDisposed = false;
-
-			CollectionChanged += FullObservableCollectionCollectionChanged;
 		}
 
 		public CollectionModel(IEnumerable<TValue> items)
 			: base(items)
 		{
 			IsDisposed = false;
-
-			CollectionChanged += FullObservableCollectionCollectionChanged;
 		}
 
 		~CollectionModel()
@@ -160,35 +157,6 @@
 			//Insert(indexA, itemB);
 			//Insert(indexB, itemA);
 			SwapIndex(indexA, indexB);
-		}
-
-		public void FullObservableCollectionCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-		{
-			if(e.Action == NotifyCollectionChangedAction.Replace) {
-				Debug.WriteLine(sender);
-			}
-			if(e.NewItems != null) {
-				foreach(var item in e.NewItems.OfType<INotifyPropertyChanged>()) {
-					((INotifyPropertyChanged)item).PropertyChanged += ItemPropertyChanged;
-				}
-			}
-			if(e.OldItems != null) {
-				foreach(var item in e.OldItems.OfType<INotifyPropertyChanged>()) {
-					((INotifyPropertyChanged)item).PropertyChanged -= ItemPropertyChanged;
-				}
-			}
-		}
-
-		public void ItemPropertyChanged(object sender, PropertyChangedEventArgs e)
-		{
-			NotifyCollectionChangedEventArgs args = new NotifyCollectionChangedEventArgs(
-				NotifyCollectionChangedAction.Replace, 
-				sender, 
-				sender, 
-				IndexOf((TValue)sender)
-			);
-
-			OnCollectionChanged(args);
 		}
 
 		#endregion

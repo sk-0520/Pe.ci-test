@@ -222,8 +222,6 @@
 
 		#region SingleModelWrapperViewModelBase
 
-		public override string DisplayText { get { return DisplayTextUtility.GetDisplayName(Model); } }
-
 		protected override void Dispose(bool disposing)
 		{
 			if (!IsDisposed) {
