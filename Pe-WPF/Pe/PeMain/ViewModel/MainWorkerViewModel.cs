@@ -548,6 +548,14 @@
 			if (!cachingItems.Any(p => p.Id == guid)) {
 				var pairItem = new IndexBodyPairItem<TIndexBody>(guid, indexBody);
 				cachingItems.Add(pairItem);
+				if (cachingItems.StockItems.Any()) {
+					var itemPairList = cachingItems.StockItems.ToArray();
+					cachingItems.StockItems.Clear();
+					foreach (var pair in itemPairList) {
+						CommonData.Logger.Trace("cache dispose: " + pair.Id.ToString(), pair.Body);
+						pair.Body.Dispose();
+					}
+				}
 			}
 		}
 

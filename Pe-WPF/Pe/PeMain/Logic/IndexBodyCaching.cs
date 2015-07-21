@@ -26,6 +26,10 @@
 			TemplateItems = new IndexBodyPairItemCollection<TemplateBodyItemModel>();
 
 			LimitSize = limitSize;
+
+			NoteItems.StockRemovedItem = true;
+			ClipboardItems.StockRemovedItem = true;
+			TemplateItems.StockRemovedItem = true;
 		}
 
 		#region property
