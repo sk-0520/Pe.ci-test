@@ -14,7 +14,7 @@
 	{
 		public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
 		{
-			var model = value as LauncherViewModelBase;
+			var model = value as LauncherItemViewModelBase;
 			if(model != null) {
 				//TODO: parameterで切り替えれた方があとあと便利そう。
 				var result = new LauncherItemEditViewModel(model.Model, model.LauncherIconCaching, model.NonProcess);

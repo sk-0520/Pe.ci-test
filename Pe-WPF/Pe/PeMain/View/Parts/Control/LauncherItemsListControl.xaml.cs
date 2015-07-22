@@ -73,20 +73,20 @@
 				SetValue(SelectedLauncherItemProperty, value);
 				this.ListItems.SelectedItem = value;
 				if (value != null) {
-					SelectedLauncherViewModel = new LauncherSimpleViewModel(SelectedLauncherItem, CommonData.LauncherIconCaching, CommonData.NonProcess);
+					SelectedLauncherViewModel = new LauncherSimpleItemViewModel(SelectedLauncherItem, CommonData.LauncherIconCaching, CommonData.NonProcess);
 				}
 			}
 		}
 
 		public static readonly DependencyProperty SelectedLauncherViewModelProperty = DependencyProperty.Register(
 			"SelectedLauncherViewModel",
-			typeof(LauncherViewModelBase),
+			typeof(LauncherItemViewModelBase),
 			typeof(LauncherItemsListControl),
 			new FrameworkPropertyMetadata(null)
 		);
-		public LauncherViewModelBase SelectedLauncherViewModel
+		public LauncherItemViewModelBase SelectedLauncherViewModel
 		{
-			get { return GetValue(SelectedLauncherViewModelProperty) as LauncherViewModelBase; }
+			get { return GetValue(SelectedLauncherViewModelProperty) as LauncherItemViewModelBase; }
 			set { SetValue(SelectedLauncherViewModelProperty, value); }
 		}
 

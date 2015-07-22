@@ -204,10 +204,10 @@
     <Compile Include="ViewModel\GroupRootViewModel.cs" />
     <Compile Include="ViewModel\GroupViewModelBase.cs" />
     <Compile Include="ViewModel\HavingViewSingleModelWrapperIndexViewModelBase.cs" />
-    <Compile Include="ViewModel\LauncherSimpleViewModel.cs" />
+    <Compile Include="ViewModel\LauncherSimpleItemViewModel.cs" />
     <Compile Include="ViewModel\LauncherToolbarViewModel.cs" />
-    <Compile Include="ViewModel\LauncherButtonViewModel.cs" />
-    <Compile Include="ViewModel\LauncherViewModelBase.cs" />
+    <Compile Include="ViewModel\LauncherButtonItemViewModel.cs" />
+    <Compile Include="ViewModel\LauncherItemViewModelBase.cs" />
     <Compile Include="ViewModel\LoggingViewModel.cs" />
     <Compile Include="ViewModel\MainWorkerViewModel.cs" />
     <Compile Include="ViewModel\NoteMenuViewModel.cs" />

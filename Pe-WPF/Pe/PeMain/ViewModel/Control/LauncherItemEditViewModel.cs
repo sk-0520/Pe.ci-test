@@ -10,7 +10,7 @@
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 	using ContentTypeTextNet.Pe.PeMain.Data;
 
-	public class LauncherItemEditViewModel : LauncherSimpleViewModel
+	public class LauncherItemEditViewModel : LauncherSimpleItemViewModel
 	{
 		public LauncherItemEditViewModel(LauncherItemModel model, LauncherIconCaching launcherIconCaching, INonProcess nonPorocess)
 			: base(model, launcherIconCaching, nonPorocess)
