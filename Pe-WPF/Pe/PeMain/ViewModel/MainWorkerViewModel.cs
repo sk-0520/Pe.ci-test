@@ -419,6 +419,11 @@
 			ReceiveRemoveWindow(window);
 		}
 
+		public Window SendCreateWindow(WindowKind kind, object extensionData, Window parent)
+		{
+			return ReceiveCreateWindow(kind, extensionData, parent);
+		}
+
 		public void SendRemoveIndex(IndexKind indexKind, Guid guid)
 		{
 			ReceiveRemoveIndex(indexKind, guid);
@@ -477,6 +482,21 @@
 
 				OnPropertyChanged("NoteShowItems");
 				OnPropertyChanged("NoteHiddenItems");
+			}
+		}
+
+		public Window ReceiveCreateWindow(WindowKind kind, object extensionData, Window parent)
+		{
+			switch(kind) {
+				case WindowKind.ExecuteLauncher:
+					{
+						var window = new LauncherExecuteWindow();
+						window.SetCommonData(CommonData, extensionData);
+						return window;
+					}
+
+				default:
+					throw new NotImplementedException();
 			}
 		}
 

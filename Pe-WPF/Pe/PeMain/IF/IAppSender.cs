@@ -27,6 +27,13 @@
 		/// <param name="window"></param>
 		void SendRemoveWindow(Window window);
 		/// <summary>
+		/// ウィンドウを生成。
+		/// </summary>
+		/// <param name="windowKind"></param>
+		/// <param name="extensionData"></param>
+		/// <param name="parent"></param>
+		Window SendCreateWindow(WindowKind windowKind, object extensionData, Window parent);
+		/// <summary>
 		/// 対象インデックスから指定IDを削除。
 		/// </summary>
 		/// <param name="guid"></param>

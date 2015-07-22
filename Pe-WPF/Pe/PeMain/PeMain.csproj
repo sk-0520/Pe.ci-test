@@ -145,6 +145,7 @@
     <Compile Include="Define\FileType.cs" />
     <Compile Include="Define\ImageScale.cs" />
     <Compile Include="Define\ToolbarNodeKind.cs" />
+    <Compile Include="Define\WindowKind.cs" />
     <Compile Include="IF\IAppSender.cs" />
     <Compile Include="IF\IHavingAppSender.cs" />
     <Compile Include="IF\IMenuItem.cs" />
