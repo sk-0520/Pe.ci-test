@@ -463,6 +463,8 @@
 
 		void ReceiveAppendWindow(Window window)
 		{
+			window.Closed += Window_Closed;
+
 			var toolbarWindow = window as LauncherToolbarWindow;
 			if(toolbarWindow != null) {
 				LauncherToolbarWindowList.Add(toolbarWindow);
@@ -1109,6 +1111,12 @@
 		{
 			SaveWindowItem(WindowSaveType.System);
 		}
+
+		void Window_Closed(object sender, EventArgs e)
+		{
+			SendRemoveWindow(sender as Window);
+		}
+
 
 	}
 }

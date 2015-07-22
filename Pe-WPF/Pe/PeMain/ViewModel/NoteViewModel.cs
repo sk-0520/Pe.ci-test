@@ -630,9 +630,6 @@
 		private void View_UserClosing(object sender, CancelEventArgs e)
 		{
 			Visible = false;
-			if (HasView) {
-				AppSender.SendRemoveWindow(View);
-			}
 		}
 
 	}
