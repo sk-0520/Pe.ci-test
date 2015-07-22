@@ -34,7 +34,7 @@
 	using System.Windows.Controls.Primitives;
 	using System.Windows.Media.Imaging;
 
-	public class LauncherToolbarViewModel : HavingViewSingleModelWrapperViewModelBase<LauncherToolbarDataModel, LauncherToolbarWindow>, IApplicationDesktopToolbarData, IVisualStyleData, IHavingNonProcess, IHavingClipboardWatcher, IWindowAreaCorrectionData, IWindowHitTestData, IHavingLauncherIconCaching
+	public class LauncherToolbarViewModel : HavingViewSingleModelWrapperViewModelBase<LauncherToolbarDataModel, LauncherToolbarWindow>, IApplicationDesktopToolbarData, IVisualStyleData, IHavingNonProcess, IHavingClipboardWatcher, IWindowAreaCorrectionData, IWindowHitTestData, IHavingLauncherIconCaching, IHavingAppSender
 	{
 		#region static
 
@@ -154,13 +154,14 @@
 
 		#endregion
 
-		public LauncherToolbarViewModel(LauncherToolbarDataModel model, LauncherToolbarWindow view, ScreenModel screen, LauncherIconCaching launcherIconCaching, INonProcess nonProcess, IClipboardWatcher clipboardWatcher)
+		public LauncherToolbarViewModel(LauncherToolbarDataModel model, LauncherToolbarWindow view, ScreenModel screen, LauncherIconCaching launcherIconCaching, INonProcess nonProcess, IClipboardWatcher clipboardWatcher, IAppSender appSender)
 			: base(model, view)
 		{
 			DockScreen = screen;
 			LauncherIconCaching = launcherIconCaching;
 			NonProcess = nonProcess;
 			ClipboardWatcher = clipboardWatcher;
+			AppSender = appSender;
 
 			this._captionWidth = GetCaptionWidth();
 			MenuWidth = GetMenuWidth();
@@ -320,7 +321,7 @@
 			{
 				if (this._launcherItems == null) {
 					var list = GetLauncherItems(SelectedGroup)
-						.Select(m => new LauncherButtonItemViewModel(m, this.LauncherIconCaching, NonProcess, ClipboardWatcher) {
+						.Select(m => new LauncherButtonItemViewModel(m, this.LauncherIconCaching, NonProcess, ClipboardWatcher, AppSender) {
 							IconScale = Model.Toolbar.IconScale,
 						});
 					;
@@ -356,6 +357,12 @@
 		#region IHavingLauncherIconCaching
 
 		public LauncherIconCaching LauncherIconCaching { get; private set; }
+
+		#endregion
+
+		#region IHavingAppSender
+
+		public IAppSender AppSender { get; private set; }
 
 		#endregion
 

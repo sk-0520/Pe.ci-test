@@ -21,7 +21,7 @@
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
-	public class LauncherButtonItemViewModel: LauncherSimpleItemViewModel, IHavingClipboardWatcher
+	public class LauncherButtonItemViewModel: LauncherSimpleItemViewModel, IHavingClipboardWatcher, IHavingAppSender
 	{
 		#region varable
 
@@ -37,10 +37,11 @@
 
 		#endregion
 
-		public LauncherButtonItemViewModel(LauncherItemModel model, LauncherIconCaching launcherIconCaching, INonProcess nonPorocess, IClipboardWatcher clipboardWatcher)
+		public LauncherButtonItemViewModel(LauncherItemModel model, LauncherIconCaching launcherIconCaching, INonProcess nonPorocess, IClipboardWatcher clipboardWatcher, IAppSender appSender)
 			: base(model, launcherIconCaching, nonPorocess)
 		{
 			ClipboardWatcher = clipboardWatcher;
+			AppSender = appSender;
 		}
 
 		#region property
@@ -51,7 +52,13 @@
 		public IClipboardWatcher ClipboardWatcher { get; private set; }
 
 		#endregion
-	
+
+		#region IHavingAppSender
+
+		public IAppSender AppSender { get; private set; }
+
+		#endregion
+
 		public IconScale IconScale 
 		{
 			get { return this._iconScale; }
@@ -175,6 +182,19 @@
 				var result = CreateCommand(
 					o => {
 						Execute();
+					}
+				);
+
+				return result;
+			}
+		}
+
+		public ICommand RunExCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
 					}
 				);
 

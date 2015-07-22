@@ -456,7 +456,7 @@
 									<TextBlock Text="execute" />
 									<StackPanel Orientation="Horizontal">
 										<Button Content="normal" IsEnabled="{Binding ExistsCommand}" Command="{Binding RunCommand}" Style="{StaticResource PopupClose}" />
-										<Button Content="extra"  IsEnabled="{Binding ExistsCommand}" Style="{StaticResource PopupClose}" />
+										<Button Content="extra"  IsEnabled="{Binding ExistsCommand}" Command="{Binding RunExCommand}" Style="{StaticResource PopupClose}" />
 									</StackPanel>
 									<Separator/>
 									<TextBlock Text="file" />

@@ -1,0 +1,19 @@
+﻿<AW:ViewModelCommonDataWindow
+	x:Class="ContentTypeTextNet.Pe.PeMain.View.LauncherExecuteWindow"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:AVM="clr-namespace:ContentTypeTextNet.Pe.PeMain.ViewModel"
+	xmlns:AP="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
+	xmlns:AW="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Window"
+	xmlns:SC="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=SharedLibrary"
+	xmlns:AC="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Converter"
+	x:TypeArguments="AVM:LauncherExecuteItemViewModel"
+	Title="LauncherExecuteWindow" 
+	WindowStyle="ToolWindow"
+	Height="300" 
+	Width="300"
+>
+	<Grid>
+
+	</Grid>
+</AW:ViewModelCommonDataWindow>

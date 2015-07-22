@@ -204,6 +204,7 @@
     <Compile Include="ViewModel\GroupRootViewModel.cs" />
     <Compile Include="ViewModel\GroupViewModelBase.cs" />
     <Compile Include="ViewModel\HavingViewSingleModelWrapperIndexViewModelBase.cs" />
+    <Compile Include="ViewModel\LauncherExecuteItemViewModel.cs" />
     <Compile Include="ViewModel\LauncherSimpleItemViewModel.cs" />
     <Compile Include="ViewModel\LauncherToolbarViewModel.cs" />
     <Compile Include="ViewModel\LauncherButtonItemViewModel.cs" />
@@ -222,6 +223,9 @@
     </Compile>
     <Compile Include="View\ClipboardWindow.xaml.cs">
       <DependentUpon>ClipboardWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\LauncherExecuteWindow.xaml.cs">
+      <DependentUpon>LauncherExecuteWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\LoggingWindow.xaml.cs">
       <DependentUpon>LoggingWindow.xaml</DependentUpon>
@@ -323,6 +327,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\ClipboardWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\LauncherExecuteWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
