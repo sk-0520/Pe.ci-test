@@ -2,6 +2,7 @@
 {
 	using System;
 	using System.Collections.Generic;
+	using System.Diagnostics;
 	using System.IO;
 	using System.IO.Compression;
 	using System.Linq;
@@ -141,6 +142,32 @@
 			}
 		}
 
+
+		/// <summary>
+		/// パスから名前取得。
+		/// </summary>
+		/// <param name="path"></param>
+		/// <returns></returns>
+		public static string GetName(string path)
+		{
+			var plainName = Path.GetFileNameWithoutExtension(path);
+			if (string.IsNullOrEmpty(plainName)) {
+				// ドライブ名
+				var drive = DriveInfo.GetDrives().FirstOrDefault(d => d.Name == path);
+				if (drive != null) {
+					return drive.VolumeLabel;
+				}
+			}
+
+			if (PathUtility.HasExtension(path, "exe", "dll")) {
+				var verInfo = FileVersionInfo.GetVersionInfo(path);
+				if (!string.IsNullOrEmpty(verInfo.ProductName)) {
+					return verInfo.ProductName;
+				}
+			}
+
+			return plainName;
+		}
 
 	}
 }
