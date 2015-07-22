@@ -89,7 +89,9 @@
     <Compile Include="CompatibleWindows\IconWrapper.cs" />
     <Compile Include="CompatibleWindows\Utility\HandleUtility.cs" />
     <Compile Include="CompatibleWindows\Utility\PodStructUtility.cs" />
+    <Compile Include="Data\DialogFilterItem.cs" />
     <Compile Include="Data\InformationGroup.cs" />
+    <Compile Include="Data\DialogFilterValueItem.cs" />
     <Compile Include="Define\DockType.cs" />
     <Compile Include="Define\IconScale.cs" />
     <Compile Include="Define\LogKind.cs" />
@@ -113,6 +115,7 @@
     <Compile Include="IF\IMakeBitmapSource.cs" />
     <Compile Include="IF\INonProcess.cs" />
     <Compile Include="Data\MVMPair.cs" />
+    <Compile Include="Logic\DialogFilterList.cs" />
     <Compile Include="Logic\MVMPairCreateDelegationCollection.cs" />
     <Compile Include="Model\CollectionModel.cs" />
     <Compile Include="Model\FixedSizeCollectionModel.cs" />

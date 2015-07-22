@@ -188,7 +188,7 @@
 			OnPropertyChanged("ItemTypeText");
 		}
 
-		void SetReplacedValue()
+		public void SetReplacedValue()
 		{
 			if (IsReplace) {
 				Processor = TemplateUtility.MakeTemplateProcessor(BodyModel.Source, Processor, NonProcess);

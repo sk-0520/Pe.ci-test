@@ -4,13 +4,16 @@
 	using System.Collections.Generic;
 	using System.Collections.ObjectModel;
 	using System.Diagnostics;
+	using System.IO;
 	using System.Linq;
 	using System.Text;
 	using System.Threading.Tasks;
 	using System.Windows;
 	using System.Windows.Input;
+	using ContentTypeTextNet.Library.SharedLibrary.Data;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 	using ContentTypeTextNet.Pe.Library.PeData.Define;
@@ -22,6 +25,7 @@
 	using ContentTypeTextNet.Pe.PeMain.Logic.Property;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 	using ContentTypeTextNet.Pe.PeMain.View;
+	using Microsoft.Win32;
 
 	public class TemplateViewModel : HavingViewSingleModelWrapperIndexViewModelBase<TemplateSettingModel, TemplateWindow, TemplateIndexItemCollectionModel, TemplateIndexItemModel, TemplateItemViewModel>
 	{
@@ -175,6 +179,26 @@
 			}
 		}
 
+		public ICommand SaveItemCommand
+		{
+			get {
+				var result = CreateCommand(
+					o => {
+						if (SelectedViewModel == null) {
+							return;
+						}
+
+						SelectedViewModel.SetReplacedValue();
+						if (!string.IsNullOrEmpty(SelectedViewModel.Replaced)) {
+							SaveFileFromDialog(SelectedViewModel);
+						}
+					}
+				);
+
+				return result;
+			}
+		}
+
 		#endregion
 
 		#region function
@@ -223,6 +247,39 @@
 			if (vm.IsChanged) {
 				vm.SaveBody();
 			}
+		}
+
+		bool SaveFileFromDialog(TemplateItemViewModel vm)
+		{
+			CheckUtility.EnforceNotNullAndNotEmpty(vm.Replaced);
+
+			var filter = new DialogFilterList() {
+				{ new DialogFilterItem("text", "*.txt") },
+			};
+
+			var dialog = new SaveFileDialog() {
+				Filter = filter.FilterText,
+				FilterIndex = 0,
+				AddExtension = true,
+				CheckPathExists = true,
+				ValidateNames = true,
+			};
+
+			var dialogResult = dialog.ShowDialog();
+			if (dialogResult.GetValueOrDefault()) {
+				SaveFile(dialog.FileName, vm);
+				return true;
+			} else {
+				return false;
+			}
+		}
+
+		void SaveFile(string path, TemplateItemViewModel vm)
+		{
+			CheckUtility.EnforceNotNullAndNotEmpty(vm.Replaced);
+
+			var writeValue = vm.Replaced;
+			File.WriteAllText(path, writeValue);
 		}
 
 		#endregion

@@ -54,7 +54,7 @@
 					<TextBlock Text="create" />
 				</StackPanel>
 			</Button>
-			<Button  IsEnabled="{Binding IsEnabled,ElementName=content}">
+			<Button Command="{Binding SaveItemCommand}" IsEnabled="{Binding IsEnabled,ElementName=content}">
 				<StackPanel Orientation="Horizontal">
 					<Image Style="{StaticResource ImageRenderStyle}" Source="{Binding Source={x:Static AM:AppResource.CommonSaveImage}}" />
 					<TextBlock Text="save" />
