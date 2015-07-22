@@ -338,6 +338,7 @@
 
 			var quotas = new XmlDictionaryReaderQuotas() {
 				MaxArrayLength = (int)stream.Length,
+				MaxStringContentLength = (int)stream.Length,
 			};
 			using(var reader = XmlDictionaryReader.CreateBinaryReader(stream, null, quotas)) {
 				//reader.Read();

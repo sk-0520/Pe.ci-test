@@ -194,6 +194,11 @@
 				}
 			}
 
+			if (!filter.Any()) {
+				NonProcess.Logger.Information("type list: 0");
+				return false;
+			}
+
 			var dialog = new SaveFileDialog() {
 				Filter = filter.FilterText,
 				FilterIndex = defIndex,
