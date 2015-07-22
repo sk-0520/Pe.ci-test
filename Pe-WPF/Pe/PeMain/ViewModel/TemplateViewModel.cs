@@ -267,19 +267,24 @@
 
 			var dialogResult = dialog.ShowDialog();
 			if (dialogResult.GetValueOrDefault()) {
-				SaveFile(dialog.FileName, vm);
-				return true;
+				return SaveFile(dialog.FileName, vm);
 			} else {
 				return false;
 			}
 		}
 
-		void SaveFile(string path, TemplateItemViewModel vm)
+		bool SaveFile(string path, TemplateItemViewModel vm)
 		{
 			CheckUtility.EnforceNotNullAndNotEmpty(vm.Replaced);
 
 			var writeValue = vm.Replaced;
-			File.WriteAllText(path, writeValue);
+			try {
+				File.WriteAllText(path, writeValue);
+				return true;
+			} catch (Exception ex) {
+				NonProcess.Logger.Error(ex);
+				return false;
+			}
 		}
 
 		#endregion

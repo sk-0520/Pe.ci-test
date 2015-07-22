@@ -169,7 +169,7 @@
 			}
 		}
 
-		public ImageSource Image
+		public BitmapSource Image
 		{
 			get {
 				if(BodyModel.Image != null) {

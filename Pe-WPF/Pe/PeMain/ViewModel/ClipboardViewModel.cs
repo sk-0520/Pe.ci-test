@@ -1,28 +1,33 @@
 ﻿namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 {
 	using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Media;
-using ContentTypeTextNet.Library.SharedLibrary.IF;
-using ContentTypeTextNet.Library.SharedLibrary.Model;
-using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
-using ContentTypeTextNet.Pe.Library.PeData.Define;
-using ContentTypeTextNet.Pe.Library.PeData.Item;
-using ContentTypeTextNet.Pe.Library.PeData.Setting;
-using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
-using ContentTypeTextNet.Pe.PeMain.Data;
-using ContentTypeTextNet.Pe.PeMain.Define;
-using ContentTypeTextNet.Pe.PeMain.IF;
-using ContentTypeTextNet.Pe.PeMain.Logic.Property;
-using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
-using ContentTypeTextNet.Pe.PeMain.View;
+	using System.Collections.Generic;
+	using System.Diagnostics;
+	using System.IO;
+	using System.Linq;
+	using System.Text;
+	using System.Threading.Tasks;
+	using System.Windows;
+	using System.Windows.Controls;
+	using System.Windows.Input;
+	using System.Windows.Media;
+	using System.Windows.Media.Imaging;
+	using ContentTypeTextNet.Library.SharedLibrary.Data;
+	using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic;
+	using ContentTypeTextNet.Library.SharedLibrary.Model;
+	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+	using ContentTypeTextNet.Pe.Library.PeData.Define;
+	using ContentTypeTextNet.Pe.Library.PeData.Item;
+	using ContentTypeTextNet.Pe.Library.PeData.Setting;
+	using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
+	using ContentTypeTextNet.Pe.PeMain.Data;
+	using ContentTypeTextNet.Pe.PeMain.Define;
+	using ContentTypeTextNet.Pe.PeMain.IF;
+	using ContentTypeTextNet.Pe.PeMain.Logic.Property;
+	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
+	using ContentTypeTextNet.Pe.PeMain.View;
+	using Microsoft.Win32;
 
 	public class ClipboardViewModel: HavingViewSingleModelWrapperIndexViewModelBase<ClipboardSettingModel, ClipboardWindow, ClipboardIndexItemCollectionModel, ClipboardIndexItemModel, ClipboardItemViewModel>
 	{
@@ -129,6 +134,24 @@ using ContentTypeTextNet.Pe.PeMain.View;
 			}
 		}
 
+		public ICommand SaveItemCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						if (SelectedViewModel == null) {
+							return;
+						}
+
+						SaveFileFromDialog(SelectedViewModel);
+					}
+				);
+
+				return result;
+			}
+		}
+
 		#endregion
 
 		#region function
@@ -146,6 +169,75 @@ using ContentTypeTextNet.Pe.PeMain.View;
 			return result;
 		}
 
+		bool SaveFileFromDialog(ClipboardItemViewModel vm)
+		{
+			var srcFilters = new [] {
+				new DialogFilterValueItem<ClipboardType>(ClipboardType.Text, "text", "*.txt"),
+				new DialogFilterValueItem<ClipboardType>(ClipboardType.Rtf, "rtf", "*.rtf"),
+				new DialogFilterValueItem<ClipboardType>(ClipboardType.Html, "html", "*.html"),
+				new DialogFilterValueItem<ClipboardType>(ClipboardType.Image, "image", "*.png"),
+			};
+			var filter = new DialogFilterList();
+
+			var bestType = ClipboardUtility.GetSingleClipboardType(vm.Model.Type);
+			var types = ClipboardUtility.GetClipboardTypeList(vm.Model.Type);
+			var defIndex = 0;
+			var tempIndex = 0;
+			foreach (var type in types.Where(t => t != ClipboardType.File)) {
+				var filterItem = srcFilters.FirstOrDefault(f => f.Value == type);
+				if (filterItem != null) {
+					filter.Add(filterItem);
+					tempIndex += 1;
+					if (filterItem.Value == bestType) {
+						defIndex = tempIndex;
+					}
+				}
+			}
+
+			var dialog = new SaveFileDialog() {
+				Filter = filter.FilterText,
+				FilterIndex = defIndex,
+				AddExtension = true,
+				CheckPathExists = true,
+				ValidateNames = true,
+			};
+
+			var dialogResult = dialog.ShowDialog();
+			if (dialogResult.GetValueOrDefault()) {
+				var type = ((DialogFilterValueItem<ClipboardType>)filter[dialog.FilterIndex - 1]).Value;
+				SaveFile(dialog.FileName, vm, type);
+				return true;
+			} else {
+				return false;
+			}
+		}
+
+		bool SaveFile(string path, ClipboardItemViewModel vm, ClipboardType saveType)
+		{
+			Debug.Assert(saveType != ClipboardType.File);
+
+			var map = new Dictionary<ClipboardType, Action>() {
+				{ ClipboardType.Text, () => File.WriteAllText(path, vm.Text) },
+				{ ClipboardType.Rtf, () => File.WriteAllText(path, vm.Rtf) },
+				{ ClipboardType.Html, () => File.WriteAllText(path, vm.HtmlCode) },
+				{ ClipboardType.Image, () => {
+					using(var stream = new FileStream(path, FileMode.Create, FileAccess.Write)) {
+						var encoder = new PngBitmapEncoder();
+						encoder.Frames.Add(BitmapFrame.Create(vm.Image));
+						encoder.Save(stream);
+					}
+				} },
+			};
+
+			try {
+				map[saveType]();
+				return true;
+			} catch (Exception ex) {
+				NonProcess.Logger.Error(ex);
+				return false;
+			}
+
+		}
 
 		#endregion
 
