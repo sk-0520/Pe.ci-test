@@ -184,7 +184,6 @@
     <Compile Include="Logic\Utility\SystemEnvironmentUtility.cs" />
     <Compile Include="Logic\Utility\SystemExecuteUtility.cs" />
     <Compile Include="Logic\Utility\TemplateUtility.cs" />
-    <Compile Include="Logic\Utility\ViewUtility.cs" />
     <Compile Include="AppResource.cs" />
     <Compile Include="ViewModel\AcceptViewModel.cs" />
     <Compile Include="ViewModel\ClipboardItemViewModel.cs" />

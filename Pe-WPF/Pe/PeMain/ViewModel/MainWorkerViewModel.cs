@@ -488,6 +488,13 @@
 			CommonDataWindow window = null;
 
 			switch(kind) {
+				case WindowKind.LauncherToolbar:
+					{
+						window = new LauncherToolbarWindow();
+						window.SetCommonData(CommonData, (ScreenModel)extensionData);
+						break;
+					}
+
 				case WindowKind.ExecuteLauncher:
 					{
 						window = new LauncherExecuteWindow();
@@ -995,8 +1002,7 @@
 				foreach(var screen in Screen.AllScreens.OrderBy(s => !s.Primary)) {
 					//var toolbar = new LauncherToolbarWindow();
 					//toolbar.SetCommonData(CommonData, screen);
-					//LauncherToolbarWindowList.Add(toolbar);
-					ViewUtility.CreateToolbarWindow(screen, CommonData);
+					SendCreateWindow(WindowKind.LauncherToolbar, screen, null);
 				}
 			}
 		}
