@@ -48,7 +48,7 @@ using ContentTypeTextNet.Pe.PeMain.ViewModel;
 
 		#region IHavingWindowKind
 
-		public WindowKind WindowKind { get { return WindowKind.ExecuteLauncher; } }
+		public WindowKind WindowKind { get { return WindowKind.LauncherExecute; } }
 
 		#endregion
 	}

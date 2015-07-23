@@ -9,7 +9,7 @@
 	public enum WindowKind
 	{
 		LauncherToolbar,
-		ExecuteLauncher,
+		LauncherExecute,
 		Note,
 	}
 }

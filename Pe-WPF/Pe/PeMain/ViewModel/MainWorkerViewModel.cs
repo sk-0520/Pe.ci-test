@@ -495,7 +495,7 @@
 						break;
 					}
 
-				case WindowKind.ExecuteLauncher:
+				case WindowKind.LauncherExecute:
 					{
 						window = new LauncherExecuteWindow();
 						window.SetCommonData(CommonData, extensionData);

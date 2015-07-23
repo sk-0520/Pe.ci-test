@@ -196,7 +196,7 @@
 			{
 				var result = CreateCommand(
 					o => {
-						var window = AppSender.SendCreateWindow(WindowKind.ExecuteLauncher, Model, null);
+						var window = AppSender.SendCreateWindow(WindowKind.LauncherExecute, Model, null);
 						window.Show();
 					}
 				);
