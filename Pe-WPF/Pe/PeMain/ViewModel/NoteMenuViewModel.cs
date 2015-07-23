@@ -11,15 +11,18 @@
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 	using ContentTypeTextNet.Pe.PeMain.Data;
+	using ContentTypeTextNet.Pe.PeMain.Define;
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
+	using ContentTypeTextNet.Pe.PeMain.View;
 
-	public class NoteMenuViewModel : SingleModelWrapperViewModelBase<NoteIndexItemModel>, INoteMenuItem, IHavingCommonData
+	public class NoteMenuViewModel: SingleModelWrapperViewModelBase<NoteIndexItemModel>, INoteMenuItem, IHavingAppSender, IHavingNonProcess
 	{
-		public NoteMenuViewModel(NoteIndexItemModel model, CommonData commonData)
+		public NoteMenuViewModel(NoteIndexItemModel model, INonProcess nonProcess,  IAppSender appSender)
 			: base(model)
 		{
-			CommonData = commonData;
+			NonProcess = nonProcess;
+			AppSender = appSender;
 		}
 
 		#region property
@@ -42,8 +45,8 @@
 			{
 				var result = CreateCommand(
 					o => {
-						CommonData.NonProcess.Logger.Information("menu");
-						var window = ViewUtility.CreateNoteWindow(Model, CommonData);
+						NonProcess.Logger.Information("menu");
+						var window = (NoteWindow)AppSender.SendCreateWindow(WindowKind.Note, Model, null);
 						window.Activate();
 					}
 				);
@@ -54,9 +57,15 @@
 
 		#endregion
 
-		#region IHavingCommonData
+		#region IHavingNonProcess
 
-		public CommonData CommonData { get; private set; }
+		public INonProcess NonProcess { get; private set; }
+
+		#endregion
+
+		#region IHavingAppSender
+
+		public IAppSender AppSender { get; private set; }
 
 		#endregion
 	}

@@ -37,6 +37,7 @@
 	using System.Windows.Threading;
 	using Microsoft.Win32;
 	using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
+	using ContentTypeTextNet.Pe.PeMain.View.Parts.Window;
 
 	public sealed class MainWorkerViewModel: ViewModelBase, IAppSender, IClipboardWatcher
 	{
@@ -118,7 +119,7 @@
 
 		List<NoteWindow> NoteWindowList { get; set; }
 		public IEnumerable<NoteViewModel> NoteShowItems { get { return NoteWindowList.Select(w => w.ViewModel); } }
-		public IEnumerable<NoteMenuViewModel> NoteHiddenItems { get { return CommonData.NoteIndexSetting.Items.Where(n => !n.Visible).Select(n => new NoteMenuViewModel(n, CommonData)); } }
+		public IEnumerable<NoteMenuViewModel> NoteHiddenItems { get { return CommonData.NoteIndexSetting.Items.Where(n => !n.Visible).Select(n => new NoteMenuViewModel(n, CommonData.NonProcess, CommonData.AppSender)); } }
 
 		MessageWindow MessageWindow { get; set; }
 		List<Window> WindowList { get; set; }
@@ -489,17 +490,34 @@
 
 		public Window ReceiveCreateWindow(WindowKind kind, object extensionData, Window parent)
 		{
+			CommonDataWindow window = null;
+
 			switch(kind) {
 				case WindowKind.ExecuteLauncher:
 					{
-						var window = new LauncherExecuteWindow();
+						window = new LauncherExecuteWindow();
 						window.SetCommonData(CommonData, extensionData);
-						return window;
+						break;
+					}
+
+				case WindowKind.Note: 
+					{
+						var noteItem = (NoteIndexItemModel)extensionData;
+						if(!noteItem.Visible) {
+							CommonData.Logger.Trace("hidden -> show", noteItem);
+							noteItem.Visible = true;
+						}
+						window = new NoteWindow();
+						window.SetCommonData(CommonData, noteItem);
+						break;
 					}
 
 				default:
 					throw new NotImplementedException();
 			}
+
+			SendAppendWindow(window);
+			return window;
 		}
 
 		void RemoveIndex<TItemModel, TIndexBody>(IndexKind indexKind, Guid guid, IndexItemCollectionModel<TItemModel> items, IndexBodyPairItemCollection<TIndexBody> cachingItems)
@@ -1036,7 +1054,7 @@
 
 		NoteWindow CreateNoteWindow(NoteIndexItemModel noteItem, bool appendIndex)
 		{
-			var window = ViewUtility.CreateNoteWindow(noteItem, CommonData);
+			var window = (NoteWindow)SendCreateWindow(WindowKind.Note, noteItem, null);
 			if(appendIndex) {
 				CommonData.NoteIndexSetting.Items.Add(noteItem);
 			}

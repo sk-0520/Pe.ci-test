@@ -8,6 +8,8 @@
 
 	public enum WindowKind
 	{
+		LauncherToolbar,
 		ExecuteLauncher,
+		Note,
 	}
 }
