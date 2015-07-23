@@ -473,13 +473,28 @@
 
 		void RemoveWindow(Window window)
 		{
-			var noteWindow = window as NoteWindow;
-			if(noteWindow != null) {
-				NoteWindowList.Remove(noteWindow);
-				//var noteViewMode = noteWindow.ViewModel;
+			var havingWindwKind = window as IHavingWindowKind;
+			if(havingWindwKind != null) {
+				switch(havingWindwKind.WindowKind) {
+					case WindowKind.LauncherToolbar: 
+						{
+							CommonData.Logger.Debug("not impl");
+						}
+						break;
 
-				OnPropertyChanged("NoteShowItems");
-				OnPropertyChanged("NoteHiddenItems");
+					case WindowKind.Note:
+						{
+							var noteWindow = (NoteWindow)window;
+							NoteWindowList.Remove(noteWindow);
+
+							OnPropertyChanged("NoteShowItems");
+							OnPropertyChanged("NoteHiddenItems");
+							break;
+						}
+
+					default:
+						throw new NotImplementedException();
+				}
 			}
 		}
 

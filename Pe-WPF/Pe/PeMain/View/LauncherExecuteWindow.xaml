@@ -9,7 +9,6 @@
 	xmlns:AC="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Converter"
 	x:TypeArguments="AVM:LauncherExecuteItemViewModel"
 	Title="LauncherExecuteWindow" 
-	WindowStyle="ToolWindow"
 	Height="300" 
 	Width="300"
 >
