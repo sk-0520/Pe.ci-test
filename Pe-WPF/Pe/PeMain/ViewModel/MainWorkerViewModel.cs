@@ -415,11 +415,6 @@
 			ReceiveAppendWindow(window);
 		}
 
-		public void SendRemoveWindow(Window window)
-		{
-			ReceiveRemoveWindow(window);
-		}
-
 		public Window SendCreateWindow(WindowKind kind, object extensionData, Window parent)
 		{
 			return ReceiveCreateWindow(kind, extensionData, parent);
@@ -476,7 +471,7 @@
 			}
 		}
 
-		void ReceiveRemoveWindow(Window window)
+		void RemoveWindow(Window window)
 		{
 			var noteWindow = window as NoteWindow;
 			if(noteWindow != null) {
@@ -1132,7 +1127,7 @@
 
 		void Window_Closed(object sender, EventArgs e)
 		{
-			SendRemoveWindow(sender as Window);
+			RemoveWindow(sender as Window);
 		}
 
 

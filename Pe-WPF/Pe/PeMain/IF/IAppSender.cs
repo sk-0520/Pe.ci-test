@@ -22,11 +22,6 @@
 		/// <param name="window"></param>
 		void SendAppendWindow(Window window);
 		/// <summary>
-		/// ウィンドウを破棄。
-		/// </summary>
-		/// <param name="window"></param>
-		void SendRemoveWindow(Window window);
-		/// <summary>
 		/// ウィンドウを生成。
 		/// </summary>
 		/// <param name="windowKind"></param>
