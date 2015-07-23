@@ -148,6 +148,7 @@
     <Compile Include="Define\WindowKind.cs" />
     <Compile Include="IF\IAppSender.cs" />
     <Compile Include="IF\IHavingAppSender.cs" />
+    <Compile Include="IF\IHavingWindowKind.cs" />
     <Compile Include="IF\IMenuItem.cs" />
     <Compile Include="IF\INoteMenuItem.cs" />
     <Compile Include="IF\IUnload.cs" />

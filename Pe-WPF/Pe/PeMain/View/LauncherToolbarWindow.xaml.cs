@@ -40,11 +40,12 @@
 	using ContentTypeTextNet.Pe.PeMain.View.Parts.ViewExtend;
 	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
+	using ContentTypeTextNet.Pe.PeMain.Define;
 
 	/// <summary>
 	/// ToolbarWindow.xaml の相互作用ロジック
 	/// </summary>
-	public partial class LauncherToolbarWindow : ViewModelCommonDataWindow<LauncherToolbarViewModel>, IApplicationDesktopToolbar
+	public partial class LauncherToolbarWindow : ViewModelCommonDataWindow<LauncherToolbarViewModel>, IApplicationDesktopToolbar, IHavingWindowKind
 	{
 		public LauncherToolbarWindow()
 		{
@@ -172,6 +173,12 @@
 				//NativeMethods.UpdateWindow(Handle);
 			}
 		}
+
+		#endregion
+
+		#region IHavingWindowKind
+
+		public WindowKind WindowKind { get { return WindowKind.LauncherToolbar; } }
 
 		#endregion
 

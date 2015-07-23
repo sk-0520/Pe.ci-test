@@ -17,6 +17,8 @@
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.View.ViewExtend;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
+	using ContentTypeTextNet.Pe.PeMain.Define;
+	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.View.Parts.ViewExtend;
 	using ContentTypeTextNet.Pe.PeMain.View.Parts.Window;
 	using ContentTypeTextNet.Pe.PeMain.ViewModel;
@@ -24,7 +26,7 @@
 	/// <summary>
 	/// NoteWindow.xaml の相互作用ロジック
 	/// </summary>
-	public partial class NoteWindow: ViewModelCommonDataWindow<NoteViewModel>
+	public partial class NoteWindow: ViewModelCommonDataWindow<NoteViewModel>, IHavingWindowKind
 	{
 		public NoteWindow()
 		{
@@ -87,6 +89,12 @@
 
 			return base.WndProc(hWnd, msg, wParam, lParam, ref handled);
 		}
+
+		#endregion
+
+		#region IHavingWindowKind
+
+		public WindowKind WindowKind { get { return WindowKind.Note; } }
 
 		#endregion
 
