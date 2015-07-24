@@ -32,7 +32,18 @@ namespace ContentTypeTextNet.Pe.PeMain
 <#
 var type = typeof(AppResource);
 var fieldInfos = type.GetFields(BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
-foreach(var fieldInfo in fieldInfos) {
+var usingFieldInfos = fieldInfos
+	.Where(fi => fi.GetCustomAttribute(typeof(AppResourceAttribute), true) != null)
+	.ToArray()
+;
+#>
+		/*
+		このソースは自動生成のため AppResource-generator.tt を編集すること。
+
+		生成元フィールド数: <#= usingFieldInfos.Length #>
+		*/
+<#
+foreach(var fieldInfo in usingFieldInfos) {
 	var attribute = fieldInfo.GetCustomAttribute(typeof(AppResourceAttribute), true) as AppResourceAttribute;
 	if(attribute == null) {
 		continue;
@@ -41,8 +52,12 @@ foreach(var fieldInfo in fieldInfos) {
 	var baseName = fieldInfo.Name.ToUpperInvariant()[0] + fieldInfo.Name.Substring(1);
 	var pathName = baseName + "Path";
 #>
-		#region <#= attribute.AppResourceType #>: <#= fieldInfo.Name #>
+		#region <#= attribute.AppResourceType #>: <#= baseName #>
 
+		/// <summary>
+		/// [<#= attribute.AppResourceType #>] <#= baseName #>のリソースパス。
+		/// <para><#= fieldInfo.GetValue(null) #></para>
+		/// </summary>
 		public static string <#= pathName #>
 		{
 			get { return <#= fieldInfo.Name #>; }
@@ -52,19 +67,28 @@ foreach(var fieldInfo in fieldInfos) {
 	switch(attribute.AppResourceType) {
 		case AppResourceType.Image:
 #>
-
+		/// <summary>
+		/// [<#= attribute.AppResourceType #>] <#= baseName #>のイメージソース。
+		/// <para>初回のみ生成を行う。</para>
+		/// </summary>
+		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
 		public static BitmapSource <#= baseName #>Image
 		{
 			get { return GetImage(<#= pathName #>); }
 		}
-
 <#
 			break;
 				
 		case AppResourceType.Icon:
 			var getIconMethodName = "Get" + baseName + "Icon";
 #>
-
+		/// <summary>
+		/// [<#= attribute.AppResourceType #>] <#= baseName #>のイメージソース。
+		/// <para>初回のみ生成を行う。</para>
+		/// </summary>
+		/// <param name="iconScale">アイコンサイズ</param>
+		/// <param name="logger">ログ。不要であれば null を指定(するか引数を与えない)。</param>
+		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
 		public static BitmapSource <#= getIconMethodName #>(IconScale iconScale, ILogger logger = null)
 		{
 			return GetIcon(<#= pathName #>, iconScale, logger);
@@ -76,6 +100,10 @@ foreach(var fieldInfo in fieldInfos) {
 			var iconScaleList = new [] { "Small", "Normal", "Big", "Large", };
 			foreach(var iconScale in iconScaleList) {
 #>
+		/// <summary>
+		/// [<#= attribute.AppResourceType #>] <#= baseName #>のイメージソース(IconScale.<#= iconScale #>)。
+		/// </summary>
+		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
 		public static BitmapSource <#= baseName #>Icon<#= iconScale #>
 		{
 			get

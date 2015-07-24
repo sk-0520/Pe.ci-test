@@ -23,8 +23,6 @@
 	/// </summary>
 	public static partial class AppResource
 	{
-		#region variable
-
 		[AppResource(AppResourceType.Icon)]
 		const string application="/Resources/Icon/App.ico";
 		[AppResource(AppResourceType.Icon)]
@@ -97,7 +95,5 @@
 		const string windowLoad = "/Resources/Image/Window/WindowLoad.png";
 		[AppResource(AppResourceType.Image)]
 		const string windowSave = "/Resources/Image/Window/WindowSave.png";
-
-		#endregion
 	}
 }
