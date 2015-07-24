@@ -7,6 +7,7 @@
 	using System.Text;
 	using System.Threading.Tasks;
 	using System.Windows.Input;
+	using ContentTypeTextNet.Library.SharedLibrary.CompatibleForms;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
@@ -97,7 +98,14 @@
 			get
 			{
 				var result = CreateCommand(
-					o => { }
+					o => {
+						using (var dialog = new FolderBrowserDialog()) {
+							var dialogResult = dialog.ShowDialog();
+							if (dialogResult.GetValueOrDefault()) {
+
+							}
+						}
+					}
 				);
 
 				return result;

@@ -81,6 +81,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attribute\PixelKindAttribute.cs" />
+    <Compile Include="CompatibleForms\CompatibleFormWindow.cs" />
+    <Compile Include="CompatibleForms\FolderBrowserDialog.cs" />
     <Compile Include="CompatibleForms\Screen.cs" />
     <Compile Include="CompatibleForms\SystemInformation.cs" />
     <Compile Include="CompatibleForms\Utility\DrawingUtility.cs" />
