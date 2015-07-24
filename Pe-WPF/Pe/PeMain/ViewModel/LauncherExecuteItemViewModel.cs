@@ -2,13 +2,17 @@
 {
 	using System;
 	using System.Collections.Generic;
+	using System.IO;
 	using System.Linq;
 	using System.Text;
 	using System.Threading.Tasks;
+	using System.Windows.Input;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.ViewModel.Control;
+	using Microsoft.Win32;
 
 	public class LauncherExecuteItemViewModel : LauncherSimpleItemViewModel
 	{
@@ -59,6 +63,57 @@
 		{
 			get { return this._workDirPath; }
 			set { SetVariableValue(ref this._workDirPath, value); }
+		}
+
+		#endregion
+
+		#region command
+
+		public ICommand OpenOptionFilesCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						var defFilePath = File.Exists(Option) ? Option: string.Empty;
+						var dialog = new OpenFileDialog() {
+							CheckFileExists = true,
+							FileName = defFilePath,
+							Multiselect = true,
+						};
+						var dialogResult = dialog.ShowDialog();
+						if (dialogResult.GetValueOrDefault()) {
+							Option = string.Join(" ", TextUtility.WhitespaceToQuotation(dialog.FileNames));
+						}
+					}
+				);
+
+				return result;
+			}
+		}
+
+		public ICommand OpenOptionDirectoryCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => { }
+				);
+
+				return result;
+			}
+		}
+
+		public ICommand OpenWorkDirectoryDirectoryCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => { }
+				);
+
+				return result;
+			}
 		}
 
 		#endregion

@@ -72,5 +72,21 @@
 				}
 			}
 		}
+
+		/// <summary>
+		/// 文字列が条件に該当すればくくる。
+		/// </summary>
+		/// <param name="s"></param>
+		/// <param name="left"></param>
+		/// <param name="right"></param>
+		/// <returns></returns>
+		public static string SetParentheses(this string s, Func<string, bool> func, string left, string right)
+		{
+			if (func(s)) {
+				return left + s + right;
+			} else {
+				return s;
+			}
+		}
 	}
 }

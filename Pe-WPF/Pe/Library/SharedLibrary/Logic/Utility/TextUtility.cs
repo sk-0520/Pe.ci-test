@@ -9,6 +9,7 @@
 	using System.Text;
 	using System.Text.RegularExpressions;
 	using System.Threading.Tasks;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 
 	/// <summary>
 	/// 文字列処理共通。
@@ -58,5 +59,16 @@
 
 			return sc;
 		}
+
+		/// <summary>
+		/// ホワイトスペースがあれば " で括る。
+		/// </summary>
+		/// <param name="seq"></param>
+		/// <returns></returns>
+		public static IEnumerable<string> WhitespaceToQuotation(this IEnumerable<string> seq)
+		{
+			return seq.Select(word => word.SetParentheses(s => s.Any(c => char.IsWhiteSpace(c)), "\"", "\""));
+		}
+
 	}
 }
