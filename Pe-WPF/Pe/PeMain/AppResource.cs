@@ -93,17 +93,11 @@
 		[AppResource(AppResourceType.Image)]
 		const string clipboardImageRaw = "/Resources/Image/Clipboard/ImageRaw.png";
 
-		public static string WindowLoadPath { get { return "/Resources/Image/Window/WindowLoad.png"; } }
-		public static string WindowSavePath { get { return "/Resources/Image/Window/WindowSave.png"; } }
+		[AppResource(AppResourceType.Image)]
+		const string windowLoad = "/Resources/Image/Window/WindowLoad.png";
+		[AppResource(AppResourceType.Image)]
+		const string windowSave = "/Resources/Image/Window/WindowSave.png";
 
 		#endregion
-
-		#region property
-
-		public static BitmapSource WindowSaveImage { get { return GetImage(WindowLoadPath); } }
-		public static BitmapSource WindowLoadImage { get { return GetImage(WindowSavePath); } }
-		#endregion
-
-
 	}
 }

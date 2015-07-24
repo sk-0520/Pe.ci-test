@@ -576,6 +576,34 @@ namespace ContentTypeTextNet.Pe.PeMain
 		}
 
 		#endregion clipboardImageRaw
+		#region Image: windowLoad
+
+		public static string WindowLoadPath
+		{
+			get { return windowLoad; }
+		}
+
+
+		public static BitmapSource WindowLoadImage
+		{
+			get { return GetImage(WindowLoadPath); }
+		}
+
+		#endregion windowLoad
+		#region Image: windowSave
+
+		public static string WindowSavePath
+		{
+			get { return windowSave; }
+		}
+
+
+		public static BitmapSource WindowSaveImage
+		{
+			get { return GetImage(WindowSavePath); }
+		}
+
+		#endregion windowSave
 	}
 }
 
