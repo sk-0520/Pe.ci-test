@@ -18,6 +18,7 @@
 		#region variable
 
 		HashSet<DelegateCommand> _createdCommands = new HashSet<DelegateCommand>();
+		bool _isChanged = false;
 
 		#endregion
 
@@ -29,7 +30,10 @@
 
 		#region property
 
-		public bool IsChanged { get; private set; }
+		public bool IsChanged {
+			get { return this._isChanged; }
+			private set { SetVariableValue(ref this._isChanged, value); }
+		}
 
 		#endregion
 
