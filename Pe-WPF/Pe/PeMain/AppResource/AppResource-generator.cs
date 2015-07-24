@@ -17,7 +17,7 @@ namespace ContentTypeTextNet.Pe.PeMain
 	using ContentTypeTextNet.Pe.PeMain.Logic;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
-	partial class AppResourceT4
+	partial class AppResource
 	{
 					//4
 			

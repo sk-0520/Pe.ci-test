@@ -12,11 +12,7 @@
 	using ContentTypeTextNet.Library.SharedLibrary.Logic;
 	using ContentTypeTextNet.Pe.PeMain.Logic;
 
-	/// <summary>
-	/// Peで使用するリソース関係。
-	/// <para>自分の持ち物くらい好きにさわらせてくれ。</para>
-	/// </summary>
-	public static partial class AppResourceT4
+	partial class AppResource
 	{
 		#region static
 

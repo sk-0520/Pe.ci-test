@@ -124,8 +124,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="AppResource\AppResource-const.cs" />
-    <Compile Include="AppResource\AppResource-main.cs" />
+    <Compile Include="AppResource\AppResource-implement.cs" />
     <Compile Include="AppResource\AppResourceAttribute.cs" />
     <Compile Include="AppResource\AppResource-generator.cs">
       <AutoGen>True</AutoGen>

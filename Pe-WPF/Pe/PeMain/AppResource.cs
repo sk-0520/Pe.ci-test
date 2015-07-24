@@ -20,18 +20,11 @@
 	/// Peで使用するリソース関係。
 	/// <para>自分の持ち物くらい好きにさわらせてくれ。</para>
 	/// </summary>
-	public static class AppResource
+	public static partial class AppResource
 	{
-		#region static
-
-		static IconCaching<string> _iconCaching = new IconCaching<string>();
-		static Caching<string,BitmapSource> _imageCaching = new Caching<string,BitmapSource>();
-
-		#endregion
-
 		#region variable
 
-		public static string ApplicationIconPath { get { return "/Resources/Icon/App.ico"; } }
+		const string applicationIcon="/Resources/Icon/App.ico";
 		public static string NotFoundIconPath { get { return "/Resources/Icon/NotFound.ico"; } }
 		public static string LauncherToolbarMainIconPath { get { return "/Resources/Icon/LauncherToolbarMain.ico"; } }
 		public static string LauncherCommandIconPath { get { return "/Resources/Icon/LauncherCommand.ico"; } }
@@ -51,7 +44,7 @@
 			}
 		}
 
-		public static string CommonFilteringPath { get { return "/Resources/Image/Common/Filtering.png"; } }
+		const string commonFiltering = "/Resources/Image/Common/Filtering.png";
 		public static string CommonTemplatePath { get { return "/Resources/Image/Common/Template.png"; } }
 		public static string CommonClipboardPath { get { return "/Resources/Image/Common/Clipboard.png"; } }
 		public static string CommonSendPath { get { return "/Resources/Image/Common/Send.png"; } }
@@ -117,22 +110,7 @@
 
 		#region function
 
-		static BitmapSource GetImage(string path)
-		{
-			return _imageCaching.Get(path, () => {
-				var uri = SharedConstants.GetEntryUri(path);
-				return new BitmapImage(uri);
-			});
-		}
-
-		static BitmapSource GetIcon(string path, IconScale iconScale, ILogger logger = null)
-		{
-			return _iconCaching[iconScale].Get(path, () => {
-				using(var icon = new IconWrapper(path, iconScale)) {
-					return icon.MakeBitmapSource();
-				}
-			});
-		}
+	
 
 		static public BitmapSource GetApplicationIcon(IconScale iconScale, ILogger logger = null)
 		{
