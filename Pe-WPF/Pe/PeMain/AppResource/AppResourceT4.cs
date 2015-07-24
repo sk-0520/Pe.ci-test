@@ -49,28 +49,6 @@ namespace ContentTypeTextNet.Pe.PeMain
 			});
 		}
 
-		/*
-		static public BitmapSource GetApplicationIcon(IconScale iconScale, ILogger logger = null)
-		{
-			return GetIcon(ApplicationIconPath, iconScale, logger);
-		}
-
-		static public BitmapSource GetNotFoundIcon(IconScale iconScale, ILogger logger = null)
-		{
-			return GetIcon(NotFoundIconPath, iconScale, logger);
-		}
-
-		static public BitmapSource GetLauncherToolbarMainIcon(IconScale iconScale, ILogger logger = null)
-		{
-			return GetIcon(LauncherToolbarMainIconPath, iconScale, logger);
-		}
-
-		static public BitmapSource GetLauncherCommandIcon(IconScale iconScale, ILogger logger = null)
-		{
-			return GetIcon(LauncherCommandIconPath, iconScale, logger);
-		}
-		*/
-
 		#endregion
 	}
 
@@ -105,7 +83,7 @@ namespace ContentTypeTextNet.Pe.PeMain
 
 	partial class AppResourceT4
 	{
-					//5
+					//4
 			
 			#region commonFiltering
 
@@ -123,7 +101,7 @@ namespace ContentTypeTextNet.Pe.PeMain
 					
 			#endregion commonFiltering
 			
-						//5
+						//4
 			
 			#region applicationIcon
 
@@ -137,6 +115,8 @@ namespace ContentTypeTextNet.Pe.PeMain
 					{
 						return GetIcon(ApplicationIconPath, iconScale, logger);
 					}
+
+					#region IconScale
 
 											
 						public static BitmapSource ApplicationIconIconSmall
@@ -175,63 +155,10 @@ namespace ContentTypeTextNet.Pe.PeMain
 						}
 
 											
+					#endregion IconScale
+
 					
 			#endregion applicationIcon
-			
-						//5
-			
-			#region applicationIcon2
-
-			public static string ApplicationIcon2Path
-			{
-				get { return applicationIcon2; }
-			}
-
-			
-					public static BitmapSource GetApplicationIcon2Icon(IconScale iconScale, ILogger logger = null)
-					{
-						return GetIcon(ApplicationIcon2Path, iconScale, logger);
-					}
-
-											
-						public static BitmapSource ApplicationIcon2IconSmall
-						{
-							get
-							{
-								return GetApplicationIcon2Icon(IconScale.Small);
-							}
-						}
-
-												
-						public static BitmapSource ApplicationIcon2IconNormal
-						{
-							get
-							{
-								return GetApplicationIcon2Icon(IconScale.Normal);
-							}
-						}
-
-												
-						public static BitmapSource ApplicationIcon2IconBig
-						{
-							get
-							{
-								return GetApplicationIcon2Icon(IconScale.Big);
-							}
-						}
-
-												
-						public static BitmapSource ApplicationIcon2IconLarge
-						{
-							get
-							{
-								return GetApplicationIcon2Icon(IconScale.Large);
-							}
-						}
-
-											
-					
-			#endregion applicationIcon2
 			
 				}
 }

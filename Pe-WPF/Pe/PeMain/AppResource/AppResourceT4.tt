@@ -1,7 +1,7 @@
 ﻿<#@ template debug="true" hostspecific="false" language="C#" #>
 <#@ assembly name="System.Core" #>
 <#@ assembly name="System.Reflection" #>
-<#@ assembly name="$(SolutionDir)..\Output\$(Configuration)\$(Platform)\Pe.exe" #>
+<#@ assembly name="$(TargetPath)" #>
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
@@ -58,28 +58,6 @@ namespace ContentTypeTextNet.Pe.PeMain
 				}
 			});
 		}
-
-		/*
-		static public BitmapSource GetApplicationIcon(IconScale iconScale, ILogger logger = null)
-		{
-			return GetIcon(ApplicationIconPath, iconScale, logger);
-		}
-
-		static public BitmapSource GetNotFoundIcon(IconScale iconScale, ILogger logger = null)
-		{
-			return GetIcon(NotFoundIconPath, iconScale, logger);
-		}
-
-		static public BitmapSource GetLauncherToolbarMainIcon(IconScale iconScale, ILogger logger = null)
-		{
-			return GetIcon(LauncherToolbarMainIconPath, iconScale, logger);
-		}
-
-		static public BitmapSource GetLauncherCommandIcon(IconScale iconScale, ILogger logger = null)
-		{
-			return GetIcon(LauncherCommandIconPath, iconScale, logger);
-		}
-		*/
 
 		#endregion
 	}
@@ -159,6 +137,8 @@ namespace ContentTypeTextNet.Pe.PeMain
 						return GetIcon(<#= pathName #>, iconScale, logger);
 					}
 
+					#region IconScale
+
 					<#
 					var iconScaleList = new [] { "Small", "Normal", "Big", "Large", };
 					foreach(var iconScale in iconScaleList) {
@@ -176,6 +156,8 @@ namespace ContentTypeTextNet.Pe.PeMain
 					}
 					#>
 					
+					#endregion IconScale
+
 					<#
 					break;
 
