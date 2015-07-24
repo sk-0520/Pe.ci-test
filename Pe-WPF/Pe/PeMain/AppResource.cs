@@ -76,14 +76,22 @@
 		[AppResource(AppResourceType.Image)]
 		const string templateProgrammable = "/Resources/Image/Template/TemplateProgrammable.png";
 
-		public static string ClipboardClearPath { get { return "/Resources/Image/Clipboard/Clear.png"; } }
-		public static string ClipboardTextFormatPath { get { return "/Resources/Image/Clipboard/ClipboardText.png"; } }
-		public static string ClipboardHtmlPath { get { return "/Resources/Image/Clipboard/ClipboardHtml.png"; } }
-		public static string ClipboardRichTextFormatPath { get { return "/Resources/Image/Clipboard/ClipboardRichTextFormat.png"; } }
-		public static string ClipboardImagePath { get { return "/Resources/Image/Clipboard/ClipboardImage.png"; } }
-		public static string ClipboardFilePath { get { return "/Resources/Image/Clipboard/ClipboardFile.png"; } }
-		public static string ClipboardImageFitPath { get { return "/Resources/Image/Clipboard/ImageFit.png"; } }
-		public static string ClipboardImageRawPath { get { return "/Resources/Image/Clipboard/ImageRaw.png"; } }
+		[AppResource(AppResourceType.Image)]
+		const string clipboardClear = "/Resources/Image/Clipboard/Clear.png";
+		[AppResource(AppResourceType.Image)]
+		const string clipboardTextFormat = "/Resources/Image/Clipboard/ClipboardText.png";
+		[AppResource(AppResourceType.Image)]
+		const string clipboardHtml = "/Resources/Image/Clipboard/ClipboardHtml.png";
+		[AppResource(AppResourceType.Image)]
+		const string clipboardRichTextFormat = "/Resources/Image/Clipboard/ClipboardRichTextFormat.png";
+		[AppResource(AppResourceType.Image)]
+		const string clipboardImage = "/Resources/Image/Clipboard/ClipboardImage.png";
+		[AppResource(AppResourceType.Image)]
+		const string clipboardFile = "/Resources/Image/Clipboard/ClipboardFile.png";
+		[AppResource(AppResourceType.Image)]
+		const string clipboardImageFit = "/Resources/Image/Clipboard/ImageFit.png";
+		[AppResource(AppResourceType.Image)]
+		const string clipboardImageRaw = "/Resources/Image/Clipboard/ImageRaw.png";
 
 		public static string WindowLoadPath { get { return "/Resources/Image/Window/WindowLoad.png"; } }
 		public static string WindowSavePath { get { return "/Resources/Image/Window/WindowSave.png"; } }
@@ -91,15 +99,6 @@
 		#endregion
 
 		#region property
-
-		public static BitmapSource ClipboardClearImage { get { return GetImage(ClipboardClearPath); } }
-		public static BitmapSource ClipboardTextFormatImage { get { return GetImage(ClipboardTextFormatPath); } }
-		public static BitmapSource ClipboardRichTextFormatImage { get { return GetImage(ClipboardRichTextFormatPath); } }
-		public static BitmapSource ClipboardHtmlImage { get { return GetImage(ClipboardHtmlPath); } }
-		public static BitmapSource ClipboardImageImage { get { return GetImage(ClipboardImagePath); } }
-		public static BitmapSource ClipboardFileImage { get { return GetImage(ClipboardFilePath); } }
-		public static BitmapSource ClipboardImageFitImage { get { return GetImage(ClipboardImageFitPath); } }
-		public static BitmapSource ClipboardImageRawImage { get { return GetImage(ClipboardImageRawPath); } }
 
 		public static BitmapSource WindowSaveImage { get { return GetImage(WindowLoadPath); } }
 		public static BitmapSource WindowLoadImage { get { return GetImage(WindowSavePath); } }

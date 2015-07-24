@@ -464,6 +464,118 @@ namespace ContentTypeTextNet.Pe.PeMain
 		}
 
 		#endregion templateProgrammable
+		#region Image: clipboardClear
+
+		public static string ClipboardClearPath
+		{
+			get { return clipboardClear; }
+		}
+
+
+		public static BitmapSource ClipboardClearImage
+		{
+			get { return GetImage(ClipboardClearPath); }
+		}
+
+		#endregion clipboardClear
+		#region Image: clipboardTextFormat
+
+		public static string ClipboardTextFormatPath
+		{
+			get { return clipboardTextFormat; }
+		}
+
+
+		public static BitmapSource ClipboardTextFormatImage
+		{
+			get { return GetImage(ClipboardTextFormatPath); }
+		}
+
+		#endregion clipboardTextFormat
+		#region Image: clipboardHtml
+
+		public static string ClipboardHtmlPath
+		{
+			get { return clipboardHtml; }
+		}
+
+
+		public static BitmapSource ClipboardHtmlImage
+		{
+			get { return GetImage(ClipboardHtmlPath); }
+		}
+
+		#endregion clipboardHtml
+		#region Image: clipboardRichTextFormat
+
+		public static string ClipboardRichTextFormatPath
+		{
+			get { return clipboardRichTextFormat; }
+		}
+
+
+		public static BitmapSource ClipboardRichTextFormatImage
+		{
+			get { return GetImage(ClipboardRichTextFormatPath); }
+		}
+
+		#endregion clipboardRichTextFormat
+		#region Image: clipboardImage
+
+		public static string ClipboardImagePath
+		{
+			get { return clipboardImage; }
+		}
+
+
+		public static BitmapSource ClipboardImageImage
+		{
+			get { return GetImage(ClipboardImagePath); }
+		}
+
+		#endregion clipboardImage
+		#region Image: clipboardFile
+
+		public static string ClipboardFilePath
+		{
+			get { return clipboardFile; }
+		}
+
+
+		public static BitmapSource ClipboardFileImage
+		{
+			get { return GetImage(ClipboardFilePath); }
+		}
+
+		#endregion clipboardFile
+		#region Image: clipboardImageFit
+
+		public static string ClipboardImageFitPath
+		{
+			get { return clipboardImageFit; }
+		}
+
+
+		public static BitmapSource ClipboardImageFitImage
+		{
+			get { return GetImage(ClipboardImageFitPath); }
+		}
+
+		#endregion clipboardImageFit
+		#region Image: clipboardImageRaw
+
+		public static string ClipboardImageRawPath
+		{
+			get { return clipboardImageRaw; }
+		}
+
+
+		public static BitmapSource ClipboardImageRawImage
+		{
+			get { return GetImage(ClipboardImageRawPath); }
+		}
+
+		#endregion clipboardImageRaw
 	}
 }
 
