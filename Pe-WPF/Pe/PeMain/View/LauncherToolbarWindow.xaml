@@ -505,8 +505,8 @@
 								<StackPanel>
 									<TextBlock Text="execute" />
 									<StackPanel Orientation="Horizontal">
-										<Button Content="normal" IsEnabled="{Binding HasDataCommand}" Style="{StaticResource PopupClose}" />
-										<Button Content="extra" IsEnabled="{Binding HasDataCommand}" Style="{StaticResource PopupClose}" />
+										<Button Content="normal" IsEnabled="{Binding HasDataCommand}" Command="{Binding RunCommand}" Style="{StaticResource PopupClose}" />
+										<Button Content="extra" IsEnabled="{Binding HasDataCommand}" Command="{Binding RunExCommand}" Style="{StaticResource PopupClose}" />
 									</StackPanel>
 									<Separator/>
 									<TextBlock Text="clipboard" />
@@ -515,7 +515,7 @@
 									</StackPanel>
 									<TextBlock Text="others" />
 									<StackPanel Orientation="Horizontal">
-										<Button Content="setting" Style="{StaticResource PopupClose}" />
+										<Button Content="customize" Style="{StaticResource PopupClose}" Command="{Binding OpenCustomize}" />
 									</StackPanel>
 								</StackPanel>
 							</xctk:SplitButton.DropDownContent>

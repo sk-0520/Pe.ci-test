@@ -12,12 +12,22 @@
 	using ContentTypeTextNet.Pe.PeMain.View;
 	using ContentTypeTextNet.Pe.PeMain.ViewModel.Control;
 
+	/// <summary>
+	/// <para>内部でモデルを元保持して最後に再設定する。</para>
+	/// </summary>
 	public class LauncherItemCustomizeViewModel: LauncherItemEditViewModel, IHavingView<LauncherItemCustomizeWindow>
 	{
+		#region variable
+
+		LauncherItemModel _srcModel;
+
+		#endregion
+
 		public LauncherItemCustomizeViewModel(LauncherItemModel model, LauncherItemCustomizeWindow view, LauncherIconCaching launcherIconCaching, INonProcess nonPorocess)
-			: base(model, launcherIconCaching, nonPorocess)
+			: base((LauncherItemModel)model.DeepClone(), launcherIconCaching, nonPorocess)
 		{
 			View = view;
+			this._srcModel = model;
 		}
 
 		#region property

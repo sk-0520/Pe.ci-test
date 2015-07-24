@@ -10,7 +10,9 @@
 	xmlns:ACC="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Control"
 	x:Class="ContentTypeTextNet.Pe.PeMain.View.LauncherItemCustomizeWindow"
 	x:TypeArguments="AVM:LauncherItemCustomizeViewModel"
-	Title="LauncherSettingWindow" Height="300" Width="300"
+	Title="LauncherSettingWindow"
+	Height="300"
+	Width="300"
 >
 	<AW:CommonDataWindow.Resources>
 		<ResourceDictionary>
