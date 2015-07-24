@@ -1,21 +1,22 @@
 ﻿namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 {
 	using System;
-	using System.Collections.Generic;
-	using System.IO;
-	using System.Linq;
-	using System.Text;
-	using System.Threading.Tasks;
-	using System.Windows.Input;
-	using ContentTypeTextNet.Library.SharedLibrary.CompatibleForms;
-	using ContentTypeTextNet.Library.SharedLibrary.IF;
-	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
-	using ContentTypeTextNet.Pe.Library.PeData.Item;
-	using ContentTypeTextNet.Pe.PeMain.Data;
-	using ContentTypeTextNet.Pe.PeMain.ViewModel.Control;
-	using Microsoft.Win32;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Input;
+using ContentTypeTextNet.Library.SharedLibrary.CompatibleForms;
+using ContentTypeTextNet.Library.SharedLibrary.IF;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.Pe.Library.PeData.Item;
+using ContentTypeTextNet.Pe.PeMain.Data;
+using ContentTypeTextNet.Pe.PeMain.View;
+using ContentTypeTextNet.Pe.PeMain.ViewModel.Control;
+using Microsoft.Win32;
 
-	public class LauncherExecuteItemViewModel : LauncherSimpleItemViewModel
+	public class LauncherExecuteItemViewModel: LauncherSimpleItemViewModel, IHavingView<LauncherExecuteWindow>
 	{
 		#region variable
 
@@ -27,9 +28,11 @@
 		
 		#endregion
 
-		public LauncherExecuteItemViewModel(LauncherItemModel model, LauncherIconCaching launcherIconCaching, INonProcess nonPorocess)
+		public LauncherExecuteItemViewModel(LauncherItemModel model, LauncherExecuteWindow view, LauncherIconCaching launcherIconCaching, INonProcess nonPorocess)
 			: base(model, launcherIconCaching, nonPorocess)
 		{
+			View = view;
+
 			this._environmentVariablesItem = (EnvironmentVariablesItemModel)Model.EnvironmentVariables.DeepClone();
 			EnvironmentVariables = new EnvironmentVariablesEditViewModel(this._environmentVariablesItem, NonProcess);
 
@@ -69,6 +72,22 @@
 		#endregion
 
 		#region command
+
+		public ICommand CancelCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						if(HasView) {
+							View.Close();
+						}
+					}
+				);
+
+				return result;
+			}
+		}
 
 		public ICommand OpenOptionFilesCommand
 		{
@@ -123,6 +142,15 @@
 				return result;
 			}
 		}
+
+		#endregion
+
+		#region IHavingView
+
+		public LauncherExecuteWindow View { get; private set; }
+
+		public bool HasView { get { return View != null;} }
+
 
 		#endregion
 	}

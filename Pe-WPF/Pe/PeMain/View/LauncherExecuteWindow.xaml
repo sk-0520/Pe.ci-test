@@ -4,6 +4,7 @@
 	xmlns:AVM="clr-namespace:ContentTypeTextNet.Pe.PeMain.ViewModel"
 	xmlns:AP="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
 	xmlns:AW="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Window"
+	xmlns:AM="clr-namespace:ContentTypeTextNet.Pe.PeMain"
 	xmlns:SC="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=SharedLibrary"
 	xmlns:AC="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Converter"
 	xmlns:ACC="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Control"
@@ -15,7 +16,12 @@
 	SizeToContent="Height"
 >
 	<AW:CommonDataWindow.Resources>
-		<ResourceDictionary Source="/View/Parts/Resource/DialogDictionary.xaml"/>
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceDictionary Source="/View/Parts/Resource/DialogDictionary.xaml"/>
+				<ResourceDictionary Source="/View/Parts/Resource/ImageDictionary.xaml"/>
+			</ResourceDictionary.MergedDictionaries>
+		</ResourceDictionary>
 	</AW:CommonDataWindow.Resources>
 	<Grid>
 		<Grid.RowDefinitions>
@@ -26,6 +32,8 @@
 		<StackPanel>
 			<Grid>
 				<Grid.RowDefinitions>
+					<RowDefinition />
+					<RowDefinition />
 					<RowDefinition />
 					<RowDefinition />
 					<RowDefinition />
@@ -42,23 +50,35 @@
 
 				<Label Grid.Row="1" Grid.Column="0" Content="option" />
 				<ComboBox Grid.Row="1" Grid.Column="1" IsEditable="True" Text="{Binding Option}" />
-				<Button Grid.Row="1" Grid.Column="2" Command="{Binding OpenOptionFilesCommand}" />
-				<Button Grid.Row="1" Grid.Column="3" Command="{Binding OpenOptionDirectoryCommand}" />
+				<Button Grid.Row="1" Grid.Column="2" Command="{Binding OpenOptionFilesCommand}">
+					<Image Style="{StaticResource ImageRenderStyle}" Source="{x:Static AM:AppResource.CommonFileImage}" />
+				</Button>
+				<Button Grid.Row="1" Grid.Column="3" Command="{Binding OpenOptionDirectoryCommand}">
+					<Image Style="{StaticResource ImageRenderStyle}" Source="{x:Static AM:AppResource.CommonFolderImage}" />
+				</Button>
 
 				<Label Grid.Row="2" Grid.Column="0" Content="work dir" />
 				<ComboBox Grid.Row="2" Grid.Column="1" IsEditable="True" Text="{Binding WorkDirectoryPath}" />
-				<Button Grid.Row="2" Grid.Column="2" Command="{Binding OpenWorkDirectoryDirectoryCommand}" />
+				<Button Grid.Row="2" Grid.Column="2" Command="{Binding OpenWorkDirectoryDirectoryCommand}">
+					<Image Style="{StaticResource ImageRenderStyle}" Source="{x:Static AM:AppResource.CommonFolderImage}" />
+				</Button>
+				
+				<Label Grid.Row="3" Grid.Column="0" Content="others" />
+				<StackPanel Grid.Row="3" Grid.Column="1"  Orientation="Horizontal">
+					<CheckBox Content="std-stream" IsChecked="{Binding StdStreamOutput}" />
+					<CheckBox Content="admin" IsChecked="{Binding Administrator}" />
+				</StackPanel>
+
+				<Expander Grid.Row="4" Grid.RowSpan="1" Grid.Column="1" Header="Expander" >
+					<ACC:EnvironmentVariablesEditControl Height="180" DataContext="{Binding EnvironmentVariables}" />
+				</Expander>
+
 			</Grid>
-			<CheckBox Content="std-stream" IsChecked="{Binding StdStreamOutput}" />
-			<CheckBox Content="admin" IsChecked="{Binding Administrator}" />
-			<Expander Header="Expander" >
-				<ACC:EnvironmentVariablesEditControl Height="180" DataContext="{Binding EnvironmentVariables}" />
-			</Expander>
 		</StackPanel>
 
 		<StackPanel Grid.Row="1" Style="{StaticResource ResourceKey=DialogResultPanel}" >
-			<Button Style="{StaticResource ResourceKey=DialogResultButton}" Content="ok" />
-			<Button Style="{StaticResource ResourceKey=DialogResultButton}" Content="cancel" />
+			<Button Content="ok" Style="{StaticResource ResourceKey=DialogResultButton}"  />
+			<Button Content="cancel" Style="{StaticResource ResourceKey=DialogResultButton}" Command="{Binding CancelCommand}" />
 		</StackPanel>
 
 	</Grid>

@@ -34,7 +34,7 @@ using ContentTypeTextNet.Pe.PeMain.ViewModel;
 		protected override void CreateViewModel()
 		{
 			var model = (LauncherItemModel)ExtensionData;
-			ViewModel = new LauncherExecuteItemViewModel(model, CommonData.LauncherIconCaching, CommonData.NonProcess);
+			ViewModel = new LauncherExecuteItemViewModel(model, this, CommonData.LauncherIconCaching, CommonData.NonProcess);
 		}
 
 		protected override void ApplyViewModel()
