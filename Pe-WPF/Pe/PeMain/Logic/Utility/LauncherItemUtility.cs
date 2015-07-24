@@ -54,7 +54,18 @@
 		}
 
 		/// <summary>
-		/// オプション選択用ダイアログを表示する。
+		/// コマンド選択用ファイルダイアログお表示する。
+		/// </summary>
+		/// <param name="defaultPath"></param>
+		/// <param name="nonProcess"></param>
+		/// <returns>選択されたファイル。未選択の場合は null 。</returns>
+		public static string ShowOpenCommandDialog(string defaultPath, IHavingNonProcess nonProcess)
+		{
+			return DialogUtility.ShowOpenSingleFileDialog(defaultPath);
+		}
+
+		/// <summary>
+		/// オプション選択用ファイルダイアログを表示する。
 		/// </summary>
 		/// <param name="defaultPath"></param>
 		/// <returns>選択されたファイル群をまとめた文字列。未選択の場合は null 。</returns>

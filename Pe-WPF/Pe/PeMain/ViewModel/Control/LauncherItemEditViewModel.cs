@@ -47,6 +47,34 @@
 
 		#region command
 
+		public ICommand SelectCommandFileCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+
+					}
+				);
+
+				return result;
+			}
+		}
+
+		public ICommand SelectCommandDirectoryCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+
+					}
+				);
+
+				return result;
+			}
+		}
+
 		public ICommand SelectOptionFilesCommand
 		{
 			get
@@ -74,6 +102,34 @@
 						if(dialogResult != null) {
 							Option = dialogResult;
 						}
+					}
+				);
+
+				return result;
+			}
+		}
+
+		public ICommand SelectWorkDirectoryCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+
+					}
+				);
+
+				return result;
+			}
+		}
+
+		public ICommand SelectIconCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+
 					}
 				);
 

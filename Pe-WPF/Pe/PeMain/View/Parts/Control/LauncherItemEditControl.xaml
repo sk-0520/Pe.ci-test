@@ -54,11 +54,11 @@
 
 					<Label Grid.Row="1" Grid.Column="0" Content="command" />
 					<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Command, UpdateSourceTrigger=PropertyChanged}" />
-					<Button Grid.Row="1" Grid.Column="2">
+					<Button Grid.Row="1" Grid.Column="2" Command="{Binding SelectCommandFileCommand}">
 						<!-- file -->
 						<Image Source="{x:Static AM:AppResource.CommonFileImage}" Style="{StaticResource ImageRenderStyle}" />
 					</Button>
-					<Button Grid.Row="1" Grid.Column="3">
+					<Button Grid.Row="1" Grid.Column="3" Command="{Binding SelectCommandDirectoryCommand}">
 						<!-- dir -->
 						<Image Source="{x:Static AM:AppResource.CommonFolderImage}" Style="{StaticResource ImageRenderStyle}" />
 					</Button>
@@ -69,21 +69,21 @@
 						<!-- file -->
 						<Image Source="{x:Static AM:AppResource.CommonFileImage}" Style="{StaticResource ImageRenderStyle}" />
 					</Button>
-					<Button Grid.Row="2" Grid.Column="3"  Command="{Binding SelectOptionDirectoryCommand}">
+					<Button Grid.Row="2" Grid.Column="3" Command="{Binding SelectOptionDirectoryCommand}">
 						<!-- dir -->
 						<Image Source="{x:Static AM:AppResource.CommonFolderImage}" Style="{StaticResource ImageRenderStyle}" />
 					</Button>
 
 					<Label Grid.Row="3" Grid.Column="0" Content="work dir"  />
 					<TextBox Grid.Row="3" Grid.Column="1" Text="{Binding WorkDirectoryPath, UpdateSourceTrigger=PropertyChanged}" />
-					<Button Grid.Row="3" Grid.Column="2">
+					<Button Grid.Row="3" Grid.Column="2" Command="{Binding SelectWorkDirectoryCommand}">
 						<!-- dir -->
 						<Image Source="{x:Static AM:AppResource.CommonFolderImage}" Style="{StaticResource ImageRenderStyle}" />
 					</Button>
 
 					<Label Grid.Row="4" Grid.Column="0" Content="icon path" />
 					<TextBox Grid.Row="4" Grid.Column="1" IsReadOnly="True" Text="{Binding IconPath, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
-					<Button Grid.Row="4" Grid.Column="2">
+					<Button Grid.Row="4" Grid.Column="2" Command="{Binding SelectIconCommand}">
 						<!-- file -->
 						<Image Source="{x:Static AM:AppResource.CommonFileImage}" Style="{StaticResource ImageRenderStyle}" />
 					</Button>
