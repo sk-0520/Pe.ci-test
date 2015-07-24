@@ -141,21 +141,15 @@
 			}
 		}
 
-		public ICommand OpenOptionFilesCommand
+		public ICommand SelectOptionFilesCommand
 		{
 			get
 			{
 				var result = CreateCommand(
 					o => {
-						var defFilePath = File.Exists(Option) ? Option: string.Empty;
-						var dialog = new OpenFileDialog() {
-							CheckFileExists = true,
-							FileName = defFilePath,
-							Multiselect = true,
-						};
-						var dialogResult = dialog.ShowDialog();
-						if (dialogResult.GetValueOrDefault()) {
-							Option = string.Join(" ", TextUtility.WhitespaceToQuotation(dialog.FileNames));
+						var files = LauncherItemUtility.ShowOpenOptionDialog(Option);
+						if(files != null) {
+							Option = files;
 						}
 					}
 				);
@@ -164,13 +158,13 @@
 			}
 		}
 
-		public ICommand OpenOptionDirectoryCommand
+		public ICommand SelectOptionDirectoryCommand
 		{
 			get
 			{
 				var result = CreateCommand(
 					o => {
-						var dialogResult = DialogUtility.OpenDirectoryDialog(Option);
+						var dialogResult = DialogUtility.ShowDirectoryDialog(Option);
 						if(dialogResult != null) {
 							Option = dialogResult;
 						}
@@ -181,13 +175,13 @@
 			}
 		}
 
-		public ICommand OpenWorkDirectoryDirectoryCommand
+		public ICommand SelectWorkDirectoryDirectoryCommand
 		{
 			get
 			{
 				var result = CreateCommand(
 					o => {
-						var dialogResult = DialogUtility.OpenDirectoryDialog(WorkDirectoryPath);
+						var dialogResult = DialogUtility.ShowDirectoryDialog(WorkDirectoryPath);
 						if(dialogResult != null) {
 							WorkDirectoryPath = dialogResult;
 						}

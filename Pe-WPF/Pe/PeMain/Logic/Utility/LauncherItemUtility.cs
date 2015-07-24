@@ -52,5 +52,20 @@
 				return AppResource.GetNotFoundIcon(iconScale, nonProcess.Logger);
 			}
 		}
+
+		/// <summary>
+		/// オプション選択用ダイアログを表示する。
+		/// </summary>
+		/// <param name="defaultPath"></param>
+		/// <returns>選択されたファイル群をまとめた文字列。未選択の場合は null 。</returns>
+		public static string ShowOpenOptionDialog(string defaultPath)
+		{
+			var files = DialogUtility.ShowOpenMultiFileDialog(defaultPath);
+			if(files != null) {
+				return string.Join(" ", TextUtility.WhitespaceToQuotation(files));
+			} else {
+				return null;
+			}
+		}
 	}
 }
