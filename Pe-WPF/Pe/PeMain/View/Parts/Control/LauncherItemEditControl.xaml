@@ -5,6 +5,7 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
 	xmlns:AV="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Control"
 	xmlns:AP="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
+	xmlns:AM="clr-namespace:ContentTypeTextNet.Pe.PeMain"
 	xmlns:SC="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=SharedLibrary"
 	xmlns:AD="clr-namespace:ContentTypeTextNet.Pe.Library.PeData.Define;assembly=PeData"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
@@ -12,7 +13,12 @@
 	d:DesignHeight="300" d:DesignWidth="300"
 >
 	<AV:CommonDataUserControl.Resources>
-		<SC:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceDictionary Source="/View/Parts/Resource/ImageDictionary.xaml"/>
+			</ResourceDictionary.MergedDictionaries>
+			<SC:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
+		</ResourceDictionary>
 	</AV:CommonDataUserControl.Resources>
 
 	<TabControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
@@ -37,32 +43,50 @@
 						<RowDefinition Height="Auto" />
 					</Grid.RowDefinitions>
 					<Grid.ColumnDefinitions>
-						<ColumnDefinition />
-						<ColumnDefinition />
-						<ColumnDefinition />
-						<ColumnDefinition />
+						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition Width="Auto" />
 					</Grid.ColumnDefinitions>
 
-					<Label Content="name" Grid.Row="0" Grid.Column="0" />
-					<TextBox Text="{Binding Name}" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" />
+					<Label Grid.Row="0" Grid.Column="0" Content="name" />
+					<TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
 
-					<Label Content="command" Grid.Row="1" Grid.Column="0" />
-					<TextBox Text="{Binding Command}" Grid.Row="1" Grid.Column="1"  />
-					<Button Grid.Row="1" Grid.Column="2" />
-					<Button Grid.Row="1" Grid.Column="3" />
+					<Label Grid.Row="1" Grid.Column="0" Content="command" />
+					<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Command, UpdateSourceTrigger=PropertyChanged}" />
+					<Button Grid.Row="1" Grid.Column="2">
+						<!-- file -->
+						<Image Source="{x:Static AM:AppResource.CommonFileImage}" Style="{StaticResource ImageRenderStyle}" />
+					</Button>
+					<Button Grid.Row="1" Grid.Column="3">
+						<!-- dir -->
+						<Image Source="{x:Static AM:AppResource.CommonFolderImage}" Style="{StaticResource ImageRenderStyle}" />
+					</Button>
 
-					<Label Content="option" Grid.Row="2" Grid.Column="0" />
-					<TextBox Text="{Binding Option}" Grid.Row="2" Grid.Column="1" />
-					<Button Grid.Row="2" Grid.Column="2" />
-					<Button Grid.Row="2" Grid.Column="3" />
+					<Label Grid.Row="2" Grid.Column="0" Content="option" />
+					<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Option, UpdateSourceTrigger=PropertyChanged}" />
+					<Button Grid.Row="2" Grid.Column="2">
+						<!-- file -->
+						<Image Source="{x:Static AM:AppResource.CommonFileImage}" Style="{StaticResource ImageRenderStyle}" />
+					</Button>
+					<Button Grid.Row="2" Grid.Column="3">
+						<!-- dir -->
+						<Image Source="{x:Static AM:AppResource.CommonFolderImage}" Style="{StaticResource ImageRenderStyle}" />
+					</Button>
 
-					<Label Content="work dir" Grid.Row="3" Grid.Column="0" />
-					<TextBox Text="{Binding WorkDirectoryPath}" Grid.Row="3" Grid.Column="1"  />
-					<Button Grid.Row="3" Grid.Column="2" />
+					<Label Grid.Row="3" Grid.Column="0" Content="work dir"  />
+					<TextBox Grid.Row="3" Grid.Column="1" Text="{Binding WorkDirectoryPath, UpdateSourceTrigger=PropertyChanged}" />
+					<Button Grid.Row="3" Grid.Column="2">
+						<!-- dir -->
+						<Image Source="{x:Static AM:AppResource.CommonFolderImage}" Style="{StaticResource ImageRenderStyle}" />
+					</Button>
 
-					<Label Content="icon path" Grid.Row="4" Grid.Column="0" />
-					<TextBox Text="{Binding IconPath, Mode=OneWay}" IsReadOnly="True" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" Grid.Row="4" Grid.Column="1"  />
-					<Button Grid.Row="4" Grid.Column="2" />
+					<Label Grid.Row="4" Grid.Column="0" Content="icon path" />
+					<TextBox Grid.Row="4" Grid.Column="1" IsReadOnly="True" Text="{Binding IconPath, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
+					<Button Grid.Row="4" Grid.Column="2">
+						<!-- file -->
+						<Image Source="{x:Static AM:AppResource.CommonFileImage}" Style="{StaticResource ImageRenderStyle}" />
+					</Button>
 				</Grid>
 			</Grid>
 		</TabItem>
@@ -86,10 +110,10 @@
 				<CheckBox Grid.Row="1" Grid.Column="0"  Content="admin" IsChecked="{Binding Administrator}" />
 
 				<Label Grid.Row="2" Grid.Column="0" Content="tag" />
-				<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Tags}" />
+				<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Tags, UpdateSourceTrigger=PropertyChanged}" />
 
 				<Label Grid.Row="3" Grid.Column="0" Content="memo" />
-				<TextBox Grid.Row="3" Grid.Column="1" AcceptsReturn="True" Text="{Binding Comment}" />
+				<TextBox Grid.Row="3" Grid.Column="1" AcceptsReturn="True" Text="{Binding Comment, UpdateSourceTrigger=PropertyChanged}" />
 			</Grid>
 		</TabItem>
 	</TabControl>
