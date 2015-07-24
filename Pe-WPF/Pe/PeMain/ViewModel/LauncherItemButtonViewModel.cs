@@ -248,6 +248,21 @@
 			}
 		}
 
+		public ICommand OpenCustomize
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						var window = AppSender.SendCreateWindow(WindowKind.LauncherCustomize, Model, null);
+						window.Show();
+					}
+				);
+
+				return result;
+			}
+		}
+
 		public ICommand OpenProperty
 		{
 			get

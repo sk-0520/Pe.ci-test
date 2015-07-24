@@ -11,17 +11,45 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using ContentTypeTextNet.Pe.Library.PeData.Item;
+using ContentTypeTextNet.Pe.PeMain.Define;
+using ContentTypeTextNet.Pe.PeMain.IF;
+using ContentTypeTextNet.Pe.PeMain.View.Parts.Window;
+using ContentTypeTextNet.Pe.PeMain.ViewModel;
 
 namespace ContentTypeTextNet.Pe.PeMain.View
 {
 	/// <summary>
 	/// LauncherSettingWindow.xaml の相互作用ロジック
 	/// </summary>
-	public partial class LauncherItemCustomizeWindow: Window
+	public partial class LauncherItemCustomizeWindow: ViewModelCommonDataWindow<LauncherItemCustomizeViewModel>, IHavingWindowKind
 	{
 		public LauncherItemCustomizeWindow()
 		{
 			InitializeComponent();
 		}
+
+		#region ViewModelCommonDataWindow
+
+		protected override void CreateViewModel()
+		{
+			var model = (LauncherItemModel)ExtensionData;
+			ViewModel = new LauncherItemCustomizeViewModel(model, this, CommonData.LauncherIconCaching, CommonData.NonProcess);
+		}
+
+		protected override void ApplyViewModel()
+		{
+			DataContext = ViewModel;
+
+			base.ApplyViewModel();
+		}
+
+		#endregion
+
+		#region IHavingWindowKind
+
+		public WindowKind WindowKind { get { return WindowKind.LauncherCustomize; } }
+
+		#endregion
 	}
 }

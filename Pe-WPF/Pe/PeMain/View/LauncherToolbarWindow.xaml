@@ -473,7 +473,7 @@
 									</StackPanel>
 									<TextBlock Text="others" />
 									<StackPanel Orientation="Horizontal">
-										<Button Content="setting" Style="{StaticResource PopupClose}" />
+										<Button Content="customize" Style="{StaticResource PopupClose}" Command="{Binding OpenCustomize}" />
 										<Button Content="property" IsEnabled="{Binding ExistsParentDirectory}" Command="{Binding OpenProperty}" Style="{StaticResource PopupClose}" />
 									</StackPanel>
 								</StackPanel>

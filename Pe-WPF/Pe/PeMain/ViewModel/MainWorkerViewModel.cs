@@ -475,6 +475,7 @@
 						break;
 
 					case WindowKind.LauncherExecute:
+					case WindowKind.LauncherCustomize:
 						{
 							OtherWindows.Add(window);
 						}
@@ -507,7 +508,8 @@
 						}
 						break;
 
-					case WindowKind.LauncherExecute: 
+					case WindowKind.LauncherExecute:
+					case WindowKind.LauncherCustomize: 
 						{
 							OtherWindows.Remove(window);
 						}
@@ -546,6 +548,13 @@
 				case WindowKind.LauncherExecute:
 					{
 						window = new LauncherItemExecuteWindow();
+						window.SetCommonData(CommonData, extensionData);
+						break;
+					}
+
+				case WindowKind.LauncherCustomize: 
+					{
+						window = new LauncherItemCustomizeWindow();
 						window.SetCommonData(CommonData, extensionData);
 						break;
 					}

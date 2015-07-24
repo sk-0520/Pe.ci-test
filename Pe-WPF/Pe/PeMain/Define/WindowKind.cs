@@ -10,6 +10,7 @@
 	{
 		LauncherToolbar,
 		LauncherExecute,
+		LauncherCustomize,
 		Note,
 	}
 }
