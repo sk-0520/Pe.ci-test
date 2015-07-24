@@ -422,6 +422,48 @@ namespace ContentTypeTextNet.Pe.PeMain
 		}
 
 		#endregion commonDown
+		#region Image: templatePlain
+
+		public static string TemplatePlainPath
+		{
+			get { return templatePlain; }
+		}
+
+
+		public static BitmapSource TemplatePlainImage
+		{
+			get { return GetImage(TemplatePlainPath); }
+		}
+
+		#endregion templatePlain
+		#region Image: templateReplace
+
+		public static string TemplateReplacePath
+		{
+			get { return templateReplace; }
+		}
+
+
+		public static BitmapSource TemplateReplaceImage
+		{
+			get { return GetImage(TemplateReplacePath); }
+		}
+
+		#endregion templateReplace
+		#region Image: templateProgrammable
+
+		public static string TemplateProgrammablePath
+		{
+			get { return templateProgrammable; }
+		}
+
+
+		public static BitmapSource TemplateProgrammableImage
+		{
+			get { return GetImage(TemplateProgrammablePath); }
+		}
+
+		#endregion templateProgrammable
 	}
 }
 

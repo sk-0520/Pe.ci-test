@@ -67,11 +67,14 @@
 		const string commonUp = "/Resources/Image/Common/Up.png";
 		[AppResource(AppResourceType.Image)]
 		const string commonDown = "/Resources/Image/Common/Down.png";
-		
 
-		public static string TemplatePlainPath { get { return "/Resources/Image/Template/TemplatePlain.png"; } }
-		public static string TemplateReplacePath { get { return "/Resources/Image/Template/TemplateReplace.png"; } }
-		public static string TemplateProgrammablePath { get { return "/Resources/Image/Template/TemplateProgrammable.png"; } }
+
+		[AppResource(AppResourceType.Image)]
+		const string templatePlain = "/Resources/Image/Template/TemplatePlain.png";
+		[AppResource(AppResourceType.Image)]
+		const string templateReplace = "/Resources/Image/Template/TemplateReplace.png";
+		[AppResource(AppResourceType.Image)]
+		const string templateProgrammable = "/Resources/Image/Template/TemplateProgrammable.png";
 
 		public static string ClipboardClearPath { get { return "/Resources/Image/Clipboard/Clear.png"; } }
 		public static string ClipboardTextFormatPath { get { return "/Resources/Image/Clipboard/ClipboardText.png"; } }
@@ -88,10 +91,6 @@
 		#endregion
 
 		#region property
-
-		public static BitmapSource TemplatePlainImage { get { return GetImage(TemplatePlainPath); } }
-		public static BitmapSource TemplateReplaceImage { get { return GetImage(TemplateReplacePath); } }
-		public static BitmapSource TemplateProgrammableImage { get { return GetImage(TemplateProgrammablePath); } }
 
 		public static BitmapSource ClipboardClearImage { get { return GetImage(ClipboardClearPath); } }
 		public static BitmapSource ClipboardTextFormatImage { get { return GetImage(ClipboardTextFormatPath); } }
