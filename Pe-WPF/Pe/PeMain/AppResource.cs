@@ -19,30 +19,30 @@
 	/// <summary>
 	/// Peで使用するリソース関係。
 	/// <para>自分の持ち物くらい好きにさわらせてくれ。</para>
+	/// <para>細かい実装は PeMain/AppResource に分離。本ファイルでは定数定義のみにとどめる。</para>
 	/// </summary>
 	public static partial class AppResource
 	{
 		#region variable
 
-		const string applicationIcon="/Resources/Icon/App.ico";
-		public static string NotFoundIconPath { get { return "/Resources/Icon/NotFound.ico"; } }
-		public static string LauncherToolbarMainIconPath { get { return "/Resources/Icon/LauncherToolbarMain.ico"; } }
-		public static string LauncherCommandIconPath { get { return "/Resources/Icon/LauncherCommand.ico"; } }
+		[AppResource(AppResourceType.Icon)]
+		const string application="/Resources/Icon/App.ico";
+		[AppResource(AppResourceType.Icon)]
+		const string notFound = "/Resources/Icon/NotFound.ico";
+		[AppResource(AppResourceType.Icon)]
+		const string launcherToolbarMain = "/Resources/Icon/LauncherToolbarMain.ico";
+		[AppResource(AppResourceType.Icon)]
+		const string launcherCommand = "/Resources/Icon/LauncherCommand.ico";
 
-		public static string ApplicationTasktrayPath
-		{
-			get
-			{
+		[AppResource(AppResourceType.Icon)]
+		const string applicationTasktray
 #if DEBUG
-				return "/Resources/Icon/Tasktray/App-debug.ico";
+				= "/Resources/Icon/Tasktray/App-debug.ico";
 #elif BETA
-				return "/Resources/Icon/Tasktray/App-beta.ico";
+				= "/Resources/Icon/Tasktray/App-beta.ico";
 #else
-				return "/Resources/Icon/Tasktray/App-release.ico";
+				= "/Resources/Icon/Tasktray/App-release.ico";
 #endif
-
-			}
-		}
 
 		const string commonFiltering = "/Resources/Image/Common/Filtering.png";
 		public static string CommonTemplatePath { get { return "/Resources/Image/Common/Template.png"; } }
@@ -108,30 +108,6 @@
 		public static BitmapSource WindowLoadImage { get { return GetImage(WindowSavePath); } }
 		#endregion
 
-		#region function
 
-	
-
-		static public BitmapSource GetApplicationIcon(IconScale iconScale, ILogger logger = null)
-		{
-			return GetIcon(ApplicationIconPath, iconScale, logger);
-		}
-
-		static public BitmapSource GetNotFoundIcon(IconScale iconScale, ILogger logger = null)
-		{
-			return GetIcon(NotFoundIconPath, iconScale, logger);
-		}
-
-		static public BitmapSource GetLauncherToolbarMainIcon(IconScale iconScale, ILogger logger = null)
-		{
-			return GetIcon(LauncherToolbarMainIconPath, iconScale, logger);
-		}
-
-		static public BitmapSource GetLauncherCommandIcon(IconScale iconScale, ILogger logger = null)
-		{
-			return GetIcon(LauncherCommandIconPath, iconScale, logger);
-		}
-
-		#endregion
 	}
 }

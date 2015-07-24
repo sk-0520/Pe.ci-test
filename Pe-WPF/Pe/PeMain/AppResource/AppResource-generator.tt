@@ -30,8 +30,8 @@ namespace ContentTypeTextNet.Pe.PeMain
 	partial class AppResource
 	{
 		<#
-		var type = typeof(AppResourceT4);
-		var fieldInfos = type.GetFields(BindingFlags.Static | BindingFlags.NonPublic);
+		var type = typeof(AppResource);
+		var fieldInfos = type.GetFields(BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
 		foreach(var fieldInfo in fieldInfos) {
 			var attribute = fieldInfo.GetCustomAttribute(typeof(AppResourceAttribute), true) as AppResourceAttribute;
 			if(attribute == null) {
@@ -43,7 +43,6 @@ namespace ContentTypeTextNet.Pe.PeMain
 			var baseName = fieldInfo.Name.ToUpperInvariant()[0] + fieldInfo.Name.Substring(1);
 			var pathName = baseName + "Path";
 			#>
-
 			#region <#= fieldInfo.Name #>
 
 			public static string <#= pathName #>
@@ -103,7 +102,6 @@ namespace ContentTypeTextNet.Pe.PeMain
 			#>
 
 			#endregion <#= fieldInfo.Name #>
-			
 			<#
 		}
 		#>
