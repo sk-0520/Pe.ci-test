@@ -7,7 +7,7 @@
 	xmlns:AM="clr-namespace:ContentTypeTextNet.Pe.PeMain"
 	xmlns:SC="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=SharedLibrary"
 	xmlns:AC="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Converter"
-	xmlns:AS="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Control.SettingPage"
+	xmlns:ACC="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Control"
 	x:Class="ContentTypeTextNet.Pe.PeMain.View.LauncherItemCustomizeWindow"
 	x:TypeArguments="AVM:LauncherItemCustomizeViewModel"
 	Title="LauncherSettingWindow" Height="300" Width="300"
@@ -21,6 +21,16 @@
 		</ResourceDictionary>
 	</AW:CommonDataWindow.Resources>
 	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*" />
+			<RowDefinition Height="Auto" />
+		</Grid.RowDefinitions>
 
+		<ACC:LauncherItemEditControl Grid.Row="0" />
+
+		<StackPanel Grid.Row="1" Style="{StaticResource ResourceKey=DialogResultPanel}" >
+			<Button Content="ok" Style="{StaticResource ResourceKey=DialogResultButton}"  Command="{Binding SaveCommand}" />
+			<Button Content="cancel" Style="{StaticResource ResourceKey=DialogResultButton}" Command="{Binding CancelCommand}" />
+		</StackPanel>
 	</Grid>
 </AW:ViewModelCommonDataWindow>
