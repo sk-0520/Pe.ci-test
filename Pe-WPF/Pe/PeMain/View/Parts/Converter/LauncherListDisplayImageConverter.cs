@@ -29,7 +29,7 @@
 		{
 			var model = value as LauncherItemModel;
 			if (model != null) {
-				var vm = new LauncherSimpleItemViewModel(model, LauncherIconCaching, NonProcess);
+				var vm = new LauncherItemSimpleViewModel(model, LauncherIconCaching, NonProcess);
 				return vm.GetIcon(IconScale.Small);
 			}
 

@@ -22,7 +22,7 @@
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
-	public class LauncherButtonItemViewModel: LauncherSimpleItemViewModel, IHavingClipboardWatcher, IHavingAppSender
+	public class LauncherItemButtonViewModel: LauncherItemSimpleViewModel, IHavingClipboardWatcher, IHavingAppSender
 	{
 		#region varable
 
@@ -38,7 +38,7 @@
 
 		#endregion
 
-		public LauncherButtonItemViewModel(LauncherItemModel model, LauncherIconCaching launcherIconCaching, INonProcess nonPorocess, IClipboardWatcher clipboardWatcher, IAppSender appSender)
+		public LauncherItemButtonViewModel(LauncherItemModel model, LauncherIconCaching launcherIconCaching, INonProcess nonPorocess, IClipboardWatcher clipboardWatcher, IAppSender appSender)
 			: base(model, launcherIconCaching, nonPorocess)
 		{
 			ClipboardWatcher = clipboardWatcher;

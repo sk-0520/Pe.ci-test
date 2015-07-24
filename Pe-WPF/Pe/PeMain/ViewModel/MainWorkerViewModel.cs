@@ -545,7 +545,7 @@
 
 				case WindowKind.LauncherExecute:
 					{
-						window = new LauncherExecuteWindow();
+						window = new LauncherItemExecuteWindow();
 						window.SetCommonData(CommonData, extensionData);
 						break;
 					}

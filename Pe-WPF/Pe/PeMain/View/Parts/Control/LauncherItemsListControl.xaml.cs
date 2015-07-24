@@ -73,7 +73,7 @@
 				SetValue(SelectedLauncherItemProperty, value);
 				this.ListItems.SelectedItem = value;
 				if (value != null) {
-					SelectedLauncherViewModel = new LauncherSimpleItemViewModel(SelectedLauncherItem, CommonData.LauncherIconCaching, CommonData.NonProcess);
+					SelectedLauncherViewModel = new LauncherItemSimpleViewModel(SelectedLauncherItem, CommonData.LauncherIconCaching, CommonData.NonProcess);
 				}
 			}
 		}

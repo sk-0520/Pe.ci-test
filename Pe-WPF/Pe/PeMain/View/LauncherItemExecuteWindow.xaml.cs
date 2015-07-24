@@ -22,9 +22,9 @@ using ContentTypeTextNet.Pe.PeMain.ViewModel;
 	/// <summary>
 	/// LauncherExecuteWindow.xaml の相互作用ロジック
 	/// </summary>
-	public partial class LauncherExecuteWindow: ViewModelCommonDataWindow<LauncherExecuteItemViewModel>, IHavingWindowKind
+	public partial class LauncherItemExecuteWindow: ViewModelCommonDataWindow<LauncherItemExecuteViewModel>, IHavingWindowKind
 	{
-		public LauncherExecuteWindow()
+		public LauncherItemExecuteWindow()
 		{
 			InitializeComponent();
 		}
@@ -34,7 +34,7 @@ using ContentTypeTextNet.Pe.PeMain.ViewModel;
 		protected override void CreateViewModel()
 		{
 			var model = (LauncherItemModel)ExtensionData;
-			ViewModel = new LauncherExecuteItemViewModel(model, this, CommonData.LauncherIconCaching, CommonData.NonProcess);
+			ViewModel = new LauncherItemExecuteViewModel(model, this, CommonData.LauncherIconCaching, CommonData.NonProcess);
 		}
 
 		protected override void ApplyViewModel()

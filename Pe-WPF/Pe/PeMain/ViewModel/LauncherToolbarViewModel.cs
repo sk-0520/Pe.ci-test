@@ -143,7 +143,7 @@
 		#region variable
 
 		LauncherGroupItemModel _selectedGroup = null;
-		CollectionModel<LauncherButtonItemViewModel> _launcherItems = null;
+		CollectionModel<LauncherItemButtonViewModel> _launcherItems = null;
 		double _captionWidth;
 		Thickness _borderThickness;
 		Brush _borderBrush;
@@ -315,18 +315,18 @@
 			}
 		}
 
-		public IEnumerable<LauncherButtonItemViewModel> LauncherItems
+		public IEnumerable<LauncherItemButtonViewModel> LauncherItems
 		{
 			get
 			{
 				if (this._launcherItems == null) {
 					var list = GetLauncherItems(SelectedGroup)
-						.Select(m => new LauncherButtonItemViewModel(m, this.LauncherIconCaching, NonProcess, ClipboardWatcher, AppSender) {
+						.Select(m => new LauncherItemButtonViewModel(m, this.LauncherIconCaching, NonProcess, ClipboardWatcher, AppSender) {
 							IconScale = Model.Toolbar.IconScale,
 						});
 					;
 
-					this._launcherItems = new CollectionModel<LauncherButtonItemViewModel>(list);
+					this._launcherItems = new CollectionModel<LauncherItemButtonViewModel>(list);
 				}
 
 				return this._launcherItems;

@@ -21,9 +21,9 @@
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
-	public class LauncherSimpleItemViewModel: LauncherItemViewModelBase
+	public class LauncherItemSimpleViewModel: LauncherItemViewModelBase
 	{
-		public LauncherSimpleItemViewModel(LauncherItemModel model, LauncherIconCaching launcherIconCaching, INonProcess nonPorocess)
+		public LauncherItemSimpleViewModel(LauncherItemModel model, LauncherIconCaching launcherIconCaching, INonProcess nonPorocess)
 			: base(model, launcherIconCaching, nonPorocess)
 		{ }
 	}

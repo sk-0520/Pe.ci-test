@@ -17,7 +17,7 @@
 	using ContentTypeTextNet.Pe.PeMain.ViewModel.Control;
 	using Microsoft.Win32;
 
-	public class LauncherExecuteItemViewModel: LauncherSimpleItemViewModel, IHavingView<LauncherExecuteWindow>
+	public class LauncherItemExecuteViewModel: LauncherItemSimpleViewModel, IHavingView<LauncherItemExecuteWindow>
 	{
 		#region variable
 
@@ -29,7 +29,7 @@
 		
 		#endregion
 
-		public LauncherExecuteItemViewModel(LauncherItemModel model, LauncherExecuteWindow view, LauncherIconCaching launcherIconCaching, INonProcess nonPorocess)
+		public LauncherItemExecuteViewModel(LauncherItemModel model, LauncherItemExecuteWindow view, LauncherIconCaching launcherIconCaching, INonProcess nonPorocess)
 			: base(model, launcherIconCaching, nonPorocess)
 		{
 			View = view;
@@ -235,7 +235,7 @@
 
 		#region IHavingView
 
-		public LauncherExecuteWindow View { get; private set; }
+		public LauncherItemExecuteWindow View { get; private set; }
 
 		public bool HasView { get { return View != null;} }
 
