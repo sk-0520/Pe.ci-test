@@ -21,6 +21,23 @@
 
 		#endregion
 
+		#region property
+
+		public static string ApplicationTasktrayPath
+		{
+			get 
+			{
+#if DEBUG
+				return applicationTasktrayDebug;
+#elif BETA
+				return applicationTasktrayBeta;
+#else
+				return applicationTasktrayRelease;
+#endif
+		#endregion
+			}
+		}
+
 		#region function
 
 		static BitmapSource GetImage(string path)

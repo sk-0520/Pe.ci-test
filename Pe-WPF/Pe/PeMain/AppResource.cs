@@ -33,14 +33,11 @@
 		const string launcherCommand = "/Resources/Icon/LauncherCommand.ico";
 
 		[AppResource(AppResourceType.Icon)]
-		const string applicationTasktray
-#if DEBUG
-				= "/Resources/Icon/Tasktray/App-debug.ico";
-#elif BETA
-				= "/Resources/Icon/Tasktray/App-beta.ico";
-#else
-				= "/Resources/Icon/Tasktray/App-release.ico";
-#endif
+		const string applicationTasktrayDebug = "/Resources/Icon/Tasktray/App-debug.ico";
+		[AppResource(AppResourceType.Icon)]
+		const string applicationTasktrayBeta = "/Resources/Icon/Tasktray/App-beta.ico";
+		[AppResource(AppResourceType.Icon)]
+		const string applicationTasktrayRelease = "/Resources/Icon/Tasktray/App-release.ico";
 		[AppResource(AppResourceType.Image)]
 		const string commonFiltering = "/Resources/Image/Common/Filtering.png";
 		[AppResource(AppResourceType.Image)]
@@ -65,6 +62,10 @@
 		const string commonUp = "/Resources/Image/Common/Up.png";
 		[AppResource(AppResourceType.Image)]
 		const string commonDown = "/Resources/Image/Common/Down.png";
+		[AppResource(AppResourceType.Image)]
+		const string commonFile = "/Resources/Image/Common/File.png";
+		[AppResource(AppResourceType.Image)]
+		const string commonFolder = "/Resources/Image/Common/Folder.png";
 
 
 		[AppResource(AppResourceType.Image)]

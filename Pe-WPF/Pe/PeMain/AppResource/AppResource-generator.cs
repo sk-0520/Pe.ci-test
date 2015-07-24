@@ -21,7 +21,7 @@
 		/*
 		このソースは自動生成のため AppResource-generator.tt を編集すること。
 
-		生成元フィールド数: 30
+		生成元フィールド数: 34
 		*/
 		#region Icon: Application
 
@@ -351,88 +351,252 @@
 		#endregion IconScale
 
 		#endregion LauncherCommand
-		#region Icon: ApplicationTasktray
+		#region Icon: ApplicationTasktrayDebug
 
 		/// <summary>
-		/// [Icon] ApplicationTasktrayのリソースパスを取得。
+		/// [Icon] ApplicationTasktrayDebugのリソースパスを取得。
 		/// <para>/Resources/Icon/Tasktray/App-debug.ico</para>
 		/// </summary>
-		public static string ApplicationTasktrayPath
+		public static string ApplicationTasktrayDebugPath
 		{
-			get { return applicationTasktray; }
+			get { return applicationTasktrayDebug; }
 		}
 
 		/// <summary>
-		/// [Icon] ApplicationTasktrayのイメージソースを取得。
+		/// [Icon] ApplicationTasktrayDebugのイメージソースを取得。
 		/// <para>初回のみ生成を行う。</para>
-		/// <para>ApplicationTasktrayPath: /Resources/Icon/Tasktray/App-debug.ico</para>
+		/// <para>ApplicationTasktrayDebugPath: /Resources/Icon/Tasktray/App-debug.ico</para>
 		/// </summary>
 		/// <param name="iconScale">アイコンサイズ</param>
 		/// <param name="logger">ログ。不要であれば null を指定(するか引数を与えない)。</param>
 		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
-		public static BitmapSource GetApplicationTasktrayIcon(IconScale iconScale, ILogger logger = null)
+		public static BitmapSource GetApplicationTasktrayDebugIcon(IconScale iconScale, ILogger logger = null)
 		{
-			return GetIcon(ApplicationTasktrayPath, iconScale, logger);
+			return GetIcon(ApplicationTasktrayDebugPath, iconScale, logger);
 		}
 
 		#region IconScale
 
 		/// <summary>
-		/// [Icon] ApplicationTasktrayのイメージソース(IconScale.Small)を取得。
-		/// <para>内部的にはGetApplicationTasktrayIcon(IconScale, ILogger)の呼び出しを行う。</para>
-		/// <para>ApplicationTasktrayPath: /Resources/Icon/Tasktray/App-debug.ico</para>
+		/// [Icon] ApplicationTasktrayDebugのイメージソース(IconScale.Small)を取得。
+		/// <para>内部的にはGetApplicationTasktrayDebugIcon(IconScale, ILogger)の呼び出しを行う。</para>
+		/// <para>ApplicationTasktrayDebugPath: /Resources/Icon/Tasktray/App-debug.ico</para>
 		/// </summary>
 		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
-		public static BitmapSource ApplicationTasktrayIconSmall
+		public static BitmapSource ApplicationTasktrayDebugIconSmall
 		{
 			get
 			{
-				return GetApplicationTasktrayIcon(IconScale.Small);
+				return GetApplicationTasktrayDebugIcon(IconScale.Small);
 			}
 		}
 		/// <summary>
-		/// [Icon] ApplicationTasktrayのイメージソース(IconScale.Normal)を取得。
-		/// <para>内部的にはGetApplicationTasktrayIcon(IconScale, ILogger)の呼び出しを行う。</para>
-		/// <para>ApplicationTasktrayPath: /Resources/Icon/Tasktray/App-debug.ico</para>
+		/// [Icon] ApplicationTasktrayDebugのイメージソース(IconScale.Normal)を取得。
+		/// <para>内部的にはGetApplicationTasktrayDebugIcon(IconScale, ILogger)の呼び出しを行う。</para>
+		/// <para>ApplicationTasktrayDebugPath: /Resources/Icon/Tasktray/App-debug.ico</para>
 		/// </summary>
 		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
-		public static BitmapSource ApplicationTasktrayIconNormal
+		public static BitmapSource ApplicationTasktrayDebugIconNormal
 		{
 			get
 			{
-				return GetApplicationTasktrayIcon(IconScale.Normal);
+				return GetApplicationTasktrayDebugIcon(IconScale.Normal);
 			}
 		}
 		/// <summary>
-		/// [Icon] ApplicationTasktrayのイメージソース(IconScale.Big)を取得。
-		/// <para>内部的にはGetApplicationTasktrayIcon(IconScale, ILogger)の呼び出しを行う。</para>
-		/// <para>ApplicationTasktrayPath: /Resources/Icon/Tasktray/App-debug.ico</para>
+		/// [Icon] ApplicationTasktrayDebugのイメージソース(IconScale.Big)を取得。
+		/// <para>内部的にはGetApplicationTasktrayDebugIcon(IconScale, ILogger)の呼び出しを行う。</para>
+		/// <para>ApplicationTasktrayDebugPath: /Resources/Icon/Tasktray/App-debug.ico</para>
 		/// </summary>
 		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
-		public static BitmapSource ApplicationTasktrayIconBig
+		public static BitmapSource ApplicationTasktrayDebugIconBig
 		{
 			get
 			{
-				return GetApplicationTasktrayIcon(IconScale.Big);
+				return GetApplicationTasktrayDebugIcon(IconScale.Big);
 			}
 		}
 		/// <summary>
-		/// [Icon] ApplicationTasktrayのイメージソース(IconScale.Large)を取得。
-		/// <para>内部的にはGetApplicationTasktrayIcon(IconScale, ILogger)の呼び出しを行う。</para>
-		/// <para>ApplicationTasktrayPath: /Resources/Icon/Tasktray/App-debug.ico</para>
+		/// [Icon] ApplicationTasktrayDebugのイメージソース(IconScale.Large)を取得。
+		/// <para>内部的にはGetApplicationTasktrayDebugIcon(IconScale, ILogger)の呼び出しを行う。</para>
+		/// <para>ApplicationTasktrayDebugPath: /Resources/Icon/Tasktray/App-debug.ico</para>
 		/// </summary>
 		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
-		public static BitmapSource ApplicationTasktrayIconLarge
+		public static BitmapSource ApplicationTasktrayDebugIconLarge
 		{
 			get
 			{
-				return GetApplicationTasktrayIcon(IconScale.Large);
+				return GetApplicationTasktrayDebugIcon(IconScale.Large);
 			}
 		}
 
 		#endregion IconScale
 
-		#endregion ApplicationTasktray
+		#endregion ApplicationTasktrayDebug
+		#region Icon: ApplicationTasktrayBeta
+
+		/// <summary>
+		/// [Icon] ApplicationTasktrayBetaのリソースパスを取得。
+		/// <para>/Resources/Icon/Tasktray/App-beta.ico</para>
+		/// </summary>
+		public static string ApplicationTasktrayBetaPath
+		{
+			get { return applicationTasktrayBeta; }
+		}
+
+		/// <summary>
+		/// [Icon] ApplicationTasktrayBetaのイメージソースを取得。
+		/// <para>初回のみ生成を行う。</para>
+		/// <para>ApplicationTasktrayBetaPath: /Resources/Icon/Tasktray/App-beta.ico</para>
+		/// </summary>
+		/// <param name="iconScale">アイコンサイズ</param>
+		/// <param name="logger">ログ。不要であれば null を指定(するか引数を与えない)。</param>
+		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
+		public static BitmapSource GetApplicationTasktrayBetaIcon(IconScale iconScale, ILogger logger = null)
+		{
+			return GetIcon(ApplicationTasktrayBetaPath, iconScale, logger);
+		}
+
+		#region IconScale
+
+		/// <summary>
+		/// [Icon] ApplicationTasktrayBetaのイメージソース(IconScale.Small)を取得。
+		/// <para>内部的にはGetApplicationTasktrayBetaIcon(IconScale, ILogger)の呼び出しを行う。</para>
+		/// <para>ApplicationTasktrayBetaPath: /Resources/Icon/Tasktray/App-beta.ico</para>
+		/// </summary>
+		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
+		public static BitmapSource ApplicationTasktrayBetaIconSmall
+		{
+			get
+			{
+				return GetApplicationTasktrayBetaIcon(IconScale.Small);
+			}
+		}
+		/// <summary>
+		/// [Icon] ApplicationTasktrayBetaのイメージソース(IconScale.Normal)を取得。
+		/// <para>内部的にはGetApplicationTasktrayBetaIcon(IconScale, ILogger)の呼び出しを行う。</para>
+		/// <para>ApplicationTasktrayBetaPath: /Resources/Icon/Tasktray/App-beta.ico</para>
+		/// </summary>
+		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
+		public static BitmapSource ApplicationTasktrayBetaIconNormal
+		{
+			get
+			{
+				return GetApplicationTasktrayBetaIcon(IconScale.Normal);
+			}
+		}
+		/// <summary>
+		/// [Icon] ApplicationTasktrayBetaのイメージソース(IconScale.Big)を取得。
+		/// <para>内部的にはGetApplicationTasktrayBetaIcon(IconScale, ILogger)の呼び出しを行う。</para>
+		/// <para>ApplicationTasktrayBetaPath: /Resources/Icon/Tasktray/App-beta.ico</para>
+		/// </summary>
+		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
+		public static BitmapSource ApplicationTasktrayBetaIconBig
+		{
+			get
+			{
+				return GetApplicationTasktrayBetaIcon(IconScale.Big);
+			}
+		}
+		/// <summary>
+		/// [Icon] ApplicationTasktrayBetaのイメージソース(IconScale.Large)を取得。
+		/// <para>内部的にはGetApplicationTasktrayBetaIcon(IconScale, ILogger)の呼び出しを行う。</para>
+		/// <para>ApplicationTasktrayBetaPath: /Resources/Icon/Tasktray/App-beta.ico</para>
+		/// </summary>
+		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
+		public static BitmapSource ApplicationTasktrayBetaIconLarge
+		{
+			get
+			{
+				return GetApplicationTasktrayBetaIcon(IconScale.Large);
+			}
+		}
+
+		#endregion IconScale
+
+		#endregion ApplicationTasktrayBeta
+		#region Icon: ApplicationTasktrayRelease
+
+		/// <summary>
+		/// [Icon] ApplicationTasktrayReleaseのリソースパスを取得。
+		/// <para>/Resources/Icon/Tasktray/App-release.ico</para>
+		/// </summary>
+		public static string ApplicationTasktrayReleasePath
+		{
+			get { return applicationTasktrayRelease; }
+		}
+
+		/// <summary>
+		/// [Icon] ApplicationTasktrayReleaseのイメージソースを取得。
+		/// <para>初回のみ生成を行う。</para>
+		/// <para>ApplicationTasktrayReleasePath: /Resources/Icon/Tasktray/App-release.ico</para>
+		/// </summary>
+		/// <param name="iconScale">アイコンサイズ</param>
+		/// <param name="logger">ログ。不要であれば null を指定(するか引数を与えない)。</param>
+		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
+		public static BitmapSource GetApplicationTasktrayReleaseIcon(IconScale iconScale, ILogger logger = null)
+		{
+			return GetIcon(ApplicationTasktrayReleasePath, iconScale, logger);
+		}
+
+		#region IconScale
+
+		/// <summary>
+		/// [Icon] ApplicationTasktrayReleaseのイメージソース(IconScale.Small)を取得。
+		/// <para>内部的にはGetApplicationTasktrayReleaseIcon(IconScale, ILogger)の呼び出しを行う。</para>
+		/// <para>ApplicationTasktrayReleasePath: /Resources/Icon/Tasktray/App-release.ico</para>
+		/// </summary>
+		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
+		public static BitmapSource ApplicationTasktrayReleaseIconSmall
+		{
+			get
+			{
+				return GetApplicationTasktrayReleaseIcon(IconScale.Small);
+			}
+		}
+		/// <summary>
+		/// [Icon] ApplicationTasktrayReleaseのイメージソース(IconScale.Normal)を取得。
+		/// <para>内部的にはGetApplicationTasktrayReleaseIcon(IconScale, ILogger)の呼び出しを行う。</para>
+		/// <para>ApplicationTasktrayReleasePath: /Resources/Icon/Tasktray/App-release.ico</para>
+		/// </summary>
+		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
+		public static BitmapSource ApplicationTasktrayReleaseIconNormal
+		{
+			get
+			{
+				return GetApplicationTasktrayReleaseIcon(IconScale.Normal);
+			}
+		}
+		/// <summary>
+		/// [Icon] ApplicationTasktrayReleaseのイメージソース(IconScale.Big)を取得。
+		/// <para>内部的にはGetApplicationTasktrayReleaseIcon(IconScale, ILogger)の呼び出しを行う。</para>
+		/// <para>ApplicationTasktrayReleasePath: /Resources/Icon/Tasktray/App-release.ico</para>
+		/// </summary>
+		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
+		public static BitmapSource ApplicationTasktrayReleaseIconBig
+		{
+			get
+			{
+				return GetApplicationTasktrayReleaseIcon(IconScale.Big);
+			}
+		}
+		/// <summary>
+		/// [Icon] ApplicationTasktrayReleaseのイメージソース(IconScale.Large)を取得。
+		/// <para>内部的にはGetApplicationTasktrayReleaseIcon(IconScale, ILogger)の呼び出しを行う。</para>
+		/// <para>ApplicationTasktrayReleasePath: /Resources/Icon/Tasktray/App-release.ico</para>
+		/// </summary>
+		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
+		public static BitmapSource ApplicationTasktrayReleaseIconLarge
+		{
+			get
+			{
+				return GetApplicationTasktrayReleaseIcon(IconScale.Large);
+			}
+		}
+
+		#endregion IconScale
+
+		#endregion ApplicationTasktrayRelease
 		#region Image: CommonFiltering
 
 		/// <summary>
@@ -697,6 +861,50 @@
 			get { return GetImage(CommonDownPath); }
 		}
 		#endregion CommonDown
+		#region Image: CommonFile
+
+		/// <summary>
+		/// [Image] CommonFileのリソースパスを取得。
+		/// <para>/Resources/Image/Common/File.png</para>
+		/// </summary>
+		public static string CommonFilePath
+		{
+			get { return commonFile; }
+		}
+
+		/// <summary>
+		/// [Image] CommonFileのイメージソースを取得。
+		/// <para>初回のみ生成を行う。</para>
+		/// <para>CommonFilePath: /Resources/Image/Common/File.png</para>
+		/// </summary>
+		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
+		public static BitmapSource CommonFileImage
+		{
+			get { return GetImage(CommonFilePath); }
+		}
+		#endregion CommonFile
+		#region Image: CommonFolder
+
+		/// <summary>
+		/// [Image] CommonFolderのリソースパスを取得。
+		/// <para>/Resources/Image/Common/Folder.png</para>
+		/// </summary>
+		public static string CommonFolderPath
+		{
+			get { return commonFolder; }
+		}
+
+		/// <summary>
+		/// [Image] CommonFolderのイメージソースを取得。
+		/// <para>初回のみ生成を行う。</para>
+		/// <para>CommonFolderPath: /Resources/Image/Common/Folder.png</para>
+		/// </summary>
+		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
+		public static BitmapSource CommonFolderImage
+		{
+			get { return GetImage(CommonFolderPath); }
+		}
+		#endregion CommonFolder
 		#region Image: TemplatePlain
 
 		/// <summary>
