@@ -1,5 +1,4 @@
-﻿
-namespace ContentTypeTextNet.Pe.PeMain
+﻿namespace ContentTypeTextNet.Pe.PeMain
 {
 	using System;
 	using System.Collections.Generic;
@@ -27,7 +26,7 @@ namespace ContentTypeTextNet.Pe.PeMain
 		#region Icon: Application
 
 		/// <summary>
-		/// [Icon] Applicationのリソースパス。
+		/// [Icon] Applicationのリソースパスを取得。
 		/// <para>/Resources/Icon/App.ico</para>
 		/// </summary>
 		public static string ApplicationPath
@@ -36,8 +35,9 @@ namespace ContentTypeTextNet.Pe.PeMain
 		}
 
 		/// <summary>
-		/// [Icon] Applicationのイメージソース。
+		/// [Icon] Applicationのイメージソースを取得。
 		/// <para>初回のみ生成を行う。</para>
+		/// <para>ApplicationPath: /Resources/Icon/App.ico</para>
 		/// </summary>
 		/// <param name="iconScale">アイコンサイズ</param>
 		/// <param name="logger">ログ。不要であれば null を指定(するか引数を与えない)。</param>
@@ -50,7 +50,9 @@ namespace ContentTypeTextNet.Pe.PeMain
 		#region IconScale
 
 		/// <summary>
-		/// [Icon] Applicationのイメージソース(IconScale.Small)。
+		/// [Icon] Applicationのイメージソース(IconScale.Small)を取得。
+		/// <para>内部的にはGetApplicationIcon(IconScale, ILogger)の呼び出しを行う。</para>
+		/// <para>ApplicationPath: /Resources/Icon/App.ico</para>
 		/// </summary>
 		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
 		public static BitmapSource ApplicationIconSmall
@@ -61,7 +63,9 @@ namespace ContentTypeTextNet.Pe.PeMain
 			}
 		}
 		/// <summary>
-		/// [Icon] Applicationのイメージソース(IconScale.Normal)。
+		/// [Icon] Applicationのイメージソース(IconScale.Normal)を取得。
+		/// <para>内部的にはGetApplicationIcon(IconScale, ILogger)の呼び出しを行う。</para>
+		/// <para>ApplicationPath: /Resources/Icon/App.ico</para>
 		/// </summary>
 		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
 		public static BitmapSource ApplicationIconNormal
@@ -72,7 +76,9 @@ namespace ContentTypeTextNet.Pe.PeMain
 			}
 		}
 		/// <summary>
-		/// [Icon] Applicationのイメージソース(IconScale.Big)。
+		/// [Icon] Applicationのイメージソース(IconScale.Big)を取得。
+		/// <para>内部的にはGetApplicationIcon(IconScale, ILogger)の呼び出しを行う。</para>
+		/// <para>ApplicationPath: /Resources/Icon/App.ico</para>
 		/// </summary>
 		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
 		public static BitmapSource ApplicationIconBig
@@ -83,7 +89,9 @@ namespace ContentTypeTextNet.Pe.PeMain
 			}
 		}
 		/// <summary>
-		/// [Icon] Applicationのイメージソース(IconScale.Large)。
+		/// [Icon] Applicationのイメージソース(IconScale.Large)を取得。
+		/// <para>内部的にはGetApplicationIcon(IconScale, ILogger)の呼び出しを行う。</para>
+		/// <para>ApplicationPath: /Resources/Icon/App.ico</para>
 		/// </summary>
 		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
 		public static BitmapSource ApplicationIconLarge
@@ -96,11 +104,11 @@ namespace ContentTypeTextNet.Pe.PeMain
 
 		#endregion IconScale
 
-		#endregion application
+		#endregion Application
 		#region Icon: NotFound
 
 		/// <summary>
-		/// [Icon] NotFoundのリソースパス。
+		/// [Icon] NotFoundのリソースパスを取得。
 		/// <para>/Resources/Icon/NotFound.ico</para>
 		/// </summary>
 		public static string NotFoundPath
@@ -109,8 +117,9 @@ namespace ContentTypeTextNet.Pe.PeMain
 		}
 
 		/// <summary>
-		/// [Icon] NotFoundのイメージソース。
+		/// [Icon] NotFoundのイメージソースを取得。
 		/// <para>初回のみ生成を行う。</para>
+		/// <para>NotFoundPath: /Resources/Icon/NotFound.ico</para>
 		/// </summary>
 		/// <param name="iconScale">アイコンサイズ</param>
 		/// <param name="logger">ログ。不要であれば null を指定(するか引数を与えない)。</param>
@@ -123,7 +132,9 @@ namespace ContentTypeTextNet.Pe.PeMain
 		#region IconScale
 
 		/// <summary>
-		/// [Icon] NotFoundのイメージソース(IconScale.Small)。
+		/// [Icon] NotFoundのイメージソース(IconScale.Small)を取得。
+		/// <para>内部的にはGetNotFoundIcon(IconScale, ILogger)の呼び出しを行う。</para>
+		/// <para>NotFoundPath: /Resources/Icon/NotFound.ico</para>
 		/// </summary>
 		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
 		public static BitmapSource NotFoundIconSmall
@@ -134,7 +145,9 @@ namespace ContentTypeTextNet.Pe.PeMain
 			}
 		}
 		/// <summary>
-		/// [Icon] NotFoundのイメージソース(IconScale.Normal)。
+		/// [Icon] NotFoundのイメージソース(IconScale.Normal)を取得。
+		/// <para>内部的にはGetNotFoundIcon(IconScale, ILogger)の呼び出しを行う。</para>
+		/// <para>NotFoundPath: /Resources/Icon/NotFound.ico</para>
 		/// </summary>
 		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
 		public static BitmapSource NotFoundIconNormal
@@ -145,7 +158,9 @@ namespace ContentTypeTextNet.Pe.PeMain
 			}
 		}
 		/// <summary>
-		/// [Icon] NotFoundのイメージソース(IconScale.Big)。
+		/// [Icon] NotFoundのイメージソース(IconScale.Big)を取得。
+		/// <para>内部的にはGetNotFoundIcon(IconScale, ILogger)の呼び出しを行う。</para>
+		/// <para>NotFoundPath: /Resources/Icon/NotFound.ico</para>
 		/// </summary>
 		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
 		public static BitmapSource NotFoundIconBig
@@ -156,7 +171,9 @@ namespace ContentTypeTextNet.Pe.PeMain
 			}
 		}
 		/// <summary>
-		/// [Icon] NotFoundのイメージソース(IconScale.Large)。
+		/// [Icon] NotFoundのイメージソース(IconScale.Large)を取得。
+		/// <para>内部的にはGetNotFoundIcon(IconScale, ILogger)の呼び出しを行う。</para>
+		/// <para>NotFoundPath: /Resources/Icon/NotFound.ico</para>
 		/// </summary>
 		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
 		public static BitmapSource NotFoundIconLarge
@@ -169,11 +186,11 @@ namespace ContentTypeTextNet.Pe.PeMain
 
 		#endregion IconScale
 
-		#endregion notFound
+		#endregion NotFound
 		#region Icon: LauncherToolbarMain
 
 		/// <summary>
-		/// [Icon] LauncherToolbarMainのリソースパス。
+		/// [Icon] LauncherToolbarMainのリソースパスを取得。
 		/// <para>/Resources/Icon/LauncherToolbarMain.ico</para>
 		/// </summary>
 		public static string LauncherToolbarMainPath
@@ -182,8 +199,9 @@ namespace ContentTypeTextNet.Pe.PeMain
 		}
 
 		/// <summary>
-		/// [Icon] LauncherToolbarMainのイメージソース。
+		/// [Icon] LauncherToolbarMainのイメージソースを取得。
 		/// <para>初回のみ生成を行う。</para>
+		/// <para>LauncherToolbarMainPath: /Resources/Icon/LauncherToolbarMain.ico</para>
 		/// </summary>
 		/// <param name="iconScale">アイコンサイズ</param>
 		/// <param name="logger">ログ。不要であれば null を指定(するか引数を与えない)。</param>
@@ -196,7 +214,9 @@ namespace ContentTypeTextNet.Pe.PeMain
 		#region IconScale
 
 		/// <summary>
-		/// [Icon] LauncherToolbarMainのイメージソース(IconScale.Small)。
+		/// [Icon] LauncherToolbarMainのイメージソース(IconScale.Small)を取得。
+		/// <para>内部的にはGetLauncherToolbarMainIcon(IconScale, ILogger)の呼び出しを行う。</para>
+		/// <para>LauncherToolbarMainPath: /Resources/Icon/LauncherToolbarMain.ico</para>
 		/// </summary>
 		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
 		public static BitmapSource LauncherToolbarMainIconSmall
@@ -207,7 +227,9 @@ namespace ContentTypeTextNet.Pe.PeMain
 			}
 		}
 		/// <summary>
-		/// [Icon] LauncherToolbarMainのイメージソース(IconScale.Normal)。
+		/// [Icon] LauncherToolbarMainのイメージソース(IconScale.Normal)を取得。
+		/// <para>内部的にはGetLauncherToolbarMainIcon(IconScale, ILogger)の呼び出しを行う。</para>
+		/// <para>LauncherToolbarMainPath: /Resources/Icon/LauncherToolbarMain.ico</para>
 		/// </summary>
 		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
 		public static BitmapSource LauncherToolbarMainIconNormal
@@ -218,7 +240,9 @@ namespace ContentTypeTextNet.Pe.PeMain
 			}
 		}
 		/// <summary>
-		/// [Icon] LauncherToolbarMainのイメージソース(IconScale.Big)。
+		/// [Icon] LauncherToolbarMainのイメージソース(IconScale.Big)を取得。
+		/// <para>内部的にはGetLauncherToolbarMainIcon(IconScale, ILogger)の呼び出しを行う。</para>
+		/// <para>LauncherToolbarMainPath: /Resources/Icon/LauncherToolbarMain.ico</para>
 		/// </summary>
 		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
 		public static BitmapSource LauncherToolbarMainIconBig
@@ -229,7 +253,9 @@ namespace ContentTypeTextNet.Pe.PeMain
 			}
 		}
 		/// <summary>
-		/// [Icon] LauncherToolbarMainのイメージソース(IconScale.Large)。
+		/// [Icon] LauncherToolbarMainのイメージソース(IconScale.Large)を取得。
+		/// <para>内部的にはGetLauncherToolbarMainIcon(IconScale, ILogger)の呼び出しを行う。</para>
+		/// <para>LauncherToolbarMainPath: /Resources/Icon/LauncherToolbarMain.ico</para>
 		/// </summary>
 		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
 		public static BitmapSource LauncherToolbarMainIconLarge
@@ -242,11 +268,11 @@ namespace ContentTypeTextNet.Pe.PeMain
 
 		#endregion IconScale
 
-		#endregion launcherToolbarMain
+		#endregion LauncherToolbarMain
 		#region Icon: LauncherCommand
 
 		/// <summary>
-		/// [Icon] LauncherCommandのリソースパス。
+		/// [Icon] LauncherCommandのリソースパスを取得。
 		/// <para>/Resources/Icon/LauncherCommand.ico</para>
 		/// </summary>
 		public static string LauncherCommandPath
@@ -255,8 +281,9 @@ namespace ContentTypeTextNet.Pe.PeMain
 		}
 
 		/// <summary>
-		/// [Icon] LauncherCommandのイメージソース。
+		/// [Icon] LauncherCommandのイメージソースを取得。
 		/// <para>初回のみ生成を行う。</para>
+		/// <para>LauncherCommandPath: /Resources/Icon/LauncherCommand.ico</para>
 		/// </summary>
 		/// <param name="iconScale">アイコンサイズ</param>
 		/// <param name="logger">ログ。不要であれば null を指定(するか引数を与えない)。</param>
@@ -269,7 +296,9 @@ namespace ContentTypeTextNet.Pe.PeMain
 		#region IconScale
 
 		/// <summary>
-		/// [Icon] LauncherCommandのイメージソース(IconScale.Small)。
+		/// [Icon] LauncherCommandのイメージソース(IconScale.Small)を取得。
+		/// <para>内部的にはGetLauncherCommandIcon(IconScale, ILogger)の呼び出しを行う。</para>
+		/// <para>LauncherCommandPath: /Resources/Icon/LauncherCommand.ico</para>
 		/// </summary>
 		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
 		public static BitmapSource LauncherCommandIconSmall
@@ -280,7 +309,9 @@ namespace ContentTypeTextNet.Pe.PeMain
 			}
 		}
 		/// <summary>
-		/// [Icon] LauncherCommandのイメージソース(IconScale.Normal)。
+		/// [Icon] LauncherCommandのイメージソース(IconScale.Normal)を取得。
+		/// <para>内部的にはGetLauncherCommandIcon(IconScale, ILogger)の呼び出しを行う。</para>
+		/// <para>LauncherCommandPath: /Resources/Icon/LauncherCommand.ico</para>
 		/// </summary>
 		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
 		public static BitmapSource LauncherCommandIconNormal
@@ -291,7 +322,9 @@ namespace ContentTypeTextNet.Pe.PeMain
 			}
 		}
 		/// <summary>
-		/// [Icon] LauncherCommandのイメージソース(IconScale.Big)。
+		/// [Icon] LauncherCommandのイメージソース(IconScale.Big)を取得。
+		/// <para>内部的にはGetLauncherCommandIcon(IconScale, ILogger)の呼び出しを行う。</para>
+		/// <para>LauncherCommandPath: /Resources/Icon/LauncherCommand.ico</para>
 		/// </summary>
 		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
 		public static BitmapSource LauncherCommandIconBig
@@ -302,7 +335,9 @@ namespace ContentTypeTextNet.Pe.PeMain
 			}
 		}
 		/// <summary>
-		/// [Icon] LauncherCommandのイメージソース(IconScale.Large)。
+		/// [Icon] LauncherCommandのイメージソース(IconScale.Large)を取得。
+		/// <para>内部的にはGetLauncherCommandIcon(IconScale, ILogger)の呼び出しを行う。</para>
+		/// <para>LauncherCommandPath: /Resources/Icon/LauncherCommand.ico</para>
 		/// </summary>
 		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
 		public static BitmapSource LauncherCommandIconLarge
@@ -315,11 +350,11 @@ namespace ContentTypeTextNet.Pe.PeMain
 
 		#endregion IconScale
 
-		#endregion launcherCommand
+		#endregion LauncherCommand
 		#region Icon: ApplicationTasktray
 
 		/// <summary>
-		/// [Icon] ApplicationTasktrayのリソースパス。
+		/// [Icon] ApplicationTasktrayのリソースパスを取得。
 		/// <para>/Resources/Icon/Tasktray/App-debug.ico</para>
 		/// </summary>
 		public static string ApplicationTasktrayPath
@@ -328,8 +363,9 @@ namespace ContentTypeTextNet.Pe.PeMain
 		}
 
 		/// <summary>
-		/// [Icon] ApplicationTasktrayのイメージソース。
+		/// [Icon] ApplicationTasktrayのイメージソースを取得。
 		/// <para>初回のみ生成を行う。</para>
+		/// <para>ApplicationTasktrayPath: /Resources/Icon/Tasktray/App-debug.ico</para>
 		/// </summary>
 		/// <param name="iconScale">アイコンサイズ</param>
 		/// <param name="logger">ログ。不要であれば null を指定(するか引数を与えない)。</param>
@@ -342,7 +378,9 @@ namespace ContentTypeTextNet.Pe.PeMain
 		#region IconScale
 
 		/// <summary>
-		/// [Icon] ApplicationTasktrayのイメージソース(IconScale.Small)。
+		/// [Icon] ApplicationTasktrayのイメージソース(IconScale.Small)を取得。
+		/// <para>内部的にはGetApplicationTasktrayIcon(IconScale, ILogger)の呼び出しを行う。</para>
+		/// <para>ApplicationTasktrayPath: /Resources/Icon/Tasktray/App-debug.ico</para>
 		/// </summary>
 		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
 		public static BitmapSource ApplicationTasktrayIconSmall
@@ -353,7 +391,9 @@ namespace ContentTypeTextNet.Pe.PeMain
 			}
 		}
 		/// <summary>
-		/// [Icon] ApplicationTasktrayのイメージソース(IconScale.Normal)。
+		/// [Icon] ApplicationTasktrayのイメージソース(IconScale.Normal)を取得。
+		/// <para>内部的にはGetApplicationTasktrayIcon(IconScale, ILogger)の呼び出しを行う。</para>
+		/// <para>ApplicationTasktrayPath: /Resources/Icon/Tasktray/App-debug.ico</para>
 		/// </summary>
 		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
 		public static BitmapSource ApplicationTasktrayIconNormal
@@ -364,7 +404,9 @@ namespace ContentTypeTextNet.Pe.PeMain
 			}
 		}
 		/// <summary>
-		/// [Icon] ApplicationTasktrayのイメージソース(IconScale.Big)。
+		/// [Icon] ApplicationTasktrayのイメージソース(IconScale.Big)を取得。
+		/// <para>内部的にはGetApplicationTasktrayIcon(IconScale, ILogger)の呼び出しを行う。</para>
+		/// <para>ApplicationTasktrayPath: /Resources/Icon/Tasktray/App-debug.ico</para>
 		/// </summary>
 		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
 		public static BitmapSource ApplicationTasktrayIconBig
@@ -375,7 +417,9 @@ namespace ContentTypeTextNet.Pe.PeMain
 			}
 		}
 		/// <summary>
-		/// [Icon] ApplicationTasktrayのイメージソース(IconScale.Large)。
+		/// [Icon] ApplicationTasktrayのイメージソース(IconScale.Large)を取得。
+		/// <para>内部的にはGetApplicationTasktrayIcon(IconScale, ILogger)の呼び出しを行う。</para>
+		/// <para>ApplicationTasktrayPath: /Resources/Icon/Tasktray/App-debug.ico</para>
 		/// </summary>
 		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
 		public static BitmapSource ApplicationTasktrayIconLarge
@@ -388,11 +432,11 @@ namespace ContentTypeTextNet.Pe.PeMain
 
 		#endregion IconScale
 
-		#endregion applicationTasktray
+		#endregion ApplicationTasktray
 		#region Image: CommonFiltering
 
 		/// <summary>
-		/// [Image] CommonFilteringのリソースパス。
+		/// [Image] CommonFilteringのリソースパスを取得。
 		/// <para>/Resources/Image/Common/Filtering.png</para>
 		/// </summary>
 		public static string CommonFilteringPath
@@ -401,19 +445,20 @@ namespace ContentTypeTextNet.Pe.PeMain
 		}
 
 		/// <summary>
-		/// [Image] CommonFilteringのイメージソース。
+		/// [Image] CommonFilteringのイメージソースを取得。
 		/// <para>初回のみ生成を行う。</para>
+		/// <para>CommonFilteringPath: /Resources/Image/Common/Filtering.png</para>
 		/// </summary>
 		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
 		public static BitmapSource CommonFilteringImage
 		{
 			get { return GetImage(CommonFilteringPath); }
 		}
-		#endregion commonFiltering
+		#endregion CommonFiltering
 		#region Image: CommonTemplate
 
 		/// <summary>
-		/// [Image] CommonTemplateのリソースパス。
+		/// [Image] CommonTemplateのリソースパスを取得。
 		/// <para>/Resources/Image/Common/Template.png</para>
 		/// </summary>
 		public static string CommonTemplatePath
@@ -422,19 +467,20 @@ namespace ContentTypeTextNet.Pe.PeMain
 		}
 
 		/// <summary>
-		/// [Image] CommonTemplateのイメージソース。
+		/// [Image] CommonTemplateのイメージソースを取得。
 		/// <para>初回のみ生成を行う。</para>
+		/// <para>CommonTemplatePath: /Resources/Image/Common/Template.png</para>
 		/// </summary>
 		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
 		public static BitmapSource CommonTemplateImage
 		{
 			get { return GetImage(CommonTemplatePath); }
 		}
-		#endregion commonTemplate
+		#endregion CommonTemplate
 		#region Image: CommonClipboard
 
 		/// <summary>
-		/// [Image] CommonClipboardのリソースパス。
+		/// [Image] CommonClipboardのリソースパスを取得。
 		/// <para>/Resources/Image/Common/Clipboard.png</para>
 		/// </summary>
 		public static string CommonClipboardPath
@@ -443,19 +489,20 @@ namespace ContentTypeTextNet.Pe.PeMain
 		}
 
 		/// <summary>
-		/// [Image] CommonClipboardのイメージソース。
+		/// [Image] CommonClipboardのイメージソースを取得。
 		/// <para>初回のみ生成を行う。</para>
+		/// <para>CommonClipboardPath: /Resources/Image/Common/Clipboard.png</para>
 		/// </summary>
 		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
 		public static BitmapSource CommonClipboardImage
 		{
 			get { return GetImage(CommonClipboardPath); }
 		}
-		#endregion commonClipboard
+		#endregion CommonClipboard
 		#region Image: CommonSend
 
 		/// <summary>
-		/// [Image] CommonSendのリソースパス。
+		/// [Image] CommonSendのリソースパスを取得。
 		/// <para>/Resources/Image/Common/Send.png</para>
 		/// </summary>
 		public static string CommonSendPath
@@ -464,19 +511,20 @@ namespace ContentTypeTextNet.Pe.PeMain
 		}
 
 		/// <summary>
-		/// [Image] CommonSendのイメージソース。
+		/// [Image] CommonSendのイメージソースを取得。
 		/// <para>初回のみ生成を行う。</para>
+		/// <para>CommonSendPath: /Resources/Image/Common/Send.png</para>
 		/// </summary>
 		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
 		public static BitmapSource CommonSendImage
 		{
 			get { return GetImage(CommonSendPath); }
 		}
-		#endregion commonSend
+		#endregion CommonSend
 		#region Image: CommonPin
 
 		/// <summary>
-		/// [Image] CommonPinのリソースパス。
+		/// [Image] CommonPinのリソースパスを取得。
 		/// <para>/Resources/Image/Common/Pin.png</para>
 		/// </summary>
 		public static string CommonPinPath
@@ -485,19 +533,20 @@ namespace ContentTypeTextNet.Pe.PeMain
 		}
 
 		/// <summary>
-		/// [Image] CommonPinのイメージソース。
+		/// [Image] CommonPinのイメージソースを取得。
 		/// <para>初回のみ生成を行う。</para>
+		/// <para>CommonPinPath: /Resources/Image/Common/Pin.png</para>
 		/// </summary>
 		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
 		public static BitmapSource CommonPinImage
 		{
 			get { return GetImage(CommonPinPath); }
 		}
-		#endregion commonPin
+		#endregion CommonPin
 		#region Image: CommonWindowList
 
 		/// <summary>
-		/// [Image] CommonWindowListのリソースパス。
+		/// [Image] CommonWindowListのリソースパスを取得。
 		/// <para>/Resources/Image/Common/Pin.png</para>
 		/// </summary>
 		public static string CommonWindowListPath
@@ -506,19 +555,20 @@ namespace ContentTypeTextNet.Pe.PeMain
 		}
 
 		/// <summary>
-		/// [Image] CommonWindowListのイメージソース。
+		/// [Image] CommonWindowListのイメージソースを取得。
 		/// <para>初回のみ生成を行う。</para>
+		/// <para>CommonWindowListPath: /Resources/Image/Common/Pin.png</para>
 		/// </summary>
 		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
 		public static BitmapSource CommonWindowListImage
 		{
 			get { return GetImage(CommonWindowListPath); }
 		}
-		#endregion commonWindowList
+		#endregion CommonWindowList
 		#region Image: CommonAdd
 
 		/// <summary>
-		/// [Image] CommonAddのリソースパス。
+		/// [Image] CommonAddのリソースパスを取得。
 		/// <para>/Resources/Image/Common/Add.png</para>
 		/// </summary>
 		public static string CommonAddPath
@@ -527,19 +577,20 @@ namespace ContentTypeTextNet.Pe.PeMain
 		}
 
 		/// <summary>
-		/// [Image] CommonAddのイメージソース。
+		/// [Image] CommonAddのイメージソースを取得。
 		/// <para>初回のみ生成を行う。</para>
+		/// <para>CommonAddPath: /Resources/Image/Common/Add.png</para>
 		/// </summary>
 		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
 		public static BitmapSource CommonAddImage
 		{
 			get { return GetImage(CommonAddPath); }
 		}
-		#endregion commonAdd
+		#endregion CommonAdd
 		#region Image: CommonRemove
 
 		/// <summary>
-		/// [Image] CommonRemoveのリソースパス。
+		/// [Image] CommonRemoveのリソースパスを取得。
 		/// <para>/Resources/Image/Common/Remove.png</para>
 		/// </summary>
 		public static string CommonRemovePath
@@ -548,19 +599,20 @@ namespace ContentTypeTextNet.Pe.PeMain
 		}
 
 		/// <summary>
-		/// [Image] CommonRemoveのイメージソース。
+		/// [Image] CommonRemoveのイメージソースを取得。
 		/// <para>初回のみ生成を行う。</para>
+		/// <para>CommonRemovePath: /Resources/Image/Common/Remove.png</para>
 		/// </summary>
 		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
 		public static BitmapSource CommonRemoveImage
 		{
 			get { return GetImage(CommonRemovePath); }
 		}
-		#endregion commonRemove
+		#endregion CommonRemove
 		#region Image: CommonSave
 
 		/// <summary>
-		/// [Image] CommonSaveのリソースパス。
+		/// [Image] CommonSaveのリソースパスを取得。
 		/// <para>/Resources/Image/Common/Save.png</para>
 		/// </summary>
 		public static string CommonSavePath
@@ -569,19 +621,20 @@ namespace ContentTypeTextNet.Pe.PeMain
 		}
 
 		/// <summary>
-		/// [Image] CommonSaveのイメージソース。
+		/// [Image] CommonSaveのイメージソースを取得。
 		/// <para>初回のみ生成を行う。</para>
+		/// <para>CommonSavePath: /Resources/Image/Common/Save.png</para>
 		/// </summary>
 		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
 		public static BitmapSource CommonSaveImage
 		{
 			get { return GetImage(CommonSavePath); }
 		}
-		#endregion commonSave
+		#endregion CommonSave
 		#region Image: CommonUsingClipboard
 
 		/// <summary>
-		/// [Image] CommonUsingClipboardのリソースパス。
+		/// [Image] CommonUsingClipboardのリソースパスを取得。
 		/// <para>/Resources/Image/Common/UsingClipboard.png</para>
 		/// </summary>
 		public static string CommonUsingClipboardPath
@@ -590,19 +643,20 @@ namespace ContentTypeTextNet.Pe.PeMain
 		}
 
 		/// <summary>
-		/// [Image] CommonUsingClipboardのイメージソース。
+		/// [Image] CommonUsingClipboardのイメージソースを取得。
 		/// <para>初回のみ生成を行う。</para>
+		/// <para>CommonUsingClipboardPath: /Resources/Image/Common/UsingClipboard.png</para>
 		/// </summary>
 		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
 		public static BitmapSource CommonUsingClipboardImage
 		{
 			get { return GetImage(CommonUsingClipboardPath); }
 		}
-		#endregion commonUsingClipboard
+		#endregion CommonUsingClipboard
 		#region Image: CommonUp
 
 		/// <summary>
-		/// [Image] CommonUpのリソースパス。
+		/// [Image] CommonUpのリソースパスを取得。
 		/// <para>/Resources/Image/Common/Up.png</para>
 		/// </summary>
 		public static string CommonUpPath
@@ -611,19 +665,20 @@ namespace ContentTypeTextNet.Pe.PeMain
 		}
 
 		/// <summary>
-		/// [Image] CommonUpのイメージソース。
+		/// [Image] CommonUpのイメージソースを取得。
 		/// <para>初回のみ生成を行う。</para>
+		/// <para>CommonUpPath: /Resources/Image/Common/Up.png</para>
 		/// </summary>
 		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
 		public static BitmapSource CommonUpImage
 		{
 			get { return GetImage(CommonUpPath); }
 		}
-		#endregion commonUp
+		#endregion CommonUp
 		#region Image: CommonDown
 
 		/// <summary>
-		/// [Image] CommonDownのリソースパス。
+		/// [Image] CommonDownのリソースパスを取得。
 		/// <para>/Resources/Image/Common/Down.png</para>
 		/// </summary>
 		public static string CommonDownPath
@@ -632,19 +687,20 @@ namespace ContentTypeTextNet.Pe.PeMain
 		}
 
 		/// <summary>
-		/// [Image] CommonDownのイメージソース。
+		/// [Image] CommonDownのイメージソースを取得。
 		/// <para>初回のみ生成を行う。</para>
+		/// <para>CommonDownPath: /Resources/Image/Common/Down.png</para>
 		/// </summary>
 		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
 		public static BitmapSource CommonDownImage
 		{
 			get { return GetImage(CommonDownPath); }
 		}
-		#endregion commonDown
+		#endregion CommonDown
 		#region Image: TemplatePlain
 
 		/// <summary>
-		/// [Image] TemplatePlainのリソースパス。
+		/// [Image] TemplatePlainのリソースパスを取得。
 		/// <para>/Resources/Image/Template/TemplatePlain.png</para>
 		/// </summary>
 		public static string TemplatePlainPath
@@ -653,19 +709,20 @@ namespace ContentTypeTextNet.Pe.PeMain
 		}
 
 		/// <summary>
-		/// [Image] TemplatePlainのイメージソース。
+		/// [Image] TemplatePlainのイメージソースを取得。
 		/// <para>初回のみ生成を行う。</para>
+		/// <para>TemplatePlainPath: /Resources/Image/Template/TemplatePlain.png</para>
 		/// </summary>
 		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
 		public static BitmapSource TemplatePlainImage
 		{
 			get { return GetImage(TemplatePlainPath); }
 		}
-		#endregion templatePlain
+		#endregion TemplatePlain
 		#region Image: TemplateReplace
 
 		/// <summary>
-		/// [Image] TemplateReplaceのリソースパス。
+		/// [Image] TemplateReplaceのリソースパスを取得。
 		/// <para>/Resources/Image/Template/TemplateReplace.png</para>
 		/// </summary>
 		public static string TemplateReplacePath
@@ -674,19 +731,20 @@ namespace ContentTypeTextNet.Pe.PeMain
 		}
 
 		/// <summary>
-		/// [Image] TemplateReplaceのイメージソース。
+		/// [Image] TemplateReplaceのイメージソースを取得。
 		/// <para>初回のみ生成を行う。</para>
+		/// <para>TemplateReplacePath: /Resources/Image/Template/TemplateReplace.png</para>
 		/// </summary>
 		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
 		public static BitmapSource TemplateReplaceImage
 		{
 			get { return GetImage(TemplateReplacePath); }
 		}
-		#endregion templateReplace
+		#endregion TemplateReplace
 		#region Image: TemplateProgrammable
 
 		/// <summary>
-		/// [Image] TemplateProgrammableのリソースパス。
+		/// [Image] TemplateProgrammableのリソースパスを取得。
 		/// <para>/Resources/Image/Template/TemplateProgrammable.png</para>
 		/// </summary>
 		public static string TemplateProgrammablePath
@@ -695,19 +753,20 @@ namespace ContentTypeTextNet.Pe.PeMain
 		}
 
 		/// <summary>
-		/// [Image] TemplateProgrammableのイメージソース。
+		/// [Image] TemplateProgrammableのイメージソースを取得。
 		/// <para>初回のみ生成を行う。</para>
+		/// <para>TemplateProgrammablePath: /Resources/Image/Template/TemplateProgrammable.png</para>
 		/// </summary>
 		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
 		public static BitmapSource TemplateProgrammableImage
 		{
 			get { return GetImage(TemplateProgrammablePath); }
 		}
-		#endregion templateProgrammable
+		#endregion TemplateProgrammable
 		#region Image: ClipboardClear
 
 		/// <summary>
-		/// [Image] ClipboardClearのリソースパス。
+		/// [Image] ClipboardClearのリソースパスを取得。
 		/// <para>/Resources/Image/Clipboard/Clear.png</para>
 		/// </summary>
 		public static string ClipboardClearPath
@@ -716,19 +775,20 @@ namespace ContentTypeTextNet.Pe.PeMain
 		}
 
 		/// <summary>
-		/// [Image] ClipboardClearのイメージソース。
+		/// [Image] ClipboardClearのイメージソースを取得。
 		/// <para>初回のみ生成を行う。</para>
+		/// <para>ClipboardClearPath: /Resources/Image/Clipboard/Clear.png</para>
 		/// </summary>
 		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
 		public static BitmapSource ClipboardClearImage
 		{
 			get { return GetImage(ClipboardClearPath); }
 		}
-		#endregion clipboardClear
+		#endregion ClipboardClear
 		#region Image: ClipboardTextFormat
 
 		/// <summary>
-		/// [Image] ClipboardTextFormatのリソースパス。
+		/// [Image] ClipboardTextFormatのリソースパスを取得。
 		/// <para>/Resources/Image/Clipboard/ClipboardText.png</para>
 		/// </summary>
 		public static string ClipboardTextFormatPath
@@ -737,19 +797,20 @@ namespace ContentTypeTextNet.Pe.PeMain
 		}
 
 		/// <summary>
-		/// [Image] ClipboardTextFormatのイメージソース。
+		/// [Image] ClipboardTextFormatのイメージソースを取得。
 		/// <para>初回のみ生成を行う。</para>
+		/// <para>ClipboardTextFormatPath: /Resources/Image/Clipboard/ClipboardText.png</para>
 		/// </summary>
 		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
 		public static BitmapSource ClipboardTextFormatImage
 		{
 			get { return GetImage(ClipboardTextFormatPath); }
 		}
-		#endregion clipboardTextFormat
+		#endregion ClipboardTextFormat
 		#region Image: ClipboardHtml
 
 		/// <summary>
-		/// [Image] ClipboardHtmlのリソースパス。
+		/// [Image] ClipboardHtmlのリソースパスを取得。
 		/// <para>/Resources/Image/Clipboard/ClipboardHtml.png</para>
 		/// </summary>
 		public static string ClipboardHtmlPath
@@ -758,19 +819,20 @@ namespace ContentTypeTextNet.Pe.PeMain
 		}
 
 		/// <summary>
-		/// [Image] ClipboardHtmlのイメージソース。
+		/// [Image] ClipboardHtmlのイメージソースを取得。
 		/// <para>初回のみ生成を行う。</para>
+		/// <para>ClipboardHtmlPath: /Resources/Image/Clipboard/ClipboardHtml.png</para>
 		/// </summary>
 		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
 		public static BitmapSource ClipboardHtmlImage
 		{
 			get { return GetImage(ClipboardHtmlPath); }
 		}
-		#endregion clipboardHtml
+		#endregion ClipboardHtml
 		#region Image: ClipboardRichTextFormat
 
 		/// <summary>
-		/// [Image] ClipboardRichTextFormatのリソースパス。
+		/// [Image] ClipboardRichTextFormatのリソースパスを取得。
 		/// <para>/Resources/Image/Clipboard/ClipboardRichTextFormat.png</para>
 		/// </summary>
 		public static string ClipboardRichTextFormatPath
@@ -779,19 +841,20 @@ namespace ContentTypeTextNet.Pe.PeMain
 		}
 
 		/// <summary>
-		/// [Image] ClipboardRichTextFormatのイメージソース。
+		/// [Image] ClipboardRichTextFormatのイメージソースを取得。
 		/// <para>初回のみ生成を行う。</para>
+		/// <para>ClipboardRichTextFormatPath: /Resources/Image/Clipboard/ClipboardRichTextFormat.png</para>
 		/// </summary>
 		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
 		public static BitmapSource ClipboardRichTextFormatImage
 		{
 			get { return GetImage(ClipboardRichTextFormatPath); }
 		}
-		#endregion clipboardRichTextFormat
+		#endregion ClipboardRichTextFormat
 		#region Image: ClipboardImage
 
 		/// <summary>
-		/// [Image] ClipboardImageのリソースパス。
+		/// [Image] ClipboardImageのリソースパスを取得。
 		/// <para>/Resources/Image/Clipboard/ClipboardImage.png</para>
 		/// </summary>
 		public static string ClipboardImagePath
@@ -800,19 +863,20 @@ namespace ContentTypeTextNet.Pe.PeMain
 		}
 
 		/// <summary>
-		/// [Image] ClipboardImageのイメージソース。
+		/// [Image] ClipboardImageのイメージソースを取得。
 		/// <para>初回のみ生成を行う。</para>
+		/// <para>ClipboardImagePath: /Resources/Image/Clipboard/ClipboardImage.png</para>
 		/// </summary>
 		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
 		public static BitmapSource ClipboardImageImage
 		{
 			get { return GetImage(ClipboardImagePath); }
 		}
-		#endregion clipboardImage
+		#endregion ClipboardImage
 		#region Image: ClipboardFile
 
 		/// <summary>
-		/// [Image] ClipboardFileのリソースパス。
+		/// [Image] ClipboardFileのリソースパスを取得。
 		/// <para>/Resources/Image/Clipboard/ClipboardFile.png</para>
 		/// </summary>
 		public static string ClipboardFilePath
@@ -821,19 +885,20 @@ namespace ContentTypeTextNet.Pe.PeMain
 		}
 
 		/// <summary>
-		/// [Image] ClipboardFileのイメージソース。
+		/// [Image] ClipboardFileのイメージソースを取得。
 		/// <para>初回のみ生成を行う。</para>
+		/// <para>ClipboardFilePath: /Resources/Image/Clipboard/ClipboardFile.png</para>
 		/// </summary>
 		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
 		public static BitmapSource ClipboardFileImage
 		{
 			get { return GetImage(ClipboardFilePath); }
 		}
-		#endregion clipboardFile
+		#endregion ClipboardFile
 		#region Image: ClipboardImageFit
 
 		/// <summary>
-		/// [Image] ClipboardImageFitのリソースパス。
+		/// [Image] ClipboardImageFitのリソースパスを取得。
 		/// <para>/Resources/Image/Clipboard/ImageFit.png</para>
 		/// </summary>
 		public static string ClipboardImageFitPath
@@ -842,19 +907,20 @@ namespace ContentTypeTextNet.Pe.PeMain
 		}
 
 		/// <summary>
-		/// [Image] ClipboardImageFitのイメージソース。
+		/// [Image] ClipboardImageFitのイメージソースを取得。
 		/// <para>初回のみ生成を行う。</para>
+		/// <para>ClipboardImageFitPath: /Resources/Image/Clipboard/ImageFit.png</para>
 		/// </summary>
 		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
 		public static BitmapSource ClipboardImageFitImage
 		{
 			get { return GetImage(ClipboardImageFitPath); }
 		}
-		#endregion clipboardImageFit
+		#endregion ClipboardImageFit
 		#region Image: ClipboardImageRaw
 
 		/// <summary>
-		/// [Image] ClipboardImageRawのリソースパス。
+		/// [Image] ClipboardImageRawのリソースパスを取得。
 		/// <para>/Resources/Image/Clipboard/ImageRaw.png</para>
 		/// </summary>
 		public static string ClipboardImageRawPath
@@ -863,19 +929,20 @@ namespace ContentTypeTextNet.Pe.PeMain
 		}
 
 		/// <summary>
-		/// [Image] ClipboardImageRawのイメージソース。
+		/// [Image] ClipboardImageRawのイメージソースを取得。
 		/// <para>初回のみ生成を行う。</para>
+		/// <para>ClipboardImageRawPath: /Resources/Image/Clipboard/ImageRaw.png</para>
 		/// </summary>
 		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
 		public static BitmapSource ClipboardImageRawImage
 		{
 			get { return GetImage(ClipboardImageRawPath); }
 		}
-		#endregion clipboardImageRaw
+		#endregion ClipboardImageRaw
 		#region Image: WindowLoad
 
 		/// <summary>
-		/// [Image] WindowLoadのリソースパス。
+		/// [Image] WindowLoadのリソースパスを取得。
 		/// <para>/Resources/Image/Window/WindowLoad.png</para>
 		/// </summary>
 		public static string WindowLoadPath
@@ -884,19 +951,20 @@ namespace ContentTypeTextNet.Pe.PeMain
 		}
 
 		/// <summary>
-		/// [Image] WindowLoadのイメージソース。
+		/// [Image] WindowLoadのイメージソースを取得。
 		/// <para>初回のみ生成を行う。</para>
+		/// <para>WindowLoadPath: /Resources/Image/Window/WindowLoad.png</para>
 		/// </summary>
 		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
 		public static BitmapSource WindowLoadImage
 		{
 			get { return GetImage(WindowLoadPath); }
 		}
-		#endregion windowLoad
+		#endregion WindowLoad
 		#region Image: WindowSave
 
 		/// <summary>
-		/// [Image] WindowSaveのリソースパス。
+		/// [Image] WindowSaveのリソースパスを取得。
 		/// <para>/Resources/Image/Window/WindowSave.png</para>
 		/// </summary>
 		public static string WindowSavePath
@@ -905,15 +973,16 @@ namespace ContentTypeTextNet.Pe.PeMain
 		}
 
 		/// <summary>
-		/// [Image] WindowSaveのイメージソース。
+		/// [Image] WindowSaveのイメージソースを取得。
 		/// <para>初回のみ生成を行う。</para>
+		/// <para>WindowSavePath: /Resources/Image/Window/WindowSave.png</para>
 		/// </summary>
 		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
 		public static BitmapSource WindowSaveImage
 		{
 			get { return GetImage(WindowSavePath); }
 		}
-		#endregion windowSave
+		#endregion WindowSave
 	}
 }
 
