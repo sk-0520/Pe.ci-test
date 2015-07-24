@@ -1,0 +1,196 @@
+﻿<#@ template debug="true" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ assembly name="System.Reflection" #>
+<#@ assembly name="$(SolutionDir)..\Output\$(Configuration)\$(Platform)\Pe.exe" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Reflection" #>
+<#@ import namespace="ContentTypeTextNet.Pe.PeMain" #>
+<#@ output extension=".cs" #>
+
+namespace ContentTypeTextNet.Pe.PeMain
+{
+	using System;
+	using System.Collections.Generic;
+	using System.Linq;
+	using System.Text;
+	using System.Threading.Tasks;
+	using System.Windows.Media.Imaging;
+	using ContentTypeTextNet.Library.SharedLibrary.CompatibleForms.Utility;
+	using ContentTypeTextNet.Library.SharedLibrary.CompatibleWindows;
+	using ContentTypeTextNet.Library.SharedLibrary.Define;
+	using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
+	using ContentTypeTextNet.Library.SharedLibrary.Model;
+	using ContentTypeTextNet.Pe.PeMain.Logic;
+	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
+
+		/// <summary>
+	/// Peで使用するリソース関係。
+	/// <para>自分の持ち物くらい好きにさわらせてくれ。</para>
+	/// </summary>
+	public static partial class AppResourceT4
+	{
+		#region static
+
+		static IconCaching<string> _iconCaching = new IconCaching<string>();
+		static Caching<string,BitmapSource> _imageCaching = new Caching<string,BitmapSource>();
+
+		#endregion
+
+		#region function
+
+		static BitmapSource GetImage(string path)
+		{
+			return _imageCaching.Get(path, () => {
+				var uri = SharedConstants.GetEntryUri(path);
+				return new BitmapImage(uri);
+			});
+		}
+
+		static BitmapSource GetIcon(string path, IconScale iconScale, ILogger logger = null)
+		{
+			return _iconCaching[iconScale].Get(path, () => {
+				using(var icon = new IconWrapper(path, iconScale)) {
+					return icon.MakeBitmapSource();
+				}
+			});
+		}
+
+		/*
+		static public BitmapSource GetApplicationIcon(IconScale iconScale, ILogger logger = null)
+		{
+			return GetIcon(ApplicationIconPath, iconScale, logger);
+		}
+
+		static public BitmapSource GetNotFoundIcon(IconScale iconScale, ILogger logger = null)
+		{
+			return GetIcon(NotFoundIconPath, iconScale, logger);
+		}
+
+		static public BitmapSource GetLauncherToolbarMainIcon(IconScale iconScale, ILogger logger = null)
+		{
+			return GetIcon(LauncherToolbarMainIconPath, iconScale, logger);
+		}
+
+		static public BitmapSource GetLauncherCommandIcon(IconScale iconScale, ILogger logger = null)
+		{
+			return GetIcon(LauncherCommandIconPath, iconScale, logger);
+		}
+		*/
+
+		#endregion
+	}
+
+	public enum AppResourceType
+	{
+		Image,
+		Icon
+	}
+
+	public class AppResourceAttribute: Attribute
+	{
+		public AppResourceAttribute(AppResourceType appResourceType)
+		{
+			AppResourceType = appResourceType;
+		}
+
+		#region property
+
+		public AppResourceType AppResourceType { get; private set; }
+
+		#endregion
+	}
+
+	partial class AppResourceT4
+	{
+		[AppResource(AppResourceType.Image)]
+		const string commonFiltering = "/Resources/Image/Common/Filtering.png";
+
+		[AppResource(AppResourceType.Icon)]
+		const string applicationIcon = "/Resources/Icon/App.ico";
+	}
+
+	partial class AppResourceT4
+	{
+		<#
+		var type = typeof(AppResourceT4);
+		var fieldInfos = type.GetFields(BindingFlags.Static | BindingFlags.NonPublic);
+		foreach(var fieldInfo in fieldInfos) {
+			var attribute = fieldInfo.GetCustomAttribute(typeof(AppResourceAttribute), true) as AppResourceAttribute;
+			if(attribute == null) {
+				continue;
+			}
+			#>
+			//<#= fieldInfos.Length #>
+			<#
+			var baseName = fieldInfo.Name.ToUpperInvariant()[0] + fieldInfo.Name.Substring(1);
+			var pathName = baseName + "Path";
+			#>
+
+			#region <#= fieldInfo.Name #>
+
+			public static string <#= pathName #>
+			{
+				get { return <#= fieldInfo.Name #>; }
+			}
+
+			<# 
+			switch(attribute.AppResourceType) {
+				case AppResourceType.Image:
+					#>
+
+					public static BitmapSource <#= baseName #>Image
+					{
+						get { return GetImage(<#= pathName #>); }
+					}
+
+					<#
+					break;
+				
+				case AppResourceType.Icon:
+					var getIconMethodName = "Get" + baseName + "Icon";
+					#>
+
+					public static BitmapSource <#= getIconMethodName #>(IconScale iconScale, ILogger logger = null)
+					{
+						return GetIcon(<#= pathName #>, iconScale, logger);
+					}
+
+					<#
+					var iconScaleList = new [] { "Small", "Normal", "Big", "Large", };
+					foreach(var iconScale in iconScaleList) {
+						#>
+						
+						public static BitmapSource <#= baseName #>Icon<#= iconScale #>
+						{
+							get
+							{
+								return <#= getIconMethodName #>(IconScale.<#= iconScale #>);
+							}
+						}
+
+						<#
+					}
+					#>
+					
+					<#
+					break;
+
+				default:
+					throw new NotImplementedException();
+			}
+			#>
+
+			#endregion <#= fieldInfo.Name #>
+			
+			<#
+		}
+		#>
+	}
+}
+
+
+

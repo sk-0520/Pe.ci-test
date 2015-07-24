@@ -124,6 +124,11 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="AppResource\AppResourceT4.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AppResourceT4.tt</DependentUpon>
+    </Compile>
     <Compile Include="Data\ChangedDevice.cs" />
     <Compile Include="Data\CommonData.cs" />
     <Compile Include="Constants.cs" />
@@ -310,6 +315,12 @@
       <DependentUpon>App.config</DependentUpon>
       <IsTransformFile>True</IsTransformFile>
     </None>
+    <None Include="AppResource\AppResourceT4.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AppResourceT4.cs</LastGenOutput>
+      <Parameters>&lt;%3fxml version="1.0" encoding="utf-16"%3f&gt;
+&lt;ArrayOfParameterStorage xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" /&gt;</Parameters>
+    </None>
     <None Include="packages.config" />
     <AppDesigner Include="Properties\" />
     <None Include="Properties\SlowCheetah\SlowCheetah.Transforms.targets" />
@@ -412,7 +423,9 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Library\Package\Package.csproj">
       <Project>{fbf5e5e8-2d88-45a7-b1ea-9e3fb68e97e4}</Project>
