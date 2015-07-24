@@ -119,8 +119,8 @@
 
 		public static void InitializeWindowSaveSetting(WindowSaveSettingModel model, INonProcess nonProcess)
 		{
-			model.SaveCount = Constants.windowSaveCount.GetRounding(model.SaveCount);
-			model.SaveIntervalTime = Constants.windowSaveIntervalTime.GetRounding(model.SaveIntervalTime);
+			model.SaveCount = Constants.windowSaveCount.GetClamp(model.SaveCount);
+			model.SaveIntervalTime = Constants.windowSaveIntervalTime.GetClamp(model.SaveIntervalTime);
 		}
 
 		public static void InitializeNoteSetting(NoteSettingModel model, INonProcess nonProcess)
@@ -135,7 +135,7 @@
 
 		public static void InitializeClipboardSetting(ClipboardSettingModel setting, INonProcess nonProcess)
 		{
-			setting.WaitTime = Constants.clipboardWaitTime.GetRounding(setting.WaitTime);
+			setting.WaitTime = Constants.clipboardWaitTime.GetClamp(setting.WaitTime);
 
 			if(setting.ItemsListWidth <= 0) {
 				setting.ItemsListWidth = Constants.clipboardItemsListWidth;

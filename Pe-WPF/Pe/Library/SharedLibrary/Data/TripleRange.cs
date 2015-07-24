@@ -29,9 +29,9 @@
 
 		#region function
 
-		public T GetRounding(T value)
+		public T GetClamp(T value)
 		{
-			return RangeUtility.Rounding(value, this.minimum, this.maximum);
+			return RangeUtility.Clamp(value, this.minimum, this.maximum);
 		}
 
 		#endregion

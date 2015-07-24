@@ -32,7 +32,7 @@
 		/// <param name="min"></param>
 		/// <param name="max"></param>
 		/// <returns></returns>
-		public static T Rounding<T>(T value, T min, T max)
+		public static T Clamp<T>(T value, T min, T max)
 			where T : IComparable
 		{
 			if (min.CompareTo(value) > 0) {
