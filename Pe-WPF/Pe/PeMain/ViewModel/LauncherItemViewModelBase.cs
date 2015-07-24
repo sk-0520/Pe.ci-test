@@ -37,18 +37,6 @@
 
 		#region property
 
-		#region IHavingNonProcess
-
-		public INonProcess NonProcess { get; private set; }
-
-		#endregion
-
-		#region IHavingLauncherIconCaching
-
-		public LauncherIconCaching LauncherIconCaching { get; private set; }
-
-		#endregion
-
 		public override string DisplayText { get { return DisplayTextUtility.GetDisplayName(Model); } }
 
 		public virtual LauncherKind LauncherKind
@@ -63,13 +51,13 @@
 			set { SetModelValue(value); }
 		}
 
-		public string WorkDirectoryPath
+		public virtual string WorkDirectoryPath
 		{
 			get { return Model.WorkDirectoryPath; }
 			set { SetModelValue(value); }
 		}
 
-		public string Option
+		public virtual string Option
 		{
 			get { return Model.Option; }
 			set { SetModelValue(value); }
@@ -87,13 +75,13 @@
 			set { SetModelValue(value); }
 		}
 
-		public bool StdStreamOutput
+		public virtual bool StdStreamOutput
 		{
 			get { return Model.StdStream.OutputWatch; }
 			set { SetPropertyValue(Model.StdStream, value, "OutputWatch"); }
 		}
 
-		public bool Administrator
+		public virtual bool Administrator
 		{
 			get { return Model.Administrator; }
 			set { SetModelValue(value); }
@@ -147,5 +135,18 @@
 		}
 
 		#endregion
+
+		#region IHavingNonProcess
+
+		public INonProcess NonProcess { get; private set; }
+
+		#endregion
+
+		#region IHavingLauncherIconCaching
+
+		public LauncherIconCaching LauncherIconCaching { get; private set; }
+
+		#endregion
+
 	}
 }

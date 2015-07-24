@@ -1,9 +1,9 @@
-﻿<W:CommonDataWindow
+﻿<AW:CommonDataWindow
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:AP="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
-	xmlns:W="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Window"
-	xmlns:SP="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Control.SettingPage" 
+	xmlns:AW="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Window"
+	xmlns:AS="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Control.SettingPage" 
 	x:Class="ContentTypeTextNet.Pe.PeMain.View.SettingWindow"
 	xmlns:AA="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Attached"
 	AA:Language.Key="window/setting"
@@ -13,9 +13,9 @@
 	Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"
 	BorderBrush="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" WindowStartupLocation="CenterScreen"
 >
-	<W:CommonDataWindow.Resources>
+	<AW:CommonDataWindow.Resources>
 		<ResourceDictionary Source="/View/Parts/Resource/DialogDictionary.xaml"/>
-	</W:CommonDataWindow.Resources>
+	</AW:CommonDataWindow.Resources>
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="*"/>
@@ -33,26 +33,26 @@
 				</Style>
 			</TabControl.Resources>
 			<TabItem Header="main">
-				<SP:MainSettingControl x:Name="MainSettingControl" DataContext="{Binding MainSetting}" VerticalAlignment="Stretch" />
+				<AS:MainSettingControl x:Name="MainSettingControl" DataContext="{Binding MainSetting}" VerticalAlignment="Stretch" />
 			</TabItem>
 			<TabItem Header="launcher">
-				<SP:LauncherItemSettingControl x:Name="LauncherItemSettingControl" DataContext="{Binding LauncherItemSetting}" VerticalAlignment="Stretch"/>
+				<AS:LauncherItemSettingControl x:Name="LauncherItemSettingControl" DataContext="{Binding LauncherItemSetting}" VerticalAlignment="Stretch"/>
 			</TabItem>
 			<TabItem Header="toolbar" >
-				<SP:ToolbarSettingControl x:Name="ToolbarSettingControl" DataContext="{Binding ToolbarSetting}" VerticalAlignment="Stretch"/>
+				<AS:ToolbarSettingControl x:Name="ToolbarSettingControl" DataContext="{Binding ToolbarSetting}" VerticalAlignment="Stretch"/>
 			</TabItem>
 			<TabItem Header="command">
-				<SP:CommandSettingControl x:Name="CommandSettingControl" DataContext="{Binding CommandSetting}" VerticalAlignment="Stretch" />
+				<AS:CommandSettingControl x:Name="CommandSettingControl" DataContext="{Binding CommandSetting}" VerticalAlignment="Stretch" />
 			</TabItem>
 			<TabItem Header="note">
-				<SP:NoteSettingControl x:Name="NoteSettingControl" DataContext="{Binding NoteSetting}" VerticalAlignment="Stretch" />
+				<AS:NoteSettingControl x:Name="NoteSettingControl" DataContext="{Binding NoteSetting}" VerticalAlignment="Stretch" />
 			</TabItem>
 			<TabItem Header="clipboard">
-				<SP:ClipboardSettingControl x:Name="ClipboardSettingControl" DataContext="{Binding ClipboardSetting}" VerticalAlignment="Stretch" />
+				<AS:ClipboardSettingControl x:Name="ClipboardSettingControl" DataContext="{Binding ClipboardSetting}" VerticalAlignment="Stretch" />
 			</TabItem>
 			<TabItem Header="template">
-				<SP:TemplateSettingControl x:Name="TemplateSettingControl" DataContext="{Binding TemplateSetting}" VerticalAlignment="Stretch" />
+				<AS:TemplateSettingControl x:Name="TemplateSettingControl" DataContext="{Binding TemplateSetting}" VerticalAlignment="Stretch" />
 			</TabItem>
 		</TabControl>
 	</Grid>
-</W:CommonDataWindow>
+</AW:CommonDataWindow>

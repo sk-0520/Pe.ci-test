@@ -48,7 +48,10 @@
 
 			// 二回も生成するのかー。。。
 			// TODO: clone
-			result.Update = Update;
+			result.Update = new EnvironmentVariableUpdateItemCollectionModel();
+			foreach(var item in Update) {
+				result.Update.Add((EnvironmentVariableUpdateItemModel)item.DeepClone());
+			}
 			result.Remove = new CollectionModel<string>(Remove);
 
 			return result;

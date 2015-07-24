@@ -11,7 +11,7 @@
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
 	using ContentTypeTextNet.Pe.Library.PeData.IF;
 
-	public class EnvironmentVariableUpdateItemModel: ItemModelBase, ITId<string>
+	public class EnvironmentVariableUpdateItemModel: ItemModelBase, ITId<string>, IDeepClone
 	{
 		#region define
 
@@ -49,6 +49,21 @@
 			}
 			return string.Concat(s.Select(sc => unusableCharacters.Any(uc => uc == sc) ? '_' : sc));
 		}
+
+		#endregion
+
+		#region IDeepClone
+
+		public IDeepClone DeepClone()
+		{
+			var result = new EnvironmentVariableUpdateItemModel() {
+				Id = this.Id,
+				Value = this.Value,
+			};
+
+			return result;
+		}
+
 
 		#endregion
 	}
