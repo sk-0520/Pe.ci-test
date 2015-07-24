@@ -72,6 +72,8 @@
 
 			WindowSaveData = new WindowSaveData();
 
+			OtherWindows = new HashSet<Window>();
+
 			IndexBodyCaching = new IndexBodyCaching(
 				Constants.CacheIndexNote,
 				Constants.CacheIndexTemplate,
@@ -111,18 +113,19 @@
 			}
 		}
 
+		HashSet<Window> OtherWindows { get; set; }
+
 		LoggingWindow LoggingWindow { get; set; }
 		public LoggingViewModel Logging { get { return LoggingWindow.ViewModel; } }
 
-		List<LauncherToolbarWindow> LauncherToolbarWindowList { get; set; }
-		public IEnumerable<LauncherToolbarViewModel> LauncherToolbar { get { return LauncherToolbarWindowList.Select(l => l.ViewModel); } }
+		List<LauncherToolbarWindow> LauncherToolbarWindows { get; set; }
+		public IEnumerable<LauncherToolbarViewModel> LauncherToolbar { get { return LauncherToolbarWindows.Select(l => l.ViewModel); } }
 
-		List<NoteWindow> NoteWindowList { get; set; }
-		public IEnumerable<NoteViewModel> NoteShowItems { get { return NoteWindowList.Select(w => w.ViewModel); } }
+		List<NoteWindow> NoteWindows { get; set; }
+		public IEnumerable<NoteViewModel> NoteShowItems { get { return NoteWindows.Select(w => w.ViewModel); } }
 		public IEnumerable<NoteMenuViewModel> NoteHiddenItems { get { return CommonData.NoteIndexSetting.Items.Where(n => !n.Visible).Select(n => new NoteMenuViewModel(n, CommonData.NonProcess, CommonData.AppSender)); } }
 
 		MessageWindow MessageWindow { get; set; }
-		List<Window> WindowList { get; set; }
 
 		WindowSaveData WindowSaveData { get; set; }
 
@@ -305,7 +308,7 @@
 			{
 				var result = CreateCommand(
 					o => {
-						foreach(var window in NoteWindowList.Where(n => !n.ViewModel.IsLocked).ToArray()) {
+						foreach(var window in NoteWindows.Where(n => !n.ViewModel.IsLocked).ToArray()) {
 							window.UserClose();
 						}
 					}
@@ -321,7 +324,7 @@
 			{
 				var result = CreateCommand(
 					o => {
-						foreach(var window in NoteWindowList) {
+						foreach(var window in NoteWindows) {
 							WindowsUtility.ShowNoActive(window.Handle);
 						}
 					}
@@ -461,13 +464,34 @@
 		{
 			window.Closed += Window_Closed;
 
-			var toolbarWindow = window as LauncherToolbarWindow;
-			if(toolbarWindow != null) {
-				LauncherToolbarWindowList.Add(toolbarWindow);
-			}
-			var noteWindow = window as NoteWindow;
-			if (noteWindow != null) {
-				NoteWindowList.Add(noteWindow);
+			var windowKind = window as IHavingWindowKind;
+			if (windowKind != null) {
+				switch(windowKind.WindowKind) {
+					case WindowKind.LauncherToolbar:
+						{
+							var toolbarWindow = (LauncherToolbarWindow)window;
+							LauncherToolbarWindows.Add(toolbarWindow);
+						}
+						break;
+
+					case WindowKind.LauncherExecute:
+						{
+							OtherWindows.Add(window);
+						}
+						break;
+
+					case WindowKind.Note: 
+						{
+							var noteWindow = (NoteWindow)window;
+							NoteWindows.Add(noteWindow);
+						}
+						break;
+
+					default:
+						throw new NotImplementedException();
+				}
+			} else {
+				OtherWindows.Add(window);
 			}
 		}
 
@@ -478,14 +502,21 @@
 				switch(havingWindwKind.WindowKind) {
 					case WindowKind.LauncherToolbar: 
 						{
-							CommonData.Logger.Debug("not impl");
+							var toolbarWindow = (LauncherToolbarWindow)window;
+							LauncherToolbarWindows.Remove(toolbarWindow);
+						}
+						break;
+
+					case WindowKind.LauncherExecute: 
+						{
+							OtherWindows.Remove(window);
 						}
 						break;
 
 					case WindowKind.Note:
 						{
 							var noteWindow = (NoteWindow)window;
-							NoteWindowList.Remove(noteWindow);
+							NoteWindows.Remove(noteWindow);
 
 							OnPropertyChanged("NoteShowItems");
 							OnPropertyChanged("NoteHiddenItems");
@@ -495,6 +526,8 @@
 					default:
 						throw new NotImplementedException();
 				}
+			} else {
+				OtherWindows.Remove(window);
 			}
 		}
 
@@ -1012,7 +1045,7 @@
 		void CreateToolbar()
 		{
 			using(var timeLogger = CommonData.NonProcess.CreateTimeLogger()) {
-				LauncherToolbarWindowList = new List<LauncherToolbarWindow>();
+				LauncherToolbarWindows = new List<LauncherToolbarWindow>();
 
 				foreach(var screen in Screen.AllScreens.OrderBy(s => !s.Primary)) {
 					//var toolbar = new LauncherToolbarWindow();
@@ -1025,7 +1058,7 @@
 		void CreateNote()
 		{
 			using(var timeLogger = CommonData.NonProcess.CreateTimeLogger()) {
-				NoteWindowList = new List<NoteWindow>();
+				NoteWindows = new List<NoteWindow>();
 
 				foreach(var noteItem in CommonData.NoteIndexSetting.Items.Where(n => n.Visible)) {
 					var window = CreateNoteWindow(noteItem, false);
