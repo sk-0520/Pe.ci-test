@@ -124,11 +124,15 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="AppResource\AppResourceT4.cs">
+    <Compile Include="AppResource\AppResource-const.cs" />
+    <Compile Include="AppResource\AppResource-main.cs" />
+    <Compile Include="AppResource\AppResourceAttribute.cs" />
+    <Compile Include="AppResource\AppResource-generator.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>AppResourceT4.tt</DependentUpon>
+      <DependentUpon>AppResource-generator.tt</DependentUpon>
     </Compile>
+    <Compile Include="AppResource\AppResourceType.cs" />
     <Compile Include="Data\ChangedDevice.cs" />
     <Compile Include="Data\CommonData.cs" />
     <Compile Include="Constants.cs" />
@@ -315,9 +319,9 @@
       <DependentUpon>App.config</DependentUpon>
       <IsTransformFile>True</IsTransformFile>
     </None>
-    <None Include="AppResource\AppResourceT4.tt">
+    <None Include="AppResource\AppResource-generator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>AppResourceT4.cs</LastGenOutput>
+      <LastGenOutput>AppResource-generator.cs</LastGenOutput>
       <Parameters>&lt;%3fxml version="1.0" encoding="utf-16"%3f&gt;
 &lt;ArrayOfParameterStorage xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" /&gt;</Parameters>
     </None>
