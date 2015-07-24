@@ -195,7 +195,7 @@ using ContentTypeTextNet.Library.SharedLibrary.IF;
 		string PutsOutput(LogItemModel item, char c)
 		{
 			return string.Format(
-				"{0}{1}[{2}] {3}({4}): {5}{6}",
+				"{0:s}{1}[{2}] {3}({4}): {5}{6}",
 				item.Timestamp,
 				c,
 				item.LogKind.ToString().ToUpper()[0],

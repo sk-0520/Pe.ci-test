@@ -17,8 +17,8 @@
 		public LauncherHistoryItemModel()
 			: base()
 		{
-			WorkDirectoryPaths = new CollectionModel<string>();
 			Options = new CollectionModel<string>();
+			WorkDirectoryPaths = new CollectionModel<string>();
 		}
 
 		/// <summary>
@@ -28,16 +28,16 @@
 		public uint ExecuteCount { get; set; }
 
 		/// <summary>
-		/// 作業ディレクトリ。
-		/// </summary>
-		[DataMember, XmlArray("WorkDirectoryPaths"), XmlArrayItem("Item")]
-		CollectionModel<string> WorkDirectoryPaths { get; set; }
-
-		/// <summary>
 		/// オプション。
 		/// </summary>
 		[DataMember, XmlArray("Options"), XmlArrayItem("Item")]
-		CollectionModel<string> Options { get; set; }
+		public CollectionModel<string> Options { get; set; }
+
+		/// <summary>
+		/// 作業ディレクトリ。
+		/// </summary>
+		[DataMember, XmlArray("WorkDirectoryPaths"), XmlArrayItem("Item")]
+		public CollectionModel<string> WorkDirectoryPaths { get; set; }
 
 		#region IDeepClone
 
