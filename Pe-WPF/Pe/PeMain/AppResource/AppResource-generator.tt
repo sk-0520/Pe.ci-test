@@ -29,84 +29,77 @@ namespace ContentTypeTextNet.Pe.PeMain
 
 	partial class AppResource
 	{
-		<#
-		var type = typeof(AppResource);
-		var fieldInfos = type.GetFields(BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
-		foreach(var fieldInfo in fieldInfos) {
-			var attribute = fieldInfo.GetCustomAttribute(typeof(AppResourceAttribute), true) as AppResourceAttribute;
-			if(attribute == null) {
-				continue;
-			}
-			#>
-			//<#= fieldInfos.Length #>
-			<#
-			var baseName = fieldInfo.Name.ToUpperInvariant()[0] + fieldInfo.Name.Substring(1);
-			var pathName = baseName + "Path";
-			#>
-			#region <#= fieldInfo.Name #>
+<#
+var type = typeof(AppResource);
+var fieldInfos = type.GetFields(BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
+foreach(var fieldInfo in fieldInfos) {
+	var attribute = fieldInfo.GetCustomAttribute(typeof(AppResourceAttribute), true) as AppResourceAttribute;
+	if(attribute == null) {
+		continue;
+	}
 
-			public static string <#= pathName #>
-			{
-				get { return <#= fieldInfo.Name #>; }
-			}
+	var baseName = fieldInfo.Name.ToUpperInvariant()[0] + fieldInfo.Name.Substring(1);
+	var pathName = baseName + "Path";
+#>
+		#region <#= attribute.AppResourceType #>: <#= fieldInfo.Name #>
 
-			<# 
-			switch(attribute.AppResourceType) {
-				case AppResourceType.Image:
-					#>
-
-					public static BitmapSource <#= baseName #>Image
-					{
-						get { return GetImage(<#= pathName #>); }
-					}
-
-					<#
-					break;
-				
-				case AppResourceType.Icon:
-					var getIconMethodName = "Get" + baseName + "Icon";
-					#>
-
-					public static BitmapSource <#= getIconMethodName #>(IconScale iconScale, ILogger logger = null)
-					{
-						return GetIcon(<#= pathName #>, iconScale, logger);
-					}
-
-					#region IconScale
-
-					<#
-					var iconScaleList = new [] { "Small", "Normal", "Big", "Large", };
-					foreach(var iconScale in iconScaleList) {
-						#>
-						
-						public static BitmapSource <#= baseName #>Icon<#= iconScale #>
-						{
-							get
-							{
-								return <#= getIconMethodName #>(IconScale.<#= iconScale #>);
-							}
-						}
-
-						<#
-					}
-					#>
-					
-					#endregion IconScale
-
-					<#
-					break;
-
-				default:
-					throw new NotImplementedException();
-			}
-			#>
-
-			#endregion <#= fieldInfo.Name #>
-			<#
+		public static string <#= pathName #>
+		{
+			get { return <#= fieldInfo.Name #>; }
 		}
-		#>
+
+<# 
+	switch(attribute.AppResourceType) {
+		case AppResourceType.Image:
+#>
+
+		public static BitmapSource <#= baseName #>Image
+		{
+			get { return GetImage(<#= pathName #>); }
+		}
+
+<#
+			break;
+				
+		case AppResourceType.Icon:
+			var getIconMethodName = "Get" + baseName + "Icon";
+#>
+
+		public static BitmapSource <#= getIconMethodName #>(IconScale iconScale, ILogger logger = null)
+		{
+			return GetIcon(<#= pathName #>, iconScale, logger);
+		}
+
+		#region IconScale
+
+<#
+			var iconScaleList = new [] { "Small", "Normal", "Big", "Large", };
+			foreach(var iconScale in iconScaleList) {
+#>
+		public static BitmapSource <#= baseName #>Icon<#= iconScale #>
+		{
+			get
+			{
+				return <#= getIconMethodName #>(IconScale.<#= iconScale #>);
+			}
+		}
+<#
+			}
+#>
+
+		#endregion IconScale
+
+<#
+			break;
+
+		default:
+			throw new NotImplementedException();
+	}
+#>
+		#endregion <#= fieldInfo.Name #>
+<#
+}
+#>
 	}
 }
-
-
 

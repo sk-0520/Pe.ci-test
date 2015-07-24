@@ -43,19 +43,30 @@
 #else
 				= "/Resources/Icon/Tasktray/App-release.ico";
 #endif
-
+		[AppResource(AppResourceType.Image)]
 		const string commonFiltering = "/Resources/Image/Common/Filtering.png";
-		public static string CommonTemplatePath { get { return "/Resources/Image/Common/Template.png"; } }
-		public static string CommonClipboardPath { get { return "/Resources/Image/Common/Clipboard.png"; } }
-		public static string CommonSendPath { get { return "/Resources/Image/Common/Send.png"; } }
-		public static string CommonPinPath { get { return "/Resources/Image/Common/Pin.png"; } }
-		public static string CommonWindowListPath { get { return "/Resources/Image/Common/Pin.png"; } }
-		public static string CommonAddPath { get { return "/Resources/Image/Common/Add.png"; } }
-		public static string CommonRemovePath { get { return "/Resources/Image/Common/Remove.png"; } }
-		public static string CommonSavePath { get { return "/Resources/Image/Common/Save.png"; } }
-		public static string CommonUsingClipboardPath { get { return "/Resources/Image/Common/UsingClipboard.png"; } }
-		public static string CommonUpPath { get { return "/Resources/Image/Common/Up.png"; } }
-		public static string CommonDownPath { get { return "/Resources/Image/Common/Down.png"; } }
+		[AppResource(AppResourceType.Image)]
+		const string commonTemplate = "/Resources/Image/Common/Template.png";
+		[AppResource(AppResourceType.Image)]
+		const string commonClipboard = "/Resources/Image/Common/Clipboard.png";
+		[AppResource(AppResourceType.Image)]
+		const string commonSend = "/Resources/Image/Common/Send.png";
+		[AppResource(AppResourceType.Image)]
+		const string commonPin = "/Resources/Image/Common/Pin.png";
+		[AppResource(AppResourceType.Image)]
+		const string commonWindowList = "/Resources/Image/Common/Pin.png";
+		[AppResource(AppResourceType.Image)]
+		const string commonAdd = "/Resources/Image/Common/Add.png";
+		[AppResource(AppResourceType.Image)]
+		const string commonRemove = "/Resources/Image/Common/Remove.png";
+		[AppResource(AppResourceType.Image)]
+		const string commonSave = "/Resources/Image/Common/Save.png";
+		[AppResource(AppResourceType.Image)]
+		const string commonUsingClipboard = "/Resources/Image/Common/UsingClipboard.png";
+		[AppResource(AppResourceType.Image)]
+		const string commonUp = "/Resources/Image/Common/Up.png";
+		[AppResource(AppResourceType.Image)]
+		const string commonDown = "/Resources/Image/Common/Down.png";
 		
 
 		public static string TemplatePlainPath { get { return "/Resources/Image/Template/TemplatePlain.png"; } }
@@ -77,19 +88,6 @@
 		#endregion
 
 		#region property
-
-		public static BitmapSource CommonTemplateImage { get { return GetImage(CommonTemplatePath); } }
-		public static BitmapSource CommonClipboardImage { get { return GetImage(CommonClipboardPath); } }
-		public static BitmapSource CommonSendImage { get {return GetImage(CommonSendPath); } }
-		public static BitmapSource CommonPinImage { get {return GetImage(CommonPinPath); } }
-		public static BitmapSource CommonWindowListImage { get { return GetImage(CommonWindowListPath); } }
-		public static BitmapSource CommonAddImage { get { return GetImage(CommonAddPath); } }
-		public static BitmapSource CommonRemoveImage { get { return GetImage(CommonRemovePath); } }
-		public static BitmapSource CommonSaveImage { get { return GetImage(CommonSavePath); } }
-		public static BitmapSource CommonUsingClipboardImage { get { return GetImage(CommonUsingClipboardPath); } }
-		public static BitmapSource CommonUpImage { get { return GetImage(CommonUpPath); } }
-		public static BitmapSource CommonDownImage { get { return GetImage(CommonDownPath); } }
-		
 
 		public static BitmapSource TemplatePlainImage { get { return GetImage(TemplatePlainPath); } }
 		public static BitmapSource TemplateReplaceImage { get { return GetImage(TemplateReplacePath); } }
