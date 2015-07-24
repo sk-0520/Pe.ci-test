@@ -170,7 +170,7 @@
 			{
 				var result = CreateCommand(
 					o => {
-						var dialogResult = OpenDirectoryDialog(Option);
+						var dialogResult = DialogUtility.OpenDirectoryDialog(Option);
 						if(dialogResult != null) {
 							Option = dialogResult;
 						}
@@ -187,7 +187,7 @@
 			{
 				var result = CreateCommand(
 					o => {
-						var dialogResult = OpenDirectoryDialog(WorkDirectoryPath);
+						var dialogResult = DialogUtility.OpenDirectoryDialog(WorkDirectoryPath);
 						if(dialogResult != null) {
 							WorkDirectoryPath = dialogResult;
 						}
@@ -201,28 +201,6 @@
 		#endregion
 
 		#region function
-
-		/// <summary>
-		/// ディレクトリを開く。
-		/// TODO: 独立。
-		/// </summary>
-		/// <param name="defPath">初期パス</param>
-		/// <returns>選択されたディレクトリパス。未選択の場合は null 。</returns>
-		string OpenDirectoryDialog(string defPath)
-		{
-			using(var dialog = new FolderBrowserDialog()) {
-				var expandedPath = Environment.ExpandEnvironmentVariables(defPath);
-				if(Directory.Exists(expandedPath)) {
-					dialog.SelectedPath = expandedPath;
-				}
-				var dialogResult = dialog.ShowDialog();
-				if(dialogResult.GetValueOrDefault()) {
-					return dialog.SelectedPath;
-				} else {
-					return null;
-				}
-			}
-		}
 
 		/// <summary>
 		/// 外部からデータを設定する。

@@ -182,6 +182,7 @@
     <Compile Include="Logic\Property\WindowStateProperty.cs" />
     <Compile Include="Logic\Utility\AppUtility.cs" />
     <Compile Include="Logic\Utility\ClipboardUtility.cs" />
+    <Compile Include="Logic\Utility\DialogUtility.cs" />
     <Compile Include="Logic\Utility\ExecuteUtility.cs" />
     <Compile Include="Logic\Utility\IndexItemUtility.cs" />
     <Compile Include="Logic\Utility\LanguageUtility.cs" />
