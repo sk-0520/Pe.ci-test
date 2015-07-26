@@ -15,13 +15,17 @@ using Microsoft.Win32;
 	{
 		static IEnumerable<string> ShowOpenFileDialog(string defaultPath, bool multiSelect, DialogFilterList filter)
 		{
-			var usingFilePath = File.Exists(defaultPath) ? defaultPath : string.Empty;
+			var tempPath = Environment.ExpandEnvironmentVariables(defaultPath);
+			var usingFilePath = File.Exists(tempPath) ? tempPath : string.Empty;
 
 			var dialog = new OpenFileDialog() {
 				CheckFileExists = true,
 				FileName = usingFilePath,
 				Multiselect = multiSelect,
 			};
+			if(!string.IsNullOrWhiteSpace(usingFilePath)) {
+				dialog.InitialDirectory = Path.GetDirectoryName(usingFilePath);
+			}
 			if(filter != null) {
 				dialog.Filter = filter.FilterText;
 			}
@@ -46,7 +50,12 @@ using Microsoft.Win32;
 		/// <returns>選択されたファイル。未選択の場合は null 。</returns>
 		public static string ShowOpenSingleFileDialog(string defaultPath, DialogFilterList filter = null)
 		{
-			return ShowOpenFileDialog(defaultPath, false, filter).FirstOrDefault();
+			var result = ShowOpenFileDialog(defaultPath, false, filter);
+			if(result != null) {
+				return result.FirstOrDefault();
+			} else {
+				return null;
+			}
 		}
 
 		/// <summary>
@@ -67,7 +76,7 @@ using Microsoft.Win32;
 		/// <returns>選択されたディレクトリパス。未選択の場合は null 。</returns>
 		public static string ShowDirectoryDialog(string defaultPath)
 		{
-			var usingFilePath = File.Exists(defaultPath) ? defaultPath : string.Empty;
+			var usingFilePath = Directory.Exists(defaultPath) ? defaultPath : string.Empty;
 
 			using(var dialog = new FolderBrowserDialog()) {
 				var expandedPath = Environment.ExpandEnvironmentVariables(usingFilePath);

@@ -59,7 +59,7 @@
 		/// <param name="defaultPath"></param>
 		/// <param name="nonProcess"></param>
 		/// <returns>選択されたファイル。未選択の場合は null 。</returns>
-		public static string ShowOpenCommandDialog(string defaultPath, IHavingNonProcess nonProcess)
+		public static string ShowOpenCommandDialog(string defaultPath, INonProcess nonProcess)
 		{
 			return DialogUtility.ShowOpenSingleFileDialog(defaultPath);
 		}

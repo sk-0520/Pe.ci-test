@@ -53,7 +53,10 @@
 			{
 				var result = CreateCommand(
 					o => {
-
+						var dialogResult = LauncherItemUtility.ShowOpenCommandDialog(Command, NonProcess);
+						if(dialogResult != null) {
+							Command = dialogResult;
+						}
 					}
 				);
 
@@ -67,7 +70,10 @@
 			{
 				var result = CreateCommand(
 					o => {
-
+						var dialogResult = DialogUtility.ShowDirectoryDialog(Command);
+						if(dialogResult != null) {
+							Command = dialogResult;
+						}
 					}
 				);
 
@@ -115,7 +121,10 @@
 			{
 				var result = CreateCommand(
 					o => {
-
+						var dialogResult = DialogUtility.ShowDirectoryDialog(WorkDirectoryPath);
+						if(dialogResult != null) {
+							WorkDirectoryPath = dialogResult;
+						}
 					}
 				);
 
@@ -129,7 +138,6 @@
 			{
 				var result = CreateCommand(
 					o => {
-
 					}
 				);
 
