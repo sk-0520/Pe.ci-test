@@ -16,39 +16,47 @@
 	using System.Windows.Media.Imaging;
 	using System.Windows.Navigation;
 	using System.Windows.Shapes;
+	using ContentTypeTextNet.Library.SharedLibrary.View.Converter;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 	using ContentTypeTextNet.Pe.PeMain.ViewModel;
 
 	/// <summary>
 	/// LauncherItemsListControl.xaml の相互作用ロジック
 	/// </summary>
-	public partial class LauncherItemsListControl : CommonDataUserControl, INotifyPropertyChanged
+	public partial class LauncherItemsListControl : CommonDataUserControl//, INotifyPropertyChanged
 	{
+		//#region variable
+
+		//bool _canListEdit;
+
+		//#endregion
+
 		public LauncherItemsListControl()
 		{
 			InitializeComponent();
-
+			CanListEdit = false;
 			ListItems.SelectionChanged += ListItems_SelectionChanged;
 		}
 
-		#region INotifyPropertyChanged
+		//#region INotifyPropertyChanged
 
-		/// <summary>
-		/// プロパティが変更された際に発生。
-		/// </summary>
-		public event PropertyChangedEventHandler PropertyChanged = delegate { };
+		///// <summary>
+		///// プロパティが変更された際に発生。
+		///// </summary>
+		//public event PropertyChangedEventHandler PropertyChanged = delegate { };
 
-		/// <summary>
-		/// PropertyChanged呼び出し。
-		/// </summary>
-		/// <param name="propertyName"></param>
-		protected void OnPropertyChanged([CallerMemberName] string propertyName = "")
-		{
-			this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-		}
+		///// <summary>
+		///// PropertyChanged呼び出し。
+		///// </summary>
+		///// <param name="propertyName"></param>
+		//protected void OnPropertyChanged([CallerMemberName] string propertyName = "")
+		//{
+		//	this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+		//}
 
-		#endregion
+		//#endregion
 
+		#region SelectedLauncherItemProperty
 
 		public static readonly DependencyProperty SelectedLauncherItemProperty = DependencyProperty.Register(
 			"SelectedLauncherItem",
@@ -78,6 +86,10 @@
 			}
 		}
 
+		#endregion
+
+		#region SelectedLauncherViewModelProperty
+
 		public static readonly DependencyProperty SelectedLauncherViewModelProperty = DependencyProperty.Register(
 			"SelectedLauncherViewModel",
 			typeof(LauncherItemViewModelBase),
@@ -95,5 +107,45 @@
 			SelectedLauncherItem = ListItems.SelectedItem as LauncherItemModel;
 		}
 
+		#endregion
+
+		#region CanListEditProperty
+
+		public static readonly DependencyProperty CanListEditProperty = DependencyProperty.Register(
+			"CanListEdit",
+			typeof(bool),
+			typeof(LauncherItemsListControl),
+			new FrameworkPropertyMetadata(new PropertyChangedCallback(OnChangedCanListEdit))
+		);
+
+		public bool CanListEdit
+		{
+			get { return (bool)GetValue(CanListEditProperty); }
+			set 
+			{ 
+				SetValue(CanListEditProperty, value);
+				ChangedCanListEdit(this, (bool)value);
+			}
+		}
+
+		private static void OnChangedCanListEdit(DependencyObject d, DependencyPropertyChangedEventArgs e)
+		{
+			var control = d as LauncherItemsListControl;
+			if(control != null) {
+				ChangedCanListEdit(control, (bool)e.NewValue);
+			}
+		}
+
+		static void ChangedCanListEdit(LauncherItemsListControl control, bool value)
+		{
+			var converter = new BooleanVisibilityConverter();
+			var visibility = (Visibility)converter.Convert(value, typeof(bool), null, null);
+			var elements = new UIElement[] { control.toolAppend, control.toolRemove, control.toolSeparator };
+			foreach(var element in elements) {
+				element.Visibility = visibility;
+			}
+		}
+
+		#endregion
 	}
 }

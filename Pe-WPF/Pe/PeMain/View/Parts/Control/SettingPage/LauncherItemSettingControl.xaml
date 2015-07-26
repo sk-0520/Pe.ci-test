@@ -21,7 +21,7 @@
 			<ColumnDefinition Width="7*"/>
 			<ColumnDefinition Width="13*"/>
 		</Grid.ColumnDefinitions>
-		<AV:LauncherItemsListControl Grid.Column="0" DataContext="{Binding LauncherItems}" x:Name="ItemList" />
+		<AV:LauncherItemsListControl x:Name="ItemList" Grid.Column="0" CanListEdit="True" DataContext="{Binding LauncherItems}"  />
 		<AV:LauncherItemEditControl Grid.Column="1" DataContext="{Binding SelectedLauncherViewModel, ElementName=ItemList, Converter={StaticResource LauncherViewModelConverter}}" />
 	</Grid>
 </AV:CommonDataUserControl>
