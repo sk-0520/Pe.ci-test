@@ -119,7 +119,7 @@
 		public LoggingViewModel Logging { get { return LoggingWindow.ViewModel; } }
 
 		List<LauncherToolbarWindow> LauncherToolbarWindows { get; set; }
-		public IEnumerable<LauncherToolbarViewModel> LauncherToolbar { get { return LauncherToolbarWindows.Select(l => l.ViewModel); } }
+		public IEnumerable<LauncherToolbarViewModel> LauncherToolbars { get { return LauncherToolbarWindows.Select(l => l.ViewModel); } }
 
 		List<NoteWindow> NoteWindows { get; set; }
 		public IEnumerable<NoteViewModel> NoteShowItems { get { return NoteWindows.Select(w => w.ViewModel); } }
@@ -589,7 +589,7 @@
 			switch(kind) {
 				case WindowKind.LauncherToolbar:
 					{
-						foreach(var toolbar in LauncherToolbar) {
+						foreach(var toolbar in LauncherToolbars) {
 							toolbar.Refresh();
 						}
 					}
@@ -780,7 +780,7 @@
 
 				// 変更通知から現在数をAPIでまともに取得する
 				var rawScreenCount = NativeMethods.GetSystemMetrics(SM.SM_CMONITORS);
-				bool changedScreenCount = LauncherToolbar.Count() != rawScreenCount;
+				bool changedScreenCount = LauncherToolbars.Count() != rawScreenCount;
 
 				Task.Run(() => {
 					// Forms で取得するディスプレイ数の合計値は少し遅れる

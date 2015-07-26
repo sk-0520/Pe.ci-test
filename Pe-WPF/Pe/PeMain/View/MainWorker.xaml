@@ -29,7 +29,7 @@
 		</ContextMenu.Resources>
 		<MenuItem AA:Language.Key="tasktray/setting" Header="setting" Command="{Binding ShowSettingWindowCommand}" />
 		<Separator />
-		<MenuItem AA:Language.Key="tasktray/toolbar" Header="toolbar" ItemsSource="{Binding LauncherToolbar}">
+		<MenuItem AA:Language.Key="tasktray/toolbar" Header="toolbar" ItemsSource="{Binding LauncherToolbars}">
 			<MenuItem.ItemContainerStyle>
 				<Style TargetType="MenuItem">
 					<Setter Property="IsChecked" Value="{Binding Visible, Mode=OneWay}"/>
