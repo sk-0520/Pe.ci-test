@@ -59,7 +59,17 @@
 				.Any(s => s == ext);
 		}
 
-		public static bool HasIconPath(string path)
+		public static bool IsIconPath(string path)
+		{
+			return HasExtension(path, "exe", "dll");
+		}
+
+		public static bool IsShortcut(string path)
+		{
+			return HasExtension(path, "lnk");
+		}
+
+		public static bool IsProgram(string path)
 		{
 			return HasExtension(path, "exe", "dll");
 		}

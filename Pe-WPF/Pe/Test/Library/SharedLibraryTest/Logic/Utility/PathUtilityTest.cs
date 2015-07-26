@@ -54,7 +54,7 @@
 		[TestCase(false, "a.ico")]
 		public void HasIconTest(bool test, string value)
 		{
-			Assert.AreEqual(test, PathUtility.HasIconPath(value));
+			Assert.AreEqual(test, PathUtility.IsIconPath(value));
 		}
 	}
 }

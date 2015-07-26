@@ -307,7 +307,7 @@
 		public static BitmapSource Load(string iconPath, IconScale iconScale, int iconIndex, ILogger logger = null)
 		{
 			// 実行形式
-			var hasIcon = PathUtility.HasIconPath(iconPath);
+			var hasIcon = PathUtility.IsIconPath(iconPath);
 			var useIconIndex = Math.Abs(iconIndex);
 
 			BitmapSource result = null;

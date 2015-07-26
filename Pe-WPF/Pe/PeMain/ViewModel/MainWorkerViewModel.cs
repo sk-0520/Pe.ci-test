@@ -589,7 +589,9 @@
 			switch(kind) {
 				case WindowKind.LauncherToolbar:
 					{
-						LauncherToolbar.ElementAt(0).Refresh();
+						foreach(var toolbar in LauncherToolbar) {
+							toolbar.Refresh();
+						}
 					}
 					break;
 

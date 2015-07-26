@@ -2,12 +2,15 @@
 {
 	using System;
 	using System.Collections.Generic;
+	using System.Diagnostics;
+	using System.IO;
 	using System.Linq;
 	using System.Text;
 	using System.Threading.Tasks;
 	using System.Windows.Media.Imaging;
 	using ContentTypeTextNet.Library.SharedLibrary.Define;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
 	using ContentTypeTextNet.Pe.Library.PeData.Define;
@@ -77,6 +80,52 @@
 			} else {
 				return null;
 			}
+		}
+
+		static public TagItemModel GetTag(string expandedPath)
+		{
+			var result = new TagItemModel();
+			if(PathUtility.IsProgram(expandedPath) && File.Exists(expandedPath)) {
+				var versionInfo = FileVersionInfo.GetVersionInfo(expandedPath);
+				if(!string.IsNullOrEmpty(versionInfo.CompanyName)) {
+					result.Items.Add(versionInfo.CompanyName);
+				}
+			}
+
+			return result;
+		}
+
+		public static LauncherItemModel CreateFromFile(string path, bool loadShortcut)
+		{
+			var expandedPath = Environment.ExpandEnvironmentVariables(path);
+
+			var isProgram = PathUtility.IsProgram(path);
+			var isShortCut = PathUtility.IsShortcut(path);
+
+			var result = new LauncherItemModel() {
+				LauncherKind = LauncherKind.File,
+			};
+
+			if(loadShortcut && PathUtility.IsShortcut(path)) {
+				using(var shortcut = new ShortcutFile(expandedPath)) {
+					result.Command = shortcut.TargetPath;
+					
+					result.Option = shortcut.Arguments;
+					result.WorkDirectoryPath = shortcut.WorkingDirectory;
+
+					var icon =shortcut.GetIcon();
+					result.Icon.Path = icon.Path;
+					result.Icon.Index = icon.Index;
+
+					result.Comment = shortcut.Description;
+				}
+			} else {
+				result.Command = path;
+			}
+
+			result.Tag = GetTag(Environment.ExpandEnvironmentVariables(result.Command));
+			
+			return result;
 		}
 	}
 }

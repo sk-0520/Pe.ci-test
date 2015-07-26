@@ -159,7 +159,7 @@
 				}
 			}
 
-			if (PathUtility.HasExtension(path, "exe", "dll")) {
+			if (PathUtility.IsProgram(path)) {
 				var verInfo = FileVersionInfo.GetVersionInfo(path);
 				if (!string.IsNullOrEmpty(verInfo.ProductName)) {
 					return verInfo.ProductName;
@@ -168,6 +168,5 @@
 
 			return plainName;
 		}
-
 	}
 }
