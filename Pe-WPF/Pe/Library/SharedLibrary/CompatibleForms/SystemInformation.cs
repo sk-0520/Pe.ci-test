@@ -6,10 +6,10 @@
 	using System.Text;
 	using Forms = System.Windows.Forms;
 	using System.Threading.Tasks;
-using System.Windows;
+	using System.Windows;
 	using ContentTypeTextNet.Library.SharedLibrary.CompatibleForms.Utility;
-using ContentTypeTextNet.Library.SharedLibrary.Attribute;
-using ContentTypeTextNet.Library.SharedLibrary.Define;
+	using ContentTypeTextNet.Library.SharedLibrary.Attribute;
+	using ContentTypeTextNet.Library.SharedLibrary.Define;
 
 	public static class SystemInformation
 	{

@@ -6,6 +6,7 @@
 	using System.Text;
 	using System.Threading.Tasks;
 	using System.Windows.Input;
+	using ContentTypeTextNet.Library.SharedLibrary.CompatibleWindows;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 	using ContentTypeTextNet.Pe.Library.PeData.Define;
@@ -138,6 +139,15 @@
 			{
 				var result = CreateCommand(
 					o => {
+						var dialog = new IconDialog();
+						dialog.Icon.Path = Environment.ExpandEnvironmentVariables(Icon.Path ?? string.Empty);
+						dialog.Icon.Index = Icon.Index;
+						var dialogResult = dialog.ShowDialog();
+						if(dialogResult.GetValueOrDefault()) {
+							Icon.Path = dialog.Icon.Path;
+							Icon.Index = dialog.Icon.Index;
+							OnPropertyChanged("IconPath");
+						}
 					}
 				);
 
