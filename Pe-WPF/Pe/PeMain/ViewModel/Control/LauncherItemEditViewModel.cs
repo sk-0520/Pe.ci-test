@@ -34,7 +34,7 @@
 			set { SetModelValue(value); }
 		}
 
-		public string IconPath
+		public string IconDisplayText
 		{
 			get { return Model.Icon.DisplayText; }
 		}
@@ -146,7 +146,7 @@
 						if(dialogResult.GetValueOrDefault()) {
 							Icon.Path = dialog.Icon.Path;
 							Icon.Index = dialog.Icon.Index;
-							OnPropertyChanged("IconPath");
+							OnPropertyChanged("IconDisplayText");
 						}
 					}
 				);
