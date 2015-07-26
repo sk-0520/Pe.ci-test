@@ -18,7 +18,9 @@
 	{
 		public WindowAreaCorrection(Window view, IWindowAreaCorrectionData restrictionViewModel, INonProcess nonProcess)
 			: base(view, restrictionViewModel, nonProcess)
-		{ }
+		{
+			View.IsVisibleChanged += View_IsVisibleChanged;
+		}
 
 		#region WindowsViewExtendBase
 
@@ -167,5 +169,27 @@
 		}
 
 		#endregion
+
+		void View_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+		{
+			if(View.Visibility != Visibility.Hidden) {
+				var logicalRect = new Rect(
+					View.Left,
+					View.Top,
+					View.Width,
+					View.Height
+				);
+				var deviceRect = UIUtility.ToDevicePixel(View, logicalRect);
+				var sendRect = PodStructUtility.Convert(deviceRect);
+
+				IntPtr lParam = Marshal.AllocHGlobal(Marshal.SizeOf(sendRect));
+				Marshal.StructureToPtr(sendRect, lParam, false);
+
+				NativeMethods.SendMessage(HandleUtility.GetWindowHandle(View), WM.WM_MOVING, IntPtr.Zero, lParam);
+
+				View.IsVisibleChanged -= View_IsVisibleChanged;
+			}
+		}
+
 	}
 }
