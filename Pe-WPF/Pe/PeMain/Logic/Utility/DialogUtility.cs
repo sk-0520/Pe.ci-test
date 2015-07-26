@@ -1,15 +1,15 @@
 ﻿namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 {
 	using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ContentTypeTextNet.Library.SharedLibrary.CompatibleForms;
-using ContentTypeTextNet.Library.SharedLibrary.Logic;
-using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
-using Microsoft.Win32;
+	using System.Collections.Generic;
+	using System.IO;
+	using System.Linq;
+	using System.Text;
+	using System.Threading.Tasks;
+	using ContentTypeTextNet.Library.SharedLibrary.CompatibleForms;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+	using Microsoft.Win32;
 
 	public static class DialogUtility
 	{

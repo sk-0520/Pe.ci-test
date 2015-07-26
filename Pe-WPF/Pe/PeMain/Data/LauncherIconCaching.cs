@@ -20,5 +20,12 @@
 		public LauncherIconCaching()
 			: base()
 		{ }
+
+		public void Remove(LauncherItemModel model)
+		{
+			foreach(var cache in this.Values) {
+				cache.Remove(model);
+			}
+		}
 	}
 }

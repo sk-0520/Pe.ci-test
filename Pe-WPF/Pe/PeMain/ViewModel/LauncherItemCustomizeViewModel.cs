@@ -9,13 +9,16 @@
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 	using ContentTypeTextNet.Pe.PeMain.Data;
+	using ContentTypeTextNet.Pe.PeMain.Define;
+	using ContentTypeTextNet.Pe.PeMain.IF;
+	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 	using ContentTypeTextNet.Pe.PeMain.View;
 	using ContentTypeTextNet.Pe.PeMain.ViewModel.Control;
 
 	/// <summary>
 	/// <para>内部でモデルを元保持して最後に再設定する。</para>
 	/// </summary>
-	public class LauncherItemCustomizeViewModel: LauncherItemEditViewModel, IHavingView<LauncherItemCustomizeWindow>
+	public class LauncherItemCustomizeViewModel: LauncherItemEditViewModel, IHavingView<LauncherItemCustomizeWindow>, IHavingAppSender
 	{
 		#region variable
 
@@ -23,10 +26,11 @@
 
 		#endregion
 
-		public LauncherItemCustomizeViewModel(LauncherItemModel model, LauncherItemCustomizeWindow view, LauncherIconCaching launcherIconCaching, INonProcess nonPorocess)
+		public LauncherItemCustomizeViewModel(LauncherItemModel model, LauncherItemCustomizeWindow view, LauncherIconCaching launcherIconCaching, INonProcess nonPorocess, IAppSender appSender)
 			: base((LauncherItemModel)model.DeepClone(), launcherIconCaching, nonPorocess)
 		{
 			View = view;
+			AppSender = appSender;
 			this._srcModel = model;
 		}
 
@@ -41,6 +45,25 @@
 			{
 				var result = CreateCommand(
 					o => {
+						this._srcModel.Name = Model.Name;
+						this._srcModel.LauncherKind = Model.LauncherKind;
+						this._srcModel.Command = Model.Command;
+						this._srcModel.Option = Model.Option;
+						this._srcModel.WorkDirectoryPath = Model.WorkDirectoryPath;
+						this._srcModel.Icon = Model.Icon;
+						this._srcModel.History = Model.History;
+						this._srcModel.Comment = Model.Comment;
+						this._srcModel.Tag = Model.Tag;
+						this._srcModel.StdStream = Model.StdStream;
+						this._srcModel.Administrator = Model.Administrator;
+						this._srcModel.EnvironmentVariables = Model.EnvironmentVariables;
+
+						if(HasView) {
+							View.Close();
+						}
+						SettingUtility.IncrementLauncherItem(Model, null, null, NonProcess);
+						LauncherIconCaching.Remove(this._srcModel);
+						AppSender.SendRefreshView(WindowKind.LauncherToolbar, null);
 					}
 				);
 
@@ -71,6 +94,12 @@
 		public LauncherItemCustomizeWindow View { get; private set; }
 
 		public bool HasView { get { return View != null; } }
+
+		#endregion
+
+		#region IHavingAppSender
+
+		public IAppSender AppSender { get; private set; }
 
 		#endregion
 	}

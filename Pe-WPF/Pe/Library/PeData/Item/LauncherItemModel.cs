@@ -46,15 +46,15 @@
 		[DataMember]
 		public string Command { get; set; }
 		/// <summary>
-		/// 実行時の作業ディレクトリ。
-		/// </summary>
-		[DataMember]
-		public string WorkDirectoryPath { get; set; }
-		/// <summary>
 		/// 実行時に渡されるオプション。
 		/// </summary>
 		[DataMember]
 		public string Option { get; set; }
+		/// <summary>
+		/// 実行時の作業ディレクトリ。
+		/// </summary>
+		[DataMember]
+		public string WorkDirectoryPath { get; set; }
 		/// <summary>
 		/// 表示アイコンパス。
 		/// </summary>

@@ -423,6 +423,11 @@
 			return ReceiveCreateWindow(kind, extensionData, parent);
 		}
 
+		public void SendRefreshView(WindowKind kind, Window fromView)
+		{
+			ReceiveRefreshView(kind, fromView);
+		}
+
 		public void SendRemoveIndex(IndexKind indexKind, Guid guid)
 		{
 			ReceiveRemoveIndex(indexKind, guid);
@@ -577,6 +582,20 @@
 
 			SendAppendWindow(window);
 			return window;
+		}
+
+		public void ReceiveRefreshView(WindowKind kind, Window fromView)
+		{
+			switch(kind) {
+				case WindowKind.LauncherToolbar:
+					{
+						LauncherToolbar.ElementAt(0).Refresh();
+					}
+					break;
+
+				default:
+					throw new NotImplementedException();
+			}
 		}
 
 		void RemoveIndex<TItemModel, TIndexBody>(IndexKind indexKind, Guid guid, IndexItemCollectionModel<TItemModel> items, IndexBodyPairItemCollection<TIndexBody> cachingItems)

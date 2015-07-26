@@ -34,7 +34,7 @@
 	using System.Windows.Controls.Primitives;
 	using System.Windows.Media.Imaging;
 
-	public class LauncherToolbarViewModel : HavingViewSingleModelWrapperViewModelBase<LauncherToolbarDataModel, LauncherToolbarWindow>, IApplicationDesktopToolbarData, IVisualStyleData, IHavingNonProcess, IHavingClipboardWatcher, IWindowAreaCorrectionData, IWindowHitTestData, IHavingLauncherIconCaching, IHavingAppSender
+	public class LauncherToolbarViewModel: HavingViewSingleModelWrapperViewModelBase<LauncherToolbarDataModel, LauncherToolbarWindow>, IApplicationDesktopToolbarData, IVisualStyleData, IHavingNonProcess, IHavingClipboardWatcher, IWindowAreaCorrectionData, IWindowHitTestData, IHavingLauncherIconCaching, IHavingAppSender, IRefreshFromViewModel
 	{
 		#region static
 
@@ -350,6 +350,176 @@
 		public PlacementMode DropDownPlacement
 		{
 			get { return GetDropDownPlacement(DockType); }
+		}
+
+		#endregion
+
+		#region command
+
+		public ICommand PositionChangeCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						var dockType = (DockType)o;
+						View.Docking(dockType, AutoHide);
+					},
+					o => {
+						var dockType = (DockType)o;
+						return dockType != DockType;
+					}
+				);
+
+				return result;
+			}
+		}
+
+		public ICommand SwitchTopMostCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						TopMost = !TopMost;
+					}
+				);
+
+				return result;
+			}
+		}
+
+		public ICommand SwitchAutoHideCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						AutoHide = !AutoHide;
+					},
+					o => {
+						return IsDocking;
+					}
+				);
+
+				return result;
+			}
+		}
+
+		public ICommand GroupChangeCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						var group = (LauncherGroupItemModel)o;
+						NonProcess.Logger.Debug(group.ToString());
+						SelectedGroup = group;
+					}
+				);
+
+				return result;
+			}
+		}
+
+		public ICommand ChangeVisibleCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						var visible = (bool)o;
+						Visible = visible;
+					}
+				);
+
+				return result;
+			}
+		}
+
+		#endregion
+
+		#region function
+
+		void CalculateWindowStatus(DockType dockType)
+		{
+			Debug.Assert(HasView);
+
+			BorderThickness = GetBorderThickness(dockType, View);
+
+			BarSize = new Size(ButtonSize.Width + BorderThickness.GetHorizon(), ButtonSize.Height + BorderThickness.GetVertical());
+
+			if (dockType != DockType.None) {
+				HideWidth = GetHideWidth(dockType);
+				MinSize = new Size(0, 0);
+			} else {
+				var orientation = GetOrientation(dockType);
+				MinSize = GetMinSize(dockType, orientation, BorderThickness, ButtonSize, this._captionWidth);
+			}
+
+		}
+
+		IEnumerable<LauncherItemModel> GetLauncherItems(LauncherGroupItemModel groupItem)
+		{
+			if (groupItem.GroupKind == GroupKind.LauncherItems) {
+				return groupItem.LauncherItems
+					.Where(i => Model.LauncherItems.Contains(i)) //TODO: Xアイコン表示をどうしよう
+					.Select(i => Model.LauncherItems[i])
+				;
+			}
+
+			// 当面はランチャーアイテムのみ
+			throw new NotImplementedException();
+		}
+
+		double CalculateViewWidth(DockType dockType, Orientation orientation, Thickness borderThickness, double captionWidth)
+		{
+			var captionSize = GetCaptionSize(orientation, captionWidth);
+			return Model.Toolbar.FloatToolbar.WidthButtonCount * ButtonSize.Width + captionSize.Width + borderThickness.GetHorizon();
+		}
+		int CalculateButtonWidthCount(DockType dockType, Orientation orientation, Thickness borderThickness, double captionWidth, double viewWidth)
+		{
+			var captionSize = GetCaptionSize(orientation, captionWidth);
+			return (int)((viewWidth - borderThickness.GetHorizon() - captionSize.Width) / ButtonSize.Width);
+		}
+		double CalculateViewHeight(DockType dockType, Orientation orientation, Thickness borderThickness, double captionWidth)
+		{
+			var captionSize = GetCaptionSize(orientation, captionWidth);
+			return Model.Toolbar.FloatToolbar.HeightButtonCount * ButtonSize.Height + captionSize.Height + borderThickness.GetVertical();
+		}
+		int CalculateButtonHeightCount(DockType dockType, Orientation orientation, Thickness borderThickness, double captionWidth, double viewHeight)
+		{
+			var captionSize = GetCaptionSize(orientation, captionWidth);
+			return (int)((viewHeight - borderThickness.GetVertical() - captionSize.Height) / ButtonSize.Height);
+		}
+
+		BitmapSource GetAppIcon()
+		{
+			return AppResource.GetLauncherToolbarMainIcon(Model.Toolbar.IconScale);
+		}
+
+		Color GetAppIconColor()
+		{
+			return MediaUtility.GetPredominantColorFromBitmapSource(GetAppIcon());
+		}
+
+		public void ChangingWindowMode(DockType dockType)
+		{
+			DockType = dockType;
+			var logicalRect = new Rect(
+				WindowLeft,
+				WindowTop,
+				WindowWidth,
+				WindowHeight
+			);
+			var deviceRect = UIUtility.ToDevicePixel(View, logicalRect);
+			var podRect = PodStructUtility.Convert(deviceRect);
+			//NativeMethods.MoveWindow(View.Handle, podRect.Left, podRect.Top, podRect.Width, podRect.Height, false);
+			NativeMethods.SetWindowPos(View.Handle, IntPtr.Zero, podRect.Left, podRect.Top, podRect.Width, podRect.Height, SWP.SWP_NOSENDCHANGING | SWP.SWP_NOREDRAW);
+			//View.InvalidateVisual();
+			//View.UpdateLayout()
+			//DockType = dockType;
+			//MinSize = GetMinSize(DockType, Orientation, BorderThickness, ButtonSize);
 		}
 
 		#endregion
@@ -757,172 +927,13 @@
 
 		#endregion
 
-		#region command
+		#region IRefreshFromViewModel
 
-		public ICommand PositionChangeCommand
+		public void Refresh()
 		{
-			get
-			{
-				var result = CreateCommand(
-					o => {
-						var dockType = (DockType)o;
-						View.Docking(dockType, AutoHide);
-					},
-					o => {
-						var dockType = (DockType)o;
-						return dockType != DockType;
-					}
-				);
-
-				return result;
-			}
-		}
-
-		public ICommand SwitchTopMostCommand
-		{
-			get
-			{
-				var result = CreateCommand(
-					o => {
-						TopMost = !TopMost;
-					}
-				);
-
-				return result;
-			}
-		}
-
-		public ICommand SwitchAutoHideCommand
-		{
-			get
-			{
-				var result = CreateCommand(
-					o => {
-						AutoHide = !AutoHide;
-					},
-					o => {
-						return IsDocking;
-					}
-				);
-
-				return result;
-			}
-		}
-
-		public ICommand GroupChangeCommand
-		{
-			get
-			{
-				var result = CreateCommand(
-					o => {
-						var group = (LauncherGroupItemModel)o;
-						NonProcess.Logger.Debug(group.ToString());
-						SelectedGroup = group;
-					}
-				);
-
-				return result;
-			}
-		}
-
-		public ICommand ChangeVisibleCommand
-		{
-			get
-			{
-				var result = CreateCommand(
-					o => {
-						var visible = (bool)o;
-						Visible = visible;
-					}
-				);
-
-				return result;
-			}
-		}
-
-		#endregion
-
-		#region function
-
-		void CalculateWindowStatus(DockType dockType)
-		{
-			Debug.Assert(HasView);
-
-			BorderThickness = GetBorderThickness(dockType, View);
-
-			BarSize = new Size(ButtonSize.Width + BorderThickness.GetHorizon(), ButtonSize.Height + BorderThickness.GetVertical());
-
-			if (dockType != DockType.None) {
-				HideWidth = GetHideWidth(dockType);
-				MinSize = new Size(0, 0);
-			} else {
-				var orientation = GetOrientation(dockType);
-				MinSize = GetMinSize(dockType, orientation, BorderThickness, ButtonSize, this._captionWidth);
-			}
-
-		}
-
-		IEnumerable<LauncherItemModel> GetLauncherItems(LauncherGroupItemModel groupItem)
-		{
-			if (groupItem.GroupKind == GroupKind.LauncherItems) {
-				return groupItem.LauncherItems
-					.Where(i => Model.LauncherItems.Contains(i)) //TODO: Xアイコン表示をどうしよう
-					.Select(i => Model.LauncherItems[i])
-				;
-			}
-
-			// 当面はランチャーアイテムのみ
-			throw new NotImplementedException();
-		}
-
-		double CalculateViewWidth(DockType dockType, Orientation orientation, Thickness borderThickness, double captionWidth)
-		{
-			var captionSize = GetCaptionSize(orientation, captionWidth);
-			return Model.Toolbar.FloatToolbar.WidthButtonCount * ButtonSize.Width + captionSize.Width + borderThickness.GetHorizon();
-		}
-		int CalculateButtonWidthCount(DockType dockType, Orientation orientation, Thickness borderThickness, double captionWidth, double viewWidth)
-		{
-			var captionSize = GetCaptionSize(orientation, captionWidth);
-			return (int)((viewWidth - borderThickness.GetHorizon() - captionSize.Width) / ButtonSize.Width);
-		}
-		double CalculateViewHeight(DockType dockType, Orientation orientation, Thickness borderThickness, double captionWidth)
-		{
-			var captionSize = GetCaptionSize(orientation, captionWidth);
-			return Model.Toolbar.FloatToolbar.HeightButtonCount * ButtonSize.Height + captionSize.Height + borderThickness.GetVertical();
-		}
-		int CalculateButtonHeightCount(DockType dockType, Orientation orientation, Thickness borderThickness, double captionWidth, double viewHeight)
-		{
-			var captionSize = GetCaptionSize(orientation, captionWidth);
-			return (int)((viewHeight - borderThickness.GetVertical() - captionSize.Height) / ButtonSize.Height);
-		}
-
-		BitmapSource GetAppIcon()
-		{
-			return AppResource.GetLauncherToolbarMainIcon(Model.Toolbar.IconScale);
-		}
-
-		Color GetAppIconColor()
-		{
-			return MediaUtility.GetPredominantColorFromBitmapSource(GetAppIcon());
-		}
-
-		public void ChangingWindowMode(DockType dockType)
-		{
-			DockType = dockType;
-			var logicalRect = new Rect(
-				WindowLeft,
-				WindowTop,
-				WindowWidth,
-				WindowHeight
-			);
-			var deviceRect = UIUtility.ToDevicePixel(View, logicalRect);
-			var podRect = PodStructUtility.Convert(deviceRect);
-			//NativeMethods.MoveWindow(View.Handle, podRect.Left, podRect.Top, podRect.Width, podRect.Height, false);
-			NativeMethods.SetWindowPos(View.Handle, IntPtr.Zero, podRect.Left, podRect.Top, podRect.Width, podRect.Height, SWP.SWP_NOSENDCHANGING | SWP.SWP_NOREDRAW);
-			//View.InvalidateVisual();
-			//View.UpdateLayout()
-			//DockType = dockType;
-			//MinSize = GetMinSize(DockType, Orientation, BorderThickness, ButtonSize);
+			var nowGroup = this._selectedGroup;
+			this._selectedGroup = null;
+			SelectedGroup = nowGroup;
 		}
 
 		#endregion
