@@ -35,7 +35,7 @@
 			<ListView Grid.Row="0" ItemsSource="{Binding LogItems}" x:Name="LogList">
 				<ListView.View>
 					<GridView>
-						<GridViewColumn Header="timestamp" AA:Language.Key="log-timestamp" DisplayMemberBinding="{Binding Timestamp}" />
+						<GridViewColumn Header="timestamp" AA:Language.Key="logging/timestamp" DisplayMemberBinding="{Binding Timestamp}" />
 						<GridViewColumn Header="message" AA:Language.Key="log-message" DisplayMemberBinding="{Binding Message}" />
 					</GridView>
 				</ListView.View>

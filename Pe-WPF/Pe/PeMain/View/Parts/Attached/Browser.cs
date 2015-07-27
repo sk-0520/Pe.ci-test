@@ -14,10 +14,11 @@
 	public class Browser
 	{
 		public static readonly DependencyProperty HtmlProperty = DependencyProperty.RegisterAttached(
-				"Html",
-				typeof(string),
-				typeof(Browser),
-				new FrameworkPropertyMetadata(OnHtmlChanged));
+			"Html",
+			typeof(string),
+			typeof(Browser),
+			new FrameworkPropertyMetadata(OnHtmlChanged)
+		);
 
 		[AttachedPropertyBrowsableForType(typeof(WebBrowser))]
 		public static string GetHtml(WebBrowser d)

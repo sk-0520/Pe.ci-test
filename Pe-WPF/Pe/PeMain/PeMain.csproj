@@ -173,7 +173,6 @@
     <Compile Include="IF\IToolbarNode.cs" />
     <Compile Include="Logic\AppInformationCollection.cs" />
     <Compile Include="Logic\AppLanguageManager.cs" />
-    <Compile Include="Logic\Extension\LanguageExtension.cs" />
     <Compile Include="Logic\IconCaching.cs" />
     <Compile Include="Logic\IndexBodyCaching.cs" />
     <Compile Include="Logic\ProgramTemplateProcessor.cs" />
@@ -523,6 +522,7 @@
     <Resource Include="Resources\Icon\Tasktray\App-debug.ico" />
     <Resource Include="Resources\Icon\Tasktray\App-release.ico" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>copy "$(OutDir)etc\lang\ja-JP.xml" "$(OutDir)etc\lang\default.xml"

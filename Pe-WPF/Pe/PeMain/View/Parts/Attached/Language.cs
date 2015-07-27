@@ -11,7 +11,7 @@
 
 	public static class Language
 	{
-		#region LanguageKey
+		#region KeyProperty
 
 		public static readonly DependencyProperty KeyProperty = DependencyProperty.RegisterAttached(
 			"Key",
@@ -33,19 +33,29 @@
 			dependencyObject.SetValue(KeyProperty, value);
 		}
 
-		//#region extension
+		#endregion
 
-		//public static string LanguageKey(this DependencyObject dependencyObject)
-		//{
-		//	return GetLanguageKey(dependencyObject);
-		//}
+		#region HintProperty
 
-		//public static void LanguageKey(this DependencyObject dependencyObject, string value)
-		//{
-		//	SetLanguageKey(dependencyObject, value);
-		//}
+		public static readonly DependencyProperty HintProperty = DependencyProperty.RegisterAttached(
+			"Hint",
+			typeof(string),
+			typeof(Language),
+			new FrameworkPropertyMetadata(null)
+		);
 
-		//#endregion
+		public static string GetHint(DependencyObject dependencyObject)
+		{
+			Validate(dependencyObject);
+
+			return (string)dependencyObject.GetValue(HintProperty);
+		}
+		public static void SetHint(DependencyObject dependencyObject, string value)
+		{
+			Validate(dependencyObject);
+
+			dependencyObject.SetValue(HintProperty, value);
+		}
 
 		#endregion
 
