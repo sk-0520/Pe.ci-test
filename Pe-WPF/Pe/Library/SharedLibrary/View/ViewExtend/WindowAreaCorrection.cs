@@ -19,7 +19,11 @@
 		public WindowAreaCorrection(Window view, IWindowAreaCorrectionData restrictionViewModel, INonProcess nonProcess)
 			: base(view, restrictionViewModel, nonProcess)
 		{
-			View.IsVisibleChanged += View_IsVisibleChanged;
+			if(View.Visibility != Visibility.Visible) {
+				View.IsVisibleChanged += View_IsVisibleChanged;
+			} else {
+				ForcePosition();
+			}
 		}
 
 		#region WindowsViewExtendBase
@@ -168,26 +172,37 @@
 			return IntPtr.Zero;
 		}
 
+		void ForcePosition()
+		{
+			var logicalRect = new Rect(
+				View.Left,
+				View.Top,
+				View.Width,
+				View.Height
+			);
+			var deviceRect = UIUtility.ToDevicePixel(View, logicalRect);
+			var sendRect = PodStructUtility.Convert(deviceRect);
+
+			IntPtr lParam = Marshal.AllocHGlobal(Marshal.SizeOf(sendRect));
+			Marshal.StructureToPtr(sendRect, lParam, false);
+
+			//NativeMethods.SendMessage(HandleUtility.GetWindowHandle(View), WM.WM_MOVING, IntPtr.Zero, lParam);
+			bool handled = false;
+			CorrectionMoving(IntPtr.Zero, (int)WM.WM_MOVING, IntPtr.Zero, lParam, ref handled);
+			if(handled) {
+				//var convertedRect = UIUtility.ToLogicalPixel(View, PodStructUtility.Convert(WindowsUtility.ConvertRECTFromLParam(lParam)));
+				var resultRect = WindowsUtility.ConvertRECTFromLParam(lParam);
+				NativeMethods.MoveWindow(HandleUtility.GetWindowHandle(View), resultRect.X, resultRect.Y, resultRect.Width, resultRect.Height, true);
+			}
+		}
+
 		#endregion
 
 		void View_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
 		{
 			if(View.Visibility != Visibility.Hidden) {
-				var logicalRect = new Rect(
-					View.Left,
-					View.Top,
-					View.Width,
-					View.Height
-				);
-				var deviceRect = UIUtility.ToDevicePixel(View, logicalRect);
-				var sendRect = PodStructUtility.Convert(deviceRect);
-
-				IntPtr lParam = Marshal.AllocHGlobal(Marshal.SizeOf(sendRect));
-				Marshal.StructureToPtr(sendRect, lParam, false);
-
-				NativeMethods.SendMessage(HandleUtility.GetWindowHandle(View), WM.WM_MOVING, IntPtr.Zero, lParam);
-
 				View.IsVisibleChanged -= View_IsVisibleChanged;
+				ForcePosition();
 			}
 		}
 
