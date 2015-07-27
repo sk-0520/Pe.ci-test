@@ -36,19 +36,19 @@
 			});
 		}
 
-		//public static void SetUI(this CheckBox ui, LanguageManager language, IReadOnlyDictionary<string, string> map = null)
-		//{
-		//	SetUI_Impl(ui, language, map, key => {
-		//		if(!ui.HasContent || ui.Content is string) {
-		//			ui.Content = language[key, map];
-		//		}
-		//	});
-		//}
-
 		public static void SetText(TextBlock ui, LanguageManager language, IReadOnlyDictionary<string, string> map = null)
 		{
 			SetUI_Impl(ui, language, map, (key, hint) => {
 				ui.Text = language[key, map];
+			});
+		}
+
+		public static void SetHeader(MenuItem ui, LanguageManager language, IReadOnlyDictionary<string, string> map = null)
+		{
+			SetUI_Impl(ui, language, map, (key, hint) => {
+				if(!ui.HasHeader || ui.Header is string) {
+					ui.Header = language[key, map];
+				}
 			});
 		}
 
@@ -79,9 +79,14 @@
 				if(contentControl != null) {
 					SetContent(contentControl, language, map);
 				} else {
-					var textBlock = control as TextBlock;
-					if(textBlock != null) {
-						SetText(textBlock, language, map);
+					var menuItem = control as MenuItem;
+					if(menuItem != null) {
+						SetHeader(menuItem, language, map);
+					} else {
+						var textBlock = control as TextBlock;
+						if(textBlock != null) {
+							SetText(textBlock, language, map);
+						}
 					}
 				}
 			}
@@ -102,14 +107,15 @@
 				//	action(dependencyObject);
 				//}
 				SetLanguageItem(dependencyObject, language, map);
-				if (dependencyObject is Visual)
-				foreach (var visualElement in UIUtility.FindVisualChildren<Visual>(dependencyObject)) {
-					//var visualType = visualElement.GetType();
-					//Debug.WriteLine("V: " + visualType.ToString());
-					//if (map.TryGetValue(visualType, out action)) {
-					//	action(visualElement);
-					//}
-					SetLanguageItem(visualElement, language, map);
+				if(dependencyObject is Visual) {
+					foreach(var visualElement in UIUtility.FindVisualChildren<Visual>(dependencyObject)) {
+						//var visualType = visualElement.GetType();
+						//Debug.WriteLine("V: " + visualType.ToString());
+						//if (map.TryGetValue(visualType, out action)) {
+						//	action(visualElement);
+						//}
+						SetLanguageItem(visualElement, language, map);
+					}
 				}
 			}
 

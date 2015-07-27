@@ -174,6 +174,20 @@
 
 		#region command
 
+		public ICommand OpenContextMenuCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						LanguageUtility.SetLanguage((ContextMenu)o, CommonData.Language);
+					}
+				);
+
+				return result;
+			}
+		}
+
 		/// <summary>
 		/// 設定ウィンドウ表示。
 		/// </summary>
@@ -397,6 +411,282 @@
 
 				return result;
 			}
+		}
+
+		#endregion
+
+		#region function
+
+		void LoadSetting()
+		{
+			// TODO: 環境変数展
+			using(var timeLogger = CommonData.NonProcess.CreateTimeLogger()) {
+				// 各種設定の読込
+				CommonData.MainSetting = AppUtility.LoadSetting<MainSettingModel>(CommonData.VariableConstants.UserSettingFileMainSettingPath, FileType.Json, CommonData.Logger);
+				CommonData.LauncherItemSetting = AppUtility.LoadSetting<LauncherItemSettingModel>(CommonData.VariableConstants.UserSettingFileLauncherItemSettingPath, FileType.Json, CommonData.Logger);
+				CommonData.LauncherGroupSetting = AppUtility.LoadSetting<LauncherGroupSettingModel>(CommonData.VariableConstants.UserSettingFileLauncherGroupItemSetting, FileType.Json, CommonData.Logger);
+				// 言語ファイル
+				CommonData.Language = AppUtility.LoadLanguageFile(CommonData.VariableConstants.ApplicationLanguageDirectoryPath, CommonData.MainSetting.Language.Name, CommonData.VariableConstants.LanguageCode, CommonData.Logger);
+				// インデックスファイル読み込み
+				CommonData.NoteIndexSetting = AppUtility.LoadSetting<NoteIndexSettingModel>(CommonData.VariableConstants.UserSettingNoteIndexFilePath, FileType.Json, CommonData.Logger);
+				CommonData.ClipboardIndexSetting = AppUtility.LoadSetting<ClipboardIndexSettingModel>(CommonData.VariableConstants.UserSettingClipboardIndexFilePath, FileType.Json, CommonData.Logger);
+				CommonData.TemplateIndexSetting = AppUtility.LoadSetting<TemplateIndexSettingModel>(CommonData.VariableConstants.UserSettingTemplateIndexFilePath, FileType.Json, CommonData.Logger);
+			}
+		}
+
+		void SaveSetting()
+		{
+			using(var timeLogger = CommonData.NonProcess.CreateTimeLogger()) {
+				AppUtility.SaveSetting(CommonData.VariableConstants.UserSettingFileMainSettingPath, CommonData.MainSetting, FileType.Json, CommonData.Logger);
+				AppUtility.SaveSetting(CommonData.VariableConstants.UserSettingFileLauncherItemSettingPath, CommonData.LauncherItemSetting, FileType.Json, CommonData.Logger);
+				AppUtility.SaveSetting(CommonData.VariableConstants.UserSettingFileLauncherGroupItemSetting, CommonData.LauncherGroupSetting, FileType.Json, CommonData.Logger);
+
+				SendSaveIndex(IndexKind.Note);
+				SendSaveIndex(IndexKind.Clipboard);
+				SendSaveIndex(IndexKind.Template);
+			}
+		}
+
+		/// <summary>
+		///プログラム実行を準備。
+		/// </summary>
+		public bool Initialize()
+		{
+			using(var timeLogger = CommonData.NonProcess.CreateTimeLogger()) {
+
+				LoadSetting();
+				if(!InitializeAccept()) {
+					return false;
+				}
+				InitializeSetting();
+
+				InitializeStatus();
+
+				InitializeSystemEvent();
+
+				InitializeStatic();
+
+				CreateMessage();
+
+				CreateLogger();
+
+				CreateToolbar();
+
+				CreateNote();
+
+				CreateTemplate();
+
+				CreateClipboard();
+
+				return true;
+			}
+		}
+
+		/// <summary>
+		/// 使用許諾まわり。
+		/// </summary>
+		bool InitializeAccept()
+		{
+			if(SettingUtility.CheckAccept(CommonData.MainSetting.RunningInformation, CommonData.NonProcess)) {
+				SettingUtility.IncrementRunningInformation(CommonData.MainSetting.RunningInformation);
+			} else {
+				// 使用許諾表示前に使用しない状態にしておく。
+				CommonData.MainSetting.RunningInformation.Accept = false;
+				var window = new AcceptWindow();
+				window.SetCommonData(CommonData, null);
+				window.ShowDialog();
+				if(CommonData.MainSetting.RunningInformation.Accept) {
+					CommonData.Logger.Information("accept: OK");
+					SettingUtility.IncrementRunningInformation(CommonData.MainSetting.RunningInformation);
+				} else {
+					CommonData.Logger.Information("accept: NG");
+					return false;
+				}
+			}
+
+			return true;
+		}
+
+		void InitializeSetting()
+		{
+			using(var timeLogger = CommonData.NonProcess.CreateTimeLogger()) {
+				SettingUtility.InitializeMainSetting(CommonData.MainSetting, CommonData.NonProcess);
+				SettingUtility.InitializeLauncherItemSetting(CommonData.LauncherItemSetting, CommonData.NonProcess);
+				SettingUtility.InitializeLauncherGroupSetting(CommonData.LauncherGroupSetting, CommonData.NonProcess);
+			}
+		}
+
+		void InitializeStatus()
+		{
+			WindowSaveData.TimerItems.LimitSize = CommonData.MainSetting.WindowSave.SaveCount;
+			WindowSaveData.SystemItems.LimitSize = CommonData.MainSetting.WindowSave.SaveCount;
+			
+			if (WindowSaveTimer != null) {
+				WindowSaveTimer.Stop();
+			}
+
+			WindowSaveTimer = new DispatcherTimer();
+			WindowSaveTimer.Tick += Timer_Tick;
+			WindowSaveTimer.Interval = CommonData.MainSetting.WindowSave.SaveIntervalTime;
+			//@ WindowSaveTimer.Start();
+		}
+
+		void InitializeSystemEvent()
+		{
+			SystemEvents.DisplaySettingsChanging += SystemEvents_DisplaySettingsChanging;
+		}
+
+		void InitializeStatic()
+		{
+			LauncherListDisplayImageConverter.LauncherIconCaching = CommonData.LauncherIconCaching;
+			LauncherListDisplayImageConverter.NonProcess = CommonData.NonProcess;
+			LauncherListDisplayImageConverter.AppSender = CommonData.AppSender;
+		}
+
+		/// <summary>
+		/// メッセージウィンドウ作成
+		/// </summary>
+		void CreateMessage()
+		{
+			MessageWindow = new MessageWindow();
+			MessageWindow.SetCommonData(CommonData, null);
+			MessageWindow.Show();
+		}
+
+		/// <summary>
+		/// ログの生成。
+		/// </summary>
+		void CreateLogger()
+		{
+			using(var timeLogger = CommonData.NonProcess.CreateTimeLogger()) {
+				LoggingWindow = new LoggingWindow();
+				LoggingWindow.SetCommonData(CommonData, null);
+
+				var appLogger = (AppLogger)CommonData.Logger;
+				appLogger.LogCollector = Logging;
+				if(appLogger.IsStock) {
+					// 溜まったログをViewにドバー
+					foreach(var logItem in appLogger.StockItems) {
+						appLogger.LogCollector.AddLog(logItem);
+					}
+					appLogger.IsStock = false;
+				}
+			}
+		}
+
+		/// <summary>
+		/// ツールバーの生成。
+		/// </summary>
+		void CreateToolbar()
+		{
+			using(var timeLogger = CommonData.NonProcess.CreateTimeLogger()) {
+				LauncherToolbarWindows = new List<LauncherToolbarWindow>();
+
+				foreach(var screen in Screen.AllScreens.OrderBy(s => !s.Primary)) {
+					//var toolbar = new LauncherToolbarWindow();
+					//toolbar.SetCommonData(CommonData, screen);
+					SendCreateWindow(WindowKind.LauncherToolbar, screen, null);
+				}
+			}
+		}
+
+		void CreateNote()
+		{
+			using(var timeLogger = CommonData.NonProcess.CreateTimeLogger()) {
+				NoteWindows = new List<NoteWindow>();
+
+				foreach(var noteItem in CommonData.NoteIndexSetting.Items.Where(n => n.Visible)) {
+					var window = CreateNoteWindow(noteItem, false);
+				}
+			}
+		}
+
+		void CreateTemplate()
+		{
+			TemplateWindow = new TemplateWindow();
+			TemplateWindow.SetCommonData(CommonData, null);
+		}
+
+		void CreateClipboard()
+		{
+			ClipboardWindow = new ClipboardWindow();
+			ClipboardWindow.SetCommonData(CommonData, null);
+		}
+
+		/// <summary>
+		/// ディスプレイ数に変更があった。
+		/// </summary>
+		void ChangedScreenCount()
+		{
+		}
+
+		NoteWindow CreateNoteItem([PixelKind(Px.Logical)] Point point, [PixelKind(Px.Logical)] Size size, bool appendIndex)
+		{
+			var noteItem = new NoteIndexItemModel() {
+				WindowLeft = point.X,
+				WindowTop = point.Y,
+				WindowWidth = size.Width,
+				WindowHeight = size.Height,
+				Visible = true,
+				ForeColor = CommonData.MainSetting.Note.ForeColor,
+				BackColor = CommonData.MainSetting.Note.BackColor,
+				Name = "TODO: note title",
+			};
+
+			return CreateNoteWindow(noteItem, appendIndex);
+		}
+
+		NoteWindow CreateNoteWindow(NoteIndexItemModel noteItem, bool appendIndex)
+		{
+			var window = (NoteWindow)SendCreateWindow(WindowKind.Note, noteItem, null);
+			if(appendIndex) {
+				CommonData.NoteIndexSetting.Items.Add(noteItem);
+			}
+
+			return window;
+		}
+
+		IEnumerable<NoteViewModel> GetEnabledNoteItems()
+		{
+			return NoteShowItems
+				.Where(n => !n.IsLocked)
+				.Where(n => !n.IsCompacted)
+			;
+		}
+
+		WindowItemCollectionModel SaveWindowItem(WindowSaveType type)
+		{
+			var windowList = AppUtility.GetSystemWindowList(false);
+			var windowCollection = new WindowItemCollectionModel();
+			foreach (var window in windowList) {
+				windowCollection.Add(window);
+			}
+
+			windowCollection.Name = "TODO:" + DateTime.Now.ToString();
+
+			switch(type) {
+				case WindowSaveType.Temporary:
+					WindowSaveData.TemporaryItem = windowCollection;
+					break;
+
+				case WindowSaveType.Timer:
+					WindowSaveData.TimerItems.Add(windowCollection);
+					OnPropertyChanged("WindowTimerItems");
+					break;
+
+				case WindowSaveType.System:
+					WindowSaveData.SystemItems.Add(windowCollection);
+					OnPropertyChanged("WindowSystemItems");
+					break;
+			}
+			CommonData.Logger.Information("save window", windowCollection);
+
+			return windowCollection;
+		}
+
+		Task<WindowItemCollectionModel> SaveWindowItemAsync(WindowSaveType type)
+		{
+			return Task.Run(() => SaveWindowItem(type));
 		}
 
 		#endregion
@@ -934,281 +1224,6 @@
 
 		#endregion
 
-		#region function
-
-		void LoadSetting()
-		{
-			// TODO: 環境変数展
-			using(var timeLogger = CommonData.NonProcess.CreateTimeLogger()) {
-				// 各種設定の読込
-				CommonData.MainSetting = AppUtility.LoadSetting<MainSettingModel>(CommonData.VariableConstants.UserSettingFileMainSettingPath, FileType.Json, CommonData.Logger);
-				CommonData.LauncherItemSetting = AppUtility.LoadSetting<LauncherItemSettingModel>(CommonData.VariableConstants.UserSettingFileLauncherItemSettingPath, FileType.Json, CommonData.Logger);
-				CommonData.LauncherGroupSetting = AppUtility.LoadSetting<LauncherGroupSettingModel>(CommonData.VariableConstants.UserSettingFileLauncherGroupItemSetting, FileType.Json, CommonData.Logger);
-				// 言語ファイル
-				CommonData.Language = AppUtility.LoadLanguageFile(CommonData.VariableConstants.ApplicationLanguageDirectoryPath, CommonData.MainSetting.Language.Name, CommonData.VariableConstants.LanguageCode, CommonData.Logger);
-				// インデックスファイル読み込み
-				CommonData.NoteIndexSetting = AppUtility.LoadSetting<NoteIndexSettingModel>(CommonData.VariableConstants.UserSettingNoteIndexFilePath, FileType.Json, CommonData.Logger);
-				CommonData.ClipboardIndexSetting = AppUtility.LoadSetting<ClipboardIndexSettingModel>(CommonData.VariableConstants.UserSettingClipboardIndexFilePath, FileType.Json, CommonData.Logger);
-				CommonData.TemplateIndexSetting = AppUtility.LoadSetting<TemplateIndexSettingModel>(CommonData.VariableConstants.UserSettingTemplateIndexFilePath, FileType.Json, CommonData.Logger);
-			}
-		}
-
-		void SaveSetting()
-		{
-			using(var timeLogger = CommonData.NonProcess.CreateTimeLogger()) {
-				AppUtility.SaveSetting(CommonData.VariableConstants.UserSettingFileMainSettingPath, CommonData.MainSetting, FileType.Json, CommonData.Logger);
-				AppUtility.SaveSetting(CommonData.VariableConstants.UserSettingFileLauncherItemSettingPath, CommonData.LauncherItemSetting, FileType.Json, CommonData.Logger);
-				AppUtility.SaveSetting(CommonData.VariableConstants.UserSettingFileLauncherGroupItemSetting, CommonData.LauncherGroupSetting, FileType.Json, CommonData.Logger);
-
-				SendSaveIndex(IndexKind.Note);
-				SendSaveIndex(IndexKind.Clipboard);
-				SendSaveIndex(IndexKind.Template);
-			}
-		}
-
-		/// <summary>
-		///プログラム実行を準備。
-		/// </summary>
-		public bool Initialize()
-		{
-			using(var timeLogger = CommonData.NonProcess.CreateTimeLogger()) {
-
-				LoadSetting();
-				if(!InitializeAccept()) {
-					return false;
-				}
-				InitializeSetting();
-
-				InitializeStatus();
-
-				InitializeSystemEvent();
-
-				InitializeStatic();
-
-				CreateMessage();
-
-				CreateLogger();
-
-				CreateToolbar();
-
-				CreateNote();
-
-				CreateTemplate();
-
-				CreateClipboard();
-
-				return true;
-			}
-		}
-
-		/// <summary>
-		/// 使用許諾まわり。
-		/// </summary>
-		bool InitializeAccept()
-		{
-			if(SettingUtility.CheckAccept(CommonData.MainSetting.RunningInformation, CommonData.NonProcess)) {
-				SettingUtility.IncrementRunningInformation(CommonData.MainSetting.RunningInformation);
-			} else {
-				// 使用許諾表示前に使用しない状態にしておく。
-				CommonData.MainSetting.RunningInformation.Accept = false;
-				var window = new AcceptWindow();
-				window.SetCommonData(CommonData, null);
-				window.ShowDialog();
-				if(CommonData.MainSetting.RunningInformation.Accept) {
-					CommonData.Logger.Information("accept: OK");
-					SettingUtility.IncrementRunningInformation(CommonData.MainSetting.RunningInformation);
-				} else {
-					CommonData.Logger.Information("accept: NG");
-					return false;
-				}
-			}
-
-			return true;
-		}
-
-		void InitializeSetting()
-		{
-			using(var timeLogger = CommonData.NonProcess.CreateTimeLogger()) {
-				SettingUtility.InitializeMainSetting(CommonData.MainSetting, CommonData.NonProcess);
-				SettingUtility.InitializeLauncherItemSetting(CommonData.LauncherItemSetting, CommonData.NonProcess);
-				SettingUtility.InitializeLauncherGroupSetting(CommonData.LauncherGroupSetting, CommonData.NonProcess);
-			}
-		}
-
-		void InitializeStatus()
-		{
-			WindowSaveData.TimerItems.LimitSize = CommonData.MainSetting.WindowSave.SaveCount;
-			WindowSaveData.SystemItems.LimitSize = CommonData.MainSetting.WindowSave.SaveCount;
-			
-			if (WindowSaveTimer != null) {
-				WindowSaveTimer.Stop();
-			}
-
-			WindowSaveTimer = new DispatcherTimer();
-			WindowSaveTimer.Tick += Timer_Tick;
-			WindowSaveTimer.Interval = CommonData.MainSetting.WindowSave.SaveIntervalTime;
-			//@ WindowSaveTimer.Start();
-		}
-
-		void InitializeSystemEvent()
-		{
-			SystemEvents.DisplaySettingsChanging += SystemEvents_DisplaySettingsChanging;
-		}
-
-		void InitializeStatic()
-		{
-			LauncherListDisplayImageConverter.LauncherIconCaching = CommonData.LauncherIconCaching;
-			LauncherListDisplayImageConverter.NonProcess = CommonData.NonProcess;
-			LauncherListDisplayImageConverter.AppSender = CommonData.AppSender;
-		}
-
-		/// <summary>
-		/// メッセージウィンドウ作成
-		/// </summary>
-		void CreateMessage()
-		{
-			MessageWindow = new MessageWindow();
-			MessageWindow.SetCommonData(CommonData, null);
-			MessageWindow.Show();
-		}
-
-		/// <summary>
-		/// ログの生成。
-		/// </summary>
-		void CreateLogger()
-		{
-			using(var timeLogger = CommonData.NonProcess.CreateTimeLogger()) {
-				LoggingWindow = new LoggingWindow();
-				LoggingWindow.SetCommonData(CommonData, null);
-
-				var appLogger = (AppLogger)CommonData.Logger;
-				appLogger.LogCollector = Logging;
-				if(appLogger.IsStock) {
-					// 溜まったログをViewにドバー
-					foreach(var logItem in appLogger.StockItems) {
-						appLogger.LogCollector.AddLog(logItem);
-					}
-					appLogger.IsStock = false;
-				}
-			}
-		}
-
-		/// <summary>
-		/// ツールバーの生成。
-		/// </summary>
-		void CreateToolbar()
-		{
-			using(var timeLogger = CommonData.NonProcess.CreateTimeLogger()) {
-				LauncherToolbarWindows = new List<LauncherToolbarWindow>();
-
-				foreach(var screen in Screen.AllScreens.OrderBy(s => !s.Primary)) {
-					//var toolbar = new LauncherToolbarWindow();
-					//toolbar.SetCommonData(CommonData, screen);
-					SendCreateWindow(WindowKind.LauncherToolbar, screen, null);
-				}
-			}
-		}
-
-		void CreateNote()
-		{
-			using(var timeLogger = CommonData.NonProcess.CreateTimeLogger()) {
-				NoteWindows = new List<NoteWindow>();
-
-				foreach(var noteItem in CommonData.NoteIndexSetting.Items.Where(n => n.Visible)) {
-					var window = CreateNoteWindow(noteItem, false);
-				}
-			}
-		}
-
-		void CreateTemplate()
-		{
-			TemplateWindow = new TemplateWindow();
-			TemplateWindow.SetCommonData(CommonData, null);
-		}
-
-		void CreateClipboard()
-		{
-			ClipboardWindow = new ClipboardWindow();
-			ClipboardWindow.SetCommonData(CommonData, null);
-		}
-
-		/// <summary>
-		/// ディスプレイ数に変更があった。
-		/// </summary>
-		void ChangedScreenCount()
-		{
-		}
-
-		NoteWindow CreateNoteItem([PixelKind(Px.Logical)] Point point, [PixelKind(Px.Logical)] Size size, bool appendIndex)
-		{
-			var noteItem = new NoteIndexItemModel() {
-				WindowLeft = point.X,
-				WindowTop = point.Y,
-				WindowWidth = size.Width,
-				WindowHeight = size.Height,
-				Visible = true,
-				ForeColor = CommonData.MainSetting.Note.ForeColor,
-				BackColor = CommonData.MainSetting.Note.BackColor,
-				Name = "TODO: note title",
-			};
-
-			return CreateNoteWindow(noteItem, appendIndex);
-		}
-
-		NoteWindow CreateNoteWindow(NoteIndexItemModel noteItem, bool appendIndex)
-		{
-			var window = (NoteWindow)SendCreateWindow(WindowKind.Note, noteItem, null);
-			if(appendIndex) {
-				CommonData.NoteIndexSetting.Items.Add(noteItem);
-			}
-
-			return window;
-		}
-
-		IEnumerable<NoteViewModel> GetEnabledNoteItems()
-		{
-			return NoteShowItems
-				.Where(n => !n.IsLocked)
-				.Where(n => !n.IsCompacted)
-			;
-		}
-
-		WindowItemCollectionModel SaveWindowItem(WindowSaveType type)
-		{
-			var windowList = AppUtility.GetSystemWindowList(false);
-			var windowCollection = new WindowItemCollectionModel();
-			foreach (var window in windowList) {
-				windowCollection.Add(window);
-			}
-
-			windowCollection.Name = "TODO:" + DateTime.Now.ToString();
-
-			switch(type) {
-				case WindowSaveType.Temporary:
-					WindowSaveData.TemporaryItem = windowCollection;
-					break;
-
-				case WindowSaveType.Timer:
-					WindowSaveData.TimerItems.Add(windowCollection);
-					OnPropertyChanged("WindowTimerItems");
-					break;
-
-				case WindowSaveType.System:
-					WindowSaveData.SystemItems.Add(windowCollection);
-					OnPropertyChanged("WindowSystemItems");
-					break;
-			}
-			CommonData.Logger.Information("save window", windowCollection);
-
-			return windowCollection;
-		}
-
-		Task<WindowItemCollectionModel> SaveWindowItemAsync(WindowSaveType type)
-		{
-			return Task.Run(() => SaveWindowItem(type));
-		}
-
-		#endregion
 
 		void Timer_Tick(object sender, EventArgs e)
 		{
