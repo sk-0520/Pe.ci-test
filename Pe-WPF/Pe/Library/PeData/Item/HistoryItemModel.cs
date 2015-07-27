@@ -42,21 +42,6 @@
 
 		#endregion
 
-		#region IDeepClone
-
-		public virtual IDeepClone DeepClone()
-		{
-			var result = new HistoryItemModel() {
-				CreateTimestamp = this.CreateTimestamp,
-				UpdateTimestamp = this.UpdateTimestamp,
-				UpdateCount = this.UpdateCount
-			};
-
-			return result;
-		}
-
-		#endregion
-
 		#region function
 
 		public virtual void Update()
@@ -66,5 +51,29 @@
 		}
 
 		#endregion
+
+		#region IDeepClone
+
+		public virtual void DeepCloneTo(IDeepClone target)
+		{
+			var obj = (HistoryItemModel)target;
+
+			obj.CreateTimestamp = CreateTimestamp;
+			obj.UpdateTimestamp = UpdateTimestamp;
+			obj.UpdateCount = UpdateCount;
+		}
+
+		public virtual IDeepClone DeepClone()
+		{
+			var result = new HistoryItemModel();
+
+			DeepCloneTo(target);
+
+			return result;
+		}
+
+		#endregion
+
+
 	}
 }
