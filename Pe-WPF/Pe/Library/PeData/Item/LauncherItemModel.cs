@@ -95,24 +95,31 @@
 
 		#region IDeepClone
 
+		public virtual void DeepCloneTo(IDeepClone target)
+		{
+			var obj = (LauncherItemModel)target;
+
+			obj.Id = Id;
+			obj.Name = Name;
+			obj.LauncherKind = LauncherKind;
+			obj.Command = Command;
+			obj.WorkDirectoryPath = WorkDirectoryPath;
+			obj.Option = Option;
+			obj.Comment = Comment;
+			obj.Administrator = Administrator;
+
+			Icon.DeepCloneTo(obj.Icon);
+			History.DeepCloneTo(obj.History);
+			Tag.DeepCloneTo(obj.Tag);
+			StdStream.DeepCloneTo(obj.StdStream);
+			EnvironmentVariables.DeepCloneTo(obj.EnvironmentVariables);
+		}
+
 		public IDeepClone DeepClone()
 		{
-			var result = new LauncherItemModel() {
-				Id = this.Id,
-				Name = this.Name,
-				LauncherKind = this.LauncherKind,
-				Command = this.Command,
-				WorkDirectoryPath = this.WorkDirectoryPath,
-				Option = this.Option,
-				Comment = this.Comment,
-				Administrator = this.Administrator,
-			};
+			var result = new LauncherItemModel();
 
-			result.Icon = (IconItemModel)Icon.DeepClone();
-			result.History = (LauncherHistoryItemModel)History.DeepClone();
-			result.Tag = (TagItemModel)Tag.DeepClone();
-			result.StdStream = (LauncherStdStreamItemModel)StdStream.DeepClone();
-			result.EnvironmentVariables = (EnvironmentVariablesItemModel)EnvironmentVariables.DeepClone();
+			DeepCloneTo(result);
 
 			return result;
 		}

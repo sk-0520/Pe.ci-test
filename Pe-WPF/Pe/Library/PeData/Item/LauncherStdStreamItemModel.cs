@@ -31,12 +31,19 @@
 
 		#region IDeepClone
 
+		public virtual void DeepCloneTo(IDeepClone target)
+		{
+			var obj = (LauncherStdStreamItemModel)target;
+
+			obj.OutputWatch = OutputWatch;
+			obj.InputWatch = InputWatch;
+		}
+
 		public IDeepClone DeepClone()
 		{
-			var result = new LauncherStdStreamItemModel() {
-				OutputWatch = this.OutputWatch,
-				InputWatch = this.InputWatch,
-			};
+			var result = new LauncherStdStreamItemModel();
+
+			DeepCloneTo(result);
 
 			return result;
 		}
