@@ -14,15 +14,17 @@
 	{
 		/// <summary>
 		/// 全データを完全複製。
-		/// <para>状態までは面倒見ない。DBへのコネクションとかね。</para>
+		/// <para>ほぼほぼDeepCloneToを呼び出すためだけに存在している。</para>
 		/// </summary>
 		/// <returns></returns>
 		IDeepClone DeepClone();
 
 		/// <summary>
-		/// DeepClone()の内部実装。
+		/// 全データを完全複製。
+		/// <para>状態までは面倒見ない。DBへのコネクションとかね。</para>
+		/// <para>おおよそDeepCloneの内部実装。</para>
 		/// </summary>
 		/// <param name="target"></param>
-		void DeepClone(IDeepClone target);
+		void DeepCloneTo(IDeepClone target);
 	}
 }

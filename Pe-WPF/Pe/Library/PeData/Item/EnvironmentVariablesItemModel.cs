@@ -40,7 +40,7 @@
 
 		#region IDeepClone
 
-		public void DeepClone(IDeepClone target)
+		public void DeepCloneTo(IDeepClone target)
 		{
 			var obj = (EnvironmentVariablesItemModel)target;
 			obj.Edit = Edit;
@@ -52,7 +52,7 @@
 		{
 			var result = new EnvironmentVariablesItemModel();
 
-			DeepClone(result);
+			DeepCloneTo(result);
 
 			return result;
 		}
