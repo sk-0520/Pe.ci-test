@@ -29,6 +29,8 @@
 		{
 			CommonData = commonData;
 			ExtensionData = extensionData;
+
+			//ApplyLanguage();
 		}
 
 		public CommonData CommonData { get; private set; }

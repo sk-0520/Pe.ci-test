@@ -252,6 +252,7 @@
     </Compile>
     <Compile Include="View\Parts\Attached\Browser.cs" />
     <Compile Include="View\Parts\Attached\IconSize.cs" />
+    <Compile Include="View\Parts\Control\AppDataGrid.cs" />
     <Compile Include="View\Parts\Control\CommonDataUserControl.cs" />
     <Compile Include="View\Parts\Control\EnvironmentVariablesEditControl.xaml.cs">
       <DependentUpon>EnvironmentVariablesEditControl.xaml</DependentUpon>

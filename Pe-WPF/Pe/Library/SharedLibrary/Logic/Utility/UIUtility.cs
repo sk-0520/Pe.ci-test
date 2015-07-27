@@ -58,6 +58,12 @@ using ContentTypeTextNet.Library.SharedLibrary.Attribute;
 			}
 		}
 
+		public static IEnumerable<T> FindChildren<T>(DependencyObject depObj)
+			where T: DependencyObject
+		{
+			return FindLogicalChildren<T>(depObj).Concat(FindVisualChildren<T>(depObj));
+		}
+
 		public static DependencyObject GetVisualParent(DependencyObject depObj)
 		{
 			return VisualTreeHelper.GetParent(depObj);
@@ -72,6 +78,14 @@ using ContentTypeTextNet.Library.SharedLibrary.Attribute;
 				return element;
 			} else {
 				return GetVisualClosest<T>(parent);
+			}
+		}
+
+		public static void RecursiveApplyTemplate(IEnumerable<FrameworkElement> elements)
+		{
+			foreach(var element in elements) {
+				element.ApplyTemplate();
+				RecursiveApplyTemplate(FindChildren<FrameworkElement>(element));
 			}
 		}
 

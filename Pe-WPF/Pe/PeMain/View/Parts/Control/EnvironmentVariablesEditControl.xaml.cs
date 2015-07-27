@@ -12,17 +12,19 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 
 namespace ContentTypeTextNet.Pe.PeMain.View.Parts.Control
 {
 	/// <summary>
 	/// EnvironmentVariablesEditControl.xaml の相互作用ロジック
 	/// </summary>
-	public partial class EnvironmentVariablesEditControl : UserControl
+	public partial class EnvironmentVariablesEditControl: CommonDataUserControl
 	{
 		public EnvironmentVariablesEditControl()
 		{
 			InitializeComponent();
+			//UIUtility.RecursiveApplyTemplate(new[] { gridEnv });
 		}
 	}
 }

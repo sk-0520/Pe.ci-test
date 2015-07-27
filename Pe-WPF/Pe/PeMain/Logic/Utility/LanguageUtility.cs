@@ -12,6 +12,10 @@
 	using ContentTypeTextNet.Pe.PeMain.Logic.Extension;
 	using ContentTypeTextNet.Pe.PeMain.View.Parts.Attached;
 	using System.Windows.Controls.Primitives;
+	using ContentTypeTextNet.Pe.PeMain.View.Parts.Control;
+	using System.Threading.Tasks;
+	using System.Threading;
+	using System.Windows.Threading;
 
 	public static class LanguageUtility
 	{
@@ -153,7 +157,7 @@
 
 			var processedElements = new HashSet<DependencyObject>();
 
-			foreach(var dependencyObject in UIUtility.FindLogicalChildren<DependencyObject>(root).Concat(UIUtility.FindVisualChildren<DependencyObject>(root))) {
+			foreach(var dependencyObject in UIUtility.FindChildren<DependencyObject>(root)) {
 				//var type = dependencyObject.GetType();
 				//Debug.WriteLine("L: " + type.ToString());
 				//Action<DependencyObject> action;
@@ -170,24 +174,99 @@
 				//		SetLanguage((DependencyObject)sender, language, map);
 				//	}, releaseEvent => uiElement.IsVisibleChanged -= releaseEvent);
 				//}
-				var dataGrid = dependencyObject as DataGrid;
+				var dataGrid = dependencyObject as AppDataGrid;
 				if(dataGrid != null) {
-					dataGrid.Loaded += EventUtility.Auto<RoutedEventHandler>((sender, e) => {
-						SetLanguage((DependencyObject)sender, language, map);
-						//var uiElement = sender as UIElement;
-						//if(uiElement.Visibility != Visibility.Visible) {
-						//	uiElement.IsVisibleChanged += EventUtility.Auto<DependencyPropertyChangedEventHandler>((sender2, e2) => {
-						//		if(uiElement.Visibility == Visibility.Visible) {
-						//			SetLanguage((DependencyObject)sender2, language, map);
-						//		}
-						//	}, releaseEvent => uiElement.IsVisibleChanged -= releaseEvent);
-						//}
-					}, releaseEvent => dataGrid.Loaded -= releaseEvent);
-
+					//Debug.WriteLine(dataGrid.IsLoaded);
+					//UIUtility.RecursiveApplyTemplate(new[] { dataGrid });
+					//Debug.WriteLine(dataGrid.IsLoaded);
+					//dataGrid.Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(() => {
+					//	Debug.WriteLine("$$ Error -------------------------");
+					//	SetLanguage((DependencyObject)dataGrid, language, map);
+					//}));
+					//while(!dataGrid.ApplyTemplate()) { }
+					//foreach(var child in UIUtility.FindChildren<FrameworkElement>(dataGrid)) {
+					//	while(!child.ApplyTemplate()) { }
+					//}
 					//dataGrid.Initialized += EventUtility.Auto<EventHandler>((sender, e) => {
+					//	Debug.WriteLine("@@ Error -------------------------");
 					//	SetLanguage((DependencyObject)sender, language, map);
-
 					//}, releaseEvent => dataGrid.Initialized -= releaseEvent);
+					//UIUtility.RecursiveApplyTemplate(new[] { dataGrid });
+					////Debug.WriteLine("** Error -------------------------");
+					////SetLanguage((DependencyObject)dataGrid, language, map);
+
+					//dataGrid.Loaded += EventUtility.Auto<RoutedEventHandler>((sender, e) => {
+					//	//while(dataGrid.ApplyTemplate()) { }
+					//	//foreach(var child in UIUtility.FindChildren<FrameworkElement>(dataGrid)) {
+					//	//	while(child.ApplyTemplate()) { }
+					//	//}
+					//	Debug.WriteLine("?? Error -------------------------");
+					//	SetLanguage((DependencyObject)sender, language, map);
+					//	//var uiElement = sender as UIElement;
+					//	//if(uiElement.Visibility != Visibility.Visible) {
+					//	//	uiElement.IsVisibleChanged += EventUtility.Auto<DependencyPropertyChangedEventHandler>((sender2, e2) => {
+					//	//		if(uiElement.Visibility == Visibility.Visible) {
+					//	//			SetLanguage((DependencyObject)sender2, language, map);
+					//	//		}
+					//	//	}, releaseEvent => uiElement.IsVisibleChanged -= releaseEvent);
+					//	//}
+					//}, releaseEvent => dataGrid.Loaded -= releaseEvent);
+
+					//////dataGrid.LayoutUpdated += EventUtility.Auto<EventHandler>((sender, e) => {
+					//////	SetLanguage(dataGrid, language, map);
+					//////}, releaseEvent => dataGrid.LayoutUpdated -= releaseEvent);
+
+					//////dataGrid.ApplyTemplate();
+					//////foreach(var child in UIUtility.FindChildren<FrameworkElement>(dataGrid)) {
+					//////	child.ApplyTemplate();
+					//////}
+					Debug.WriteLine("^.^");
+					//var eventDisposer = new EventDisposer<EventHandler>();
+					//eventDisposer.Handling(
+					//	(sender, e) => {
+					//	},
+					//	releaseEvent => {
+					//		dataGrid.Rendered -= releaseEvent;
+					//	}
+					//);
+					EventDisposer<EventHandler> eventDisposer = null;
+					dataGrid.Rendered += EventUtility.Create<EventHandler>(
+						(sender, e) => {
+							SetLanguage(dataGrid, language, map);
+							eventDisposer.Dispose();
+							eventDisposer = null;
+							dataGrid = null;
+							language = null;
+							map = null;
+						},
+						releaseEvent => {
+							dataGrid.Rendered -= releaseEvent;
+						},
+						out eventDisposer
+					);
+
+					//dataGrid.Rendered += EventUtility.Auto<EventHandler>(
+					//	(sender, e) => {
+					//		SetLanguage((DependencyObject)sender, language, map);
+					//	}, 
+					//	releaseEvent => {
+					//		dataGrid.Rendered -= releaseEvent;
+					//	}
+					//);
+					Debug.WriteLine("'_'");
+					//dataGrid.Rendered += EventUtility.Auto<EventHandler>((sender, e) => {
+					//	////Task.Run(() => {
+					//	////	Debug.WriteLine("#" + dataGrid.IsInitialized);
+					//	////	Thread.Sleep(TimeSpan.FromSeconds(1));
+					//	////}).ContinueWith(t => {
+					//	//while(dataGrid.ApplyTemplate()) { }
+					//	//foreach(var child in UIUtility.FindChildren<FrameworkElement>(dataGrid)) {
+					//	//	while(child.ApplyTemplate()) { }
+					//	//}
+					//	Debug.WriteLine("!! Error -------------------------");
+					//	SetLanguage((DependencyObject)sender, language, map);
+					//	//}, TaskScheduler.FromCurrentSynchronizationContext());
+					//}, releaseEvent => dataGrid.Rendered -= releaseEvent);
 				}
 
 				if(dependencyObject is Visual) {
@@ -208,6 +287,5 @@
 			}
 
 		}
-
 	}
 }
