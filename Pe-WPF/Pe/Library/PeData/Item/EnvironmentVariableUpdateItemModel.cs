@@ -54,12 +54,20 @@
 
 		#region IDeepClone
 
+		public virtual void DeepCloneTo(IDeepClone target)
+		{
+			var obj = (EnvironmentVariableUpdateItemModel)target;
+
+			obj.Id = Id;
+			obj.Value = Value;
+
+		}
+
 		public IDeepClone DeepClone()
 		{
-			var result = new EnvironmentVariableUpdateItemModel() {
-				Id = this.Id,
-				Value = this.Value,
-			};
+			var result = new EnvironmentVariableUpdateItemModel();
+
+			DeepCloneTo(result);
 
 			return result;
 		}

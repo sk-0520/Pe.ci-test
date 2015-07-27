@@ -30,12 +30,19 @@
 		public CollectionModel<string> Items { get; set; }
 
 		#region IDeepClone
+
+		public virtual void DeepCloneTo(IDeepClone target)
+		{
+			var obj = (TagItemModel)target;
+
+			obj.Items.AddRange(Items);
+		}
 		
 		public IDeepClone DeepClone()
 		{
 			var result = new TagItemModel();
 
-			result.Items = new CollectionModel<string>(Items);
+			DeepCloneTo(result);
 
 			return result;
 		}

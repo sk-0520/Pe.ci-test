@@ -50,12 +50,19 @@
 
 		#region IDeepClone
 
-		public virtual IDeepClone DeepClone()
+		public virtual void DeepCloneTo(IDeepClone target)
 		{
-			var result = new HotKeyModel() {
-				Key = this.Key,
-				ModifierKeys = this.ModifierKeys,
-			};
+			var obj = (HotKeyModel)target;
+
+			obj.Key = Key;
+			obj.ModifierKeys = ModifierKeys;
+		}
+
+		public IDeepClone DeepClone()
+		{
+			var result = new HotKeyModel();
+
+			DeepCloneTo(result);
 
 			return result;
 		}
