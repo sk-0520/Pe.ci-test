@@ -105,6 +105,7 @@
 		/// <summary>
 		/// XMLストリーム読み込み。
 		/// <para>Serializableを使用。</para>
+		/// <para>http://stackoverflow.com/questions/2209443/c-sharp-xmlserializer-bindingfailure</para>
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		/// <param name="stream"></param>
@@ -117,7 +118,8 @@
 			}
 
 			using(var reader = new XmlTextReader(stream)) {
-				var serializer = new XmlSerializer(typeof(T));
+				//var serializer = new XmlSerializer(typeof(T));
+				var serializer = XmlSerializer.FromTypes(new[] { typeof(T) })[0];
 				var result = (T)serializer.Deserialize(reader);
 				result.Correction();
 				return result;
