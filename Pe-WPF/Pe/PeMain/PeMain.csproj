@@ -218,6 +218,7 @@
     <Compile Include="ViewModel\LauncherItemExecuteViewModel.cs" />
     <Compile Include="ViewModel\LauncherItemCustomizeViewModel.cs" />
     <Compile Include="ViewModel\LauncherItemSimpleViewModel.cs" />
+    <Compile Include="ViewModel\LauncherItemStreamViewModel.cs" />
     <Compile Include="ViewModel\LauncherToolbarViewModel.cs" />
     <Compile Include="ViewModel\LauncherItemButtonViewModel.cs" />
     <Compile Include="ViewModel\LauncherItemViewModelBase.cs" />
@@ -302,6 +303,9 @@
     <Compile Include="View\Parts\Window\CommonDataWindow.cs" />
     <Compile Include="View\LauncherToolbarWindow.xaml.cs">
       <DependentUpon>LauncherToolbarWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\LauncherItemStreamWindow.xaml.cs">
+      <DependentUpon>LauncherItemStreamWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\TemplateWindow.xaml.cs">
       <DependentUpon>TemplateWindow.xaml</DependentUpon>
@@ -428,6 +432,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\LauncherToolbarWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\LauncherItemStreamWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

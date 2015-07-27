@@ -23,7 +23,7 @@
 			var process = new Process();
 			var startInfo = process.StartInfo;
 			startInfo.FileName = Environment.ExpandEnvironmentVariables(launcherItem.Command);
-			var getOutput = false;
+			var streamWatch = false;
 
 			startInfo.Arguments = launcherItem.Option;
 
@@ -55,17 +55,17 @@
 
 			// 出力取得
 			//StreamForm streamForm = null;
-			//startInfo.CreateNoWindow = launcherItem.StdOutputWatch;
-			//if (launcherItem.StdOutputWatch) {
-			//	getOutput = true;
-			//	startInfo.UseShellExecute = false;
-			//	startInfo.RedirectStandardOutput = true;
-			//	startInfo.RedirectStandardError = true;
-			//	startInfo.RedirectStandardInput = true;
-			//}
+			if (launcherItem.StdStream.OutputWatch) {
+				streamWatch = true;
+				startInfo.CreateNoWindow = true;
+				startInfo.UseShellExecute = false;
+				startInfo.RedirectStandardOutput = launcherItem.StdStream.OutputWatch;
+				startInfo.RedirectStandardError = launcherItem.StdStream.OutputWatch;
+				startInfo.RedirectStandardInput = launcherItem.StdStream.InputWatch;
+			}
 
 			try {
-				if (getOutput) {
+				if (streamWatch) {
 					//streamForm = new StreamForm();
 					//streamForm.SetParameter(process, launcherItem);
 					//streamForm.SetCommonData(commonData);
@@ -74,7 +74,7 @@
 
 				process.Start();
 
-				if (getOutput) {
+				if (streamWatch) {
 					//streamForm.StartStream();
 					//streamForm.Show();
 				}

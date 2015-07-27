@@ -1,16 +1,14 @@
 ﻿namespace ContentTypeTextNet.Pe.PeMain.Define
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Text;
-	using System.Threading.Tasks;
-
+	/// <summary>
+	/// ウィンドウ種別。
+	/// </summary>
 	public enum WindowKind
 	{
 		LauncherToolbar,
 		LauncherExecute,
 		LauncherCustomize,
+		LauncherStream,
 		Note,
 	}
 }
