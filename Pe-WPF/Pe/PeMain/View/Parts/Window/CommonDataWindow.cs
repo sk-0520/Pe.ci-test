@@ -75,7 +75,7 @@
 		{
 			Debug.Assert(CommonData != null);
 
-			LanguageUtility.SetLanguage(this, CommonData.Language);
+			LanguageUtility.RecursiveSetLanguage(this, CommonData.Language);
 		}
 
 		protected virtual void ApplyViewModel()

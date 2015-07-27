@@ -58,7 +58,7 @@
 					<Image Style="{StaticResource ImageRenderStyle}" Source="{x:Static AM:AppResource.CommonFolderImage}" />
 				</Button>
 
-				<Label Grid.Row="2" Grid.Column="0" AA:Language.Key="environment/update" Content="work dir" />
+				<Label Grid.Row="2" Grid.Column="0" Content="work dir" />
 				<ComboBox Grid.Row="2" Grid.Column="1" IsEditable="True" Text="{Binding WorkDirectoryPath}" ItemsSource="{Binding WorkDirectoryPaths}" />
 				<Button Grid.Row="2" Grid.Column="2" Command="{Binding SelectWorkDirectoryDirectoryCommand}">
 					<Image Style="{StaticResource ImageRenderStyle}" Source="{x:Static AM:AppResource.CommonFolderImage}" />

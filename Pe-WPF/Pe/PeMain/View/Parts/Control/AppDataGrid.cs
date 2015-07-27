@@ -16,13 +16,10 @@
 
 		#endregion
 
-		
-
 		protected override void OnRender(System.Windows.Media.DrawingContext drawingContext)
 		{
 			base.OnRender(drawingContext);
 
-			Debug.WriteLine("-.-");
 			Rendered(this, EventArgs.Empty);
 		}
 	}

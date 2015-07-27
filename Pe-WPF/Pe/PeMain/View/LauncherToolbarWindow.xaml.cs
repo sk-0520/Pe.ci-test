@@ -218,7 +218,7 @@
 		{
 			var popup = (Popup)sender;
 
-			LanguageUtility.SetLanguage(popup, CommonData.Language);
+			LanguageUtility.RecursiveSetLanguage(popup, CommonData.Language);
 		}
 	}
 }

@@ -43,7 +43,7 @@
 			systemLogger.Information("application", new AppInformationCollection().ToString());
 			this._mainWorker = new MainWorkerViewModel(constants, systemLogger);
 			if (this._mainWorker.Initialize()) {
-				LanguageUtility.SetLanguage(this._notifyIcon, this._mainWorker.Language);
+				LanguageUtility.RecursiveSetLanguage(this._notifyIcon, this._mainWorker.Language);
 				this._notifyIcon = (TaskbarIcon)FindResource("root");
 				this._notifyIcon.DataContext = this._mainWorker;
 				//var menu = (ContextMenu)FindResource("ContextMenu");

@@ -180,7 +180,7 @@
 			{
 				var result = CreateCommand(
 					o => {
-						LanguageUtility.SetLanguage((ContextMenu)o, CommonData.Language);
+						LanguageUtility.RecursiveSetLanguage((ContextMenu)o, CommonData.Language);
 					}
 				);
 
