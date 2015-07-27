@@ -84,7 +84,7 @@
 
 				if (streamWatch) {
 					streamWindow.ViewModel.Start();
-					streamWindow.Show();
+					//streamWindow.Show();
 				} else {
 					process.Start();
 				}
