@@ -13,8 +13,9 @@
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 	using System.Runtime.InteropServices;
+	using ContentTypeTextNet.Library.SharedLibrary.Model.Unmanaged;
 
-	public class WindowAreaCorrection : WindowsViewExtendBase<IWindowAreaCorrectionData>
+	public class WindowAreaCorrection: WindowsViewExtendBase<IWindowAreaCorrectionData>
 	{
 		public WindowAreaCorrection(Window view, IWindowAreaCorrectionData restrictionViewModel, INonProcess nonProcess)
 			: base(view, restrictionViewModel, nonProcess)
@@ -30,19 +31,19 @@
 
 		public override IntPtr WndProc(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
 		{
-			if (RestrictionViewModel.UsingMaxMinSuppression) {
+			if(RestrictionViewModel.UsingMaxMinSuppression) {
 				var result = SuppressionMaxMin(hWnd, msg, wParam, lParam, ref handled);
 				if(handled) {
 					return result;
 				}
 			}
-			if (RestrictionViewModel.UsingMultipleResize) {
+			if(RestrictionViewModel.UsingMultipleResize) {
 				var result = CorrectionSizing(hWnd, msg, wParam, lParam, ref handled);
 				if(handled) {
 					return result;
 				}
 			}
-			if (RestrictionViewModel.UsingMoveLimitArea) {
+			if(RestrictionViewModel.UsingMoveLimitArea) {
 				var result = CorrectionMoving(hWnd, msg, wParam, lParam, ref handled);
 				if(handled) {
 					return result;
@@ -58,7 +59,7 @@
 
 		IntPtr CorrectionSizing(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
 		{
-			if (msg == (int)WM.WM_SIZING) {
+			if(msg == (int)WM.WM_SIZING) {
 				var logicalRect = UIUtility.ToLogicalPixel(View, PodStructUtility.Convert(WindowsUtility.ConvertRECTFromLParam(lParam)));
 
 				var l = logicalRect.Left;
@@ -75,7 +76,7 @@
 				var height = logicalRect.Height - (correctionSize.Height % RestrictionViewModel.MultipleSize.Height);
 
 				var sizing = WindowsUtility.ConvertWMSZFromWParam(wParam);
-				switch (sizing) {
+				switch(sizing) {
 					case WMSZ.WMSZ_LEFT:
 						l = r - width;
 						break;
@@ -115,28 +116,28 @@
 
 			return IntPtr.Zero;
 		}
-		
+
 		IntPtr CorrectionMoving(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
 		{
-			if (msg == (int)WM.WM_MOVING) {
+			if(msg == (int)WM.WM_MOVING) {
 				var rawRect = WindowsUtility.ConvertRECTFromLParam(lParam);
 				var logicalRect = UIUtility.ToLogicalPixel(View, PodStructUtility.Convert(rawRect));
-				
+
 				var x = logicalRect.Left;
 				var y = logicalRect.Top;
 
-				if (logicalRect.X < RestrictionViewModel.MoveLimitArea.X) {
+				if(logicalRect.X < RestrictionViewModel.MoveLimitArea.X) {
 					// 左
 					x = RestrictionViewModel.MoveLimitArea.X;
-				} else if (logicalRect.Right > RestrictionViewModel.MoveLimitArea.Right) {
+				} else if(logicalRect.Right > RestrictionViewModel.MoveLimitArea.Right) {
 					// 右
 					x = RestrictionViewModel.MoveLimitArea.Right - logicalRect.Width;
 				}
 
-				if (logicalRect.Y < RestrictionViewModel.MoveLimitArea.Y) {
+				if(logicalRect.Y < RestrictionViewModel.MoveLimitArea.Y) {
 					// 上
 					y = RestrictionViewModel.MoveLimitArea.Y;
-				} else if (logicalRect.Bottom > RestrictionViewModel.MoveLimitArea.Bottom) {
+				} else if(logicalRect.Bottom > RestrictionViewModel.MoveLimitArea.Bottom) {
 					// 下
 					y = RestrictionViewModel.MoveLimitArea.Bottom - logicalRect.Height;
 				}
@@ -157,7 +158,7 @@
 
 		IntPtr SuppressionMaxMin(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
 		{
-			if (msg == (int)WM.WM_SYSCOMMAND) {
+			if(msg == (int)WM.WM_SYSCOMMAND) {
 				var sc = WindowsUtility.ConvertSCFromWParam(wParam);
 				var set = new HashSet<SC>() {
 					SC.SC_MINIMIZE,
@@ -174,6 +175,10 @@
 
 		void ForcePosition()
 		{
+			if(!RestrictionViewModel.UsingMoveLimitArea) {
+				return;
+			}
+
 			var logicalRect = new Rect(
 				View.Left,
 				View.Top,
@@ -183,16 +188,16 @@
 			var deviceRect = UIUtility.ToDevicePixel(View, logicalRect);
 			var sendRect = PodStructUtility.Convert(deviceRect);
 
-			IntPtr lParam = Marshal.AllocHGlobal(Marshal.SizeOf(sendRect));
-			Marshal.StructureToPtr(sendRect, lParam, false);
-
-			//NativeMethods.SendMessage(HandleUtility.GetWindowHandle(View), WM.WM_MOVING, IntPtr.Zero, lParam);
-			bool handled = false;
-			CorrectionMoving(IntPtr.Zero, (int)WM.WM_MOVING, IntPtr.Zero, lParam, ref handled);
-			if(handled) {
-				//var convertedRect = UIUtility.ToLogicalPixel(View, PodStructUtility.Convert(WindowsUtility.ConvertRECTFromLParam(lParam)));
-				var resultRect = WindowsUtility.ConvertRECTFromLParam(lParam);
-				NativeMethods.MoveWindow(HandleUtility.GetWindowHandle(View), resultRect.X, resultRect.Y, resultRect.Width, resultRect.Height, true);
+			//IntPtr lParam = Marshal.AllocHGlobal(Marshal.SizeOf(sendRect));
+			//Marshal.StructureToPtr(sendRect, lParam, false);
+			using(var lParam = GlobalAllocModel.Create(sendRect)) {
+				bool handled = false;
+				CorrectionMoving(IntPtr.Zero, (int)WM.WM_MOVING, IntPtr.Zero, lParam.Buffer, ref handled);
+				if(handled) {
+					//var convertedRect = UIUtility.ToLogicalPixel(View, PodStructUtility.Convert(WindowsUtility.ConvertRECTFromLParam(lParam)));
+					var resultRect = WindowsUtility.ConvertRECTFromLParam(lParam.Buffer);
+					NativeMethods.MoveWindow(HandleUtility.GetWindowHandle(View), resultRect.X, resultRect.Y, resultRect.Width, resultRect.Height, true);
+				}
 			}
 		}
 
