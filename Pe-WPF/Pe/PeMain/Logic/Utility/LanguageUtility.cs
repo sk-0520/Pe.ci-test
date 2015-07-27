@@ -13,54 +13,86 @@
 
 	public static class LanguageUtility
 	{
-		static void SetUI_Impl(DependencyObject baseElement, LanguageManager language, IReadOnlyDictionary<string, string> map, Action<string, string> action)
+		static bool SetUI_Impl(DependencyObject baseElement, LanguageManager language, IReadOnlyDictionary<string, string> map, Action<string, string> action)
 		{
 			var key = Language.GetKey(baseElement);
 			var hint = Language.GetHint(baseElement);
-			if(!string.IsNullOrWhiteSpace(key)) {
+			if(!string.IsNullOrEmpty(key) || !string.IsNullOrEmpty(hint)) {
 				action(key, hint);
+				return true;
+			} else {
+				return false;
 			}
 		}
 
-		public static void SetTitle(Window ui, LanguageManager language, IReadOnlyDictionary<string, string> map = null)
+		public static bool SetTitle(Window ui, LanguageManager language, IReadOnlyDictionary<string, string> map = null)
 		{
-			SetUI_Impl(ui, language, map, (key, hint) => ui.Title = language[key, map]);
+			return SetUI_Impl(ui, language, map, (key, hint) => ui.Title = language[key, map]);
 		}
 
-		public static void SetContent(ContentControl ui, LanguageManager language, IReadOnlyDictionary<string, string> map = null)
+		public static bool SetContent(ContentControl ui, LanguageManager language, IReadOnlyDictionary<string, string> map = null)
 		{
-			SetUI_Impl(ui, language, map, (key, hint) => {
+			return SetUI_Impl(ui, language, map, (key, hint) => {
 				if(!ui.HasContent || ui.Content is string) {
 					ui.Content = language[key, map];
+					if(string.IsNullOrEmpty(hint)) {
+						ui.ToolTip = ui.Content;
+					} else {
+						ui.ToolTip = language[hint, map];
+					}
 				}
 			});
 		}
-
-		public static void SetText(TextBlock ui, LanguageManager language, IReadOnlyDictionary<string, string> map = null)
+		public static bool SetContent(ContentPresenter ui, LanguageManager language, IReadOnlyDictionary<string, string> map = null)
 		{
-			SetUI_Impl(ui, language, map, (key, hint) => {
+			return SetUI_Impl(ui, language, map, (key, hint) => {
+				if(ui.Content is string) {
+					ui.Content = language[key, map];
+					if(string.IsNullOrEmpty(hint)) {
+						ui.ToolTip = ui.Content;
+					} else {
+						ui.ToolTip = language[hint, map];
+					}
+				}
+			});
+		}
+		
+
+		public static bool SetText(TextBlock ui, LanguageManager language, IReadOnlyDictionary<string, string> map = null)
+		{
+			return SetUI_Impl(ui, language, map, (key, hint) => {
 				ui.Text = language[key, map];
 			});
 		}
 
-		public static void SetHeader(MenuItem ui, LanguageManager language, IReadOnlyDictionary<string, string> map = null)
+		public static bool SetHeader(HeaderedItemsControl ui, LanguageManager language, IReadOnlyDictionary<string, string> map = null)
 		{
-			SetUI_Impl(ui, language, map, (key, hint) => {
+			return SetUI_Impl(ui, language, map, (key, hint) => {
+				if(!ui.HasHeader || ui.Header is string) {
+					ui.Header = language[key, map];
+				}
+			});
+		}
+		public static bool SetHeader(HeaderedContentControl ui, LanguageManager language, IReadOnlyDictionary<string, string> map = null)
+		{
+			return SetUI_Impl(ui, language, map, (key, hint) => {
 				if(!ui.HasHeader || ui.Header is string) {
 					ui.Header = language[key, map];
 				}
 			});
 		}
 
-		public static void SetColumn(GridViewColumnHeader ui, LanguageManager language, IReadOnlyDictionary<string, string> map = null)
+		public static bool SetColumn(GridViewColumnHeader ui, LanguageManager language, IReadOnlyDictionary<string, string> map = null)
 		{
 			if(ui.Column != null) {
-				SetUI_Impl(ui.Column, language, map, (key, hint) => {
+				return SetUI_Impl(ui.Column, language, map, (key, hint) => {
 					if(!ui.HasContent || ui.Content is string) {
 						ui.Content = language[key, map];
 					}
 				});
 			}
+
+			return false;
 		}
 
 		/// <summary>
@@ -69,58 +101,83 @@
 		/// <param name="control"></param>
 		/// <param name="language"></param>
 		/// <param name="map"></param>
-		static void SetLanguageItem(DependencyObject control, LanguageManager language, IReadOnlyDictionary<string, string> map)
+		static bool SetLanguageItem(DependencyObject control, LanguageManager language, IReadOnlyDictionary<string, string> map)
 		{
 			var gridViewColumnHeader = control as GridViewColumnHeader;
 			if(gridViewColumnHeader != null) {
-				SetColumn(gridViewColumnHeader, language, map);
+				return SetColumn(gridViewColumnHeader, language, map);
 			} else {
-				var contentControl = control as ContentControl;
-				if(contentControl != null) {
-					SetContent(contentControl, language, map);
+				var headeredItemsControl = control as HeaderedItemsControl;
+				if(headeredItemsControl != null) {
+					return SetHeader(headeredItemsControl, language, map);
 				} else {
-					var menuItem = control as MenuItem;
-					if(menuItem != null) {
-						SetHeader(menuItem, language, map);
+					var headeredContentControl = control as HeaderedContentControl;
+					if(headeredContentControl != null) {
+						return SetHeader(headeredContentControl, language, map);
 					} else {
 						var textBlock = control as TextBlock;
 						if(textBlock != null) {
-							SetText(textBlock, language, map);
+							return SetText(textBlock, language, map);
+						} else {
+							var contentPresenter = control as ContentPresenter;
+							if(contentPresenter != null) {
+								return SetContent(contentPresenter, language, map);
+							} else {
+								var contentControl = control as ContentControl;
+								if(contentControl != null) {
+									return SetContent(contentControl, language, map);
+								}
+							}
 						}
 					}
 				}
 			}
+
+			return false;
 		}
 
 		public static void SetLanguage(DependencyObject root, LanguageManager language, IReadOnlyDictionary<string, string> map = null)
 		{
 			var window = root as Window;
-			if (window != null) {
+			if(window != null) {
 				SetTitle(window, language, map);
 			}
 
-			foreach (var dependencyObject in UIUtility.FindLogicalChildren<DependencyObject>(root)) {
-				//var type = dependencyObject.GetType();
-				//Debug.WriteLine("L: " + type.ToString());
+			var processedElements = new HashSet<DependencyObject>();
+
+			foreach(var dependencyObject in UIUtility.FindLogicalChildren<DependencyObject>(root)) {
+				var type = dependencyObject.GetType();
+				Debug.WriteLine("L: " + type.ToString());
 				//Action<DependencyObject> action;
 				//if (map.TryGetValue(type, out action)) {
 				//	action(dependencyObject);
 				//}
-				SetLanguageItem(dependencyObject, language, map);
+				if(SetLanguageItem(dependencyObject, language, map)) {
+					processedElements.Add(dependencyObject);
+				}
+				
+				var uiElement = dependencyObject as UIElement;
+				if(uiElement != null && uiElement.Visibility != Visibility.Visible) {
+					uiElement.IsVisibleChanged += EventUtility.Auto<DependencyPropertyChangedEventHandler>((sender, e) => {
+						SetLanguage((DependencyObject)sender, language, map);
+					}, releaseEvent => uiElement.IsVisibleChanged -= releaseEvent);
+				}
+
 				if(dependencyObject is Visual) {
 					foreach(var visualElement in UIUtility.FindVisualChildren<Visual>(dependencyObject)) {
-						//var visualType = visualElement.GetType();
-						//Debug.WriteLine("V: " + visualType.ToString());
+						var visualType = visualElement.GetType();
+						Debug.WriteLine("V: " + visualType.ToString());
 						//if (map.TryGetValue(visualType, out action)) {
 						//	action(visualElement);
 						//}
-						SetLanguageItem(visualElement, language, map);
+						if(processedElements.Add(visualElement)) {
+							SetLanguageItem(visualElement, language, map);
+						}
 					}
 				}
 			}
 
 		}
-
 
 	}
 }

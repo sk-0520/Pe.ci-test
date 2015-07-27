@@ -17,7 +17,7 @@
 			"Key",
 			typeof(string),
 			typeof(Language), 
-			new FrameworkPropertyMetadata(null)
+			new FrameworkPropertyMetadata()
 		);
 
 		public static string GetKey(DependencyObject dependencyObject)
