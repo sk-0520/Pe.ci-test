@@ -486,6 +486,9 @@
     <Content Include="etc\style\common.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Image\Common\Clear.png" />
+    <Resource Include="Resources\Image\Common\Refresh.png" />
+    <Resource Include="Resources\Image\Stream\Kill.png" />
     <Resource Include="Resources\Image\Common\File.png" />
     <Resource Include="Resources\Image\Common\Folder.png" />
     <Resource Include="Resources\Image\Clipboard\ImageFit.png" />

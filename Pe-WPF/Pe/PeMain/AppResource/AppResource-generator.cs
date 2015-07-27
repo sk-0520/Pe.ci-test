@@ -21,7 +21,7 @@
 		/*
 		このソースは自動生成のため AppResource-generator.tt を編集すること。
 
-		生成元フィールド数: 34
+		生成元フィールド数: 37
 		*/
 		#region Icon: Application
 
@@ -905,6 +905,50 @@
 			get { return GetImage(CommonFolderPath); }
 		}
 		#endregion CommonFolder
+		#region Image: CommonClear
+
+		/// <summary>
+		/// [Image] CommonClearのリソースパスを取得。
+		/// <para>/Resources/Image/Common/Clear.png</para>
+		/// </summary>
+		public static string CommonClearPath
+		{
+			get { return commonClear; }
+		}
+
+		/// <summary>
+		/// [Image] CommonClearのイメージソースを取得。
+		/// <para>初回のみ生成を行う。</para>
+		/// <para>CommonClearPath: /Resources/Image/Common/Clear.png</para>
+		/// </summary>
+		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
+		public static BitmapSource CommonClearImage
+		{
+			get { return GetImage(CommonClearPath); }
+		}
+		#endregion CommonClear
+		#region Image: CommonRefresh
+
+		/// <summary>
+		/// [Image] CommonRefreshのリソースパスを取得。
+		/// <para>/Resources/Image/Common/Refresh.png</para>
+		/// </summary>
+		public static string CommonRefreshPath
+		{
+			get { return commonRefresh; }
+		}
+
+		/// <summary>
+		/// [Image] CommonRefreshのイメージソースを取得。
+		/// <para>初回のみ生成を行う。</para>
+		/// <para>CommonRefreshPath: /Resources/Image/Common/Refresh.png</para>
+		/// </summary>
+		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
+		public static BitmapSource CommonRefreshImage
+		{
+			get { return GetImage(CommonRefreshPath); }
+		}
+		#endregion CommonRefresh
 		#region Image: TemplatePlain
 
 		/// <summary>
@@ -1147,6 +1191,28 @@
 			get { return GetImage(ClipboardImageRawPath); }
 		}
 		#endregion ClipboardImageRaw
+		#region Image: StreamKill
+
+		/// <summary>
+		/// [Image] StreamKillのリソースパスを取得。
+		/// <para>/Resources/Image/Stream/Kill.png</para>
+		/// </summary>
+		public static string StreamKillPath
+		{
+			get { return streamKill; }
+		}
+
+		/// <summary>
+		/// [Image] StreamKillのイメージソースを取得。
+		/// <para>初回のみ生成を行う。</para>
+		/// <para>StreamKillPath: /Resources/Image/Stream/Kill.png</para>
+		/// </summary>
+		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
+		public static BitmapSource StreamKillImage
+		{
+			get { return GetImage(StreamKillPath); }
+		}
+		#endregion StreamKill
 		#region Image: WindowLoad
 
 		/// <summary>

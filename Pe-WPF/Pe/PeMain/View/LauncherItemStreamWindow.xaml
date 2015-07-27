@@ -23,22 +23,34 @@
 	</AW:CommonDataWindow.Resources>
 	<Grid>
 		<Grid.RowDefinitions>
-			<RowDefinition Height="*" />
 			<RowDefinition Height="Auto" />
+			<RowDefinition Height="*" />
 		</Grid.RowDefinitions>
-		<ToolBar Grid.Column="0">
+		<ToolBar Grid.Row="0">
 			<Button>
 				<!-- topmost -->
 				<Image Style="{StaticResource ImageRenderStyle}" Source="{x:Static AM:AppResource.CommonPinImage}" />
 			</Button>
 			<Separator />
-			<Button>save</Button>
-			<Button>clear</Button>
+			<Button>
+				<!-- save -->
+				<Image Style="{StaticResource ImageRenderStyle}" Source="{x:Static AM:AppResource.CommonSaveImage}" />
+			</Button>
+			<Button>
+				<!-- clear -->
+				<Image Style="{StaticResource ImageRenderStyle}" Source="{x:Static AM:AppResource.CommonClearImage}" />
+			</Button>
 			<Separator />
-			<Button>refresh</Button>
-			<Button>kill</Button>
+			<Button>
+				<!-- refresh -->
+				<Image Style="{StaticResource ImageRenderStyle}" Source="{x:Static AM:AppResource.CommonRefreshImage}" />
+			</Button>
+			<Button>
+				<!-- kill -->
+				<Image Style="{StaticResource ImageRenderStyle}" Source="{x:Static AM:AppResource.StreamKillImage}" />
+			</Button>
 		</ToolBar>
-		<TabControl>
+		<TabControl Grid.Row="1">
 			<TabItem Header="stream">
 
 			</TabItem>

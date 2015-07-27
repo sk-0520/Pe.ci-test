@@ -66,6 +66,10 @@
 		const string commonFile = "/Resources/Image/Common/File.png";
 		[AppResource(AppResourceType.Image)]
 		const string commonFolder = "/Resources/Image/Common/Folder.png";
+		[AppResource(AppResourceType.Image)]
+		const string commonClear = "/Resources/Image/Common/Clear.png";
+		[AppResource(AppResourceType.Image)]
+		const string commonRefresh = "/Resources/Image/Common/Refresh.png";
 
 
 		[AppResource(AppResourceType.Image)]
@@ -91,6 +95,9 @@
 		const string clipboardImageFit = "/Resources/Image/Clipboard/ImageFit.png";
 		[AppResource(AppResourceType.Image)]
 		const string clipboardImageRaw = "/Resources/Image/Clipboard/ImageRaw.png";
+
+		[AppResource(AppResourceType.Image)]
+		const string streamKill = "/Resources/Image/Stream/Kill.png";
 
 		[AppResource(AppResourceType.Image)]
 		const string windowLoad = "/Resources/Image/Window/WindowLoad.png";
