@@ -18,5 +18,11 @@
 		/// </summary>
 		/// <returns></returns>
 		IDeepClone DeepClone();
+
+		/// <summary>
+		/// DeepClone()の内部実装。
+		/// </summary>
+		/// <param name="target"></param>
+		void DeepClone(IDeepClone target);
 	}
 }

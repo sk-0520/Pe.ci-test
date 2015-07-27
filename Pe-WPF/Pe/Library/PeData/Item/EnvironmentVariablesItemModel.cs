@@ -40,19 +40,19 @@
 
 		#region IDeepClone
 
+		public void DeepClone(IDeepClone target)
+		{
+			var obj = (EnvironmentVariablesItemModel)target;
+			obj.Edit = Edit;
+			obj.Update.AddRange(Update);
+			obj.Remove.AddRange(Remove);
+		}
+
 		public IDeepClone DeepClone()
 		{
-			var result = new EnvironmentVariablesItemModel() {
-				Edit = this.Edit,
-			};
+			var result = new EnvironmentVariablesItemModel();
 
-			// 二回も生成するのかー。。。
-			// TODO: clone
-			result.Update = new EnvironmentVariableUpdateItemCollectionModel();
-			foreach(var item in Update) {
-				result.Update.Add((EnvironmentVariableUpdateItemModel)item.DeepClone());
-			}
-			result.Remove = new CollectionModel<string>(Remove);
+			DeepClone(result);
 
 			return result;
 		}
