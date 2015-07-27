@@ -118,6 +118,10 @@
 						} catch(Exception ex) {
 							NonProcess.Logger.Warning(ex);
 						}
+
+						if (HasView) {
+							View.Close();
+						}
 					}
 				);
 
