@@ -72,6 +72,7 @@
 
 			WindowSaveData = new WindowSaveData();
 
+			StreamWindows = new HashSet<LauncherItemStreamWindow>();
 			OtherWindows = new HashSet<Window>();
 
 			IndexBodyCaching = new IndexBodyCaching(
@@ -113,6 +114,7 @@
 			}
 		}
 
+		HashSet<LauncherItemStreamWindow> StreamWindows { get; set; }
 		HashSet<Window> OtherWindows { get; set; }
 
 		LoggingWindow LoggingWindow { get; set; }
@@ -486,6 +488,13 @@
 						}
 						break;
 
+					case WindowKind.LauncherStream: 
+						{
+							var streamWindow = (LauncherItemStreamWindow)window;
+							StreamWindows.Add(streamWindow);
+						}
+						break;
+
 					case WindowKind.Note: 
 						{
 							var noteWindow = (NoteWindow)window;
@@ -517,6 +526,13 @@
 					case WindowKind.LauncherCustomize: 
 						{
 							OtherWindows.Remove(window);
+						}
+						break;
+
+					case WindowKind.LauncherStream: 
+						{
+							var streamWindow = (LauncherItemStreamWindow)window;
+							StreamWindows.Remove(streamWindow);
 						}
 						break;
 
@@ -560,6 +576,13 @@
 				case WindowKind.LauncherCustomize: 
 					{
 						window = new LauncherItemCustomizeWindow();
+						window.SetCommonData(CommonData, extensionData);
+						break;
+					}
+
+				case WindowKind.LauncherStream:
+					{
+						window = new LauncherItemStreamWindow();
 						window.SetCommonData(CommonData, extensionData);
 						break;
 					}
