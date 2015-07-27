@@ -78,8 +78,8 @@
 		</StackPanel>
 
 		<StackPanel Grid.Row="1" Style="{StaticResource ResourceKey=DialogResultPanel}" >
-			<Button Content="ok" Style="{StaticResource ResourceKey=DialogResultButton}"  Command="{Binding RunCommand}" />
-			<Button Content="cancel" Style="{StaticResource ResourceKey=DialogResultButton}" Command="{Binding CancelCommand}" />
+			<Button Content="ok" Style="{StaticResource ResourceKey=DialogResultButtonAccept}" Command="{Binding RunCommand}" />
+			<Button Content="close" Style="{StaticResource ResourceKey=DialogResultButtonCancel}" Command="{Binding CancelCommand}" />
 		</StackPanel>
 
 	</Grid>
