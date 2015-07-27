@@ -45,6 +45,13 @@
 			});
 		}
 
+		public static void SetUI(this TextBlock ui, LanguageManager language, IReadOnlyDictionary<string, string> map = null)
+		{
+			SetUI_Impl(ui, language, map, key => {
+				ui.Text = language[key, map];
+			});
+		}
+
 		public static void SetUI(this GridViewColumnHeader ui, LanguageManager language, IReadOnlyDictionary<string, string> map = null)
 		{
 			if (ui.Column != null) {

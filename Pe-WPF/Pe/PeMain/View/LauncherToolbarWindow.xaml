@@ -246,6 +246,7 @@
 								x:Name="PART_Popup" 
 								Style="{StaticResource DropDownPopupMenu}"
 								IsOpen="{Binding IsChecked, ElementName=PART_DropDownButton}"
+								Opened="PART_Popup_Opened"
 							>
 								<Border Style="{StaticResource DropDownPopupBorder}">
 									<ContentPresenter Content="{TemplateBinding DropDownContent}" />
@@ -311,6 +312,7 @@
 								x:Name="PART_Popup"
 								Style="{StaticResource DropDownPopupMenu}"
 								IsOpen="{TemplateBinding IsOpen}"
+								Opened="PART_Popup_Opened"
 							>
 								<Border Style="{StaticResource DropDownPopupBorder}">
 									<ContentPresenter Content="{Binding DropDownContent,RelativeSource={RelativeSource AncestorType=xctk:SplitButton}}" />
@@ -442,7 +444,7 @@
 						<xctk:SplitButton Visibility="{Binding VisibilityFile, Mode=OneWay}" Style="{StaticResource LauncherSplit}" Command="{Binding RunCommand}">
 							<i:Interaction.Triggers>
 								<i:EventTrigger EventName="Opened">
-									<i:InvokeCommandAction Command="{Binding OpenDropDownCommand}"></i:InvokeCommandAction>
+									<i:InvokeCommandAction Command="{Binding OpenDropDownCommand}" />
 								</i:EventTrigger>
 							</i:Interaction.Triggers>
 							<xctk:SplitButton.Content>
@@ -453,7 +455,7 @@
 							</xctk:SplitButton.Content>
 							<xctk:SplitButton.DropDownContent>
 								<StackPanel>
-									<TextBlock Text="execute" />
+									<TextBlock Text="execute" AA:Language.Key="launcher/run/normal" />
 									<StackPanel Orientation="Horizontal">
 										<Button Content="normal" IsEnabled="{Binding ExistsCommand}" Command="{Binding RunCommand}" Style="{StaticResource PopupClose}" />
 										<Button Content="extra"  IsEnabled="{Binding ExistsCommand}" Command="{Binding RunExCommand}" Style="{StaticResource PopupClose}" />

@@ -327,6 +327,10 @@
 					;
 
 					this._launcherItems = new CollectionModel<LauncherItemButtonViewModel>(list);
+
+					//if (HasView) {
+					//	View.ApplyLanguage();
+					//}
 				}
 
 				return this._launcherItems;

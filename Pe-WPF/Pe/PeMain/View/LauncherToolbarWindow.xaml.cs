@@ -213,5 +213,12 @@
 		{
 			e.Handled = true;
 		}
+
+		private void PART_Popup_Opened(object sender, EventArgs e)
+		{
+			var popup = (Popup)sender;
+
+			LanguageUtility.SetLanguage(popup, CommonData.Language);
+		}
 	}
 }

@@ -71,7 +71,7 @@
 		protected virtual void CreateViewModel()
 		{ }
 
-		protected virtual void ApplyLanguage()
+		public virtual void ApplyLanguage()
 		{
 			Debug.Assert(CommonData != null);
 
