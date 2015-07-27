@@ -105,11 +105,12 @@
 		/// <param name="map"></param>
 		static bool SetLanguageItem(DependencyObject control, LanguageManager language, IReadOnlyDictionary<string, string> map)
 		{
+#if DEBUG
 			var s = Language.GetKey(control);
 			if(s != null) {
-				Debug.WriteLine("@: " + s);
+				Debug.WriteLine(s);
 			}
-
+#endif
 			var gridViewColumnHeader = control as GridViewColumnHeader;
 			if(gridViewColumnHeader != null) {
 				return SetColumn(gridViewColumnHeader, language, map);
@@ -162,19 +163,32 @@
 				if(SetLanguageItem(dependencyObject, language, map)) {
 					processedElements.Add(dependencyObject);
 				}
-				
+
 				//var uiElement = dependencyObject as UIElement;
 				//if(uiElement != null && uiElement.Visibility != Visibility.Visible) {
 				//	uiElement.IsVisibleChanged += EventUtility.Auto<DependencyPropertyChangedEventHandler>((sender, e) => {
 				//		SetLanguage((DependencyObject)sender, language, map);
 				//	}, releaseEvent => uiElement.IsVisibleChanged -= releaseEvent);
 				//}
-				//var dataGrid = dependencyObject as DataGrid;
-				//if(dataGrid != null) {
-				//	dataGrid.Loaded += EventUtility.Auto<RoutedEventHandler>((sender, e) => {
-				//		SetLanguage((DependencyObject)sender, language, map);
-				//	}, releaseEvent => dataGrid.Loaded -= releaseEvent);
-				//}
+				var dataGrid = dependencyObject as DataGrid;
+				if(dataGrid != null) {
+					dataGrid.Loaded += EventUtility.Auto<RoutedEventHandler>((sender, e) => {
+						SetLanguage((DependencyObject)sender, language, map);
+						//var uiElement = sender as UIElement;
+						//if(uiElement.Visibility != Visibility.Visible) {
+						//	uiElement.IsVisibleChanged += EventUtility.Auto<DependencyPropertyChangedEventHandler>((sender2, e2) => {
+						//		if(uiElement.Visibility == Visibility.Visible) {
+						//			SetLanguage((DependencyObject)sender2, language, map);
+						//		}
+						//	}, releaseEvent => uiElement.IsVisibleChanged -= releaseEvent);
+						//}
+					}, releaseEvent => dataGrid.Loaded -= releaseEvent);
+
+					//dataGrid.Initialized += EventUtility.Auto<EventHandler>((sender, e) => {
+					//	SetLanguage((DependencyObject)sender, language, map);
+
+					//}, releaseEvent => dataGrid.Initialized -= releaseEvent);
+				}
 
 				if(dependencyObject is Visual) {
 					foreach(var visualElement in UIUtility.FindVisualChildren<Visual>(dependencyObject)) {

@@ -76,7 +76,11 @@
 		protected override void Dispose(bool disposing)
 		{
 			if(!IsDisposed) {
-				Application.Current.Dispatcher.Invoke(new Action(() => ReleaseEvent(EventHandler)));
+				if(Application.Current != null) {
+					Application.Current.Dispatcher.Invoke(new Action(() => ReleaseEvent(EventHandler)));
+				} else {
+					ReleaseEvent(EventHandler);
+				}
 			}
 
 			base.Dispose(disposing);

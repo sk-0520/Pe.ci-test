@@ -21,8 +21,16 @@
 		<GroupBox AA:Language.Key="environment/update" Header="update" Grid.Row="1" Margin="0" >
 			<DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Update}" CanUserAddRows="True" >
 				<DataGrid.Columns>
-					<DataGridTextColumn AA:Language.Key="environment/key" Header="key" Binding="{Binding Id}" />
-					<DataGridTextColumn AA:Language.Key="environment/val" Header="value" Binding="{Binding Value}" />
+					<DataGridTextColumn Binding="{Binding Id}">
+						<DataGridTextColumn.Header>
+							<TextBlock AA:Language.Key="environment/key" Text="key" />
+						</DataGridTextColumn.Header>
+					</DataGridTextColumn>
+					<DataGridTextColumn Binding="{Binding Value}">
+						<DataGridTextColumn.Header>
+							<TextBlock AA:Language.Key="environment/value" Text="value" />
+						</DataGridTextColumn.Header>
+					</DataGridTextColumn>
 				</DataGrid.Columns>
 			</DataGrid>
 		</GroupBox>
