@@ -6,10 +6,12 @@
 	using System.Windows;
 	using System.Windows.Controls;
 	using System.Windows.Media;
+	using System.Linq;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Extension;
 	using ContentTypeTextNet.Pe.PeMain.View.Parts.Attached;
+	using System.Windows.Controls.Primitives;
 
 	public static class LanguageUtility
 	{
@@ -103,6 +105,11 @@
 		/// <param name="map"></param>
 		static bool SetLanguageItem(DependencyObject control, LanguageManager language, IReadOnlyDictionary<string, string> map)
 		{
+			var s = Language.GetKey(control);
+			if(s != null) {
+				Debug.WriteLine("@: " + s);
+			}
+
 			var gridViewColumnHeader = control as GridViewColumnHeader;
 			if(gridViewColumnHeader != null) {
 				return SetColumn(gridViewColumnHeader, language, map);
@@ -145,9 +152,9 @@
 
 			var processedElements = new HashSet<DependencyObject>();
 
-			foreach(var dependencyObject in UIUtility.FindLogicalChildren<DependencyObject>(root)) {
-				var type = dependencyObject.GetType();
-				Debug.WriteLine("L: " + type.ToString());
+			foreach(var dependencyObject in UIUtility.FindLogicalChildren<DependencyObject>(root).Concat(UIUtility.FindVisualChildren<DependencyObject>(root))) {
+				//var type = dependencyObject.GetType();
+				//Debug.WriteLine("L: " + type.ToString());
 				//Action<DependencyObject> action;
 				//if (map.TryGetValue(type, out action)) {
 				//	action(dependencyObject);
@@ -156,19 +163,28 @@
 					processedElements.Add(dependencyObject);
 				}
 				
-				var uiElement = dependencyObject as UIElement;
-				if(uiElement != null && uiElement.Visibility != Visibility.Visible) {
-					uiElement.IsVisibleChanged += EventUtility.Auto<DependencyPropertyChangedEventHandler>((sender, e) => {
-						SetLanguage((DependencyObject)sender, language, map);
-					}, releaseEvent => uiElement.IsVisibleChanged -= releaseEvent);
-				}
+				//var uiElement = dependencyObject as UIElement;
+				//if(uiElement != null && uiElement.Visibility != Visibility.Visible) {
+				//	uiElement.IsVisibleChanged += EventUtility.Auto<DependencyPropertyChangedEventHandler>((sender, e) => {
+				//		SetLanguage((DependencyObject)sender, language, map);
+				//	}, releaseEvent => uiElement.IsVisibleChanged -= releaseEvent);
+				//}
+				//var dataGrid = dependencyObject as DataGrid;
+				//if(dataGrid != null) {
+				//	dataGrid.Loaded += EventUtility.Auto<RoutedEventHandler>((sender, e) => {
+				//		SetLanguage((DependencyObject)sender, language, map);
+				//	}, releaseEvent => dataGrid.Loaded -= releaseEvent);
+				//}
 
 				if(dependencyObject is Visual) {
 					foreach(var visualElement in UIUtility.FindVisualChildren<Visual>(dependencyObject)) {
-						var visualType = visualElement.GetType();
-						Debug.WriteLine("V: " + visualType.ToString());
+						//var visualType = visualElement.GetType();
+						//Debug.WriteLine("V: " + visualType.ToString());
 						//if (map.TryGetValue(visualType, out action)) {
 						//	action(visualElement);
+						//}
+						//if(visualElement is DataGridColumnHeader) {
+						//	Debug.WriteLine("#");
 						//}
 						if(processedElements.Add(visualElement)) {
 							SetLanguageItem(visualElement, language, map);

@@ -5,6 +5,8 @@
 	using System.Linq;
 	using System.Text;
 	using System.Threading.Tasks;
+	using System.Windows;
+	using System.Windows.Threading;
 
 	public class EventDisposer: DisposeFinalizeBase
 	{
@@ -74,7 +76,7 @@
 		protected override void Dispose(bool disposing)
 		{
 			if(!IsDisposed) {
-				ReleaseEvent(EventHandler);
+				Application.Current.Dispatcher.Invoke(new Action(() => ReleaseEvent(EventHandler)));
 			}
 
 			base.Dispose(disposing);
