@@ -20,6 +20,9 @@
 
 		<Item Id="launcher/run/normal" Word="起動" />
 
+		<Item Id="clipboard/type/rtf" Word="書式付文字列" />
+		<Item Id="clipboard/image/fit" Word="ウィンドウに合わせる" />
+
 		<Item Id="environment/key" Word="キー" />
 		
 		<Item Id="logging/timestamp" Word="発生日時" />

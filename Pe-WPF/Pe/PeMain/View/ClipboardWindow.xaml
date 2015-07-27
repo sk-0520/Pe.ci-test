@@ -207,7 +207,7 @@
 							<TabItem.Header>
 								<StackPanel Orientation="Horizontal">
 									<Image Style="{StaticResource ClipboardRtf}" />
-									<TextBlock Text="rft" />
+									<TextBlock Text="rft" AA:Language.Key="clipboard/type/rtf" />
 								</StackPanel>
 							</TabItem.Header>
 							<xctk:RichTextBox IsReadOnly="True" Text="{Binding SelectedViewModel.Rtf}" >
@@ -260,7 +260,7 @@
 									<RadioButton x:Name="imageFit" IsChecked="{Binding ImageScale, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static AD:ImageScale.Fit}}" >
 										<StackPanel Orientation="Horizontal">
 											<Image Style="{StaticResource ImageRenderStyle}" Source="{x:Static AM:AppResource.ClipboardImageFitImage}" />
-											<TextBlock Text="fit" />
+											<TextBlock Text="fit" AA:Language.Key="clipboard/image/fit" />
 										</StackPanel>
 									</RadioButton>
 									<RadioButton x:Name="imageRaw" IsChecked="{Binding ImageScale, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static AD:ImageScale.Raw}}">
