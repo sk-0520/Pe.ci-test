@@ -41,7 +41,7 @@
 
 		#region IDeepClone
 
-		public virtual void DeepCloneTo(IDeepClone target)
+		public void DeepCloneTo(IDeepClone target)
 		{
 			var obj = (IconItemModel)target;
 
