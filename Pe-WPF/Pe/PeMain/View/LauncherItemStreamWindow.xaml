@@ -14,14 +14,41 @@
 	Height="300" 
 	Width="300"
 >
-	<!--<AW:CommonDataWindow.Resources>
+	<AW:CommonDataWindow.Resources>
 		<ResourceDictionary>
 			<ResourceDictionary.MergedDictionaries>
 				<ResourceDictionary Source="/View/Parts/Resource/ImageDictionary.xaml"/>
 			</ResourceDictionary.MergedDictionaries>
 		</ResourceDictionary>
-	</AW:CommonDataWindow.Resources>-->
+	</AW:CommonDataWindow.Resources>
 	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*" />
+			<RowDefinition Height="Auto" />
+		</Grid.RowDefinitions>
+		<ToolBar Grid.Column="0">
+			<Button>
+				<!-- topmost -->
+				<Image Style="{StaticResource ImageRenderStyle}" Source="{x:Static AM:AppResource.CommonPinImage}" />
+			</Button>
+			<Separator />
+			<Button>save</Button>
+			<Button>clear</Button>
+			<Separator />
+			<Button>refresh</Button>
+			<Button>kill</Button>
+		</ToolBar>
+		<TabControl>
+			<TabItem Header="stream">
 
+			</TabItem>
+			<TabItem Header="process">
+
+			</TabItem>
+			<TabItem Header="startinfo">
+
+			</TabItem>
+		</TabControl>
+		
 	</Grid>
 </AW:ViewModelCommonDataWindow>

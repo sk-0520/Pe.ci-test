@@ -34,6 +34,7 @@ using ContentTypeTextNet.Pe.PeMain.View;
 
 		public void Start()
 		{
+			Process.Start();
 		}
 
 		#endregion

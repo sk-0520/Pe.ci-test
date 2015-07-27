@@ -82,12 +82,13 @@
 					//commonData.RootSender.AppendWindow(streamForm);
 				}
 
-				process.Start();
-
 				if (streamWatch) {
 					streamWindow.ViewModel.Start();
 					streamWindow.Show();
+				} else {
+					process.Start();
 				}
+
 			} catch (Win32Exception ex) {
 				nonProcess.Logger.Error(ex);
 				//if (streamForm != null) {
