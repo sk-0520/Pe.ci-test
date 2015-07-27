@@ -41,12 +41,19 @@
 
 		#region IDeepClone
 
+		public virtual void DeepCloneTo(IDeepClone target)
+		{
+			var obj = (IconItemModel)target;
+
+			obj.Path = Path;
+			obj.Index = Index;
+		}
+
 		public IDeepClone DeepClone()
 		{
-			var result = new IconItemModel() {
-				Path = this.Path,
-				Index = this.Index,
-			};
+			var result = new IconItemModel();
+
+			DeepCloneTo(result);
 
 			return result;
 		}

@@ -67,7 +67,7 @@
 		{
 			var result = new HistoryItemModel();
 
-			DeepCloneTo(target);
+			DeepCloneTo(result);
 
 			return result;
 		}
