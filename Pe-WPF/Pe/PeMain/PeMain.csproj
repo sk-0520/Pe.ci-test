@@ -147,6 +147,7 @@
     <Compile Include="Data\Temporary\IndexBodyPairItem.cs" />
     <Compile Include="Data\Temporary\SelectedNodeAndLauncherItem.cs" />
     <Compile Include="Data\Temporary\SettingNotifiyItem.cs" />
+    <Compile Include="Data\Temporary\StreamData.cs" />
     <Compile Include="Data\VariableConstants.cs" />
     <Compile Include="Data\WindowSaveData.cs" />
     <Compile Include="Define\HotKeyId.cs" />

@@ -23,8 +23,8 @@
 
 	public class LauncherItemSimpleViewModel: LauncherItemViewModelBase
 	{
-		public LauncherItemSimpleViewModel(LauncherItemModel model, LauncherIconCaching launcherIconCaching, INonProcess nonPorocess)
-			: base(model, launcherIconCaching, nonPorocess)
+		public LauncherItemSimpleViewModel(LauncherItemModel model, LauncherIconCaching launcherIconCaching, INonProcess nonPorocess, IAppSender appSender)
+			: base(model, launcherIconCaching, nonPorocess, appSender)
 		{ }
 	}
 }

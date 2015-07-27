@@ -14,6 +14,7 @@
 	using System.Windows.Media.Imaging;
 	using System.Windows.Shapes;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
+	using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
 	using ContentTypeTextNet.Pe.PeMain.Define;
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.View.Parts.Window;
@@ -33,8 +34,8 @@
 
 		protected override void CreateViewModel()
 		{
-			var model = (LauncherItemModel)ExtensionData;
-			ViewModel = new LauncherItemStreamViewModel(model, this, CommonData.LauncherIconCaching, CommonData.NonProcess);
+			var streamData = (StreamData)ExtensionData;
+			ViewModel = new LauncherItemStreamViewModel(streamData.LauncherItem, this, streamData.Process, CommonData.MainSetting.Stream, CommonData.LauncherIconCaching, CommonData.NonProcess, CommonData.AppSender);
 		}
 
 		protected override void ApplyViewModel()

@@ -1,18 +1,22 @@
 ﻿namespace ContentTypeTextNet.Pe.PeMain.View.Parts.Converter
 {
 	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Text;
-	using System.Threading.Tasks;
-	using System.Windows.Data;
-	using ContentTypeTextNet.Library.SharedLibrary.Define;
-	using ContentTypeTextNet.Library.SharedLibrary.IF;
-	using ContentTypeTextNet.Pe.Library.PeData.Item;
-	using ContentTypeTextNet.Pe.PeMain.Data;
-	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
-	using ContentTypeTextNet.Pe.PeMain.ViewModel;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Data;
+using ContentTypeTextNet.Library.SharedLibrary.Define;
+using ContentTypeTextNet.Library.SharedLibrary.IF;
+using ContentTypeTextNet.Pe.Library.PeData.Item;
+using ContentTypeTextNet.Pe.PeMain.Data;
+using ContentTypeTextNet.Pe.PeMain.IF;
+using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
+using ContentTypeTextNet.Pe.PeMain.ViewModel;
 
+	/// <summary>
+	/// TODO: 状態を持ちすぎ、しんどい
+	/// </summary>
 	public class LauncherListDisplayImageConverter : IValueConverter
 	{
 		#region static
@@ -22,6 +26,7 @@
 		/// </summary>
 		public static LauncherIconCaching LauncherIconCaching { get; set; }
 		public static INonProcess NonProcess { get; set; }
+		public static IAppSender AppSender { get; set; }
 
 		#endregion
 
@@ -29,7 +34,7 @@
 		{
 			var model = value as LauncherItemModel;
 			if (model != null) {
-				var vm = new LauncherItemSimpleViewModel(model, LauncherIconCaching, NonProcess);
+				var vm = new LauncherItemSimpleViewModel(model, LauncherIconCaching, NonProcess, AppSender);
 				return vm.GetIcon(IconScale.Small);
 			}
 

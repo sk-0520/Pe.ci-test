@@ -12,12 +12,13 @@
 	using ContentTypeTextNet.Pe.Library.PeData.Define;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 	using ContentTypeTextNet.Pe.PeMain.Data;
+	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
 	public class LauncherItemEditViewModel: LauncherItemSimpleViewModel
 	{
-		public LauncherItemEditViewModel(LauncherItemModel model, LauncherIconCaching launcherIconCaching, INonProcess nonPorocess)
-			: base(model, launcherIconCaching, nonPorocess)
+		public LauncherItemEditViewModel(LauncherItemModel model, LauncherIconCaching launcherIconCaching, INonProcess nonPorocess, IAppSender appSender)
+			: base(model, launcherIconCaching, nonPorocess, appSender)
 		{ }
 
 		#region property

@@ -19,7 +19,7 @@
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
-	public abstract class LauncherItemViewModelBase: SingleModelWrapperViewModelBase<LauncherItemModel>, IHavingNonProcess, IHavingLauncherIconCaching
+	public abstract class LauncherItemViewModelBase: SingleModelWrapperViewModelBase<LauncherItemModel>, IHavingNonProcess, IHavingLauncherIconCaching, IHavingAppSender
 	{
 		#region variable
 
@@ -28,11 +28,12 @@
 
 		#endregion
 
-		public LauncherItemViewModelBase(LauncherItemModel model, LauncherIconCaching launcherIconCaching, INonProcess nonProcess)
+		public LauncherItemViewModelBase(LauncherItemModel model, LauncherIconCaching launcherIconCaching, INonProcess nonProcess, IAppSender appSender)
 			: base(model)
 		{
 			LauncherIconCaching = launcherIconCaching;
 			NonProcess = nonProcess;
+			AppSender = appSender;
 		}
 
 		#region property
@@ -127,7 +128,7 @@
 		protected void Execute()
 		{
 			try {
-				ExecuteUtility.RunItem(Model, NonProcess);
+				ExecuteUtility.RunItem(Model, NonProcess, AppSender);
 				SettingUtility.IncrementLauncherItem(Model, null, null, NonProcess);
 			} catch (Exception ex) {
 				NonProcess.Logger.Warning(ex);
@@ -148,5 +149,10 @@
 
 		#endregion
 
+		#region IHavingAppSender
+
+		public IAppSender AppSender { get; private set; }
+
+		#endregion
 	}
 }

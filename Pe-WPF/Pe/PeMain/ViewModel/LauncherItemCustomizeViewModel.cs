@@ -27,10 +27,10 @@
 		#endregion
 
 		public LauncherItemCustomizeViewModel(LauncherItemModel model, LauncherItemCustomizeWindow view, LauncherIconCaching launcherIconCaching, INonProcess nonPorocess, IAppSender appSender)
-			: base((LauncherItemModel)model.DeepClone(), launcherIconCaching, nonPorocess)
+			: base((LauncherItemModel)model.DeepClone(), launcherIconCaching, nonPorocess, appSender)
 		{
 			View = view;
-			AppSender = appSender;
+
 			this._srcModel = model;
 		}
 
@@ -94,12 +94,6 @@
 		public LauncherItemCustomizeWindow View { get; private set; }
 
 		public bool HasView { get { return View != null; } }
-
-		#endregion
-
-		#region IHavingAppSender
-
-		public IAppSender AppSender { get; private set; }
 
 		#endregion
 	}

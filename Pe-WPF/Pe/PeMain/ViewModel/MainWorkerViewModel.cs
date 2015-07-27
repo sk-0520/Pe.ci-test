@@ -1059,6 +1059,7 @@
 		{
 			LauncherListDisplayImageConverter.LauncherIconCaching = CommonData.LauncherIconCaching;
 			LauncherListDisplayImageConverter.NonProcess = CommonData.NonProcess;
+			LauncherListDisplayImageConverter.AppSender = CommonData.AppSender;
 		}
 
 		/// <summary>

@@ -12,6 +12,7 @@
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 	using ContentTypeTextNet.Pe.PeMain.Data;
+	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 	using ContentTypeTextNet.Pe.PeMain.View;
 	using ContentTypeTextNet.Pe.PeMain.ViewModel.Control;
@@ -29,8 +30,8 @@
 		
 		#endregion
 
-		public LauncherItemExecuteViewModel(LauncherItemModel model, LauncherItemExecuteWindow view, LauncherIconCaching launcherIconCaching, INonProcess nonPorocess)
-			: base(model, launcherIconCaching, nonPorocess)
+		public LauncherItemExecuteViewModel(LauncherItemModel model, LauncherItemExecuteWindow view, LauncherIconCaching launcherIconCaching, INonProcess nonPorocess, IAppSender appSender)
+			: base(model, launcherIconCaching, nonPorocess, appSender)
 		{
 			View = view;
 
@@ -113,7 +114,7 @@
 						dummyModel.Administrator = Administrator;
 						dummyModel.EnvironmentVariables = this._environmentVariablesItem;
 						try {
-							ExecuteUtility.RunItem(dummyModel, NonProcess);
+							ExecuteUtility.RunItem(dummyModel, NonProcess, AppSender);
 							SettingUtility.IncrementLauncherItem(Model, Option, WorkDirectoryPath, NonProcess);
 						} catch(Exception ex) {
 							NonProcess.Logger.Warning(ex);

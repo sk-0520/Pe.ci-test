@@ -39,26 +39,12 @@
 		#endregion
 
 		public LauncherItemButtonViewModel(LauncherItemModel model, LauncherIconCaching launcherIconCaching, INonProcess nonPorocess, IClipboardWatcher clipboardWatcher, IAppSender appSender)
-			: base(model, launcherIconCaching, nonPorocess)
+			: base(model, launcherIconCaching, nonPorocess, appSender)
 		{
 			ClipboardWatcher = clipboardWatcher;
-			AppSender = appSender;
 		}
 
 		#region property
-
-
-		#region IHavingClipboardWatcher
-
-		public IClipboardWatcher ClipboardWatcher { get; private set; }
-
-		#endregion
-
-		#region IHavingAppSender
-
-		public IAppSender AppSender { get; private set; }
-
-		#endregion
 
 		public IconScale IconScale 
 		{
@@ -312,6 +298,12 @@
 					break;
 			}
 		}
+
+		#endregion
+
+		#region IHavingClipboardWatcher
+
+		public IClipboardWatcher ClipboardWatcher { get; private set; }
 
 		#endregion
 	}

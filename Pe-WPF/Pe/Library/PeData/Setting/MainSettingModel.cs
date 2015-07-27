@@ -28,6 +28,7 @@
 			Clipboard = new ClipboardSettingModel();
 			Template = new TemplateSettingModel();
 			Note = new NoteSettingModel();
+			Stream = new StreamSettingModel();
 		}
 
 		[DataMember]
@@ -50,5 +51,7 @@
 		public TemplateSettingModel Template { get; set; }
 		[DataMember]
 		public NoteSettingModel Note { get; set; }
+		[DataMember]
+		public StreamSettingModel Stream { get; set; }
 	}
 }

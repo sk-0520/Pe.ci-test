@@ -13,10 +13,14 @@
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 	using ContentTypeTextNet.Pe.Library.PeData.Define;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
+	using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
+	using ContentTypeTextNet.Pe.PeMain.Define;
+	using ContentTypeTextNet.Pe.PeMain.IF;
+	using ContentTypeTextNet.Pe.PeMain.View;
 
 	public static class ExecuteUtility
 	{
-		static Process RunFileItem(LauncherItemModel launcherItem, INonProcess nonProcess)
+		static Process RunFileItem(LauncherItemModel launcherItem, INonProcess nonProcess, IAppSender appSender)
 		{
 			Debug.Assert(launcherItem.LauncherKind == LauncherKind.File);
 
@@ -64,8 +68,14 @@
 				startInfo.RedirectStandardInput = launcherItem.StdStream.InputWatch;
 			}
 
+			LauncherItemStreamWindow streamWindow = null;
 			try {
 				if (streamWatch) {
+					var streamData = new StreamData() {
+						Process = process,
+						LauncherItem = launcherItem,
+					};
+					streamWindow = (LauncherItemStreamWindow)appSender.SendCreateWindow(WindowKind.LauncherStream, streamData, null);
 					//streamForm = new StreamForm();
 					//streamForm.SetParameter(process, launcherItem);
 					//streamForm.SetCommonData(commonData);
@@ -75,8 +85,8 @@
 				process.Start();
 
 				if (streamWatch) {
-					//streamForm.StartStream();
-					//streamForm.Show();
+					streamWindow.ViewModel.Start();
+					streamWindow.Show();
 				}
 			} catch (Win32Exception ex) {
 				nonProcess.Logger.Error(ex);
@@ -95,7 +105,7 @@
 		/// <param name="launcherItem">URIアイテム</param>
 		/// <param name="commonData">共通データ</param>
 		/// <param name="parentForm">親ウィンドウ</param>
-		private static Process RunCommandItem(LauncherItemModel launcherItem, INonProcess nonProcess)
+		private static Process RunCommandItem(LauncherItemModel launcherItem, INonProcess nonProcess, IAppSender appSender)
 		{
 			Debug.Assert(launcherItem.LauncherKind == LauncherKind.Command);
 
@@ -106,18 +116,18 @@
 			// 管理者権限はどうにも効かなさそう
 			fileLauncherItem.Administrator = false;
 
-			return RunFileItem(fileLauncherItem, nonProcess);
+			return RunFileItem(fileLauncherItem, nonProcess, appSender);
 		}
-		public static Process RunItem(LauncherItemModel launcherItem, INonProcess nonProcess)
+		public static Process RunItem(LauncherItemModel launcherItem, INonProcess nonProcess, IAppSender appSender)
 		{
 			nonProcess.Logger.Information(launcherItem.ToString());
 
 			switch(launcherItem.LauncherKind) {
 				case LauncherKind.File:
-					return RunFileItem(launcherItem, nonProcess);
+					return RunFileItem(launcherItem, nonProcess, appSender);
 
 				case LauncherKind.Command:
-					return RunCommandItem(launcherItem, nonProcess);
+					return RunCommandItem(launcherItem, nonProcess, appSender);
 
 				default:
 					throw new NotImplementedException();
