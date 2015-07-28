@@ -27,7 +27,7 @@
 		/// 標準入力へ入力するか。
 		/// </summary>
 		[DataMember]
-		public bool InputWatch { get; set; }
+		public bool IsEnabledInput { get; set; }
 
 		#region IDeepClone
 
@@ -36,7 +36,7 @@
 			var obj = (LauncherStdStreamItemModel)target;
 
 			obj.OutputWatch = OutputWatch;
-			obj.InputWatch = InputWatch;
+			obj.IsEnabledInput = IsEnabledInput;
 		}
 
 		public IDeepClone DeepClone()

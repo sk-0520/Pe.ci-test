@@ -566,7 +566,7 @@
 					//var animateTime = (int)RestrictionViewModel.HiddenAnimateTime.TotalMilliseconds;
 					//var animateFlag = ToAW(RestrictionViewModel.DockType, false);
 					//NativeMethods.AnimateWindow(Handle, animateTime, animateFlag);
-					/*TODO*/
+					// TODO: アニメーションしねぇ…
 					NativeMethods.MoveWindow(Handle, (int)deviceHideArea.X, (int)deviceHideArea.Y, (int)deviceHideArea.Width, (int)deviceHideArea.Height, true);
 				} else {
 					NativeMethods.MoveWindow(Handle, (int)deviceHideArea.X, (int)deviceHideArea.Y, (int)deviceHideArea.Width, (int)deviceHideArea.Height, true);
