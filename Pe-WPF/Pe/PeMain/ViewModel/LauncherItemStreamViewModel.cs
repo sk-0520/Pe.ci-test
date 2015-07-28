@@ -45,7 +45,10 @@
 		#region property
 
 		StreamSettingModel StreamSetting { get; set; }
+
 		FlowDocument OutputStream { get; set; }
+		Task OutputTask;
+		Task ErrorTask;
 
 		public Process Process { get; private set; }
 		public ProcessStartInfo StartInfo { get; private set; }
@@ -125,8 +128,8 @@
 			Process.Start();
 
 			Debug.Assert(Model.StdStream.OutputWatch);
-			ReceiveOutput(Process.StandardOutput, true);
-			ReceiveOutput(Process.StandardError, false);
+			OutputTask = Task.Run(() => ReceiveOutput(Process.StandardOutput, true));
+			ErrorTask = Task.Run(() => ReceiveOutput(Process.StandardError, false));
 			
 			if (HasView) {
 				View.Show();
@@ -154,19 +157,18 @@
 			var isContinue = true;
 			while (isContinue) {
 				var readLength = reader.ReadAsync(buffer, 0, buffer.Length);
-					readLength.Wait(waitTime);
+				readLength.Wait(waitTime);
+
+				if (readLength.Result == 0) {
+					isContinue = true;
+					return;
+				}
+				var line = string.Concat(buffer.Take(readLength.Result).ToArray());
 				Application.Current.Dispatcher.Invoke(new Action(() => {
-					if (readLength.Result == 0) {
-						isContinue = true;
-						return;
-					}
-					var line = string.Concat(buffer.Take(readLength.Result).ToArray());
 					var textRange = new TextRange(OutputStream.ContentEnd, OutputStream.ContentEnd);
 					textRange.Text = line;
 				}));
 			}
-
-
 		}
 
 		void RefreshProcess()
