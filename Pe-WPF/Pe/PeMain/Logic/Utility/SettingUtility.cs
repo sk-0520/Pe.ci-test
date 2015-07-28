@@ -164,6 +164,7 @@
 			InitializeNoteSetting(setting.Note, nonProcess);
 			InitializeWindowSaveSetting(setting.WindowSave, nonProcess);
 			InitializeClipboardSetting(setting.Clipboard, nonProcess);
+			InitializeTemplateSetting(setting.Template, nonProcess);
 		}
 
 		public static void InitializeLauncherItemSetting(LauncherItemSettingModel setting, INonProcess nonProcess)
