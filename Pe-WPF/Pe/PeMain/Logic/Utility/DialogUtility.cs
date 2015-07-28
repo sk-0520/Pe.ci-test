@@ -70,6 +70,39 @@
 		}
 
 		/// <summary>
+		/// ファイルを保存するダイアログ。
+		/// </summary>
+		/// <param name="defaultPath"></param>
+		/// <param name="filter"></param>
+		/// <returns>選択されたパス、未選択の場合は null を返す。</returns>
+		public static string ShowSaveFileDialog(string defaultPath, DialogFilterList filter = null)
+		{
+			var tempPath = Environment.ExpandEnvironmentVariables(defaultPath);
+			var usingFilePath = File.Exists(tempPath) ? tempPath : string.Empty;
+
+			var dialog = new SaveFileDialog() {
+				AddExtension = true,
+				ValidateNames = true,
+				FileName = usingFilePath,
+				CheckPathExists = true,
+				OverwritePrompt = true,
+			};
+			if (!string.IsNullOrWhiteSpace(usingFilePath)) {
+				dialog.InitialDirectory = Path.GetDirectoryName(usingFilePath);
+			}
+			if (filter != null) {
+				dialog.Filter = filter.FilterText;
+			}
+
+			var dialogResult = dialog.ShowDialog();
+			if (dialogResult.GetValueOrDefault()) {
+				return dialog.FileName;
+			}
+
+			return null;
+		}
+
+		/// <summary>
 		/// ディレクトリダイアログを表示する。
 		/// </summary>
 		/// <param name="defaultPath">初期パス</param>

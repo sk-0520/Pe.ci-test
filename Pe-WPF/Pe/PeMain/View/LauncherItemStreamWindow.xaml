@@ -3,6 +3,7 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
 	xmlns:AVM="clr-namespace:ContentTypeTextNet.Pe.PeMain.ViewModel"
+	xmlns:AA="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Attached"
 	xmlns:AP="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
 	xmlns:AW="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Window"
 	xmlns:AM="clr-namespace:ContentTypeTextNet.Pe.PeMain"
@@ -13,8 +14,8 @@
 	x:TypeArguments="AVM:LauncherItemStreamViewModel"
 	x:Name="root"
 	Title="StreamWindow" 
-	Height="300" 
-	Width="300"
+	Width="480"
+	Height="360" 
 >
 	<AW:CommonDataWindow.Resources>
 		<ResourceDictionary>
@@ -36,11 +37,11 @@
 				<Image Style="{StaticResource ImageRenderStyle}" Source="{x:Static AM:AppResource.CommonPinImage}" />
 			</ToggleButton>
 			<Separator />
-			<Button>
+			<Button Command="{Binding SaveCommand}">
 				<!-- save -->
 				<Image Style="{StaticResource ImageRenderStyle}" Source="{x:Static AM:AppResource.CommonSaveImage}" />
 			</Button>
-			<Button IsEnabled="{Binding ProcessRunning, Mode=OneWay}">
+			<Button IsEnabled="{Binding ProcessRunning, Mode=OneWay}" Command="{Binding ClearCommand}" >
 				<!-- clear -->
 				<Image Style="{StaticResource ImageRenderStyle}" Source="{x:Static AM:AppResource.CommonClearImage}" />
 			</Button>
@@ -61,15 +62,24 @@
 						<RowDefinition Height="*" />
 						<RowDefinition Height="Auto" />
 					</Grid.RowDefinitions>
-					<xctk:RichTextBox x:Name="viewConsole" Grid.Row="0" IsReadOnly="True" />
-					<TextBox Grid.Row="1" Visibility="{Binding IsEnabledInput, Converter={StaticResource BooleanVisibilityConverter}}" Text="{Binding InputConsole}">
+					<RichTextBox x:Name="viewConsole" Grid.Row="0" IsReadOnly="True" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible">
+						<RichTextBox.Padding>
+							<Thickness>
+								<Thickness.Bottom>8</Thickness.Bottom>
+							</Thickness>
+						</RichTextBox.Padding>
+					</RichTextBox>
+					<TextBox Grid.Row="1" Visibility="{Binding IsEnabledInput, Converter={StaticResource BooleanVisibilityConverter}}" Text="{Binding InputConsole, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding ProcessRunning, Mode=OneWay, Converter={StaticResource LogicalNotConverter}}" >
 						<TextBox.InputBindings>
 							<KeyBinding Command="{Binding Path=ReturnInputCommand}" Key="Enter" />
 						</TextBox.InputBindings>
 					</TextBox>
 				</Grid>
 			</TabItem>
-			<TabItem Header="process">
+			<TabItem>
+				<TabItem.Header>
+					<TextBlock Text="process" AA:Language.Key="stream/process" />
+				</TabItem.Header>
 				<xctk:PropertyGrid IsReadOnly="{Binding ProcessRunning, Mode=OneWay, Converter={StaticResource LogicalNotConverter}}" SelectedObject="{Binding Process}" />
 			</TabItem>
 			<TabItem Header="startinfo">

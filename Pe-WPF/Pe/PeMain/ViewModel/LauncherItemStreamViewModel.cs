@@ -8,13 +8,16 @@
 	using System.Text;
 	using System.Threading.Tasks;
 	using System.Windows;
+	using System.Windows.Controls;
 	using System.Windows.Documents;
 	using System.Windows.Input;
+	using System.Windows.Media;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 	using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
 	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.IF;
+	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 	using ContentTypeTextNet.Pe.PeMain.View;
 
 	public class LauncherItemStreamViewModel : LauncherItemSimpleViewModel, IHavingView<LauncherItemStreamWindow>
@@ -53,6 +56,10 @@
 		public Process Process { get; private set; }
 		public ProcessStartInfo StartInfo { get; private set; }
 
+		/// <summary>
+		/// プロセスは動いているか。
+		/// <para>Process.HasExited見ればいいんだろうけど通知用としてこっちを用いる。</para>
+		/// </summary>
 		public bool ProcessRunning
 		{
 			get { return this._processRunning; }
@@ -110,6 +117,35 @@
 				var result = CreateCommand(
 					o => {
 						SendInput(InputConsole);
+						InputConsole = string.Empty;
+					}
+				);
+
+				return result;
+			}
+		}
+
+		public ICommand ClearCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						OutputStream.Blocks.Clear();
+					}
+				);
+
+				return result;
+			}
+		}
+
+		public ICommand SaveCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						SaveOutputFromDialog();
 					}
 				);
 
@@ -145,14 +181,6 @@
 			const int maxBuffer = 1024;
 			int waitTime = (int)TimeSpan.FromMilliseconds(1000).TotalMilliseconds;
 
-			//Action<string> action = line => {
-			//	Debug.Assert(line.Length > 0);
-			//	Debug.WriteLine(line);
-			//	var textRange = new TextRange(OutputStream.ContentEnd, OutputStream.ContentEnd);
-			//	textRange.Text = line;
-			//	//textRange.ApplyPropertyValue(TextElement.)
-			//};
-
 			char[] buffer = new char[maxBuffer];
 			var isContinue = true;
 			while (isContinue) {
@@ -160,14 +188,26 @@
 				readLength.Wait(waitTime);
 
 				if (readLength.Result == 0) {
-					isContinue = true;
+					//isContinue = false;
 					return;
 				}
+
 				var line = string.Concat(buffer.Take(readLength.Result).ToArray());
-				Application.Current.Dispatcher.Invoke(new Action(() => {
+
+				Application.Current.Dispatcher.BeginInvoke(new Action(() => {
 					var textRange = new TextRange(OutputStream.ContentEnd, OutputStream.ContentEnd);
 					textRange.Text = line;
+					if (!isStandardOutput) {
+						textRange.ApplyPropertyValue(TextElement.BackgroundProperty, Brushes.Red);
+					}
+					if (HasView) {
+						View.viewConsole.ScrollToEnd();
+					}
 				}));
+
+				if (reader.EndOfStream) {
+					isContinue = false;
+				}
 			}
 		}
 
@@ -194,6 +234,36 @@
 			Process.StandardInput.WriteLine(command);
 		}
 
+		bool SaveOutputFromDialog()
+		{
+			var dir = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
+			var name = "TODO.txt";
+			var path = Path.Combine(dir, name);
+			
+			var resultPath = DialogUtility.ShowSaveFileDialog(path);
+			if (resultPath != null) {
+				return SaveOutput(resultPath);
+			}
+
+			return false;
+		}
+
+		bool SaveOutput(string path)
+		{
+			try {
+				using (var stream = new FileStream(path, FileMode.Create, FileAccess.Write)) {
+					var textRange = new TextRange(OutputStream.ContentStart, OutputStream.ContentEnd);
+					textRange.Save(stream, DataFormats.Text);
+
+					return true;
+				}
+			} catch (Exception ex) {
+				NonProcess.Logger.Error(ex);
+			}
+
+			return false;
+		}
+
 		#endregion
 
 		#region IHavingView
@@ -212,6 +282,12 @@
 
 		void View_UserClosing(object sender, System.ComponentModel.CancelEventArgs e)
 		{
+			if(ProcessRunning) {
+				NonProcess.Logger.Warning(NonProcess.Language["running"]);
+				e.Cancel = true;
+				return;
+			}
+
 			View.UserClosing -= View_UserClosing;
 			// not impl
 		}
