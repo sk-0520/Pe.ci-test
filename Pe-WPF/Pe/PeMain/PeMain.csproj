@@ -157,6 +157,7 @@
     <Compile Include="Define\WindowKind.cs" />
     <Compile Include="IF\IAppNonProcess.cs" />
     <Compile Include="IF\IAppSender.cs" />
+    <Compile Include="IF\IHavingAppNonProcess.cs" />
     <Compile Include="IF\IHavingAppSender.cs" />
     <Compile Include="IF\IHavingWindowKind.cs" />
     <Compile Include="IF\IMenuItem.cs" />

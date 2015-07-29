@@ -17,13 +17,15 @@
 	{
 		#region define
 
-		public sealed class AppNonProcessImplement: INonProcess
+		public sealed class AppNonProcessImplement: IAppNonProcess
 		{
 			public AppNonProcessImplement()
 			{ }
 
 			public ILogger Logger { get; set; }
 			public ILanguage Language { get; set; }
+			public VariableConstants VariableConstants { get; set; }
+			public LauncherIconCaching LauncherIconCaching { get; set; }
 		}
 
 		#endregion
