@@ -96,7 +96,7 @@
 			{
 				if(this._groupTree == null) {
 					var groupVm = GroupSettingModel.Groups
-						.Select(g => new GroupRootViewModel(g, LauncherItemSetting.Items, LauncherIconCaching, NonProcess))
+						.Select(g => new GroupRootViewModel(g, LauncherItemSetting.Items, NonProcess))
 					;
 					this._groupTree = new CollectionModel<GroupRootViewModel>(groupVm);
 				}
@@ -125,7 +125,7 @@
 						if(groupNode.Nodes[selectedIndex].Model != this._selectedLauncherItem) {
 							targetGroupSetting.LauncherItems[selectedIndex] = this._selectedLauncherItem.Id;
 
-							var insertViewModel = new GroupItemViewMode(this._selectedLauncherItem, LauncherIconCaching, NonProcess) {
+							var insertViewModel = new GroupItemViewMode(this._selectedLauncherItem, NonProcess) {
 								IsSelected = true,
 							};
 							foreach (var node in groupNode.Nodes) {
@@ -150,7 +150,7 @@
 					o => {
 						var model = SettingUtility.CreateLauncherGroup(GroupSettingModel.Groups, NonProcess);
 						GroupSettingModel.Groups.Add(model);
-						var vm = new GroupRootViewModel(model, LauncherItemSetting.Items, LauncherIconCaching, NonProcess);
+						var vm = new GroupRootViewModel(model, LauncherItemSetting.Items, NonProcess);
 						this._groupTree.Add(vm);
 					}
 				);
@@ -175,7 +175,7 @@
 							var groupViewModel = (GroupRootViewModel)nodeAndItem.SelectedNode;
 							var groupModel = groupViewModel.Model;
 							var target = this._groupTree.Single(g => g == groupViewModel);
-							var appendViewModel = new GroupItemViewMode(nodeAndItem.LauncherItem, LauncherIconCaching, NonProcess);
+							var appendViewModel = new GroupItemViewMode(nodeAndItem.LauncherItem, NonProcess);
 
 							groupModel.LauncherItems.Add(nodeAndItem.LauncherItem.Id);
 							target.Nodes.Add(appendViewModel);
@@ -184,7 +184,7 @@
 							Debug.Assert(nodeAndItem.SelectedNode.ToolbarNodeKind == ToolbarNodeKind.Item);
 							var itemViewModel = (GroupItemViewMode)nodeAndItem.SelectedNode;
 							var groupViewModel = this._groupTree.First(g => g.Nodes.Any(i => i == itemViewModel));
-							var appendViewModel = new GroupItemViewMode(nodeAndItem.LauncherItem, LauncherIconCaching, NonProcess);
+							var appendViewModel = new GroupItemViewMode(nodeAndItem.LauncherItem, NonProcess);
 							var groupModel = groupViewModel.Model;
 							
 							var insertIndex = groupViewModel.Nodes.IndexOf(itemViewModel) + 1;
