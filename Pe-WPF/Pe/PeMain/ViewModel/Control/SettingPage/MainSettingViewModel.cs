@@ -13,11 +13,12 @@
 	using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
 	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
+	using ContentTypeTextNet.Pe.PeMain.IF;
 
 	public class MainSettingViewModel : SettingPageViewModelBase
 	{
-		public MainSettingViewModel(RunningInformationSettingModel runningInformation, LanguageSettingModel language, LoggingSettingModel logging, SystemEnvironmentSettingModel systemEnvironment, INonProcess nonProcess, VariableConstants variableConstants, SettingNotifiyItem settingNotifiyItem)
-			: base(nonProcess, variableConstants, settingNotifiyItem)
+		public MainSettingViewModel(RunningInformationSettingModel runningInformation, LanguageSettingModel language, LoggingSettingModel logging, SystemEnvironmentSettingModel systemEnvironment, IAppNonProcess nonProcess, SettingNotifiyItem settingNotifiyItem)
+			: base(nonProcess, settingNotifiyItem)
 		{
 			RunningInformation = runningInformation;
 			Language = language;

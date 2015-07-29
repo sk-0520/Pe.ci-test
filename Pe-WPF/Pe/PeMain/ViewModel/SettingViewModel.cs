@@ -51,7 +51,6 @@
 						CommonData.MainSetting.Logging,
 						CommonData.MainSetting.SystemEnvironment,
 						CommonData.NonProcess,
-						CommonData.VariableConstants,
 						SettingNotifiyItem
 					);
 				}
@@ -69,7 +68,6 @@
 						CommonData.LauncherItemSetting,
 						CommonData.LauncherIconCaching,
 						CommonData.NonProcess,
-						CommonData.VariableConstants,
 						SettingNotifiyItem
 					);
 				}
@@ -89,7 +87,6 @@
 						CommonData.LauncherItemSetting,
 						CommonData.LauncherIconCaching,
 						CommonData.NonProcess,
-						CommonData.VariableConstants,
 						SettingNotifiyItem
 					);
 				}
@@ -106,7 +103,6 @@
 					this._commandSetting = new CommandSettingViewModel(
 						CommonData.MainSetting.Command,
 						CommonData.NonProcess,
-						CommonData.VariableConstants,
 						SettingNotifiyItem
 					);
 				}
@@ -123,7 +119,6 @@
 					this._noteSetting = new NoteSettingViewModel(
 						CommonData.MainSetting.Note,
 						CommonData.NonProcess,
-						CommonData.VariableConstants,
 						SettingNotifiyItem
 					);
 				}
@@ -140,7 +135,6 @@
 					this._clipboardSetting = new ClipboardSettingViewModel(
 						CommonData.MainSetting.Clipboard,
 						CommonData.NonProcess,
-						CommonData.VariableConstants,
 						SettingNotifiyItem
 					);
 				}
@@ -157,7 +151,6 @@
 					this._templateSetting = new TemplateSettingViewModel(
 						CommonData.MainSetting.Template,
 						CommonData.NonProcess,
-						CommonData.VariableConstants,
 						SettingNotifiyItem
 					);
 				}

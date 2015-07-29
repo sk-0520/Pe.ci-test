@@ -21,8 +21,8 @@
 
 		#endregion
 
-		public LauncherItemSettingViewModel(LauncherItemSettingModel launcherItemSetting, LauncherIconCaching launcherIconCaching, INonProcess nonProcess, VariableConstants variableConstants, SettingNotifiyItem settingNotifiyItem)
-			: base(launcherIconCaching, nonProcess, variableConstants, settingNotifiyItem)
+		public LauncherItemSettingViewModel(LauncherItemSettingModel launcherItemSetting, LauncherIconCaching launcherIconCaching, IAppNonProcess nonProcess, SettingNotifiyItem settingNotifiyItem)
+			: base(launcherIconCaching, nonProcess, settingNotifiyItem)
 		{
 			LauncherItemSetting = launcherItemSetting;
 		}

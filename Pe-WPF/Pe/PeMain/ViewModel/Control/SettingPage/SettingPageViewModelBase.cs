@@ -12,16 +12,14 @@
 	using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
 	using ContentTypeTextNet.Pe.PeMain.IF;
 
-	public abstract class SettingPageViewModelBase: ViewModelBase, IHavingNonProcess, IHavingVariableConstants
+	public abstract class SettingPageViewModelBase: ViewModelBase, IHavingAppNonProcess
 	{
-		public SettingPageViewModelBase(INonProcess nonProcess, VariableConstants variableConstants, SettingNotifiyItem settingNotifiyItem)
+		public SettingPageViewModelBase(IAppNonProcess nonProcess, SettingNotifiyItem settingNotifiyItem)
 		{
 			CheckUtility.DebugEnforceNotNull(nonProcess);
-			CheckUtility.DebugEnforceNotNull(variableConstants);
 			CheckUtility.DebugEnforceNotNull(settingNotifiyItem);
 
 			NonProcess = nonProcess;
-			VariableConstants = variableConstants;
 			SettingNotifiyItem = settingNotifiyItem;
 		}
 
@@ -31,15 +29,9 @@
 
 		#endregion
 
-		#region IHavingNonProcess
+		#region IHavingAppNonProcess
 
-		public INonProcess NonProcess { get; private set; }
-
-		#endregion
-
-		#region IHavingVariableConstants
-
-		public VariableConstants VariableConstants { get; private set; }
+		public IAppNonProcess NonProcess { get; private set; }
 
 		#endregion
 	}

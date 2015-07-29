@@ -14,8 +14,8 @@
 
 	public abstract class SettingPageLauncherIconCacheViewModelBase : SettingPageViewModelBase, IHavingLauncherIconCaching
 	{
-		public SettingPageLauncherIconCacheViewModelBase(LauncherIconCaching launcherIconCaching, INonProcess nonProcess, VariableConstants variableConstants, SettingNotifiyItem settingNotifiyItem)
-			: base(nonProcess, variableConstants, settingNotifiyItem)
+		public SettingPageLauncherIconCacheViewModelBase(LauncherIconCaching launcherIconCaching, IAppNonProcess nonProcess, SettingNotifiyItem settingNotifiyItem)
+			: base(nonProcess, settingNotifiyItem)
 		{
 			CheckUtility.EnforceNotNull(launcherIconCaching);
 

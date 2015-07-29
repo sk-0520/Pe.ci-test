@@ -34,8 +34,8 @@
 
 		#endregion
 
-		public ToolbarSettingViewModel(ToolbarItemCollectionModel toolbarItems, LauncherGroupSettingModel groupSettingModel, LauncherItemSettingModel launcherItemSetting, LauncherIconCaching launcherIconCaching, INonProcess nonProcess, VariableConstants variableConstants, SettingNotifiyItem settingNotifiyItem)
-			: base(launcherIconCaching, nonProcess, variableConstants, settingNotifiyItem)
+		public ToolbarSettingViewModel(ToolbarItemCollectionModel toolbarItems, LauncherGroupSettingModel groupSettingModel, LauncherItemSettingModel launcherItemSetting, LauncherIconCaching launcherIconCaching, IAppNonProcess nonProcess, SettingNotifiyItem settingNotifiyItem)
+			: base(launcherIconCaching, nonProcess, settingNotifiyItem)
 		{
 			ToolbarItems = toolbarItems;
 			GroupSettingModel = groupSettingModel;
@@ -71,7 +71,7 @@
 			get
 			{
 				foreach (var model in ToolbarItems) {
-					var vm = new ToolbarViewModel(model, GroupSettingModel.Groups, LauncherIconCaching, NonProcess);
+					var vm = new ToolbarViewModel(model, GroupSettingModel.Groups, NonProcess);
 					yield return vm;
 				}
 			}
