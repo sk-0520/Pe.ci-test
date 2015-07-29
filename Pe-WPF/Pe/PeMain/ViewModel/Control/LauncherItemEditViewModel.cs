@@ -17,8 +17,8 @@
 
 	public class LauncherItemEditViewModel: LauncherItemSimpleViewModel
 	{
-		public LauncherItemEditViewModel(LauncherItemModel model, LauncherIconCaching launcherIconCaching, INonProcess nonPorocess, IAppSender appSender)
-			: base(model, launcherIconCaching, nonPorocess, appSender)
+		public LauncherItemEditViewModel(LauncherItemModel model, IAppNonProcess nonPorocess, IAppSender appSender)
+			: base(model, nonPorocess, appSender)
 		{ }
 
 		#region property
@@ -42,7 +42,7 @@
 
 		public EnvironmentVariablesEditViewModel EnvironmentVariables
 		{
-			get { return new EnvironmentVariablesEditViewModel(Model.EnvironmentVariables, NonProcess); }
+			get { return new EnvironmentVariablesEditViewModel(Model.EnvironmentVariables, AppNonProcess); }
 		}
 
 		#endregion
@@ -55,7 +55,7 @@
 			{
 				var result = CreateCommand(
 					o => {
-						var dialogResult = LauncherItemUtility.ShowOpenCommandDialog(Command, NonProcess);
+						var dialogResult = LauncherItemUtility.ShowOpenCommandDialog(Command, AppNonProcess);
 						if(dialogResult != null) {
 							Command = dialogResult;
 						}

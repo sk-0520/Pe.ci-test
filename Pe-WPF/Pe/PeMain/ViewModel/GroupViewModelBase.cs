@@ -12,7 +12,7 @@
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
-	public abstract class GroupViewModelBase<TModel>: SingleModelWrapperViewModelBase<TModel>, IHavingNonProcess, IHavingLauncherIconCaching, IToolbarNode
+	public abstract class GroupViewModelBase<TModel>: SingleModelWrapperViewModelBase<TModel>, IHavingAppNonProcess, IToolbarNode
 		where TModel: IModel, ITId<Guid>, IName
 	{
 		#region variable
@@ -21,11 +21,10 @@
 
 		#endregion
 
-		public GroupViewModelBase(TModel model, LauncherIconCaching launcherIconCaching, INonProcess nonProcess)
+		public GroupViewModelBase(TModel model, IAppNonProcess appNonProcess)
 			:base(model)
 		{
-			LauncherIconCaching = launcherIconCaching;
-			NonProcess = nonProcess;
+			AppNonProcess = appNonProcess;
 		}
 
 		#region property
@@ -46,15 +45,9 @@
 
 		#endregion
 
-		#region IHavingLauncherIconCaching
+		#region IHavingAppNonProcess
 
-		public LauncherIconCaching LauncherIconCaching { get; private set; }
-
-		#endregion
-
-		#region IHavingNonProcess
-
-		public INonProcess NonProcess { get; private set; }
+		public IAppNonProcess AppNonProcess { get; private set; }
 
 		#endregion
 

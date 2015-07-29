@@ -34,8 +34,8 @@
 
 		#endregion
 
-		public ToolbarSettingViewModel(ToolbarItemCollectionModel toolbarItems, LauncherGroupSettingModel groupSettingModel, LauncherItemSettingModel launcherItemSetting, LauncherIconCaching launcherIconCaching, INonProcess nonProcess, VariableConstants variableConstants, SettingNotifiyItem settingNotifiyItem)
-			: base(launcherIconCaching, nonProcess, variableConstants, settingNotifiyItem)
+		public ToolbarSettingViewModel(ToolbarItemCollectionModel toolbarItems, LauncherGroupSettingModel groupSettingModel, LauncherItemSettingModel launcherItemSetting, IAppNonProcess appNonProcess, SettingNotifiyItem settingNotifiyItem)
+			: base(appNonProcess, settingNotifiyItem)
 		{
 			ToolbarItems = toolbarItems;
 			GroupSettingModel = groupSettingModel;
@@ -57,8 +57,7 @@
 				if (this._launcherItems == null) {
 					this._launcherItems = new LauncherItemsViewModel(
 						LauncherItemSetting.Items,
-						LauncherIconCaching,
-						NonProcess
+						AppNonProcess
 					);
 				}
 
@@ -71,7 +70,7 @@
 			get
 			{
 				foreach (var model in ToolbarItems) {
-					var vm = new ToolbarViewModel(model, GroupSettingModel.Groups, LauncherIconCaching, NonProcess);
+					var vm = new ToolbarViewModel(model, GroupSettingModel.Groups, AppNonProcess);
 					yield return vm;
 				}
 			}
@@ -96,7 +95,7 @@
 			{
 				if(this._groupTree == null) {
 					var groupVm = GroupSettingModel.Groups
-						.Select(g => new GroupRootViewModel(g, LauncherItemSetting.Items, LauncherIconCaching, NonProcess))
+						.Select(g => new GroupRootViewModel(g, LauncherItemSetting.Items, AppNonProcess))
 					;
 					this._groupTree = new CollectionModel<GroupRootViewModel>(groupVm);
 				}
@@ -125,7 +124,7 @@
 						if(groupNode.Nodes[selectedIndex].Model != this._selectedLauncherItem) {
 							targetGroupSetting.LauncherItems[selectedIndex] = this._selectedLauncherItem.Id;
 
-							var insertViewModel = new GroupItemViewMode(this._selectedLauncherItem, LauncherIconCaching, NonProcess) {
+							var insertViewModel = new GroupItemViewMode(this._selectedLauncherItem, AppNonProcess) {
 								IsSelected = true,
 							};
 							foreach (var node in groupNode.Nodes) {
@@ -148,9 +147,9 @@
 			{
 				var result = CreateCommand(
 					o => {
-						var model = SettingUtility.CreateLauncherGroup(GroupSettingModel.Groups, NonProcess);
+						var model = SettingUtility.CreateLauncherGroup(GroupSettingModel.Groups, AppNonProcess);
 						GroupSettingModel.Groups.Add(model);
-						var vm = new GroupRootViewModel(model, LauncherItemSetting.Items, LauncherIconCaching, NonProcess);
+						var vm = new GroupRootViewModel(model, LauncherItemSetting.Items, AppNonProcess);
 						this._groupTree.Add(vm);
 					}
 				);
@@ -175,7 +174,7 @@
 							var groupViewModel = (GroupRootViewModel)nodeAndItem.SelectedNode;
 							var groupModel = groupViewModel.Model;
 							var target = this._groupTree.Single(g => g == groupViewModel);
-							var appendViewModel = new GroupItemViewMode(nodeAndItem.LauncherItem, LauncherIconCaching, NonProcess);
+							var appendViewModel = new GroupItemViewMode(nodeAndItem.LauncherItem, AppNonProcess);
 
 							groupModel.LauncherItems.Add(nodeAndItem.LauncherItem.Id);
 							target.Nodes.Add(appendViewModel);
@@ -184,7 +183,7 @@
 							Debug.Assert(nodeAndItem.SelectedNode.ToolbarNodeKind == ToolbarNodeKind.Item);
 							var itemViewModel = (GroupItemViewMode)nodeAndItem.SelectedNode;
 							var groupViewModel = this._groupTree.First(g => g.Nodes.Any(i => i == itemViewModel));
-							var appendViewModel = new GroupItemViewMode(nodeAndItem.LauncherItem, LauncherIconCaching, NonProcess);
+							var appendViewModel = new GroupItemViewMode(nodeAndItem.LauncherItem, AppNonProcess);
 							var groupModel = groupViewModel.Model;
 							
 							var insertIndex = groupViewModel.Nodes.IndexOf(itemViewModel) + 1;

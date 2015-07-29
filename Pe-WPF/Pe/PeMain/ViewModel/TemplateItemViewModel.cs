@@ -22,7 +22,7 @@
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 	using ContentTypeTextNet.Pe.PeMain.View;
 
-	public class TemplateItemViewModel : SingleModelWrapperViewModelBase<TemplateIndexItemModel>, IHavingAppSender, IHavingClipboardWatcher, IHavingNonProcess, IHavingVariableConstants, IUnload
+	public class TemplateItemViewModel : SingleModelWrapperViewModelBase<TemplateIndexItemModel>, IHavingAppSender, IHavingAppNonProcess, IUnload
 	{
 		#region variable
 
@@ -32,13 +32,11 @@
 
 		#endregion
 
-		public TemplateItemViewModel(TemplateIndexItemModel model, IAppSender appSender, IClipboardWatcher clipboardWatcher, INonProcess nonProcess, VariableConstants variableConstants)
+		public TemplateItemViewModel(TemplateIndexItemModel model, IAppSender appSender, IAppNonProcess appNonProcess)
 			:base(model)
 		{
 			AppSender = appSender;
-			ClipboardWatcher = clipboardWatcher;
-			NonProcess = nonProcess;
-			VariableConstants = variableConstants;
+			AppNonProcess = appNonProcess;
 		}
 
 		#region property
@@ -155,7 +153,7 @@
 						var hWnd = apiWindow.Handle;
 						// TODO: なんだかなぁ。
 						SetReplacedValue();
-						ClipboardUtility.OutputText(hWnd, Replaced, NonProcess, ClipboardWatcher);
+						ClipboardUtility.OutputText(hWnd, Replaced, AppNonProcess, AppNonProcess.ClipboardWatcher);
 					}
 				);
 
@@ -170,7 +168,7 @@
 				var result = CreateCommand(
 					o => {
 						SetReplacedValue();
-						ClipboardUtility.CopyText(Replaced, ClipboardWatcher);
+						ClipboardUtility.CopyText(Replaced, AppNonProcess.ClipboardWatcher);
 					}
 				);
 
@@ -191,8 +189,8 @@
 		public void SetReplacedValue()
 		{
 			if (IsReplace) {
-				Processor = TemplateUtility.MakeTemplateProcessor(BodyModel.Source, Processor, NonProcess);
-				Replaced = TemplateUtility.ToPlainText(Model, BodyModel, Processor, DateTime.Now, NonProcess);
+				Processor = TemplateUtility.MakeTemplateProcessor(BodyModel.Source, Processor, AppNonProcess);
+				Replaced = TemplateUtility.ToPlainText(Model, BodyModel, Processor, DateTime.Now, AppNonProcess);
 			} else {
 				Replaced = Source ?? string.Empty;
 			}
@@ -205,7 +203,7 @@
 				return;
 			}
 			BodyModel.History.Update();
-			NonProcess.Logger.Information("save body:" + Name, BodyModel);
+			AppNonProcess.Logger.Information("save body:" + Name, BodyModel);
 			AppSender.SendSaveIndexBody(BodyModel, Model.Id);
 			ResetChangeFlag();
 		}
@@ -238,21 +236,9 @@
 
 		#endregion
 
-		#region IHavingClipboardWatcher
+		#region IHavingAppNonProcess
 
-		public IClipboardWatcher ClipboardWatcher { get; private set; }
-
-		#endregion
-
-		#region IHavingNonProcess
-
-		public INonProcess NonProcess { get; private set; }
-
-		#endregion
-
-		#region IHavingVariableConstants
-
-		public VariableConstants VariableConstants { get; private set; }
+		public IAppNonProcess AppNonProcess { get; private set; }
 
 		#endregion
 

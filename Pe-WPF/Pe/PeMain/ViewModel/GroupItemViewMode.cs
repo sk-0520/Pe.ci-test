@@ -17,8 +17,8 @@
 
 	public class GroupItemViewMode: GroupViewModelBase<LauncherItemModel>
 	{
-		public GroupItemViewMode(LauncherItemModel model, LauncherIconCaching launcherIconCaching, INonProcess nonProcess)
-			: base(model, launcherIconCaching, nonProcess)
+		public GroupItemViewMode(LauncherItemModel model, IAppNonProcess appNonProcess)
+			: base(model, appNonProcess)
 		{ }
 
 		#region property

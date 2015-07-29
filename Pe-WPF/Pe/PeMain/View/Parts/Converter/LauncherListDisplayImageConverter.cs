@@ -21,11 +21,9 @@ using ContentTypeTextNet.Pe.PeMain.ViewModel;
 	{
 		#region static
 
-		/// <summary>
-		/// <para>CommonData.LauncherIconCachingを使いたかったけど渡し方分からなんだ。</para>
-		/// </summary>
+		// TODO: CommonData.LauncherIconCachingを使いたかったけど渡し方分からなんだ。
 		public static LauncherIconCaching LauncherIconCaching { get; set; }
-		public static INonProcess NonProcess { get; set; }
+		public static IAppNonProcess NonProcess { get; set; }
 		public static IAppSender AppSender { get; set; }
 
 		#endregion
@@ -34,7 +32,7 @@ using ContentTypeTextNet.Pe.PeMain.ViewModel;
 		{
 			var model = value as LauncherItemModel;
 			if (model != null) {
-				var vm = new LauncherItemSimpleViewModel(model, LauncherIconCaching, NonProcess, AppSender);
+				var vm = new LauncherItemSimpleViewModel(model, NonProcess, AppSender);
 				return vm.GetIcon(IconScale.Small);
 			}
 

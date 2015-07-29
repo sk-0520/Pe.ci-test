@@ -21,36 +21,40 @@
 	/// </summary>
 	public static class SettingUtility
 	{
-		static Guid[] guidList = new[] {
+		static Guid[] debugGuidList = new[] {
 			Guid.NewGuid(),
 			Guid.NewGuid(),
 			Guid.NewGuid(),
 			Guid.NewGuid(),
 		};
-		public static bool CheckAccept(RunningInformationSettingModel model, INonProcess nonProcess)
+
+		public static bool CheckAccept(RunningInformationSettingModel model, INonProcess appNonProcess)
 		{
 			if(!model.Accept) {
 				// 完全に初回
-				nonProcess.Logger.Debug("first");
+				appNonProcess.Logger.Debug("first");
 				return false;
 			}
 
 			if(model.LastExecuteVersion == null) {
 				// 何らかの理由で前回実行時のバージョン格納されていない
-				nonProcess.Logger.Debug("last version == null");
+				appNonProcess.Logger.Debug("last version == null");
 				return false;
 			}
 
 			if(model.LastExecuteVersion < Constants.acceptVersion) {
 				// 前回バージョンから強制定期に使用許諾が必要
-				nonProcess.Logger.Debug("last version < accept version");
+				appNonProcess.Logger.Debug("last version < accept version");
 				return false;
 			}
 
 			return true;
 		}
 
-
+		/// <summary>
+		/// 実行情報の切り上げ。
+		/// </summary>
+		/// <param name="model"></param>
 		public static void IncrementRunningInformation(RunningInformationSettingModel model)
 		{
 			CheckUtility.EnforceNotNull(model);
@@ -73,25 +77,9 @@
 			return result;
 		}
 
-		public static LauncherGroupItemModel CreateLauncherGroup(LauncherGroupItemCollectionModel group, INonProcess nonProcess)
+		public static LauncherGroupItemModel CreateLauncherGroup(LauncherGroupItemCollectionModel group, INonProcess appNonProcess)
 		{
-			////var newGroupId = nonProcess.Language["new/group-id"];
-			//var newGroupName = nonProcess.Language["new/group-name"];
-
-			//var result = new LauncherGroupItemModel();
-			//if(group != null || group.Any()) {
-			//	//newGroupId = TextUtility.ToUnique(
-			//	//	newGroupId,
-			//	//	group.Keys,
-			//	//	(s, i) => string.Format("{0}_{1}", s, i)
-			//	//);
-			//	newGroupName = TextUtility.ToUniqueDefault(newGroupName, group.Select(g => g.Name));
-			//}
-			////result.Id = newGroupId;
-			//result.Name = newGroupName;
-
-			//return result;
-			var result = CreateModelName(group, nonProcess.Language, "new/group-name");
+			var result = CreateModelName(group, appNonProcess.Language, "new/group-name");
 			return result;
 		}
 
@@ -99,15 +87,15 @@
 		/// 
 		/// </summary>
 		/// <param name="items"></param>
-		/// <param name="nonProcess"></param>
+		/// <param name="appNonProcess"></param>
 		/// <returns></returns>
-		public static TemplateIndexItemModel CreateTemplateIndexItem(TemplateIndexItemCollectionModel items, INonProcess nonProcess)
+		public static TemplateIndexItemModel CreateTemplateIndexItem(TemplateIndexItemCollectionModel items, INonProcess appNonProcess)
 		{
-			var result = CreateModelName(items, nonProcess.Language, "new/template-name");
+			var result = CreateModelName(items, appNonProcess.Language, "new/template-name");
 			return result;
 		}
 
-		public static void InitializeToolbar(ToolbarItemModel model, INonProcess nonProcess)
+		public static void InitializeToolbar(ToolbarItemModel model, Version previousVersion, INonProcess appNonProcess)
 		{
 			if (model.FloatToolbar.WidthButtonCount <= 0) {
 				model.FloatToolbar.WidthButtonCount = 1;
@@ -117,13 +105,13 @@
 			}
 		}
 
-		public static void InitializeWindowSaveSetting(WindowSaveSettingModel model, INonProcess nonProcess)
+		public static void InitializeWindowSaveSetting(WindowSaveSettingModel model, Version previousVersion, INonProcess appNonProcess)
 		{
 			model.SaveCount = Constants.windowSaveCount.GetClamp(model.SaveCount);
 			model.SaveIntervalTime = Constants.windowSaveIntervalTime.GetClamp(model.SaveIntervalTime);
 		}
 
-		public static void InitializeNoteSetting(NoteSettingModel model, INonProcess nonProcess)
+		public static void InitializeNoteSetting(NoteSettingModel model, Version previousVersion, INonProcess appNonProcess)
 		{
 			if (model.ForeColor == default(Color)) {
 				model.ForeColor = Constants.noteForeColor;
@@ -133,7 +121,7 @@
 			}
 		}
 
-		public static void InitializeClipboardSetting(ClipboardSettingModel setting, INonProcess nonProcess)
+		public static void InitializeClipboardSetting(ClipboardSettingModel setting, Version previousVersion, INonProcess appNonProcess)
 		{
 			setting.WaitTime = Constants.clipboardWaitTime.GetClamp(setting.WaitTime);
 
@@ -142,7 +130,7 @@
 			}
 		}
 
-		public static void InitializeTemplateSetting(TemplateSettingModel setting, INonProcess nonProcess)
+		public static void InitializeTemplateSetting(TemplateSettingModel setting, Version previousVersion, INonProcess appNonProcess)
 		{
 			if(setting.ItemsListWidth <= 0) {
 				setting.ItemsListWidth = Constants.templateItemsListWidth;
@@ -152,47 +140,52 @@
 			}
 		}
 
-
-		public static void InitializeMainSetting(MainSettingModel setting, INonProcess nonProcess)
+		/// <summary>
+		/// 本体設定を補正。
+		/// </summary>
+		/// <param name="setting"></param>
+		/// <param name="previousVersion"></param>
+		/// <param name="appNonProcess"></param>
+		public static void InitializeMainSetting(MainSettingModel setting, Version previousVersion, INonProcess appNonProcess)
 		{
 			CheckUtility.EnforceNotNull(setting);
 
 			foreach(var toolbar in setting.Toolbar) {
-				InitializeToolbar(toolbar, nonProcess);
+				InitializeToolbar(toolbar, previousVersion, appNonProcess);
 			}
 
-			InitializeNoteSetting(setting.Note, nonProcess);
-			InitializeWindowSaveSetting(setting.WindowSave, nonProcess);
-			InitializeClipboardSetting(setting.Clipboard, nonProcess);
-			InitializeTemplateSetting(setting.Template, nonProcess);
+			InitializeNoteSetting(setting.Note, previousVersion, appNonProcess);
+			InitializeWindowSaveSetting(setting.WindowSave, previousVersion, appNonProcess);
+			InitializeClipboardSetting(setting.Clipboard, previousVersion, appNonProcess);
+			InitializeTemplateSetting(setting.Template, previousVersion, appNonProcess);
 		}
 
-		public static void InitializeLauncherItemSetting(LauncherItemSettingModel setting, INonProcess nonProcess)
+		public static void InitializeLauncherItemSetting(LauncherItemSettingModel setting, Version previousVersion, INonProcess appNonProcess)
 		{
 			CheckUtility.EnforceNotNull(setting);
 
 			// --------------------------------
 			if(!setting.Items.Any()) {
 				setting.Items.Add(new LauncherItemModel() {
-					Id = guidList[0],
+					Id = debugGuidList[0],
 					Name = "name1",
 					LauncherKind = LauncherKind.File,
 					Command = @"C:\Windows\System32\mspaint.exe"
 				});
 				setting.Items.Add(new LauncherItemModel() {
-					Id = guidList[1],
+					Id = debugGuidList[1],
 					Name = "name2",
 					LauncherKind = LauncherKind.File,
 					Command = @"%windir%\system32\calc.exe"
 				});
 				setting.Items.Add(new LauncherItemModel() {
-					Id = guidList[2],
+					Id = debugGuidList[2],
 					Name = "name3",
 					LauncherKind = LauncherKind.Command,
 					Command = @"ping"
 				});
 				setting.Items.Add(new LauncherItemModel() {
-					Id = guidList[3],
+					Id = debugGuidList[3],
 					Name = "name4",
 					LauncherKind = LauncherKind.File,
 					Command = @"c:\"
@@ -201,26 +194,26 @@
 			// --------------------------------
 		}
 
-		public static void InitializeLauncherGroupSetting(LauncherGroupSettingModel setting, INonProcess nonProcess)
+		public static void InitializeLauncherGroupSetting(LauncherGroupSettingModel setting, Version previousVersion, INonProcess appNonProcess)
 		{
 			CheckUtility.EnforceNotNull(setting);
-			CheckUtility.EnforceNotNull(nonProcess);
+			CheckUtility.EnforceNotNull(appNonProcess);
 
 			if(!setting.Groups.Any()) {
-				var initGroup = CreateLauncherGroup(setting.Groups, nonProcess);
+				var initGroup = CreateLauncherGroup(setting.Groups, appNonProcess);
 				//------------------------
 				initGroup.LauncherItems = new CollectionModel<Guid>(new[] {
-					guidList[0],
-					guidList[1],
-					guidList[2],
-					guidList[3],
+					debugGuidList[0],
+					debugGuidList[1],
+					debugGuidList[2],
+					debugGuidList[3],
 				});
 				//------------------------
 				setting.Groups.Add(initGroup);
 			}
 		}
 
-		public static void IncrementLauncherItem(LauncherItemModel launcherItem, string option, string workDirPath, INonProcess nonProcess)
+		public static void IncrementLauncherItem(LauncherItemModel launcherItem, string option, string workDirPath, INonProcess appNonProcess)
 		{
 			CheckUtility.EnforceNotNull(launcherItem);
 		}

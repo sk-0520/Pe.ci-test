@@ -19,7 +19,7 @@
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
-	public abstract class LauncherItemViewModelBase: SingleModelWrapperViewModelBase<LauncherItemModel>, IHavingNonProcess, IHavingLauncherIconCaching, IHavingAppSender
+	public abstract class LauncherItemViewModelBase: SingleModelWrapperViewModelBase<LauncherItemModel>, IHavingAppNonProcess, IHavingAppSender
 	{
 		#region variable
 
@@ -28,11 +28,10 @@
 
 		#endregion
 
-		public LauncherItemViewModelBase(LauncherItemModel model, LauncherIconCaching launcherIconCaching, INonProcess nonProcess, IAppSender appSender)
+		public LauncherItemViewModelBase(LauncherItemModel model, IAppNonProcess appNonProcess, IAppSender appSender)
 			: base(model)
 		{
-			LauncherIconCaching = launcherIconCaching;
-			NonProcess = nonProcess;
+			AppNonProcess = appNonProcess;
 			AppSender = appSender;
 		}
 
@@ -110,9 +109,9 @@
 
 		public BitmapSource GetIcon(IconScale iconScale)
 		{
-			CheckUtility.DebugEnforceNotNull(LauncherIconCaching);
+			CheckUtility.DebugEnforceNotNull(AppNonProcess.LauncherIconCaching);
 
-			return LauncherIconCaching[iconScale].Get(Model, () => LauncherItemUtility.GetIcon(Model, iconScale, NonProcess));
+			return AppNonProcess.LauncherIconCaching[iconScale].Get(Model, () => LauncherItemUtility.GetIcon(Model, iconScale, AppNonProcess));
 		}
 
 		public Color GetIconColor(IconScale iconScale)
@@ -128,24 +127,18 @@
 		protected void Execute()
 		{
 			try {
-				ExecuteUtility.RunItem(Model, NonProcess, AppSender);
-				SettingUtility.IncrementLauncherItem(Model, null, null, NonProcess);
+				ExecuteUtility.RunItem(Model, AppNonProcess, AppSender);
+				SettingUtility.IncrementLauncherItem(Model, null, null, AppNonProcess);
 			} catch (Exception ex) {
-				NonProcess.Logger.Warning(ex);
+				AppNonProcess.Logger.Warning(ex);
 			}
 		}
 
 		#endregion
 
-		#region IHavingNonProcess
+		#region IHavingAppNonProcess
 
-		public INonProcess NonProcess { get; private set; }
-
-		#endregion
-
-		#region IHavingLauncherIconCaching
-
-		public LauncherIconCaching LauncherIconCaching { get; private set; }
+		public IAppNonProcess AppNonProcess { get; private set; }
 
 		#endregion
 

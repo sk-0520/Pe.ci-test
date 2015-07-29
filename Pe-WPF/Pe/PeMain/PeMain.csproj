@@ -155,7 +155,9 @@
     <Compile Include="Define\ImageScale.cs" />
     <Compile Include="Define\ToolbarNodeKind.cs" />
     <Compile Include="Define\WindowKind.cs" />
+    <Compile Include="IF\IAppNonProcess.cs" />
     <Compile Include="IF\IAppSender.cs" />
+    <Compile Include="IF\IHavingAppNonProcess.cs" />
     <Compile Include="IF\IHavingAppSender.cs" />
     <Compile Include="IF\IHavingWindowKind.cs" />
     <Compile Include="IF\IMenuItem.cs" />
@@ -165,10 +167,7 @@
     <Compile Include="IF\ViewExtend\ICaptionDoubleClickData.cs" />
     <Compile Include="IF\IClipboardWatcher.cs" />
     <Compile Include="IF\ICommonData.cs" />
-    <Compile Include="IF\IHavingClipboardWatcher.cs" />
     <Compile Include="IF\IHavingCommonData.cs" />
-    <Compile Include="IF\IHavingLauncherIconCaching.cs" />
-    <Compile Include="IF\IHavingVariableConstants.cs" />
     <Compile Include="IF\ILogAppender.cs" />
     <Compile Include="IF\IToolbarNode.cs" />
     <Compile Include="Logic\AppInformationCollection.cs" />

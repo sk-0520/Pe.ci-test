@@ -455,27 +455,22 @@
 			using(var timeLogger = CommonData.NonProcess.CreateTimeLogger()) {
 
 				LoadSetting();
+				// 前回バージョンが色々必要なのでインクリメント前の生情報を保持しておく。
+				var previousVersion = (Version)CommonData.MainSetting.RunningInformation.LastExecuteVersion;
 				if(!InitializeAccept()) {
 					return false;
 				}
-				InitializeSetting();
-
+				InitializeSetting(previousVersion);
 				InitializeStatus();
-
 				InitializeSystemEvent();
-
 				InitializeStatic();
 
 				CreateMessage();
-
 				CreateLogger();
 
 				CreateToolbar();
-
 				CreateNote();
-
 				CreateTemplate();
-
 				CreateClipboard();
 
 				return true;
@@ -507,12 +502,12 @@
 			return true;
 		}
 
-		void InitializeSetting()
+		void InitializeSetting(Version previousVersion)
 		{
 			using(var timeLogger = CommonData.NonProcess.CreateTimeLogger()) {
-				SettingUtility.InitializeMainSetting(CommonData.MainSetting, CommonData.NonProcess);
-				SettingUtility.InitializeLauncherItemSetting(CommonData.LauncherItemSetting, CommonData.NonProcess);
-				SettingUtility.InitializeLauncherGroupSetting(CommonData.LauncherGroupSetting, CommonData.NonProcess);
+				SettingUtility.InitializeMainSetting(CommonData.MainSetting, previousVersion, CommonData.NonProcess);
+				SettingUtility.InitializeLauncherItemSetting(CommonData.LauncherItemSetting, previousVersion, CommonData.NonProcess);
+				SettingUtility.InitializeLauncherGroupSetting(CommonData.LauncherGroupSetting, previousVersion, CommonData.NonProcess);
 			}
 		}
 

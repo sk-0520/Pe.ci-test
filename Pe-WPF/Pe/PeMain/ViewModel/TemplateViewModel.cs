@@ -35,8 +35,8 @@
 
 		#endregion
 
-		public TemplateViewModel(TemplateSettingModel model, TemplateWindow view, TemplateIndexSettingModel indexModel, INonProcess nonProcess, IClipboardWatcher clipboardWatcher, VariableConstants variableConstants, IAppSender appSender)
-			: base(model, view, indexModel, nonProcess, clipboardWatcher, variableConstants, appSender)
+		public TemplateViewModel(TemplateSettingModel model, TemplateWindow view, TemplateIndexSettingModel indexModel, IAppNonProcess appNonProcess, IAppSender appSender)
+			: base(model, view, indexModel, appNonProcess, appSender)
 		{ }
 
 		#region property
@@ -86,7 +86,7 @@
 			{
 				var result = CreateCommand(
 					o => {
-						var indexModel = SettingUtility.CreateTemplateIndexItem(IndexModel.Items, NonProcess);
+						var indexModel = SettingUtility.CreateTemplateIndexItem(IndexModel.Items, AppNonProcess);
 						var pair = IndexPairList.Insert(0, indexModel, null);
 						SelectedViewModel = pair.ViewModel;
 					}
@@ -234,9 +234,7 @@
 			var result = new TemplateItemViewModel(
 				model,
 				AppSender,
-				ClipboardWatcher,
-				NonProcess,
-				VariableConstants
+				AppNonProcess
 			);
 
 			return result;
@@ -282,7 +280,7 @@
 				File.WriteAllText(path, writeValue);
 				return true;
 			} catch (Exception ex) {
-				NonProcess.Logger.Error(ex);
+				AppNonProcess.Logger.Error(ex);
 				return false;
 			}
 		}

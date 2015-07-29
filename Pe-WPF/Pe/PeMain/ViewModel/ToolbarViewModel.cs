@@ -16,14 +16,13 @@
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 	using ContentTypeTextNet.Pe.PeMain.Data;
 
-	public class ToolbarViewModel : SingleModelWrapperViewModelBase<ToolbarItemModel>, IHavingNonProcess, IHavingLauncherIconCaching
+	public class ToolbarViewModel : SingleModelWrapperViewModelBase<ToolbarItemModel>, IHavingAppNonProcess
 	{
-		public ToolbarViewModel(ToolbarItemModel toolbarItemModel, LauncherGroupItemCollectionModel group, LauncherIconCaching launcherIconCaching, INonProcess nonProcess)
+		public ToolbarViewModel(ToolbarItemModel toolbarItemModel, LauncherGroupItemCollectionModel group, IAppNonProcess appNonProcess)
 			: base(toolbarItemModel)
 		{
 			Group = group;
-			LauncherIconCaching = launcherIconCaching;
-			NonProcess = nonProcess;
+			AppNonProcess = appNonProcess;
 		}
 
 		#region property
@@ -78,15 +77,9 @@
 
 		#endregion
 
-		#region IHavingNonProcess
+		#region IHavingAppNonProcess
 
-		public INonProcess NonProcess { get; private set; }
-
-		#endregion
-
-		#region IHavingLauncherIconCaching
-
-		public LauncherIconCaching LauncherIconCaching { get; private set; }
+		public IAppNonProcess AppNonProcess { get; set; }
 
 		#endregion
 
@@ -96,7 +89,7 @@
 		{
 			get
 			{
-				return ScreenUtility.GetScreenName(Model.Id, NonProcess.Logger);
+				return ScreenUtility.GetScreenName(Model.Id, AppNonProcess.Logger);
 			}
 		}
 

@@ -8,6 +8,9 @@
 	using System.Threading.Tasks;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 
+	/// <summary>
+	/// 実行情報。
+	/// </summary>
 	[Serializable]
 	public class RunningInformationSettingModel : SettingModelBase
 	{

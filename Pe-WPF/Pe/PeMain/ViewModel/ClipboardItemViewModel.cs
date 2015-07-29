@@ -21,7 +21,7 @@
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
-	public class ClipboardItemViewModel : SingleModelWrapperViewModelBase<ClipboardIndexItemModel>, IHavingAppSender, IHavingClipboardWatcher, IHavingNonProcess, IHavingVariableConstants, IUnload
+	public class ClipboardItemViewModel : SingleModelWrapperViewModelBase<ClipboardIndexItemModel>, IHavingAppSender, IHavingAppNonProcess, IUnload
 	{
 		#region define
 
@@ -35,13 +35,11 @@
 
 		#endregion
 
-		public ClipboardItemViewModel(ClipboardIndexItemModel model, IAppSender appSender, IClipboardWatcher clipboardWatcher, INonProcess nonProcess, VariableConstants variableConstants)
+		public ClipboardItemViewModel(ClipboardIndexItemModel model, IAppSender appSender, IAppNonProcess appNonProcess)
 			:base(model)
 		{
 			AppSender = appSender;
-			ClipboardWatcher = clipboardWatcher;
-			NonProcess = nonProcess;
-			VariableConstants = variableConstants;
+			AppNonProcess = appNonProcess;
 		}
 
 		#region property
@@ -55,7 +53,7 @@
 					var body = AppSender.SendLoadIndexBody(IndexKind.Clipboard, Model.Id);
 					this._bodyModel = (ClipboardBodyItemModel)body;
 					if(Model.Type.HasFlag(ClipboardType.Html)) {
-						HtmlModel = ClipboardUtility.ConvertClipboardHtmlFromFromRawHtml(this._bodyModel.Html, NonProcess);
+						HtmlModel = ClipboardUtility.ConvertClipboardHtmlFromFromRawHtml(this._bodyModel.Html, AppNonProcess);
 					} else {
 						HtmlModel = null;
 					}
@@ -209,7 +207,7 @@
 						var apiWindow = (WindowsAPIWindowBase)o;
 						var hWnd = apiWindow.Handle;
 
-						ClipboardUtility.OutputText(hWnd, Text, NonProcess, ClipboardWatcher);
+						ClipboardUtility.OutputText(hWnd, Text, AppNonProcess, AppNonProcess.ClipboardWatcher);
 					}
 				);
 
@@ -228,7 +226,7 @@
 							Body = BodyModel,
 						};
 
-						ClipboardUtility.CopyClipboardItem(clipboardItem, ClipboardWatcher);
+						ClipboardUtility.CopyClipboardItem(clipboardItem, AppNonProcess.ClipboardWatcher);
 					}
 				);
 
@@ -242,7 +240,7 @@
 			{
 				var result = CreateCommand(
 					o => {
-						ClipboardUtility.CopyText(Text, ClipboardWatcher);
+						ClipboardUtility.CopyText(Text, AppNonProcess.ClipboardWatcher);
 					}
 				);
 
@@ -256,7 +254,7 @@
 			{
 				var result = CreateCommand(
 					o => {
-						ClipboardUtility.CopyRtf(Rtf, ClipboardWatcher);
+						ClipboardUtility.CopyRtf(Rtf, AppNonProcess.ClipboardWatcher);
 					}
 				);
 
@@ -270,7 +268,7 @@
 			{
 				var result = CreateCommand(
 					o => {
-						ClipboardUtility.CopyHtml(BodyModel.Html, ClipboardWatcher);
+						ClipboardUtility.CopyHtml(BodyModel.Html, AppNonProcess.ClipboardWatcher);
 					}
 				);
 
@@ -284,7 +282,7 @@
 			{
 				var result = CreateCommand(
 					o => {
-						ClipboardUtility.CopyImage(BodyModel.Image, ClipboardWatcher);
+						ClipboardUtility.CopyImage(BodyModel.Image, AppNonProcess.ClipboardWatcher);
 					}
 				);
 
@@ -298,7 +296,7 @@
 			{
 				var result = CreateCommand(
 					o => {
-						ClipboardUtility.CopyFile(BodyModel.Files, ClipboardWatcher);
+						ClipboardUtility.CopyFile(BodyModel.Files, AppNonProcess.ClipboardWatcher);
 					}
 				);
 
@@ -327,23 +325,11 @@
 
 		#endregion
 
-		#region IHavingClipboardWatcher
+		#region IHavingAppNonProcess
 
-		public IClipboardWatcher ClipboardWatcher { get; private set; }
-
-		#endregion
-
-		#region IHavingNonProcess
-
-		public INonProcess NonProcess { get; private set; }
+		public IAppNonProcess AppNonProcess { get; private set; }
 
 		#endregion
-
-		#region IHavingVariableConstants
-
-		public VariableConstants VariableConstants { get; private set; }
-
-		#endregion	
 
 		#region IUnload
 

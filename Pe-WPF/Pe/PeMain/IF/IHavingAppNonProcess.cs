@@ -6,8 +6,8 @@
 	using System.Text;
 	using System.Threading.Tasks;
 
-	public interface IHavingClipboardWatcher
+	public interface IHavingAppNonProcess
 	{
-		IClipboardWatcher ClipboardWatcher { get; }
+		IAppNonProcess AppNonProcess { get; }
 	}
 }

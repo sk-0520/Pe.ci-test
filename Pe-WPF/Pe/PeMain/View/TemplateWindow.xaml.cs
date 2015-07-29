@@ -35,8 +35,6 @@
 				this,
 				CommonData.TemplateIndexSetting,
 				CommonData.NonProcess,
-				CommonData.ClipboardWatcher,
-				CommonData.VariableConstants,
 				CommonData.AppSender
 			);
 		}

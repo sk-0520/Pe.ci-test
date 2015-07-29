@@ -29,8 +29,8 @@
 
 		#endregion
 
-		public LauncherItemStreamViewModel(LauncherItemModel model, LauncherItemStreamWindow view, Process process, StreamSettingModel streamSetting, LauncherIconCaching launcherIconCaching, INonProcess nonPorocess, IAppSender appSender)
-			: base(model, launcherIconCaching, nonPorocess, appSender)
+		public LauncherItemStreamViewModel(LauncherItemModel model, LauncherItemStreamWindow view, Process process, StreamSettingModel streamSetting, IAppNonProcess nonPorocess, IAppSender appSender)
+			: base(model, nonPorocess, appSender)
 		{
 			View = view;
 			Process = process;
@@ -225,7 +225,7 @@
 				}
 				Process.Kill();
 			} catch (Exception ex) {
-				NonProcess.Logger.Error(ex);
+				AppNonProcess.Logger.Error(ex);
 			}
 		}
 
@@ -258,7 +258,7 @@
 					return true;
 				}
 			} catch (Exception ex) {
-				NonProcess.Logger.Error(ex);
+				AppNonProcess.Logger.Error(ex);
 			}
 
 			return false;
@@ -283,7 +283,7 @@
 		void View_UserClosing(object sender, System.ComponentModel.CancelEventArgs e)
 		{
 			if(ProcessRunning) {
-				NonProcess.Logger.Warning(NonProcess.Language["running"]);
+				AppNonProcess.Logger.Warning(AppNonProcess.Language["running"]);
 				e.Cancel = true;
 				return;
 			}

@@ -5,10 +5,13 @@
 	using System.Linq;
 	using System.Text;
 	using System.Threading.Tasks;
+	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Pe.PeMain.Data;
 
-	public interface IHavingVariableConstants
+	public interface IAppNonProcess: INonProcess
 	{
 		VariableConstants VariableConstants { get; }
+		LauncherIconCaching LauncherIconCaching { get; }
+		IClipboardWatcher ClipboardWatcher { get; }
 	}
 }

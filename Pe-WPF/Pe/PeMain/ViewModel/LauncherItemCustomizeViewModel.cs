@@ -26,8 +26,8 @@
 
 		#endregion
 
-		public LauncherItemCustomizeViewModel(LauncherItemModel model, LauncherItemCustomizeWindow view, LauncherIconCaching launcherIconCaching, INonProcess nonPorocess, IAppSender appSender)
-			: base((LauncherItemModel)model.DeepClone(), launcherIconCaching, nonPorocess, appSender)
+		public LauncherItemCustomizeViewModel(LauncherItemModel model, LauncherItemCustomizeWindow view, IAppNonProcess nonPorocess, IAppSender appSender)
+			: base((LauncherItemModel)model.DeepClone(), nonPorocess, appSender)
 		{
 			View = view;
 
@@ -61,8 +61,8 @@
 						if(HasView) {
 							View.Close();
 						}
-						SettingUtility.IncrementLauncherItem(Model, null, null, NonProcess);
-						LauncherIconCaching.Remove(this._srcModel);
+						SettingUtility.IncrementLauncherItem(Model, null, null, AppNonProcess);
+						AppNonProcess.LauncherIconCaching.Remove(this._srcModel);
 						AppSender.SendRefreshView(WindowKind.LauncherToolbar, null);
 					}
 				);

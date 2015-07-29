@@ -12,6 +12,7 @@
 	using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
 	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
+	using ContentTypeTextNet.Pe.PeMain.IF;
 
 	public class ClipboardSettingViewModel : SettingPageViewModelBase
 	{
@@ -22,8 +23,8 @@
 
 		#endregion
 
-		public ClipboardSettingViewModel(ClipboardSettingModel clipboard, INonProcess nonProcess, VariableConstants variableConstants, SettingNotifiyItem settingNotifiyItem)
-			: base(nonProcess, variableConstants, settingNotifiyItem)
+		public ClipboardSettingViewModel(ClipboardSettingModel clipboard, IAppNonProcess appNonProcess, SettingNotifiyItem settingNotifiyItem)
+			: base(appNonProcess, settingNotifiyItem)
 		{
 			Clipboard = clipboard;
 		}

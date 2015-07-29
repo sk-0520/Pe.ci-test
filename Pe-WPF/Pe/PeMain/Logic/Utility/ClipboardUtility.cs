@@ -176,7 +176,7 @@
 			return ConvertStringFromRawHtml(range, rawHtml, Encoding.UTF8);
 		}
 
-		public static ClipboardHtmlItemModel ConvertClipboardHtmlFromFromRawHtml(string rawClipboardHtml, INonProcess nonProcess)
+		public static ClipboardHtmlItemModel ConvertClipboardHtmlFromFromRawHtml(string rawClipboardHtml, INonProcess appNonProcess)
 		{
 			var result = new ClipboardHtmlItemModel();
 
@@ -219,7 +219,7 @@
 				try {
 					map[key](value);
 				} catch(Exception ex) {
-					nonProcess.Logger.Warning(ex);
+					appNonProcess.Logger.Warning(ex);
 				}
 			}
 
@@ -297,10 +297,10 @@
 			return clipboardItem;
 		}
 
-		public static void OutputText(IntPtr hBaseWnd, string outputText, INonProcess nonProcess, IClipboardWatcher clipboardWatcher)
+		public static void OutputText(IntPtr hBaseWnd, string outputText, INonProcess appNonProcess, IClipboardWatcher clipboardWatcher)
 		{
 			if(string.IsNullOrEmpty(outputText)) {
-				nonProcess.Logger.Information("empty");
+				appNonProcess.Logger.Information("empty");
 				return;
 			}
 
@@ -312,14 +312,14 @@
 			} while(!NativeMethods.IsWindowVisible(hWnd));
 
 			if(hWnd == IntPtr.Zero) {
-				nonProcess.Logger.Warning("notfound");
+				appNonProcess.Logger.Warning("notfound");
 				return;
 			}
 
 			NativeMethods.SetForegroundWindow(hWnd);
 			if(clipboardWatcher.UsingClipboard) {
 				// 現在クリップボードを一時退避
-				var clipboardItem = ClipboardUtility.CreateClipboardItem(ClipboardType.All, hBaseWnd, nonProcess.Logger);
+				var clipboardItem = ClipboardUtility.CreateClipboardItem(ClipboardType.All, hBaseWnd, appNonProcess.Logger);
 				try {
 					ClipboardUtility.CopyText(outputText, clipboardWatcher);
 					NativeMethods.SendMessage(hWnd, WM.WM_PASTE, IntPtr.Zero, IntPtr.Zero);
