@@ -120,6 +120,7 @@
     <Compile Include="Data\MVMPair.cs" />
     <Compile Include="Logic\DialogFilterList.cs" />
     <Compile Include="Logic\MVMPairCreateDelegationCollection.cs" />
+    <Compile Include="Logic\Utility\FontUtility.cs" />
     <Compile Include="Model\CollectionModel.cs" />
     <Compile Include="Model\FixedSizeCollectionModel.cs" />
     <Compile Include="Model\FontModel.cs" />

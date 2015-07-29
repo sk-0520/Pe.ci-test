@@ -2,10 +2,12 @@
 {
 	using System;
 	using System.Collections.Generic;
+	using System.Diagnostics;
 	using System.IO;
 	using System.Linq;
 	using System.Text;
 	using System.Threading.Tasks;
+	using System.Windows;
 	using System.Windows.Media;
 	using System.Windows.Media.Imaging;
 	using ContentTypeTextNet.Library.SharedLibrary.Define;
@@ -20,6 +22,7 @@
 		void DebugProcess()
 		{
 			//icon();
+			//font();
 		}
 
 		void icon()
@@ -46,6 +49,17 @@
 				}
 			}
 		}
+
+		void font()
+		{
+			var names = new[] { null, "", "Arial", "ＭＳ ゴシック" };
+			foreach(var name in names) {
+				var ff = FontUtility.MakeFontFamily(name, SystemFonts.MessageFontFamily);
+				Debug.WriteLine(ff);
+			}
+		}
+
+
 #endif
 	}
 }

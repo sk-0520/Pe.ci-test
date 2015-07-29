@@ -28,5 +28,10 @@
 		{
 			return new Rect(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
 		}
+
+		public static double ConvertFontSize(double drawingFontPoint)
+		{
+			return drawingFontPoint * 96.0 / 72.0;
+		}
 	}
 }
