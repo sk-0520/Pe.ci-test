@@ -26,6 +26,7 @@
 			public ILanguage Language { get; set; }
 			public VariableConstants VariableConstants { get; set; }
 			public LauncherIconCaching LauncherIconCaching { get; set; }
+			public IClipboardWatcher ClipboardWatcher { get; set; }
 		}
 
 		#endregion
@@ -48,13 +49,16 @@
 		public NoteIndexSettingModel NoteIndexSetting { get; set; }
 		public ClipboardIndexSettingModel ClipboardIndexSetting { get; set; }
 		public TemplateIndexSettingModel TemplateIndexSetting { get; set; }
-		public AppLanguageManager Language { get; set; }
 
+		#region IAppNonProcess
+
+		public AppLanguageManager Language { get; set; }
 		public ILogger Logger { get; set; }
 		public IAppSender AppSender { get; set; }
 		public IClipboardWatcher ClipboardWatcher { get; set; }
-
 		public LauncherIconCaching LauncherIconCaching { get; set; }
+
+		#endregion
 
 		/// <summary>
 		/// 呼び出し元から見てると心臓に悪い。
@@ -70,6 +74,7 @@
 				NonProcessInstance.Logger = Logger;
 				NonProcessInstance.LauncherIconCaching = LauncherIconCaching;
 				NonProcessInstance.VariableConstants = VariableConstants;
+				NonProcessInstance.ClipboardWatcher = ClipboardWatcher;
 
 				return NonProcessInstance; 
 			} 

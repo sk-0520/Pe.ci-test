@@ -12,5 +12,6 @@
 	{
 		VariableConstants VariableConstants { get; }
 		LauncherIconCaching LauncherIconCaching { get; }
+		IClipboardWatcher ClipboardWatcher { get; }
 	}
 }

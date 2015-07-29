@@ -22,7 +22,7 @@
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
-	public class LauncherItemButtonViewModel: LauncherItemSimpleViewModel, IHavingClipboardWatcher, IHavingAppSender
+	public class LauncherItemButtonViewModel: LauncherItemSimpleViewModel, IHavingAppSender
 	{
 		#region varable
 
@@ -38,11 +38,9 @@
 
 		#endregion
 
-		public LauncherItemButtonViewModel(LauncherItemModel model, IAppNonProcess nonPorocess, IClipboardWatcher clipboardWatcher, IAppSender appSender)
+		public LauncherItemButtonViewModel(LauncherItemModel model, IAppNonProcess nonPorocess, IAppSender appSender)
 			: base(model, nonPorocess, appSender)
-		{
-			ClipboardWatcher = clipboardWatcher;
-		}
+		{ }
 
 		#region property
 
@@ -226,7 +224,7 @@
 						};
 						var s = map[type]();
 
-						ClipboardUtility.CopyText(s, ClipboardWatcher);
+						ClipboardUtility.CopyText(s, NonProcess.ClipboardWatcher);
 					}
 				);
 
@@ -301,10 +299,5 @@
 
 		#endregion
 
-		#region IHavingClipboardWatcher
-
-		public IClipboardWatcher ClipboardWatcher { get; private set; }
-
-		#endregion
 	}
 }

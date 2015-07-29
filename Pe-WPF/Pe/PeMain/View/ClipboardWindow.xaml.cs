@@ -35,7 +35,6 @@
 				this,
 				CommonData.ClipboardIndexSetting,
 				CommonData.NonProcess,
-				CommonData.ClipboardWatcher,
 				CommonData.AppSender
 			);
 		}

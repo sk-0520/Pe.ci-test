@@ -22,7 +22,7 @@
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 	using ContentTypeTextNet.Pe.PeMain.View;
 
-	public class TemplateItemViewModel : SingleModelWrapperViewModelBase<TemplateIndexItemModel>, IHavingAppSender, IHavingClipboardWatcher, IHavingAppNonProcess, IUnload
+	public class TemplateItemViewModel : SingleModelWrapperViewModelBase<TemplateIndexItemModel>, IHavingAppSender, IHavingAppNonProcess, IUnload
 	{
 		#region variable
 
@@ -32,11 +32,10 @@
 
 		#endregion
 
-		public TemplateItemViewModel(TemplateIndexItemModel model, IAppSender appSender, IClipboardWatcher clipboardWatcher, IAppNonProcess nonProcess)
+		public TemplateItemViewModel(TemplateIndexItemModel model, IAppSender appSender, IAppNonProcess nonProcess)
 			:base(model)
 		{
 			AppSender = appSender;
-			ClipboardWatcher = clipboardWatcher;
 			NonProcess = nonProcess;
 		}
 
@@ -154,7 +153,7 @@
 						var hWnd = apiWindow.Handle;
 						// TODO: なんだかなぁ。
 						SetReplacedValue();
-						ClipboardUtility.OutputText(hWnd, Replaced, NonProcess, ClipboardWatcher);
+						ClipboardUtility.OutputText(hWnd, Replaced, NonProcess, NonProcess.ClipboardWatcher);
 					}
 				);
 
@@ -169,7 +168,7 @@
 				var result = CreateCommand(
 					o => {
 						SetReplacedValue();
-						ClipboardUtility.CopyText(Replaced, ClipboardWatcher);
+						ClipboardUtility.CopyText(Replaced, NonProcess.ClipboardWatcher);
 					}
 				);
 
@@ -234,12 +233,6 @@
 		#region IHavingAppSender
 
 		public IAppSender AppSender { get; private set; }
-
-		#endregion
-
-		#region IHavingClipboardWatcher
-
-		public IClipboardWatcher ClipboardWatcher { get; private set; }
 
 		#endregion
 

@@ -35,8 +35,8 @@
 
 		#endregion
 
-		public TemplateViewModel(TemplateSettingModel model, TemplateWindow view, TemplateIndexSettingModel indexModel, IAppNonProcess nonProcess, IClipboardWatcher clipboardWatcher, IAppSender appSender)
-			: base(model, view, indexModel, nonProcess, clipboardWatcher, appSender)
+		public TemplateViewModel(TemplateSettingModel model, TemplateWindow view, TemplateIndexSettingModel indexModel, IAppNonProcess nonProcess, IAppSender appSender)
+			: base(model, view, indexModel, nonProcess, appSender)
 		{ }
 
 		#region property
@@ -234,7 +234,6 @@
 			var result = new TemplateItemViewModel(
 				model,
 				AppSender,
-				ClipboardWatcher,
 				NonProcess
 			);
 

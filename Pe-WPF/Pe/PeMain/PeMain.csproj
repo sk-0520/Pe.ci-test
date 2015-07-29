@@ -167,9 +167,7 @@
     <Compile Include="IF\ViewExtend\ICaptionDoubleClickData.cs" />
     <Compile Include="IF\IClipboardWatcher.cs" />
     <Compile Include="IF\ICommonData.cs" />
-    <Compile Include="IF\IHavingClipboardWatcher.cs" />
     <Compile Include="IF\IHavingCommonData.cs" />
-    <Compile Include="IF\IHavingVariableConstants.cs" />
     <Compile Include="IF\ILogAppender.cs" />
     <Compile Include="IF\IToolbarNode.cs" />
     <Compile Include="Logic\AppInformationCollection.cs" />

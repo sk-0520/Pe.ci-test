@@ -74,7 +74,7 @@
 					<TextBlock Text="topmost" />
 				</StackPanel>
 			</ToggleButton>
-			<ToggleButton IsChecked="{Binding ClipboardWatcher.UsingClipboard}">
+			<ToggleButton IsChecked="{Binding NonProcess.ClipboardWatcher.UsingClipboard}">
 				<StackPanel Orientation="Horizontal">
 					<Image Style="{StaticResource ImageRenderStyle}" Source="{Binding Source={x:Static AM:AppResource.CommonUsingClipboardImage}}" />
 					<TextBlock Text="use clipboard" />

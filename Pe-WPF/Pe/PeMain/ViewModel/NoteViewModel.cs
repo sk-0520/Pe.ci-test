@@ -24,7 +24,7 @@
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
-	public class NoteViewModel : HavingViewSingleModelWrapperViewModelBase<NoteIndexItemModel, NoteWindow>, IHavingNonProcess, IHavingClipboardWatcher, IWindowHitTestData, IWindowAreaCorrectionData, ICaptionDoubleClickData, IHavingAppSender, IColorPair, INoteMenuItem
+	public class NoteViewModel : HavingViewSingleModelWrapperViewModelBase<NoteIndexItemModel, NoteWindow>, IHavingAppNonProcess, IWindowHitTestData, IWindowAreaCorrectionData, ICaptionDoubleClickData, IHavingAppSender, IColorPair, INoteMenuItem
 	{
 		#region static
 
@@ -43,11 +43,10 @@
 
 		#endregion
 
-		public NoteViewModel(NoteIndexItemModel model, NoteWindow view, INonProcess nonProcess, IClipboardWatcher clipboardWatcher, IAppSender appSender)
+		public NoteViewModel(NoteIndexItemModel model, NoteWindow view, IAppNonProcess nonProcess, IAppSender appSender)
 			: base(model, view)
 		{
 			NonProcess = nonProcess;
-			ClipboardWatcher = clipboardWatcher;
 			AppSender = appSender;
 
 			SetCompactArea();
@@ -288,15 +287,9 @@
 
 		#endregion
 
-		#region IHavingNonProcess
+		#region IHavingAppNonProcess
 
-		public INonProcess NonProcess { get; private set; }
-
-		#endregion
-
-		#region IHavingClipboardWatcher
-
-		public IClipboardWatcher ClipboardWatcher { get; private set; }
+		public IAppNonProcess NonProcess { get; private set; }
 
 		#endregion
 
@@ -519,7 +512,7 @@
 							return;
 						}
 
-						ClipboardUtility.CopyText(Body, ClipboardWatcher);
+						ClipboardUtility.CopyText(Body, NonProcess.ClipboardWatcher);
 					}
 				);
 

@@ -34,7 +34,7 @@
 	using System.Windows.Controls.Primitives;
 	using System.Windows.Media.Imaging;
 
-	public class LauncherToolbarViewModel: HavingViewSingleModelWrapperViewModelBase<LauncherToolbarDataModel, LauncherToolbarWindow>, IApplicationDesktopToolbarData, IVisualStyleData, IHavingAppNonProcess, IHavingClipboardWatcher, IWindowAreaCorrectionData, IWindowHitTestData, IHavingAppSender, IRefreshFromViewModel
+	public class LauncherToolbarViewModel: HavingViewSingleModelWrapperViewModelBase<LauncherToolbarDataModel, LauncherToolbarWindow>, IApplicationDesktopToolbarData, IVisualStyleData, IHavingAppNonProcess, IWindowAreaCorrectionData, IWindowHitTestData, IHavingAppSender, IRefreshFromViewModel
 	{
 		#region static
 
@@ -154,12 +154,11 @@
 
 		#endregion
 
-		public LauncherToolbarViewModel(LauncherToolbarDataModel model, LauncherToolbarWindow view, ScreenModel screen, IAppNonProcess nonProcess, IClipboardWatcher clipboardWatcher, IAppSender appSender)
+		public LauncherToolbarViewModel(LauncherToolbarDataModel model, LauncherToolbarWindow view, ScreenModel screen, IAppNonProcess nonProcess, IAppSender appSender)
 			: base(model, view)
 		{
 			DockScreen = screen;
 			NonProcess = nonProcess;
-			ClipboardWatcher = clipboardWatcher;
 			AppSender = appSender;
 
 			this._captionWidth = GetCaptionWidth();
@@ -320,7 +319,7 @@
 			{
 				if (this._launcherItems == null) {
 					var list = GetLauncherItems(SelectedGroup)
-						.Select(m => new LauncherItemButtonViewModel(m, NonProcess, ClipboardWatcher, AppSender) {
+						.Select(m => new LauncherItemButtonViewModel(m, NonProcess, AppSender) {
 							IconScale = Model.Toolbar.IconScale,
 						});
 					;
@@ -542,12 +541,6 @@
 		#region IHavingAppNonPorocess
 
 		public IAppNonProcess NonProcess { get; private set; }
-
-		#endregion
-
-		#region IHavingClipboardWatcher
-
-		public IClipboardWatcher ClipboardWatcher { get; private set; }
 
 		#endregion
 

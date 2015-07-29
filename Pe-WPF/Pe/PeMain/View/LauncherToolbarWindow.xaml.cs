@@ -88,7 +88,7 @@
 			SettingUtility.InitializeToolbar(toolbar, CommonData.NonProcess);
 			model.Toolbar = toolbar;
 
-			ViewModel = new LauncherToolbarViewModel(model, this, screen, CommonData.NonProcess, CommonData.ClipboardWatcher, CommonData.AppSender);
+			ViewModel = new LauncherToolbarViewModel(model, this, screen, CommonData.NonProcess, CommonData.AppSender);
 		}
 
 		protected override void ApplyViewModel()
