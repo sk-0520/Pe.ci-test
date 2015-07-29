@@ -122,6 +122,7 @@
     <Compile Include="Logic\MVMPairCreateDelegationCollection.cs" />
     <Compile Include="Model\CollectionModel.cs" />
     <Compile Include="Model\FixedSizeCollectionModel.cs" />
+    <Compile Include="Model\FontModel.cs" />
     <Compile Include="Model\GuidCollectionBase.cs" />
     <Compile Include="Model\GuidModelBase.cs" />
     <Compile Include="Logic\MVMPairCollectionBase.cs" />
