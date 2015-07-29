@@ -7,7 +7,7 @@
 	xmlns:AP="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
 	xmlns:AW="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Window"
 	xmlns:AA="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Attached"
-	AA:Language.Key="window/log"
+	AA:Language.Word="window/log"
 	Title="LoggingWindow" 
 	ShowInTaskbar="False" 
 	WindowStyle="ToolWindow"
@@ -23,8 +23,8 @@
 >
 	<DockPanel LastChildFill="True">
 		<ToolBar DockPanel.Dock="Top" FontFamily="{DynamicResource {x:Static SystemFonts.MenuFontFamilyKey}}" FontSize="{DynamicResource {x:Static SystemFonts.MenuFontSizeKey}}" Height="30" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" ToolBarTray.IsLocked="True">
-			<Button Content="save" AA:Language.Key="log/save" />
-			<Button Content="clear" AA:Language.Key="log/clear" />
+			<Button Content="save" AA:Language.Word="log/save" />
+			<Button Content="clear" AA:Language.Word="log/clear" />
 		</ToolBar>
 		<StatusBar DockPanel.Dock="Bottom" FontFamily="{DynamicResource {x:Static SystemFonts.StatusFontFamilyKey}}" FontSize="{DynamicResource {x:Static SystemFonts.StatusFontSizeKey}}" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" Height="{DynamicResource {x:Static SystemParameters.MenuHeightKey}}" />
 		<Grid>
@@ -35,8 +35,8 @@
 			<ListView Grid.Row="0" ItemsSource="{Binding LogItems}" x:Name="LogList">
 				<ListView.View>
 					<GridView>
-						<GridViewColumn Header="timestamp" AA:Language.Key="logging/timestamp" DisplayMemberBinding="{Binding Timestamp}" />
-						<GridViewColumn Header="message" AA:Language.Key="log-message" DisplayMemberBinding="{Binding Message}" />
+						<GridViewColumn Header="timestamp" AA:Language.Word="logging/timestamp" DisplayMemberBinding="{Binding Timestamp}" />
+						<GridViewColumn Header="message" AA:Language.Word="log-message" DisplayMemberBinding="{Binding Message}" />
 					</GridView>
 				</ListView.View>
 			</ListView>

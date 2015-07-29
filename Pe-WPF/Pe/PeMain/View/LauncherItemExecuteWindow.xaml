@@ -70,7 +70,7 @@
 					<CheckBox Content="admin" IsChecked="{Binding Administrator}" />
 				</StackPanel>
 
-				<Expander Grid.Row="4" Grid.RowSpan="1" Grid.Column="1" Header="Expander" AA:Language.Key="environment/title" >
+				<Expander Grid.Row="4" Grid.RowSpan="1" Grid.Column="1" Header="Expander" AA:Language.Word="environment/title" >
 					<ACC:EnvironmentVariablesEditControl Height="180" DataContext="{Binding EnvironmentVariables}" />
 				</Expander>
 

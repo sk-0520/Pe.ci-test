@@ -15,7 +15,7 @@
 	x:Class="ContentTypeTextNet.Pe.PeMain.View.LauncherToolbarWindow"
 	x:TypeArguments="AVM:LauncherToolbarViewModel"
 	xmlns:AA="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Attached"
-	AA:Language.Key="window/toolbar"
+	AA:Language.Word="window/toolbar"
 	Title="ToolbarWindow" 
 	Left="{Binding WindowLeft, Mode=TwoWay}" 
 	Top="{Binding WindowTop, Mode=TwoWay}"
@@ -410,10 +410,10 @@
 						<Button Grid.Row="2" Grid.Column="1" CommandParameter="{x:Static SD:DockType.Bottom}" Style="{StaticResource PopupClose}">↓</Button>
 					</Grid>
 					<Separator />
-					<MenuItem Header="topmost" AA:Language.Key="topmost" Style="{StaticResource PopupCloseMenu}" IsChecked="{Binding TopMost}" Command="{Binding SwitchTopMostCommand}"  />
-					<MenuItem Header="auto hide" AA:Language.Key="autohide" Style="{StaticResource PopupCloseMenu}" IsChecked="{Binding AutoHide}" Command="{Binding SwitchAutoHideCommand}"/>
+					<MenuItem Header="topmost" AA:Language.Word="topmost" Style="{StaticResource PopupCloseMenu}" IsChecked="{Binding TopMost}" Command="{Binding SwitchTopMostCommand}"  />
+					<MenuItem Header="auto hide" AA:Language.Word="autohide" Style="{StaticResource PopupCloseMenu}" IsChecked="{Binding AutoHide}" Command="{Binding SwitchAutoHideCommand}"/>
 					<Separator />
-					<MenuItem Header="hide" AA:Language.Key="hide" Style="{StaticResource PopupCloseMenu}" Command="{Binding ChangeVisibleCommand}" >
+					<MenuItem Header="hide" AA:Language.Word="hide" Style="{StaticResource PopupCloseMenu}" Command="{Binding ChangeVisibleCommand}" >
 						<MenuItem.CommandParameter>
 							<sys:Boolean>false</sys:Boolean>
 						</MenuItem.CommandParameter>
@@ -455,7 +455,7 @@
 							</xctk:SplitButton.Content>
 							<xctk:SplitButton.DropDownContent>
 								<StackPanel>
-									<TextBlock Text="execute" AA:Language.Key="launcher/run/normal" />
+									<TextBlock Text="execute" AA:Language.Word="launcher/run/normal" />
 									<StackPanel Orientation="Horizontal">
 										<Button Content="normal" IsEnabled="{Binding ExistsCommand}" Command="{Binding RunCommand}" Style="{StaticResource PopupClose}" />
 										<Button Content="extra"  IsEnabled="{Binding ExistsCommand}" Command="{Binding RunExCommand}" Style="{StaticResource PopupClose}" />

@@ -7,7 +7,7 @@
 	xmlns:AP="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
 	xmlns:AW="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Window"
 	xmlns:AA="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Attached"
-	AA:Language.Key="window/accept"
+	AA:Language.Word="window/accept"
 	Title="AcceptWindow" 
 	Width="{Binding MinWidth, RelativeSource={RelativeSource Self}}"
 	Height="{Binding MinHeight, RelativeSource={RelativeSource Self}}" 
@@ -35,12 +35,12 @@
 					<Setter Property="Margin" Value="0,4,10,4"/>
 				</Style>
 			</StackPanel.Resources>
-			<CheckBox IsChecked="{Binding CheckUpdateRelease}" AA:Language.Key="update-check/release" Content="release" />
-			<CheckBox IsChecked="{Binding CheckUpdateRC}" AA:Language.Key="update-check/rc" Content="rc" />
+			<CheckBox IsChecked="{Binding CheckUpdateRelease}" AA:Language.Word="update-check/release" Content="release" />
+			<CheckBox IsChecked="{Binding CheckUpdateRC}" AA:Language.Word="update-check/rc" Content="rc" />
 		</StackPanel>
 		<StackPanel Style="{StaticResource ResourceKey=DialogResultPanel}"  Grid.Row="2">
-			<Button Style="{StaticResource ResourceKey=DialogResultButton}" AA:Language.Key="accept/ok" Content="ok" Command="{Binding OkCommand}"  />
-			<Button Style="{StaticResource ResourceKey=DialogResultButton}" AA:Language.Key="accept/ng" Content="ng" Command="{Binding NgCommand}"  />
+			<Button Style="{StaticResource ResourceKey=DialogResultButton}" AA:Language.Word="accept/ok" Content="ok" Command="{Binding OkCommand}"  />
+			<Button Style="{StaticResource ResourceKey=DialogResultButton}" AA:Language.Word="accept/ng" Content="ng" Command="{Binding NgCommand}"  />
 		</StackPanel>
 	</Grid>
 </AW:ViewModelCommonDataWindow>

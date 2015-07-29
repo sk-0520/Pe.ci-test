@@ -3,6 +3,7 @@
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+	xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
 	xmlns:AP="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
 	xmlns:AA="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Attached"
 	xmlns:AW="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Window"
@@ -12,7 +13,6 @@
 	xmlns:AD="clr-namespace:ContentTypeTextNet.Pe.PeMain.Define"
 	xmlns:SC="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=SharedLibrary"
 	xmlns:SD="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.Define;assembly=SharedLibrary"
-	xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
 	x:TypeArguments="AVM:ClipboardViewModel"
 	Title="ClipboardWindow" 
 	x:Name="root"
@@ -207,7 +207,7 @@
 							<TabItem.Header>
 								<StackPanel Orientation="Horizontal">
 									<Image Style="{StaticResource ClipboardRtf}" />
-									<TextBlock Text="rft" AA:Language.Key="clipboard/type/rtf" />
+									<TextBlock Text="rft" AA:Language.Word="clipboard/type/rtf" />
 								</StackPanel>
 							</TabItem.Header>
 							<xctk:RichTextBox IsReadOnly="True" Text="{Binding SelectedViewModel.Rtf}" >
@@ -260,7 +260,7 @@
 									<RadioButton x:Name="imageFit" IsChecked="{Binding ImageScale, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static AD:ImageScale.Fit}}" >
 										<StackPanel Orientation="Horizontal">
 											<Image Style="{StaticResource ImageRenderStyle}" Source="{x:Static AM:AppResource.ClipboardImageFitImage}" />
-											<TextBlock Text="fit" AA:Language.Key="clipboard/image/fit" />
+											<TextBlock Text="fit" AA:Language.Word="clipboard/image/fit" />
 										</StackPanel>
 									</RadioButton>
 									<RadioButton x:Name="imageRaw" IsChecked="{Binding ImageScale, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static AD:ImageScale.Raw}}">

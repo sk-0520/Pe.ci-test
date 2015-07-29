@@ -78,7 +78,7 @@
 			</TabItem>
 			<TabItem>
 				<TabItem.Header>
-					<TextBlock Text="process" AA:Language.Key="stream/process" />
+					<TextBlock Text="process" AA:Language.Word="stream/process" />
 				</TabItem.Header>
 				<xctk:PropertyGrid IsReadOnly="{Binding ProcessRunning, Mode=OneWay, Converter={StaticResource LogicalNotConverter}}" SelectedObject="{Binding Process}" />
 			</TabItem>

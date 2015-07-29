@@ -20,17 +20,17 @@
 			<RowDefinition Height="148*"/>
 		</Grid.RowDefinitions>
 		<CheckBox Content="edit" Margin="16,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" IsChecked="{Binding Edit}" />
-		<GroupBox AA:Language.Key="environment/update" Header="update" Grid.Row="1" Margin="0" >
+		<GroupBox AA:Language.Word="environment/update" Header="update" Grid.Row="1" Margin="0" >
 			<ACC:AppDataGrid x:Name="gridEnv" CanUserAddRows="True" AutoGenerateColumns="False" ItemsSource="{Binding Update}" >
 				<ACC:AppDataGrid.Columns>
 					<DataGridTextColumn Binding="{Binding Id}">
 						<DataGridTextColumn.Header>
-							<TextBlock AA:Language.Key="environment/key" Text="key" />
+							<TextBlock AA:Language.Word="environment/key" Text="key" />
 						</DataGridTextColumn.Header>
 					</DataGridTextColumn>
 					<DataGridTextColumn Binding="{Binding Value}">
 						<DataGridTextColumn.Header>
-							<TextBlock AA:Language.Key="environment/value" Text="value" />
+							<TextBlock AA:Language.Word="environment/value" Text="value" />
 						</DataGridTextColumn.Header>
 					</DataGridTextColumn>
 				</ACC:AppDataGrid.Columns>

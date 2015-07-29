@@ -11,26 +11,26 @@
 
 	public static class Language
 	{
-		#region KeyProperty
+		#region WordProperty
 
-		public static readonly DependencyProperty KeyProperty = DependencyProperty.RegisterAttached(
-			"Key",
+		public static readonly DependencyProperty WordProperty = DependencyProperty.RegisterAttached(
+			"Word",
 			typeof(string),
 			typeof(Language), 
 			new FrameworkPropertyMetadata()
 		);
 
-		public static string GetKey(DependencyObject dependencyObject)
+		public static string GetWord(DependencyObject dependencyObject)
 		{
 			Validate(dependencyObject);
 
-			return (string)dependencyObject.GetValue(KeyProperty);
+			return (string)dependencyObject.GetValue(WordProperty);
 		}
-		public static void SetKey(DependencyObject dependencyObject, string value)
+		public static void SetWord(DependencyObject dependencyObject, string value)
 		{
 			Validate(dependencyObject);
 
-			dependencyObject.SetValue(KeyProperty, value);
+			dependencyObject.SetValue(WordProperty, value);
 		}
 
 		#endregion

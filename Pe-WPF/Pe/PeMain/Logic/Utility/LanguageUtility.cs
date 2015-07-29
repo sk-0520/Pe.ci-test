@@ -15,7 +15,7 @@
 	{
 		static bool SetUI_Impl(DependencyObject baseElement, LanguageManager language, IReadOnlyDictionary<string, string> map, Action<string, string> action)
 		{
-			var key = Language.GetKey(baseElement);
+			var key = Language.GetWord(baseElement);
 			var hint = Language.GetHint(baseElement);
 			if(!string.IsNullOrEmpty(key) || !string.IsNullOrEmpty(hint)) {
 				action(key, hint);
@@ -104,7 +104,7 @@
 		static bool SetLanguageItem(DependencyObject control, LanguageManager language, IReadOnlyDictionary<string, string> map)
 		{
 #if DEBUG
-			var s = Language.GetKey(control);
+			var s = Language.GetWord(control);
 			if(s != null) {
 				Debug.WriteLine(s);
 			}

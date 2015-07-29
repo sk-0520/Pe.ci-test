@@ -20,6 +20,8 @@
 
 		<Item Id="launcher/run/normal" Word="起動" />
 
+		<Item Id="note/input" Word="入力" />
+
 		<Item Id="clipboard/type/rtf" Word="書式付文字列" />
 		<Item Id="clipboard/image/fit" Word="ウィンドウに合わせる" />
 

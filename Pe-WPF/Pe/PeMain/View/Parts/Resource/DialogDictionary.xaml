@@ -22,10 +22,10 @@
 		<Setter Property="Margin" Value="0, 0, 10, 0" />
 	</Style>
 	<Style x:Key="DialogResultButtonAccept" TargetType="Button" BasedOn="{StaticResource ResourceKey=DialogResultButton}">
-		<Setter Property="AA:Language.Key" Value="common/ok" />
+		<Setter Property="AA:Language.Word" Value="common/ok" />
 		<Setter Property="IsDefault" Value="True" />
 	</Style>
 	<Style x:Key="DialogResultButtonCancel" TargetType="Button" BasedOn="{StaticResource ResourceKey=DialogResultButton}">
-		<Setter Property="AA:Language.Key" Value="common/cancel" />
+		<Setter Property="AA:Language.Word" Value="common/cancel" />
 	</Style>
 </ResourceDictionary>
