@@ -66,7 +66,6 @@
 				if(this._launcherItemSetting == null) {
 					this._launcherItemSetting = new LauncherItemSettingViewModel(
 						CommonData.LauncherItemSetting,
-						CommonData.LauncherIconCaching,
 						CommonData.NonProcess,
 						SettingNotifiyItem
 					);
@@ -85,7 +84,6 @@
 						CommonData.MainSetting.Toolbar,
 						CommonData.LauncherGroupSetting,
 						CommonData.LauncherItemSetting,
-						CommonData.LauncherIconCaching,
 						CommonData.NonProcess,
 						SettingNotifiyItem
 					);

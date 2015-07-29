@@ -17,8 +17,8 @@
 
 	public class LauncherItemEditViewModel: LauncherItemSimpleViewModel
 	{
-		public LauncherItemEditViewModel(LauncherItemModel model, LauncherIconCaching launcherIconCaching, INonProcess nonPorocess, IAppSender appSender)
-			: base(model, launcherIconCaching, nonPorocess, appSender)
+		public LauncherItemEditViewModel(LauncherItemModel model, IAppNonProcess nonPorocess, IAppSender appSender)
+			: base(model, nonPorocess, appSender)
 		{ }
 
 		#region property

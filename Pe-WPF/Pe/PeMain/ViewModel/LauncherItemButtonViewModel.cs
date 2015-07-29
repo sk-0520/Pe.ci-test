@@ -38,8 +38,8 @@
 
 		#endregion
 
-		public LauncherItemButtonViewModel(LauncherItemModel model, LauncherIconCaching launcherIconCaching, INonProcess nonPorocess, IClipboardWatcher clipboardWatcher, IAppSender appSender)
-			: base(model, launcherIconCaching, nonPorocess, appSender)
+		public LauncherItemButtonViewModel(LauncherItemModel model, IAppNonProcess nonPorocess, IClipboardWatcher clipboardWatcher, IAppSender appSender)
+			: base(model, nonPorocess, appSender)
 		{
 			ClipboardWatcher = clipboardWatcher;
 		}

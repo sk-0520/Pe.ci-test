@@ -30,8 +30,8 @@
 		
 		#endregion
 
-		public LauncherItemExecuteViewModel(LauncherItemModel model, LauncherItemExecuteWindow view, LauncherIconCaching launcherIconCaching, INonProcess nonPorocess, IAppSender appSender)
-			: base(model, launcherIconCaching, nonPorocess, appSender)
+		public LauncherItemExecuteViewModel(LauncherItemModel model, LauncherItemExecuteWindow view, IAppNonProcess nonPorocess, IAppSender appSender)
+			: base(model, nonPorocess, appSender)
 		{
 			View = view;
 

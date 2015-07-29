@@ -19,7 +19,7 @@
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
-	public abstract class LauncherItemViewModelBase: SingleModelWrapperViewModelBase<LauncherItemModel>, IHavingNonProcess, IHavingLauncherIconCaching, IHavingAppSender
+	public abstract class LauncherItemViewModelBase: SingleModelWrapperViewModelBase<LauncherItemModel>, IHavingAppNonProcess, IHavingAppSender
 	{
 		#region variable
 
@@ -28,10 +28,9 @@
 
 		#endregion
 
-		public LauncherItemViewModelBase(LauncherItemModel model, LauncherIconCaching launcherIconCaching, INonProcess nonProcess, IAppSender appSender)
+		public LauncherItemViewModelBase(LauncherItemModel model, IAppNonProcess nonProcess, IAppSender appSender)
 			: base(model)
 		{
-			LauncherIconCaching = launcherIconCaching;
 			NonProcess = nonProcess;
 			AppSender = appSender;
 		}
@@ -110,9 +109,9 @@
 
 		public BitmapSource GetIcon(IconScale iconScale)
 		{
-			CheckUtility.DebugEnforceNotNull(LauncherIconCaching);
+			CheckUtility.DebugEnforceNotNull(NonProcess.LauncherIconCaching);
 
-			return LauncherIconCaching[iconScale].Get(Model, () => LauncherItemUtility.GetIcon(Model, iconScale, NonProcess));
+			return NonProcess.LauncherIconCaching[iconScale].Get(Model, () => LauncherItemUtility.GetIcon(Model, iconScale, NonProcess));
 		}
 
 		public Color GetIconColor(IconScale iconScale)
@@ -137,15 +136,9 @@
 
 		#endregion
 
-		#region IHavingNonProcess
+		#region IHavingAppNonProcess
 
-		public INonProcess NonProcess { get; private set; }
-
-		#endregion
-
-		#region IHavingLauncherIconCaching
-
-		public LauncherIconCaching LauncherIconCaching { get; private set; }
+		public IAppNonProcess NonProcess { get; private set; }
 
 		#endregion
 

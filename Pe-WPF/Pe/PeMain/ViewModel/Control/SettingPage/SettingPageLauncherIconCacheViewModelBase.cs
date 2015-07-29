@@ -12,21 +12,10 @@
 	using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
 	using ContentTypeTextNet.Pe.PeMain.IF;
 
-	public abstract class SettingPageLauncherIconCacheViewModelBase : SettingPageViewModelBase, IHavingLauncherIconCaching
+	public abstract class SettingPageLauncherIconCacheViewModelBase : SettingPageViewModelBase
 	{
-		public SettingPageLauncherIconCacheViewModelBase(LauncherIconCaching launcherIconCaching, IAppNonProcess nonProcess, SettingNotifiyItem settingNotifiyItem)
+		public SettingPageLauncherIconCacheViewModelBase(IAppNonProcess nonProcess, SettingNotifiyItem settingNotifiyItem)
 			: base(nonProcess, settingNotifiyItem)
-		{
-			CheckUtility.EnforceNotNull(launcherIconCaching);
-
-			LauncherIconCaching = launcherIconCaching;
-		}
-
-		#region IHavingLauncherIconCaching
-
-		public LauncherIconCaching LauncherIconCaching { get; private set; }
-
-		#endregion
-
+		{ }
 	}
 }

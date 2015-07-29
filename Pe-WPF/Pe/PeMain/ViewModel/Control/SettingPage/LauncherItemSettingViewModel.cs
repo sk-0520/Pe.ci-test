@@ -21,8 +21,8 @@
 
 		#endregion
 
-		public LauncherItemSettingViewModel(LauncherItemSettingModel launcherItemSetting, LauncherIconCaching launcherIconCaching, IAppNonProcess nonProcess, SettingNotifiyItem settingNotifiyItem)
-			: base(launcherIconCaching, nonProcess, settingNotifiyItem)
+		public LauncherItemSettingViewModel(LauncherItemSettingModel launcherItemSetting, IAppNonProcess nonProcess, SettingNotifiyItem settingNotifiyItem)
+			: base(nonProcess, settingNotifiyItem)
 		{
 			LauncherItemSetting = launcherItemSetting;
 		}
@@ -38,7 +38,6 @@
 				if(this._launcherItems == null) {
 					this._launcherItems = new LauncherItemsViewModel(
 						LauncherItemSetting.Items,
-						LauncherIconCaching,
 						NonProcess
 					);
 				}

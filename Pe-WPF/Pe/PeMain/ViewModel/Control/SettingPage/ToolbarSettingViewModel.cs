@@ -34,8 +34,8 @@
 
 		#endregion
 
-		public ToolbarSettingViewModel(ToolbarItemCollectionModel toolbarItems, LauncherGroupSettingModel groupSettingModel, LauncherItemSettingModel launcherItemSetting, LauncherIconCaching launcherIconCaching, IAppNonProcess nonProcess, SettingNotifiyItem settingNotifiyItem)
-			: base(launcherIconCaching, nonProcess, settingNotifiyItem)
+		public ToolbarSettingViewModel(ToolbarItemCollectionModel toolbarItems, LauncherGroupSettingModel groupSettingModel, LauncherItemSettingModel launcherItemSetting, IAppNonProcess nonProcess, SettingNotifiyItem settingNotifiyItem)
+			: base(nonProcess, settingNotifiyItem)
 		{
 			ToolbarItems = toolbarItems;
 			GroupSettingModel = groupSettingModel;
@@ -57,7 +57,6 @@
 				if (this._launcherItems == null) {
 					this._launcherItems = new LauncherItemsViewModel(
 						LauncherItemSetting.Items,
-						LauncherIconCaching,
 						NonProcess
 					);
 				}

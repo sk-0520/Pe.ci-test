@@ -34,7 +34,7 @@
 	using System.Windows.Controls.Primitives;
 	using System.Windows.Media.Imaging;
 
-	public class LauncherToolbarViewModel: HavingViewSingleModelWrapperViewModelBase<LauncherToolbarDataModel, LauncherToolbarWindow>, IApplicationDesktopToolbarData, IVisualStyleData, IHavingNonProcess, IHavingClipboardWatcher, IWindowAreaCorrectionData, IWindowHitTestData, IHavingLauncherIconCaching, IHavingAppSender, IRefreshFromViewModel
+	public class LauncherToolbarViewModel: HavingViewSingleModelWrapperViewModelBase<LauncherToolbarDataModel, LauncherToolbarWindow>, IApplicationDesktopToolbarData, IVisualStyleData, IHavingAppNonProcess, IHavingClipboardWatcher, IWindowAreaCorrectionData, IWindowHitTestData, IHavingAppSender, IRefreshFromViewModel
 	{
 		#region static
 
@@ -154,11 +154,10 @@
 
 		#endregion
 
-		public LauncherToolbarViewModel(LauncherToolbarDataModel model, LauncherToolbarWindow view, ScreenModel screen, LauncherIconCaching launcherIconCaching, INonProcess nonProcess, IClipboardWatcher clipboardWatcher, IAppSender appSender)
+		public LauncherToolbarViewModel(LauncherToolbarDataModel model, LauncherToolbarWindow view, ScreenModel screen, IAppNonProcess nonProcess, IClipboardWatcher clipboardWatcher, IAppSender appSender)
 			: base(model, view)
 		{
 			DockScreen = screen;
-			LauncherIconCaching = launcherIconCaching;
 			NonProcess = nonProcess;
 			ClipboardWatcher = clipboardWatcher;
 			AppSender = appSender;
@@ -321,7 +320,7 @@
 			{
 				if (this._launcherItems == null) {
 					var list = GetLauncherItems(SelectedGroup)
-						.Select(m => new LauncherItemButtonViewModel(m, this.LauncherIconCaching, NonProcess, ClipboardWatcher, AppSender) {
+						.Select(m => new LauncherItemButtonViewModel(m, NonProcess, ClipboardWatcher, AppSender) {
 							IconScale = Model.Toolbar.IconScale,
 						});
 					;
@@ -540,9 +539,9 @@
 
 		#endregion
 
-		#region IHavingNonPorocess
+		#region IHavingAppNonPorocess
 
-		public INonProcess NonProcess { get; private set; }
+		public IAppNonProcess NonProcess { get; private set; }
 
 		#endregion
 

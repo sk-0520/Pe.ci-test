@@ -34,7 +34,7 @@ namespace ContentTypeTextNet.Pe.PeMain.View
 		protected override void CreateViewModel()
 		{
 			var model = (LauncherItemModel)ExtensionData;
-			ViewModel = new LauncherItemCustomizeViewModel(model, this, CommonData.LauncherIconCaching, CommonData.NonProcess, CommonData.AppSender);
+			ViewModel = new LauncherItemCustomizeViewModel(model, this, CommonData.NonProcess, CommonData.AppSender);
 		}
 
 		protected override void ApplyViewModel()

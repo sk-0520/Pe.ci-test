@@ -29,8 +29,8 @@
 
 		#endregion
 
-		public LauncherItemStreamViewModel(LauncherItemModel model, LauncherItemStreamWindow view, Process process, StreamSettingModel streamSetting, LauncherIconCaching launcherIconCaching, INonProcess nonPorocess, IAppSender appSender)
-			: base(model, launcherIconCaching, nonPorocess, appSender)
+		public LauncherItemStreamViewModel(LauncherItemModel model, LauncherItemStreamWindow view, Process process, StreamSettingModel streamSetting, IAppNonProcess nonPorocess, IAppSender appSender)
+			: base(model, nonPorocess, appSender)
 		{
 			View = view;
 			Process = process;

@@ -14,22 +14,15 @@
 	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.IF;
 
-	public class LauncherItemsViewModel: SingleModelWrapperViewModelBase<LauncherItemCollectionModel>, IHavingNonProcess, IHavingLauncherIconCaching
+	public class LauncherItemsViewModel: SingleModelWrapperViewModelBase<LauncherItemCollectionModel>, IHavingAppNonProcess
 	{
-		public LauncherItemsViewModel(LauncherItemCollectionModel model, LauncherIconCaching launcherIconCaching, INonProcess nonProcess)
+		public LauncherItemsViewModel(LauncherItemCollectionModel model, IAppNonProcess nonProcess)
 			: base(model)
 		{
-			LauncherIconCaching = launcherIconCaching;
 			NonProcess = nonProcess;
 		}
 
 		#region property
-
-		#region IHavingLauncherIconCaching
-
-		public LauncherIconCaching LauncherIconCaching { get; set; }
-
-		#endregion
 
 		#region IHavingClipboardWatcher
 
@@ -37,9 +30,9 @@
 
 		#endregion
 
-		#region IHavingNonProcess
+		#region IHavingAppNonProcess
 
-		public INonProcess NonProcess { get; private set; }
+		public IAppNonProcess NonProcess { get; private set; }
 
 		#endregion
 

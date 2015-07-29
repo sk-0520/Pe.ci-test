@@ -14,10 +14,11 @@
 	{
 		public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
 		{
-			var model = value as LauncherItemViewModelBase;
-			if(model != null) {
-				//TODO: parameterで切り替えれた方があとあと便利そう。
-				var result = new LauncherItemEditViewModel(model.Model, model.LauncherIconCaching, model.NonProcess, model.AppSender);
+			var viewModel = value as LauncherItemViewModelBase;
+			if(viewModel != null) {
+				// TODO: parameterで切り替えれた方があとあと便利そう。
+				// TODO: ダサい
+				var result = new LauncherItemEditViewModel(viewModel.Model, viewModel.NonProcess, viewModel.AppSender);
 				return result;
 			}
 			return null;
