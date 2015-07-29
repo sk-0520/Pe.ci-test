@@ -35,8 +35,8 @@
 
 		#endregion
 
-		public TemplateViewModel(TemplateSettingModel model, TemplateWindow view, TemplateIndexSettingModel indexModel, INonProcess nonProcess, IClipboardWatcher clipboardWatcher, VariableConstants variableConstants, IAppSender appSender)
-			: base(model, view, indexModel, nonProcess, clipboardWatcher, variableConstants, appSender)
+		public TemplateViewModel(TemplateSettingModel model, TemplateWindow view, TemplateIndexSettingModel indexModel, IAppNonProcess nonProcess, IClipboardWatcher clipboardWatcher, IAppSender appSender)
+			: base(model, view, indexModel, nonProcess, clipboardWatcher, appSender)
 		{ }
 
 		#region property
@@ -235,8 +235,7 @@
 				model,
 				AppSender,
 				ClipboardWatcher,
-				NonProcess,
-				VariableConstants
+				NonProcess
 			);
 
 			return result;

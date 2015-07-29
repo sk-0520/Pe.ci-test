@@ -38,8 +38,8 @@
 
 		#endregion
 
-		public ClipboardViewModel(ClipboardSettingModel model, ClipboardWindow view, ClipboardIndexSettingModel indexModel, INonProcess nonProcess, IClipboardWatcher clipboardWatcher, VariableConstants variableConstants, IAppSender appSender)
-			: base(model, view, indexModel, nonProcess, clipboardWatcher, variableConstants, appSender)
+		public ClipboardViewModel(ClipboardSettingModel model, ClipboardWindow view, ClipboardIndexSettingModel indexModel, IAppNonProcess nonProcess, IClipboardWatcher clipboardWatcher, IAppSender appSender)
+			: base(model, view, indexModel, nonProcess, clipboardWatcher, appSender)
 		{ }
 
 		#region property
@@ -162,8 +162,7 @@
 				model,
 				AppSender,
 				ClipboardWatcher,
-				NonProcess,
-				VariableConstants
+				NonProcess
 			);
 
 			return result;

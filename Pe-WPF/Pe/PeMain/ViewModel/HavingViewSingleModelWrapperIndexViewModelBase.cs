@@ -24,19 +24,18 @@
 	/// <typeparam name="TCollectionModel"></typeparam>
 	/// <typeparam name="TItemModel"></typeparam>
 	/// <typeparam name="TItemViewModel"></typeparam>
-	public abstract class HavingViewSingleModelWrapperIndexViewModelBase<TModel, TView, TCollectionModel, TItemModel, TItemViewModel> : HavingViewSingleModelWrapperViewModelBase<TModel, TView>, IHavingClipboardWatcher, IHavingVariableConstants, IHavingNonProcess, IHavingAppSender
+	public abstract class HavingViewSingleModelWrapperIndexViewModelBase<TModel, TView, TCollectionModel, TItemModel, TItemViewModel> : HavingViewSingleModelWrapperViewModelBase<TModel, TView>, IHavingClipboardWatcher, IHavingAppNonProcess, IHavingAppSender
 		where TModel: IModel
 		where TView: UIElement
 		where TCollectionModel : IndexItemCollectionModel<TItemModel>, new()
 		where TItemModel : IndexItemModelBase
 		where TItemViewModel : SingleModelWrapperViewModelBase<TItemModel>
 	{
-		public HavingViewSingleModelWrapperIndexViewModelBase(TModel model, TView view, IndexSettingModelBase<TCollectionModel, TItemModel> indexModel, INonProcess nonProcess, IClipboardWatcher clipboardWatcher, VariableConstants variableConstants, IAppSender appSender)
+		public HavingViewSingleModelWrapperIndexViewModelBase(TModel model, TView view, IndexSettingModelBase<TCollectionModel, TItemModel> indexModel, IAppNonProcess nonProcess, IClipboardWatcher clipboardWatcher, IAppSender appSender)
 			: base(model, view)
 		{
 			NonProcess = nonProcess;
 			ClipboardWatcher = clipboardWatcher;
-			VariableConstants = variableConstants;
 			AppSender = appSender;
 
 			IndexModel = indexModel;
@@ -64,21 +63,15 @@
 
 		#endregion
 
-		#region IHavingNonProcess
+		#region IHavingAppNonProcess
 
-		public INonProcess NonProcess { get; private set; }
+		public IAppNonProcess NonProcess { get; private set; }
 
 		#endregion
 
 		#region IHavingClipboardWatcher
 
 		public IClipboardWatcher ClipboardWatcher { get; private set; }
-
-		#endregion
-
-		#region IHavingVariableConstants
-
-		public VariableConstants VariableConstants { get; private set; }
 
 		#endregion
 

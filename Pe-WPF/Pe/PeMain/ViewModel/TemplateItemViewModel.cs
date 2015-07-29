@@ -22,7 +22,7 @@
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 	using ContentTypeTextNet.Pe.PeMain.View;
 
-	public class TemplateItemViewModel : SingleModelWrapperViewModelBase<TemplateIndexItemModel>, IHavingAppSender, IHavingClipboardWatcher, IHavingNonProcess, IHavingVariableConstants, IUnload
+	public class TemplateItemViewModel : SingleModelWrapperViewModelBase<TemplateIndexItemModel>, IHavingAppSender, IHavingClipboardWatcher, IHavingAppNonProcess, IUnload
 	{
 		#region variable
 
@@ -32,13 +32,12 @@
 
 		#endregion
 
-		public TemplateItemViewModel(TemplateIndexItemModel model, IAppSender appSender, IClipboardWatcher clipboardWatcher, INonProcess nonProcess, VariableConstants variableConstants)
+		public TemplateItemViewModel(TemplateIndexItemModel model, IAppSender appSender, IClipboardWatcher clipboardWatcher, IAppNonProcess nonProcess)
 			:base(model)
 		{
 			AppSender = appSender;
 			ClipboardWatcher = clipboardWatcher;
 			NonProcess = nonProcess;
-			VariableConstants = variableConstants;
 		}
 
 		#region property
@@ -244,15 +243,9 @@
 
 		#endregion
 
-		#region IHavingNonProcess
+		#region IHavingAppNonProcess
 
-		public INonProcess NonProcess { get; private set; }
-
-		#endregion
-
-		#region IHavingVariableConstants
-
-		public VariableConstants VariableConstants { get; private set; }
+		public IAppNonProcess NonProcess { get; private set; }
 
 		#endregion
 
