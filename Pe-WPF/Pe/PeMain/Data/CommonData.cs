@@ -59,7 +59,7 @@
 		/// <summary>
 		/// 呼び出し元から見てると心臓に悪い。
 		/// </summary>
-		public INonProcess NonProcess
+		public IAppNonProcess NonProcess
 		{ 
 			get 
 			{
@@ -68,6 +68,8 @@
 				}
 				NonProcessInstance.Language = Language;
 				NonProcessInstance.Logger = Logger;
+				NonProcessInstance.LauncherIconCaching = LauncherIconCaching;
+				NonProcessInstance.VariableConstants = VariableConstants;
 
 				return NonProcessInstance; 
 			} 
