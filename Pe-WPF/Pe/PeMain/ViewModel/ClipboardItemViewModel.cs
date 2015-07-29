@@ -35,11 +35,11 @@
 
 		#endregion
 
-		public ClipboardItemViewModel(ClipboardIndexItemModel model, IAppSender appSender, IAppNonProcess nonProcess)
+		public ClipboardItemViewModel(ClipboardIndexItemModel model, IAppSender appSender, IAppNonProcess appNonProcess)
 			:base(model)
 		{
 			AppSender = appSender;
-			NonProcess = nonProcess;
+			AppNonProcess = appNonProcess;
 		}
 
 		#region property
@@ -53,7 +53,7 @@
 					var body = AppSender.SendLoadIndexBody(IndexKind.Clipboard, Model.Id);
 					this._bodyModel = (ClipboardBodyItemModel)body;
 					if(Model.Type.HasFlag(ClipboardType.Html)) {
-						HtmlModel = ClipboardUtility.ConvertClipboardHtmlFromFromRawHtml(this._bodyModel.Html, NonProcess);
+						HtmlModel = ClipboardUtility.ConvertClipboardHtmlFromFromRawHtml(this._bodyModel.Html, AppNonProcess);
 					} else {
 						HtmlModel = null;
 					}
@@ -207,7 +207,7 @@
 						var apiWindow = (WindowsAPIWindowBase)o;
 						var hWnd = apiWindow.Handle;
 
-						ClipboardUtility.OutputText(hWnd, Text, NonProcess, NonProcess.ClipboardWatcher);
+						ClipboardUtility.OutputText(hWnd, Text, AppNonProcess, AppNonProcess.ClipboardWatcher);
 					}
 				);
 
@@ -226,7 +226,7 @@
 							Body = BodyModel,
 						};
 
-						ClipboardUtility.CopyClipboardItem(clipboardItem, NonProcess.ClipboardWatcher);
+						ClipboardUtility.CopyClipboardItem(clipboardItem, AppNonProcess.ClipboardWatcher);
 					}
 				);
 
@@ -240,7 +240,7 @@
 			{
 				var result = CreateCommand(
 					o => {
-						ClipboardUtility.CopyText(Text, NonProcess.ClipboardWatcher);
+						ClipboardUtility.CopyText(Text, AppNonProcess.ClipboardWatcher);
 					}
 				);
 
@@ -254,7 +254,7 @@
 			{
 				var result = CreateCommand(
 					o => {
-						ClipboardUtility.CopyRtf(Rtf, NonProcess.ClipboardWatcher);
+						ClipboardUtility.CopyRtf(Rtf, AppNonProcess.ClipboardWatcher);
 					}
 				);
 
@@ -268,7 +268,7 @@
 			{
 				var result = CreateCommand(
 					o => {
-						ClipboardUtility.CopyHtml(BodyModel.Html, NonProcess.ClipboardWatcher);
+						ClipboardUtility.CopyHtml(BodyModel.Html, AppNonProcess.ClipboardWatcher);
 					}
 				);
 
@@ -282,7 +282,7 @@
 			{
 				var result = CreateCommand(
 					o => {
-						ClipboardUtility.CopyImage(BodyModel.Image, NonProcess.ClipboardWatcher);
+						ClipboardUtility.CopyImage(BodyModel.Image, AppNonProcess.ClipboardWatcher);
 					}
 				);
 
@@ -296,7 +296,7 @@
 			{
 				var result = CreateCommand(
 					o => {
-						ClipboardUtility.CopyFile(BodyModel.Files, NonProcess.ClipboardWatcher);
+						ClipboardUtility.CopyFile(BodyModel.Files, AppNonProcess.ClipboardWatcher);
 					}
 				);
 
@@ -327,7 +327,7 @@
 
 		#region IHavingAppNonProcess
 
-		public IAppNonProcess NonProcess { get; private set; }
+		public IAppNonProcess AppNonProcess { get; private set; }
 
 		#endregion
 

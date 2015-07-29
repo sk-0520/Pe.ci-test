@@ -13,8 +13,8 @@
 
 	public class CaptionCursorHitTest: WindowHitTest
 	{
-		public CaptionCursorHitTest(Window view, IWindowHitTestData restrictionViewModel, INonProcess nonProcess)
-			: base(view, restrictionViewModel, nonProcess)
+		public CaptionCursorHitTest(Window view, IWindowHitTestData restrictionViewModel, INonProcess appNonProcess)
+			: base(view, restrictionViewModel, appNonProcess)
 		{ }
 
 		#region property

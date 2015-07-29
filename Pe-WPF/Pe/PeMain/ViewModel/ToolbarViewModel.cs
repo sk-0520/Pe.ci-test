@@ -18,11 +18,11 @@
 
 	public class ToolbarViewModel : SingleModelWrapperViewModelBase<ToolbarItemModel>, IHavingAppNonProcess
 	{
-		public ToolbarViewModel(ToolbarItemModel toolbarItemModel, LauncherGroupItemCollectionModel group, IAppNonProcess nonProcess)
+		public ToolbarViewModel(ToolbarItemModel toolbarItemModel, LauncherGroupItemCollectionModel group, IAppNonProcess appNonProcess)
 			: base(toolbarItemModel)
 		{
 			Group = group;
-			NonProcess = nonProcess;
+			AppNonProcess = appNonProcess;
 		}
 
 		#region property
@@ -79,7 +79,7 @@
 
 		#region IHavingAppNonProcess
 
-		public IAppNonProcess NonProcess { get; set; }
+		public IAppNonProcess AppNonProcess { get; set; }
 
 		#endregion
 
@@ -89,7 +89,7 @@
 		{
 			get
 			{
-				return ScreenUtility.GetScreenName(Model.Id, NonProcess.Logger);
+				return ScreenUtility.GetScreenName(Model.Id, AppNonProcess.Logger);
 			}
 		}
 

@@ -61,8 +61,8 @@
 						if(HasView) {
 							View.Close();
 						}
-						SettingUtility.IncrementLauncherItem(Model, null, null, NonProcess);
-						NonProcess.LauncherIconCaching.Remove(this._srcModel);
+						SettingUtility.IncrementLauncherItem(Model, null, null, AppNonProcess);
+						AppNonProcess.LauncherIconCaching.Remove(this._srcModel);
 						AppSender.SendRefreshView(WindowKind.LauncherToolbar, null);
 					}
 				);

@@ -40,29 +40,29 @@
 		/// <param name="item">テンプレートアイテム。テンプレートプロセッサが設定される。</param>
 		/// <param name="language">使用言語。</param>
 		/// <returns>作成されたテンプレートプロセッサ。</returns>
-		public static ProgramTemplateProcessor MakeTemplateProcessor(string source, ProgramTemplateProcessor processor, INonProcess nonProcess)
+		public static ProgramTemplateProcessor MakeTemplateProcessor(string source, ProgramTemplateProcessor processor, INonProcess appNonProcess)
 		{
 			if(processor != null) {
 				//processor.Language = language;
 				try {
-					processor.CultureCode = nonProcess.Language.CultureCode;
+					processor.CultureCode = appNonProcess.Language.CultureCode;
 					processor.TemplateSource = source;
 				} catch(RemotingException ex) {
-					nonProcess.Logger.Error(ex);
+					appNonProcess.Logger.Error(ex);
 				}
 
 				return processor;
 			}
 
 			var result = new ProgramTemplateProcessor() {
-				CultureCode = nonProcess.Language.CultureCode,
+				CultureCode = appNonProcess.Language.CultureCode,
 				TemplateSource = source,
 			};
 
 			return result;
 		}
 
-		public static string ToPlainText(TemplateIndexItemModel indexModel, TemplateBodyItemModel bodyModel, ProgramTemplateProcessor processor, DateTime dateTime, INonProcess nonProcess)
+		public static string ToPlainText(TemplateIndexItemModel indexModel, TemplateBodyItemModel bodyModel, ProgramTemplateProcessor processor, DateTime dateTime, INonProcess appNonProcess)
 		{
 			if(!indexModel.IsReplace) {
 				return bodyModel.Source ?? string.Empty;
@@ -83,8 +83,8 @@
 				return processor.TransformText();
 			} else {
 				var map = GetTemplateMap();
-				var replacedText = nonProcess.Language.GetReplacedWordText(bodyModel.Source ?? string.Empty, dateTime, map);
-				nonProcess.Logger.Debug("replacedText: " + replacedText);
+				var replacedText = appNonProcess.Language.GetReplacedWordText(bodyModel.Source ?? string.Empty, dateTime, map);
+				appNonProcess.Logger.Debug("replacedText: " + replacedText);
 				return replacedText;
 			}
 		}

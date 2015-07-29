@@ -21,8 +21,8 @@
 		CollectionModel<GroupItemViewMode> _nodes;
 		#endregion
 
-		public GroupRootViewModel(LauncherGroupItemModel model, LauncherItemCollectionModel items, IAppNonProcess nonProcess)
-			: base(model, nonProcess)
+		public GroupRootViewModel(LauncherGroupItemModel model, LauncherItemCollectionModel items, IAppNonProcess appNonProcess)
+			: base(model, appNonProcess)
 		{
 			Items = items;
 		}
@@ -40,13 +40,13 @@
 					foreach(var s in Model.LauncherItems) {
 						if (Items.Contains(s)) {
 							var item = Items[s];
-							list.Add(new GroupItemViewMode(item, NonProcess));
+							list.Add(new GroupItemViewMode(item, AppNonProcess));
 						} else {
 							//TODO: 表記
 							var item = new LauncherItemModel();
 							item.Id = s;
 							item.Name = s.ToString("B");
-							list.Add(new GroupItemViewMode(item, NonProcess));
+							list.Add(new GroupItemViewMode(item, AppNonProcess));
 						}
 					}
 

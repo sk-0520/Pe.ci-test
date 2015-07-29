@@ -18,7 +18,7 @@
 			if(viewModel != null) {
 				// TODO: parameterで切り替えれた方があとあと便利そう。
 				// TODO: ダサい
-				var result = new LauncherItemEditViewModel(viewModel.Model, viewModel.NonProcess, viewModel.AppSender);
+				var result = new LauncherItemEditViewModel(viewModel.Model, viewModel.AppNonProcess, viewModel.AppSender);
 				return result;
 			}
 			return null;

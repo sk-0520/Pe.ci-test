@@ -14,8 +14,8 @@
 
 	public abstract class SettingPageLauncherIconCacheViewModelBase : SettingPageViewModelBase
 	{
-		public SettingPageLauncherIconCacheViewModelBase(IAppNonProcess nonProcess, SettingNotifiyItem settingNotifiyItem)
-			: base(nonProcess, settingNotifiyItem)
+		public SettingPageLauncherIconCacheViewModelBase(IAppNonProcess appNonProcess, SettingNotifiyItem settingNotifiyItem)
+			: base(appNonProcess, settingNotifiyItem)
 		{ }
 	}
 }

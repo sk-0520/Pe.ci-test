@@ -21,10 +21,10 @@
 
 		#endregion
 
-		public GroupViewModelBase(TModel model, IAppNonProcess nonProcess)
+		public GroupViewModelBase(TModel model, IAppNonProcess appNonProcess)
 			:base(model)
 		{
-			NonProcess = nonProcess;
+			AppNonProcess = appNonProcess;
 		}
 
 		#region property
@@ -47,7 +47,7 @@
 
 		#region IHavingAppNonProcess
 
-		public IAppNonProcess NonProcess { get; private set; }
+		public IAppNonProcess AppNonProcess { get; private set; }
 
 		#endregion
 

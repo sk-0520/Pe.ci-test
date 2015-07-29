@@ -36,7 +36,7 @@
 			View = view;
 
 			this._environmentVariablesItem = (EnvironmentVariablesItemModel)Model.EnvironmentVariables.DeepClone();
-			EnvironmentVariables = new EnvironmentVariablesEditViewModel(this._environmentVariablesItem, NonProcess);
+			EnvironmentVariables = new EnvironmentVariablesEditViewModel(this._environmentVariablesItem, AppNonProcess);
 
 			this._option = Model.Option;
 			this._workDirPath = Model.WorkDirectoryPath;
@@ -114,10 +114,10 @@
 						dummyModel.Administrator = Administrator;
 						dummyModel.EnvironmentVariables = this._environmentVariablesItem;
 						try {
-							ExecuteUtility.RunItem(dummyModel, NonProcess, AppSender);
-							SettingUtility.IncrementLauncherItem(Model, Option, WorkDirectoryPath, NonProcess);
+							ExecuteUtility.RunItem(dummyModel, AppNonProcess, AppSender);
+							SettingUtility.IncrementLauncherItem(Model, Option, WorkDirectoryPath, AppNonProcess);
 						} catch(Exception ex) {
-							NonProcess.Logger.Warning(ex);
+							AppNonProcess.Logger.Warning(ex);
 						}
 
 						if (HasView) {

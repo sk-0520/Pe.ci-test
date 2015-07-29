@@ -38,8 +38,8 @@
 
 		#endregion
 
-		public ClipboardViewModel(ClipboardSettingModel model, ClipboardWindow view, ClipboardIndexSettingModel indexModel, IAppNonProcess nonProcess, IAppSender appSender)
-			: base(model, view, indexModel, nonProcess, appSender)
+		public ClipboardViewModel(ClipboardSettingModel model, ClipboardWindow view, ClipboardIndexSettingModel indexModel, IAppNonProcess appNonProcess, IAppSender appSender)
+			: base(model, view, indexModel, appNonProcess, appSender)
 		{ }
 
 		#region property
@@ -161,7 +161,7 @@
 			var result = new ClipboardItemViewModel(
 				model,
 				AppSender,
-				NonProcess
+				AppNonProcess
 			);
 
 			return result;
@@ -193,7 +193,7 @@
 			}
 
 			if (!filter.Any()) {
-				NonProcess.Logger.Information("type list: 0");
+				AppNonProcess.Logger.Information("type list: 0");
 				return false;
 			}
 
@@ -236,7 +236,7 @@
 				map[saveType]();
 				return true;
 			} catch (Exception ex) {
-				NonProcess.Logger.Error(ex);
+				AppNonProcess.Logger.Error(ex);
 				return false;
 			}
 

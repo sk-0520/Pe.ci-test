@@ -32,11 +32,11 @@
 
 		#endregion
 
-		public TemplateItemViewModel(TemplateIndexItemModel model, IAppSender appSender, IAppNonProcess nonProcess)
+		public TemplateItemViewModel(TemplateIndexItemModel model, IAppSender appSender, IAppNonProcess appNonProcess)
 			:base(model)
 		{
 			AppSender = appSender;
-			NonProcess = nonProcess;
+			AppNonProcess = appNonProcess;
 		}
 
 		#region property
@@ -153,7 +153,7 @@
 						var hWnd = apiWindow.Handle;
 						// TODO: なんだかなぁ。
 						SetReplacedValue();
-						ClipboardUtility.OutputText(hWnd, Replaced, NonProcess, NonProcess.ClipboardWatcher);
+						ClipboardUtility.OutputText(hWnd, Replaced, AppNonProcess, AppNonProcess.ClipboardWatcher);
 					}
 				);
 
@@ -168,7 +168,7 @@
 				var result = CreateCommand(
 					o => {
 						SetReplacedValue();
-						ClipboardUtility.CopyText(Replaced, NonProcess.ClipboardWatcher);
+						ClipboardUtility.CopyText(Replaced, AppNonProcess.ClipboardWatcher);
 					}
 				);
 
@@ -189,8 +189,8 @@
 		public void SetReplacedValue()
 		{
 			if (IsReplace) {
-				Processor = TemplateUtility.MakeTemplateProcessor(BodyModel.Source, Processor, NonProcess);
-				Replaced = TemplateUtility.ToPlainText(Model, BodyModel, Processor, DateTime.Now, NonProcess);
+				Processor = TemplateUtility.MakeTemplateProcessor(BodyModel.Source, Processor, AppNonProcess);
+				Replaced = TemplateUtility.ToPlainText(Model, BodyModel, Processor, DateTime.Now, AppNonProcess);
 			} else {
 				Replaced = Source ?? string.Empty;
 			}
@@ -203,7 +203,7 @@
 				return;
 			}
 			BodyModel.History.Update();
-			NonProcess.Logger.Information("save body:" + Name, BodyModel);
+			AppNonProcess.Logger.Information("save body:" + Name, BodyModel);
 			AppSender.SendSaveIndexBody(BodyModel, Model.Id);
 			ResetChangeFlag();
 		}
@@ -238,7 +238,7 @@
 
 		#region IHavingAppNonProcess
 
-		public IAppNonProcess NonProcess { get; private set; }
+		public IAppNonProcess AppNonProcess { get; private set; }
 
 		#endregion
 

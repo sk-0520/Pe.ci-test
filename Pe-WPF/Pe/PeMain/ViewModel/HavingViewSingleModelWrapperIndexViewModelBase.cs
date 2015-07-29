@@ -31,10 +31,10 @@
 		where TItemModel : IndexItemModelBase
 		where TItemViewModel : SingleModelWrapperViewModelBase<TItemModel>
 	{
-		public HavingViewSingleModelWrapperIndexViewModelBase(TModel model, TView view, IndexSettingModelBase<TCollectionModel, TItemModel> indexModel, IAppNonProcess nonProcess, IAppSender appSender)
+		public HavingViewSingleModelWrapperIndexViewModelBase(TModel model, TView view, IndexSettingModelBase<TCollectionModel, TItemModel> indexModel, IAppNonProcess appNonProcess, IAppSender appSender)
 			: base(model, view)
 		{
-			NonProcess = nonProcess;
+			AppNonProcess = appNonProcess;
 			AppSender = appSender;
 
 			IndexModel = indexModel;
@@ -64,7 +64,7 @@
 
 		#region IHavingAppNonProcess
 
-		public IAppNonProcess NonProcess { get; private set; }
+		public IAppNonProcess AppNonProcess { get; private set; }
 
 		#endregion
 

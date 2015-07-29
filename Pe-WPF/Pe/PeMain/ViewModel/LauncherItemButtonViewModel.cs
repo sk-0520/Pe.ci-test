@@ -202,7 +202,7 @@
 						};
 						var s = map[type]();
 
-						ExecuteUtility.OpenDirectory(s, NonProcess, default(LauncherItemModel));
+						ExecuteUtility.OpenDirectory(s, AppNonProcess, default(LauncherItemModel));
 					}
 				);
 
@@ -224,7 +224,7 @@
 						};
 						var s = map[type]();
 
-						ClipboardUtility.CopyText(s, NonProcess.ClipboardWatcher);
+						ClipboardUtility.CopyText(s, AppNonProcess.ClipboardWatcher);
 					}
 				);
 

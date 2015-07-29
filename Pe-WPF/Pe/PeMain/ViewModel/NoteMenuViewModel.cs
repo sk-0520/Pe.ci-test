@@ -18,10 +18,10 @@
 
 	public class NoteMenuViewModel: SingleModelWrapperViewModelBase<NoteIndexItemModel>, INoteMenuItem, IHavingAppSender, IHavingNonProcess
 	{
-		public NoteMenuViewModel(NoteIndexItemModel model, INonProcess nonProcess,  IAppSender appSender)
+		public NoteMenuViewModel(NoteIndexItemModel model, INonProcess appNonProcess,  IAppSender appSender)
 			: base(model)
 		{
-			NonProcess = nonProcess;
+			NonProcess = appNonProcess;
 			AppSender = appSender;
 		}
 

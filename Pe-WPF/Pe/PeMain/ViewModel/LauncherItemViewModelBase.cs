@@ -28,10 +28,10 @@
 
 		#endregion
 
-		public LauncherItemViewModelBase(LauncherItemModel model, IAppNonProcess nonProcess, IAppSender appSender)
+		public LauncherItemViewModelBase(LauncherItemModel model, IAppNonProcess appNonProcess, IAppSender appSender)
 			: base(model)
 		{
-			NonProcess = nonProcess;
+			AppNonProcess = appNonProcess;
 			AppSender = appSender;
 		}
 
@@ -109,9 +109,9 @@
 
 		public BitmapSource GetIcon(IconScale iconScale)
 		{
-			CheckUtility.DebugEnforceNotNull(NonProcess.LauncherIconCaching);
+			CheckUtility.DebugEnforceNotNull(AppNonProcess.LauncherIconCaching);
 
-			return NonProcess.LauncherIconCaching[iconScale].Get(Model, () => LauncherItemUtility.GetIcon(Model, iconScale, NonProcess));
+			return AppNonProcess.LauncherIconCaching[iconScale].Get(Model, () => LauncherItemUtility.GetIcon(Model, iconScale, AppNonProcess));
 		}
 
 		public Color GetIconColor(IconScale iconScale)
@@ -127,10 +127,10 @@
 		protected void Execute()
 		{
 			try {
-				ExecuteUtility.RunItem(Model, NonProcess, AppSender);
-				SettingUtility.IncrementLauncherItem(Model, null, null, NonProcess);
+				ExecuteUtility.RunItem(Model, AppNonProcess, AppSender);
+				SettingUtility.IncrementLauncherItem(Model, null, null, AppNonProcess);
 			} catch (Exception ex) {
-				NonProcess.Logger.Warning(ex);
+				AppNonProcess.Logger.Warning(ex);
 			}
 		}
 
@@ -138,7 +138,7 @@
 
 		#region IHavingAppNonProcess
 
-		public IAppNonProcess NonProcess { get; private set; }
+		public IAppNonProcess AppNonProcess { get; private set; }
 
 		#endregion
 

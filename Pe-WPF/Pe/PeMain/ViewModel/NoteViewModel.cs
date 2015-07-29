@@ -43,10 +43,10 @@
 
 		#endregion
 
-		public NoteViewModel(NoteIndexItemModel model, NoteWindow view, IAppNonProcess nonProcess, IAppSender appSender)
+		public NoteViewModel(NoteIndexItemModel model, NoteWindow view, IAppNonProcess appNonProcess, IAppSender appSender)
 			: base(model, view)
 		{
-			NonProcess = nonProcess;
+			AppNonProcess = appNonProcess;
 			AppSender = appSender;
 
 			SetCompactArea();
@@ -289,7 +289,7 @@
 
 		#region IHavingAppNonProcess
 
-		public IAppNonProcess NonProcess { get; private set; }
+		public IAppNonProcess AppNonProcess { get; private set; }
 
 		#endregion
 
@@ -508,11 +508,11 @@
 				var result = CreateCommand(
 					o => {
 						if (string.IsNullOrEmpty(Body)) {
-							NonProcess.Logger.Information("empty body");
+							AppNonProcess.Logger.Information("empty body");
 							return;
 						}
 
-						ClipboardUtility.CopyText(Body, NonProcess.ClipboardWatcher);
+						ClipboardUtility.CopyText(Body, AppNonProcess.ClipboardWatcher);
 					}
 				);
 

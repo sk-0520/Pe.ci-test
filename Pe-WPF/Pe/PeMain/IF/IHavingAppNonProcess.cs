@@ -8,6 +8,6 @@
 
 	public interface IHavingAppNonProcess
 	{
-		IAppNonProcess NonProcess { get; }
+		IAppNonProcess AppNonProcess { get; }
 	}
 }

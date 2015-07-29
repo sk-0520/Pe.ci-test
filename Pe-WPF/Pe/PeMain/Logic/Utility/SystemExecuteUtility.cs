@@ -11,7 +11,7 @@
 
 	public static class SystemExecuteUtility
 	{
-		public static Process RunDLL(string command, INonProcess nonProcess)
+		public static Process RunDLL(string command, INonProcess appNonProcess)
 		{
 			var rundll = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "rundll32.exe");
 			var startupInfo = new ProcessStartInfo(rundll, command);
@@ -22,10 +22,10 @@
 		/// <summary>
 		/// タスクトレイ通知領域履歴を開く。
 		/// </summary>
-		/// <param name="nonProcess"></param>
-		public static void OpenNotificationAreaHistory(INonProcess nonProcess)
+		/// <param name="appNonProcess"></param>
+		public static void OpenNotificationAreaHistory(INonProcess appNonProcess)
 		{
-			RunDLL("shell32.dll,Options_RunDLL 5", nonProcess);
+			RunDLL("shell32.dll,Options_RunDLL 5", appNonProcess);
 		}
 	}
 }

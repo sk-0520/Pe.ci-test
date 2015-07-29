@@ -14,8 +14,8 @@
 
 	public class NoteSettingViewModel : SettingPageViewModelBase
 	{
-		public NoteSettingViewModel(NoteSettingModel note, IAppNonProcess nonProcess, SettingNotifiyItem settingNotifiyItem)
-			: base(nonProcess, settingNotifiyItem)
+		public NoteSettingViewModel(NoteSettingModel note, IAppNonProcess appNonProcess, SettingNotifiyItem settingNotifiyItem)
+			: base(appNonProcess, settingNotifiyItem)
 		{
 			Note = note;
 		}

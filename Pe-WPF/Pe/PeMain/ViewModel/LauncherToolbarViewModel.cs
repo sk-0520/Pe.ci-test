@@ -154,11 +154,11 @@
 
 		#endregion
 
-		public LauncherToolbarViewModel(LauncherToolbarDataModel model, LauncherToolbarWindow view, ScreenModel screen, IAppNonProcess nonProcess, IAppSender appSender)
+		public LauncherToolbarViewModel(LauncherToolbarDataModel model, LauncherToolbarWindow view, ScreenModel screen, IAppNonProcess appNonProcess, IAppSender appSender)
 			: base(model, view)
 		{
 			DockScreen = screen;
-			NonProcess = nonProcess;
+			AppNonProcess = appNonProcess;
 			AppSender = appSender;
 
 			this._captionWidth = GetCaptionWidth();
@@ -319,7 +319,7 @@
 			{
 				if (this._launcherItems == null) {
 					var list = GetLauncherItems(SelectedGroup)
-						.Select(m => new LauncherItemButtonViewModel(m, NonProcess, AppSender) {
+						.Select(m => new LauncherItemButtonViewModel(m, AppNonProcess, AppSender) {
 							IconScale = Model.Toolbar.IconScale,
 						});
 					;
@@ -415,7 +415,7 @@
 				var result = CreateCommand(
 					o => {
 						var group = (LauncherGroupItemModel)o;
-						NonProcess.Logger.Debug(group.ToString());
+						AppNonProcess.Logger.Debug(group.ToString());
 						SelectedGroup = group;
 					}
 				);
@@ -540,7 +540,7 @@
 
 		#region IHavingAppNonPorocess
 
-		public IAppNonProcess NonProcess { get; private set; }
+		public IAppNonProcess AppNonProcess { get; private set; }
 
 		#endregion
 
@@ -858,7 +858,7 @@
 				if(HasView) {
 					return UIUtility.ToLogicalPixel(View, DockScreen.DeviceWorkingArea);
 				} else {
-					NonProcess.Logger.SafeDebug("device pixel");
+					AppNonProcess.Logger.SafeDebug("device pixel");
 					return DockScreen.DeviceWorkingArea;
 				}
 			}

@@ -14,12 +14,12 @@
 
 	public abstract class SettingPageViewModelBase: ViewModelBase, IHavingAppNonProcess
 	{
-		public SettingPageViewModelBase(IAppNonProcess nonProcess, SettingNotifiyItem settingNotifiyItem)
+		public SettingPageViewModelBase(IAppNonProcess appNonProcess, SettingNotifiyItem settingNotifiyItem)
 		{
-			CheckUtility.DebugEnforceNotNull(nonProcess);
+			CheckUtility.DebugEnforceNotNull(appNonProcess);
 			CheckUtility.DebugEnforceNotNull(settingNotifiyItem);
 
-			NonProcess = nonProcess;
+			AppNonProcess = appNonProcess;
 			SettingNotifiyItem = settingNotifiyItem;
 		}
 
@@ -31,7 +31,7 @@
 
 		#region IHavingAppNonProcess
 
-		public IAppNonProcess NonProcess { get; private set; }
+		public IAppNonProcess AppNonProcess { get; private set; }
 
 		#endregion
 	}

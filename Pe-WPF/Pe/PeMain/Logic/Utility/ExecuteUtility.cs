@@ -20,7 +20,7 @@
 
 	public static class ExecuteUtility
 	{
-		static Process RunFileItem(LauncherItemModel launcherItem, INonProcess nonProcess, IAppSender appSender)
+		static Process RunFileItem(LauncherItemModel launcherItem, INonProcess appNonProcess, IAppSender appSender)
 		{
 			Debug.Assert(launcherItem.LauncherKind == LauncherKind.File);
 
@@ -90,7 +90,7 @@
 				}
 
 			} catch (Win32Exception ex) {
-				nonProcess.Logger.Error(ex);
+				appNonProcess.Logger.Error(ex);
 				//if (streamForm != null) {
 				//	streamForm.Dispose();
 				//}
@@ -106,7 +106,7 @@
 		/// <param name="launcherItem">URIアイテム</param>
 		/// <param name="commonData">共通データ</param>
 		/// <param name="parentForm">親ウィンドウ</param>
-		private static Process RunCommandItem(LauncherItemModel launcherItem, INonProcess nonProcess, IAppSender appSender)
+		private static Process RunCommandItem(LauncherItemModel launcherItem, INonProcess appNonProcess, IAppSender appSender)
 		{
 			Debug.Assert(launcherItem.LauncherKind == LauncherKind.Command);
 
@@ -117,18 +117,18 @@
 			// 管理者権限はどうにも効かなさそう
 			fileLauncherItem.Administrator = false;
 
-			return RunFileItem(fileLauncherItem, nonProcess, appSender);
+			return RunFileItem(fileLauncherItem, appNonProcess, appSender);
 		}
-		public static Process RunItem(LauncherItemModel launcherItem, INonProcess nonProcess, IAppSender appSender)
+		public static Process RunItem(LauncherItemModel launcherItem, INonProcess appNonProcess, IAppSender appSender)
 		{
-			nonProcess.Logger.Information(launcherItem.ToString());
+			appNonProcess.Logger.Information(launcherItem.ToString());
 
 			switch(launcherItem.LauncherKind) {
 				case LauncherKind.File:
-					return RunFileItem(launcherItem, nonProcess, appSender);
+					return RunFileItem(launcherItem, appNonProcess, appSender);
 
 				case LauncherKind.Command:
-					return RunCommandItem(launcherItem, nonProcess, appSender);
+					return RunCommandItem(launcherItem, appNonProcess, appSender);
 
 				default:
 					throw new NotImplementedException();
@@ -140,20 +140,20 @@
 		/// コマンド文字列の実行。
 		/// </summary>
 		/// <param name="expandedPath">環境変数展開済みコマンド文字列。</param>
-		/// <param name="nonProcess"></param>
+		/// <param name="appNonProcess"></param>
 		/// <returns></returns>
-		public static Process ExecuteCommand(string expandedPath, INonProcess nonProcess)
+		public static Process ExecuteCommand(string expandedPath, INonProcess appNonProcess)
 		{
-			return ExecuteCommand(expandedPath, null, nonProcess);
+			return ExecuteCommand(expandedPath, null, appNonProcess);
 		}
 
 		/// <summary>
 		/// コマンド文字列の実行。
 		/// </summary>
 		/// <param name="expandedPath">環境変数展開済みコマンド文字列。</param>
-		/// <param name="nonProcess"></param>
+		/// <param name="appNonProcess"></param>
 		/// <returns></returns>
-		public static Process ExecuteCommand(string expandedPath, string arguments, INonProcess nonProcess)
+		public static Process ExecuteCommand(string expandedPath, string arguments, INonProcess appNonProcess)
 		{
 			string exCommand = expandedPath;
 
@@ -168,9 +168,9 @@
 		/// ファイルパスを規定プログラムで開く。
 		/// </summary>
 		/// <param name="expandedFilePath">展開済みファイルパス</param>
-		/// <param name="nonProcess"></param>
+		/// <param name="appNonProcess"></param>
 		/// <returns></returns>
-		public static Process OpenFile(string expandedFilePath, INonProcess nonProcess)
+		public static Process OpenFile(string expandedFilePath, INonProcess appNonProcess)
 		{
 			return Process.Start(expandedFilePath); 
 		}
@@ -179,9 +179,9 @@
 		/// ディレクトリを開く。
 		/// </summary>
 		/// <param name="expandedDirPath">展開済みディレクトリパス</param>
-		/// <param name="nonProcess"></param>
+		/// <param name="appNonProcess"></param>
 		/// <param name="openItem"></param>
-		public static Process OpenDirectory(string expandedDirPath, INonProcess nonProcess, LauncherItemModel openItem)
+		public static Process OpenDirectory(string expandedDirPath, INonProcess appNonProcess, LauncherItemModel openItem)
 		{
 			return Process.Start(expandedDirPath);
 		}
@@ -189,10 +189,10 @@
 		/// 
 		/// </summary>
 		/// <param name="expandedFilePath"></param>
-		/// <param name="nonProcess"></param>
+		/// <param name="appNonProcess"></param>
 		/// <param name="openItem"></param>
 		/// <returns></returns>
-		public static Process OpenDirectoryWithFileSelect(string expandedFilePath, INonProcess nonProcess, LauncherItemModel openItem)
+		public static Process OpenDirectoryWithFileSelect(string expandedFilePath, INonProcess appNonProcess, LauncherItemModel openItem)
 		{
 			if (FileUtility.Exists(expandedFilePath)) {
 				var processName = "explorer.exe";
@@ -200,7 +200,7 @@
 				return Process.Start(processName, argument);
 			} else {
 				var dirPath = Path.GetDirectoryName(expandedFilePath);
-				return OpenDirectory(dirPath, nonProcess, openItem);
+				return OpenDirectory(dirPath, appNonProcess, openItem);
 			}
 		}
 

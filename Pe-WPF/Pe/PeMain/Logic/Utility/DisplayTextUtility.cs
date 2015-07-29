@@ -57,7 +57,7 @@
 			return name.Name ?? string.Empty;
 		}
 
-		public static string MakeClipboardName(ClipboardItem clipboardItem, INonProcess nonProcess) 
+		public static string MakeClipboardName(ClipboardItem clipboardItem, INonProcess appNonProcess) 
 		{
 
 			var type = ClipboardUtility.GetSingleClipboardType(clipboardItem.Type);
@@ -131,7 +131,7 @@
 							}
 						} catch (RegexMatchTimeoutException ex) {
 							//logger.Puts(LogType.Warning, ex.Message, new ExceptionMessage("<title>", ex));
-							nonProcess.Logger.Warning(ex);
+							appNonProcess.Logger.Warning(ex);
 						}
 
 						// h1
@@ -145,7 +145,7 @@
 							}
 						} catch (RegexMatchTimeoutException ex) {
 							//logger.Puts(LogType.Warning, ex.Message, new ExceptionMessage("<header>", ex));
-							nonProcess.Logger.Warning(ex);
+							appNonProcess.Logger.Warning(ex);
 						}
 
 						if (!converted || string.IsNullOrWhiteSpace(text)) {
