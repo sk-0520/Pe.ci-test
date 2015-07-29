@@ -23,6 +23,8 @@
 	using ContentTypeTextNet.Pe.PeMain.View;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+	using System.Windows.Controls;
 
 	public class NoteViewModel : HavingViewSingleModelWrapperViewModelBase<NoteIndexItemModel, NoteWindow>, IHavingAppNonProcess, IWindowHitTestData, IWindowAreaCorrectionData, ICaptionDoubleClickData, IHavingAppSender, IColorPair, INoteMenuItem
 	{
@@ -167,6 +169,17 @@
 			}
 		}
 
+		public FontFamily FontFamily
+		{
+			get { return FontUtility.MakeFontFamily(Model.Font.Family, SystemFonts.MessageFontFamily); }
+			set 
+			{
+				if(value != null) {
+					SetPropertyValue(Model.Font, value.Source, "Family");
+				}
+			}
+		}
+
 		#endregion
 
 		#region HavingViewSingleModelWrapperViewModelBase
@@ -202,207 +215,6 @@
 		{
 			get { return ColorPairProperty.GetNoneAlphaBackColor(Model); }
 			set { ColorPairProperty.SetNoneAlphaBackColor(Model, value, OnPropertyChanged); }
-		}
-
-		#endregion
-
-		#region ITopMost
-
-		public bool TopMost
-		{
-			get { return TopMostProperty.GetTopMost(Model); }
-			set { TopMostProperty.SetTopMost(Model, value, OnPropertyChanged); }
-		}
-
-		#endregion
-
-		#region IVisible
-
-		public Visibility Visibility
-		{
-			get { return VisibleVisibilityProperty.GetVisibility(Model); }
-			set { VisibleVisibilityProperty.SetVisibility(Model, value, OnPropertyChanged); }
-		}
-
-		public bool Visible
-		{
-			get { return VisibleVisibilityProperty.GetVisible(Model); }
-			set { VisibleVisibilityProperty.SetVisible(Model, value, OnPropertyChanged); }
-		}
-
-		#endregion
-
-		#region window
-
-		public double WindowLeft
-		{
-			get { return WindowAreaProperty.GetWindowLeft(Model); }
-			set 
-			{
-				if (!IsLocked) {
-					WindowAreaProperty.SetWindowLeft(Model, value, OnPropertyChanged); 
-				}
-			}
-		}
-
-		public double WindowTop
-		{
-			get { return WindowAreaProperty.GetWindowTop(Model); }
-			set
-			{
-				if (!IsLocked) {
-					WindowAreaProperty.SetWindowTop(Model, value, OnPropertyChanged);
-				}
-			}
-		}
-		public double WindowWidth
-		{
-			get 
-			{
-				return WindowAreaProperty.GetWindowWidth(Model); 
-			}
-			set 
-			{
-				if (!IsLocked && !IsCompacted) {
-					WindowAreaProperty.SetWindowWidth(Model, value, OnPropertyChanged);
-				}
-			}
-		}
-		public double WindowHeight
-		{
-			get {
-				if (IsCompacted) {
-					return this._compactHeight;
-				} else {
-					return WindowAreaProperty.GetWindowHeight(Model);
-				}
-			}
-			set 
-			{ 
-				if (!IsLocked && !IsCompacted) {
-					WindowAreaProperty.SetWindowHeight(Model, value, OnPropertyChanged);
-				}
-			}
-		}
-
-		#endregion
-
-		#region IHavingAppNonProcess
-
-		public IAppNonProcess AppNonProcess { get; private set; }
-
-		#endregion
-
-		#region IWindowHitTestData
-
-		/// <summary>
-		/// ヒットテストを行うか
-		/// </summary>
-		public bool UsingBorderHitTest { get { return !(IsCompacted || IsLocked); } }
-
-		public bool UsingCaptionHitTest
-		{
-			get
-			{
-				if(this._editingTitle) {
-					return false;
-				}
-
-				return !IsLocked;
-			}
-		}
-
-		/// <summary>
-		/// タイトルバーとして認識される領域。
-		/// </summary>
-		[PixelKind(Px.Logical)]
-		public Rect CaptionArea
-		{
-			get
-			{
-				var resizeThickness = ResizeThickness;
-				var rect = new Rect(
-					resizeThickness.Left,
-					resizeThickness.Top,
-					View.caption.ActualWidth,
-					TitleHeight
-				);
-
-				return rect;
-			}
-		}
-		/// <summary>
-		/// サイズ変更に使用する境界線。
-		/// </summary>
-		[PixelKind(Px.Logical)]
-		public Thickness ResizeThickness { get { return new Thickness(8); } }
-
-		#endregion
-
-		#region IWindowAreaCorrectionData
-
-		/// <summary>
-		/// ウィンドウサイズの倍数制御を行うか。
-		/// </summary>
-		public bool UsingMultipleResize { get { return false; } }
-		/// <summary>
-		/// ウィンドウサイズの倍数制御に使用する元となる論理サイズ。
-		/// </summary>
-		[PixelKind(Px.Logical)]
-		public Size MultipleSize { get { throw new NotImplementedException(); } }
-		/// <summary>
-		/// タイトルバーとかボーダーを含んだ領域。
-		/// </summary>
-		[PixelKind(Px.Logical)]
-		public Thickness MultipleThickness { get { throw new NotImplementedException(); } }
-		/// <summary>
-		/// 移動制限を行うか。
-		/// </summary>
-		public bool UsingMoveLimitArea { get { return false; } }
-		/// <summary>
-		/// 移動制限に使用する論理領域。
-		/// </summary>
-		[PixelKind(Px.Logical)]
-		public Rect MoveLimitArea { get { throw new NotImplementedException(); } }
-		/// <summary>
-		/// 最大化・最小化を抑制するか。
-		/// </summary>
-		public bool UsingMaxMinSuppression { get { return true; } }
-
-		#endregion
-
-		#region ICaptionDoubleClickData
-
-		public void OnCaptionDoubleClick(object sender, CancelEventArgs e)
-		{ }
-
-		#endregion
-
-		#region IHavingAppSender
-
-		public IAppSender AppSender { get; private set; }
-
-		#endregion
-
-		#region INoteMenuItem
-
-		public ImageSource MenuImage { get { return null; } }
-		public override string DisplayText { get { return DisplayTextUtility.GetDisplayName(Model); } }
-
-		public ICommand NoteMenuSelectedCommand
-		{
-			get
-			{
-				var result = CreateCommand(
-					o => {
-						if(HasView) {
-							View.Activate();
-						}
-					}
-				);
-
-				return result;
-			}
 		}
 
 		#endregion
@@ -590,6 +402,33 @@
 			}
 		}
 
+		public ICommand OpenPopupCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						var comboBox = (ComboBox)o;
+						if(comboBox.SelectedValue == null && comboBox.ItemsSource != null) {
+							AppNonProcess.Logger.Information(string.Join(Environment.NewLine, comboBox.ItemsSource.Cast<FontFamily>().Select(f => f.Source)));
+							var fontFamily = FontFamily;
+							var index = comboBox.ItemsSource.Cast<FontFamily>()
+								.ToArray()
+								.FindIndex(f => f.Source == fontFamily.Source)
+							;
+							if(index != -1) {
+								comboBox.SelectedIndex = index;
+							}
+							//System.Diagnostics.Debug.WriteLine(comboBox.ItemsSource);
+							//comboBox.SelectedItem = FontFamily;
+						}
+					}
+				);
+
+				return result;
+			}
+		}
+
 		#endregion
 
 		#region function
@@ -615,6 +454,208 @@
 			if(this._editingBody) {
 				this._editingBody = false;
 				OnPropertyChanged("IsBodyReadOnly");
+			}
+		}
+
+		#endregion
+
+		#region ITopMost
+
+		public bool TopMost
+		{
+			get { return TopMostProperty.GetTopMost(Model); }
+			set { TopMostProperty.SetTopMost(Model, value, OnPropertyChanged); }
+		}
+
+		#endregion
+
+		#region IVisible
+
+		public Visibility Visibility
+		{
+			get { return VisibleVisibilityProperty.GetVisibility(Model); }
+			set { VisibleVisibilityProperty.SetVisibility(Model, value, OnPropertyChanged); }
+		}
+
+		public bool Visible
+		{
+			get { return VisibleVisibilityProperty.GetVisible(Model); }
+			set { VisibleVisibilityProperty.SetVisible(Model, value, OnPropertyChanged); }
+		}
+
+		#endregion
+
+		#region window
+
+		public double WindowLeft
+		{
+			get { return WindowAreaProperty.GetWindowLeft(Model); }
+			set
+			{
+				if(!IsLocked) {
+					WindowAreaProperty.SetWindowLeft(Model, value, OnPropertyChanged);
+				}
+			}
+		}
+
+		public double WindowTop
+		{
+			get { return WindowAreaProperty.GetWindowTop(Model); }
+			set
+			{
+				if(!IsLocked) {
+					WindowAreaProperty.SetWindowTop(Model, value, OnPropertyChanged);
+				}
+			}
+		}
+		public double WindowWidth
+		{
+			get
+			{
+				return WindowAreaProperty.GetWindowWidth(Model);
+			}
+			set
+			{
+				if(!IsLocked && !IsCompacted) {
+					WindowAreaProperty.SetWindowWidth(Model, value, OnPropertyChanged);
+				}
+			}
+		}
+		public double WindowHeight
+		{
+			get
+			{
+				if(IsCompacted) {
+					return this._compactHeight;
+				} else {
+					return WindowAreaProperty.GetWindowHeight(Model);
+				}
+			}
+			set
+			{
+				if(!IsLocked && !IsCompacted) {
+					WindowAreaProperty.SetWindowHeight(Model, value, OnPropertyChanged);
+				}
+			}
+		}
+
+		#endregion
+
+		#region IHavingAppNonProcess
+
+		public IAppNonProcess AppNonProcess { get; private set; }
+
+		#endregion
+
+		#region IWindowHitTestData
+
+		/// <summary>
+		/// ヒットテストを行うか
+		/// </summary>
+		public bool UsingBorderHitTest { get { return !(IsCompacted || IsLocked); } }
+
+		public bool UsingCaptionHitTest
+		{
+			get
+			{
+				if(this._editingTitle) {
+					return false;
+				}
+
+				return !IsLocked;
+			}
+		}
+
+		/// <summary>
+		/// タイトルバーとして認識される領域。
+		/// </summary>
+		[PixelKind(Px.Logical)]
+		public Rect CaptionArea
+		{
+			get
+			{
+				var resizeThickness = ResizeThickness;
+				var rect = new Rect(
+					resizeThickness.Left,
+					resizeThickness.Top,
+					View.caption.ActualWidth,
+					TitleHeight
+				);
+
+				return rect;
+			}
+		}
+		/// <summary>
+		/// サイズ変更に使用する境界線。
+		/// </summary>
+		[PixelKind(Px.Logical)]
+		public Thickness ResizeThickness { get { return new Thickness(8); } }
+
+		#endregion
+
+		#region IWindowAreaCorrectionData
+
+		/// <summary>
+		/// ウィンドウサイズの倍数制御を行うか。
+		/// </summary>
+		public bool UsingMultipleResize { get { return false; } }
+		/// <summary>
+		/// ウィンドウサイズの倍数制御に使用する元となる論理サイズ。
+		/// </summary>
+		[PixelKind(Px.Logical)]
+		public Size MultipleSize { get { throw new NotImplementedException(); } }
+		/// <summary>
+		/// タイトルバーとかボーダーを含んだ領域。
+		/// </summary>
+		[PixelKind(Px.Logical)]
+		public Thickness MultipleThickness { get { throw new NotImplementedException(); } }
+		/// <summary>
+		/// 移動制限を行うか。
+		/// </summary>
+		public bool UsingMoveLimitArea { get { return false; } }
+		/// <summary>
+		/// 移動制限に使用する論理領域。
+		/// </summary>
+		[PixelKind(Px.Logical)]
+		public Rect MoveLimitArea { get { throw new NotImplementedException(); } }
+		/// <summary>
+		/// 最大化・最小化を抑制するか。
+		/// </summary>
+		public bool UsingMaxMinSuppression { get { return true; } }
+
+		#endregion
+
+		#region ICaptionDoubleClickData
+
+		public void OnCaptionDoubleClick(object sender, CancelEventArgs e)
+		{ }
+
+		#endregion
+
+		#region IHavingAppSender
+
+		public IAppSender AppSender { get; private set; }
+
+		#endregion
+
+		#region INoteMenuItem
+
+		public ImageSource MenuImage { get { return null; } }
+		public override string DisplayText { get { return DisplayTextUtility.GetDisplayName(Model); } }
+
+		public ICommand NoteMenuSelectedCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						if(HasView) {
+							View.Activate();
+						}
+					}
+				);
+
+				return result;
 			}
 		}
 

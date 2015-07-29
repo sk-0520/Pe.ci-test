@@ -615,6 +615,13 @@
 		{
 		}
 
+		/// <summary>
+		/// <para>TODO: これで完結できるならSettingUtilityに移動する。</para>
+		/// </summary>
+		/// <param name="point"></param>
+		/// <param name="size"></param>
+		/// <param name="appendIndex"></param>
+		/// <returns></returns>
 		NoteWindow CreateNoteItem([PixelKind(Px.Logical)] Point point, [PixelKind(Px.Logical)] Size size, bool appendIndex)
 		{
 			var noteItem = new NoteIndexItemModel() {
@@ -625,8 +632,10 @@
 				Visible = true,
 				ForeColor = CommonData.MainSetting.Note.ForeColor,
 				BackColor = CommonData.MainSetting.Note.BackColor,
+				// TODO: note title
 				Name = "TODO: note title",
 			};
+			noteItem.Font.Family = SystemFonts.MessageFontFamily.Source;
 
 			return CreateNoteWindow(noteItem, appendIndex);
 		}

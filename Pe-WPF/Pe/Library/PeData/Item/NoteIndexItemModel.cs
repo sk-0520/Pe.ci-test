@@ -26,6 +26,7 @@
 			: base()
 		{
 			NoteKind = NoteKind.Plain;
+			Font = new FontModel();
 		}
 
 		#region property
@@ -37,6 +38,9 @@
 		public bool IsLocked { get; set; }
 		[DataMember]
 		public bool IsCompacted { get; set; }
+
+		[DataMember]
+		public FontModel Font { get; set; }
 
 		#endregion
 
