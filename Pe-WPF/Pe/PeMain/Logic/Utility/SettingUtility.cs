@@ -16,6 +16,7 @@
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 	using ContentTypeTextNet.Pe.Library.PeData.Setting;
 	using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
+	using Implement = ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityImplement;
 
 	/// <summary>
 	/// 設定データを上手いことなんやかんやする。
@@ -103,6 +104,8 @@
 
 		public static void InitializeToolbar(ToolbarItemModel model, Version previousVersion, INonProcess nonProcess)
 		{
+			Implement.InitializeToolbar.Correction(model, previousVersion, nonProcess);
+
 			if (model.FloatToolbar.WidthButtonCount <= 0) {
 				model.FloatToolbar.WidthButtonCount = 1;
 			}
@@ -113,12 +116,16 @@
 
 		public static void InitializeWindowSaveSetting(WindowSaveSettingModel model, Version previousVersion, INonProcess nonProcess)
 		{
+			Implement.InitializeWindowSaveSetting.Correction(model, previousVersion, nonProcess);
+
 			model.SaveCount = Constants.windowSaveCount.GetClamp(model.SaveCount);
 			model.SaveIntervalTime = Constants.windowSaveIntervalTime.GetClamp(model.SaveIntervalTime);
 		}
 
 		public static void InitializeNoteSetting(NoteSettingModel model, Version previousVersion, INonProcess nonProcess)
 		{
+			Implement.InitializeNoteSetting.Correction(model, previousVersion, nonProcess);
+
 			if (model.ForeColor == default(Color)) {
 				model.ForeColor = Constants.noteForeColor;
 			}
@@ -129,7 +136,7 @@
 
 		public static void InitializeClipboardSetting(ClipboardSettingModel setting, Version previousVersion, INonProcess nonProcess)
 		{
-			InitializeClipboardSetting_v_first()
+			Implement.InitializeClipboardSetting.Correction(setting, previousVersion, nonProcess);
 
 			setting.WaitTime = Constants.clipboardWaitTime.GetClamp(setting.WaitTime);
 
@@ -148,6 +155,8 @@
 
 		public static void InitializeTemplateSetting(TemplateSettingModel setting, Version previousVersion, INonProcess nonProcess)
 		{
+			Implement.InitializeTemplateSetting.Correction(setting, previousVersion, nonProcess);
+
 			if(IsIllegalPlusNumber(setting.ItemsListWidth)) {
 				setting.ItemsListWidth = Constants.templateItemsListWidth;
 			}
@@ -187,7 +196,7 @@
 
 		public static void InitializeLauncherItemSetting(LauncherItemSettingModel setting, Version previousVersion, INonProcess nonProcess)
 		{
-			CheckUtility.EnforceNotNull(setting);
+			Implement.InitializeLauncherItemSetting.Correction(setting, previousVersion, nonProcess);
 
 			// --------------------------------
 			if(!setting.Items.Any()) {
@@ -221,8 +230,7 @@
 
 		public static void InitializeLauncherGroupSetting(LauncherGroupSettingModel setting, Version previousVersion, INonProcess nonProcess)
 		{
-			CheckUtility.EnforceNotNull(setting);
-			CheckUtility.EnforceNotNull(nonProcess);
+			Implement.InitializeLauncherGroupSetting.Correction(setting, previousVersion, nonProcess);
 
 			if(!setting.Groups.Any()) {
 				var initGroup = CreateLauncherGroup(setting.Groups, nonProcess);
@@ -245,14 +253,18 @@
 
 		public static void InitializeNoteIndexSetting(NoteIndexSettingModel setting, Version previousVersion, INonProcess nonProcess)
 		{
+			Implement.InitializeNoteIndexSetting.Correction(setting, previousVersion, nonProcess);
+
 			CheckUtility.EnforceNotNull(setting);
 			foreach (var noteIndex in setting.Items) {
 				InitializeNoteIndexItem(noteIndex, previousVersion, nonProcess);
 			}
 		}
 
-		public static void InitializeNoteIndexItem(NoteIndexItemModel indexItem, Version previousVersion, INonProcess appNonProcess)
+		public static void InitializeNoteIndexItem(NoteIndexItemModel indexItem, Version previousVersion, INonProcess nonProcess)
 		{
+			Implement.InitializeNoteIndexItem.Correction(indexItem, previousVersion, nonProcess);
+
 			CheckUtility.EnforceNotNull(indexItem);
 			if (IsIllegalPlusNumber(indexItem.Font.Size)) {
 				indexItem.Font.Size = Constants.noteFontSize.median;
@@ -275,11 +287,13 @@
 
 		public static void InitializeTemplateIndexSetting(TemplateIndexSettingModel setting, Version previousVersion, INonProcess nonProcess)
 		{
+			Implement.InitializeTemplateIndexSetting.Correction(setting, previousVersion, nonProcess);
 			CheckUtility.EnforceNotNull(setting);
 		}
 
 		public static void InitializeClipboardIndexSetting(ClipboardIndexSettingModel setting, Version previousVersion, INonProcess nonProcess)
 		{
+			Implement.InitializeClipboardIndexSetting.Correction(setting, previousVersion, nonProcess);
 			CheckUtility.EnforceNotNull(setting);
 		}
 

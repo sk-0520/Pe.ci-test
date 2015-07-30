@@ -191,6 +191,17 @@
     <Compile Include="Logic\Utility\DisplayTextUtility.cs" />
     <Compile Include="Logic\Utility\LauncherItemUtility.cs" />
     <Compile Include="Logic\Utility\SettingUtility.cs" />
+    <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeClipboardIndexSetting.cs" />
+    <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeClipboardSetting.cs" />
+    <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeLauncherGroupSetting.cs" />
+    <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeLauncherItemSetting.cs" />
+    <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeNoteIndexItem.cs" />
+    <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeNoteIndexSetting.cs" />
+    <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeNoteSetting.cs" />
+    <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeTemplateIndexSetting.cs" />
+    <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeTemplateSetting.cs" />
+    <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeToolbar.cs" />
+    <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeWindowSaveSetting.cs" />
     <Compile Include="Logic\Utility\SystemEnvironmentUtility.cs" />
     <Compile Include="Logic\Utility\SystemExecuteUtility.cs" />
     <Compile Include="Logic\Utility\TemplateUtility.cs" />
@@ -523,9 +534,7 @@
     <Resource Include="Resources\Icon\Tasktray\App-debug.ico" />
     <Resource Include="Resources\Icon\Tasktray\App-release.ico" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Logic\Utility\SettingUtility\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>copy "$(OutDir)etc\lang\ja-JP.xml" "$(OutDir)etc\lang\default.xml"
