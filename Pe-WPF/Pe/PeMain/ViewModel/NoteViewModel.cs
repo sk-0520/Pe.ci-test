@@ -180,6 +180,25 @@
 			}
 		}
 
+		public bool FontBold
+		{
+			get { return Model.Font.Bold; }
+			set { SetPropertyValue(Model.Font, value, "Bold"); }
+		}
+
+		public bool FontItalic
+		{
+			get { return Model.Font.Italic; }
+			set { SetPropertyValue(Model.Font, value, "Italic"); }
+		}
+
+		public double FontSize
+		{
+			get { return Model.Font.Size; }
+			set { SetPropertyValue(Model.Font, value, "Size"); }
+
+		}
+
 		#endregion
 
 		#region command

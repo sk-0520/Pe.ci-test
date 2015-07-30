@@ -31,6 +31,8 @@
 >
 	<AW:CommonDataWindow.Resources>
 		<SC:LogicalNotConverter x:Key="LogicalNotConverter"/>
+		<SC:BooleanFontWeightConverter x:Key="BooleanFontWeightConverter" />
+		<SC:BooleanFontStyleConverter x:Key="BooleanFontStyleConverter" />
 		<AC:FontFamilyToNameConverter x:Key="FontFamilyToNameConverter" />
 	</AW:CommonDataWindow.Resources>
 	<AW:CommonDataWindow.Foreground>
@@ -76,7 +78,7 @@
 			</Grid.ColumnDefinitions>
 			<VirtualizingStackPanel x:Name="caption" Grid.Column="0">
 				<TextBlock Text="{Binding Name}" Visibility="{Binding TitleCaptionVisibility}" Padding="{Binding CaptionPadding,Mode=OneTime}" />
-				<TextBox x:Name="title" Text="{Binding Name}" Visibility="{Binding TitleEditVisibility}" Padding="{Binding CaptionPadding,Mode=OneTime}" BorderThickness="0" >
+				<TextBox x:Name="title" BorderThickness="0" Text="{Binding Name}" Visibility="{Binding TitleEditVisibility}" Padding="{Binding CaptionPadding,Mode=OneTime}" >
 					<i:Interaction.Triggers>
 						<i:EventTrigger EventName="LostFocus">
 							<i:InvokeCommandAction Command="{Binding HideTitleEditCommand}" />
@@ -97,7 +99,11 @@
 				<TextBlock Text="x" />
 			</Button>
 		</Grid>
-		<TextBox Grid.Row="1" x:Name="body" AcceptsReturn="True" AcceptsTab="True" Background="Transparent" BorderThickness="0" Padding="2" TextWrapping="Wrap" Text="{Binding Body}" IsReadOnly="{Binding IsBodyReadOnly}" IsEnabled="{Binding IsCompacted, Converter={StaticResource LogicalNotConverter}}" FontFamily="{Binding FontFamily}">
+		<TextBox
+			x:Name="body" Grid.Row="1" AcceptsReturn="True" AcceptsTab="True" Background="Transparent" BorderThickness="0" Padding="2" TextWrapping="Wrap" 
+			Text="{Binding Body}" IsReadOnly="{Binding IsBodyReadOnly}" IsEnabled="{Binding IsCompacted, Converter={StaticResource LogicalNotConverter}}" 
+			FontFamily="{Binding FontFamily, Mode=OneWay}" FontWeight="{Binding FontBold, Converter={StaticResource BooleanFontWeightConverter}, Mode=OneWay}" FontStyle="{Binding FontItalic, Converter={StaticResource BooleanFontStyleConverter}, Mode=OneWay}" FontSize="{Binding FontSize, Mode=OneWay}"
+		>
 			<TextBox.Foreground>
 				<SolidColorBrush Color="{Binding ForeColor}" />
 			</TextBox.Foreground>
@@ -180,8 +186,9 @@
 									</DataTemplate>
 								</ComboBox.ItemTemplate>
 							</ComboBox>
-							<ToggleButton Grid.Row="1" Grid.Column="0" Content="b" />
-							<ToggleButton Grid.Row="1" Grid.Column="1" Content="i" />
+							<ToggleButton Grid.Row="1" Grid.Column="0" Content="b" IsChecked="{Binding FontBold}" />
+							<ToggleButton Grid.Row="1" Grid.Column="1" Content="i" IsChecked="{Binding FontItalic}" />
+							<xctk:DoubleUpDown Grid.Row="1" Grid.Column="2" Value="{Binding FontSize}" />
 						</Grid>
 					</Grid>
 					<Grid Style="{StaticResource Group}">

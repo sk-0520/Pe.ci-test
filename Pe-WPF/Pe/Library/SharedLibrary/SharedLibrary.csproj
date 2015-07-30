@@ -168,6 +168,8 @@
     <Compile Include="Model\Unmanaged\GlobalAllocModel.cs" />
     <Compile Include="View\Control\HotkeyControl.cs" />
     <Compile Include="View\Control\TemplateBindingToolbar.cs" />
+    <Compile Include="View\Converter\BooleanFontStyleConverter.cs" />
+    <Compile Include="View\Converter\BooleanFontWeightConverter.cs" />
     <Compile Include="View\Converter\BooleanVisibilityConverter.cs" />
     <Compile Include="View\Converter\DoubleGridLengthConverter.cs" />
     <Compile Include="View\Converter\EnumToBooleanConverter .cs" />
