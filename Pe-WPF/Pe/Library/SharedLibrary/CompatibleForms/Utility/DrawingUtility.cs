@@ -19,11 +19,19 @@
 			return new Size(size.Width, size.Height);
 		}
 
+		public static Drawing.Point Convert(Point point)
+		{
+			return new Drawing.Point((int)point.X, (int)point.Y);
+		}
+		public static Point Convert(Drawing.Point point)
+		{
+			return new Point(point.X, point.Y);
+		}
+
 		public static Drawing.Rectangle Convert(Rect rect)
 		{
 			return new Drawing.Rectangle((int)rect.X, (int)rect.Y, (int)rect.Width, (int)rect.Height);
 		}
-
 		public static Rect Convert(Drawing.Rectangle rectangle)
 		{
 			return new Rect(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);

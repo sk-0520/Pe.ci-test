@@ -6,6 +6,7 @@
 	using System.Linq;
 	using System.Text;
 	using System.Threading.Tasks;
+	using System.Windows;
 	using System.Windows.Media;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic;
@@ -27,6 +28,11 @@
 			Guid.NewGuid(),
 			Guid.NewGuid(),
 		};
+
+		public static bool IsIllegalPlusNumber(double number)
+		{
+			return double.IsNaN(number) || number <= 0;
+		}
 
 		public static bool CheckAccept(RunningInformationSettingModel model, INonProcess nonProcess)
 		{
@@ -229,10 +235,23 @@
 		public static void InitializeNoteIndexItem(NoteIndexItemModel indexItem, Version previousVersion, INonProcess appNonProcess)
 		{
 			CheckUtility.EnforceNotNull(indexItem);
-			if (double.IsNaN(indexItem.Font.Size) || indexItem.Font.Size <= 0) {
+			if (IsIllegalPlusNumber(indexItem.Font.Size)) {
 				indexItem.Font.Size = Constants.noteFontSize.median;
 			}
+
 			indexItem.Font.Size = Constants.noteFontSize.GetClamp(indexItem.Font.Size);
+			
+			if (string.IsNullOrWhiteSpace(indexItem.Font.Family)) {
+				indexItem.Font.Family = SystemFonts.MessageFontFamily.Source;
+			}
+
+			if (IsIllegalPlusNumber(indexItem.WindowWidth)) {
+				indexItem.WindowWidth = Constants.noteDefualtSize.Width;
+			}
+			if (IsIllegalPlusNumber(indexItem.WindowHeight)) {
+				indexItem.WindowHeight = Constants.noteDefualtSize.Height;
+			}
+
 		}
 
 		public static void InitializeTemplateIndexSetting(TemplateIndexSettingModel setting, Version previousVersion, INonProcess nonProcess)

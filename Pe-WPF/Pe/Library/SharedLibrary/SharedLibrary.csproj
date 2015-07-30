@@ -91,6 +91,7 @@
     <Compile Include="CompatibleWindows\IconDialog.cs" />
     <Compile Include="CompatibleWindows\IconWrapper.cs" />
     <Compile Include="CompatibleWindows\Utility\HandleUtility.cs" />
+    <Compile Include="CompatibleWindows\Utility\MouseUtility.cs" />
     <Compile Include="CompatibleWindows\Utility\PodStructUtility.cs" />
     <Compile Include="Data\DialogFilterItem.cs" />
     <Compile Include="Data\InformationGroup.cs" />

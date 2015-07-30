@@ -54,5 +54,47 @@
 			get { return ConvertScreenModel(Forms.Screen.PrimaryScreen); }
 		}
 
+		/// <summary>
+		/// 指定したポイントを保持するディスプレイを表す ScreenModel を取得します。
+		/// </summary>
+		/// <param name="point"></param>
+		/// <returns></returns>
+		public static ScreenModel FromDevicePoint(Point point)
+		{
+			var drawingPoint = DrawingUtility.Convert(point);
+			var formScreen = Forms.Screen.FromPoint(drawingPoint);
+			var result = ConvertScreenModel(formScreen);
+
+			return result;
+		}
+
+		/// <summary>
+		/// 四角形の最大部分を保持する ScreenModel を取得します。
+		/// </summary>
+		/// <param name="rect"></param>
+		/// <returns></returns>
+		public static ScreenModel FromDeviceRectangle(Rect rect)
+		{
+			var drawingRect = DrawingUtility.Convert(rect);
+			var formScreen = Forms.Screen.FromRectangle(drawingRect);
+			var result = ConvertScreenModel(formScreen);
+
+			return result;
+		}
+
+		/// <summary>
+		/// 指定したハンドルによって参照されているオブジェクトの最大領域を保持するディスプレイを表す ScreenModel を取得します。
+		/// </summary>
+		/// <param name="hWnd"></param>
+		/// <returns></returns>
+		public static ScreenModel FromHandle(IntPtr hWnd)
+		{
+			var formScreen = Forms.Screen.FromHandle(hWnd);
+
+			var result = ConvertScreenModel(formScreen);
+
+			return result;
+		}
+
 	}
 }

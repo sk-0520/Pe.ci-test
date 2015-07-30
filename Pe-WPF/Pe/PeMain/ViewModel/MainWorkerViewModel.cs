@@ -39,6 +39,7 @@
 	using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
 	using ContentTypeTextNet.Pe.PeMain.View.Parts.Window;
 	using System.Globalization;
+	using ContentTypeTextNet.Library.SharedLibrary.CompatibleWindows.Utility;
 
 	public sealed class MainWorkerViewModel: ViewModelBase, IAppSender, IClipboardWatcher
 	{
@@ -293,8 +294,17 @@
 			{
 				var result = CreateCommand(
 					o => {
-						var point = new Point();
-						var size = new Size(200, 200);
+						var devicePoint = MouseUtility.GetDevicePosition();
+						var screen = Screen.FromDevicePoint(devicePoint);
+						// TODO: 論理領域取れてない！
+						var logcalArea = screen.DeviceBounds;
+
+						var size = Constants.noteDefualtSize;
+						var point = new Point(
+							logcalArea.Width / 2 - size.Width / 2,
+							logcalArea.Height / 2 - size.Height / 2
+						);
+
 						CreateNoteItem(point, size, true); 
 					}
 				);
@@ -621,7 +631,7 @@
 		}
 
 		/// <summary>
-		/// <para>TODO: これで完結できるならSettingUtilityに移動する。</para>
+		/// 
 		/// </summary>
 		/// <param name="point"></param>
 		/// <param name="size"></param>
@@ -640,7 +650,6 @@
 				// TODO: note title
 				Name = "TODO: note title",
 			};
-			noteItem.Font.Family = SystemFonts.MessageFontFamily.Source;
 			SettingUtility.InitializeNoteIndexItem(noteItem, Constants.assemblyVersion, CommonData.NonProcess);
 
 			return CreateNoteWindow(noteItem, appendIndex);

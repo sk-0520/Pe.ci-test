@@ -480,9 +480,11 @@
 
 			AutoHideTimer.Stop();
 
-			var deviceCursolPosition = new POINT();
-			NativeMethods.GetCursorPos(out deviceCursolPosition);
-			var logicalCursolPosition = UIUtility.ToLogicalPixel(View, PodStructUtility.Convert(deviceCursolPosition));
+			//var deviceCursolPosition = new POINT();
+			//NativeMethods.GetCursorPos(out deviceCursolPosition);
+			//var logicalCursolPosition = UIUtility.ToLogicalPixel(View, PodStructUtility.Convert(deviceCursolPosition));
+			var deviceCursolPosition = MouseUtility.GetDevicePosition();
+			var logicalCursolPosition = UIUtility.ToLogicalPixel(View, deviceCursolPosition);
 
 			if (!force && RestrictionViewModel.ShowLogicalBarArea.Contains(logicalCursolPosition)) {
 				return;

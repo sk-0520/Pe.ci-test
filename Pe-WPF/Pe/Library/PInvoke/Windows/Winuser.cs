@@ -1800,6 +1800,13 @@ namespace ContentTypeTextNet.Library.PInvoke.Windows
 		WMSZ_BOTTOMLEFT = 7,
 		WMSZ_BOTTOMRIGHT = 8,
 	}
+
+	public enum MONITOR : uint
+	{
+		MONITOR_DEFAULTTONULL = 0x00000000,
+		MONITOR_DEFAULTTOPRIMARY = 0x00000001,
+		MONITOR_DEFAULTTONEAREST = 0x00000002
+	}
 	
 	partial class NativeMethods
 	{
@@ -2070,6 +2077,13 @@ namespace ContentTypeTextNet.Library.PInvoke.Windows
 		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
 		[return: MarshalAs(UnmanagedType.Bool)]
 		public static extern bool GetCursorPos(out POINT lpPoint);
+
+		[DllImport("user32.dll", SetLastError = true)]
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
+		public static extern IntPtr MonitorFromPoint(POINT pt, MONITOR dwFlags);
+
+		// TODO: GetDpiForMonitor, windows7が死滅するか動的にとるか後で考える
+
 	}
 
 
