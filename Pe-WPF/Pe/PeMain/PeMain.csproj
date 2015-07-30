@@ -201,6 +201,7 @@
     <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeTemplateIndexSetting.cs" />
     <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeTemplateSetting.cs" />
     <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeToolbar.cs" />
+    <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeToolbarSetting.cs" />
     <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeWindowSaveSetting.cs" />
     <Compile Include="Logic\Utility\SystemEnvironmentUtility.cs" />
     <Compile Include="Logic\Utility\SystemExecuteUtility.cs" />

@@ -75,11 +75,11 @@
 			ToolbarItemModel toolbar;
 			var screen = ExtensionData as ScreenModel;
 			if (screen != null) {
-				if(!CommonData.MainSetting.Toolbar.TryGetValue(screen.DeviceName, out toolbar)) {
+				if(!CommonData.MainSetting.Toolbar.Items.TryGetValue(screen.DeviceName, out toolbar)) {
 					toolbar = new ToolbarItemModel();
 					toolbar.Id = screen.DeviceName;
 					CommonData.Logger.Information("create toolbar", screen);
-					CommonData.MainSetting.Toolbar.Add(toolbar);
+					CommonData.MainSetting.Toolbar.Items.Add(toolbar);
 				}
 			} else {
 				CommonData.Logger.Debug("dummy toolbar");

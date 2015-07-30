@@ -102,6 +102,15 @@
 			return result;
 		}
 
+		public static void InitializeToolbarSetting(ToolbarSettingModel setting, Version previousVersion, INonProcess nonProcess)
+		{
+			Implement.InitializeToolbarSetting.Correction(setting, previousVersion, nonProcess);
+
+			foreach(var toolbar in setting.Items) {
+				InitializeToolbar(toolbar, previousVersion, nonProcess);
+			}
+		}
+
 		public static void InitializeToolbar(ToolbarItemModel model, Version previousVersion, INonProcess nonProcess)
 		{
 			Implement.InitializeToolbar.Correction(model, previousVersion, nonProcess);
@@ -184,10 +193,7 @@
 		{
 			CheckUtility.EnforceNotNull(setting);
 
-			foreach(var toolbar in setting.Toolbar) {
-				InitializeToolbar(toolbar, previousVersion, nonProcess);
-			}
-
+			InitializeToolbarSetting(setting.Toolbar, previousVersion, nonProcess);
 			InitializeNoteSetting(setting.Note, previousVersion, nonProcess);
 			InitializeWindowSaveSetting(setting.WindowSave, previousVersion, nonProcess);
 			InitializeClipboardSetting(setting.Clipboard, previousVersion, nonProcess);

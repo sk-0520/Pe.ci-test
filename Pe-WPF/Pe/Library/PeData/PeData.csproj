@@ -120,12 +120,13 @@
     <Compile Include="Setting\MainSettings\NoteSettingModel.cs" />
     <Compile Include="Setting\MainSettings\StreamSettingModel.cs" />
     <Compile Include="Setting\MainSettings\TemplateSettingModel.cs" />
-    <Compile Include="Setting\MainSettings\ToolbarItemCollectionModel.cs" />
+    <Compile Include="Item\ToolbarItemCollectionModel.cs" />
     <Compile Include="Item\ToolbarItemModel.cs" />
     <Compile Include="Setting\MainSettings\RunningInformationSettingModel.cs" />
     <Compile Include="Setting\MainSettings\SystemEnvironmentSettingModel.cs" />
     <Compile Include="Item\TagItemModel.cs" />
     <Compile Include="Item\LauncherItemCollectionModel.cs" />
+    <Compile Include="Setting\MainSettings\ToolbarSettingModel.cs" />
     <Compile Include="Setting\MainSettings\WindowSaveSettingModel.cs" />
     <Compile Include="Setting\LauncherGroupSettingModel.cs" />
     <Compile Include="Setting\LauncherItemSettingModel.cs" />

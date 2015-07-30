@@ -34,17 +34,17 @@
 
 		#endregion
 
-		public ToolbarSettingViewModel(ToolbarItemCollectionModel toolbarItems, LauncherGroupSettingModel groupSettingModel, LauncherItemSettingModel launcherItemSetting, IAppNonProcess appNonProcess, SettingNotifiyItem settingNotifiyItem)
+		public ToolbarSettingViewModel(ToolbarSettingModel toolbarSetting, LauncherGroupSettingModel groupSettingModel, LauncherItemSettingModel launcherItemSetting, IAppNonProcess appNonProcess, SettingNotifiyItem settingNotifiyItem)
 			: base(appNonProcess, settingNotifiyItem)
 		{
-			ToolbarItems = toolbarItems;
+			ToolbarSetting = toolbarSetting;
 			GroupSettingModel = groupSettingModel;
 			LauncherItemSetting = launcherItemSetting;
 		}
 
 		#region proerty
 
-		ToolbarItemCollectionModel ToolbarItems { get; set; }
+		ToolbarSettingModel ToolbarSetting { get; set; }
 
 		LauncherGroupSettingModel GroupSettingModel { get; set; }
 
@@ -69,7 +69,7 @@
 		{
 			get
 			{
-				foreach (var model in ToolbarItems) {
+				foreach(var model in ToolbarSetting.Items) {
 					var vm = new ToolbarViewModel(model, GroupSettingModel.Groups, AppNonProcess);
 					yield return vm;
 				}

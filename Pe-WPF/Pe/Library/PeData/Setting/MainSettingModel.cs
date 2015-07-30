@@ -21,7 +21,7 @@
 			RunningInformation = new RunningInformationSettingModel();
 			Language = new LanguageSettingModel();
 			Logging = new LoggingSettingModel();
-			Toolbar = new ToolbarItemCollectionModel();
+			Toolbar = new ToolbarSettingModel();
 			WindowSave = new WindowSaveSettingModel();
 			SystemEnvironment = new SystemEnvironmentSettingModel();
 			Command = new CommandSettingModel();
@@ -38,7 +38,7 @@
 		[DataMember]
 		public LoggingSettingModel Logging { get; set; }
 		[DataMember]
-		public ToolbarItemCollectionModel Toolbar { get; set; }
+		public ToolbarSettingModel Toolbar { get; set; }
 		[DataMember]
 		public WindowSaveSettingModel WindowSave { get; set; }
 		[DataMember]
