@@ -35,11 +35,9 @@
 			return SetUI_Impl(ui, language, map, (key, hint) => {
 				if(!ui.HasContent || ui.Content is string) {
 					ui.Content = language[key, map];
-					if(string.IsNullOrEmpty(hint)) {
-						ui.ToolTip = ui.Content;
-					} else {
-						ui.ToolTip = language[hint, map];
-					}
+				}
+				if(!string.IsNullOrEmpty(hint)) {
+					ui.ToolTip = language[hint, map];
 				}
 			});
 		}
@@ -48,11 +46,9 @@
 			return SetUI_Impl(ui, language, map, (key, hint) => {
 				if(ui.Content is string) {
 					ui.Content = language[key, map];
-					if(string.IsNullOrEmpty(hint)) {
-						ui.ToolTip = ui.Content;
-					} else {
-						ui.ToolTip = language[hint, map];
-					}
+				}
+				if(!string.IsNullOrEmpty(hint)) {
+					ui.ToolTip = language[hint, map];
 				}
 			});
 		}
@@ -62,6 +58,9 @@
 		{
 			return SetUI_Impl(ui, language, map, (key, hint) => {
 				ui.Text = language[key, map];
+				if(!string.IsNullOrEmpty(hint)) {
+					ui.ToolTip = language[hint, map];
+				}
 			});
 		}
 
@@ -71,6 +70,9 @@
 				if(!ui.HasHeader || ui.Header is string) {
 					ui.Header = language[key, map];
 				}
+				if(!string.IsNullOrEmpty(hint)) {
+					ui.ToolTip = language[hint, map];
+				}
 			});
 		}
 		public static bool SetHeader(HeaderedContentControl ui, LanguageManager language, IReadOnlyDictionary<string, string> map = null)
@@ -78,6 +80,9 @@
 			return SetUI_Impl(ui, language, map, (key, hint) => {
 				if(!ui.HasHeader || ui.Header is string) {
 					ui.Header = language[key, map];
+				}
+				if(!string.IsNullOrEmpty(hint)) {
+					ui.ToolTip = language[hint, map];
 				}
 			});
 		}
@@ -88,6 +93,9 @@
 				return SetUI_Impl(ui.Column, language, map, (key, hint) => {
 					if(!ui.HasContent || ui.Content is string) {
 						ui.Content = language[key, map];
+					}
+					if(!string.IsNullOrEmpty(hint)) {
+						ui.ToolTip = language[hint, map];
 					}
 				});
 			}

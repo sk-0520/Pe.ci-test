@@ -65,7 +65,7 @@
 				<RowDefinition Height="Auto"/>
 			</Grid.RowDefinitions>
 			<ToolBar Style="{StaticResource IndexItemsStyleDefaultToolbarStyle}" >
-				<ToggleButton IsChecked="{Binding Enabled}" AA:Language.Hint="clipboard/enabled">
+				<ToggleButton IsChecked="{Binding Enabled}" AA:Language.Hint="clipboard/enabled:hint">
 					<StackPanel Orientation="Horizontal">
 						<TextBlock Text="enabled" AA:Language.Word="clipboard/enabled" />
 					</StackPanel>
