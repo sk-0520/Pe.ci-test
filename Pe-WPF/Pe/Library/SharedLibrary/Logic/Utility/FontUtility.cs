@@ -26,5 +26,17 @@
 
 			return defaultFontFamily;
 		}
+
+		/// <summary>
+		/// <para>TODO: この環境で再現できないのでスタブのみ作成</para>
+		/// </summary>
+		/// <param name="fontFamily"></param>
+		/// <returns></returns>
+		public static string GetOriginalFontFamilyName(FontFamily fontFamily)
+		{
+			CheckUtility.DebugEnforceNotNull(fontFamily);
+
+			return fontFamily.Source;
+		}
 	}
 }
