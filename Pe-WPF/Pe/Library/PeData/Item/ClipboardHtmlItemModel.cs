@@ -69,5 +69,11 @@
 		{
 			return HtmlText ?? FragmentText ?? SelectionText ?? string.Empty;
 		}
+
+		#region ItemModelBase
+
+
+
+		#endregion
 	}
 }

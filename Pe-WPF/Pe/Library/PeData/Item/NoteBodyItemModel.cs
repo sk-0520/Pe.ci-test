@@ -6,6 +6,7 @@
 	using System.Runtime.Serialization;
 	using System.Text;
 	using System.Threading.Tasks;
+	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Pe.Library.PeData.Define;
 	using ContentTypeTextNet.Pe.Library.PeData.IF;
 
@@ -26,6 +27,23 @@
 		#region IndexBodyItemModelBase
 
 		public override IndexKind IndexKind { get { return IndexKind.Note; } }
+
+		public override void DeepCloneTo(IDeepClone target)
+		{
+			base.DeepCloneTo(target);
+
+			var obj = (NoteBodyItemModel)target;
+			obj.Text = Text;
+		}
+
+		public override IDeepClone DeepClone()
+		{
+			var result = new NoteBodyItemModel();
+
+			DeepCloneTo(result);
+
+			return result;
+		}
 
 		#endregion
 	}

@@ -11,6 +11,7 @@
 	using System.Windows;
 	using System.Windows.Media.Imaging;
 	using System.Xml.Serialization;
+	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
 	using ContentTypeTextNet.Pe.Library.PeData.Define;
 
@@ -104,6 +105,31 @@
 			}
 
 			base.Dispose(disposing);
+		}
+
+		public override void DeepCloneTo(IDeepClone target)
+		{
+			base.DeepCloneTo(target);
+
+			var obj = (ClipboardBodyItemModel)target;
+
+			obj.Text = Text;
+			obj.Rtf = Rtf;
+			obj.Html = Html;
+			if(Image_Impl != null) {
+				obj.Image_Impl = new byte[Image_Impl.Length];
+				Image_Impl.CopyTo(obj.Image_Impl, 0);
+			}
+			obj.Files.AddRange(Files);
+		}
+
+		public override ContentTypeTextNet.Library.SharedLibrary.IF.IDeepClone DeepClone()
+		{
+			var result = new ClipboardBodyItemModel();
+
+			DeepCloneTo(result);
+
+			return result;
 		}
 
 		#endregion
