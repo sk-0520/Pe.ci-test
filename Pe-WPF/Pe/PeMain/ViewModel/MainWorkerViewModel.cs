@@ -510,6 +510,9 @@
 				SettingUtility.InitializeMainSetting(CommonData.MainSetting, previousVersion, CommonData.NonProcess);
 				SettingUtility.InitializeLauncherItemSetting(CommonData.LauncherItemSetting, previousVersion, CommonData.NonProcess);
 				SettingUtility.InitializeLauncherGroupSetting(CommonData.LauncherGroupSetting, previousVersion, CommonData.NonProcess);
+				SettingUtility.InitializeNoteIndexSetting(CommonData.NoteIndexSetting, previousVersion, CommonData.NonProcess);
+				SettingUtility.InitializeTemplateIndexSetting(CommonData.TemplateIndexSetting, previousVersion, CommonData.NonProcess);
+				SettingUtility.InitializeClipboardIndexSetting(CommonData.ClipboardIndexSetting, previousVersion, CommonData.NonProcess);
 			}
 		}
 
@@ -638,6 +641,7 @@
 				Name = "TODO: note title",
 			};
 			noteItem.Font.Family = SystemFonts.MessageFontFamily.Source;
+			SettingUtility.InitializeNoteIndexItem(noteItem, Constants.assemblyVersion, CommonData.NonProcess);
 
 			return CreateNoteWindow(noteItem, appendIndex);
 		}

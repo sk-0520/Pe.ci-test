@@ -14,8 +14,8 @@
 
 	public class CaptionDoubleClick: WindowsViewExtendBase<ICaptionDoubleClickData>
 	{
-		public CaptionDoubleClick(Window view, ICaptionDoubleClickData restrictionViewModel, INonProcess appNonProcess)
-			: base(view, restrictionViewModel, appNonProcess)
+		public CaptionDoubleClick(Window view, ICaptionDoubleClickData restrictionViewModel, INonProcess nonProcess)
+			: base(view, restrictionViewModel, nonProcess)
 		{ }
 
 		#region WindowsViewExtendBase

@@ -18,11 +18,11 @@
 
 	public static class LauncherItemUtility
 	{
-		public static BitmapSource GetIcon(LauncherItemModel model, IconScale iconScale, INonProcess appNonProcess)
+		public static BitmapSource GetIcon(LauncherItemModel model, IconScale iconScale, INonProcess nonProcess)
 		{
 			CheckUtility.DebugEnforceNotNull(model);
 			CheckUtility.DebugEnforceNotNull(model.Icon);
-			CheckUtility.DebugEnforceNotNull(appNonProcess);
+			CheckUtility.DebugEnforceNotNull(nonProcess);
 
 			var hasIcon = false;
 			var useIcon = new IconPathModel();
@@ -45,14 +45,14 @@
 					}
 				}
 				if(!hasIcon && model.LauncherKind == LauncherKind.Command) {
-					return AppResource.GetLauncherCommandIcon(iconScale, appNonProcess.Logger);
+					return AppResource.GetLauncherCommandIcon(iconScale, nonProcess.Logger);
 				}
 			}
 
 			if(hasIcon) {
-				return AppUtility.LoadIconDefault(useIcon, iconScale, appNonProcess.Logger);
+				return AppUtility.LoadIconDefault(useIcon, iconScale, nonProcess.Logger);
 			} else {
-				return AppResource.GetNotFoundIcon(iconScale, appNonProcess.Logger);
+				return AppResource.GetNotFoundIcon(iconScale, nonProcess.Logger);
 			}
 		}
 
@@ -60,9 +60,9 @@
 		/// コマンド選択用ファイルダイアログお表示する。
 		/// </summary>
 		/// <param name="defaultPath"></param>
-		/// <param name="appNonProcess"></param>
+		/// <param name="nonProcess"></param>
 		/// <returns>選択されたファイル。未選択の場合は null 。</returns>
-		public static string ShowOpenCommandDialog(string defaultPath, INonProcess appNonProcess)
+		public static string ShowOpenCommandDialog(string defaultPath, INonProcess nonProcess)
 		{
 			return DialogUtility.ShowOpenSingleFileDialog(defaultPath);
 		}

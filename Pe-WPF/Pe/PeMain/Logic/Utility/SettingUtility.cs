@@ -28,23 +28,23 @@
 			Guid.NewGuid(),
 		};
 
-		public static bool CheckAccept(RunningInformationSettingModel model, INonProcess appNonProcess)
+		public static bool CheckAccept(RunningInformationSettingModel model, INonProcess nonProcess)
 		{
 			if(!model.Accept) {
 				// 完全に初回
-				appNonProcess.Logger.Debug("first");
+				nonProcess.Logger.Debug("first");
 				return false;
 			}
 
 			if(model.LastExecuteVersion == null) {
 				// 何らかの理由で前回実行時のバージョン格納されていない
-				appNonProcess.Logger.Debug("last version == null");
+				nonProcess.Logger.Debug("last version == null");
 				return false;
 			}
 
 			if(model.LastExecuteVersion < Constants.acceptVersion) {
 				// 前回バージョンから強制定期に使用許諾が必要
-				appNonProcess.Logger.Debug("last version < accept version");
+				nonProcess.Logger.Debug("last version < accept version");
 				return false;
 			}
 
@@ -77,9 +77,9 @@
 			return result;
 		}
 
-		public static LauncherGroupItemModel CreateLauncherGroup(LauncherGroupItemCollectionModel group, INonProcess appNonProcess)
+		public static LauncherGroupItemModel CreateLauncherGroup(LauncherGroupItemCollectionModel group, INonProcess nonProcess)
 		{
-			var result = CreateModelName(group, appNonProcess.Language, "new/group-name");
+			var result = CreateModelName(group, nonProcess.Language, "new/group-name");
 			return result;
 		}
 
@@ -87,15 +87,15 @@
 		/// 
 		/// </summary>
 		/// <param name="items"></param>
-		/// <param name="appNonProcess"></param>
+		/// <param name="nonProcess"></param>
 		/// <returns></returns>
-		public static TemplateIndexItemModel CreateTemplateIndexItem(TemplateIndexItemCollectionModel items, INonProcess appNonProcess)
+		public static TemplateIndexItemModel CreateTemplateIndexItem(TemplateIndexItemCollectionModel items, INonProcess nonProcess)
 		{
-			var result = CreateModelName(items, appNonProcess.Language, "new/template-name");
+			var result = CreateModelName(items, nonProcess.Language, "new/template-name");
 			return result;
 		}
 
-		public static void InitializeToolbar(ToolbarItemModel model, Version previousVersion, INonProcess appNonProcess)
+		public static void InitializeToolbar(ToolbarItemModel model, Version previousVersion, INonProcess nonProcess)
 		{
 			if (model.FloatToolbar.WidthButtonCount <= 0) {
 				model.FloatToolbar.WidthButtonCount = 1;
@@ -105,13 +105,13 @@
 			}
 		}
 
-		public static void InitializeWindowSaveSetting(WindowSaveSettingModel model, Version previousVersion, INonProcess appNonProcess)
+		public static void InitializeWindowSaveSetting(WindowSaveSettingModel model, Version previousVersion, INonProcess nonProcess)
 		{
 			model.SaveCount = Constants.windowSaveCount.GetClamp(model.SaveCount);
 			model.SaveIntervalTime = Constants.windowSaveIntervalTime.GetClamp(model.SaveIntervalTime);
 		}
 
-		public static void InitializeNoteSetting(NoteSettingModel model, Version previousVersion, INonProcess appNonProcess)
+		public static void InitializeNoteSetting(NoteSettingModel model, Version previousVersion, INonProcess nonProcess)
 		{
 			if (model.ForeColor == default(Color)) {
 				model.ForeColor = Constants.noteForeColor;
@@ -121,7 +121,7 @@
 			}
 		}
 
-		public static void InitializeClipboardSetting(ClipboardSettingModel setting, Version previousVersion, INonProcess appNonProcess)
+		public static void InitializeClipboardSetting(ClipboardSettingModel setting, Version previousVersion, INonProcess nonProcess)
 		{
 			setting.WaitTime = Constants.clipboardWaitTime.GetClamp(setting.WaitTime);
 
@@ -130,7 +130,7 @@
 			}
 		}
 
-		public static void InitializeTemplateSetting(TemplateSettingModel setting, Version previousVersion, INonProcess appNonProcess)
+		public static void InitializeTemplateSetting(TemplateSettingModel setting, Version previousVersion, INonProcess nonProcess)
 		{
 			if(setting.ItemsListWidth <= 0) {
 				setting.ItemsListWidth = Constants.templateItemsListWidth;
@@ -145,22 +145,22 @@
 		/// </summary>
 		/// <param name="setting"></param>
 		/// <param name="previousVersion"></param>
-		/// <param name="appNonProcess"></param>
-		public static void InitializeMainSetting(MainSettingModel setting, Version previousVersion, INonProcess appNonProcess)
+		/// <param name="nonProcess"></param>
+		public static void InitializeMainSetting(MainSettingModel setting, Version previousVersion, INonProcess nonProcess)
 		{
 			CheckUtility.EnforceNotNull(setting);
 
 			foreach(var toolbar in setting.Toolbar) {
-				InitializeToolbar(toolbar, previousVersion, appNonProcess);
+				InitializeToolbar(toolbar, previousVersion, nonProcess);
 			}
 
-			InitializeNoteSetting(setting.Note, previousVersion, appNonProcess);
-			InitializeWindowSaveSetting(setting.WindowSave, previousVersion, appNonProcess);
-			InitializeClipboardSetting(setting.Clipboard, previousVersion, appNonProcess);
-			InitializeTemplateSetting(setting.Template, previousVersion, appNonProcess);
+			InitializeNoteSetting(setting.Note, previousVersion, nonProcess);
+			InitializeWindowSaveSetting(setting.WindowSave, previousVersion, nonProcess);
+			InitializeClipboardSetting(setting.Clipboard, previousVersion, nonProcess);
+			InitializeTemplateSetting(setting.Template, previousVersion, nonProcess);
 		}
 
-		public static void InitializeLauncherItemSetting(LauncherItemSettingModel setting, Version previousVersion, INonProcess appNonProcess)
+		public static void InitializeLauncherItemSetting(LauncherItemSettingModel setting, Version previousVersion, INonProcess nonProcess)
 		{
 			CheckUtility.EnforceNotNull(setting);
 
@@ -194,13 +194,13 @@
 			// --------------------------------
 		}
 
-		public static void InitializeLauncherGroupSetting(LauncherGroupSettingModel setting, Version previousVersion, INonProcess appNonProcess)
+		public static void InitializeLauncherGroupSetting(LauncherGroupSettingModel setting, Version previousVersion, INonProcess nonProcess)
 		{
 			CheckUtility.EnforceNotNull(setting);
-			CheckUtility.EnforceNotNull(appNonProcess);
+			CheckUtility.EnforceNotNull(nonProcess);
 
 			if(!setting.Groups.Any()) {
-				var initGroup = CreateLauncherGroup(setting.Groups, appNonProcess);
+				var initGroup = CreateLauncherGroup(setting.Groups, nonProcess);
 				//------------------------
 				initGroup.LauncherItems = new CollectionModel<Guid>(new[] {
 					debugGuidList[0],
@@ -213,9 +213,36 @@
 			}
 		}
 
-		public static void IncrementLauncherItem(LauncherItemModel launcherItem, string option, string workDirPath, INonProcess appNonProcess)
+		public static void IncrementLauncherItem(LauncherItemModel launcherItem, string option, string workDirPath, INonProcess nonProcess)
 		{
 			CheckUtility.EnforceNotNull(launcherItem);
+		}
+
+		public static void InitializeNoteIndexSetting(NoteIndexSettingModel setting, Version previousVersion, INonProcess nonProcess)
+		{
+			CheckUtility.EnforceNotNull(setting);
+			foreach (var noteIndex in setting.Items) {
+				InitializeNoteIndexItem(noteIndex, previousVersion, nonProcess);
+			}
+		}
+
+		public static void InitializeNoteIndexItem(NoteIndexItemModel indexItem, Version previousVersion, INonProcess appNonProcess)
+		{
+			CheckUtility.EnforceNotNull(indexItem);
+			if (double.IsNaN(indexItem.Font.Size) || indexItem.Font.Size <= 0) {
+				indexItem.Font.Size = Constants.noteFontSize.median;
+			}
+			indexItem.Font.Size = Constants.noteFontSize.GetClamp(indexItem.Font.Size);
+		}
+
+		public static void InitializeTemplateIndexSetting(TemplateIndexSettingModel setting, Version previousVersion, INonProcess nonProcess)
+		{
+			CheckUtility.EnforceNotNull(setting);
+		}
+
+		public static void InitializeClipboardIndexSetting(ClipboardIndexSettingModel setting, Version previousVersion, INonProcess nonProcess)
+		{
+			CheckUtility.EnforceNotNull(setting);
 		}
 
 	}

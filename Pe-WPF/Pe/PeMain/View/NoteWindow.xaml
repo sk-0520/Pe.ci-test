@@ -3,6 +3,7 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
 	xmlns:AA="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Attached"
+	xmlns:AM="clr-namespace:ContentTypeTextNet.Pe.PeMain"
 	xmlns:AVM="clr-namespace:ContentTypeTextNet.Pe.PeMain.ViewModel"
 	xmlns:AP="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
 	xmlns:AW="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Window"
@@ -188,7 +189,7 @@
 							</ComboBox>
 							<ToggleButton Grid.Row="1" Grid.Column="0" Content="b" IsChecked="{Binding FontBold}" />
 							<ToggleButton Grid.Row="1" Grid.Column="1" Content="i" IsChecked="{Binding FontItalic}" />
-							<xctk:DoubleUpDown Grid.Row="1" Grid.Column="2" Value="{Binding FontSize}" />
+							<xctk:DoubleUpDown Grid.Row="1" Grid.Column="2" Minimum="{x:Static AM:Constants.NoteFontMinimumSize}" Maximum="{x:Static AM:Constants.NoteFontMaximumSize}" Value="{Binding FontSize}" />
 						</Grid>
 					</Grid>
 					<Grid Style="{StaticResource Group}">

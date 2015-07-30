@@ -13,8 +13,8 @@
 
 	public class LauncherToolbarHitTest: CaptionCursorHitTest
 	{
-		public LauncherToolbarHitTest(Window view, IWindowHitTestData restrictionViewModel, INonProcess appNonProcess)
-			: base(view, restrictionViewModel, appNonProcess)
+		public LauncherToolbarHitTest(Window view, IWindowHitTestData restrictionViewModel, INonProcess nonProcess)
+			: base(view, restrictionViewModel, nonProcess)
 		{ }
 
 		#region CaptionCursorHitTest

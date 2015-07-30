@@ -138,6 +138,12 @@
 		public const double noteCaptionHeight = 20;
 		public static readonly Color noteForeColor = Colors.Black;
 		public static readonly Color noteBackColor = Color.FromRgb(250, 250, 180);
+		public static readonly TripleRange<double> noteFontSize = new TripleRange<double>(
+			8,
+			10.5,
+			72
+		);
+		public static readonly Size noteDefualtSize = new Size(200, 200);
 
 		/// <summary>
 		/// 実行パス
@@ -163,6 +169,9 @@
 		/// スタートアップ用ショートカットファイルパス。
 		/// </summary>
 		public static readonly string startupShortcutPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Startup), shortcutName);
+
+		// TODO: T4しちゃっていいんじゃないだろうか
+		#region TripleRange
 
 		#region commandHideTime
 
@@ -196,6 +205,15 @@
 
 		public static double ClipboardDuplicationMinimumCount { get { return clipboardDuplicationCount.minimum; } }
 		public static double ClipboardDuplicationMaximumCount { get { return clipboardDuplicationCount.maximum; } }
+
+		#endregion
+
+		#region noteFontSize
+
+		public static double NoteFontMinimumSize { get { return noteFontSize.minimum; } }
+		public static double NoteFontMaximumSize { get { return noteFontSize.maximum; } }
+
+		#endregion
 
 		#endregion
 

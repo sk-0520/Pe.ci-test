@@ -14,10 +14,10 @@
 
 	public class EnvironmentVariablesEditViewModel : SingleModelWrapperViewModelBase<EnvironmentVariablesItemModel>, IHavingNonProcess
 	{
-		public EnvironmentVariablesEditViewModel(EnvironmentVariablesItemModel model, INonProcess appNonProcess)
+		public EnvironmentVariablesEditViewModel(EnvironmentVariablesItemModel model, INonProcess nonProcess)
 			: base(model)
 		{
-			NonProcess = appNonProcess;
+			NonProcess = nonProcess;
 		}
 
 		#region property
