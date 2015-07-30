@@ -178,12 +178,13 @@
 							<ComboBox x:Name="listFont" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" SelectedValue="{Binding FontFamily}" SelectedValuePath="Source" ItemsSource="{Binding Source={x:Static Fonts.SystemFontFamilies}}">
 								<ComboBox.ItemsPanel>
 									<ItemsPanelTemplate>
-										<VirtualizingStackPanel />
+										<!-- TODO: サイズ固定-->
+										<VirtualizingStackPanel Width="200" ScrollUnit="Item" />
 									</ItemsPanelTemplate>
 								</ComboBox.ItemsPanel>
 								<ComboBox.ItemTemplate>
 									<DataTemplate>
-										<TextBlock Text="{Binding Converter={StaticResource FontFamilyToNameConverter}}" FontFamily="{Binding}" Height="20"/>
+										<TextBlock Height="20" Text="{Binding Converter={StaticResource FontFamilyToNameConverter}}" FontFamily="{Binding}" />
 									</DataTemplate>
 								</ComboBox.ItemTemplate>
 							</ComboBox>
