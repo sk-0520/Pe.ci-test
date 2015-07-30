@@ -124,14 +124,14 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="AppResource\AppResource-implement.cs" />
-    <Compile Include="AppResource\AppResourceAttribute.cs" />
-    <Compile Include="AppResource\AppResource-generator.cs">
+    <Compile Include="X-Partial\AppResource-implement.cs" />
+    <Compile Include="X-Partial\AppResourceAttribute.cs" />
+    <Compile Include="X-Partial\AppResource-generator.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>AppResource-generator.tt</DependentUpon>
     </Compile>
-    <Compile Include="AppResource\AppResourceType.cs" />
+    <Compile Include="X-Partial\AppResourceType.cs" />
     <Compile Include="Data\ChangedDevice.cs" />
     <Compile Include="Data\ClipboardHtmlData.cs" />
     <Compile Include="Data\CommonData.cs" />
@@ -342,7 +342,7 @@
       <DependentUpon>App.config</DependentUpon>
       <IsTransformFile>True</IsTransformFile>
     </None>
-    <None Include="AppResource\AppResource-generator.tt">
+    <None Include="X-Partial\AppResource-generator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AppResource-generator.cs</LastGenOutput>
       <Parameters>&lt;%3fxml version="1.0" encoding="utf-16"%3f&gt;
