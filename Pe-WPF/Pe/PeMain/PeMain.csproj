@@ -133,6 +133,7 @@
     </Compile>
     <Compile Include="AppResource\AppResourceType.cs" />
     <Compile Include="Data\ChangedDevice.cs" />
+    <Compile Include="Data\ClipboardHtmlData.cs" />
     <Compile Include="Data\CommonData.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Data\Event\AppbarStateChangeEventArgs.cs" />

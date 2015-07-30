@@ -64,7 +64,7 @@
 			}
 		}
 
-		ClipboardHtmlItemModel HtmlModel { get; set; }
+		ClipboardHtmlData HtmlModel { get; set; }
 
 
 		public ImageSource ItemTypeImage

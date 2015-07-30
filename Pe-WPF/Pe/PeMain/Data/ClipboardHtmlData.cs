@@ -1,4 +1,4 @@
-﻿namespace ContentTypeTextNet.Pe.Library.PeData.Item
+﻿namespace ContentTypeTextNet.Pe.PeMain.Data
 {
 	using System;
 	using System.Collections.Generic;
@@ -7,11 +7,11 @@
 	using System.Text;
 	using System.Threading.Tasks;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Pe.PeMain.Data;
 
-	[DataContract, Serializable]
-	public class ClipboardHtmlItemModel: ItemModelBase
+	public class ClipboardHtmlData
 	{
-		public ClipboardHtmlItemModel()
+		public ClipboardHtmlData()
 			: base()
 		{
 			Html = new RangeModel<int>();
@@ -22,43 +22,35 @@
 		/// <summary>
 		/// バージョン。
 		/// </summary>
-		[DataMember]
 		public decimal Version { get; set; }
 
 		/// <summary>
 		/// HTMLデータの長さ。
 		/// </summary>
-		[DataMember]
 		public RangeModel<int> Html { get; set; }
 		/// <summary>
 		/// Fragmentデータの長さ。
 		/// </summary>
-		[DataMember]
 		public RangeModel<int> Fragment { get; set; }
 		/// <summary>
 		/// Selectionデータの長さ。
 		/// </summary>
-		[DataMember]
 		public RangeModel<int> Selection { get; set; }
 		/// <summary>
 		/// 
 		/// </summary>
-		[DataMember]
 		public Uri SourceURL { get; set; }
 		/// <summary>
 		/// HTMLテキストデータ。
 		/// </summary>
-		[DataMember]
 		public string HtmlText { get; set; }
 		/// <summary>
 		/// Fragmentテキストデータ。
 		/// </summary>
-		[DataMember]
 		public string FragmentText { get; set; }
 		/// <summary>
 		/// Selectionテキストデータ。
 		/// </summary>
-		[DataMember]
 		public string SelectionText { get; set; }
 
 		/// <summary>

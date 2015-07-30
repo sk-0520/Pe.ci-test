@@ -18,6 +18,7 @@
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 	using ContentTypeTextNet.Pe.Library.PeData.Define;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
+	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
 	using ContentTypeTextNet.Pe.PeMain.IF;
 
@@ -176,9 +177,9 @@
 			return ConvertStringFromRawHtml(range, rawHtml, Encoding.UTF8);
 		}
 
-		public static ClipboardHtmlItemModel ConvertClipboardHtmlFromFromRawHtml(string rawClipboardHtml, INonProcess nonProcess)
+		public static ClipboardHtmlData ConvertClipboardHtmlFromFromRawHtml(string rawClipboardHtml, INonProcess nonProcess)
 		{
-			var result = new ClipboardHtmlItemModel();
+			var result = new ClipboardHtmlData();
 
 			//Version:0.9
 			//StartHTML:00000213
