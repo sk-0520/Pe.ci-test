@@ -38,6 +38,7 @@
 	using Microsoft.Win32;
 	using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
 	using ContentTypeTextNet.Pe.PeMain.View.Parts.Window;
+	using System.Globalization;
 
 	public sealed class MainWorkerViewModel: ViewModelBase, IAppSender, IClipboardWatcher
 	{
@@ -457,6 +458,7 @@
 				LoadSetting();
 				// 前回バージョンが色々必要なのでインクリメント前の生情報を保持しておく。
 				var previousVersion = (Version)CommonData.MainSetting.RunningInformation.LastExecuteVersion;
+				ResetCulture(CommonData.NonProcess);
 				if(!InitializeAccept()) {
 					return false;
 				}
@@ -648,6 +650,18 @@
 			}
 
 			return window;
+		}
+
+		static void ResetCulture(INonProcess nonProcess)
+		{
+			try {
+				var cultureInfo = new CultureInfo(nonProcess.Language.CultureCode);
+				CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+				CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
+			} catch (CultureNotFoundException ex) {
+				nonProcess.Logger.Trace(ex);
+			}
+			
 		}
 
 		IEnumerable<NoteViewModel> GetEnabledNoteItems()

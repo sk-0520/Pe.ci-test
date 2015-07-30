@@ -31,6 +31,7 @@
 >
 	<AW:CommonDataWindow.Resources>
 		<SC:LogicalNotConverter x:Key="LogicalNotConverter"/>
+		<AC:FontFamilyToNameConverter x:Key="FontFamilyToNameConverter" />
 	</AW:CommonDataWindow.Resources>
 	<AW:CommonDataWindow.Foreground>
 		<SolidColorBrush Color="{Binding ForeColor}" />
@@ -158,12 +159,16 @@
 						<xctk:ColorPicker Grid.Row="2" Grid.Column="1" SelectedColor="{Binding BackColor}" />
 						<Label Grid.Row="3" Grid.Column="0" Content="font" />
 						<Grid Grid.Row="3" Grid.Column="1" >
+							<Grid.RowDefinitions>
+								<RowDefinition />
+								<RowDefinition />
+							</Grid.RowDefinitions>
 							<Grid.ColumnDefinitions>
 								<ColumnDefinition />
 								<ColumnDefinition />
 								<ColumnDefinition />
 							</Grid.ColumnDefinitions>
-							<ComboBox x:Name="listFont" Grid.Column="0" SelectedValue="{Binding FontFamily}" SelectedValuePath="Source" ItemsSource="{Binding Source={x:Static Fonts.SystemFontFamilies}}">
+							<ComboBox x:Name="listFont" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" SelectedValue="{Binding FontFamily}" SelectedValuePath="Source" ItemsSource="{Binding Source={x:Static Fonts.SystemFontFamilies}}">
 								<ComboBox.ItemsPanel>
 									<ItemsPanelTemplate>
 										<VirtualizingStackPanel />
@@ -171,12 +176,12 @@
 								</ComboBox.ItemsPanel>
 								<ComboBox.ItemTemplate>
 									<DataTemplate>
-										<TextBlock Text="{Binding}" FontFamily="{Binding}" Height="20"/>
+										<TextBlock Text="{Binding Converter={StaticResource FontFamilyToNameConverter}}" FontFamily="{Binding}" Height="20"/>
 									</DataTemplate>
 								</ComboBox.ItemTemplate>
 							</ComboBox>
-							<ToggleButton Grid.Column="1" Content="b" />
-							<ToggleButton Grid.Column="2" Content="i" />
+							<ToggleButton Grid.Row="1" Grid.Column="0" Content="b" />
+							<ToggleButton Grid.Row="1" Grid.Column="1" Content="i" />
 						</Grid>
 					</Grid>
 					<Grid Style="{StaticResource Group}">

@@ -5,9 +5,11 @@
 	using System.Diagnostics;
 	using System.Linq;
 	using System.Text;
+	using System.Threading;
 	using System.Threading.Tasks;
 	using System.Windows;
 	using System.Windows.Controls;
+	using System.Windows.Markup;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 	using ContentTypeTextNet.Library.SharedLibrary.View;
@@ -63,6 +65,8 @@
 		protected virtual void ApplySetting()
 		{
 			Debug.Assert(CommonData != null);
+
+			this.Language = XmlLanguage.GetLanguage(Thread.CurrentThread.CurrentCulture.Name);
 
 			CreateViewModel();
 			ApplyViewModel();
