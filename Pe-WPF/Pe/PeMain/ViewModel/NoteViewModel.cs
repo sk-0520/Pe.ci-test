@@ -182,43 +182,6 @@
 
 		#endregion
 
-		#region HavingViewSingleModelWrapperViewModelBase
-
-		protected override void InitializeView()
-		{
-			SetCompactArea();
-			OnPropertyChanged("IsBodyReadOnly");
-
-			View.UserClosing += View_UserClosing;
-			
-			base.InitializeView();
-		}
-
-		protected override void UninitializeView()
-		{
-			View.UserClosing -= View_UserClosing;
-
-			base.UninitializeView();
-		}
-
-		#endregion
-
-		#region IColorPair
-
-		public Color ForeColor
-		{
-			get { return ColorPairProperty.GetNoneAlphaForeColor(Model); }
-			set { ColorPairProperty.SetNoneAlphaForekColor(Model, value, OnPropertyChanged); }
-		}
-
-		public Color BackColor
-		{
-			get { return ColorPairProperty.GetNoneAlphaBackColor(Model); }
-			set { ColorPairProperty.SetNoneAlphaBackColor(Model, value, OnPropertyChanged); }
-		}
-
-		#endregion
-
 		#region command
 
 		public ICommand SaveIndexCommnad
@@ -234,12 +197,12 @@
 							return;
 						}
 
-						if(IsChanged) {
+						if (IsChanged) {
 							Model.History.Update();
 							AppSender.SendSaveIndex(IndexKind.Note);
 							ResetChangeFlag();
 						}
-						if(HasView) {
+						if (HasView) {
 							// フォーカス外れたときにうまいこと反映されない対策
 							Body = View.body.Text;
 							ResetChangeFlag();
@@ -340,7 +303,7 @@
 					o => {
 						TitleEditVisibility = Visibility.Visible;
 						this._editingTitle = true;
-						if(HasView) {
+						if (HasView) {
 							View.title.SelectAll();
 							View.title.Focus();
 						}
@@ -373,8 +336,8 @@
 					o => {
 						this._editingBody = true;
 						OnPropertyChanged("IsBodyReadOnly");
-						if(HasView) {
-							if(View.body.SelectionLength == 0) {
+						if (HasView) {
+							if (View.body.SelectionLength == 0) {
 								View.body.SelectAll();
 							}
 							View.body.Focus();
@@ -392,7 +355,7 @@
 			{
 				var result = CreateCommand(
 					o => {
-						if(this._editingTitle) {
+						if (this._editingTitle) {
 							EndEditTitle();
 						}
 					}
@@ -409,14 +372,14 @@
 				var result = CreateCommand(
 					o => {
 						var comboBox = (ComboBox)o;
-						if(comboBox.SelectedValue == null && comboBox.ItemsSource != null) {
+						if (comboBox.SelectedValue == null && comboBox.ItemsSource != null) {
 							AppNonProcess.Logger.Information(string.Join(Environment.NewLine, comboBox.ItemsSource.Cast<FontFamily>().Select(f => f.Source)));
 							var fontFamily = FontFamily;
 							var index = comboBox.ItemsSource.Cast<FontFamily>()
 								.ToArray()
 								.FindIndex(f => f.Source == fontFamily.Source)
 							;
-							if(index != -1) {
+							if (index != -1) {
 								comboBox.SelectedIndex = index;
 							}
 							//System.Diagnostics.Debug.WriteLine(comboBox.ItemsSource);
@@ -427,6 +390,43 @@
 
 				return result;
 			}
+		}
+
+		#endregion
+
+		#region HavingViewSingleModelWrapperViewModelBase
+
+		protected override void InitializeView()
+		{
+			SetCompactArea();
+			OnPropertyChanged("IsBodyReadOnly");
+
+			View.UserClosing += View_UserClosing;
+			
+			base.InitializeView();
+		}
+
+		protected override void UninitializeView()
+		{
+			View.UserClosing -= View_UserClosing;
+
+			base.UninitializeView();
+		}
+
+		#endregion
+
+		#region IColorPair
+
+		public Color ForeColor
+		{
+			get { return ColorPairProperty.GetNoneAlphaForeColor(Model); }
+			set { ColorPairProperty.SetNoneAlphaForekColor(Model, value, OnPropertyChanged); }
+		}
+
+		public Color BackColor
+		{
+			get { return ColorPairProperty.GetNoneAlphaBackColor(Model); }
+			set { ColorPairProperty.SetNoneAlphaBackColor(Model, value, OnPropertyChanged); }
 		}
 
 		#endregion

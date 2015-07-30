@@ -793,6 +793,9 @@
 						{
 							var noteWindow = (NoteWindow)window;
 							NoteWindows.Add(noteWindow);
+
+							OnPropertyChanged("NoteShowItems");
+							OnPropertyChanged("NoteHiddenItems");
 						}
 						break;
 
