@@ -129,21 +129,40 @@
 
 		public static void InitializeClipboardSetting(ClipboardSettingModel setting, Version previousVersion, INonProcess nonProcess)
 		{
+			InitializeClipboardSetting_v_first()
+
 			setting.WaitTime = Constants.clipboardWaitTime.GetClamp(setting.WaitTime);
 
-			if(setting.ItemsListWidth <= 0) {
+			if (IsIllegalPlusNumber(setting.ItemsListWidth)) {
 				setting.ItemsListWidth = Constants.clipboardItemsListWidth;
 			}
+
+			if (IsIllegalPlusNumber(setting.WindowWidth)) {
+				setting.WindowWidth = Constants.clipboardDefaultWindowSize.Width;
+			}
+			if (IsIllegalPlusNumber(setting.WindowHeight)) {
+				setting.WindowHeight = Constants.clipboardDefaultWindowSize.Height;
+			}
+
 		}
 
 		public static void InitializeTemplateSetting(TemplateSettingModel setting, Version previousVersion, INonProcess nonProcess)
 		{
-			if(setting.ItemsListWidth <= 0) {
+			if(IsIllegalPlusNumber(setting.ItemsListWidth)) {
 				setting.ItemsListWidth = Constants.templateItemsListWidth;
 			}
-			if(setting.ReplaceListWidth <= 0) {
+			if(IsIllegalPlusNumber(setting.ReplaceListWidth)) {
 				setting.ReplaceListWidth = Constants.templateReplaceListWidth;
 			}
+
+			if (IsIllegalPlusNumber(setting.WindowWidth)) {
+				setting.WindowWidth = Constants.templateDefaultWindowSize.Width;
+			}
+			if (IsIllegalPlusNumber(setting.WindowHeight)) {
+				setting.WindowHeight = Constants.templateDefaultWindowSize.Height;
+			}
+
+
 		}
 
 		/// <summary>
