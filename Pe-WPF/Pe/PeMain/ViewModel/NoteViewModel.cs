@@ -175,7 +175,8 @@
 			set 
 			{
 				if(value != null) {
-					SetPropertyValue(Model.Font, value.Source, "Family");
+					var fontFamily = FontUtility.GetOriginalFontFamilyName(value);
+					SetPropertyValue(Model.Font, fontFamily, "Family");
 				}
 			}
 		}

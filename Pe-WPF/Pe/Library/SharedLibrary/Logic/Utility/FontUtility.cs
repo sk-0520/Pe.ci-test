@@ -5,6 +5,7 @@
 	using System.Linq;
 	using System.Text;
 	using System.Threading.Tasks;
+	using System.Windows.Markup;
 	using System.Windows.Media;
 
 	public static class FontUtility
@@ -35,6 +36,10 @@
 		public static string GetOriginalFontFamilyName(FontFamily fontFamily)
 		{
 			CheckUtility.DebugEnforceNotNull(fontFamily);
+
+			if(fontFamily.FamilyNames.Any()) {
+				return fontFamily.FamilyNames.First().Value;
+			}
 
 			return fontFamily.Source;
 		}

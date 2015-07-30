@@ -279,7 +279,7 @@
 			indexItem.Font.Size = Constants.noteFontSize.GetClamp(indexItem.Font.Size);
 			
 			if (string.IsNullOrWhiteSpace(indexItem.Font.Family)) {
-				indexItem.Font.Family = SystemFonts.MessageFontFamily.Source;
+				indexItem.Font.Family = FontUtility.GetOriginalFontFamilyName(SystemFonts.MessageFontFamily);
 			}
 
 			if (IsIllegalPlusNumber(indexItem.WindowWidth)) {
