@@ -18,7 +18,6 @@
 		<StackPanel HorizontalAlignment="Left" Height="93" Margin="10,10,0,0" VerticalAlignment="Top" Width="114">
 			<CheckBox Content="enabled" IsChecked="{Binding Enabled}" />
 			<CheckBox Content="copy app" IsChecked="{Binding EnabledApplicationCopy}"/>
-			<CheckBox Content="save" IsChecked="{Binding SaveClipboard}" />
 			<CheckBox Content="topmost" IsChecked="{Binding TopMost}" />
 			<CheckBox Content="visible" IsChecked="{Binding Visible}" />
 			<CheckBox Content="using clipboard" IsChecked="{Binding UsingClipboard}"/>

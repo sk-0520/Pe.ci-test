@@ -38,12 +38,6 @@
 		public bool EnabledApplicationCopy { get; set; }
 
 		/// <summary>
-		/// 履歴を保存する。
-		/// </summary>
-		[DataMember]
-		public bool SaveClipboard { get; set; }
-
-		/// <summary>
 		/// 表示非表示切り替え。
 		/// </summary>
 		[DataMember]

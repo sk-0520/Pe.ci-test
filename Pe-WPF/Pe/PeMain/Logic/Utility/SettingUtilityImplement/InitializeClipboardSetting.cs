@@ -6,6 +6,7 @@
 	using System.Text;
 	using System.Threading.Tasks;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Pe.Library.PeData.Define;
 	using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
 
 	internal static class InitializeClipboardSetting
@@ -16,6 +17,15 @@
 		}
 
 		static void V_First(ClipboardSettingModel setting, Version previousVersion, INonProcess nonProcess)
-		{ }
+		{
+			if(previousVersion != null) {
+				return;
+			}
+
+			nonProcess.Logger.Trace("version setting: first");
+
+			setting.Enabled = true;
+			setting.EnabledClipboardTypes = ClipboardType.All;
+		}
 	}
 }

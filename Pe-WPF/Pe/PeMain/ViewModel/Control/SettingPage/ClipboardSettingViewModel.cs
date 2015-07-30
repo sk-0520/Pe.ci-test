@@ -45,12 +45,6 @@
 			set { SetPropertyValue(Clipboard, value); }
 		}
 
-		public bool SaveClipboard
-		{
-			get { return Clipboard.SaveClipboard; }
-			set { SetPropertyValue(Clipboard, value); }
-		}
-
 		public HotKeyModel ToggleHotKey
 		{
 			get { return Clipboard.ToggleHotKey; }
