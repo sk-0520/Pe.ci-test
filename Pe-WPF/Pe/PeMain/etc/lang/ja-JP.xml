@@ -2,7 +2,13 @@
 <Language xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" CultureCode="ja-JP" Name="日本語">
 	<Define>
 		<Item Id="ok"  Word="OK" />
-		<Item Id="cancel" Word="Cancel"  />
+		<Item Id="cancel" Word="Cancel" />
+
+		<Item Id="topmpst" Word="最前面" />
+		<Item Id="enabled" Word="有効" />
+		<Item Id="show" Word="表示" />
+		<Item Id="hide" Word="非表示" />
+		
 	</Define>
 	<Words>
 		<Item Id="window/setting" Word="setting"  />
@@ -22,8 +28,15 @@
 
 		<Item Id="note/input" Word="入力" />
 
+		<Item Id="clipboard/enabled" Word="クリップボード取込" Hint="asdfghjl" />
+		<Item Id="clipboard/target" Word="取込対象" />
+		<Item Id="clipboard/type/text" Word="文字列" />
 		<Item Id="clipboard/type/rtf" Word="書式付文字列" />
+		<Item Id="clipboard/type/html" Word="HTML" />
+		<Item Id="clipboard/type/image" Word="画像" />
+		<Item Id="clipboard/type/files" Word="ファイル" />
 		<Item Id="clipboard/image/fit" Word="ウィンドウに合わせる" />
+		<Item Id="clipboard/image/raw" Word="原寸表示" />
 
 		<Item Id="environment/key" Word="キー" />
 		

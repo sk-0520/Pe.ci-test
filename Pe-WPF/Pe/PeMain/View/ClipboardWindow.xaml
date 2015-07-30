@@ -65,9 +65,9 @@
 				<RowDefinition Height="Auto"/>
 			</Grid.RowDefinitions>
 			<ToolBar Style="{StaticResource IndexItemsStyleDefaultToolbarStyle}" >
-				<ToggleButton IsChecked="{Binding Enabled}">
+				<ToggleButton IsChecked="{Binding Enabled}" AA:Language.Hint="clipboard/enabled">
 					<StackPanel Orientation="Horizontal">
-						<TextBlock Text="enabled" />
+						<TextBlock Text="enabled" AA:Language.Word="clipboard/enabled" />
 					</StackPanel>
 				</ToggleButton>
 				<Separator />
@@ -198,7 +198,7 @@
 							<TabItem.Header>
 								<StackPanel Orientation="Horizontal">
 									<Image Style="{StaticResource ClipboardText}" />
-									<TextBlock Text="text" />
+									<TextBlock Text="text" AA:Language.Word="clipboard/type/text" />
 								</StackPanel>
 							</TabItem.Header>
 							<TextBox IsReadOnly="True" Text="{Binding SelectedViewModel.Text, Mode=OneWay}" />
@@ -222,7 +222,7 @@
 							<TabItem.Header>
 								<StackPanel Orientation="Horizontal">
 									<Image Style="{StaticResource ClipboardHtml}" />
-									<TextBlock Text="html" />
+									<TextBlock Text="html" AA:Language.Word="clipboard/type/html" />
 								</StackPanel>
 							</TabItem.Header>
 							<Grid>
@@ -248,7 +248,7 @@
 							<TabItem.Header>
 								<StackPanel Orientation="Horizontal">
 									<Image Style="{StaticResource ClipboardImage}" />
-									<TextBlock Text="image" />
+									<TextBlock Text="image" AA:Language.Word="clipboard/type/image" />
 								</StackPanel>
 							</TabItem.Header>
 							<Grid>
@@ -266,7 +266,7 @@
 									<RadioButton x:Name="imageRaw" IsChecked="{Binding ImageScale, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static AD:ImageScale.Raw}}">
 										<StackPanel Orientation="Horizontal">
 											<Image Style="{StaticResource ImageRenderStyle}" Source="{x:Static AM:AppResource.ClipboardImageRawImage}" />
-											<TextBlock Text="raw" />
+											<TextBlock Text="raw" AA:Language.Word="clipboard/image/raw" />
 										</StackPanel>
 									</RadioButton>
 								</ToolBar>
@@ -303,7 +303,7 @@
 							<TabItem.Header>
 								<StackPanel Orientation="Horizontal">
 									<Image Style="{StaticResource ClipboardFiles}" />
-									<TextBlock Text="files" />
+									<TextBlock Text="files" AA:Language.Word="clipboard/type/files" />
 								</StackPanel>
 							</TabItem.Header>
 							<ListView ItemsSource="{Binding SelectedViewModel.Files}">
