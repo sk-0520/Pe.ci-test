@@ -25,15 +25,7 @@
 			EnvironmentVariables = new EnvironmentVariablesItemModel();
 		}
 
-		#region IName
-
-		/// <summary>
-		/// アイテム名称。
-		/// </summary>
-		[DataMember, XmlAttribute]
-		public string Name { get; set; }
-
-		#endregion
+		#region property
 
 		/// <summary>
 		/// ランチャー種別。
@@ -92,6 +84,18 @@
 		/// </summary>
 		[DataMember]
 		public EnvironmentVariablesItemModel EnvironmentVariables { get; set; }
+
+		#endregion
+
+		#region IName
+
+		/// <summary>
+		/// アイテム名称。
+		/// </summary>
+		[DataMember, XmlAttribute]
+		public string Name { get; set; }
+
+		#endregion
 
 		#region IDeepClone
 

@@ -13,7 +13,7 @@
 	using ContentTypeTextNet.Pe.Library.PeData.IF;
 
 	[Serializable]
-	public class ToolbarItemModel: ModelBase, IVisible, ITopMost, ITId<string>
+	public class ToolbarItemModel: ModelBase, IVisible, ITopMost, ITId<string>, IDeepClone
 	{
 		public ToolbarItemModel()
 			: base()
@@ -31,6 +31,50 @@
 		/// </summary>
 		[DataMember]
 		public DockType DockType { get; set; }
+
+		/// <summary>
+		/// フロート状態。
+		/// </summary>
+		[DataMember]
+		public FloatToolbarItemModel FloatToolbar { get; set; }
+		/// <summary>
+		/// アイコンサイズ。
+		/// </summary>
+		[DataMember]
+		public IconScale IconScale { get; set; }
+		/// <summary>
+		/// 自動的に隠すか。
+		/// </summary>
+		[DataMember]
+		public bool AutoHide { get; set; }
+		/// <summary>
+		/// 自動的に隠すまでの時間。
+		/// </summary>
+		[DataMember]
+		public TimeSpan HideWaitTime { get; set; }
+		/// <summary>
+		/// 自動的に隠す際のアニメーション時間。
+		/// </summary>
+		[DataMember]
+		public TimeSpan HideAnimateTime { get; set; }
+		/// <summary>
+		/// 初期値として使用するグループID。
+		/// </summary>
+		[DataMember]
+		public Guid DefaultGroupId { get; set; }
+
+		/// <summary>
+		/// テキスト表示を行うか。
+		/// </summary>
+		[DataMember]
+		public bool TextVisible { get; set; }
+		/// <summary>
+		/// テキストの表示幅。
+		/// </summary>
+		[DataMember]
+		public double TextWidth { get; set; }
+
+		#endregion
 
 		#region IVisible
 
@@ -76,47 +120,34 @@
 
 		#endregion 
 
-		/// <summary>
-		/// フロート状態。
-		/// </summary>
-		[DataMember]
-		public FloatToolbarItemModel FloatToolbar { get; set; }
-		/// <summary>
-		/// アイコンサイズ。
-		/// </summary>
-		[DataMember]
-		public IconScale IconScale { get; set; }
-		/// <summary>
-		/// 自動的に隠すか。
-		/// </summary>
-		[DataMember]
-		public bool AutoHide { get; set; }
-		/// <summary>
-		/// 自動的に隠すまでの時間。
-		/// </summary>
-		[DataMember]
-		public TimeSpan HideWaitTime { get; set; }
-		/// <summary>
-		/// 自動的に隠す際のアニメーション時間。
-		/// </summary>
-		[DataMember]
-		public TimeSpan HideAnimateTime { get; set; }
-		/// <summary>
-		/// 初期値として使用するグループID。
-		/// </summary>
-		[DataMember]
-		public Guid DefaultGroupId { get; set; }
+		#region IDeepClone
 
-		/// <summary>
-		/// テキスト表示を行うか。
-		/// </summary>
-		[DataMember]
-		public bool TextVisible { get; set; }
-		/// <summary>
-		/// テキストの表示幅。
-		/// </summary>
-		[DataMember]
-		public double TextWidth { get; set; }
+		public void DeepCloneTo(IDeepClone target)
+		{
+			var obj = (ToolbarItemModel)target;
+
+			obj.DockType = DockType;
+			FloatToolbar.DeepCloneTo(obj.FloatToolbar);
+			obj.IconScale = IconScale;
+			obj.AutoHide = AutoHide;
+			obj.HideWaitTime = HideWaitTime;
+			obj.HideAnimateTime = HideAnimateTime;
+			obj.DefaultGroupId = DefaultGroupId;
+			obj.TextVisible = TextVisible;
+			obj.TextWidth = TextWidth;
+			obj.Visible = Visible;
+			obj.TopMost = TopMost;
+			obj.Id = Id;
+		}
+	
+		public IDeepClone DeepClone()
+		{
+			var result = new ToolbarItemModel();
+
+			DeepCloneTo(result);
+
+			return result;
+		}
 
 		#endregion
 	}

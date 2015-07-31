@@ -18,6 +18,8 @@
 			: base()
 		{ }
 
+		#region property
+
 		/// <summary>
 		/// 標準出力(とエラー)を取得するか。
 		/// </summary>
@@ -28,6 +30,8 @@
 		/// </summary>
 		[DataMember]
 		public bool IsEnabledInput { get; set; }
+
+		#endregion
 
 		#region IDeepClone
 
