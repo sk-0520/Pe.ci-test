@@ -7,7 +7,7 @@
 	using System.Threading.Tasks;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
-using ContentTypeTextNet.Pe.Library.PeData.Define;
+	using ContentTypeTextNet.Pe.Library.PeData.Define;
 
 	public class ClipboardIndexItemModel: IndexItemModelBase
 	{
@@ -16,5 +16,27 @@ using ContentTypeTextNet.Pe.Library.PeData.Define;
 		{ }
 
 		public ClipboardType Type { get; set; }
+
+		#region IndexItemModelBase
+
+		public override void DeepCloneTo(IDeepClone target)
+		{
+			base.DeepCloneTo(target);
+
+			var obj = (ClipboardIndexItemModel)target;
+
+			obj.Type = Type;
+		}
+
+		public override IDeepClone DeepClone()
+		{
+			var result = new ClipboardIndexItemModel();
+
+			DeepCloneTo(result);
+
+			return result;
+		}
+
+		#endregion
 	}
 }

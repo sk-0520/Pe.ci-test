@@ -83,5 +83,41 @@
 		public bool Visible { get; set; }
 
 		#endregion
+
+		#region IndexItemModelBase
+
+		public override void DeepCloneTo(IDeepClone target)
+		{
+			base.DeepCloneTo(target);
+
+			var obj = (NoteIndexItemModel)target;
+
+			obj.NoteKind = NoteKind;
+			obj.IsLocked = IsLocked;
+			Font.DeepCloneTo(obj.Font);
+
+			obj.ForeColor = ForeColor;
+			obj.BackColor = BackColor;
+
+			obj.WindowTop = WindowTop;
+			obj.WindowLeft = WindowLeft;
+			obj.WindowWidth = WindowWidth;
+			obj.WindowHeight = WindowHeight;
+
+			obj.TopMost = TopMost;
+
+			obj.Visible = Visible;
+		}
+
+		public override IDeepClone DeepClone()
+		{
+			var result = new NoteIndexItemModel();
+
+			DeepCloneTo(result);
+
+			return result;
+		}
+
+		#endregion
 	}
 }

@@ -6,6 +6,7 @@
 	using System.Runtime.Serialization;
 	using System.Text;
 	using System.Threading.Tasks;
+	using ContentTypeTextNet.Library.SharedLibrary.IF;
 
 	public class TemplateIndexItemModel: IndexItemModelBase
 	{
@@ -25,6 +26,29 @@
 		/// </summary>
 		[DataMember]
 		public bool IsProgrammableReplace { get; set; }
+
+		#endregion
+
+		#region IndexItemModelBase
+
+		public override void DeepCloneTo(IDeepClone target)
+		{
+			base.DeepCloneTo(target);
+
+			var obj = (TemplateIndexItemModel)target;
+
+			obj.IsReplace = IsReplace;
+			obj.IsProgrammableReplace = IsProgrammableReplace;
+		}
+
+		public override IDeepClone DeepClone()
+		{
+			var result = new TemplateIndexItemModel();
+
+			DeepCloneTo(result);
+
+			return result;
+		}
 
 		#endregion
 	}
