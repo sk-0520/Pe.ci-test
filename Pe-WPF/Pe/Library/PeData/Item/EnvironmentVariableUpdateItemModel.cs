@@ -60,7 +60,6 @@
 
 			obj.Id = Id;
 			obj.Value = Value;
-
 		}
 
 		public IDeepClone DeepClone()
