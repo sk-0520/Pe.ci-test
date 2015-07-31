@@ -14,7 +14,7 @@
 	using ContentTypeTextNet.Pe.Library.PeData.IF;
 
 	[Serializable]
-	public class LauncherGroupItemModel: GuidModelBase, IName
+	public class LauncherGroupItemModel: GuidModelBase, IName, IDeepClone
 	{
 		public LauncherGroupItemModel()
 			: base()
@@ -22,15 +22,7 @@
 			LauncherItems = new CollectionModel<Guid>();
 		}
 
-		#region IName
-
-		/// <summary>
-		/// グループ名称。
-		/// </summary>
-		[DataMember, XmlAttribute]
-		public string Name { get; set; }
-
-		#endregion
+		#region property
 
 		/// <summary>
 		/// グループ種別。
@@ -43,5 +35,38 @@
 		/// </summary>
 		[DataMember, XmlArrayItem("Item")]
 		public CollectionModel<Guid> LauncherItems { get; set; }
+
+		#endregion
+
+		#region IName
+
+		/// <summary>
+		/// グループ名称。
+		/// </summary>
+		[DataMember, XmlAttribute]
+		public string Name { get; set; }
+
+		#endregion
+
+		#region IDeepClone
+
+		public void DeepCloneTo(IDeepClone target)
+		{
+			var obj = (LauncherGroupItemModel)target;
+
+			obj.GroupKind = GroupKind;
+			obj.LauncherItems.AddRange(LauncherItems);
+		}
+
+		public IDeepClone DeepClone()
+		{
+			var result = new LauncherGroupItemModel();
+
+			DeepCloneTo(result);
+
+			return result;
+		}
+
+		#endregion
 	}
 }
