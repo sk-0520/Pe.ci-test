@@ -9,12 +9,13 @@
 	using System.Windows;
 	using ContentTypeTextNet.Library.SharedLibrary.Attribute;
 	using ContentTypeTextNet.Library.SharedLibrary.Define;
+	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
 	using ContentTypeTextNet.Pe.Library.PeData.IF;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 
 	[Serializable]
-	public class TemplateSettingModel: SettingModelBase, IWindowStatus
+	public class TemplateSettingModel: SettingModelBase, IWindowStatus, IDeepClone
 	{
 		public TemplateSettingModel()
 			: base()
@@ -75,6 +76,35 @@
 		public bool Visible { get; set; }
 
 		#endregion
+
+		#endregion
+
+		#region IDeepClone
+
+		public void DeepCloneTo(IDeepClone target)
+		{
+			var obj = (TemplateSettingModel)target;
+
+			ToggleHotKey.DeepCloneTo(obj.ToggleHotKey);
+			obj.ItemsListWidth = ItemsListWidth;
+			obj.ReplaceListWidth = ReplaceListWidth;
+			obj.WindowTop = WindowTop;
+			obj.WindowLeft = WindowLeft;
+			obj.WindowWidth = WindowWidth;
+			obj.WindowHeight = WindowHeight;
+			obj.WindowState = WindowState;
+			obj.TopMost = TopMost;
+			obj.Visible = Visible;
+		}
+
+		public IDeepClone DeepClone()
+		{
+			var result = new TemplateSettingModel();
+
+			DeepCloneTo(result);
+
+			return result;
+		}
 
 		#endregion
 	}
