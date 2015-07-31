@@ -13,6 +13,7 @@
 	using System.Windows.Input;
 	using System.Windows.Media;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 	using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
 	using ContentTypeTextNet.Pe.PeMain.Data;
@@ -270,7 +271,7 @@
 
 		public LauncherItemStreamWindow View { get; private set; }
 
-		public bool HasView { get { return View != null; } }
+		public bool HasView { get { return HavingViewUtility.GetHasView(this); } }
 
 		#endregion
 

@@ -7,6 +7,7 @@
 	using System.Threading.Tasks;
 	using System.Windows.Input;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.Define;
@@ -93,7 +94,7 @@
 
 		public LauncherItemCustomizeWindow View { get; private set; }
 
-		public bool HasView { get { return View != null; } }
+		public bool HasView { get { return HavingViewUtility.GetHasView(this); } }
 
 		#endregion
 	}

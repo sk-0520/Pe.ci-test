@@ -214,8 +214,7 @@
 
 		public LauncherItemExecuteWindow View { get; private set; }
 
-		public bool HasView { get { return View != null;} }
-
+		public bool HasView { get { return HavingViewUtility.GetHasView(this); } }
 
 		#endregion
 	}

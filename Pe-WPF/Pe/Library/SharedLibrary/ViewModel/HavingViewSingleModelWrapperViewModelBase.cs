@@ -27,7 +27,7 @@
 			:base(model)
 		{
 			View = view;
-			if(View != null) {
+			if(HasView) {
 				InitializeView();
 			}
 		}
@@ -35,7 +35,7 @@
 		#region property
 
 		public TView View { get; private set; }
-		public bool HasView { get { return View != null; } }
+		public bool HasView { get { return HavingViewUtility.GetHasView(this); } }
 
 		#endregion
 
