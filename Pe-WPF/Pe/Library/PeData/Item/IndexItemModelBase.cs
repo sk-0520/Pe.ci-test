@@ -10,7 +10,7 @@
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
 
-	public abstract class IndexItemModelBase: GuidModelBase, IName, IDeepClone
+	public abstract class IndexItemModelBase: GuidModelBase, IName
 	{
 		public IndexItemModelBase()
 			: base()
@@ -30,15 +30,17 @@
 
 		#region IDeepClone
 
-		public virtual void DeepCloneTo(IDeepClone target)
+		public override void DeepCloneTo(IDeepClone target)
 		{
+			base.DeepCloneTo(target);
+
 			var obj = (IndexItemModelBase)target;
 
 			obj.Name = Name;
-			History.DeepCloneTo(obj);
+			History.DeepCloneTo(obj.History);
 		}
 
-		public abstract IDeepClone DeepClone();
+		//public abstract IDeepClone DeepClone();
 
 		#endregion
 	}

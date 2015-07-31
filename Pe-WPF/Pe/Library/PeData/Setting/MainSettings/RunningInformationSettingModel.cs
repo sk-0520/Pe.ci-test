@@ -61,10 +61,14 @@
 			var obj = (RunningInformationSettingModel)target;
 
 			obj.Accept = Accept;
-			obj.LastExecuteVersion = (Version)LastExecuteVersion.Clone();
+			if(LastExecuteVersion != null) {
+				obj.LastExecuteVersion = (Version)LastExecuteVersion.Clone();
+			}
 			obj.CheckUpdateRelease = CheckUpdateRelease;
 			obj.CheckUpdateRC = CheckUpdateRC;
-			obj.IgnoreUpdateVersion = (Version)IgnoreUpdateVersion.Clone();
+			if(IgnoreUpdateVersion != null) {
+				obj.IgnoreUpdateVersion = (Version)IgnoreUpdateVersion.Clone();
+			}
 			obj.ExecuteCount = ExecuteCount;
 		}
 

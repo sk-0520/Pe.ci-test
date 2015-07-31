@@ -14,7 +14,7 @@
 	using ContentTypeTextNet.Pe.Library.PeData.IF;
 
 	[Serializable]
-	public class LauncherGroupItemModel: GuidModelBase, IName, IDeepClone
+	public class LauncherGroupItemModel: GuidModelBase, IName
 	{
 		public LauncherGroupItemModel()
 			: base()
@@ -50,15 +50,18 @@
 
 		#region IDeepClone
 
-		public void DeepCloneTo(IDeepClone target)
+		public override void DeepCloneTo(IDeepClone target)
 		{
+			base.DeepCloneTo(target);
+
 			var obj = (LauncherGroupItemModel)target;
 
+			obj.Name = Name;
 			obj.GroupKind = GroupKind;
 			obj.LauncherItems.InitializeRange(LauncherItems);
 		}
 
-		public IDeepClone DeepClone()
+		public override IDeepClone DeepClone()
 		{
 			var result = new LauncherGroupItemModel();
 

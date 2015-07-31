@@ -28,6 +28,7 @@
 			var obj = (FontModel)target;
 
 			obj.Family = Family;
+			obj.Size = Size;
 			obj.Bold = Bold;
 			obj.Italic = Italic;
 		}

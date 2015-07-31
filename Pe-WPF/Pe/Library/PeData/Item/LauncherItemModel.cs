@@ -13,7 +13,7 @@
 	using ContentTypeTextNet.Pe.Library.PeData.IF;
 
 	[Serializable]
-	public class LauncherItemModel: GuidModelBase, IName, IDeepClone
+	public class LauncherItemModel: GuidModelBase, IName
 	{
 		public LauncherItemModel()
 			: base()
@@ -99,11 +99,12 @@
 
 		#region IDeepClone
 
-		public virtual void DeepCloneTo(IDeepClone target)
+		public override void DeepCloneTo(IDeepClone target)
 		{
+			base.DeepCloneTo(target);
+
 			var obj = (LauncherItemModel)target;
 
-			obj.Id = Id;
 			obj.Name = Name;
 			obj.LauncherKind = LauncherKind;
 			obj.Command = Command;
@@ -119,7 +120,7 @@
 			EnvironmentVariables.DeepCloneTo(obj.EnvironmentVariables);
 		}
 
-		public IDeepClone DeepClone()
+		public override IDeepClone DeepClone()
 		{
 			var result = new LauncherItemModel();
 

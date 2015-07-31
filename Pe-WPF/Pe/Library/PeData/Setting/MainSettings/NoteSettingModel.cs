@@ -57,8 +57,8 @@
 			HideHotKey.DeepCloneTo(obj.HideHotKey);
 			CompactHotKey.DeepCloneTo(obj.CompactHotKey);
 			ShowFrontHotKey.DeepCloneTo(obj.ShowFrontHotKey);
-			ForeColor = obj.ForeColor;
-			BackColor = obj.BackColor;
+			obj.ForeColor = ForeColor;
+			obj.BackColor = BackColor;
 		}
 
 		public IDeepClone DeepClone()

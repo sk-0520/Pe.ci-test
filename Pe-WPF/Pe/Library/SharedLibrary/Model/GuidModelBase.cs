@@ -9,7 +9,7 @@
 	using System.Xml.Serialization;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 
-	public abstract class GuidModelBase: ModelBase, ITId<Guid>
+	public abstract class GuidModelBase: ModelBase, ITId<Guid>, IDeepClone
 	{
 		#region define
 
@@ -37,6 +37,19 @@
 		{
 			return id;
 		}
+
+		#endregion
+
+		#region IDeepClone
+
+		public virtual void DeepCloneTo(IDeepClone target)
+		{
+			var obj = (GuidModelBase)target;
+
+			obj.Id = Id;
+		}
+
+		public abstract IDeepClone DeepClone();
 
 		#endregion
 	}
