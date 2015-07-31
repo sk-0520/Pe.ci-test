@@ -6,6 +6,7 @@
 	using System.Runtime.Serialization;
 	using System.Text;
 	using System.Threading.Tasks;
+	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 
 	[DataContract, Serializable]
@@ -14,5 +15,19 @@
 		public ClipboardIndexSettingModel()
 			:base()
 		{ }
+
+		#region IndexSettingModelBase
+
+		public override IDeepClone DeepClone()
+		{
+			var result = new ClipboardIndexSettingModel();
+
+			DeepCloneTo(result);
+
+			return result;
+		}
+		
+
+		#endregion
 	}
 }
