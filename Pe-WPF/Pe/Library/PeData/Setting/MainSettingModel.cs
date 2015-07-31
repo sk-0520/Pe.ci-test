@@ -6,6 +6,7 @@
 	using System.Runtime.Serialization;
 	using System.Text;
 	using System.Threading.Tasks;
+	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 	using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
 
@@ -14,7 +15,7 @@
 	/// <para>その他の大きいやつは別クラスで管理しとく。</para>
 	/// </summary>
 	[DataContract(Namespace = ""), Serializable]
-	public sealed class MainSettingModel: SettingModelBase
+	public sealed class MainSettingModel: SettingModelBase, IDeepClone
 	{
 		public MainSettingModel()
 		{
@@ -30,6 +31,8 @@
 			Note = new NoteSettingModel();
 			Stream = new StreamSettingModel();
 		}
+
+		#region property
 
 		[DataMember]
 		public RunningInformationSettingModel RunningInformation { get; set; }
@@ -53,5 +56,37 @@
 		public NoteSettingModel Note { get; set; }
 		[DataMember]
 		public StreamSettingModel Stream { get; set; }
+
+		#endregion
+
+		#region IDeepClone
+
+		public void DeepCloneTo(IDeepClone target)
+		{
+			var obj = (MainSettingModel)target;
+
+			RunningInformation.DeepCloneTo(obj.RunningInformation);
+			Language.DeepCloneTo(obj.Language);
+			Logging.DeepCloneTo(obj.Logging);
+			Toolbar.DeepCloneTo(obj.Toolbar);
+			WindowSave.DeepCloneTo(obj.WindowSave);
+			SystemEnvironment.DeepCloneTo(obj.SystemEnvironment);
+			Command.DeepCloneTo(obj.Command);
+			Clipboard.DeepCloneTo(obj.Clipboard);
+			Template.DeepCloneTo(obj.Template);
+			Note.DeepCloneTo(obj.Note);
+			Stream.DeepCloneTo(obj.Stream);
+		}
+
+		public IDeepClone DeepClone()
+		{
+			var result = new MainSettingModel();
+
+			DeepCloneTo(result);
+
+			return result;
+		}
+
+		#endregion
 	}
 }
