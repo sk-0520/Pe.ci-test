@@ -124,7 +124,7 @@
 
 			obj.Enabled = Enabled;
 			obj.EnabledApplicationCopy = EnabledApplicationCopy;
-			ToggleHotKey.DeepCloneTo(ToggleHotKey);
+			ToggleHotKey.DeepCloneTo(obj.ToggleHotKey);
 			obj.EnabledClipboardTypes = EnabledClipboardTypes;
 			obj.SaveCount = SaveCount;
 			obj.WaitTime = WaitTime;

@@ -9,12 +9,13 @@
 	using System.Windows;
 	using ContentTypeTextNet.Library.SharedLibrary.Attribute;
 	using ContentTypeTextNet.Library.SharedLibrary.Define;
+	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
 	using ContentTypeTextNet.Pe.Library.PeData.IF;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 
 	[Serializable]
-	public class CommandSettingModel : SettingModelBase, IWindowStatus
+	public class CommandSettingModel : SettingModelBase, IWindowStatus, IDeepClone
 	{
 		public CommandSettingModel()
 			: base()
@@ -93,5 +94,36 @@
 
 		#endregion
 
+		#region IDeepClone
+
+		public void DeepCloneTo(IDeepClone target)
+		{
+			var obj = (CommandSettingModel)target;
+
+			obj.IconScale = IconScale;
+			obj.HideTime = HideTime;
+			ShowHotkey.DeepCloneTo(obj.ShowHotkey);
+			obj.FindId = FindId;
+			obj.FindTag = FindTag;
+			obj.FindFile = FindFile;
+			obj.WindowTop = WindowTop;
+			obj.WindowLeft = WindowLeft;
+			obj.WindowWidth = WindowWidth;
+			obj.WindowHeight = WindowHeight;
+			obj.WindowState = WindowState;
+			obj.TopMost = TopMost;
+			obj.Visible = Visible;
+		}
+
+		public IDeepClone DeepClone()
+		{
+			var result = new CommandSettingModel();
+
+			DeepCloneTo(result);
+
+			return result;
+		}
+
+		#endregion
 	}
 }
