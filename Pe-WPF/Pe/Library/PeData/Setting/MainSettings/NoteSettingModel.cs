@@ -1,16 +1,17 @@
 ﻿namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
 {
 	using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media;
-using ContentTypeTextNet.Library.SharedLibrary.Model;
-using ContentTypeTextNet.Pe.Library.PeData.IF;
+	using System.Collections.Generic;
+	using System.Linq;
+	using System.Runtime.Serialization;
+	using System.Text;
+	using System.Threading.Tasks;
+	using System.Windows.Media;
+	using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Library.SharedLibrary.Model;
+	using ContentTypeTextNet.Pe.Library.PeData.IF;
 
-	public class NoteSettingModel: SettingModelBase, IColorPair
+	public class NoteSettingModel: SettingModelBase, IColorPair, IDeepClone
 	{
 		public NoteSettingModel()
 			: base()
@@ -46,5 +47,29 @@ using ContentTypeTextNet.Pe.Library.PeData.IF;
 
 		#endregion
 
+		#region IDeepClone
+
+		public void DeepCloneTo(IDeepClone target)
+		{
+			var obj = (NoteSettingModel)target;
+
+			CreateHotKey.DeepCloneTo(obj.CreateHotKey);
+			HideHotKey.DeepCloneTo(obj.HideHotKey);
+			CompactHotKey.DeepCloneTo(obj.CompactHotKey);
+			ShowFrontHotKey.DeepCloneTo(obj.ShowFrontHotKey);
+			ForeColor = obj.ForeColor;
+			BackColor = obj.BackColor;
+		}
+
+		public IDeepClone DeepClone()
+		{
+			var result = new NoteSettingModel();
+
+			DeepCloneTo(result);
+
+			return result;
+		}
+
+		#endregion
 	}
 }
