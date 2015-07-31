@@ -10,7 +10,7 @@
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 
 	[Serializable]
-	public class LanguageSettingModel : SettingModelBase, IName
+	public class LanguageSettingModel : SettingModelBase, IName, IDeepClone
 	{
 		public LanguageSettingModel()
 			: base()
@@ -23,6 +23,26 @@
 		/// </summary>
 		[DataMember]
 		public string Name { get; set; }
+
+		#endregion
+
+		#region IDeepClone
+
+		public void DeepCloneTo(IDeepClone target)
+		{
+			var obj = (LanguageSettingModel)target;
+
+			obj.Name = Name;
+		}
+
+		public IDeepClone DeepClone()
+		{
+			var result = new LanguageSettingModel();
+
+			DeepCloneTo(result);
+
+			return result;
+		}
 
 		#endregion
 	}
