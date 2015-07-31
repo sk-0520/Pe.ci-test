@@ -9,13 +9,14 @@
 	using System.Windows;
 	using ContentTypeTextNet.Library.SharedLibrary.Attribute;
 	using ContentTypeTextNet.Library.SharedLibrary.Define;
+	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
 	using ContentTypeTextNet.Pe.Library.PeData.Define;
 	using ContentTypeTextNet.Pe.Library.PeData.IF;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 
 	[Serializable]
-	public class ClipboardSettingModel : SettingModelBase, IWindowStatus
+	public class ClipboardSettingModel : SettingModelBase, IWindowStatus, IDeepClone
 	{
 		public ClipboardSettingModel()
 			: base()
@@ -112,6 +113,41 @@
 		public bool Visible { get; set; }
 
 		#endregion
+
+		#endregion
+
+		#region IDeepClone
+
+		public void DeepCloneTo(IDeepClone target)
+		{
+			var obj = (ClipboardSettingModel)target;
+
+			obj.Enabled = Enabled;
+			obj.EnabledApplicationCopy = EnabledApplicationCopy;
+			ToggleHotKey.DeepCloneTo(ToggleHotKey);
+			obj.EnabledClipboardTypes = EnabledClipboardTypes;
+			obj.SaveCount = SaveCount;
+			obj.WaitTime = WaitTime;
+			obj.DuplicationCount = DuplicationCount;
+			obj.UsingClipboard = UsingClipboard;
+			obj.ItemsListWidth = ItemsListWidth;
+			obj.WindowTop = WindowTop;
+			obj.WindowLeft = WindowLeft;
+			obj.WindowWidth = WindowWidth;
+			obj.WindowHeight = WindowHeight;
+			obj.WindowState = WindowState;
+			obj.TopMost = TopMost;
+			obj.Visible = Visible;
+		}
+
+		public IDeepClone DeepClone()
+		{
+			var result = new ClipboardSettingModel();
+
+			DeepCloneTo(result);
+
+			return result;
+		}
 
 		#endregion
 	}
