@@ -35,6 +35,11 @@
 			return double.IsNaN(number) || number <= 0;
 		}
 
+		public static bool IsIllegalPlusNumber(int number)
+		{
+			return number <= 0;
+		}
+
 		public static bool CheckAccept(RunningInformationSettingModel model, INonProcess nonProcess)
 		{
 			if(!model.Accept) {
@@ -115,10 +120,10 @@
 		{
 			Implement.InitializeToolbar.Correction(model, previousVersion, nonProcess);
 
-			if (model.FloatToolbar.WidthButtonCount <= 0) {
+			if(IsIllegalPlusNumber(model.FloatToolbar.WidthButtonCount)) {
 				model.FloatToolbar.WidthButtonCount = 1;
 			}
-			if (model.FloatToolbar.HeightButtonCount <= 0) {
+			if(IsIllegalPlusNumber(model.FloatToolbar.HeightButtonCount)) {
 				model.FloatToolbar.HeightButtonCount = 1;
 			}
 		}

@@ -16,6 +16,14 @@
 		}
 
 		static void V_First(WindowSaveSettingModel setting, Version previousVersion, INonProcess nonProcess)
-		{ }
+		{
+			if(previousVersion != null) {
+				return;
+			}
+
+			setting.Enabled = true;
+			setting.SaveCount = Constants.windowSaveCount.median;
+			setting.SaveIntervalTime = Constants.windowSaveIntervalTime.median;
+		}
 	}
 }
