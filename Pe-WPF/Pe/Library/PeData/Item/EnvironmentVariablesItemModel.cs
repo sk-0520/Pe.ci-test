@@ -45,8 +45,8 @@
 			var obj = (EnvironmentVariablesItemModel)target;
 
 			obj.Edit = Edit;
-			obj.Update.AddRange(Update.Select(u => (EnvironmentVariableUpdateItemModel)u.DeepClone()));
-			obj.Remove.AddRange(Remove);
+			obj.Update.InitializeRange(Update.Select(u => (EnvironmentVariableUpdateItemModel)u.DeepClone()));
+			obj.Remove.InitializeRange(Remove);
 		}
 
 		public IDeepClone DeepClone()

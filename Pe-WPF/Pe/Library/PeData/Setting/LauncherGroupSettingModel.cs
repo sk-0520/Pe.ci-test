@@ -34,7 +34,7 @@
 		{
 			var obj = (LauncherGroupSettingModel)target;
 
-			obj.Groups.AddRange(Groups.Select(i => (LauncherGroupItemModel)i.DeepClone()));
+			obj.Groups.InitializeRange(Groups.Select(i => (LauncherGroupItemModel)i.DeepClone()));
 		}
 
 		public IDeepClone DeepClone()

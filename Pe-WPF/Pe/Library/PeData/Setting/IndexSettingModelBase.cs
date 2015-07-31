@@ -32,7 +32,7 @@
 		{
 			var obj = (IndexSettingModelBase<TCollectionModel, TItemModel>)target;
 
-			obj.Items.AddRange(Items.Select(i => (TItemModel)i.DeepClone()));
+			obj.Items.InitializeRange(Items.Select(i => (TItemModel)i.DeepClone()));
 		}
 
 		public abstract IDeepClone DeepClone();

@@ -120,7 +120,7 @@
 				obj.Image_Impl = new byte[Image_Impl.Length];
 				Image_Impl.CopyTo(obj.Image_Impl, 0);
 			}
-			obj.Files.AddRange(Files);
+			obj.Files.InitializeRange(Files);
 		}
 
 		public override ContentTypeTextNet.Library.SharedLibrary.IF.IDeepClone DeepClone()

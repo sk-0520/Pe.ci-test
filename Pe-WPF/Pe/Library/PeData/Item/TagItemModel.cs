@@ -35,7 +35,7 @@
 		{
 			var obj = (TagItemModel)target;
 
-			obj.Items.AddRange(Items);
+			obj.Items.InitializeRange(Items);
 		}
 		
 		public IDeepClone DeepClone()

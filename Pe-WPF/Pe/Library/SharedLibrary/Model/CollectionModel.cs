@@ -117,6 +117,12 @@
 			}
 		}
 
+		public void InitializeRange(IEnumerable<TValue> items)
+		{
+			Clear();
+			AddRange(items);
+		}
+
 		public void SwapIndex(int indexA, int indexB)
 		{
 			var itemA = Items[indexA];

@@ -55,7 +55,7 @@
 			var obj = (LauncherGroupItemModel)target;
 
 			obj.GroupKind = GroupKind;
-			obj.LauncherItems.AddRange(LauncherItems);
+			obj.LauncherItems.InitializeRange(LauncherItems);
 		}
 
 		public IDeepClone DeepClone()

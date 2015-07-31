@@ -26,7 +26,7 @@
 		{
 			var obj = (ToolbarSettingModel)target;
 
-			obj.Items.AddRange(Items.Select(i => (ToolbarItemModel)i.DeepClone()));
+			obj.Items.InitializeRange(Items.Select(i => (ToolbarItemModel)i.DeepClone()));
 		}
 
 		public IDeepClone DeepClone()
