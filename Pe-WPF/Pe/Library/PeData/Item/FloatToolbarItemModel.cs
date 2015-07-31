@@ -9,9 +9,10 @@
 	using System.Windows;
 	using ContentTypeTextNet.Library.SharedLibrary.Attribute;
 	using ContentTypeTextNet.Library.SharedLibrary.Define;
+	using ContentTypeTextNet.Library.SharedLibrary.IF;
 
 	[Serializable]
-	public class FloatToolbarItemModel: ItemModelBase
+	public class FloatToolbarItemModel: ItemModelBase, IDeepClone
 	{
 		public FloatToolbarItemModel()
 			: base()
@@ -39,5 +40,28 @@
 		[DataMember]
 		[PixelKind(Px.Logical)]
 		public double Top { get; set; }
+
+		#region IDeepClone
+
+		public void DeepCloneTo(IDeepClone target)
+		{
+			var obj = (FloatToolbarItemModel)target;
+
+			obj.WidthButtonCount = WidthButtonCount;
+			obj.HeightButtonCount = HeightButtonCount;
+			obj.Left = Left;
+			obj.Top = Top;
+		}
+
+		public IDeepClone DeepClone()
+		{
+			var result = new FloatToolbarItemModel();
+
+			DeepCloneTo(result);
+
+			return result;
+		}
+
+		#endregion
 	}
 }
