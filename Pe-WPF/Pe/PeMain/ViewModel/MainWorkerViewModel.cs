@@ -201,7 +201,9 @@
 					o => {
 						var window = new SettingWindow();
 						window.SetCommonData(CommonData, null);
-						window.ShowDialog();
+						if(window.ShowDialog().GetValueOrDefault()) {
+
+						}
 					}
 				);
 

@@ -20,21 +20,26 @@
 	/// <summary>
 	/// SettingWindow.xaml の相互作用ロジック
 	/// </summary>
-	public partial class SettingWindow : CommonDataWindow
+	public partial class SettingWindow: ViewModelCommonDataWindow<SettingViewModel>
 	{
 		public SettingWindow()
 		{
 			InitializeComponent();
 		}
 
-		#region CommonDataWindow
+		#region ViewModelCommonDataWindow
+
+		protected override void CreateViewModel()
+		{
+			//TODO
+			var clonedCommonData = CommonData;
+			DataContext = new SettingViewModel(clonedCommonData, this);
+		}
 
 		protected override void ApplyViewModel()
 		{
 			base.ApplyViewModel();
-			//TODO
-			var clonedCommonData = CommonData;
-			DataContext = new SettingViewModel(clonedCommonData, this);
+			DataContext = ViewModel;
 		}
 
 		#endregion
