@@ -689,11 +689,15 @@
 		void ResetCache()
 		{
 			// TODO: impl
+			CommonData.LauncherIconCaching.Clear();
 		}
 
 		void ResetSetting()
 		{
+			ResetCache();
 			// TODO: impl
+			InitializeStatus();
+			InitializeStatic();
 		}
 
 		static void ResetCulture(INonProcess nonProcess)

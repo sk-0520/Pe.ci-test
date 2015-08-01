@@ -12,7 +12,7 @@
 	/// </summary>
 	/// <typeparam name="Tkey"></typeparam>
 	/// <typeparam name="TValue"></typeparam>
-	public class Caching<Tkey, TValue> : Dictionary<Tkey, TValue>
+	public class Caching<Tkey, TValue>: Dictionary<Tkey, TValue>
 	{
 		#region function
 
@@ -26,12 +26,33 @@
 		public TValue Get(Tkey key, Func<TValue> creator)
 		{
 			TValue result;
-			if (!TryGetValue(key, out result)) {
+			if(!TryGetValue(key, out result)) {
 				result = creator();
 				this[key] = result;
 			}
 
 			return result;
+		}
+
+		public bool ClearCache(Tkey key)
+		{
+			TValue result;
+			if(!TryGetValue(key, out result)) {
+				result = default(TValue);
+				Remove(key);
+				return true;
+			} else {
+				return false;
+			}
+		}
+
+		public new void Clear()
+		{
+			foreach(var key in this.Keys) {
+				ClearCache(key);
+			}
+
+			base.Clear();
 		}
 
 		#endregion

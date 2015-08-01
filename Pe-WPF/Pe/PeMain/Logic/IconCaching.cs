@@ -18,5 +18,10 @@
 				this.Add(iconScale, new Caching<TChildKey, BitmapSource>());
 			}
 		}
+
+		#region function
+
+
+		#endregion
 	}
 }
