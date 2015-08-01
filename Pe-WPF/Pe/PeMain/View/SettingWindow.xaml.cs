@@ -31,14 +31,13 @@
 
 		protected override void CreateViewModel()
 		{
-			//TODO
-			var clonedCommonData = CommonData;
-			DataContext = new SettingViewModel(clonedCommonData, this);
+			ViewModel = new SettingViewModel(CommonData, this);
 		}
 
 		protected override void ApplyViewModel()
 		{
 			base.ApplyViewModel();
+
 			DataContext = ViewModel;
 		}
 

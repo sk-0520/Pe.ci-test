@@ -11,7 +11,7 @@
 		public static Delegate CreateEvent(Delegate handler, Action<Delegate> releaseEvent, out EventDisposer eventDisposer)
 		{
 			eventDisposer = new EventDisposer();
-			return eventDisposer.Handle(handler, releaseEvent);
+			return eventDisposer.Handling(handler, releaseEvent);
 		}
 		public static Delegate Auto(Delegate handler, Action<Delegate> releaseEvent)
 		{

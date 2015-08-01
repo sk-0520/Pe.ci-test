@@ -180,7 +180,9 @@
 			{
 				var reslut = CreateCommand(
 					o => {
-						View.Close();
+						if(HasView) {
+							View.Close();
+						}
 					}
 				);
 

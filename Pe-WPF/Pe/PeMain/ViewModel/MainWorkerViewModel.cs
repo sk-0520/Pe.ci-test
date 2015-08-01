@@ -199,10 +199,29 @@
 			{
 				var result = CreateCommand(
 					o => {
-						var window = new SettingWindow();
-						window.SetCommonData(CommonData, null);
-						if(window.ShowDialog().GetValueOrDefault()) {
+						var cloneCommonData = new CommonData() {
+							AppSender = CommonData.AppSender,
+							ClipboardWatcher = CommonData.ClipboardWatcher,
+							Language = CommonData.Language,
+							Logger = CommonData.Logger,
+							LauncherIconCaching = CommonData.LauncherIconCaching,
+							//-----------------------------------------
+							MainSetting = (MainSettingModel)CommonData.MainSetting.DeepClone(),
+							LauncherGroupSetting = (LauncherGroupSettingModel)CommonData.LauncherGroupSetting.DeepClone(),
+							LauncherItemSetting = (LauncherItemSettingModel)CommonData.LauncherItemSetting.DeepClone(),
+							NoteIndexSetting = (NoteIndexSettingModel)CommonData.NoteIndexSetting.DeepClone(),
+							TemplateIndexSetting = (TemplateIndexSettingModel)CommonData.TemplateIndexSetting.DeepClone(),
+							ClipboardIndexSetting = (ClipboardIndexSettingModel)CommonData.ClipboardIndexSetting.DeepClone(),
+						};
 
+						var window = new SettingWindow();
+						window.SetCommonData(cloneCommonData, null);
+						if(window.ShowDialog().GetValueOrDefault()) {
+							CommonData = window.CommonData;
+							SaveSetting();
+							ResetSetting();
+						} else {
+							ResetCache();
 						}
 					}
 				);
@@ -665,6 +684,16 @@
 			}
 
 			return window;
+		}
+
+		void ResetCache()
+		{
+			// TODO: impl
+		}
+
+		void ResetSetting()
+		{
+			// TODO: impl
 		}
 
 		static void ResetCulture(INonProcess nonProcess)

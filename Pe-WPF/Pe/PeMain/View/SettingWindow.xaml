@@ -24,10 +24,6 @@
 			<RowDefinition Height="auto"/>
 		</Grid.RowDefinitions>
 
-		<StackPanel Style="{StaticResource ResourceKey=DialogResultPanel}"  Grid.Row="2">
-			<Button Style="{StaticResource ResourceKey=DialogResultButtonAccept}" AA:Language.Word="common/ok" Content="ok" />
-			<Button Style="{StaticResource ResourceKey=DialogResultButtonCancel}" AA:Language.Word="common/cancel" Content="cancel" Command="{Binding CancelCommand}" />
-		</StackPanel>
 		<TabControl VerticalAlignment="Stretch">
 			<TabControl.Resources>
 				<Style TargetType="{x:Type TabItem}">
@@ -56,5 +52,10 @@
 				<AS:TemplateSettingControl x:Name="TemplateSettingControl" DataContext="{Binding TemplateSetting}" VerticalAlignment="Stretch" />
 			</TabItem>
 		</TabControl>
+		
+		<StackPanel Style="{StaticResource ResourceKey=DialogResultPanel}"  Grid.Row="2">
+			<Button Content="ok"  Style="{StaticResource ResourceKey=DialogResultButtonAccept}"/>
+			<Button Content="cancel" Style="{StaticResource ResourceKey=DialogResultButtonCancel}"  Command="{Binding CancelCommand}" />
+		</StackPanel>
 	</Grid>
 </AW:ViewModelCommonDataWindow>
