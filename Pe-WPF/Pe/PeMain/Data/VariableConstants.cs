@@ -117,9 +117,10 @@
 		/// </summary>
 		public string UserBackupDirectoryPath { get { return Path.Combine(UserDirectoryPath, Constants.backupDirectoryName); } }
 
-		public string UserSettingFileMainSettingPath { get { return Path.Combine(UserSettingDirectoryPath, this._mainSettingFileName); } }
-		public string UserSettingFileLauncherItemSettingPath { get { return Path.Combine(UserSettingDirectoryPath, this._launcherItemSettingFileName); } }
-		public string UserSettingFileLauncherGroupItemSetting { get { return Path.Combine(UserSettingDirectoryPath, this._launcherGroupItemSettingFileName); } }
+		public string UserSettingMainSettingFilePath { get { return Path.Combine(UserSettingDirectoryPath, this._mainSettingFileName); } }
+
+		public string UserSettingLauncherItemSettingFilePath { get { return Path.Combine(UserSettingDirectoryPath, this._launcherItemSettingFileName); } }
+		public string UserSettingLauncherGroupItemSettingFilePath { get { return Path.Combine(UserSettingDirectoryPath, this._launcherGroupItemSettingFileName); } }
 
 		public string UserSettingNoteDirectoryPath { get { return Path.Combine(UserSettingDirectoryPath, this._noteDirectoryFileName); } }
 		public string UserSettingNoteIndexFilePath { get { return Path.Combine(UserSettingDirectoryPath, this._noteIndexFileName); } }

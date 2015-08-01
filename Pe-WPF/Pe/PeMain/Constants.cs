@@ -239,5 +239,19 @@
 		public static int BackupArchiveCount { get { return int.Parse(ConfigurationManager.AppSettings["backup-archive"]); } }
 
 		#endregion
+
+		#region function
+
+		public static string GetTimestampFileName(DateTime dateTime)
+		{
+			return dateTime.ToString(timestampFileName);
+		}
+
+		public static string GetNowTimestampFileName()
+		{
+			return GetTimestampFileName(DateTime.Now);
+
+		}
+		#endregion
 	}
 }

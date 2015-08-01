@@ -456,9 +456,9 @@
 			// TODO: 環境変数展
 			using(var timeLogger = CommonData.NonProcess.CreateTimeLogger()) {
 				// 各種設定の読込
-				CommonData.MainSetting = AppUtility.LoadSetting<MainSettingModel>(CommonData.VariableConstants.UserSettingFileMainSettingPath, FileType.Json, CommonData.Logger);
-				CommonData.LauncherItemSetting = AppUtility.LoadSetting<LauncherItemSettingModel>(CommonData.VariableConstants.UserSettingFileLauncherItemSettingPath, FileType.Json, CommonData.Logger);
-				CommonData.LauncherGroupSetting = AppUtility.LoadSetting<LauncherGroupSettingModel>(CommonData.VariableConstants.UserSettingFileLauncherGroupItemSetting, FileType.Json, CommonData.Logger);
+				CommonData.MainSetting = AppUtility.LoadSetting<MainSettingModel>(CommonData.VariableConstants.UserSettingMainSettingFilePath, FileType.Json, CommonData.Logger);
+				CommonData.LauncherItemSetting = AppUtility.LoadSetting<LauncherItemSettingModel>(CommonData.VariableConstants.UserSettingLauncherItemSettingFilePath, FileType.Json, CommonData.Logger);
+				CommonData.LauncherGroupSetting = AppUtility.LoadSetting<LauncherGroupSettingModel>(CommonData.VariableConstants.UserSettingLauncherGroupItemSettingFilePath, FileType.Json, CommonData.Logger);
 				// 言語ファイル
 				CommonData.Language = AppUtility.LoadLanguageFile(CommonData.VariableConstants.ApplicationLanguageDirectoryPath, CommonData.MainSetting.Language.Name, CommonData.VariableConstants.LanguageCode, CommonData.Logger);
 				// インデックスファイル読み込み
@@ -472,10 +472,10 @@
 		{
 			using(var timeLogger = CommonData.NonProcess.CreateTimeLogger()) {
 				BackupSetting();
-
-				AppUtility.SaveSetting(CommonData.VariableConstants.UserSettingFileMainSettingPath, CommonData.MainSetting, FileType.Json, CommonData.Logger);
-				AppUtility.SaveSetting(CommonData.VariableConstants.UserSettingFileLauncherItemSettingPath, CommonData.LauncherItemSetting, FileType.Json, CommonData.Logger);
-				AppUtility.SaveSetting(CommonData.VariableConstants.UserSettingFileLauncherGroupItemSetting, CommonData.LauncherGroupSetting, FileType.Json, CommonData.Logger);
+				
+				AppUtility.SaveSetting(CommonData.VariableConstants.UserSettingMainSettingFilePath, CommonData.MainSetting, FileType.Json, CommonData.Logger);
+				AppUtility.SaveSetting(CommonData.VariableConstants.UserSettingLauncherItemSettingFilePath, CommonData.LauncherItemSetting, FileType.Json, CommonData.Logger);
+				AppUtility.SaveSetting(CommonData.VariableConstants.UserSettingLauncherGroupItemSettingFilePath, CommonData.LauncherGroupSetting, FileType.Json, CommonData.Logger);
 
 				SendSaveIndex(IndexKind.Note);
 				SendSaveIndex(IndexKind.Clipboard);
@@ -486,10 +486,30 @@
 		void BackupSetting()
 		{
 			var backupDir = Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserBackupDirectoryPath);
+
+			// 旧データの削除
 			FileUtility.RotateFiles(backupDir, "*.zip", OrderBy.Asc, Constants.BackupSettingCount, ex => {
 				CommonData.Logger.Error(ex);
 				return true;
 			});
+
+			var fileName = PathUtility.AppendExtension(Constants.GetNowTimestampFileName(), "zip");
+			var backupFileFilePath = Path.Combine(backupDir, fileName);
+			FileUtility.MakeFileParentDirectory(backupFileFilePath);
+
+			// zip
+			var targetFiles = new[] {
+				CommonData.VariableConstants.UserSettingMainSettingFilePath,
+				CommonData.VariableConstants.UserSettingLauncherItemSettingFilePath,
+				CommonData.VariableConstants.UserSettingLauncherGroupItemSettingFilePath,
+				CommonData.VariableConstants.UserSettingNoteIndexFilePath,
+				CommonData.VariableConstants.UserSettingNoteDirectoryPath,
+				CommonData.VariableConstants.UserSettingTemplateIndexFilePath,
+				CommonData.VariableConstants.UserSettingTemplateDirectoryPath,
+				CommonData.VariableConstants.UserSettingClipboardIndexFilePath,
+				CommonData.VariableConstants.UserSettingClipboardDirectoryPath,
+			};
+			FileUtility.CreateZipFile(backupFileFilePath, backupDir, targetFiles.Select(Environment.ExpandEnvironmentVariables));
 		}
 
 		/// <summary>

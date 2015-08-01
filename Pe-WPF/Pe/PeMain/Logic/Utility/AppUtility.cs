@@ -113,7 +113,7 @@ using ContentTypeTextNet.Pe.Library.PeData.Item;
 
 			if(outputFile) {
 				logger.LoggerConfig.PutsFile = true;
-				var filePath = PathUtility.AppendExtension(Path.Combine(baseDir, DateTime.Now.ToString(Constants.timestampFileName)), "log");
+				var filePath = PathUtility.AppendExtension(Path.Combine(baseDir, Constants.GetNowTimestampFileName()), "log");
 				FileUtility.MakeFileParentDirectory(filePath);
 				logger.FilePath = filePath;
 			}
@@ -243,7 +243,6 @@ using ContentTypeTextNet.Pe.Library.PeData.Item;
 					true
 				);
 			}
-
 		}
 	}
 }
