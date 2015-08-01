@@ -486,6 +486,10 @@
 		void BackupSetting()
 		{
 			var backupDir = Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserBackupDirectoryPath);
+			FileUtility.RotateFiles(backupDir, "*.zip", OrderBy.Asc, Constants.BackupSettingCount, ex => {
+				CommonData.Logger.Error(ex);
+				return true;
+			});
 		}
 
 		/// <summary>

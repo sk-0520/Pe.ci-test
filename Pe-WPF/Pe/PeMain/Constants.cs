@@ -235,6 +235,9 @@
 		public static int CacheIndexTemplate { get { return int.Parse(ConfigurationManager.AppSettings["cache-index-template"]); } }
 		public static int CacheIndexClipboard { get { return int.Parse(ConfigurationManager.AppSettings["cache-index-clipboard"]); } }
 
+		public static int BackupSettingCount { get { return int.Parse(ConfigurationManager.AppSettings["backup-setting"]); } }
+		public static int BackupArchiveCount { get { return int.Parse(ConfigurationManager.AppSettings["backup-archive"]); } }
+
 		#endregion
 	}
 }
