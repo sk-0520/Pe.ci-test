@@ -991,7 +991,7 @@
 		}
 
 		void SaveIndex<TIndexSetting>(IndexKind indexKind, TIndexSetting indexSetting, string filePath)
-			where TIndexSetting : ModelBase, IDeepClone
+			where TIndexSetting : ModelBase
 		{
 			var path = Environment.ExpandEnvironmentVariables(filePath);
 			AppUtility.SaveSetting(path, indexSetting, FileType.Json, CommonData.Logger);
@@ -1079,7 +1079,7 @@
 		}
 
 		void SaveIndexBody<TIndexBody>(IndexBodyItemModelBase indexBody, Guid guid, IndexBodyPairItemCollection<TIndexBody> cachingItems, string dirPath, FileType fileType)
-			where TIndexBody : IndexBodyItemModelBase, IDeepClone
+			where TIndexBody : IndexBodyItemModelBase
 		{
 			var fileName = IndexItemUtility.GetIndexBodyFileName(indexBody.IndexKind, fileType, guid);
 			var path = Environment.ExpandEnvironmentVariables(Path.Combine(dirPath, fileName));
