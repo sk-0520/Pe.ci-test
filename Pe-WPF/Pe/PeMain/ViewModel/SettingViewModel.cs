@@ -190,6 +190,22 @@
 			}
 		}
 
+		public ICommand AcceptCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						if(HasView) {
+							View.DialogResult = true;
+						}
+					}
+				);
+
+				return result;
+			}
+		}
+
 		#endregion
 	}
 }

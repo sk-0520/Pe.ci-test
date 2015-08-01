@@ -205,6 +205,7 @@
 							Language = CommonData.Language,
 							Logger = CommonData.Logger,
 							LauncherIconCaching = CommonData.LauncherIconCaching,
+							VariableConstants = CommonData.VariableConstants,
 							//-----------------------------------------
 							MainSetting = (MainSettingModel)CommonData.MainSetting.DeepClone(),
 							LauncherGroupSetting = (LauncherGroupSettingModel)CommonData.LauncherGroupSetting.DeepClone(),
@@ -396,6 +397,7 @@
 				return result;
 			}
 		}
+
 		public ICommand LoadTemporaryWindow
 		{
 			get
