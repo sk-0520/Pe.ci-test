@@ -471,6 +471,8 @@
 		void SaveSetting()
 		{
 			using(var timeLogger = CommonData.NonProcess.CreateTimeLogger()) {
+				BackupSetting();
+
 				AppUtility.SaveSetting(CommonData.VariableConstants.UserSettingFileMainSettingPath, CommonData.MainSetting, FileType.Json, CommonData.Logger);
 				AppUtility.SaveSetting(CommonData.VariableConstants.UserSettingFileLauncherItemSettingPath, CommonData.LauncherItemSetting, FileType.Json, CommonData.Logger);
 				AppUtility.SaveSetting(CommonData.VariableConstants.UserSettingFileLauncherGroupItemSetting, CommonData.LauncherGroupSetting, FileType.Json, CommonData.Logger);
@@ -479,6 +481,11 @@
 				SendSaveIndex(IndexKind.Clipboard);
 				SendSaveIndex(IndexKind.Template);
 			}
+		}
+
+		void BackupSetting()
+		{
+			var backupDir = Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserBackupDirectoryPath);
 		}
 
 		/// <summary>
