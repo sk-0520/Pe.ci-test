@@ -715,10 +715,34 @@ using Hardcodet.Wpf.TaskbarNotification;
 			TemplateWindow.SetCommonData(CommonData, null);
 		}
 
+		void RemoveTemplate()
+		{
+			TemplateWindow.Close();
+			TemplateWindow = null;
+		}
+
+		void ResetTemplate()
+		{
+			RemoveTemplate();
+			CreateTemplate();
+		}
+
 		void CreateClipboard()
 		{
 			ClipboardWindow = new ClipboardWindow();
 			ClipboardWindow.SetCommonData(CommonData, null);
+		}
+
+		void RemoveCLipboard()
+		{
+			ClipboardWindow.Close();
+			ClipboardWindow = null;
+		}
+
+		void ResetClipboard()
+		{
+			RemoveCLipboard();
+			CreateClipboard();
 		}
 
 		/// <summary>
@@ -791,8 +815,8 @@ using Hardcodet.Wpf.TaskbarNotification;
 			ResetToolbar();
 			ResetNote();
 
-			ClipboardWindow.SetCommonData(CommonData, null);
-			TemplateWindow.SetCommonData(CommonData, null);
+			ResetTemplate();
+			ResetClipboard();
 		}
 
 		static void ResetCulture(INonProcess nonProcess)
