@@ -58,7 +58,7 @@
 		/// </summary>
 		/// <param name="indexBody"></param>
 		/// <param name="guid"></param>
-		void SendSaveIndexBody(IndexBodyItemModelBase indexBody, Guid guid);
+		void SendSaveIndexBody(IndexBodyItemModelBase indexBody, Guid guid, Timing timing);
 		/// <summary>
 		/// デバイスが変更されたことを通知。
 		/// </summary>

@@ -835,9 +835,9 @@
 			return ReceiveLoadIndexBody(indexKind, guid);
 		}
 
-		public void SendSaveIndexBody(IndexBodyItemModelBase indexBody, Guid guid)
+		public void SendSaveIndexBody(IndexBodyItemModelBase indexBody, Guid guid, Timing timing)
 		{
-			ReceiveSaveIndexBody(indexBody, guid);
+			ReceiveSaveIndexBody(indexBody, guid, timing);
 		}
 
 		public void SendDeviceChanged(ChangedDevice changedDevice)
@@ -1030,7 +1030,7 @@
 			}
 			items.Remove(guid);
 
-			SendSaveIndex(indexKind, Timing.Instantly);
+			SendSaveIndex(indexKind, Timing.Delay);
 		}
 
 		void ReceiveRemoveIndex(IndexKind indexKind, Guid guid)
@@ -1147,7 +1147,7 @@
 			}
 		}
 
-		void SaveIndexBody<TIndexBody>(IndexBodyItemModelBase indexBody, Guid guid, IndexBodyPairItemCollection<TIndexBody> cachingItems, string dirPath, FileType fileType)
+		void SaveIndexBody<TIndexBody>(IndexBodyItemModelBase indexBody, Guid guid, IndexBodyPairItemCollection<TIndexBody> cachingItems, Timing timing, string dirPath, FileType fileType)
 			where TIndexBody : IndexBodyItemModelBase
 		{
 			var fileName = IndexItemUtility.GetIndexBodyFileName(indexBody.IndexKind, fileType, guid);
@@ -1157,24 +1157,24 @@
 			AppendCachingItems(guid, bodyItem, cachingItems);
 		}
 
-		void ReceiveSaveIndexBody(IndexBodyItemModelBase indexBody, Guid guid)
+		void ReceiveSaveIndexBody(IndexBodyItemModelBase indexBody, Guid guid, Timing timing)
 		{
 			switch (indexBody.IndexKind) {
 				case IndexKind.Note:
 					{
-						SaveIndexBody<NoteBodyItemModel>(indexBody, guid, IndexBodyCaching.NoteItems, CommonData.VariableConstants.UserSettingNoteDirectoryPath, FileType.Json);
+						SaveIndexBody<NoteBodyItemModel>(indexBody, guid, IndexBodyCaching.NoteItems, timing, CommonData.VariableConstants.UserSettingNoteDirectoryPath, FileType.Json);
 					}
 					break;
 
 				case IndexKind.Template: 
 					{
-						SaveIndexBody<TemplateBodyItemModel>(indexBody, guid, IndexBodyCaching.TemplateItems, CommonData.VariableConstants.UserSettingTemplateDirectoryPath, FileType.Json);
+						SaveIndexBody<TemplateBodyItemModel>(indexBody, guid, IndexBodyCaching.TemplateItems, timing, CommonData.VariableConstants.UserSettingTemplateDirectoryPath, FileType.Json);
 					}
 					break;
 
 				case IndexKind.Clipboard: 
 					{
-						SaveIndexBody<ClipboardBodyItemModel>(indexBody, guid, IndexBodyCaching.ClipboardItems, CommonData.VariableConstants.UserSettingClipboardDirectoryPath, FileType.Binary);
+						SaveIndexBody<ClipboardBodyItemModel>(indexBody, guid, IndexBodyCaching.ClipboardItems, timing, CommonData.VariableConstants.UserSettingClipboardDirectoryPath, FileType.Binary);
 					}
 					break;
 
@@ -1272,7 +1272,7 @@
 									Name = displayText,
 									Type = clipboardItem.Type,
 								};
-								SendSaveIndexBody(clipboardItem.Body, index.Id);
+								SendSaveIndexBody(clipboardItem.Body, index.Id, Timing.Delay);
 								Clipboard.IndexPairList.Add(index, null);
 							} catch (Exception ex) {
 								CommonData.Logger.Error(ex);

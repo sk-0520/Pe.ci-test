@@ -17,6 +17,7 @@
 	using ContentTypeTextNet.Pe.Library.PeData.Define;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 	using ContentTypeTextNet.Pe.PeMain.Data;
+	using ContentTypeTextNet.Pe.PeMain.Define;
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Logic;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
@@ -204,7 +205,7 @@
 			}
 			BodyModel.History.Update();
 			AppNonProcess.Logger.Information("save body:" + Name, BodyModel);
-			AppSender.SendSaveIndexBody(BodyModel, Model.Id);
+			AppSender.SendSaveIndexBody(BodyModel, Model.Id, Timing.Delay);
 			ResetChangeFlag();
 		}
 

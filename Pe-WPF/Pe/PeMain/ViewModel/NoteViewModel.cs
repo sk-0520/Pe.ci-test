@@ -165,7 +165,7 @@
 				var indexBody = IndexBody;
 				if(SetPropertyValue(indexBody, value, "Text")) {
 					indexBody.History.Update();
-					AppSender.SendSaveIndexBody(IndexBody, Model.Id);
+					AppSender.SendSaveIndexBody(IndexBody, Model.Id, Timing.Delay);
 				}
 			}
 		}
@@ -220,7 +220,7 @@
 
 						if (IsChanged) {
 							Model.History.Update();
-							AppSender.SendSaveIndex(IndexKind.Note, Timing.Instantly);
+							AppSender.SendSaveIndex(IndexKind.Note, Timing.Delay);
 							ResetChangeFlag();
 						}
 						if (HasView) {
