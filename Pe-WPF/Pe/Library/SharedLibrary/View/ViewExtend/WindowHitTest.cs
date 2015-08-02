@@ -35,7 +35,7 @@
 				} else if (RestrictionViewModel.UsingBorderHitTest) {
 					var hitState = new HitState();
 					hitState.CalculateAndSetValue(new Rect(0, 0, View.Width, View.Height), RestrictionViewModel.ResizeThickness, logicalClientPoint);
-					if (hitState.Enabled) {
+					if (hitState.IsEnabled) {
 						if (hitState.Left) {
 							if (hitState.Top) {
 								hitTest = HT.HTTOPLEFT;

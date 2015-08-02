@@ -26,7 +26,7 @@
 
 		#region property
 
-		public bool Enabled { get { return this._flag != 0; } }
+		public bool IsEnabled { get { return this._flag != 0; } }
 
 		public bool Left
 		{

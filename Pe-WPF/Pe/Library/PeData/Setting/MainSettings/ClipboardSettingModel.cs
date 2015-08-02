@@ -30,7 +30,7 @@
 		/// クリップボード監視の変更を検知するか。
 		/// </summary>
 		[DataMember]
-		public bool Enabled { get; set; }
+		public bool IsEnabled { get; set; }
 
 		/// <summary>
 		/// アプリケーション内でのコピー操作も監視対象とするか。
@@ -122,7 +122,7 @@
 		{
 			var obj = (ClipboardSettingModel)target;
 
-			obj.Enabled = Enabled;
+			obj.IsEnabled = IsEnabled;
 			obj.EnabledApplicationCopy = EnabledApplicationCopy;
 			ToggleHotKey.DeepCloneTo(obj.ToggleHotKey);
 			obj.EnabledClipboardTypes = EnabledClipboardTypes;

@@ -21,7 +21,7 @@
 				return;
 			}
 
-			setting.Enabled = true;
+			setting.IsEnabled = true;
 			setting.SaveCount = Constants.windowSaveCount.median;
 			setting.SaveIntervalTime = Constants.windowSaveIntervalTime.median;
 		}

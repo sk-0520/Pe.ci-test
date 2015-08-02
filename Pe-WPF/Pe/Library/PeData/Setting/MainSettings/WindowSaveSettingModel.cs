@@ -21,7 +21,7 @@
 		/// 有効。
 		/// </summary>
 		[DataMember]
-		public bool Enabled { get; set; }
+		public bool IsEnabled { get; set; }
 		/// <summary>
 		/// 保存数。
 		/// </summary>
@@ -41,7 +41,7 @@
 		{
 			var obj = (WindowSaveSettingModel)target;
 
-			obj.Enabled = Enabled;
+			obj.IsEnabled = IsEnabled;
 			obj.SaveCount = SaveCount;
 			obj.SaveIntervalTime = SaveIntervalTime;
 		}

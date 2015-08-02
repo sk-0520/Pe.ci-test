@@ -39,7 +39,7 @@
 		/// 有効なキー設定か。
 		/// </summary>
 		[XmlIgnore, IgnoreDataMember]
-		public bool Enabled
+		public bool IsEnabled
 		{
 			get
 			{

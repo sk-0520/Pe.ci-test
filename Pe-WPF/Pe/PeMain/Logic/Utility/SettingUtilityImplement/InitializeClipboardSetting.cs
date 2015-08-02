@@ -24,7 +24,7 @@
 
 			nonProcess.Logger.Trace("version setting: first");
 
-			setting.Enabled = true;
+			setting.IsEnabled = true;
 			setting.EnabledClipboardTypes = ClipboardType.All;
 		}
 	}

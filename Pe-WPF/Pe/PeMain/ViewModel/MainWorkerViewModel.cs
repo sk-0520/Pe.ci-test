@@ -1335,7 +1335,7 @@ using Hardcodet.Wpf.TaskbarNotification;
 
 		void ReceiveClipboardChanged()
 		{
-			if(!CommonData.MainSetting.Clipboard.Enabled) {
+			if(!CommonData.MainSetting.Clipboard.IsEnabled) {
 				return;
 			}
 

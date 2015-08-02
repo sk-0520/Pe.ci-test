@@ -17,7 +17,7 @@
 	</AV:CommonDataUserControl.Resources>
 	<Grid>
 		<StackPanel HorizontalAlignment="Left" Height="93" Margin="10,10,0,0" VerticalAlignment="Top" Width="114">
-			<CheckBox Content="enabled" IsChecked="{Binding Enabled}" />
+			<CheckBox Content="enabled" IsChecked="{Binding IsEnabled}" />
 			<CheckBox Content="copy app" IsChecked="{Binding EnabledApplicationCopy}"/>
 			<CheckBox Content="topmost" IsChecked="{Binding IsTopmost}" />
 			<CheckBox Content="visible" IsChecked="{Binding IsVisible}" />

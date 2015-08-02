@@ -44,9 +44,9 @@
 
 		#region property
 
-		public bool Enabled
+		public bool IsEnabled
 		{
-			get { return Model.Enabled; }
+			get { return Model.IsEnabled; }
 			set { SetModelValue(value); }
 		}
 

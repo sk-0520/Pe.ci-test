@@ -33,9 +33,9 @@
 
 		ClipboardSettingModel Clipboard { get; set; }
 
-		public bool Enabled
+		public bool IsEnabled
 		{
-			get { return Clipboard.Enabled; }
+			get { return Clipboard.IsEnabled; }
 			set { SetPropertyValue(Clipboard, value); }
 		}
 

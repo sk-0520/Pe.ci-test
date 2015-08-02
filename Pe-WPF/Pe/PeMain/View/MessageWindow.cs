@@ -157,7 +157,7 @@
 			}
 
 			// 登録
-			foreach(var hotKeyData in hotKeyDatas.Where(hk => hk.HotKey.Enabled)) {
+			foreach(var hotKeyData in hotKeyDatas.Where(hk => hk.HotKey.IsEnabled)) {
 				if(RegistHotKey(hotKeyData.Id, hotKeyData.HotKey)) {
 					hotKeyData.HotKey.IsRegistered = true;
 				} else {
