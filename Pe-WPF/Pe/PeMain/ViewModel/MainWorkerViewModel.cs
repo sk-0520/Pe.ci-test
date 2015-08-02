@@ -509,7 +509,8 @@
 				CommonData.VariableConstants.UserSettingClipboardIndexFilePath,
 				CommonData.VariableConstants.UserSettingClipboardDirectoryPath,
 			};
-			FileUtility.CreateZipFile(backupFileFilePath, backupDir, targetFiles.Select(Environment.ExpandEnvironmentVariables));
+			var basePath = Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingDirectoryPath);
+			FileUtility.CreateZipFile(backupFileFilePath, basePath, targetFiles.Select(Environment.ExpandEnvironmentVariables));
 		}
 
 		/// <summary>
