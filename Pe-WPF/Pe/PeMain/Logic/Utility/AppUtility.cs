@@ -125,7 +125,7 @@ using ContentTypeTextNet.Pe.Library.PeData.Item;
 		/// 自身のショートカットを作成。
 		/// </summary>
 		/// <param name="savePath">保存先パス。</param>
-		public static void MakeAppShortcut(string savePath, VariableConstants variableConstants)
+		public static void MakeAppShortcut(string savePath)
 		{
 			using(var shortcut = new ShortcutFile()) {
 				shortcut.TargetPath = Constants.applicationExecutablePath;

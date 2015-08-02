@@ -220,6 +220,18 @@ using Hardcodet.Wpf.TaskbarNotification;
 						window.SetCommonData(cloneCommonData, null);
 						if(window.ShowDialog().GetValueOrDefault()) {
 							CommonData = window.CommonData;
+							var notifiy = window.ViewModel.SettingNotifiyItem;
+
+							Debug.Assert(notifiy.StartupRegist.HasValue);
+							var startuoPath = Environment.ExpandEnvironmentVariables(Constants.startupShortcutPath);
+							if(notifiy.StartupRegist.Value) {
+								AppUtility.MakeAppShortcut(startuoPath);
+							} else {
+								if(File.Exists(startuoPath)) {
+									File.Delete(startuoPath);
+								}
+							}
+
 							SaveSetting();
 							ResetSetting();
 						} else {
@@ -301,6 +313,12 @@ using Hardcodet.Wpf.TaskbarNotification;
 				var result = CreateCommand(
 					o => {
 						SaveSetting();
+#if DEBUG
+							var startuoPath = Environment.ExpandEnvironmentVariables(Constants.startupShortcutPath);
+							if(File.Exists(startuoPath)) {
+								File.Delete(startuoPath);
+							}
+#endif
 						Application.Current.Shutdown();
 					}
 				);

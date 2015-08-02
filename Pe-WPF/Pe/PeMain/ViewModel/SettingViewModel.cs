@@ -38,7 +38,7 @@
 
 		#region property
 
-		SettingNotifiyItem SettingNotifiyItem { get; set; }
+		public SettingNotifiyItem SettingNotifiyItem { get; private set; }
 
 		public MainSettingViewModel MainSetting
 		{
