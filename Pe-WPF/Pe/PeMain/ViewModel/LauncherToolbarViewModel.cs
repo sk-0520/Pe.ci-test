@@ -431,7 +431,7 @@
 				var result = CreateCommand(
 					o => {
 						var visible = (bool)o;
-						Visible = visible;
+						IsVisible = visible;
 					}
 				);
 
@@ -556,7 +556,7 @@
 			set { VisibleVisibilityProperty.SetVisibility(Model.Toolbar, value, OnPropertyChanged); }
 		}
 
-		public bool Visible
+		public bool IsVisible
 		{
 			get { return VisibleVisibilityProperty.GetVisible(Model.Toolbar); }
 			set { VisibleVisibilityProperty.SetVisible(Model.Toolbar, value, OnPropertyChanged); }
@@ -808,7 +808,7 @@
 		/// <summary>
 		/// ウィンドウサイズの倍数制御を行うか。
 		/// </summary>
-		public bool UsingMultipleResize { get { return NowFloatWindow && Visible; } }
+		public bool UsingMultipleResize { get { return NowFloatWindow && IsVisible; } }
 		/// <summary>
 		/// ウィンドウサイズの倍数制御に使用する元となる論理サイズ。
 		/// </summary>
@@ -948,7 +948,7 @@
 			Debug.Assert(HasView);
 
 			e.Cancel = true;
-			Visible = false;
+			IsVisible = false;
 		}
 
 	}

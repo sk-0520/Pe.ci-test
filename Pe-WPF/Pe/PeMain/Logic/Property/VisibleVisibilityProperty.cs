@@ -13,13 +13,13 @@
 	{
 		public static bool GetVisible(IVisible model)
 		{
-			return model.Visible;
+			return model.IsVisible;
 		}
 
 		public static bool SetVisible(IVisible model, bool value, Action<string> onPropertyChanged, [CallerMemberName] string propertyName = "")
 		{
-			if (model.Visible != value) {
-				model.Visible = value;
+			if(model.IsVisible != value) {
+				model.IsVisible = value;
 				onPropertyChanged(propertyName);
 				onPropertyChanged("Visibility");
 

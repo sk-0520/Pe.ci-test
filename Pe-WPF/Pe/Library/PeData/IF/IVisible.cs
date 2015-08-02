@@ -12,6 +12,6 @@
 		/// <summary>
 		/// 設定値としての表示・非表示。
 		/// </summary>
-		bool Visible { get; set; }
+		bool IsVisible { get; set; }
 	}
 }

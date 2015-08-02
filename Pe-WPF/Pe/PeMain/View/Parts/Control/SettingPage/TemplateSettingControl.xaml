@@ -11,7 +11,7 @@
 	<Grid>
 		<StackPanel HorizontalAlignment="Left" Height="93" Margin="10,10,0,0" VerticalAlignment="Top" Width="114">
 			<CheckBox Content="topmost" IsChecked="{Binding IsTopmost}" />
-			<CheckBox Content="visible" IsChecked="{Binding Visible}" />
+			<CheckBox Content="visible" IsChecked="{Binding IsVisible}" />
 			<AV:AppHotkeyControl Hotkey="{Binding ToggleHotKey}" />
 		</StackPanel>
 

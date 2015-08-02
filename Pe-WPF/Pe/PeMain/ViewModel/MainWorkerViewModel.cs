@@ -128,7 +128,7 @@ using Hardcodet.Wpf.TaskbarNotification;
 
 		List<NoteWindow> NoteWindows { get; set; }
 		public IEnumerable<NoteViewModel> NoteShowItems { get { return NoteWindows.Select(w => w.ViewModel); } }
-		public IEnumerable<NoteMenuViewModel> NoteHiddenItems { get { return CommonData.NoteIndexSetting.Items.Where(n => !n.Visible).Select(n => new NoteMenuViewModel(n, CommonData.NonProcess, CommonData.AppSender)); } }
+		public IEnumerable<NoteMenuViewModel> NoteHiddenItems { get { return CommonData.NoteIndexSetting.Items.Where(n => !n.IsVisible).Select(n => new NoteMenuViewModel(n, CommonData.NonProcess, CommonData.AppSender)); } }
 
 		MessageWindow MessageWindow { get; set; }
 
@@ -269,7 +269,7 @@ using Hardcodet.Wpf.TaskbarNotification;
 				var result = CreateCommand(
 					o => {
 						Debug.Assert(Logging != null);
-						Logging.Visible = !Logging.Visible;
+						Logging.IsVisible = !Logging.IsVisible;
 					}
 				);
 
@@ -688,7 +688,7 @@ using Hardcodet.Wpf.TaskbarNotification;
 			using(var timeLogger = CommonData.NonProcess.CreateTimeLogger()) {
 				NoteWindows = new List<NoteWindow>();
 
-				foreach(var noteItem in CommonData.NoteIndexSetting.Items.Where(n => n.Visible)) {
+				foreach(var noteItem in CommonData.NoteIndexSetting.Items.Where(n => n.IsVisible)) {
 					var window = CreateNoteWindow(noteItem, false);
 				}
 			}
@@ -742,7 +742,7 @@ using Hardcodet.Wpf.TaskbarNotification;
 				WindowTop = point.Y,
 				WindowWidth = size.Width,
 				WindowHeight = size.Height,
-				Visible = true,
+				IsVisible = true,
 				ForeColor = CommonData.MainSetting.Note.ForeColor,
 				BackColor = CommonData.MainSetting.Note.BackColor,
 				// TODO: note title
@@ -888,13 +888,13 @@ using Hardcodet.Wpf.TaskbarNotification;
 		void SwitchShowClipboardWindow()
 		{
 			Debug.Assert(Clipboard != null);
-			Clipboard.Visible = !Clipboard.Visible;
+			Clipboard.IsVisible = !Clipboard.IsVisible;
 		}
 
 		void SwitchShowTemplateWindow()
 		{
 			Debug.Assert(Template != null);
-			Template.Visible = !Template.Visible;
+			Template.IsVisible = !Template.IsVisible;
 		}
 
 		#endregion
@@ -1096,9 +1096,9 @@ using Hardcodet.Wpf.TaskbarNotification;
 				case WindowKind.Note: 
 					{
 						var noteItem = (NoteIndexItemModel)extensionData;
-						if(!noteItem.Visible) {
+						if(!noteItem.IsVisible) {
 							CommonData.Logger.Trace("hidden -> show", noteItem);
-							noteItem.Visible = true;
+							noteItem.IsVisible = true;
 						}
 						window = new NoteWindow();
 						window.SetCommonData(CommonData, noteItem);
@@ -1472,7 +1472,7 @@ using Hardcodet.Wpf.TaskbarNotification;
 					{
 						SwitchShowClipboardWindow();
 						string message;
-						if(Clipboard.Visible) {
+						if(Clipboard.IsVisible) {
 							message = "tooltip/clipboard/message/show";
 						} else {
 							message = "tooltip/clipboard/message/hide";
@@ -1485,7 +1485,7 @@ using Hardcodet.Wpf.TaskbarNotification;
 					{
 						SwitchShowTemplateWindow();
 						string message;
-						if(Template.Visible) {
+						if(Template.IsVisible) {
 							message = "tooltip/template/message/show";
 						} else {
 							message = "tooltip/template/message/hide";

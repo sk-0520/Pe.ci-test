@@ -20,7 +20,7 @@
 			<CheckBox Content="enabled" IsChecked="{Binding Enabled}" />
 			<CheckBox Content="copy app" IsChecked="{Binding EnabledApplicationCopy}"/>
 			<CheckBox Content="topmost" IsChecked="{Binding IsTopmost}" />
-			<CheckBox Content="visible" IsChecked="{Binding Visible}" />
+			<CheckBox Content="visible" IsChecked="{Binding IsVisible}" />
 			<CheckBox Content="using clipboard" IsChecked="{Binding UsingClipboard}"/>
 		</StackPanel>
 		<GroupBox Header="enabled type" AA:Language.Word="clipboard/target" HorizontalAlignment="Left" Margin="10,123,0,0" VerticalAlignment="Top" Height="119" Width="97">

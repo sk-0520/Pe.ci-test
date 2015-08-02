@@ -38,9 +38,9 @@
 		<MenuItem AA:Language.Word="tasktray/toolbar" Header="toolbar" ItemsSource="{Binding LauncherToolbars}">
 			<MenuItem.ItemContainerStyle>
 				<Style TargetType="MenuItem">
-					<Setter Property="IsChecked" Value="{Binding Visible, Mode=OneWay}"/>
+					<Setter Property="IsChecked" Value="{Binding IsVisible, Mode=OneWay}"/>
 					<Setter Property="Command" Value="{Binding ChangeVisibleCommand}" />
-					<Setter Property="CommandParameter" Value="{Binding Visible, Converter={StaticResource LogicalNotConverter}}" />
+					<Setter Property="CommandParameter" Value="{Binding IsVisible, Converter={StaticResource LogicalNotConverter}}" />
 				</Style>
 			</MenuItem.ItemContainerStyle>
 			<MenuItem.ItemTemplate>
@@ -62,15 +62,15 @@
 			<MenuItem Header="show" ItemsSource="{Binding NoteShowItems}" ItemTemplate="{StaticResource ResourceKey=IMenuItemTemplate}" ItemContainerStyle="{StaticResource ResourceKey=NoteMenuItemStyle}" IsEnabled="{Binding ItemsSource,RelativeSource={RelativeSource Self}, Converter={StaticResource IsNotEmptyCollection}}"/>
 			<MenuItem Header="hidden" ItemsSource="{Binding NoteHiddenItems}" ItemTemplate="{StaticResource ResourceKey=IMenuItemTemplate}" ItemContainerStyle="{StaticResource ResourceKey=NoteMenuItemStyle}" IsEnabled="{Binding ItemsSource,RelativeSource={RelativeSource Self}, Converter={StaticResource IsNotEmptyCollection}}"/>
 		</MenuItem>
-		<MenuItem AA:Language.Word="tasktray/template" Header="template" Command="{Binding SwitchTemplateWindowCommand}" IsChecked="{Binding Template.Visible, Mode=OneWay}" />
+		<MenuItem AA:Language.Word="tasktray/template" Header="template" Command="{Binding SwitchTemplateWindowCommand}" IsChecked="{Binding Template.IsVisible, Mode=OneWay}" />
 		<MenuItem AA:Language.Word="tasktray/command" Header="command" Command="{Binding SwitchCommandWindowCommand}" />
-		<MenuItem AA:Language.Word="tasktray/log"     Header="log" Command="{Binding SwitchLoggingWindowCommand}" IsChecked="{Binding Logging.Visible, Mode=OneWay}" />
+		<MenuItem AA:Language.Word="tasktray/log"     Header="log" Command="{Binding SwitchLoggingWindowCommand}" IsChecked="{Binding Logging.IsVisible, Mode=OneWay}" />
 		<Separator />
 		<MenuItem AA:Language.Word="tasktray/system-env" Header="system-env">
 			<MenuItem Header="hide file" Command="{Binding SwitchShellHideFileCommand}" IsChecked="{Binding IsVisibledShellHideFile, Mode=OneWay}" />
 			<MenuItem Header="extension" Command="{Binding SwitchShellExtensionCommand}" IsChecked="{Binding IsVisibledShellExtension, Mode=OneWay}" />
 			<Separator />
-			<MenuItem Header="clipboard" Command="{Binding SwitchClipboardWindowCommand}" IsChecked="{Binding Clipboard.Visible}" />
+			<MenuItem Header="clipboard" Command="{Binding SwitchClipboardWindowCommand}" IsChecked="{Binding Clipboard.IsVisible}" />
 			<Separator />
 			<MenuItem Header="window - save" Command="{Binding SaveTemporaryWindow}" />
 			<MenuItem Header="window - load" Command="{Binding LoadTemporaryWindow}" />
@@ -116,9 +116,9 @@
 				<MenuItem AA:Language.Word="tasktray/toolbar" Header="toolbar" ItemsSource="{Binding LauncherToolbar}">
 					<MenuItem.ItemContainerStyle>
 						<Style TargetType="MenuItem">
-							<Setter Property="IsChecked" Value="{Binding Visible, Mode=OneWay}"/>
+							<Setter Property="IsChecked" Value="{Binding IsVisible, Mode=OneWay}"/>
 							<Setter Property="Command" Value="{Binding ChangeVisibleCommand}" />
-							<Setter Property="CommandParameter" Value="{Binding Visible, Converter={StaticResource LogicalNotConverter}}" />
+							<Setter Property="CommandParameter" Value="{Binding IsVisible, Converter={StaticResource LogicalNotConverter}}" />
 						</Style>
 					</MenuItem.ItemContainerStyle>
 					<MenuItem.ItemTemplate>
@@ -141,7 +141,7 @@
 					<MenuItem Header="hidden" ItemsSource="{Binding NoteHiddenItems}" ItemTemplate="{StaticResource ResourceKey=NoteMenuItemTemplate}" ItemContainerStyle="{StaticResource ResourceKey=NoteMenuItemStyle}" Command="{Binding MenuSelectedCommand}" />
 				</MenuItem>
 				<MenuItem AA:Language.Word="tasktray/command" Header="command" />
-				<MenuItem AA:Language.Word="tasktray/log"     Header="log" Command="{Binding SwitchLoggingWindowCommand}" IsChecked="{Binding Logging.Visible, Mode=OneWay}" />
+				<MenuItem AA:Language.Word="tasktray/log"     Header="log" Command="{Binding SwitchLoggingWindowCommand}" IsChecked="{Binding Logging.IsVisible, Mode=OneWay}" />
 				<Separator />
 				<MenuItem AA:Language.Word="tasktray/log" Header="system-env" />
 				<Separator />

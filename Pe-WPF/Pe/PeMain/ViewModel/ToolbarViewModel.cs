@@ -69,7 +69,7 @@
 
 		#endregion
 
-		public bool Visible
+		public bool IsVisible
 		{
 			get { return VisibleVisibilityProperty.GetVisible(Model); }
 			set { VisibleVisibilityProperty.SetVisible(Model, value, OnPropertyChanged); }

@@ -78,7 +78,7 @@
 			set { VisibleVisibilityProperty.SetVisibility(Model, value, OnPropertyChanged); }
 		}
 
-		public bool Visible
+		public bool IsVisible
 		{
 			get { return VisibleVisibilityProperty.GetVisible(Model); }
 			set { VisibleVisibilityProperty.SetVisible(Model, value, OnPropertyChanged); }
@@ -138,7 +138,7 @@
 			Debug.Assert(HasView);
 
 			e.Cancel = true;
-			Visible = false;
+			IsVisible = false;
 		}
 	}
 }

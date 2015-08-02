@@ -110,7 +110,7 @@
 		#region IVisible
 
 		[DataMember]
-		public bool Visible { get; set; }
+		public bool IsVisible { get; set; }
 
 		#endregion
 
@@ -137,7 +137,7 @@
 			obj.WindowHeight = WindowHeight;
 			obj.WindowState = WindowState;
 			obj.IsTopmost = IsTopmost;
-			obj.Visible = Visible;
+			obj.IsVisible = IsVisible;
 		}
 
 		public IDeepClone DeepClone()

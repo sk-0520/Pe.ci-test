@@ -82,7 +82,7 @@
 		/// 表示。
 		/// </summary>
 		[DataMember]
-		public bool Visible { get; set; }
+		public bool IsVisible { get; set; }
 
 		#endregion
 
@@ -135,7 +135,7 @@
 			obj.DefaultGroupId = DefaultGroupId;
 			obj.TextVisible = TextVisible;
 			obj.TextWidth = TextWidth;
-			obj.Visible = Visible;
+			obj.IsVisible = IsVisible;
 			obj.IsTopmost = IsTopmost;
 			obj.Id = Id;
 		}

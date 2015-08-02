@@ -111,9 +111,9 @@
 			set { SetPropertyValue(Clipboard, value); }
 		}
 
-		public bool Visible
+		public bool IsVisible
 		{
-			get { return Clipboard.Visible; }
+			get { return Clipboard.IsVisible; }
 			set { SetPropertyValue(Clipboard, value); }
 		}
 

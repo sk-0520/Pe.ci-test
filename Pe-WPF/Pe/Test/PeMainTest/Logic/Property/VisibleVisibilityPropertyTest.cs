@@ -15,7 +15,7 @@ using NUnit.Framework;
 	{
 		class IVisibleImpl: IVisible
 		{
-			public bool Visible { get; set; }
+			public bool IsVisible { get; set; }
 		}
 
 		void DummyAction(string name) { }
@@ -25,7 +25,7 @@ using NUnit.Framework;
 		public void GetVisibleTest(bool test, bool arg)
 		{
 			var testObj = new IVisibleImpl() {
-				Visible = arg,
+				IsVisible = arg,
 			};
 			Assert.AreEqual(test, VisibleVisibilityProperty.GetVisible(testObj));
 		}
@@ -36,7 +36,7 @@ using NUnit.Framework;
 		{
 			var testObj = new IVisibleImpl();
 			VisibleVisibilityProperty.SetVisible(testObj, value, DummyAction);
-			Assert.AreEqual(test, testObj.Visible);
+			Assert.AreEqual(test, testObj.IsVisible);
 		}
 
 		[TestCase(Visibility.Visible, true)]
@@ -44,7 +44,7 @@ using NUnit.Framework;
 		public void GetVisibleTest(Visibility test, bool value)
 		{
 			var testObj = new IVisibleImpl() {
-				Visible = value,
+				IsVisible = value,
 			};
 			Assert.AreEqual(test, VisibleVisibilityProperty.GetVisibility(testObj));
 		}
@@ -56,7 +56,7 @@ using NUnit.Framework;
 		{
 			var testObj = new IVisibleImpl();
 			VisibleVisibilityProperty.SetVisibility(testObj, value, DummyAction);
-			Assert.AreEqual(test, testObj.Visible);
+			Assert.AreEqual(test, testObj.IsVisible);
 		}
 	}
 }

@@ -85,7 +85,7 @@
 
 		public Visibility TitleCaptionVisibility
 		{
-			get { return this._titleEditVisibility == Visibility.Visible ? Visibility.Collapsed: Visibility.Visible ; }
+			get { return this._titleEditVisibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible; }
 		}
 		public Visibility TitleEditVisibility
 		{
@@ -498,7 +498,7 @@
 			set { VisibleVisibilityProperty.SetVisibility(Model, value, OnPropertyChanged); }
 		}
 
-		public bool Visible
+		public bool IsVisible
 		{
 			get { return VisibleVisibilityProperty.GetVisible(Model); }
 			set { VisibleVisibilityProperty.SetVisible(Model, value, OnPropertyChanged); }
@@ -684,7 +684,7 @@
 
 		private void View_UserClosing(object sender, CancelEventArgs e)
 		{
-			Visible = false;
+			IsVisible = false;
 		}
 
 	}

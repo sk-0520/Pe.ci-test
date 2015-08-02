@@ -59,8 +59,8 @@
 
 		public bool LogVisible
 		{
-			get { return Logging.Visible; }
-			set { SetPropertyValue(Logging, value, "Visible"); }
+			get { return Logging.IsVisible; }
+			set { SetPropertyValue(Logging, value, "IsVisible"); }
 		}
 
 		public bool LogAddShow

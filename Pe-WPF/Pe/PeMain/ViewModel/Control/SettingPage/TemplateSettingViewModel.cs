@@ -30,9 +30,9 @@ using ContentTypeTextNet.Pe.PeMain.IF;
 			set { SetPropertyValue(Template, value); }
 		}
 
-		public bool Visible
+		public bool IsVisible
 		{
-			get { return Template.Visible; }
+			get { return Template.IsVisible; }
 			set { SetPropertyValue(Template, value); }
 		}
 

@@ -80,7 +80,7 @@
 		#region IVisible
 
 		[DataMember]
-		public bool Visible { get; set; }
+		public bool IsVisible { get; set; }
 
 		#endregion
 
@@ -106,7 +106,7 @@
 
 			obj.IsTopmost = IsTopmost;
 
-			obj.Visible = Visible;
+			obj.IsVisible = IsVisible;
 		}
 
 		public override IDeepClone DeepClone()

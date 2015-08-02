@@ -327,7 +327,7 @@
 			set { VisibleVisibilityProperty.SetVisibility(Model, value, OnPropertyChanged); }
 		}
 
-		public bool Visible
+		public bool IsVisible
 		{
 			get { return VisibleVisibilityProperty.GetVisible(Model); }
 			set { VisibleVisibilityProperty.SetVisible(Model, value, OnPropertyChanged); }
@@ -372,7 +372,7 @@
 		private void View_UserClosing(object sender, System.ComponentModel.CancelEventArgs e)
 		{
 			e.Cancel = true;
-			Visible = false;
+			IsVisible = false;
 		}
 
 
