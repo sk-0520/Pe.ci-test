@@ -897,6 +897,12 @@ using Hardcodet.Wpf.TaskbarNotification;
 			Template.IsVisible = !Template.IsVisible;
 		}
 
+		void OnPropertyNote()
+		{
+			OnPropertyChanged("NoteShowItems");
+			OnPropertyChanged("NoteHiddenItems");
+		}
+
 		#endregion
 
 		#region ViewModelBase
@@ -1003,8 +1009,7 @@ using Hardcodet.Wpf.TaskbarNotification;
 							var noteWindow = (NoteWindow)window;
 							NoteWindows.Add(noteWindow);
 
-							OnPropertyChanged("NoteShowItems");
-							OnPropertyChanged("NoteHiddenItems");
+							OnPropertyNote();
 						}
 						break;
 
@@ -1047,8 +1052,7 @@ using Hardcodet.Wpf.TaskbarNotification;
 							var noteWindow = (NoteWindow)window;
 							NoteWindows.Remove(noteWindow);
 
-							OnPropertyChanged("NoteShowItems");
-							OnPropertyChanged("NoteHiddenItems");
+							OnPropertyNote();
 							break;
 						}
 
