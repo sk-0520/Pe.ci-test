@@ -54,10 +54,10 @@
 		</MenuItem>
 		<MenuItem AA:Language.Word="tasktray/note"    Header="note">
 			<MenuItem AA:Language.Word="note/create" Header="create" Command="{Binding CreateNoteItemCommand}" />
-			<MenuItem Header="compact" Command="{Binding CompactNoteItemCommand}" />
-			<MenuItem Header="hide" Command="{Binding HideNoteItemCommand}" />
+			<MenuItem Header="compact" Command="{Binding CompactNoteItemsCommand}" />
+			<MenuItem Header="hide" Command="{Binding HideNoteItemsCommand}" />
 			<Separator />
-			<MenuItem Header="front" Command="{Binding FrontNoteItemCommand}" />
+			<MenuItem Header="front" Command="{Binding FrontNoteItemsCommand}" />
 			<Separator />
 			<MenuItem Header="show" ItemsSource="{Binding NoteShowItems}" ItemTemplate="{StaticResource ResourceKey=IMenuItemTemplate}" ItemContainerStyle="{StaticResource ResourceKey=NoteMenuItemStyle}" IsEnabled="{Binding ItemsSource,RelativeSource={RelativeSource Self}, Converter={StaticResource IsNotEmptyCollection}}"/>
 			<MenuItem Header="hidden" ItemsSource="{Binding NoteHiddenItems}" ItemTemplate="{StaticResource ResourceKey=IMenuItemTemplate}" ItemContainerStyle="{StaticResource ResourceKey=NoteMenuItemStyle}" IsEnabled="{Binding ItemsSource,RelativeSource={RelativeSource Self}, Converter={StaticResource IsNotEmptyCollection}}"/>

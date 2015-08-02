@@ -12,9 +12,10 @@
 		HideFile,
 		Extension,
 		CreateNote,
-		HiddenNote,
+		HideNote,
 		CompactNote,
 		ShowFrontNote,
 		SwitchClipboardShow,
+		SwitchTemplateShow,
 	}
 }

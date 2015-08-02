@@ -336,15 +336,13 @@ using Hardcodet.Wpf.TaskbarNotification;
 			}
 		}
 
-		public ICommand CompactNoteItemCommand
+		public ICommand CompactNoteItemsCommand
 		{
 			get
 			{
 				var result = CreateCommand(
 					o => {
-						foreach(var vm in GetEnabledNoteItems()) {
-							vm.IsCompacted = true;
-						}
+						CompactNoteItems();
 					}
 				);
 
@@ -352,15 +350,13 @@ using Hardcodet.Wpf.TaskbarNotification;
 			}
 		}
 
-		public ICommand HideNoteItemCommand
+		public ICommand HideNoteItemsCommand
 		{
 			get
 			{
 				var result = CreateCommand(
 					o => {
-						foreach(var window in NoteWindows.Where(n => !n.ViewModel.IsLocked).ToArray()) {
-							window.UserClose();
-						}
+						HideNoteItems();
 					}
 				);
 
@@ -368,15 +364,13 @@ using Hardcodet.Wpf.TaskbarNotification;
 			}
 		}
 
-		public ICommand FrontNoteItemCommand
+		public ICommand FrontNoteItemsCommand
 		{
 			get
 			{
 				var result = CreateCommand(
 					o => {
-						foreach(var window in NoteWindows) {
-							WindowsUtility.ShowNoActive(window.Handle);
-						}
+						FrontNoteItems();
 					}
 				);
 
@@ -868,6 +862,28 @@ using Hardcodet.Wpf.TaskbarNotification;
 			SystemEnvironmentUtility.RefreshShell();
 			OnPropertyChanged("IsVisibledShellExtension");
 		}
+
+		void CompactNoteItems()
+		{
+			foreach(var vm in GetEnabledNoteItems()) {
+				vm.IsCompacted = true;
+			}
+		}
+
+		void HideNoteItems()
+		{
+			foreach(var window in NoteWindows.Where(n => !n.ViewModel.IsLocked).ToArray()) {
+				window.UserClose();
+			}
+		}
+
+		void FrontNoteItems()
+		{
+			foreach(var window in NoteWindows) {
+				WindowsUtility.ShowNoActive(window.Handle);
+			}
+		}
+
 
 		#endregion
 
@@ -1414,18 +1430,34 @@ using Hardcodet.Wpf.TaskbarNotification;
 					break;
 
 				case HotKeyId.CreateNote:
-					throw new NotImplementedException();
+					{
+						var devicePoint = MouseUtility.GetDevicePosition();
+						// TODO: 論理座標取れてない！
+						var logcalPoint = devicePoint;
+						var noteSize = Constants.noteDefualtSize;
+						CreateNoteItem(logcalPoint, noteSize, true);
+						SendInformationTips(CommonData.Language["tooltip/note/create/title"], CommonData.Language["tooltip/note/create/message"], LogKind.Information);
+					}
+					break;
 
-				case HotKeyId.HiddenNote:
-					throw new NotImplementedException();
+				case HotKeyId.HideNote:
+					HideNoteItems();
+					SendInformationTips(CommonData.Language["tooltip/note/hide/title"], CommonData.Language["tooltip/note/hide/message"], LogKind.Information);
+					break;
 
 				case HotKeyId.CompactNote:
-					throw new NotImplementedException();
+					CompactNoteItems();
+					SendInformationTips(CommonData.Language["tooltip/note/compact/title"], CommonData.Language["tooltip/note/compact/message"], LogKind.Information);
+					break;
 
 				case HotKeyId.ShowFrontNote:
+					FrontNoteItems();
+					SendInformationTips(CommonData.Language["tooltip/note/front/title"], CommonData.Language["tooltip/note/front/message"], LogKind.Information);
 					throw new NotImplementedException();
 
 				case HotKeyId.SwitchClipboardShow:
+					throw new NotImplementedException();
+				case HotKeyId.SwitchTemplateShow:
 					throw new NotImplementedException();
 
 				default:
