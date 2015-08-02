@@ -13,6 +13,7 @@
 	using System.Windows.Media;
 	using System.Windows.Media.Imaging;
 	using System.Windows.Shapes;
+	using ContentTypeTextNet.Library.SharedLibrary.Model;
 	using ContentTypeTextNet.Pe.Library.PeData.IF;
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.View.Parts.Window;
@@ -32,7 +33,7 @@
 
 		protected override void CreateViewModel()
 		{
-			ViewModel = new LoggingViewModel(CommonData.MainSetting.Logging, this);
+			ViewModel = new LoggingViewModel(CommonData.MainSetting.Logging, this, ExtensionData as CollectionModel<LogItemModel>);
 		}
 
 		protected override void ApplyViewModel()

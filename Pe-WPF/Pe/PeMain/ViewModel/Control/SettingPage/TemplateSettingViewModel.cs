@@ -23,6 +23,18 @@
 
 		TemplateSettingModel Template { get; set; }
 
+		public bool TopMost
+		{
+			get { return Template.TopMost; }
+			set { SetPropertyValue(Template, value); }
+		}
+
+		public bool Visible
+		{
+			get { return Template.Visible; }
+			set { SetPropertyValue(Template, value); }
+		}
+
 		#endregion
 	}
 }

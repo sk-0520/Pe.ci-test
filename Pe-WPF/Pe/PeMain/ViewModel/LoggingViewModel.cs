@@ -24,10 +24,14 @@
 
 	public class LoggingViewModel : HavingViewSingleModelWrapperViewModelBase<LoggingSettingModel, LoggingWindow>, ILogAppender, IWindowStatus
 	{
-		public LoggingViewModel(LoggingSettingModel model, LoggingWindow view)
+		public LoggingViewModel(LoggingSettingModel model, LoggingWindow view, CollectionModel<LogItemModel> logItems)
 			: base(model, view)
 		{
-			LogItems = new CollectionModel<LogItemModel>();
+			if(logItems != null) {
+				LogItems = logItems;
+			} else {
+				LogItems = new CollectionModel<LogItemModel>();
+			}
 		}
 
 		#region property

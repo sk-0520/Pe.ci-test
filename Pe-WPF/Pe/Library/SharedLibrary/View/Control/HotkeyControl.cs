@@ -43,6 +43,7 @@
 
 		ModifierKeys ModifierKeys { get; set; }
 		Key Key { get; set; }
+		bool IsRegistered { get; set; }
 
 		/// <summary>
 		/// キー文字列の結合表記文字列。
@@ -84,6 +85,7 @@
 				} else {
 					ModifierKeys = value.ModifierKeys;
 					Key = value.Key;
+					IsRegistered = value.IsRegistered;
 				}
 				SetText();
 			}
@@ -135,6 +137,7 @@
 			Hotkey = new HotKeyModel() {
 				ModifierKeys = this.ModifierKeys,
 				Key = this.Key,
+				IsRegistered = this.IsRegistered,
 			};
 		}
 

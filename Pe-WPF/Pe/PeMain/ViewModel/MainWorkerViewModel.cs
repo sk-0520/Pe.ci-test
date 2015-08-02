@@ -533,7 +533,7 @@
 				InitializeStatic();
 
 				CreateMessage();
-				CreateLogger();
+				CreateLogger(null);
 
 				CreateToolbar();
 				CreateNote();
@@ -621,22 +621,39 @@
 		/// <summary>
 		/// ログの生成。
 		/// </summary>
-		void CreateLogger()
+		void CreateLogger(CollectionModel<LogItemModel> logItems)
 		{
 			using(var timeLogger = CommonData.NonProcess.CreateTimeLogger()) {
 				LoggingWindow = new LoggingWindow();
-				LoggingWindow.SetCommonData(CommonData, null);
-
-				var appLogger = (AppLogger)CommonData.Logger;
-				appLogger.LogCollector = Logging;
-				if(appLogger.IsStock) {
-					// 溜まったログをViewにドバー
-					foreach(var logItem in appLogger.StockItems) {
-						appLogger.LogCollector.AddLog(logItem);
+				LoggingWindow.SetCommonData(CommonData, logItems);
+				if(logItems == null) {
+					var appLogger = (AppLogger)CommonData.Logger;
+					appLogger.LogCollector = Logging;
+					if(appLogger.IsStock) {
+						// 溜まったログをViewにドバー
+						foreach(var logItem in appLogger.StockItems) {
+							appLogger.LogCollector.AddLog(logItem);
+						}
+						appLogger.IsStock = false;
 					}
-					appLogger.IsStock = false;
 				}
 			}
+		}
+
+		CollectionModel<LogItemModel> RemoveLogger()
+		{
+			var resultItems = Logging.LogItems;
+
+			LoggingWindow.Close();
+			LoggingWindow = null;
+
+			return resultItems;
+		}
+
+		void ResetLogger()
+		{
+			var logItems = RemoveLogger();
+			CreateLogger(logItems);
 		}
 
 		/// <summary>
@@ -769,9 +786,14 @@
 			// TODO: impl
 			InitializeStatus();
 
+			MessageWindow.SetCommonData(CommonData, null);
+			ResetLogger();
+
 			ResetToolbar();
 			ResetNote();
 
+			ClipboardWindow.SetCommonData(CommonData, null);
+			TemplateWindow.SetCommonData(CommonData, null);
 		}
 
 		static void ResetCulture(INonProcess nonProcess)

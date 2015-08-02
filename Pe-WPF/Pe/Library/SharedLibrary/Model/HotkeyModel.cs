@@ -56,6 +56,7 @@
 
 			obj.Key = Key;
 			obj.ModifierKeys = ModifierKeys;
+			obj.IsRegistered = IsRegistered;
 		}
 
 		public IDeepClone DeepClone()
