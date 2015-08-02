@@ -99,6 +99,7 @@
     <Compile Include="Define\DockType.cs" />
     <Compile Include="Define\IconScale.cs" />
     <Compile Include="Define\LogKind.cs" />
+    <Compile Include="Define\LogPutDelegate.cs" />
     <Compile Include="Define\OrderBy.cs" />
     <Compile Include="Define\Px.cs" />
     <Compile Include="Define\SharedConstants.cs" />

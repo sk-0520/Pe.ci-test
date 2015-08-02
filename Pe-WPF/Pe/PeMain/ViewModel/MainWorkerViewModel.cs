@@ -40,8 +40,9 @@
 	using ContentTypeTextNet.Pe.PeMain.View.Parts.Window;
 	using System.Globalization;
 	using ContentTypeTextNet.Library.SharedLibrary.CompatibleWindows.Utility;
+using Hardcodet.Wpf.TaskbarNotification;
 
-	public sealed class MainWorkerViewModel: ViewModelBase, IAppSender, IClipboardWatcher
+	public sealed class MainWorkerViewModel: ViewModelBase, IAppSender, IClipboardWatcher, IHavingView<TaskbarIcon>
 	{
 		#region define
 
@@ -415,15 +416,13 @@
 			}
 		}
 
-		public ICommand SwitchShellHideFile
+		public ICommand SwitchShellHideFileCommand
 		{
 			get
 			{
 				var result = CreateCommand(
 					o => {
-						SystemEnvironmentUtility.SetHideFileShow(!IsVisibledShellHideFile);
-						SystemEnvironmentUtility.RefreshShell();
-						OnPropertyChanged("IsVisibledShellHideFile");
+						SwitchShellHideFile();
 					}
 				);
 
@@ -431,15 +430,13 @@
 			}
 		}
 
-		public ICommand SwitchShellExtension
+		public ICommand SwitchShellExtensionCommand
 		{
 			get
 			{
 				var result = CreateCommand(
 					o => {
-						SystemEnvironmentUtility.SetExtensionShow(!IsVisibledShellExtension);
-						SystemEnvironmentUtility.RefreshShell();
-						OnPropertyChanged("IsVisibledShellExtension");
+						SwitchShellExtension();
 					}
 				);
 
@@ -450,6 +447,13 @@
 		#endregion
 
 		#region function
+
+		public void SetView(TaskbarIcon view)
+		{
+			Debug.Assert(!HasView);
+
+			View = view;
+		}
 
 		void LoadSetting()
 		{
@@ -851,6 +855,20 @@
 			return Task.Run(() => SaveWindowItem(type));
 		}
 
+		void SwitchShellHideFile()
+		{
+			SystemEnvironmentUtility.SetHideFileShow(!IsVisibledShellHideFile);
+			SystemEnvironmentUtility.RefreshShell();
+			OnPropertyChanged("IsVisibledShellHideFile");
+		}
+
+		void SwitchShellExtension()
+		{
+			SystemEnvironmentUtility.SetExtensionShow(!IsVisibledShellExtension);
+			SystemEnvironmentUtility.RefreshShell();
+			OnPropertyChanged("IsVisibledShellExtension");
+		}
+
 		#endregion
 
 		#region ViewModelBase
@@ -915,6 +933,11 @@
 		public void SendInputHotKey(HotKeyId hotKeyId, HotKeyModel hotKeyModel)
 		{
 			ReceiveHotKey(hotKeyId, hotKeyModel);
+		}
+
+		public void SendInformationTips(string title, string message, LogKind logKind)
+		{
+			ReceiveInformationTips(title, message, logKind);
 		}
 
 		#region IAppSender-Implement
@@ -1353,14 +1376,84 @@
 			}
 		}
 
-		public void ReceiveHotKey(HotKeyId hotKeyId, HotKeyModel hotKeyModel)
+		void ReceiveHotKey(HotKeyId hotKeyId, HotKeyModel hotKeyModel)
 		{
 			if (Pause) {
 				CommonData.Logger.Information("pause");
 				return;
 			}
-			CommonData.Logger.Trace(hotKeyId.ToString(), hotKeyModel);
+
+			switch(hotKeyId) {
+				case HotKeyId.ShowCommand:
+					throw new NotImplementedException();
+
+				case HotKeyId.HideFile:
+					{
+						SwitchShellHideFile();
+						string message;
+						if(SystemEnvironmentUtility.IsHideFileShow()) {
+							message = "tooltip/hidefile/message/show";
+						} else {
+							message = "tooltip/hidefile/message/hide";
+						}
+						SendInformationTips(CommonData.Language["tooltip/hidefile/title"], CommonData.Language[message], LogKind.Information);
+					}
+					break;
+
+				case HotKeyId.Extension: 
+					{
+						SwitchShellExtension();
+						string message;
+						if(SystemEnvironmentUtility.IsExtensionShow()) {
+							message = "tooltip/extension/message/show";
+						} else {
+							message = "tooltip/extension/message/hide";
+						}
+						SendInformationTips(CommonData.Language["tooltip/extension/title"], CommonData.Language[message], LogKind.Information);
+					}
+					break;
+
+				case HotKeyId.CreateNote:
+					throw new NotImplementedException();
+
+				case HotKeyId.HiddenNote:
+					throw new NotImplementedException();
+
+				case HotKeyId.CompactNote:
+					throw new NotImplementedException();
+
+				case HotKeyId.ShowFrontNote:
+					throw new NotImplementedException();
+
+				case HotKeyId.SwitchClipboardShow:
+					throw new NotImplementedException();
+
+				default:
+					throw new NotImplementedException();
+			}
 		}
+
+		void ReceiveInformationTips(string title, string message, LogKind logKind)
+		{
+			var map = new Dictionary<LogKind, BalloonIcon>() {
+				{ LogKind.None, BalloonIcon.None },
+				{ LogKind.Information, BalloonIcon.Info },
+				{ LogKind.Warning, BalloonIcon.Warning },
+				{ LogKind.Error, BalloonIcon.Error },
+			};
+
+			if(HasView) {
+				View.ShowBalloonTip(title, message, map[logKind]);
+			}
+			var action = new Dictionary<LogKind, LogPutDelegate>() {
+				{ LogKind.None, CommonData.Logger.Trace },
+				{ LogKind.Information, CommonData.Logger.Information },
+				{ LogKind.Warning, CommonData.Logger.Warning },
+				{ LogKind.Error, CommonData.Logger.Error },
+			};
+			action[logKind](title, message);
+		}
+
 
 		#endregion
 
@@ -1389,6 +1482,13 @@
 
 		#endregion
 
+		#region IHavingView
+
+		public TaskbarIcon View {get;private set;}
+
+		public bool HasView { get{ return HavingViewUtility.GetHasView(this); } }
+
+		#endregion
 
 		void Timer_Tick(object sender, EventArgs e)
 		{

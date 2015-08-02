@@ -16,17 +16,11 @@
 	/// </summary>
 	public class TimeLogger: DisposeFinalizeBase
 	{
-		#region define
-
-		delegate void PutsDelegate(string message, object detail = null, int frame = 1, [CallerFilePath] string callerFile = "", [CallerLineNumber] int callerLine = -1, [CallerMemberName] string callerMember = "");
-
-		#endregion
-
 		#region static
 
 		[ThreadStatic]
 		static Random random = new Random();
-		static PutsDelegate GetPuts(ILogger logger, LogKind logKind)
+		static LogPutDelegate GetPuts(ILogger logger, LogKind logKind)
 		{
 			Debug.Assert(logger != null);
 
@@ -46,7 +40,7 @@
 
 		#region variable
 
-		PutsDelegate Puts;
+		LogPutDelegate Puts;
 
 		#endregion
 

@@ -12,6 +12,10 @@
 	public enum LogKind
 	{
 		/// <summary>
+		/// 基本的に使用しない。
+		/// </summary>
+		None,
+		/// <summary>
 		/// デバッグ情報。
 		/// </summary>
 		Debug,

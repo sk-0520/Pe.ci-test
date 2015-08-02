@@ -67,8 +67,8 @@
 		<MenuItem AA:Language.Word="tasktray/log"     Header="log" Command="{Binding SwitchLoggingWindowCommand}" IsChecked="{Binding Logging.Visible, Mode=OneWay}" />
 		<Separator />
 		<MenuItem AA:Language.Word="tasktray/system-env" Header="system-env">
-			<MenuItem Header="hide file" Command="{Binding SwitchShellHideFile}" IsChecked="{Binding IsVisibledShellHideFile, Mode=OneWay}" />
-			<MenuItem Header="extension" Command="{Binding SwitchShellExtension}" IsChecked="{Binding IsVisibledShellExtension, Mode=OneWay}" />
+			<MenuItem Header="hide file" Command="{Binding SwitchShellHideFileCommand}" IsChecked="{Binding IsVisibledShellHideFile, Mode=OneWay}" />
+			<MenuItem Header="extension" Command="{Binding SwitchShellExtensionCommand}" IsChecked="{Binding IsVisibledShellExtension, Mode=OneWay}" />
 			<Separator />
 			<MenuItem Header="clipboard" Command="{Binding SwitchClipboardWindowCommand}" IsChecked="{Binding Clipboard.Visible}" />
 			<Separator />

@@ -117,7 +117,7 @@
 			50,
 			256
 		);
-		public const double clipboardItemsListWidth = 180;
+		public const double clipboardItemsListWidth = 220;
 		public static readonly Size clipboardDefaultWindowSize = new Size(580, 380);
 
 		public const double templateItemsListWidth = 180;

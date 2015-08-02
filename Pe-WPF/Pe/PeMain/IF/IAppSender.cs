@@ -1,18 +1,19 @@
 ﻿namespace ContentTypeTextNet.Pe.PeMain.IF
 {
 	using System;
-	using System.Collections.Generic;
-	using System.IO;
-	using System.Linq;
-	using System.Text;
-	using System.Threading.Tasks;
-	using System.Windows;
-	using ContentTypeTextNet.Library.SharedLibrary.Model;
-	using ContentTypeTextNet.Pe.Library.PeData.Define;
-	using ContentTypeTextNet.Pe.Library.PeData.IF;
-	using ContentTypeTextNet.Pe.Library.PeData.Item;
-	using ContentTypeTextNet.Pe.PeMain.Data;
-	using ContentTypeTextNet.Pe.PeMain.Define;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using ContentTypeTextNet.Library.SharedLibrary.Define;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.Pe.Library.PeData.Define;
+using ContentTypeTextNet.Pe.Library.PeData.IF;
+using ContentTypeTextNet.Pe.Library.PeData.Item;
+using ContentTypeTextNet.Pe.PeMain.Data;
+using ContentTypeTextNet.Pe.PeMain.Define;
 
 	public interface IAppSender
 	{
@@ -74,5 +75,12 @@
 		/// <param name="hotKeyId"></param>
 		/// <param name="hotKeyModel"></param>
 		void SendInputHotKey(HotKeyId hotKeyId, HotKeyModel hotKeyModel);
+		/// <summary>
+		/// バルーン通知。
+		/// </summary>
+		/// <param name="title"></param>
+		/// <param name="message"></param>
+		/// <param name="logKind">諸事情によりHardcodet.Wpf.TaskbarNotification.BalloonIconじゃなくてLogKind の None, Information, Warning, Errorをそれぞれ指定</param>
+		void SendInformationTips(string title, string message, LogKind logKind);
 	}
 }
