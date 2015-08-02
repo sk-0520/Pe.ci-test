@@ -3,6 +3,7 @@
 	using System;
 	using System.Collections.Generic;
 	using System.Linq;
+	using System.Runtime.CompilerServices;
 	using System.Text;
 	using System.Threading.Tasks;
 	using System.Windows;
@@ -19,11 +20,15 @@
 		protected TEventHandler EventHandler { get; set; }
 		protected Action<TEventHandler> ReleaseEvent { get; set; }
 
+		public string CallerFile { get; protected set; }
+		public int CallerLine { get; protected set; }
+		public string CallerMember { get; protected set; }
+
 		#endregion
 
 		#region function
 
-		public TEventHandler Handling(TEventHandler eventHandler, Action<TEventHandler> releaseEvent)
+		public TEventHandler Handling(TEventHandler eventHandler, Action<TEventHandler> releaseEvent, [CallerFilePath] string callerFile = "", [CallerLineNumber] int callerLine = -1, [CallerMemberName] string callerMember = "")
 		{
 			if(EventHandler != null) {
 				throw new InvalidOperationException("EventHandler");
@@ -38,6 +43,10 @@
 			if(releaseEvent == null) {
 				throw new ArgumentNullException("releaseEvent");
 			}
+
+			CallerFile = callerFile;
+			CallerLine = callerLine;
+			CallerMember = callerMember;
 
 			ReleaseEvent = releaseEvent;
 			return EventHandler = eventHandler;
