@@ -222,7 +222,7 @@
 							SaveSetting();
 							ResetSetting();
 						} else {
-							ResetCache();
+							ResetCache(true);
 						}
 					}
 				);
@@ -655,6 +655,21 @@
 			}
 		}
 
+		void RemoveToolbar()
+		{
+			foreach(var toolbar in LauncherToolbarWindows.ToArray()) {
+				toolbar.Close();
+			}
+			LauncherToolbarWindows.Clear();
+			LauncherToolbarWindows = null;
+		}
+
+		void ResetToolbar()
+		{
+			RemoveToolbar();
+			CreateToolbar();
+		}
+
 		void CreateNote()
 		{
 			using(var timeLogger = CommonData.NonProcess.CreateTimeLogger()) {
@@ -720,12 +735,14 @@
 			return window;
 		}
 
-		void ResetCache()
+		void ResetCache(bool isRefresh)
 		{
 			CommonData.LauncherIconCaching.Clear();
-			
-			foreach(var viewModel in LauncherToolbars) {
-				viewModel.Refresh();
+
+			if(isRefresh) {
+				foreach(var viewModel in LauncherToolbars) {
+					viewModel.Refresh();
+				}
 			}
 
 			InitializeStatic();
@@ -733,9 +750,10 @@
 
 		void ResetSetting()
 		{
-			ResetCache();
+			ResetCache(false);
 			// TODO: impl
 			InitializeStatus();
+			ResetToolbar();
 		}
 
 		static void ResetCulture(INonProcess nonProcess)
