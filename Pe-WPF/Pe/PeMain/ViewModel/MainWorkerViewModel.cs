@@ -473,13 +473,13 @@
 			using(var timeLogger = CommonData.NonProcess.CreateTimeLogger()) {
 				BackupSetting();
 				
-				AppUtility.SaveSetting(CommonData.VariableConstants.UserSettingMainSettingFilePath, CommonData.MainSetting, FileType.Json, CommonData.Logger);
-				AppUtility.SaveSetting(CommonData.VariableConstants.UserSettingLauncherItemSettingFilePath, CommonData.LauncherItemSetting, FileType.Json, CommonData.Logger);
-				AppUtility.SaveSetting(CommonData.VariableConstants.UserSettingLauncherGroupItemSettingFilePath, CommonData.LauncherGroupSetting, FileType.Json, CommonData.Logger);
+				AppUtility.SaveSetting(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingMainSettingFilePath), CommonData.MainSetting, FileType.Json, CommonData.Logger);
+				AppUtility.SaveSetting(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingLauncherItemSettingFilePath), CommonData.LauncherItemSetting, FileType.Json, CommonData.Logger);
+				AppUtility.SaveSetting(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingLauncherGroupItemSettingFilePath), CommonData.LauncherGroupSetting, FileType.Json, CommonData.Logger);
 
-				SendSaveIndex(IndexKind.Note);
-				SendSaveIndex(IndexKind.Clipboard);
-				SendSaveIndex(IndexKind.Template);
+				foreach(var indexKind in EnumUtility.GetMembers<IndexKind>()) {
+					SendSaveIndex(indexKind, Timing.Instantly);
+				}
 			}
 		}
 
@@ -825,9 +825,9 @@
 			ReceiveRemoveIndex(indexKind, guid);
 		}
 
-		public void SendSaveIndex(IndexKind indexKind)
+		public void SendSaveIndex(IndexKind indexKind, Timing timing)
 		{
-			ReceiveSaveIndex(indexKind);
+			ReceiveSaveIndex(indexKind, timing);
 		}
 
 		public IndexBodyItemModelBase SendLoadIndexBody(IndexKind indexKind, Guid guid)
@@ -1030,7 +1030,7 @@
 			}
 			items.Remove(guid);
 
-			SendSaveIndex(indexKind);
+			SendSaveIndex(indexKind, Timing.Instantly);
 		}
 
 		void ReceiveRemoveIndex(IndexKind indexKind, Guid guid)
@@ -1059,31 +1059,31 @@
 			}
 		}
 
-		void SaveIndex<TIndexSetting>(IndexKind indexKind, TIndexSetting indexSetting, string filePath)
+		void SaveIndex<TIndexSetting>(IndexKind indexKind, Timing timing, TIndexSetting indexSetting, string filePath)
 			where TIndexSetting : ModelBase
 		{
 			var path = Environment.ExpandEnvironmentVariables(filePath);
 			AppUtility.SaveSetting(path, indexSetting, FileType.Json, CommonData.Logger);
 		}
 
-		void ReceiveSaveIndex(IndexKind indexKind)
+		void ReceiveSaveIndex(IndexKind indexKind, Timing timing)
 		{
 			switch(indexKind) {
 				case IndexKind.Note:
 					{
-						SaveIndex(indexKind, CommonData.NoteIndexSetting, CommonData.VariableConstants.UserSettingNoteIndexFilePath);
+						SaveIndex(indexKind, timing, CommonData.NoteIndexSetting, CommonData.VariableConstants.UserSettingNoteIndexFilePath);
 					}
 					break;
 
 				case IndexKind.Template:
 					{
-						SaveIndex(indexKind, CommonData.TemplateIndexSetting, CommonData.VariableConstants.UserSettingTemplateIndexFilePath);
+						SaveIndex(indexKind, timing, CommonData.TemplateIndexSetting, CommonData.VariableConstants.UserSettingTemplateIndexFilePath);
 					}
 					break;
 
 				case IndexKind.Clipboard:
 					{
-						SaveIndex(indexKind, CommonData.ClipboardIndexSetting, CommonData.VariableConstants.UserSettingClipboardIndexFilePath);
+						SaveIndex(indexKind, timing, CommonData.ClipboardIndexSetting, CommonData.VariableConstants.UserSettingClipboardIndexFilePath);
 					}
 					break;
 

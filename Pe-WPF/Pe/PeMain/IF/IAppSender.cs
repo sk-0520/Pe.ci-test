@@ -44,7 +44,8 @@
 		/// 対象インデックスを保存。
 		/// </summary>
 		/// <param name="indexKind"></param>
-		void SendSaveIndex(IndexKind indexKind);
+		/// <param name="timing"></param>
+		void SendSaveIndex(IndexKind indexKind, Timing timing);
 		/// <summary>
 		/// 対象インデックスのボディ部を取得。
 		/// </summary>

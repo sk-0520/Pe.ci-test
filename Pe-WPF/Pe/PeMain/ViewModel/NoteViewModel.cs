@@ -25,6 +25,7 @@
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 	using System.Windows.Controls;
+	using ContentTypeTextNet.Pe.PeMain.Define;
 
 	public class NoteViewModel : HavingViewSingleModelWrapperViewModelBase<NoteIndexItemModel, NoteWindow>, IHavingAppNonProcess, IWindowHitTestData, IWindowAreaCorrectionData, ICaptionDoubleClickData, IHavingAppSender, IColorPair, INoteMenuItem
 	{
@@ -219,7 +220,7 @@
 
 						if (IsChanged) {
 							Model.History.Update();
-							AppSender.SendSaveIndex(IndexKind.Note);
+							AppSender.SendSaveIndex(IndexKind.Note, Timing.Instantly);
 							ResetChangeFlag();
 						}
 						if (HasView) {

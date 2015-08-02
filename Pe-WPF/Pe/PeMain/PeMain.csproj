@@ -124,6 +124,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Define\Timing.cs" />
     <Compile Include="X-Partial\AppResource-implement.cs" />
     <Compile Include="X-Partial\AppResourceAttribute.cs" />
     <Compile Include="X-Partial\AppResource-generator.cs">
