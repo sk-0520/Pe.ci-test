@@ -657,8 +657,8 @@
 
 		void RemoveToolbar()
 		{
-			foreach(var toolbar in LauncherToolbarWindows.ToArray()) {
-				toolbar.Close();
+			foreach(var window in LauncherToolbarWindows.ToArray()) {
+				window.Close();
 			}
 			LauncherToolbarWindows.Clear();
 			LauncherToolbarWindows = null;
@@ -679,6 +679,21 @@
 					var window = CreateNoteWindow(noteItem, false);
 				}
 			}
+		}
+
+		void RemoveNote()
+		{
+			foreach(var window in NoteWindows.ToArray()) {
+				window.Close();
+			}
+			NoteWindows.Clear();
+			NoteWindows = null;
+		}
+
+		void ResetNote()
+		{
+			RemoveNote();
+			CreateNote();
 		}
 
 		void CreateTemplate()
@@ -753,7 +768,10 @@
 			ResetCache(false);
 			// TODO: impl
 			InitializeStatus();
+
 			ResetToolbar();
+			ResetNote();
+
 		}
 
 		static void ResetCulture(INonProcess nonProcess)
