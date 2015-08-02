@@ -72,7 +72,7 @@
 				<StackPanel HorizontalAlignment="Left" Height="71" Grid.Row="5" Grid.ColumnSpan="2" VerticalAlignment="Top">
 					<CheckBox Content="show text" HorizontalAlignment="Stretch" IsChecked="{Binding SelectedItem.TextVisible, ElementName=Toolbar}" />
 					<CheckBox Content="auto hide" HorizontalAlignment="Stretch" IsChecked="{Binding SelectedItem.AutoHide, ElementName=Toolbar}" />
-					<CheckBox Content="topmost" HorizontalAlignment="Stretch" IsChecked="{Binding SelectedItem.TopMost, ElementName=Toolbar}" />
+					<CheckBox Content="topmost" HorizontalAlignment="Stretch" IsChecked="{Binding SelectedItem.IsTopmost, ElementName=Toolbar}" />
 					<CheckBox Content="visible" HorizontalAlignment="Stretch" IsChecked="{Binding SelectedItem.Visible, ElementName=Toolbar}" />
 				</StackPanel>
 			</Grid>

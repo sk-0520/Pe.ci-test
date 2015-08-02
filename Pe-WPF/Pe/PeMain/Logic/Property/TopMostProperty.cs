@@ -12,13 +12,13 @@
 	{
 		public static bool GetTopMost(ITopMost model)
 		{
-			return model.TopMost;
+			return model.IsTopmost;
 		}
 
 		public static bool SetTopMost(ITopMost model, bool value, Action<string> onPropertyChanged, [CallerMemberName] string propertyName = "")
 		{
-			if(model.TopMost != value) {
-				model.TopMost = value;
+			if(model.IsTopmost != value) {
+				model.IsTopmost = value;
 				onPropertyChanged(propertyName);
 
 				return true;

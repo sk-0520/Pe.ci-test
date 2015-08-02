@@ -105,9 +105,9 @@
 			set { SetPropertyValue(Clipboard, value); }
 		}
 
-		public bool TopMost
+		public bool IsTopmost
 		{
-			get { return Clipboard.TopMost; }
+			get { return Clipboard.IsTopmost; }
 			set { SetPropertyValue(Clipboard, value); }
 		}
 

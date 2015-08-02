@@ -383,7 +383,7 @@
 			{
 				var result = CreateCommand(
 					o => {
-						TopMost = !TopMost;
+						IsTopmost = !IsTopmost;
 					}
 				);
 
@@ -540,7 +540,7 @@
 
 		#region ITopMost
 
-		public bool TopMost
+		public bool IsTopmost
 		{
 			get { return TopMostProperty.GetTopMost(Model.Toolbar); }
 			set { TopMostProperty.SetTopMost(Model.Toolbar, value, OnPropertyChanged); }

@@ -23,7 +23,7 @@
 	Width="{Binding WindowWidth, Mode=TwoWay}"
 	Height="{Binding WindowHeight, Mode=TwoWay}"
 	Visibility="{Binding Visibility}"
-	Topmost="{Binding TopMost}"
+	Topmost="{Binding IsTopmost}"
 	BorderThickness="{Binding ResizeThickness}"
 	BorderBrush="{Binding BorderBrush}"
 	x:Name="root"
@@ -93,7 +93,7 @@
 			<ToggleButton Grid.Column="1" Visibility="{Binding CaptionButtonVisibility}" IsChecked="{Binding IsCompacted}">
 				<TextBlock Text="_" />
 			</ToggleButton>
-			<ToggleButton Grid.Column="2" Visibility="{Binding CaptionButtonVisibility}" IsChecked="{Binding TopMost}">
+			<ToggleButton Grid.Column="2" Visibility="{Binding CaptionButtonVisibility}" IsChecked="{Binding IsTopmost}">
 				<TextBlock Text="y" />
 			</ToggleButton>
 			<Button Grid.Column="3" Visibility="{Binding CaptionButtonVisibility}" Command="{Binding HideCommand}">
@@ -206,7 +206,7 @@
 						<Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="state" Style="{StaticResource Title}" />
 						<CheckBox Grid.Row="1" Grid.Column="0" IsChecked="{Binding IsLocked}" Content="lock" />
 						<CheckBox Grid.Row="1" Grid.Column="1" IsChecked="{Binding IsCompacted}" Content="compact" />
-						<CheckBox Grid.Row="1" Grid.Column="2" IsChecked="{Binding TopMost}" Content="topmost" />
+						<CheckBox Grid.Row="1" Grid.Column="2" IsChecked="{Binding IsTopmost}" Content="topmost" />
 					</Grid>
 					<Grid Style="{StaticResource Group}">
 						<Grid.RowDefinitions>

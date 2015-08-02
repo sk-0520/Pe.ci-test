@@ -255,7 +255,7 @@
 		//	{
 		//		var result = CreateCommand(
 		//			o => {
-		//				TopMost = !TopMost;
+		//				IsTopmost = !IsTopmost;
 		//			}
 		//		);
 
@@ -482,7 +482,7 @@
 
 		#region ITopMost
 
-		public bool TopMost
+		public bool IsTopmost
 		{
 			get { return TopMostProperty.GetTopMost(Model); }
 			set { TopMostProperty.SetTopMost(Model, value, OnPropertyChanged); }

@@ -24,9 +24,9 @@ using ContentTypeTextNet.Pe.PeMain.IF;
 
 		TemplateSettingModel Template { get; set; }
 
-		public bool TopMost
+		public bool IsTopmost
 		{
-			get { return Template.TopMost; }
+			get { return Template.IsTopmost; }
 			set { SetPropertyValue(Template, value); }
 		}
 

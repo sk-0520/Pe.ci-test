@@ -11,6 +11,6 @@ namespace ContentTypeTextNet.Pe.Library.PeData.IF
 		/// <summary>
 		/// 最前面。
 		/// </summary>
-		bool TopMost { get; set; }
+		bool IsTopmost { get; set; }
 	}
 }

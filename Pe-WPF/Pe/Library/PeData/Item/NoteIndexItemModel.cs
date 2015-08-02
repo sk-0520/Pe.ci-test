@@ -73,7 +73,7 @@
 		#region ITopMost
 
 		[DataMember]
-		public bool TopMost { get; set; }
+		public bool IsTopmost { get; set; }
 
 		#endregion
 
@@ -104,7 +104,7 @@
 			obj.WindowWidth = WindowWidth;
 			obj.WindowHeight = WindowHeight;
 
-			obj.TopMost = TopMost;
+			obj.IsTopmost = IsTopmost;
 
 			obj.Visible = Visible;
 		}

@@ -92,7 +92,7 @@
 		/// 最前面表示。
 		/// </summary>
 		[DataMember]
-		public bool TopMost { get; set; }
+		public bool IsTopmost { get; set; }
 
 		#endregion
 
@@ -136,7 +136,7 @@
 			obj.TextVisible = TextVisible;
 			obj.TextWidth = TextWidth;
 			obj.Visible = Visible;
-			obj.TopMost = TopMost;
+			obj.IsTopmost = IsTopmost;
 			obj.Id = Id;
 		}
 	

@@ -27,7 +27,7 @@
 	AllowsTransparency="True"
 	WindowStartupLocation="Manual"
 	Visibility="{Binding Visibility}" 
-	Topmost="{Binding TopMost, Mode=OneWay}"
+	Topmost="{Binding IsTopmost, Mode=OneWay}"
 	BorderThickness="{Binding BorderThickness, Mode=OneWay}"
 	BorderBrush="{Binding BorderBrush, Mode=OneWay}"
 	
@@ -410,7 +410,7 @@
 						<Button Grid.Row="2" Grid.Column="1" CommandParameter="{x:Static SD:DockType.Bottom}" Style="{StaticResource PopupClose}">↓</Button>
 					</Grid>
 					<Separator />
-					<MenuItem Header="topmost" AA:Language.Word="topmost" Style="{StaticResource PopupCloseMenu}" IsChecked="{Binding TopMost}" Command="{Binding SwitchTopMostCommand}"  />
+					<MenuItem Header="topmost" AA:Language.Word="topmost" Style="{StaticResource PopupCloseMenu}" IsChecked="{Binding IsTopmost}" Command="{Binding SwitchTopMostCommand}"  />
 					<MenuItem Header="auto hide" AA:Language.Word="autohide" Style="{StaticResource PopupCloseMenu}" IsChecked="{Binding AutoHide}" Command="{Binding SwitchAutoHideCommand}"/>
 					<Separator />
 					<MenuItem Header="hide" AA:Language.Word="hide" Style="{StaticResource PopupCloseMenu}" Command="{Binding ChangeVisibleCommand}" >

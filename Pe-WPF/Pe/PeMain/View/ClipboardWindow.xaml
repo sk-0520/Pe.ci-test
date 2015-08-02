@@ -22,7 +22,7 @@
 	Top="{Binding WindowTop, Mode=TwoWay}"
 	Width="{Binding WindowWidth, Mode=TwoWay}"
 	Height="{Binding WindowHeight, Mode=TwoWay}"
-	Topmost="{Binding TopMost}"
+	Topmost="{Binding IsTopmost}"
 	Style="{DynamicResource IndexItemsStyleDefualtWindowStyle}"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
 	d:DesignWidth="407" d:DesignHeight="222"
@@ -91,7 +91,7 @@
 					</StackPanel>
 				</Button>
 				<Separator />
-				<ToggleButton IsChecked="{Binding TopMost}">
+				<ToggleButton IsChecked="{Binding IsTopmost}">
 					<StackPanel Orientation="Horizontal">
 						<Image Style="{StaticResource ImageRenderStyle}" Source="{x:Static AM:AppResource.CommonPinImage}" />
 						<TextBlock Text="topmost" />
