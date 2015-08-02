@@ -21,7 +21,7 @@
 		/*
 		このソースは自動生成のため AppResource-generator.tt を編集すること。
 
-		生成元フィールド数: 37
+		生成元フィールド数: 39
 		*/
 		#region Icon: Application
 
@@ -949,6 +949,50 @@
 			get { return GetImage(CommonRefreshPath); }
 		}
 		#endregion CommonRefresh
+		#region Image: CommonFontBold
+
+		/// <summary>
+		/// [Image] CommonFontBoldのリソースパスを取得。
+		/// <para>/Resources/Image/Common/FontBold.png</para>
+		/// </summary>
+		public static string CommonFontBoldPath
+		{
+			get { return commonFontBold; }
+		}
+
+		/// <summary>
+		/// [Image] CommonFontBoldのイメージソースを取得。
+		/// <para>初回のみ生成を行う。</para>
+		/// <para>CommonFontBoldPath: /Resources/Image/Common/FontBold.png</para>
+		/// </summary>
+		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
+		public static BitmapSource CommonFontBoldImage
+		{
+			get { return GetImage(CommonFontBoldPath); }
+		}
+		#endregion CommonFontBold
+		#region Image: CommonFontItalic
+
+		/// <summary>
+		/// [Image] CommonFontItalicのリソースパスを取得。
+		/// <para>/Resources/Image/Common/FontItalic.png</para>
+		/// </summary>
+		public static string CommonFontItalicPath
+		{
+			get { return commonFontItalic; }
+		}
+
+		/// <summary>
+		/// [Image] CommonFontItalicのイメージソースを取得。
+		/// <para>初回のみ生成を行う。</para>
+		/// <para>CommonFontItalicPath: /Resources/Image/Common/FontItalic.png</para>
+		/// </summary>
+		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
+		public static BitmapSource CommonFontItalicImage
+		{
+			get { return GetImage(CommonFontItalicPath); }
+		}
+		#endregion CommonFontItalic
 		#region Image: TemplatePlain
 
 		/// <summary>

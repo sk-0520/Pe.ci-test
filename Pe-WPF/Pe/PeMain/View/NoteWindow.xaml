@@ -31,10 +31,15 @@
 	d:DesignWidth="300" d:DesignHeight="300"
 >
 	<AW:CommonDataWindow.Resources>
-		<SC:LogicalNotConverter x:Key="LogicalNotConverter"/>
-		<SC:BooleanFontWeightConverter x:Key="BooleanFontWeightConverter" />
-		<SC:BooleanFontStyleConverter x:Key="BooleanFontStyleConverter" />
-		<AC:FontFamilyToNameConverter x:Key="FontFamilyToNameConverter" />
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceDictionary Source="/View/Parts/Resource/ImageDictionary.xaml"/>
+			</ResourceDictionary.MergedDictionaries>
+			<SC:LogicalNotConverter x:Key="LogicalNotConverter"/>
+			<SC:BooleanFontWeightConverter x:Key="BooleanFontWeightConverter" />
+			<SC:BooleanFontStyleConverter x:Key="BooleanFontStyleConverter" />
+			<AC:FontFamilyToNameConverter x:Key="FontFamilyToNameConverter" />
+		</ResourceDictionary>
 	</AW:CommonDataWindow.Resources>
 	<AW:CommonDataWindow.Foreground>
 		<SolidColorBrush Color="{Binding ForeColor}" />
@@ -188,8 +193,12 @@
 									</DataTemplate>
 								</ComboBox.ItemTemplate>
 							</ComboBox>
-							<ToggleButton Grid.Row="1" Grid.Column="0" Content="b" IsChecked="{Binding FontBold}" />
-							<ToggleButton Grid.Row="1" Grid.Column="1" Content="i" IsChecked="{Binding FontItalic}" />
+							<ToggleButton Grid.Row="1" Grid.Column="0" IsChecked="{Binding FontBold}" AA:Language.Hint="font/weight">
+								<Image Style="{StaticResource ImageRenderStyle}" Source="{x:Static AM:AppResource.CommonFontBoldImage}" />
+							</ToggleButton>
+							<ToggleButton Grid.Row="1" Grid.Column="1" IsChecked="{Binding FontItalic}" AA:Language.Hint="font/style">
+								<Image Style="{StaticResource ImageRenderStyle}" Source="{x:Static AM:AppResource.CommonFontItalicImage}" />
+							</ToggleButton>
 							<xctk:DoubleUpDown Grid.Row="1" Grid.Column="2" Minimum="{x:Static AM:Constants.NoteFontMinimumSize}" Maximum="{x:Static AM:Constants.NoteFontMaximumSize}" Value="{Binding FontSize}" />
 						</Grid>
 					</Grid>
