@@ -21,7 +21,17 @@
 
 		#region IWindowsHandle
 
-		public IntPtr Handle { get { return WindowInteropHelper.Handle; } }
+		public IntPtr Handle 
+		{ 
+			get 
+			{
+				if(WindowInteropHelper == null) {
+					WindowInteropHelper = new WindowInteropHelper(this);
+				}
+
+				return WindowInteropHelper.Handle; 
+			} 
+		}
 
 		#endregion
 
@@ -31,6 +41,7 @@
 
 		protected override void OnSourceInitialized(EventArgs e)
 		{
+			// うーん呼ばれない ;-(
 			WindowInteropHelper = new WindowInteropHelper(this);
 			
 			base.OnSourceInitialized(e);

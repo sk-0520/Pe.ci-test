@@ -238,8 +238,7 @@ using Hardcodet.Wpf.TaskbarNotification;
 			{
 				var result = CreateCommand(
 					o => {
-						Debug.Assert(Template != null);
-						Template.Visible = !Template.Visible;
+						SwitchShowTemplateWindow();
 					}
 				);
 
@@ -284,8 +283,7 @@ using Hardcodet.Wpf.TaskbarNotification;
 			{
 				var result = CreateCommand(
 					o => {
-						Debug.Assert(Clipboard != null);
-						Clipboard.Visible = !Clipboard.Visible;
+						SwitchShowClipboardWindow();
 					}
 				);
 
@@ -752,7 +750,10 @@ using Hardcodet.Wpf.TaskbarNotification;
 			};
 			SettingUtility.InitializeNoteIndexItem(noteItem, Constants.assemblyVersion, CommonData.NonProcess);
 
-			return CreateNoteWindow(noteItem, appendIndex);
+			var window = CreateNoteWindow(noteItem, appendIndex);
+			WindowsUtility.ShowNoActive(window.Handle);
+
+			return window;
 		}
 
 		NoteWindow CreateNoteWindow(NoteIndexItemModel noteItem, bool appendIndex)
@@ -884,6 +885,17 @@ using Hardcodet.Wpf.TaskbarNotification;
 			}
 		}
 
+		void SwitchShowClipboardWindow()
+		{
+			Debug.Assert(Clipboard != null);
+			Clipboard.Visible = !Clipboard.Visible;
+		}
+
+		void SwitchShowTemplateWindow()
+		{
+			Debug.Assert(Template != null);
+			Template.Visible = !Template.Visible;
+		}
 
 		#endregion
 
@@ -1435,8 +1447,9 @@ using Hardcodet.Wpf.TaskbarNotification;
 						// TODO: 論理座標取れてない！
 						var logcalPoint = devicePoint;
 						var noteSize = Constants.noteDefualtSize;
-						CreateNoteItem(logcalPoint, noteSize, true);
+						var window = CreateNoteItem(logcalPoint, noteSize, true);
 						SendInformationTips(CommonData.Language["tooltip/note/create/title"], CommonData.Language["tooltip/note/create/message"], LogKind.Information);
+						//WindowsUtility.ShowNoActive(window.Handle);
 					}
 					break;
 
@@ -1453,12 +1466,33 @@ using Hardcodet.Wpf.TaskbarNotification;
 				case HotKeyId.ShowFrontNote:
 					FrontNoteItems();
 					SendInformationTips(CommonData.Language["tooltip/note/front/title"], CommonData.Language["tooltip/note/front/message"], LogKind.Information);
-					throw new NotImplementedException();
+					break;
 
-				case HotKeyId.SwitchClipboardShow:
-					throw new NotImplementedException();
+				case HotKeyId.SwitchClipboardShow: 
+					{
+						SwitchShowClipboardWindow();
+						string message;
+						if(Clipboard.Visible) {
+							message = "tooltip/clipboard/message/show";
+						} else {
+							message = "tooltip/clipboard/message/hide";
+						}
+						SendInformationTips(CommonData.Language["tooltip/clipboard/title"], CommonData.Language[message], LogKind.Information);
+					}
+					break;
+
 				case HotKeyId.SwitchTemplateShow:
-					throw new NotImplementedException();
+					{
+						SwitchShowTemplateWindow();
+						string message;
+						if(Template.Visible) {
+							message = "tooltip/template/message/show";
+						} else {
+							message = "tooltip/template/message/hide";
+						}
+						SendInformationTips(CommonData.Language["tooltip/template/title"], CommonData.Language[message], LogKind.Information);
+					}
+					break;
 
 				default:
 					throw new NotImplementedException();
