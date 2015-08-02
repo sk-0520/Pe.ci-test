@@ -14,13 +14,28 @@
 	{
 		public IconCaching()
 		{
+			Initialize();
+		}
+
+		#region function
+
+		protected void Initialize()
+		{
 			foreach(var iconScale in EnumUtility.GetMembers<IconScale>()) {
 				this.Add(iconScale, new Caching<TChildKey, BitmapSource>());
 			}
 		}
 
-		#region function
+		public new void Clear()
+		{
+			foreach(var value in this.Values) {
+				value.Clear();
+			}
 
+			base.Clear();
+
+			Initialize();
+		}
 
 		#endregion
 	}

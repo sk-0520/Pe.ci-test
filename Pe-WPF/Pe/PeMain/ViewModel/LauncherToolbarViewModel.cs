@@ -526,12 +526,6 @@
 
 		#endregion
 
-		#region IHavingLauncherIconCaching
-
-		public LauncherIconCaching LauncherIconCaching { get; private set; }
-
-		#endregion
-
 		#region IHavingAppSender
 
 		public IAppSender AppSender { get; private set; }

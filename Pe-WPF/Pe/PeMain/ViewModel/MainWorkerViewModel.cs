@@ -722,8 +722,13 @@
 
 		void ResetCache()
 		{
-			// TODO: impl
 			CommonData.LauncherIconCaching.Clear();
+			
+			foreach(var viewModel in LauncherToolbars) {
+				viewModel.Refresh();
+			}
+
+			InitializeStatic();
 		}
 
 		void ResetSetting()
@@ -731,7 +736,6 @@
 			ResetCache();
 			// TODO: impl
 			InitializeStatus();
-			InitializeStatic();
 		}
 
 		static void ResetCulture(INonProcess nonProcess)

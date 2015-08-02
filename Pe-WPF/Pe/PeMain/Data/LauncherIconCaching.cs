@@ -21,11 +21,15 @@
 			: base()
 		{ }
 
+		#region function
+
 		public void Remove(LauncherItemModel model)
 		{
 			foreach(var cache in this.Values) {
 				cache.Remove(model);
 			}
 		}
+
+		#endregion
 	}
 }
