@@ -141,7 +141,8 @@
 					new { Id = HotKeyId.HideNote,    HotKey = CommonData.MainSetting.Note.HideHotKey,              UnRegistMessageName = "hotkey/unregist/hidden-note",     RegistMessageName = "hotkey/regist/hidden-note" },
 					new { Id = HotKeyId.CompactNote,   HotKey = CommonData.MainSetting.Note.CompactHotKey,             UnRegistMessageName = "hotkey/unregist/compact-note",    RegistMessageName = "hotkey/regist/compact-note" },
 					new { Id = HotKeyId.ShowFrontNote, HotKey = CommonData.MainSetting.Note.ShowFrontHotKey,           UnRegistMessageName = "hotkey/unregist/show-front-note", RegistMessageName = "hotkey/regist/show-front-note" },
-					new { Id = HotKeyId.SwitchClipboardShow, HotKey = CommonData.MainSetting.Clipboard.ToggleHotKey, UnRegistMessageName = "hotkey/unregist/show-front-note", RegistMessageName = "hotkey/regist/clipborad" },
+					new { Id = HotKeyId.SwitchClipboardShow, HotKey = CommonData.MainSetting.Clipboard.ToggleHotKey, UnRegistMessageName = "hotkey/unregist/clipboard", RegistMessageName = "hotkey/regist/clipboard" },
+					new { Id = HotKeyId.SwitchTemplateShow, HotKey = CommonData.MainSetting.Template.ToggleHotKey, UnRegistMessageName = "hotkey/unregist/template", RegistMessageName = "hotkey/regist/template" },
 				};
 			// 登録解除
 			foreach(var hotKeyData in hotKeyDatas.Where(hk => hk.HotKey.IsRegistered)) {
