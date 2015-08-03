@@ -278,7 +278,7 @@
 			get
 			{
 				if (this._selectedGroup == null) {
-					if (Model.Toolbar.DefaultGroupId != null) {
+					if (Model.Toolbar.DefaultGroupId != Guid.Empty) {
 						Model.GroupItems.TryGetValue(Model.Toolbar.DefaultGroupId, out this._selectedGroup);
 					}
 					if (this._selectedGroup == null) {
