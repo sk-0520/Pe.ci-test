@@ -32,7 +32,7 @@
 						<ColumnDefinition Width="*"/>
 						<ColumnDefinition Width="Auto" MinWidth="42" />
 					</Grid.ColumnDefinitions>
-					<ComboBox x:Name="listToolbar" Grid.Column="0" SelectedIndex="0" DisplayMemberPath="DisplayText" ItemsSource="{Binding ToolbarItemList, Mode=OneTime}" />
+					<ComboBox x:Name="listToolbar" Grid.Column="0" SelectedIndex="0" DisplayMemberPath="DisplayText" SelectedItem="{Binding SelectedToolbar}" ItemsSource="{Binding ToolbarItemList, Mode=OneTime}" />
 					<Button Grid.Column="1" Content="screen" />
 				</Grid>
 			</GroupBox.Header>
@@ -50,10 +50,10 @@
 					<RowDefinition Height="125*"/>
 				</Grid.RowDefinitions>
 				<Label Content="group" HorizontalAlignment="Left" Grid.Row="0" VerticalAlignment="Top"/>
-				<ComboBox Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" ItemsSource="{Binding DefaultGroupList}" >
+				<ComboBox Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" ItemsSource="{Binding DefaultGroupList}" SelectedValue="{Binding SelectedItem.DefaultGroupId, ElementName=listToolbar}" SelectedValuePath="Id" >
 					<ComboBox.ItemTemplate>
 						<ItemContainerTemplate>
-							<ContentPresenter  Content="{Binding Converter={StaticResource DisplayTextConverter}}" />
+							<ContentPresenter Content="{Binding Converter={StaticResource DisplayTextConverter}}" />
 						</ItemContainerTemplate>
 					</ComboBox.ItemTemplate>
 				</ComboBox>

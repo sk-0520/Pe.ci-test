@@ -29,6 +29,12 @@
 
 		LauncherGroupItemCollectionModel Group { get; set; }
 
+		public Guid DefaultGroupId
+		{
+			get { return Model.DefaultGroupId; }
+			set { SetModelValue(value); }
+		}
+
 		public DockType DockType
 		{
 			get { return Model.DockType; }

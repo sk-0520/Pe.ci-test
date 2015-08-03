@@ -31,6 +31,7 @@
 		CollectionModel<GroupRootViewModel> _groupTree;
 
 		LauncherItemModel _selectedLauncherItem;
+		ToolbarViewModel _selectedToolbar;
 
 		#endregion
 
@@ -76,12 +77,18 @@
 			}
 		}
 
+		public ToolbarViewModel SelectedToolbar
+		{
+			get { return this._selectedToolbar; }
+			set { SetVariableValue(ref this._selectedToolbar, value); }
+		}
+
 		public IEnumerable<LauncherGroupItemModel> DefaultGroupList
 		{
 			get
 			{
-				// TODO: なまえ
-				yield return new LauncherGroupItemModel() { Name = "(default)" };
+				// TODO: i18n なまえ
+				yield return new LauncherGroupItemModel() { Id = Guid.Empty, Name = "(default)" };
 
 				foreach(var item in GroupSettingModel.Groups) {
 					yield return item;
@@ -239,6 +246,12 @@
 
 							GroupSettingModel.Groups.Remove(groupModel);
 							this._groupTree.Remove(groupViewModel);
+
+							OnPropertyChanged("DefaultGroupList");
+							if(SelectedToolbar.DefaultGroupId == groupViewModel.Id) {
+								SelectedToolbar.DefaultGroupId = Guid.Empty;
+							}
+
 						} else {
 							Debug.Assert(toolbarNode.ToolbarNodeKind == ToolbarNodeKind.Item);
 							var itemViewModel = (GroupItemViewMode)toolbarNode;
