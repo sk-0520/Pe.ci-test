@@ -32,7 +32,7 @@
 						<ColumnDefinition Width="*"/>
 						<ColumnDefinition Width="Auto" MinWidth="42" />
 					</Grid.ColumnDefinitions>
-					<ComboBox x:Name="listToolbar" Grid.Column="0" SelectedIndex="0" DisplayMemberPath="DisplayText" SelectedItem="{Binding SelectedToolbar}" ItemsSource="{Binding ToolbarItemList, Mode=OneTime}" />
+					<ComboBox Grid.Column="0" SelectedIndex="0" DisplayMemberPath="DisplayText" SelectedItem="{Binding SelectedToolbar}" ItemsSource="{Binding ToolbarItemList, Mode=OneTime}" />
 					<Button Grid.Column="1" Content="screen" />
 				</Grid>
 			</GroupBox.Header>
@@ -50,7 +50,7 @@
 					<RowDefinition Height="125*"/>
 				</Grid.RowDefinitions>
 				<Label Content="group" HorizontalAlignment="Left" Grid.Row="0" VerticalAlignment="Top"/>
-				<ComboBox Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" ItemsSource="{Binding DefaultGroupList}" SelectedValue="{Binding SelectedItem.DefaultGroupId, ElementName=listToolbar}" SelectedValuePath="Id" >
+				<ComboBox Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" ItemsSource="{Binding DefaultGroupList}" SelectedValue="{Binding SelectedToolbar.DefaultGroupId}" SelectedValuePath="Id" >
 					<ComboBox.ItemTemplate>
 						<ItemContainerTemplate>
 							<ContentPresenter Content="{Binding Converter={StaticResource DisplayTextConverter}}" />
@@ -59,21 +59,21 @@
 				</ComboBox>
 
 				<Label Content="dock" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Top" />
-				<ComboBox Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" ItemsSource="{Binding Source={x:Static AP:EnumList.DockTypeList}}" SelectedItem="{Binding SelectedItem.DockType, ElementName=listToolbar, Mode=TwoWay}" />
+				<ComboBox Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" ItemsSource="{Binding Source={x:Static AP:EnumList.DockTypeList}}" SelectedItem="{Binding SelectedToolbar.DockType, Mode=TwoWay}" />
 
 				<Label Content="icon" HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Top"/>
-				<ComboBox Grid.Column="1" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Top" ItemsSource="{Binding Source={x:Static AP:EnumList.PlainIconScaleList}}" SelectedItem="{Binding SelectedItem.IconScale, ElementName=listToolbar, Mode=TwoWay}" />
+				<ComboBox Grid.Column="1" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Top" ItemsSource="{Binding Source={x:Static AP:EnumList.PlainIconScaleList}}" SelectedItem="{Binding SelectedToolbar.IconScale, Mode=TwoWay}" />
 
 				<Label Content="font" Grid.Row="3" HorizontalAlignment="Stretch" VerticalAlignment="Top" />
 
 				<Label Content="text length" Grid.Row="4" HorizontalAlignment="Stretch" VerticalAlignment="Top" />
-				<Slider Grid.Column="1" Grid.Row="4" HorizontalAlignment="Stretch" VerticalAlignment="Top" Value="{Binding SelectedItem.TextWidth, ElementName=listToolbar, Mode=TwoWay}" Minimum="{Binding Source={x:Static AM:Constants.ToolbarTextMinimumLength}}" Maximum="{Binding Source={x:Static AM:Constants.ToolbarTextMaximumLength}}" />
+				<Slider Grid.Column="1" Grid.Row="4" HorizontalAlignment="Stretch" VerticalAlignment="Top" Value="{Binding SelectedToolbar.TextWidth, Mode=TwoWay}" Minimum="{Binding Source={x:Static AM:Constants.ToolbarTextMinimumLength}}" Maximum="{Binding Source={x:Static AM:Constants.ToolbarTextMaximumLength}}" />
 
 				<StackPanel HorizontalAlignment="Left" Height="71" Grid.Row="5" Grid.ColumnSpan="2" VerticalAlignment="Top">
-					<CheckBox Content="show text" HorizontalAlignment="Stretch" IsChecked="{Binding SelectedItem.TextVisible, ElementName=listToolbar}" />
-					<CheckBox Content="auto hide" HorizontalAlignment="Stretch" IsChecked="{Binding SelectedItem.AutoHide, ElementName=listToolbar}" />
-					<CheckBox Content="topmost" HorizontalAlignment="Stretch" IsChecked="{Binding SelectedItem.IsTopmost, ElementName=listToolbar}" />
-					<CheckBox Content="visible" HorizontalAlignment="Stretch" IsChecked="{Binding SelectedItem.IsVisible, ElementName=listToolbar}" />
+					<CheckBox Content="show text" HorizontalAlignment="Stretch" IsChecked="{Binding SelectedToolbar.TextVisible}" />
+					<CheckBox Content="auto hide" HorizontalAlignment="Stretch" IsChecked="{Binding SelectedToolbar.AutoHide}" />
+					<CheckBox Content="topmost" HorizontalAlignment="Stretch" IsChecked="{Binding SelectedToolbar.IsTopmost}" />
+					<CheckBox Content="visible" HorizontalAlignment="Stretch" IsChecked="{Binding SelectedToolbar.IsVisible}" />
 				</StackPanel>
 			</Grid>
 		</GroupBox>
