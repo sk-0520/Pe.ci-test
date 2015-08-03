@@ -688,7 +688,7 @@ using Hardcodet.Wpf.TaskbarNotification;
 
 		void RemoveToolbar()
 		{
-			foreach(var window in LauncherToolbarWindows.ToArray()) {
+			foreach(var window in LauncherToolbarWindows.Where(w => w.IsLoaded).ToArray()) {
 				window.Close();
 			}
 			LauncherToolbarWindows.Clear();
