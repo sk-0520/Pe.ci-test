@@ -88,6 +88,8 @@
 		public const int screenCountChangeRetryCount = 10;
 		public static readonly TimeSpan screenCountChangeWaitTime = TimeSpan.FromMilliseconds(250);
 
+		public static Size loggingDefaultWindowSize = new Size(320, 480);
+
 		public static readonly TripleRange<TimeSpan> commandHideTime = new TripleRange<TimeSpan>(
 			TimeSpan.FromMilliseconds(250),
 			TimeSpan.FromSeconds(2),

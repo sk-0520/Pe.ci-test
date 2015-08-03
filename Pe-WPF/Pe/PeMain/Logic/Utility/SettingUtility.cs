@@ -209,6 +209,13 @@
 		public static void InitializeLoggingSetting(LoggingSettingModel setting, Version previousVersion, INonProcess nonProcess)
 		{
 			Implement.InitializeLoggingSetting.Correction(setting, previousVersion, nonProcess);
+
+			if(IsIllegalPlusNumber(setting.WindowWidth)) {
+				setting.WindowWidth = Constants.loggingDefaultWindowSize.Width;
+			}
+			if(IsIllegalPlusNumber(setting.WindowHeight)) {
+				setting.WindowHeight = Constants.loggingDefaultWindowSize.Height;
+			}
 		}
 
 		public static void InitializeLauncherItemSetting(LauncherItemSettingModel setting, Version previousVersion, INonProcess nonProcess)

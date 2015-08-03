@@ -16,6 +16,12 @@
 		}
 
 		static void V_First(LoggingSettingModel setting, Version previousVersion, INonProcess nonProcess)
-		{ }
+		{
+			if(previousVersion != null) {
+				return;
+			}
+
+			nonProcess.Logger.Trace("version setting: first");
+		}
 	}
 }
