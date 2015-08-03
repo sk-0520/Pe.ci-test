@@ -32,7 +32,7 @@
 						<ColumnDefinition Width="*"/>
 						<ColumnDefinition Width="Auto" MinWidth="42" />
 					</Grid.ColumnDefinitions>
-					<ComboBox Grid.Column="0" ItemsSource="{Binding ToolbarItemList, Mode=OneTime}" DisplayMemberPath="DisplayText" SelectedIndex="0" x:Name="Toolbar" />
+					<ComboBox x:Name="listToolbar" Grid.Column="0" SelectedIndex="0" DisplayMemberPath="DisplayText" ItemsSource="{Binding ToolbarItemList, Mode=OneTime}" />
 					<Button Grid.Column="1" Content="screen" />
 				</Grid>
 			</GroupBox.Header>
