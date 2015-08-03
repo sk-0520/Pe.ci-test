@@ -198,11 +198,17 @@
 		{
 			CheckUtility.EnforceNotNull(setting);
 
+			InitializeLoggingSetting(setting.Logging, previousVersion, nonProcess);
 			InitializeToolbarSetting(setting.Toolbar, previousVersion, nonProcess);
 			InitializeNoteSetting(setting.Note, previousVersion, nonProcess);
 			InitializeWindowSaveSetting(setting.WindowSave, previousVersion, nonProcess);
 			InitializeClipboardSetting(setting.Clipboard, previousVersion, nonProcess);
 			InitializeTemplateSetting(setting.Template, previousVersion, nonProcess);
+		}
+
+		public static void InitializeLoggingSetting(LoggingSettingModel setting, Version previousVersion, INonProcess nonProcess)
+		{
+			Implement.InitializeLoggingSetting.Correction(setting, previousVersion, nonProcess);
 		}
 
 		public static void InitializeLauncherItemSetting(LauncherItemSettingModel setting, Version previousVersion, INonProcess nonProcess)
