@@ -19,6 +19,7 @@
 	using ContentTypeTextNet.Library.SharedLibrary.View.Converter;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 	using ContentTypeTextNet.Pe.PeMain.ViewModel;
+	using ContentTypeTextNet.Pe.PeMain.ViewModel.Control;
 
 	/// <summary>
 	/// LauncherItemsListControl.xaml の相互作用ロジック
@@ -60,7 +61,7 @@
 
 		public static readonly DependencyProperty SelectedLauncherItemProperty = DependencyProperty.Register(
 			"SelectedLauncherItem",
-			typeof(LauncherItemModel),
+			typeof(LauncherListItemViewModel),
 			typeof(LauncherListItemsControl),
 			new FrameworkPropertyMetadata(new PropertyChangedCallback(OnSelectedLauncherItem))
 		);
@@ -69,45 +70,45 @@
 		{
 			var control = d as LauncherListItemsControl;
 			if (control != null) {
-				control.SelectedLauncherItem = e.NewValue as LauncherItemModel;
+				control.SelectedLauncherItem = e.NewValue as LauncherListItemViewModel;
 			}
 		}
 
-		public LauncherItemModel SelectedLauncherItem
+		public LauncherListItemViewModel SelectedLauncherItem
 		{
-			get { return GetValue(SelectedLauncherItemProperty) as LauncherItemModel; }
+			get { return GetValue(SelectedLauncherItemProperty) as LauncherListItemViewModel; }
 			set 
 			{
 				SetValue(SelectedLauncherItemProperty, value);
 				this.listItems.SelectedItem = value;
-				if (value != null) {
-					SelectedLauncherViewModel = new LauncherItemSimpleViewModel(SelectedLauncherItem, CommonData.NonProcess, CommonData.AppSender);
-				}
+				//if (value != null) {
+				//	SelectedLauncherViewModel = new LauncherItemSimpleViewModel(SelectedLauncherItem, CommonData.NonProcess, CommonData.AppSender);
+				//}
 			}
 		}
 
 		#endregion
 
-		#region SelectedLauncherViewModelProperty
+		//#region SelectedLauncherViewModelProperty
 
-		public static readonly DependencyProperty SelectedLauncherViewModelProperty = DependencyProperty.Register(
-			"SelectedLauncherViewModel",
-			typeof(LauncherItemViewModelBase),
-			typeof(LauncherListItemsControl),
-			new FrameworkPropertyMetadata(null)
-		);
-		public LauncherItemViewModelBase SelectedLauncherViewModel
-		{
-			get { return GetValue(SelectedLauncherViewModelProperty) as LauncherItemViewModelBase; }
-			set { SetValue(SelectedLauncherViewModelProperty, value); }
-		}
+		//public static readonly DependencyProperty SelectedLauncherViewModelProperty = DependencyProperty.Register(
+		//	"SelectedLauncherViewModel",
+		//	typeof(LauncherItemViewModelBase),
+		//	typeof(LauncherListItemsControl),
+		//	new FrameworkPropertyMetadata(null)
+		//);
+		//public LauncherItemViewModelBase SelectedLauncherViewModel
+		//{
+		//	get { return GetValue(SelectedLauncherViewModelProperty) as LauncherItemViewModelBase; }
+		//	set { SetValue(SelectedLauncherViewModelProperty, value); }
+		//}
 
 		void ListItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			SelectedLauncherItem = this.listItems.SelectedItem as LauncherItemModel;
+			SelectedLauncherItem = this.listItems.SelectedItem as LauncherListItemViewModel;
 		}
 
-		#endregion
+		//#endregion
 
 		#region CanListEditProperty
 

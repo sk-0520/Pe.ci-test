@@ -12,6 +12,7 @@
 	using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.ViewModel;
+	using ContentTypeTextNet.Pe.PeMain.ViewModel.Control;
 
 	public class SelectedNodeAndLauncherItemConverter : IMultiValueConverter
 	{
@@ -21,7 +22,7 @@
 			result.SelectedNode = values[0] as IToolbarNode;
 			result.LauncherItem = values[1] == null
 				? default(LauncherItemModel)
-				: ((LauncherItemViewModelBase)values[1]).Model
+				: ((LauncherListItemViewModel)values[1]).Model
 			;
 
 			return result;

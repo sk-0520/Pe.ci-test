@@ -88,13 +88,13 @@
 						<Button Content="group" Command="{Binding CreateGroupCommand}" />
 						<Button 
 							Content="item" 
-							IsEnabled="{Binding SelectedLauncherViewModel, ElementName=ItemList, Converter={StaticResource LogicalIsNotNullConverter}}" 
+							IsEnabled="{Binding SelectedLauncherItem, ElementName=ItemList, Converter={StaticResource LogicalIsNotNullConverter}}" 
 							Command="{Binding CreateLauncherItemCommand}" 
 						>
 							<Button.CommandParameter>
 								<MultiBinding Converter="{StaticResource SelectedNodeAndLauncherItemConverter}">
 									<Binding Path="SelectedItem" ElementName="GroupTree" />
-									<Binding Path="SelectedLauncherViewModel" ElementName="ItemList" />
+									<Binding Path="SelectedLauncherItem" ElementName="ItemList" />
 								</MultiBinding>
 							</Button.CommandParameter>
 						</Button>
