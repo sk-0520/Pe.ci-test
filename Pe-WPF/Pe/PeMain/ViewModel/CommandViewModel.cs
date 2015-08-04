@@ -14,21 +14,33 @@
 	using ContentTypeTextNet.Pe.PeMain.Logic.Property;
 	using ContentTypeTextNet.Pe.PeMain.View;
 	using System.Diagnostics;
+	using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.Pe.Library.PeData.Setting;
+	using ContentTypeTextNet.Pe.PeMain.Define;
+	using ContentTypeTextNet.Pe.PeMain.IF;
 
-	public class CommandViewModel : HavingViewSingleModelWrapperViewModelBase<CommandSettingModel, CommandWindow>
+	public class CommandViewModel : HavingViewSingleModelWrapperViewModelBase<CommandSettingModel, CommandWindow>, IHavingAppNonProcess
 	{
 		#region variable
 		
 		double _windowLeft, _windowTop;
 		Visibility _visibility = Visibility.Hidden;
+		CollectionModel<CommandItemViewModel> _commandItems;
 		
 		#endregion
 
-		public CommandViewModel(CommandSettingModel model, CommandWindow view)
+		public CommandViewModel(CommandSettingModel model, CommandWindow view, LauncherItemSettingModel launcherItemSetting, IAppNonProcess appNonProcess)
 			: base(model, view)
-		{ }
+		{
+			LauncherItemSetting = launcherItemSetting;
+			AppNonProcess = appNonProcess;
+
+			CommandItems = new CollectionModel<CommandItemViewModel>(GetAllCommandItems());
+		}
 
 		#region property
+
+		LauncherItemSettingModel LauncherItemSetting { get; set; }
 
 		public double WindowLeft
 		{
@@ -56,6 +68,29 @@
 
 		public double IconWidth { get { return Model.IconScale.ToWidth(); } }
 		public double IconHeight { get { return Model.IconScale.ToHeight(); } }
+
+		public CollectionModel<CommandItemViewModel> CommandItems 
+		{
+			get { return this._commandItems; }
+			set { SetVariableValue(ref this._commandItems, value); }
+		}
+
+		#endregion
+
+		#region function
+
+		IEnumerable<CommandItemViewModel> GetAllCommandItems()
+		{
+			return LauncherItemSetting.Items
+				.Select(i => new CommandItemViewModel(CommandKind.LauncherItemName, i, AppNonProcess))
+			;
+		}
+
+		#endregion
+
+		#region IHavingAppNonProcess
+
+		public IAppNonProcess AppNonProcess { get; private set; }
 
 		#endregion
 

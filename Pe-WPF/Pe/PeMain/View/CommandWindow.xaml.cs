@@ -30,7 +30,7 @@ namespace ContentTypeTextNet.Pe.PeMain.View
 
 		protected override void CreateViewModel()
 		{
-			ViewModel = new CommandViewModel(CommonData.MainSetting.Command, this);
+			ViewModel = new CommandViewModel(CommonData.MainSetting.Command, this, CommonData.LauncherItemSetting, CommonData.NonProcess);
 		}
 
 		protected override void ApplyViewModel()
