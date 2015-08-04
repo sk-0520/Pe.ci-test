@@ -6,6 +6,7 @@
 	xmlns:AP="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
 	xmlns:AW="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Window"
 	xmlns:AA="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Attached"
+	xmlns:AC="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Converter"
 	x:TypeArguments="AVM:CommandViewModel"
 	Visibility="{Binding Visibility, Mode=TwoWay}"
 	Left="{Binding WindowLeft, Mode=TwoWay}"
@@ -13,10 +14,19 @@
 	Width="{Binding WindowWidth, Mode=TwoWay}"
 	Height="80"
 	Title="CommandWindow"
+	Topmost="True"
 
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
 	d:DesignWidth="300"
 >
+	<AW:CommonDataWindow.Resources>
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceDictionary Source="/View/Parts/Resource/ImageDictionary.xaml"/>
+			</ResourceDictionary.MergedDictionaries>
+			<AC:CommandItemConverter x:Key="CommandItemConverter" />
+		</ResourceDictionary>
+	</AW:CommonDataWindow.Resources>
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition />
@@ -29,7 +39,7 @@
 		</Grid.ColumnDefinitions>
 		<Image Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Width="{Binding IconWidth, Mode=OneTime}" Height="{Binding IconHeight, Mode=OneTime}" />
 
-		<ComboBox Grid.Row="0" Grid.Column="1" IsEditable="True" Text="{Binding InputText, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedCommandItem}" ItemsSource="{Binding CommandItems}" SelectedValuePath="DisplayText">
+		<ComboBox Grid.Row="0" Grid.Column="1" IsEditable="True" Text="{Binding InputText, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedCommandItem}" ItemsSource="{Binding CommandItems}" >
 			<ComboBox.ItemTemplate>
 				<DataTemplate>
 					<TextBlock Height="20" Text="{Binding DisplayText}" />

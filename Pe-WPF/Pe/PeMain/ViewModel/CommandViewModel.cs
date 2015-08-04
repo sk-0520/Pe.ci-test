@@ -94,11 +94,14 @@ using ContentTypeTextNet.Pe.Library.PeData.Setting;
 			get { return this._inputText; }
 			set 
 			{
-				if (SetVariableValue(ref this._inputText, value.Trim())) {
-					if (!string.IsNullOrEmpty(this._inputText) && SelectedCommandItem == null) {
+				if (SelectedCommandItem == null) {
+					SetVariableValue(ref this._inputText, value.Trim());
+					if (!string.IsNullOrEmpty(this._inputText)) {
 						var items = GetCommandItems(this._inputText);
 						CommandItems = new CollectionModel<CommandItemViewModel>(items);
 					}
+				} else {
+					SetVariableValue(ref this._inputText, SelectedCommandItem.DisplayText);
 				}
 			}
 		}
@@ -106,7 +109,14 @@ using ContentTypeTextNet.Pe.Library.PeData.Setting;
 		public CommandItemViewModel SelectedCommandItem
 		{
 			get { return this._selectedCommandItem; }
-			set { SetVariableValue(ref this._selectedCommandItem, value); }
+			set 
+			{ 
+				SetVariableValue(ref this._selectedCommandItem, value);
+				//if (this._selectedCommandItem == null) {
+				//	var items = GetAllCommandItems();
+				//	CommandItems = new CollectionModel<CommandItemViewModel>(items);
+				//}
+			}
 		}
 
 		#endregion

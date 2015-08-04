@@ -133,6 +133,7 @@
     <Compile Include="View\CommandWindow.xaml.cs">
       <DependentUpon>CommandWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Parts\Converter\CommandItemConverter.cs" />
     <Compile Include="X-Partial\AppResource-implement.cs" />
     <Compile Include="X-Partial\AppResourceAttribute.cs" />
     <Compile Include="X-Partial\AppResource-generator.cs">
