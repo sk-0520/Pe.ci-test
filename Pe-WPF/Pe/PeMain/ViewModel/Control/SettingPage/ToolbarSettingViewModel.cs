@@ -35,12 +35,13 @@
 
 		#endregion
 
-		public ToolbarSettingViewModel(ToolbarSettingModel toolbarSetting, LauncherGroupSettingModel groupSettingModel, LauncherItemSettingModel launcherItemSetting, IAppNonProcess appNonProcess, SettingNotifiyItem settingNotifiyItem)
+		public ToolbarSettingViewModel(ToolbarSettingModel toolbarSetting, LauncherGroupSettingModel groupSettingModel, LauncherItemSettingModel launcherItemSetting, IAppNonProcess appNonProcess, IAppSender appSender, SettingNotifiyItem settingNotifiyItem)
 			: base(appNonProcess, settingNotifiyItem)
 		{
 			ToolbarSetting = toolbarSetting;
 			GroupSettingModel = groupSettingModel;
 			LauncherItemSetting = launcherItemSetting;
+			AppSender = appSender;
 		}
 
 		#region proerty
@@ -58,7 +59,8 @@
 				if (this._launcherItems == null) {
 					this._launcherItems = new LauncherListItemsViewModel(
 						LauncherItemSetting.Items,
-						AppNonProcess
+						AppNonProcess,
+						AppSender
 					);
 				}
 
@@ -345,6 +347,12 @@
 			}
 			toolbarNode.IsSelected = true;
 		}
+
+		#endregion
+
+		#region IHavingAppSender
+
+		public IAppSender AppSender { get; private set; }
 
 		#endregion
 	}

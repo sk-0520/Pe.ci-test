@@ -67,6 +67,7 @@
 					this._launcherItemSetting = new LauncherItemSettingViewModel(
 						CommonData.LauncherItemSetting,
 						CommonData.NonProcess,
+						CommonData.AppSender,
 						SettingNotifiyItem
 					);
 				}
@@ -85,6 +86,7 @@
 						CommonData.LauncherGroupSetting,
 						CommonData.LauncherItemSetting,
 						CommonData.NonProcess,
+						CommonData.AppSender,
 						SettingNotifiyItem
 					);
 				}

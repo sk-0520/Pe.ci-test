@@ -13,7 +13,7 @@
 	using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
 	using ContentTypeTextNet.Pe.PeMain.IF;
 
-	public class LauncherItemSettingViewModel: SettingPageLauncherIconCacheViewModelBase
+	public class LauncherItemSettingViewModel: SettingPageLauncherIconCacheViewModelBase, IHavingAppSender
 	{
 		#region variable
 
@@ -21,10 +21,11 @@
 
 		#endregion
 
-		public LauncherItemSettingViewModel(LauncherItemSettingModel launcherItemSetting, IAppNonProcess appNonProcess, SettingNotifiyItem settingNotifiyItem)
+		public LauncherItemSettingViewModel(LauncherItemSettingModel launcherItemSetting, IAppNonProcess appNonProcess, IAppSender appSender, SettingNotifiyItem settingNotifiyItem)
 			: base(appNonProcess, settingNotifiyItem)
 		{
 			LauncherItemSetting = launcherItemSetting;
+			AppSender = appSender;
 		}
 
 		#region proerty
@@ -38,13 +39,20 @@
 				if(this._launcherItems == null) {
 					this._launcherItems = new LauncherListItemsViewModel(
 						LauncherItemSetting.Items,
-						AppNonProcess
+						AppNonProcess,
+						AppSender
 					);
 				}
 
 				return this._launcherItems;
 			}
 		}
+
+		#endregion
+
+		#region IHavingAppSender
+
+		public IAppSender AppSender { get; private set; }
 
 		#endregion
 	}
