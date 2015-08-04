@@ -36,6 +36,8 @@ using ContentTypeTextNet.Pe.Library.PeData.Setting;
 		Visibility _visibility = Visibility.Hidden;
 		CollectionModel<CommandItemViewModel> _commandItems;
 		string _inputText;
+
+		CommandItemViewModel _selectedCommandItem;
 		
 		#endregion
 
@@ -93,12 +95,18 @@ using ContentTypeTextNet.Pe.Library.PeData.Setting;
 			set 
 			{
 				if (SetVariableValue(ref this._inputText, value.Trim())) {
-					if (!string.IsNullOrEmpty(this._inputText)) {
+					if (!string.IsNullOrEmpty(this._inputText) && SelectedCommandItem == null) {
 						var items = GetCommandItems(this._inputText);
 						CommandItems = new CollectionModel<CommandItemViewModel>(items);
 					}
 				}
 			}
+		}
+
+		public CommandItemViewModel SelectedCommandItem
+		{
+			get { return this._selectedCommandItem; }
+			set { SetVariableValue(ref this._selectedCommandItem, value); }
 		}
 
 		#endregion
@@ -114,6 +122,9 @@ using ContentTypeTextNet.Pe.Library.PeData.Setting;
 
 		IEnumerable<CommandItemViewModel> GetCommandItems(string filter)
 		{
+			if (string.IsNullOrWhiteSpace(filter)) {
+				return GetAllCommandItems();
+			}
 			var items = LauncherItemSetting.Items
 				.Where(i => i.Name.StartsWith(filter))
 				.Select(i => new CommandItemViewModel(i, AppNonProcess))

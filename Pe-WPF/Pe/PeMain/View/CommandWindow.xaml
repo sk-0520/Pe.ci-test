@@ -11,20 +11,35 @@
 	Left="{Binding WindowLeft, Mode=TwoWay}"
 	Top="{Binding WindowTop, Mode=TwoWay}"
 	Width="{Binding WindowWidth, Mode=TwoWay}"
-	Height="60"
+	Height="80"
 	Title="CommandWindow"
 
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
 	d:DesignWidth="300"
 >
 	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition />
+			<RowDefinition />
+		</Grid.RowDefinitions>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="Auto" />
 			<ColumnDefinition Width="*" />
 			<ColumnDefinition Width="Auto" />
 		</Grid.ColumnDefinitions>
-		<Image Grid.Column="0" Width="{Binding IconWidth, Mode=OneTime}" Height="{Binding IconHeight, Mode=OneTime}" />
-		<ComboBox Grid.Column="1" IsEditable="True" Text="{Binding InputText, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding CommandItems}" />
-		<Button Grid.Column="2" Content="execute" AA:Language.Word="command/execute" />
+		<Image Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Width="{Binding IconWidth, Mode=OneTime}" Height="{Binding IconHeight, Mode=OneTime}" />
+
+		<ComboBox Grid.Row="0" Grid.Column="1" IsEditable="True" Text="{Binding InputText, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedCommandItem}" ItemsSource="{Binding CommandItems}" SelectedValuePath="DisplayText">
+			<ComboBox.ItemTemplate>
+				<DataTemplate>
+					<TextBlock Height="20" Text="{Binding DisplayText}" />
+				</DataTemplate>
+			</ComboBox.ItemTemplate>
+		</ComboBox>
+		<StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
+			<TextBlock Text="{Binding SelectedCommandItem.CommandKind}" />
+		</StackPanel>
+		
+		<Button Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" Content="execute" AA:Language.Word="command/execute" />
 	</Grid>
 </AW:ViewModelCommonDataWindow>

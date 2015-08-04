@@ -1,14 +1,14 @@
 ﻿namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 {
 	using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
-using ContentTypeTextNet.Pe.Library.PeData.Item;
-using ContentTypeTextNet.Pe.PeMain.Define;
-using ContentTypeTextNet.Pe.PeMain.IF;
+	using System.Collections.Generic;
+	using System.Linq;
+	using System.Text;
+	using System.Threading.Tasks;
+	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+	using ContentTypeTextNet.Pe.Library.PeData.Item;
+	using ContentTypeTextNet.Pe.PeMain.Define;
+	using ContentTypeTextNet.Pe.PeMain.IF;
 
 	/// <summary>
 	/// <para>モデルはなし。</para>
@@ -53,6 +53,30 @@ using ContentTypeTextNet.Pe.PeMain.IF;
 		#region IHavingAppNonProcess
 
 		public IAppNonProcess AppNonProcess { get; private set; }
+
+		#endregion
+
+		#region ViewModelBase
+
+		public override string DisplayText
+		{
+			get
+			{
+				switch (CommandKind) {
+					case Define.CommandKind.LauncherItemName:
+						return LauncherItemModel.Name;
+
+					case Define.CommandKind.LauncherItemTag:
+						return Tag;
+
+					case Define.CommandKind.File:
+						return FilePath;
+
+					default:
+						throw new NotImplementedException();
+				}
+			}
+		}
 
 		#endregion
 	}
