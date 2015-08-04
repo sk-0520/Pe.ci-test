@@ -56,7 +56,7 @@
 		<StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
 			<TextBlock Text="{Binding SelectedCommandItem.CommandKind}" />
 		</StackPanel>-->
-		<TextBox x:Name="inputCommand" Grid.Row="0" Grid.Column="1" Text="{Binding InputText, UpdateSourceTrigger=PropertyChanged}" >
+		<TextBox x:Name="inputCommand" Grid.Row="0" Grid.Column="1"  Text="{Binding InputText, UpdateSourceTrigger=PropertyChanged}">
 			<TextBox.InputBindings>
 				<KeyBinding Key="Up" Command="{Binding UpListCommand}" />
 				<KeyBinding Key="Down" Command="{Binding DownListCommand}" />
@@ -64,7 +64,7 @@
 		</TextBox>
 		<Popup x:Name="popup" PlacementTarget="{Binding ElementName=inputCommand}" IsOpen="{Binding IsOpen, Mode=OneWay}">
 			<Border>
-				<ListBox x:Name="listItems" SelectedIndex="{Binding SelectedIndex}" ItemsSource="{Binding CommandItems}">
+				<ListBox x:Name="listItems" SelectedIndex="{Binding SelectedIndex}" SelectedItem="{Binding SelectedCommandItem}" ItemsSource="{Binding CommandItems}">
 					<ListBox.ItemTemplate>
 						<DataTemplate>
 							<StackPanel Orientation="Horizontal">

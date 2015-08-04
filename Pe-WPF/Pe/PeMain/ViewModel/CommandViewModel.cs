@@ -107,7 +107,21 @@ using System.Windows.Input;
 						CommandItems = new CollectionModel<CommandItemViewModel>(items);
 					}
 				} else {
-					SetVariableValue(ref this._inputText, SelectedCommandItem.DisplayText);
+					switch(SelectedCommandItem.CommandKind) {
+						case CommandKind.LauncherItemName:
+						case CommandKind.LauncherItemTag:
+							if(SelectedCommandItem.DisplayText.StartsWith(value)) {
+								SetVariableValue(ref this._inputText, SelectedCommandItem.DisplayText);
+							} else {
+								SetVariableValue(ref this._inputText, value);
+								var items = GetCommandItems(this._inputText);
+								CommandItems = new CollectionModel<CommandItemViewModel>(items);
+							}
+							break;
+						case CommandKind.File:
+							SetVariableValue(ref this._inputText, value);
+							break;
+					}
 				}
 				OnPropertyChangeIsOpen();
 			}
@@ -236,7 +250,7 @@ using System.Windows.Input;
 			get
 			{
 				var result = CreateCommand(
-					o => { }
+					o => { ChangeSelectedItemFromList(true); }
 				);
 
 				return result;
@@ -248,7 +262,7 @@ using System.Windows.Input;
 			get
 			{
 				var result = CreateCommand(
-					o => { }
+					o => { ChangeSelectedItemFromList(false); }
 				);
 
 				return result;
@@ -287,6 +301,23 @@ using System.Windows.Input;
 			base.UninitializeView();
 		}
 
+		void ChangeSelectedItemFromList(bool isUp)
+		{
+			if(isUp) {
+				if(SelectedIndex == 0) {
+					SelectedIndex = CommandItems.Count - 1;
+				} else {
+					SelectedIndex = SelectedIndex - 1;
+				}
+			} else {
+				if(SelectedIndex >= CommandItems.Count - 1) {
+					SelectedIndex = 0;
+				} else {
+					SelectedIndex = SelectedIndex + 1;
+				}
+			}
+		}
+
 		#endregion
 
 		private void View_UserClosing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -298,6 +329,9 @@ using System.Windows.Input;
 		void View_Activated(object sender, EventArgs e)
 		{
 			OnPropertyChangeIsOpen();
+			if(HasView) {
+				View.inputCommand.Focus();
+			}
 		}
 
 		void View_Deactivated(object sender, EventArgs e)
