@@ -122,6 +122,7 @@
     <Compile Include="IF\INonProcess.cs" />
     <Compile Include="Data\MVMPair.cs" />
     <Compile Include="Logic\DialogFilterList.cs" />
+    <Compile Include="Logic\Extension\FileSystemInfoUtility.cs" />
     <Compile Include="Logic\MVMPairCreateDelegationCollection.cs" />
     <Compile Include="Logic\Utility\FontUtility.cs" />
     <Compile Include="Model\CollectionModel.cs" />

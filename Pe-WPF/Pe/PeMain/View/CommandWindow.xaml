@@ -24,7 +24,7 @@
 			<ColumnDefinition Width="Auto" />
 		</Grid.ColumnDefinitions>
 		<Image Grid.Column="0" Width="{Binding IconWidth, Mode=OneTime}" Height="{Binding IconHeight, Mode=OneTime}" />
-		<ComboBox Grid.Column="1" IsEditable="True" ItemsSource="{Binding CommandItems}" />
+		<ComboBox Grid.Column="1" IsEditable="True" Text="{Binding InputText, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding CommandItems}" />
 		<Button Grid.Column="2" Content="execute" AA:Language.Word="command/execute" />
 	</Grid>
 </AW:ViewModelCommonDataWindow>

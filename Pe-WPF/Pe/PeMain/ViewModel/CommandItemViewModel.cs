@@ -19,23 +19,33 @@ using ContentTypeTextNet.Pe.PeMain.IF;
 
 		#endregion
 
-		public CommandItemViewModel(CommandKind commandKind, LauncherItemModel launcherItem, IAppNonProcess appNonProcess)
+		public CommandItemViewModel(LauncherItemModel launcherItem, IAppNonProcess appNonProcess)
 		{
-			CommandKind = commandKind;
+			CommandKind = CommandKind.LauncherItemName;
 			LauncherItemModel = launcherItem;
 			AppNonProcess = appNonProcess;
 		}
 
-		public CommandItemViewModel(string filePath)
+		public CommandItemViewModel(LauncherItemModel launcherItem, string tag, IAppNonProcess appNonProcess)
+		{
+			CommandKind = CommandKind.LauncherItemTag;
+			LauncherItemModel = launcherItem;
+			Tag = tag;
+			AppNonProcess = appNonProcess;
+		}
+
+		public CommandItemViewModel(string filePath, IAppNonProcess appNonProcess)
 		{
 			CommandKind = CommandKind.File;
 			FilePath = filePath;
+			AppNonProcess = appNonProcess;
 		}
 
 		#region property
 
 		public CommandKind CommandKind { get; private set; }
 		public LauncherItemModel LauncherItemModel { get; private set; }
+		public string Tag { get; private set; }
 		public string FilePath { get; private set; }
 
 		#endregion

@@ -18,16 +18,28 @@
 using ContentTypeTextNet.Pe.Library.PeData.Setting;
 	using ContentTypeTextNet.Pe.PeMain.Define;
 	using ContentTypeTextNet.Pe.PeMain.IF;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+	using System.IO;
+	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
 	public class CommandViewModel : HavingViewSingleModelWrapperViewModelBase<CommandSettingModel, CommandWindow>, IHavingAppNonProcess
 	{
+		#region define
+
+		static readonly IReadOnlyList<CommandItemViewModel> emptyCommandList = new List<CommandItemViewModel>();
+
+		#endregion
+
 		#region variable
-		
+
 		double _windowLeft, _windowTop;
 		Visibility _visibility = Visibility.Hidden;
 		CollectionModel<CommandItemViewModel> _commandItems;
+		string _inputText;
 		
 		#endregion
+
+
 
 		public CommandViewModel(CommandSettingModel model, CommandWindow view, LauncherItemSettingModel launcherItemSetting, IAppNonProcess appNonProcess)
 			: base(model, view)
@@ -75,6 +87,20 @@ using ContentTypeTextNet.Pe.Library.PeData.Setting;
 			set { SetVariableValue(ref this._commandItems, value); }
 		}
 
+		public string InputText
+		{
+			get { return this._inputText; }
+			set 
+			{
+				if (SetVariableValue(ref this._inputText, value.Trim())) {
+					if (!string.IsNullOrEmpty(this._inputText)) {
+						var items = GetCommandItems(this._inputText);
+						CommandItems = new CollectionModel<CommandItemViewModel>(items);
+					}
+				}
+			}
+		}
+
 		#endregion
 
 		#region function
@@ -82,8 +108,69 @@ using ContentTypeTextNet.Pe.Library.PeData.Setting;
 		IEnumerable<CommandItemViewModel> GetAllCommandItems()
 		{
 			return LauncherItemSetting.Items
-				.Select(i => new CommandItemViewModel(CommandKind.LauncherItemName, i, AppNonProcess))
+				.Select(i => new CommandItemViewModel(i, AppNonProcess))
 			;
+		}
+
+		IEnumerable<CommandItemViewModel> GetCommandItems(string filter)
+		{
+			var items = LauncherItemSetting.Items
+				.Where(i => i.Name.StartsWith(filter))
+				.Select(i => new CommandItemViewModel(i, AppNonProcess))
+			;
+
+			IEnumerable<CommandItemViewModel> tags = null;
+			if (Model.FindTag) {
+				tags = LauncherItemSetting.Items
+					.Where(i => i.Tag.Items.Any(t => t.StartsWith(filter)))
+					.Select(i => new CommandItemViewModel(i, i.Tag.Items.First(t => t.StartsWith(filter)), AppNonProcess))
+				;
+			}
+			if (tags == null) {
+				tags = emptyCommandList;
+			}
+
+			IEnumerable<CommandItemViewModel> files = null;
+			if (Model.FindFile) {
+				var inputPath = Environment.ExpandEnvironmentVariables(filter);
+				var isDir = Directory.Exists(inputPath);
+				string baseDir;
+				try {
+					baseDir = isDir
+						? inputPath.Last() == Path.VolumeSeparatorChar
+							? inputPath + Path.DirectorySeparatorChar
+							: inputPath
+						: Path.GetDirectoryName(inputPath)
+					;
+				} catch (ArgumentException) {
+					baseDir = inputPath;
+				}
+				if (FileUtility.Exists(baseDir)) {
+					Debug.WriteLine(inputPath);
+					//var isDir = Directory.Exists(inputPath);
+					//var baseDir = isDir ? inputPath : Path.GetDirectoryName(inputPath);
+					var searchPattern = isDir ? "*" : Path.GetFileName(inputPath) + "*";
+					var showHiddenFile = SystemEnvironmentUtility.IsHideFileShow();
+					var directoryInfo = new DirectoryInfo(baseDir);
+					try {
+						files = directoryInfo
+							.EnumerateFileSystemInfos(searchPattern, SearchOption.TopDirectoryOnly)
+							.Where(fs => fs.Exists)
+							.Where(fs => showHiddenFile ? true : !fs.IsHidden())
+							.Select(fs => new CommandItemViewModel(fs.FullName, AppNonProcess))
+						;
+					} catch (IOException ex) {
+						AppNonProcess.Logger.Warning(ex);
+					} catch (UnauthorizedAccessException ex) {
+						AppNonProcess.Logger.Warning(ex);
+					}
+				}
+			}
+			if (files == null) {
+				files = emptyCommandList;
+			}
+
+			return items.Concat(tags).Concat(files);
 		}
 
 		#endregion
