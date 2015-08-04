@@ -14,7 +14,7 @@
 	{
 		public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
 		{
-			var viewModel = value as LauncherItemViewModelBase;
+			var viewModel = value as LauncherListItemViewModel;
 			if(viewModel != null) {
 				// TODO: parameterで切り替えれた方があとあと便利そう。
 				// TODO: ダサい

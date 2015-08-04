@@ -70,7 +70,10 @@
 		{
 			var control = d as LauncherListItemsControl;
 			if (control != null) {
-				control.SelectedLauncherItem = e.NewValue as LauncherListItemViewModel;
+				var viewModel = e.NewValue as LauncherListItemViewModel;
+				if (viewModel != null) {
+					control.SelectedLauncherItem = viewModel;
+				}
 			}
 		}
 
@@ -81,9 +84,9 @@
 			{
 				SetValue(SelectedLauncherItemProperty, value);
 				this.listItems.SelectedItem = value;
-				//if (value != null) {
-				//	SelectedLauncherViewModel = new LauncherItemSimpleViewModel(SelectedLauncherItem, CommonData.NonProcess, CommonData.AppSender);
-				//}
+				if (value != null) {
+					SelectedLauncherModel = value.Model;
+				}
 			}
 		}
 
@@ -109,6 +112,48 @@
 		}
 
 		//#endregion
+
+		#region SelectedLauncherModelProperty
+
+		public static readonly DependencyProperty SelectedLauncherModelProperty = DependencyProperty.Register(
+			"SelectedLauncherModel",
+			typeof(LauncherItemModel),
+			typeof(LauncherListItemsControl),
+			new FrameworkPropertyMetadata(new PropertyChangedCallback(OnSelectedLauncherModel))
+		);
+
+		private static void OnSelectedLauncherModel(DependencyObject d, DependencyPropertyChangedEventArgs e)
+		{
+			var control = d as LauncherListItemsControl;
+			if (control != null) {
+				var model = e.NewValue as LauncherItemModel;
+				if (model != null) {
+					control.SelectedLauncherModel = model;
+				}
+			}
+		}
+
+		public LauncherItemModel SelectedLauncherModel
+		{
+			get { return GetValue(SelectedLauncherModelProperty) as LauncherItemModel; }
+			set
+			{
+				SetValue(SelectedLauncherModelProperty, value);
+				if (SelectedLauncherItem != null && SelectedLauncherItem.Model == value) {
+					return;
+				}
+				SelectedLauncherItem = this.listItems.ItemsSource
+					.Cast<LauncherListItemViewModel>()
+					.FirstOrDefault(vm => vm.Model == value)
+				;
+				//if (value != null) {
+				//	SelectedLauncherViewModel = new LauncherItemSimpleViewModel(SelectedLauncherItem, CommonData.NonProcess, CommonData.AppSender);
+				//}
+			}
+		}
+
+		#endregion
+
 
 		#region CanListEditProperty
 

@@ -130,7 +130,7 @@
 			Grid.Column="2"
 			DataContext="{Binding LauncherItems}"
 			x:Name="ItemList"
-			SelectedLauncherItem="{Binding DataContext.SelectedLauncherItem, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}, Mode=TwoWay}"
+			SelectedLauncherModel="{Binding DataContext.SelectedLauncherItem, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}, Mode=TwoWay}"
 		/>
 	</Grid>
 </AV:CommonDataUserControl>
