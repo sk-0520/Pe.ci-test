@@ -28,7 +28,7 @@
 				<TextBox />
 			</ToolBar>
 		</ToolBarTray>
-		<ListBox ItemsSource="{Binding Items}" x:Name="ListItems"  Grid.Row="1">
+		<ListBox x:Name="listItems"  Grid.Row="1" ItemsSource="{Binding Items}">
 			<ListBox.ItemTemplate>
 				<DataTemplate>
 					<StackPanel Orientation="Horizontal">

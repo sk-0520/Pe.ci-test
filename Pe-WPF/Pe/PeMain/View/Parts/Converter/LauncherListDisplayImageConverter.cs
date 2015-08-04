@@ -22,7 +22,7 @@ using ContentTypeTextNet.Pe.PeMain.ViewModel;
 		#region static
 
 		// TODO: CommonData.LauncherIconCachingを使いたかったけど渡し方分からなんだ。
-		public static LauncherIconCaching LauncherIconCaching { get; set; }
+		//public static LauncherIconCaching LauncherIconCaching { get; set; }
 		public static IAppNonProcess NonProcess { get; set; }
 		public static IAppSender AppSender { get; set; }
 

@@ -35,7 +35,7 @@
 		{
 			InitializeComponent();
 			CanListEdit = false;
-			ListItems.SelectionChanged += ListItems_SelectionChanged;
+			this.listItems.SelectionChanged += ListItems_SelectionChanged;
 		}
 
 		//#region INotifyPropertyChanged
@@ -79,7 +79,7 @@
 			set 
 			{
 				SetValue(SelectedLauncherItemProperty, value);
-				this.ListItems.SelectedItem = value;
+				this.listItems.SelectedItem = value;
 				if (value != null) {
 					SelectedLauncherViewModel = new LauncherItemSimpleViewModel(SelectedLauncherItem, CommonData.NonProcess, CommonData.AppSender);
 				}
@@ -104,7 +104,7 @@
 
 		void ListItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			SelectedLauncherItem = ListItems.SelectedItem as LauncherItemModel;
+			SelectedLauncherItem = this.listItems.SelectedItem as LauncherItemModel;
 		}
 
 		#endregion
