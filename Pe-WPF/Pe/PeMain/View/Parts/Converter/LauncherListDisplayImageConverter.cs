@@ -17,6 +17,7 @@ using ContentTypeTextNet.Pe.PeMain.ViewModel;
 	/// <summary>
 	/// TODO: 状態を持ちすぎ、しんどい
 	/// </summary>
+	[Obsolete]
 	public class LauncherListDisplayImageConverter : IValueConverter
 	{
 		#region static
