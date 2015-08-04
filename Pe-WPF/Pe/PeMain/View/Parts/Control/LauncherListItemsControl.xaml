@@ -1,5 +1,5 @@
 ﻿<AV:CommonDataUserControl
-	x:Class="ContentTypeTextNet.Pe.PeMain.View.Parts.Control.LauncherItemsListControl"
+	x:Class="ContentTypeTextNet.Pe.PeMain.View.Parts.Control.LauncherListItemsControl"
 	xmlns:AV="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Control"
 	xmlns:AP="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
 	xmlns:AC="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Converter"

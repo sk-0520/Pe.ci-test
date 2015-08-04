@@ -14,9 +14,9 @@
 	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.IF;
 
-	public class LauncherItemsViewModel: SingleModelWrapperViewModelBase<LauncherItemCollectionModel>, IHavingAppNonProcess
+	public class LauncherListItemsViewModel: SingleModelWrapperViewModelBase<LauncherItemCollectionModel>, IHavingAppNonProcess
 	{
-		public LauncherItemsViewModel(LauncherItemCollectionModel model, IAppNonProcess appNonProcess)
+		public LauncherListItemsViewModel(LauncherItemCollectionModel model, IAppNonProcess appNonProcess)
 			: base(model)
 		{
 			AppNonProcess = appNonProcess;

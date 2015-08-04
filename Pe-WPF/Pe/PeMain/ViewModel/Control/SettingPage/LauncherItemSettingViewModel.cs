@@ -17,7 +17,7 @@
 	{
 		#region variable
 
-		LauncherItemsViewModel _launcherItems;
+		LauncherListItemsViewModel _launcherItems;
 
 		#endregion
 
@@ -31,12 +31,12 @@
 
 		LauncherItemSettingModel LauncherItemSetting { get; set; }
 
-		public LauncherItemsViewModel LauncherItems
+		public LauncherListItemsViewModel LauncherItems
 		{
 			get
 			{
 				if(this._launcherItems == null) {
-					this._launcherItems = new LauncherItemsViewModel(
+					this._launcherItems = new LauncherListItemsViewModel(
 						LauncherItemSetting.Items,
 						AppNonProcess
 					);

@@ -27,7 +27,7 @@
 	{
 		#region variable
 
-		LauncherItemsViewModel _launcherItems;
+		LauncherListItemsViewModel _launcherItems;
 		CollectionModel<GroupRootViewModel> _groupTree;
 
 		LauncherItemModel _selectedLauncherItem;
@@ -51,12 +51,12 @@
 
 		LauncherItemSettingModel LauncherItemSetting { get; set; }
 
-		public LauncherItemsViewModel LauncherItems
+		public LauncherListItemsViewModel LauncherItems
 		{
 			get
 			{
 				if (this._launcherItems == null) {
-					this._launcherItems = new LauncherItemsViewModel(
+					this._launcherItems = new LauncherListItemsViewModel(
 						LauncherItemSetting.Items,
 						AppNonProcess
 					);

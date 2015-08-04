@@ -23,7 +23,7 @@
 	/// <summary>
 	/// LauncherItemsListControl.xaml の相互作用ロジック
 	/// </summary>
-	public partial class LauncherItemsListControl : CommonDataUserControl//, INotifyPropertyChanged
+	public partial class LauncherListItemsControl : CommonDataUserControl//, INotifyPropertyChanged
 	{
 		//#region variable
 
@@ -31,7 +31,7 @@
 
 		//#endregion
 
-		public LauncherItemsListControl()
+		public LauncherListItemsControl()
 		{
 			InitializeComponent();
 			CanListEdit = false;
@@ -61,13 +61,13 @@
 		public static readonly DependencyProperty SelectedLauncherItemProperty = DependencyProperty.Register(
 			"SelectedLauncherItem",
 			typeof(LauncherItemModel),
-			typeof(LauncherItemsListControl),
+			typeof(LauncherListItemsControl),
 			new FrameworkPropertyMetadata(new PropertyChangedCallback(OnSelectedLauncherItem))
 		);
 
 		private static void OnSelectedLauncherItem(DependencyObject d, DependencyPropertyChangedEventArgs e)
 		{
-			var control = d as LauncherItemsListControl;
+			var control = d as LauncherListItemsControl;
 			if (control != null) {
 				control.SelectedLauncherItem = e.NewValue as LauncherItemModel;
 			}
@@ -93,7 +93,7 @@
 		public static readonly DependencyProperty SelectedLauncherViewModelProperty = DependencyProperty.Register(
 			"SelectedLauncherViewModel",
 			typeof(LauncherItemViewModelBase),
-			typeof(LauncherItemsListControl),
+			typeof(LauncherListItemsControl),
 			new FrameworkPropertyMetadata(null)
 		);
 		public LauncherItemViewModelBase SelectedLauncherViewModel
@@ -114,7 +114,7 @@
 		public static readonly DependencyProperty CanListEditProperty = DependencyProperty.Register(
 			"CanListEdit",
 			typeof(bool),
-			typeof(LauncherItemsListControl),
+			typeof(LauncherListItemsControl),
 			new FrameworkPropertyMetadata(new PropertyChangedCallback(OnChangedCanListEdit))
 		);
 
@@ -130,13 +130,13 @@
 
 		private static void OnChangedCanListEdit(DependencyObject d, DependencyPropertyChangedEventArgs e)
 		{
-			var control = d as LauncherItemsListControl;
+			var control = d as LauncherListItemsControl;
 			if(control != null) {
 				ChangedCanListEdit(control, (bool)e.NewValue);
 			}
 		}
 
-		static void ChangedCanListEdit(LauncherItemsListControl control, bool value)
+		static void ChangedCanListEdit(LauncherListItemsControl control, bool value)
 		{
 			var converter = new BooleanVisibilityConverter();
 			var visibility = (Visibility)converter.Convert(value, typeof(bool), null, null);

@@ -126,7 +126,7 @@
 				</TreeView.ItemContainerStyle>
 			</TreeView>
 		</Grid>
-		<AV:LauncherItemsListControl
+		<AV:LauncherListItemsControl
 			Grid.Column="2"
 			DataContext="{Binding LauncherItems}"
 			x:Name="ItemList"
