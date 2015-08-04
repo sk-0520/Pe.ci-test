@@ -267,12 +267,7 @@
 			{
 				var result = CreateCommand(
 					o => {
-						var devicePosition = MouseUtility.GetDevicePosition();
-						// TODO: 論理座標！
-						//CommandWindow.Visibility = Visibility.Visible;
-						Command.WindowLeft = devicePosition.X;
-						Command.WindowTop = devicePosition.Y;
-						Command.Visibility = Visibility.Visible;
+						ShowCommandWindow();
 					}
 				);
 
@@ -969,10 +964,20 @@
 			Template.IsVisible = !Template.IsVisible;
 		}
 
-		void OnPropertyNote()
+		void OnPropertyChangeForNote()
 		{
 			OnPropertyChanged("NoteShowItems");
 			OnPropertyChanged("NoteHiddenItems");
+		}
+
+		void ShowCommandWindow()
+		{
+			var devicePosition = MouseUtility.GetDevicePosition();
+			// TODO: 論理座標！
+			//CommandWindow.Visibility = Visibility.Visible;
+			Command.WindowLeft = devicePosition.X;
+			Command.WindowTop = devicePosition.Y;
+			Command.Visibility = Visibility.Visible;
 		}
 
 		#endregion
@@ -1081,7 +1086,7 @@
 							var noteWindow = (NoteWindow)window;
 							NoteWindows.Add(noteWindow);
 
-							OnPropertyNote();
+							OnPropertyChangeForNote();
 						}
 						break;
 
@@ -1124,7 +1129,7 @@
 							var noteWindow = (NoteWindow)window;
 							NoteWindows.Remove(noteWindow);
 
-							OnPropertyNote();
+							OnPropertyChangeForNote();
 							break;
 						}
 
@@ -1489,7 +1494,9 @@
 
 			switch(hotKeyId) {
 				case HotKeyId.ShowCommand:
-					throw new NotImplementedException();
+					ShowCommandWindow();
+					SendInformationTips(CommonData.Language["tooltip/command/show/title"], CommonData.Language["tooltip/command/show/message"], LogKind.Information);
+					break;
 
 				case HotKeyId.HideFile:
 					{

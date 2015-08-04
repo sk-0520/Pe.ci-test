@@ -18,6 +18,13 @@
 	d:DesignWidth="300"
 >
 	<Grid>
-
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="Auto" />
+			<ColumnDefinition Width="*" />
+			<ColumnDefinition Width="Auto" />
+		</Grid.ColumnDefinitions>
+		<Image Grid.Column="0" />
+		<TextBox Grid.Column="1" />
+		<Button Grid.Column="2" Content="execute" AA:Language.Word="command/execute" />
 	</Grid>
 </AW:ViewModelCommonDataWindow>
