@@ -21,6 +21,7 @@ using ContentTypeTextNet.Pe.Library.PeData.Setting;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 	using System.IO;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
+using System.Windows.Input;
 
 	public class CommandViewModel : HavingViewSingleModelWrapperViewModelBase<CommandSettingModel, CommandWindow>, IHavingAppNonProcess
 	{
@@ -36,6 +37,7 @@ using ContentTypeTextNet.Pe.Library.PeData.Setting;
 		Visibility _visibility = Visibility.Hidden;
 		CollectionModel<CommandItemViewModel> _commandItems;
 		string _inputText;
+		int _selectedIndex;
 
 		CommandItemViewModel _selectedCommandItem;
 		
@@ -86,7 +88,11 @@ using ContentTypeTextNet.Pe.Library.PeData.Setting;
 		public CollectionModel<CommandItemViewModel> CommandItems 
 		{
 			get { return this._commandItems; }
-			set { SetVariableValue(ref this._commandItems, value); }
+			set 
+			{ 
+				SetVariableValue(ref this._commandItems, value);
+				OnPropertyChangeIsOpen();
+			}
 		}
 
 		public string InputText
@@ -103,6 +109,7 @@ using ContentTypeTextNet.Pe.Library.PeData.Setting;
 				} else {
 					SetVariableValue(ref this._inputText, SelectedCommandItem.DisplayText);
 				}
+				OnPropertyChangeIsOpen();
 			}
 		}
 
@@ -119,9 +126,35 @@ using ContentTypeTextNet.Pe.Library.PeData.Setting;
 			}
 		}
 
+		public int SelectedIndex
+		{
+			get { return this._selectedIndex; }
+			set { SetVariableValue(ref this._selectedIndex, value); }
+		}
+
+		public bool IsOpen
+		{
+			get
+			{
+				var result = !string.IsNullOrEmpty(InputText)
+					||
+					CommandItems.Any()
+					;
+				if(HasView) {
+					result &= View.IsActive;
+				}
+				return result;
+			}
+		}
+
 		#endregion
 
 		#region function
+
+		void OnPropertyChangeIsOpen()
+		{
+			OnPropertyChanged("IsOpen");
+		}
 
 		IEnumerable<CommandItemViewModel> GetAllCommandItems()
 		{
@@ -196,6 +229,34 @@ using ContentTypeTextNet.Pe.Library.PeData.Setting;
 
 		#endregion
 
+		#region command
+
+		public ICommand UpListCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => { }
+				);
+
+				return result;
+			}
+		}
+
+		public ICommand DownListCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => { }
+				);
+
+				return result;
+			}
+		}
+
+		#endregion
+
 		#region IHavingAppNonProcess
 
 		public IAppNonProcess AppNonProcess { get; private set; }
@@ -209,6 +270,8 @@ using ContentTypeTextNet.Pe.Library.PeData.Setting;
 			Debug.Assert(HasView);
 
 			View.UserClosing += View_UserClosing;
+			View.Activated += View_Activated;
+			View.Deactivated += View_Deactivated;
 
 			base.InitializeView();
 		}
@@ -218,6 +281,8 @@ using ContentTypeTextNet.Pe.Library.PeData.Setting;
 			Debug.Assert(HasView);
 
 			View.UserClosing -= View_UserClosing;
+			View.Activated -= View_Activated;
+			View.Deactivated -= View_Deactivated;
 
 			base.UninitializeView();
 		}
@@ -228,6 +293,16 @@ using ContentTypeTextNet.Pe.Library.PeData.Setting;
 		{
 			e.Cancel = true;
 			Visibility = Visibility.Hidden;
+		}
+
+		void View_Activated(object sender, EventArgs e)
+		{
+			OnPropertyChangeIsOpen();
+		}
+
+		void View_Deactivated(object sender, EventArgs e)
+		{
+			OnPropertyChangeIsOpen();
 		}
 
 	}
