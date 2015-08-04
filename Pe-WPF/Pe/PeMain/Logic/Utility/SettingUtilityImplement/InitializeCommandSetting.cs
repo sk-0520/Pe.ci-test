@@ -5,6 +5,7 @@
 	using System.Linq;
 	using System.Text;
 	using System.Threading.Tasks;
+	using ContentTypeTextNet.Library.SharedLibrary.Define;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
 
@@ -22,6 +23,8 @@
 			}
 
 			nonProcess.Logger.Trace("version setting: first");
+
+			setting.IconScale = IconScale.Normal;
 		}
 	}
 }

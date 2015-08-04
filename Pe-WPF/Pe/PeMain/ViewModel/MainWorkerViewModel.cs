@@ -974,9 +974,10 @@
 		{
 			var devicePosition = MouseUtility.GetDevicePosition();
 			// TODO: 論理座標！
+			var logicalPosition = devicePosition;
 			//CommandWindow.Visibility = Visibility.Visible;
-			Command.WindowLeft = devicePosition.X;
-			Command.WindowTop = devicePosition.Y;
+			Command.WindowLeft = logicalPosition.X;
+			Command.WindowTop = logicalPosition.Y;
 			Command.Visibility = Visibility.Visible;
 		}
 

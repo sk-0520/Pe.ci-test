@@ -7,7 +7,7 @@
 	xmlns:AW="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Window"
 	xmlns:AA="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Attached"
 	x:TypeArguments="AVM:CommandViewModel"
-	Visibility="{Binding Visibility, Mode=OneWay}"
+	Visibility="{Binding Visibility, Mode=TwoWay}"
 	Left="{Binding WindowLeft, Mode=TwoWay}"
 	Top="{Binding WindowTop, Mode=TwoWay}"
 	Width="{Binding WindowWidth, Mode=TwoWay}"
@@ -23,7 +23,7 @@
 			<ColumnDefinition Width="*" />
 			<ColumnDefinition Width="Auto" />
 		</Grid.ColumnDefinitions>
-		<Image Grid.Column="0" />
+		<Image Grid.Column="0" Width="{Binding IconWidth, Mode=OneTime}" Height="{Binding IconHeight, Mode=OneTime}" />
 		<TextBox Grid.Column="1" />
 		<Button Grid.Column="2" Content="execute" AA:Language.Word="command/execute" />
 	</Grid>
