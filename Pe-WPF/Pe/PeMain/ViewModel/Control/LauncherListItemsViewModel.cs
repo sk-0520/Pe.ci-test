@@ -1,21 +1,21 @@
 ﻿namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control
 {
 	using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ContentTypeTextNet.Library.SharedLibrary.IF;
-using ContentTypeTextNet.Library.SharedLibrary.Logic;
-using ContentTypeTextNet.Library.SharedLibrary.Model;
-using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
-using ContentTypeTextNet.Pe.Library.PeData.Item;
-using ContentTypeTextNet.Pe.Library.PeData.Setting;
-using ContentTypeTextNet.Pe.PeMain.Data;
-using ContentTypeTextNet.Pe.PeMain.IF;
+	using System.Collections.Generic;
+	using System.Collections.ObjectModel;
+	using System.Linq;
+	using System.Text;
+	using System.Threading.Tasks;
+	using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic;
+	using ContentTypeTextNet.Library.SharedLibrary.Model;
+	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+	using ContentTypeTextNet.Pe.Library.PeData.Item;
+	using ContentTypeTextNet.Pe.Library.PeData.Setting;
+	using ContentTypeTextNet.Pe.PeMain.Data;
+	using ContentTypeTextNet.Pe.PeMain.IF;
 
-	public class LauncherListItemsViewModel: SingleModelWrapperViewModelBase<LauncherItemCollectionModel>, IHavingAppNonProcess, IHavingAppSender
+	public class LauncherListItemsViewModel : SingleModelWrapperViewModelBase<LauncherItemCollectionModel>, IHavingAppNonProcess, IHavingAppSender
 	{
 		#region variable
 
@@ -30,8 +30,8 @@ using ContentTypeTextNet.Pe.PeMain.IF;
 			AppSender = appSender;
 
 			this._launcherItemPairList = new MVMPairCreateDelegationCollection<LauncherItemModel, LauncherListItemViewModel>(
-				Model, 
-				null, 
+				Model,
+				default(object),
 				CreateItemViewModel
 			);
 		}
@@ -39,11 +39,11 @@ using ContentTypeTextNet.Pe.PeMain.IF;
 
 		#region property
 
-		public CollectionModel<LauncherItemModel> Items 
-		{ 
+		public CollectionModel<LauncherListItemViewModel> Items
+		{
 			get
 			{
-				return Model;
+				return this._launcherItemPairList.ViewModelList;
 			}
 		}
 
