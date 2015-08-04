@@ -184,8 +184,11 @@
 			if (IsIllegalPlusNumber(setting.WindowHeight)) {
 				setting.WindowHeight = Constants.templateDefaultWindowSize.Height;
 			}
+		}
 
-
+		public static void InitializeCommandSetting(CommandSettingModel setting, Version previousVersion, INonProcess nonProcess)
+		{
+			Implement.InitializeCommandSetting.Correction(setting, previousVersion, nonProcess);
 		}
 
 		/// <summary>

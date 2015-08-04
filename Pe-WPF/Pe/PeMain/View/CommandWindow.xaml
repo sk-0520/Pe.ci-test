@@ -1,0 +1,23 @@
+﻿<AW:ViewModelCommonDataWindow
+	x:Class="ContentTypeTextNet.Pe.PeMain.View.CommandWindow"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:AVM="clr-namespace:ContentTypeTextNet.Pe.PeMain.ViewModel"
+	xmlns:AP="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
+	xmlns:AW="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Window"
+	xmlns:AA="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Attached"
+	x:TypeArguments="AVM:CommandViewModel"
+	Visibility="{Binding Visibility, Mode=OneWay}"
+	Left="{Binding WindowLeft, Mode=TwoWay}"
+	Top="{Binding WindowTop, Mode=TwoWay}"
+	Width="{Binding WindowWidth, Mode=TwoWay}"
+	Height="60"
+	Title="CommandWindow"
+
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
+	d:DesignWidth="300"
+>
+	<Grid>
+
+	</Grid>
+</AW:ViewModelCommonDataWindow>

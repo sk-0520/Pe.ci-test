@@ -125,7 +125,12 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Define\Timing.cs" />
+    <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeCommandSetting.cs" />
     <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeLoggingSetting.cs" />
+    <Compile Include="ViewModel\CommandViewModel.cs" />
+    <Compile Include="View\CommandWindow.xaml.cs">
+      <DependentUpon>CommandWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="X-Partial\AppResource-implement.cs" />
     <Compile Include="X-Partial\AppResourceAttribute.cs" />
     <Compile Include="X-Partial\AppResource-generator.cs">
@@ -368,6 +373,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\ClipboardWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\CommandWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

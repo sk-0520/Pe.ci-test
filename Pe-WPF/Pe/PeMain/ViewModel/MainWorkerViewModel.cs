@@ -40,7 +40,7 @@
 	using ContentTypeTextNet.Pe.PeMain.View.Parts.Window;
 	using System.Globalization;
 	using ContentTypeTextNet.Library.SharedLibrary.CompatibleWindows.Utility;
-using Hardcodet.Wpf.TaskbarNotification;
+	using Hardcodet.Wpf.TaskbarNotification;
 
 	public sealed class MainWorkerViewModel: ViewModelBase, IAppSender, IClipboardWatcher, IHavingView<TaskbarIcon>
 	{
@@ -173,6 +173,9 @@ using Hardcodet.Wpf.TaskbarNotification;
 
 		IndexBodyCaching IndexBodyCaching { get; set; }
 
+		CommandWindow CommandWindow { get; set; }
+		CommandViewModel Command { get { return CommandWindow.ViewModel; } }
+
 		#endregion
 
 		#region command
@@ -258,12 +261,18 @@ using Hardcodet.Wpf.TaskbarNotification;
 			}
 		}
 
-		public ICommand SwitchCommandWindowCommand
+		public ICommand ShowCommandWindowCommand
 		{
 			get
 			{
 				var result = CreateCommand(
 					o => {
+						var devicePosition = MouseUtility.GetDevicePosition();
+						// TODO: 論理座標！
+						//CommandWindow.Visibility = Visibility.Visible;
+						Command.WindowLeft = devicePosition.X;
+						Command.WindowTop = devicePosition.Y;
+						Command.Visibility = Visibility.Visible;
 					}
 				);
 
@@ -553,6 +562,7 @@ using Hardcodet.Wpf.TaskbarNotification;
 				CreateNote();
 				CreateTemplate();
 				CreateClipboard();
+				CreateCommandWindow();
 
 				return true;
 			}
@@ -763,6 +773,24 @@ using Hardcodet.Wpf.TaskbarNotification;
 			CreateClipboard();
 		}
 
+		void CreateCommandWindow()
+		{
+			CommandWindow = new CommandWindow();
+			CommandWindow.SetCommonData(CommonData, null);
+		}
+
+		void RemoveCommonWindow()
+		{
+			CommandWindow.Close();
+			CommandWindow = null;
+		}
+
+		void ResetCommandWindow()
+		{
+			RemoveCommonWindow();
+			CreateCommandWindow();
+		}
+
 		/// <summary>
 		/// ディスプレイ数に変更があった。
 		/// </summary>
@@ -835,6 +863,8 @@ using Hardcodet.Wpf.TaskbarNotification;
 
 			ResetTemplate();
 			ResetClipboard();
+
+			ResetCommandWindow();
 		}
 
 		static void ResetCulture(INonProcess nonProcess)

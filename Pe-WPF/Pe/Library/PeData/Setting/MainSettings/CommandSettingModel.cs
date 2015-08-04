@@ -15,7 +15,7 @@
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 
 	[Serializable]
-	public class CommandSettingModel : SettingModelBase, IWindowStatus, IDeepClone
+	public class CommandSettingModel : SettingModelBase, IDeepClone
 	{
 		public CommandSettingModel()
 			: base()
@@ -58,39 +58,9 @@
 		[DataMember]
 		public bool FindFile { get; set; }
 
-		#endregion
-
-		#region IWindowStatus
-
-		[DataMember]
-		[PixelKind(Px.Logical)]
-		public double WindowTop { get; set; }
-		[DataMember]
-		[PixelKind(Px.Logical)]
-		public double WindowLeft { get; set; }
 		[DataMember]
 		[PixelKind(Px.Logical)]
 		public double WindowWidth { get; set; }
-		[DataMember]
-		[PixelKind(Px.Logical)]
-		public double WindowHeight { get; set; }
-		[DataMember]
-		[PixelKind(Px.Logical)]
-		public WindowState WindowState { get; set; }
-
-		#region ITopMost
-
-		[DataMember]
-		public bool IsTopmost { get; set; }
-
-		#endregion
-
-		#region IVisible
-
-		[DataMember]
-		public bool IsVisible { get; set; }
-
-		#endregion
 
 		#endregion
 
@@ -106,13 +76,7 @@
 			obj.FindId = FindId;
 			obj.FindTag = FindTag;
 			obj.FindFile = FindFile;
-			obj.WindowTop = WindowTop;
-			obj.WindowLeft = WindowLeft;
 			obj.WindowWidth = WindowWidth;
-			obj.WindowHeight = WindowHeight;
-			obj.WindowState = WindowState;
-			obj.IsTopmost = IsTopmost;
-			obj.IsVisible = IsVisible;
 		}
 
 		public IDeepClone DeepClone()
