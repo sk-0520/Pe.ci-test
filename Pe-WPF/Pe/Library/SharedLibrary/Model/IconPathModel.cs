@@ -13,6 +13,8 @@
 	[Serializable]
 	public class IconPathModel: ModelBase
 	{
+		#region property
+
 		/// <summary>
 		/// パス。
 		/// </summary>
@@ -23,6 +25,8 @@
 		/// </summary>
 		[DataMember]
 		public int Index { get; set; }
+
+		#endregion
 
 		#region ModelBase
 

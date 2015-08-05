@@ -121,32 +121,6 @@
 
 		#endregion
 
-		#region CollectionModel
-
-		public new void Add(T item)
-		{
-			if (UsingLimit) {
-				while (Count >= LimitSize) {
-					RemoveLimit();
-				}
-			}
-
-			base.Add(item);
-		}
-
-		public new void Insert(int index, T item)
-		{
-			base.Insert(index, item);
-
-			if (UsingLimit) {
-				while (Count > LimitSize) {
-					RemoveLimit();
-				}
-			}
-		}
-
-		#endregion
-
 		#region function
 
 		void RemoveLimit()
@@ -161,6 +135,32 @@
 				StockItems.Add(this[removeIndex]);
 			}
 			RemoveAt(removeIndex);
+		}
+
+		#endregion
+
+		#region CollectionModel
+
+		public new void Add(T item)
+		{
+			if(UsingLimit) {
+				while(Count >= LimitSize) {
+					RemoveLimit();
+				}
+			}
+
+			base.Add(item);
+		}
+
+		public new void Insert(int index, T item)
+		{
+			base.Insert(index, item);
+
+			if(UsingLimit) {
+				while(Count > LimitSize) {
+					RemoveLimit();
+				}
+			}
 		}
 
 		#endregion

@@ -57,81 +57,6 @@
 
 		#endregion
 
-		#region FixedSizeCollectionModel
-
-		/// <summary>
-		/// 要素を追加する。
-		/// </summary>
-		/// <param name="value"></param>
-		/// <exception cref="ArgumentNullException">valueがnull</exception>
-		/// <exception cref="ArgumentException">value.Idがすでに存在する</exception>
-		public new void Add(TValue value)
-		{
-			CheckId(value);
-
-			Add(value, true);
-		}
-
-		public new void Clear()
-		{
-			base.Clear();
-			this._map.Clear();
-		}
-
-		public new void ClearItems()
-		{
-			base.ClearItems();
-			this._map.Clear();
-		}
-
-		public new bool Remove(TValue item)
-		{
-			if(base.Remove(item)) {
-				this._map.Remove(item.Id);
-				return true;
-			}
-
-			return false;
-		}
-
-		public bool Remove(TKey key)
-		{
-			var index = IndexOf(key);
-			if (index != -1) {
-				Items.RemoveAt(index);
-				this._map.Remove(key);
-
-				return true;
-			}
-
-			return false;
-		}
-
-		#region indexer
-
-		public TValue this[TKey key]
-		{
-			get
-			{
-				TValue result;
-				if (this._map.TryGetValue(key, out result)) {
-					return result;
-				}
-
-				result = Items.FirstOrDefault(i => key.CompareTo(i.Id) == 0);
-				if (result != null) {
-					this._map[result.Id] = result;
-					return result;
-				}
-
-				throw new IndexOutOfRangeException(GetIdString(key));
-			}
-		}
-
-		#endregion
-
-		#endregion
-
 		#region function
 
 		static string GetIdString(TKey id)
@@ -254,6 +179,81 @@
 			this._map.Remove(src);
 			this._map[dst] = srcValue;
 		}
+
+		#endregion
+
+		#region FixedSizeCollectionModel
+
+		/// <summary>
+		/// 要素を追加する。
+		/// </summary>
+		/// <param name="value"></param>
+		/// <exception cref="ArgumentNullException">valueがnull</exception>
+		/// <exception cref="ArgumentException">value.Idがすでに存在する</exception>
+		public new void Add(TValue value)
+		{
+			CheckId(value);
+
+			Add(value, true);
+		}
+
+		public new void Clear()
+		{
+			base.Clear();
+			this._map.Clear();
+		}
+
+		public new void ClearItems()
+		{
+			base.ClearItems();
+			this._map.Clear();
+		}
+
+		public new bool Remove(TValue item)
+		{
+			if(base.Remove(item)) {
+				this._map.Remove(item.Id);
+				return true;
+			}
+
+			return false;
+		}
+
+		public bool Remove(TKey key)
+		{
+			var index = IndexOf(key);
+			if(index != -1) {
+				Items.RemoveAt(index);
+				this._map.Remove(key);
+
+				return true;
+			}
+
+			return false;
+		}
+
+		#region indexer
+
+		public TValue this[TKey key]
+		{
+			get
+			{
+				TValue result;
+				if(this._map.TryGetValue(key, out result)) {
+					return result;
+				}
+
+				result = Items.FirstOrDefault(i => key.CompareTo(i.Id) == 0);
+				if(result != null) {
+					this._map[result.Id] = result;
+					return result;
+				}
+
+				throw new IndexOutOfRangeException(GetIdString(key));
+			}
+		}
+
+		#endregion
 
 		#endregion
 	}

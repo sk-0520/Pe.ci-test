@@ -9,10 +9,14 @@
 
 	public class ChangedDevice
 	{
+		#region varable
+
 		IntPtr _hWnd;
 		int _msg;
 		IntPtr _wParam;
 		IntPtr _lParam;
+
+		#endregion
 
 		/// <summary>
 		/// 
@@ -28,9 +32,13 @@
 			DBT = (DBT)this._wParam.ToInt32();
 		}
 
+		#region property
+
 		/// <summary>
 		/// DBT! DBT!
 		/// </summary>
 		public DBT DBT { get; private set; }
+
+		#endregion
 	}
 }

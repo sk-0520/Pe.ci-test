@@ -13,6 +13,8 @@
 
 	public class ClipboardFileItem
 	{
+		#region property
+
 		public string Name { get; set; }
 		public string Path { get; set; }
 		public ImageSource Image { 
@@ -28,6 +30,8 @@
 					return AppResource.GetNotFoundIcon(IconScale.Small);
 				}
 			}
-		} 
+		}
+
+		#endregion
 	}
 }

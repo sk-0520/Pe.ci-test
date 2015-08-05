@@ -13,6 +13,8 @@
 	[Serializable]
 	public class LoggerConfigModel : ModelBase
 	{
+		#region proprty
+
 		/// <summary>
 		/// デバッグ情報をログ対象とするか。
 		/// </summary>
@@ -91,5 +93,7 @@
 		/// </summary>
 		[DataMember]
 		public bool PutsCustom { get; set; }
+
+		#endregion
 	}
 }

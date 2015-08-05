@@ -8,7 +8,7 @@
 	using System.Windows;
 	using System.Windows.Controls;
 	using System.Windows.Media;
-using ContentTypeTextNet.Library.SharedLibrary.Attribute;
+	using ContentTypeTextNet.Library.SharedLibrary.Attribute;
 	using ContentTypeTextNet.Library.SharedLibrary.Define;
 
 	public static class UIUtility
@@ -97,7 +97,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Attribute;
 		public static Point GetDpiScale(Visual visual)
 		{
 			var source = PresentationSource.FromVisual(visual);
-			if (source != null && source.CompositionTarget != null) {
+			if(source != null && source.CompositionTarget != null) {
 				return new Point(
 					source.CompositionTarget.TransformToDevice.M11,
 					source.CompositionTarget.TransformToDevice.M22
@@ -139,7 +139,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Attribute;
 			return y / dpiScale.Y;
 		}
 
-		[return: PixelKind(Px.Device)] 
+		[return: PixelKind(Px.Device)]
 		public static Point ToDevicePixel(Visual visual, Point point)
 		{
 			var dpiScale = GetDpiScale(visual);

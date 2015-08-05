@@ -17,6 +17,8 @@
 	[Serializable]
 	public class LogItemModel: ModelBase
 	{
+		#region property
+
 		/// <summary>
 		/// 発生日。
 		/// </summary>
@@ -84,5 +86,7 @@
 		/// </summary>
 		[DataMember]
 		public Thread CallerThread { get; set; }
+
+		#endregion
 	}
 }

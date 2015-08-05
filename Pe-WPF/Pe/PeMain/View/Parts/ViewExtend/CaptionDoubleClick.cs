@@ -18,6 +18,15 @@
 			: base(view, restrictionViewModel, nonProcess)
 		{ }
 
+		#region function
+
+		void OnCaptionDoubleClick(CancelEventArgs e)
+		{
+			//RestrictionViewModel.CaptionDoubleClick(this, e);
+		}
+
+		#endregion
+
 		#region WindowsViewExtendBase
 
 		public override IntPtr WndProc(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
@@ -34,15 +43,6 @@
 				}
 			}
 			return base.WndProc(hWnd, msg, wParam, lParam, ref handled);
-		}
-
-		#endregion
-
-		#region function
-
-		void OnCaptionDoubleClick(CancelEventArgs e)
-		{
-			//RestrictionViewModel.CaptionDoubleClick(this, e);
 		}
 
 		#endregion

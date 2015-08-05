@@ -12,7 +12,8 @@
 	{
 		public string FilterText
 		{
-			get {
+			get 
+			{
 				return string.Join("|", this.Select(i => i.ToString()));
 			}
 		}

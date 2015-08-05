@@ -35,47 +35,6 @@
 
 		#endregion
 
-		#region WindowsViewExtendBase
-
-		public override IntPtr WndProc(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
-		{
-			if(RestrictionViewModel.UsingVisualStyle) {
-				switch(msg) {
-					case (int)WM.WM_DESTROY:
-						UnsetStyle();
-						break;
-
-					case (int)WM.WM_DWMCOMPOSITIONCHANGED:
-						SetStyle();
-						handled = true;
-						break;
-
-					case (int)WM.WM_DWMCOLORIZATIONCOLORCHANGED:
-						SetWindowColor();
-						handled = true;
-						break;
-
-
-					//case (int)WM.WM_NCHITTEST:
-					//	IntPtr result = new IntPtr();
-					//	handled = NativeMethods.DwmDefWindowProc(hwnd, msg, wParam, lParam, ref result);
-					//	handled = true;
-					//	break;
-
-					//case (int)WM.WM_WINDOWPOSCHANGED:
-					//	SetStyle();
-					//	break;
-
-					default:
-						break;
-				}
-			}
-
-			return base.WndProc(hWnd, msg, wParam, lParam, ref handled);
-		}
-
-		#endregion
-
 		#region function
 
 		static bool SupportAeroGlass()
@@ -226,5 +185,45 @@
 
 		#endregion
 
+		#region WindowsViewExtendBase
+
+		public override IntPtr WndProc(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+		{
+			if(RestrictionViewModel.UsingVisualStyle) {
+				switch(msg) {
+					case (int)WM.WM_DESTROY:
+						UnsetStyle();
+						break;
+
+					case (int)WM.WM_DWMCOMPOSITIONCHANGED:
+						SetStyle();
+						handled = true;
+						break;
+
+					case (int)WM.WM_DWMCOLORIZATIONCOLORCHANGED:
+						SetWindowColor();
+						handled = true;
+						break;
+
+
+					//case (int)WM.WM_NCHITTEST:
+					//	IntPtr result = new IntPtr();
+					//	handled = NativeMethods.DwmDefWindowProc(hwnd, msg, wParam, lParam, ref result);
+					//	handled = true;
+					//	break;
+
+					//case (int)WM.WM_WINDOWPOSCHANGED:
+					//	SetStyle();
+					//	break;
+
+					default:
+						break;
+				}
+			}
+
+			return base.WndProc(hWnd, msg, wParam, lParam, ref handled);
+		}
+
+		#endregion
 	}
 }

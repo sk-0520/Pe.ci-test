@@ -42,6 +42,15 @@
 
 		#endregion
 
+		#region function
+
+		protected virtual IntPtr WndProc(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+		{
+			return IntPtr.Zero;
+		}
+
+		#endregion
+
 		#region WindowsAPIWindowBase
 
 		protected override void OnSourceInitialized(EventArgs e)
@@ -52,15 +61,6 @@
 			Closed += WndProcWindowBase_Closed;
 
 			IsHandleCreated = true;
-		}
-
-		#endregion
-
-		#region function
-
-		protected virtual IntPtr WndProc(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
-		{
-			return IntPtr.Zero;
 		}
 
 		#endregion

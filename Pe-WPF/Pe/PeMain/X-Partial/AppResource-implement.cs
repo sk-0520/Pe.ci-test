@@ -34,9 +34,10 @@
 #else
 				return applicationTasktrayRelease;
 #endif
-		#endregion
 			}
 		}
+
+		#endregion
 
 		#region function
 

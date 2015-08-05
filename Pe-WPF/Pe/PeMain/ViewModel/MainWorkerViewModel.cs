@@ -1,46 +1,43 @@
 ﻿namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 {
 	using System;
-	using System.Linq;
 	using System.Collections.Generic;
 	using System.Diagnostics;
+	using System.Globalization;
+	using System.IO;
+	using System.Linq;
+	using System.Threading;
+	using System.Threading.Tasks;
 	using System.Windows;
 	using System.Windows.Controls;
 	using System.Windows.Input;
+	using System.Windows.Media;
+	using System.Windows.Media.Imaging;
+	using System.Windows.Threading;
+	using ContentTypeTextNet.Library.PInvoke.Windows;
+	using ContentTypeTextNet.Library.SharedLibrary.Attribute;
 	using ContentTypeTextNet.Library.SharedLibrary.CompatibleForms;
+	using ContentTypeTextNet.Library.SharedLibrary.CompatibleWindows.Utility;
+	using ContentTypeTextNet.Library.SharedLibrary.Define;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+	using ContentTypeTextNet.Library.SharedLibrary.Model;
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+	using ContentTypeTextNet.Pe.Library.PeData.Define;
+	using ContentTypeTextNet.Pe.Library.PeData.Item;
 	using ContentTypeTextNet.Pe.Library.PeData.Setting;
 	using ContentTypeTextNet.Pe.PeMain.Data;
+	using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
+	using ContentTypeTextNet.Pe.PeMain.Define;
+	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Logic;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 	using ContentTypeTextNet.Pe.PeMain.View;
-	using System.Windows.Media;
-	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
-	using ContentTypeTextNet.Library.SharedLibrary.CompatibleWindows;
-	using ContentTypeTextNet.Library.SharedLibrary.Define;
-	using System.Windows.Media.Imaging;
-	using ContentTypeTextNet.Pe.PeMain.IF;
-	using ContentTypeTextNet.Library.PInvoke.Windows;
-	using System.Threading.Tasks;
-	using System.Threading;
-	using ContentTypeTextNet.Pe.PeMain.View.Parts.Converter;
-	using ContentTypeTextNet.Pe.PeMain.Define;
-	using ContentTypeTextNet.Library.SharedLibrary.Model;
-	using ContentTypeTextNet.Pe.Library.PeData.Item;
-	using ContentTypeTextNet.Library.SharedLibrary.Attribute;
-	using ContentTypeTextNet.Pe.Library.PeData.Define;
-	using ContentTypeTextNet.Pe.Library.PeData.IF;
-	using System.IO;
-	using System.Windows.Threading;
-	using Microsoft.Win32;
-	using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
 	using ContentTypeTextNet.Pe.PeMain.View.Parts.Window;
-	using System.Globalization;
-	using ContentTypeTextNet.Library.SharedLibrary.CompatibleWindows.Utility;
 	using Hardcodet.Wpf.TaskbarNotification;
+	using Microsoft.Win32;
 
 	public sealed class MainWorkerViewModel: ViewModelBase, IAppSender, IClipboardWatcher, IHavingView<TaskbarIcon>
 	{

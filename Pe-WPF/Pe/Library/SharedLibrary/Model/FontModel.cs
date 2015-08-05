@@ -12,6 +12,8 @@
 	[Serializable]
 	public class FontModel: ModelBase, IDeepClone
 	{
+		#regionproperty
+
 		[DataMember]
 		public string Family { get; set; }
 		[DataMember]
@@ -20,6 +22,8 @@
 		public bool Bold { get; set; }
 		[DataMember]
 		public bool Italic { get; set; }
+
+		#endregion
 
 		#region IDeepClone
 

@@ -17,6 +17,7 @@
 	public class ScreenModel: ModelBase
 	{
 		#region property
+
 		/// <summary>
 		/// 1 ピクセルのデータに関連付けられているメモリのビット数を取得します。
 		/// </summary>

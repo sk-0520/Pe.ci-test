@@ -27,34 +27,6 @@
 			}
 		}
 
-		#region WindowsViewExtendBase
-
-		public override IntPtr WndProc(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
-		{
-			if(RestrictionViewModel.UsingMaxMinSuppression) {
-				var result = SuppressionMaxMin(hWnd, msg, wParam, lParam, ref handled);
-				if(handled) {
-					return result;
-				}
-			}
-			if(RestrictionViewModel.UsingMultipleResize) {
-				var result = CorrectionSizing(hWnd, msg, wParam, lParam, ref handled);
-				if(handled) {
-					return result;
-				}
-			}
-			if(RestrictionViewModel.UsingMoveLimitArea) {
-				var result = CorrectionMoving(hWnd, msg, wParam, lParam, ref handled);
-				if(handled) {
-					return result;
-				}
-			}
-
-			return base.WndProc(hWnd, msg, wParam, lParam, ref handled);
-		}
-
-		#endregion
-
 		#region function
 
 		IntPtr CorrectionSizing(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
@@ -199,6 +171,34 @@
 					NativeMethods.MoveWindow(HandleUtility.GetWindowHandle(View), resultRect.X, resultRect.Y, resultRect.Width, resultRect.Height, true);
 				}
 			}
+		}
+
+		#endregion
+
+		#region WindowsViewExtendBase
+
+		public override IntPtr WndProc(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+		{
+			if(RestrictionViewModel.UsingMaxMinSuppression) {
+				var result = SuppressionMaxMin(hWnd, msg, wParam, lParam, ref handled);
+				if(handled) {
+					return result;
+				}
+			}
+			if(RestrictionViewModel.UsingMultipleResize) {
+				var result = CorrectionSizing(hWnd, msg, wParam, lParam, ref handled);
+				if(handled) {
+					return result;
+				}
+			}
+			if(RestrictionViewModel.UsingMoveLimitArea) {
+				var result = CorrectionMoving(hWnd, msg, wParam, lParam, ref handled);
+				if(handled) {
+					return result;
+				}
+			}
+
+			return base.WndProc(hWnd, msg, wParam, lParam, ref handled);
 		}
 
 		#endregion

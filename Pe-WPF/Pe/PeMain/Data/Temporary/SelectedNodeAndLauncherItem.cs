@@ -10,7 +10,11 @@
 
 	public class SelectedNodeAndLauncherItem
 	{
+		#region property
+
 		public IToolbarNode SelectedNode { get; set; }
 		public LauncherItemModel LauncherItem { get; set; }
+
+		#endregion
 	}
 }

@@ -23,10 +23,6 @@
 		[IgnoreDataMember, XmlIgnore]
 		public bool IsDisposed { get; protected set; }
 
-		#endregion
-
-		#region IDisposable
-
 		protected virtual void Dispose(bool disposing)
 		{
 			if(IsDisposed) {

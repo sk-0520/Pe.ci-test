@@ -12,6 +12,7 @@
 		{
 			return Enum.GetValues(type).Cast<TEnum>();
 		}
+
 		public static IEnumerable<TEnum> GetMembers<TEnum>()
 		{
 			return GetMembers<TEnum>(typeof(TEnum));

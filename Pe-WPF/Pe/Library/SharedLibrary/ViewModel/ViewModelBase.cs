@@ -37,45 +37,6 @@
 
 		#endregion
 
-		#region IDisplayText
-
-		public virtual string DisplayText { get { return ToString(); } }
-
-		#endregion
-
-		#region DisposeFinalizeBase
-
-		protected override void Dispose(bool disposing)
-		{
-			if (!IsDisposed) {
-				foreach (var command in this._createdCommands) {
-					command.Dispose();
-				}
-			}
-			base.Dispose(disposing);
-		}
-
-		#endregion
-
-		#region INotifyPropertyChanged
-
-		/// <summary>
-		/// プロパティが変更された際に発生。
-		/// </summary>
-		public event PropertyChangedEventHandler PropertyChanged = delegate { };
-
-		/// <summary>
-		/// PropertyChanged呼び出し。
-		/// </summary>
-		/// <param name="propertyName"></param>
-		protected void OnPropertyChanged([CallerMemberName] string propertyName = "")
-		{
-			IsChanged = true;
-			this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-		}
-
-		#endregion
-
 		#region function
 
 		/// <summary>
@@ -147,6 +108,45 @@
 		protected void ResetChangeFlag()
 		{
 			IsChanged = false;
+		}
+
+		#endregion
+
+		#region IDisplayText
+
+		public virtual string DisplayText { get { return ToString(); } }
+
+		#endregion
+
+		#region DisposeFinalizeBase
+
+		protected override void Dispose(bool disposing)
+		{
+			if(!IsDisposed) {
+				foreach(var command in this._createdCommands) {
+					command.Dispose();
+				}
+			}
+			base.Dispose(disposing);
+		}
+
+		#endregion
+
+		#region INotifyPropertyChanged
+
+		/// <summary>
+		/// プロパティが変更された際に発生。
+		/// </summary>
+		public event PropertyChangedEventHandler PropertyChanged = delegate { };
+
+		/// <summary>
+		/// PropertyChanged呼び出し。
+		/// </summary>
+		/// <param name="propertyName"></param>
+		protected void OnPropertyChanged([CallerMemberName] string propertyName = "")
+		{
+			IsChanged = true;
+			this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 		}
 
 		#endregion

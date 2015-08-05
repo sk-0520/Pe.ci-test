@@ -14,8 +14,14 @@
 	/// </summary>
 	public class ShortcutFile: DisposeFinalizeBase
 	{
+		#region define
+
 		const int _argumentLength = 1024;
 		const int _descriptionLength = 1024 * 5;
+
+		#endregion
+
+		#region static
 
 		private static StringBuilder CreateStringBuffer()
 		{
@@ -32,8 +38,14 @@
 			return new ComModel<IShellLink>((IShellLink)new ShellLinkObject());
 		}
 
+		#endregion
+
+		#region variable
+
 		protected ComModel<IShellLink> _shellLink = null;
 		protected ComModel<IPersistFile> _persistFile = null;
+
+		#endregion
 
 		/// <summary>
 		/// ショートカットを作成するためにオブジェクト生成。
@@ -168,27 +180,6 @@
 
 		#endregion
 
-		#region DisposeFinalizeBase
-
-		protected override void Dispose(bool disposing)
-		{
-			if(!IsDisposed) {
-				if(this._persistFile != null) {
-					this._persistFile.Dispose();
-				}
-				this._persistFile = null;
-
-				if(this._shellLink != null) {
-					this._shellLink.Dispose();
-				}
-				this._shellLink = null;
-			}
-
-			base.Dispose(disposing);
-		}
-
-		#endregion /////////////////////////////////
-
 		#region function
 
 		/// <summary>
@@ -244,5 +235,26 @@
 		}
 
 		#endregion
+
+		#region DisposeFinalizeBase
+
+		protected override void Dispose(bool disposing)
+		{
+			if(!IsDisposed) {
+				if(this._persistFile != null) {
+					this._persistFile.Dispose();
+				}
+				this._persistFile = null;
+
+				if(this._shellLink != null) {
+					this._shellLink.Dispose();
+				}
+				this._shellLink = null;
+			}
+
+			base.Dispose(disposing);
+		}
+
+		#endregion /////////////////////////////////
 	}
 }

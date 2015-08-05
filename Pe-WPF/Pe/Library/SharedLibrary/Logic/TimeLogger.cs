@@ -79,22 +79,6 @@
 
 		#endregion
 
-		#region DisposeFinalizeBase
-
-		protected override void Dispose(bool disposing)
-		{
-			if(!IsDisposed) {
-				InstanceStopWatch.Stop();
-				Puts(MakeMessage("STOP"), Detail);
-
-				Puts = null;
-			}
-
-			base.Dispose(disposing);
-		}
-
-		#endregion
-
 		#region function
 
 		string MakeMessage(string type)
@@ -110,6 +94,22 @@
 		{
 			Puts(MakeMessage("CHECK"), Detail, frame, callerFile, callerLine, callerMember);
 		}
+		#endregion
+
+		#region DisposeFinalizeBase
+
+		protected override void Dispose(bool disposing)
+		{
+			if(!IsDisposed) {
+				InstanceStopWatch.Stop();
+				Puts(MakeMessage("STOP"), Detail);
+
+				Puts = null;
+			}
+
+			base.Dispose(disposing);
+		}
+
 		#endregion
 	}
 }

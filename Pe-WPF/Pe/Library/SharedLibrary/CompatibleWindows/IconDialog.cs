@@ -1,13 +1,13 @@
 ﻿namespace ContentTypeTextNet.Library.SharedLibrary.CompatibleWindows
 {
 	using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ContentTypeTextNet.Library.PInvoke.Windows;
-using ContentTypeTextNet.Library.SharedLibrary.Model;
-using Microsoft.Win32;
+	using System.Collections.Generic;
+	using System.Linq;
+	using System.Text;
+	using System.Threading.Tasks;
+	using ContentTypeTextNet.Library.PInvoke.Windows;
+	using ContentTypeTextNet.Library.SharedLibrary.Model;
+	using Microsoft.Win32;
 
 	public class IconDialog: CommonDialog
 	{

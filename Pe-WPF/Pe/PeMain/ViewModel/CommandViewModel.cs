@@ -15,15 +15,15 @@
 	using ContentTypeTextNet.Pe.PeMain.View;
 	using System.Diagnostics;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
-using ContentTypeTextNet.Pe.Library.PeData.Setting;
+	using ContentTypeTextNet.Pe.Library.PeData.Setting;
 	using ContentTypeTextNet.Pe.PeMain.Define;
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 	using System.IO;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
-using System.Windows.Input;
+	using System.Windows.Input;
 
-	public class CommandViewModel : HavingViewSingleModelWrapperViewModelBase<CommandSettingModel, CommandWindow>, IHavingAppNonProcess
+	public class CommandViewModel: HavingViewSingleModelWrapperViewModelBase<CommandSettingModel, CommandWindow>, IHavingAppNonProcess
 	{
 		#region define
 
@@ -40,7 +40,7 @@ using System.Windows.Input;
 		int _selectedIndex;
 
 		CommandItemViewModel _selectedCommandItem;
-		
+
 		#endregion
 
 
@@ -85,11 +85,11 @@ using System.Windows.Input;
 		public double IconWidth { get { return Model.IconScale.ToWidth(); } }
 		public double IconHeight { get { return Model.IconScale.ToHeight(); } }
 
-		public CollectionModel<CommandItemViewModel> CommandItems 
+		public CollectionModel<CommandItemViewModel> CommandItems
 		{
 			get { return this._commandItems; }
-			set 
-			{ 
+			set
+			{
 				SetVariableValue(ref this._commandItems, value);
 				OnPropertyChangeIsOpen();
 			}
@@ -98,11 +98,11 @@ using System.Windows.Input;
 		public string InputText
 		{
 			get { return this._inputText; }
-			set 
+			set
 			{
-				if (SelectedCommandItem == null) {
+				if(SelectedCommandItem == null) {
 					SetVariableValue(ref this._inputText, value.Trim());
-					if (!string.IsNullOrEmpty(this._inputText)) {
+					if(!string.IsNullOrEmpty(this._inputText)) {
 						var items = GetCommandItems(this._inputText);
 						CommandItems = new CollectionModel<CommandItemViewModel>(items);
 					}
@@ -130,8 +130,8 @@ using System.Windows.Input;
 		public CommandItemViewModel SelectedCommandItem
 		{
 			get { return this._selectedCommandItem; }
-			set 
-			{ 
+			set
+			{
 				SetVariableValue(ref this._selectedCommandItem, value);
 				//if (this._selectedCommandItem == null) {
 				//	var items = GetAllCommandItems();
@@ -179,7 +179,7 @@ using System.Windows.Input;
 
 		IEnumerable<CommandItemViewModel> GetCommandItems(string filter)
 		{
-			if (string.IsNullOrWhiteSpace(filter)) {
+			if(string.IsNullOrWhiteSpace(filter)) {
 				return GetAllCommandItems();
 			}
 			var items = LauncherItemSetting.Items
@@ -188,18 +188,18 @@ using System.Windows.Input;
 			;
 
 			IEnumerable<CommandItemViewModel> tags = null;
-			if (Model.FindTag) {
+			if(Model.FindTag) {
 				tags = LauncherItemSetting.Items
 					.Where(i => i.Tag.Items.Any(t => t.StartsWith(filter)))
 					.Select(i => new CommandItemViewModel(i, i.Tag.Items.First(t => t.StartsWith(filter)), AppNonProcess))
 				;
 			}
-			if (tags == null) {
+			if(tags == null) {
 				tags = emptyCommandList;
 			}
 
 			IEnumerable<CommandItemViewModel> files = null;
-			if (Model.FindFile) {
+			if(Model.FindFile) {
 				var inputPath = Environment.ExpandEnvironmentVariables(filter);
 				var isDir = Directory.Exists(inputPath);
 				string baseDir;
@@ -210,10 +210,10 @@ using System.Windows.Input;
 							: inputPath
 						: Path.GetDirectoryName(inputPath)
 					;
-				} catch (ArgumentException) {
+				} catch(ArgumentException) {
 					baseDir = inputPath;
 				}
-				if (FileUtility.Exists(baseDir)) {
+				if(FileUtility.Exists(baseDir)) {
 					Debug.WriteLine(inputPath);
 					//var isDir = Directory.Exists(inputPath);
 					//var baseDir = isDir ? inputPath : Path.GetDirectoryName(inputPath);
@@ -227,14 +227,14 @@ using System.Windows.Input;
 							.Where(fs => showHiddenFile ? true : !fs.IsHidden())
 							.Select(fs => new CommandItemViewModel(fs.FullName, AppNonProcess))
 						;
-					} catch (IOException ex) {
+					} catch(IOException ex) {
 						AppNonProcess.Logger.Warning(ex);
-					} catch (UnauthorizedAccessException ex) {
+					} catch(UnauthorizedAccessException ex) {
 						AppNonProcess.Logger.Warning(ex);
 					}
 				}
 			}
-			if (files == null) {
+			if(files == null) {
 				files = emptyCommandList;
 			}
 

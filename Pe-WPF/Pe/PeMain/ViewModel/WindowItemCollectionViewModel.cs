@@ -20,20 +20,6 @@
 			:base(model)
 		{ }
 
-		#region IMenuItem
-
-		public ImageSource MenuImage {get { return null; }}
-
-		public override string DisplayText
-		{
-			get
-			{
-				return Model.Name;
-			}
-		}
-
-		#endregion
-
 		#region command
 
 		public ICommand WindowMenuSelectedCommand
@@ -49,6 +35,20 @@
 				return result;
 			}
 		}
+		#endregion
+
+		#region IMenuItem
+
+		public ImageSource MenuImage {get { return null; }}
+
+		public override string DisplayText
+		{
+			get
+			{
+				return Model.Name;
+			}
+		}
+
 		#endregion
 	}
 }

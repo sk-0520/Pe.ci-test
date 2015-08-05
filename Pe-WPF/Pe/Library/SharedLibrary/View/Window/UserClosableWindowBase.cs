@@ -25,6 +25,15 @@
 			: base()
 		{ }
 
+		#region function
+
+		protected virtual void OnUserClosing(CancelEventArgs e)
+		{
+			UserClosing(this, e);
+		}
+
+		#endregion
+
 		#region WndProcWindowBase
 
 		protected override IntPtr WndProc(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
@@ -52,15 +61,6 @@
 			if(!e.Cancel) {
 				Close();
 			}
-		}
-
-		#endregion
-
-		#region function
-
-		protected virtual void OnUserClosing(CancelEventArgs e)
-		{
-			UserClosing(this, e);
 		}
 
 		#endregion

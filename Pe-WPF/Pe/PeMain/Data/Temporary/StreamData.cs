@@ -11,7 +11,11 @@
 
 	public class StreamData
 	{
+		#region property
+
 		public Process Process { get; set; }
 		public LauncherItemModel LauncherItem { get; set; }
+
+		#endregion
 	}
 }

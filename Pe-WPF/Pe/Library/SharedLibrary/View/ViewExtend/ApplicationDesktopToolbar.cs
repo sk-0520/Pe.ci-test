@@ -64,89 +64,6 @@
 
 		#endregion
 
-		#region DisposeFinalizeBase
-
-		protected override void Dispose(bool disposing)
-		{
-			if (!IsDisposed) {
-				View.IsVisibleChanged -= View_IsVisibleChanged;
-				View.MouseEnter -= View_MouseEnter;
-				View.MouseLeave -= View_MouseLeave;
-			}
-			base.Dispose(disposing);
-		}
-
-		#endregion
-
-		#region WindowsViewExtendBase
-
-		public override IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
-		{
-			if (RestrictionViewModel.IsDocking) {
-				switch ((int)msg) {
-					case (int)WM.WM_DESTROY:
-						{
-							UnresistAppbar();
-							handled = true;
-						}
-						break;
-
-					case (int)WM.WM_ACTIVATE:
-						{
-							var appBar = new APPBARDATA(Handle);
-							NativeMethods.SHAppBarMessage(ABM.ABM_ACTIVATE, ref appBar);
-						}
-						break;
-
-					case (int)WM.WM_WINDOWPOSCHANGED:
-						{
-							//DockingFromProperty();
-							var appBar = new APPBARDATA(Handle);
-							NativeMethods.SHAppBarMessage(ABM.ABM_WINDOWPOSCHANGED, ref appBar);
-						}
-						break;
-
-					case (int)WM.WM_EXITSIZEMOVE:
-						{
-							// 到達した試しがない
-							OnResizeEnd();
-						}
-						break;
-
-					default:
-						if (RestrictionViewModel.CallbackMessage != 0 && msg == RestrictionViewModel.CallbackMessage) {
-							switch (wParam.ToInt32()) {
-								case (int)ABN.ABN_FULLSCREENAPP:
-									// フルスクリーン
-									OnAppbarFullScreen(WindowsUtility.ConvertBoolFromLParam(lParam));
-									break;
-
-								case (int)ABN.ABN_POSCHANGED:
-									// 他のバーの位置が変更されたので再設定
-									DockingFromProperty();
-									OnAppbarPosChanged();
-									break;
-
-								case (int)ABN.ABN_STATECHANGE:
-									// タスクバーの [常に手前に表示] または [自動的に隠す] が変化したとき
-									// 特に何もする必要なし
-									DockingFromProperty();
-									OnAppbarStateChange();
-									break;
-
-								default:
-									break;
-							}
-						}
-						break;
-				}
-			}
-
-			return base.WndProc(hwnd, msg, wParam, lParam, ref handled);
-		}
-
-		#endregion
-
 		#region function
 
 		protected void OnAppbarFullScreen(bool fullScreen)
@@ -578,6 +495,86 @@
 
 		#endregion
 
+
+		#region DisposeFinalizeBase
+
+		protected override void Dispose(bool disposing)
+		{
+			if(!IsDisposed) {
+				View.IsVisibleChanged -= View_IsVisibleChanged;
+				View.MouseEnter -= View_MouseEnter;
+				View.MouseLeave -= View_MouseLeave;
+			}
+			base.Dispose(disposing);
+		}
+
+		#endregion
+
+		#region WindowsViewExtendBase
+
+		public override IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+		{
+			if(RestrictionViewModel.IsDocking) {
+				switch((int)msg) {
+					case (int)WM.WM_DESTROY: {
+							UnresistAppbar();
+							handled = true;
+						}
+						break;
+
+					case (int)WM.WM_ACTIVATE: {
+							var appBar = new APPBARDATA(Handle);
+							NativeMethods.SHAppBarMessage(ABM.ABM_ACTIVATE, ref appBar);
+						}
+						break;
+
+					case (int)WM.WM_WINDOWPOSCHANGED: {
+							//DockingFromProperty();
+							var appBar = new APPBARDATA(Handle);
+							NativeMethods.SHAppBarMessage(ABM.ABM_WINDOWPOSCHANGED, ref appBar);
+						}
+						break;
+
+					case (int)WM.WM_EXITSIZEMOVE: {
+							// 到達した試しがない
+							OnResizeEnd();
+						}
+						break;
+
+					default:
+						if(RestrictionViewModel.CallbackMessage != 0 && msg == RestrictionViewModel.CallbackMessage) {
+							switch(wParam.ToInt32()) {
+								case (int)ABN.ABN_FULLSCREENAPP:
+									// フルスクリーン
+									OnAppbarFullScreen(WindowsUtility.ConvertBoolFromLParam(lParam));
+									break;
+
+								case (int)ABN.ABN_POSCHANGED:
+									// 他のバーの位置が変更されたので再設定
+									DockingFromProperty();
+									OnAppbarPosChanged();
+									break;
+
+								case (int)ABN.ABN_STATECHANGE:
+									// タスクバーの [常に手前に表示] または [自動的に隠す] が変化したとき
+									// 特に何もする必要なし
+									DockingFromProperty();
+									OnAppbarStateChange();
+									break;
+
+								default:
+									break;
+							}
+						}
+						break;
+				}
+			}
+
+			return base.WndProc(hwnd, msg, wParam, lParam, ref handled);
+		}
+
+		#endregion
+
 		void View_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
 		{
 			if (e.NewValue != e.OldValue) {
@@ -614,7 +611,5 @@
 				StartHideWait();
 			}
 		}
-
-
 	}
 }

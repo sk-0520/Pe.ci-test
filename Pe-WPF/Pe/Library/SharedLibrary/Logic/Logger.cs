@@ -94,6 +94,32 @@ using ContentTypeTextNet.Library.SharedLibrary.IF;
 
 		#endregion
 
+		#region function
+
+		void ClearFileWriter()
+		{
+			if(this._fileWriter != null) {
+				this._fileWriter.Dispose();
+				this._fileWriter = null;
+			}
+		}
+
+		string PutsOutput(LogItemModel item, char c)
+		{
+			return string.Format(
+				"{0:s}{1}[{2}] {3}({4}): {5}{6}",
+				item.Timestamp,
+				c,
+				item.LogKind.ToString().ToUpper()[0],
+				item.CallerMember,
+				item.CallerLine,
+				item.Message,
+				item.HasDetail ? ", " + item.DetailText.SplitLines().First(): string.Empty
+			);
+		}
+
+		#endregion
+
 		#region LoggerBase
 
 		protected override void Dispose(bool disposing)
@@ -121,11 +147,11 @@ using ContentTypeTextNet.Library.SharedLibrary.IF;
 				);
 				var message = string.Format(messageFormat, item.Message);
 				var detail = item.DetailText;
-				if (!string.IsNullOrEmpty(detail)) {
+				if(!string.IsNullOrEmpty(detail)) {
 					var detailIndent = new string(' ', message.Length);
 					var lines = detail.SplitLines();
 					var nexts = lines.Skip(1).Select(s => detailIndent + detailPadding + s);
-					if (nexts.Any()) {
+					if(nexts.Any()) {
 						var first = detailPadding + lines.First();
 						detail = first + Environment.NewLine + string.Join(Environment.NewLine, nexts);
 					} else {
@@ -133,13 +159,13 @@ using ContentTypeTextNet.Library.SharedLibrary.IF;
 					}
 				}
 				var stack = string.Join(
-					Environment.NewLine, 
+					Environment.NewLine,
 					item.StackTrace.GetFrames()
 						.Select(sf => string.Format(
-							indent + "-[{0:x8}][{1:x8}] {2}[{3}]", 
-							sf.GetNativeOffset(), 
-							sf.GetILOffset(), 
-							ToShowText(sf.GetMethod()), 
+							indent + "-[{0:x8}][{1:x8}] {2}[{3}]",
+							sf.GetNativeOffset(),
+							sf.GetILOffset(),
+							ToShowText(sf.GetMethod()),
 							sf.GetFileLineNumber()
 						)
 					)
@@ -181,33 +207,5 @@ using ContentTypeTextNet.Library.SharedLibrary.IF;
 		{ }
 
 		#endregion
-
-		#region function
-
-		void ClearFileWriter()
-		{
-			if(this._fileWriter != null) {
-				this._fileWriter.Dispose();
-				this._fileWriter = null;
-			}
-		}
-
-		string PutsOutput(LogItemModel item, char c)
-		{
-			return string.Format(
-				"{0:s}{1}[{2}] {3}({4}): {5}{6}",
-				item.Timestamp,
-				c,
-				item.LogKind.ToString().ToUpper()[0],
-				item.CallerMember,
-				item.CallerLine,
-				item.Message,
-				item.HasDetail ? ", " + item.DetailText.SplitLines().First(): string.Empty
-			);
-		}
-
-		#endregion
-
-
 	}
 }

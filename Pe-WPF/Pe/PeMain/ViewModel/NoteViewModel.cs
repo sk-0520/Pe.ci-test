@@ -1,31 +1,27 @@
 ﻿namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 {
 	using System;
-	using System.Collections.Generic;
 	using System.ComponentModel;
 	using System.Linq;
-	using System.Text;
-	using System.Threading.Tasks;
 	using System.Windows;
+	using System.Windows.Controls;
 	using System.Windows.Input;
 	using System.Windows.Media;
 	using ContentTypeTextNet.Library.SharedLibrary.Attribute;
 	using ContentTypeTextNet.Library.SharedLibrary.Define;
-	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.IF.WindowsViewExtend;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 	using ContentTypeTextNet.Pe.Library.PeData.Define;
 	using ContentTypeTextNet.Pe.Library.PeData.IF;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
+	using ContentTypeTextNet.Pe.PeMain.Define;
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.IF.ViewExtend;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Property;
-	using ContentTypeTextNet.Pe.PeMain.View;
-	using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
-	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
-	using System.Windows.Controls;
-	using ContentTypeTextNet.Pe.PeMain.Define;
+	using ContentTypeTextNet.Pe.PeMain.View;
 
 	public class NoteViewModel : HavingViewSingleModelWrapperViewModelBase<NoteIndexItemModel, NoteWindow>, IHavingAppNonProcess, IWindowHitTestData, IWindowAreaCorrectionData, ICaptionDoubleClickData, IHavingAppSender, IColorPair, INoteMenuItem
 	{

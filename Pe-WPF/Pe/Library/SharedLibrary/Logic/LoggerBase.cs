@@ -24,96 +24,6 @@
 
 		#endregion
 
-		#region ILogger
-
-		public LoggerConfigModel LoggerConfig { get; set; }
-
-		public virtual void Debug(string message, object detail = null, int frame = 1, [CallerFilePath] string callerFile = "", [CallerLineNumber] int callerLine = -1, [CallerMemberName] string callerMember = "")
-		{
-			if (LoggerConfig.EnabledDebug) {
-				CallPuts(LogKind.Debug, message, detail, frame, callerFile, callerLine, callerMember, Assembly.GetCallingAssembly(), Thread.CurrentThread);
-			}
-		}
-
-		public virtual void Debug(Exception ex, int frame = 1, [CallerFilePath] string callerFile = "", [CallerLineNumber] int callerLine = -1, [CallerMemberName] string callerMember = "")
-		{
-			if (LoggerConfig.EnabledDebug) {
-				CallPuts(LogKind.Debug, default(string), ex, frame, callerFile, callerLine, callerMember, Assembly.GetCallingAssembly(), Thread.CurrentThread);
-			}
-		}
-
-		public virtual void Trace(string message, object detail = null, int frame = 1, [CallerFilePath] string callerFile = "", [CallerLineNumber] int callerLine = -1, [CallerMemberName] string callerMember = "")
-		{
-			if (LoggerConfig.EnabledTrace) {
-				CallPuts(LogKind.Trace, message, detail, frame, callerFile, callerLine, callerMember, Assembly.GetCallingAssembly(), Thread.CurrentThread);
-			}
-		}
-
-		public virtual void Trace(Exception ex, int frame = 1, [CallerFilePath] string callerFile = "", [CallerLineNumber] int callerLine = -1, [CallerMemberName] string callerMember = "")
-		{
-			if (LoggerConfig.EnabledTrace) {
-				CallPuts(LogKind.Trace, default(string), ex, frame, callerFile, callerLine, callerMember, Assembly.GetCallingAssembly(), Thread.CurrentThread);
-			}
-		}
-
-		public virtual void Information(string message, object detail = null, int frame = 1, [CallerFilePath] string callerFile = "", [CallerLineNumber] int callerLine = -1, [CallerMemberName] string callerMember = "")
-		{
-			if (LoggerConfig.EnabledInformation) {
-				CallPuts(LogKind.Information, message, detail, frame, callerFile, callerLine, callerMember, Assembly.GetCallingAssembly(), Thread.CurrentThread);
-			}
-		}
-
-		public virtual void Information(Exception ex, int frame = 1, [CallerFilePath] string callerFile = "", [CallerLineNumber] int callerLine = -1, [CallerMemberName] string callerMember = "")
-		{
-			if (LoggerConfig.EnabledInformation) {
-				CallPuts(LogKind.Information, default(string), ex, frame, callerFile, callerLine, callerMember, Assembly.GetCallingAssembly(), Thread.CurrentThread);
-			}
-		}
-
-		public virtual void Warning(string message, object detail = null, int frame = 1, [CallerFilePath] string callerFile = "", [CallerLineNumber] int callerLine = -1, [CallerMemberName] string callerMember = "")
-		{
-			if (LoggerConfig.EnabledWarning) {
-				CallPuts(LogKind.Warning, message, detail, frame, callerFile, callerLine, callerMember, Assembly.GetCallingAssembly(), Thread.CurrentThread);
-			}
-		}
-
-		public virtual void Warning(Exception ex, int frame = 1, [CallerFilePath] string callerFile = "", [CallerLineNumber] int callerLine = -1, [CallerMemberName] string callerMember = "")
-		{
-			if (LoggerConfig.EnabledWarning) {
-				CallPuts(LogKind.Warning, default(string), ex, frame, callerFile, callerLine, callerMember, Assembly.GetCallingAssembly(), Thread.CurrentThread);
-			}
-		}
-
-		public virtual void Error(string message, object detail = null, int frame = 1, [CallerFilePath] string callerFile = "", [CallerLineNumber] int callerLine = -1, [CallerMemberName] string callerMember = "")
-		{
-			if (LoggerConfig.EnabledError) {
-				CallPuts(LogKind.Error, message, detail, frame, callerFile, callerLine, callerMember, Assembly.GetCallingAssembly(), Thread.CurrentThread);
-			}
-		}
-
-		public virtual void Error(Exception ex, int frame = 1, [CallerFilePath] string callerFile = "", [CallerLineNumber] int callerLine = -1, [CallerMemberName] string callerMember = "")
-		{
-			if (LoggerConfig.EnabledError) {
-				CallPuts(LogKind.Error, default(string), ex, frame, callerFile, callerLine, callerMember, Assembly.GetCallingAssembly(), Thread.CurrentThread);
-			}
-		}
-
-		public virtual void Fatal(string message, object detail = null, int frame = 1, [CallerFilePath] string callerFile = "", [CallerLineNumber] int callerLine = -1, [CallerMemberName] string callerMember = "")
-		{
-			if (LoggerConfig.EnabledFatal) {
-				CallPuts(LogKind.Fatal, message, detail, frame, callerFile, callerLine, callerMember, Assembly.GetCallingAssembly(), Thread.CurrentThread);
-			}
-		}
-
-		public virtual void Fatal(Exception ex, int frame = 1, [CallerFilePath] string callerFile = "", [CallerLineNumber] int callerLine = -1, [CallerMemberName] string callerMember = "")
-		{
-			if (LoggerConfig.EnabledFatal) {
-				CallPuts(LogKind.Fatal, default(string), ex, frame, callerFile, callerLine, callerMember, Assembly.GetCallingAssembly(), Thread.CurrentThread);
-			}
-		}
-
-		#endregion
-
 		#region function
 
 		/// <summary>
@@ -187,6 +97,96 @@
 		{
 			var logItem = CreateItem(logKind, message, detail, frame + 1, callerFile, callerLine, callerMember, callerAssembly, callerThread);
 			Puts(logItem);
+		}
+
+		#endregion
+
+		#region ILogger
+
+		public LoggerConfigModel LoggerConfig { get; set; }
+
+		public virtual void Debug(string message, object detail = null, int frame = 1, [CallerFilePath] string callerFile = "", [CallerLineNumber] int callerLine = -1, [CallerMemberName] string callerMember = "")
+		{
+			if(LoggerConfig.EnabledDebug) {
+				CallPuts(LogKind.Debug, message, detail, frame, callerFile, callerLine, callerMember, Assembly.GetCallingAssembly(), Thread.CurrentThread);
+			}
+		}
+
+		public virtual void Debug(Exception ex, int frame = 1, [CallerFilePath] string callerFile = "", [CallerLineNumber] int callerLine = -1, [CallerMemberName] string callerMember = "")
+		{
+			if(LoggerConfig.EnabledDebug) {
+				CallPuts(LogKind.Debug, default(string), ex, frame, callerFile, callerLine, callerMember, Assembly.GetCallingAssembly(), Thread.CurrentThread);
+			}
+		}
+
+		public virtual void Trace(string message, object detail = null, int frame = 1, [CallerFilePath] string callerFile = "", [CallerLineNumber] int callerLine = -1, [CallerMemberName] string callerMember = "")
+		{
+			if(LoggerConfig.EnabledTrace) {
+				CallPuts(LogKind.Trace, message, detail, frame, callerFile, callerLine, callerMember, Assembly.GetCallingAssembly(), Thread.CurrentThread);
+			}
+		}
+
+		public virtual void Trace(Exception ex, int frame = 1, [CallerFilePath] string callerFile = "", [CallerLineNumber] int callerLine = -1, [CallerMemberName] string callerMember = "")
+		{
+			if(LoggerConfig.EnabledTrace) {
+				CallPuts(LogKind.Trace, default(string), ex, frame, callerFile, callerLine, callerMember, Assembly.GetCallingAssembly(), Thread.CurrentThread);
+			}
+		}
+
+		public virtual void Information(string message, object detail = null, int frame = 1, [CallerFilePath] string callerFile = "", [CallerLineNumber] int callerLine = -1, [CallerMemberName] string callerMember = "")
+		{
+			if(LoggerConfig.EnabledInformation) {
+				CallPuts(LogKind.Information, message, detail, frame, callerFile, callerLine, callerMember, Assembly.GetCallingAssembly(), Thread.CurrentThread);
+			}
+		}
+
+		public virtual void Information(Exception ex, int frame = 1, [CallerFilePath] string callerFile = "", [CallerLineNumber] int callerLine = -1, [CallerMemberName] string callerMember = "")
+		{
+			if(LoggerConfig.EnabledInformation) {
+				CallPuts(LogKind.Information, default(string), ex, frame, callerFile, callerLine, callerMember, Assembly.GetCallingAssembly(), Thread.CurrentThread);
+			}
+		}
+
+		public virtual void Warning(string message, object detail = null, int frame = 1, [CallerFilePath] string callerFile = "", [CallerLineNumber] int callerLine = -1, [CallerMemberName] string callerMember = "")
+		{
+			if(LoggerConfig.EnabledWarning) {
+				CallPuts(LogKind.Warning, message, detail, frame, callerFile, callerLine, callerMember, Assembly.GetCallingAssembly(), Thread.CurrentThread);
+			}
+		}
+
+		public virtual void Warning(Exception ex, int frame = 1, [CallerFilePath] string callerFile = "", [CallerLineNumber] int callerLine = -1, [CallerMemberName] string callerMember = "")
+		{
+			if(LoggerConfig.EnabledWarning) {
+				CallPuts(LogKind.Warning, default(string), ex, frame, callerFile, callerLine, callerMember, Assembly.GetCallingAssembly(), Thread.CurrentThread);
+			}
+		}
+
+		public virtual void Error(string message, object detail = null, int frame = 1, [CallerFilePath] string callerFile = "", [CallerLineNumber] int callerLine = -1, [CallerMemberName] string callerMember = "")
+		{
+			if(LoggerConfig.EnabledError) {
+				CallPuts(LogKind.Error, message, detail, frame, callerFile, callerLine, callerMember, Assembly.GetCallingAssembly(), Thread.CurrentThread);
+			}
+		}
+
+		public virtual void Error(Exception ex, int frame = 1, [CallerFilePath] string callerFile = "", [CallerLineNumber] int callerLine = -1, [CallerMemberName] string callerMember = "")
+		{
+			if(LoggerConfig.EnabledError) {
+				CallPuts(LogKind.Error, default(string), ex, frame, callerFile, callerLine, callerMember, Assembly.GetCallingAssembly(), Thread.CurrentThread);
+			}
+		}
+
+		public virtual void Fatal(string message, object detail = null, int frame = 1, [CallerFilePath] string callerFile = "", [CallerLineNumber] int callerLine = -1, [CallerMemberName] string callerMember = "")
+		{
+			if(LoggerConfig.EnabledFatal) {
+				CallPuts(LogKind.Fatal, message, detail, frame, callerFile, callerLine, callerMember, Assembly.GetCallingAssembly(), Thread.CurrentThread);
+			}
+		}
+
+		public virtual void Fatal(Exception ex, int frame = 1, [CallerFilePath] string callerFile = "", [CallerLineNumber] int callerLine = -1, [CallerMemberName] string callerMember = "")
+		{
+			if(LoggerConfig.EnabledFatal) {
+				CallPuts(LogKind.Fatal, default(string), ex, frame, callerFile, callerLine, callerMember, Assembly.GetCallingAssembly(), Thread.CurrentThread);
+			}
 		}
 
 		#endregion

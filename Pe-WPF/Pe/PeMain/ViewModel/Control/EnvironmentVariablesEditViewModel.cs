@@ -22,12 +22,6 @@
 
 		#region property
 		
-		#region IHavingNonProcess
-
-		public INonProcess NonProcess { get; private set; }
-
-		#endregion
-
 		public bool Edit
 		{
 			get { return Model.Edit; }
@@ -49,10 +43,12 @@
 			}
 		}
 
-
-
 		#endregion
 
+		#region IHavingNonProcess
 
+		public INonProcess NonProcess { get; private set; }
+
+		#endregion
 	}
 }

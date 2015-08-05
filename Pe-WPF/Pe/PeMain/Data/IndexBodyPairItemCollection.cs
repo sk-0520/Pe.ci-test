@@ -15,6 +15,9 @@
 		public IndexBodyPairItemCollection(int limitSize)
 			: base(limitSize)
 		{ }
+
+		#region function
+
 		/// <summary>
 		/// 指定IDのデータを取得。
 		/// </summary>
@@ -42,5 +45,7 @@
 
 			return result.Index;
 		}
+
+		#endregion
 	}
 }

@@ -34,32 +34,6 @@
 
 		#endregion
 
-		#region ICommonData
-
-		public void SetCommonData(CommonData commonData, object extensionData)
-		{
-			CommonData = commonData;
-			ExtensionData = extensionData;
-
-			ApplySetting();
-		}
-
-		public CommonData CommonData { get; private set; }
-
-		#endregion
-
-		#region UserClosableWindowWindowBase
-
-		protected override void OnLoaded(object sender, RoutedEventArgs e)
-		{
-			base.OnLoaded(sender, e);
-
-			ApplyLanguage();
-			SetChildCommonData();
-		}
-
-		#endregion
-
 		#region function
 
 		protected virtual void ApplySetting()
@@ -99,5 +73,30 @@
 
 		#endregion
 
+		#region ICommonData
+
+		public void SetCommonData(CommonData commonData, object extensionData)
+		{
+			CommonData = commonData;
+			ExtensionData = extensionData;
+
+			ApplySetting();
+		}
+
+		public CommonData CommonData { get; private set; }
+
+		#endregion
+
+		#region UserClosableWindowWindowBase
+
+		protected override void OnLoaded(object sender, RoutedEventArgs e)
+		{
+			base.OnLoaded(sender, e);
+
+			ApplyLanguage();
+			SetChildCommonData();
+		}
+
+		#endregion
 	}
 }

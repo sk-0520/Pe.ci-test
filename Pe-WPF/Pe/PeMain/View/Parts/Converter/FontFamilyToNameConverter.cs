@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Data;
-using System.Windows.Markup;
-using System.Windows.Media;
-
-namespace ContentTypeTextNet.Pe.PeMain.View.Parts.Converter
+﻿namespace ContentTypeTextNet.Pe.PeMain.View.Parts.Converter
 {
+	using System;
+	using System.Collections.Generic;
+	using System.Linq;
+	using System.Text;
+	using System.Threading.Tasks;
+	using System.Windows.Data;
+	using System.Windows.Markup;
+	using System.Windows.Media;
+
 	/// <summary>
 	/// <para>http://sourcechord.hatenablog.com/entry/2014/04/25/013631</para>
 	/// </summary>

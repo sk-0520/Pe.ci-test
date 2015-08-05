@@ -13,10 +13,10 @@
 		{
 			return fs.Attributes.HasFlag(FileAttributes.Directory);
 		}
+
 		public static bool IsHidden(this FileSystemInfo fs)
 		{
 			return fs.Attributes.HasFlag(FileAttributes.Hidden);
 		}
-
 	}
 }

@@ -30,16 +30,6 @@
 		[DataMember, XmlAttribute]
 		public string CultureCode { get; set; }
 
-		#region IName
-
-		/// <summary>
-		/// 言語名。
-		/// </summary>
-		[DataMember, XmlAttribute]
-		public string Name { get; set; }
-
-		#endregion
-
 		/// <summary>
 		/// 共通定義部。
 		/// </summary>
@@ -50,6 +40,16 @@
 		/// </summary>
 		[DataMember, XmlArrayItem("Item")]
 		public List<LanguageItemModel> Words { get; set; }
+
+		#endregion
+
+		#region IName
+
+		/// <summary>
+		/// 言語名。
+		/// </summary>
+		[DataMember, XmlAttribute]
+		public string Name { get; set; }
 
 		#endregion
 	}

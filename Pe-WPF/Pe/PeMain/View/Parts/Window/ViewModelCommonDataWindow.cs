@@ -24,13 +24,9 @@
 			:base()
 		{ }
 
-		#region property
-
 		#region TViewModel
 
 		public TViewModel ViewModel { get; protected set; }
-
-		#endregion
 
 		#endregion
 

@@ -21,6 +21,8 @@
 			GroupItems = group;
 		}
 
+		#region property
+
 		/// <summary>
 		/// ツールバー設定。
 		/// </summary>
@@ -33,5 +35,7 @@
 		/// グループアイテム。
 		/// </summary>
 		public LauncherGroupItemCollectionModel GroupItems { get; set; }
+
+		#endregion
 	}
 }

@@ -1,21 +1,21 @@
 ﻿namespace ContentTypeTextNet.Library.SharedLibrary.CompatibleWindows
 {
 	using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Media.Imaging;
-using System.Windows.Resources;
-using ContentTypeTextNet.Library.SharedLibrary.CompatibleForms.Utility;
-using ContentTypeTextNet.Library.SharedLibrary.Define;
-using ContentTypeTextNet.Library.SharedLibrary.IF;
-using ContentTypeTextNet.Library.SharedLibrary.Logic;
-using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
-using ContentTypeTextNet.Library.SharedLibrary.Model.Unmanaged.Gdi;
-using Drawing = System.Drawing;
+	using System.Collections.Generic;
+	using System.IO;
+	using System.Linq;
+	using System.Text;
+	using System.Threading.Tasks;
+	using System.Windows;
+	using System.Windows.Media.Imaging;
+	using System.Windows.Resources;
+	using ContentTypeTextNet.Library.SharedLibrary.CompatibleForms.Utility;
+	using ContentTypeTextNet.Library.SharedLibrary.Define;
+	using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
+	using ContentTypeTextNet.Library.SharedLibrary.Model.Unmanaged.Gdi;
+	using Drawing = System.Drawing;
 
 	public class IconWrapper: DisposeFinalizeBase, IMakeBitmapSource
 	{

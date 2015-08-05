@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ContentTypeTextNet.Library.SharedLibrary.Data
+﻿namespace ContentTypeTextNet.Library.SharedLibrary.Data
 {
+	using System;
+	using System.Collections.Generic;
+	using System.IO;
+	using System.Linq;
+	using System.Text;
+	using System.Threading.Tasks;
+
 	public class InformationGroup
 	{
 		public InformationGroup(string title)

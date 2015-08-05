@@ -12,9 +12,13 @@
 	/// </summary>
 	public class SettingNotifiyItem
 	{
+		#region property
+
 		/// <summary>
 		/// スタートアップに登録するか。
 		/// </summary>
 		public bool? StartupRegist { get; set; }
+
+		#endregion
 	}
 }

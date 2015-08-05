@@ -49,60 +49,6 @@
 			Dispose(false);
 		}
 
-		#region IIsDisposed
-
-		[IgnoreDataMember, XmlIgnore]
-		public bool IsDisposed { get; private set; }
-
-		protected virtual void Dispose(bool disposing)
-		{
-			if (IsDisposed) {
-				return;
-			}
-
-			IsDisposed = true;
-			GC.SuppressFinalize(this);
-		}
-
-		public void Dispose()
-		{
-			Dispose(true);
-		}
-
-		#endregion
-
-		#region IModel
-
-		[IgnoreDataMember, XmlIgnore]
-		public virtual string DisplayText
-		{
-			get { return GetType().FullName; }
-		}
-
-		[IgnoreDataMember, XmlIgnore]
-		public IEnumerable<PropertyInfo> PropertyInfos
-		{
-			get
-			{
-				if (this._propertyInfos == null) {
-					this._propertyInfos = GetType().GetProperties();
-				}
-
-				return this._propertyInfos;
-			}
-		}
-
-		public IEnumerable<string> GetNameValueList()
-		{
-			var nameValueMap = ReflectionUtility.GetMembers(this, PropertyInfos);
-			return ReflectionUtility.GetNameValueStrings(nameValueMap);
-		}
-
-		public virtual void Correction()
-		{ }
-
-		#endregion
-
 		#region function
 
 		/// <summary>
@@ -164,6 +110,60 @@
 			//Insert(indexB, itemA);
 			SwapIndex(indexA, indexB);
 		}
+
+		#endregion
+
+		#region IIsDisposed
+
+		[IgnoreDataMember, XmlIgnore]
+		public bool IsDisposed { get; private set; }
+
+		protected virtual void Dispose(bool disposing)
+		{
+			if(IsDisposed) {
+				return;
+			}
+
+			IsDisposed = true;
+			GC.SuppressFinalize(this);
+		}
+
+		public void Dispose()
+		{
+			Dispose(true);
+		}
+
+		#endregion
+
+		#region IModel
+
+		[IgnoreDataMember, XmlIgnore]
+		public virtual string DisplayText
+		{
+			get { return GetType().FullName; }
+		}
+
+		[IgnoreDataMember, XmlIgnore]
+		public IEnumerable<PropertyInfo> PropertyInfos
+		{
+			get
+			{
+				if(this._propertyInfos == null) {
+					this._propertyInfos = GetType().GetProperties();
+				}
+
+				return this._propertyInfos;
+			}
+		}
+
+		public IEnumerable<string> GetNameValueList()
+		{
+			var nameValueMap = ReflectionUtility.GetMembers(this, PropertyInfos);
+			return ReflectionUtility.GetNameValueStrings(nameValueMap);
+		}
+
+		public virtual void Correction()
+		{ }
 
 		#endregion
 	}

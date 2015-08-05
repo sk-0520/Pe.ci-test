@@ -19,6 +19,8 @@
 			Selection = new RangeModel<int>();
 		}
 
+		#region property
+
 		/// <summary>
 		/// バージョン。
 		/// </summary>
@@ -53,6 +55,10 @@
 		/// </summary>
 		public string SelectionText { get; set; }
 
+		#endregion
+
+		#region function
+
 		/// <summary>
 		/// それっぽいHTMLの取得。
 		/// </summary>
@@ -61,6 +67,8 @@
 		{
 			return HtmlText ?? FragmentText ?? SelectionText ?? string.Empty;
 		}
+
+		#endregion
 
 		#region ItemModelBase
 

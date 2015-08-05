@@ -44,6 +44,22 @@
 
 		#endregion
 
+		#region function
+
+		protected void ResetVariable()
+		{
+			//var clipboardItem = ClipboardUtility.CreateClipboardItem(ClipboardType.Text, IntPtr.Zero, new NullLogger());
+
+			//Variable[TemplateProgramLanguageName.timestamp] = DateTime.Now;
+			//Variable[TemplateProgramLanguageName.clipboard] = clipboardItem.Text ?? string.Empty;
+			//Variable[TemplateProgramLanguageName.application] = Literal.programName;
+			//Variable[TemplateProgramLanguageName.versionFull] = Literal.ApplicationVersion;
+			//Variable[TemplateProgramLanguageName.versionNumber] = Literal.Version.FileVersion;
+			//Variable[TemplateProgramLanguageName.versionHash] = Literal.Version.ProductVersion;
+		}
+
+		#endregion
+
 		#region T4TemplateProcessor
 
 		protected override void Initialize()
@@ -73,7 +89,7 @@
 			var map = new Dictionary<string, string>() {
 				{ directiveLang, string.Empty },
 			};
-			if (!string.IsNullOrWhiteSpace(CultureCode)) {
+			if(!string.IsNullOrWhiteSpace(CultureCode)) {
 				map[directiveLang] = string.Format("culture=\"{0}\"", CultureCode);
 			}
 			var templateDirective = TemplateDirective.ReplaceRangeFromDictionary("{{", "}}", map);
@@ -89,22 +105,6 @@
 			ResetVariable();
 
 			return base.TransformText_Impl();
-		}
-
-		#endregion
-
-		#region function
-
-		protected void ResetVariable()
-		{
-			//var clipboardItem = ClipboardUtility.CreateClipboardItem(ClipboardType.Text, IntPtr.Zero, new NullLogger());
-
-			//Variable[TemplateProgramLanguageName.timestamp] = DateTime.Now;
-			//Variable[TemplateProgramLanguageName.clipboard] = clipboardItem.Text ?? string.Empty;
-			//Variable[TemplateProgramLanguageName.application] = Literal.programName;
-			//Variable[TemplateProgramLanguageName.versionFull] = Literal.ApplicationVersion;
-			//Variable[TemplateProgramLanguageName.versionNumber] = Literal.Version.FileVersion;
-			//Variable[TemplateProgramLanguageName.versionHash] = Literal.Version.ProductVersion;
 		}
 
 		#endregion
