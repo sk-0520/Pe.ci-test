@@ -62,7 +62,10 @@
 				<KeyBinding Key="Down" Command="{Binding DownListCommand}" />
 				<KeyBinding Key="Tab" Command="{Binding DownListCommand}" />
 				<KeyBinding Key="Tab" Modifiers="Shift" Command="{Binding UpListCommand}" />
+				
 				<KeyBinding Key="Enter" Command="{Binding RunCommand}" />
+				
+				<!-- \ -->
 				<KeyBinding Key="OemBackslash" Command="{Binding FileFindCommand}" />
 				<KeyBinding Key="Oem5" Command="{Binding FileFindCommand}" />
 			</TextBox.InputBindings>
@@ -70,6 +73,15 @@
 		<Popup x:Name="popup" PlacementTarget="{Binding ElementName=inputCommand}" IsOpen="{Binding IsOpen, Mode=OneWay}">
 			<Border>
 				<ListBox x:Name="listItems" SelectedIndex="{Binding SelectedIndex}" SelectedItem="{Binding SelectedCommandItem}" ItemsSource="{Binding CommandItems}">
+					<ListBox.InputBindings>
+						<MouseBinding MouseAction="LeftDoubleClick" Command="{Binding RunCommand}" />
+						
+						<KeyBinding Key="Enter" Command="{Binding RunCommand}" />
+						
+						<!-- \ -->
+						<KeyBinding Key="OemBackslash" Command="{Binding FileFindCommand}" />
+						<KeyBinding Key="Oem5" Command="{Binding FileFindCommand}" />
+					</ListBox.InputBindings>
 					<ListBox.ItemTemplate>
 						<DataTemplate>
 							<StackPanel Orientation="Horizontal">
