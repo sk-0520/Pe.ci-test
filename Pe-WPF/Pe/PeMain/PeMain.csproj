@@ -126,6 +126,7 @@
     </Compile>
     <Compile Include="Define\CommandKind.cs" />
     <Compile Include="Define\Timing.cs" />
+    <Compile Include="Logic\Utility\PopupUtility.cs" />
     <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeCommandSetting.cs" />
     <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeLoggingSetting.cs" />
     <Compile Include="ViewModel\CommandItemViewModel.cs" />

@@ -36,7 +36,7 @@
 		double _windowLeft, _windowTop;
 		Visibility _visibility = Visibility.Hidden;
 		CollectionModel<CommandItemViewModel> _commandItems;
-		string _inputText;
+		string _inputText, _selectedText;
 		int _selectedIndex;
 
 		CommandItemViewModel _selectedCommandItem;
@@ -100,29 +100,7 @@
 			get { return this._inputText; }
 			set
 			{
-				if(SelectedCommandItem == null) {
-					SetVariableValue(ref this._inputText, value.Trim());
-					if(!string.IsNullOrEmpty(this._inputText)) {
-						var items = GetCommandItems(this._inputText);
-						CommandItems = new CollectionModel<CommandItemViewModel>(items);
-					}
-				} else {
-					switch(SelectedCommandItem.CommandKind) {
-						case CommandKind.LauncherItemName:
-						case CommandKind.LauncherItemTag:
-							if(SelectedCommandItem.DisplayText.StartsWith(value)) {
-								SetVariableValue(ref this._inputText, SelectedCommandItem.DisplayText);
-							} else {
-								SetVariableValue(ref this._inputText, value);
-								var items = GetCommandItems(this._inputText);
-								CommandItems = new CollectionModel<CommandItemViewModel>(items);
-							}
-							break;
-						case CommandKind.File:
-							SetVariableValue(ref this._inputText, value);
-							break;
-					}
-				}
+				SetVariableValue(ref this._inputText, value);
 				OnPropertyChangeIsOpen();
 			}
 		}
@@ -144,6 +122,12 @@
 		{
 			get { return this._selectedIndex; }
 			set { SetVariableValue(ref this._selectedIndex, value); }
+		}
+
+		public string SelectedText
+		{
+			get { return this._selectedText; }
+			set { SetVariableValue(ref this._selectedText, value); }
 		}
 
 		public bool IsOpen

@@ -100,29 +100,29 @@
 
 		#region function
 
-		void ResetPopupPosition()
-		{
-			popup.HorizontalOffset += 1;
-			popup.HorizontalOffset -= 1;
-		}
+		//void ResetPopupPosition()
+		//{
+		//	//popup.HorizontalOffset += 1;
+		//	//popup.HorizontalOffset -= 1;
+		//}
 
 		#endregion
 
-		/// <summary>
-		/// <para>http://stackoverflow.com/questions/5736359/popup-control-moves-with-parent</para>
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		protected override void OnLocationChanged(EventArgs e)
-		{
-			ResetPopupPosition();
-			base.OnLocationChanged(e);
-		}
+		///// <summary>
+		///// <para>http://stackoverflow.com/questions/5736359/popup-control-moves-with-parent</para>
+		///// </summary>
+		///// <param name="sender"></param>
+		///// <param name="e"></param>
+		//protected override void OnLocationChanged(EventArgs e)
+		//{
+		//	ResetPopupPosition();
+		//	base.OnLocationChanged(e);
+		//}
 
-		protected override void OnRenderSizeChanged(SizeChangedInfo sizeInfo)
-		{
-			ResetPopupPosition();
-			base.OnRenderSizeChanged(sizeInfo);
-		}
+		//protected override void OnRenderSizeChanged(SizeChangedInfo sizeInfo)
+		//{
+		//	ResetPopupPosition();
+		//	base.OnRenderSizeChanged(sizeInfo);
+		//}
 	}
 }
