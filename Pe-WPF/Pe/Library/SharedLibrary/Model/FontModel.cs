@@ -12,7 +12,7 @@
 	[Serializable]
 	public class FontModel: ModelBase, IDeepClone
 	{
-		#regionproperty
+		#region property
 
 		[DataMember]
 		public string Family { get; set; }
