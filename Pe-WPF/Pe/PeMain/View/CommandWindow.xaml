@@ -17,9 +17,7 @@
 	Width="{Binding WindowWidth, Mode=TwoWay}"
 	Height="80"
 	Title="CommandWindow"
-	Topmost="True"
 	x:Name="root"
-	
 
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
 	d:DesignWidth="300"
@@ -32,6 +30,7 @@
 			<SC:HasTextLengthConverter x:Key="HasTextLengthConverter" />
 			<SC:LogicalMultiOrConverter x:Key="LogicalMultiOrConverter" />
 			<SC:IsNotEmptyCollection x:Key="IsNotEmptyCollection" />
+			<SC:LogicalIsNotNullConverter x:Key="LogicalIsNotNullConverter" />
 			<AC:CommandItemConverter x:Key="CommandItemConverter" />
 		</ResourceDictionary>
 	</AW:CommonDataWindow.Resources>
@@ -61,6 +60,11 @@
 			<TextBox.InputBindings>
 				<KeyBinding Key="Up" Command="{Binding UpListCommand}" />
 				<KeyBinding Key="Down" Command="{Binding DownListCommand}" />
+				<KeyBinding Key="Tab" Command="{Binding DownListCommand}" />
+				<KeyBinding Key="Tab" Modifiers="Shift" Command="{Binding UpListCommand}" />
+				<KeyBinding Key="Enter" Command="{Binding RunCommand}" />
+				<KeyBinding Key="OemBackslash" Command="{Binding FileFindCommand}" />
+				<KeyBinding Key="Oem5" Command="{Binding FileFindCommand}" />
 			</TextBox.InputBindings>
 		</TextBox>
 		<Popup x:Name="popup" PlacementTarget="{Binding ElementName=inputCommand}" IsOpen="{Binding IsOpen, Mode=OneWay}">
@@ -77,7 +81,7 @@
 				</ListBox>
 			</Border>
 		</Popup>
-		
-		<Button Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" Content="execute" AA:Language.Word="command/execute" />
+
+		<Button Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" Content="execute" AA:Language.Word="command/execute" IsEnabled="{Binding SelectedCommandItem, Converter={StaticResource LogicalIsNotNullConverter}}" Command="{Binding RunCommand}" />
 	</Grid>
 </AW:ViewModelCommonDataWindow>

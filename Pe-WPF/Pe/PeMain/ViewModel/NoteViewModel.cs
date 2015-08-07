@@ -419,9 +419,7 @@
 			OnPropertyChanged("IsBodyReadOnly");
 
 			View.UserClosing += View_UserClosing;
-			if(HasView) {
-				PopupUtility.Attachment(View, View.popup);
-			}
+			PopupUtility.Attachment(View, View.popup);
 			
 			base.InitializeView();
 		}

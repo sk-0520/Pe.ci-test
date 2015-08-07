@@ -43,8 +43,6 @@
 
 		#endregion
 
-
-
 		public CommandViewModel(CommandSettingModel model, CommandWindow view, LauncherItemSettingModel launcherItemSetting, IAppNonProcess appNonProcess)
 			: base(model, view)
 		{
@@ -91,6 +89,9 @@
 			set
 			{
 				SetVariableValue(ref this._commandItems, value);
+				if(this._commandItems != null && this._commandItems.Any()) {
+					SelectedIndex = 0;
+				}
 				OnPropertyChangeIsOpen();
 			}
 		}
@@ -100,7 +101,13 @@
 			get { return this._inputText; }
 			set
 			{
-				SetVariableValue(ref this._inputText, value);
+				SetVariableValue(ref this._inputText, value.Trim());
+				var items = string.IsNullOrWhiteSpace(InputText)
+					? GetAllCommandItems()
+					: GetCommandItems(InputText)
+				;
+				CommandItems = new CollectionModel<CommandItemViewModel>(items);
+
 				OnPropertyChangeIsOpen();
 			}
 		}
@@ -253,6 +260,38 @@
 			}
 		}
 
+		public ICommand RunCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						if(SelectedCommandItem != null) {
+							AppNonProcess.Logger.Information(SelectedCommandItem.ToString());
+						}
+					}
+				);
+
+				return result;
+			}
+		}
+
+		public ICommand FileFindCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						if(SelectedCommandItem != null && SelectedCommandItem.CommandKind == CommandKind.File) {
+							InputText = SelectedCommandItem.FilePath;
+						}
+					}
+				);
+
+				return result;
+			}
+		}
+
 		#endregion
 
 		#region IHavingAppNonProcess
@@ -270,6 +309,7 @@
 			View.UserClosing += View_UserClosing;
 			View.Activated += View_Activated;
 			View.Deactivated += View_Deactivated;
+			PopupUtility.Attachment(View, View.popup);
 
 			base.InitializeView();
 		}
