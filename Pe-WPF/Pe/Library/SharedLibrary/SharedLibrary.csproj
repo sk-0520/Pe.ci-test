@@ -170,6 +170,7 @@
     <Compile Include="Model\Unmanaged\Gdi\IconHandleModel.cs" />
     <Compile Include="Model\Unmanaged\Gdi\BitmapHandleModel.cs" />
     <Compile Include="Model\Unmanaged\GlobalAllocModel.cs" />
+    <Compile Include="View\Attached\TextBoxHelper.cs" />
     <Compile Include="View\Control\HotkeyControl.cs" />
     <Compile Include="View\Control\TemplateBindingToolbar.cs" />
     <Compile Include="View\Converter\BooleanFontStyleConverter.cs" />
