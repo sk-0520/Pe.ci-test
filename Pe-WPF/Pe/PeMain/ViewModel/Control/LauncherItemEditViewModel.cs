@@ -17,11 +17,29 @@
 
 	public class LauncherItemEditViewModel: LauncherItemSimpleViewModel
 	{
-		public LauncherItemEditViewModel(LauncherItemModel model, IAppNonProcess nonPorocess, IAppSender appSender)
+		#region define
+
+		class NullRefreshFromViewModel: IRefreshFromViewModel
+		{
+			public void Refresh()
+			{ }
+		}
+
+		#endregion
+
+		public LauncherItemEditViewModel(LauncherItemModel model, IRefreshFromViewModel refreshFromViewModel, IAppNonProcess nonPorocess, IAppSender appSender)
 			: base(model, nonPorocess, appSender)
-		{ }
+		{
+			if(refreshFromViewModel == null) {
+				RefreshFromViewModel = new NullRefreshFromViewModel();
+			} else {
+				RefreshFromViewModel = refreshFromViewModel;
+			}
+		}
 
 		#region property
+
+		public IRefreshFromViewModel RefreshFromViewModel { get; private set; }
 
 		public string Name
 		{
@@ -33,6 +51,8 @@
 				}
 			}
 		}
+
+		
 
 		public override LauncherKind LauncherKind
 		{
@@ -153,6 +173,8 @@
 							Icon.Path = dialog.Icon.Path;
 							Icon.Index = dialog.Icon.Index;
 							OnPropertyChanged("IconDisplayText");
+							
+							RefreshFromViewModel.Refresh();
 						}
 					}
 				);
@@ -161,6 +183,16 @@
 			}
 		}
 
+
+		#endregion
+
+		#region LauncherItemSimpleViewModel
+		
+		protected override void OnPropertyChangeDisplayText()
+		{
+			base.OnPropertyChangeDisplayText();
+			RefreshFromViewModel.Refresh();
+		}
 
 		#endregion
 	}

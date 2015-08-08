@@ -18,6 +18,7 @@
 		#region variable
 
 		LauncherListItemsViewModel _launcherItems;
+		bool _isItemEdited;
 
 		#endregion
 
@@ -31,6 +32,14 @@
 		#region proerty
 
 		LauncherItemSettingModel LauncherItemSetting { get; set; }
+
+		public bool IsItemEdited 
+		{
+			get { return this._isItemEdited; }
+			set { 
+				SetVariableValue(ref this._isItemEdited, value);
+			}
+		}
 
 		public LauncherListItemsViewModel LauncherItems
 		{

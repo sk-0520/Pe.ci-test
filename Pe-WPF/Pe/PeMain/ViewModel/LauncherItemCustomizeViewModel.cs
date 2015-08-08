@@ -28,7 +28,7 @@
 		#endregion
 
 		public LauncherItemCustomizeViewModel(LauncherItemModel model, LauncherItemCustomizeWindow view, IAppNonProcess nonPorocess, IAppSender appSender)
-			: base((LauncherItemModel)model.DeepClone(), nonPorocess, appSender)
+			: base((LauncherItemModel)model.DeepClone(), null, nonPorocess, appSender)
 		{
 			View = view;
 

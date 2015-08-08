@@ -11,7 +11,7 @@
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
-	public class LauncherListItemViewModel : LauncherItemViewModelBase
+	public class LauncherListItemViewModel: LauncherItemViewModelBase, IRefreshFromViewModel
 	{
 		public LauncherListItemViewModel(LauncherItemModel model, IAppNonProcess nonPorocess, IAppSender appSender)
 			: base(model, nonPorocess, appSender)
@@ -33,5 +33,12 @@
 		}
 
 		#endregion
+
+		public void Refresh()
+		{
+			OnPropertyChangeDisplayText();
+			AppNonProcess.LauncherIconCaching.Remove(Model);
+			OnPropertyChanged("Image");
+		}
 	}
 }

@@ -20,9 +20,53 @@
 	/// </summary>
 	public partial class LauncherItemEditControl: CommonDataUserControl
 	{
+		#region event
+
+		public event EventHandler<DependencyPropertyChangedEventArgs> PropertyChanged = delegate { };
+
+		#endregion
+
 		public LauncherItemEditControl()
 		{
 			InitializeComponent();
 		}
+
+		#region IsEditedProperty
+
+		public static readonly DependencyProperty IsEditedProperty = DependencyProperty.Register(
+			"IsEdited",
+			typeof(bool),
+			typeof(LauncherItemEditControl),
+			new FrameworkPropertyMetadata(new PropertyChangedCallback(OnIsEditedChanged))
+		);
+
+		private static void OnIsEditedChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
+		{
+			var view = obj as LauncherItemEditControl;
+			if(view != null) {
+				view.IsEdited = (bool)e.NewValue;
+			}
+		}
+
+		public bool IsEdited
+		{
+			get { return (bool)GetValue(IsEditedProperty); }
+			set { SetValue(IsEditedProperty, value); }
+		}
+
+		#endregion
+
+		//#region CommonDataUserControl
+
+		//protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
+		//{
+		//	base.OnPropertyChanged(e);
+		//	if(CommonData != null) {
+		//		CommonData.Logger.Information(e.Property.Name);
+		//		PropertyChanged(this, e);
+		//	}
+		//}
+
+		//#endregion
 	}
 }
