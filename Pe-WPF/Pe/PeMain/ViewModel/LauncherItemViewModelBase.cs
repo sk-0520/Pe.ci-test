@@ -89,14 +89,12 @@
 
 		public string Tags
 		{
-			get { return string.Join(", ", Model.Tag.Items); }
+			get { return string.Join(", ", Model.Tag.Items.Concat(new[] { string.Empty })); }
 			set
 			{
 				var items = value.Split(',')
 					.Where(s => !string.IsNullOrWhiteSpace(s))
 					.Select(s => s.Trim())
-					.OrderBy(s => s)
-					.Distinct()
 				;
 				Model.Tag.Items = new CollectionModel<string>(items);
 				OnPropertyChanged();
