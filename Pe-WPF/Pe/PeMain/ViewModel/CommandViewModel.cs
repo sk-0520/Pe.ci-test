@@ -119,10 +119,11 @@
 					var pair = items
 						.Select((f, i) => new { Item = f, Index = i })
 						.Where(p => p.Item.CommandKind == CommandKind.Drive)
-						.FirstOrDefault(p => p.Item.FilePath.StartsWith(InputText))
+						.FirstOrDefault(p => p.Item.FilePath.StartsWith(InputText, StringComparison.OrdinalIgnoreCase))
 					;
 					if(pair != null) {
 						SelectedIndex = pair.Index;
+						//SelectedCommandItem = pair.Item;
 					} else {
 						SelectedIndex = 0;
 					}

@@ -36,7 +36,7 @@
 			<AC:CommandItemConverter x:Key="CommandItemConverter" />
 		</ResourceDictionary>
 	</AW:CommonDataWindow.Resources>
-	<Grid>
+	<Grid x:Name="parent">
 		<Grid.RowDefinitions>
 			<RowDefinition Height="{Binding IconHeight, Mode=OneTime}" />
 			<RowDefinition Height="*" />
@@ -63,7 +63,11 @@
 				<KeyBinding Key="Enter" Modifiers="Shift" Command="{Binding RunItemCommand}" />
 			</TextBox.InputBindings>
 		</TextBox>
-		<Popup x:Name="popup" PlacementTarget="{Binding ElementName=inputCommand}" IsOpen="{Binding IsOpen, Mode=OneWay}">
+		<Button
+			Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Content="execute" AA:Language.Word="command/execute" 
+			IsEnabled="{Binding SelectedCommandItem, Converter={StaticResource LogicalIsNotNullConverter}}" Command="{Binding RunItemCommand}"
+		/>
+		<Popup x:Name="popup" PlacementTarget="{Binding ElementName=parent}" IsOpen="{Binding IsOpen, Mode=OneWay}">
 			<Border>
 				<ListBox x:Name="listItems" IsSynchronizedWithCurrentItem="True"  SelectedIndex="{Binding SelectedIndex}" SelectedItem="{Binding SelectedCommandItem}" ItemsSource="{Binding CommandItems}">
 					<ListBox.Resources>
@@ -85,11 +89,11 @@
 						</DataTemplate>
 					</ListBox.ItemTemplate>
 					<ListBox.InputBindings>
-						<MouseBinding MouseAction="LeftDoubleClick" Command="{Binding RunItemCommand}" />
+						<!--<MouseBinding MouseAction="LeftDoubleClick" Command="{Binding RunItemCommand}" />-->
 
 						<KeyBinding Key="Enter" Command="{Binding RunItemCommand}" />
 						<KeyBinding Key="Enter" Modifiers="Shift" Command="{Binding RunItemCommand}" />
-						
+
 						<!-- \ -->
 						<KeyBinding Key="OemBackslash" Command="{Binding FileFindCommand}" />
 						<KeyBinding Key="Oem5" Command="{Binding FileFindCommand}" />
@@ -97,9 +101,5 @@
 				</ListBox>
 			</Border>
 		</Popup>
-		<Button
-			Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Content="execute" AA:Language.Word="command/execute" 
-			IsEnabled="{Binding SelectedCommandItem, Converter={StaticResource LogicalIsNotNullConverter}}" Command="{Binding RunItemCommand}"
-		/>
 	</Grid>
 </AW:ViewModelCommonDataWindow>
