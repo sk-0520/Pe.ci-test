@@ -110,6 +110,11 @@
 			IsChanged = false;
 		}
 
+		protected void OnPropertyChangeDisplayText()
+		{
+			OnPropertyChanged("DisplayText");
+		}
+
 		#endregion
 
 		#region IDisplayText

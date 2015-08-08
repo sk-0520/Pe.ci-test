@@ -26,7 +26,12 @@
 		public string Name
 		{
 			get { return Model.Name; }
-			set { SetModelValue(value); }
+			set
+			{
+				if(SetModelValue(value)) {
+					OnPropertyChangeDisplayText();
+				}
+			}
 		}
 
 		public override LauncherKind LauncherKind

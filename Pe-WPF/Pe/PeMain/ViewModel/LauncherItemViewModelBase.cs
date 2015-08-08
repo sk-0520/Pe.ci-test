@@ -48,7 +48,12 @@
 		public string Command
 		{
 			get { return Model.Command; }
-			set { SetModelValue(value); }
+			set
+			{
+				if(SetModelValue(value)) {
+					OnPropertyChangeDisplayText();
+				}
+			}
 		}
 
 		public virtual string WorkDirectoryPath
