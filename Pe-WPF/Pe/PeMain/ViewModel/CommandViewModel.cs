@@ -55,17 +55,6 @@
 			AppSender = appSender;
 
 			CommandItems = new CollectionModel<CommandItemViewModel>(GetAllCommandItems());
-
-			try {
-				this._driveItems = DriveInfo.GetDrives()
-					.Where(d => d.IsReady)
-					.Select(d => new CommandItemViewModel(Model.IconScale, d.RootDirectory.FullName, d.VolumeLabel, AppNonProcess, AppSender))
-				;
-			} catch(IOException ex) {
-				AppNonProcess.Logger.Warning(ex);
-			} catch(UnauthorizedAccessException ex) {
-				AppNonProcess.Logger.Warning(ex);
-			}
 		}
 
 		#region property
@@ -111,14 +100,7 @@
 		public CollectionModel<CommandItemViewModel> CommandItems
 		{
 			get { return this._commandItems; }
-			set
-			{
-				SetVariableValue(ref this._commandItems, value);
-				if(this._commandItems != null && this._commandItems.Any()) {
-					SelectedIndex = 0;
-				}
-				OnPropertyChangeIsOpen();
-			}
+			set{ SetVariableValue(ref this._commandItems, value); }
 		}
 
 		public string InputText
@@ -127,11 +109,28 @@
 			set
 			{
 				SetVariableValue(ref this._inputText, value.Trim());
-				var items = string.IsNullOrWhiteSpace(InputText)
+				var isAll = string.IsNullOrWhiteSpace(InputText);
+				var items = isAll
 					? GetAllCommandItems()
 					: GetCommandItems(InputText)
 				;
 				CommandItems = new CollectionModel<CommandItemViewModel>(items);
+				if(!isAll && items.Any(i => i.CommandKind == CommandKind.Drive)) {
+					var pair = items
+						.Select((f, i) => new { Item = f, Index = i })
+						.Where(p => p.Item.CommandKind == CommandKind.Drive)
+						.FirstOrDefault(p => p.Item.FilePath.StartsWith(InputText))
+					;
+					if(pair != null) {
+						SelectedIndex = pair.Index;
+					} else {
+						SelectedIndex = 0;
+					}
+				} else {
+					if(this._commandItems != null && this._commandItems.Any()) {
+						SelectedIndex = 0;
+					}
+				}
 
 				OnPropertyChangeIsOpen();
 			}
@@ -249,13 +248,20 @@
 						}
 					}
 				} else if(inputPath.Length == @"C:".Length && char.IsLetter(inputPath[0]) && inputPath[1] == Path.VolumeSeparatorChar) {
-					try {
-						files = this._driveItems;
-					} catch(IOException ex) {
-						AppNonProcess.Logger.Warning(ex);
-					} catch(UnauthorizedAccessException ex) {
-						AppNonProcess.Logger.Warning(ex);
+					if(this._driveItems == null) {
+						try {
+							this._driveItems = DriveInfo.GetDrives()
+								.Where(d => d.IsReady)
+								.Select(d => new CommandItemViewModel(Model.IconScale, d.RootDirectory.FullName, d.VolumeLabel, AppNonProcess, AppSender))
+							;
+						} catch(IOException ex) {
+							AppNonProcess.Logger.Warning(ex);
+						} catch(UnauthorizedAccessException ex) {
+							AppNonProcess.Logger.Warning(ex);
+						}
 					}
+
+					files = this._driveItems;
 				}
 			}
 			if(files == null) {

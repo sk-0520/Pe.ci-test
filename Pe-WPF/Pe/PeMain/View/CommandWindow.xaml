@@ -41,15 +41,10 @@
 			<RowDefinition />
 		</Grid.RowDefinitions>
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="Auto" />
 			<ColumnDefinition Width="*" />
 			<ColumnDefinition Width="Auto" />
 		</Grid.ColumnDefinitions>
-		<Image 
-			Grid.Row="0" Grid.RowSpan="2" Grid.Column="0"
-			Width="{Binding IconWidth, Mode=OneTime}" Height="{Binding IconHeight, Mode=OneTime}" Style="{StaticResource ImageRenderStyle}" Source="{Binding SelectedCommandItem.Image}"
-		/>
-		<TextBox x:Name="inputCommand" Grid.Row="0" Grid.Column="1" Text="{Binding InputText, UpdateSourceTrigger=PropertyChanged}" SA:TextBoxHelper.SelectedText="{Binding SelectedText}" >
+		<TextBox x:Name="inputCommand" Grid.Row="0" Grid.Column="0" Text="{Binding InputText, UpdateSourceTrigger=PropertyChanged}" SA:TextBoxHelper.SelectedText="{Binding SelectedText}" >
 			<TextBox.InputBindings>
 				<KeyBinding Key="Up" Command="{Binding UpListCommand}" />
 				<KeyBinding Key="Down" Command="{Binding DownListCommand}" />
@@ -84,8 +79,14 @@
 				</ListBox>
 			</Border>
 		</Popup>
+		<StackPanel Grid.Row="1" Grid.Column="0">
+			<Image 
+			Width="{Binding IconWidth, Mode=OneTime}" Height="{Binding IconHeight, Mode=OneTime}" Style="{StaticResource ImageRenderStyle}" Source="{Binding SelectedCommandItem.Image}"
+		/>
+
+		</StackPanel>
 		<Button
-			Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" Content="execute" AA:Language.Word="command/execute" 
+			Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Content="execute" AA:Language.Word="command/execute" 
 			IsEnabled="{Binding SelectedCommandItem, Converter={StaticResource LogicalIsNotNullConverter}}" Command="{Binding RunItemCommand}"
 		/>
 	</Grid>
