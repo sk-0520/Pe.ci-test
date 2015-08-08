@@ -55,6 +55,14 @@
 			IsHideFile = isHideFile;
 		}
 
+		public CommandItemViewModel(IconScale iconScale, string filePath, string driveName, IAppNonProcess appNonProcess, IAppSender appSender)
+			: this(CommandKind.Drive, iconScale, appNonProcess, appSender)
+		{
+			FilePath = filePath;
+			IsDirectory = true;
+			DriveName = driveName;
+		}
+
 		#region property
 
 		public CommandKind CommandKind { get; private set; }
@@ -62,6 +70,7 @@
 		public LauncherItemModel LauncherItemModel { get; private set; }
 		public string Tag { get; private set; }
 		public string FilePath { get; private set; }
+		public string DriveName { get; private set; }
 		public bool IsDirectory { get; private set; }
 		public bool IsHideFile { get; private set; }
 
@@ -70,7 +79,7 @@
 			get
 			{
 				if(this._image == null) {
-					if(CommandKind == CommandKind.File) {
+					if(CommandKind == CommandKind.File || CommandKind == CommandKind.Drive) {
 						var iconPath = new IconPathModel() {
 							Path = FilePath,
 							Index = 0,
@@ -108,14 +117,27 @@
 			get
 			{
 				switch(CommandKind) {
-					case Define.CommandKind.LauncherItemName:
+					case CommandKind.LauncherItemName:
 						return LauncherItemModel.Name;
 
-					case Define.CommandKind.LauncherItemTag:
+					case CommandKind.LauncherItemTag:
 						return Tag;
 
-					case Define.CommandKind.File:
+					case CommandKind.File:
 						return FilePath;
+
+					case CommandKind.Drive:
+						if(string.IsNullOrWhiteSpace(DriveName)) {
+							return FilePath;
+						} else {
+							var map = new Dictionary<string, string>() {
+								{ LanguageKey.drivePath, FilePath },
+								{ LanguageKey.driveVolume, DriveName },
+							};
+							//var result = string.Format("{0} ({1})", DriveName, FilePath);
+							var result = AppNonProcess.Language["name/drive", map];
+							return result;
+						}
 
 					default:
 						throw new NotImplementedException();

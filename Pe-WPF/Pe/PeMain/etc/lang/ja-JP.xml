@@ -23,6 +23,8 @@
 
 		<Item Id="new/group-name" Word="新規グループ" />
 		<Item Id="new/template-name" Word="新規テンプレート" />
+		
+		<Item Id="name/drive" Word="@[VOLUME] (@[PATH])" />
 
 		<Item Id="launcher/run/normal" Word="起動" />
 

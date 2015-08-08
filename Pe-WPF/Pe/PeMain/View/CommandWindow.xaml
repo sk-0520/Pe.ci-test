@@ -45,18 +45,10 @@
 			<ColumnDefinition Width="*" />
 			<ColumnDefinition Width="Auto" />
 		</Grid.ColumnDefinitions>
-		<Image Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Width="{Binding IconWidth, Mode=OneTime}" Height="{Binding IconHeight, Mode=OneTime}" Style="{StaticResource ImageRenderStyle}" Source="{Binding SelectedCommandItem.Image}" />
-
-		<!--<ComboBox Grid.Row="0" Grid.Column="1" IsEditable="True" Text="{Binding InputText, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedCommandItem}" ItemsSource="{Binding CommandItems}" >
-			<ComboBox.ItemTemplate>
-				<DataTemplate>
-					<TextBlock Height="20" Text="{Binding DisplayText}" />
-				</DataTemplate>
-			</ComboBox.ItemTemplate>
-		</ComboBox>
-		<StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
-			<TextBlock Text="{Binding SelectedCommandItem.CommandKind}" />
-		</StackPanel>-->
+		<Image 
+			Grid.Row="0" Grid.RowSpan="2" Grid.Column="0"
+			Width="{Binding IconWidth, Mode=OneTime}" Height="{Binding IconHeight, Mode=OneTime}" Style="{StaticResource ImageRenderStyle}" Source="{Binding SelectedCommandItem.Image}"
+		/>
 		<TextBox x:Name="inputCommand" Grid.Row="0" Grid.Column="1" Text="{Binding InputText, UpdateSourceTrigger=PropertyChanged}" SA:TextBoxHelper.SelectedText="{Binding SelectedText}" >
 			<TextBox.InputBindings>
 				<KeyBinding Key="Up" Command="{Binding UpListCommand}" />
@@ -66,10 +58,6 @@
 
 				<KeyBinding Key="Enter" Command="{Binding RunItemCommand}" />
 				<KeyBinding Key="Enter" Modifiers="Shift" Command="{Binding RunItemCommand}" />
-
-				<!-- \ -->
-				<!--<KeyBinding Key="OemBackslash" Command="{Binding FileFindCommand}" />
-				<KeyBinding Key="Oem5" Command="{Binding FileFindCommand}" />-->
 			</TextBox.InputBindings>
 		</TextBox>
 		<Popup x:Name="popup" PlacementTarget="{Binding ElementName=inputCommand}" IsOpen="{Binding IsOpen, Mode=OneWay}">
@@ -96,7 +84,9 @@
 				</ListBox>
 			</Border>
 		</Popup>
-
-		<Button Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" Content="execute" AA:Language.Word="command/execute" IsEnabled="{Binding SelectedCommandItem, Converter={StaticResource LogicalIsNotNullConverter}}" Command="{Binding RunItemCommand}" />
+		<Button
+			Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" Content="execute" AA:Language.Word="command/execute" 
+			IsEnabled="{Binding SelectedCommandItem, Converter={StaticResource LogicalIsNotNullConverter}}" Command="{Binding RunItemCommand}"
+		/>
 	</Grid>
 </AW:ViewModelCommonDataWindow>

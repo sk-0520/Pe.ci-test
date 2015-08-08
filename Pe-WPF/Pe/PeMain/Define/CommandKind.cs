@@ -10,6 +10,7 @@
 	{
 		LauncherItemName,
 		LauncherItemTag,
-		File
+		File,
+		Drive,
 	}
 }

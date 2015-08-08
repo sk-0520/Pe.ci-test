@@ -42,6 +42,9 @@
 
 		CommandItemViewModel _selectedCommandItem;
 
+		IEnumerable<CommandItemViewModel> _driveItems;
+
+
 		#endregion
 
 		public CommandViewModel(CommandSettingModel model, CommandWindow view, LauncherItemSettingModel launcherItemSetting, IAppNonProcess appNonProcess, IAppSender appSender)
@@ -52,6 +55,17 @@
 			AppSender = appSender;
 
 			CommandItems = new CollectionModel<CommandItemViewModel>(GetAllCommandItems());
+
+			try {
+				this._driveItems = DriveInfo.GetDrives()
+					.Where(d => d.IsReady)
+					.Select(d => new CommandItemViewModel(Model.IconScale, d.RootDirectory.FullName, d.VolumeLabel, AppNonProcess, AppSender))
+				;
+			} catch(IOException ex) {
+				AppNonProcess.Logger.Warning(ex);
+			} catch(UnauthorizedAccessException ex) {
+				AppNonProcess.Logger.Warning(ex);
+			}
 		}
 
 		#region property
@@ -79,7 +93,7 @@
 		public Visibility Visibility
 		{
 			get { return this._visibility; }
-			set 
+			set
 			{
 				SetVariableValue(ref this._visibility, value);
 				if(HasView) {
@@ -201,7 +215,7 @@
 			IEnumerable<CommandItemViewModel> files = null;
 			if(Model.FindFile) {
 				var inputPath = Environment.ExpandEnvironmentVariables(filter);
-				if(inputPath.Length > @"C:".Length) {
+				if(inputPath.Length >= @"C:\".Length) {
 					var isDir = Directory.Exists(inputPath);
 					string baseDir;
 					try {
@@ -233,6 +247,14 @@
 						} catch(UnauthorizedAccessException ex) {
 							AppNonProcess.Logger.Warning(ex);
 						}
+					}
+				} else if(inputPath.Length == @"C:".Length && char.IsLetter(inputPath[0]) && inputPath[1] == Path.VolumeSeparatorChar) {
+					try {
+						files = this._driveItems;
+					} catch(IOException ex) {
+						AppNonProcess.Logger.Warning(ex);
+					} catch(UnauthorizedAccessException ex) {
+						AppNonProcess.Logger.Warning(ex);
 					}
 				}
 			}
@@ -371,6 +393,7 @@
 
 			switch(commandItem.CommandKind) {
 				case CommandKind.File:
+				case CommandKind.Drive:
 					try {
 						ExecuteUtility.OpenFile(commandItem.FilePath, AppNonProcess);
 					} catch(Exception ex) {
@@ -379,8 +402,7 @@
 					break;
 
 				case CommandKind.LauncherItemName:
-				case CommandKind.LauncherItemTag:
-					{
+				case CommandKind.LauncherItemTag: {
 						if(showExtension) {
 							var window = AppSender.SendCreateWindow(WindowKind.LauncherExecute, commandItem.LauncherItemModel, null);
 							window.Show();
@@ -390,6 +412,9 @@
 						}
 					}
 					break;
+
+				default:
+					throw new NotImplementedException();
 			}
 		}
 
@@ -417,7 +442,7 @@
 		void inputCommand_KeyDown(object sender, KeyEventArgs e)
 		{
 			if(e.Key == Key.Oem5 || e.Key == Key.OemBackslash) {
-				if(SelectedCommandItem != null && SelectedCommandItem.CommandKind == CommandKind.File) {
+				if(SelectedCommandItem != null && SelectedCommandItem.CommandKind == CommandKind.File || SelectedCommandItem.CommandKind == CommandKind.Drive) {
 					var textBox = (TextBox)sender;
 					InputText = SelectedCommandItem.FilePath;
 					textBox.Select(InputText.Length, 0);
