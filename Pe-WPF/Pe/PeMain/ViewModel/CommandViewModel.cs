@@ -22,6 +22,7 @@
 	using System.IO;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 	using System.Windows.Input;
+	using System.Windows.Controls;
 
 	public class CommandViewModel: HavingViewSingleModelWrapperViewModelBase<CommandSettingModel, CommandWindow>, IHavingAppNonProcess
 	{
@@ -141,10 +142,8 @@
 		{
 			get
 			{
-				var result = !string.IsNullOrEmpty(InputText)
-					||
-					CommandItems.Any()
-					;
+				var result = CommandItems.Any();
+
 				if(HasView) {
 					result &= View.IsActive;
 				}
@@ -192,36 +191,38 @@
 			IEnumerable<CommandItemViewModel> files = null;
 			if(Model.FindFile) {
 				var inputPath = Environment.ExpandEnvironmentVariables(filter);
-				var isDir = Directory.Exists(inputPath);
-				string baseDir;
-				try {
-					baseDir = isDir
-						? inputPath.Last() == Path.VolumeSeparatorChar
-							? inputPath + Path.DirectorySeparatorChar
-							: inputPath
-						: Path.GetDirectoryName(inputPath)
-					;
-				} catch(ArgumentException) {
-					baseDir = inputPath;
-				}
-				if(FileUtility.Exists(baseDir)) {
-					Debug.WriteLine(inputPath);
-					//var isDir = Directory.Exists(inputPath);
-					//var baseDir = isDir ? inputPath : Path.GetDirectoryName(inputPath);
-					var searchPattern = isDir ? "*" : Path.GetFileName(inputPath) + "*";
-					var showHiddenFile = SystemEnvironmentUtility.IsHideFileShow();
-					var directoryInfo = new DirectoryInfo(baseDir);
+				if(inputPath.Length > @"C:".Length) {
+					var isDir = Directory.Exists(inputPath);
+					string baseDir;
 					try {
-						files = directoryInfo
-							.EnumerateFileSystemInfos(searchPattern, SearchOption.TopDirectoryOnly)
-							.Where(fs => fs.Exists)
-							.Where(fs => showHiddenFile ? true : !fs.IsHidden())
-							.Select(fs => new CommandItemViewModel(fs.FullName, AppNonProcess))
+						baseDir = isDir
+							? inputPath.Last() == Path.VolumeSeparatorChar
+								? inputPath + Path.DirectorySeparatorChar
+								: inputPath
+							: Path.GetDirectoryName(inputPath)
 						;
-					} catch(IOException ex) {
-						AppNonProcess.Logger.Warning(ex);
-					} catch(UnauthorizedAccessException ex) {
-						AppNonProcess.Logger.Warning(ex);
+					} catch(ArgumentException) {
+						baseDir = inputPath;
+					}
+					if(FileUtility.Exists(baseDir)) {
+						Debug.WriteLine(inputPath);
+						//var isDir = Directory.Exists(inputPath);
+						//var baseDir = isDir ? inputPath : Path.GetDirectoryName(inputPath);
+						var searchPattern = isDir ? "*" : Path.GetFileName(inputPath) + "*";
+						var showHiddenFile = SystemEnvironmentUtility.IsHideFileShow();
+						var directoryInfo = new DirectoryInfo(baseDir);
+						try {
+							files = directoryInfo
+								.EnumerateFileSystemInfos(searchPattern, SearchOption.TopDirectoryOnly)
+								.Where(fs => fs.Exists)
+								.Where(fs => showHiddenFile ? true : !fs.IsHidden())
+								.Select(fs => new CommandItemViewModel(fs.FullName, AppNonProcess))
+							;
+						} catch(IOException ex) {
+							AppNonProcess.Logger.Warning(ex);
+						} catch(UnauthorizedAccessException ex) {
+							AppNonProcess.Logger.Warning(ex);
+						}
 					}
 				}
 			}
@@ -276,6 +277,24 @@
 			}
 		}
 
+		//public ICommand InputDirectorySeparator
+		//{
+		//	get
+		//	{
+		//		var result = CreateCommand(
+		//			o => {
+		//				if(SelectedCommandItem != null && SelectedCommandItem.CommandKind == CommandKind.File) {
+		//					if(InputText.LastOrDefault() != Path.DirectorySeparatorChar) {
+		//						InputText = SelectedCommandItem.FilePath;
+		//					}
+		//				}
+		//			}
+		//		);
+
+		//		return result;
+		//	}
+		//}
+
 		public ICommand FileFindCommand
 		{
 			get
@@ -310,6 +329,7 @@
 			View.Activated += View_Activated;
 			View.Deactivated += View_Deactivated;
 			PopupUtility.Attachment(View, View.popup);
+			View.inputCommand.KeyDown += inputCommand_KeyDown;
 
 			base.InitializeView();
 		}
@@ -321,6 +341,7 @@
 			View.UserClosing -= View_UserClosing;
 			View.Activated -= View_Activated;
 			View.Deactivated -= View_Deactivated;
+			View.inputCommand.KeyDown -= inputCommand_KeyDown;
 
 			base.UninitializeView();
 		}
@@ -363,5 +384,16 @@
 			OnPropertyChangeIsOpen();
 		}
 
+		void inputCommand_KeyDown(object sender, KeyEventArgs e)
+		{
+			if(e.Key == Key.Oem5 || e.Key == Key.OemBackslash) {
+				if(SelectedCommandItem != null && SelectedCommandItem.CommandKind == CommandKind.File) {
+					var textBox = (TextBox)sender;
+					InputText = SelectedCommandItem.FilePath;
+					textBox.Select(InputText.Length, 0);
+					e.Handled = true;
+				}
+			}
+		}
 	}
 }

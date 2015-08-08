@@ -976,6 +976,7 @@
 			Command.WindowLeft = logicalPosition.X;
 			Command.WindowTop = logicalPosition.Y;
 			Command.Visibility = Visibility.Visible;
+			CommandWindow.Activate();
 		}
 
 		#endregion
