@@ -124,7 +124,7 @@
 			return this._iconColor;
 		}
 
-		protected void Execute()
+		public void Execute()
 		{
 			try {
 				ExecuteUtility.RunItem(Model, AppNonProcess, AppSender);

@@ -144,7 +144,7 @@
 		public static readonly Color noteBackColor = Color.FromRgb(250, 250, 180);
 		public static readonly TripleRange<double> noteFontSize = new TripleRange<double>(
 			8,
-			10.5,
+			11,
 			72
 		);
 		public static readonly Size noteDefualtSize = new Size(200, 200);

@@ -24,7 +24,7 @@
 	using System.Windows.Input;
 	using System.Windows.Controls;
 
-	public class CommandViewModel: HavingViewSingleModelWrapperViewModelBase<CommandSettingModel, CommandWindow>, IHavingAppNonProcess
+	public class CommandViewModel: HavingViewSingleModelWrapperViewModelBase<CommandSettingModel, CommandWindow>, IHavingAppNonProcess, IHavingAppSender
 	{
 		#region define
 
@@ -44,11 +44,12 @@
 
 		#endregion
 
-		public CommandViewModel(CommandSettingModel model, CommandWindow view, LauncherItemSettingModel launcherItemSetting, IAppNonProcess appNonProcess)
+		public CommandViewModel(CommandSettingModel model, CommandWindow view, LauncherItemSettingModel launcherItemSetting, IAppNonProcess appNonProcess, IAppSender appSender)
 			: base(model, view)
 		{
 			LauncherItemSetting = launcherItemSetting;
 			AppNonProcess = appNonProcess;
+			AppSender = appSender;
 
 			CommandItems = new CollectionModel<CommandItemViewModel>(GetAllCommandItems());
 		}
@@ -78,7 +79,16 @@
 		public Visibility Visibility
 		{
 			get { return this._visibility; }
-			set { SetVariableValue(ref this._visibility, value); }
+			set 
+			{
+				SetVariableValue(ref this._visibility, value);
+				if(HasView) {
+					if(Visibility != Visibility.Visible) {
+						View.Topmost = true;
+						View.Topmost = false;
+					}
+				}
+			}
 		}
 
 		public double IconWidth { get { return Model.IconScale.ToWidth(); } }
@@ -216,7 +226,7 @@
 								.EnumerateFileSystemInfos(searchPattern, SearchOption.TopDirectoryOnly)
 								.Where(fs => fs.Exists)
 								.Where(fs => showHiddenFile ? true : !fs.IsHidden())
-								.Select(fs => new CommandItemViewModel(fs.FullName, AppNonProcess))
+								.Select(fs => new CommandItemViewModel(fs.FullName, fs.IsDirectory(), fs.IsHidden(), AppNonProcess))
 							;
 						} catch(IOException ex) {
 							AppNonProcess.Logger.Warning(ex);
@@ -261,14 +271,16 @@
 			}
 		}
 
-		public ICommand RunCommand
+		public ICommand RunItemCommand
 		{
 			get
 			{
 				var result = CreateCommand(
 					o => {
 						if(SelectedCommandItem != null) {
-							AppNonProcess.Logger.Information(SelectedCommandItem.ToString());
+							var showExtension = Keyboard.Modifiers.HasFlag(ModifierKeys.Shift);
+							RunItem(SelectedCommandItem, showExtension);
+							Visibility = Visibility.Hidden;
 						}
 					}
 				);
@@ -319,6 +331,12 @@
 
 		#endregion
 
+		#region IHavingAppSender
+
+		public IAppSender AppSender { get; private set; }
+
+		#endregion
+
 		#region HavingViewSingleModelWrapperIndexViewModelBase
 
 		protected override void InitializeView()
@@ -360,6 +378,36 @@
 				} else {
 					SelectedIndex = SelectedIndex + 1;
 				}
+			}
+		}
+
+		void RunItem(CommandItemViewModel commandItem, bool showExtension)
+		{
+			CheckUtility.EnforceNotNull(commandItem);
+
+			AppNonProcess.Logger.Information(SelectedCommandItem.ToString());
+
+			switch(commandItem.CommandKind) {
+				case CommandKind.File:
+					try {
+						ExecuteUtility.OpenFile(commandItem.FilePath, AppNonProcess);
+					} catch(Exception ex) {
+						AppNonProcess.Logger.Warning(ex);
+					}
+					break;
+
+				case CommandKind.LauncherItemName:
+				case CommandKind.LauncherItemTag:
+					{
+						if(showExtension) {
+							var window = AppSender.SendCreateWindow(WindowKind.LauncherExecute, commandItem.LauncherItemModel, null);
+							window.Show();
+						} else {
+							var viewModel = new LauncherItemSimpleViewModel(commandItem.LauncherItemModel, AppNonProcess, AppSender);
+							viewModel.Execute();
+						}
+					}
+					break;
 			}
 		}
 

@@ -30,7 +30,7 @@
 
 		protected override void CreateViewModel()
 		{
-			ViewModel = new CommandViewModel(CommonData.MainSetting.Command, this, CommonData.LauncherItemSetting, CommonData.NonProcess);
+			ViewModel = new CommandViewModel(CommonData.MainSetting.Command, this, CommonData.LauncherItemSetting, CommonData.NonProcess, CommonData.AppSender);
 		}
 
 		protected override void ApplyViewModel()

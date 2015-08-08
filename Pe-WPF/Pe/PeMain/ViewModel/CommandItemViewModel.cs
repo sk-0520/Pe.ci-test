@@ -34,10 +34,12 @@
 			AppNonProcess = appNonProcess;
 		}
 
-		public CommandItemViewModel(string filePath, IAppNonProcess appNonProcess)
+		public CommandItemViewModel(string filePath, bool isDirectory, bool isHideFile, IAppNonProcess appNonProcess)
 		{
 			CommandKind = CommandKind.File;
 			FilePath = filePath;
+			IsDirectory = isDirectory;
+			IsHideFile = isHideFile;
 			AppNonProcess = appNonProcess;
 		}
 
@@ -47,6 +49,8 @@
 		public LauncherItemModel LauncherItemModel { get; private set; }
 		public string Tag { get; private set; }
 		public string FilePath { get; private set; }
+		public bool IsDirectory { get; private set; }
+		public bool IsHideFile { get; private set; }
 
 		#endregion
 
