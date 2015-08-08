@@ -23,8 +23,6 @@
 
 		<Item Id="new/group-name" Word="新規グループ" />
 		<Item Id="new/template-name" Word="新規テンプレート" />
-		
-		<Item Id="name/drive" Word="@[VOLUME] (@[PATH])" />
 
 		<Item Id="launcher/run/normal" Word="起動" />
 
@@ -42,7 +40,8 @@
 		<Item Id="clipboard/image/raw" Word="原寸表示" />
 
 		<Item Id="command/selected" Word="選択中アイテム" />
-		
+		<Item Id="command/tag" Word="@[TAG] (@[NAME])" />
+		<Item Id="command/drive" Word="@[VOLUME] (@[PATH])" />
 
 		<Item Id="environment/key" Word="キー" />
 		

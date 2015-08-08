@@ -118,10 +118,18 @@
 			{
 				switch(CommandKind) {
 					case CommandKind.LauncherItemName:
-						return LauncherItemModel.Name;
+						return DisplayTextUtility.GetDisplayName(LauncherItemModel);
 
-					case CommandKind.LauncherItemTag:
-						return Tag;
+					case CommandKind.LauncherItemTag: 
+						{
+							var map = new Dictionary<string, string>() {
+								{ LanguageKey.commandItemName, DisplayTextUtility.GetDisplayName(LauncherItemModel) },
+								{ LanguageKey.commandItemTag, Tag },
+							};
+							//var result = string.Format("{0} ({1})", DriveName, FilePath);
+							var result = AppNonProcess.Language["command/tag", map];
+							return result;
+						}
 
 					case CommandKind.File:
 						return FilePath;
@@ -131,11 +139,11 @@
 							return FilePath;
 						} else {
 							var map = new Dictionary<string, string>() {
-								{ LanguageKey.drivePath, FilePath },
-								{ LanguageKey.driveVolume, DriveName },
+								{ LanguageKey.commandDrivePath, FilePath },
+								{ LanguageKey.commandDriveVolume, DriveName },
 							};
 							//var result = string.Format("{0} ({1})", DriveName, FilePath);
-							var result = AppNonProcess.Language["name/drive", map];
+							var result = AppNonProcess.Language["command/drive", map];
 							return result;
 						}
 

@@ -88,6 +88,8 @@
 				if(HasView) {
 					if(Visibility != Visibility.Visible) {
 						View.Topmost = true;
+						View.Activate();
+						View.inputCommand.Focus();
 						View.Topmost = false;
 					}
 				}

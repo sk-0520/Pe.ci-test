@@ -8,7 +8,9 @@
 
 	public static class LanguageKey
 	{
-		public const string drivePath = "PATH";
-		public const string driveVolume = "VOLUME";
+		public const string commandItemTag = "TAG";
+		public const string commandItemName = "NAME";
+		public const string commandDrivePath = "PATH";
+		public const string commandDriveVolume = "VOLUME";
 	}
 }
