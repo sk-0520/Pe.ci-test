@@ -45,7 +45,7 @@
 			<ColumnDefinition Width="*" />
 			<ColumnDefinition Width="Auto" />
 		</Grid.ColumnDefinitions>
-		<Image Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Width="{Binding IconWidth, Mode=OneTime}" Height="{Binding IconHeight, Mode=OneTime}" />
+		<Image Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Width="{Binding IconWidth, Mode=OneTime}" Height="{Binding IconHeight, Mode=OneTime}" Style="{StaticResource ImageRenderStyle}" Source="{Binding SelectedCommandItem.Image}" />
 
 		<!--<ComboBox Grid.Row="0" Grid.Column="1" IsEditable="True" Text="{Binding InputText, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedCommandItem}" ItemsSource="{Binding CommandItems}" >
 			<ComboBox.ItemTemplate>
@@ -88,7 +88,7 @@
 					<ListBox.ItemTemplate>
 						<DataTemplate>
 							<StackPanel Orientation="Horizontal">
-								<!--<Image Style="{StaticResource ImageRenderStyle}" Source="{Binding Image}" />-->
+								<Image Style="{StaticResource ImageRenderStyle}" Source="{Binding Image}" />
 								<TextBlock Text="{Binding DisplayText}" />
 							</StackPanel>
 						</DataTemplate>
@@ -97,6 +97,6 @@
 			</Border>
 		</Popup>
 
-		<Button Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" Content="execute" AA:Language.Word="command/execute" IsEnabled="{Binding SelectedCommandItem, Converter={StaticResource LogicalIsNotNullConverter}}" Command="{Binding RunCommand}" />
+		<Button Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" Content="execute" AA:Language.Word="command/execute" IsEnabled="{Binding SelectedCommandItem, Converter={StaticResource LogicalIsNotNullConverter}}" Command="{Binding RunItemCommand}" />
 	</Grid>
 </AW:ViewModelCommonDataWindow>

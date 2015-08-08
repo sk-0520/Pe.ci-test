@@ -173,7 +173,7 @@
 		IEnumerable<CommandItemViewModel> GetAllCommandItems()
 		{
 			return LauncherItemSetting.Items
-				.Select(i => new CommandItemViewModel(i, AppNonProcess))
+				.Select(i => new CommandItemViewModel(Model.IconScale, i, AppNonProcess, AppSender))
 			;
 		}
 
@@ -184,14 +184,14 @@
 			}
 			var items = LauncherItemSetting.Items
 				.Where(i => i.Name.StartsWith(filter))
-				.Select(i => new CommandItemViewModel(i, AppNonProcess))
+				.Select(i => new CommandItemViewModel(Model.IconScale, i, AppNonProcess, AppSender))
 			;
 
 			IEnumerable<CommandItemViewModel> tags = null;
 			if(Model.FindTag) {
 				tags = LauncherItemSetting.Items
 					.Where(i => i.Tag.Items.Any(t => t.StartsWith(filter)))
-					.Select(i => new CommandItemViewModel(i, i.Tag.Items.First(t => t.StartsWith(filter)), AppNonProcess))
+					.Select(i => new CommandItemViewModel(Model.IconScale, i, i.Tag.Items.First(t => t.StartsWith(filter)), AppNonProcess, AppSender))
 				;
 			}
 			if(tags == null) {
@@ -226,7 +226,7 @@
 								.EnumerateFileSystemInfos(searchPattern, SearchOption.TopDirectoryOnly)
 								.Where(fs => fs.Exists)
 								.Where(fs => showHiddenFile ? true : !fs.IsHidden())
-								.Select(fs => new CommandItemViewModel(fs.FullName, fs.IsDirectory(), fs.IsHidden(), AppNonProcess))
+								.Select(fs => new CommandItemViewModel(Model.IconScale, fs.FullName, fs.IsDirectory(), fs.IsHidden(), AppNonProcess, AppSender))
 							;
 						} catch(IOException ex) {
 							AppNonProcess.Logger.Warning(ex);
@@ -288,24 +288,6 @@
 				return result;
 			}
 		}
-
-		//public ICommand InputDirectorySeparator
-		//{
-		//	get
-		//	{
-		//		var result = CreateCommand(
-		//			o => {
-		//				if(SelectedCommandItem != null && SelectedCommandItem.CommandKind == CommandKind.File) {
-		//					if(InputText.LastOrDefault() != Path.DirectorySeparatorChar) {
-		//						InputText = SelectedCommandItem.FilePath;
-		//					}
-		//				}
-		//			}
-		//		);
-
-		//		return result;
-		//	}
-		//}
 
 		public ICommand FileFindCommand
 		{
