@@ -41,6 +41,9 @@
 		<Item Id="clipboard/image/fit" Word="ウィンドウに合わせる" />
 		<Item Id="clipboard/image/raw" Word="原寸表示" />
 
+		<Item Id="command/selected" Word="選択中アイテム" />
+		
+
 		<Item Id="environment/key" Word="キー" />
 		
 		<Item Id="logging/timestamp" Word="発生日時" />

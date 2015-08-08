@@ -30,6 +30,7 @@
 			</ResourceDictionary.MergedDictionaries>
 			<SC:HasTextLengthConverter x:Key="HasTextLengthConverter" />
 			<SC:LogicalMultiOrConverter x:Key="LogicalMultiOrConverter" />
+			<SC:BooleanVisibilityConverter x:Key="BooleanVisibilityConverter" />
 			<SC:IsNotEmptyCollection x:Key="IsNotEmptyCollection" />
 			<SC:LogicalIsNotNullConverter x:Key="LogicalIsNotNullConverter" />
 			<AC:CommandItemConverter x:Key="CommandItemConverter" />
@@ -37,14 +38,21 @@
 	</AW:CommonDataWindow.Resources>
 	<Grid>
 		<Grid.RowDefinitions>
-			<RowDefinition />
-			<RowDefinition />
+			<RowDefinition Height="{Binding IconHeight, Mode=OneTime}" />
+			<RowDefinition Height="*" />
 		</Grid.RowDefinitions>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="*" />
 			<ColumnDefinition Width="Auto" />
 		</Grid.ColumnDefinitions>
-		<TextBox x:Name="inputCommand" Grid.Row="0" Grid.Column="0" Text="{Binding InputText, UpdateSourceTrigger=PropertyChanged}" SA:TextBoxHelper.SelectedText="{Binding SelectedText}" >
+		<StackPanel Grid.Row="0" Grid.Column="0" >
+			<StackPanel Orientation="Horizontal">
+				<TextBlock Text="selected" AA:Language.Word="command/selected" />
+				<Image Width="{Binding IconWidth, Mode=OneTime}" Height="{Binding IconHeight, Mode=OneTime}" Style="{StaticResource ImageRenderStyle}" Source="{Binding SelectedCommandItem.Image}"/>
+				<TextBlock Text="{Binding SelectedCommandItem.DisplayText}" />
+			</StackPanel>
+		</StackPanel>
+		<TextBox x:Name="inputCommand" Grid.Row="1" Grid.Column="0" Text="{Binding InputText, UpdateSourceTrigger=PropertyChanged}" SA:TextBoxHelper.SelectedText="{Binding SelectedText}" >
 			<TextBox.InputBindings>
 				<KeyBinding Key="Up" Command="{Binding UpListCommand}" />
 				<KeyBinding Key="Down" Command="{Binding DownListCommand}" />
@@ -57,7 +65,25 @@
 		</TextBox>
 		<Popup x:Name="popup" PlacementTarget="{Binding ElementName=inputCommand}" IsOpen="{Binding IsOpen, Mode=OneWay}">
 			<Border>
-				<ListBox x:Name="listItems" SelectedIndex="{Binding SelectedIndex}" SelectedItem="{Binding SelectedCommandItem}" ItemsSource="{Binding CommandItems}">
+				<ListBox x:Name="listItems" IsSynchronizedWithCurrentItem="True"  SelectedIndex="{Binding SelectedIndex}" SelectedItem="{Binding SelectedCommandItem}" ItemsSource="{Binding CommandItems}">
+					<ListBox.Resources>
+						<!-- 選択行の背景色 -->
+						<SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="{DynamicResource {x:Static SystemColors.HighlightColorKey}}" />
+						<!-- 選択行の文字色 -->
+						<SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="{DynamicResource {x:Static SystemColors.HighlightTextColorKey}}" />
+						<!-- フォーカスを失った時の選択行の背景色 -->
+						<SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="{DynamicResource {x:Static SystemColors.HighlightColorKey}}" />
+						<!-- フォーカスを失った時の選択行の文字色 -->
+						<SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}" Color="{DynamicResource {x:Static SystemColors.HighlightTextColorKey}}" />
+					</ListBox.Resources>
+					<ListBox.ItemTemplate>
+						<DataTemplate>
+							<StackPanel Orientation="Horizontal">
+								<Image Style="{StaticResource ImageRenderStyle}" Source="{Binding Image}" />
+								<TextBlock Text="{Binding DisplayText}" />
+							</StackPanel>
+						</DataTemplate>
+					</ListBox.ItemTemplate>
 					<ListBox.InputBindings>
 						<MouseBinding MouseAction="LeftDoubleClick" Command="{Binding RunItemCommand}" />
 
@@ -68,23 +94,9 @@
 						<KeyBinding Key="OemBackslash" Command="{Binding FileFindCommand}" />
 						<KeyBinding Key="Oem5" Command="{Binding FileFindCommand}" />
 					</ListBox.InputBindings>
-					<ListBox.ItemTemplate>
-						<DataTemplate>
-							<StackPanel Orientation="Horizontal">
-								<Image Style="{StaticResource ImageRenderStyle}" Source="{Binding Image}" />
-								<TextBlock Text="{Binding DisplayText}" />
-							</StackPanel>
-						</DataTemplate>
-					</ListBox.ItemTemplate>
 				</ListBox>
 			</Border>
 		</Popup>
-		<StackPanel Grid.Row="1" Grid.Column="0">
-			<Image 
-			Width="{Binding IconWidth, Mode=OneTime}" Height="{Binding IconHeight, Mode=OneTime}" Style="{StaticResource ImageRenderStyle}" Source="{Binding SelectedCommandItem.Image}"
-		/>
-
-		</StackPanel>
 		<Button
 			Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Content="execute" AA:Language.Word="command/execute" 
 			IsEnabled="{Binding SelectedCommandItem, Converter={StaticResource LogicalIsNotNullConverter}}" Command="{Binding RunItemCommand}"

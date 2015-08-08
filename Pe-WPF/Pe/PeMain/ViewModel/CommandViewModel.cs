@@ -142,11 +142,18 @@
 			set
 			{
 				SetVariableValue(ref this._selectedCommandItem, value);
-				//if (this._selectedCommandItem == null) {
-				//	var items = GetAllCommandItems();
-				//	CommandItems = new CollectionModel<CommandItemViewModel>(items);
-				//}
+				OnPropertyChanged("IsSelectedCommandItem");
+				OnPropertyChanged("IsNotSelectedCommandItem");
 			}
+		}
+
+		public bool IsSelectedCommandItem
+		{
+			get { return SelectedCommandItem != null; }
+		}
+		public bool IsNotSelectedCommandItem
+		{
+			get { return !IsSelectedCommandItem; }
 		}
 
 		public int SelectedIndex
