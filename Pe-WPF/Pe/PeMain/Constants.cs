@@ -12,6 +12,7 @@
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
 	using System.Windows;
 	using System.Windows.Media;
+using ContentTypeTextNet.Pe.PeMain.Define;
 
 	/// <summary>
 	/// 定数。
@@ -81,6 +82,16 @@
 		public const string timestampFileName = "yyyy-MM-dd_HH-mm-ss";
 
 		public const string languageAcceptDocumentFileName = ".accept.html";
+
+		public const FileType fileTypeMainSetting = FileType.Json;
+		public const FileType fileTypeLauncherItemSetting = FileType.Json;
+		public const FileType fileTypeLauncherGroupSetting = FileType.Json;
+		public const FileType fileTypeNoteIndex = FileType.Json;
+		public const FileType fileTypeNoteBody = FileType.Json;
+		public const FileType fileTypeTemplateIndex = FileType.Json;
+		public const FileType fileTypeTemplateBody = FileType.Json;
+		public const FileType fileTypeClipboardIndex = FileType.Json;
+		public const FileType fileTypeClipboardBody = FileType.Binary;
 
 		public static readonly TimeSpan iconLoadWaitTime = TimeSpan.FromMilliseconds(250);
 		public const int iconLoadRetryMax = 3;
