@@ -24,7 +24,7 @@
 
 			nonProcess.Logger.Trace("version setting: first");
 
-			setting.IconScale = IconScale.Normal;
+			setting.IconScale = IconScale.Large;
 			setting.WindowWidth = Constants.commandWindowWidth.median;
 		}
 	}

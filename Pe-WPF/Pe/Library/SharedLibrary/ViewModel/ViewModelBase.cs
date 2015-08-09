@@ -110,7 +110,7 @@
 			IsChanged = false;
 		}
 
-		protected virtual void OnPropertyChangeDisplayText()
+		protected virtual void OnPropertyChangeDisplayItem()
 		{
 			OnPropertyChanged("DisplayText");
 		}

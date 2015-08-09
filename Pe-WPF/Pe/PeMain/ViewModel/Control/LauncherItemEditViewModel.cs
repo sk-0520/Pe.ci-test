@@ -47,7 +47,7 @@
 			set
 			{
 				if(SetModelValue(value)) {
-					OnPropertyChangeDisplayText();
+					OnPropertyChangeDisplayItem();
 				}
 			}
 		}
@@ -188,9 +188,9 @@
 
 		#region LauncherItemSimpleViewModel
 		
-		protected override void OnPropertyChangeDisplayText()
+		protected override void OnPropertyChangeDisplayItem()
 		{
-			base.OnPropertyChangeDisplayText();
+			base.OnPropertyChangeDisplayItem();
 			RefreshFromViewModel.Refresh();
 		}
 

@@ -6,6 +6,8 @@
 	using System.Linq;
 	using System.Text;
 	using System.Threading.Tasks;
+	using System.Windows.Media.Imaging;
+	using ContentTypeTextNet.Library.SharedLibrary.Define;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
@@ -33,6 +35,24 @@
 		#region IToolbarNode
 
 		public override ToolbarNodeKind ToolbarNodeKind { get { return ToolbarNodeKind.Item; } }
+
+		public override BitmapSource Image
+		{
+			get
+			{
+				return AppUtility.LoadLauncherItemIcon(IconScale.Small, Model, AppNonProcess.LauncherIconCaching, AppNonProcess);
+			}
+		}
+
+		#endregion
+
+		#region GroupViewModelBase
+
+		protected override void OnPropertyChangeDisplayItem()
+		{
+			base.OnPropertyChangeDisplayItem();
+			OnPropertyChanged("Image");
+		}
 
 		#endregion
 	}

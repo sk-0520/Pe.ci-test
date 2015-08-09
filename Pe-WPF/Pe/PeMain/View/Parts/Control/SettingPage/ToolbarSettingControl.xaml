@@ -14,10 +14,15 @@
 	d:DesignHeight="318" d:DesignWidth="517"
 >
 	<AV:CommonDataUserControl.Resources>
-		<SC:LogicalIsNotNullConverter x:Key="LogicalIsNotNullConverter" />
-		<AC:DisplayTextConverter x:Key="DisplayTextConverter" />
-		<AC:SelectedNodeAndLauncherItemConverter x:Key="SelectedNodeAndLauncherItemConverter" />
-		<AC:TreeListLauncherItemRelationConverter x:Key="TreeListLauncherItemRelationConverter" />
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceDictionary Source="/View/Parts/Resource/ImageDictionary.xaml"/>
+			</ResourceDictionary.MergedDictionaries>
+			<SC:LogicalIsNotNullConverter x:Key="LogicalIsNotNullConverter" />
+			<AC:DisplayTextConverter x:Key="DisplayTextConverter" />
+			<AC:SelectedNodeAndLauncherItemConverter x:Key="SelectedNodeAndLauncherItemConverter" />
+			<AC:TreeListLauncherItemRelationConverter x:Key="TreeListLauncherItemRelationConverter" />
+		</ResourceDictionary>
 	</AV:CommonDataUserControl.Resources>
 	<Grid>
 		<Grid.ColumnDefinitions>
@@ -113,7 +118,8 @@
 				</i:Interaction.Triggers>
 				<TreeView.ItemTemplate>
 					<HierarchicalDataTemplate ItemsSource="{Binding Nodes}" >
-						<StackPanel>
+						<StackPanel Orientation="Horizontal">
+							<Image Style="{StaticResource ImageRenderStyle}" Source="{Binding Image}" />
 							<TextBlock Text="{Binding DisplayText}" />
 						</StackPanel>
 					</HierarchicalDataTemplate>

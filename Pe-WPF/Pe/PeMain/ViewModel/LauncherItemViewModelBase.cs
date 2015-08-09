@@ -51,7 +51,7 @@
 			set
 			{
 				if(SetModelValue(value)) {
-					OnPropertyChangeDisplayText();
+					OnPropertyChangeDisplayItem();
 				}
 			}
 		}
@@ -114,7 +114,7 @@
 		{
 			CheckUtility.DebugEnforceNotNull(AppNonProcess.LauncherIconCaching);
 
-			return AppNonProcess.LauncherIconCaching[iconScale].Get(Model, () => LauncherItemUtility.GetIcon(Model, iconScale, AppNonProcess));
+			return AppUtility.LoadLauncherItemIcon(iconScale, Model, AppNonProcess.LauncherIconCaching, AppNonProcess);
 		}
 
 		public Color GetIconColor(IconScale iconScale)

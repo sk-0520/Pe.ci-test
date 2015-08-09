@@ -174,6 +174,12 @@ using ContentTypeTextNet.Pe.Library.PeData.Item;
 			return LoadIcon(iconPath, iconScale, Constants.iconLoadWaitTime, Constants.iconLoadRetryMax, logger, callerMember);
 		}
 
+		public static BitmapSource LoadLauncherItemIcon(IconScale iconScale, LauncherItemModel launcherItem, LauncherIconCaching launcherIconCaching, INonProcess nonProcess)
+		{
+			return launcherIconCaching[iconScale].Get(launcherItem, () => LauncherItemUtility.GetIcon(launcherItem, iconScale, nonProcess));
+		}
+
+
 		public static IList<WindowItemModel> GetSystemWindowList(bool getAppWindow)
 		{
 			// http://msdn.microsoft.com/en-us/library/windows/desktop/ms633574(v=vs.85).aspx

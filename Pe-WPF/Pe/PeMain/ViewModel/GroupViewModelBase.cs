@@ -5,6 +5,7 @@
 	using System.Linq;
 	using System.Text;
 	using System.Threading.Tasks;
+	using System.Windows.Media.Imaging;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 	using ContentTypeTextNet.Pe.PeMain.Data;
@@ -12,7 +13,7 @@
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
-	public abstract class GroupViewModelBase<TModel>: SingleModelWrapperViewModelBase<TModel>, IHavingAppNonProcess, IToolbarNode
+	public abstract class GroupViewModelBase<TModel>: SingleModelWrapperViewModelBase<TModel>, IHavingAppNonProcess, IToolbarNode, IRefreshFromViewModel
 		where TModel: IModel, ITId<Guid>, IName
 	{
 		#region variable
@@ -41,7 +42,7 @@
 			get { return this._isSelected; }
 			set { SetVariableValue(ref this._isSelected, value); }
 		}
-
+		public virtual BitmapSource Image { get { return null; } }
 
 		#endregion
 
@@ -54,6 +55,15 @@
 		#region SingleModelWrapperViewModelBase
 
 		public override string DisplayText { get { return DisplayTextUtility.GetDisplayName(Model); } }
+
+		#endregion
+
+		#region IRefreshFromViewModel
+
+		public void Refresh()
+		{
+			OnPropertyChangeDisplayItem();
+		}
 
 		#endregion
 	}
