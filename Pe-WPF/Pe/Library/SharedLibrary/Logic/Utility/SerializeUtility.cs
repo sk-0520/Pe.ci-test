@@ -311,6 +311,7 @@
 			}
 
 			using (var writer = XmlDictionaryWriter.CreateBinaryWriter(stream)) {
+
 				var serializer = new DataContractSerializer(typeof(T));
 				serializer.WriteObject(writer, model);
 			}

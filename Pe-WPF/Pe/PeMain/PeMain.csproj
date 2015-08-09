@@ -137,14 +137,20 @@
       <DependentUpon>CommandWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Parts\Converter\CommandItemConverter.cs" />
-    <Compile Include="X-Partial\AppResource-implement.cs" />
-    <Compile Include="X-Partial\AppResourceAttribute.cs" />
-    <Compile Include="X-Partial\AppResource-generator.cs">
+    <Compile Include="AppResource-implement.cs">
+      <DependentUpon>AppResource.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AppResourceAttribute.cs">
+      <DependentUpon>AppResource.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AppResource-generator.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>AppResource-generator.tt</DependentUpon>
     </Compile>
-    <Compile Include="X-Partial\AppResourceType.cs" />
+    <Compile Include="AppResourceType.cs">
+      <DependentUpon>AppResource.cs</DependentUpon>
+    </Compile>
     <Compile Include="Data\ChangedDevice.cs" />
     <Compile Include="Data\ClipboardHtmlData.cs" />
     <Compile Include="Data\CommonData.cs" />
@@ -355,11 +361,12 @@
       <DependentUpon>App.config</DependentUpon>
       <IsTransformFile>True</IsTransformFile>
     </None>
-    <None Include="X-Partial\AppResource-generator.tt">
+    <None Include="AppResource-generator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AppResource-generator.cs</LastGenOutput>
       <Parameters>&lt;%3fxml version="1.0" encoding="utf-16"%3f&gt;
 &lt;ArrayOfParameterStorage xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" /&gt;</Parameters>
+      <DependentUpon>AppResource.cs</DependentUpon>
     </None>
     <None Include="packages.config" />
     <AppDesigner Include="Properties\" />
