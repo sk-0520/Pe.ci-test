@@ -501,7 +501,7 @@
 		void inputCommand_KeyDown(object sender, KeyEventArgs e)
 		{
 			if(e.Key == Key.Oem5 || e.Key == Key.OemBackslash) {
-				if(SelectedCommandItem != null && SelectedCommandItem.CommandKind == CommandKind.File || SelectedCommandItem.CommandKind == CommandKind.Drive) {
+				if(SelectedCommandItem != null && (SelectedCommandItem.CommandKind == CommandKind.File || SelectedCommandItem.CommandKind == CommandKind.Drive)) {
 					var textBox = (TextBox)sender;
 					InputText = SelectedCommandItem.FilePath;
 					textBox.Select(InputText.Length, 0);

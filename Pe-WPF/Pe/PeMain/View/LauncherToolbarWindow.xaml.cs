@@ -59,7 +59,7 @@
 		ApplicationDesktopToolbar Appbar { get; set; }
 		VisualStyle VisualStyle { get; set; }
 		WindowAreaCorrection WindowAreaCorrection { get; set; }
-		LauncherToolbarHitTest WindowHitTest { get; set; }
+		WidthResizeHitTest WindowHitTest { get; set; }
 
 		#endregion
 
@@ -114,7 +114,7 @@
 			Appbar = new ApplicationDesktopToolbar(this, ViewModel, CommonData.NonProcess);
 			VisualStyle = new VisualStyle(this, ViewModel, CommonData.NonProcess);
 			WindowAreaCorrection = new WindowAreaCorrection(this, ViewModel, CommonData.NonProcess);
-			WindowHitTest = new LauncherToolbarHitTest(this, ViewModel, CommonData.NonProcess);
+			WindowHitTest = new WidthResizeHitTest(this, ViewModel, CommonData.NonProcess);
 		}
 
 		protected override IntPtr WndProc(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)

@@ -11,9 +11,9 @@
 	using ContentTypeTextNet.Library.SharedLibrary.View.ViewExtend;
 	using ContentTypeTextNet.Library.PInvoke.Windows;
 
-	public class LauncherToolbarHitTest: CaptionCursorHitTest
+	public class WidthResizeHitTest: CaptionCursorHitTest
 	{
-		public LauncherToolbarHitTest(Window view, IWindowHitTestData restrictionViewModel, INonProcess nonProcess)
+		public WidthResizeHitTest(Window view, IWindowHitTestData restrictionViewModel, INonProcess nonProcess)
 			: base(view, restrictionViewModel, nonProcess)
 		{ }
 

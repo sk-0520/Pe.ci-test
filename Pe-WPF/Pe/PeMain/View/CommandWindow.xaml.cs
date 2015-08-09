@@ -56,13 +56,13 @@
 			WindowsUtility.SetWindowLong(Handle, (int)GWL.GWL_EXSTYLE, (IntPtr)exStyle);
 
 			// ノート側はこれつけなきゃいけないの腑に落ちん
-			//var style = (int)WindowsUtility.GetWindowLong(Handle, (int)GWL.GWL_STYLE);
-			//style &= ~(int)(WS.WS_MAXIMIZEBOX | WS.WS_MINIMIZEBOX);
-			//WindowsUtility.SetWindowLong(Handle, (int)GWL.GWL_STYLE, (IntPtr)style);
+			var style = (int)WindowsUtility.GetWindowLong(Handle, (int)GWL.GWL_STYLE);
+			style &= ~(int)(WS.WS_MAXIMIZEBOX | WS.WS_MINIMIZEBOX);
+			WindowsUtility.SetWindowLong(Handle, (int)GWL.GWL_STYLE, (IntPtr)style);
 
 			base.OnLoaded(sender, e);
 
-			WindowHitTest = new CaptionCursorHitTest(this, ViewModel, CommonData.NonProcess);
+			WindowHitTest = new WidthResizeHitTest(this, ViewModel, CommonData.NonProcess);
 		}
 
 		protected override IntPtr WndProc(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)

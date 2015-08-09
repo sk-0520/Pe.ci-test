@@ -321,7 +321,7 @@
     <Compile Include="View\Parts\EnumList.cs" />
     <Compile Include="View\Parts\ViewExtend\CaptionCursorHitTest.cs" />
     <Compile Include="View\Parts\ViewExtend\CaptionDoubleClick.cs" />
-    <Compile Include="View\Parts\ViewExtend\LauncherToolbarHitTest.cs" />
+    <Compile Include="View\Parts\ViewExtend\WidthResizeHitTest.cs" />
     <Compile Include="View\Parts\Window\ViewModelCommonDataWindow.cs" />
     <Compile Include="View\Parts\Attached\Language.cs" />
     <Compile Include="View\SettingWindow.xaml.cs">
