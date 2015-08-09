@@ -12,12 +12,12 @@
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
 	using System.Windows;
 	using System.Windows.Media;
-using ContentTypeTextNet.Pe.PeMain.Define;
+	using ContentTypeTextNet.Pe.PeMain.Define;
 
 	/// <summary>
 	/// 定数。
 	/// </summary>
-	public static class Constants
+	public static partial class Constants
 	{
 		public const string programName = "Pe-WPF";
 		/// <summary>
@@ -140,7 +140,7 @@ using ContentTypeTextNet.Pe.PeMain.Define;
 
 		public const double templateItemsListWidth = 180;
 		public const double templateReplaceListWidth = 100;
-		public static readonly Size templateDefaultWindowSize = new Size(580,380);
+		public static readonly Size templateDefaultWindowSize = new Size(580, 380);
 
 		public static readonly TripleRange<TimeSpan> windowSaveIntervalTime = new TripleRange<TimeSpan>(
 			//TimeSpan.FromMinutes(1),

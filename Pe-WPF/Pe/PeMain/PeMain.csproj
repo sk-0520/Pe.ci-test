@@ -124,6 +124,14 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Constants-generator.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Constants-generator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ConstantsRangeAttribute.cs">
+      <DependentUpon>Constants.cs</DependentUpon>
+    </Compile>
     <Compile Include="Define\CommandKind.cs" />
     <Compile Include="Define\Timing.cs" />
     <Compile Include="LanguageKey.cs" />
@@ -367,6 +375,11 @@
       <Parameters>&lt;%3fxml version="1.0" encoding="utf-16"%3f&gt;
 &lt;ArrayOfParameterStorage xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" /&gt;</Parameters>
       <DependentUpon>AppResource.cs</DependentUpon>
+    </None>
+    <None Include="Constants-generator.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Constants.cs</DependentUpon>
+      <LastGenOutput>Constants-generator.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
     <AppDesigner Include="Properties\" />
