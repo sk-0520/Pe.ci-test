@@ -84,12 +84,12 @@
 		</GroupBox>
 		<Grid Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
 			<Grid.RowDefinitions>
-				<RowDefinition Height="24"/>
-				<RowDefinition/>
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="*" />
 			</Grid.RowDefinitions>
-			<ToolBarTray HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+			<!--<ToolBarTray HorizontalAlignment="Stretch" VerticalAlignment="Stretch">-->
 				<ToolBar HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-					<StackPanel Orientation="Horizontal">
+					<!--<StackPanel Orientation="Horizontal">-->
 						<Button Content="group" Command="{Binding CreateGroupCommand}" />
 						<Button 
 							Content="item" 
@@ -107,9 +107,9 @@
 						<Button Content="up" Command="{Binding NodeUpCommand}" CommandParameter="{Binding SelectedItem,ElementName=GroupTree}" />
 						<Button Content="down" Command="{Binding NodeDownCommand}" CommandParameter="{Binding SelectedItem,ElementName=GroupTree}" />
 						<Button Content="remove" Command="{Binding NodeRemoveCommand}" CommandParameter="{Binding SelectedItem,ElementName=GroupTree}"  />
-					</StackPanel>
+					<!--</StackPanel>-->
 				</ToolBar>
-			</ToolBarTray>
+			<!--</TkoolBarTray>-->
 			<TreeView Grid.Row="1" ItemsSource="{Binding GroupTree}" x:Name="GroupTree" >
 				<i:Interaction.Triggers>
 					<i:EventTrigger EventName="SelectedItemChanged">

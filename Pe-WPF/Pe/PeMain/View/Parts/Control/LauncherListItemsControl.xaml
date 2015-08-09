@@ -19,23 +19,23 @@
 			</ResourceDictionary.MergedDictionaries>
 			<SC:LogicalNotConverter x:Key="LogicalNotConverter" />
 			<AC:LauncherListDisplayImageConverter x:Key="LauncherListDisplayImageConverter" />
-		<AC:DisplayTextConverter x:Key="DisplayTextConverter" />
-			</ResourceDictionary>
+			<AC:DisplayTextConverter x:Key="DisplayTextConverter" />
+		</ResourceDictionary>
 	</AV:CommonDataUserControl.Resources>
-	
+
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto" />
 			<RowDefinition Height="*" />
 		</Grid.RowDefinitions>
-		<ToolBarTray Grid.Row="0">
-			<ToolBar>
-				<Button x:Name="toolAppend" Content="append" />
-				<Button x:Name="toolRemove" Content="remove" />
-				<Separator x:Name="toolSeparator"  />
-				<TextBox />
-			</ToolBar>
-		</ToolBarTray>
+		<!--<ToolBarTray Grid.Row="0">-->
+		<ToolBar Grid.Row="0">
+			<Button x:Name="toolAppend" Content="append" />
+			<Button x:Name="toolRemove" Content="remove" />
+			<Separator x:Name="toolSeparator"  />
+			<TextBox />
+		</ToolBar>
+		<!--</ToolBarTray>-->
 		<ListBox x:Name="listItems"  Grid.Row="1" ItemsSource="{Binding Items}">
 			<ListBox.ItemTemplate>
 				<DataTemplate>
