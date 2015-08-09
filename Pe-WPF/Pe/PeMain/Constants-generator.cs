@@ -19,6 +19,8 @@
 	partial class Constants
 	{
 /*
+< #
+var type = typeof(Constants);
 var fieldInfos = type.GetFields(BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
 var usingFieldInfos = fieldInfos
 	.Select(fi => new { FieldInfo = fi, Attribute = fi.GetCustomAttribute(typeof(ConstantsRangeAttribute), true) as ConstantsRangeAttribute })

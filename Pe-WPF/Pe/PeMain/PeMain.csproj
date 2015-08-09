@@ -377,8 +377,10 @@
       <DependentUpon>AppResource.cs</DependentUpon>
     </None>
     <None Include="Constants-generator.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Constants.cs</DependentUpon>
+      <Parameters>&lt;%3fxml version="1.0" encoding="utf-16"%3f&gt;
+&lt;ArrayOfParameterStorage xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" /&gt;</Parameters>
+      <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Constants-generator.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
