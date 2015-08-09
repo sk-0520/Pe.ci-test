@@ -2,9 +2,11 @@
 {
 	using System;
 	using System.Collections.Generic;
+	using System.Diagnostics;
 	using System.Linq;
 	using System.Text;
 	using System.Threading.Tasks;
+	using System.Windows.Controls;
 	using System.Windows.Input;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
@@ -18,6 +20,8 @@
 	public class SettingViewModel: ViewModelBase, IHavingCommonData, IHavingView<SettingWindow>
 	{
 		#region variable
+
+		TabItem _selectedTab;
 
 		MainSettingViewModel _mainSetting;
 		LauncherItemSettingViewModel _launcherItemSetting;
@@ -34,11 +38,30 @@
 			CommonData = commonData;
 			View = view;
 			SettingNotifiyItem = new SettingNotifiyItem();
+
+			if(HasView) {
+				this._selectedTab = View.pageMain;
+			}
 		}
 
 		#region property
 
 		public SettingNotifiyItem SettingNotifiyItem { get; private set; }
+
+		public TabItem SelectedTab
+		{ 
+			get { return this._selectedTab; }
+			set 
+			{
+				if(SetVariableValue(ref this._selectedTab, value)) {
+					if(HasView) {
+						if(value == View.pageToolbar) {
+							ToolbarSetting.Refresh();
+						}
+					}
+				}
+			}
+		}
 
 		public MainSettingViewModel MainSetting
 		{

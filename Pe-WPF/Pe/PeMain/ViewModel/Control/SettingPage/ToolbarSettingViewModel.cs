@@ -23,7 +23,7 @@
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
-	public class ToolbarSettingViewModel: SettingPageLauncherIconCacheViewModelBase
+	public class ToolbarSettingViewModel: SettingPageLauncherIconCacheViewModelBase, IRefreshFromViewModel
 	{
 		#region variable
 
@@ -353,6 +353,17 @@
 		#region IHavingAppSender
 
 		public IAppSender AppSender { get; private set; }
+
+		#endregion
+
+		#region IRefreshFromViewModel
+
+		public void Refresh()
+		{
+			foreach(var vm in LauncherItems.Items) {
+				vm.Refresh();
+			}
+		}
 
 		#endregion
 	}

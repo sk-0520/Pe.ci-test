@@ -24,19 +24,19 @@
 			<RowDefinition Height="auto"/>
 		</Grid.RowDefinitions>
 
-		<TabControl VerticalAlignment="Stretch">
+		<TabControl VerticalAlignment="Stretch" SelectedItem="{Binding SelectedTab}">
 			<TabControl.Resources>
 				<Style TargetType="{x:Type TabItem}">
 					<Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" />
 				</Style>
 			</TabControl.Resources>
-			<TabItem Header="main">
+			<TabItem x:Name="pageMain" Header="main" AA:Language.Word="setting/main">
 				<AS:MainSettingControl x:Name="MainSettingControl" DataContext="{Binding MainSetting}" VerticalAlignment="Stretch" />
 			</TabItem>
 			<TabItem Header="launcher">
 				<AS:LauncherItemSettingControl x:Name="LauncherItemSettingControl" DataContext="{Binding LauncherItemSetting}" VerticalAlignment="Stretch"/>
 			</TabItem>
-			<TabItem Header="toolbar" >
+			<TabItem x:Name="pageToolbar" Header="toolbar" >
 				<AS:ToolbarSettingControl x:Name="ToolbarSettingControl" DataContext="{Binding ToolbarSetting}" VerticalAlignment="Stretch"/>
 			</TabItem>
 			<TabItem Header="command">
