@@ -23,8 +23,11 @@
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 	using System.Windows.Input;
 	using System.Windows.Controls;
+	using ContentTypeTextNet.Library.SharedLibrary.IF.WindowsViewExtend;
+	using ContentTypeTextNet.Library.SharedLibrary.Attribute;
+	using System.Windows.Media;
 
-	public class CommandViewModel: HavingViewSingleModelWrapperViewModelBase<CommandSettingModel, CommandWindow>, IHavingAppNonProcess, IHavingAppSender
+	public class CommandViewModel: HavingViewSingleModelWrapperViewModelBase<CommandSettingModel, CommandWindow>, IHavingAppNonProcess, IHavingAppSender, IWindowHitTestData
 	{
 		#region define
 
@@ -43,7 +46,10 @@
 		CommandItemViewModel _selectedCommandItem;
 
 		IEnumerable<CommandItemViewModel> _driveItems;
+		Thickness _resizeThickness = new Thickness(3);
 
+		Brush _borderBrush = new SolidColorBrush(Colors.Red);
+		Thickness _borderThickness = new Thickness(3);
 
 		#endregion
 
@@ -183,6 +189,12 @@
 				return result;
 			}
 		}
+
+		public double CaptionWidth { get; set; }
+		public double CaptionHeight { get; set; }
+
+		public Brush BorderBrush { get { return this._borderBrush; } }
+		public Thickness BorderThickness { get { return this._borderThickness; } }
 
 		#endregion
 
@@ -433,6 +445,37 @@
 					throw new NotImplementedException();
 			}
 		}
+
+		#endregion
+
+		#region IWindowHitTestData
+
+		/// <summary>
+		/// ボーダーに対するヒットテストを行うか
+		/// </summary>
+		public bool UsingBorderHitTest { get { return true; } }
+		/// <summary>
+		/// タイトルバーに対するヒットテストを行うか
+		/// </summary>
+		public bool UsingCaptionHitTest { get { return true; } }
+
+		/// <summary>
+		/// タイトルバーとして認識される領域。
+		/// </summary>
+		[PixelKind(Px.Logical)]
+		public Rect CaptionArea { get { 
+			var result = new Rect(
+				BorderThickness.Left, BorderThickness.Top,
+				View.caption.ActualWidth, View.caption.ActualHeight
+			);
+			return result;
+		} }
+		/// <summary>
+		/// サイズ変更に使用する境界線。
+		/// </summary>
+		[PixelKind(Px.Logical)]
+		public Thickness ResizeThickness { get { return BorderThickness; } }
+
 
 		#endregion
 

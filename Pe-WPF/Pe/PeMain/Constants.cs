@@ -95,6 +95,11 @@
 			TimeSpan.FromSeconds(2),
 			TimeSpan.FromSeconds(10)
 		);
+		public static readonly TripleRange<double> commandWindowWidth = new TripleRange<double>(
+			250,
+			400,
+			800
+		);
 
 		public static readonly TripleRange<double> toolbarTextLength = new TripleRange<double>(
 			20,
@@ -216,6 +221,13 @@
 
 		public static double NoteFontMinimumSize { get { return noteFontSize.minimum; } }
 		public static double NoteFontMaximumSize { get { return noteFontSize.maximum; } }
+
+		#endregion
+
+		#region commandWindowWidth
+
+		public static double CommandWindowMinimumWidth { get { return commandWindowWidth.minimum; } }
+		public static double CommandWindowMaximumWidth { get { return commandWindowWidth.maximum; } }
 
 		#endregion
 

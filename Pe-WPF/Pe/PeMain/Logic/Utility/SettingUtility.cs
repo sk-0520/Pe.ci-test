@@ -189,6 +189,8 @@
 		public static void InitializeCommandSetting(CommandSettingModel setting, Version previousVersion, INonProcess nonProcess)
 		{
 			Implement.InitializeCommandSetting.Correction(setting, previousVersion, nonProcess);
+
+			setting.WindowWidth = Constants.commandWindowWidth.GetClamp(setting.WindowWidth);
 		}
 
 		/// <summary>
@@ -207,6 +209,7 @@
 			InitializeWindowSaveSetting(setting.WindowSave, previousVersion, nonProcess);
 			InitializeClipboardSetting(setting.Clipboard, previousVersion, nonProcess);
 			InitializeTemplateSetting(setting.Template, previousVersion, nonProcess);
+			InitializeCommandSetting(setting.Command, previousVersion, nonProcess);
 		}
 
 		public static void InitializeLoggingSetting(LoggingSettingModel setting, Version previousVersion, INonProcess nonProcess)
