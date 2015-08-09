@@ -33,6 +33,8 @@
 		LauncherItemModel _selectedLauncherItem;
 		ToolbarViewModel _selectedToolbar;
 
+		int _defaultGroupIndex;
+
 		#endregion
 
 		public ToolbarSettingViewModel(ToolbarSettingModel toolbarSetting, LauncherGroupSettingModel groupSettingModel, LauncherItemSettingModel launcherItemSetting, IAppNonProcess appNonProcess, IAppSender appSender, SettingNotifiyItem settingNotifiyItem)
@@ -146,6 +148,12 @@
 			}
 		}
 
+		public int DefaultGroupIndex
+		{
+			get { return this._defaultGroupIndex; }
+			set { SetVariableValue(ref this._defaultGroupIndex, value); }
+		}
+
 		#endregion
 
 		#region command
@@ -160,6 +168,10 @@
 						GroupSettingModel.Groups.Add(model);
 						var vm = new GroupRootViewModel(model, LauncherItemSetting.Items, AppNonProcess);
 						this._groupTree.Add(vm);
+
+						//OnPropertyChanged("DefaultGroupList");
+						//SelectedToolbar.DefaultGroupId
+						//OnPropertyChangeDefaultGroupList(SelectedToolbar.DefaultGroupId)
 					}
 				);
 
@@ -249,10 +261,7 @@
 							GroupSettingModel.Groups.Remove(groupModel);
 							this._groupTree.Remove(groupViewModel);
 
-							OnPropertyChanged("DefaultGroupList");
-							if(SelectedToolbar.DefaultGroupId == groupViewModel.Id) {
-								SelectedToolbar.DefaultGroupId = Guid.Empty;
-							}
+							OnPropertyChangeDefaultGroupList(groupViewModel.Id);
 
 						} else {
 							Debug.Assert(toolbarNode.ToolbarNodeKind == ToolbarNodeKind.Item);
@@ -346,6 +355,20 @@
 				groupViewModel.Nodes.Insert(nextIndex, itemViewModel);
 			}
 			toolbarNode.IsSelected = true;
+		}
+
+		private void OnPropertyChangeDefaultGroupList(Guid prevDefaultId)
+		{
+			OnPropertyChanged("DefaultGroupList");
+			if(SelectedToolbar.DefaultGroupId == Guid.Empty) {
+				// 値設定するとバインドが死ぬのでインデックス指定
+				DefaultGroupIndex = 0;
+				OnPropertyChanged("DefaultGroupId");
+			} else if(SelectedToolbar.DefaultGroupId == prevDefaultId) {
+				SelectedToolbar.DefaultGroupId = Guid.Empty;
+				OnPropertyChanged("DefaultGroupId");
+			}
+			//OnPropertyChanged("DefaultGroupList");
 		}
 
 		#endregion
