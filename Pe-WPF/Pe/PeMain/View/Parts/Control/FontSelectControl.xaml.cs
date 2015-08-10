@@ -26,11 +26,13 @@
 			"FamilyName",
 			typeof(FontFamily),
 			typeof(FontSelectControl),
-			new FrameworkPropertyMetadata(new PropertyChangedCallback(OnFamilyNameChanged))
+			new FrameworkPropertyMetadata(
+				SystemFonts.MessageFontFamily,
+				FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
+				new PropertyChangedCallback(OnFamilyNameChanged)
+			)
 		);
 
-
-		// 2. CLI用プロパティを提供するラッパー
 		public FontFamily FamilyName
 		{
 			get { return (FontFamily)GetValue(FamilyNameProperty); }
@@ -53,11 +55,13 @@
 			"IsBold",
 			typeof(bool),
 			typeof(FontSelectControl),
-			new FrameworkPropertyMetadata(new PropertyChangedCallback(OnIsBoldChanged))
+			new FrameworkPropertyMetadata(
+				default(bool),
+				FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
+				new PropertyChangedCallback(OnIsBoldChanged)
+			)
 		);
 
-
-		// 2. CLI用プロパティを提供するラッパー
 		public bool IsBold
 		{
 			get { return (bool)GetValue(IsBoldProperty); }
@@ -80,11 +84,13 @@
 			"IsItalic",
 			typeof(bool),
 			typeof(FontSelectControl),
-			new FrameworkPropertyMetadata(new PropertyChangedCallback(OnIsItalicChanged))
+			new FrameworkPropertyMetadata(
+				default(bool),
+				FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
+				new PropertyChangedCallback(OnIsItalicChanged)
+			)
 		);
 
-
-		// 2. CLI用プロパティを提供するラッパー
 		public bool IsItalic
 		{
 			get { return (bool)GetValue(IsItalicProperty); }
@@ -107,11 +113,13 @@
 			"Size",
 			typeof(double),
 			typeof(FontSelectControl),
-			new FrameworkPropertyMetadata(new PropertyChangedCallback(OnSizeChanged))
+			new FrameworkPropertyMetadata(
+				SystemFonts.MessageFontSize,
+				FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
+				new PropertyChangedCallback(OnSizeChanged)
+			)
 		);
 
-
-		// 2. CLI用プロパティを提供するラッパー
 		public double Size
 		{
 			get { return (double)GetValue(SizeProperty); }
@@ -134,11 +142,12 @@
 			"SizeMinimum",
 			typeof(double),
 			typeof(FontSelectControl),
-			new FrameworkPropertyMetadata(new PropertyChangedCallback(OnSizeMinimumChanged))
+			new FrameworkPropertyMetadata(
+				0.0,
+				new PropertyChangedCallback(OnSizeMinimumChanged)
+			)
 		);
 
-
-		// 2. CLI用プロパティを提供するラッパー
 		public double SizeMinimum
 		{
 			get { return (double)GetValue(SizeMinimumProperty); }
@@ -161,11 +170,12 @@
 			"SizeMaximum",
 			typeof(double),
 			typeof(FontSelectControl),
-			new FrameworkPropertyMetadata(new PropertyChangedCallback(OnSizeMaximumChanged))
+			new FrameworkPropertyMetadata(
+				100.0,
+				new PropertyChangedCallback(OnSizeMaximumChanged)
+			)
 		);
 
-
-		// 2. CLI用プロパティを提供するラッパー
 		public double SizeMaximum
 		{
 			get { return (double)GetValue(SizeMaximumProperty); }

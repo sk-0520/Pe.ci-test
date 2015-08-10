@@ -176,10 +176,10 @@
 						<Label Grid.Row="3" Grid.Column="0" Content="font" />
 						<AV:FontSelectControl
 							Grid.Row="3" Grid.Column="1"
-							FamilyName="{Binding FontFamily, Mode=TwoWay}"
-							IsBold="{Binding FontBold, Mode=TwoWay}"
-							IsItalic="{Binding FontItalic, Mode=TwoWay}"
-							Size="{Binding FontSize, Mode=TwoWay}"
+							FamilyName="{Binding FontFamily}"
+							IsBold="{Binding FontBold}"
+							IsItalic="{Binding FontItalic}"
+							Size="{Binding FontSize}"
 							SizeMinimum="{x:Static AM:Constants.NoteFontMinimumSize}"
 							SizeMaximum="{x:Static AM:Constants.NoteFontMaximumSize}"
 						/>
