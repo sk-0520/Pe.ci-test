@@ -144,6 +144,9 @@
     <Compile Include="View\CommandWindow.xaml.cs">
       <DependentUpon>CommandWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Parts\Control\FontSelectControl.xaml.cs">
+      <DependentUpon>FontSelectControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Parts\Converter\CommandItemConverter.cs" />
     <Compile Include="AppResource-implement.cs">
       <DependentUpon>AppResource.cs</DependentUpon>
@@ -429,6 +432,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Parts\Control\EnvironmentVariablesEditControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Parts\Control\FontSelectControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
