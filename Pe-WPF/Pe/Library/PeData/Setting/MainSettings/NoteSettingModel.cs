@@ -20,6 +20,8 @@
 			HideHotKey = new HotKeyModel();
 			CompactHotKey = new HotKeyModel();
 			ShowFrontHotKey = new HotKeyModel();
+
+			Font = new FontModel();
 		}
 
 		#region property
@@ -35,6 +37,9 @@
 		public HotKeyModel CompactHotKey { get; set; }
 		[DataMember]
 		public HotKeyModel ShowFrontHotKey { get; set; }
+
+		[DataMember]
+		public FontModel Font { get; set; }
 
 		#endregion
 
@@ -59,6 +64,7 @@
 			ShowFrontHotKey.DeepCloneTo(obj.ShowFrontHotKey);
 			obj.ForeColor = ForeColor;
 			obj.BackColor = BackColor;
+			Font.DeepCloneTo(obj.Font);
 		}
 
 		public IDeepClone DeepClone()

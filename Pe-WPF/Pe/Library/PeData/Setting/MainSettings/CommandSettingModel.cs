@@ -21,6 +21,7 @@
 			: base()
 		{
 			ShowHotkey = new HotKeyModel();
+			Font = new FontModel();
 		}
 
 		#region property
@@ -62,6 +63,9 @@
 		[PixelKind(Px.Logical)]
 		public double WindowWidth { get; set; }
 
+		[DataMember]
+		public FontModel Font { get; set; }
+
 		#endregion
 
 		#region IDeepClone
@@ -77,6 +81,7 @@
 			obj.FindTag = FindTag;
 			obj.FindFile = FindFile;
 			obj.WindowWidth = WindowWidth;
+			Font.DeepCloneTo(obj.Font);
 		}
 
 		public IDeepClone DeepClone()

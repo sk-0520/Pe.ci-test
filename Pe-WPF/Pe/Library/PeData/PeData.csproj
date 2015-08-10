@@ -88,6 +88,7 @@
     <Compile Include="Item\ClipboardBodyItemModel.cs" />
     <Compile Include="Item\ClipboardIndexItemCollectionModel.cs" />
     <Compile Include="Item\ClipboardIndexItemModel.cs" />
+    <Compile Include="Item\ColorPairItemModel.cs" />
     <Compile Include="Item\IndexBodyItemModelBase.cs" />
     <Compile Include="Item\IndexItemCollectionModel.cs" />
     <Compile Include="Item\IndexItemModelBase.cs" />

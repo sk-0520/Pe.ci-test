@@ -21,6 +21,7 @@
 			: base()
 		{
 			ToggleHotKey = new HotKeyModel();
+			Font = new FontModel();
 		}
 
 		#region property
@@ -42,6 +43,9 @@
 		/// </summary>
 		[DataMember]
 		public double ReplaceListWidth { get; set; }
+
+		[DataMember]
+		public FontModel Font { get; set; }
 
 		#endregion
 
@@ -95,6 +99,7 @@
 			obj.WindowState = WindowState;
 			obj.IsTopmost = IsTopmost;
 			obj.IsVisible = IsVisible;
+			Font.DeepCloneTo(obj.Font);
 		}
 
 		public IDeepClone DeepClone()
