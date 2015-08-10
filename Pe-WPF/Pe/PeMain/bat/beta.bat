@@ -1,4 +1,4 @@
-ï»¿cd /d %~dp0\..\
+cd /d %~dp0\..\
 
 for /F "skip=2 tokens=3* delims= " %%a in ('reg query "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" /v Desktop') do set DesktopFolder=%%a
 for /F "usebackq" %%s in (`echo %DesktopFolder%`) do set DESKTOP=%%s
@@ -10,9 +10,9 @@ set BETA_DIR=%BETA_ROOT_DIR%\Pe
 set RELEASE_DIR=%APPDATA%\Pe
 
 if exist "%BETA_ROOT_DIR%" (
-	rem ãƒ™ãƒ¼ã‚¿ç”¨ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªãŒã‚ã‚‹ã®ã§ã‚³ãƒ”ã‚‰ãªã„
+	rem ƒx[ƒ^—pƒfƒBƒŒƒNƒgƒŠ‚ª‚ ‚é‚Ì‚ÅƒRƒs‚ç‚È‚¢
 ) else (
-	rem æ—¢å­˜ãƒ‡ãƒ¼ã‚¿ã‚’ãƒ‘ã‚¯ã£ã¦ãã‚‹
+	rem Šù‘¶ƒf[ƒ^‚ðƒpƒN‚Á‚Ä‚­‚é
 	mkdir "%BETA_DIR%"  2>NUL
 	copy  "%RELEASE_DIR%\*.xml"      "%BETA_DIR%" /Y
 	copy  "%RELEASE_DIR%\*.sqlite3"  "%BETA_DIR%" /Y
