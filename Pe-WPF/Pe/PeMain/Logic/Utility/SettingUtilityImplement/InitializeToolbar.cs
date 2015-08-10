@@ -5,6 +5,7 @@
 	using System.Linq;
 	using System.Text;
 	using System.Threading.Tasks;
+	using ContentTypeTextNet.Library.SharedLibrary.Define;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 	using ContentTypeTextNet.Pe.Library.PeData.Setting;
@@ -17,6 +18,10 @@
 		}
 
 		static void V_First(ToolbarItemModel setting, Version previousVersion, INonProcess nonProcess)
-		{ }
+		{
+			setting.IconScale = IconScale.Normal;
+			setting.HideWaitTime = Constants.toolbarHideWaitTime.median;
+			setting.HideAnimateTime = Constants.toolbarHideAnimateTime.median;
+		}
 	}
 }

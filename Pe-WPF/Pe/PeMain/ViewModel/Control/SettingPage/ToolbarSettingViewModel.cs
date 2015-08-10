@@ -9,7 +9,9 @@
 	using System.Threading.Tasks;
 	using System.Windows;
 	using System.Windows.Input;
+	using System.Windows.Media;
 	using ContentTypeTextNet.Library.SharedLibrary.CompatibleForms;
+	using ContentTypeTextNet.Library.SharedLibrary.CompatibleWindows.Utility;
 	using ContentTypeTextNet.Library.SharedLibrary.Define;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
@@ -153,6 +155,8 @@
 			get { return this._defaultGroupIndex; }
 			set { SetVariableValue(ref this._defaultGroupIndex, value); }
 		}
+
+
 
 		#endregion
 

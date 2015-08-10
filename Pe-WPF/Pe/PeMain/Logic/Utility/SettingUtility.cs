@@ -126,6 +126,9 @@
 			if(IsIllegalPlusNumber(model.FloatToolbar.HeightButtonCount)) {
 				model.FloatToolbar.HeightButtonCount = 1;
 			}
+
+			model.HideWaitTime = Constants.toolbarHideWaitTime.GetClamp(model.HideWaitTime);
+			model.HideAnimateTime = Constants.toolbarHideAnimateTime.GetClamp(model.HideAnimateTime);
 		}
 
 		public static void InitializeWindowSaveSetting(WindowSaveSettingModel model, Version previousVersion, INonProcess nonProcess)

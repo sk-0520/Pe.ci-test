@@ -117,6 +117,23 @@
 			80,
 			200
 		);
+		public static readonly TripleRange<double> toolbarFontSize = new TripleRange<double>(
+			8,
+			14,
+			64
+		);
+
+		public static readonly TripleRange<TimeSpan> toolbarHideWaitTime = new TripleRange<TimeSpan>(
+			TimeSpan.FromMilliseconds(500),
+			TimeSpan.FromSeconds(3),
+			TimeSpan.FromSeconds(10)
+		);
+
+		public static readonly TripleRange<TimeSpan> toolbarHideAnimateTime = new TripleRange<TimeSpan>(
+			TimeSpan.FromMilliseconds(100),
+			TimeSpan.FromMilliseconds(250),
+			TimeSpan.FromSeconds(1)
+		);
 
 		public static readonly TripleRange<TimeSpan> clipboardWaitTime = new TripleRange<TimeSpan>(
 			TimeSpan.FromMilliseconds(50),
@@ -204,6 +221,27 @@
 
 		public static double ToolbarTextMinimumLength { get { return toolbarTextLength.minimum; } }
 		public static double ToolbarTextMaximumLength { get { return toolbarTextLength.maximum; } }
+
+		#endregion
+
+		#region toolbarFontSize
+
+		public static double ToolbarFontMinimumSize { get { return toolbarFontSize.minimum; } }
+		public static double ToolbarFontMaximumSize { get { return toolbarFontSize.maximum; } }
+
+		#endregion
+
+		#region toolbarHideWaitTime
+
+		public static TimeSpan ToolbarHideWaitMinimumTime { get { return toolbarHideWaitTime.minimum; } }
+		public static TimeSpan ToolbarHideWaitMaximumTime { get { return toolbarHideWaitTime.maximum; } }
+
+		#endregion
+
+		#region toolbarHideAnimateTime
+
+		public static TimeSpan ToolbarHideAnimateMinimumTime { get { return toolbarHideAnimateTime.minimum; } }
+		public static TimeSpan ToolbarHideAnimateMaximumTime { get { return toolbarHideAnimateTime.maximum; } }
 
 		#endregion
 

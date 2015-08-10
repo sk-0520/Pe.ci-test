@@ -19,9 +19,7 @@
 			: base()
 		{
 			FloatToolbar = new FloatToolbarItemModel();
-			IconScale = IconScale.Normal;
-			HideWaitTime = TimeSpan.FromSeconds(3);
-			HideAnimateTime = TimeSpan.FromMilliseconds(250);
+			Font = new FontModel();
 		}
 
 		#region property
@@ -73,6 +71,9 @@
 		/// </summary>
 		[DataMember]
 		public double TextWidth { get; set; }
+
+		[DataMember]
+		public FontModel Font { get; set; }
 
 		#endregion
 
@@ -138,6 +139,7 @@
 			obj.IsVisible = IsVisible;
 			obj.IsTopmost = IsTopmost;
 			obj.Id = Id;
+			Font.DeepCloneTo(obj.Font);
 		}
 	
 		public IDeepClone DeepClone()

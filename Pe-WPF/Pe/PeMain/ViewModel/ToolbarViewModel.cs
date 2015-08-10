@@ -15,6 +15,9 @@
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 	using ContentTypeTextNet.Pe.PeMain.Data;
+	using System.Windows.Media;
+	using System.Windows;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 
 	public class ToolbarViewModel : SingleModelWrapperViewModelBase<ToolbarItemModel>, IHavingAppNonProcess
 	{
@@ -63,6 +66,36 @@
 		{
 			get { return Model.AutoHide; }
 			set { SetModelValue(value); }
+		}
+
+		public FontFamily FontFamily
+		{
+			get { return FontUtility.MakeFontFamily(Model.Font.Family, SystemFonts.MessageFontFamily); }
+			set
+			{
+				if (value != null) {
+					var fontFamily = FontUtility.GetOriginalFontFamilyName(value);
+					SetPropertyValue(Model.Font, fontFamily, "Family");
+				}
+			}
+		}
+
+		public bool FontBold
+		{
+			get { return Model.Font.Bold; }
+			set { SetPropertyValue(Model.Font, value, "Bold"); }
+		}
+
+		public bool FontItalic
+		{
+			get { return Model.Font.Italic; }
+			set { SetPropertyValue(Model.Font, value, "Italic"); }
+		}
+
+		public double FontSize
+		{
+			get { return Model.Font.Size; }
+			set { SetPropertyValue(Model.Font, value, "Size"); }
 		}
 
 		#region ITopMost

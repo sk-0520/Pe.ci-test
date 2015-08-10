@@ -7,7 +7,7 @@
 	using System.Threading.Tasks;
 	using Drawing = System.Drawing;
 
-	public static class FontUtility
+	public static class CompatibleFontUtility
 	{
 		/// <summary>
 		/// FormsフォントサイズをWOFフォントサイズに変換。

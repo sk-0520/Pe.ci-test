@@ -118,11 +118,11 @@
 		</TextBox>
 
 		<Popup x:Name="popup" PlacementTarget="{Binding ElementName=root}" Placement="Left" IsOpen="{Binding IsActive, ElementName=root, Mode=OneWay}">
-			<i:Interaction.Triggers>
+			<!--<i:Interaction.Triggers>
 				<i:EventTrigger EventName="Opened">
 					<i:InvokeCommandAction Command="{Binding OpenPopupCommand}" CommandParameter="{Binding ElementName=listFont}" />
 				</i:EventTrigger>
-			</i:Interaction.Triggers>
+			</i:Interaction.Triggers>-->
 			<Popup.Resources>
 				<Style TargetType="Button">
 					<Setter Property="Focusable" Value="False" />
