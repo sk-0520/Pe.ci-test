@@ -174,40 +174,8 @@
 						<Label Grid.Row="2" Grid.Column="0" Content="back" />
 						<xctk:ColorPicker Grid.Row="2" Grid.Column="1" SelectedColor="{Binding BackColor}" />
 						<Label Grid.Row="3" Grid.Column="0" Content="font" />
-						<Grid Grid.Row="3" Grid.Column="1" >
-							<Grid.RowDefinitions>
-								<RowDefinition />
-								<RowDefinition />
-							</Grid.RowDefinitions>
-							<Grid.ColumnDefinitions>
-								<ColumnDefinition />
-								<ColumnDefinition />
-								<ColumnDefinition />
-							</Grid.ColumnDefinitions>
-							<ComboBox x:Name="listFont" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" SelectedValue="{Binding FontFamily}" SelectedValuePath="Source" ItemsSource="{Binding Source={x:Static Fonts.SystemFontFamilies}}">
-								<ComboBox.ItemsPanel>
-									<ItemsPanelTemplate>
-										<!-- TODO: サイズ固定-->
-										<VirtualizingStackPanel Width="200" ScrollUnit="Item" />
-									</ItemsPanelTemplate>
-								</ComboBox.ItemsPanel>
-								<ComboBox.ItemTemplate>
-									<DataTemplate>
-										<TextBlock Height="20" Text="{Binding Converter={StaticResource FontFamilyToNameConverter}}" FontFamily="{Binding}" />
-									</DataTemplate>
-								</ComboBox.ItemTemplate>
-							</ComboBox>
-							<ToggleButton Grid.Row="1" Grid.Column="0" IsChecked="{Binding FontBold}" AA:Language.Hint="font/weight">
-								<Image Style="{StaticResource ImageRenderStyle}" Source="{x:Static AM:AppResource.CommonFontBoldImage}" />
-							</ToggleButton>
-							<ToggleButton Grid.Row="1" Grid.Column="1" IsChecked="{Binding FontItalic}" AA:Language.Hint="font/style">
-								<Image Style="{StaticResource ImageRenderStyle}" Source="{x:Static AM:AppResource.CommonFontItalicImage}" />
-							</ToggleButton>
-							<xctk:DoubleUpDown Grid.Row="1" Grid.Column="2" Minimum="{x:Static AM:Constants.NoteFontMinimumSize}" Maximum="{x:Static AM:Constants.NoteFontMaximumSize}" Value="{Binding FontSize}" />
-						</Grid>
-						
 						<AV:FontSelectControl
-							Grid.Row="4" Grid.Column="1"
+							Grid.Row="3" Grid.Column="1"
 							FamilyName="{Binding FontFamily, Mode=TwoWay}"
 							IsBold="{Binding FontBold, Mode=TwoWay}"
 							IsItalic="{Binding FontItalic, Mode=TwoWay}"

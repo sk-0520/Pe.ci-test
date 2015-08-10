@@ -388,20 +388,20 @@
 			{
 				var result = CreateCommand(
 					o => {
-						var comboBox = (ComboBox)o;
-						if (comboBox.SelectedValue == null && comboBox.ItemsSource != null) {
-							AppNonProcess.Logger.Information(string.Join(Environment.NewLine, comboBox.ItemsSource.Cast<FontFamily>().Select(f => f.Source)));
-							var fontFamily = FontFamily;
-							var index = comboBox.ItemsSource.Cast<FontFamily>()
-								.ToArray()
-								.FindIndex(f => f.Source == fontFamily.Source)
-							;
-							if (index != -1) {
-								comboBox.SelectedIndex = index;
-							}
-							//System.Diagnostics.Debug.WriteLine(comboBox.ItemsSource);
-							//comboBox.SelectedItem = FontFamily;
-						}
+						//var comboBox = (ComboBox)o;
+						//if (comboBox.SelectedValue == null && comboBox.ItemsSource != null) {
+						//	AppNonProcess.Logger.Information(string.Join(Environment.NewLine, comboBox.ItemsSource.Cast<FontFamily>().Select(f => f.Source)));
+						//	var fontFamily = FontFamily;
+						//	var index = comboBox.ItemsSource.Cast<FontFamily>()
+						//		.ToArray()
+						//		.FindIndex(f => f.Source == fontFamily.Source)
+						//	;
+						//	if (index != -1) {
+						//		comboBox.SelectedIndex = index;
+						//	}
+						//	//System.Diagnostics.Debug.WriteLine(comboBox.ItemsSource);
+						//	//comboBox.SelectedItem = FontFamily;
+						//}
 					}
 				);
 
