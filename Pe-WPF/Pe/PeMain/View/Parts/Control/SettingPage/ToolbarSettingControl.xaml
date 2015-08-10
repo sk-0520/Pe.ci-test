@@ -69,7 +69,8 @@
 				<Label Content="icon" HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Top"/>
 				<ComboBox Grid.Column="1" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Top" ItemsSource="{Binding Source={x:Static AP:EnumList.PlainIconScaleList}}" SelectedItem="{Binding SelectedToolbar.IconScale, Mode=TwoWay}" />
 
-				<Label Content="font" Grid.Row="3" HorizontalAlignment="Stretch" VerticalAlignment="Top" />
+				<Label Content="font" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Top" />
+				<AV:FontSelectControl Grid.Row="3" Grid.Column="1"  />
 
 				<Label Content="text length" Grid.Row="4" HorizontalAlignment="Stretch" VerticalAlignment="Top" />
 				<Slider Grid.Column="1" Grid.Row="4" HorizontalAlignment="Stretch" VerticalAlignment="Top" Value="{Binding SelectedToolbar.TextWidth, Mode=TwoWay}" Minimum="{Binding Source={x:Static AM:Constants.ToolbarTextMinimumLength}}" Maximum="{Binding Source={x:Static AM:Constants.ToolbarTextMaximumLength}}" />
