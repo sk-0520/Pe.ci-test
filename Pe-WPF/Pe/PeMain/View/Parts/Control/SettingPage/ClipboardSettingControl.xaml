@@ -32,12 +32,13 @@
 				<CheckBox Content="file"  AA:Language.Word="clipboard/type/files" IsChecked="{Binding EnabledClipboardTypesFile}" />
 			</StackPanel>
 		</GroupBox>
-		<Grid HorizontalAlignment="Left" Height="92" Margin="130,11,0,0" VerticalAlignment="Top" Width="148">
+		<Grid HorizontalAlignment="Left" Height="146" Margin="130,11,0,0" VerticalAlignment="Top" Width="148">
 			<Grid.RowDefinitions>
 				<RowDefinition Height="31*"/>
 				<RowDefinition Height="33*"/>
 				<RowDefinition Height="35*"/>
 				<RowDefinition Height="35*"/>
+				<RowDefinition Height="Auto"/>
 			</Grid.RowDefinitions>
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="15*"/>
@@ -55,6 +56,11 @@
 
 			<Label Grid.Row="3" Grid.Column="0" Content="dup" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top"/>
 			<xctk:SingleUpDown Grid.Row="3" Grid.Column="1" Value="{Binding DuplicationCount}" Minimum="{Binding Source={x:Static AM:Constants.ClipboardDuplicationMinimumCount}}" Maximum="{Binding Source={x:Static AM:Constants.ClipboardDuplicationMaximumCount}}"  />
+		
+			<Label Grid.Row="4" Grid.Column="0" Content="font" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top"/>
+			<AV:FontSelectControl
+				Grid.Row="4" Grid.Column="1"
+			/>
 		</Grid>
 
 	</Grid>

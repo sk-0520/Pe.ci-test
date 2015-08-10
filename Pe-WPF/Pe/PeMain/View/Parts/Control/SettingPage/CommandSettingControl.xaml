@@ -16,7 +16,8 @@
 				<RowDefinition Height="30"/>
 				<RowDefinition Height="33"/>
 				<RowDefinition Height="34"/>
-				<RowDefinition Height="203"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="190"/>
 			</Grid.RowDefinitions>
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="131"/>
@@ -31,13 +32,21 @@
 			<Label Content="hide time" HorizontalAlignment="Left" Margin="10,5,0,0" Grid.Row="2" VerticalAlignment="Top" Height="25" Width="65"/>
 			<Slider Grid.Column="1" HorizontalAlignment="Left" Margin="10,10,0,0" Grid.Row="2" VerticalAlignment="Top" Width="119" Value="{Binding HideTimeMs}" Minimum="{Binding Source={x:Static AM:Constants.CommandHideMinimumTime}}" Maximum="{Binding Source={x:Static AM:Constants.CommandHideMaximumTime}}" Height="18"/>
 
-			<GroupBox Header="GroupBox" HorizontalAlignment="Left" Margin="10,10,0,0" Grid.Row="3" VerticalAlignment="Top" Height="85" Width="196" Grid.ColumnSpan="2">
+			<Label Grid.Row="3" Grid.Column="0" Content="font"/>
+			<AV:FontSelectControl
+				Grid.Row="3" Grid.Column="1"
+			/>
+
+			<GroupBox Header="GroupBox" HorizontalAlignment="Left" Margin="10,10,0,0" Grid.Row="4" VerticalAlignment="Top" Height="85" Width="196" Grid.ColumnSpan="2" Grid.RowSpan="2">
 				<StackPanel>
 					<CheckBox Content="FindId" IsChecked="{Binding FindId}" />
 					<CheckBox Content="FindTag" IsChecked="{Binding FindTag}"/>
 					<CheckBox Content="FindFile" IsChecked="{Binding FindFile}"/>
 				</StackPanel>
 			</GroupBox>
+
+
+
 		</Grid>
 	</Grid>
 </AV:CommonDataUserControl>
