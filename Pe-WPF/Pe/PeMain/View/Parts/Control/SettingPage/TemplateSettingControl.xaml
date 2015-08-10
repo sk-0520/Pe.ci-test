@@ -1,8 +1,9 @@
 ﻿<AV:CommonDataUserControl
 	x:Class="ContentTypeTextNet.Pe.PeMain.View.Parts.Control.SettingPage.TemplateSettingControl"
-	xmlns:AV="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Control"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:AV="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Control"
+	xmlns:AM="clr-namespace:ContentTypeTextNet.Pe.PeMain"
 	
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
 	mc:Ignorable="d" 
@@ -24,6 +25,12 @@
 			<Label Grid.Row="0" Grid.Column="0" Content="font" />
 			<AV:FontSelectControl
 				Grid.Row="0" Grid.Column="1"
+				FamilyName="{Binding FontFamily}"
+				IsBold="{Binding FontBold}"
+				IsItalic="{Binding FontItalic}"
+				Size="{Binding FontSize}"
+				SizeMinimum="{x:Static AM:Constants.TemplateFontMinimumSize}"
+				SizeMaximum="{x:Static AM:Constants.TemplateFontMaximumSize}"
 			/>
 
 		</Grid>

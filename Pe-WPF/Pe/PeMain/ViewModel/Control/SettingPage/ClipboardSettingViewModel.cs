@@ -6,7 +6,10 @@
 	using System.Runtime.CompilerServices;
 	using System.Text;
 	using System.Threading.Tasks;
+	using System.Windows;
+	using System.Windows.Media;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
 	using ContentTypeTextNet.Pe.Library.PeData.Define;
 	using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
@@ -115,6 +118,36 @@
 		{
 			get { return Clipboard.IsVisible; }
 			set { SetPropertyValue(Clipboard, value); }
+		}
+
+		public FontFamily FontFamily
+		{
+			get { return FontUtility.MakeFontFamily(Clipboard.Font.Family, SystemFonts.MessageFontFamily); }
+			set
+			{
+				if(value != null) {
+					var fontFamily = FontUtility.GetOriginalFontFamilyName(value);
+					SetPropertyValue(Clipboard.Font, fontFamily, "Family");
+				}
+			}
+		}
+
+		public bool FontBold
+		{
+			get { return Clipboard.Font.Bold; }
+			set { SetPropertyValue(Clipboard.Font, value, "Bold"); }
+		}
+
+		public bool FontItalic
+		{
+			get { return Clipboard.Font.Italic; }
+			set { SetPropertyValue(Clipboard.Font, value, "Italic"); }
+		}
+
+		public double FontSize
+		{
+			get { return Clipboard.Font.Size; }
+			set { SetPropertyValue(Clipboard.Font, value, "Size"); }
 		}
 
 		#endregion

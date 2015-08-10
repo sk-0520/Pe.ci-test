@@ -6,7 +6,10 @@
 	using System.Linq;
 	using System.Text;
 	using System.Threading.Tasks;
+	using System.Windows;
+	using System.Windows.Media;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
@@ -17,13 +20,14 @@
 
 	public class MainSettingViewModel : SettingPageViewModelBase
 	{
-		public MainSettingViewModel(RunningInformationSettingModel runningInformation, LanguageSettingModel language, LoggingSettingModel logging, SystemEnvironmentSettingModel systemEnvironment, IAppNonProcess appNonProcess, SettingNotifiyItem settingNotifiyItem)
+		public MainSettingViewModel(RunningInformationSettingModel runningInformation, LanguageSettingModel language, LoggingSettingModel logging, SystemEnvironmentSettingModel systemEnvironment, StreamSettingModel stream, IAppNonProcess appNonProcess, SettingNotifiyItem settingNotifiyItem)
 			: base(appNonProcess, settingNotifiyItem)
 		{
 			RunningInformation = runningInformation;
 			Language = language;
 			Logging = logging;
 			SystemEnvironment = systemEnvironment;
+			Stream = stream;
 		}
 
 		#region property
@@ -32,6 +36,7 @@
 		LanguageSettingModel Language { get; set; }
 		LoggingSettingModel Logging { get; set; }
 		SystemEnvironmentSettingModel SystemEnvironment { get; set; }
+		StreamSettingModel Stream { get; set; }
 
 		public bool Startup
 		{
@@ -118,7 +123,7 @@
 
 		#endregion
 
-		#region
+		#region SystemEnvironment
 
 		public HotKeyModel SysEnvHideFileHotkey
 		{
@@ -132,6 +137,39 @@
 			set { SetPropertyValue(SystemEnvironment, value, "ExtensionHotkey"); }
 		}
 
+		#endregion
+
+		#region StreamSettingModel
+
+		public FontFamily StreamFontFamily
+		{
+			get { return FontUtility.MakeFontFamily(Stream.Font.Family, SystemFonts.MessageFontFamily); }
+			set
+			{
+				if(value != null) {
+					var fontFamily = FontUtility.GetOriginalFontFamilyName(value);
+					SetPropertyValue(Stream.Font, fontFamily, "Family");
+				}
+			}
+		}
+
+		public bool StreamFontBold
+		{
+			get { return Stream.Font.Bold; }
+			set { SetPropertyValue(Stream.Font, value, "Bold"); }
+		}
+
+		public bool StreamFontItalic
+		{
+			get { return Stream.Font.Italic; }
+			set { SetPropertyValue(Stream.Font, value, "Italic"); }
+		}
+
+		public double StreamFontSize
+		{
+			get { return Stream.Font.Size; }
+			set { SetPropertyValue(Stream.Font, value, "Size"); }
+		}
 		#endregion
 
 		#endregion

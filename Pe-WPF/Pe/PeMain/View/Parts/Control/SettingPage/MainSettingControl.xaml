@@ -1,15 +1,15 @@
 ﻿<AV:CommonDataUserControl
 	x:Class="ContentTypeTextNet.Pe.PeMain.View.Parts.Control.SettingPage.MainSettingControl"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:AM="clr-namespace:ContentTypeTextNet.Pe.PeMain"
 	xmlns:AV="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Control"
 	xmlns:AP="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
 	xmlns:AA="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Attached"
-	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-	xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+	
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
 	mc:Ignorable="d" 
-	d:DesignWidth="480" 
-	d:DesignHeight="400"
+	d:DesignWidth="480" d:DesignHeight="400"
 >
 	<Grid>
 		<GroupBox AA:Language.Word="setting/main" Header="main" Height="79" Width="202" Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
@@ -58,9 +58,29 @@
 				</Grid.ColumnDefinitions>
 				<Label Grid.Row="0" Grid.Column="0" Content="hide file" />
 				<AV:AppHotkeyControl Grid.Row="0" Grid.Column="1" Hotkey="{Binding SysEnvHideFileHotkey}" />
-				
+
 				<Label Grid.Row="1" Grid.Column="0" Content="extension" />
 				<AV:AppHotkeyControl Grid.Row="1" Grid.Column="1" Hotkey="{Binding SysEnvExtensionHotkey}" />
+			</Grid>
+		</GroupBox>
+
+		<GroupBox Header="GroupBox" HorizontalAlignment="Left" Margin="217,190,0,0" VerticalAlignment="Top" Height="119" Width="159">
+			<Grid>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition />
+					<ColumnDefinition />
+				</Grid.ColumnDefinitions>
+				
+				<Label Grid.Row="0" Grid.Column="0" Content="font" />
+				<AV:FontSelectControl
+					Grid.Row="0" Grid.Column="1"
+					FamilyName="{Binding StreamFontFamily}"
+					IsBold="{Binding StreamFontBold}"
+					IsItalic="{Binding StreamFontItalic}"
+					Size="{Binding StreamFontSize}"
+					SizeMinimum="{x:Static AM:Constants.StreamFontMinimumSize}"
+					SizeMaximum="{x:Static AM:Constants.StreamFontMaximumSize}"
+				/>
 			</Grid>
 		</GroupBox>
 

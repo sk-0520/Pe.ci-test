@@ -5,8 +5,11 @@
 	using System.Linq;
 	using System.Text;
 	using System.Threading.Tasks;
+	using System.Windows;
+	using System.Windows.Media;
 	using ContentTypeTextNet.Library.SharedLibrary.Define;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
@@ -63,7 +66,35 @@
 			set { SetPropertyValue(Command, value); }
 		}
 
+		public FontFamily FontFamily
+		{
+			get { return FontUtility.MakeFontFamily(Command.Font.Family, SystemFonts.MessageFontFamily); }
+			set
+			{
+				if(value != null) {
+					var fontFamily = FontUtility.GetOriginalFontFamilyName(value);
+					SetPropertyValue(Command.Font, fontFamily, "Family");
+				}
+			}
+		}
 
+		public bool FontBold
+		{
+			get { return Command.Font.Bold; }
+			set { SetPropertyValue(Command.Font, value, "Bold"); }
+		}
+
+		public bool FontItalic
+		{
+			get { return Command.Font.Italic; }
+			set { SetPropertyValue(Command.Font, value, "Italic"); }
+		}
+
+		public double FontSize
+		{
+			get { return Command.Font.Size; }
+			set { SetPropertyValue(Command.Font, value, "Size"); }
+		}
 		#endregion
 	}
 }

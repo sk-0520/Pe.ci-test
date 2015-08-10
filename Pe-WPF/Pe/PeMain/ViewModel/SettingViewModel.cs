@@ -73,6 +73,7 @@
 						CommonData.MainSetting.Language,
 						CommonData.MainSetting.Logging,
 						CommonData.MainSetting.SystemEnvironment,
+						CommonData.MainSetting.Stream,
 						CommonData.NonProcess,
 						SettingNotifiyItem
 					);

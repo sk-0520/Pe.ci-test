@@ -35,6 +35,12 @@
 			<Label Grid.Row="3" Grid.Column="0" Content="font"/>
 			<AV:FontSelectControl
 				Grid.Row="3" Grid.Column="1"
+				FamilyName="{Binding FontFamily}"
+				IsBold="{Binding FontBold}"
+				IsItalic="{Binding FontItalic}"
+				Size="{Binding FontSize}"
+				SizeMinimum="{x:Static AM:Constants.CommandFontMinimumSize}"
+				SizeMaximum="{x:Static AM:Constants.CommandFontMaximumSize}"
 			/>
 
 			<GroupBox Header="GroupBox" HorizontalAlignment="Left" Margin="10,10,0,0" Grid.Row="4" VerticalAlignment="Top" Height="85" Width="196" Grid.ColumnSpan="2" Grid.RowSpan="2">

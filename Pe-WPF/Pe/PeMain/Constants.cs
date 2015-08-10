@@ -99,7 +99,19 @@
 		public const int screenCountChangeRetryCount = 10;
 		public static readonly TimeSpan screenCountChangeWaitTime = TimeSpan.FromMilliseconds(250);
 
+		static readonly TripleRange<double> defaultFontSize = new TripleRange<double>(
+			8,
+			11.5,
+			72
+		);
+
 		public static Size loggingDefaultWindowSize = new Size(320, 480);
+
+		public static readonly TripleRange<double> streamFontSize = new TripleRange<double>(
+			defaultFontSize.minimum,
+			defaultFontSize.median,
+			defaultFontSize.maximum
+		);
 
 		public static readonly TripleRange<TimeSpan> commandHideTime = new TripleRange<TimeSpan>(
 			TimeSpan.FromMilliseconds(250),
@@ -111,6 +123,12 @@
 			400,
 			800
 		);
+		public static readonly TripleRange<double> commandFontSize = new TripleRange<double>(
+			defaultFontSize.minimum,
+			defaultFontSize.median,
+			defaultFontSize.maximum
+		);
+
 
 		public static readonly TripleRange<double> toolbarTextLength = new TripleRange<double>(
 			20,
@@ -154,10 +172,20 @@
 		);
 		public const double clipboardItemsListWidth = 220;
 		public static readonly Size clipboardDefaultWindowSize = new Size(580, 380);
+		public static readonly TripleRange<double> clipboardFontSize = new TripleRange<double>(
+			defaultFontSize.minimum,
+			defaultFontSize.median,
+			defaultFontSize.maximum
+		);
 
 		public const double templateItemsListWidth = 180;
 		public const double templateReplaceListWidth = 100;
 		public static readonly Size templateDefaultWindowSize = new Size(580, 380);
+		public static readonly TripleRange<double> templateFontSize = new TripleRange<double>(
+			defaultFontSize.minimum,
+			defaultFontSize.median,
+			defaultFontSize.maximum
+		);
 
 		public static readonly TripleRange<TimeSpan> windowSaveIntervalTime = new TripleRange<TimeSpan>(
 			//TimeSpan.FromMinutes(1),
@@ -217,10 +245,24 @@
 
 		#endregion
 
+		#region commandFontSize
+
+		public static double CommandFontMinimumSize { get { return commandFontSize.minimum; } }
+		public static double CommandFontMaximumSize { get { return commandFontSize.maximum; } }
+
+		#endregion
+
 		#region toolbarTextLength
 
 		public static double ToolbarTextMinimumLength { get { return toolbarTextLength.minimum; } }
 		public static double ToolbarTextMaximumLength { get { return toolbarTextLength.maximum; } }
+
+		#endregion
+
+		#region streamFontSize
+
+		public static double StreamFontMinimumSize { get { return streamFontSize.minimum; } }
+		public static double StreamFontMaximumSize { get { return streamFontSize.maximum; } }
 
 		#endregion
 
@@ -266,6 +308,13 @@
 
 		#endregion
 
+		#region clipboardFontSize
+
+		public static double ClipboardFontMinimumSize { get { return clipboardFontSize.minimum; } }
+		public static double ClipboardFontMaximumSize { get { return clipboardFontSize.maximum; } }
+
+		#endregion
+
 		#region noteFontSize
 
 		public static double NoteFontMinimumSize { get { return noteFontSize.minimum; } }
@@ -277,6 +326,13 @@
 
 		public static double CommandWindowMinimumWidth { get { return commandWindowWidth.minimum; } }
 		public static double CommandWindowMaximumWidth { get { return commandWindowWidth.maximum; } }
+
+		#endregion
+
+		#region templateFontSize
+
+		public static double TemplateFontMinimumSize { get { return templateFontSize.minimum; } }
+		public static double TemplateFontMaximumSize { get { return templateFontSize.maximum; } }
 
 		#endregion
 
