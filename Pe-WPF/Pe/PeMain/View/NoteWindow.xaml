@@ -5,6 +5,7 @@
 	xmlns:AA="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Attached"
 	xmlns:AM="clr-namespace:ContentTypeTextNet.Pe.PeMain"
 	xmlns:AVM="clr-namespace:ContentTypeTextNet.Pe.PeMain.ViewModel"
+	xmlns:AV="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Control"
 	xmlns:AP="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
 	xmlns:AW="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Window"
 	xmlns:SC="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=SharedLibrary"
@@ -160,6 +161,8 @@
 							<RowDefinition />
 							<RowDefinition />
 							<RowDefinition />
+							
+							<RowDefinition />
 						</Grid.RowDefinitions>
 						<Grid.ColumnDefinitions>
 							<ColumnDefinition />
@@ -202,6 +205,16 @@
 							</ToggleButton>
 							<xctk:DoubleUpDown Grid.Row="1" Grid.Column="2" Minimum="{x:Static AM:Constants.NoteFontMinimumSize}" Maximum="{x:Static AM:Constants.NoteFontMaximumSize}" Value="{Binding FontSize}" />
 						</Grid>
+						
+						<AV:FontSelectControl
+							Grid.Row="4" Grid.Column="1"
+							FamilyName="{Binding FontFamily, Mode=TwoWay}"
+							IsBold="{Binding FontBold, Mode=TwoWay}"
+							IsItalic="{Binding FontItalic, Mode=TwoWay}"
+							Size="{Binding FontSize, Mode=TwoWay}"
+							SizeMinimum="{x:Static AM:Constants.NoteFontMinimumSize}"
+							SizeMaximum="{x:Static AM:Constants.NoteFontMaximumSize}"
+						/>
 					</Grid>
 					<Grid Style="{StaticResource Group}">
 						<Grid.RowDefinitions>
