@@ -21,3 +21,4 @@ if exist "%BETA_ROOT_DIR%" (
 
 start PeMain.exe /setting-root=%BETA_ROOT_DIR% /log=%BETA_ROOT_DIR%\logs /mutex=Pe_beta
 
+
