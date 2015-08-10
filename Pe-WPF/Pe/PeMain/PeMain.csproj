@@ -373,6 +373,9 @@
 &lt;ArrayOfParameterStorage xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" /&gt;</Parameters>
       <DependentUpon>AppResource.cs</DependentUpon>
     </None>
+    <None Include="bat\beta.bat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Constants-generator.tt">
       <DependentUpon>Constants.cs</DependentUpon>
       <Parameters>&lt;%3fxml version="1.0" encoding="utf-16"%3f&gt;
