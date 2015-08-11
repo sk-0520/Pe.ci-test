@@ -10,6 +10,7 @@
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
+	using ContentTypeTextNet.Pe.Library.PeData.Define;
 	using ContentTypeTextNet.Pe.Library.PeData.IF;
 	using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
 	using ContentTypeTextNet.Pe.PeMain.Data;
@@ -82,6 +83,13 @@
 			get { return Note.Font.Size; }
 			set { SetPropertyValue(Note.Font, value, "Size"); }
 		}
+
+		public NoteTitle NoteTitle 
+		{
+			get { return Note.NoteTitle; }
+			set { SetPropertyValue(Note, value); }
+		}
+
 
 		#endregion
 

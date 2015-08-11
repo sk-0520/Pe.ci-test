@@ -9,6 +9,7 @@
 	using System.Windows.Media;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
+	using ContentTypeTextNet.Pe.Library.PeData.Define;
 	using ContentTypeTextNet.Pe.Library.PeData.IF;
 
 	public class NoteSettingModel: SettingModelBase, IColorPair, IDeepClone
@@ -41,6 +42,9 @@
 		[DataMember]
 		public FontModel Font { get; set; }
 
+		[DataMember]
+		public NoteTitle NoteTitle { get; set; }
+
 		#endregion
 
 		#region IColorPair
@@ -65,6 +69,7 @@
 			obj.ForeColor = ForeColor;
 			obj.BackColor = BackColor;
 			Font.DeepCloneTo(obj.Font);
+			obj.NoteTitle = NoteTitle;
 		}
 
 		public IDeepClone DeepClone()

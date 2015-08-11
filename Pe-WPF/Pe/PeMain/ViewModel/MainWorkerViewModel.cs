@@ -811,9 +811,31 @@
 				IsVisible = true,
 				ForeColor = CommonData.MainSetting.Note.ForeColor,
 				BackColor = CommonData.MainSetting.Note.BackColor,
-				// TODO: note title
-				Name = "TODO: note title",
 			};
+			CommonData.MainSetting.Note.Font.DeepCloneTo(noteItem.Font);
+			//TODO: 外部化
+			switch(CommonData.MainSetting.Note.NoteTitle) {
+				case NoteTitle.Timestamp: 
+					{
+						noteItem.Name = CommonData.Language["note/title/timestamp"];
+					}
+					break;
+
+				case NoteTitle.DefaultCaption: 
+					{
+						//TODO: ユニークはまぁ優先度下げ下げ
+						var map = new Dictionary<string, string>() {
+							{ LanguageKey.noteTitleCount, CommonData.NoteIndexSetting.Items.Count.ToString() },
+						};
+
+						noteItem.Name = CommonData.Language["note/title/default", map];
+					}
+					break;
+				default:
+					throw new NotImplementedException();
+			}
+			
+			
 			SettingUtility.InitializeNoteIndexItem(noteItem, Constants.assemblyVersion, CommonData.NonProcess);
 
 			var window = CreateNoteWindow(noteItem, appendIndex);

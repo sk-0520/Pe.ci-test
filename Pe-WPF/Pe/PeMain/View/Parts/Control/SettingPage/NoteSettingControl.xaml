@@ -5,7 +5,9 @@
 	xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
 	xmlns:AV="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Control"
 	xmlns:AM="clr-namespace:ContentTypeTextNet.Pe.PeMain"
-	
+	xmlns:SC="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=SharedLibrary"
+	xmlns:AD="clr-namespace:ContentTypeTextNet.Pe.Library.PeData.Define;assembly=PeData"
+
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
 	mc:Ignorable="d" 
 	d:DesignHeight="300" d:DesignWidth="300"
@@ -16,7 +18,7 @@
 				<ResourceDictionary Source="/View/Parts/Resource/ImageDictionary.xaml"/>
 				<ResourceDictionary Source="/View/Parts/Resource/ColorPickerDictionary.xaml"/>
 			</ResourceDictionary.MergedDictionaries>
-			
+			<SC:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
 		</ResourceDictionary>
 	</AV:CommonDataUserControl.Resources>
 	<Grid>
@@ -63,7 +65,12 @@
 			
 			<Label Grid.Row="2" Grid.Column="0" Content="back" />
 			<xctk:ColorPicker Grid.Row="2" Grid.Column="1" Style="{StaticResource DefaultColorPicker}" SelectedColor="{Binding BackColor}" />
-
 		</Grid>
+		<GroupBox Header="GroupBox" HorizontalAlignment="Left" Margin="158,205,0,0" VerticalAlignment="Top" Height="57" Width="103">
+			<StackPanel>
+				<RadioButton Content="timestamp" IsChecked="{Binding NoteTitle, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static AD:NoteTitle.Timestamp}}" />
+				<RadioButton Content="default" IsChecked="{Binding NoteTitle, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static AD:NoteTitle.DefaultCaption}}" />
+			</StackPanel>
+		</GroupBox>
 	</Grid>
 </AV:CommonDataUserControl>

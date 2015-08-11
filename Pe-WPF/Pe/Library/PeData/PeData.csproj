@@ -76,6 +76,7 @@
     <Compile Include="Define\LauncherKind.cs" />
     <Compile Include="Define\LauncherCommandType.cs" />
     <Compile Include="Define\NoteKind.cs" />
+    <Compile Include="Define\NoteTitle.cs" />
     <Compile Include="IF\IColorPair.cs" />
     <Compile Include="IF\IItemModel.cs" />
     <Compile Include="IF\IPeData.cs" />
