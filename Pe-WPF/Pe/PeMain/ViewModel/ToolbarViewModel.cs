@@ -100,8 +100,6 @@
 		//	set { SetPropertyValue(Model.Font, value, "Size"); }
 		//}
 
-		#region font
-
 		public FontFamily FontFamily
 		{
 			get { return FontModelProperty.GetFamilyDefault(Model.Font); }
@@ -125,9 +123,6 @@
 			get { return FontModelProperty.GetSize(Model.Font); }
 			set { FontModelProperty.SetSize(Model.Font, value, OnPropertyChanged); }
 		}
-
-		#endregion
-
 
 		#endregion
 

@@ -24,6 +24,8 @@
 			</ResourceDictionary.MergedDictionaries>
 			<SC:LogicalNotConverter x:Key="LogicalNotConverter" />
 			<SC:BooleanVisibilityConverter x:Key="BooleanVisibilityConverter" />
+			<SC:BooleanFontWeightConverter x:Key="BooleanFontWeightConverter" />
+			<SC:BooleanFontStyleConverter x:Key="BooleanFontStyleConverter" />
 		</ResourceDictionary>
 	</AW:CommonDataWindow.Resources>
 	<Grid>
@@ -32,7 +34,7 @@
 			<RowDefinition Height="*" />
 		</Grid.RowDefinitions>
 		<ToolBar ToolBarTray.IsLocked="True" Grid.Row="0">
-			<ToggleButton IsChecked="{Binding IsTopmost, ElementName=root}">
+			<ToggleButton IsChecked="{Binding Topmost, ElementName=root}">
 				<!-- topmost -->
 				<Image Style="{StaticResource ImageRenderStyle}" Source="{x:Static AM:AppResource.CommonPinImage}" />
 			</ToggleButton>
@@ -62,7 +64,10 @@
 						<RowDefinition Height="*" />
 						<RowDefinition Height="Auto" />
 					</Grid.RowDefinitions>
-					<RichTextBox x:Name="viewConsole" Grid.Row="0" IsReadOnly="True" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible">
+					<RichTextBox 
+						x:Name="viewConsole" Grid.Row="0" IsReadOnly="True" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible"
+						FontFamily="{Binding FontFamily}" FontWeight="{Binding FontBold, Converter={StaticResource BooleanFontWeightConverter}}" FontStyle="{Binding FontItalic, Converter={StaticResource BooleanFontStyleConverter}}" FontSize="{Binding FontSize}"
+					>
 						<RichTextBox.Padding>
 							<Thickness>
 								<Thickness.Bottom>8</Thickness.Bottom>

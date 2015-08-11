@@ -18,6 +18,7 @@
 	using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
 	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.IF;
+	using ContentTypeTextNet.Pe.PeMain.Logic.Property;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 	using ContentTypeTextNet.Pe.PeMain.View;
 
@@ -78,6 +79,35 @@
 			get { return this._inputConsole; }
 			set { SetVariableValue(ref this._inputConsole, value); }
 		}
+
+		#region font
+
+		public FontFamily FontFamily
+		{
+			get { return FontModelProperty.GetFamilyDefault(StreamSetting.Font); }
+			//set { FontModelProperty.SetFamily(StreamSetting.Font, value, OnPropertyChanged); }
+		}
+
+		public bool FontBold
+		{
+			get { return FontModelProperty.GetBold(StreamSetting.Font); }
+			//set { FontModelProperty.SetBold(StreamSetting.Font, value, OnPropertyChanged); }
+		}
+
+		public bool FontItalic
+		{
+			get { return FontModelProperty.GetItalic(StreamSetting.Font); }
+			//set { FontModelProperty.SetItalic(StreamSetting.Font, value, OnPropertyChanged); }
+		}
+
+		public double FontSize
+		{
+			get { return FontModelProperty.GetSize(StreamSetting.Font); }
+			//set { FontModelProperty.SetSize(StreamSetting.Font, value, OnPropertyChanged); }
+		}
+
+		#endregion
+
 
 		#endregion
 
