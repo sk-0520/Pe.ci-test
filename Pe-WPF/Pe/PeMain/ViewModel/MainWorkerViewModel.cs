@@ -686,6 +686,8 @@
 					SendCreateWindow(WindowKind.LauncherToolbar, screen, null);
 				}
 			}
+
+			OnPropertyChanged("LauncherToolbars");
 		}
 
 		void RemoveToolbar()
@@ -788,6 +790,8 @@
 		/// </summary>
 		void ChangedScreenCount()
 		{
+			CommonData.Logger.Information("chnage screen");
+			ResetToolbar();
 		}
 
 		/// <summary>

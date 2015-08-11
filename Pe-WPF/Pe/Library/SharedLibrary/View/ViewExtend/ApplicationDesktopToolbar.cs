@@ -61,6 +61,7 @@
 
 		protected virtual string MessageString { get { return "appbar"; } }
 		protected virtual DispatcherTimer AutoHideTimer { get; private set; }
+		protected DispatcherOperation DispatcherOperation { get; set; }
 
 		#endregion
 
@@ -120,6 +121,10 @@
 
 		public bool UnresistAppbar()
 		{
+			if (DispatcherOperation != null) {
+				DispatcherOperation.Abort();
+				DispatcherOperation = null;
+			}
 			var appBar = new APPBARDATA(Handle);
 			var unregistResult = NativeMethods.SHAppBarMessage(ABM.ABM_REMOVE, ref appBar);
 			RestrictionViewModel.CallbackMessage = 0;
@@ -248,7 +253,7 @@
 				StartHideWait();
 			}
 
-			View.Dispatcher.BeginInvoke(
+			DispatcherOperation = View.Dispatcher.BeginInvoke(
 				DispatcherPriority.ApplicationIdle,
 				new Action(() => ResizeShowDeviceBarArea())
 			);
@@ -256,8 +261,10 @@
 
 		void ResizeShowDeviceBarArea()
 		{
-			var deviceArea = UIUtility.ToDevicePixel(View, RestrictionViewModel.ShowLogicalBarArea);
-			NativeMethods.MoveWindow(Handle, (int)deviceArea.X, (int)deviceArea.Y, (int)deviceArea.Width, (int)deviceArea.Height, true);
+			if (View != null && RestrictionViewModel != null) {
+				var deviceArea = UIUtility.ToDevicePixel(View, RestrictionViewModel.ShowLogicalBarArea);
+				NativeMethods.MoveWindow(Handle, (int)deviceArea.X, (int)deviceArea.Y, (int)deviceArea.Width, (int)deviceArea.Height, true);
+			}
 		}
 
 		public void DockingFromProperty()
