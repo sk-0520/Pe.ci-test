@@ -23,7 +23,7 @@
 	d:DesignWidth="300" d:DesignHeight="400" 
 >
 	<DockPanel LastChildFill="True">
-		<ToolBar DockPanel.Dock="Top" FontFamily="{DynamicResource {x:Static SystemFonts.MenuFontFamilyKey}}" FontSize="{DynamicResource {x:Static SystemFonts.MenuFontSizeKey}}" Height="30" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" ToolBarTray.IsLocked="True">
+		<ToolBar ToolBarTray.IsLocked="True" DockPanel.Dock="Top" FontFamily="{DynamicResource {x:Static SystemFonts.MenuFontFamilyKey}}" FontSize="{DynamicResource {x:Static SystemFonts.MenuFontSizeKey}}" Height="30" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" >
 			<Button Content="save" AA:Language.Word="log/save" />
 			<Button Content="clear" AA:Language.Word="log/clear" />
 		</ToolBar>

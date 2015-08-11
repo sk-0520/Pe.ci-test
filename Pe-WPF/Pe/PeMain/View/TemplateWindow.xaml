@@ -48,7 +48,7 @@
 			<RowDefinition Height="*"/>
 			<RowDefinition Height="Auto"/>
 		</Grid.RowDefinitions>
-		<ToolBar Style="{StaticResource IndexItemsStyleDefaultToolbarStyle}" >
+		<ToolBar ToolBarTray.IsLocked="True" Style="{StaticResource IndexItemsStyleDefaultToolbarStyle}" >
 			<Button Command="{Binding CreateItemCommand}">
 				<StackPanel Orientation="Horizontal">
 					<Image Style="{StaticResource ImageRenderStyle}" Source="{Binding Source={x:Static AM:AppResource.CommonAddImage}}" />

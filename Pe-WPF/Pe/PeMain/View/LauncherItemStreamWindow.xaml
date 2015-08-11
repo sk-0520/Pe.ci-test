@@ -31,7 +31,7 @@
 			<RowDefinition Height="Auto" />
 			<RowDefinition Height="*" />
 		</Grid.RowDefinitions>
-		<ToolBar Grid.Row="0">
+		<ToolBar ToolBarTray.IsLocked="True" Grid.Row="0">
 			<ToggleButton IsChecked="{Binding IsTopmost, ElementName=root}">
 				<!-- topmost -->
 				<Image Style="{StaticResource ImageRenderStyle}" Source="{x:Static AM:AppResource.CommonPinImage}" />

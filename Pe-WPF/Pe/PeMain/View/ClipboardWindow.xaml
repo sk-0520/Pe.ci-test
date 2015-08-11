@@ -64,7 +64,7 @@
 				<RowDefinition Height="*"/>
 				<RowDefinition Height="Auto"/>
 			</Grid.RowDefinitions>
-			<ToolBar Style="{StaticResource IndexItemsStyleDefaultToolbarStyle}" >
+			<ToolBar ToolBarTray.IsLocked="True" Style="{StaticResource IndexItemsStyleDefaultToolbarStyle}" >
 				<ToggleButton IsChecked="{Binding IsEnabled}" AA:Language.Hint="clipboard/enabled:hint">
 					<StackPanel Orientation="Horizontal">
 						<TextBlock Text="enabled" AA:Language.Word="clipboard/enabled" />
@@ -256,7 +256,7 @@
 									<RowDefinition Height="Auto" />
 									<RowDefinition Height="*" />
 								</Grid.RowDefinitions>
-								<ToolBar Grid.Row="0">
+								<ToolBar ToolBarTray.IsLocked="True" Grid.Row="0">
 									<RadioButton x:Name="imageFit" IsChecked="{Binding ImageScale, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static AD:ImageScale.Fit}}" >
 										<StackPanel Orientation="Horizontal">
 											<Image Style="{StaticResource ImageRenderStyle}" Source="{x:Static AM:AppResource.ClipboardImageFitImage}" />
