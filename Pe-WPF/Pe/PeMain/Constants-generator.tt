@@ -8,6 +8,7 @@
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.Reflection" #>
+<#@ import namespace="System.Text.RegularExpressions" #>
 <#@ import namespace="ContentTypeTextNet.Pe.PeMain" #>
 <#@ output extension=".cs" #>
 namespace ContentTypeTextNet.Pe.PeMain
@@ -30,26 +31,76 @@ namespace ContentTypeTextNet.Pe.PeMain
 
 	partial class Constants
 	{
-/*
 <#
-//ん、んん？
-//var type = typeof(Constants);
-#>
-< #=
-Constants.noteDefualtSize
-# >
+var type = typeof(Constants);
 var fieldInfos = type.GetFields(BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
-var usingFieldInfos = fieldInfos
+var usingRangeFieldInfos = fieldInfos
 	.Select(fi => new { FieldInfo = fi, Attribute = fi.GetCustomAttribute(typeof(ConstantsRangeAttribute), true) as ConstantsRangeAttribute })
 	.Where(fa => fa.Attribute != null)
 	.ToArray()
 ;
-# >
-*/
+#>
 		/*
 		このソースは自動生成のため Constants-generator.tt を編集すること。
 
-		生成元フィールド数: < #= usingFieldInfos.Length # >
+		生成元ConstantsRangeフィールド数: <#= usingRangeFieldInfos.Length #>
 		*/
+
+		// TripleRange
+<#
+	foreach(var fa in usingRangeFieldInfos) {
+		var reg = new Regex(@"(?<NAME>\w.*)(?<UNIT>[A-Z]\w+)");
+		var match = reg.Matches(fa.FieldInfo.Name)[0];
+		var baseName = match.Groups["NAME"].Value.ToUpperInvariant()[0] + match.Groups["NAME"].Value.Substring(1);
+		var unit = match.Groups["UNIT"].Value;
+		var fieldType = Generator.GetGenericType(fa.FieldInfo.FieldType);
+#>
+		#region <#= fa.FieldInfo.Name #>
+<#
+		foreach(var kind in new[] { "minimum", "median", "maximum" }) {
+			var methodKind = kind.ToUpperInvariant()[0] + kind.Substring(1);
+#>
+
+		/// <summary>
+		/// Constants.<#= fa.FieldInfo.Name #>.<#= kind #>取得用プロパティ。
+		/// <para>XAMLで使用することを想定</para>
+		/// </summary>
+		public static <#= fieldType #> <#= baseName #><#= methodKind #><#= unit #>
+		{
+			get
+			{
+				return <#= fa.FieldInfo.Name #>.<#= kind #>;
+			}
+		}
+		
+<#
+		}
+#>
+
+		#endregion
+<#
+	}
+#>
+
 	}
 }
+<#+
+internal static class Generator
+{
+	internal static string GetGenericType(Type type)
+	{
+		var builder = new StringBuilder();
+		var name = type.Name;
+		var index = name.IndexOf("`");
+		if(index == -1) {
+			return name;
+		}
+		//builder.AppendFormat("{0}.{1}", type.Namespace, name.Substring(0, index));
+		//builder.Append('<');
+		builder.Append(string.Join(",", type.GetGenericArguments().Select(arg => GetGenericType(arg))));
+		//builder.Append('>');
+
+		return builder.ToString();
+	}
+}
+#>

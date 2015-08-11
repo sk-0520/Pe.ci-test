@@ -110,64 +110,74 @@
 
 		public static Size loggingDefaultWindowSize = new Size(320, 480);
 
+		[ConstantsRange]
 		public static readonly TripleRange<double> streamFontSize = new TripleRange<double>(
 			defaultFontSize.minimum,
 			defaultFontSize.median,
 			defaultFontSize.maximum
 		);
 
+		[ConstantsRange]
 		public static readonly TripleRange<TimeSpan> commandHideTime = new TripleRange<TimeSpan>(
 			TimeSpan.FromMilliseconds(250),
 			TimeSpan.FromSeconds(2),
 			TimeSpan.FromSeconds(10)
 		);
+		[ConstantsRange]
 		public static readonly TripleRange<double> commandWindowWidth = new TripleRange<double>(
 			250,
 			400,
 			800
 		);
+		[ConstantsRange]
 		public static readonly TripleRange<double> commandFontSize = new TripleRange<double>(
 			defaultFontSize.minimum,
 			defaultFontSize.median,
 			defaultFontSize.maximum
 		);
 
-
+		[ConstantsRange]
 		public static readonly TripleRange<double> toolbarTextLength = new TripleRange<double>(
 			20,
 			80,
 			200
 		);
+		[ConstantsRange]
 		public static readonly TripleRange<double> toolbarFontSize = new TripleRange<double>(
 			8,
 			14,
 			64
 		);
 
+		[ConstantsRange]
 		public static readonly TripleRange<TimeSpan> toolbarHideWaitTime = new TripleRange<TimeSpan>(
 			TimeSpan.FromMilliseconds(500),
 			TimeSpan.FromSeconds(3),
 			TimeSpan.FromSeconds(10)
 		);
 
+		[ConstantsRange]
 		public static readonly TripleRange<TimeSpan> toolbarHideAnimateTime = new TripleRange<TimeSpan>(
 			TimeSpan.FromMilliseconds(100),
 			TimeSpan.FromMilliseconds(250),
 			TimeSpan.FromSeconds(1)
 		);
 
+		[ConstantsRange]
 		public static readonly TripleRange<TimeSpan> clipboardWaitTime = new TripleRange<TimeSpan>(
 			TimeSpan.FromMilliseconds(50),
 			TimeSpan.FromMilliseconds(500),
 			TimeSpan.FromSeconds(1)
 		);
 
+		[ConstantsRange]
 		public static readonly TripleRange<double> clipboardSaveCount = new TripleRange<double>(
 			0,
 			1024,
 			1024 * 10
 		);
 
+		[ConstantsRange]
 		public static readonly TripleRange<double> clipboardDuplicationCount = new TripleRange<double>(
 			-1,
 			50,
@@ -175,6 +185,7 @@
 		);
 		public const double clipboardItemsListWidth = 220;
 		public static readonly Size clipboardDefaultWindowSize = new Size(580, 380);
+		[ConstantsRange]
 		public static readonly TripleRange<double> clipboardFontSize = new TripleRange<double>(
 			defaultFontSize.minimum,
 			defaultFontSize.median,
@@ -184,12 +195,14 @@
 		public const double templateItemsListWidth = 180;
 		public const double templateReplaceListWidth = 100;
 		public static readonly Size templateDefaultWindowSize = new Size(580, 380);
+		[ConstantsRange]
 		public static readonly TripleRange<double> templateFontSize = new TripleRange<double>(
 			defaultFontSize.minimum,
 			defaultFontSize.median,
 			defaultFontSize.maximum
 		);
 
+		[ConstantsRange]
 		public static readonly TripleRange<TimeSpan> windowSaveIntervalTime = new TripleRange<TimeSpan>(
 			//TimeSpan.FromMinutes(1),
 			TimeSpan.FromSeconds(5),
@@ -206,6 +219,7 @@
 		public const double noteCaptionHeight = 20;
 		public static readonly Color noteForeColor = Colors.Black;
 		public static readonly Color noteBackColor = Color.FromRgb(250, 250, 180);
+		[ConstantsRange]
 		public static readonly TripleRange<double> noteFontSize = new TripleRange<double>(
 			8,
 			11,
@@ -239,107 +253,107 @@
 		public static readonly string startupShortcutPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Startup), shortcutName);
 
 		// TODO: T4しちゃっていいんじゃないだろうか
-		#region TripleRange
+		//#region TripleRange
 
-		#region commandHideTime
+		//#region commandHideTime
 
-		public static double CommandHideMinimumTime { get { return commandHideTime.minimum.TotalMilliseconds; } }
-		public static double CommandHideMaximumTime { get { return commandHideTime.maximum.TotalMilliseconds; } }
+		//public static double CommandHideMinimumTime { get { return commandHideTime.minimum.TotalMilliseconds; } }
+		//public static double CommandHideMaximumTime { get { return commandHideTime.maximum.TotalMilliseconds; } }
 
-		#endregion
+		//#endregion
 
-		#region commandFontSize
+		//#region commandFontSize
 
-		public static double CommandFontMinimumSize { get { return commandFontSize.minimum; } }
-		public static double CommandFontMaximumSize { get { return commandFontSize.maximum; } }
+		//public static double CommandFontMinimumSize { get { return commandFontSize.minimum; } }
+		//public static double CommandFontMaximumSize { get { return commandFontSize.maximum; } }
 
-		#endregion
+		//#endregion
 
-		#region toolbarTextLength
+		//#region toolbarTextLength
 
-		public static double ToolbarTextMinimumLength { get { return toolbarTextLength.minimum; } }
-		public static double ToolbarTextMaximumLength { get { return toolbarTextLength.maximum; } }
+		//public static double ToolbarTextMinimumLength { get { return toolbarTextLength.minimum; } }
+		//public static double ToolbarTextMaximumLength { get { return toolbarTextLength.maximum; } }
 
-		#endregion
+		//#endregion
 
-		#region streamFontSize
+		//#region streamFontSize
 
-		public static double StreamFontMinimumSize { get { return streamFontSize.minimum; } }
-		public static double StreamFontMaximumSize { get { return streamFontSize.maximum; } }
+		//public static double StreamFontMinimumSize { get { return streamFontSize.minimum; } }
+		//public static double StreamFontMaximumSize { get { return streamFontSize.maximum; } }
 
-		#endregion
+		//#endregion
 
-		#region toolbarFontSize
+		//#region toolbarFontSize
 
-		public static double ToolbarFontMinimumSize { get { return toolbarFontSize.minimum; } }
-		public static double ToolbarFontMaximumSize { get { return toolbarFontSize.maximum; } }
+		//public static double ToolbarFontMinimumSize { get { return toolbarFontSize.minimum; } }
+		//public static double ToolbarFontMaximumSize { get { return toolbarFontSize.maximum; } }
 
-		#endregion
+		//#endregion
 
-		#region toolbarHideWaitTime
+		//#region toolbarHideWaitTime
 
-		public static TimeSpan ToolbarHideWaitMinimumTime { get { return toolbarHideWaitTime.minimum; } }
-		public static TimeSpan ToolbarHideWaitMaximumTime { get { return toolbarHideWaitTime.maximum; } }
+		//public static TimeSpan ToolbarHideWaitMinimumTime { get { return toolbarHideWaitTime.minimum; } }
+		//public static TimeSpan ToolbarHideWaitMaximumTime { get { return toolbarHideWaitTime.maximum; } }
 
-		#endregion
+		//#endregion
 
-		#region toolbarHideAnimateTime
+		//#region toolbarHideAnimateTime
 
-		public static TimeSpan ToolbarHideAnimateMinimumTime { get { return toolbarHideAnimateTime.minimum; } }
-		public static TimeSpan ToolbarHideAnimateMaximumTime { get { return toolbarHideAnimateTime.maximum; } }
+		//public static TimeSpan ToolbarHideAnimateMinimumTime { get { return toolbarHideAnimateTime.minimum; } }
+		//public static TimeSpan ToolbarHideAnimateMaximumTime { get { return toolbarHideAnimateTime.maximum; } }
 
-		#endregion
+		//#endregion
 
-		#region clipboardWaitTime
+		//#region clipboardWaitTime
 
-		public static double ClipboardWaitMinimumTime { get { return clipboardWaitTime.minimum.TotalMilliseconds; } }
-		public static double ClipboardWaitMaximumTime { get { return clipboardWaitTime.maximum.TotalMilliseconds; } }
+		//public static double ClipboardWaitMinimumTime { get { return clipboardWaitTime.minimum.TotalMilliseconds; } }
+		//public static double ClipboardWaitMaximumTime { get { return clipboardWaitTime.maximum.TotalMilliseconds; } }
 
-		#endregion
+		//#endregion
 
-		#region clipboardSaveCount
+		//#region clipboardSaveCount
 
-		public static double ClipboardSaveMinimumCount { get { return clipboardSaveCount.minimum; } }
-		public static double ClipboardSaveMaximumCount { get { return clipboardSaveCount.maximum; } }
+		//public static double ClipboardSaveMinimumCount { get { return clipboardSaveCount.minimum; } }
+		//public static double ClipboardSaveMaximumCount { get { return clipboardSaveCount.maximum; } }
 
-		#endregion
+		//#endregion
 
-		#region clipboardDuplicationCount
+		//#region clipboardDuplicationCount
 
-		public static double ClipboardDuplicationMinimumCount { get { return clipboardDuplicationCount.minimum; } }
-		public static double ClipboardDuplicationMaximumCount { get { return clipboardDuplicationCount.maximum; } }
+		//public static double ClipboardDuplicationMinimumCount { get { return clipboardDuplicationCount.minimum; } }
+		//public static double ClipboardDuplicationMaximumCount { get { return clipboardDuplicationCount.maximum; } }
 
-		#endregion
+		//#endregion
 
-		#region clipboardFontSize
+		//#region clipboardFontSize
 
-		public static double ClipboardFontMinimumSize { get { return clipboardFontSize.minimum; } }
-		public static double ClipboardFontMaximumSize { get { return clipboardFontSize.maximum; } }
+		//public static double ClipboardFontMinimumSize { get { return clipboardFontSize.minimum; } }
+		//public static double ClipboardFontMaximumSize { get { return clipboardFontSize.maximum; } }
 
-		#endregion
+		//#endregion
 
-		#region noteFontSize
+		//#region noteFontSize
 
-		public static double NoteFontMinimumSize { get { return noteFontSize.minimum; } }
-		public static double NoteFontMaximumSize { get { return noteFontSize.maximum; } }
+		//public static double NoteFontMinimumSize { get { return noteFontSize.minimum; } }
+		//public static double NoteFontMaximumSize { get { return noteFontSize.maximum; } }
 
-		#endregion
+		//#endregion
 
-		#region commandWindowWidth
+		//#region commandWindowWidth
 
-		public static double CommandWindowMinimumWidth { get { return commandWindowWidth.minimum; } }
-		public static double CommandWindowMaximumWidth { get { return commandWindowWidth.maximum; } }
+		//public static double CommandWindowMinimumWidth { get { return commandWindowWidth.minimum; } }
+		//public static double CommandWindowMaximumWidth { get { return commandWindowWidth.maximum; } }
 
-		#endregion
+		//#endregion
 
-		#region templateFontSize
+		//#region templateFontSize
 
-		public static double TemplateFontMinimumSize { get { return templateFontSize.minimum; } }
-		public static double TemplateFontMaximumSize { get { return templateFontSize.maximum; } }
+		//public static double TemplateFontMinimumSize { get { return templateFontSize.minimum; } }
+		//public static double TemplateFontMaximumSize { get { return templateFontSize.maximum; } }
 
-		#endregion
+		//#endregion
 
-		#endregion
+		//#endregion
 
 		#region app.config
 
