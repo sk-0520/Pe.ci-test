@@ -179,7 +179,7 @@
 							</Grid.ColumnDefinitions>
 							<TextBox
 								Grid.Column="0" AcceptsReturn="True" AcceptsTab="True" Text="{Binding SelectedViewModel.Source, UpdateSourceTrigger=PropertyChanged}"
-								FontFamily="{Binding FontFamily}" FontWeight="{Binding FontBold, Converter={StaticResource BooleanFontWeightConverter}}" FontStyle="{Binding FontItalic, Converter={StaticResource BooleanFontStyleConverter}}" FontSize="{Binding FontSize}"
+								FontFamily="{Binding FontFamily, Mode=OneWay}" FontWeight="{Binding FontBold, Converter={StaticResource BooleanFontWeightConverter}, Mode=OneWay}" FontStyle="{Binding FontItalic, Converter={StaticResource BooleanFontStyleConverter}, Mode=OneWay}" FontSize="{Binding FontSize, Mode=OneWay}"
 							/>
 							<GridSplitter Grid.Column="1"  Style="{StaticResource IndexItemsStyleDefaultGridSplitterStyle}" />
 							<ListBox Grid.Column="1" Margin="{StaticResource IndexItemsStyleSplitterMargin}" />
@@ -189,7 +189,7 @@
 				<TabItem Header="replace" IsEnabled="{Binding SelectedViewModel.IsReplace}" IsSelected="{Binding SelectedViewModel.ReplaceViewSelected}">
 					<TextBox
 						IsReadOnly="True" Text="{Binding SelectedViewModel.Replaced}"
-						FontFamily="{Binding FontFamily}" FontWeight="{Binding FontBold, Converter={StaticResource BooleanFontWeightConverter}}" FontStyle="{Binding FontItalic, Converter={StaticResource BooleanFontStyleConverter}}" FontSize="{Binding FontSize}"
+						FontFamily="{Binding FontFamily, Mode=OneWay}" FontWeight="{Binding FontBold, Converter={StaticResource BooleanFontWeightConverter}, Mode=OneWay}" FontStyle="{Binding FontItalic, Converter={StaticResource BooleanFontStyleConverter}, Mode=OneWay}" FontSize="{Binding FontSize, Mode=OneWay}"
 					/>
 				</TabItem>
 			</TabControl>
