@@ -40,6 +40,8 @@
 			<SC:BooleanVisibilityConverter x:Key="BooleanVisibilityConverter" />
 			<AC:ReverseClipboardItemListConverter x:Key="ReverseClipboardItemListConverter" />
 			<AC:DisplayTextConverter x:Key="DisplayTextConverter" />
+			<SC:BooleanFontWeightConverter x:Key="BooleanFontWeightConverter" />
+			<SC:BooleanFontStyleConverter x:Key="BooleanFontStyleConverter" />
 			<Style x:Key="ClipboardText" TargetType="Image" BasedOn="{StaticResource ImageRenderStyle}">
 				<Setter Property="Source" Value="{x:Static AM:AppResource.ClipboardTextFormatImage}" />
 			</Style>
@@ -201,7 +203,10 @@
 									<TextBlock Text="text" AA:Language.Word="clipboard/type/text" />
 								</StackPanel>
 							</TabItem.Header>
-							<TextBox IsReadOnly="True" Text="{Binding SelectedViewModel.Text, Mode=OneWay}" />
+							<TextBox 
+								IsReadOnly="True" Text="{Binding SelectedViewModel.Text, Mode=OneWay}"
+								FontFamily="{Binding FontFamily}" FontWeight="{Binding FontBold, Converter={StaticResource BooleanFontWeightConverter}}" FontStyle="{Binding FontItalic, Converter={StaticResource BooleanFontStyleConverter}}" FontSize="{Binding FontSize}"
+							/>
 						</TabItem>
 						<TabItem x:Name="pageRtf" Visibility="{Binding SelectedViewModel.EnabledClipboardTypesRtf, Converter={StaticResource BooleanVisibilityConverter}}">
 							<TabItem.Header>

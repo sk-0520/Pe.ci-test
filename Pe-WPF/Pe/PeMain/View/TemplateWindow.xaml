@@ -34,6 +34,8 @@
 			<SC:LogicalIsNotNullConverter x:Key="LogicalIsNotNullConverter" />
 			<SC:DoubleGridLengthConverter x:Key="DoubleGridLengthConverter" />
 			<AC:DisplayTextConverter x:Key="DisplayTextConverter" />
+			<SC:BooleanFontWeightConverter x:Key="BooleanFontWeightConverter" />
+			<SC:BooleanFontStyleConverter x:Key="BooleanFontStyleConverter" />
 		</ResourceDictionary>
 	</AW:CommonDataWindow.Resources>
 	<i:Interaction.Triggers>
@@ -175,14 +177,20 @@
 								<ColumnDefinition Width="*" />
 								<ColumnDefinition Width="{Binding ReplaceListWidth, Converter={StaticResource DoubleGridLengthConverter}, Mode=TwoWay}" />
 							</Grid.ColumnDefinitions>
-							<TextBox Grid.Column="0" AcceptsReturn="True" AcceptsTab="True" Text="{Binding SelectedViewModel.Source, UpdateSourceTrigger=PropertyChanged}" />
+							<TextBox
+								Grid.Column="0" AcceptsReturn="True" AcceptsTab="True" Text="{Binding SelectedViewModel.Source, UpdateSourceTrigger=PropertyChanged}"
+								FontFamily="{Binding FontFamily}" FontWeight="{Binding FontBold, Converter={StaticResource BooleanFontWeightConverter}}" FontStyle="{Binding FontItalic, Converter={StaticResource BooleanFontStyleConverter}}" FontSize="{Binding FontSize}"
+							/>
 							<GridSplitter Grid.Column="1"  Style="{StaticResource IndexItemsStyleDefaultGridSplitterStyle}" />
 							<ListBox Grid.Column="1" Margin="{StaticResource IndexItemsStyleSplitterMargin}" />
 						</Grid>
 					</Grid>
 				</TabItem>
 				<TabItem Header="replace" IsEnabled="{Binding SelectedViewModel.IsReplace}" IsSelected="{Binding SelectedViewModel.ReplaceViewSelected}">
-					<TextBox Text="{Binding SelectedViewModel.Replaced}" IsReadOnly="True" />
+					<TextBox
+						IsReadOnly="True" Text="{Binding SelectedViewModel.Replaced}"
+						FontFamily="{Binding FontFamily}" FontWeight="{Binding FontBold, Converter={StaticResource BooleanFontWeightConverter}}" FontStyle="{Binding FontItalic, Converter={StaticResource BooleanFontStyleConverter}}" FontSize="{Binding FontSize}"
+					/>
 				</TabItem>
 			</TabControl>
 		</Grid>
