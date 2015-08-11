@@ -196,6 +196,35 @@
 		public Brush BorderBrush { get { return this._borderBrush; } }
 		public Thickness BorderThickness { get { return this._borderThickness; } }
 
+		#region font
+
+		public FontFamily FontFamily
+		{
+			get { return FontModelProperty.GetFamilyDefault(Model.Font); }
+			set { FontModelProperty.SetFamily(Model.Font, value, OnPropertyChanged); }
+		}
+
+		public bool FontBold
+		{
+			get { return FontModelProperty.GetBold(Model.Font); }
+			set { FontModelProperty.SetBold(Model.Font, value, OnPropertyChanged); }
+		}
+
+		public bool FontItalic
+		{
+			get { return FontModelProperty.GetItalic(Model.Font); }
+			set { FontModelProperty.SetItalic(Model.Font, value, OnPropertyChanged); }
+		}
+
+		public double FontSize
+		{
+			get { return FontModelProperty.GetSize(Model.Font); }
+			set { FontModelProperty.SetSize(Model.Font, value, OnPropertyChanged); }
+		}
+
+		#endregion
+
+
 		#endregion
 
 		#region function

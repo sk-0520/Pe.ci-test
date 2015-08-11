@@ -43,6 +43,8 @@
 			<SC:IsNotEmptyCollection x:Key="IsNotEmptyCollection" />
 			<SC:LogicalIsNotNullConverter x:Key="LogicalIsNotNullConverter" />
 			<AC:CommandItemConverter x:Key="CommandItemConverter" />
+			<SC:BooleanFontWeightConverter x:Key="BooleanFontWeightConverter" />
+			<SC:BooleanFontStyleConverter x:Key="BooleanFontStyleConverter" />
 		</ResourceDictionary>
 	</AW:CommonDataWindow.Resources>
 	<Grid x:Name="parent">
@@ -67,7 +69,10 @@
 				<TextBlock Text="{Binding SelectedCommandItem.DisplayText}" />
 			</StackPanel>
 		</StackPanel>
-		<TextBox x:Name="inputCommand" Grid.Row="1" Grid.Column="1" Text="{Binding InputText, UpdateSourceTrigger=PropertyChanged}" SA:TextBoxHelper.SelectedText="{Binding SelectedText}" >
+		<TextBox
+			x:Name="inputCommand" Grid.Row="1" Grid.Column="1" Text="{Binding InputText, UpdateSourceTrigger=PropertyChanged}" SA:TextBoxHelper.SelectedText="{Binding SelectedText}"
+			FontFamily="{Binding FontFamily}" FontWeight="{Binding FontBold, Converter={StaticResource BooleanFontWeightConverter}}" FontStyle="{Binding FontItalic, Converter={StaticResource BooleanFontStyleConverter}}" FontSize="{Binding FontSize}"
+		>
 			<TextBox.InputBindings>
 				<KeyBinding Key="Up" Command="{Binding UpListCommand}" />
 				<KeyBinding Key="Down" Command="{Binding DownListCommand}" />
