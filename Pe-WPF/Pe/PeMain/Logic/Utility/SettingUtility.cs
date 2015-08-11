@@ -8,6 +8,7 @@
 	using System.Threading.Tasks;
 	using System.Windows;
 	using System.Windows.Media;
+	using ContentTypeTextNet.Library.SharedLibrary.Define;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
@@ -193,6 +194,7 @@
 		{
 			Implement.InitializeCommandSetting.Correction(setting, previousVersion, nonProcess);
 
+			setting.IconScale = EnumUtility.GetNormalization(setting.IconScale, IconScale.Small);
 			setting.WindowWidth = Constants.commandWindowWidth.GetClamp(setting.WindowWidth);
 		}
 

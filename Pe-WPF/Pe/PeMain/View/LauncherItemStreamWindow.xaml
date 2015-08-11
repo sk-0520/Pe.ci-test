@@ -62,7 +62,7 @@
 						<RowDefinition Height="*" />
 						<RowDefinition Height="Auto" />
 					</Grid.RowDefinitions>
-					<RichTextBox x:Name="viewConsole" Grid.Row="0" IsReadOnly="True" HorizontalScrollBarVisibility="IsVisible" VerticalScrollBarVisibility="IsVisible">
+					<RichTextBox x:Name="viewConsole" Grid.Row="0" IsReadOnly="True" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible">
 						<RichTextBox.Padding>
 							<Thickness>
 								<Thickness.Bottom>8</Thickness.Bottom>
