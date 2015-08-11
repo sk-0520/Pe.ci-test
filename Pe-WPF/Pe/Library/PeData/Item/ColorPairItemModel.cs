@@ -11,6 +11,17 @@
 
 	public class ColorPairItemModel: ItemModelBase, IDeepClone, IColorPair
 	{
+		public ColorPairItemModel()
+			:base()
+		{ }
+
+		public ColorPairItemModel(Color fore, Color back)
+			:this()
+		{
+			ForeColor = fore;
+			BackColor = back;
+		}
+
 		#region IColorPair
 		
 		public Color ForeColor { get; set; }
@@ -18,8 +29,8 @@
 
 		#endregion
 
-		#region 
-	
+		#region IDeepClone
+
 		public void DeepCloneTo(IDeepClone target)
 		{
 			var obj = (ColorPairItemModel)target;

@@ -108,6 +108,40 @@
 			return result;
 		}
 
+		public static void InitializeLoggingSetting(LoggingSettingModel setting, Version previousVersion, INonProcess nonProcess)
+		{
+			Implement.InitializeLoggingSetting.Correction(setting, previousVersion, nonProcess);
+
+			if(IsIllegalPlusNumber(setting.WindowWidth)) {
+				setting.WindowWidth = Constants.loggingDefaultWindowSize.Width;
+			}
+			if(IsIllegalPlusNumber(setting.WindowHeight)) {
+				setting.WindowHeight = Constants.loggingDefaultWindowSize.Height;
+			}
+		}
+
+		private static void InitializeStreamSetting(StreamSettingModel setting, Version previousVersion, INonProcess nonProcess)
+		{
+			Implement.InitializeStreamSetting.Correction(setting, previousVersion, nonProcess);
+
+			setting.Font.Size = Constants.streamFontSize.GetClamp(setting.Font.Size);
+
+			if(setting.OutputColor.ForeColor == default(Color)) {
+				setting.OutputColor.ForeColor = Constants.streamOutputColor.ForeColor;
+			}
+			if(setting.OutputColor.BackColor == default(Color)) {
+				setting.OutputColor.BackColor = Constants.streamOutputColor.BackColor;
+			}
+
+			if(setting.ErrorColor.ForeColor == default(Color)) {
+				setting.ErrorColor.ForeColor = Constants.streamErrorColor.ForeColor;
+			}
+			if(setting.ErrorColor.BackColor == default(Color)) {
+				setting.ErrorColor.BackColor = Constants.streamErrorColor.BackColor;
+			}
+
+		}
+
 		public static void InitializeToolbarSetting(ToolbarSettingModel setting, Version previousVersion, INonProcess nonProcess)
 		{
 			Implement.InitializeToolbarSetting.Correction(setting, previousVersion, nonProcess);
@@ -121,15 +155,16 @@
 		{
 			Implement.InitializeToolbar.Correction(model, previousVersion, nonProcess);
 
+			model.HideWaitTime = Constants.toolbarHideWaitTime.GetClamp(model.HideWaitTime);
+			model.HideAnimateTime = Constants.toolbarHideAnimateTime.GetClamp(model.HideAnimateTime);
+			model.Font.Size = Constants.toolbarFontSize.GetClamp(model.Font.Size);
+
 			if(IsIllegalPlusNumber(model.FloatToolbar.WidthButtonCount)) {
 				model.FloatToolbar.WidthButtonCount = 1;
 			}
 			if(IsIllegalPlusNumber(model.FloatToolbar.HeightButtonCount)) {
 				model.FloatToolbar.HeightButtonCount = 1;
 			}
-
-			model.HideWaitTime = Constants.toolbarHideWaitTime.GetClamp(model.HideWaitTime);
-			model.HideAnimateTime = Constants.toolbarHideAnimateTime.GetClamp(model.HideAnimateTime);
 		}
 
 		public static void InitializeWindowSaveSetting(WindowSaveSettingModel model, Version previousVersion, INonProcess nonProcess)
@@ -144,11 +179,13 @@
 		{
 			Implement.InitializeNoteSetting.Correction(model, previousVersion, nonProcess);
 
+			model.Font.Size = Constants.noteFontSize.GetClamp(model.Font.Size);
+
 			if (model.ForeColor == default(Color)) {
-				model.ForeColor = Constants.noteForeColor;
+				model.ForeColor = Constants.noteColor.ForeColor;
 			}
 			if (model.BackColor == default(Color)) {
-				model.BackColor = Constants.noteBackColor;
+				model.BackColor = Constants.noteColor.BackColor;
 			}
 		}
 
@@ -157,8 +194,9 @@
 			Implement.InitializeClipboardSetting.Correction(setting, previousVersion, nonProcess);
 
 			setting.WaitTime = Constants.clipboardWaitTime.GetClamp(setting.WaitTime);
+			setting.Font.Size = Constants.clipboardFontSize.GetClamp(setting.Font.Size);
 
-			if (IsIllegalPlusNumber(setting.ItemsListWidth)) {
+			if(IsIllegalPlusNumber(setting.ItemsListWidth)) {
 				setting.ItemsListWidth = Constants.clipboardItemsListWidth;
 			}
 
@@ -174,6 +212,8 @@
 		public static void InitializeTemplateSetting(TemplateSettingModel setting, Version previousVersion, INonProcess nonProcess)
 		{
 			Implement.InitializeTemplateSetting.Correction(setting, previousVersion, nonProcess);
+
+			setting.Font.Size = Constants.templateFontSize.GetClamp(setting.Font.Size);
 
 			if(IsIllegalPlusNumber(setting.ItemsListWidth)) {
 				setting.ItemsListWidth = Constants.templateItemsListWidth;
@@ -196,6 +236,7 @@
 
 			setting.IconScale = EnumUtility.GetNormalization(setting.IconScale, IconScale.Small);
 			setting.WindowWidth = Constants.commandWindowWidth.GetClamp(setting.WindowWidth);
+			setting.Font.Size = Constants.commandFontSize.GetClamp(setting.Font.Size);
 		}
 
 		/// <summary>
@@ -209,24 +250,13 @@
 			CheckUtility.EnforceNotNull(setting);
 
 			InitializeLoggingSetting(setting.Logging, previousVersion, nonProcess);
+			InitializeStreamSetting(setting.Stream, previousVersion, nonProcess);
 			InitializeToolbarSetting(setting.Toolbar, previousVersion, nonProcess);
 			InitializeNoteSetting(setting.Note, previousVersion, nonProcess);
 			InitializeWindowSaveSetting(setting.WindowSave, previousVersion, nonProcess);
 			InitializeClipboardSetting(setting.Clipboard, previousVersion, nonProcess);
 			InitializeTemplateSetting(setting.Template, previousVersion, nonProcess);
 			InitializeCommandSetting(setting.Command, previousVersion, nonProcess);
-		}
-
-		public static void InitializeLoggingSetting(LoggingSettingModel setting, Version previousVersion, INonProcess nonProcess)
-		{
-			Implement.InitializeLoggingSetting.Correction(setting, previousVersion, nonProcess);
-
-			if(IsIllegalPlusNumber(setting.WindowWidth)) {
-				setting.WindowWidth = Constants.loggingDefaultWindowSize.Width;
-			}
-			if(IsIllegalPlusNumber(setting.WindowHeight)) {
-				setting.WindowHeight = Constants.loggingDefaultWindowSize.Height;
-			}
 		}
 
 		public static void InitializeLauncherItemSetting(LauncherItemSettingModel setting, Version previousVersion, INonProcess nonProcess)

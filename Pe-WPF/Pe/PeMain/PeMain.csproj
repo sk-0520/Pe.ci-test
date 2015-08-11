@@ -139,6 +139,7 @@
     <Compile Include="Logic\Utility\PopupUtility.cs" />
     <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeCommandSetting.cs" />
     <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeLoggingSetting.cs" />
+    <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeStreamSetting.cs" />
     <Compile Include="ViewModel\CommandItemViewModel.cs" />
     <Compile Include="ViewModel\CommandViewModel.cs" />
     <Compile Include="ViewModel\Control\LauncherListItemViewModel.cs" />

@@ -26,6 +26,7 @@
 
 			setting.IconScale = IconScale.Small;
 			setting.WindowWidth = Constants.commandWindowWidth.median;
+			setting.Font.Size = Constants.commandFontSize.median;
 		}
 	}
 }

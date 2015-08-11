@@ -22,6 +22,7 @@
 			setting.IconScale = IconScale.Normal;
 			setting.HideWaitTime = Constants.toolbarHideWaitTime.median;
 			setting.HideAnimateTime = Constants.toolbarHideAnimateTime.median;
+			setting.Font.Size = Constants.toolbarFontSize.median;
 		}
 	}
 }

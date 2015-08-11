@@ -16,6 +16,14 @@
 		}
 
 		static void V_First(NoteSettingModel setting, Version previousVersion, INonProcess nonProcess)
-		{ }
+		{
+			if(previousVersion != null) {
+				return;
+			}
+
+			setting.Font.Size = Constants.noteFontSize.median;
+			setting.ForeColor = Constants.noteColor.ForeColor;
+			setting.BackColor = Constants.noteColor.BackColor;
+		}
 	}
 }

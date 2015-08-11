@@ -22,6 +22,9 @@
 			}
 
 			nonProcess.Logger.Trace("version setting: first");
+
+			setting.WindowWidth = Constants.loggingDefaultWindowSize.Width;
+			setting.WindowHeight = Constants.loggingDefaultWindowSize.Height;
 		}
 	}
 }

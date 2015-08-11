@@ -15,16 +15,16 @@ using ContentTypeTextNet.Pe.Library.PeData.Item;
 		public StreamSettingModel()
 			: base()
 		{
-			Normal = new ColorPairItemModel();
-			Error = new ColorPairItemModel();
+			OutputColor = new ColorPairItemModel();
+			ErrorColor = new ColorPairItemModel();
 
 			Font = new FontModel();
 		}
 
 		#region property
 
-		public ColorPairItemModel Normal { get; set; }
-		public ColorPairItemModel Error{ get; set; }
+		public ColorPairItemModel OutputColor { get; set; }
+		public ColorPairItemModel ErrorColor { get; set; }
 
 		public FontModel Font { get; set; }
 
@@ -36,8 +36,8 @@ using ContentTypeTextNet.Pe.Library.PeData.Item;
 		{
 			var obj = (StreamSettingModel)target;
 
-			Normal.DeepCloneTo(obj.Normal);
-			Error.DeepCloneTo(obj.Error);
+			OutputColor.DeepCloneTo(obj.OutputColor);
+			ErrorColor.DeepCloneTo(obj.ErrorColor);
 
 			Font.DeepCloneTo(obj.Font);
 		}

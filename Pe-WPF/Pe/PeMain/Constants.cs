@@ -13,6 +13,7 @@
 	using System.Windows;
 	using System.Windows.Media;
 	using ContentTypeTextNet.Pe.PeMain.Define;
+	using ContentTypeTextNet.Pe.Library.PeData.Item;
 
 	/// <summary>
 	/// 定数。
@@ -116,6 +117,14 @@
 			defaultFontSize.median,
 			defaultFontSize.maximum
 		);
+		public static readonly ColorPairItemModel streamOutputColor = new ColorPairItemModel(
+			Colors.White,
+			Colors.Black
+		);
+		public static readonly ColorPairItemModel streamErrorColor = new ColorPairItemModel(
+			Colors.Red,
+			Colors.Black
+		);
 
 		[ConstantsRange]
 		public static readonly TripleRange<TimeSpan> commandHideTime = new TripleRange<TimeSpan>(
@@ -217,8 +226,11 @@
 
 		public static readonly Thickness noteCaptionPadding = new Thickness(2);
 		public const double noteCaptionHeight = 20;
-		public static readonly Color noteForeColor = Colors.Black;
-		public static readonly Color noteBackColor = Color.FromRgb(250, 250, 180);
+		public static readonly ColorPairItemModel noteColor = new ColorPairItemModel(
+			Colors.Black,
+			Color.FromRgb(250, 250, 180)
+		);
+
 		[ConstantsRange]
 		public static readonly TripleRange<double> noteFontSize = new TripleRange<double>(
 			8,

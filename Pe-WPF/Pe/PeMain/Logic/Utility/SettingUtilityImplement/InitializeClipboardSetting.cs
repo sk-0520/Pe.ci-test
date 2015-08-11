@@ -26,6 +26,10 @@
 
 			setting.IsEnabled = true;
 			setting.EnabledClipboardTypes = ClipboardType.All;
+			setting.Font.Size = Constants.clipboardFontSize.median;
+			setting.ItemsListWidth = Constants.clipboardItemsListWidth;
+			setting.WindowWidth = Constants.clipboardDefaultWindowSize.Width;
+			setting.WindowHeight = Constants.clipboardDefaultWindowSize.Height;
 		}
 	}
 }

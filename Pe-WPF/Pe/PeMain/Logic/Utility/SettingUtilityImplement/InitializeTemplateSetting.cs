@@ -16,6 +16,16 @@
 		}
 
 		static void V_First(TemplateSettingModel setting, Version previousVersion, INonProcess nonProcess)
-		{ }
+		{
+			if(previousVersion != null) {
+				return;
+			}
+
+			setting.Font.Size = Constants.templateFontSize.median;
+			setting.ItemsListWidth = Constants.templateItemsListWidth;
+			setting.ReplaceListWidth = Constants.templateReplaceListWidth;
+			setting.WindowWidth = Constants.templateDefaultWindowSize.Width;
+			setting.WindowHeight = Constants.templateDefaultWindowSize.Height;
+		}
 	}
 }
