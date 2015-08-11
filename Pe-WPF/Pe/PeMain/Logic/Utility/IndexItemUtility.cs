@@ -7,15 +7,15 @@
 	using System.Threading.Tasks;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 	using ContentTypeTextNet.Pe.Library.PeData.Define;
-using ContentTypeTextNet.Pe.PeMain.Define;
+	using ContentTypeTextNet.Pe.PeMain.Define;
 
 	public static class IndexItemUtility
 	{
 		public static string GetIndexBodyFileName(IndexKind indexKind, FileType fileType, Guid guid)
 		{
 			var ext = new Dictionary<FileType, string>() {
-				{ FileType.Json,   "json" },
-				{ FileType.Binary, "dat" },
+				{ FileType.Json,   Constants.extensionJsonFile },
+				{ FileType.Binary, Constants.extensionBinaryFile },
 			};
 
 			var map = new Dictionary<string, string>() {
