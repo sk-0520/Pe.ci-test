@@ -91,7 +91,6 @@
     <Compile Include="CompatibleForms\Utility\SendKeysUtility.cs" />
     <Compile Include="CompatibleWindows\IconDialog.cs" />
     <Compile Include="CompatibleWindows\IconWrapper.cs" />
-    <Compile Include="CompatibleWindows\Utility\CompatibleFontUtility.cs" />
     <Compile Include="CompatibleWindows\Utility\HandleUtility.cs" />
     <Compile Include="CompatibleWindows\Utility\MouseUtility.cs" />
     <Compile Include="CompatibleWindows\Utility\PodStructUtility.cs" />

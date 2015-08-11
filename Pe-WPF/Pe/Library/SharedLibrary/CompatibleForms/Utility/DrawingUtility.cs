@@ -37,9 +37,14 @@
 			return new Rect(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
 		}
 
-		public static double ConvertFontSize(double drawingFontPoint)
+		public static double ConvertFontSizeFromDrawing(double drawingFontPoint)
 		{
-			return drawingFontPoint * 96.0 / 72.0;
+			return drawingFontPoint / 72.0 * 96.0;
 		}
+		public static float ConvertFontSizeFromWpf(double dpwFontSize)
+		{
+			return (float)(dpwFontSize * 72.0 / 96.0);
+		}
+
 	}
 }
