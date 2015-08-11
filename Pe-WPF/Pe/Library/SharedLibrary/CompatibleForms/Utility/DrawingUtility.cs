@@ -41,9 +41,9 @@
 		{
 			return drawingFontPoint / 72.0 * 96.0;
 		}
-		public static float ConvertFontSizeFromWpf(double dpwFontSize)
+		public static float ConvertFontSizeFromWpf(double wpfFontSize)
 		{
-			return (float)(dpwFontSize * 72.0 / 96.0);
+			return (float)(wpfFontSize * 72.0 / 96.0);
 		}
 
 	}
