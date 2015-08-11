@@ -5,6 +5,7 @@
 	using System.IO;
 	using System.Windows;
 	using System.Windows.Input;
+	using System.Windows.Media;
 	using ContentTypeTextNet.Library.SharedLibrary.Data;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
@@ -66,6 +67,34 @@
 			get { return Model.ReplaceListWidth; }
 			set { SetModelValue(value); }
 		}
+
+		#region font
+
+		public FontFamily FontFamily
+		{
+			get { return FontModelProperty.GetFamilyDefault(Model.Font); }
+			set { FontModelProperty.SetFamily(Model.Font, value, OnPropertyChanged); }
+		}
+
+		public bool FontBold
+		{
+			get { return FontModelProperty.GetBold(Model.Font); }
+			set { FontModelProperty.SetBold(Model.Font, value, OnPropertyChanged); }
+		}
+
+		public bool FontItalic
+		{
+			get { return FontModelProperty.GetItalic(Model.Font); }
+			set { FontModelProperty.SetItalic(Model.Font, value, OnPropertyChanged); }
+		}
+
+		public double FontSize
+		{
+			get { return FontModelProperty.GetSize(Model.Font); }
+			set { FontModelProperty.SetSize(Model.Font, value, OnPropertyChanged); }
+		}
+
+		#endregion
 
 		#endregion
 

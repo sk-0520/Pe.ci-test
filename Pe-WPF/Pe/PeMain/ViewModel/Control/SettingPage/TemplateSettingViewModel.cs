@@ -14,6 +14,7 @@
 	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
 	using ContentTypeTextNet.Pe.PeMain.IF;
+	using ContentTypeTextNet.Pe.PeMain.Logic.Property;
 
 	public class TemplateSettingViewModel : SettingPageViewModelBase
 	{
@@ -45,35 +46,64 @@
 			set { SetPropertyValue(Template, value); }
 		}
 
+		//public FontFamily FontFamily
+		//{
+		//	get { return FontUtility.MakeFontFamily(Template.Font.Family, SystemFonts.MessageFontFamily); }
+		//	set
+		//	{
+		//		if(value != null) {
+		//			var fontFamily = FontUtility.GetOriginalFontFamilyName(value);
+		//			SetPropertyValue(Template.Font, fontFamily, "Family");
+		//		}
+		//	}
+		//}
+
+		//public bool FontBold
+		//{
+		//	get { return Template.Font.Bold; }
+		//	set { SetPropertyValue(Template.Font, value, "Bold"); }
+		//}
+
+		//public bool FontItalic
+		//{
+		//	get { return Template.Font.Italic; }
+		//	set { SetPropertyValue(Template.Font, value, "Italic"); }
+		//}
+
+		//public double FontSize
+		//{
+		//	get { return Template.Font.Size; }
+		//	set { SetPropertyValue(Template.Font, value, "Size"); }
+		//}
+
+		#region font
+
 		public FontFamily FontFamily
 		{
-			get { return FontUtility.MakeFontFamily(Template.Font.Family, SystemFonts.MessageFontFamily); }
-			set
-			{
-				if(value != null) {
-					var fontFamily = FontUtility.GetOriginalFontFamilyName(value);
-					SetPropertyValue(Template.Font, fontFamily, "Family");
-				}
-			}
+			get { return FontModelProperty.GetFamilyDefault(Template.Font); }
+			set { FontModelProperty.SetFamily(Template.Font, value, OnPropertyChanged); }
 		}
 
 		public bool FontBold
 		{
-			get { return Template.Font.Bold; }
-			set { SetPropertyValue(Template.Font, value, "Bold"); }
+			get { return FontModelProperty.GetBold(Template.Font); }
+			set { FontModelProperty.SetBold(Template.Font, value, OnPropertyChanged); }
 		}
 
 		public bool FontItalic
 		{
-			get { return Template.Font.Italic; }
-			set { SetPropertyValue(Template.Font, value, "Italic"); }
+			get { return FontModelProperty.GetItalic(Template.Font); }
+			set { FontModelProperty.SetItalic(Template.Font, value, OnPropertyChanged); }
 		}
 
 		public double FontSize
 		{
-			get { return Template.Font.Size; }
-			set { SetPropertyValue(Template.Font, value, "Size"); }
+			get { return FontModelProperty.GetSize(Template.Font); }
+			set { FontModelProperty.SetSize(Template.Font, value, OnPropertyChanged); }
 		}
+
+		#endregion
+
 
 		#endregion
 	}

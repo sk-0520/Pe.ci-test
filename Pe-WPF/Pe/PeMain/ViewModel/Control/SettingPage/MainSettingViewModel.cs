@@ -17,6 +17,7 @@
 	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
 	using ContentTypeTextNet.Pe.PeMain.IF;
+	using ContentTypeTextNet.Pe.PeMain.Logic.Property;
 
 	public class MainSettingViewModel : SettingPageViewModelBase
 	{
@@ -141,35 +142,63 @@
 
 		#region StreamSettingModel
 
+		//public FontFamily StreamFontFamily
+		//{
+		//	get { return FontUtility.MakeFontFamily(Stream.Font.Family, SystemFonts.MessageFontFamily); }
+		//	set
+		//	{
+		//		if(value != null) {
+		//			var fontFamily = FontUtility.GetOriginalFontFamilyName(value);
+		//			SetPropertyValue(Stream.Font, fontFamily, "Family");
+		//		}
+		//	}
+		//}
+
+		//public bool StreamFontBold
+		//{
+		//	get { return Stream.Font.Bold; }
+		//	set { SetPropertyValue(Stream.Font, value, "Bold"); }
+		//}
+
+		//public bool StreamFontItalic
+		//{
+		//	get { return Stream.Font.Italic; }
+		//	set { SetPropertyValue(Stream.Font, value, "Italic"); }
+		//}
+
+		//public double StreamFontSize
+		//{
+		//	get { return Stream.Font.Size; }
+		//	set { SetPropertyValue(Stream.Font, value, "Size"); }
+		//}
+		#region font
+
 		public FontFamily StreamFontFamily
 		{
-			get { return FontUtility.MakeFontFamily(Stream.Font.Family, SystemFonts.MessageFontFamily); }
-			set
-			{
-				if(value != null) {
-					var fontFamily = FontUtility.GetOriginalFontFamilyName(value);
-					SetPropertyValue(Stream.Font, fontFamily, "Family");
-				}
-			}
+			get { return FontModelProperty.GetFamilyDefault(Stream.Font); }
+			set { FontModelProperty.SetFamily(Stream.Font, value, OnPropertyChanged); }
 		}
 
 		public bool StreamFontBold
 		{
-			get { return Stream.Font.Bold; }
-			set { SetPropertyValue(Stream.Font, value, "Bold"); }
+			get { return FontModelProperty.GetBold(Stream.Font); }
+			set { FontModelProperty.SetBold(Stream.Font, value, OnPropertyChanged); }
 		}
 
 		public bool StreamFontItalic
 		{
-			get { return Stream.Font.Italic; }
-			set { SetPropertyValue(Stream.Font, value, "Italic"); }
+			get { return FontModelProperty.GetItalic(Stream.Font); }
+			set { FontModelProperty.SetItalic(Stream.Font, value, OnPropertyChanged); }
 		}
 
 		public double StreamFontSize
 		{
-			get { return Stream.Font.Size; }
-			set { SetPropertyValue(Stream.Font, value, "Size"); }
+			get { return FontModelProperty.GetSize(Stream.Font); }
+			set { FontModelProperty.SetSize(Stream.Font, value, OnPropertyChanged); }
 		}
+
+		#endregion
+
 		#endregion
 
 		#endregion

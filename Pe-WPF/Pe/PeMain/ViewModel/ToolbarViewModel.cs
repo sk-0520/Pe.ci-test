@@ -68,35 +68,68 @@
 			set { SetModelValue(value); }
 		}
 
+		#region font
+
+		//public FontFamily FontFamily
+		//{
+		//	get { return FontUtility.MakeFontFamily(Model.Font.Family, SystemFonts.MessageFontFamily); }
+		//	set
+		//	{
+		//		if (value != null) {
+		//			var fontFamily = FontUtility.GetOriginalFontFamilyName(value);
+		//			SetPropertyValue(Model.Font, fontFamily, "Family");
+		//		}
+		//	}
+		//}
+
+		//public bool FontBold
+		//{
+		//	get { return Model.Font.Bold; }
+		//	set { SetPropertyValue(Model.Font, value, "Bold"); }
+		//}
+
+		//public bool FontItalic
+		//{
+		//	get { return Model.Font.Italic; }
+		//	set { SetPropertyValue(Model.Font, value, "Italic"); }
+		//}
+
+		//public double FontSize
+		//{
+		//	get { return Model.Font.Size; }
+		//	set { SetPropertyValue(Model.Font, value, "Size"); }
+		//}
+
+		#region font
+
 		public FontFamily FontFamily
 		{
-			get { return FontUtility.MakeFontFamily(Model.Font.Family, SystemFonts.MessageFontFamily); }
-			set
-			{
-				if (value != null) {
-					var fontFamily = FontUtility.GetOriginalFontFamilyName(value);
-					SetPropertyValue(Model.Font, fontFamily, "Family");
-				}
-			}
+			get { return FontModelProperty.GetFamilyDefault(Model.Font); }
+			set { FontModelProperty.SetFamily(Model.Font, value, OnPropertyChanged); }
 		}
 
 		public bool FontBold
 		{
-			get { return Model.Font.Bold; }
-			set { SetPropertyValue(Model.Font, value, "Bold"); }
+			get { return FontModelProperty.GetBold(Model.Font); }
+			set { FontModelProperty.SetBold(Model.Font, value, OnPropertyChanged); }
 		}
 
 		public bool FontItalic
 		{
-			get { return Model.Font.Italic; }
-			set { SetPropertyValue(Model.Font, value, "Italic"); }
+			get { return FontModelProperty.GetItalic(Model.Font); }
+			set { FontModelProperty.SetItalic(Model.Font, value, OnPropertyChanged); }
 		}
 
 		public double FontSize
 		{
-			get { return Model.Font.Size; }
-			set { SetPropertyValue(Model.Font, value, "Size"); }
+			get { return FontModelProperty.GetSize(Model.Font); }
+			set { FontModelProperty.SetSize(Model.Font, value, OnPropertyChanged); }
 		}
+
+		#endregion
+
+
+		#endregion
 
 		#region ITopMost
 

@@ -54,35 +54,62 @@
 			set { SetPropertyValue(Note, value); }
 		}
 
+		//public FontFamily FontFamily
+		//{
+		//	get { return FontUtility.MakeFontFamily(Note.Font.Family, SystemFonts.MessageFontFamily); }
+		//	set
+		//	{
+		//		if(value != null) {
+		//			var fontFamily = FontUtility.GetOriginalFontFamilyName(value);
+		//			SetPropertyValue(Note.Font, fontFamily, "Family");
+		//		}
+		//	}
+		//}
+
+		//public bool FontBold
+		//{
+		//	get { return Note.Font.Bold; }
+		//	set { SetPropertyValue(Note.Font, value, "Bold"); }
+		//}
+
+		//public bool FontItalic
+		//{
+		//	get { return Note.Font.Italic; }
+		//	set { SetPropertyValue(Note.Font, value, "Italic"); }
+		//}
+
+		//public double FontSize
+		//{
+		//	get { return Note.Font.Size; }
+		//	set { SetPropertyValue(Note.Font, value, "Size"); }
+		//}
+		#region font
+
 		public FontFamily FontFamily
 		{
-			get { return FontUtility.MakeFontFamily(Note.Font.Family, SystemFonts.MessageFontFamily); }
-			set
-			{
-				if(value != null) {
-					var fontFamily = FontUtility.GetOriginalFontFamilyName(value);
-					SetPropertyValue(Note.Font, fontFamily, "Family");
-				}
-			}
+			get { return FontModelProperty.GetFamilyDefault(Note.Font); }
+			set { FontModelProperty.SetFamily(Note.Font, value, OnPropertyChanged); }
 		}
 
 		public bool FontBold
 		{
-			get { return Note.Font.Bold; }
-			set { SetPropertyValue(Note.Font, value, "Bold"); }
+			get { return FontModelProperty.GetBold(Note.Font); }
+			set { FontModelProperty.SetBold(Note.Font, value, OnPropertyChanged); }
 		}
 
 		public bool FontItalic
 		{
-			get { return Note.Font.Italic; }
-			set { SetPropertyValue(Note.Font, value, "Italic"); }
+			get { return FontModelProperty.GetItalic(Note.Font); }
+			set { FontModelProperty.SetItalic(Note.Font, value, OnPropertyChanged); }
 		}
 
 		public double FontSize
 		{
-			get { return Note.Font.Size; }
-			set { SetPropertyValue(Note.Font, value, "Size"); }
+			get { return FontModelProperty.GetSize(Note.Font); }
+			set { FontModelProperty.SetSize(Note.Font, value, OnPropertyChanged); }
 		}
+
+		#endregion
 
 		public NoteTitle NoteTitle 
 		{

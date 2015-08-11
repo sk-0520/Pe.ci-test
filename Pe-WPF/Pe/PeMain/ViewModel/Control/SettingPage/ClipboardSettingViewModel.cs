@@ -16,6 +16,7 @@
 	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
 	using ContentTypeTextNet.Pe.PeMain.IF;
+	using ContentTypeTextNet.Pe.PeMain.Logic.Property;
 
 	public class ClipboardSettingViewModel : SettingPageViewModelBase
 	{
@@ -120,35 +121,64 @@
 			set { SetPropertyValue(Clipboard, value); }
 		}
 
+		//public FontFamily FontFamily
+		//{
+		//	get { return FontUtility.MakeFontFamily(Clipboard.Font.Family, SystemFonts.MessageFontFamily); }
+		//	set
+		//	{
+		//		if(value != null) {
+		//			var fontFamily = FontUtility.GetOriginalFontFamilyName(value);
+		//			SetPropertyValue(Clipboard.Font, fontFamily, "Family");
+		//		}
+		//	}
+		//}
+
+		//public bool FontBold
+		//{
+		//	get { return Clipboard.Font.Bold; }
+		//	set { SetPropertyValue(Clipboard.Font, value, "Bold"); }
+		//}
+
+		//public bool FontItalic
+		//{
+		//	get { return Clipboard.Font.Italic; }
+		//	set { SetPropertyValue(Clipboard.Font, value, "Italic"); }
+		//}
+
+		//public double FontSize
+		//{
+		//	get { return Clipboard.Font.Size; }
+		//	set { SetPropertyValue(Clipboard.Font, value, "Size"); }
+		//}
+
+		#region font
+
 		public FontFamily FontFamily
 		{
-			get { return FontUtility.MakeFontFamily(Clipboard.Font.Family, SystemFonts.MessageFontFamily); }
-			set
-			{
-				if(value != null) {
-					var fontFamily = FontUtility.GetOriginalFontFamilyName(value);
-					SetPropertyValue(Clipboard.Font, fontFamily, "Family");
-				}
-			}
+			get { return FontModelProperty.GetFamilyDefault(Clipboard.Font); }
+			set { FontModelProperty.SetFamily(Clipboard.Font, value, OnPropertyChanged); }
 		}
 
 		public bool FontBold
 		{
-			get { return Clipboard.Font.Bold; }
-			set { SetPropertyValue(Clipboard.Font, value, "Bold"); }
+			get { return FontModelProperty.GetBold(Clipboard.Font); }
+			set { FontModelProperty.SetBold(Clipboard.Font, value, OnPropertyChanged); }
 		}
 
 		public bool FontItalic
 		{
-			get { return Clipboard.Font.Italic; }
-			set { SetPropertyValue(Clipboard.Font, value, "Italic"); }
+			get { return FontModelProperty.GetItalic(Clipboard.Font); }
+			set { FontModelProperty.SetItalic(Clipboard.Font, value, OnPropertyChanged); }
 		}
 
 		public double FontSize
 		{
-			get { return Clipboard.Font.Size; }
-			set { SetPropertyValue(Clipboard.Font, value, "Size"); }
+			get { return FontModelProperty.GetSize(Clipboard.Font); }
+			set { FontModelProperty.SetSize(Clipboard.Font, value, OnPropertyChanged); }
 		}
+
+		#endregion
+
 
 		#endregion
 

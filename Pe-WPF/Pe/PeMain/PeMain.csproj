@@ -135,6 +135,7 @@
     <Compile Include="Define\CommandKind.cs" />
     <Compile Include="Define\Timing.cs" />
     <Compile Include="LanguageKey.cs" />
+    <Compile Include="Logic\Property\FontModelProperty.cs" />
     <Compile Include="Logic\Utility\PopupUtility.cs" />
     <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeCommandSetting.cs" />
     <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeLoggingSetting.cs" />
