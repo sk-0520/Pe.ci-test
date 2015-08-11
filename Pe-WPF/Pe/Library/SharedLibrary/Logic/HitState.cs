@@ -7,7 +7,7 @@
 	using System.Threading.Tasks;
 	using System.Windows;
 
-	class HitState
+	public class HitState
 	{
 		#region define
 
