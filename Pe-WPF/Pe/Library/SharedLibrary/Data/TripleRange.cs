@@ -11,6 +11,10 @@
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 
+	/// <summary>
+	/// 最小値・中間値・最大値を保持するデータ。
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
 	public struct TripleRange<T>
 		where T: IComparable
 	{

@@ -9,9 +9,9 @@
 
 	public static class EnumUtility
 	{
-		public static IEnumerable<TEnum> GetMembers<TEnum>(Type type)
+		public static IEnumerable<TEnum> GetMembers<TEnum>(Type enumType)
 		{
-			return Enum.GetValues(type).Cast<TEnum>();
+			return Enum.GetValues(enumType).Cast<TEnum>();
 		}
 
 		public static IEnumerable<TEnum> GetMembers<TEnum>()
