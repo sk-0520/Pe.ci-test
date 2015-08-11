@@ -10,12 +10,14 @@
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
+	using ContentTypeTextNet.Pe.Library.PeData.IF;
 	using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
 	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
 	using ContentTypeTextNet.Pe.PeMain.IF;
+	using ContentTypeTextNet.Pe.PeMain.Logic.Property;
 
-	public class NoteSettingViewModel : SettingPageViewModelBase
+	public class NoteSettingViewModel : SettingPageViewModelBase, IColorPair
 	{
 		public NoteSettingViewModel(NoteSettingModel note, IAppNonProcess appNonProcess, SettingNotifiyItem settingNotifiyItem)
 			: base(appNonProcess, settingNotifiyItem)
@@ -80,6 +82,24 @@
 			get { return Note.Font.Size; }
 			set { SetPropertyValue(Note.Font, value, "Size"); }
 		}
+
 		#endregion
+
+		#region IColorPair
+
+		public Color ForeColor
+		{
+			get { return ColorPairProperty.GetNoneAlphaForeColor(Note); }
+			set { ColorPairProperty.SetNoneAlphaForekColor(Note, value, OnPropertyChanged); }
+		}
+
+		public Color BackColor
+		{
+			get { return ColorPairProperty.GetNoneAlphaBackColor(Note); }
+			set { ColorPairProperty.SetNoneAlphaBackColor(Note, value, OnPropertyChanged); }
+		}
+
+		#endregion
+
 	}
 }
