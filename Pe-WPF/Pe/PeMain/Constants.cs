@@ -84,8 +84,8 @@
 
 		public const string languageAcceptDocumentFileName = ".accept.html";
 
-		public const string extensionBinaryFile = ".dat";
-		public const string extensionJsonFile = ".dat";
+		public const string extensionBinaryFile = "dat";
+		public const string extensionJsonFile = "json";
 
 		public const FileType fileTypeMainSetting = FileType.Json;
 		public const FileType fileTypeLauncherItemSetting = FileType.Json;
