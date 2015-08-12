@@ -30,7 +30,8 @@
 			<AV:AppHotkeyControl Hotkey="{Binding ShowHotkey}" Margin="10,10,40,0" Grid.Column="1" Grid.Row="1" />
 
 			<Label Content="hide time" HorizontalAlignment="Left" Margin="10,5,0,0" Grid.Row="2" VerticalAlignment="Top" Height="25" Width="65"/>
-			<Slider Grid.Column="1" HorizontalAlignment="Left" Margin="10,10,0,0" Grid.Row="2" VerticalAlignment="Top" Width="119" Value="{Binding HideTimeMs}" Minimum="{Binding Source={x:Static AM:Constants.CommandHideMinimumTime}}" Maximum="{Binding Source={x:Static AM:Constants.CommandHideMaximumTime}}" Height="18"/>
+			<!--<Slider Grid.Column="1" HorizontalAlignment="Left" Margin="10,10,0,0" Grid.Row="2" VerticalAlignment="Top" Width="119" Value="{Binding HideTimeMs}" Minimum="{Binding Source={x:Static AM:Constants.CommandHideMinimumTime}}" Maximum="{Binding Source={x:Static AM:Constants.CommandHideMaximumTime}}" Height="18"/>-->
+			<AV:TimeSliderControl Grid.Row="2" Grid.Column="1" Value="{Binding HideTime}"  Minimum="{Binding Source={x:Static AM:Constants.CommandHideMinimumTime}}" Maximum="{Binding Source={x:Static AM:Constants.CommandHideMaximumTime}}" />
 
 			<Label Grid.Row="3" Grid.Column="0" Content="font"/>
 			<AV:FontSelectControl

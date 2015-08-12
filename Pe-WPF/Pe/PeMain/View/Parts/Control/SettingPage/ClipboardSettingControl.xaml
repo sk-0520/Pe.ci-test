@@ -52,7 +52,8 @@
 			<xctk:SingleUpDown Grid.Row="1" Grid.Column="1" Value="{Binding SaveCount}" Minimum="{Binding Source={x:Static AM:Constants.ClipboardSaveMinimumCount}}" Maximum="{Binding Source={x:Static AM:Constants.ClipboardSaveMaximumCount}}" />
 
 			<Label Grid.Row="2" Grid.Column="0" Content="wait time" HorizontalAlignment="Left" Margin="4,0,0,0" VerticalAlignment="Top"/>
-			<Slider Grid.Row="2" Grid.Column="1" Value="{Binding WaitTimeMs}" Minimum="{Binding Source={x:Static AM:Constants.ClipboardWaitMinimumTime}}" Maximum="{Binding Source={x:Static AM:Constants.ClipboardWaitMaximumTime}}" />
+			<!--<Slider Grid.Row="2" Grid.Column="1" Value="{Binding WaitTimeMs}" Minimum="{Binding Source={x:Static AM:Constants.ClipboardWaitMinimumTime}}" Maximum="{Binding Source={x:Static AM:Constants.ClipboardWaitMaximumTime}}" />-->
+			<AV:TimeSliderControl Grid.Row="2" Grid.Column="1" Value="{Binding WaitTime}"  Minimum="{Binding Source={x:Static AM:Constants.ClipboardWaitMinimumTime}}" Maximum="{Binding Source={x:Static AM:Constants.ClipboardWaitMaximumTime}}" />
 
 			<Label Grid.Row="3" Grid.Column="0" Content="dup" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top"/>
 			<xctk:SingleUpDown Grid.Row="3" Grid.Column="1" Value="{Binding DuplicationCount}" Minimum="{Binding Source={x:Static AM:Constants.ClipboardDuplicationMinimumCount}}" Maximum="{Binding Source={x:Static AM:Constants.ClipboardDuplicationMaximumCount}}"  />

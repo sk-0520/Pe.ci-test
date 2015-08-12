@@ -37,11 +37,18 @@
 			set { SetPropertyValue(Command, value); }
 		}
 
-		public double HideTimeMs
+		//public double HideTimeMs
+		//{
+		//	get { return Command.HideTime.TotalMilliseconds; }
+		//	set { SetPropertyValue(Command, TimeSpan.FromMilliseconds(value), "HideTime"); }
+		//}
+
+		public TimeSpan HideTime
 		{
-			get { return Command.HideTime.TotalMilliseconds; }
-			set { SetPropertyValue(Command, TimeSpan.FromMilliseconds(value), "HideTime"); }
+			get { return Command.HideTime; }
+			set { SetPropertyValue(Command, value); }
 		}
+		
 
 		public HotKeyModel ShowHotkey
 		{

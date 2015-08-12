@@ -97,6 +97,12 @@
 			set { SetPropertyValue(Clipboard, TimeSpan.FromMilliseconds(value), "WaitTime"); }
 		}
 
+		public TimeSpan WaitTime
+		{
+			get { return Clipboard.WaitTime; }
+			set { SetPropertyValue(Clipboard, value); }
+		}
+
 		public int DuplicationCount
 		{
 			get { return Clipboard.DuplicationCount; }
