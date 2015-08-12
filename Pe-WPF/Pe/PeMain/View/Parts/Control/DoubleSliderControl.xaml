@@ -22,17 +22,20 @@
 	</AV:CommonDataUserControl.Resources>
 	<Grid Style="{StaticResource TypeGridStyle}">
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition />
-			<ColumnDefinition />
+			<ColumnDefinition Style="{StaticResource TypeColumnSlider}" />
+			<ColumnDefinition Style="{StaticResource TypeColumnUpDown}" />
 		</Grid.ColumnDefinitions>
 		<Slider
+			x:Name="PART_Slider"
 			Style="{StaticResource TypeSliderStyle}"
 			Value="{Binding Value, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}}"
 			Maximum="{Binding Maximum, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}, Mode=OneWay}"
 			Minimum="{Binding Minimum, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}, Mode=OneWay}"
 		/>
-		<xctk:DoubleUpDown
-			Style="{StaticResource TypeUpDownStyle}"
+		<TextBox
+			x:Name="PART_UpDown"
+			Style="{StaticResource TypeValueStyle}"
+			Text="{Binding Value, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}}"
 		/>
 	</Grid>
 </AV:CommonDataUserControl>
