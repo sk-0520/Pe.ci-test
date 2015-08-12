@@ -14,8 +14,12 @@
 	</Style>
 	<Style x:Key="TypeSliderStyle" TargetType="Slider">
 		<Setter Property="Grid.Column" Value="0" />
+		<Setter Property="VerticalAlignment" Value="Center" />
 	</Style>
 	<Style x:Key="TypeValueStyle" TargetType="TextBox">
 		<Setter Property="Grid.Column" Value="1" />
+		<Setter Property="IsReadOnly" Value="True" />
+		<Setter Property="IsUndoEnabled" Value="False" />
+		<Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
 	</Style>
 </ResourceDictionary>
