@@ -409,7 +409,7 @@
 		/// Constants.clipboardSaveCount.minimum取得用プロパティ。
 		/// <para>XAMLで使用することを想定</para>
 		/// </summary>
-		public static Double ClipboardSaveMinimumCount
+		public static Int32 ClipboardSaveMinimumCount
 		{
 			get
 			{
@@ -422,7 +422,7 @@
 		/// Constants.clipboardSaveCount.median取得用プロパティ。
 		/// <para>XAMLで使用することを想定</para>
 		/// </summary>
-		public static Double ClipboardSaveMedianCount
+		public static Int32 ClipboardSaveMedianCount
 		{
 			get
 			{
@@ -435,7 +435,7 @@
 		/// Constants.clipboardSaveCount.maximum取得用プロパティ。
 		/// <para>XAMLで使用することを想定</para>
 		/// </summary>
-		public static Double ClipboardSaveMaximumCount
+		public static Int32 ClipboardSaveMaximumCount
 		{
 			get
 			{
@@ -451,7 +451,7 @@
 		/// Constants.clipboardDuplicationCount.minimum取得用プロパティ。
 		/// <para>XAMLで使用することを想定</para>
 		/// </summary>
-		public static Double ClipboardDuplicationMinimumCount
+		public static Int32 ClipboardDuplicationMinimumCount
 		{
 			get
 			{
@@ -464,7 +464,7 @@
 		/// Constants.clipboardDuplicationCount.median取得用プロパティ。
 		/// <para>XAMLで使用することを想定</para>
 		/// </summary>
-		public static Double ClipboardDuplicationMedianCount
+		public static Int32 ClipboardDuplicationMedianCount
 		{
 			get
 			{
@@ -477,7 +477,7 @@
 		/// Constants.clipboardDuplicationCount.maximum取得用プロパティ。
 		/// <para>XAMLで使用することを想定</para>
 		/// </summary>
-		public static Double ClipboardDuplicationMaximumCount
+		public static Int32 ClipboardDuplicationMaximumCount
 		{
 			get
 			{

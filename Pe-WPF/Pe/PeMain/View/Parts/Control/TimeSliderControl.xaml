@@ -21,6 +21,7 @@
 	</AV:CommonDataUserControl.Resources>
 	<Grid>
 		<Slider
+			Style="{StaticResource TypeSliderStyle}"
 			Value="{Binding Value, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}, Converter={StaticResource TimeSpanMillisecondConverter}}"
 			Maximum="{Binding Maximum, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}, Converter={StaticResource TimeSpanMillisecondConverter}, Mode=OneWay}"
 			Minimum="{Binding Minimum, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}, Converter={StaticResource TimeSpanMillisecondConverter}, Mode=OneWay}"

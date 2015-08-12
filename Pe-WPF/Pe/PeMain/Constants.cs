@@ -180,14 +180,14 @@
 		);
 
 		[ConstantsRange]
-		public static readonly TripleRange<double> clipboardSaveCount = new TripleRange<double>(
+		public static readonly TripleRange<int> clipboardSaveCount = new TripleRange<int>(
 			0,
 			1024,
 			1024 * 10
 		);
 
 		[ConstantsRange]
-		public static readonly TripleRange<double> clipboardDuplicationCount = new TripleRange<double>(
+		public static readonly TripleRange<int> clipboardDuplicationCount = new TripleRange<int>(
 			-1,
 			50,
 			256
