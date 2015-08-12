@@ -4,5 +4,7 @@
 >
 	<Style x:Key="DefaultToolbarStyle" TargetType="ToolBar">
 		<Setter Property="ToolBarTray.IsLocked" Value="True" />
+		<Setter Property="HorizontalAlignment" Value="Stretch" />
+		<Setter Property="VerticalAlignment" Value="Stretch" />
 	</Style>
 </ResourceDictionary>

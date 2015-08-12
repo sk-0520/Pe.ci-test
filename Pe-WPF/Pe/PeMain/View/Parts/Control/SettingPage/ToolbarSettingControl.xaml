@@ -105,7 +105,7 @@
 				<RowDefinition Height="*" />
 			</Grid.RowDefinitions>
 			<!--<ToolBarTray HorizontalAlignment="Stretch" VerticalAlignment="Stretch">-->
-			<ToolBar HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Style="{StaticResource DefaultToolbarStyle}">
+			<ToolBar Style="{StaticResource DefaultToolbarStyle}">
 					<!--<StackPanel Orientation="Horizontal">-->
 						<Button Content="group" Command="{Binding CreateGroupCommand}" />
 						<Button 
