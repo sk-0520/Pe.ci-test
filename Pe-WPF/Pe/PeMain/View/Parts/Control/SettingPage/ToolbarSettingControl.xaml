@@ -17,6 +17,7 @@
 		<ResourceDictionary>
 			<ResourceDictionary.MergedDictionaries>
 				<ResourceDictionary Source="/View/Parts/Resource/ImageDictionary.xaml"/>
+				<ResourceDictionary Source="/View/Parts/Resource/ToolbarDictionary.xaml"/>
 			</ResourceDictionary.MergedDictionaries>
 			<SC:LogicalIsNotNullConverter x:Key="LogicalIsNotNullConverter" />
 			<AC:DisplayTextConverter x:Key="DisplayTextConverter" />
@@ -104,7 +105,7 @@
 				<RowDefinition Height="*" />
 			</Grid.RowDefinitions>
 			<!--<ToolBarTray HorizontalAlignment="Stretch" VerticalAlignment="Stretch">-->
-			<ToolBar ToolBarTray.IsLocked="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+			<ToolBar HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Style="{StaticResource DefaultToolbarStyle}">
 					<!--<StackPanel Orientation="Horizontal">-->
 						<Button Content="group" Command="{Binding CreateGroupCommand}" />
 						<Button 

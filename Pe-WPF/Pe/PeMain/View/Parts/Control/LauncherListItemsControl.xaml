@@ -16,6 +16,7 @@
 			<ResourceDictionary.MergedDictionaries>
 				<ResourceDictionary Source="/View/Parts/Resource/IndexItemsDictionary.xaml"/>
 				<ResourceDictionary Source="/View/Parts/Resource/ImageDictionary.xaml"/>
+				<ResourceDictionary Source="/View/Parts/Resource/ToolbarDictionary.xaml" />
 			</ResourceDictionary.MergedDictionaries>
 			<SC:LogicalNotConverter x:Key="LogicalNotConverter" />
 			<AC:LauncherListDisplayImageConverter x:Key="LauncherListDisplayImageConverter" />
@@ -29,7 +30,7 @@
 			<RowDefinition Height="*" />
 		</Grid.RowDefinitions>
 		<!--<ToolBarTray Grid.Row="0">-->
-		<ToolBar ToolBarTray.IsLocked="True" Grid.Row="0">
+		<ToolBar Grid.Row="0" Style="{StaticResource DefaultToolbarStyle}">
 			<Button x:Name="toolAppend" Content="append" />
 			<Button x:Name="toolRemove" Content="remove" />
 			<Separator x:Name="toolSeparator"  />

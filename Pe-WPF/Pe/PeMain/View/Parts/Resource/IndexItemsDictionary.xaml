@@ -4,13 +4,16 @@
 	xmlns:sys="clr-namespace:System;assembly=mscorlib"
 	xmlns:SC="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=SharedLibrary"
 >
+	<ResourceDictionary.MergedDictionaries>
+		<ResourceDictionary Source="/View/Parts/Resource/ToolbarDictionary.xaml"/>
+	</ResourceDictionary.MergedDictionaries>
 	<sys:Double x:Key="IndexItemsStyleSplitterWidth">5</sys:Double>
 
 	<Style x:Key="IndexItemsStyleDefualtWindowStyle" TargetType="Window">
 		<Setter Property="WindowStyle" Value="ToolWindow" />
 		<Setter Property="ShowInTaskbar" Value="False" />
 	</Style>
-	<Style x:Key="IndexItemsStyleDefaultToolbarStyle" TargetType="ToolBar">
+	<Style x:Key="IndexItemsStyleDefaultToolbarStyle" TargetType="ToolBar" BasedOn="{StaticResource DefaultToolbarStyle}">
 		<Setter Property="HorizontalAlignment" Value="Stretch" />
 		<Setter Property="VerticalAlignment" Value="Stretch" />
 	</Style>

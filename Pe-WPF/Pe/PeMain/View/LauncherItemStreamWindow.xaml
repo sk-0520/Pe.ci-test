@@ -20,7 +20,8 @@
 	<AW:CommonDataWindow.Resources>
 		<ResourceDictionary>
 			<ResourceDictionary.MergedDictionaries>
-				<ResourceDictionary Source="/View/Parts/Resource/ImageDictionary.xaml"/>
+				<ResourceDictionary Source="/View/Parts/Resource/ImageDictionary.xaml" />
+				<ResourceDictionary Source="/View/Parts/Resource/ToolbarDictionary.xaml" />
 			</ResourceDictionary.MergedDictionaries>
 			<SC:LogicalNotConverter x:Key="LogicalNotConverter" />
 			<SC:BooleanVisibilityConverter x:Key="BooleanVisibilityConverter" />
@@ -33,7 +34,7 @@
 			<RowDefinition Height="Auto" />
 			<RowDefinition Height="*" />
 		</Grid.RowDefinitions>
-		<ToolBar ToolBarTray.IsLocked="True" Grid.Row="0">
+		<ToolBar Grid.Row="0" Style="{StaticResource DefaultToolbarStyle}">
 			<ToggleButton IsChecked="{Binding Topmost, ElementName=root}">
 				<!-- topmost -->
 				<Image Style="{StaticResource ImageRenderStyle}" Source="{x:Static AM:AppResource.CommonPinImage}" />
