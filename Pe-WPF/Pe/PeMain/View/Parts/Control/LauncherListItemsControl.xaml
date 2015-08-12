@@ -31,10 +31,10 @@
 		</Grid.RowDefinitions>
 		<!--<ToolBarTray Grid.Row="0">-->
 		<ToolBar Grid.Row="0" Style="{StaticResource DefaultToolbarStyle}">
-			<Button x:Name="toolAppend" Content="append" />
-			<Button x:Name="toolRemove" Content="remove" />
+			<Button x:Name="toolAppend" Content="append" Focusable="False" />
+			<Button x:Name="toolRemove" Content="remove" Focusable="False" />
 			<Separator x:Name="toolSeparator"  />
-			<TextBox />
+			<TextBox  Focusable="False"  />
 		</ToolBar>
 		<!--</ToolBarTray>-->
 		<ListBox x:Name="listItems"  Grid.Row="1" ItemsSource="{Binding Items}">
