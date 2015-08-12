@@ -96,6 +96,11 @@
 			set { SetVariableValue(ref this._imageScale, value); }
 		}
 
+		public int LimitSize
+		{
+			get { return Model.SaveCount; }
+		}
+
 		#region font
 
 		public FontFamily FontFamily

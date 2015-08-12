@@ -43,6 +43,7 @@
 			<AC:DisplayTextConverter x:Key="DisplayTextConverter" />
 			<SC:BooleanFontWeightConverter x:Key="BooleanFontWeightConverter" />
 			<SC:BooleanFontStyleConverter x:Key="BooleanFontStyleConverter" />
+			<AC:SelectedIndexNumberConverter x:Key="SelectedIndexNumberConverter" />
 			<Style x:Key="ClipboardText" TargetType="Image" BasedOn="{StaticResource ImageRenderStyle}">
 				<Setter Property="Source" Value="{x:Static AM:AppResource.ClipboardTextFormatImage}" />
 			</Style>
@@ -121,7 +122,7 @@
 						<Image />
 						<TextBox />
 					</StackPanel>
-					<ListBox Grid.Row="1" ItemsSource="{Binding IndexItems, Converter={StaticResource ReverseClipboardItemListConverter}}" SelectedItem="{Binding SelectedViewModel}" x:Name="itemsList" HorizontalContentAlignment="Stretch">
+					<ListBox x:Name="listItems" Grid.Row="1" ItemsSource="{Binding IndexItems, Converter={StaticResource ReverseClipboardItemListConverter}}" SelectedItem="{Binding SelectedViewModel}" HorizontalContentAlignment="Stretch">
 						<ListBox.ItemTemplate>
 							<DataTemplate>
 								<Grid>
@@ -343,9 +344,12 @@
 				</Grid>
 			</Grid>
 			<StatusBar Grid.Row="2" Style="{StaticResource IndexItemsStyleDefaultStatusbarStyle}">
-				<TextBlock Text="now" />
+				<TextBlock Text="{Binding SelectedIndex, ElementName=listItems, Converter={StaticResource SelectedIndexNumberConverter}}" />
 				<TextBlock Text="/" />
-				<TextBlock Text="max" />
+				<TextBlock Text="{Binding IndexItems.Count}" />
+				<TextBlock Text="(" />
+				<TextBlock Text="{Binding LimitSize}" />
+				<TextBlock Text=")" />
 			</StatusBar>
 		</Grid>
 	</Grid>

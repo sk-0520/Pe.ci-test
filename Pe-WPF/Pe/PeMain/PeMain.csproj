@@ -338,6 +338,7 @@
     <Compile Include="View\Parts\Converter\DisplayTextConverter.cs" />
     <Compile Include="View\Parts\Converter\FontFamilyToNameConverter.cs" />
     <Compile Include="View\Parts\Converter\ReverseClipboardItemListConverter.cs" />
+    <Compile Include="View\Parts\Converter\SelectedIndexNumberConverter.cs" />
     <Compile Include="View\Parts\Converter\SelectedNodeAndLauncherItemConverter.cs" />
     <Compile Include="View\Parts\Converter\HotTrackConverter.cs" />
     <Compile Include="View\Parts\Converter\LauncherListDisplayImageConverter.cs" />

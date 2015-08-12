@@ -36,6 +36,7 @@
 			<AC:DisplayTextConverter x:Key="DisplayTextConverter" />
 			<SC:BooleanFontWeightConverter x:Key="BooleanFontWeightConverter" />
 			<SC:BooleanFontStyleConverter x:Key="BooleanFontStyleConverter" />
+			<AC:SelectedIndexNumberConverter x:Key="SelectedIndexNumberConverter" />
 		</ResourceDictionary>
 	</AW:CommonDataWindow.Resources>
 	<i:Interaction.Triggers>
@@ -98,7 +99,7 @@
 					<Image />
 					<TextBox />
 				</StackPanel>
-				<ListBox Grid.Row="1" ItemsSource="{Binding IndexItems}" SelectedItem="{Binding SelectedViewModel}" x:Name="itemsList" HorizontalContentAlignment="Stretch">
+				<ListBox x:Name="listItems" Grid.Row="1" ItemsSource="{Binding IndexItems}" SelectedItem="{Binding SelectedViewModel}" HorizontalContentAlignment="Stretch">
 					<ListBox.ItemTemplate>
 						<DataTemplate>
 							<Grid>
@@ -204,9 +205,9 @@
 			</TabControl>
 		</Grid>
 		<StatusBar Grid.Row="2" Style="{StaticResource IndexItemsStyleDefaultStatusbarStyle}">
-			<TextBlock Text="now" />
+			<TextBlock Text="{Binding SelectedIndex, ElementName=listItems, Converter={StaticResource SelectedIndexNumberConverter}}" />
 			<TextBlock Text="/" />
-			<TextBlock Text="max" />
+			<TextBlock Text="{Binding IndexItems.Count}" />
 		</StatusBar>
 	</Grid>
 </AW:ViewModelCommonDataWindow>
