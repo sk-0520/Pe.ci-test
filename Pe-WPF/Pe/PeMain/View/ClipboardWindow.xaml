@@ -204,7 +204,11 @@
 								</StackPanel>
 							</TabItem.Header>
 							<TextBox 
-								IsReadOnly="True" Text="{Binding SelectedViewModel.Text, Mode=OneWay}"
+								IsReadOnly="True"
+								Text="{Binding SelectedViewModel.Text, Mode=OneWay}"
+								HorizontalScrollBarVisibility="Auto"
+								VerticalScrollBarVisibility="Auto"
+								TextWrapping="NoWrap"
 								FontFamily="{Binding FontFamily, Mode=OneWay}" FontWeight="{Binding FontBold, Converter={StaticResource BooleanFontWeightConverter}, Mode=OneWay}" FontStyle="{Binding FontItalic, Converter={StaticResource BooleanFontStyleConverter}, Mode=OneWay}" FontSize="{Binding FontSize, Mode=OneWay}"
 							/>
 						</TabItem>
@@ -215,7 +219,12 @@
 									<TextBlock Text="rft" AA:Language.Word="clipboard/type/rtf" />
 								</StackPanel>
 							</TabItem.Header>
-							<xctk:RichTextBox IsReadOnly="True" Text="{Binding SelectedViewModel.Rtf}" >
+							<xctk:RichTextBox 
+								IsReadOnly="True" 
+								HorizontalScrollBarVisibility="Auto" 
+								VerticalScrollBarVisibility="Auto" 
+								Text="{Binding SelectedViewModel.Rtf}"
+							>
 								<xctk:RichTextBox.TextFormatter>
 									<xctk:RtfFormatter  />
 									<!--<xctk:PlainTextFormatter   />-->
