@@ -4,6 +4,7 @@
 	using System.Collections.Generic;
 	using System.IO;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
 
 	public class AppLanguageManager: LanguageManager
@@ -19,7 +20,7 @@
 
 		public string BaseFileName { get; private set; }
 		public string BaseDirectoryPath { get; private set; }
-		public string AcceptDocumentFilePath { get { return Path.Combine(BaseDirectoryPath, BaseFileName + Constants.languageAcceptDocumentFileName); } }
+		public string AcceptDocumentFilePath { get { return Path.Combine(BaseDirectoryPath, PathUtility.AppendExtension(BaseFileName, Constants.languageAcceptDocumentExtension)); } }
 
 		#endregion 
 

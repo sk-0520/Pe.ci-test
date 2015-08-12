@@ -82,7 +82,7 @@
 
 		public const string timestampFileName = "yyyy-MM-dd_HH-mm-ss";
 
-		public const string languageAcceptDocumentFileName = ".accept.html";
+		public const string languageAcceptDocumentExtension = "accept.html";
 
 		public const string extensionBinaryFile = "dat";
 		public const string extensionJsonFile = "json";
