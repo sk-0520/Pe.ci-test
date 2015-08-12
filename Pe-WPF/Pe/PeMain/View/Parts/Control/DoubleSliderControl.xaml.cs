@@ -16,11 +16,11 @@
 	using System.Windows.Shapes;
 
 	/// <summary>
-	/// TimeSliderControl.xaml の相互作用ロジック
+	/// DoubleSliderControl.xaml の相互作用ロジック
 	/// </summary>
-	public partial class TimeSliderControl : CommonDataUserControl
+	public partial class DoubleSliderControl: CommonDataUserControl
 	{
-		public TimeSliderControl()
+		public DoubleSliderControl()
 		{
 			InitializeComponent();
 		}
@@ -29,26 +29,26 @@
 
 		public static readonly DependencyProperty ValueProperty = DependencyProperty.Register(
 			"Value",
-			typeof(TimeSpan),
-			typeof(TimeSliderControl),
+			typeof(double),
+			typeof(DoubleSliderControl),
 			new FrameworkPropertyMetadata(
-				TimeSpan.Zero,
+				0.0,
 				FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
 				new PropertyChangedCallback(OnValueChanged)
 			)
 		);
 
-		public TimeSpan Value
+		public double Value
 		{
-			get { return (TimeSpan)GetValue(ValueProperty); }
+			get { return (double)GetValue(ValueProperty); }
 			set { SetValue(ValueProperty, value); }
 		}
 
 		static void OnValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
 		{
-			var ctrl = d as TimeSliderControl;
-			if (ctrl != null) {
-				ctrl.Value = (TimeSpan)e.NewValue;
+			var ctrl = d as DoubleSliderControl;
+			if(ctrl != null) {
+				ctrl.Value = (double)e.NewValue;
 			}
 		}
 
@@ -58,25 +58,25 @@
 
 		public static readonly DependencyProperty MaximumProperty = DependencyProperty.Register(
 			"Maximum",
-			typeof(TimeSpan),
-			typeof(TimeSliderControl),
+			typeof(double),
+			typeof(DoubleSliderControl),
 			new FrameworkPropertyMetadata(
-				TimeSpan.Zero,
+				double.MaxValue,
 				new PropertyChangedCallback(OnMaximumChanged)
 			)
 		);
 
-		public TimeSpan Maximum
+		public double Maximum
 		{
-			get { return (TimeSpan)GetValue(ValueProperty); }
+			get { return (double)GetValue(ValueProperty); }
 			set { SetValue(ValueProperty, value); }
 		}
 
 		static void OnMaximumChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
 		{
-			var ctrl = d as TimeSliderControl;
-			if (ctrl != null) {
-				ctrl.Maximum = (TimeSpan)e.NewValue;
+			var ctrl = d as DoubleSliderControl;
+			if(ctrl != null) {
+				ctrl.Maximum = (double)e.NewValue;
 			}
 		}
 
@@ -86,25 +86,25 @@
 
 		public static readonly DependencyProperty MinimumProperty = DependencyProperty.Register(
 			"Minimum",
-			typeof(TimeSpan),
-			typeof(TimeSliderControl),
+			typeof(double),
+			typeof(DoubleSliderControl),
 			new FrameworkPropertyMetadata(
-				TimeSpan.Zero,
+				double.MinValue,
 				new PropertyChangedCallback(OnMinimumChanged)
 			)
 		);
 
-		public TimeSpan Minimum
+		public double Minimum
 		{
-			get { return (TimeSpan)GetValue(ValueProperty); }
+			get { return (double)GetValue(ValueProperty); }
 			set { SetValue(ValueProperty, value); }
 		}
 
 		static void OnMinimumChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
 		{
-			var ctrl = d as TimeSliderControl;
-			if (ctrl != null) {
-				ctrl.Minimum = (TimeSpan)e.NewValue;
+			var ctrl = d as DoubleSliderControl;
+			if(ctrl != null) {
+				ctrl.Minimum = (double)e.NewValue;
 			}
 		}
 

@@ -8,8 +8,8 @@
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-	xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+	
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
 	mc:Ignorable="d" 
 	d:DesignHeight="318" d:DesignWidth="517"
 >
@@ -81,7 +81,14 @@
 				/>
 
 				<Label Content="text length" Grid.Row="4" HorizontalAlignment="Stretch" VerticalAlignment="Top" />
-				<Slider Grid.Column="1" Grid.Row="4" HorizontalAlignment="Stretch" VerticalAlignment="Top" Value="{Binding SelectedToolbar.TextWidth, Mode=TwoWay}" Minimum="{Binding Source={x:Static AM:Constants.ToolbarTextMinimumLength}}" Maximum="{Binding Source={x:Static AM:Constants.ToolbarTextMaximumLength}}" />
+				<!--<Slider Grid.Row="4" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" Value="{Binding SelectedToolbar.TextWidth, Mode=TwoWay}" Minimum="{Binding Source={x:Static AM:Constants.ToolbarTextMinimumLength}}" Maximum="{Binding Source={x:Static AM:Constants.ToolbarTextMaximumLength}}" />-->
+				<AV:DoubleSliderControl
+					Grid.Row="4"
+					Grid.Column="1"
+					Value="{Binding SelectedToolbar.TextWidth, Mode=TwoWay}"
+					Minimum="{Binding Source={x:Static AM:Constants.ToolbarTextMinimumLength}}"
+					Maximum="{Binding Source={x:Static AM:Constants.ToolbarTextMaximumLength}}"
+				/>
 
 				<StackPanel HorizontalAlignment="Left" Height="71" Grid.Row="5" Grid.ColumnSpan="2" VerticalAlignment="Top">
 					<CheckBox Content="show text" HorizontalAlignment="Stretch" IsChecked="{Binding SelectedToolbar.TextVisible}" />
