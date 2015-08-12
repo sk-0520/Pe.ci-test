@@ -91,11 +91,11 @@
 			set { SetPropertyValue(Clipboard, value); }
 		}
 
-		public double WaitTimeMs
-		{
-			get { return Clipboard.WaitTime.TotalMilliseconds; }
-			set { SetPropertyValue(Clipboard, TimeSpan.FromMilliseconds(value), "WaitTime"); }
-		}
+		//public double WaitTimeMs
+		//{
+		//	get { return Clipboard.WaitTime.TotalMilliseconds; }
+		//	set { SetPropertyValue(Clipboard, TimeSpan.FromMilliseconds(value), "WaitTime"); }
+		//}
 
 		public TimeSpan WaitTime
 		{
