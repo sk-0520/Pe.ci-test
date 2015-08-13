@@ -12,6 +12,7 @@
 	using System.Windows.Media.Imaging;
 	using ContentTypeTextNet.Library.SharedLibrary.Define;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
 	partial class App
 	{
@@ -23,6 +24,7 @@
 		{
 			//icon();
 			//font();
+			//box();
 		}
 
 		void icon()
@@ -56,6 +58,19 @@
 			foreach(var name in names) {
 				var ff = FontUtility.MakeFontFamily(name, SystemFonts.MessageFontFamily);
 				Debug.WriteLine(ff);
+			}
+		}
+
+		void box()
+		{
+			var canvas = ImageUtility.CreateBox(Colors.Red, Colors.Yellow, new Size(16, 16));
+			var box16 = ImageUtility.MakeBitmapBitmapSourceDefualtDpi(canvas);
+
+			var encoder = new PngBitmapEncoder();
+			encoder.Frames.Add(BitmapFrame.Create(box16));
+
+			using (var stm = File.Create(@"Z:\image.png")) {
+				encoder.Save(stm);
 			}
 		}
 
