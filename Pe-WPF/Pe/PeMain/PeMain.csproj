@@ -152,6 +152,9 @@
     <Compile Include="View\Parts\Control\FontSelectControl.xaml.cs">
       <DependentUpon>FontSelectControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Parts\Control\IntegerSliderControl.xaml.cs">
+      <DependentUpon>IntegerSliderControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Parts\Control\TimeSliderControl.xaml.cs">
       <DependentUpon>TimeSliderControl.xaml</DependentUpon>
     </Compile>
@@ -452,6 +455,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Parts\Control\FontSelectControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Parts\Control\IntegerSliderControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
