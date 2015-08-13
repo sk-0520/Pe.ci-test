@@ -21,18 +21,11 @@
 			<SC:LogicalNotConverter x:Key="LogicalNotConverter"/>
 			<SC:IsNotEmptyCollection x:Key="IsNotEmptyCollection" />
 
-			<ItemContainerTemplate x:Key="IMenuItemTemplate">
-				<StackPanel Orientation="Horizontal">
-					<Image Source="{Binding MenuImage}" />
-					<TextBlock Text="{Binding DisplayText}" />
-				</StackPanel>
-			</ItemContainerTemplate>
-			
-			<Style x:Key="NoteMenuItemStyle" TargetType="MenuItem">
+			<Style x:Key="NoteMenuItemStyle" TargetType="MenuItem" BasedOn="{StaticResource IMenuItem}">
 				<Setter Property="Command" Value="{Binding NoteMenuSelectedCommand}" />
 			</Style>
 
-			<Style x:Key="WindowMenuItemStyle" TargetType="MenuItem">
+			<Style x:Key="WindowMenuItemStyle" TargetType="MenuItem" BasedOn="{StaticResource IMenuItem}">
 				<Setter Property="Command" Value="{Binding WindowMenuSelectedCommand}" />
 			</Style>
 		</ContextMenu.Resources>
@@ -62,8 +55,8 @@
 			<Separator />
 			<MenuItem Header="front" Command="{Binding FrontNoteItemsCommand}" />
 			<Separator />
-			<MenuItem Header="show" ItemsSource="{Binding NoteShowItems}" ItemContainerStyle="{StaticResource IMenuItem}" IsEnabled="{Binding ItemsSource,RelativeSource={RelativeSource Self}, Converter={StaticResource IsNotEmptyCollection}}"/>
-			<MenuItem Header="hidden" ItemsSource="{Binding NoteHiddenItems}" ItemTemplate="{StaticResource ResourceKey=IMenuItemTemplate}" ItemContainerStyle="{StaticResource ResourceKey=NoteMenuItemStyle}" IsEnabled="{Binding ItemsSource,RelativeSource={RelativeSource Self}, Converter={StaticResource IsNotEmptyCollection}}"/>
+			<MenuItem Header="show" ItemsSource="{Binding NoteShowItems}" ItemContainerStyle="{StaticResource NoteMenuItemStyle}" IsEnabled="{Binding ItemsSource,RelativeSource={RelativeSource Self}, Converter={StaticResource IsNotEmptyCollection}}"/>
+			<MenuItem Header="hidden" ItemsSource="{Binding NoteHiddenItems}" ItemContainerStyle="{StaticResource NoteMenuItemStyle}" IsEnabled="{Binding ItemsSource,RelativeSource={RelativeSource Self}, Converter={StaticResource IsNotEmptyCollection}}"/>
 		</MenuItem>
 		<MenuItem AA:Language.Word="tasktray/template" Header="template" Command="{Binding SwitchTemplateWindowCommand}" IsChecked="{Binding Template.IsVisible, Mode=OneWay}" />
 		<MenuItem AA:Language.Word="tasktray/command" Header="command" Command="{Binding ShowCommandWindowCommand}" />
@@ -77,8 +70,8 @@
 			<Separator />
 			<MenuItem Header="window - save" Command="{Binding SaveTemporaryWindow}" />
 			<MenuItem Header="window - load" Command="{Binding LoadTemporaryWindow}" />
-			<MenuItem Header="window - timer" ItemsSource="{Binding WindowTimerItems}" ItemTemplate="{StaticResource ResourceKey=IMenuItemTemplate}" ItemContainerStyle="{StaticResource ResourceKey=WindowMenuItemStyle}" IsEnabled="{Binding ItemsSource,RelativeSource={RelativeSource Self}, Converter={StaticResource IsNotEmptyCollection}}" />
-			<MenuItem Header="window - system" ItemsSource="{Binding WindowSystemItems}" ItemTemplate="{StaticResource ResourceKey=IMenuItemTemplate}" ItemContainerStyle="{StaticResource ResourceKey=WindowMenuItemStyle}" IsEnabled="{Binding ItemsSource,RelativeSource={RelativeSource Self}, Converter={StaticResource IsNotEmptyCollection}}" />
+			<MenuItem Header="window - timer" ItemsSource="{Binding WindowTimerItems}" ItemContainerStyle="{StaticResource ResourceKey=WindowMenuItemStyle}" IsEnabled="{Binding ItemsSource,RelativeSource={RelativeSource Self}, Converter={StaticResource IsNotEmptyCollection}}" />
+			<MenuItem Header="window - system" ItemsSource="{Binding WindowSystemItems}" ItemContainerStyle="{StaticResource ResourceKey=WindowMenuItemStyle}" IsEnabled="{Binding ItemsSource,RelativeSource={RelativeSource Self}, Converter={StaticResource IsNotEmptyCollection}}" />
 		</MenuItem>
 		<Separator />
 		<MenuItem AA:Language.Word="tasktray/about" Header="about" />
