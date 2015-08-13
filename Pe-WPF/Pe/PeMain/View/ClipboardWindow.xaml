@@ -23,14 +23,14 @@
 	Width="{Binding WindowWidth, Mode=TwoWay}"
 	Height="{Binding WindowHeight, Mode=TwoWay}"
 	Topmost="{Binding IsTopmost}"
-	Style="{DynamicResource IndexItemsStyleDefualtWindowStyle}"
+	Style="{DynamicResource ClipboardTemplateDefualtWindow}"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
 	d:DesignWidth="407" d:DesignHeight="222"
 >
 	<AW:CommonDataWindow.Resources>
 		<ResourceDictionary>
 			<ResourceDictionary.MergedDictionaries>
-				<ResourceDictionary Source="/View/Parts/Resource/IndexItemsDictionary.xaml"/>
+				<ResourceDictionary Source="/View/Parts/Resource/ClipboardTemplateDictionary.xaml"/>
 				<ResourceDictionary Source="/View/Parts/Resource/ImageDictionary.xaml"/>
 				<ResourceDictionary Source="/View/Parts/Resource/ToolbarDictionary.xaml"/>
 			</ResourceDictionary.MergedDictionaries>
@@ -68,7 +68,7 @@
 				<RowDefinition Height="*"/>
 				<RowDefinition Height="Auto"/>
 			</Grid.RowDefinitions>
-			<ToolBar Style="{StaticResource IndexItemsStyleDefaultToolbarStyle}" >
+			<ToolBar Style="{StaticResource ClipboardTemplateDefualtToolbar}" >
 				<ToggleButton IsChecked="{Binding IsEnabled}" AA:Language.Hint="clipboard/enabled:hint">
 					<StackPanel Orientation="Horizontal">
 						<TextBlock Text="enabled" AA:Language.Word="clipboard/enabled" />
@@ -108,7 +108,7 @@
 					</StackPanel>
 				</ToggleButton>
 			</ToolBar>
-			<Grid Style="{StaticResource IndexItemsStyleDefaultMainPanelStyle}" Grid.Row="1">
+			<Grid Style="{StaticResource ClipboardTemplateDefaultMainPanel}" Grid.Row="1">
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="{Binding ItemsListWidth, Converter={StaticResource DoubleGridLengthConverter}, Mode=TwoWay}"/>
 					<ColumnDefinition Width="*"/>
@@ -126,7 +126,7 @@
 						<ListBox.ItemTemplate>
 							<DataTemplate>
 								<Grid>
-									<Border x:Name="item" Style="{StaticResource IndexItemsStyleItem}">
+									<Border x:Name="item" Style="{StaticResource ClipboardTemplateItem}">
 										<StackPanel>
 											<TextBlock Text="{Binding Name}" />
 											<Border Style="{StaticResource IndexItemsStyleInfo}">
@@ -141,7 +141,7 @@
 											</Border>
 										</StackPanel>
 									</Border>
-									<Border Style="{StaticResource IndexItemsStyleItemCommandArea}" >
+									<Border Style="{StaticResource ClipboardTemplateCommandArea}" >
 										<StackPanel Orientation="Horizontal">
 											<StackPanel.Resources>
 												<Style TargetType="Button">
@@ -183,8 +183,8 @@
 						</ListBox.ItemTemplate>
 					</ListBox>
 				</Grid>
-				<GridSplitter Grid.Column="1" Style="{StaticResource IndexItemsStyleDefaultGridSplitterStyle}" />
-				<Grid x:Name="content" Grid.Column="1" Margin="{StaticResource IndexItemsStyleSplitterMargin}" IsEnabled="{Binding SelectedViewModel, Converter={StaticResource LogicalIsNotNullConverter}}">
+				<GridSplitter Grid.Column="1" Style="{StaticResource ClipboardTemplateDefaultGridSplitter}" />
+				<Grid x:Name="content" Grid.Column="1" Margin="{StaticResource ClipboardTemplateSplitterMargin}" IsEnabled="{Binding SelectedViewModel, Converter={StaticResource LogicalIsNotNullConverter}}">
 					<Grid.RowDefinitions>
 						<RowDefinition Height="Auto" />
 						<RowDefinition Height="*" />
@@ -343,7 +343,7 @@
 					</TabControl>
 				</Grid>
 			</Grid>
-			<StatusBar Grid.Row="2" Style="{StaticResource IndexItemsStyleDefaultStatusbarStyle}">
+			<StatusBar Grid.Row="2" Style="{StaticResource ClipboardTemplateDefaultStatusbar}">
 				<TextBlock Text="{Binding SelectedIndex, ElementName=listItems, Converter={StaticResource SelectedIndexNumberConverter}}" />
 				<TextBlock Text="/" />
 				<TextBlock Text="{Binding IndexItems.Count}" />
