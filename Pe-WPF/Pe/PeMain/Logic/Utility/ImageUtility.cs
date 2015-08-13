@@ -68,5 +68,26 @@
 		{
 			return MakeBitmapBitmapSource(element, new Point(96, 96));
 		}
+
+		public static Color GetToolbarPositionColor(bool isBoxColor, bool isActive)
+		{
+			byte alpha = 80;
+
+			if(isBoxColor) {
+				if(isActive) {
+					return SystemColors.ActiveCaptionColor;
+				} else {
+					var color = SystemColors.InactiveCaptionColor;
+					return Color.FromArgb(alpha, color.R, color.G, color.B);
+				}
+			} else {
+				if(isActive) {
+					return SystemColors.ActiveCaptionTextColor;
+				} else {
+					var color = SystemColors.InactiveCaptionTextColor;
+					return Color.FromArgb(alpha, color.R, color.G, color.B);
+				}
+			}
+		}
 	}
 }

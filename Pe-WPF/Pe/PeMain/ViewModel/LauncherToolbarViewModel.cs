@@ -35,7 +35,7 @@
 	using System.Windows.Media.Imaging;
 	using System.Windows.Shapes;
 
-	public class LauncherToolbarViewModel : HavingViewSingleModelWrapperViewModelBase<LauncherToolbarDataModel, LauncherToolbarWindow>, IApplicationDesktopToolbarData, IVisualStyleData, IHavingAppNonProcess, IWindowAreaCorrectionData, IWindowHitTestData, IHavingAppSender, IRefreshFromViewModel, IMenuItem
+	public class LauncherToolbarViewModel: HavingViewSingleModelWrapperViewModelBase<LauncherToolbarDataModel, LauncherToolbarWindow>, IApplicationDesktopToolbarData, IVisualStyleData, IHavingAppNonProcess, IWindowAreaCorrectionData, IWindowHitTestData, IHavingAppSender, IRefreshFromViewModel, IMenuItem
 	{
 		#region static
 
@@ -46,7 +46,7 @@
 
 		static Size GetCaptionSize(Orientation orientation, double captionWidth)
 		{
-			if (orientation == Orientation.Horizontal) {
+			if(orientation == Orientation.Horizontal) {
 				return new Size(captionWidth, 0);
 			} else {
 				return new Size(0, captionWidth);
@@ -102,7 +102,7 @@
 
 		static Orientation GetOrientation(DockType dockType)
 		{
-			switch (dockType) {
+			switch(dockType) {
 				case DockType.Left:
 				case DockType.Right:
 					return Orientation.Vertical;
@@ -168,13 +168,13 @@
 			ButtonSize = GetButtonSize(IconSize, MenuWidth, Model.Toolbar.TextVisible, Model.Toolbar.TextWidth);
 
 			//BorderThickness = GetBorderThickness(Model.Toolbar.DockType, View);
-			if (HasView) {
+			if(HasView) {
 				BorderBrush = View.Background;
 
 				var backgroundPropertyDescriptor = DependencyPropertyDescriptor.FromProperty(
 					Window.BackgroundProperty, typeof(Brush)
 				);
-				if (backgroundPropertyDescriptor != null) {
+				if(backgroundPropertyDescriptor != null) {
 					backgroundPropertyDescriptor.AddValueChanged(View, OnBackgroundChanged);
 				}
 
@@ -236,7 +236,7 @@
 		{
 			get
 			{
-				if (Orientation == Orientation.Horizontal) {
+				if(Orientation == Orientation.Horizontal) {
 					return this._captionWidth;
 				} else {
 					return HasView ? View.Width : ButtonSize.Width;
@@ -247,7 +247,7 @@
 		{
 			get
 			{
-				if (Orientation == Orientation.Vertical) {
+				if(Orientation == Orientation.Vertical) {
 					return this._captionWidth;
 				} else {
 					return HasView ? View.Height : ButtonSize.Height;
@@ -265,7 +265,7 @@
 			get { return this._minSize; }
 			set
 			{
-				if (this._minSize != value) {
+				if(this._minSize != value) {
 					this._minSize = value;
 					OnPropertyChanged();
 				}
@@ -278,11 +278,11 @@
 		{
 			get
 			{
-				if (this._selectedGroup == null) {
-					if (Model.Toolbar.DefaultGroupId != Guid.Empty) {
+				if(this._selectedGroup == null) {
+					if(Model.Toolbar.DefaultGroupId != Guid.Empty) {
 						Model.GroupItems.TryGetValue(Model.Toolbar.DefaultGroupId, out this._selectedGroup);
 					}
-					if (this._selectedGroup == null) {
+					if(this._selectedGroup == null) {
 						this._selectedGroup = Model.GroupItems.First();
 					}
 				}
@@ -302,12 +302,12 @@
 				//		oldItem.Dispose();
 				//	}
 				//}
-				if (SetVariableValue(ref this._selectedGroup, value)) {
+				if(SetVariableValue(ref this._selectedGroup, value)) {
 					OnPropertyChanged("GroupItems");
 					var oldItems = this._launcherItems;
 					this._launcherItems = null;
 					OnPropertyChanged("LauncherItems");
-					foreach (var oldItem in oldItems) {
+					foreach(var oldItem in oldItems) {
 						oldItem.Dispose();
 					}
 				}
@@ -318,7 +318,7 @@
 		{
 			get
 			{
-				if (this._launcherItems == null) {
+				if(this._launcherItems == null) {
 					var list = GetLauncherItems(SelectedGroup)
 						.Select(m => new LauncherItemButtonViewModel(m, AppNonProcess, AppSender) {
 							IconScale = Model.Toolbar.IconScale,
@@ -452,7 +452,7 @@
 
 			BarSize = new Size(ButtonSize.Width + BorderThickness.GetHorizon(), ButtonSize.Height + BorderThickness.GetVertical());
 
-			if (dockType != DockType.None) {
+			if(dockType != DockType.None) {
 				HideWidth = GetHideWidth(dockType);
 				MinSize = new Size(0, 0);
 			} else {
@@ -464,7 +464,7 @@
 
 		IEnumerable<LauncherItemModel> GetLauncherItems(LauncherGroupItemModel groupItem)
 		{
-			if (groupItem.GroupKind == GroupKind.LauncherItems) {
+			if(groupItem.GroupKind == GroupKind.LauncherItems) {
 				return groupItem.LauncherItems
 					.Where(i => Model.LauncherItems.Contains(i)) //TODO: Xアイコン表示をどうしよう
 					.Select(i => Model.LauncherItems[i])
@@ -946,61 +946,40 @@
 				};
 				maxArea.Width = Math.Abs(maxArea.X) + screens.Max(s => s.DeviceBounds.Right);
 				maxArea.Height = Math.Abs(maxArea.Y) + screens.Max(s => s.DeviceBounds.Bottom);
-				
+
 				var percentage = new Size(
 					drawSize.Width / maxArea.Width * 100.0f,
 					drawSize.Height / maxArea.Height * 100.0f
 				);
 
-							var canvas = new Canvas();
-							canvas.Width = 16;
-							canvas.Height = 16;
+				var canvas = new Canvas() {
+					Width = iconSize.Width,
+					Height = iconSize.Height,
+				};
 
-				foreach (var screen in screens) {
-					//if (menuItem.DropDownItems.ContainsKey(screen.DeviceName)) {
-						//var screenMenuItem = (ToolStripMenuItem)menuItem.DropDownItems[screen.DeviceName];
-						// 各エリアの描画
-						//var alpha = 80;
-						//var baseImage = new Bitmap(iconSize.Width, iconSize.Height);
-						//using (var g = Graphics.FromImage(baseImage)) {
-							//foreach (var inScreen in screens) {
+				foreach(var screen in screens) {
 					var useScreen = DockScreen.DeviceName == screen.DeviceName;
-								//var backColor = AppUtility.GetToolbarPositionColor(false, useScreen);
-								//var foreColor = AppUtility.GetToolbarPositionColor(true, useScreen);
-								var backColor = Colors.Red;
-								var foreColor = Colors.Pink;
-								if(useScreen) {
-									backColor = Colors.White;
-								}
+					var backColor = ImageUtility.GetToolbarPositionColor(true, useScreen);
+					var foreColor = ImageUtility.GetToolbarPositionColor(false, useScreen);
 
-								var baseArea = screen.DeviceBounds;
-								baseArea.Offset(basePos.X, basePos.Y);
+					var baseArea = screen.DeviceBounds;
+					baseArea.Offset(basePos.X, basePos.Y);
 
-								var drawArea = new Rect(
-									baseArea.X / 100.0f * percentage.Width,
-									baseArea.Y / 100.0f * percentage.Height,
-									baseArea.Width / 100.0f * percentage.Width,
-									baseArea.Height / 100.0f * percentage.Height
-								);
+					var drawArea = new Rect(
+						baseArea.X / 100.0 * percentage.Width,
+						baseArea.Y / 100.0 * percentage.Height,
+						baseArea.Width / 100.0 * percentage.Width,
+						baseArea.Height / 100.0 * percentage.Height
+					);
 
-								//using (var img = this._commonData.Skin.CreateColorBoxImage(foreColor, backColor, drawArea.Size.ToSize())) {
-								//	g.DrawImage(img, drawArea.Location);
-								//}
-								var element = (Rectangle)ImageUtility.CreateBox(foreColor, backColor, drawArea.Size);
-								Canvas.SetLeft(element, drawArea.X);
-								Canvas.SetTop(element, drawArea.Y);
-								canvas.Children.Add(element);
-							//}
-						//}
-						//screenMenuItem.Image.ToDispose();
-						//screenMenuItem.Image = baseImage;
-						//screenMenuItem.Checked = this._toolbarForms[screen].Visible;
-					//}
+					var element = (Rectangle)ImageUtility.CreateBox(foreColor, backColor, drawArea.Size);
+					Canvas.SetLeft(element, drawArea.X);
+					Canvas.SetTop(element, drawArea.Y);
+					canvas.Children.Add(element);
 				}
 
-				return ImageUtility.MakeBitmapBitmapSourceDefualtDpi(canvas);
-
-				//return null;
+				var result = ImageUtility.MakeBitmapBitmapSourceDefualtDpi(canvas);
+				return result;
 			}
 		}
 
@@ -1010,7 +989,7 @@
 		void OnBackgroundChanged(object sender, EventArgs e)
 		{
 			var viewBrush = View.Background as SolidColorBrush;
-			if (viewBrush != null) {
+			if(viewBrush != null) {
 				BorderBrush = viewBrush;
 			}
 		}

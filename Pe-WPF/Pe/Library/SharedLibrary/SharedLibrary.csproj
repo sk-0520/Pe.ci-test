@@ -87,7 +87,6 @@
     <Compile Include="CompatibleForms\Screen.cs" />
     <Compile Include="CompatibleForms\SystemInformation.cs" />
     <Compile Include="CompatibleForms\Utility\DrawingUtility.cs" />
-    <Compile Include="CompatibleForms\Utility\ImageUtility.cs" />
     <Compile Include="CompatibleForms\Utility\SendKeysUtility.cs" />
     <Compile Include="CompatibleWindows\IconDialog.cs" />
     <Compile Include="CompatibleWindows\IconWrapper.cs" />

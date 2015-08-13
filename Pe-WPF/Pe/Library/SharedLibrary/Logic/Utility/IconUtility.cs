@@ -251,7 +251,7 @@
 				try {
 					var iconList = LoadIconResource(iconPath);
 					if (iconIndex < iconList.Count) {
-						return (BitmapSource)ImageUtility.ImageSourceFromBinaryIcon(iconList[iconIndex], iconScale.ToSize());
+						return (BitmapSource)DrawingUtility.ImageSourceFromBinaryIcon(iconList[iconIndex], iconScale.ToSize());
 					}
 				} catch (Exception ex) {
 					logger.SafeDebug(ex);
