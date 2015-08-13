@@ -97,7 +97,12 @@
 		public string Name
 		{
 			get { return Model.Name; }
-			set { SetModelValue(value); }
+			set 
+			{
+				if (SetModelValue(value)) {
+					OnPropertyChangeDisplayItem();
+				}
+			}
 		}
 
 		public bool IsLocked
@@ -460,6 +465,12 @@
 			base.UninitializeView();
 		}
 
+		protected override void OnPropertyChangeDisplayItem()
+		{
+			base.OnPropertyChangeDisplayItem();
+			OnPropertyChanged("MenuImage");
+		}
+
 		#endregion
 
 		#region IColorPair
@@ -467,13 +478,23 @@
 		public Color ForeColor
 		{
 			get { return ColorPairProperty.GetNoneAlphaForeColor(Model); }
-			set { ColorPairProperty.SetNoneAlphaForekColor(Model, value, OnPropertyChanged); }
+			set
+			{
+				if (ColorPairProperty.SetNoneAlphaForekColor(Model, value, OnPropertyChanged)) {
+					OnPropertyChangeDisplayItem();
+				}
+			}
 		}
 
 		public Color BackColor
 		{
 			get { return ColorPairProperty.GetNoneAlphaBackColor(Model); }
-			set { ColorPairProperty.SetNoneAlphaBackColor(Model, value, OnPropertyChanged); }
+			set
+			{
+				if (ColorPairProperty.SetNoneAlphaBackColor(Model, value, OnPropertyChanged)) {
+					OnPropertyChangeDisplayItem();
+				}
+			}
 		}
 
 		#endregion
@@ -687,16 +708,8 @@
 
 		#region INoteMenuItem
 
-		public ImageSource MenuImage 
-		{ 
-			get 
-			{
-				var size = IconScale.Small.ToSize();
-				var element = ImageUtility.CreateBox(Model.ForeColor, Model.BackColor, size);
-				var image = ImageUtility.MakeBitmapBitmapSourceDefualtDpi(element);
-				return image;
-			} 
-		}
+		public ImageSource MenuImage { get { return NoteUtility.CreateMenuIcon(Model); } }
+
 		public override string DisplayText { get { return DisplayTextUtility.GetDisplayName(Model); } }
 
 		public ICommand NoteMenuSelectedCommand

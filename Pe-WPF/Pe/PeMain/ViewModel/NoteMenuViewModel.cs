@@ -36,7 +36,7 @@
 
 		#region INoteMenuItem
 
-		public ImageSource MenuImage { get { return null; } }
+		public ImageSource MenuImage { get { return NoteUtility.CreateMenuIcon(Model); } }
 		public override string DisplayText { get { return DisplayTextUtility.GetDisplayName(Model); } }
 
 		public ICommand NoteMenuSelectedCommand
