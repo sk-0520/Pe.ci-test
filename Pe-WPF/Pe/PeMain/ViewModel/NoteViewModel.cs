@@ -687,7 +687,16 @@
 
 		#region INoteMenuItem
 
-		public ImageSource MenuImage { get { return null; } }
+		public ImageSource MenuImage 
+		{ 
+			get 
+			{
+				var size = IconScale.Small.ToSize();
+				var element = ImageUtility.CreateBox(Model.ForeColor, Model.BackColor, size);
+				var image = ImageUtility.MakeBitmapBitmapSourceDefualtDpi(element);
+				return image;
+			} 
+		}
 		public override string DisplayText { get { return DisplayTextUtility.GetDisplayName(Model); } }
 
 		public ICommand NoteMenuSelectedCommand
