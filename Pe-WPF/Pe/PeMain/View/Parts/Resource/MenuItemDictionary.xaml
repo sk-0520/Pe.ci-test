@@ -8,5 +8,11 @@
 	<Style x:Key="IMenuItem" TargetType="MenuItem">
 		<Setter Property="Header" Value="{Binding DisplayText}" />
 		<Setter Property="Icon" Value="{StaticResource MenuItem}" />
+		<!--<Setter Property="Template" Value="{StaticResource IMenuItemTemplate}" />-->
 	</Style>
+
+	<!--<ControlTemplate x:Key="IMenuItemTemplate" TargetType="MenuItem">
+		<ContentPresenter />
+	</ControlTemplate>-->
+
 </ResourceDictionary>
