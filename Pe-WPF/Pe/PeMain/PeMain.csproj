@@ -72,7 +72,6 @@
     <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>False</Private>
     </Reference>
@@ -136,6 +135,7 @@
     <Compile Include="Define\Timing.cs" />
     <Compile Include="LanguageKey.cs" />
     <Compile Include="Logic\Property\FontModelProperty.cs" />
+    <Compile Include="Logic\Utility\ImageUtility.cs" />
     <Compile Include="Logic\Utility\PopupUtility.cs" />
     <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeCommandSetting.cs" />
     <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeLoggingSetting.cs" />
