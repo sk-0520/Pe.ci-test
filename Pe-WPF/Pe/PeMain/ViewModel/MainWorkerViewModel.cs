@@ -751,6 +751,8 @@
 
 		void CreateClipboard()
 		{
+			CommonData.ClipboardIndexSetting.Items.LimitSize = CommonData.MainSetting.Clipboard.SaveCount;
+
 			ClipboardWindow = new ClipboardWindow();
 			ClipboardWindow.SetCommonData(CommonData, null);
 		}
