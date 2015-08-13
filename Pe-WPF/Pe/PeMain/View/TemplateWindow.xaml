@@ -161,14 +161,14 @@
 							<RowDefinition Height="Auto" />
 							<RowDefinition Height="*" />
 						</Grid.RowDefinitions>
-						<Grid Grid.Row="0">
+						<Grid Grid.Row="0" Style="{StaticResource ClipboardTemplateNames}">
 							<Grid.ColumnDefinitions>
 								<ColumnDefinition Width="Auto"/>
 								<ColumnDefinition Width="*"/>
 								<ColumnDefinition Width="Auto"/>
 								<ColumnDefinition Width="Auto"/>
 							</Grid.ColumnDefinitions>
-							<Label Grid.Column="0"  Content="name" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+							<TextBlock Grid.Column="0"  Text="name" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 							<TextBox Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Text="{Binding SelectedViewModel.Name, UpdateSourceTrigger=PropertyChanged}" />
 							<CheckBox Grid.Column="2" Content="replace" HorizontalAlignment="Left" VerticalAlignment="Center" IsChecked="{Binding SelectedViewModel.IsReplace}"/>
 							<CheckBox Grid.Column="3" Content="T4" HorizontalAlignment="Left" VerticalAlignment="Center" IsChecked="{Binding SelectedViewModel.IsProgrammableReplace}"/>
