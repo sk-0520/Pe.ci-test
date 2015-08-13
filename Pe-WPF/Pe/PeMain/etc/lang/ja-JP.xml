@@ -40,7 +40,8 @@
 		<Item Id="clipboard/type/files" Word="ファイル" />
 		<Item Id="clipboard/image/fit" Word="ウィンドウに合わせる" />
 		<Item Id="clipboard/image/raw" Word="原寸表示" />
-
+		<Item Id="clipboard/save-count" Word="保存対象件数" />
+		
 		<Item Id="command/selected" Word="選択中アイテム" />
 		<Item Id="command/tag" Word="@[TAG] (@[NAME])" />
 		<Item Id="command/drive" Word="@[VOLUME] (@[PATH])" />

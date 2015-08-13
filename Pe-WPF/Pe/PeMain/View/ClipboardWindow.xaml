@@ -348,6 +348,8 @@
 				<TextBlock Text="/" />
 				<TextBlock Text="{Binding IndexItems.Count}" />
 				<TextBlock Text="(" />
+				<TextBlock AA:Language.Word="clipboard/save-count" />
+				<TextBlock Text=":" />
 				<TextBlock Text="{Binding LimitSize}" />
 				<TextBlock Text=")" />
 			</StatusBar>
