@@ -59,7 +59,7 @@ using System.Windows.Media.Imaging;
 		}
 
 		/// <summary>
-		/// 指定色から自づ的に見やすそうな色を算出。
+		/// 指定色から自動的に見やすそうな色を算出。
 		/// </summary>
 		/// <param name="color"></param>
 		/// <returns></returns>
