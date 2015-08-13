@@ -42,6 +42,7 @@
 
 		<AC:DisplayTextConverter x:Key="DisplayTextConverter" />
 		<AC:HotTrackConverter x:Key="HotTrackConverter" />
+		<AC:DockTypeMenuTuneConverter x:Key="DockTypeMenuTuneConverter" />
 
 		<Style x:Key="Image" TargetType="{x:Type Image}">
 			<Setter Property="Source" Value="{Binding ToolbarImage, Mode=OneWay}" />
@@ -164,7 +165,7 @@
 						<Setter.Value>
 							<MultiBinding Converter="{StaticResource HotTrackConverter}">
 								<Binding Path="ToolbarHotTrack" />
-								<Binding Path="DataContext.DockType" ElementName="root" />
+								<Binding Path="DataContext.DockType" ElementName="root" Converter="{StaticResource DockTypeMenuTuneConverter}" />
 								<Binding>
 									<Binding.Source>
 										<sys:Double>0.2</sys:Double>
@@ -179,7 +180,7 @@
 						<Setter.Value>
 							<MultiBinding Converter="{StaticResource HotTrackConverter}">
 								<Binding Path="ToolbarHotTrack" />
-								<Binding Path="DataContext.DockType" ElementName="root" />
+								<Binding Path="DataContext.DockType" ElementName="root" Converter="{StaticResource DockTypeMenuTuneConverter}"/>
 								<Binding>
 									<Binding.Source>
 										<sys:Double>0.6</sys:Double>
@@ -194,7 +195,7 @@
 						<Setter.Value>
 							<MultiBinding Converter="{StaticResource HotTrackConverter}">
 								<Binding Path="ToolbarHotTrack" />
-								<Binding Path="DataContext.DockType" ElementName="root" />
+								<Binding Path="DataContext.DockType" ElementName="root" Converter="{StaticResource DockTypeMenuTuneConverter}"/>
 								<Binding>
 									<Binding.Source>
 										<sys:Double>0.8</sys:Double>
