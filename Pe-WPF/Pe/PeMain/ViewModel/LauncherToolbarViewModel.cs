@@ -987,6 +987,8 @@
 								//	g.DrawImage(img, drawArea.Location);
 								//}
 								var element = (Rectangle)ImageUtility.CreateBox(foreColor, backColor, drawArea.Size);
+								Canvas.SetLeft(element, drawArea.X);
+								Canvas.SetTop(element, drawArea.Y);
 								canvas.Children.Add(element);
 							//}
 						//}
