@@ -1,0 +1,10 @@
+﻿<ResourceDictionary 
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+>
+	<Image x:Key="MenuItem" x:Shared="False" Source="{Binding MenuImage}" />
+	<Style x:Key="IMenuItem" TargetType="MenuItem">
+		<Setter Property="Header" Value="{Binding DisplayText}" />
+		<Setter Property="Icon" Value="{StaticResource MenuItem}" />
+	</Style>
+</ResourceDictionary>

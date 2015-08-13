@@ -8,6 +8,9 @@
 	xmlns:AA="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Attached"
 	xmlns:SC="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=SharedLibrary"
 >
+	<ResourceDictionary.MergedDictionaries>
+		<ResourceDictionary Source="/View/Parts/Resource/MenuItemDictionary.xaml"/>
+	</ResourceDictionary.MergedDictionaries>
 	<ContextMenu x:Shared="false" x:Key="ContextMenu" IsOpen="{Binding IsContextMenuOpen}">
 		<i:Interaction.Triggers>
 			<i:EventTrigger EventName="Opened">
@@ -59,7 +62,7 @@
 			<Separator />
 			<MenuItem Header="front" Command="{Binding FrontNoteItemsCommand}" />
 			<Separator />
-			<MenuItem Header="show" ItemsSource="{Binding NoteShowItems}" ItemTemplate="{StaticResource ResourceKey=IMenuItemTemplate}" ItemContainerStyle="{StaticResource ResourceKey=NoteMenuItemStyle}" IsEnabled="{Binding ItemsSource,RelativeSource={RelativeSource Self}, Converter={StaticResource IsNotEmptyCollection}}"/>
+			<MenuItem Header="show" ItemsSource="{Binding NoteShowItems}" ItemContainerStyle="{StaticResource IMenuItem}" IsEnabled="{Binding ItemsSource,RelativeSource={RelativeSource Self}, Converter={StaticResource IsNotEmptyCollection}}"/>
 			<MenuItem Header="hidden" ItemsSource="{Binding NoteHiddenItems}" ItemTemplate="{StaticResource ResourceKey=IMenuItemTemplate}" ItemContainerStyle="{StaticResource ResourceKey=NoteMenuItemStyle}" IsEnabled="{Binding ItemsSource,RelativeSource={RelativeSource Self}, Converter={StaticResource IsNotEmptyCollection}}"/>
 		</MenuItem>
 		<MenuItem AA:Language.Word="tasktray/template" Header="template" Command="{Binding SwitchTemplateWindowCommand}" IsChecked="{Binding Template.IsVisible, Mode=OneWay}" />
