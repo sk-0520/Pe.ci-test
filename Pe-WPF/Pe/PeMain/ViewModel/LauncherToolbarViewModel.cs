@@ -33,8 +33,9 @@
 	using ContentTypeTextNet.Library.SharedLibrary.IF.WindowsViewExtend;
 	using System.Windows.Controls.Primitives;
 	using System.Windows.Media.Imaging;
+	using System.Windows.Shapes;
 
-	public class LauncherToolbarViewModel: HavingViewSingleModelWrapperViewModelBase<LauncherToolbarDataModel, LauncherToolbarWindow>, IApplicationDesktopToolbarData, IVisualStyleData, IHavingAppNonProcess, IWindowAreaCorrectionData, IWindowHitTestData, IHavingAppSender, IRefreshFromViewModel
+	public class LauncherToolbarViewModel : HavingViewSingleModelWrapperViewModelBase<LauncherToolbarDataModel, LauncherToolbarWindow>, IApplicationDesktopToolbarData, IVisualStyleData, IHavingAppNonProcess, IWindowAreaCorrectionData, IWindowHitTestData, IHavingAppSender, IRefreshFromViewModel, IMenuItem
 	{
 		#region static
 
@@ -928,6 +929,82 @@
 
 		#endregion
 
+		#region IMenuItem
+
+		public ImageSource MenuImage
+		{
+			get
+			{
+				var screens = Screen.AllScreens.ToArray();
+				var elements = new List<FrameworkElement>();
+				var basePos = new Point(Math.Abs(screens.Min(s => s.DeviceBounds.Left)), Math.Abs(screens.Min(s => s.DeviceBounds.Top)));
+				var iconSize = IconScale.Small.ToSize();
+				var drawSize = iconSize;
+				var maxArea = new Rect() {
+					X = screens.Min(s => s.DeviceBounds.Left),
+					Y = screens.Min(s => s.DeviceBounds.Top)
+				};
+				maxArea.Width = Math.Abs(maxArea.X) + screens.Max(s => s.DeviceBounds.Right);
+				maxArea.Height = Math.Abs(maxArea.Y) + screens.Max(s => s.DeviceBounds.Bottom);
+				
+				var percentage = new Size(
+					drawSize.Width / maxArea.Width * 100.0f,
+					drawSize.Height / maxArea.Height * 100.0f
+				);
+
+							var canvas = new Canvas();
+							canvas.Width = 16;
+							canvas.Height = 16;
+
+				foreach (var screen in screens) {
+					//if (menuItem.DropDownItems.ContainsKey(screen.DeviceName)) {
+						//var screenMenuItem = (ToolStripMenuItem)menuItem.DropDownItems[screen.DeviceName];
+						// 各エリアの描画
+						//var alpha = 80;
+						//var baseImage = new Bitmap(iconSize.Width, iconSize.Height);
+						//using (var g = Graphics.FromImage(baseImage)) {
+							//foreach (var inScreen in screens) {
+					var useScreen = DockScreen.DeviceName == screen.DeviceName;
+								//var backColor = AppUtility.GetToolbarPositionColor(false, useScreen);
+								//var foreColor = AppUtility.GetToolbarPositionColor(true, useScreen);
+								var backColor = Colors.Red;
+								var foreColor = Colors.Pink;
+								if(useScreen) {
+									backColor = Colors.White;
+								}
+
+								var baseArea = screen.DeviceBounds;
+								baseArea.Offset(basePos.X, basePos.Y);
+
+								var drawArea = new Rect(
+									baseArea.X / 100.0f * percentage.Width,
+									baseArea.Y / 100.0f * percentage.Height,
+									baseArea.Width / 100.0f * percentage.Width,
+									baseArea.Height / 100.0f * percentage.Height
+								);
+
+								//using (var img = this._commonData.Skin.CreateColorBoxImage(foreColor, backColor, drawArea.Size.ToSize())) {
+								//	g.DrawImage(img, drawArea.Location);
+								//}
+								var element = (Rectangle)ImageUtility.CreateBox(foreColor, backColor, drawArea.Size);
+								canvas.Children.Add(element);
+							//}
+						//}
+						//screenMenuItem.Image.ToDispose();
+						//screenMenuItem.Image = baseImage;
+						//screenMenuItem.Checked = this._toolbarForms[screen].Visible;
+					//}
+				}
+
+				return ImageUtility.MakeBitmapBitmapSourceDefualtDpi(canvas);
+
+				//return null;
+			}
+		}
+
+
+		#endregion
+
 		void OnBackgroundChanged(object sender, EventArgs e)
 		{
 			var viewBrush = View.Background as SolidColorBrush;
@@ -950,6 +1027,5 @@
 			e.Cancel = true;
 			IsVisible = false;
 		}
-
 	}
 }

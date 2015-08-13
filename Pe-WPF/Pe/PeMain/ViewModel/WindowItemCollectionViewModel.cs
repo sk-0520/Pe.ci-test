@@ -7,6 +7,7 @@
 	using System.Threading.Tasks;
 	using System.Windows.Input;
 	using System.Windows.Media;
+	using System.Windows.Shapes;
 	using ContentTypeTextNet.Library.PInvoke.Windows;
 	using ContentTypeTextNet.Library.SharedLibrary.CompatibleWindows.Utility;
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
@@ -39,7 +40,13 @@
 
 		#region IMenuItem
 
-		public ImageSource MenuImage {get { return null; }}
+		public ImageSource MenuImage
+		{
+			get 
+			{
+				return null; 
+			}
+		}
 
 		public override string DisplayText
 		{
