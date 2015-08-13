@@ -609,7 +609,7 @@
 			WindowSaveTimer = new DispatcherTimer();
 			WindowSaveTimer.Tick += Timer_Tick;
 			WindowSaveTimer.Interval = CommonData.MainSetting.WindowSave.SaveIntervalTime;
-			//@ WindowSaveTimer.Start();
+			WindowSaveTimer.Start();
 		}
 
 		void InitializeSystemEvent()
@@ -1671,6 +1671,8 @@
 				CommonData.Logger.Information("pause");
 				return;
 			}
+			// TODO: 色々実装中に動かれると邪魔
+			var a = 1; if (a == 1) return; // なので抑制
 
 			var timer = (DispatcherTimer)sender;
 			timer.Stop();
