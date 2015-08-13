@@ -13,19 +13,38 @@
 
 	public static class ImageUtility
 	{
+		/// <summary>
+		/// 箱形の要素を作成する。
+		/// <para>同じようなものを共通の見栄えで作成するため細かい部分は内部実装に隠ぺいする。</para>
+		/// </summary>
+		/// <param name="borderColor">境界線の色。</param>
+		/// <param name="backColor">背景色</param>
+		/// <param name="size">サイズ。</param>
+		/// <returns>生成された要素。</returns>
 		public static FrameworkElement CreateBox(Color borderColor, Color backColor, Size size)
 		{
-			var box = new Rectangle() {
-				Width = size.Width,
-				Height = size.Height,
-				Stroke = new SolidColorBrush(borderColor),
-				StrokeThickness = 1,
-				Fill = new SolidColorBrush(backColor),
-			};
+			var box = new Rectangle();
+
+			box.BeginInit();
+			try {
+				box.Width = size.Width;
+				box.Height = size.Height;
+				box.Stroke = new SolidColorBrush(borderColor);
+				box.StrokeThickness = 1;
+				box.Fill = new SolidColorBrush(backColor);
+			} finally {
+				box.EndInit();
+			}
 
 			return box;
 		}
 
+		/// <summary>
+		/// 指定要素をビットマップに落とし込む。
+		/// </summary>
+		/// <param name="element"></param>
+		/// <param name="dpi"></param>
+		/// <returns></returns>
 		public static BitmapSource MakeBitmapBitmapSource(FrameworkElement element, Point dpi)
 		{
 			var size = new Size(element.Width, element.Height);
@@ -39,6 +58,12 @@
 			return render;
 		}
 
+		/// <summary>
+		/// 指定要素をビットマップに落とし込む。
+		/// <para>DPIは96を使用する。</para>
+		/// </summary>
+		/// <param name="element"></param>
+		/// <returns></returns>
 		public static BitmapSource MakeBitmapBitmapSourceDefualtDpi(FrameworkElement element)
 		{
 			return MakeBitmapBitmapSource(element, new Point(96, 96));
