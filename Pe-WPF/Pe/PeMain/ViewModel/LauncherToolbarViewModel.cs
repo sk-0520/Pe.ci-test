@@ -924,7 +924,7 @@
 		protected override void OnPropertyChangeDisplayItem()
 		{
 			base.OnPropertyChangeDisplayItem();
-			OnPropertyChanged("MenuImage");
+			OnPropertyChanged("MenuIcon");
 		}
 
 		#endregion
@@ -942,7 +942,7 @@
 
 		#region IMenuItem
 
-		public override string DisplayText
+		public string MenuText
 		{
 			get
 			{
@@ -950,7 +950,7 @@
 			}
 		}
 
-		public FrameworkElement MenuImage
+		public FrameworkElement MenuIcon
 		{
 			get
 			{

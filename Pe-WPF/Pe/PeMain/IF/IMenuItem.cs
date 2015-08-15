@@ -10,8 +10,9 @@
 	using System.Windows.Media;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 
-	public interface IMenuItem: IDisplayText
+	public interface IMenuItem
 	{
-		FrameworkElement MenuImage { get; }
+		string MenuText { get; }
+		FrameworkElement MenuIcon { get; }
 	}
 }

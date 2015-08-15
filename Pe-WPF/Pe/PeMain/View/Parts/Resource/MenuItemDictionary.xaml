@@ -6,8 +6,8 @@
 	<!--<Image x:Key="MenuItem" x:Shared="False" Source="{Binding MenuImage}" />-->
 	
 	<Style x:Key="IMenuItem" TargetType="MenuItem">
-		<Setter Property="Header" Value="{Binding DisplayText}" />
-		<Setter Property="Icon" Value="{Binding MenuImage}" />
+		<Setter Property="Header" Value="{Binding MenuText}" />
+		<Setter Property="Icon" Value="{Binding MenuIcon}" />
 		<!--<Setter Property="Template" Value="{StaticResource IMenuItemTemplate}" />-->
 	</Style>
 

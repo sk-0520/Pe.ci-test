@@ -41,19 +41,19 @@
 
 		#region IMenuItem
 
-		public FrameworkElement MenuImage
-		{
-			get 
-			{
-				return null; 
-			}
-		}
-
-		public override string DisplayText
+		public string MenuText
 		{
 			get
 			{
 				return Model.Name;
+			}
+		}
+
+		public FrameworkElement MenuIcon
+		{
+			get 
+			{
+				return null; 
 			}
 		}
 

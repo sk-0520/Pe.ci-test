@@ -37,8 +37,9 @@
 
 		#region INoteMenuItem
 
-		public FrameworkElement MenuImage { get { return NoteUtility.CreateMenuBox(Model); } }
-		public override string DisplayText { get { return DisplayTextUtility.GetDisplayName(Model); } }
+		public string MenuText { get { return DisplayTextUtility.GetDisplayName(Model); } }
+
+		public FrameworkElement MenuIcon { get { return NoteUtility.CreateMenuBox(Model); } }
 
 		public ICommand NoteMenuSelectedCommand
 		{
