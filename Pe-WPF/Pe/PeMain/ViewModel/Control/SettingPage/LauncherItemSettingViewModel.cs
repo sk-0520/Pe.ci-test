@@ -1,17 +1,18 @@
 ﻿namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control.SettingPage
 {
 	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Text;
-	using System.Threading.Tasks;
-	using ContentTypeTextNet.Library.SharedLibrary.IF;
-	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
-	using ContentTypeTextNet.Pe.Library.PeData.Item;
-	using ContentTypeTextNet.Pe.Library.PeData.Setting;
-	using ContentTypeTextNet.Pe.PeMain.Data;
-	using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
-	using ContentTypeTextNet.Pe.PeMain.IF;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Input;
+using ContentTypeTextNet.Library.SharedLibrary.IF;
+using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+using ContentTypeTextNet.Pe.Library.PeData.Item;
+using ContentTypeTextNet.Pe.Library.PeData.Setting;
+using ContentTypeTextNet.Pe.PeMain.Data;
+using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
+using ContentTypeTextNet.Pe.PeMain.IF;
 
 	public class LauncherItemSettingViewModel: SettingPageLauncherIconCacheViewModelBase, IHavingAppSender
 	{
@@ -54,6 +55,38 @@
 				}
 
 				return this._launcherItems;
+			}
+		}
+
+		#endregion
+
+		#region command
+
+		public ICommand AppendItemCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						AppNonProcess.Logger.Information("AppendItemCommand");
+					}
+				);
+
+				return result;
+			}
+		}
+
+		public ICommand RemoveItemCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						AppNonProcess.Logger.Information("RemoveItemCommand");
+					}
+				);
+
+				return result;
 			}
 		}
 
