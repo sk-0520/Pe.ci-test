@@ -37,9 +37,9 @@
 
 		#region INoteMenuItem
 
-		public string MenuText { get { return DisplayTextUtility.GetDisplayName(Model); } }
+		public string MenuText { get { return NoteUtility.MakeMenuText(Model); } }
 
-		public FrameworkElement MenuIcon { get { return NoteUtility.CreateMenuBox(Model); } }
+		public FrameworkElement MenuIcon { get { return NoteUtility.MakeMenuIcon(Model); } }
 
 		public ICommand NoteMenuSelectedCommand
 		{

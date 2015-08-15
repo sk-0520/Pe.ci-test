@@ -14,12 +14,21 @@
 	public static class NoteUtility
 	{
 		/// <summary>
+		/// ノートメニュー表示テキスト
+		/// </summary>
+		/// <param name="indexItem"></param>
+		/// <returns></returns>
+		public static string MakeMenuText(NoteIndexItemModel indexItem)
+		{
+			return DisplayTextUtility.GetDisplayName(indexItem);
+		}
+		/// <summary>
 		/// ノートメニューアイコンの生成。
 		/// TODO: 未実装
 		/// </summary>
 		/// <param name="indexItem"></param>
 		/// <returns></returns>
-		public static FrameworkElement CreateMenuBox(NoteIndexItemModel indexItem)
+		public static FrameworkElement MakeMenuIcon(NoteIndexItemModel indexItem)
 		{
 			var size = IconScale.Small.ToSize();
 			var element = ImageUtility.CreateBox(indexItem.ForeColor, indexItem.BackColor, size);
