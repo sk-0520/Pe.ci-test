@@ -218,6 +218,7 @@
 			TimeSpan.FromMinutes(10),
 			TimeSpan.FromHours(1)
 		);
+		[ConstantsRange]
 		public static readonly TripleRange<int> windowSaveCount = new TripleRange<int>(
 			3,
 			10,

@@ -21,7 +21,7 @@
 
 	public class MainSettingViewModel : SettingPageViewModelBase
 	{
-		public MainSettingViewModel(RunningInformationSettingModel runningInformation, LanguageSettingModel language, LoggingSettingModel logging, SystemEnvironmentSettingModel systemEnvironment, StreamSettingModel stream, IAppNonProcess appNonProcess, SettingNotifiyItem settingNotifiyItem)
+		public MainSettingViewModel(RunningInformationSettingModel runningInformation, LanguageSettingModel language, LoggingSettingModel logging, SystemEnvironmentSettingModel systemEnvironment, StreamSettingModel stream, WindowSaveSettingModel windowSave, IAppNonProcess appNonProcess, SettingNotifiyItem settingNotifiyItem)
 			: base(appNonProcess, settingNotifiyItem)
 		{
 			RunningInformation = runningInformation;
@@ -29,6 +29,7 @@
 			Logging = logging;
 			SystemEnvironment = systemEnvironment;
 			Stream = stream;
+			WindowSave = windowSave;
 		}
 
 		#region property
@@ -38,6 +39,7 @@
 		LoggingSettingModel Logging { get; set; }
 		SystemEnvironmentSettingModel SystemEnvironment { get; set; }
 		StreamSettingModel Stream { get; set; }
+		WindowSaveSettingModel WindowSave { get; set; }
 
 		public bool Startup
 		{
@@ -198,6 +200,29 @@
 		}
 
 		#endregion
+
+		#endregion
+
+		#region WindowSaveSettingModel
+
+		public bool WindowSaveIsEnabled
+		{
+			get { return WindowSave.IsEnabled; }
+			set { SetPropertyValue(WindowSave, value, "IsEnabled"); }
+		}
+
+		public TimeSpan WindowSaveIntervalTime
+		{
+			get { return WindowSave.SaveIntervalTime; }
+			set { SetPropertyValue(WindowSave, value, "SaveIntervalTime"); }
+		}
+
+		public int WindowSaveCount
+		{
+			get { return WindowSave.SaveCount; }
+			set { SetPropertyValue(WindowSave, value, "SaveCount"); }
+		}
+
 
 		#endregion
 

@@ -21,7 +21,7 @@
 		/*
 		このソースは自動生成のため Constants-generator.tt を編集すること。
 
-		生成元ConstantsRangeフィールド数: 15
+		生成元ConstantsRangeフィールド数: 16
 		*/
 
 		// TripleRange
@@ -608,6 +608,48 @@
 			get
 			{
 				return windowSaveIntervalTime.maximum;
+			}
+		}
+		
+
+		#endregion
+		#region windowSaveCount
+
+		/// <summary>
+		/// Constants.windowSaveCount.minimum取得用プロパティ。
+		/// <para>XAMLで使用することを想定</para>
+		/// </summary>
+		public static Int32 WindowSaveMinimumCount
+		{
+			get
+			{
+				return windowSaveCount.minimum;
+			}
+		}
+		
+
+		/// <summary>
+		/// Constants.windowSaveCount.median取得用プロパティ。
+		/// <para>XAMLで使用することを想定</para>
+		/// </summary>
+		public static Int32 WindowSaveMedianCount
+		{
+			get
+			{
+				return windowSaveCount.median;
+			}
+		}
+		
+
+		/// <summary>
+		/// Constants.windowSaveCount.maximum取得用プロパティ。
+		/// <para>XAMLで使用することを想定</para>
+		/// </summary>
+		public static Int32 WindowSaveMaximumCount
+		{
+			get
+			{
+				return windowSaveCount.maximum;
 			}
 		}
 		

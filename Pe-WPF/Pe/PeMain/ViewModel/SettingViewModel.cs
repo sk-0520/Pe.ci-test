@@ -74,6 +74,7 @@
 						CommonData.MainSetting.Logging,
 						CommonData.MainSetting.SystemEnvironment,
 						CommonData.MainSetting.Stream,
+						CommonData.MainSetting.WindowSave,
 						CommonData.NonProcess,
 						SettingNotifiyItem
 					);
