@@ -19,6 +19,10 @@
 
 		static void V_First(ToolbarItemModel setting, Version previousVersion, INonProcess nonProcess)
 		{
+			if(previousVersion != null) {
+				return;
+			}
+
 			setting.IconScale = IconScale.Normal;
 			setting.HideWaitTime = Constants.toolbarHideWaitTime.median;
 			setting.HideAnimateTime = Constants.toolbarHideAnimateTime.median;

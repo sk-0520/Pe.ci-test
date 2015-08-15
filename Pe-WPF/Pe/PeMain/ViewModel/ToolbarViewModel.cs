@@ -68,6 +68,12 @@
 			set { SetModelValue(value); }
 		}
 
+		public TimeSpan HideWaitTime
+		{
+			get { return Model.HideWaitTime; }
+			set { SetModelValue(value); }
+		}
+
 		#region font
 
 		//public FontFamily FontFamily

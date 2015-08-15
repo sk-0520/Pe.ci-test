@@ -50,6 +50,7 @@
 				<Grid.RowDefinitions>
 					<RowDefinition Height="24*"/>
 					<RowDefinition Height="32*"/>
+					<RowDefinition Height="32*"/>
 					<RowDefinition Height="36*"/>
 					<RowDefinition Height="36*"/>
 					<RowDefinition Height="37*"/>
@@ -91,7 +92,16 @@
 					Maximum="{Binding Source={x:Static AM:Constants.ToolbarTextMaximumLength}}"
 				/>
 
-				<StackPanel HorizontalAlignment="Left" Height="71" Grid.Row="5" Grid.ColumnSpan="2" VerticalAlignment="Top">
+				<Label Content="hide wait" Grid.Row="5" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Top" />
+				<AV:TimeSliderControl
+					Grid.Row="5"
+					Grid.Column="1"
+					Value="{Binding SelectedToolbar.HideWaitTime, Mode=TwoWay}"
+					Minimum="{Binding Source={x:Static AM:Constants.ToolbarHideWaitMinimumTime}}"
+					Maximum="{Binding Source={x:Static AM:Constants.ToolbarHideWaitMaximumTime}}"
+				/>
+				
+				<StackPanel HorizontalAlignment="Left" Height="71" Grid.Row="6" Grid.ColumnSpan="2" VerticalAlignment="Top">
 					<CheckBox Content="show text" HorizontalAlignment="Stretch" IsChecked="{Binding SelectedToolbar.TextVisible}" />
 					<CheckBox Content="auto hide" HorizontalAlignment="Stretch" IsChecked="{Binding SelectedToolbar.AutoHide}" />
 					<CheckBox Content="topmost" HorizontalAlignment="Stretch" IsChecked="{Binding SelectedToolbar.IsTopmost}" />
