@@ -4,6 +4,9 @@
 	xmlns:sys="clr-namespace:System;assembly=mscorlib"
 	xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
 >
+	<ResourceDictionary.MergedDictionaries>
+		<ResourceDictionary Source="/View/Parts/Resource/TextBoxDictionary.xaml"/>
+	</ResourceDictionary.MergedDictionaries>
 	<Style x:Key="TypeGridStyle" TargetType="Grid">
 	</Style>
 	<Style x:Key="TypeColumnSlider" TargetType="ColumnDefinition">
@@ -16,11 +19,11 @@
 		<Setter Property="Grid.Column" Value="0" />
 		<Setter Property="VerticalAlignment" Value="Center" />
 	</Style>
-	<Style x:Key="TypeValueStyle" TargetType="TextBox">
+	<Style x:Key="TypeValueStyle" TargetType="TextBox" BasedOn="{StaticResource DefaultTextBox}">
 		<Setter Property="Grid.Column" Value="1" />
 		<Setter Property="IsReadOnly" Value="True" />
 		<Setter Property="IsUndoEnabled" Value="False" />
-		<Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
+		<!--<Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />-->
 		<Setter Property="VerticalAlignment" Value="Center" />
 	</Style>
 </ResourceDictionary>

@@ -33,6 +33,7 @@
 				<ResourceDictionary Source="/View/Parts/Resource/ClipboardTemplateDictionary.xaml"/>
 				<ResourceDictionary Source="/View/Parts/Resource/ImageDictionary.xaml"/>
 				<ResourceDictionary Source="/View/Parts/Resource/ToolbarDictionary.xaml"/>
+				<ResourceDictionary Source="/View/Parts/Resource/TextBoxDictionary.xaml"/>
 			</ResourceDictionary.MergedDictionaries>
 			<SC:LogicalNotConverter x:Key="LogicalNotConverter" />
 			<SC:LogicalIsNotNullConverter x:Key="LogicalIsNotNullConverter" />
@@ -211,6 +212,7 @@
 								HorizontalScrollBarVisibility="Auto"
 								VerticalScrollBarVisibility="Auto"
 								TextWrapping="NoWrap"
+								Style="{StaticResource DefaultTextBox}"
 								FontFamily="{Binding FontFamily, Mode=OneWay}" FontWeight="{Binding FontBold, Converter={StaticResource BooleanFontWeightConverter}, Mode=OneWay}" FontStyle="{Binding FontItalic, Converter={StaticResource BooleanFontStyleConverter}, Mode=OneWay}" FontSize="{Binding FontSize, Mode=OneWay}"
 							/>
 						</TabItem>
@@ -252,7 +254,7 @@
 									<ColumnDefinition Width="Auto" />
 								</Grid.ColumnDefinitions>
 								<TextBlock Grid.Row="0" Grid.Column="0" Text="uri" />
-								<TextBox Grid.Row="0" Grid.Column="1" IsReadOnly="True" Text="{Binding SelectedViewModel.HtmlUri, Mode=OneWay}" />
+								<TextBox Grid.Row="0" Grid.Column="1" IsReadOnly="True" Text="{Binding SelectedViewModel.HtmlUri, Mode=OneWay}" Style="{StaticResource DefaultTextBox}" />
 								<Button Grid.Row="0" Grid.Column="2">
 									<!--<Image Style="{StaticResource ImageRenderStyle}" Source="{Binding Source={x:Static AM:AppResource.CommonClipboardImage}}" AA:IconSize.IconScale="Small" />-->
 									<Image Style="{StaticResource ClipboardHtml}" />

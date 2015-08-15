@@ -21,6 +21,7 @@
 			<ResourceDictionary.MergedDictionaries>
 				<ResourceDictionary Source="/View/Parts/Resource/DialogDictionary.xaml"/>
 				<ResourceDictionary Source="/View/Parts/Resource/ImageDictionary.xaml"/>
+				<ResourceDictionary Source="/View/Parts/Resource/TextBoxDictionary.xaml"/>
 			</ResourceDictionary.MergedDictionaries>
 		</ResourceDictionary>
 	</AW:CommonDataWindow.Resources>
@@ -47,7 +48,7 @@
 				</Grid.ColumnDefinitions>
 				
 				<Label Grid.Row="0" Grid.Column="0" Content="command" />
-				<TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" IsReadOnly="True" Text="{Binding Command, Mode=OneTime}" />
+				<TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" IsReadOnly="True" Text="{Binding Command, Mode=OneTime}" Style="{StaticResource DefaultTextBox}" />
 
 				<Label Grid.Row="1" Grid.Column="0" Content="option" />
 				<ComboBox Grid.Row="1" Grid.Column="1" IsEditable="True" Text="{Binding Option}" ItemsSource="{Binding Options}" />

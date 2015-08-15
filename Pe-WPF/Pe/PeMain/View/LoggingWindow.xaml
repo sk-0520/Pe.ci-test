@@ -26,6 +26,7 @@
 		<ResourceDictionary>
 			<ResourceDictionary.MergedDictionaries>
 				<ResourceDictionary Source="/View/Parts/Resource/ToolbarDictionary.xaml" />
+				<ResourceDictionary Source="/View/Parts/Resource/TextBoxDictionary.xaml"/>
 			</ResourceDictionary.MergedDictionaries>
 		</ResourceDictionary>
 	</AW:CommonDataWindow.Resources>
@@ -57,9 +58,8 @@
 				TextWrapping="Wrap"
 				IsUndoEnabled="False"
 				IsReadOnly="True" 
-				Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"
-				Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
 				Text="{Binding SelectedValue.DetailText, ElementName=LogList, Mode=OneWay}"
+				Style="{StaticResource DefaultTextBox}"
 			/>
 		</Grid>
 	</DockPanel>
