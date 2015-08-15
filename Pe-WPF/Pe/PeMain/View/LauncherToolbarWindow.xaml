@@ -394,6 +394,7 @@
 							<Style x:Key="PopupClose" TargetType="Button" BasedOn="{StaticResource PopupClose}">
 								<Setter Property="Command" Value="{Binding PositionChangeCommand}" />
 								<Setter Property="Margin" Value="2" />
+								<Setter Property="Content" Value="{Binding CommandParameter, RelativeSource={RelativeSource Self}, Converter={StaticResource ToolbarDockTypeImageConverter}}" />
 							</Style>
 						</Grid.Resources>
 						<Grid.ColumnDefinitions>
@@ -406,11 +407,11 @@
 							<RowDefinition />
 							<RowDefinition />
 						</Grid.RowDefinitions>
-						<Button Grid.Row="0" Grid.Column="1" CommandParameter="{x:Static SD:DockType.Top}" Style="{StaticResource PopupClose}" Content="{Binding CommandParameter, RelativeSource={RelativeSource Self}, Converter={StaticResource ToolbarDockTypeImageConverter}}" />
-						<Button Grid.Row="1" Grid.Column="0" CommandParameter="{x:Static SD:DockType.Left}" Style="{StaticResource PopupClose}">←</Button>
-						<Button Grid.Row="1" Grid.Column="1" CommandParameter="{x:Static SD:DockType.None}" Style="{StaticResource PopupClose}">□</Button>
-						<Button Grid.Row="1" Grid.Column="2" CommandParameter="{x:Static SD:DockType.Right}" Style="{StaticResource PopupClose}">→</Button>
-						<Button Grid.Row="2" Grid.Column="1" CommandParameter="{x:Static SD:DockType.Bottom}" Style="{StaticResource PopupClose}">↓</Button>
+						<Button Grid.Row="0" Grid.Column="1" CommandParameter="{x:Static SD:DockType.Top}"    Style="{StaticResource PopupClose}" />
+						<Button Grid.Row="1" Grid.Column="0" CommandParameter="{x:Static SD:DockType.Left}"   Style="{StaticResource PopupClose}" />
+						<Button Grid.Row="1" Grid.Column="1" CommandParameter="{x:Static SD:DockType.None}"   Style="{StaticResource PopupClose}" />
+						<Button Grid.Row="1" Grid.Column="2" CommandParameter="{x:Static SD:DockType.Right}"  Style="{StaticResource PopupClose}" />
+						<Button Grid.Row="2" Grid.Column="1" CommandParameter="{x:Static SD:DockType.Bottom}" Style="{StaticResource PopupClose}" />
 					</Grid>
 					<Separator />
 					<MenuItem Header="topmost" AA:Language.Word="topmost" Style="{StaticResource PopupCloseMenu}" IsChecked="{Binding IsTopmost}" Command="{Binding SwitchTopMostCommand}"  />
