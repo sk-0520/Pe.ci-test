@@ -83,7 +83,7 @@
 			};
 			if (string.IsNullOrEmpty(message) && detail != null && detail is Exception) {
 				var ex = (Exception)detail;
-				result.CallerMember = ex.Message;
+				result.Message = ex.Message;
 				result.Detail = ex;
 			} else {
 				result.Message = message;

@@ -41,7 +41,7 @@
 				<RowDefinition Height="154*"/>
 				<RowDefinition Height="103*"/>
 			</Grid.RowDefinitions>
-			<ListView Grid.Row="0" ItemsSource="{Binding LogItems}" x:Name="LogList">
+			<ListView Grid.Row="0" ItemsSource="{Binding LogItems}" x:Name="listLog">
 				<ListView.View>
 					<GridView>
 						<GridViewColumn Header="timestamp" AA:Language.Word="logging/timestamp" DisplayMemberBinding="{Binding Timestamp}" />
@@ -58,7 +58,7 @@
 				TextWrapping="Wrap"
 				IsUndoEnabled="False"
 				IsReadOnly="True" 
-				Text="{Binding SelectedValue.DetailText, ElementName=LogList, Mode=OneWay}"
+				Text="{Binding SelectedValue.DetailText, ElementName=listLog, Mode=OneWay}"
 				Style="{StaticResource DefaultTextBox}"
 			/>
 		</Grid>
