@@ -85,7 +85,7 @@
 				CommonData.Logger.Debug("dummy toolbar");
 				toolbar = new ToolbarItemModel();
 			}
-			SettingUtility.InitializeToolbar(toolbar, Constants.assemblyVersion, CommonData.NonProcess);
+			SettingUtility.InitializeToolbarItem(toolbar, Constants.assemblyVersion, CommonData.NonProcess);
 			model.Toolbar = toolbar;
 
 			ViewModel = new LauncherToolbarViewModel(model, this, screen, CommonData.NonProcess, CommonData.AppSender);

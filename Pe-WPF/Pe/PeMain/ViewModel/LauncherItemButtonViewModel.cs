@@ -289,9 +289,14 @@
 						ExistsCommand = HasDataCommand && FileUtility.Exists(command);
 
 						// 親ディレクトリ
-						var parentDir = Path.GetDirectoryName(command);
-						HasDataParentDirectory = !string.IsNullOrWhiteSpace(parentDir);
-						ExistsParentDirectory = ExistsCommand && HasDataParentDirectory && Directory.Exists(parentDir);
+						if(!string.IsNullOrWhiteSpace(command)) {
+							var parentDir = Path.GetDirectoryName(command);
+							HasDataParentDirectory = !string.IsNullOrWhiteSpace(parentDir);
+							ExistsParentDirectory = ExistsCommand && HasDataParentDirectory && Directory.Exists(parentDir);
+						} else {
+							HasDataParentDirectory = false;
+							ExistsParentDirectory = false;
+						}
 					}
 					break;
 			}

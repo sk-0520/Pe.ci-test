@@ -140,6 +140,7 @@
     <Compile Include="Logic\Utility\NoteUtility.cs" />
     <Compile Include="Logic\Utility\PopupUtility.cs" />
     <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeCommandSetting.cs" />
+    <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeLauncherItem.cs" />
     <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeLoggingSetting.cs" />
     <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeStreamSetting.cs" />
     <Compile Include="ViewModel\CommandItemViewModel.cs" />
@@ -244,7 +245,7 @@
     <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeNoteSetting.cs" />
     <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeTemplateIndexSetting.cs" />
     <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeTemplateSetting.cs" />
-    <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeToolbar.cs" />
+    <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeToolbarItem.cs" />
     <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeToolbarSetting.cs" />
     <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeWindowSaveSetting.cs" />
     <Compile Include="Logic\Utility\SystemEnvironmentUtility.cs" />

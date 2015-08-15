@@ -15,7 +15,7 @@
 	{
 		static IEnumerable<string> ShowOpenFileDialog(string defaultPath, bool multiSelect, DialogFilterList filter)
 		{
-			var tempPath = Environment.ExpandEnvironmentVariables(defaultPath);
+			var tempPath = string.IsNullOrEmpty(defaultPath) ? string.Empty: Environment.ExpandEnvironmentVariables(defaultPath);
 			var usingFilePath = File.Exists(tempPath) ? tempPath : string.Empty;
 
 			var dialog = new OpenFileDialog() {

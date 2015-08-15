@@ -12,10 +12,6 @@
 	public enum LauncherKind
 	{
 		/// <summary>
-		/// なし。
-		/// </summary>
-		None,
-		/// <summary>
 		/// 何かのファイル。
 		/// </summary>
 		File,

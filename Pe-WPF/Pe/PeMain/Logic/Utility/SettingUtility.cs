@@ -90,6 +90,13 @@
 			return result;
 		}
 
+		public static LauncherItemModel CreateLauncherItem(LauncherItemCollectionModel items, INonProcess nonProcess)
+		{
+			var result = CreateModelName(items, nonProcess.Language, "new/item-name");
+			InitializeLauncherItem(result, Constants.assemblyVersion, nonProcess);
+			return result;
+		}
+
 		public static LauncherGroupItemModel CreateLauncherGroup(LauncherGroupItemCollectionModel group, INonProcess nonProcess)
 		{
 			var result = CreateModelName(group, nonProcess.Language, "new/group-name");
@@ -123,13 +130,13 @@
 			Implement.InitializeToolbarSetting.Correction(setting, previousVersion, nonProcess);
 
 			foreach(var toolbar in setting.Items) {
-				InitializeToolbar(toolbar, previousVersion, nonProcess);
+				InitializeToolbarItem(toolbar, previousVersion, nonProcess);
 			}
 		}
 
-		public static void InitializeToolbar(ToolbarItemModel model, Version previousVersion, INonProcess nonProcess)
+		public static void InitializeToolbarItem(ToolbarItemModel model, Version previousVersion, INonProcess nonProcess)
 		{
-			Implement.InitializeToolbar.Correction(model, previousVersion, nonProcess);
+			Implement.InitializeToolbarItem.Correction(model, previousVersion, nonProcess);
 		}
 
 		public static void InitializeWindowSaveSetting(WindowSaveSettingModel model, Version previousVersion, INonProcess nonProcess)
@@ -209,6 +216,15 @@
 				});
 			}
 			// --------------------------------
+
+			foreach(var item in setting.Items) {
+				InitializeLauncherItem(item, previousVersion, nonProcess);
+			}
+		}
+
+		public static void InitializeLauncherItem(LauncherItemModel item, Version previousVersion, INonProcess nonProcess)
+		{
+			Implement.InitializeLauncherItem.Correction(item, previousVersion, nonProcess);
 		}
 
 		public static void InitializeLauncherGroupSetting(LauncherGroupSettingModel setting, Version previousVersion, INonProcess nonProcess)

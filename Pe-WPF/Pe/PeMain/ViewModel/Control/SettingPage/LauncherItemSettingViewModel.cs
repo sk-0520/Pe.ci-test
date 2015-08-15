@@ -1,18 +1,21 @@
 ﻿namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control.SettingPage
 {
 	using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using ContentTypeTextNet.Library.SharedLibrary.IF;
-using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
-using ContentTypeTextNet.Pe.Library.PeData.Item;
-using ContentTypeTextNet.Pe.Library.PeData.Setting;
-using ContentTypeTextNet.Pe.PeMain.Data;
-using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
-using ContentTypeTextNet.Pe.PeMain.IF;
+	using System.Collections.Generic;
+	using System.Linq;
+	using System.Text;
+	using System.Threading.Tasks;
+	using System.Windows.Input;
+	using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+	using ContentTypeTextNet.Pe.Library.PeData.Define;
+	using ContentTypeTextNet.Pe.Library.PeData.Item;
+	using ContentTypeTextNet.Pe.Library.PeData.Setting;
+	using ContentTypeTextNet.Pe.PeMain.Data;
+	using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
+	using ContentTypeTextNet.Pe.PeMain.IF;
+	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
 	public class LauncherItemSettingViewModel: SettingPageLauncherIconCacheViewModelBase, IHavingAppSender
 	{
@@ -68,7 +71,8 @@ using ContentTypeTextNet.Pe.PeMain.IF;
 			{
 				var result = CreateCommand(
 					o => {
-						AppNonProcess.Logger.Information("AppendItemCommand");
+						var model = SettingUtility.CreateLauncherItem(LauncherItemSetting.Items, AppNonProcess);
+						LauncherItems.LauncherItemPairList.Add(model, null);
 					}
 				);
 
@@ -82,7 +86,6 @@ using ContentTypeTextNet.Pe.PeMain.IF;
 			{
 				var result = CreateCommand(
 					o => {
-						AppNonProcess.Logger.Information("RemoveItemCommand");
 						var viewModel = o as LauncherListItemViewModel;
 						LauncherItems.LauncherItemPairList.Remove(viewModel.Model);
 						//LauncherItems.Items.Remove(o);

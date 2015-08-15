@@ -16,6 +16,10 @@
 		}
 
 		static void V_First(ClipboardIndexSettingModel setting, Version previousVersion, INonProcess nonProcess)
-		{ }
+		{
+			if(previousVersion != null) {
+				return;
+			}
+		}
 	}
 }

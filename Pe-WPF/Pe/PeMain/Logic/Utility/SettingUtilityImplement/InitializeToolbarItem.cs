@@ -10,7 +10,7 @@
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 	using ContentTypeTextNet.Pe.Library.PeData.Setting;
 
-	internal static class InitializeToolbar
+	internal static class InitializeToolbarItem
 	{
 		public static void Correction(ToolbarItemModel setting, Version previousVersion, INonProcess nonProcess)
 		{
