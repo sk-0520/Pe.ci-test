@@ -127,7 +127,13 @@
 		public void AddLog(LogItemModel item)
 		{
 			if(HasView) {
-				View.Dispatcher.BeginInvoke(new Action(() => LogItems.Add(item)));
+				View.Dispatcher.BeginInvoke(new Action(() => {
+					LogItems.Add(item);
+					View.listLog.SelectedItem = item;
+					View.listLog.ScrollIntoView(item);
+				}));
+			} else {
+				LogItems.Add(item);
 			}
 		}
 
