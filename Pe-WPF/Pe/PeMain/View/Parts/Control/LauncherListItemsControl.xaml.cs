@@ -35,7 +35,9 @@
 		public LauncherListItemsControl()
 		{
 			InitializeComponent();
+
 			CanListEdit = false;
+
 			this.listItems.SelectionChanged += ListItems_SelectionChanged;
 		}
 
@@ -190,6 +192,56 @@
 			foreach(var element in elements) {
 				element.Visibility = visibility;
 			}
+		}
+
+		#endregion
+
+		#region AppendCommandProperty
+
+		public static readonly DependencyProperty AppendCommandProperty = DependencyProperty.Register(
+			"AppendCommand",
+			typeof(ICommand),
+			typeof(LauncherListItemsControl),
+			new FrameworkPropertyMetadata(new PropertyChangedCallback(OnAppendCommandChanged))
+		);
+
+		private static void OnAppendCommandChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+		{
+			var control = d as LauncherListItemsControl;
+			if(control != null) {
+				control.AppendCommand = e.NewValue as ICommand;
+			}
+		}
+
+		public ICommand AppendCommand
+		{
+			get { return GetValue(AppendCommandProperty) as ICommand; }
+			set { SetValue(AppendCommandProperty, value); }
+		}
+
+		#endregion
+
+		#region RemoveCommandProperty
+
+		public static readonly DependencyProperty RemoveCommandProperty = DependencyProperty.Register(
+			"RemoveCommand",
+			typeof(ICommand),
+			typeof(LauncherListItemsControl),
+			new FrameworkPropertyMetadata(new PropertyChangedCallback(OnRemoveCommandChanged))
+		);
+
+		private static void OnRemoveCommandChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+		{
+			var control = d as LauncherListItemsControl;
+			if(control != null) {
+				control.RemoveCommand = e.NewValue as ICommand;
+			}
+		}
+
+		public ICommand RemoveCommand
+		{
+			get { return GetValue(RemoveCommandProperty) as ICommand; }
+			set { SetValue(RemoveCommandProperty, value); }
 		}
 
 		#endregion

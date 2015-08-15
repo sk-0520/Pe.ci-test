@@ -30,20 +30,16 @@
 		</Grid.RowDefinitions>
 		<!--<ToolBarTray Grid.Row="0">-->
 		<ToolBar Grid.Row="0" Style="{StaticResource DefaultToolbarStyle}">
-			<Button x:Name="toolAppend" Content="append" Focusable="False" />
-			<Button x:Name="toolRemove" Content="remove" Focusable="False" />
+			<Button x:Name="toolAppend" Content="append" Focusable="False" Command="{Binding AppendCommand, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}}" CommandParameter="{Binding SelectedLauncherItem, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}}" />
+			<Button x:Name="toolRemove" Content="remove" Focusable="False" Command="{Binding RemoveCommand, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}}" CommandParameter="{Binding SelectedLauncherItem, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}}" />
 			<Separator x:Name="toolSeparator"  />
-			<TextBox  Focusable="False"  />
+			<TextBox />
 		</ToolBar>
 		<!--</ToolBarTray>-->
 		<ListBox x:Name="listItems"  Grid.Row="1" ItemsSource="{Binding Items}">
 			<ListBox.ItemTemplate>
 				<DataTemplate>
 					<StackPanel Orientation="Horizontal">
-						<!--
-						<Image Source="{Binding Converter={StaticResource LauncherListDisplayImageConverter}}" />
-						<TextBlock Text="{Binding Converter={StaticResource DisplayTextConverter}}" />
-						-->
 						<Image Style="{StaticResource ImageRenderStyle}" Source="{Binding Image}" />
 						<TextBlock Text="{Binding DisplayText}" />
 					</StackPanel>
