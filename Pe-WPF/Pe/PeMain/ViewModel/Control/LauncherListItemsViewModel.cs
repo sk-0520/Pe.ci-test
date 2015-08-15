@@ -17,19 +17,13 @@
 
 	public class LauncherListItemsViewModel : SingleModelWrapperViewModelBase<LauncherItemCollectionModel>, IHavingAppNonProcess, IHavingAppSender
 	{
-		#region variable
-
-		MVMPairCreateDelegationCollection<LauncherItemModel, LauncherListItemViewModel> _launcherItemPairList;
-
-		#endregion
-
 		public LauncherListItemsViewModel(LauncherItemCollectionModel model, IAppNonProcess appNonProcess, IAppSender appSender)
 			: base(model)
 		{
 			AppNonProcess = appNonProcess;
 			AppSender = appSender;
 
-			this._launcherItemPairList = new MVMPairCreateDelegationCollection<LauncherItemModel, LauncherListItemViewModel>(
+			LauncherItemPairList = new MVMPairCreateDelegationCollection<LauncherItemModel, LauncherListItemViewModel>(
 				Model,
 				default(object),
 				CreateItemViewModel
@@ -39,11 +33,13 @@
 
 		#region property
 
+		internal MVMPairCreateDelegationCollection<LauncherItemModel, LauncherListItemViewModel> LauncherItemPairList { get; private set; }
+
 		public CollectionModel<LauncherListItemViewModel> Items
 		{
 			get
 			{
-				return this._launcherItemPairList.ViewModelList;
+				return LauncherItemPairList.ViewModelList;
 			}
 		}
 

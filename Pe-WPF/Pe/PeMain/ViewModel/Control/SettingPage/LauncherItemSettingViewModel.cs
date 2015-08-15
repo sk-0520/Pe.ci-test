@@ -83,6 +83,9 @@ using ContentTypeTextNet.Pe.PeMain.IF;
 				var result = CreateCommand(
 					o => {
 						AppNonProcess.Logger.Information("RemoveItemCommand");
+						var viewModel = o as LauncherListItemViewModel;
+						LauncherItems.LauncherItemPairList.Remove(viewModel.Model);
+						//LauncherItems.Items.Remove(o);
 					}
 				);
 
