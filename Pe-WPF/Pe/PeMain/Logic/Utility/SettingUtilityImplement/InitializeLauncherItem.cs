@@ -17,6 +17,11 @@
 			V_First(item, previousVersion, nonProcess);
 
 			item.LauncherKind = EnumUtility.GetNormalization(item.LauncherKind, LauncherKind.File);
+
+			if(SettingUtility.IsIllegalString(item.Command)) {
+				item.Command = string.Empty;
+			}
+
 		}
 
 		static void V_First(LauncherItemModel item, Version previousVersion, INonProcess nonProcess)

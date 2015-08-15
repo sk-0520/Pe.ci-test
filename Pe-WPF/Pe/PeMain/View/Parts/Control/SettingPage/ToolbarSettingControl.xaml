@@ -120,13 +120,13 @@
 						<Button Content="group" Command="{Binding CreateGroupCommand}" />
 						<Button 
 							Content="item" 
-							IsEnabled="{Binding SelectedLauncherItem, ElementName=ItemList, Converter={StaticResource LogicalIsNotNullConverter}}" 
+							IsEnabled="{Binding SelectedLauncherItem, ElementName=listItems, Converter={StaticResource LogicalIsNotNullConverter}}" 
 							Command="{Binding CreateLauncherItemCommand}" 
 						>
 							<Button.CommandParameter>
 								<MultiBinding Converter="{StaticResource SelectedNodeAndLauncherItemConverter}">
 									<Binding Path="SelectedItem" ElementName="GroupTree" />
-									<Binding Path="SelectedLauncherItem" ElementName="ItemList" />
+							<Binding Path="SelectedLauncherItem" ElementName="listItems" />
 								</MultiBinding>
 							</Button.CommandParameter>
 						</Button>
@@ -162,8 +162,9 @@
 		<AV:LauncherListItemsControl
 			Grid.Column="2"
 			DataContext="{Binding LauncherItems}"
-			x:Name="ItemList"
+			x:Name="listItems"
 			SelectedLauncherModel="{Binding DataContext.SelectedLauncherItem, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}, Mode=TwoWay}"
+			DoubleClickCommand="{Binding DataContext.DoubleClickCommand, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}}"
 		/>
 	</Grid>
 </AV:CommonDataUserControl>

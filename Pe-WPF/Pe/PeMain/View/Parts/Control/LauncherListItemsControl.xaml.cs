@@ -245,5 +245,30 @@
 		}
 
 		#endregion
+
+		#region DoubleClickCommandProperty
+
+		public static readonly DependencyProperty DoubleClickCommandProperty = DependencyProperty.Register(
+			"DoubleClickCommand",
+			typeof(ICommand),
+			typeof(LauncherListItemsControl),
+			new FrameworkPropertyMetadata(new PropertyChangedCallback(OnDoubleClickCommandChanged))
+		);
+
+		private static void OnDoubleClickCommandChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+		{
+			var control = d as LauncherListItemsControl;
+			if(control != null) {
+				control.DoubleClickCommand = e.NewValue as ICommand;
+			}
+		}
+
+		public ICommand DoubleClickCommand
+		{
+			get { return GetValue(DoubleClickCommandProperty) as ICommand; }
+			set { SetValue(DoubleClickCommandProperty, value); }
+		}
+
+		#endregion
 	}
 }

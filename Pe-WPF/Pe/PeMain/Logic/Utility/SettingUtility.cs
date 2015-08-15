@@ -41,6 +41,11 @@
 			return number <= 0;
 		}
 
+		internal static bool IsIllegalString(string s)
+		{
+			return s == null;
+		}
+
 		public static bool CheckAccept(RunningInformationSettingModel model, INonProcess nonProcess)
 		{
 			if(!model.Accept) {

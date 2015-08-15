@@ -22,13 +22,13 @@
 			<ColumnDefinition Width="13*"/>
 		</Grid.ColumnDefinitions>
 		<AV:LauncherListItemsControl
-			x:Name="ItemList" 
+			x:Name="listItems" 
 			Grid.Column="0" 
 			CanListEdit="True" 
 			DataContext="{Binding LauncherItems}" 
 			AppendCommand="{Binding DataContext.AppendItemCommand, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}}" 
 			RemoveCommand="{Binding DataContext.RemoveItemCommand, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}}" 
 		/>
-		<AV:LauncherItemEditControl Grid.Column="1" DataContext="{Binding SelectedLauncherItem, ElementName=ItemList, Converter={StaticResource LauncherViewModelConverter}}" />
+		<AV:LauncherItemEditControl Grid.Column="1" DataContext="{Binding SelectedLauncherItem, ElementName=listItems, Converter={StaticResource LauncherViewModelConverter}}" />
 	</Grid>
 </AV:CommonDataUserControl>

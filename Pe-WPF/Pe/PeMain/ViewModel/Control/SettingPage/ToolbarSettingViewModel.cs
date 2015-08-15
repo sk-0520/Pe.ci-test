@@ -304,6 +304,20 @@
 			}
 		}
 
+		public ICommand DoubleClickCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						var viewModel = o as LauncherListItemViewModel;
+					}
+				);
+
+				return result;
+			}
+		}
+
 		#endregion
 
 		#region function
