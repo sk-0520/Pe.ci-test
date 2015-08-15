@@ -3,6 +3,7 @@
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:sys="clr-namespace:System;assembly=mscorlib"
+	xmlns:windows="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
 	xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
 	xmlns:SC="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=SharedLibrary"
@@ -43,6 +44,7 @@
 		<AC:DisplayTextConverter x:Key="DisplayTextConverter" />
 		<AC:HotTrackConverter x:Key="HotTrackConverter" />
 		<AC:DockTypeMenuTuneConverter x:Key="DockTypeMenuTuneConverter" />
+		<AC:ToolbarDockTypeImageConverter x:Key="ToolbarDockTypeImageConverter" />
 
 		<Style x:Key="Image" TargetType="{x:Type Image}">
 			<Setter Property="Source" Value="{Binding ToolbarImage, Mode=OneWay}" />
@@ -404,7 +406,7 @@
 							<RowDefinition />
 							<RowDefinition />
 						</Grid.RowDefinitions>
-						<Button Grid.Row="0" Grid.Column="1" CommandParameter="{x:Static SD:DockType.Top}" Style="{StaticResource PopupClose}">↑</Button>
+						<Button Grid.Row="0" Grid.Column="1" CommandParameter="{x:Static SD:DockType.Top}" Style="{StaticResource PopupClose}" Content="{Binding CommandParameter, RelativeSource={RelativeSource Self}, Converter={StaticResource ToolbarDockTypeImageConverter}}" />
 						<Button Grid.Row="1" Grid.Column="0" CommandParameter="{x:Static SD:DockType.Left}" Style="{StaticResource PopupClose}">←</Button>
 						<Button Grid.Row="1" Grid.Column="1" CommandParameter="{x:Static SD:DockType.None}" Style="{StaticResource PopupClose}">□</Button>
 						<Button Grid.Row="1" Grid.Column="2" CommandParameter="{x:Static SD:DockType.Right}" Style="{StaticResource PopupClose}">→</Button>

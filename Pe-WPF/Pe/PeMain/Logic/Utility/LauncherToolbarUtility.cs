@@ -63,5 +63,72 @@
 			//return result;
 			return canvas;
 		}
+
+		public static FrameworkElement MakeDockIcon(DockType dockType, Size imageSize)
+		{
+		var drawSize = new Size(0.2f, 0.3f);
+			//using(var targetGraphics = CreateGraphics()) {
+			//	var image = new Bitmap(imageSize.Width, imageSize.Height, targetGraphics);
+				var drawArea = new Rect();
+				switch(dockType) {
+					case DockType.None:
+						drawArea.Width = (int)(imageSize.Width * 0.8);
+						drawArea.Height = (int)(imageSize.Height * 0.4);
+						drawArea.X = imageSize.Width / 2 - drawArea.Width / 2;
+						drawArea.Y = imageSize.Height / 2 - drawArea.Height / 2;
+						break;
+					case DockType.Left:
+						drawArea.Width = (int)(imageSize.Width * drawSize.Width);
+						drawArea.Height = imageSize.Height;
+						drawArea.X = 0;
+						drawArea.Y = imageSize.Height / 2 - drawArea.Height / 2;
+						break;
+					case DockType.Right:
+						drawArea.Width = (int)(imageSize.Width * drawSize.Width);
+						drawArea.Height = imageSize.Height;
+						drawArea.X = imageSize.Width - drawArea.Width;
+						drawArea.Y = imageSize.Height / 2 - drawArea.Height / 2;
+						break;
+					case DockType.Top:
+						drawArea.Width = imageSize.Width;
+						drawArea.Height = (int)(imageSize.Height * drawSize.Height);
+						drawArea.X = imageSize.Width / 2 - drawArea.Width / 2;
+						drawArea.Y = 0;
+						break;
+					case DockType.Bottom:
+						drawArea.Width = imageSize.Width;
+						drawArea.Height = (int)(imageSize.Height * drawSize.Height);
+						drawArea.X = imageSize.Width / 2 - drawArea.Width / 2;
+						drawArea.Y = imageSize.Height - drawArea.Height;
+						break;
+					default:
+						throw new NotImplementedException();
+				}
+
+
+				var screenElement = ImageUtility.CreateBox(ImageUtility.GetToolbarPositionColor(false, false), ImageUtility.GetToolbarPositionColor(true, false), imageSize);
+				var toolbarElement = ImageUtility.CreateBox(ImageUtility.GetToolbarPositionColor(false, true), ImageUtility.GetToolbarPositionColor(true, true), drawArea.Size);
+
+			var canvas = new Canvas() {
+				Width = imageSize.Width,
+				Height = imageSize.Height,
+			};
+			canvas.Children.Add(screenElement);
+			canvas.Children.Add(toolbarElement);
+			Canvas.SetLeft(toolbarElement, drawArea.Location.X);
+			Canvas.SetTop(toolbarElement, drawArea.Location.Y);
+
+				//using(var g = Graphics.FromImage(image)) {
+				//	using(var box = CommonData.Skin.CreateColorBoxImage(AppUtility.GetToolbarPositionColor(true, false), AppUtility.GetToolbarPositionColor(false, false), imageSize)) {
+				//		g.DrawImage(box, Point.Empty);
+				//	}
+				//	using(var box = CommonData.Skin.CreateColorBoxImage(AppUtility.GetToolbarPositionColor(true, true), AppUtility.GetToolbarPositionColor(false, true), drawArea.Size)) {
+				//		g.DrawImage(box, drawArea.Location);
+				//	}
+				//}
+
+				//return image;
+			return canvas;
+		}
 	}
 }
