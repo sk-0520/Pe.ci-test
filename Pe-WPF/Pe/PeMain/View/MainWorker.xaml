@@ -34,7 +34,7 @@
 		<MenuItem AA:Language.Word="tasktray/toolbar" Header="toolbar" ItemsSource="{Binding LauncherToolbars}">
 			<MenuItem.ItemContainerStyle>
 				<Style TargetType="MenuItem" BasedOn="{StaticResource IMenuItem}">
-					<Setter Property="IsChecked" Value="{Binding IsVisible, Mode=OneWay}"/>
+					<!--<Setter Property="IsChecked" Value="{Binding IsVisible, Mode=OneWay}"/>-->
 					<Setter Property="Command" Value="{Binding ChangeVisibleCommand}" />
 					<Setter Property="CommandParameter" Value="{Binding IsVisible, Converter={StaticResource LogicalNotConverter}}" />
 				</Style>
