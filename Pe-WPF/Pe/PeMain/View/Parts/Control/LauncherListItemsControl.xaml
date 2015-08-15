@@ -17,6 +17,7 @@
 			<ResourceDictionary.MergedDictionaries>
 				<ResourceDictionary Source="/View/Parts/Resource/ImageDictionary.xaml"/>
 				<ResourceDictionary Source="/View/Parts/Resource/ToolbarDictionary.xaml" />
+				<ResourceDictionary Source="/View/Parts/Resource/TextBoxDictionary.xaml" />
 			</ResourceDictionary.MergedDictionaries>
 			<SC:LogicalNotConverter x:Key="LogicalNotConverter" />
 			<SC:LogicalIsNotNullConverter x:Key="LogicalIsNotNullConverter" />
@@ -35,7 +36,7 @@
 			<Button x:Name="toolAppend" Content="append" Focusable="False" Command="{Binding AppendCommand, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}}" />
 			<Button x:Name="toolRemove" Content="remove" Focusable="False" IsEnabled="{Binding SelectedLauncherItem, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}, Converter={StaticResource LogicalIsNotNullConverter}}" Command="{Binding RemoveCommand, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}}" CommandParameter="{Binding SelectedLauncherItem, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}}" />
 			<Separator x:Name="toolSeparator"  />
-			<TextBox />
+			<TextBox Style="{StaticResource DefaultTextBox}" />
 		</ToolBar>
 		<!--</ToolBarTray>-->
 		<ListBox x:Name="listItems"  Grid.Row="1" ItemsSource="{Binding Items}">
