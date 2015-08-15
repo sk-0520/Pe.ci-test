@@ -5,6 +5,7 @@
 	using System.Linq;
 	using System.Text;
 	using System.Threading.Tasks;
+	using System.Windows;
 	using System.Windows.Input;
 	using System.Windows.Media;
 	using System.Windows.Shapes;
@@ -40,7 +41,7 @@
 
 		#region IMenuItem
 
-		public ImageSource MenuImage
+		public FrameworkElement MenuImage
 		{
 			get 
 			{

@@ -341,14 +341,14 @@
 		public Color ToolbarHotTrack { get { return GetAppIconColor(); } }
 		public Visibility TextVisible { get { return Model.Toolbar.TextVisible ? Visibility.Visible : Visibility.Collapsed; } }
 
-		public string ScreenName { get { return ScreenUtility.GetScreenName(DockScreen); } }
-		public ImageSource ScreenPosition
-		{
-			get
-			{
-				return null;
-			}
-		}
+		//public string ScreenName { get { return ScreenUtility.GetScreenName(DockScreen); } }
+		//public ImageSource ScreenPosition
+		//{
+		//	get
+		//	{
+		//		return null;
+		//	}
+		//}
 
 		public PlacementMode DropDownPlacement
 		{
@@ -560,7 +560,12 @@
 		public bool IsVisible
 		{
 			get { return VisibleVisibilityProperty.GetVisible(Model.Toolbar); }
-			set { VisibleVisibilityProperty.SetVisible(Model.Toolbar, value, OnPropertyChanged); }
+			set
+			{
+				if(VisibleVisibilityProperty.SetVisible(Model.Toolbar, value, OnPropertyChanged)) {
+					OnPropertyChangeDisplayItem();
+				}
+			}
 		}
 
 		#endregion
@@ -916,6 +921,12 @@
 			base.UninitializeView();
 		}
 
+		protected override void OnPropertyChangeDisplayItem()
+		{
+			base.OnPropertyChangeDisplayItem();
+			OnPropertyChanged("MenuImage");
+		}
+
 		#endregion
 
 		#region IRefreshFromViewModel
@@ -931,7 +942,15 @@
 
 		#region IMenuItem
 
-		public ImageSource MenuImage
+		public override string DisplayText
+		{
+			get
+			{
+				return ScreenUtility.GetScreenName(DockScreen);
+			}
+		}
+
+		public FrameworkElement MenuImage
 		{
 			get
 			{
@@ -972,14 +991,20 @@
 						baseArea.Height / 100.0 * percentage.Height
 					);
 
-					var element = (Rectangle)ImageUtility.CreateBox(foreColor, backColor, drawArea.Size);
+					var element = ImageUtility.CreateBox(foreColor, backColor, drawArea.Size);
 					Canvas.SetLeft(element, drawArea.X);
 					Canvas.SetTop(element, drawArea.Y);
 					canvas.Children.Add(element);
 				}
-
-				var result = ImageUtility.MakeBitmapBitmapSourceDefualtDpi(canvas);
-				return result;
+				// IsCheckedで強調したかったけど手間かかるので透明度で対応
+				if(IsVisible) {
+					canvas.Opacity = 1;
+				} else {
+					canvas.Opacity = 0.5;
+				}
+				//var result = ImageUtility.MakeBitmapBitmapSourceDefualtDpi(canvas);
+				//return result;
+				return canvas;
 			}
 		}
 

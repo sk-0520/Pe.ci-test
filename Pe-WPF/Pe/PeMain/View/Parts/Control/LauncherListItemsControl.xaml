@@ -14,7 +14,6 @@
 	<AV:CommonDataUserControl.Resources>
 		<ResourceDictionary>
 			<ResourceDictionary.MergedDictionaries>
-				<ResourceDictionary Source="/View/Parts/Resource/IndexItemsDictionary.xaml"/>
 				<ResourceDictionary Source="/View/Parts/Resource/ImageDictionary.xaml"/>
 				<ResourceDictionary Source="/View/Parts/Resource/ToolbarDictionary.xaml" />
 			</ResourceDictionary.MergedDictionaries>

@@ -5,6 +5,7 @@
 	using System.Linq;
 	using System.Text;
 	using System.Threading.Tasks;
+	using System.Windows;
 	using System.Windows.Media.Imaging;
 	using ContentTypeTextNet.Library.SharedLibrary.Define;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
@@ -18,12 +19,13 @@
 		/// </summary>
 		/// <param name="indexItem"></param>
 		/// <returns></returns>
-		public static BitmapSource CreateMenuIcon(NoteIndexItemModel indexItem)
+		public static FrameworkElement CreateMenuBox(NoteIndexItemModel indexItem)
 		{
 			var size = IconScale.Small.ToSize();
 			var element = ImageUtility.CreateBox(indexItem.ForeColor, indexItem.BackColor, size);
-			var image = ImageUtility.MakeBitmapBitmapSourceDefualtDpi(element);
-			return image;
+			//var image = ImageUtility.MakeBitmapBitmapSourceDefualtDpi(element);
+			//return image;
+			return element;
 		}
 	}
 }

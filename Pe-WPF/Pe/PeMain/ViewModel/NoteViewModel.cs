@@ -708,7 +708,7 @@
 
 		#region INoteMenuItem
 
-		public ImageSource MenuImage { get { return NoteUtility.CreateMenuIcon(Model); } }
+		public FrameworkElement MenuImage { get { return NoteUtility.CreateMenuBox(Model); } }
 
 		public override string DisplayText { get { return DisplayTextUtility.GetDisplayName(Model); } }
 
