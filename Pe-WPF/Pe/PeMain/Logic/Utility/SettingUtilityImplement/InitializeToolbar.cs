@@ -15,6 +15,17 @@
 		public static void Correction(ToolbarItemModel setting, Version previousVersion, INonProcess nonProcess)
 		{
 			V_First(setting, previousVersion, nonProcess);
+
+			setting.HideWaitTime = Constants.toolbarHideWaitTime.GetClamp(setting.HideWaitTime);
+			setting.HideAnimateTime = Constants.toolbarHideAnimateTime.GetClamp(setting.HideAnimateTime);
+			setting.Font.Size = Constants.toolbarFontSize.GetClamp(setting.Font.Size);
+
+			if(SettingUtility.IsIllegalPlusNumber(setting.FloatToolbar.WidthButtonCount)) {
+				setting.FloatToolbar.WidthButtonCount = 1;
+			}
+			if(SettingUtility.IsIllegalPlusNumber(setting.FloatToolbar.HeightButtonCount)) {
+				setting.FloatToolbar.HeightButtonCount = 1;
+			}
 		}
 
 		static void V_First(ToolbarItemModel setting, Version previousVersion, INonProcess nonProcess)

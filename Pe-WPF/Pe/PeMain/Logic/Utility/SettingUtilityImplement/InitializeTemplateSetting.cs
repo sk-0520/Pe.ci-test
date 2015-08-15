@@ -13,6 +13,23 @@
 		public static void Correction(TemplateSettingModel setting, Version previousVersion, INonProcess nonProcess)
 		{
 			V_First(setting, previousVersion, nonProcess);
+
+			setting.Font.Size = Constants.templateFontSize.GetClamp(setting.Font.Size);
+
+			if(SettingUtility.IsIllegalPlusNumber(setting.ItemsListWidth)) {
+				setting.ItemsListWidth = Constants.templateItemsListWidth;
+			}
+			if(SettingUtility.IsIllegalPlusNumber(setting.ReplaceListWidth)) {
+				setting.ReplaceListWidth = Constants.templateReplaceListWidth;
+			}
+
+			if(SettingUtility.IsIllegalPlusNumber(setting.WindowWidth)) {
+				setting.WindowWidth = Constants.templateDefaultWindowSize.Width;
+			}
+			if(SettingUtility.IsIllegalPlusNumber(setting.WindowHeight)) {
+				setting.WindowHeight = Constants.templateDefaultWindowSize.Height;
+			}
+
 		}
 
 		static void V_First(TemplateSettingModel setting, Version previousVersion, INonProcess nonProcess)

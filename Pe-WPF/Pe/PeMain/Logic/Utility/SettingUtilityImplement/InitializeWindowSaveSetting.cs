@@ -13,6 +13,9 @@
 		public static void Correction(WindowSaveSettingModel setting, Version previousVersion, INonProcess nonProcess)
 		{
 			V_First(setting, previousVersion, nonProcess);
+
+			setting.SaveCount = Constants.windowSaveCount.GetClamp(setting.SaveCount);
+			setting.SaveIntervalTime = Constants.windowSaveIntervalTime.GetClamp(setting.SaveIntervalTime);
 		}
 
 		static void V_First(WindowSaveSettingModel setting, Version previousVersion, INonProcess nonProcess)

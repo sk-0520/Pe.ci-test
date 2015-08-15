@@ -14,6 +14,20 @@
 		public static void Correction(ClipboardSettingModel setting, Version previousVersion, INonProcess nonProcess)
 		{
 			V_First(setting, previousVersion, nonProcess);
+
+			setting.WaitTime = Constants.clipboardWaitTime.GetClamp(setting.WaitTime);
+			setting.Font.Size = Constants.clipboardFontSize.GetClamp(setting.Font.Size);
+
+			if(SettingUtility.IsIllegalPlusNumber(setting.ItemsListWidth)) {
+				setting.ItemsListWidth = Constants.clipboardItemsListWidth;
+			}
+
+			if(SettingUtility.IsIllegalPlusNumber(setting.WindowWidth)) {
+				setting.WindowWidth = Constants.clipboardDefaultWindowSize.Width;
+			}
+			if(SettingUtility.IsIllegalPlusNumber(setting.WindowHeight)) {
+				setting.WindowHeight = Constants.clipboardDefaultWindowSize.Height;
+			}
 		}
 
 		static void V_First(ClipboardSettingModel setting, Version previousVersion, INonProcess nonProcess)

@@ -31,12 +31,12 @@
 			Guid.NewGuid(),
 		};
 
-		public static bool IsIllegalPlusNumber(double number)
+		internal static bool IsIllegalPlusNumber(double number)
 		{
 			return double.IsNaN(number) || number <= 0;
 		}
 
-		public static bool IsIllegalPlusNumber(int number)
+		internal static bool IsIllegalPlusNumber(int number)
 		{
 			return number <= 0;
 		}
@@ -111,35 +111,11 @@
 		public static void InitializeLoggingSetting(LoggingSettingModel setting, Version previousVersion, INonProcess nonProcess)
 		{
 			Implement.InitializeLoggingSetting.Correction(setting, previousVersion, nonProcess);
-
-			if(IsIllegalPlusNumber(setting.WindowWidth)) {
-				setting.WindowWidth = Constants.loggingDefaultWindowSize.Width;
-			}
-			if(IsIllegalPlusNumber(setting.WindowHeight)) {
-				setting.WindowHeight = Constants.loggingDefaultWindowSize.Height;
-			}
 		}
 
 		private static void InitializeStreamSetting(StreamSettingModel setting, Version previousVersion, INonProcess nonProcess)
 		{
 			Implement.InitializeStreamSetting.Correction(setting, previousVersion, nonProcess);
-
-			setting.Font.Size = Constants.streamFontSize.GetClamp(setting.Font.Size);
-
-			if(setting.OutputColor.ForeColor == default(Color)) {
-				setting.OutputColor.ForeColor = Constants.streamOutputColor.ForeColor;
-			}
-			if(setting.OutputColor.BackColor == default(Color)) {
-				setting.OutputColor.BackColor = Constants.streamOutputColor.BackColor;
-			}
-
-			if(setting.ErrorColor.ForeColor == default(Color)) {
-				setting.ErrorColor.ForeColor = Constants.streamErrorColor.ForeColor;
-			}
-			if(setting.ErrorColor.BackColor == default(Color)) {
-				setting.ErrorColor.BackColor = Constants.streamErrorColor.BackColor;
-			}
-
 		}
 
 		public static void InitializeToolbarSetting(ToolbarSettingModel setting, Version previousVersion, INonProcess nonProcess)
@@ -154,89 +130,31 @@
 		public static void InitializeToolbar(ToolbarItemModel model, Version previousVersion, INonProcess nonProcess)
 		{
 			Implement.InitializeToolbar.Correction(model, previousVersion, nonProcess);
-
-			model.HideWaitTime = Constants.toolbarHideWaitTime.GetClamp(model.HideWaitTime);
-			model.HideAnimateTime = Constants.toolbarHideAnimateTime.GetClamp(model.HideAnimateTime);
-			model.Font.Size = Constants.toolbarFontSize.GetClamp(model.Font.Size);
-
-			if(IsIllegalPlusNumber(model.FloatToolbar.WidthButtonCount)) {
-				model.FloatToolbar.WidthButtonCount = 1;
-			}
-			if(IsIllegalPlusNumber(model.FloatToolbar.HeightButtonCount)) {
-				model.FloatToolbar.HeightButtonCount = 1;
-			}
 		}
 
 		public static void InitializeWindowSaveSetting(WindowSaveSettingModel model, Version previousVersion, INonProcess nonProcess)
 		{
 			Implement.InitializeWindowSaveSetting.Correction(model, previousVersion, nonProcess);
-
-			model.SaveCount = Constants.windowSaveCount.GetClamp(model.SaveCount);
-			model.SaveIntervalTime = Constants.windowSaveIntervalTime.GetClamp(model.SaveIntervalTime);
 		}
 
 		public static void InitializeNoteSetting(NoteSettingModel model, Version previousVersion, INonProcess nonProcess)
 		{
 			Implement.InitializeNoteSetting.Correction(model, previousVersion, nonProcess);
-
-			model.Font.Size = Constants.noteFontSize.GetClamp(model.Font.Size);
-
-			if (model.ForeColor == default(Color)) {
-				model.ForeColor = Constants.noteColor.ForeColor;
-			}
-			if (model.BackColor == default(Color)) {
-				model.BackColor = Constants.noteColor.BackColor;
-			}
 		}
 
 		public static void InitializeClipboardSetting(ClipboardSettingModel setting, Version previousVersion, INonProcess nonProcess)
 		{
 			Implement.InitializeClipboardSetting.Correction(setting, previousVersion, nonProcess);
-
-			setting.WaitTime = Constants.clipboardWaitTime.GetClamp(setting.WaitTime);
-			setting.Font.Size = Constants.clipboardFontSize.GetClamp(setting.Font.Size);
-
-			if(IsIllegalPlusNumber(setting.ItemsListWidth)) {
-				setting.ItemsListWidth = Constants.clipboardItemsListWidth;
-			}
-
-			if (IsIllegalPlusNumber(setting.WindowWidth)) {
-				setting.WindowWidth = Constants.clipboardDefaultWindowSize.Width;
-			}
-			if (IsIllegalPlusNumber(setting.WindowHeight)) {
-				setting.WindowHeight = Constants.clipboardDefaultWindowSize.Height;
-			}
-
 		}
 
 		public static void InitializeTemplateSetting(TemplateSettingModel setting, Version previousVersion, INonProcess nonProcess)
 		{
 			Implement.InitializeTemplateSetting.Correction(setting, previousVersion, nonProcess);
-
-			setting.Font.Size = Constants.templateFontSize.GetClamp(setting.Font.Size);
-
-			if(IsIllegalPlusNumber(setting.ItemsListWidth)) {
-				setting.ItemsListWidth = Constants.templateItemsListWidth;
-			}
-			if(IsIllegalPlusNumber(setting.ReplaceListWidth)) {
-				setting.ReplaceListWidth = Constants.templateReplaceListWidth;
-			}
-
-			if (IsIllegalPlusNumber(setting.WindowWidth)) {
-				setting.WindowWidth = Constants.templateDefaultWindowSize.Width;
-			}
-			if (IsIllegalPlusNumber(setting.WindowHeight)) {
-				setting.WindowHeight = Constants.templateDefaultWindowSize.Height;
-			}
 		}
 
 		public static void InitializeCommandSetting(CommandSettingModel setting, Version previousVersion, INonProcess nonProcess)
 		{
 			Implement.InitializeCommandSetting.Correction(setting, previousVersion, nonProcess);
-
-			setting.IconScale = EnumUtility.GetNormalization(setting.IconScale, IconScale.Small);
-			setting.WindowWidth = Constants.commandWindowWidth.GetClamp(setting.WindowWidth);
-			setting.Font.Size = Constants.commandFontSize.GetClamp(setting.Font.Size);
 		}
 
 		/// <summary>
@@ -329,37 +247,16 @@
 		public static void InitializeNoteIndexItem(NoteIndexItemModel indexItem, Version previousVersion, INonProcess nonProcess)
 		{
 			Implement.InitializeNoteIndexItem.Correction(indexItem, previousVersion, nonProcess);
-
-			CheckUtility.EnforceNotNull(indexItem);
-			if (IsIllegalPlusNumber(indexItem.Font.Size)) {
-				indexItem.Font.Size = Constants.noteFontSize.median;
-			}
-
-			indexItem.Font.Size = Constants.noteFontSize.GetClamp(indexItem.Font.Size);
-			
-			if (string.IsNullOrWhiteSpace(indexItem.Font.Family)) {
-				indexItem.Font.Family = FontUtility.GetOriginalFontFamilyName(SystemFonts.MessageFontFamily);
-			}
-
-			if (IsIllegalPlusNumber(indexItem.WindowWidth)) {
-				indexItem.WindowWidth = Constants.noteDefualtSize.Width;
-			}
-			if (IsIllegalPlusNumber(indexItem.WindowHeight)) {
-				indexItem.WindowHeight = Constants.noteDefualtSize.Height;
-			}
-
 		}
 
 		public static void InitializeTemplateIndexSetting(TemplateIndexSettingModel setting, Version previousVersion, INonProcess nonProcess)
 		{
 			Implement.InitializeTemplateIndexSetting.Correction(setting, previousVersion, nonProcess);
-			CheckUtility.EnforceNotNull(setting);
 		}
 
 		public static void InitializeClipboardIndexSetting(ClipboardIndexSettingModel setting, Version previousVersion, INonProcess nonProcess)
 		{
 			Implement.InitializeClipboardIndexSetting.Correction(setting, previousVersion, nonProcess);
-			CheckUtility.EnforceNotNull(setting);
 		}
 
 	}

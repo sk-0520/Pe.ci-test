@@ -16,6 +16,10 @@
 		}
 
 		static void V_First(LauncherGroupSettingModel setting, Version previousVersion, INonProcess nonProcess)
-		{ }
+		{
+			if(previousVersion != null) {
+				return;
+			}
+		}
 	}
 }

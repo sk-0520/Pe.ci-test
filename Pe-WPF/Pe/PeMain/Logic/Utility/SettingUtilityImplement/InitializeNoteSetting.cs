@@ -5,6 +5,7 @@
 	using System.Linq;
 	using System.Text;
 	using System.Threading.Tasks;
+	using System.Windows.Media;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
 
@@ -13,6 +14,15 @@
 		public static void Correction(NoteSettingModel setting, Version previousVersion, INonProcess nonProcess)
 		{
 			V_First(setting, previousVersion, nonProcess);
+
+			setting.Font.Size = Constants.noteFontSize.GetClamp(setting.Font.Size);
+
+			if(setting.ForeColor == default(Color)) {
+				setting.ForeColor = Constants.noteColor.ForeColor;
+			}
+			if(setting.BackColor == default(Color)) {
+				setting.BackColor = Constants.noteColor.BackColor;
+			}
 		}
 
 		static void V_First(NoteSettingModel setting, Version previousVersion, INonProcess nonProcess)
