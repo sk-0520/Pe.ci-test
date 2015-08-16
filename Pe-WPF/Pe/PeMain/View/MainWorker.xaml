@@ -49,24 +49,24 @@
 			</MenuItem.ItemTemplate>-->
 		</MenuItem>
 		<MenuItem AA:Language.Word="tasktray/note"    Header="note">
-			<MenuItem AA:Language.Word="note/create" Header="create" Command="{Binding CreateNoteItemCommand}" InputGestureText="{Binding CreateNoteItemKey}" />
-			<MenuItem Header="compact" Command="{Binding CompactNoteItemsCommand}" />
-			<MenuItem Header="hide" Command="{Binding HideNoteItemsCommand}" />
+			<MenuItem AA:Language.Word="note/create" Header="create" Command="{Binding CreateNoteItemCommand}" InputGestureText="{Binding CreateNoteHotKey}" />
+			<MenuItem Header="compact" Command="{Binding CompactNoteItemsCommand}" InputGestureText="{Binding CompactNoteItemsHotKey}" />
+			<MenuItem Header="hide" Command="{Binding HideNoteItemsCommand}"  InputGestureText="{Binding HideNoteItemsHotKey}" />
 			<Separator />
-			<MenuItem Header="front" Command="{Binding FrontNoteItemsCommand}" />
+			<MenuItem Header="front" Command="{Binding FrontNoteItemsCommand}" InputGestureText="{Binding FrontNoteItemsHotKey}"/>
 			<Separator />
 			<MenuItem Header="show" ItemsSource="{Binding NoteShowItems}" ItemContainerStyle="{StaticResource NoteMenuItemStyle}" IsEnabled="{Binding ItemsSource,RelativeSource={RelativeSource Self}, Converter={StaticResource IsNotEmptyCollection}}"/>
 			<MenuItem Header="hidden" ItemsSource="{Binding NoteHiddenItems}" ItemContainerStyle="{StaticResource NoteMenuItemStyle}" IsEnabled="{Binding ItemsSource,RelativeSource={RelativeSource Self}, Converter={StaticResource IsNotEmptyCollection}}"/>
 		</MenuItem>
-		<MenuItem AA:Language.Word="tasktray/template" Header="template" Command="{Binding SwitchTemplateWindowCommand}" IsChecked="{Binding Template.IsVisible, Mode=OneWay}" />
-		<MenuItem AA:Language.Word="tasktray/command" Header="command" Command="{Binding ShowCommandWindowCommand}" />
+		<MenuItem AA:Language.Word="tasktray/template" Header="template" Command="{Binding SwitchTemplateWindowCommand}" IsChecked="{Binding Template.IsVisible, Mode=OneWay}" InputGestureText="{Binding SwitchTemplateWindowHotKey}" />
+		<MenuItem AA:Language.Word="tasktray/command" Header="command" Command="{Binding ShowCommandWindowCommand}" InputGestureText="{Binding ShowCommandWindowHotKey}" />
 		<MenuItem AA:Language.Word="tasktray/log"     Header="log" Command="{Binding SwitchLoggingWindowCommand}" IsChecked="{Binding Logging.IsVisible, Mode=OneWay}" />
 		<Separator />
 		<MenuItem AA:Language.Word="tasktray/system-env" Header="system-env">
-			<MenuItem Header="hide file" Command="{Binding SwitchShellHideFileCommand}" IsChecked="{Binding IsVisibledShellHideFile, Mode=OneWay}" />
-			<MenuItem Header="extension" Command="{Binding SwitchShellExtensionCommand}" IsChecked="{Binding IsVisibledShellExtension, Mode=OneWay}" />
+			<MenuItem Header="hide file" Command="{Binding SwitchShellHideFileCommand}" IsChecked="{Binding IsVisibledShellHideFile, Mode=OneWay}"  InputGestureText="{Binding SwitchShellHideFileHotKey}"/>
+			<MenuItem Header="extension" Command="{Binding SwitchShellExtensionCommand}" IsChecked="{Binding IsVisibledShellExtension, Mode=OneWay}"  InputGestureText="{Binding SwitchShellExtensionHotKey}"/>
 			<Separator />
-			<MenuItem Header="clipboard" Command="{Binding SwitchClipboardWindowCommand}" IsChecked="{Binding Clipboard.IsVisible}" />
+			<MenuItem Header="clipboard" Command="{Binding SwitchClipboardWindowCommand}" IsChecked="{Binding Clipboard.IsVisible}" InputGestureText="{Binding SwitchClipboardWindowHotKey}" />
 			<Separator />
 			<MenuItem Header="window - save" Command="{Binding SaveTemporaryWindow}" />
 			<MenuItem Header="window - load" Command="{Binding LoadTemporaryWindow}" />

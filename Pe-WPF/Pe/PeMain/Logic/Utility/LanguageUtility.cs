@@ -241,6 +241,10 @@
 
 		public static string GetTextFromSingleKey(Key value, ILanguage language)
 		{
+			if(Key.A <= value && value <= Key.Z) {
+				return value.ToString();
+			}
+			
 			var key = GetEnumKeyName(value.GetType(), value);
 			return language[key];
 		}

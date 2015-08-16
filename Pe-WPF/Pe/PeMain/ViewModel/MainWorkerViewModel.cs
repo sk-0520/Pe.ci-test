@@ -173,9 +173,19 @@
 		CommandWindow CommandWindow { get; set; }
 		CommandViewModel Command { get { return CommandWindow.ViewModel; } }
 
-		public string CreateNoteItemKey { get { return LanguageUtility.GetMenuTextFromHotKeyModel(CommonData.MainSetting.Note.CreateHotKey, CommonData.Language);  } }
+		public string CreateNoteHotKey { get { return LanguageUtility.GetMenuTextFromHotKeyModel(CommonData.MainSetting.Note.CreateHotKey, CommonData.Language); } }
+		public string CompactNoteItemsHotKey { get { return LanguageUtility.GetMenuTextFromHotKeyModel(CommonData.MainSetting.Note.CompactHotKey, CommonData.Language); } }
+		public string HideNoteItemsHotKey { get { return LanguageUtility.GetMenuTextFromHotKeyModel(CommonData.MainSetting.Note.HideHotKey, CommonData.Language); } }
+		public string FrontNoteItemsHotKey { get { return LanguageUtility.GetMenuTextFromHotKeyModel(CommonData.MainSetting.Note.ShowFrontHotKey, CommonData.Language); } }
 
+		public string SwitchTemplateWindowHotKey { get { return LanguageUtility.GetMenuTextFromHotKeyModel(CommonData.MainSetting.Template.ToggleHotKey, CommonData.Language); } }
+		public string ShowCommandWindowHotKey { get { return LanguageUtility.GetMenuTextFromHotKeyModel(CommonData.MainSetting.Command.ShowHotkey, CommonData.Language); } }
+		
+		public string SwitchShellHideFileHotKey { get { return LanguageUtility.GetMenuTextFromHotKeyModel(CommonData.MainSetting.SystemEnvironment.HideFileHotkey, CommonData.Language); } }
+		public string SwitchShellExtensionHotKey { get { return LanguageUtility.GetMenuTextFromHotKeyModel(CommonData.MainSetting.SystemEnvironment.ExtensionHotkey, CommonData.Language); } }
 
+		public string SwitchClipboardWindowHotKey { get { return LanguageUtility.GetMenuTextFromHotKeyModel(CommonData.MainSetting.Clipboard.ToggleHotKey, CommonData.Language); } }
+		
 		#endregion
 
 		#region command
@@ -548,6 +558,7 @@
 				}
 				InitializeSetting(previousVersion);
 				InitializeStatus();
+				InitializeHotkey();
 				InitializeSystemEvent();
 				InitializeStatic();
 
@@ -598,6 +609,24 @@
 				SettingUtility.InitializeNoteIndexSetting(CommonData.NoteIndexSetting, previousVersion, CommonData.NonProcess);
 				SettingUtility.InitializeTemplateIndexSetting(CommonData.TemplateIndexSetting, previousVersion, CommonData.NonProcess);
 				SettingUtility.InitializeClipboardIndexSetting(CommonData.ClipboardIndexSetting, previousVersion, CommonData.NonProcess);
+			}
+		}
+
+		void InitializeHotkey()
+		{
+			var propertyNames = new[] {
+				"CreateNoteHotKey",
+				"CompactNoteItemsHotKey",
+				"HideNoteItemsHotKey",
+				"FrontNoteItemsHotKey",
+				"SwitchTemplateWindowHotKey",
+				"ShowCommandWindowHotKey",
+				"SwitchShellHideFileHotKey",
+				"SwitchShellExtensionHotKey",
+				"SwitchClipboardWindowHotKey",
+			};
+			foreach(var propertyName in propertyNames) {
+				OnPropertyChanged(propertyName);
 			}
 		}
 
@@ -718,7 +747,6 @@
 					var window = CreateNoteWindow(noteItem, false);
 				}
 			}
-			OnPropertyChanged("CreateNoteItemKey");
 		}
 
 		void RemoveNote()
@@ -879,6 +907,7 @@
 			ResetCache(false);
 			// TODO: impl
 			InitializeStatus();
+			InitializeHotkey();
 
 			MessageWindow.SetCommonData(CommonData, null);
 			ResetLogger();
