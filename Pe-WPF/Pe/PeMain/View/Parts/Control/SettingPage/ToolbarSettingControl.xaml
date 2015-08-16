@@ -28,6 +28,7 @@
 			<AC:TreeListLauncherItemRelationConverter x:Key="TreeListLauncherItemRelationConverter" />
 			<AC:ToolbarDockTypeImageConverter x:Key="ToolbarDockTypeImageConverter" />
 			<ACE:DockTypeLanguageConverter  x:Key="DockTypeLanguageConverter" />
+			<ACE:IconScaleLanguageConverter x:Key="IconScaleLanguageConverter" />
 		</ResourceDictionary>
 	</AV:CommonDataUserControl.Resources>
 	<Grid>
@@ -93,7 +94,20 @@
 				</ComboBox>
 
 				<Label Content="icon" HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Top"/>
-				<ComboBox Grid.Column="1" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Top" ItemsSource="{Binding Source={x:Static AP:EnumList.PlainIconScaleList}}" SelectedItem="{Binding SelectedToolbar.IconScale, Mode=TwoWay}" />
+				<ComboBox Grid.Column="1" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Top" ItemsSource="{Binding Source={x:Static AP:EnumList.PlainIconScaleList}}" SelectedItem="{Binding SelectedToolbar.IconScale, Mode=TwoWay}" >
+					<ComboBox.ItemTemplate>
+						<DataTemplate>
+							<TextBlock>
+								<TextBlock.Text>
+									<MultiBinding Converter="{StaticResource IconScaleLanguageConverter}" >
+										<Binding Path="" />
+										<Binding Path="CommonData.Language" RelativeSource="{RelativeSource AncestorType=AV:CommonDataUserControl}" />
+									</MultiBinding>
+								</TextBlock.Text>
+							</TextBlock>
+						</DataTemplate>
+					</ComboBox.ItemTemplate>
+				</ComboBox>
 
 				<Label Content="font" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Top" />
 				<AV:FontSelectControl

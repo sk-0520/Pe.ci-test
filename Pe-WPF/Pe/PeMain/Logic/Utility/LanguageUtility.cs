@@ -214,10 +214,17 @@ using ContentTypeTextNet.Pe.PeMain.View.Parts.Control;
 			return language[key];
 		}
 
+		static string GetTextFromIconScale(IconScale value, ILanguage language)
+		{
+			var key = GetEnumKeyName(value.GetType(), value);
+			return language[key];
+		}
+
 		public static string GetTextFromEnum(Type type, object value, ILanguage language)
 		{
 			var map = new Dictionary<Type, Func<string>>() {
-				{ typeof(DockType), () => GetTextFromDockType((DockType)value, language) }
+				{ typeof(DockType), () => GetTextFromDockType((DockType)value, language) },
+				{ typeof(IconScale), () => GetTextFromIconScale((IconScale)value, language) },
 			};
 
 			Func<string> getText;
