@@ -97,7 +97,7 @@
 
 		public static LauncherItemModel CreateLauncherItem(LauncherItemCollectionModel items, INonProcess nonProcess)
 		{
-			var result = CreateModelName(items, nonProcess.Language, "new/item-name");
+			var result = CreateModelName(items, nonProcess.Language, "new/launcher-name");
 			InitializeLauncherItem(result, Constants.assemblyVersion, nonProcess);
 			return result;
 		}
@@ -105,6 +105,7 @@
 		public static LauncherGroupItemModel CreateLauncherGroup(LauncherGroupItemCollectionModel group, INonProcess nonProcess)
 		{
 			var result = CreateModelName(group, nonProcess.Language, "new/group-name");
+			InitializeLauncherGroupItem(result, Constants.assemblyVersion, nonProcess);
 			return result;
 		}
 
@@ -248,6 +249,15 @@
 				//------------------------
 				setting.Groups.Add(initGroup);
 			}
+
+			foreach(var item in setting.Groups) {
+				InitializeLauncherGroupItem(item, previousVersion, nonProcess);
+			}
+		}
+
+		public static void InitializeLauncherGroupItem(LauncherGroupItemModel item, Version previousVersion, INonProcess nonProcess)
+		{
+			Implement.InitializeLauncherGroupItem.Correction(item, previousVersion, nonProcess);
 		}
 
 		public static void IncrementLauncherItem(LauncherItemModel launcherItem, string option, string workDirPath, INonProcess nonProcess)

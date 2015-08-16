@@ -8,7 +8,8 @@
 		<Item Id="enabled" Word="有効" />
 		<Item Id="show" Word="表示" />
 		<Item Id="hide" Word="非表示" />
-		
+
+		<Item Id="execute" Word="起動" />
 	</Define>
 	<Words>
 		<Item Id="window/setting" Word="setting"  />
@@ -23,8 +24,11 @@
 
 		<Item Id="new/group-name" Word="新規グループ" />
 		<Item Id="new/template-name" Word="新規テンプレート" />
+		<Item Id="new/launcher-name" Word="ランチャーアイテム" />
 
-		<Item Id="launcher/run/normal" Word="起動" />
+		<Item Id="command/execute" Word="${execute}" />
+
+		<Item Id="launcher/run/normal" Word="${execute}" />
 
 		<Item Id="note/title/default"   Word="新規ノート@[COUNT]" />
 		<Item Id="note/title/timestamp" Word="@[TIMESTAMP]" />

@@ -140,6 +140,7 @@
     <Compile Include="Logic\Utility\NoteUtility.cs" />
     <Compile Include="Logic\Utility\PopupUtility.cs" />
     <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeCommandSetting.cs" />
+    <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeLauncherGroupItem.cs" />
     <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeLauncherItem.cs" />
     <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeLoggingSetting.cs" />
     <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeStreamSetting.cs" />

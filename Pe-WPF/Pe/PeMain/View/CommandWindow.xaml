@@ -48,29 +48,28 @@
 		</ResourceDictionary>
 	</AW:CommonDataWindow.Resources>
 	<Grid x:Name="parent">
-		<Grid.RowDefinitions>
-			<RowDefinition Height="Auto" />
-			<RowDefinition Height="*" />
-		</Grid.RowDefinitions>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="10" />
+			<ColumnDefinition Width="Auto" />
 			<ColumnDefinition Width="*" />
 			<ColumnDefinition Width="Auto" />
 		</Grid.ColumnDefinitions>
 		<Rectangle
 			x:Name="caption"
-			Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" 
+			Grid.Column="0" 
 			Fill="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}"
 		/>
-		<StackPanel Grid.Row="0" Grid.Column="1" >
-			<StackPanel Orientation="Horizontal">
-				<TextBlock Text="selected" AA:Language.Word="command/selected" />
-				<Image Width="{Binding IconWidth, Mode=OneTime}" Height="{Binding IconHeight, Mode=OneTime}" Style="{StaticResource ImageRenderStyle}" Source="{Binding SelectedCommandItem.Image}"/>
-				<TextBlock Text="{Binding SelectedCommandItem.DisplayText}" />
-			</StackPanel>
-		</StackPanel>
+		<Image
+			Grid.Column="1"
+			Width="{Binding IconWidth, Mode=OneTime}"
+			Height="{Binding IconHeight, Mode=OneTime}"
+			Style="{StaticResource ImageRenderStyle}"
+			Source="{Binding SelectedCommandItem.Image}"
+		/>
 		<TextBox
-			x:Name="inputCommand" Grid.Row="1" Grid.Column="1" Text="{Binding InputText, UpdateSourceTrigger=PropertyChanged}" SA:TextBoxHelper.SelectedText="{Binding SelectedText}"
+			x:Name="inputCommand" 
+			Grid.Column="2" 
+			Text="{Binding InputText, UpdateSourceTrigger=PropertyChanged}" SA:TextBoxHelper.SelectedText="{Binding SelectedText}"
 			FontFamily="{Binding FontFamily, Mode=OneWay}" FontWeight="{Binding FontBold, Converter={StaticResource BooleanFontWeightConverter}, Mode=OneWay}" FontStyle="{Binding FontItalic, Converter={StaticResource BooleanFontStyleConverter}, Mode=OneWay}" FontSize="{Binding FontSize, Mode=OneWay}"
 		>
 			<TextBox.InputBindings>
@@ -84,10 +83,15 @@
 			</TextBox.InputBindings>
 		</TextBox>
 		<Button
-			Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" Content="execute" AA:Language.Word="command/execute" 
+			Grid.Column="3" Content="execute" AA:Language.Word="command/execute" 
 			IsEnabled="{Binding SelectedCommandItem, Converter={StaticResource LogicalIsNotNullConverter}}" Command="{Binding RunItemCommand}"
 		/>
-		<Popup x:Name="popup" PlacementTarget="{Binding ElementName=parent}" IsOpen="{Binding IsOpen, Mode=OneWay}">
+		<Popup
+			x:Name="popup"
+			MinWidth="{Binding ActualWidth, ElementName=inputCommand}"
+			PlacementTarget="{Binding ElementName=inputCommand}"
+			IsOpen="{Binding IsOpen, Mode=OneWay}"
+		>
 			<Border>
 				<ListBox x:Name="listItems" IsSynchronizedWithCurrentItem="True" MaxHeight="400" SelectedIndex="{Binding SelectedIndex}" SelectedItem="{Binding SelectedCommandItem}" ItemsSource="{Binding CommandItems}">
 					<ListBox.Resources>
