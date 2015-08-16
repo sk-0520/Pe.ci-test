@@ -1,15 +1,17 @@
 ﻿namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 {
 	using System;
-	using System.Collections.Generic;
-	using System.Diagnostics;
-	using System.Windows;
-	using System.Windows.Controls;
-	using System.Windows.Media;
-	using ContentTypeTextNet.Library.SharedLibrary.Logic;
-	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
-	using ContentTypeTextNet.Pe.PeMain.View.Parts.Attached;
-	using ContentTypeTextNet.Pe.PeMain.View.Parts.Control;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
+using ContentTypeTextNet.Library.SharedLibrary.Define;
+using ContentTypeTextNet.Library.SharedLibrary.IF;
+using ContentTypeTextNet.Library.SharedLibrary.Logic;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.Pe.PeMain.View.Parts.Attached;
+using ContentTypeTextNet.Pe.PeMain.View.Parts.Control;
 
 	public static class LanguageUtility
 	{
@@ -200,5 +202,31 @@
 			}
 
 		}
+
+		static string GetEnumKeyName(Type type, object value)
+		{
+			return "enum/" + type.Name + "/" + value.ToString();
+		}
+
+		static string GetTextFromDockType(DockType value, ILanguage language)
+		{
+			var key = GetEnumKeyName(value.GetType(), value);
+			return language[key];
+		}
+
+		public static string GetTextFromEnum(Type type, object value, ILanguage language)
+		{
+			var map = new Dictionary<Type, Func<string>>() {
+				{ typeof(DockType), () => GetTextFromDockType((DockType)value, language) }
+			};
+
+			Func<string> getText;
+			if(map.TryGetValue(type, out getText)) {
+				return getText();
+			} else {
+				return string.Format("####{0}####", value);
+			}
+		}
+
 	}
 }

@@ -18,7 +18,11 @@
 		public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
 		{
 			var dockType = (DockType)value;
-			var element = LauncherToolbarUtility.MakeDockIcon(dockType, imageSize);
+			var usingImageSize = imageSize;
+			if(parameter is Size) {
+				usingImageSize = (Size)parameter;
+			}
+			var element = LauncherToolbarUtility.MakeDockIcon(dockType, usingImageSize);
 			return element;
 			//return ImageUtility.MakeBitmapBitmapSourceDefualtDpi(element);
 		}
