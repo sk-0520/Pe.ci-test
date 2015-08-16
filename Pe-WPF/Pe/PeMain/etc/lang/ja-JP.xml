@@ -50,6 +50,58 @@
 		
 		<Item Id="logging/timestamp" Word="発生日時" />
 
+		<!-- enum -->
+		
+		<Item Id="enum/ModifierKeys" Word="修飾キー" />
+		<Item Id="enum/ModifierKeys/Alt" Word="Alt" />
+		<Item Id="enum/ModifierKeys/Control" Word="Control" />
+		<Item Id="enum/ModifierKeys/Shift" Word="Shift" />
+		<Item Id="enum/ModifierKeys/Windows" Word="Windows" />
+		<!-- key 106 -->
+		<Item Id="enum/Key/separator" Word=" + " />
+		
+		<Item Id="enum/Key/NumPad0" Word="0" />
+		<Item Id="enum/Key/NumPad1" Word="1" />
+		<Item Id="enum/Key/NumPad2" Word="2" />
+		<Item Id="enum/Key/NumPad3" Word="3" />
+		<Item Id="enum/Key/NumPad4" Word="4" />
+		<Item Id="enum/Key/NumPad5" Word="5" />
+		<Item Id="enum/Key/NumPad6" Word="6" />
+		<Item Id="enum/Key/NumPad7" Word="7" />
+		<Item Id="enum/Key/NumPad8" Word="8" />
+		<Item Id="enum/Key/NumPad9" Word="9" />
+		
+		<Item Id="enum/Key/D0" Word="Num 0" />
+		<Item Id="enum/Key/D1" Word="Num 1" />
+		<Item Id="enum/Key/D2" Word="Num 2" />
+		<Item Id="enum/Key/D3" Word="Num 3" />
+		<Item Id="enum/Key/D4" Word="Num 4" />
+		<Item Id="enum/Key/D5" Word="Num 5" />
+		<Item Id="enum/Key/D6" Word="Num 6" />
+		<Item Id="enum/Key/D7" Word="Num 7" />
+		<Item Id="enum/Key/D8" Word="Num 8" />
+		<Item Id="enum/Key/D9" Word="Num 9" />
+
+		<Item Id="enum/Key/OemMinus"         Word="-" />
+		<Item Id="enum/Key/OemQuotes"        Word="^" />
+		<Item Id="enum/Key/Oem5"             Word="¥" />
+		<Item Id="enum/Key/Oem3"             Word="@" />
+		<Item Id="enum/Key/OemOpenBrackets"  Word="[" />
+		<Item Id="enum/Key/OemPlus"          Word=":" />
+		<Item Id="enum/Key/Oem1"             Word=":" />
+		<Item Id="enum/Key/Oem6"             Word="]" />
+		<Item Id="enum/Key/OemComma"         Word="," />
+		<Item Id="enum/Key/OemPeriod"        Word="." />
+		<Item Id="enum/Key/OemQuestion"      Word="/" />
+		<Item Id="enum/Key/OemBackslash"     Word="\" />
+		<Item Id="enum/Key/ImeNonConvert"    Word="無変換" />
+		<Item Id="enum/Key/ImeConvert"       Word="変換" />
+		
+		<Item Id="enum/Key/Add"       Word="Num +" />
+		<Item Id="enum/Key/Subtract"  Word="Num -" />
+		<Item Id="enum/Key/Multiply"  Word="Num *" />
+		<Item Id="enum/Key/Divide"    Word="Num /" />
+		<Item Id="enum/Key/Decimal"   Word="Num ." />
 
 	</Words>
 </Language>

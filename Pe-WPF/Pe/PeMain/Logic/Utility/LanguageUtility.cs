@@ -1,17 +1,21 @@
 ﻿namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 {
 	using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media;
-using ContentTypeTextNet.Library.SharedLibrary.Define;
-using ContentTypeTextNet.Library.SharedLibrary.IF;
-using ContentTypeTextNet.Library.SharedLibrary.Logic;
-using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
-using ContentTypeTextNet.Pe.PeMain.View.Parts.Attached;
-using ContentTypeTextNet.Pe.PeMain.View.Parts.Control;
+	using System.Collections.Generic;
+	using System.Diagnostics;
+	using System.Linq;
+	using System.Text;
+	using System.Windows;
+	using System.Windows.Controls;
+	using System.Windows.Input;
+	using System.Windows.Media;
+	using ContentTypeTextNet.Library.SharedLibrary.Define;
+	using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+	using ContentTypeTextNet.Library.SharedLibrary.Model;
+	using ContentTypeTextNet.Pe.PeMain.View.Parts.Attached;
+	using ContentTypeTextNet.Pe.PeMain.View.Parts.Control;
 
 	public static class LanguageUtility
 	{
@@ -235,5 +239,56 @@ using ContentTypeTextNet.Pe.PeMain.View.Parts.Control;
 			}
 		}
 
+		public static string GetTextFromSingleKey(Key value, ILanguage language)
+		{
+			var key = GetEnumKeyName(value.GetType(), value);
+			return language[key];
+		}
+
+		public static string GetTextFromSingleModifierKey(ModifierKeys value, ILanguage language)
+		{
+			var key = GetEnumKeyName(value.GetType(), value);
+			return language[key];
+		}
+
+		public static string GetKeySeparatorText(ILanguage language)
+		{
+			var key = "enum/Key/separator";
+			return language[key];
+		}
+
+		public static string GetTextFromHotKeyModel(HotKeyModel hotkey, ILanguage language)
+		{
+			var buffer = new StringBuilder();
+
+			var mk = new[] {
+				ModifierKeys.Alt,
+				ModifierKeys.Control,
+				ModifierKeys.Shift,
+				ModifierKeys.Windows,
+			};
+			var modText = mk
+				.Where(m => hotkey.ModifierKeys.HasFlag(m))
+				.Select(m => GetTextFromSingleModifierKey(m, language))
+			;
+			if(modText.Any()) {
+				buffer.Append(string.Join(GetKeySeparatorText(language), modText));
+				if(hotkey.Key != Key.None) {
+					buffer.Append(GetKeySeparatorText(language));
+				}
+			}
+			buffer.Append(GetTextFromSingleKey(hotkey.Key, language));
+
+			return buffer.ToString();
+		}
+
+		public static string GetMenuTextFromHotKeyModel(HotKeyModel hotkey, ILanguage language)
+		{
+			if(hotkey.Key == Key.None) {
+				return string.Empty;
+			}
+
+			return GetTextFromHotKeyModel(hotkey, language);
+		}
 	}
 }

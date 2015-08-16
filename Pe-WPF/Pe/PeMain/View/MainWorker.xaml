@@ -49,7 +49,7 @@
 			</MenuItem.ItemTemplate>-->
 		</MenuItem>
 		<MenuItem AA:Language.Word="tasktray/note"    Header="note">
-			<MenuItem AA:Language.Word="note/create" Header="create" Command="{Binding CreateNoteItemCommand}" />
+			<MenuItem AA:Language.Word="note/create" Header="create" Command="{Binding CreateNoteItemCommand}" InputGestureText="{Binding CreateNoteItemKey}" />
 			<MenuItem Header="compact" Command="{Binding CompactNoteItemsCommand}" />
 			<MenuItem Header="hide" Command="{Binding HideNoteItemsCommand}" />
 			<Separator />

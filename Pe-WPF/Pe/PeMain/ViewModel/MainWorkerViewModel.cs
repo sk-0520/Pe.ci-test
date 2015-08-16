@@ -173,6 +173,9 @@
 		CommandWindow CommandWindow { get; set; }
 		CommandViewModel Command { get { return CommandWindow.ViewModel; } }
 
+		public string CreateNoteItemKey { get { return LanguageUtility.GetMenuTextFromHotKeyModel(CommonData.MainSetting.Note.CreateHotKey, CommonData.Language);  } }
+
+
 		#endregion
 
 		#region command
@@ -315,9 +318,9 @@
 					o => {
 						SaveSetting();
 #if DEBUG
-							var startuoPath = Environment.ExpandEnvironmentVariables(Constants.startupShortcutPath);
-							if(File.Exists(startuoPath)) {
-								File.Delete(startuoPath);
+							var startupPath = Environment.ExpandEnvironmentVariables(Constants.startupShortcutPath);
+							if(File.Exists(startupPath)) {
+								File.Delete(startupPath);
 							}
 #endif
 						Application.Current.Shutdown();
@@ -327,6 +330,7 @@
 				return result;
 			}
 		}
+
 
 		public ICommand CreateNoteItemCommand
 		{
@@ -714,6 +718,7 @@
 					var window = CreateNoteWindow(noteItem, false);
 				}
 			}
+			OnPropertyChanged("CreateNoteItemKey");
 		}
 
 		void RemoveNote()
