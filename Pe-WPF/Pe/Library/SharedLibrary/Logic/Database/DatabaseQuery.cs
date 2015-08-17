@@ -1,19 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Common;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using ContentTypeTextNet.Library.SharedLibrary.Data.Database;
-using System.Reflection;
-
-namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Database
+﻿namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Database
 {
+	using System;
+	using System.Collections.Generic;
+	using System.Data.Common;
+	using System.Linq;
+	using System.Text;
+	using System.Text.RegularExpressions;
+	using System.Threading.Tasks;
+	using ContentTypeTextNet.Library.SharedLibrary.Data.Database;
+	using System.Reflection;
+	using System.Diagnostics;
+	using ContentTypeTextNet.Library.SharedLibrary.Attribute;
+
 	/// <summary>
 	/// DBクエリ。
 	/// </summary>
-	public class DbQuery: IDisposable
+	public class DatabaseQuery: DisposeFinalizeBase
 	{
 		/// <summary>
 		/// 生成。
@@ -21,7 +23,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Database
 		/// 基本的にDBManagerから作成するのでユーザーコードでは使用しない。
 		/// </summary>
 		/// <param name="dbManager"></param>
-		public DbQuery(DBManager dbManager)
+		public DatabaseQuery(DatabaseManager dbManager)
 		{
 			DBManager = dbManager;
 			DbCommand = dbManager.Connection.CreateCommand();
@@ -35,7 +37,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Database
 		/// <summary>
 		/// 生成元。
 		/// </summary>
-		public DBManager DBManager { get; private set; }
+		public DatabaseManager DBManager { get; private set; }
 		/// <summary>
 		/// コマンド。
 		/// </summary>
@@ -92,7 +94,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Database
 		{
 			return Expression[exprName] = expr;
 		}
-
+		
 		/// <summary>
 		/// コマンド条件式を真で設定。
 		/// </summary>
@@ -242,16 +244,16 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Database
 		/// 対象Row/Dtoから物理名・プロパティ紐付一覧を取得。
 		/// </summary>
 		/// <returns></returns>
-		private IList<EntityMappingInfo> GetTargetInfoList<T>()
-			where T: DbData
+		private IList<EntityMappingInformation> GetTargetInfoList<T>()
+			where T: DatabaseDataBase
 		{
 			var members = typeof(T).GetMembers();
-			var targetList = new List<EntityMappingInfo>(members.Length);
+			var targetList = new List<EntityMappingInformation>(members.Length);
 			foreach(var member in members) {
 				var tartgetNameAttribute = member.GetCustomAttribute(typeof(EntityMappingAttribute)) as EntityMappingAttribute;
 				if(tartgetNameAttribute != null) {
 					var propertyInfo = typeof(T).GetProperty(member.Name);
-					var targetInfo = new EntityMappingInfo(tartgetNameAttribute, propertyInfo);
+					var targetInfo = new EntityMappingInformation(tartgetNameAttribute, propertyInfo);
 					targetList.Add(targetInfo);
 				}
 			}
@@ -265,7 +267,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Database
 		/// <param name="code"></param>
 		/// <returns>Tの集合</returns>
 		private IEnumerable<T> GetDtoListImpl<T>(string code)
-			where T: DbData, new()
+			where T: DatabaseDataBase, new()
 		{
 			var targetInfos = GetTargetInfoList<T>();
 			using(var reader = ExecuteReader(code)) {
@@ -288,7 +290,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Database
 		/// <param name="code"></param>
 		/// <returns>T単体</returns>
 		public T GetResultSingle<T>(string code)
-			where T: Dto, new()
+			where T: DataTransferObject, new()
 		{
 			return GetDtoListImpl<T>(code).Single();
 		}
@@ -299,7 +301,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Database
 		/// <param name="code"></param>
 		/// <returns>T集合</returns>
 		public IEnumerable<T> GetResultList<T>(string code)
-			where T: Dto, new()
+			where T: DataTransferObject, new()
 		{
 			return GetDtoListImpl<T>(code);
 		}
@@ -309,7 +311,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Database
 		/// </summary>
 		/// <returns></returns>
 		private EntityMappingSet GetEntitySet<T>()
-			where T: Row
+			where T: DatabaseRow
 		{
 			var tableAttribute = (EntityMappingAttribute)typeof(T).GetCustomAttribute(typeof(EntityMappingAttribute));
 			var tableName = tableAttribute.PhysicalName;
@@ -320,7 +322,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Database
 
 
 
-		protected void SetParameterFromEntitySet(Row row, EntityMappingSet entitySet)
+		protected void SetParameterFromEntitySet(DatabaseRow row, EntityMappingSet entitySet)
 		{
 			foreach(var targetInfo in entitySet.TargetInfos) {
 				Parameter[targetInfo.PropertyInfo.Name] = targetInfo.PropertyInfo.GetValue(row);
@@ -335,7 +337,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Database
 		/// <param name="rowList"></param>
 		/// <param name="func">実行するコマンドを生成する処理</param>
 		private void ExecuteEntityCommand<T>(IList<T> rowList, Func<EntityMappingSet, string> func)
-			where T: Row
+			where T: DatabaseRow
 		{
 			var entitySet = GetEntitySet<T>();
 			var code = func(entitySet);
@@ -350,7 +352,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Database
 		/// </summary>
 		/// <param name="rowList"></param>
 		public void ExecuteInsert<T>(IList<T> rowList)
-			where T: Row
+			where T: DatabaseRow
 		{
 			ExecuteEntityCommand(rowList, DBManager.CreateInsertCommandCode);
 		}
@@ -360,7 +362,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Database
 		/// </summary>
 		/// <param name="rowList"></param>
 		public void ExecuteUpdate<T>(IList<T> rowList)
-			where T: Row
+			where T: DatabaseRow
 		{
 			ExecuteEntityCommand(rowList, DBManager.CreateUpdateCommandCode);
 		}
@@ -370,7 +372,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Database
 		/// </summary>
 		/// <param name="rowList"></param>
 		public void ExecuteDelete<T>(IList<T> rowList)
-			where T: Row
+			where T: DatabaseRow
 		{
 			ExecuteEntityCommand(rowList, DBManager.CreateDeleteCommandCode);
 		}
@@ -381,7 +383,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Database
 		/// <param name="row"></param>
 		/// <returns>対象のデータが設定された行。見つからない場合は null。</returns>
 		public T GetRow<T>(T row)
-			where T: Row, new()
+			where T: DatabaseRow, new()
 		{
 			var entitySet = GetEntitySet<T>();
 			var code = DBManager.CreateSelectCommandCode(entitySet);
@@ -396,7 +398,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Database
 		/// <param name="src"></param>
 		/// <returns></returns>
 		public virtual T CreateKeyRow<T>(T src)
-			where T: Row, new()
+			where T: DatabaseRow, new()
 		{
 			var targetInfos = GetTargetInfoList<T>();
 			var keyEntity = new T();
@@ -407,16 +409,18 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Database
 			return keyEntity;
 		}
 
-		#region IDisposable
+		#region DisposeFinalizeBase
 
-		protected virtual void Dispose(bool disposing)
+		protected override void Dispose(bool disposing)
 		{
-			DbCommand.Dispose();
-		}
+			if(!IsDisposed) {
+				Debug.Assert(DbCommand != null);
 
-		public void Dispose()
-		{
-			Dispose(true);
+				DbCommand.Dispose();
+				DbCommand = null;
+			}
+
+			base.Dispose(disposing);
 		}
 
 		#endregion

@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ContentTypeTextNet.Library.SharedLibrary.Define.Database;
+using ContentTypeTextNet.Library.SharedLibrary.Define;
 
 namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Database
 {

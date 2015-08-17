@@ -1,19 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Common;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Database
+﻿namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Database
 {
+	using System;
+	using System.Collections.Generic;
+	using System.Data;
+	using System.Data.Common;
+	using System.Linq;
+	using System.Text;
+	using System.Threading.Tasks;
+	using ContentTypeTextNet.Library.SharedLibrary.Data.Database;
+
 	/// <summary>
 	/// DB接続・操作の一元化
 	/// 
 	/// すんごいとろくない限り処理速度は考えない。
 	/// </summary>
-	public abstract class DBManager: IDisposable
+	public abstract class DatabaseManager: IDisposable
 	{
 		/// <summary>
 		/// 生成。
@@ -21,7 +22,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Database
 		/// </summary>
 		/// <param name="connection">コネクション</param>
 		/// <param name="isOpened">コネクションは開いているか。閉じている場合は開く。</param>
-		public DBManager(DbConnection connection, bool isOpened)
+		public DatabaseManager(DbConnection connection, bool isOpened)
 		{
 			///Parameter = new Dictionary<string, object>();
 			///Expression = new Dictionary<string, CommandExpression>();
@@ -56,9 +57,9 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Database
 		/// ユーザーコードでは多分出番ない、はず。
 		/// </summary>
 		/// <returns></returns>
-		public virtual DbQuery CreateQuery()
+		public virtual DatabaseQuery CreateQuery()
 		{
-			return new DbQuery(this);
+			return new DatabaseQuery(this);
 		}
 
 		/// <summary>
