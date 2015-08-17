@@ -26,6 +26,11 @@
 		/// </summary>
 		[DataMember]
 		public uint ExecuteCount { get; set; }
+		/// <summary>
+		/// 最終実行日。
+		/// </summary>
+		[DataMember]
+		public DateTime ExecuteTimestamp { get; set; }
 
 		/// <summary>
 		/// オプション。

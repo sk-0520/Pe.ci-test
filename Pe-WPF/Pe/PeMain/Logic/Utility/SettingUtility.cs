@@ -12,6 +12,7 @@
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
 	using ContentTypeTextNet.Pe.Library.PeData.Define;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
@@ -260,11 +261,6 @@
 			Implement.InitializeLauncherGroupItem.Correction(item, previousVersion, nonProcess);
 		}
 
-		public static void IncrementLauncherItem(LauncherItemModel launcherItem, string option, string workDirPath, INonProcess nonProcess)
-		{
-			CheckUtility.EnforceNotNull(launcherItem);
-		}
-
 		public static void InitializeNoteIndexSetting(NoteIndexSettingModel setting, Version previousVersion, INonProcess nonProcess)
 		{
 			Implement.InitializeNoteIndexSetting.Correction(setting, previousVersion, nonProcess);
@@ -288,6 +284,37 @@
 		public static void InitializeClipboardIndexSetting(ClipboardIndexSettingModel setting, Version previousVersion, INonProcess nonProcess)
 		{
 			Implement.InitializeClipboardIndexSetting.Correction(setting, previousVersion, nonProcess);
+		}
+
+		/// <summary>
+		/// リスト構造の整理。
+		/// </summary>
+		/// <param name="list"></param>
+		/// <param name="value"></param>
+		static void IncrementList(CollectionModel<string> list, string value)
+		{
+			if(!string.IsNullOrEmpty(value)) {
+				var index = list.FindIndex(s => s == value);
+				if(index != -1) {
+					list.RemoveAt(index);
+				}
+				list.Insert(0, value);
+			}
+		}
+
+		public static void IncrementLauncherItem(LauncherItemModel launcherItem, string option, string workDirPath, INonProcess nonProcess)
+		{
+			CheckUtility.EnforceNotNull(launcherItem);
+
+			var dateTime = DateTime.Now;
+
+			IncrementList(launcherItem.History.Options, option);
+			IncrementList(launcherItem.History.WorkDirectoryPaths, workDirPath);
+			
+			launcherItem.History.ExecuteTimestamp = dateTime;
+			launcherItem.History.ExecuteCount += 1;
+
+			launcherItem.History.Update(dateTime);
 		}
 
 	}

@@ -44,10 +44,14 @@
 
 		#region function
 
-		public virtual void Update()
+		public virtual void Update(DateTime dateTime)
 		{
 			UpdateCount += 1;
 			UpdateTimestamp = DateTime.Now;
+		}
+		public virtual void Update()
+		{
+			Update(DateTime.Now);
 		}
 
 		#endregion
