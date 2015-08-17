@@ -16,9 +16,7 @@
 	{
 		public static void Correction(ToolbarItemModel setting, Version previousVersion, INonProcess nonProcess)
 		{
-			//V_First(setting, previousVersion, nonProcess);
-			// ロジック的に previousVersion が null(初回) で到達することはなさそう
-			Debug.Assert(previousVersion != null);
+			V_First(setting, previousVersion, nonProcess);
 
 			setting.HideWaitTime = Constants.toolbarHideWaitTime.GetClamp(setting.HideWaitTime);
 			setting.HideAnimateTime = Constants.toolbarHideAnimateTime.GetClamp(setting.HideAnimateTime);
@@ -31,6 +29,18 @@
 			if(SettingUtility.IsIllegalPlusNumber(setting.FloatToolbar.HeightButtonCount)) {
 				setting.FloatToolbar.HeightButtonCount = 1;
 			}
+		}
+
+		static void V_First(ToolbarItemModel setting, Version previousVersion, INonProcess nonProcess)
+		{
+			if(previousVersion != null) {
+				return;
+			}
+
+			setting.IconScale = IconScale.Normal;
+			setting.HideWaitTime = Constants.toolbarHideWaitTime.median;
+			setting.HideAnimateTime = Constants.toolbarHideAnimateTime.median;
+			setting.Font.Size = Constants.toolbarFontSize.median;
 		}
 	}
 }

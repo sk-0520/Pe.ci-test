@@ -571,6 +571,14 @@
 				if(!InitializeAccept()) {
 					return false;
 				}
+				if(previousVersion == null) {
+					foreach(var screen in Screen.AllScreens) {
+						var toolbar = new ToolbarItemModel();
+						toolbar.Id = screen.DeviceName;
+						CommonData.Logger.Information("create toolbar setting", screen);
+						CommonData.MainSetting.Toolbar.Items.Add(toolbar);
+					}
+				}
 				InitializeSetting(previousVersion);
 				InitializeStatus();
 				OnPropertyChangeHotkey();
