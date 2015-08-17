@@ -99,6 +99,7 @@
     <Compile Include="Data\DialogFilterItem.cs" />
     <Compile Include="Data\InformationGroup.cs" />
     <Compile Include="Data\DialogFilterValueItem.cs" />
+    <Compile Include="Define\Database\QueryCondition.cs" />
     <Compile Include="Define\DockType.cs" />
     <Compile Include="Define\IconScale.cs" />
     <Compile Include="Define\LogKind.cs" />

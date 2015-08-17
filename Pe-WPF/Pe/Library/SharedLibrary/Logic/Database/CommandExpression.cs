@@ -4,23 +4,10 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.Define.Database;
 
 namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Database
 {
-	/// <summary>
-	/// 条件が偽の場合にコマンドと条件式のどちらを使用するか。
-	/// </summary>
-	public enum FalseCondition
-	{
-		/// <summary>
-		/// コマンドを使用する。
-		/// </summary>
-		Command,
-		/// <summary>
-		/// 条件式を使用する。
-		/// </summary>
-		Expression,
-	}
 
 	/// <summary>
 	/// 条件式からコマンドの構築。
@@ -36,7 +23,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Database
 		{
 			Condition = false;
 			TrueCommand = string.Empty;
-			FalseCondition = FalseCondition.Command;
+			QueryCondition = QueryCondition.Command;
 			FalseCommand = string.Empty;
 			FalseExpression = null;
 		}
@@ -64,7 +51,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Database
 		{
 			Condition = condition;
 			TrueCommand = trueCommand;
-			FalseCondition = FalseCondition.Command;
+			QueryCondition = QueryCondition.Command;
 		}
 
 		/// <summary>
@@ -78,7 +65,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Database
 		{
 			Condition = condition;
 			TrueCommand = trueCommand;
-			FalseCondition = FalseCondition.Command;
+			QueryCondition = QueryCondition.Command;
 			FalseCommand = falseCommand;
 		}
 
@@ -93,7 +80,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Database
 		/// <summary>
 		/// 条件が偽の場合にコマンドと式のどちらを使用するか
 		/// </summary>
-		public FalseCondition FalseCondition { get; private set; }
+		public QueryCondition QueryCondition { get; private set; }
 		/// <summary>
 		/// 条件が偽の場合のコマンド
 		/// </summary>
@@ -113,11 +100,11 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Database
 				return TrueCommand;
 			}
 
-			if(FalseCondition == FalseCondition.Command) {
+			if(QueryCondition == QueryCondition.Command) {
 				// 文字列
 				return FalseCommand;
 			} else {
-				Debug.Assert(FalseCondition == FalseCondition.Expression);
+				Debug.Assert(QueryCondition == QueryCondition.Expression);
 				// 式
 				return FalseExpression.ToCode();
 			}
