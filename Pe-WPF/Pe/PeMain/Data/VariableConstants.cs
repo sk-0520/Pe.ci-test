@@ -116,6 +116,10 @@
 		/// バックアップディレクトリパス。
 		/// </summary>
 		public string UserBackupDirectoryPath { get { return Path.Combine(UserDirectoryPath, Constants.backupDirectoryName); } }
+		/// <summary>
+		/// アーカイブディレクトリ。
+		/// </summary>
+		public string UserArchiveDirectoryPath { get { return Path.Combine(UserDirectoryPath, Constants.archiveDirectoryName); } }
 
 		public string UserSettingMainSettingFilePath { get { return Path.Combine(UserSettingDirectoryPath, this._mainSettingFileName); } }
 

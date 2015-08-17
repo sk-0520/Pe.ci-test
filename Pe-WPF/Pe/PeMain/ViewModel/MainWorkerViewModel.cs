@@ -6,6 +6,7 @@
 	using System.Globalization;
 	using System.IO;
 	using System.Linq;
+	using System.Net.NetworkInformation;
 	using System.Threading;
 	using System.Threading.Tasks;
 	using System.Windows;
@@ -1064,6 +1065,112 @@
 			Command.Visibility = Visibility.Visible;
 		}
 
+		UpdateData CheckUpdate(bool force)
+		{
+
+			var updateData = new UpdateData(CommonData.VariableConstants.UserArchiveDirectoryPath, CommonData.MainSetting.RunningInformation.CheckUpdateRC, CommonData);
+			CommonData.Logger.Debug("update: parameter", string.Format("force = {0}, setting = {1}", force, CommonData.MainSetting.RunningInformation.CheckUpdateRelease));
+			if(force || !Pause && this.CommonData.MainSetting.RunningInformation.CheckUpdateRelease) {
+				var updateInfo = updateData.Check();
+			}
+			return updateData;
+		}
+
+		/// <summary>
+		/// アップデートを実行するか確認する。
+		/// </summary>
+		/// <param name="force">強制的に確認を行うか。</param>
+		/// <param name="updateData">アップデート情報。</param>
+		void ConfirmUpdate(bool force, UpdateData updateData)
+		{
+			if(force || !Pause && CommonData.MainSetting.RunningInformation.CheckUpdateRelease) {
+				if(updateData != null && updateData.Info != null) {
+					if(updateData.Info.IsUpdate) {
+						ShowUpdateDialog(updateData);
+					} else if(updateData.Info.IsError) {
+						CommonData.Logger.Warning(CommonData.Language["log/update/error"], updateData.Info.Log);
+					} else {
+						CommonData.Logger.Information(CommonData.Language["log/update/newest"], updateData.Info.Log);
+					}
+				} else {
+					CommonData.Logger.Error(CommonData.Language["log/update/error"], "info is null");
+				}
+			} else if(Pause) {
+				CommonData.Logger.Information(CommonData.Language["log/update/check-stop"], "this._pause => true");
+			}
+		}
+
+		/// <summary>
+		/// アップデートチェックを非同期で行い、アップデートが存在すればアップデート確認を行う。
+		/// </summary>
+		void CheckUpdateProcessAsync()
+		{
+#if !DISABLED_UPDATE_CHECK
+			Task.Run(() => {
+				// ネットワーク接続可能か？
+				var nic = NetworkInterface.GetIsNetworkAvailable();
+				if(nic) {
+					CommonData.Logger.Debug("update: check");
+					Thread.Sleep(Constants.updateWaitTime);
+					return CheckUpdate(false);
+				} else {
+					return null;
+				}
+			}).ContinueWith(t => {
+				if(t.Result != null) {
+					ConfirmUpdate(false, t.Result);
+				} else {
+					CommonData.Logger.Information(CommonData.Language["log/update/check-stop"], CommonData.Language["log/update/nic"]);
+				}
+			}, TaskScheduler.FromCurrentSynchronizationContext());
+#else
+			if(this._commonData.Logger != null) {
+				CommonData.Logger.Debug("update: check", "DISABLED_UPDATE_CHECK");
+			}
+#endif
+		}
+
+		/// <summary>
+		/// アップデートチェックを同期的に行い、アップデートが存在すればアップデート確認を行う。
+		/// </summary>
+		/// <param name="force">強制的に確認を行うか。</param>
+		void CheckUpdateProcessWait(bool force)
+		{
+			var updateData = CheckUpdate(force);
+			ConfirmUpdate(force, updateData);
+		}
+
+		/// <summary>
+		/// アップデートダイアログ表示。
+		/// </summary>
+		/// <param name="updateData"></param>
+		void ShowUpdateDialog(UpdateData updateData)
+		{
+			// TODO: ShowUpdateDialog
+			CommonData.Logger.Trace("TODO");
+			//PauseOthersPlain(() => {
+			//	try {
+			//		using(var dialog = new UpdateForm()) {
+			//			dialog.UpdateData = updateData;
+			//			dialog.SetCommonData(this._commonData);
+			//			if(dialog.ShowDialog() == DialogResult.OK) {
+			//				// 現在設定を保持する
+			//				AppUtility.SaveSetting(this._commonData);
+			//				if(updateData.Execute()) {
+			//					return () => {
+			//						CloseApplication(false);
+			//						return false;
+			//					};
+			//				}
+			//			}
+			//		}
+			//	} catch(Exception ex) {
+			//		// #96
+			//		this._commonData.Logger.Puts(LogType.Error, ex.Message, ex);
+			//	}
+			//	return null;
+			//});
+		}
 		#endregion
 
 		#region ViewModelBase

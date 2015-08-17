@@ -21,6 +21,8 @@
 	public static partial class Constants
 	{
 		public const string programName = "Pe-WPF";
+		public const string updateProgramDirectoryName = "Updater";
+		public const string updateProgramName = updateProgramDirectoryName + ".exe";
 		/// <summary>
 		/// 前回バージョンがこれ未満なら使用許諾を表示
 		/// </summary>
@@ -99,6 +101,13 @@
 
 		public static readonly TimeSpan iconLoadWaitTime = TimeSpan.FromMilliseconds(250);
 		public const int iconLoadRetryMax = 3;
+
+		public const int updateArchiveCount = 15;
+#if DEBUG
+		public static readonly TimeSpan updateWaitTime = TimeSpan.FromSeconds(1);
+#else
+		public static readonly TimeSpan updateWaitTime = TimeSpan.FromSeconds(30);
+#endif
 
 		public const int screenCountChangeRetryCount = 10;
 		public static readonly TimeSpan screenCountChangeWaitTime = TimeSpan.FromMilliseconds(250);
@@ -386,6 +395,10 @@
 
 		public static int BackupSettingCount { get { return int.Parse(ConfigurationManager.AppSettings["backup-setting"]); } }
 		public static int BackupArchiveCount { get { return int.Parse(ConfigurationManager.AppSettings["backup-archive"]); } }
+
+		#endregion
+
+		#region property
 
 		#endregion
 
