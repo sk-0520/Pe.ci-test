@@ -56,6 +56,12 @@
 			}
 		}
 
+		public static BitmapSource MakeOverwrapIcon(LauncherItemModel model, INonProcess nonProcess)
+		{
+			// TODO: だりぃ
+			return null;
+		}
+
 		/// <summary>
 		/// コマンド選択用ファイルダイアログお表示する。
 		/// </summary>
