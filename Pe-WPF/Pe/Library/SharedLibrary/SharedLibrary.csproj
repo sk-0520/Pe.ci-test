@@ -93,6 +93,9 @@
     <Compile Include="CompatibleWindows\Utility\HandleUtility.cs" />
     <Compile Include="CompatibleWindows\Utility\MouseUtility.cs" />
     <Compile Include="CompatibleWindows\Utility\PodStructUtility.cs" />
+    <Compile Include="Data\Database\DbData.cs" />
+    <Compile Include="Data\Database\Dto.cs" />
+    <Compile Include="Data\Database\Row.cs" />
     <Compile Include="Data\DialogFilterItem.cs" />
     <Compile Include="Data\InformationGroup.cs" />
     <Compile Include="Data\DialogFilterValueItem.cs" />
@@ -121,6 +124,10 @@
     <Compile Include="IF\IMakeBitmapSource.cs" />
     <Compile Include="IF\INonProcess.cs" />
     <Compile Include="Data\MVMPair.cs" />
+    <Compile Include="Logic\Database\CommandExpression.cs" />
+    <Compile Include="Logic\Database\DBManager.cs" />
+    <Compile Include="Logic\Database\DbQuery.cs" />
+    <Compile Include="Logic\Database\EntityMapping.cs" />
     <Compile Include="Logic\DialogFilterList.cs" />
     <Compile Include="Logic\Extension\FileSystemInfoUtility.cs" />
     <Compile Include="Logic\MVMPairCreateDelegationCollection.cs" />
