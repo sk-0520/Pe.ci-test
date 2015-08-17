@@ -37,25 +37,25 @@
 		<ToolBar Grid.Row="0" Style="{StaticResource DefaultToolbarStyle}">
 			<ToggleButton IsChecked="{Binding Topmost, ElementName=root}">
 				<!-- topmost -->
-				<Image Style="{StaticResource ImageRenderStyle}" Source="{x:Static AM:AppResource.CommonPinImage}" />
+				<Image Style="{StaticResource DefaultImage}" Source="{x:Static AM:AppResource.CommonPinImage}" />
 			</ToggleButton>
 			<Separator />
 			<Button Command="{Binding SaveCommand}">
 				<!-- save -->
-				<Image Style="{StaticResource ImageRenderStyle}" Source="{x:Static AM:AppResource.CommonSaveImage}" />
+				<Image Style="{StaticResource DefaultImage}" Source="{x:Static AM:AppResource.CommonSaveImage}" />
 			</Button>
 			<Button IsEnabled="{Binding ProcessRunning, Mode=OneWay}" Command="{Binding ClearCommand}" >
 				<!-- clear -->
-				<Image Style="{StaticResource ImageRenderStyle}" Source="{x:Static AM:AppResource.CommonClearImage}" />
+				<Image Style="{StaticResource DefaultImage}" Source="{x:Static AM:AppResource.CommonClearImage}" />
 			</Button>
 			<Separator />
 			<Button Command="{Binding RefreshProcessCommand}" IsEnabled="{Binding ProcessRunning, Mode=OneWay}">
 				<!-- refresh -->
-				<Image Style="{StaticResource ImageRenderStyle}" Source="{x:Static AM:AppResource.CommonRefreshImage}" />
+				<Image Style="{StaticResource DefaultImage}" Source="{x:Static AM:AppResource.CommonRefreshImage}" />
 			</Button>
 			<Button Command="{Binding KillProcessCommand}" IsEnabled="{Binding ProcessRunning, Mode=OneWay}">
 				<!-- kill -->
-				<Image Style="{StaticResource ImageRenderStyle}" Source="{x:Static AM:AppResource.StreamKillImage}" />
+				<Image Style="{StaticResource DefaultImage}" Source="{x:Static AM:AppResource.StreamKillImage}" />
 			</Button>
 		</ToolBar>
 		<TabControl Grid.Row="1">

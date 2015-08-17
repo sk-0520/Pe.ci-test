@@ -46,19 +46,19 @@
 			<SC:BooleanFontWeightConverter x:Key="BooleanFontWeightConverter" />
 			<SC:BooleanFontStyleConverter x:Key="BooleanFontStyleConverter" />
 			<AC:SelectedIndexNumberConverter x:Key="SelectedIndexNumberConverter" />
-			<Style x:Key="ClipboardText" TargetType="Image" BasedOn="{StaticResource ImageRenderStyle}">
+			<Style x:Key="ClipboardText" TargetType="Image" BasedOn="{StaticResource DefaultImage}">
 				<Setter Property="Source" Value="{x:Static AM:AppResource.ClipboardTextFormatImage}" />
 			</Style>
-			<Style x:Key="ClipboardRtf" TargetType="Image" BasedOn="{StaticResource ImageRenderStyle}">
+			<Style x:Key="ClipboardRtf" TargetType="Image" BasedOn="{StaticResource DefaultImage}">
 				<Setter Property="Source" Value="{x:Static AM:AppResource.ClipboardRichTextFormatImage}" />
 			</Style>
-			<Style x:Key="ClipboardHtml" TargetType="Image" BasedOn="{StaticResource ImageRenderStyle}">
+			<Style x:Key="ClipboardHtml" TargetType="Image" BasedOn="{StaticResource DefaultImage}">
 				<Setter Property="Source" Value="{x:Static AM:AppResource.ClipboardHtmlImage}" />
 			</Style>
-			<Style x:Key="ClipboardImage" TargetType="Image" BasedOn="{StaticResource ImageRenderStyle}">
+			<Style x:Key="ClipboardImage" TargetType="Image" BasedOn="{StaticResource DefaultImage}">
 				<Setter Property="Source" Value="{x:Static AM:AppResource.ClipboardImageImage}" />
 			</Style>
-			<Style x:Key="ClipboardFiles" TargetType="Image" BasedOn="{StaticResource ImageRenderStyle}">
+			<Style x:Key="ClipboardFiles" TargetType="Image" BasedOn="{StaticResource DefaultImage}">
 				<Setter Property="Source" Value="{x:Static AM:AppResource.ClipboardFileImage}" />
 			</Style>
 		</ResourceDictionary>
@@ -79,33 +79,33 @@
 				<Separator />
 				<Button Command="{Binding SaveItemCommand}" IsEnabled="{Binding IsEnabled,ElementName=content}">
 					<StackPanel Orientation="Horizontal">
-						<Image Style="{StaticResource ImageRenderStyle}" Source="{x:Static AM:AppResource.CommonSaveImage}" />
+						<Image Style="{StaticResource DefaultImage}" Source="{x:Static AM:AppResource.CommonSaveImage}" />
 						<TextBlock Text="save" />
 					</StackPanel>
 				</Button>
 				<Separator />
 				<Button Command="{Binding RemoveItemCommand}" IsEnabled="{Binding IsEnabled,ElementName=content}">
 					<StackPanel Orientation="Horizontal">
-						<Image Style="{StaticResource ImageRenderStyle}" Source="{x:Static AM:AppResource.CommonRemoveImage}" />
+						<Image Style="{StaticResource DefaultImage}" Source="{x:Static AM:AppResource.CommonRemoveImage}" />
 						<TextBlock Text="remove" />
 					</StackPanel>
 				</Button>
 				<Button Command="{Binding ClipboardClearCommand}">
 					<StackPanel Orientation="Horizontal">
-						<Image Style="{StaticResource ImageRenderStyle}" Source="{x:Static AM:AppResource.ClipboardClearImage}" />
+						<Image Style="{StaticResource DefaultImage}" Source="{x:Static AM:AppResource.ClipboardClearImage}" />
 						<TextBlock Text="clipboard clear" />
 					</StackPanel>
 				</Button>
 				<Separator />
 				<ToggleButton IsChecked="{Binding IsTopmost}">
 					<StackPanel Orientation="Horizontal">
-						<Image Style="{StaticResource ImageRenderStyle}" Source="{x:Static AM:AppResource.CommonPinImage}" />
+						<Image Style="{StaticResource DefaultImage}" Source="{x:Static AM:AppResource.CommonPinImage}" />
 						<TextBlock Text="topmost" />
 					</StackPanel>
 				</ToggleButton>
 				<ToggleButton IsChecked="{Binding AppNonProcess.ClipboardWatcher.UsingClipboard}">
 					<StackPanel Orientation="Horizontal">
-						<Image Style="{StaticResource ImageRenderStyle}" Source="{x:Static AM:AppResource.CommonUsingClipboardImage}" />
+						<Image Style="{StaticResource DefaultImage}" Source="{x:Static AM:AppResource.CommonUsingClipboardImage}" />
 						<TextBlock Text="use clipboard" />
 					</StackPanel>
 				</ToggleButton>
@@ -137,7 +137,7 @@
 														<ColumnDefinition Width="Auto" />
 														<ColumnDefinition Width="*" />
 													</Grid.ColumnDefinitions>
-													<Image Grid.Column="0" Style="{StaticResource ImageRenderStyle}" Source="{Binding ItemTypeImage}" />
+													<Image Grid.Column="0" Style="{StaticResource DefaultImage}" Source="{Binding ItemTypeImage}" />
 													<TextBlock Grid.Column="1" HorizontalAlignment="Right" Text="{Binding CreateTimestamp}" />
 												</Grid>
 											</Border>
@@ -152,11 +152,11 @@
 											</StackPanel.Resources>
 											<Button IsEnabled="{Binding EnabledClipboardTypesText}" Command="{Binding SendItemCommand}" CommandParameter="{Binding ElementName=root}" >
 												<!-- send -->
-												<Image Style="{StaticResource ImageRenderStyle}" Source="{Binding Source={x:Static AM:AppResource.CommonSendImage}}" />
+												<Image Style="{StaticResource DefaultImage}" Source="{Binding Source={x:Static AM:AppResource.CommonSendImage}}" />
 											</Button>
 											<Button Command="{Binding CopyItemCommand}">
 												<!-- copy -->
-												<Image Style="{StaticResource ImageRenderStyle}" Source="{Binding Source={x:Static AM:AppResource.CommonClipboardImage}}" />
+												<Image Style="{StaticResource DefaultImage}" Source="{Binding Source={x:Static AM:AppResource.CommonClipboardImage}}" />
 											</Button>
 											<Button Command="{Binding CopyTextCommand}" IsEnabled="{Binding EnabledClipboardTypesText}">
 												<!-- text -->
@@ -257,7 +257,7 @@
 								<TextBlock Grid.Row="0" Grid.Column="0" Text="uri" />
 								<TextBox Grid.Row="0" Grid.Column="1" IsReadOnly="True" Text="{Binding SelectedViewModel.HtmlUri, Mode=OneWay}" Style="{StaticResource DefaultTextBox}" />
 								<Button Grid.Row="0" Grid.Column="2">
-									<!--<Image Style="{StaticResource ImageRenderStyle}" Source="{Binding Source={x:Static AM:AppResource.CommonClipboardImage}}" AA:IconSize.IconScale="Small" />-->
+									<!--<Image Style="{StaticResource DefaultImage}" Source="{Binding Source={x:Static AM:AppResource.CommonClipboardImage}}" AA:IconSize.IconScale="Small" />-->
 									<Image Style="{StaticResource ClipboardHtml}" />
 								</Button>
 								<WebBrowser Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" AA:Browser.Html="{Binding SelectedViewModel.HtmlCode}" />
@@ -278,13 +278,13 @@
 								<ToolBar Grid.Row="0" Style="{StaticResource DefaultToolbarStyle}">
 									<RadioButton x:Name="imageFit" IsChecked="{Binding ImageScale, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static AD:ImageScale.Fit}}" >
 										<StackPanel Orientation="Horizontal">
-											<Image Style="{StaticResource ImageRenderStyle}" Source="{x:Static AM:AppResource.ClipboardImageFitImage}" />
+											<Image Style="{StaticResource DefaultImage}" Source="{x:Static AM:AppResource.ClipboardImageFitImage}" />
 											<TextBlock Text="fit" AA:Language.Word="clipboard/image/fit" />
 										</StackPanel>
 									</RadioButton>
 									<RadioButton x:Name="imageRaw" IsChecked="{Binding ImageScale, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static AD:ImageScale.Raw}}">
 										<StackPanel Orientation="Horizontal">
-											<Image Style="{StaticResource ImageRenderStyle}" Source="{x:Static AM:AppResource.ClipboardImageRawImage}" />
+											<Image Style="{StaticResource DefaultImage}" Source="{x:Static AM:AppResource.ClipboardImageRawImage}" />
 											<TextBlock Text="raw" AA:Language.Word="clipboard/image/raw" />
 										</StackPanel>
 									</RadioButton>
@@ -305,7 +305,7 @@
 									</ScrollViewer.Style>
 									<Image Source="{Binding SelectedViewModel.Image, Mode=OneWay}">
 										<Image.Style>
-											<Style TargetType="Image" BasedOn="{StaticResource ImageRenderStyle}">
+											<Style TargetType="Image" BasedOn="{StaticResource DefaultImage}">
 												<Setter Property="Stretch" Value="None" />
 												<Style.Triggers>
 													<DataTrigger Binding="{Binding IsChecked,ElementName=imageFit}" Value="True">
@@ -332,7 +332,7 @@
 											<GridViewColumn.CellTemplate>
 												<DataTemplate>
 													<StackPanel Orientation="Horizontal">
-														<Image Style="{StaticResource ImageRenderStyle}" Source="{Binding Image}"/>
+														<Image Style="{StaticResource DefaultImage}" Source="{Binding Image}"/>
 														<TextBlock Text="{Binding Name}"/>
 													</StackPanel>
 												</DataTemplate>

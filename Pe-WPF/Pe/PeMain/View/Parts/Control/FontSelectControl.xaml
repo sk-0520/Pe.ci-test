@@ -47,10 +47,10 @@
 			</ComboBox.ItemTemplate>
 		</ComboBox>
 		<ToggleButton Grid.Row="1" Grid.Column="0" IsChecked="{Binding IsBold, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}}" AA:Language.Hint="font/weight">
-			<Image Style="{StaticResource ImageRenderStyle}" Source="{x:Static AM:AppResource.CommonFontBoldImage}" />
+			<Image Style="{StaticResource DefaultImage}" Source="{x:Static AM:AppResource.CommonFontBoldImage}" />
 		</ToggleButton>
 		<ToggleButton Grid.Row="1" Grid.Column="1" IsChecked="{Binding IsItalic, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}}" AA:Language.Hint="font/style">
-			<Image Style="{StaticResource ImageRenderStyle}" Source="{x:Static AM:AppResource.CommonFontItalicImage}" />
+			<Image Style="{StaticResource DefaultImage}" Source="{x:Static AM:AppResource.CommonFontItalicImage}" />
 		</ToggleButton>
 		<xctk:DoubleUpDown Grid.Row="1" Grid.Column="2" Minimum="{Binding SizeMinimum, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}}" Maximum="{Binding SizeMaximum, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}}" Value="{Binding Size, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}}" />
 	</Grid>

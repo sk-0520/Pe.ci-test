@@ -184,7 +184,7 @@
 				<TreeView.ItemTemplate>
 					<HierarchicalDataTemplate ItemsSource="{Binding Nodes}" >
 						<StackPanel Orientation="Horizontal">
-							<Image Style="{StaticResource ImageRenderStyle}" Source="{Binding Image}" />
+							<Image Style="{StaticResource DefaultImage}" Source="{Binding Image}" />
 							<TextBlock Text="{Binding DisplayText}" />
 						</StackPanel>
 					</HierarchicalDataTemplate>

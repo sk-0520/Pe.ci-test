@@ -56,33 +56,33 @@
 		<ToolBar Style="{StaticResource ClipboardTemplateDefualtToolbar}" >
 			<Button Command="{Binding CreateItemCommand}">
 				<StackPanel Orientation="Horizontal">
-					<Image Style="{StaticResource ImageRenderStyle}" Source="{Binding Source={x:Static AM:AppResource.CommonAddImage}}" />
+					<Image Style="{StaticResource DefaultImage}" Source="{Binding Source={x:Static AM:AppResource.CommonAddImage}}" />
 					<TextBlock Text="create" />
 				</StackPanel>
 			</Button>
 			<Button Command="{Binding SaveItemCommand}" IsEnabled="{Binding IsEnabled,ElementName=content}">
 				<StackPanel Orientation="Horizontal">
-					<Image Style="{StaticResource ImageRenderStyle}" Source="{Binding Source={x:Static AM:AppResource.CommonSaveImage}}" />
+					<Image Style="{StaticResource DefaultImage}" Source="{Binding Source={x:Static AM:AppResource.CommonSaveImage}}" />
 					<TextBlock Text="save" />
 				</StackPanel>
 			</Button>
 			<Separator />
 			<Button Command="{Binding RemoveItemCommand}" IsEnabled="{Binding IsEnabled,ElementName=content}" >
 				<StackPanel Orientation="Horizontal">
-					<Image Style="{StaticResource ImageRenderStyle}" Source="{Binding Source={x:Static AM:AppResource.CommonRemoveImage}}" />
+					<Image Style="{StaticResource DefaultImage}" Source="{Binding Source={x:Static AM:AppResource.CommonRemoveImage}}" />
 					<TextBlock Text="remove" />
 				</StackPanel>
 			</Button>
 			<Separator />
 			<ToggleButton IsChecked="{Binding IsTopmost}">
 				<StackPanel Orientation="Horizontal">
-					<Image Style="{StaticResource ImageRenderStyle}" Source="{Binding Source={x:Static AM:AppResource.CommonPinImage}}" />
+					<Image Style="{StaticResource DefaultImage}" Source="{Binding Source={x:Static AM:AppResource.CommonPinImage}}" />
 					<TextBlock Text="topmost" />
 				</StackPanel>
 			</ToggleButton>
 			<ToggleButton IsChecked="{Binding AppNonProcess.ClipboardWatcher.UsingClipboard}">
 				<StackPanel Orientation="Horizontal">
-					<Image Style="{StaticResource ImageRenderStyle}" Source="{Binding Source={x:Static AM:AppResource.CommonUsingClipboardImage}}" />
+					<Image Style="{StaticResource DefaultImage}" Source="{Binding Source={x:Static AM:AppResource.CommonUsingClipboardImage}}" />
 					<TextBlock Text="use clipboard" />
 				</StackPanel>
 			</ToggleButton>
@@ -110,7 +110,7 @@
 										<TextBlock Text="{Binding Name}" />
 										<Border Style="{StaticResource IndexItemsStyleInfo}">
 											<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-												<Image Style="{StaticResource ImageRenderStyle}" Source="{Binding ItemTypeImage}" Margin="0,0,2,0" />
+												<Image Style="{StaticResource DefaultImage}" Source="{Binding ItemTypeImage}" Margin="0,0,2,0" />
 												<TextBlock Text="{Binding ItemTypeText}" />
 											</StackPanel>
 										</Border>
@@ -125,19 +125,19 @@
 										</StackPanel.Resources>
 										<Button Command="{Binding SendItemCommand}" CommandParameter="{Binding ElementName=root}" >
 											<!-- send -->
-											<Image Style="{StaticResource ImageRenderStyle}" Source="{Binding Source={x:Static AM:AppResource.CommonSendImage}}" />
+											<Image Style="{StaticResource DefaultImage}" Source="{Binding Source={x:Static AM:AppResource.CommonSendImage}}" />
 										</Button>
 										<Button Command="{Binding CopyItemCommand}">
 											<!-- copy -->
-											<Image Style="{StaticResource ImageRenderStyle}" Source="{Binding Source={x:Static AM:AppResource.CommonClipboardImage}}" />
+											<Image Style="{StaticResource DefaultImage}" Source="{Binding Source={x:Static AM:AppResource.CommonClipboardImage}}" />
 										</Button>
 										<Button Command="{Binding DataContext.MoveUpItemCommand, ElementName=root}" CommandParameter="{Binding }" >
 											<!-- up -->
-											<Image Style="{StaticResource ImageRenderStyle}" Source="{Binding Source={x:Static AM:AppResource.CommonUpImage}}" />
+											<Image Style="{StaticResource DefaultImage}" Source="{Binding Source={x:Static AM:AppResource.CommonUpImage}}" />
 										</Button>
 										<Button Command="{Binding DataContext.MoveDownItemCommand, ElementName=root}" CommandParameter="{Binding }">
 											<!-- down -->
-											<Image Style="{StaticResource ImageRenderStyle}" Source="{Binding Source={x:Static AM:AppResource.CommonDownImage}}" />
+											<Image Style="{StaticResource DefaultImage}" Source="{Binding Source={x:Static AM:AppResource.CommonDownImage}}" />
 										</Button>
 									</StackPanel>
 								</Border>

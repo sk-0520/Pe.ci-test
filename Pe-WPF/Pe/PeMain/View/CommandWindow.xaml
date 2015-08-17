@@ -63,7 +63,7 @@
 			Grid.Column="1"
 			Width="{Binding IconWidth, Mode=OneTime}"
 			Height="{Binding IconHeight, Mode=OneTime}"
-			Style="{StaticResource ImageRenderStyle}"
+			Style="{StaticResource DefaultImage}"
 			Source="{Binding SelectedCommandItem.Image}"
 		/>
 		<TextBox
@@ -107,7 +107,7 @@
 					<ListBox.ItemTemplate>
 						<DataTemplate>
 							<StackPanel Orientation="Horizontal">
-								<Image Style="{StaticResource ImageRenderStyle}" Source="{Binding Image}" />
+								<Image Style="{StaticResource DefaultImage}" Source="{Binding Image}" />
 								<TextBlock Text="{Binding DisplayText}" />
 							</StackPanel>
 						</DataTemplate>
