@@ -204,6 +204,20 @@
 			}
 		}
 
+		public ICommand OpenSystemEnvironmentMenuCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						OnPropertyChangeSystemEnvironment();
+					}
+				);
+
+				return result;
+			}
+		}
+
 		/// <summary>
 		/// 設定ウィンドウ表示。
 		/// </summary>
@@ -558,7 +572,7 @@
 				}
 				InitializeSetting(previousVersion);
 				InitializeStatus();
-				InitializeHotkey();
+				OnPropertyChangeHotkey();
 				InitializeSystemEvent();
 				InitializeStatic();
 
@@ -609,24 +623,6 @@
 				SettingUtility.InitializeNoteIndexSetting(CommonData.NoteIndexSetting, previousVersion, CommonData.NonProcess);
 				SettingUtility.InitializeTemplateIndexSetting(CommonData.TemplateIndexSetting, previousVersion, CommonData.NonProcess);
 				SettingUtility.InitializeClipboardIndexSetting(CommonData.ClipboardIndexSetting, previousVersion, CommonData.NonProcess);
-			}
-		}
-
-		void InitializeHotkey()
-		{
-			var propertyNames = new[] {
-				"CreateNoteHotKey",
-				"CompactNoteItemsHotKey",
-				"HideNoteItemsHotKey",
-				"FrontNoteItemsHotKey",
-				"SwitchTemplateWindowHotKey",
-				"ShowCommandWindowHotKey",
-				"SwitchShellHideFileHotKey",
-				"SwitchShellExtensionHotKey",
-				"SwitchClipboardWindowHotKey",
-			};
-			foreach(var propertyName in propertyNames) {
-				OnPropertyChanged(propertyName);
 			}
 		}
 
@@ -907,7 +903,7 @@
 			ResetCache(false);
 			// TODO: impl
 			InitializeStatus();
-			InitializeHotkey();
+			OnPropertyChangeHotkey();
 
 			MessageWindow.SetCommonData(CommonData, null);
 			ResetLogger();
@@ -1023,10 +1019,38 @@
 			Template.IsVisible = !Template.IsVisible;
 		}
 
-		void OnPropertyChangeForNote()
+		void OnPropertyChangeNoteMenu()
 		{
-			OnPropertyChanged("NoteShowItems");
-			OnPropertyChanged("NoteHiddenItems");
+			var propertyNames = new[] {
+				"NoteShowItems",
+				"NoteHiddenItems",
+			};
+			CallOnPropertyChange(propertyNames);
+		}
+
+		void OnPropertyChangeSystemEnvironment()
+		{
+			var propertyNames = new[] {
+				"IsVisibledShellHideFile",
+				"IsVisibledShellExtension",
+			};
+			CallOnPropertyChange(propertyNames);
+		}
+
+		void OnPropertyChangeHotkey()
+		{
+			var propertyNames = new[] {
+				"CreateNoteHotKey",
+				"CompactNoteItemsHotKey",
+				"HideNoteItemsHotKey",
+				"FrontNoteItemsHotKey",
+				"SwitchTemplateWindowHotKey",
+				"ShowCommandWindowHotKey",
+				"SwitchShellHideFileHotKey",
+				"SwitchShellExtensionHotKey",
+				"SwitchClipboardWindowHotKey",
+			};
+			CallOnPropertyChange(propertyNames);
 		}
 
 		void ShowCommandWindow()
@@ -1146,7 +1170,7 @@
 							var noteWindow = (NoteWindow)window;
 							NoteWindows.Add(noteWindow);
 
-							OnPropertyChangeForNote();
+							OnPropertyChangeNoteMenu();
 						}
 						break;
 
@@ -1189,7 +1213,7 @@
 							var noteWindow = (NoteWindow)window;
 							NoteWindows.Remove(noteWindow);
 
-							OnPropertyChangeForNote();
+							OnPropertyChangeNoteMenu();
 							break;
 						}
 

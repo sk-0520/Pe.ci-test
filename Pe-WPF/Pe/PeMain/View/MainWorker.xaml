@@ -63,6 +63,11 @@
 		<MenuItem AA:Language.Word="tasktray/log"     Header="log" Command="{Binding SwitchLoggingWindowCommand}" IsChecked="{Binding Logging.IsVisible, Mode=OneWay}" />
 		<Separator />
 		<MenuItem AA:Language.Word="tasktray/system-env" Header="system-env">
+			<i:Interaction.Triggers>
+				<i:EventTrigger EventName="SubmenuOpened">
+					<i:InvokeCommandAction Command="{Binding OpenSystemEnvironmentMenuCommand}" />
+				</i:EventTrigger>
+			</i:Interaction.Triggers>
 			<MenuItem Header="hide file" Command="{Binding SwitchShellHideFileCommand}" IsChecked="{Binding IsVisibledShellHideFile, Mode=OneWay}"  InputGestureText="{Binding SwitchShellHideFileHotKey}"/>
 			<MenuItem Header="extension" Command="{Binding SwitchShellExtensionCommand}" IsChecked="{Binding IsVisibledShellExtension, Mode=OneWay}"  InputGestureText="{Binding SwitchShellExtensionHotKey}"/>
 			<Separator />

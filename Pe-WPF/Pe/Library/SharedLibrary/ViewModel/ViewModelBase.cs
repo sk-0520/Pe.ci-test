@@ -115,6 +115,13 @@
 			OnPropertyChanged("DisplayText");
 		}
 
+		protected void CallOnPropertyChange(IEnumerable<string> propertyNames)
+		{
+			foreach (var propertyName in propertyNames) {
+				OnPropertyChanged(propertyName);
+			}
+		}
+
 		#endregion
 
 		#region IDisplayText
@@ -155,5 +162,7 @@
 		}
 
 		#endregion
+
+
 	}
 }
