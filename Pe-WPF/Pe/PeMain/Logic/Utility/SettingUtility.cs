@@ -70,17 +70,7 @@
 			return true;
 		}
 
-		/// <summary>
-		/// 実行情報の切り上げ。
-		/// </summary>
-		/// <param name="model"></param>
-		public static void IncrementRunningInformation(RunningInformationSettingModel model)
-		{
-			CheckUtility.EnforceNotNull(model);
-
-			model.LastExecuteVersion = Constants.assemblyVersion;
-			model.ExecuteCount += 1;
-		}
+		#region create
 
 		static TModel CreateModelName<TModel>(IEnumerable<TModel> items, ILanguage language, string nameKey)
 			where TModel: IName, new()
@@ -121,6 +111,57 @@
 			var result = CreateModelName(items, nonProcess.Language, "new/template-name");
 			return result;
 		}
+
+		#endregion
+
+		#region increment
+
+		/// <summary>
+		/// 実行情報の切り上げ。
+		/// </summary>
+		/// <param name="model"></param>
+		public static void IncrementRunningInformation(RunningInformationSettingModel model)
+		{
+			CheckUtility.EnforceNotNull(model);
+
+			model.LastExecuteVersion = Constants.assemblyVersion;
+			model.ExecuteCount += 1;
+		}
+
+		/// <summary>
+		/// リスト構造の整理。
+		/// </summary>
+		/// <param name="list"></param>
+		/// <param name="value"></param>
+		static void IncrementList(CollectionModel<string> list, string value)
+		{
+			if(!string.IsNullOrEmpty(value)) {
+				var index = list.FindIndex(s => s == value);
+				if(index != -1) {
+					list.RemoveAt(index);
+				}
+				list.Insert(0, value);
+			}
+		}
+
+		public static void IncrementLauncherItem(LauncherItemModel launcherItem, string option, string workDirPath, INonProcess nonProcess)
+		{
+			CheckUtility.EnforceNotNull(launcherItem);
+
+			var dateTime = DateTime.Now;
+
+			IncrementList(launcherItem.History.Options, option);
+			IncrementList(launcherItem.History.WorkDirectoryPaths, workDirPath);
+			
+			launcherItem.History.ExecuteTimestamp = dateTime;
+			launcherItem.History.ExecuteCount += 1;
+
+			launcherItem.History.Update(dateTime);
+		}
+
+		#endregion
+
+		#region initialize
 
 		public static void InitializeLoggingSetting(LoggingSettingModel setting, Version previousVersion, INonProcess nonProcess)
 		{
@@ -266,7 +307,7 @@
 			Implement.InitializeNoteIndexSetting.Correction(setting, previousVersion, nonProcess);
 
 			CheckUtility.EnforceNotNull(setting);
-			foreach (var noteIndex in setting.Items) {
+			foreach(var noteIndex in setting.Items) {
 				InitializeNoteIndexItem(noteIndex, previousVersion, nonProcess);
 			}
 		}
@@ -286,36 +327,6 @@
 			Implement.InitializeClipboardIndexSetting.Correction(setting, previousVersion, nonProcess);
 		}
 
-		/// <summary>
-		/// リスト構造の整理。
-		/// </summary>
-		/// <param name="list"></param>
-		/// <param name="value"></param>
-		static void IncrementList(CollectionModel<string> list, string value)
-		{
-			if(!string.IsNullOrEmpty(value)) {
-				var index = list.FindIndex(s => s == value);
-				if(index != -1) {
-					list.RemoveAt(index);
-				}
-				list.Insert(0, value);
-			}
-		}
-
-		public static void IncrementLauncherItem(LauncherItemModel launcherItem, string option, string workDirPath, INonProcess nonProcess)
-		{
-			CheckUtility.EnforceNotNull(launcherItem);
-
-			var dateTime = DateTime.Now;
-
-			IncrementList(launcherItem.History.Options, option);
-			IncrementList(launcherItem.History.WorkDirectoryPaths, workDirPath);
-			
-			launcherItem.History.ExecuteTimestamp = dateTime;
-			launcherItem.History.ExecuteCount += 1;
-
-			launcherItem.History.Update(dateTime);
-		}
-
+		#endregion
 	}
 }
