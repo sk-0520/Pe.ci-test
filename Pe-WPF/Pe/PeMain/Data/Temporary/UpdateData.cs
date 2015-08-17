@@ -1,17 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
-using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
-using Microsoft.Win32.SafeHandles;
-
-namespace ContentTypeTextNet.Pe.PeMain.Data.Temporary
+﻿namespace ContentTypeTextNet.Pe.PeMain.Data.Temporary
 {
+	using System;
+	using System.Collections.Generic;
+	using System.Diagnostics;
+	using System.IO;
+	using System.Linq;
+	using System.Text;
+	using System.Threading;
+	using System.Threading.Tasks;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
+	using Microsoft.Win32.SafeHandles;
+
+	/// <summary>
+	/// <para>ベタ移植したはいいけどロジックもちすぎ</para>
+	/// </summary>
 	public class UpdateData
 	{
 		readonly string _downloadPath;
