@@ -34,6 +34,7 @@
 				<ResourceDictionary Source="/View/Parts/Resource/ImageDictionary.xaml"/>
 				<ResourceDictionary Source="/View/Parts/Resource/ToolbarDictionary.xaml"/>
 				<ResourceDictionary Source="/View/Parts/Resource/TextBoxDictionary.xaml"/>
+				<ResourceDictionary Source="/View/Parts/Resource/GridSplitterDictionary.xaml"/>
 			</ResourceDictionary.MergedDictionaries>
 			<SC:LogicalNotConverter x:Key="LogicalNotConverter" />
 			<SC:LogicalIsNotNullConverter x:Key="LogicalIsNotNullConverter" />
@@ -184,7 +185,7 @@
 						</ListBox.ItemTemplate>
 					</ListBox>
 				</Grid>
-				<GridSplitter Grid.Column="1" Style="{StaticResource ClipboardTemplateDefaultGridSplitter}" />
+				<GridSplitter Grid.Column="1" Style="{StaticResource VericalGridSplitter}" />
 				<Grid x:Name="content" Grid.Column="1" Margin="{StaticResource ClipboardTemplateSplitterMargin}" IsEnabled="{Binding SelectedViewModel, Converter={StaticResource LogicalIsNotNullConverter}}">
 					<Grid.RowDefinitions>
 						<RowDefinition Height="Auto" />

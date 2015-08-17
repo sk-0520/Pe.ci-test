@@ -30,6 +30,7 @@
 				<ResourceDictionary Source="/View/Parts/Resource/ClipboardTemplateDictionary.xaml"/>
 				<ResourceDictionary Source="/View/Parts/Resource/ImageDictionary.xaml"/>
 				<ResourceDictionary Source="/View/Parts/Resource/TextBoxDictionary.xaml"/>
+				<ResourceDictionary Source="/View/Parts/Resource/GridSplitterDictionary.xaml"/>
 			</ResourceDictionary.MergedDictionaries>
 			<SC:LogicalNotConverter x:Key="LogicalNotConverter" />
 			<SC:LogicalIsNotNullConverter x:Key="LogicalIsNotNullConverter" />
@@ -154,7 +155,7 @@
 					</ListBox.ItemContainerStyle>-->
 				</ListBox>
 			</Grid>
-			<GridSplitter Grid.Column="1" Style="{StaticResource ClipboardTemplateDefaultGridSplitter}" />
+			<GridSplitter Grid.Column="1" Style="{StaticResource VericalGridSplitter}" />
 			<TabControl x:Name="content" Grid.Column="1" Margin="{StaticResource ClipboardTemplateSplitterMargin}" IsEnabled="{Binding SelectedViewModel, Converter={StaticResource LogicalIsNotNullConverter}}">
 				<TabItem Header="source" x:Name="pageSource">
 					<Grid>
@@ -189,7 +190,7 @@
 								Text="{Binding SelectedViewModel.Source, UpdateSourceTrigger=PropertyChanged}"
 								FontFamily="{Binding FontFamily, Mode=OneWay}" FontWeight="{Binding FontBold, Converter={StaticResource BooleanFontWeightConverter}, Mode=OneWay}" FontStyle="{Binding FontItalic, Converter={StaticResource BooleanFontStyleConverter}, Mode=OneWay}" FontSize="{Binding FontSize, Mode=OneWay}"
 							/>
-							<GridSplitter Grid.Column="1"  Style="{StaticResource ClipboardTemplateDefaultGridSplitter}" />
+							<GridSplitter Grid.Column="1"  Style="{StaticResource VericalGridSplitter}" />
 							<ListBox Grid.Column="1" Margin="{StaticResource ClipboardTemplateSplitterMargin}" />
 						</Grid>
 					</Grid>
