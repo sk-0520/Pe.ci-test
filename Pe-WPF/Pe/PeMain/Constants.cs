@@ -60,8 +60,8 @@
 		public const string archiveDirectoryName = "archive";
 
 		public const string mainSettingFileName = "main-setting.json";
-		public const string launcherItemSettingFileName = "item-setting.json";
-		public const string launcherGroupItemSettingFileName = "group-item.json";
+		public const string launcherItemSettingFileName = "launcher-items.json";
+		public const string launcherGroupItemSettingFileName = "group-items.json";
 
 		public const int indexBodyCachingSize = 3;
 		public const string indexBodyBaseFileName = keyGuidName + "." + keyIndexExt;
