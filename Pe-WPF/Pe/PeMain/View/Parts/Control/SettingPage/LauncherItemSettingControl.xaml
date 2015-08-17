@@ -2,6 +2,7 @@
 	x:Class="ContentTypeTextNet.Pe.PeMain.View.Parts.Control.SettingPage.LauncherItemSettingControl"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:SC="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=SharedLibrary"
 	xmlns:AV="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Control"
 	xmlns:AP="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
 	xmlns:AC="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Converter"
@@ -11,6 +12,7 @@
 	d:DesignHeight="300" d:DesignWidth="300"
 >
 	<AV:CommonDataUserControl.Resources>
+		<SC:LogicalIsNotNullConverter x:Key="LogicalIsNotNullConverter" />
 		<AC:LauncherViewModelConverter x:Key="LauncherViewModelConverter" />
 	</AV:CommonDataUserControl.Resources>
 	<Grid>
@@ -29,6 +31,10 @@
 			AppendCommand="{Binding DataContext.AppendItemCommand, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}}" 
 			RemoveCommand="{Binding DataContext.RemoveItemCommand, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}}" 
 		/>
-		<AV:LauncherItemEditControl Grid.Column="1" DataContext="{Binding SelectedLauncherItem, ElementName=listItems, Converter={StaticResource LauncherViewModelConverter}}" />
+		<AV:LauncherItemEditControl
+			Grid.Column="1"
+			DataContext="{Binding SelectedLauncherItem, ElementName=listItems, Converter={StaticResource LauncherViewModelConverter}}" 
+			IsEnabled="{Binding SelectedLauncherItem, ElementName=listItems,Converter={StaticResource LogicalIsNotNullConverter}}"
+		/>
 	</Grid>
 </AV:CommonDataUserControl>
