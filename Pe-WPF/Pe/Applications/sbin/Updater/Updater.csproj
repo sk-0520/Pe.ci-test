@@ -7,7 +7,7 @@
     <ProjectGuid>{7CC3600F-2EC1-4905-AF5C-6191D37A3824}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ContentTypeTextNet.Pe.Applications.Updater</RootNamespace>
+    <RootNamespace>ContentTypeTextNet.Pe.SystemApplications.Updater</RootNamespace>
     <AssemblyName>Updater</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -60,6 +60,8 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -67,8 +69,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="Link\CommandLine.cs" />
+    <Compile Include="Update.cs" />
+    <Compile Include="Updater.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UpdaterException.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
