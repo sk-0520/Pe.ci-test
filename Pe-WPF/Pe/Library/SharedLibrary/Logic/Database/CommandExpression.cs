@@ -69,6 +69,8 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Database
 			FalseCommand = falseCommand;
 		}
 
+		#region property
+
 		/// <summary>
 		/// 条件
 		/// </summary>
@@ -90,6 +92,10 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Database
 		/// </summary>
 		public CommandExpression FalseExpression { get; private set; }
 
+		#endregion
+
+		#region function
+
 		/// <summary>
 		/// 条件をコマンドに落とし込む。
 		/// </summary>
@@ -109,5 +115,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Database
 				return FalseExpression.ToCode();
 			}
 		}
+
+		#endregion
 	}
 }

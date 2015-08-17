@@ -34,6 +34,8 @@
 			ConditionPattern = @"\{(\w+)\}";
 		}
 
+		#region property
+
 		/// <summary>
 		/// 生成元。
 		/// </summary>
@@ -63,6 +65,10 @@
 			get { return CompiledPattern.ToString(); }
 			set { CompiledPattern = new Regex(value, RegexOptions.Singleline | RegexOptions.Compiled); }
 		}
+
+		#endregion
+
+		#region function
 
 		/// <summary>
 		/// 条件式が存在するか。
@@ -408,6 +414,8 @@
 			}
 			return keyEntity;
 		}
+
+		#endregion
 
 		#region DisposeFinalizeBase
 

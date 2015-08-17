@@ -14,7 +14,7 @@
 	/// 
 	/// すんごいとろくない限り処理速度は考えない。
 	/// </summary>
-	public abstract class DatabaseManager: IDisposable
+	public abstract class DatabaseManager: DisposeFinalizeBase
 	{
 		/// <summary>
 		/// 生成。
@@ -35,10 +35,16 @@
 			}
 		}
 
+		#region property
+
 		/// <summary>
 		/// DB接続。
 		/// </summary>
 		public DbConnection Connection { get; private set; }
+
+		#endregion
+
+		#region function
 
 		/// <summary>
 		/// トランザクションの開始
@@ -227,19 +233,18 @@
 			return code;
 		}
 
-		#region IDisposable
+		#endregion
 
-		protected virtual void Dispose(bool disposing)
-		{
-			Connection.Dispose();
-		}
+		#region DisposeFinalizeBase
 
-		/// <summary>
-		/// とじるん。
-		/// </summary>
-		public void Dispose()
+		protected override void Dispose(bool disposing)
 		{
-			Dispose(true);
+			if(!IsDisposed) {
+				Connection.Dispose();
+				Connection = null;
+			}
+
+			base.Dispose(disposing);
 		}
 
 		#endregion

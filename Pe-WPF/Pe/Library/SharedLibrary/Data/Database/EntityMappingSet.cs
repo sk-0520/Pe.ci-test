@@ -21,6 +21,9 @@
 			TableName = tableName;
 			TargetInfos = targetInfos;
 		}
+
+		#region property
+
 		/// <summary>
 		/// テーブル名。
 		/// </summary>
@@ -29,5 +32,7 @@
 		/// 対象TargetInfoの集合
 		/// </summary>
 		public IList<EntityMappingInformation> TargetInfos { get; private set; }
+
+		#endregion
 	}
 }

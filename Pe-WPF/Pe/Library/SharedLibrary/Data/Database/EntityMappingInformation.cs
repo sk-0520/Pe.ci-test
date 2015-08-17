@@ -20,10 +20,15 @@
 			EntityMappingAttribute = attribute;
 			PropertyInfo = propertyInfo;
 		}
+
+		#region property
+
 		public EntityMappingAttribute EntityMappingAttribute { get; private set; }
 		/// <summary>
 		/// TargetNameAttributeで紐付くプロパティ。
 		/// </summary>
 		public PropertyInfo PropertyInfo { get; private set; }
+
+		#endregion
 	}
 }
