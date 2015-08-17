@@ -403,6 +403,8 @@
 &lt;ArrayOfParameterStorage xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" /&gt;</Parameters>
       <DependentUpon>AppResource.cs</DependentUpon>
     </None>
+    <None Include="bat\log.bat" />
+    <None Include="bat\accept.bat" />
     <None Include="bat\beta.bat" />
     <None Include="Constants-generator.tt">
       <DependentUpon>Constants.cs</DependentUpon>
