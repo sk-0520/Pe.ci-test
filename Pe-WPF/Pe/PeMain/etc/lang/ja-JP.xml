@@ -8,19 +8,35 @@
 		<Item Id="enabled" Word="有効" />
 		<Item Id="show" Word="表示" />
 		<Item Id="hide" Word="非表示" />
+		<Item Id="input" Word="入力" />
 
 		<Item Id="execute" Word="起動" />
+
+		<Item Id="setting" Word="設定" />
+		<Item Id="toolbar" Word="ツールバー" />
 	</Define>
 	<Words>
-		<Item Id="window/setting" Word="setting"  />
+		<Item Id="window/setting" Word="@[APPLICATION] ${setting}"  />
 		<Item Id="window/accept" Word="@[APPLICATION] 使用許諾"  />
+		<Item Id="window/toolbar" Word="${toolbar}"  />
+		<Item Id="window/clipboard" Word="clipboard"  />
+		<Item Id="window/template" Word="template"  />
+		<Item Id="window/execute" Word="execute"  />
+		<Item Id="window/stream" Word="stream"  />
+		<Item Id="window/logging" Word="log"  />
+		
 		<Item Id="common/ok" Word="${ok}"  />
 		<Item Id="common/cancel" Word="${cancel}"  />
-		<Item Id="tasktray/tooltip" Word="ぴーいー" />
+		
+		
 		<Item Id="accept/ok" Word="使用する" />
 		<Item Id="accept/ng" Word="使用しない" />
 		<Item Id="update-check/release" Word="アップデートを確認する" />
 		<Item Id="update-check/rc" Word="RC版も確認対象とする" />
+
+		<Item Id="tasktray/tooltip" Word="ぴーいー" />
+		<Item Id="tasktray/setting" Word="@[APPLICATION] ${setting}" />
+		<Item Id="tasktray/toolbar" Word="@[APPLICATION] ${toolbar}" />
 
 		<Item Id="new/group-name" Word="新規グループ" />
 		<Item Id="new/template-name" Word="新規テンプレート" />
@@ -32,7 +48,7 @@
 
 		<Item Id="note/title/default"   Word="新規ノート@[COUNT]" />
 		<Item Id="note/title/timestamp" Word="@[TIMESTAMP]" />
-		<Item Id="note/input" Word="入力" />
+		<Item Id="note/input" Word="${input}" />
 
 		<Item Id="clipboard/enabled" Word="クリップボード取込" />
 		<Item Id="clipboard/enabled:hint" Word="クリップボードにコピーされたデータを取り込みます" />
