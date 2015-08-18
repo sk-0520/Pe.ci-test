@@ -69,7 +69,8 @@
 		</Style>
 		
 		<Style x:Key="ToolbarTooltip" TargetType="ToolTip">
-			<Setter Property="Placement" Value="{Binding DataContext.DropDownPlacement, Mode=OneWay, ElementName=root}" />
+			<!--<Setter Property="Placement" Value="{Binding DataContext.DropDownPlacement, Mode=OneWay, ElementName=root}" />-->
+			<Setter Property="Placement" Value="{Binding DataContext.DropDownPlacement, Mode=OneWay, Source={x:Reference root}}" />
 		</Style>
 
 		<Style x:Key="DropDownPopupMenu" TargetType="Popup">
