@@ -104,6 +104,10 @@
 			</Setter>
 		</Style>
 
+		<sys:Double x:Key="ButtonOver">0.2</sys:Double>
+		<sys:Double x:Key="ButtonPressed">0.6</sys:Double>
+		<sys:Double x:Key="ButtonCheckd">0.8</sys:Double>
+
 		<ControlTemplate x:Key="LauncherContentButton" TargetType="ButtonBase">
 			<Grid x:Name="ParentElement" Style="{StaticResource ParentElementStyle}">
 				<ContentPresenter  />
@@ -115,11 +119,7 @@
 							<MultiBinding Converter="{StaticResource HotTrackConverter}">
 								<Binding Path="ToolbarHotTrack" />
 								<Binding Path="DataContext.DockType" ElementName="root" />
-								<Binding>
-									<Binding.Source>
-										<sys:Double>0.2</sys:Double>
-									</Binding.Source>
-								</Binding>
+								<Binding Source="{StaticResource ButtonOver}" />
 							</MultiBinding>
 						</Setter.Value>
 					</Setter>
@@ -130,11 +130,7 @@
 							<MultiBinding Converter="{StaticResource HotTrackConverter}">
 								<Binding Path="ToolbarHotTrack" />
 								<Binding Path="DataContext.DockType" ElementName="root" />
-								<Binding>
-									<Binding.Source>
-										<sys:Double>0.6</sys:Double>
-									</Binding.Source>
-								</Binding>
+								<Binding Source="{StaticResource ButtonPressed}" />
 							</MultiBinding>
 						</Setter.Value>
 					</Setter>
@@ -145,11 +141,7 @@
 							<MultiBinding Converter="{StaticResource HotTrackConverter}">
 								<Binding Path="ToolbarHotTrack" />
 								<Binding Path="DataContext.DockType" ElementName="root" />
-								<Binding>
-									<Binding.Source>
-										<sys:Double>0.8</sys:Double>
-									</Binding.Source>
-								</Binding>
+								<Binding Source="{StaticResource ButtonCheckd}" />
 							</MultiBinding>
 						</Setter.Value>
 					</Setter>
@@ -168,11 +160,7 @@
 							<MultiBinding Converter="{StaticResource HotTrackConverter}">
 								<Binding Path="ToolbarHotTrack" />
 								<Binding Path="DataContext.DockType" ElementName="root" Converter="{StaticResource DockTypeMenuTuneConverter}" />
-								<Binding>
-									<Binding.Source>
-										<sys:Double>0.2</sys:Double>
-									</Binding.Source>
-								</Binding>
+								<Binding Source="{StaticResource ButtonOver}" />
 							</MultiBinding>
 						</Setter.Value>
 					</Setter>
@@ -183,11 +171,7 @@
 							<MultiBinding Converter="{StaticResource HotTrackConverter}">
 								<Binding Path="ToolbarHotTrack" />
 								<Binding Path="DataContext.DockType" ElementName="root" Converter="{StaticResource DockTypeMenuTuneConverter}"/>
-								<Binding>
-									<Binding.Source>
-										<sys:Double>0.6</sys:Double>
-									</Binding.Source>
-								</Binding>
+								<Binding Source="{StaticResource ButtonPressed}" />
 							</MultiBinding>
 						</Setter.Value>
 					</Setter>
@@ -198,11 +182,7 @@
 							<MultiBinding Converter="{StaticResource HotTrackConverter}">
 								<Binding Path="ToolbarHotTrack" />
 								<Binding Path="DataContext.DockType" ElementName="root" Converter="{StaticResource DockTypeMenuTuneConverter}"/>
-								<Binding>
-									<Binding.Source>
-										<sys:Double>0.8</sys:Double>
-									</Binding.Source>
-								</Binding>
+								<Binding Source="{StaticResource ButtonCheckd}" />
 							</MultiBinding>
 						</Setter.Value>
 					</Setter>
