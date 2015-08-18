@@ -60,6 +60,7 @@
 			<Style x:Key="ToolbarText" TargetType="{x:Type TextBlock}">
 				<Setter Property="Text" Value="{Binding ToolbarText, Mode=OneWay}" />
 				<Setter Property="TextTrimming" Value="CharacterEllipsis" />
+				<Setter Property="VerticalAlignment" Value="Center" />
 				<Setter Property="Visibility" Value="{Binding DataContext.TextVisible, Mode=OneWay, ElementName=root}" />
 			</Style>
 
@@ -78,12 +79,12 @@
 				<!--<Setter Property="Placement" Value="{Binding DataContext.DropDownPlacement, Mode=OneWay, ElementName=root}" />-->
 				<Setter Property="Placement" Value="{Binding DataContext.DropDownPlacement, Mode=OneWay, Source={x:Reference root}}" />
 			</Style>
-			
+
 			<Style x:Key="ToolbarToolTipImage" TargetType="Image" BasedOn="{StaticResource DefaultImage}">
 				<Setter Property="Margin" Value="4" />
 			</Style>
 			<Style x:Key="ToolbarToolTipTitle" TargetType="TextBlock">
-				
+				<Setter Property="VerticalAlignment" Value="Center" />
 			</Style>
 
 			<Style x:Key="DropDownPopupMenu" TargetType="Popup">
@@ -214,29 +215,29 @@
 						<ControlTemplate TargetType="{x:Type xctk:DropDownButton}">
 							<Grid x:Name="MainGrid" SnapsToDevicePixels="True">
 								<ToggleButton 
-								x:Name="PART_DropDownButton"
-								Grid.Column="0"
-								IsTabStop="False"
-								Focusable="false"
-								IsChecked="{Binding IsOpen, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
-								IsHitTestVisible="{Binding IsOpen, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource InverseBoolConverter}}"
-								Template="{StaticResource LauncherContentButton}"
-							>
+									x:Name="PART_DropDownButton"
+									Grid.Column="0"
+									IsTabStop="False"
+									Focusable="false"
+									IsChecked="{Binding IsOpen, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+									IsHitTestVisible="{Binding IsOpen, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource InverseBoolConverter}}"
+									Template="{StaticResource LauncherContentButton}"
+								>
 									<Grid Style="{StaticResource LauncherButtonFace}">
 										<Grid.ColumnDefinitions>
 											<ColumnDefinition Width="*" />
 											<ColumnDefinition Width="{Binding DataContext.MenuWidth, ElementName=root}" />
 										</Grid.ColumnDefinitions>
 										<ContentPresenter
-										Name="ActionButtonContent"
-										Margin="{TemplateBinding Padding}"
-										Content="{TemplateBinding Content}"
-										ContentTemplate="{TemplateBinding ContentTemplate}"
-										VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-										HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-										RecognizesAccessKey="true"
-										Grid.Column="0"
-									/>
+											Name="ActionButtonContent"
+											Margin="{TemplateBinding Padding}"
+											Content="{TemplateBinding Content}"
+											ContentTemplate="{TemplateBinding ContentTemplate}"
+											VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+											HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+											RecognizesAccessKey="true"
+											Grid.Column="0"
+										/>
 										<Grid x:Name="arrowGlyph" Grid.Column="1" Style="{StaticResource ArrowParent}">
 											<Path Style="{StaticResource ArrowContent}" />
 										</Grid>
@@ -265,43 +266,43 @@
 						<ControlTemplate TargetType="{x:Type xctk:SplitButton}">
 							<Grid x:Name="MainGrid" SnapsToDevicePixels="True">
 								<Button
-								x:Name="PART_ActionButton"
-								Grid.Column="0"
-								IsTabStop="False"
-								Focusable="False"
-								Margin="{TemplateBinding Margin}"
-								HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-								VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-								Padding="{TemplateBinding Padding}"
-								IsHitTestVisible="{Binding IsOpen, RelativeSource={RelativeSource AncestorType=xctk:SplitButton}, Converter={StaticResource InverseBoolConverter}}"
-								Template="{StaticResource LauncherContentButton}"
-							>
+									x:Name="PART_ActionButton"
+									Grid.Column="0"
+									IsTabStop="False"
+									Focusable="False"
+									Margin="{TemplateBinding Margin}"
+									HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+									VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+									Padding="{TemplateBinding Padding}"
+									IsHitTestVisible="{Binding IsOpen, RelativeSource={RelativeSource AncestorType=xctk:SplitButton}, Converter={StaticResource InverseBoolConverter}}"
+									Template="{StaticResource LauncherContentButton}"
+								>
 									<Grid x:Name="ParentElement" Style="{StaticResource LauncherButtonFace}">
 										<Grid.ColumnDefinitions>
 											<ColumnDefinition Width="*" />
 											<ColumnDefinition Width="{Binding DataContext.MenuWidth, ElementName=root}" />
 										</Grid.ColumnDefinitions>
 										<ContentPresenter
-										Name="ActionButtonContent"
-										Grid.Column="0"
-										Margin="{TemplateBinding Padding}"
-										Content="{TemplateBinding Content}"
-										ContentTemplate="{TemplateBinding ContentTemplate}"
-										VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-										HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-										RecognizesAccessKey="true"
-									/>
+											Name="ActionButtonContent"
+											Grid.Column="0"
+											Margin="{TemplateBinding Padding}"
+											Content="{TemplateBinding Content}"
+											ContentTemplate="{TemplateBinding ContentTemplate}"
+											VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+											HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+											RecognizesAccessKey="true"
+										/>
 										<ToggleButton 
-										x:Name="PART_ToggleButton"
-										Grid.Column="1"
-										IsTabStop="False"
-										Focusable="False"
-										IsChecked="{Binding IsOpen, RelativeSource={RelativeSource AncestorType=xctk:SplitButton}, Mode=TwoWay}"
-										IsHitTestVisible="{Binding IsOpen, RelativeSource={RelativeSource AncestorType=xctk:SplitButton}, Converter={StaticResource InverseBoolConverter}}"
-										Template="{StaticResource LauncherMenuButton}"
-										MouseDown="PART_ToggleButton_MouseDown"
-										Click="PART_ToggleButton_Click"
-									>
+											x:Name="PART_ToggleButton"
+											Grid.Column="1"
+											IsTabStop="False"
+											Focusable="False"
+											IsChecked="{Binding IsOpen, RelativeSource={RelativeSource AncestorType=xctk:SplitButton}, Mode=TwoWay}"
+											IsHitTestVisible="{Binding IsOpen, RelativeSource={RelativeSource AncestorType=xctk:SplitButton}, Converter={StaticResource InverseBoolConverter}}"
+											Template="{StaticResource LauncherMenuButton}"
+											MouseDown="PART_ToggleButton_MouseDown"
+											Click="PART_ToggleButton_Click"
+										>
 											<Grid x:Name="arrowGlyph" Style="{StaticResource ArrowParent}">
 												<Path Style="{StaticResource ArrowContent}" />
 											</Grid>
@@ -310,11 +311,11 @@
 								</Button>
 								<!-- MENU -->
 								<Popup 
-								x:Name="PART_Popup"
-								Style="{StaticResource DropDownPopupMenu}"
-								IsOpen="{TemplateBinding IsOpen}"
-								Opened="PART_Popup_Opened"
-							>
+									x:Name="PART_Popup"
+									Style="{StaticResource DropDownPopupMenu}"
+									IsOpen="{TemplateBinding IsOpen}"
+									Opened="PART_Popup_Opened"
+								>
 									<Border Style="{StaticResource DropDownPopupBorder}">
 										<ContentPresenter Content="{Binding DropDownContent,RelativeSource={RelativeSource AncestorType=xctk:SplitButton}}" />
 									</Border>
@@ -454,10 +455,10 @@
 								<StackPanel>
 									<StackPanel Orientation="Horizontal">
 										<Image Source="{Binding ToolTipImage}" Style="{StaticResource ToolbarToolTipImage}" />
-										<TextBlock Text="{Binding ToolTipTitle}" Style="{StaticResource ToolbarToolTipTitle}" />
+										<TextBlock Text="{Binding ToolTipTitle}" Style="{StaticResource ToolbarToolTipTitle}" FontFamily="{DynamicResource {x:Static SystemFonts.CaptionFontFamilyKey}}" />
 									</StackPanel>
 									<StackPanel Orientation="Horizontal" Visibility="{Binding HasToolTipMessage, Converter={StaticResource BooleanVisibilityConverter}}">
-										<TextBlock Text="{Binding ToolTipMessage}" />
+										<TextBlock Text="{Binding ToolTipMessage}" FontFamily="{DynamicResource {x:Static SystemFonts.SmallCaptionFontFamilyKey}}" />
 									</StackPanel>
 								</StackPanel>
 							</ToolTip>

@@ -340,6 +340,7 @@
 		public string ToolbarText { get { return DisplayTextUtility.GetDisplayName(SelectedGroup); } }
 		public Color ToolbarHotTrack { get { return GetAppIconColor(); } }
 		public Visibility TextVisible { get { return Model.Toolbar.TextVisible ? Visibility.Visible : Visibility.Collapsed; } }
+
 		public string ToolTipTitle { get { return ToolbarText; } }
 		//public string ScreenName { get { return ScreenUtility.GetScreenName(DockScreen); } }
 		//public ImageSource ScreenPosition

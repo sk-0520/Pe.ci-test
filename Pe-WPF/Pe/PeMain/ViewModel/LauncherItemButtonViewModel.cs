@@ -64,6 +64,7 @@
 		public ImageSource ToolbarImage { get { return GetIcon(IconScale); } }
 		public Color ToolbarHotTrack { get { return GetIconColor(IconScale); } }
 		public string ToolTipTitle { get { return ToolbarText; } }
+
 		public string ToolTipMessage { get { return Model.Comment; } }
 		public bool HasToolTipMessage { get { return !string.IsNullOrEmpty(ToolTipMessage); } }
 		public ImageSource ToolTipImage { get { return GetIcon(IconScale.Normal); } }
