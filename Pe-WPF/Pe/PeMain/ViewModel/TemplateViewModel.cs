@@ -383,6 +383,9 @@
 			Debug.Assert(HasView);
 
 			View.UserClosing -= View_UserClosing;
+			//foreach(var itemViewModel in IndexPairList.ViewModelList) {
+			//	itemViewModel.Unload();
+			//}
 
 			base.UninitializeView();
 		}
