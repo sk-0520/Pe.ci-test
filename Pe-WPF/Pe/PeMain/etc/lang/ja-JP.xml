@@ -44,8 +44,6 @@
 
 		<Item Id="command/execute" Word="${execute}" />
 
-		<Item Id="launcher/run/normal" Word="${execute}" />
-
 		<Item Id="note/title/default"   Word="新規ノート@[COUNT]" />
 		<Item Id="note/title/timestamp" Word="@[TIMESTAMP]" />
 		<Item Id="note/input" Word="${input}" />

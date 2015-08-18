@@ -356,6 +356,34 @@
 			get { return GetDropDownPlacement(DockType); }
 		}
 
+		#region font
+
+		public FontFamily FontFamily
+		{
+			get { return FontModelProperty.GetFamilyDefault(Model.Toolbar.Font); }
+			//set { FontModelProperty.SetFamily(Model.Toolbar.Font, value, OnPropertyChanged); }
+		}
+
+		public bool FontBold
+		{
+			get { return FontModelProperty.GetBold(Model.Toolbar.Font); }
+			//set { FontModelProperty.SetBold(Model.Toolbar.Font, value, OnPropertyChanged); }
+		}
+
+		public bool FontItalic
+		{
+			get { return FontModelProperty.GetItalic(Model.Toolbar.Font); }
+			//set { FontModelProperty.SetItalic(Model.Toolbar.Font, value, OnPropertyChanged); }
+		}
+
+		public double FontSize
+		{
+			get { return FontModelProperty.GetSize(Model.Toolbar.Font); }
+			//set { FontModelProperty.SetSize(Model.Toolbar.Font, value, OnPropertyChanged); }
+		}
+
+		#endregion
+
 		#endregion
 
 		#region command
