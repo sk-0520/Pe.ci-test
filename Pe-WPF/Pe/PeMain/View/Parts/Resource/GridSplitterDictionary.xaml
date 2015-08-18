@@ -6,7 +6,7 @@
 	<sys:Double x:Key="GridSplitterSize">5</sys:Double>
 	
 	<Style x:Key="VericalGridSplitter" TargetType="GridSplitter">
-		<Setter Property="HorizontalAlignment" Value="Left" />
+		<Setter Property="HorizontalAlignment" Value="Center" />
 		<Setter Property="VerticalAlignment" Value="Stretch" />
 		<Setter Property="Width" Value="{StaticResource GridSplitterSize}" />
 	</Style>

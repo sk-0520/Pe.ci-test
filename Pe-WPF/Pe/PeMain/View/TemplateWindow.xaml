@@ -90,6 +90,7 @@
 		<Grid Style="{StaticResource ClipboardTemplateDefaultMainPanel}" Grid.Row="1">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="{Binding ItemsListWidth, Converter={StaticResource DoubleGridLengthConverter}, Mode=TwoWay}"/>
+				<ColumnDefinition Width="Auto"/>
 				<ColumnDefinition Width="*"/>
 			</Grid.ColumnDefinitions>
 			<Grid Grid.Column="0">
@@ -156,7 +157,7 @@
 				</ListBox>
 			</Grid>
 			<GridSplitter Grid.Column="1" Style="{StaticResource VericalGridSplitter}" />
-			<TabControl x:Name="content" Grid.Column="1" Margin="{StaticResource ClipboardTemplateSplitterMargin}" IsEnabled="{Binding SelectedViewModel, Converter={StaticResource LogicalIsNotNullConverter}}">
+			<TabControl x:Name="content" Grid.Column="2" IsEnabled="{Binding SelectedViewModel, Converter={StaticResource LogicalIsNotNullConverter}}">
 				<TabItem Header="source" x:Name="pageSource">
 					<Grid>
 						<Grid.RowDefinitions>
@@ -178,6 +179,7 @@
 						<Grid Grid.Row="1">
 							<Grid.ColumnDefinitions>
 								<ColumnDefinition Width="*" />
+								<ColumnDefinition Width="Auto" />
 								<ColumnDefinition Width="{Binding ReplaceListWidth, Converter={StaticResource DoubleGridLengthConverter}, Mode=TwoWay}" />
 							</Grid.ColumnDefinitions>
 							<TextBox
@@ -191,7 +193,7 @@
 								FontFamily="{Binding FontFamily, Mode=OneWay}" FontWeight="{Binding FontBold, Converter={StaticResource BooleanFontWeightConverter}, Mode=OneWay}" FontStyle="{Binding FontItalic, Converter={StaticResource BooleanFontStyleConverter}, Mode=OneWay}" FontSize="{Binding FontSize, Mode=OneWay}"
 							/>
 							<GridSplitter Grid.Column="1"  Style="{StaticResource VericalGridSplitter}" />
-							<ListBox Grid.Column="1" Margin="{StaticResource ClipboardTemplateSplitterMargin}" />
+							<ListBox Grid.Column="2" />
 						</Grid>
 					</Grid>
 				</TabItem>

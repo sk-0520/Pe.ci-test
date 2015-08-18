@@ -26,7 +26,6 @@
 		<Setter Property="VerticalAlignment" Value="Stretch" />
 	</Style>
 
-	<Thickness x:Key="ClipboardTemplateSplitterMargin" Left="{StaticResource GridSplitterSize}" Top="0" Right="0" Bottom="0" />
 	<Style x:Key="ClipboardTemplateCommandArea" TargetType="Border">
 		<Style.Resources>
 			<SC:BooleanVisibilityConverter x:Key="BooleanVisibilityConverter" />
