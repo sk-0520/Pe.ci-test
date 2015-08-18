@@ -63,6 +63,7 @@
 		public string ToolbarText { get { return DisplayText; } }
 		public ImageSource ToolbarImage { get { return GetIcon(IconScale); } }
 		public Color ToolbarHotTrack { get { return GetIconColor(IconScale); } }
+		public string ToolbarMessage { get { return "ToolbarMessage"; } }
 
 		public Visibility VisibilityFile { get { return ToVisibility(Model.LauncherKind == LauncherKind.File); } }
 		//public Visibility VisibilityDirectory { get { return ToVisibility(Model.LauncherKind == LauncherKind.Directory); } }
