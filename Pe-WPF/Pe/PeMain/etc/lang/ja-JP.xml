@@ -42,6 +42,24 @@
 		<Item Id="new/template-name" Word="新規テンプレート" />
 		<Item Id="new/launcher-name" Word="ランチャーアイテム" />
 
+		<Item Id="toolbar/position" Word="ツールバー位置" />
+		<Item Id="toolbar/topmost" Word="最前面で表示する" />
+		<Item Id="toolbar/autohide" Word="自動的に隠す" />
+		<Item Id="toolbar/hide" Word="非表示" />
+		<Item Id="toolbar/execute" Word="実行" />
+		<Item Id="toolbar/execute/normal" Word="通常実行" />
+		<Item Id="toolbar/execute/extra" Word="指定して実行" />
+		<Item Id="toolbar/file" Word="ファイル" />
+		<Item Id="toolbar/file/parent-dir" Word="親ディレクトリ" />
+		<Item Id="toolbar/file/work-dir" Word="作業ディレクトリ" />
+		<Item Id="toolbar/clipboard" Word="クリップボード" />
+		<Item Id="toolbar/clipboard/command" Word="コマンド" />
+		<Item Id="toolbar/clipboard/parent-dir" Word="親ディレクトリ" />
+		<Item Id="toolbar/clipboard/work-dir" Word="作業ディレクトリ" />
+		<Item Id="toolbar/others" Word="その他" />
+		<Item Id="toolbar/others/customize" Word="編集" />
+		<Item Id="toolbar/others/property" Word="プロパティ" />
+
 		<Item Id="command/execute" Word="${execute}" />
 
 		<Item Id="note/title/default"   Word="新規ノート@[COUNT]" />
