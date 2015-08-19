@@ -60,6 +60,17 @@
 		<Item Id="toolbar/others/customize" Word="編集" />
 		<Item Id="toolbar/others/property" Word="プロパティ" />
 
+		<Item Id="execute/command" Word="コマンド" />
+		<Item Id="execute/option" Word="オプション" />
+		<Item Id="execute/option/file" Word="オプションにファイルを選択" />
+		<Item Id="execute/option/dir" Word="オプションにディレクトリを選択" />
+		<Item Id="execute/work-dir" Word="作業ディレクトリ" />
+		<Item Id="execute/work-dir/dir" Word="作業ディレクトリを選択" />
+		<Item Id="execute/others" Word="その他" />
+		<Item Id="execute/others/std-stream" Word="標準入出力" />
+		<Item Id="execute/others/admin" Word="管理者権限で実行" />
+		<Item Id="execute/environment" Word="環境編集の編集" />
+
 		<Item Id="command/execute" Word="${execute}" />
 
 		<Item Id="note/title/default"   Word="新規ノート@[COUNT]" />
