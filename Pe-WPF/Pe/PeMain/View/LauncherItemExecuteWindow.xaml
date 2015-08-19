@@ -12,9 +12,10 @@
 	x:Class="ContentTypeTextNet.Pe.PeMain.View.LauncherItemExecuteWindow"
 	x:TypeArguments="AVM:LauncherItemExecuteViewModel"
 	Title="LauncherItemExecuteWindow" 
-	Height="207.463" 
-	Width="443.284"
+	Height="200" 
+	Width="640"
 	SizeToContent="Height"
+	ResizeMode="NoResize"
 >
 	<AW:CommonDataWindow.Resources>
 		<ResourceDictionary>
@@ -47,28 +48,28 @@
 					<ColumnDefinition Width="Auto" />
 				</Grid.ColumnDefinitions>
 				
-				<Label Grid.Row="0" Grid.Column="0" Content="command" />
+				<Label Grid.Row="0" Grid.Column="0" Content="command" AA:Language.Word="execute/command" />
 				<TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" IsReadOnly="True" Text="{Binding Command, Mode=OneTime}" Style="{StaticResource DefaultTextBox}" />
 
-				<Label Grid.Row="1" Grid.Column="0" Content="option" />
+				<Label Grid.Row="1" Grid.Column="0" Content="option" AA:Language.Word="execute/option" />
 				<ComboBox Grid.Row="1" Grid.Column="1" IsEditable="True" Text="{Binding Option}" ItemsSource="{Binding Options}" />
-				<Button Grid.Row="1" Grid.Column="2" Command="{Binding SelectOptionFilesCommand}">
+				<Button Grid.Row="1" Grid.Column="2" Command="{Binding SelectOptionFilesCommand}" AA:Language.Hint="execute/option/file" >
 					<Image Style="{StaticResource DefaultImage}" Source="{x:Static AM:AppResource.CommonFileImage}" />
 				</Button>
-				<Button Grid.Row="1" Grid.Column="3" Command="{Binding SelectOptionDirectoryCommand}">
+				<Button Grid.Row="1" Grid.Column="3" Command="{Binding SelectOptionDirectoryCommand}" AA:Language.Hint="execute/option/dir" >
 					<Image Style="{StaticResource DefaultImage}" Source="{x:Static AM:AppResource.CommonFolderImage}" />
 				</Button>
 
-				<Label Grid.Row="2" Grid.Column="0" Content="work dir" />
+				<Label Grid.Row="2" Grid.Column="0" Content="work dir" AA:Language.Word="execute/work-dir" />
 				<ComboBox Grid.Row="2" Grid.Column="1" IsEditable="True" Text="{Binding WorkDirectoryPath}" ItemsSource="{Binding WorkDirectoryPaths}" />
-				<Button Grid.Row="2" Grid.Column="2" Command="{Binding SelectWorkDirectoryDirectoryCommand}">
+				<Button Grid.Row="2" Grid.Column="2" Command="{Binding SelectWorkDirectoryDirectoryCommand}" AA:Language.Hint="execute/work-dir/dir">
 					<Image Style="{StaticResource DefaultImage}" Source="{x:Static AM:AppResource.CommonFolderImage}" />
 				</Button>
-				
-				<Label Grid.Row="3" Grid.Column="0" Content="others" />
+
+				<Label Grid.Row="3" Grid.Column="0" Content="others" AA:Language.Word="execute/others" />
 				<StackPanel Grid.Row="3" Grid.Column="1"  Orientation="Horizontal">
-					<CheckBox Content="std-stream" IsChecked="{Binding StdStreamOutput}" />
-					<CheckBox Content="admin" IsChecked="{Binding Administrator}" />
+					<CheckBox Content="std-stream" AA:Language.Word="execute/others/std-stream" IsChecked="{Binding StdStreamOutput}" />
+					<CheckBox Content="admin" AA:Language.Word="execute/others/admin" IsChecked="{Binding Administrator}" />
 				</StackPanel>
 
 				<Expander Grid.Row="4" Grid.RowSpan="1" Grid.Column="1" Header="Expander" AA:Language.Word="environment/title" >
