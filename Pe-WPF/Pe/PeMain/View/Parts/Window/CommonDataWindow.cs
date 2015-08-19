@@ -49,11 +49,11 @@
 		protected virtual void CreateViewModel()
 		{ }
 
-		public virtual void ApplyLanguage()
+		public virtual void ApplyLanguage(Dictionary<string, string> map)
 		{
 			Debug.Assert(CommonData != null);
 
-			LanguageUtility.RecursiveSetLanguage(this, CommonData.Language);
+			LanguageUtility.RecursiveSetLanguage(this, CommonData.Language, map);
 		}
 
 		protected virtual void ApplyViewModel()
@@ -93,7 +93,8 @@
 		{
 			base.OnLoaded(sender, e);
 
-			ApplyLanguage();
+			var map = new Dictionary<string, string>();
+			ApplyLanguage(map);
 			SetChildCommonData();
 		}
 

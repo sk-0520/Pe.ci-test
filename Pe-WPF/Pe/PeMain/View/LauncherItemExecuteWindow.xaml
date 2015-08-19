@@ -13,6 +13,7 @@
 	x:Class="ContentTypeTextNet.Pe.PeMain.View.LauncherItemExecuteWindow"
 	x:TypeArguments="AVM:LauncherItemExecuteViewModel"
 	Title="LauncherItemExecuteWindow" 
+	AA:Language.Word="window/execute"
 	Height="200" 
 	Width="640"
 	SizeToContent="Height"

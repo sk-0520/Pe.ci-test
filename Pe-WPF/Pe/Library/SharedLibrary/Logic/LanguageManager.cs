@@ -86,7 +86,7 @@
 			var plainText = GetPlainText(words);
 
 			var usingMap = GetSystemMap(dateTime);
-			if(map != null) {
+			if(map != null && map.Any()) {
 				foreach(var pair in map) {
 					usingMap[pair.Key] = pair.Value;
 				}

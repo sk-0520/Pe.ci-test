@@ -21,7 +21,7 @@
 		<Item Id="window/toolbar" Word="${toolbar}"  />
 		<Item Id="window/clipboard" Word="clipboard"  />
 		<Item Id="window/template" Word="template"  />
-		<Item Id="window/execute" Word="execute"  />
+		<Item Id="window/execute" Word="@[ITEM]を指定して実行"  />
 		<Item Id="window/stream" Word="stream"  />
 		<Item Id="window/logging" Word="log"  />
 		
