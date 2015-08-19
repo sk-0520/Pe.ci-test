@@ -9,7 +9,6 @@
 		x:Class="object"
 		=> http://frog.raindrop.jp/knowledge/archives/002177.html
 	-->
-	
 	<Style x:Key="DialogResultPanel" TargetType="StackPanel">
 		<Setter Property="VerticalAlignment" Value="Center" />
 		<Setter Property="HorizontalAlignment" Value="Right" />
