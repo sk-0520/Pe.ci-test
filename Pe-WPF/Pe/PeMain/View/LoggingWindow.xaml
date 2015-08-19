@@ -31,7 +31,7 @@
 		</ResourceDictionary>
 	</AW:CommonDataWindow.Resources>
 	<DockPanel LastChildFill="True">
-		<ToolBar DockPanel.Dock="Top" Style="{StaticResource DefaultToolbarStyle}" FontFamily="{DynamicResource {x:Static SystemFonts.MenuFontFamilyKey}}" FontSize="{DynamicResource {x:Static SystemFonts.MenuFontSizeKey}}" Height="30" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" >
+		<ToolBar DockPanel.Dock="Top" Style="{StaticResource DefaultToolbar}" FontFamily="{DynamicResource {x:Static SystemFonts.MenuFontFamilyKey}}" FontSize="{DynamicResource {x:Static SystemFonts.MenuFontSizeKey}}" Height="30" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" >
 			<Button Content="save" AA:Language.Word="log/save" />
 			<Button Content="clear" AA:Language.Word="log/clear" />
 		</ToolBar>

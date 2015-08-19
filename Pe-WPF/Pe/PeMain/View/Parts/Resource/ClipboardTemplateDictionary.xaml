@@ -13,7 +13,7 @@
 		<Setter Property="WindowStyle" Value="ToolWindow" />
 		<Setter Property="ShowInTaskbar" Value="False" />
 	</Style>
-	<Style x:Key="ClipboardTemplateDefualtToolbar" TargetType="ToolBar" BasedOn="{StaticResource DefaultToolbarStyle}">
+	<Style x:Key="ClipboardTemplateDefualtToolbar" TargetType="ToolBar" BasedOn="{StaticResource DefaultToolbar}">
 		<Setter Property="HorizontalAlignment" Value="Stretch" />
 		<Setter Property="VerticalAlignment" Value="Stretch" />
 	</Style>

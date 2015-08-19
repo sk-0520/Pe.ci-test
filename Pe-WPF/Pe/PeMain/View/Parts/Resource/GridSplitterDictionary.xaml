@@ -3,12 +3,12 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:sys="clr-namespace:System;assembly=mscorlib"
 >
-	<sys:Double x:Key="GridSplitterLength">5</sys:Double>
+	<sys:Double x:Key="DefaultGridSplitterLength">5</sys:Double>
 	
-	<Style x:Key="VericalGridSplitter" TargetType="GridSplitter">
+	<Style x:Key="DefaultVericalGridSplitter" TargetType="GridSplitter">
 		<Setter Property="HorizontalAlignment" Value="Center" />
 		<Setter Property="VerticalAlignment" Value="Stretch" />
-		<Setter Property="Width" Value="{StaticResource GridSplitterLength}" />
+		<Setter Property="Width" Value="{StaticResource DefaultGridSplitterLength}" />
 	</Style>
 
 </ResourceDictionary>

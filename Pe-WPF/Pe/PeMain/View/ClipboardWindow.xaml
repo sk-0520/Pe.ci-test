@@ -186,7 +186,7 @@
 						</ListBox.ItemTemplate>
 					</ListBox>
 				</Grid>
-				<GridSplitter Grid.Column="1" Style="{StaticResource VericalGridSplitter}" />
+				<GridSplitter Grid.Column="1" Style="{StaticResource DefaultVericalGridSplitter}" />
 				<Grid x:Name="content" Grid.Column="2" IsEnabled="{Binding SelectedViewModel, Converter={StaticResource LogicalIsNotNullConverter}}">
 					<Grid.RowDefinitions>
 						<RowDefinition Height="Auto" />
@@ -276,7 +276,7 @@
 									<RowDefinition Height="Auto" />
 									<RowDefinition Height="*" />
 								</Grid.RowDefinitions>
-								<ToolBar Grid.Row="0" Style="{StaticResource DefaultToolbarStyle}">
+								<ToolBar Grid.Row="0" Style="{StaticResource DefaultToolbar}">
 									<RadioButton x:Name="imageFit" IsChecked="{Binding ImageScale, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static AD:ImageScale.Fit}}" >
 										<StackPanel Orientation="Horizontal">
 											<Image Style="{StaticResource DefaultImage}" Source="{x:Static AM:AppResource.ClipboardImageFitImage}" />

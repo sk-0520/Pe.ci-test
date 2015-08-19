@@ -32,7 +32,7 @@
 			<RowDefinition Height="*" />
 		</Grid.RowDefinitions>
 		<!--<ToolBarTray Grid.Row="0">-->
-		<ToolBar Grid.Row="0" Style="{StaticResource DefaultToolbarStyle}">
+		<ToolBar Grid.Row="0" Style="{StaticResource DefaultToolbar}">
 			<Button x:Name="toolAppend" Content="append" Focusable="False" Command="{Binding AppendCommand, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}}" />
 			<Button x:Name="toolRemove" Content="remove" Focusable="False" IsEnabled="{Binding SelectedLauncherItem, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}, Converter={StaticResource LogicalIsNotNullConverter}}" Command="{Binding RemoveCommand, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}}" CommandParameter="{Binding SelectedLauncherItem, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}}" />
 			<Separator x:Name="toolSeparator"  />

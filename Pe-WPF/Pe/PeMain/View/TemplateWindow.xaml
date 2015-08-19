@@ -156,7 +156,7 @@
 					</ListBox.ItemContainerStyle>-->
 				</ListBox>
 			</Grid>
-			<GridSplitter Grid.Column="1" Style="{StaticResource VericalGridSplitter}" />
+			<GridSplitter Grid.Column="1" Style="{StaticResource DefaultVericalGridSplitter}" />
 			<TabControl x:Name="content" Grid.Column="2" IsEnabled="{Binding SelectedViewModel, Converter={StaticResource LogicalIsNotNullConverter}}">
 				<TabItem Header="source" x:Name="pageSource">
 					<Grid>
@@ -192,7 +192,7 @@
 								Text="{Binding SelectedViewModel.Source, UpdateSourceTrigger=PropertyChanged}"
 								FontFamily="{Binding FontFamily, Mode=OneWay}" FontWeight="{Binding FontBold, Converter={StaticResource BooleanFontWeightConverter}, Mode=OneWay}" FontStyle="{Binding FontItalic, Converter={StaticResource BooleanFontStyleConverter}, Mode=OneWay}" FontSize="{Binding FontSize, Mode=OneWay}"
 							/>
-							<GridSplitter Grid.Column="1"  Style="{StaticResource VericalGridSplitter}" />
+							<GridSplitter Grid.Column="1"  Style="{StaticResource DefaultVericalGridSplitter}" />
 							<ListBox Grid.Column="2" />
 						</Grid>
 					</Grid>
