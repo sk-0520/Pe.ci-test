@@ -503,6 +503,7 @@
 										<Button Content="parent dir" AA:Language.Word="toolbar/clipboard/parent-dir" IsEnabled="{Binding HasDataParentDirectory}" Command="{Binding CopyText}" CommandParameter="{x:Static AD:LauncherCommandType.ParentDirectory}" Style="{StaticResource PopupClose}" />
 										<Button Content="work dir"   AA:Language.Word="toolbar/clipboard/work-dir"   IsEnabled="{Binding HasDataWorkDirectory}" Command="{Binding CopyText}" CommandParameter="{x:Static AD:LauncherCommandType.WorkDirectory}" Style="{StaticResource PopupClose}" />
 									</StackPanel>
+									<Separator/>
 									<TextBlock Text="others" AA:Language.Word="toolbar/others" />
 									<StackPanel Orientation="Horizontal">
 										<Button Content="customize" AA:Language.Word="toolbar/others/customize" Style="{StaticResource PopupClose}" Command="{Binding OpenCustomize}" />
@@ -545,6 +546,7 @@
 									<StackPanel Orientation="Horizontal">
 										<Button Content="command" AA:Language.Word="toolbar/clipboard/command" IsEnabled="{Binding HasDataCommand}" Command="{Binding CopyText}" CommandParameter="{x:Static AD:LauncherCommandType.Command}" Style="{StaticResource PopupClose}" />
 									</StackPanel>
+									<Separator/>
 									<TextBlock Text="others" AA:Language.Word="toolbar/others" />
 									<StackPanel Orientation="Horizontal">
 										<Button Content="customize" AA:Language.Word="toolbar/others/customize" Style="{StaticResource PopupClose}" Command="{Binding OpenCustomize}" />
