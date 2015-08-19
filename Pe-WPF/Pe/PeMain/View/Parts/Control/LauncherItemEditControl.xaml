@@ -107,7 +107,10 @@
 					<ColumnDefinition />
 				</Grid.ColumnDefinitions>
 
-				<CheckBox Grid.Row="0" Grid.Column="0"  Content="stream" IsChecked="{Binding StdStreamOutput}" />
+				<StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+					<CheckBox Grid.Row="0" Grid.Column="0"  Content="stream-o" IsChecked="{Binding StdStreamOutput}" />
+					<CheckBox Grid.Row="0" Grid.Column="0"  Content="stream-i" IsChecked="{Binding StdStreamInput}" />
+				</StackPanel>
 				<CheckBox Grid.Row="1" Grid.Column="0"  Content="admin" IsChecked="{Binding Administrator}" />
 
 				<Label Grid.Row="2" Grid.Column="0" Content="tag" />

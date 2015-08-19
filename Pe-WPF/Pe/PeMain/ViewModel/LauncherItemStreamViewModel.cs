@@ -69,9 +69,9 @@
 		}
 
 
-		public bool IsEnabledInput
+		public bool UsingInput
 		{
-			get { return Model.StdStream.IsEnabledInput; }
+			get { return Model.StdStream.InputUsing; }
 		}
 		
 		public string InputConsole
@@ -197,7 +197,8 @@
 			Debug.Assert(Model.StdStream.OutputWatch);
 			OutputTask = Task.Run(() => ReceiveOutput(Process.StandardOutput, true));
 			ErrorTask = Task.Run(() => ReceiveOutput(Process.StandardError, false));
-			
+
+			// TODO: 物によってSystem.Windows.Data Error: 17
 			if (HasView) {
 				View.Show();
 			}

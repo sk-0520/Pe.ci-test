@@ -67,7 +67,8 @@
 		<Item Id="execute/work-dir" Word="作業ディレクトリ" />
 		<Item Id="execute/work-dir/dir" Word="作業ディレクトリを選択" />
 		<Item Id="execute/others" Word="その他" />
-		<Item Id="execute/others/std-stream" Word="標準入出力" />
+		<Item Id="execute/others/stream-output" Word="標準出力" />
+		<Item Id="execute/others/stream-input"  Word="標準入力" />
 		<Item Id="execute/others/admin" Word="管理者権限で実行" />
 		<Item Id="execute/environment" Word="環境編集の編集" />
 

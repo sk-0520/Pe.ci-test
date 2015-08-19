@@ -65,7 +65,7 @@
 				startInfo.UseShellExecute = false;
 				startInfo.RedirectStandardOutput = launcherItem.StdStream.OutputWatch;
 				startInfo.RedirectStandardError = launcherItem.StdStream.OutputWatch;
-				startInfo.RedirectStandardInput = launcherItem.StdStream.IsEnabledInput;
+				startInfo.RedirectStandardInput = launcherItem.StdStream.InputUsing;
 			}
 
 			LauncherItemStreamWindow streamWindow = null;

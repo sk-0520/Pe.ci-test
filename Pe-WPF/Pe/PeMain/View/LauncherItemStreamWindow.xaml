@@ -75,7 +75,7 @@
 							</Thickness>
 						</RichTextBox.Padding>
 					</RichTextBox>
-					<TextBox Grid.Row="1" Visibility="{Binding IsEnabledInput, Converter={StaticResource BooleanVisibilityConverter}}" Text="{Binding InputConsole, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding ProcessRunning, Mode=OneWay, Converter={StaticResource LogicalNotConverter}}" >
+					<TextBox Grid.Row="1" Visibility="{Binding UsingInput, Converter={StaticResource BooleanVisibilityConverter}}" Text="{Binding InputConsole, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding ProcessRunning, Mode=OneWay, Converter={StaticResource LogicalNotConverter}}" >
 						<TextBox.InputBindings>
 							<KeyBinding Command="{Binding Path=ReturnInputCommand}" Key="Enter" />
 						</TextBox.InputBindings>

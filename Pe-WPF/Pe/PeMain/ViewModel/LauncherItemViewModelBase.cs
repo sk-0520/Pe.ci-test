@@ -86,6 +86,13 @@
 			set { SetPropertyValue(Model.StdStream, value, "OutputWatch"); }
 		}
 
+		public virtual bool StdStreamInput
+		{
+			get { return Model.StdStream.InputUsing; }
+			set { SetPropertyValue(Model.StdStream, value, "InputUsing"); }
+		}
+		
+
 		public virtual bool Administrator
 		{
 			get { return Model.Administrator; }

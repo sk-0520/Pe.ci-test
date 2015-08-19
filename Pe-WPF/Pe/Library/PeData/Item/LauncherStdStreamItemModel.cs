@@ -29,7 +29,7 @@
 		/// 標準入力へ入力するか。
 		/// </summary>
 		[DataMember]
-		public bool IsEnabledInput { get; set; }
+		public bool InputUsing { get; set; }
 
 		#endregion
 
@@ -40,7 +40,7 @@
 			var obj = (LauncherStdStreamItemModel)target;
 
 			obj.OutputWatch = OutputWatch;
-			obj.IsEnabledInput = IsEnabledInput;
+			obj.InputUsing = InputUsing;
 		}
 
 		public IDeepClone DeepClone()

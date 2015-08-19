@@ -26,6 +26,7 @@
 		string _option;
 		string _workDirPath;
 		bool _stdStreamOutput;
+		bool _stdStreamInput;
 		bool _admin;
 		
 		#endregion
@@ -41,6 +42,7 @@
 			this._option = Model.Option;
 			this._workDirPath = Model.WorkDirectoryPath;
 			this._stdStreamOutput = Model.StdStream.OutputWatch;
+			this._stdStreamInput = Model.StdStream.InputUsing;
 		}
 
 		#region property
@@ -51,6 +53,12 @@
 		{
 			get { return this._stdStreamOutput; }
 			set { SetVariableValue(ref this._stdStreamOutput, value); }
+		}
+
+		public override bool StdStreamInput
+		{
+			get { return this._stdStreamInput; }
+			set { SetVariableValue(ref this._stdStreamInput, value); }
 		}
 
 		public override bool Administrator
@@ -111,6 +119,7 @@
 						dummyModel.Option = Option;
 						dummyModel.WorkDirectoryPath = WorkDirectoryPath;
 						dummyModel.StdStream.OutputWatch = StdStreamOutput;
+						dummyModel.StdStream.InputUsing = StdStreamInput;
 						dummyModel.Administrator = Administrator;
 						dummyModel.EnvironmentVariables = this._environmentVariablesItem;
 						try {
