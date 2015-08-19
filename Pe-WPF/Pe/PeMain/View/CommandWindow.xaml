@@ -36,6 +36,7 @@
 		<ResourceDictionary>
 			<ResourceDictionary.MergedDictionaries>
 				<ResourceDictionary Source="/View/Parts/Resource/ImageDictionary.xaml"/>
+				<ResourceDictionary Source="/View/Parts/Resource/GripDictionary.xaml"/>
 			</ResourceDictionary.MergedDictionaries>
 			<SC:HasTextLengthConverter x:Key="HasTextLengthConverter" />
 			<SC:LogicalMultiOrConverter x:Key="LogicalMultiOrConverter" />
@@ -57,7 +58,7 @@
 		<Rectangle
 			x:Name="caption"
 			Grid.Column="0" 
-			Fill="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}"
+			Style="{StaticResource DefaultGrip}"
 		/>
 		<Image
 			Grid.Column="1"

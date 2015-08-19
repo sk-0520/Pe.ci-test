@@ -42,6 +42,7 @@
 		<ResourceDictionary>
 			<ResourceDictionary.MergedDictionaries>
 				<ResourceDictionary Source="/View/Parts/Resource/ImageDictionary.xaml"/>
+				<ResourceDictionary Source="/View/Parts/Resource/GripDictionary.xaml"/>
 			</ResourceDictionary.MergedDictionaries>
 			<xctk:InverseBoolConverter x:Key="InverseBoolConverter" />
 			<SC:LogicalMultiEqualConverter x:Key="LogicalMultiEqualConverter" />
@@ -380,7 +381,7 @@
 			Width="{Binding CaptionWidth, Mode=OneWay}" 
 			Height="{Binding CaptionHeight, Mode=OneWay}" 
 			Visibility="{Binding CaptionVisibility}" 
-			Fill="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}"
+			Style="{StaticResource DefaultGrip}"
 		/>
 
 		<!-- メインボタン -->
