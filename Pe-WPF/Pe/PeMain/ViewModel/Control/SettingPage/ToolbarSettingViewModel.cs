@@ -401,9 +401,12 @@
 
 		public void Refresh()
 		{
-			foreach(var vm in LauncherItems.Items) {
-				vm.Refresh();
-			}
+			//foreach(var vm in LauncherItems.Items) {
+			//	vm.Refresh();
+			//}
+			this._launcherItems = null;
+			OnPropertyChanged("LauncherItems");
+
 			foreach(var node in this._groupTree.SelectMany(t => t.Nodes)) {
 				node.Refresh();
 			}
