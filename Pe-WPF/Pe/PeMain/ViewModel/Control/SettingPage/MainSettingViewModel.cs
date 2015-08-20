@@ -144,6 +144,28 @@
 
 		#region StreamSettingModel
 
+		public Color StdOutputForeColor
+		{
+			get { return Stream.OutputColor.ForeColor; }
+			set { SetPropertyValue(Stream.OutputColor, value, "ForeColor"); }
+		}
+		public Color StdOutputBackColor
+		{
+			get { return Stream.OutputColor.BackColor; }
+			set { SetPropertyValue(Stream.OutputColor, value, "BackColor"); }
+		}
+
+		public Color ErrOutputForeColor
+		{
+			get { return Stream.ErrorColor.ForeColor; }
+			set { SetPropertyValue(Stream.ErrorColor, value, "ForeColor"); }
+		}
+		public Color ErrOutputBackColor
+		{
+			get { return Stream.ErrorColor.BackColor; }
+			set { SetPropertyValue(Stream.ErrorColor, value, "BackColor"); }
+		}
+
 		//public FontFamily StreamFontFamily
 		//{
 		//	get { return FontUtility.MakeFontFamily(Stream.Font.Family, SystemFonts.MessageFontFamily); }

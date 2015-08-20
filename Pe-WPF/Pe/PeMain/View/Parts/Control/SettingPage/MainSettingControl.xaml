@@ -2,6 +2,7 @@
 	x:Class="ContentTypeTextNet.Pe.PeMain.View.Parts.Control.SettingPage.MainSettingControl"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
 	xmlns:AM="clr-namespace:ContentTypeTextNet.Pe.PeMain"
 	xmlns:AV="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Control"
 	xmlns:AP="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
@@ -11,6 +12,13 @@
 	mc:Ignorable="d" 
 	d:DesignWidth="520" d:DesignHeight="400"
 >
+	<AV:CommonDataUserControl.Resources>
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceDictionary Source="/View/Parts/Resource/ColorPickerDictionary.xaml"/>
+			</ResourceDictionary.MergedDictionaries>
+		</ResourceDictionary>
+	</AV:CommonDataUserControl.Resources>
 	<Grid>
 		<GroupBox AA:Language.Word="setting/main" Header="main" Height="79" Width="202" Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
 			<StackPanel Orientation="Vertical">
@@ -64,14 +72,21 @@
 			</Grid>
 		</GroupBox>
 
-		<GroupBox Header="stream" HorizontalAlignment="Left" Margin="217,190,0,0" VerticalAlignment="Top" Height="119" Width="159">
+		<GroupBox Header="stream" HorizontalAlignment="Left" Margin="217,190,0,0" VerticalAlignment="Top" Height="181" Width="159">
 			<Grid>
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition />
 					<ColumnDefinition />
+					<ColumnDefinition />
 				</Grid.ColumnDefinitions>
+				<Grid.RowDefinitions>
+					<RowDefinition />
+					<RowDefinition />
+					<RowDefinition />
+					<RowDefinition />
+				</Grid.RowDefinitions>
 
-				<Label Grid.Row="0" Grid.Column="0" Content="font" />
+				<Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="font" />
 				<AV:FontSelectControl
 					Grid.Row="0" Grid.Column="1"
 					FamilyName="{Binding StreamFontFamily}"
@@ -81,6 +96,18 @@
 					SizeMinimum="{x:Static AM:Constants.StreamFontMinimumSize}"
 					SizeMaximum="{x:Static AM:Constants.StreamFontMaximumSize}"
 				/>
+
+				<Label Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Content="std-out" />
+				
+				<Label Grid.Row="2" Grid.Column="0" Content="std-out" />
+				<xctk:ColorPicker Grid.Row="2" Grid.Column="1" SelectedColor="{Binding StdOutputForeColor}" Style="{StaticResource DefaultColorPicker}" />
+				<xctk:ColorPicker Grid.Row="2" Grid.Column="2" SelectedColor="{Binding StdOutputBackColor}" Style="{StaticResource DefaultColorPicker}" />
+				
+				<Label Grid.Row="3" Grid.Column="0" Content="std-err" />
+				<xctk:ColorPicker Grid.Row="3" Grid.Column="1" SelectedColor="{Binding ErrOutputForeColor}" Style="{StaticResource DefaultColorPicker}" />
+				<xctk:ColorPicker Grid.Row="3" Grid.Column="2" SelectedColor="{Binding ErrOutputBackColor}" Style="{StaticResource DefaultColorPicker}" />
+
+
 			</Grid>
 		</GroupBox>
 
