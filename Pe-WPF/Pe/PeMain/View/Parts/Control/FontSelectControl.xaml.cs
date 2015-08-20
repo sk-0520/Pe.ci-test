@@ -192,5 +192,64 @@
 
 		#endregion
 
+		#region IsEnabledBoldProperty
+
+		public static readonly DependencyProperty IsEnabledBoldProperty = DependencyProperty.Register(
+			"IsEnabledBold",
+			typeof(bool),
+			typeof(FontSelectControl),
+			new FrameworkPropertyMetadata(
+				true,
+				FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
+				new PropertyChangedCallback(OnIsEnabledBoldChanged)
+			)
+		);
+
+		public bool IsEnabledBold
+		{
+			get { return (bool)GetValue(IsEnabledBoldProperty); }
+			set { SetValue(IsEnabledBoldProperty, value); }
+		}
+
+		static void OnIsEnabledBoldChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+		{
+			var ctrl = d as FontSelectControl;
+			if (ctrl != null) {
+				ctrl.IsEnabledBold = (bool)e.NewValue;
+			}
+		}
+
+		#endregion
+
+
+		#region IsEnabledItalicProperty
+
+		public static readonly DependencyProperty IsEnabledItalicProperty = DependencyProperty.Register(
+			"IsEnabledItalic",
+			typeof(bool),
+			typeof(FontSelectControl),
+			new FrameworkPropertyMetadata(
+				true,
+				FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
+				new PropertyChangedCallback(OnIsEnabledItalicChanged)
+			)
+		);
+
+		public bool IsEnabledItalic
+		{
+			get { return (bool)GetValue(IsEnabledItalicProperty); }
+			set { SetValue(IsEnabledItalicProperty, value); }
+		}
+
+		static void OnIsEnabledItalicChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+		{
+			var ctrl = d as FontSelectControl;
+			if (ctrl != null) {
+				ctrl.IsEnabledItalic = (bool)e.NewValue;
+			}
+		}
+
+		#endregion
+
 	}
 }
