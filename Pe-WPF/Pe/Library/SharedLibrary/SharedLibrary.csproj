@@ -135,6 +135,7 @@
     <Compile Include="Logic\Extension\FileSystemInfoUtility.cs" />
     <Compile Include="Logic\MVMPairCreateDelegationCollection.cs" />
     <Compile Include="Logic\Utility\FontUtility.cs" />
+    <Compile Include="Logic\Utility\LogUtility.cs" />
     <Compile Include="Model\CollectionModel.cs" />
     <Compile Include="Model\FixedSizeCollectionModel.cs" />
     <Compile Include="Model\FontModel.cs" />

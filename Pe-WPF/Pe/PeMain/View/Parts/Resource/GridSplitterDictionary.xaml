@@ -4,11 +4,17 @@
 	xmlns:sys="clr-namespace:System;assembly=mscorlib"
 >
 	<sys:Double x:Key="DefaultGridSplitterLength">5</sys:Double>
-	
+
 	<Style x:Key="DefaultVericalGridSplitter" TargetType="GridSplitter">
 		<Setter Property="HorizontalAlignment" Value="Center" />
 		<Setter Property="VerticalAlignment" Value="Stretch" />
 		<Setter Property="Width" Value="{StaticResource DefaultGridSplitterLength}" />
+	</Style>
+
+	<Style x:Key="DefaultHorizonGridSplitter" TargetType="GridSplitter">
+		<Setter Property="HorizontalAlignment" Value="Stretch" />
+		<Setter Property="VerticalAlignment" Value="Center" />
+		<Setter Property="Height" Value="{StaticResource DefaultGridSplitterLength}" />
 	</Style>
 
 </ResourceDictionary>

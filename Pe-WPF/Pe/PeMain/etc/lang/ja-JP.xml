@@ -23,7 +23,7 @@
 		<Item Id="window/template" Word="template"  />
 		<Item Id="window/execute" Word="@[ITEM]を指定して実行"  />
 		<Item Id="window/stream" Word="stream"  />
-		<Item Id="window/logging" Word="log"  />
+		<Item Id="window/logging" Word="ログ"  />
 		
 		<Item Id="common/ok" Word="${ok}"  />
 		<Item Id="common/cancel" Word="${cancel}"  />
@@ -110,8 +110,11 @@
 		<Item Id="command/selected" Word="選択中アイテム" />
 		<Item Id="command/tag" Word="@[TAG] (@[NAME])" />
 		<Item Id="command/drive" Word="@[VOLUME] (@[PATH])" />
-		
-		<Item Id="logging/timestamp" Word="発生日時" />
+
+		<Item Id="logging/save"  Word="ログ保存" />
+		<Item Id="logging/clear" Word="ログクリア" />
+		<Item Id="logging/timestamp" Word="タイムスタンプ" />
+		<Item Id="logging/timestamp" Word="概要" />
 
 		<!-- control -->
 		

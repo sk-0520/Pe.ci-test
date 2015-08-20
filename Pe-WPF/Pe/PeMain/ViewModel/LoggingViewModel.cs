@@ -5,13 +5,17 @@
 	using System.Collections.ObjectModel;
 	using System.ComponentModel;
 	using System.Diagnostics;
+	using System.IO;
 	using System.Linq;
 	using System.Text;
 	using System.Threading.Tasks;
 	using System.Windows;
+	using System.Windows.Input;
 	using System.Windows.Threading;
+	using ContentTypeTextNet.Library.SharedLibrary.Data;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 	using ContentTypeTextNet.Pe.Library.PeData.IF;
@@ -21,6 +25,7 @@
 	using ContentTypeTextNet.Pe.PeMain.Logic.Property;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 	using ContentTypeTextNet.Pe.PeMain.View;
+	using Microsoft.Win32;
 
 	public class LoggingViewModel : HavingViewSingleModelWrapperViewModelBase<LoggingSettingModel, LoggingWindow>, ILogAppender, IWindowStatus
 	{
@@ -97,6 +102,74 @@
 		#endregion
 
 		#endregion
+
+		#endregion
+
+		#region command
+
+		public ICommand SaveCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						// TODO: 他の関数と合わせたけどFromってなんだ
+						SaveFileFromDialog(LogItems);
+					}
+				);
+
+				return result;
+			}
+		}
+
+		public ICommand ClearCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						LogItems.Clear();
+					}
+				);
+
+				return result;
+			}
+		}
+
+		#endregion
+
+		#region function
+
+		bool SaveFileFromDialog(IEnumerable<LogItemModel> logItems)
+		{
+			var filter = new DialogFilterList() {
+				new DialogFilterItem("log", "*.log")
+			};
+			var dialog = new SaveFileDialog() {
+				AddExtension = true,
+				CheckPathExists = true,
+				ValidateNames = true,
+				Filter = filter.FilterText,
+			};
+
+			var dialogResult = dialog.ShowDialog();
+			if (dialogResult.GetValueOrDefault()) {
+				return SaveFile(dialog.FileName, logItems);
+			} else {
+				return false;
+			}
+		}
+
+		bool SaveFile(string path, IEnumerable<LogItemModel> logItems)
+		{
+			using (var stream = new StreamWriter(File.Create(path))) {
+				foreach (var logMessage in logItems.Select(l => LogUtility.MakeLogDetailText(l))) {
+					stream.WriteLine(logMessage);
+				}
+			}
+
+			return true;
+		}
 
 		#endregion
 
