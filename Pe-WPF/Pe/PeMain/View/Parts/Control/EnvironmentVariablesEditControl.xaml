@@ -19,24 +19,24 @@
 			<RowDefinition Height="31*"/>
 			<RowDefinition Height="148*"/>
 		</Grid.RowDefinitions>
-		<CheckBox Content="edit" Margin="16,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" IsChecked="{Binding Edit}" />
-		<GroupBox AA:Language.Word="environment/update" Header="update" Grid.Row="1" Margin="0" >
+		<CheckBox Grid.Row="0" Grid.Column="0" Margin="16,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" IsChecked="{Binding Edit}" Content="edit" AA:Language.Word="environment/edit" />
+		<GroupBox  Grid.Row="1" Grid.Column="0" Margin="0" Header="update" AA:Language.Word="environment/update" >
 			<ACC:AppDataGrid x:Name="gridEnv" CanUserAddRows="True" AutoGenerateColumns="False" ItemsSource="{Binding Update}" >
 				<ACC:AppDataGrid.Columns>
 					<DataGridTextColumn Binding="{Binding Id}">
 						<DataGridTextColumn.Header>
-							<TextBlock AA:Language.Word="environment/key" Text="key" />
+							<TextBlock Text="key" AA:Language.Word="environment/key" />
 						</DataGridTextColumn.Header>
 					</DataGridTextColumn>
 					<DataGridTextColumn Binding="{Binding Value}">
 						<DataGridTextColumn.Header>
-							<TextBlock AA:Language.Word="environment/value" Text="value" />
+							<TextBlock Text="value" AA:Language.Word="environment/value"  />
 						</DataGridTextColumn.Header>
 					</DataGridTextColumn>
 				</ACC:AppDataGrid.Columns>
 			</ACC:AppDataGrid>
 		</GroupBox>
-		<GroupBox Header="remove" Grid.Row="1" Grid.Column="1" Margin="0" >
+		<GroupBox Grid.Row="1" Grid.Column="1" Margin="0" Header="remove" AA:Language.Word="environment/remove">
 			<TextBox Text="{Binding Remove}" AcceptsReturn="True" />
 		</GroupBox>
 	</Grid>
