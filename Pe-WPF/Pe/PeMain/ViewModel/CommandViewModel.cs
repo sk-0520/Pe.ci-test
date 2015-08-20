@@ -465,7 +465,7 @@
 							window.Show();
 						} else {
 							var viewModel = new LauncherItemSimpleViewModel(commandItem.LauncherItemModel, AppNonProcess, AppSender);
-							viewModel.Execute();
+							viewModel.Execute(null);
 						}
 					}
 					break;

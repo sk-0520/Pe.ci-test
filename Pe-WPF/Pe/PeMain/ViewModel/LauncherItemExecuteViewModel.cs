@@ -10,6 +10,7 @@
 	using ContentTypeTextNet.Library.SharedLibrary.CompatibleForms;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+	using ContentTypeTextNet.Library.SharedLibrary.Model;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.IF;
@@ -31,10 +32,11 @@
 		
 		#endregion
 
-		public LauncherItemExecuteViewModel(LauncherItemModel model, LauncherItemExecuteWindow view, IAppNonProcess nonPorocess, IAppSender appSender)
+		public LauncherItemExecuteViewModel(LauncherItemModel model, LauncherItemExecuteWindow view, ScreenModel screen,  IAppNonProcess nonPorocess, IAppSender appSender)
 			: base(model, nonPorocess, appSender)
 		{
 			View = view;
+			Screen = screen;
 
 			this._environmentVariablesItem = (EnvironmentVariablesItemModel)Model.EnvironmentVariables.DeepClone();
 			EnvironmentVariables = new EnvironmentVariablesEditViewModel(this._environmentVariablesItem, AppNonProcess);
@@ -46,6 +48,8 @@
 		}
 
 		#region property
+
+		ScreenModel Screen { get; set; }
 
 		public EnvironmentVariablesEditViewModel EnvironmentVariables { get; set; }
 
@@ -123,7 +127,7 @@
 						dummyModel.Administrator = Administrator;
 						dummyModel.EnvironmentVariables = this._environmentVariablesItem;
 						try {
-							ExecuteUtility.RunItem(dummyModel, AppNonProcess, AppSender);
+							ExecuteUtility.RunItem(dummyModel, Screen, AppNonProcess, AppSender);
 							SettingUtility.IncrementLauncherItem(Model, Option, WorkDirectoryPath, AppNonProcess);
 						} catch(Exception ex) {
 							AppNonProcess.Logger.Warning(ex);

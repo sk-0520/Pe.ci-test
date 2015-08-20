@@ -320,7 +320,7 @@
 			{
 				if(this._launcherItems == null) {
 					var list = GetLauncherItems(SelectedGroup)
-						.Select(m => new LauncherItemButtonViewModel(m, AppNonProcess, AppSender) {
+						.Select(m => new LauncherItemButtonViewModel(m, DockScreen, AppNonProcess, AppSender) {
 							IconScale = Model.Toolbar.IconScale,
 						});
 					;

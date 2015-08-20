@@ -14,10 +14,12 @@
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+	using ContentTypeTextNet.Library.SharedLibrary.Model;
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 	using ContentTypeTextNet.Pe.Library.PeData.Define;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 	using ContentTypeTextNet.Pe.PeMain.Data;
+	using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
 	using ContentTypeTextNet.Pe.PeMain.Define;
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
@@ -38,11 +40,16 @@
 
 		#endregion
 
-		public LauncherItemButtonViewModel(LauncherItemModel model, IAppNonProcess nonPorocess, IAppSender appSender)
+		public LauncherItemButtonViewModel(LauncherItemModel model, ScreenModel dockScreen, IAppNonProcess nonPorocess, IAppSender appSender)
 			: base(model, nonPorocess, appSender)
-		{ }
+		{
+			DockScreen = dockScreen;
+		}
 
 		#region property
+
+		protected ScreenModel DockScreen { get; set; }
+
 
 		public IconScale IconScale 
 		{
@@ -171,7 +178,7 @@
 			{
 				var result = CreateCommand(
 					o => {
-						Execute();
+						Execute(DockScreen);
 					}
 				);
 
@@ -185,7 +192,9 @@
 			{
 				var result = CreateCommand(
 					o => {
-						var window = AppSender.SendCreateWindow(WindowKind.LauncherExecute, Model, null);
+						var data = new ItemWithScreen<LauncherItemModel>(Model, DockScreen);
+						var window = AppSender.SendCreateWindow(WindowKind.LauncherExecute, data, null);
+						
 						window.Show();
 					}
 				);

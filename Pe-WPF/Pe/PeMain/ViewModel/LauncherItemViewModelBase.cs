@@ -134,10 +134,10 @@
 			return this._iconColor;
 		}
 
-		public void Execute()
+		public void Execute(ScreenModel screen)
 		{
 			try {
-				ExecuteUtility.RunItem(Model, AppNonProcess, AppSender);
+				ExecuteUtility.RunItem(Model, screen, AppNonProcess, AppSender);
 				SettingUtility.IncrementLauncherItem(Model, null, null, AppNonProcess);
 			} catch (Exception ex) {
 				AppNonProcess.Logger.Warning(ex);
