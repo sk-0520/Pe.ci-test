@@ -19,7 +19,7 @@
 		<Item Id="window/setting" Word="@[APPLICATION] ${setting}"  />
 		<Item Id="window/accept" Word="@[APPLICATION] 使用許諾"  />
 		<Item Id="window/toolbar" Word="${toolbar}"  />
-		<Item Id="window/clipboard" Word="clipboard"  />
+		<Item Id="window/clipboard" Word="クリップボード"  />
 		<Item Id="window/template" Word="template"  />
 		<Item Id="window/execute" Word="@[ITEM]を指定して実行"  />
 		<Item Id="window/stream" Word="@[ITEM]の標準入出力"  />
@@ -117,6 +117,19 @@
 		<Item Id="clipboard/image/fit" Word="ウィンドウに合わせる" />
 		<Item Id="clipboard/image/raw" Word="原寸表示" />
 		<Item Id="clipboard/save-count" Word="保存対象件数" />
+		<Item Id="clipboard/save" Word="保存" />
+		<Item Id="clipboard/remove" Word="削除" />
+		<Item Id="clipboard/clear" Word="クリップボードを削除" />
+		<Item Id="clipboard/topmost" Word="最前面" />
+		<Item Id="clipboard/using-clipboard" Word="転送にクリップボードを使用" />
+		<Item Id="clipboard/command/send"  Word="転送" />
+		<Item Id="clipboard/command/copy"  Word="コピー" />
+		<Item Id="clipboard/command/text"  Word="文字列のコピー" />
+		<Item Id="clipboard/command/rtf"   Word="書式付文字列のコピー" />
+		<Item Id="clipboard/command/html"  Word="HTMLのコピー" />
+		<Item Id="clipboard/command/image" Word="画像のコピー" />
+		<Item Id="clipboard/command/file"  Word="ファイルのコピー" />
+		<Item Id="clipboard/item/name" Word="クリップボード名" />
 		
 		<Item Id="command/selected" Word="選択中アイテム" />
 		<Item Id="command/tag" Word="@[TAG] (@[NAME])" />
