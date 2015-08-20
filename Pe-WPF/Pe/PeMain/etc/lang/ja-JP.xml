@@ -124,6 +124,9 @@
 		<Item Id="launcher-item-edit/others/tag" Word="タグ(カンマ区切り)" />
 		<Item Id="launcher-item-edit/others/memo" Word="備考" />
 
+		<Item Id="launcher-list-items/append" Word="アイテムの追加" />
+		<Item Id="launcher-list-items/remove" Word="アイテムの削除" />
+		
 		<!-- enum -->
 		
 		<Item Id="enum/ModifierKeys" Word="修飾キー" />

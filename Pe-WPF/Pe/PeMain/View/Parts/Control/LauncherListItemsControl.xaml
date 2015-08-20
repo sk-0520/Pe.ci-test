@@ -3,6 +3,8 @@
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+	xmlns:AM="clr-namespace:ContentTypeTextNet.Pe.PeMain"
+	xmlns:AA="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Attached"
 	xmlns:AV="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Control"
 	xmlns:AP="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
 	xmlns:AC="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Converter"
@@ -33,8 +35,12 @@
 		</Grid.RowDefinitions>
 		<!--<ToolBarTray Grid.Row="0">-->
 		<ToolBar Grid.Row="0" Style="{StaticResource DefaultToolbar}">
-			<Button x:Name="toolAppend" Content="append" Focusable="False" Command="{Binding AppendCommand, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}}" />
-			<Button x:Name="toolRemove" Content="remove" Focusable="False" IsEnabled="{Binding SelectedLauncherItem, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}, Converter={StaticResource LogicalIsNotNullConverter}}" Command="{Binding RemoveCommand, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}}" CommandParameter="{Binding SelectedLauncherItem, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}}" />
+			<Button x:Name="toolAppend" Focusable="False" Command="{Binding AppendCommand, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}}" AA:Language.Hint="launcher-list-items/append">
+				<Image Source="{x:Static AM:AppResource.CommonAddImage}" Style="{StaticResource DefaultImage}" />
+			</Button>
+			<Button x:Name="toolRemove" Focusable="False" IsEnabled="{Binding SelectedLauncherItem, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}, Converter={StaticResource LogicalIsNotNullConverter}}" Command="{Binding RemoveCommand, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}}" CommandParameter="{Binding SelectedLauncherItem, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}}" AA:Language.Hint="launcher-list-items/remove" >
+				<Image Source="{x:Static AM:AppResource.CommonRemoveImage}" Style="{StaticResource DefaultImage}" />
+			</Button>
 			<Separator x:Name="toolSeparator"  />
 			<TextBox Style="{StaticResource DefaultTextBox}" />
 		</ToolBar>
