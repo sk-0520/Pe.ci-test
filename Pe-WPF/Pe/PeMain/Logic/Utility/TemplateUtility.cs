@@ -82,6 +82,7 @@
 				}
 				return processor.TransformText();
 			} else {
+				// TODO: なんで言語設定してるんだっけか
 				var map = GetTemplateMap();
 				var replacedText = appNonProcess.Language.GetReplacedWordText(bodyModel.Source ?? string.Empty, dateTime, map);
 				appNonProcess.Logger.Debug("replacedText: " + replacedText);
