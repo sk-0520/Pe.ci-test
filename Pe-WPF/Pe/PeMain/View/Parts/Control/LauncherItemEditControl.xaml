@@ -20,6 +20,7 @@
 				<ResourceDictionary Source="/View/Parts/Resource/TextBoxDictionary.xaml"/>
 			</ResourceDictionary.MergedDictionaries>
 			<SC:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
+			<Thickness x:Key="ControlMargin" Top="4" Bottom="4" />
 		</ResourceDictionary>
 	</AV:CommonDataUserControl.Resources>
 
@@ -37,6 +38,18 @@
 					</StackPanel>
 				</GroupBox>
 				<Grid Grid.Row="1">
+					<Grid.Resources>
+						<Style TargetType="TextBlock">
+							<Setter Property="Margin" Value="0,0,4,0" />
+							<Setter Property="VerticalAlignment" Value="Center" />
+						</Style>
+						<Style TargetType="TextBox" BasedOn="{StaticResource DefaultTextBox}">
+							<Setter Property="Margin" Value="{StaticResource ControlMargin}" />
+						</Style>
+						<Style TargetType="Button">
+							<Setter Property="Margin" Value="{StaticResource ControlMargin}" />
+						</Style>
+					</Grid.Resources>
 					<Grid.RowDefinitions>
 						<RowDefinition Height="Auto" />
 						<RowDefinition Height="Auto" />
@@ -84,7 +97,7 @@
 					</Button>
 
 					<TextBlock Grid.Row="4" Grid.Column="0" Text="icon path" AA:Language.Word="launcher-item-edit/general/icon" />
-					<TextBox Grid.Row="4" Grid.Column="1" IsReadOnly="True" Text="{Binding IconDisplayText, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DefaultTextBox}" />
+					<TextBox Grid.Row="4" Grid.Column="1" IsReadOnly="True" Text="{Binding IconDisplayText, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
 					<Button Grid.Row="4" Grid.Column="2" Command="{Binding SelectIconCommand}">
 						<!-- file -->
 						<Image Source="{x:Static AM:AppResource.CommonFileImage}" Style="{StaticResource DefaultImage}" />
