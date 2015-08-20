@@ -25,6 +25,7 @@
 			<Label Grid.Row="0" Grid.Column="0" Content="font" />
 			<AV:FontSelectControl
 				Grid.Row="0" Grid.Column="1"
+				IsEnabledBold="False"
 				FamilyName="{Binding FontFamily}"
 				IsBold="{Binding FontBold}"
 				IsItalic="{Binding FontItalic}"

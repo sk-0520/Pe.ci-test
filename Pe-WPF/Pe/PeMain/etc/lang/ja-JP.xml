@@ -93,14 +93,21 @@
 		<Item Id="command/selected" Word="選択中アイテム" />
 		<Item Id="command/tag" Word="@[TAG] (@[NAME])" />
 		<Item Id="command/drive" Word="@[VOLUME] (@[PATH])" />
+		
+		<Item Id="logging/timestamp" Word="発生日時" />
 
+		<!-- control -->
+		
 		<Item Id="environment/edit" Word="環境変数を編集する" />
 		<Item Id="environment/update" Word="変更" />
 		<Item Id="environment/remove" Word="削除" />
 		<Item Id="environment/key" Word="キー" />
 		<Item Id="environment/value" Word="値" />
+
+		<Item Id="font/weight" Word="ボールド" />
+		<Item Id="font/style" Word="イタリック" />
 		
-		<Item Id="logging/timestamp" Word="発生日時" />
+
 
 		<!-- enum -->
 		

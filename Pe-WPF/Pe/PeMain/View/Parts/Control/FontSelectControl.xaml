@@ -25,13 +25,13 @@
 	
 	<Grid>
 		<Grid.RowDefinitions>
-			<RowDefinition />
-			<RowDefinition />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
 		</Grid.RowDefinitions>
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition />
-			<ColumnDefinition />
-			<ColumnDefinition />
+			<ColumnDefinition Width="Auto" />
+			<ColumnDefinition Width="Auto" />
+			<ColumnDefinition Width="*" />
 		</Grid.ColumnDefinitions>
 		<ComboBox x:Name="listFont" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" SelectedValue="{Binding FamilyName, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}}" SelectedValuePath="Source" ItemsSource="{Binding Source={x:Static Fonts.SystemFontFamilies}}">
 			<ComboBox.ItemsPanel>
