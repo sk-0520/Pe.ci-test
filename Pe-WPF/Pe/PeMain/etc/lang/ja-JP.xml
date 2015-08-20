@@ -22,9 +22,10 @@
 		<Item Id="window/clipboard" Word="clipboard"  />
 		<Item Id="window/template" Word="template"  />
 		<Item Id="window/execute" Word="@[ITEM]を指定して実行"  />
-		<Item Id="window/stream" Word="stream"  />
+		<Item Id="window/stream" Word="@[ITEM]の標準入出力"  />
 		<Item Id="window/logging" Word="ログ"  />
-		
+		<Item Id="window/customize" Word="@[ITEM]を編集" />
+
 		<Item Id="common/ok" Word="${ok}"  />
 		<Item Id="common/cancel" Word="${cancel}"  />
 		
@@ -199,6 +200,18 @@
 		<Item Id="enum/Key/Multiply"  Word="Num *" />
 		<Item Id="enum/Key/Divide"    Word="Num /" />
 		<Item Id="enum/Key/Decimal"   Word="Num ." />
+
+
+		<Item Id="enum/IconScale/Small"  Word="小" />
+		<Item Id="enum/IconScale/Normal" Word="中" />
+		<Item Id="enum/IconScale/Big"    Word="大" />
+		<Item Id="enum/IconScale/Large"  Word="特大" />
+
+		<Item Id="enum/DockType/None"    Word="フロート" />
+		<Item Id="enum/DockType/Top"     Word="デスクトップ: 上" />
+		<Item Id="enum/DockType/Left"    Word="デスクトップ: 左" />
+		<Item Id="enum/DockType/Right"   Word="デスクトップ: 右" />
+		<Item Id="enum/DockType/Bottom"  Word="デスクトップ: 下" />
 
 	</Words>
 </Language>

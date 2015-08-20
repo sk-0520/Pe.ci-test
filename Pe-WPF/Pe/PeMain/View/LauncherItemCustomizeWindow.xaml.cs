@@ -44,6 +44,13 @@ namespace ContentTypeTextNet.Pe.PeMain.View
 			base.ApplyViewModel();
 		}
 
+		public override void ApplyLanguage(Dictionary<string, string> map)
+		{
+			map[LanguageKey.customizeItem] = ViewModel.DisplayText;
+
+			base.ApplyLanguage(map);
+		}
+
 		#endregion
 
 		#region IHavingWindowKind

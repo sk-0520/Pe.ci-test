@@ -45,6 +45,14 @@
 			base.ApplyViewModel();
 		}
 
+		public override void ApplyLanguage(Dictionary<string, string> map)
+		{
+			map[LanguageKey.streamItem] = ViewModel.DisplayText;
+
+			base.ApplyLanguage(map);
+		}
+
+
 		#endregion
 
 		#region IHavingWindowKind
