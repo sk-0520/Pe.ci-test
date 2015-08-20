@@ -36,31 +36,31 @@
 			<RowDefinition Height="*" />
 		</Grid.RowDefinitions>
 		<ToolBar Grid.Row="0" Style="{StaticResource DefaultToolbar}">
-			<ToggleButton IsChecked="{Binding Topmost, ElementName=root}">
+			<ToggleButton IsChecked="{Binding Topmost, ElementName=root}" AA:Language.Hint="stream/topmost">
 				<!-- topmost -->
 				<Image Style="{StaticResource DefaultImage}" Source="{x:Static AM:AppResource.CommonPinImage}" />
 			</ToggleButton>
 			<Separator />
-			<Button Command="{Binding SaveCommand}">
+			<Button Command="{Binding SaveCommand}" AA:Language.Hint="stream/save">
 				<!-- save -->
 				<Image Style="{StaticResource DefaultImage}" Source="{x:Static AM:AppResource.CommonSaveImage}" />
 			</Button>
-			<Button IsEnabled="{Binding ProcessRunning, Mode=OneWay}" Command="{Binding ClearCommand}" >
+			<Button IsEnabled="{Binding ProcessRunning, Mode=OneWay}" Command="{Binding ClearCommand}" AA:Language.Hint="stream/clear" >
 				<!-- clear -->
 				<Image Style="{StaticResource DefaultImage}" Source="{x:Static AM:AppResource.CommonClearImage}" />
 			</Button>
 			<Separator />
-			<Button Command="{Binding RefreshProcessCommand}" IsEnabled="{Binding ProcessRunning, Mode=OneWay}">
+			<Button Command="{Binding RefreshProcessCommand}" IsEnabled="{Binding ProcessRunning, Mode=OneWay}" AA:Language.Hint="stream/refresh">
 				<!-- refresh -->
 				<Image Style="{StaticResource DefaultImage}" Source="{x:Static AM:AppResource.CommonRefreshImage}" />
 			</Button>
-			<Button Command="{Binding KillProcessCommand}" IsEnabled="{Binding ProcessRunning, Mode=OneWay}">
+			<Button Command="{Binding KillProcessCommand}" IsEnabled="{Binding ProcessRunning, Mode=OneWay}" AA:Language.Hint="stream/kill">
 				<!-- kill -->
 				<Image Style="{StaticResource DefaultImage}" Source="{x:Static AM:AppResource.StreamKillImage}" />
 			</Button>
 		</ToolBar>
 		<TabControl Grid.Row="1">
-			<TabItem Header="stream">
+			<TabItem Header="stream" AA:Language.Word="stream/stream">
 				<Grid>
 					<Grid.RowDefinitions>
 						<RowDefinition Height="*" />
@@ -76,11 +76,14 @@
 							</Thickness>
 						</RichTextBox.Padding>
 					</RichTextBox>
-					<TextBox Grid.Row="1" Visibility="{Binding UsingInput, Converter={StaticResource BooleanVisibilityConverter}}" Text="{Binding InputConsole, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding ProcessRunning, Mode=OneWay, Converter={StaticResource LogicalNotConverter}}" >
-						<TextBox.InputBindings>
+					<xctk:WatermarkTextBox Grid.Row="1" Visibility="{Binding UsingInput, Converter={StaticResource BooleanVisibilityConverter}}" Text="{Binding InputConsole, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding ProcessRunning, Mode=OneWay, Converter={StaticResource LogicalNotConverter}}" >
+						<xctk:WatermarkTextBox.Watermark>
+							<TextBlock Text="input" AA:Language.Word="stream/stream/input" />
+						</xctk:WatermarkTextBox.Watermark>
+						<xctk:WatermarkTextBox.InputBindings>
 							<KeyBinding Command="{Binding Path=ReturnInputCommand}" Key="Enter" />
-						</TextBox.InputBindings>
-					</TextBox>
+						</xctk:WatermarkTextBox.InputBindings>
+					</xctk:WatermarkTextBox>
 				</Grid>
 			</TabItem>
 			<TabItem>
@@ -89,7 +92,7 @@
 				</TabItem.Header>
 				<xctk:PropertyGrid IsReadOnly="{Binding ProcessRunning, Mode=OneWay, Converter={StaticResource LogicalNotConverter}}" SelectedObject="{Binding Process}" />
 			</TabItem>
-			<TabItem Header="startinfo">
+			<TabItem Header="startinfo" AA:Language.Word="stream/startinfo" >
 				<xctk:PropertyGrid IsReadOnly="True" SelectedObject="{Binding StartInfo}" />
 			</TabItem>
 		</TabControl>

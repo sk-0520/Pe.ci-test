@@ -72,6 +72,16 @@
 		<Item Id="execute/others/stream-input"  Word="標準入力" />
 		<Item Id="execute/others/admin" Word="管理者権限で実行" />
 		<Item Id="execute/environment" Word="環境編集の編集" />
+		
+		<Item Id="stream/topmost" Word="最前面" />
+		<Item Id="stream/save" Word="保存" />
+		<Item Id="stream/clear" Word="クリア" />
+		<Item Id="stream/refresh" Word="" />
+		<Item Id="stream/kill" Word="強制終了" />
+		<Item Id="stream/stream" Word="標準入出力" />
+		<Item Id="stream/stream/input" Word="標準入力" />
+		<Item Id="stream/process" Word="プロセス" />
+		<Item Id="stream/startinfo" Word="起動プロパティ" />
 
 		<Item Id="command/execute" Word="${execute}" />
 
