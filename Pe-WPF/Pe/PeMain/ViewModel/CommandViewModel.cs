@@ -26,6 +26,9 @@
 	using ContentTypeTextNet.Library.SharedLibrary.IF.WindowsViewExtend;
 	using ContentTypeTextNet.Library.SharedLibrary.Attribute;
 	using System.Windows.Media;
+	using ContentTypeTextNet.Pe.Library.PeData.Item;
+	using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
+	using ContentTypeTextNet.Library.SharedLibrary.CompatibleForms;
 
 	public class CommandViewModel: HavingViewSingleModelWrapperViewModelBase<CommandSettingModel, CommandWindow>, IHavingAppNonProcess, IHavingAppSender, IWindowHitTestData
 	{
@@ -461,7 +464,12 @@
 				case CommandKind.LauncherItemName:
 				case CommandKind.LauncherItemTag: {
 						if(showExtension) {
-							var window = AppSender.SendCreateWindow(WindowKind.LauncherExecute, commandItem.LauncherItemModel, null);
+							ScreenModel screen = null;
+							if(HasView) {
+								screen = Screen.FromHandle(View.Handle);
+							}
+							var data = new ItemWithScreen<LauncherItemModel>(commandItem.LauncherItemModel, screen);
+							var window = AppSender.SendCreateWindow(WindowKind.LauncherExecute, data, null);
 							window.Show();
 						} else {
 							var viewModel = new LauncherItemSimpleViewModel(commandItem.LauncherItemModel, AppNonProcess, AppSender);
