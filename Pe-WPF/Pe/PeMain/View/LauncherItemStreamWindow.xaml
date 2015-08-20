@@ -67,14 +67,20 @@
 						<RowDefinition Height="Auto" />
 					</Grid.RowDefinitions>
 					<RichTextBox 
-						x:Name="viewConsole" Grid.Row="0" IsReadOnly="True" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible"
+						x:Name="viewConsole" 
+						Grid.Row="0" 
+						IsReadOnly="True" 
+						HorizontalScrollBarVisibility="Visible" 
+						VerticalScrollBarVisibility="Visible"
+						Padding="0,0,0,8"
 						FontFamily="{Binding FontFamily}" FontWeight="{Binding FontBold, Converter={StaticResource BooleanFontWeightConverter}}" FontStyle="{Binding FontItalic, Converter={StaticResource BooleanFontStyleConverter}}" FontSize="{Binding FontSize}"
 					>
-						<RichTextBox.Padding>
-							<Thickness>
-								<Thickness.Bottom>8</Thickness.Bottom>
-							</Thickness>
-						</RichTextBox.Padding>
+						<RichTextBox.Foreground>
+							<SolidColorBrush Color="{Binding StdOutputForeColor}" />
+						</RichTextBox.Foreground>
+						<RichTextBox.Background>
+							<SolidColorBrush Color="{Binding StdOutputBackColor}" />
+						</RichTextBox.Background>
 					</RichTextBox>
 					<xctk:WatermarkTextBox Grid.Row="1" Visibility="{Binding UsingInput, Converter={StaticResource BooleanVisibilityConverter}}" Text="{Binding InputConsole, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding ProcessRunning, Mode=OneWay, Converter={StaticResource LogicalNotConverter}}" >
 						<xctk:WatermarkTextBox.Watermark>

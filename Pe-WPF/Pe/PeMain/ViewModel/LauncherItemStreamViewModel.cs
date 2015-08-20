@@ -29,6 +29,9 @@
 		bool _processRunning;
 		string _inputConsole;
 
+		Brush _errOutputForeBrush;
+		Brush _errOutputBackBrush;
+
 		#endregion
 
 		public LauncherItemStreamViewModel(LauncherItemModel model, LauncherItemStreamWindow view, Process process, StreamSettingModel streamSetting, IAppNonProcess nonPorocess, IAppSender appSender)
@@ -80,6 +83,30 @@
 			set { SetVariableValue(ref this._inputConsole, value); }
 		}
 
+		public Color StdOutputForeColor { get { return StreamSetting.OutputColor.ForeColor; } }
+		public Color StdOutputBackColor { get { return StreamSetting.OutputColor.BackColor; } }
+
+		public Brush ErrOutputForeBrush 
+		{ 
+			get 
+			{
+				if (this._errOutputForeBrush == null) {
+					this._errOutputForeBrush = new SolidColorBrush(StreamSetting.ErrorColor.ForeColor);
+				}
+				return this._errOutputForeBrush; 
+			} 
+		}
+		public Brush ErrOutputBackBrush
+		{
+			get
+			{
+				if (this._errOutputBackBrush == null) {
+					this._errOutputBackBrush = new SolidColorBrush(StreamSetting.ErrorColor.BackColor);
+				}
+				return this._errOutputBackBrush;
+			}
+		}
+
 		#region font
 
 		public FontFamily FontFamily
@@ -107,7 +134,6 @@
 		}
 
 		#endregion
-
 
 		#endregion
 
@@ -230,7 +256,8 @@
 					var textRange = new TextRange(OutputStream.ContentEnd, OutputStream.ContentEnd);
 					textRange.Text = line;
 					if (!isStandardOutput) {
-						textRange.ApplyPropertyValue(TextElement.BackgroundProperty, Brushes.Red);
+						textRange.ApplyPropertyValue(TextElement.ForegroundProperty, ErrOutputForeBrush);
+						textRange.ApplyPropertyValue(TextElement.BackgroundProperty, ErrOutputBackBrush);
 					}
 					if (HasView) {
 						View.viewConsole.ScrollToEnd();
