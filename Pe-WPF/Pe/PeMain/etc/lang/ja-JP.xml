@@ -76,8 +76,25 @@
 
 		<Item Id="note/title/default"   Word="新規ノート@[COUNT]" />
 		<Item Id="note/title/timestamp" Word="@[TIMESTAMP]" />
+		<Item Id="note/caption/small" Word="最小化" />
+		<Item Id="note/caption/topmost"  Word="最前面" />
+		<Item Id="note/caption/hide"  Word="非表示" />
 		<Item Id="note/input" Word="${input}" />
-
+		<Item Id="note/input/title" Word="タイトル" />
+		<Item Id="note/input/body" Word="本文" />
+		<Item Id="note/style" Word="書式" />
+		<Item Id="note/style/fore-color" Word="前景" />
+		<Item Id="note/style/back-color" Word="背景" />
+		<Item Id="note/style/font" Word="フォント" />
+		<Item Id="note/state" Word="状態" />
+		<Item Id="note/state/lock" Word="固定" />
+		<Item Id="note/state/compact" Word="最小化" />
+		<Item Id="note/state/topmost" Word="最前面" />
+		<Item Id="note/operation" Word="操作" />
+		<Item Id="note/operation/copy" Word="コピー" />
+		<Item Id="note/operation/hide" Word="非表示" />
+		<Item Id="note/operation/remove" Word="削除" />
+		
 		<Item Id="clipboard/enabled" Word="クリップボード取込" />
 		<Item Id="clipboard/enabled:hint" Word="クリップボードにコピーされたデータを取り込みます" />
 		<Item Id="clipboard/target" Word="取込対象" />

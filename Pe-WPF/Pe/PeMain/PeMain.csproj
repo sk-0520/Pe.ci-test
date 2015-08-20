@@ -547,6 +547,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="View\Parts\Resource\PopupDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Parts\Resource\TextBoxDictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -656,7 +660,9 @@
     <Resource Include="Resources\Icon\Tasktray\App-debug.ico" />
     <Resource Include="Resources\Icon\Tasktray\App-release.ico" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Resources\Image\Note\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>copy "$(OutDir)etc\lang\ja-JP.xml" "$(OutDir)etc\lang\default.xml"

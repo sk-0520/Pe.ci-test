@@ -43,6 +43,7 @@
 			<ResourceDictionary.MergedDictionaries>
 				<ResourceDictionary Source="/View/Parts/Resource/ImageDictionary.xaml"/>
 				<ResourceDictionary Source="/View/Parts/Resource/GripDictionary.xaml"/>
+				<ResourceDictionary Source="/View/Parts/Resource/PopupDictionary.xaml"/>
 			</ResourceDictionary.MergedDictionaries>
 			<xctk:InverseBoolConverter x:Key="InverseBoolConverter" />
 			<SC:LogicalMultiEqualConverter x:Key="LogicalMultiEqualConverter" />
@@ -94,19 +95,8 @@
 				<Setter Property="VerticalAlignment" Value="Center" />
 			</Style>
 
-			<Style x:Key="DropDownPopupMenu" TargetType="Popup">
-				<Setter Property="HorizontalOffset" Value="1" />
-				<Setter Property="VerticalOffset" Value="1" />
-				<Setter Property="AllowsTransparency" Value="True" />
-				<Setter Property="StaysOpen" Value="False" />
+			<Style x:Key="DropDownPopupMenu" TargetType="Popup" BasedOn="{StaticResource MenuPopup}">
 				<Setter Property="Placement" Value="{Binding DataContext.DropDownPlacement, Mode=OneWay, ElementName=root}" />
-				<Setter Property="Focusable" Value="False" />
-			</Style>
-			<Style x:Key="DropDownPopupBorder" TargetType="Border">
-				<Setter Property="BorderThickness" Value="1" />
-				<Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" />
-				<Setter Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}" />
-				<Setter Property="Padding" Value="4" />
 			</Style>
 
 			<Style x:Key="ParentElement" TargetType="Grid">
@@ -257,7 +247,7 @@
 								IsOpen="{Binding IsChecked, ElementName=PART_DropDownButton}"
 								Opened="PART_Popup_Opened"
 							>
-									<Border Style="{StaticResource DropDownPopupBorder}">
+									<Border Style="{StaticResource MenuPopupBorder}">
 										<ContentPresenter Content="{TemplateBinding DropDownContent}" />
 									</Border>
 								</Popup>
@@ -323,7 +313,7 @@
 									IsOpen="{TemplateBinding IsOpen}"
 									Opened="PART_Popup_Opened"
 								>
-									<Border Style="{StaticResource DropDownPopupBorder}">
+									<Border Style="{StaticResource MenuPopupBorder}">
 										<ContentPresenter Content="{Binding DropDownContent,RelativeSource={RelativeSource AncestorType=xctk:SplitButton}}" />
 									</Border>
 								</Popup>
