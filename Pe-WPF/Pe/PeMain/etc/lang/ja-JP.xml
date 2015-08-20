@@ -106,8 +106,23 @@
 
 		<Item Id="font/weight" Word="ボールド" />
 		<Item Id="font/style" Word="イタリック" />
-		
 
+		<Item Id="launcher-item-edit/general" Word="基本設定" />
+		<Item Id="launcher-item-edit/general/kind" Word="アイテムの種類" />
+		<Item Id="launcher-item-edit/general/kind/file" Word="ファイル" />
+		<Item Id="launcher-item-edit/general/kind/command" Word="コマンド" />
+		<Item Id="launcher-item-edit/general/name" Word="名前" />
+		<Item Id="launcher-item-edit/general/command" Word="コマンド" />
+		<Item Id="launcher-item-edit/general/option" Word="オプション" />
+		<Item Id="launcher-item-edit/general/work-dir" Word="作業ディレクトリ" />
+		<Item Id="launcher-item-edit/general/icon" Word="アイコン" />
+		<Item Id="launcher-item-edit/env" Word="基本設定" />
+		<Item Id="launcher-item-edit/others" Word="その他" />
+		<Item Id="launcher-item-edit/others/stream-output" Word="標準出力" />
+		<Item Id="launcher-item-edit/others/stream-input" Word="標準入力" />
+		<Item Id="launcher-item-edit/others/admin" Word="管理者権限" />
+		<Item Id="launcher-item-edit/others/tag" Word="タグ(カンマ区切り)" />
+		<Item Id="launcher-item-edit/others/memo" Word="備考" />
 
 		<!-- enum -->
 		
