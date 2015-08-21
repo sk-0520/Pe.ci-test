@@ -15,6 +15,7 @@
 	Title="LauncherSettingWindow"
 	Height="300"
 	Width="300"
+	Icon="{Binding ViewIcon}"
 >
 	<AW:CommonDataWindow.Resources>
 		<ResourceDictionary>

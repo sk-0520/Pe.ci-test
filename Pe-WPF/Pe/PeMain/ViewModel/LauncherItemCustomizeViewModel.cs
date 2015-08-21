@@ -35,9 +35,6 @@
 			this._srcModel = model;
 		}
 
-		#region property
-		#endregion
-
 		#region command
 
 		public ICommand SaveCommand

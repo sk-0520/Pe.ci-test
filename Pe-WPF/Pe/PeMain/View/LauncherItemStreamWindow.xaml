@@ -17,6 +17,7 @@
 	Title="StreamWindow" 
 	Width="480"
 	Height="360" 
+	Icon="{Binding ViewIcon}"
 >
 	<AW:CommonDataWindow.Resources>
 		<ResourceDictionary>

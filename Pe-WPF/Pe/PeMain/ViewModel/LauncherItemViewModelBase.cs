@@ -113,6 +113,22 @@
 			}
 		}
 
+		public BitmapSource ViewIcon
+		{
+			get
+			{
+				var element = ImageUtility.MakeOverlayImage(
+					AppResource.ApplicationIconNormal,
+					GetIcon(IconScale.Small)
+				);
+
+				// TODO: 16pxアイコンも作りたいなぁ
+				var image = ImageUtility.MakeBitmapBitmapSourceDefualtDpi(element);
+
+				return image;
+			}
+		}
+
 		#endregion
 
 		#region function

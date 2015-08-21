@@ -89,5 +89,27 @@
 				}
 			}
 		}
+
+		public static FrameworkElement MakeOverlayImage(ImageSource parent, ImageSource child)
+		{
+			var canvas = new Canvas();
+			canvas.Width = parent.Width;
+			canvas.Height = parent.Height;
+
+			var parentImage = new Image() { 
+				Source = parent,
+			};
+			var childImage = new Image() {
+				Source = child,
+			};
+
+			canvas.Children.Add(parentImage);
+			canvas.Children.Add(childImage);
+
+			Canvas.SetLeft(childImage, parent.Width - child.Width);
+			Canvas.SetTop(childImage, parent.Height - child.Height);
+
+			return canvas;
+		}
 	}
 }

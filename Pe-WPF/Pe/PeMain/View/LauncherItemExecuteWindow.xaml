@@ -18,6 +18,7 @@
 	Width="640"
 	SizeToContent="Height"
 	ResizeMode="NoResize"
+	Icon="{Binding ViewIcon}"
 >
 	<AW:CommonDataWindow.Resources>
 		<ResourceDictionary>

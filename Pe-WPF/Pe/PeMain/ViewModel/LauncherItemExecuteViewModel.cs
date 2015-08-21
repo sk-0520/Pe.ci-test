@@ -7,7 +7,9 @@
 	using System.Text;
 	using System.Threading.Tasks;
 	using System.Windows.Input;
+	using System.Windows.Media.Imaging;
 	using ContentTypeTextNet.Library.SharedLibrary.CompatibleForms;
+	using ContentTypeTextNet.Library.SharedLibrary.Define;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;

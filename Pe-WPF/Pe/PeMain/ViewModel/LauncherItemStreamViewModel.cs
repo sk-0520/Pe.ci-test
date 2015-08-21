@@ -12,6 +12,8 @@
 	using System.Windows.Documents;
 	using System.Windows.Input;
 	using System.Windows.Media;
+	using System.Windows.Media.Imaging;
+	using ContentTypeTextNet.Library.SharedLibrary.Define;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
