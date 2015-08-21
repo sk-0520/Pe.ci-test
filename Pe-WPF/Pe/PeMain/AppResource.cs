@@ -74,7 +74,17 @@
 		const string commonRun = "/Resources/Image/Common/CommonRun.png";
 		[AppResource(AppResourceType.Image)]
 		const string commonCreate = "/Resources/Image/Common/CommonCreate.png";
+		[AppResource(AppResourceType.Image)]
+		const string commonConfig = "/Resources/Image/Common/CommonConfig.png";
 
+		[AppResource(AppResourceType.Image)]
+		const string toolbarToolbar = "/Resources/Image/Toolbar/Toolbar.png";
+
+		[AppResource(AppResourceType.Image)]
+		const string streamKill = "/Resources/Image/Stream/StreamKill.png";
+
+		[AppResource(AppResourceType.Image)]
+		const string noteNote = "/Resources/Image/Note/Note.png";
 
 		[AppResource(AppResourceType.Image)]
 		const string templateTemplate = "/Resources/Image/Template/Template.png";
@@ -105,13 +115,28 @@
 		const string clipboardImageRaw = "/Resources/Image/Clipboard/ClipboardImageRaw.png";
 
 		[AppResource(AppResourceType.Image)]
-		const string streamKill = "/Resources/Image/Stream/StreamKill.png";
-
-		[AppResource(AppResourceType.Image)]
 		const string windowList = "/Resources/Image/Window/WindowList.png";
 		[AppResource(AppResourceType.Image)]
 		const string windowLoad = "/Resources/Image/Window/WindowLoad.png";
 		[AppResource(AppResourceType.Image)]
 		const string windowSave = "/Resources/Image/Window/WindowSave.png";
+
+		[AppResource(AppResourceType.Image)]
+		const string logLog = "/Resources/Image/Log/Log.png";
+		[AppResource(AppResourceType.Image)]
+		const string logDebug = "/Resources/Image/Log/LogDebug.png";
+		[AppResource(AppResourceType.Image)]
+		const string logTrace = "/Resources/Image/Log/LogTrace.png";
+		[AppResource(AppResourceType.Image)]
+		const string logInformation = "/Resources/Image/Log/LogInformation.png";
+		[AppResource(AppResourceType.Image)]
+		const string logWarning = "/Resources/Image/Log/LogWarning.png";
+		[AppResource(AppResourceType.Image)]
+		const string logError = "/Resources/Image/Log/LogError.png";
+		[AppResource(AppResourceType.Image)]
+		const string logFatal = "/Resources/Image/Log/LogFatal.png";
+
+		[AppResource(AppResourceType.Image)]
+		const string settingSetting = "/Resources/Image/Setting/Setting.png";
 	}
 }

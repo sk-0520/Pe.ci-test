@@ -626,6 +626,17 @@
     <Content Include="etc\style\common.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Image\Log\Log.png" />
+    <Resource Include="Resources\Image\Log\LogDebug.png" />
+    <Resource Include="Resources\Image\Log\LogError.png" />
+    <Resource Include="Resources\Image\Log\LogFatal.png" />
+    <Resource Include="Resources\Image\Log\LogInformation.png" />
+    <Resource Include="Resources\Image\Log\LogTrace.png" />
+    <Resource Include="Resources\Image\Log\LogWarning.png" />
+    <Resource Include="Resources\Image\Common\CommonConfig.png" />
+    <Resource Include="Resources\Image\Setting\Setting.png" />
+    <Resource Include="Resources\Image\Note\Note.png" />
+    <Resource Include="Resources\Image\Toolbar\Toolbar.png" />
     <Resource Include="Resources\Image\Common\CommonCreate.png" />
     <Resource Include="Resources\Image\Common\CommonRun.png" />
     <Resource Include="Resources\Image\Common\CommonFontBold.png" />

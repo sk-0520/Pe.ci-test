@@ -21,7 +21,7 @@
 		/*
 		このソースは自動生成のため AppResource-generator.tt を編集すること。
 
-		生成元フィールド数: 41
+		生成元フィールド数: 53
 		*/
 		#region Icon: Application
 
@@ -971,6 +971,116 @@
 			get { return GetImage(CommonRunPath); }
 		}
 		#endregion CommonRun
+		#region Image: CommonCreate
+
+		/// <summary>
+		/// [Image] CommonCreateのリソースパスを取得。
+		/// <para>/Resources/Image/Common/CommonCreate.png</para>
+		/// </summary>
+		public static string CommonCreatePath
+		{
+			get { return commonCreate; }
+		}
+
+		/// <summary>
+		/// [Image] CommonCreateのイメージソースを取得。
+		/// <para>初回のみ生成を行う。</para>
+		/// <para>CommonCreatePath: /Resources/Image/Common/CommonCreate.png</para>
+		/// </summary>
+		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
+		public static BitmapSource CommonCreateImage
+		{
+			get { return GetImage(CommonCreatePath); }
+		}
+		#endregion CommonCreate
+		#region Image: CommonConfig
+
+		/// <summary>
+		/// [Image] CommonConfigのリソースパスを取得。
+		/// <para>/Resources/Image/Common/CommonConfig.png</para>
+		/// </summary>
+		public static string CommonConfigPath
+		{
+			get { return commonConfig; }
+		}
+
+		/// <summary>
+		/// [Image] CommonConfigのイメージソースを取得。
+		/// <para>初回のみ生成を行う。</para>
+		/// <para>CommonConfigPath: /Resources/Image/Common/CommonConfig.png</para>
+		/// </summary>
+		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
+		public static BitmapSource CommonConfigImage
+		{
+			get { return GetImage(CommonConfigPath); }
+		}
+		#endregion CommonConfig
+		#region Image: ToolbarToolbar
+
+		/// <summary>
+		/// [Image] ToolbarToolbarのリソースパスを取得。
+		/// <para>/Resources/Image/Toolbar/Toolbar.png</para>
+		/// </summary>
+		public static string ToolbarToolbarPath
+		{
+			get { return toolbarToolbar; }
+		}
+
+		/// <summary>
+		/// [Image] ToolbarToolbarのイメージソースを取得。
+		/// <para>初回のみ生成を行う。</para>
+		/// <para>ToolbarToolbarPath: /Resources/Image/Toolbar/Toolbar.png</para>
+		/// </summary>
+		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
+		public static BitmapSource ToolbarToolbarImage
+		{
+			get { return GetImage(ToolbarToolbarPath); }
+		}
+		#endregion ToolbarToolbar
+		#region Image: StreamKill
+
+		/// <summary>
+		/// [Image] StreamKillのリソースパスを取得。
+		/// <para>/Resources/Image/Stream/StreamKill.png</para>
+		/// </summary>
+		public static string StreamKillPath
+		{
+			get { return streamKill; }
+		}
+
+		/// <summary>
+		/// [Image] StreamKillのイメージソースを取得。
+		/// <para>初回のみ生成を行う。</para>
+		/// <para>StreamKillPath: /Resources/Image/Stream/StreamKill.png</para>
+		/// </summary>
+		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
+		public static BitmapSource StreamKillImage
+		{
+			get { return GetImage(StreamKillPath); }
+		}
+		#endregion StreamKill
+		#region Image: NoteNote
+
+		/// <summary>
+		/// [Image] NoteNoteのリソースパスを取得。
+		/// <para>/Resources/Image/Note/Note.png</para>
+		/// </summary>
+		public static string NoteNotePath
+		{
+			get { return noteNote; }
+		}
+
+		/// <summary>
+		/// [Image] NoteNoteのイメージソースを取得。
+		/// <para>初回のみ生成を行う。</para>
+		/// <para>NoteNotePath: /Resources/Image/Note/Note.png</para>
+		/// </summary>
+		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
+		public static BitmapSource NoteNoteImage
+		{
+			get { return GetImage(NoteNotePath); }
+		}
+		#endregion NoteNote
 		#region Image: TemplateTemplate
 
 		/// <summary>
@@ -1257,28 +1367,6 @@
 			get { return GetImage(ClipboardImageRawPath); }
 		}
 		#endregion ClipboardImageRaw
-		#region Image: StreamKill
-
-		/// <summary>
-		/// [Image] StreamKillのリソースパスを取得。
-		/// <para>/Resources/Image/Stream/StreamKill.png</para>
-		/// </summary>
-		public static string StreamKillPath
-		{
-			get { return streamKill; }
-		}
-
-		/// <summary>
-		/// [Image] StreamKillのイメージソースを取得。
-		/// <para>初回のみ生成を行う。</para>
-		/// <para>StreamKillPath: /Resources/Image/Stream/StreamKill.png</para>
-		/// </summary>
-		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
-		public static BitmapSource StreamKillImage
-		{
-			get { return GetImage(StreamKillPath); }
-		}
-		#endregion StreamKill
 		#region Image: WindowList
 
 		/// <summary>
@@ -1345,6 +1433,182 @@
 			get { return GetImage(WindowSavePath); }
 		}
 		#endregion WindowSave
+		#region Image: LogLog
+
+		/// <summary>
+		/// [Image] LogLogのリソースパスを取得。
+		/// <para>/Resources/Image/Log/Log.png</para>
+		/// </summary>
+		public static string LogLogPath
+		{
+			get { return logLog; }
+		}
+
+		/// <summary>
+		/// [Image] LogLogのイメージソースを取得。
+		/// <para>初回のみ生成を行う。</para>
+		/// <para>LogLogPath: /Resources/Image/Log/Log.png</para>
+		/// </summary>
+		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
+		public static BitmapSource LogLogImage
+		{
+			get { return GetImage(LogLogPath); }
+		}
+		#endregion LogLog
+		#region Image: LogDebug
+
+		/// <summary>
+		/// [Image] LogDebugのリソースパスを取得。
+		/// <para>/Resources/Image/Log/LogDebug.png</para>
+		/// </summary>
+		public static string LogDebugPath
+		{
+			get { return logDebug; }
+		}
+
+		/// <summary>
+		/// [Image] LogDebugのイメージソースを取得。
+		/// <para>初回のみ生成を行う。</para>
+		/// <para>LogDebugPath: /Resources/Image/Log/LogDebug.png</para>
+		/// </summary>
+		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
+		public static BitmapSource LogDebugImage
+		{
+			get { return GetImage(LogDebugPath); }
+		}
+		#endregion LogDebug
+		#region Image: LogTrace
+
+		/// <summary>
+		/// [Image] LogTraceのリソースパスを取得。
+		/// <para>/Resources/Image/Log/LogTrace.png</para>
+		/// </summary>
+		public static string LogTracePath
+		{
+			get { return logTrace; }
+		}
+
+		/// <summary>
+		/// [Image] LogTraceのイメージソースを取得。
+		/// <para>初回のみ生成を行う。</para>
+		/// <para>LogTracePath: /Resources/Image/Log/LogTrace.png</para>
+		/// </summary>
+		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
+		public static BitmapSource LogTraceImage
+		{
+			get { return GetImage(LogTracePath); }
+		}
+		#endregion LogTrace
+		#region Image: LogInformation
+
+		/// <summary>
+		/// [Image] LogInformationのリソースパスを取得。
+		/// <para>/Resources/Image/Log/LogInformation.png</para>
+		/// </summary>
+		public static string LogInformationPath
+		{
+			get { return logInformation; }
+		}
+
+		/// <summary>
+		/// [Image] LogInformationのイメージソースを取得。
+		/// <para>初回のみ生成を行う。</para>
+		/// <para>LogInformationPath: /Resources/Image/Log/LogInformation.png</para>
+		/// </summary>
+		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
+		public static BitmapSource LogInformationImage
+		{
+			get { return GetImage(LogInformationPath); }
+		}
+		#endregion LogInformation
+		#region Image: LogWarning
+
+		/// <summary>
+		/// [Image] LogWarningのリソースパスを取得。
+		/// <para>/Resources/Image/Log/LogWarning.png</para>
+		/// </summary>
+		public static string LogWarningPath
+		{
+			get { return logWarning; }
+		}
+
+		/// <summary>
+		/// [Image] LogWarningのイメージソースを取得。
+		/// <para>初回のみ生成を行う。</para>
+		/// <para>LogWarningPath: /Resources/Image/Log/LogWarning.png</para>
+		/// </summary>
+		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
+		public static BitmapSource LogWarningImage
+		{
+			get { return GetImage(LogWarningPath); }
+		}
+		#endregion LogWarning
+		#region Image: LogError
+
+		/// <summary>
+		/// [Image] LogErrorのリソースパスを取得。
+		/// <para>/Resources/Image/Log/LogError.png</para>
+		/// </summary>
+		public static string LogErrorPath
+		{
+			get { return logError; }
+		}
+
+		/// <summary>
+		/// [Image] LogErrorのイメージソースを取得。
+		/// <para>初回のみ生成を行う。</para>
+		/// <para>LogErrorPath: /Resources/Image/Log/LogError.png</para>
+		/// </summary>
+		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
+		public static BitmapSource LogErrorImage
+		{
+			get { return GetImage(LogErrorPath); }
+		}
+		#endregion LogError
+		#region Image: LogFatal
+
+		/// <summary>
+		/// [Image] LogFatalのリソースパスを取得。
+		/// <para>/Resources/Image/Log/LogFatal.png</para>
+		/// </summary>
+		public static string LogFatalPath
+		{
+			get { return logFatal; }
+		}
+
+		/// <summary>
+		/// [Image] LogFatalのイメージソースを取得。
+		/// <para>初回のみ生成を行う。</para>
+		/// <para>LogFatalPath: /Resources/Image/Log/LogFatal.png</para>
+		/// </summary>
+		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
+		public static BitmapSource LogFatalImage
+		{
+			get { return GetImage(LogFatalPath); }
+		}
+		#endregion LogFatal
+		#region Image: SettingSetting
+
+		/// <summary>
+		/// [Image] SettingSettingのリソースパスを取得。
+		/// <para>/Resources/Image/Setting/Setting.png</para>
+		/// </summary>
+		public static string SettingSettingPath
+		{
+			get { return settingSetting; }
+		}
+
+		/// <summary>
+		/// [Image] SettingSettingのイメージソースを取得。
+		/// <para>初回のみ生成を行う。</para>
+		/// <para>SettingSettingPath: /Resources/Image/Setting/Setting.png</para>
+		/// </summary>
+		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
+		public static BitmapSource SettingSettingImage
+		{
+			get { return GetImage(SettingSettingPath); }
+		}
+		#endregion SettingSetting
 	}
 }
 
