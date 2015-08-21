@@ -73,17 +73,12 @@
 			};
 
 			ToolbarItemModel toolbar;
-			var screen = ExtensionData as ScreenModel;
-			if (screen != null) {
-				if(!CommonData.MainSetting.Toolbar.Items.TryGetValue(screen.DeviceName, out toolbar)) {
-					toolbar = new ToolbarItemModel();
-					toolbar.Id = screen.DeviceName;
-					CommonData.Logger.Information("create toolbar", screen);
-					CommonData.MainSetting.Toolbar.Items.Add(toolbar);
-				}
-			} else {
-				CommonData.Logger.Debug("dummy toolbar");
+			var screen = (ScreenModel)ExtensionData;
+			if (!CommonData.MainSetting.Toolbar.Items.TryGetValue(screen.DeviceName, out toolbar)) {
 				toolbar = new ToolbarItemModel();
+				toolbar.Id = screen.DeviceName;
+				CommonData.Logger.Information("create toolbar", screen);
+				CommonData.MainSetting.Toolbar.Items.Add(toolbar);
 			}
 			SettingUtility.InitializeToolbarItem(toolbar, Constants.assemblyVersion, CommonData.NonProcess);
 			model.Toolbar = toolbar;
@@ -108,7 +103,7 @@
 			//var style = (int)WindowsUtility.GetWindowLong(Handle, (int)GWL.GWL_STYLE);
 			//style &= ~(int)(WS.WS_MAXIMIZEBOX | WS.WS_MINIMIZEBOX);
 			//WindowsUtility.SetWindowLong(Handle, (int)GWL.GWL_STYLE, (IntPtr)style);
-			
+
 			base.OnLoaded(sender, e);
 
 			Appbar = new ApplicationDesktopToolbar(this, ViewModel, CommonData.NonProcess);
@@ -141,7 +136,7 @@
 			};
 			foreach (var extend in extends.Where(e => e != null)) {
 				var result = extend.WndProc(hWnd, msg, wParam, lParam, ref handled);
-				if(handled) {
+				if (handled) {
 					return result;
 				}
 			}
@@ -152,7 +147,7 @@
 		protected override void OnClosed(EventArgs e)
 		{
 			base.OnClosed(e);
-			if(Appbar != null) {
+			if (Appbar != null) {
 				Appbar.Dispose();
 				Appbar = null;
 			}
@@ -166,7 +161,7 @@
 		{
 			if (Appbar != null) {
 				Appbar.Docking(dockType, autoHide);
-				if(VisualStyle != null) {
+				if (VisualStyle != null) {
 					//VisualStyle.UnsetStyle();
 					VisualStyle.SetStyle();
 				}
@@ -199,7 +194,7 @@
 		private void Element_Click(object sender, RoutedEventArgs e)
 		{
 			// ダルイ、全部閉じちゃおう
-			foreach(var button in UIUtility.FindVisualChildren<DropDownButton>(this).Where(b => b.IsOpen)) {
+			foreach (var button in UIUtility.FindVisualChildren<DropDownButton>(this).Where(b => b.IsOpen)) {
 				button.IsOpen = false;
 			}
 		}

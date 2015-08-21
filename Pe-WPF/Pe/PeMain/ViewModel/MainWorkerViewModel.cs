@@ -876,7 +876,7 @@
 			}
 			
 			
-			SettingUtility.InitializeNoteIndexItem(noteItem, Constants.assemblyVersion, CommonData.NonProcess);
+			SettingUtility.InitializeNoteIndexItem(noteItem, null, CommonData.NonProcess);
 
 			var window = CreateNoteWindow(noteItem, appendIndex);
 			WindowsUtility.ShowNoActive(window.Handle);

@@ -89,14 +89,14 @@
 		public static LauncherItemModel CreateLauncherItem(LauncherItemCollectionModel items, INonProcess nonProcess)
 		{
 			var result = CreateModelName(items, nonProcess.Language, "new/launcher-name");
-			InitializeLauncherItem(result, Constants.assemblyVersion, nonProcess);
+			InitializeLauncherItem(result, null, nonProcess);
 			return result;
 		}
 
 		public static LauncherGroupItemModel CreateLauncherGroup(LauncherGroupItemCollectionModel group, INonProcess nonProcess)
 		{
 			var result = CreateModelName(group, nonProcess.Language, "new/group-name");
-			InitializeLauncherGroupItem(result, Constants.assemblyVersion, nonProcess);
+			InitializeLauncherGroupItem(result, null, nonProcess);
 			return result;
 		}
 
