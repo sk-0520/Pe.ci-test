@@ -158,7 +158,7 @@
 											</Button>
 											<Button Command="{Binding CopyItemCommand}" AA:Language.Hint="clipboard/command/copy" >
 												<!-- copy -->
-												<Image Style="{StaticResource DefaultImage}" Source="{Binding Source={x:Static AM:AppResource.CommonClipboardImage}}" />
+												<Image Style="{StaticResource DefaultImage}" Source="{Binding Source={x:Static AM:AppResource.CommonCopyImage}}" />
 											</Button>
 											<Button Command="{Binding CopyTextCommand}" IsEnabled="{Binding EnabledClipboardTypesText}" AA:Language.Hint="clipboard/command/text" >
 												<!-- text -->

@@ -619,50 +619,28 @@
 			get { return GetImage(CommonFilteringPath); }
 		}
 		#endregion CommonFiltering
-		#region Image: CommonTemplate
+		#region Image: CommonCopy
 
 		/// <summary>
-		/// [Image] CommonTemplateのリソースパスを取得。
-		/// <para>/Resources/Image/Common/Template.png</para>
+		/// [Image] CommonCopyのリソースパスを取得。
+		/// <para>/Resources/Image/Common/Copy.png</para>
 		/// </summary>
-		public static string CommonTemplatePath
+		public static string CommonCopyPath
 		{
-			get { return commonTemplate; }
+			get { return commonCopy; }
 		}
 
 		/// <summary>
-		/// [Image] CommonTemplateのイメージソースを取得。
+		/// [Image] CommonCopyのイメージソースを取得。
 		/// <para>初回のみ生成を行う。</para>
-		/// <para>CommonTemplatePath: /Resources/Image/Common/Template.png</para>
+		/// <para>CommonCopyPath: /Resources/Image/Common/Copy.png</para>
 		/// </summary>
 		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
-		public static BitmapSource CommonTemplateImage
+		public static BitmapSource CommonCopyImage
 		{
-			get { return GetImage(CommonTemplatePath); }
+			get { return GetImage(CommonCopyPath); }
 		}
-		#endregion CommonTemplate
-		#region Image: CommonClipboard
-
-		/// <summary>
-		/// [Image] CommonClipboardのリソースパスを取得。
-		/// <para>/Resources/Image/Common/Clipboard.png</para>
-		/// </summary>
-		public static string CommonClipboardPath
-		{
-			get { return commonClipboard; }
-		}
-
-		/// <summary>
-		/// [Image] CommonClipboardのイメージソースを取得。
-		/// <para>初回のみ生成を行う。</para>
-		/// <para>CommonClipboardPath: /Resources/Image/Common/Clipboard.png</para>
-		/// </summary>
-		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
-		public static BitmapSource CommonClipboardImage
-		{
-			get { return GetImage(CommonClipboardPath); }
-		}
-		#endregion CommonClipboard
+		#endregion CommonCopy
 		#region Image: CommonSend
 
 		/// <summary>
@@ -971,6 +949,28 @@
 			get { return GetImage(CommonFontItalicPath); }
 		}
 		#endregion CommonFontItalic
+		#region Image: TemplateTemplate
+
+		/// <summary>
+		/// [Image] TemplateTemplateのリソースパスを取得。
+		/// <para>/Resources/Image/Template/Template.png</para>
+		/// </summary>
+		public static string TemplateTemplatePath
+		{
+			get { return templateTemplate; }
+		}
+
+		/// <summary>
+		/// [Image] TemplateTemplateのイメージソースを取得。
+		/// <para>初回のみ生成を行う。</para>
+		/// <para>TemplateTemplatePath: /Resources/Image/Template/Template.png</para>
+		/// </summary>
+		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
+		public static BitmapSource TemplateTemplateImage
+		{
+			get { return GetImage(TemplateTemplatePath); }
+		}
+		#endregion TemplateTemplate
 		#region Image: TemplatePlain
 
 		/// <summary>

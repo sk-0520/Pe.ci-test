@@ -132,7 +132,7 @@
 										</Button>
 										<Button Command="{Binding CopyItemCommand}" AA:Language.Hint="template/command/copy">
 											<!-- copy -->
-											<Image Style="{StaticResource DefaultImage}" Source="{Binding Source={x:Static AM:AppResource.CommonClipboardImage}}" />
+											<Image Style="{StaticResource DefaultImage}" Source="{Binding Source={x:Static AM:AppResource.CommonCopyImage}}" />
 										</Button>
 										<Button Command="{Binding DataContext.MoveUpItemCommand, ElementName=root}" CommandParameter="{Binding }" AA:Language.Hint="template/command/up" >
 											<!-- up -->

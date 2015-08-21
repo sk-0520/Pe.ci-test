@@ -41,9 +41,7 @@
 		[AppResource(AppResourceType.Image)]
 		const string commonFiltering = "/Resources/Image/Common/Filtering.png";
 		[AppResource(AppResourceType.Image)]
-		const string commonTemplate = "/Resources/Image/Common/Template.png";
-		[AppResource(AppResourceType.Image)]
-		const string commonClipboard = "/Resources/Image/Common/Clipboard.png";
+		const string commonCopy = "/Resources/Image/Common/Copy.png";
 		[AppResource(AppResourceType.Image)]
 		const string commonSend = "/Resources/Image/Common/Send.png";
 		[AppResource(AppResourceType.Image)]
@@ -74,6 +72,8 @@
 		const string commonFontItalic = "/Resources/Image/Common/FontItalic.png";
 
 
+		[AppResource(AppResourceType.Image)]
+		const string templateTemplate = "/Resources/Image/Template/Template.png";
 		[AppResource(AppResourceType.Image)]
 		const string templatePlain = "/Resources/Image/Template/TemplatePlain.png";
 		[AppResource(AppResourceType.Image)]

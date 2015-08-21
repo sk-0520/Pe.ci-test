@@ -642,14 +642,14 @@
     <Resource Include="Resources\Image\Common\Pin.png" />
     <Resource Include="Resources\Image\Common\Send.png" />
     <Resource Include="Resources\Image\Window\WindowList.png" />
-    <Resource Include="Resources\Image\Common\Clipboard.png" />
+    <Resource Include="Resources\Image\Common\Copy.png" />
     <Resource Include="Resources\Image\Clipboard\ClipboardFile.png" />
     <Resource Include="Resources\Image\Clipboard\ClipboardHtml.png" />
     <Resource Include="Resources\Image\Clipboard\ClipboardImage.png" />
     <Resource Include="Resources\Image\Clipboard\ClipboardRichTextFormat.png" />
     <Resource Include="Resources\Image\Clipboard\ClipboardText.png" />
     <Resource Include="Resources\Image\Common\Filtering.png" />
-    <Resource Include="Resources\Image\Common\Template.png" />
+    <Resource Include="Resources\Image\Template\Template.png" />
     <Resource Include="Resources\Image\Template\TemplatePlain.png" />
     <Resource Include="Resources\Image\Template\TemplateProgrammable.png" />
     <Resource Include="Resources\Image\Template\TemplateReplace.png" />
