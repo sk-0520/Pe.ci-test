@@ -39,37 +39,37 @@
 		[AppResource(AppResourceType.Icon)]
 		const string applicationTasktrayRelease = "/Resources/Icon/Tasktray/App-release.ico";
 		[AppResource(AppResourceType.Image)]
-		const string commonFiltering = "/Resources/Image/Common/Filtering.png";
+		const string commonFiltering = "/Resources/Image/Common/CommonFiltering.png";
 		[AppResource(AppResourceType.Image)]
-		const string commonCopy = "/Resources/Image/Common/Copy.png";
+		const string commonCopy = "/Resources/Image/Common/CommonCopy.png";
 		[AppResource(AppResourceType.Image)]
-		const string commonSend = "/Resources/Image/Common/Send.png";
+		const string commonSend = "/Resources/Image/Common/CommonSend.png";
 		[AppResource(AppResourceType.Image)]
-		const string commonPin = "/Resources/Image/Common/Pin.png";
+		const string commonPin = "/Resources/Image/Common/CommonPin.png";
 		[AppResource(AppResourceType.Image)]
-		const string commonAdd = "/Resources/Image/Common/Add.png";
+		const string commonAdd = "/Resources/Image/Common/CommonAdd.png";
 		[AppResource(AppResourceType.Image)]
-		const string commonRemove = "/Resources/Image/Common/Remove.png";
+		const string commonRemove = "/Resources/Image/Common/CommonRemove.png";
 		[AppResource(AppResourceType.Image)]
-		const string commonSave = "/Resources/Image/Common/Save.png";
+		const string commonSave = "/Resources/Image/Common/CommonSave.png";
 		[AppResource(AppResourceType.Image)]
-		const string commonUsingClipboard = "/Resources/Image/Common/UsingClipboard.png";
+		const string commonUsingClipboard = "/Resources/Image/Common/CommonUsingClipboard.png";
 		[AppResource(AppResourceType.Image)]
-		const string commonUp = "/Resources/Image/Common/Up.png";
+		const string commonUp = "/Resources/Image/Common/CommonUp.png";
 		[AppResource(AppResourceType.Image)]
-		const string commonDown = "/Resources/Image/Common/Down.png";
+		const string commonDown = "/Resources/Image/Common/CommonDown.png";
 		[AppResource(AppResourceType.Image)]
-		const string commonFile = "/Resources/Image/Common/File.png";
+		const string commonFile = "/Resources/Image/Common/CommonFile.png";
 		[AppResource(AppResourceType.Image)]
-		const string commonFolder = "/Resources/Image/Common/Folder.png";
+		const string commonFolder = "/Resources/Image/Common/CommonFolder.png";
 		[AppResource(AppResourceType.Image)]
-		const string commonClear = "/Resources/Image/Common/Clear.png";
+		const string commonClear = "/Resources/Image/Common/CommonClear.png";
 		[AppResource(AppResourceType.Image)]
-		const string commonRefresh = "/Resources/Image/Common/Refresh.png";
+		const string commonRefresh = "/Resources/Image/Common/CommonRefresh.png";
 		[AppResource(AppResourceType.Image)]
-		const string commonFontBold = "/Resources/Image/Common/FontBold.png";
+		const string commonFontBold = "/Resources/Image/Common/CommonFontBold.png";
 		[AppResource(AppResourceType.Image)]
-		const string commonFontItalic = "/Resources/Image/Common/FontItalic.png";
+		const string commonFontItalic = "/Resources/Image/Common/CommonFontItalic.png";
 
 
 		[AppResource(AppResourceType.Image)]
@@ -94,12 +94,12 @@
 		[AppResource(AppResourceType.Image)]
 		const string clipboardFile = "/Resources/Image/Clipboard/ClipboardFile.png";
 		[AppResource(AppResourceType.Image)]
-		const string clipboardImageFit = "/Resources/Image/Clipboard/ImageFit.png";
+		const string clipboardImageFit = "/Resources/Image/Clipboard/ClipboardImageFit.png";
 		[AppResource(AppResourceType.Image)]
-		const string clipboardImageRaw = "/Resources/Image/Clipboard/ImageRaw.png";
+		const string clipboardImageRaw = "/Resources/Image/Clipboard/ClipboardImageRaw.png";
 
 		[AppResource(AppResourceType.Image)]
-		const string streamKill = "/Resources/Image/Stream/Kill.png";
+		const string streamKill = "/Resources/Image/Stream/StreamKill.png";
 
 		[AppResource(AppResourceType.Image)]
 		const string windowList = "/Resources/Image/Window/WindowList.png";

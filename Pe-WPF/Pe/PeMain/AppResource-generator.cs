@@ -601,7 +601,7 @@
 
 		/// <summary>
 		/// [Image] CommonFilteringのリソースパスを取得。
-		/// <para>/Resources/Image/Common/Filtering.png</para>
+		/// <para>/Resources/Image/Common/CommonFiltering.png</para>
 		/// </summary>
 		public static string CommonFilteringPath
 		{
@@ -611,7 +611,7 @@
 		/// <summary>
 		/// [Image] CommonFilteringのイメージソースを取得。
 		/// <para>初回のみ生成を行う。</para>
-		/// <para>CommonFilteringPath: /Resources/Image/Common/Filtering.png</para>
+		/// <para>CommonFilteringPath: /Resources/Image/Common/CommonFiltering.png</para>
 		/// </summary>
 		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
 		public static BitmapSource CommonFilteringImage
@@ -623,7 +623,7 @@
 
 		/// <summary>
 		/// [Image] CommonCopyのリソースパスを取得。
-		/// <para>/Resources/Image/Common/Copy.png</para>
+		/// <para>/Resources/Image/Common/CommonCopy.png</para>
 		/// </summary>
 		public static string CommonCopyPath
 		{
@@ -633,7 +633,7 @@
 		/// <summary>
 		/// [Image] CommonCopyのイメージソースを取得。
 		/// <para>初回のみ生成を行う。</para>
-		/// <para>CommonCopyPath: /Resources/Image/Common/Copy.png</para>
+		/// <para>CommonCopyPath: /Resources/Image/Common/CommonCopy.png</para>
 		/// </summary>
 		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
 		public static BitmapSource CommonCopyImage
@@ -645,7 +645,7 @@
 
 		/// <summary>
 		/// [Image] CommonSendのリソースパスを取得。
-		/// <para>/Resources/Image/Common/Send.png</para>
+		/// <para>/Resources/Image/Common/CommonSend.png</para>
 		/// </summary>
 		public static string CommonSendPath
 		{
@@ -655,7 +655,7 @@
 		/// <summary>
 		/// [Image] CommonSendのイメージソースを取得。
 		/// <para>初回のみ生成を行う。</para>
-		/// <para>CommonSendPath: /Resources/Image/Common/Send.png</para>
+		/// <para>CommonSendPath: /Resources/Image/Common/CommonSend.png</para>
 		/// </summary>
 		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
 		public static BitmapSource CommonSendImage
@@ -667,7 +667,7 @@
 
 		/// <summary>
 		/// [Image] CommonPinのリソースパスを取得。
-		/// <para>/Resources/Image/Common/Pin.png</para>
+		/// <para>/Resources/Image/Common/CommonPin.png</para>
 		/// </summary>
 		public static string CommonPinPath
 		{
@@ -677,7 +677,7 @@
 		/// <summary>
 		/// [Image] CommonPinのイメージソースを取得。
 		/// <para>初回のみ生成を行う。</para>
-		/// <para>CommonPinPath: /Resources/Image/Common/Pin.png</para>
+		/// <para>CommonPinPath: /Resources/Image/Common/CommonPin.png</para>
 		/// </summary>
 		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
 		public static BitmapSource CommonPinImage
@@ -689,7 +689,7 @@
 
 		/// <summary>
 		/// [Image] CommonAddのリソースパスを取得。
-		/// <para>/Resources/Image/Common/Add.png</para>
+		/// <para>/Resources/Image/Common/CommonAdd.png</para>
 		/// </summary>
 		public static string CommonAddPath
 		{
@@ -699,7 +699,7 @@
 		/// <summary>
 		/// [Image] CommonAddのイメージソースを取得。
 		/// <para>初回のみ生成を行う。</para>
-		/// <para>CommonAddPath: /Resources/Image/Common/Add.png</para>
+		/// <para>CommonAddPath: /Resources/Image/Common/CommonAdd.png</para>
 		/// </summary>
 		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
 		public static BitmapSource CommonAddImage
@@ -711,7 +711,7 @@
 
 		/// <summary>
 		/// [Image] CommonRemoveのリソースパスを取得。
-		/// <para>/Resources/Image/Common/Remove.png</para>
+		/// <para>/Resources/Image/Common/CommonRemove.png</para>
 		/// </summary>
 		public static string CommonRemovePath
 		{
@@ -721,7 +721,7 @@
 		/// <summary>
 		/// [Image] CommonRemoveのイメージソースを取得。
 		/// <para>初回のみ生成を行う。</para>
-		/// <para>CommonRemovePath: /Resources/Image/Common/Remove.png</para>
+		/// <para>CommonRemovePath: /Resources/Image/Common/CommonRemove.png</para>
 		/// </summary>
 		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
 		public static BitmapSource CommonRemoveImage
@@ -733,7 +733,7 @@
 
 		/// <summary>
 		/// [Image] CommonSaveのリソースパスを取得。
-		/// <para>/Resources/Image/Common/Save.png</para>
+		/// <para>/Resources/Image/Common/CommonSave.png</para>
 		/// </summary>
 		public static string CommonSavePath
 		{
@@ -743,7 +743,7 @@
 		/// <summary>
 		/// [Image] CommonSaveのイメージソースを取得。
 		/// <para>初回のみ生成を行う。</para>
-		/// <para>CommonSavePath: /Resources/Image/Common/Save.png</para>
+		/// <para>CommonSavePath: /Resources/Image/Common/CommonSave.png</para>
 		/// </summary>
 		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
 		public static BitmapSource CommonSaveImage
@@ -755,7 +755,7 @@
 
 		/// <summary>
 		/// [Image] CommonUsingClipboardのリソースパスを取得。
-		/// <para>/Resources/Image/Common/UsingClipboard.png</para>
+		/// <para>/Resources/Image/Common/CommonUsingClipboard.png</para>
 		/// </summary>
 		public static string CommonUsingClipboardPath
 		{
@@ -765,7 +765,7 @@
 		/// <summary>
 		/// [Image] CommonUsingClipboardのイメージソースを取得。
 		/// <para>初回のみ生成を行う。</para>
-		/// <para>CommonUsingClipboardPath: /Resources/Image/Common/UsingClipboard.png</para>
+		/// <para>CommonUsingClipboardPath: /Resources/Image/Common/CommonUsingClipboard.png</para>
 		/// </summary>
 		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
 		public static BitmapSource CommonUsingClipboardImage
@@ -777,7 +777,7 @@
 
 		/// <summary>
 		/// [Image] CommonUpのリソースパスを取得。
-		/// <para>/Resources/Image/Common/Up.png</para>
+		/// <para>/Resources/Image/Common/CommonUp.png</para>
 		/// </summary>
 		public static string CommonUpPath
 		{
@@ -787,7 +787,7 @@
 		/// <summary>
 		/// [Image] CommonUpのイメージソースを取得。
 		/// <para>初回のみ生成を行う。</para>
-		/// <para>CommonUpPath: /Resources/Image/Common/Up.png</para>
+		/// <para>CommonUpPath: /Resources/Image/Common/CommonUp.png</para>
 		/// </summary>
 		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
 		public static BitmapSource CommonUpImage
@@ -799,7 +799,7 @@
 
 		/// <summary>
 		/// [Image] CommonDownのリソースパスを取得。
-		/// <para>/Resources/Image/Common/Down.png</para>
+		/// <para>/Resources/Image/Common/CommonDown.png</para>
 		/// </summary>
 		public static string CommonDownPath
 		{
@@ -809,7 +809,7 @@
 		/// <summary>
 		/// [Image] CommonDownのイメージソースを取得。
 		/// <para>初回のみ生成を行う。</para>
-		/// <para>CommonDownPath: /Resources/Image/Common/Down.png</para>
+		/// <para>CommonDownPath: /Resources/Image/Common/CommonDown.png</para>
 		/// </summary>
 		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
 		public static BitmapSource CommonDownImage
@@ -821,7 +821,7 @@
 
 		/// <summary>
 		/// [Image] CommonFileのリソースパスを取得。
-		/// <para>/Resources/Image/Common/File.png</para>
+		/// <para>/Resources/Image/Common/CommonFile.png</para>
 		/// </summary>
 		public static string CommonFilePath
 		{
@@ -831,7 +831,7 @@
 		/// <summary>
 		/// [Image] CommonFileのイメージソースを取得。
 		/// <para>初回のみ生成を行う。</para>
-		/// <para>CommonFilePath: /Resources/Image/Common/File.png</para>
+		/// <para>CommonFilePath: /Resources/Image/Common/CommonFile.png</para>
 		/// </summary>
 		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
 		public static BitmapSource CommonFileImage
@@ -843,7 +843,7 @@
 
 		/// <summary>
 		/// [Image] CommonFolderのリソースパスを取得。
-		/// <para>/Resources/Image/Common/Folder.png</para>
+		/// <para>/Resources/Image/Common/CommonFolder.png</para>
 		/// </summary>
 		public static string CommonFolderPath
 		{
@@ -853,7 +853,7 @@
 		/// <summary>
 		/// [Image] CommonFolderのイメージソースを取得。
 		/// <para>初回のみ生成を行う。</para>
-		/// <para>CommonFolderPath: /Resources/Image/Common/Folder.png</para>
+		/// <para>CommonFolderPath: /Resources/Image/Common/CommonFolder.png</para>
 		/// </summary>
 		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
 		public static BitmapSource CommonFolderImage
@@ -865,7 +865,7 @@
 
 		/// <summary>
 		/// [Image] CommonClearのリソースパスを取得。
-		/// <para>/Resources/Image/Common/Clear.png</para>
+		/// <para>/Resources/Image/Common/CommonClear.png</para>
 		/// </summary>
 		public static string CommonClearPath
 		{
@@ -875,7 +875,7 @@
 		/// <summary>
 		/// [Image] CommonClearのイメージソースを取得。
 		/// <para>初回のみ生成を行う。</para>
-		/// <para>CommonClearPath: /Resources/Image/Common/Clear.png</para>
+		/// <para>CommonClearPath: /Resources/Image/Common/CommonClear.png</para>
 		/// </summary>
 		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
 		public static BitmapSource CommonClearImage
@@ -887,7 +887,7 @@
 
 		/// <summary>
 		/// [Image] CommonRefreshのリソースパスを取得。
-		/// <para>/Resources/Image/Common/Refresh.png</para>
+		/// <para>/Resources/Image/Common/CommonRefresh.png</para>
 		/// </summary>
 		public static string CommonRefreshPath
 		{
@@ -897,7 +897,7 @@
 		/// <summary>
 		/// [Image] CommonRefreshのイメージソースを取得。
 		/// <para>初回のみ生成を行う。</para>
-		/// <para>CommonRefreshPath: /Resources/Image/Common/Refresh.png</para>
+		/// <para>CommonRefreshPath: /Resources/Image/Common/CommonRefresh.png</para>
 		/// </summary>
 		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
 		public static BitmapSource CommonRefreshImage
@@ -909,7 +909,7 @@
 
 		/// <summary>
 		/// [Image] CommonFontBoldのリソースパスを取得。
-		/// <para>/Resources/Image/Common/FontBold.png</para>
+		/// <para>/Resources/Image/Common/CommonFontBold.png</para>
 		/// </summary>
 		public static string CommonFontBoldPath
 		{
@@ -919,7 +919,7 @@
 		/// <summary>
 		/// [Image] CommonFontBoldのイメージソースを取得。
 		/// <para>初回のみ生成を行う。</para>
-		/// <para>CommonFontBoldPath: /Resources/Image/Common/FontBold.png</para>
+		/// <para>CommonFontBoldPath: /Resources/Image/Common/CommonFontBold.png</para>
 		/// </summary>
 		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
 		public static BitmapSource CommonFontBoldImage
@@ -931,7 +931,7 @@
 
 		/// <summary>
 		/// [Image] CommonFontItalicのリソースパスを取得。
-		/// <para>/Resources/Image/Common/FontItalic.png</para>
+		/// <para>/Resources/Image/Common/CommonFontItalic.png</para>
 		/// </summary>
 		public static string CommonFontItalicPath
 		{
@@ -941,7 +941,7 @@
 		/// <summary>
 		/// [Image] CommonFontItalicのイメージソースを取得。
 		/// <para>初回のみ生成を行う。</para>
-		/// <para>CommonFontItalicPath: /Resources/Image/Common/FontItalic.png</para>
+		/// <para>CommonFontItalicPath: /Resources/Image/Common/CommonFontItalic.png</para>
 		/// </summary>
 		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
 		public static BitmapSource CommonFontItalicImage
@@ -1173,7 +1173,7 @@
 
 		/// <summary>
 		/// [Image] ClipboardImageFitのリソースパスを取得。
-		/// <para>/Resources/Image/Clipboard/ImageFit.png</para>
+		/// <para>/Resources/Image/Clipboard/ClipboardImageFit.png</para>
 		/// </summary>
 		public static string ClipboardImageFitPath
 		{
@@ -1183,7 +1183,7 @@
 		/// <summary>
 		/// [Image] ClipboardImageFitのイメージソースを取得。
 		/// <para>初回のみ生成を行う。</para>
-		/// <para>ClipboardImageFitPath: /Resources/Image/Clipboard/ImageFit.png</para>
+		/// <para>ClipboardImageFitPath: /Resources/Image/Clipboard/ClipboardImageFit.png</para>
 		/// </summary>
 		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
 		public static BitmapSource ClipboardImageFitImage
@@ -1195,7 +1195,7 @@
 
 		/// <summary>
 		/// [Image] ClipboardImageRawのリソースパスを取得。
-		/// <para>/Resources/Image/Clipboard/ImageRaw.png</para>
+		/// <para>/Resources/Image/Clipboard/ClipboardImageRaw.png</para>
 		/// </summary>
 		public static string ClipboardImageRawPath
 		{
@@ -1205,7 +1205,7 @@
 		/// <summary>
 		/// [Image] ClipboardImageRawのイメージソースを取得。
 		/// <para>初回のみ生成を行う。</para>
-		/// <para>ClipboardImageRawPath: /Resources/Image/Clipboard/ImageRaw.png</para>
+		/// <para>ClipboardImageRawPath: /Resources/Image/Clipboard/ClipboardImageRaw.png</para>
 		/// </summary>
 		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
 		public static BitmapSource ClipboardImageRawImage
@@ -1217,7 +1217,7 @@
 
 		/// <summary>
 		/// [Image] StreamKillのリソースパスを取得。
-		/// <para>/Resources/Image/Stream/Kill.png</para>
+		/// <para>/Resources/Image/Stream/StreamKill.png</para>
 		/// </summary>
 		public static string StreamKillPath
 		{
@@ -1227,7 +1227,7 @@
 		/// <summary>
 		/// [Image] StreamKillのイメージソースを取得。
 		/// <para>初回のみ生成を行う。</para>
-		/// <para>StreamKillPath: /Resources/Image/Stream/Kill.png</para>
+		/// <para>StreamKillPath: /Resources/Image/Stream/StreamKill.png</para>
 		/// </summary>
 		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
 		public static BitmapSource StreamKillImage
