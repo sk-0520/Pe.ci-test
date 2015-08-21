@@ -21,7 +21,7 @@
 		/*
 		このソースは自動生成のため AppResource-generator.tt を編集すること。
 
-		生成元フィールド数: 40
+		生成元フィールド数: 41
 		*/
 		#region Icon: Application
 
@@ -1059,11 +1059,33 @@
 			get { return GetImage(TemplateProgrammablePath); }
 		}
 		#endregion TemplateProgrammable
+		#region Image: ClipboardClipboard
+
+		/// <summary>
+		/// [Image] ClipboardClipboardのリソースパスを取得。
+		/// <para>/Resources/Image/Clipboard/Clipboard.png</para>
+		/// </summary>
+		public static string ClipboardClipboardPath
+		{
+			get { return clipboardClipboard; }
+		}
+
+		/// <summary>
+		/// [Image] ClipboardClipboardのイメージソースを取得。
+		/// <para>初回のみ生成を行う。</para>
+		/// <para>ClipboardClipboardPath: /Resources/Image/Clipboard/Clipboard.png</para>
+		/// </summary>
+		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
+		public static BitmapSource ClipboardClipboardImage
+		{
+			get { return GetImage(ClipboardClipboardPath); }
+		}
+		#endregion ClipboardClipboard
 		#region Image: ClipboardClear
 
 		/// <summary>
 		/// [Image] ClipboardClearのリソースパスを取得。
-		/// <para>/Resources/Image/Clipboard/Clear.png</para>
+		/// <para>/Resources/Image/Clipboard/ClipboardClear.png</para>
 		/// </summary>
 		public static string ClipboardClearPath
 		{
@@ -1073,7 +1095,7 @@
 		/// <summary>
 		/// [Image] ClipboardClearのイメージソースを取得。
 		/// <para>初回のみ生成を行う。</para>
-		/// <para>ClipboardClearPath: /Resources/Image/Clipboard/Clear.png</para>
+		/// <para>ClipboardClearPath: /Resources/Image/Clipboard/ClipboardClear.png</para>
 		/// </summary>
 		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
 		public static BitmapSource ClipboardClearImage

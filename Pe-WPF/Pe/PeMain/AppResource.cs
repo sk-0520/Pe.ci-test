@@ -72,6 +72,8 @@
 		const string commonFontItalic = "/Resources/Image/Common/CommonFontItalic.png";
 		[AppResource(AppResourceType.Image)]
 		const string commonRun = "/Resources/Image/Common/CommonRun.png";
+		[AppResource(AppResourceType.Image)]
+		const string commonCreate = "/Resources/Image/Common/CommonCreate.png";
 
 
 		[AppResource(AppResourceType.Image)]
@@ -84,7 +86,9 @@
 		const string templateProgrammable = "/Resources/Image/Template/TemplateProgrammable.png";
 
 		[AppResource(AppResourceType.Image)]
-		const string clipboardClear = "/Resources/Image/Clipboard/Clear.png";
+		const string clipboardClipboard = "/Resources/Image/Clipboard/Clipboard.png";
+		[AppResource(AppResourceType.Image)]
+		const string clipboardClear = "/Resources/Image/Clipboard/ClipboardClear.png";
 		[AppResource(AppResourceType.Image)]
 		const string clipboardTextFormat = "/Resources/Image/Clipboard/ClipboardText.png";
 		[AppResource(AppResourceType.Image)]
