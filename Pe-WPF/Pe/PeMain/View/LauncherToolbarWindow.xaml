@@ -441,8 +441,8 @@
 			</ItemsControl.ItemsPanel>
 			<ItemsControl.ItemTemplate>
 				<DataTemplate>
-					<StackPanel Orientation="Vertical">
-						<StackPanel.ToolTip>
+					<VirtualizingStackPanel Orientation="Vertical">
+						<VirtualizingStackPanel.ToolTip>
 							<ToolTip Style="{StaticResource ToolbarTooltip}">
 								<StackPanel>
 									<StackPanel Orientation="Horizontal">
@@ -454,7 +454,7 @@
 									</StackPanel>
 								</StackPanel>
 							</ToolTip>
-						</StackPanel.ToolTip>
+						</VirtualizingStackPanel.ToolTip>
 
 						<!-- ファイル -->
 						<xctk:SplitButton Visibility="{Binding VisibilityFile, Mode=OneWay}" Style="{StaticResource LauncherSplit}" Command="{Binding RunCommand}">
@@ -579,7 +579,7 @@
 								</Grid>
 							</xctk:SplitButton.DropDownContent>
 						</xctk:SplitButton>
-					</StackPanel>
+					</VirtualizingStackPanel>
 				</DataTemplate>
 			</ItemsControl.ItemTemplate>
 		</ItemsControl>
