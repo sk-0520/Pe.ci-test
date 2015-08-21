@@ -27,6 +27,7 @@
 				<ResourceDictionary Source="/View/Parts/Resource/ImageDictionary.xaml"/>
 				<ResourceDictionary Source="/View/Parts/Resource/TextBoxDictionary.xaml"/>
 				<ResourceDictionary Source="/View/Parts/Resource/ComboBoxDictionary.xaml"/>
+				<ResourceDictionary Source="/View/Parts/Resource/LabelDictionary.xaml"/>
 			</ResourceDictionary.MergedDictionaries>
 			<sys:Double x:Key="MarginValue">4</sys:Double>
 			<Thickness x:Key="ControlMargin" Top="{StaticResource MarginValue}" Bottom="{StaticResource MarginValue}" />
@@ -58,10 +59,10 @@
 				<ColumnDefinition Width="Auto" />
 			</Grid.ColumnDefinitions>
 
-			<TextBlock Grid.Row="0" Grid.Column="0" Text="command" AA:Language.Word="execute/command" />
+			<Label Grid.Row="0" Grid.Column="0" Content="command" AA:Language.Word="execute/command" Style="{StaticResource Headerlabel}" />
 			<TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" IsReadOnly="True" Text="{Binding Command, Mode=OneTime}" Style="{StaticResource DefaultTextBox}" Margin="{StaticResource ControlMargin}" />
 
-			<TextBlock Grid.Row="1" Grid.Column="0" Text="option" AA:Language.Word="execute/option" />
+			<Label Grid.Row="1" Grid.Column="0" Content="option" AA:Language.Word="execute/option" Style="{StaticResource Headerlabel}" />
 			<ComboBox Grid.Row="1" Grid.Column="1" IsEditable="True" Text="{Binding Option}" ItemsSource="{Binding Options}" Style="{StaticResource DefaultComboBox}" Margin="{StaticResource ControlMargin}" />
 			<Button Grid.Row="1" Grid.Column="2" Command="{Binding SelectOptionFilesCommand}" AA:Language.Hint="execute/option/file" Margin="{StaticResource ControlMargin}">
 				<Image Style="{StaticResource DefaultImage}" Source="{x:Static AM:AppResource.CommonFileImage}" />
@@ -70,13 +71,13 @@
 				<Image Style="{StaticResource DefaultImage}" Source="{x:Static AM:AppResource.CommonFolderImage}" />
 			</Button>
 
-			<TextBlock Grid.Row="2" Grid.Column="0" Text="work dir" AA:Language.Word="execute/work-dir" />
+			<Label Grid.Row="2" Grid.Column="0" Content="work dir" AA:Language.Word="execute/work-dir" Style="{StaticResource Headerlabel}" />
 			<ComboBox Grid.Row="2" Grid.Column="1" IsEditable="True" Text="{Binding WorkDirectoryPath}" ItemsSource="{Binding WorkDirectoryPaths}" Style="{StaticResource DefaultComboBox}" Margin="{StaticResource ControlMargin}" />
 			<Button Grid.Row="2" Grid.Column="2" Command="{Binding SelectWorkDirectoryDirectoryCommand}" AA:Language.Hint="execute/work-dir/dir" Margin="{StaticResource ControlMargin}">
 				<Image Style="{StaticResource DefaultImage}" Source="{x:Static AM:AppResource.CommonFolderImage}" />
 			</Button>
 
-			<TextBlock Grid.Row="3" Grid.Column="0" Text="others" AA:Language.Word="execute/others" />
+			<Label Grid.Row="3" Grid.Column="0" Content="others" AA:Language.Word="execute/others" Style="{StaticResource Headerlabel}" />
 			<StackPanel Grid.Row="3" Grid.Column="1"  Orientation="Horizontal" Margin="{StaticResource ControlMargin}">
 				<CheckBox Margin="0,0,8,0" Content="std-stream-o" AA:Language.Word="execute/others/stream-output" IsChecked="{Binding StdStreamOutput}" />
 				<CheckBox Margin="0,0,8,0" Content="std-stream-i" AA:Language.Word="execute/others/stream-input" IsChecked="{Binding StdStreamInput}" IsEnabled="{Binding StdStreamOutput}" />

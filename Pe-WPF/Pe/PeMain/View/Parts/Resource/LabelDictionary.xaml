@@ -5,5 +5,11 @@
 	<Style x:Key="TitleLabel" TargetType="Label">
 		<Setter Property="FontWeight" Value="Bold" />
 	</Style>
-	
+	<Style x:Key="Headerlabel" TargetType="Label">
+		<Setter Property="Margin">
+			<Setter.Value>
+				<Thickness Right="4" />
+			</Setter.Value>
+		</Setter>
+	</Style>
 </ResourceDictionary>

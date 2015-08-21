@@ -33,6 +33,7 @@
 				<ResourceDictionary Source="/View/Parts/Resource/ImageDictionary.xaml"/>
 				<ResourceDictionary Source="/View/Parts/Resource/TextBoxDictionary.xaml"/>
 				<ResourceDictionary Source="/View/Parts/Resource/GridSplitterDictionary.xaml"/>
+				<ResourceDictionary Source="/View/Parts/Resource/LabelDictionary.xaml"/>
 			</ResourceDictionary.MergedDictionaries>
 			<SC:LogicalNotConverter x:Key="LogicalNotConverter" />
 			<SC:LogicalIsNotNullConverter x:Key="LogicalIsNotNullConverter" />
@@ -173,7 +174,7 @@
 								<ColumnDefinition Width="Auto"/>
 								<ColumnDefinition Width="Auto"/>
 							</Grid.ColumnDefinitions>
-							<TextBlock Grid.Column="0"  HorizontalAlignment="Left" VerticalAlignment="Center" Text="name" AA:Language.Word="template/item/name"/>
+							<Label Grid.Column="0"  HorizontalAlignment="Left" VerticalAlignment="Center" Content="name" AA:Language.Word="template/item/name" Style="{StaticResource Headerlabel}"/>
 							<TextBox Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Text="{Binding SelectedViewModel.Name, UpdateSourceTrigger=PropertyChanged}" />
 							<CheckBox Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" IsChecked="{Binding SelectedViewModel.IsReplace}" Content="replace" AA:Language.Word="template/item/replace" />
 							<CheckBox Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Center" IsChecked="{Binding SelectedViewModel.IsProgrammableReplace}" Content="T4" AA:Language.Word="template/item/t4" />

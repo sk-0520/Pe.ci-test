@@ -248,11 +248,11 @@
 							<ColumnDefinition Width="7*" />
 						</Grid.ColumnDefinitions>
 						<Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="style" AA:Language.Word="note/style" Style="{StaticResource TitleLabel}" />
-						<TextBlock Grid.Row="1" Grid.Column="0" Text="fore" AA:Language.Word="note/style/fore-color" />
+						<Label Grid.Row="1" Grid.Column="0" Content="fore" AA:Language.Word="note/style/fore-color" />
 						<xctk:ColorPicker Grid.Row="1" Grid.Column="1" Style="{StaticResource DefaultColorPicker}" SelectedColor="{Binding ForeColor}" />
-						<TextBlock Grid.Row="2" Grid.Column="0" Text="back" AA:Language.Word="note/style/back-color" />
+						<Label Grid.Row="2" Grid.Column="0" Content="back" AA:Language.Word="note/style/back-color" Style="{StaticResource Headerlabel}"/>
 						<xctk:ColorPicker Grid.Row="2" Grid.Column="1" Style="{StaticResource DefaultColorPicker}" SelectedColor="{Binding BackColor}" />
-						<TextBlock Grid.Row="3" Grid.Column="0" Text="font" AA:Language.Word="note/style/font" />
+						<Label Grid.Row="3" Grid.Column="0" Content="font" AA:Language.Word="note/style/font" Style="{StaticResource Headerlabel}" />
 						<AV:FontSelectControl
 							Grid.Row="3" Grid.Column="1"
 							FamilyName="{Binding FontFamily}"

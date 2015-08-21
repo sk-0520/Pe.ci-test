@@ -36,6 +36,7 @@
 				<ResourceDictionary Source="/View/Parts/Resource/ToolbarDictionary.xaml"/>
 				<ResourceDictionary Source="/View/Parts/Resource/TextBoxDictionary.xaml"/>
 				<ResourceDictionary Source="/View/Parts/Resource/GridSplitterDictionary.xaml"/>
+				<ResourceDictionary Source="/View/Parts/Resource/LabelDictionary.xaml"/>
 			</ResourceDictionary.MergedDictionaries>
 			<SC:LogicalNotConverter x:Key="LogicalNotConverter" />
 			<SC:LogicalIsNotNullConverter x:Key="LogicalIsNotNullConverter" />
@@ -198,7 +199,7 @@
 							<ColumnDefinition Width="Auto" />
 							<ColumnDefinition Width="*" />
 						</Grid.ColumnDefinitions>
-						<TextBlock Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Text="name" AA:Language.Word="clipboard/item/name"/>
+						<Label Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Content="name" AA:Language.Word="clipboard/item/name" Style="{StaticResource Headerlabel}" />
 						<TextBox Grid.Column="1" HorizontalAlignment="Stretch" Text="{Binding SelectedViewModel.Name, UpdateSourceTrigger=PropertyChanged}" />
 					</Grid>
 					<TabControl x:Name="tabClipboard" Grid.Row="1">

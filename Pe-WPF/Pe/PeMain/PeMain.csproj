@@ -626,6 +626,10 @@
     <Content Include="etc\style\common.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Image\Common\CommonUpdate.png" />
+    <Resource Include="Resources\Image\Setting\SettingLauncherGroupItem.png" />
+    <Resource Include="Resources\Image\Setting\SettingLauncherGroupParent.png" />
+    <Resource Include="Resources\Image\Common\CommonClose.png" />
     <Resource Include="Resources\Image\Log\Log.png" />
     <Resource Include="Resources\Image\Log\LogDebug.png" />
     <Resource Include="Resources\Image\Log\LogError.png" />

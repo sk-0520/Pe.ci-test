@@ -21,7 +21,7 @@
 		/*
 		このソースは自動生成のため AppResource-generator.tt を編集すること。
 
-		生成元フィールド数: 53
+		生成元フィールド数: 57
 		*/
 		#region Icon: Application
 
@@ -1015,6 +1015,50 @@
 			get { return GetImage(CommonConfigPath); }
 		}
 		#endregion CommonConfig
+		#region Image: CommonClose
+
+		/// <summary>
+		/// [Image] CommonCloseのリソースパスを取得。
+		/// <para>/Resources/Image/Common/CommonClose.png</para>
+		/// </summary>
+		public static string CommonClosePath
+		{
+			get { return commonClose; }
+		}
+
+		/// <summary>
+		/// [Image] CommonCloseのイメージソースを取得。
+		/// <para>初回のみ生成を行う。</para>
+		/// <para>CommonClosePath: /Resources/Image/Common/CommonClose.png</para>
+		/// </summary>
+		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
+		public static BitmapSource CommonCloseImage
+		{
+			get { return GetImage(CommonClosePath); }
+		}
+		#endregion CommonClose
+		#region Image: CommonUpdate
+
+		/// <summary>
+		/// [Image] CommonUpdateのリソースパスを取得。
+		/// <para>/Resources/Image/Common/CommonUpdate.png</para>
+		/// </summary>
+		public static string CommonUpdatePath
+		{
+			get { return commonUpdate; }
+		}
+
+		/// <summary>
+		/// [Image] CommonUpdateのイメージソースを取得。
+		/// <para>初回のみ生成を行う。</para>
+		/// <para>CommonUpdatePath: /Resources/Image/Common/CommonUpdate.png</para>
+		/// </summary>
+		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
+		public static BitmapSource CommonUpdateImage
+		{
+			get { return GetImage(CommonUpdatePath); }
+		}
+		#endregion CommonUpdate
 		#region Image: ToolbarToolbar
 
 		/// <summary>
@@ -1609,6 +1653,50 @@
 			get { return GetImage(SettingSettingPath); }
 		}
 		#endregion SettingSetting
+		#region Image: SettingLauncherGroupItem
+
+		/// <summary>
+		/// [Image] SettingLauncherGroupItemのリソースパスを取得。
+		/// <para>/Resources/Image/Setting/SettingLauncherGroupItem.png</para>
+		/// </summary>
+		public static string SettingLauncherGroupItemPath
+		{
+			get { return settingLauncherGroupItem; }
+		}
+
+		/// <summary>
+		/// [Image] SettingLauncherGroupItemのイメージソースを取得。
+		/// <para>初回のみ生成を行う。</para>
+		/// <para>SettingLauncherGroupItemPath: /Resources/Image/Setting/SettingLauncherGroupItem.png</para>
+		/// </summary>
+		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
+		public static BitmapSource SettingLauncherGroupItemImage
+		{
+			get { return GetImage(SettingLauncherGroupItemPath); }
+		}
+		#endregion SettingLauncherGroupItem
+		#region Image: SettingLauncherGroupParent
+
+		/// <summary>
+		/// [Image] SettingLauncherGroupParentのリソースパスを取得。
+		/// <para>/Resources/Image/Setting/SettingLauncherGroupParent.png</para>
+		/// </summary>
+		public static string SettingLauncherGroupParentPath
+		{
+			get { return settingLauncherGroupParent; }
+		}
+
+		/// <summary>
+		/// [Image] SettingLauncherGroupParentのイメージソースを取得。
+		/// <para>初回のみ生成を行う。</para>
+		/// <para>SettingLauncherGroupParentPath: /Resources/Image/Setting/SettingLauncherGroupParent.png</para>
+		/// </summary>
+		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
+		public static BitmapSource SettingLauncherGroupParentImage
+		{
+			get { return GetImage(SettingLauncherGroupParentPath); }
+		}
+		#endregion SettingLauncherGroupParent
 	}
 }
 

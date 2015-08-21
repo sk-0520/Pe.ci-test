@@ -76,6 +76,10 @@
 		const string commonCreate = "/Resources/Image/Common/CommonCreate.png";
 		[AppResource(AppResourceType.Image)]
 		const string commonConfig = "/Resources/Image/Common/CommonConfig.png";
+		[AppResource(AppResourceType.Image)]
+		const string commonClose = "/Resources/Image/Common/CommonClose.png";
+		[AppResource(AppResourceType.Image)]
+		const string commonUpdate = "/Resources/Image/Common/CommonUpdate.png";
 
 		[AppResource(AppResourceType.Image)]
 		const string toolbarToolbar = "/Resources/Image/Toolbar/Toolbar.png";
@@ -138,5 +142,9 @@
 
 		[AppResource(AppResourceType.Image)]
 		const string settingSetting = "/Resources/Image/Setting/Setting.png";
+		[AppResource(AppResourceType.Image)]
+		const string settingLauncherGroupItem = "/Resources/Image/Setting/SettingLauncherGroupItem.png";
+		[AppResource(AppResourceType.Image)]
+		const string settingLauncherGroupParent = "/Resources/Image/Setting/SettingLauncherGroupParent.png";
 	}
 }
