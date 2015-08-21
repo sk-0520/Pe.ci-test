@@ -99,6 +99,7 @@
     <Compile Include="Data\Database\DatabaseRow.cs" />
     <Compile Include="Data\Database\EntityMappingInformation.cs" />
     <Compile Include="Data\DialogFilterItem.cs" />
+    <Compile Include="Data\EventData.cs" />
     <Compile Include="Data\InformationGroup.cs" />
     <Compile Include="Data\DialogFilterValueItem.cs" />
     <Compile Include="Define\QueryCondition.cs" />
@@ -181,6 +182,7 @@
     <Compile Include="Model\Unmanaged\Gdi\IconHandleModel.cs" />
     <Compile Include="Model\Unmanaged\Gdi\BitmapHandleModel.cs" />
     <Compile Include="Model\Unmanaged\GlobalAllocModel.cs" />
+    <Compile Include="View\Attached\DragTarget.cs" />
     <Compile Include="View\Attached\TextBoxHelper.cs" />
     <Compile Include="View\Control\HotkeyControl.cs" />
     <Compile Include="View\Control\TemplateBindingToolbar.cs" />

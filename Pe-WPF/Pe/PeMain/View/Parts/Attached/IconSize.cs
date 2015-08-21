@@ -16,7 +16,7 @@
 			"IconScale",
 			typeof(IconScale),
 			typeof(Browser),
-			new FrameworkPropertyMetadata(OnIconScaleChnaged)
+			new FrameworkPropertyMetadata(OnIconScaleChanged)
 		);
 
 		public static IconScale GetIconScale(DependencyObject dependencyObject)
@@ -28,7 +28,7 @@
 			dependencyObject.SetValue(IconScaleProperty, value);
 		}
 
-		private static void OnIconScaleChnaged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+		private static void OnIconScaleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
 		{
 			var iconScale = GetIconScale(d);
 			var element = d as FrameworkElement;
