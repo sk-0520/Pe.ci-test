@@ -13,8 +13,8 @@
 	x:TypeArguments="AVM:LauncherItemCustomizeViewModel"
 	AA:Language.Word="window/customize"
 	Title="LauncherSettingWindow"
-	Height="300"
-	Width="300"
+	Height="380"
+	Width="460"
 	Icon="{Binding ViewIcon}"
 >
 	<AW:CommonDataWindow.Resources>
