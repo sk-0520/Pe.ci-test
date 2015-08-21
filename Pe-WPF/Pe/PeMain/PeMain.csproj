@@ -132,6 +132,7 @@
       <DependentUpon>Constants.cs</DependentUpon>
     </Compile>
     <Compile Include="Data\Temporary\ItemWithScreen.cs" />
+    <Compile Include="Data\Temporary\LauncherExecuteItem.cs" />
     <Compile Include="Data\Temporary\UpdateData.cs" />
     <Compile Include="Data\Temporary\UpdateInfo.cs" />
     <Compile Include="Define\CommandKind.cs" />

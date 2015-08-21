@@ -129,6 +129,8 @@
 				result.Command = path;
 			}
 
+			result.Name = FileUtility.GetName(path);
+
 			result.Tag = GetTag(Environment.ExpandEnvironmentVariables(result.Command));
 			
 			return result;

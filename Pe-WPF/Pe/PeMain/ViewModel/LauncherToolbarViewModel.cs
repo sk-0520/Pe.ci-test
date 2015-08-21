@@ -34,6 +34,8 @@
 	using System.Windows.Controls.Primitives;
 	using System.Windows.Media.Imaging;
 	using System.Windows.Shapes;
+	using ContentTypeTextNet.Library.SharedLibrary.Data;
+	using ContentTypeTextNet.Pe.PeMain.Define;
 
 	public class LauncherToolbarViewModel: HavingViewSingleModelWrapperViewModelBase<LauncherToolbarDataModel, LauncherToolbarWindow>, IApplicationDesktopToolbarData, IVisualStyleData, IHavingAppNonProcess, IWindowAreaCorrectionData, IWindowHitTestData, IHavingAppSender, IRefreshFromViewModel, IMenuItem
 	{
@@ -462,6 +464,57 @@
 					o => {
 						var visible = (bool)o;
 						IsVisible = visible;
+					}
+				);
+
+				return result;
+			}
+		}
+
+		public ICommand DragOverCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						var eventData = (EventData<DragEventArgs>)o;
+						if (eventData.EventArgs.Data.GetDataPresent(DataFormats.FileDrop)) {
+							var filePathList = eventData.EventArgs.Data.GetData(DataFormats.FileDrop) as string[];
+							if (filePathList != null && filePathList.Count() == 1) {
+								eventData.EventArgs.Effects = DragDropEffects.Copy;
+							} else {
+								eventData.EventArgs.Effects = DragDropEffects.None;
+							}
+						} else {
+							eventData.EventArgs.Effects = DragDropEffects.None;
+						}
+
+						eventData.EventArgs.Handled = true;
+					}
+				);
+
+				return result;
+			}
+		}
+
+		public ICommand DragDropCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						var eventData = (EventData<DragEventArgs>)o;
+						if (eventData.EventArgs.Data.GetDataPresent(DataFormats.FileDrop)) {
+							var filePathList = eventData.EventArgs.Data.GetData(DataFormats.FileDrop) as string[];
+							if (filePathList != null && filePathList.Count() == 1) {
+								var filePath = filePathList.First();
+								var item = LauncherItemUtility.CreateFromFile(filePath, true);
+								SelectedGroup.LauncherItems.Add(item.Id);
+								Model.LauncherItems.Add(item);
+								var view = HasView ? View: null;
+								AppSender.SendRefreshView(WindowKind.LauncherToolbar, view);
+							}
+						}
 					}
 				);
 

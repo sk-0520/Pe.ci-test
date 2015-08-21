@@ -7,6 +7,7 @@
 	xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
 	xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
 	xmlns:SC="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=SharedLibrary"
+	xmlns:SA="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Attached;assembly=SharedLibrary"
 	xmlns:AM="clr-namespace:ContentTypeTextNet.Pe.PeMain"
 	xmlns:AVM="clr-namespace:ContentTypeTextNet.Pe.PeMain.ViewModel"
 	xmlns:AP="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
@@ -32,6 +33,11 @@
 	Topmost="{Binding IsTopmost, Mode=OneWay}"
 	BorderThickness="{Binding BorderThickness, Mode=OneWay}"
 	BorderBrush="{Binding BorderBrush, Mode=OneWay}"
+	
+	SA:DragTarget.UsingDragTarget="True"
+	SA:DragTarget.DragEnterCommand="{Binding DragOverCommand}"
+	SA:DragTarget.DragOverCommand="{Binding DragOverCommand}"
+	SA:DragTarget.DragDropCommand="{Binding DragDropCommand}"
 	
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
 	mc:Ignorable="d" 
@@ -363,6 +369,7 @@
 	<StackPanel Orientation="{Binding Orientation, Mode=OneWay}" Visibility="{Binding HideVisibility}" >
 
 		<Rectangle 
+			AllowDrop="False"
 			Width="{Binding CaptionWidth, Mode=OneWay}" 
 			Height="{Binding CaptionHeight, Mode=OneWay}" 
 			Visibility="{Binding CaptionVisibility}" 
@@ -370,7 +377,7 @@
 		/>
 
 		<!-- メインボタン -->
-		<xctk:DropDownButton Style="{StaticResource LauncherDropDown}">
+		<xctk:DropDownButton AllowDrop="False" Style="{StaticResource LauncherDropDown}">
 			<xctk:DropDownButton.Content>
 				<StackPanel Orientation="Horizontal">
 					<Image Style="{StaticResource ToolbarImage}"/>
@@ -441,7 +448,13 @@
 			</ItemsControl.ItemsPanel>
 			<ItemsControl.ItemTemplate>
 				<DataTemplate>
-					<VirtualizingStackPanel Orientation="Vertical">
+					<VirtualizingStackPanel
+						Orientation="Vertical"
+						SA:DragTarget.UsingDragTarget="True"
+						SA:DragTarget.DragEnterCommand="{Binding DragOverCommand}"
+						SA:DragTarget.DragOverCommand="{Binding DragOverCommand}"
+						SA:DragTarget.DragDropCommand="{Binding DragDropCommand}"
+					>
 						<VirtualizingStackPanel.ToolTip>
 							<ToolTip Style="{StaticResource ToolbarTooltip}">
 								<StackPanel>

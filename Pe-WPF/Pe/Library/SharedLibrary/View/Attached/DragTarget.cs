@@ -9,14 +9,14 @@
 	using System.Windows.Input;
 	using ContentTypeTextNet.Library.SharedLibrary.Data;
 
-	public static class DragTarget
+	public class DragTarget
 	{
 		#region UsingDragTarget
 
 		public static readonly DependencyProperty UsingDragTargetProperty = DependencyProperty.RegisterAttached(
 			"UsingDragTarget",
 			typeof(bool),
-			typeof(UIElement),
+			typeof(DragTarget),
 			new FrameworkPropertyMetadata(OnUsingDragTargetChanged)
 		);
 
@@ -36,15 +36,17 @@
 		{
 			var oldValue = GetUsingDragTarget(dependencyObject);
 			if (oldValue && oldValue != value) {
-				dependencyObject.DragEnter += element_DragEnter;
-				dependencyObject.DragLeave += element_DragLeave;
-				dependencyObject.DragOver += element_DragOver;
-				dependencyObject.Drop += element_DragDrop;
-			} else {
 				dependencyObject.DragEnter -= element_DragEnter;
 				dependencyObject.DragLeave -= element_DragLeave;
 				dependencyObject.DragOver -= element_DragOver;
 				dependencyObject.Drop -= element_DragDrop;
+				dependencyObject.AllowDrop = false;
+			} else {
+				dependencyObject.DragEnter += element_DragEnter;
+				dependencyObject.DragLeave += element_DragLeave;
+				dependencyObject.DragOver += element_DragOver;
+				dependencyObject.Drop += element_DragDrop;
+				dependencyObject.AllowDrop = true;
 			}
 			dependencyObject.SetValue(UsingDragTargetProperty, value);
 		}
@@ -65,8 +67,10 @@
 			if (element != null) {
 				var eventdata = new EventData<DragEventArgs>(element, e);
 				var command = getCommand(element);
-				if (command.CanExecute(eventdata)) {
-					command.Execute(eventdata);
+				if (command != null) {
+					if (command.CanExecute(eventdata)) {
+						command.Execute(eventdata);
+					}
 				}
 			}
 		}
@@ -98,8 +102,8 @@
 		public static readonly DependencyProperty DragEnterCommandProperty = DependencyProperty.RegisterAttached(
 			"DragEnterCommand",
 			typeof(ICommand),
-			typeof(UIElement),
-			new FrameworkPropertyMetadata(OnDragEnterCommandChanged)
+			typeof(DragTarget),
+			new PropertyMetadata(null, OnDragEnterCommandChanged)
 		);
 
 		private static void OnDragEnterCommandChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -126,8 +130,8 @@
 		public static readonly DependencyProperty DragLeaveCommandProperty = DependencyProperty.RegisterAttached(
 			"DragLeaveCommand",
 			typeof(ICommand),
-			typeof(UIElement),
-			new FrameworkPropertyMetadata(OnDragLeaveCommandChanged)
+			typeof(DragTarget),
+			new PropertyMetadata(null, OnDragLeaveCommandChanged)
 		);
 
 		private static void OnDragLeaveCommandChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -154,8 +158,8 @@
 		public static readonly DependencyProperty DragOverCommandProperty = DependencyProperty.RegisterAttached(
 			"DragOverCommand",
 			typeof(ICommand),
-			typeof(UIElement),
-			new FrameworkPropertyMetadata(OnDragOverCommandChanged)
+			typeof(DragTarget),
+			new PropertyMetadata(null, OnDragOverCommandChanged)
 		);
 
 		private static void OnDragOverCommandChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -182,8 +186,8 @@
 		public static readonly DependencyProperty DragDropCommandProperty = DependencyProperty.RegisterAttached(
 			"DragDropCommand",
 			typeof(ICommand),
-			typeof(UIElement),
-			new FrameworkPropertyMetadata(OnDragDropCommandChanged)
+			typeof(DragTarget),
+			new PropertyMetadata(null, OnDragDropCommandChanged)
 		);
 
 		private static void OnDragDropCommandChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)

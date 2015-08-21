@@ -37,9 +37,12 @@
 
 		protected override void CreateViewModel()
 		{
-			var data = (ItemWithScreen<LauncherItemModel>)ExtensionData;
+			var data = (LauncherExecuteItem)ExtensionData;
 
 			ViewModel = new LauncherItemExecuteViewModel(data.Model, this, data.Screen, CommonData.NonProcess, CommonData.AppSender);
+			if (data.Options != null && data.Options.Any()) {
+				ViewModel.Option = string.Join(" ", data.Options.WhitespaceToQuotation());
+			}
 		}
 
 		protected override void ApplyViewModel()

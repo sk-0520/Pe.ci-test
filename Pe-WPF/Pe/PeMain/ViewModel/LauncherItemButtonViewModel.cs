@@ -10,6 +10,7 @@
 	using System.Windows.Input;
 	using System.Windows.Media;
 	using ContentTypeTextNet.Library.SharedLibrary.CompatibleWindows;
+	using ContentTypeTextNet.Library.SharedLibrary.Data;
 	using ContentTypeTextNet.Library.SharedLibrary.Define;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic;
@@ -192,7 +193,7 @@
 			{
 				var result = CreateCommand(
 					o => {
-						var data = new ItemWithScreen<LauncherItemModel>(Model, DockScreen);
+						var data = new LauncherExecuteItem(Model, DockScreen, null);
 						var window = AppSender.SendCreateWindow(WindowKind.LauncherExecute, data, null);
 						
 						window.Show();
@@ -276,6 +277,49 @@
 			}
 		}
 
+		public ICommand DragOverCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						var eventData = (EventData<DragEventArgs>)o;
+						if (eventData.EventArgs.Data.GetDataPresent(DataFormats.FileDrop)) {
+							eventData.EventArgs.Effects = DragDropEffects.Move;
+						} else {
+							eventData.EventArgs.Effects = DragDropEffects.None;
+						}
+						eventData.EventArgs.Handled = true;
+					}
+				);
+
+				return result;
+			}
+		}
+
+		public ICommand DragDropCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						var eventData = (EventData<DragEventArgs>)o;
+						if (eventData.EventArgs.Data.GetDataPresent(DataFormats.FileDrop)) {
+							var filePathList = eventData.EventArgs.Data.GetData(DataFormats.FileDrop) as string[];
+							// TODO: 指定して実行を無視して実行, #290
+							var data = new LauncherExecuteItem(Model, DockScreen, filePathList);
+							var window = AppSender.SendCreateWindow(WindowKind.LauncherExecute, data, null);
+
+							window.Show();
+
+							eventData.EventArgs.Handled = true;
+						}
+					}
+				);
+
+				return result;
+			}
+		}
 		#endregion
 
 		#region function
