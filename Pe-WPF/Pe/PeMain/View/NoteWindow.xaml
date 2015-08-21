@@ -37,6 +37,7 @@
 			<ResourceDictionary.MergedDictionaries>
 				<ResourceDictionary Source="/View/Parts/Resource/ImageDictionary.xaml"/>
 				<ResourceDictionary Source="/View/Parts/Resource/ColorPickerDictionary.xaml"/>
+				<ResourceDictionary Source="/View/Parts/Resource/LabelDictionary.xaml"/>
 			</ResourceDictionary.MergedDictionaries>
 			<SC:LogicalNotConverter x:Key="LogicalNotConverter"/>
 			<SC:BooleanFontWeightConverter x:Key="BooleanFontWeightConverter" />
@@ -210,7 +211,7 @@
 				<Style x:Key="Group" TargetType="Grid">
 					<Setter Property="Margin" Value="0,0,0,8" />
 				</Style>
-				<Style x:Key="Title" TargetType="TextBlock">
+				<Style x:Key="TitleLabel" TargetType="Label" BasedOn="{StaticResource TitleLabel}">
 					<Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
 				</Style>
 			</Popup.Resources>
@@ -230,7 +231,7 @@
 							<ColumnDefinition />
 							<ColumnDefinition />
 						</Grid.ColumnDefinitions>
-						<TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="input" AA:Language.Word="note/input" Style="{StaticResource Title}" />
+						<Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="input" AA:Language.Word="note/input" Style="{StaticResource TitleLabel}" />
 						<Button Grid.Row="1" Grid.Column="0" Content="title" AA:Language.Word="note/input/title" Command="{Binding EditTitleCommand}" />
 						<Button Grid.Row="1" Grid.Column="1" Content="body" AA:Language.Word="note/input/body"  Command="{Binding EditBodyCommand}" IsEnabled="{Binding IsCompacted, Converter={StaticResource LogicalNotConverter}}" />
 					</Grid>
@@ -246,7 +247,7 @@
 							<ColumnDefinition Width="3*" />
 							<ColumnDefinition Width="7*" />
 						</Grid.ColumnDefinitions>
-						<TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="style" AA:Language.Word="note/style" Style="{StaticResource Title}" />
+						<Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="style" AA:Language.Word="note/style" Style="{StaticResource TitleLabel}" />
 						<TextBlock Grid.Row="1" Grid.Column="0" Text="fore" AA:Language.Word="note/style/fore-color" />
 						<xctk:ColorPicker Grid.Row="1" Grid.Column="1" Style="{StaticResource DefaultColorPicker}" SelectedColor="{Binding ForeColor}" />
 						<TextBlock Grid.Row="2" Grid.Column="0" Text="back" AA:Language.Word="note/style/back-color" />
@@ -272,7 +273,7 @@
 							<ColumnDefinition Width="33*" />
 							<ColumnDefinition Width="33*" />
 						</Grid.ColumnDefinitions>
-						<TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="state" AA:Language.Word="note/state"  Style="{StaticResource Title}" />
+						<Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="state" AA:Language.Word="note/state"  Style="{StaticResource TitleLabel}" />
 						<CheckBox Grid.Row="1" Grid.Column="0" IsChecked="{Binding IsLocked}" Content="lock" AA:Language.Word="note/state/lock" />
 						<CheckBox Grid.Row="1" Grid.Column="1" IsChecked="{Binding IsCompacted}" Content="compact" AA:Language.Word="note/state/compact" />
 						<CheckBox Grid.Row="1" Grid.Column="2" IsChecked="{Binding IsTopmost}" Content="topmost" AA:Language.Word="note/state/topmost" />
@@ -287,7 +288,7 @@
 							<ColumnDefinition Width="33*" />
 							<ColumnDefinition Width="33*" />
 						</Grid.ColumnDefinitions>
-						<TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="operation" AA:Language.Word="note/operation" Style="{StaticResource Title}" />
+						<Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="operation" AA:Language.Word="note/operation" Style="{StaticResource TitleLabel}" />
 						<Button Grid.Row="1" Grid.Column="0"  Content="copy" AA:Language.Word="note/operation/copy" Command="{Binding CopyBodyCommand}" />
 						<Button Grid.Row="1" Grid.Column="1"  Content="hide" AA:Language.Word="note/operation/hide" Command="{Binding HideCommand}" />
 						<Button Grid.Row="1" Grid.Column="2"  Content="remove" AA:Language.Word="note/operation/remove" Command="{Binding RemoveCommand}" />

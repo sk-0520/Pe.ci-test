@@ -50,6 +50,7 @@
 				<ResourceDictionary Source="/View/Parts/Resource/ImageDictionary.xaml"/>
 				<ResourceDictionary Source="/View/Parts/Resource/GripDictionary.xaml"/>
 				<ResourceDictionary Source="/View/Parts/Resource/PopupDictionary.xaml"/>
+				<ResourceDictionary Source="/View/Parts/Resource/LabelDictionary.xaml"/>
 			</ResourceDictionary.MergedDictionaries>
 			<xctk:InverseBoolConverter x:Key="InverseBoolConverter" />
 			<SC:LogicalMultiEqualConverter x:Key="LogicalMultiEqualConverter" />
@@ -386,7 +387,7 @@
 			</xctk:DropDownButton.Content>
 			<xctk:DropDownButton.DropDownContent>
 				<StackPanel>
-					<TextBlock Text="toolbar pos" AA:Language.Word="toolbar/position" />
+					<Label Content="toolbar pos" AA:Language.Word="toolbar/position" Style="{StaticResource TitleLabel}" />
 					<Grid>
 						<Grid.Resources>
 							<Style x:Key="PopupClose" TargetType="Button" BasedOn="{StaticResource PopupClose}">
@@ -508,26 +509,26 @@
 										<ColumnDefinition />
 										<ColumnDefinition />
 									</Grid.ColumnDefinitions>
-									<TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Text="execute" AA:Language.Word="toolbar/execute" />
+									<Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Content="execute" AA:Language.Word="toolbar/execute" Style="{StaticResource TitleLabel}" />
 									<Button Grid.Row="1" Grid.Column="0" Content="normal" AA:Language.Word="toolbar/execute/normal" IsEnabled="{Binding ExistsCommand}" Command="{Binding RunCommand}" Style="{StaticResource PopupClose}" />
 									<Button Grid.Row="1" Grid.Column="1" Content="extra"  AA:Language.Word="toolbar/execute/extra"  IsEnabled="{Binding ExistsCommand}" Command="{Binding RunExCommand}" Style="{StaticResource PopupClose}" />
 
 									<Separator Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" />
 
-									<TextBlock Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Text="file" AA:Language.Word="toolbar/file" />
+									<Label Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Content="file" AA:Language.Word="toolbar/file" Style="{StaticResource TitleLabel}" />
 									<Button Grid.Row="4" Grid.Column="0" Content="parent dir" AA:Language.Word="toolbar/file/parent-dir" IsEnabled="{Binding ExistsParentDirectory}" Command="{Binding OpenDirectory}" CommandParameter="{x:Static AD:LauncherCommandType.ParentDirectory}" Style="{StaticResource PopupClose}" />
 									<Button Grid.Row="4" Grid.Column="1" Content="work dir"   AA:Language.Word="toolbar/file/work-dir"   IsEnabled="{Binding ExistsWorkDirectory}" Command="{Binding OpenDirectory}" CommandParameter="{x:Static AD:LauncherCommandType.WorkDirectory}" Style="{StaticResource PopupClose}" />
 
 									<Separator Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3" />
 
-									<TextBlock Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3" Text="clipboard" AA:Language.Word="toolbar/clipboard" />
+									<Label Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3" Content="clipboard" AA:Language.Word="toolbar/clipboard"  Style="{StaticResource TitleLabel}" />
 									<Button Grid.Row="7" Grid.Column="0" Content="command"    AA:Language.Word="toolbar/clipboard/command"    IsEnabled="{Binding HasDataCommand}" Command="{Binding CopyText}" CommandParameter="{x:Static AD:LauncherCommandType.Command}" Style="{StaticResource PopupClose}" />
 									<Button Grid.Row="7" Grid.Column="1" Content="parent dir" AA:Language.Word="toolbar/clipboard/parent-dir" IsEnabled="{Binding HasDataParentDirectory}" Command="{Binding CopyText}" CommandParameter="{x:Static AD:LauncherCommandType.ParentDirectory}" Style="{StaticResource PopupClose}" />
 									<Button Grid.Row="7" Grid.Column="2" Content="work dir"   AA:Language.Word="toolbar/clipboard/work-dir"   IsEnabled="{Binding HasDataWorkDirectory}" Command="{Binding CopyText}" CommandParameter="{x:Static AD:LauncherCommandType.WorkDirectory}" Style="{StaticResource PopupClose}" />
 
 									<Separator Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="3" />
 
-									<TextBlock Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="3" Text="others" AA:Language.Word="toolbar/others" />
+									<Label Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="3" Content="others" AA:Language.Word="toolbar/others" Style="{StaticResource TitleLabel}" />
 									<Button Grid.Row="10" Grid.Column="0" Content="customize" AA:Language.Word="toolbar/others/customize" Style="{StaticResource PopupClose}" Command="{Binding OpenCustomize}" />
 									<Button Grid.Row="10" Grid.Column="1" Content="property"  AA:Language.Word="toolbar/others/property"  IsEnabled="{Binding ExistsCommand}" Command="{Binding OpenProperty}" Style="{StaticResource PopupClose}" />
 								</Grid>
@@ -576,18 +577,18 @@
 										<ColumnDefinition />
 									</Grid.ColumnDefinitions>
 
-									<TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="execute" AA:Language.Word="toolbar/execute" />
+									<Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="execute" AA:Language.Word="toolbar/execute"  Style="{StaticResource TitleLabel}"/>
 									<Button Grid.Row="1" Grid.Column="0" Content="normal" AA:Language.Word="toolbar/execute/normal" IsEnabled="{Binding HasDataCommand}" Command="{Binding RunCommand}" Style="{StaticResource PopupClose}" />
 									<Button Grid.Row="1" Grid.Column="1" Content="extra"  AA:Language.Word="toolbar/execute/extra"  IsEnabled="{Binding HasDataCommand}" Command="{Binding RunExCommand}" Style="{StaticResource PopupClose}" />
 
 									<Separator Grid.Row="2" Grid.ColumnSpan="2"/>
 
-									<TextBlock Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Text="clipboard" AA:Language.Word="toolbar/clipboard" />
+									<Label Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Content="clipboard" AA:Language.Word="toolbar/clipboard"  Style="{StaticResource TitleLabel}" />
 									<Button Grid.Row="4" Grid.Column="0" Content="command" AA:Language.Word="toolbar/clipboard/command" IsEnabled="{Binding HasDataCommand}" Command="{Binding CopyText}" CommandParameter="{x:Static AD:LauncherCommandType.Command}" Style="{StaticResource PopupClose}" />
 
 									<Separator Grid.Row="5" Grid.ColumnSpan="2"/>
 
-									<TextBlock Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Text="others" AA:Language.Word="toolbar/others" />
+									<Label Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Content="others" AA:Language.Word="toolbar/others" Style="{StaticResource TitleLabel}" />
 									<Button Grid.Row="7" Grid.Column="0" Content="customize" AA:Language.Word="toolbar/others/customize" Style="{StaticResource PopupClose}" Command="{Binding OpenCustomize}" />
 								</Grid>
 							</xctk:SplitButton.DropDownContent>
