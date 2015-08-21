@@ -476,6 +476,11 @@
 								<i:EventTrigger EventName="Opened">
 									<i:InvokeCommandAction Command="{Binding OpenDropDownCommand}" />
 								</i:EventTrigger>
+								<!-- むりか
+								<i:EventTrigger EventName="MouseDown">
+									<i:InvokeCommandAction Command="{Binding DataContext.MouseDownCommand, ElementName=root}" CommandParameter="{Binding}" />
+								</i:EventTrigger>
+								-->
 							</i:Interaction.Triggers>
 							<xctk:SplitButton.Content>
 								<StackPanel Orientation="Horizontal">
