@@ -641,7 +641,7 @@
     <Resource Include="Resources\Image\Window\WindowSave.png" />
     <Resource Include="Resources\Image\Common\Pin.png" />
     <Resource Include="Resources\Image\Common\Send.png" />
-    <Resource Include="Resources\Image\Common\WindowList.png" />
+    <Resource Include="Resources\Image\Window\WindowList.png" />
     <Resource Include="Resources\Image\Common\Clipboard.png" />
     <Resource Include="Resources\Image\Clipboard\ClipboardFile.png" />
     <Resource Include="Resources\Image\Clipboard\ClipboardHtml.png" />

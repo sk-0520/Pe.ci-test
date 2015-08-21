@@ -49,8 +49,6 @@
 		[AppResource(AppResourceType.Image)]
 		const string commonPin = "/Resources/Image/Common/Pin.png";
 		[AppResource(AppResourceType.Image)]
-		const string commonWindowList = "/Resources/Image/Common/Pin.png";
-		[AppResource(AppResourceType.Image)]
 		const string commonAdd = "/Resources/Image/Common/Add.png";
 		[AppResource(AppResourceType.Image)]
 		const string commonRemove = "/Resources/Image/Common/Remove.png";
@@ -103,6 +101,8 @@
 		[AppResource(AppResourceType.Image)]
 		const string streamKill = "/Resources/Image/Stream/Kill.png";
 
+		[AppResource(AppResourceType.Image)]
+		const string windowList = "/Resources/Image/Window/WindowList.png";
 		[AppResource(AppResourceType.Image)]
 		const string windowLoad = "/Resources/Image/Window/WindowLoad.png";
 		[AppResource(AppResourceType.Image)]

@@ -707,28 +707,6 @@
 			get { return GetImage(CommonPinPath); }
 		}
 		#endregion CommonPin
-		#region Image: CommonWindowList
-
-		/// <summary>
-		/// [Image] CommonWindowListのリソースパスを取得。
-		/// <para>/Resources/Image/Common/Pin.png</para>
-		/// </summary>
-		public static string CommonWindowListPath
-		{
-			get { return commonWindowList; }
-		}
-
-		/// <summary>
-		/// [Image] CommonWindowListのイメージソースを取得。
-		/// <para>初回のみ生成を行う。</para>
-		/// <para>CommonWindowListPath: /Resources/Image/Common/Pin.png</para>
-		/// </summary>
-		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
-		public static BitmapSource CommonWindowListImage
-		{
-			get { return GetImage(CommonWindowListPath); }
-		}
-		#endregion CommonWindowList
 		#region Image: CommonAdd
 
 		/// <summary>
@@ -1257,6 +1235,28 @@
 			get { return GetImage(StreamKillPath); }
 		}
 		#endregion StreamKill
+		#region Image: WindowList
+
+		/// <summary>
+		/// [Image] WindowListのリソースパスを取得。
+		/// <para>/Resources/Image/Window/WindowList.png</para>
+		/// </summary>
+		public static string WindowListPath
+		{
+			get { return windowList; }
+		}
+
+		/// <summary>
+		/// [Image] WindowListのイメージソースを取得。
+		/// <para>初回のみ生成を行う。</para>
+		/// <para>WindowListPath: /Resources/Image/Window/WindowList.png</para>
+		/// </summary>
+		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
+		public static BitmapSource WindowListImage
+		{
+			get { return GetImage(WindowListPath); }
+		}
+		#endregion WindowList
 		#region Image: WindowLoad
 
 		/// <summary>
