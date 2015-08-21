@@ -105,14 +105,14 @@
 		{
 			var expandedPath = Environment.ExpandEnvironmentVariables(path);
 
-			var isProgram = PathUtility.IsProgram(path);
-			var isShortCut = PathUtility.IsShortcut(path);
+			var isProgram = PathUtility.IsProgram(expandedPath);
+			var isShortCut = PathUtility.IsShortcut(expandedPath);
 
 			var result = new LauncherItemModel() {
 				LauncherKind = LauncherKind.File,
 			};
 
-			if(loadShortcut && PathUtility.IsShortcut(path)) {
+			if (loadShortcut && PathUtility.IsShortcut(expandedPath)) {
 				using(var shortcut = new ShortcutFile(expandedPath)) {
 					result.Command = shortcut.TargetPath;
 					
@@ -129,7 +129,7 @@
 				result.Command = path;
 			}
 
-			result.Name = FileUtility.GetName(path);
+			result.Name = FileUtility.GetName(expandedPath);
 
 			result.Tag = GetTag(Environment.ExpandEnvironmentVariables(result.Command));
 			
