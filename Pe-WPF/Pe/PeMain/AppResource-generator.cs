@@ -21,7 +21,7 @@
 		/*
 		このソースは自動生成のため AppResource-generator.tt を編集すること。
 
-		生成元フィールド数: 58
+		生成元フィールド数: 60
 		*/
 		#region Icon: Application
 
@@ -1059,6 +1059,28 @@
 			get { return GetImage(CommonUpdatePath); }
 		}
 		#endregion CommonUpdate
+		#region Image: CommonOperatingSystem
+
+		/// <summary>
+		/// [Image] CommonOperatingSystemのリソースパスを取得。
+		/// <para>/Resources/Image/Common/CommonOperatingSystem.png</para>
+		/// </summary>
+		public static string CommonOperatingSystemPath
+		{
+			get { return commonOperatingSystem; }
+		}
+
+		/// <summary>
+		/// [Image] CommonOperatingSystemのイメージソースを取得。
+		/// <para>初回のみ生成を行う。</para>
+		/// <para>CommonOperatingSystemPath: /Resources/Image/Common/CommonOperatingSystem.png</para>
+		/// </summary>
+		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
+		public static BitmapSource CommonOperatingSystemImage
+		{
+			get { return GetImage(CommonOperatingSystemPath); }
+		}
+		#endregion CommonOperatingSystem
 		#region Image: ToolbarToolbar
 
 		/// <summary>
@@ -1411,6 +1433,28 @@
 			get { return GetImage(ClipboardImageRawPath); }
 		}
 		#endregion ClipboardImageRaw
+		#region Image: CommandCommand
+
+		/// <summary>
+		/// [Image] CommandCommandのリソースパスを取得。
+		/// <para>/Resources/Image/Command/Command.png</para>
+		/// </summary>
+		public static string CommandCommandPath
+		{
+			get { return commandCommand; }
+		}
+
+		/// <summary>
+		/// [Image] CommandCommandのイメージソースを取得。
+		/// <para>初回のみ生成を行う。</para>
+		/// <para>CommandCommandPath: /Resources/Image/Command/Command.png</para>
+		/// </summary>
+		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
+		public static BitmapSource CommandCommandImage
+		{
+			get { return GetImage(CommandCommandPath); }
+		}
+		#endregion CommandCommand
 		#region Image: WindowListSystem
 
 		/// <summary>

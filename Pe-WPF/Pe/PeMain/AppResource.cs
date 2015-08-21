@@ -80,6 +80,8 @@
 		const string commonClose = "/Resources/Image/Common/CommonClose.png";
 		[AppResource(AppResourceType.Image)]
 		const string commonUpdate = "/Resources/Image/Common/CommonUpdate.png";
+		[AppResource(AppResourceType.Image)]
+		const string commonOperatingSystem = "/Resources/Image/Common/CommonOperatingSystem.png";
 
 		[AppResource(AppResourceType.Image)]
 		const string toolbarToolbar = "/Resources/Image/Toolbar/Toolbar.png";
@@ -117,6 +119,9 @@
 		const string clipboardImageFit = "/Resources/Image/Clipboard/ClipboardImageFit.png";
 		[AppResource(AppResourceType.Image)]
 		const string clipboardImageRaw = "/Resources/Image/Clipboard/ClipboardImageRaw.png";
+
+		[AppResource(AppResourceType.Image)]
+		const string commandCommand = "/Resources/Image/Command/Command.png";
 
 		[AppResource(AppResourceType.Image)]
 		const string windowListSystem = "/Resources/Image/Window/WindowListSystem.png";
