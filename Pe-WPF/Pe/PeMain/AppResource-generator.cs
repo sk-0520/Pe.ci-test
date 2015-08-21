@@ -21,7 +21,7 @@
 		/*
 		このソースは自動生成のため AppResource-generator.tt を編集すること。
 
-		生成元フィールド数: 57
+		生成元フィールド数: 58
 		*/
 		#region Icon: Application
 
@@ -1411,28 +1411,50 @@
 			get { return GetImage(ClipboardImageRawPath); }
 		}
 		#endregion ClipboardImageRaw
-		#region Image: WindowList
+		#region Image: WindowListSystem
 
 		/// <summary>
-		/// [Image] WindowListのリソースパスを取得。
-		/// <para>/Resources/Image/Window/WindowList.png</para>
+		/// [Image] WindowListSystemのリソースパスを取得。
+		/// <para>/Resources/Image/Window/WindowListSystem.png</para>
 		/// </summary>
-		public static string WindowListPath
+		public static string WindowListSystemPath
 		{
-			get { return windowList; }
+			get { return windowListSystem; }
 		}
 
 		/// <summary>
-		/// [Image] WindowListのイメージソースを取得。
+		/// [Image] WindowListSystemのイメージソースを取得。
 		/// <para>初回のみ生成を行う。</para>
-		/// <para>WindowListPath: /Resources/Image/Window/WindowList.png</para>
+		/// <para>WindowListSystemPath: /Resources/Image/Window/WindowListSystem.png</para>
 		/// </summary>
 		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
-		public static BitmapSource WindowListImage
+		public static BitmapSource WindowListSystemImage
 		{
-			get { return GetImage(WindowListPath); }
+			get { return GetImage(WindowListSystemPath); }
 		}
-		#endregion WindowList
+		#endregion WindowListSystem
+		#region Image: WindowListTimer
+
+		/// <summary>
+		/// [Image] WindowListTimerのリソースパスを取得。
+		/// <para>/Resources/Image/Window/WindowListTimer.png</para>
+		/// </summary>
+		public static string WindowListTimerPath
+		{
+			get { return windowListTimer; }
+		}
+
+		/// <summary>
+		/// [Image] WindowListTimerのイメージソースを取得。
+		/// <para>初回のみ生成を行う。</para>
+		/// <para>WindowListTimerPath: /Resources/Image/Window/WindowListTimer.png</para>
+		/// </summary>
+		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
+		public static BitmapSource WindowListTimerImage
+		{
+			get { return GetImage(WindowListTimerPath); }
+		}
+		#endregion WindowListTimer
 		#region Image: WindowLoad
 
 		/// <summary>

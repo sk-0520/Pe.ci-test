@@ -626,6 +626,8 @@
     <Content Include="etc\style\common.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Image\Window\WindowListSystem.png" />
+    <Resource Include="Resources\Image\Window\WindowListTimer.png" />
     <Resource Include="Resources\Image\Common\CommonUpdate.png" />
     <Resource Include="Resources\Image\Setting\SettingLauncherGroupItem.png" />
     <Resource Include="Resources\Image\Setting\SettingLauncherGroupParent.png" />
@@ -663,7 +665,6 @@
     <Resource Include="Resources\Image\Window\WindowSave.png" />
     <Resource Include="Resources\Image\Common\CommonPin.png" />
     <Resource Include="Resources\Image\Common\CommonSend.png" />
-    <Resource Include="Resources\Image\Window\WindowList.png" />
     <Resource Include="Resources\Image\Common\CommonCopy.png" />
     <Resource Include="Resources\Image\Clipboard\ClipboardFile.png" />
     <Resource Include="Resources\Image\Clipboard\ClipboardHtml.png" />

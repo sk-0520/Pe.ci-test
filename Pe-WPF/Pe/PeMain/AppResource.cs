@@ -119,7 +119,9 @@
 		const string clipboardImageRaw = "/Resources/Image/Clipboard/ClipboardImageRaw.png";
 
 		[AppResource(AppResourceType.Image)]
-		const string windowList = "/Resources/Image/Window/WindowList.png";
+		const string windowListSystem = "/Resources/Image/Window/WindowListSystem.png";
+		[AppResource(AppResourceType.Image)]
+		const string windowListTimer = "/Resources/Image/Window/WindowListTimer.png";
 		[AppResource(AppResourceType.Image)]
 		const string windowLoad = "/Resources/Image/Window/WindowLoad.png";
 		[AppResource(AppResourceType.Image)]
