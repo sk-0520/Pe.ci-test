@@ -21,7 +21,7 @@
 		/*
 		このソースは自動生成のため AppResource-generator.tt を編集すること。
 
-		生成元フィールド数: 39
+		生成元フィールド数: 40
 		*/
 		#region Icon: Application
 
@@ -949,6 +949,28 @@
 			get { return GetImage(CommonFontItalicPath); }
 		}
 		#endregion CommonFontItalic
+		#region Image: CommonRun
+
+		/// <summary>
+		/// [Image] CommonRunのリソースパスを取得。
+		/// <para>/Resources/Image/Common/CommonRun.png</para>
+		/// </summary>
+		public static string CommonRunPath
+		{
+			get { return commonRun; }
+		}
+
+		/// <summary>
+		/// [Image] CommonRunのイメージソースを取得。
+		/// <para>初回のみ生成を行う。</para>
+		/// <para>CommonRunPath: /Resources/Image/Common/CommonRun.png</para>
+		/// </summary>
+		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
+		public static BitmapSource CommonRunImage
+		{
+			get { return GetImage(CommonRunPath); }
+		}
+		#endregion CommonRun
 		#region Image: TemplateTemplate
 
 		/// <summary>

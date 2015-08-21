@@ -70,6 +70,8 @@
 		const string commonFontBold = "/Resources/Image/Common/CommonFontBold.png";
 		[AppResource(AppResourceType.Image)]
 		const string commonFontItalic = "/Resources/Image/Common/CommonFontItalic.png";
+		[AppResource(AppResourceType.Image)]
+		const string commonRun = "/Resources/Image/Common/CommonRun.png";
 
 
 		[AppResource(AppResourceType.Image)]
