@@ -350,14 +350,16 @@
 				</Grid>
 			</Grid>
 			<StatusBar Grid.Row="2" Style="{StaticResource ClipboardTemplateDefaultStatusbar}">
-				<TextBlock Text="{Binding SelectedIndex, ElementName=listItems, Converter={StaticResource SelectedIndexNumberConverter}}" />
-				<TextBlock Text="/" />
-				<TextBlock Text="{Binding IndexItems.Count}" />
-				<TextBlock Text="(" />
-				<TextBlock AA:Language.Word="clipboard/save-count" />
-				<TextBlock Text=":" />
-				<TextBlock Text="{Binding LimitSize}" />
-				<TextBlock Text=")" />
+				<TextBlock>
+					<Run Text="{Binding SelectedIndex, ElementName=listItems, Converter={StaticResource SelectedIndexNumberConverter}}" />
+					<Run Text="/" />
+					<Run Text="{Binding IndexItems.Count, Mode=OneWay}" />
+					<Run Text="("/>
+					<TextBlock Text="save count" AA:Language.Word="clipboard/save-count" />
+					<Run Text=":" />
+					<Run Text="{Binding LimitSize, Mode=OneWay}" />
+					<Run Text=")" />
+				</TextBlock>
 			</StatusBar>
 		</Grid>
 	</Grid>

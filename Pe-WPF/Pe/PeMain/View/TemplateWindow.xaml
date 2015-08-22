@@ -213,9 +213,11 @@
 			</TabControl>
 		</Grid>
 		<StatusBar Grid.Row="2" Style="{StaticResource ClipboardTemplateDefaultStatusbar}">
-			<TextBlock Text="{Binding SelectedIndex, ElementName=listItems, Converter={StaticResource SelectedIndexNumberConverter}}" />
-			<TextBlock Text="/" />
-			<TextBlock Text="{Binding IndexItems.Count}" />
+			<TextBlock>
+				<Run Text="{Binding SelectedIndex, ElementName=listItems, Converter={StaticResource SelectedIndexNumberConverter}}" />
+				<Run Text="/" />
+				<Run Text="{Binding IndexItems.Count, Mode=OneWay}" />
+			</TextBlock>
 		</StatusBar>
 	</Grid>
 </AW:ViewModelCommonDataWindow>
