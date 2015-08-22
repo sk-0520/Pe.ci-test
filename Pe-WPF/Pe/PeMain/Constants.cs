@@ -222,7 +222,6 @@
 
 		[ConstantsRange]
 		public static readonly TripleRange<TimeSpan> windowSaveIntervalTime = new TripleRange<TimeSpan>(
-			//TimeSpan.FromMinutes(1),
 			TimeSpan.FromSeconds(5),
 			TimeSpan.FromMinutes(10),
 			TimeSpan.FromHours(1)
@@ -273,109 +272,6 @@
 		/// スタートアップ用ショートカットファイルパス。
 		/// </summary>
 		public static readonly string startupShortcutPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Startup), shortcutName);
-
-		// TODO: T4しちゃっていいんじゃないだろうか
-		//#region TripleRange
-
-		//#region commandHideTime
-
-		//public static double CommandHideMinimumTime { get { return commandHideTime.minimum.TotalMilliseconds; } }
-		//public static double CommandHideMaximumTime { get { return commandHideTime.maximum.TotalMilliseconds; } }
-
-		//#endregion
-
-		//#region commandFontSize
-
-		//public static double CommandFontMinimumSize { get { return commandFontSize.minimum; } }
-		//public static double CommandFontMaximumSize { get { return commandFontSize.maximum; } }
-
-		//#endregion
-
-		//#region toolbarTextLength
-
-		//public static double ToolbarTextMinimumLength { get { return toolbarTextLength.minimum; } }
-		//public static double ToolbarTextMaximumLength { get { return toolbarTextLength.maximum; } }
-
-		//#endregion
-
-		//#region streamFontSize
-
-		//public static double StreamFontMinimumSize { get { return streamFontSize.minimum; } }
-		//public static double StreamFontMaximumSize { get { return streamFontSize.maximum; } }
-
-		//#endregion
-
-		//#region toolbarFontSize
-
-		//public static double ToolbarFontMinimumSize { get { return toolbarFontSize.minimum; } }
-		//public static double ToolbarFontMaximumSize { get { return toolbarFontSize.maximum; } }
-
-		//#endregion
-
-		//#region toolbarHideWaitTime
-
-		//public static TimeSpan ToolbarHideWaitMinimumTime { get { return toolbarHideWaitTime.minimum; } }
-		//public static TimeSpan ToolbarHideWaitMaximumTime { get { return toolbarHideWaitTime.maximum; } }
-
-		//#endregion
-
-		//#region toolbarHideAnimateTime
-
-		//public static TimeSpan ToolbarHideAnimateMinimumTime { get { return toolbarHideAnimateTime.minimum; } }
-		//public static TimeSpan ToolbarHideAnimateMaximumTime { get { return toolbarHideAnimateTime.maximum; } }
-
-		//#endregion
-
-		//#region clipboardWaitTime
-
-		//public static double ClipboardWaitMinimumTime { get { return clipboardWaitTime.minimum.TotalMilliseconds; } }
-		//public static double ClipboardWaitMaximumTime { get { return clipboardWaitTime.maximum.TotalMilliseconds; } }
-
-		//#endregion
-
-		//#region clipboardSaveCount
-
-		//public static double ClipboardSaveMinimumCount { get { return clipboardSaveCount.minimum; } }
-		//public static double ClipboardSaveMaximumCount { get { return clipboardSaveCount.maximum; } }
-
-		//#endregion
-
-		//#region clipboardDuplicationCount
-
-		//public static double ClipboardDuplicationMinimumCount { get { return clipboardDuplicationCount.minimum; } }
-		//public static double ClipboardDuplicationMaximumCount { get { return clipboardDuplicationCount.maximum; } }
-
-		//#endregion
-
-		//#region clipboardFontSize
-
-		//public static double ClipboardFontMinimumSize { get { return clipboardFontSize.minimum; } }
-		//public static double ClipboardFontMaximumSize { get { return clipboardFontSize.maximum; } }
-
-		//#endregion
-
-		//#region noteFontSize
-
-		//public static double NoteFontMinimumSize { get { return noteFontSize.minimum; } }
-		//public static double NoteFontMaximumSize { get { return noteFontSize.maximum; } }
-
-		//#endregion
-
-		//#region commandWindowWidth
-
-		//public static double CommandWindowMinimumWidth { get { return commandWindowWidth.minimum; } }
-		//public static double CommandWindowMaximumWidth { get { return commandWindowWidth.maximum; } }
-
-		//#endregion
-
-		//#region templateFontSize
-
-		//public static double TemplateFontMinimumSize { get { return templateFontSize.minimum; } }
-		//public static double TemplateFontMaximumSize { get { return templateFontSize.maximum; } }
-
-		//#endregion
-
-		//#endregion
 
 		#region app.config
 

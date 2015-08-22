@@ -244,26 +244,31 @@
 							ClipboardIndexSetting = (ClipboardIndexSettingModel)CommonData.ClipboardIndexSetting.DeepClone(),
 						};
 
-						var window = new SettingWindow();
-						window.SetCommonData(cloneCommonData, null);
-						if(window.ShowDialog().GetValueOrDefault()) {
-							CommonData = window.CommonData;
-							var notifiy = window.ViewModel.SettingNotifiyItem;
+						Pause = true;
+						try {
+							var window = new SettingWindow();
+							window.SetCommonData(cloneCommonData, null);
+							if(window.ShowDialog().GetValueOrDefault()) {
+								CommonData = window.CommonData;
+								var notifiy = window.ViewModel.SettingNotifiyItem;
 
-							Debug.Assert(notifiy.StartupRegist.HasValue);
-							var startuoPath = Environment.ExpandEnvironmentVariables(Constants.startupShortcutPath);
-							if(notifiy.StartupRegist.Value) {
-								AppUtility.MakeAppShortcut(startuoPath);
-							} else {
-								if(File.Exists(startuoPath)) {
-									File.Delete(startuoPath);
+								Debug.Assert(notifiy.StartupRegist.HasValue);
+								var startuoPath = Environment.ExpandEnvironmentVariables(Constants.startupShortcutPath);
+								if(notifiy.StartupRegist.Value) {
+									AppUtility.MakeAppShortcut(startuoPath);
+								} else {
+									if(File.Exists(startuoPath)) {
+										File.Delete(startuoPath);
+									}
 								}
-							}
 
-							SaveSetting();
-							ResetSetting();
-						} else {
-							ResetCache(true);
+								SaveSetting();
+								ResetSetting();
+							} else {
+								ResetCache(true);
+							}
+						} finally {
+							Pause = false;
 						}
 					}
 				);

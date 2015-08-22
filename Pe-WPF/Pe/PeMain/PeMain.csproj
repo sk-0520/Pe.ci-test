@@ -154,6 +154,7 @@
     <Compile Include="View\CommandWindow.xaml.cs">
       <DependentUpon>CommandWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Parts\Attached\MenuIcon.cs" />
     <Compile Include="View\Parts\Control\DoubleSliderControl.xaml.cs">
       <DependentUpon>DoubleSliderControl.xaml</DependentUpon>
     </Compile>
