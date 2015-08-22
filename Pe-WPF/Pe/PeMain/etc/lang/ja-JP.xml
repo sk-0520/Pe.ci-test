@@ -20,7 +20,7 @@
 		<Item Id="window/accept" Word="@[APPLICATION] 使用許諾"  />
 		<Item Id="window/toolbar" Word="${toolbar}"  />
 		<Item Id="window/clipboard" Word="クリップボード"  />
-		<Item Id="window/template" Word="template"  />
+		<Item Id="window/template" Word="テンプレート"  />
 		<Item Id="window/execute" Word="@[ITEM]を指定して実行"  />
 		<Item Id="window/stream" Word="@[ITEM]の標準入出力"  />
 		<Item Id="window/logging" Word="ログ"  />

@@ -8,6 +8,7 @@
 	xmlns:AP="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
 	xmlns:AW="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Window"
 	xmlns:AA="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Attached"
+	xmlns:AC="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Converter"
 	AA:Language.Word="window/logging"
 	Title="LoggingWindow" 
 	ShowInTaskbar="False" 
@@ -31,10 +32,16 @@
 				<ResourceDictionary Source="/View/Parts/Resource/ImageDictionary.xaml"/>
 				<ResourceDictionary Source="/View/Parts/Resource/GridSplitterDictionary.xaml"/>
 			</ResourceDictionary.MergedDictionaries>
+			<AC:SelectedIndexNumberConverter x:Key="SelectedIndexNumberConverter" />
 		</ResourceDictionary>
 	</AW:CommonDataWindow.Resources>
-	<DockPanel LastChildFill="True">
-		<ToolBar DockPanel.Dock="Top" Style="{StaticResource DefaultToolbar}" FontFamily="{DynamicResource {x:Static SystemFonts.MenuFontFamilyKey}}" FontSize="{DynamicResource {x:Static SystemFonts.MenuFontSizeKey}}" Height="30" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" >
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="*" />
+			<RowDefinition Height="Auto" />
+		</Grid.RowDefinitions>
+		<ToolBar Grid.Row="0" Height="Auto" Style="{StaticResource DefaultToolbar}" FontFamily="{DynamicResource {x:Static SystemFonts.MenuFontFamilyKey}}" FontSize="{DynamicResource {x:Static SystemFonts.MenuFontSizeKey}}" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" >
 			<Button Command="{Binding SaveCommand}">
 				<StackPanel Orientation="Horizontal">
 					<Image Source="{x:Static AM:AppResource.CommonSaveImage}" Style="{StaticResource DefaultImage}" />
@@ -48,8 +55,7 @@
 				</StackPanel>
 			</Button>
 		</ToolBar>
-		<StatusBar DockPanel.Dock="Bottom" FontFamily="{DynamicResource {x:Static SystemFonts.StatusFontFamilyKey}}" FontSize="{DynamicResource {x:Static SystemFonts.StatusFontSizeKey}}" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" Height="{DynamicResource {x:Static SystemParameters.MenuHeightKey}}" />
-		<Grid>
+		<Grid Grid.Row="1">
 			<Grid.RowDefinitions>
 				<RowDefinition Height="154*"/>
 				<RowDefinition Height="Auto"/>
@@ -76,5 +82,18 @@
 				Style="{StaticResource DefaultTextBox}"
 			/>
 		</Grid>
-	</DockPanel>
+		<StatusBar
+			Grid.Row="2" 
+			FontFamily="{DynamicResource {x:Static SystemFonts.StatusFontFamilyKey}}"
+			FontSize="{DynamicResource {x:Static SystemFonts.StatusFontSizeKey}}"
+			Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"
+			Height="{DynamicResource {x:Static SystemParameters.MenuHeightKey}}"
+		>
+			<TextBlock>
+				<Run Text="{Binding SelectedIndex, ElementName=listLog, Converter={StaticResource SelectedIndexNumberConverter}, Mode=OneWay}" />
+				<Run>/</Run>
+				<Run Text="{Binding LogItems.Count, Mode=OneWay}" />
+			</TextBlock>
+		</StatusBar>
+	</Grid>
 </AW:ViewModelCommonDataWindow>
