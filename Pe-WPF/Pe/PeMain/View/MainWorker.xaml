@@ -84,9 +84,9 @@
 			<MenuItem Header="show" AA:Language.Word="tasktray/note/show" ItemsSource="{Binding NoteShowItems}" ItemContainerStyle="{StaticResource NoteMenuItemStyle}" IsEnabled="{Binding ItemsSource,RelativeSource={RelativeSource Self}, Converter={StaticResource IsNotEmptyCollection}}"/>
 			<MenuItem Header="hidden" AA:Language.Word="tasktray/note/hidden" ItemsSource="{Binding NoteHiddenItems}" ItemContainerStyle="{StaticResource NoteMenuItemStyle}" IsEnabled="{Binding ItemsSource,RelativeSource={RelativeSource Self}, Converter={StaticResource IsNotEmptyCollection}}"/>
 		</MenuItem>
-		<MenuItem Header="template" AA:Language.Word="tasktray/template" Command="{Binding SwitchTemplateWindowCommand}" IsChecked="{Binding Template.IsVisible, Mode=OneWay}" InputGestureText="{Binding SwitchTemplateWindowHotKey}">
+		<MenuItem Header="template" AA:Language.Word="tasktray/template" Command="{Binding SwitchTemplateWindowCommand}" InputGestureText="{Binding SwitchTemplateWindowHotKey}">
 			<MenuItem.Icon>
-				<Image Source="{x:Static AM:AppResource.TemplateTemplateImage}" Style="{StaticResource DefaultImage}" />
+				<Image AA:MenuIcon.IsStrong="{Binding Template.IsVisible}" Source="{x:Static AM:AppResource.TemplateTemplateImage}" Style="{StaticResource DefaultImage}" />
 			</MenuItem.Icon>
 		</MenuItem>
 		<MenuItem AA:Language.Word="tasktray/command" Header="command" Command="{Binding ShowCommandWindowCommand}" InputGestureText="{Binding ShowCommandWindowHotKey}">
@@ -112,9 +112,9 @@
 			<MenuItem Header="hide file" Command="{Binding SwitchShellHideFileCommand}" IsChecked="{Binding IsVisibledShellHideFile, Mode=OneWay}"  InputGestureText="{Binding SwitchShellHideFileHotKey}"/>
 			<MenuItem Header="extension" Command="{Binding SwitchShellExtensionCommand}" IsChecked="{Binding IsVisibledShellExtension, Mode=OneWay}"  InputGestureText="{Binding SwitchShellExtensionHotKey}"/>
 			<Separator />
-			<MenuItem Header="clipboard" Command="{Binding SwitchClipboardWindowCommand}" IsChecked="{Binding Clipboard.IsVisible}" InputGestureText="{Binding SwitchClipboardWindowHotKey}">
+			<MenuItem Header="clipboard" Command="{Binding SwitchClipboardWindowCommand}" InputGestureText="{Binding SwitchClipboardWindowHotKey}">
 				<MenuItem.Icon>
-					<Image Source="{x:Static AM:AppResource.ClipboardClipboardImage}" Style="{StaticResource DefaultImage}" />
+					<Image AA:MenuIcon.IsStrong="{Binding Clipboard.IsVisible}" Source="{x:Static AM:AppResource.ClipboardClipboardImage}" Style="{StaticResource DefaultImage}" />
 				</MenuItem.Icon>
 			</MenuItem>
 			<Separator />
