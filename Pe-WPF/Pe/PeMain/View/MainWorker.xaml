@@ -7,6 +7,7 @@
 	xmlns:AM="clr-namespace:ContentTypeTextNet.Pe.PeMain"
 	xmlns:AV="clr-namespace:ContentTypeTextNet.Pe.PeMain.ViewModel"
 	xmlns:AA="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Attached"
+	xmlns:ACC="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Control"
 	xmlns:SC="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=SharedLibrary"
 >
 	<ResourceDictionary.MergedDictionaries>
@@ -84,9 +85,9 @@
 				<Image Source="{x:Static AM:AppResource.CommandCommandImage}" Style="{StaticResource DefaultImage}" />
 			</MenuItem.Icon>
 		</MenuItem>
-		<MenuItem AA:Language.Word="tasktray/log" Header="log" Command="{Binding SwitchLoggingWindowCommand}" >
+		<MenuItem AA:Language.Word="tasktray/log" Header="log" Command="{Binding SwitchLoggingWindowCommand}">
 			<MenuItem.Icon>
-				<Image AA:MenuIcon.IsStrong="{Binding Logging.IsVisible}" Source="{x:Static AM:AppResource.LogLogImage}" Style="{StaticResource DefaultImage}" />
+				<Image AA:MenuIcon.IsStrong="{Binding LogVisibled, Mode=TwoWay}"  Source="{x:Static AM:AppResource.LogLogImage}" Style="{StaticResource DefaultImage}" />
 			</MenuItem.Icon>
 		</MenuItem>
 		<Separator />
