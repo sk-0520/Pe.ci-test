@@ -23,7 +23,7 @@
 			"IsStrong",
 			typeof(bool),
 			typeof(MenuIcon),
-			new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnIsStrongChanged)
+			new FrameworkPropertyMetadata(false,FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnIsStrongChanged)
 		);
 
 		private static void OnIsStrongChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
