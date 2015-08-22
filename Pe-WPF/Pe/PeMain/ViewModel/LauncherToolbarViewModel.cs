@@ -1037,18 +1037,9 @@
 			get
 			{
 				var canvas = LauncherToolbarUtility.MakeScreenIcon(DockScreen, IconScale.Small);
-
-				// IsCheckedで強調したかったけど手間かかるので透明度で対応
-				if(IsVisible) {
-					canvas.Opacity = 1;
-				} else {
-					canvas.Opacity = 0.5;
-				}
-
 				return canvas;
 			}
 		}
-
 
 		#endregion
 

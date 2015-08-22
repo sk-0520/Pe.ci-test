@@ -24,25 +24,25 @@
 
 		static void OnIsStrongChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
 		{
-			var imageObject = dependencyObject as Image;
-			if(imageObject != null) {
-				SetIsStrong(imageObject, (bool)e.NewValue);
+			var element = dependencyObject as UIElement;
+			if(element != null) {
+				SetIsStrong(element, (bool)e.NewValue);
 			}
 		}
 
-		public static bool GetIsStrong(Image imageObject)
+		public static bool GetIsStrong(UIElement element)
 		{
-			return (bool)imageObject.GetValue(IsStrongProperty);
+			return (bool)element.GetValue(IsStrongProperty);
 		}
-		public static void SetIsStrong(Image imageObject, bool value)
+		public static void SetIsStrong(UIElement element, bool value)
 		{
-			imageObject.SetValue(IsStrongProperty, value);
+			element.SetValue(IsStrongProperty, value);
 			//var img = imageObject as Image;
-			if(imageObject != null) {
+			if(element != null) {
 				if(value) {
-					imageObject.Opacity = checkedIsStrong;
+					element.Opacity = checkedIsStrong;
 				} else {
-					imageObject.Opacity = uncheckedIsStrong;
+					element.Opacity = uncheckedIsStrong;
 				}
 			}
 		}
