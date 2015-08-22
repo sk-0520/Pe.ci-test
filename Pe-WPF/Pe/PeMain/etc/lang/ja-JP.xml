@@ -37,7 +37,13 @@
 
 		<Item Id="tasktray/tooltip" Word="ぴーいー" />
 		<Item Id="tasktray/setting" Word="@[APPLICATION] ${setting}" />
-		<Item Id="tasktray/toolbar" Word="@[APPLICATION] ${toolbar}" />
+		<Item Id="tasktray/toolbar" Word="${toolbar}" />
+		<Item Id="tasktray/note/create" Word="新規作成" />
+		<Item Id="tasktray/note/compact" Word="最小化" />
+		<Item Id="tasktray/note/hide" Word="非表示" />
+		<Item Id="tasktray/note/front" Word="前面表示" />
+		<Item Id="tasktray/note/show" Word="表示中一覧" />
+		<Item Id="tasktray/note/hidden" Word="非表示一覧" />
 
 		<Item Id="new/group-name" Word="新規グループ" />
 		<Item Id="new/template-name" Word="新規テンプレート" />
