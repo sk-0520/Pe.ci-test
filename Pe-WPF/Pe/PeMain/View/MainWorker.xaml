@@ -87,7 +87,7 @@
 		</MenuItem>
 		<MenuItem AA:Language.Word="tasktray/log" Header="log" Command="{Binding SwitchLoggingWindowCommand}">
 			<MenuItem.Icon>
-				<Image AA:MenuIcon.IsStrong="{Binding LogVisibled, Mode=TwoWay}"  Source="{x:Static AM:AppResource.LogLogImage}" Style="{StaticResource DefaultImage}" />
+				<Image AA:MenuIcon.IsStrong="{Binding Logging.IsVisible}"  Source="{x:Static AM:AppResource.LogLogImage}" Style="{StaticResource DefaultImage}" />
 			</MenuItem.Icon>
 		</MenuItem>
 		<Separator />

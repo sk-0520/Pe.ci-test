@@ -12,33 +12,37 @@
 	{
 		#region IsStrongProperty
 
+		const double checkedIsStrong = 1;
+		const double uncheckedIsStrong = 0.5;
+
 		public static readonly DependencyProperty IsStrongProperty = DependencyProperty.RegisterAttached(
 			"IsStrong",
 			typeof(bool),
 			typeof(MenuIcon),
-			new PropertyMetadata(false, OnIsStrongChanged)
+			new FrameworkPropertyMetadata(true,FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnIsStrongChanged)
 		);
 
 		static void OnIsStrongChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
 		{
-			var webBrowser = dependencyObject as Image;
-			if(webBrowser != null) {
-				SetIsStrong(webBrowser, (bool)e.NewValue);
+			var imageObject = dependencyObject as Image;
+			if(imageObject != null) {
+				SetIsStrong(imageObject, (bool)e.NewValue);
 			}
 		}
-		public static bool GetIsStrong(DependencyObject dependencyObject)
+
+		public static bool GetIsStrong(Image imageObject)
 		{
-			return (bool)dependencyObject.GetValue(IsStrongProperty);
+			return (bool)imageObject.GetValue(IsStrongProperty);
 		}
-		public static void SetIsStrong(DependencyObject dependencyObject, bool value)
+		public static void SetIsStrong(Image imageObject, bool value)
 		{
-			dependencyObject.SetValue(IsStrongProperty, value);
-			var img = dependencyObject as Image;
-			if(img != null) {
+			imageObject.SetValue(IsStrongProperty, value);
+			//var img = imageObject as Image;
+			if(imageObject != null) {
 				if(value) {
-					img.Opacity = 1;
+					imageObject.Opacity = checkedIsStrong;
 				} else {
-					img.Opacity = 0.5;
+					imageObject.Opacity = uncheckedIsStrong;
 				}
 			}
 		}

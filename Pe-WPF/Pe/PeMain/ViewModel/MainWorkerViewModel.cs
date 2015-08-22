@@ -187,12 +187,6 @@
 
 		public string SwitchClipboardWindowHotKey { get { return LanguageUtility.GetMenuTextFromHotKeyModel(CommonData.MainSetting.Clipboard.ToggleHotKey, CommonData.Language); } }
 		
-		public bool LogVisibled
-		{
-			get { return Logging.IsVisible; }
-			set { SetPropertyValue(Logging, value, "IsVisible"); }
-		}
-
 		#endregion
 
 		#region command
@@ -321,7 +315,7 @@
 				var result = CreateCommand(
 					o => {
 						Debug.Assert(Logging != null);
-						LogVisibled = !LogVisibled;
+						Logging.IsVisible = !Logging.IsVisible;
 					}
 				);
 
