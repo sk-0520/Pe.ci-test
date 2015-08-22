@@ -40,8 +40,8 @@
 
 			foreach(var screen in screens) {
 				var useScreen = strongScreen.DeviceName == screen.DeviceName;
-				var backColor = ImageUtility.GetToolbarPositionColor(true, useScreen);
-				var foreColor = ImageUtility.GetToolbarPositionColor(false, useScreen);
+				var backColor = ImageUtility.GetMenuIconColor(true, useScreen);
+				var foreColor = ImageUtility.GetMenuIconColor(false, useScreen);
 
 				var baseArea = screen.DeviceBounds;
 				baseArea.Offset(basePos.X, basePos.Y);
@@ -106,8 +106,8 @@
 				}
 
 
-				var screenElement = ImageUtility.CreateBox(ImageUtility.GetToolbarPositionColor(false, false), ImageUtility.GetToolbarPositionColor(true, false), imageSize);
-				var toolbarElement = ImageUtility.CreateBox(ImageUtility.GetToolbarPositionColor(false, true), ImageUtility.GetToolbarPositionColor(true, true), drawArea.Size);
+				var screenElement = ImageUtility.CreateBox(ImageUtility.GetMenuIconColor(false, false), ImageUtility.GetMenuIconColor(true, false), imageSize);
+				var toolbarElement = ImageUtility.CreateBox(ImageUtility.GetMenuIconColor(false, true), ImageUtility.GetMenuIconColor(true, true), drawArea.Size);
 
 			var canvas = new Canvas() {
 				Width = imageSize.Width,

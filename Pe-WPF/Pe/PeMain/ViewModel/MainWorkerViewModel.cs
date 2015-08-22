@@ -186,6 +186,22 @@
 		public string SwitchShellExtensionHotKey { get { return LanguageUtility.GetMenuTextFromHotKeyModel(CommonData.MainSetting.SystemEnvironment.ExtensionHotkey, CommonData.Language); } }
 
 		public string SwitchClipboardWindowHotKey { get { return LanguageUtility.GetMenuTextFromHotKeyModel(CommonData.MainSetting.Clipboard.ToggleHotKey, CommonData.Language); } }
+
+		public FrameworkElement NoteCompactIcon
+		{
+			get
+			{
+				var noteItem = new NoteIndexItemModel() {
+					Id = Guid.Empty,
+					IsCompacted = true,
+					ForeColor = ImageUtility.GetMenuIconColor(false, true),
+					BackColor = ImageUtility.GetMenuIconColor(true, true),
+				};
+				var result = NoteUtility.MakeMenuIcon(noteItem);
+
+				return result;
+			}
+		}
 		
 		#endregion
 
