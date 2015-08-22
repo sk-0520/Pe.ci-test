@@ -91,6 +91,10 @@
 
 		[AppResource(AppResourceType.Image)]
 		const string noteNote = "/Resources/Image/Note/Note.png";
+		[AppResource(AppResourceType.Image)]
+		const string noteHide = "/Resources/Image/Note/NoteHide.png";
+		[AppResource(AppResourceType.Image)]
+		const string noteFront = "/Resources/Image/Note/NoteFront.png";
 
 		[AppResource(AppResourceType.Image)]
 		const string templateTemplate = "/Resources/Image/Template/Template.png";

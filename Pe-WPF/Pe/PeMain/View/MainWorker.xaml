@@ -69,9 +69,17 @@
 				</MenuItem.Icon>
 			</MenuItem>
 			<MenuItem Header="compact" AA:Language.Word="tasktray/note/compact" Command="{Binding CompactNoteItemsCommand}" InputGestureText="{Binding CompactNoteItemsHotKey}" Icon="{Binding NoteCompactIcon}" />
-			<MenuItem Header="hide" AA:Language.Word="tasktray/note/hide" Command="{Binding HideNoteItemsCommand}"  InputGestureText="{Binding HideNoteItemsHotKey}" />
+			<MenuItem Header="hide" AA:Language.Word="tasktray/note/hide" Command="{Binding HideNoteItemsCommand}"  InputGestureText="{Binding HideNoteItemsHotKey}">
+				<MenuItem.Icon>
+					<Image Source="{x:Static AM:AppResource.NoteHideImage}" Style="{StaticResource DefaultImage}" />
+				</MenuItem.Icon>
+			</MenuItem>
 			<Separator />
-			<MenuItem Header="front" AA:Language.Word="tasktray/note/front" Command="{Binding FrontNoteItemsCommand}" InputGestureText="{Binding FrontNoteItemsHotKey}"/>
+			<MenuItem Header="front" AA:Language.Word="tasktray/note/front" Command="{Binding FrontNoteItemsCommand}" InputGestureText="{Binding FrontNoteItemsHotKey}">
+				<MenuItem.Icon>
+					<Image Source="{x:Static AM:AppResource.NoteFrontImage}" Style="{StaticResource DefaultImage}" />
+				</MenuItem.Icon>
+			</MenuItem>
 			<Separator />
 			<MenuItem Header="show" AA:Language.Word="tasktray/note/show" ItemsSource="{Binding NoteShowItems}" ItemContainerStyle="{StaticResource NoteMenuItemStyle}" IsEnabled="{Binding ItemsSource,RelativeSource={RelativeSource Self}, Converter={StaticResource IsNotEmptyCollection}}"/>
 			<MenuItem Header="hidden" AA:Language.Word="tasktray/note/hidden" ItemsSource="{Binding NoteHiddenItems}" ItemContainerStyle="{StaticResource NoteMenuItemStyle}" IsEnabled="{Binding ItemsSource,RelativeSource={RelativeSource Self}, Converter={StaticResource IsNotEmptyCollection}}"/>

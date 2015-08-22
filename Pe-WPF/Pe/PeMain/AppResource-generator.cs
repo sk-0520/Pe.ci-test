@@ -21,7 +21,7 @@
 		/*
 		このソースは自動生成のため AppResource-generator.tt を編集すること。
 
-		生成元フィールド数: 60
+		生成元フィールド数: 62
 		*/
 		#region Icon: Application
 
@@ -1147,6 +1147,50 @@
 			get { return GetImage(NoteNotePath); }
 		}
 		#endregion NoteNote
+		#region Image: NoteHide
+
+		/// <summary>
+		/// [Image] NoteHideのリソースパスを取得。
+		/// <para>/Resources/Image/Note/NoteHide.png</para>
+		/// </summary>
+		public static string NoteHidePath
+		{
+			get { return noteHide; }
+		}
+
+		/// <summary>
+		/// [Image] NoteHideのイメージソースを取得。
+		/// <para>初回のみ生成を行う。</para>
+		/// <para>NoteHidePath: /Resources/Image/Note/NoteHide.png</para>
+		/// </summary>
+		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
+		public static BitmapSource NoteHideImage
+		{
+			get { return GetImage(NoteHidePath); }
+		}
+		#endregion NoteHide
+		#region Image: NoteFront
+
+		/// <summary>
+		/// [Image] NoteFrontのリソースパスを取得。
+		/// <para>/Resources/Image/Note/NoteFront.png</para>
+		/// </summary>
+		public static string NoteFrontPath
+		{
+			get { return noteFront; }
+		}
+
+		/// <summary>
+		/// [Image] NoteFrontのイメージソースを取得。
+		/// <para>初回のみ生成を行う。</para>
+		/// <para>NoteFrontPath: /Resources/Image/Note/NoteFront.png</para>
+		/// </summary>
+		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
+		public static BitmapSource NoteFrontImage
+		{
+			get { return GetImage(NoteFrontPath); }
+		}
+		#endregion NoteFront
 		#region Image: TemplateTemplate
 
 		/// <summary>
