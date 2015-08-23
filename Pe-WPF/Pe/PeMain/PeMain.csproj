@@ -138,6 +138,9 @@
     <Compile Include="Data\Temporary\UpdateInfo.cs" />
     <Compile Include="Define\CommandKind.cs" />
     <Compile Include="Define\Timing.cs" />
+    <Content Include="etc\script\Updater\UpdaterScript.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Compile Include="LanguageKey.cs" />
     <Compile Include="Logic\Property\FontModelProperty.cs" />
     <Compile Include="Logic\Utility\ImageUtility.cs" />
