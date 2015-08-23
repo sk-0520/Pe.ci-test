@@ -7,19 +7,32 @@
 	using System.Threading.Tasks;
 	using System.Windows;
 	using System.Windows.Controls;
+	using System.Windows.Media.Effects;
+	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
 	public static class MenuIcon
 	{
-		#region IsStrongProperty
+		static DropShadowEffect _effect;
 
-		const double checkedIsStrong = 1;
-		const double uncheckedIsStrong = 0.5;
+		static MenuIcon()
+		{
+			_effect = new DropShadowEffect() {
+				Color = ImageUtility.GetMenuIconColor(false, true),
+				ShadowDepth = 0,
+				BlurRadius = 6,
+			};
+			if(_effect.CanFreeze) {
+				_effect.Freeze();
+			}
+		}
+
+		#region IsStrongProperty
 
 		public static readonly DependencyProperty IsStrongProperty = DependencyProperty.RegisterAttached(
 			"IsStrong",
 			typeof(bool),
 			typeof(MenuIcon),
-			new FrameworkPropertyMetadata(true,FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnIsStrongChanged)
+			new FrameworkPropertyMetadata(false,FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnIsStrongChanged)
 		);
 
 		static void OnIsStrongChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
@@ -40,9 +53,11 @@
 			//var img = imageObject as Image;
 			if(element != null) {
 				if(value) {
-					element.Opacity = checkedIsStrong;
+					//element.Opacity = checkedIsStrong;
+					element.Effect = _effect;
 				} else {
-					element.Opacity = uncheckedIsStrong;
+					//element.Opacity = uncheckedIsStrong;
+					element.Effect = null;
 				}
 			}
 		}

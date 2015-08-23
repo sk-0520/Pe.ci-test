@@ -45,7 +45,7 @@
 		<Item Id="tasktray/note/front" Word="前面表示" />
 		<Item Id="tasktray/note/show" Word="表示中一覧" />
 		<Item Id="tasktray/note/hidden" Word="非表示一覧" />
-		<Item Id="tasktray/template" Word="非表示一覧" />
+		<Item Id="tasktray/template" Word="テンプレート" />
 		<Item Id="tasktray/command" Word="コマンド" />
 		<Item Id="tasktray/log" Word="ログ" />
 		<Item Id="tasktray/system-env" Word="システム環境" />

@@ -14,6 +14,8 @@
 		<ResourceDictionary Source="/View/Parts/Resource/ImageDictionary.xaml"/>
 		<ResourceDictionary Source="/View/Parts/Resource/MenuItemDictionary.xaml"/>
 	</ResourceDictionary.MergedDictionaries>
+	<!--<Setter Property="AA:MenuIcon.IsStrong" Value="{Binding IsVisible}" />-->
+	<ContentControl x:Shared="false" x:Key="ToolbarMenuIcon" AA:MenuIcon.IsStrong="{Binding IsVisible}"  Content="{Binding MenuIcon}" />
 	<ContextMenu x:Shared="false" x:Key="ContextMenu" IsOpen="{Binding IsContextMenuOpen}">
 		<i:Interaction.Triggers>
 			<i:EventTrigger EventName="Opened">
@@ -39,13 +41,19 @@
 		</MenuItem>
 		<Separator />
 		<MenuItem AA:Language.Word="tasktray/toolbar" Header="toolbar" ItemsSource="{Binding LauncherToolbars}">
+			<MenuItem.Resources>
+				<Style TargetType="MenuItem">
+					<Setter Property="Icon" Value="{DynamicResource ToolbarMenuIcon}" />
+				</Style>
+			</MenuItem.Resources>
 			<MenuItem.Icon>
-				<Image Source="{x:Static AM:AppResource.ToolbarToolbarImage}" Style="{StaticResource DefaultImage}" />
+					<Image Source="{x:Static AM:AppResource.ToolbarToolbarImage}" Style="{StaticResource DefaultImage}" />
 			</MenuItem.Icon>
 			<MenuItem.ItemContainerStyle>
-				<Style TargetType="MenuItem" BasedOn="{StaticResource IMenuItem}">
+					<Style TargetType="MenuItem" BasedOn="{StaticResource IMenuItem}">
 					<!--<Setter Property="IsChecked" Value="{Binding IsVisible, Mode=OneWay}"/>-->
-					<Setter Property="AA:MenuIcon.IsStrong" Value="{Binding IsVisible}" />
+					<!--<Setter Property="AA:MenuIcon.IsStrong" Value="{Binding IsVisible}" />-->
+					<Setter Property="Icon" Value="{StaticResource ToolbarMenuIcon}" />
 					<Setter Property="Command" Value="{Binding ChangeVisibleCommand}" />
 					<Setter Property="CommandParameter" Value="{Binding IsVisible, Converter={StaticResource LogicalNotConverter}}" />
 				</Style>
