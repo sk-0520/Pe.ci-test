@@ -23,8 +23,11 @@
 			<RowDefinition Height="Auto" />
 		</Grid.RowDefinitions>
 		
-		<TabControl>
-			
+		<TabControl Grid.Row="0">
+			<TabItem Header="info">
+			</TabItem>
+			<TabItem Header="component">
+			</TabItem>
 		</TabControl>
 		
 		<Grid Grid.Row="1">

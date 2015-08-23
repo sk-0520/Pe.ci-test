@@ -346,13 +346,15 @@
 			{
 				var result = CreateCommand(
 					o => {
-						var window = new AboutWindow();
-						var notifiy = new AboutNotifiyItem();
-						window.SetCommonData(CommonData, notifiy);
-						window.ShowDialog();
-						if(notifiy.CheckUpdate) {
-							CheckUpdateProcessWait(true);
-						}
+						PausingBasicAction(() => {
+							var window = new AboutWindow();
+							var notifiy = new AboutNotifiyItem();
+							window.SetCommonData(CommonData, notifiy);
+							window.ShowDialog();
+							if(notifiy.CheckUpdate) {
+								CheckUpdateProcessWait(true);
+							}
+						});
 					}
 				);
 
