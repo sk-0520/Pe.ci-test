@@ -21,6 +21,13 @@
 
 		UpdateData UpdateData { get; set; }
 
+		public string NewVersion { get { return UpdateData.Info.Version; } }
+		public bool IsRcVersion { get { return UpdateData.Info.IsRcVersion; } }
+
+		#endregion
+
+		#region HavingViewModelBase
+
 		#endregion
 	}
 }

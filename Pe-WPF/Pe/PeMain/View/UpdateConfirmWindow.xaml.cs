@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
+using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 using ContentTypeTextNet.Pe.PeMain.View.Parts.Window;
 using ContentTypeTextNet.Pe.PeMain.ViewModel;
 
@@ -39,6 +40,15 @@ namespace ContentTypeTextNet.Pe.PeMain.View
 			base.ApplyViewModel();
 
 			DataContext = ViewModel;
+		}
+
+		public override void ApplyLanguage(Dictionary<string, string> map)
+		{
+			map[LanguageKey.updateNowVersion] = Constants.ApplicationVersion;
+			map[LanguageKey.updateNewVersion] = ViewModel.NewVersion;
+			map[LanguageKey.updateNewType] = ViewModel.IsRcVersion ? "${version-rc}": "${version-release}";
+
+			base.ApplyLanguage(map);
 		}
 
 		#endregion

@@ -16,5 +16,9 @@
 		public const string executeItem = "ITEM";
 		public const string streamItem = "ITEM";
 		public const string noteTitleCount = "COUNT";
+
+		public const string updateNowVersion = "UPDATE-NOW-VERSION";
+		public const string updateNewVersion = "UPDATE-NEW-VERSION";
+		public const string updateNewType = "UPDATE-NEW-TYPE";
 	}
 }
