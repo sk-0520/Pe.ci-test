@@ -12,8 +12,8 @@
 	Title="AboutWindow" 
 	Width="580"
 	Height="320" 
-	ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
-	
+	ResizeMode="NoResize" WindowStartupLocation="CenterScreen" 
+	Icon="/PeMain;component/Resources/Icon/App.ico"
 >
 	<AW:CommonDataWindow.Resources>
 		<ResourceDictionary>

@@ -14,6 +14,7 @@
 	Height="480" 
 	Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"
 	BorderBrush="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" WindowStartupLocation="CenterScreen"
+	Icon="/PeMain;component/Resources/Icon/App.ico"
 >
 	<AW:CommonDataWindow.Resources>
 		<ResourceDictionary Source="/View/Parts/Resource/DialogDictionary.xaml"/>

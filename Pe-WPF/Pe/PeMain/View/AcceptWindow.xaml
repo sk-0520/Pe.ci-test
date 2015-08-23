@@ -18,6 +18,7 @@
 	WindowStartupLocation="CenterScreen" 
 	Topmost="True" 
 	ResizeMode="CanResizeWithGrip"
+	Icon="/PeMain;component/Resources/Icon/App.ico"
 >
 	<AW:CommonDataWindow.Resources>
 		<ResourceDictionary Source="/View/Parts/Resource/DialogDictionary.xaml"/>
