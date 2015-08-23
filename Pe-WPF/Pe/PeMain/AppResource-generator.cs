@@ -21,7 +21,7 @@
 		/*
 		このソースは自動生成のため AppResource-generator.tt を編集すること。
 
-		生成元フィールド数: 62
+		生成元フィールド数: 63
 		*/
 		#region Icon: Application
 
@@ -1037,28 +1037,6 @@
 			get { return GetImage(CommonClosePath); }
 		}
 		#endregion CommonClose
-		#region Image: CommonUpdate
-
-		/// <summary>
-		/// [Image] CommonUpdateのリソースパスを取得。
-		/// <para>/Resources/Image/Common/CommonUpdate.png</para>
-		/// </summary>
-		public static string CommonUpdatePath
-		{
-			get { return commonUpdate; }
-		}
-
-		/// <summary>
-		/// [Image] CommonUpdateのイメージソースを取得。
-		/// <para>初回のみ生成を行う。</para>
-		/// <para>CommonUpdatePath: /Resources/Image/Common/CommonUpdate.png</para>
-		/// </summary>
-		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
-		public static BitmapSource CommonUpdateImage
-		{
-			get { return GetImage(CommonUpdatePath); }
-		}
-		#endregion CommonUpdate
 		#region Image: CommonOperatingSystem
 
 		/// <summary>
@@ -1741,6 +1719,50 @@
 			get { return GetImage(LogFatalPath); }
 		}
 		#endregion LogFatal
+		#region Image: AboutUpdate
+
+		/// <summary>
+		/// [Image] AboutUpdateのリソースパスを取得。
+		/// <para>/Resources/Image/About/AboutUpdate.png</para>
+		/// </summary>
+		public static string AboutUpdatePath
+		{
+			get { return aboutUpdate; }
+		}
+
+		/// <summary>
+		/// [Image] AboutUpdateのイメージソースを取得。
+		/// <para>初回のみ生成を行う。</para>
+		/// <para>AboutUpdatePath: /Resources/Image/About/AboutUpdate.png</para>
+		/// </summary>
+		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
+		public static BitmapSource AboutUpdateImage
+		{
+			get { return GetImage(AboutUpdatePath); }
+		}
+		#endregion AboutUpdate
+		#region Image: AboutHistory
+
+		/// <summary>
+		/// [Image] AboutHistoryのリソースパスを取得。
+		/// <para>/Resources/Image/About/AboutHistory.png</para>
+		/// </summary>
+		public static string AboutHistoryPath
+		{
+			get { return aboutHistory; }
+		}
+
+		/// <summary>
+		/// [Image] AboutHistoryのイメージソースを取得。
+		/// <para>初回のみ生成を行う。</para>
+		/// <para>AboutHistoryPath: /Resources/Image/About/AboutHistory.png</para>
+		/// </summary>
+		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
+		public static BitmapSource AboutHistoryImage
+		{
+			get { return GetImage(AboutHistoryPath); }
+		}
+		#endregion AboutHistory
 		#region Image: SettingSetting
 
 		/// <summary>

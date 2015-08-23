@@ -59,6 +59,11 @@
     <Prefer32Bit>true</Prefer32Bit>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
+  <PropertyGroup />
+  <PropertyGroup>
+    <ApplicationIcon>Resources\Icon\App.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup />
   <ItemGroup>
     <Reference Include="Hardcodet.Wpf.TaskbarNotification, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Hardcodet.NotifyIcon.Wpf.1.0.5\lib\net451\Hardcodet.Wpf.TaskbarNotification.dll</HintPath>
@@ -136,6 +141,7 @@
     <Compile Include="Data\Temporary\LauncherExecuteItem.cs" />
     <Compile Include="Data\Temporary\UpdateData.cs" />
     <Compile Include="Data\Temporary\UpdateInfo.cs" />
+    <Compile Include="Define\AboutCopyKind.cs" />
     <Compile Include="Define\CommandKind.cs" />
     <Compile Include="Define\Timing.cs" />
     <Content Include="etc\script\Updater\UpdaterScript.cs">
@@ -393,6 +399,7 @@
     <Compile Include="View\UpdateConfirmWindow.xaml.cs">
       <DependentUpon>UpdateConfirmWindow.xaml</DependentUpon>
     </Compile>
+    <Resource Include="Resources\Image\About\AboutHistory.png" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -654,7 +661,7 @@
     <Resource Include="Resources\Image\Common\CommonOperatingSystem.png" />
     <Resource Include="Resources\Image\Window\WindowListSystem.png" />
     <Resource Include="Resources\Image\Window\WindowListTimer.png" />
-    <Resource Include="Resources\Image\Common\CommonUpdate.png" />
+    <Resource Include="Resources\Image\About\AboutUpdate.png" />
     <Resource Include="Resources\Image\Setting\SettingLauncherGroupItem.png" />
     <Resource Include="Resources\Image\Setting\SettingLauncherGroupParent.png" />
     <Resource Include="Resources\Image\Common\CommonClose.png" />

@@ -296,6 +296,11 @@
 
 		#region property
 
+		public static string ApplicationName { get { return programName; } }
+		public static string BuildType { get { return buildType; } }
+		public static string BuildProcess { get { return buildProcess; } }
+		public static string ApplicationRevision { get { return applicationRevision; } }
+		public static string ApplicationVersion { get { return applicationVersion; } }
 		#endregion
 
 		#region function

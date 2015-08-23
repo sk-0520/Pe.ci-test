@@ -174,6 +174,24 @@
 		<Item Id="logging/clear" Word="ログクリア" />
 		<Item Id="logging/timestamp" Word="タイムスタンプ" />
 		<Item Id="logging/timestamp" Word="概要" />
+		
+		<Item Id="about/information" Word="@[APPLICATION] 情報" />
+		<Item Id="about/information/link/web" Word="WEBページ" />
+		<Item Id="about/information/link/mail" Word="メール送信" />
+		<Item Id="about/information/link/dev" Word="開発ページ" />
+		<Item Id="about/information/link/forum" Word="フォーラム" />
+		<Item Id="about/information/link/feedback" Word="フィードバック" />
+		<Item Id="about/information/copy" Word="報告用情報をクリップボードにコピーする" />
+		<Item Id="about/information/copy/short" Word="短い情報" />
+		<Item Id="about/information/copy/long" Word="長い情報" />
+		<Item Id="about/component" Word="コンポーネント" />
+		<Item Id="about/app" Word="@[APPLICATION]" />
+		<Item Id="about/data" Word="データ" />
+		<Item Id="about/history" Word="更新履歴" />
+		<Item Id="about/update" Word="アップデート" />
+		<Item Id="about/update/dialog/caption" Word="アップデートチェック" />
+		<Item Id="about/update/dialog/message" Word="情報ダイアログを閉じてアップデートチェックを開始しますか" />
+		<Item Id="about/close" Word="閉じる" />
 
 		<!-- control -->
 		
@@ -215,7 +233,7 @@
 		<Item Id="enum/ModifierKeys/Windows" Word="Windows" />
 		<!-- key 106 -->
 		<Item Id="enum/Key/separator" Word=" + " />
-		None
+		
 		<Item Id="enum/Key/None" Word="None" />
 		<Item Id="enum/Key/NumPad0" Word="0" />
 		<Item Id="enum/Key/NumPad1" Word="1" />

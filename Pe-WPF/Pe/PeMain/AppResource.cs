@@ -79,8 +79,6 @@
 		[AppResource(AppResourceType.Image)]
 		const string commonClose = "/Resources/Image/Common/CommonClose.png";
 		[AppResource(AppResourceType.Image)]
-		const string commonUpdate = "/Resources/Image/Common/CommonUpdate.png";
-		[AppResource(AppResourceType.Image)]
 		const string commonOperatingSystem = "/Resources/Image/Common/CommonOperatingSystem.png";
 
 		[AppResource(AppResourceType.Image)]
@@ -150,6 +148,11 @@
 		const string logError = "/Resources/Image/Log/LogError.png";
 		[AppResource(AppResourceType.Image)]
 		const string logFatal = "/Resources/Image/Log/LogFatal.png";
+
+		[AppResource(AppResourceType.Image)]
+		const string aboutUpdate = "/Resources/Image/About/AboutUpdate.png";
+		[AppResource(AppResourceType.Image)]
+		const string aboutHistory = "/Resources/Image/About/AboutHistory.png";
 
 		[AppResource(AppResourceType.Image)]
 		const string settingSetting = "/Resources/Image/Setting/Setting.png";
