@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using ContentTypeTextNet.Pe.Library.PeData.Item;
+using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
 using ContentTypeTextNet.Pe.PeMain.Define;
 using ContentTypeTextNet.Pe.PeMain.IF;
 using ContentTypeTextNet.Pe.PeMain.View.Parts.Window;
@@ -33,8 +34,9 @@ namespace ContentTypeTextNet.Pe.PeMain.View
 
 		protected override void CreateViewModel()
 		{
-			var model = (LauncherItemModel)ExtensionData;
-			ViewModel = new LauncherItemCustomizeViewModel(model, this, CommonData.NonProcess, CommonData.AppSender);
+			var data = (LauncherItemWithScreen)ExtensionData;
+
+			ViewModel = new LauncherItemCustomizeViewModel(data.Model, this, data.Screen, CommonData.NonProcess, CommonData.AppSender);
 		}
 
 		protected override void ApplyViewModel()

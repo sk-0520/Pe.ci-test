@@ -8,9 +8,9 @@
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 
-	public class LauncherExecuteItem : ItemWithScreen<LauncherItemModel>
+	public class LauncherItemWithScreen : ItemWithScreen<LauncherItemModel>
 	{
-		public LauncherExecuteItem(LauncherItemModel model, ScreenModel screen, IEnumerable<string> options)
+		public LauncherItemWithScreen(LauncherItemModel model, ScreenModel screen, IEnumerable<string> options)
 			:base(model, screen)
 		{
 			Options = options;

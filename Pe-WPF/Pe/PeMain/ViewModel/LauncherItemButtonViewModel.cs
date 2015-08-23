@@ -193,7 +193,7 @@
 			{
 				var result = CreateCommand(
 					o => {
-						var data = new LauncherExecuteItem(Model, DockScreen, null);
+						var data = new LauncherItemWithScreen(Model, DockScreen, null);
 						var window = AppSender.SendCreateWindow(WindowKind.LauncherExecute, data, null);
 						
 						window.Show();
@@ -253,7 +253,8 @@
 			{
 				var result = CreateCommand(
 					o => {
-						var window = AppSender.SendCreateWindow(WindowKind.LauncherCustomize, Model, null);
+						var data = new LauncherItemWithScreen(Model, DockScreen, null);
+						var window = AppSender.SendCreateWindow(WindowKind.LauncherCustomize, data, null);
 						window.Show();
 					}
 				);
@@ -307,7 +308,7 @@
 						if (eventData.EventArgs.Data.GetDataPresent(DataFormats.FileDrop)) {
 							var filePathList = eventData.EventArgs.Data.GetData(DataFormats.FileDrop) as string[];
 							// TODO: 指定して実行を無視して実行, #290
-							var data = new LauncherExecuteItem(Model, DockScreen, filePathList);
+							var data = new LauncherItemWithScreen(Model, DockScreen, filePathList);
 							var window = AppSender.SendCreateWindow(WindowKind.LauncherExecute, data, null);
 
 							window.Show();

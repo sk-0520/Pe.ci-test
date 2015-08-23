@@ -468,7 +468,7 @@
 							if(HasView) {
 								screen = Screen.FromHandle(View.Handle);
 							}
-							var data = new LauncherExecuteItem(commandItem.LauncherItemModel, screen, null);
+							var data = new LauncherItemWithScreen(commandItem.LauncherItemModel, screen, null);
 							var window = AppSender.SendCreateWindow(WindowKind.LauncherExecute, data, null);
 							window.Show();
 						} else {

@@ -8,6 +8,7 @@
 	using System.Windows.Input;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+	using ContentTypeTextNet.Library.SharedLibrary.Model;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.Define;
@@ -27,13 +28,19 @@
 
 		#endregion
 
-		public LauncherItemCustomizeViewModel(LauncherItemModel model, LauncherItemCustomizeWindow view, IAppNonProcess nonPorocess, IAppSender appSender)
+		public LauncherItemCustomizeViewModel(LauncherItemModel model, LauncherItemCustomizeWindow view, ScreenModel screen, IAppNonProcess nonPorocess, IAppSender appSender)
 			: base((LauncherItemModel)model.DeepClone(), null, nonPorocess, appSender)
 		{
 			View = view;
-
+			Screen = screen;
 			this._srcModel = model;
 		}
+
+		#region proeprty
+
+		ScreenModel Screen { get; set; }
+
+		#endregion
 
 		#region command
 

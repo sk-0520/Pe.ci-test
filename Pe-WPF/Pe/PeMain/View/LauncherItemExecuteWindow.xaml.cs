@@ -37,7 +37,7 @@
 
 		protected override void CreateViewModel()
 		{
-			var data = (LauncherExecuteItem)ExtensionData;
+			var data = (LauncherItemWithScreen)ExtensionData;
 
 			ViewModel = new LauncherItemExecuteViewModel(data.Model, this, data.Screen, CommonData.NonProcess, CommonData.AppSender);
 			if (data.Options != null && data.Options.Any()) {
