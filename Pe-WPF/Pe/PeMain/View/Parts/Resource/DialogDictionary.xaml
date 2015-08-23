@@ -12,7 +12,7 @@
 	<Style x:Key="DialogResultPanel" TargetType="StackPanel">
 		<Setter Property="VerticalAlignment" Value="Center" />
 		<Setter Property="HorizontalAlignment" Value="Right" />
-		<Setter Property="Margin" Value="0, 4, 20, 8" />
+		<Setter Property="Margin" Value="0, 4, 8, 8" />
 		<Setter Property="Orientation" Value="Horizontal" />
 	</Style>
 	<Style x:Key="DialogResultButton" TargetType="Button">
