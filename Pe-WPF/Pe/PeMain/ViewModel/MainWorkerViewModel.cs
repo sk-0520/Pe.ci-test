@@ -55,7 +55,7 @@
 
 		#region variable
 
-		bool _isContextMenuOpen;
+		//bool _isContextMenuOpen;
 
 		DateTime _clipboardPreviousTime = DateTime.MinValue;
 		uint _clipboardPreviousSequenceNumber = 0;
@@ -102,16 +102,20 @@
 		CommonData CommonData { get; set; }
 		public LanguageManager Language { get { return CommonData.Language; } }
 
-		public bool Pause { get; set; }
+		public bool IsPause { get; set; }
 
 		public bool IsContextMenuOpen 
 		{
-			get { return this._isContextMenuOpen; }
+			get 
+			{
+				return IsPause;
+				//return this._isContextMenuOpen; 
+			}
 			set
 			{
-				if (SetVariableValue(ref this._isContextMenuOpen, value)) {
-					Pause = IsContextMenuOpen;
-				}
+				//if (SetVariableValue(ref this._isContextMenuOpen, value)) {
+				IsPause = value;
+				//}
 			}
 		}
 
@@ -260,7 +264,7 @@
 							ClipboardIndexSetting = (ClipboardIndexSettingModel)CommonData.ClipboardIndexSetting.DeepClone(),
 						};
 
-						Pause = true;
+						IsPause = true;
 						try {
 							var window = new SettingWindow();
 							window.SetCommonData(cloneCommonData, null);
@@ -284,7 +288,7 @@
 								ResetCache(true);
 							}
 						} finally {
-							Pause = false;
+							IsPause = false;
 						}
 					}
 				);
@@ -1099,7 +1103,7 @@
 
 			var updateData = new UpdateData(CommonData.VariableConstants.UserArchiveDirectoryPath, CommonData.MainSetting.RunningInformation.CheckUpdateRC, CommonData);
 			CommonData.Logger.Debug("update: parameter", string.Format("force = {0}, setting = {1}", force, CommonData.MainSetting.RunningInformation.CheckUpdateRelease));
-			if(force || !Pause && this.CommonData.MainSetting.RunningInformation.CheckUpdateRelease) {
+			if(force || !IsPause && this.CommonData.MainSetting.RunningInformation.CheckUpdateRelease) {
 				var updateInfo = updateData.Check();
 			}
 			return updateData;
@@ -1112,7 +1116,7 @@
 		/// <param name="updateData">アップデート情報。</param>
 		void ConfirmUpdate(bool force, UpdateData updateData)
 		{
-			if(force || !Pause && CommonData.MainSetting.RunningInformation.CheckUpdateRelease) {
+			if(force || !IsPause && CommonData.MainSetting.RunningInformation.CheckUpdateRelease) {
 				if(updateData != null && updateData.Info != null) {
 					if(updateData.Info.IsUpdate) {
 						ShowUpdateDialog(updateData);
@@ -1124,7 +1128,7 @@
 				} else {
 					CommonData.Logger.Error(CommonData.Language["log/update/error"], "info is null");
 				}
-			} else if(Pause) {
+			} else if(IsPause) {
 				CommonData.Logger.Information(CommonData.Language["log/update/check-stop"], "this._pause => true");
 			}
 		}
@@ -1604,7 +1608,7 @@
 			var Initialized = true;
 
 			// デバイス状態が変更されたか
-			if(changedDevice.DBT == DBT.DBT_DEVNODES_CHANGED && Initialized && !Pause) {
+			if(changedDevice.DBT == DBT.DBT_DEVNODES_CHANGED && Initialized && !IsPause) {
 				// デバイス変更前のスクリーン数が異なっていればディスプレイの抜き差しが行われたと判定する
 				// 現在生成されているツールバーの数が前回ディスプレイ数となる
 
@@ -1707,7 +1711,7 @@
 
 		void ReceiveHotKey(HotKeyId hotKeyId, HotKeyModel hotKeyModel)
 		{
-			if (Pause) {
+			if (IsPause) {
 				CommonData.Logger.Information("pause");
 				return;
 			}
@@ -1861,7 +1865,7 @@
 
 		void Timer_Tick(object sender, EventArgs e)
 		{
-			if (Pause) {
+			if (IsPause) {
 				CommonData.Logger.Information("pause");
 				return;
 			}

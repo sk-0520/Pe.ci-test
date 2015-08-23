@@ -16,7 +16,7 @@
 	</ResourceDictionary.MergedDictionaries>
 	<!--<Setter Property="AA:MenuIcon.IsStrong" Value="{Binding IsVisible}" />-->
 	<ContentControl x:Shared="false" x:Key="ToolbarMenuIcon" AA:MenuIcon.IsStrong="{Binding IsVisible}"  Content="{Binding MenuIcon}" />
-	<ContextMenu x:Shared="false" x:Key="ContextMenu" IsOpen="{Binding IsContextMenuOpen}">
+	<ContextMenu x:Shared="false" x:Key="ContextMenu" IsOpen="{Binding IsContextMenuOpen}" >
 		<i:Interaction.Triggers>
 			<i:EventTrigger EventName="Opened">
 				<i:InvokeCommandAction Command="{Binding OpenContextMenuCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
