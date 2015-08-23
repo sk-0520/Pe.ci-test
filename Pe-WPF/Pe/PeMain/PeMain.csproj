@@ -131,6 +131,7 @@
     <Compile Include="ConstantsRangeAttribute.cs">
       <DependentUpon>Constants.cs</DependentUpon>
     </Compile>
+    <Compile Include="Data\Temporary\AboutNotifiyItem.cs" />
     <Compile Include="Data\Temporary\ItemWithScreen.cs" />
     <Compile Include="Data\Temporary\LauncherExecuteItem.cs" />
     <Compile Include="Data\Temporary\UpdateData.cs" />
@@ -148,10 +149,14 @@
     <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeLauncherItem.cs" />
     <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeLoggingSetting.cs" />
     <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeStreamSetting.cs" />
+    <Compile Include="ViewModel\AboutViewModel.cs" />
     <Compile Include="ViewModel\CommandItemViewModel.cs" />
     <Compile Include="ViewModel\CommandViewModel.cs" />
     <Compile Include="ViewModel\Control\LauncherListItemViewModel.cs" />
     <Compile Include="ViewModel\UpdateConfirmViewModel.cs" />
+    <Compile Include="View\AboutWindow.xaml.cs">
+      <DependentUpon>AboutWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\CommandWindow.xaml.cs">
       <DependentUpon>CommandWindow.xaml</DependentUpon>
     </Compile>
@@ -433,6 +438,10 @@
     <Resource Include="Resources\Icon\App.ico" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="View\AboutWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\AcceptWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

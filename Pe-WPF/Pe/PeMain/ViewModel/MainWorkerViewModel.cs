@@ -250,8 +250,7 @@
 							ClipboardIndexSetting = (ClipboardIndexSettingModel)CommonData.ClipboardIndexSetting.DeepClone(),
 						};
 
-						IsPause = true;
-						try {
+						PausingBasicAction(() => {
 							var window = new SettingWindow();
 							window.SetCommonData(cloneCommonData, null);
 							if(window.ShowDialog().GetValueOrDefault()) {
@@ -273,9 +272,7 @@
 							} else {
 								ResetCache(true);
 							}
-						} finally {
-							IsPause = false;
-						}
+						});
 					}
 				);
 
@@ -336,6 +333,26 @@
 				var result = CreateCommand(
 					o => {
 						SwitchShowClipboardWindow();
+					}
+				);
+
+				return result;
+			}
+		}
+
+		public ICommand AboutCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						var window = new AboutWindow();
+						var notifiy = new AboutNotifiyItem();
+						window.SetCommonData(CommonData, notifiy);
+						window.ShowDialog();
+						if(notifiy.CheckUpdate) {
+							CheckUpdateProcessWait(true);
+						}
 					}
 				);
 
@@ -1200,21 +1217,31 @@
 			//	return null;
 			//});
 			try {
-				IsPause = true; 
-				var window = new UpdateConfirmWindow();
-				window.SetCommonData(CommonData, updateData);
-				if(window.ShowDialog().GetValueOrDefault()) {
-					SaveSetting();
-					if(updateData.Execute()) {
-						Application.Current.Shutdown();
+				PausingBasicAction(() => {
+					var window = new UpdateConfirmWindow();
+					window.SetCommonData(CommonData, updateData);
+					if(window.ShowDialog().GetValueOrDefault()) {
+						SaveSetting();
+						if(updateData.Execute()) {
+							Application.Current.Shutdown();
+						}
 					}
-				}
+				});
 			} catch(Exception ex) {
 				CommonData.Logger.Error(ex);
+			}
+		}
+
+		void PausingBasicAction(Action action)
+		{
+			try {
+				IsPause = true;
+				action();
 			} finally {
 				IsPause = false;
 			}
 		}
+
 		#endregion
 
 		#region ViewModelBase
