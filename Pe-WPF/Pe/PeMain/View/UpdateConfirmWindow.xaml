@@ -1,0 +1,16 @@
+﻿<AW:ViewModelCommonDataWindow 
+	x:Class="ContentTypeTextNet.Pe.PeMain.View.UpdateConfirmWindow"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:AW="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Window"
+	xmlns:AVM="clr-namespace:ContentTypeTextNet.Pe.PeMain.ViewModel"
+	x:TypeArguments="AVM:UpdateConfirmViewModel"
+	Title="UpdateWindow" 
+	Height="300" 
+	Width="300"
+>
+  
+	<Grid>
+        
+    </Grid>
+</AW:ViewModelCommonDataWindow>

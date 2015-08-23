@@ -47,6 +47,7 @@
 				this._notifyIcon = (TaskbarIcon)FindResource("root");
 				this._notifyIcon.DataContext = this._mainWorker;
 				this._mainWorker.SetView(this._notifyIcon);
+				this._mainWorker.CheckUpdateProcessAsync();
 				//var menu = (ContextMenu)FindResource("ContextMenu");
 				//menu.PlacementTarget = this._notifyIcon;
 				//menu.DataContext = this._notifyIcon.DataContext;

@@ -81,8 +81,6 @@
 				Constants.CacheIndexTemplate,
 				Constants.CacheIndexClipboard
 			);
-
-			CheckUpdateProcessAsync();
 		}
 
 		#region property
@@ -1135,7 +1133,7 @@
 		/// <summary>
 		/// アップデートチェックを非同期で行い、アップデートが存在すればアップデート確認を行う。
 		/// </summary>
-		void CheckUpdateProcessAsync()
+		public void CheckUpdateProcessAsync()
 		{
 #if !DISABLED_UPDATE_CHECK
 			Task.Run(() => {
@@ -1179,7 +1177,6 @@
 		void ShowUpdateDialog(UpdateData updateData)
 		{
 			// TODO: ShowUpdateDialog
-			CommonData.Logger.Trace("TODO");
 			//PauseOthersPlain(() => {
 			//	try {
 			//		using(var dialog = new UpdateForm()) {
@@ -1202,6 +1199,21 @@
 			//	}
 			//	return null;
 			//});
+			try {
+				IsPause = true; 
+				var window = new UpdateConfirmWindow();
+				window.SetCommonData(CommonData, updateData);
+				if(window.ShowDialog().GetValueOrDefault()) {
+					SaveSetting();
+					if(updateData.Execute()) {
+						Application.Current.Shutdown();
+					}
+				}
+			} catch(Exception ex) {
+				CommonData.Logger.Error(ex);
+			} finally {
+				IsPause = false;
+			}
 		}
 		#endregion
 
