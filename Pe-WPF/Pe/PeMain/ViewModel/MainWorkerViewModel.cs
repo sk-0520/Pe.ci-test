@@ -211,19 +211,19 @@
 
 		#region command
 
-		public ICommand OpenContextMenuCommand
-		{
-			get
-			{
-				var result = CreateCommand(
-					o => {
-						//LanguageUtility.RecursiveSetLanguage((ContextMenu)o, CommonData.Language);
-					}
-				);
+		//public ICommand OpenContextMenuCommand
+		//{
+		//	get
+		//	{
+		//		var result = CreateCommand(
+		//			o => {
+		//				//LanguageUtility.RecursiveSetLanguage((ContextMenu)o, CommonData.Language);
+		//			}
+		//		);
 
-				return result;
-			}
-		}
+		//		return result;
+		//	}
+		//}
 
 		public ICommand OpenSystemEnvironmentMenuCommand
 		{
@@ -679,7 +679,16 @@
 
 		void InitializeSystemEvent()
 		{
+			SystemEvents.SessionSwitch += SystemEvents_SessionSwitch;
+			SystemEvents.SessionEnding += SystemEvents_SessionEnding;
 			SystemEvents.DisplaySettingsChanging += SystemEvents_DisplaySettingsChanging;
+		}
+
+		void UninitializeSystemEvent()
+		{
+			SystemEvents.SessionSwitch -= SystemEvents_SessionSwitch;
+			SystemEvents.SessionEnding -= SystemEvents_SessionEnding;
+			SystemEvents.DisplaySettingsChanging -= SystemEvents_DisplaySettingsChanging;
 		}
 
 		void InitializeStatic()
@@ -857,7 +866,7 @@
 		/// </summary>
 		void ChangedScreenCount()
 		{
-			CommonData.Logger.Information("chnage screen");
+			CommonData.Logger.Information("change screen count");
 			ResetToolbar();
 		}
 
@@ -1212,6 +1221,8 @@
 
 		protected override void Dispose(bool disposing)
 		{
+			UninitializeSystemEvent();
+
 			if(!IsDisposed) {
 				CommonData.Dispose();
 			}
@@ -1876,7 +1887,9 @@
 			timer.Stop();
 			try {
 				if (timer == WindowSaveTimer) {
-					SaveWindowItemAsync(WindowSaveType.Timer);
+					if(CommonData.MainSetting.WindowSave.IsEnabled) {
+						SaveWindowItemAsync(WindowSaveType.Timer);
+					}
 				}
 			} finally {
 				timer.Start();
@@ -1885,7 +1898,31 @@
 
 		void SystemEvents_DisplaySettingsChanging(object sender, EventArgs e)
 		{
-			SaveWindowItem(WindowSaveType.System);
+			if(CommonData.MainSetting.WindowSave.IsEnabled) {
+				SaveWindowItem(WindowSaveType.System);
+			}
+
+			CommonData.Logger.Information("change screen setting", e);
+			ResetToolbar();
+		}
+
+		void SystemEvents_SessionSwitch(object sender, SessionSwitchEventArgs e)
+		{
+			CommonData.Logger.Information("SessionSwitch", e);
+			if(e.Reason == SessionSwitchReason.ConsoleConnect || e.Reason == SessionSwitchReason.SessionUnlock) {
+				ResetToolbar();
+				if(e.Reason == SessionSwitchReason.SessionUnlock) {
+					CheckUpdateProcessAsync();
+				}
+			} else if(e.Reason == SessionSwitchReason.ConsoleDisconnect) {
+				SaveSetting();
+			}
+		}
+
+		void SystemEvents_SessionEnding(object sender, SessionEndingEventArgs e)
+		{
+			CommonData.Logger.Information("SessionEnding", e);
+			SaveSetting();
 		}
 
 		void Window_Closed(object sender, EventArgs e)
