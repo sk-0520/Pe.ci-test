@@ -2,6 +2,7 @@
 {
 	using System;
 	using System.Collections.Generic;
+	using System.IO;
 	using System.Linq;
 	using System.Text;
 	using System.Threading.Tasks;
@@ -62,6 +63,21 @@
 			}
 		}
 
+		public ICommand OpenHistoryCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						var path = Environment.ExpandEnvironmentVariables(Path.Combine(AppNonProcess.VariableConstants.ApplicationDocumentDirectoryPath, Constants.changelogFileName));
+						ExecuteUtility.OpenFile(path, AppNonProcess);
+					}
+				);
+
+				return result;
+			}
+		}
+
 		public ICommand UpdateCommand
 		{
 			get
@@ -77,14 +93,37 @@
 						if(messageResult == MessageBoxResult.Yes) {
 							Notifiy.CheckUpdate = true;
 
-							if(HasView) {
-								View.Close();
-							}
+							CloseView();
 						}
 					}
 				);
 
 				return result;
+			}
+		}
+
+		public ICommand CloseCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						CloseView();
+					}
+				);
+
+				return result;
+			}
+		}
+
+		#endregion
+
+		#region function
+
+		void CloseView()
+		{
+			if(HasView) {
+				View.Close();
 			}
 		}
 

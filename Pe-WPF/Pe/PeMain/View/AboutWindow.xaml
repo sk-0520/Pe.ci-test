@@ -136,7 +136,7 @@
 					<TextBlock Text="data" AA:Language.Word="about/data" />
 				</StackPanel>
 			</Button>
-			<Button Grid.Column="2">
+			<Button Grid.Column="2" Command="{Binding OpenHistoryCommand}">
 				<StackPanel Orientation="Horizontal">
 					<Image Source="{x:Static AM:AppResource.AboutHistoryImage}" Style="{StaticResource DefaultImage}" />
 					<TextBlock Text="history" AA:Language.Word="about/history" />
@@ -149,7 +149,7 @@
 				</StackPanel>
 			</Button>
 
-			<Button Grid.Column="5" IsDefault="True"  Content="ok" AA:Language.Word="about/close" />
+			<Button Grid.Column="5" IsDefault="True"  Content="ok" AA:Language.Word="about/close" Command="{Binding CloseCommand}" />
 		</Grid>
 
 	</Grid>

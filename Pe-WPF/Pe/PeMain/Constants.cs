@@ -65,6 +65,8 @@
 		public const string launcherItemSettingFileName = "launcher-items.json";
 		public const string launcherGroupItemSettingFileName = "group-items.json";
 
+		public const string changelogFileName = "changelog.xml";
+
 		public const int indexBodyCachingSize = 3;
 		public const string indexBodyBaseFileName = keyGuidName + "." + keyIndexExt;
 
