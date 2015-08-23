@@ -1222,7 +1222,9 @@
 				PausingBasicAction(() => {
 					var window = new UpdateConfirmWindow();
 					window.SetCommonData(CommonData, updateData);
-					if(window.ShowDialog().GetValueOrDefault()) {
+					window.ShowDialog();
+					// 情報ダイアログの通知方法と合わせる
+					if(updateData.ApprovalUpdate) {
 						SaveSetting();
 						if(updateData.Execute()) {
 							Application.Current.Shutdown();

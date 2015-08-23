@@ -40,6 +40,8 @@ namespace ContentTypeTextNet.Pe.PeMain.View
 			base.ApplyViewModel();
 
 			DataContext = ViewModel;
+
+			ViewModel.SetUpdateDocument(this.webUpdate);
 		}
 
 		public override void ApplyLanguage(Dictionary<string, string> map)

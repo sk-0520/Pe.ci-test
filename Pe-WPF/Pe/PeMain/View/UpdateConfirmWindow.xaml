@@ -26,14 +26,14 @@
 			<RowDefinition Height="Auto" />
 		</Grid.RowDefinitions>
 
-		<WebBrowser x:Name="webBrowser" Grid.Row="0" />
+		<WebBrowser x:Name="webUpdate" Grid.Row="0" />
 		
 		<StackPanel Grid.Row="1">
-			<TextBlock x:Name="viewVersion" Text="now -> new?" AA:Language.Word="update/confirm" />
+			<TextBlock x:Name="viewVersion" Text="now -> new?" AA:Language.Word="update/confirm" Foreground="{Binding VersionForeground}" Background="{Binding VersionBackground}" />
 		</StackPanel>
 
 		<StackPanel Grid.Row="2" Style="{StaticResource ResourceKey=DialogResultPanel}" >
-			<Button Content="ok" Style="{StaticResource ResourceKey=DialogResultButtonAccept}" Command="{Binding RunCommand}" />
+			<Button Content="ok" Style="{StaticResource ResourceKey=DialogResultButtonAccept}" Command="{Binding UpdateCommand}" />
 			<Button Content="close" Style="{StaticResource ResourceKey=DialogResultButtonCancel}" Command="{Binding CancelCommand}" />
 		</StackPanel>
 

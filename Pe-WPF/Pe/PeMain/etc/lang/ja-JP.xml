@@ -10,6 +10,9 @@
 		<Item Id="hide" Word="非表示" />
 		<Item Id="input" Word="入力" />
 
+		<Word Name="version-release"     Text="リリース版" />
+		<Word Name="version-rc"          Text="RC版" />
+		
 		<Item Id="execute" Word="起動" />
 
 		<Item Id="setting" Word="設定" />

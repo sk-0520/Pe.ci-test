@@ -23,6 +23,8 @@
 
 		public UpdateInfo Info { get; private set; }
 
+		public bool ApprovalUpdate { get; set; }
+
 		public static string UpdaterExe
 		{
 			get { return Path.Combine(Constants.applicationRootDirectoryPath, Constants.sbinDirectoryName, Constants.updateProgramDirectoryName, Constants.updateProgramName); }
