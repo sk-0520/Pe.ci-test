@@ -51,7 +51,8 @@
 			</MenuItem.Icon>
 			<MenuItem.ItemContainerStyle>
 					<Style TargetType="MenuItem" BasedOn="{StaticResource IMenuItem}">
-					<!--<Setter Property="IsChecked" Value="{Binding IsVisible, Mode=OneWay}"/>-->
+					<!--<Setter Property="IsChecked
+						" Value="{Binding IsVisible, Mode=OneWay}"/>-->
 					<!--<Setter Property="AA:MenuIcon.IsStrong" Value="{Binding IsVisible}" />-->
 					<Setter Property="Icon" Value="{StaticResource ToolbarMenuIcon}" />
 					<Setter Property="Command" Value="{Binding ChangeVisibleCommand}" />

@@ -141,7 +141,7 @@
 			};
 		}
 
-		void SetText()
+		protected void SetText()
 		{
 			SetText(ModifierKeys, Key);
 		}

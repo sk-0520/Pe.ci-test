@@ -215,7 +215,8 @@
 		<Item Id="enum/ModifierKeys/Windows" Word="Windows" />
 		<!-- key 106 -->
 		<Item Id="enum/Key/separator" Word=" + " />
-		
+		None
+		<Item Id="enum/Key/None" Word="None" />
 		<Item Id="enum/Key/NumPad0" Word="0" />
 		<Item Id="enum/Key/NumPad1" Word="1" />
 		<Item Id="enum/Key/NumPad2" Word="2" />
