@@ -25,7 +25,7 @@
 
 		public static string UpdaterExe
 		{
-			get { return Path.Combine(Constants.sbinDirectoryName, Constants.updateProgramDirectoryName, Constants.updateProgramName); }
+			get { return Path.Combine(Constants.applicationRootDirectoryPath, Constants.sbinDirectoryName, Constants.updateProgramDirectoryName, Constants.updateProgramName); }
 		}
 
 		public UpdateData(string downloadPath, bool donwloadRc, CommonData commonData)

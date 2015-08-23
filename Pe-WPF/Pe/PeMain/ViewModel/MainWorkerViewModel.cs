@@ -81,21 +81,9 @@
 				Constants.CacheIndexTemplate,
 				Constants.CacheIndexClipboard
 			);
+
+			CheckUpdateProcessAsync();
 		}
-		///// <summary>
-		///// dummy init
-		///// </summary>
-		//public MainWorkerViewModel() 
-		//{
-		//	CommonData = new CommonData() {
-		//		NoteIndexSetting = new NoteIndexSettingModel(),
-		//		TemplateIndexSetting = new TemplateIndexSettingModel(),
-		//		ClipboardIndexSetting = new ClipboardIndexSettingModel(),
-		//	};
-		//	LauncherToolbarWindowList = new List<LauncherToolbarWindow>();
-		//	NoteWindowList = new List<NoteWindow>();
-		//	LoggingWindow = new LoggingWindow();
-		//}
 
 		#region property
 
