@@ -167,69 +167,8 @@
 		IconSource="{Binding ApplicationIcon, Mode=OneWay}"
 		ToolTipText="Double-click for window, right-click for menu"
 		ContextMenu="{StaticResource ResourceKey=ContextMenu}"
+		
 	/>
 
-	<!--<Taskbar:TaskbarIcon 
-		x:Key="root"
-		x:Name="root"
-		Tag="{Binding DataContext,RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}"
-		IconSource="{Binding ApplicationIcon, Mode=OneWay}"
-		ToolTipText="Double-click for window, right-click for menu"
-	>
-		<Taskbar:TaskbarIcon.ContextMenu>
-			<ContextMenu >
-				<ContextMenu.Resources>
-					<SC:LogicalNotConverter x:Key="LogicalNotConverter"/>
 
-					<ItemContainerTemplate x:Key="NoteMenuItemTemplate">
-						<StackPanel Orientation="Horizontal">
-							<Image Source="{Binding MenuImage}" />
-							<TextBlock Text="{Binding DisplayText}" />
-						</StackPanel>
-					</ItemContainerTemplate>
-					<Style x:Key="NoteMenuItemStyle" TargetType="MenuItem">
-						<Setter Property="Command" Value="{Binding Path=PlacementTarget.MenuSelectedCommand,  RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}" />
-					</Style>
-				</ContextMenu.Resources>
-				<MenuItem AA:Language.Word="tasktray/setting" Header="setting" Command="{Binding ShowSettingWindowCommand}" />
-				<MenuItem AA:Language.Word="tasktray/toolbar" Header="toolbar" ItemsSource="{Binding LauncherToolbar}">
-					<MenuItem.ItemContainerStyle>
-						<Style TargetType="MenuItem">
-							<Setter Property="IsChecked" Value="{Binding IsVisible, Mode=OneWay}"/>
-							<Setter Property="Command" Value="{Binding ChangeVisibleCommand}" />
-							<Setter Property="CommandParameter" Value="{Binding IsVisible, Converter={StaticResource LogicalNotConverter}}" />
-						</Style>
-					</MenuItem.ItemContainerStyle>
-					<MenuItem.ItemTemplate>
-						<DataTemplate>
-							<StackPanel Orientation="Horizontal">
-								<Image Source="{Binding ScreenPosition}" />
-								<TextBlock Text="{Binding ScreenName}" />
-							</StackPanel>
-						</DataTemplate>
-					</MenuItem.ItemTemplate>
-				</MenuItem>
-				<MenuItem AA:Language.Word="tasktray/note"    Header="note">
-					<MenuItem Header="create" Command="{Binding CreateNoteItemCommand}" />
-					<MenuItem Header="compact" />
-					<MenuItem Header="hide" />
-					<Separator />
-					<MenuItem Header="front" />
-					<Separator />
-					<MenuItem Header="show" ItemsSource="{Binding NoteShowItems}" ItemTemplate="{StaticResource ResourceKey=NoteMenuItemTemplate}" ItemContainerStyle="{StaticResource ResourceKey=NoteMenuItemStyle}" />
-					<MenuItem Header="hidden" ItemsSource="{Binding NoteHiddenItems}" ItemTemplate="{StaticResource ResourceKey=NoteMenuItemTemplate}" ItemContainerStyle="{StaticResource ResourceKey=NoteMenuItemStyle}" Command="{Binding MenuSelectedCommand}" />
-				</MenuItem>
-				<MenuItem AA:Language.Word="tasktray/command" Header="command" />
-				<MenuItem AA:Language.Word="tasktray/log"     Header="log" Command="{Binding SwitchLoggingWindowCommand}" IsChecked="{Binding Logging.IsVisible, Mode=OneWay}" />
-				<Separator />
-				<MenuItem AA:Language.Word="tasktray/log" Header="system-env" />
-				<Separator />
-				<MenuItem AA:Language.Word="tasktray/about" Header="about" />
-				<MenuItem AA:Language.Word="tasktray/exit" Header="exit" Command="{Binding ExitApplicationCommand}" />
-			</ContextMenu>
-		</Taskbar:TaskbarIcon.ContextMenu>
-		<Taskbar:TaskbarIcon.DataContext>
-			<AV:MainWorkerViewModel />
-		</Taskbar:TaskbarIcon.DataContext>
-	</Taskbar:TaskbarIcon>-->
 </ResourceDictionary>

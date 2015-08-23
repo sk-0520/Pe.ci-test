@@ -217,7 +217,7 @@
 			{
 				var result = CreateCommand(
 					o => {
-						LanguageUtility.RecursiveSetLanguage((ContextMenu)o, CommonData.Language);
+						//LanguageUtility.RecursiveSetLanguage((ContextMenu)o, CommonData.Language);
 					}
 				);
 
@@ -518,6 +518,8 @@
 			Debug.Assert(!HasView);
 
 			View = view;
+
+			View.PreviewTrayContextMenuOpen += View_PreviewTrayContextMenuOpen;
 		}
 
 		void LoadSetting()
@@ -1891,6 +1893,13 @@
 			RemoveWindow(sender as Window);
 		}
 
-
+		void View_PreviewTrayContextMenuOpen(object sender, RoutedEventArgs e)
+		{
+			if(IsPause) {
+				e.Handled = true;
+			} else {
+				LanguageUtility.RecursiveSetLanguage(((TaskbarIcon)sender).ContextMenu, CommonData.Language);
+			}
+		}
 	}
 }
