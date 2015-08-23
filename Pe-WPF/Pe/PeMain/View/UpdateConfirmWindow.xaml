@@ -7,6 +7,7 @@
 	xmlns:AW="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Window"
 	xmlns:AVM="clr-namespace:ContentTypeTextNet.Pe.PeMain.ViewModel"
 	x:TypeArguments="AVM:UpdateConfirmViewModel"
+	AA:Language.Word="window/update"
 	Title="UpdateWindow" 
 	Height="300" 
 	Width="300"

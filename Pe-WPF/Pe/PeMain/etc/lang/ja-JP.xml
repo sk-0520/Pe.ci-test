@@ -24,10 +24,11 @@
 		<Item Id="window/toolbar" Word="${toolbar}"  />
 		<Item Id="window/clipboard" Word="クリップボード"  />
 		<Item Id="window/template" Word="テンプレート"  />
-		<Item Id="window/execute" Word="@[ITEM]を指定して実行"  />
-		<Item Id="window/stream" Word="@[ITEM]の標準入出力"  />
+		<Item Id="window/execute" Word="@[LAUNCHER-ITEM-EXECUTE]を指定して実行"  />
+		<Item Id="window/stream" Word="@[LAUNCHER-ITEM-STREAM]の標準入出力"  />
 		<Item Id="window/logging" Word="ログ"  />
-		<Item Id="window/customize" Word="@[ITEM]を編集" />
+		<Item Id="window/customize" Word="@[LAUNCHER-ITEM-CUSTOMIZE]を編集" />
+		<Item Id="window/update" Word="@[APPLICATION] アップデート" />
 
 		<Item Id="common/ok" Word="${ok}"  />
 		<Item Id="common/cancel" Word="${cancel}"  />
@@ -170,8 +171,8 @@
 		<Item Id="template/item/preview" Word="プレビュー" />
 		
 		<Item Id="command/selected" Word="選択中アイテム" />
-		<Item Id="command/tag" Word="@[TAG] (@[NAME])" />
-		<Item Id="command/drive" Word="@[VOLUME] (@[PATH])" />
+		<Item Id="command/tag" Word="@[LAUNCHER-ITEM-TAG] (@[LAUNCHER-ITEM-NAME])" />
+		<Item Id="command/drive" Word="@[DRIVE-VOLUME] (@[DRIVE-PATH])" />
 
 		<Item Id="logging/save"  Word="ログ保存" />
 		<Item Id="logging/clear" Word="ログクリア" />

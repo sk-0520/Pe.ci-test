@@ -10,6 +10,7 @@
 	using System.Diagnostics;
 	using System.Configuration;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 	using System.Windows;
 	using System.Windows.Media;
 	using ContentTypeTextNet.Pe.PeMain.Define;
@@ -277,12 +278,30 @@
 
 		#region app.config
 
+		/// <summary>
+		/// 文字列リテラルを書式で変換。
+		/// 
+		/// {...} を置き換える。
+		/// * TIMESTAMP: そんとき
+		/// </summary>
+		/// <param name="src"></param>
+		/// <returns></returns>
+		private static string ReplaceAppConfig(string src)
+		{
+			var map = new Dictionary<string, string>() {
+				{ "TIMESTAMP", DateTime.Now.ToBinary().ToString() },
+			};
+			var replacedText = src.ReplaceRangeFromDictionary("{", "}", map);
+
+			return replacedText;
+		}
+
 		public static string UriAbout { get { return ConfigurationManager.AppSettings["uri-about"]; } }
 		public static string MailAbout { get { return ConfigurationManager.AppSettings["mail-about"]; } }
 		public static string UriDevelopment { get { return ConfigurationManager.AppSettings["uri-development"]; } }
-		public static string UriUpdate { get { return ConfigurationManager.AppSettings["uri-update"]; } }
-		public static string UriChangelogRelease { get { return ConfigurationManager.AppSettings["uri-changelog-release"]; } }
-		public static string UriChangelogRc { get { return ConfigurationManager.AppSettings["uri-changelog-rc"]; } }
+		public static string UriUpdate { get { return ReplaceAppConfig(ConfigurationManager.AppSettings["uri-update"]); } }
+		public static string UriChangelogRelease { get { return ReplaceAppConfig(ConfigurationManager.AppSettings["uri-changelog-release"]); } }
+		public static string UriChangelogRc { get { return ReplaceAppConfig(ConfigurationManager.AppSettings["uri-changelog-rc"]); } }
 		public static string UriForum { get { return ConfigurationManager.AppSettings["uri-forum"]; } }
 		public static string UriHelp { get { return ConfigurationManager.AppSettings["uri-help"]; } }
 		public static string UriFeedback { get { return ConfigurationManager.AppSettings["uri-feedback"]; } }

@@ -8,14 +8,14 @@
 
 	public static class LanguageKey
 	{
-		public const string commandItemTag = "TAG";
-		public const string commandItemName = "NAME";
-		public const string commandDrivePath = "PATH";
-		public const string commandDriveVolume = "VOLUME";
-		public const string customizeItem = "ITEM";
-		public const string executeItem = "ITEM";
-		public const string streamItem = "ITEM";
-		public const string noteTitleCount = "COUNT";
+		public const string commandItemTag = "LAUNCHER-ITEM-TAG";
+		public const string commandItemName = "LAUNCHER-ITEM-NAME";
+		public const string commandDrivePath = "DRIVE-PATH";
+		public const string commandDriveVolume = "DRIVE-VOLUME";
+		public const string customizeItem = "LAUNCHER-ITEM-CUSTOMIZE";
+		public const string executeItem = "LAUNCHER-ITEM-EXECUTE";
+		public const string streamItem = "LAUNCHER-ITEM-STREAM";
+		public const string noteTitleCount = "NOTE-COUNT";
 
 		public const string updateNowVersion = "UPDATE-NOW-VERSION";
 		public const string updateNewVersion = "UPDATE-NEW-VERSION";
