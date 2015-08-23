@@ -38,12 +38,26 @@
 		<Item Id="tasktray/tooltip" Word="ぴーいー" />
 		<Item Id="tasktray/setting" Word="@[APPLICATION] ${setting}" />
 		<Item Id="tasktray/toolbar" Word="${toolbar}" />
+		<Item Id="tasktray/note" Word="ノート" />
 		<Item Id="tasktray/note/create" Word="新規作成" />
 		<Item Id="tasktray/note/compact" Word="最小化" />
 		<Item Id="tasktray/note/hide" Word="非表示" />
 		<Item Id="tasktray/note/front" Word="前面表示" />
 		<Item Id="tasktray/note/show" Word="表示中一覧" />
 		<Item Id="tasktray/note/hidden" Word="非表示一覧" />
+		<Item Id="tasktray/template" Word="非表示一覧" />
+		<Item Id="tasktray/command" Word="コマンド" />
+		<Item Id="tasktray/log" Word="ログ" />
+		<Item Id="tasktray/system-env" Word="システム環境" />
+		<Item Id="tasktray/system-env/shell-hidden" Word="隠しファイルを表示する" />
+		<Item Id="tasktray/system-env/shell-ext" Word="拡張子を表示する" />
+		<Item Id="tasktray/system-env/clipboard" Word="クリップボード" />
+		<Item Id="tasktray/system-env/window/save" Word="現在のウィンドウ状態を保存" />
+		<Item Id="tasktray/system-env/window/load" Word="保存しているウィンドウ状態を復帰" />
+		<Item Id="tasktray/system-env/window/timer" Word="タイマー保存" />
+		<Item Id="tasktray/system-env/window/system" Word="システム変更" />
+		<Item Id="tasktray/about" Word="@[APPLICATION] 情報" />
+		<Item Id="tasktray/exit" Word="終了" />
 
 		<Item Id="new/group-name" Word="新規グループ" />
 		<Item Id="new/template-name" Word="新規テンプレート" />

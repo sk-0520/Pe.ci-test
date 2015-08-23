@@ -100,7 +100,7 @@
 			</MenuItem.Icon>
 		</MenuItem>
 		<Separator />
-		<MenuItem AA:Language.Word="tasktray/system-env" Header="system-env">
+		<MenuItem Header="system-env" AA:Language.Word="tasktray/system-env">
 			<i:Interaction.Triggers>
 				<i:EventTrigger EventName="SubmenuOpened">
 					<i:InvokeCommandAction Command="{Binding OpenSystemEnvironmentMenuCommand}" />
@@ -109,31 +109,31 @@
 			<MenuItem.Icon>
 				<Image Source="{x:Static AM:AppResource.CommonOperatingSystemImage}" Style="{StaticResource DefaultImage}" />
 			</MenuItem.Icon>
-			<MenuItem Header="hide file" Command="{Binding SwitchShellHideFileCommand}" IsChecked="{Binding IsVisibledShellHideFile, Mode=OneWay}"  InputGestureText="{Binding SwitchShellHideFileHotKey}"/>
-			<MenuItem Header="extension" Command="{Binding SwitchShellExtensionCommand}" IsChecked="{Binding IsVisibledShellExtension, Mode=OneWay}"  InputGestureText="{Binding SwitchShellExtensionHotKey}"/>
+			<MenuItem Header="hide file" AA:Language.Word="tasktray/system-env/shell-hidden" Command="{Binding SwitchShellHideFileCommand}" IsChecked="{Binding IsVisibledShellHideFile, Mode=OneWay}"  InputGestureText="{Binding SwitchShellHideFileHotKey}"/>
+			<MenuItem Header="extension" AA:Language.Word="tasktray/system-env/shell-ext" Command="{Binding SwitchShellExtensionCommand}" IsChecked="{Binding IsVisibledShellExtension, Mode=OneWay}"  InputGestureText="{Binding SwitchShellExtensionHotKey}"/>
 			<Separator />
-			<MenuItem Header="clipboard" Command="{Binding SwitchClipboardWindowCommand}" InputGestureText="{Binding SwitchClipboardWindowHotKey}">
+			<MenuItem Header="clipboard" AA:Language.Word="tasktray/system-env/clipboard" Command="{Binding SwitchClipboardWindowCommand}" InputGestureText="{Binding SwitchClipboardWindowHotKey}">
 				<MenuItem.Icon>
 					<Image AA:MenuIcon.IsStrong="{Binding Clipboard.IsVisible}" Source="{x:Static AM:AppResource.ClipboardClipboardImage}" Style="{StaticResource DefaultImage}" />
 				</MenuItem.Icon>
 			</MenuItem>
 			<Separator />
-			<MenuItem Header="window - save" Command="{Binding SaveTemporaryWindow}">
+			<MenuItem Header="window - save" AA:Language.Word="tasktray/system-env/window/save" Command="{Binding SaveTemporaryWindow}">
 				<MenuItem.Icon>
 					<Image Source="{x:Static AM:AppResource.WindowSaveImage}" Style="{StaticResource DefaultImage}" />
 				</MenuItem.Icon>
 			</MenuItem>
-			<MenuItem Header="window - load" Command="{Binding LoadTemporaryWindow}">
+			<MenuItem Header="window - load" AA:Language.Word="tasktray/system-env/window/load" Command="{Binding LoadTemporaryWindow}">
 				<MenuItem.Icon>
 					<Image Source="{x:Static AM:AppResource.WindowLoadImage}" Style="{StaticResource DefaultImage}" />
 				</MenuItem.Icon>
 			</MenuItem>
-			<MenuItem Header="window - timer" ItemsSource="{Binding WindowTimerItems}" ItemContainerStyle="{StaticResource ResourceKey=WindowMenuItemStyle}" IsEnabled="{Binding ItemsSource,RelativeSource={RelativeSource Self}, Converter={StaticResource IsNotEmptyCollection}}">
+			<MenuItem Header="window - timer" AA:Language.Word="tasktray/system-env/window/timer" ItemsSource="{Binding WindowTimerItems}" ItemContainerStyle="{StaticResource ResourceKey=WindowMenuItemStyle}" IsEnabled="{Binding ItemsSource,RelativeSource={RelativeSource Self}, Converter={StaticResource IsNotEmptyCollection}}">
 				<MenuItem.Icon>
 					<Image Source="{x:Static AM:AppResource.WindowListTimerImage}" Style="{StaticResource DefaultImage}" />
 				</MenuItem.Icon>
 			</MenuItem>
-			<MenuItem Header="window - system" ItemsSource="{Binding WindowSystemItems}" ItemContainerStyle="{StaticResource ResourceKey=WindowMenuItemStyle}" IsEnabled="{Binding ItemsSource,RelativeSource={RelativeSource Self}, Converter={StaticResource IsNotEmptyCollection}}">
+			<MenuItem Header="window - system" AA:Language.Word="tasktray/system-env/window/system" ItemsSource="{Binding WindowSystemItems}" ItemContainerStyle="{StaticResource ResourceKey=WindowMenuItemStyle}" IsEnabled="{Binding ItemsSource,RelativeSource={RelativeSource Self}, Converter={StaticResource IsNotEmptyCollection}}">
 				<MenuItem.Icon>
 					<Image Source="{x:Static AM:AppResource.WindowListSystemImage}" Style="{StaticResource DefaultImage}" />
 				</MenuItem.Icon>
