@@ -158,7 +158,7 @@
 		);
 
 		[ConstantsRange]
-		public static readonly TripleRange<double> toolbarTextLength = new TripleRange<double>(
+		public static readonly TripleRange<int> toolbarTextLength = new TripleRange<int>(
 			20,
 			80,
 			200

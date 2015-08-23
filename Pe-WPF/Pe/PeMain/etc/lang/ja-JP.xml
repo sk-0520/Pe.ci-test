@@ -109,7 +109,7 @@
 
 		<Item Id="command/execute" Word="${execute}" />
 
-		<Item Id="note/title/default"   Word="新規ノート@[COUNT]" />
+		<Item Id="note/title/default"   Word="新規ノート@[NOTE-COUNT]" />
 		<Item Id="note/title/timestamp" Word="@[TIMESTAMP]" />
 		<Item Id="note/caption/small" Word="最小化" />
 		<Item Id="note/caption/topmost"  Word="最前面" />

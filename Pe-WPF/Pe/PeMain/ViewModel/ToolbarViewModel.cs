@@ -56,10 +56,10 @@
 			set { SetModelValue(value); }
 		}
 
-		public double TextWidth
+		public int TextWidth
 		{
-			get { return Model.TextWidth; }
-			set { SetModelValue(value); }
+			get { return (int)Model.TextWidth; }
+			set { SetModelValue((double)value); }
 		}
 
 		public bool AutoHide

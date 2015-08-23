@@ -22,7 +22,7 @@
 			setting.HideAnimateTime = Constants.toolbarHideAnimateTime.GetClamp(setting.HideAnimateTime);
 			setting.Font.Size = Constants.toolbarFontSize.GetClamp(setting.Font.Size);
 			setting.IconScale = EnumUtility.GetNormalization(setting.IconScale, IconScale.Normal);
-
+			setting.TextWidth = Constants.toolbarTextLength.GetClamp((int)setting.TextWidth);
 			if(SettingUtility.IsIllegalPlusNumber(setting.FloatToolbar.WidthButtonCount)) {
 				setting.FloatToolbar.WidthButtonCount = 1;
 			}
@@ -37,6 +37,7 @@
 				return;
 			}
 
+			setting.TextWidth = Constants.toolbarTextLength.median;
 			setting.IconScale = IconScale.Normal;
 			setting.HideWaitTime = Constants.toolbarHideWaitTime.median;
 			setting.HideAnimateTime = Constants.toolbarHideAnimateTime.median;
