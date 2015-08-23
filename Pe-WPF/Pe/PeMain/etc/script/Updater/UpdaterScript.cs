@@ -1,11 +1,7 @@
-﻿/*-*/
-using System;
-/*-*/
-using System.IO;
-/*-*/
-using System.Data;
-/*-*/
-using System.Linq;
+﻿/*-*/using System;
+/*-*/using System.IO;
+/*-*/using System.Data;
+/*-*/using System.Linq;
 
 public class UpdaterScript
 {
