@@ -69,8 +69,8 @@
 				var result = CreateCommand(
 					o => {
 						var messageResult = MessageBox.Show(
-							AppNonProcess.Language["about/update/dialog/caption"],
 							AppNonProcess.Language["about/update/dialog/message"],
+							AppNonProcess.Language["about/update/dialog/caption"],
 							MessageBoxButton.YesNo,
 							MessageBoxImage.Information
 						);
