@@ -23,7 +23,7 @@ using ContentTypeTextNet.Pe.PeMain.View;
 	{
 		static Process RunFileItem(LauncherItemModel launcherItem, INonProcess nonProcess, IAppSender appSender)
 		{
-			Debug.Assert(launcherItem.LauncherKind == LauncherKind.File);
+			Debug.Assert(launcherItem.LauncherKind == LauncherKind.File || launcherItem.LauncherKind == LauncherKind.Command);
 
 			var process = new Process();
 			var startInfo = process.StartInfo;
@@ -113,8 +113,9 @@ using ContentTypeTextNet.Pe.PeMain.View;
 
 			//return RunCommand(launcherItem.Command, launcherItem.Option, commonData);
 			var fileLauncherItem = (LauncherItemModel)launcherItem.DeepClone();
-			// ファイルアイテムに変換
-			fileLauncherItem.LauncherKind = LauncherKind.File;
+			// アイコンが取れないべ
+			//// ファイルアイテムに変換
+			//fileLauncherItem.LauncherKind = LauncherKind.File;
 			// 管理者権限はどうにも効かなさそう
 			fileLauncherItem.Administrator = false;
 
