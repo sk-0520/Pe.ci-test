@@ -79,11 +79,11 @@
 					<ComboBox.ItemTemplate>
 						<DataTemplate>
 							<StackPanel Orientation="Horizontal">
-								<Label Content="{Binding Converter={StaticResource ToolbarDockTypeImageConverter}, ConverterParameter={StaticResource ImageSize}}" />
+								<Label SnapsToDevicePixels="True" Content="{Binding Converter={StaticResource ToolbarDockTypeImageConverter}, ConverterParameter={StaticResource ImageSize}}" />
 								<TextBlock VerticalAlignment="Center">
 									<TextBlock.Text>
 										<MultiBinding Converter="{StaticResource DockTypeLanguageConverter}" >
-											<Binding Path="" />
+											<Binding Path="" /><!-- *{Binding}* -->
 											<Binding Path="CommonData.Language" RelativeSource="{RelativeSource AncestorType=AV:CommonDataUserControl}" />
 										</MultiBinding>
 									</TextBlock.Text>
