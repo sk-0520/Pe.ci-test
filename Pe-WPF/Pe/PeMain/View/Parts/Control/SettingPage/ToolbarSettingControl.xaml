@@ -139,7 +139,7 @@
 					Maximum="{Binding Source={x:Static AM:Constants.ToolbarHideWaitMaximumTime}}"
 				/>
 
-				<StackPanel HorizontalAlignment="Left" Height="71" Grid.Row="6" Grid.ColumnSpan="2" VerticalAlignment="Top">
+				<StackPanel HorizontalAlignment="Left" Height="92" Grid.Row="6" Grid.ColumnSpan="2" VerticalAlignment="Top">
 					<CheckBox Content="show text" HorizontalAlignment="Stretch" IsChecked="{Binding SelectedToolbar.TextVisible}" />
 					<CheckBox Content="auto hide" HorizontalAlignment="Stretch" IsChecked="{Binding SelectedToolbar.AutoHide}" />
 					<CheckBox Content="topmost" HorizontalAlignment="Stretch" IsChecked="{Binding SelectedToolbar.IsTopmost}" />
