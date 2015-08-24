@@ -144,6 +144,7 @@
 					<CheckBox Content="auto hide" HorizontalAlignment="Stretch" IsChecked="{Binding SelectedToolbar.AutoHide}" />
 					<CheckBox Content="topmost" HorizontalAlignment="Stretch" IsChecked="{Binding SelectedToolbar.IsTopmost}" />
 					<CheckBox Content="visible" HorizontalAlignment="Stretch" IsChecked="{Binding SelectedToolbar.IsVisible}" />
+					<CheckBox Content="menu position" HorizontalAlignment="Stretch" IsChecked="{Binding SelectedToolbar.MenuPositionCorrection}" />
 				</StackPanel>
 			</Grid>
 		</GroupBox>

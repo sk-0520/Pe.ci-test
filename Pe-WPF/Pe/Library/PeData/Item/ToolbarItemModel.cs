@@ -75,6 +75,13 @@
 		[DataMember]
 		public FontModel Font { get; set; }
 
+		/// <summary>
+		/// メニューボタンの位置を補正する。
+		/// <para>右側にツールバー設置時に左側にメニューボタンを配置する。</para>
+		/// </summary>
+		[DataMember]
+		public bool MenuPositionCorrection { get; set; }
+
 		#endregion
 
 		#region IVisible

@@ -74,6 +74,12 @@
 			set { SetModelValue(value); }
 		}
 
+		public bool MenuPositionCorrection
+		{
+			get { return Model.MenuPositionCorrection; }
+			set { SetModelValue(value); }
+		}
+
 		#region font
 
 		//public FontFamily FontFamily
