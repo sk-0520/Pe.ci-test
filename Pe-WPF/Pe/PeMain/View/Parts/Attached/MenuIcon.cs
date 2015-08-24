@@ -17,9 +17,9 @@
 		static MenuIcon()
 		{
 			_effect = new DropShadowEffect() {
-				Color = ImageUtility.GetMenuIconColor(false, true),
+				Color = ImageUtility.GetMenuIconColor(true, true),
 				ShadowDepth = 0,
-				BlurRadius = 6,
+				BlurRadius = 8,
 			};
 			if(_effect.CanFreeze) {
 				_effect.Freeze();
