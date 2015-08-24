@@ -33,7 +33,8 @@
 	Topmost="{Binding IsTopmost, Mode=OneWay}"
 	BorderThickness="{Binding BorderThickness, Mode=OneWay}"
 	BorderBrush="{Binding BorderBrush, Mode=OneWay}"
-	
+	MinWidth="{Binding MinSize.Width}"
+	MinHeight="{Binding MinSize.Height}"
 	SA:DragTarget.UsingDragTarget="True"
 	SA:DragTarget.DragEnterCommand="{Binding DragOverCommand}"
 	SA:DragTarget.DragOverCommand="{Binding DragOverCommand}"

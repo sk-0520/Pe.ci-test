@@ -39,6 +39,9 @@
 
 	public class LauncherToolbarViewModel: HavingViewSingleModelWrapperViewModelBase<LauncherToolbarDataModel, LauncherToolbarWindow>, IApplicationDesktopToolbarData, IVisualStyleData, IHavingAppNonProcess, IWindowAreaCorrectionData, IWindowHitTestData, IHavingAppSender, IRefreshFromViewModel, IMenuItem
 	{
+		#region define
+		#endregion
+
 		#region static
 
 		static double GetCaptionWidth()
