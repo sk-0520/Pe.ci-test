@@ -62,14 +62,14 @@
 		/>
 		<Image
 			Grid.Column="1"
-			Width="{Binding IconWidth, Mode=OneTime}"
-			Height="{Binding IconHeight, Mode=OneTime}"
+			AA:IconSize.IconScale="Small"
 			Style="{StaticResource DefaultImage}"
-			Source="{Binding SelectedCommandItem.Image}"
+			Source="{Binding SelectedCommandItem.SmallImage}"
 		/>
 		<TextBox
 			x:Name="inputCommand" 
 			Grid.Column="2" 
+			VerticalAlignment="Center"
 			Text="{Binding InputText, UpdateSourceTrigger=PropertyChanged}" SA:TextBoxHelper.SelectedText="{Binding SelectedText}"
 			FontFamily="{Binding FontFamily, Mode=OneWay}" FontWeight="{Binding FontBold, Converter={StaticResource BooleanFontWeightConverter}, Mode=OneWay}" FontStyle="{Binding FontItalic, Converter={StaticResource BooleanFontStyleConverter}, Mode=OneWay}" FontSize="{Binding FontSize, Mode=OneWay}"
 		>
@@ -109,7 +109,7 @@
 						<DataTemplate>
 							<StackPanel Orientation="Horizontal">
 								<Image Style="{StaticResource DefaultImage}" Source="{Binding Image}" />
-								<TextBlock Text="{Binding DisplayText}" />
+								<TextBlock Text="{Binding DisplayText}" VerticalAlignment="Center" />
 							</StackPanel>
 						</DataTemplate>
 					</ListBox.ItemTemplate>

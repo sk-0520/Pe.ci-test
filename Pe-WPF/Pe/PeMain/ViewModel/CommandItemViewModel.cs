@@ -3,6 +3,7 @@
 	using System;
 	using System.Collections.Generic;
 	using System.Diagnostics;
+	using System.IO;
 	using System.Linq;
 	using System.Text;
 	using System.Threading.Tasks;
@@ -22,7 +23,7 @@
 	{
 		#region variable
 
-		BitmapSource _image;
+		BitmapSource _image, _smallImage;
 
 		#endregion
 
@@ -50,8 +51,16 @@
 		public CommandItemViewModel(IconScale iconScale, string filePath, bool isDirectory, bool isHideFile, IAppNonProcess appNonProcess, IAppSender appSender)
 			: this(CommandKind.File, iconScale, appNonProcess, appSender)
 		{
-			FilePath = filePath;
 			IsDirectory = isDirectory;
+			if (IsDirectory) {
+				if (filePath.Last() == Path.DirectorySeparatorChar) {
+					FilePath = filePath;
+				} else {
+					FilePath = filePath + Path.DirectorySeparatorChar;
+				}
+			} else {
+				FilePath = filePath;
+			}
 			IsHideFile = isHideFile;
 		}
 
@@ -79,23 +88,44 @@
 			get
 			{
 				if(this._image == null) {
-					if(CommandKind == CommandKind.File || CommandKind == CommandKind.Drive) {
-						var iconPath = new IconPathModel() {
-							Path = FilePath,
-							Index = 0,
-						};
-						this._image = AppUtility.LoadIconDefault(iconPath, IconScale, AppNonProcess.Logger);
-					} else {
-						Debug.Assert(CommandKind == CommandKind.LauncherItemName || CommandKind == CommandKind.LauncherItemTag);
-						var viewModel = new LauncherItemSimpleViewModel(LauncherItemModel, AppNonProcess, AppSender);
-						this._image = viewModel.GetIcon(IconScale);
-					}
-					//AppUtility.LoadIconDefault()
+					this._image = GetImage(IconScale);
 				}
 
 				return this._image;
 			}
 		}
+
+		public BitmapSource SmallImage
+		{
+			get
+			{
+				if (this._smallImage == null) {
+					this._smallImage = GetImage(IconScale.Small);
+				}
+
+				return this._smallImage;
+			}
+		}
+
+		#endregion
+
+		#region function
+
+		BitmapSource GetImage(IconScale iconScale)
+		{
+			if (CommandKind == CommandKind.File || CommandKind == CommandKind.Drive) {
+				var iconPath = new IconPathModel() {
+					Path = FilePath,
+					Index = 0,
+				};
+				return AppUtility.LoadIconDefault(iconPath, iconScale, AppNonProcess.Logger);
+			} else {
+				Debug.Assert(CommandKind == CommandKind.LauncherItemName || CommandKind == CommandKind.LauncherItemTag);
+				var viewModel = new LauncherItemSimpleViewModel(LauncherItemModel, AppNonProcess, AppSender);
+				return viewModel.GetIcon(iconScale);
+			}
+		}
+
 		#endregion
 
 		#region IHavingAppNonProcess
@@ -132,7 +162,11 @@
 						}
 
 					case CommandKind.File:
-						return FilePath;
+						if (IsDirectory) {
+							return FilePath.Substring(0, FilePath.Length - 1);
+						} else {
+							return FilePath;
+						}
 
 					case CommandKind.Drive:
 						if(string.IsNullOrWhiteSpace(DriveName)) {
