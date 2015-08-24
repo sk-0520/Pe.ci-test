@@ -39,10 +39,12 @@
 				var r = logicalRect.Right;
 				var b = logicalRect.Bottom;
 
-				var correctionSize = new Size(
-					logicalRect.Width - RestrictionViewModel.MultipleThickness.GetHorizon(),
-					logicalRect.Height - RestrictionViewModel.MultipleThickness.GetVertical()
-				);
+				var tempWidth = logicalRect.Width - RestrictionViewModel.MultipleThickness.GetHorizon();
+				var tempHeight = logicalRect.Height - RestrictionViewModel.MultipleThickness.GetVertical();
+				if(tempWidth <= 0 || tempHeight <= 0) {
+					return IntPtr.Zero;
+				}
+				var correctionSize = new Size(tempWidth, tempHeight);
 
 				var width = logicalRect.Width - (correctionSize.Width % RestrictionViewModel.MultipleSize.Width);
 				var height = logicalRect.Height - (correctionSize.Height % RestrictionViewModel.MultipleSize.Height);

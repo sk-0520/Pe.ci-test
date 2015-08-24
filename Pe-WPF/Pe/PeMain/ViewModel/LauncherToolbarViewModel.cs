@@ -57,15 +57,25 @@
 
 		static Thickness GetBorderThickness(DockType dockType, Visual visual)
 		{
-			var deviceBorderSize = SystemInformation.BorderSize;
-			var logicalBorderSize = UIUtility.ToLogicalPixel(visual, deviceBorderSize);
+			//var deviceBorderSize = SystemInformation.BorderSize;
+			//var logicalBorderSize = UIUtility.ToLogicalPixel(visual, deviceBorderSize);
 
+			//var map = new Dictionary<DockType, Thickness>() {
+			//	{ DockType.None, new Thickness(logicalBorderSize.Width, logicalBorderSize.Height, logicalBorderSize.Width, logicalBorderSize.Height) },
+			//	{ DockType.Left, new Thickness(0, 0, logicalBorderSize.Width, 0) },
+			//	{ DockType.Top, new Thickness(0, 0, 0, logicalBorderSize.Height) },
+			//	{ DockType.Right, new Thickness(logicalBorderSize.Width, 0, 0, 0)},
+			//	{ DockType.Bottom, new Thickness(0, logicalBorderSize.Height, 0, 0)},
+			//};
+
+			var floatThickness = SystemParameters.WindowResizeBorderThickness;
+			var barBorder = SystemParameters.BorderWidth;
 			var map = new Dictionary<DockType, Thickness>() {
-				{ DockType.None, new Thickness(logicalBorderSize.Width, logicalBorderSize.Height, logicalBorderSize.Width, logicalBorderSize.Height) },
-				{ DockType.Left, new Thickness(0, 0, logicalBorderSize.Width, 0) },
-				{ DockType.Top, new Thickness(0, 0, 0, logicalBorderSize.Height) },
-				{ DockType.Right, new Thickness(logicalBorderSize.Width, 0, 0, 0)},
-				{ DockType.Bottom, new Thickness(0, logicalBorderSize.Height, 0, 0)},
+				{ DockType.None, new Thickness(floatThickness.Left, 0, floatThickness.Right, 0) },
+				{ DockType.Left, new Thickness(0, 0, barBorder, 0) },
+				{ DockType.Top, new Thickness(0, 0, 0, barBorder) },
+				{ DockType.Right, new Thickness(barBorder, 0, 0, 0)},
+				{ DockType.Bottom, new Thickness(0, barBorder, 0, 0)},
 			};
 
 			return map[dockType];
