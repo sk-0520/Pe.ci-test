@@ -26,7 +26,7 @@
 	Height="{Binding WindowHeight, Mode=TwoWay}" 
 	ShowInTaskbar="False" 
 	WindowStyle="None"
-	ResizeMode="CanResize"
+	ResizeMode="{Binding ResizeMode}"
 	AllowsTransparency="True"
 	WindowStartupLocation="Manual"
 	Visibility="{Binding Visibility}" 

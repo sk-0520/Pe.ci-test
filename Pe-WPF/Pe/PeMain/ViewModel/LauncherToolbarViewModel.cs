@@ -293,6 +293,19 @@
 			}
 		}
 
+		public ResizeMode ResizeMode
+		{
+			get
+			{
+				if(DockType == DockType.None) {
+					return ResizeMode.CanResize;
+				} else {
+					return ResizeMode.NoResize;
+				}
+			}
+		}
+
+
 		public Orientation Orientation
 		{
 			get { return GetOrientation(DockType); }
@@ -855,6 +868,7 @@
 						"IsEnabledCorrection",
 						"PositionContentButton",
 						"PositionMenuButton",
+						"ResizeMode",
 					});
 					View.UpdateLayout();
 				}

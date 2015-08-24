@@ -61,7 +61,8 @@
 
 		protected virtual string MessageString { get { return "appbar"; } }
 		protected virtual DispatcherTimer AutoHideTimer { get; private set; }
-		protected DispatcherOperation DispatcherOperation { get; set; }
+		protected DispatcherOperation DockingDispatcherOperation { get; set; }
+		protected DispatcherOperation HiddenDispatcherOperation { get; set; }
 
 		#endregion
 
@@ -121,9 +122,9 @@
 
 		public bool UnresistAppbar()
 		{
-			if (DispatcherOperation != null) {
-				DispatcherOperation.Abort();
-				DispatcherOperation = null;
+			if (DockingDispatcherOperation != null) {
+				DockingDispatcherOperation.Abort();
+				DockingDispatcherOperation = null;
 			}
 			var appBar = new APPBARDATA(Handle);
 			var unregistResult = NativeMethods.SHAppBarMessage(ABM.ABM_REMOVE, ref appBar);
@@ -253,7 +254,7 @@
 				StartHideWait();
 			}
 
-			DispatcherOperation = View.Dispatcher.BeginInvoke(
+			DockingDispatcherOperation = View.Dispatcher.BeginInvoke(
 				DispatcherPriority.ApplicationIdle,
 				new Action(() => ResizeShowDeviceBarArea())
 			);
@@ -432,7 +433,7 @@
 					logicalHideArea.Width = logicalScreenArea.Width;
 					logicalHideArea.Height = RestrictionViewModel.HideWidth;
 					logicalHideArea.X = logicalScreenArea.X;
-					logicalHideArea.Y = logicalScreenArea.Y - logicalHideArea.Height;
+					logicalHideArea.Y = logicalScreenArea.Height - logicalHideArea.Height;
 					break;
 
 				case DockType.Left:
@@ -493,10 +494,14 @@
 					//var animateFlag = ToAW(RestrictionViewModel.DockType, false);
 					//NativeMethods.AnimateWindow(Handle, animateTime, animateFlag);
 					// TODO: アニメーションしねぇ…
-					NativeMethods.MoveWindow(Handle, (int)deviceHideArea.X, (int)deviceHideArea.Y, (int)deviceHideArea.Width, (int)deviceHideArea.Height, true);
+					//NativeMethods.MoveWindow(Handle, (int)deviceHideArea.X, (int)deviceHideArea.Y, (int)deviceHideArea.Width, (int)deviceHideArea.Height, true);
 				} else {
-					NativeMethods.MoveWindow(Handle, (int)deviceHideArea.X, (int)deviceHideArea.Y, (int)deviceHideArea.Width, (int)deviceHideArea.Height, true);
+					//NativeMethods.MoveWindow(Handle, (int)deviceHideArea.X, (int)deviceHideArea.Y, (int)deviceHideArea.Width, (int)deviceHideArea.Height, true);
 				}
+				NativeMethods.MoveWindow(Handle, (int)deviceHideArea.X, (int)deviceHideArea.Y, (int)deviceHideArea.Width, (int)deviceHideArea.Height, true);
+				//View.Width = logicalHideArea.Width;
+				//View.Measure(logicalHideArea.Size);
+				//View.Arrange(new Rect(0, 0, logicalHideArea.Width, logicalHideArea.Height));
 			}
 		}
 
