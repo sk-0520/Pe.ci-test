@@ -117,7 +117,7 @@
 
 		static readonly TripleRange<double> defaultFontSize = new TripleRange<double>(
 			8,
-			11.5,
+			12.5,
 			72
 		);
 
@@ -245,9 +245,9 @@
 
 		[ConstantsRange]
 		public static readonly TripleRange<double> noteFontSize = new TripleRange<double>(
-			8,
-			11,
-			72
+			defaultFontSize.minimum,
+			defaultFontSize.median,
+			defaultFontSize.maximum
 		);
 		public static readonly Size noteDefualtSize = new Size(200, 200);
 

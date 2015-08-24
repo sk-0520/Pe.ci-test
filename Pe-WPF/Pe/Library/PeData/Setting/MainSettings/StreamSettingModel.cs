@@ -3,11 +3,12 @@
 	using System;
 	using System.Collections.Generic;
 	using System.Linq;
+	using System.Runtime.Serialization;
 	using System.Text;
 	using System.Threading.Tasks;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
-using ContentTypeTextNet.Library.SharedLibrary.Model;
-using ContentTypeTextNet.Pe.Library.PeData.Item;
+	using ContentTypeTextNet.Library.SharedLibrary.Model;
+	using ContentTypeTextNet.Pe.Library.PeData.Item;
 
 	[Serializable]
 	public class StreamSettingModel : SettingModelBase, IDeepClone
@@ -23,9 +24,12 @@ using ContentTypeTextNet.Pe.Library.PeData.Item;
 
 		#region property
 
+		[DataMember]
 		public ColorPairItemModel OutputColor { get; set; }
+		[DataMember]
 		public ColorPairItemModel ErrorColor { get; set; }
 
+		[DataMember]
 		public FontModel Font { get; set; }
 
 		#endregion
