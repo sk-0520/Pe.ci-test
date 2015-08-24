@@ -231,10 +231,10 @@
 		public double FirstWidth { 
 			get
 			{
-				if (PositionContentButton == 0) {
-					return ContentWidth;
-				} else {
+				if (IsEnabledCorrection) {
 					return MenuWidth;
+				} else {
+					return ContentWidth;
 				}
 			}
 		}
@@ -242,10 +242,10 @@
 		{
 			get
 			{
-				if (PositionContentButton != 0) {
-					return ContentWidth;
-				} else {
+				if (!IsEnabledCorrection) {
 					return MenuWidth;
+				} else {
+					return ContentWidth;
 				}
 			}
 		}
@@ -413,10 +413,8 @@
 		{
 			get
 			{
-				if (Model.Toolbar.MenuPositionCorrection) {
-					if (DockType == DockType.Right) {
+				if (IsEnabledCorrection) {
 						return 1;
-					}
 				}
 
 				return 0;
@@ -427,11 +425,19 @@
 		{
 			get
 			{
-				if (PositionContentButton == 0) {
+				if (!IsEnabledCorrection) {
 					return 1;
 				} else {
 					return 0;
 				}
+			}
+		}
+
+		public bool IsEnabledCorrection
+		{
+			get
+			{
+				return Model.Toolbar.MenuPositionCorrection && DockType == DockType.Right;
 			}
 		}
 
@@ -833,6 +839,7 @@
 					CallOnPropertyChange(new[] {
 						"FirstWidth",
 						"SecondWidth",
+						"IsEnabledCorrection",
 						"PositionContentButton",
 						"PositionMenuButton",
 					});

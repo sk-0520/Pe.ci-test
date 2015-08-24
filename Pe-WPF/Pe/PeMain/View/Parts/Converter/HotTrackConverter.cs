@@ -37,6 +37,11 @@
 			var color = (Color)values[0];
 			var dockType = (DockType)values[1];
 			var length = (double)values[2];
+			var isEnabledCorrection = values[3] as bool?;
+
+			if (isEnabledCorrection.GetValueOrDefault() && dockType == DockType.Right) {
+				dockType = DockType.Left;
+			}
 
 			var brush = new LinearGradientBrush();
 			switch(dockType) {

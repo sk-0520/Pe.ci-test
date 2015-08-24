@@ -25,5 +25,22 @@
 		{
 			throw new NotImplementedException();
 		}
+
+		//public object Convert(object[] values, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+		//{
+		//	var dockType = (DockType)values[0];
+		//	var isEnabledCorrection = (bool)values[1];
+		//	if (dockType == DockType.Left) {
+		//		return DockType.Right;
+		//	} else if (dockType == DockType.Right && isEnabledCorrection) {
+		//		return DockType.Left;
+		//	}
+		//	return dockType;
+		//}
+
+		//public object[] ConvertBack(object value, Type[] targetTypes, object parameter, System.Globalization.CultureInfo culture)
+		//{
+		//	throw new NotImplementedException();
+		//}
 	}
 }
