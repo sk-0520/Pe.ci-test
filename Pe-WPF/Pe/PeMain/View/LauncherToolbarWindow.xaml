@@ -220,7 +220,7 @@
 							<Grid x:Name="MainGrid" SnapsToDevicePixels="True">
 								<ToggleButton 
 									x:Name="PART_DropDownButton"
-									Grid.Column="0"
+									Grid.Column="{Binding DataContext.PositionContentButton, ElementName=root}"
 									IsTabStop="False"
 									Focusable="false"
 									IsChecked="{Binding IsOpen, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
@@ -229,8 +229,8 @@
 								>
 									<Grid Style="{StaticResource LauncherButtonFace}">
 										<Grid.ColumnDefinitions>
-											<ColumnDefinition Width="*" />
-											<ColumnDefinition Width="{Binding DataContext.MenuWidth, ElementName=root}" />
+											<ColumnDefinition Width="{Binding DataContext.FirstWidth, ElementName=root}" />
+											<ColumnDefinition Width="{Binding DataContext.SecondWidth, ElementName=root}" />
 										</Grid.ColumnDefinitions>
 										<ContentPresenter
 											Name="ActionButtonContent"
@@ -240,9 +240,9 @@
 											VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
 											HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
 											RecognizesAccessKey="true"
-											Grid.Column="0"
+											Grid.Column="{Binding DataContext.PositionContentButton, ElementName=root}"
 										/>
-										<Grid x:Name="arrowGlyph" Grid.Column="1" Style="{StaticResource ArrowParent}">
+										<Grid x:Name="arrowGlyph" Grid.Column="{Binding DataContext.PositionMenuButton, ElementName=root}" Style="{StaticResource ArrowParent}">
 											<Path Style="{StaticResource ArrowContent}" />
 										</Grid>
 									</Grid>
@@ -283,12 +283,12 @@
 								>
 									<Grid x:Name="ParentElement" Style="{StaticResource LauncherButtonFace}">
 										<Grid.ColumnDefinitions>
-											<ColumnDefinition Width="*" />
-											<ColumnDefinition Width="{Binding DataContext.MenuWidth, ElementName=root}" />
+											<ColumnDefinition Width="{Binding DataContext.FirstWidth, ElementName=root}" />
+											<ColumnDefinition Width="{Binding DataContext.SecondWidth, ElementName=root}" />
 										</Grid.ColumnDefinitions>
 										<ContentPresenter
 											Name="ActionButtonContent"
-											Grid.Column="0"
+											Grid.Column="{Binding DataContext.PositionContentButton, ElementName=root}"
 											Margin="{TemplateBinding Padding}"
 											Content="{TemplateBinding Content}"
 											ContentTemplate="{TemplateBinding ContentTemplate}"
@@ -298,7 +298,7 @@
 										/>
 										<ToggleButton 
 											x:Name="PART_ToggleButton"
-											Grid.Column="1"
+											Grid.Column="{Binding DataContext.PositionMenuButton, ElementName=root}"
 											IsTabStop="False"
 											Focusable="False"
 											IsChecked="{Binding IsOpen, RelativeSource={RelativeSource AncestorType=xctk:SplitButton}, Mode=TwoWay}"

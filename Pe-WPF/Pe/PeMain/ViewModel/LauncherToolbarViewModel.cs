@@ -226,6 +226,29 @@
 		public Size IconSize { get; set; }
 		public Size ButtonSize { get; set; }
 		public double MenuWidth { get; set; }
+		public double ContentWidth { get { return ButtonSize.Width - MenuWidth; } }
+
+		public double FirstWidth { 
+			get
+			{
+				if (PositionContentButton == 0) {
+					return ContentWidth;
+				} else {
+					return MenuWidth;
+				}
+			}
+		}
+		public double SecondWidth
+		{
+			get
+			{
+				if (PositionContentButton != 0) {
+					return ContentWidth;
+				} else {
+					return MenuWidth;
+				}
+			}
+		}
 
 		public bool NowFloatWindow { get { return DockType == DockType.None; } }
 		//public bool CanWindowDrag { get { return NowFloatWindow; } }
@@ -385,6 +408,32 @@
 		}
 
 		#endregion
+
+		public int PositionContentButton
+		{
+			get
+			{
+				if (Model.Toolbar.MenuPositionCorrection) {
+					if (DockType == DockType.Right) {
+						return 1;
+					}
+				}
+
+				return 0;
+			}
+		}
+
+		public int PositionMenuButton
+		{
+			get
+			{
+				if (PositionContentButton == 0) {
+					return 1;
+				} else {
+					return 0;
+				}
+			}
+		}
 
 		#endregion
 
@@ -781,6 +830,12 @@
 					OnPropertyChanged("CaptionWidth");
 					OnPropertyChanged("CaptionHeight");
 					OnPropertyChanged("DropDownPlacement");
+					CallOnPropertyChange(new[] {
+						"FirstWidth",
+						"SecondWidth",
+						"PositionContentButton",
+						"PositionMenuButton",
+					});
 					View.UpdateLayout();
 				}
 			}

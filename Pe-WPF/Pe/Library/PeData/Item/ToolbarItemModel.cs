@@ -145,6 +145,7 @@
 			obj.TextWidth = TextWidth;
 			obj.IsVisible = IsVisible;
 			obj.IsTopmost = IsTopmost;
+			obj.MenuPositionCorrection = MenuPositionCorrection;
 			obj.Id = Id;
 			Font.DeepCloneTo(obj.Font);
 		}
