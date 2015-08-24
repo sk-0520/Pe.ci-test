@@ -199,7 +199,7 @@
 		/// Constants.toolbarTextLength.minimum取得用プロパティ。
 		/// <para>XAMLで使用することを想定</para>
 		/// </summary>
-		public static Double ToolbarTextMinimumLength
+		public static Int32 ToolbarTextMinimumLength
 		{
 			get
 			{
@@ -212,7 +212,7 @@
 		/// Constants.toolbarTextLength.median取得用プロパティ。
 		/// <para>XAMLで使用することを想定</para>
 		/// </summary>
-		public static Double ToolbarTextMedianLength
+		public static Int32 ToolbarTextMedianLength
 		{
 			get
 			{
@@ -225,7 +225,7 @@
 		/// Constants.toolbarTextLength.maximum取得用プロパティ。
 		/// <para>XAMLで使用することを想定</para>
 		/// </summary>
-		public static Double ToolbarTextMaximumLength
+		public static Int32 ToolbarTextMaximumLength
 		{
 			get
 			{
