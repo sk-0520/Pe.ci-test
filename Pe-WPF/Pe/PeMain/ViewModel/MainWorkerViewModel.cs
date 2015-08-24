@@ -255,6 +255,9 @@
 							window.SetCommonData(cloneCommonData, null);
 							if(window.ShowDialog().GetValueOrDefault()) {
 								CommonData = window.CommonData;
+
+								ApplyLanguage();
+
 								var notifiy = window.ViewModel.SettingNotifiyItem;
 
 								Debug.Assert(notifiy.StartupRegist.HasValue);
@@ -533,10 +536,9 @@
 			using(var timeLogger = CommonData.NonProcess.CreateTimeLogger()) {
 				// 各種設定の読込
 				CommonData.MainSetting = AppUtility.LoadSetting<MainSettingModel>(CommonData.VariableConstants.UserSettingMainSettingFilePath, Constants.fileTypeMainSetting, CommonData.Logger);
+				ApplyLanguage();
 				CommonData.LauncherItemSetting = AppUtility.LoadSetting<LauncherItemSettingModel>(CommonData.VariableConstants.UserSettingLauncherItemSettingFilePath, Constants.fileTypeLauncherItemSetting, CommonData.Logger);
 				CommonData.LauncherGroupSetting = AppUtility.LoadSetting<LauncherGroupSettingModel>(CommonData.VariableConstants.UserSettingLauncherGroupItemSettingFilePath, Constants.fileTypeLauncherGroupSetting, CommonData.Logger);
-				// 言語ファイル
-				CommonData.Language = AppUtility.LoadLanguageFile(CommonData.VariableConstants.ApplicationLanguageDirectoryPath, CommonData.MainSetting.Language.Name, CommonData.VariableConstants.LanguageCode, CommonData.Logger);
 				// インデックスファイル読み込み
 				CommonData.NoteIndexSetting = AppUtility.LoadSetting<NoteIndexSettingModel>(CommonData.VariableConstants.UserSettingNoteIndexFilePath, Constants.fileTypeNoteIndex, CommonData.Logger);
 				CommonData.ClipboardIndexSetting = AppUtility.LoadSetting<ClipboardIndexSettingModel>(CommonData.VariableConstants.UserSettingClipboardIndexFilePath, Constants.fileTypeTemplateIndex, CommonData.Logger);
@@ -587,6 +589,12 @@
 			};
 			var basePath = Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingDirectoryPath);
 			FileUtility.CreateZipFile(backupFileFilePath, basePath, targetFiles.Select(Environment.ExpandEnvironmentVariables));
+		}
+
+		void ApplyLanguage()
+		{
+			// 言語ファイル
+			CommonData.Language = AppUtility.LoadLanguageFile(CommonData.VariableConstants.ApplicationLanguageDirectoryPath, CommonData.MainSetting.Language.Name, CommonData.VariableConstants.LanguageCode, CommonData.Logger);
 		}
 
 		/// <summary>

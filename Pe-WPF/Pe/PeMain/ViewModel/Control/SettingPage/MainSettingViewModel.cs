@@ -18,9 +18,17 @@
 	using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Property;
+	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
 	public class MainSettingViewModel : SettingPageViewModelBase
 	{
+		#region variavle
+
+		IEnumerable<ListItem<string>> _languageList;
+		int _languageSelectedIndex = -1;
+
+		#endregion
+
 		public MainSettingViewModel(RunningInformationSettingModel runningInformation, LanguageSettingModel language, LoggingSettingModel logging, SystemEnvironmentSettingModel systemEnvironment, StreamSettingModel stream, WindowSaveSettingModel windowSave, IAppNonProcess appNonProcess, SettingNotifiyItem settingNotifiyItem)
 			: base(appNonProcess, settingNotifiyItem)
 		{
@@ -61,7 +69,58 @@
 			}
 		}
 
+		public IEnumerable<ListItem<string>> LanguageList
+		{
+			get
+			{
+				if (this._languageList == null) {
+					var list = AppUtility.GetLanguageFiles(AppNonProcess.VariableConstants.ApplicationLanguageDirectoryPath, AppNonProcess.Logger)
+						.Where(p => string.Compare(Path.GetFileName(p.Value.Key), Constants.languageDefaultFileName, true) != 0)
+					;
+					//this._languageList = list.Select(
+					//	p => new ListItem<LanguageSettingModel>(
+					//		string.Format("{0}({1})", p.Value.Value.Name, p.Value.Value.CultureCode),
+					//		new LanguageSettingModel() { Name = p.Value.Value.CultureCode }
+					//	)
+					//);
+					bool isSelectedLanguage = false;
+					var langList = new List<ListItem<string>>();
+					foreach (var item in list.Select((l, i) => new { Language = l, Index = i})) {
+						var displayText = string.Format("{0}({1})", item.Language.Value.Value.Name, item.Language.Value.Value.CultureCode);
+						if(!isSelectedLanguage && item.Language.Value.Value.Name == Language.Name) {
+							this._languageSelectedIndex = item.Index;
+							langList.Add(new ListItem<string>(displayText, Language.Name));
+							isSelectedLanguage = true;
+						} else {
+							var i = new ListItem<string>(
+								displayText,
+								item.Language.Value.Value.Name
+							);
+							langList.Add(i);
+						}
+					}
+					this._languageList = langList;
+				}
 
+				return this._languageList;
+			}
+		}
+
+		public string SelectedLanguage
+		{
+			get { return Language.Name; }
+			set 
+			{
+				Language.Name = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public int LanguageSelectedIndex
+		{
+			get { return this._languageSelectedIndex; }
+			set { SetVariableValue(ref _languageSelectedIndex, value); }
+		}
 
 		#region logging
 

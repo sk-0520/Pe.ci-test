@@ -139,6 +139,7 @@
     <Compile Include="Data\Temporary\AboutNotifiyItem.cs" />
     <Compile Include="Data\Temporary\ItemWithScreen.cs" />
     <Compile Include="Data\Temporary\LauncherItemWithScreen.cs" />
+    <Compile Include="Data\Temporary\ListItem.cs" />
     <Compile Include="Data\Temporary\UpdateData.cs" />
     <Compile Include="Data\Temporary\UpdateInfo.cs" />
     <Compile Include="Define\AboutCopyKind.cs" />

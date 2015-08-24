@@ -24,7 +24,7 @@
 			<StackPanel Orientation="Vertical">
 				<StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Width="190">
 					<Label AA:Language.Word="using-language" Content="language" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-					<ComboBox HorizontalAlignment="Left" Width="89" Height="27" VerticalAlignment="Top" />
+					<ComboBox HorizontalAlignment="Left" Width="89" Height="27" VerticalAlignment="Top" ItemsSource="{Binding LanguageList}" DisplayMemberPath="DisplayText" SelectedValuePath="Value" SelectedValue="{Binding SelectedLanguage}" />
 				</StackPanel>
 				<CheckBox AA:Language.Word="startup/regist" Content="startup" IsChecked="{Binding Startup}"/>
 			</StackPanel>

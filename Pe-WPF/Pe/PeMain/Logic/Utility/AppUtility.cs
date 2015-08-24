@@ -71,6 +71,23 @@ using ContentTypeTextNet.Pe.Library.PeData.Item;
 			}
 		}
 
+		public static IEnumerable<KeyValuePair<string, LanguageCollectionModel>?> GetLanguageFiles(string baseDir, ILogger logger)
+		{
+			foreach (var path in Directory.EnumerateFiles(baseDir, Constants.languageSearchPattern)) {
+				LanguageCollectionModel model = null;
+				try {
+					model = SerializeUtility.LoadXmlSerializeFromFile<LanguageCollectionModel>(path);
+				} catch (Exception ex) {
+					logger.Error(ex);
+					continue;
+				}
+				Debug.Assert(model != null);
+
+				var pair = new KeyValuePair<string, LanguageCollectionModel>(path, model);
+				yield return pair;
+			}
+		}
+
 		/// <summary>
 		/// 指定ディレクトリ内から指定した言語名の言語ファイルを取得する。
 		/// </summary>
@@ -81,16 +98,17 @@ using ContentTypeTextNet.Pe.Library.PeData.Item;
 		public static AppLanguageManager LoadLanguageFile(string baseDir, string name, string cultureCode, ILogger logger)
 		{
 			logger.Information("load language file", baseDir);
-			var langPairList = new List<KeyValuePair<string, LanguageCollectionModel>?>();
-			foreach(var path in Directory.EnumerateFiles(baseDir, Constants.languageSearchPattern)) {
-				try {
-					var model = SerializeUtility.LoadXmlSerializeFromFile<LanguageCollectionModel>(path);
-					var pair = new KeyValuePair<string, LanguageCollectionModel>(path, model);
-					langPairList.Add(pair);
-				} catch(Exception ex) {
-					logger.Error(ex);
-				}
-			}
+			//var langPairList = new List<KeyValuePair<string, LanguageCollectionModel>?>();
+			//foreach(var path in Directory.EnumerateFiles(baseDir, Constants.languageSearchPattern)) {
+			//	try {
+			//		var model = SerializeUtility.LoadXmlSerializeFromFile<LanguageCollectionModel>(path);
+			//		var pair = new KeyValuePair<string, LanguageCollectionModel>(path, model);
+			//		langPairList.Add(pair);
+			//	} catch(Exception ex) {
+			//		logger.Error(ex);
+			//	}
+			//}
+			var langPairList = GetLanguageFiles(baseDir, logger);
 
 			var defaultPath = Path.Combine(baseDir, Constants.languageDefaultFileName);
 			var lang = langPairList.FirstOrDefault(p => p.Value.Value.Name == name)
