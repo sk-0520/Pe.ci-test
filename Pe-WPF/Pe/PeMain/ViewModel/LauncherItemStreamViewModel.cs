@@ -85,8 +85,27 @@
 			set { SetVariableValue(ref this._inputConsole, value); }
 		}
 
-		public Color StdOutputForeColor { get { return StreamSetting.OutputColor.ForeColor; } }
-		public Color StdOutputBackColor { get { return StreamSetting.OutputColor.BackColor; } }
+		public Brush StdOutputForeground { 
+			get 
+			{
+				var result = new SolidColorBrush() {
+					Color = StreamSetting.OutputColor.ForeColor,
+				};
+
+				return result;
+			}
+		}
+		public Brush StdOutputBackground
+		{
+			get
+			{
+				var result = new SolidColorBrush() {
+					Color = StreamSetting.OutputColor.BackColor,
+				};
+
+				return result;
+			}
+		}
 
 		public Brush ErrOutputForeBrush 
 		{ 

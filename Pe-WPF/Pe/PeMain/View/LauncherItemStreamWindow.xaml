@@ -75,13 +75,16 @@
 						VerticalScrollBarVisibility="Visible"
 						Padding="0,0,0,8"
 						FontFamily="{Binding FontFamily}" FontWeight="{Binding FontBold, Converter={StaticResource BooleanFontWeightConverter}}" FontStyle="{Binding FontItalic, Converter={StaticResource BooleanFontStyleConverter}}" FontSize="{Binding FontSize}"
+						Foreground="{Binding StdOutputForeground}"
+						Background="{Binding StdOutputBackground}"
+						AllowDrop="False"
 					>
-						<RichTextBox.Foreground>
+						<!--<RichTextBox.Foreground>
 							<SolidColorBrush Color="{Binding StdOutputForeColor}" />
 						</RichTextBox.Foreground>
 						<RichTextBox.Background>
 							<SolidColorBrush Color="{Binding StdOutputBackColor}" />
-						</RichTextBox.Background>
+						</RichTextBox.Background>-->
 					</RichTextBox>
 					<xctk:WatermarkTextBox Grid.Row="1" Visibility="{Binding UsingInput, Converter={StaticResource BooleanVisibilityConverter}}" Text="{Binding InputConsole, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding ProcessRunning, Mode=OneWay, Converter={StaticResource LogicalNotConverter}}" >
 						<xctk:WatermarkTextBox.Watermark>

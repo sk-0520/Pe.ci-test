@@ -103,7 +103,7 @@
 
 		static Process RunFileItem(LauncherItemModel launcherItem, INonProcess nonProcess, IAppSender appSender)
 		{
-			Debug.Assert(launcherItem.LauncherKind == LauncherKind.File;
+			Debug.Assert(launcherItem.LauncherKind == LauncherKind.File);
 
 			return RunExecutableItem(launcherItem, nonProcess, appSender);
 		}
@@ -118,13 +118,7 @@
 		{
 			Debug.Assert(launcherItem.LauncherKind == LauncherKind.Command);
 
-			//return RunCommand(launcherItem.Command, launcherItem.Option, commonData);
-			var fileLauncherItem = (LauncherItemModel)launcherItem.DeepClone();
-
-			// 管理者権限はどうにも効かなさそう
-			fileLauncherItem.Administrator = false;
-
-			return RunExecutableItem(fileLauncherItem, nonProcess, appSender);
+			return RunExecutableItem(launcherItem, nonProcess, appSender);
 		}
 		public static Process RunItem(LauncherItemModel launcherItem, ScreenModel screen, INonProcess nonProcess, IAppSender appSender)
 		{
