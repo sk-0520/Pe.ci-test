@@ -40,6 +40,8 @@
 		bool _editingTitle = false;
 		bool _editingBody = false;
 
+		Brush _borderBrush;
+
 		#endregion
 
 		public NoteViewModel(NoteIndexItemModel model, NoteWindow view, IAppNonProcess appNonProcess, IAppSender appSender)
@@ -47,6 +49,8 @@
 		{
 			AppNonProcess = appNonProcess;
 			AppSender = appSender;
+
+			this._borderBrush = MakeBorderBrush();
 
 			SetCompactArea();
 		}
@@ -59,10 +63,8 @@
 
 		public Brush BorderBrush
 		{
-			get
-			{
-				return new SolidColorBrush(Colors.Red);
-			}
+			get { return this._borderBrush; }
+			set { SetVariableValue(ref this._borderBrush, value); }
 		}
 
 		public double TitleHeight { get { return Constants.noteCaptionHeight + CaptionPadding.GetHorizon(); } }
@@ -493,6 +495,7 @@
 			set
 			{
 				if (ColorPairProperty.SetNoneAlphaBackColor(Model, value, OnPropertyChanged)) {
+					BorderBrush = MakeBorderBrush();
 					OnPropertyChangeDisplayItem();
 				}
 			}
@@ -524,6 +527,12 @@
 				this._editingBody = false;
 				OnPropertyChanged("IsBodyReadOnly");
 			}
+		}
+
+		Brush MakeBorderBrush()
+		{
+			//TODO: あうあう
+			return new SolidColorBrush(Model.BackColor);
 		}
 
 		#endregion
@@ -658,7 +667,7 @@
 		/// サイズ変更に使用する境界線。
 		/// </summary>
 		[PixelKind(Px.Logical)]
-		public Thickness ResizeThickness { get { return new Thickness(8); } }
+		public Thickness ResizeThickness { get { return SystemParameters.WindowResizeBorderThickness; } }
 
 		#endregion
 
