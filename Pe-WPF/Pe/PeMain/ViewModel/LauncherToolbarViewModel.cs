@@ -589,7 +589,21 @@
 							var filePathList = eventData.EventArgs.Data.GetData(DataFormats.FileDrop) as string[];
 							if (filePathList != null && filePathList.Count() == 1) {
 								var filePath = filePathList.First();
-								var item = LauncherItemUtility.CreateFromFile(filePath, true);
+								var loadShorcut = true;
+								if (PathUtility.IsShortcut(filePath)) {
+									var dialogResult = MessageBox.Show(
+										AppNonProcess.Language["confirm/shortcut/message"],
+										AppNonProcess.Language["confirm/shortcut/caption"],
+										MessageBoxButton.YesNoCancel,
+										MessageBoxImage.Question
+									);
+									if (dialogResult == MessageBoxResult.Cancel) {
+										// やめる
+										return;
+									}
+									loadShorcut = dialogResult == MessageBoxResult.Yes;
+								}
+								var item = LauncherItemUtility.CreateFromFile(filePath, loadShorcut);
 								SelectedGroup.LauncherItems.Add(item.Id);
 								Model.LauncherItems.Add(item);
 								var view = HasView ? View: null;

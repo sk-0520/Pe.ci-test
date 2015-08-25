@@ -3,6 +3,8 @@
 	<Define>
 		<Item Id="ok"  Word="OK" />
 		<Item Id="cancel" Word="キャンセル" />
+		<Item Id="yes" Word="はい" />
+		<Item Id="no" Word="いいえ" />
 
 		<Item Id="topmpst" Word="最前面" />
 		<Item Id="enabled" Word="有効" />
@@ -84,7 +86,7 @@
 		<Item Id="toolbar/others" Word="その他" />
 		<Item Id="toolbar/others/customize" Word="編集" />
 		<Item Id="toolbar/others/property" Word="プロパティ" />
-
+		
 		<Item Id="execute/command" Word="コマンド" />
 		<Item Id="execute/option" Word="オプション" />
 		<Item Id="execute/option/file" Word="オプションにファイルを選択" />
@@ -198,6 +200,9 @@
 		<Item Id="about/update/dialog/caption" Word="アップデートチェック" />
 		<Item Id="about/update/dialog/message" Word="情報ダイアログを閉じてアップデートチェックを開始しますか" />
 		<Item Id="about/close" Word="閉じる" />
+
+		<Item Id="confirm/shortcut/caption" Word="ショートカット登録方法" />
+		<Item Id="confirm/shortcut/message" Word="D&amp;Dされたパスはショートカットファイルです。&#x0d;&#x0a;&#x0d;&#x0a;ショートカット先を登録するには「${yes}」を、&#x0d;&#x0a;ショートカットファイルそのものを登録するには「${no}」を選択してください。" />
 
 		<!-- control -->
 		
