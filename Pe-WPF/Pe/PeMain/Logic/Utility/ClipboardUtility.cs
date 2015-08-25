@@ -201,12 +201,12 @@
 			var reg = new Regex(@"
 				^\s*
 				(?<KEY>
-						Version
-						|StartHTML
-						|EndHTML
-						|StartFragment
-						|EndFragment
-						|SourceURL
+					Version
+					|StartHTML
+					|EndHTML
+					|StartFragment
+					|EndFragment
+					|SourceURL
 				)
 				\s*:\s*
 				(?<VALUE>
@@ -289,29 +289,40 @@
 			return clipboardItem;
 		}
 
-		static byte[] CalculateHashCodeSHA1FromString(string s, INonProcess nonProcess)
+		static HashAlgorithm GetHashAlgorithm(HashType hashType)
 		{
-			using(var hash = new SHA1CryptoServiceProvider()) {
+			switch(hashType) {
+				case HashType.SHA1:
+					return new SHA1CryptoServiceProvider();
+
+				default:
+					throw new NotImplementedException();
+			}
+		}
+
+		static byte[] CalculateHashCodeFromString(HashType hashType, string s, INonProcess nonProcess)
+		{
+			using(var hash = GetHashAlgorithm(hashType)) {
 				var binary = Encoding.Unicode.GetBytes(s);
 				return hash.ComputeHash(binary);
 			}
 		}
-		static byte[] CalculateHashCodeSHA1FromText(ClipboardBodyItemModel bodyItem, INonProcess nonProcess)
+		static byte[] CalculateHashCodeFromText(HashType hashType, ClipboardBodyItemModel bodyItem, INonProcess nonProcess)
 		{
-			return CalculateHashCodeSHA1FromString(bodyItem.Text, nonProcess);
+			return CalculateHashCodeFromString(hashType, bodyItem.Text, nonProcess);
 		}
 
-		static byte[] CalculateHashCodeSHA1FromRtf(ClipboardBodyItemModel bodyItem, INonProcess nonProcess)
+		static byte[] CalculateHashCodeFromRtf(HashType hashType, ClipboardBodyItemModel bodyItem, INonProcess nonProcess)
 		{
-			return CalculateHashCodeSHA1FromString(bodyItem.Rtf, nonProcess);
+			return CalculateHashCodeFromString(hashType, bodyItem.Rtf, nonProcess);
 		}
 
-		static byte[] CalculateHashCodeSHA1FromHtml(ClipboardBodyItemModel bodyItem, INonProcess nonProcess)
+		static byte[] CalculateHashCodeFromHtml(HashType hashType, ClipboardBodyItemModel bodyItem, INonProcess nonProcess)
 		{
-			return CalculateHashCodeSHA1FromString(bodyItem.Html, nonProcess);
+			return CalculateHashCodeFromString(hashType, bodyItem.Html, nonProcess);
 		}
 
-		static byte[] CalculateHashCodeSHA1FromImage(ClipboardBodyItemModel bodyItem, INonProcess nonProcess)
+		static byte[] CalculateHashCodeFromImage(HashType hashType, ClipboardBodyItemModel bodyItem, INonProcess nonProcess)
 		{
 			var binaryWidth = BitConverter.GetBytes(bodyItem.Image.PixelWidth);
 			var binaryHeight = BitConverter.GetBytes(bodyItem.Image.PixelHeight);
@@ -322,52 +333,47 @@
 				binaryImage,
 			};
 
-			return CalculateHashCodeSHA1FromBinaryList(binaryList, nonProcess);
+			return CalculateHashCodeFromBinaryList(hashType, binaryList, nonProcess);
 		}
 
-		static byte[] CalculateHashCodeSHA1FromFiles(ClipboardBodyItemModel bodyItem, INonProcess nonProcess)
+		static byte[] CalculateHashCodeFromFiles(HashType hashType, ClipboardBodyItemModel bodyItem, INonProcess nonProcess)
 		{
 			var binaryList = bodyItem.Files.Select((s, i) => Encoding.Unicode.GetBytes(s + i.ToString()));
-			return CalculateHashCodeSHA1FromBinaryList(binaryList, nonProcess);
+			return CalculateHashCodeFromBinaryList(hashType, binaryList, nonProcess);
 		}
 
-		static byte[] CalculateHashCodeSHA1FromBinaryList(IEnumerable<byte[]> binaryList, INonProcess nonProcess)
+		static byte[] CalculateHashCodeFromBinaryList(HashType hashType, IEnumerable<byte[]> binaryList, INonProcess nonProcess)
 		{
 			using(var stream = new MemoryStream()) {
 				foreach(var binary in binaryList) {
 					stream.Write(binary, 0, binary.Length);
 				}
 
-				using(var hash = new SHA1CryptoServiceProvider()) {
+				using(var hash = GetHashAlgorithm(hashType)) {
 					stream.Seek(0, SeekOrigin.Begin);
 					return hash.ComputeHash(stream);
 				}
 			}
 		}
 
-		static byte[] CalculateHashCodeSHA1(ClipboardType clipboardType, ClipboardBodyItemModel bodyItem, INonProcess nonProcess)
+		public static byte[] CalculateHashCode(HashType hashType, ClipboardType clipboardType, ClipboardBodyItemModel bodyItem, INonProcess nonProcess)
 		{
-			var map = new Dictionary<ClipboardType, Func<ClipboardBodyItemModel, INonProcess, byte[]>>() {
-				{ ClipboardType.Text, CalculateHashCodeSHA1FromText },
-				{ ClipboardType.Rtf, CalculateHashCodeSHA1FromRtf },
-				{ ClipboardType.Html, CalculateHashCodeSHA1FromHtml },
-				{ ClipboardType.Image, CalculateHashCodeSHA1FromImage },
-				{ ClipboardType.File, CalculateHashCodeSHA1FromFiles },
+			var map = new Dictionary<ClipboardType, Func<HashType, ClipboardBodyItemModel, INonProcess, byte[]>>() {
+				{ ClipboardType.Text, CalculateHashCodeFromText },
+				{ ClipboardType.Rtf, CalculateHashCodeFromRtf },
+				{ ClipboardType.Html, CalculateHashCodeFromHtml },
+				{ ClipboardType.Image, CalculateHashCodeFromImage },
+				{ ClipboardType.File, CalculateHashCodeFromFiles },
 			};
 			var binaryDataList = map
 				.Where(p => clipboardType.HasFlag(p.Key))
-				.Select(p => p.Value(bodyItem, nonProcess))
+				.Select(p => p.Value(hashType, bodyItem, nonProcess))
 				.ToList()
 			;
 			var binaryClipboardType = BitConverter.GetBytes((int)clipboardType);
 			binaryDataList.Add(binaryClipboardType);
 
-			return CalculateHashCodeSHA1FromBinaryList(binaryDataList, nonProcess);
-		}
-
-		public static byte[] CalculateHashCode(HashType hashType, ClipboardType clipboardType, ClipboardBodyItemModel bodyItem, INonProcess nonProcess)
-		{
-			return CalculateHashCodeSHA1(clipboardType, bodyItem, nonProcess);
+			return CalculateHashCodeFromBinaryList(hashType, binaryDataList, nonProcess);
 		}
 
 		static ClipboardData CreateClipboardItem_Impl(ClipboardType enabledTypes, IntPtr hWnd, INonProcess nonProcess, bool calcHash)
