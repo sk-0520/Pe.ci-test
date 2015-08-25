@@ -51,7 +51,7 @@
 		CommandItemViewModel _selectedCommandItem;
 
 		IEnumerable<CommandItemViewModel> _driveItems;
-		Thickness _resizeThickness = new Thickness(3);
+		//Thickness _resizeThickness = new Thickness(3);
 
 		Brush _borderBrush = new SolidColorBrush(Colors.Red);
 		Thickness _borderThickness = new Thickness(3);
@@ -474,6 +474,7 @@
 			View.Deactivated += View_Deactivated;
 			PopupUtility.Attachment(View, View.popup);
 			View.inputCommand.KeyDown += inputCommand_KeyDown;
+			View.listItems.SelectionChanged += listItems_SelectionChanged;
 
 			base.InitializeView();
 		}
@@ -486,6 +487,7 @@
 			View.Activated -= View_Activated;
 			View.Deactivated -= View_Deactivated;
 			View.inputCommand.KeyDown -= inputCommand_KeyDown;
+			View.listItems.SelectionChanged -= listItems_SelectionChanged;
 
 			base.UninitializeView();
 		}
@@ -579,5 +581,23 @@
 				View.UserClose();
 			}
 		}
+
+		/// <summary>
+		/// <para>http://stackoverflow.com/questions/8827489/scroll-wpf-listbox-to-the-selecteditem-set-in-code-in-a-view-model?answertab=votes#tab-top</para>
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		void listItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			var listBox = (ListBox)sender;
+			listBox.Dispatcher.BeginInvoke((Action)(() => {
+				listBox.UpdateLayout();
+				if (listBox.SelectedItem != null) {
+					listBox.ScrollIntoView(listBox.SelectedItem);
+				}
+			}));
+		}
+
+
 	}
 }
