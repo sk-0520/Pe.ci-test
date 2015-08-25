@@ -28,6 +28,7 @@
 	WindowStyle="None"
 	ResizeMode="CanResize"
 	AllowsTransparency="True"
+	Topmost="True"
 
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
 	d:DesignWidth="300"
@@ -49,6 +50,9 @@
 		</ResourceDictionary>
 	</AW:CommonDataWindow.Resources>
 	<Grid x:Name="parent">
+		<Grid.RowDefinitions>
+			<RowDefinition />
+		</Grid.RowDefinitions>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="10" />
 			<ColumnDefinition Width="Auto" />
@@ -84,9 +88,14 @@
 			</TextBox.InputBindings>
 		</TextBox>
 		<Button
-			Grid.Column="3" Content="execute" AA:Language.Word="command/execute" 
-			IsEnabled="{Binding SelectedCommandItem, Converter={StaticResource LogicalIsNotNullConverter}}" Command="{Binding RunItemCommand}"
-		/>
+			Grid.Column="3" 
+			AA:Language.Hint="command/execute" 
+			IsEnabled="{Binding SelectedCommandItem, Converter={StaticResource LogicalIsNotNullConverter}}" 
+			Command="{Binding RunItemCommand}"
+			Padding="0"
+		>
+			<Image AA:IconSize.IconScale="Small" Source="{x:Static AM:AppResource.CommonRunImage}" Style="{StaticResource DefaultImage}" Margin="0" />
+		</Button>
 		<Popup
 			x:Name="popup"
 			MinWidth="{Binding ActualWidth, ElementName=inputCommand}"

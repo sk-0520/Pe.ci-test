@@ -29,6 +29,8 @@
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 	using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
 	using ContentTypeTextNet.Library.SharedLibrary.CompatibleForms;
+	using ContentTypeTextNet.Library.PInvoke.Windows;
+	using System.Windows.Threading;
 
 	public class CommandViewModel: HavingViewSingleModelWrapperViewModelBase<CommandSettingModel, CommandWindow>, IHavingAppNonProcess, IHavingAppSender, IWindowHitTestData
 	{
@@ -64,11 +66,17 @@
 			AppSender = appSender;
 
 			CommandItems = new CollectionModel<CommandItemViewModel>(GetAllCommandItems());
+
+			HideTimer = new DispatcherTimer();
+			HideTimer.Interval = Model.HideTime;
+			HideTimer.Tick += HideTimer_Tick;
 		}
 
 		#region property
 
 		LauncherItemSettingModel LauncherItemSetting { get; set; }
+
+		DispatcherTimer HideTimer { get; set; }
 
 		public double WindowLeft
 		{
@@ -95,11 +103,9 @@
 			{
 				SetVariableValue(ref this._visibility, value);
 				if(HasView) {
-					if(Visibility != Visibility.Visible) {
-						View.Topmost = true;
+					if(Visibility == Visibility.Visible) {
 						View.Activate();
-						View.inputCommand.Focus();
-						View.Topmost = false;
+						//View.inputCommand.Focus();
 					}
 				}
 			}
@@ -325,6 +331,62 @@
 			return items.Concat(tags).Concat(files);
 		}
 
+		void ChangeSelectedItemFromList(bool isUp)
+		{
+			if (isUp) {
+				if (SelectedIndex == 0) {
+					SelectedIndex = CommandItems.Count - 1;
+				} else {
+					SelectedIndex = SelectedIndex - 1;
+				}
+			} else {
+				if (SelectedIndex >= CommandItems.Count - 1) {
+					SelectedIndex = 0;
+				} else {
+					SelectedIndex = SelectedIndex + 1;
+				}
+			}
+		}
+
+		void RunItem(CommandItemViewModel commandItem, bool showExtension)
+		{
+			CheckUtility.EnforceNotNull(commandItem);
+
+			AppNonProcess.Logger.Information(SelectedCommandItem.ToString());
+
+			switch (commandItem.CommandKind) {
+				case CommandKind.File:
+				case CommandKind.Drive:
+					try {
+						ExecuteUtility.OpenFile(commandItem.FilePath, AppNonProcess);
+					} catch (Exception ex) {
+						AppNonProcess.Logger.Warning(ex);
+					}
+					break;
+
+				case CommandKind.LauncherItemName:
+				case CommandKind.LauncherItemTag: {
+						if (showExtension) {
+							ScreenModel screen = null;
+							if (HasView) {
+								screen = Screen.FromHandle(View.Handle);
+							}
+							var data = new LauncherItemWithScreen(commandItem.LauncherItemModel, screen, null);
+							var window = AppSender.SendCreateWindow(WindowKind.LauncherExecute, data, null);
+							window.Show();
+						} else {
+							var viewModel = new LauncherItemSimpleViewModel(commandItem.LauncherItemModel, AppNonProcess, AppSender);
+							viewModel.Execute(null);
+						}
+					}
+					break;
+
+				default:
+					throw new NotImplementedException();
+			}
+		}
+
+
 		#endregion
 
 		#region command
@@ -428,59 +490,16 @@
 			base.UninitializeView();
 		}
 
-		void ChangeSelectedItemFromList(bool isUp)
+		protected override void Dispose(bool disposing)
 		{
-			if(isUp) {
-				if(SelectedIndex == 0) {
-					SelectedIndex = CommandItems.Count - 1;
-				} else {
-					SelectedIndex = SelectedIndex - 1;
-				}
-			} else {
-				if(SelectedIndex >= CommandItems.Count - 1) {
-					SelectedIndex = 0;
-				} else {
-					SelectedIndex = SelectedIndex + 1;
+			if (!IsDisposed) {
+				if (HideTimer != null) {
+					HideTimer.Stop();
+					HideTimer = null;
 				}
 			}
-		}
 
-		void RunItem(CommandItemViewModel commandItem, bool showExtension)
-		{
-			CheckUtility.EnforceNotNull(commandItem);
-
-			AppNonProcess.Logger.Information(SelectedCommandItem.ToString());
-
-			switch(commandItem.CommandKind) {
-				case CommandKind.File:
-				case CommandKind.Drive:
-					try {
-						ExecuteUtility.OpenFile(commandItem.FilePath, AppNonProcess);
-					} catch(Exception ex) {
-						AppNonProcess.Logger.Warning(ex);
-					}
-					break;
-
-				case CommandKind.LauncherItemName:
-				case CommandKind.LauncherItemTag: {
-						if(showExtension) {
-							ScreenModel screen = null;
-							if(HasView) {
-								screen = Screen.FromHandle(View.Handle);
-							}
-							var data = new LauncherItemWithScreen(commandItem.LauncherItemModel, screen, null);
-							var window = AppSender.SendCreateWindow(WindowKind.LauncherExecute, data, null);
-							window.Show();
-						} else {
-							var viewModel = new LauncherItemSimpleViewModel(commandItem.LauncherItemModel, AppNonProcess, AppSender);
-							viewModel.Execute(null);
-						}
-					}
-					break;
-
-				default:
-					throw new NotImplementedException();
-			}
+ 			base.Dispose(disposing);
 		}
 
 		#endregion
@@ -518,14 +537,18 @@
 
 		private void View_UserClosing(object sender, System.ComponentModel.CancelEventArgs e)
 		{
+			HideTimer.Stop();
 			e.Cancel = true;
 			Visibility = Visibility.Hidden;
+			InputText = string.Empty;
 		}
 
 		void View_Activated(object sender, EventArgs e)
 		{
+			AppNonProcess.Logger.Trace("command window: active");
 			OnPropertyChangeIsOpen();
-			if(HasView) {
+			HideTimer.IsEnabled = false;
+			if (HasView) {
 				View.inputCommand.Focus();
 			}
 		}
@@ -533,6 +556,7 @@
 		void View_Deactivated(object sender, EventArgs e)
 		{
 			OnPropertyChangeIsOpen();
+			HideTimer.IsEnabled = true;
 		}
 
 		void inputCommand_KeyDown(object sender, KeyEventArgs e)
@@ -544,6 +568,15 @@
 					textBox.Select(InputText.Length, 0);
 					e.Handled = true;
 				}
+			}
+		}
+
+		void HideTimer_Tick(object sender, EventArgs e)
+		{
+			//HideTimer.IsEnabled = false;
+			AppNonProcess.Logger.Trace("command window: hide");
+			if (HasView) {
+				View.UserClose();
 			}
 		}
 	}
