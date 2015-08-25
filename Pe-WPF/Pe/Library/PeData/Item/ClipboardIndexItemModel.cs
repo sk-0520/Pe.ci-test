@@ -13,9 +13,16 @@
 	{
 		public ClipboardIndexItemModel()
 			: base()
-		{ }
+		{
+			Hash = new HashItemModel();
+		}
+
+		#region
 
 		public ClipboardType Type { get; set; }
+		public HashItemModel Hash { get; set; }
+
+		#endregion
 
 		#region IndexItemModelBase
 
@@ -26,6 +33,7 @@
 			var obj = (ClipboardIndexItemModel)target;
 
 			obj.Type = Type;
+			Hash.DeepCloneTo(obj.Hash);
 		}
 
 		public override IDeepClone DeepClone()

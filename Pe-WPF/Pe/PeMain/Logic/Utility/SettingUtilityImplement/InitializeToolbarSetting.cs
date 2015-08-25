@@ -17,9 +17,7 @@
 		}
 
 		static void V_Last(ToolbarSettingModel setting, Version previousVersion, INonProcess nonProcess)
-		{
-			throw new NotImplementedException();
-		}
+		{ }
 
 		static void V_First(ToolbarSettingModel setting, Version previousVersion, INonProcess nonProcess)
 		{

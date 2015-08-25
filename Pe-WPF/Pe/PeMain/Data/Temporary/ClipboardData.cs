@@ -9,17 +9,19 @@
 	using ContentTypeTextNet.Pe.Library.PeData.Define;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 
-	public class ClipboardItem
+	public class ClipboardData
 	{
-		public ClipboardItem()
+		public ClipboardData()
 		{
 			Type = ClipboardType.None;
+			Hash = new HashItemModel();
 			Body = new ClipboardBodyItemModel();
 		}
 
 		#region property
 
 		public ClipboardType Type { get; set; }
+		public HashItemModel Hash { get; set; }
 		public ClipboardBodyItemModel Body { get; set; }
 
 		#endregion

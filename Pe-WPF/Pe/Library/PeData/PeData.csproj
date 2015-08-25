@@ -72,6 +72,7 @@
   <ItemGroup>
     <Compile Include="Define\ClipboardType.cs" />
     <Compile Include="Define\GroupKind.cs" />
+    <Compile Include="Define\HashType.cs" />
     <Compile Include="Define\IndexKind.cs" />
     <Compile Include="Define\LauncherKind.cs" />
     <Compile Include="Define\LauncherCommandType.cs" />
@@ -90,6 +91,7 @@
     <Compile Include="Item\ClipboardIndexItemCollectionModel.cs" />
     <Compile Include="Item\ClipboardIndexItemModel.cs" />
     <Compile Include="Item\ColorPairItemModel.cs" />
+    <Compile Include="Item\HashItemModel.cs" />
     <Compile Include="Item\IndexBodyItemModelBase.cs" />
     <Compile Include="Item\IndexItemCollectionModel.cs" />
     <Compile Include="Item\IndexItemModelBase.cs" />

@@ -57,7 +57,7 @@
 			return name.Name ?? string.Empty;
 		}
 
-		public static string MakeClipboardName(ClipboardItem clipboardItem, INonProcess nonProcess) 
+		public static string MakeClipboardName(ClipboardData clipboardItem, INonProcess nonProcess) 
 		{
 
 			var type = ClipboardUtility.GetSingleClipboardType(clipboardItem.Type);

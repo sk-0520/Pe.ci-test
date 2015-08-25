@@ -221,7 +221,7 @@
 			{
 				var result = CreateCommand(
 					o => {
-						var clipboardItem = new ClipboardItem() {
+						var clipboardItem = new ClipboardData() {
 							Type = Model.Type,
 							Body = BodyModel,
 						};

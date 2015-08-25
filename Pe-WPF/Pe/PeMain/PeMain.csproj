@@ -212,7 +212,7 @@
     <Compile Include="Data\LauncherIconCaching.cs" />
     <Compile Include="Data\LauncherToolbarDataModel.cs" />
     <Compile Include="Data\Temporary\ClipboardFileItem.cs" />
-    <Compile Include="Data\Temporary\ClipboardItem.cs" />
+    <Compile Include="Data\Temporary\ClipboardData.cs" />
     <Compile Include="Data\Temporary\IndexBodyPairItem.cs" />
     <Compile Include="Data\Temporary\SelectedNodeAndLauncherItem.cs" />
     <Compile Include="Data\Temporary\SettingNotifiyItem.cs" />

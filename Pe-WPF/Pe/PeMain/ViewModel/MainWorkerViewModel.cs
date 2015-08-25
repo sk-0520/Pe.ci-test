@@ -1710,8 +1710,8 @@
 			this._clipboardPreviousTime = now;
 
 			try {
-				var clipboardItem = ClipboardUtility.CreateClipboardItem(CommonData.MainSetting.Clipboard.EnabledClipboardTypes, MessageWindow.Handle, CommonData.Logger);
-				if (clipboardItem.Type != ClipboardType.None) {
+				var clipboardData = ClipboardUtility.CreateClipboardItem(CommonData.MainSetting.Clipboard.EnabledClipboardTypes, MessageWindow.Handle, CommonData.NonProcess);
+				if (clipboardData.Type != ClipboardType.None) {
 					Task.Run(() => {
 						//clipboardItem.Name = displayText;
 						if (Clipboard.IndexItems.Any()) {
@@ -1737,12 +1737,13 @@
 								//this._commonData.MainSetting.Clipboard.HistoryItems.Insert(0, clipboardItem);
 								//Clipboard.IndexItems.Insert();
 								//var body = ReceiveGetIndexBody(IndexKind.Template)
-								var displayText = DisplayTextUtility.MakeClipboardName(clipboardItem, CommonData.NonProcess);
+								var displayText = DisplayTextUtility.MakeClipboardName(clipboardData, CommonData.NonProcess);
 								var index = new ClipboardIndexItemModel() {
 									Name = displayText,
-									Type = clipboardItem.Type,
+									Type = clipboardData.Type,
+									Hash = clipboardData.Hash,
 								};
-								SendSaveIndexBody(clipboardItem.Body, index.Id, Timing.Delay);
+								SendSaveIndexBody(clipboardData.Body, index.Id, Timing.Delay);
 								Clipboard.IndexPairList.Add(index, null);
 							} catch (Exception ex) {
 								CommonData.Logger.Error(ex);
