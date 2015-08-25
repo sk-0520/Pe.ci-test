@@ -31,8 +31,9 @@
 	using ContentTypeTextNet.Library.SharedLibrary.CompatibleForms;
 	using ContentTypeTextNet.Library.PInvoke.Windows;
 	using System.Windows.Threading;
+	using System.ComponentModel;
 
-	public class CommandViewModel: HavingViewSingleModelWrapperViewModelBase<CommandSettingModel, CommandWindow>, IHavingAppNonProcess, IHavingAppSender, IWindowHitTestData
+	public class CommandViewModel : HavingViewSingleModelWrapperViewModelBase<CommandSettingModel, CommandWindow>, IHavingAppNonProcess, IHavingAppSender, IWindowHitTestData, IVisualStyleData
 	{
 		#region define
 
@@ -53,8 +54,8 @@
 		IEnumerable<CommandItemViewModel> _driveItems;
 		//Thickness _resizeThickness = new Thickness(3);
 
-		Brush _borderBrush = new SolidColorBrush(Colors.Red);
-		Thickness _borderThickness = new Thickness(3);
+		Brush _borderBrush = SystemColors.ActiveBorderBrush;
+		Thickness _borderThickness = SystemParameters.WindowResizeBorderThickness;
 
 		#endregion
 
@@ -70,6 +71,17 @@
 			HideTimer = new DispatcherTimer();
 			HideTimer.Interval = Model.HideTime;
 			HideTimer.Tick += HideTimer_Tick;
+
+			if (HasView) {
+				BorderBrush = View.Background;
+
+				var backgroundPropertyDescriptor = DependencyPropertyDescriptor.FromProperty(
+					Window.BackgroundProperty, typeof(Brush)
+				);
+				if (backgroundPropertyDescriptor != null) {
+					backgroundPropertyDescriptor.AddValueChanged(View, OnBackgroundChanged);
+				}
+			}
 		}
 
 		#region property
@@ -202,7 +214,11 @@
 		public double CaptionWidth { get; set; }
 		public double CaptionHeight { get; set; }
 
-		public Brush BorderBrush { get { return this._borderBrush; } }
+		public Brush BorderBrush
+		{
+			get { return this._borderBrush; }
+			set { SetVariableValue(ref this._borderBrush, value); }
+		}
 		public Thickness BorderThickness { get { return this._borderThickness; } }
 
 		#region font
@@ -537,6 +553,15 @@
 
 		#endregion
 
+		#region IVisualStyleData
+
+		public bool UsingVisualStyle { get { return true; } }
+		public bool EnabledVisualStyle { get; set; }
+		public Color VisualPlainColor { get; set; }
+		public Color VisualAlphaColor { get; set; }
+
+		#endregion
+
 		private void View_UserClosing(object sender, System.ComponentModel.CancelEventArgs e)
 		{
 			HideTimer.Stop();
@@ -598,6 +623,13 @@
 			}));
 		}
 
+		void OnBackgroundChanged(object sender, EventArgs e)
+		{
+			var viewBrush = View.Background as SolidColorBrush;
+			if (viewBrush != null) {
+				BorderBrush = viewBrush;
+			}
+		}
 
 	}
 }

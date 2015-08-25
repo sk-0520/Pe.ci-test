@@ -15,6 +15,7 @@
 	using System.Windows.Shapes;
 	using ContentTypeTextNet.Library.PInvoke.Windows;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Library.SharedLibrary.View.ViewExtend;
 	using ContentTypeTextNet.Pe.PeMain.View.Parts.ViewExtend;
 	using ContentTypeTextNet.Pe.PeMain.View.Parts.Window;
 	using ContentTypeTextNet.Pe.PeMain.ViewModel;
@@ -32,6 +33,7 @@
 		#region property
 
 		CaptionCursorHitTest WindowHitTest { get; set; }
+		VisualStyle VisualStyle { get; set; }
 
 		#endregion
 
@@ -63,6 +65,7 @@
 			base.OnLoaded(sender, e);
 
 			WindowHitTest = new WidthResizeHitTest(this, ViewModel, CommonData.NonProcess);
+			VisualStyle = new VisualStyle(this, ViewModel, CommonData.NonProcess);
 		}
 
 		protected override IntPtr WndProc(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
@@ -82,6 +85,7 @@
 
 
 			var extends = new IHavingWndProc[] {
+				VisualStyle,
 				WindowHitTest,
 			};
 			foreach(var extend in extends.Where(e => e != null)) {
