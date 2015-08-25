@@ -15,7 +15,11 @@
 		public static void Correction(CommandSettingModel setting, Version previousVersion, INonProcess nonProcess)
 		{
 			V_First(setting, previousVersion, nonProcess);
+			V_Last(setting, previousVersion, nonProcess);
+		}
 
+		static void V_Last(CommandSettingModel setting, Version previousVersion, INonProcess nonProcess)
+		{
 			setting.IconScale = EnumUtility.GetNormalization(setting.IconScale, IconScale.Small);
 			setting.WindowWidth = Constants.commandWindowWidth.GetClamp(setting.WindowWidth);
 			setting.Font.Size = Constants.commandFontSize.GetClamp(setting.Font.Size);

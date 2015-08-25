@@ -14,7 +14,11 @@
 		public static void Correction(ClipboardSettingModel setting, Version previousVersion, INonProcess nonProcess)
 		{
 			V_First(setting, previousVersion, nonProcess);
+			V_Last(setting, previousVersion, nonProcess);
+		}
 
+		static void V_Last(ClipboardSettingModel setting, Version previousVersion, INonProcess nonProcess)
+		{
 			setting.WaitTime = Constants.clipboardWaitTime.GetClamp(setting.WaitTime);
 			setting.Font.Size = Constants.clipboardFontSize.GetClamp(setting.Font.Size);
 

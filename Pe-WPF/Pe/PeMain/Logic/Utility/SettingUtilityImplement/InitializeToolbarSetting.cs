@@ -13,6 +13,12 @@
 		public static void Correction(ToolbarSettingModel setting, Version previousVersion, INonProcess nonProcess)
 		{
 			V_First(setting, previousVersion, nonProcess);
+			V_Last(setting, previousVersion, nonProcess);
+		}
+
+		static void V_Last(ToolbarSettingModel setting, Version previousVersion, INonProcess nonProcess)
+		{
+			throw new NotImplementedException();
 		}
 
 		static void V_First(ToolbarSettingModel setting, Version previousVersion, INonProcess nonProcess)

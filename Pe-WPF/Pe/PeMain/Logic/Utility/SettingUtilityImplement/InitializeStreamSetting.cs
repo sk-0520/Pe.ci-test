@@ -14,7 +14,11 @@
 		internal static void Correction(StreamSettingModel setting, Version previousVersion, INonProcess nonProcess)
 		{
 			V_First(setting, previousVersion, nonProcess);
+			V_Last(setting, previousVersion, nonProcess);
+		}
 
+		static void V_Last(StreamSettingModel setting, Version previousVersion, INonProcess nonProcess)
+		{
 			setting.Font.Size = Constants.streamFontSize.GetClamp(setting.Font.Size);
 
 			if(setting.OutputColor.ForeColor == default(Color)) {

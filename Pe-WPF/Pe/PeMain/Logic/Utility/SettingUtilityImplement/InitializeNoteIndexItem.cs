@@ -15,8 +15,11 @@
 		public static void Correction(NoteIndexItemModel indexItem, Version previousVersion, INonProcess nonProcess)
 		{
 			V_First(indexItem, previousVersion, nonProcess);
+			V_Last(indexItem, previousVersion, nonProcess);
+		}
 
-			CheckUtility.EnforceNotNull(indexItem);
+		static void V_Last(NoteIndexItemModel indexItem, Version previousVersion, INonProcess nonProcess)
+		{
 			if(SettingUtility.IsIllegalPlusNumber(indexItem.Font.Size)) {
 				indexItem.Font.Size = Constants.noteFontSize.median;
 			}

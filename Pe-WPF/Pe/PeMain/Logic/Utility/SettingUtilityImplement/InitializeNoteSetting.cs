@@ -14,7 +14,11 @@
 		public static void Correction(NoteSettingModel setting, Version previousVersion, INonProcess nonProcess)
 		{
 			V_First(setting, previousVersion, nonProcess);
+			V_Last(setting, previousVersion, nonProcess);
+		}
 
+		static void V_Last(NoteSettingModel setting, Version previousVersion, INonProcess nonProcess)
+		{
 			setting.Font.Size = Constants.noteFontSize.GetClamp(setting.Font.Size);
 
 			if(setting.ForeColor == default(Color)) {

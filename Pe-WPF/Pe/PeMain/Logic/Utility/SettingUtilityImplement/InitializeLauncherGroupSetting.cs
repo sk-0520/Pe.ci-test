@@ -13,7 +13,11 @@
 		public static void Correction(LauncherGroupSettingModel setting, Version previousVersion, INonProcess nonProcess)
 		{
 			V_First(setting, previousVersion, nonProcess);
+			V_Last(setting, previousVersion, nonProcess);
 		}
+
+		static void V_Last(LauncherGroupSettingModel setting, Version previousVersion, INonProcess nonProcess)
+		{ }
 
 		static void V_First(LauncherGroupSettingModel setting, Version previousVersion, INonProcess nonProcess)
 		{

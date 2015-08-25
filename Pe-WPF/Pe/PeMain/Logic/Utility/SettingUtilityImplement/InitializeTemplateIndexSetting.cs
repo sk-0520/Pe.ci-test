@@ -13,7 +13,11 @@
 		public static void Correction(TemplateIndexSettingModel setting, Version previousVersion, INonProcess nonProcess)
 		{
 			V_First(setting, previousVersion, nonProcess);
+			V_Last(setting, previousVersion, nonProcess);
 		}
+
+		static void V_Last(TemplateIndexSettingModel setting, Version previousVersion, INonProcess nonProcess)
+		{ }
 
 		static void V_First(TemplateIndexSettingModel setting, Version previousVersion, INonProcess nonProcess)
 		{

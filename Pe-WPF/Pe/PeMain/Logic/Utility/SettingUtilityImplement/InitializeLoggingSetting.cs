@@ -13,7 +13,11 @@
 		public static void Correction(LoggingSettingModel setting, Version previousVersion, INonProcess nonProcess)
 		{
 			V_First(setting, previousVersion, nonProcess);
+			V_Last(setting, previousVersion, nonProcess);
+		}
 
+		static void V_Last(LoggingSettingModel setting, Version previousVersion, INonProcess nonProcess)
+		{
 			if(SettingUtility.IsIllegalPlusNumber(setting.WindowWidth)) {
 				setting.WindowWidth = Constants.loggingDefaultWindowSize.Width;
 			}

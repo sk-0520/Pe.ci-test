@@ -17,7 +17,11 @@
 		public static void Correction(ToolbarItemModel setting, Version previousVersion, INonProcess nonProcess)
 		{
 			V_First(setting, previousVersion, nonProcess);
+			V_Last(setting, previousVersion, nonProcess);
+		}
 
+		static void V_Last(ToolbarItemModel setting, Version previousVersion, INonProcess nonProcess)
+		{
 			setting.HideWaitTime = Constants.toolbarHideWaitTime.GetClamp(setting.HideWaitTime);
 			setting.HideAnimateTime = Constants.toolbarHideAnimateTime.GetClamp(setting.HideAnimateTime);
 			setting.Font.Size = Constants.toolbarFontSize.GetClamp(setting.Font.Size);
