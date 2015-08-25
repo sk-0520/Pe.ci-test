@@ -1,27 +1,27 @@
 ﻿namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 {
 	using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ContentTypeTextNet.Library.PInvoke.Windows;
-using ContentTypeTextNet.Library.SharedLibrary.IF;
-using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
-using ContentTypeTextNet.Library.SharedLibrary.Model;
-using ContentTypeTextNet.Pe.Library.PeData.Define;
-using ContentTypeTextNet.Pe.Library.PeData.Item;
-using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
-using ContentTypeTextNet.Pe.PeMain.Define;
-using ContentTypeTextNet.Pe.PeMain.IF;
-using ContentTypeTextNet.Pe.PeMain.View;
+	using System.Collections.Generic;
+	using System.ComponentModel;
+	using System.Diagnostics;
+	using System.IO;
+	using System.Linq;
+	using System.Text;
+	using System.Threading.Tasks;
+	using ContentTypeTextNet.Library.PInvoke.Windows;
+	using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+	using ContentTypeTextNet.Library.SharedLibrary.Model;
+	using ContentTypeTextNet.Pe.Library.PeData.Define;
+	using ContentTypeTextNet.Pe.Library.PeData.Item;
+	using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
+	using ContentTypeTextNet.Pe.PeMain.Define;
+	using ContentTypeTextNet.Pe.PeMain.IF;
+	using ContentTypeTextNet.Pe.PeMain.View;
 
 	public static class ExecuteUtility
 	{
-		static Process RunFileItem(LauncherItemModel launcherItem, INonProcess nonProcess, IAppSender appSender)
+		static Process RunExecutableItem(LauncherItemModel launcherItem, INonProcess nonProcess, IAppSender appSender)
 		{
 			Debug.Assert(launcherItem.LauncherKind == LauncherKind.File || launcherItem.LauncherKind == LauncherKind.Command);
 
@@ -32,35 +32,35 @@ using ContentTypeTextNet.Pe.PeMain.View;
 
 			startInfo.Arguments = launcherItem.Option;
 
-			if (launcherItem.Administrator) {
+			if(launcherItem.Administrator) {
 				startInfo.Verb = "runas";
 			}
 
 			// 作業ディレクトリ
-			if (!string.IsNullOrWhiteSpace(launcherItem.WorkDirectoryPath)) {
+			if(!string.IsNullOrWhiteSpace(launcherItem.WorkDirectoryPath)) {
 				startInfo.WorkingDirectory = Environment.ExpandEnvironmentVariables(launcherItem.WorkDirectoryPath);
-			} else if (Path.IsPathRooted(startInfo.FileName) && FileUtility.Exists(startInfo.FileName)) {
+			} else if(Path.IsPathRooted(startInfo.FileName) && FileUtility.Exists(startInfo.FileName)) {
 				startInfo.WorkingDirectory = Path.GetDirectoryName(startInfo.FileName);
 			}
 
 			// 環境変数
-			if (launcherItem.EnvironmentVariables.Edit) {
+			if(launcherItem.EnvironmentVariables.Edit) {
 				startInfo.UseShellExecute = false;
 				var envs = startInfo.EnvironmentVariables;
 				// 追加・更新
-				foreach (var pair in launcherItem.EnvironmentVariables.Update) {
+				foreach(var pair in launcherItem.EnvironmentVariables.Update) {
 					envs[pair.Id] = pair.Value;
 				}
 				// 削除
 				var removeList = launcherItem.EnvironmentVariables.Remove.Where(envs.ContainsKey);
-				foreach (var key in removeList) {
+				foreach(var key in removeList) {
 					envs.Remove(key);
 				}
 			}
 
 			// 出力取得
 			//StreamForm streamForm = null;
-			if (launcherItem.StdStream.OutputWatch) {
+			if(launcherItem.StdStream.OutputWatch) {
 				streamWatch = true;
 				startInfo.CreateNoWindow = true;
 				startInfo.UseShellExecute = false;
@@ -71,7 +71,7 @@ using ContentTypeTextNet.Pe.PeMain.View;
 
 			LauncherItemStreamWindow streamWindow = null;
 			try {
-				if (streamWatch) {
+				if(streamWatch) {
 					var streamData = new StreamData() {
 						Process = process,
 						LauncherItem = launcherItem,
@@ -83,14 +83,14 @@ using ContentTypeTextNet.Pe.PeMain.View;
 					//commonData.RootSender.AppendWindow(streamForm);
 				}
 
-				if (streamWatch) {
+				if(streamWatch) {
 					streamWindow.ViewModel.Start();
 					//streamWindow.Show();
 				} else {
 					process.Start();
 				}
 
-			} catch (Win32Exception ex) {
+			} catch(Win32Exception ex) {
 				nonProcess.Logger.Error(ex);
 				//if (streamForm != null) {
 				//	streamForm.Dispose();
@@ -99,6 +99,13 @@ using ContentTypeTextNet.Pe.PeMain.View;
 			}
 
 			return process;
+		}
+
+		static Process RunFileItem(LauncherItemModel launcherItem, INonProcess nonProcess, IAppSender appSender)
+		{
+			Debug.Assert(launcherItem.LauncherKind == LauncherKind.File;
+
+			return RunExecutableItem(launcherItem, nonProcess, appSender);
 		}
 
 		/// <summary>
@@ -113,13 +120,11 @@ using ContentTypeTextNet.Pe.PeMain.View;
 
 			//return RunCommand(launcherItem.Command, launcherItem.Option, commonData);
 			var fileLauncherItem = (LauncherItemModel)launcherItem.DeepClone();
-			// アイコンが取れないべ
-			//// ファイルアイテムに変換
-			//fileLauncherItem.LauncherKind = LauncherKind.File;
+
 			// 管理者権限はどうにも効かなさそう
 			fileLauncherItem.Administrator = false;
 
-			return RunFileItem(fileLauncherItem, nonProcess, appSender);
+			return RunExecutableItem(fileLauncherItem, nonProcess, appSender);
 		}
 		public static Process RunItem(LauncherItemModel launcherItem, ScreenModel screen, INonProcess nonProcess, IAppSender appSender)
 		{
