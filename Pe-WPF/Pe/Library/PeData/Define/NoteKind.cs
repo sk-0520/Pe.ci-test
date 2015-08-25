@@ -6,8 +6,15 @@
 	using System.Text;
 	using System.Threading.Tasks;
 
+	/// <summary>
+	/// ノート種別。
+	/// <para>ほぼほぼ予約項目。</para>
+	/// </summary>
 	public enum NoteKind
 	{
-		Plain
+		/// <summary>
+		/// プレーンテキスト。
+		/// </summary>
+		Text
 	}
 }

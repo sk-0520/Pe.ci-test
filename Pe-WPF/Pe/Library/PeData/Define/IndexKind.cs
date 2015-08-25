@@ -6,10 +6,22 @@
 	using System.Text;
 	using System.Threading.Tasks;
 	
+	/// <summary>
+	/// インデックスデータ種別。
+	/// </summary>
 	public enum IndexKind
 	{
+		/// <summary>
+		/// ノート。
+		/// </summary>
 		Note,
+		/// <summary>
+		/// クリップボード。
+		/// </summary>
 		Clipboard,
+		/// <summary>
+		/// テンプレート。
+		/// </summary>
 		Template,
 	}
 }

@@ -6,6 +6,9 @@
 	using System.Text;
 	using System.Threading.Tasks;
 
+	/// <summary>
+	/// ハッシュ種別。
+	/// </summary>
 	public enum HashType
 	{
 		SHA1
