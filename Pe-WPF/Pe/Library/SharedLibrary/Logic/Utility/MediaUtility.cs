@@ -73,6 +73,11 @@ using System.Windows.Media.Imaging;
 			}
 		}
 
+		/// <summary>
+		/// 指定ビットマップソースから全ピクセル情報を取得。
+		/// </summary>
+		/// <param name="bitmapSource"></param>
+		/// <returns></returns>
 		public static byte[] GetPixels(BitmapSource bitmapSource)
 		{
 			var usingNewImage = bitmapSource.Format != PixelFormats.Bgra32;
@@ -97,8 +102,14 @@ using System.Windows.Media.Imaging;
 			return pixels;
 		}
 
-		public static IEnumerable< Color> GetColors(byte[] pixels)
+		/// <summary>
+		/// ピクセル情報から色へ変換。
+		/// </summary>
+		/// <param name="pixels">[B][G][R][A]... となっていることを期待。</param>
+		/// <returns></returns>
+		public static IEnumerable<Color> GetColors(byte[] pixels)
 		{
+			CheckUtility.Enforce<ArgumentException>(pixels.Length % 4 == 0);
 			for (var i = 0; i < pixels.Length; i += 4) {
 				var b = pixels[i + 0];
 				var g = pixels[i + 1];
