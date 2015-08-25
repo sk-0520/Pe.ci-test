@@ -125,11 +125,7 @@
 				</Style>
 				<Style x:Key="CaptionCommand" TargetType="TextBlock">
 					<Setter Property="FontFamily" Value="Webdings" />
-					<Setter Property="Foreground">
-						<Setter.Value>
-							<SolidColorBrush Color="{Binding ForeColor}" />
-						</Setter.Value>
-					</Setter>
+					<Setter Property="Foreground" Value="{Binding ForeColorBrush}" />
 					<!--<Setter Property="VerticalAlignment" Value="Stretch"/>-->
 				</Style>
 			</Grid.Resources>

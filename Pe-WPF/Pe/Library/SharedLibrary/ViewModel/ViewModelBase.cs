@@ -115,6 +115,15 @@
 			OnPropertyChanged("DisplayText");
 		}
 
+		protected void CallOnPropertyChange(string propertyName, params string[] propertyNames)
+		{
+			var paramList = new List<string>(1 + (propertyNames != null ? propertyNames.Length: 0));
+			paramList.Add(propertyName);
+			if(propertyNames != null && propertyNames.Any()) {
+				paramList.AddRange(propertyNames);
+			}
+			CallOnPropertyChange(paramList);
+		}
 		protected void CallOnPropertyChange(IEnumerable<string> propertyNames)
 		{
 			foreach (var propertyName in propertyNames) {

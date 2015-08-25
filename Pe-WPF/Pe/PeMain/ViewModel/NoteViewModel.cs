@@ -230,6 +230,11 @@
 			set { FontModelProperty.SetSize(Model.Font, value, OnPropertyChanged); }
 		}
 
+		public Brush ForeColorBrush
+		{
+			get { return new SolidColorBrush(ForeColor); }
+		}
+
 		#endregion
 
 
@@ -484,6 +489,7 @@
 			set
 			{
 				if (ColorPairProperty.SetNoneAlphaForekColor(Model, value, OnPropertyChanged)) {
+					CallOnPropertyChange("ForeColorBrush");
 					OnPropertyChangeDisplayItem();
 				}
 			}
