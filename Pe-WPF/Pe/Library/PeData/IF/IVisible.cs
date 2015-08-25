@@ -7,6 +7,9 @@
 	using System.Threading.Tasks;
 	using System.Windows;
 
+	/// <summary>
+	/// 表示・非表示を保持する。
+	/// </summary>
 	public interface IVisible
 	{
 		/// <summary>

@@ -8,6 +8,9 @@
 	using ContentTypeTextNet.Library.SharedLibrary.Attribute;
 	using ContentTypeTextNet.Library.SharedLibrary.Define;
 
+	/// <summary>
+	/// ウィンドウ位置を保持する。
+	/// </summary>
 	public interface IWindowArea
 	{
 		/// <summary>

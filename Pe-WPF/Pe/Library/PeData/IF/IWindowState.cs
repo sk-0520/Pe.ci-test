@@ -7,6 +7,9 @@
 	using System.Threading.Tasks;
 	using System.Windows;
 
+	/// <summary>
+	/// ウィンドウ状態を保持。
+	/// </summary>
 	public interface IWindowState
 	{
 		/// <summary>

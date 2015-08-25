@@ -9,6 +9,9 @@
 	using ContentTypeTextNet.Library.SharedLibrary.Attribute;
 	using ContentTypeTextNet.Library.SharedLibrary.Define;
 
+	/// <summary>
+	/// 各種ウィンドウ状態を保持するマーカー。
+	/// </summary>
 	public interface IWindowStatus: IVisible, ITopMost, IWindowArea, IWindowState
 	{ }
 }

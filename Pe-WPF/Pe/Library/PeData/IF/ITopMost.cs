@@ -1,11 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ContentTypeTextNet.Pe.Library.PeData.IF
+﻿namespace ContentTypeTextNet.Pe.Library.PeData.IF
 {
+	using System;
+	using System.Collections.Generic;
+	using System.Linq;
+	using System.Text;
+	using System.Threading.Tasks;
+
+	/// <summary>
+	/// 最前面を保持する。
+	/// </summary>
 	public interface ITopMost
 	{
 		/// <summary>
