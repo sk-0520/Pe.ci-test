@@ -63,7 +63,7 @@ using System.Windows.Media.Imaging;
 		/// </summary>
 		/// <param name="color"></param>
 		/// <returns></returns>
-		public static Color CalculateAutoColor(Color color)
+		public static Color GetAutoColor(Color color)
 		{
 			var brightness = GetBrightness(color);
 			if (brightness > 160) {

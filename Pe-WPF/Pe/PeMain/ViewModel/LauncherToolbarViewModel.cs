@@ -36,6 +36,7 @@
 	using System.Windows.Shapes;
 	using ContentTypeTextNet.Library.SharedLibrary.Data;
 	using ContentTypeTextNet.Pe.PeMain.Define;
+	using System.Windows.Media.Effects;
 
 	public class LauncherToolbarViewModel: HavingViewSingleModelWrapperViewModelBase<LauncherToolbarDataModel, LauncherToolbarWindow>, IApplicationDesktopToolbarData, IVisualStyleData, IHavingAppNonProcess, IWindowAreaCorrectionData, IWindowHitTestData, IHavingAppSender, IRefreshFromViewModel, IMenuItem
 	{
@@ -391,6 +392,33 @@
 		public string ToolbarText { get { return DisplayTextUtility.GetDisplayName(SelectedGroup); } }
 		public Color ToolbarHotTrack { get { return GetAppIconColor(); } }
 		public Visibility TextVisible { get { return Model.Toolbar.TextVisible ? Visibility.Visible : Visibility.Collapsed; } }
+
+		public Brush ToolbarTextForeground
+		{
+			get
+			{
+				var result = new SolidColorBrush();
+
+				var color = MediaUtility.GetAutoColor(VisualPlainColor);
+				result.Color = color;
+
+				return result;
+			}
+		}
+		public Effect ToolbarTextEffect
+		{
+			get
+			{
+				var color = MediaUtility.GetAutoColor(MediaUtility.GetAutoColor(VisualPlainColor));
+				var result = new DropShadowEffect() {
+					Color = color,
+					BlurRadius = 4,
+					ShadowDepth = 0,
+				};
+
+				return result;
+ 			}
+		}
 
 		public string ToolTipTitle { get { return ToolbarText; } }
 		//public string ScreenName { get { return ScreenUtility.GetScreenName(DockScreen); } }
@@ -1152,6 +1180,10 @@
 			if(viewBrush != null) {
 				BorderBrush = viewBrush;
 			}
+			CallOnPropertyChange(
+				"ToolbarTextForeground",
+				"ToolbarTextEffect"
+			);
 		}
 
 		void View_Loaded(object sender, RoutedEventArgs e)
