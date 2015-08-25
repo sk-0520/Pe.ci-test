@@ -59,7 +59,7 @@
 	<Grid>
 		<Grid.Background>
 			<LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-				<GradientStop Color="#80ffffff" Offset="0" />
+				<GradientStop Color="#A0ffffff" Offset="0" />
 				<GradientStop Color="Transparent" Offset="0.4"/>
 				<GradientStop Color="Transparent" Offset="0.8"/>
 				<GradientStop Color="#20101010" Offset="1"/>
