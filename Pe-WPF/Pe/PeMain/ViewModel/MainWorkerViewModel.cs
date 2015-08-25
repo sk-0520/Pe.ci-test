@@ -1122,10 +1122,10 @@
 			Command.Visibility = Visibility.Visible;
 		}
 
-		UpdateData CheckUpdate(bool force)
+		Updater CheckUpdate(bool force)
 		{
 
-			var updateData = new UpdateData(CommonData.VariableConstants.UserArchiveDirectoryPath, CommonData.MainSetting.RunningInformation.CheckUpdateRC, CommonData);
+			var updateData = new Updater(CommonData.VariableConstants.UserArchiveDirectoryPath, CommonData.MainSetting.RunningInformation.CheckUpdateRC, CommonData);
 			CommonData.Logger.Debug("update: parameter", string.Format("force = {0}, setting = {1}", force, CommonData.MainSetting.RunningInformation.CheckUpdateRelease));
 			if(force || !IsPause && this.CommonData.MainSetting.RunningInformation.CheckUpdateRelease) {
 				var updateInfo = updateData.Check();
@@ -1138,16 +1138,16 @@
 		/// </summary>
 		/// <param name="force">強制的に確認を行うか。</param>
 		/// <param name="updateData">アップデート情報。</param>
-		void ConfirmUpdate(bool force, UpdateData updateData)
+		void ConfirmUpdate(bool force, Updater updateData)
 		{
 			if(force || !IsPause && CommonData.MainSetting.RunningInformation.CheckUpdateRelease) {
-				if(updateData != null && updateData.Info != null) {
-					if(updateData.Info.IsUpdate) {
+				if(updateData != null && updateData.Information != null) {
+					if(updateData.Information.IsUpdate) {
 						ShowUpdateDialog(updateData);
-					} else if(updateData.Info.IsError) {
-						CommonData.Logger.Warning(CommonData.Language["log/update/error"], updateData.Info.Log);
+					} else if(updateData.Information.IsError) {
+						CommonData.Logger.Warning(CommonData.Language["log/update/error"], updateData.Information.Log);
 					} else {
-						CommonData.Logger.Information(CommonData.Language["log/update/newest"], updateData.Info.Log);
+						CommonData.Logger.Information(CommonData.Language["log/update/newest"], updateData.Information.Log);
 					}
 				} else {
 					CommonData.Logger.Error(CommonData.Language["log/update/error"], "info is null");
@@ -1201,7 +1201,7 @@
 		/// アップデートダイアログ表示。
 		/// </summary>
 		/// <param name="updateData"></param>
-		void ShowUpdateDialog(UpdateData updateData)
+		void ShowUpdateDialog(Updater updateData)
 		{
 			// TODO: ShowUpdateDialog
 			//PauseOthersPlain(() => {

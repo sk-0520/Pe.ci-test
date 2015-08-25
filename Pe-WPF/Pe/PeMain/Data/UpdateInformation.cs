@@ -1,4 +1,4 @@
-﻿namespace ContentTypeTextNet.Pe.PeMain.Data.Temporary
+﻿namespace ContentTypeTextNet.Pe.PeMain.Data
 {
 	using System;
 	using System.Collections.Generic;
@@ -6,11 +6,11 @@
 	using System.Text;
 	using System.Threading.Tasks;
 
-	public class UpdateInfo
+	public class UpdateInformation
 	{
 		IEnumerable<string> _log;
 
-		public UpdateInfo(IEnumerable<string> log)
+		public UpdateInformation(IEnumerable<string> log)
 		{
 			this._log = log;
 		}

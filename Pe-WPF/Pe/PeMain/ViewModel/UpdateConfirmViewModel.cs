@@ -1,40 +1,41 @@
 ﻿namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 {
 	using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Media;
-using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
-using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
-using ContentTypeTextNet.Pe.PeMain.View;
+	using System.Collections.Generic;
+	using System.IO;
+	using System.Linq;
+	using System.Net;
+	using System.Text;
+	using System.Threading.Tasks;
+	using System.Windows;
+	using System.Windows.Controls;
+	using System.Windows.Input;
+	using System.Windows.Media;
+	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+	using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
+	using ContentTypeTextNet.Pe.PeMain.Logic;
+	using ContentTypeTextNet.Pe.PeMain.View;
 
 	public class UpdateConfirmViewModel: HavingViewModelBase<UpdateConfirmWindow>
 	{
-		public UpdateConfirmViewModel(UpdateConfirmWindow view, UpdateData updateDate)
+		public UpdateConfirmViewModel(UpdateConfirmWindow view, Updater updater)
 			:base(view)
 		{
-			UpdateData = updateDate;
+			Updater = updater;
 		}
 
 		#region property
 
-		UpdateData UpdateData { get; set; }
+		Updater Updater { get; set; }
 
-		public string NewVersion { get { return UpdateData.Info.Version; } }
-		public bool IsRcVersion { get { return UpdateData.Info.IsRcVersion; } }
+		public string NewVersion { get { return Updater.Information.Version; } }
+		public bool IsRcVersion { get { return Updater.Information.IsRcVersion; } }
 
 		public Brush VersionForeground
 		{
 			get
 			{
-				if(UpdateData.Info.IsRcVersion) {
+				if(Updater.Information.IsRcVersion) {
 					return new SolidColorBrush() {
 						Color = Colors.Red,
 					};
@@ -51,7 +52,7 @@ using ContentTypeTextNet.Pe.PeMain.View;
 		{
 			get
 			{
-				if(UpdateData.Info.IsRcVersion) {
+				if(Updater.Information.IsRcVersion) {
 					return new SolidColorBrush() {
 						Color = Colors.Black,
 					};
@@ -87,7 +88,7 @@ using ContentTypeTextNet.Pe.PeMain.View;
 			{
 				var result = CreateCommand(
 					o => {
-						UpdateData.ApprovalUpdate = true;
+						Updater.ApprovalUpdate = true;
 						CloseView();
 					}
 				);
@@ -111,7 +112,7 @@ using ContentTypeTextNet.Pe.PeMain.View;
 		{
 			byte[] httpData = null;
 			using(var web = new WebClient()) {
-				var url = UpdateData.Info.IsRcVersion ? Constants.UriChangelogRc: Constants.UriChangelogRelease; 
+				var url = Updater.Information.IsRcVersion ? Constants.UriChangelogRc: Constants.UriChangelogRelease; 
 				httpData = web.DownloadData(url);
 			}
 			if(HasView) {

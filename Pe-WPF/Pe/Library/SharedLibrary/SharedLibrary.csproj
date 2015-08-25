@@ -102,6 +102,7 @@
     <Compile Include="Data\EventData.cs" />
     <Compile Include="Data\InformationGroup.cs" />
     <Compile Include="Data\DialogFilterValueItem.cs" />
+    <Compile Include="Data\DisplayData.cs" />
     <Compile Include="Define\QueryCondition.cs" />
     <Compile Include="Define\DockType.cs" />
     <Compile Include="Define\IconScale.cs" />

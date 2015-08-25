@@ -8,6 +8,7 @@
 	using System.Threading.Tasks;
 	using System.Windows;
 	using System.Windows.Media;
+	using ContentTypeTextNet.Library.SharedLibrary.Data;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
@@ -24,7 +25,7 @@
 	{
 		#region variavle
 
-		IEnumerable<ListItem<string>> _languageList;
+		IEnumerable<DisplayData<string>> _languageList;
 		int _languageSelectedIndex = -1;
 
 		#endregion
@@ -69,7 +70,7 @@
 			}
 		}
 
-		public IEnumerable<ListItem<string>> LanguageList
+		public IEnumerable<DisplayData<string>> LanguageList
 		{
 			get
 			{
@@ -84,15 +85,15 @@
 					//	)
 					//);
 					bool isSelectedLanguage = false;
-					var langList = new List<ListItem<string>>();
+					var langList = new List<DisplayData<string>>();
 					foreach (var item in list.Select((l, i) => new { Language = l, Index = i})) {
 						var displayText = string.Format("{0}({1})", item.Language.Value.Value.Name, item.Language.Value.Value.CultureCode);
 						if(!isSelectedLanguage && item.Language.Value.Value.Name == Language.Name) {
 							this._languageSelectedIndex = item.Index;
-							langList.Add(new ListItem<string>(displayText, Language.Name));
+							langList.Add(new DisplayData<string>(displayText, Language.Name));
 							isSelectedLanguage = true;
 						} else {
-							var i = new ListItem<string>(
+							var i = new DisplayData<string>(
 								displayText,
 								item.Language.Value.Value.Name
 							);
