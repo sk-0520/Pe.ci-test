@@ -143,7 +143,7 @@
 						var hWnd = apiWindow.Handle;
 						// TODO: なんだかなぁ。
 						SetReplacedValue();
-						ClipboardUtility.OutputText(hWnd, Replaced, AppNonProcess, AppNonProcess.ClipboardWatcher);
+						ClipboardUtility.OutputTextForNextWindow(hWnd, Replaced, AppNonProcess, AppNonProcess.ClipboardWatcher);
 					}
 				);
 

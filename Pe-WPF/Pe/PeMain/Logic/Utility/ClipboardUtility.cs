@@ -234,8 +234,13 @@
 			return result;
 		}
 
-
-		static ClipboardData CreateClipboardItemFromFramework(ClipboardType enabledTypes, INonProcess nonProcess)
+		/// <summary>
+		/// .NET Frameworkからクリップボードデータを取得
+		/// </summary>
+		/// <param name="enabledTypes"></param>
+		/// <param name="nonProcess"></param>
+		/// <returns></returns>
+		static ClipboardData GetClipboardDataFromFramework(ClipboardType enabledTypes, INonProcess nonProcess)
 		{
 			var clipboardItem = new ClipboardData();
 
@@ -289,6 +294,11 @@
 			return clipboardItem;
 		}
 
+		/// <summary>
+		/// ハッシュ算出用アルゴリズムの取得。
+		/// </summary>
+		/// <param name="hashType"></param>
+		/// <returns></returns>
 		static HashAlgorithm GetHashAlgorithm(HashType hashType)
 		{
 			switch(hashType) {
@@ -300,6 +310,13 @@
 			}
 		}
 
+		/// <summary>
+		/// 文字列からハッシュ値を算出。
+		/// </summary>
+		/// <param name="hashType"></param>
+		/// <param name="s"></param>
+		/// <param name="nonProcess"></param>
+		/// <returns></returns>
 		static byte[] CalculateHashCodeFromString(HashType hashType, string s, INonProcess nonProcess)
 		{
 			using(var hash = GetHashAlgorithm(hashType)) {
@@ -307,21 +324,50 @@
 				return hash.ComputeHash(binary);
 			}
 		}
+
+		/// <summary>
+		/// テキストからハッシュ値を算出。
+		/// </summary>
+		/// <param name="hashType"></param>
+		/// <param name="bodyItem"></param>
+		/// <param name="nonProcess"></param>
+		/// <returns></returns>
 		static byte[] CalculateHashCodeFromText(HashType hashType, ClipboardBodyItemModel bodyItem, INonProcess nonProcess)
 		{
 			return CalculateHashCodeFromString(hashType, bodyItem.Text, nonProcess);
 		}
 
+		/// <summary>
+		/// RTFからハッシュ値を算出。
+		/// </summary>
+		/// <param name="hashType"></param>
+		/// <param name="bodyItem"></param>
+		/// <param name="nonProcess"></param>
+		/// <returns></returns>
 		static byte[] CalculateHashCodeFromRtf(HashType hashType, ClipboardBodyItemModel bodyItem, INonProcess nonProcess)
 		{
 			return CalculateHashCodeFromString(hashType, bodyItem.Rtf, nonProcess);
 		}
 
+		/// <summary>
+		/// HTMLからハッシュ値を算出。
+		/// </summary>
+		/// <param name="hashType"></param>
+		/// <param name="bodyItem"></param>
+		/// <param name="nonProcess"></param>
+		/// <returns></returns>
 		static byte[] CalculateHashCodeFromHtml(HashType hashType, ClipboardBodyItemModel bodyItem, INonProcess nonProcess)
 		{
 			return CalculateHashCodeFromString(hashType, bodyItem.Html, nonProcess);
 		}
 
+		/// <summary>
+		/// 画像からハッシュ値を算出。
+		/// </summary>
+		/// <param name="hashType"></param>
+		/// <param name="bodyItem"></param>
+		/// <param name="nonProcess"></param>
+		/// <returns></returns>
 		static byte[] CalculateHashCodeFromImage(HashType hashType, ClipboardBodyItemModel bodyItem, INonProcess nonProcess)
 		{
 			var binaryWidth = BitConverter.GetBytes(bodyItem.Image.PixelWidth);
@@ -336,12 +382,26 @@
 			return CalculateHashCodeFromBinaryList(hashType, binaryList, nonProcess);
 		}
 
+		/// <summary>
+		/// ファイルからハッシュ値を算出。
+		/// </summary>
+		/// <param name="hashType"></param>
+		/// <param name="bodyItem"></param>
+		/// <param name="nonProcess"></param>
+		/// <returns></returns>
 		static byte[] CalculateHashCodeFromFiles(HashType hashType, ClipboardBodyItemModel bodyItem, INonProcess nonProcess)
 		{
 			var binaryList = bodyItem.Files.Select((s, i) => Encoding.Unicode.GetBytes(s + i.ToString()));
 			return CalculateHashCodeFromBinaryList(hashType, binaryList, nonProcess);
 		}
 
+		/// <summary>
+		/// バイナリ群からハッシュ値の算出。
+		/// </summary>
+		/// <param name="hashType"></param>
+		/// <param name="binaryList"></param>
+		/// <param name="nonProcess"></param>
+		/// <returns></returns>
 		static byte[] CalculateHashCodeFromBinaryList(HashType hashType, IEnumerable<byte[]> binaryList, INonProcess nonProcess)
 		{
 			using(var stream = new MemoryStream()) {
@@ -356,6 +416,14 @@
 			}
 		}
 
+		/// <summary>
+		/// 各種値からハッシュ値の算出。
+		/// </summary>
+		/// <param name="hashType"></param>
+		/// <param name="clipboardType"></param>
+		/// <param name="bodyItem"></param>
+		/// <param name="nonProcess"></param>
+		/// <returns></returns>
 		public static byte[] CalculateHashCode(HashType hashType, ClipboardType clipboardType, ClipboardBodyItemModel bodyItem, INonProcess nonProcess)
 		{
 			var map = new Dictionary<ClipboardType, Func<HashType, ClipboardBodyItemModel, INonProcess, byte[]>>() {
@@ -376,9 +444,17 @@
 			return CalculateHashCodeFromBinaryList(hashType, binaryDataList, nonProcess);
 		}
 
-		static ClipboardData CreateClipboardItem_Impl(ClipboardType enabledTypes, IntPtr hWnd, INonProcess nonProcess, bool calcHash)
+		/// <summary>
+		/// <see cref="GetClipboardData"/>の内部実装。
+		/// </summary>
+		/// <param name="enabledTypes"></param>
+		/// <param name="hWnd"></param>
+		/// <param name="nonProcess"></param>
+		/// <param name="calcHash">ハッシュ値の算出を行うか。</param>
+		/// <returns></returns>
+		static ClipboardData GetClipboardData_Impl(ClipboardType enabledTypes, IntPtr hWnd, INonProcess nonProcess, bool calcHash)
 		{
-			var clipboardItem = CreateClipboardItemFromFramework(enabledTypes, nonProcess);
+			var clipboardItem = GetClipboardDataFromFramework(enabledTypes, nonProcess);
 			if(calcHash && clipboardItem.Type != ClipboardType.None) {
 				clipboardItem.Hash.Type = HashType.SHA1;
 				clipboardItem.Hash.Code = CalculateHashCode(HashType.SHA1, clipboardItem.Type, clipboardItem.Body, nonProcess);
@@ -391,17 +467,56 @@
 		/// </summary>
 		/// <param name="enabledTypes">取り込み対象とするクリップボード種別。</param>
 		/// <returns>生成されたクリップボードアイテム。nullが返ることはない。</returns>
-		public static ClipboardData CreateClipboardItem(ClipboardType enabledTypes, IntPtr hWnd, INonProcess nonProcess)
+		public static ClipboardData GetClipboardData(ClipboardType enabledTypes, IntPtr hWnd, INonProcess nonProcess)
 		{
-			return CreateClipboardItem_Impl(enabledTypes, hWnd, nonProcess, true);
+			return GetClipboardData_Impl(enabledTypes, hWnd, nonProcess, true);
 		}
 
-		public static void OutputText(IntPtr hBaseWnd, string outputText, INonProcess nonProcess, IClipboardWatcher clipboardWatcher)
+		/// <summary>
+		/// 指定ウィンドウハンドルに文字列を転送する。
+		/// </summary>
+		/// <param name="hWnd"></param>
+		/// <param name="outputText"></param>
+		/// <param name="nonProcess"></param>
+		/// <param name="clipboardWatcher"></param>
+		public static void OutputTextForWindowHandle(IntPtr hWnd, string outputText, INonProcess nonProcess, IClipboardWatcher clipboardWatcher)
 		{
-			if(string.IsNullOrEmpty(outputText)) {
+			if (string.IsNullOrEmpty(outputText)) {
 				nonProcess.Logger.Information("empty");
 				return;
 			}
+
+			if (hWnd == IntPtr.Zero) {
+				nonProcess.Logger.Warning("notfound");
+				return;
+			}
+
+			NativeMethods.SetForegroundWindow(hWnd);
+			if (clipboardWatcher.UsingClipboard) {
+				// 現在クリップボードを一時退避
+				var clipboardItem = ClipboardUtility.GetClipboardData_Impl(ClipboardType.All, hWnd, nonProcess, false);
+				try {
+					ClipboardUtility.CopyText(outputText, clipboardWatcher);
+					NativeMethods.SendMessage(hWnd, WM.WM_PASTE, IntPtr.Zero, IntPtr.Zero);
+				} finally {
+					if (clipboardItem.Type != ClipboardType.None) {
+						ClipboardUtility.CopyClipboardItem(clipboardItem, clipboardWatcher);
+					}
+				}
+			} else {
+				SendKeysUtility.Send(outputText);
+			}
+		}
+
+		/// <summary>
+		/// 指定ウィンドウハンドルの次のウィンドウハンドルに文字列を転送する。
+		/// </summary>
+		/// <param name="hBaseWnd"></param>
+		/// <param name="outputText"></param>
+		/// <param name="nonProcess"></param>
+		/// <param name="clipboardWatcher"></param>
+		public static void OutputTextForNextWindow(IntPtr hBaseWnd, string outputText, INonProcess nonProcess, IClipboardWatcher clipboardWatcher)
+		{
 
 			var windowHandles = new List<IntPtr>();
 			var hWnd = hBaseWnd;
@@ -410,26 +525,7 @@
 				windowHandles.Add(hWnd);
 			} while(!NativeMethods.IsWindowVisible(hWnd));
 
-			if(hWnd == IntPtr.Zero) {
-				nonProcess.Logger.Warning("notfound");
-				return;
-			}
-
-			NativeMethods.SetForegroundWindow(hWnd);
-			if(clipboardWatcher.UsingClipboard) {
-				// 現在クリップボードを一時退避
-				var clipboardItem = ClipboardUtility.CreateClipboardItem_Impl(ClipboardType.All, hBaseWnd, nonProcess, false);
-				try {
-					ClipboardUtility.CopyText(outputText, clipboardWatcher);
-					NativeMethods.SendMessage(hWnd, WM.WM_PASTE, IntPtr.Zero, IntPtr.Zero);
-				} finally {
-					if(clipboardItem.Type != ClipboardType.None) {
-						ClipboardUtility.CopyClipboardItem(clipboardItem, clipboardWatcher);
-					}
-				}
-			} else {
-				SendKeysUtility.Send(outputText);
-			}
+			OutputTextForWindowHandle(hWnd, outputText, nonProcess, clipboardWatcher);
 		}
 
 		private static IEnumerable<ClipboardType> GetEnabledClipboardTypeList(ClipboardType types, IEnumerable<ClipboardType> list)

@@ -207,7 +207,7 @@
 						var apiWindow = (WindowsAPIWindowBase)o;
 						var hWnd = apiWindow.Handle;
 
-						ClipboardUtility.OutputText(hWnd, Text, AppNonProcess, AppNonProcess.ClipboardWatcher);
+						ClipboardUtility.OutputTextForNextWindow(hWnd, Text, AppNonProcess, AppNonProcess.ClipboardWatcher);
 					}
 				);
 
