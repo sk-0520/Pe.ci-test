@@ -20,7 +20,7 @@
 		</ResourceDictionary>
 	</AV:CommonDataUserControl.Resources>
 	<Grid>
-		<GroupBox AA:Language.Word="setting/main" Header="main" Height="79" Width="202" Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+		<GroupBox Header="main" AA:Language.Word="setting/main/general" Height="79" Width="202" Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
 			<StackPanel Orientation="Vertical">
 				<StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Width="190">
 					<Label AA:Language.Word="using-language" Content="language" HorizontalAlignment="Left" VerticalAlignment="Top"/>

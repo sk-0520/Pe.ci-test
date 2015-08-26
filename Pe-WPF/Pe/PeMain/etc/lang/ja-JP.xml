@@ -235,7 +235,9 @@
 
 		<Item Id="launcher-list-items/append" Word="アイテムの追加" />
 		<Item Id="launcher-list-items/remove" Word="アイテムの削除" />
-		
+
+		<Item Id="setting/main" Word="本体設定" />
+		<Item Id="setting/main/general" Word="基本設定" />
 		<!-- enum -->
 		
 		<Item Id="enum/ModifierKeys" Word="修飾キー" />
