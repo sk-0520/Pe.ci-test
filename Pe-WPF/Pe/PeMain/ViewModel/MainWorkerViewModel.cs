@@ -1725,13 +1725,13 @@
 							}
 
 							// 毎回ファイル読むのもなぁ
-							//// 指定範囲内に同じデータがあれば追加しない
-							//IEnumerable<ClipboardItem> clipboardItems = this._commonData.MainSetting.Clipboard.HistoryItems;
-							//if (this._commonData.MainSetting.Clipboard.ClipboardRepeated != Constants.clipboardDuplicationCount.minimum) {
-							//	clipboardItems = clipboardItems.Take(this._commonData.MainSetting.Clipboard.ClipboardRepeated);
-							//}
-							//var hitItem = clipboardItems.FirstOrDefault(c => ClipboardUtility.EqualClipboardItem(c, clipboardItem));
-							//return hitItem == null;
+							// 指定範囲内に同じデータがあれば追加しない
+							IEnumerable<ClipboardIndexItemModel> clipboardItems = CommonData.ClipboardIndexSetting.Items;
+							if (CommonData.MainSetting.Clipboard.DuplicationCount != Constants.clipboardDuplicationCount.minimum) {
+								clipboardItems = clipboardItems.Take(CommonData.MainSetting.Clipboard.DuplicationCount);
+							}
+							var hitItem = clipboardItems.FirstOrDefault(c => clipboardData.Hash.IsEqual(c.Hash));
+							return hitItem == null;
 						}
 						return true;
 					}).ContinueWith(t => {

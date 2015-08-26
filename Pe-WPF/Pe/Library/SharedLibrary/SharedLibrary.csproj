@@ -122,6 +122,7 @@
     <Compile Include="Event\AppbarStateChangeEventArgs.cs" />
     <Compile Include="Event\TextTemplatingErrorEventArgs.cs" />
     <Compile Include="IF\IApplicationDesktopToolbar.cs" />
+    <Compile Include="IF\IIsEqual.cs" />
     <Compile Include="IF\ILimitSize.cs" />
     <Compile Include="IF\ViewExtend\IApplicationDesktopToolbarData.cs" />
     <Compile Include="IF\IDeepClone.cs" />

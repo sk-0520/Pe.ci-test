@@ -10,7 +10,7 @@
 	using ContentTypeTextNet.Pe.Library.PeData.Define;
 
 	[Serializable]
-	public class HashItemModel: ItemModelBase, IDeepClone
+	public class HashItemModel : ItemModelBase, IDeepClone, IIsEqual
 	{
 		public HashItemModel()
 			: base()
@@ -52,6 +52,35 @@
 			DeepCloneTo(result);
 
 			return result;
+		}
+
+		#endregion
+
+		#region IIsEqual
+
+		public bool IsEqual(IIsEqual target)
+		{
+			var obj = target as HashItemModel;
+			if (obj == null) {
+				return false;
+			}
+
+			if (Type != obj.Type) {
+				return false;
+			}
+			if (Code == obj.Code) {
+				return true;
+			}
+
+			if (Code == null || obj.Code == null) {
+				return false;
+			}
+
+			if (Code.Length != obj.Code.Length) {
+				return false;
+			}
+
+			return Code.SequenceEqual(obj.Code);
 		}
 
 		#endregion
