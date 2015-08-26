@@ -1491,6 +1491,18 @@
 			}
 		}
 
+		bool RemoveIndexBody(IndexKind indexKind, Guid guid, IAppNonProcess appNonProcess)
+		{
+			var path = IndexItemUtility.GetIndexBodyFilePath(indexKind, guid, appNonProcess.VariableConstants);
+			try {
+				File.Delete(path);
+				return true;
+			} catch (Exception ex) {
+				appNonProcess.Logger.Error(ex);
+				return false;
+			}
+		}
+
 		void RemoveIndex<TItemModel, TIndexBody>(IndexKind indexKind, Guid guid, IndexItemCollectionModel<TItemModel> items, IndexBodyPairItemCollection<TIndexBody> cachingItems)
 			where TItemModel : IndexItemModelBase
 			where TIndexBody : IndexBodyItemModelBase
@@ -1504,6 +1516,9 @@
 				pair.Body.Dispose();
 			}
 			items.Remove(guid);
+
+			// ボディ部のファイルも削除する。
+			RemoveIndexBody(indexKind, guid, CommonData.NonProcess);
 			
 			SendSaveIndex(indexKind, Timing.Delay);
 		}
