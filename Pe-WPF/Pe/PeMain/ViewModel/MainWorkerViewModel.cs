@@ -1333,6 +1333,7 @@
 
 		#region IAppSender-Implement
 
+
 		void ReceiveAppendWindow(Window window)
 		{
 			window.Closed += Window_Closed;
@@ -1503,7 +1504,7 @@
 				pair.Body.Dispose();
 			}
 			items.Remove(guid);
-
+			
 			SendSaveIndex(indexKind, Timing.Delay);
 		}
 
@@ -1544,21 +1545,15 @@
 		{
 			switch(indexKind) {
 				case IndexKind.Note:
-					{
-						SaveIndex(indexKind, timing, CommonData.NoteIndexSetting, Constants.fileTypeNoteIndex, CommonData.VariableConstants.UserSettingNoteIndexFilePath);
-					}
+					SaveIndex(indexKind, timing, CommonData.NoteIndexSetting, Constants.fileTypeNoteIndex, CommonData.VariableConstants.UserSettingNoteIndexFilePath);
 					break;
 
 				case IndexKind.Template:
-					{
-						SaveIndex(indexKind, timing, CommonData.TemplateIndexSetting, Constants.fileTypeTemplateIndex, CommonData.VariableConstants.UserSettingTemplateIndexFilePath);
-					}
+					SaveIndex(indexKind, timing, CommonData.TemplateIndexSetting, Constants.fileTypeTemplateIndex, CommonData.VariableConstants.UserSettingTemplateIndexFilePath);
 					break;
 
 				case IndexKind.Clipboard:
-					{
-						SaveIndex(indexKind, timing, CommonData.ClipboardIndexSetting, Constants.fileTypeClipboardIndex, CommonData.VariableConstants.UserSettingClipboardIndexFilePath);
-					}
+					SaveIndex(indexKind, timing, CommonData.ClipboardIndexSetting, Constants.fileTypeClipboardIndex, CommonData.VariableConstants.UserSettingClipboardIndexFilePath);
 					break;
 
 				default:
@@ -1583,7 +1578,7 @@
 			}
 		}
 
-		IndexBodyItemModelBase GetIndexBody<TIndexBody>(IndexKind indexKind, Guid guid, IndexBodyPairItemCollection<TIndexBody> cachingItems, string dirPath, FileType fileType)
+		IndexBodyItemModelBase GetIndexBody<TIndexBody>(IndexKind indexKind, Guid guid, IndexBodyPairItemCollection<TIndexBody> cachingItems)
 			where TIndexBody : IndexBodyItemModelBase, new()
 		{
 			var body = cachingItems.GetFromId(guid);
@@ -1591,8 +1586,8 @@
 				CommonData.Logger.Debug("load cache: " + guid.ToString(), body);
 				return body;
 			}
-			var fileName = IndexItemUtility.GetIndexBodyFileName(indexKind, fileType, guid);
-			var path = Environment.ExpandEnvironmentVariables(Path.Combine(dirPath, fileName));
+			var fileType = IndexItemUtility.GetIndexBodyFileType(indexKind);
+			var path = IndexItemUtility.GetIndexBodyFilePath(indexKind, guid, CommonData.VariableConstants);
 			var result = AppUtility.LoadSetting<TIndexBody>(path, fileType, CommonData.Logger);
 			AppendCachingItems(guid, result, cachingItems);
 			return result;
@@ -1602,30 +1597,24 @@
 		{
 			switch(indexKind) {
 				case IndexKind.Note: 
-					{
-						return GetIndexBody<NoteBodyItemModel>(indexKind, guid, IndexBodyCaching.NoteItems, CommonData.VariableConstants.UserSettingNoteDirectoryPath, Constants.fileTypeNoteBody);
-					}
+					return GetIndexBody<NoteBodyItemModel>(indexKind, guid, IndexBodyCaching.NoteItems);
 
 				case IndexKind.Template: 
-					{
-						return GetIndexBody<TemplateBodyItemModel>(indexKind, guid, IndexBodyCaching.TemplateItems, CommonData.VariableConstants.UserSettingTemplateDirectoryPath, Constants.fileTypeTemplateBody);
-					}
+					return GetIndexBody<TemplateBodyItemModel>(indexKind, guid, IndexBodyCaching.TemplateItems);
 
 				case IndexKind.Clipboard: 
-					{
-						return GetIndexBody<ClipboardBodyItemModel>(indexKind, guid, IndexBodyCaching.ClipboardItems, CommonData.VariableConstants.UserSettingClipboardDirectoryPath, Constants.fileTypeClipboardBody);
-					}
+					return GetIndexBody<ClipboardBodyItemModel>(indexKind, guid, IndexBodyCaching.ClipboardItems);
 
 				default:
 					throw new NotImplementedException();
 			}
 		}
 
-		void SaveIndexBody<TIndexBody>(IndexBodyItemModelBase indexBody, Guid guid, IndexBodyPairItemCollection<TIndexBody> cachingItems, Timing timing, string dirPath, FileType fileType)
+		void SaveIndexBody<TIndexBody>(IndexBodyItemModelBase indexBody, Guid guid, IndexBodyPairItemCollection<TIndexBody> cachingItems, Timing timing)
 			where TIndexBody : IndexBodyItemModelBase
 		{
-			var fileName = IndexItemUtility.GetIndexBodyFileName(indexBody.IndexKind, fileType, guid);
-			var path = Environment.ExpandEnvironmentVariables(Path.Combine(dirPath, fileName));
+			var fileType = IndexItemUtility.GetIndexBodyFileType(indexBody.IndexKind);
+			var path = IndexItemUtility.GetIndexBodyFilePath(indexBody.IndexKind, guid, CommonData.VariableConstants);
 			var bodyItem = (TIndexBody)indexBody;
 			AppUtility.SaveSetting(path, bodyItem, fileType, CommonData.Logger);
 			AppendCachingItems(guid, bodyItem, cachingItems);
@@ -1635,21 +1624,15 @@
 		{
 			switch (indexBody.IndexKind) {
 				case IndexKind.Note:
-					{
-						SaveIndexBody<NoteBodyItemModel>(indexBody, guid, IndexBodyCaching.NoteItems, timing, CommonData.VariableConstants.UserSettingNoteDirectoryPath, Constants.fileTypeNoteBody);
-					}
+					SaveIndexBody<NoteBodyItemModel>(indexBody, guid, IndexBodyCaching.NoteItems, timing);
 					break;
 
 				case IndexKind.Template: 
-					{
-						SaveIndexBody<TemplateBodyItemModel>(indexBody, guid, IndexBodyCaching.TemplateItems, timing, CommonData.VariableConstants.UserSettingTemplateDirectoryPath, Constants.fileTypeTemplateBody);
-					}
+					SaveIndexBody<TemplateBodyItemModel>(indexBody, guid, IndexBodyCaching.TemplateItems, timing);
 					break;
 
 				case IndexKind.Clipboard: 
-					{
-						SaveIndexBody<ClipboardBodyItemModel>(indexBody, guid, IndexBodyCaching.ClipboardItems, timing, CommonData.VariableConstants.UserSettingClipboardDirectoryPath, Constants.fileTypeClipboardBody);
-					}
+					SaveIndexBody<ClipboardBodyItemModel>(indexBody, guid, IndexBodyCaching.ClipboardItems, timing);
 					break;
 
 				default:
