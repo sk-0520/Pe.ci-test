@@ -374,14 +374,13 @@
 			{
 				var result = CreateCommand(
 					o => {
-						SaveSetting();
 #if DEBUG
 							var startupPath = Environment.ExpandEnvironmentVariables(Constants.startupShortcutPath);
 							if(File.Exists(startupPath)) {
 								File.Delete(startupPath);
 							}
 #endif
-						Application.Current.Shutdown();
+							ExitApplication(true, true);
 					}
 				);
 
@@ -520,6 +519,19 @@
 		#endregion
 
 		#region function
+
+		void ExitApplication(bool saveSetting, bool gc)
+		{
+			if (saveSetting) {
+				SaveSetting();
+			}
+			if (gc) {
+				IndexItemUtility.GarbageCollectionBody(IndexKind.Note, CommonData.NoteIndexSetting.Items, CommonData.NonProcess);
+				IndexItemUtility.GarbageCollectionBody(IndexKind.Template, CommonData.TemplateIndexSetting.Items, CommonData.NonProcess);
+				IndexItemUtility.GarbageCollectionBody(IndexKind.Clipboard, CommonData.ClipboardIndexSetting.Items, CommonData.NonProcess);
+			}
+			Application.Current.Shutdown();
+		}
 
 		public void SetView(TaskbarIcon view)
 		{
@@ -1235,7 +1247,7 @@
 					if(updateData.ApprovalUpdate) {
 						SaveSetting();
 						if(updateData.Execute()) {
-							Application.Current.Shutdown();
+							ExitApplication(false, false);
 						}
 					}
 				});
@@ -1491,18 +1503,6 @@
 			}
 		}
 
-		bool RemoveIndexBody(IndexKind indexKind, Guid guid, IAppNonProcess appNonProcess)
-		{
-			var path = IndexItemUtility.GetIndexBodyFilePath(indexKind, guid, appNonProcess.VariableConstants);
-			try {
-				File.Delete(path);
-				return true;
-			} catch (Exception ex) {
-				appNonProcess.Logger.Error(ex);
-				return false;
-			}
-		}
-
 		void RemoveIndex<TItemModel, TIndexBody>(IndexKind indexKind, Guid guid, IndexItemCollectionModel<TItemModel> items, IndexBodyPairItemCollection<TIndexBody> cachingItems)
 			where TItemModel : IndexItemModelBase
 			where TIndexBody : IndexBodyItemModelBase
@@ -1518,7 +1518,7 @@
 			items.Remove(guid);
 
 			// ボディ部のファイルも削除する。
-			RemoveIndexBody(indexKind, guid, CommonData.NonProcess);
+			IndexItemUtility.RemoveBody(indexKind, guid, CommonData.NonProcess);
 			
 			SendSaveIndex(indexKind, Timing.Delay);
 		}
@@ -1601,8 +1601,8 @@
 				CommonData.Logger.Debug("load cache: " + guid.ToString(), body);
 				return body;
 			}
-			var fileType = IndexItemUtility.GetIndexBodyFileType(indexKind);
-			var path = IndexItemUtility.GetIndexBodyFilePath(indexKind, guid, CommonData.VariableConstants);
+			var fileType = IndexItemUtility.GetBodyFileType(indexKind);
+			var path = IndexItemUtility.GetBodyFilePath(indexKind, guid, CommonData.VariableConstants);
 			var result = AppUtility.LoadSetting<TIndexBody>(path, fileType, CommonData.Logger);
 			AppendCachingItems(guid, result, cachingItems);
 			return result;
@@ -1628,10 +1628,12 @@
 		void SaveIndexBody<TIndexBody>(IndexBodyItemModelBase indexBody, Guid guid, IndexBodyPairItemCollection<TIndexBody> cachingItems, Timing timing)
 			where TIndexBody : IndexBodyItemModelBase
 		{
-			var fileType = IndexItemUtility.GetIndexBodyFileType(indexBody.IndexKind);
-			var path = IndexItemUtility.GetIndexBodyFilePath(indexBody.IndexKind, guid, CommonData.VariableConstants);
+			//var fileType = IndexItemUtility.GetIndexBodyFileType(indexBody.IndexKind);
+			//var path = IndexItemUtility.GetIndexBodyFilePath(indexBody.IndexKind, guid, CommonData.VariableConstants);
 			var bodyItem = (TIndexBody)indexBody;
-			AppUtility.SaveSetting(path, bodyItem, fileType, CommonData.Logger);
+			//AppUtility.SaveSetting(path, bodyItem, fileType, CommonData.Logger);
+			//AppendCachingItems(guid, bodyItem, cachingItems);
+			IndexItemUtility.SaveBody(bodyItem, guid, CommonData.NonProcess);
 			AppendCachingItems(guid, bodyItem, cachingItems);
 		}
 

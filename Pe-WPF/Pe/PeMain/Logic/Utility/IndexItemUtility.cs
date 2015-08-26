@@ -8,12 +8,14 @@
 	using System.Threading.Tasks;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 	using ContentTypeTextNet.Pe.Library.PeData.Define;
+	using ContentTypeTextNet.Pe.Library.PeData.Item;
 	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.Define;
+	using ContentTypeTextNet.Pe.PeMain.IF;
 
 	public static class IndexItemUtility
 	{
-		public static string GetIndexBodyFileName(IndexKind indexKind, FileType fileType, Guid guid)
+		public static string GetBodyFileName(IndexKind indexKind, FileType fileType, Guid guid)
 		{
 			var ext = new Dictionary<FileType, string>() {
 				{ FileType.Json,   Constants.extensionJsonFile },
@@ -27,7 +29,7 @@
 			return Constants.indexBodyBaseFileName.ReplaceFromDictionary(map);
 		}
 
-		public static FileType GetIndexBodyFileType(IndexKind indexKind)
+		public static FileType GetBodyFileType(IndexKind indexKind)
 		{
 			switch (indexKind) {
 				case IndexKind.Note:
@@ -44,7 +46,7 @@
 			}
 		}
 
-		public static string GetIndexBodyParentDirectory(IndexKind indexKind, VariableConstants variableConstants)
+		public static string GetBodyParentDirectory(IndexKind indexKind, VariableConstants variableConstants)
 		{
 			switch (indexKind) {
 				case IndexKind.Note:
@@ -68,14 +70,63 @@
 		/// <param name="guid"></param>
 		/// <param name="variableConstants"></param>
 		/// <returns>環境変数展開済みファイルパス。</returns>
-		public static string GetIndexBodyFilePath(IndexKind indexKind, Guid guid, VariableConstants variableConstants)
+		public static string GetBodyFilePath(IndexKind indexKind, Guid guid, VariableConstants variableConstants)
 		{
-			var dirPath = IndexItemUtility.GetIndexBodyParentDirectory(indexKind, variableConstants);
-			var fileType = IndexItemUtility.GetIndexBodyFileType(indexKind);
-			var fileName = IndexItemUtility.GetIndexBodyFileName(indexKind, fileType, guid);
+			var dirPath = IndexItemUtility.GetBodyParentDirectory(indexKind, variableConstants);
+			var fileType = IndexItemUtility.GetBodyFileType(indexKind);
+			var fileName = IndexItemUtility.GetBodyFileName(indexKind, fileType, guid);
 			var path = Environment.ExpandEnvironmentVariables(Path.Combine(dirPath, fileName));
 
 			return path;
 		}
+
+		public static bool RemoveBody(IndexKind indexKind, Guid guid, IAppNonProcess appNonProcess)
+		{
+			var path = IndexItemUtility.GetBodyFilePath(indexKind, guid, appNonProcess.VariableConstants);
+			try {
+				File.Delete(path);
+				return true;
+			} catch (Exception ex) {
+				appNonProcess.Logger.Error(ex);
+				return false;
+			}
+		}
+
+		public static void GarbageCollectionBody<TItemModel>(IndexKind indexKind, IndexItemCollectionModel<TItemModel> items, IAppNonProcess appNonProcess)
+			where TItemModel : IndexItemModelBase
+		{
+			var parentDirPath = Environment.ExpandEnvironmentVariables(GetBodyParentDirectory(indexKind, appNonProcess.VariableConstants));
+			var searchPattern = "*" + Path.GetExtension(GetBodyFileName(indexKind, GetBodyFileType(indexKind), Guid.Empty));
+			var fileNameList = Directory
+				.EnumerateFiles(parentDirPath, searchPattern, SearchOption.TopDirectoryOnly)
+				.Select(s => Path.GetFileName(s))
+			;
+			var itemList = items.ToList();
+			var removeTargetList = new List<Guid>();
+			foreach (var fileName in fileNameList) {
+				var guidName = Path.GetFileNameWithoutExtension(fileName);
+				var targetIndex = itemList.FindIndex(i => string.Compare(i.Id.ToString(), guidName, true) == 0);
+				if (targetIndex == -1) {
+					removeTargetList.Add(new Guid(guidName));
+				} else {
+					itemList.RemoveAt(targetIndex);
+				}
+			}
+
+			foreach (var removeFileGuid in removeTargetList) {
+				RemoveBody(indexKind, removeFileGuid, appNonProcess);
+			}
+		}
+
+		public static void SaveBody<TIndexBody>(TIndexBody indexBody, Guid guid, IAppNonProcess appNonProcess)
+			where TIndexBody : IndexBodyItemModelBase
+		{
+			var fileType = IndexItemUtility.GetBodyFileType(indexBody.IndexKind);
+			var path = IndexItemUtility.GetBodyFilePath(indexBody.IndexKind, guid, appNonProcess.VariableConstants);
+			var bodyItem = (TIndexBody)indexBody;
+			AppUtility.SaveSetting(path, bodyItem, fileType, appNonProcess.Logger);
+		}
+
+
 	}
 }
