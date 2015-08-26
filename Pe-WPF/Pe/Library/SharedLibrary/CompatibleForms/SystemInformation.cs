@@ -11,6 +11,7 @@
 	using ContentTypeTextNet.Library.SharedLibrary.Attribute;
 	using ContentTypeTextNet.Library.SharedLibrary.Define;
 
+	[Obsolete]
 	public static class SystemInformation
 	{
 		public static TimeSpan MouseHoverTime { get { return TimeSpan.FromMilliseconds(Forms.SystemInformation.MouseHoverTime); } }

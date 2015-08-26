@@ -10,6 +10,10 @@
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using Forms = System.Windows.Forms;
 
+	/// <summary>
+	/// FormsのFormをウィンドウとして扱う。
+	/// <para>要はウィンドウハンドル欲しい。</para>
+	/// </summary>
 	public class CompatibleFormWindow : Forms.IWin32Window, IWindowsHandle
 	{
 		public CompatibleFormWindow(Window window)

@@ -10,6 +10,9 @@
 	using System.ComponentModel;
 	using System.Windows;
 
+	/// <summary>
+	/// <see cref="System.Windows.Forms.FolderBrowserDialog"/>互換クラス。
+	/// </summary>
 	public class FolderBrowserDialog : DisposeFinalizeBase
 	{
 		public FolderBrowserDialog()
