@@ -143,6 +143,7 @@
 		<Item Id="clipboard/image/fit" Word="ウィンドウに合わせる" />
 		<Item Id="clipboard/image/raw" Word="原寸表示" />
 		<Item Id="clipboard/save-count" Word="保存対象件数" />
+		<Item Id="clipboard/save-count/all" Word="全件" />
 		<Item Id="clipboard/save" Word="保存" />
 		<Item Id="clipboard/remove" Word="削除" />
 		<Item Id="clipboard/clear" Word="クリップボードを削除" />
