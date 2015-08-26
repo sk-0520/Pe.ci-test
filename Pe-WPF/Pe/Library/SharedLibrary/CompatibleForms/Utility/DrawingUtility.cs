@@ -12,6 +12,10 @@
 	using System.Windows.Media.Imaging;
 	using Drawing = System.Drawing;
 
+	/// <summary>
+	/// <see cref="System.Drawing"/>名前空間の互換処理群。
+	/// <para>...WPFでも<see cref="System.Drawing"/>は選択的に非推奨じゃないのね……。</para>
+	/// </summary>
 	public static class DrawingUtility
 	{
 		public static Drawing.Size Convert(Size size)
