@@ -96,6 +96,9 @@
 			where TItemModel : IndexItemModelBase
 		{
 			var parentDirPath = Environment.ExpandEnvironmentVariables(GetBodyParentDirectory(indexKind, appNonProcess.VariableConstants));
+			if(!Directory.Exists(parentDirPath)) {
+				return;
+			}
 			var searchPattern = "*" + Path.GetExtension(GetBodyFileName(indexKind, GetBodyFileType(indexKind), Guid.Empty));
 			var fileNameList = Directory
 				.EnumerateFiles(parentDirPath, searchPattern, SearchOption.TopDirectoryOnly)
