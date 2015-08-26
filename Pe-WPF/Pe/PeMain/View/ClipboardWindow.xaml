@@ -49,10 +49,10 @@
 			<SC:BooleanFontStyleConverter x:Key="BooleanFontStyleConverter" />
 			<AC:SelectedIndexNumberConverter x:Key="SelectedIndexNumberConverter" />
 			<Style x:Key="ClipboardText" TargetType="Image" BasedOn="{StaticResource DefaultImage}">
-				<Setter Property="Source" Value="{x:Static AM:AppResource.ClipboardTextFormatImage}" />
+				<Setter Property="Source" Value="{x:Static AM:AppResource.ClipboardTextImage}" />
 			</Style>
 			<Style x:Key="ClipboardRtf" TargetType="Image" BasedOn="{StaticResource DefaultImage}">
-				<Setter Property="Source" Value="{x:Static AM:AppResource.ClipboardRichTextFormatImage}" />
+				<Setter Property="Source" Value="{x:Static AM:AppResource.ClipboardRtfImage}" />
 			</Style>
 			<Style x:Key="ClipboardHtml" TargetType="Image" BasedOn="{StaticResource DefaultImage}">
 				<Setter Property="Source" Value="{x:Static AM:AppResource.ClipboardHtmlImage}" />

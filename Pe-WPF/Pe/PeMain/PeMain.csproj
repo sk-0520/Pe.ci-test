@@ -712,7 +712,7 @@
     <Resource Include="Resources\Image\Clipboard\ClipboardFile.png" />
     <Resource Include="Resources\Image\Clipboard\ClipboardHtml.png" />
     <Resource Include="Resources\Image\Clipboard\ClipboardImage.png" />
-    <Resource Include="Resources\Image\Clipboard\ClipboardRichTextFormat.png" />
+    <Resource Include="Resources\Image\Clipboard\ClipboardRtf.png" />
     <Resource Include="Resources\Image\Clipboard\ClipboardText.png" />
     <Resource Include="Resources\Image\Common\CommonFiltering.png" />
     <Resource Include="Resources\Image\Template\Template.png" />

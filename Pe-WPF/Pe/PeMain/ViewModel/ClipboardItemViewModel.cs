@@ -73,8 +73,8 @@
 			{
 				var type = ClipboardUtility.GetSingleClipboardType(Model.Type);
 				var map = new Dictionary<ClipboardType, ImageSource>() {
-					{ ClipboardType.Text, AppResource.ClipboardTextFormatImage },
-					{ ClipboardType.Rtf, AppResource.ClipboardRichTextFormatImage },
+					{ ClipboardType.Text, AppResource.ClipboardTextImage },
+					{ ClipboardType.Rtf, AppResource.ClipboardRtfImage },
 					{ ClipboardType.Html, AppResource.ClipboardHtmlImage },
 					{ ClipboardType.Image, AppResource.ClipboardImageImage },
 					{ ClipboardType.File, AppResource.ClipboardFileImage },

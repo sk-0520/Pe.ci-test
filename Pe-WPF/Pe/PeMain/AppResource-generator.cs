@@ -1301,28 +1301,28 @@
 			get { return GetImage(ClipboardClearPath); }
 		}
 		#endregion ClipboardClear
-		#region Image: ClipboardTextFormat
+		#region Image: ClipboardText
 
 		/// <summary>
-		/// [Image] ClipboardTextFormatのリソースパスを取得。
+		/// [Image] ClipboardTextのリソースパスを取得。
 		/// <para>/Resources/Image/Clipboard/ClipboardText.png</para>
 		/// </summary>
-		public static string ClipboardTextFormatPath
+		public static string ClipboardTextPath
 		{
-			get { return clipboardTextFormat; }
+			get { return clipboardText; }
 		}
 
 		/// <summary>
-		/// [Image] ClipboardTextFormatのイメージソースを取得。
+		/// [Image] ClipboardTextのイメージソースを取得。
 		/// <para>初回のみ生成を行う。</para>
-		/// <para>ClipboardTextFormatPath: /Resources/Image/Clipboard/ClipboardText.png</para>
+		/// <para>ClipboardTextPath: /Resources/Image/Clipboard/ClipboardText.png</para>
 		/// </summary>
 		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
-		public static BitmapSource ClipboardTextFormatImage
+		public static BitmapSource ClipboardTextImage
 		{
-			get { return GetImage(ClipboardTextFormatPath); }
+			get { return GetImage(ClipboardTextPath); }
 		}
-		#endregion ClipboardTextFormat
+		#endregion ClipboardText
 		#region Image: ClipboardHtml
 
 		/// <summary>
@@ -1345,28 +1345,28 @@
 			get { return GetImage(ClipboardHtmlPath); }
 		}
 		#endregion ClipboardHtml
-		#region Image: ClipboardRichTextFormat
+		#region Image: ClipboardRtf
 
 		/// <summary>
-		/// [Image] ClipboardRichTextFormatのリソースパスを取得。
-		/// <para>/Resources/Image/Clipboard/ClipboardRichTextFormat.png</para>
+		/// [Image] ClipboardRtfのリソースパスを取得。
+		/// <para>/Resources/Image/Clipboard/ClipboardRtf.png</para>
 		/// </summary>
-		public static string ClipboardRichTextFormatPath
+		public static string ClipboardRtfPath
 		{
-			get { return clipboardRichTextFormat; }
+			get { return clipboardRtf; }
 		}
 
 		/// <summary>
-		/// [Image] ClipboardRichTextFormatのイメージソースを取得。
+		/// [Image] ClipboardRtfのイメージソースを取得。
 		/// <para>初回のみ生成を行う。</para>
-		/// <para>ClipboardRichTextFormatPath: /Resources/Image/Clipboard/ClipboardRichTextFormat.png</para>
+		/// <para>ClipboardRtfPath: /Resources/Image/Clipboard/ClipboardRtf.png</para>
 		/// </summary>
 		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
-		public static BitmapSource ClipboardRichTextFormatImage
+		public static BitmapSource ClipboardRtfImage
 		{
-			get { return GetImage(ClipboardRichTextFormatPath); }
+			get { return GetImage(ClipboardRtfPath); }
 		}
-		#endregion ClipboardRichTextFormat
+		#endregion ClipboardRtf
 		#region Image: ClipboardImage
 
 		/// <summary>

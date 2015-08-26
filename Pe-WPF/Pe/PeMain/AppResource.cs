@@ -108,11 +108,11 @@
 		[AppResource(AppResourceType.Image)]
 		const string clipboardClear = "/Resources/Image/Clipboard/ClipboardClear.png";
 		[AppResource(AppResourceType.Image)]
-		const string clipboardTextFormat = "/Resources/Image/Clipboard/ClipboardText.png";
+		const string clipboardText = "/Resources/Image/Clipboard/ClipboardText.png";
 		[AppResource(AppResourceType.Image)]
 		const string clipboardHtml = "/Resources/Image/Clipboard/ClipboardHtml.png";
 		[AppResource(AppResourceType.Image)]
-		const string clipboardRichTextFormat = "/Resources/Image/Clipboard/ClipboardRichTextFormat.png";
+		const string clipboardRtf = "/Resources/Image/Clipboard/ClipboardRtf.png";
 		[AppResource(AppResourceType.Image)]
 		const string clipboardImage = "/Resources/Image/Clipboard/ClipboardImage.png";
 		[AppResource(AppResourceType.Image)]
