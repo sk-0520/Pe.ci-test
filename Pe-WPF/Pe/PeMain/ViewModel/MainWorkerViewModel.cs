@@ -217,7 +217,7 @@
 			{
 				var result = CreateCommand(
 					o => {
-						OnPropertyChangeSystemEnvironment();
+						CallPropertyChangeSystemEnvironment();
 					}
 				);
 
@@ -621,7 +621,7 @@
 				}
 				InitializeSetting(previousVersion);
 				InitializeStatus();
-				OnPropertyChangeHotkey();
+				CallPropertyChangeHotkey();
 				InitializeSystemEvent();
 				InitializeStatic();
 
@@ -961,7 +961,7 @@
 			ResetCache(false);
 			// TODO: impl
 			InitializeStatus();
-			OnPropertyChangeHotkey();
+			CallPropertyChangeHotkey();
 
 			MessageWindow.SetCommonData(CommonData, null);
 			ResetLogger();
@@ -1077,7 +1077,7 @@
 			Template.IsVisible = !Template.IsVisible;
 		}
 
-		void OnPropertyChangeNoteMenu()
+		void CallPropertyChangeNoteMenu()
 		{
 			var propertyNames = new[] {
 				"NoteShowItems",
@@ -1086,7 +1086,7 @@
 			CallOnPropertyChange(propertyNames);
 		}
 
-		void OnPropertyChangeSystemEnvironment()
+		void CallPropertyChangeSystemEnvironment()
 		{
 			var propertyNames = new[] {
 				"IsVisibledShellHideFile",
@@ -1095,7 +1095,7 @@
 			CallOnPropertyChange(propertyNames);
 		}
 
-		void OnPropertyChangeHotkey()
+		void CallPropertyChangeHotkey()
 		{
 			var propertyNames = new[] {
 				"CreateNoteHotKey",
@@ -1272,6 +1272,8 @@
 
 		#region IAppSender
 
+		#region IAppSender-Send*
+
 		public void SendAppendWindow(Window window)
 		{
 			ReceiveAppendWindow(window);
@@ -1327,6 +1329,8 @@
 			ReceiveInformationTips(title, message, logKind);
 		}
 
+		#endregion
+
 		#region IAppSender-Implement
 
 		void ReceiveAppendWindow(Window window)
@@ -1362,7 +1366,7 @@
 							var noteWindow = (NoteWindow)window;
 							NoteWindows.Add(noteWindow);
 
-							OnPropertyChangeNoteMenu();
+							CallPropertyChangeNoteMenu();
 						}
 						break;
 
@@ -1405,7 +1409,7 @@
 							var noteWindow = (NoteWindow)window;
 							NoteWindows.Remove(noteWindow);
 
-							OnPropertyChangeNoteMenu();
+							CallPropertyChangeNoteMenu();
 							break;
 						}
 
@@ -1417,7 +1421,7 @@
 			}
 		}
 
-		public Window ReceiveCreateWindow(WindowKind kind, object extensionData, Window parent)
+		Window ReceiveCreateWindow(WindowKind kind, object extensionData, Window parent)
 		{
 			CommonDataWindow window = null;
 
@@ -1470,7 +1474,7 @@
 			return window;
 		}
 
-		public void ReceiveRefreshView(WindowKind kind, Window fromView)
+		void ReceiveRefreshView(WindowKind kind, Window fromView)
 		{
 			switch(kind) {
 				case WindowKind.LauncherToolbar:
