@@ -242,48 +242,48 @@
 		/// <returns></returns>
 		static ClipboardData GetClipboardDataFromFramework(ClipboardType enabledTypes, INonProcess nonProcess)
 		{
-			var clipboardItem = new ClipboardData();
+			var clipboardData = new ClipboardData();
 
 			try {
-				var clipboardData = Clipboard.GetDataObject();
-				if(clipboardData != null) {
+				var clipboardObject = Clipboard.GetDataObject();
+				if(clipboardObject != null) {
 					if(enabledTypes.HasFlag(ClipboardType.Text)) {
-						if(clipboardData.GetDataPresent(DataFormats.UnicodeText)) {
-							clipboardItem.Body.Text = (string)clipboardData.GetData(DataFormats.UnicodeText);
-							clipboardItem.Type |= ClipboardType.Text;
-						} else if(clipboardData.GetDataPresent(DataFormats.Text)) {
-							clipboardItem.Body.Text = (string)clipboardData.GetData(DataFormats.Text);
-							clipboardItem.Type |= ClipboardType.Text;
+						if(clipboardObject.GetDataPresent(DataFormats.UnicodeText)) {
+							clipboardData.Body.Text = (string)clipboardObject.GetData(DataFormats.UnicodeText);
+							clipboardData.Type |= ClipboardType.Text;
+						} else if(clipboardObject.GetDataPresent(DataFormats.Text)) {
+							clipboardData.Body.Text = (string)clipboardObject.GetData(DataFormats.Text);
+							clipboardData.Type |= ClipboardType.Text;
 						}
 					}
 
-					if(enabledTypes.HasFlag(ClipboardType.Rtf) && clipboardData.GetDataPresent(DataFormats.Rtf)) {
-						clipboardItem.Body.Rtf = (string)clipboardData.GetData(DataFormats.Rtf);
-						clipboardItem.Type |= ClipboardType.Rtf;
+					if(enabledTypes.HasFlag(ClipboardType.Rtf) && clipboardObject.GetDataPresent(DataFormats.Rtf)) {
+						clipboardData.Body.Rtf = (string)clipboardObject.GetData(DataFormats.Rtf);
+						clipboardData.Type |= ClipboardType.Rtf;
 					}
 
-					if(enabledTypes.HasFlag(ClipboardType.Html) && clipboardData.GetDataPresent(DataFormats.Html)) {
-						clipboardItem.Body.Html = (string)clipboardData.GetData(DataFormats.Html);
-						clipboardItem.Type |= ClipboardType.Html;
+					if(enabledTypes.HasFlag(ClipboardType.Html) && clipboardObject.GetDataPresent(DataFormats.Html)) {
+						clipboardData.Body.Html = (string)clipboardObject.GetData(DataFormats.Html);
+						clipboardData.Type |= ClipboardType.Html;
 					}
 
-					if(enabledTypes.HasFlag(ClipboardType.Image) && clipboardData.GetDataPresent(DataFormats.Bitmap)) {
-						var image = clipboardData.GetData(DataFormats.Bitmap) as BitmapSource;
+					if(enabledTypes.HasFlag(ClipboardType.Image) && clipboardObject.GetDataPresent(DataFormats.Bitmap)) {
+						var image = clipboardObject.GetData(DataFormats.Bitmap) as BitmapSource;
 						if(image != null) {
 							var bitmap = BitmapFrame.Create(image);
 
-							clipboardItem.Body.Image = bitmap;
-							clipboardItem.Type |= ClipboardType.Image;
+							clipboardData.Body.Image = bitmap;
+							clipboardData.Type |= ClipboardType.Image;
 						}
 					}
 
-					if(enabledTypes.HasFlag(ClipboardType.File) && clipboardData.GetDataPresent(DataFormats.FileDrop)) {
-						var files = clipboardData.GetData(DataFormats.FileDrop) as string[];
+					if(enabledTypes.HasFlag(ClipboardType.File) && clipboardObject.GetDataPresent(DataFormats.FileDrop)) {
+						var files = clipboardObject.GetData(DataFormats.FileDrop) as string[];
 						if(files != null) {
 							var sortedFiles = files.OrderBy(s => s, new CaseInsensitiveComparer());
-							clipboardItem.Body.Files.AddRange(sortedFiles);
-							clipboardItem.Body.Text = string.Join(Environment.NewLine, sortedFiles);
-							clipboardItem.Type |= ClipboardType.Text | ClipboardType.File;
+							clipboardData.Body.Files.AddRange(sortedFiles);
+							clipboardData.Body.Text = string.Join(Environment.NewLine, sortedFiles);
+							clipboardData.Type |= ClipboardType.Text | ClipboardType.File;
 						}
 					}
 				}
@@ -291,7 +291,7 @@
 				nonProcess.Logger.Error(ex);
 			}
 
-			return clipboardItem;
+			return clipboardData;
 		}
 
 		/// <summary>
