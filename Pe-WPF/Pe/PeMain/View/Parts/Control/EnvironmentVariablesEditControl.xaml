@@ -10,17 +10,26 @@
 	mc:Ignorable="d" 
 	d:DesignHeight="179" d:DesignWidth="426"
 >
+	<AV:CommonDataUserControl.Resources>
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceDictionary Source="/View/Parts/Resource/GroupBoxDictionary.xaml"/>
+				<ResourceDictionary Source="/View/Parts/Resource/GridSplitterDictionary.xaml"/>
+			</ResourceDictionary.MergedDictionaries>
+		</ResourceDictionary>
+	</AV:CommonDataUserControl.Resources>
 	<Grid>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="3*"/>
+			<ColumnDefinition Width="Auto"/>
 			<ColumnDefinition Width="2*"/>
 		</Grid.ColumnDefinitions>
 		<Grid.RowDefinitions>
-			<RowDefinition Height="31*"/>
-			<RowDefinition Height="148*"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="*"/>
 		</Grid.RowDefinitions>
-		<CheckBox Grid.Row="0" Grid.Column="0" Margin="16,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" IsChecked="{Binding Edit}" Content="edit" AA:Language.Word="environment/edit" />
-		<GroupBox  Grid.Row="1" Grid.Column="0" Margin="0" Header="update" AA:Language.Word="environment/update" >
+		<CheckBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="16,4,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" IsChecked="{Binding Edit}" Content="edit" AA:Language.Word="environment/edit" />
+		<GroupBox  Grid.Row="1" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Header="update" AA:Language.Word="environment/update" Style="{StaticResource DefaultGroupBox}" >
 			<ACC:AppDataGrid x:Name="gridEnv" CanUserAddRows="True" AutoGenerateColumns="False" ItemsSource="{Binding Update}" >
 				<ACC:AppDataGrid.Columns>
 					<DataGridTextColumn Binding="{Binding Id}">
@@ -36,7 +45,7 @@
 				</ACC:AppDataGrid.Columns>
 			</ACC:AppDataGrid>
 		</GroupBox>
-		<GroupBox Grid.Row="1" Grid.Column="1" Margin="0" Header="remove" AA:Language.Word="environment/remove">
+		<GroupBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Header="remove" AA:Language.Word="environment/remove" Style="{StaticResource DefaultGroupBox}">
 			<TextBox Text="{Binding Remove}" AcceptsReturn="True" />
 		</GroupBox>
 	</Grid>
