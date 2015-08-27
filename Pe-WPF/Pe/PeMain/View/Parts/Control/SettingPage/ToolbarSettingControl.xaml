@@ -160,28 +160,28 @@
 				<!--<StackPanel Orientation="Horizontal">-->
 				<Button Content="group" Command="{Binding CreateGroupCommand}" />
 				<Button 
-							Content="item" 
-							IsEnabled="{Binding SelectedLauncherItem, ElementName=listItems, Converter={StaticResource LogicalIsNotNullConverter}}" 
-							Command="{Binding CreateLauncherItemCommand}" 
-						>
+					Content="item" 
+					IsEnabled="{Binding SelectedLauncherItem, ElementName=listItems, Converter={StaticResource LogicalIsNotNullConverter}}" 
+					Command="{Binding CreateLauncherItemCommand}" 
+				>
 					<Button.CommandParameter>
 						<MultiBinding Converter="{StaticResource SelectedNodeAndLauncherItemConverter}">
-							<Binding Path="SelectedItem" ElementName="GroupTree" />
+							<Binding Path="SelectedItem" ElementName="treeGroup" />
 							<Binding Path="SelectedLauncherItem" ElementName="listItems" />
 						</MultiBinding>
 					</Button.CommandParameter>
 				</Button>
 
-				<Button Content="up" Command="{Binding NodeUpCommand}" CommandParameter="{Binding SelectedItem,ElementName=GroupTree}" />
-				<Button Content="down" Command="{Binding NodeDownCommand}" CommandParameter="{Binding SelectedItem,ElementName=GroupTree}" />
-				<Button Content="remove" Command="{Binding NodeRemoveCommand}" CommandParameter="{Binding SelectedItem,ElementName=GroupTree}"  />
+				<Button Content="up" Command="{Binding NodeUpCommand}" CommandParameter="{Binding SelectedItem,ElementName=treeGroup}" />
+				<Button Content="down" Command="{Binding NodeDownCommand}" CommandParameter="{Binding SelectedItem,ElementName=treeGroup}" />
+				<Button Content="remove" Command="{Binding NodeRemoveCommand}" CommandParameter="{Binding SelectedItem,ElementName=treeGroup}"  />
 				<!--</StackPanel>-->
 			</ToolBar>
 			<!--</TkoolBarTray>-->
-			<TreeView Grid.Row="1" ItemsSource="{Binding GroupTree}" x:Name="GroupTree" >
+			<TreeView x:Name="treeGroup" Grid.Row="1" ItemsSource="{Binding GroupTree}" >
 				<i:Interaction.Triggers>
 					<i:EventTrigger EventName="SelectedItemChanged">
-						<i:InvokeCommandAction Command="{Binding SelectedItemChangedCommand}" CommandParameter="{Binding SelectedItem, ElementName=GroupTree}" />
+						<i:InvokeCommandAction Command="{Binding SelectedItemChangedCommand}" CommandParameter="{Binding SelectedItem, ElementName=treeGroup}" />
 					</i:EventTrigger>
 				</i:Interaction.Triggers>
 				<TreeView.ItemTemplate>
@@ -206,7 +206,7 @@
 			DataContext="{Binding LauncherItems}"
 			x:Name="listItems"
 			SelectedLauncherModel="{Binding DataContext.SelectedLauncherItem, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}, Mode=TwoWay}"
-			DoubleClickCommand="{Binding DataContext.DoubleClickCommand, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}}"
+			DoubleClickCommand="{Binding DataContext.AppendChildLauncherItemCommand, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}}"
 		/>
 	</Grid>
 </AV:CommonDataUserControl>

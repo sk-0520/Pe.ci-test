@@ -304,13 +304,23 @@
 			}
 		}
 
-		public ICommand DoubleClickCommand
+		public ICommand AppendChildLauncherItemCommand
 		{
 			get
 			{
 				var result = CreateCommand(
 					o => {
 						var viewModel = o as LauncherListItemViewModel;
+						if (viewModel != null) {
+							//AppNonProcess.Logger.Information(SelectedLauncherItem.ToString());
+							var groupViewModel = this._groupTree.FirstOrDefault(t => t.IsSelected);
+							if (groupViewModel != null) {
+								var target = this._groupTree.Single(g => g == groupViewModel);
+								var appendViewModel = new GroupItemViewMode(viewModel.Model, AppNonProcess);
+								groupViewModel.Model.LauncherItems.Add(viewModel.Model.Id);
+								target.Nodes.Add(appendViewModel);
+							}
+						}
 					}
 				);
 
