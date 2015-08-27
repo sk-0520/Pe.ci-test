@@ -252,9 +252,9 @@
 						<Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="style" AA:Language.Word="note/style" Style="{StaticResource TitleLabel}" />
 						<Label Grid.Row="1" Grid.Column="0" Content="fore" AA:Language.Word="note/style/fore-color" />
 						<xctk:ColorPicker Grid.Row="1" Grid.Column="1" Style="{StaticResource DefaultColorPicker}" SelectedColor="{Binding ForeColor}" />
-						<Label Grid.Row="2" Grid.Column="0" Content="back" AA:Language.Word="note/style/back-color" Style="{StaticResource Headerlabel}"/>
+						<Label Grid.Row="2" Grid.Column="0" Content="back" AA:Language.Word="note/style/back-color" Style="{StaticResource HeaderLabel}"/>
 						<xctk:ColorPicker Grid.Row="2" Grid.Column="1" Style="{StaticResource DefaultColorPicker}" SelectedColor="{Binding BackColor}" />
-						<Label Grid.Row="3" Grid.Column="0" Content="font" AA:Language.Word="note/style/font" Style="{StaticResource Headerlabel}" />
+						<Label Grid.Row="3" Grid.Column="0" Content="font" AA:Language.Word="note/style/font" Style="{StaticResource HeaderLabel}" />
 						<AV:FontSelectControl
 							Grid.Row="3" Grid.Column="1"
 							FamilyName="{Binding FontFamily}"

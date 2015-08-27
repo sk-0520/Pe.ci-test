@@ -24,6 +24,7 @@
 				<ResourceDictionary Source="/View/Parts/Resource/GridSplitterDictionary.xaml"/>
 				<ResourceDictionary Source="/View/Parts/Resource/GroupBoxDictionary.xaml"/>
 				<ResourceDictionary Source="/View/Parts/Resource/LabelDictionary.xaml"/>
+				<ResourceDictionary Source="/View/Parts/Resource/ComboBoxDictionary.xaml"/>
 			</ResourceDictionary.MergedDictionaries>
 			<SC:LogicalIsNotNullConverter x:Key="LogicalIsNotNullConverter" />
 			<AC:DisplayTextConverter x:Key="DisplayTextConverter" />
@@ -53,6 +54,9 @@
 				</Grid>
 			</GroupBox.Header>
 			<Grid>
+				<Grid.Resources>
+					<Style TargetType="ComboBox" BasedOn="{StaticResource DefaultComboBox}" />
+				</Grid.Resources>
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="Auto"/>
 					<ColumnDefinition Width="*"/>
@@ -66,7 +70,7 @@
 					<RowDefinition Height="Auto" />
 					<RowDefinition Height="Auto" />
 				</Grid.RowDefinitions>
-				<Label Grid.Row="0" Grid.Column="0" Content="group" AA:Language.Word="toolbar-setting/toolbar/group" Style="{StaticResource Headerlabel}" />
+				<Label Grid.Row="0" Grid.Column="0" Content="group" AA:Language.Word="toolbar-setting/toolbar/group" Style="{StaticResource HeaderLabel}" />
 				<ComboBox Grid.Column="1" ItemsSource="{Binding DefaultGroupList}" SelectedValue="{Binding SelectedToolbar.DefaultGroupId}" SelectedIndex="{Binding DefaultGroupIndex}" SelectedValuePath="Id" >
 					<ComboBox.ItemTemplate>
 						<ItemContainerTemplate>
@@ -75,7 +79,7 @@
 					</ComboBox.ItemTemplate>
 				</ComboBox>
 
-				<Label Grid.Row="1" Grid.Column="0" Content="dock" AA:Language.Word="toolbar-setting/toolbar/position" Style="{StaticResource Headerlabel}" />
+				<Label Grid.Row="1" Grid.Column="0" Content="dock" AA:Language.Word="toolbar-setting/toolbar/position" Style="{StaticResource HeaderLabel}" />
 				<ComboBox Grid.Column="1" Grid.Row="1" ItemsSource="{Binding Source={x:Static AP:EnumList.DockTypeList}}" SelectedItem="{Binding SelectedToolbar.DockType, Mode=TwoWay}">
 					<ComboBox.Resources>
 						<windows:Size x:Key="ImageSize" Width="16" Height="16" />
@@ -97,7 +101,7 @@
 					</ComboBox.ItemTemplate>
 				</ComboBox>
 
-				<Label Grid.Row="2" Grid.Column="0" Content="icon" AA:Language.Word="toolbar-setting/toolbar/icon" Style="{StaticResource Headerlabel}" />
+				<Label Grid.Row="2" Grid.Column="0" Content="icon" AA:Language.Word="toolbar-setting/toolbar/icon" Style="{StaticResource HeaderLabel}" />
 				<ComboBox Grid.Column="1" Grid.Row="2" ItemsSource="{Binding Source={x:Static AP:EnumList.PlainIconScaleList}}" SelectedItem="{Binding SelectedToolbar.IconScale, Mode=TwoWay}" >
 					<ComboBox.ItemTemplate>
 						<DataTemplate>
@@ -113,7 +117,7 @@
 					</ComboBox.ItemTemplate>
 				</ComboBox>
 
-				<Label Grid.Row="3" Grid.Column="0" VerticalAlignment="Top" Content="font" AA:Language.Word="toolbar-setting/toolbar/font" Style="{StaticResource Headerlabel}" />
+				<Label Grid.Row="3" Grid.Column="0" VerticalAlignment="Top" Content="font" AA:Language.Word="toolbar-setting/toolbar/font" Style="{StaticResource HeaderLabel}" />
 				<AV:FontSelectControl
 					Grid.Row="3" Grid.Column="1"
 					FamilyName="{Binding SelectedToolbar.FontFamily}"
@@ -124,7 +128,7 @@
 					SizeMaximum="{x:Static AM:Constants.ToolbarFontMaximumSize}"
 				/>
 
-				<Label Grid.Row="4" Grid.Column="0" Content="text length" AA:Language.Word="toolbar-setting/toolbar/text-length" Style="{StaticResource Headerlabel}" />
+				<Label Grid.Row="4" Grid.Column="0" Content="text length" AA:Language.Word="toolbar-setting/toolbar/text-length" Style="{StaticResource HeaderLabel}" />
 				<AV:DoubleSliderControl
 					Grid.Row="4"
 					Grid.Column="1"
@@ -133,7 +137,7 @@
 					Maximum="{Binding Source={x:Static AM:Constants.ToolbarTextMaximumLength}}"
 				/>
 
-				<Label Grid.Row="5" Grid.Column="0" Content="hide wait" AA:Language.Word="toolbar-setting/toolbar/auto-hide-time" Style="{StaticResource Headerlabel}" />
+				<Label Grid.Row="5" Grid.Column="0" Content="hide wait" AA:Language.Word="toolbar-setting/toolbar/auto-hide-time" Style="{StaticResource HeaderLabel}" />
 				<AV:TimeSliderControl
 					Grid.Row="5"
 					Grid.Column="1"

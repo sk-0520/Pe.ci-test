@@ -199,7 +199,7 @@
 							<ColumnDefinition Width="Auto" />
 							<ColumnDefinition Width="*" />
 						</Grid.ColumnDefinitions>
-						<Label Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Content="name" AA:Language.Word="clipboard/item/name" Style="{StaticResource Headerlabel}" />
+						<Label Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Content="name" AA:Language.Word="clipboard/item/name" Style="{StaticResource HeaderLabel}" />
 						<TextBox Grid.Column="1" HorizontalAlignment="Stretch" Text="{Binding SelectedViewModel.Name, UpdateSourceTrigger=PropertyChanged}" />
 					</Grid>
 					<TabControl x:Name="tabClipboard" Grid.Row="1">

@@ -12,13 +12,14 @@
 	
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
 	mc:Ignorable="d" 
-	d:DesignWidth="520" d:DesignHeight="400"
+	d:DesignWidth="640" d:DesignHeight="400"
 >
 	<AV:CommonDataUserControl.Resources>
 		<ResourceDictionary>
 			<ResourceDictionary.MergedDictionaries>
 				<ResourceDictionary Source="/View/Parts/Resource/ColorPickerDictionary.xaml"/>
 				<ResourceDictionary Source="/View/Parts/Resource/GroupBoxDictionary.xaml"/>
+				<ResourceDictionary Source="/View/Parts/Resource/ComboBoxDictionary.xaml"/>
 				<ResourceDictionary Source="/View/Parts/Resource/LabelDictionary.xaml"/>
 				<ResourceDictionary Source="/View/Parts/Resource/CheckBoxDictionary.xaml"/>
 				<ResourceDictionary Source="/View/Parts/Resource/AppHotkeyDictionary.xaml"/>
@@ -41,8 +42,8 @@
 					<ColumnDefinition Width="200" />
 					<ColumnDefinition Width="Auto"/>
 				</Grid.ColumnDefinitions>
-				<Label Grid.Row="0" Grid.Column="0" Content="language" AA:Language.Word="main-setting/general/lang" Style="{StaticResource Headerlabel}" />
-				<ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding LanguageList}" DisplayMemberPath="DisplayText" SelectedValuePath="Value" SelectedValue="{Binding SelectedLanguage}" />
+				<Label Grid.Row="0" Grid.Column="0" Content="language" AA:Language.Word="main-setting/general/lang" Style="{StaticResource HeaderLabel}" />
+				<ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding LanguageList}" DisplayMemberPath="DisplayText" SelectedValuePath="Value" SelectedValue="{Binding SelectedLanguage}" Style="{StaticResource DefaultComboBox}" />
 				<CheckBox Grid.Row="0" Grid.Column="2" Margin="32,0,0,0" Content="startup" AA:Language.Word="main-setting/general/startup" IsChecked="{Binding Startup}" Style="{StaticResource DefaultCheckBox}" />
 			</Grid>
 		</GroupBox>
@@ -92,10 +93,10 @@
 							<ColumnDefinition />
 							<ColumnDefinition />
 						</Grid.ColumnDefinitions>
-						<Label Grid.Row="0" Grid.Column="0" Content="hide file" AA:Language.Word="main-setting/system-env/shell-hidden" Style="{StaticResource Headerlabel}" />
+						<Label Grid.Row="0" Grid.Column="0" Content="hide file" AA:Language.Word="main-setting/system-env/shell-hidden" Style="{StaticResource HeaderLabel}" />
 						<AV:AppHotkeyControl Grid.Row="0" Grid.Column="1" Hotkey="{Binding SysEnvHideFileHotkey}" Style="{StaticResource DefaultAppHotkey}" />
 
-						<Label Grid.Row="1" Grid.Column="0" Content="extension" AA:Language.Word="main-setting/system-env/shell-ext" Style="{StaticResource Headerlabel}" />
+						<Label Grid.Row="1" Grid.Column="0" Content="extension" AA:Language.Word="main-setting/system-env/shell-ext" Style="{StaticResource HeaderLabel}" />
 						<AV:AppHotkeyControl Grid.Row="1" Grid.Column="1" Hotkey="{Binding SysEnvExtensionHotkey}" Style="{StaticResource DefaultAppHotkey}" />
 					</Grid>
 				</GroupBox>
@@ -114,7 +115,7 @@
 
 						<CheckBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="enable" AA:Language.Word="main-setting/window-save/enabled" IsChecked="{Binding WindowSaveIsEnabled}"/>
 
-						<Label Grid.Row="1" Grid.Column="0" Content="count" AA:Language.Word="main-setting/window-save/count" Style="{StaticResource Headerlabel}" />
+						<Label Grid.Row="1" Grid.Column="0" Content="count" AA:Language.Word="main-setting/window-save/count" Style="{StaticResource HeaderLabel}" />
 						<AV:IntegerSliderControl
 							Grid.Row="1"
 							Grid.Column="1"
@@ -123,7 +124,7 @@
 							Maximum="{Binding Source={x:Static AM:Constants.WindowSaveMaximumCount}}"
 						/>
 
-						<Label Grid.Row="2" Grid.Column="0" Content="time" AA:Language.Word="main-setting/window-save/interval" Style="{StaticResource Headerlabel}" />
+						<Label Grid.Row="2" Grid.Column="0" Content="time" AA:Language.Word="main-setting/window-save/interval" Style="{StaticResource HeaderLabel}" />
 						<AV:TimeSliderControl
 							Grid.Row="2"
 							Grid.Column="1"
@@ -153,7 +154,7 @@
 						<RowDefinition />
 					</Grid.RowDefinitions>
 
-					<Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="font" AA:Language.Word="main-setting/stream/font" Style="{StaticResource Headerlabel}" />
+					<Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Top" Content="font" AA:Language.Word="main-setting/stream/font" Style="{StaticResource HeaderLabel}" />
 					<AV:FontSelectControl
 						Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"
 						Width="{StaticResource FontWidth}"
@@ -167,11 +168,11 @@
 
 					<Label Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Content="color" AA:Language.Word="main-setting/stream/color" Style="{StaticResource TitleLabel}" />
 
-					<Label Grid.Row="2" Grid.Column="0" Content="std-out" AA:Language.Word="main-setting/stream/color/std-out" Style="{StaticResource Headerlabel}" />
+					<Label Grid.Row="2" Grid.Column="0" Content="std-out" AA:Language.Word="main-setting/stream/color/std-out" Style="{StaticResource HeaderLabel}" />
 					<xctk:ColorPicker Grid.Row="2" Grid.Column="1" Width="{StaticResource ColorWidth}" SelectedColor="{Binding StdOutputForeColor}" Style="{StaticResource DefaultColorPicker}" />
 					<xctk:ColorPicker Grid.Row="2" Grid.Column="2" Width="{StaticResource ColorWidth}" SelectedColor="{Binding StdOutputBackColor}" Style="{StaticResource DefaultColorPicker}" />
 
-					<Label Grid.Row="3" Grid.Column="0" Content="std-err" AA:Language.Word="main-setting/stream/color/std-err" Style="{StaticResource Headerlabel}" />
+					<Label Grid.Row="3" Grid.Column="0" Content="std-err" AA:Language.Word="main-setting/stream/color/std-err" Style="{StaticResource HeaderLabel}" />
 					<xctk:ColorPicker Grid.Row="3" Grid.Column="1" Width="{StaticResource ColorWidth}" SelectedColor="{Binding ErrOutputForeColor}" Style="{StaticResource DefaultColorPicker}" />
 					<xctk:ColorPicker Grid.Row="3" Grid.Column="2" Width="{StaticResource ColorWidth}" SelectedColor="{Binding ErrOutputBackColor}" Style="{StaticResource DefaultColorPicker}" />
 				</Grid>

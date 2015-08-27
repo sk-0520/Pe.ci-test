@@ -18,6 +18,7 @@
 				<ResourceDictionary Source="/View/Parts/Resource/LabelDictionary.xaml"/>
 				<ResourceDictionary Source="/View/Parts/Resource/AppHotKeyDictionary.xaml"/>
 				<ResourceDictionary Source="/View/Parts/Resource/GroupBoxDictionary.xaml"/>
+				<ResourceDictionary Source="/View/Parts/Resource/ComboBoxDictionary.xaml"/>
 			</ResourceDictionary.MergedDictionaries>
 			<ACE:IconScaleLanguageConverter x:Key="IconScaleLanguageConverter" />
 		</ResourceDictionary>
@@ -36,8 +37,8 @@
 				<ColumnDefinition Width="Auto"/>
 			</Grid.ColumnDefinitions>
 			
-			<Label Grid.Row="0" Grid.Column="0" Content="icon" AA:Language.Word="command-setting/icon" Style="{StaticResource Headerlabel}" />
-			<ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding Source={x:Static AP:EnumList.PlainIconScaleList}}" SelectedItem="{Binding IconScale}">
+			<Label Grid.Row="0" Grid.Column="0" Content="icon" AA:Language.Word="command-setting/icon" Style="{StaticResource HeaderLabel}" />
+			<ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding Source={x:Static AP:EnumList.PlainIconScaleList}}" SelectedItem="{Binding IconScale}" Style="{StaticResource DefaultComboBox}">
 				<ComboBox.ItemTemplate>
 					<DataTemplate>
 						<TextBlock>
@@ -52,13 +53,13 @@
 				</ComboBox.ItemTemplate>
 			</ComboBox>
 
-			<Label Grid.Row="1" Grid.Column="0" Content="hotkey" AA:Language.Word="command-setting/hotkey" Style="{StaticResource Headerlabel}" />
+			<Label Grid.Row="1" Grid.Column="0" Content="hotkey" AA:Language.Word="command-setting/hotkey" Style="{StaticResource HeaderLabel}" />
 			<AV:AppHotkeyControl Grid.Column="1" Grid.Row="1" Hotkey="{Binding ShowHotkey}" Style="{StaticResource DefaultAppHotkey}" />
 
-			<Label Grid.Row="2" Grid.Column="0" Content="hide time" AA:Language.Word="command-setting/hide-time" Style="{StaticResource Headerlabel}" />
+			<Label Grid.Row="2" Grid.Column="0" Content="hide time" AA:Language.Word="command-setting/hide-time" Style="{StaticResource HeaderLabel}" />
 			<AV:TimeSliderControl Grid.Row="2" Grid.Column="1" Value="{Binding HideTime}"  Minimum="{Binding Source={x:Static AM:Constants.CommandHideMinimumTime}}" Maximum="{Binding Source={x:Static AM:Constants.CommandHideMaximumTime}}" />
 
-			<Label Grid.Row="3" Grid.Column="0" Content="font" AA:Language.Word="command-setting/font" Style="{StaticResource Headerlabel}" />
+			<Label Grid.Row="3" Grid.Column="0" VerticalAlignment="Top" Content="font" AA:Language.Word="command-setting/font" Style="{StaticResource HeaderLabel}" />
 			<AV:FontSelectControl
 				Grid.Row="3" Grid.Column="1"
 				FamilyName="{Binding FontFamily}"

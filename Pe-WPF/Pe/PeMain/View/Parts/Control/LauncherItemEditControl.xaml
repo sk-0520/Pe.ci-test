@@ -41,7 +41,7 @@
 				</GroupBox>
 				<Grid Grid.Row="1">
 					<Grid.Resources>
-						<Style TargetType="Label" BasedOn="{StaticResource Headerlabel}">
+						<Style TargetType="Label" BasedOn="{StaticResource HeaderLabel}">
 							<Setter Property="Margin" Value="0,0,4,0" />
 							<Setter Property="VerticalAlignment" Value="Center" />
 						</Style>
@@ -130,10 +130,10 @@
 				
 				<CheckBox Grid.Row="1" Grid.Column="0"  IsChecked="{Binding Administrator}" Content="admin" AA:Language.Word="launcher-item-edit/others/admin" />
 
-				<Label Grid.Row="2" Grid.Column="0" Content="tag" AA:Language.Word="launcher-item-edit/others/tag" Style="{StaticResource Headerlabel}" />
+				<Label Grid.Row="2" Grid.Column="0" Content="tag" AA:Language.Word="launcher-item-edit/others/tag" Style="{StaticResource HeaderLabel}" />
 				<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Tags, UpdateSourceTrigger=PropertyChanged}" />
 
-				<Label Grid.Row="3" Grid.Column="0" VerticalAlignment="Top" Content="memo" AA:Language.Word="launcher-item-edit/others/memo" Style="{StaticResource Headerlabel}" />
+				<Label Grid.Row="3" Grid.Column="0" VerticalAlignment="Top" Content="memo" AA:Language.Word="launcher-item-edit/others/memo" Style="{StaticResource HeaderLabel}" />
 				<TextBox Grid.Row="3" Grid.Column="1" AcceptsReturn="True" Text="{Binding Comment, UpdateSourceTrigger=PropertyChanged}" />
 			</Grid>
 		</TabItem>
