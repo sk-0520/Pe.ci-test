@@ -329,6 +329,12 @@
 		<Item Id="clipboard-setting/wait-time" Word="前回コピーからの待機時間" />
 		<Item Id="clipboard-setting/dup" Word="重複判定(-1:全て対象)" />
 		<Item Id="clipboard-setting/font" Word="フォント" />
+
+		<Item Id="template-setting/topmost" Word="最前面" />
+		<Item Id="template-setting/visible" Word="テンプレートウィンドウを表示する" />
+		<Item Id="template-setting/show" Word="表示切り替えキー" />
+		<Item Id="template-setting/font" Word="フォント" />
+
 		<!-- enum -->
 		
 		<Item Id="enum/ModifierKeys" Word="修飾キー" />
