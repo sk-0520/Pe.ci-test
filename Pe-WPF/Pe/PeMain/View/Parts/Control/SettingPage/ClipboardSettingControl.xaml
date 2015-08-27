@@ -11,66 +11,88 @@
 	
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
 	mc:Ignorable="d" 
-	d:DesignHeight="300" d:DesignWidth="400"
+	d:DesignHeight="400" d:DesignWidth="400"
 >
 	<AV:CommonDataUserControl.Resources>
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceDictionary Source="/View/Parts/Resource/GroupBoxDictionary.xaml"/>
+				<ResourceDictionary Source="/View/Parts/Resource/AppHotkeyDictionary.xaml"/>
+				<ResourceDictionary Source="/View/Parts/Resource/LabelDictionary.xaml"/>
+			</ResourceDictionary.MergedDictionaries>
+			<SC:DoubleGridLengthConverter x:Key="DoubleGridLengthConverter" />
+		</ResourceDictionary>
 	</AV:CommonDataUserControl.Resources>
 	<Grid>
-		<StackPanel HorizontalAlignment="Left" Height="93" Margin="10,10,0,0" VerticalAlignment="Top" Width="114">
-			<CheckBox Content="enabled" IsChecked="{Binding IsEnabled}" />
-			<CheckBox Content="copy app" IsChecked="{Binding EnabledApplicationCopy}"/>
-			<CheckBox Content="topmost" IsChecked="{Binding IsTopmost}" />
-			<CheckBox Content="visible" IsChecked="{Binding IsVisible}" />
-			<CheckBox Content="using clipboard" IsChecked="{Binding UsingClipboard}"/>
-		</StackPanel>
-		<GroupBox Header="enabled type" AA:Language.Word="clipboard/target" HorizontalAlignment="Left" Margin="10,123,0,0" VerticalAlignment="Top" Height="119" Width="97">
-			<StackPanel>
-				<CheckBox Content="text"  AA:Language.Word="clipboard/type/text" IsChecked="{Binding EnabledClipboardTypesText}" />
-				<CheckBox Content="rtf"   AA:Language.Word="clipboard/type/rtf" IsChecked="{Binding EnabledClipboardTypesRtf}" />
-				<CheckBox Content="html"  AA:Language.Word="clipboard/type/html" IsChecked="{Binding EnabledClipboardTypesHtml}" />
-				<CheckBox Content="image" AA:Language.Word="clipboard/type/image" IsChecked="{Binding EnabledClipboardTypesImage}" />
-				<CheckBox Content="file"  AA:Language.Word="clipboard/type/files" IsChecked="{Binding EnabledClipboardTypesFile}" />
-			</StackPanel>
-		</GroupBox>
-		<Grid HorizontalAlignment="Left" Height="146" Margin="130,11,0,0" VerticalAlignment="Top" Width="148">
+		<Grid>
 			<Grid.RowDefinitions>
-				<RowDefinition Height="31*"/>
-				<RowDefinition Height="33*"/>
-				<RowDefinition Height="35*"/>
-				<RowDefinition Height="35*"/>
-				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="Auto" />
 			</Grid.RowDefinitions>
 			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="15*"/>
-				<ColumnDefinition Width="22*"/>
+				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition Width="Auto" />
 			</Grid.ColumnDefinitions>
+			
+			<StackPanel Grid.Row="0" Grid.Column="0">
+				<CheckBox Content="enabled" AA:Language.Word="clipboard-setting/enabled" IsChecked="{Binding IsEnabled}" />
+				<CheckBox Content="copy app" AA:Language.Word="clipboard-setting/copy-app" IsChecked="{Binding EnabledApplicationCopy}"/>
+				<CheckBox Content="topmost" AA:Language.Word="clipboard-setting/topmost" IsChecked="{Binding IsTopmost}" />
+				<CheckBox Content="visible" AA:Language.Word="clipboard-setting/visible" IsChecked="{Binding IsVisible}" />
+				<CheckBox Content="using clipboard" AA:Language.Word="clipboard-setting/using-clipboard" IsChecked="{Binding UsingClipboard}"/>
+			</StackPanel>
 
-			<Label Grid.Row="0" Grid.Column="0" Content="show" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Height="21"/>
-			<AV:AppHotkeyControl Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" Margin="10,5,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Hotkey="{Binding ToggleHotKey}"/>
+			<Grid Grid.Row="1" Grid.Column="0" >
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="Auto"/>
+				</Grid.RowDefinitions>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="*"/>
+				</Grid.ColumnDefinitions>
 
-			<Label Grid.Row="1" Grid.Column="0" Content="save count" AA:Language.Word="clipboard/save-count" HorizontalAlignment="Left" Margin="4,0,0,0" VerticalAlignment="Top"/>
-			<!--<xctk:IntegerUpDown Grid.Row="1" Grid.Column="1" Value="{Binding SaveCount}" Minimum="{Binding Source={x:Static AM:Constants.ClipboardSaveMinimumCount}}" Maximum="{Binding Source={x:Static AM:Constants.ClipboardSaveMaximumCount}}" />-->
-			<AV:IntegerSliderControl Grid.Row="1" Grid.Column="1" Value="{Binding SaveCount}" Minimum="{Binding Source={x:Static AM:Constants.ClipboardSaveMinimumCount}}" Maximum="{Binding Source={x:Static AM:Constants.ClipboardSaveMaximumCount}}"/>
+				<Label Grid.Row="0" Grid.Column="0" Content="show" AA:Language.Word="clipboard-setting/show" Style="{StaticResource HeaderLabel}" />
+				<AV:AppHotkeyControl Grid.Row="0" Grid.Column="1" Hotkey="{Binding ToggleHotKey}" Style="{StaticResource DefaultAppHotkey}" />
 
-			<Label Grid.Row="2" Grid.Column="0" Content="wait time" HorizontalAlignment="Left" Margin="4,0,0,0" VerticalAlignment="Top"/>
-			<!--<Slider Grid.Row="2" Grid.Column="1" Value="{Binding WaitTimeMs}" Minimum="{Binding Source={x:Static AM:Constants.ClipboardWaitMinimumTime}}" Maximum="{Binding Source={x:Static AM:Constants.ClipboardWaitMaximumTime}}" />-->
-			<AV:TimeSliderControl Grid.Row="2" Grid.Column="1" Value="{Binding WaitTime}"  Minimum="{Binding Source={x:Static AM:Constants.ClipboardWaitMinimumTime}}" Maximum="{Binding Source={x:Static AM:Constants.ClipboardWaitMaximumTime}}" />
+				<Label Grid.Row="1" Grid.Column="0" Content="save count" AA:Language.Word="clipboard-setting/save-count" Style="{StaticResource HeaderLabel}" />
+				<AV:IntegerSliderControl Grid.Row="1" Grid.Column="1" Value="{Binding SaveCount}" Minimum="{Binding Source={x:Static AM:Constants.ClipboardSaveMinimumCount}}" Maximum="{Binding Source={x:Static AM:Constants.ClipboardSaveMaximumCount}}"/>
 
-			<Label Grid.Row="3" Grid.Column="0" Content="dup" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top"/>
-			<!--<xctk:IntegerUpDown Grid.Row="3" Grid.Column="1" Value="{Binding DuplicationCount}" Minimum="{Binding Source={x:Static AM:Constants.ClipboardDuplicationMinimumCount}}" Maximum="{Binding Source={x:Static AM:Constants.ClipboardDuplicationMaximumCount}}"  />-->
-			<AV:IntegerSliderControl Grid.Row="3" Grid.Column="1" Value="{Binding DuplicationCount}" Minimum="{Binding Source={x:Static AM:Constants.ClipboardDuplicationMinimumCount}}" Maximum="{Binding Source={x:Static AM:Constants.ClipboardDuplicationMaximumCount}}" />
+				<Label Grid.Row="2" Grid.Column="0" Content="wait time" AA:Language.Word="clipboard-setting/wait-time" Style="{StaticResource HeaderLabel}" />
+				<AV:TimeSliderControl Grid.Row="2" Grid.Column="1" Value="{Binding WaitTime}"  Minimum="{Binding Source={x:Static AM:Constants.ClipboardWaitMinimumTime}}" Maximum="{Binding Source={x:Static AM:Constants.ClipboardWaitMaximumTime}}" />
 
-			<Label Grid.Row="4" Grid.Column="0" Content="font" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top"/>
-			<AV:FontSelectControl
-				Grid.Row="4" Grid.Column="1"
-				FamilyName="{Binding FontFamily}"
-				IsBold="{Binding FontBold}"
-				IsItalic="{Binding FontItalic}"
-				Size="{Binding FontSize}"
-				SizeMinimum="{x:Static AM:Constants.ClipboardFontMinimumSize}"
-				SizeMaximum="{x:Static AM:Constants.ClipboardFontMaximumSize}"
-			/>
+				<Label Grid.Row="3" Grid.Column="0" Content="dup" AA:Language.Word="clipboard-setting/dup" Style="{StaticResource HeaderLabel}" />
+				<!--<xctk:IntegerUpDown Grid.Row="3" Grid.Column="1" Value="{Binding DuplicationCount}" Minimum="{Binding Source={x:Static AM:Constants.ClipboardDuplicationMinimumCount}}" Maximum="{Binding Source={x:Static AM:Constants.ClipboardDuplicationMaximumCount}}"  />-->
+				<AV:IntegerSliderControl Grid.Row="3" Grid.Column="1" Value="{Binding DuplicationCount}" Minimum="{Binding Source={x:Static AM:Constants.ClipboardDuplicationMinimumCount}}" Maximum="{Binding Source={x:Static AM:Constants.ClipboardDuplicationMaximumCount}}" />
+
+				<Label Grid.Row="4" Grid.Column="0" VerticalAlignment="Top" Content="font" AA:Language.Word="clipboard-setting/font" Style="{StaticResource HeaderLabel}" />
+				<AV:FontSelectControl
+					Grid.Row="4" Grid.Column="1"
+					FamilyName="{Binding FontFamily}"
+					IsBold="{Binding FontBold}"
+					IsItalic="{Binding FontItalic}"
+					Size="{Binding FontSize}"
+					SizeMinimum="{x:Static AM:Constants.ClipboardFontMinimumSize}"
+					SizeMaximum="{x:Static AM:Constants.ClipboardFontMaximumSize}"
+				/>
+			</Grid>
+
+			<GroupBox Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Header="enabled type" AA:Language.Word="clipboard-setting/enabled-type" Style="{StaticResource DefaultGroupBox}" >
+				<StackPanel>
+					<CheckBox Content="text"  AA:Language.Word="clipboard-setting/enabled-type/text" IsChecked="{Binding EnabledClipboardTypesText}" />
+					<CheckBox Content="rtf"   AA:Language.Word="clipboard-setting/enabled-type/rtf" IsChecked="{Binding EnabledClipboardTypesRtf}" />
+					<CheckBox Content="html"  AA:Language.Word="clipboard-setting/enabled-type/html" IsChecked="{Binding EnabledClipboardTypesHtml}" />
+					<CheckBox Content="image" AA:Language.Word="clipboard-setting/enabled-type/image" IsChecked="{Binding EnabledClipboardTypesImage}" />
+					<CheckBox Content="files" AA:Language.Word="clipboard-setting/enabled-type/files" IsChecked="{Binding EnabledClipboardTypesFile}" />
+				</StackPanel>
+			</GroupBox>
 		</Grid>
+		
+		
+		
 
 	</Grid>
 </AV:CommonDataUserControl>
