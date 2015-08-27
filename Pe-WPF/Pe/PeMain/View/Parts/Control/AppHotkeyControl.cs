@@ -56,6 +56,18 @@
 			}
 		}
 
+		protected override string DisplayAddText 
+		{ 
+			get 
+			{ 
+			if(CommonData != null) {
+				return LanguageUtility.GetKeySeparatorText(CommonData.Language);
+			} else {
+				return base.DisplayAddText;
+			}
+			} 
+		}
+
 		#endregion
 	}
 }
