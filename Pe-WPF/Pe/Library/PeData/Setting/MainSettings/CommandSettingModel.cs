@@ -44,11 +44,6 @@
 		public HotKeyModel ShowHotkey { get; set; }
 
 		/// <summary>
-		/// IDを検索対象にする。
-		/// </summary>
-		[DataMember]
-		public bool FindId { get; set; }
-		/// <summary>
 		/// タグを検索対象にする。
 		/// </summary>
 		[DataMember]
@@ -77,7 +72,6 @@
 			obj.IconScale = IconScale;
 			obj.HideTime = HideTime;
 			ShowHotkey.DeepCloneTo(obj.ShowHotkey);
-			obj.FindId = FindId;
 			obj.FindTag = FindTag;
 			obj.FindFile = FindFile;
 			obj.WindowWidth = WindowWidth;

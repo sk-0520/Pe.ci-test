@@ -3,6 +3,7 @@
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:AV="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Control"
+	xmlns:AA="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Attached"
 	xmlns:AP="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
 	xmlns:AM="clr-namespace:ContentTypeTextNet.Pe.PeMain"
 	xmlns:ACE="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Converter.EnumLanguageConverter" 
@@ -13,24 +14,30 @@
 >
 	<AV:CommonDataUserControl.Resources>
 		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceDictionary Source="/View/Parts/Resource/LabelDictionary.xaml"/>
+				<ResourceDictionary Source="/View/Parts/Resource/AppHotKeyDictionary.xaml"/>
+				<ResourceDictionary Source="/View/Parts/Resource/GroupBoxDictionary.xaml"/>
+			</ResourceDictionary.MergedDictionaries>
 			<ACE:IconScaleLanguageConverter x:Key="IconScaleLanguageConverter" />
 		</ResourceDictionary>
 	</AV:CommonDataUserControl.Resources>
 	<Grid>
-		<Grid Margin="10,10,20,43">
+		<Grid>
 			<Grid.RowDefinitions>
-				<RowDefinition Height="30"/>
-				<RowDefinition Height="33"/>
-				<RowDefinition Height="34"/>
 				<RowDefinition Height="Auto"/>
-				<RowDefinition Height="190"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
 			</Grid.RowDefinitions>
 			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="131"/>
-				<ColumnDefinition Width="169"/>
+				<ColumnDefinition Width="Auto"/>
+				<ColumnDefinition Width="Auto"/>
 			</Grid.ColumnDefinitions>
-			<Label Grid.Row="0" Content="icon" HorizontalAlignment="Left" Margin="18,0,0,0" VerticalAlignment="Top" Height="25" Width="34"/>
-			<ComboBox Grid.Row="0" ItemsSource="{Binding Source={x:Static AP:EnumList.PlainIconScaleList}}" SelectedItem="{Binding IconScale}" Margin="10,9,40,0" Grid.Column="1">
+			
+			<Label Grid.Row="0" Grid.Column="0" Content="icon" AA:Language.Word="command-setting/icon" Style="{StaticResource Headerlabel}" />
+			<ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding Source={x:Static AP:EnumList.PlainIconScaleList}}" SelectedItem="{Binding IconScale}">
 				<ComboBox.ItemTemplate>
 					<DataTemplate>
 						<TextBlock>
@@ -45,14 +52,13 @@
 				</ComboBox.ItemTemplate>
 			</ComboBox>
 
-			<Label Content="hotkey" HorizontalAlignment="Left" Margin="18,5,0,0" Grid.Row="1" VerticalAlignment="Top" Height="25" Width="49"/>
-			<AV:AppHotkeyControl Hotkey="{Binding ShowHotkey}" Margin="10,10,40,0" Grid.Column="1" Grid.Row="1" />
+			<Label Grid.Row="1" Grid.Column="0" Content="hotkey" AA:Language.Word="command-setting/hotkey" Style="{StaticResource Headerlabel}" />
+			<AV:AppHotkeyControl Grid.Column="1" Grid.Row="1" Hotkey="{Binding ShowHotkey}" Style="{StaticResource DefaultAppHotkey}" />
 
-			<Label Content="hide time" HorizontalAlignment="Left" Margin="10,5,0,0" Grid.Row="2" VerticalAlignment="Top" Height="25" Width="65"/>
-			<!--<Slider Grid.Column="1" HorizontalAlignment="Left" Margin="10,10,0,0" Grid.Row="2" VerticalAlignment="Top" Width="119" Value="{Binding HideTimeMs}" Minimum="{Binding Source={x:Static AM:Constants.CommandHideMinimumTime}}" Maximum="{Binding Source={x:Static AM:Constants.CommandHideMaximumTime}}" Height="18"/>-->
+			<Label Grid.Row="2" Grid.Column="0" Content="hide time" AA:Language.Word="command-setting/hide-time" Style="{StaticResource Headerlabel}" />
 			<AV:TimeSliderControl Grid.Row="2" Grid.Column="1" Value="{Binding HideTime}"  Minimum="{Binding Source={x:Static AM:Constants.CommandHideMinimumTime}}" Maximum="{Binding Source={x:Static AM:Constants.CommandHideMaximumTime}}" />
 
-			<Label Grid.Row="3" Grid.Column="0" Content="font"/>
+			<Label Grid.Row="3" Grid.Column="0" Content="font" AA:Language.Word="command-setting/font" Style="{StaticResource Headerlabel}" />
 			<AV:FontSelectControl
 				Grid.Row="3" Grid.Column="1"
 				FamilyName="{Binding FontFamily}"
@@ -63,11 +69,10 @@
 				SizeMaximum="{x:Static AM:Constants.CommandFontMaximumSize}"
 			/>
 
-			<GroupBox Header="GroupBox" HorizontalAlignment="Left" Margin="10,10,0,0" Grid.Row="4" VerticalAlignment="Top" Height="85" Width="196" Grid.ColumnSpan="2" Grid.RowSpan="2">
+			<GroupBox Grid.Row="4" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="2" Header="find" AA:Language.Word="command-setting/find" Style="{StaticResource DefaultGroupBox}" >
 				<StackPanel>
-					<CheckBox Content="FindId" IsChecked="{Binding FindId}" />
-					<CheckBox Content="FindTag" IsChecked="{Binding FindTag}"/>
-					<CheckBox Content="FindFile" IsChecked="{Binding FindFile}"/>
+					<CheckBox IsChecked="{Binding FindTag}"  Content="FindTag"  AA:Language.Word="command-setting/find/tag" />
+					<CheckBox IsChecked="{Binding FindFile}" Content="FindFile" AA:Language.Word="command-setting/find/file" />
 				</StackPanel>
 			</GroupBox>
 

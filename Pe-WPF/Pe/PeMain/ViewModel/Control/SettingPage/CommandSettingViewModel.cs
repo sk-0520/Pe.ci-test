@@ -56,12 +56,6 @@
 			set { SetPropertyValue(Command, value); }
 		}
 
-		public bool FindId
-		{
-			get { return Command.FindId; }
-			set { SetPropertyValue(Command, value); }
-		}
-
 		public bool FindTag
 		{
 			get { return Command.FindTag; }
