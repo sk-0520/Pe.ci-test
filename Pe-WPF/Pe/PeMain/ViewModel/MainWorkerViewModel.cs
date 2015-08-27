@@ -374,13 +374,7 @@
 			{
 				var result = CreateCommand(
 					o => {
-#if DEBUG
-							var startupPath = Environment.ExpandEnvironmentVariables(Constants.startupShortcutPath);
-							if(File.Exists(startupPath)) {
-								File.Delete(startupPath);
-							}
-#endif
-							ExitApplication(true, true);
+						ExitApplication(true, true);
 					}
 				);
 
@@ -522,6 +516,12 @@
 
 		void ExitApplication(bool saveSetting, bool gc)
 		{
+#if DEBUG
+			var startupPath = Environment.ExpandEnvironmentVariables(Constants.startupShortcutPath);
+			if (File.Exists(startupPath)) {
+				File.Delete(startupPath);
+			}
+#endif
 			if (saveSetting) {
 				SaveSetting();
 			}
@@ -1601,9 +1601,11 @@
 				CommonData.Logger.Debug("load cache: " + guid.ToString(), body);
 				return body;
 			}
-			var fileType = IndexItemUtility.GetBodyFileType(indexKind);
-			var path = IndexItemUtility.GetBodyFilePath(indexKind, guid, CommonData.VariableConstants);
-			var result = AppUtility.LoadSetting<TIndexBody>(path, fileType, CommonData.Logger);
+			//var fileType = IndexItemUtility.GetBodyFileType(indexKind);
+			//var path = IndexItemUtility.GetBodyFilePath(indexKind, guid, CommonData.VariableConstants);
+			//var result = AppUtility.LoadSetting<TIndexBody>(path, fileType, CommonData.Logger);
+			var result = IndexItemUtility.LoadBody<TIndexBody>(indexKind, guid, CommonData.NonProcess);
+
 			AppendCachingItems(guid, result, cachingItems);
 			return result;
 		}

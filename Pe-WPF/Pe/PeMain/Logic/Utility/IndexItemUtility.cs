@@ -121,6 +121,16 @@
 			}
 		}
 
+		public static TIndexBody LoadBody<TIndexBody>(IndexKind indexKind, Guid guid, IAppNonProcess appNonProcess)
+			where TIndexBody : IndexBodyItemModelBase, new()
+		{
+			var fileType = IndexItemUtility.GetBodyFileType(indexKind);
+			var path = IndexItemUtility.GetBodyFilePath(indexKind, guid, appNonProcess.VariableConstants);
+			var result = AppUtility.LoadSetting<TIndexBody>(path, fileType, appNonProcess.Logger);
+
+			return result;
+		}
+
 		public static void SaveBody<TIndexBody>(TIndexBody indexBody, Guid guid, IAppNonProcess appNonProcess)
 			where TIndexBody : IndexBodyItemModelBase
 		{
