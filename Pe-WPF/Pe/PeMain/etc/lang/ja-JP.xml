@@ -185,6 +185,12 @@
 		<Item Id="update/confirm" Word="バージョン @[UPDATE-NOW-VERSION] → @[UPDATE-NEW-VERSION] @[UPDATE-NEW-TYPE] へ更新しますか？" />
 		
 		<Item Id="setting/main" Word="本体設定" />
+		<Item Id="setting/launcher" Word="ランチャー" />
+		<Item Id="setting/toolbar" Word="ツールバー" />
+		<Item Id="setting/command" Word="コマンド" />
+		<Item Id="setting/note" Word="ノート" />
+		<Item Id="setting/clipboard" Word="クリップボード" />
+		<Item Id="setting/template" Word="テンプレート" />
 		
 		<Item Id="about/information" Word="@[APPLICATION] 情報" />
 		<Item Id="about/information/link/web" Word="WEBページ" />

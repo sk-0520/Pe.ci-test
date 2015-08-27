@@ -34,22 +34,22 @@
 			<TabItem x:Name="pageMain" Header="main" AA:Language.Word="setting/main">
 				<AS:MainSettingControl x:Name="MainSettingControl" DataContext="{Binding MainSetting}" VerticalAlignment="Stretch" />
 			</TabItem>
-			<TabItem Header="launcher">
+			<TabItem Header="launcher" AA:Language.Word="setting/launcher">
 				<AS:LauncherItemSettingControl x:Name="LauncherItemSettingControl" DataContext="{Binding LauncherItemSetting}" VerticalAlignment="Stretch"/>
 			</TabItem>
-			<TabItem x:Name="pageToolbar" Header="toolbar" >
+			<TabItem x:Name="pageToolbar" Header="toolbar" AA:Language.Word="setting/toolbar">
 				<AS:ToolbarSettingControl x:Name="ToolbarSettingControl" DataContext="{Binding ToolbarSetting}" VerticalAlignment="Stretch"/>
 			</TabItem>
-			<TabItem Header="command">
+			<TabItem Header="command" AA:Language.Word="setting/command">
 				<AS:CommandSettingControl x:Name="CommandSettingControl" DataContext="{Binding CommandSetting}" VerticalAlignment="Stretch" />
 			</TabItem>
-			<TabItem Header="note">
+			<TabItem Header="note" AA:Language.Word="setting/note">
 				<AS:NoteSettingControl x:Name="NoteSettingControl" DataContext="{Binding NoteSetting}" VerticalAlignment="Stretch" />
 			</TabItem>
-			<TabItem Header="clipboard">
+			<TabItem Header="clipboard" AA:Language.Word="setting/clipboard">
 				<AS:ClipboardSettingControl x:Name="ClipboardSettingControl" DataContext="{Binding ClipboardSetting}" VerticalAlignment="Stretch" />
 			</TabItem>
-			<TabItem Header="template">
+			<TabItem Header="template" AA:Language.Word="setting/template">
 				<AS:TemplateSettingControl x:Name="TemplateSettingControl" DataContext="{Binding TemplateSetting}" VerticalAlignment="Stretch" />
 			</TabItem>
 		</TabControl>
