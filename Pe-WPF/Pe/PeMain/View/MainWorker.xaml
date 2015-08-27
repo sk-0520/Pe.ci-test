@@ -15,7 +15,7 @@
 		<ResourceDictionary Source="/View/Parts/Resource/MenuItemDictionary.xaml"/>
 	</ResourceDictionary.MergedDictionaries>
 	<!--<Setter Property="AA:MenuIcon.IsStrong" Value="{Binding IsVisible}" />-->
-	<ContentControl x:Shared="false" x:Key="ToolbarMenuIcon" AA:MenuIcon.IsStrong="{Binding IsVisible}"  Content="{Binding MenuIcon}" />
+	<ContentControl x:Shared="false" x:Key="ToolbarMenuIcon" SnapsToDevicePixels="True" AA:MenuIcon.IsStrong="{Binding IsVisible}"  Content="{Binding MenuIcon}" />
 	<ContextMenu x:Shared="false" x:Key="ContextMenu" IsOpen="{Binding IsContextMenuOpen}" >
 		<ContextMenu.Resources>
 			<SC:LogicalNotConverter x:Key="LogicalNotConverter"/>
