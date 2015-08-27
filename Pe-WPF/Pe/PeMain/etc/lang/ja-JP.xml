@@ -241,6 +241,31 @@
 		<Item Id="main-setting/general" Word="基本設定" />
 		<Item Id="main-setting/general/lang" Word="使用言語" />
 		<Item Id="main-setting/general/startup" Word="Window ログオン時に @[APPLICATION] を起動" />
+		<Item Id="main-setting/log" Word="ログ設定" />
+		<Item Id="main-setting/log/visible" Word="ログウィンドウの表示" />
+		<Item Id="main-setting/log/add-show" Word="追加されるたびに表示する" />
+		<Item Id="main-setting/log/trigger/debug" Word="デバッグ" />
+		<Item Id="main-setting/log/trigger/trace" Word="トレース" />
+		<Item Id="main-setting/log/trigger/info" Word="情報" />
+		<Item Id="main-setting/log/trigger/warning" Word="警報" />
+		<Item Id="main-setting/log/trigger/error" Word="エラー" />
+		<Item Id="main-setting/log/trigger/fatal" Word="致命" />
+		<Item Id="main-setting/running/update/check" Word="アップデートチェック" />
+		<Item Id="main-setting/running/update/check/release" Word="アップデートを確認する" />
+		<Item Id="main-setting/running/update/check/rc" Word="RC版も確認対象とする" />
+		<Item Id="main-setting/system-env" Word="システム環境" />
+		<Item Id="main-setting/system-env/shell-hidden" Word="隠しファイル切替" />
+		<Item Id="main-setting/system-env/shell-ext" Word="拡張子切替" />
+		<Item Id="main-setting/stream" Word="標準入出力" />
+		<Item Id="main-setting/stream/font" Word="フォント" />
+		<Item Id="main-setting/stream/color" Word="色設定" />
+		<Item Id="main-setting/stream/color/std-out" Word="基本" />
+		<Item Id="main-setting/stream/color/std-err" Word="エラー" />
+		<Item Id="main-setting/window-save" Word="ウィンドウ位置保存" />
+		<Item Id="main-setting/window-save/enabled" Word="ウィンドウ位置を保存する" />
+		<Item Id="main-setting/window-save/count" Word="保存件数" />
+		<Item Id="main-setting/window-save/interval" Word="保存間隔" />
+		
 		
 		<Item Id="toolbar-setting/group/node/add/group" Word="グループ追加" />
 		<Item Id="toolbar-setting/group/node/add/item" Word="選択中ランチャーアイテムの追加" />

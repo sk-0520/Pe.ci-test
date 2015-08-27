@@ -10,7 +10,7 @@
 	xmlns:AA="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Attached"
 	AA:Language.Word="window/setting"
 	Title="SettingWindow" 
-	Width="640"
+	Width="800"
 	Height="480" 
 	Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"
 	BorderBrush="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" WindowStartupLocation="CenterScreen"

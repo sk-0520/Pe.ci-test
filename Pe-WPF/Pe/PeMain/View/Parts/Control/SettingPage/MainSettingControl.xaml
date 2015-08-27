@@ -18,136 +18,154 @@
 				<ResourceDictionary Source="/View/Parts/Resource/ColorPickerDictionary.xaml"/>
 				<ResourceDictionary Source="/View/Parts/Resource/GroupBoxDictionary.xaml"/>
 				<ResourceDictionary Source="/View/Parts/Resource/LabelDictionary.xaml"/>
+				<ResourceDictionary Source="/View/Parts/Resource/CheckBoxDictionary.xaml"/>
+				<ResourceDictionary Source="/View/Parts/Resource/AppHotkeyDictionary.xaml"/>
 			</ResourceDictionary.MergedDictionaries> 
 		</ResourceDictionary>
 	</AV:CommonDataUserControl.Resources>
 	<Grid>
-		<GroupBox Header="main" AA:Language.Word="main-setting/general" Height="79" Width="202" Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource DefaultGroupBox}">
-			<StackPanel Orientation="Vertical">
-				<StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Width="190">
-					<Label Content="language" AA:Language.Word="main-setting/general/lang" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource Headerlabel}" />
-					<ComboBox HorizontalAlignment="Left" Width="89" Height="27" VerticalAlignment="Top" ItemsSource="{Binding LanguageList}" DisplayMemberPath="DisplayText" SelectedValuePath="Value" SelectedValue="{Binding SelectedLanguage}" />
-				</StackPanel>
-				<CheckBox Content="startup" AA:Language.Word="main-setting/general/startup" IsChecked="{Binding Startup}"/>
-			</StackPanel>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+		</Grid.RowDefinitions>
+		<GroupBox Grid.Row="0" Header="main" AA:Language.Word="main-setting/general" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource DefaultGroupBox}">
+			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto" />
+				</Grid.RowDefinitions>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition Width="200" />
+					<ColumnDefinition Width="Auto"/>
+				</Grid.ColumnDefinitions>
+				<Label Grid.Row="0" Grid.Column="0" Content="language" AA:Language.Word="main-setting/general/lang" Style="{StaticResource Headerlabel}" />
+				<ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding LanguageList}" DisplayMemberPath="DisplayText" SelectedValuePath="Value" SelectedValue="{Binding SelectedLanguage}" />
+				<CheckBox Grid.Row="0" Grid.Column="2" Margin="32,0,0,0" Content="startup" AA:Language.Word="main-setting/general/startup" IsChecked="{Binding Startup}" Style="{StaticResource DefaultCheckBox}" />
+			</Grid>
 		</GroupBox>
+		<Grid Grid.Row="1">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition Width="Auto" />
+			</Grid.ColumnDefinitions>
+			<GroupBox Grid.Column="0" Header="log" AA:Language.Word="main-setting/log" Style="{StaticResource DefaultGroupBox}" >
+				<StackPanel>
+					<CheckBox Content="visible" AA:Language.Word="main-setting/log/visible" IsChecked="{Binding LogVisible}" />
+					<GroupBox Style="{StaticResource DefaultGroupBox}">
+						<GroupBox.Header>
+							<CheckBox Content="add-show" AA:Language.Word="main-setting/log/add-show" IsChecked="{Binding LogAddShow}" />
+						</GroupBox.Header>
+						<StackPanel>
+							<CheckBox Content="debug"   AA:Language.Word="main-setting/log/trigger/debug" IsChecked="{Binding LogTriggerDebug}" />
+							<CheckBox Content="trace"   AA:Language.Word="main-setting/log/trigger/trace"  IsChecked="{Binding LogTriggerTrace}" />
+							<CheckBox Content="info"    AA:Language.Word="main-setting/log/trigger/info" IsChecked="{Binding LogTriggerInformation}" />
+							<CheckBox Content="warning" AA:Language.Word="main-setting/log/trigger/warning" IsChecked="{Binding LogTriggerWarning}" />
+							<CheckBox Content="error"   AA:Language.Word="main-setting/log/trigger/error" IsChecked="{Binding LogTriggerError}" />
+							<CheckBox Content="fatal"   AA:Language.Word="main-setting/log/trigger/fatal" IsChecked="{Binding LogTriggerFatal}" />
+						</StackPanel>
+					</GroupBox>
+				</StackPanel>
+			</GroupBox>
+			
+			<StackPanel Grid.Column="1">
+				<GroupBox Header="system-env" AA:Language.Word="main-setting/system-env" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource DefaultGroupBox}">
+					<Grid>
+						<Grid.RowDefinitions>
+							<RowDefinition />
+							<RowDefinition />
+						</Grid.RowDefinitions>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition />
+							<ColumnDefinition />
+						</Grid.ColumnDefinitions>
+						<Label Grid.Row="0" Grid.Column="0" Content="hide file" AA:Language.Word="main-setting/system-env/shell-hidden" Style="{StaticResource Headerlabel}" />
+						<AV:AppHotkeyControl Grid.Row="0" Grid.Column="1" Hotkey="{Binding SysEnvHideFileHotkey}" Style="{StaticResource DefaultAppHotkey}" />
 
-		<GroupBox AA:Language.Word="setting/log" Header="log" Margin="10,94,0,0" HorizontalAlignment="Left" Width="202" Height="182" VerticalAlignment="Top">
-			<StackPanel>
-				<CheckBox AA:Language.Word="visible" Content="visible" IsChecked="{Binding LogVisible}" />
-				<GroupBox>
-					<GroupBox.Header>
-						<CheckBox AA:Language.Word="log/add-show" Content="add-show" IsChecked="{Binding LogAddShow}" />
-					</GroupBox.Header>
-					<StackPanel Margin="8">
-						<CheckBox AA:Language.Word="log/debug" Content="debug" IsChecked="{Binding LogTriggerDebug}" />
-						<CheckBox AA:Language.Word="log/trace" Content="trace" IsChecked="{Binding LogTriggerTrace}" />
-						<CheckBox AA:Language.Word="log/information" Content="info" IsChecked="{Binding LogTriggerInformation}" />
-						<CheckBox AA:Language.Word="log/warning" Content="warning" IsChecked="{Binding LogTriggerWarning}" />
-						<CheckBox AA:Language.Word="log/error" Content="error" IsChecked="{Binding LogTriggerError}" />
-						<CheckBox AA:Language.Word="log/fatal" Content="fatal" IsChecked="{Binding LogTriggerFatal}" />
+						<Label Grid.Row="1" Grid.Column="0" Content="extension" AA:Language.Word="main-setting/system-env/shell-ext" Style="{StaticResource Headerlabel}" />
+						<AV:AppHotkeyControl Grid.Row="1" Grid.Column="1" Hotkey="{Binding SysEnvExtensionHotkey}" Style="{StaticResource DefaultAppHotkey}" />
+					</Grid>
+				</GroupBox>
+				<GroupBox Header="update" AA:Language.Word="main-setting/running/update/check" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource DefaultGroupBox}">
+					<StackPanel>
+						<CheckBox Content="update check" AA:Language.Word="main-setting/running/update/check/release" IsChecked="{Binding RunningCheckUpdateRelease}" />
+						<CheckBox Content="update check rc" AA:Language.Word="main-setting/running/update/check/rc" IsChecked="{Binding RunningCheckUpdateRC}" />
 					</StackPanel>
 				</GroupBox>
 			</StackPanel>
-		</GroupBox>
-		<GroupBox AA:Language.Word="setting/running"  Header="update" HorizontalAlignment="Left" Margin="217,10,0,0" VerticalAlignment="Top" Height="70" Width="136">
-			<StackPanel>
-				<CheckBox AA:Language.Word="update/check-release" Content="update check" IsChecked="{Binding RunningCheckUpdateRelease}" />
-				<CheckBox AA:Language.Word="update/check-rc" Content="update check rc" IsChecked="{Binding RunningCheckUpdateRC}" />
-			</StackPanel>
-		</GroupBox>
-		<GroupBox Header="system" HorizontalAlignment="Left" Margin="217,94,0,0" VerticalAlignment="Top" Height="75" Width="136">
-			<Grid>
-				<Grid.RowDefinitions>
-					<RowDefinition />
-					<RowDefinition />
-				</Grid.RowDefinitions>
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition />
-					<ColumnDefinition />
-				</Grid.ColumnDefinitions>
-				<Label Grid.Row="0" Grid.Column="0" Content="hide file" />
-				<AV:AppHotkeyControl Grid.Row="0" Grid.Column="1" Hotkey="{Binding SysEnvHideFileHotkey}" />
 
-				<Label Grid.Row="1" Grid.Column="0" Content="extension" />
-				<AV:AppHotkeyControl Grid.Row="1" Grid.Column="1" Hotkey="{Binding SysEnvExtensionHotkey}" />
-			</Grid>
-		</GroupBox>
+			<GroupBox Grid.Column="2" Header="stream" AA:Language.Word="main-setting/stream" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource DefaultGroupBox}">
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition />
+						<ColumnDefinition />
+						<ColumnDefinition />
+					</Grid.ColumnDefinitions>
+					<Grid.RowDefinitions>
+						<RowDefinition />
+						<RowDefinition />
+						<RowDefinition />
+						<RowDefinition />
+					</Grid.RowDefinitions>
 
-		<GroupBox Header="stream" HorizontalAlignment="Left" Margin="217,190,0,0" VerticalAlignment="Top" Height="181" Width="159">
-			<Grid>
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition />
-					<ColumnDefinition />
-					<ColumnDefinition />
-				</Grid.ColumnDefinitions>
-				<Grid.RowDefinitions>
-					<RowDefinition />
-					<RowDefinition />
-					<RowDefinition />
-					<RowDefinition />
-				</Grid.RowDefinitions>
+					<Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="font" AA:Language.Word="main-setting/stream/font" Style="{StaticResource Headerlabel}" />
+					<AV:FontSelectControl
+						Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"
+						FamilyName="{Binding StreamFontFamily}"
+						IsBold="{Binding StreamFontBold}"
+						IsItalic="{Binding StreamFontItalic}"
+						Size="{Binding StreamFontSize}"
+						SizeMinimum="{x:Static AM:Constants.StreamFontMinimumSize}"
+						SizeMaximum="{x:Static AM:Constants.StreamFontMaximumSize}"
+					/>
 
-				<Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="font" />
-				<AV:FontSelectControl
-					Grid.Row="0" Grid.Column="1"
-					FamilyName="{Binding StreamFontFamily}"
-					IsBold="{Binding StreamFontBold}"
-					IsItalic="{Binding StreamFontItalic}"
-					Size="{Binding StreamFontSize}"
-					SizeMinimum="{x:Static AM:Constants.StreamFontMinimumSize}"
-					SizeMaximum="{x:Static AM:Constants.StreamFontMaximumSize}"
-				/>
+					<Label Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Content="color" AA:Language.Word="main-setting/stream/color" Style="{StaticResource TitleLabel}" />
 
-				<Label Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Content="std-out" />
-				
-				<Label Grid.Row="2" Grid.Column="0" Content="std-out" />
-				<xctk:ColorPicker Grid.Row="2" Grid.Column="1" SelectedColor="{Binding StdOutputForeColor}" Style="{StaticResource DefaultColorPicker}" />
-				<xctk:ColorPicker Grid.Row="2" Grid.Column="2" SelectedColor="{Binding StdOutputBackColor}" Style="{StaticResource DefaultColorPicker}" />
-				
-				<Label Grid.Row="3" Grid.Column="0" Content="std-err" />
-				<xctk:ColorPicker Grid.Row="3" Grid.Column="1" SelectedColor="{Binding ErrOutputForeColor}" Style="{StaticResource DefaultColorPicker}" />
-				<xctk:ColorPicker Grid.Row="3" Grid.Column="2" SelectedColor="{Binding ErrOutputBackColor}" Style="{StaticResource DefaultColorPicker}" />
+					<Label Grid.Row="2" Grid.Column="0" Content="std-out" AA:Language.Word="main-setting/stream/color/std-out" Style="{StaticResource Headerlabel}" />
+					<xctk:ColorPicker Grid.Row="2" Grid.Column="1" SelectedColor="{Binding StdOutputForeColor}" Style="{StaticResource DefaultColorPicker}" />
+					<xctk:ColorPicker Grid.Row="2" Grid.Column="2" SelectedColor="{Binding StdOutputBackColor}" Style="{StaticResource DefaultColorPicker}" />
 
+					<Label Grid.Row="3" Grid.Column="0" Content="std-err" AA:Language.Word="main-setting/stream/color/std-err" Style="{StaticResource Headerlabel}" />
+					<xctk:ColorPicker Grid.Row="3" Grid.Column="1" SelectedColor="{Binding ErrOutputForeColor}" Style="{StaticResource DefaultColorPicker}" />
+					<xctk:ColorPicker Grid.Row="3" Grid.Column="2" SelectedColor="{Binding ErrOutputBackColor}" Style="{StaticResource DefaultColorPicker}" />
+				</Grid>
+			</GroupBox>
 
-			</Grid>
-		</GroupBox>
+			<GroupBox Grid.Column="3" Header="window save" AA:Language.Word="main-setting/window-save" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource DefaultGroupBox}">
+				<Grid>
+					<Grid.RowDefinitions>
+						<RowDefinition />
+						<RowDefinition />
+						<RowDefinition />
+					</Grid.RowDefinitions>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition />
+						<ColumnDefinition />
+					</Grid.ColumnDefinitions>
 
-		<GroupBox Header="window save" HorizontalAlignment="Left" Margin="370,22,0,0" VerticalAlignment="Top" Height="116" Width="130">
-			<Grid>
-				<Grid.RowDefinitions>
-					<RowDefinition />
-					<RowDefinition />
-					<RowDefinition />
-				</Grid.RowDefinitions>
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition />
-					<ColumnDefinition />
-				</Grid.ColumnDefinitions>
+					<CheckBox Grid.Row="0" Grid.Column="0" Content="enable" AA:Language.Word="main-setting/window-save/enabled" IsChecked="{Binding WindowSaveIsEnabled}"/>
 
-				<CheckBox Grid.Row="0" Grid.Column="0" Content="enable" IsChecked="{Binding WindowSaveIsEnabled}"/>
-				
-				<Label Grid.Row="1" Grid.Column="0" Content="count"/>
-				<AV:IntegerSliderControl
-					Grid.Row="1"
-					Grid.Column="1"
-					Value="{Binding WindowSaveCount, Mode=TwoWay}"
-					Minimum="{Binding Source={x:Static AM:Constants.WindowSaveMinimumCount}}"
-					Maximum="{Binding Source={x:Static AM:Constants.WindowSaveMaximumCount}}"
-				/>
+					<Label Grid.Row="1" Grid.Column="0" Content="count" AA:Language.Word="main-setting/window-save/count" Style="{StaticResource Headerlabel}" />
+					<AV:IntegerSliderControl
+						Grid.Row="1"
+						Grid.Column="1"
+						Value="{Binding WindowSaveCount, Mode=TwoWay}"
+						Minimum="{Binding Source={x:Static AM:Constants.WindowSaveMinimumCount}}"
+						Maximum="{Binding Source={x:Static AM:Constants.WindowSaveMaximumCount}}"
+					/>
 
-				<Label Grid.Row="2" Grid.Column="0" Content="time"/>
-				<AV:TimeSliderControl
-					Grid.Row="2"
-					Grid.Column="1"
-					Value="{Binding WindowSaveIntervalTime, Mode=TwoWay}"
-					Minimum="{Binding Source={x:Static AM:Constants.WindowSaveIntervalMinimumTime}}"
-					Maximum="{Binding Source={x:Static AM:Constants.WindowSaveIntervalMaximumTime}}"
-				/>
-			</Grid>
-			
+					<Label Grid.Row="2" Grid.Column="0" Content="time" AA:Language.Word="main-setting/window-save/interval" Style="{StaticResource Headerlabel}" />
+					<AV:TimeSliderControl
+						Grid.Row="2"
+						Grid.Column="1"
+						Value="{Binding WindowSaveIntervalTime, Mode=TwoWay}"
+						Minimum="{Binding Source={x:Static AM:Constants.WindowSaveIntervalMinimumTime}}"
+						Maximum="{Binding Source={x:Static AM:Constants.WindowSaveIntervalMaximumTime}}"
+					/>
+				</Grid>
+			</GroupBox>
 
-		</GroupBox>
-
+		</Grid>
 	</Grid>
 </AV:CommonDataUserControl>
