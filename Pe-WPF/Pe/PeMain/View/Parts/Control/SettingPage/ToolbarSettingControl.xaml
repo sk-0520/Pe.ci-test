@@ -21,6 +21,7 @@
 			<ResourceDictionary.MergedDictionaries>
 				<ResourceDictionary Source="/View/Parts/Resource/ImageDictionary.xaml"/>
 				<ResourceDictionary Source="/View/Parts/Resource/ToolbarDictionary.xaml"/>
+				<ResourceDictionary Source="/View/Parts/Resource/GridSplitterDictionary.xaml"/>
 			</ResourceDictionary.MergedDictionaries>
 			<SC:LogicalIsNotNullConverter x:Key="LogicalIsNotNullConverter" />
 			<AC:DisplayTextConverter x:Key="DisplayTextConverter" />
@@ -35,6 +36,7 @@
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="200"/>
 			<ColumnDefinition Width="198*"/>
+			<ColumnDefinition Width="Auto"/>
 			<ColumnDefinition Width="119*"/>
 		</Grid.ColumnDefinitions>
 		<GroupBox HorizontalAlignment="Stretch">
@@ -198,8 +200,9 @@
 				</TreeView.ItemContainerStyle>
 			</TreeView>
 		</Grid>
+		<GridSplitter Grid.Column="2" Style="{StaticResource DefaultVericalGridSplitter}" />
 		<AV:LauncherListItemsControl
-			Grid.Column="2"
+			Grid.Column="3"
 			DataContext="{Binding LauncherItems}"
 			x:Name="listItems"
 			SelectedLauncherModel="{Binding DataContext.SelectedLauncherItem, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}, Mode=TwoWay}"

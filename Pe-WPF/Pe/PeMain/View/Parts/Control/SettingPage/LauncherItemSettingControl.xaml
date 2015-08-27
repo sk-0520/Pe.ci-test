@@ -12,8 +12,13 @@
 	d:DesignHeight="300" d:DesignWidth="300"
 >
 	<AV:CommonDataUserControl.Resources>
-		<SC:LogicalIsNotNullConverter x:Key="LogicalIsNotNullConverter" />
-		<AC:LauncherViewModelConverter x:Key="LauncherViewModelConverter" />
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceDictionary Source="/View/Parts/Resource/GridSplitterDictionary.xaml"/>
+			</ResourceDictionary.MergedDictionaries>
+			<SC:LogicalIsNotNullConverter x:Key="LogicalIsNotNullConverter" />
+			<AC:LauncherViewModelConverter x:Key="LauncherViewModelConverter" />
+		</ResourceDictionary>
 	</AV:CommonDataUserControl.Resources>
 	<Grid>
 		<Grid.RowDefinitions>
@@ -21,6 +26,7 @@
 		</Grid.RowDefinitions>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="7*"/>
+			<ColumnDefinition Width="Auto"/>
 			<ColumnDefinition Width="13*"/>
 		</Grid.ColumnDefinitions>
 		<AV:LauncherListItemsControl
@@ -31,8 +37,9 @@
 			AppendCommand="{Binding DataContext.AppendItemCommand, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}}" 
 			RemoveCommand="{Binding DataContext.RemoveItemCommand, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}}" 
 		/>
+		<GridSplitter Grid.Column="1" Style="{StaticResource DefaultVericalGridSplitter}" />
 		<AV:LauncherItemEditControl
-			Grid.Column="1"
+			Grid.Column="2"
 			DataContext="{Binding SelectedLauncherItem, ElementName=listItems, Converter={StaticResource LauncherViewModelConverter}}" 
 			IsEnabled="{Binding SelectedLauncherItem, ElementName=listItems,Converter={StaticResource LogicalIsNotNullConverter}}"
 		/>
