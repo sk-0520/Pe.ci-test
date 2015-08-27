@@ -16,17 +16,19 @@
 		<ResourceDictionary>
 			<ResourceDictionary.MergedDictionaries>
 				<ResourceDictionary Source="/View/Parts/Resource/ColorPickerDictionary.xaml"/>
-			</ResourceDictionary.MergedDictionaries>
+				<ResourceDictionary Source="/View/Parts/Resource/GroupBoxDictionary.xaml"/>
+				<ResourceDictionary Source="/View/Parts/Resource/LabelDictionary.xaml"/>
+			</ResourceDictionary.MergedDictionaries> 
 		</ResourceDictionary>
 	</AV:CommonDataUserControl.Resources>
 	<Grid>
-		<GroupBox Header="main" AA:Language.Word="setting/main/general" Height="79" Width="202" Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+		<GroupBox Header="main" AA:Language.Word="main-setting/general" Height="79" Width="202" Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource DefaultGroupBox}">
 			<StackPanel Orientation="Vertical">
 				<StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Width="190">
-					<Label AA:Language.Word="using-language" Content="language" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+					<Label Content="language" AA:Language.Word="main-setting/general/lang" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource Headerlabel}" />
 					<ComboBox HorizontalAlignment="Left" Width="89" Height="27" VerticalAlignment="Top" ItemsSource="{Binding LanguageList}" DisplayMemberPath="DisplayText" SelectedValuePath="Value" SelectedValue="{Binding SelectedLanguage}" />
 				</StackPanel>
-				<CheckBox AA:Language.Word="startup/regist" Content="startup" IsChecked="{Binding Startup}"/>
+				<CheckBox Content="startup" AA:Language.Word="main-setting/general/startup" IsChecked="{Binding Startup}"/>
 			</StackPanel>
 		</GroupBox>
 

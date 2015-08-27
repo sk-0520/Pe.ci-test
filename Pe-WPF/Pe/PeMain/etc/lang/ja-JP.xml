@@ -184,6 +184,8 @@
 
 		<Item Id="update/confirm" Word="バージョン @[UPDATE-NOW-VERSION] → @[UPDATE-NEW-VERSION] @[UPDATE-NEW-TYPE] へ更新しますか？" />
 		
+		<Item Id="setting/main" Word="本体設定" />
+		
 		<Item Id="about/information" Word="@[APPLICATION] 情報" />
 		<Item Id="about/information/link/web" Word="WEBページ" />
 		<Item Id="about/information/link/mail" Word="メール送信" />
@@ -236,8 +238,18 @@
 		<Item Id="launcher-list-items/append" Word="アイテムの追加" />
 		<Item Id="launcher-list-items/remove" Word="アイテムの削除" />
 
-		<Item Id="setting/main" Word="本体設定" />
-		<Item Id="setting/main/general" Word="基本設定" />
+		<Item Id="main-setting/general" Word="基本設定" />
+		<Item Id="main-setting/general/lang" Word="使用言語" />
+		<Item Id="main-setting/general/startup" Word="Window ログオン時に @[APPLICATION] を起動" />
+		
+		<Item Id="toolbar-setting/group/node/add/group" Word="グループ追加" />
+		<Item Id="toolbar-setting/group/node/add/item" Word="選択中ランチャーアイテムの追加" />
+		<Item Id="toolbar-setting/group/node/up" Word="選択中ノードを上に移動" />
+		<Item Id="toolbar-setting/group/node/down" Word="選択中ノードを下に移動" />
+		<Item Id="toolbar-setting/group/node/remove" Word="選択中ノードを削除" />
+		
+		
+		
 		<!-- enum -->
 		
 		<Item Id="enum/ModifierKeys" Word="修飾キー" />

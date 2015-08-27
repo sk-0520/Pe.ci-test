@@ -158,9 +158,11 @@
 			<!--<ToolBarTray HorizontalAlignment="Stretch" VerticalAlignment="Stretch">-->
 			<ToolBar Style="{StaticResource DefaultToolbar}">
 				<!--<StackPanel Orientation="Horizontal">-->
-				<Button Content="group" Command="{Binding CreateGroupCommand}" />
+				<Button AA:Language.Hint="toolbar-setting/group/node/add/group" Command="{Binding CreateGroupCommand}">
+					<Image Source="{x:Static AM:AppResource.SettingLauncherGroupParentImage}" Style="{StaticResource DefaultImage}" />
+				</Button>
 				<Button 
-					Content="item" 
+					AA:Language.Hint="toolbar-setting/group/node/add/item"
 					IsEnabled="{Binding SelectedLauncherItem, ElementName=listItems, Converter={StaticResource LogicalIsNotNullConverter}}" 
 					Command="{Binding CreateLauncherItemCommand}" 
 				>
@@ -170,11 +172,19 @@
 							<Binding Path="SelectedLauncherItem" ElementName="listItems" />
 						</MultiBinding>
 					</Button.CommandParameter>
+					<Image Source="{x:Static AM:AppResource.SettingLauncherGroupItemImage}" Style="{StaticResource DefaultImage}" />
 				</Button>
-
-				<Button Content="up" Command="{Binding NodeUpCommand}" CommandParameter="{Binding SelectedItem,ElementName=treeGroup}" />
-				<Button Content="down" Command="{Binding NodeDownCommand}" CommandParameter="{Binding SelectedItem,ElementName=treeGroup}" />
-				<Button Content="remove" Command="{Binding NodeRemoveCommand}" CommandParameter="{Binding SelectedItem,ElementName=treeGroup}"  />
+				<Separator />
+				<Button AA:Language.Hint="toolbar-setting/group/node/up" Command="{Binding NodeUpCommand}" CommandParameter="{Binding SelectedItem,ElementName=treeGroup}">
+					<Image Source="{x:Static AM:AppResource.CommonUpImage}" Style="{StaticResource DefaultImage}" />
+				</Button>
+				<Button AA:Language.Hint="toolbar-setting/group/node/down" Command="{Binding NodeDownCommand}" CommandParameter="{Binding SelectedItem,ElementName=treeGroup}">
+					<Image Source="{x:Static AM:AppResource.CommonDownImage}" Style="{StaticResource DefaultImage}" />
+				</Button>
+				<Separator />
+				<Button AA:Language.Hint="toolbar-setting/group/node/remove" Command="{Binding NodeRemoveCommand}" CommandParameter="{Binding SelectedItem,ElementName=treeGroup}">
+					<Image Source="{x:Static AM:AppResource.CommonRemoveImage}" Style="{StaticResource DefaultImage}" />
+				</Button>
 				<!--</StackPanel>-->
 			</ToolBar>
 			<!--</TkoolBarTray>-->

@@ -6,6 +6,7 @@
 		<Setter Property="FontWeight" Value="Bold" />
 	</Style>
 	<Style x:Key="Headerlabel" TargetType="Label">
+		<Setter Property="VerticalAlignment" Value="Center" />
 		<Setter Property="Margin">
 			<Setter.Value>
 				<Thickness Right="4" />
