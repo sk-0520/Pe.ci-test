@@ -2,11 +2,13 @@
 	x:Class="ContentTypeTextNet.Pe.PeMain.View.Parts.Control.SettingPage.MainSettingControl"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:sys="clr-namespace:System;assembly=mscorlib"
 	xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
 	xmlns:AM="clr-namespace:ContentTypeTextNet.Pe.PeMain"
 	xmlns:AV="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Control"
 	xmlns:AP="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
 	xmlns:AA="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Attached"
+	xmlns:SC="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=SharedLibrary"
 	
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
 	mc:Ignorable="d" 
@@ -20,7 +22,8 @@
 				<ResourceDictionary Source="/View/Parts/Resource/LabelDictionary.xaml"/>
 				<ResourceDictionary Source="/View/Parts/Resource/CheckBoxDictionary.xaml"/>
 				<ResourceDictionary Source="/View/Parts/Resource/AppHotkeyDictionary.xaml"/>
-			</ResourceDictionary.MergedDictionaries> 
+			</ResourceDictionary.MergedDictionaries>
+			<SC:DoubleGridLengthConverter x:Key="DoubleGridLengthConverter" />
 		</ResourceDictionary>
 	</AV:CommonDataUserControl.Resources>
 	<Grid>
@@ -134,10 +137,14 @@
 
 			<GroupBox Grid.Column="2" Header="stream" AA:Language.Word="main-setting/stream" Style="{StaticResource DefaultGroupBox}">
 				<Grid>
+					<Grid.Resources>
+						<sys:Double x:Key="FontWidth">120</sys:Double>
+						<sys:Double x:Key="ColorWidth">60</sys:Double>
+					</Grid.Resources>
 					<Grid.ColumnDefinitions>
-						<ColumnDefinition />
-						<ColumnDefinition />
-						<ColumnDefinition />
+						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition Width="Auto" />
 					</Grid.ColumnDefinitions>
 					<Grid.RowDefinitions>
 						<RowDefinition />
@@ -149,6 +156,7 @@
 					<Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="font" AA:Language.Word="main-setting/stream/font" Style="{StaticResource Headerlabel}" />
 					<AV:FontSelectControl
 						Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"
+						Width="{StaticResource FontWidth}"
 						FamilyName="{Binding StreamFontFamily}"
 						IsBold="{Binding StreamFontBold}"
 						IsItalic="{Binding StreamFontItalic}"
@@ -160,12 +168,12 @@
 					<Label Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Content="color" AA:Language.Word="main-setting/stream/color" Style="{StaticResource TitleLabel}" />
 
 					<Label Grid.Row="2" Grid.Column="0" Content="std-out" AA:Language.Word="main-setting/stream/color/std-out" Style="{StaticResource Headerlabel}" />
-					<xctk:ColorPicker Grid.Row="2" Grid.Column="1" SelectedColor="{Binding StdOutputForeColor}" Style="{StaticResource DefaultColorPicker}" />
-					<xctk:ColorPicker Grid.Row="2" Grid.Column="2" SelectedColor="{Binding StdOutputBackColor}" Style="{StaticResource DefaultColorPicker}" />
+					<xctk:ColorPicker Grid.Row="2" Grid.Column="1" Width="{StaticResource ColorWidth}" SelectedColor="{Binding StdOutputForeColor}" Style="{StaticResource DefaultColorPicker}" />
+					<xctk:ColorPicker Grid.Row="2" Grid.Column="2" Width="{StaticResource ColorWidth}" SelectedColor="{Binding StdOutputBackColor}" Style="{StaticResource DefaultColorPicker}" />
 
 					<Label Grid.Row="3" Grid.Column="0" Content="std-err" AA:Language.Word="main-setting/stream/color/std-err" Style="{StaticResource Headerlabel}" />
-					<xctk:ColorPicker Grid.Row="3" Grid.Column="1" SelectedColor="{Binding ErrOutputForeColor}" Style="{StaticResource DefaultColorPicker}" />
-					<xctk:ColorPicker Grid.Row="3" Grid.Column="2" SelectedColor="{Binding ErrOutputBackColor}" Style="{StaticResource DefaultColorPicker}" />
+					<xctk:ColorPicker Grid.Row="3" Grid.Column="1" Width="{StaticResource ColorWidth}" SelectedColor="{Binding ErrOutputForeColor}" Style="{StaticResource DefaultColorPicker}" />
+					<xctk:ColorPicker Grid.Row="3" Grid.Column="2" Width="{StaticResource ColorWidth}" SelectedColor="{Binding ErrOutputBackColor}" Style="{StaticResource DefaultColorPicker}" />
 				</Grid>
 			</GroupBox>
 
