@@ -298,6 +298,20 @@
 		<Item Id="command-setting/find" Word="検索条件" />
 		<Item Id="command-setting/find/tag" Word="タグを検索する" />
 		<Item Id="command-setting/find/file" Word="ファイルを検索する" />
+
+		<Item Id="note-setting/key" Word="キー設定" />
+		<Item Id="note-setting/key/create" Word="作成" />
+		<Item Id="note-setting/key/hide" Word="隠す" />
+		<Item Id="note-setting/key/compact" Word="最小化" />
+		<Item Id="note-setting/key/front" Word="前面表示" />
+
+		<Item Id="note-setting/style" Word="スタイル" />
+		<Item Id="note-setting/style/font" Word="フォント" />
+		<Item Id="note-setting/style/fore-color" Word="前景色" />
+		<Item Id="note-setting/style/back-color" Word="背景色" />
+		<Item Id="note-setting/title" Word="初期タイトル" />
+		<Item Id="note-setting/title/timestamp" Word="タイムスタンプ" />
+		<Item Id="note-setting/title/default" Word="デフォルト" />
 		
 		<!-- enum -->
 		
