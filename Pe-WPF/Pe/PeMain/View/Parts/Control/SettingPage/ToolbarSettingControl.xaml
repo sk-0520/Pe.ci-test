@@ -22,6 +22,8 @@
 				<ResourceDictionary Source="/View/Parts/Resource/ImageDictionary.xaml"/>
 				<ResourceDictionary Source="/View/Parts/Resource/ToolbarDictionary.xaml"/>
 				<ResourceDictionary Source="/View/Parts/Resource/GridSplitterDictionary.xaml"/>
+				<ResourceDictionary Source="/View/Parts/Resource/GroupBoxDictionary.xaml"/>
+				<ResourceDictionary Source="/View/Parts/Resource/LabelDictionary.xaml"/>
 			</ResourceDictionary.MergedDictionaries>
 			<SC:LogicalIsNotNullConverter x:Key="LogicalIsNotNullConverter" />
 			<AC:DisplayTextConverter x:Key="DisplayTextConverter" />
@@ -34,38 +36,38 @@
 	</AV:CommonDataUserControl.Resources>
 	<Grid>
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="200"/>
-			<ColumnDefinition Width="198*"/>
+			<ColumnDefinition Width="270"/>
+			<ColumnDefinition Width="180*"/>
 			<ColumnDefinition Width="Auto"/>
-			<ColumnDefinition Width="119*"/>
+			<ColumnDefinition Width="140*"/>
 		</Grid.ColumnDefinitions>
-		<GroupBox HorizontalAlignment="Stretch">
+		<GroupBox HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Style="{StaticResource DefaultGroupBox}">
 			<GroupBox.Header>
-				<Grid HorizontalAlignment="Stretch" Width="180">
+				<Grid HorizontalAlignment="Stretch">
 					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="*"/>
-						<ColumnDefinition Width="Auto" MinWidth="42" />
+						<ColumnDefinition Width="180"/>
+						<ColumnDefinition MinWidth="60" />
 					</Grid.ColumnDefinitions>
 					<ComboBox Grid.Column="0" SelectedIndex="0" DisplayMemberPath="DisplayText" SelectedItem="{Binding SelectedToolbar}" ItemsSource="{Binding ToolbarItemList, Mode=OneTime}" />
-					<Button Grid.Column="1" Content="screen" />
+					<Button Grid.Column="1" Content="screen" AA:Language.Word="toolbar-setting/screen" />
 				</Grid>
 			</GroupBox.Header>
 			<Grid>
 				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="95*"/>
-					<ColumnDefinition Width="91*"/>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="*"/>
 				</Grid.ColumnDefinitions>
 				<Grid.RowDefinitions>
-					<RowDefinition Height="24*"/>
-					<RowDefinition Height="32*"/>
-					<RowDefinition Height="32*"/>
-					<RowDefinition Height="36*"/>
-					<RowDefinition Height="36*"/>
-					<RowDefinition Height="37*"/>
-					<RowDefinition Height="125*"/>
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="Auto" />
 				</Grid.RowDefinitions>
-				<Label Content="group" HorizontalAlignment="Left" Grid.Row="0" VerticalAlignment="Top"/>
-				<ComboBox Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" ItemsSource="{Binding DefaultGroupList}" SelectedValue="{Binding SelectedToolbar.DefaultGroupId}" SelectedIndex="{Binding DefaultGroupIndex}" SelectedValuePath="Id" >
+				<Label Grid.Row="0" Grid.Column="0" Content="group" AA:Language.Word="toolbar-setting/toolbar/group" Style="{StaticResource Headerlabel}" />
+				<ComboBox Grid.Column="1" ItemsSource="{Binding DefaultGroupList}" SelectedValue="{Binding SelectedToolbar.DefaultGroupId}" SelectedIndex="{Binding DefaultGroupIndex}" SelectedValuePath="Id" >
 					<ComboBox.ItemTemplate>
 						<ItemContainerTemplate>
 							<ContentPresenter Content="{Binding Converter={StaticResource DisplayTextConverter}}" />
@@ -73,8 +75,8 @@
 					</ComboBox.ItemTemplate>
 				</ComboBox>
 
-				<Label Content="dock" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Top" />
-				<ComboBox Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" ItemsSource="{Binding Source={x:Static AP:EnumList.DockTypeList}}" SelectedItem="{Binding SelectedToolbar.DockType, Mode=TwoWay}">
+				<Label Grid.Row="1" Grid.Column="0" Content="dock" AA:Language.Word="toolbar-setting/toolbar/position" Style="{StaticResource Headerlabel}" />
+				<ComboBox Grid.Column="1" Grid.Row="1" ItemsSource="{Binding Source={x:Static AP:EnumList.DockTypeList}}" SelectedItem="{Binding SelectedToolbar.DockType, Mode=TwoWay}">
 					<ComboBox.Resources>
 						<windows:Size x:Key="ImageSize" Width="16" Height="16" />
 					</ComboBox.Resources>
@@ -95,8 +97,8 @@
 					</ComboBox.ItemTemplate>
 				</ComboBox>
 
-				<Label Content="icon" HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Top"/>
-				<ComboBox Grid.Column="1" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Top" ItemsSource="{Binding Source={x:Static AP:EnumList.PlainIconScaleList}}" SelectedItem="{Binding SelectedToolbar.IconScale, Mode=TwoWay}" >
+				<Label Grid.Row="2" Grid.Column="0" Content="icon" AA:Language.Word="toolbar-setting/toolbar/icon" Style="{StaticResource Headerlabel}" />
+				<ComboBox Grid.Column="1" Grid.Row="2" ItemsSource="{Binding Source={x:Static AP:EnumList.PlainIconScaleList}}" SelectedItem="{Binding SelectedToolbar.IconScale, Mode=TwoWay}" >
 					<ComboBox.ItemTemplate>
 						<DataTemplate>
 							<TextBlock>
@@ -111,7 +113,7 @@
 					</ComboBox.ItemTemplate>
 				</ComboBox>
 
-				<Label Content="font" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Top" />
+				<Label Grid.Row="3" Grid.Column="0" VerticalAlignment="Top" Content="font" AA:Language.Word="toolbar-setting/toolbar/font" Style="{StaticResource Headerlabel}" />
 				<AV:FontSelectControl
 					Grid.Row="3" Grid.Column="1"
 					FamilyName="{Binding SelectedToolbar.FontFamily}"
@@ -122,8 +124,7 @@
 					SizeMaximum="{x:Static AM:Constants.ToolbarFontMaximumSize}"
 				/>
 
-				<Label Content="text length" Grid.Row="4" HorizontalAlignment="Stretch" VerticalAlignment="Top" />
-				<!--<Slider Grid.Row="4" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" Value="{Binding SelectedToolbar.TextWidth, Mode=TwoWay}" Minimum="{Binding Source={x:Static AM:Constants.ToolbarTextMinimumLength}}" Maximum="{Binding Source={x:Static AM:Constants.ToolbarTextMaximumLength}}" />-->
+				<Label Grid.Row="4" Grid.Column="0" Content="text length" AA:Language.Word="toolbar-setting/toolbar/text-length" Style="{StaticResource Headerlabel}" />
 				<AV:DoubleSliderControl
 					Grid.Row="4"
 					Grid.Column="1"
@@ -132,7 +133,7 @@
 					Maximum="{Binding Source={x:Static AM:Constants.ToolbarTextMaximumLength}}"
 				/>
 
-				<Label Content="hide wait" Grid.Row="5" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Top" />
+				<Label Grid.Row="5" Grid.Column="0" Content="hide wait" AA:Language.Word="toolbar-setting/toolbar/auto-hide-time" Style="{StaticResource Headerlabel}" />
 				<AV:TimeSliderControl
 					Grid.Row="5"
 					Grid.Column="1"
@@ -141,12 +142,12 @@
 					Maximum="{Binding Source={x:Static AM:Constants.ToolbarHideWaitMaximumTime}}"
 				/>
 
-				<StackPanel HorizontalAlignment="Left" Height="92" Grid.Row="6" Grid.ColumnSpan="2" VerticalAlignment="Top">
-					<CheckBox Content="show text" HorizontalAlignment="Stretch" IsChecked="{Binding SelectedToolbar.TextVisible}" />
-					<CheckBox Content="auto hide" HorizontalAlignment="Stretch" IsChecked="{Binding SelectedToolbar.AutoHide}" />
-					<CheckBox Content="topmost" HorizontalAlignment="Stretch" IsChecked="{Binding SelectedToolbar.IsTopmost}" />
-					<CheckBox Content="visible" HorizontalAlignment="Stretch" IsChecked="{Binding SelectedToolbar.IsVisible}" />
-					<CheckBox Content="menu position" HorizontalAlignment="Stretch" IsChecked="{Binding SelectedToolbar.MenuPositionCorrection}" />
+				<StackPanel Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Top">
+					<CheckBox Content="show text" AA:Language.Word="toolbar-setting/toolbar/show-text"  IsChecked="{Binding SelectedToolbar.TextVisible}" />
+					<CheckBox Content="auto hide" AA:Language.Word="toolbar-setting/toolbar/auto-hide" IsChecked="{Binding SelectedToolbar.AutoHide}" />
+					<CheckBox Content="topmost" AA:Language.Word="toolbar-setting/toolbar/topmost" IsChecked="{Binding SelectedToolbar.IsTopmost}" />
+					<CheckBox Content="visible" AA:Language.Word="toolbar-setting/toolbar/visible" IsChecked="{Binding SelectedToolbar.IsVisible}" />
+					<CheckBox Content="menu position" AA:Language.Word="toolbar-setting/toolbar/menu-posotion" IsChecked="{Binding SelectedToolbar.MenuPositionCorrection}" />
 				</StackPanel>
 			</Grid>
 		</GroupBox>
