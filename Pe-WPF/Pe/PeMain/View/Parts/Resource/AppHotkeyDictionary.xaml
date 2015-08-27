@@ -8,7 +8,7 @@
 		<ResourceDictionary Source="/View/Parts/Resource/TextBoxDictionary.xaml"/>
 	</ResourceDictionary.MergedDictionaries>
 	<Style x:Key="DefaultAppHotkey" TargetType="AV:AppHotkeyControl">
-		<Setter Property="Width" Value="120" />
+		<Setter Property="Width" Value="140" />
 		<Setter Property="Padding" Value="{StaticResource TextBoxPadding}" />
 		<Setter Property="VerticalAlignment" Value="Center" />
 	</Style>

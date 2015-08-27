@@ -28,7 +28,7 @@
 			<RowDefinition Height="Auto" />
 			<RowDefinition Height="Auto" />
 		</Grid.RowDefinitions>
-		<GroupBox Grid.Row="0" Header="main" AA:Language.Word="main-setting/general" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource DefaultGroupBox}">
+		<GroupBox Grid.Row="0" Header="main" AA:Language.Word="main-setting/general" Style="{StaticResource DefaultGroupBox}">
 			<Grid>
 				<Grid.RowDefinitions>
 					<RowDefinition Height="Auto" />
@@ -48,29 +48,38 @@
 				<ColumnDefinition Width="Auto" />
 				<ColumnDefinition Width="Auto" />
 				<ColumnDefinition Width="Auto" />
-				<ColumnDefinition Width="Auto" />
 			</Grid.ColumnDefinitions>
-			<GroupBox Grid.Column="0" Header="log" AA:Language.Word="main-setting/log" Style="{StaticResource DefaultGroupBox}" >
-				<StackPanel>
-					<CheckBox Content="visible" AA:Language.Word="main-setting/log/visible" IsChecked="{Binding LogVisible}" />
-					<GroupBox Style="{StaticResource DefaultGroupBox}">
-						<GroupBox.Header>
-							<CheckBox Content="add-show" AA:Language.Word="main-setting/log/add-show" IsChecked="{Binding LogAddShow}" />
-						</GroupBox.Header>
-						<StackPanel>
-							<CheckBox Content="debug"   AA:Language.Word="main-setting/log/trigger/debug" IsChecked="{Binding LogTriggerDebug}" />
-							<CheckBox Content="trace"   AA:Language.Word="main-setting/log/trigger/trace"  IsChecked="{Binding LogTriggerTrace}" />
-							<CheckBox Content="info"    AA:Language.Word="main-setting/log/trigger/info" IsChecked="{Binding LogTriggerInformation}" />
-							<CheckBox Content="warning" AA:Language.Word="main-setting/log/trigger/warning" IsChecked="{Binding LogTriggerWarning}" />
-							<CheckBox Content="error"   AA:Language.Word="main-setting/log/trigger/error" IsChecked="{Binding LogTriggerError}" />
-							<CheckBox Content="fatal"   AA:Language.Word="main-setting/log/trigger/fatal" IsChecked="{Binding LogTriggerFatal}" />
-						</StackPanel>
-					</GroupBox>
-				</StackPanel>
-			</GroupBox>
+			
+			<StackPanel Grid.Column="0">
+				<GroupBox HorizontalAlignment="Stretch" Header="update" AA:Language.Word="main-setting/running/update/check" Style="{StaticResource DefaultGroupBox}">
+					<StackPanel>
+						<CheckBox Content="update check" AA:Language.Word="main-setting/running/update/check/release" IsChecked="{Binding RunningCheckUpdateRelease}" />
+						<CheckBox Content="update check rc" AA:Language.Word="main-setting/running/update/check/rc" IsChecked="{Binding RunningCheckUpdateRC}" />
+					</StackPanel>
+				</GroupBox>
+
+				<GroupBox HorizontalAlignment="Stretch" Header="log" AA:Language.Word="main-setting/log" Style="{StaticResource DefaultGroupBox}" >
+					<StackPanel>
+						<CheckBox Content="visible" AA:Language.Word="main-setting/log/visible" IsChecked="{Binding LogVisible}" />
+						<GroupBox Style="{StaticResource DefaultGroupBox}">
+							<GroupBox.Header>
+								<CheckBox Content="add-show" AA:Language.Word="main-setting/log/add-show" IsChecked="{Binding LogAddShow}" />
+							</GroupBox.Header>
+							<StackPanel>
+								<CheckBox Content="debug"   AA:Language.Word="main-setting/log/trigger/debug" IsChecked="{Binding LogTriggerDebug}" />
+								<CheckBox Content="trace"   AA:Language.Word="main-setting/log/trigger/trace"  IsChecked="{Binding LogTriggerTrace}" />
+								<CheckBox Content="info"    AA:Language.Word="main-setting/log/trigger/info" IsChecked="{Binding LogTriggerInformation}" />
+								<CheckBox Content="warning" AA:Language.Word="main-setting/log/trigger/warning" IsChecked="{Binding LogTriggerWarning}" />
+								<CheckBox Content="error"   AA:Language.Word="main-setting/log/trigger/error" IsChecked="{Binding LogTriggerError}" />
+								<CheckBox Content="fatal"   AA:Language.Word="main-setting/log/trigger/fatal" IsChecked="{Binding LogTriggerFatal}" />
+							</StackPanel>
+						</GroupBox>
+					</StackPanel>
+				</GroupBox>
+			</StackPanel>
 			
 			<StackPanel Grid.Column="1">
-				<GroupBox Header="system-env" AA:Language.Word="main-setting/system-env" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource DefaultGroupBox}">
+				<GroupBox HorizontalAlignment="Stretch" Header="system-env" AA:Language.Word="main-setting/system-env" Style="{StaticResource DefaultGroupBox}">
 					<Grid>
 						<Grid.RowDefinitions>
 							<RowDefinition />
@@ -87,15 +96,43 @@
 						<AV:AppHotkeyControl Grid.Row="1" Grid.Column="1" Hotkey="{Binding SysEnvExtensionHotkey}" Style="{StaticResource DefaultAppHotkey}" />
 					</Grid>
 				</GroupBox>
-				<GroupBox Header="update" AA:Language.Word="main-setting/running/update/check" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource DefaultGroupBox}">
-					<StackPanel>
-						<CheckBox Content="update check" AA:Language.Word="main-setting/running/update/check/release" IsChecked="{Binding RunningCheckUpdateRelease}" />
-						<CheckBox Content="update check rc" AA:Language.Word="main-setting/running/update/check/rc" IsChecked="{Binding RunningCheckUpdateRC}" />
-					</StackPanel>
+
+				<GroupBox HorizontalAlignment="Stretch" Header="window save" AA:Language.Word="main-setting/window-save" VerticalAlignment="Top" Style="{StaticResource DefaultGroupBox}">
+					<Grid>
+						<Grid.RowDefinitions>
+							<RowDefinition />
+							<RowDefinition />
+							<RowDefinition />
+						</Grid.RowDefinitions>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="Auto" />
+							<ColumnDefinition Width="*" />
+						</Grid.ColumnDefinitions>
+
+						<CheckBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="enable" AA:Language.Word="main-setting/window-save/enabled" IsChecked="{Binding WindowSaveIsEnabled}"/>
+
+						<Label Grid.Row="1" Grid.Column="0" Content="count" AA:Language.Word="main-setting/window-save/count" Style="{StaticResource Headerlabel}" />
+						<AV:IntegerSliderControl
+							Grid.Row="1"
+							Grid.Column="1"
+							Value="{Binding WindowSaveCount, Mode=TwoWay}"
+							Minimum="{Binding Source={x:Static AM:Constants.WindowSaveMinimumCount}}"
+							Maximum="{Binding Source={x:Static AM:Constants.WindowSaveMaximumCount}}"
+						/>
+
+						<Label Grid.Row="2" Grid.Column="0" Content="time" AA:Language.Word="main-setting/window-save/interval" Style="{StaticResource Headerlabel}" />
+						<AV:TimeSliderControl
+							Grid.Row="2"
+							Grid.Column="1"
+							Value="{Binding WindowSaveIntervalTime, Mode=TwoWay}"
+							Minimum="{Binding Source={x:Static AM:Constants.WindowSaveIntervalMinimumTime}}"
+							Maximum="{Binding Source={x:Static AM:Constants.WindowSaveIntervalMaximumTime}}"
+						/>
+					</Grid>
 				</GroupBox>
 			</StackPanel>
 
-			<GroupBox Grid.Column="2" Header="stream" AA:Language.Word="main-setting/stream" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource DefaultGroupBox}">
+			<GroupBox Grid.Column="2" Header="stream" AA:Language.Word="main-setting/stream" Style="{StaticResource DefaultGroupBox}">
 				<Grid>
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition />
@@ -132,39 +169,6 @@
 				</Grid>
 			</GroupBox>
 
-			<GroupBox Grid.Column="3" Header="window save" AA:Language.Word="main-setting/window-save" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource DefaultGroupBox}">
-				<Grid>
-					<Grid.RowDefinitions>
-						<RowDefinition />
-						<RowDefinition />
-						<RowDefinition />
-					</Grid.RowDefinitions>
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition />
-						<ColumnDefinition />
-					</Grid.ColumnDefinitions>
-
-					<CheckBox Grid.Row="0" Grid.Column="0" Content="enable" AA:Language.Word="main-setting/window-save/enabled" IsChecked="{Binding WindowSaveIsEnabled}"/>
-
-					<Label Grid.Row="1" Grid.Column="0" Content="count" AA:Language.Word="main-setting/window-save/count" Style="{StaticResource Headerlabel}" />
-					<AV:IntegerSliderControl
-						Grid.Row="1"
-						Grid.Column="1"
-						Value="{Binding WindowSaveCount, Mode=TwoWay}"
-						Minimum="{Binding Source={x:Static AM:Constants.WindowSaveMinimumCount}}"
-						Maximum="{Binding Source={x:Static AM:Constants.WindowSaveMaximumCount}}"
-					/>
-
-					<Label Grid.Row="2" Grid.Column="0" Content="time" AA:Language.Word="main-setting/window-save/interval" Style="{StaticResource Headerlabel}" />
-					<AV:TimeSliderControl
-						Grid.Row="2"
-						Grid.Column="1"
-						Value="{Binding WindowSaveIntervalTime, Mode=TwoWay}"
-						Minimum="{Binding Source={x:Static AM:Constants.WindowSaveIntervalMinimumTime}}"
-						Maximum="{Binding Source={x:Static AM:Constants.WindowSaveIntervalMaximumTime}}"
-					/>
-				</Grid>
-			</GroupBox>
 
 		</Grid>
 	</Grid>

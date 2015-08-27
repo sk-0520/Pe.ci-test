@@ -27,6 +27,7 @@
 		</Grid.ColumnDefinitions>
 		<Slider
 			x:Name="PART_Slider"
+			Grid.Column="0"
 			Style="{StaticResource TypeSliderStyle}"
 			Value="{Binding Value, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}}"
 			Maximum="{Binding Maximum, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}, Mode=OneWay}"
@@ -34,6 +35,7 @@
 		/>
 		<TextBox
 			x:Name="PART_UpDown"
+			Grid.Column="1"
 			Style="{StaticResource TypeValueStyle}"
 			Text="{Binding Value, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}}"
 		/>
