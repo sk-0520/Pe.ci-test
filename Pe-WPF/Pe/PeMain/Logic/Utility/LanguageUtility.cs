@@ -204,16 +204,21 @@
 					tabControl.Rendered += EventUtility.Create<EventHandler>(
 						(sender, e) => {
 							//RecursiveSetLanguage(tabControl, language, map);
-							var index = tabControl.SelectedIndex;
-							var pageCount = tabControl.Items.Count;
-							for(var i = 1; i< pageCount; i++) {
-								tabControl.SelectedIndex = i;
-								CastUtility.AsAction<FrameworkElement>(tabControl.SelectedContent, content => {
-									content.ApplyTemplate();
-									RecursiveSetLanguage(content, language, map);
-								});
-							}
-							tabControl.SelectedIndex = index;
+							//var index = tabControl.SelectedIndex;
+							//var pageCount = tabControl.Items.Count;
+							//for(var i = 1; i< pageCount; i++) {
+							//	tabControl.SelectedIndex = i;
+							//	CastUtility.AsAction<FrameworkElement>(tabControl.SelectedContent, content => {
+							//		content.ApplyTemplate();
+							//		RecursiveSetLanguage(content, language, map);
+							//	});
+							//}
+							//tabControl.SelectedIndex = index;
+							CastUtility.AsAction<FrameworkElement>(tabControl.SelectedContent, content => {
+								tabControl.InvalidateVisual();
+								content.ApplyTemplate();
+								RecursiveSetLanguage(content, language, map);
+							});
 
 							//eventDisposer.Dispose();
 							//eventDisposer = null;

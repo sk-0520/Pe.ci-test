@@ -15,9 +15,9 @@
 
 		#endregion
 
-		protected override void OnRender(System.Windows.Media.DrawingContext drawingContext)
+		protected override void OnSelectionChanged(SelectionChangedEventArgs  e)
 		{
-			base.OnRender(drawingContext);
+			base.OnSelectionChanged(e);
 
 			Rendered(this, EventArgs.Empty);
 		}
