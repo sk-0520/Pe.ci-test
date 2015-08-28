@@ -132,6 +132,16 @@
 				var result = CreateCommand(
 					o => {
 						var command = (string)o;
+						try {
+							if(command.Any(c => c == '@')) {
+								var mail = "mailto:" + command;
+								ExecuteUtility.ExecuteCommand(mail, AppNonProcess);
+							} else {
+								ExecuteUtility.ExecuteCommand(command, AppNonProcess);
+							}
+						} catch(Exception ex) {
+							AppNonProcess.Logger.Error(ex);
+						}
 					}
 				);
 
