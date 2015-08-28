@@ -71,27 +71,27 @@
 						<StackPanel Margin="12,0,0,0">
 							<!--TODO: ださい-->
 							<TextBlock>
-								<Hyperlink CommandParameter="{x:Static AM:Constants.UriAbout}">
+								<Hyperlink Command="{Binding OpenLinkCommand}" CommandParameter="{x:Static AM:Constants.UriAbout}">
 									<TextBlock Text="web" AA:Language.Word="about/information/link/web" />
 								</Hyperlink>
 							</TextBlock>
 							<TextBlock>
-								<Hyperlink CommandParameter="{x:Static AM:Constants.MailAbout}">
+								<Hyperlink Command="{Binding OpenLinkCommand}" CommandParameter="{x:Static AM:Constants.MailAbout}">
 									<TextBlock Text="mail" AA:Language.Word="about/information/link/mail" />
 								</Hyperlink>
 							</TextBlock>
 							<TextBlock>
-								<Hyperlink CommandParameter="{x:Static AM:Constants.UriDevelopment}">
+								<Hyperlink Command="{Binding OpenLinkCommand}" CommandParameter="{x:Static AM:Constants.UriDevelopment}">
 									<TextBlock Text="dev" AA:Language.Word="about/information/link/dev" />
 								</Hyperlink>
 							</TextBlock>
 							<TextBlock>
-								<Hyperlink CommandParameter="{x:Static AM:Constants.UriForum}">
+								<Hyperlink Command="{Binding OpenLinkCommand}" CommandParameter="{x:Static AM:Constants.UriForum}">
 									<TextBlock Text="forum" AA:Language.Word="about/information/link/forum" />
 								</Hyperlink>
 							</TextBlock>
 							<TextBlock>
-								<Hyperlink CommandParameter="{x:Static AM:Constants.UriFeedback}">
+								<Hyperlink Command="{Binding ICommand}" CommandParameter="{x:Static AM:Constants.UriFeedback}">
 									<TextBlock Text="feedback" AA:Language.Word="about/information/link/feedback" />
 								</Hyperlink>
 							</TextBlock>
@@ -101,12 +101,12 @@
 					<StackPanel Grid.Row="1" Orientation="Horizontal">
 						<TextBlock Text="copty" AA:Language.Word="about/information/copy" />
 						<TextBlock>
-							<Hyperlink CommandParameter="{x:Static AD:AboutCopyKind.Short}">
+							<Hyperlink Command="{Binding CopyLinkCommand}" CommandParameter="{x:Static AD:AboutCopyKind.Short}">
 								<TextBlock Text="short" AA:Language.Word="about/information/copy/short" />
 							</Hyperlink>
 						</TextBlock>
 						<TextBlock>
-							<Hyperlink CommandParameter="{x:Static AD:AboutCopyKind.Long}">
+							<Hyperlink Command="{Binding CopyLinkCommand}" CommandParameter="{x:Static AD:AboutCopyKind.Long}">
 								<TextBlock Text="long" AA:Language.Word="about/information/copy/long" />
 							</Hyperlink>
 						</TextBlock>

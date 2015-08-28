@@ -11,6 +11,7 @@
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 	using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
+	using ContentTypeTextNet.Pe.PeMain.Define;
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 	using ContentTypeTextNet.Pe.PeMain.View;
@@ -109,6 +110,34 @@
 				var result = CreateCommand(
 					o => {
 						CloseView();
+					}
+				);
+
+				return result;
+			}
+		}
+
+		public ICommand OpenLinkCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						var command = (string)o;
+					}
+				);
+
+				return result;
+			}
+		}
+
+		public ICommand CopyLinkCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						var copyKind = (AboutCopyKind)o;
 					}
 				);
 
