@@ -19,6 +19,7 @@
 				<ResourceDictionary Source="/View/Parts/Resource/AppHotKeyDictionary.xaml"/>
 				<ResourceDictionary Source="/View/Parts/Resource/GroupBoxDictionary.xaml"/>
 				<ResourceDictionary Source="/View/Parts/Resource/ComboBoxDictionary.xaml"/>
+				<ResourceDictionary Source="/View/Parts/Resource/FontSelectDictionary.xaml"/>
 			</ResourceDictionary.MergedDictionaries>
 			<ACE:IconScaleLanguageConverter x:Key="IconScaleLanguageConverter" />
 		</ResourceDictionary>
@@ -68,6 +69,7 @@
 				Size="{Binding FontSize}"
 				SizeMinimum="{x:Static AM:Constants.CommandFontMinimumSize}"
 				SizeMaximum="{x:Static AM:Constants.CommandFontMaximumSize}"
+				Width="{StaticResource FontSelectWidth}"
 			/>
 
 			<GroupBox Grid.Row="4" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="2" Header="find" AA:Language.Word="command-setting/find" Style="{StaticResource DefaultGroupBox}" >

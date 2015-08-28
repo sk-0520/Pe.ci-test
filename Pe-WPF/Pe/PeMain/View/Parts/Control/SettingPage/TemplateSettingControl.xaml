@@ -16,6 +16,7 @@
 				<ResourceDictionary Source="/View/Parts/Resource/GroupBoxDictionary.xaml"/>
 				<ResourceDictionary Source="/View/Parts/Resource/AppHotkeyDictionary.xaml"/>
 				<ResourceDictionary Source="/View/Parts/Resource/LabelDictionary.xaml"/>
+				<ResourceDictionary Source="/View/Parts/Resource/FontSelectDictionary.xaml"/>
 			</ResourceDictionary.MergedDictionaries>
 		</ResourceDictionary>
 	</AV:CommonDataUserControl.Resources>
@@ -48,6 +49,7 @@
 				Size="{Binding FontSize}"
 				SizeMinimum="{x:Static AM:Constants.TemplateFontMinimumSize}"
 				SizeMaximum="{x:Static AM:Constants.TemplateFontMaximumSize}"
+				Width="{StaticResource FontSelectWidth}"
 			/>
 
 		</Grid>

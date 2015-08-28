@@ -22,6 +22,7 @@
 				<ResourceDictionary Source="/View/Parts/Resource/GroupBoxDictionary.xaml"/>
 				<ResourceDictionary Source="/View/Parts/Resource/LabelDictionary.xaml"/>
 				<ResourceDictionary Source="/View/Parts/Resource/AppHotKeyDictionary.xaml"/>
+				<ResourceDictionary Source="/View/Parts/Resource/FontSelectDictionary.xaml"/>
 			</ResourceDictionary.MergedDictionaries>
 			<SC:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
 		</ResourceDictionary>
@@ -85,6 +86,7 @@
 						Size="{Binding FontSize}"
 						SizeMinimum="{x:Static AM:Constants.NoteFontMinimumSize}"
 						SizeMaximum="{x:Static AM:Constants.NoteFontMaximumSize}"
+						Width="{StaticResource FontSelectWidth}"
 					/>
 
 					<Label Grid.Row="1" Grid.Column="0" Content="fore" AA:Language.Word="note-setting/style/fore-color" Style="{StaticResource HeaderLabel}" />

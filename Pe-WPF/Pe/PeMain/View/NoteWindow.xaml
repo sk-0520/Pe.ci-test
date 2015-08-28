@@ -38,6 +38,7 @@
 				<ResourceDictionary Source="/View/Parts/Resource/ImageDictionary.xaml"/>
 				<ResourceDictionary Source="/View/Parts/Resource/ColorPickerDictionary.xaml"/>
 				<ResourceDictionary Source="/View/Parts/Resource/LabelDictionary.xaml"/>
+				<ResourceDictionary Source="/View/Parts/Resource/FontSelectDictionary.xaml"/>
 			</ResourceDictionary.MergedDictionaries>
 			<SC:LogicalNotConverter x:Key="LogicalNotConverter"/>
 			<SC:BooleanFontWeightConverter x:Key="BooleanFontWeightConverter" />
@@ -263,6 +264,7 @@
 							Size="{Binding FontSize}"
 							SizeMinimum="{x:Static AM:Constants.NoteFontMinimumSize}"
 							SizeMaximum="{x:Static AM:Constants.NoteFontMaximumSize}"
+							Width="{StaticResource FontSelectWidth}"
 						/>
 					</Grid>
 					<Grid Style="{StaticResource Group}">
