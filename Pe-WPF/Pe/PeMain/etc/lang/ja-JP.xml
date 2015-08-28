@@ -102,7 +102,7 @@
 		<Item Id="stream/topmost" Word="最前面" />
 		<Item Id="stream/save" Word="保存" />
 		<Item Id="stream/clear" Word="クリア" />
-		<Item Id="stream/refresh" Word="" />
+		<Item Id="stream/refresh" Word="更新" />
 		<Item Id="stream/kill" Word="強制終了" />
 		<Item Id="stream/stream" Word="標準入出力" />
 		<Item Id="stream/stream/input" Word="標準入力" />
@@ -233,7 +233,7 @@
 		<Item Id="launcher-item-edit/general/option" Word="オプション" />
 		<Item Id="launcher-item-edit/general/work-dir" Word="作業ディレクトリ" />
 		<Item Id="launcher-item-edit/general/icon" Word="アイコン" />
-		<Item Id="launcher-item-edit/env" Word="基本設定" />
+		<Item Id="launcher-item-edit/env" Word="環境変数" />
 		<Item Id="launcher-item-edit/others" Word="その他" />
 		<Item Id="launcher-item-edit/others/stream-output" Word="標準出力" />
 		<Item Id="launcher-item-edit/others/stream-input" Word="標準入力" />
