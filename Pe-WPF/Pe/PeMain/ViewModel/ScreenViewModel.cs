@@ -29,7 +29,18 @@
 			Screen = screen;
 			AppNonProcess = appNonProcess;
 
-			this._backColor = Colors.Red;
+			byte alpha = 180;
+			if(Screen.Primary) {
+				this._backColor = Color.FromArgb(alpha, 0xff, 0xff, 0xff);
+			} else {
+				var rand = new Random(screen.DeviceName.GetHashCode());
+				this._backColor = Color.FromArgb(
+					alpha,
+					(byte)rand.Next(0x00, 0xff),
+					(byte)rand.Next(0x00, 0xff),
+					(byte)rand.Next(0x00, 0xff)
+				);
+			}
 		}
 
 		#region property
@@ -41,7 +52,7 @@
 			get 
 			{
 				var result = new SolidColorBrush();
-				result.Color = MediaUtility.GetAutoColor(this._backColor);
+				result.Color = MediaUtility.GetNoneAlphaColor(MediaUtility.GetAutoColor(this._backColor));
 
 				return result;
 			}

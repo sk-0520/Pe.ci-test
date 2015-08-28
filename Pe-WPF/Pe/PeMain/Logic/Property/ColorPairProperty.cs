@@ -7,6 +7,7 @@
 	using System.Text;
 	using System.Threading.Tasks;
 	using System.Windows.Media;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 	using ContentTypeTextNet.Pe.Library.PeData.IF;
 
 	public static class ColorPairProperty
@@ -47,28 +48,24 @@
 
 		public static Color GetNoneAlphaForeColor(IColorPair model)
 		{
-			var result = GetForeColor(model);
-			result.A = 0xff;
+			var result = MediaUtility.GetNoneAlphaColor(GetForeColor(model));
 			return result;
 		}
 
 		public static bool SetNoneAlphaForekColor(IColorPair model, Color value, Action<string> onPropertyChanged, [CallerMemberName] string propertyName = "")
 		{
-			value.A = 0xff;
-			return SetForeColor(model, value, onPropertyChanged, propertyName);
+			return SetForeColor(model, MediaUtility.GetNoneAlphaColor(value), onPropertyChanged, propertyName);
 		}
 
 		public static Color GetNoneAlphaBackColor(IColorPair model)
 		{
-			var result = GetBackColor(model);
-			result.A = 0xff;
+			var result = MediaUtility.GetNoneAlphaColor(GetBackColor(model));
 			return result;
 		}
 
 		public static bool SetNoneAlphaBackColor(IColorPair model, Color value, Action<string> onPropertyChanged, [CallerMemberName] string propertyName = "")
 		{
-			value.A = 0xff;
-			return SetBackColor(model, value, onPropertyChanged, propertyName);
+			return SetBackColor(model, MediaUtility.GetNoneAlphaColor(value), onPropertyChanged, propertyName);
 		}
 	
 	

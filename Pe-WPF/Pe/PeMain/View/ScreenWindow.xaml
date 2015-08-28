@@ -15,6 +15,11 @@
 	AllowsTransparency="True"
 	FontSize="36"
 	Topmost="True"
+	ShowInTaskbar="False"
+	ResizeMode="NoResize"
+	
+	Background="{Binding Background}"
+	Foreground="{Binding Foreground}"
 >
 	<AW:CommonDataWindow.Resources>
 		<Style TargetType="TextBlock">

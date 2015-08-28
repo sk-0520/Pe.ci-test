@@ -73,6 +73,12 @@ using System.Windows.Media.Imaging;
 			}
 		}
 
+		public static Color GetNoneAlphaColor(Color value)
+		{
+			value.A = 0xff;
+			return value;
+		}
+
 		/// <summary>
 		/// 指定ビットマップソースから全ピクセル情報を取得。
 		/// </summary>
