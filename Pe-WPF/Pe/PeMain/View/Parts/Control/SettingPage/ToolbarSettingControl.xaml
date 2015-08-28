@@ -50,7 +50,7 @@
 						<ColumnDefinition MinWidth="60" />
 					</Grid.ColumnDefinitions>
 					<ComboBox Grid.Column="0" SelectedIndex="0" DisplayMemberPath="DisplayText" SelectedItem="{Binding SelectedToolbar}" ItemsSource="{Binding ToolbarItemList, Mode=OneTime}" />
-					<Button Grid.Column="1" Content="screen" AA:Language.Word="toolbar-setting/screen" />
+					<Button Grid.Column="1" Content="screen" AA:Language.Word="toolbar-setting/screen" Command="{Binding ShowScreenCommand}" />
 				</Grid>
 			</GroupBox.Header>
 			<Grid>

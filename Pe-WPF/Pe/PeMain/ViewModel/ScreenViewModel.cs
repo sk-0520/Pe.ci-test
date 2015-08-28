@@ -6,6 +6,8 @@
 	using System.Text;
 	using System.Threading.Tasks;
 	using System.Windows.Media;
+	using ContentTypeTextNet.Library.PInvoke.Windows;
+	using ContentTypeTextNet.Library.SharedLibrary.CompatibleWindows.Utility;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
@@ -77,10 +79,34 @@
 
 		#endregion
 
+		#region HavingViewModelBase
+
+		protected override void InitializeView()
+		{
+			base.InitializeView();
+
+			View.Loaded += View_Loaded;
+		}
+
+		protected override void UninitializeView()
+		{
+			View.Loaded -= View_Loaded;
+
+			base.UninitializeView();
+		}
+
+		#endregion
+
 		#region IHavingAppNonProcess
 
 		public IAppNonProcess AppNonProcess { get; private set; }
 
 		#endregion
+
+		void View_Loaded(object sender, System.Windows.RoutedEventArgs e)
+		{
+			var deviceArea = PodStructUtility.Convert(Screen.DeviceBounds);
+			NativeMethods.MoveWindow(View.Handle, deviceArea.X, deviceArea.Y, deviceArea.Width, deviceArea.Height, true);
+		}
 	}
 }

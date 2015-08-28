@@ -24,8 +24,9 @@
 	using ContentTypeTextNet.Pe.PeMain.Define;
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
+using ContentTypeTextNet.Pe.PeMain.View;
 
-	public class ToolbarSettingViewModel: SettingPageLauncherIconCacheViewModelBase, IRefreshFromViewModel
+	public class ToolbarSettingViewModel: SettingPageLauncherIconCacheViewModelBase, IRefreshFromViewModel, IHavingAppSender
 	{
 		#region variable
 
@@ -49,6 +50,8 @@
 		}
 
 		#region proerty
+
+		IList<ScreenWindow> ScreenWindowList { get; set; }
 
 		ToolbarSettingModel ToolbarSetting { get; set; }
 
@@ -328,6 +331,33 @@
 			}
 		}
 
+		public ICommand ShowScreenCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						ScreenWindowList = Screen
+							.AllScreens
+							.Select(s => new ItemWithScreen<IModel>(default(IModel), s))
+							.Select(d => AppSender.SendCreateWindow(WindowKind.Screen, d, null))
+							.Cast<ScreenWindow>()
+							.ToList()
+						;
+
+						foreach(var window in ScreenWindowList) {
+							window.MouseUp += CloseScreenWindow;
+							window.KeyUp += CloseScreenWindow;
+							window.Show();
+							window.UpdateLayout();
+						}
+					}
+				);
+
+				return result;
+			}
+		}
+
 		#endregion
 
 		#region function
@@ -397,6 +427,14 @@
 				OnPropertyChanged("DefaultGroupId");
 			}
 			//OnPropertyChanged("DefaultGroupList");
+		}
+
+		void CloseScreenWindow(object sender, EventArgs e)
+		{
+			foreach(var window in ScreenWindowList) {
+				window.Close();
+			}
+			ScreenWindowList = null;
 		}
 
 		#endregion

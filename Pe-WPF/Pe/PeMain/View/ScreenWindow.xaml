@@ -30,6 +30,7 @@
 			<TextBlock>
 				<TextBlock.Style>
 					<Style TargetType="TextBlock">
+						<Setter Property="TextAlignment" Value="Center" />
 						<Style.Triggers>
 							<DataTrigger Binding="{Binding IsPrimaryScreen}" Value="True">
 								<Setter Property="AA:Language.Word" Value="screen/primary" />

@@ -1443,29 +1443,29 @@
 					{
 						window = new LauncherToolbarWindow();
 						window.SetCommonData(CommonData, (ScreenModel)extensionData);
-						break;
 					}
+					break;
 
 				case WindowKind.LauncherExecute:
 					{
 						window = new LauncherItemExecuteWindow();
 						window.SetCommonData(CommonData, extensionData);
-						break;
 					}
+					break;
 
 				case WindowKind.LauncherCustomize: 
 					{
 						window = new LauncherItemCustomizeWindow();
 						window.SetCommonData(CommonData, extensionData);
-						break;
 					}
+					break;
 
 				case WindowKind.LauncherStream:
 					{
 						window = new LauncherItemStreamWindow();
 						window.SetCommonData(CommonData, extensionData);
-						break;
 					}
+					break;
 
 				case WindowKind.Note: 
 					{
@@ -1476,8 +1476,16 @@
 						}
 						window = new NoteWindow();
 						window.SetCommonData(CommonData, noteItem);
-						break;
 					}
+					break;
+
+				case WindowKind.Screen:
+					{
+						window = new ScreenWindow();
+						window.SetCommonData(CommonData, extensionData);
+					}
+					break;
+
 
 				default:
 					throw new NotImplementedException();

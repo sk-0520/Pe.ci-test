@@ -10,5 +10,6 @@
 		LauncherCustomize,
 		LauncherStream,
 		Note,
+		Screen,
 	}
 }
