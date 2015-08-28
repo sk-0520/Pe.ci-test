@@ -117,11 +117,13 @@
 		/// <param name="map"></param>
 		static bool SetLanguageItem(DependencyObject control, LanguageManager language, IReadOnlyDictionary<string, string> map)
 		{
+#if !true
 #if DEBUG
 			var s = Language.GetWord(control);
 			if(s != null) {
 				Debug.WriteLine(s);
 			}
+#endif
 #endif
 			var gridViewColumnHeader = control as GridViewColumnHeader;
 			if(gridViewColumnHeader != null) {
@@ -167,10 +169,11 @@
 			var window = root as Window;
 			if(window != null) {
 				SetTitle(window, language, map);
+				//window.ApplyTemplate();
 			}
 
 			var processedElements = new HashSet<DependencyObject>();
-
+			
 			foreach(var dependencyObject in UIUtility.FindChildren<DependencyObject>(root)) {
 				if(SetLanguageItem(dependencyObject, language, map)) {
 					processedElements.Add(dependencyObject);
@@ -195,6 +198,51 @@
 						out eventDisposer
 					);
 				}
+
+				CastUtility.AsAction<AppTabControl>(dependencyObject, tabControl => {
+					EventDisposer<EventHandler> eventRenderedDisposer = null;
+					tabControl.Rendered += EventUtility.Create<EventHandler>(
+						(sender, e) => {
+							//RecursiveSetLanguage(tabControl, language, map);
+							var index = tabControl.SelectedIndex;
+							var pageCount = tabControl.Items.Count;
+							for(var i = 1; i< pageCount; i++) {
+								tabControl.SelectedIndex = i;
+								CastUtility.AsAction<FrameworkElement>(tabControl.SelectedContent, content => {
+									content.ApplyTemplate();
+									RecursiveSetLanguage(content, language, map);
+								});
+							}
+							tabControl.SelectedIndex = index;
+
+							//eventDisposer.Dispose();
+							//eventDisposer = null;
+							//language = null;
+							//map = null;
+						},
+						releaseEvent => {
+							tabControl.Rendered -= releaseEvent;
+							tabControl = null;
+						},
+						out eventRenderedDisposer
+					);
+					CastUtility.AsAction<Window>(root, w => {
+						EventDisposer<RoutedEventHandler> eventUnloadedDisposer = null;
+						w.Unloaded += EventUtility.Create<RoutedEventHandler>(
+							(sender, e) => {
+								eventRenderedDisposer.Dispose();
+
+								eventUnloadedDisposer.Dispose();
+								eventUnloadedDisposer = null;
+							},
+							releaseEvent => {
+								w.Unloaded -= releaseEvent;
+								w = null;
+							},
+							out eventUnloadedDisposer
+						);
+					});
+				});
 
 				if(dependencyObject is Visual) {
 					foreach(var visualElement in UIUtility.FindVisualChildren<Visual>(dependencyObject)) {

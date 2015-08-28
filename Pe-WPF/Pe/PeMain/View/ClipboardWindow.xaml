@@ -9,6 +9,7 @@
 	xmlns:AW="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Window"
 	xmlns:AVM="clr-namespace:ContentTypeTextNet.Pe.PeMain.ViewModel"
 	xmlns:AC="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Converter"
+	xmlns:ACC="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Control"
 	xmlns:AM="clr-namespace:ContentTypeTextNet.Pe.PeMain"
 	xmlns:AD="clr-namespace:ContentTypeTextNet.Pe.PeMain.Define"
 	xmlns:SC="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=SharedLibrary"
@@ -202,7 +203,7 @@
 						<Label Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Content="name" AA:Language.Word="clipboard/item/name" Style="{StaticResource HeaderLabel}" />
 						<TextBox Grid.Column="1" HorizontalAlignment="Stretch" Text="{Binding SelectedViewModel.Name, UpdateSourceTrigger=PropertyChanged}" />
 					</Grid>
-					<TabControl x:Name="tabClipboard" Grid.Row="1">
+					<ACC:AppTabControl x:Name="tabClipboard" Grid.Row="1">
 						<TabItem x:Name="pageText" Visibility="{Binding SelectedViewModel.EnabledClipboardTypesText, Converter={StaticResource BooleanVisibilityConverter}}">
 							<TabItem.Header>
 								<StackPanel Orientation="Horizontal">
@@ -331,7 +332,7 @@
 							<ListView ItemsSource="{Binding SelectedViewModel.Files}">
 								<ListView.View>
 									<GridView>
-										<GridViewColumn Header="name">
+										<GridViewColumn Header="name" AA:Language.Word="clipboard/files/name" >
 											<GridViewColumn.CellTemplate>
 												<DataTemplate>
 													<StackPanel Orientation="Horizontal">
@@ -341,12 +342,16 @@
 												</DataTemplate>
 											</GridViewColumn.CellTemplate>
 										</GridViewColumn>
-										<GridViewColumn Header="path" DisplayMemberBinding="{Binding Path}" />
+										<GridViewColumn DisplayMemberBinding="{Binding Path}">
+											<GridViewColumn.Header>
+												<TextBlock Text="path" AA:Language.Word="clipboard/files/path" />
+											</GridViewColumn.Header>
+										</GridViewColumn>
 									</GridView>
 								</ListView.View>
 							</ListView>
 						</TabItem>
-					</TabControl>
+					</ACC:AppTabControl>
 				</Grid>
 			</Grid>
 			<StatusBar Grid.Row="2" Style="{StaticResource ClipboardTemplateDefaultStatusbar}">
