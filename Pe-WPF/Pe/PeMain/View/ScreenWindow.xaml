@@ -10,6 +10,8 @@
 	Width="300"
 	Height="300" 
 	Icon="/PeMain;component/Resources/Icon/App.ico"
+	WindowStyle="None"
+	AllowsTransparency="True"
 >
 	<AW:CommonDataWindow.Resources>
 	</AW:CommonDataWindow.Resources>
