@@ -75,7 +75,7 @@
 			get
 			{
 				if (this._languageList == null) {
-					var list = AppUtility.GetLanguageFiles(AppNonProcess.VariableConstants.ApplicationLanguageDirectoryPath, AppNonProcess.Logger)
+					var list = AppUtility.GetLanguageFiles(Constants.ApplicationLanguageDirectoryPath, AppNonProcess.Logger)
 						.Where(p => string.Compare(Path.GetFileName(p.Value.Key), Constants.languageDefaultFileName, true) != 0)
 					;
 					//this._languageList = list.Select(

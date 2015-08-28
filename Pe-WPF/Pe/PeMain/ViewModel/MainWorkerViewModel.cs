@@ -606,7 +606,7 @@
 		void ApplyLanguage()
 		{
 			// 言語ファイル
-			CommonData.Language = AppUtility.LoadLanguageFile(CommonData.VariableConstants.ApplicationLanguageDirectoryPath, CommonData.MainSetting.Language.Name, CommonData.VariableConstants.LanguageCode, CommonData.Logger);
+			CommonData.Language = AppUtility.LoadLanguageFile(Constants.ApplicationLanguageDirectoryPath, CommonData.MainSetting.Language.Name, CommonData.VariableConstants.LanguageCode, CommonData.Logger);
 		}
 
 		/// <summary>

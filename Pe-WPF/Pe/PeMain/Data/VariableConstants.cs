@@ -68,39 +68,6 @@
 		#region property
 
 		/// <summary>
-		/// bin/
-		/// </summary>
-		public string ApplicationBinDirectoryPath { get { return Path.Combine(Constants.applicationRootDirectoryPath, Constants.binDirectoryName); } }
-		/// <summary>
-		/// sbin/
-		/// </summary>
-		public string ApplicationSBinDirectoryPath { get { return Path.Combine(Constants.applicationRootDirectoryPath, Constants.sbinDirectoryName); } }
-		/// <summary>
-		/// lib/
-		/// </summary>
-		public string ApplicationLibraryDirectoryPath { get { return Path.Combine(Constants.applicationRootDirectoryPath, Constants.libraryDirectoryName); } }
-		/// <summary>
-		/// etc/
-		/// </summary>
-		public string ApplicationEtcDirectoryPath { get { return Path.Combine(Constants.applicationRootDirectoryPath, Constants.etcDirectoryName); } }
-		/// <summary>
-		/// etc/lang
-		/// </summary>
-		public string ApplicationLanguageDirectoryPath { get { return Path.Combine(ApplicationEtcDirectoryPath, Constants.languageDirectoryName); } }
-		/// <summary>
-		/// etc/style
-		/// </summary>
-		public string ApplicationStyleDirectoryPath { get { return Path.Combine(ApplicationEtcDirectoryPath, Constants.styleDirectoryName); } }
-		/// <summary>
-		/// etc/script
-		/// </summary>
-		public string ApplicationScriptDirectoryPath { get { return Path.Combine(ApplicationEtcDirectoryPath, Constants.scriptDirectoryName); } }
-		/// <summary>
-		/// doc/
-		/// </summary>
-		public string ApplicationDocumentDirectoryPath { get { return Path.Combine(Constants.applicationRootDirectoryPath, Constants.documentDirectoryName); } }
-
-		/// <summary>
 		/// ユーザールートディレクトリ。
 		/// </summary>
 		public string UserDirectoryPath { get { return Path.Combine(_settingRootDirectoryPath, _rootDirectoryName); } }

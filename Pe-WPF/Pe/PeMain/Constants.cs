@@ -67,6 +67,7 @@
 		public const string launcherGroupItemSettingFileName = "group-items.json";
 
 		public const string changelogFileName = "changelog.xml";
+		public const string componentListFileNam = "components.xml";
 
 		public const int indexBodyCachingSize = 3;
 		public const string indexBodyBaseFileName = keyGuidName + "." + keyIndexExt;
@@ -322,6 +323,40 @@
 		public static string BuildProcess { get { return buildProcess; } }
 		public static string ApplicationRevision { get { return applicationRevision; } }
 		public static string ApplicationVersion { get { return applicationVersion; } }
+
+		/// <summary>
+		/// bin/
+		/// </summary>
+		public static string ApplicationBinDirectoryPath { get { return Path.Combine(applicationRootDirectoryPath, binDirectoryName); } }
+		/// <summary>
+		/// sbin/
+		/// </summary>
+		public static string ApplicationSBinDirectoryPath { get { return Path.Combine(applicationRootDirectoryPath, sbinDirectoryName); } }
+		/// <summary>
+		/// lib/
+		/// </summary>
+		public static string ApplicationLibraryDirectoryPath { get { return Path.Combine(applicationRootDirectoryPath, libraryDirectoryName); } }
+		/// <summary>
+		/// etc/
+		/// </summary>
+		public static string ApplicationEtcDirectoryPath { get { return Path.Combine(applicationRootDirectoryPath, etcDirectoryName); } }
+		/// <summary>
+		/// etc/lang
+		/// </summary>
+		public static string ApplicationLanguageDirectoryPath { get { return Path.Combine(ApplicationEtcDirectoryPath, languageDirectoryName); } }
+		/// <summary>
+		/// etc/style
+		/// </summary>
+		public static string ApplicationStyleDirectoryPath { get { return Path.Combine(ApplicationEtcDirectoryPath, styleDirectoryName); } }
+		/// <summary>
+		/// etc/script
+		/// </summary>
+		public static string ApplicationScriptDirectoryPath { get { return Path.Combine(ApplicationEtcDirectoryPath, scriptDirectoryName); } }
+		/// <summary>
+		/// doc/
+		/// </summary>
+		public static string ApplicationDocumentDirectoryPath { get { return Path.Combine(applicationRootDirectoryPath, documentDirectoryName); } }
+
 		#endregion
 
 		#region function

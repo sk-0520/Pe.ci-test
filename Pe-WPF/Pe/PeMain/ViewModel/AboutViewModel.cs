@@ -78,7 +78,7 @@
 			{
 				var result = CreateCommand(
 					o => {
-						var path = Environment.ExpandEnvironmentVariables(Path.Combine(AppNonProcess.VariableConstants.ApplicationDocumentDirectoryPath, Constants.changelogFileName));
+						var path = Path.Combine(Constants.ApplicationDocumentDirectoryPath, Constants.changelogFileName);
 						ExecuteUtility.OpenFile(path, AppNonProcess);
 					}
 				);
