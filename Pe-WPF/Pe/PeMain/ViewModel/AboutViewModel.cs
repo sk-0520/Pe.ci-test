@@ -13,11 +13,19 @@
 	using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
 	using ContentTypeTextNet.Pe.PeMain.Define;
 	using ContentTypeTextNet.Pe.PeMain.IF;
+	using ContentTypeTextNet.Pe.PeMain.Logic;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 	using ContentTypeTextNet.Pe.PeMain.View;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 
-	public class AboutViewModel: HavingViewModelBase<AboutWindow>, IHavingAppNonProcess 
+	public class AboutViewModel: HavingViewModelBase<AboutWindow>, IHavingAppNonProcess
 	{
+		#region define
+
+		static string separator = "____________";
+
+		#endregion
+
 		public AboutViewModel(AboutWindow view, AboutNotifiyItem notifiy, IAppNonProcess appNonProcess)
 			: base(view)
 		{
@@ -138,6 +146,45 @@
 				var result = CreateCommand(
 					o => {
 						var copyKind = (AboutCopyKind)o;
+
+						switch(copyKind) {
+							case AboutCopyKind.Short: 
+								{
+									var list = new List<string>();
+									list.Add("Software: " + Constants.ApplicationName);
+									list.Add("Version: " + Constants.ApplicationVersion);
+									list.Add("Type: " + Constants.BuildType);
+									list.Add("Process: " + Constants.BuildProcess);
+									list.Add("Platform: " + (Environment.Is64BitOperatingSystem ? "64" : "32"));
+									list.Add("OS: " + System.Environment.OSVersion);
+									list.Add("CLI: " + System.Runtime.InteropServices.RuntimeEnvironment.GetSystemVersion());
+									var text = Environment.NewLine + separator + Environment.NewLine + string.Join(Environment.NewLine, list.Select(s => "    " + s)) + Environment.NewLine + Environment.NewLine;
+									ClipboardUtility.CopyText(text, AppNonProcess.ClipboardWatcher);
+								}
+								break;
+
+							case AboutCopyKind.Long: 
+								{
+									var appInfo = new AppInformationCollection();
+									var text 
+										= Environment.NewLine 
+										+ separator 
+										+ Environment.NewLine 
+										+ string.Join(
+											Environment.NewLine, 
+											appInfo.ToString()
+												.SplitLines()
+												.Select(s => "    " + s)
+										) 
+										+ Environment.NewLine 
+										+ Environment.NewLine
+									;
+									ClipboardUtility.CopyText(text, AppNonProcess.ClipboardWatcher);
+								}
+								break;
+							default:
+								throw new NotImplementedException();
+						}
 					}
 				);
 
