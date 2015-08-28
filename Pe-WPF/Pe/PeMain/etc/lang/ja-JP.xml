@@ -206,7 +206,10 @@
 		<Item Id="about/information/copy" Word="報告用情報をクリップボードにコピーする" />
 		<Item Id="about/information/copy/short" Word="短い情報" />
 		<Item Id="about/information/copy/long" Word="長い情報" />
-		<Item Id="about/component" Word="コンポーネント" />
+		<Item Id="about/component" Word="コンポーネント情報" />
+		<Item Id="about/component/component" Word="コンポーネント" />
+		<Item Id="about/component/license" Word="ライセンス" />
+		
 		<Item Id="about/app" Word="@[APPLICATION]" />
 		<Item Id="about/data" Word="データ" />
 		<Item Id="about/history" Word="更新履歴" />

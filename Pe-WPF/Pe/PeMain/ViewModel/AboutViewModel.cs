@@ -17,6 +17,7 @@
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 	using ContentTypeTextNet.Pe.PeMain.View;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
+	using ContentTypeTextNet.Pe.Library.PeData.Item;
 
 	public class AboutViewModel: HavingViewModelBase<AboutWindow>, IHavingAppNonProcess
 	{
@@ -33,11 +34,22 @@
 
 			Notifiy = notifiy;
 			AppNonProcess = appNonProcess;
+
+			var componentFilePath = Path.Combine(Constants.ApplicationDocumentDirectoryPath, Constants.componentListFileNam);
+			ComponentCollection = SerializeUtility.LoadXmlSerializeFromFile<ComponentItemCollectionModel>(componentFilePath);
 		}
 
 		#region property
 
 		AboutNotifiyItem Notifiy { get; set; }
+		ComponentItemCollectionModel ComponentCollection { get; set; }
+		public IEnumerable<ComponentItemViewModel> ComponentItems
+		{
+			get
+			{
+				return ComponentCollection.Select(i => new ComponentItemViewModel(i, AppNonProcess));
+			}
+		}
 
 		#endregion
 
@@ -201,6 +213,19 @@
 				return result;
 			}
 		}
+
+		//public ICommand OpenComponentCommand
+		//{
+		//	get
+		//	{
+		//		var result = CreateCommand(
+		//			o => {
+		//			}
+		//		);
+
+		//		return result;
+		//	}
+		//}
 
 		#endregion
 

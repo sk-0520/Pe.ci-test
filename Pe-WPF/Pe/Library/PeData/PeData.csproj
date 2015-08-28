@@ -71,6 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Define\ClipboardType.cs" />
+    <Compile Include="Define\ComponentKind.cs" />
     <Compile Include="Define\GroupKind.cs" />
     <Compile Include="Define\HashType.cs" />
     <Compile Include="Define\IndexKind.cs" />
@@ -91,6 +92,8 @@
     <Compile Include="Item\ClipboardIndexItemCollectionModel.cs" />
     <Compile Include="Item\ClipboardIndexItemModel.cs" />
     <Compile Include="Item\ColorPairItemModel.cs" />
+    <Compile Include="Item\ComponentItemModel.cs" />
+    <Compile Include="Item\ComponentItemCollectionModel.cs" />
     <Compile Include="Item\HashItemModel.cs" />
     <Compile Include="Item\IndexBodyItemModelBase.cs" />
     <Compile Include="Item\IndexItemCollectionModel.cs" />

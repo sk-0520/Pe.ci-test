@@ -120,6 +120,24 @@
 				</Grid>
 			</TabItem>
 			<TabItem Header="component" AA:Language.Word="about/component">
+				<ListView ItemsSource="{Binding ComponentItems}">
+					<ListView.View>
+						<GridView>
+							<GridViewColumn Header="component" AA:Language.Word="about/component/component" >
+								<GridViewColumn.CellTemplate>
+									<DataTemplate>
+										<TextBlock>
+											<Hyperlink Command="{Binding OpenComponentCommand}">
+												<TextBlock Text="{Binding DisplayText}" />
+											</Hyperlink>
+										</TextBlock>
+									</DataTemplate>
+								</GridViewColumn.CellTemplate>
+							</GridViewColumn>
+							<GridViewColumn Header="license" AA:Language.Word="about/component/license" DisplayMemberBinding="{Binding License}" />
+						</GridView>
+					</ListView.View>
+				</ListView>
 			</TabItem>
 		</TabControl>
 

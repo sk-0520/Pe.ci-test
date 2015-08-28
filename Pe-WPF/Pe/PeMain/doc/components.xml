@@ -1,4 +1,4 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<components>
-	<component name="Mono.TextTemplating" uri="https://github.com/mono/monodevelop/tree/master/main/src/addins/TextTemplating/Mono.TextTemplating/Mono.TextTemplating" type="Library" license="Mit" />
-</components>
+<Components xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<Component Name="Mono.TextTemplating" Uri="https://github.com/mono/monodevelop/tree/master/main/src/addins/TextTemplating/Mono.TextTemplating/Mono.TextTemplating" Type="Library" License="Mit" />
+</Components>
