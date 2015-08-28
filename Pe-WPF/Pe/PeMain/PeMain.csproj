@@ -165,6 +165,7 @@
     <Compile Include="ViewModel\CommandItemViewModel.cs" />
     <Compile Include="ViewModel\CommandViewModel.cs" />
     <Compile Include="ViewModel\Control\LauncherListItemViewModel.cs" />
+    <Compile Include="ViewModel\ScreenViewModel.cs" />
     <Compile Include="ViewModel\UpdateConfirmViewModel.cs" />
     <Compile Include="View\AboutWindow.xaml.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>
@@ -386,6 +387,9 @@
     <Compile Include="View\Parts\ViewExtend\WidthResizeHitTest.cs" />
     <Compile Include="View\Parts\Window\ViewModelCommonDataWindow.cs" />
     <Compile Include="View\Parts\Attached\Language.cs" />
+    <Compile Include="View\ScreenWindow.xaml.cs">
+      <DependentUpon>ScreenWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\SettingWindow.xaml.cs">
       <DependentUpon>SettingWindow.xaml</DependentUpon>
     </Compile>
@@ -614,6 +618,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Parts\Resource\TypeSliderDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ScreenWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
