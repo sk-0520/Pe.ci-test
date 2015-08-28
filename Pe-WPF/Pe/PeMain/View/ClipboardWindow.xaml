@@ -329,7 +329,31 @@
 									<TextBlock Text="files" AA:Language.Word="clipboard/type/files" />
 								</StackPanel>
 							</TabItem.Header>
-							<ListView ItemsSource="{Binding SelectedViewModel.Files}">
+							<ACC:AppDataGrid AutoGenerateColumns="False" IsReadOnly="True" ItemsSource="{Binding SelectedViewModel.Files}">
+								<ACC:AppDataGrid.Columns>
+									<DataGridTemplateColumn>
+										<DataGridTemplateColumn.Header>
+											<TextBlock Text="name" AA:Language.Word="clipboard/files/name" />
+										</DataGridTemplateColumn.Header>
+										<DataGridTemplateColumn.CellTemplate>
+											<DataTemplate>
+												<StackPanel Orientation="Horizontal">
+													<Image AA:IconSize.IconScale="Small" Style="{StaticResource DefaultImage}" Source="{Binding Image}"/>
+													<TextBlock Text="{Binding Name}"/>
+												</StackPanel>
+											</DataTemplate>
+										</DataGridTemplateColumn.CellTemplate>
+									</DataGridTemplateColumn>
+
+									<DataGridTextColumn Binding="{Binding Path}">
+										<DataGridTextColumn.Header>
+											<TextBlock Text="path" AA:Language.Word="clipboard/files/path" />
+										</DataGridTextColumn.Header>
+									</DataGridTextColumn>
+								</ACC:AppDataGrid.Columns>
+
+							</ACC:AppDataGrid>
+							<!--<ListView>
 								<ListView.View>
 									<GridView>
 										<GridViewColumn Header="name" AA:Language.Word="clipboard/files/name" >
@@ -349,7 +373,7 @@
 										</GridViewColumn>
 									</GridView>
 								</ListView.View>
-							</ListView>
+							</ListView>-->
 						</TabItem>
 					</ACC:AppTabControl>
 				</Grid>

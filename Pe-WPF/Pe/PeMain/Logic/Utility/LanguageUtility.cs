@@ -188,66 +188,16 @@
 							RecursiveSetLanguage(dataGrid, language, map);
 							eventDisposer.Dispose();
 							eventDisposer = null;
-							language = null;
-							map = null;
 						},
 						releaseEvent => {
 							dataGrid.Rendered -= releaseEvent;
 							dataGrid = null;
+							language = null;
+							map = null;
 						},
 						out eventDisposer
 					);
 				}
-
-				CastUtility.AsAction<AppTabControl>(dependencyObject, tabControl => {
-					EventDisposer<EventHandler> eventRenderedDisposer = null;
-					tabControl.Rendered += EventUtility.Create<EventHandler>(
-						(sender, e) => {
-							//RecursiveSetLanguage(tabControl, language, map);
-							//var index = tabControl.SelectedIndex;
-							//var pageCount = tabControl.Items.Count;
-							//for(var i = 1; i< pageCount; i++) {
-							//	tabControl.SelectedIndex = i;
-							//	CastUtility.AsAction<FrameworkElement>(tabControl.SelectedContent, content => {
-							//		content.ApplyTemplate();
-							//		RecursiveSetLanguage(content, language, map);
-							//	});
-							//}
-							//tabControl.SelectedIndex = index;
-							CastUtility.AsAction<FrameworkElement>(tabControl.SelectedContent, content => {
-								tabControl.InvalidateVisual();
-								content.ApplyTemplate();
-								RecursiveSetLanguage(content, language, map);
-							});
-
-							//eventDisposer.Dispose();
-							//eventDisposer = null;
-							//language = null;
-							//map = null;
-						},
-						releaseEvent => {
-							tabControl.Rendered -= releaseEvent;
-							tabControl = null;
-						},
-						out eventRenderedDisposer
-					);
-					CastUtility.AsAction<Window>(root, w => {
-						EventDisposer<RoutedEventHandler> eventUnloadedDisposer = null;
-						w.Unloaded += EventUtility.Create<RoutedEventHandler>(
-							(sender, e) => {
-								eventRenderedDisposer.Dispose();
-
-								eventUnloadedDisposer.Dispose();
-								eventUnloadedDisposer = null;
-							},
-							releaseEvent => {
-								w.Unloaded -= releaseEvent;
-								w = null;
-							},
-							out eventUnloadedDisposer
-						);
-					});
-				});
 
 				if(dependencyObject is Visual) {
 					foreach(var visualElement in UIUtility.FindVisualChildren<Visual>(dependencyObject)) {
