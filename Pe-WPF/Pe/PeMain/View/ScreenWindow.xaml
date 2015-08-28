@@ -6,15 +6,41 @@
 	xmlns:AW="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Window"
 	xmlns:AA="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Attached"
 	xmlns:AVM="clr-namespace:ContentTypeTextNet.Pe.PeMain.ViewModel"
+	AA:Language.Word="window/screen"
 	Title="ScreenWindow" 
 	Width="300"
 	Height="300" 
 	Icon="/PeMain;component/Resources/Icon/App.ico"
 	WindowStyle="None"
 	AllowsTransparency="True"
+	FontSize="36"
+	Topmost="True"
 >
 	<AW:CommonDataWindow.Resources>
+		<Style TargetType="TextBlock">
+			<Setter Property="TextAlignment" Value="Center" />
+		</Style>
 	</AW:CommonDataWindow.Resources>
-	<Grid>
-	</Grid>
+	<StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+		
+		<TextBlock Text="{Binding ScreenName}" />
+		
+		<StackPanel Margin="20">
+			<TextBlock Text="{Binding DeviceName}" />
+			<TextBlock>
+				<TextBlock.Style>
+					<Style TargetType="TextBlock">
+						<Style.Triggers>
+							<DataTrigger Binding="{Binding IsPrimaryScreen}" Value="True">
+								<Setter Property="AA:Language.Word" Value="screen/primary" />
+							</DataTrigger>
+						</Style.Triggers>
+					</Style>
+				</TextBlock.Style>
+			</TextBlock>
+		</StackPanel>
+		
+		<TextBlock Text="click or key" AA:Language.Word="screen/click-key" />
+		
+	</StackPanel>
 </AW:ViewModelCommonDataWindow>
