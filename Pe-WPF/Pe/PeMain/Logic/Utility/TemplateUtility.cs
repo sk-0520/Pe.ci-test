@@ -23,15 +23,15 @@
 			if(clipboardItem.Type != ClipboardType.None) {
 				var clipboardText = clipboardItem.Body.Text;
 				// そのまんま
-				map[TemplateReplaceKey.clipboard] = clipboardText;
+				map[TemplateReplaceKey.textClipboard] = clipboardText;
 
 				var lines = clipboardText.SplitLines().ToList();
 				// 改行を削除
-				map[TemplateReplaceKey.clipboardNobreak] = string.Join(string.Empty, lines);
+				map[TemplateReplaceKey.textClipboardNobreak] = string.Join(string.Empty, lines);
 				// 先頭行
-				map[TemplateReplaceKey.clipboardHead] = lines.FirstOrDefault();
+				map[TemplateReplaceKey.textClipboardHead] = lines.FirstOrDefault();
 				// 最終行
-				map[TemplateReplaceKey.clipboardTail] = lines.LastOrDefault();
+				map[TemplateReplaceKey.textClipboardTail] = lines.LastOrDefault();
 			}
 
 			return map;

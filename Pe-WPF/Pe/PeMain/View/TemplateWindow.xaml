@@ -196,7 +196,16 @@
 								FontFamily="{Binding FontFamily, Mode=OneWay}" FontWeight="{Binding FontBold, Converter={StaticResource BooleanFontWeightConverter}, Mode=OneWay}" FontStyle="{Binding FontItalic, Converter={StaticResource BooleanFontStyleConverter}, Mode=OneWay}" FontSize="{Binding FontSize, Mode=OneWay}"
 							/>
 							<GridSplitter Grid.Column="1"  Style="{StaticResource DefaultVericalGridSplitter}" />
-							<ListBox Grid.Column="2" />
+							<ListBox Grid.Column="2" ItemsSource="{Binding KeywordList}">
+								<ListBox.ItemTemplate>
+									<DataTemplate>
+										<StackPanel>
+											<TextBlock Text="{Binding KeywordTitle}" />
+											<TextBlock Text="{Binding KeywordComment}" />
+										</StackPanel>
+									</DataTemplate>
+								</ListBox.ItemTemplate>
+							</ListBox>
 						</Grid>
 					</Grid>
 				</TabItem>

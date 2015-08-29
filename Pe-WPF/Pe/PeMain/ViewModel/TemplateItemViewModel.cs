@@ -12,7 +12,7 @@
 	using ContentTypeTextNet.Pe.PeMain.Logic;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
-	public class TemplateItemViewModel : SingleModelWrapperViewModelBase<TemplateIndexItemModel>, IHavingAppSender, IHavingAppNonProcess, IUnload
+	public class TemplateItemViewModel: SingleModelWrapperViewModelBase<TemplateIndexItemModel>, IHavingAppSender, IHavingAppNonProcess, IUnload
 	{
 		#region variable
 

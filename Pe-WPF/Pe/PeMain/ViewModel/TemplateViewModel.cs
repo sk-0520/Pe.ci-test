@@ -3,6 +3,8 @@
 	using System;
 	using System.Diagnostics;
 	using System.IO;
+	using System.Linq;
+	using System.Collections.Generic;
 	using System.Windows;
 	using System.Windows.Input;
 	using System.Windows.Media;
@@ -18,6 +20,7 @@
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 	using ContentTypeTextNet.Pe.PeMain.View;
 	using Microsoft.Win32;
+	using System.ComponentModel;
 
 	public class TemplateViewModel : HavingViewSingleModelWrapperIndexViewModelBase<TemplateSettingModel, TemplateWindow, TemplateIndexItemCollectionModel, TemplateIndexItemModel, TemplateItemViewModel>
 	{
@@ -42,7 +45,14 @@
 				if (SetVariableValue(ref this._selectedViewModel, value)) {
 					View.pageSource.IsSelected = true;
 
+					CallOnPropertyChange("KeywordList");
+					if(this._selectedViewModel != null) {
+						this._selectedViewModel.PropertyChanged += SelectedViewModel_PropertyChanged;
+					}
+
 					if(prevViewModel != null) {
+						prevViewModel.PropertyChanged -= SelectedViewModel_PropertyChanged;
+
 						SaveItemViewModel(prevViewModel);
 						prevViewModel.Unload();
 					}
@@ -95,6 +105,32 @@
 		}
 
 		#endregion
+
+		public IEnumerable<TemplateKeywordViewModel> KeywordList
+		{
+			get
+			{
+				if(SelectedViewModel != null && SelectedViewModel.IsReplace) {
+					if(SelectedViewModel.IsProgrammableReplace) {
+						var typeMap = TemplateReplaceKey.ProgramTypes;
+						return TemplateReplaceKey
+							.ProgramKeyList
+							.Select(k => new TemplateKeywordViewModel(k, SelectedViewModel.IsProgrammableReplace, AppNonProcess) {
+								Type = TemplateReplaceKey.ProgramTypes[k],
+								CaretInSpace = TemplateReplaceKey.caretInSpaceKeys.Any(s => s == k)
+							})
+						;
+					} else {
+						return TemplateReplaceKey
+							.TextKeyList
+							.Select(k => new TemplateKeywordViewModel(k, SelectedViewModel.IsProgrammableReplace, AppNonProcess))
+						;
+					}
+				} else {
+					return null;
+				}
+			}
+		}
 
 		#endregion
 
@@ -408,6 +444,17 @@
 		{
 			e.Cancel = true;
 			IsVisible = false;
+		}
+
+		void SelectedViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+		{
+			var refreshTargets =new[] { 
+				"IsReplace",
+				"IsProgrammableReplace",
+			};
+			if(SelectedViewModel != null && refreshTargets.Any(s => s == e.PropertyName)) {
+				CallOnPropertyChange("KeywordList");
+			}
 		}
 
 

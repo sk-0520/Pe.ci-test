@@ -12,8 +12,8 @@
 		<Item Id="hide" Word="非表示" />
 		<Item Id="input" Word="入力" />
 
-		<Word Name="version-release"     Text="リリース版" />
-		<Word Name="version-rc"          Text="RC版" />
+		<Item Id="version-release"     Word="リリース版" />
+		<Item Id="version-rc"          Word="RC版" />
 		
 		<Item Id="execute" Word="起動" />
 
@@ -350,39 +350,39 @@
 		<Item Id="template-setting/font" Word="フォント" />
 
 		<!-- テンプレート -->
-		<Word Name="template/replace/text/name/APPLICATION"  Text="${template-APPLICATION}" />
-		<Word Name="template/replace/text/name/VER"          Text="@[APPLICATION] ${template-VER}" />
-		<Word Name="template/replace/text/name/VER:NUMBER"   Text="@[APPLICATION] ${template-VER:NUMBER}" />
-		<Word Name="template/replace/text/name/VER:HASH"     Text="@[APPLICATION] ${template-VER:HASH}" />
-		<Word Name="template/replace/text/name/TIMESTAMP"    Text="${template-TIMESTAMP}" />
-		<Word Name="template/replace/text/name/Y"            Text="西暦" />
-		<Word Name="template/replace/text/name/Y:04"         Text="西暦(4桁)" />
-		<Word Name="template/replace/text/name/M"            Text="月" />
-		<Word Name="template/replace/text/name/M:02"         Text="月(2桁)" />
-		<Word Name="template/replace/text/name/M:S"          Text="月(ロケールでの短い名称)" />
-		<Word Name="template/replace/text/name/M:L"          Text="月(ロケールでの長い名称)" />
-		<Word Name="template/replace/text/name/D"            Text="日" />
-		<Word Name="template/replace/text/name/D:02"         Text="日(2桁)" />
-		<Word Name="template/replace/text/name/h"            Text="時" />
-		<Word Name="template/replace/text/name/h:02"         Text="時(2桁)" />
-		<Word Name="template/replace/text/name/m"            Text="分" />
-		<Word Name="template/replace/text/name/m:02"         Text="分(2桁)" />
-		<Word Name="template/replace/text/name/s"            Text="秒" />
-		<Word Name="template/replace/text/name/s:02"         Text="秒(2桁)" />
-		<Word Name="template/replace/text/name/CLIP"         Text="${template-CLIP}" />
-		<Word Name="template/replace/text/name/CLIP:NOBREAK" Text="改行なし${template-CLIP}" />
-		<Word Name="template/replace/text/name/CLIP:HEAD"    Text="先頭行のみ${template-CLIP}" />
-		<Word Name="template/replace/text/name/CLIP:TAIL"    Text="最終行のみ${template-CLIP}" />
+		<Item Id="template/keyword/text/APPLICATION"  Word="${template-APPLICATION}" />
+		<Item Id="template/keyword/text/VER"          Word="@[APPLICATION] ${template-VER}" />
+		<Item Id="template/keyword/text/VER:NUMBER"   Word="@[APPLICATION] ${template-VER:NUMBER}" />
+		<Item Id="template/keyword/text/VER:HASH"     Word="@[APPLICATION] ${template-VER:HASH}" />
+		<Item Id="template/keyword/text/TIMESTAMP"    Word="${template-TIMESTAMP}" />
+		<Item Id="template/keyword/text/Y"            Word="西暦" />
+		<Item Id="template/keyword/text/Y:04"         Word="西暦(4桁)" />
+		<Item Id="template/keyword/text/M"            Word="月" />
+		<Item Id="template/keyword/text/M:02"         Word="月(2桁)" />
+		<Item Id="template/keyword/text/M:S"          Word="月(ロケールでの短い名称)" />
+		<Item Id="template/keyword/text/M:L"          Word="月(ロケールでの長い名称)" />
+		<Item Id="template/keyword/text/D"            Word="日" />
+		<Item Id="template/keyword/text/D:02"         Word="日(2桁)" />
+		<Item Id="template/keyword/text/h"            Word="時" />
+		<Item Id="template/keyword/text/h:02"         Word="時(2桁)" />
+		<Item Id="template/keyword/text/m"            Word="分" />
+		<Item Id="template/keyword/text/m:02"         Word="分(2桁)" />
+		<Item Id="template/keyword/text/s"            Word="秒" />
+		<Item Id="template/keyword/text/s:02"         Word="秒(2桁)" />
+		<Item Id="template/keyword/text/CLIP"         Word="${template-CLIP}" />
+		<Item Id="template/keyword/text/CLIP:NOBREAK" Word="改行なし${template-CLIP}" />
+		<Item Id="template/keyword/text/CLIP:HEAD"    Word="先頭行のみ${template-CLIP}" />
+		<Item Id="template/keyword/text/CLIP:TAIL"    Word="最終行のみ${template-CLIP}" />
 		
-		<Word Name="template/replace/program/name/&lt;#  #&gt;"  Text="コード" />
-		<Word Name="template/replace/program/name/&lt;#=  #&gt;"  Text="式" />
-		<Word Name="template/replace/program/name/&lt;#+  #&gt;"  Text="定義" />
-		<Word Name="template/replace/program/name/APPLICATION"  Text="${template-APPLICATION}" />
-		<Word Name="template/replace/program/name/VER"          Text="@[APPLICATION] ${template-VER}" />
-		<Word Name="template/replace/program/name/VER:NUMBER"   Text="@[APPLICATION] ${template-VER:NUMBER}" />
-		<Word Name="template/replace/program/name/VER:HASH"     Text="@[APPLICATION] ${template-VER:HASH}" />
-		<Word Name="template/replace/program/name/TIMESTAMP"    Text="${template-TIMESTAMP}" />
-		<Word Name="template/replace/program/name/CLIP"         Text="${template-CLIP}" />
+		<Item Id="template/keyword/program/&lt;#  #&gt;"  Word="コード" />
+		<Item Id="template/keyword/program/&lt;#=  #&gt;"  Word="式" />
+		<Item Id="template/keyword/program/&lt;#+  #&gt;"  Word="定義" />
+		<Item Id="template/keyword/program/APPLICATION"  Word="${template-APPLICATION}" />
+		<Item Id="template/keyword/program/VER"          Word="@[APPLICATION] ${template-VER}" />
+		<Item Id="template/keyword/program/VER:NUMBER"   Word="@[APPLICATION] ${template-VER:NUMBER}" />
+		<Item Id="template/keyword/program/VER:HASH"     Word="@[APPLICATION] ${template-VER:HASH}" />
+		<Item Id="template/keyword/program/TIMESTAMP"    Word="${template-TIMESTAMP}" />
+		<Item Id="template/keyword/program/CLIP"         Word="${template-CLIP}" />
 
 		<!-- enum -->
 		

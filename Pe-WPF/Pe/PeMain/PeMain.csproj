@@ -168,6 +168,7 @@
     <Compile Include="ViewModel\ComponentItemViewModel.cs" />
     <Compile Include="ViewModel\Control\LauncherListItemViewModel.cs" />
     <Compile Include="ViewModel\ScreenViewModel.cs" />
+    <Compile Include="ViewModel\TemplateKeywordViewModel.cs" />
     <Compile Include="ViewModel\UpdateConfirmViewModel.cs" />
     <Compile Include="View\AboutWindow.xaml.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>

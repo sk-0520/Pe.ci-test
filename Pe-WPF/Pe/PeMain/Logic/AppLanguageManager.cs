@@ -15,25 +15,25 @@
 		public static IDictionary<string, string> GetAppMap(DateTime dateTime, ILanguage language)
 		{
 			var appMap = new Dictionary<string, string>() {
-				{ "APPLICATION",          Constants.ApplicationName },
-				{ "APPLICATION:VERSION",  Constants.ApplicationVersion },
-				{ "APPLICATION:REVISION", Constants.ApplicationRevision },
+				{ LanguageKey.application,          Constants.ApplicationName },
+				{ LanguageKey.applicationVersion,  Constants.ApplicationVersion },
+				{ LanguageKey.applicationRevision, Constants.ApplicationRevision },
 
-				{ "TIMESTAMP",            dateTime.ToString() },
-				{ "Y",                    dateTime.Year.ToString() },
-				{ "YYYY",                 dateTime.Year.ToString("D4") },
-				{ "M",                    dateTime.Month.ToString() },
-				{ "MM",                   dateTime.Month.ToString("D2") },
-				{ "MMM",                  dateTime.ToString("MMM") },
-				{ "MMMM",                 dateTime.ToString("MMMM") },
-				{ "D",                    dateTime.Day.ToString() },
-				{ "DD",                   dateTime.Day.ToString("D2") },
-				{ "h",                    dateTime.Hour.ToString() },
-				{ "hh",                   dateTime.Hour.ToString("D2") },
-				{ "m",                    dateTime.Minute.ToString() },
-				{ "mm",                   dateTime.Minute.ToString("D2") },
-				{ "s",                    dateTime.Second.ToString() },
-				{ "ss",                   dateTime.Second.ToString("D2") },
+				{ LanguageKey.timestamp,      dateTime.ToString() },
+				{ LanguageKey.year,           dateTime.Year.ToString() },
+				{ LanguageKey.year04,         dateTime.Year.ToString("D4") },
+				{ LanguageKey.month,          dateTime.Month.ToString() },
+				{ LanguageKey.month02,        dateTime.Month.ToString("D2") },
+				{ LanguageKey.monthShortName, dateTime.ToString("MMM") },
+				{ LanguageKey.monthLongName,  dateTime.ToString("MMMM") },
+				{ LanguageKey.day,            dateTime.Day.ToString() },
+				{ LanguageKey.day02,          dateTime.Day.ToString("D2") },
+				{ LanguageKey.hour,           dateTime.Hour.ToString() },
+				{ LanguageKey.hour02,         dateTime.Hour.ToString("D2") },
+				{ LanguageKey.minute,         dateTime.Minute.ToString() },
+				{ LanguageKey.minute02,       dateTime.Minute.ToString("D2") },
+				{ LanguageKey.second,         dateTime.Second.ToString() },
+				{ LanguageKey.second02,       dateTime.Second.ToString("D2") },
 			};
 
 			return appMap;
