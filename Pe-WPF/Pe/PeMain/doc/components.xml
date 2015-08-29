@@ -1,4 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Components xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-	<Component Name="Mono.TextTemplating" Uri="https://github.com/mono/monodevelop/tree/master/main/src/addins/TextTemplating/Mono.TextTemplating/Mono.TextTemplating" Type="Library" License="Mit" />
+	<Component Type="Library" Name="Mono.TextTemplating" Uri="https://github.com/mono/monodevelop/tree/master/main/src/addins/TextTemplating/Mono.TextTemplating/Mono.TextTemplating" License="Mit" />
+	<Component Type="Library" Name="WPF NotifyIcon" Uri="http://www.hardcodet.net/wpf-notifyicon" License="CPOL" />
+	<Component Type="Library" Name="Json.NET" Uri="http://www.newtonsoft.com/json" License="MIT" />
+	<Component Type="Library" Name="Extended WPF Toolkit™ Community Edition" Uri="http://wpftoolkit.codeplex.com/" License="Ms-PL" />
+	
+	<Component Type="Source" Name="IconExtractor" Uri="https://github.com/TsudaKageyu/IconExtractor" License="BSD License" />
+	<Component Type="Source" Name="Invoke.net" Uri="http://www.pinvoke.net/" License="" />
+	
+	<Component Type="Image" Name="MICROSOFT VISUAL STUDIO 2013 IMAGE LIBRARY" Uri="http://msdn.microsoft.com/ja-jp/library/ms246582.aspx" License="Visual Studio 2013 Image Library EULA" />
+	
 </Components>

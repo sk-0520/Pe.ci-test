@@ -10,8 +10,9 @@
 	x:TypeArguments="AVM:AboutViewModel"
   Topmost="True"
 	Title="AboutWindow" 
-	Width="640"
-	Height="240" 
+	AA:Language.Word="window/about"
+	Width="800"
+	Height="280" 
 	ResizeMode="NoResize" WindowStartupLocation="CenterScreen" 
 	Icon="/PeMain;component/Resources/Icon/App.ico"
 >
@@ -76,16 +77,16 @@
 				<TextBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" IsReadOnly="True" Text="{x:Static AM:Constants.ApplicationVersion}" Style="{StaticResource DefaultTextBox}" HorizontalAlignment="Left" />
 
 				<StackPanel Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,8,0,0" Orientation="Vertical">
-					<Label Content="copty" AA:Language.Word="about/information/copy" Style="{StaticResource TitleLabel}" />
+					<Label Content="copty" AA:Language.Word="about/copy" Style="{StaticResource TitleLabel}" />
 					<StackPanel Orientation="Horizontal">
 						<TextBlock Style="{StaticResource LinkText}">
 							<Hyperlink Command="{Binding CopyLinkCommand}" CommandParameter="{x:Static AD:AboutCopyKind.Short}">
-								<TextBlock Text="short" AA:Language.Word="about/information/copy/short" />
+								<TextBlock Text="short" AA:Language.Word="about/copy/short" />
 							</Hyperlink>
 						</TextBlock>
 						<TextBlock Style="{StaticResource LinkText}">
 							<Hyperlink Command="{Binding CopyLinkCommand}" CommandParameter="{x:Static AD:AboutCopyKind.Long}">
-								<TextBlock Text="long" AA:Language.Word="about/information/copy/long" />
+								<TextBlock Text="long" AA:Language.Word="about/copy/long" />
 							</Hyperlink>
 						</TextBlock>
 					</StackPanel>
@@ -96,27 +97,27 @@
 				<!--TODO: ださい-->
 				<TextBlock Style="{StaticResource LinkText}">
 					<Hyperlink Command="{Binding OpenLinkCommand}" CommandParameter="{x:Static AM:Constants.UriAbout}">
-						<TextBlock Text="web" AA:Language.Word="about/information/link/web" />
+						<TextBlock Text="web" AA:Language.Word="about/link/web" />
 					</Hyperlink>
 				</TextBlock>
 				<TextBlock Style="{StaticResource LinkText}">
 					<Hyperlink Command="{Binding OpenLinkCommand}" CommandParameter="{x:Static AM:Constants.MailAbout}">
-						<TextBlock Text="mail" AA:Language.Word="about/information/link/mail" />
+						<TextBlock Text="mail" AA:Language.Word="about/link/mail" />
 					</Hyperlink>
 				</TextBlock>
 				<TextBlock Style="{StaticResource LinkText}">
 					<Hyperlink Command="{Binding OpenLinkCommand}" CommandParameter="{x:Static AM:Constants.UriDevelopment}">
-						<TextBlock Text="dev" AA:Language.Word="about/information/link/dev" />
+						<TextBlock Text="dev" AA:Language.Word="about/link/dev" />
 					</Hyperlink>
 				</TextBlock>
 				<TextBlock Style="{StaticResource LinkText}">
 					<Hyperlink Command="{Binding OpenLinkCommand}" CommandParameter="{x:Static AM:Constants.UriForum}">
-						<TextBlock Text="forum" AA:Language.Word="about/information/link/forum" />
+						<TextBlock Text="forum" AA:Language.Word="about/link/forum" />
 					</Hyperlink>
 				</TextBlock>
 				<TextBlock Style="{StaticResource LinkText}">
 					<Hyperlink Command="{Binding ICommand}" CommandParameter="{x:Static AM:Constants.UriFeedback}">
-						<TextBlock Text="feedback" AA:Language.Word="about/information/link/feedback" />
+						<TextBlock Text="feedback" AA:Language.Word="about/link/feedback" />
 					</Hyperlink>
 				</TextBlock>
 			</StackPanel>
@@ -124,7 +125,7 @@
 			<ListView Grid.Row="0" Grid.Column="2" ItemsSource="{Binding ComponentItems}">
 				<ListView.View>
 					<GridView>
-						<GridViewColumn Header="component" AA:Language.Word="about/component/component" >
+						<GridViewColumn Header="component" AA:Language.Word="about/component" >
 							<GridViewColumn.CellTemplate>
 								<DataTemplate>
 									<TextBlock>
@@ -135,7 +136,7 @@
 								</DataTemplate>
 							</GridViewColumn.CellTemplate>
 						</GridViewColumn>
-						<GridViewColumn Header="license" AA:Language.Word="about/component/license" DisplayMemberBinding="{Binding License}" />
+						<GridViewColumn Header="license" AA:Language.Word="about/license" DisplayMemberBinding="{Binding License}" />
 					</GridView>
 				</ListView.View>
 			</ListView>
