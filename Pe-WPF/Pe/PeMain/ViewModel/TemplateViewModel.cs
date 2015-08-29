@@ -123,7 +123,7 @@
 						return TemplateReplaceKey
 							.ProgramKeyList
 							.Select(k => new { Key = k, CaretInSpace = TemplateReplaceKey.caretInSpaceKeys.Any(s => s == k) })
-							.Select(v => new TemplateKeywordViewModel(v.Key, SelectedViewModel.IsProgrammableReplace, v.CaretInSpace ? Tuple.Create("app[", "]"): null, AppNonProcess) {
+							.Select(v => new TemplateKeywordViewModel(v.Key, SelectedViewModel.IsProgrammableReplace, v.CaretInSpace ? null : Tuple.Create("app[\"", "\"]"), AppNonProcess) {
 								Type = TemplateReplaceKey.ProgramTypes[v.Key],
 								CaretInSpace = v.CaretInSpace,
 							})

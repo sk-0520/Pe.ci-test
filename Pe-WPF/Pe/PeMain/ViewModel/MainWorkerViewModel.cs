@@ -1724,7 +1724,7 @@
 			this._clipboardPreviousTime = now;
 
 			try {
-				var clipboardData = ClipboardUtility.GetClipboardData(CommonData.MainSetting.Clipboard.EnabledClipboardTypes, MessageWindow.Handle, CommonData.NonProcess);
+				var clipboardData = ClipboardUtility.GetClipboardData(CommonData.MainSetting.Clipboard.EnabledClipboardTypes, MessageWindow.Handle, CommonData.NonProcess.Logger);
 				if (clipboardData.Type != ClipboardType.None) {
 					Task.Run(() => {
 						//clipboardItem.Name = displayText;

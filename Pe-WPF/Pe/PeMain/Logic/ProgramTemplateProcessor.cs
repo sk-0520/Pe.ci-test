@@ -8,6 +8,8 @@
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.T4Template;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
+	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
+	using ContentTypeTextNet.Pe.Library.PeData.Define;
 
 	/// <summary>
 	/// C#限定でムリくりアプリケーション用テンプレート処理。
@@ -48,7 +50,7 @@
 
 		protected void ResetVariable()
 		{
-			//var clipboardItem = ClipboardUtility.CreateClipboardItem(ClipboardType.Text, IntPtr.Zero, new NullLogger());
+			//var clipboardItem = ClipboardUtility.GetClipboardData(ClipboardType.Text, IntPtr.Zero, Logger);
 
 			//Variable[TemplateProgramLanguageName.timestamp] = DateTime.Now;
 			//Variable[TemplateProgramLanguageName.clipboard] = clipboardItem.Text ?? string.Empty;

@@ -41,7 +41,22 @@ using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 		{
 			get
 			{
-				return Key;
+				var result = new StringBuilder();
+
+				if(Type != null) {
+					result.Append("(");
+					result.Append(Type.Name);
+					result.Append(")");
+				}
+				if(Bracket != null) {
+					result.Append(Bracket.Item1);
+				}
+				result.Append(Key);
+				if(Bracket != null) {
+					result.Append(Bracket.Item2);
+				}
+
+				return result.ToString();
 			}
 		}
 

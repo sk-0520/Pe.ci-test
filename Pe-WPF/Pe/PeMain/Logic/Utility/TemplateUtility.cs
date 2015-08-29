@@ -19,7 +19,7 @@
 		{
 			var map = new Dictionary<string, string>();
 
-			var clipboardItem = ClipboardUtility.GetClipboardData(ClipboardType.Text | ClipboardType.File, IntPtr.Zero, nonProcess);
+			var clipboardItem = ClipboardUtility.GetClipboardData(ClipboardType.Text | ClipboardType.File, IntPtr.Zero, nonProcess.Logger);
 			if(clipboardItem.Type != ClipboardType.None) {
 				var clipboardText = clipboardItem.Body.Text;
 				// そのまんま

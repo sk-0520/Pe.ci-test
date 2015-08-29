@@ -238,9 +238,9 @@
 		/// .NET Frameworkからクリップボードデータを取得
 		/// </summary>
 		/// <param name="enabledTypes"></param>
-		/// <param name="nonProcess"></param>
+		/// <param name="logger"></param>
 		/// <returns></returns>
-		static ClipboardData GetClipboardDataFromFramework(ClipboardType enabledTypes, INonProcess nonProcess)
+		static ClipboardData GetClipboardDataFromFramework(ClipboardType enabledTypes, ILogger logger)
 		{
 			var clipboardData = new ClipboardData();
 
@@ -288,7 +288,7 @@
 					}
 				}
 			} catch(COMException ex) {
-				nonProcess.Logger.Error(ex);
+				logger.Error(ex);
 			}
 
 			return clipboardData;
@@ -317,7 +317,7 @@
 		/// <param name="s"></param>
 		/// <param name="nonProcess"></param>
 		/// <returns></returns>
-		static byte[] CalculateHashCodeFromString(HashType hashType, string s, INonProcess nonProcess)
+		static byte[] CalculateHashCodeFromString(HashType hashType, string s)
 		{
 			using(var hash = GetHashAlgorithm(hashType)) {
 				var binary = Encoding.Unicode.GetBytes(s);
@@ -332,9 +332,9 @@
 		/// <param name="bodyItem"></param>
 		/// <param name="nonProcess"></param>
 		/// <returns></returns>
-		static byte[] CalculateHashCodeFromText(HashType hashType, ClipboardBodyItemModel bodyItem, INonProcess nonProcess)
+		static byte[] CalculateHashCodeFromText(HashType hashType, ClipboardBodyItemModel bodyItem)
 		{
-			return CalculateHashCodeFromString(hashType, bodyItem.Text, nonProcess);
+			return CalculateHashCodeFromString(hashType, bodyItem.Text);
 		}
 
 		/// <summary>
@@ -344,9 +344,9 @@
 		/// <param name="bodyItem"></param>
 		/// <param name="nonProcess"></param>
 		/// <returns></returns>
-		static byte[] CalculateHashCodeFromRtf(HashType hashType, ClipboardBodyItemModel bodyItem, INonProcess nonProcess)
+		static byte[] CalculateHashCodeFromRtf(HashType hashType, ClipboardBodyItemModel bodyItem)
 		{
-			return CalculateHashCodeFromString(hashType, bodyItem.Rtf, nonProcess);
+			return CalculateHashCodeFromString(hashType, bodyItem.Rtf);
 		}
 
 		/// <summary>
@@ -356,9 +356,9 @@
 		/// <param name="bodyItem"></param>
 		/// <param name="nonProcess"></param>
 		/// <returns></returns>
-		static byte[] CalculateHashCodeFromHtml(HashType hashType, ClipboardBodyItemModel bodyItem, INonProcess nonProcess)
+		static byte[] CalculateHashCodeFromHtml(HashType hashType, ClipboardBodyItemModel bodyItem)
 		{
-			return CalculateHashCodeFromString(hashType, bodyItem.Html, nonProcess);
+			return CalculateHashCodeFromString(hashType, bodyItem.Html);
 		}
 
 		/// <summary>
@@ -368,7 +368,7 @@
 		/// <param name="bodyItem"></param>
 		/// <param name="nonProcess"></param>
 		/// <returns></returns>
-		static byte[] CalculateHashCodeFromImage(HashType hashType, ClipboardBodyItemModel bodyItem, INonProcess nonProcess)
+		static byte[] CalculateHashCodeFromImage(HashType hashType, ClipboardBodyItemModel bodyItem)
 		{
 			var binaryWidth = BitConverter.GetBytes(bodyItem.Image.PixelWidth);
 			var binaryHeight = BitConverter.GetBytes(bodyItem.Image.PixelHeight);
@@ -379,7 +379,7 @@
 				binaryImage,
 			};
 
-			return CalculateHashCodeFromBinaryList(hashType, binaryList, nonProcess);
+			return CalculateHashCodeFromBinaryList(hashType, binaryList);
 		}
 
 		/// <summary>
@@ -389,10 +389,10 @@
 		/// <param name="bodyItem"></param>
 		/// <param name="nonProcess"></param>
 		/// <returns></returns>
-		static byte[] CalculateHashCodeFromFiles(HashType hashType, ClipboardBodyItemModel bodyItem, INonProcess nonProcess)
+		static byte[] CalculateHashCodeFromFiles(HashType hashType, ClipboardBodyItemModel bodyItem)
 		{
 			var binaryList = bodyItem.Files.Select((s, i) => Encoding.Unicode.GetBytes(s + i.ToString()));
-			return CalculateHashCodeFromBinaryList(hashType, binaryList, nonProcess);
+			return CalculateHashCodeFromBinaryList(hashType, binaryList);
 		}
 
 		/// <summary>
@@ -402,7 +402,7 @@
 		/// <param name="binaryList"></param>
 		/// <param name="nonProcess"></param>
 		/// <returns></returns>
-		static byte[] CalculateHashCodeFromBinaryList(HashType hashType, IEnumerable<byte[]> binaryList, INonProcess nonProcess)
+		static byte[] CalculateHashCodeFromBinaryList(HashType hashType, IEnumerable<byte[]> binaryList)
 		{
 			using(var stream = new MemoryStream()) {
 				foreach(var binary in binaryList) {
@@ -424,9 +424,9 @@
 		/// <param name="bodyItem"></param>
 		/// <param name="nonProcess"></param>
 		/// <returns></returns>
-		public static byte[] CalculateHashCode(HashType hashType, ClipboardType clipboardType, ClipboardBodyItemModel bodyItem, INonProcess nonProcess)
+		public static byte[] CalculateHashCode(HashType hashType, ClipboardType clipboardType, ClipboardBodyItemModel bodyItem)
 		{
-			var map = new Dictionary<ClipboardType, Func<HashType, ClipboardBodyItemModel, INonProcess, byte[]>>() {
+			var map = new Dictionary<ClipboardType, Func<HashType, ClipboardBodyItemModel, byte[]>>() {
 				{ ClipboardType.Text, CalculateHashCodeFromText },
 				{ ClipboardType.Rtf, CalculateHashCodeFromRtf },
 				{ ClipboardType.Html, CalculateHashCodeFromHtml },
@@ -435,13 +435,13 @@
 			};
 			var binaryDataList = map
 				.Where(p => clipboardType.HasFlag(p.Key))
-				.Select(p => p.Value(hashType, bodyItem, nonProcess))
+				.Select(p => p.Value(hashType, bodyItem))
 				.ToList()
 			;
 			var binaryClipboardType = BitConverter.GetBytes((int)clipboardType);
 			binaryDataList.Add(binaryClipboardType);
 
-			return CalculateHashCodeFromBinaryList(hashType, binaryDataList, nonProcess);
+			return CalculateHashCodeFromBinaryList(hashType, binaryDataList);
 		}
 
 		/// <summary>
@@ -449,15 +449,15 @@
 		/// </summary>
 		/// <param name="enabledTypes"></param>
 		/// <param name="hWnd"></param>
-		/// <param name="nonProcess"></param>
+		/// <param name="logger"></param>
 		/// <param name="calcHash">ハッシュ値の算出を行うか。</param>
 		/// <returns></returns>
-		static ClipboardData GetClipboardData_Impl(ClipboardType enabledTypes, IntPtr hWnd, INonProcess nonProcess, bool calcHash)
+		static ClipboardData GetClipboardData_Impl(ClipboardType enabledTypes, IntPtr hWnd, ILogger logger, bool calcHash)
 		{
-			var clipboardItem = GetClipboardDataFromFramework(enabledTypes, nonProcess);
+			var clipboardItem = GetClipboardDataFromFramework(enabledTypes, logger);
 			if(calcHash && clipboardItem.Type != ClipboardType.None) {
 				clipboardItem.Hash.Type = HashType.SHA1;
-				clipboardItem.Hash.Code = CalculateHashCode(HashType.SHA1, clipboardItem.Type, clipboardItem.Body, nonProcess);
+				clipboardItem.Hash.Code = CalculateHashCode(HashType.SHA1, clipboardItem.Type, clipboardItem.Body);
 			}
 			return clipboardItem;
 
@@ -467,9 +467,9 @@
 		/// </summary>
 		/// <param name="enabledTypes">取り込み対象とするクリップボード種別。</param>
 		/// <returns>生成されたクリップボードアイテム。nullが返ることはない。</returns>
-		public static ClipboardData GetClipboardData(ClipboardType enabledTypes, IntPtr hWnd, INonProcess nonProcess)
+		public static ClipboardData GetClipboardData(ClipboardType enabledTypes, IntPtr hWnd, ILogger logger)
 		{
-			return GetClipboardData_Impl(enabledTypes, hWnd, nonProcess, true);
+			return GetClipboardData_Impl(enabledTypes, hWnd, logger, true);
 		}
 
 		/// <summary>
@@ -494,7 +494,7 @@
 			NativeMethods.SetForegroundWindow(hWnd);
 			if (clipboardWatcher.UsingClipboard) {
 				// 現在クリップボードを一時退避
-				var clipboardItem = ClipboardUtility.GetClipboardData_Impl(ClipboardType.All, hWnd, nonProcess, false);
+				var clipboardItem = ClipboardUtility.GetClipboardData_Impl(ClipboardType.All, hWnd, nonProcess.Logger, false);
 				try {
 					ClipboardUtility.CopyText(outputText, clipboardWatcher);
 					NativeMethods.SendMessage(hWnd, WM.WM_PASTE, IntPtr.Zero, IntPtr.Zero);
