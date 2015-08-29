@@ -272,15 +272,21 @@
 			CheckUtility.EnforceNotNullAndNotEmpty(vm.Replaced);
 
 			var filter = new DialogFilterList() {
-				{ new DialogFilterItem("text", "*.txt") },
+				{ new DialogFilterItem(AppNonProcess.Language["dialog/filter/txt"], Constants.dialogFilterText) },
 			};
 
+			var name = PathUtility.ToSafeNameDefault(vm.Model.Name);
+			if(string.IsNullOrWhiteSpace(name)) {
+				name = Constants.GetNowTimestampFileName();
+			}
 			var dialog = new SaveFileDialog() {
 				Filter = filter.FilterText,
 				FilterIndex = 0,
 				AddExtension = true,
 				CheckPathExists = true,
 				ValidateNames = true,
+				InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory),
+				FileName = name,
 			};
 
 			var dialogResult = dialog.ShowDialog();
