@@ -24,27 +24,21 @@
 		[ConstantsProperty]
 		const string applicationName = "Pe-WPF";
 		public const string updateProgramDirectoryName = "Updater";
-		public const string updateProgramName = updateProgramDirectoryName + ".exe";
+		public const string updateProgramName = "Updater" + ".exe";
 		/// <summary>
 		/// 前回バージョンがこれ未満なら使用許諾を表示
 		/// </summary>
 		[ConstantsProperty]
 		public static readonly Version acceptVersion = new Version(0, 0, 0, 0);
 
-#if DEBUG
-		public const string shortcutName = applicationName + "(DEBUG).lnk";
-#elif BETA
-		public const string shortcutName = applicationName + "(BETA).lnk";
-#else
-		public const string shortcutName = applicationName + ".lnk";
-#endif
-#if DEBUG
-		public const string buildType = "DEBUG";
-#elif BETA
-		public const string buildType = "β";
-#else
-		public const string buildType = "RELEASE";
-#endif
+		public const string shortcutNameDebug = applicationName + "(DEBUG).lnk";
+		public const string shortcutNameBeta = applicationName + "(BETA).lnk";
+		public const string shortcutNameRelease = applicationName + ".lnk";
+
+		public const string buildTypeDebug = "DEBUG";
+		public const string buildTypeBeta = "β";
+		public const string buildTypeRelease = "RELEASE";
+
 		public static readonly string buildProcess = Environment.Is64BitProcess ? "64" : "32";
 
 		public const string keyGuidName = "${GUID}";
@@ -284,7 +278,7 @@
 		/// <summary>
 		/// スタートアップ用ショートカットファイルパス。
 		/// </summary>
-		public static readonly string startupShortcutPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Startup), shortcutName);
+		public static readonly string startupShortcutPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Startup), ShortcutName);
 
 		#region app.config
 
@@ -328,7 +322,7 @@
 		#region property
 
 		//public static string ApplicationName { get { return applicationName; } }
-		public static string BuildType { get { return buildType; } }
+		//public static string BuildType { get { return buildType; } }
 		public static string BuildProcess { get { return buildProcess; } }
 		public static string ApplicationVersion { get { return applicationVersion; } }
 		public static Version ApplicationVersionNumber { get { return applicationVersionNumber; } }

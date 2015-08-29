@@ -20,7 +20,7 @@
 		{
 			var result = base.GetApplication();
 
-			result.Items.Add("BuildType", Constants.buildType);
+			result.Items.Add("BuildType", Constants.BuildType);
 			
 			return result;
 		}

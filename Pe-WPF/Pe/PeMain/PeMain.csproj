@@ -128,10 +128,16 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="AppResource-Implement.cs">
+      <DependentUpon>AppResource.cs</DependentUpon>
+    </Compile>
     <Compile Include="Constants-generator.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Constants-generator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Constants-Implement.cs">
+      <DependentUpon>Constants.cs</DependentUpon>
     </Compile>
     <Compile Include="ConstantsPropertyAttribute.cs">
       <DependentUpon>Constants.cs</DependentUpon>
@@ -193,9 +199,6 @@
       <DependentUpon>TimeSliderControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Parts\Converter\CommandItemConverter.cs" />
-    <Compile Include="AppResource-implement.cs">
-      <DependentUpon>AppResource.cs</DependentUpon>
-    </Compile>
     <Compile Include="AppResourceAttribute.cs">
       <DependentUpon>AppResource.cs</DependentUpon>
     </Compile>
