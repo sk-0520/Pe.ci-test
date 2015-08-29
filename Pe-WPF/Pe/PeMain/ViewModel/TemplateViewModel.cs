@@ -27,6 +27,7 @@
 		#region variable
 
 		TemplateItemViewModel _selectedViewModel;
+		TemplateKeywordViewModel _selectedKeyword;
 
 		#endregion
 
@@ -105,6 +106,12 @@
 		}
 
 		#endregion
+
+		public TemplateKeywordViewModel SelectedKeyword
+		{
+			get { return this._selectedKeyword; }
+			set { SetVariableValue(ref this._selectedKeyword, value); }
+		}
 
 		public IEnumerable<TemplateKeywordViewModel> KeywordList
 		{
@@ -247,6 +254,44 @@
 						SelectedViewModel.SetReplacedValue();
 						if (!string.IsNullOrEmpty(SelectedViewModel.Replaced)) {
 							SaveFileInDialog(SelectedViewModel);
+						}
+					}
+				);
+
+				return result;
+			}
+		}
+
+		public ICommand InsertKeywordCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						if(SelectedViewModel == null) {
+							return;
+						}
+						if(SelectedKeyword == null) {
+							return;
+						}
+
+						var keyword = SelectedKeyword.Key;
+
+						if(HasView) {
+							var editControl = View.editSource;
+							var startPosition = editControl.SelectionStart;
+							editControl.SelectedText = keyword;
+							if(SelectedKeyword.CaretInSpace) {
+								var index = keyword.IndexOf(' ');
+								if(index != -1) {
+									var count = keyword.Skip(index).TakeWhile(c => c == ' ').Count();
+									var targetIndex = index + (int)(count / 2);
+									editControl.Select(startPosition + targetIndex, 0);
+								}
+							} else {
+								editControl.Select(startPosition, keyword.Length);
+							}
+							editControl.Focus();
 						}
 					}
 				);
