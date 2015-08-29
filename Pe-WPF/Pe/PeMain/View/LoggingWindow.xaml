@@ -4,6 +4,7 @@
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:AVM="clr-namespace:ContentTypeTextNet.Pe.PeMain.ViewModel"
+	xmlns:SD="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.Define;assembly=SharedLibrary"
 	xmlns:AM="clr-namespace:ContentTypeTextNet.Pe.PeMain"
 	xmlns:AP="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
 	xmlns:AW="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Window"
@@ -64,7 +65,41 @@
 			<ListView Grid.Row="0" ItemsSource="{Binding LogItems}" x:Name="listLog">
 				<ListView.View>
 					<GridView>
-						<GridViewColumn Header="timestamp" AA:Language.Word="logging/timestamp" DisplayMemberBinding="{Binding Timestamp}" />
+						<GridViewColumn Header="timestamp" AA:Language.Word="logging/timestamp">
+							<GridViewColumn.CellTemplate>
+								<DataTemplate>
+									<StackPanel Orientation="Horizontal">
+										<Image AA:IconSize.IconScale="Small">
+											<Image.Style>
+												<Style TargetType="Image" BasedOn="{StaticResource DefaultImage}">
+													<Style.Triggers>
+														<DataTrigger Binding="{Binding LogKind}" Value="{x:Static SD:LogKind.Debug}">
+															<Setter Property="Source" Value="{x:Static AM:AppResource.LogDebugImage}" />
+														</DataTrigger>
+														<DataTrigger Binding="{Binding LogKind}" Value="{x:Static SD:LogKind.Trace}">
+															<Setter Property="Source" Value="{x:Static AM:AppResource.LogTraceImage}" />
+														</DataTrigger>
+														<DataTrigger Binding="{Binding LogKind}" Value="{x:Static SD:LogKind.Information}">
+															<Setter Property="Source" Value="{x:Static AM:AppResource.LogInformationImage}" />
+														</DataTrigger>
+														<DataTrigger Binding="{Binding LogKind}" Value="{x:Static SD:LogKind.Warning}">
+															<Setter Property="Source" Value="{x:Static AM:AppResource.LogWarningImage}" />
+														</DataTrigger>
+														<DataTrigger Binding="{Binding LogKind}" Value="{x:Static SD:LogKind.Error}">
+															<Setter Property="Source" Value="{x:Static AM:AppResource.LogErrorImage}" />
+														</DataTrigger>
+														<DataTrigger Binding="{Binding LogKind}" Value="{x:Static SD:LogKind.Fatal}">
+															<Setter Property="Source" Value="{x:Static AM:AppResource.LogFatalImage}" />
+														</DataTrigger>
+													</Style.Triggers>
+												</Style>
+											</Image.Style>
+										</Image>
+										<TextBlock Text="{Binding Timestamp}" />
+									</StackPanel>
+								</DataTemplate>
+							</GridViewColumn.CellTemplate>
+						</GridViewColumn>
 						<GridViewColumn Header="message" AA:Language.Word="log-message" DisplayMemberBinding="{Binding Message}" />
 					</GridView>
 				</ListView.View>

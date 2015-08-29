@@ -129,7 +129,7 @@
 						<GridViewColumn Header="component" AA:Language.Word="about/component" >
 							<GridViewColumn.CellTemplate>
 								<DataTemplate>
-									<TextBlock>
+									<StackPanel Orientation="Horizontal">
 										<Image AA:IconSize.IconScale="Small">
 											<Image.Style>
 												<Style TargetType="Image" BasedOn="{StaticResource DefaultImage}">
@@ -147,10 +147,12 @@
 												</Style>
 											</Image.Style>
 										</Image>
-										<Hyperlink Command="{Binding OpenComponentCommand}">
-											<TextBlock Text="{Binding DisplayText}" />
-										</Hyperlink>
-									</TextBlock>
+										<TextBlock>
+											<Hyperlink Command="{Binding OpenComponentCommand}">
+												<TextBlock Text="{Binding DisplayText}" />
+											</Hyperlink>
+										</TextBlock>
+									</StackPanel>
 								</DataTemplate>
 							</GridViewColumn.CellTemplate>
 						</GridViewColumn>
