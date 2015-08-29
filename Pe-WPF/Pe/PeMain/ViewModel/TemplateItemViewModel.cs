@@ -179,7 +179,9 @@
 		public void SetReplacedValue()
 		{
 			if (IsReplace) {
-				Processor = TemplateUtility.MakeTemplateProcessor(BodyModel.Source, Processor, AppNonProcess);
+				if(IsProgrammableReplace) {
+					Processor = TemplateUtility.MakeTemplateProcessor(BodyModel.Source, Processor, AppNonProcess);
+				}
 				Replaced = TemplateUtility.ToPlainText(Model, BodyModel, Processor, DateTime.Now, AppNonProcess);
 			} else {
 				Replaced = Source ?? string.Empty;

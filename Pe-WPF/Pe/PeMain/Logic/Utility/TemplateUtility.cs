@@ -8,28 +8,31 @@
 	using System.Threading.Tasks;
 	using System.Windows.Controls;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
+	using ContentTypeTextNet.Pe.Library.PeData.Define;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 
 	public static class TemplateUtility
 	{
-		static IReadOnlyDictionary<string, string> GetTemplateMap()
+		static IReadOnlyDictionary<string, string> GetTemplateMap(INonProcess nonProcess)
 		{
 			var map = new Dictionary<string, string>();
 
-			//var clipboardItem = ClipboardUtility.CreateClipboardItem(ClipboardType.Text | ClipboardType.File, IntPtr.Zero, new NullLogger());
-			//if(clipboardItem.ClipboardTypes != ClipboardType.None) {
-			//	var clipboardText = clipboardItem.Text;
-			//	// そのまんま
-			//	map[TemplateTextLanguageName.clipboard] = clipboardText;
+			var clipboardItem = ClipboardUtility.GetClipboardData(ClipboardType.Text | ClipboardType.File, IntPtr.Zero, nonProcess);
+			if(clipboardItem.Type != ClipboardType.None) {
+				var clipboardText = clipboardItem.Body.Text;
+				// そのまんま
+				map[TemplateReplaceKey.clipboard] = clipboardText;
 
-			//	var lines = clipboardText.SplitLines().ToList();
-			//	// 改行を削除
-			//	map[TemplateTextLanguageName.clipboardNobreak] = string.Join(string.Empty, lines);
-			//	// 先頭行
-			//	map[TemplateTextLanguageName.clipboardHead] = lines.FirstOrDefault();
-			//	// 最終行
-			//	map[TemplateTextLanguageName.clipboardTail] = lines.LastOrDefault();
-			//}
+				var lines = clipboardText.SplitLines().ToList();
+				// 改行を削除
+				map[TemplateReplaceKey.clipboardNobreak] = string.Join(string.Empty, lines);
+				// 先頭行
+				map[TemplateReplaceKey.clipboardHead] = lines.FirstOrDefault();
+				// 最終行
+				map[TemplateReplaceKey.clipboardTail] = lines.LastOrDefault();
+			}
 
 			return map;
 		}
@@ -62,31 +65,50 @@
 			return result;
 		}
 
+		static string ToPlainTextProgrammable(TemplateIndexItemModel indexModel, TemplateBodyItemModel bodyModel, ProgramTemplateProcessor processor, DateTime dateTime, INonProcess appNonProcess)
+		{
+			if(processor.Compiled) {
+				return processor.TransformText();
+			}
+			processor.AllProcess();
+			if(processor.Error != null || processor.GeneratedErrorList.Any() || processor.CompileErrorList.Any()) {
+				// エラーあり
+				if(processor.Error != null) {
+					return processor.Error.ToString() + Environment.NewLine + string.Join(Environment.NewLine, processor.GeneratedErrorList.Concat(processor.CompileErrorList).Select(e => e.ToString()));
+				} else {
+					return string.Join(Environment.NewLine, processor.GeneratedErrorList.Concat(processor.CompileErrorList).Select(e => string.Format("[{0},{1}] {2}: {3}", e.Line - processor.FirstLineNumber, e.Column, e.ErrorNumber, e.ErrorText)));
+				}
+			}
+			return processor.TransformText();
+		}
+
+		static string ToPlainTextReplace(TemplateIndexItemModel indexModel, TemplateBodyItemModel bodyModel, DateTime dateTime, INonProcess appNonProcess)
+		{
+			var src = bodyModel.Source ?? string.Empty;
+			if(string.IsNullOrWhiteSpace(src)) {
+				return src;
+			}
+
+			var templateMap = GetTemplateMap(appNonProcess);
+			var appMap = AppLanguageManager.GetAppMap(DateTime.Now, appNonProcess.Language);
+
+			var map = templateMap.Concat(appMap).ToDictionary(p => p.Key, p => p.Value);
+
+			var result = src.ReplaceRangeFromDictionary("@[", "]", map);
+
+			return result;
+		}
+
 		public static string ToPlainText(TemplateIndexItemModel indexModel, TemplateBodyItemModel bodyModel, ProgramTemplateProcessor processor, DateTime dateTime, INonProcess appNonProcess)
 		{
 			if(!indexModel.IsReplace) {
 				return bodyModel.Source ?? string.Empty;
 			}
 			if(indexModel.IsProgrammableReplace) {
-				if(processor.Compiled) {
-					return processor.TransformText();
-				}
-				processor.AllProcess();
-				if(processor.Error != null || processor.GeneratedErrorList.Any() || processor.CompileErrorList.Any()) {
-					// エラーあり
-					if(processor.Error != null) {
-						return processor.Error.ToString() + Environment.NewLine + string.Join(Environment.NewLine, processor.GeneratedErrorList.Concat(processor.CompileErrorList).Select(e => e.ToString()));
-					} else {
-						return string.Join(Environment.NewLine, processor.GeneratedErrorList.Concat(processor.CompileErrorList).Select(e => string.Format("[{0},{1}] {2}: {3}", e.Line - processor.FirstLineNumber, e.Column, e.ErrorNumber, e.ErrorText)));
-					}
-				}
-				return processor.TransformText();
+				CheckUtility.EnforceNotNull(processor);
+				return ToPlainTextProgrammable(indexModel, bodyModel, processor, dateTime, appNonProcess);
 			} else {
-				// TODO: なんで言語設定してるんだっけか
-				var map = GetTemplateMap();
-				var replacedText = appNonProcess.Language.GetReplacedWordText(bodyModel.Source ?? string.Empty, dateTime, map);
-				appNonProcess.Logger.Debug("replacedText: " + replacedText);
-				return replacedText;
+				return ToPlainTextReplace(indexModel, bodyModel, dateTime, appNonProcess);
 			}
 		}
 	}

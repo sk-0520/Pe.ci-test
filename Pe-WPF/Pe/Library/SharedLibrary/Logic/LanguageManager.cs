@@ -62,23 +62,25 @@
 		/// <returns></returns>
 		protected virtual IDictionary<string, string> GetSystemMap(DateTime dateTime)
 		{
-			return new Dictionary<string, string>() {
-				{ "TIMESTAMP",  dateTime.ToString() },
-				{ "Y",          dateTime.Year.ToString() },
-				{ "YYYY",       dateTime.Year.ToString("D4") },
-				{ "M",          dateTime.Month.ToString() },
-				{ "MM",         dateTime.Month.ToString("D2") },
-				{ "MMM",        dateTime.ToString("MMM") },
-				{ "MMMM",       dateTime.ToString("MMMM") },
-				{ "D",          dateTime.Day.ToString() },
-				{ "DD",         dateTime.Day.ToString("D2") },
-				{ "h",          dateTime.Hour.ToString() },
-				{ "hh",         dateTime.Hour.ToString("D2") },
-				{ "m",          dateTime.Minute.ToString() },
-				{ "mm",         dateTime.Minute.ToString("D2") },
-				{ "s",          dateTime.Second.ToString() },
-				{ "ss",         dateTime.Second.ToString("D2") },
-			};
+			return new Dictionary<string, string>();
+
+			//return new Dictionary<string, string>() {
+			//	{ "TIMESTAMP",  dateTime.ToString() },
+			//	{ "Y",          dateTime.Year.ToString() },
+			//	{ "YYYY",       dateTime.Year.ToString("D4") },
+			//	{ "M",          dateTime.Month.ToString() },
+			//	{ "MM",         dateTime.Month.ToString("D2") },
+			//	{ "MMM",        dateTime.ToString("MMM") },
+			//	{ "MMMM",       dateTime.ToString("MMMM") },
+			//	{ "D",          dateTime.Day.ToString() },
+			//	{ "DD",         dateTime.Day.ToString("D2") },
+			//	{ "h",          dateTime.Hour.ToString() },
+			//	{ "hh",         dateTime.Hour.ToString("D2") },
+			//	{ "m",          dateTime.Minute.ToString() },
+			//	{ "mm",         dateTime.Minute.ToString("D2") },
+			//	{ "s",          dateTime.Second.ToString() },
+			//	{ "ss",         dateTime.Second.ToString("D2") },
+			//};
 		}
 
 		public string GetReplacedWordText(string words, DateTime dateTime, IReadOnlyDictionary<string, string> map)

@@ -161,6 +161,7 @@
     <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeLauncherItem.cs" />
     <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeLoggingSetting.cs" />
     <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeStreamSetting.cs" />
+    <Compile Include="TemplateReplaceKey.cs" />
     <Compile Include="ViewModel\AboutViewModel.cs" />
     <Compile Include="ViewModel\CommandItemViewModel.cs" />
     <Compile Include="ViewModel\CommandViewModel.cs" />
