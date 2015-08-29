@@ -13,7 +13,7 @@
 	xmlns:AP="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
 	xmlns:AW="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Window"
 	xmlns:AC="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Converter"
-	xmlns:AD="clr-namespace:ContentTypeTextNet.Pe.Library.PeData.Define;assembly=PeData"
+	xmlns:ADD="clr-namespace:ContentTypeTextNet.Pe.Library.PeData.Define;assembly=PeData"
 	xmlns:SD="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.Define;assembly=SharedLibrary"
 	x:Class="ContentTypeTextNet.Pe.PeMain.View.LauncherToolbarWindow"
 	x:TypeArguments="AVM:LauncherToolbarViewModel"
@@ -530,15 +530,15 @@
 									<Separator Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" />
 
 									<Label Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Content="file" AA:Language.Word="toolbar/file" Style="{StaticResource TitleLabel}" />
-									<Button Grid.Row="4" Grid.Column="0" Content="parent dir" AA:Language.Word="toolbar/file/parent-dir" IsEnabled="{Binding ExistsParentDirectory}" Command="{Binding OpenDirectory}" CommandParameter="{x:Static AD:LauncherCommandType.ParentDirectory}" Style="{StaticResource PopupClose}" />
-									<Button Grid.Row="4" Grid.Column="1" Content="work dir"   AA:Language.Word="toolbar/file/work-dir"   IsEnabled="{Binding ExistsWorkDirectory}" Command="{Binding OpenDirectory}" CommandParameter="{x:Static AD:LauncherCommandType.WorkDirectory}" Style="{StaticResource PopupClose}" />
+									<Button Grid.Row="4" Grid.Column="0" Content="parent dir" AA:Language.Word="toolbar/file/parent-dir" IsEnabled="{Binding ExistsParentDirectory}" Command="{Binding OpenDirectory}" CommandParameter="{x:Static ADD:LauncherCommandType.ParentDirectory}" Style="{StaticResource PopupClose}" />
+									<Button Grid.Row="4" Grid.Column="1" Content="work dir"   AA:Language.Word="toolbar/file/work-dir"   IsEnabled="{Binding ExistsWorkDirectory}" Command="{Binding OpenDirectory}" CommandParameter="{x:Static ADD:LauncherCommandType.WorkDirectory}" Style="{StaticResource PopupClose}" />
 
 									<Separator Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3" />
 
 									<Label Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3" Content="clipboard" AA:Language.Word="toolbar/clipboard"  Style="{StaticResource TitleLabel}" />
-									<Button Grid.Row="7" Grid.Column="0" Content="command"    AA:Language.Word="toolbar/clipboard/command"    IsEnabled="{Binding HasDataCommand}" Command="{Binding CopyText}" CommandParameter="{x:Static AD:LauncherCommandType.Command}" Style="{StaticResource PopupClose}" />
-									<Button Grid.Row="7" Grid.Column="1" Content="parent dir" AA:Language.Word="toolbar/clipboard/parent-dir" IsEnabled="{Binding HasDataParentDirectory}" Command="{Binding CopyText}" CommandParameter="{x:Static AD:LauncherCommandType.ParentDirectory}" Style="{StaticResource PopupClose}" />
-									<Button Grid.Row="7" Grid.Column="2" Content="work dir"   AA:Language.Word="toolbar/clipboard/work-dir"   IsEnabled="{Binding HasDataWorkDirectory}" Command="{Binding CopyText}" CommandParameter="{x:Static AD:LauncherCommandType.WorkDirectory}" Style="{StaticResource PopupClose}" />
+									<Button Grid.Row="7" Grid.Column="0" Content="command"    AA:Language.Word="toolbar/clipboard/command"    IsEnabled="{Binding HasDataCommand}" Command="{Binding CopyText}" CommandParameter="{x:Static ADD:LauncherCommandType.Command}" Style="{StaticResource PopupClose}" />
+									<Button Grid.Row="7" Grid.Column="1" Content="parent dir" AA:Language.Word="toolbar/clipboard/parent-dir" IsEnabled="{Binding HasDataParentDirectory}" Command="{Binding CopyText}" CommandParameter="{x:Static ADD:LauncherCommandType.ParentDirectory}" Style="{StaticResource PopupClose}" />
+									<Button Grid.Row="7" Grid.Column="2" Content="work dir"   AA:Language.Word="toolbar/clipboard/work-dir"   IsEnabled="{Binding HasDataWorkDirectory}" Command="{Binding CopyText}" CommandParameter="{x:Static ADD:LauncherCommandType.WorkDirectory}" Style="{StaticResource PopupClose}" />
 
 									<Separator Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="3" />
 
@@ -598,7 +598,7 @@
 									<Separator Grid.Row="2" Grid.ColumnSpan="2"/>
 
 									<Label Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Content="clipboard" AA:Language.Word="toolbar/clipboard"  Style="{StaticResource TitleLabel}" />
-									<Button Grid.Row="4" Grid.Column="0" Content="command" AA:Language.Word="toolbar/clipboard/command" IsEnabled="{Binding HasDataCommand}" Command="{Binding CopyText}" CommandParameter="{x:Static AD:LauncherCommandType.Command}" Style="{StaticResource PopupClose}" />
+									<Button Grid.Row="4" Grid.Column="0" Content="command" AA:Language.Word="toolbar/clipboard/command" IsEnabled="{Binding HasDataCommand}" Command="{Binding CopyText}" CommandParameter="{x:Static ADD:LauncherCommandType.Command}" Style="{StaticResource PopupClose}" />
 
 									<Separator Grid.Row="5" Grid.ColumnSpan="2"/>
 

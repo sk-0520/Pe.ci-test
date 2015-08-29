@@ -100,22 +100,24 @@
 								</DataTemplate>
 							</GridViewColumn.CellTemplate>
 						</GridViewColumn>
-						<GridViewColumn Header="message" AA:Language.Word="log-message" DisplayMemberBinding="{Binding Message}" />
+						<GridViewColumn Header="message" AA:Language.Word="logging/message" DisplayMemberBinding="{Binding Message}" />
 					</GridView>
 				</ListView.View>
 			</ListView>
 			<GridSplitter Grid.Row="1" Style="{StaticResource DefaultHorizonGridSplitter}" />
-			<TextBox
-				Grid.Row="2"
-				AllowDrop="False"
-				HorizontalScrollBarVisibility="Disabled"
-				VerticalScrollBarVisibility="Auto"
-				TextWrapping="Wrap"
-				IsUndoEnabled="False"
-				IsReadOnly="True" 
-				Text="{Binding SelectedValue.DetailText, ElementName=listLog, Mode=OneWay}"
-				Style="{StaticResource DefaultTextBox}"
-			/>
+			<Grid Grid.Row="2">
+				<TextBox
+					Grid.Row="2"
+					AllowDrop="False"
+					HorizontalScrollBarVisibility="Disabled"
+					VerticalScrollBarVisibility="Auto"
+					TextWrapping="Wrap"
+					IsUndoEnabled="False"
+					IsReadOnly="True" 
+					Text="{Binding SelectedValue.DetailText, ElementName=listLog, Mode=OneWay}"
+					Style="{StaticResource DefaultTextBox}"
+				/>
+			</Grid>
 		</Grid>
 		<StatusBar
 			Grid.Row="2" 

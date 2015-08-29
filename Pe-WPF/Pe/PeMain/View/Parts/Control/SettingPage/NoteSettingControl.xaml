@@ -7,8 +7,8 @@
 	xmlns:AV="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Control"
 	xmlns:AM="clr-namespace:ContentTypeTextNet.Pe.PeMain"
 	xmlns:SC="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=SharedLibrary"
-	xmlns:AD="clr-namespace:ContentTypeTextNet.Pe.Library.PeData.Define;assembly=PeData"
 	xmlns:AA="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Attached"
+	xmlns:ADD="clr-namespace:ContentTypeTextNet.Pe.Library.PeData.Define;assembly=PeData"
 
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
 	mc:Ignorable="d" 
@@ -99,8 +99,8 @@
 
 			<GroupBox Grid.Column="2" Header="title" AA:Language.Word="note-setting/title" Style="{StaticResource DefaultGroupBox}" >
 				<StackPanel>
-					<RadioButton Content="timestamp" AA:Language.Word="note-setting/title/timestamp" IsChecked="{Binding NoteTitle, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static AD:NoteTitle.Timestamp}}" />
-					<RadioButton Content="default" AA:Language.Word="note-setting/title/default" IsChecked="{Binding NoteTitle, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static AD:NoteTitle.DefaultCaption}}" />
+					<RadioButton Content="timestamp" AA:Language.Word="note-setting/title/timestamp" IsChecked="{Binding NoteTitle, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static ADD:NoteTitle.Timestamp}}" />
+					<RadioButton Content="default" AA:Language.Word="note-setting/title/default" IsChecked="{Binding NoteTitle, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static ADD:NoteTitle.DefaultCaption}}" />
 				</StackPanel>
 			</GroupBox>
 
