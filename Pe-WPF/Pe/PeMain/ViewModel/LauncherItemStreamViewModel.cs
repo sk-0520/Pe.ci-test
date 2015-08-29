@@ -13,8 +13,10 @@
 	using System.Windows.Input;
 	using System.Windows.Media;
 	using System.Windows.Media.Imaging;
+	using ContentTypeTextNet.Library.SharedLibrary.Data;
 	using ContentTypeTextNet.Library.SharedLibrary.Define;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 	using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
@@ -317,10 +319,11 @@
 		bool SaveOutputFromDialog()
 		{
 			var dir = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
-			var name = "TODO.txt";
-			var path = Path.Combine(dir, name);
-			
-			var resultPath = DialogUtility.ShowSaveFileDialog(path);
+			var name = string.Format("{0}-{1}.log", PathUtility.ToSafeNameDefault(Model.Name), Constants.GetNowTimestampFileName());
+			var filter = new DialogFilterList();
+			filter.Add(new DialogFilterItem(AppNonProcess.Language["dialog/filter/log"], Constants.dialogFilterLog));
+
+			var resultPath = DialogUtility.ShowSaveFileDialog(dir, name, filter, filter.First());
 			if (resultPath != null) {
 				return SaveOutput(resultPath);
 			}

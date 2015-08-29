@@ -1,15 +1,16 @@
 ﻿namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 {
 	using System;
-	using System.Collections.Generic;
-	using System.IO;
-	using System.Linq;
-	using System.Text;
-	using System.Threading.Tasks;
-	using ContentTypeTextNet.Library.SharedLibrary.CompatibleForms;
-	using ContentTypeTextNet.Library.SharedLibrary.Logic;
-	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
-	using Microsoft.Win32;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.CompatibleForms;
+using ContentTypeTextNet.Library.SharedLibrary.Data;
+using ContentTypeTextNet.Library.SharedLibrary.Logic;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using Microsoft.Win32;
 
 	public static class DialogUtility
 	{
@@ -75,23 +76,30 @@
 		/// <param name="defaultPath"></param>
 		/// <param name="filter"></param>
 		/// <returns>選択されたパス、未選択の場合は null を返す。</returns>
-		public static string ShowSaveFileDialog(string defaultPath, DialogFilterList filter = null)
+		public static string ShowSaveFileDialog(string directoryPath, string fileName, DialogFilterList filter = null, DialogFilterItem initItem = null)
 		{
-			var tempPath = Environment.ExpandEnvironmentVariables(defaultPath);
-			var usingFilePath = File.Exists(tempPath) ? tempPath : string.Empty;
+			var usingDirectoryPath = Environment.ExpandEnvironmentVariables(directoryPath);
 
 			var dialog = new SaveFileDialog() {
 				AddExtension = true,
 				ValidateNames = true,
-				FileName = usingFilePath,
+				FileName = fileName,
+				InitialDirectory = usingDirectoryPath,
 				CheckPathExists = true,
 				OverwritePrompt = true,
 			};
-			if (!string.IsNullOrWhiteSpace(usingFilePath)) {
-				dialog.InitialDirectory = Path.GetDirectoryName(usingFilePath);
+			if(!string.IsNullOrWhiteSpace(usingDirectoryPath)) {
+				dialog.InitialDirectory = usingDirectoryPath;
 			}
 			if (filter != null) {
 				dialog.Filter = filter.FilterText;
+				if(initItem != null) {
+					dialog.FilterIndex = filter
+						.Select((f, i) => new { f, i })
+						.First(p => p.f == initItem)
+						.i + 1
+					;
+				}
 			}
 
 			var dialogResult = dialog.ShowDialog();
