@@ -35,6 +35,20 @@
 
 		#region replace
 
+		public const string acceptWeb = "ACCEPT-WEB";
+		public const string acceptDevelopment = "ACCEPT-DEVELOPMENT";
+		public const string acceptMail = "ACCEPT-MAIL";
+		public const string acceptForum = "ACCEPT-FORUM";
+		public const string acceptFeedback = "ACCEPT-FEEDBACK";
+		public const string acceptHelp = "ACCEPT-HELP";
+		public const string acceptStyle = "ACCEPT-STYLE";
+		public const string acceptApplicationName = "ACCEPT-APP";
+		public const string acceptOk = "ACCEPT-OK";
+		public const string acceptNg = "ACCEPT-NG";
+		public const string acceptRelease = "ACCEPT-CHECK-RELEASE";
+		public const string acceptRc = "ACCEPT-CHECK-RC";
+
+
 		public const string commandItemTag = "LAUNCHER-ITEM-TAG";
 		public const string commandItemName = "LAUNCHER-ITEM-NAME";
 		public const string commandDrivePath = "DRIVE-PATH";

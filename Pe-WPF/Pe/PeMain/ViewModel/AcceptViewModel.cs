@@ -86,18 +86,18 @@
 		{
 			var acceptSource = File.ReadAllText(language.AcceptDocumentFilePath);
 			var acceptMap = new Dictionary<string, string>() {
-				{"WEB", Constants.UriAbout },
-				{"DEVELOPMENT", Constants.UriDevelopment },
-				{"MAIL", Constants.MailAbout },
-				{"FORUM", Constants.UriForum },
-				{"FEEDBACK", Constants.UriFeedback },
-				{"HELP", Constants.UriHelp },
-				{"STYLE", File.ReadAllText(Path.Combine(Constants.ApplicationStyleDirectoryPath, Constants.styleCommonFileName), Encoding.UTF8) },
-				{"APP", Constants.ApplicationName },
-				{"OK", language["accept/ok"] },
-				{"NG", language["accept/ng"] },
-				{"CHECK-RELEASE", language["update-check/release"] },
-				{"CHECK-RC", language["update-check/rc"] },
+				{ LanguageKey.acceptWeb, Constants.UriAbout },
+				{ LanguageKey.acceptDevelopment, Constants.UriDevelopment },
+				{ LanguageKey.acceptMail, Constants.MailAbout },
+				{ LanguageKey.acceptForum, Constants.UriForum },
+				{ LanguageKey.acceptFeedback, Constants.UriFeedback },
+				{ LanguageKey.acceptHelp, Constants.UriHelp },
+				{ LanguageKey.acceptStyle, File.ReadAllText(Path.Combine(Constants.ApplicationStyleDirectoryPath, Constants.styleCommonFileName), Encoding.UTF8) },
+				{ LanguageKey.acceptApplicationName, Constants.ApplicationName },
+				{ LanguageKey.acceptOk, language["accept/ok"] },
+				{ LanguageKey.acceptNg, language["accept/ng"] },
+				{ LanguageKey.acceptRelease, language["update-check/release"] },
+				{ LanguageKey.acceptRc, language["update-check/rc"] },
 			};
 			var replacedAcceptSource = acceptSource.ReplaceRangeFromDictionary("${", "}", acceptMap);
 
