@@ -3,6 +3,7 @@
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:AM="clr-namespace:ContentTypeTextNet.Pe.PeMain"
+	xmlns:ADD="clr-namespace:ContentTypeTextNet.Pe.Library.PeData.Define;assembly=PeData"
 	xmlns:AD="clr-namespace:ContentTypeTextNet.Pe.PeMain.Define"
 	xmlns:AW="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Window"
 	xmlns:AA="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Attached"
@@ -129,10 +130,27 @@
 							<GridViewColumn.CellTemplate>
 								<DataTemplate>
 									<TextBlock>
-											<Hyperlink Command="{Binding OpenComponentCommand}">
-												<TextBlock Text="{Binding DisplayText}" />
-											</Hyperlink>
-										</TextBlock>
+										<Image AA:IconSize.IconScale="Small">
+											<Image.Style>
+												<Style TargetType="Image" BasedOn="{StaticResource DefaultImage}">
+													<Style.Triggers>
+														<DataTrigger Binding="{Binding ComponentKind}" Value="{x:Static ADD:ComponentKind.Library}">
+															<Setter Property="Source" Value="{x:Static AM:AppResource.AboutComponentKindLibraryImage}" />
+														</DataTrigger>
+														<DataTrigger Binding="{Binding ComponentKind}" Value="{x:Static ADD:ComponentKind.Image}">
+															<Setter Property="Source" Value="{x:Static AM:AppResource.AboutComponentKindImageImage}" />
+														</DataTrigger>
+														<DataTrigger Binding="{Binding ComponentKind}" Value="{x:Static ADD:ComponentKind.Source}">
+															<Setter Property="Source" Value="{x:Static AM:AppResource.AboutComponentKindSourceImage}" />
+														</DataTrigger>
+													</Style.Triggers>
+												</Style>
+											</Image.Style>
+										</Image>
+										<Hyperlink Command="{Binding OpenComponentCommand}">
+											<TextBlock Text="{Binding DisplayText}" />
+										</Hyperlink>
+									</TextBlock>
 								</DataTemplate>
 							</GridViewColumn.CellTemplate>
 						</GridViewColumn>

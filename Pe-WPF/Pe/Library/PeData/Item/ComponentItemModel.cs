@@ -20,7 +20,7 @@
 		#region property
 
 		[DataMember, XmlAttribute]
-		public ComponentKind ComponentKind { get; set; }
+		public ComponentKind Kind { get; set; }
 
 		[DataMember, XmlAttribute]
 		public string Uri { get; set; }

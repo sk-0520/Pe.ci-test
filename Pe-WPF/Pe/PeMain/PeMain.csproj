@@ -175,7 +175,6 @@
       <DependentUpon>CommandWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Parts\Attached\MenuIcon.cs" />
-    <Compile Include="View\Parts\Control\AppTabControl.cs" />
     <Compile Include="View\Parts\Control\DoubleSliderControl.xaml.cs">
       <DependentUpon>DoubleSliderControl.xaml</DependentUpon>
     </Compile>
@@ -408,6 +407,9 @@
     <Compile Include="View\UpdateConfirmWindow.xaml.cs">
       <DependentUpon>UpdateConfirmWindow.xaml</DependentUpon>
     </Compile>
+    <Resource Include="Resources\Image\About\AboutComponentKindImage.png" />
+    <Resource Include="Resources\Image\About\AboutComponentKindLibrary.png" />
+    <Resource Include="Resources\Image\About\AboutComponentKindSource.png" />
     <Resource Include="Resources\Image\About\AboutHistory.png" />
   </ItemGroup>
   <ItemGroup>

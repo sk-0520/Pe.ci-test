@@ -153,6 +153,12 @@
 		const string aboutUpdate = "/Resources/Image/About/AboutUpdate.png";
 		[AppResource(AppResourceType.Image)]
 		const string aboutHistory = "/Resources/Image/About/AboutHistory.png";
+		[AppResource(AppResourceType.Image)]
+		const string aboutComponentKindImage = "/Resources/Image/About/AboutComponentKindImage.png";
+		[AppResource(AppResourceType.Image)]
+		const string aboutComponentKindLibrary = "/Resources/Image/About/AboutComponentKindLibrary.png";
+		[AppResource(AppResourceType.Image)]
+		const string aboutComponentKindSource = "/Resources/Image/About/AboutComponentKindSource.png";
 
 		[AppResource(AppResourceType.Image)]
 		const string settingSetting = "/Resources/Image/Setting/Setting.png";

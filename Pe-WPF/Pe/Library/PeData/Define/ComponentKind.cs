@@ -10,5 +10,6 @@
 	{
 		Library,
 		Image,
+		Source,
 	}
 }

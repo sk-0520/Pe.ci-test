@@ -23,7 +23,7 @@
 		#region proeprty
 
 		public string License { get { return Model.License; } }
-		public ComponentKind ComponentKind { get { return Model.ComponentKind; } }
+		public ComponentKind ComponentKind { get { return Model.Kind; } }
 
 		#endregion
 

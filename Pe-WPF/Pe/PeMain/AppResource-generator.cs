@@ -21,7 +21,7 @@
 		/*
 		このソースは自動生成のため AppResource-generator.tt を編集すること。
 
-		生成元フィールド数: 63
+		生成元フィールド数: 66
 		*/
 		#region Icon: Application
 
@@ -1763,6 +1763,72 @@
 			get { return GetImage(AboutHistoryPath); }
 		}
 		#endregion AboutHistory
+		#region Image: AboutComponentKindImage
+
+		/// <summary>
+		/// [Image] AboutComponentKindImageのリソースパスを取得。
+		/// <para>/Resources/Image/About/AboutComponentKindImage.png</para>
+		/// </summary>
+		public static string AboutComponentKindImagePath
+		{
+			get { return aboutComponentKindImage; }
+		}
+
+		/// <summary>
+		/// [Image] AboutComponentKindImageのイメージソースを取得。
+		/// <para>初回のみ生成を行う。</para>
+		/// <para>AboutComponentKindImagePath: /Resources/Image/About/AboutComponentKindImage.png</para>
+		/// </summary>
+		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
+		public static BitmapSource AboutComponentKindImageImage
+		{
+			get { return GetImage(AboutComponentKindImagePath); }
+		}
+		#endregion AboutComponentKindImage
+		#region Image: AboutComponentKindLibrary
+
+		/// <summary>
+		/// [Image] AboutComponentKindLibraryのリソースパスを取得。
+		/// <para>/Resources/Image/About/AboutComponentKindLibrary.png</para>
+		/// </summary>
+		public static string AboutComponentKindLibraryPath
+		{
+			get { return aboutComponentKindLibrary; }
+		}
+
+		/// <summary>
+		/// [Image] AboutComponentKindLibraryのイメージソースを取得。
+		/// <para>初回のみ生成を行う。</para>
+		/// <para>AboutComponentKindLibraryPath: /Resources/Image/About/AboutComponentKindLibrary.png</para>
+		/// </summary>
+		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
+		public static BitmapSource AboutComponentKindLibraryImage
+		{
+			get { return GetImage(AboutComponentKindLibraryPath); }
+		}
+		#endregion AboutComponentKindLibrary
+		#region Image: AboutComponentKindSource
+
+		/// <summary>
+		/// [Image] AboutComponentKindSourceのリソースパスを取得。
+		/// <para>/Resources/Image/About/AboutComponentKindSource.png</para>
+		/// </summary>
+		public static string AboutComponentKindSourcePath
+		{
+			get { return aboutComponentKindSource; }
+		}
+
+		/// <summary>
+		/// [Image] AboutComponentKindSourceのイメージソースを取得。
+		/// <para>初回のみ生成を行う。</para>
+		/// <para>AboutComponentKindSourcePath: /Resources/Image/About/AboutComponentKindSource.png</para>
+		/// </summary>
+		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
+		public static BitmapSource AboutComponentKindSourceImage
+		{
+			get { return GetImage(AboutComponentKindSourcePath); }
+		}
+		#endregion AboutComponentKindSource
 		#region Image: SettingSetting
 
 		/// <summary>
