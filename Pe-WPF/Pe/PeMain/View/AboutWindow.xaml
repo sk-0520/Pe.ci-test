@@ -10,8 +10,8 @@
 	x:TypeArguments="AVM:AboutViewModel"
   Topmost="True"
 	Title="AboutWindow" 
-	Width="580"
-	Height="320" 
+	Width="640"
+	Height="240" 
 	ResizeMode="NoResize" WindowStartupLocation="CenterScreen" 
 	Icon="/PeMain;component/Resources/Icon/App.ico"
 >
@@ -35,77 +35,49 @@
 			<RowDefinition Height="Auto" />
 		</Grid.RowDefinitions>
 
-		<TabControl Grid.Row="0">
-			<TabItem Header="info" AA:Language.Word="about/information">
-				<Grid Margin="16">
-					<Grid.RowDefinitions>
-						<RowDefinition Height="*" />
-						<RowDefinition Height="Auto" />
-					</Grid.RowDefinitions>
+		<Grid Grid.Row="0" Margin="16">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="*" />
+			</Grid.RowDefinitions>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition Width="*" />
+			</Grid.ColumnDefinitions>
 
-					<StackPanel Grid.Row="0" Orientation="Horizontal">
-						<Grid Width="180">
-							<Grid.RowDefinitions>
-								<RowDefinition Height="Auto" />
-								<RowDefinition Height="Auto" />
-								<RowDefinition Height="Auto" />
-							</Grid.RowDefinitions>
-							<Grid.ColumnDefinitions>
-								<ColumnDefinition Width="Auto" />
-								<ColumnDefinition Width="*" />
-							</Grid.ColumnDefinitions>
+			<Grid Width="180" Grid.Row="0" Grid.Column="0">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="Auto" />
+				</Grid.RowDefinitions>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition Width="*" />
+				</Grid.ColumnDefinitions>
 
-							<Image
-								Grid.Row="0" Grid.RowSpan="2" Grid.Column="0"
-								Margin="4"
-								AA:IconSize.IconScale="Big"
-								Source="{x:Static AM:AppResource.ApplicationIconBig}"
-								Style="{StaticResource DefaultImage}"
-							/>
+				<Image
+					Grid.Row="0" Grid.RowSpan="2" Grid.Column="0"
+					Margin="4"
+					AA:IconSize.IconScale="Big"
+					Source="{x:Static AM:AppResource.ApplicationIconBig}"
+					Style="{StaticResource DefaultImage}"
+				/>
 
-							<TextBlock Grid.Row="0" Grid.Column="1" Text="{x:Static AM:Constants.ApplicationName}" VerticalAlignment="Center" />
-							<TextBlock Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" >
-								<Run Text="{x:Static AM:Constants.BuildType}" />
-								<Run Text=": " />
-								<Run Text="{x:Static AM:Constants.BuildProcess}" />
-								<Run Text="bit" />
-							</TextBlock>
+				<TextBlock Grid.Row="0" Grid.Column="1" Text="{x:Static AM:Constants.ApplicationName}" VerticalAlignment="Center" />
+				<TextBlock Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" >
+					<Run Text="{x:Static AM:Constants.BuildType}" />
+					<Run Text=": " />
+					<Run Text="{x:Static AM:Constants.BuildProcess}" />
+					<Run Text="bit" />
+				</TextBlock>
 
-							<TextBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" IsReadOnly="True" Text="{x:Static AM:Constants.ApplicationVersion}" Style="{StaticResource DefaultTextBox}" HorizontalAlignment="Left" />
+				<TextBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" IsReadOnly="True" Text="{x:Static AM:Constants.ApplicationVersion}" Style="{StaticResource DefaultTextBox}" HorizontalAlignment="Left" />
 
-						</Grid>
-						<StackPanel Margin="12,0,0,0">
-							<!--TODO: ださい-->
-							<TextBlock Style="{StaticResource LinkText}">
-								<Hyperlink Command="{Binding OpenLinkCommand}" CommandParameter="{x:Static AM:Constants.UriAbout}">
-									<TextBlock Text="web" AA:Language.Word="about/information/link/web" />
-								</Hyperlink>
-							</TextBlock>
-							<TextBlock Style="{StaticResource LinkText}">
-								<Hyperlink Command="{Binding OpenLinkCommand}" CommandParameter="{x:Static AM:Constants.MailAbout}">
-									<TextBlock Text="mail" AA:Language.Word="about/information/link/mail" />
-								</Hyperlink>
-							</TextBlock>
-							<TextBlock Style="{StaticResource LinkText}">
-								<Hyperlink Command="{Binding OpenLinkCommand}" CommandParameter="{x:Static AM:Constants.UriDevelopment}">
-									<TextBlock Text="dev" AA:Language.Word="about/information/link/dev" />
-								</Hyperlink>
-							</TextBlock>
-							<TextBlock Style="{StaticResource LinkText}">
-								<Hyperlink Command="{Binding OpenLinkCommand}" CommandParameter="{x:Static AM:Constants.UriForum}">
-									<TextBlock Text="forum" AA:Language.Word="about/information/link/forum" />
-								</Hyperlink>
-							</TextBlock>
-							<TextBlock Style="{StaticResource LinkText}">
-								<Hyperlink Command="{Binding ICommand}" CommandParameter="{x:Static AM:Constants.UriFeedback}">
-									<TextBlock Text="feedback" AA:Language.Word="about/information/link/feedback" />
-								</Hyperlink>
-							</TextBlock>
-						</StackPanel>
-					</StackPanel>
-
-					<StackPanel Grid.Row="1" Orientation="Horizontal">
-						<Label Content="copty" AA:Language.Word="about/information/copy" Style="{StaticResource HeaderLabel}" />
+				<StackPanel Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,8,0,0" Orientation="Vertical">
+					<Label Content="copty" AA:Language.Word="about/information/copy" Style="{StaticResource TitleLabel}" />
+					<StackPanel Orientation="Horizontal">
 						<TextBlock Style="{StaticResource LinkText}">
 							<Hyperlink Command="{Binding CopyLinkCommand}" CommandParameter="{x:Static AD:AboutCopyKind.Short}">
 								<TextBlock Text="short" AA:Language.Word="about/information/copy/short" />
@@ -117,29 +89,59 @@
 							</Hyperlink>
 						</TextBlock>
 					</StackPanel>
-				</Grid>
-			</TabItem>
-			<TabItem Header="component" AA:Language.Word="about/component">
-				<ListView ItemsSource="{Binding ComponentItems}">
-					<ListView.View>
-						<GridView>
-							<GridViewColumn Header="component" AA:Language.Word="about/component/component" >
-								<GridViewColumn.CellTemplate>
-									<DataTemplate>
-										<TextBlock>
+				</StackPanel>
+			</Grid>
+
+			<StackPanel Grid.Row="0" Grid.Column="1" Margin="12">
+				<!--TODO: ださい-->
+				<TextBlock Style="{StaticResource LinkText}">
+					<Hyperlink Command="{Binding OpenLinkCommand}" CommandParameter="{x:Static AM:Constants.UriAbout}">
+						<TextBlock Text="web" AA:Language.Word="about/information/link/web" />
+					</Hyperlink>
+				</TextBlock>
+				<TextBlock Style="{StaticResource LinkText}">
+					<Hyperlink Command="{Binding OpenLinkCommand}" CommandParameter="{x:Static AM:Constants.MailAbout}">
+						<TextBlock Text="mail" AA:Language.Word="about/information/link/mail" />
+					</Hyperlink>
+				</TextBlock>
+				<TextBlock Style="{StaticResource LinkText}">
+					<Hyperlink Command="{Binding OpenLinkCommand}" CommandParameter="{x:Static AM:Constants.UriDevelopment}">
+						<TextBlock Text="dev" AA:Language.Word="about/information/link/dev" />
+					</Hyperlink>
+				</TextBlock>
+				<TextBlock Style="{StaticResource LinkText}">
+					<Hyperlink Command="{Binding OpenLinkCommand}" CommandParameter="{x:Static AM:Constants.UriForum}">
+						<TextBlock Text="forum" AA:Language.Word="about/information/link/forum" />
+					</Hyperlink>
+				</TextBlock>
+				<TextBlock Style="{StaticResource LinkText}">
+					<Hyperlink Command="{Binding ICommand}" CommandParameter="{x:Static AM:Constants.UriFeedback}">
+						<TextBlock Text="feedback" AA:Language.Word="about/information/link/feedback" />
+					</Hyperlink>
+				</TextBlock>
+			</StackPanel>
+
+			<ListView Grid.Row="0" Grid.Column="2" ItemsSource="{Binding ComponentItems}">
+				<ListView.View>
+					<GridView>
+						<GridViewColumn Header="component" AA:Language.Word="about/component/component" >
+							<GridViewColumn.CellTemplate>
+								<DataTemplate>
+									<TextBlock>
 											<Hyperlink Command="{Binding OpenComponentCommand}">
 												<TextBlock Text="{Binding DisplayText}" />
 											</Hyperlink>
 										</TextBlock>
-									</DataTemplate>
-								</GridViewColumn.CellTemplate>
-							</GridViewColumn>
-							<GridViewColumn Header="license" AA:Language.Word="about/component/license" DisplayMemberBinding="{Binding License}" />
-						</GridView>
-					</ListView.View>
-				</ListView>
-			</TabItem>
-		</TabControl>
+								</DataTemplate>
+							</GridViewColumn.CellTemplate>
+						</GridViewColumn>
+						<GridViewColumn Header="license" AA:Language.Word="about/component/license" DisplayMemberBinding="{Binding License}" />
+					</GridView>
+				</ListView.View>
+			</ListView>
+
+		</Grid>
+
 
 		<Grid Grid.Row="1" Margin="4,4,4,4">
 			<Grid.Resources>
