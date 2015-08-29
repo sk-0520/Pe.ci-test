@@ -113,8 +113,7 @@
 			{
 				var result = CreateCommand(
 					o => {
-						// TODO: 他の関数と合わせたけどFromってなんだ
-						SaveFileFromDialog(LogItems);
+						SaveFileInDialog(LogItems);
 					}
 				);
 
@@ -140,7 +139,7 @@
 
 		#region function
 
-		bool SaveFileFromDialog(IEnumerable<LogItemModel> logItems)
+		bool SaveFileInDialog(IEnumerable<LogItemModel> logItems)
 		{
 			var filter = new DialogFilterList() {
 				new DialogFilterItem("log", "*.log")

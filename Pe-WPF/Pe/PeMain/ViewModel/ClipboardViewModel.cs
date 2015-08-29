@@ -177,7 +177,7 @@
 							return;
 						}
 
-						SaveFileFromDialog(SelectedViewModel);
+						SaveFileInDialog(SelectedViewModel);
 					}
 				);
 
@@ -200,7 +200,7 @@
 			return result;
 		}
 
-		bool SaveFileFromDialog(ClipboardItemViewModel vm)
+		bool SaveFileInDialog(ClipboardItemViewModel vm)
 		{
 			var srcFilters = new [] {
 				new DialogFilterValueItem<ClipboardType>(ClipboardType.Text, "text", "*.txt"),

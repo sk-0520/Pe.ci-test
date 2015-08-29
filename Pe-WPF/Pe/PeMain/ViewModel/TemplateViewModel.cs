@@ -210,7 +210,7 @@
 
 						SelectedViewModel.SetReplacedValue();
 						if (!string.IsNullOrEmpty(SelectedViewModel.Replaced)) {
-							SaveFileFromDialog(SelectedViewModel);
+							SaveFileInDialog(SelectedViewModel);
 						}
 					}
 				);
@@ -267,7 +267,7 @@
 			}
 		}
 
-		bool SaveFileFromDialog(TemplateItemViewModel vm)
+		bool SaveFileInDialog(TemplateItemViewModel vm)
 		{
 			CheckUtility.EnforceNotNullAndNotEmpty(vm.Replaced);
 
