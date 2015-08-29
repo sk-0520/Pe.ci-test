@@ -102,7 +102,9 @@
 		const string templateReplace = "/Resources/Image/Template/TemplateReplace.png";
 		[AppResource(AppResourceType.Image)]
 		const string templateProgrammable = "/Resources/Image/Template/TemplateProgrammable.png";
-
+		[AppResource(AppResourceType.Image)]
+		const string templatePreview = "/Resources/Image/Template/TemplatePreview.png";
+		
 		[AppResource(AppResourceType.Image)]
 		const string clipboardClipboard = "/Resources/Image/Clipboard/Clipboard.png";
 		[AppResource(AppResourceType.Image)]

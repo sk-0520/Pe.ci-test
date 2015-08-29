@@ -21,7 +21,7 @@
 		/*
 		このソースは自動生成のため AppResource-generator.tt を編集すること。
 
-		生成元フィールド数: 66
+		生成元フィールド数: 67
 		*/
 		#region Icon: Application
 
@@ -1257,6 +1257,28 @@
 			get { return GetImage(TemplateProgrammablePath); }
 		}
 		#endregion TemplateProgrammable
+		#region Image: TemplatePreview
+
+		/// <summary>
+		/// [Image] TemplatePreviewのリソースパスを取得。
+		/// <para>/Resources/Image/Template/TemplatePreview.png</para>
+		/// </summary>
+		public static string TemplatePreviewPath
+		{
+			get { return templatePreview; }
+		}
+
+		/// <summary>
+		/// [Image] TemplatePreviewのイメージソースを取得。
+		/// <para>初回のみ生成を行う。</para>
+		/// <para>TemplatePreviewPath: /Resources/Image/Template/TemplatePreview.png</para>
+		/// </summary>
+		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
+		public static BitmapSource TemplatePreviewImage
+		{
+			get { return GetImage(TemplatePreviewPath); }
+		}
+		#endregion TemplatePreview
 		#region Image: ClipboardClipboard
 
 		/// <summary>

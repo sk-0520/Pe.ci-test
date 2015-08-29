@@ -161,7 +161,13 @@
 			</Grid>
 			<GridSplitter Grid.Column="1" Style="{StaticResource DefaultVericalGridSplitter}" />
 			<TabControl x:Name="content" Grid.Column="2" IsEnabled="{Binding SelectedViewModel, Converter={StaticResource LogicalIsNotNullConverter}}">
-				<TabItem x:Name="pageSource" Header="source" AA:Language.Word="template/item/source">
+				<TabItem x:Name="pageSource">
+					<TabItem.Header>
+						<StackPanel Orientation="Horizontal">
+							<Image Source="{x:Static AM:AppResource.TemplateTemplateImage}" Style="{StaticResource DefaultImage}" />
+							<TextBlock Text="source" AA:Language.Word="template/item/source" />
+						</StackPanel>
+					</TabItem.Header>
 					<Grid>
 						<Grid.RowDefinitions>
 							<RowDefinition Height="Auto" />
@@ -223,7 +229,13 @@
 						</Grid>
 					</Grid>
 				</TabItem>
-				<TabItem Header="preview" AA:Language.Word="template/item/preview" IsEnabled="{Binding SelectedViewModel.IsReplace}" IsSelected="{Binding SelectedViewModel.ReplaceViewSelected}">
+				<TabItem IsEnabled="{Binding SelectedViewModel.IsReplace}" IsSelected="{Binding SelectedViewModel.ReplaceViewSelected}">
+					<TabItem.Header>
+						<StackPanel Orientation="Horizontal">
+							<Image Source="{x:Static AM:AppResource.TemplatePreviewImage}" Style="{StaticResource DefaultImage}" />
+							<TextBlock Text="preview" AA:Language.Word="template/item/preview" />
+						</StackPanel>
+					</TabItem.Header>
 					<TextBox
 						IsReadOnly="True"
 						HorizontalScrollBarVisibility="Auto"
