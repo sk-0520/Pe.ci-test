@@ -146,18 +146,24 @@
 			var filter = new DialogFilterList() {
 				new DialogFilterItem(NonProcess.Language["dialog/filter/log"], Constants.dialogFilterLog),
 			};
-			var dialog = new SaveFileDialog() {
-				AddExtension = true,
-				CheckPathExists = true,
-				ValidateNames = true,
-				Filter = filter.FilterText,
-				InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory),
-				FileName = Constants.GetNowTimestampFileName(),
-			};
+			//var dialog = new SaveFileDialog() {
+			//	AddExtension = true,
+			//	CheckPathExists = true,
+			//	ValidateNames = true,
+			//	Filter = filter.FilterText,
+			//	InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory),
+			//	FileName = Constants.GetNowTimestampFileName(),
+			//};
 
-			var dialogResult = dialog.ShowDialog();
-			if (dialogResult.GetValueOrDefault()) {
-				return SaveFile(dialog.FileName, logItems);
+			//var dialogResult = dialog.ShowDialog();
+			//if (dialogResult.GetValueOrDefault()) {
+			//	return SaveFile(dialog.FileName, logItems);
+			//} else {
+			//	return false;
+			//}
+			var dialogResut = DialogUtility.ShowSaveFileDialog(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), Constants.GetNowTimestampFileName(), filter);
+			if(dialogResut != null) {
+				return SaveFile(dialogResut, logItems);
 			} else {
 				return false;
 			}

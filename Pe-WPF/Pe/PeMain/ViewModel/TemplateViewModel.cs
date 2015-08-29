@@ -279,19 +279,25 @@
 			if(string.IsNullOrWhiteSpace(name)) {
 				name = Constants.GetNowTimestampFileName();
 			}
-			var dialog = new SaveFileDialog() {
-				Filter = filter.FilterText,
-				FilterIndex = 0,
-				AddExtension = true,
-				CheckPathExists = true,
-				ValidateNames = true,
-				InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory),
-				FileName = name,
-			};
+			//var dialog = new SaveFileDialog() {
+			//	Filter = filter.FilterText,
+			//	FilterIndex = 0,
+			//	AddExtension = true,
+			//	CheckPathExists = true,
+			//	ValidateNames = true,
+			//	InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory),
+			//	FileName = name,
+			//};
+			var dialogResult = DialogUtility.ShowSaveFileDialog(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), name, filter);
 
-			var dialogResult = dialog.ShowDialog();
-			if (dialogResult.GetValueOrDefault()) {
-				return SaveFile(dialog.FileName, vm);
+			//var dialogResult = dialog.ShowDialog();
+			//if(dialogResult.GetValueOrDefault()) {
+			//	return SaveFile(dialog.FileName, vm);
+			//} else {
+			//	return false;
+			//}
+			if(dialogResult != null) {
+				return SaveFile(dialogResult, vm);
 			} else {
 				return false;
 			}
