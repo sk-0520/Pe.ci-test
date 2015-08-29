@@ -18,7 +18,7 @@
 	{
 		#region define
 
-		const string _rootDirectoryName = Constants.programName;
+		//const string _rootDirectoryName = Constants.applicationName;
 
 		static readonly string _baseDirPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 
@@ -70,7 +70,7 @@
 		/// <summary>
 		/// ユーザールートディレクトリ。
 		/// </summary>
-		public string UserDirectoryPath { get { return Path.Combine(_settingRootDirectoryPath, _rootDirectoryName); } }
+		public string UserDirectoryPath { get { return Path.Combine(_settingRootDirectoryPath, Constants.ApplicationName); } }
 		/// <summary>
 		/// ユーザー設定ディレクトリ。
 		/// </summary>

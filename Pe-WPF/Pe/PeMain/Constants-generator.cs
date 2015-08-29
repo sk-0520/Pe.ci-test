@@ -21,18 +21,29 @@
 		/*
 		このソースは自動生成のため Constants-generator.tt を編集すること。
 
-		生成元ConstantsPropertyフィールド数: 1
+		生成元ConstantsPropertyフィールド数: 2
 		生成元ConstantsRangeフィールド数: 16
 		*/
 
 		// ConstantsPropertyAttribute
-		#region programName
+		#region acceptVersion
 
-		public static String ProgramName
+		public static Version AcceptVersion
 		{
 			get
 			{
-				return programName;
+				return acceptVersion;
+			}
+		}
+
+		#endregion
+		#region applicationName
+
+		public static String ApplicationName
+		{
+			get
+			{
+				return applicationName;
 			}
 		}
 

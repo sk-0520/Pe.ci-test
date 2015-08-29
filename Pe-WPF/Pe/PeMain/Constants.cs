@@ -22,16 +22,17 @@
 	public static partial class Constants
 	{
 		[ConstantsProperty]
-		public const string programName = "Pe-WPF";
+		const string applicationName = "Pe-WPF";
 		public const string updateProgramDirectoryName = "Updater";
 		public const string updateProgramName = updateProgramDirectoryName + ".exe";
 		/// <summary>
 		/// 前回バージョンがこれ未満なら使用許諾を表示
 		/// </summary>
+		[ConstantsProperty]
 		public static readonly Version acceptVersion = new Version(0, 0, 0, 0);
 
 #if DEBUG
-		public const string shortcutName = programName + "(DEBUG).lnk";
+		public const string shortcutName = applicationName + "(DEBUG).lnk";
 #elif BETA
 		public const string shortcutName = programName + "(BETA).lnk";
 #else
@@ -326,7 +327,7 @@
 
 		#region property
 
-		public static string ApplicationName { get { return programName; } }
+		//public static string ApplicationName { get { return applicationName; } }
 		public static string BuildType { get { return buildType; } }
 		public static string BuildProcess { get { return buildProcess; } }
 		public static string ApplicationVersion { get { return applicationVersion; } }

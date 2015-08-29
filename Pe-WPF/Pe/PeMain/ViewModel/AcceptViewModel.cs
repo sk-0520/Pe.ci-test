@@ -93,7 +93,7 @@
 				{"FEEDBACK", Constants.UriFeedback },
 				{"HELP", Constants.UriHelp },
 				{"STYLE", File.ReadAllText(Path.Combine(Constants.ApplicationStyleDirectoryPath, Constants.styleCommonFileName), Encoding.UTF8) },
-				{"APP", Constants.programName },
+				{"APP", Constants.ApplicationName },
 				{"OK", language["accept/ok"] },
 				{"NG", language["accept/ng"] },
 				{"CHECK-RELEASE", language["update-check/release"] },
