@@ -89,7 +89,7 @@
 		public const string dialogFilterText = "*.txt";
 		public const string dialogFilterRtf = "*.rtf";
 		public const string dialogFilterHtml = "*.html";
-		public const string dialogFilterImage = "*.png";
+		public const string dialogFilterPng = "*.png";
 		public const string dialogFilterLog = "*.log";
 		public const string dialogFilterAll = "*.*";
 

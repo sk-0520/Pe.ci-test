@@ -15,6 +15,7 @@
 	using ContentTypeTextNet.Library.SharedLibrary.Data;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 	using ContentTypeTextNet.Pe.Library.PeData.Define;
@@ -203,10 +204,10 @@
 		bool SaveFileInDialog(ClipboardItemViewModel vm)
 		{
 			var srcFilters = new [] {
-				new DialogFilterValueItem<ClipboardType>(ClipboardType.Text, "text", "*.txt"),
-				new DialogFilterValueItem<ClipboardType>(ClipboardType.Rtf, "rtf", "*.rtf"),
-				new DialogFilterValueItem<ClipboardType>(ClipboardType.Html, "html", "*.html"),
-				new DialogFilterValueItem<ClipboardType>(ClipboardType.Image, "image", "*.png"),
+				new DialogFilterValueItem<ClipboardType>(ClipboardType.Text, AppNonProcess.Language["dialog/filter/txt"], Constants.dialogFilterText),
+				new DialogFilterValueItem<ClipboardType>(ClipboardType.Rtf, AppNonProcess.Language["dialog/filter/rtf"], Constants.dialogFilterRtf),
+				new DialogFilterValueItem<ClipboardType>(ClipboardType.Html, AppNonProcess.Language["dialog/filter/html"], Constants.dialogFilterHtml),
+				new DialogFilterValueItem<ClipboardType>(ClipboardType.Image, AppNonProcess.Language["dialog/filter/png"], Constants.dialogFilterPng),
 			};
 			var filter = new DialogFilterList();
 
@@ -230,12 +231,18 @@
 				return false;
 			}
 
+			var name = PathUtility.ToSafeNameDefault(vm.Model.Name);
+			if(string.IsNullOrWhiteSpace(name)) {
+				name = Constants.GetNowTimestampFileName();
+			}
 			var dialog = new SaveFileDialog() {
 				Filter = filter.FilterText,
 				FilterIndex = defIndex,
 				AddExtension = true,
 				CheckPathExists = true,
 				ValidateNames = true,
+				InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory),
+				FileName = name,
 			};
 
 			var dialogResult = dialog.ShowDialog();
