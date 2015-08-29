@@ -10,9 +10,10 @@
 	{
 		#region common
 
-		public const string application = "APPLICATION";
+		public const string applicationName = "APPLICATION:NAME";
 		public const string applicationVersion = "APPLICATION:VERSION";
-		public const string applicationRevision = "APPLICATION:REVISION";
+		public const string applicationVersionNumber = "APPLICATION:VERSION-NUMBER";
+		public const string applicationVersionRevision = "APPLICATION:VERSION-REVISION";
 
 		public const string timestamp = "TIMESTAMP";
 		public const string year = "Y";

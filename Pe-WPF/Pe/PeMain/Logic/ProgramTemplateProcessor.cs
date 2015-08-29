@@ -50,14 +50,14 @@
 
 		protected void ResetVariable()
 		{
-			//var clipboardItem = ClipboardUtility.GetClipboardData(ClipboardType.Text, IntPtr.Zero, Logger);
+			var clipboardData = ClipboardUtility.GetClipboardData(ClipboardType.Text, IntPtr.Zero, Logger);
 
-			//Variable[TemplateProgramLanguageName.timestamp] = DateTime.Now;
-			//Variable[TemplateProgramLanguageName.clipboard] = clipboardItem.Text ?? string.Empty;
-			//Variable[TemplateProgramLanguageName.application] = Literal.programName;
-			//Variable[TemplateProgramLanguageName.versionFull] = Literal.ApplicationVersion;
-			//Variable[TemplateProgramLanguageName.versionNumber] = Literal.Version.FileVersion;
-			//Variable[TemplateProgramLanguageName.versionHash] = Literal.Version.ProductVersion;
+			Variable[TemplateReplaceKey.programTimestamp] = DateTime.Now;
+			Variable[TemplateReplaceKey.programClipboard] = clipboardData.Body.Text ?? string.Empty;
+			Variable[TemplateReplaceKey.programApplicationName] = Constants.ApplicationName;
+			Variable[TemplateReplaceKey.programApplicationVersion] = Constants.ApplicationVersion;
+			Variable[TemplateReplaceKey.programApplicationVersionNumber] = Constants.ApplicationVersionNumber;
+			Variable[TemplateReplaceKey.programApplicationVersionRevision] = Constants.ApplicationVersionRevision;
 		}
 
 		#endregion

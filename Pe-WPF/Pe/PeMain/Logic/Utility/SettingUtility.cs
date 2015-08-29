@@ -124,7 +124,7 @@
 		{
 			CheckUtility.EnforceNotNull(model);
 
-			model.LastExecuteVersion = Constants.assemblyVersion;
+			model.LastExecuteVersion = Constants.applicationVersionNumber;
 			model.ExecuteCount += 1;
 		}
 

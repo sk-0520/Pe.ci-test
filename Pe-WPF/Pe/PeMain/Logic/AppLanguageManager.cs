@@ -15,9 +15,10 @@
 		public static IDictionary<string, string> GetAppMap(DateTime dateTime, ILanguage language)
 		{
 			var appMap = new Dictionary<string, string>() {
-				{ LanguageKey.application,          Constants.ApplicationName },
-				{ LanguageKey.applicationVersion,  Constants.ApplicationVersion },
-				{ LanguageKey.applicationRevision, Constants.ApplicationRevision },
+				{ LanguageKey.applicationName,            Constants.ApplicationName },
+				{ LanguageKey.applicationVersion,         Constants.ApplicationVersion },
+				{ LanguageKey.applicationVersionNumber,   Constants.ApplicationVersionNumber.ToString() },
+				{ LanguageKey.applicationVersionRevision, Constants.ApplicationVersionRevision },
 
 				{ LanguageKey.timestamp,      dateTime.ToString() },
 				{ LanguageKey.year,           dateTime.Year.ToString() },

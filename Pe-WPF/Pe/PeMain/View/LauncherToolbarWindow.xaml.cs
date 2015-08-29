@@ -80,7 +80,7 @@
 				CommonData.Logger.Information("create toolbar", screen);
 				CommonData.MainSetting.Toolbar.Items.Add(toolbar);
 			}
-			SettingUtility.InitializeToolbarItem(toolbar, Constants.assemblyVersion, CommonData.NonProcess);
+			SettingUtility.InitializeToolbarItem(toolbar, Constants.applicationVersionNumber, CommonData.NonProcess);
 			model.Toolbar = toolbar;
 
 			ViewModel = new LauncherToolbarViewModel(model, this, screen, CommonData.NonProcess, CommonData.AppSender);

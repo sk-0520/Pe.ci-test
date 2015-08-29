@@ -268,17 +268,17 @@
 		/// </summary>
 		public static readonly string applicationRootDirectoryPath = Path.GetDirectoryName(applicationExecutablePath);
 		/// <summary>
-		/// アセンブリバージョン。
+		/// バージョン番号。
 		/// </summary>
-		public static readonly Version assemblyVersion = Assembly.GetExecutingAssembly().GetName().Version;
+		public static readonly Version applicationVersionNumber = Assembly.GetExecutingAssembly().GetName().Version;
 		/// <summary>
-		/// 識別リビジョン。
+		/// バージョンリビジョン。
 		/// </summary>
-		public static readonly string applicationRevision = FileVersionInfo.GetVersionInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).ProductVersion;
+		public static readonly string applicationVersionRevision = FileVersionInfo.GetVersionInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).ProductVersion;
 		/// <summary>
 		/// アプリケーションバージョン。
 		/// </summary>
-		public static readonly string applicationVersion = assemblyVersion.ToString() + "-" + applicationRevision;
+		public static readonly string applicationVersion = applicationVersionNumber.ToString() + "-" + applicationVersionRevision;
 		/// <summary>
 		/// スタートアップ用ショートカットファイルパス。
 		/// </summary>
@@ -328,8 +328,9 @@
 		public static string ApplicationName { get { return programName; } }
 		public static string BuildType { get { return buildType; } }
 		public static string BuildProcess { get { return buildProcess; } }
-		public static string ApplicationRevision { get { return applicationRevision; } }
 		public static string ApplicationVersion { get { return applicationVersion; } }
+		public static Version ApplicationVersionNumber { get { return applicationVersionNumber; } }
+		public static string ApplicationVersionRevision { get { return applicationVersionRevision; } }
 
 		/// <summary>
 		/// bin/
