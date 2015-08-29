@@ -203,6 +203,9 @@
 										<i:InvokeCommandAction Command="{Binding InsertKeywordCommand}" />
 									</i:EventTrigger>
 								</i:Interaction.Triggers>
+								<ListBox.InputBindings>
+									<KeyBinding Key="Enter" Command="{Binding InsertKeywordCommand}" />
+								</ListBox.InputBindings>
 								<ListBox.ItemTemplate>
 									<DataTemplate>
 										<StackPanel Margin="4">
