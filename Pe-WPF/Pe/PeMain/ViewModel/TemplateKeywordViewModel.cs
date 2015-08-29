@@ -10,10 +10,11 @@ using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 
 	public class TemplateKeywordViewModel: ViewModelBase, IHavingNonProcess
 	{
-		public TemplateKeywordViewModel(string key, bool isProgram, INonProcess nonProcess)
+		public TemplateKeywordViewModel(string key, bool isProgram, Tuple<string,string> bracket, INonProcess nonProcess)
 		{
 			Key = key;
 			IsProgram = isProgram;
+			Bracket = bracket;
 			NonProcess = nonProcess;
 		}
 
@@ -21,10 +22,10 @@ using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 
 		bool IsProgram { get; set; }
 
-		public string Key { get; private set; }
+		string Key { get; set; }
 
-		public string KeywordTitle { get { return Key; } }
-		public string KeywordComment { 
+		public string Title { get { return Key; } }
+		public string Comment { 
 			get{
 				string langKey;
 				if(IsProgram) {
@@ -36,6 +37,15 @@ using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 				return NonProcess.Language[langKey + "/" + Key];
 			} 
 		}
+		public string Keyword
+		{
+			get
+			{
+				return Key;
+			}
+		}
+
+		Tuple<string,string> Bracket { get; set; }
 
 		/// <summary>
 		/// Nameの示す型。
@@ -47,21 +57,6 @@ using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 		public bool CaretInSpace { get; set; }
 
 
-		#endregion
-
-		#region function
-		/// <summary>
-		/// Typeをキャストとして適応する。
-		/// </summary>
-		/// <param name="word"></param>
-		/// <returns></returns>
-		string GetReplaceWord(string word)
-		{
-			if(Type != null) {
-				return string.Format("({0}){1}", Type.Name, word);
-			}
-			return word;
-		}
 		#endregion
 
 		#region IHavingNonProcess

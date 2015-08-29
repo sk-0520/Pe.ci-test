@@ -122,15 +122,16 @@
 						var typeMap = TemplateReplaceKey.ProgramTypes;
 						return TemplateReplaceKey
 							.ProgramKeyList
-							.Select(k => new TemplateKeywordViewModel(k, SelectedViewModel.IsProgrammableReplace, AppNonProcess) {
-								Type = TemplateReplaceKey.ProgramTypes[k],
-								CaretInSpace = TemplateReplaceKey.caretInSpaceKeys.Any(s => s == k)
+							.Select(k => new { Key = k, CaretInSpace = TemplateReplaceKey.caretInSpaceKeys.Any(s => s == k) })
+							.Select(v => new TemplateKeywordViewModel(v.Key, SelectedViewModel.IsProgrammableReplace, v.CaretInSpace ? Tuple.Create("app[", "]"): null, AppNonProcess) {
+								Type = TemplateReplaceKey.ProgramTypes[v.Key],
+								CaretInSpace = v.CaretInSpace,
 							})
 						;
 					} else {
 						return TemplateReplaceKey
 							.TextKeyList
-							.Select(k => new TemplateKeywordViewModel(k, SelectedViewModel.IsProgrammableReplace, AppNonProcess))
+							.Select(k => new TemplateKeywordViewModel(k, SelectedViewModel.IsProgrammableReplace, Tuple.Create("@[", "]"), AppNonProcess))
 						;
 					}
 				} else {
@@ -275,7 +276,7 @@
 							return;
 						}
 
-						var keyword = SelectedKeyword.Key;
+						var keyword = SelectedKeyword.Keyword;
 
 						if(HasView) {
 							var editControl = View.editSource;
