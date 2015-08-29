@@ -27,11 +27,13 @@
 	using ContentTypeTextNet.Pe.PeMain.View;
 	using Microsoft.Win32;
 
-	public class LoggingViewModel : HavingViewSingleModelWrapperViewModelBase<LoggingSettingModel, LoggingWindow>, ILogAppender, IWindowStatus
+	public class LoggingViewModel : HavingViewSingleModelWrapperViewModelBase<LoggingSettingModel, LoggingWindow>, ILogAppender, IWindowStatus, IHavingNonProcess
 	{
-		public LoggingViewModel(LoggingSettingModel model, LoggingWindow view, CollectionModel<LogItemModel> logItems)
+		public LoggingViewModel(LoggingSettingModel model, LoggingWindow view, CollectionModel<LogItemModel> logItems, INonProcess nonProcess)
 			: base(model, view)
 		{
+			NonProcess = nonProcess;
+
 			if(logItems != null) {
 				LogItems = logItems;
 			} else {
@@ -142,13 +144,15 @@
 		bool SaveFileInDialog(IEnumerable<LogItemModel> logItems)
 		{
 			var filter = new DialogFilterList() {
-				new DialogFilterItem("log", "*.log")
+				new DialogFilterItem(NonProcess.Language["dialog/filter/log"], Constants.dialogFilterLog),
 			};
 			var dialog = new SaveFileDialog() {
 				AddExtension = true,
 				CheckPathExists = true,
 				ValidateNames = true,
 				Filter = filter.FilterText,
+				InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory),
+				FileName = Constants.GetNowTimestampFileName(),
 			};
 
 			var dialogResult = dialog.ShowDialog();
@@ -208,6 +212,12 @@
 				LogItems.Add(item);
 			}
 		}
+
+		#endregion
+
+		#region IHavingNonProcess
+
+		public INonProcess NonProcess { get; private set; }
 
 		#endregion
 

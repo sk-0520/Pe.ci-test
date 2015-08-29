@@ -86,6 +86,13 @@
 		public const string languageDefaultFileName = "default.xml";
 		public const string languageSearchPattern = "*.xml";
 
+		public const string dialogFilterText = "*.txt";
+		public const string dialogFilterRtf = "*.rtf";
+		public const string dialogFilterHtml = "*.html";
+		public const string dialogFilterImage = "*.png";
+		public const string dialogFilterLog = "*.log";
+		public const string dialogFilterAll = "*.*";
+
 		public const string timestampFileName = "yyyy-MM-dd_HH-mm-ss";
 
 		public const string languageAcceptDocumentExtension = "accept.html";

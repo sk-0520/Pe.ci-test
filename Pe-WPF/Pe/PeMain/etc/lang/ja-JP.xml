@@ -36,7 +36,13 @@
 
 		<Item Id="common/ok" Word="${ok}"  />
 		<Item Id="common/cancel" Word="${cancel}"  />
-		
+
+		<Item Id="dialog/filter/txt" Word="テキスト形式" />
+		<Item Id="dialog/filter/rtf" Word="リッチテキスト形式" />
+		<Item Id="dialog/filter/html" Word="HTML形式" />
+		<Item Id="dialog/filter/png" Word="PNG形式" />
+		<Item Id="dialog/filter/log" Word="ログ形式" />
+		<Item Id="dialog/filter/*" Word="全て" />
 		
 		<Item Id="accept/ok" Word="使用する" />
 		<Item Id="accept/ng" Word="使用しない" />
