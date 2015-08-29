@@ -34,9 +34,9 @@
 #if DEBUG
 		public const string shortcutName = applicationName + "(DEBUG).lnk";
 #elif BETA
-		public const string shortcutName = programName + "(BETA).lnk";
+		public const string shortcutName = applicationName + "(BETA).lnk";
 #else
-		public const string shortcutName = programName + ".lnk";
+		public const string shortcutName = applicationName + ".lnk";
 #endif
 #if DEBUG
 		public const string buildType = "DEBUG";
