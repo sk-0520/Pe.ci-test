@@ -21,10 +21,24 @@
 		/*
 		このソースは自動生成のため Constants-generator.tt を編集すること。
 
+		生成元ConstantsPropertyフィールド数: 1
 		生成元ConstantsRangeフィールド数: 16
 		*/
 
-		// TripleRange
+		// ConstantsPropertyAttribute
+		#region programName
+
+		public static String ProgramName
+		{
+			get
+			{
+				return programName;
+			}
+		}
+
+		#endregion
+
+		// ConstantsRangeAttribute
 		#region streamFontSize
 
 		/// <summary>

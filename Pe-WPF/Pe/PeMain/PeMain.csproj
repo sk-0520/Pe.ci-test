@@ -133,6 +133,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Constants-generator.tt</DependentUpon>
     </Compile>
+    <Compile Include="ConstantsPropertyAttribute.cs">
+      <DependentUpon>Constants.cs</DependentUpon>
+    </Compile>
     <Compile Include="ConstantsRangeAttribute.cs">
       <DependentUpon>Constants.cs</DependentUpon>
     </Compile>

@@ -21,6 +21,7 @@
 	/// </summary>
 	public static partial class Constants
 	{
+		[ConstantsProperty]
 		public const string programName = "Pe-WPF";
 		public const string updateProgramDirectoryName = "Updater";
 		public const string updateProgramName = updateProgramDirectoryName + ".exe";

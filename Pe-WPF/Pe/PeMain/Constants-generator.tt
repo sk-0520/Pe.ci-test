@@ -34,19 +34,48 @@ namespace ContentTypeTextNet.Pe.PeMain
 <#
 var type = typeof(Constants);
 var fieldInfos = type.GetFields(BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
+var usingPropertyFieldInfos = fieldInfos
+	.Select(fi => new { FieldInfo = fi, Attribute = fi.GetCustomAttribute(typeof(ConstantsPropertyAttribute), true) as ConstantsPropertyAttribute })
+	.Where(fa => fa.Attribute != null)
+	.ToArray()
+;
 var usingRangeFieldInfos = fieldInfos
 	.Select(fi => new { FieldInfo = fi, Attribute = fi.GetCustomAttribute(typeof(ConstantsRangeAttribute), true) as ConstantsRangeAttribute })
 	.Where(fa => fa.Attribute != null)
 	.ToArray()
 ;
+
 #>
 		/*
 		このソースは自動生成のため Constants-generator.tt を編集すること。
 
+		生成元ConstantsPropertyフィールド数: <#= usingPropertyFieldInfos.Length #>
 		生成元ConstantsRangeフィールド数: <#= usingRangeFieldInfos.Length #>
 		*/
 
-		// TripleRange
+		// ConstantsPropertyAttribute
+<#
+	foreach(var fa in usingPropertyFieldInfos) {
+		var baseName = fa.FieldInfo.Name.ToUpper()[0] + fa.FieldInfo.Name.Substring(1);
+		var fieldType = Generator.GetGenericType(fa.FieldInfo.FieldType);
+
+#>
+		#region <#= fa.FieldInfo.Name #>
+
+		public static <#= fieldType #> <#= baseName #>
+		{
+			get
+			{
+				return <#= fa.FieldInfo.Name #>;
+			}
+		}
+
+		#endregion
+<#
+	}
+#>
+
+		// ConstantsRangeAttribute
 <#
 	foreach(var fa in usingRangeFieldInfos) {
 		var reg = new Regex(@"(?<NAME>\w.*)(?<UNIT>[A-Z]\w+)");
