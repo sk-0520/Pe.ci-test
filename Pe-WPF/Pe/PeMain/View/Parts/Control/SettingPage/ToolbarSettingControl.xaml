@@ -54,9 +54,6 @@
 				</Grid>
 			</GroupBox.Header>
 			<Grid>
-				<Grid.Resources>
-					<Style TargetType="ComboBox" BasedOn="{StaticResource DefaultComboBox}" />
-				</Grid.Resources>
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="Auto"/>
 					<ColumnDefinition Width="*"/>
@@ -71,7 +68,7 @@
 					<RowDefinition Height="Auto" />
 				</Grid.RowDefinitions>
 				<Label Grid.Row="0" Grid.Column="0" Content="group" AA:Language.Word="toolbar-setting/toolbar/group" Style="{StaticResource HeaderLabel}" />
-				<ComboBox Grid.Column="1" ItemsSource="{Binding DefaultGroupList}" SelectedValue="{Binding SelectedToolbar.DefaultGroupId}" SelectedIndex="{Binding DefaultGroupIndex}" SelectedValuePath="Id" >
+				<ComboBox Grid.Column="1" SelectedValuePath="Id" ItemsSource="{Binding DefaultGroupList}" SelectedValue="{Binding SelectedToolbar.DefaultGroupId}" SelectedIndex="{Binding DefaultGroupIndex}" Style="{StaticResource DefaultComboBox}" >
 					<ComboBox.ItemTemplate>
 						<ItemContainerTemplate>
 							<ContentPresenter Content="{Binding Converter={StaticResource DisplayTextConverter}}" />
@@ -80,7 +77,7 @@
 				</ComboBox>
 
 				<Label Grid.Row="1" Grid.Column="0" Content="dock" AA:Language.Word="toolbar-setting/toolbar/position" Style="{StaticResource HeaderLabel}" />
-				<ComboBox Grid.Column="1" Grid.Row="1" ItemsSource="{Binding Source={x:Static AP:EnumList.DockTypeList}}" SelectedItem="{Binding SelectedToolbar.DockType, Mode=TwoWay}">
+				<ComboBox Grid.Column="1" Grid.Row="1" ItemsSource="{Binding Source={x:Static AP:EnumList.DockTypeList}}" SelectedItem="{Binding SelectedToolbar.DockType, Mode=TwoWay}" Style="{StaticResource DefaultComboBox}">
 					<ComboBox.Resources>
 						<windows:Size x:Key="ImageSize" Width="16" Height="16" />
 					</ComboBox.Resources>
@@ -102,7 +99,7 @@
 				</ComboBox>
 
 				<Label Grid.Row="2" Grid.Column="0" Content="icon" AA:Language.Word="toolbar-setting/toolbar/icon" Style="{StaticResource HeaderLabel}" />
-				<ComboBox Grid.Column="1" Grid.Row="2" ItemsSource="{Binding Source={x:Static AP:EnumList.PlainIconScaleList}}" SelectedItem="{Binding SelectedToolbar.IconScale, Mode=TwoWay}" >
+				<ComboBox Grid.Column="1" Grid.Row="2" ItemsSource="{Binding Source={x:Static AP:EnumList.PlainIconScaleList}}" SelectedItem="{Binding SelectedToolbar.IconScale, Mode=TwoWay}"  Style="{StaticResource DefaultComboBox}">
 					<ComboBox.ItemTemplate>
 						<DataTemplate>
 							<TextBlock>
