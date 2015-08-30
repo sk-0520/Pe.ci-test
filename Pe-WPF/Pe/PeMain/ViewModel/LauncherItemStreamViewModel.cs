@@ -52,6 +52,8 @@
 			} else {
 				OutputStream = new FlowDocument();
 			}
+
+			Process.Exited += Process_Exited;
 		}
 
 		#region property
@@ -237,11 +239,14 @@
 
 		#region function
 
+		public void SetProcess()
+		{
+
+		}
+
 		public void Start()
 		{
 			Process.EnableRaisingEvents = true;
-			Process.Exited += Process_Exited;
-			Process.Start();
 
 			Debug.Assert(Model.StdStream.OutputWatch);
 			OutputTask = Task.Run(() => ReceiveOutput(Process.StandardOutput, true));

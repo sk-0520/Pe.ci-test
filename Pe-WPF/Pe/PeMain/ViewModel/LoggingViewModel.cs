@@ -13,6 +13,7 @@
 	using System.Windows.Input;
 	using System.Windows.Threading;
 	using ContentTypeTextNet.Library.SharedLibrary.Data;
+	using ContentTypeTextNet.Library.SharedLibrary.Define;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
@@ -180,6 +181,27 @@
 			return true;
 		}
 
+		void ShowTrigger(LogItemModel item)
+		{
+			var map = new Dictionary<LogKind, bool>() {
+				{ LogKind.Debug, Model.ShowTriggerDebug },
+				{ LogKind.Trace, Model.ShowTriggerTrace },
+				{ LogKind.Information, Model.ShowTriggerInformation },
+				{ LogKind.Warning, Model.ShowTriggerWarning },
+				{ LogKind.Error, Model.ShowTriggerError },
+				{ LogKind.Fatal, Model.ShowTriggerFatal },
+			};
+			if(map[item.LogKind]) {
+				if(HasView) {
+					View.Dispatcher.BeginInvoke(new Action(() => {
+					IsVisible = true;
+					}));
+				} else {
+					IsVisible = true;
+				}
+			}
+		}
+
 		#endregion
 
 		#region HavingViewSingleModelWrapperViewModelBase
@@ -211,11 +233,18 @@
 			if(HasView) {
 				View.Dispatcher.BeginInvoke(new Action(() => {
 					LogItems.Add(item);
-					View.listLog.SelectedItem = item;
-					View.listLog.ScrollIntoView(item);
 				}));
 			} else {
 				LogItems.Add(item);
+			}
+			if(Model.AddShow) {
+				ShowTrigger(item);
+			}
+			if(HasView) {
+				View.Dispatcher.BeginInvoke(new Action(() => {
+					View.listLog.SelectedItem = item;
+					View.listLog.ScrollIntoView(item);
+				}));
 			}
 		}
 

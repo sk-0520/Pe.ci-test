@@ -70,33 +70,31 @@
 			}
 
 			LauncherItemStreamWindow streamWindow = null;
-			try {
+			//try {
 				if(streamWatch) {
-					var streamData = new StreamData() {
-						Process = process,
-						LauncherItem = launcherItem,
-					};
-					streamWindow = (LauncherItemStreamWindow)appSender.SendCreateWindow(WindowKind.LauncherStream, streamData, null);
 					//streamForm = new StreamForm();
 					//streamForm.SetParameter(process, launcherItem);
 					//streamForm.SetCommonData(commonData);
 					//commonData.RootSender.AppendWindow(streamForm);
 				}
 
+				process.Start();
 				if(streamWatch) {
+					var streamData = new StreamData() {
+						Process = process,
+						LauncherItem = launcherItem,
+					};
+					streamWindow = (LauncherItemStreamWindow)appSender.SendCreateWindow(WindowKind.LauncherStream, streamData, null);
 					streamWindow.ViewModel.Start();
-					//streamWindow.Show();
-				} else {
-					process.Start();
 				}
 
-			} catch(Win32Exception ex) {
-				nonProcess.Logger.Error(ex);
-				//if (streamForm != null) {
-				//	streamForm.Dispose();
-				//}
-				throw;
-			}
+			//} catch(Win32Exception ex) {
+			//	nonProcess.Logger.Error(ex);
+			//	//if (streamForm != null) {
+			//	//	streamForm.Dispose();
+			//	//}
+			//	throw;
+			//}
 
 			return process;
 		}
