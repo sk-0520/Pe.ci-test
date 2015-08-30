@@ -42,6 +42,8 @@
 				return;
 			}
 
+			setting.IsVisible = true;
+			setting.IsTopmost = true;
 			setting.TextWidth = Constants.toolbarTextLength.median;
 			setting.IconScale = IconScale.Normal;
 			setting.HideWaitTime = Constants.toolbarHideWaitTime.median;

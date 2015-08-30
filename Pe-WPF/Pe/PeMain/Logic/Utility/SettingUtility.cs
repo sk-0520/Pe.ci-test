@@ -25,13 +25,6 @@
 	/// </summary>
 	public static class SettingUtility
 	{
-		static Guid[] debugGuidList = new[] {
-			Guid.NewGuid(),
-			Guid.NewGuid(),
-			Guid.NewGuid(),
-			Guid.NewGuid(),
-		};
-
 		internal static bool IsIllegalPlusNumber(double number)
 		{
 			return double.IsNaN(number) || number <= 0;
@@ -236,35 +229,6 @@
 		{
 			Implement.InitializeLauncherItemSetting.Correction(setting, previousVersion, nonProcess);
 
-			// --------------------------------
-			if(!setting.Items.Any()) {
-				setting.Items.Add(new LauncherItemModel() {
-					Id = debugGuidList[0],
-					Name = "name1",
-					LauncherKind = LauncherKind.File,
-					Command = @"C:\Windows\System32\mspaint.exe"
-				});
-				setting.Items.Add(new LauncherItemModel() {
-					Id = debugGuidList[1],
-					Name = "name2",
-					LauncherKind = LauncherKind.File,
-					Command = @"%windir%\system32\calc.exe"
-				});
-				setting.Items.Add(new LauncherItemModel() {
-					Id = debugGuidList[2],
-					Name = "name3",
-					LauncherKind = LauncherKind.Command,
-					Command = @"ping"
-				});
-				setting.Items.Add(new LauncherItemModel() {
-					Id = debugGuidList[3],
-					Name = "name4",
-					LauncherKind = LauncherKind.File,
-					Command = @"c:\"
-				});
-			}
-			// --------------------------------
-
 			foreach(var item in setting.Items) {
 				InitializeLauncherItem(item, previousVersion, nonProcess);
 			}
@@ -281,14 +245,7 @@
 
 			if(!setting.Groups.Any()) {
 				var initGroup = CreateLauncherGroup(setting.Groups, nonProcess);
-				//------------------------
-				initGroup.LauncherItems = new CollectionModel<Guid>(new[] {
-					debugGuidList[0],
-					debugGuidList[1],
-					debugGuidList[2],
-					debugGuidList[3],
-				});
-				//------------------------
+
 				setting.Groups.Add(initGroup);
 			}
 

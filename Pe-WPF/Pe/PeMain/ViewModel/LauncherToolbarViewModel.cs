@@ -168,6 +168,7 @@
 
 		Rect _showLogicalBarArea;
 		bool _isHidden;
+		bool _nowFullScreen;
 
 		#endregion
 
@@ -748,7 +749,14 @@
 
 		public bool IsTopmost
 		{
-			get { return TopMostProperty.GetTopMost(Model.Toolbar); }
+			get 
+			{
+				if(NowFullScreen) {
+					return false;
+				} else {
+					return TopMostProperty.GetTopMost(Model.Toolbar);
+				}
+			}
 			set { TopMostProperty.SetTopMost(Model.Toolbar, value, OnPropertyChanged); }
 		}
 
@@ -881,7 +889,14 @@
 		/// <summary>
 		/// 他ウィンドウがフルスクリーン表示。
 		/// </summary>
-		public bool NowFullScreen { get; set; }
+		public bool NowFullScreen {
+			get { return this._nowFullScreen; }
+			set {
+				AppNonProcess.Logger.Fatal(string.Format("NowFullScreen {0} -> {1}", this._nowFullScreen, value));
+				SetVariableValue(ref this._nowFullScreen, value);
+				OnPropertyChanged("IsTopmost");
+			}
+		}
 		public bool IsDocking { get; set; }
 		/// <summary>
 		/// ドッキング種別。

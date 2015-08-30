@@ -30,7 +30,7 @@
 		/// <summary>
 		/// フルスクリーンイベント。
 		/// </summary>
-		public event EventHandler<AppbarFullScreenEventArgs> AppbarFullScreen;
+		public event EventHandler<AppbarFullScreenEventArgs> AppbarFullScreen = delegate { };
 		/// <summary>
 		/// 位置変更時に発生。
 		/// </summary>
