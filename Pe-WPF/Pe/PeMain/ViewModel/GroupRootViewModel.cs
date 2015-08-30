@@ -41,12 +41,6 @@
 						if (Items.Contains(s)) {
 							var item = Items[s];
 							list.Add(new GroupItemViewMode(item, AppNonProcess));
-						} else {
-							//TODO: 表記
-							var item = new LauncherItemModel();
-							item.Id = s;
-							item.Name = s.ToString("B");
-							list.Add(new GroupItemViewMode(item, AppNonProcess));
 						}
 					}
 
