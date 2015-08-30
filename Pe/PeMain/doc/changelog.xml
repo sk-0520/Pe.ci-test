@@ -56,53 +56,36 @@
 	</log>
 	<sep dummy="################################################################################" />
 	-->
-	<log date="YYYY/MM/DD" version="0.61.1" type="rc">
+	<log date="2015/08/30" version="0.62.0">
 		<group type="note">
 			<sep dummy="==================================================================" />
 			<note rev="">
-				<message></message>
+				<message>WPF版の開発に注力していたのでForms版ひさびさのリリースです</message>
 			</note>
 			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-		</group>
-		<group type="features">
-			<sep dummy="==================================================================" />
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
+			<message>本バージョンを持ってForms版としては最終リリースになります</message>
+			<comments>
+				<comment>今後はWPF版としてリリースされる予定です</comment>
+				<comment>未決定ですがWPF版とForms版での設定データに互換性はありません</comment>
+				<comment>&gt;変換処理実装に割く時間が無いかもなのです</comment>
+				<comment>&gt;&gt;互換性を持たせるための処理・検証よりWPF版リリースを優先してそこから発生した不具合の修正を優先したいのです</comment>
+				<comment>よっぽどおかしな処理があればForms版でも修正入れますが、ほぼほぼ無いです</comment>
+			</comments>
 			</note>
 		</group>
 		<group type="fixes">
 			<sep dummy="==================================================================" />
 			<note rev="">
-				<message></message>
+				<message>ショートカット処理でリソースリーク</message>
 			</note>
 			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
+				<message>コマンド入力時のTAB, Shift + TABでの次候補選択順序が逆</message>
 			</note>
 		</group>
 		<group type="developer">
 			<sep dummy="==================================================================" />
 			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
+				<message>Forms版最終リリース</message>
 			</note>
 		</group>
 	</log>
@@ -157,21 +140,6 @@
 					<comment>ゲームしようとフルスクリーンにするとツールバー状態のPeがそれを解除しようとしてゲーム進行が止まるのですよ</comment>
 					<comment>Crysis2の時は大丈夫だったんだけど昨日買ったCrysis3だと止まるんだよ！ だれだよこんなソース書いたやつは！</comment>
 				</comments>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-		</group>
-		<group type="developer">
-			<sep dummy="==================================================================" />
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
 			</note>
 		</group>
 	</log>
