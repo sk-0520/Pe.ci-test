@@ -110,22 +110,8 @@
 		void View_SourceInitialized(object sender, EventArgs e)
 		{
 			View.SourceInitialized -= View_SourceInitialized;
-			//View.Unloaded += View_Unloaded;
 
-			var logicalWindowSize = new Size(View.Width, View.Height);
-			var deviceWindowSize = UIUtility.ToDevicePixel(View, logicalWindowSize);
-			var deviceWindowPosition = new Point(
-				Screen.DeviceBounds.Width / 2 - deviceWindowSize.Width / 2,
-				Screen.DeviceBounds.Height / 2 - deviceWindowSize.Height / 2
-			);
-			var logicalWindowPotision = UIUtility.ToLogicalPixel(View, deviceWindowPosition);
-			View.Left = logicalWindowPotision.X;
-			View.Top = logicalWindowPotision.Y;
-		}
-
-		void View_Unloaded(object sender, RoutedEventArgs e)
-		{
-			View.Unloaded -= View_Unloaded;
+			ScreenUtility.MoveCenter(View, Screen);
 		}
 	}
 }

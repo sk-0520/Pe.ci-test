@@ -6,11 +6,13 @@
 	using System.Linq;
 	using System.Management;
 	using System.Runtime.InteropServices;
+	using System.Windows;
 	using ContentTypeTextNet.Library.PInvoke.Windows;
 	using ContentTypeTextNet.Library.PInvoke.Windows.root.CIMV2;
 	using ContentTypeTextNet.Library.SharedLibrary.CompatibleForms;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
 
 	/// <summary>
@@ -83,5 +85,24 @@
 		//{
 		//	return Screen.FromPoint(Cursor.Position);
 		//}
+
+		/// <summary>
+		/// ウィンドウを指定スクリーンの中央に移動。
+		/// </summary>
+		/// <param name="window"></param>
+		/// <param name="screen"></param>
+		public static void MoveCenter(Window window, ScreenModel screen)
+		{
+			var logicalWindowSize = new Size(window.Width, window.Height);
+			var deviceWindowSize = UIUtility.ToDevicePixel(window, logicalWindowSize);
+			var deviceWindowPosition = new Point(
+				screen.DeviceBounds.Left + screen.DeviceBounds.Width / 2 - deviceWindowSize.Width / 2,
+				screen.DeviceBounds.Top + screen.DeviceBounds.Height / 2 - deviceWindowSize.Height / 2
+			);
+			var logicalWindowPotision = UIUtility.ToLogicalPixel(window, deviceWindowPosition);
+			window.Left = logicalWindowPotision.X;
+			window.Top = logicalWindowPotision.Y;
+		}
+
 	}
 }
