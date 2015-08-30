@@ -100,11 +100,8 @@
 					</StackPanel>
 				</Button>
 				<Separator />
-				<ToggleButton IsChecked="{Binding IsTopmost}">
-					<StackPanel Orientation="Horizontal">
-						<Image Style="{StaticResource DefaultImage}" Source="{x:Static AM:AppResource.CommonPinImage}" />
-						<TextBlock Text="topmost" AA:Language.Word="clipboard/topmost" />
-					</StackPanel>
+				<ToggleButton IsChecked="{Binding IsTopmost}" AA:Language.Hint="clipboard/topmost">
+					<Image Style="{StaticResource DefaultImage}" Source="{x:Static AM:AppResource.CommonPinImage}" />
 				</ToggleButton>
 				<ToggleButton IsChecked="{Binding AppNonProcess.ClipboardWatcher.UsingClipboard}">
 					<StackPanel Orientation="Horizontal">
