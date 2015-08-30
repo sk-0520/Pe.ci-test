@@ -33,10 +33,10 @@
 		/// <summary>
 		/// ファイル。
 		/// </summary>
-		File = 0x10,
+		Files = 0x10,
 		/// <summary>
 		/// 全て。
 		/// </summary>
-		All = Text | Rtf | Html | Image | File,
+		All = Text | Rtf | Html | Image | Files,
 	}
 }

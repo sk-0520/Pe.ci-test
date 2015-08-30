@@ -141,7 +141,7 @@
 				{ ClipboardType.Rtf, () => data.SetText(clipboardItem.Body.Rtf, TextDataFormat.Rtf) },
 				{ ClipboardType.Html, () => data.SetText(clipboardItem.Body.Html, TextDataFormat.Html) },
 				{ ClipboardType.Image, () => data.SetImage(clipboardItem.Body.Image) },
-				{ ClipboardType.File, () => {
+				{ ClipboardType.Files, () => {
 					data.SetFileDropList(TextUtility.ToStringCollection(clipboardItem.Body.Files)); 
 				}},
 			};
@@ -277,13 +277,13 @@
 						}
 					}
 
-					if(enabledTypes.HasFlag(ClipboardType.File) && clipboardObject.GetDataPresent(DataFormats.FileDrop)) {
+					if(enabledTypes.HasFlag(ClipboardType.Files) && clipboardObject.GetDataPresent(DataFormats.FileDrop)) {
 						var files = clipboardObject.GetData(DataFormats.FileDrop) as string[];
 						if(files != null) {
 							var sortedFiles = files.OrderBy(s => s, new CaseInsensitiveComparer());
 							clipboardData.Body.Files.AddRange(sortedFiles);
 							clipboardData.Body.Text = string.Join(Environment.NewLine, sortedFiles);
-							clipboardData.Type |= ClipboardType.Text | ClipboardType.File;
+							clipboardData.Type |= ClipboardType.Text | ClipboardType.Files;
 						}
 					}
 				}
@@ -431,7 +431,7 @@
 				{ ClipboardType.Rtf, CalculateHashCodeFromRtf },
 				{ ClipboardType.Html, CalculateHashCodeFromHtml },
 				{ ClipboardType.Image, CalculateHashCodeFromImage },
-				{ ClipboardType.File, CalculateHashCodeFromFiles },
+				{ ClipboardType.Files, CalculateHashCodeFromFiles },
 			};
 			var binaryDataList = map
 				.Where(p => clipboardType.HasFlag(p.Key))
@@ -546,7 +546,7 @@
 				ClipboardType.Rtf,
 				ClipboardType.Html,
 				ClipboardType.Image,
-				ClipboardType.File,
+				ClipboardType.Files,
 			};
 
 			return GetEnabledClipboardTypeList(types, list);
@@ -557,7 +557,7 @@
 			var list = new[] {
 				ClipboardType.Html,
 				ClipboardType.Rtf,
-				ClipboardType.File,
+				ClipboardType.Files,
 				ClipboardType.Text,
 				ClipboardType.Image,
 			};

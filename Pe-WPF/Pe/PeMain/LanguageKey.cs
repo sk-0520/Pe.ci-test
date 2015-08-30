@@ -62,6 +62,11 @@
 		public const string updateNewVersion = "UPDATE-NEW-VERSION";
 		public const string updateNewType = "UPDATE-NEW-TYPE";
 
+		public const string clipboardType = "CLIP-TYPE";
+		public const string clipboardImageWidth = "CLIP-IMAGE-WIDTH";
+		public const string clipboardImageHeight = "CLIP-IMAGE-HEIGHT";
+		public const string clipboardFileCount= "CLIP-FILES-COUNT";
+
 		#endregion
 	}
 }

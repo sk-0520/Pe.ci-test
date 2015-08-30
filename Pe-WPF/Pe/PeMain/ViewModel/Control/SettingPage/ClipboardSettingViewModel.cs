@@ -79,8 +79,8 @@
 		}
 		public bool EnabledClipboardTypesFile
 		{
-			get { return Clipboard.EnabledClipboardTypes.HasFlag(ClipboardType.File); }
-			set { SetClipboardType(Clipboard, Clipboard.EnabledClipboardTypes, ClipboardType.File, defineEnabled); }
+			get { return Clipboard.EnabledClipboardTypes.HasFlag(ClipboardType.Files); }
+			set { SetClipboardType(Clipboard, Clipboard.EnabledClipboardTypes, ClipboardType.Files, defineEnabled); }
 		}
 
 		#endregion

@@ -66,7 +66,8 @@
 			string result;
 
 			switch (type) {
-				case ClipboardType.Text: {
+				case ClipboardType.Text:
+					{
 						var text = clipboardItem.Body.Text
 							.SplitLines()
 							.Where(s => !string.IsNullOrWhiteSpace(s))
@@ -75,15 +76,15 @@
 						;
 
 						if (string.IsNullOrWhiteSpace(text)) {
-							// TODO: i18n
-							result = type.ToString();
+							result = LanguageUtility.GetTextFromEnum(type, nonProcess.Language);
 						} else {
 							result = text;
 						}
 					}
 					break;
 
-				case ClipboardType.Rtf: {
+				case ClipboardType.Rtf: 
+					{
 						var rt = new RichTextBox();
 							string plainText;
 							using(var reader = new MemoryStream(ASCIIEncoding.Default.GetBytes(clipboardItem.Body.Rtf))) {
@@ -102,8 +103,7 @@
 							;
 
 							if (string.IsNullOrWhiteSpace(text)) {
-								// TODO: i18n
-								result = type.ToString();
+								result = LanguageUtility.GetTextFromEnum(type, nonProcess.Language);
 							} else {
 								result = text;
 							}
@@ -111,7 +111,8 @@
 					
 					break;
 
-				case ClipboardType.Html: {
+				case ClipboardType.Html: 
+					{
 						var takeCount = 64;
 						var converted = false;
 						var lines = clipboardItem.Body.Html.SplitLines().Take(takeCount);
@@ -121,7 +122,7 @@
 						var timeTitle = TimeSpan.FromMilliseconds(500);
 						var timeHeader = TimeSpan.FromMilliseconds(500);
 
-						// タイトル
+						// <title>
 						try {
 							var regTitle = new Regex("<title>(.+)</title>", RegexOptions.IgnoreCase | RegexOptions.Multiline, timeTitle);
 							var matchTitle = regTitle.Match(text);
@@ -134,7 +135,7 @@
 							nonProcess.Logger.Warning(ex);
 						}
 
-						// h1
+						// <h1>
 						try {
 							var regHeader = new Regex("<h1(?:.*)?>(.+)</h1>", RegexOptions.IgnoreCase | RegexOptions.Multiline);
 							var matchHeader = regHeader.Match(text);
@@ -149,38 +150,33 @@
 						}
 
 						if (!converted || string.IsNullOrWhiteSpace(text)) {
-							// TODO: i18n
-							result = type.ToString();
+							result = LanguageUtility.GetTextFromEnum(type, nonProcess.Language);
 						} else {
 							result = text;
 						}
 					}
 					break;
 
-				case ClipboardType.Image: {
-						//var map = new Dictionary<string, string>() {
-						//	{ ProgramLanguageName.imageType, ClipboardTypeToDisplayText(language, type) },
-						//	{ ProgramLanguageName.imageWidth, clipboardItem.Image.Width.ToString() },
-						//	{ ProgramLanguageName.imageHeight, clipboardItem.Image.Height.ToString() },
-						//};
+				case ClipboardType.Image: 
+					{
+						var map = new Dictionary<string, string>() {
+							{ LanguageKey.clipboardType, LanguageUtility.GetTextFromEnum(type, nonProcess.Language) },
+							{ LanguageKey.clipboardImageWidth, clipboardItem.Body.Image.PixelWidth.ToString() },
+							{ LanguageKey.clipboardImageHeight, clipboardItem.Body.Image.PixelHeight.ToString() },
+						};
 
-						//result = language["clipboard/title/image", map];
-					// TODO: i18n
-					result= string.Format("{0} x {1}", clipboardItem.Body.Image.PixelWidth, clipboardItem.Body.Image.PixelHeight);
-					
+						result = nonProcess.Language["clipboard/name/image", map];
 					}
 					break;
 
-				case ClipboardType.File: {
-						//var map = new Dictionary<string, string>() {
-						//	{ ProgramLanguageName.fileType, ClipboardTypeToDisplayText(language, type) },
-						//	{ ProgramLanguageName.fileCount, clipboardItem.Files.Count().ToString() },
-						//};
+				case ClipboardType.Files: 
+					{
+						var map = new Dictionary<string, string>() {
+							{ LanguageKey.clipboardType, LanguageUtility.GetTextFromEnum(type, nonProcess.Language) },
+							{ LanguageKey.clipboardFileCount, clipboardItem.Body.Files.Count().ToString() },
+						};
 
-						//result = language["clipboard/title/file", map];
-
-						// TODO: i18n
-						result = string.Format("{0}", clipboardItem.Body.Files.Count);
+						result = nonProcess.Language["clipboard/name/files", map];
 					}
 					break;
 

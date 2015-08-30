@@ -66,7 +66,7 @@
 								{ ClipboardType.Rtf, View.pageRtf },
 								{ ClipboardType.Html, View.pageHtml },
 								{ ClipboardType.Image, View.pageImage },
-								{ ClipboardType.File, View.pageFiles },
+								{ ClipboardType.Files, View.pageFiles },
 							};
 							var type = ClipboardUtility.GetSingleClipboardType(this._selectedViewModel.Model.Type);
 							foreach(var tab in map.Values) {
@@ -215,7 +215,7 @@
 			var types = ClipboardUtility.GetClipboardTypeList(vm.Model.Type);
 			var defIndex = 0;
 			var tempIndex = 0;
-			foreach (var type in types.Where(t => t != ClipboardType.File)) {
+			foreach (var type in types.Where(t => t != ClipboardType.Files)) {
 				var filterItem = srcFilters.FirstOrDefault(f => f.Value == type);
 				if (filterItem != null) {
 					filter.Add(filterItem);
@@ -257,7 +257,7 @@
 
 		bool SaveFile(string path, ClipboardItemViewModel vm, ClipboardType saveType)
 		{
-			Debug.Assert(saveType != ClipboardType.File);
+			Debug.Assert(saveType != ClipboardType.Files);
 
 			var map = new Dictionary<ClipboardType, Action>() {
 				{ ClipboardType.Text, () => File.WriteAllText(path, vm.Text) },

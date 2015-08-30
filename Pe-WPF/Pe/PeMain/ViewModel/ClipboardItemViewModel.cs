@@ -77,7 +77,7 @@
 					{ ClipboardType.Rtf, AppResource.ClipboardRtfImage },
 					{ ClipboardType.Html, AppResource.ClipboardHtmlImage },
 					{ ClipboardType.Image, AppResource.ClipboardImageImage },
-					{ ClipboardType.File, AppResource.ClipboardFileImage },
+					{ ClipboardType.Files, AppResource.ClipboardFileImage },
 				};
 
 				return map[type];
@@ -116,8 +116,8 @@
 		}
 		public bool EnabledClipboardTypesFiles
 		{
-			get { return Model.Type.HasFlag(ClipboardType.File); }
-			set { SetClipboardType(Model, Model.Type, ClipboardType.File, defineEnabled); }
+			get { return Model.Type.HasFlag(ClipboardType.Files); }
+			set { SetClipboardType(Model, Model.Type, ClipboardType.Files, defineEnabled); }
 		}
 	
 		#endregion

@@ -44,6 +44,9 @@
 		<Item Id="dialog/filter/log" Word="ログ形式" />
 		<Item Id="dialog/filter/*" Word="全て" />
 		
+		<Item Id="clipboard/name/image" Word="@[CLIP-TYPE]: @[CLIP-IMAGE-WIDTH] × @[CLIP-IMAGE-HEIGHT]" />
+		<Item Id="clipboard/name/files" Word="@[CLIP-TYPE]: @[CLIP-FILES-COUNT]" />
+		
 		<Item Id="accept/ok" Word="使用する" />
 		<Item Id="accept/ng" Word="使用しない" />
 		<Item Id="update-check/release" Word="アップデートを確認する" />
@@ -450,5 +453,11 @@
 		<Item Id="enum/DockType/Right"   Word="デスクトップ: 右" />
 		<Item Id="enum/DockType/Bottom"  Word="デスクトップ: 下" />
 
+		<Item Id="enum/ClipboardType/Text" Word="文字列" />
+		<Item Id="enum/ClipboardType/Rtf" Word="書式付文字列" />
+		<Item Id="enum/ClipboardType/Html" Word="HTML" />
+		<Item Id="enum/ClipboardType/Image" Word="画像" />
+		<Item Id="enum/ClipboardType/Files" Word="ファイル" />
+		
 	</Words>
 </Language>
