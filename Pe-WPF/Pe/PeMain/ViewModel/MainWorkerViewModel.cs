@@ -544,17 +544,16 @@
 
 		void LoadSetting()
 		{
-			// TODO: 環境変数展
 			using(var timeLogger = CommonData.NonProcess.CreateTimeLogger()) {
 				// 各種設定の読込
-				CommonData.MainSetting = AppUtility.LoadSetting<MainSettingModel>(CommonData.VariableConstants.UserSettingMainSettingFilePath, Constants.fileTypeMainSetting, CommonData.Logger);
+				CommonData.MainSetting = AppUtility.LoadSetting<MainSettingModel>(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingMainSettingFilePath), Constants.fileTypeMainSetting, CommonData.Logger);
 				ApplyLanguage();
-				CommonData.LauncherItemSetting = AppUtility.LoadSetting<LauncherItemSettingModel>(CommonData.VariableConstants.UserSettingLauncherItemSettingFilePath, Constants.fileTypeLauncherItemSetting, CommonData.Logger);
-				CommonData.LauncherGroupSetting = AppUtility.LoadSetting<LauncherGroupSettingModel>(CommonData.VariableConstants.UserSettingLauncherGroupItemSettingFilePath, Constants.fileTypeLauncherGroupSetting, CommonData.Logger);
+				CommonData.LauncherItemSetting = AppUtility.LoadSetting<LauncherItemSettingModel>(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingLauncherItemSettingFilePath), Constants.fileTypeLauncherItemSetting, CommonData.Logger);
+				CommonData.LauncherGroupSetting = AppUtility.LoadSetting<LauncherGroupSettingModel>(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingLauncherGroupItemSettingFilePath), Constants.fileTypeLauncherGroupSetting, CommonData.Logger);
 				// インデックスファイル読み込み
-				CommonData.NoteIndexSetting = AppUtility.LoadSetting<NoteIndexSettingModel>(CommonData.VariableConstants.UserSettingNoteIndexFilePath, Constants.fileTypeNoteIndex, CommonData.Logger);
-				CommonData.ClipboardIndexSetting = AppUtility.LoadSetting<ClipboardIndexSettingModel>(CommonData.VariableConstants.UserSettingClipboardIndexFilePath, Constants.fileTypeTemplateIndex, CommonData.Logger);
-				CommonData.TemplateIndexSetting = AppUtility.LoadSetting<TemplateIndexSettingModel>(CommonData.VariableConstants.UserSettingTemplateIndexFilePath, Constants.fileTypeClipboardIndex, CommonData.Logger);
+				CommonData.NoteIndexSetting = AppUtility.LoadSetting<NoteIndexSettingModel>(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingNoteIndexFilePath), Constants.fileTypeNoteIndex, CommonData.Logger);
+				CommonData.ClipboardIndexSetting = AppUtility.LoadSetting<ClipboardIndexSettingModel>(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingClipboardIndexFilePath), Constants.fileTypeTemplateIndex, CommonData.Logger);
+				CommonData.TemplateIndexSetting = AppUtility.LoadSetting<TemplateIndexSettingModel>(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingTemplateIndexFilePath), Constants.fileTypeClipboardIndex, CommonData.Logger);
 			}
 		}
 
@@ -971,7 +970,7 @@
 		void ResetSetting()
 		{
 			ResetCache(false);
-			// TODO: impl
+			
 			InitializeStatus();
 			CallPropertyChangeHotkey();
 
@@ -1215,29 +1214,6 @@
 		/// <param name="updateData"></param>
 		void ShowUpdateDialog(Updater updateData)
 		{
-			// TODO: ShowUpdateDialog
-			//PauseOthersPlain(() => {
-			//	try {
-			//		using(var dialog = new UpdateForm()) {
-			//			dialog.UpdateData = updateData;
-			//			dialog.SetCommonData(this._commonData);
-			//			if(dialog.ShowDialog() == DialogResult.OK) {
-			//				// 現在設定を保持する
-			//				AppUtility.SaveSetting(this._commonData);
-			//				if(updateData.Execute()) {
-			//					return () => {
-			//						CloseApplication(false);
-			//						return false;
-			//					};
-			//				}
-			//			}
-			//		}
-			//	} catch(Exception ex) {
-			//		// #96
-			//		this._commonData.Logger.Puts(LogType.Error, ex.Message, ex);
-			//	}
-			//	return null;
-			//});
 			try {
 				PausingBasicAction(() => {
 					var window = new UpdateConfirmWindow();
