@@ -7,6 +7,8 @@
 	using System.Threading.Tasks;
 	using System.Windows.Media;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+	using ContentTypeTextNet.Pe.Library.PeData.Define;
 	using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
 
 	internal static class InitializeNoteSetting
@@ -20,6 +22,7 @@
 		static void V_Last(NoteSettingModel setting, Version previousVersion, INonProcess nonProcess)
 		{
 			setting.Font.Size = Constants.noteFontSize.GetClamp(setting.Font.Size);
+			setting.NoteTitle = EnumUtility.GetNormalization(setting.NoteTitle, NoteTitle.Timestamp);
 
 			if(setting.ForeColor == default(Color)) {
 				setting.ForeColor = Constants.noteColor.ForeColor;
@@ -38,6 +41,7 @@
 			setting.Font.Size = Constants.noteFontSize.median;
 			setting.ForeColor = Constants.noteColor.ForeColor;
 			setting.BackColor = Constants.noteColor.BackColor;
+			setting.NoteTitle = NoteTitle.Timestamp;
 		}
 	}
 }

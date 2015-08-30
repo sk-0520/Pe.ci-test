@@ -27,6 +27,7 @@
 			setting.Font.Size = Constants.toolbarFontSize.GetClamp(setting.Font.Size);
 			setting.IconScale = EnumUtility.GetNormalization(setting.IconScale, IconScale.Normal);
 			setting.TextWidth = Constants.toolbarTextLength.GetClamp((int)setting.TextWidth);
+
 			if(SettingUtility.IsIllegalPlusNumber(setting.FloatToolbar.WidthButtonCount)) {
 				setting.FloatToolbar.WidthButtonCount = 1;
 			}
@@ -46,6 +47,11 @@
 			setting.HideWaitTime = Constants.toolbarHideWaitTime.median;
 			setting.HideAnimateTime = Constants.toolbarHideAnimateTime.median;
 			setting.Font.Size = Constants.toolbarFontSize.median;
+			setting.FloatToolbar.WidthButtonCount = 1;
+			setting.FloatToolbar.HeightButtonCount = 1;
+			setting.DockType = DockType.Right;
+			setting.DefaultGroupId = Guid.Empty;
+			setting.MenuPositionCorrection = false;
 		}
 	}
 }

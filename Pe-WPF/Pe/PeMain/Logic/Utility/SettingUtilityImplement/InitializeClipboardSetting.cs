@@ -20,6 +20,7 @@
 		static void V_Last(ClipboardSettingModel setting, Version previousVersion, INonProcess nonProcess)
 		{
 			setting.WaitTime = Constants.clipboardWaitTime.GetClamp(setting.WaitTime);
+			setting.DuplicationCount = Constants.clipboardDuplicationCount.GetClamp(setting.DuplicationCount);
 			setting.Font.Size = Constants.clipboardFontSize.GetClamp(setting.Font.Size);
 
 			if(SettingUtility.IsIllegalPlusNumber(setting.ItemsListWidth)) {
@@ -44,6 +45,10 @@
 
 			setting.IsEnabled = true;
 			setting.EnabledClipboardTypes = ClipboardType.All;
+			setting.UsingClipboard = false;
+			setting.SaveCount = 0;
+			setting.DuplicationCount = Constants.clipboardDuplicationCount.median;
+			setting.WaitTime = Constants.clipboardWaitTime.median;
 			setting.Font.Size = Constants.clipboardFontSize.median;
 			setting.ItemsListWidth = Constants.clipboardItemsListWidth;
 			setting.WindowWidth = Constants.clipboardDefaultWindowSize.Width;

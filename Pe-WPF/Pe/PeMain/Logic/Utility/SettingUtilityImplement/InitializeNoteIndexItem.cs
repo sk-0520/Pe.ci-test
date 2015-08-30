@@ -8,6 +8,7 @@
 	using System.Windows;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+	using ContentTypeTextNet.Pe.Library.PeData.Define;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 
 	internal static class InitializeNoteIndexItem
@@ -20,10 +21,9 @@
 
 		static void V_Last(NoteIndexItemModel indexItem, Version previousVersion, INonProcess nonProcess)
 		{
-			if(SettingUtility.IsIllegalPlusNumber(indexItem.Font.Size)) {
-				indexItem.Font.Size = Constants.noteFontSize.median;
-			}
-
+			indexItem.NoteKind = EnumUtility.GetNormalization(indexItem.NoteKind, NoteKind.Text);
+			indexItem.IsLocked =false;
+			indexItem.IsCompacted = false;
 			indexItem.Font.Size = Constants.noteFontSize.GetClamp(indexItem.Font.Size);
 
 			if(string.IsNullOrWhiteSpace(indexItem.Font.Family)) {
@@ -43,6 +43,13 @@
 			if(previousVersion != null) {
 				return;
 			}
+
+			indexItem.NoteKind = NoteKind.Text;
+			indexItem.Font.Size = Constants.noteFontSize.median;
+			indexItem.Font.Family = FontUtility.GetOriginalFontFamilyName(SystemFonts.MessageFontFamily);
+			indexItem.WindowWidth = Constants.noteDefualtSize.Width;
+			indexItem.WindowHeight = Constants.noteDefualtSize.Height;
+
 		}
 	}
 }

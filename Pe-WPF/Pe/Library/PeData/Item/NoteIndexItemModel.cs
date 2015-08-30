@@ -25,7 +25,6 @@
 		public NoteIndexItemModel()
 			: base()
 		{
-			NoteKind = NoteKind.Text;
 			Font = new FontModel();
 		}
 

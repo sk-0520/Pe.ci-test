@@ -36,6 +36,14 @@
 
 			setting.WindowWidth = Constants.loggingDefaultWindowSize.Width;
 			setting.WindowHeight = Constants.loggingDefaultWindowSize.Height;
+			setting.AddShow = true;
+			setting.IsVisible = false;
+			setting.ShowTriggerDebug = false;
+			setting.ShowTriggerTrace = false;
+			setting.ShowTriggerInformation = false;
+			setting.ShowTriggerWarning = true;
+			setting.ShowTriggerError = true;
+			setting.ShowTriggerFatal = true;
 		}
 	}
 }

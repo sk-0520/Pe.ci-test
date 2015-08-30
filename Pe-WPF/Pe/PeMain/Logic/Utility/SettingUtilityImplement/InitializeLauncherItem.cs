@@ -33,6 +33,7 @@
 				return;
 			}
 
+			item.LauncherKind = LauncherKind.File;
 		}
 	}
 }
