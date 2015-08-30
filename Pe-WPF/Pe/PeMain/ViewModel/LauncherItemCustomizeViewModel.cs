@@ -5,7 +5,10 @@
 	using System.Linq;
 	using System.Text;
 	using System.Threading.Tasks;
+	using System.Windows;
 	using System.Windows.Input;
+	using ContentTypeTextNet.Library.PInvoke.Windows;
+	using ContentTypeTextNet.Library.SharedLibrary.CompatibleWindows.Utility;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
@@ -34,6 +37,8 @@
 			View = view;
 			Screen = screen;
 			this._srcModel = model;
+
+			View.SourceInitialized += View_SourceInitialized;
 		}
 
 		#region proeprty
@@ -101,5 +106,26 @@
 		public bool HasView { get { return HavingViewUtility.GetHasView(this); } }
 
 		#endregion
+
+		void View_SourceInitialized(object sender, EventArgs e)
+		{
+			View.SourceInitialized -= View_SourceInitialized;
+			//View.Unloaded += View_Unloaded;
+
+			var logicalWindowSize = new Size(View.Width, View.Height);
+			var deviceWindowSize = UIUtility.ToDevicePixel(View, logicalWindowSize);
+			var deviceWindowPosition = new Point(
+				Screen.DeviceBounds.Width / 2 - deviceWindowSize.Width / 2,
+				Screen.DeviceBounds.Height / 2 - deviceWindowSize.Height / 2
+			);
+			var logicalWindowPotision = UIUtility.ToLogicalPixel(View, deviceWindowPosition);
+			View.Left = logicalWindowPotision.X;
+			View.Top = logicalWindowPotision.Y;
+		}
+
+		void View_Unloaded(object sender, RoutedEventArgs e)
+		{
+			View.Unloaded -= View_Unloaded;
+		}
 	}
 }
