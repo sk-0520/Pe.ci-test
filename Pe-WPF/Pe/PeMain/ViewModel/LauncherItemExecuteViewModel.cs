@@ -47,6 +47,10 @@
 			this._workDirPath = Model.WorkDirectoryPath;
 			this._stdStreamOutput = Model.StdStream.OutputWatch;
 			this._stdStreamInput = Model.StdStream.InputUsing;
+
+			if(HasView) {
+				View.SourceInitialized += View_SourceInitialized;
+			}
 		}
 
 		#region property
@@ -232,5 +236,12 @@
 		public bool HasView { get { return HavingViewUtility.GetHasView(this); } }
 
 		#endregion
+
+		void View_SourceInitialized(object sender, EventArgs e)
+		{
+			View.SourceInitialized -= View_SourceInitialized;
+
+			ScreenUtility.MoveCenter(View, Screen);
+		}
 	}
 }

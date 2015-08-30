@@ -38,7 +38,9 @@
 			Screen = screen;
 			this._srcModel = model;
 
-			View.SourceInitialized += View_SourceInitialized;
+			if(HasView) {
+				View.SourceInitialized += View_SourceInitialized;
+			}
 		}
 
 		#region proeprty

@@ -1,30 +1,31 @@
 ﻿namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 {
 	using System;
-	using System.Collections.Generic;
-	using System.Diagnostics;
-	using System.IO;
-	using System.Linq;
-	using System.Text;
-	using System.Threading.Tasks;
-	using System.Windows;
-	using System.Windows.Controls;
-	using System.Windows.Documents;
-	using System.Windows.Input;
-	using System.Windows.Media;
-	using System.Windows.Media.Imaging;
-	using ContentTypeTextNet.Library.SharedLibrary.Data;
-	using ContentTypeTextNet.Library.SharedLibrary.Define;
-	using ContentTypeTextNet.Library.SharedLibrary.IF;
-	using ContentTypeTextNet.Library.SharedLibrary.Logic;
-	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
-	using ContentTypeTextNet.Pe.Library.PeData.Item;
-	using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
-	using ContentTypeTextNet.Pe.PeMain.Data;
-	using ContentTypeTextNet.Pe.PeMain.IF;
-	using ContentTypeTextNet.Pe.PeMain.Logic.Property;
-	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
-	using ContentTypeTextNet.Pe.PeMain.View;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using ContentTypeTextNet.Library.SharedLibrary.Data;
+using ContentTypeTextNet.Library.SharedLibrary.Define;
+using ContentTypeTextNet.Library.SharedLibrary.IF;
+using ContentTypeTextNet.Library.SharedLibrary.Logic;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.Pe.Library.PeData.Item;
+using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
+using ContentTypeTextNet.Pe.PeMain.Data;
+using ContentTypeTextNet.Pe.PeMain.IF;
+using ContentTypeTextNet.Pe.PeMain.Logic.Property;
+using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
+using ContentTypeTextNet.Pe.PeMain.View;
 
 	public class LauncherItemStreamViewModel : LauncherItemSimpleViewModel, IHavingView<LauncherItemStreamWindow>
 	{
@@ -38,10 +39,11 @@
 
 		#endregion
 
-		public LauncherItemStreamViewModel(LauncherItemModel model, LauncherItemStreamWindow view, Process process, StreamSettingModel streamSetting, IAppNonProcess nonPorocess, IAppSender appSender)
+		public LauncherItemStreamViewModel(LauncherItemModel model, LauncherItemStreamWindow view, ScreenModel screen, Process process, StreamSettingModel streamSetting, IAppNonProcess nonPorocess, IAppSender appSender)
 			: base(model, nonPorocess, appSender)
 		{
 			View = view;
+			Screen = screen;
 			Process = process;
 			StartInfo = Process.StartInfo;
 			StreamSetting = streamSetting;
@@ -54,11 +56,16 @@
 			}
 
 			Process.Exited += Process_Exited;
+
+			if(HasView) {
+				View.SourceInitialized += View_SourceInitialized;
+			}
 		}
 
 		#region property
 
 		StreamSettingModel StreamSetting { get; set; }
+		ScreenModel Screen { get; set; }
 
 		FlowDocument OutputStream { get; set; }
 		Task OutputTask;
@@ -380,6 +387,12 @@
 			// not impl
 		}
 
+		void View_SourceInitialized(object sender, EventArgs e)
+		{
+			View.SourceInitialized -= View_SourceInitialized;
+
+			ScreenUtility.MoveCenter(View, Screen);
+		}
 
 	}
 

@@ -35,7 +35,7 @@
 		protected override void CreateViewModel()
 		{
 			var streamData = (StreamData)ExtensionData;
-			ViewModel = new LauncherItemStreamViewModel(streamData.LauncherItem, this, streamData.Process, CommonData.MainSetting.Stream, CommonData.NonProcess, CommonData.AppSender);
+			ViewModel = new LauncherItemStreamViewModel(streamData.Model, this, streamData.Screen, streamData.Process, CommonData.MainSetting.Stream, CommonData.NonProcess, CommonData.AppSender);
 		}
 
 		protected override void ApplyViewModel()

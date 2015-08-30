@@ -21,7 +21,7 @@
 
 	public static class ExecuteUtility
 	{
-		static Process RunExecutableItem(LauncherItemModel launcherItem, INonProcess nonProcess, IAppSender appSender)
+		static Process RunExecutableItem(LauncherItemModel launcherItem, ScreenModel screen, INonProcess nonProcess, IAppSender appSender)
 		{
 			Debug.Assert(launcherItem.LauncherKind == LauncherKind.File || launcherItem.LauncherKind == LauncherKind.Command);
 
@@ -80,10 +80,7 @@
 
 				process.Start();
 				if(streamWatch) {
-					var streamData = new StreamData() {
-						Process = process,
-						LauncherItem = launcherItem,
-					};
+					var streamData = new StreamData(launcherItem, screen, process);
 					streamWindow = (LauncherItemStreamWindow)appSender.SendCreateWindow(WindowKind.LauncherStream, streamData, null);
 					streamWindow.ViewModel.Start();
 				}
@@ -99,11 +96,11 @@
 			return process;
 		}
 
-		static Process RunFileItem(LauncherItemModel launcherItem, INonProcess nonProcess, IAppSender appSender)
+		static Process RunFileItem(LauncherItemModel launcherItem, ScreenModel screen, INonProcess nonProcess, IAppSender appSender)
 		{
 			Debug.Assert(launcherItem.LauncherKind == LauncherKind.File);
 
-			return RunExecutableItem(launcherItem, nonProcess, appSender);
+			return RunExecutableItem(launcherItem, screen, nonProcess, appSender);
 		}
 
 		/// <summary>
@@ -112,11 +109,11 @@
 		/// <param name="launcherItem">URIアイテム</param>
 		/// <param name="commonData">共通データ</param>
 		/// <param name="parentForm">親ウィンドウ</param>
-		private static Process RunCommandItem(LauncherItemModel launcherItem, INonProcess nonProcess, IAppSender appSender)
+		private static Process RunCommandItem(LauncherItemModel launcherItem, ScreenModel screen, INonProcess nonProcess, IAppSender appSender)
 		{
 			Debug.Assert(launcherItem.LauncherKind == LauncherKind.Command);
 
-			return RunExecutableItem(launcherItem, nonProcess, appSender);
+			return RunExecutableItem(launcherItem, screen, nonProcess, appSender);
 		}
 		public static Process RunItem(LauncherItemModel launcherItem, ScreenModel screen, INonProcess nonProcess, IAppSender appSender)
 		{
@@ -124,10 +121,10 @@
 
 			switch(launcherItem.LauncherKind) {
 				case LauncherKind.File:
-					return RunFileItem(launcherItem, nonProcess, appSender);
+					return RunFileItem(launcherItem, screen, nonProcess, appSender);
 
 				case LauncherKind.Command:
-					return RunCommandItem(launcherItem, nonProcess, appSender);
+					return RunCommandItem(launcherItem, screen, nonProcess, appSender);
 
 				default:
 					throw new NotImplementedException();
