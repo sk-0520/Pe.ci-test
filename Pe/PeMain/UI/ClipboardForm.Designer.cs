@@ -143,7 +143,7 @@
 			// 
 			this.panelMain.ContentPanel.Controls.Add(this.panelClipboard);
 			this.panelMain.ContentPanel.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-			this.panelMain.ContentPanel.Size = new System.Drawing.Size(608, 243);
+			this.panelMain.ContentPanel.Size = new System.Drawing.Size(608, 244);
 			this.panelMain.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panelMain.LeftToolStripPanelVisible = false;
 			this.panelMain.Location = new System.Drawing.Point(0, 0);
@@ -170,43 +170,43 @@
             this.statusClipboard_itemLimitRight});
 			this.statusClipboard.Location = new System.Drawing.Point(0, 0);
 			this.statusClipboard.Name = "statusClipboard";
-			this.statusClipboard.Size = new System.Drawing.Size(608, 23);
+			this.statusClipboard.Size = new System.Drawing.Size(608, 22);
 			this.statusClipboard.TabIndex = 0;
 			// 
 			// statusClipboard_itemSelectedIndex
 			// 
 			this.statusClipboard_itemSelectedIndex.Name = "statusClipboard_itemSelectedIndex";
-			this.statusClipboard_itemSelectedIndex.Size = new System.Drawing.Size(20, 18);
+			this.statusClipboard_itemSelectedIndex.Size = new System.Drawing.Size(19, 17);
 			this.statusClipboard_itemSelectedIndex.Text = "☃";
 			// 
 			// toolStripStatusLabel2
 			// 
 			this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
-			this.toolStripStatusLabel2.Size = new System.Drawing.Size(13, 18);
+			this.toolStripStatusLabel2.Size = new System.Drawing.Size(12, 17);
 			this.toolStripStatusLabel2.Text = "/";
 			// 
 			// statusClipboard_itemCount
 			// 
 			this.statusClipboard_itemCount.Name = "statusClipboard_itemCount";
-			this.statusClipboard_itemCount.Size = new System.Drawing.Size(20, 18);
+			this.statusClipboard_itemCount.Size = new System.Drawing.Size(19, 17);
 			this.statusClipboard_itemCount.Text = "☃";
 			// 
 			// statusClipboard_itemLimitLeft
 			// 
 			this.statusClipboard_itemLimitLeft.Name = "statusClipboard_itemLimitLeft";
-			this.statusClipboard_itemLimitLeft.Size = new System.Drawing.Size(13, 18);
+			this.statusClipboard_itemLimitLeft.Size = new System.Drawing.Size(12, 17);
 			this.statusClipboard_itemLimitLeft.Text = "(";
 			// 
 			// statusClipboard_itemLimitCount
 			// 
 			this.statusClipboard_itemLimitCount.Name = "statusClipboard_itemLimitCount";
-			this.statusClipboard_itemLimitCount.Size = new System.Drawing.Size(20, 18);
+			this.statusClipboard_itemLimitCount.Size = new System.Drawing.Size(19, 17);
 			this.statusClipboard_itemLimitCount.Text = "☃";
 			// 
 			// statusClipboard_itemLimitRight
 			// 
 			this.statusClipboard_itemLimitRight.Name = "statusClipboard_itemLimitRight";
-			this.statusClipboard_itemLimitRight.Size = new System.Drawing.Size(13, 18);
+			this.statusClipboard_itemLimitRight.Size = new System.Drawing.Size(12, 17);
 			this.statusClipboard_itemLimitRight.Text = ")";
 			// 
 			// panelClipboard
@@ -224,7 +224,7 @@
 			// panelClipboard.Panel2
 			// 
 			this.panelClipboard.Panel2.Controls.Add(this.tabPreview);
-			this.panelClipboard.Size = new System.Drawing.Size(608, 243);
+			this.panelClipboard.Size = new System.Drawing.Size(608, 244);
 			this.panelClipboard.SplitterDistance = 225;
 			this.panelClipboard.SplitterWidth = 3;
 			this.panelClipboard.TabIndex = 0;
@@ -237,13 +237,13 @@
 			// panelItemStack.ContentPanel
 			// 
 			this.panelItemStack.ContentPanel.Controls.Add(this.listItemStack);
-			this.panelItemStack.ContentPanel.Size = new System.Drawing.Size(225, 218);
+			this.panelItemStack.ContentPanel.Size = new System.Drawing.Size(225, 219);
 			this.panelItemStack.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panelItemStack.LeftToolStripPanelVisible = false;
 			this.panelItemStack.Location = new System.Drawing.Point(0, 0);
 			this.panelItemStack.Name = "panelItemStack";
 			this.panelItemStack.RightToolStripPanelVisible = false;
-			this.panelItemStack.Size = new System.Drawing.Size(225, 243);
+			this.panelItemStack.Size = new System.Drawing.Size(225, 244);
 			this.panelItemStack.TabIndex = 1;
 			this.panelItemStack.Text = "toolStripContainer2";
 			// 
@@ -261,7 +261,7 @@
 			this.listItemStack.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.listItemStack.Name = "listItemStack";
 			this.listItemStack.ScrollAlwaysVisible = true;
-			this.listItemStack.Size = new System.Drawing.Size(225, 218);
+			this.listItemStack.Size = new System.Drawing.Size(225, 219);
 			this.listItemStack.TabIndex = 0;
 			this.listItemStack.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listClipboard_DrawItem);
 			this.listItemStack.SelectedIndexChanged += new System.EventHandler(this.listClipboard_SelectedIndexChanged);
@@ -314,7 +314,7 @@
 			this.tabPreview.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.tabPreview.Name = "tabPreview";
 			this.tabPreview.SelectedIndex = 0;
-			this.tabPreview.Size = new System.Drawing.Size(380, 243);
+			this.tabPreview.Size = new System.Drawing.Size(380, 244);
 			this.tabPreview.TabIndex = 0;
 			this.tabPreview.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.tabPreview_Selecting);
 			// 
@@ -325,7 +325,7 @@
 			this.tabPreview_pageText.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.tabPreview_pageText.Name = "tabPreview_pageText";
 			this.tabPreview_pageText.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-			this.tabPreview_pageText.Size = new System.Drawing.Size(372, 212);
+			this.tabPreview_pageText.Size = new System.Drawing.Size(372, 213);
 			this.tabPreview_pageText.TabIndex = 0;
 			this.tabPreview_pageText.Text = "#ClipboardType.Text";
 			this.tabPreview_pageText.UseVisualStyleBackColor = true;
@@ -339,7 +339,7 @@
 			this.viewText.Name = "viewText";
 			this.viewText.ReadOnly = true;
 			this.viewText.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-			this.viewText.Size = new System.Drawing.Size(366, 208);
+			this.viewText.Size = new System.Drawing.Size(366, 209);
 			this.viewText.TabIndex = 0;
 			this.viewText.WordWrap = false;
 			// 
@@ -350,7 +350,7 @@
 			this.tabPreview_pageRtf.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.tabPreview_pageRtf.Name = "tabPreview_pageRtf";
 			this.tabPreview_pageRtf.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-			this.tabPreview_pageRtf.Size = new System.Drawing.Size(372, 212);
+			this.tabPreview_pageRtf.Size = new System.Drawing.Size(372, 213);
 			this.tabPreview_pageRtf.TabIndex = 1;
 			this.tabPreview_pageRtf.Text = "#ClipboardType.Rtf";
 			this.tabPreview_pageRtf.UseVisualStyleBackColor = true;
@@ -365,7 +365,7 @@
 			this.viewRtf.Name = "viewRtf";
 			this.viewRtf.ReadOnly = true;
 			this.viewRtf.ShortcutsEnabled = false;
-			this.viewRtf.Size = new System.Drawing.Size(366, 208);
+			this.viewRtf.Size = new System.Drawing.Size(366, 209);
 			this.viewRtf.TabIndex = 0;
 			this.viewRtf.Text = "";
 			this.viewRtf.WordWrap = false;
@@ -376,7 +376,7 @@
 			this.tabPreview_pageHtml.Location = new System.Drawing.Point(4, 27);
 			this.tabPreview_pageHtml.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.tabPreview_pageHtml.Name = "tabPreview_pageHtml";
-			this.tabPreview_pageHtml.Size = new System.Drawing.Size(372, 212);
+			this.tabPreview_pageHtml.Size = new System.Drawing.Size(372, 213);
 			this.tabPreview_pageHtml.TabIndex = 4;
 			this.tabPreview_pageHtml.Text = "#ClipboardType.Html";
 			this.tabPreview_pageHtml.UseVisualStyleBackColor = true;
@@ -397,7 +397,7 @@
 			this.tableLayoutPanel2.RowCount = 2;
 			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel2.Size = new System.Drawing.Size(372, 212);
+			this.tableLayoutPanel2.Size = new System.Drawing.Size(372, 213);
 			this.tableLayoutPanel2.TabIndex = 2;
 			// 
 			// viewHtml
@@ -410,7 +410,7 @@
 			this.viewHtml.MinimumSize = new System.Drawing.Size(20, 20);
 			this.viewHtml.Name = "viewHtml";
 			this.viewHtml.ScriptErrorsSuppressed = true;
-			this.viewHtml.Size = new System.Drawing.Size(366, 177);
+			this.viewHtml.Size = new System.Drawing.Size(366, 178);
 			this.viewHtml.TabIndex = 0;
 			this.viewHtml.ShowMessage += new System.EventHandler<ContentTypeTextNet.Pe.PeMain.UI.Ex.ShowMessageEventArgs>(this.viewHtml_ShowMessage);
 			// 
@@ -450,7 +450,7 @@
 			this.tabPreview_pageImage.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.tabPreview_pageImage.Name = "tabPreview_pageImage";
 			this.tabPreview_pageImage.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-			this.tabPreview_pageImage.Size = new System.Drawing.Size(372, 212);
+			this.tabPreview_pageImage.Size = new System.Drawing.Size(372, 213);
 			this.tabPreview_pageImage.TabIndex = 2;
 			this.tabPreview_pageImage.Text = "#ClipboardType.Image";
 			this.tabPreview_pageImage.UseVisualStyleBackColor = true;
@@ -462,13 +462,13 @@
 			// toolStripContainer1.ContentPanel
 			// 
 			this.toolStripContainer1.ContentPanel.Controls.Add(this.panelImage);
-			this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(366, 183);
+			this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(366, 184);
 			this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.toolStripContainer1.LeftToolStripPanelVisible = false;
 			this.toolStripContainer1.Location = new System.Drawing.Point(3, 2);
 			this.toolStripContainer1.Name = "toolStripContainer1";
 			this.toolStripContainer1.RightToolStripPanelVisible = false;
-			this.toolStripContainer1.Size = new System.Drawing.Size(366, 208);
+			this.toolStripContainer1.Size = new System.Drawing.Size(366, 209);
 			this.toolStripContainer1.TabIndex = 2;
 			this.toolStripContainer1.Text = "toolStripContainer1";
 			// 
@@ -484,7 +484,7 @@
 			this.panelImage.Location = new System.Drawing.Point(0, 0);
 			this.panelImage.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.panelImage.Name = "panelImage";
-			this.panelImage.Size = new System.Drawing.Size(366, 183);
+			this.panelImage.Size = new System.Drawing.Size(366, 184);
 			this.panelImage.TabIndex = 1;
 			// 
 			// viewImage
@@ -515,7 +515,7 @@
 			this.toolImage_itemFill.Image = ((System.Drawing.Image)(resources.GetObject("toolImage_itemFill.Image")));
 			this.toolImage_itemFill.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolImage_itemFill.Name = "toolImage_itemFill";
-			this.toolImage_itemFill.Size = new System.Drawing.Size(146, 22);
+			this.toolImage_itemFill.Size = new System.Drawing.Size(145, 22);
 			this.toolImage_itemFill.Text = ":clipboard/image/fill";
 			this.toolImage_itemFill.Click += new System.EventHandler(this.toolImage_itemRaw_Click);
 			// 
@@ -524,7 +524,7 @@
 			this.toolImage_itemRaw.Image = ((System.Drawing.Image)(resources.GetObject("toolImage_itemRaw.Image")));
 			this.toolImage_itemRaw.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolImage_itemRaw.Name = "toolImage_itemRaw";
-			this.toolImage_itemRaw.Size = new System.Drawing.Size(155, 22);
+			this.toolImage_itemRaw.Size = new System.Drawing.Size(154, 22);
 			this.toolImage_itemRaw.Text = ":clipboard/image/raw";
 			this.toolImage_itemRaw.Click += new System.EventHandler(this.toolImage_itemRaw_Click);
 			// 
@@ -535,7 +535,7 @@
 			this.tabPreview_pageFile.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.tabPreview_pageFile.Name = "tabPreview_pageFile";
 			this.tabPreview_pageFile.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-			this.tabPreview_pageFile.Size = new System.Drawing.Size(372, 212);
+			this.tabPreview_pageFile.Size = new System.Drawing.Size(372, 213);
 			this.tabPreview_pageFile.TabIndex = 3;
 			this.tabPreview_pageFile.Text = "#ClipboardType.File";
 			this.tabPreview_pageFile.UseVisualStyleBackColor = true;
@@ -554,7 +554,7 @@
 			this.viewFile.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.viewFile.MultiSelect = false;
 			this.viewFile.Name = "viewFile";
-			this.viewFile.Size = new System.Drawing.Size(366, 208);
+			this.viewFile.Size = new System.Drawing.Size(366, 209);
 			this.viewFile.TabIndex = 0;
 			this.viewFile.UseCompatibleStateImageBehavior = false;
 			this.viewFile.View = System.Windows.Forms.View.Details;
@@ -575,20 +575,20 @@
             this.contextFileMenu_itemExecute,
             this.contextFileMenu_itemOpenParentDirectory});
 			this.contextFileMenu.Name = "contextFileMenu";
-			this.contextFileMenu.Size = new System.Drawing.Size(293, 48);
+			this.contextFileMenu.Size = new System.Drawing.Size(291, 48);
 			this.contextFileMenu.Opening += new System.ComponentModel.CancelEventHandler(this.contextFileMenu_Opening);
 			// 
 			// contextFileMenu_itemExecute
 			// 
 			this.contextFileMenu_itemExecute.Name = "contextFileMenu_itemExecute";
-			this.contextFileMenu_itemExecute.Size = new System.Drawing.Size(292, 22);
+			this.contextFileMenu_itemExecute.Size = new System.Drawing.Size(290, 22);
 			this.contextFileMenu_itemExecute.Text = ":clipboard/menu/file/open-file";
 			this.contextFileMenu_itemExecute.Click += new System.EventHandler(this.contextFileMenu_itemExecute_Click);
 			// 
 			// contextFileMenu_itemOpenParentDirectory
 			// 
 			this.contextFileMenu_itemOpenParentDirectory.Name = "contextFileMenu_itemOpenParentDirectory";
-			this.contextFileMenu_itemOpenParentDirectory.Size = new System.Drawing.Size(292, 22);
+			this.contextFileMenu_itemOpenParentDirectory.Size = new System.Drawing.Size(290, 22);
 			this.contextFileMenu_itemOpenParentDirectory.Text = ":clipboard/menu/file/open-parent-dir";
 			this.contextFileMenu_itemOpenParentDirectory.Click += new System.EventHandler(this.contextFileMenu_itemOpenParentDirectory_Click);
 			// 
@@ -598,7 +598,7 @@
 			this.tabPreview_pageRawTemplate.Location = new System.Drawing.Point(4, 27);
 			this.tabPreview_pageRawTemplate.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.tabPreview_pageRawTemplate.Name = "tabPreview_pageRawTemplate";
-			this.tabPreview_pageRawTemplate.Size = new System.Drawing.Size(372, 212);
+			this.tabPreview_pageRawTemplate.Size = new System.Drawing.Size(372, 213);
 			this.tabPreview_pageRawTemplate.TabIndex = 5;
 			this.tabPreview_pageRawTemplate.Text = ":clipboard/page/raw-template";
 			this.tabPreview_pageRawTemplate.UseVisualStyleBackColor = true;
@@ -616,7 +616,7 @@
 			this.tableLayoutPanel1.RowCount = 2;
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel1.Size = new System.Drawing.Size(372, 212);
+			this.tableLayoutPanel1.Size = new System.Drawing.Size(372, 213);
 			this.tableLayoutPanel1.TabIndex = 8;
 			// 
 			// flowLayoutPanel1
@@ -693,8 +693,8 @@
 			// panelTemplateSource.Panel2
 			// 
 			this.panelTemplateSource.Panel2.Controls.Add(this.listReplace);
-			this.panelTemplateSource.Size = new System.Drawing.Size(366, 131);
-			this.panelTemplateSource.SplitterDistance = 260;
+			this.panelTemplateSource.Size = new System.Drawing.Size(366, 132);
+			this.panelTemplateSource.SplitterDistance = 263;
 			this.panelTemplateSource.SplitterWidth = 3;
 			this.panelTemplateSource.TabIndex = 7;
 			this.panelTemplateSource.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.panelTemplateSource_SplitterMoved);
@@ -710,7 +710,7 @@
 			this.inputTemplateSource.Multiline = true;
 			this.inputTemplateSource.Name = "inputTemplateSource";
 			this.inputTemplateSource.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-			this.inputTemplateSource.Size = new System.Drawing.Size(260, 131);
+			this.inputTemplateSource.Size = new System.Drawing.Size(263, 132);
 			this.inputTemplateSource.TabIndex = 0;
 			this.inputTemplateSource.WordWrap = false;
 			// 
@@ -723,7 +723,7 @@
 			this.listReplace.Location = new System.Drawing.Point(0, 0);
 			this.listReplace.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.listReplace.Name = "listReplace";
-			this.listReplace.Size = new System.Drawing.Size(103, 131);
+			this.listReplace.Size = new System.Drawing.Size(100, 132);
 			this.listReplace.TabIndex = 0;
 			this.listReplace.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listReplace_DrawItem);
 			this.listReplace.MeasureItem += new System.Windows.Forms.MeasureItemEventHandler(this.listReplace_MeasureItem);
@@ -736,7 +736,7 @@
 			this.tabPreview_pageReplaceTemplate.Location = new System.Drawing.Point(4, 27);
 			this.tabPreview_pageReplaceTemplate.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.tabPreview_pageReplaceTemplate.Name = "tabPreview_pageReplaceTemplate";
-			this.tabPreview_pageReplaceTemplate.Size = new System.Drawing.Size(372, 212);
+			this.tabPreview_pageReplaceTemplate.Size = new System.Drawing.Size(372, 213);
 			this.tabPreview_pageReplaceTemplate.TabIndex = 6;
 			this.tabPreview_pageReplaceTemplate.Text = ":clipboard/page/replace-template";
 			this.tabPreview_pageReplaceTemplate.UseVisualStyleBackColor = true;
@@ -750,7 +750,7 @@
 			this.viewReplaceTemplate.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.viewReplaceTemplate.Name = "viewReplaceTemplate";
 			this.viewReplaceTemplate.ReadOnly = true;
-			this.viewReplaceTemplate.Size = new System.Drawing.Size(372, 212);
+			this.viewReplaceTemplate.Size = new System.Drawing.Size(372, 213);
 			this.viewReplaceTemplate.TabIndex = 0;
 			this.viewReplaceTemplate.Text = "";
 			this.viewReplaceTemplate.WordWrap = false;
@@ -785,7 +785,7 @@
 			this.toolClipboard_itemEnabled.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ReplaceSkin;
 			this.toolClipboard_itemEnabled.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolClipboard_itemEnabled.Name = "toolClipboard_itemEnabled";
-			this.toolClipboard_itemEnabled.Size = new System.Drawing.Size(200, 22);
+			this.toolClipboard_itemEnabled.Size = new System.Drawing.Size(199, 22);
 			this.toolClipboard_itemEnabled.Text = ":clipboard/command/enabled";
 			this.toolClipboard_itemEnabled.ToolTipText = ":clipboard/tips/enabled";
 			this.toolClipboard_itemEnabled.Click += new System.EventHandler(this.toolClipboard_itemEnabled_Click);
@@ -832,7 +832,7 @@
 			// 
 			this.toolClipboard_itemClear.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ReplaceSkin;
 			this.toolClipboard_itemClear.Name = "toolClipboard_itemClear";
-			this.toolClipboard_itemClear.Size = new System.Drawing.Size(241, 22);
+			this.toolClipboard_itemClear.Size = new System.Drawing.Size(239, 22);
 			this.toolClipboard_itemClear.Text = ":clipboard/command/clear";
 			this.toolClipboard_itemClear.Click += new System.EventHandler(this.toolClipboard_itemClear_Click);
 			// 
@@ -840,7 +840,7 @@
 			// 
 			this.toolClipboard_itemEmpty.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ReplaceSkin;
 			this.toolClipboard_itemEmpty.Name = "toolClipboard_itemEmpty";
-			this.toolClipboard_itemEmpty.Size = new System.Drawing.Size(241, 22);
+			this.toolClipboard_itemEmpty.Size = new System.Drawing.Size(239, 22);
 			this.toolClipboard_itemEmpty.Text = ":clipboard/command/empty";
 			this.toolClipboard_itemEmpty.Click += new System.EventHandler(this.toolClipboard_itemEmpty_Click);
 			// 
@@ -857,21 +857,22 @@
 			this.toolClipboard_itemType.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_NotImpl;
 			this.toolClipboard_itemType.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolClipboard_itemType.Name = "toolClipboard_itemType";
-			this.toolClipboard_itemType.Size = new System.Drawing.Size(166, 22);
+			this.toolClipboard_itemType.Size = new System.Drawing.Size(165, 22);
 			this.toolClipboard_itemType.Text = ":clipboard/select/type";
 			// 
 			// toolClipboard_itemType_itemClipboard
 			// 
 			this.toolClipboard_itemType_itemClipboard.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ReplaceSkin;
 			this.toolClipboard_itemType_itemClipboard.Name = "toolClipboard_itemType_itemClipboard";
-			this.toolClipboard_itemType_itemClipboard.Size = new System.Drawing.Size(248, 22);
+			this.toolClipboard_itemType_itemClipboard.Size = new System.Drawing.Size(246, 22);
 			this.toolClipboard_itemType_itemClipboard.Text = "#ClipboardListType.History";
 			this.toolClipboard_itemType_itemClipboard.Click += new System.EventHandler(this.toolClipboard_itemType_itemClipboard_Click);
 			// 
 			// toolClipboard_itemType_itemTemplate
 			// 
+			this.toolClipboard_itemType_itemTemplate.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ReplaceSkin;
 			this.toolClipboard_itemType_itemTemplate.Name = "toolClipboard_itemType_itemTemplate";
-			this.toolClipboard_itemType_itemTemplate.Size = new System.Drawing.Size(248, 22);
+			this.toolClipboard_itemType_itemTemplate.Size = new System.Drawing.Size(246, 22);
 			this.toolClipboard_itemType_itemTemplate.Text = "#ClipboardListType.Template";
 			this.toolClipboard_itemType_itemTemplate.Click += new System.EventHandler(this.toolClipboard_itemType_itemClipboard_Click);
 			// 
@@ -880,7 +881,7 @@
 			this.toolClipboard_itemOutputClipboard.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
 			this.toolClipboard_itemOutputClipboard.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolClipboard_itemOutputClipboard.Name = "toolClipboard_itemOutputClipboard";
-			this.toolClipboard_itemOutputClipboard.Size = new System.Drawing.Size(233, 22);
+			this.toolClipboard_itemOutputClipboard.Size = new System.Drawing.Size(232, 22);
 			this.toolClipboard_itemOutputClipboard.Text = ":clipboard/tool/output-using-clipboard";
 			this.toolClipboard_itemOutputClipboard.Click += new System.EventHandler(this.toolClipboard_itemOutputClipboard_Click);
 			// 
