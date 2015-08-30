@@ -729,6 +729,7 @@
 				WindowsUtility.SetRedraw(this, true);
 				//Refresh();
 				Invalidate();
+				this.statusClipboard.Refresh();
 			}
 		}
 
