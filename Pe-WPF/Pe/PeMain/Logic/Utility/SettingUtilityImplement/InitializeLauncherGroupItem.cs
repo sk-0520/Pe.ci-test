@@ -6,6 +6,8 @@
 	using System.Text;
 	using System.Threading.Tasks;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+	using ContentTypeTextNet.Pe.Library.PeData.Define;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 
 	internal static class InitializeLauncherGroupItem
@@ -17,13 +19,17 @@
 		}
 
 		static void V_Last(LauncherGroupItemModel item, Version previousVersion, INonProcess nonProcess)
-		{ }
+		{
+			item.GroupKind = EnumUtility.GetNormalization(item.GroupKind, GroupKind.LauncherItems);
+		}
 
 		static void V_First(LauncherGroupItemModel item, Version previousVersion, INonProcess nonProcess)
 		{
 			if(previousVersion != null) {
 				return;
 			}
+
+			item.GroupKind = GroupKind.LauncherItems;
 		}
 	}
 }

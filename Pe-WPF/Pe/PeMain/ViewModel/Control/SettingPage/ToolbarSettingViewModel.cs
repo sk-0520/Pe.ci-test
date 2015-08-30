@@ -96,8 +96,12 @@ using ContentTypeTextNet.Pe.PeMain.View;
 		{
 			get
 			{
-				// TODO: i18n なまえ
-				yield return new LauncherGroupItemModel() { Id = Guid.Empty, Name = "(default)" };
+				var defaultGroupItem = new LauncherGroupItemModel() { 
+					Id = Guid.Empty,
+					Name = AppNonProcess.Language["group/default"],
+				};
+				SettingUtility.InitializeLauncherGroupItem(defaultGroupItem, null, AppNonProcess);
+				yield return defaultGroupItem;
 
 				foreach(var item in GroupSettingModel.Groups) {
 					yield return item;

@@ -44,6 +44,7 @@
 		<Item Id="dialog/filter/log" Word="ログ形式" />
 		<Item Id="dialog/filter/*" Word="全て" />
 		
+		<Item Id="group/default" Word="(デフォルト)" />
 		<Item Id="clipboard/name/image" Word="@[CLIP-TYPE]: @[CLIP-IMAGE-WIDTH] × @[CLIP-IMAGE-HEIGHT]" />
 		<Item Id="clipboard/name/files" Word="@[CLIP-TYPE]: @[CLIP-FILES-COUNT]" />
 		
