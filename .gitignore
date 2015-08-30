@@ -8,8 +8,8 @@ $*
 /Output/
 /Changelog/
 *.Settings
-/Pe/packages/
-/Pe/TestResults/
+/Pe*/packages/
+/Pe*/TestResults/
 *.cd
 ProfilingSessions/
 *.suo
