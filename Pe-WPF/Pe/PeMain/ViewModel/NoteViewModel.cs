@@ -127,6 +127,7 @@
 					if (value) {
 						SetCompactArea();
 					}
+					OnPropertyChangeDisplayItem();
 					OnPropertyChanged("WindowHeight");
 				}
 			}
@@ -475,8 +476,12 @@
 		protected override void OnPropertyChangeDisplayItem()
 		{
 			base.OnPropertyChangeDisplayItem();
-			OnPropertyChanged("MenuIcon");
-			OnPropertyChanged("MenuText");
+
+			var propertyNames = new[] {
+				"MenuIcon",
+				"MenuText",
+			};
+			CallOnPropertyChange(propertyNames);
 		}
 
 		#endregion
@@ -537,7 +542,6 @@
 
 		Brush MakeBorderBrush()
 		{
-			//TODO: あうあう
 			return new SolidColorBrush(Model.BackColor);
 		}
 

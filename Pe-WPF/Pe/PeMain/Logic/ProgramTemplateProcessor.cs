@@ -13,7 +13,6 @@
 
 	/// <summary>
 	/// C#限定でムリくりアプリケーション用テンプレート処理。
-	/// TODO: 既存の処理を暫定的に外してる
 	/// </summary>
 	[Serializable]
 	public class ProgramTemplateProcessor : T4TemplateProcessor

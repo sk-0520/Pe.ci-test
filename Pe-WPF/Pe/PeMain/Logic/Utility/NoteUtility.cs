@@ -31,6 +31,9 @@
 		public static FrameworkElement MakeMenuIcon(NoteIndexItemModel indexItem)
 		{
 			var size = IconScale.Small.ToSize();
+			if(indexItem.IsCompacted) {
+				size.Height /= 3;
+			}
 			var element = ImageUtility.CreateBox(indexItem.ForeColor, indexItem.BackColor, size);
 			//var image = ImageUtility.MakeBitmapBitmapSourceDefualtDpi(element);
 			//return image;

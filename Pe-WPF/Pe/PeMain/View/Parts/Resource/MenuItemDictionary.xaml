@@ -13,7 +13,8 @@
 
 	<Style x:Key="IMenuItem" TargetType="MenuItem" BasedOn="{StaticResource _MenuItem}">
 		<Setter Property="Header" Value="{Binding MenuText}" />
-		<Setter Property="Icon" Value="{Binding MenuIcon}" />
+		<Setter Property="Icon" Value="{Binding MenuIcon}"  />
+		<Setter Property="SnapsToDevicePixels" Value="True"  />
 		<!--<Setter Property="Template" Value="{StaticResource IMenuItemTemplate}" />-->
 	</Style>
 
