@@ -39,7 +39,8 @@
 			this._srcModel = model;
 
 			if(HasView) {
-				View.SourceInitialized += View_SourceInitialized;
+				ScreenUtility.AttachmentStartupMoveScreenCenter(view, Screen);
+				//View.SourceInitialized += View_SourceInitialized;
 			}
 		}
 
@@ -108,12 +109,5 @@
 		public bool HasView { get { return HavingViewUtility.GetHasView(this); } }
 
 		#endregion
-
-		void View_SourceInitialized(object sender, EventArgs e)
-		{
-			View.SourceInitialized -= View_SourceInitialized;
-
-			ScreenUtility.MoveCenter(View, Screen);
-		}
 	}
 }

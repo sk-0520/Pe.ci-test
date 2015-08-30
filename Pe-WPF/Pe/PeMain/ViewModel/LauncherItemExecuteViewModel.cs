@@ -49,7 +49,7 @@
 			this._stdStreamInput = Model.StdStream.InputUsing;
 
 			if(HasView) {
-				View.SourceInitialized += View_SourceInitialized;
+				ScreenUtility.AttachmentStartupMoveScreenCenter(View, Screen);
 			}
 		}
 
@@ -236,12 +236,5 @@
 		public bool HasView { get { return HavingViewUtility.GetHasView(this); } }
 
 		#endregion
-
-		void View_SourceInitialized(object sender, EventArgs e)
-		{
-			View.SourceInitialized -= View_SourceInitialized;
-
-			ScreenUtility.MoveCenter(View, Screen);
-		}
 	}
 }

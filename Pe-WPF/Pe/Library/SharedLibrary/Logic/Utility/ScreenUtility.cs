@@ -11,6 +11,7 @@
 	using ContentTypeTextNet.Library.PInvoke.Windows.root.CIMV2;
 	using ContentTypeTextNet.Library.SharedLibrary.CompatibleForms;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
@@ -104,5 +105,16 @@
 			window.Top = logicalWindowPotision.Y;
 		}
 
+		public static void AttachmentStartupMoveScreenCenter(Window window, ScreenModel screen)
+		{
+			MoveCenter(window, screen);
+			window.SourceInitialized += Window_SourceInitialized;
+		}
+
+		static void Window_SourceInitialized(object sender, EventArgs e)
+		{
+			var window = (Window)sender;
+			window.SourceInitialized -= Window_SourceInitialized;
+		}
 	}
 }

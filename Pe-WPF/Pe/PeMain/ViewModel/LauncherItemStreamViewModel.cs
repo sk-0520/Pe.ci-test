@@ -58,7 +58,7 @@ using ContentTypeTextNet.Pe.PeMain.View;
 			Process.Exited += Process_Exited;
 
 			if(HasView) {
-				View.SourceInitialized += View_SourceInitialized;
+				ScreenUtility.AttachmentStartupMoveScreenCenter(View, Screen);
 			}
 		}
 
@@ -386,14 +386,6 @@ using ContentTypeTextNet.Pe.PeMain.View;
 			View.UserClosing -= View_UserClosing;
 			// not impl
 		}
-
-		void View_SourceInitialized(object sender, EventArgs e)
-		{
-			View.SourceInitialized -= View_SourceInitialized;
-
-			ScreenUtility.MoveCenter(View, Screen);
-		}
-
 	}
 
 }
