@@ -8,6 +8,7 @@
 
 	public static class LanguageKey
 	{
+		// 内部使用
 		#region common
 
 		public const string applicationName = "APPLICATION:NAME";
@@ -33,6 +34,7 @@
 
 		#endregion
 
+		// 言語ファイルの置き換え文字列
 		#region replace
 
 		public const string acceptWeb = "ACCEPT-WEB";
