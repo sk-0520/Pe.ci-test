@@ -17,7 +17,7 @@
 	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.IF;
 
-	public class LauncherListItemsViewModel : SingleModelWrapperViewModelBase<LauncherItemCollectionModel>, IHavingAppNonProcess, IHavingAppSender
+	public class LauncherItemsListViewModel : SingleModelWrapperViewModelBase<LauncherItemCollectionModel>, IHavingAppNonProcess, IHavingAppSender
 	{
 		#region variable
 
@@ -25,7 +25,7 @@
 
 		#endregion
 
-		public LauncherListItemsViewModel(LauncherItemCollectionModel model, IAppNonProcess appNonProcess, IAppSender appSender)
+		public LauncherItemsListViewModel(LauncherItemCollectionModel model, IAppNonProcess appNonProcess, IAppSender appSender)
 			: base(model)
 		{
 			AppNonProcess = appNonProcess;

@@ -30,7 +30,7 @@ using ContentTypeTextNet.Pe.PeMain.View;
 	{
 		#region variable
 
-		LauncherListItemsViewModel _launcherItems;
+		LauncherItemsListViewModel _launcherItems;
 		CollectionModel<GroupRootViewModel> _groupTree;
 
 		LauncherItemModel _selectedLauncherItem;
@@ -59,12 +59,12 @@ using ContentTypeTextNet.Pe.PeMain.View;
 
 		LauncherItemSettingModel LauncherItemSetting { get; set; }
 
-		public LauncherListItemsViewModel LauncherItems
+		public LauncherItemsListViewModel LauncherItems
 		{
 			get
 			{
 				if (this._launcherItems == null) {
-					this._launcherItems = new LauncherListItemsViewModel(
+					this._launcherItems = new LauncherItemsListViewModel(
 						LauncherItemSetting.Items,
 						AppNonProcess,
 						AppSender

@@ -294,7 +294,7 @@
     <Compile Include="ViewModel\ClipboardViewModel.cs" />
     <Compile Include="ViewModel\Control\EnvironmentVariablesEditViewModel.cs" />
     <Compile Include="ViewModel\Control\LauncherItemEditViewModel.cs" />
-    <Compile Include="ViewModel\Control\LauncherListItemsViewModel.cs" />
+    <Compile Include="ViewModel\Control\LauncherItemsListViewModel.cs" />
     <Compile Include="ViewModel\Control\SettingPage\ClipboardSettingViewModel.cs" />
     <Compile Include="ViewModel\Control\SettingPage\CommandSettingViewModel.cs" />
     <Compile Include="ViewModel\Control\SettingPage\NoteSettingViewModel.cs" />
