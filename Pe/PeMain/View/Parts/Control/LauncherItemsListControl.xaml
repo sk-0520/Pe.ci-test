@@ -34,17 +34,60 @@
 			<RowDefinition Height="*" />
 		</Grid.RowDefinitions>
 		<!--<ToolBarTray Grid.Row="0">-->
-		<ToolBar Grid.Row="0" Style="{StaticResource DefaultToolbar}">
-			<Button x:Name="toolAppend" Focusable="False" Command="{Binding AppendCommand, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}}" AA:Language.Hint="launcher-list-items/append">
-				<Image Source="{x:Static AM:AppResource.CommonAddImage}" Style="{StaticResource DefaultImage}" />
-			</Button>
-			<Button x:Name="toolRemove" Focusable="False" IsEnabled="{Binding SelectedLauncherItem, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}, Converter={StaticResource LogicalIsNotNullConverter}}" Command="{Binding RemoveCommand, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}}" CommandParameter="{Binding SelectedLauncherItem, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}}" AA:Language.Hint="launcher-list-items/remove" >
-				<Image Source="{x:Static AM:AppResource.CommonRemoveImage}" Style="{StaticResource DefaultImage}" />
-			</Button>
-			<Separator x:Name="toolSeparator"  />
-			<TextBox Text="{Binding FilterText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DefaultTextBox}" />
-		</ToolBar>
+		<!--<ToolBar Grid.Row="0" Style="{StaticResource DefaultToolbar}" >
+			<Grid VerticalAlignment="Stretch">
+				<Grid.Resources>
+					<Style TargetType="Button" BasedOn="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+						<Setter Property="Focusable" Value="False" />
+					</Style>
+				</Grid.Resources>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition Width="*" />
+				</Grid.ColumnDefinitions>
+				<Button x:Name="toolAppend" Grid.Column="0" Command="{Binding AppendCommand, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}}" AA:Language.Hint="launcher-list-items/append">
+					<Image Source="{x:Static AM:AppResource.CommonAddImage}" Style="{StaticResource DefaultImage}" />
+				</Button>
+				<Button x:Name="toolRemove" Grid.Column="1" IsEnabled="{Binding SelectedLauncherItem, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}, Converter={StaticResource LogicalIsNotNullConverter}}" Command="{Binding RemoveCommand, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}}" CommandParameter="{Binding SelectedLauncherItem, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}}" AA:Language.Hint="launcher-list-items/remove" >
+					<Image Source="{x:Static AM:AppResource.CommonRemoveImage}" Style="{StaticResource DefaultImage}" />
+				</Button>
+				<Separator x:Name="toolSeparator" Grid.Column="2" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
+				<TextBox Grid.Column="3" Text="{Binding FilterText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DefaultTextBox}" />
+			</Grid>
+		</ToolBar>-->
 		<!--</ToolBarTray>-->
+		<DockPanel>
+			<ToolBar DockPanel.Dock="Top" Style="{StaticResource DefaultToolbar}">
+				<ToolBar.Resources>
+					<Style TargetType="ToolBarPanel">
+						<Setter Property="Orientation" Value="Vertical"/>
+					</Style>
+				</ToolBar.Resources>
+				<Grid VerticalAlignment="Stretch">
+					<Grid.Resources>
+						<Style TargetType="Button" BasedOn="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+							<Setter Property="Focusable" Value="False" />
+						</Style>
+					</Grid.Resources>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition Width="*" />
+					</Grid.ColumnDefinitions>
+					<Button x:Name="toolAppend" Grid.Column="0" Command="{Binding AppendCommand, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}}" AA:Language.Hint="launcher-list-items/append">
+						<Image Source="{x:Static AM:AppResource.CommonAddImage}" Style="{StaticResource DefaultImage}" />
+					</Button>
+					<Button x:Name="toolRemove" Grid.Column="1" IsEnabled="{Binding SelectedLauncherItem, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}, Converter={StaticResource LogicalIsNotNullConverter}}" Command="{Binding RemoveCommand, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}}" CommandParameter="{Binding SelectedLauncherItem, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}}" AA:Language.Hint="launcher-list-items/remove" >
+						<Image Source="{x:Static AM:AppResource.CommonRemoveImage}" Style="{StaticResource DefaultImage}" />
+					</Button>
+					<Separator x:Name="toolSeparator" Grid.Column="2" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
+					<TextBox Grid.Column="3" Text="{Binding FilterText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DefaultTextBox}" />
+				</Grid>
+			</ToolBar>
+		</DockPanel>
 		<ListBox x:Name="listItems"  Grid.Row="1" ItemsSource="{Binding Items}">
 			<i:Interaction.Triggers>
 				<i:EventTrigger EventName="MouseDoubleClick">
