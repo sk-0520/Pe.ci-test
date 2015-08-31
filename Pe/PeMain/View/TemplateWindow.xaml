@@ -100,9 +100,9 @@
 				</Grid.RowDefinitions>
 				<StackPanel Grid.Row="0">
 					<Image />
-					<TextBox />
+					<TextBox Text="{Binding FilterText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 				</StackPanel>
-				<ListBox x:Name="listItems" Grid.Row="1" ItemsSource="{Binding IndexItems}" SelectedItem="{Binding SelectedViewModel}" HorizontalContentAlignment="Stretch">
+				<ListBox x:Name="listItems" Grid.Row="1" ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedViewModel}" HorizontalContentAlignment="Stretch">
 					<ListBox.ItemTemplate>
 						<DataTemplate>
 							<Grid>

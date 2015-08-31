@@ -3,10 +3,12 @@
 	using System;
 	using System.Collections.Generic;
 	using System.Collections.ObjectModel;
+	using System.ComponentModel;
 	using System.Linq;
 	using System.Text;
 	using System.Threading.Tasks;
 	using System.Windows;
+	using System.Windows.Data;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
@@ -31,6 +33,13 @@
 		where TItemModel : IndexItemModelBase
 		where TItemViewModel : SingleModelWrapperViewModelBase<TItemModel>
 	{
+		#region variable
+
+		string _filterText;
+		string _filterText_impl;
+
+		#endregion
+
 		public HavingViewSingleModelWrapperIndexViewModelBase(TModel model, TView view, IndexSettingModelBase<TCollectionModel, TItemModel> indexModel, IAppNonProcess appNonProcess, IAppSender appSender)
 			: base(model, view)
 		{
@@ -44,7 +53,11 @@
 				default(object),
 				CreateIndexViewModel
 			);
+			Items = CollectionViewSource.GetDefaultView(IndexPairList.ViewModelList);
+			Items.Filter = FilterAction;
+			Items.Refresh();
 		}
+
 
 		#region property
 
@@ -52,13 +65,38 @@
 
 		public MVMPairCreateDelegationCollection<TItemModel, TItemViewModel> IndexPairList { get; private set; }
 
-		public virtual CollectionModel<TItemViewModel> IndexItems { get { return IndexPairList.ViewModelList; } }
+		public CollectionModel<TItemViewModel> IndexItems { get { return IndexPairList.ViewModelList; } }
+
+		public ICollectionView Items { get; private set; }
+
+		public string FilterText
+		{
+			get { return this._filterText; }
+			set
+			{
+				SetVariableValue(ref this._filterText, value);
+				this._filterText_impl = this._filterText;
+				Items.Refresh();
+				if (Items.IsEmpty && !string.IsNullOrWhiteSpace(this._filterText)) {
+					this._filterText_impl = string.Empty;
+					Items.Refresh();
+				}
+			}
+		}
+
 
 		#endregion
 
 		#region function
 
 		protected abstract TItemViewModel CreateIndexViewModel(TItemModel model, object data);
+
+		bool FilterAction(object o)
+		{
+			var s = this._filterText_impl ?? string.Empty;
+			var vm = (TItemViewModel)o;
+			return vm.Model.Name.StartsWith(s, StringComparison.CurrentCultureIgnoreCase);
+		}
 
 		#endregion
 

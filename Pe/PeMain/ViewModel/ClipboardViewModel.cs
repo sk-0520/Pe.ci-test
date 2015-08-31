@@ -2,6 +2,7 @@
 {
 	using System;
 	using System.Collections.Generic;
+	using System.ComponentModel;
 	using System.Diagnostics;
 	using System.IO;
 	using System.Linq;
@@ -41,7 +42,9 @@
 
 		public ClipboardViewModel(ClipboardSettingModel model, ClipboardWindow view, ClipboardIndexSettingModel indexModel, IAppNonProcess appNonProcess, IAppSender appSender)
 			: base(model, view, indexModel, appNonProcess, appSender)
-		{ }
+		{
+			Items.SortDescriptions.Add(new SortDescription("CreateTimestamp", ListSortDirection.Descending));
+		}
 
 		#region property
 
