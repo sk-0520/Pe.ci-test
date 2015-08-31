@@ -168,6 +168,7 @@
 			<Grid.Resources>
 				<Style TargetType="Button">
 					<Setter Property="Margin" Value="4" />
+					<Setter Property="Padding" Value="8" />
 				</Style>
 			</Grid.Resources>
 			<Grid.ColumnDefinitions>
