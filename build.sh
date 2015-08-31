@@ -9,6 +9,8 @@ if [ -z "${CI+x}" ] ; then
         read
         exit 1
     fi
+else
+    echo "[CI] skip: status check"
 fi
 
 # バージョン書き換え
