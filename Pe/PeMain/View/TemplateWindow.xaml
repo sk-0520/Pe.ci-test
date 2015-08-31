@@ -98,10 +98,7 @@
 					<RowDefinition Height="Auto"/>
 					<RowDefinition Height="*"/>
 				</Grid.RowDefinitions>
-				<StackPanel Grid.Row="0">
-					<Image />
-					<TextBox Text="{Binding FilterText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-				</StackPanel>
+				<TextBox Grid.Row="0" Text="{Binding FilterText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DefaultTextBox}" />
 				<ListBox x:Name="listItems" Grid.Row="1" ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedViewModel}" HorizontalContentAlignment="Stretch">
 					<ListBox.ItemTemplate>
 						<DataTemplate>
@@ -111,6 +108,7 @@
 										<TextBlock Text="{Binding Name}" />
 										<Border Style="{StaticResource IndexItemsStyleInfo}">
 											<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+												<!-- enum で trigger 使えばよかった -->
 												<Image Style="{StaticResource DefaultImage}" Source="{Binding ItemTypeImage}" Margin="0,0,2,0" />
 												<TextBlock Text="{Binding ItemTypeText}" />
 											</StackPanel>
@@ -177,10 +175,10 @@
 								<ColumnDefinition Width="Auto"/>
 								<ColumnDefinition Width="Auto"/>
 							</Grid.ColumnDefinitions>
-							<Label Grid.Column="0"  HorizontalAlignment="Left" VerticalAlignment="Center" Content="name" AA:Language.Word="template/item/name" Style="{StaticResource HeaderLabel}"/>
-							<TextBox Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Text="{Binding SelectedViewModel.Name, UpdateSourceTrigger=PropertyChanged}" />
-							<CheckBox Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" IsChecked="{Binding SelectedViewModel.IsReplace}" Content="replace" AA:Language.Word="template/item/replace" />
-							<CheckBox Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Center" IsChecked="{Binding SelectedViewModel.IsProgrammableReplace}" Content="T4" AA:Language.Word="template/item/t4" />
+							<Label Grid.Column="0"  VerticalAlignment="Center" Content="name" AA:Language.Word="template/item/name" Style="{StaticResource HeaderLabel}"/>
+							<TextBox Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Text="{Binding SelectedViewModel.Name, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DefaultTextBox}" />
+							<CheckBox Grid.Column="2" Margin="4,0,4,0" VerticalAlignment="Center" Content="replace" AA:Language.Word="template/item/replace" IsChecked="{Binding SelectedViewModel.IsReplace}" />
+							<CheckBox Grid.Column="3" VerticalAlignment="Center" Content="T4" AA:Language.Word="template/item/t4" IsChecked="{Binding SelectedViewModel.IsProgrammableReplace}" />
 						</Grid>
 						<Grid Grid.Row="1">
 							<Grid.ColumnDefinitions>

@@ -304,6 +304,20 @@
 			}
 		}
 
+		public ICommand CopyHtmlUriCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						ClipboardUtility.CopyText(HtmlUri, AppNonProcess.ClipboardWatcher);
+					}
+				);
+
+				return result;
+			}
+		}
+
 		#endregion
 
 		#region function

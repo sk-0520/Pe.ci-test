@@ -152,6 +152,7 @@
 		<Item Id="clipboard/type/html" Word="HTML" />
 		<Item Id="clipboard/type/image" Word="画像" />
 		<Item Id="clipboard/type/files" Word="ファイル" />
+		<Item Id="clipboard/html/uri" Word="URI" />
 		<Item Id="clipboard/image/fit" Word="ウィンドウに合わせる" />
 		<Item Id="clipboard/image/raw" Word="原寸表示" />
 		<Item Id="clipboard/files/name" Word="ファイル名" />
@@ -186,6 +187,9 @@
 		<Item Id="template/item/t4" Word="T4" />
 		<Item Id="template/item/source" Word="テキストテンプレート" />
 		<Item Id="template/item/preview" Word="プレビュー" />
+		<Item Id="template/replace/plain" Word="通常" />
+		<Item Id="template/replace/text" Word="文字列置き換え" />
+		<Item Id="template/replace/program" Word="T4置き換え" />
 		
 		<Item Id="command/selected" Word="選択中アイテム" />
 		<Item Id="command/tag" Word="@[LAUNCHER-ITEM-TAG] (@[LAUNCHER-ITEM-NAME])" />

@@ -122,10 +122,7 @@
 						<RowDefinition Height="Auto"/>
 						<RowDefinition Height="*"/>
 					</Grid.RowDefinitions>
-					<StackPanel Grid.Row="0">
-						<Image />
-						<TextBox Text="{Binding FilterText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-					</StackPanel>
+					<TextBox Grid.Row="0" Text="{Binding FilterText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DefaultTextBox}" />
 					<ListBox x:Name="listItems" Grid.Row="1" ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedViewModel}" HorizontalContentAlignment="Stretch">
 						<ListBox.ItemTemplate>
 							<DataTemplate>
@@ -256,11 +253,10 @@
 									<ColumnDefinition Width="*" />
 									<ColumnDefinition Width="Auto" />
 								</Grid.ColumnDefinitions>
-								<TextBlock Grid.Row="0" Grid.Column="0" Text="uri" />
+								<Label Grid.Row="0" Grid.Column="0" Content="uri" AA:Language.Word="clipboard/html/uri" Style="{StaticResource HeaderLabel}" />
 								<TextBox Grid.Row="0" Grid.Column="1" IsReadOnly="True" Text="{Binding SelectedViewModel.HtmlUri, Mode=OneWay}" Style="{StaticResource DefaultTextBox}" />
-								<Button Grid.Row="0" Grid.Column="2">
-									<!--<Image Style="{StaticResource DefaultImage}" Source="{Binding Source={x:Static AM:AppResource.CommonClipboardImage}}" AA:IconSize.IconScale="Small" />-->
-									<Image Style="{StaticResource ClipboardHtml}" />
+								<Button Grid.Row="0" Grid.Column="2" Command="{Binding SelectedViewModel.CopyHtmlUriCommand}">
+									<Image Source="{x:Static AM:AppResource.CommonCopyImage}" Style="{StaticResource DefaultImage}" />
 								</Button>
 								<WebBrowser Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" AA:Browser.Html="{Binding SelectedViewModel.HtmlCode}" />
 							</Grid>

@@ -120,12 +120,12 @@
 			{
 				if(IsReplace) {
 					if(IsProgrammableReplace) {
-						return "TODO:Programmable";
+						return AppNonProcess.Language["template/replace/program"];
 					} else {
-						return "TODO:Replace";
+						return AppNonProcess.Language["template/replace/text"];
 					}
 				}
-				return "TODO:Plain";
+				return AppNonProcess.Language["template/replace/plain"];
 			}
 		}
 
