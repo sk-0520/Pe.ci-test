@@ -95,7 +95,12 @@
 		{
 			var s = this._filterText_impl ?? string.Empty;
 			var vm = (TItemViewModel)o;
-			return vm.Model.Name.StartsWith(s, StringComparison.CurrentCultureIgnoreCase);
+			return FilterAction_Impl(s, vm);
+		}
+
+		protected virtual bool FilterAction_Impl(string filterText, TItemViewModel viewModelItem)
+		{
+			return viewModelItem.Model.Name.StartsWith(filterText, StringComparison.CurrentCultureIgnoreCase);
 		}
 
 		#endregion
