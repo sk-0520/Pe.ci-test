@@ -8,8 +8,8 @@ $*
 /Output/
 /Changelog/
 *.Settings
-/Pe*/packages/
-/Pe*/TestResults/
+packages/
+TestResults/
 *.cd
 ProfilingSessions/
 *.suo
@@ -18,3 +18,4 @@ ProfilingSessions/
 *.vsp
 *.cache
 TemporaryGeneratedFile_*
+*.pdb
