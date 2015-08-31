@@ -40,8 +40,8 @@
 			<CheckBox IsChecked="{Binding CheckUpdateRC}" AA:Language.Word="update-check/rc" Content="rc" />
 		</StackPanel>
 		<StackPanel Style="{StaticResource ResourceKey=DialogResultPanel}"  Grid.Row="2">
-			<Button Style="{StaticResource ResourceKey=DialogResultButton}" AA:Language.Word="accept/ok" Content="ok" Command="{Binding OkCommand}"  />
-			<Button Style="{StaticResource ResourceKey=DialogResultButton}" AA:Language.Word="accept/ng" Content="ng" Command="{Binding NgCommand}"  />
+			<Button Style="{StaticResource ResourceKey=DialogButton}" AA:Language.Word="accept/ok" Content="ok" Command="{Binding OkCommand}"  />
+			<Button Style="{StaticResource ResourceKey=DialogButton}" AA:Language.Word="accept/ng" Content="ng" Command="{Binding NgCommand}"  />
 		</StackPanel>
 	</Grid>
 </AW:ViewModelCommonDataWindow>

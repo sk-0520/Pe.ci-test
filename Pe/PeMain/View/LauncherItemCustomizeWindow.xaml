@@ -34,8 +34,8 @@
 		<ACC:LauncherItemEditControl Grid.Row="0" />
 
 		<StackPanel Grid.Row="1" Style="{StaticResource ResourceKey=DialogResultPanel}" >
-			<Button Content="ok" Style="{StaticResource ResourceKey=DialogResultButtonAccept}"  Command="{Binding SaveCommand}" />
-			<Button Content="cancel" Style="{StaticResource ResourceKey=DialogResultButtonCancel}" Command="{Binding CancelCommand}" />
+			<Button Content="ok" Style="{StaticResource ResourceKey=DialogAcceptButton}"  Command="{Binding SaveCommand}" />
+			<Button Content="cancel" Style="{StaticResource ResourceKey=DialogCancelButton}" Command="{Binding CancelCommand}" />
 		</StackPanel>
 	</Grid>
 </AW:ViewModelCommonDataWindow>
