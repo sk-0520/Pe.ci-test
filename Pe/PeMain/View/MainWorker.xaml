@@ -162,7 +162,6 @@
 		IconSource="{Binding ApplicationIcon, Mode=OneWay}"
 		ToolTipText="Double-click for window, right-click for menu"
 		ContextMenu="{StaticResource ResourceKey=ContextMenu}"
-		
 	/>
 
 
