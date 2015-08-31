@@ -42,7 +42,7 @@
 				<Image Source="{x:Static AM:AppResource.CommonRemoveImage}" Style="{StaticResource DefaultImage}" />
 			</Button>
 			<Separator x:Name="toolSeparator"  />
-			<TextBox Style="{StaticResource DefaultTextBox}" />
+			<TextBox Text="{Binding FilterText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DefaultTextBox}" />
 		</ToolBar>
 		<!--</ToolBarTray>-->
 		<ListBox x:Name="listItems"  Grid.Row="1" ItemsSource="{Binding Items}">

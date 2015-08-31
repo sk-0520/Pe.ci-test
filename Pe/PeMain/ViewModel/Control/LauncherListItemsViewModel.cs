@@ -3,9 +3,11 @@
 	using System;
 	using System.Collections.Generic;
 	using System.Collections.ObjectModel;
+	using System.ComponentModel;
 	using System.Linq;
 	using System.Text;
 	using System.Threading.Tasks;
+	using System.Windows.Data;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
@@ -17,6 +19,12 @@
 
 	public class LauncherListItemsViewModel : SingleModelWrapperViewModelBase<LauncherItemCollectionModel>, IHavingAppNonProcess, IHavingAppSender
 	{
+		#region variable
+
+		string _filterText;
+
+		#endregion
+
 		public LauncherListItemsViewModel(LauncherItemCollectionModel model, IAppNonProcess appNonProcess, IAppSender appSender)
 			: base(model)
 		{
@@ -28,6 +36,14 @@
 				default(object),
 				CreateItemViewModel
 			);
+
+			Items = CollectionViewSource.GetDefaultView(LauncherItemPairList.ViewModelList);
+			Items.Filter = o => {
+				var s = FilterText ?? string.Empty;
+				var vm = (LauncherListItemViewModel)o;
+				return vm.Model.Name.StartsWith(s, StringComparison.CurrentCultureIgnoreCase);
+			};
+			Items.Refresh();
 		}
 
 
@@ -35,13 +51,17 @@
 
 		internal MVMPairCreateDelegationCollection<LauncherItemModel, LauncherListItemViewModel> LauncherItemPairList { get; private set; }
 
-		public CollectionModel<LauncherListItemViewModel> Items
+		public string FilterText
 		{
-			get
+			get { return this._filterText; }
+			set
 			{
-				return LauncherItemPairList.ViewModelList;
+				SetVariableValue(ref this._filterText, value);
+				Items.Refresh();
 			}
 		}
+
+		public ICollectionView Items { get; private set;}
 
 		#endregion
 
