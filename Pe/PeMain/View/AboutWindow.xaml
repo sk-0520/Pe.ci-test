@@ -117,7 +117,7 @@
 					</Hyperlink>
 				</TextBlock>
 				<TextBlock Style="{StaticResource LinkText}">
-					<Hyperlink Command="{Binding ICommand}" CommandParameter="{x:Static AM:Constants.UriFeedback}">
+					<Hyperlink Command="{Binding OpenLinkCommand}" CommandParameter="{x:Static AM:Constants.UriFeedback}">
 						<TextBlock Text="feedback" AA:Language.Word="about/link/feedback" />
 					</Hyperlink>
 				</TextBlock>
