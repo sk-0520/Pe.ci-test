@@ -353,8 +353,8 @@
     <Compile Include="View\Parts\Control\LauncherItemEditControl.xaml.cs">
       <DependentUpon>LauncherItemEditControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Parts\Control\LauncherListItemsControl.xaml.cs">
-      <DependentUpon>LauncherListItemsControl.xaml</DependentUpon>
+    <Compile Include="View\Parts\Control\LauncherItemsListControl.xaml.cs">
+      <DependentUpon>LauncherItemsListControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Parts\Control\AppHotkeyControl.cs" />
     <Compile Include="View\Parts\Control\SettingPage\ClipboardSettingControl.xaml.cs">
@@ -533,7 +533,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Parts\Control\LauncherListItemsControl.xaml">
+    <Page Include="View\Parts\Control\LauncherItemsListControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
