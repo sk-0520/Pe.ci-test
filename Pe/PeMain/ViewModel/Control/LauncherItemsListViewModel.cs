@@ -58,6 +58,11 @@
 			{
 				SetVariableValue(ref this._filterText, value);
 				Items.Refresh();
+				if (Items.IsEmpty && !string.IsNullOrWhiteSpace(this._filterText)) {
+					this._filterText = string.Empty;
+					Items.Refresh();
+					this._filterText = value;
+				}
 			}
 		}
 
