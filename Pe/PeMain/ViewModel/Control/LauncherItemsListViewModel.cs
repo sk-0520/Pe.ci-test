@@ -22,6 +22,7 @@
 		#region variable
 
 		string _filterText;
+		string _filterText_impl;
 
 		#endregion
 
@@ -38,11 +39,7 @@
 			);
 
 			Items = CollectionViewSource.GetDefaultView(LauncherItemPairList.ViewModelList);
-			Items.Filter = o => {
-				var s = FilterText ?? string.Empty;
-				var vm = (LauncherListItemViewModel)o;
-				return vm.Model.Name.StartsWith(s, StringComparison.CurrentCultureIgnoreCase);
-			};
+			Items.Filter = FilterAction;
 			Items.Refresh();
 		}
 
@@ -57,11 +54,11 @@
 			set
 			{
 				SetVariableValue(ref this._filterText, value);
+				this._filterText_impl = this._filterText;
 				Items.Refresh();
 				if (Items.IsEmpty && !string.IsNullOrWhiteSpace(this._filterText)) {
-					this._filterText = string.Empty;
+					this._filterText_impl = string.Empty;
 					Items.Refresh();
-					this._filterText = value;
 				}
 			}
 		}
@@ -75,6 +72,13 @@
 		LauncherListItemViewModel CreateItemViewModel(LauncherItemModel model, object data)
 		{
 			return new LauncherListItemViewModel(model, AppNonProcess, AppSender);
+		}
+
+		bool FilterAction(object o)
+		{
+			var s = this._filterText_impl ?? string.Empty;
+			var vm = (LauncherListItemViewModel)o;
+			return vm.Model.Name.StartsWith(s, StringComparison.CurrentCultureIgnoreCase);
 		}
 
 		#endregion
