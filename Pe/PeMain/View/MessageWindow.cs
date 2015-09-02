@@ -23,10 +23,10 @@
 		{
 			WindowStartupLocation = System.Windows.WindowStartupLocation.Manual;
 			WindowStyle = System.Windows.WindowStyle.None;
-			Width = 0;
-			Height = 0;
 			ResizeMode = System.Windows.ResizeMode.NoResize;
 			ShowInTaskbar = false;
+			Width = 0;
+			Height = 0;
 
 			ClipboardListenerRegisted = false;
 		}
@@ -44,7 +44,7 @@
 			base.OnLoaded(sender, e);
 			Visibility = System.Windows.Visibility.Collapsed;
 
-			ApplySettingImpl();
+			ApplySetting_Impl();
 		}
 		
 		protected override IntPtr WndProc(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
@@ -89,7 +89,7 @@
 		{
 			base.ApplySetting();
 			if (IsHandleCreated) {
-				ApplySettingImpl();
+				ApplySetting_Impl();
 			}
 		}
 
@@ -97,7 +97,7 @@
 
 		#region function
 
-		void ApplySettingImpl()
+		void ApplySetting_Impl()
 		{
 			ApplyHotKey();
 			RegistClipboardListener();
