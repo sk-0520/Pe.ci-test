@@ -104,6 +104,7 @@
 		<Item Id="new/template-name" Word="新規テンプレート" />
 		<Item Id="new/launcher-name" Word="ランチャーアイテム" />
 
+		<Item Id="toolbar/group" Word="選択中グループ" />
 		<Item Id="toolbar/position" Word="ツールバー位置" />
 		<Item Id="toolbar/topmost" Word="最前面で表示する" />
 		<Item Id="toolbar/autohide" Word="自動的に隠す" />

@@ -188,10 +188,10 @@
 		{
 			var converter = new BooleanVisibilityConverter();
 			var visibility = (Visibility)converter.Convert(value, typeof(bool), null, null);
-			//var elements = new UIElement[] { control.toolAppend, control.toolRemove, control.toolSeparator };
-			//foreach(var element in elements) {
-			//	element.Visibility = visibility;
-			//}
+			var elements = new UIElement[] { control.toolAppend, control.toolRemove, control.toolSeparator };
+			foreach(var element in elements) {
+				element.Visibility = visibility;
+			}
 		}
 
 		#endregion
