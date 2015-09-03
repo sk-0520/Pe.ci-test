@@ -257,7 +257,7 @@ using ContentTypeTextNet.Pe.PeMain.View.Parts.Control;
 
 		public static string GetTextFromSingleKey(Key value, ILanguage language)
 		{
-			if(Key.A <= value && value <= Key.Z) {
+			if((Key.A <= value && value <= Key.Z) || (Key.F1 <= value && value <= Key.F24)) {
 				return value.ToString();
 			}
 			

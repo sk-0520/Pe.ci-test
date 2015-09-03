@@ -468,7 +468,21 @@
 		<Item Id="enum/Key/Multiply"  Word="Num *" />
 		<Item Id="enum/Key/Divide"    Word="Num /" />
 		<Item Id="enum/Key/Decimal"   Word="Num ." />
-
+		
+		<Item Id="enum/Key/Insert"   Word="Insert" />
+		<Item Id="enum/Key/Delete"   Word="Delete" />
+		<Item Id="enum/Key/Home"     Word="Home" />
+		<Item Id="enum/Key/End"      Word="End" />
+		<Item Id="enum/Key/PageUp"   Word="PgUp" />
+		<Item Id="enum/Key/Next"     Word="PgDn" />
+		<Item Id="enum/Key/Scroll"   Word="ScrLk" />
+		<Item Id="enum/Key/Pause"    Word="Pause" />
+		<Item Id="enum/Key/Cancel"   Word="Break" />
+		
+		<Item Id="enum/Key/MediaStop"          Word="再生" />
+		<Item Id="enum/Key/MediaPlayPause"     Word="停止" />
+		<Item Id="enum/Key/MediaPreviousTrack" Word="前" />
+		<Item Id="enum/Key/MediaNextTrack"     Word="次" />
 
 		<Item Id="enum/IconScale/Small"  Word="小" />
 		<Item Id="enum/IconScale/Normal" Word="中" />

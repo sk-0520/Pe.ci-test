@@ -17,7 +17,14 @@
 	{
 		#region variable
 
-		IList<Key> _ignoreKeys = new List<Key>() {
+		static readonly Key[] throughSystemKeys = new[] {
+			Key.Tab,
+			Key.Escape,
+			Key.ImeProcessed,
+			Key.OemEnlw
+		};
+
+		static readonly Key[] ignoreKeys = new[] {
 			Key.LeftShift,
 			Key.RightShift,
 			Key.LeftCtrl,
@@ -96,10 +103,14 @@
 
 		protected override void OnPreviewKeyDown(KeyEventArgs e)
 		{
+			if(throughSystemKeys.Any(k => k == e.Key)) {
+				return;
+			}
+
 			e.Handled = true;
 
 			var key = (e.Key == Key.System ? e.SystemKey : e.Key);
-			if(this._ignoreKeys.Any(k => k == key)) {
+			if(ignoreKeys.Any(k => k == key)) {
 				ResetKey();
 				SetText();
 				return;
@@ -112,6 +123,11 @@
 
 		protected override void OnKeyUp(KeyEventArgs e)
 		{
+			if(throughSystemKeys.Any(k => k == e.Key)) {
+				base.OnKeyUp(e);
+				return;
+			}
+
 			if(Key == Key.None) {
 				ResetKey();
 				SetText();
