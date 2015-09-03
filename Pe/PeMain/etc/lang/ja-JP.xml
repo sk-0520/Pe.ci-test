@@ -77,6 +77,29 @@
 		<Item Id="tasktray/about" Word="@[APPLICATION:NAME] 情報" />
 		<Item Id="tasktray/exit" Word="終了" />
 
+		<Item Id="notify/info/command/show/title"      Word="コマンドウィンドウ" />
+		<Item Id="notify/info/command/show/message"    Word="コマンドウィンドウの表示" />
+		<Item Id="notify/info/hidefile/title"          Word="システム環境" />
+		<Item Id="notify/info/hidefile/message/show"   Word="隠しファイルの表示" />
+		<Item Id="notify/info/hidefile/message/hide"   Word="隠しファイルの非表示" />
+		<Item Id="notify/info/extension/title"         Word="システム環境" />
+		<Item Id="notify/info/extension/message/show"  Word="拡張子を表示" />
+		<Item Id="notify/info/extension/message/hide"  Word="拡張子を非表示" />
+		<Item Id="notify/info/note/create/title"       Word="ノート" />
+		<Item Id="notify/info/note/create/message"     Word="新しいノートの作成" />
+		<Item Id="notify/info/note/hide/title"         Word="ノート" />
+		<Item Id="notify/info/note/hide/message"       Word="非固定の表示中ノートを非表示" />
+		<Item Id="notify/info/note/compact/title"      Word="ノート" />
+		<Item Id="notify/info/note/compact/message"    Word="非固定の表示中ノートを最小化" />
+		<Item Id="notify/info/note/front/title"        Word="ノート" />
+		<Item Id="notify/info/note/front/message"      Word="表示中ノートを前面移動" />
+		<Item Id="notify/info/clipboard/title"         Word="クリップボード" />
+		<Item Id="notify/info/clipboard/message/show"  Word="ウィンドウの表示" />
+		<Item Id="notify/info/clipboard/message/hide"  Word="ウィンドウの非表示" />
+		<Item Id="notify/info/template/title"          Word="テンプレート" />
+		<Item Id="notify/info/template/message/show"   Word="ウィンドウの表示" />
+		<Item Id="notify/info/template/message/hide"   Word="ウィンドウの非表示" />
+
 		<Item Id="new/group-name" Word="新規グループ" />
 		<Item Id="new/template-name" Word="新規テンプレート" />
 		<Item Id="new/launcher-name" Word="ランチャーアイテム" />

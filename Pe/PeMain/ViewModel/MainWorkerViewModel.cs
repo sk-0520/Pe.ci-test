@@ -1762,7 +1762,7 @@
 			switch(hotKeyId) {
 				case HotKeyId.ShowCommand:
 					ShowCommandWindow();
-					SendInformationTips(CommonData.Language["tooltip/command/show/title"], CommonData.Language["tooltip/command/show/message"], LogKind.Information);
+					SendInformationTips(CommonData.Language["notify/info/command/show/title"], CommonData.Language["notify/info/command/show/message"], LogKind.Information);
 					break;
 
 				case HotKeyId.HideFile:
@@ -1770,11 +1770,11 @@
 						SwitchShellHideFile();
 						string message;
 						if(SystemEnvironmentUtility.IsHideFileShow()) {
-							message = "tooltip/hidefile/message/show";
+							message = "notify/info/hidefile/message/show";
 						} else {
-							message = "tooltip/hidefile/message/hide";
+							message = "notify/info/hidefile/message/hide";
 						}
-						SendInformationTips(CommonData.Language["tooltip/hidefile/title"], CommonData.Language[message], LogKind.Information);
+						SendInformationTips(CommonData.Language["notify/info/hidefile/title"], CommonData.Language[message], LogKind.Information);
 					}
 					break;
 
@@ -1783,11 +1783,11 @@
 						SwitchShellExtension();
 						string message;
 						if(SystemEnvironmentUtility.IsExtensionShow()) {
-							message = "tooltip/extension/message/show";
+							message = "notify/info/extension/message/show";
 						} else {
-							message = "tooltip/extension/message/hide";
+							message = "notify/info/extension/message/hide";
 						}
-						SendInformationTips(CommonData.Language["tooltip/extension/title"], CommonData.Language[message], LogKind.Information);
+						SendInformationTips(CommonData.Language["notify/info/extension/title"], CommonData.Language[message], LogKind.Information);
 					}
 					break;
 
@@ -1798,24 +1798,24 @@
 						var logcalPoint = devicePoint;
 						var noteSize = Constants.noteDefualtSize;
 						var window = CreateNoteItem(logcalPoint, noteSize, true);
-						SendInformationTips(CommonData.Language["tooltip/note/create/title"], CommonData.Language["tooltip/note/create/message"], LogKind.Information);
+						SendInformationTips(CommonData.Language["notify/info/note/create/title"], CommonData.Language["notify/info/note/create/message"], LogKind.Information);
 						//WindowsUtility.ShowNoActive(window.Handle);
 					}
 					break;
 
 				case HotKeyId.HideNote:
 					HideNoteItems();
-					SendInformationTips(CommonData.Language["tooltip/note/hide/title"], CommonData.Language["tooltip/note/hide/message"], LogKind.Information);
+					SendInformationTips(CommonData.Language["notify/info/note/hide/title"], CommonData.Language["notify/info/note/hide/message"], LogKind.Information);
 					break;
 
 				case HotKeyId.CompactNote:
 					CompactNoteItems();
-					SendInformationTips(CommonData.Language["tooltip/note/compact/title"], CommonData.Language["tooltip/note/compact/message"], LogKind.Information);
+					SendInformationTips(CommonData.Language["notify/info/note/compact/title"], CommonData.Language["notify/info/note/compact/message"], LogKind.Information);
 					break;
 
 				case HotKeyId.ShowFrontNote:
 					FrontNoteItems();
-					SendInformationTips(CommonData.Language["tooltip/note/front/title"], CommonData.Language["tooltip/note/front/message"], LogKind.Information);
+					SendInformationTips(CommonData.Language["notify/info/note/front/title"], CommonData.Language["notify/info/note/front/message"], LogKind.Information);
 					break;
 
 				case HotKeyId.SwitchClipboardShow: 
@@ -1823,11 +1823,11 @@
 						SwitchShowClipboardWindow();
 						string message;
 						if(Clipboard.IsVisible) {
-							message = "tooltip/clipboard/message/show";
+							message = "notify/info/clipboard/message/show";
 						} else {
-							message = "tooltip/clipboard/message/hide";
+							message = "notify/info/clipboard/message/hide";
 						}
-						SendInformationTips(CommonData.Language["tooltip/clipboard/title"], CommonData.Language[message], LogKind.Information);
+						SendInformationTips(CommonData.Language["notify/info/clipboard/title"], CommonData.Language[message], LogKind.Information);
 					}
 					break;
 
@@ -1836,11 +1836,11 @@
 						SwitchShowTemplateWindow();
 						string message;
 						if(Template.IsVisible) {
-							message = "tooltip/template/message/show";
+							message = "notify/info/template/message/show";
 						} else {
-							message = "tooltip/template/message/hide";
+							message = "notify/info/template/message/hide";
 						}
-						SendInformationTips(CommonData.Language["tooltip/template/title"], CommonData.Language[message], LogKind.Information);
+						SendInformationTips(CommonData.Language["notify/info/template/title"], CommonData.Language[message], LogKind.Information);
 					}
 					break;
 

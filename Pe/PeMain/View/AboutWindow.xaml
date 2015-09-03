@@ -13,7 +13,7 @@
 	Title="AboutWindow" 
 	AA:Language.Word="window/about"
 	Width="800"
-	Height="280" 
+	Height="300" 
 	ResizeMode="NoResize" WindowStartupLocation="CenterScreen" 
 	Icon="/PeMain;component/Resources/Icon/App.ico"
 >
