@@ -61,6 +61,7 @@
 
 		/// <summary>
 		/// プロパティ変更用ヘルパ。
+		/// TODO: キャッシュする。
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		/// <param name="obj">対象オブジェクト。</param>
@@ -105,11 +106,18 @@
 			return result;
 		}
 
+		/// <summary>
+		/// 変更状態をリセット。
+		/// </summary>
 		protected void ResetChangeFlag()
 		{
 			IsChanged = false;
 		}
 
+		/// <summary>
+		/// 表示要素の更新。
+		/// <para>各要素は必要なクラスで適時実装すること。</para>
+		/// </summary>
 		protected virtual void OnPropertyChangeDisplayItem()
 		{
 			OnPropertyChanged("DisplayText");
