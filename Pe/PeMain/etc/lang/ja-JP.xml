@@ -495,6 +495,7 @@
 		<Item Id="enum/DockType/Right"   Word="デスクトップ: 右" />
 		<Item Id="enum/DockType/Bottom"  Word="デスクトップ: 下" />
 
+		<Item Id="enum/TemplateReplaceMode"         Word="置き換え種別" />
 		<Item Id="enum/TemplateReplaceMode/None"    Word="通常" />
 		<Item Id="enum/TemplateReplaceMode/Text"    Word="文字列置き換え" />
 		<Item Id="enum/TemplateReplaceMode/Program" Word="T4置き換え" />

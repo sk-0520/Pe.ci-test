@@ -150,7 +150,7 @@
 											<!-- copy -->
 											<Image Style="{StaticResource DefaultImage}" Source="{Binding Source={x:Static AM:AppResource.CommonCopyImage}}" />
 										</Button>
-										<Button Command="{Binding DataContext.MoveUpItemCommand, ElementName=root}" CommandParameter="{Binding }" AA:Language.Hint="template/command/up" >
+										<Button Margin="2,0,0,0" Command="{Binding DataContext.MoveUpItemCommand, ElementName=root}" CommandParameter="{Binding }" AA:Language.Hint="template/command/up" >
 											<!-- up -->
 											<Image Style="{StaticResource DefaultImage}" Source="{Binding Source={x:Static AM:AppResource.CommonUpImage}}" />
 										</Button>

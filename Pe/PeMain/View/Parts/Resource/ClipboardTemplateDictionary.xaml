@@ -30,8 +30,8 @@
 		<Style.Resources>
 			<SC:BooleanVisibilityConverter x:Key="BooleanVisibilityConverter" />
 		</Style.Resources>
-		<Setter Property="BorderThickness" Value="4" />
-		<Setter Property="BorderBrush" Value="Yellow" />
+		<!--<Setter Property="BorderThickness" Value="4" />
+		<Setter Property="BorderBrush" Value="Yellow" />-->
 		<Setter Property="Visibility" Value="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType=ListBoxItem}, Mode=OneWay, Converter={StaticResource BooleanVisibilityConverter}}" />
 		<Setter Property="VerticalAlignment" Value="Bottom" />
 		<Setter Property="HorizontalAlignment" Value="Left" />
@@ -40,6 +40,7 @@
 		<Setter Property="Margin" Value="0,0,0,1" />
 	</Style>
 	<Style x:Key="ClipboardTemplateItem" TargetType="Border">
+		<Setter Property="SnapsToDevicePixels" Value="True" />
 		<Setter Property="BorderThickness" Value="0,0,0,1" />
 		<Setter Property="BorderBrush">
 			<Setter.Value>
