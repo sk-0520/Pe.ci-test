@@ -69,7 +69,7 @@
 				<Setter Property="Source" Value="{Binding ToolbarImage, Mode=OneWay}" />
 				<Setter Property="Width" Value="{Binding DataContext.IconSize.Width, Mode=OneWay, ElementName=root}" />
 				<Setter Property="Height" Value="{Binding DataContext.IconSize.Height, Mode=OneWay, ElementName=root}" />
-				<!--<Setter Property="Margin" Value="4, 0, 4, 0" />-->
+				<Setter Property="Margin" Value="2, 0, 2, 0" />
 			</Style>
 			<Style x:Key="ToolbarText" TargetType="TextBlock">
 				<Setter Property="Text" Value="{Binding ToolbarText, Mode=OneWay}" />
