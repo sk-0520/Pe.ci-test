@@ -63,7 +63,7 @@ using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
 		public void Refresh()
 		{
-			OnPropertyChangeDisplayItem();
+			CallOnPropertyChangeDisplayItem();
 		}
 
 		#endregion

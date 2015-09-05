@@ -36,7 +36,7 @@
 
 		public void Refresh()
 		{
-			OnPropertyChangeDisplayItem();
+			CallOnPropertyChangeDisplayItem();
 			AppNonProcess.LauncherIconCaching.Remove(Model);
 			OnPropertyChanged("Image");
 		}

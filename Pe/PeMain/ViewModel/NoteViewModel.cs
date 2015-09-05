@@ -102,7 +102,7 @@
 			set 
 			{
 				if (SetModelValue(value)) {
-					OnPropertyChangeDisplayItem();
+					CallOnPropertyChangeDisplayItem();
 				}
 			}
 		}
@@ -127,7 +127,7 @@
 					if (value) {
 						SetCompactArea();
 					}
-					OnPropertyChangeDisplayItem();
+					CallOnPropertyChangeDisplayItem();
 					OnPropertyChanged("WindowHeight");
 				}
 			}
@@ -473,9 +473,9 @@
 			base.UninitializeView();
 		}
 
-		protected override void OnPropertyChangeDisplayItem()
+		protected override void CallOnPropertyChangeDisplayItem()
 		{
-			base.OnPropertyChangeDisplayItem();
+			base.CallOnPropertyChangeDisplayItem();
 
 			var propertyNames = new[] {
 				"MenuIcon",
@@ -495,7 +495,7 @@
 			{
 				if (ColorPairProperty.SetNoneAlphaForekColor(Model, value, OnPropertyChanged)) {
 					CallOnPropertyChange("ForeColorBrush");
-					OnPropertyChangeDisplayItem();
+					CallOnPropertyChangeDisplayItem();
 				}
 			}
 		}
@@ -507,7 +507,7 @@
 			{
 				if (ColorPairProperty.SetNoneAlphaBackColor(Model, value, OnPropertyChanged)) {
 					BorderBrush = MakeBorderBrush();
-					OnPropertyChangeDisplayItem();
+					CallOnPropertyChangeDisplayItem();
 				}
 			}
 		}

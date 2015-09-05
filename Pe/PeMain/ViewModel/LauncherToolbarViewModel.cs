@@ -779,7 +779,7 @@
 			set
 			{
 				if(VisibleVisibilityProperty.SetVisible(Model.Toolbar, value, OnPropertyChanged)) {
-					OnPropertyChangeDisplayItem();
+					CallOnPropertyChangeDisplayItem();
 				}
 			}
 		}
@@ -1155,9 +1155,9 @@
 			base.UninitializeView();
 		}
 
-		protected override void OnPropertyChangeDisplayItem()
+		protected override void CallOnPropertyChangeDisplayItem()
 		{
-			base.OnPropertyChangeDisplayItem();
+			base.CallOnPropertyChangeDisplayItem();
 			OnPropertyChanged("MenuIcon");
 		}
 

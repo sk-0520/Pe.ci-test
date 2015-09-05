@@ -118,7 +118,7 @@
 		/// 表示要素の更新。
 		/// <para>各要素は必要なクラスで適時実装すること。</para>
 		/// </summary>
-		protected virtual void OnPropertyChangeDisplayItem()
+		protected virtual void CallOnPropertyChangeDisplayItem()
 		{
 			OnPropertyChanged("DisplayText");
 		}

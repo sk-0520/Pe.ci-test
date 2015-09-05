@@ -48,9 +48,9 @@
 
 		#region GroupViewModelBase
 
-		protected override void OnPropertyChangeDisplayItem()
+		protected override void CallOnPropertyChangeDisplayItem()
 		{
-			base.OnPropertyChangeDisplayItem();
+			base.CallOnPropertyChangeDisplayItem();
 			OnPropertyChanged("Image");
 		}
 

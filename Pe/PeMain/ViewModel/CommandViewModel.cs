@@ -162,7 +162,7 @@
 					}
 				}
 
-				OnPropertyChangeIsOpen();
+				CallOnPropertyChangeIsOpen();
 			}
 		}
 
@@ -172,8 +172,10 @@
 			set
 			{
 				SetVariableValue(ref this._selectedCommandItem, value);
-				OnPropertyChanged("IsSelectedCommandItem");
-				OnPropertyChanged("IsNotSelectedCommandItem");
+				CallOnPropertyChange(
+					"IsSelectedCommandItem",
+					"IsNotSelectedCommandItem"
+				);
 			}
 		}
 
@@ -254,7 +256,7 @@
 
 		#region function
 
-		void OnPropertyChangeIsOpen()
+		void CallOnPropertyChangeIsOpen()
 		{
 			OnPropertyChanged("IsOpen");
 		}
@@ -573,7 +575,7 @@
 		void View_Activated(object sender, EventArgs e)
 		{
 			AppNonProcess.Logger.Trace("command window: active");
-			OnPropertyChangeIsOpen();
+			CallOnPropertyChangeIsOpen();
 			HideTimer.IsEnabled = false;
 			if (HasView) {
 				View.inputCommand.Focus();
@@ -582,7 +584,7 @@
 
 		void View_Deactivated(object sender, EventArgs e)
 		{
-			OnPropertyChangeIsOpen();
+			CallOnPropertyChangeIsOpen();
 			HideTimer.IsEnabled = true;
 		}
 

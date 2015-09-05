@@ -51,7 +51,7 @@
 			set
 			{
 				if(SetModelValue(value)) {
-					OnPropertyChangeDisplayItem();
+					CallOnPropertyChangeDisplayItem();
 				}
 			}
 		}
