@@ -75,6 +75,7 @@
 						CommonData.MainSetting.SystemEnvironment,
 						CommonData.MainSetting.Stream,
 						CommonData.MainSetting.WindowSave,
+						HasView ? View.controlMainSetting:null,
 						CommonData.NonProcess,
 						SettingNotifiyItem
 					);
@@ -91,6 +92,7 @@
 				if(this._launcherItemSetting == null) {
 					this._launcherItemSetting = new LauncherItemSettingViewModel(
 						CommonData.LauncherItemSetting,
+						HasView ? View.controlLauncherItemSetting:null,
 						CommonData.NonProcess,
 						CommonData.AppSender,
 						SettingNotifiyItem
@@ -110,6 +112,7 @@
 						CommonData.MainSetting.Toolbar,
 						CommonData.LauncherGroupSetting,
 						CommonData.LauncherItemSetting,
+						HasView ? View.controlToolbarSetting: null,
 						CommonData.NonProcess,
 						CommonData.AppSender,
 						SettingNotifiyItem
@@ -127,6 +130,7 @@
 				if(this._commandSetting == null) {
 					this._commandSetting = new CommandSettingViewModel(
 						CommonData.MainSetting.Command,
+						HasView ? View.controlCommandSetting: null,
 						CommonData.NonProcess,
 						SettingNotifiyItem
 					);
@@ -143,6 +147,7 @@
 				if (this._noteSetting == null) {
 					this._noteSetting = new NoteSettingViewModel(
 						CommonData.MainSetting.Note,
+						HasView ? View.controlNoteSetting: null,
 						CommonData.NonProcess,
 						SettingNotifiyItem
 					);
@@ -159,6 +164,7 @@
 				if (this._clipboardSetting == null) {
 					this._clipboardSetting = new ClipboardSettingViewModel(
 						CommonData.MainSetting.Clipboard,
+						HasView ? View.controlClipboardSetting: null,
 						CommonData.NonProcess,
 						SettingNotifiyItem
 					);
@@ -175,6 +181,7 @@
 				if (this._templateSetting == null) {
 					this._templateSetting = new TemplateSettingViewModel(
 						CommonData.MainSetting.Template,
+						HasView ? View.controlTemplateSetting: null,
 						CommonData.NonProcess,
 						SettingNotifiyItem
 					);

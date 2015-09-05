@@ -16,8 +16,9 @@
 	using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
+	using ContentTypeTextNet.Pe.PeMain.View.Parts.Control.SettingPage;
 
-	public class LauncherItemSettingViewModel: SettingPageLauncherIconCacheViewModelBase, IHavingAppSender
+	public class LauncherItemSettingViewModel: SettingPageLauncherIconCacheViewModelBase<LauncherItemSettingControl>, IHavingAppSender
 	{
 		#region variable
 
@@ -26,8 +27,8 @@
 
 		#endregion
 
-		public LauncherItemSettingViewModel(LauncherItemSettingModel launcherItemSetting, IAppNonProcess appNonProcess, IAppSender appSender, SettingNotifiyItem settingNotifiyItem)
-			: base(appNonProcess, settingNotifiyItem)
+		public LauncherItemSettingViewModel(LauncherItemSettingModel launcherItemSetting, LauncherItemSettingControl view, IAppNonProcess appNonProcess, IAppSender appSender, SettingNotifiyItem settingNotifiyItem)
+			: base(view, appNonProcess, settingNotifiyItem)
 		{
 			LauncherItemSetting = launcherItemSetting;
 			AppSender = appSender;

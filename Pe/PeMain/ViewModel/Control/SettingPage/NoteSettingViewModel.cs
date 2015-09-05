@@ -17,11 +17,12 @@
 	using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Property;
+	using ContentTypeTextNet.Pe.PeMain.View.Parts.Control.SettingPage;
 
-	public class NoteSettingViewModel : SettingPageViewModelBase, IColorPair
+	public class NoteSettingViewModel : SettingPageViewModelBase<NoteSettingControl>, IColorPair
 	{
-		public NoteSettingViewModel(NoteSettingModel note, IAppNonProcess appNonProcess, SettingNotifiyItem settingNotifiyItem)
-			: base(appNonProcess, settingNotifiyItem)
+		public NoteSettingViewModel(NoteSettingModel note, NoteSettingControl view, IAppNonProcess appNonProcess, SettingNotifiyItem settingNotifiyItem)
+			: base(view, appNonProcess, settingNotifiyItem)
 		{
 			Note = note;
 		}

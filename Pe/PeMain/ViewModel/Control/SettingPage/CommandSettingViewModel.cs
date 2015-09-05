@@ -18,11 +18,12 @@
 	using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Property;
+	using ContentTypeTextNet.Pe.PeMain.View.Parts.Control.SettingPage;
 
-	public class CommandSettingViewModel: SettingPageViewModelBase
+	public class CommandSettingViewModel: SettingPageViewModelBase<CommandSettingControl>
 	{
-		public CommandSettingViewModel(CommandSettingModel command, IAppNonProcess appNonProcess, SettingNotifiyItem settingNotifiyItem)
-			: base(appNonProcess, settingNotifiyItem)
+		public CommandSettingViewModel(CommandSettingModel command, CommandSettingControl view, IAppNonProcess appNonProcess, SettingNotifiyItem settingNotifiyItem)
+			: base(view, appNonProcess, settingNotifiyItem)
 		{
 			Command = command;
 		}
