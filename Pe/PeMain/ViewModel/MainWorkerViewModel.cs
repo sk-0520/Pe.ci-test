@@ -1700,7 +1700,7 @@
 			this._clipboardPreviousTime = now;
 
 			try {
-				var clipboardData = ClipboardUtility.GetClipboardData(CommonData.MainSetting.Clipboard.EnabledClipboardTypes, MessageWindow.Handle, CommonData.NonProcess.Logger);
+				var clipboardData = ClipboardUtility.GetClipboardData(CommonData.MainSetting.Clipboard.CaptureType, MessageWindow.Handle, CommonData.NonProcess.Logger);
 				if (clipboardData.Type != ClipboardType.None) {
 					Task.Run(() => {
 						//clipboardItem.Name = displayText;
@@ -1888,7 +1888,7 @@
 
 		public bool ClipboardWatching { get { return MessageWindow.ClipboardListenerRegisted; } }
 
-		public bool ClipboardEnabledApplicationCopy { get { return CommonData.MainSetting.Clipboard.EnabledApplicationCopy; } }
+		public bool ClipboardEnabledApplicationCopy { get { return CommonData.MainSetting.Clipboard.IsEnabledApplicationCopy; } }
 
 		public bool UsingClipboard
 		{

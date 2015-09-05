@@ -44,7 +44,7 @@
 			nonProcess.Logger.Trace("version setting: first");
 
 			setting.IsEnabled = true;
-			setting.EnabledClipboardTypes = ClipboardType.All;
+			setting.CaptureType = ClipboardType.All;
 			setting.UsingClipboard = false;
 			setting.SaveCount = 0;
 			setting.DuplicationCount = Constants.clipboardDuplicationCount.median;

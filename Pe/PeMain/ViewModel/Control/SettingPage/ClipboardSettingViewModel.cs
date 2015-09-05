@@ -23,7 +23,7 @@
 	{
 		#region variable
 
-		const string defineEnabled = "EnabledClipboardTypes";
+		const string defineEnabled = "CaptureType";
 		//const string defineSave = "SaveClipboardTypes";
 
 		#endregion
@@ -46,7 +46,7 @@
 
 		public bool EnabledApplicationCopy
 		{
-			get { return Clipboard.EnabledApplicationCopy; }
+			get { return Clipboard.IsEnabledApplicationCopy; }
 			set { SetPropertyValue(Clipboard, value); }
 		}
 
@@ -56,32 +56,32 @@
 			set { SetPropertyValue(Clipboard, value); }
 		}
 
-		#region EnabledClipboardTypes
+		#region CaptureType
 
-		public bool EnabledClipboardTypesText
+		public bool CaptureTypeText
 		{
-			get { return Clipboard.EnabledClipboardTypes.HasFlag(ClipboardType.Text); }
-			set { SetClipboardType(Clipboard, Clipboard.EnabledClipboardTypes, ClipboardType.Text, defineEnabled); }
+			get { return Clipboard.CaptureType.HasFlag(ClipboardType.Text); }
+			set { SetClipboardType(Clipboard, Clipboard.CaptureType, ClipboardType.Text, defineEnabled); }
 		}
-		public bool EnabledClipboardTypesRtf
+		public bool CaptureTypeRtf
 		{
-			get { return Clipboard.EnabledClipboardTypes.HasFlag(ClipboardType.Rtf); }
-			set { SetClipboardType(Clipboard, Clipboard.EnabledClipboardTypes, ClipboardType.Rtf, defineEnabled); }
+			get { return Clipboard.CaptureType.HasFlag(ClipboardType.Rtf); }
+			set { SetClipboardType(Clipboard, Clipboard.CaptureType, ClipboardType.Rtf, defineEnabled); }
 		}
-		public bool EnabledClipboardTypesHtml
+		public bool CaptureTypeHtml
 		{
-			get { return Clipboard.EnabledClipboardTypes.HasFlag(ClipboardType.Html); }
-			set { SetClipboardType(Clipboard, Clipboard.EnabledClipboardTypes, ClipboardType.Html, defineEnabled); }
+			get { return Clipboard.CaptureType.HasFlag(ClipboardType.Html); }
+			set { SetClipboardType(Clipboard, Clipboard.CaptureType, ClipboardType.Html, defineEnabled); }
 		}
-		public bool EnabledClipboardTypesImage
+		public bool CaptureTypeImage
 		{
-			get { return Clipboard.EnabledClipboardTypes.HasFlag(ClipboardType.Image); }
-			set { SetClipboardType(Clipboard, Clipboard.EnabledClipboardTypes, ClipboardType.Image, defineEnabled); }
+			get { return Clipboard.CaptureType.HasFlag(ClipboardType.Image); }
+			set { SetClipboardType(Clipboard, Clipboard.CaptureType, ClipboardType.Image, defineEnabled); }
 		}
-		public bool EnabledClipboardTypesFile
+		public bool CaptureTypeFiles
 		{
-			get { return Clipboard.EnabledClipboardTypes.HasFlag(ClipboardType.Files); }
-			set { SetClipboardType(Clipboard, Clipboard.EnabledClipboardTypes, ClipboardType.Files, defineEnabled); }
+			get { return Clipboard.CaptureType.HasFlag(ClipboardType.Files); }
+			set { SetClipboardType(Clipboard, Clipboard.CaptureType, ClipboardType.Files, defineEnabled); }
 		}
 
 		#endregion

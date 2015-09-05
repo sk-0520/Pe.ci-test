@@ -82,13 +82,13 @@
 				/>
 			</Grid>
 
-			<GroupBox Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Header="enabled type" AA:Language.Word="clipboard-setting/enabled-type" Style="{StaticResource DefaultGroupBox}" >
+			<GroupBox Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Header="capture type" AA:Language.Word="clipboard-setting/capture-type" Style="{StaticResource DefaultGroupBox}" >
 				<StackPanel>
-					<CheckBox Content="text"  AA:Language.Word="clipboard-setting/enabled-type/text" IsChecked="{Binding EnabledClipboardTypesText}" />
-					<CheckBox Content="rtf"   AA:Language.Word="clipboard-setting/enabled-type/rtf" IsChecked="{Binding EnabledClipboardTypesRtf}" />
-					<CheckBox Content="html"  AA:Language.Word="clipboard-setting/enabled-type/html" IsChecked="{Binding EnabledClipboardTypesHtml}" />
-					<CheckBox Content="image" AA:Language.Word="clipboard-setting/enabled-type/image" IsChecked="{Binding EnabledClipboardTypesImage}" />
-					<CheckBox Content="files" AA:Language.Word="clipboard-setting/enabled-type/files" IsChecked="{Binding EnabledClipboardTypesFile}" />
+					<CheckBox Content="text"  AA:Language.Word="clipboard-setting/capture-type/text" IsChecked="{Binding CaptureTypeText}" />
+					<CheckBox Content="rtf"   AA:Language.Word="clipboard-setting/capture-type/rtf" IsChecked="{Binding CaptureTypeRtf}" />
+					<CheckBox Content="html"  AA:Language.Word="clipboard-setting/capture-type/html" IsChecked="{Binding CaptureTypeHtml}" />
+					<CheckBox Content="image" AA:Language.Word="clipboard-setting/capture-type/image" IsChecked="{Binding CaptureTypeImage}" />
+					<CheckBox Content="files" AA:Language.Word="clipboard-setting/capture-type/files" IsChecked="{Binding CaptureTypeFiles}" />
 				</StackPanel>
 			</GroupBox>
 		</Grid>

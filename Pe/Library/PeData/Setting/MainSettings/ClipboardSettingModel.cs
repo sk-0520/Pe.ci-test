@@ -37,7 +37,7 @@
 		/// アプリケーション内でのコピー操作も監視対象とするか。
 		/// </summary>
 		[DataMember]
-		public bool EnabledApplicationCopy { get; set; }
+		public bool IsEnabledApplicationCopy { get; set; }
 
 		/// <summary>
 		/// 表示非表示切り替え。
@@ -49,7 +49,7 @@
 		/// 取り込み対象。
 		/// </summary>
 		[DataMember]
-		public ClipboardType EnabledClipboardTypes { get; set; }
+		public ClipboardType CaptureType { get; set; }
 
 		/// <summary>
 		/// 履歴数。
@@ -127,9 +127,9 @@
 			var obj = (ClipboardSettingModel)target;
 
 			obj.IsEnabled = IsEnabled;
-			obj.EnabledApplicationCopy = EnabledApplicationCopy;
+			obj.IsEnabledApplicationCopy = IsEnabledApplicationCopy;
 			ToggleHotKey.DeepCloneTo(obj.ToggleHotKey);
-			obj.EnabledClipboardTypes = EnabledClipboardTypes;
+			obj.CaptureType = CaptureType;
 			obj.SaveCount = SaveCount;
 			obj.WaitTime = WaitTime;
 			obj.DuplicationCount = DuplicationCount;

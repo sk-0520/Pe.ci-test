@@ -363,12 +363,12 @@
 		<Item Id="clipboard-setting/topmost" Word="最前面" />
 		<Item Id="clipboard-setting/visible" Word="クリップボードウィンドウを表示する" />
 		<Item Id="clipboard-setting/using-clipboard" Word="テキスト転送にクリップボードを経由する" />
-		<Item Id="clipboard-setting/enabled-type" Word="取込対象" />
-		<Item Id="clipboard-setting/enabled-type/text" Word="文字列" />
-		<Item Id="clipboard-setting/enabled-type/rtf" Word="書式付文字列" />
-		<Item Id="clipboard-setting/enabled-type/html" Word="HTML" />
-		<Item Id="clipboard-setting/enabled-type/image" Word="画像" />
-		<Item Id="clipboard-setting/enabled-type/files" Word="ファイル" />
+		<Item Id="clipboard-setting/capture-type" Word="取込対象" />
+		<Item Id="clipboard-setting/capture-type/text" Word="文字列" />
+		<Item Id="clipboard-setting/capture-type/rtf" Word="書式付文字列" />
+		<Item Id="clipboard-setting/capture-type/html" Word="HTML" />
+		<Item Id="clipboard-setting/capture-type/image" Word="画像" />
+		<Item Id="clipboard-setting/capture-type/files" Word="ファイル" />
 		<Item Id="clipboard-setting/show" Word="表示切り替えキー" />
 		<Item Id="clipboard-setting/save-count" Word="保存件数(0:全件)" />
 		<Item Id="clipboard-setting/wait-time" Word="前回コピーからの待機時間" />

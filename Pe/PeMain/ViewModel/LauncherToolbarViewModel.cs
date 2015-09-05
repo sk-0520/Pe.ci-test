@@ -895,7 +895,7 @@
 		public bool NowFullScreen {
 			get { return this._nowFullScreen; }
 			set {
-				AppNonProcess.Logger.Fatal(string.Format("NowFullScreen {0} -> {1}", this._nowFullScreen, value));
+				AppNonProcess.Logger.Debug(string.Format("NowFullScreen {0} -> {1}", this._nowFullScreen, value));
 				SetVariableValue(ref this._nowFullScreen, value);
 				OnPropertyChanged("IsTopmost");
 			}

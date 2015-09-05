@@ -57,10 +57,10 @@
 			return name.Name ?? string.Empty;
 		}
 
-		public static string MakeClipboardName(ClipboardData clipboardItem, INonProcess nonProcess) 
+		public static string MakeClipboardName(ClipboardData clipboardData, INonProcess nonProcess) 
 		{
 
-			var type = ClipboardUtility.GetSingleClipboardType(clipboardItem.Type);
+			var type = ClipboardUtility.GetSingleClipboardType(clipboardData.Type);
 			Debug.Assert(type != ClipboardType.None);
 
 			string result;
@@ -68,7 +68,7 @@
 			switch (type) {
 				case ClipboardType.Text:
 					{
-						var text = clipboardItem.Body.Text
+						var text = clipboardData.Body.Text
 							.SplitLines()
 							.Where(s => !string.IsNullOrWhiteSpace(s))
 							.Select(s => s.Trim())
@@ -87,7 +87,7 @@
 					{
 						var rt = new RichTextBox();
 							string plainText;
-							using(var reader = new MemoryStream(ASCIIEncoding.Default.GetBytes(clipboardItem.Body.Rtf))) {
+							using(var reader = new MemoryStream(ASCIIEncoding.Default.GetBytes(clipboardData.Body.Rtf))) {
 								rt.Selection.Load(reader, DataFormats.Rtf);
 								using(var writer = new MemoryStream()) {
 									rt.Selection.Save(writer, DataFormats.Text);
@@ -115,7 +115,7 @@
 					{
 						var takeCount = 64;
 						var converted = false;
-						var lines = clipboardItem.Body.Html.SplitLines().Take(takeCount);
+						var lines = clipboardData.Body.Html.SplitLines().Take(takeCount);
 						var text = string.Join("", lines);
 						//var text = clipboardItem.Html.Replace('\r', ' ').Replace('\n', ' ');
 
@@ -161,8 +161,8 @@
 					{
 						var map = new Dictionary<string, string>() {
 							{ LanguageKey.clipboardType, LanguageUtility.GetTextFromEnum(type, nonProcess.Language) },
-							{ LanguageKey.clipboardImageWidth, clipboardItem.Body.Image.PixelWidth.ToString() },
-							{ LanguageKey.clipboardImageHeight, clipboardItem.Body.Image.PixelHeight.ToString() },
+							{ LanguageKey.clipboardImageWidth, clipboardData.Body.Image.PixelWidth.ToString() },
+							{ LanguageKey.clipboardImageHeight, clipboardData.Body.Image.PixelHeight.ToString() },
 						};
 
 						result = nonProcess.Language["clipboard/name/image", map];
@@ -173,7 +173,7 @@
 					{
 						var map = new Dictionary<string, string>() {
 							{ LanguageKey.clipboardType, LanguageUtility.GetTextFromEnum(type, nonProcess.Language) },
-							{ LanguageKey.clipboardFileCount, clipboardItem.Body.Files.Count().ToString() },
+							{ LanguageKey.clipboardFileCount, clipboardData.Body.Files.Count().ToString() },
 						};
 
 						result = nonProcess.Language["clipboard/name/files", map];
