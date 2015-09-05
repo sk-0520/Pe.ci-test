@@ -754,6 +754,9 @@
 				if(NowFullScreen) {
 					return false;
 				} else {
+					if(IsDocking && AutoHide && IsHidden) {
+						return true;
+					}
 					return TopMostProperty.GetTopMost(Model.Toolbar);
 				}
 			}
@@ -967,7 +970,10 @@
 				//	OnPropertyChanged("HideVisibility");
 				//}
 				if(SetVariableValue(ref this._isHidden, value)) {
-					OnPropertyChanged("HideVisibility");
+					CallOnPropertyChange(
+						"HideVisibility",
+						"IsTopmost"
+					);
 				}
 			}
 		}
