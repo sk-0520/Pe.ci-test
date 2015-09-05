@@ -564,6 +564,14 @@
 							}
 							break;
 						case ToolbarNodeKind.Item:
+							if(dstNode.ToolbarNodeKind == ToolbarNodeKind.Group) {
+								var srcItemViewModel = (GroupItemViewMode)srcNode;
+								var srcGroupViewModel = this._groupTree.First(g => g.Nodes.Any(i => i == srcItemViewModel));
+								if(dstNode == srcGroupViewModel) {
+									e.Effects = DragDropEffects.None;
+									break;
+								}
+							}
 							e.Effects = DragDropEffects.Move;
 							break;
 						default:
