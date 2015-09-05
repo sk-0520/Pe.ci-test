@@ -1191,72 +1191,72 @@
 			get { return GetImage(TemplateTemplatePath); }
 		}
 		#endregion TemplateTemplate
-		#region Image: TemplatePlain
+		#region Image: TemplateReplaceNone
 
 		/// <summary>
-		/// [Image] TemplatePlainのリソースパスを取得。
-		/// <para>/Resources/Image/Template/TemplatePlain.png</para>
+		/// [Image] TemplateReplaceNoneのリソースパスを取得。
+		/// <para>/Resources/Image/Template/TemplateReplaceNone.png</para>
 		/// </summary>
-		public static string TemplatePlainPath
+		public static string TemplateReplaceNonePath
 		{
-			get { return templatePlain; }
+			get { return templateReplaceNone; }
 		}
 
 		/// <summary>
-		/// [Image] TemplatePlainのイメージソースを取得。
+		/// [Image] TemplateReplaceNoneのイメージソースを取得。
 		/// <para>初回のみ生成を行う。</para>
-		/// <para>TemplatePlainPath: /Resources/Image/Template/TemplatePlain.png</para>
+		/// <para>TemplateReplaceNonePath: /Resources/Image/Template/TemplateReplaceNone.png</para>
 		/// </summary>
 		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
-		public static BitmapSource TemplatePlainImage
+		public static BitmapSource TemplateReplaceNoneImage
 		{
-			get { return GetImage(TemplatePlainPath); }
+			get { return GetImage(TemplateReplaceNonePath); }
 		}
-		#endregion TemplatePlain
-		#region Image: TemplateReplace
+		#endregion TemplateReplaceNone
+		#region Image: TemplateReplaceText
 
 		/// <summary>
-		/// [Image] TemplateReplaceのリソースパスを取得。
-		/// <para>/Resources/Image/Template/TemplateReplace.png</para>
+		/// [Image] TemplateReplaceTextのリソースパスを取得。
+		/// <para>/Resources/Image/Template/TemplateReplaceText.png</para>
 		/// </summary>
-		public static string TemplateReplacePath
+		public static string TemplateReplaceTextPath
 		{
-			get { return templateReplace; }
+			get { return templateReplaceText; }
 		}
 
 		/// <summary>
-		/// [Image] TemplateReplaceのイメージソースを取得。
+		/// [Image] TemplateReplaceTextのイメージソースを取得。
 		/// <para>初回のみ生成を行う。</para>
-		/// <para>TemplateReplacePath: /Resources/Image/Template/TemplateReplace.png</para>
+		/// <para>TemplateReplaceTextPath: /Resources/Image/Template/TemplateReplaceText.png</para>
 		/// </summary>
 		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
-		public static BitmapSource TemplateReplaceImage
+		public static BitmapSource TemplateReplaceTextImage
 		{
-			get { return GetImage(TemplateReplacePath); }
+			get { return GetImage(TemplateReplaceTextPath); }
 		}
-		#endregion TemplateReplace
-		#region Image: TemplateProgrammable
+		#endregion TemplateReplaceText
+		#region Image: TemplateReplaceProgram
 
 		/// <summary>
-		/// [Image] TemplateProgrammableのリソースパスを取得。
-		/// <para>/Resources/Image/Template/TemplateProgrammable.png</para>
+		/// [Image] TemplateReplaceProgramのリソースパスを取得。
+		/// <para>/Resources/Image/Template/TemplateReplaceProgram.png</para>
 		/// </summary>
-		public static string TemplateProgrammablePath
+		public static string TemplateReplaceProgramPath
 		{
-			get { return templateProgrammable; }
+			get { return templateReplaceProgram; }
 		}
 
 		/// <summary>
-		/// [Image] TemplateProgrammableのイメージソースを取得。
+		/// [Image] TemplateReplaceProgramのイメージソースを取得。
 		/// <para>初回のみ生成を行う。</para>
-		/// <para>TemplateProgrammablePath: /Resources/Image/Template/TemplateProgrammable.png</para>
+		/// <para>TemplateReplaceProgramPath: /Resources/Image/Template/TemplateReplaceProgram.png</para>
 		/// </summary>
 		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
-		public static BitmapSource TemplateProgrammableImage
+		public static BitmapSource TemplateReplaceProgramImage
 		{
-			get { return GetImage(TemplateProgrammablePath); }
+			get { return GetImage(TemplateReplaceProgramPath); }
 		}
-		#endregion TemplateProgrammable
+		#endregion TemplateReplaceProgram
 		#region Image: TemplatePreview
 
 		/// <summary>

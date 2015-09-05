@@ -499,6 +499,9 @@
 				"TemplateReplaceMode",
 			};
 			if(SelectedViewModel != null && refreshTargets.Any(s => s == e.PropertyName)) {
+				if(HasView) {
+					LanguageUtility.RecursiveSetLanguage(View.listItems, AppNonProcess.Language);
+				}
 				CallOnPropertyChange("KeywordList");
 			}
 		}

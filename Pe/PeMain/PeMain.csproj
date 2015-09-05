@@ -759,9 +759,9 @@
     <Resource Include="Resources\Image\Clipboard\ClipboardText.png" />
     <Resource Include="Resources\Image\Common\CommonFiltering.png" />
     <Resource Include="Resources\Image\Template\Template.png" />
-    <Resource Include="Resources\Image\Template\TemplatePlain.png" />
-    <Resource Include="Resources\Image\Template\TemplateProgrammable.png" />
-    <Resource Include="Resources\Image\Template\TemplateReplace.png" />
+    <Resource Include="Resources\Image\Template\TemplateReplaceNone.png" />
+    <Resource Include="Resources\Image\Template\TemplateReplaceProgram.png" />
+    <Resource Include="Resources\Image\Template\TemplateReplaceText.png" />
     <Resource Include="Resources\Icon\LauncherCommand.ico" />
     <Resource Include="Resources\Icon\NotFound.ico" />
     <Resource Include="Resources\Icon\LauncherToolbarMain.ico" />

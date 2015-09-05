@@ -20,7 +20,7 @@
 
 	public static class LanguageUtility
 	{
-		static bool SetUI_Impl(DependencyObject baseElement, LanguageManager language, IReadOnlyDictionary<string, string> map, Action<string, string> action)
+		static bool SetUI_Impl(DependencyObject baseElement, ILanguage language, IReadOnlyDictionary<string, string> map, Action<string, string> action)
 		{
 			var key = Language.GetWord(baseElement);
 			var hint = Language.GetHint(baseElement);
@@ -32,12 +32,12 @@
 			}
 		}
 
-		public static bool SetTitle(Window ui, LanguageManager language, IReadOnlyDictionary<string, string> map = null)
+		public static bool SetTitle(Window ui, ILanguage language, IReadOnlyDictionary<string, string> map = null)
 		{
 			return SetUI_Impl(ui, language, map, (key, hint) => ui.Title = language[key, map]);
 		}
 
-		public static bool SetContent(ContentControl ui, LanguageManager language, IReadOnlyDictionary<string, string> map = null)
+		public static bool SetContent(ContentControl ui, ILanguage language, IReadOnlyDictionary<string, string> map = null)
 		{
 			return SetUI_Impl(ui, language, map, (key, hint) => {
 				if(!ui.HasContent || ui.Content is string) {
@@ -48,7 +48,7 @@
 				}
 			});
 		}
-		public static bool SetContent(ContentPresenter ui, LanguageManager language, IReadOnlyDictionary<string, string> map = null)
+		public static bool SetContent(ContentPresenter ui, ILanguage language, IReadOnlyDictionary<string, string> map = null)
 		{
 			return SetUI_Impl(ui, language, map, (key, hint) => {
 				if(ui.Content is string) {
@@ -61,7 +61,7 @@
 		}
 
 
-		public static bool SetText(TextBlock ui, LanguageManager language, IReadOnlyDictionary<string, string> map = null)
+		public static bool SetText(TextBlock ui, ILanguage language, IReadOnlyDictionary<string, string> map = null)
 		{
 			return SetUI_Impl(ui, language, map, (key, hint) => {
 				ui.Text = language[key, map];
@@ -71,7 +71,7 @@
 			});
 		}
 
-		public static bool SetHeader(HeaderedItemsControl ui, LanguageManager language, IReadOnlyDictionary<string, string> map = null)
+		public static bool SetHeader(HeaderedItemsControl ui, ILanguage language, IReadOnlyDictionary<string, string> map = null)
 		{
 			return SetUI_Impl(ui, language, map, (key, hint) => {
 				if(!ui.HasHeader || ui.Header is string) {
@@ -82,7 +82,7 @@
 				}
 			});
 		}
-		public static bool SetHeader(HeaderedContentControl ui, LanguageManager language, IReadOnlyDictionary<string, string> map = null)
+		public static bool SetHeader(HeaderedContentControl ui, ILanguage language, IReadOnlyDictionary<string, string> map = null)
 		{
 			return SetUI_Impl(ui, language, map, (key, hint) => {
 				if(!ui.HasHeader || ui.Header is string) {
@@ -94,7 +94,7 @@
 			});
 		}
 
-		public static bool SetColumn(GridViewColumnHeader ui, LanguageManager language, IReadOnlyDictionary<string, string> map = null)
+		public static bool SetColumn(GridViewColumnHeader ui, ILanguage language, IReadOnlyDictionary<string, string> map = null)
 		{
 			if(ui.Column != null) {
 				return SetUI_Impl(ui.Column, language, map, (key, hint) => {
@@ -116,7 +116,7 @@
 		/// <param name="control"></param>
 		/// <param name="language"></param>
 		/// <param name="map"></param>
-		static bool SetLanguageItem(DependencyObject control, LanguageManager language, IReadOnlyDictionary<string, string> map)
+		static bool SetLanguageItem(DependencyObject control, ILanguage language, IReadOnlyDictionary<string, string> map)
 		{
 #if !true
 #if DEBUG
@@ -165,7 +165,7 @@
 		/// <param name="root"></param>
 		/// <param name="language"></param>
 		/// <param name="map"></param>
-		public static void RecursiveSetLanguage(DependencyObject root, LanguageManager language, IReadOnlyDictionary<string, string> map = null)
+		public static void RecursiveSetLanguage(DependencyObject root, ILanguage language, IReadOnlyDictionary<string, string> map = null)
 		{
 			var window = root as Window;
 			if(window != null) {

@@ -88,22 +88,22 @@
 			set { SetVariableValue(ref this._replaced, value); }
 		}
 
-		public ImageSource ItemTypeImage
-		{
-			get
-			{
-				switch(TemplateReplaceMode) {
-					case Library.PeData.Define.TemplateReplaceMode.None:
-						return AppResource.TemplatePlainImage;
-					case Library.PeData.Define.TemplateReplaceMode.Text:
-						return AppResource.TemplateReplaceImage;
-					case Library.PeData.Define.TemplateReplaceMode.Program:
-						return AppResource.TemplateProgrammableImage;
-					default:
-						throw new NotImplementedException();
-				}
-			}
-		}
+		//public ImageSource ItemTypeImage
+		//{
+		//	get
+		//	{
+		//		switch(TemplateReplaceMode) {
+		//			case Library.PeData.Define.TemplateReplaceMode.None:
+		//				return AppResource.TemplatePlainImage;
+		//			case Library.PeData.Define.TemplateReplaceMode.Text:
+		//				return AppResource.TemplateReplaceImage;
+		//			case Library.PeData.Define.TemplateReplaceMode.Program:
+		//				return AppResource.TemplateProgrammableImage;
+		//			default:
+		//				throw new NotImplementedException();
+		//		}
+		//	}
+		//}
 
 		public bool IsReplace
 		{
@@ -172,8 +172,8 @@
 		{
 			var propertyNames = new[] {
 				"IsReplace",
-				"ItemTypeImage",
-				"ItemTypeText",
+//				"ItemTypeImage",
+//				"ItemTypeText",
 			};
 			CallOnPropertyChange(propertyNames);
 		}

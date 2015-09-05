@@ -11,6 +11,7 @@
 	xmlns:AM="clr-namespace:ContentTypeTextNet.Pe.PeMain"
 	xmlns:SC="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=SharedLibrary"
 	xmlns:ACE="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Converter.EnumLanguageConverter" 
+	xmlns:ADD="clr-namespace:ContentTypeTextNet.Pe.Library.PeData.Define;assembly=PeData"
 	x:TypeArguments="AVM:TemplateViewModel"
 	Title="TemplateWindow"
 	AA:Language.Word="window/template"
@@ -111,8 +112,24 @@
 										<TextBlock Text="{Binding Name}" />
 										<Border Style="{StaticResource IndexItemsStyleInfo}">
 											<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-												<!-- enum で trigger 使えばよかった -->
-												<Image Style="{StaticResource DefaultImage}" Source="{Binding ItemTypeImage}" Margin="0,0,2,0" />
+												<Image Margin="0,0,2,0">
+													<Image.Style>
+														<Style TargetType="Image" BasedOn="{StaticResource DefaultImage}">
+															<Style.Triggers>
+																<DataTrigger Binding="{Binding TemplateReplaceMode}" Value="{x:Static ADD:TemplateReplaceMode.None}">
+																	<Setter Property="Source" Value="{x:Static AM:AppResource.TemplateReplaceNoneImage}" />
+																</DataTrigger>
+																<DataTrigger Binding="{Binding TemplateReplaceMode}" Value="{x:Static ADD:TemplateReplaceMode.Text}">
+																	<Setter Property="Source" Value="{x:Static AM:AppResource.TemplateReplaceTextImage}" />
+																</DataTrigger>
+																<DataTrigger Binding="{Binding TemplateReplaceMode}" Value="{x:Static ADD:TemplateReplaceMode.Program}">
+																	<Setter Property="Source" Value="{x:Static AM:AppResource.TemplateReplaceProgramImage}" />
+																</DataTrigger>
+															</Style.Triggers>
+														</Style>
+													</Image.Style>
+												</Image>
+												<!-- AA:Language使うの結構手間だった -->
 												<TextBlock Text="{Binding ItemTypeText}" />
 											</StackPanel>
 										</Border>

@@ -97,11 +97,11 @@
 		[AppResource(AppResourceType.Image)]
 		const string templateTemplate = "/Resources/Image/Template/Template.png";
 		[AppResource(AppResourceType.Image)]
-		const string templatePlain = "/Resources/Image/Template/TemplatePlain.png";
+		const string templateReplaceNone = "/Resources/Image/Template/TemplateReplaceNone.png";
 		[AppResource(AppResourceType.Image)]
-		const string templateReplace = "/Resources/Image/Template/TemplateReplace.png";
+		const string templateReplaceText = "/Resources/Image/Template/TemplateReplaceText.png";
 		[AppResource(AppResourceType.Image)]
-		const string templateProgrammable = "/Resources/Image/Template/TemplateProgrammable.png";
+		const string templateReplaceProgram = "/Resources/Image/Template/TemplateReplaceProgram.png";
 		[AppResource(AppResourceType.Image)]
 		const string templatePreview = "/Resources/Image/Template/TemplatePreview.png";
 		
