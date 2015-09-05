@@ -604,8 +604,20 @@
 							break;
 						case ToolbarNodeKind.Item:
 							// アイテムの移動
-							if(dstNode.ToolbarNodeKind == ToolbarNodeKind.Group) {
-							} else {
+							{
+								var srcItemViewModel = (GroupItemViewMode)srcNode;
+								if(dstNode.ToolbarNodeKind == ToolbarNodeKind.Group) {
+									// 親に追加
+									var srcGroupViewModel = this._groupTree.First(g => g.Nodes.Any(i => i == srcItemViewModel));
+									srcGroupViewModel.Nodes.Remove(srcItemViewModel);
+									GroupSettingModel.Groups[srcGroupViewModel.Id].LauncherItems.Remove(srcItemViewModel.Id);
+
+									var dstGroupViewModel = (GroupRootViewModel)dstNode;
+									dstGroupViewModel.Nodes.Add(srcItemViewModel);
+									GroupSettingModel.Groups[dstGroupViewModel.Id].LauncherItems.Add(srcItemViewModel.Id);
+								} else {
+									// アイテムの下に付ける
+								}
 							}
 							break;
 						default:
