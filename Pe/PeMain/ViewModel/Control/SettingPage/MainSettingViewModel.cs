@@ -20,8 +20,9 @@
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Property;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
+	using ContentTypeTextNet.Pe.PeMain.View.Parts.Control.SettingPage;
 
-	public class MainSettingViewModel : SettingPageViewModelBase
+	public class MainSettingViewModel : SettingPageViewModelBase<MainSettingControl>
 	{
 		#region variavle
 
@@ -30,8 +31,8 @@
 
 		#endregion
 
-		public MainSettingViewModel(RunningInformationSettingModel runningInformation, LanguageSettingModel language, LoggingSettingModel logging, SystemEnvironmentSettingModel systemEnvironment, StreamSettingModel stream, WindowSaveSettingModel windowSave, IAppNonProcess appNonProcess, SettingNotifiyItem settingNotifiyItem)
-			: base(appNonProcess, settingNotifiyItem)
+		public MainSettingViewModel(RunningInformationSettingModel runningInformation, LanguageSettingModel language, LoggingSettingModel logging, SystemEnvironmentSettingModel systemEnvironment, StreamSettingModel stream, WindowSaveSettingModel windowSave,MainSettingControl view, IAppNonProcess appNonProcess, SettingNotifiyItem settingNotifiyItem)
+			: base(view, appNonProcess, settingNotifiyItem)
 		{
 			RunningInformation = runningInformation;
 			Language = language;

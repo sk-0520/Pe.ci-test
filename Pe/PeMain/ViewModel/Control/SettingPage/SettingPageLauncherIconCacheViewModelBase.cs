@@ -5,6 +5,7 @@
 	using System.Linq;
 	using System.Text;
 	using System.Threading.Tasks;
+	using System.Windows.Controls;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
@@ -12,10 +13,11 @@
 	using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
 	using ContentTypeTextNet.Pe.PeMain.IF;
 
-	public abstract class SettingPageLauncherIconCacheViewModelBase : SettingPageViewModelBase
+	public abstract class SettingPageLauncherIconCacheViewModelBase<TView>: SettingPageViewModelBase<TView>
+		where TView: UserControl
 	{
-		public SettingPageLauncherIconCacheViewModelBase(IAppNonProcess appNonProcess, SettingNotifiyItem settingNotifiyItem)
-			: base(appNonProcess, settingNotifiyItem)
+		public SettingPageLauncherIconCacheViewModelBase(TView view, IAppNonProcess appNonProcess, SettingNotifiyItem settingNotifiyItem)
+			: base(view, appNonProcess, settingNotifiyItem)
 		{ }
 	}
 }

@@ -15,11 +15,12 @@
 	using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Property;
+	using ContentTypeTextNet.Pe.PeMain.View.Parts.Control.SettingPage;
 
-	public class TemplateSettingViewModel : SettingPageViewModelBase
+	public class TemplateSettingViewModel : SettingPageViewModelBase<TemplateSettingControl>
 	{
-		public TemplateSettingViewModel(TemplateSettingModel template, IAppNonProcess appNonProcess, SettingNotifiyItem settingNotifiyItem)
-			: base(appNonProcess, settingNotifiyItem)
+		public TemplateSettingViewModel(TemplateSettingModel template, TemplateSettingControl view, IAppNonProcess appNonProcess, SettingNotifiyItem settingNotifiyItem)
+			: base(view, appNonProcess, settingNotifiyItem)
 		{
 			Template = template;
 		}

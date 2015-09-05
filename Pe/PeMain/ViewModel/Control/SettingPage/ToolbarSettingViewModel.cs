@@ -25,8 +25,9 @@
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 using ContentTypeTextNet.Pe.PeMain.View;
+	using ContentTypeTextNet.Pe.PeMain.View.Parts.Control.SettingPage;
 
-	public class ToolbarSettingViewModel: SettingPageLauncherIconCacheViewModelBase, IRefreshFromViewModel, IHavingAppSender
+	public class ToolbarSettingViewModel: SettingPageLauncherIconCacheViewModelBase<ToolbarSettingControl>, IRefreshFromViewModel, IHavingAppSender
 	{
 		#region variable
 
@@ -40,8 +41,8 @@ using ContentTypeTextNet.Pe.PeMain.View;
 
 		#endregion
 
-		public ToolbarSettingViewModel(ToolbarSettingModel toolbarSetting, LauncherGroupSettingModel groupSettingModel, LauncherItemSettingModel launcherItemSetting, IAppNonProcess appNonProcess, IAppSender appSender, SettingNotifiyItem settingNotifiyItem)
-			: base(appNonProcess, settingNotifiyItem)
+		public ToolbarSettingViewModel(ToolbarSettingModel toolbarSetting, LauncherGroupSettingModel groupSettingModel, LauncherItemSettingModel launcherItemSetting, ToolbarSettingControl view, IAppNonProcess appNonProcess, IAppSender appSender, SettingNotifiyItem settingNotifiyItem)
+			: base(view, appNonProcess, settingNotifiyItem)
 		{
 			ToolbarSetting = toolbarSetting;
 			GroupSettingModel = groupSettingModel;

@@ -32,25 +32,25 @@
 				</Style>
 			</TabControl.Resources>
 			<TabItem x:Name="pageMain" Header="main" AA:Language.Word="setting/main">
-				<AS:MainSettingControl x:Name="MainSettingControl" DataContext="{Binding MainSetting}" VerticalAlignment="Stretch" />
+				<AS:MainSettingControl x:Name="controlMainSetting" DataContext="{Binding MainSetting}" VerticalAlignment="Stretch" />
 			</TabItem>
 			<TabItem Header="launcher" AA:Language.Word="setting/launcher">
-				<AS:LauncherItemSettingControl x:Name="LauncherItemSettingControl" DataContext="{Binding LauncherItemSetting}" VerticalAlignment="Stretch"/>
+				<AS:LauncherItemSettingControl x:Name="controlLauncherItemSetting" DataContext="{Binding LauncherItemSetting}" VerticalAlignment="Stretch"/>
 			</TabItem>
 			<TabItem x:Name="pageToolbar" Header="toolbar" AA:Language.Word="setting/toolbar">
-				<AS:ToolbarSettingControl x:Name="ToolbarSettingControl" DataContext="{Binding ToolbarSetting}" VerticalAlignment="Stretch"/>
+				<AS:ToolbarSettingControl x:Name="controlToolbarSetting" DataContext="{Binding ToolbarSetting}" VerticalAlignment="Stretch"/>
 			</TabItem>
 			<TabItem Header="command" AA:Language.Word="setting/command">
-				<AS:CommandSettingControl x:Name="CommandSettingControl" DataContext="{Binding CommandSetting}" VerticalAlignment="Stretch" />
+				<AS:CommandSettingControl x:Name="controlCommandSetting" DataContext="{Binding CommandSetting}" VerticalAlignment="Stretch" />
 			</TabItem>
 			<TabItem Header="note" AA:Language.Word="setting/note">
-				<AS:NoteSettingControl x:Name="NoteSettingControl" DataContext="{Binding NoteSetting}" VerticalAlignment="Stretch" />
+				<AS:NoteSettingControl x:Name="controlNoteSetting" DataContext="{Binding NoteSetting}" VerticalAlignment="Stretch" />
 			</TabItem>
 			<TabItem Header="clipboard" AA:Language.Word="setting/clipboard">
-				<AS:ClipboardSettingControl x:Name="ClipboardSettingControl" DataContext="{Binding ClipboardSetting}" VerticalAlignment="Stretch" />
+				<AS:ClipboardSettingControl x:Name="controlClipboardSetting" DataContext="{Binding ClipboardSetting}" VerticalAlignment="Stretch" />
 			</TabItem>
 			<TabItem Header="template" AA:Language.Word="setting/template">
-				<AS:TemplateSettingControl x:Name="TemplateSettingControl" DataContext="{Binding TemplateSetting}" VerticalAlignment="Stretch" />
+				<AS:TemplateSettingControl x:Name="controlTemplateSetting" DataContext="{Binding TemplateSetting}" VerticalAlignment="Stretch" />
 			</TabItem>
 		</TabControl>
 		
