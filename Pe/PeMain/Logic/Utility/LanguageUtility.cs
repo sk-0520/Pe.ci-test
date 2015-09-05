@@ -1,22 +1,22 @@
 ﻿namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 {
 	using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Media;
-using ContentTypeTextNet.Library.SharedLibrary.Define;
-using ContentTypeTextNet.Library.SharedLibrary.IF;
-using ContentTypeTextNet.Library.SharedLibrary.Logic;
-using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
-using ContentTypeTextNet.Library.SharedLibrary.Model;
-using ContentTypeTextNet.Pe.Library.PeData.Define;
-using ContentTypeTextNet.Pe.PeMain.View.Parts.Attached;
-using ContentTypeTextNet.Pe.PeMain.View.Parts.Control;
+	using System.Collections.Generic;
+	using System.Diagnostics;
+	using System.Linq;
+	using System.Text;
+	using System.Windows;
+	using System.Windows.Controls;
+	using System.Windows.Input;
+	using System.Windows.Media;
+	using ContentTypeTextNet.Library.SharedLibrary.Define;
+	using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+	using ContentTypeTextNet.Library.SharedLibrary.Model;
+	using ContentTypeTextNet.Pe.Library.PeData.Define;
+	using ContentTypeTextNet.Pe.PeMain.View.Parts.Attached;
+	using ContentTypeTextNet.Pe.PeMain.View.Parts.Control;
 
 	public static class LanguageUtility
 	{
@@ -59,7 +59,7 @@ using ContentTypeTextNet.Pe.PeMain.View.Parts.Control;
 				}
 			});
 		}
-		
+
 
 		public static bool SetText(TextBlock ui, LanguageManager language, IReadOnlyDictionary<string, string> map = null)
 		{
@@ -174,7 +174,7 @@ using ContentTypeTextNet.Pe.PeMain.View.Parts.Control;
 			}
 
 			var processedElements = new HashSet<DependencyObject>();
-			
+
 			foreach(var dependencyObject in UIUtility.FindChildren<DependencyObject>(root)) {
 				if(SetLanguageItem(dependencyObject, language, map)) {
 					processedElements.Add(dependencyObject);
@@ -234,17 +234,25 @@ using ContentTypeTextNet.Pe.PeMain.View.Parts.Control;
 			return language[key];
 		}
 
+		static string GetTextFromTemplateReplaceMode(TemplateReplaceMode value, ILanguage language)
+		{
+			var key = GetEnumKeyName(value.GetType(), value);
+			return language[key];
+		}
 
 		public static string GetTextFromEnum<TEnum>(TEnum value, ILanguage language)
 		{
 			return GetTextFromEnum(typeof(TEnum), value, language);
 		}
+
+
 		public static string GetTextFromEnum(Type type, object value, ILanguage language)
 		{
 			var map = new Dictionary<Type, Func<string>>() {
 				{ typeof(DockType), () => GetTextFromDockType((DockType)value, language) },
 				{ typeof(IconScale), () => GetTextFromIconScale((IconScale)value, language) },
 				{ typeof(ClipboardType), () => GetTextFromClipboardType((ClipboardType)value, language) },
+				{ typeof(TemplateReplaceMode), () => GetTextFromTemplateReplaceMode((TemplateReplaceMode)value, language) },
 			};
 
 			Func<string> getText;
@@ -260,7 +268,7 @@ using ContentTypeTextNet.Pe.PeMain.View.Parts.Control;
 			if((Key.A <= value && value <= Key.Z) || (Key.F1 <= value && value <= Key.F24)) {
 				return value.ToString();
 			}
-			
+
 			var key = GetEnumKeyName(value.GetType(), value);
 			return language[key];
 		}

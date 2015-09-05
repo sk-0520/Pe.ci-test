@@ -170,8 +170,12 @@
 
 		void OnPropertyChangedItemType()
 		{
-			OnPropertyChanged("ItemTypeImage");
-			OnPropertyChanged("ItemTypeText");
+			var propertyNames = new[] {
+				"IsReplace",
+				"ItemTypeImage",
+				"ItemTypeText",
+			};
+			CallOnPropertyChange(propertyNames);
 		}
 
 		public void SetReplacedValue()

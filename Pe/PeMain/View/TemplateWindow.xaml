@@ -35,6 +35,7 @@
 				<ResourceDictionary Source="/View/Parts/Resource/TextBoxDictionary.xaml"/>
 				<ResourceDictionary Source="/View/Parts/Resource/GridSplitterDictionary.xaml"/>
 				<ResourceDictionary Source="/View/Parts/Resource/LabelDictionary.xaml"/>
+				<ResourceDictionary Source="/View/Parts/Resource/ComboBoxDictionary.xaml"/>
 			</ResourceDictionary.MergedDictionaries>
 			<SC:LogicalNotConverter x:Key="LogicalNotConverter" />
 			<SC:LogicalIsNotNullConverter x:Key="LogicalIsNotNullConverter" />
@@ -173,14 +174,14 @@
 						<Grid Grid.Row="0" Style="{StaticResource ClipboardTemplateNames}">
 							<Grid.ColumnDefinitions>
 								<ColumnDefinition Width="Auto"/>
-								<ColumnDefinition Width="*"/>
+								<ColumnDefinition Width="7*"/>
 								<ColumnDefinition Width="3*"/>
 							</Grid.ColumnDefinitions>
 							<Label Grid.Column="0"  VerticalAlignment="Center" Content="name" AA:Language.Word="template/item/name" Style="{StaticResource HeaderLabel}"/>
 							<TextBox Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Text="{Binding SelectedViewModel.Name, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DefaultTextBox}" />
 							<!--<CheckBox Grid.Column="2" Margin="4,0,4,0" VerticalAlignment="Center" Content="replace" AA:Language.Word="template/item/replace" IsChecked="{Binding SelectedViewModel.IsReplace}" />
 							<CheckBox Grid.Column="3" VerticalAlignment="Center" Content="T4" AA:Language.Word="template/item/t4" IsChecked="{Binding SelectedViewModel.IsProgrammableReplace}" />-->
-							<ComboBox Grid.Column="2" HorizontalAlignment="Stretch" ItemsSource="{Binding Source={x:Static AP:EnumList.TemplateReplaceModeList}}" SelectedItem="{Binding SelectedViewModel.TemplateReplaceMode}">
+							<ComboBox Grid.Column="2" HorizontalAlignment="Stretch" ItemsSource="{Binding Source={x:Static AP:EnumList.TemplateReplaceModeList}}" SelectedItem="{Binding SelectedViewModel.TemplateReplaceMode}" Style="{StaticResource DefaultComboBox}">
 								<ComboBox.ItemTemplate>
 									<DataTemplate>
 										<TextBlock>

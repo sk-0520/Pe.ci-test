@@ -13,6 +13,9 @@
 	{
 		public object Convert(object[] values, Type targetType, object parameter, System.Globalization.CultureInfo culture)
 		{
+			if(!Enum.IsDefined(typeof(TEnum), values[0])) {
+				return string.Empty;
+			}
 			var tag = (TEnum)values[0];
 			var lang = (ILanguage)values[1];
 
