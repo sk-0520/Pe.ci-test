@@ -40,6 +40,7 @@
 		#region variable
 
 		LauncherItemsListViewModel _launcherItems;
+		//TODO: クソみたいな二重管理がつらい
 		CollectionModel<GroupRootViewModel> _groupTree;
 
 		LauncherItemModel _selectedLauncherItem;

@@ -5,23 +5,19 @@
 	using System.Linq;
 	using System.Text;
 	using System.Threading.Tasks;
+	using System.Windows;
 	using System.Windows.Data;
 
-	public class IsEmptyCollection : IValueConverter
+	public class GridDistanceConverter: IValueConverter
 	{
 		public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
 		{
-			var collection = value as IEnumerable<object>;
-			if (collection != null) {
-				return !collection.Any();
-			}
-
-			return true;
+			return new GridLength((double)value);
 		}
-
 		public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
 		{
-			throw new NotImplementedException();
+			GridLength gridLength = (GridLength)value;
+			return gridLength.Value;
 		}
 	}
 }

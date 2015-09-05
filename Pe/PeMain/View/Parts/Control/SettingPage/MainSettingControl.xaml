@@ -24,7 +24,7 @@
 				<ResourceDictionary Source="/View/Parts/Resource/CheckBoxDictionary.xaml"/>
 				<ResourceDictionary Source="/View/Parts/Resource/AppHotkeyDictionary.xaml"/>
 			</ResourceDictionary.MergedDictionaries>
-			<SC:DoubleGridLengthConverter x:Key="DoubleGridLengthConverter" />
+			<SC:GridDistanceConverter x:Key="GridDistanceConverter" />
 		</ResourceDictionary>
 	</AV:CommonDataUserControl.Resources>
 	<Grid>

@@ -196,11 +196,11 @@
     <Compile Include="View\Converter\BooleanFontStyleConverter.cs" />
     <Compile Include="View\Converter\BooleanFontWeightConverter.cs" />
     <Compile Include="View\Converter\BooleanVisibilityConverter.cs" />
-    <Compile Include="View\Converter\DoubleGridLengthConverter.cs" />
+    <Compile Include="View\Converter\GridDistanceConverter.cs" />
     <Compile Include="View\Converter\EnumToBooleanConverter .cs" />
     <Compile Include="View\Converter\HasTextLengthConverter.cs" />
-    <Compile Include="View\Converter\IsEmptyCollection.cs" />
-    <Compile Include="View\Converter\IsNotEmptyCollection.cs" />
+    <Compile Include="View\Converter\IsEmptyCollectionConverter.cs" />
+    <Compile Include="View\Converter\IsNotEmptyCollectionConverter.cs" />
     <Compile Include="View\Converter\LogicalIsNotNullConverter.cs" />
     <Compile Include="View\Converter\LogicalIsNullConverter.cs" />
     <Compile Include="View\Converter\LogicalMultiEqualConverter.cs" />

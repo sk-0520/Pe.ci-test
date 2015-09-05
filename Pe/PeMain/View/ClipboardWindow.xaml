@@ -43,7 +43,7 @@
 			<SC:LogicalNotConverter x:Key="LogicalNotConverter" />
 			<SC:LogicalIsNotNullConverter x:Key="LogicalIsNotNullConverter" />
 			<SC:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
-			<SC:DoubleGridLengthConverter x:Key="DoubleGridLengthConverter" />
+			<SC:GridDistanceConverter x:Key="GridDistanceConverter" />
 			<SC:BooleanVisibilityConverter x:Key="BooleanVisibilityConverter" />
 			<AC:ReverseClipboardItemListConverter x:Key="ReverseClipboardItemListConverter" />
 			<AC:DisplayTextConverter x:Key="DisplayTextConverter" />
@@ -113,7 +113,7 @@
 			</ToolBar>
 			<Grid Style="{StaticResource ClipboardTemplateDefaultMainPanel}" Grid.Row="1">
 				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="{Binding ItemsListWidth, Converter={StaticResource DoubleGridLengthConverter}, Mode=TwoWay}"/>
+					<ColumnDefinition Width="{Binding ItemsListWidth, Converter={StaticResource GridDistanceConverter}, Mode=TwoWay}"/>
 					<ColumnDefinition Width="Auto"/>
 					<ColumnDefinition Width="*"/>
 				</Grid.ColumnDefinitions>

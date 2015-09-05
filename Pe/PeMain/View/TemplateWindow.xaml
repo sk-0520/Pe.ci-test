@@ -37,7 +37,7 @@
 			</ResourceDictionary.MergedDictionaries>
 			<SC:LogicalNotConverter x:Key="LogicalNotConverter" />
 			<SC:LogicalIsNotNullConverter x:Key="LogicalIsNotNullConverter" />
-			<SC:DoubleGridLengthConverter x:Key="DoubleGridLengthConverter" />
+			<SC:GridDistanceConverter x:Key="GridDistanceConverter" />
 			<AC:DisplayTextConverter x:Key="DisplayTextConverter" />
 			<SC:BooleanFontWeightConverter x:Key="BooleanFontWeightConverter" />
 			<SC:BooleanFontStyleConverter x:Key="BooleanFontStyleConverter" />
@@ -89,7 +89,7 @@
 		</ToolBar>
 		<Grid Style="{StaticResource ClipboardTemplateDefaultMainPanel}" Grid.Row="1">
 			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="{Binding ItemsListWidth, Converter={StaticResource DoubleGridLengthConverter}, Mode=TwoWay}"/>
+				<ColumnDefinition Width="{Binding ItemsListWidth, Converter={StaticResource GridDistanceConverter}, Mode=TwoWay}"/>
 				<ColumnDefinition Width="Auto"/>
 				<ColumnDefinition Width="*"/>
 			</Grid.ColumnDefinitions>
@@ -184,7 +184,7 @@
 							<Grid.ColumnDefinitions>
 								<ColumnDefinition Width="*" />
 								<ColumnDefinition Width="Auto" />
-								<ColumnDefinition Width="{Binding ReplaceListWidth, Converter={StaticResource DoubleGridLengthConverter}, Mode=TwoWay}" />
+								<ColumnDefinition Width="{Binding ReplaceListWidth, Converter={StaticResource GridDistanceConverter}, Mode=TwoWay}" />
 							</Grid.ColumnDefinitions>
 							<TextBox
 								x:Name="editSource"

@@ -21,7 +21,7 @@
 				<ResourceDictionary Source="/View/Parts/Resource/LabelDictionary.xaml"/>
 				<ResourceDictionary Source="/View/Parts/Resource/FontSelectDictionary.xaml"/>
 			</ResourceDictionary.MergedDictionaries>
-			<SC:DoubleGridLengthConverter x:Key="DoubleGridLengthConverter" />
+			<SC:GridDistanceConverter x:Key="GridDistanceConverter" />
 		</ResourceDictionary>
 	</AV:CommonDataUserControl.Resources>
 	<Grid>

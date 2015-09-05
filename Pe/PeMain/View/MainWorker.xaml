@@ -19,7 +19,7 @@
 	<ContextMenu x:Shared="false" x:Key="ContextMenu" IsOpen="{Binding IsContextMenuOpen}" >
 		<ContextMenu.Resources>
 			<SC:LogicalNotConverter x:Key="LogicalNotConverter"/>
-			<SC:IsNotEmptyCollection x:Key="IsNotEmptyCollection" />
+			<SC:IsNotEmptyCollectionConverter x:Key="IsNotEmptyCollectionConverter" />
 
 			<Style x:Key="NoteMenuItemStyle" TargetType="MenuItem" BasedOn="{StaticResource IMenuItem}">
 				<Setter Property="Command" Value="{Binding NoteMenuSelectedCommand}" />
@@ -85,8 +85,8 @@
 				</MenuItem.Icon>
 			</MenuItem>
 			<Separator />
-			<MenuItem Header="show" AA:Language.Word="tasktray/note/show" ItemsSource="{Binding NoteShowItems}" ItemContainerStyle="{StaticResource NoteMenuItemStyle}" IsEnabled="{Binding ItemsSource,RelativeSource={RelativeSource Self}, Converter={StaticResource IsNotEmptyCollection}}"/>
-			<MenuItem Header="hidden" AA:Language.Word="tasktray/note/hidden" ItemsSource="{Binding NoteHiddenItems}" ItemContainerStyle="{StaticResource NoteMenuItemStyle}" IsEnabled="{Binding ItemsSource,RelativeSource={RelativeSource Self}, Converter={StaticResource IsNotEmptyCollection}}"/>
+			<MenuItem Header="show" AA:Language.Word="tasktray/note/show" ItemsSource="{Binding NoteShowItems}" ItemContainerStyle="{StaticResource NoteMenuItemStyle}" IsEnabled="{Binding ItemsSource,RelativeSource={RelativeSource Self}, Converter={StaticResource IsNotEmptyCollectionConverter}}"/>
+			<MenuItem Header="hidden" AA:Language.Word="tasktray/note/hidden" ItemsSource="{Binding NoteHiddenItems}" ItemContainerStyle="{StaticResource NoteMenuItemStyle}" IsEnabled="{Binding ItemsSource,RelativeSource={RelativeSource Self}, Converter={StaticResource IsNotEmptyCollectionConverter}}"/>
 		</MenuItem>
 		<MenuItem Header="template" AA:Language.Word="tasktray/template" Command="{Binding SwitchTemplateWindowCommand}" InputGestureText="{Binding SwitchTemplateWindowHotKey}">
 			<MenuItem.Icon>
@@ -132,12 +132,12 @@
 					<Image Source="{x:Static AM:AppResource.WindowLoadImage}" Style="{StaticResource DefaultImage}" />
 				</MenuItem.Icon>
 			</MenuItem>
-			<MenuItem Header="window - timer" AA:Language.Word="tasktray/system-env/window/timer" ItemsSource="{Binding WindowTimerItems}" ItemContainerStyle="{StaticResource ResourceKey=WindowMenuItemStyle}" IsEnabled="{Binding ItemsSource,RelativeSource={RelativeSource Self}, Converter={StaticResource IsNotEmptyCollection}}">
+			<MenuItem Header="window - timer" AA:Language.Word="tasktray/system-env/window/timer" ItemsSource="{Binding WindowTimerItems}" ItemContainerStyle="{StaticResource ResourceKey=WindowMenuItemStyle}" IsEnabled="{Binding ItemsSource,RelativeSource={RelativeSource Self}, Converter={StaticResource IsNotEmptyCollectionConverter}}">
 				<MenuItem.Icon>
 					<Image Source="{x:Static AM:AppResource.WindowListTimerImage}" Style="{StaticResource DefaultImage}" />
 				</MenuItem.Icon>
 			</MenuItem>
-			<MenuItem Header="window - system" AA:Language.Word="tasktray/system-env/window/system" ItemsSource="{Binding WindowSystemItems}" ItemContainerStyle="{StaticResource ResourceKey=WindowMenuItemStyle}" IsEnabled="{Binding ItemsSource,RelativeSource={RelativeSource Self}, Converter={StaticResource IsNotEmptyCollection}}">
+			<MenuItem Header="window - system" AA:Language.Word="tasktray/system-env/window/system" ItemsSource="{Binding WindowSystemItems}" ItemContainerStyle="{StaticResource ResourceKey=WindowMenuItemStyle}" IsEnabled="{Binding ItemsSource,RelativeSource={RelativeSource Self}, Converter={StaticResource IsNotEmptyCollectionConverter}}">
 				<MenuItem.Icon>
 					<Image Source="{x:Static AM:AppResource.WindowListSystemImage}" Style="{StaticResource DefaultImage}" />
 				</MenuItem.Icon>

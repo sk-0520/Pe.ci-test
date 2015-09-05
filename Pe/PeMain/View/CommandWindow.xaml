@@ -42,7 +42,7 @@
 			<SC:HasTextLengthConverter x:Key="HasTextLengthConverter" />
 			<SC:LogicalMultiOrConverter x:Key="LogicalMultiOrConverter" />
 			<SC:BooleanVisibilityConverter x:Key="BooleanVisibilityConverter" />
-			<SC:IsNotEmptyCollection x:Key="IsNotEmptyCollection" />
+			<SC:IsNotEmptyCollectionConverter x:Key="IsNotEmptyCollectionConverter" />
 			<SC:LogicalIsNotNullConverter x:Key="LogicalIsNotNullConverter" />
 			<AC:CommandItemConverter x:Key="CommandItemConverter" />
 			<SC:BooleanFontWeightConverter x:Key="BooleanFontWeightConverter" />
