@@ -587,11 +587,23 @@
 				if(dstNode != null && srcNode != dstNode) {
 					switch(srcNode.ToolbarNodeKind) {
 						case ToolbarNodeKind.Group:
+							// グループの移動
 							if(dstNode.ToolbarNodeKind == ToolbarNodeKind.Group) {
-							} else {
+								var srcGroupViewModel = (GroupRootViewModel)srcNode;
+								GroupSettingModel.Groups.Remove(srcGroupViewModel.Model); 
+								this._groupTree.Remove(srcGroupViewModel);
+
+								var dstGroupViewModel = (GroupRootViewModel)dstNode;
+								var dstIndex = GroupSettingModel.Groups.IndexOf(dstGroupViewModel.Id);
+								if(dstIndex != -1) {
+									GroupSettingModel.Groups.Insert(dstIndex, srcGroupViewModel.Model);
+									this._groupTree.Insert(dstIndex, srcGroupViewModel);
+									srcGroupViewModel.IsSelected = true;
+								}
 							}
 							break;
 						case ToolbarNodeKind.Item:
+							// アイテムの移動
 							if(dstNode.ToolbarNodeKind == ToolbarNodeKind.Group) {
 							} else {
 							}
