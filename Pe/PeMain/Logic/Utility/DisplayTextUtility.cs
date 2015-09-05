@@ -91,7 +91,7 @@
 								rt.Selection.Load(reader, DataFormats.Rtf);
 								using(var writer = new MemoryStream()) {
 									rt.Selection.Save(writer, DataFormats.Text);
-									plainText = ASCIIEncoding.Default.GetString(writer.ToArray());
+									plainText = Encoding.UTF8.GetString(writer.ToArray());
 								}
 							}
 
