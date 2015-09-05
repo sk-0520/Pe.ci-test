@@ -117,21 +117,22 @@
 		{
 			get
 			{
-				if(SelectedViewModel != null && SelectedViewModel.IsReplace) {
-					if(SelectedViewModel.IsProgrammableReplace) {
+				if(SelectedViewModel != null && SelectedViewModel.TemplateReplaceMode != TemplateReplaceMode.None) {
+					if(SelectedViewModel.TemplateReplaceMode == TemplateReplaceMode.Program) {
 						var typeMap = TemplateReplaceKey.ProgramTypes;
 						return TemplateReplaceKey
 							.ProgramKeyList
 							.Select(k => new { Key = k, CaretInSpace = TemplateReplaceKey.caretInSpaceKeys.Any(s => s == k) })
-							.Select(v => new TemplateKeywordViewModel(v.Key, SelectedViewModel.IsProgrammableReplace, v.CaretInSpace ? null : Tuple.Create("app[\"", "\"]"), AppNonProcess) {
+							.Select(v => new TemplateKeywordViewModel(v.Key, SelectedViewModel.TemplateReplaceMode, v.CaretInSpace ? null : Tuple.Create("app[\"", "\"]"), AppNonProcess) {
 								Type = TemplateReplaceKey.ProgramTypes[v.Key],
 								CaretInSpace = v.CaretInSpace,
 							})
 						;
 					} else {
+						Debug.Assert(SelectedViewModel.TemplateReplaceMode == TemplateReplaceMode.Text);
 						return TemplateReplaceKey
 							.TextKeyList
-							.Select(k => new TemplateKeywordViewModel(k, SelectedViewModel.IsProgrammableReplace, Tuple.Create("@[", "]"), AppNonProcess))
+							.Select(k => new TemplateKeywordViewModel(k, SelectedViewModel.TemplateReplaceMode, Tuple.Create("@[", "]"), AppNonProcess))
 						;
 					}
 				} else {
@@ -495,8 +496,7 @@
 		void SelectedViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
 			var refreshTargets =new[] { 
-				"IsReplace",
-				"IsProgrammableReplace",
+				"TemplateReplaceMode",
 			};
 			if(SelectedViewModel != null && refreshTargets.Any(s => s == e.PropertyName)) {
 				CallOnPropertyChange("KeywordList");

@@ -31,6 +31,12 @@
 		[ConstantsProperty]
 		public static readonly Version acceptVersion = new Version(0, 0, 0, 0);
 
+		/// <summary>
+		/// Forms版のバージョン。
+		/// </summary>
+		[ConstantsProperty]
+		static readonly Version formsVersion = new Version(0, 62, 0, 42674);
+
 		public const string shortcutNameDebug = applicationName + "(DEBUG).lnk";
 		public const string shortcutNameBeta = applicationName + "(BETA).lnk";
 		public const string shortcutNameRelease = applicationName + ".lnk";

@@ -52,20 +52,9 @@
 			set { SetModelValue(value); }
 		}
 
-		public bool IsReplace
+		public TemplateReplaceMode TemplateReplaceMode
 		{
-			get { return Model.IsReplace; }
-			set
-			{
-				if(SetModelValue(value)) {
-					OnPropertyChangedItemType();
-				}
-			}
-		}
-
-		public bool IsProgrammableReplace
-		{
-			get { return Model.IsProgrammableReplace; }
+			get { return Model.TemplateReplaceMode; }
 			set
 			{
 				if(SetModelValue(value)) {
@@ -103,29 +92,38 @@
 		{
 			get
 			{
-				if(IsReplace) {
-					if(IsProgrammableReplace) {
-						return AppResource.TemplateProgrammableImage;
-					} else {
+				switch(TemplateReplaceMode) {
+					case Library.PeData.Define.TemplateReplaceMode.None:
+						return AppResource.TemplatePlainImage;
+					case Library.PeData.Define.TemplateReplaceMode.Text:
 						return AppResource.TemplateReplaceImage;
-					}
+					case Library.PeData.Define.TemplateReplaceMode.Program:
+						return AppResource.TemplateProgrammableImage;
+					default:
+						throw new NotImplementedException();
 				}
-				return AppResource.TemplatePlainImage;
 			}
+		}
+
+		public bool IsReplace
+		{
+			get { return TemplateReplaceMode != TemplateReplaceMode.None; }
 		}
 
 		public string ItemTypeText
 		{
 			get
 			{
-				if(IsReplace) {
-					if(IsProgrammableReplace) {
-						return AppNonProcess.Language["template/replace/program"];
-					} else {
+				switch(TemplateReplaceMode) {
+					case TemplateReplaceMode.None:
+						return AppNonProcess.Language["template/replace/plain"];
+					case TemplateReplaceMode.Text:
 						return AppNonProcess.Language["template/replace/text"];
-					}
+					case TemplateReplaceMode.Program:
+						return AppNonProcess.Language["template/replace/program"];
+					default:
+						throw new NotImplementedException();
 				}
-				return AppNonProcess.Language["template/replace/plain"];
 			}
 		}
 
@@ -178,13 +176,13 @@
 
 		public void SetReplacedValue()
 		{
-			if (IsReplace) {
-				if(IsProgrammableReplace) {
+			if(TemplateReplaceMode == TemplateReplaceMode.None) {
+				Replaced = Source ?? string.Empty;
+			} else {
+				if(TemplateReplaceMode == TemplateReplaceMode.Program) {
 					Processor = TemplateUtility.MakeTemplateProcessor(BodyModel.Source, Processor, AppNonProcess);
 				}
 				Replaced = TemplateUtility.ToPlainText(Model, BodyModel, Processor, DateTime.Now, AppNonProcess);
-			} else {
-				Replaced = Source ?? string.Empty;
 			}
 		}
 

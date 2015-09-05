@@ -1,26 +1,30 @@
 ﻿namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 {
 	using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ContentTypeTextNet.Library.SharedLibrary.IF;
-using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+	using System.Collections.Generic;
+	using System.Linq;
+	using System.Text;
+	using System.Threading.Tasks;
+	using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+	using ContentTypeTextNet.Pe.Library.PeData.Define;
 
 	public class TemplateKeywordViewModel: ViewModelBase, IHavingNonProcess
 	{
-		public TemplateKeywordViewModel(string key, bool isProgram, Tuple<string,string> bracket, INonProcess nonProcess)
+		public TemplateKeywordViewModel(string key, TemplateReplaceMode replaceMode, Tuple<string, string> bracket, INonProcess nonProcess)
 		{
+			CheckUtility.DebugEnforce(replaceMode != TemplateReplaceMode.None);
+
 			Key = key;
-			IsProgram = isProgram;
+			TemplateReplaceMode = replaceMode;
 			Bracket = bracket;
 			NonProcess = nonProcess;
 		}
 
 		#region property
 
-		bool IsProgram { get; set; }
+		TemplateReplaceMode TemplateReplaceMode { get; set; }
 
 		string Key { get; set; }
 
@@ -28,7 +32,7 @@ using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 		public string Comment { 
 			get{
 				string langKey;
-				if(IsProgram) {
+				if(TemplateReplaceMode == TemplateReplaceMode.Program) {
 					langKey = "template/keyword/program";
 				} else {
 					langKey = "template/keyword/text";

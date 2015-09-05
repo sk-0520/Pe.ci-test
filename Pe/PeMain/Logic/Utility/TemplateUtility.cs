@@ -12,6 +12,7 @@
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 	using ContentTypeTextNet.Pe.Library.PeData.Define;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
+	using System.Diagnostics;
 
 	public static class TemplateUtility
 	{
@@ -101,13 +102,14 @@
 
 		public static string ToPlainText(TemplateIndexItemModel indexModel, TemplateBodyItemModel bodyModel, ProgramTemplateProcessor processor, DateTime dateTime, INonProcess appNonProcess)
 		{
-			if(!indexModel.IsReplace) {
+			if(indexModel.TemplateReplaceMode == TemplateReplaceMode.None) {
 				return bodyModel.Source ?? string.Empty;
 			}
-			if(indexModel.IsProgrammableReplace) {
+			if(indexModel.TemplateReplaceMode == TemplateReplaceMode.Program) {
 				CheckUtility.EnforceNotNull(processor);
 				return ToPlainTextProgrammable(indexModel, bodyModel, processor, dateTime, appNonProcess);
 			} else {
+				Debug.Assert(indexModel.TemplateReplaceMode == TemplateReplaceMode.Text);
 				return ToPlainTextReplace(indexModel, bodyModel, dateTime, appNonProcess);
 			}
 		}

@@ -6,6 +6,7 @@
 	using System.Text;
 	using System.Threading.Tasks;
 	using ContentTypeTextNet.Library.SharedLibrary.Define;
+using ContentTypeTextNet.Pe.Library.PeData.Define;
 
 	public static class EnumList
 	{
@@ -33,6 +34,20 @@
 					IconScale.Small,
 					IconScale.Normal,
 					IconScale.Big,
+				};
+
+				return result;
+			}
+		}
+
+		public static IEnumerable<TemplateReplaceMode> TemplateReplaceModeList
+		{
+			get
+			{
+				var result = new[] {
+					TemplateReplaceMode.None,
+					TemplateReplaceMode.Text,
+					TemplateReplaceMode.Program,
 				};
 
 				return result;

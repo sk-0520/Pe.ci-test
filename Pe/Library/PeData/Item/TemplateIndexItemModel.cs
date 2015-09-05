@@ -7,6 +7,7 @@
 	using System.Text;
 	using System.Threading.Tasks;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Pe.Library.PeData.Define;
 
 	public class TemplateIndexItemModel: IndexItemModelBase
 	{
@@ -20,12 +21,7 @@
 		/// 置換処理を行うか。
 		/// </summary>
 		[DataMember]
-		public bool IsReplace { get; set; }
-		/// <summary>
-		/// プログラム的置き換え処理を行うか。
-		/// </summary>
-		[DataMember]
-		public bool IsProgrammableReplace { get; set; }
+		public TemplateReplaceMode TemplateReplaceMode { get; set; }
 
 		#endregion
 
@@ -37,8 +33,7 @@
 
 			var obj = (TemplateIndexItemModel)target;
 
-			obj.IsReplace = IsReplace;
-			obj.IsProgrammableReplace = IsProgrammableReplace;
+			obj.TemplateReplaceMode = TemplateReplaceMode;
 		}
 
 		public override IDeepClone DeepClone()
