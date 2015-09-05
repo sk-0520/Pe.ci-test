@@ -1,6 +1,8 @@
 ﻿<?xml version="1.0"?>
 <Language xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" CultureCode="ja-JP" Name="日本語">
 	<Define>
+		<Item Id="br" Word="&#x0d;&#x0a;" />
+		
 		<Item Id="ok"  Word="OK" />
 		<Item Id="cancel" Word="キャンセル" />
 		<Item Id="yes" Word="はい" />
@@ -379,6 +381,10 @@
 		<Item Id="template-setting/visible" Word="テンプレートウィンドウを表示する" />
 		<Item Id="template-setting/show" Word="表示切り替えキー" />
 		<Item Id="template-setting/font" Word="フォント" />
+
+		<!-- ログメッセージ -->
+		<Item Id="log/clipboard/prev-time/message" Word="クリップボード: 待ち時間中のため無視" />
+		<Item Id="log/clipboard/prev-time/detail"  Word="前回取込時間 -> @[LOG-CLIP-WAIT_TIME-PREV]${br}今回取込時間 -> @[LOG-CLIP-WAIT_TIME-CURRENT]${br}設定時間 -> @[LOG-CLIP-WAIT_TIME-SETTING]${br}待機時間 -> @[LOG-CLIP-WAIT_TIME-WAIT]" />
 
 		<!-- テンプレート -->
 		<Item Id="template/keyword/text/APPLICATION"  Word="${template-APPLICATION}" />

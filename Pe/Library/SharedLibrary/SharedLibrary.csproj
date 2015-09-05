@@ -139,6 +139,7 @@
     <Compile Include="Logic\Database\DatabaseQuery.cs" />
     <Compile Include="Data\Database\EntityMappingSet.cs" />
     <Compile Include="Logic\DialogFilterList.cs" />
+    <Compile Include="Logic\Extension\DateTimeExtension.cs" />
     <Compile Include="Logic\Extension\FileSystemInfoUtility.cs" />
     <Compile Include="Logic\MVMPairCreateDelegationCollection.cs" />
     <Compile Include="Logic\Utility\CastUtility.cs" />

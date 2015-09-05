@@ -1694,7 +1694,16 @@
 
 			var now = DateTime.Now;
 			if (now - this._clipboardPreviousTime  <= CommonData.MainSetting.Clipboard.WaitTime) {
-				CommonData.Logger.Information("clipboard time");
+				// 待ち時間中のため取り込まない
+				var map = new Dictionary<string,string>() {
+					{ LanguageKey.logClipboardWaitTimePrev, this._clipboardPreviousTime.ToDetailTimestampString() },
+					{ LanguageKey.logClipboardWaitTimeCurrent, now.ToDetailTimestampString() },
+					{ LanguageKey.logClipboardWaitTimeSetting, CommonData.MainSetting.Clipboard.WaitTime.ToString() },
+					{ LanguageKey.logClipboardWaitTimeWait, (now - this._clipboardPreviousTime).ToString() },
+				};
+				var message= CommonData.Language["log/clipboard/prev-time/message"];
+				var detail = CommonData.Language["log/clipboard/prev-time/detail", map];
+				CommonData.Logger.Information(message, detail);
 				return;
 			}
 			this._clipboardPreviousTime = now;
