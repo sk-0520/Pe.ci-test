@@ -8,12 +8,14 @@
 	using System.Text;
 	using System.Threading.Tasks;
 	using System.Windows;
+	using System.Windows.Controls;
 	using System.Windows.Input;
 	using System.Windows.Media;
 	using ContentTypeTextNet.Library.SharedLibrary.CompatibleForms;
 	using ContentTypeTextNet.Library.SharedLibrary.CompatibleWindows.Utility;
 	using ContentTypeTextNet.Library.SharedLibrary.Define;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
@@ -24,11 +26,17 @@
 	using ContentTypeTextNet.Pe.PeMain.Define;
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
-using ContentTypeTextNet.Pe.PeMain.View;
+	using ContentTypeTextNet.Pe.PeMain.View;
 	using ContentTypeTextNet.Pe.PeMain.View.Parts.Control.SettingPage;
 
 	public class ToolbarSettingViewModel: SettingPageLauncherIconCacheViewModelBase<ToolbarSettingControl>, IRefreshFromViewModel, IHavingAppSender
 	{
+		#region define
+
+		static readonly string DragNodeFormat = Constants.ApplicationName + "@@Node";
+
+		#endregion
+
 		#region variable
 
 		LauncherItemsListViewModel _launcherItems;
@@ -39,6 +47,9 @@ using ContentTypeTextNet.Pe.PeMain.View;
 
 		int _defaultGroupIndex;
 
+		bool _isDragging = false;
+		Point _dragStartPosition;
+
 		#endregion
 
 		public ToolbarSettingViewModel(ToolbarSettingModel toolbarSetting, LauncherGroupSettingModel groupSettingModel, LauncherItemSettingModel launcherItemSetting, ToolbarSettingControl view, IAppNonProcess appNonProcess, IAppSender appSender, SettingNotifiyItem settingNotifiyItem)
@@ -48,6 +59,14 @@ using ContentTypeTextNet.Pe.PeMain.View;
 			GroupSettingModel = groupSettingModel;
 			LauncherItemSetting = launcherItemSetting;
 			AppSender = appSender;
+
+			if(HasView) {
+				View.treeGroup.PreviewMouseLeftButtonDown += treeGroup_PreviewMouseLeftButtonDown;
+				View.treeGroup.MouseMove += treeGroup_MouseMove;
+				View.DragOver += View_DragEnterAndOver;
+				View.DragEnter += View_DragEnterAndOver;
+				View.Drop += View_Drop;
+			}
 		}
 
 		#region proerty
@@ -164,7 +183,11 @@ using ContentTypeTextNet.Pe.PeMain.View;
 			set { SetVariableValue(ref this._defaultGroupIndex, value); }
 		}
 
-
+		public bool IsDragging
+		{
+			get { return this._isDragging; }
+			set { SetVariableValue(ref this._isDragging, value); }
+		}
 
 		#endregion
 
@@ -442,6 +465,25 @@ using ContentTypeTextNet.Pe.PeMain.View;
 			ScreenWindowList = null;
 		}
 
+		/// <summary>
+		/// 座標からデータを取得。
+		/// </summary>
+		/// <param name="treeView">指定ツリービュー。</param>
+		/// <param name="position">ツリービューの原点を基点とした座標。</param>
+		/// <returns></returns>
+		IToolbarNode GetToolbarNode(TreeView treeView, Point position)
+		{
+			var node = treeView.InputHitTest(position);
+
+			var hitTestResults = VisualTreeHelper.HitTest(treeView, position);
+			IToolbarNode result = null;
+			CastUtility.AsAction<FrameworkElement>(hitTestResults.VisualHit, element => {
+				result = element.DataContext as IToolbarNode;
+			});
+
+			return result;
+		}
+
 		#endregion
 
 		#region IHavingAppSender
@@ -466,5 +508,100 @@ using ContentTypeTextNet.Pe.PeMain.View;
 		}
 
 		#endregion
+
+		/// <summary>
+		/// <para>http://stackoverflow.com/questions/1026179/drag-drop-in-treeview</para>
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		void treeGroup_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+		{
+			//var treeView = (TreeView)sender;
+			//this._dragStartPosition = e.GetPosition(treeView);
+			//e.Handled = true;
+			this._dragStartPosition = e.GetPosition(null);
+		}
+
+		void treeGroup_MouseMove(object sender, MouseEventArgs e)
+		{
+			if(e.LeftButton != MouseButtonState.Pressed) {
+				return;
+			}
+
+			if(!IsDragging) {
+				var nowPosition = e.GetPosition(null);
+				var size = new Size(10, 10);
+
+				var isDragX = Math.Abs(nowPosition.X - this._dragStartPosition.X) > size.Width;
+				var isDragY = Math.Abs(nowPosition.Y - this._dragStartPosition.Y) > size.Height;
+				if(isDragX || isDragY) {
+					var treeView = (TreeView)sender;
+					treeView.AllowDrop = true;
+					CastUtility.AsAction<IToolbarNode>(treeView.SelectedItem, selectedNode => {
+						var item = new DataObject(DragNodeFormat, selectedNode);
+						IsDragging = true;
+						DragDrop.DoDragDrop(treeView, item, DragDropEffects.Move);
+						IsDragging = false;
+						treeView.AllowDrop = false;
+					});
+				}
+			}
+		}
+
+		void View_DragEnterAndOver(object sender, DragEventArgs e)
+		{
+			if(e.Data.GetDataPresent(DragNodeFormat)) {
+				var srcNode = (IToolbarNode)e.Data.GetData(DragNodeFormat);
+				CheckUtility.DebugEnforce(HasView);
+				var dstNode = GetToolbarNode(View.treeGroup, e.GetPosition(View.treeGroup));
+				if(dstNode != null && srcNode != dstNode) {
+					switch(srcNode.ToolbarNodeKind) {
+						case ToolbarNodeKind.Group:
+							if(dstNode.ToolbarNodeKind == ToolbarNodeKind.Group) {
+								e.Effects = DragDropEffects.Move;
+							} else {
+								e.Effects = DragDropEffects.None;
+							}
+							break;
+						case ToolbarNodeKind.Item:
+							e.Effects = DragDropEffects.Move;
+							break;
+						default:
+							throw new NotImplementedException();
+					}
+				} else {
+					e.Effects = DragDropEffects.None;
+				}
+			} else {
+				e.Effects = DragDropEffects.None;
+			}
+			e.Handled = true;
+		}
+
+		void View_Drop(object sender, DragEventArgs e)
+		{
+			if(e.Data.GetDataPresent(DragNodeFormat)) {
+				var srcNode = (IToolbarNode)e.Data.GetData(DragNodeFormat);
+				CheckUtility.DebugEnforce(HasView);
+				var dstNode = GetToolbarNode(View.treeGroup, e.GetPosition(View.treeGroup));
+				if(dstNode != null && srcNode != dstNode) {
+					switch(srcNode.ToolbarNodeKind) {
+						case ToolbarNodeKind.Group:
+							if(dstNode.ToolbarNodeKind == ToolbarNodeKind.Group) {
+							} else {
+							}
+							break;
+						case ToolbarNodeKind.Item:
+							if(dstNode.ToolbarNodeKind == ToolbarNodeKind.Group) {
+							} else {
+							}
+							break;
+						default:
+							throw new NotImplementedException();
+					}
+				}
+			}
+		}
+
 	}
 }
