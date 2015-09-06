@@ -37,6 +37,7 @@
 
 			if(logItems != null) {
 				LogItems = logItems;
+				View.Loaded += View_Loaded;
 			} else {
 				LogItems = new CollectionModel<LogItemModel>();
 			}
@@ -241,9 +242,9 @@
 				ShowTrigger(item);
 			}
 			if(HasView) {
-				View.Dispatcher.BeginInvoke(new Action(() => {
+				View.listLog.Dispatcher.BeginInvoke(new Action(() => {
 					View.listLog.SelectedItem = item;
-					View.listLog.ScrollIntoView(item);
+					View.listLog.ScrollIntoView(View.listLog.SelectedItem);
 				}));
 			}
 		}
@@ -263,5 +264,16 @@
 			e.Cancel = true;
 			IsVisible = false;
 		}
+
+		void View_Loaded(object sender, RoutedEventArgs e)
+		{
+			View.Loaded -= View_Loaded;
+
+			if(View.listLog.Items.Count != -1) {
+				View.listLog.SelectedIndex = View.listLog.Items.Count - 1;
+				View.listLog.ScrollIntoView(View.listLog.SelectedItem);
+			}
+		}
+
 	}
 }

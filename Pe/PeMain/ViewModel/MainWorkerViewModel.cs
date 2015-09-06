@@ -730,9 +730,12 @@
 			using(var timeLogger = CommonData.NonProcess.CreateTimeLogger()) {
 				LoggingWindow = new LoggingWindow();
 				LoggingWindow.SetCommonData(CommonData, logItems);
+
+				var appLogger = (AppLogger)CommonData.Logger;
+				appLogger.LogCollector = Logging;
 				if(logItems == null) {
-					var appLogger = (AppLogger)CommonData.Logger;
-					appLogger.LogCollector = Logging;
+					//var appLogger = (AppLogger)CommonData.Logger;
+					//appLogger.LogCollector = Logging;
 					if(appLogger.IsStock) {
 						// 溜まったログをViewにドバー
 						foreach(var logItem in appLogger.StockItems) {
