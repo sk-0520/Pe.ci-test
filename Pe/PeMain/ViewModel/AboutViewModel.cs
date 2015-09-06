@@ -76,6 +76,9 @@
 				var result = CreateCommand(
 					o => {
 						var path = Environment.ExpandEnvironmentVariables(AppNonProcess.VariableConstants.UserSettingDirectoryPath);
+						if(!Directory.Exists(path)) {
+							Directory.CreateDirectory(path);
+						}
 						ExecuteUtility.OpenDirectory(path, AppNonProcess, null);
 					}
 				);

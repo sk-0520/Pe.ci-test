@@ -242,7 +242,7 @@
 				ShowTrigger(item);
 			}
 			if(HasView) {
-				View.listLog.Dispatcher.BeginInvoke(new Action(() => {
+				View.Dispatcher.BeginInvoke(new Action(() => {
 					View.listLog.SelectedItem = item;
 					View.listLog.ScrollIntoView(View.listLog.SelectedItem);
 				}));
