@@ -327,7 +327,7 @@
 						if (HasView) {
 							View.Close();
 						}
-						AppSender.SendRemoveIndex(IndexKind.Note, Model.Id);
+						AppSender.SendRemoveIndex(IndexKind.Note, Model.Id, Timing.Delay);
 					}
 				);
 

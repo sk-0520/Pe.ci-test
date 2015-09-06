@@ -40,7 +40,7 @@ using ContentTypeTextNet.Pe.PeMain.Define;
 		/// </summary>
 		/// <param name="guid"></param>
 		/// <param name="indexKind"></param>
-		void SendRemoveIndex(IndexKind indexKind, Guid guid);
+		void SendRemoveIndex(IndexKind indexKind, Guid guid, Timing timing);
 		/// <summary>
 		/// 対象インデックスを保存。
 		/// </summary>

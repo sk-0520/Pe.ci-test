@@ -21,6 +21,7 @@
 	using ContentTypeTextNet.Pe.PeMain.View;
 	using Microsoft.Win32;
 	using System.ComponentModel;
+	using ContentTypeTextNet.Pe.PeMain.Define;
 
 	public class TemplateViewModel : HavingViewSingleModelWrapperIndexViewModelBase<TemplateSettingModel, TemplateWindow, TemplateIndexItemCollectionModel, TemplateIndexItemModel, TemplateItemViewModel>
 	{
@@ -175,7 +176,7 @@
 						var index = IndexPairList.ViewModelList.IndexOf(nowViewModel);
 
 						IndexPairList.Remove(nowViewModel);
-						AppSender.SendRemoveIndex(IndexKind.Template, nowViewModel.Model.Id);
+						AppSender.SendRemoveIndex(IndexKind.Template, nowViewModel.Model.Id, Timing.Delay);
 
 						if(IndexPairList.Any()) {
 							while(IndexPairList.ViewModelList.Count <= index) {

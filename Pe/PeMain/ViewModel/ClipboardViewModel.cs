@@ -151,7 +151,7 @@
 						var index = IndexPairList.ViewModelList.IndexOf(nowViewModel);
 
 						IndexPairList.Remove(nowViewModel);
-						AppSender.SendRemoveIndex(IndexKind.Clipboard, nowViewModel.Model.Id);
+						AppSender.SendRemoveIndex(IndexKind.Clipboard, nowViewModel.Model.Id, Timing.Delay);
 
 						if(IndexPairList.Any()) {
 							while(IndexPairList.ViewModelList.Count <= index) {

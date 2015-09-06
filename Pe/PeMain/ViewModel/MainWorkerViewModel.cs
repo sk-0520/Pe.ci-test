@@ -1279,9 +1279,9 @@
 			ReceiveRefreshView(kind, fromView);
 		}
 
-		public void SendRemoveIndex(IndexKind indexKind, Guid guid)
+		public void SendRemoveIndex(IndexKind indexKind, Guid guid, Timing timing)
 		{
-			ReceiveRemoveIndex(indexKind, guid);
+			ReceiveRemoveIndex(indexKind, guid, timing);
 		}
 
 		public void SendSaveIndex(IndexKind indexKind, Timing timing)
@@ -1509,7 +1509,7 @@
 			SendSaveIndex(indexKind, Timing.Delay);
 		}
 
-		void ReceiveRemoveIndex(IndexKind indexKind, Guid guid)
+		void ReceiveRemoveIndex(IndexKind indexKind, Guid guid, Timing timing)
 		{
 			switch(indexKind) {
 				case IndexKind.Note: 
