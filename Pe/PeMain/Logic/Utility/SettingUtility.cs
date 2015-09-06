@@ -19,6 +19,7 @@
 	using ContentTypeTextNet.Pe.Library.PeData.Setting;
 	using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
 	using Implement = ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityImplement;
+using ContentTypeTextNet.Pe.PeMain.Data;
 
 	/// <summary>
 	/// 設定データを上手いことなんやかんやする。
@@ -282,6 +283,11 @@
 		public static void InitializeClipboardIndexSetting(ClipboardIndexSettingModel setting, Version previousVersion, INonProcess nonProcess)
 		{
 			Implement.InitializeClipboardIndexSetting.Correction(setting, previousVersion, nonProcess);
+		}
+
+		public static void ConvertFormsSetting(CommonData commonData)
+		{
+			Implement.ConvertFormsSetting.Convert(commonData);
 		}
 
 		#endregion

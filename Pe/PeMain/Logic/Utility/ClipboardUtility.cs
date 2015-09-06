@@ -20,7 +20,7 @@
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 	using ContentTypeTextNet.Pe.Library.PeData.Define;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
-	using ContentTypeTextNet.Pe.PeMain.Data;
+//	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
 	using ContentTypeTextNet.Pe.PeMain.IF;
 
@@ -179,9 +179,9 @@
 			return ConvertStringFromRawHtml(range, rawHtml, Encoding.UTF8);
 		}
 
-		public static ClipboardHtmlData ConvertClipboardHtmlFromFromRawHtml(string rawClipboardHtml, INonProcess nonProcess)
+		public static ContentTypeTextNet.Pe.PeMain.Data.ClipboardHtmlData ConvertClipboardHtmlFromFromRawHtml(string rawClipboardHtml, INonProcess nonProcess)
 		{
-			var result = new ClipboardHtmlData();
+			var result = new ContentTypeTextNet.Pe.PeMain.Data.ClipboardHtmlData();
 
 			//Version:0.9
 			//StartHTML:00000213

@@ -30,7 +30,7 @@
 	using ContentTypeTextNet.Pe.Library.PeData.Define;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 	using ContentTypeTextNet.Pe.Library.PeData.Setting;
-	using ContentTypeTextNet.Pe.PeMain.Data;
+	using Data = ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
 	using ContentTypeTextNet.Pe.PeMain.Define;
 	using ContentTypeTextNet.Pe.PeMain.IF;
@@ -52,16 +52,16 @@
 
 		#endregion
 
-		public MainWorkerViewModel(VariableConstants variableConstants, ILogger logger)
+		public MainWorkerViewModel(Data.VariableConstants variableConstants, ILogger logger)
 		{
-			CommonData = new CommonData() {
+			CommonData = new Data.CommonData() {
 				Logger = logger,
 				VariableConstants = variableConstants,
 				AppSender = this,
 				ClipboardWatcher = this,
 			};
 
-			WindowSaveData = new WindowSaveData();
+			WindowSaveData = new Data.WindowSaveData();
 
 			StreamWindows = new HashSet<LauncherItemStreamWindow>();
 			OtherWindows = new HashSet<Window>();
@@ -75,7 +75,7 @@
 
 		#region property
 
-		CommonData CommonData { get; set; }
+		Data.CommonData CommonData { get; set; }
 		public LanguageManager Language { get { return CommonData.Language; } }
 
 		public bool IsPause { get; set; }
@@ -110,7 +110,7 @@
 
 		MessageWindow MessageWindow { get; set; }
 
-		WindowSaveData WindowSaveData { get; set; }
+		Data.WindowSaveData WindowSaveData { get; set; }
 
 		public ImageSource ApplicationIcon
 		{
@@ -224,7 +224,7 @@
 			{
 				var result = CreateCommand(
 					o => {
-						var cloneCommonData = new CommonData() {
+						var cloneCommonData = new Data.CommonData() {
 							AppSender = CommonData.AppSender,
 							ClipboardWatcher = CommonData.ClipboardWatcher,
 							Language = CommonData.Language,
@@ -661,6 +661,7 @@
 				var isLoaded = LoadSetting();
 				if(!isLoaded) {
 					// Forms版からのデータ変換
+					SettingUtility.ConvertFormsSetting(CommonData);
 				}
 				// 前回バージョンが色々必要なのでインクリメント前の生情報を保持しておく。
 				var previousVersion = (Version)CommonData.MainSetting.RunningInformation.LastExecuteVersion;
@@ -1355,7 +1356,7 @@
 			ReceiveSaveIndexBody(indexBody, guid, timing);
 		}
 
-		public void SendDeviceChanged(ChangedDevice changedDevice)
+		public void SendDeviceChanged(Data.ChangedDevice changedDevice)
 		{
 			ReceiveDeviceChanged(changedDevice);
 		}
@@ -1545,7 +1546,7 @@
 			}
 		}
 
-		void RemoveIndex<TItemModel, TIndexBody>(IndexKind indexKind, Guid guid, IndexItemCollectionModel<TItemModel> items, IndexBodyPairItemCollection<TIndexBody> cachingItems)
+		void RemoveIndex<TItemModel, TIndexBody>(IndexKind indexKind, Guid guid, IndexItemCollectionModel<TItemModel> items, Data.IndexBodyPairItemCollection<TIndexBody> cachingItems)
 			where TItemModel : IndexItemModelBase
 			where TIndexBody : IndexBodyItemModelBase
 		{
@@ -1618,7 +1619,7 @@
 			}
 		}
 
-		void AppendCachingItems<TIndexBody>(Guid guid, TIndexBody indexBody, IndexBodyPairItemCollection<TIndexBody> cachingItems)
+		void AppendCachingItems<TIndexBody>(Guid guid, TIndexBody indexBody, Data.IndexBodyPairItemCollection<TIndexBody> cachingItems)
 			where TIndexBody : IndexBodyItemModelBase
 		{
 			if (!cachingItems.Any(p => p.Id == guid)) {
@@ -1635,7 +1636,7 @@
 			}
 		}
 
-		IndexBodyItemModelBase GetIndexBody<TIndexBody>(IndexKind indexKind, Guid guid, IndexBodyPairItemCollection<TIndexBody> cachingItems)
+		IndexBodyItemModelBase GetIndexBody<TIndexBody>(IndexKind indexKind, Guid guid, Data.IndexBodyPairItemCollection<TIndexBody> cachingItems)
 			where TIndexBody : IndexBodyItemModelBase, new()
 		{
 			var body = cachingItems.GetFromId(guid);
@@ -1655,13 +1656,13 @@
 		public IndexBodyItemModelBase ReceiveLoadIndexBody(IndexKind indexKind, Guid guid)
 		{
 			switch(indexKind) {
-				case IndexKind.Note: 
+				case IndexKind.Note:
 					return GetIndexBody<NoteBodyItemModel>(indexKind, guid, IndexBodyCaching.NoteItems);
 
-				case IndexKind.Template: 
+				case IndexKind.Template:
 					return GetIndexBody<TemplateBodyItemModel>(indexKind, guid, IndexBodyCaching.TemplateItems);
 
-				case IndexKind.Clipboard: 
+				case IndexKind.Clipboard:
 					return GetIndexBody<ClipboardBodyItemModel>(indexKind, guid, IndexBodyCaching.ClipboardItems);
 
 				default:
@@ -1669,7 +1670,7 @@
 			}
 		}
 
-		void SaveIndexBody<TIndexBody>(IndexBodyItemModelBase indexBody, Guid guid, IndexBodyPairItemCollection<TIndexBody> cachingItems, Timing timing)
+		void SaveIndexBody<TIndexBody>(IndexBodyItemModelBase indexBody, Guid guid, Data.IndexBodyPairItemCollection<TIndexBody> cachingItems, Timing timing)
 			where TIndexBody : IndexBodyItemModelBase
 		{
 			//var fileType = IndexItemUtility.GetIndexBodyFileType(indexBody.IndexKind);
@@ -1701,7 +1702,7 @@
 			}
 		}
 
-		void ReceiveDeviceChanged(ChangedDevice changedDevice)
+		void ReceiveDeviceChanged(Data.ChangedDevice changedDevice)
 		{
 			//CommonData.Logger.Information("catch: changed device");
 			// TODO: まだ作ってないので暫定的に。

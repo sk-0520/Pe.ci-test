@@ -16,7 +16,7 @@
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 	using ContentTypeTextNet.Pe.Library.PeData.Define;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
-	using ContentTypeTextNet.Pe.PeMain.Data;
+	//using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
@@ -64,7 +64,7 @@
 			}
 		}
 
-		ClipboardHtmlData HtmlModel { get; set; }
+		ContentTypeTextNet.Pe.PeMain.Data.ClipboardHtmlData HtmlModel { get; set; }
 
 
 		public ImageSource ItemTypeImage
