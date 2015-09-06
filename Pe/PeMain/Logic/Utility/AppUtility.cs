@@ -276,15 +276,36 @@ using ContentTypeTextNet.Pe.Library.PeData.Item;
 		public static void ChangeWindowFromWindowList(IList<WindowItemModel> windowList)
 		{
 			foreach (var windowItem in windowList) {
-				var rect = PodStructUtility.Convert(windowItem.WindowArea);
-				var reslut = NativeMethods.MoveWindow(
-					windowItem.WindowHandle,
-					rect.X,
-					rect.Y,
-					rect.Width,
-					rect.Height,
-					true
-				);
+				switch(windowItem.WindowState) {
+					case WindowState.Maximized:
+						NativeMethods.ShowWindow(windowItem.WindowHandle, SW.SW_MAXIMIZE);
+						break;
+
+					case WindowState.Minimized:
+						NativeMethods.ShowWindow(windowItem.WindowHandle, SW.SW_MINIMIZE);
+						break;
+
+					case WindowState.Normal:
+						{
+							if(NativeMethods.IsZoomed(windowItem.WindowHandle) || NativeMethods.IsIconic(windowItem.WindowHandle)) {
+								NativeMethods.ShowWindow(windowItem.WindowHandle, SW.SW_RESTORE);
+							}
+
+							var deviceWindowArea = PodStructUtility.Convert(windowItem.WindowArea);
+							var reslut = NativeMethods.MoveWindow(
+								windowItem.WindowHandle,
+								deviceWindowArea.X,
+								deviceWindowArea.Y,
+								deviceWindowArea.Width,
+								deviceWindowArea.Height,
+								true
+							);
+						}
+						break;
+
+					default:
+						throw new NotImplementedException();
+				}
 			}
 		}
 	}
