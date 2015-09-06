@@ -160,7 +160,7 @@
 		x:Key="root"
 		Tag="{Binding DataContext,RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}"
 		IconSource="{Binding ApplicationIcon, Mode=OneWay}"
-		ToolTipText="Double-click for window, right-click for menu"
+		DoubleClickCommand="{Binding ShowHomeWindowCommand}"
 		ContextMenu="{StaticResource ResourceKey=ContextMenu}"
 	/>
 

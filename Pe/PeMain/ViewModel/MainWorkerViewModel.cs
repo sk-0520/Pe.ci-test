@@ -500,9 +500,35 @@
 			}
 		}
 
+		public ICommand ShowHomeWindowCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						if(!IsPause) {
+							ShowHomeDialog();
+						}
+					}
+				);
+
+				return result;
+			}
+		}
+
 		#endregion
 
 		#region function
+
+		void ShowHomeDialog()
+		{
+			PausingBasicAction(() => {
+				var window = new HomeWindow();
+				window.SetCommonData(CommonData, null);
+				window.ShowDialog();
+				window = null;
+			});
+		}
 
 		void ExitApplication(bool saveSetting, bool gc)
 		{
