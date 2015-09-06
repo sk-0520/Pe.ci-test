@@ -18,10 +18,31 @@
 	<AW:CommonDataWindow.Resources>
 		<ResourceDictionary>
 			<ResourceDictionary.MergedDictionaries>
+				<ResourceDictionary Source="/View/Parts/Resource/DialogDictionary.xaml"/>
 			</ResourceDictionary.MergedDictionaries>
 		</ResourceDictionary>
 	</AW:CommonDataWindow.Resources>
 	<Grid>
-
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*" />
+			<RowDefinition Height="Auto" />
+		</Grid.RowDefinitions>
+		<Grid Grid.Row="0">
+			<StackPanel>
+				<Button Command="{Binding ResistItemsCommand}">
+					auto regist
+				</Button>
+				<Button Command="{Binding ShowNotifyAreaCommand}">
+					notify area
+				</Button>
+				<Button Command="{Binding ResistStartupCommand}">
+					startup
+				</Button>
+			</StackPanel>
+		</Grid>
+		
+		<StackPanel Grid.Row="1" Style="{StaticResource DialogResultPanel}">
+			<Button Command="{Binding CloseCommand}" Style="{StaticResource DialogAcceptButton}" />
+		</StackPanel>
 	</Grid>
 </AW:ViewModelCommonDataWindow>
