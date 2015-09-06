@@ -19,6 +19,8 @@
 	using System.Windows.Input;
 	using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
 	using ContentTypeTextNet.Library.SharedLibrary.CompatibleForms.Utility;
+using ContentTypeTextNet.Pe.Library.PeData.Item;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
 	//using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
 
 	internal static class ConvertFormsSetting
@@ -57,6 +59,20 @@
 			using(var stream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read)) {
 				return LoadXmlSerializeFromStream<T>(stream);
 			}
+		}
+
+		static void ConvertPairColor(ColorPairItemModel dst, Data.ColorPairItem src)
+		{
+			dst.BackColor = DrawingUtility.Convert(src.Back.Color);
+			dst.ForeColor = DrawingUtility.Convert(src.Fore.Color);
+		}
+
+		static void FontConverter(FontModel dst, Data.FontSetting src)
+		{
+			dst.Family = src.Family;
+			dst.Bold = src.Bold;
+			dst.Italic = src.Italic;
+			dst.Size = DrawingUtility.ConvertFontSizeFromDrawing(src.Height);
 		}
 
 		#endregion
@@ -113,12 +129,21 @@
 			dstSetting.SaveIntervalTime = srcMainSetting.WindowSaveTime;
 		}
 
+		static void ConvertSteamSetting(StreamSettingModel dstSetting, Data.StreamSetting srcSetting, INonProcess nonProcess)
+		{
+			ConvertPairColor(dstSetting.OutputColor, srcSetting.GeneralColor);
+			ConvertPairColor(dstSetting.ErrorColor, srcSetting.ErrorColor);
+			FontConverter(dstSetting.Font, srcSetting.FontSetting);
+		}
+
 		static void ConvertMainSetting(MainSettingModel dstMainSetting, Data.MainSetting srcMainSetting, INonProcess nonProcess)
 		{
 			ConvertRunningSetting(dstMainSetting.RunningInformation, srcMainSetting.Running, nonProcess);
 			ConvertLoggingSetting(dstMainSetting.Logging, srcMainSetting.Log, nonProcess);
 			ConvertSystemEnvironmentSetting(dstMainSetting.SystemEnvironment, srcMainSetting.SystemEnvironment, nonProcess);
 			ConvertWindowSaveSetting(dstMainSetting.WindowSave, srcMainSetting, nonProcess);
+			ConvertSteamSetting(dstMainSetting.Stream, srcMainSetting.Stream, nonProcess);
+			
 		}
 
 	}

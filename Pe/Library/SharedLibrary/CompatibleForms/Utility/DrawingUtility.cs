@@ -73,5 +73,10 @@
 				}
 			}
 		}
+
+		public static Color Convert(Drawing.Color color)
+		{
+			return Color.FromArgb(color.A, color.R, color.G, color.B);
+		}
 	}
 }
