@@ -21,7 +21,6 @@
 	using ContentTypeTextNet.Library.SharedLibrary.CompatibleForms.Utility;
 using ContentTypeTextNet.Pe.Library.PeData.Item;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
-	//using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
 
 	internal static class ConvertFormsSetting
 	{
@@ -67,12 +66,24 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 			dst.ForeColor = DrawingUtility.Convert(src.Fore.Color);
 		}
 
-		static void FontConverter(FontModel dst, Data.FontSetting src)
+		static void ConvertFont(FontModel dst, Data.FontSetting src)
 		{
 			dst.Family = src.Family;
 			dst.Bold = src.Bold;
 			dst.Italic = src.Italic;
 			dst.Size = DrawingUtility.ConvertFontSizeFromDrawing(src.Height);
+		}
+
+		static void ConvertHotKey(HotKeyModel dst, Data.HotKeySetting src)
+		{
+			dst.Key = FormsConverter.GetKey(src);
+			dst.ModifierKeys = FormsConverter.GetModifierKeys(src);
+		}
+
+		static ContentTypeTextNet.Library.SharedLibrary.Define.IconScale ConvertIconScale(ContentTypeTextNet.Pe.Library.Skin.IconScale src)
+		{
+			var raw = (int)src;
+			return (ContentTypeTextNet.Library.SharedLibrary.Define.IconScale)raw;
 		}
 
 		#endregion
@@ -115,11 +126,8 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 
 		private static void ConvertSystemEnvironmentSetting(SystemEnvironmentSettingModel dstSetting, Data.SystemEnvironmentSetting srcSetting, INonProcess nonProcess)
 		{
-			dstSetting.ExtensionHotkey.Key = FormsConverter.GetKey(srcSetting.ExtensionShowHotKey);
-			dstSetting.ExtensionHotkey.ModifierKeys = FormsConverter.GetModifierKeys(srcSetting.ExtensionShowHotKey);
-
-			dstSetting.HideFileHotkey.Key = FormsConverter.GetKey(srcSetting.HiddenFileShowHotKey);
-			dstSetting.HideFileHotkey.ModifierKeys = FormsConverter.GetModifierKeys(srcSetting.HiddenFileShowHotKey);
+			ConvertHotKey(dstSetting.ExtensionHotkey, srcSetting.ExtensionShowHotKey);
+			ConvertHotKey(dstSetting.HideFileHotkey, srcSetting.HiddenFileShowHotKey);
 		}
 
 		static void ConvertWindowSaveSetting(WindowSaveSettingModel dstSetting, Data.MainSetting srcMainSetting, INonProcess nonProcess)
@@ -133,7 +141,16 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 		{
 			ConvertPairColor(dstSetting.OutputColor, srcSetting.GeneralColor);
 			ConvertPairColor(dstSetting.ErrorColor, srcSetting.ErrorColor);
-			FontConverter(dstSetting.Font, srcSetting.FontSetting);
+			ConvertFont(dstSetting.Font, srcSetting.FontSetting);
+		}
+
+		static void ConvertCommandSetting(CommandSettingModel dstSetting, Data.CommandSetting srcSetting, INonProcess nonProcess)
+		{
+			ConvertFont(dstSetting.Font, srcSetting.FontSetting);
+			ConvertHotKey(dstSetting.ShowHotkey, srcSetting.HotKey);
+			dstSetting.HideTime = srcSetting.HiddenTime;
+			dstSetting.IconScale = ConvertIconScale(srcSetting.IconScale);
+			dstSetting.WindowWidth = srcSetting.Width;
 		}
 
 		static void ConvertMainSetting(MainSettingModel dstMainSetting, Data.MainSetting srcMainSetting, INonProcess nonProcess)
@@ -143,6 +160,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 			ConvertSystemEnvironmentSetting(dstMainSetting.SystemEnvironment, srcMainSetting.SystemEnvironment, nonProcess);
 			ConvertWindowSaveSetting(dstMainSetting.WindowSave, srcMainSetting, nonProcess);
 			ConvertSteamSetting(dstMainSetting.Stream, srcMainSetting.Stream, nonProcess);
+			ConvertCommandSetting(dstMainSetting.Command, srcMainSetting.Command, nonProcess);
 			
 		}
 
