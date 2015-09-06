@@ -21,6 +21,7 @@
 	using ContentTypeTextNet.Library.SharedLibrary.CompatibleForms.Utility;
 using ContentTypeTextNet.Pe.Library.PeData.Item;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
+	using System.Windows;
 
 	internal static class ConvertFormsSetting
 	{
@@ -162,6 +163,49 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 			ConvertHotKey(dstSetting.ShowFrontHotKey, srcSetting.ShowFrontHotKey);
 		}
 
+		static void ConvertClipboardSetting(ClipboardSettingModel dstSetting, Data.ClipboardSetting srcSetting, INonProcess nonProcess)
+		{
+			dstSetting.IsEnabled = srcSetting.Enabled;
+			dstSetting.IsEnabledApplicationCopy = srcSetting.EnabledApplicationCopy;
+			var captureMap = new Dictionary<Data.ClipboardType, ContentTypeTextNet.Pe.Library.PeData.Define.ClipboardType>() {
+				{ Data.ClipboardType.Text, ContentTypeTextNet.Pe.Library.PeData.Define.ClipboardType.Text },
+				{ Data.ClipboardType.Rtf, ContentTypeTextNet.Pe.Library.PeData.Define.ClipboardType.Rtf },
+				{ Data.ClipboardType.Html, ContentTypeTextNet.Pe.Library.PeData.Define.ClipboardType.Html },
+				{ Data.ClipboardType.Image, ContentTypeTextNet.Pe.Library.PeData.Define.ClipboardType.Image },
+				{ Data.ClipboardType.File, ContentTypeTextNet.Pe.Library.PeData.Define.ClipboardType.Files },
+			};
+			dstSetting.CaptureType = captureMap
+				.Where(p => srcSetting.EnabledTypes.HasFlag(p.Key))
+				.Select(p => p.Value)
+				.Aggregate(ContentTypeTextNet.Pe.Library.PeData.Define.ClipboardType.None, (a, b) => a | b)
+			;
+			dstSetting.DuplicationCount = srcSetting.ClipboardRepeated;
+			dstSetting.SaveCount = srcSetting.Limit;
+			dstSetting.WaitTime = srcSetting.WaitTime;
+			dstSetting.UsingClipboard = srcSetting.OutputUsingClipboard;
+			dstSetting.ItemsListWidth = srcSetting.StackListWidth;
+			// ホットキーはクリップボードで使用してテンプレートは設定しない
+			ConvertHotKey(dstSetting.ToggleHotKey, srcSetting.ToggleHotKeySetting);
+			ConvertFont(dstSetting.Font, srcSetting.TextFont);
+			dstSetting.IsVisible = srcSetting.Visible;
+			dstSetting.IsTopmost = srcSetting.TopMost;
+			dstSetting.WindowLeft = srcSetting.Location.X;
+			dstSetting.WindowTop = srcSetting.Location.Y;
+			dstSetting.WindowWidth= srcSetting.Size.Width;
+			dstSetting.WindowHeight = srcSetting.Size.Height;
+		}
+
+		static void ConvertTemplateSetting(TemplateSettingModel dstSetting, Data.ClipboardSetting srcSetting, INonProcess nonProcess)
+		{
+			dstSetting.ItemsListWidth = srcSetting.StackListWidth;
+			dstSetting.ReplaceListWidth = srcSetting.TemplateListWidth;
+			ConvertFont(dstSetting.Font, srcSetting.TextFont);
+			// 微妙にずらしとく
+			dstSetting.WindowLeft = srcSetting.Location.X + SystemParameters.IconWidth;
+			dstSetting.WindowTop = srcSetting.Location.Y + SystemParameters.IconHeight;
+			dstSetting.WindowWidth = srcSetting.Size.Width;
+			dstSetting.WindowHeight = srcSetting.Size.Height;
+		}
 		static void ConvertMainSetting(MainSettingModel dstMainSetting, Data.MainSetting srcMainSetting, INonProcess nonProcess)
 		{
 			ConvertRunningSetting(dstMainSetting.RunningInformation, srcMainSetting.Running, nonProcess);
@@ -171,7 +215,8 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 			ConvertSteamSetting(dstMainSetting.Stream, srcMainSetting.Stream, nonProcess);
 			ConvertCommandSetting(dstMainSetting.Command, srcMainSetting.Command, nonProcess);
 			ConvertNoteSetting(dstMainSetting.Note, srcMainSetting.Note, nonProcess);
-			
+			ConvertClipboardSetting(dstMainSetting.Clipboard, srcMainSetting.Clipboard, nonProcess);
+			ConvertTemplateSetting(dstMainSetting.Template, srcMainSetting.Clipboard, nonProcess);
 		}
 
 	}
