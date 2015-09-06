@@ -1,20 +1,25 @@
 ﻿namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 {
 	using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
-using ContentTypeTextNet.Pe.PeMain.View;
-using ContentTypeTextNet.Pe.PeMain.View.Parts;
+	using System.Collections.Generic;
+	using System.IO;
+	using System.Linq;
+	using System.Text;
+	using System.Threading.Tasks;
+	using System.Windows;
+	using System.Windows.Input;
+	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+	using ContentTypeTextNet.Pe.PeMain.IF;
+	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
+	using ContentTypeTextNet.Pe.PeMain.View;
+	using ContentTypeTextNet.Pe.PeMain.View.Parts;
 
-	public class HomeViewModel: HavingViewModelBase<HomeWindow>
+	public class HomeViewModel: HavingViewModelBase<HomeWindow>, IHavingAppNonProcess
 	{
-		public HomeViewModel(HomeWindow view)
+		public HomeViewModel(HomeWindow view, IAppNonProcess appNonProcess)
 			: base(view)
 		{
+			AppNonProcess = appNonProcess;
 		}
 
 		#region property
@@ -44,7 +49,7 @@ using ContentTypeTextNet.Pe.PeMain.View.Parts;
 			{
 				var result = CreateCommand(
 					o => {
-
+						SystemExecuteUtility.OpenNotificationAreaHistory(AppNonProcess);
 					}
 				);
 
@@ -59,6 +64,24 @@ using ContentTypeTextNet.Pe.PeMain.View.Parts;
 				var result = CreateCommand(
 					o => {
 
+						var startupPath = Environment.ExpandEnvironmentVariables(Constants.StartupShortcutPath);
+
+						var image = MessageBoxImage.Information;
+						string message;
+						if(!File.Exists(startupPath)) {
+							try {
+								AppUtility.MakeAppShortcut(startupPath);
+								message = AppNonProcess.Language["home/startup/dialog/message"];
+							} catch(Exception ex) {
+								AppNonProcess.Logger.Error(ex);
+								message = ex.Message;
+								image = MessageBoxImage.Error;
+							}
+						} else {
+							message = AppNonProcess.Language["home/startup/exists"];
+							AppNonProcess.Logger.Information(message, startupPath);
+						}
+						MessageBox.Show(message, AppNonProcess.Language["home/startup/dialog/caption"], MessageBoxButton.OK, image);
 					}
 				);
 
@@ -79,6 +102,12 @@ using ContentTypeTextNet.Pe.PeMain.View.Parts;
 				return result;
 			}
 		}
+
+		#endregion
+
+		#region IHavingAppNonProcess
+
+		public IAppNonProcess AppNonProcess { get; private set; }
 
 		#endregion
 	}

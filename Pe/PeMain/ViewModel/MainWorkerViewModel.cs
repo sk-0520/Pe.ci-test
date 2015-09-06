@@ -251,12 +251,12 @@
 								var notifiy = window.ViewModel.SettingNotifiyItem;
 
 								Debug.Assert(notifiy.StartupRegist.HasValue);
-								var startuoPath = Environment.ExpandEnvironmentVariables(Constants.startupShortcutPath);
+								var startupPath = Environment.ExpandEnvironmentVariables(Constants.StartupShortcutPath);
 								if(notifiy.StartupRegist.Value) {
-									AppUtility.MakeAppShortcut(startuoPath);
+									AppUtility.MakeAppShortcut(startupPath);
 								} else {
-									if(File.Exists(startuoPath)) {
-										File.Delete(startuoPath);
+									if(File.Exists(startupPath)) {
+										File.Delete(startupPath);
 									}
 								}
 
@@ -533,7 +533,7 @@
 		void ExitApplication(bool saveSetting, bool gc)
 		{
 #if DEBUG
-			var startupPath = Environment.ExpandEnvironmentVariables(Constants.startupShortcutPath);
+			var startupPath = Environment.ExpandEnvironmentVariables(Constants.StartupShortcutPath);
 			if (File.Exists(startupPath)) {
 				File.Delete(startupPath);
 			}

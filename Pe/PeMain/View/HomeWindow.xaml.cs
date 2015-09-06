@@ -30,7 +30,7 @@
 
 		protected override void CreateViewModel()
 		{
-			ViewModel = new HomeViewModel(this);
+			ViewModel = new HomeViewModel(this, CommonData.NonProcess);
 		}
 
 		protected override void ApplyViewModel()

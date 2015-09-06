@@ -284,7 +284,8 @@
 		/// <summary>
 		/// スタートアップ用ショートカットファイルパス。
 		/// </summary>
-		public static readonly string startupShortcutPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Startup), ShortcutName);
+		[ConstantsProperty]
+		static readonly string startupShortcutPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Startup), ShortcutName);
 
 		#region app.config
 
