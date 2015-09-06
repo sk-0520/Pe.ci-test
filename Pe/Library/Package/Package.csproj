@@ -112,6 +112,10 @@
       <Project>{b3c0d8c0-2382-4058-8cec-3c62de401c3f}</Project>
       <Name>PeData</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PeFormsData\PeFormsData.csproj">
+      <Project>{1e6d2b54-a9a1-4ad8-a44c-65afd7189228}</Project>
+      <Name>PeFormsData</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PInvoke\PInvoke.csproj">
       <Project>{13a7d6df-6702-49cb-86f1-0980a3c1d6c6}</Project>
       <Name>PInvoke</Name>
