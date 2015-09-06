@@ -208,6 +208,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 		}
 		static void ConvertMainSetting(MainSettingModel dstMainSetting, Data.MainSetting srcMainSetting, INonProcess nonProcess)
 		{
+			dstMainSetting.Language.Name = srcMainSetting.LanguageName;
 			ConvertRunningSetting(dstMainSetting.RunningInformation, srcMainSetting.Running, nonProcess);
 			ConvertLoggingSetting(dstMainSetting.Logging, srcMainSetting.Log, nonProcess);
 			ConvertSystemEnvironmentSetting(dstMainSetting.SystemEnvironment, srcMainSetting.SystemEnvironment, nonProcess);
