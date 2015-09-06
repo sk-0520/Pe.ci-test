@@ -581,12 +581,6 @@
 			using(var timeLogger = CommonData.NonProcess.CreateTimeLogger()) {
 				// 各種設定の読込
 				var mainSettingPath = Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingMainSettingFilePath);
-				if(!File.Exists(mainSettingPath)) {
-					var formsMainSettingPath = Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.FormsUserSettingMainSettinFilePath);
-					if(File.Exists(formsMainSettingPath)) {
-						return false;
-					}
-				}
 				CommonData.MainSetting = AppUtility.LoadSetting<MainSettingModel>(mainSettingPath, Constants.fileTypeMainSetting, CommonData.Logger);
 				ApplyLanguage();
 				CommonData.LauncherItemSetting = AppUtility.LoadSetting<LauncherItemSettingModel>(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingLauncherItemSettingFilePath), Constants.fileTypeLauncherItemSetting, CommonData.Logger);
@@ -596,6 +590,12 @@
 				CommonData.ClipboardIndexSetting = AppUtility.LoadSetting<ClipboardIndexSettingModel>(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingClipboardIndexFilePath), Constants.fileTypeTemplateIndex, CommonData.Logger);
 				CommonData.TemplateIndexSetting = AppUtility.LoadSetting<TemplateIndexSettingModel>(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingTemplateIndexFilePath), Constants.fileTypeClipboardIndex, CommonData.Logger);
 
+				if(!File.Exists(mainSettingPath)) {
+					var formsMainSettingPath = Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.FormsUserSettingMainSettinFilePath);
+					if(File.Exists(formsMainSettingPath)) {
+						return false;
+					}
+				}
 				return true;
 			}
 		}

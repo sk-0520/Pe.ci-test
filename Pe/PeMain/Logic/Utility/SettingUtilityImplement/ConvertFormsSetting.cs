@@ -12,6 +12,9 @@
 	using System.Xml;
 	using System.IO;
 	using System.Xml.Serialization;
+	using ContentTypeTextNet.Pe.Library.PeData.Setting;
+using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
 
 	internal static class ConvertFormsSetting
 	{
@@ -59,6 +62,26 @@
 			var launcherItemsFilePath = Environment.ExpandEnvironmentVariables(commonData.VariableConstants.FormsUserSettingLauncherItemsSettinFilePath);
 			var mainSetting = LoadXmlSerializeFromFile<Forms.MainSetting>(mainSettingFilePath);
 			var launcherItems = LoadXmlSerializeFromFile<HashSet<Forms.LauncherItem>>(launcherItemsFilePath);
+
+			commonData.MainSetting = new MainSettingModel();
+			SettingUtility.InitializeMainSetting(commonData.MainSetting, null, commonData.NonProcess);
+			ConvertMainSetting(commonData.MainSetting, mainSetting, commonData.NonProcess);
 		}
+
+
+		static void ConvertRunningSetting(RunningInformationSettingModel dstRunningSetting, Data.RunningSetting srcRunningSetting, INonProcess nonProcess)
+		{
+			dstRunningSetting.Accept = srcRunningSetting.Running;
+			dstRunningSetting.CheckUpdateRelease = srcRunningSetting.CheckUpdate;
+			dstRunningSetting.CheckUpdateRC = srcRunningSetting.CheckUpdateRC;
+			dstRunningSetting.LastExecuteVersion = new Version(srcRunningSetting.VersionMajor, srcRunningSetting.VersionMinor, srcRunningSetting.VersionBuild, srcRunningSetting.VersionRevision);
+			dstRunningSetting.ExecuteCount = srcRunningSetting.ExecuteCount;
+		}
+
+		static void ConvertMainSetting(MainSettingModel dstMainSetting, Data.MainSetting srcMainSetting, INonProcess nonProcess)
+		{
+			ConvertRunningSetting(dstMainSetting.RunningInformation, srcMainSetting.Running, nonProcess);
+		}
+
 	}
 }
