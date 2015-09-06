@@ -106,11 +106,19 @@
 			dstSetting.HideFileHotkey.ModifierKeys = FormsConverter.GetModifierKeys(srcSetting.HiddenFileShowHotKey);
 		}
 
+		static void ConvertWindowSaveSetting(WindowSaveSettingModel dstSetting, Data.MainSetting srcMainSetting, INonProcess nonProcess)
+		{
+			dstSetting.IsEnabled = srcMainSetting.WindowSaveCount > 0;
+			dstSetting.SaveCount = srcMainSetting.WindowSaveCount;
+			dstSetting.SaveIntervalTime = srcMainSetting.WindowSaveTime;
+		}
+
 		static void ConvertMainSetting(MainSettingModel dstMainSetting, Data.MainSetting srcMainSetting, INonProcess nonProcess)
 		{
 			ConvertRunningSetting(dstMainSetting.RunningInformation, srcMainSetting.Running, nonProcess);
 			ConvertLoggingSetting(dstMainSetting.Logging, srcMainSetting.Log, nonProcess);
 			ConvertSystemEnvironmentSetting(dstMainSetting.SystemEnvironment, srcMainSetting.SystemEnvironment, nonProcess);
+			ConvertWindowSaveSetting(dstMainSetting.WindowSave, srcMainSetting, nonProcess);
 		}
 
 	}
