@@ -15,6 +15,7 @@
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
 	using ContentTypeTextNet.Pe.Library.PeData.Define;
+	using ContentTypeTextNet.Pe.PeMain.Define;
 	using ContentTypeTextNet.Pe.PeMain.View.Parts.Attached;
 	using ContentTypeTextNet.Pe.PeMain.View.Parts.Control;
 
@@ -240,11 +241,16 @@
 			return language[key];
 		}
 
+		public static string GetTextFromEnum_Impl<TEnum>(TEnum value, ILanguage language)
+		{
+			var key = GetEnumKeyName(value.GetType(), value);
+			return language[key];
+		}
+
 		public static string GetTextFromEnum<TEnum>(TEnum value, ILanguage language)
 		{
 			return GetTextFromEnum(typeof(TEnum), value, language);
 		}
-
 
 		public static string GetTextFromEnum(Type type, object value, ILanguage language)
 		{
@@ -253,6 +259,7 @@
 				{ typeof(IconScale), () => GetTextFromIconScale((IconScale)value, language) },
 				{ typeof(ClipboardType), () => GetTextFromClipboardType((ClipboardType)value, language) },
 				{ typeof(TemplateReplaceMode), () => GetTextFromTemplateReplaceMode((TemplateReplaceMode)value, language) },
+				{ typeof(WindowSaveType), () => GetTextFromEnum_Impl((WindowSaveType)value, language) },
 			};
 
 			Func<string> getText;

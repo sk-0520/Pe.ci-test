@@ -73,7 +73,7 @@
 		public const string logClipboardWaitTimeCurrent = "LOG-CLIP-WAIT_TIME-CURRENT";
 		public const string logClipboardWaitTimeSetting = "LOG-CLIP-WAIT_TIME-SETTING";
 		public const string logClipboardWaitTimeWait = "LOG-CLIP-WAIT_TIME-WAIT";
-		
+		public const string logWindowSaveType = "LOG-WINDOW-SAVE-TYPE";
 		
 
 		#endregion

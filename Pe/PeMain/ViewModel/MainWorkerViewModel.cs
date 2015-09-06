@@ -7,6 +7,7 @@
 	using System.IO;
 	using System.Linq;
 	using System.Net.NetworkInformation;
+	using System.Runtime.CompilerServices;
 	using System.Threading;
 	using System.Threading.Tasks;
 	using System.Windows;
@@ -42,17 +43,6 @@
 
 	public sealed class MainWorkerViewModel: ViewModelBase, IAppSender, IClipboardWatcher, IHavingView<TaskbarIcon>
 	{
-		#region define
-
-		enum WindowSaveType
-		{
-			Temporary,
-			Timer,
-			System
-		}
-
-		#endregion
-
 		#region variable
 
 		//bool _isContextMenuOpen;
@@ -626,7 +616,7 @@
 					foreach(var screen in Screen.AllScreens) {
 						var toolbar = new ToolbarItemModel();
 						toolbar.Id = screen.DeviceName;
-						CommonData.Logger.Information("create toolbar setting", screen);
+						CommonData.Logger.Information(CommonData.Language["log/create/toolbar-setting"], screen);
 						CommonData.MainSetting.Toolbar.Items.Add(toolbar);
 					}
 				}
@@ -663,10 +653,10 @@
 				window.SetCommonData(CommonData, null);
 				window.ShowDialog();
 				if(CommonData.MainSetting.RunningInformation.Accept) {
-					CommonData.Logger.Information("accept: OK");
+					CommonData.Logger.Information(CommonData.Language["log/accept/ok"]);
 					SettingUtility.IncrementRunningInformation(CommonData.MainSetting.RunningInformation);
 				} else {
-					CommonData.Logger.Information("accept: NG");
+					CommonData.Logger.Information(CommonData.Language["log/accept/ng"]);
 					return false;
 				}
 			}
@@ -890,7 +880,7 @@
 		/// </summary>
 		void ChangedScreenCount()
 		{
-			CommonData.Logger.Information("change screen count");
+			CommonData.Logger.Information(CommonData.Language["log/screen/change-count"]);
 			ResetToolbar();
 		}
 
@@ -1031,7 +1021,12 @@
 					OnPropertyChanged("WindowSystemItems");
 					break;
 			}
-			CommonData.Logger.Information("save window", windowCollection);
+			if(type != WindowSaveType.Temporary) {
+				var map = new Dictionary<string, string>() {
+					{ LanguageKey.logWindowSaveType, LanguageUtility.GetTextFromEnum(type, CommonData.Language) },
+				};
+				CommonData.Logger.Information(CommonData.Language["log/window/save", map], windowCollection);
+			}
 
 			return windowCollection;
 		}
@@ -1137,7 +1132,7 @@
 		{
 
 			var updateData = new Updater(CommonData.VariableConstants.UserArchiveDirectoryPath, CommonData.MainSetting.RunningInformation.CheckUpdateRC, CommonData);
-			CommonData.Logger.Debug("update: parameter", string.Format("force = {0}, setting = {1}", force, CommonData.MainSetting.RunningInformation.CheckUpdateRelease));
+			CommonData.Logger.Debug(CommonData.Language["log/update/check"], string.Format("force = {0}, setting = {1}", force, CommonData.MainSetting.RunningInformation.CheckUpdateRelease));
 			if(force || !IsPause && this.CommonData.MainSetting.RunningInformation.CheckUpdateRelease) {
 				var updateInfo = updateData.Check();
 			}
@@ -1164,7 +1159,7 @@
 					CommonData.Logger.Error(CommonData.Language["log/update/error"], "info is null");
 				}
 			} else if(IsPause) {
-				CommonData.Logger.Information(CommonData.Language["log/update/check-stop"], "this._pause => true");
+				CommonData.Logger.Information(CommonData.Language["log/update/check-stop"], "IsPause => true");
 			}
 		}
 
@@ -1178,7 +1173,6 @@
 				// ネットワーク接続可能か？
 				var nic = NetworkInterface.GetIsNetworkAvailable();
 				if(nic) {
-					CommonData.Logger.Debug("update: check");
 					Thread.Sleep(Constants.updateWaitTime);
 					return CheckUpdate(false);
 				} else {
@@ -1240,6 +1234,11 @@
 			} finally {
 				IsPause = false;
 			}
+		}
+
+		void PuaseOutputLog(int frame = 2, [CallerFilePath] string callerFile = "", [CallerLineNumber] int callerLine = -1, [CallerMemberName] string callerMember = "")
+		{
+			CommonData.Logger.Debug(CommonData.Language["log/pause/skip"], null, frame, callerFile, callerLine, callerMember);
 		}
 
 		#endregion
@@ -1496,7 +1495,7 @@
 				var pair = cachingItems[index];
 				Debug.Assert(pair.Id == guid);
 				cachingItems.RemoveAt(index);
-				CommonData.Logger.Trace("remove cache dispose: " + pair.Id.ToString(), pair.Body);
+				CommonData.Logger.Trace("cache dispose: " + pair.Id.ToString(), pair.Body);
 				pair.Body.Dispose();
 			}
 			items.Remove(guid);
@@ -1582,7 +1581,7 @@
 		{
 			var body = cachingItems.GetFromId(guid);
 			if (body != null) {
-				CommonData.Logger.Debug("load cache: " + guid.ToString(), body);
+				CommonData.Logger.Trace("load cache: " + guid.ToString(), body);
 				return body;
 			}
 			//var fileType = IndexItemUtility.GetBodyFileType(indexKind);
@@ -1645,7 +1644,7 @@
 
 		void ReceiveDeviceChanged(ChangedDevice changedDevice)
 		{
-			CommonData.Logger.Information("catch: changed device");
+			//CommonData.Logger.Information("catch: changed device");
 			// TODO: まだ作ってないので暫定的に。
 			var Initialized = true;
 
@@ -1716,7 +1715,7 @@
 						if (Clipboard.IndexItems.Any()) {
 							if (CommonData.MainSetting.Clipboard.DuplicationCount == 0) {
 								// 範囲チェックを行わないのであれば無条件で追加
-								return true;
+								return null;
 							}
 
 							// 毎回ファイル読むのもなぁ
@@ -1726,12 +1725,12 @@
 								clipboardItems = clipboardItems.Take(CommonData.MainSetting.Clipboard.DuplicationCount);
 							}
 							var hitItem = clipboardItems.FirstOrDefault(c => clipboardData.Hash.IsEqual(c.Hash));
-							return hitItem == null;
+							return hitItem;
 						}
-						return true;
+						return null;
 					}).ContinueWith(t => {
-						Debug.WriteLine("Clipboard: " + t.Result);
-						if (t.Result) {
+						var dupItem = t.Result;
+						if(dupItem == null) {
 							try {
 								//this._commonData.MainSetting.Clipboard.HistoryItems.Insert(0, clipboardItem);
 								//Clipboard.IndexItems.Insert();
@@ -1748,7 +1747,7 @@
 								CommonData.Logger.Error(ex);
 							}
 						} else {
-							CommonData.Logger.Information("clipboard dup");
+							CommonData.Logger.Information(CommonData.Language["log/clipboard/dup-item/message"], dupItem);
 						}
 
 						t.Dispose();
@@ -1764,7 +1763,7 @@
 		void ReceiveHotKey(HotKeyId hotKeyId, HotKeyModel hotKeyModel)
 		{
 			if (IsPause) {
-				CommonData.Logger.Information("pause");
+				PuaseOutputLog();
 				return;
 			}
 
@@ -1918,7 +1917,7 @@
 		void Timer_Tick(object sender, EventArgs e)
 		{
 			if (IsPause) {
-				CommonData.Logger.Information("pause");
+				PuaseOutputLog();
 				return;
 			}
 
