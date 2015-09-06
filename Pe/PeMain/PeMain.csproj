@@ -147,6 +147,7 @@
     </Compile>
     <Compile Include="Data\Temporary\AboutNotifiyItem.cs" />
     <Compile Include="Data\Temporary\ItemWithScreen.cs" />
+    <Compile Include="Data\Temporary\LauncherGroupAndItems.cs" />
     <Compile Include="Data\Temporary\LauncherItemWithScreen.cs" />
     <Compile Include="Define\WindowSaveType.cs" />
     <Compile Include="Logic\Updater.cs" />

@@ -23,6 +23,7 @@
 		<Item Id="toolbar" Word="ツールバー" />
 	</Define>
 	<Words>
+		<Item Id="window/home"    Word="@[APPLICATION:NAME] ホーム"  />
 		<Item Id="window/setting" Word="@[APPLICATION:NAME] ${setting}"  />
 		<Item Id="window/accept" Word="@[APPLICATION:NAME] 使用許諾"  />
 		<Item Id="window/toolbar" Word="${toolbar}"  />
@@ -54,6 +55,17 @@
 		<Item Id="accept/ng" Word="使用しない" />
 		<Item Id="update-check/release" Word="アップデートを確認する" />
 		<Item Id="update-check/rc" Word="RC版も確認対象とする" />
+		
+		<Item Id="home/startup/title"  Word="スタートアップ登録" />
+		<Item Id="home/startup/create" Word="スタートアップに@[APPLICATION:NAME]を登録しました" />
+		<Item Id="home/startup/exists" Word="既に登録されています" />
+
+		<Item Id="home/auto-regist/merge/message"    Word="アイテム自動登録確認" />
+		<Item Id="home/auto-regist/merge/title"      Word="既にアイテムが登録されています。${br}既存データに追加されますがよろしいですか。" />
+		<Item Id="home/auto-regist/registed/title"   Word="アイテム自動登録" />
+		<Item Id="home/auto-regist/registed/message" Word="検索・登録処理が完了しました" />
+		<Item Id="home/auto-regist/group/program"    Word="プログラム" />
+		
 
 		<Item Id="tasktray/tooltip" Word="ぴーいー" />
 		<Item Id="tasktray/setting" Word="@[APPLICATION:NAME] ${setting}" />
@@ -394,11 +406,10 @@
 		<Item Id="log/update/newest" Word="アップデート確認: 最新版です" />
 		<Item Id="log/update/check-stop" Word="アップデート確認: 取り消し" />
 		<Item Id="log/update/nic" Word="NICが有効ではありません。" />
-		
-		
 		<Item Id="log/clipboard/prev-time/message" Word="クリップボード: 待ち時間中のため無視" />
 		<Item Id="log/clipboard/prev-time/detail"  Word="前回取込時間 -> @[LOG-CLIP-WAIT_TIME-PREV]${br}今回取込時間 -> @[LOG-CLIP-WAIT_TIME-CURRENT]${br}設定時間 -> @[LOG-CLIP-WAIT_TIME-SETTING]${br}待機時間 -> @[LOG-CLIP-WAIT_TIME-WAIT]" />
 		<Item Id="log/clipboard/dup-item/message"  Word="クリップボード: 重複するクリップボードアイテムが存在するため無視" />
+		<Item Id="log/auto-regist/message"  Word="ホームウィンドウ処理でのログ" />
 
 		<!-- テンプレート -->
 		<Item Id="template/keyword/text/APPLICATION"  Word="${template-APPLICATION}" />

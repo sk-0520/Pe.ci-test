@@ -632,7 +632,7 @@
 									}
 									loadShorcut = dialogResult == MessageBoxResult.Yes;
 								}
-								var item = LauncherItemUtility.CreateFromFile(filePath, loadShorcut);
+								var item = LauncherItemUtility.CreateFromFile(filePath, loadShorcut, AppNonProcess);
 								SelectedGroup.LauncherItems.Add(item.Id);
 								Model.LauncherItems.Add(item);
 								var view = HasView ? View: null;

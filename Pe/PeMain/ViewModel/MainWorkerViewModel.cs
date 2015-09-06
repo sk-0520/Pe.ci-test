@@ -507,7 +507,10 @@
 				var result = CreateCommand(
 					o => {
 						if(!IsPause) {
-							ShowHomeDialog();
+							var dialogResult = ShowHomeDialog();
+							if(dialogResult) {
+								ResetToolbar();
+							}
 						}
 					}
 				);
@@ -520,14 +523,25 @@
 
 		#region function
 
-		void ShowHomeDialog()
+		bool ShowHomeDialog()
 		{
+			var isAppReload = false;
 			PausingBasicAction(() => {
 				var window = new HomeWindow();
 				window.SetCommonData(CommonData, null);
 				window.ShowDialog();
+				var viewModel = window.ViewModel;
+				isAppReload = viewModel.IsAppReload;
+				var log = viewModel.LogList;
+				viewModel = null;
 				window = null;
+				CastUtility.AsAction<ILogAppender>(CommonData.Logger, appAppender => {
+					var detail = string.Join(Environment.NewLine, log.Where(l => l != null).Select(l => l.ToString()));
+					CommonData.Logger.Information(CommonData.Language["log/auto-regist/message"], detail);
+				});
 			});
+
+			return isAppReload;
 		}
 
 		void ExitApplication(bool saveSetting, bool gc)
