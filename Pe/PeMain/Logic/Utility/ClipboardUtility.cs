@@ -162,7 +162,7 @@
 		{
 			if(-1 < range.Head && -1 < range.Tail && range.Head <= range.Tail) {
 				var raw = rawHtml.Skip(range.Head).Take(range.Tail - range.Head);
-				return Encoding.UTF8.GetString(raw.ToArray());
+				return encoding.GetString(raw.ToArray());
 			}
 
 			return null;
@@ -227,7 +227,7 @@
 			}
 
 			var rawHtml = Encoding.UTF8.GetBytes(rawClipboardHtml);
-			result.HtmlText = ConvertStringFromDefaultRawHtml(result.Html, rawHtml); ;
+			result.HtmlText = ConvertStringFromDefaultRawHtml(result.Html, rawHtml);
 			result.FragmentText = ConvertStringFromDefaultRawHtml(result.Fragment, rawHtml);
 			result.SelectionText = ConvertStringFromDefaultRawHtml(result.Selection, rawHtml);
 

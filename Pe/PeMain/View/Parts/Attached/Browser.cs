@@ -2,6 +2,7 @@
 {
 	using System;
 	using System.Collections.Generic;
+	using System.IO;
 	using System.Linq;
 	using System.Text;
 	using System.Threading.Tasks;
@@ -34,8 +35,15 @@
 		static void OnHtmlChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
 		{
 			WebBrowser webBrowser = dependencyObject as WebBrowser;
-			if(webBrowser != null)
-				webBrowser.NavigateToString(e.NewValue as string ?? "&nbsp;");
+			if(webBrowser != null) {
+				var bom =new byte[] { 0xef, 0xbb, 0xbf};
+				var buffer = Encoding.UTF8.GetBytes(e.NewValue as string ?? "&nbsp;");
+				var stream = new MemoryStream();
+				stream.Write(bom, 0, bom.Length);
+				stream.Write(buffer, 0, buffer.Length);
+				stream.Seek(0, SeekOrigin.Begin);
+				webBrowser.NavigateToStream(stream);
+			}
 		}
 	}
 }
