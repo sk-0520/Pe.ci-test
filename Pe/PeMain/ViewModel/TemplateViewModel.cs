@@ -172,11 +172,17 @@
 							return;
 						}
 
+						var index = IndexPairList.ViewModelList.IndexOf(nowViewModel);
+
 						IndexPairList.Remove(nowViewModel);
 						AppSender.SendRemoveIndex(IndexKind.Template, nowViewModel.Model.Id);
-						
-						//IndexModel.Items.Remove(nowViewModel.Model);
-						//IndexItems.Remove(nowViewModel);
+
+						if(IndexPairList.Any()) {
+							while(IndexPairList.ViewModelList.Count <= index) {
+								index -= 1;
+							}
+							SelectedViewModel = IndexPairList.ViewModelList[index];
+						}
 					}
 				);
 

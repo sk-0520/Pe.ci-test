@@ -184,7 +184,7 @@
 		<Item Id="clipboard/files/path" Word="パス" />
 		<Item Id="clipboard/save-count" Word="保存対象件数" />
 		<Item Id="clipboard/save-count/all" Word="全件" />
-		<Item Id="clipboard/save" Word="保存" />
+		<Item Id="clipboard/save" Word="ファイルに保存" />
 		<Item Id="clipboard/remove" Word="削除" />
 		<Item Id="clipboard/clear" Word="クリップボードを削除" />
 		<Item Id="clipboard/topmost" Word="最前面" />
@@ -199,7 +199,7 @@
 		<Item Id="clipboard/item/name" Word="クリップボード名" />
 		
 		<Item Id="template/create" Word="新規作成" />
-		<Item Id="template/save" Word="保存" />
+		<Item Id="template/save" Word="ファイルに保存" />
 		<Item Id="template/remove" Word="削除" />
 		<Item Id="template/topmost" Word="最前面" />
 		<Item Id="template/using-clipboard" Word="クリップボード経由の転送" />

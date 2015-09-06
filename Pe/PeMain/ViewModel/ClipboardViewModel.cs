@@ -148,8 +148,17 @@
 							return;
 						}
 
+						var index = IndexPairList.ViewModelList.IndexOf(nowViewModel);
+
 						IndexPairList.Remove(nowViewModel);
 						AppSender.SendRemoveIndex(IndexKind.Clipboard, nowViewModel.Model.Id);
+
+						if(IndexPairList.Any()) {
+							while(IndexPairList.ViewModelList.Count <= index) {
+								index -= 1;
+							}
+							SelectedViewModel = IndexPairList.ViewModelList[index];
+						}
 					}
 				);
 
