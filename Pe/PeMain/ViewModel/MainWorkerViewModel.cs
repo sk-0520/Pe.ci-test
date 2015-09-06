@@ -251,12 +251,12 @@
 								var notifiy = window.ViewModel.SettingNotifiyItem;
 
 								Debug.Assert(notifiy.StartupRegist.HasValue);
-								var startuoPath = Environment.ExpandEnvironmentVariables(Constants.startupShortcutPath);
+								var startupPath = Environment.ExpandEnvironmentVariables(Constants.StartupShortcutPath);
 								if(notifiy.StartupRegist.Value) {
-									AppUtility.MakeAppShortcut(startuoPath);
+									AppUtility.MakeAppShortcut(startupPath);
 								} else {
-									if(File.Exists(startuoPath)) {
-										File.Delete(startuoPath);
+									if(File.Exists(startupPath)) {
+										File.Delete(startupPath);
 									}
 								}
 
@@ -500,14 +500,54 @@
 			}
 		}
 
+		public ICommand ShowHomeWindowCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						if(!IsPause) {
+							var dialogResult = ShowHomeDialog();
+							if(dialogResult) {
+								ResetToolbar();
+							}
+						}
+					}
+				);
+
+				return result;
+			}
+		}
+
 		#endregion
 
 		#region function
 
+		bool ShowHomeDialog()
+		{
+			var isAppReload = false;
+			PausingBasicAction(() => {
+				var window = new HomeWindow();
+				window.SetCommonData(CommonData, null);
+				window.ShowDialog();
+				var viewModel = window.ViewModel;
+				isAppReload = viewModel.IsAppReload;
+				var log = viewModel.LogList;
+				viewModel = null;
+				window = null;
+				CastUtility.AsAction<ILogAppender>(CommonData.Logger, appAppender => {
+					var detail = string.Join(Environment.NewLine, log.Where(l => l != null).Select(l => l.ToString()));
+					CommonData.Logger.Information(CommonData.Language["log/auto-regist/message"], detail);
+				});
+			});
+
+			return isAppReload;
+		}
+
 		void ExitApplication(bool saveSetting, bool gc)
 		{
 #if DEBUG
-			var startupPath = Environment.ExpandEnvironmentVariables(Constants.startupShortcutPath);
+			var startupPath = Environment.ExpandEnvironmentVariables(Constants.StartupShortcutPath);
 			if (File.Exists(startupPath)) {
 				File.Delete(startupPath);
 			}

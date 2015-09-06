@@ -56,7 +56,7 @@
 			get
 			{
 				if (!SettingNotifiyItem.StartupRegist.HasValue) {
-					var path = Environment.ExpandEnvironmentVariables(Constants.startupShortcutPath);
+					var path = Environment.ExpandEnvironmentVariables(Constants.StartupShortcutPath);
 					SettingNotifiyItem.StartupRegist = File.Exists(path);
 				}
 

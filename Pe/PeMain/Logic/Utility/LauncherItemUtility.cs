@@ -101,16 +101,16 @@
 			return result;
 		}
 
-		public static LauncherItemModel CreateFromFile(string path, bool loadShortcut)
+		public static LauncherItemModel CreateFromFile(string path, bool loadShortcut, INonProcess nonProcess)
 		{
 			var expandedPath = Environment.ExpandEnvironmentVariables(path);
 
 			var isProgram = PathUtility.IsProgram(expandedPath);
 			var isShortCut = PathUtility.IsShortcut(expandedPath);
 
-			var result = new LauncherItemModel() {
-				LauncherKind = LauncherKind.File,
-			};
+			var result = new LauncherItemModel();
+			SettingUtility.InitializeLauncherItem(result, null, nonProcess);
+			result.LauncherKind = LauncherKind.File;
 
 			if (loadShortcut && PathUtility.IsShortcut(expandedPath)) {
 				using(var shortcut = new ShortcutFile(expandedPath)) {

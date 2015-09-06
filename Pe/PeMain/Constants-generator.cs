@@ -21,7 +21,7 @@
 		/*
 		このソースは自動生成のため Constants-generator.tt を編集すること。
 
-		生成元ConstantsPropertyフィールド数: 2
+		生成元ConstantsPropertyフィールド数: 4
 		生成元ConstantsRangeフィールド数: 16
 		*/
 
@@ -33,6 +33,28 @@
 			get
 			{
 				return acceptVersion;
+			}
+		}
+
+		#endregion
+		#region formsVersion
+
+		public static Version FormsVersion
+		{
+			get
+			{
+				return formsVersion;
+			}
+		}
+
+		#endregion
+		#region startupShortcutPath
+
+		public static String StartupShortcutPath
+		{
+			get
+			{
+				return startupShortcutPath;
 			}
 		}
 

@@ -147,6 +147,7 @@
     </Compile>
     <Compile Include="Data\Temporary\AboutNotifiyItem.cs" />
     <Compile Include="Data\Temporary\ItemWithScreen.cs" />
+    <Compile Include="Data\Temporary\LauncherGroupAndItems.cs" />
     <Compile Include="Data\Temporary\LauncherItemWithScreen.cs" />
     <Compile Include="Define\WindowSaveType.cs" />
     <Compile Include="Logic\Updater.cs" />
@@ -180,6 +181,7 @@
     <Compile Include="ViewModel\CommandViewModel.cs" />
     <Compile Include="ViewModel\ComponentItemViewModel.cs" />
     <Compile Include="ViewModel\Control\LauncherListItemViewModel.cs" />
+    <Compile Include="ViewModel\HomeViewModel.cs" />
     <Compile Include="ViewModel\ScreenViewModel.cs" />
     <Compile Include="ViewModel\TemplateKeywordViewModel.cs" />
     <Compile Include="ViewModel\UpdateConfirmViewModel.cs" />
@@ -396,6 +398,9 @@
     <Compile Include="View\Parts\Converter\ToolbarDockTypeImageConverter.cs" />
     <Compile Include="View\Parts\Converter\TreeListLauncherItemRelationConverter.cs" />
     <Compile Include="View\Parts\EnumList.cs" />
+    <Compile Include="View\HomeWindow.xaml.cs">
+      <DependentUpon>HomeWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Parts\ViewExtend\CaptionCursorHitTest.cs" />
     <Compile Include="View\Parts\ViewExtend\CaptionDoubleClick.cs" />
     <Compile Include="View\Parts\ViewExtend\WidthResizeHitTest.cs" />
@@ -564,6 +569,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Parts\Control\TimeSliderControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\HomeWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
