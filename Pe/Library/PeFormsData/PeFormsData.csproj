@@ -58,8 +58,10 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FormsConverter.cs" />
     <Compile Include="Data\ClipboardSetting.cs" />
     <Compile Include="Data\ColorItem.cs" />
     <Compile Include="Data\CommandSetting.cs" />
@@ -110,7 +112,18 @@
     <Compile Include="Utility\Functions.cs" />
     <Compile Include="Utility\IconPath.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\PInvoke\PInvoke.csproj">
+      <Project>{13a7d6df-6702-49cb-86f1-0980a3c1d6c6}</Project>
+      <Name>PInvoke</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\SharedLibrary\SharedLibrary.csproj">
+      <Project>{9e8e373e-cd97-411d-8c45-10ac4a86cae8}</Project>
+      <Name>SharedLibrary</Name>
+      <Private>False</Private>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -13,9 +13,13 @@
 	using System.IO;
 	using System.Xml.Serialization;
 	using ContentTypeTextNet.Pe.Library.PeData.Setting;
-using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
 	using ContentTypeTextNet.Pe.PeMain.Kind;
+	using System.Windows.Input;
+	using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
+	using ContentTypeTextNet.Library.SharedLibrary.CompatibleForms.Utility;
+	//using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
 
 	internal static class ConvertFormsSetting
 	{
@@ -93,10 +97,20 @@ using ContentTypeTextNet.Library.SharedLibrary.IF;
 			dstSetting.WindowHeight = srcSetting.Size.Height;
 		}
 
+		private static void ConvertSystemEnvironmentSetting(SystemEnvironmentSettingModel dstSetting, Data.SystemEnvironmentSetting srcSetting, INonProcess nonProcess)
+		{
+			dstSetting.ExtensionHotkey.Key = FormsConverter.GetKey(srcSetting.ExtensionShowHotKey);
+			dstSetting.ExtensionHotkey.ModifierKeys = FormsConverter.GetModifierKeys(srcSetting.ExtensionShowHotKey);
+
+			dstSetting.HideFileHotkey.Key = FormsConverter.GetKey(srcSetting.HiddenFileShowHotKey);
+			dstSetting.HideFileHotkey.ModifierKeys = FormsConverter.GetModifierKeys(srcSetting.HiddenFileShowHotKey);
+		}
+
 		static void ConvertMainSetting(MainSettingModel dstMainSetting, Data.MainSetting srcMainSetting, INonProcess nonProcess)
 		{
 			ConvertRunningSetting(dstMainSetting.RunningInformation, srcMainSetting.Running, nonProcess);
 			ConvertLoggingSetting(dstMainSetting.Logging, srcMainSetting.Log, nonProcess);
+			ConvertSystemEnvironmentSetting(dstMainSetting.SystemEnvironment, srcMainSetting.SystemEnvironment, nonProcess);
 		}
 
 	}
