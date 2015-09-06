@@ -153,6 +153,15 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 			dstSetting.WindowWidth = srcSetting.Width;
 		}
 
+		static void ConvertNoteSetting(NoteSettingModel dstSetting, Data.NoteSetting srcSetting, INonProcess nonProcess)
+		{
+			ConvertFont(dstSetting.Font, srcSetting.CaptionFontSetting);
+			ConvertHotKey(dstSetting.CreateHotKey, srcSetting.CreateHotKey);
+			ConvertHotKey(dstSetting.CompactHotKey, srcSetting.CompactHotKey);
+			ConvertHotKey(dstSetting.HideHotKey, srcSetting.HiddenHotKey);
+			ConvertHotKey(dstSetting.ShowFrontHotKey, srcSetting.ShowFrontHotKey);
+		}
+
 		static void ConvertMainSetting(MainSettingModel dstMainSetting, Data.MainSetting srcMainSetting, INonProcess nonProcess)
 		{
 			ConvertRunningSetting(dstMainSetting.RunningInformation, srcMainSetting.Running, nonProcess);
@@ -161,6 +170,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 			ConvertWindowSaveSetting(dstMainSetting.WindowSave, srcMainSetting, nonProcess);
 			ConvertSteamSetting(dstMainSetting.Stream, srcMainSetting.Stream, nonProcess);
 			ConvertCommandSetting(dstMainSetting.Command, srcMainSetting.Command, nonProcess);
+			ConvertNoteSetting(dstMainSetting.Note, srcMainSetting.Note, nonProcess);
 			
 		}
 
