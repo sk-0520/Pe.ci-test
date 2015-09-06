@@ -243,8 +243,10 @@
 			}
 			if(HasView) {
 				View.Dispatcher.BeginInvoke(new Action(() => {
-					View.listLog.SelectedItem = item;
-					View.listLog.ScrollIntoView(View.listLog.SelectedItem);
+					if(!View.IsActive) {
+						View.listLog.SelectedItem = item;
+						View.listLog.ScrollIntoView(View.listLog.SelectedItem);
+					}
 				}));
 			}
 		}

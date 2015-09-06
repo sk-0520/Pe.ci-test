@@ -1746,6 +1746,10 @@
 								};
 								SendSaveIndexBody(clipboardData.Body, index.Id, Timing.Delay);
 								Clipboard.IndexPairList.Add(index, null);
+								if(!ClipboardWindow.IsActive) {
+									ClipboardWindow.listItems.SelectedItem = ClipboardWindow.listItems.Items[0];
+									ClipboardWindow.listItems.ScrollIntoView(ClipboardWindow.listItems.SelectedItem);
+								}
 							} catch (Exception ex) {
 								CommonData.Logger.Error(ex);
 							}
