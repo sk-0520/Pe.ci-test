@@ -15,6 +15,7 @@
 	using ContentTypeTextNet.Pe.Library.PeData.Setting;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
+	using ContentTypeTextNet.Pe.PeMain.Kind;
 
 	internal static class ConvertFormsSetting
 	{
@@ -69,18 +70,33 @@ using ContentTypeTextNet.Library.SharedLibrary.IF;
 		}
 
 
-		static void ConvertRunningSetting(RunningInformationSettingModel dstRunningSetting, Data.RunningSetting srcRunningSetting, INonProcess nonProcess)
+		static void ConvertRunningSetting(RunningInformationSettingModel dstSetting, Data.RunningSetting srcSetting, INonProcess nonProcess)
 		{
-			dstRunningSetting.Accept = srcRunningSetting.Running;
-			dstRunningSetting.CheckUpdateRelease = srcRunningSetting.CheckUpdate;
-			dstRunningSetting.CheckUpdateRC = srcRunningSetting.CheckUpdateRC;
-			dstRunningSetting.LastExecuteVersion = new Version(srcRunningSetting.VersionMajor, srcRunningSetting.VersionMinor, srcRunningSetting.VersionBuild, srcRunningSetting.VersionRevision);
-			dstRunningSetting.ExecuteCount = srcRunningSetting.ExecuteCount;
+			dstSetting.Accept = srcSetting.Running;
+			dstSetting.CheckUpdateRelease = srcSetting.CheckUpdate;
+			dstSetting.CheckUpdateRC = srcSetting.CheckUpdateRC;
+			dstSetting.LastExecuteVersion = new Version(srcSetting.VersionMajor, srcSetting.VersionMinor, srcSetting.VersionBuild, srcSetting.VersionRevision);
+			dstSetting.ExecuteCount = srcSetting.ExecuteCount;
+		}
+
+		static void ConvertLoggingSetting(LoggingSettingModel dstSetting, Data.LogSetting srcSetting, INonProcess nonProcess)
+		{
+			dstSetting.AddShow = srcSetting.AddShow;
+			dstSetting.ShowTriggerDebug = srcSetting.AddShowTrigger.HasFlag(LogType.Debug);
+			dstSetting.ShowTriggerInformation = srcSetting.AddShowTrigger.HasFlag(LogType.Information);
+			dstSetting.ShowTriggerWarning = srcSetting.AddShowTrigger.HasFlag(LogType.Warning);
+			dstSetting.ShowTriggerError = srcSetting.AddShowTrigger.HasFlag(LogType.Error);
+			dstSetting.IsVisible = srcSetting.Visible;
+			dstSetting.WindowLeft = srcSetting.Point.X;
+			dstSetting.WindowTop = srcSetting.Point.Y;
+			dstSetting.WindowWidth = srcSetting.Size.Width;
+			dstSetting.WindowHeight = srcSetting.Size.Height;
 		}
 
 		static void ConvertMainSetting(MainSettingModel dstMainSetting, Data.MainSetting srcMainSetting, INonProcess nonProcess)
 		{
 			ConvertRunningSetting(dstMainSetting.RunningInformation, srcMainSetting.Running, nonProcess);
+			ConvertLoggingSetting(dstMainSetting.Logging, srcMainSetting.Log, nonProcess);
 		}
 
 	}
