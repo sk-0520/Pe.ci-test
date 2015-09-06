@@ -31,6 +31,10 @@
 		/// </summary>
 		[PixelKind(Px.Device)]
 		public Rect WindowArea { get; set; }
+		/// <summary>
+		/// ウィンドウ状態。
+		/// </summary>
+		public WindowState WindowState { get;set;}
 
 		#region IName
 

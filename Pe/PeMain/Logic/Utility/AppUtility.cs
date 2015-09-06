@@ -24,6 +24,7 @@ using ContentTypeTextNet.Pe.Library.PeData.Item;
 	using ContentTypeTextNet.Library.PInvoke.Windows;
 	using ContentTypeTextNet.Library.SharedLibrary.CompatibleWindows.Utility;
 	using ContentTypeTextNet.Pe.PeMain.Define;
+	using System.Windows;
 
 	public static class AppUtility
 	{
@@ -197,7 +198,11 @@ using ContentTypeTextNet.Pe.Library.PeData.Item;
 			return launcherIconCaching[iconScale].Get(launcherItem, () => LauncherItemUtility.GetIcon(launcherItem, iconScale, nonProcess));
 		}
 
-
+		/// <summary>
+		/// ウィンドウ一覧の取得。
+		/// </summary>
+		/// <param name="getAppWindow">自身のウィンドウも取得対象とするか。</param>
+		/// <returns></returns>
 		public static IList<WindowItemModel> GetSystemWindowList(bool getAppWindow)
 		{
 			// http://msdn.microsoft.com/en-us/library/windows/desktop/ms633574(v=vs.85).aspx
@@ -240,11 +245,25 @@ using ContentTypeTextNet.Pe.Library.PeData.Item;
 				NativeMethods.GetWindowText(hWnd, titleBuffer, titleBuffer.Capacity);
 				var rawRect = new RECT();
 				NativeMethods.GetWindowRect(hWnd, out rawRect);
+				var isZoomed = NativeMethods.IsZoomed(hWnd);
+				var isIconic = NativeMethods.IsIconic(hWnd);
+				WindowState windowState;
+				if(isZoomed || isIconic) {
+					if(isZoomed) {
+						windowState = WindowState.Maximized;
+					} else {
+						Debug.Assert(isIconic);
+						windowState = WindowState.Minimized;
+					}
+				} else {
+					windowState = WindowState.Normal;
+				}
 				var windowItem = new WindowItemModel() {
 					Name = titleBuffer.ToString(),
 					Process = process,
 					WindowHandle = hWnd,
 					WindowArea = PodStructUtility.Convert(rawRect),
+					WindowState = windowState,
 				};
 				windowItemList.Add(windowItem);
 				return true;
