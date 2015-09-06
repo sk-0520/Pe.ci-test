@@ -1135,7 +1135,7 @@
 		{
 
 			var updateData = new Updater(CommonData.VariableConstants.UserArchiveDirectoryPath, CommonData.MainSetting.RunningInformation.CheckUpdateRC, CommonData);
-			CommonData.Logger.Debug(CommonData.Language["log/update/check"], string.Format("force = {0}, setting = {1}", force, CommonData.MainSetting.RunningInformation.CheckUpdateRelease));
+			CommonData.Logger.Information(CommonData.Language["log/update/check"], string.Format("force = {0}, setting = {1}", force, CommonData.MainSetting.RunningInformation.CheckUpdateRelease));
 			if(force || !IsPause && this.CommonData.MainSetting.RunningInformation.CheckUpdateRelease) {
 				var updateInfo = updateData.Check();
 			}
