@@ -572,11 +572,22 @@
 			View.PreviewTrayContextMenuOpen += View_PreviewTrayContextMenuOpen;
 		}
 
-		void LoadSetting()
+		/// <summary>
+		/// 各種設定の読み込み。
+		/// </summary>
+		/// <returns>本体設定が存在せず、Forms版での設定ファイルが存在する場合は偽、それ以外は真。</returns>
+		bool LoadSetting()
 		{
 			using(var timeLogger = CommonData.NonProcess.CreateTimeLogger()) {
 				// 各種設定の読込
-				CommonData.MainSetting = AppUtility.LoadSetting<MainSettingModel>(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingMainSettingFilePath), Constants.fileTypeMainSetting, CommonData.Logger);
+				var mainSettingPath = Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingMainSettingFilePath);
+				if(!File.Exists(mainSettingPath)) {
+					var formsMainSettingPath = Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.FormsUserSettingMainSettinFilePath);
+					if(File.Exists(formsMainSettingPath)) {
+						return false;
+					}
+				}
+				CommonData.MainSetting = AppUtility.LoadSetting<MainSettingModel>(mainSettingPath, Constants.fileTypeMainSetting, CommonData.Logger);
 				ApplyLanguage();
 				CommonData.LauncherItemSetting = AppUtility.LoadSetting<LauncherItemSettingModel>(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingLauncherItemSettingFilePath), Constants.fileTypeLauncherItemSetting, CommonData.Logger);
 				CommonData.LauncherGroupSetting = AppUtility.LoadSetting<LauncherGroupSettingModel>(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingLauncherGroupItemSettingFilePath), Constants.fileTypeLauncherGroupSetting, CommonData.Logger);
@@ -584,6 +595,8 @@
 				CommonData.NoteIndexSetting = AppUtility.LoadSetting<NoteIndexSettingModel>(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingNoteIndexFilePath), Constants.fileTypeNoteIndex, CommonData.Logger);
 				CommonData.ClipboardIndexSetting = AppUtility.LoadSetting<ClipboardIndexSettingModel>(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingClipboardIndexFilePath), Constants.fileTypeTemplateIndex, CommonData.Logger);
 				CommonData.TemplateIndexSetting = AppUtility.LoadSetting<TemplateIndexSettingModel>(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingTemplateIndexFilePath), Constants.fileTypeClipboardIndex, CommonData.Logger);
+
+				return true;
 			}
 		}
 
@@ -645,7 +658,10 @@
 		{
 			using(var timeLogger = CommonData.NonProcess.CreateTimeLogger()) {
 
-				LoadSetting();
+				var isLoaded = LoadSetting();
+				if(!isLoaded) {
+					// Forms版からのデータ変換
+				}
 				// 前回バージョンが色々必要なのでインクリメント前の生情報を保持しておく。
 				var previousVersion = (Version)CommonData.MainSetting.RunningInformation.LastExecuteVersion;
 				ResetCulture(CommonData.NonProcess);

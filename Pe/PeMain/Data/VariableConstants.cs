@@ -75,6 +75,7 @@
 		/// ユーザー設定ディレクトリ。
 		/// </summary>
 		public string UserSettingDirectoryPath { get { return Path.Combine(UserDirectoryPath, Constants.settingDirectoryName); } }
+
 		/// <summary>
 		/// ログ保存ディレクトリ。
 		/// </summary>
@@ -87,6 +88,9 @@
 		/// アーカイブディレクトリ。
 		/// </summary>
 		public string UserArchiveDirectoryPath { get { return Path.Combine(UserDirectoryPath, Constants.archiveDirectoryName); } }
+
+		public string FormsUserSettingMainSettinFilePath { get { return Path.Combine(UserDirectoryPath, Constants.formsMainSettingFileName); } }
+		public string FormsUserSettingLauncherItemsSettinFilePath { get { return Path.Combine(UserDirectoryPath, Constants.formsLauncherItemsSettingFileName); } }
 
 		public string UserSettingMainSettingFilePath { get { return Path.Combine(UserSettingDirectoryPath, this._mainSettingFileName); } }
 

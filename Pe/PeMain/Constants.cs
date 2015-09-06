@@ -64,6 +64,9 @@
 		public const string backupDirectoryName = "backup";
 		public const string archiveDirectoryName = "archive";
 
+		public const string formsMainSettingFileName = "mainsetting.xml";
+		public const string formsLauncherItemsSettingFileName = "launcher-items.xml";
+
 		public const string mainSettingFileName = "main-setting.json";
 		public const string launcherItemSettingFileName = "launcher-items.json";
 		public const string launcherGroupItemSettingFileName = "group-items.json";
