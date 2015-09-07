@@ -21,6 +21,10 @@
 		static void V_Last(LauncherItemModel item, Version previousVersion, INonProcess nonProcess)
 		{
 			item.LauncherKind = EnumUtility.GetNormalization(item.LauncherKind, LauncherKind.File);
+			// あるだけ
+			if (item.LauncherKind == LauncherKind.Directory) {
+				item.LauncherKind = LauncherKind.File;
+			}
 
 			if(SettingUtility.IsIllegalString(item.Command)) {
 				item.Command = string.Empty;

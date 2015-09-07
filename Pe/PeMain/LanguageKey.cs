@@ -74,8 +74,11 @@
 		public const string logClipboardWaitTimeSetting = "LOG-CLIP-WAIT_TIME-SETTING";
 		public const string logClipboardWaitTimeWait = "LOG-CLIP-WAIT_TIME-WAIT";
 		public const string logWindowSaveType = "LOG-WINDOW-SAVE-TYPE";
-		
 
+		public const string formsConvertLauncherItemName = "FORMS-CONVERT-LAUNCHER-ITEM-NAME";
+		public const string formsConvertLauncherItemType = "FORMS-CONVERT-LAUNCHER-ITEM-TYPE";
+		public const string formsConvertLauncherItemTypeFile = "FORMS-CONVERT-LAUNCHER-ITEM-TYPE:FILE";
+		
 		#endregion
 	}
 }

@@ -22,6 +22,7 @@
 using ContentTypeTextNet.Pe.Library.PeData.Item;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 	using System.Windows;
+	using ContentTypeTextNet.Pe.Library.PeData.Define;
 
 	internal static class ConvertFormsSetting
 	{
@@ -85,6 +86,41 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 		{
 			var raw = (int)src;
 			return (ContentTypeTextNet.Library.SharedLibrary.Define.IconScale)raw;
+		}
+
+		static LauncherItemModel ConvertLauncherItem(Data.LauncherItem srcItem, INonProcess nonProcess)
+		{
+			var dstItem = new LauncherItemModel();
+			SettingUtility.InitializeLauncherItem(dstItem, null, nonProcess);
+
+			var launcherTypeMap = new Dictionary<LauncherType, LauncherKind>() {
+				{ LauncherType.File, LauncherKind.File },
+				{ LauncherType.Directory, LauncherKind.File },
+				{ LauncherType.Command, LauncherKind.Command },
+			};
+
+			dstItem.Name = srcItem.Name;
+			LauncherKind outLauncherKind;
+			if(launcherTypeMap.TryGetValue(srcItem.LauncherType, out outLauncherKind)) {
+				if (srcItem.LauncherType == LauncherType.Directory) {
+					var map = new Dictionary<string, string>() {
+						{ LanguageKey.formsConvertLauncherItemName, srcItem.Name },
+						{ LanguageKey.formsConvertLauncherItemType, srcItem.LauncherType.ToString() },
+						{ LanguageKey.formsConvertLauncherItemTypeFile, LanguageUtility.GetTextFromEnum(outLauncherKind, nonProcess.Language) },
+					};
+					nonProcess.Logger.Warning(nonProcess.Language["forms-convert/launcher-item/LauncherType/dir-file-convert", map], srcItem);
+				}
+				dstItem.LauncherKind = outLauncherKind;
+			} else {
+				var map = new Dictionary<string, string>() {
+					{ LanguageKey.formsConvertLauncherItemName, srcItem.Name },
+					{ LanguageKey.formsConvertLauncherItemType, srcItem.LauncherType.ToString() },
+				};
+				nonProcess.Logger.Warning(nonProcess.Language["forms-convert/launcher-item/LauncherType/not-support", map], srcItem);
+				return null;
+			}
+
+			return dstItem;
 		}
 
 		#endregion
@@ -223,6 +259,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 			ConvertTemplateSetting(dstMainSetting.Template, srcMainSetting.Clipboard, nonProcess);
 		}
 
+
 		/// <summary>
 		/// ツールバー設定、ランチャーアイテム、グループのGuidがかかわる部分を変換。
 		/// </summary>
@@ -232,7 +269,17 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 		/// <param name="nonProcess"></param>
 		static void ConvertLauncherItems(ToolbarSettingModel dstToolbarSetting, LauncherGroupSettingModel dstLauncherGroupSetting, LauncherItemSettingModel dstLauncherItemSetting, Data.ToolbarSetting srcToolbarSetting, HashSet<Data.LauncherItem> srcLauncherItems, INonProcess nonProcess)
 		{
-			//throw new NotImplementedException();
+			// ランチャーアイテム変換とそのマッピング
+			var items = new Dictionary<Data.LauncherItem, LauncherItemModel>();
+			foreach (var srcItem in srcLauncherItems) {
+				var dstItem = ConvertLauncherItem(srcItem, nonProcess);
+				items[srcItem] = dstItem;
+			}
+
+
+			// グループ変換とそのマッピング
+			var groups = new Dictionary<Data.ToolbarGroupItem, LauncherGroupItemModel>();
+
 		}
 	}
 }

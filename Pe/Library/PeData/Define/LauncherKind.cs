@@ -15,10 +15,12 @@
 		/// 何かのファイル。
 		/// </summary>
 		File,
-		///// <summary>
-		///// ディレクトリ。
-		///// </summary>
-		//Directory,
+		/// <summary>
+		/// ディレクトリ。
+		/// <para>作っとくだけで使わない。</para>
+		/// TODO: どうしようかねー。
+		/// </summary>
+		Directory,
 		/// <summary>
 		/// コマンド。
 		/// </summary>
