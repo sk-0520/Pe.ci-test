@@ -108,7 +108,9 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 						{ LanguageKey.formsConvertLauncherItemType, srcItem.LauncherType.ToString() },
 						{ LanguageKey.formsConvertLauncherItemTypeFile, LanguageUtility.GetTextFromEnum(outLauncherKind, nonProcess.Language) },
 					};
-					nonProcess.Logger.Warning(nonProcess.Language["forms-convert/launcher-item/LauncherType/dir-file-convert", map], srcItem);
+					var message = nonProcess.Language["forms-convert/launcher-item/LauncherType/dir-file-convert/message"];
+					var detail = nonProcess.Language["forms-convert/launcher-item/LauncherType/dir-file-convert/detail", map];
+					nonProcess.Logger.Warning(message, detail);
 				}
 				dstItem.LauncherKind = outLauncherKind;
 			} else {
@@ -116,7 +118,10 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 					{ LanguageKey.formsConvertLauncherItemName, srcItem.Name },
 					{ LanguageKey.formsConvertLauncherItemType, srcItem.LauncherType.ToString() },
 				};
-				nonProcess.Logger.Warning(nonProcess.Language["forms-convert/launcher-item/LauncherType/not-support", map], srcItem);
+				var message = nonProcess.Language["forms-convert/launcher-item/LauncherType/not-support/message"];
+				var detail = nonProcess.Language["forms-convert/launcher-item/LauncherType/not-support/detail", map];
+				nonProcess.Logger.Warning(message, detail);
+
 				return null;
 			}
 

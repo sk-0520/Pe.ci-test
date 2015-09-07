@@ -254,12 +254,14 @@
 
 		public static string GetTextFromEnum(Type type, object value, ILanguage language)
 		{
+			// 何やってんだこれ...
 			var map = new Dictionary<Type, Func<string>>() {
 				{ typeof(DockType), () => GetTextFromDockType((DockType)value, language) },
 				{ typeof(IconScale), () => GetTextFromIconScale((IconScale)value, language) },
 				{ typeof(ClipboardType), () => GetTextFromClipboardType((ClipboardType)value, language) },
 				{ typeof(TemplateReplaceMode), () => GetTextFromTemplateReplaceMode((TemplateReplaceMode)value, language) },
 				{ typeof(WindowSaveType), () => GetTextFromEnum_Impl((WindowSaveType)value, language) },
+				{ typeof(LauncherKind), () => GetTextFromEnum_Impl((LauncherKind)value, language) },
 			};
 
 			Func<string> getText;

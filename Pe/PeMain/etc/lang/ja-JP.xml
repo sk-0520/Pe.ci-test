@@ -542,9 +542,17 @@
 		<Item Id="enum/WindowSaveType/Timer"     Word="タイマー" />
 		<Item Id="enum/WindowSaveType/System"    Word="環境変更" />
 		
+		<Item Id="enum/LauncherKind/File"      Word="ファイル" />
+		<Item Id="enum/LauncherKind/Directory" Word="##Directory##" />
+		<Item Id="enum/LauncherKind/Command"   Word="コマンド" />
+		
+		
+		
 		<!-- 変換 -->
-		<Item Id="forms-convert/launcher-item/LauncherType/dir-file-convert"  Word="@[FORMS-CONVERT-LAUNCHER-ITEM-NAME]の種別@[FORMS-CONVERT-LAUNCHER-ITEM-TYPE]は@[FORMS-CONVERT-LAUNCHER-ITEM-TYPE:FILE]に変換" />
-		<Item Id="forms-convert/launcher-item/LauncherType/not-support"       Word="@[FORMS-CONVERT-LAUNCHER-ITEM-NAME]の種別@[FORMS-CONVERT-LAUNCHER-ITEM-TYPE]は未サポートのため除外" />
+		<Item Id="forms-convert/launcher-item/LauncherType/dir-file-convert/message"  Word="旧バージョン変換: ランチャーの種類変更" />
+		<Item Id="forms-convert/launcher-item/LauncherType/dir-file-convert/detail"   Word="@[FORMS-CONVERT-LAUNCHER-ITEM-NAME]の種別@[FORMS-CONVERT-LAUNCHER-ITEM-TYPE]は@[FORMS-CONVERT-LAUNCHER-ITEM-TYPE:FILE]に変換" />
+		<Item Id="forms-convert/launcher-item/LauncherType/not-support/message"       Word="旧バージョン変換: 未サポート" />
+		<Item Id="forms-convert/launcher-item/LauncherType/not-support/detail"        Word="@[FORMS-CONVERT-LAUNCHER-ITEM-NAME]の種別@[FORMS-CONVERT-LAUNCHER-ITEM-TYPE]は未サポートのため除外" />
 		
 		
 	</Words>
