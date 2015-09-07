@@ -100,17 +100,13 @@
 		{
 			get
 			{
-				var index = 1;
+				bool skipGroupCheck = false;
 				foreach(var model in ToolbarSetting.Items) {
 					var vm = new ToolbarViewModel(model, GroupSettingModel.Groups, AppNonProcess);
-					if(vm.DefaultGroupId != Guid.Empty) {
-						DefaultGroupIndex = DefaultGroupList
-							.Select((g, i) => new { Id = g.Id, Index = i })
-							.FirstOrDefault(p => vm.DefaultGroupId == p.Id)
-							.Index
-						;
+					if(!skipGroupCheck && vm.DefaultGroupId != Guid.Empty) {
+						CallOnPropertyChangeDefaultGroupList(vm.DefaultGroupId);
+						skipGroupCheck = true;
 					}
-					index += 1;
 					yield return vm;
 				}
 			}
@@ -217,6 +213,7 @@
 						//OnPropertyChanged("DefaultGroupList");
 						//SelectedToolbar.DefaultGroupId
 						//OnPropertyChangeDefaultGroupList(SelectedToolbar.DefaultGroupId)
+						CallOnPropertyChangeDefaultGroupList(SelectedToolbar.DefaultGroupId);
 					}
 				);
 
@@ -306,7 +303,7 @@
 							GroupSettingModel.Groups.Remove(groupModel);
 							this._groupTree.Remove(groupViewModel);
 
-							OnPropertyChangeDefaultGroupList(groupViewModel.Id);
+							CallOnPropertyChangeDefaultGroupListFromRemove(groupViewModel.Id);
 
 						} else {
 							Debug.Assert(toolbarNode.ToolbarNodeKind == ToolbarNodeKind.Item);
@@ -426,6 +423,7 @@
 				GroupSettingModel.Groups.Insert(nextIndex, groupModel);
 				this._groupTree.Remove(groupViewModel);
 				this._groupTree.Insert(nextIndex, groupViewModel);
+				CallOnPropertyChangeDefaultGroupList(SelectedToolbar.DefaultGroupId);
 			} else {
 				Debug.Assert(toolbarNode.ToolbarNodeKind == ToolbarNodeKind.Item);
 				var itemViewModel = (GroupItemViewMode)toolbarNode;
@@ -453,7 +451,7 @@
 			toolbarNode.IsSelected = true;
 		}
 
-		private void OnPropertyChangeDefaultGroupList(Guid prevDefaultId)
+		private void CallOnPropertyChangeDefaultGroupListFromRemove(Guid prevDefaultId)
 		{
 			OnPropertyChanged("DefaultGroupList");
 			if(SelectedToolbar.DefaultGroupId == Guid.Empty) {
@@ -465,6 +463,16 @@
 				OnPropertyChanged("DefaultGroupId");
 			}
 			//OnPropertyChanged("DefaultGroupList");
+		}
+
+		void CallOnPropertyChangeDefaultGroupList(Guid groupId)
+		{
+			OnPropertyChanged("DefaultGroupList");
+			DefaultGroupIndex = DefaultGroupList
+				.Select((g, i) => new { Id = g.Id, Index = i })
+				.FirstOrDefault(p => groupId == p.Id)
+				.Index
+			;
 		}
 
 		void CloseScreenWindow(object sender, EventArgs e)
@@ -618,6 +626,7 @@
 									this._groupTree.Insert(dstIndex, srcGroupViewModel);
 									srcGroupViewModel.IsSelected = true;
 								}
+								CallOnPropertyChangeDefaultGroupList(SelectedToolbar.DefaultGroupId);
 							}
 							break;
 						case ToolbarNodeKind.Item:
