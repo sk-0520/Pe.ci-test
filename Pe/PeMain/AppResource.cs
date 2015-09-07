@@ -80,6 +80,8 @@
 		const string commonClose = "/Resources/Image/Common/CommonClose.png";
 		[AppResource(AppResourceType.Image)]
 		const string commonOperatingSystem = "/Resources/Image/Common/CommonOperatingSystem.png";
+		[AppResource(AppResourceType.Image)]
+		const string commonEdit = "/Resources/Image/Common/CommonEdit.png";
 
 		[AppResource(AppResourceType.Image)]
 		const string toolbarToolbar = "/Resources/Image/Toolbar/Toolbar.png";

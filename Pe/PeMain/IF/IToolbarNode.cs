@@ -12,5 +12,7 @@
 		ToolbarNodeKind ToolbarNodeKind { get; }
 		bool IsExpanded { get; }
 		bool IsSelected { get; set; }
+		string Name { get; set; }
+		bool CanEdit { get; }
 	}
 }

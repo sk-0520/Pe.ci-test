@@ -43,6 +43,8 @@ using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 			get { return this._isSelected; }
 			set { SetVariableValue(ref this._isSelected, value); }
 		}
+		public abstract string Name { get; set; }
+		public abstract bool CanEdit { get; }
 		public virtual BitmapSource Image { get { return null; } }
 
 		#endregion

@@ -44,6 +44,15 @@
 			}
 		}
 
+		public override string Name
+		{
+			get { return Model.Name; }
+			set { }
+		}
+
+		public override bool CanEdit { get { return false; } }
+
+
 		#endregion
 
 		#region GroupViewModelBase

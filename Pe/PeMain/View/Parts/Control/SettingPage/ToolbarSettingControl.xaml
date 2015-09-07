@@ -11,6 +11,7 @@
 	xmlns:AC="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Converter"
 	xmlns:ACE="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Converter.EnumLanguageConverter"
 	xmlns:SC="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=SharedLibrary"
+	xmlns:AD="clr-namespace:ContentTypeTextNet.Pe.PeMain.Define"
 	
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
 	mc:Ignorable="d" 
@@ -25,6 +26,7 @@
 				<ResourceDictionary Source="/View/Parts/Resource/GroupBoxDictionary.xaml"/>
 				<ResourceDictionary Source="/View/Parts/Resource/LabelDictionary.xaml"/>
 				<ResourceDictionary Source="/View/Parts/Resource/ComboBoxDictionary.xaml"/>
+				<ResourceDictionary Source="/View/Parts/Resource/PopupDictionary.xaml"/>
 			</ResourceDictionary.MergedDictionaries>
 			<SC:LogicalIsNotNullConverter x:Key="LogicalIsNotNullConverter" />
 			<AC:DisplayTextConverter x:Key="DisplayTextConverter" />
@@ -33,6 +35,7 @@
 			<AC:ToolbarDockTypeImageConverter x:Key="ToolbarDockTypeImageConverter" />
 			<ACE:DockTypeLanguageConverter  x:Key="DockTypeLanguageConverter" />
 			<ACE:IconScaleLanguageConverter x:Key="IconScaleLanguageConverter" />
+			<SC:LogicalMultiAndConverter x:Key="LogicalMultiAndConverter" />
 		</ResourceDictionary>
 	</AV:CommonDataUserControl.Resources>
 	<Grid>
@@ -155,6 +158,7 @@
 		<Grid Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
 			<Grid.RowDefinitions>
 				<RowDefinition Height="Auto" />
+				<RowDefinition Height="Auto" />
 				<RowDefinition Height="*" />
 			</Grid.RowDefinitions>
 			<!--<ToolBarTray HorizontalAlignment="Stretch" VerticalAlignment="Stretch">-->
@@ -191,6 +195,11 @@
 			</ToolBar>
 			<!--</TkoolBarTray>-->
 			<TreeView x:Name="treeGroup" Grid.Row="1" ItemsSource="{Binding GroupTree}" >
+				<TreeView.Resources>
+					<DataTemplate x:Key="EditTemplate">
+						<TextBox Text="{Binding Name}"/>
+					</DataTemplate>
+				</TreeView.Resources>
 				<i:Interaction.Triggers>
 					<i:EventTrigger EventName="SelectedItemChanged">
 						<i:InvokeCommandAction Command="{Binding SelectedItemChangedCommand}" CommandParameter="{Binding SelectedItem, ElementName=treeGroup}" />
@@ -201,6 +210,24 @@
 						<StackPanel Orientation="Horizontal">
 							<Image Style="{StaticResource DefaultImage}" Source="{Binding Image}" />
 							<TextBlock Text="{Binding DisplayText}" />
+							<Popup Width="200" Placement="Top">
+								<Popup.IsOpen>
+									<MultiBinding Converter="{StaticResource LogicalMultiAndConverter}" Mode="OneWay">
+										<Binding Path="IsSelected" Mode="OneWay" />
+										<Binding Path="CanEdit" Mode="OneWay" />
+									</MultiBinding>
+								</Popup.IsOpen>
+								<Border Style="{StaticResource MenuPopupBorder}">
+									<Grid>
+										<Grid.ColumnDefinitions>
+											<ColumnDefinition Width="Auto" />
+											<ColumnDefinition Width="*" />
+										</Grid.ColumnDefinitions>
+										<Image Grid.Column="0" AA:IconSize.IconScale="Small" Source="{x:Static AM:AppResource.CommonEditImage}" Style="{StaticResource DefaultImage}" />
+										<TextBox Grid.Column="1" Text="{Binding Name}" />
+									</Grid>
+								</Border>
+							</Popup>
 						</StackPanel>
 					</HierarchicalDataTemplate>
 				</TreeView.ItemTemplate>

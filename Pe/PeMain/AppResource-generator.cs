@@ -21,7 +21,7 @@
 		/*
 		このソースは自動生成のため AppResource-generator.tt を編集すること。
 
-		生成元フィールド数: 67
+		生成元フィールド数: 68
 		*/
 		#region Icon: Application
 
@@ -1059,6 +1059,28 @@
 			get { return GetImage(CommonOperatingSystemPath); }
 		}
 		#endregion CommonOperatingSystem
+		#region Image: CommonEdit
+
+		/// <summary>
+		/// [Image] CommonEditのリソースパスを取得。
+		/// <para>/Resources/Image/Common/CommonEdit.png</para>
+		/// </summary>
+		public static string CommonEditPath
+		{
+			get { return commonEdit; }
+		}
+
+		/// <summary>
+		/// [Image] CommonEditのイメージソースを取得。
+		/// <para>初回のみ生成を行う。</para>
+		/// <para>CommonEditPath: /Resources/Image/Common/CommonEdit.png</para>
+		/// </summary>
+		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
+		public static BitmapSource CommonEditImage
+		{
+			get { return GetImage(CommonEditPath); }
+		}
+		#endregion CommonEdit
 		#region Image: ToolbarToolbar
 
 		/// <summary>

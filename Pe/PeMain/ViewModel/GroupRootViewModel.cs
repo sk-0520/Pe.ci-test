@@ -56,6 +56,19 @@
 
 		public override ToolbarNodeKind ToolbarNodeKind { get { return ToolbarNodeKind.Group; } }
 
+		public override string Name
+		{
+			get { return Model.Name; }
+			set
+			{
+				if(SetModelValue(value)) {
+					CallOnPropertyChangeDisplayItem();
+				}
+			}
+		}
+
+		public override bool CanEdit { get { return true; } }
+
 		#endregion
 	}
 }

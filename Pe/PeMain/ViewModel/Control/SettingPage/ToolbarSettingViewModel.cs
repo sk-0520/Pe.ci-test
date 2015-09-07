@@ -431,7 +431,7 @@
 				var targetIdList = GroupSettingModel.Groups[groupViewModel.Id].LauncherItems;
 				var srcIndex = targetIdList.IndexOf(itemViewModel.Id);
 				var nextIndex = srcIndex + (isUp ? -1 : +1);
-
+				
 				if (isUp && srcIndex == 0) {
 					return;
 				}
