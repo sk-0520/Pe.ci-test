@@ -336,7 +336,11 @@
 						Model.GroupItems.TryGetValue(Model.Toolbar.DefaultGroupId, out this._selectedGroup);
 					}
 					if(this._selectedGroup == null) {
-						this._selectedGroup = Model.GroupItems.First();
+						var group = Model.GroupItems.FirstOrDefault();
+						if(group == null) {
+							group = SettingUtility.CreateLauncherGroup(Model.GroupItems, AppNonProcess);
+						}
+						this._selectedGroup = group;
 					}
 				}
 

@@ -23,6 +23,8 @@ using ContentTypeTextNet.Pe.Library.PeData.Item;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 	using System.Windows;
 	using ContentTypeTextNet.Pe.Library.PeData.Define;
+	using ContentTypeTextNet.Pe.Library.Skin;
+	using WPF = ContentTypeTextNet.Library.SharedLibrary.Define;
 
 	internal static class ConvertFormsSetting
 	{
@@ -82,10 +84,10 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 			dst.ModifierKeys = FormsConverter.GetModifierKeys(src);
 		}
 
-		static ContentTypeTextNet.Library.SharedLibrary.Define.IconScale ConvertIconScale(ContentTypeTextNet.Pe.Library.Skin.IconScale src)
+		static WPF.IconScale ConvertIconScale(ContentTypeTextNet.Pe.Library.Skin.IconScale src)
 		{
 			var raw = (int)src;
-			return (ContentTypeTextNet.Library.SharedLibrary.Define.IconScale)raw;
+			return (WPF.IconScale)raw;
 		}
 
 		static LauncherItemModel ConvertLauncherItem(Data.LauncherItem srcItem, INonProcess nonProcess)
@@ -152,6 +154,16 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 			dstItem.History.ExecuteTimestamp = srcItem.LauncherHistory.DateHistory.Update;
 
 			return dstItem;
+		}
+
+		static LauncherGroupItemModel ConvertLauncherGroup(Data.ToolbarGroupItem srcGroup, INonProcess nonProcess)
+		{
+			var dstGroup = new LauncherGroupItemModel();
+			SettingUtility.InitializeLauncherGroupItem(dstGroup, null, nonProcess);
+
+			dstGroup.Name = srcGroup.Name;
+
+			return dstGroup;
 		}
 
 		#endregion
@@ -236,12 +248,12 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 		{
 			dstSetting.IsEnabled = srcSetting.Enabled;
 			dstSetting.IsEnabledApplicationCopy = srcSetting.EnabledApplicationCopy;
-			var captureMap = new Dictionary<Data.ClipboardType, ContentTypeTextNet.Pe.Library.PeData.Define.ClipboardType>() {
-				{ Data.ClipboardType.Text, ContentTypeTextNet.Pe.Library.PeData.Define.ClipboardType.Text },
-				{ Data.ClipboardType.Rtf, ContentTypeTextNet.Pe.Library.PeData.Define.ClipboardType.Rtf },
-				{ Data.ClipboardType.Html, ContentTypeTextNet.Pe.Library.PeData.Define.ClipboardType.Html },
-				{ Data.ClipboardType.Image, ContentTypeTextNet.Pe.Library.PeData.Define.ClipboardType.Image },
-				{ Data.ClipboardType.File, ContentTypeTextNet.Pe.Library.PeData.Define.ClipboardType.Files },
+			var captureMap = new Dictionary<Data.ClipboardType, ClipboardType>() {
+				{ Data.ClipboardType.Text, ClipboardType.Text },
+				{ Data.ClipboardType.Rtf,  ClipboardType.Rtf },
+				{ Data.ClipboardType.Html, ClipboardType.Html },
+				{ Data.ClipboardType.Image, ClipboardType.Image },
+				{ Data.ClipboardType.File, ClipboardType.Files },
 			};
 			dstSetting.CaptureType = captureMap
 				.Where(p => srcSetting.EnabledTypes.HasFlag(p.Key))
@@ -290,6 +302,37 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 			ConvertTemplateSetting(dstMainSetting.Template, srcMainSetting.Clipboard, nonProcess);
 		}
 
+		static ToolbarItemModel ConvertToolbarItem(Data.ToolbarItem srcToolbar, INonProcess nonProcess)
+		{
+			var dstToolbar = new ToolbarItemModel();
+			SettingUtility.InitializeToolbarItem(dstToolbar, null, nonProcess);
+
+			dstToolbar.Id = srcToolbar.Name;
+			dstToolbar.IconScale = ConvertIconScale(srcToolbar.IconScale);
+			dstToolbar.IsVisible = srcToolbar.Visible;
+			dstToolbar.IsTopmost = srcToolbar.Topmost;
+			dstToolbar.TextWidth = srcToolbar.TextWidth;
+			dstToolbar.TextVisible = srcToolbar.ShowText;
+			dstToolbar.AutoHide = srcToolbar.AutoHide;
+			dstToolbar.FloatToolbar.Left = srcToolbar.FloatLocation.X;
+			dstToolbar.FloatToolbar.Top = srcToolbar.FloatLocation.Y;
+
+			ConvertFont(dstToolbar.Font, srcToolbar.FontSetting);
+
+			var toolbarPositionMap = new Dictionary<ToolbarPosition, WPF.DockType>() {
+				{ ToolbarPosition.DesktopFloat, WPF.DockType.None },
+				{ ToolbarPosition.DesktopLeft, WPF.DockType.Left},
+				{ ToolbarPosition.DesktopTop, WPF.DockType.Top },
+				{ ToolbarPosition.DesktopRight, WPF.DockType.Right },
+				{ ToolbarPosition.DesktopBottom, WPF.DockType.Bottom },
+			};
+			WPF.DockType outDockType;
+			if(toolbarPositionMap.TryGetValue(srcToolbar.ToolbarPosition, out outDockType)) {
+				dstToolbar.DockType = outDockType;
+			}
+			
+			return dstToolbar;
+		}
 
 		/// <summary>
 		/// ツールバー設定、ランチャーアイテム、グループのGuidがかかわる部分を変換。
@@ -307,10 +350,51 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 				items[srcItem] = dstItem;
 			}
 
-
 			// グループ変換とそのマッピング
 			var groups = new Dictionary<Data.ToolbarGroupItem, LauncherGroupItemModel>();
+			foreach(var srcGroup in srcToolbarSetting.ToolbarGroup.Groups) {
+				var dstGroup = ConvertLauncherGroup(srcGroup, nonProcess);
+				groups[srcGroup] = dstGroup;
+			}
 
+			// ツールバー
+			var toolbars = new Dictionary<Data.ToolbarItem, ToolbarItemModel>();
+			foreach(var srcToolbar in srcToolbarSetting.Items) {
+				var dstToolbar = ConvertToolbarItem(srcToolbar, nonProcess);
+				toolbars[srcToolbar] = dstToolbar;
+			}
+
+			// 各種マッピング設定
+			// ツールバーグループ
+			foreach(var pair in toolbars) {
+				var srcGroupName = pair.Key.DefaultGroup;
+				if(string.IsNullOrEmpty(srcGroupName)) {
+					var group = groups
+						.FirstOrDefault(g => g.Key.Name == srcGroupName)
+					;
+					if(group.Value != null) {
+						pair.Value.DefaultGroupId = group.Value.Id;
+					}
+				}
+			}
+			// グループ内アイテム
+			foreach(var group in groups) {
+				var srcItemNames = group.Key.ItemNames;
+				foreach(var srcItemName in srcItemNames) {
+					var item = items
+						.FirstOrDefault(i => i.Key.Name == srcItemName)
+					;
+					if(item.Value != null) {
+						group.Value.LauncherItems.Add(item.Value.Id);
+					}
+				}
+			}
+
+			// 反映
+			dstToolbarSetting.Items.AddRange(toolbars.Values.Where(v => v != null));
+			dstLauncherGroupSetting.Groups.AddRange(groups.Values.Where(v => v != null));
+			dstLauncherItemSetting.Items.AddRange(items.Values.Where(v => v != null));
 		}
+
 	}
 }
