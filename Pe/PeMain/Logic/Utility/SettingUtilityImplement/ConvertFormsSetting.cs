@@ -99,7 +99,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 			commonData.MainSetting = new MainSettingModel();
 			SettingUtility.InitializeMainSetting(commonData.MainSetting, null, commonData.NonProcess);
 			ConvertMainSetting(commonData.MainSetting, mainSetting, commonData.NonProcess);
-			ConvertLauncherItems(commonData.MainSetting.Toolbar, commonData.LauncherGroupSetting, commonData.LauncherItemSetting, commonData.NonProcess);
+			ConvertLauncherItems(commonData.MainSetting.Toolbar, commonData.LauncherGroupSetting, commonData.LauncherItemSetting, mainSetting.Toolbar, launcherItems, commonData.NonProcess);
 		}
 
 		static void ConvertRunningSetting(RunningInformationSettingModel dstSetting, Data.RunningSetting srcSetting, INonProcess nonProcess)
@@ -230,7 +230,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 		/// <param name="launcherGroupSetting"></param>
 		/// <param name="launcherItemSetting"></param>
 		/// <param name="nonProcess"></param>
-		static void ConvertLauncherItems(ToolbarSettingModel toolbarSetting, LauncherGroupSettingModel launcherGroupSetting, LauncherItemSettingModel launcherItemSetting, INonProcess nonProcess)
+		static void ConvertLauncherItems(ToolbarSettingModel dstToolbarSetting, LauncherGroupSettingModel dstLauncherGroupSetting, LauncherItemSettingModel dstLauncherItemSetting, Data.ToolbarSetting srcToolbarSetting, HashSet<Data.LauncherItem> srcLauncherItems, INonProcess nonProcess)
 		{
 			//throw new NotImplementedException();
 		}
