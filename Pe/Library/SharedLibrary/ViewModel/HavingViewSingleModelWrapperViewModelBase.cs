@@ -36,6 +36,7 @@
 
 		public TView View { get; private set; }
 		public bool HasView { get { return HavingViewUtility.GetHasView(this); } }
+		public bool IsClosed { get; private set; }
 
 		#endregion
 
@@ -44,7 +45,7 @@
 		protected virtual void InitializeView()
 		{
 			Debug.Assert(View != null);
-
+			IsClosed = false;
 			var vm = this as IHavingView<Window>;
 			if(vm != null && HasView) {
 				vm.View.Closed += View_Closed;
@@ -68,7 +69,7 @@
 		void View_Closed(object sender, EventArgs e)
 		{
 			Debug.Assert(HasView);
-
+			IsClosed = true;
 			var vm = (IHavingView<Window>)this;
 			vm.View.Closed -= View_Closed;
 			UninitializeView_Impl();

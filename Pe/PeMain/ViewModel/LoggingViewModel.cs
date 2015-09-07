@@ -195,7 +195,7 @@
 			if(map[item.LogKind]) {
 				if(HasView) {
 					View.Dispatcher.BeginInvoke(new Action(() => {
-					IsVisible = true;
+						IsVisible = true;
 					}));
 				} else {
 					IsVisible = true;
