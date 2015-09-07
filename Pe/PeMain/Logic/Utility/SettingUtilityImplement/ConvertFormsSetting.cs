@@ -99,8 +99,8 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 			commonData.MainSetting = new MainSettingModel();
 			SettingUtility.InitializeMainSetting(commonData.MainSetting, null, commonData.NonProcess);
 			ConvertMainSetting(commonData.MainSetting, mainSetting, commonData.NonProcess);
+			ConvertLauncherItems(commonData.MainSetting.Toolbar, commonData.LauncherGroupSetting, commonData.LauncherItemSetting, commonData.NonProcess);
 		}
-
 
 		static void ConvertRunningSetting(RunningInformationSettingModel dstSetting, Data.RunningSetting srcSetting, INonProcess nonProcess)
 		{
@@ -125,7 +125,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 			dstSetting.WindowHeight = srcSetting.Size.Height;
 		}
 
-		private static void ConvertSystemEnvironmentSetting(SystemEnvironmentSettingModel dstSetting, Data.SystemEnvironmentSetting srcSetting, INonProcess nonProcess)
+		static void ConvertSystemEnvironmentSetting(SystemEnvironmentSettingModel dstSetting, Data.SystemEnvironmentSetting srcSetting, INonProcess nonProcess)
 		{
 			ConvertHotKey(dstSetting.ExtensionHotkey, srcSetting.ExtensionShowHotKey);
 			ConvertHotKey(dstSetting.HideFileHotkey, srcSetting.HiddenFileShowHotKey);
@@ -208,6 +208,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 			dstSetting.WindowWidth = srcSetting.Size.Width;
 			dstSetting.WindowHeight = srcSetting.Size.Height;
 		}
+
 		static void ConvertMainSetting(MainSettingModel dstMainSetting, Data.MainSetting srcMainSetting, INonProcess nonProcess)
 		{
 			dstMainSetting.Language.Name = srcMainSetting.LanguageName;
@@ -222,5 +223,16 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 			ConvertTemplateSetting(dstMainSetting.Template, srcMainSetting.Clipboard, nonProcess);
 		}
 
+		/// <summary>
+		/// ツールバー設定、ランチャーアイテム、グループのGuidがかかわる部分を変換。
+		/// </summary>
+		/// <param name="toolbarSetting"></param>
+		/// <param name="launcherGroupSetting"></param>
+		/// <param name="launcherItemSetting"></param>
+		/// <param name="nonProcess"></param>
+		static void ConvertLauncherItems(ToolbarSettingModel toolbarSetting, LauncherGroupSettingModel launcherGroupSetting, LauncherItemSettingModel launcherItemSetting, INonProcess nonProcess)
+		{
+			//throw new NotImplementedException();
+		}
 	}
 }
