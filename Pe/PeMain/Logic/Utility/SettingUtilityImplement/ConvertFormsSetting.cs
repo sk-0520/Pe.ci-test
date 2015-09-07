@@ -152,6 +152,8 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 			dstSetting.HideTime = srcSetting.HiddenTime;
 			dstSetting.IconScale = ConvertIconScale(srcSetting.IconScale);
 			dstSetting.WindowWidth = srcSetting.Width;
+			dstSetting.FindFile = srcSetting.EnabledFindFile;
+			dstSetting.FindTag = srcSetting.EnabledFindTag;
 		}
 
 		static void ConvertNoteSetting(NoteSettingModel dstSetting, Data.NoteSetting srcSetting, INonProcess nonProcess)
