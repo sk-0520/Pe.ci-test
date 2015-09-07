@@ -368,7 +368,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 			// ツールバーグループ
 			foreach(var pair in toolbars) {
 				var srcGroupName = pair.Key.DefaultGroup;
-				if(string.IsNullOrEmpty(srcGroupName)) {
+				if(!string.IsNullOrEmpty(srcGroupName)) {
 					var group = groups
 						.FirstOrDefault(g => g.Key.Name == srcGroupName)
 					;
