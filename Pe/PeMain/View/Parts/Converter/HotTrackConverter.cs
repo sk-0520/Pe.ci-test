@@ -34,7 +34,13 @@
 		//}
 		public object Convert(object[] values, Type targetType, object parameter, System.Globalization.CultureInfo culture)
 		{
-			var color = (Color)values[0];
+			Color color;
+			try {
+				color = (Color)values[0];
+			} catch (InvalidCastException ex) {
+				Debug.WriteLine(ex);
+				color = SystemColors.DesktopColor;
+			}
 			var dockType = (DockType)values[1];
 			var length = (double)values[2];
 			var isEnabledCorrection = values[3] as bool?;
