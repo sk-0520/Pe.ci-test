@@ -124,6 +124,10 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 
 				return null;
 			}
+			dstItem.Command = srcItem.Command;
+			dstItem.Option = srcItem.Option;
+			dstItem.WorkDirectoryPath = srcItem.WorkDirPath;
+
 
 			return dstItem;
 		}
