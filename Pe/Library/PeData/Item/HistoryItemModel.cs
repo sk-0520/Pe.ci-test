@@ -38,7 +38,7 @@
 		/// 更新回数。
 		/// </summary>
 		[DataMember, XmlAttribute]
-		public int UpdateCount { get; set; }
+		public uint UpdateCount { get; set; }
 
 		#endregion
 

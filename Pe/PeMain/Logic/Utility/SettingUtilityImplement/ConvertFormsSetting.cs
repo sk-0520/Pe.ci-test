@@ -127,7 +127,29 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 			dstItem.Command = srcItem.Command;
 			dstItem.Option = srcItem.Option;
 			dstItem.WorkDirectoryPath = srcItem.WorkDirPath;
-
+			dstItem.Administrator = srcItem.Administrator;
+			dstItem.StdStream.OutputWatch = srcItem.StdOutputWatch;
+			dstItem.StdStream.InputUsing = srcItem.StdOutputWatch;
+			dstItem.Icon.Path = srcItem.IconItem.Path;
+			dstItem.Icon.Index = srcItem.IconItem.Index;
+			dstItem.EnvironmentVariables.Edit = srcItem.EnvironmentSetting.EditEnvironment;
+			dstItem.EnvironmentVariables.Update.AddRange(
+				srcItem.EnvironmentSetting.Update
+					.Select(u => new EnvironmentVariableUpdateItemModel() {
+						Id = u.First,
+						Value = u.Second,
+					})
+			);
+			dstItem.EnvironmentVariables.Remove.AddRange(srcItem.EnvironmentSetting.Remove);
+			dstItem.Tag.Items.AddRange(srcItem.Tag);
+			dstItem.Comment = srcItem.Note;
+			dstItem.History.CreateTimestamp = srcItem.LauncherHistory.DateHistory.Create;
+			dstItem.History.UpdateTimestamp = srcItem.LauncherHistory.DateHistory.Update;
+			dstItem.History.Options.AddRange(srcItem.LauncherHistory.Options);
+			dstItem.History.WorkDirectoryPaths.AddRange(srcItem.LauncherHistory.WorkDirs);
+			dstItem.History.ExecuteCount = srcItem.LauncherHistory.ExecuteCount;
+			dstItem.History.UpdateCount =  srcItem.LauncherHistory.ExecuteCount;
+			dstItem.History.ExecuteTimestamp = srcItem.LauncherHistory.DateHistory.Update;
 
 			return dstItem;
 		}
