@@ -100,8 +100,17 @@
 		{
 			get
 			{
+				var index = 1;
 				foreach(var model in ToolbarSetting.Items) {
 					var vm = new ToolbarViewModel(model, GroupSettingModel.Groups, AppNonProcess);
+					if(vm.DefaultGroupId != Guid.Empty) {
+						DefaultGroupIndex = DefaultGroupList
+							.Select((g, i) => new { Id = g.Id, Index = i })
+							.FirstOrDefault(p => vm.DefaultGroupId == p.Id)
+							.Index
+						;
+					}
+					index += 1;
 					yield return vm;
 				}
 			}
