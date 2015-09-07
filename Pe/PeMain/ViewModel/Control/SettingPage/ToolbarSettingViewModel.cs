@@ -100,12 +100,10 @@
 		{
 			get
 			{
-				bool skipGroupCheck = false;
-				foreach(var model in ToolbarSetting.Items) {
-					var vm = new ToolbarViewModel(model, GroupSettingModel.Groups, AppNonProcess);
-					if(!skipGroupCheck && vm.DefaultGroupId != Guid.Empty) {
+				foreach (var val in ToolbarSetting.Items.Select((m, i) => new { Model = m, Index = i })) {
+					var vm = new ToolbarViewModel(val.Model, GroupSettingModel.Groups, AppNonProcess);
+					if (val.Index==0 &&  vm.DefaultGroupId != Guid.Empty) {
 						CallOnPropertyChangeDefaultGroupList(vm.DefaultGroupId);
-						skipGroupCheck = true;
 					}
 					yield return vm;
 				}
