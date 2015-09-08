@@ -8,7 +8,9 @@
 	using System.Windows;
 	using System.Windows.Controls;
 	using System.Windows.Media;
+	using ContentTypeTextNet.Library.PInvoke.Windows;
 	using ContentTypeTextNet.Library.SharedLibrary.Attribute;
+	using ContentTypeTextNet.Library.SharedLibrary.CompatibleWindows.Utility;
 	using ContentTypeTextNet.Library.SharedLibrary.Define;
 
 	public static class UIUtility
@@ -207,6 +209,28 @@
 				rect.Width / dpiScale.X,
 				rect.Height / dpiScale.Y
 			);
+		}
+
+		public static void SetStyleToolWindow(Window window, bool enabledMax, bool enabledMin)
+		{
+			var hWnd = HandleUtility.GetWindowHandle(window);
+
+			int exStyle = (int)WindowsUtility.GetWindowLong(hWnd, (int)GWL.GWL_EXSTYLE);
+			exStyle |= (int)WS_EX.WS_EX_TOOLWINDOW;
+			WindowsUtility.SetWindowLong(hWnd, (int)GWL.GWL_EXSTYLE, (IntPtr)exStyle);
+
+			if (!enabledMax || !enabledMin) {
+				var style = (int)WindowsUtility.GetWindowLong(hWnd, (int)GWL.GWL_STYLE);
+				WS ws = (WS)0;
+				if (!enabledMax) {
+					ws |= WS.WS_MAXIMIZEBOX;
+				}
+				if (!enabledMin) {
+					ws |= WS.WS_MINIMIZEBOX;
+				}
+				style &= ~(int)ws;
+				WindowsUtility.SetWindowLong(hWnd, (int)GWL.GWL_STYLE, (IntPtr)style);
+			}
 		}
 	}
 }

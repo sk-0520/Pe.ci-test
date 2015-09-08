@@ -13,6 +13,7 @@
 	using System.Windows.Media;
 	using System.Windows.Media.Imaging;
 	using System.Windows.Shapes;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 	using ContentTypeTextNet.Pe.PeMain.View.Parts.Window;
 	using ContentTypeTextNet.Pe.PeMain.ViewModel;
 
@@ -27,6 +28,13 @@
 		}
 
 		#region ViewModelCommonDataWindow
+
+		protected override void OnLoaded(object sender, RoutedEventArgs e)
+		{
+			UIUtility.SetStyleToolWindow(this, false, false);
+
+			base.OnLoaded(sender, e);
+		}
 
 		protected override void CreateViewModel()
 		{

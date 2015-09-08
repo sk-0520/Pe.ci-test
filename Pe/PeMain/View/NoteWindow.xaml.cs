@@ -15,6 +15,7 @@
 	using System.Windows.Shapes;
 	using ContentTypeTextNet.Library.PInvoke.Windows;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 	using ContentTypeTextNet.Library.SharedLibrary.View.ViewExtend;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 	using ContentTypeTextNet.Pe.PeMain.Define;
@@ -58,13 +59,14 @@
 
 		protected override void OnLoaded(object sender, RoutedEventArgs e)
 		{
-			int exStyle = (int)WindowsUtility.GetWindowLong(Handle, (int)GWL.GWL_EXSTYLE);
-			exStyle |= (int)WS_EX.WS_EX_TOOLWINDOW;
-			WindowsUtility.SetWindowLong(Handle, (int)GWL.GWL_EXSTYLE, (IntPtr)exStyle);
+			//int exStyle = (int)WindowsUtility.GetWindowLong(Handle, (int)GWL.GWL_EXSTYLE);
+			//exStyle |= (int)WS_EX.WS_EX_TOOLWINDOW;
+			//WindowsUtility.SetWindowLong(Handle, (int)GWL.GWL_EXSTYLE, (IntPtr)exStyle);
 
-			var style = (int)WindowsUtility.GetWindowLong(Handle, (int)GWL.GWL_STYLE);
-			style &= ~(int)(WS.WS_MAXIMIZEBOX | WS.WS_MINIMIZEBOX);
-			WindowsUtility.SetWindowLong(Handle, (int)GWL.GWL_STYLE, (IntPtr)style); 
+			//var style = (int)WindowsUtility.GetWindowLong(Handle, (int)GWL.GWL_STYLE);
+			//style &= ~(int)(WS.WS_MAXIMIZEBOX | WS.WS_MINIMIZEBOX);
+			//WindowsUtility.SetWindowLong(Handle, (int)GWL.GWL_STYLE, (IntPtr)style); 
+			UIUtility.SetStyleToolWindow(this, false, false);
 			
 			base.OnLoaded(sender, e);
 

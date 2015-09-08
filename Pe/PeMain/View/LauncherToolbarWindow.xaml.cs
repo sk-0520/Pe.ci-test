@@ -95,14 +95,7 @@
 
 		protected override void OnLoaded(object sender, RoutedEventArgs e)
 		{
-			int exStyle = (int)WindowsUtility.GetWindowLong(Handle, (int)GWL.GWL_EXSTYLE);
-			exStyle |= (int)WS_EX.WS_EX_TOOLWINDOW;
-			WindowsUtility.SetWindowLong(Handle, (int)GWL.GWL_EXSTYLE, (IntPtr)exStyle);
-
-			// ノート側はこれつけなきゃいけないの腑に落ちん
-			//var style = (int)WindowsUtility.GetWindowLong(Handle, (int)GWL.GWL_STYLE);
-			//style &= ~(int)(WS.WS_MAXIMIZEBOX | WS.WS_MINIMIZEBOX);
-			//WindowsUtility.SetWindowLong(Handle, (int)GWL.GWL_STYLE, (IntPtr)style);
+			UIUtility.SetStyleToolWindow(this, false, false);
 
 			base.OnLoaded(sender, e);
 
@@ -167,6 +160,7 @@
 				}
 				//NativeMethods.UpdateWindow(Handle);
 			}
+			UIUtility.SetStyleToolWindow(this, false, false);
 		}
 
 		#endregion
