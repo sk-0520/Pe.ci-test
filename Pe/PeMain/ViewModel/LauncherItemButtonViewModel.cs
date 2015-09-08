@@ -2,6 +2,7 @@
 {
 	using System;
 	using System.Collections.Generic;
+	using System.Diagnostics;
 	using System.IO;
 	using System.Linq;
 	using System.Text;
@@ -211,13 +212,15 @@
 				var result = CreateCommand(
 					o => {
 						var type = (LauncherCommandType)o;
-						var map = new Dictionary<LauncherCommandType, Func<string>>() {
-							{ LauncherCommandType.ParentDirectory, () => Path.GetDirectoryName(Environment.ExpandEnvironmentVariables(Model.Command)) },
-							{ LauncherCommandType.WorkDirectory, () => Environment.ExpandEnvironmentVariables(Model.WorkDirectoryPath) },
-						};
-						var s = map[type]();
 
-						ExecuteUtility.OpenDirectory(s, AppNonProcess, default(LauncherItemModel));
+						if (type == LauncherCommandType.ParentDirectory) {
+							var path = Environment.ExpandEnvironmentVariables(Model.Command);
+							ExecuteUtility.OpenDirectoryWithFileSelect(path, AppNonProcess, default(LauncherItemModel));
+						} else {
+							Debug.Assert(type == LauncherCommandType.WorkDirectory);
+							var path = Environment.ExpandEnvironmentVariables(Model.WorkDirectoryPath);
+							ExecuteUtility.OpenDirectory(path, AppNonProcess, default(LauncherItemModel));
+						}
 					}
 				);
 
