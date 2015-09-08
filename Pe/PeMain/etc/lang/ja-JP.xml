@@ -430,11 +430,7 @@
 		<Item Id="log/hotkey/regist/template"            Word="ホットキー登録失敗: テンプレート" />
 		
 		<!-- テンプレート -->
-		<Item Id="template/keyword/text/APPLICATION"  Word="${template-APPLICATION}" />
-		<Item Id="template/keyword/text/VER"          Word="@[APPLICATION:NAME] ${template-VER}" />
-		<Item Id="template/keyword/text/VER:NUMBER"   Word="@[APPLICATION:NAME] ${template-VER:NUMBER}" />
-		<Item Id="template/keyword/text/VER:HASH"     Word="@[APPLICATION:NAME] ${template-VER:HASH}" />
-		<Item Id="template/keyword/text/TIMESTAMP"    Word="${template-TIMESTAMP}" />
+		<Item Id="template/keyword/text/TIMESTAMP"    Word="タイムスタンプ" />
 		<Item Id="template/keyword/text/Y"            Word="西暦" />
 		<Item Id="template/keyword/text/Y:04"         Word="西暦(4桁)" />
 		<Item Id="template/keyword/text/M"            Word="月" />
@@ -449,20 +445,25 @@
 		<Item Id="template/keyword/text/m:02"         Word="分(2桁)" />
 		<Item Id="template/keyword/text/s"            Word="秒" />
 		<Item Id="template/keyword/text/s:02"         Word="秒(2桁)" />
-		<Item Id="template/keyword/text/CLIP"         Word="${template-CLIP}" />
-		<Item Id="template/keyword/text/CLIP:NOBREAK" Word="改行なし${template-CLIP}" />
-		<Item Id="template/keyword/text/CLIP:HEAD"    Word="先頭行のみ${template-CLIP}" />
-		<Item Id="template/keyword/text/CLIP:TAIL"    Word="最終行のみ${template-CLIP}" />
+		<Item Id="template/keyword/text/CLIP"         Word="クリップボード" />
+		<Item Id="template/keyword/text/CLIP:NOBREAK" Word="改行なしクリップボード" />
+		<Item Id="template/keyword/text/CLIP:HEAD"    Word="先頭行のみクリップボード" />
+		<Item Id="template/keyword/text/CLIP:TAIL"    Word="最終行のみクリップボード" />
+		<Item Id="template/keyword/text/APPLICATION:NAME"              Word="アプリケーション名称" />
+		<Item Id="template/keyword/text/APPLICATION:VERSION"           Word="@[APPLICATION:NAME] バージョン" />
+		<Item Id="template/keyword/text/APPLICATION:VERSION-NUMBER"    Word="@[APPLICATION:NAME] バージョン番号" />
+		<Item Id="template/keyword/text/APPLICATION:VERSION-REVISION"  Word="@[APPLICATION:NAME] リビジョン" />
+		<Item Id="template/keyword/text/APPLICATION:VERSION-NUMBER"    Word="@[APPLICATION:NAME] リビジョン" />
 		
 		<Item Id="template/keyword/program/&lt;#  #&gt;"  Word="コード" />
 		<Item Id="template/keyword/program/&lt;#=  #&gt;"  Word="式" />
 		<Item Id="template/keyword/program/&lt;#+  #&gt;"  Word="定義" />
-		<Item Id="template/keyword/program/APPLICATION"  Word="${template-APPLICATION}" />
-		<Item Id="template/keyword/program/VER"          Word="@[APPLICATION:NAME] ${template-VER}" />
-		<Item Id="template/keyword/program/VER:NUMBER"   Word="@[APPLICATION:NAME] ${template-VER:NUMBER}" />
-		<Item Id="template/keyword/program/VER:HASH"     Word="@[APPLICATION:NAME] ${template-VER:HASH}" />
-		<Item Id="template/keyword/program/TIMESTAMP"    Word="${template-TIMESTAMP}" />
-		<Item Id="template/keyword/program/CLIP"         Word="${template-CLIP}" />
+		<Item Id="template/keyword/program/TIMESTAMP"          Word="現在日時" />
+		<Item Id="template/keyword/program/CLIP"               Word="クリップボードテキスト" />
+		<Item Id="template/keyword/program/APPLICATION:NAME"     Word="アプリケーション名称" />
+		<Item Id="template/keyword/program/APPLICATION:VERSION"  Word="@[APPLICATION:NAME] バージョン文字列" />
+		<Item Id="template/keyword/program/APPLICATION:VERSION-NUMBER"  Word="@[APPLICATION:NAME] バージョン番号" />
+		<Item Id="template/keyword/program/APPLICATION:VERSION-REVISION"  Word="@[APPLICATION:NAME] リビジョン" />
 
 		<!-- enum -->
 		

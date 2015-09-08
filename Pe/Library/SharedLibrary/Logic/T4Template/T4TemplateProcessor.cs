@@ -286,31 +286,21 @@
 		protected virtual void DisposeAssembly(bool disposing)
 		{
 			if (TemplateProxy != null) {
-				if (!disposing) {
-					try {
-						if (TemplateProxy != null) {
-							TemplateProxy.Dispose();
-						}
-					} catch (RemotingException ex) {
-						Logger.SafeWarning(ex);
-					}
-				} else {
+				try {
 					if (TemplateProxy != null) {
 						TemplateProxy.Dispose();
 					}
+				} catch (RemotingException ex) {
+					Logger.SafeWarning(ex);
 				}
 				TemplateProxy = null;
 			}
 			if (TemplateAppDomain != null) {
 				if (IsOtherAppDomain) {
-					if (!disposing) {
-						try {
-							AppDomain.Unload(TemplateAppDomain);
-						} catch (CannotUnloadAppDomainException ex) {
-							Logger.SafeWarning(ex);
-						}
-					} else {
+					try {
 						AppDomain.Unload(TemplateAppDomain);
+					} catch (CannotUnloadAppDomainException ex) {
+						Logger.SafeWarning(ex);
 					}
 				}
 				TemplateAppDomain = null;
