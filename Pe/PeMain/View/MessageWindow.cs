@@ -134,25 +134,24 @@
 		void ApplyHotKey()
 		{
 			var hotKeyDatas = new[] {
-					new { Id = HotKeyId.ShowCommand,   HotKey = CommonData.MainSetting.Command.ShowHotkey,                 UnRegistMessageName = "hotkey/unregist/command",         RegistMessageName = "hotkey/regist/command" },
-					new { Id = HotKeyId.HideFile,      HotKey = CommonData.MainSetting.SystemEnvironment.HideFileHotkey, UnRegistMessageName = "hotkey/unregist/hidden-file",     RegistMessageName = "hotkey/regist/hidden-file" },
-					new { Id = HotKeyId.Extension,     HotKey = CommonData.MainSetting.SystemEnvironment.ExtensionHotkey,  UnRegistMessageName = "hotkey/unregist/extension",       RegistMessageName = "hotkey/regist/extension" },
-					new { Id = HotKeyId.CreateNote,    HotKey = CommonData.MainSetting.Note.CreateHotKey,              UnRegistMessageName = "hotkey/unregist/create-note",     RegistMessageName = "hotkey/regist/create-note" },
-					new { Id = HotKeyId.HideNote,    HotKey = CommonData.MainSetting.Note.HideHotKey,              UnRegistMessageName = "hotkey/unregist/hidden-note",     RegistMessageName = "hotkey/regist/hidden-note" },
-					new { Id = HotKeyId.CompactNote,   HotKey = CommonData.MainSetting.Note.CompactHotKey,             UnRegistMessageName = "hotkey/unregist/compact-note",    RegistMessageName = "hotkey/regist/compact-note" },
-					new { Id = HotKeyId.ShowFrontNote, HotKey = CommonData.MainSetting.Note.ShowFrontHotKey,           UnRegistMessageName = "hotkey/unregist/show-front-note", RegistMessageName = "hotkey/regist/show-front-note" },
-					new { Id = HotKeyId.SwitchClipboardShow, HotKey = CommonData.MainSetting.Clipboard.ToggleHotKey, UnRegistMessageName = "hotkey/unregist/clipboard", RegistMessageName = "hotkey/regist/clipboard" },
-					new { Id = HotKeyId.SwitchTemplateShow, HotKey = CommonData.MainSetting.Template.ToggleHotKey, UnRegistMessageName = "hotkey/unregist/template", RegistMessageName = "hotkey/regist/template" },
+					new { Id = HotKeyId.ShowCommand,         HotKey = CommonData.MainSetting.Command.ShowHotkey,                 UnRegistMessageName = "log/hotkey/unregist/command",         RegistMessageName = "log/hotkey/regist/command" },
+					new { Id = HotKeyId.HideFile,            HotKey = CommonData.MainSetting.SystemEnvironment.HideFileHotkey,   UnRegistMessageName = "log/hotkey/unregist/hidden-file",     RegistMessageName = "log/hotkey/regist/hidden-file" },
+					new { Id = HotKeyId.Extension,           HotKey = CommonData.MainSetting.SystemEnvironment.ExtensionHotkey,  UnRegistMessageName = "log/hotkey/unregist/extension",       RegistMessageName = "log/hotkey/regist/extension" },
+					new { Id = HotKeyId.CreateNote,          HotKey = CommonData.MainSetting.Note.CreateHotKey,                  UnRegistMessageName = "log/hotkey/unregist/create-note",     RegistMessageName = "log/hotkey/regist/create-note" },
+					new { Id = HotKeyId.HideNote,            HotKey = CommonData.MainSetting.Note.HideHotKey,                    UnRegistMessageName = "log/hotkey/unregist/hide-note",       RegistMessageName = "log/hotkey/regist/hide-note" },
+					new { Id = HotKeyId.CompactNote,         HotKey = CommonData.MainSetting.Note.CompactHotKey,                 UnRegistMessageName = "log/hotkey/unregist/compact-note",    RegistMessageName = "log/hotkey/regist/compact-note" },
+					new { Id = HotKeyId.ShowFrontNote,       HotKey = CommonData.MainSetting.Note.ShowFrontHotKey,               UnRegistMessageName = "log/hotkey/unregist/show-front-note", RegistMessageName = "log/hotkey/regist/show-front-note" },
+					new { Id = HotKeyId.SwitchClipboardShow, HotKey = CommonData.MainSetting.Clipboard.ToggleHotKey,             UnRegistMessageName = "log/hotkey/unregist/clipboard",       RegistMessageName = "log/hotkey/regist/clipboard" },
+					new { Id = HotKeyId.SwitchTemplateShow,  HotKey = CommonData.MainSetting.Template.ToggleHotKey,              UnRegistMessageName = "log/hotkey/unregist/template",        RegistMessageName = "log/hotkey/regist/template" },
 				};
 			// 登録解除
 			foreach(var hotKeyData in hotKeyDatas.Where(hk => hk.HotKey.IsRegistered)) {
 				if(UnRegisterHotKey(hotKeyData.Id)) {
 					hotKeyData.HotKey.IsRegistered = false;
 				} else {
-					var message = CommonData.Language["hotkey/unregist/fail"];
-					var detail = CommonData.Language[hotKeyData.UnRegistMessageName];
+					var message = CommonData.Language[hotKeyData.UnRegistMessageName];
 
-					CommonData.Logger.Warning(message, detail);
+					CommonData.Logger.Warning(message, hotKeyData.HotKey);
 				}
 			}
 
@@ -161,10 +160,9 @@
 				if(RegistHotKey(hotKeyData.Id, hotKeyData.HotKey)) {
 					hotKeyData.HotKey.IsRegistered = true;
 				} else {
-					var message = CommonData.Language["hotkey/regist/fail"];
-					var detail = CommonData.Language[hotKeyData.RegistMessageName];
+					var message = CommonData.Language[hotKeyData.RegistMessageName];
 
-					CommonData.Logger.Warning(message, detail);
+					CommonData.Logger.Warning(message, hotKeyData.HotKey);
 				}
 			}
 		}

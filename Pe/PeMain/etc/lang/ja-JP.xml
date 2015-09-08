@@ -410,7 +410,25 @@
 		<Item Id="log/clipboard/prev-time/detail"  Word="前回取込時間 -> @[LOG-CLIP-WAIT_TIME-PREV]${br}今回取込時間 -> @[LOG-CLIP-WAIT_TIME-CURRENT]${br}設定時間 -> @[LOG-CLIP-WAIT_TIME-SETTING]${br}待機時間 -> @[LOG-CLIP-WAIT_TIME-WAIT]" />
 		<Item Id="log/clipboard/dup-item/message"  Word="クリップボード: 重複するクリップボードアイテムが存在するため無視" />
 		<Item Id="log/auto-regist/message"  Word="ホームウィンドウ処理でのログ" />
-
+		<Item Id="log/hotkey/unregist/command"           Word="ホットキー解除失敗: コマンド" />
+		<Item Id="log/hotkey/unregist/hidden-file"       Word="ホットキー解除失敗: 隠しファイル" />
+		<Item Id="log/hotkey/unregist/extension"         Word="ホットキー解除失敗: 拡張子" />
+		<Item Id="log/hotkey/unregist/create-note"       Word="ホットキー解除失敗: ノート作成" />
+		<Item Id="log/hotkey/unregist/hide-note"         Word="ホットキー解除失敗: ノート非表示" />
+		<Item Id="log/hotkey/unregist/compact-note"      Word="ホットキー解除失敗: ノート最小化" />
+		<Item Id="log/hotkey/unregist/show-front-note"   Word="ホットキー解除失敗: ノート前面表示" />
+		<Item Id="log/hotkey/unregist/clipboard"         Word="ホットキー解除失敗: クリップボード" />
+		<Item Id="log/hotkey/unregist/template"          Word="ホットキー解除失敗: テンプレート" />
+		<Item Id="log/hotkey/regist/command"             Word="ホットキー登録失敗: コマンド" />
+		<Item Id="log/hotkey/regist/hidden-file"         Word="ホットキー登録失敗: 隠しファイル" />
+		<Item Id="log/hotkey/regist/extension"           Word="ホットキー登録失敗: 拡張子" />
+		<Item Id="log/hotkey/regist/create-note"         Word="ホットキー登録失敗: ノート作成" />
+		<Item Id="log/hotkey/regist/hide-note"           Word="ホットキー登録失敗: ノート非表示" />
+		<Item Id="log/hotkey/regist/compact-note"        Word="ホットキー登録失敗: ノート最小化" />
+		<Item Id="log/hotkey/regist/show-front-note"     Word="ホットキー登録失敗: ノート前面表示" />
+		<Item Id="log/hotkey/regist/clipboard"           Word="ホットキー登録失敗: クリップボード" />
+		<Item Id="log/hotkey/regist/template"            Word="ホットキー登録失敗: テンプレート" />
+		
 		<!-- テンプレート -->
 		<Item Id="template/keyword/text/APPLICATION"  Word="${template-APPLICATION}" />
 		<Item Id="template/keyword/text/VER"          Word="@[APPLICATION:NAME] ${template-VER}" />
