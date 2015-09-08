@@ -9,5 +9,11 @@
 	<Component Kind="Source" Name="Invoke.net" Uri="http://www.pinvoke.net/" License="" />
 	
 	<Component Kind="Image" Name="MICROSOFT VISUAL STUDIO 2013 IMAGE LIBRARY" Uri="http://msdn.microsoft.com/ja-jp/library/ms246582.aspx" License="Visual Studio 2013 Image Library EULA" />
+	<!-- home search:https://www.iconfinder.com/icons/314507/flag_icon#size=128 -->
+	<Component Kind="Image" Name="Google" Uri="https://design.google.com/" License="Free for commercial use" />
+	<!-- home flag:https://www.iconfinder.com/icons/326690/magnify_search_zoom_icon#size=128 -->
+	<Component Kind="Image" Name="Yannick Lung" Uri="http://www.yanlu.de/" License="Free for commercial use" />
+	<!-- home windows:https://www.iconfinder.com/icons/670393/call_cell_mobile_phone_smartphone_window_windows_icon#size=128 -->
+	<Component Kind="Image" Name="Weweka Group" Uri="https://www.iconfinder.com/weweka" License="Free for commercial use" />
 	
 </Components>

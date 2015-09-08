@@ -55,17 +55,21 @@
 		<Item Id="accept/ng" Word="使用しない" />
 		<Item Id="update-check/release" Word="アップデートを確認する" />
 		<Item Id="update-check/rc" Word="RC版も確認対象とする" />
-		
-		<Item Id="home/startup/title"  Word="スタートアップ登録" />
-		<Item Id="home/startup/create" Word="スタートアップに@[APPLICATION:NAME]を登録しました" />
-		<Item Id="home/startup/exists" Word="既に登録されています" />
 
-		<Item Id="home/auto-regist/merge/message"    Word="アイテム自動登録確認" />
-		<Item Id="home/auto-regist/merge/title"      Word="既にアイテムが登録されています。${br}既存データに追加されますがよろしいですか。" />
+		<Item Id="home/auto-regist/title"   Word="ランチャー自動登録" />
+		<Item Id="home/auto-regist/message" Word="使用環境から自動的にランチャーアイテムを構築します。${br}※実装中機能になります。" />
+		<Item Id="home/notify-area/title"   Word="通知領域設定" />
+		<Item Id="home/notify-area/message" Word="通知領域の@[APPLICATION:NAME]アイコンを常に表示するとにより操作しやすくなります。" />
+		<Item Id="home/startup/title"       Word="スタートアップ登録" />
+		<Item Id="home/startup/message"     Word="Windowsログオン時に@[APPLICATION:NAME]を起動するようにします。" />
+		<Item Id="home/startup/regist/title"  Word="スタートアップ登録" />
+		<Item Id="home/startup/regist/create" Word="スタートアップに@[APPLICATION:NAME]を登録しました" />
+		<Item Id="home/startup/regist/exists" Word="既に登録されています" />
+		<Item Id="home/auto-regist/merge/title"      Word="アイテム自動登録確認" />
+		<Item Id="home/auto-regist/merge/message"    Word="既にアイテムが登録されています。${br}既存データに追加されますがよろしいですか。" />
 		<Item Id="home/auto-regist/registed/title"   Word="アイテム自動登録" />
 		<Item Id="home/auto-regist/registed/message" Word="検索・登録処理が完了しました" />
 		<Item Id="home/auto-regist/group/program"    Word="プログラム" />
-		
 
 		<Item Id="tasktray/tooltip" Word="ぴーいー" />
 		<Item Id="tasktray/setting" Word="@[APPLICATION:NAME] ${setting}" />

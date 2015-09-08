@@ -12,8 +12,10 @@
 	xmlns:AC="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Converter"
 	AA:Language.Word="window/home"
 	Title="HomeWindow" 
-	Width="300"
-	Height="300"
+	Width="640"
+	SizeToContent="WidthAndHeight"
+	ResizeMode="NoResize"
+	Icon="/PeMain;component/Resources/Icon/App.ico"
 >
 	<AW:CommonDataWindow.Resources>
 		<ResourceDictionary>
@@ -27,18 +29,59 @@
 			<RowDefinition Height="*" />
 			<RowDefinition Height="Auto" />
 		</Grid.RowDefinitions>
-		<Grid Grid.Row="0">
-			<StackPanel>
-				<Button Command="{Binding ResistItemsCommand}">
-					auto regist
+		<Grid Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center">
+			<Grid Margin="16,0">
+				<Grid.Resources>
+					<Style TargetType="Image" BasedOn="{StaticResource DefaultImage}">
+						<Setter Property="Width" Value="128" />
+						<Setter Property="Height" Value="128" />
+					</Style>
+					<Style TargetType="Button">
+						<Setter Property="Margin" Value="16" />
+						<Setter Property="Padding" Value="16,4,16,4" />
+					</Style>
+					<Style TargetType="Label">
+						<Setter Property="HorizontalAlignment" Value="Center" />
+					</Style>
+					<Style TargetType="TextBlock">
+						<Setter Property="Margin" Value="16,4,16,4" />
+						<Setter Property="TextWrapping" Value="WrapWithOverflow" />
+						<Setter Property="Width" Value="180" />
+					</Style>
+				</Grid.Resources>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="Auto" />
+				</Grid.RowDefinitions>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition Width="Auto" />
+				</Grid.ColumnDefinitions>
+				<Button Grid.Row="0" Grid.Column="0" Command="{Binding ResistItemsCommand}">
+					<StackPanel>
+						<Image Source="{x:Static AM:AppResource.HomeSearchImage}" />
+						<Label Content="auto resist" AA:Language.Word="home/auto-regist/title" />
+					</StackPanel>
 				</Button>
-				<Button Command="{Binding ShowNotifyAreaCommand}">
-					notify area
+				<TextBlock Grid.Row="1" Grid.Column="0" Text="('_')" AA:Language.Word="home/auto-regist/message" />
+				
+				<Button Grid.Row="0" Grid.Column="1" Command="{Binding ShowNotifyAreaCommand}">
+					<StackPanel>
+						<Image Source="{x:Static AM:AppResource.HomeFlagImage}" />
+						<Label Content="notify area" AA:Language.Word="home/notify-area/title" />
+					</StackPanel>
 				</Button>
-				<Button Command="{Binding ResistStartupCommand}">
-					startup
+				<TextBlock Grid.Row="1" Grid.Column="1" Text="('_')" AA:Language.Word="home/notify-area/message" />
+				
+				<Button Grid.Row="0" Grid.Column="2" Command="{Binding ResistStartupCommand}">
+					<StackPanel>
+						<Image Source="{x:Static AM:AppResource.HomeWindowsImage}" />
+						<Label Content="startup" AA:Language.Word="home/startup/title" />
+					</StackPanel>
 				</Button>
-			</StackPanel>
+				<TextBlock Grid.Row="1" Grid.Column="2" Text="('_')" AA:Language.Word="home/startup/message" />
+			</Grid>
 		</Grid>
 		
 		<StackPanel Grid.Row="1" Style="{StaticResource DialogResultPanel}">

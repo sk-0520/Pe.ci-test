@@ -426,6 +426,9 @@
     <Compile Include="View\UpdateConfirmWindow.xaml.cs">
       <DependentUpon>UpdateConfirmWindow.xaml</DependentUpon>
     </Compile>
+    <Resource Include="Resources\Image\Home\HomeFlag.png" />
+    <Resource Include="Resources\Image\Home\HomeSearch.png" />
+    <Resource Include="Resources\Image\Home\HomeWindows.png" />
     <Resource Include="Resources\Image\Common\CommonEdit.png" />
     <Resource Include="Resources\Image\Template\TemplatePreview.png" />
     <Resource Include="Resources\Image\About\AboutComponentKindImage.png" />

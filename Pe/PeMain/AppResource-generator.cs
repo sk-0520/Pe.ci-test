@@ -21,7 +21,7 @@
 		/*
 		このソースは自動生成のため AppResource-generator.tt を編集すること。
 
-		生成元フィールド数: 68
+		生成元フィールド数: 71
 		*/
 		#region Icon: Application
 
@@ -1081,6 +1081,72 @@
 			get { return GetImage(CommonEditPath); }
 		}
 		#endregion CommonEdit
+		#region Image: HomeSearch
+
+		/// <summary>
+		/// [Image] HomeSearchのリソースパスを取得。
+		/// <para>/Resources/Image/Home/homeSearch.png</para>
+		/// </summary>
+		public static string HomeSearchPath
+		{
+			get { return homeSearch; }
+		}
+
+		/// <summary>
+		/// [Image] HomeSearchのイメージソースを取得。
+		/// <para>初回のみ生成を行う。</para>
+		/// <para>HomeSearchPath: /Resources/Image/Home/homeSearch.png</para>
+		/// </summary>
+		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
+		public static BitmapSource HomeSearchImage
+		{
+			get { return GetImage(HomeSearchPath); }
+		}
+		#endregion HomeSearch
+		#region Image: HomeFlag
+
+		/// <summary>
+		/// [Image] HomeFlagのリソースパスを取得。
+		/// <para>/Resources/Image/Home/homeFlag.png</para>
+		/// </summary>
+		public static string HomeFlagPath
+		{
+			get { return homeFlag; }
+		}
+
+		/// <summary>
+		/// [Image] HomeFlagのイメージソースを取得。
+		/// <para>初回のみ生成を行う。</para>
+		/// <para>HomeFlagPath: /Resources/Image/Home/homeFlag.png</para>
+		/// </summary>
+		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
+		public static BitmapSource HomeFlagImage
+		{
+			get { return GetImage(HomeFlagPath); }
+		}
+		#endregion HomeFlag
+		#region Image: HomeWindows
+
+		/// <summary>
+		/// [Image] HomeWindowsのリソースパスを取得。
+		/// <para>/Resources/Image/Home/homeWindows.png</para>
+		/// </summary>
+		public static string HomeWindowsPath
+		{
+			get { return homeWindows; }
+		}
+
+		/// <summary>
+		/// [Image] HomeWindowsのイメージソースを取得。
+		/// <para>初回のみ生成を行う。</para>
+		/// <para>HomeWindowsPath: /Resources/Image/Home/homeWindows.png</para>
+		/// </summary>
+		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
+		public static BitmapSource HomeWindowsImage
+		{
+			get { return GetImage(HomeWindowsPath); }
+		}
+		#endregion HomeWindows
 		#region Image: ToolbarToolbar
 
 		/// <summary>

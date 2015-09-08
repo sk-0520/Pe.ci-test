@@ -87,17 +87,17 @@
 						if(!File.Exists(startupPath)) {
 							try {
 								AppUtility.MakeAppShortcut(startupPath);
-								message = AppNonProcess.Language["home/startup/create"];
+								message = AppNonProcess.Language["home/startup/regist/create"];
 							} catch(Exception ex) {
 								AppNonProcess.Logger.Error(ex);
 								message = ex.Message;
 								image = MessageBoxImage.Error;
 							}
 						} else {
-							message = AppNonProcess.Language["home/startup/exists"];
+							message = AppNonProcess.Language["home/startup/regist/exists"];
 							AppNonProcess.Logger.Information(message, startupPath);
 						}
-						MessageBox.Show(message, AppNonProcess.Language["home/startup/title"], MessageBoxButton.OK, image);
+						MessageBox.Show(message, AppNonProcess.Language["home/startup/regist/title"], MessageBoxButton.OK, image);
 					}
 				);
 
@@ -128,7 +128,7 @@
 							}
 							LauncherGroupSetting.Groups.AddRange(createItems.LauncherGroupSetting.Groups);
 
-							MessageBox.Show(AppNonProcess.Language["home/auto-regist/registed/title"], AppNonProcess.Language["home/auto-regist/registed/message"], MessageBoxButton.OK, MessageBoxImage.Information);
+							MessageBox.Show(AppNonProcess.Language["home/auto-regist/registed/message"], AppNonProcess.Language["home/auto-regist/registed/title"], MessageBoxButton.OK, MessageBoxImage.Information);
 						}
 					}
 				);

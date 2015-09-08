@@ -84,6 +84,13 @@
 		const string commonEdit = "/Resources/Image/Common/CommonEdit.png";
 
 		[AppResource(AppResourceType.Image)]
+		const string homeSearch = "/Resources/Image/Home/homeSearch.png";
+		[AppResource(AppResourceType.Image)]
+		const string homeFlag = "/Resources/Image/Home/homeFlag.png";
+		[AppResource(AppResourceType.Image)]
+		const string homeWindows = "/Resources/Image/Home/homeWindows.png";
+
+		[AppResource(AppResourceType.Image)]
 		const string toolbarToolbar = "/Resources/Image/Toolbar/Toolbar.png";
 
 		[AppResource(AppResourceType.Image)]
