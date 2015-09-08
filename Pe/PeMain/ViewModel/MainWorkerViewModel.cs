@@ -1020,7 +1020,7 @@
 		void ResetSetting()
 		{
 			ResetCache(false);
-			
+
 			InitializeStatus();
 			CallPropertyChangeHotkey();
 
@@ -1034,6 +1034,25 @@
 			ResetClipboard();
 
 			ResetCommandWindow();
+
+			// バインドの無理やり付け替え
+			if (HasView) {
+				var temp = new MainWorkerViewModel(new ContentTypeTextNet.Pe.PeMain.Data.VariableConstants(), new Logger()) {
+					CommonData = this.CommonData,
+					LauncherToolbarWindows = new List<LauncherToolbarWindow>(),
+					NoteWindows = new List<NoteWindow>(),
+					TemplateWindow = this.TemplateWindow,
+					ClipboardWindow = this.ClipboardWindow,
+					LoggingWindow = this.LoggingWindow,
+				};
+				var stock = View.DataContext;
+				View.DataContext = temp;
+				View.DataContext = stock;
+
+				temp.CommonData = null;
+				temp = null;
+				View.ContextMenu.IsOpen = false;
+			}
 		}
 
 		static void ResetCulture(INonProcess nonProcess)
@@ -1310,7 +1329,10 @@
 			UninitializeSystemEvent();
 
 			if(!IsDisposed) {
-				CommonData.Dispose();
+				if (CommonData != null) {
+					CommonData.Dispose();
+					CommonData = null;
+				}
 			}
 			base.Dispose(disposing);
 		}

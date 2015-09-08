@@ -87,10 +87,22 @@
 		protected override void Dispose(bool disposing)
 		{
 			if (!IsDisposed) {
-				MainSetting.Dispose();
-				LauncherItemSetting.Dispose();
-				LauncherGroupSetting.Dispose();
-				Logger.Dispose();
+				if (MainSetting != null) {
+					MainSetting.Dispose();
+					MainSetting = null;
+				}
+				if (LauncherItemSetting != null) {
+					LauncherItemSetting.Dispose();
+					LauncherItemSetting = null;
+				}
+				if (LauncherGroupSetting != null) {
+					LauncherGroupSetting.Dispose();
+					LauncherGroupSetting = null;
+				}
+				if (Logger != null) {
+					Logger.Dispose();
+					Logger = null;
+				}
 			}
 			base.Dispose(disposing);
 		}
