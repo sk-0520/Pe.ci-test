@@ -138,6 +138,17 @@
 			);
 		}
 
+		public static void MoveZoderBttom(IntPtr hWnd)
+		{
+			NativeMethods.SetWindowPos(
+				hWnd,
+				new IntPtr((int)HWND.HWND_BOTTOM),
+				0, 0,
+				0, 0,
+				SWP.SWP_NOMOVE | SWP.SWP_NOSIZE
+			);
+		}
+
 		#endregion
 	}
 }

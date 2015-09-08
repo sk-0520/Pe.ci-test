@@ -37,6 +37,8 @@
 	using ContentTypeTextNet.Library.SharedLibrary.Data;
 	using ContentTypeTextNet.Pe.PeMain.Define;
 	using System.Windows.Media.Effects;
+	using System.Windows.Threading;
+	using System.Threading;
 
 	public class LauncherToolbarViewModel: HavingViewSingleModelWrapperViewModelBase<LauncherToolbarDataModel, LauncherToolbarWindow>, IApplicationDesktopToolbarData, IVisualStyleData, IHavingAppNonProcess, IWindowAreaCorrectionData, IWindowHitTestData, IHavingAppSender, IRefreshFromViewModel, IMenuItem
 	{
@@ -756,11 +758,17 @@
 			get 
 			{
 				if(NowFullScreen) {
+					if(HasView) {
+						WindowsUtility.MoveZoderBttom(View.Handle);
+					}
 					return false;
 				} else {
 					if(IsDocking && AutoHide && IsHidden) {
 						return true;
 					}
+					//if(DockType != DockType.None) {
+					//	return false;
+					//}
 					return TopMostProperty.GetTopMost(Model.Toolbar);
 				}
 			}
@@ -898,12 +906,45 @@
 		/// </summary>
 		public bool NowFullScreen {
 			get { return this._nowFullScreen; }
-			set {
-				AppNonProcess.Logger.Debug(string.Format("NowFullScreen {0} -> {1}", this._nowFullScreen, value));
-				SetVariableValue(ref this._nowFullScreen, value);
-				OnPropertyChanged("IsTopmost");
+			// TODO: 二回取得しちゃってワケわかめ状態、暫定対応としてドッキング状態は最前面表示しないようにする
+			set 
+			{
+				var prevFullScreen = this._nowFullScreen;
+
+				AppNonProcess.Logger.Debug(string.Format("fullscreen: [OLD]:{0} -> [NEW]:{1}",this._nowFullScreen, value));
+				if(SetVariableValue(ref this._nowFullScreen, value)) {
+					var nowTime = DateTime.Now;
+					if(this._nowFullScreen) {
+						AppNonProcess.Logger.Debug("fullscreen: first, cancel-flag on");
+						OnPropertyChanged("IsTopmost");
+						this._prevChangeFullScreen = DateTime.Now;
+					} else {
+						TimeSpan skipNoFullScreenChange = TimeSpan.FromMilliseconds(500);
+						var nowSpan = nowTime - _prevChangeFullScreen;
+						AppNonProcess.Logger.Debug(string.Format("fullscreen: catch cancel, WAIT:{0}, NOW:{1}", skipNoFullScreenChange, nowSpan));
+						if(nowSpan < skipNoFullScreenChange) {
+							// 二重で発行されたので無視する
+							AppNonProcess.Logger.Debug("fullscreen: ignore cancel");
+							this._nowFullScreen = prevFullScreen;
+							this._prevFullScreenCancel = true;
+						} else {
+							AppNonProcess.Logger.Debug("fullscreen: " + this._nowFullScreen.ToString());
+							OnPropertyChanged("IsTopmost");
+							if(this._nowFullScreen && this._prevFullScreenCancel) {
+								// 前回フルクリーンが二重発行されてた場合は解除する
+								this._prevFullScreenCancel = false;
+								AppNonProcess.Logger.Debug("fullscreen: cancel-flag off");
+							}
+
+							this._prevChangeFullScreen = nowTime;
+						}
+					}
+				}
 			}
 		}
+		DateTime _prevChangeFullScreen;
+		bool _prevFullScreenCancel;
+
 		public bool IsDocking { get; set; }
 		/// <summary>
 		/// ドッキング種別。
@@ -933,6 +974,7 @@
 						"PositionContentButton",
 						"PositionMenuButton",
 						"ResizeMode",
+						"IsTopmost",
 					});
 					View.UpdateLayout();
 				}

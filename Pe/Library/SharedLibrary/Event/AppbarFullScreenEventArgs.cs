@@ -14,5 +14,6 @@
 		}
 
 		public bool FullScreen { get; private set; }
+		public bool Handled { get; set; }
 	}
 }

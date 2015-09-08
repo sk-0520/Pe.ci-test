@@ -30,7 +30,7 @@
 		/// <summary>
 		/// フルスクリーンイベント。
 		/// </summary>
-		public event EventHandler<AppbarFullScreenEventArgs> AppbarFullScreen = delegate { };
+		//public event EventHandler<AppbarFullScreenEventArgs> AppbarFullScreen = delegate { };
 		/// <summary>
 		/// 位置変更時に発生。
 		/// </summary>
@@ -70,9 +70,11 @@
 
 		protected void OnAppbarFullScreen(bool fullScreen)
 		{
-			var e = new AppbarFullScreenEventArgs(fullScreen);
-			RestrictionViewModel.NowFullScreen = e.FullScreen;
-			AppbarFullScreen(View, e);
+			//var e = new AppbarFullScreenEventArgs(fullScreen);
+			//RestrictionViewModel.NowFullScreen = e.FullScreen;
+			RestrictionViewModel.NowFullScreen = fullScreen;
+			//e.Handled = true;
+			//AppbarFullScreen(View, e);
 		}
 
 		protected virtual void OnAppbarPosChanged()
@@ -559,6 +561,7 @@
 								case (int)ABN.ABN_FULLSCREENAPP:
 									// フルスクリーン
 									OnAppbarFullScreen(WindowsUtility.ConvertBoolFromLParam(lParam));
+									//return IntPtr.Zero;
 									break;
 
 								case (int)ABN.ABN_POSCHANGED:
