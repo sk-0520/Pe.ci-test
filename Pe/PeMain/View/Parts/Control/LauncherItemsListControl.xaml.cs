@@ -89,6 +89,7 @@
 				if (value != null) {
 					SelectedLauncherModel = value.Model;
 				}
+				this.listItems.ScrollIntoView(this.listItems.SelectedItem);
 			}
 		}
 
