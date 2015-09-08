@@ -16,6 +16,8 @@
 	SizeToContent="WidthAndHeight"
 	ResizeMode="NoResize"
 	Icon="/PeMain;component/Resources/Icon/App.ico"
+	WindowStartupLocation="CenterScreen"
+	Topmost="True"
 >
 	<AW:CommonDataWindow.Resources>
 		<ResourceDictionary>
