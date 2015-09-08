@@ -147,7 +147,7 @@
 			return IntPtr.Zero;
 		}
 
-		void ForcePosition()
+		public void ForcePosition()
 		{
 			if(!RestrictionViewModel.UsingMoveLimitArea) {
 				return;

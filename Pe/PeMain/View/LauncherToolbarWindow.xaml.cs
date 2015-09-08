@@ -158,6 +158,9 @@
 					//VisualStyle.UnsetStyle();
 					VisualStyle.SetStyle();
 				}
+				if(dockType == DockType.None) {
+					WindowAreaCorrection.ForcePosition();
+				}
 				//NativeMethods.UpdateWindow(Handle);
 			}
 			UIUtility.SetStyleToolWindow(this, false, false);
