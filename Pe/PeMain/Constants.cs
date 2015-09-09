@@ -29,7 +29,7 @@
 		/// 前回バージョンがこれ未満なら使用許諾を表示
 		/// </summary>
 		[ConstantsProperty]
-		public static readonly Version acceptVersion = new Version(0, 0, 0, 0);
+		public static readonly Version acceptVersion = new Version(0, 63, 0, 0);
 
 		/// <summary>
 		/// Forms版のバージョン。
