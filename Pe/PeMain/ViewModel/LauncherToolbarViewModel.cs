@@ -99,12 +99,12 @@
 
 		static Thickness GetButtonPadding()
 		{
-			return new Thickness(4, 2, 4, 2);
+			return new Thickness(3,2,3,2);
 		}
 
 		static Thickness GetIconMargin()
 		{
-			return new Thickness(4);
+			return new Thickness(2);
 		}
 
 		static Size GetButtonSize(Size iconSize, double menuWidth, bool showText, double textWidth, Thickness buttonPadding, Thickness iconMargin)
