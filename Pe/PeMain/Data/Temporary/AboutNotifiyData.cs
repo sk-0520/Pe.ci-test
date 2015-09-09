@@ -6,7 +6,7 @@
 	using System.Text;
 	using System.Threading.Tasks;
 
-	public class AboutNotifiyItem
+	public class AboutNotifiyData : NotifiyDataBase
 	{
 		#region property
 

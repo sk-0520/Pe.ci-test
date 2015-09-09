@@ -27,7 +27,7 @@
 
 		#endregion
 
-		public LauncherItemSettingViewModel(LauncherItemSettingModel launcherItemSetting, LauncherItemSettingControl view, IAppNonProcess appNonProcess, IAppSender appSender, SettingNotifiyItem settingNotifiyItem)
+		public LauncherItemSettingViewModel(LauncherItemSettingModel launcherItemSetting, LauncherItemSettingControl view, IAppNonProcess appNonProcess, IAppSender appSender, SettingNotifiyData settingNotifiyItem)
 			: base(view, appNonProcess, settingNotifiyItem)
 		{
 			LauncherItemSetting = launcherItemSetting;

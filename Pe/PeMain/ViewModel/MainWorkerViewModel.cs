@@ -341,7 +341,7 @@
 					o => {
 						PausingBasicAction(() => {
 							var window = new AboutWindow();
-							var notifiy = new AboutNotifiyItem();
+							var notifiy = new AboutNotifiyData();
 							window.SetCommonData(CommonData, notifiy);
 							window.ShowDialog();
 							if(notifiy.CheckUpdate) {

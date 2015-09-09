@@ -19,7 +19,7 @@
 
 	public class TemplateSettingViewModel : SettingPageViewModelBase<TemplateSettingControl>
 	{
-		public TemplateSettingViewModel(TemplateSettingModel template, TemplateSettingControl view, IAppNonProcess appNonProcess, SettingNotifiyItem settingNotifiyItem)
+		public TemplateSettingViewModel(TemplateSettingModel template, TemplateSettingControl view, IAppNonProcess appNonProcess, SettingNotifiyData settingNotifiyItem)
 			: base(view, appNonProcess, settingNotifiyItem)
 		{
 			Template = template;

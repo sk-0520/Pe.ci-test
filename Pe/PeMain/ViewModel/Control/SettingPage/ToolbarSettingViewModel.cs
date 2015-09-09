@@ -53,7 +53,7 @@
 
 		#endregion
 
-		public ToolbarSettingViewModel(ToolbarSettingModel toolbarSetting, LauncherGroupSettingModel groupSettingModel, LauncherItemSettingModel launcherItemSetting, ToolbarSettingControl view, IAppNonProcess appNonProcess, IAppSender appSender, SettingNotifiyItem settingNotifiyItem)
+		public ToolbarSettingViewModel(ToolbarSettingModel toolbarSetting, LauncherGroupSettingModel groupSettingModel, LauncherItemSettingModel launcherItemSetting, ToolbarSettingControl view, IAppNonProcess appNonProcess, IAppSender appSender, SettingNotifiyData settingNotifiyItem)
 			: base(view, appNonProcess, settingNotifiyItem)
 		{
 			ToolbarSetting = toolbarSetting;

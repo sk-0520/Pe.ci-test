@@ -31,7 +31,7 @@
 
 		#endregion
 
-		public MainSettingViewModel(RunningInformationSettingModel runningInformation, LanguageSettingModel language, LoggingSettingModel logging, SystemEnvironmentSettingModel systemEnvironment, StreamSettingModel stream, WindowSaveSettingModel windowSave,MainSettingControl view, IAppNonProcess appNonProcess, SettingNotifiyItem settingNotifiyItem)
+		public MainSettingViewModel(RunningInformationSettingModel runningInformation, LanguageSettingModel language, LoggingSettingModel logging, SystemEnvironmentSettingModel systemEnvironment, StreamSettingModel stream, WindowSaveSettingModel windowSave,MainSettingControl view, IAppNonProcess appNonProcess, SettingNotifiyData settingNotifiyItem)
 			: base(view, appNonProcess, settingNotifiyItem)
 		{
 			RunningInformation = runningInformation;

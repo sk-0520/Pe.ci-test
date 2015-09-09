@@ -37,7 +37,7 @@
 		{
 			CommonData = commonData;
 			View = view;
-			SettingNotifiyItem = new SettingNotifiyItem();
+			SettingNotifiyItem = new SettingNotifiyData();
 
 			if(HasView) {
 				this._selectedTab = View.pageMain;
@@ -46,7 +46,7 @@
 
 		#region property
 
-		public SettingNotifiyItem SettingNotifiyItem { get; private set; }
+		public SettingNotifiyData SettingNotifiyItem { get; private set; }
 
 		public TabItem SelectedTab
 		{ 

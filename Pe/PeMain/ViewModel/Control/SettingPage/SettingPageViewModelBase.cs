@@ -16,7 +16,7 @@
 	public abstract class SettingPageViewModelBase<TView>: ViewModelBase, IHavingAppNonProcess, IHavingView<TView>
 		where TView: UserControl
 	{
-		public SettingPageViewModelBase(TView view, IAppNonProcess appNonProcess, SettingNotifiyItem settingNotifiyItem)
+		public SettingPageViewModelBase(TView view, IAppNonProcess appNonProcess, SettingNotifiyData settingNotifiyItem)
 		{
 			CheckUtility.DebugEnforceNotNull(view);
 			CheckUtility.DebugEnforceNotNull(appNonProcess);
@@ -29,7 +29,7 @@
 
 		#region property
 
-		protected SettingNotifiyItem SettingNotifiyItem { get; private set; }
+		protected SettingNotifiyData SettingNotifiyItem { get; private set; }
 
 		#endregion
 
