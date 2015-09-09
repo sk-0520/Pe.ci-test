@@ -9,6 +9,6 @@
 	/// <summary>
 	/// 通知用受け渡しデータ。
 	/// </summary>
-	public abstract class NotifiyDataBase
+	public abstract class NotifyDataBase
 	{ }
 }

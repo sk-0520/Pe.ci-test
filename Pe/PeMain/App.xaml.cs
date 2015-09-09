@@ -42,15 +42,22 @@
 			systemLogger.Information("start!", commandLine);
 			systemLogger.Information("application", new AppInformationCollection().ToString());
 			this._mainWorker = new MainWorkerViewModel(constants, systemLogger);
-			if (this._mainWorker.Initialize()) {
+			var startupNotifiyData = this._mainWorker.Initialize();
+			if (startupNotifiyData.AcceptRunning) {
 				LanguageUtility.RecursiveSetLanguage(this._notifyIcon, this._mainWorker.Language);
 				this._notifyIcon = (TaskbarIcon)FindResource("root");
 				this._notifyIcon.DataContext = this._mainWorker;
 				this._mainWorker.SetView(this._notifyIcon);
-				this._mainWorker.CheckUpdateProcessAsync();
-				//var menu = (ContextMenu)FindResource("ContextMenu");
-				//menu.PlacementTarget = this._notifyIcon;
-				//menu.DataContext = this._notifyIcon.DataContext;
+				if (!startupNotifiyData.ExistsSetting && !startupNotifiyData.ExistsFormsSetting) {
+					// 現行設定も旧設定もなければ完全に初回とする
+					Application.Current.Dispatcher.BeginInvoke(new Action(() => {
+						this._mainWorker.ShowHomeDialog();
+						this._mainWorker.ResetToolbar();
+						this._mainWorker.CheckUpdateProcessAsync();
+					}), System.Windows.Threading.DispatcherPriority.ApplicationIdle);
+				} else {
+					this._mainWorker.CheckUpdateProcessAsync();
+				}
 			} else {
 				// 終了
 				Application.Current.Shutdown();

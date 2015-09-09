@@ -523,7 +523,7 @@
 
 		#region function
 
-		bool ShowHomeDialog()
+		public bool ShowHomeDialog()
 		{
 			var isAppReload = false;
 			PausingBasicAction(() => {
@@ -576,7 +576,7 @@
 		/// 各種設定の読み込み。
 		/// </summary>
 		/// <returns>本体設定が存在せず、Forms版での設定ファイルが存在する場合は偽、それ以外は真。</returns>
-		bool LoadSetting()
+		StartupNotifyData LoadSetting()
 		{
 			using(var timeLogger = CommonData.NonProcess.CreateTimeLogger()) {
 				// 各種設定の読込
@@ -590,13 +590,13 @@
 				CommonData.ClipboardIndexSetting = AppUtility.LoadSetting<ClipboardIndexSettingModel>(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingClipboardIndexFilePath), Constants.fileTypeTemplateIndex, CommonData.Logger);
 				CommonData.TemplateIndexSetting = AppUtility.LoadSetting<TemplateIndexSettingModel>(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingTemplateIndexFilePath), Constants.fileTypeClipboardIndex, CommonData.Logger);
 
-				if(!File.Exists(mainSettingPath)) {
+				var result = new StartupNotifyData();
+				result.ExistsSetting = File.Exists(mainSettingPath);
+				if (!result.ExistsSetting) {
 					var formsMainSettingPath = Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.FormsUserSettingMainSettinFilePath);
-					if(File.Exists(formsMainSettingPath)) {
-						return false;
-					}
+					result.ExistsFormsSetting = File.Exists(formsMainSettingPath);
 				}
-				return true;
+				return result;
 			}
 		}
 
@@ -654,20 +654,21 @@
 		/// <summary>
 		///プログラム実行を準備。
 		/// </summary>
-		public bool Initialize()
+		public StartupNotifyData Initialize()
 		{
 			using(var timeLogger = CommonData.NonProcess.CreateTimeLogger()) {
 
-				var isLoaded = LoadSetting();
-				if(!isLoaded) {
+				var startupNotifyData = LoadSetting();
+				if (startupNotifyData.ExistsFormsSetting) {
 					// Forms版からのデータ変換
 					SettingUtility.ConvertFormsSetting(CommonData);
 				}
 				// 前回バージョンが色々必要なのでインクリメント前の生情報を保持しておく。
 				var previousVersion = (Version)CommonData.MainSetting.RunningInformation.LastExecuteVersion;
 				ResetCulture(CommonData.NonProcess);
-				if(!InitializeAccept()) {
-					return false;
+				startupNotifyData.AcceptRunning = InitializeAccept();
+				if (!startupNotifyData.AcceptRunning) {
+					return startupNotifyData;
 				}
 				if(previousVersion == null) {
 					foreach(var screen in Screen.AllScreens) {
@@ -692,7 +693,7 @@
 				CreateClipboard();
 				CreateCommandWindow();
 
-				return true;
+				return startupNotifyData;
 			}
 		}
 
@@ -847,7 +848,7 @@
 			LauncherToolbarWindows = null;
 		}
 
-		void ResetToolbar()
+		internal void ResetToolbar()
 		{
 			RemoveToolbar();
 			CreateToolbar();
