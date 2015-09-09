@@ -153,7 +153,7 @@
     <Compile Include="Data\Temporary\StartupNotifyData.cs" />
     <Compile Include="Define\WindowSaveType.cs" />
     <Compile Include="Logic\Updater.cs" />
-    <Compile Include="Data\UpdateInformation.cs" />
+    <Compile Include="Data\Temporary\UpdateInformation.cs" />
     <Compile Include="Define\AboutCopyKind.cs" />
     <Compile Include="Define\CommandKind.cs" />
     <Compile Include="Define\Timing.cs" />

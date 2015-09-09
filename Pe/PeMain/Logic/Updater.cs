@@ -10,6 +10,7 @@
 	using System.Threading.Tasks;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 	using ContentTypeTextNet.Pe.PeMain.Data;
+	using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 	using Microsoft.Win32.SafeHandles;
 

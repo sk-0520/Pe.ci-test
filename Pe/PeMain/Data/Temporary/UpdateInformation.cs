@@ -1,4 +1,4 @@
-﻿namespace ContentTypeTextNet.Pe.PeMain.Data
+﻿namespace ContentTypeTextNet.Pe.PeMain.Data.Temporary
 {
 	using System;
 	using System.Collections.Generic;
