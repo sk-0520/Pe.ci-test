@@ -80,6 +80,7 @@
 				<Setter Property="FontWeight" Value="{Binding DataContext.FontBold, Converter={StaticResource BooleanFontWeightConverter}, Mode=OneWay, ElementName=root}" />
 				<Setter Property="FontStyle" Value="{Binding DataContext.FontItalic, Converter={StaticResource BooleanFontStyleConverter}, Mode=OneWay, ElementName=root}" />
 				<Setter Property="FontSize" Value="{Binding DataContext.FontSize, Mode=OneWay, ElementName=root}" />
+				<Setter Property="Effect" Value="{Binding DataContext.ToolbarTextEffect, ElementName=root}" />
 			</Style>
 
 			<Style x:Key="ArrowParent" TargetType="Grid">
