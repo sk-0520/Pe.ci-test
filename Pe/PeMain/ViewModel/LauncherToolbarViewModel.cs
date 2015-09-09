@@ -922,10 +922,9 @@
 							OnPropertyChanged("IsTopmost");
 							this._prevFullScreenTime = DateTime.Now;
 						} else {
-							TimeSpan skipNoFullScreenChange = TimeSpan.FromMilliseconds(500);
 							var nowSpan = nowTime - _prevFullScreenTime;
-							AppNonProcess.Logger.Debug(string.Format("fullscreen: catch cancel, WAIT:{0}, NOW:{1}", skipNoFullScreenChange, nowSpan));
-							if (nowSpan < skipNoFullScreenChange) {
+							AppNonProcess.Logger.Debug(string.Format("fullscreen: catch cancel, WAIT:{0}, NOW:{1}", Constants.FullScreenIgnoreTime, nowSpan));
+							if (nowSpan < Constants.FullScreenIgnoreTime) {
 								// 二重で発行されたので無視する
 								AppNonProcess.Logger.Debug("fullscreen: ignore cancel");
 								this._nowFullScreen = prevFullScreen;

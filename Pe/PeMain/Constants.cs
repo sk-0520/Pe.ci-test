@@ -21,6 +21,11 @@
 	/// </summary>
 	public static partial class Constants
 	{
+		static Constants()
+		{
+			FullScreenIgnoreTime = TimeSpan.Parse( ConfigurationManager.AppSettings["fullscreen-ignore-time"]);
+		}
+
 		[ConstantsProperty]
 		const string applicationName = "Pe-WPF";
 		public const string updateProgramDirectoryName = "Updater";
@@ -326,6 +331,8 @@
 
 		public static int BackupSettingCount { get { return int.Parse(ConfigurationManager.AppSettings["backup-setting"]); } }
 		public static int BackupArchiveCount { get { return int.Parse(ConfigurationManager.AppSettings["backup-archive"]); } }
+
+		public static TimeSpan FullScreenIgnoreTime { get; private set; }
 
 		#endregion
 
