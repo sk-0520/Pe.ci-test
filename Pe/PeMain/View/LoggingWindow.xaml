@@ -32,6 +32,7 @@
 				<ResourceDictionary Source="/View/Parts/Resource/TextBoxDictionary.xaml"/>
 				<ResourceDictionary Source="/View/Parts/Resource/ImageDictionary.xaml"/>
 				<ResourceDictionary Source="/View/Parts/Resource/GridSplitterDictionary.xaml"/>
+				<ResourceDictionary Source="/View/Parts/Resource/LabelDictionary.xaml"/>
 			</ResourceDictionary.MergedDictionaries>
 			<AC:SelectedIndexNumberConverter x:Key="SelectedIndexNumberConverter" />
 		</ResourceDictionary>
@@ -106,8 +107,31 @@
 			</ListView>
 			<GridSplitter Grid.Row="1" Style="{StaticResource DefaultHorizonGridSplitter}" />
 			<Grid Grid.Row="2">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="*" />
+				</Grid.RowDefinitions>
+				<Grid Grid.Row="0">
+					<Grid>
+						<Grid.RowDefinitions>
+							<RowDefinition />
+							<RowDefinition />
+							<RowDefinition />
+						</Grid.RowDefinitions>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition />
+							<ColumnDefinition />
+							<ColumnDefinition />
+						</Grid.ColumnDefinitions>
+						
+						<Label Grid.Row="0" Grid.Column="0" Content="caller" AA:Language.Word="logging/detail/caller" Style="{StaticResource HeaderLabel}" />
+						<Label Grid.Row="0" Grid.Column="1" Content="caller" AA:Language.Word="logging/detail/caller/member" Style="{StaticResource HeaderLabel}" />
+						<TextBox Grid.Row="0" Grid.Column="2" IsReadOnly="True" Text="{Binding SelectedItem.CallerMember, ElementName=listLog}" Style="{StaticResource DefaultTextBox}" />
+						
+					</Grid>
+				</Grid>
 				<TextBox
-					Grid.Row="2"
+					Grid.Row="1"
 					AllowDrop="False"
 					HorizontalScrollBarVisibility="Disabled"
 					VerticalScrollBarVisibility="Auto"
