@@ -366,7 +366,7 @@
 			}
 		}
 
-		void RunItem(CommandItemViewModel commandItem, bool showExtension)
+		void RunItem(CommandItemViewModel commandItem, bool extension)
 		{
 			CheckUtility.EnforceNotNull(commandItem);
 
@@ -376,7 +376,11 @@
 				case CommandKind.File:
 				case CommandKind.Drive:
 					try {
-						ExecuteUtility.OpenFile(commandItem.FilePath, AppNonProcess);
+						if (commandItem.CommandKind == CommandKind.File && extension) {
+							ExecuteUtility.OpenDirectoryWithFileSelect(commandItem.FilePath, AppNonProcess, default(LauncherItemModel));
+						} else {
+							ExecuteUtility.OpenFile(commandItem.FilePath, AppNonProcess);
+						}
 					} catch (Exception ex) {
 						AppNonProcess.Logger.Warning(ex);
 					}
@@ -384,7 +388,7 @@
 
 				case CommandKind.LauncherItemName:
 				case CommandKind.LauncherItemTag: {
-						if (showExtension) {
+						if (extension) {
 							ScreenModel screen = null;
 							if (HasView) {
 								screen = Screen.FromHandle(View.Handle);
