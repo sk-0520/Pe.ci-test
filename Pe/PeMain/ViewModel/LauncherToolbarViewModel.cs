@@ -280,6 +280,11 @@
 			}
 		}
 
+		public double TextWidth
+		{
+			get { return Model.Toolbar.TextWidth; }
+		}
+
 		public bool NowFloatWindow { get { return DockType == DockType.None; } }
 		//public bool CanWindowDrag { get { return NowFloatWindow; } }
 
@@ -413,27 +418,28 @@
 		public Color ToolbarHotTrack { get { return GetAppIconColor(); } }
 		public Visibility TextVisible { get { return Model.Toolbar.TextVisible ? Visibility.Visible : Visibility.Collapsed; } }
 
-		public Brush ToolbarTextForeground
+		public Brush ToolbarForeground
 		{
 			get
 			{
-				var result = new SolidColorBrush();
-
-				var color = MediaUtility.GetAutoColor(VisualPlainColor);
-				result.Color = color;
+				var result = new SolidColorBrush() {
+					Color = MediaUtility.GetNegativeColor(MediaUtility.GetAutoColor(VisualPlainColor))
+				};
 
 				return result;
 			}
 		}
+
 		public Effect ToolbarTextEffect
 		{
 			get
 			{
-				var color = MediaUtility.GetAutoColor(MediaUtility.GetAutoColor(VisualPlainColor));
+				var color = MediaUtility.GetAutoColor(VisualPlainColor);
 				var result = new DropShadowEffect() {
 					Color = color,
-					BlurRadius = 4,
+					BlurRadius = 2,
 					ShadowDepth = 0,
+					Opacity = 0.9
 				};
 
 				return result;
@@ -1262,7 +1268,7 @@
 				BorderBrush = viewBrush;
 			}
 			CallOnPropertyChange(
-				"ToolbarTextForeground",
+				"ToolbarForeground",
 				"ToolbarTextEffect"
 			);
 		}
