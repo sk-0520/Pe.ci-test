@@ -43,6 +43,9 @@
 	public class LauncherToolbarViewModel: HavingViewSingleModelWrapperViewModelBase<LauncherToolbarDataModel, LauncherToolbarWindow>, IApplicationDesktopToolbarData, IVisualStyleData, IHavingAppNonProcess, IWindowAreaCorrectionData, IWindowHitTestData, IHavingAppSender, IRefreshFromViewModel, IMenuItem
 	{
 		#region define
+
+		const double buttonPadding = 8;
+
 		#endregion
 
 		#region static
@@ -100,7 +103,7 @@
 		static Size GetButtonSize(Size iconSize, double menuWidth, bool showText, double textWidth)
 		{
 			//TODO: どれくらいのサイズがいいかね。
-			var padding = 10.0;
+			var padding = buttonPadding;
 
 			var mainButtonSize = iconSize;
 			return new Size(mainButtonSize.Width + padding + menuWidth + (showText ? textWidth : 0), mainButtonSize.Height + padding);
