@@ -191,6 +191,7 @@
     <Compile Include="Model\Unmanaged\Gdi\IconHandleModel.cs" />
     <Compile Include="Model\Unmanaged\Gdi\BitmapHandleModel.cs" />
     <Compile Include="Model\Unmanaged\GlobalAllocModel.cs" />
+    <Compile Include="View\Attached\BrushAnimation.cs" />
     <Compile Include="View\Attached\DragTarget.cs" />
     <Compile Include="View\Attached\TextBoxHelper.cs" />
     <Compile Include="View\Control\HotkeyControl.cs" />

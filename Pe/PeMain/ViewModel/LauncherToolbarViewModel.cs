@@ -43,9 +43,6 @@
 	public class LauncherToolbarViewModel: HavingViewSingleModelWrapperViewModelBase<LauncherToolbarDataModel, LauncherToolbarWindow>, IApplicationDesktopToolbarData, IVisualStyleData, IHavingAppNonProcess, IWindowAreaCorrectionData, IWindowHitTestData, IHavingAppSender, IRefreshFromViewModel, IMenuItem
 	{
 		#region define
-
-		const double buttonPadding = 8;
-
 		#endregion
 
 		#region static
@@ -100,13 +97,20 @@
 			return 20;
 		}
 
-		static Size GetButtonSize(Size iconSize, double menuWidth, bool showText, double textWidth)
+		static Thickness GetButtonPadding()
 		{
-			//TODO: どれくらいのサイズがいいかね。
-			var padding = buttonPadding;
+			return new Thickness(3,2,3,2);
+		}
 
+		static Thickness GetIconMargin()
+		{
+			return new Thickness(2);
+		}
+
+		static Size GetButtonSize(Size iconSize, double menuWidth, bool showText, double textWidth, Thickness buttonPadding, Thickness iconMargin)
+		{
 			var mainButtonSize = iconSize;
-			return new Size(mainButtonSize.Width + padding + menuWidth + (showText ? textWidth : 0), mainButtonSize.Height + padding);
+			return new Size(mainButtonSize.Width + iconMargin.GetHorizon() + buttonPadding.GetHorizon() + menuWidth + (showText ? textWidth : 0), mainButtonSize.Height + iconMargin.GetVertical() + buttonPadding.GetVertical());
 		}
 
 		double GetHideWidth(DockType dockType)
@@ -189,7 +193,9 @@
 			this._captionWidth = GetCaptionWidth();
 			MenuWidth = GetMenuWidth();
 			IconSize = GetIconSize(Model.Toolbar.IconScale);
-			ButtonSize = GetButtonSize(IconSize, MenuWidth, Model.Toolbar.TextVisible, Model.Toolbar.TextWidth);
+			ButtonPadding = GetButtonPadding();
+			IconMargin = GetIconMargin();
+			ButtonSize = GetButtonSize(IconSize, MenuWidth, Model.Toolbar.TextVisible, Model.Toolbar.TextWidth, ButtonPadding, IconMargin);
 
 			//BorderThickness = GetBorderThickness(Model.Toolbar.DockType, View);
 			if(HasView) {
@@ -249,6 +255,8 @@
 		public Size ButtonSize { get; set; }
 		public double MenuWidth { get; set; }
 		public double ContentWidth { get { return ButtonSize.Width - MenuWidth; } }
+		public Thickness ButtonPadding { get; set; }
+		public Thickness IconMargin { get; set; }
 
 		public double FirstWidth { 
 			get
@@ -270,6 +278,11 @@
 					return ContentWidth;
 				}
 			}
+		}
+
+		public double TextWidth
+		{
+			get { return Model.Toolbar.TextWidth; }
 		}
 
 		public bool NowFloatWindow { get { return DockType == DockType.None; } }
@@ -405,27 +418,28 @@
 		public Color ToolbarHotTrack { get { return GetAppIconColor(); } }
 		public Visibility TextVisible { get { return Model.Toolbar.TextVisible ? Visibility.Visible : Visibility.Collapsed; } }
 
-		public Brush ToolbarTextForeground
+		public Brush ToolbarForeground
 		{
 			get
 			{
-				var result = new SolidColorBrush();
-
-				var color = MediaUtility.GetAutoColor(VisualPlainColor);
-				result.Color = color;
+				var result = new SolidColorBrush() {
+					Color = MediaUtility.GetNegativeColor(MediaUtility.GetAutoColor(VisualPlainColor))
+				};
 
 				return result;
 			}
 		}
+
 		public Effect ToolbarTextEffect
 		{
 			get
 			{
-				var color = MediaUtility.GetAutoColor(MediaUtility.GetAutoColor(VisualPlainColor));
+				var color = MediaUtility.GetAutoColor(VisualPlainColor);
 				var result = new DropShadowEffect() {
 					Color = color,
-					BlurRadius = 4,
+					BlurRadius = 2,
 					ShadowDepth = 0,
+					Opacity = 0.9
 				};
 
 				return result;
@@ -1254,7 +1268,7 @@
 				BorderBrush = viewBrush;
 			}
 			CallOnPropertyChange(
-				"ToolbarTextForeground",
+				"ToolbarForeground",
 				"ToolbarTextEffect"
 			);
 		}
