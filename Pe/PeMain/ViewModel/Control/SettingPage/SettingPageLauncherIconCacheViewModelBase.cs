@@ -16,7 +16,7 @@
 	public abstract class SettingPageLauncherIconCacheViewModelBase<TView>: SettingPageViewModelBase<TView>
 		where TView: UserControl
 	{
-		public SettingPageLauncherIconCacheViewModelBase(TView view, IAppNonProcess appNonProcess, SettingNotifiyData settingNotifiyItem)
+		public SettingPageLauncherIconCacheViewModelBase(TView view, IAppNonProcess appNonProcess, SettingNotifyData settingNotifiyItem)
 			: base(view, appNonProcess, settingNotifiyItem)
 		{ }
 	}

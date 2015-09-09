@@ -140,7 +140,7 @@
 			get { return WindowSaveData.SystemItems.Select(w => new WindowItemCollectionViewModel(w)); }
 		}
 
-		public bool IsVisibledShellHideFile { get { return SystemEnvironmentUtility.IsHideFileShow(); } }
+		public bool IsVisibledShellHideFile { get { return SystemEnvironmentUtility.IsHiddenFileShow(); } }
 		public bool IsVisibledShellExtension { get { return SystemEnvironmentUtility.IsExtensionShow(); } }
 
 		TemplateWindow TemplateWindow { get; set; }
@@ -341,7 +341,7 @@
 					o => {
 						PausingBasicAction(() => {
 							var window = new AboutWindow();
-							var notifiy = new AboutNotifiyData();
+							var notifiy = new AboutNotifyData();
 							window.SetCommonData(CommonData, notifiy);
 							window.ShowDialog();
 							if(notifiy.CheckUpdate) {
@@ -1118,7 +1118,7 @@
 
 		void SwitchShellHideFile()
 		{
-			SystemEnvironmentUtility.SetHideFileShow(!IsVisibledShellHideFile);
+			SystemEnvironmentUtility.SetHiddenFileShow(!IsVisibledShellHideFile);
 			SystemEnvironmentUtility.RefreshShell();
 			OnPropertyChanged("IsVisibledShellHideFile");
 		}
@@ -1864,7 +1864,7 @@
 					{
 						SwitchShellHideFile();
 						string message;
-						if(SystemEnvironmentUtility.IsHideFileShow()) {
+						if(SystemEnvironmentUtility.IsHiddenFileShow()) {
 							message = "notify/info/hidefile/message/show";
 						} else {
 							message = "notify/info/hidefile/message/hide";

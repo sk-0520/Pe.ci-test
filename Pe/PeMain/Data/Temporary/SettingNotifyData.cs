@@ -10,7 +10,7 @@
 	/// 設定データ通知用クラス。
 	/// <para>確定時に実ファイル操作などが必要な印として使用する。</para>
 	/// </summary>
-	public class SettingNotifiyData : NotifyDataBase
+	public class SettingNotifyData : NotifyDataBase
 	{
 		#region property
 

@@ -28,7 +28,7 @@
 
 		#endregion
 
-		public ClipboardSettingViewModel(ClipboardSettingModel clipboard, ClipboardSettingControl view, IAppNonProcess appNonProcess, SettingNotifiyData settingNotifiyItem)
+		public ClipboardSettingViewModel(ClipboardSettingModel clipboard, ClipboardSettingControl view, IAppNonProcess appNonProcess, SettingNotifyData settingNotifiyItem)
 			: base(view, appNonProcess, settingNotifiyItem)
 		{
 			Clipboard = clipboard;

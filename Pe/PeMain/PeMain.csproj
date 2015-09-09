@@ -145,7 +145,7 @@
     <Compile Include="ConstantsRangeAttribute.cs">
       <DependentUpon>Constants.cs</DependentUpon>
     </Compile>
-    <Compile Include="Data\Temporary\AboutNotifiyData.cs" />
+    <Compile Include="Data\Temporary\AboutNotifyData.cs" />
     <Compile Include="Data\Temporary\ItemWithScreen.cs" />
     <Compile Include="Data\Temporary\LauncherGroupAndItems.cs" />
     <Compile Include="Data\Temporary\LauncherItemWithScreen.cs" />
@@ -230,11 +230,11 @@
     <Compile Include="Data\IndexBodyPairItemCollection.cs" />
     <Compile Include="Data\LauncherIconCaching.cs" />
     <Compile Include="Data\LauncherToolbarDataModel.cs" />
-    <Compile Include="Data\Temporary\ClipboardFileItem.cs" />
+    <Compile Include="ViewModel\ClipboardFileItemViewModel.cs" />
     <Compile Include="Data\Temporary\ClipboardData.cs" />
     <Compile Include="Data\Temporary\IndexBodyPairItem.cs" />
     <Compile Include="Data\Temporary\SelectedNodeAndLauncherItem.cs" />
-    <Compile Include="Data\Temporary\SettingNotifiyData.cs" />
+    <Compile Include="Data\Temporary\SettingNotifyData.cs" />
     <Compile Include="Data\Temporary\StreamData.cs" />
     <Compile Include="Data\VariableConstants.cs" />
     <Compile Include="Data\WindowSaveData.cs" />

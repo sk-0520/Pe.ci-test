@@ -178,12 +178,12 @@
 			}
 		}
 
-		public IEnumerable<ClipboardFileItem> Files
+		public IEnumerable<ClipboardFileItemViewModel> Files
 		{
 			get
 			{
 				if(BodyModel.Files != null && BodyModel.Files.Any()) {
-					return BodyModel.Files.Select(f => new ClipboardFileItem() {
+					return BodyModel.Files.Select(f => new ClipboardFileItemViewModel() {
 						Path = f,
 						Name = SystemEnvironmentUtility.IsExtensionShow() ? Path.GetFileName(f) : Path.GetFileNameWithoutExtension(f),
 					});

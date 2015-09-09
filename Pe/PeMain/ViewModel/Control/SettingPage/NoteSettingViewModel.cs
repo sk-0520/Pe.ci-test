@@ -21,7 +21,7 @@
 
 	public class NoteSettingViewModel : SettingPageViewModelBase<NoteSettingControl>, IColorPair
 	{
-		public NoteSettingViewModel(NoteSettingModel note, NoteSettingControl view, IAppNonProcess appNonProcess, SettingNotifiyData settingNotifiyItem)
+		public NoteSettingViewModel(NoteSettingModel note, NoteSettingControl view, IAppNonProcess appNonProcess, SettingNotifyData settingNotifiyItem)
 			: base(view, appNonProcess, settingNotifiyItem)
 		{
 			Note = note;

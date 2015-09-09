@@ -22,7 +22,7 @@
 
 	public class CommandSettingViewModel: SettingPageViewModelBase<CommandSettingControl>
 	{
-		public CommandSettingViewModel(CommandSettingModel command, CommandSettingControl view, IAppNonProcess appNonProcess, SettingNotifiyData settingNotifiyItem)
+		public CommandSettingViewModel(CommandSettingModel command, CommandSettingControl view, IAppNonProcess appNonProcess, SettingNotifyData settingNotifiyItem)
 			: base(view, appNonProcess, settingNotifiyItem)
 		{
 			Command = command;

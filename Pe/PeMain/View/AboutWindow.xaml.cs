@@ -31,7 +31,7 @@
 
 		protected override void CreateViewModel()
 		{
-			ViewModel = new AboutViewModel(this, (AboutNotifiyData)ExtensionData, CommonData.NonProcess);
+			ViewModel = new AboutViewModel(this, (AboutNotifyData)ExtensionData, CommonData.NonProcess);
 		}
 
 		protected override void ApplyViewModel()

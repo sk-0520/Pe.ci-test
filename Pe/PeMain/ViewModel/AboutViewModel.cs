@@ -27,7 +27,7 @@
 
 		#endregion
 
-		public AboutViewModel(AboutWindow view, AboutNotifiyData notifiy, IAppNonProcess appNonProcess)
+		public AboutViewModel(AboutWindow view, AboutNotifyData notifiy, IAppNonProcess appNonProcess)
 			: base(view)
 		{
 			CheckUtility.DebugEnforceNotNull(notifiy);
@@ -41,7 +41,7 @@
 
 		#region property
 
-		AboutNotifiyData Notifiy { get; set; }
+		AboutNotifyData Notifiy { get; set; }
 		ComponentItemCollectionModel ComponentCollection { get; set; }
 		public IEnumerable<ComponentItemViewModel> ComponentItems
 		{

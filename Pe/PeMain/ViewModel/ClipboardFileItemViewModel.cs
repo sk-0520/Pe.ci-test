@@ -1,4 +1,4 @@
-﻿namespace ContentTypeTextNet.Pe.PeMain.Data.Temporary
+﻿namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 {
 	using System;
 	using System.Collections.Generic;
@@ -9,9 +9,10 @@
 	using ContentTypeTextNet.Library.SharedLibrary.Define;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
+	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
-	public class ClipboardFileItem
+	public class ClipboardFileItemViewModel: ViewModelBase
 	{
 		#region property
 

@@ -310,7 +310,7 @@
 						//var isDir = Directory.Exists(inputPath);
 						//var baseDir = isDir ? inputPath : Path.GetDirectoryName(inputPath);
 						var searchPattern = isDir ? "*" : Path.GetFileName(inputPath) + "*";
-						var showHiddenFile = SystemEnvironmentUtility.IsHideFileShow();
+						var showHiddenFile = SystemEnvironmentUtility.IsHiddenFileShow();
 						var directoryInfo = new DirectoryInfo(baseDir);
 						try {
 							files = directoryInfo

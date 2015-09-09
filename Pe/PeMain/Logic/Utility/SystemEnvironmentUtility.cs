@@ -17,12 +17,12 @@
 		const string hiddenKey = "Hidden";
 		const string extensionKey = "HideFileExt";
 
-		enum HideFileHiddenType
+		enum HiddenFileHiddenType
 		{
 			Show = 1,
 			Hide = 2,
 		}
-		enum HideFileSuperHiddenType
+		enum HiddenFileSuperHiddenType
 		{
 			Show = 1,
 			Hide = 0,
@@ -41,18 +41,18 @@
 		/// <summary>
 		/// </summary>
 		/// <returns></returns>
-		public static bool IsHideFileShow()
+		public static bool IsHiddenFileShow()
 		{
 			using(var subKey = Registry.CurrentUser.OpenSubKey(hideFileRootPath)) {
 				//Debug.WriteLine(subKey.GetValue("ShowSuperHidden"));
 				var hiddenValue = (int)subKey.GetValue(hiddenKey);
-				return hiddenValue == (int)HideFileHiddenType.Show;
+				return hiddenValue == (int)HiddenFileHiddenType.Show;
 			}
 		}
-		public static void SetHideFileShow(bool show)
+		public static void SetHiddenFileShow(bool show)
 		{
 			using(var subKey = Registry.CurrentUser.OpenSubKey(hideFileRootPath, true)) {
-				var hiddenValue = (int)(show ? HideFileHiddenType.Show : HideFileHiddenType.Hide);
+				var hiddenValue = (int)(show ? HiddenFileHiddenType.Show : HiddenFileHiddenType.Hide);
 				subKey.SetValue(hiddenKey, hiddenValue, RegistryValueKind.DWord);
 			}
 		}
