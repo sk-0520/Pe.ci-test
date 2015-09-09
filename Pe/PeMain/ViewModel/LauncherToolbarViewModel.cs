@@ -914,7 +914,7 @@
 			// TODO: 二回取得しちゃってワケわかめ状態
 			set 
 			{
-				if(IsTopmost) {
+				if(Model.Toolbar.IsTopmost) {
 					var prevFullScreen = this._nowFullScreen;
 
 					AppNonProcess.Logger.Debug(string.Format("fullscreen: [OLD]:{0} -> [NEW]:{1}", this._nowFullScreen, value));
