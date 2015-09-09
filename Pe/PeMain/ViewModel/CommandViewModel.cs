@@ -578,7 +578,7 @@
 
 		void View_Activated(object sender, EventArgs e)
 		{
-			AppNonProcess.Logger.Trace("command window: active");
+			AppNonProcess.Logger.Debug("command window: active");
 			CallOnPropertyChangeIsOpen();
 			HideTimer.IsEnabled = false;
 			if (HasView) {
@@ -607,7 +607,7 @@
 		void HideTimer_Tick(object sender, EventArgs e)
 		{
 			//HideTimer.IsEnabled = false;
-			AppNonProcess.Logger.Trace("command window: hide");
+			AppNonProcess.Logger.Debug("command window: hide");
 			if (HasView) {
 				View.UserClose();
 			}
