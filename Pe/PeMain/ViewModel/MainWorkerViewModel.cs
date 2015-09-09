@@ -682,7 +682,7 @@
 				InitializeStatus();
 				CallPropertyChangeHotkey();
 				InitializeSystemEvent();
-				InitializeStatic();
+				//InitializeStatic();
 
 				CreateMessage();
 				CreateLogger(null);
@@ -763,6 +763,7 @@
 			SystemEvents.DisplaySettingsChanging -= SystemEvents_DisplaySettingsChanging;
 		}
 
+		[Obsolete]
 		void InitializeStatic()
 		{
 			//LauncherListDisplayImageConverter.LauncherIconCaching = CommonData.LauncherIconCaching;
@@ -1015,7 +1016,7 @@
 				}
 			}
 
-			InitializeStatic();
+			//InitializeStatic();
 		}
 
 		void ResetSetting()
