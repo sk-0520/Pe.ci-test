@@ -114,20 +114,30 @@
 				<Grid Grid.Row="0">
 					<Grid>
 						<Grid.RowDefinitions>
-							<RowDefinition />
-							<RowDefinition />
-							<RowDefinition />
+							<RowDefinition Height="Auto" />
+							<RowDefinition Height="Auto" />
+							<RowDefinition Height="Auto" />
 						</Grid.RowDefinitions>
 						<Grid.ColumnDefinitions>
-							<ColumnDefinition />
-							<ColumnDefinition />
-							<ColumnDefinition />
+							<ColumnDefinition Width="Auto" />
+							<ColumnDefinition Width="Auto" />
+							<ColumnDefinition Width="*" />
 						</Grid.ColumnDefinitions>
-						
-						<Label Grid.Row="0" Grid.Column="0" Content="caller" AA:Language.Word="logging/detail/caller" Style="{StaticResource HeaderLabel}" />
-						<Label Grid.Row="0" Grid.Column="1" Content="caller" AA:Language.Word="logging/detail/caller/member" Style="{StaticResource HeaderLabel}" />
+
+						<Label Grid.Row="0" Grid.Column="0" Content="caller" AA:Language.Word="logging/detail/caller" Style="{StaticResource TitleLabel}" />
+						<Label Grid.Row="0" Grid.Column="1" Content="member" AA:Language.Word="logging/detail/caller/member" Style="{StaticResource HeaderLabel}" />
 						<TextBox Grid.Row="0" Grid.Column="2" IsReadOnly="True" Text="{Binding SelectedItem.CallerMember, ElementName=listLog}" Style="{StaticResource DefaultTextBox}" />
-						
+
+						<Label Grid.Row="1" Grid.Column="1" Content="file" AA:Language.Word="logging/detail/caller/file" Style="{StaticResource HeaderLabel}" />
+						<Grid Grid.Row="1" Grid.Column="2" >
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="*" />
+								<ColumnDefinition Width="Auto" />
+							</Grid.ColumnDefinitions>
+							<TextBox Grid.Column="0" IsReadOnly="True" Text="{Binding SelectedItem.CallerFile, ElementName=listLog}" Style="{StaticResource DefaultTextBox}" />
+							<TextBox Grid.Column="1" IsReadOnly="True" AA:Language.Hint="logging/detail/caller/number" Text="{Binding SelectedItem.CallerLine, ElementName=listLog}" Style="{StaticResource DefaultTextBox}" />
+						</Grid>
+
 					</Grid>
 				</Grid>
 				<TextBox

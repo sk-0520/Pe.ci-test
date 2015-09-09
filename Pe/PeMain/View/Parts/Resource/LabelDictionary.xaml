@@ -4,6 +4,7 @@
 >
 	<Style x:Key="TitleLabel" TargetType="Label">
 		<Setter Property="FontWeight" Value="Bold" />
+		<Setter Property="VerticalAlignment" Value="Center" />
 	</Style>
 	<Style x:Key="HeaderLabel" TargetType="Label">
 		<Setter Property="VerticalAlignment" Value="Center" />
