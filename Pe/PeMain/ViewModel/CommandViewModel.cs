@@ -137,7 +137,7 @@
 			get { return this._inputText; }
 			set
 			{
-				SetVariableValue(ref this._inputText, value.Trim());
+				SetVariableValue(ref this._inputText, value.TrimStart());
 				var isAll = string.IsNullOrWhiteSpace(InputText);
 				var items = isAll
 					? GetAllCommandItems()
