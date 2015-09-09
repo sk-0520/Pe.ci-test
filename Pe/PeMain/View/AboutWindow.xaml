@@ -143,6 +143,9 @@
 														<DataTrigger Binding="{Binding ComponentKind}" Value="{x:Static ADD:ComponentKind.Source}">
 															<Setter Property="Source" Value="{x:Static AM:AppResource.AboutComponentKindSourceImage}" />
 														</DataTrigger>
+														<DataTrigger Binding="{Binding ComponentKind}" Value="{x:Static ADD:ComponentKind.WebPage}">
+															<Setter Property="Source" Value="{x:Static AM:AppResource.AboutComponentKindWebPageImage}" />
+														</DataTrigger>
 													</Style.Triggers>
 												</Style>
 											</Image.Style>

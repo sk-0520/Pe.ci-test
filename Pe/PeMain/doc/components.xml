@@ -15,5 +15,9 @@
 	<Component Kind="Image" Name="Yannick Lung" Uri="http://www.yanlu.de/" License="Free for commercial use" />
 	<!-- home windows:https://www.iconfinder.com/icons/670393/call_cell_mobile_phone_smartphone_window_windows_icon#size=128 -->
 	<Component Kind="Image" Name="Weweka Group" Uri="https://www.iconfinder.com/weweka" License="Free for commercial use" />
+
+	<Component Kind="WebPage" Name="MSDN" Uri="https://msdn.microsoft.com/" License="" />
+	<Component Kind="WebPage" Name="Stack Overflow" Uri="http://stackoverflow.com/" License="" />
+	<Component Kind="WebPage" Name="Iconfinder" Uri="https://www.iconfinder.com/" License="" />
 	
 </Components>

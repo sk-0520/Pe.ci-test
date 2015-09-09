@@ -21,7 +21,7 @@
 		/*
 		このソースは自動生成のため AppResource-generator.tt を編集すること。
 
-		生成元フィールド数: 71
+		生成元フィールド数: 72
 		*/
 		#region Icon: Application
 
@@ -1939,6 +1939,28 @@
 			get { return GetImage(AboutComponentKindSourcePath); }
 		}
 		#endregion AboutComponentKindSource
+		#region Image: AboutComponentKindWebPage
+
+		/// <summary>
+		/// [Image] AboutComponentKindWebPageのリソースパスを取得。
+		/// <para>/Resources/Image/About/AboutComponentKindWebPage.png</para>
+		/// </summary>
+		public static string AboutComponentKindWebPagePath
+		{
+			get { return aboutComponentKindWebPage; }
+		}
+
+		/// <summary>
+		/// [Image] AboutComponentKindWebPageのイメージソースを取得。
+		/// <para>初回のみ生成を行う。</para>
+		/// <para>AboutComponentKindWebPagePath: /Resources/Image/About/AboutComponentKindWebPage.png</para>
+		/// </summary>
+		/// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
+		public static BitmapSource AboutComponentKindWebPageImage
+		{
+			get { return GetImage(AboutComponentKindWebPagePath); }
+		}
+		#endregion AboutComponentKindWebPage
 		#region Image: SettingSetting
 
 		/// <summary>

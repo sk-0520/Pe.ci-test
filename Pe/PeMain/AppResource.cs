@@ -170,6 +170,8 @@
 		const string aboutComponentKindLibrary = "/Resources/Image/About/AboutComponentKindLibrary.png";
 		[AppResource(AppResourceType.Image)]
 		const string aboutComponentKindSource = "/Resources/Image/About/AboutComponentKindSource.png";
+		[AppResource(AppResourceType.Image)]
+		const string aboutComponentKindWebPage = "/Resources/Image/About/AboutComponentKindWebPage.png";
 
 		[AppResource(AppResourceType.Image)]
 		const string settingSetting = "/Resources/Image/Setting/Setting.png";

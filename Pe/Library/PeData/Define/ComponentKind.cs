@@ -23,5 +23,9 @@
 		/// ソース。
 		/// </summary>
 		Source,
+		/// <summary>
+		/// サンクス。
+		/// </summary>
+		WebPage,
 	}
 }
