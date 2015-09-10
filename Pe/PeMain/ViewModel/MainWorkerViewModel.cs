@@ -662,7 +662,6 @@
 		public StartupNotifyData Initialize()
 		{
 			using(var timeLogger = CommonData.NonProcess.CreateTimeLogger()) {
-
 				var startupNotifyData = LoadSetting();
 				if (startupNotifyData.ExistsFormsSetting) {
 					// Forms版からのデータ変換
@@ -686,7 +685,7 @@
 				InitializeSetting(previousVersion);
 				InitializeStatus();
 				CallPropertyChangeHotkey();
-				InitializeSystemEvent();
+				InitializeSystem();
 				//InitializeStatic();
 
 				CreateMessage();
@@ -754,14 +753,14 @@
 			WindowSaveTimer.Start();
 		}
 
-		void InitializeSystemEvent()
+		void InitializeSystem()
 		{
 			SystemEvents.SessionSwitch += SystemEvents_SessionSwitch;
 			SystemEvents.SessionEnding += SystemEvents_SessionEnding;
 			SystemEvents.DisplaySettingsChanging += SystemEvents_DisplaySettingsChanging;
 		}
 
-		void UninitializeSystemEvent()
+		void UninitializeSystem()
 		{
 			SystemEvents.SessionSwitch -= SystemEvents_SessionSwitch;
 			SystemEvents.SessionEnding -= SystemEvents_SessionEnding;
@@ -1345,7 +1344,7 @@
 
 		protected override void Dispose(bool disposing)
 		{
-			UninitializeSystemEvent();
+			UninitializeSystem();
 
 			if(!IsDisposed) {
 				if (CommonData != null) {

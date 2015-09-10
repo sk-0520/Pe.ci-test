@@ -49,7 +49,7 @@
 			get
 			{
 				if(this._propertyInfos == null) {
-					this._propertyInfos = GetType().GetProperties().Where(p => p.Name != "PropertyInfos").ToArray();
+					this._propertyInfos = ReflectionUtility.FilterSharedLibrary( GetType().GetProperties());
 				}
 
 				return this._propertyInfos;

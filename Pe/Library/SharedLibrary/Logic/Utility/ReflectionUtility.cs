@@ -10,6 +10,17 @@
 
 	public static class ReflectionUtility
 	{
+		public static IEnumerable<PropertyInfo> FilterSharedLibrary(IEnumerable<PropertyInfo> propertyInfos)
+		{
+			var filter = new[] {
+				"PropertyInfos",
+				"DisplayText",
+			};
+			return propertyInfos
+				.Where(pi => !filter.Any(s => s == pi.Name))
+			;
+		}
+
 		/// <summary>
 		/// メンバ名とその値を取得する。
 		/// </summary>

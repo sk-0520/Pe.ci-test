@@ -140,7 +140,7 @@
 			get
 			{
 				if(this._propertyInfos == null) {
-					this._propertyInfos = GetType().GetProperties();
+					this._propertyInfos = ReflectionUtility.FilterSharedLibrary( GetType().GetProperties());
 				}
 
 				return this._propertyInfos;

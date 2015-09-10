@@ -39,12 +39,12 @@
 			var constants = new VariableConstants(commandLine);
 			var systemLogger = AppUtility.CreateSystemLogger(constants.FileLogging, constants.LogDirectoryPath);
 			systemLogger.IsStock = true;
-			systemLogger.Information("start!", commandLine);
-			systemLogger.Information("application", new AppInformationCollection().ToString());
+			systemLogger.Information("application: start", commandLine);
+			systemLogger.Information("environment information", new AppInformationCollection().ToString());
 			this._mainWorker = new MainWorkerViewModel(constants, systemLogger);
 			var startupNotifiyData = this._mainWorker.Initialize();
 			if (startupNotifiyData.AcceptRunning) {
-				LanguageUtility.RecursiveSetLanguage(this._notifyIcon, this._mainWorker.Language);
+				//LanguageUtility.RecursiveSetLanguage(this._notifyIcon, this._mainWorker.Language);
 				this._notifyIcon = (TaskbarIcon)FindResource("root");
 				this._notifyIcon.DataContext = this._mainWorker;
 				this._mainWorker.SetView(this._notifyIcon);
@@ -60,6 +60,7 @@
 				}
 			} else {
 				// 終了
+				systemLogger.Information("application: cancel exec");
 				Application.Current.Shutdown();
 			}
 		}

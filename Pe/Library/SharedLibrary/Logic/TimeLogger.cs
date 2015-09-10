@@ -44,7 +44,7 @@
 
 		#endregion
 
-		public TimeLogger(ILogger logger, string id = "", LogKind logKind = LogKind.Trace, object detail = null, int frame = 2, [CallerFilePath] string callerFile = "", [CallerLineNumber] int callerLine = -1, [CallerMemberName] string callerMember = "")
+		public TimeLogger(ILogger logger, string id = "", LogKind logKind = LogKind.Debug, object detail = null, int frame = 2, [CallerFilePath] string callerFile = "", [CallerLineNumber] int callerLine = -1, [CallerMemberName] string callerMember = "")
 		{
 			CheckUtility.DebugEnforceNotNull(logger);
 
