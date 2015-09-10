@@ -1158,12 +1158,18 @@
 		{
 			Debug.Assert(Clipboard != null);
 			Clipboard.IsVisible = !Clipboard.IsVisible;
+			if (Clipboard.IsVisible) {
+				WindowsUtility.ShowActive(ClipboardWindow.Handle);
+			}
 		}
 
 		void SwitchShowTemplateWindow()
 		{
 			Debug.Assert(Template != null);
 			Template.IsVisible = !Template.IsVisible;
+			if (Clipboard.IsVisible) {
+				WindowsUtility.ShowActive(TemplateWindow.Handle);
+			}
 		}
 
 		void CallPropertyChangeNoteMenu()
@@ -1209,6 +1215,8 @@
 			Command.WindowLeft = logicalPosition.X;
 			Command.WindowTop = logicalPosition.Y;
 			Command.Visibility = Visibility.Visible;
+
+			WindowsUtility.ShowActive(CommandWindow.Handle);
 		}
 
 		Updater CheckUpdate(bool force)

@@ -138,6 +138,18 @@
 			);
 		}
 
+		public static void ShowActive(IntPtr hWnd)
+		{
+			NativeMethods.SetWindowPos(
+				hWnd,
+				new IntPtr((int)HWND.HWND_TOP),
+				0, 0,
+				0, 0,
+				SWP.SWP_NOMOVE | SWP.SWP_NOSIZE | SWP.SWP_SHOWWINDOW
+			);
+			NativeMethods.SetForegroundWindow(hWnd);
+		}
+
 		public static void MoveZoderBttom(IntPtr hWnd)
 		{
 			NativeMethods.SetWindowPos(
