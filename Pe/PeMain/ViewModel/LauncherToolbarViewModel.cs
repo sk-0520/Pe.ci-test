@@ -947,12 +947,12 @@
 								this._nowFullScreen = prevFullScreen;
 								this._prevFullScreenCancel = true;
 							} else {
-								AppNonProcess.Logger.Debug("fullscreen: " + this._nowFullScreen.ToString());
+								AppNonProcess.Logger.Debug(string.Format("fullscreen: [CHANGE]:{0}, [IsTopmost]:{1}", this._nowFullScreen, IsTopmost));
 								OnPropertyChanged("IsTopmost");
 								if (this._nowFullScreen && this._prevFullScreenCancel) {
 									// 前回フルクリーンが二重発行されてた場合は解除する
 									this._prevFullScreenCancel = false;
-									AppNonProcess.Logger.Debug("fullscreen: cancel-flag off");
+									AppNonProcess.Logger.Debug("fullscreen: cancel-flag off, topmost: " + IsTopmost);
 								}
 
 								this._prevFullScreenTime = nowTime;
