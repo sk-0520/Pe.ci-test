@@ -13,6 +13,7 @@
 	using System.Threading.Tasks;
 	using System.Windows;
 	using System.Windows.Interop;
+	using System.Windows.Media;
 	using System.Windows.Media.Imaging;
 	using ContentTypeTextNet.Library.PInvoke.Windows;
 	using ContentTypeTextNet.Library.SharedLibrary.CompatibleForms.Utility;
@@ -20,7 +21,7 @@
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 	using ContentTypeTextNet.Pe.Library.PeData.Define;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
-//	using ContentTypeTextNet.Pe.PeMain.Data;
+	//	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
 	using ContentTypeTextNet.Pe.PeMain.IF;
 
@@ -270,7 +271,7 @@
 					if(enabledTypes.HasFlag(ClipboardType.Image) && clipboardObject.GetDataPresent(DataFormats.Bitmap)) {
 						var image = clipboardObject.GetData(DataFormats.Bitmap) as BitmapSource;
 						if(image != null) {
-							var bitmap = BitmapFrame.Create(image);
+							var bitmap = new FormatConvertedBitmap(image, PixelFormats.Bgr32, null, 0);
 
 							clipboardData.Body.Image = bitmap;
 							clipboardData.Type |= ClipboardType.Image;
