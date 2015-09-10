@@ -49,6 +49,7 @@
 
 		DateTime _clipboardPreviousTime = DateTime.MinValue;
 		uint _clipboardPreviousSequenceNumber = 0;
+		DateTime _toolbarPrevResetTime = DateTime.MinValue;
 
 		#endregion
 
@@ -851,6 +852,7 @@
 
 		internal void ResetToolbar()
 		{
+			CommonData.Logger.Debug("toolbar: reset");
 			RemoveToolbar();
 			CreateToolbar();
 		}
@@ -2028,8 +2030,9 @@
 				SaveWindowItem(WindowSaveType.System);
 			}
 
-			CommonData.Logger.Information("change screen setting", e);
-			ResetToolbar();
+			// TODO: スクリーン数変更とぶつかる
+			//CommonData.Logger.Information("change screen setting", e);
+			//ResetToolbar();
 		}
 
 		void SystemEvents_SessionSwitch(object sender, SessionSwitchEventArgs e)
