@@ -72,9 +72,13 @@
 				Constants.CacheIndexTemplate,
 				Constants.CacheIndexClipboard
 			);
+
+			ToolbarContext = new object();
 		}
 
 		#region property
+
+		object ToolbarContext { get; set; }
 
 		Data.CommonData CommonData { get; set; }
 		public LanguageManager Language { get { return CommonData.Language; } }
@@ -853,8 +857,11 @@
 		internal void ResetToolbar()
 		{
 			CommonData.Logger.Debug("toolbar: reset");
-			RemoveToolbar();
-			CreateToolbar();
+			lock(ToolbarContext) {
+				CommonData.Logger.Debug("toolbar: reset start");
+				RemoveToolbar();
+				CreateToolbar();
+			}
 		}
 
 		void CreateNote()
@@ -2039,9 +2046,9 @@
 				SaveWindowItem(WindowSaveType.System);
 			}
 
-			// TODO: スクリーン数変更とぶつかる
-			//CommonData.Logger.Information("change screen setting", e);
-			//ResetToolbar();
+			// TODO: スクリーン数変更とぶつかる, なーんも考えずに適当にロック
+			CommonData.Logger.Information("change screen setting", e);
+			ResetToolbar();
 		}
 
 		void SystemEvents_SessionSwitch(object sender, SessionSwitchEventArgs e)
