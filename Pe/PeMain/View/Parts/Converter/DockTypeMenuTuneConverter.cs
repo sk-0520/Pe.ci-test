@@ -15,7 +15,6 @@
 		{
 			var dockType = (DockType)value;
 			if (dockType == DockType.Left) {
-				Debug.WriteLine(value);
 				return DockType.Right;
 			}
 			return dockType;

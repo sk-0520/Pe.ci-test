@@ -23,6 +23,7 @@
 		{
 			LoggerConfig.EnabledAll = true;
 			LoggerConfig.PutsDebug = true;
+			//LoggerConfig.PutsConsole = true;
 		}
 
 		#region property
@@ -92,6 +93,16 @@
 				StockItems.Add(item);
 			}
 			base.Puts(item);
+		}
+
+		protected override void PutsConsole(LogItemModel item)
+		{
+			Console.WriteLine(PutsOutput(item, 'C'));
+		}
+
+		protected override void PutsDebug(LogItemModel item)
+		{
+			Console.WriteLine(PutsOutput(item, 'D'));
 		}
 
 		#endregion

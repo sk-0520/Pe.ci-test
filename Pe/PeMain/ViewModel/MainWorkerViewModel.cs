@@ -758,6 +758,13 @@
 			SystemEvents.SessionSwitch += SystemEvents_SessionSwitch;
 			SystemEvents.SessionEnding += SystemEvents_SessionEnding;
 			SystemEvents.DisplaySettingsChanging += SystemEvents_DisplaySettingsChanging;
+
+			// 出力関係を外に出す
+			Debug.Listeners.Clear();
+			Debug.Listeners.Add(new LogListener(CommonData.Logger, LogKind.Debug));
+
+			//Trace.Listeners.Clear();
+			//Trace.Listeners.Add(new LogListener(CommonData.Logger, LogKind.Trace));
 		}
 
 		void UninitializeSystem()

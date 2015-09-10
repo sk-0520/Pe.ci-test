@@ -142,6 +142,7 @@
     <Compile Include="Logic\DialogFilterList.cs" />
     <Compile Include="Logic\Extension\DateTimeExtension.cs" />
     <Compile Include="Logic\Extension\FileSystemInfoUtility.cs" />
+    <Compile Include="Logic\LogListener.cs" />
     <Compile Include="Logic\MVMPairCreateDelegationCollection.cs" />
     <Compile Include="Logic\Utility\CastUtility.cs" />
     <Compile Include="Logic\Utility\FontUtility.cs" />
