@@ -47,11 +47,11 @@
 
 		public static double ConvertFontSizeFromDrawing(double drawingFontPoint)
 		{
-			return drawingFontPoint / 72.0 * 96.0;
+			return drawingFontPoint * 96 / 72;
 		}
 		public static float ConvertFontSizeFromWpf(double wpfFontSize)
 		{
-			return (float)(wpfFontSize * 72.0 / 96.0);
+			return (float)(wpfFontSize / 96.0 * 72.0);
 		}
 
 		public static ImageSource ImageSourceFromIcon(Drawing.Icon icon)

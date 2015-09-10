@@ -75,7 +75,8 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 			dst.Family = src.Family;
 			dst.Bold = src.Bold;
 			dst.Italic = src.Italic;
-			dst.Size = DrawingUtility.ConvertFontSizeFromDrawing(src.Height);
+			//dst.Size = DrawingUtility.ConvertFontSizeFromDrawing(src.Height);
+			dst.Size = src.Font.SizeInPoints;
 		}
 
 		static void ConvertHotKey(HotKeyModel dst, Data.HotKeySetting src)
