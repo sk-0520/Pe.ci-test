@@ -606,10 +606,12 @@
 
 		void TimerAutoHide_Tick(object sender, EventArgs e)
 		{
-			if (RestrictionViewModel.IsDocking) {
-				HideView(false);
-			} else {
-				AutoHideTimer.Stop();
+			if (View != null && RestrictionViewModel != null) {
+				if (RestrictionViewModel.IsDocking) {
+					HideView(false);
+				} else {
+					AutoHideTimer.Stop();
+				}
 			}
 		}
 

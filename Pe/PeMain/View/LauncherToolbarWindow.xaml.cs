@@ -139,11 +139,14 @@
 
 		protected override void OnClosed(EventArgs e)
 		{
-			base.OnClosed(e);
+			if (CommonData != null && CommonData.Logger != null) {
+				CommonData.Logger.Debug("toolbar: close, " + Title);
+			}
 			if (Appbar != null) {
 				Appbar.Dispose();
 				Appbar = null;
 			}
+			base.OnClosed(e);
 		}
 
 		#endregion
