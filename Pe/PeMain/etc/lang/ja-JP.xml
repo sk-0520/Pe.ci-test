@@ -398,8 +398,8 @@
 		<Item Id="clipboard-setting/font" Word="フォント" />
 		<Item Id="clipboard-setting/limit-enabled" Word="制限" />
 		<Item Id="clipboard-setting/limit/text/unit" Word="文字" />
-		<Item Id="clipboard-setting/limit/rtf/unit" Word="文字" />
-		<Item Id="clipboard-setting/limit/html/unit" Word="文字" />
+		<Item Id="clipboard-setting/limit/rtf/unit" Word="byte" />
+		<Item Id="clipboard-setting/limit/html/unit" Word="byte" />
 		<Item Id="clipboard-setting/limit/image/width" Word="横" />
 		<Item Id="clipboard-setting/limit/image/height" Word="縦" />
 		<Item Id="clipboard-setting/limit/image/unit" Word="px" />

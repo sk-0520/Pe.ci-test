@@ -37,7 +37,7 @@
 				setting.WindowHeight = Constants.clipboardDefaultWindowSize.Height;
 			}
 
-			setting.LimitType = EnumUtility.GetNormalization(setting.CaptureType, Constants.clipboardLimitType);
+			setting.LimitType = EnumUtility.GetNormalization(setting.LimitType, Constants.clipboardLimitType);
 
 			setting.LimitSize.Text = Constants.clipboardLimitTextSize.GetClamp(setting.LimitSize.Text);
 			setting.LimitSize.Rtf = Constants.clipboardLimitRtfSize.GetClamp(setting.LimitSize.Rtf);

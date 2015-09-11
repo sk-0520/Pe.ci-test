@@ -234,28 +234,31 @@
 			defaultFontSize.median,
 			defaultFontSize.maximum
 		);
-		static TripleRange<int> clipboardLimitStringSize = new TripleRange<int>(
+		/// <summary>
+		/// 文字列。
+		/// <para>Unicode文字数。</para>
+		/// </summary>
+		[ConstantsRange]
+		public static TripleRange<int> clipboardLimitTextSize = new TripleRange<int>(
+			500,
+			1000,
+			10000
+		);
+		/// <summary>
+		/// RTF。
+		/// <para>byte数。</para>
+		/// </summary>
+		[ConstantsRange]
+		public static TripleRange<int> clipboardLimitRtfSize = new TripleRange<int>(
 			1 * 1024,
-			64 * 1024,
+			10 * 1024,
 			10 * 1024 * 1024
 		);
 		[ConstantsRange]
-		public static TripleRange<int> clipboardLimitTextSize = new TripleRange<int>(
-			clipboardLimitStringSize.minimum,
-			clipboardLimitStringSize.median,
-			clipboardLimitStringSize.maximum
-		);
-		[ConstantsRange]
-		public static TripleRange<int> clipboardLimitRtfSize = new TripleRange<int>(
-			clipboardLimitStringSize.minimum,
-			clipboardLimitStringSize.median,
-			clipboardLimitStringSize.maximum
-		);
-		[ConstantsRange]
 		public static TripleRange<int> clipboardLimitHtmlSize = new TripleRange<int>(
-			clipboardLimitStringSize.minimum,
-			clipboardLimitStringSize.median,
-			clipboardLimitStringSize.maximum
+			1 * 1024,
+			5 * 10 * 1024,
+			30 * 1024 * 1024
 		);
 		static TripleRange<int> clipboardLimitImageSize = new TripleRange<int>(
 			1,
