@@ -43,10 +43,8 @@
 			setting.LimitSize.Rtf = Constants.clipboardLimitRtfSize.GetClamp(setting.LimitSize.Rtf);
 			setting.LimitSize.Html = Constants.clipboardLimitHtmlSize.GetClamp(setting.LimitSize.Html);
 
-			setting.LimitSize.Image = new Size(
-				(double)Constants.clipboardLimitImageWidthSize.GetClamp((int)setting.LimitSize.Image.Width),
-				(double)Constants.clipboardLimitImageHeightSize.GetClamp((int)setting.LimitSize.Image.Height)
-			);
+			setting.LimitSize.ImageWidth = Constants.clipboardLimitImageWidthSize.GetClamp(setting.LimitSize.ImageWidth);
+			setting.LimitSize.ImageHeight = Constants.clipboardLimitImageHeightSize.GetClamp(setting.LimitSize.ImageHeight);
 		}
 
 		static void V_First(ClipboardSettingModel setting, Version previousVersion, INonProcess nonProcess)
@@ -71,10 +69,9 @@
 			setting.LimitSize.Text = Constants.clipboardLimitTextSize.median;
 			setting.LimitSize.Rtf = Constants.clipboardLimitRtfSize.median;
 			setting.LimitSize.Html = Constants.clipboardLimitHtmlSize.median;
-			setting.LimitSize.Image = new Size(
-				Constants.clipboardLimitImageWidthSize.median,
-				Constants.clipboardLimitImageHeightSize.median
-			);
+			setting.LimitSize.ImageWidth = Constants.clipboardLimitImageWidthSize.median;
+			setting.LimitSize.ImageHeight = Constants.clipboardLimitImageHeightSize.median
+		;
 		}
 	}
 }

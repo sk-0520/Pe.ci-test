@@ -90,8 +90,10 @@
 						<RowDefinition />
 						<RowDefinition />
 						<RowDefinition />
+						<RowDefinition />
 					</Grid.RowDefinitions>
 					<Grid.ColumnDefinitions>
+						<ColumnDefinition />
 						<ColumnDefinition />
 						<ColumnDefinition />
 						<ColumnDefinition />
@@ -100,21 +102,28 @@
 					<CheckBox Grid.Row="0" Grid.Column="0" Content="text"  AA:Language.Word="clipboard-setting/capture-type/text" IsChecked="{Binding CaptureTypeText}" />
 					<ToggleButton Grid.Row="0" Grid.Column="1" Content="limit" AA:Language.Word="clipboard-setting/limit-enabled" IsChecked="{Binding LimitTypeText}" />
 					<AV:IntegerSliderControl Grid.Row="0" Grid.Column="3" Value="{Binding LimitSizeText}" Minimum="{Binding Source={x:Static AM:Constants.ClipboardLimitTextMinimumSize}}" Maximum="{Binding Source={x:Static AM:Constants.ClipboardLimitTextMaximumSize}}"/>
+					<TextBlock Grid.Row="0" Grid.Column="4" Text="unit" AA:Language.Word="clipboard-setting/limit/text/unit" />
 
 					<CheckBox Grid.Row="1" Grid.Column="0" Content="rtf"   AA:Language.Word="clipboard-setting/capture-type/rtf" IsChecked="{Binding CaptureTypeRtf}" />
 					<ToggleButton Grid.Row="1" Grid.Column="1" Content="limit" AA:Language.Word="clipboard-setting/limit-enabled" IsChecked="{Binding LimitTypeRtf}" />
 					<AV:IntegerSliderControl Grid.Row="1" Grid.Column="3" Value="{Binding LimitSizeRtf}" Minimum="{Binding Source={x:Static AM:Constants.ClipboardLimitRtfMinimumSize}}" Maximum="{Binding Source={x:Static AM:Constants.ClipboardLimitRtfMaximumSize}}"/>
+					<TextBlock Grid.Row="1" Grid.Column="4" Text="unit" AA:Language.Word="clipboard-setting/limit/rtf/unit" />
 
 					<CheckBox Grid.Row="2" Grid.Column="0" Content="html"  AA:Language.Word="clipboard-setting/capture-type/html" IsChecked="{Binding CaptureTypeHtml}" />
 					<ToggleButton Grid.Row="2" Grid.Column="1" Content="limit" AA:Language.Word="clipboard-setting/limit-enabled" IsChecked="{Binding LimitTypeHtml}" />
 					<AV:IntegerSliderControl Grid.Row="2" Grid.Column="3" Value="{Binding LimitSizeHtml}" Minimum="{Binding Source={x:Static AM:Constants.ClipboardLimitHtmlMinimumSize}}" Maximum="{Binding Source={x:Static AM:Constants.ClipboardLimitHtmlMaximumSize}}"/>
+					<TextBlock Grid.Row="2" Grid.Column="4" Text="unit" AA:Language.Word="clipboard-setting/limit/html/unit" />
 
 					<CheckBox Grid.Row="3" Grid.Column="0" Content="image" AA:Language.Word="clipboard-setting/capture-type/image" IsChecked="{Binding CaptureTypeImage}" />
 					<ToggleButton Grid.Row="3" Grid.Column="1" Content="limit" AA:Language.Word="clipboard-setting/limit-enabled" IsChecked="{Binding LimitTypeImage}" />
+					<Label Grid.Row="3" Grid.Column="2" Content="width" AA:Language.Word="clipboard-setting/limit/image/width" Style="{StaticResource HeaderLabel}" />
 					<AV:IntegerSliderControl Grid.Row="3" Grid.Column="3" Value="{Binding LimitSizeImageWidth}" Minimum="{Binding Source={x:Static AM:Constants.ClipboardLimitImageWidthMinimumSize}}" Maximum="{Binding Source={x:Static AM:Constants.ClipboardLimitImageWidthMaximumSize}}"/>
+					<TextBlock Grid.Row="3" Grid.Column="4" Text="unit" AA:Language.Word="clipboard-setting/limit/image/unit" />
+					<Label Grid.Row="4" Grid.Column="2" Content="height" AA:Language.Word="clipboard-setting/limit/image/height" Style="{StaticResource HeaderLabel}" />
 					<AV:IntegerSliderControl Grid.Row="4" Grid.Column="3" Value="{Binding LimitSizeImageHeight}" Minimum="{Binding Source={x:Static AM:Constants.ClipboardLimitImageHeightMinimumSize}}" Maximum="{Binding Source={x:Static AM:Constants.ClipboardLimitImageHeightMaximumSize}}"/>
+					<TextBlock Grid.Row="4" Grid.Column="4" Text="unit" AA:Language.Word="clipboard-setting/limit/image/unit" />
 
-					<CheckBox Grid.Row="4" Grid.Column="0" Content="files" AA:Language.Word="clipboard-setting/capture-type/files" IsChecked="{Binding CaptureTypeFiles}" />
+					<CheckBox Grid.Row="5" Grid.Column="0" Content="files" AA:Language.Word="clipboard-setting/capture-type/files" IsChecked="{Binding CaptureTypeFiles}" />
 
 				</Grid>
 			</GroupBox>

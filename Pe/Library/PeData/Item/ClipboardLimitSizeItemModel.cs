@@ -19,7 +19,9 @@
 		[DataMember]
 		public int Html { get; set; }
 		[DataMember]
-		public Size Image { get; set; }
+		public int ImageWidth { get; set; }
+		[DataMember]
+		public int ImageHeight { get; set; }
 
 		#region IDeepClone
 
@@ -30,7 +32,8 @@
 			obj.Text = Text;
 			obj.Rtf = Rtf;
 			obj.Html = Html;
-			obj.Image = Image;
+			obj.ImageWidth = ImageWidth;
+			obj.ImageHeight = ImageHeight;
 		}
 
 		public IDeepClone DeepClone()

@@ -396,6 +396,13 @@
 		<Item Id="clipboard-setting/wait-time" Word="前回コピーからの待機時間" />
 		<Item Id="clipboard-setting/dup" Word="重複判定(-1:全て対象)" />
 		<Item Id="clipboard-setting/font" Word="フォント" />
+		<Item Id="clipboard-setting/limit-enabled" Word="制限" />
+		<Item Id="clipboard-setting/limit/text/unit" Word="文字" />
+		<Item Id="clipboard-setting/limit/rtf/unit" Word="文字" />
+		<Item Id="clipboard-setting/limit/html/unit" Word="文字" />
+		<Item Id="clipboard-setting/limit/image/width" Word="横" />
+		<Item Id="clipboard-setting/limit/image/height" Word="縦" />
+		<Item Id="clipboard-setting/limit/image/unit" Word="px" />
 
 		<Item Id="template-setting/topmost" Word="最前面" />
 		<Item Id="template-setting/visible" Word="テンプレートウィンドウを表示する" />

@@ -259,8 +259,8 @@
 		);
 		static TripleRange<int> clipboardLimitImageSize = new TripleRange<int>(
 			1,
-			1* 1024,
-			4 * 1024
+			2 * 1024,
+			8 * 1024
 		);
 		[ConstantsRange]
 		public static TripleRange<int> clipboardLimitImageWidthSize = new TripleRange<int>(

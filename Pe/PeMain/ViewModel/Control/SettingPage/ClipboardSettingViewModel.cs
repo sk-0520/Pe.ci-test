@@ -135,13 +135,13 @@
 		}
 		public int LimitSizeImageWidth
 		{
-			get { return (int)Clipboard.LimitSize.Image.Width; }
-			set { SetPropertyValue(Clipboard.LimitSize.Image, (double)value, "Width"); }
+			get { return Clipboard.LimitSize.ImageWidth; }
+			set { SetPropertyValue(Clipboard.LimitSize, value, "ImageWidth"); }
 		}
 		public int LimitSizeImageHeight
 		{
-			get { return (int)Clipboard.LimitSize.Image.Height; }
-			set { SetPropertyValue(Clipboard.LimitSize.Image, (double)value, "Height"); }
+			get { return Clipboard.LimitSize.ImageHeight; }
+			set { SetPropertyValue(Clipboard.LimitSize, value, "ImageHeight"); }
 		}
 
 		#endregion
