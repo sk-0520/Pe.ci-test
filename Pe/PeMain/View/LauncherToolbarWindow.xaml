@@ -83,8 +83,14 @@
 				<!--<Setter Property="FontWeight" Value="Bold" />-->
 				<Setter Property="FontStyle" Value="{Binding DataContext.FontItalic, Converter={StaticResource BooleanFontStyleConverter}, Mode=OneWay, ElementName=root}" />
 				<Setter Property="FontSize" Value="{Binding DataContext.FontSize, Mode=OneWay, ElementName=root}" />
-				<Setter Property="Foreground" Value="{Binding DataContext.ToolbarForeground, ElementName=root}" />
-				<Setter Property="Effect" Value="{Binding DataContext.ToolbarTextEffect, ElementName=root}" />
+				<!--<Setter Property="Foreground" Value="{Binding DataContext.ToolbarForeground, ElementName=root}" />
+				<Setter Property="Effect" Value="{Binding DataContext.ToolbarTextEffect, ElementName=root}" />-->
+				<Setter Property="Foreground" Value="White" />
+				<Setter Property="Effect">
+					<Setter.Value>
+						<DropShadowEffect Color="Black" BlurRadius="2"  ShadowDepth="0" Opacity="0.9" />
+					</Setter.Value>
+				</Setter>
 			</Style>
 
 			<Style x:Key="ArrowParent" TargetType="Grid">

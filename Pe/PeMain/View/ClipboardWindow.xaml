@@ -228,7 +228,7 @@
 							<xctk:RichTextBox 
 								IsReadOnly="True" 
 								HorizontalScrollBarVisibility="Auto" 
-								VerticalScrollBarVisibility="Auto" 
+								VerticalScrollBarVisibility="Auto"
 								Text="{Binding SelectedViewModel.Rtf}"
 								UndoLimit="0"
 							>
