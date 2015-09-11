@@ -22,7 +22,7 @@
 		このソースは自動生成のため Constants-generator.tt を編集すること。
 
 		生成元ConstantsPropertyフィールド数: 4
-		生成元ConstantsRangeフィールド数: 16
+		生成元ConstantsRangeフィールド数: 21
 		*/
 
 		// ConstantsPropertyAttribute
@@ -571,6 +571,216 @@
 			get
 			{
 				return clipboardFontSize.maximum;
+			}
+		}
+		
+
+		#endregion
+		#region clipboardLimitTextSize
+
+		/// <summary>
+		/// Constants.clipboardLimitTextSize.minimum取得用プロパティ。
+		/// <para>XAMLで使用することを想定</para>
+		/// </summary>
+		public static Int32 ClipboardLimitTextMinimumSize
+		{
+			get
+			{
+				return clipboardLimitTextSize.minimum;
+			}
+		}
+		
+
+		/// <summary>
+		/// Constants.clipboardLimitTextSize.median取得用プロパティ。
+		/// <para>XAMLで使用することを想定</para>
+		/// </summary>
+		public static Int32 ClipboardLimitTextMedianSize
+		{
+			get
+			{
+				return clipboardLimitTextSize.median;
+			}
+		}
+		
+
+		/// <summary>
+		/// Constants.clipboardLimitTextSize.maximum取得用プロパティ。
+		/// <para>XAMLで使用することを想定</para>
+		/// </summary>
+		public static Int32 ClipboardLimitTextMaximumSize
+		{
+			get
+			{
+				return clipboardLimitTextSize.maximum;
+			}
+		}
+		
+
+		#endregion
+		#region clipboardLimitRtfSize
+
+		/// <summary>
+		/// Constants.clipboardLimitRtfSize.minimum取得用プロパティ。
+		/// <para>XAMLで使用することを想定</para>
+		/// </summary>
+		public static Int32 ClipboardLimitRtfMinimumSize
+		{
+			get
+			{
+				return clipboardLimitRtfSize.minimum;
+			}
+		}
+		
+
+		/// <summary>
+		/// Constants.clipboardLimitRtfSize.median取得用プロパティ。
+		/// <para>XAMLで使用することを想定</para>
+		/// </summary>
+		public static Int32 ClipboardLimitRtfMedianSize
+		{
+			get
+			{
+				return clipboardLimitRtfSize.median;
+			}
+		}
+		
+
+		/// <summary>
+		/// Constants.clipboardLimitRtfSize.maximum取得用プロパティ。
+		/// <para>XAMLで使用することを想定</para>
+		/// </summary>
+		public static Int32 ClipboardLimitRtfMaximumSize
+		{
+			get
+			{
+				return clipboardLimitRtfSize.maximum;
+			}
+		}
+		
+
+		#endregion
+		#region clipboardLimitHtmlSize
+
+		/// <summary>
+		/// Constants.clipboardLimitHtmlSize.minimum取得用プロパティ。
+		/// <para>XAMLで使用することを想定</para>
+		/// </summary>
+		public static Int32 ClipboardLimitHtmlMinimumSize
+		{
+			get
+			{
+				return clipboardLimitHtmlSize.minimum;
+			}
+		}
+		
+
+		/// <summary>
+		/// Constants.clipboardLimitHtmlSize.median取得用プロパティ。
+		/// <para>XAMLで使用することを想定</para>
+		/// </summary>
+		public static Int32 ClipboardLimitHtmlMedianSize
+		{
+			get
+			{
+				return clipboardLimitHtmlSize.median;
+			}
+		}
+		
+
+		/// <summary>
+		/// Constants.clipboardLimitHtmlSize.maximum取得用プロパティ。
+		/// <para>XAMLで使用することを想定</para>
+		/// </summary>
+		public static Int32 ClipboardLimitHtmlMaximumSize
+		{
+			get
+			{
+				return clipboardLimitHtmlSize.maximum;
+			}
+		}
+		
+
+		#endregion
+		#region clipboardLimitImageWidthSize
+
+		/// <summary>
+		/// Constants.clipboardLimitImageWidthSize.minimum取得用プロパティ。
+		/// <para>XAMLで使用することを想定</para>
+		/// </summary>
+		public static Int32 ClipboardLimitImageWidthMinimumSize
+		{
+			get
+			{
+				return clipboardLimitImageWidthSize.minimum;
+			}
+		}
+		
+
+		/// <summary>
+		/// Constants.clipboardLimitImageWidthSize.median取得用プロパティ。
+		/// <para>XAMLで使用することを想定</para>
+		/// </summary>
+		public static Int32 ClipboardLimitImageWidthMedianSize
+		{
+			get
+			{
+				return clipboardLimitImageWidthSize.median;
+			}
+		}
+		
+
+		/// <summary>
+		/// Constants.clipboardLimitImageWidthSize.maximum取得用プロパティ。
+		/// <para>XAMLで使用することを想定</para>
+		/// </summary>
+		public static Int32 ClipboardLimitImageWidthMaximumSize
+		{
+			get
+			{
+				return clipboardLimitImageWidthSize.maximum;
+			}
+		}
+		
+
+		#endregion
+		#region clipboardLimitImageHeightSize
+
+		/// <summary>
+		/// Constants.clipboardLimitImageHeightSize.minimum取得用プロパティ。
+		/// <para>XAMLで使用することを想定</para>
+		/// </summary>
+		public static Int32 ClipboardLimitImageHeightMinimumSize
+		{
+			get
+			{
+				return clipboardLimitImageHeightSize.minimum;
+			}
+		}
+		
+
+		/// <summary>
+		/// Constants.clipboardLimitImageHeightSize.median取得用プロパティ。
+		/// <para>XAMLで使用することを想定</para>
+		/// </summary>
+		public static Int32 ClipboardLimitImageHeightMedianSize
+		{
+			get
+			{
+				return clipboardLimitImageHeightSize.median;
+			}
+		}
+		
+
+		/// <summary>
+		/// Constants.clipboardLimitImageHeightSize.maximum取得用プロパティ。
+		/// <para>XAMLで使用することを想定</para>
+		/// </summary>
+		public static Int32 ClipboardLimitImageHeightMaximumSize
+		{
+			get
+			{
+				return clipboardLimitImageHeightSize.maximum;
 			}
 		}
 		

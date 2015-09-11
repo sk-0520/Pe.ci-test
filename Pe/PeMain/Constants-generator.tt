@@ -2,6 +2,7 @@
 <#@ assembly name="System.Core" #>
 <#@ assembly name="System.Reflection" #>
 <#@ assembly name="$(SolutionDir)../Output/$(Configuration)/$(Platform)/lib/SharedLibrary.dll" #>
+<#@ assembly name="$(SolutionDir)../Output/$(Configuration)/$(Platform)/lib/PeData.dll" #>
 <# /*assembly name="$(OutDir)lib\SharedLibrary.dll"*/ #>
 <#@ assembly name="$(TargetPath)" #>
 <#@ import namespace="System.Linq" #>

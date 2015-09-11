@@ -83,13 +83,40 @@
 			</Grid>
 
 			<GroupBox Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Header="capture type" AA:Language.Word="clipboard-setting/capture-type" Style="{StaticResource DefaultGroupBox}" >
-				<StackPanel>
-					<CheckBox Content="text"  AA:Language.Word="clipboard-setting/capture-type/text" IsChecked="{Binding CaptureTypeText}" />
-					<CheckBox Content="rtf"   AA:Language.Word="clipboard-setting/capture-type/rtf" IsChecked="{Binding CaptureTypeRtf}" />
-					<CheckBox Content="html"  AA:Language.Word="clipboard-setting/capture-type/html" IsChecked="{Binding CaptureTypeHtml}" />
-					<CheckBox Content="image" AA:Language.Word="clipboard-setting/capture-type/image" IsChecked="{Binding CaptureTypeImage}" />
-					<CheckBox Content="files" AA:Language.Word="clipboard-setting/capture-type/files" IsChecked="{Binding CaptureTypeFiles}" />
-				</StackPanel>
+				<Grid>
+					<Grid.RowDefinitions>
+						<RowDefinition />
+						<RowDefinition />
+						<RowDefinition />
+						<RowDefinition />
+						<RowDefinition />
+					</Grid.RowDefinitions>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition />
+						<ColumnDefinition />
+						<ColumnDefinition />
+						<ColumnDefinition />
+					</Grid.ColumnDefinitions>
+					<CheckBox Grid.Row="0" Grid.Column="0" Content="text"  AA:Language.Word="clipboard-setting/capture-type/text" IsChecked="{Binding CaptureTypeText}" />
+					<ToggleButton Grid.Row="0" Grid.Column="1" Content="limit" AA:Language.Word="clipboard-setting/limit-enabled" IsChecked="{Binding LimitTypeText}" />
+					<AV:IntegerSliderControl Grid.Row="0" Grid.Column="3" Value="{Binding LimitSizeText}" Minimum="{Binding Source={x:Static AM:Constants.ClipboardLimitTextMinimumSize}}" Maximum="{Binding Source={x:Static AM:Constants.ClipboardLimitTextMaximumSize}}"/>
+
+					<CheckBox Grid.Row="1" Grid.Column="0" Content="rtf"   AA:Language.Word="clipboard-setting/capture-type/rtf" IsChecked="{Binding CaptureTypeRtf}" />
+					<ToggleButton Grid.Row="1" Grid.Column="1" Content="limit" AA:Language.Word="clipboard-setting/limit-enabled" IsChecked="{Binding LimitTypeRtf}" />
+					<AV:IntegerSliderControl Grid.Row="1" Grid.Column="3" Value="{Binding LimitSizeRtf}" Minimum="{Binding Source={x:Static AM:Constants.ClipboardLimitRtfMinimumSize}}" Maximum="{Binding Source={x:Static AM:Constants.ClipboardLimitRtfMaximumSize}}"/>
+
+					<CheckBox Grid.Row="2" Grid.Column="0" Content="html"  AA:Language.Word="clipboard-setting/capture-type/html" IsChecked="{Binding CaptureTypeHtml}" />
+					<ToggleButton Grid.Row="2" Grid.Column="1" Content="limit" AA:Language.Word="clipboard-setting/limit-enabled" IsChecked="{Binding LimitTypeHtml}" />
+					<AV:IntegerSliderControl Grid.Row="2" Grid.Column="3" Value="{Binding LimitSizeHtml}" Minimum="{Binding Source={x:Static AM:Constants.ClipboardLimitHtmlMinimumSize}}" Maximum="{Binding Source={x:Static AM:Constants.ClipboardLimitHtmlMaximumSize}}"/>
+
+					<CheckBox Grid.Row="3" Grid.Column="0" Content="image" AA:Language.Word="clipboard-setting/capture-type/image" IsChecked="{Binding CaptureTypeImage}" />
+					<ToggleButton Grid.Row="3" Grid.Column="1" Content="limit" AA:Language.Word="clipboard-setting/limit-enabled" IsChecked="{Binding LimitTypeImage}" />
+					<AV:IntegerSliderControl Grid.Row="3" Grid.Column="3" Value="{Binding LimitSizeImageWidth}" Minimum="{Binding Source={x:Static AM:Constants.ClipboardLimitImageWidthMinimumSize}}" Maximum="{Binding Source={x:Static AM:Constants.ClipboardLimitImageWidthMaximumSize}}"/>
+					<AV:IntegerSliderControl Grid.Row="4" Grid.Column="3" Value="{Binding LimitSizeImageHeight}" Minimum="{Binding Source={x:Static AM:Constants.ClipboardLimitImageHeightMinimumSize}}" Maximum="{Binding Source={x:Static AM:Constants.ClipboardLimitImageHeightMaximumSize}}"/>
+
+					<CheckBox Grid.Row="4" Grid.Column="0" Content="files" AA:Language.Word="clipboard-setting/capture-type/files" IsChecked="{Binding CaptureTypeFiles}" />
+
+				</Grid>
 			</GroupBox>
 		</Grid>
 		

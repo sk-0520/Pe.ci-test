@@ -23,8 +23,8 @@
 	{
 		#region variable
 
-		const string defineEnabled = "CaptureType";
-		//const string defineSave = "SaveClipboardTypes";
+		const string defineCaptureType = "CaptureType";
+		const string defineLimitType = "LimitType";
 
 		#endregion
 
@@ -61,27 +61,27 @@
 		public bool CaptureTypeText
 		{
 			get { return Clipboard.CaptureType.HasFlag(ClipboardType.Text); }
-			set { SetClipboardType(Clipboard, Clipboard.CaptureType, ClipboardType.Text, defineEnabled); }
+			set { SetClipboardType(Clipboard, Clipboard.CaptureType, ClipboardType.Text, defineCaptureType); }
 		}
 		public bool CaptureTypeRtf
 		{
 			get { return Clipboard.CaptureType.HasFlag(ClipboardType.Rtf); }
-			set { SetClipboardType(Clipboard, Clipboard.CaptureType, ClipboardType.Rtf, defineEnabled); }
+			set { SetClipboardType(Clipboard, Clipboard.CaptureType, ClipboardType.Rtf, defineCaptureType); }
 		}
 		public bool CaptureTypeHtml
 		{
 			get { return Clipboard.CaptureType.HasFlag(ClipboardType.Html); }
-			set { SetClipboardType(Clipboard, Clipboard.CaptureType, ClipboardType.Html, defineEnabled); }
+			set { SetClipboardType(Clipboard, Clipboard.CaptureType, ClipboardType.Html, defineCaptureType); }
 		}
 		public bool CaptureTypeImage
 		{
 			get { return Clipboard.CaptureType.HasFlag(ClipboardType.Image); }
-			set { SetClipboardType(Clipboard, Clipboard.CaptureType, ClipboardType.Image, defineEnabled); }
+			set { SetClipboardType(Clipboard, Clipboard.CaptureType, ClipboardType.Image, defineCaptureType); }
 		}
 		public bool CaptureTypeFiles
 		{
 			get { return Clipboard.CaptureType.HasFlag(ClipboardType.Files); }
-			set { SetClipboardType(Clipboard, Clipboard.CaptureType, ClipboardType.Files, defineEnabled); }
+			set { SetClipboardType(Clipboard, Clipboard.CaptureType, ClipboardType.Files, defineCaptureType); }
 		}
 
 		#endregion
@@ -91,44 +91,44 @@
 		public bool LimitTypeText
 		{
 			get { return Clipboard.LimitType.HasFlag(ClipboardType.Text); }
-			set { SetClipboardType(Clipboard, Clipboard.LimitType, ClipboardType.Text, defineEnabled); }
+			set { SetClipboardType(Clipboard, Clipboard.LimitType, ClipboardType.Text, defineLimitType); }
 		}
 		public bool LimitTypeRtf
 		{
 			get { return Clipboard.LimitType.HasFlag(ClipboardType.Rtf); }
-			set { SetClipboardType(Clipboard, Clipboard.LimitType, ClipboardType.Rtf, defineEnabled); }
+			set { SetClipboardType(Clipboard, Clipboard.LimitType, ClipboardType.Rtf, defineLimitType); }
 		}
 		public bool LimitTypeHtml
 		{
 			get { return Clipboard.LimitType.HasFlag(ClipboardType.Html); }
-			set { SetClipboardType(Clipboard, Clipboard.LimitType, ClipboardType.Html, defineEnabled); }
+			set { SetClipboardType(Clipboard, Clipboard.LimitType, ClipboardType.Html, defineLimitType); }
 		}
 		public bool LimitTypeImage
 		{
 			get { return Clipboard.LimitType.HasFlag(ClipboardType.Image); }
-			set { SetClipboardType(Clipboard, Clipboard.LimitType, ClipboardType.Image, defineEnabled); }
+			set { SetClipboardType(Clipboard, Clipboard.LimitType, ClipboardType.Image, defineLimitType); }
 		}
 		public bool LimitTypeFiles
 		{
 			get { return Clipboard.LimitType.HasFlag(ClipboardType.Files); }
-			set { SetClipboardType(Clipboard, Clipboard.LimitType, ClipboardType.Files, defineEnabled); }
+			set { SetClipboardType(Clipboard, Clipboard.LimitType, ClipboardType.Files, defineLimitType); }
 		}
 
 		#endregion
 
 		#region LimitSize
 
-		public uint LimitSizeText
+		public int LimitSizeText
 		{
 			get { return Clipboard.LimitSize.Text; }
 			set { SetPropertyValue(Clipboard.LimitSize, value, "Text"); }
 		}
-		public uint LimitSizeRtf
+		public int LimitSizeRtf
 		{
 			get { return Clipboard.LimitSize.Rtf; }
 			set { SetPropertyValue(Clipboard.LimitSize, value, "Rtf"); }
 		}
-		public uint LimitSizeHtml
+		public int LimitSizeHtml
 		{
 			get { return Clipboard.LimitSize.Html; }
 			set { SetPropertyValue(Clipboard.LimitSize, value, "Html"); }

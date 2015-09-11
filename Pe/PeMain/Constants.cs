@@ -234,25 +234,25 @@
 			defaultFontSize.median,
 			defaultFontSize.maximum
 		);
-		static TripleRange<uint> clipboardLimitStringSize = new TripleRange<uint>(
+		static TripleRange<int> clipboardLimitStringSize = new TripleRange<int>(
 			1 * 1024,
 			64 * 1024,
 			10 * 1024 * 1024
 		);
 		[ConstantsRange]
-		public static TripleRange<uint> clipboardLimitTextSize = new TripleRange<uint>(
+		public static TripleRange<int> clipboardLimitTextSize = new TripleRange<int>(
 			clipboardLimitStringSize.minimum,
 			clipboardLimitStringSize.median,
 			clipboardLimitStringSize.maximum
 		);
 		[ConstantsRange]
-		public static TripleRange<uint> clipboardLimitRtfSize = new TripleRange<uint>(
+		public static TripleRange<int> clipboardLimitRtfSize = new TripleRange<int>(
 			clipboardLimitStringSize.minimum,
 			clipboardLimitStringSize.median,
 			clipboardLimitStringSize.maximum
 		);
 		[ConstantsRange]
-		public static TripleRange<uint> clipboardLimitHtmlSize = new TripleRange<uint>(
+		public static TripleRange<int> clipboardLimitHtmlSize = new TripleRange<int>(
 			clipboardLimitStringSize.minimum,
 			clipboardLimitStringSize.median,
 			clipboardLimitStringSize.maximum

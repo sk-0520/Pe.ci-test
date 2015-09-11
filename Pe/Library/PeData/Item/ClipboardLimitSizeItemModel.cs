@@ -13,11 +13,11 @@
 	public class ClipboardLimitSizeItemModel : ItemModelBase, IDeepClone
 	{
 		[DataMember]
-		public uint Text { get; set; }
+		public int Text { get; set; }
 		[DataMember]
-		public uint Rtf { get; set; }
+		public int Rtf { get; set; }
 		[DataMember]
-		public uint Html { get; set; }
+		public int Html { get; set; }
 		[DataMember]
 		public Size Image { get; set; }
 
