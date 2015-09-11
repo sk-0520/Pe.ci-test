@@ -1,29 +1,31 @@
 ﻿namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 {
 	using System;
-	using System.Collections.Generic;
-	using System.Diagnostics;
-	using System.IO;
-	using System.Linq;
-	using System.Runtime.CompilerServices;
-	using System.Runtime.InteropServices;
-	using System.Security.Cryptography;
-	using System.Text;
-	using System.Text.RegularExpressions;
-	using System.Threading.Tasks;
-	using System.Windows;
-	using System.Windows.Interop;
-	using System.Windows.Media;
-	using System.Windows.Media.Imaging;
-	using ContentTypeTextNet.Library.PInvoke.Windows;
-	using ContentTypeTextNet.Library.SharedLibrary.CompatibleForms.Utility;
-	using ContentTypeTextNet.Library.SharedLibrary.IF;
-	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
-	using ContentTypeTextNet.Pe.Library.PeData.Define;
-	using ContentTypeTextNet.Pe.Library.PeData.Item;
-	//	using ContentTypeTextNet.Pe.PeMain.Data;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
+using System.Security.Cryptography;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Interop;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Threading;
+using ContentTypeTextNet.Library.PInvoke.Windows;
+using ContentTypeTextNet.Library.SharedLibrary.CompatibleForms.Utility;
+using ContentTypeTextNet.Library.SharedLibrary.Define;
+using ContentTypeTextNet.Library.SharedLibrary.IF;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.Pe.Library.PeData.Define;
+using ContentTypeTextNet.Pe.Library.PeData.Item;
+//	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
-	using ContentTypeTextNet.Pe.PeMain.IF;
+using ContentTypeTextNet.Pe.PeMain.IF;
 
 	public class ClipboardUtility
 	{
@@ -272,7 +274,9 @@
 						var image = clipboardObject.GetData(DataFormats.Bitmap) as BitmapSource;
 						if(image != null) {
 							var bitmap = new FormatConvertedBitmap(image, PixelFormats.Bgr32, null, 0);
-
+							if(bitmap.CanFreeze) {
+								bitmap.Freeze();
+							}
 							clipboardData.Body.Image = bitmap;
 							clipboardData.Type |= ClipboardType.Image;
 						}
@@ -371,8 +375,17 @@
 		/// <returns></returns>
 		static byte[] CalculateHashCodeFromImage(HashType hashType, ClipboardBodyItemModel bodyItem)
 		{
-			var binaryWidth = BitConverter.GetBytes(bodyItem.Image.PixelWidth);
-			var binaryHeight = BitConverter.GetBytes(bodyItem.Image.PixelHeight);
+			byte[] binaryWidth, binaryHeight;
+			if(!bodyItem.Image.IsFrozen) {
+				binaryWidth = BitConverter.GetBytes(bodyItem.Image.PixelWidth);
+				binaryHeight = BitConverter.GetBytes(bodyItem.Image.PixelHeight);
+			} else {
+				var image = BitmapFrame.Create(bodyItem.Image);
+				image.Freeze();
+				binaryWidth = BitConverter.GetBytes(image.PixelWidth);
+				binaryHeight = BitConverter.GetBytes(image.PixelHeight);
+			}
+
 			var binaryImage = bodyItem.Image_Impl;
 			var binaryList = new[] {
 				binaryWidth,
@@ -453,15 +466,11 @@
 		/// <param name="logger"></param>
 		/// <param name="calcHash">ハッシュ値の算出を行うか。</param>
 		/// <returns></returns>
-		static ClipboardData GetClipboardData_Impl(ClipboardType enabledTypes, IntPtr hWnd, ILogger logger, bool calcHash)
+		static ClipboardData GetClipboardData_Impl(ClipboardType enabledTypes, IntPtr hWnd, ILogger logger)
 		{
 			var clipboardItem = GetClipboardDataFromFramework(enabledTypes, logger);
-			if(calcHash && clipboardItem.Type != ClipboardType.None) {
-				clipboardItem.Hash.Type = HashType.SHA1;
-				clipboardItem.Hash.Code = CalculateHashCode(HashType.SHA1, clipboardItem.Type, clipboardItem.Body);
-			}
-			return clipboardItem;
 
+			return clipboardItem;
 		}
 		/// <summary>
 		/// 現在のクリップボードからクリップボードアイテムを生成する。
@@ -470,7 +479,93 @@
 		/// <returns>生成されたクリップボードアイテム。nullが返ることはない。</returns>
 		public static ClipboardData GetClipboardData(ClipboardType enabledTypes, IntPtr hWnd, ILogger logger)
 		{
-			return GetClipboardData_Impl(enabledTypes, hWnd, logger, true);
+			return GetClipboardData_Impl(enabledTypes, hWnd, logger);
+		}
+
+		static void OutputFilter(ClipboardType clipboardType, int settingLength, int currentLength, INonProcess nonProcess, int frame = 2, [CallerFilePath] string callerFile = "", [CallerLineNumber] int callerLine = -1, [CallerMemberName] string callerMember = "")
+		{
+			var messagemap = new Dictionary<string, string>() {
+				{ LanguageKey.logClipboardFilterType, LanguageUtility.GetTextFromEnum(clipboardType, nonProcess.Language) },
+			};
+			var detailMap = new Dictionary<string, string>() {
+				{ LanguageKey.logClipboardFilterLengthCurrent, currentLength.ToString() },
+				{ LanguageKey.logClipboardFilterLengthSetting, settingLength.ToString() },
+			};
+			var message = nonProcess.Language["log/clipboard/filter/message", messagemap];
+			var detail = nonProcess.Language["log/clipboard/filter-length/detail", detailMap];
+
+			nonProcess.Logger.Debug(message, detail, frame, callerFile, callerLine, callerMember);
+		}
+
+
+		public static void FilterLimitSize(ClipboardData clipboardData, ClipboardLimitSizeItemModel limitSize, INonProcess nonProcess)
+		{
+			CheckUtility.DebugEnforceNotNull(clipboardData);
+			CheckUtility.DebugEnforceNotNull(limitSize);
+
+			var types = ClipboardUtility.GetClipboardTypeList(clipboardData.Type & ~ClipboardType.Files);
+			var limitType = limitSize.LimitType;
+			foreach(var type in types) {
+				if(limitType.HasFlag(type)) {
+					switch(type) {
+						case ClipboardType.Text:
+							{
+								var textLength = clipboardData.Body.Text.Length;
+								if(limitSize.Text < textLength) {
+									clipboardData.Type &= ~type;
+									OutputFilter(type, limitSize.Text, textLength, nonProcess);
+								}
+							}
+							break;
+						
+						case ClipboardType.Rtf:
+							{
+								var bynaryRtfLength = Encoding.ASCII.GetByteCount(clipboardData.Body.Rtf);
+								if(limitSize.Rtf < bynaryRtfLength) {
+									clipboardData.Type &= ~type;
+									OutputFilter(type, limitSize.Rtf, bynaryRtfLength, nonProcess);
+								}
+							}
+							break;
+						
+						case ClipboardType.Html:
+							{
+								var bynaryHtmlLength = Encoding.UTF8.GetByteCount(clipboardData.Body.Html);
+								if(limitSize.Html < bynaryHtmlLength) {
+									clipboardData.Type &= ~type;
+									OutputFilter(type, limitSize.Html, bynaryHtmlLength, nonProcess);
+								}
+							}
+							break;
+						
+						case ClipboardType.Image: 
+							{
+								var limitOverWidth = limitSize.ImageWidth < clipboardData.Body.Image.PixelWidth;
+								var limitOverHeight = limitSize.ImageHeight < clipboardData.Body.Image.PixelHeight;
+								if(limitOverWidth || limitOverHeight) {
+									clipboardData.Type &= ~type;
+									var messagemap = new Dictionary<string, string>() {
+										{ LanguageKey.logClipboardFilterType, LanguageUtility.GetTextFromEnum(type, nonProcess.Language) },
+									};
+									var detailMap = new Dictionary<string, string>() {
+										{ LanguageKey.logClipboardFilterImageWidthCurrent, clipboardData.Body.Image.PixelWidth.ToString() },
+										{ LanguageKey.logClipboardFilterImageHeightCurrent, clipboardData.Body.Image.PixelHeight.ToString() },
+										{ LanguageKey.logClipboardFilterImageWidthSetting, limitSize.ImageWidth.ToString() },
+										{ LanguageKey.logClipboardFilterImageHeightSetting, limitSize.ImageHeight.ToString() },
+									};
+									var message = nonProcess.Language["log/clipboard/filter/message", messagemap];
+									var detail = nonProcess.Language["log/clipboard/filter-image/detail", detailMap];
+
+									nonProcess.Logger.Debug(message, detail);
+								}
+							}
+							break;
+						
+						default:
+							throw new NotImplementedException();
+					}
+				}
+			}
 		}
 
 		/// <summary>
@@ -495,7 +590,7 @@
 			NativeMethods.SetForegroundWindow(hWnd);
 			if (clipboardWatcher.UsingClipboard) {
 				// 現在クリップボードを一時退避
-				var clipboardItem = ClipboardUtility.GetClipboardData_Impl(ClipboardType.All, hWnd, nonProcess.Logger, false);
+				var clipboardItem = ClipboardUtility.GetClipboardData_Impl(ClipboardType.All, hWnd, nonProcess.Logger);
 				try {
 					ClipboardUtility.CopyText(outputText, clipboardWatcher);
 					NativeMethods.SendMessage(hWnd, WM.WM_PASTE, IntPtr.Zero, IntPtr.Zero);

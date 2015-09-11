@@ -90,28 +90,28 @@
 
 		public bool LimitTypeText
 		{
-			get { return Clipboard.LimitType.HasFlag(ClipboardType.Text); }
-			set { SetClipboardType(Clipboard, Clipboard.LimitType, ClipboardType.Text, defineLimitType); }
+			get { return Clipboard.LimitSize.LimitType.HasFlag(ClipboardType.Text); }
+			set { SetClipboardType(Clipboard.LimitSize, Clipboard.LimitSize.LimitType, ClipboardType.Text, defineLimitType); }
 		}
 		public bool LimitTypeRtf
 		{
-			get { return Clipboard.LimitType.HasFlag(ClipboardType.Rtf); }
-			set { SetClipboardType(Clipboard, Clipboard.LimitType, ClipboardType.Rtf, defineLimitType); }
+			get { return Clipboard.LimitSize.LimitType.HasFlag(ClipboardType.Rtf); }
+			set { SetClipboardType(Clipboard.LimitSize, Clipboard.LimitSize.LimitType, ClipboardType.Rtf, defineLimitType); }
 		}
 		public bool LimitTypeHtml
 		{
-			get { return Clipboard.LimitType.HasFlag(ClipboardType.Html); }
-			set { SetClipboardType(Clipboard, Clipboard.LimitType, ClipboardType.Html, defineLimitType); }
+			get { return Clipboard.LimitSize.LimitType.HasFlag(ClipboardType.Html); }
+			set { SetClipboardType(Clipboard.LimitSize, Clipboard.LimitSize.LimitType, ClipboardType.Html, defineLimitType); }
 		}
 		public bool LimitTypeImage
 		{
-			get { return Clipboard.LimitType.HasFlag(ClipboardType.Image); }
-			set { SetClipboardType(Clipboard, Clipboard.LimitType, ClipboardType.Image, defineLimitType); }
+			get { return Clipboard.LimitSize.LimitType.HasFlag(ClipboardType.Image); }
+			set { SetClipboardType(Clipboard.LimitSize, Clipboard.LimitSize.LimitType, ClipboardType.Image, defineLimitType); }
 		}
 		public bool LimitTypeFiles
 		{
-			get { return Clipboard.LimitType.HasFlag(ClipboardType.Files); }
-			set { SetClipboardType(Clipboard, Clipboard.LimitType, ClipboardType.Files, defineLimitType); }
+			get { return Clipboard.LimitSize.LimitType.HasFlag(ClipboardType.Files); }
+			set { SetClipboardType(Clipboard.LimitSize, Clipboard.LimitSize.LimitType, ClipboardType.Files, defineLimitType); }
 		}
 
 		#endregion

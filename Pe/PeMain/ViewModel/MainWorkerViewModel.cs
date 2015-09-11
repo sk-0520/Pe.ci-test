@@ -85,9 +85,9 @@
 
 		public bool IsPause { get; set; }
 
-		public bool IsContextMenuOpen 
+		public bool IsContextMenuOpen
 		{
-			get 
+			get
 			{
 				return IsPause;
 				//return this._isContextMenuOpen; 
@@ -122,13 +122,13 @@
 			get
 			{
 				//TODO: 自前で生成したいけどHardcodet.Wpf.TaskbarNotificationの都合上厳しい
-//#if DEBUG
-//				var path = "/Resources/Icon/Tasktray/App-debug.ico";
-//#elif BETA
-//				var path = "/Resources/Icon/Tasktray/App-beta.ico";
-//#else
-//				var path = "/Resources/Icon/Tasktray/App-release.ico";
-//#endif
+				//#if DEBUG
+				//				var path = "/Resources/Icon/Tasktray/App-debug.ico";
+				//#elif BETA
+				//				var path = "/Resources/Icon/Tasktray/App-beta.ico";
+				//#else
+				//				var path = "/Resources/Icon/Tasktray/App-release.ico";
+				//#endif
 				var uri = SharedConstants.GetEntryUri(AppResource.ApplicationTasktrayPath);
 				return new BitmapImage(uri);
 			}
@@ -166,7 +166,7 @@
 
 		public string SwitchTemplateWindowHotKey { get { return LanguageUtility.GetMenuTextFromHotKeyModel(CommonData.MainSetting.Template.ToggleHotKey, CommonData.Language); } }
 		public string ShowCommandWindowHotKey { get { return LanguageUtility.GetMenuTextFromHotKeyModel(CommonData.MainSetting.Command.ShowHotkey, CommonData.Language); } }
-		
+
 		public string SwitchShellHideFileHotKey { get { return LanguageUtility.GetMenuTextFromHotKeyModel(CommonData.MainSetting.SystemEnvironment.HideFileHotkey, CommonData.Language); } }
 		public string SwitchShellExtensionHotKey { get { return LanguageUtility.GetMenuTextFromHotKeyModel(CommonData.MainSetting.SystemEnvironment.ExtensionHotkey, CommonData.Language); } }
 
@@ -187,7 +187,7 @@
 				return result;
 			}
 		}
-		
+
 		#endregion
 
 		#region command
@@ -395,7 +395,7 @@
 							logcalArea.Height / 2 - size.Height / 2
 						);
 
-						CreateNoteItem(point, size, true); 
+						CreateNoteItem(point, size, true);
 					}
 				);
 
@@ -553,14 +553,14 @@
 		{
 #if DEBUG
 			var startupPath = Environment.ExpandEnvironmentVariables(Constants.StartupShortcutPath);
-			if (File.Exists(startupPath)) {
+			if(File.Exists(startupPath)) {
 				File.Delete(startupPath);
 			}
 #endif
-			if (saveSetting) {
+			if(saveSetting) {
 				SaveSetting();
 			}
-			if (gc) {
+			if(gc) {
 				IndexItemUtility.GarbageCollectionBody(IndexKind.Note, CommonData.NoteIndexSetting.Items, CommonData.NonProcess);
 				IndexItemUtility.GarbageCollectionBody(IndexKind.Template, CommonData.TemplateIndexSetting.Items, CommonData.NonProcess);
 				IndexItemUtility.GarbageCollectionBody(IndexKind.Clipboard, CommonData.ClipboardIndexSetting.Items, CommonData.NonProcess);
@@ -597,7 +597,7 @@
 
 				var result = new StartupNotifyData();
 				result.ExistsSetting = File.Exists(mainSettingPath);
-				if (!result.ExistsSetting) {
+				if(!result.ExistsSetting) {
 					var formsMainSettingPath = Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.FormsUserSettingMainSettinFilePath);
 					result.ExistsFormsSetting = File.Exists(formsMainSettingPath);
 				}
@@ -663,7 +663,7 @@
 		{
 			using(var timeLogger = CommonData.NonProcess.CreateTimeLogger()) {
 				var startupNotifyData = LoadSetting();
-				if (startupNotifyData.ExistsFormsSetting) {
+				if(startupNotifyData.ExistsFormsSetting) {
 					// Forms版からのデータ変換
 					SettingUtility.ConvertFormsSetting(CommonData);
 				}
@@ -671,7 +671,7 @@
 				var previousVersion = (Version)CommonData.MainSetting.RunningInformation.LastExecuteVersion;
 				ResetCulture(CommonData.NonProcess);
 				startupNotifyData.AcceptRunning = InitializeAccept();
-				if (!startupNotifyData.AcceptRunning) {
+				if(!startupNotifyData.AcceptRunning) {
 					return startupNotifyData;
 				}
 				if(previousVersion == null) {
@@ -742,8 +742,8 @@
 		{
 			WindowSaveData.TimerItems.LimitSize = CommonData.MainSetting.WindowSave.SaveCount;
 			WindowSaveData.SystemItems.LimitSize = CommonData.MainSetting.WindowSave.SaveCount;
-			
-			if (WindowSaveTimer != null) {
+
+			if(WindowSaveTimer != null) {
 				WindowSaveTimer.Stop();
 			}
 
@@ -863,7 +863,7 @@
 		internal void ResetToolbar()
 		{
 			CommonData.Logger.Debug("toolbar: reset");
-			if (ResetToolbarRunning) {
+			if(ResetToolbarRunning) {
 				CommonData.Logger.Debug("toolbar-reset: skip");
 				return;
 			}
@@ -992,14 +992,12 @@
 			CommonData.MainSetting.Note.Font.DeepCloneTo(noteItem.Font);
 			//TODO: 外部化
 			switch(CommonData.MainSetting.Note.NoteTitle) {
-				case NoteTitle.Timestamp: 
-					{
+				case NoteTitle.Timestamp: {
 						noteItem.Name = CommonData.Language["note/title/timestamp"];
 					}
 					break;
 
-				case NoteTitle.DefaultCaption: 
-					{
+				case NoteTitle.DefaultCaption: {
 						//TODO: ユニークはまぁ優先度下げ下げ
 						var map = new Dictionary<string, string>() {
 							{ LanguageKey.noteTitleCount, CommonData.NoteIndexSetting.Items.Count.ToString() },
@@ -1011,8 +1009,8 @@
 				default:
 					throw new NotImplementedException();
 			}
-			
-			
+
+
 			SettingUtility.InitializeNoteIndexItem(noteItem, null, CommonData.NonProcess);
 
 			var window = CreateNoteWindow(noteItem, appendIndex);
@@ -1063,7 +1061,7 @@
 			ResetCommandWindow();
 
 			// バインドの無理やり付け替え
-			if (HasView) {
+			if(HasView) {
 				var temp = new MainWorkerViewModel(new ContentTypeTextNet.Pe.PeMain.Data.VariableConstants(), new Logger()) {
 					CommonData = this.CommonData,
 					LauncherToolbarWindows = new List<LauncherToolbarWindow>(),
@@ -1088,10 +1086,10 @@
 				var cultureInfo = new CultureInfo(nonProcess.Language.CultureCode);
 				CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
 				CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
-			} catch (CultureNotFoundException ex) {
+			} catch(CultureNotFoundException ex) {
 				nonProcess.Logger.Trace(ex);
 			}
-			
+
 		}
 
 		IEnumerable<NoteViewModel> GetEnabledNoteItems()
@@ -1106,7 +1104,7 @@
 		{
 			var windowList = AppUtility.GetSystemWindowList(false);
 			var windowCollection = new WindowItemCollectionModel();
-			foreach (var window in windowList) {
+			foreach(var window in windowList) {
 				windowCollection.Add(window);
 			}
 
@@ -1181,7 +1179,7 @@
 		{
 			Debug.Assert(Clipboard != null);
 			Clipboard.IsVisible = !Clipboard.IsVisible;
-			if (Clipboard.IsVisible) {
+			if(Clipboard.IsVisible) {
 				WindowsUtility.ShowActive(ClipboardWindow.Handle);
 			}
 		}
@@ -1190,7 +1188,7 @@
 		{
 			Debug.Assert(Template != null);
 			Template.IsVisible = !Template.IsVisible;
-			if (Clipboard.IsVisible) {
+			if(Clipboard.IsVisible) {
 				WindowsUtility.ShowActive(TemplateWindow.Handle);
 			}
 		}
@@ -1364,7 +1362,7 @@
 			UninitializeSystem();
 
 			if(!IsDisposed) {
-				if (CommonData != null) {
+				if(CommonData != null) {
 					CommonData.Dispose();
 					CommonData = null;
 				}
@@ -1443,31 +1441,27 @@
 			window.Closed += Window_Closed;
 
 			var windowKind = window as IHavingWindowKind;
-			if (windowKind != null) {
+			if(windowKind != null) {
 				switch(windowKind.WindowKind) {
-					case WindowKind.LauncherToolbar:
-						{
+					case WindowKind.LauncherToolbar: {
 							var toolbarWindow = (LauncherToolbarWindow)window;
 							LauncherToolbarWindows.Add(toolbarWindow);
 						}
 						break;
 
 					case WindowKind.LauncherExecute:
-					case WindowKind.LauncherCustomize:
-						{
+					case WindowKind.LauncherCustomize: {
 							OtherWindows.Add(window);
 						}
 						break;
 
-					case WindowKind.LauncherStream: 
-						{
+					case WindowKind.LauncherStream: {
 							var streamWindow = (LauncherItemStreamWindow)window;
 							StreamWindows.Add(streamWindow);
 						}
 						break;
 
-					case WindowKind.Note: 
-						{
+					case WindowKind.Note: {
 							var noteWindow = (NoteWindow)window;
 							NoteWindows.Add(noteWindow);
 
@@ -1488,29 +1482,25 @@
 			var havingWindwKind = window as IHavingWindowKind;
 			if(havingWindwKind != null) {
 				switch(havingWindwKind.WindowKind) {
-					case WindowKind.LauncherToolbar: 
-						{
+					case WindowKind.LauncherToolbar: {
 							var toolbarWindow = (LauncherToolbarWindow)window;
 							LauncherToolbarWindows.Remove(toolbarWindow);
 						}
 						break;
 
 					case WindowKind.LauncherExecute:
-					case WindowKind.LauncherCustomize: 
-						{
+					case WindowKind.LauncherCustomize: {
 							OtherWindows.Remove(window);
 						}
 						break;
 
-					case WindowKind.LauncherStream: 
-						{
+					case WindowKind.LauncherStream: {
 							var streamWindow = (LauncherItemStreamWindow)window;
 							StreamWindows.Remove(streamWindow);
 						}
 						break;
 
-					case WindowKind.Note:
-						{
+					case WindowKind.Note: {
 							var noteWindow = (NoteWindow)window;
 							NoteWindows.Remove(noteWindow);
 
@@ -1531,36 +1521,31 @@
 			CommonDataWindow window = null;
 
 			switch(kind) {
-				case WindowKind.LauncherToolbar:
-					{
+				case WindowKind.LauncherToolbar: {
 						window = new LauncherToolbarWindow();
 						window.SetCommonData(CommonData, (ScreenModel)extensionData);
 					}
 					break;
 
-				case WindowKind.LauncherExecute:
-					{
+				case WindowKind.LauncherExecute: {
 						window = new LauncherItemExecuteWindow();
 						window.SetCommonData(CommonData, extensionData);
 					}
 					break;
 
-				case WindowKind.LauncherCustomize: 
-					{
+				case WindowKind.LauncherCustomize: {
 						window = new LauncherItemCustomizeWindow();
 						window.SetCommonData(CommonData, extensionData);
 					}
 					break;
 
-				case WindowKind.LauncherStream:
-					{
+				case WindowKind.LauncherStream: {
 						window = new LauncherItemStreamWindow();
 						window.SetCommonData(CommonData, extensionData);
 					}
 					break;
 
-				case WindowKind.Note: 
-					{
+				case WindowKind.Note: {
 						var noteItem = (NoteIndexItemModel)extensionData;
 						if(!noteItem.IsVisible) {
 							CommonData.Logger.Trace("hidden -> show", noteItem);
@@ -1571,8 +1556,7 @@
 					}
 					break;
 
-				case WindowKind.Screen:
-					{
+				case WindowKind.Screen: {
 						window = new ScreenWindow();
 						window.SetCommonData(CommonData, extensionData);
 					}
@@ -1590,8 +1574,7 @@
 		void ReceiveRefreshView(WindowKind kind, Window fromView)
 		{
 			switch(kind) {
-				case WindowKind.LauncherToolbar:
-					{
+				case WindowKind.LauncherToolbar: {
 						foreach(var toolbar in LauncherToolbars) {
 							toolbar.Refresh();
 						}
@@ -1604,11 +1587,11 @@
 		}
 
 		void RemoveIndex<TItemModel, TIndexBody>(IndexKind indexKind, Guid guid, IndexItemCollectionModel<TItemModel> items, Data.IndexBodyPairItemCollection<TIndexBody> cachingItems)
-			where TItemModel : IndexItemModelBase
-			where TIndexBody : IndexBodyItemModelBase
+			where TItemModel: IndexItemModelBase
+			where TIndexBody: IndexBodyItemModelBase
 		{
 			var index = cachingItems.IndexOf(guid);
-			if (index != -1) {
+			if(index != -1) {
 				var pair = cachingItems[index];
 				Debug.Assert(pair.Id == guid);
 				cachingItems.RemoveAt(index);
@@ -1619,27 +1602,24 @@
 
 			// ボディ部のファイルも削除する。
 			IndexItemUtility.RemoveBody(indexKind, guid, CommonData.NonProcess);
-			
+
 			SendSaveIndex(indexKind, Timing.Delay);
 		}
 
 		void ReceiveRemoveIndex(IndexKind indexKind, Guid guid, Timing timing)
 		{
 			switch(indexKind) {
-				case IndexKind.Note: 
-					{
+				case IndexKind.Note: {
 						RemoveIndex(indexKind, guid, CommonData.NoteIndexSetting.Items, IndexBodyCaching.NoteItems);
 					}
 					break;
 
-				case IndexKind.Template:
-					{
+				case IndexKind.Template: {
 						RemoveIndex(indexKind, guid, CommonData.TemplateIndexSetting.Items, IndexBodyCaching.TemplateItems);
 					}
 					break;
 
-				case IndexKind.Clipboard: 
-					{
+				case IndexKind.Clipboard: {
 						RemoveIndex(indexKind, guid, CommonData.ClipboardIndexSetting.Items, IndexBodyCaching.ClipboardItems);
 					}
 					break;
@@ -1650,7 +1630,7 @@
 		}
 
 		void SaveIndex<TIndexSetting>(IndexKind indexKind, Timing timing, TIndexSetting indexSetting, FileType fileType, string filePath)
-			where TIndexSetting : ModelBase
+			where TIndexSetting: ModelBase
 		{
 			var path = Environment.ExpandEnvironmentVariables(filePath);
 			AppUtility.SaveSetting(path, indexSetting, fileType, CommonData.Logger);
@@ -1677,15 +1657,15 @@
 		}
 
 		void AppendCachingItems<TIndexBody>(Guid guid, TIndexBody indexBody, Data.IndexBodyPairItemCollection<TIndexBody> cachingItems)
-			where TIndexBody : IndexBodyItemModelBase
+			where TIndexBody: IndexBodyItemModelBase
 		{
-			if (!cachingItems.Any(p => p.Id == guid)) {
+			if(!cachingItems.Any(p => p.Id == guid)) {
 				var pairItem = new IndexBodyPairItem<TIndexBody>(guid, indexBody);
 				cachingItems.Add(pairItem);
-				if (cachingItems.StockItems.Any()) {
+				if(cachingItems.StockItems.Any()) {
 					var itemPairList = cachingItems.StockItems.ToArray();
 					cachingItems.StockItems.Clear();
-					foreach (var pair in itemPairList) {
+					foreach(var pair in itemPairList) {
 						CommonData.Logger.Trace("cache dispose: " + pair.Id.ToString(), pair.Body);
 						pair.Body.Dispose();
 					}
@@ -1694,10 +1674,10 @@
 		}
 
 		IndexBodyItemModelBase GetIndexBody<TIndexBody>(IndexKind indexKind, Guid guid, Data.IndexBodyPairItemCollection<TIndexBody> cachingItems)
-			where TIndexBody : IndexBodyItemModelBase, new()
+			where TIndexBody: IndexBodyItemModelBase, new()
 		{
 			var body = cachingItems.GetFromId(guid);
-			if (body != null) {
+			if(body != null) {
 				CommonData.Logger.Trace("load cache: " + guid.ToString(), body);
 				return body;
 			}
@@ -1728,7 +1708,7 @@
 		}
 
 		void SaveIndexBody<TIndexBody>(IndexBodyItemModelBase indexBody, Guid guid, Data.IndexBodyPairItemCollection<TIndexBody> cachingItems, Timing timing)
-			where TIndexBody : IndexBodyItemModelBase
+			where TIndexBody: IndexBodyItemModelBase
 		{
 			//var fileType = IndexItemUtility.GetIndexBodyFileType(indexBody.IndexKind);
 			//var path = IndexItemUtility.GetIndexBodyFilePath(indexBody.IndexKind, guid, CommonData.VariableConstants);
@@ -1741,16 +1721,16 @@
 
 		void ReceiveSaveIndexBody(IndexBodyItemModelBase indexBody, Guid guid, Timing timing)
 		{
-			switch (indexBody.IndexKind) {
+			switch(indexBody.IndexKind) {
 				case IndexKind.Note:
 					SaveIndexBody<NoteBodyItemModel>(indexBody, guid, IndexBodyCaching.NoteItems, timing);
 					break;
 
-				case IndexKind.Template: 
+				case IndexKind.Template:
 					SaveIndexBody<TemplateBodyItemModel>(indexBody, guid, IndexBodyCaching.TemplateItems, timing);
 					break;
 
-				case IndexKind.Clipboard: 
+				case IndexKind.Clipboard:
 					SaveIndexBody<ClipboardBodyItemModel>(indexBody, guid, IndexBodyCaching.ClipboardItems, timing);
 					break;
 
@@ -1804,88 +1784,108 @@
 			}
 
 			var seq = NativeMethods.GetClipboardSequenceNumber();
-			if (this._clipboardPreviousSequenceNumber == seq) {
+			if(this._clipboardPreviousSequenceNumber == seq) {
 				return;
 			}
 			this._clipboardPreviousSequenceNumber = seq;
 
 			var now = DateTime.Now;
-			if (now - this._clipboardPreviousTime  <= CommonData.MainSetting.Clipboard.WaitTime) {
+			if(now - this._clipboardPreviousTime <= CommonData.MainSetting.Clipboard.WaitTime) {
 				// 待ち時間中のため取り込まない
-				var map = new Dictionary<string,string>() {
+				var map = new Dictionary<string, string>() {
 					{ LanguageKey.logClipboardWaitTimePrev, this._clipboardPreviousTime.ToDetailTimestampString() },
 					{ LanguageKey.logClipboardWaitTimeCurrent, now.ToDetailTimestampString() },
 					{ LanguageKey.logClipboardWaitTimeSetting, CommonData.MainSetting.Clipboard.WaitTime.ToString() },
 					{ LanguageKey.logClipboardWaitTimeWait, (now - this._clipboardPreviousTime).ToString() },
 				};
-				var message= CommonData.Language["log/clipboard/prev-time/message"];
+				var message = CommonData.Language["log/clipboard/prev-time/message"];
 				var detail = CommonData.Language["log/clipboard/prev-time/detail", map];
 				CommonData.Logger.Information(message, detail);
 				return;
 			}
 			this._clipboardPreviousTime = now;
 
+			ClipboardData clipboardData;
 			try {
-				var clipboardData = ClipboardUtility.GetClipboardData(CommonData.MainSetting.Clipboard.CaptureType, MessageWindow.Handle, CommonData.NonProcess.Logger);
-				if (clipboardData.Type != ClipboardType.None) {
-					Task.Run(() => {
-						//clipboardItem.Name = displayText;
-						if (Clipboard.IndexItems.Any()) {
-							if (CommonData.MainSetting.Clipboard.DuplicationCount == 0) {
-								// 範囲チェックを行わないのであれば無条件で追加
-								return null;
-							}
-
-							// 毎回ファイル読むのもなぁ
-							// 指定範囲内に同じデータがあれば追加しない
-							IEnumerable<ClipboardIndexItemModel> clipboardItems = CommonData.ClipboardIndexSetting.Items;
-							if (CommonData.MainSetting.Clipboard.DuplicationCount != Constants.clipboardDuplicationCount.minimum) {
-								clipboardItems = clipboardItems.Take(CommonData.MainSetting.Clipboard.DuplicationCount);
-							}
-							var hitItem = clipboardItems.FirstOrDefault(c => clipboardData.Hash.IsEqual(c.Hash));
-							return hitItem;
-						}
-						return null;
-					}).ContinueWith(t => {
-						var dupItem = t.Result;
-						if(dupItem == null) {
-							try {
-								//this._commonData.MainSetting.Clipboard.HistoryItems.Insert(0, clipboardItem);
-								//Clipboard.IndexItems.Insert();
-								//var body = ReceiveGetIndexBody(IndexKind.Template)
-								var displayText = DisplayTextUtility.MakeClipboardName(clipboardData, CommonData.NonProcess);
-								var index = new ClipboardIndexItemModel() {
-									Name = displayText,
-									Type = clipboardData.Type,
-									Hash = clipboardData.Hash,
-								};
-								Clipboard.IndexPairList.Add(index, null);
-								SendSaveIndex(IndexKind.Clipboard, Timing.Delay);
-								SendSaveIndexBody(clipboardData.Body, index.Id, Timing.Delay);
-								if (!ClipboardWindow.IsActive && ClipboardWindow.IsVisible) {
-									ClipboardWindow.listItems.SelectedItem = ClipboardWindow.listItems.Items[0];
-									ClipboardWindow.listItems.ScrollIntoView(ClipboardWindow.listItems.SelectedItem);
-								}
-							} catch (Exception ex) {
-								CommonData.Logger.Error(ex);
-							}
-						} else {
-							CommonData.Logger.Information(CommonData.Language["log/clipboard/dup-item/message"], dupItem);
-						}
-
-						t.Dispose();
-					}, TaskScheduler.FromCurrentSynchronizationContext());
-				}
-			} catch (AccessViolationException ex) {
+				clipboardData = ClipboardUtility.GetClipboardData(CommonData.MainSetting.Clipboard.CaptureType, MessageWindow.Handle, CommonData.NonProcess.Logger);
+			} catch(AccessViolationException ex) {
 				// #251
 				CommonData.Logger.Error(ex);
-				//this._commonData.Logger.Puts(LogType.Error, ex.Message, ex);
+				return;
 			}
+			if(clipboardData.Type == ClipboardType.None) {
+				CommonData.NonProcess.Logger.Trace(CommonData.NonProcess.Language["log/clipboard/capture/not-support"]);
+				return;
+			}
+
+			Task.Run(() => {
+				var notify = new ClipboardCaptureNotifyData();
+
+				// 制限サイズによるフィルタリング
+				ClipboardUtility.FilterLimitSize(clipboardData, CommonData.MainSetting.Clipboard.LimitSize, CommonData.NonProcess);
+				if(clipboardData.Type == ClipboardType.None) {
+					notify.EmptyFromFiltered = true;
+					return notify;
+				}
+
+				// ハッシュ算出
+				clipboardData.Hash.Type = HashType.SHA1;
+				clipboardData.Hash.Code = ClipboardUtility.CalculateHashCode(clipboardData.Hash.Type, clipboardData.Type, clipboardData.Body);
+
+				if(Clipboard.IndexItems.Any()) {
+					if(CommonData.MainSetting.Clipboard.DuplicationCount == 0) {
+						// 範囲チェックを行わないのであれば無条件で追加
+						return notify;
+					}
+
+					// 毎回ファイル読むのもなぁ
+					// 指定範囲内に同じデータがあれば追加しない
+					IEnumerable<ClipboardIndexItemModel> clipboardItems = CommonData.ClipboardIndexSetting.Items;
+					if(CommonData.MainSetting.Clipboard.DuplicationCount != Constants.clipboardDuplicationCount.minimum) {
+						clipboardItems = clipboardItems.Take(CommonData.MainSetting.Clipboard.DuplicationCount);
+					}
+					notify.DuplicationItem = clipboardItems.FirstOrDefault(c => clipboardData.Hash.IsEqual(c.Hash));
+					return notify;
+				}
+				return null;
+			}).ContinueWith(t => {
+				if(t.Result.EmptyFromFiltered) {
+					CommonData.Logger.Information(CommonData.Language["log/clipboard/filter/empty"]);
+					return;
+				}
+				var dupItem = t.Result.DuplicationItem;
+				if(dupItem == null) {
+					try {
+						//this._commonData.MainSetting.Clipboard.HistoryItems.Insert(0, clipboardItem);
+						//Clipboard.IndexItems.Insert();
+						//var body = ReceiveGetIndexBody(IndexKind.Template)
+						var displayText = DisplayTextUtility.MakeClipboardName(clipboardData, CommonData.NonProcess);
+						var index = new ClipboardIndexItemModel() {
+							Name = displayText,
+							Type = clipboardData.Type,
+							Hash = clipboardData.Hash,
+						};
+						Clipboard.IndexPairList.Add(index, null);
+						SendSaveIndex(IndexKind.Clipboard, Timing.Delay);
+						SendSaveIndexBody(clipboardData.Body, index.Id, Timing.Delay);
+						if(!ClipboardWindow.IsActive && ClipboardWindow.IsVisible) {
+							ClipboardWindow.listItems.SelectedItem = ClipboardWindow.listItems.Items[0];
+							ClipboardWindow.listItems.ScrollIntoView(ClipboardWindow.listItems.SelectedItem);
+						}
+					} catch(Exception ex) {
+						CommonData.Logger.Error(ex);
+					}
+				} else {
+					CommonData.Logger.Information(CommonData.Language["log/clipboard/dup-item/message"], dupItem);
+				}
+
+				t.Dispose();
+			}, TaskScheduler.FromCurrentSynchronizationContext());
 		}
 
 		void ReceiveHotKey(HotKeyId hotKeyId, HotKeyModel hotKeyModel)
 		{
-			if (IsPause) {
+			if(IsPause) {
 				PuaseOutputLog();
 				return;
 			}
@@ -1896,8 +1896,7 @@
 					SendInformationTips(CommonData.Language["notify/info/command/show/title"], CommonData.Language["notify/info/command/show/message"], LogKind.Information);
 					break;
 
-				case HotKeyId.HideFile:
-					{
+				case HotKeyId.HideFile: {
 						SwitchShellHideFile();
 						string message;
 						if(SystemEnvironmentUtility.IsHiddenFileShow()) {
@@ -1909,8 +1908,7 @@
 					}
 					break;
 
-				case HotKeyId.Extension: 
-					{
+				case HotKeyId.Extension: {
 						SwitchShellExtension();
 						string message;
 						if(SystemEnvironmentUtility.IsExtensionShow()) {
@@ -1922,8 +1920,7 @@
 					}
 					break;
 
-				case HotKeyId.CreateNote:
-					{
+				case HotKeyId.CreateNote: {
 						var devicePoint = MouseUtility.GetDevicePosition();
 						// TODO: 論理座標取れてない！
 						var logcalPoint = devicePoint;
@@ -1949,8 +1946,7 @@
 					SendInformationTips(CommonData.Language["notify/info/note/front/title"], CommonData.Language["notify/info/note/front/message"], LogKind.Information);
 					break;
 
-				case HotKeyId.SwitchClipboardShow: 
-					{
+				case HotKeyId.SwitchClipboardShow: {
 						SwitchShowClipboardWindow();
 						string message;
 						if(Clipboard.IsVisible) {
@@ -1962,8 +1958,7 @@
 					}
 					break;
 
-				case HotKeyId.SwitchTemplateShow:
-					{
+				case HotKeyId.SwitchTemplateShow: {
 						SwitchShowTemplateWindow();
 						string message;
 						if(Template.IsVisible) {
@@ -2031,15 +2026,15 @@
 
 		#region IHavingView
 
-		public TaskbarIcon View {get;private set;}
+		public TaskbarIcon View { get; private set; }
 
-		public bool HasView { get{ return HavingViewUtility.GetHasView(this); } }
+		public bool HasView { get { return HavingViewUtility.GetHasView(this); } }
 
 		#endregion
 
 		void Timer_Tick(object sender, EventArgs e)
 		{
-			if (IsPause) {
+			if(IsPause) {
 				PuaseOutputLog();
 				return;
 			}
@@ -2047,7 +2042,7 @@
 			var timer = (DispatcherTimer)sender;
 			timer.Stop();
 			try {
-				if (timer == WindowSaveTimer) {
+				if(timer == WindowSaveTimer) {
 					if(CommonData.MainSetting.WindowSave.IsEnabled) {
 						SaveWindowItemAsync(WindowSaveType.Timer);
 					}

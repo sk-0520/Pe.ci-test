@@ -422,7 +422,12 @@
 		<Item Id="log/update/check-stop" Word="アップデート確認: 取り消し" />
 		<Item Id="log/update/nic" Word="NICが有効ではありません。" />
 		<Item Id="log/clipboard/prev-time/message" Word="クリップボード: 待ち時間中のため無視" />
-		<Item Id="log/clipboard/prev-time/detail"  Word="前回取込時間 -> @[LOG-CLIP-WAIT_TIME-PREV]${br}今回取込時間 -> @[LOG-CLIP-WAIT_TIME-CURRENT]${br}設定時間 -> @[LOG-CLIP-WAIT_TIME-SETTING]${br}待機時間 -> @[LOG-CLIP-WAIT_TIME-WAIT]" />
+		<Item Id="log/clipboard/prev-time/detail"  Word="前回取込時間: @[LOG-CLIP-WAIT_TIME-PREV]${br}今回取込時間: @[LOG-CLIP-WAIT_TIME-CURRENT]${br}設定時間: @[LOG-CLIP-WAIT_TIME-SETTING]${br}待機時間: @[LOG-CLIP-WAIT_TIME-WAIT]" />
+		<Item Id="log/clipboard/capture/not-support"  Word="クリップボード: 取り込めないデータ" />
+		<Item Id="log/clipboard/filter/empty"  Word="クリップボード: 取込制限により無視" />
+		<Item Id="log/clipboard/filter/message" Word="クリップボードフィルタ: @[LOG-CLIP-FILTER-TYPE]の取込制限" />
+		<Item Id="log/clipboard/filter-length/detail"  Word="取込サイズ: @[LOG-CLIP-FILTER_LENGTH-CURRENT]${br}制限サイズ: @[LOG-CLIP-FILTER_LENGTH-SETTING]" />
+		<Item Id="log/clipboard/filter-image/detail"  Word="取込サイズ:${br}	横: @[LOG-CLIP-FILTER_IMAGE_WIDTH-CURRENT]${br}	縦: @[LOG-CLIP-FILTER_IMAGE_HEIGHT-CURRENT]${br}制限サイズ:${br}	横: @[LOG-CLIP-FILTER_IMAGE_WIDTH-SETTING]${br}	縦: @[LOG-CLIP-FILTER_IMAGE_HEIGHT-SETTING]" />
 		<Item Id="log/clipboard/dup-item/message"  Word="クリップボード: 重複するクリップボードアイテムが存在するため無視" />
 		<Item Id="log/auto-regist/message"  Word="ホームウィンドウ処理でのログ" />
 		<Item Id="log/hotkey/unregist/command"           Word="ホットキー解除失敗: コマンド" />

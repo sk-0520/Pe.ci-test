@@ -8,10 +8,16 @@
 	using System.Threading.Tasks;
 	using System.Windows;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
+using ContentTypeTextNet.Pe.Library.PeData.Define;
 
 	[Serializable]
 	public class ClipboardLimitSizeItemModel : ItemModelBase, IDeepClone
 	{
+		/// <summary>
+		/// 取り込み制限対象。
+		/// </summary>
+		[DataMember]
+		public ClipboardType LimitType { get; set; }
 		[DataMember]
 		public int Text { get; set; }
 		[DataMember]
@@ -29,6 +35,7 @@
 		{
 			var obj = (ClipboardLimitSizeItemModel)target;
 
+			obj.LimitType = LimitType;
 			obj.Text = Text;
 			obj.Rtf = Rtf;
 			obj.Html = Html;

@@ -51,11 +51,6 @@
 		/// </summary>
 		[DataMember]
 		public ClipboardType CaptureType { get; set; }
-		/// <summary>
-		/// 取り込み制限対象。
-		/// </summary>
-		[DataMember]
-		public ClipboardType LimitType { get; set; }
 		[DataMember]
 		public ClipboardLimitSizeItemModel LimitSize { get; set; }
 
@@ -151,7 +146,6 @@
 			obj.IsTopmost = IsTopmost;
 			obj.IsVisible = IsVisible;
 			Font.DeepCloneTo(obj.Font);
-			obj.LimitType = LimitType;
 			LimitSize.DeepCloneTo(obj.LimitSize);
 		}
 

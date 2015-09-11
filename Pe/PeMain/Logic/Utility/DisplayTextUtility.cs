@@ -87,7 +87,7 @@
 					{
 						var rt = new RichTextBox();
 							string plainText;
-							using(var reader = new MemoryStream(ASCIIEncoding.Default.GetBytes(clipboardData.Body.Rtf))) {
+							using(var reader = new MemoryStream(Encoding.ASCII.GetBytes(clipboardData.Body.Rtf))) {
 								rt.Selection.Load(reader, DataFormats.Rtf);
 								using(var writer = new MemoryStream()) {
 									rt.Selection.Save(writer, DataFormats.Text);

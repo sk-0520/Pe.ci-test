@@ -146,6 +146,7 @@
       <DependentUpon>Constants.cs</DependentUpon>
     </Compile>
     <Compile Include="Data\Temporary\AboutNotifyData.cs" />
+    <Compile Include="Data\Temporary\ClipboardCaptureNotifyData.cs" />
     <Compile Include="Data\Temporary\ItemWithScreen.cs" />
     <Compile Include="Data\Temporary\LauncherGroupAndItems.cs" />
     <Compile Include="Data\Temporary\LauncherItemWithScreen.cs" />

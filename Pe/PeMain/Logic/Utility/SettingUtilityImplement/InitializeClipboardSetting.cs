@@ -37,8 +37,7 @@
 				setting.WindowHeight = Constants.clipboardDefaultWindowSize.Height;
 			}
 
-			setting.LimitType = EnumUtility.GetNormalization(setting.LimitType, Constants.clipboardLimitType);
-
+			setting.LimitSize.LimitType = EnumUtility.GetNormalization(setting.LimitSize.LimitType, Constants.clipboardLimitType);
 			setting.LimitSize.Text = Constants.clipboardLimitTextSize.GetClamp(setting.LimitSize.Text);
 			setting.LimitSize.Rtf = Constants.clipboardLimitRtfSize.GetClamp(setting.LimitSize.Rtf);
 			setting.LimitSize.Html = Constants.clipboardLimitHtmlSize.GetClamp(setting.LimitSize.Html);
@@ -65,7 +64,7 @@
 			setting.ItemsListWidth = Constants.clipboardItemsListWidth;
 			setting.WindowWidth = Constants.clipboardDefaultWindowSize.Width;
 			setting.WindowHeight = Constants.clipboardDefaultWindowSize.Height;
-			setting.LimitType = Constants.clipboardLimitType;
+			setting.LimitSize.LimitType = Constants.clipboardLimitType;
 			setting.LimitSize.Text = Constants.clipboardLimitTextSize.median;
 			setting.LimitSize.Rtf = Constants.clipboardLimitRtfSize.median;
 			setting.LimitSize.Html = Constants.clipboardLimitHtmlSize.median;
