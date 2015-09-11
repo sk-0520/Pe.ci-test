@@ -1859,10 +1859,10 @@
 									Type = clipboardData.Type,
 									Hash = clipboardData.Hash,
 								};
-								SendSaveIndexBody(clipboardData.Body, index.Id, Timing.Delay);
-								SendSaveIndex(IndexKind.Clipboard, Timing.Delay);
 								Clipboard.IndexPairList.Add(index, null);
-								if(!ClipboardWindow.IsActive) {
+								SendSaveIndex(IndexKind.Clipboard, Timing.Delay);
+								SendSaveIndexBody(clipboardData.Body, index.Id, Timing.Delay);
+								if (!ClipboardWindow.IsActive) {
 									ClipboardWindow.listItems.SelectedItem = ClipboardWindow.listItems.Items[0];
 									ClipboardWindow.listItems.ScrollIntoView(ClipboardWindow.listItems.SelectedItem);
 								}
