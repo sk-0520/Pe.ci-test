@@ -15,6 +15,7 @@
 	using System.Windows.Media;
 	using ContentTypeTextNet.Pe.PeMain.Define;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
+	using ContentTypeTextNet.Pe.Library.PeData.Define;
 
 	/// <summary>
 	/// 定数。
@@ -202,6 +203,9 @@
 			TimeSpan.FromSeconds(1)
 		);
 
+		public const ClipboardType clipboardCaptureType = ClipboardType.All;
+		public const ClipboardType clipboardLimitType = ClipboardType.All ^ ClipboardType.Text;
+
 		[ConstantsRange]
 		public static readonly TripleRange<TimeSpan> clipboardWaitTime = new TripleRange<TimeSpan>(
 			TimeSpan.FromMilliseconds(50),
@@ -229,6 +233,46 @@
 			defaultFontSize.minimum,
 			defaultFontSize.median,
 			defaultFontSize.maximum
+		);
+		static TripleRange<uint> clipboardLimitStringSize = new TripleRange<uint>(
+			1 * 1024,
+			64 * 1024,
+			10 * 1024 * 1024
+		);
+		[ConstantsRange]
+		public static TripleRange<uint> clipboardLimitTextSize = new TripleRange<uint>(
+			clipboardLimitStringSize.minimum,
+			clipboardLimitStringSize.median,
+			clipboardLimitStringSize.maximum
+		);
+		[ConstantsRange]
+		public static TripleRange<uint> clipboardLimitRtfSize = new TripleRange<uint>(
+			clipboardLimitStringSize.minimum,
+			clipboardLimitStringSize.median,
+			clipboardLimitStringSize.maximum
+		);
+		[ConstantsRange]
+		public static TripleRange<uint> clipboardLimitHtmlSize = new TripleRange<uint>(
+			clipboardLimitStringSize.minimum,
+			clipboardLimitStringSize.median,
+			clipboardLimitStringSize.maximum
+		);
+		static TripleRange<int> clipboardLimitImageSize = new TripleRange<int>(
+			1,
+			1* 1024,
+			4 * 1024
+		);
+		[ConstantsRange]
+		public static TripleRange<int> clipboardLimitImageWidthSize = new TripleRange<int>(
+			clipboardLimitImageSize.minimum,
+			clipboardLimitImageSize.median,
+			clipboardLimitImageSize.maximum
+		);
+		[ConstantsRange]
+		public static TripleRange<int> clipboardLimitImageHeightSize = new TripleRange<int>(
+			clipboardLimitImageSize.minimum,
+			clipboardLimitImageSize.median,
+			clipboardLimitImageSize.maximum
 		);
 
 		public const double templateItemsListWidth = 180;

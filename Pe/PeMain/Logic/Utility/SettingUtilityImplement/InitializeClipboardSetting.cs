@@ -5,7 +5,9 @@
 	using System.Linq;
 	using System.Text;
 	using System.Threading.Tasks;
+	using System.Windows;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 	using ContentTypeTextNet.Pe.Library.PeData.Define;
 	using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
 
@@ -22,6 +24,7 @@
 			setting.WaitTime = Constants.clipboardWaitTime.GetClamp(setting.WaitTime);
 			setting.DuplicationCount = Constants.clipboardDuplicationCount.GetClamp(setting.DuplicationCount);
 			setting.Font.Size = Constants.clipboardFontSize.GetClamp(setting.Font.Size);
+			setting.CaptureType = EnumUtility.GetNormalization(setting.CaptureType, Constants.clipboardCaptureType);
 
 			if(SettingUtility.IsIllegalPlusNumber(setting.ItemsListWidth)) {
 				setting.ItemsListWidth = Constants.clipboardItemsListWidth;
@@ -33,6 +36,17 @@
 			if(SettingUtility.IsIllegalPlusNumber(setting.WindowHeight)) {
 				setting.WindowHeight = Constants.clipboardDefaultWindowSize.Height;
 			}
+
+			setting.LimitType = EnumUtility.GetNormalization(setting.CaptureType, Constants.clipboardLimitType);
+
+			setting.LimitSize.Text = Constants.clipboardLimitTextSize.GetClamp(setting.LimitSize.Text);
+			setting.LimitSize.Rtf = Constants.clipboardLimitRtfSize.GetClamp(setting.LimitSize.Rtf);
+			setting.LimitSize.Html = Constants.clipboardLimitHtmlSize.GetClamp(setting.LimitSize.Html);
+
+			setting.LimitSize.Image = new Size(
+				(double)Constants.clipboardLimitImageWidthSize.GetClamp((int)setting.LimitSize.Image.Width),
+				(double)Constants.clipboardLimitImageHeightSize.GetClamp((int)setting.LimitSize.Image.Height)
+			);
 		}
 
 		static void V_First(ClipboardSettingModel setting, Version previousVersion, INonProcess nonProcess)
@@ -44,7 +58,7 @@
 			nonProcess.Logger.Trace("version setting: first");
 
 			setting.IsEnabled = true;
-			setting.CaptureType = ClipboardType.All;
+			setting.CaptureType = Constants.clipboardCaptureType;
 			setting.UsingClipboard = false;
 			setting.SaveCount = 0;
 			setting.DuplicationCount = Constants.clipboardDuplicationCount.median;
@@ -53,6 +67,14 @@
 			setting.ItemsListWidth = Constants.clipboardItemsListWidth;
 			setting.WindowWidth = Constants.clipboardDefaultWindowSize.Width;
 			setting.WindowHeight = Constants.clipboardDefaultWindowSize.Height;
+			setting.LimitType = Constants.clipboardLimitType;
+			setting.LimitSize.Text = Constants.clipboardLimitTextSize.median;
+			setting.LimitSize.Rtf = Constants.clipboardLimitRtfSize.median;
+			setting.LimitSize.Html = Constants.clipboardLimitHtmlSize.median;
+			setting.LimitSize.Image = new Size(
+				Constants.clipboardLimitImageWidthSize.median,
+				Constants.clipboardLimitImageHeightSize.median
+			);
 		}
 	}
 }

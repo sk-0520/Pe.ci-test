@@ -3,16 +3,22 @@
 	using System;
 	using System.Collections.Generic;
 	using System.Linq;
+	using System.Runtime.Serialization;
 	using System.Text;
 	using System.Threading.Tasks;
 	using System.Windows;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 
+	[Serializable]
 	public class ClipboardLimitSizeItemModel : ItemModelBase, IDeepClone
 	{
+		[DataMember]
 		public uint Text { get; set; }
+		[DataMember]
 		public uint Rtf { get; set; }
+		[DataMember]
 		public uint Html { get; set; }
+		[DataMember]
 		public Size Image { get; set; }
 
 		#region IDeepClone

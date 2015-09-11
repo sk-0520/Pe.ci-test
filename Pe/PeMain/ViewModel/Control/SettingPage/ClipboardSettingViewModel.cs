@@ -86,6 +86,66 @@
 
 		#endregion
 
+		#region LimitType
+
+		public bool LimitTypeText
+		{
+			get { return Clipboard.LimitType.HasFlag(ClipboardType.Text); }
+			set { SetClipboardType(Clipboard, Clipboard.LimitType, ClipboardType.Text, defineEnabled); }
+		}
+		public bool LimitTypeRtf
+		{
+			get { return Clipboard.LimitType.HasFlag(ClipboardType.Rtf); }
+			set { SetClipboardType(Clipboard, Clipboard.LimitType, ClipboardType.Rtf, defineEnabled); }
+		}
+		public bool LimitTypeHtml
+		{
+			get { return Clipboard.LimitType.HasFlag(ClipboardType.Html); }
+			set { SetClipboardType(Clipboard, Clipboard.LimitType, ClipboardType.Html, defineEnabled); }
+		}
+		public bool LimitTypeImage
+		{
+			get { return Clipboard.LimitType.HasFlag(ClipboardType.Image); }
+			set { SetClipboardType(Clipboard, Clipboard.LimitType, ClipboardType.Image, defineEnabled); }
+		}
+		public bool LimitTypeFiles
+		{
+			get { return Clipboard.LimitType.HasFlag(ClipboardType.Files); }
+			set { SetClipboardType(Clipboard, Clipboard.LimitType, ClipboardType.Files, defineEnabled); }
+		}
+
+		#endregion
+
+		#region LimitSize
+
+		public uint LimitSizeText
+		{
+			get { return Clipboard.LimitSize.Text; }
+			set { SetPropertyValue(Clipboard.LimitSize, value, "Text"); }
+		}
+		public uint LimitSizeRtf
+		{
+			get { return Clipboard.LimitSize.Rtf; }
+			set { SetPropertyValue(Clipboard.LimitSize, value, "Rtf"); }
+		}
+		public uint LimitSizeHtml
+		{
+			get { return Clipboard.LimitSize.Html; }
+			set { SetPropertyValue(Clipboard.LimitSize, value, "Html"); }
+		}
+		public int LimitSizeImageWidth
+		{
+			get { return (int)Clipboard.LimitSize.Image.Width; }
+			set { SetPropertyValue(Clipboard.LimitSize.Image, (double)value, "Width"); }
+		}
+		public int LimitSizeImageHeight
+		{
+			get { return (int)Clipboard.LimitSize.Image.Height; }
+			set { SetPropertyValue(Clipboard.LimitSize.Image, (double)value, "Height"); }
+		}
+
+		#endregion
+
 		public int SaveCount
 		{
 			get { return Clipboard.SaveCount; }
