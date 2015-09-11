@@ -53,7 +53,7 @@
 					var body = AppSender.SendLoadIndexBody(IndexKind.Clipboard, Model.Id);
 					this._bodyModel = (ClipboardBodyItemModel)body;
 					if(Model.Type.HasFlag(ClipboardType.Html)) {
-						HtmlModel = ClipboardUtility.ConvertClipboardHtmlFromFromRawHtml(this._bodyModel.Html, AppNonProcess);
+						HtmlModel = ClipboardUtility.ConvertClipboardHtmlFromFromRawHtml(this._bodyModel.Html ?? string.Empty, AppNonProcess);
 					} else {
 						HtmlModel = null;
 					}

@@ -245,7 +245,7 @@
 			}
 			if(HasView) {
 				View.Dispatcher.BeginInvoke(new Action(() => {
-					if(!View.IsActive) {
+					if(!View.IsActive && View.IsVisible) {
 						View.listLog.SelectedItem = item;
 						View.listLog.ScrollIntoView(View.listLog.SelectedItem);
 					}

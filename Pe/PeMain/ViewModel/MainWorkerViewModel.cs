@@ -1862,7 +1862,7 @@
 								Clipboard.IndexPairList.Add(index, null);
 								SendSaveIndex(IndexKind.Clipboard, Timing.Delay);
 								SendSaveIndexBody(clipboardData.Body, index.Id, Timing.Delay);
-								if (!ClipboardWindow.IsActive) {
+								if (!ClipboardWindow.IsActive && ClipboardWindow.IsVisible) {
 									ClipboardWindow.listItems.SelectedItem = ClipboardWindow.listItems.Items[0];
 									ClipboardWindow.listItems.ScrollIntoView(ClipboardWindow.listItems.SelectedItem);
 								}
