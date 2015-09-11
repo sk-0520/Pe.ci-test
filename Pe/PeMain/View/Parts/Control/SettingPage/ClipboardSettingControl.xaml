@@ -84,20 +84,32 @@
 
 			<GroupBox Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Header="capture type" AA:Language.Word="clipboard-setting/capture-type" Style="{StaticResource DefaultGroupBox}" >
 				<Grid>
+					<Grid.Resources>
+						<Style TargetType="CheckBox">
+							<Setter Property="VerticalAlignment" Value="Center" />
+						</Style>
+						<Style TargetType="ToggleButton">
+							<Setter Property="Margin" Value="4,1,4,1" />
+						</Style>
+						<Style TargetType="TextBlock">
+							<Setter Property="VerticalAlignment" Value="Center" />
+							<Setter Property="Margin" Value="4,0,0,0" />
+						</Style>
+					</Grid.Resources>
 					<Grid.RowDefinitions>
-						<RowDefinition />
-						<RowDefinition />
-						<RowDefinition />
-						<RowDefinition />
-						<RowDefinition />
-						<RowDefinition />
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
 					</Grid.RowDefinitions>
 					<Grid.ColumnDefinitions>
-						<ColumnDefinition />
-						<ColumnDefinition />
-						<ColumnDefinition />
-						<ColumnDefinition />
-						<ColumnDefinition />
+						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition Width="Auto" />
 					</Grid.ColumnDefinitions>
 					<CheckBox Grid.Row="0" Grid.Column="0" Content="text"  AA:Language.Word="clipboard-setting/capture-type/text" IsChecked="{Binding CaptureTypeText}" />
 					<ToggleButton Grid.Row="0" Grid.Column="1" Content="limit" AA:Language.Word="clipboard-setting/limit-enabled" IsChecked="{Binding LimitTypeText}" />
