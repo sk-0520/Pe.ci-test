@@ -40,4 +40,16 @@
 
 		#endregion
 	}
+
+	/// <summary>
+	/// ラッパー。
+	/// </summary>
+	public static class TripleRange
+	{
+		public static TripleRange<T> Create<T>(T minimum, T median, T maximum)
+			where T: IComparable
+		{
+			return new TripleRange<T>(minimum, median, maximum);
+		}
+	}
 }
