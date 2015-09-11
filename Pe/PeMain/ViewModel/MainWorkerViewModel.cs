@@ -73,12 +73,12 @@
 				Constants.CacheIndexClipboard
 			);
 
-			ToolbarContext = new object();
 		}
 
 		#region property
 
-		object ToolbarContext { get; set; }
+		bool ResetToolbarRunning { get; set; }
+		DateTime PrevResetToolbar { get; set; }
 
 		Data.CommonData CommonData { get; set; }
 		public LanguageManager Language { get { return CommonData.Language; } }
@@ -863,11 +863,21 @@
 		internal void ResetToolbar()
 		{
 			CommonData.Logger.Debug("toolbar: reset");
-			lock(ToolbarContext) {
-				CommonData.Logger.Debug("toolbar: reset start");
+			if (ResetToolbarRunning) {
+				CommonData.Logger.Debug("toolbar-reset: skip");
+				return;
+			}
+			CommonData.Logger.Debug("toolbar-reset: start");
+
+			ResetToolbarRunning = true;
+
+			Dispatcher.CurrentDispatcher.Invoke(new Action(() => {
 				RemoveToolbar();
 				CreateToolbar();
-			}
+				PrevResetToolbar = DateTime.Now;
+				ResetToolbarRunning = false;
+				CommonData.Logger.Debug("toolbar-reset: end");
+			}), DispatcherPriority.SystemIdle);
 		}
 
 		void CreateNote()
@@ -1778,6 +1788,7 @@
 						Thread.Sleep(Constants.screenCountChangeWaitTime);
 						managedScreenCount = Screen.AllScreens.Count();
 					}
+
 				}).ContinueWith(t => {
 					if(changedScreenCount) {
 						ChangedScreenCount();
