@@ -92,6 +92,7 @@
     <Compile Include="Item\ClipboardBodyItemModel.cs" />
     <Compile Include="Item\ClipboardIndexItemCollectionModel.cs" />
     <Compile Include="Item\ClipboardIndexItemModel.cs" />
+    <Compile Include="Item\ClipboardLimitSizeItemModel.cs" />
     <Compile Include="Item\ColorPairItemModel.cs" />
     <Compile Include="Item\ComponentItemModel.cs" />
     <Compile Include="Item\ComponentItemCollectionModel.cs" />
