@@ -208,6 +208,7 @@
 							</TabItem.Header>
 							<TextBox 
 								IsReadOnly="True"
+								UndoLimit="0"
 								Text="{Binding SelectedViewModel.Text, Mode=OneWay}"
 								HorizontalScrollBarVisibility="Auto"
 								VerticalScrollBarVisibility="Auto"
@@ -223,11 +224,13 @@
 									<TextBlock Text="rft" AA:Language.Word="clipboard/type/rtf" />
 								</StackPanel>
 							</TabItem.Header>
+							<!-- HACK: Mode=OneWay は xctk:RichTextBox で表示できなくなる-->
 							<xctk:RichTextBox 
 								IsReadOnly="True" 
 								HorizontalScrollBarVisibility="Auto" 
 								VerticalScrollBarVisibility="Auto" 
 								Text="{Binding SelectedViewModel.Rtf}"
+								UndoLimit="0"
 							>
 								<xctk:RichTextBox.TextFormatter>
 									<xctk:RtfFormatter  />
