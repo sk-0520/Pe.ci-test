@@ -161,6 +161,9 @@
     <Content Include="doc\changelog.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="doc\license\Pe.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="etc\script\changelog.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -479,6 +482,9 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Constants-generator.cs</LastGenOutput>
     </None>
+    <Content Include="doc\license\Visual Studio 2013 Image Library EULA.docx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="packages.config" />
     <AppDesigner Include="Properties\" />
     <None Include="Properties\SlowCheetah\SlowCheetah.Transforms.targets" />
