@@ -25,6 +25,8 @@
 				<ResourceDictionary Source="/View/Parts/Resource/DialogDictionary.xaml"/>
 				<ResourceDictionary Source="/View/Parts/Resource/TextBoxDictionary.xaml"/>
 				<ResourceDictionary Source="/View/Parts/Resource/LabelDictionary.xaml"/>
+				<ResourceDictionary Source="/View/Parts/Resource/ImageDictionary.xaml"/>
+				<ResourceDictionary Source="/View/Parts/Resource/TextBlockDictionary.xaml"/>
 			</ResourceDictionary.MergedDictionaries>
 			<Style x:Key="LinkText" TargetType="TextBlock">
 				<Setter Property="VerticalAlignment" Value="Center" />
@@ -134,7 +136,7 @@
 									<StackPanel Orientation="Horizontal">
 										<Image AA:IconSize.IconScale="Small">
 											<Image.Style>
-												<Style TargetType="Image" BasedOn="{StaticResource DefaultImage}">
+												<Style TargetType="Image" BasedOn="{StaticResource ItemImage}">
 													<Style.Triggers>
 														<DataTrigger Binding="{Binding ComponentKind}" Value="{x:Static ADD:ComponentKind.Library}">
 															<Setter Property="Source" Value="{x:Static AM:AppResource.AboutComponentKindLibraryImage}" />
