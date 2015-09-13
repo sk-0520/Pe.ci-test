@@ -17,7 +17,13 @@
 		}
 
 		static void V_Last(LauncherGroupSettingModel setting, Version previousVersion, INonProcess nonProcess)
-		{ }
+		{
+			if(!setting.Groups.Any()) {
+				var initGroup = SettingUtility.CreateLauncherGroup(setting.Groups, nonProcess);
+
+				setting.Groups.Add(initGroup);
+			}
+		}
 
 		static void V_First(LauncherGroupSettingModel setting, Version previousVersion, INonProcess nonProcess)
 		{

@@ -244,12 +244,6 @@ using ContentTypeTextNet.Pe.PeMain.Data;
 		{
 			Implement.InitializeLauncherGroupSetting.Correction(setting, previousVersion, nonProcess);
 
-			if(!setting.Groups.Any()) {
-				var initGroup = CreateLauncherGroup(setting.Groups, nonProcess);
-
-				setting.Groups.Add(initGroup);
-			}
-
 			foreach(var item in setting.Groups) {
 				InitializeLauncherGroupItem(item, previousVersion, nonProcess);
 			}

@@ -206,7 +206,7 @@
 						<StackPanel Orientation="Horizontal">
 							<Image Style="{StaticResource ItemImage}" Source="{Binding Image}" />
 							<TextBlock Style="{StaticResource ItemText}" Text="{Binding DisplayText}" />
-							<Popup Width="200" Placement="Top">
+							<Popup Width="200" Placement="Bottom">
 								<Popup.IsOpen>
 									<MultiBinding Converter="{StaticResource LogicalMultiAndConverter}" Mode="OneWay">
 										<Binding Path="IsSelected" Mode="OneWay" />

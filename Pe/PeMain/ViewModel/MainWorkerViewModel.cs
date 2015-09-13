@@ -1046,6 +1046,7 @@
 		{
 			ResetCache(false);
 
+			InitializeSetting(Constants.ApplicationVersionNumber);
 			InitializeStatus();
 			CallPropertyChangeHotkey();
 
