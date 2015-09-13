@@ -141,7 +141,6 @@
 							<xctk:AutoSelectTextBox Grid.Column="0" AutoSelectBehavior="OnFocus" IsReadOnly="True" Text="{Binding SelectedItem.CallerFile, ElementName=listLog, Mode=OneWay, Converter={StaticResource LogFileNameConverter}}" Style="{StaticResource DefaultTextBox}" />
 							<xctk:AutoSelectTextBox Grid.Column="1" AutoSelectBehavior="OnFocus" IsReadOnly="True" AA:Language.Hint="logging/detail/caller/number" Text="{Binding SelectedItem.CallerLine, ElementName=listLog, Mode=OneWay}" Style="{StaticResource DefaultTextBox}" />
 						</Grid>
-
 					</Grid>
 				</Grid>
 				<TextBox

@@ -1108,7 +1108,10 @@
 				windowCollection.Add(window);
 			}
 
-			windowCollection.Name = "TODO:" + DateTime.Now.ToString();
+			var nameMap = new Dictionary<string, string>() {
+				{ LanguageKey.windowCollectionCount, windowCollection.Count.ToString() },
+			};
+			windowCollection.Name = CommonData.Language["window-collection/name", nameMap];
 
 			switch(type) {
 				case WindowSaveType.Temporary:

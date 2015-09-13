@@ -50,6 +50,7 @@
 		<Item Id="group/default" Word="(デフォルト)" />
 		<Item Id="clipboard/name/image" Word="@[CLIP-TYPE]: @[CLIP-IMAGE-WIDTH] × @[CLIP-IMAGE-HEIGHT]" />
 		<Item Id="clipboard/name/files" Word="@[CLIP-TYPE]: @[CLIP-FILES-COUNT]" />
+		<Item Id="window-collection/name" Word="@[TIMESTAMP], ウィンドウ数: @[WINDOW-COLLECTION-COUNT]" />
 		
 		<Item Id="accept/ok" Word="使用する" />
 		<Item Id="accept/ng" Word="使用しない" />

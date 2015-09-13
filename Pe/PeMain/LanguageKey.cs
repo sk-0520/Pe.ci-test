@@ -86,7 +86,9 @@
 		public const string formsConvertLauncherItemName = "FORMS-CONVERT-LAUNCHER-ITEM-NAME";
 		public const string formsConvertLauncherItemType = "FORMS-CONVERT-LAUNCHER-ITEM-TYPE";
 		public const string formsConvertLauncherItemTypeFile = "FORMS-CONVERT-LAUNCHER-ITEM-TYPE:FILE";
-		
+
+		public const string windowCollectionCount = "WINDOW-COLLECTION-COUNT";
+
 		#endregion
 	}
 }
