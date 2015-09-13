@@ -38,19 +38,10 @@ if not %ERROR_X64% == 0 echo "build error x64: %ERROR_X64%" >> "%ERROR%"
 for /F "usebackq" %%s in (`cscript "%GV%" "%VER_TARGET%"`) do set EXEVER=%%s
 
 echo remove
-echo remove SQLite.Interop.dll
-rmdir /S /Q "%OUTPUTx86%\x64"
-rmdir /S /Q "%OUTPUTx86%\x86"
-rmdir /S /Q "%OUTPUTx64%\x64"
-rmdir /S /Q "%OUTPUTx64%\x86"
-rmdir /S /Q "%OUTPUTx86%\lib\x64"
-rmdir /S /Q "%OUTPUTx64%\lib\x86"
-echo remove XML
-del "%OUTPUTx86%\lib\System.Data.SQLite.xml"
-del "%OUTPUTx64%\lib\System.Data.SQLite.xml"
-del "%OUTPUTx86%\lib\MouseKeyboardActivityMonitor.xml"
-del "%OUTPUTx64%\lib\MouseKeyboardActivityMonitor.xml"
-
+echo remove *.pdb, *.xml
+del /S /Q *.pdb
+del /S /Q "%OUTPUTx86%\lib\*.xml"
+del /S /Q "%OUTPUTx64%\lib\*.xml"
 
 echo compression
 cscript "%ZIP%" "%OUTPUTx86%" "%OUTPUT%\Pe_%EXEVER%_x86.zip"
