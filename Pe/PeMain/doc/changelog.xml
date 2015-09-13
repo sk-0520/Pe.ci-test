@@ -58,46 +58,113 @@
 	<log date="YYYY/MM/DD" version="0.62.1" type="rc" dummy="################################################################################">
 		<group type="note" dummy="==================================================================">
 			<note rev="">
-				<message></message>
+				<message>本バージョンからWPF版になります</message>
+				<comments>
+					<comment>基本的な機能はForms版の踏襲ですがあくまで似ているだけです</comment>
+					<comment>今後の機能追加・保守はWPF版のみになります</comment>
+					<comment>本バージョンはあくまでForms→WPFへの移植で溜まっていた課題への対応は次回バージョンから頑張る</comment>
+					<comment>実装期間長かったー！</comment>
+				</comments>
 			</note>
 			<note rev="">
-				<message></message>
+				<message class="compatibility">Forms版とWPF版の設定データに互換性はありませんが一部設定のみ引き継がれます</message>
+				<comments>
+					<comment>!注意! バグバグしてそうな本バージョンへのアップデートを見送るユーザーもいそうなので、下記引き継ぎ機能は未来バージョン数世代はサポートします</comment>
+					<comment>引き継ぎ処理はWPF版本体設定が存在せずForms版本体設定が存在する場合に実施されます</comment>
+					<comment>引き継がれる設定: 基本設定、ランチャーアイテム、グループ</comment>
+					<comment>引き継がれない設定: 各ノートデータ、各クリップボードデータ、各テンプレートデータ</comment>
+					<comment>ランチャーアイテム互換性: ディレクトリアイテムはファイルアイテムに変換されます(内部実装として地味に予約しているので要望があれば検討します)</comment>
+					<comment>ランチャーアイテム互換性: 組み込みアイテムは引き継ぎ対象外になります(将来的にはまたサポートしますが今は休止)</comment>
+				</comments>
 			</note>
 			<note rev="">
-				<message></message>
+				<message>ツールバー</message>
+				<comments>
+					<comment>Aero Glass を使用しなくなりました</comment>
+					<comment>「自動的に隠す」設定時に隠れる際のアニメーションを廃止しました(実装時に設計をミスった)</comment>
+					<comment>ランチャーアイテムのメニューからファイル一覧メニューがなくなりました</comment>
+					<comment>ランチャーアイテムのメニューからアイテム編集が行えるようになりました</comment>
+					<comment>コマンドアイテムもファイルアイテムのように実行できるようにしました</comment>
+					<comment>ALTキー押下によるアイテム並び替え機能が廃止されました(現実装だとちっと難しそうなので後回し)</comment>
+					<comment>ESCキー二回押下でツールバーを隠す機能は一旦廃止しました(実装忘れてた)</comment>
+				</comments>
+			</note>
+			<note rev="">
+				<message>ノート</message>
+				<comments>
+					<comment>各種設定編集をメニューからでなく一元的に操作できるようになりました</comment>
+					<comment>通知領域からの一覧表示メニューが表示中・非表示に分離されました</comment>
+				</comments>
+			</note>
+			<note rev="">
+				<message>コマンド</message>
+				<comments>
+					<comment>URL入力機能を廃止しました(実装忘れてた)</comment>
+					<comment>候補一覧にアイコンを表示しました</comment>
+				</comments>
+			</note>
+			<note rev="">
+				<message>クリップボード</message>
+				<comments>
+					<comment>データ保持方法を変更。Forms版で大きな画像ばかり取り込んだ際に落ちる不具合が解消されたと思います。思うだけで試してません</comment>
+					<comment>クリップボードの各種データ形式に対して取込制限設定を追加しました</comment>
+					<comment>取込種類・保存種類を統合しました</comment>
+				</comments>
+			</note>
+			<note rev="">
+				<message>テンプレート</message>
+				<comments>
+					<comment>クリップボードウィンドウから独立しました</comment>
+				</comments>
 			</note>
 		</group>
 		<group type="features" dummy="==================================================================">
 			<note rev="">
-				<message></message>
+				<message>ウィンドウ位置保存機能に最大化・最小化をサポート</message>
 			</note>
 			<note rev="">
-				<message></message>
+				<message>ウィンドウ位置保存設定をUI上から変更できるようにしました</message>
 			</note>
 			<note rev="">
-				<message></message>
-			</note>
-		</group>
-		<group type="fixes" dummy="==================================================================">
-			<note rev="">
-				<message></message>
+				<message>ツールバーのメニューボタン位置を特定条件で変更する機能の追加</message>
+				<comments>
+					<comment>ツールバーを右側表示した時にメニューボタンを左に表示します</comment>
+				</comments>
 			</note>
 			<note rev="">
-				<message></message>
+				<message>ツールバーの自動的に隠すまでの時間をUI上から変更できるようにしました</message>
 			</note>
 			<note rev="">
-				<message></message>
+				<message>あとなんか色々</message>
 			</note>
 		</group>
 		<group type="developer" dummy="==================================================================">
 			<note rev="">
-				<message></message>
+				<message>Forms版のソリューションは [Pe]/Pe-Forms に配置されます</message>
 			</note>
 			<note rev="">
-				<message></message>
+				<message>以下IssuesはForms版で上がっていてWPF版から解決されたであろう課題。詳しく見てないけどなんとなく解決できたんじゃねってやつです</message>
 			</note>
 			<note rev="">
-				<message></message>
+				<message>#245: テンプレートって「システム環境」と違う気がする</message>
+			</note>
+			<note rev="">
+				<message>#243: ツールバーの自動的に隠す状態への遷移時間</message>
+			</note>
+			<note rev="">
+				<message>#248: 高DPI環境での表示不具合</message>
+			</note>
+			<note rev="">
+				<message>#275: クリップボード取込時にサイズ制限を行う</message>
+			</note>
+			<note rev="">
+				<message>#286: Aero AutoColorを適用させる</message>
+			</note>
+			<note rev="">
+				<message>#137: 大きなファイル読み込みで死ぬ</message>
+			</note>
+			<note rev="">
+				<message>#210: クリップボードアイテム名を変更する</message>
 			</note>
 		</group>
 	</log>

@@ -1680,7 +1680,7 @@
 		{
 			var body = cachingItems.GetFromId(guid);
 			if(body != null) {
-				CommonData.Logger.Debug("load cache: " + guid.ToString(), body);
+				CommonData.Logger.Debug("load cache: " + guid.ToString(), body.DisplayText);
 				return body;
 			}
 			//var fileType = IndexItemUtility.GetBodyFileType(indexKind);
