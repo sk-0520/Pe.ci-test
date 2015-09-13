@@ -429,6 +429,7 @@
     <Compile Include="View\UpdateConfirmWindow.xaml.cs">
       <DependentUpon>UpdateConfirmWindow.xaml</DependentUpon>
     </Compile>
+    <Resource Include="Resources\Image\Common\CommonOthers.png" />
     <Resource Include="Resources\Image\About\AboutComponentKindWebPage.png" />
     <Resource Include="Resources\Image\Home\HomeFlag.png" />
     <Resource Include="Resources\Image\Home\HomeSearch.png" />

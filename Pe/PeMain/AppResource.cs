@@ -82,6 +82,8 @@
 		const string commonOperatingSystem = "/Resources/Image/Common/CommonOperatingSystem.png";
 		[AppResource(AppResourceType.Image)]
 		const string commonEdit = "/Resources/Image/Common/CommonEdit.png";
+		[AppResource(AppResourceType.Image)]
+		const string commonOthers = "/Resources/Image/Common/CommonOthers.png";
 
 		[AppResource(AppResourceType.Image)]
 		const string homeSearch = "/Resources/Image/Home/homeSearch.png";
