@@ -135,6 +135,9 @@
 				<message>ツールバーの自動的に隠すまでの時間をUI上から変更できるようにしました</message>
 			</note>
 			<note rev="">
+				<message>使用許諾再表示バッチ機能の一時廃止</message>
+			</note>
+			<note rev="">
 				<message>あとなんか色々</message>
 			</note>
 		</group>
