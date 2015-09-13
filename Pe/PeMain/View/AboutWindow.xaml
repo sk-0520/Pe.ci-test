@@ -16,6 +16,8 @@
 	Height="300" 
 	ResizeMode="NoResize" WindowStartupLocation="CenterScreen" 
 	Icon="/PeMain;component/Resources/Icon/App.ico"
+	Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"
+	Foreground="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}"
 >
 	<AW:CommonDataWindow.Resources>
 		<ResourceDictionary>

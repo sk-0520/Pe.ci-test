@@ -18,6 +18,8 @@
 	Icon="/PeMain;component/Resources/Icon/App.ico"
 	WindowStartupLocation="CenterScreen"
 	Topmost="True"
+	Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"
+	Foreground="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}"
 >
 	<AW:CommonDataWindow.Resources>
 		<ResourceDictionary>

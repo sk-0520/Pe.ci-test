@@ -1931,7 +1931,10 @@
 						var window = CreateNoteItem(logcalPoint, noteSize, true);
 						SendInformationTips(CommonData.Language["notify/info/note/create/title"], CommonData.Language["notify/info/note/create/message"], LogKind.Information);
 						//WindowsUtility.ShowNoActive(window.Handle);
-						WindowsUtility.ShowActive(window.Handle);
+						Application.Current.Dispatcher.BeginInvoke(new Action(() => {
+							WindowsUtility.ShowActive(window.Handle);
+							window.Activate();
+						}), DispatcherPriority.ApplicationIdle);
 					}
 					break;
 

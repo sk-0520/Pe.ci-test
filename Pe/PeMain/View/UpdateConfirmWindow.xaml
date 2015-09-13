@@ -11,6 +11,8 @@
 	Title="UpdateWindow" 
 	Height="300" 
 	Width="300"
+	Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"
+	Foreground="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}"
 >
 	<AW:CommonDataWindow.Resources>
 		<ResourceDictionary>
