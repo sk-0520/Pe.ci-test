@@ -1,26 +1,23 @@
-﻿<?xml version="1.0"?>
-<components>
-	<component name="System.Data.SQLite" uri="http://www.sqlite.org/copyright.html" type="Library" license="Public Domain" />
-	<component name="ObjectDumper" uri="http://objectdumper.codeplex.com/" type="Library" license="New BSD License" />
-	<component name="Hotkey Control" uri="http://tech.reboot.pro/showthread.php?tid=2582" type="Library" license="unknown" />
-	<component name="SplitButton" uri="http://wyday.com/splitbutton/" type="Library" license="BSD License" />
-	<component name="MouseKeyboardActivityMonitor" uri="http://globalmousekeyhook.codeplex.com/" type="Library" license="New BSD License" />
-	<component name="IconExtractor" uri="https://github.com/TsudaKageyu/IconExtractor" type="Library" license="BSD License" />
-	<component name="LED Icon Set" uri="http://http://led24.de/" type="Image" license="CC BY-SA 3.0" />
-	<component name="iconeden" uri="http://www.iconeden.com/" type="Image" license="Free for commercial use" />
-	<component name="ionicons" uri="http://ionicons.com/" type="Image" license="MIT License" />
-	<component name="sa-ki (Alexandre Moore) on deviantART" uri="http://sa-ki.deviantart.com/" type="Image" license="unknown" />
-	<component name="Lynx Black" uri="https://www.iconfinder.com/iconsets/lynx" type="Image" license="GPL" />
-	<component name="OmmoZoubayr" uri="http://www.ommozoubayr.esy.es/" type="Image" license="GPL" />
-	<component name="MICROSOFT VISUAL STUDIO 2013 IMAGE LIBRARY" uri="http://msdn.microsoft.com/ja-jp/library/ms246582.aspx" type="Image" license="Visual Studio 2013 Image Library EULA" />
-	<component name="RRZE" uri="http://rrze-icon-set.berlios.de/" type="Image" license="Creative Commons Attribution (by)" />
-	<component name="Android Icons" uri="http://www.icons4android.com/" type="Image" license="Creative Commons Attribution (by)" />
-	<component name="Alina Agafitei" uri="https://www.iconfinder.com/alina.agafitei.73" type="Image" license="Free for commercial use" />
-	<component name="Sergio Sánchez López" uri="http://kde-look.org/usermanager/search.php?username=Sephiroth6779" type="Image" license="GPL" />
-	<component name="Pavel InFeRnODeMoN" uri="http://kde-look.org/usermanager/search.php?username=InFeRnODeMoN" type="Image" license="GPL" />
-	<component name="Yannick Lung" uri="https://www.iconfinder.com/yanlu" type="Image" license="Free for commercial use" />
-	<component name="Tahsin Tahil" uri="https://www.iconfinder.com/tahsintahil" type="Image" license="Creative Commons (Attribution 3.0 Unported)" />
-	<component name="Pavel InFeRnODeMoN" uri="http://www.kde-look.org/usermanager/search.php?username=InFeRnODeMoN" type="Image" license="GPL" />
-	<component name="Mono.TextTemplating" uri="https://github.com/mono/monodevelop/tree/master/main/src/addins/TextTemplating/Mono.TextTemplating/Mono.TextTemplating" type="Library" license="Mit" />
-	<component name=" Everaldo Coelho" uri="http://www.everaldo.com/" type="Image" license="LGPL" />
-</components>
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Components xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<Component Kind="Library" Name="Mono.TextTemplating" Uri="https://github.com/mono/monodevelop/tree/master/main/src/addins/TextTemplating/Mono.TextTemplating/Mono.TextTemplating" License="Mit" />
+	<Component Kind="Library" Name="WPF NotifyIcon" Uri="http://www.hardcodet.net/wpf-notifyicon" License="CPOL" />
+	<Component Kind="Library" Name="Json.NET" Uri="http://www.newtonsoft.com/json" License="MIT" />
+	<Component Kind="Library" Name="Extended WPF Toolkit™ Community Edition" Uri="http://wpftoolkit.codeplex.com/" License="Ms-PL" />
+	
+	<Component Kind="Source" Name="IconExtractor" Uri="https://github.com/TsudaKageyu/IconExtractor" License="BSD License" />
+	<Component Kind="Source" Name="Invoke.net" Uri="http://www.pinvoke.net/" License="" />
+	
+	<Component Kind="Image" Name="MICROSOFT VISUAL STUDIO 2013 IMAGE LIBRARY" Uri="http://msdn.microsoft.com/ja-jp/library/ms246582.aspx" License="Visual Studio 2013 Image Library EULA" />
+	<!-- home search:https://www.iconfinder.com/icons/314507/flag_icon#size=128 -->
+	<Component Kind="Image" Name="Google" Uri="https://design.google.com/" License="Free for commercial use" />
+	<!-- home flag:https://www.iconfinder.com/icons/326690/magnify_search_zoom_icon#size=128 -->
+	<Component Kind="Image" Name="Yannick Lung" Uri="http://www.yanlu.de/" License="Free for commercial use" />
+	<!-- home windows:https://www.iconfinder.com/icons/670393/call_cell_mobile_phone_smartphone_window_windows_icon#size=128 -->
+	<Component Kind="Image" Name="Weweka Group" Uri="https://www.iconfinder.com/weweka" License="Free for commercial use" />
+
+	<Component Kind="WebPage" Name="MSDN" Uri="https://msdn.microsoft.com/" License="" />
+	<Component Kind="WebPage" Name="Stack Overflow" Uri="http://stackoverflow.com/" License="" />
+	<Component Kind="WebPage" Name="Iconfinder" Uri="https://www.iconfinder.com/" License="" />
+	
+</Components>

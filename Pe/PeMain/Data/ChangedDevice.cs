@@ -1,34 +1,44 @@
 ﻿namespace ContentTypeTextNet.Pe.PeMain.Data
 {
-	using System.Windows.Forms;
-	using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
+	using System;
+	using System.Collections.Generic;
+	using System.Linq;
+	using System.Text;
+	using System.Threading.Tasks;
+	using ContentTypeTextNet.Library.PInvoke.Windows;
 
-	/// <summary>
-	/// デバイス情報変更。
-	/// </summary>
 	public class ChangedDevice
 	{
-		/// <summary>
-		/// メッセージデータ。
-		/// </summary>
-		private readonly Message _message;
-		
+		#region varable
+
+		IntPtr _hWnd;
+		int _msg;
+		IntPtr _wParam;
+		IntPtr _lParam;
+
+		#endregion
+
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="message"></param>
-		public ChangedDevice(Message message)
+		public ChangedDevice(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam)
 		{
-			this._message = message;
-			
-			DBT = (DBT)this._message.WParam.ToInt32();
+			this._hWnd = hWnd;
+			this._msg = msg;
+			this._wParam = wParam;
+			this._lParam = lParam;
+
+			DBT = (DBT)this._wParam.ToInt32();
 		}
-		
+
+		#region property
+
 		/// <summary>
 		/// DBT! DBT!
 		/// </summary>
 		public DBT DBT { get; private set; }
-		
-		
+
+		#endregion
 	}
 }

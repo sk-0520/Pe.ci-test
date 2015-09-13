@@ -1,0 +1,619 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <ProjectGuid>{6877BDA1-FA71-4850-983C-F91DF0F9C6E5}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>ContentTypeTextNet.Pe.PeMain</RootNamespace>
+    <AssemblyName>PeMain</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <NoWin32Manifest>False</NoWin32Manifest>
+    <SignAssembly>False</SignAssembly>
+    <DelaySign>False</DelaySign>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+    <NoStdLib>False</NoStdLib>
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+    <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
+    <WarningLevel>4</WarningLevel>
+    <SourceAnalysisOverrideSettingsFile>C:\Users\sk\AppData\Roaming\ICSharpCode/SharpDevelop4\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
+    <RunCodeAnalysis>False</RunCodeAnalysis>
+    <ApplicationIcon>Resources\Icon\App.ico</ApplicationIcon>
+    <NuGetPackageImportStamp>ba0649ca</NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <BaseAddress>4194304</BaseAddress>
+    <RegisterForComInterop>False</RegisterForComInterop>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <FileAlignment>4096</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>$(SolutionDir)..\Output\$(Configuration)\$(Platform)</OutputPath>
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <Optimize>False</Optimize>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <BaseIntermediateOutputPath>obj\</BaseIntermediateOutputPath>
+    <StartAction>Project</StartAction>
+    <StartArguments>
+    </StartArguments>
+    <DefineConstants>DEBUG;TRACE;DISABLED_UPDATE_CHECK</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>$(SolutionDir)..\Output\$(Configuration)\$(Platform)</OutputPath>
+    <DebugSymbols>False</DebugSymbols>
+    <DebugType>None</DebugType>
+    <Optimize>True</Optimize>
+    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+    <BaseIntermediateOutputPath>obj\</BaseIntermediateOutputPath>
+    <StartArguments>
+    </StartArguments>
+    <DefineConstants>RELEASE;TRACE;</DefineConstants>
+    <StartAction>Project</StartAction>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'x64' ">
+    <PlatformTarget>x64</PlatformTarget>
+    <BaseAddress>4194304</BaseAddress>
+    <RegisterForComInterop>False</RegisterForComInterop>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <FileAlignment>4096</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DefineConstants>TRACE;DEBUG;DISABLED_UPDATE_CHECK</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DefineConstants>TRACE;DEBUG;DISABLED_UPDATE_CHECK</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.2\lib\net45\EntityFramework.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.2\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Mono.TextTemplating">
+      <HintPath>..\packages\Mono.TextTemplating.1.0.0\lib\Mono.TextTemplating.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="MouseKeyboardActivityMonitor">
+      <HintPath>..\packages\MouseKeyboardActivityMonitor.4.0.5150.10665\lib\net20\MouseKeyboardActivityMonitor.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ObjectDumper">
+      <HintPath>..\packages\ObjectDumper.1.0.0.12\lib\net35-Client\ObjectDumper.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.SQLite">
+      <HintPath>..\packages\System.Data.SQLite.Core.1.0.96.0\lib\net451\System.Data.SQLite.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Data.SQLite.EF6">
+      <HintPath>..\packages\System.Data.SQLite.EF6.1.0.96.0\lib\net451\System.Data.SQLite.EF6.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Data.SQLite.Linq">
+      <HintPath>..\packages\System.Data.SQLite.Linq.1.0.96.0\lib\net451\System.Data.SQLite.Linq.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bat\beta.bat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\Image\ReplaceSkin.png" />
+    <None Include="bat\accept.bat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <Compile Include="..\Common-Applications\ViewModelBase.cs">
+      <Link>Data\ViewModelBase.cs</Link>
+    </Compile>
+    <Compile Include="Data\Applications.cs" />
+    <Compile Include="Data\ChangedDevice.cs" />
+    <Compile Include="Data\ClipboardHtmlDataItem.cs" />
+    <Compile Include="Data\ClipboardItem.cs" />
+    <Compile Include="Data\ClipboardSetting.cs" />
+    <Compile Include="Data\ColorItem.cs" />
+    <Compile Include="Data\CommonData.cs" />
+    <Compile Include="Data\DB\Dto\CommonDto.cs" />
+    <Compile Include="Data\DB\Dto\NoteItemDto.cs" />
+    <Compile Include="Data\DB\Row\CommonDataRow.cs" />
+    <Compile Include="Data\DB\Row\M_NOTE.cs" />
+    <Compile Include="Data\DB\Row\M_VERSION.cs" />
+    <Compile Include="Data\DB\Row\T_NOTE.cs" />
+    <Compile Include="Data\DB\Row\T_NOTE_STYLE.cs" />
+    <Compile Include="Data\HitState.cs" />
+    <Compile Include="Data\HotKeySetting.cs" />
+    <Compile Include="Data\IconItem.cs" />
+    <Compile Include="Data\LauncherHistory.cs" />
+    <Compile Include="Data\LauncherItem.cs" />
+    <Compile Include="Data\LogItem.cs" />
+    <Compile Include="Data\LogSetting.cs" />
+    <Compile Include="Data\NoteItem.cs" />
+    <Compile Include="Data\ReplaceItem.cs" />
+    <Compile Include="Data\RunningSetting.cs" />
+    <Compile Include="Data\SkinSetting.cs" />
+    <Compile Include="Data\StreamSetting.cs" />
+    <Compile Include="Data\SystemEnvSetting.cs" />
+    <Compile Include="Data\TemplateItem.cs" />
+    <Compile Include="Data\ToolbarDropData.cs" />
+    <Compile Include="Data\ToolbarGroup.cs" />
+    <Compile Include="Data\ToolbarGroupItem.cs" />
+    <Compile Include="Data\ToolbarItem.cs" />
+    <Compile Include="Data\WindowItem.cs" />
+    <Content Include="etc\script\Updater\UpdaterScript.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Compile Include="IF\IApplicationItem.cs" />
+    <Compile Include="IF\IChangedFlag.cs" />
+    <Compile Include="IF\IClipboardWatcher.cs" />
+    <Compile Include="IF\IDeepClone.cs" />
+    <Compile Include="IF\ILauncherItem.cs" />
+    <Compile Include="IF\IItem.cs" />
+    <Compile Include="IF\ILogger.cs" />
+    <Compile Include="IF\INote.cs" />
+    <Compile Include="IF\IRootSender.cs" />
+    <Compile Include="IF\ICommonData.cs" />
+    <Compile Include="IF\ILanguage.cs" />
+    <Compile Include="IF\IISkin.cs" />
+    <Compile Include="IF\IScreen.cs" />
+    <Compile Include="IF\IToolbarGroupItem.cs" />
+    <Compile Include="Kind\Applications.cs" />
+    <Compile Include="Kind\Clipboard.cs" />
+    <Compile Include="Kind\CommandKind.cs" />
+    <Compile Include="Kind\HotKeyId.cs" />
+    <Compile Include="Kind\Launcher.cs" />
+    <Compile Include="Kind\Log.cs" />
+    <Compile Include="Kind\Note.cs" />
+    <Compile Include="Kind\Toolbar.cs" />
+    <Compile Include="Literal.cs" />
+    <Compile Include="Logic\ApplicationRoot.cs" />
+    <Compile Include="Logic\AppUtility.cs" />
+    <Compile Include="Logic\ClipboardUtility.cs" />
+    <Compile Include="Logic\ControlUtility.cs" />
+    <Compile Include="Logic\DB\DBWrapper.cs" />
+    <Compile Include="Logic\DB\NoteDB.cs" />
+    <Compile Include="Logic\EnumToText.cs" />
+    <Compile Include="Logic\Executor.cs" />
+    <Compile Include="Logic\FileLogger.cs" />
+    <Compile Include="Logic\AppInformation.cs" />
+    <Compile Include="Logic\LanguageUtility.cs" />
+    <Compile Include="Data\DisplayValue.cs" />
+    <Compile Include="Logic\AppDBManager.cs" />
+    <Compile Include="Logic\LauncherItemUtility.cs" />
+    <Compile Include="Logic\Listener.cs" />
+    <Compile Include="Logic\NullLogger.cs" />
+    <Compile Include="Logic\PropertyUtility.cs" />
+    <Compile Include="Logic\ScreenUtility.cs" />
+    <Compile Include="Logic\StartupLogger.cs" />
+    <Compile Include="Logic\SystemEnvironment.cs" />
+    <Compile Include="Logic\TemplateUtility.cs" />
+    <Compile Include="Logic\ProgramTemplateProcessor.cs" />
+    <Compile Include="Logic\Update.cs" />
+    <Compile Include="Main.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Data\CommandSetting.cs" />
+    <Compile Include="Data\EnvironmentSetting.cs" />
+    <Compile Include="Data\FontSetting.cs" />
+    <Compile Include="Data\DateHistory.cs" />
+    <Compile Include="Data\Item.cs" />
+    <Compile Include="Data\Language.cs" />
+    <Compile Include="Data\LauncherSetting.cs" />
+    <Compile Include="Data\MainSetting.cs" />
+    <Compile Include="Data\NoteSetting.cs" />
+    <Compile Include="Data\ToolbarSetting.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="UI\AboutForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\AboutForm.Designer.cs">
+      <DependentUpon>AboutForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\AcceptForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\AcceptForm.Designer.cs">
+      <DependentUpon>AcceptForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\ClipboardForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\ClipboardForm.Designer.cs">
+      <DependentUpon>ClipboardForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\CommandForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\CommandForm.Designer.cs">
+      <DependentUpon>CommandForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\CustomControl\EnvRemoveControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\CustomControl\EnvRemoveControl.Designer.cs">
+      <DependentUpon>EnvRemoveControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\CustomControl\EnvUpdateControl.Designer.cs">
+      <DependentUpon>EnvUpdateControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\CustomControl\EnvUpdateControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\CustomControl\LauncherItemSelectControl-Component.cs" />
+    <Compile Include="UI\CustomControl\LauncherItemSelectControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\CustomControl\LauncherItemSelectControl.Designer.cs">
+      <DependentUpon>LauncherItemSelectControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Ex\ExButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Ex\ExComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Ex\ExListViewItem.cs" />
+    <Compile Include="UI\Ex\ExMenuItem.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Ex\ExNumericUpDown.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Ex\ExRadioButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Ex\ExTableLayoutPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Ex\ExTreeNode.cs" />
+    <Compile Include="UI\LauncherToolTipForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\LauncherToolTipForm.Designer.cs">
+      <DependentUpon>LauncherToolTipForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\ExecuteForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\ExecuteForm.Designer.cs">
+      <DependentUpon>ExecuteForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Ex\ExAppbarForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Ex\ExDataGridView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Ex\ExForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Ex\ExRichTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Ex\ExContextMenuStrip.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Ex\ExHotkeyControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Ex\ExListBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Ex\ExSplitButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Ex\ExTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Ex\ExToolStrip.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Ex\ExToolStripControlHost.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Ex\ExToolStripItem.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Ex\ExWebBrowser.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\HomeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\HomeForm.Designer.cs">
+      <DependentUpon>HomeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\LogForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\LogForm.Designer.cs">
+      <DependentUpon>LogForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\MessageWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\MessageWindow.Designer.cs">
+      <DependentUpon>MessageWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\NoteForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\NoteForm.Designer.cs">
+      <DependentUpon>NoteForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\App.cs" />
+    <Compile Include="UI\NoteToolTipForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\NoteToolTipForm.Designer.cs">
+      <DependentUpon>NoteToolTipForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\ScreenForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\ScreenForm.Designer.cs">
+      <DependentUpon>ScreenForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\SettingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\SettingForm.Designer.cs">
+      <DependentUpon>SettingForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Skin\ToolbarRenderer.cs" />
+    <Compile Include="UI\StreamForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\StreamForm.Designer.cs">
+      <DependentUpon>StreamForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\ToolbarForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\ToolbarForm.Designer.cs">
+      <DependentUpon>ToolbarForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\UpdateForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\UpdateForm.Designer.cs">
+      <DependentUpon>UpdateForm.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\AboutForm.resx">
+      <DependentUpon>AboutForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\AcceptForm.resx">
+      <DependentUpon>AcceptForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\ClipboardForm.resx">
+      <DependentUpon>ClipboardForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\CommandForm.resx">
+      <DependentUpon>CommandForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\CustomControl\EnvRemoveControl.resx">
+      <DependentUpon>EnvRemoveControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\CustomControl\EnvUpdateControl.resx">
+      <DependentUpon>EnvUpdateControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\CustomControl\LauncherItemSelectControl.resx">
+      <DependentUpon>LauncherItemSelectControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\ExecuteForm.resx">
+      <DependentUpon>ExecuteForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\HomeForm.resx">
+      <DependentUpon>HomeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\LauncherToolTipForm.resx">
+      <DependentUpon>LauncherToolTipForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\LogForm.resx">
+      <DependentUpon>LogForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\NoteForm.resx">
+      <DependentUpon>NoteForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\NoteToolTipForm.resx">
+      <DependentUpon>NoteToolTipForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\ScreenForm.resx">
+      <DependentUpon>ScreenForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\SettingForm.resx">
+      <DependentUpon>SettingForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\StreamForm.resx">
+      <DependentUpon>StreamForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\ToolbarForm.resx">
+      <DependentUpon>ToolbarForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\UpdateForm.resx">
+      <DependentUpon>UpdateForm.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <TransformOnBuild>true</TransformOnBuild>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="app.Debug.config">
+      <DependentUpon>app.config</DependentUpon>
+      <IsTransformFile>True</IsTransformFile>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="bat\log.bat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="doc\changelog.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="doc\license\Pe.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="doc\license\SplitButton.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="doc\license\Visual Studio 2013 Image Library EULA.docx" />
+    <None Include="doc\readme-ja.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="doc\components.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="etc\default-launcher.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="etc\lang\ja-JP.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <TransformOnBuild>true</TransformOnBuild>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="etc\lang\ja-JP.accept.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="etc\script\changelog.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="etc\style\changelog.xsl">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="etc\style\common.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Package\Package.csproj">
+      <Project>{e65232e9-77b5-41e3-a550-2001717aeeb1}</Project>
+      <Name>Package</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Skin\Skin.csproj">
+      <Project>{5795cabd-7c4e-4ca7-962b-e80c9813ef1b}</Project>
+      <Name>Skin</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\SystemSkin\SystemSkin.csproj">
+      <Project>{a435ce59-1963-4fa7-a67c-b2748b05dfa3}</Project>
+      <Name>SystemSkin</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Utility\Utility.csproj">
+      <Project>{863C2A90-A386-4F98-9D0B-EFB839168293}</Project>
+      <Name>Utility</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\PlatformInvoke\PlatformInvoke.csproj">
+      <Project>{2E80DF8C-5682-4B45-9172-846BAD85C305}</Project>
+      <Name>PlatformInvoke</Name>
+      <Private>False</Private>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SQL\GetId.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SQL\GetNoteItemList.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SQL\CreateNoteMasterTable.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SQL\CreateNoteStyleTransactionTable.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SQL\CreateNoteTransactionTable.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SQL\CreateVersionMasterTable.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SQL\EnabledSwitch.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SQL\CheckTable.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image\NotImpl.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Icon\App.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bin\ApplicationSetting.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="doc\license\Applications\Hash.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>copy "$(OutDir)\etc\lang\ja-JP.xml" "$(OutDir)\etc\lang\default.xml"
+copy "$(OutDir)\etc\lang\ja-JP.accept.html" "$(OutDir)\etc\lang\default.accept.html"
+</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SlowCheetahTargets Condition=" '$(SlowCheetahTargets)'=='' ">$(LOCALAPPDATA)\Microsoft\MSBuild\SlowCheetah\v2.5.11\SlowCheetah.Transforms.targets</SlowCheetahTargets>
+  </PropertyGroup>
+  <Import Project="$(SlowCheetahTargets)" Condition="Exists('$(SlowCheetahTargets)')" />
+  <Import Project="..\packages\System.Data.SQLite.Core.1.0.96.0\build\net451\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.96.0\build\net451\System.Data.SQLite.Core.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>このプロジェクトは、このコンピューターにはない NuGet パッケージを参照しています。これらをダウンロードするには、NuGet パッケージの復元を有効にしてください。詳細については、http://go.microsoft.com/fwlink/?LinkID=322105 を参照してください。不足しているファイルは {0} です。</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\System.Data.SQLite.Core.1.0.96.0\build\net451\System.Data.SQLite.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.Data.SQLite.Core.1.0.96.0\build\net451\System.Data.SQLite.Core.targets'))" />
+  </Target>
+</Project>

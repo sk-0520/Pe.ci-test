@@ -1,0 +1,44 @@
+﻿namespace ContentTypeTextNet.Pe.PeMain.Logic.Property
+{
+	using System;
+	using System.Collections.Generic;
+	using System.Linq;
+	using System.Runtime.CompilerServices;
+	using System.Text;
+	using System.Threading.Tasks;
+	using System.Windows;
+	using ContentTypeTextNet.Pe.Library.PeData.IF;
+
+	public static class VisibleVisibilityProperty
+	{
+		public static bool GetVisible(IVisible model)
+		{
+			return model.IsVisible;
+		}
+
+		public static bool SetVisible(IVisible model, bool value, Action<string> onPropertyChanged, [CallerMemberName] string propertyName = "")
+		{
+			if(model.IsVisible != value) {
+				model.IsVisible = value;
+				onPropertyChanged(propertyName);
+				onPropertyChanged("Visibility");
+
+				return true;
+			}
+
+			return false;
+		}
+
+		public static Visibility GetVisibility(IVisible model)
+		{
+			return GetVisible(model) ? Visibility.Visible : Visibility.Hidden;
+		}
+
+		public static bool SetVisibility(IVisible model, Visibility value, Action<string> onPropertyChanged, [CallerMemberName] string propertyName = "")
+		{
+			return SetVisible(model, value == Visibility.Visible, onPropertyChanged, propertyName);
+		}
+
+
+	}
+}

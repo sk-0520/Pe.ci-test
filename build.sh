@@ -1,11 +1,16 @@
 
 VERSION_PATH='Pe/PeMain/Properties/AssemblyInfo.cs'
 
-if [ `git status -s | wc -l` -ne 0 ] ; then
-    git status
-    echo "There is changed files. Press Any key to exit ... "
-    read
-    exit 1
+# CIで止まられるとなんもできん
+if [ -z "${CI+x}" ] ; then
+    if [ `git status -s | wc -l` -ne 0 ] ; then
+        git status
+        echo "There is changed files. Press Any key to exit ... "
+        read
+        exit 1
+    fi
+else
+    echo "[CI] skip: status check"
 fi
 
 # バージョン書き換え

@@ -1,50 +1,113 @@
 ﻿namespace ContentTypeTextNet.Pe.PeMain.Data
 {
 	using System;
-	using ContentTypeTextNet.Pe.Library.Skin;
-	using ContentTypeTextNet.Pe.Library.Utility;
+	using System.Collections.Generic;
+	using System.Linq;
+	using System.Text;
+	using System.Threading.Tasks;
+	using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic;
+	using ContentTypeTextNet.Library.SharedLibrary.Model;
+	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+	using ContentTypeTextNet.Pe.Library.PeData.Setting;
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Logic;
 
-	/// <summary>
-	/// 持ち運び用共通データ。
-	/// </summary>
-	public sealed class CommonData: IDisposable
+	public sealed class CommonData: DisposeFinalizeModelBase
 	{
-		/// <summary>
-		/// 主設定。
-		/// </summary>
-		public MainSetting MainSetting { get; set; }
-		/// <summary>
-		/// 言語設定。
-		/// </summary>
-		public Language Language { get; set; }
-		/// <summary>
-		/// スキン。
-		/// </summary>
-		public ISkin Skin { get; set; }
-		/// <summary>
-		/// ロガー。
-		/// </summary>
-		public ILogger Logger { get; set; }
-		/// <summary>
-		/// メッセージ送信。
-		/// </summary>
-		public IRootSender RootSender { get; set; }
-		/// <summary>
-		/// データベースコネクション。
-		/// 
-		/// 入れるべきじゃない気がする。
-		/// </summary>
-		public AppDBManager Database { get; set; }
+		#region define
 
-		public ApplicationSetting ApplicationSetting { get; set; }
-		
-		public void Dispose()
+		public sealed class AppNonProcessImplement: IAppNonProcess
 		{
-			MainSetting.ToDispose();
-			ApplicationSetting.ToDispose();
-			Database.ToDispose();
+			public AppNonProcessImplement()
+			{ }
+
+			public ILogger Logger { get; set; }
+			public ILanguage Language { get; set; }
+			public VariableConstants VariableConstants { get; set; }
+			public LauncherIconCaching LauncherIconCaching { get; set; }
+			public IClipboardWatcher ClipboardWatcher { get; set; }
 		}
+
+		#endregion
+
+		public CommonData()
+			: base()
+		{
+			LauncherIconCaching = new LauncherIconCaching();
+		}
+
+		#region property
+
+		AppNonProcessImplement NonProcessInstance { get; set; }
+
+		public VariableConstants VariableConstants { get; set; }
+
+		public MainSettingModel MainSetting { get; set; }
+		public LauncherItemSettingModel LauncherItemSetting { get; set; }
+		public LauncherGroupSettingModel LauncherGroupSetting { get; set; }
+		public NoteIndexSettingModel NoteIndexSetting { get; set; }
+		public ClipboardIndexSettingModel ClipboardIndexSetting { get; set; }
+		public TemplateIndexSettingModel TemplateIndexSetting { get; set; }
+
+		#region IAppNonProcess
+
+		public AppLanguageManager Language { get; set; }
+		public ILogger Logger { get; set; }
+		public IAppSender AppSender { get; set; }
+		public IClipboardWatcher ClipboardWatcher { get; set; }
+		public LauncherIconCaching LauncherIconCaching { get; set; }
+
+		#endregion
+
+		/// <summary>
+		/// 呼び出し元から見てると心臓に悪い。
+		/// </summary>
+		public IAppNonProcess NonProcess
+		{ 
+			get 
+			{
+				if(NonProcessInstance == null) {
+					NonProcessInstance = new AppNonProcessImplement();
+				}
+				NonProcessInstance.Language = Language;
+				NonProcessInstance.Logger = Logger;
+				NonProcessInstance.LauncherIconCaching = LauncherIconCaching;
+				NonProcessInstance.VariableConstants = VariableConstants;
+				NonProcessInstance.ClipboardWatcher = ClipboardWatcher;
+
+				return NonProcessInstance; 
+			} 
+		}
+
+		#endregion
+
+		#region DisposeFinalizeModelBase
+
+		protected override void Dispose(bool disposing)
+		{
+			if (!IsDisposed) {
+				if (MainSetting != null) {
+					MainSetting.Dispose();
+					MainSetting = null;
+				}
+				if (LauncherItemSetting != null) {
+					LauncherItemSetting.Dispose();
+					LauncherItemSetting = null;
+				}
+				if (LauncherGroupSetting != null) {
+					LauncherGroupSetting.Dispose();
+					LauncherGroupSetting = null;
+				}
+				if (Logger != null) {
+					Logger.Dispose();
+					Logger = null;
+				}
+			}
+			base.Dispose(disposing);
+		}
+
+		#endregion
+
 	}
 }

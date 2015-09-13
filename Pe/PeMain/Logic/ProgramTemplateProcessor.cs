@@ -2,33 +2,66 @@
 {
 	using System;
 	using System.Collections.Generic;
+	using System.Linq;
 	using System.Text;
-	using ContentTypeTextNet.Pe.Library.Utility;
-	using ContentTypeTextNet.Pe.PeMain.Data;
-	using ContentTypeTextNet.Pe.PeMain.IF;
+	using System.Threading.Tasks;
+	using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic.T4Template;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
+	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
+	using ContentTypeTextNet.Pe.Library.PeData.Define;
 
 	/// <summary>
 	/// C#限定でムリくりアプリケーション用テンプレート処理。
 	/// </summary>
 	[Serializable]
-	public class ProgramTemplateProcessor: T4TemplateProcessor, ILanguage
+	public class ProgramTemplateProcessor : T4TemplateProcessor
 	{
+		#region define
+
 		const string directiveLang = "LANGUAGE";
-			
-		public ProgramTemplateProcessor()
-			: base()
+
+		#endregion
+
+		public ProgramTemplateProcessor(ILogger logger = null)
+			: base(logger)
 		{ }
 
-		public ProgramTemplateProcessor(TextTemplatingEngineHost host)
-			: base(host)
+		public ProgramTemplateProcessor(TextTemplatingEngineHost host, ILogger logger = null)
+			: base(host, logger)
 		{ }
+
+		#region property
 
 		/// <summary>
 		/// テンプレートディレクティブ。
 		/// </summary>
-		public string TemplateDirective {get;set;}
+		public string TemplateDirective { get; set; }
 
-		public Language Language { get; set; }
+		/// <summary>
+		/// 言語コード。
+		/// </summary>
+		public string CultureCode { get; set; }
+
+		#endregion
+
+		#region function
+
+		protected void ResetVariable()
+		{
+			var clipboardData = ClipboardUtility.GetClipboardData(ClipboardType.Text, IntPtr.Zero, Logger);
+
+			Variable[TemplateReplaceKey.programTimestamp] = DateTime.Now;
+			Variable[TemplateReplaceKey.programClipboard] = clipboardData.Body.Text ?? string.Empty;
+			Variable[TemplateReplaceKey.programApplicationName] = Constants.ApplicationName;
+			Variable[TemplateReplaceKey.programApplicationVersion] = Constants.ApplicationVersion;
+			Variable[TemplateReplaceKey.programApplicationVersionNumber] = Constants.ApplicationVersionNumber;
+			Variable[TemplateReplaceKey.programApplicationVersionRevision] = Constants.ApplicationVersionRevision;
+		}
+
+		#endregion
+
+		#region T4TemplateProcessor
 
 		protected override void Initialize()
 		{
@@ -57,8 +90,8 @@
 			var map = new Dictionary<string, string>() {
 				{ directiveLang, string.Empty },
 			};
-			if(Language != null) {
-				map[directiveLang] = string.Format("culture=\"{0}\"", Language.Code);
+			if(!string.IsNullOrWhiteSpace(CultureCode)) {
+				map[directiveLang] = string.Format("culture=\"{0}\"", CultureCode);
 			}
 			var templateDirective = TemplateDirective.ReplaceRangeFromDictionary("{{", "}}", map);
 
@@ -68,23 +101,13 @@
 			return templateSource.ToString();
 		}
 
-		protected void ResetVariable()
-		{
-			var clipboardItem = ClipboardUtility.CreateClipboardItem(ClipboardType.Text, IntPtr.Zero, new NullLogger());
-
-			Variable[TemplateProgramLanguageName.timestamp] = DateTime.Now;
-			Variable[TemplateProgramLanguageName.clipboard] = clipboardItem.Text ?? string.Empty;
-			Variable[TemplateProgramLanguageName.application] = Literal.programName;
-			Variable[TemplateProgramLanguageName.versionFull] = Literal.ApplicationVersion;
-			Variable[TemplateProgramLanguageName.versionNumber] = Literal.Version.FileVersion;
-			Variable[TemplateProgramLanguageName.versionHash] = Literal.Version.ProductVersion;
-		}
-
 		protected override string TransformText_Impl()
 		{
 			ResetVariable();
 
 			return base.TransformText_Impl();
 		}
+
+		#endregion
 	}
 }
