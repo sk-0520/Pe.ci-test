@@ -21,32 +21,20 @@ public class UpdaterScript
 	void RemoveFiles(string baseDirectoryPath, string platform)
 	{
 		var platformDir = platform + @"\";
-		var notPlatformDir = string.Compare(platform, "x86", true) == 0 ? @"x64\": @"x86\";
-		var targets = new [] {
-			@"PeUpdater.exe",
-			@"PeUpdater.exe.config",
-			@"PeUpdater.update-old",
-			@"Interop.IWshRuntimeLibrary.dll",
-			@"System.Data.SQLite.dll",
-			@"ObjectDumper.dll",
-			@"MouseKeyboardActivityMonitor.dll",
-			@"Library.dll",
-			@"PInvoke.dll",
-			@"PeSkin.dll",
-			@"PeUtility.dll",
-			@"PeUtility.dll.config",
-			@"bat\clean.bat",
-			@"bin\PeUpdater.update-old",
-			@"bin\PeUpdater.exe",
-			@"bin\PeUpdater.exe.config",
-			@"bin\ApplicationSetting.txt",
-			@"bin\Hash\readme.txt",
-			@"sbin\Updater\readme.txt",
-			@"sbin\Updater\UpdaterScript.cs",
-			@"lib\Interop.IWshRuntimeLibrary.dll",
-			@"doc\changelog.xsl",
-			@"x86\",
-			@"x64\",
+		var notPlatformDir = string.Compare(platform, "x86", true) == 0 ? @"x64\" : @"x86\";
+		var targets = new[] {
+			// WPF
+			@"bin\",
+			@"etc\default-launcher.xml",
+			@"lib\x86",
+			@"lib\x64",
+			@"lib\ObjectDumper.dll",
+			@"lib\MouseKeyboardActivityMonitor.dll",
+			@"lib\PlatformInvoke.dll",
+			@"lib\Skin.dll",
+			@"lib\System.Data.SQLite.dll",
+			@"lib\SystemSkin.dll",
+			@"lib\Utility.dll",
 		};
 		var tagetPathList = targets.Select(s => Path.Combine(baseDirectoryPath, s));
 		foreach(var targetPath in tagetPathList) {
@@ -88,7 +76,7 @@ public class UpdaterScript
 			Console.WriteLine("S: {0}", scriptFilePath);
 			Console.WriteLine("D: {0}", baseDirectoryPath);
 			Console.WriteLine("P: {0}", platform);
-			
+
 			RemoveFiles(baseDirectoryPath, platform);
 
 		} catch(Exception ex) {

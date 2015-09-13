@@ -1,27 +1,14 @@
 ﻿namespace ContentTypeTextNet.Pe.PeMain.IF
 {
+	using System;
+	using System.Collections.Generic;
+	using System.Linq;
+	using System.Text;
+	using System.Threading.Tasks;
 	using ContentTypeTextNet.Pe.PeMain.Data;
 
-	/// <summary>
-	/// CommonDataを設定可能とする。
-	/// </summary>
-	public interface ISetCommonData
+	public interface ICommonData: IHavingCommonData
 	{
-		/// <summary>
-		/// CommonDataの設定。
-		/// </summary>
-		/// <param name="commonData"></param>
-		void SetCommonData(CommonData commonData);
-	}
-
-	/// <summary>
-	/// CommonDataの参照。
-	/// </summary>
-	public interface ICommonData
-	{
-		/// <summary>
-		/// 参照するCommonData。
-		/// </summary>
-		CommonData CommonData { get; }
+		void SetCommonData(CommonData commonData, object extensionData);
 	}
 }

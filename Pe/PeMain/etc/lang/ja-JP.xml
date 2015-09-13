@@ -1,617 +1,603 @@
 ﻿<?xml version="1.0"?>
-<Language Name="日本語" Code="ja-JP">
+<Language xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" CultureCode="ja-JP" Name="日本語">
 	<Define>
-		<Word Name="yes"                 Text="はい" />
-		<Word Name="no"                  Text="いいえ" />
-		<Word Name="cancel"              Text="キャンセル" />
-		<Word Name="ok"                  Text="OK" />
-		<Word Name="retry"               Text="再試行" />
-		<Word Name="exit"                Text="終了" />
-		<Word Name="close"               Text="閉じる" />
-		<Word Name="success"             Text="成功" />
-		<Word Name="failure"             Text="失敗" />
-		<Word Name="open-ui"             Text="..." />
-		<Word Name="remove"              Text="削除" />
-		<Word Name="edit"                Text="編集" />
-		<Word Name="show"                Text="表示" />
-		<Word Name="visible"             Text="表示する" />
-		<Word Name="hidden"              Text="非表示" />
-		<Word Name="topmost"             Text="最前面で表示する" />
-		<Word Name="show-front"          Text="前面表示" />
-		<Word Name="option"              Text="オプション" />
-		<Word Name="work-dir"            Text="作業フォルダ" />
-		<Word Name="std-stream"          Text="標準入出力を取得する" />
-		<Word Name="edit-env"            Text="環境変数を編集する" />
-		<Word Name="font"                Text="フォント" />
-		<Word Name="auto-hide"           Text="自動的に隠す" />
-		<Word Name="admin"               Text="管理者として実行" />
-		<Word Name="update-check"        Text="アップデートを確認する" />
-		<Word Name="update-check.RC"     Text="RC版も確認対象とする" />
-		<Word Name="version-release"     Text="リリース版" />
-		<Word Name="version-rc"          Text="RC版" />
-		<Word Name="note"                Text="ノート" />
-		<Word Name="command"             Text="コマンド" />
-		<Word Name="hotkey"              Text="ホットキー" />
-		<Word Name="regist"              Text="登録" />
-		<Word Name="unregist"            Text="解除" />
-		<Word Name="file"                Text="ファイル" />
-		<Word Name="hidden-file"         Text="隠しファイル" />
-		<Word Name="extension"           Text="拡張子" />
-		<Word Name="dir"                 Text="ディレクトリ" />
-		<Word Name="log"                 Text="ログ" />
-		<Word Name="unknown"             Text="なんか" />
-		<Word Name="tasktray"            Text="通知領域" />
-		<Word Name="env"                 Text="環境変数" />
-		<Word Name="copy"                Text="コピー" />
-		<Word Name="create"              Text="作成" />
-		<Word Name="clipboard"           Text="クリップボード" />
-		<Word Name="template"            Text="テキストテンプレート" />
-		<Word Name="clipboard-template"  Text="クリップボード/テンプレート" />
-		<Word Name="item-filter"         Text="アイテム抽出" />
-		<Word Name="tips-wildcard"       Text="ワイルドカードが使用できます。&#x0d;&#x0a;&lt;?&gt; 任意の1文字にマッチします。&#x0d;&#x0a;&lt;*&gt; 任意の0文字以上にマッチします。" />
-		<Word Name="template-APPLICATION"  Text="アプリケーション名称" />
-		<Word Name="template-VER"          Text="統合バージョン" />
-		<Word Name="template-VER:NUMBER"   Text="バージョン番号" />
-		<Word Name="template-VER:HASH"     Text="バージョンリビジョン" />
-		<Word Name="template-TIMESTAMP"    Text="タイムスタンプ" />
-		<Word Name="template-CLIP"         Text="クリップボードテキスト" />
+		<Item Id="br" Word="&#x0d;&#x0a;" />
+		
+		<Item Id="ok"  Word="OK" />
+		<Item Id="cancel" Word="キャンセル" />
+		<Item Id="yes" Word="はい" />
+		<Item Id="no" Word="いいえ" />
+
+		<Item Id="topmpst" Word="最前面" />
+		<Item Id="enabled" Word="有効" />
+		<Item Id="show" Word="表示" />
+		<Item Id="hide" Word="非表示" />
+		<Item Id="input" Word="入力" />
+
+		<Item Id="version-release"     Word="リリース版" />
+		<Item Id="version-rc"          Word="RC版" />
+		
+		<Item Id="execute" Word="起動" />
+
+		<Item Id="setting" Word="設定" />
+		<Item Id="toolbar" Word="ツールバー" />
 	</Define>
 	<Words>
-		<Word Name="common/command/ok"                  Text="${ok}" />
-		<Word Name="common/command/cancel"              Text="${cancel}" />
-		<Word Name="common/command/close"               Text="${close}" />
-		<Word Name="common/command/exit"                Text="${exit}" />
-		<Word Name="common/menu/exit"                   Text="${exit}(&amp;X)" />
-		<Word Name="common/label/topmost"               Text="${topmost}" />
-		<Word Name="common/menu/topmost"                Text="${topmost}(&amp;T)" />
-		<Word Name="common/label/font"                  Text="${font}" />
-		<Word Name="common/label/visible"               Text="${visible}" />
-		<Word Name="common/label/remove"                Text="${remove}" />
-		<Word Name="common/label/edit"                  Text="${edit}" />
-		<Word Name="common/command/default-font"        Text="デフォルトの${font}" />
-		<Word Name="common/command/default-font-reset"  Text="${font}をリセットする" />
-		<Word Name="common/check/admin"                 Text="${admin} (ユーザーの責任下で実行してください)" />
-		<Word Name="common/page/env"                    Text="${env}" />
-		<Word Name="common/message/notfound-path"       Text="パスが見つかりません" />
-		<Word Name="common/message/notfound-file"       Text="${file}が見つかりません" />
-		<Word Name="common/message/notfound-dir"        Text="${dir}が見つかりません" />
-		<Word Name="common/dialog/d-d/shortcut/caption"  Text="ショートカット登録方法" />
-		<Word Name="common/dialog/d-d/shortcut/message"  Text="D&amp;Dされたパスはショートカットファイルです。&#x0d;&#x0a;&#x0d;&#x0a;ショートカット先を登録するには「${yes}」を、&#x0d;&#x0a;ショートカットファイルそのものを登録するには「${no}」を選択してください。" />
+		<Item Id="window/home"    Word="@[APPLICATION:NAME] ホーム"  />
+		<Item Id="window/setting" Word="@[APPLICATION:NAME] ${setting}"  />
+		<Item Id="window/accept" Word="@[APPLICATION:NAME] 使用許諾"  />
+		<Item Id="window/toolbar" Word="${toolbar}"  />
+		<Item Id="window/clipboard" Word="クリップボード"  />
+		<Item Id="window/template" Word="テンプレート"  />
+		<Item Id="window/execute" Word="@[LAUNCHER-ITEM-EXECUTE]を指定して実行"  />
+		<Item Id="window/stream" Word="@[LAUNCHER-ITEM-STREAM]の標準入出力"  />
+		<Item Id="window/logging" Word="ログ"  />
+		<Item Id="window/customize" Word="@[LAUNCHER-ITEM-CUSTOMIZE]を編集" />
+		<Item Id="window/update" Word="@[APPLICATION:NAME] アップデート" />
+		<Item Id="window/screen" Word="スクリーン" />
+		<Item Id="window/about" Word="@[APPLICATION:NAME] 情報" />
 
-		<Word Name="window/accept"    Text="@[APPLICATION] 使用許諾" />
-		<Word Name="window/home"      Text="@[APPLICATION] ホーム" />
-		<Word Name="window/update"    Text="アップデート" />
-		<Word Name="window/toolbar"   Text="@[APPLICATION]" />
-		<Word Name="window/log"       Text="${log}" />
-		<Word Name="window/about"     Text="@[APPLICATION] 情報" />
-		<Word Name="window/execute"   Text="@[ITEM]を指定して実行" />
-		<Word Name="window/stream"    Text="@[ITEM]の標準入出力" />
-		<Word Name="window/clipboard" Text="${clipboard-template}" />
-		<Word Name="window/screen"    Text="ディスプレイ識別: @[SCREEN] - @[APPLICATION]" />
-		<Word Name="window/setting"   Text="@[APPLICATION] 設定" />
-		<Word Name="window/command"   Text="${command}" />
-		
-		<!-- <Word Name="main/menu/window"                       Text="ウィンドウ(&amp;W)" /> -->
-		<Word Name="main/menu/window/toolbar"               Text="ツールバー(&amp;T)" />
-		<Word Name="main/menu/window/note"                  Text="${note}(&amp;N)" />
-		<Word Name="main/menu/window/note/create"           Text="新規作成(&amp;N)" />
-		<Word Name="main/menu/window/note/hidden"           Text="${hidden}(&amp;H)" />
-		<Word Name="main/menu/window/note/compact"          Text="最小化(&amp;S)" />
-		<Word Name="main/menu/window/note/show-front"       Text="前面表示(&amp;V)" />
-		<Word Name="main/menu/window/command"               Text="${command}(&amp;C)" />
-		<Word Name="main/menu/applications"                 Text="組み込みアイテム(&amp;E)" />
-		<Word Name="main/menu/window/logger"                Text="${log}(&amp;L)" />
-		<Word Name="main/menu/setting"                      Text="@[APPLICATION] 設定(&amp;S) ${open-ui}" />
-		<Word Name="main/menu/about"                        Text="@[APPLICATION] 情報(&amp;A) ${open-ui}" />
-		<Word Name="main/menu/save"                         Text="現在設定を保存(&amp;S)" />
-		<Word Name="main/menu/help"                         Text="ヘルプ(&amp;H) ${open-ui}" />
-		<Word Name="main/menu/system-env"                   Text="システム環境(&amp;E)" />
-		<Word Name="main/menu/system-env/show-hiddne-file"  Text="隠しファイルを表示する(&amp;F)" />
-		<Word Name="main/menu/system-env/show-extension"    Text="拡張子を表示する(&amp;E)" />
-		<Word Name="main/menu/system-env/window"            Text="ウィンドウ(&amp;W)" />
-		<Word Name="main/menu/system-env/window/save"       Text="現在のウィンドウ状態を保存(&amp;S)" />
-		<Word Name="main/menu/system-env/window/load"       Text="保存しているウィンドウ状態を復帰(&amp;L)" />
-		<Word Name="main/menu/system-env/clipboard"         Text="${clipboard-template}(&amp;C)" />
-		
-		<Word Name="main/event/screen/count-change"    Text="ディスプレイ数変更検知" />
-		<Word Name="main/event/power/resume"           Text="レジューム" />
-		<Word Name="main/event/save-window/timer"      Text="ウィンドウ一覧取得" />
-		<Word Name="main/event/save-window/display"    Text="ディスプレイ設定変更によるウィンドウ一覧取得" />
-		<Word Name="main/event/save-window/skip"       Text="ウィンドウ一覧取得スキップ" />
-		<Word Name="main/event/reset/stream/skip"      Text="プロセス実行中のためUIリセットをスキップしました" />
-		
-		<Word Name="hotkey/unregist/fail"            Text="${hotkey}${unregist} ${failure}" />
-		<Word Name="hotkey/unregist/command"         Text="${hotkey}${unregist}: コマンド" />
-		<Word Name="hotkey/unregist/hidden-file"     Text="${hotkey}${unregist}: ${hidden-file}" />
-		<Word Name="hotkey/unregist/extension"       Text="${hotkey}${unregist}: ${extension}" />
-		<Word Name="hotkey/unregist/create-note"     Text="${hotkey}${unregist}: ${note}${create}" />
-		<Word Name="hotkey/unregist/hidden-note"     Text="${hotkey}${unregist}: ${note}${hidden}" />
-		<Word Name="hotkey/unregist/compact-note"    Text="${hotkey}${unregist}: ${note}最小化" />
-		<Word Name="hotkey/unregist/show-front-note" Text="${hotkey}${unregist}: ${note}${show-front}" />
-		
-		<Word Name="hotkey/regist/fail"            Text="${hotkey}${regist} ${failure}" />
-		<Word Name="hotkey/regist/command"         Text="${hotkey}${regist}: コマンド" />
-		<Word Name="hotkey/regist/hidden-file"     Text="${hotkey}${regist}: ${hidden-file}" />
-		<Word Name="hotkey/regist/extension"       Text="${hotkey}${regist}: ${extension}" />
-		<Word Name="hotkey/regist/create-note"     Text="${hotkey}${regist}: ${note}${create}" />
-		<Word Name="hotkey/regist/hidden-note"     Text="${hotkey}${regist}: ${note}${hidden}" />
-		<Word Name="hotkey/regist/compact-note"    Text="${hotkey}${regist}: ${note}最小化" />
-		<Word Name="hotkey/regist/show-front-note" Text="${hotkey}${regist}: ${note}${show-front}" />
-		<Word Name="hotkey/regist/clipboard"       Text="${hotkey}${regist}: ホットキー${show-front}" />
+		<Item Id="common/ok" Word="${ok}"  />
+		<Item Id="common/cancel" Word="${cancel}"  />
 
-		<Word Name="balloon/hidden-file/title" Text="${hidden-file}" />
-		<Word Name="balloon/hidden-file/show"  Text="${hidden-file}を${show}" />
-		<Word Name="balloon/hidden-file/hide"  Text="${hidden-file}を${hidden}" />
-		<Word Name="balloon/hidden-file/error" Text="${hidden-file}表示操作失敗" />
-		<Word Name="balloon/extension/title"   Text="${extension}" />
-		<Word Name="balloon/extension/show"    Text="${extension}を${show}" />
-		<Word Name="balloon/extension/hide"    Text="${extension}を${hidden}" />
-		<Word Name="balloon/extension/error"   Text="${extension}操作表示失敗" />
-		<Word Name="balloon/note/title"        Text="${note}" />
-		<Word Name="balloon/note/create"       Text="${note}を新規作成" />
-		<Word Name="balloon/note/hidden"       Text="編集可能${note}の非表示" />
-		<Word Name="balloon/note/compact"      Text="編集可能${note}の最小化" />
-		<Word Name="balloon/note/show-front"   Text="表示中${note}の${show-front}" />
-		<Word Name="balloon/clipboard/title"     Text="${clipboard-template}ウィンドウ" />
-		<Word Name="balloon/clipboard/message-show"   Text="${clipboard-template}を${show}" />
-		<Word Name="balloon/clipboard/message-hidden" Text="${clipboard-template}を${hidden}" />
+		<Item Id="dialog/filter/txt" Word="テキスト形式" />
+		<Item Id="dialog/filter/rtf" Word="リッチテキスト形式" />
+		<Item Id="dialog/filter/html" Word="HTML形式" />
+		<Item Id="dialog/filter/png" Word="PNG形式" />
+		<Item Id="dialog/filter/log" Word="ログ形式" />
+		<Item Id="dialog/filter/*" Word="全て" />
 		
+		<Item Id="group/default" Word="(デフォルト)" />
+		<Item Id="clipboard/name/image" Word="@[CLIP-TYPE]: @[CLIP-IMAGE-WIDTH] × @[CLIP-IMAGE-HEIGHT]" />
+		<Item Id="clipboard/name/files" Word="@[CLIP-TYPE]: @[CLIP-FILES-COUNT]" />
+		<Item Id="window-collection/name" Word="@[TIMESTAMP], ウィンドウ数: @[WINDOW-COLLECTION-COUNT]" />
+		
+		<Item Id="accept/ok" Word="使用する" />
+		<Item Id="accept/ng" Word="使用しない" />
+		<Item Id="update-check/release" Word="アップデートを確認する" />
+		<Item Id="update-check/rc" Word="RC版も確認対象とする" />
 
-		<Word Name="log/command/save"     Text="ログ保存" />
-		<Word Name="log/tips/save"        Text="現在のログをファイルに保存" />
-		<Word Name="log/command/clear"    Text="ログクリア" />
-		<Word Name="log/tips/clear"       Text="表示中ログをクリア" />
-		<Word Name="log/header/timestamp" Text="タイムスタンプ" />
-		<Word Name="log/header/title"     Text="概要" />
-		<Word Name="log/header/file"      Text="ソース" />
-		<Word Name="log/header/line"      Text="行数" />
-		<Word Name="log/header/method"    Text="メソッド" />
-		<Word Name="log/label/detail-full"  Text="詳細最大化表示" />
-		<Word Name="log/label/detail-split" Text="詳細分割表示" />
-		
-		<Word Name="accept/check/update-check"     Text="${update-check}" />
-		<Word Name="accept/check/update-check.RC"  Text="${update-check.RC}" />
-		
-		<Word Name="home/page/main" Text="ホーム" />
-		<Word Name="home/launcher/dialog/merge/caption"  Text="ランチャーアイテムマージ確認" />
-		<Word Name="home/launcher/dialog/merge/message"  Text="ランチャーアイテムとグループに既存データが存在します。&#x0d;&#x0a;既存データが自動登録データとマージされます。" />
-		<Word Name="home/launcher/dialog/found/caption"    Text="登録処理が完了しました。" />
-		<Word Name="home/launcher/dialog/found/message"    Text="登録処理が完了しました。" />
-		<Word Name="home/command/launcher"  Text="ランチャー自動登録" />
-		<Word Name="home/label/launcher"    Text="使用環境から自動的にランチャーアイテムを構築します。&#x0d;&#x0a;※実装中機能になります。" />
-		<Word Name="home/command/notify"  Text="${tasktray}設定" />
-		<Word Name="home/label/notify"    Text="${tasktray}の@[APPLICATION]アイコンを常に表示することにより操作しやすくなります。" />
-		<Word Name="home/command/startup" Text="スタートアップ登録" />
-		<Word Name="home/label/startup"   Text="Windowsログオン時に@[APPLICATION]を起動するようします。" />
-		<Word Name="home/startup/dialog/caption"  Text="スタートアップ登録結果" />
-		<Word Name="home/startup/dialog/message"  Text="スタートアップへの登録が完了しました。&#x0d;&#x0a;登録を解除するには設定画面を開いてください。" />
-		<Word Name="home/startup/exists"     Text="スタートアップはすでに登録されています。" />
-		
-		<Word Name="update/label/rc-note"  Text="更新履歴は${version-release}を対象としています。" />
-		<Word Name="update/label/version"  Text="バージョン @[NOW] → @[NEXT] @[TYPE] へ更新しますか？" />
-		
-		<Word Name="toolbar/main/tips"               Text="現在選択中グループ: @[GROUP]" />
-		<Word Name="toolbar/menu/main/auto-hide"     Text="${auto-hide}(&amp;H)" />
-		<Word Name="toolbar/menu/main/hidden"        Text="${hidden}(&amp;N)" />
-		<Word Name="toolbar/menu/file/execute"       Text="実行(&amp;S)" />
-		<Word Name="toolbar/menu/file/execute-ex"    Text="指定して実行(&amp;E)" />
-		<Word Name="toolbar/menu/file/execute-admin" Text="${admin}(&amp;A) ${open-ui}" />
-		<Word Name="toolbar/menu/file/path"          Text="パス(&amp;P)" />
-		<Word Name="toolbar/menu/file/ls"            Text="ファイル(&amp;F)" />
-		<Word Name="toolbar/menu/file/path/open-parent-dir" Text="親フォルダを開く(&amp;O)" />
-		<Word Name="toolbar/menu/file/path/open-work-dir"   Text="作業フォルダを開く(&amp;W)" />
-		<Word Name="toolbar/menu/file/path/copy-command"    Text="コマンドを${copy}(&amp;C)" />
-		<Word Name="toolbar/menu/file/path/copy-parent-dir" Text="親フォルダパスを${copy}(&amp;O)" />
-		<Word Name="toolbar/menu/file/path/copy-work-dir"   Text="作業フォルダパスを${copy}(&amp;W)" />
-		<Word Name="toolbar/menu/file/path/property"        Text="プロパティ(&amp;P)" />
-		<Word Name="toolbar/menu/file/ls/not-child-files"   Text="下位ファイルなし" />
-		<Word Name="toolbar/menu/file/ls/open"              Text="ここを開く" />
-		<Word Name="toolbar/menu/application/execute"     Text="実行(&amp;S)" />
-		<Word Name="toolbar/menu/application/close"       Text="終了(&amp;X)" />
-		<Word Name="toolbar/menu/application/help"        Text="ヘルプ(&amp;H)" />
-		<Word Name="toolbar/dialog/d-d/directory/caption"  Text="ディレクトリ登録方法" />
-		<Word Name="toolbar/dialog/d-d/directory/message"  Text="D&amp;Dされたパスをディレクトリアイテム(フォルダ)として登録します。&#x0d;&#x0a;&#x0d;&#x0a;ディレクトリ内容を一覧表示するには「${yes}」を、&#x0d;&#x0a;ディレクトリそのものを開く場合は「${no}」を選択してください。&#x0d;&#x0a;これは設定ダイアログで再度変更できます。" />
-		<Word Name="toolbar/loging/unfile"  Text="非ファイル形式のパス選択: ランチャー種別URIの使用を推奨します" />
+		<Item Id="home/auto-regist/title"   Word="ランチャー自動登録" />
+		<Item Id="home/auto-regist/message" Word="使用環境から自動的にランチャーアイテムを構築します。${br}※実装中機能になります。" />
+		<Item Id="home/notify-area/title"   Word="通知領域設定" />
+		<Item Id="home/notify-area/message" Word="通知領域の@[APPLICATION:NAME]アイコンを常に表示するとにより操作しやすくなります。" />
+		<Item Id="home/startup/title"       Word="スタートアップ登録" />
+		<Item Id="home/startup/message"     Word="Windowsログオン時に@[APPLICATION:NAME]を起動するようにします。" />
+		<Item Id="home/startup/regist/title"  Word="スタートアップ登録" />
+		<Item Id="home/startup/regist/create" Word="スタートアップに@[APPLICATION:NAME]を登録しました" />
+		<Item Id="home/startup/regist/exists" Word="既に登録されています" />
+		<Item Id="home/auto-regist/merge/title"      Word="アイテム自動登録確認" />
+		<Item Id="home/auto-regist/merge/message"    Word="既にアイテムが登録されています。${br}既存データに追加されますがよろしいですか。" />
+		<Item Id="home/auto-regist/registed/title"   Word="アイテム自動登録" />
+		<Item Id="home/auto-regist/registed/message" Word="検索・登録処理が完了しました" />
+		<Item Id="home/auto-regist/group/program"    Word="プログラム" />
 
-		<Word Name="execute/page/basic"         Text="基本指定" />
-		<Word Name="execute/label/option"      Text="${option}" />
-		<Word Name="execute/label/work-dir"    Text="${work-dir}" />
-		<Word Name="execute/check/std-stream"  Text="${std-stream}" />
-		<Word Name="execute/check/edit-env"    Text="${edit-env}" />
-		
-		<Word Name="note/menu/title"        Text="タイトル入力(&amp;T)" />
-		<Word Name="note/menu/body"         Text="本文入力(&amp;B)" />
-		<Word Name="note/menu/copy"         Text="${copy}(&amp;C)" />
-		<Word Name="note/menu/import"       Text="入力(&amp;I)" />
-		<Word Name="note/menu/export"       Text="出力(&amp;E)" />
-		<Word Name="note/menu/lock"         Text="固定(&amp;L)" />
-		<Word Name="note/menu/font"         Text="${font}(&amp;F)" />
-		<!-- <Word Name="note/menu/font/change"  Text="変更" /> -->
-		<Word Name="note/menu/font/reset"   Text="リセット(&amp;R)" />
-		<Word Name="note/menu/compact"      Text="最小化(&amp;N)" />
-		<Word Name="note/menu/hidden"       Text="${hidden}(&amp;X)" />
-		<Word Name="note/menu/topmost"      Text="最前面(&amp;T)" />
-		<Word Name="note/menu/remove"       Text="${remove}(&amp;D)" />
-		<Word Name="note/dialog/caption"    Text="${note}削除" />
-		<Word Name="note/dialog/message"    Text="@[NOTE]は非表示ではなく論理削除されます。&#x0d;&#x0a;よろしければ「${yes}」を、非表示にするには「${no}」を選択してください。" />
-		<Word Name="note/save"              Text="@[NOTE]を保存しました" />
-		
-		<Word Name="note/menu/color-fore"    Text="文字色(&amp;T)" />
-		<Word Name="note/menu/color-back"    Text="背景色(&amp;B)" />
-		<Word Name="note/menu/color/black"   Text="黒(&amp;B)" />
-		<Word Name="note/menu/color/white"   Text="白(&amp;W)" />
-		<Word Name="note/menu/color/red"     Text="赤(&amp;R)" />
-		<Word Name="note/menu/color/green"   Text="緑(&amp;G)" />
-		<Word Name="note/menu/color/blue"    Text="青(&amp;B)" />
-		<Word Name="note/menu/color/yellow"  Text="黄(&amp;Y)" />
-		<Word Name="note/menu/color/orange"  Text="燈(&amp;O)" />
-		<Word Name="note/menu/color/purple"  Text="紫(&amp;P)" />
-		<Word Name="note/menu/color/custom"  Text="カスタム(&amp;C) ${open-ui}" />
-		
-		<Word Name="stream/page/stream"      Text="標準入出力" />
-		<Word Name="stream/page/process"     Text="プロセス" />
-		<Word Name="stream/page/property"    Text="起動プロパティ" />
-		<Word Name="stream/command/save"    Text="出力保存" />
-		<Word Name="stream/tips/save"       Text="現在の出力をファイルに保存" />
-		<Word Name="stream/command/clear"   Text="出力クリア" />
-		<Word Name="stream/tips/clear"      Text="現在の出力をクリア" />
-		<Word Name="stream/tips/refresh"    Text="プロセス情報更新" />
-		<Word Name="stream/command/topmost" Text="${topmost}" />
-		<Word Name="stream/tips/kill"       Text="プロセスを終了" />
-		<Word Name="stream/running-close"   Text="実行中プロセスを閉じることはできません" />
+		<Item Id="tasktray/tooltip" Word="ぴーいー" />
+		<Item Id="tasktray/setting" Word="@[APPLICATION:NAME] ${setting}" />
+		<Item Id="tasktray/toolbar" Word="${toolbar}" />
+		<Item Id="tasktray/note" Word="ノート" />
+		<Item Id="tasktray/note/create" Word="新規作成" />
+		<Item Id="tasktray/note/compact" Word="最小化" />
+		<Item Id="tasktray/note/hide" Word="非表示" />
+		<Item Id="tasktray/note/front" Word="前面表示" />
+		<Item Id="tasktray/note/show" Word="表示中一覧" />
+		<Item Id="tasktray/note/hidden" Word="非表示一覧" />
+		<Item Id="tasktray/template" Word="テンプレート" />
+		<Item Id="tasktray/command" Word="コマンド" />
+		<Item Id="tasktray/log" Word="ログ" />
+		<Item Id="tasktray/system-env" Word="システム環境" />
+		<Item Id="tasktray/system-env/shell-hidden" Word="隠しファイルを表示する" />
+		<Item Id="tasktray/system-env/shell-ext" Word="拡張子を表示する" />
+		<Item Id="tasktray/system-env/clipboard" Word="クリップボード" />
+		<Item Id="tasktray/system-env/window/save" Word="現在のウィンドウ状態を保存" />
+		<Item Id="tasktray/system-env/window/load" Word="保存しているウィンドウ状態を復帰" />
+		<Item Id="tasktray/system-env/window/timer" Word="タイマー保存" />
+		<Item Id="tasktray/system-env/window/system" Word="システム変更" />
+		<Item Id="tasktray/about" Word="@[APPLICATION:NAME] 情報" />
+		<Item Id="tasktray/exit" Word="終了" />
 
-		<Word Name="clipboard/tips/topmost"    Text="${topmost}" />
-		<Word Name="clipboard/command/enabled" Text="${clipboard}取込" />
-		<Word Name="clipboard/tips/enabled"    Text="${clipboard}履歴の取り込みを有効にする" />
-		<Word Name="clipboard/command/save"    Text="アイテム保存" />
-		<Word Name="clipboard/command/remove"  Text="アイテム削除" />
-		<Word Name="clipboard/command/clear"   Text="アイテムを全てクリア" />
-		<Word Name="clipboard/command/empty"   Text="${clipboard}を空にする" />
-		<Word Name="clipboard/type/clipboard"  Text="${clipboard}" />
-		<Word Name="clipboard/header/name"     Text="名前" />
-		<Word Name="clipboard/header/path"     Text="パス" />
-		<Word Name="clipboard/html/error"      Text="HTML形式${clipboard}の解析失敗" />
-		<Word Name="clipboard/title/image"     Text="@[TYPE]: @[WIDTH] × @[HEIGHT]" />
-		<Word Name="clipboard/title/file"      Text="@[TYPE]: 選択数 @[COUNT]個" />
-		<Word Name="clipboard/wait/title"      Text="${clipboard}: 待ち時間中のため無視" />
-		<Word Name="clipboard/wait/message"    Text="@[TIME]に${clipboard}データを取り込んだため履歴取込をキャンセル" />
-		<Word Name="clipboard/dup/title"       Text="${clipboard}: 重複したクリップボードアイテムが存在するため無視" />
-		<Word Name="clipboard/page/raw-template"       Text="${template}" />
-		<Word Name="clipboard/page/replace-template"   Text="プレビュー" />
-		<Word Name="clipboard/label/template-name"     Text="テンプレート名" />
-		<Word Name="clipboard/check/template-replace"  Text="置き換え処理" />
-		<Word Name="clipboard/check/template-program"  Text="T4" />
-		<Word Name="clipboard/label/uri"     Text="URI:" />
-		<Word Name="clipboard/image/raw"     Text="原寸表示" />
-		<Word Name="clipboard/image/fill"    Text="ウィンドウに合わせる" />
-		<Word Name="clipboard/output/empty"            Text="出力文字列が空のため無効" />
-		<Word Name="clipboard/output/notfound-window"  Text="出力先ウィンドウが発見できないため無効" />
-		<Word Name="clipboard/tool/filtering"          Text="${item-filter}&#x0d;&#x0a;${tips-wildcard}" />
-		<Word Name="clipboard/tool/output-using-clipboard"  Text="クリップボード経由" />
-		<Word Name="clipboard/menu/file/open-file"       Text="開く(&amp;O)" />
-		<Word Name="clipboard/menu/file/open-parent-dir" Text="親ディレクトリを開く(&amp;O)" />
+		<Item Id="notify/info/command/show/title"      Word="コマンドウィンドウ" />
+		<Item Id="notify/info/command/show/message"    Word="コマンドウィンドウの表示" />
+		<Item Id="notify/info/hiddenfile/title"        Word="システム環境" />
+		<Item Id="notify/info/hiddenfile/message/show" Word="隠しファイルの表示" />
+		<Item Id="notify/info/hiddenfile/message/hide" Word="隠しファイルの非表示" />
+		<Item Id="notify/info/extension/title"         Word="システム環境" />
+		<Item Id="notify/info/extension/message/show"  Word="拡張子を表示" />
+		<Item Id="notify/info/extension/message/hide"  Word="拡張子を非表示" />
+		<Item Id="notify/info/note/create/title"       Word="ノート" />
+		<Item Id="notify/info/note/create/message"     Word="新しいノートの作成" />
+		<Item Id="notify/info/note/hide/title"         Word="ノート" />
+		<Item Id="notify/info/note/hide/message"       Word="非固定の表示中ノートを非表示" />
+		<Item Id="notify/info/note/compact/title"      Word="ノート" />
+		<Item Id="notify/info/note/compact/message"    Word="非固定の表示中ノートを最小化" />
+		<Item Id="notify/info/note/front/title"        Word="ノート" />
+		<Item Id="notify/info/note/front/message"      Word="表示中ノートを前面移動" />
+		<Item Id="notify/info/clipboard/title"         Word="クリップボード" />
+		<Item Id="notify/info/clipboard/message/show"  Word="ウィンドウの表示" />
+		<Item Id="notify/info/clipboard/message/hide"  Word="ウィンドウの非表示" />
+		<Item Id="notify/info/template/title"          Word="テンプレート" />
+		<Item Id="notify/info/template/message/show"   Word="ウィンドウの表示" />
+		<Item Id="notify/info/template/message/hide"   Word="ウィンドウの非表示" />
 
-		<Word Name="command/execute"  Text="実行" />
-		<Word Name="command/error/execute/launcher-item"  Text="ランチャーアイテム起動失敗" />
-		<Word Name="command/error/execute/none"  Text="指定コマンドは無効です" />
+		<Item Id="new/group-name" Word="新規グループ" />
+		<Item Id="new/template-name" Word="新規テンプレート" />
+		<Item Id="new/launcher-name" Word="ランチャーアイテム" />
 
-		<Word Name="setting/page/main"              Text="本体" />
-		<Word Name="setting/page/launcher"          Text="ランチャー" />
-		<Word Name="setting/page/launcher/basic"    Text="基本設定" />
-		<Word Name="setting/page/launcher/others"   Text="その他" />
-		<Word Name="setting/page/toolbar"           Text="ツールバー" />
-		<Word Name="setting/page/command"           Text="コマンド" />
-		<Word Name="setting/page/display"           Text="ディスプレイ" />
-		<Word Name="setting/page/note"              Text="${note}" />
-		<Word Name="setting/page/clipboard"         Text="${clipboard-template}" />
-		<Word Name="setting/check/startup"         Text="Windows ログオン時に @[APPLICATION] を自動起動する" />
-		<Word Name="setting/group/update-check"    Text="アップデートチェック" />
-		<Word Name="setting/check/update-check"    Text="${update-check}" />
-		<Word Name="setting/check/update-check.RC" Text="${update-check.RC}" />
-		<Word Name="setting/label/language"        Text="使用言語" />
-		<Word Name="setting/label/hiddenfile"      Text="${hidden-file}" />
-		<Word Name="setting/label/extension"       Text="${extension}" />
-		<Word Name="setting/group/log"             Text="ログ設定" />
-		<Word Name="setting/group/system-env"      Text="システム環境" />
-		<Word Name="setting/check/add-show"        Text="追加されるたびに表示する" />
-		<Word Name="setting/check/full-detail"     Text="詳細部分を最大化表示する" />
-		<Word Name="setting/check/debugging"       Text="デバッグログも${log}ウィンドウに出力" />
-		<Word Name="setting/group/item-type"       Text="アイテムの種類" />
-		<Word Name="setting/label/item-name"       Text="アイテム名" />
-		<Word Name="setting/label/command"         Text="パス・コマンド" />
-		<Word Name="setting/label/option"          Text="${option}" />
-		<Word Name="setting/label/work-dir"        Text="${work-dir}" />
-		<Word Name="setting/label/icon-path"       Text="アイコンパス" />
-		<Word Name="setting/label/tags"            Text="タグ" />
-		<Word Name="setting/label/note"            Text="備考" />
-		<Word Name="setting/label/note-create"     Text="${create}" />
-		<Word Name="setting/label/note-hidden"     Text="隠す" />
-		<Word Name="setting/label/note-compact"    Text="最小化" />
-		<Word Name="setting/label/note-show-front" Text="${show-front}" />
-		<Word Name="setting/check/std-stream"      Text="${std-stream}" />
-		<Word Name="setting/label/group"           Text="初期グループ" />
-		<Word Name="setting/check/auto-hide"       Text="${auto-hide}" />
-		<Word Name="setting/check/show-text"       Text="テキストを表示する" />
-		<Word Name="setting/check/edit-env"        Text="${edit-env}" />
-		<Word Name="setting/label/text-width"      Text="テキストの長さ" />
-		<Word Name="setting/tips/add-group"        Text="グループの追加" />
-		<Word Name="setting/tips/add-item"         Text="ランチャーアイテムの追加" />
-		<Word Name="setting/tips/up-item"          Text="選択アイテムを上に移動" />
-		<Word Name="setting/tips/down-item"        Text="選択アイテムを下に移動" />
-		<Word Name="setting/tips/remove-item"      Text="選択アイテムを取り除く" />
-		<Word Name="setting/group/item"            Text="${note}一覧" />
-		<Word Name="setting/group/key"             Text="キー" />
-		<Word Name="setting/column/note/remove"    Text="削除" />
-		<Word Name="setting/column/note/id"        Text="ID" />
-		<Word Name="setting/column/note/visible"   Text="表示" />
-		<Word Name="setting/column/note/locked"    Text="固定" />
-		<Word Name="setting/column/note/title"     Text="タイトル" />
-		<Word Name="setting/column/note/body"      Text="本文" />
-		<Word Name="setting/column/note/font"      Text="${font}" />
-		<Word Name="setting/column/note/fore"      Text="前景色" />
-		<Word Name="setting/column/note/back"      Text="背景色" />
-		<Word Name="setting/check/clipboard-enabled"      Text="${clipboard}履歴を取り込む" />
-		<Word Name="setting/check/clipboard-app-enabled"  Text="@[APPLICATION]のコピー操作も履歴へ取り込む" />
-		<Word Name="setting/label/clipboard-limit"        Text="保持する履歴数" />
-		<Word Name="setting/label/clipboard-wait"         Text="前回コピーからの待機時間(ミリ秒)" />
-		<Word Name="setting/label/clipboard-repeated"     Text="クリップボード重複判定(@[ALL]で全て対象)" />
-		<Word Name="setting/check/clipboard-visible"      Text="${visible}" />
-		<Word Name="setting/check/clipboard-topmost"      Text="${topmost}" />
-		<Word Name="setting/group/clipboard-output"                  Text="テキスト転送" />
-		<Word Name="setting/check/clipboard-item-doubleclick"        Text="リストのダブルクリックで転送する" />
-		<Word Name="setting/check/clipboard-output-using-clipboard"  Text="転送にクリップボードを経由する" />
-		<Word Name="setting/group/clipboard-type"         Text="取込種類" />
-		<Word Name="setting/group/save-clipboard-type"    Text="保存種類" />
-		<Word Name="setting/label/clipboard-hotkey"       Text="表示切り替え" />
-		<Word Name="setting/check/clipboard-save"         Text="${clipboard}履歴を保存する" />
-		<Word Name="setting/label/clipboard-list"         Text="表示タイプ" />
-		<Word Name="setting/group/skin"       Text="スキン" />
-		<Word Name="setting/command/skin"     Text="設定" />
-		<Word Name="setting/group/stream"     Text="標準入出力" />
-		<Word Name="setting/command/screens"  Text="識別" />
-		<Word Name="setting/label/stream-general" Text="共通" />
-		<Word Name="setting/label/stream-input" Text="入力" />
-		<Word Name="setting/label/stream-error" Text="エラー" />
-		<Word Name="setting/label/stream-fore" Text="前景色" />
-		<Word Name="setting/label/stream-back" Text="背景色" />
-		<Word Name="setting/label/hide-time"       Text="非表示までの時間(ミリ秒)" />
-		<Word Name="setting/label/command-hotkey"  Text="表示" />
-		<Word Name="setting/group/command-find"   Text="検索条件設定" />
-		<Word Name="setting/check/command-enabled-tag"   Text="タグ検索を使用" />
-		<Word Name="setting/check/command-enabled-file"  Text="ファイル検索を使用" />
+		<Item Id="toolbar/position" Word="ツールバー位置" />
+		<Item Id="toolbar/topmost" Word="最前面で表示する" />
+		<Item Id="toolbar/autohide" Word="自動的に隠す" />
+		<Item Id="toolbar/hide" Word="非表示" />
+		<Item Id="toolbar/execute" Word="実行" />
+		<Item Id="toolbar/execute/normal" Word="通常実行" />
+		<Item Id="toolbar/execute/extra" Word="指定して実行" />
+		<Item Id="toolbar/file" Word="ファイル" />
+		<Item Id="toolbar/file/parent-dir" Word="親ディレクトリ" />
+		<Item Id="toolbar/file/work-dir" Word="作業ディレクトリ" />
+		<Item Id="toolbar/clipboard" Word="クリップボード" />
+		<Item Id="toolbar/clipboard/command" Word="コマンド" />
+		<Item Id="toolbar/clipboard/parent-dir" Word="親ディレクトリ" />
+		<Item Id="toolbar/clipboard/work-dir" Word="作業ディレクトリ" />
+		<Item Id="toolbar/others" Word="その他" />
+		<Item Id="toolbar/others/customize" Word="編集" />
+		<Item Id="toolbar/others/property" Word="プロパティ" />
+		
+		<Item Id="execute/command" Word="コマンド" />
+		<Item Id="execute/option" Word="オプション" />
+		<Item Id="execute/option/file" Word="オプションにファイルを選択" />
+		<Item Id="execute/option/dir" Word="オプションにディレクトリを選択" />
+		<Item Id="execute/work-dir" Word="作業ディレクトリ" />
+		<Item Id="execute/work-dir/dir" Word="作業ディレクトリを選択" />
+		<Item Id="execute/others" Word="その他" />
+		<Item Id="execute/others/stream-output" Word="標準出力" />
+		<Item Id="execute/others/stream-input"  Word="標準入力" />
+		<Item Id="execute/others/admin" Word="管理者権限で実行" />
+		<Item Id="execute/environment" Word="環境編集の編集" />
+		
+		<Item Id="stream/topmost" Word="最前面" />
+		<Item Id="stream/save" Word="保存" />
+		<Item Id="stream/clear" Word="クリア" />
+		<Item Id="stream/refresh" Word="更新" />
+		<Item Id="stream/kill" Word="強制終了" />
+		<Item Id="stream/stream" Word="標準入出力" />
+		<Item Id="stream/stream/input" Word="標準入力" />
+		<Item Id="stream/process" Word="プロセス" />
+		<Item Id="stream/startinfo" Word="起動プロパティ" />
 
-		<Word Name="screen/primary/true"   Text="メインディスプレイ" />
-		<Word Name="screen/primary/false"  Text="" />
-		<Word Name="screen/close"          Text="マウスクリックかキー入力で識別画面を閉じてください" />
+		<Item Id="command/execute" Word="${execute}" />
 
-		<Word Name="about/command/execute"   Text="@[APPLICATION]" />
-		<Word Name="about/command/data"      Text="データ" />
-		<Word Name="about/command/backup"    Text="バックアップ" />
-		<Word Name="about/command/update"    Text="アップデート" />
-		<Word Name="about/command/changelog" Text="更新履歴" />
-		<Word Name="about/label/user-env"    Text="報告用情報を${clipboard}へ${copy}する:" />
-		<Word Name="about/link/short-env"    Text="短い情報" />
-		<Word Name="about/long/long-env"     Text="長い情報" />
-		<Word Name="about/column/name"       Text="コンポーネント" />
-		<Word Name="about/column/type"       Text="種別" />
-		<Word Name="about/column/license"    Text="ライセンス" />
-		<Word Name="about/update/check/dialog/caption"   Text="アップデートチェック" />
-		<Word Name="about/update/check/dialog/message"   Text="情報ダイアログを閉じてアップデートチェックを開始しますか？" />
-		<Word Name="about/page/app"          Text="@[APPLICATION]情報" />
-		<Word Name="about/page/component"    Text="コンポーネント情報" />
-		<Word Name="about/label/page-about"       Text="WEBサイト" />
-		<Word Name="about/label/mail-address"     Text="連絡先(メーラーが起動します)" />
-		<Word Name="about/label/page-development" Text="開発ページ" />
-		<Word Name="about/label/page-discussion"  Text="フォーラム" />
-		<Word Name="about/label/page-feedback"    Text="フィードバック(アンケート的な)" />
+		<Item Id="note/title/default"   Word="新規ノート@[NOTE-COUNT]" />
+		<Item Id="note/title/timestamp" Word="@[TIMESTAMP]" />
+		<Item Id="note/caption/small" Word="最小化" />
+		<Item Id="note/caption/topmost"  Word="最前面" />
+		<Item Id="note/caption/hide"  Word="非表示" />
+		<Item Id="note/input" Word="${input}" />
+		<Item Id="note/input/title" Word="タイトル" />
+		<Item Id="note/input/body" Word="本文" />
+		<Item Id="note/style" Word="書式" />
+		<Item Id="note/style/fore-color" Word="前景" />
+		<Item Id="note/style/back-color" Word="背景" />
+		<Item Id="note/style/font" Word="フォント" />
+		<Item Id="note/state" Word="状態" />
+		<Item Id="note/state/lock" Word="固定" />
+		<Item Id="note/state/compact" Word="最小化" />
+		<Item Id="note/state/topmost" Word="最前面" />
+		<Item Id="note/operation" Word="操作" />
+		<Item Id="note/operation/copy" Word="コピー" />
+		<Item Id="note/operation/hide" Word="非表示" />
+		<Item Id="note/operation/remove" Word="削除" />
+		
+		<Item Id="clipboard/enabled" Word="クリップボード取込" />
+		<Item Id="clipboard/enabled:hint" Word="クリップボードにコピーされたデータを取り込みます" />
+		<Item Id="clipboard/target" Word="取込対象" />
+		<Item Id="clipboard/type/text" Word="文字列" />
+		<Item Id="clipboard/type/rtf" Word="書式付文字列" />
+		<Item Id="clipboard/type/html" Word="HTML" />
+		<Item Id="clipboard/type/image" Word="画像" />
+		<Item Id="clipboard/type/files" Word="ファイル" />
+		<Item Id="clipboard/html/uri" Word="URI" />
+		<Item Id="clipboard/image/fit" Word="ウィンドウに合わせる" />
+		<Item Id="clipboard/image/raw" Word="原寸表示" />
+		<Item Id="clipboard/files/name" Word="ファイル名" />
+		<Item Id="clipboard/files/path" Word="パス" />
+		<Item Id="clipboard/save-count" Word="保存対象件数" />
+		<Item Id="clipboard/save-count/all" Word="全件" />
+		<Item Id="clipboard/save" Word="ファイルに保存" />
+		<Item Id="clipboard/remove" Word="削除" />
+		<Item Id="clipboard/clear" Word="クリップボードを削除" />
+		<Item Id="clipboard/topmost" Word="最前面" />
+		<Item Id="clipboard/using-clipboard" Word="クリップボード経由の転送" />
+		<Item Id="clipboard/command/send"  Word="転送" />
+		<Item Id="clipboard/command/copy"  Word="コピー" />
+		<Item Id="clipboard/command/text"  Word="文字列のコピー" />
+		<Item Id="clipboard/command/rtf"   Word="書式付文字列のコピー" />
+		<Item Id="clipboard/command/html"  Word="HTMLのコピー" />
+		<Item Id="clipboard/command/image" Word="画像のコピー" />
+		<Item Id="clipboard/command/file"  Word="ファイルのコピー" />
+		<Item Id="clipboard/item/name" Word="クリップボード名" />
+		
+		<Item Id="template/create" Word="新規作成" />
+		<Item Id="template/save" Word="ファイルに保存" />
+		<Item Id="template/remove" Word="削除" />
+		<Item Id="template/topmost" Word="最前面" />
+		<Item Id="template/using-clipboard" Word="クリップボード経由の転送" />
+		<Item Id="template/command/send" Word="転送" />
+		<Item Id="template/command/copy" Word="コピー" />
+		<Item Id="template/command/up" Word="上へ移動" />
+		<Item Id="template/command/down" Word="下へ移動" />
+		<Item Id="template/item/name" Word="テンプレート名" />
+		<Item Id="template/item/replace" Word="置き換え処理" />
+		<Item Id="template/item/t4" Word="T4" />
+		<Item Id="template/item/source" Word="テキストテンプレート" />
+		<Item Id="template/item/preview" Word="プレビュー" />
+		<Item Id="template/replace/plain" Word="通常" />
+		<Item Id="template/replace/text" Word="文字列置き換え" />
+		<Item Id="template/replace/program" Word="T4置き換え" />
+		
+		<Item Id="command/selected" Word="選択中アイテム" />
+		<Item Id="command/tag" Word="@[LAUNCHER-ITEM-TAG] (@[LAUNCHER-ITEM-NAME])" />
+		<Item Id="command/drive" Word="@[DRIVE-VOLUME] (@[DRIVE-PATH])" />
 
-		<Word Name="new/group-item"     Text="新規グループ" />
-		<Word Name="new/launcher-item"  Text="新規アイテム" />
-		<Word Name="new/template-item"  Text="新規テンプレート" />
-		
-		<Word Name="item-selecter/command/create"     Text="新規アイテム" />
-		<Word Name="item-selecter/command/remove"     Text="アイテム削除" />
-		<Word Name="item-selecter/command/filtering"  Text="${item-filter}&#x0d;&#x0a;${tips-wildcard}" />
-		<Word Name="item-selecter/command/type-full"  Text="自動抽出" />
-		<Word Name="item-selecter/command/type-name"  Text="アイテム名から抽出" />
-		<Word Name="item-selecter/command/type-tag"   Text="タグから抽出" />
-		
-		<Word Name="env-updater/header/key"   Text="キー" />
-		<Word Name="env-updater/header/value" Text="値" />
+		<Item Id="logging/save"  Word="ログ保存" />
+		<Item Id="logging/clear" Word="ログクリア" />
+		<Item Id="logging/timestamp" Word="タイムスタンプ" />
+		<Item Id="logging/message" Word="概要" />
+		<Item Id="logging/detail/caller"        Word="呼び出し元" />
+		<Item Id="logging/detail/caller/member" Word="メソッド" />
+		<Item Id="logging/detail/caller/file"   Word="ファイル" />
+		<Item Id="logging/detail/caller/number" Word="行数" />
 
-		<Word Name="updown/revert" Text="デフォルト値を設定" />
+		<Item Id="update/confirm" Word="バージョン @[UPDATE-NOW-VERSION] → @[UPDATE-NEW-VERSION] @[UPDATE-NEW-TYPE] へ更新しますか？" />
 		
-		<Word Name="save-window/timer"   Text="タイマー保存: @[TIMESTAMP]" />
-		<Word Name="save-window/display" Text="ディスプレイ変更: @[TIMESTAMP]" />
+		<Item Id="setting/main" Word="本体設定" />
+		<Item Id="setting/launcher" Word="ランチャー" />
+		<Item Id="setting/toolbar" Word="ツールバー" />
+		<Item Id="setting/command" Word="コマンド" />
+		<Item Id="setting/note" Word="ノート" />
+		<Item Id="setting/clipboard" Word="クリップボード" />
+		<Item Id="setting/template" Word="テンプレート" />
 		
-		<Word Name="enum/toolbar-position"                Text="ツールバー位置" />
-		<Word Name="enum/toolbar-position/desktop/float"  Text="フロート" />
-		<Word Name="enum/toolbar-position/desktop/left"   Text="デスクトップ: 左" />
-		<Word Name="enum/toolbar-position/desktop/top"    Text="デスクトップ: 上" />
-		<Word Name="enum/toolbar-position/desktop/right"  Text="デスクトップ: 右" />
-		<Word Name="enum/toolbar-position/desktop/bottom" Text="デスクトップ: 下" />
-		<Word Name="enum/toolbar-position/window/left"    Text="ウィンドウ: 左" />
-		<Word Name="enum/toolbar-position/window/top"     Text="ウィンドウ: 上" />
-		<Word Name="enum/toolbar-position/window/right"   Text="ウィンドウ: 右" />
-		<Word Name="enum/toolbar-position/window/bottom"  Text="ウィンドウ: 下" />
+		<Item Id="screen/primary" Word="メインディスプレイ" />
+		<Item Id="screen/click-key" Word="マウスクリックかキー入力で識別画面を閉じてください" />
 		
-		<Word Name="enum/launcher-type"           Text="アイテムの種類" />
-		<Word Name="enum/launcher-type/file"      Text="ファイル" />
-		<Word Name="enum/launcher-type/directory" Text="ディレクトリ" />
-		<Word Name="enum/launcher-type/uri"       Text="URI(廃止: コマンドを使用してください)" />
-		<Word Name="enum/launcher-type/command"   Text="コマンド" />
-		<Word Name="enum/launcher-type/embedded"  Text="組み込み" />
 		
-		<Word Name="enum/icon-size"        Text="アイコンサイズ" />
-		<Word Name="enum/icon-size/small"  Text="小" />
-		<Word Name="enum/icon-size/normal" Text="中" />
-		<Word Name="enum/icon-size/big"    Text="大" />
-		<Word Name="enum/icon-size/large"  Text="特大" />
+		<Item Id="about/link/web" Word="WEBページ" />
+		<Item Id="about/link/mail" Word="メール送信" />
+		<Item Id="about/link/dev" Word="開発ページ" />
+		<Item Id="about/link/forum" Word="フォーラム" />
+		<Item Id="about/link/feedback" Word="フィードバック" />
+		<Item Id="about/copy" Word="報告用情報のコピー" />
+		<Item Id="about/copy/short" Word="短い情報" />
+		<Item Id="about/copy/long" Word="長い情報" />
+		<Item Id="about/component" Word="コンポーネント" />
+		<Item Id="about/license" Word="ライセンス" />
 		
-		<Word Name="enum/log-type"             Text="ログ種別" />
-		<Word Name="enum/log-type/information" Text="情報" />
-		<Word Name="enum/log-type/warning"     Text="警報" />
-		<Word Name="enum/log-type/error"       Text="エラー" />
-		
-		<Word Name="enum/key"           Text="キー" />
-		<Word Name="enum/key/separator" Text=" + " />
-		
-		<Word Name="enum/key/mod"         Text="修飾キー" />
-		<Word Name="enum/key/mod/alt"     Text="Alt" />
-		<Word Name="enum/key/mod/control" Text="Control" />
-		<Word Name="enum/key/mod/shift"   Text="Shift" />
-		<Word Name="enum/key/mod/windows" Text="Windows" />
-		
-		<Word Name="enum/key/keys/k-1" Text="1" />
-		<Word Name="enum/key/keys/k-2" Text="2" />
-		<Word Name="enum/key/keys/k-3" Text="3" />
-		<Word Name="enum/key/keys/k-4" Text="4" />
-		<Word Name="enum/key/keys/k-5" Text="5" />
-		<Word Name="enum/key/keys/k-6" Text="6" />
-		<Word Name="enum/key/keys/k-7" Text="7" />
-		<Word Name="enum/key/keys/k-8" Text="8" />
-		<Word Name="enum/key/keys/k-9" Text="9" />
-		<Word Name="enum/key/keys/k-0" Text="0" />
-		<Word Name="enum/key/keys/n-1" Text="Num 1" />
-		<Word Name="enum/key/keys/n-2" Text="Num 2" />
-		<Word Name="enum/key/keys/n-3" Text="Num 3" />
-		<Word Name="enum/key/keys/n-4" Text="Num 4" />
-		<Word Name="enum/key/keys/n-5" Text="Num 5" />
-		<Word Name="enum/key/keys/n-6" Text="Num 6" />
-		<Word Name="enum/key/keys/n-7" Text="Num 7" />
-		<Word Name="enum/key/keys/n-8" Text="Num 8" />
-		<Word Name="enum/key/keys/n-9" Text="Num 9" />
-		<Word Name="enum/key/keys/n-0" Text="Num 0" />
-		
-		<Word Name="enum/key/keys/n-add" Text="Num +" />
-		<Word Name="enum/key/keys/n-sub" Text="Num -" />
-		<Word Name="enum/key/keys/n-mul" Text="Num *" />
-		<Word Name="enum/key/keys/n-div" Text="Num /" />
-		<Word Name="enum/key/keys/n-dec" Text="Num ." />
+		<Item Id="about/app" Word="@[APPLICATION:NAME]" />
+		<Item Id="about/data" Word="データ" />
+		<Item Id="about/history" Word="更新履歴" />
+		<Item Id="about/update" Word="アップデート" />
+		<Item Id="about/update/dialog/caption" Word="アップデートチェック" />
+		<Item Id="about/update/dialog/message" Word="情報ダイアログを閉じてアップデートチェックを開始しますか" />
+		<Item Id="about/close" Word="閉じる" />
 
-		<Word Name="enum/key/keys/page-up"   Text="Page Up" />
-		<Word Name="enum/key/keys/page-down" Text="Page Down" />
-		<Word Name="enum/key/keys/scr-lk"    Text="ScrLk" />
-		
-		<Word Name="enum/key/keys/ime-convert"    Text="変換" />
-		<Word Name="enum/key/keys/ime-nonconvert" Text="無変換" />
-		
-		<Word Name="enum/key/keys/oem-backslash"      Text="\" />
-		<Word Name="enum/key/keys/oem-plus"           Text=";" />
-		<Word Name="enum/key/keys/oem-minus"          Text="-" />
-		<Word Name="enum/key/keys/oem-semicolon"      Text=":" />
-		<Word Name="enum/key/keys/oem-comma"          Text="," />
-		<Word Name="enum/key/keys/oem-period"         Text="." />
-		<Word Name="enum/key/keys/oem-tilde"          Text="@" />
-		<Word Name="enum/key/keys/oem-open-brackets"  Text="[" />
-		<Word Name="enum/key/keys/oem-6"              Text="]" />
-		<Word Name="enum/key/keys/oem-5"              Text="\" />
-		<Word Name="enum/key/keys/oem-7"              Text="^" />
-		<Word Name="enum/key/keys/oem-question"       Text="/" />
-		
-		<Word Name="enum/about-component-type/Library"   Text="ライブラリ" />
-		<Word Name="enum/about-component-type/Image"     Text="画像" />
-		<Word Name="enum/about-component-type/Unknown"   Text="${unknown}" />
-		
-		<Word Name="enum/clipboard-type"        Text="${clipboard}の種類" />
-		<Word Name="enum/clipboard-type/text"   Text="文字列" />
-		<Word Name="enum/clipboard-type/rtf"    Text="書式付文字列" />
-		<Word Name="enum/clipboard-type/html"   Text="HTML" />
-		<Word Name="enum/clipboard-type/image"  Text="画像" />
-		<Word Name="enum/clipboard-type/file"   Text="ファイル" />
+		<Item Id="confirm/shortcut/caption" Word="ショートカット登録方法" />
+		<Item Id="confirm/shortcut/message" Word="D&amp;Dされたパスはショートカットファイルです。&#x0d;&#x0a;&#x0d;&#x0a;ショートカット先を登録するには「${yes}」を、&#x0d;&#x0a;ショートカットファイルそのものを登録するには「${no}」を選択してください。" />
 
-		<Word Name="enum/clipboard-list-type/history"   Text="${clipboard}履歴" />
-		<Word Name="enum/clipboard-list-type/template"  Text="${template}" />
+		<!-- control -->
+		
+		<Item Id="environment/edit" Word="環境変数を編集する" />
+		<Item Id="environment/update" Word="変更" />
+		<Item Id="environment/remove" Word="削除" />
+		<Item Id="environment/key" Word="キー" />
+		<Item Id="environment/value" Word="値" />
+
+		<Item Id="font/weight" Word="ボールド" />
+		<Item Id="font/style" Word="イタリック" />
+
+		<Item Id="launcher-item-edit/general" Word="基本設定" />
+		<Item Id="launcher-item-edit/general/kind" Word="アイテムの種類" />
+		<Item Id="launcher-item-edit/general/kind/file" Word="ファイル" />
+		<Item Id="launcher-item-edit/general/kind/command" Word="コマンド" />
+		<Item Id="launcher-item-edit/general/name" Word="名前" />
+		<Item Id="launcher-item-edit/general/command" Word="コマンド" />
+		<Item Id="launcher-item-edit/general/option" Word="オプション" />
+		<Item Id="launcher-item-edit/general/work-dir" Word="作業ディレクトリ" />
+		<Item Id="launcher-item-edit/general/icon" Word="アイコン" />
+		<Item Id="launcher-item-edit/env" Word="環境変数" />
+		<Item Id="launcher-item-edit/others" Word="その他" />
+		<Item Id="launcher-item-edit/others/stream-output" Word="標準出力" />
+		<Item Id="launcher-item-edit/others/stream-input" Word="標準入力" />
+		<Item Id="launcher-item-edit/others/admin" Word="管理者権限" />
+		<Item Id="launcher-item-edit/others/tag" Word="タグ(カンマ区切り)" />
+		<Item Id="launcher-item-edit/others/memo" Word="備考" />
+
+		<Item Id="launcher-list-items/append" Word="アイテムの追加" />
+		<Item Id="launcher-list-items/remove" Word="アイテムの削除" />
+
+		<Item Id="main-setting/general" Word="基本設定" />
+		<Item Id="main-setting/general/lang" Word="使用言語" />
+		<Item Id="main-setting/general/startup" Word="Window ログオン時に @[APPLICATION:NAME] を起動" />
+		<Item Id="main-setting/log" Word="ログ設定" />
+		<Item Id="main-setting/log/visible" Word="ログウィンドウの表示" />
+		<Item Id="main-setting/log/add-show" Word="追加されるたびに表示する" />
+		<Item Id="main-setting/log/trigger/debug" Word="デバッグ" />
+		<Item Id="main-setting/log/trigger/trace" Word="トレース" />
+		<Item Id="main-setting/log/trigger/info" Word="情報" />
+		<Item Id="main-setting/log/trigger/warning" Word="警報" />
+		<Item Id="main-setting/log/trigger/error" Word="エラー" />
+		<Item Id="main-setting/log/trigger/fatal" Word="致命" />
+		<Item Id="main-setting/running/update/check" Word="アップデートチェック" />
+		<Item Id="main-setting/running/update/check/release" Word="アップデートを確認する" />
+		<Item Id="main-setting/running/update/check/rc" Word="RC版も確認対象とする" />
+		<Item Id="main-setting/system-env" Word="システム環境" />
+		<Item Id="main-setting/system-env/shell-hidden" Word="隠しファイル切替" />
+		<Item Id="main-setting/system-env/shell-ext" Word="拡張子切替" />
+		<Item Id="main-setting/stream" Word="標準入出力" />
+		<Item Id="main-setting/stream/font" Word="フォント" />
+		<Item Id="main-setting/stream/color" Word="色設定" />
+		<Item Id="main-setting/stream/color/std-out" Word="基本" />
+		<Item Id="main-setting/stream/color/std-err" Word="エラー" />
+		<Item Id="main-setting/window-save" Word="ウィンドウ位置保存" />
+		<Item Id="main-setting/window-save/enabled" Word="ウィンドウ位置を保存する" />
+		<Item Id="main-setting/window-save/count" Word="保存件数" />
+		<Item Id="main-setting/window-save/interval" Word="保存間隔" />
+		
+		
+		<Item Id="toolbar-setting/screen" Word="識別" />
+		<Item Id="toolbar-setting/toolbar/group" Word="初期グループ" />
+		<Item Id="toolbar-setting/toolbar/position" Word="ツールバー位置" />
+		<Item Id="toolbar-setting/toolbar/icon" Word="アイコンサイズ" />
+		<Item Id="toolbar-setting/toolbar/font" Word="フォント" />
+		<Item Id="toolbar-setting/toolbar/text-length" Word="テキストの長さ" />
+		<Item Id="toolbar-setting/toolbar/auto-hide-time" Word="表示時間" />
+		<Item Id="toolbar-setting/toolbar/show-text" Word="テキストを表示する" />
+		<Item Id="toolbar-setting/toolbar/auto-hide" Word="自動的に隠す" />
+		<Item Id="toolbar-setting/toolbar/topmost" Word="最前面で表示する" />
+		<Item Id="toolbar-setting/toolbar/visible" Word="ツールバーの表示" />
+		<Item Id="toolbar-setting/toolbar/menu-posotion" Word="メニューボタンを調整する" />
+		<Item Id="toolbar-setting/group/node/add/group" Word="グループ追加" />
+		<Item Id="toolbar-setting/group/node/add/item" Word="選択中ランチャーアイテムの追加" />
+		<Item Id="toolbar-setting/group/node/up" Word="選択中ノードを上に移動" />
+		<Item Id="toolbar-setting/group/node/down" Word="選択中ノードを下に移動" />
+		<Item Id="toolbar-setting/group/node/remove" Word="選択中ノードを削除" />
+		
+		<Item Id="command-setting/icon" Word="アイコンサイズ" />
+		<Item Id="command-setting/hotkey" Word="呼び出しキー" />
+		<Item Id="command-setting/hide-time" Word="表示時間" />
+		<Item Id="command-setting/font" Word="フォント" />
+		<Item Id="command-setting/find" Word="検索条件" />
+		<Item Id="command-setting/find/tag" Word="タグを検索する" />
+		<Item Id="command-setting/find/file" Word="ファイルを検索する" />
+
+		<Item Id="note-setting/key" Word="キー設定" />
+		<Item Id="note-setting/key/create" Word="作成" />
+		<Item Id="note-setting/key/hide" Word="隠す" />
+		<Item Id="note-setting/key/compact" Word="最小化" />
+		<Item Id="note-setting/key/front" Word="前面表示" />
+		<Item Id="note-setting/style" Word="標準スタイル" />
+		<Item Id="note-setting/style/font" Word="フォント" />
+		<Item Id="note-setting/style/fore-color" Word="前景色" />
+		<Item Id="note-setting/style/back-color" Word="背景色" />
+		<Item Id="note-setting/title" Word="初期タイトル" />
+		<Item Id="note-setting/title/timestamp" Word="タイムスタンプ" />
+		<Item Id="note-setting/title/default" Word="デフォルト" />
+
+		<Item Id="clipboard-setting/enabled" Word="クリップボード取込を有効にする" />
+		<Item Id="clipboard-setting/copy-app" Word="@[APPLICATION:NAME] でのコピー操作も取込対象にする" />
+		<Item Id="clipboard-setting/topmost" Word="最前面" />
+		<Item Id="clipboard-setting/visible" Word="クリップボードウィンドウを表示する" />
+		<Item Id="clipboard-setting/using-clipboard" Word="テキスト転送にクリップボードを経由する" />
+		<Item Id="clipboard-setting/capture-type" Word="取込対象" />
+		<Item Id="clipboard-setting/capture-type/text" Word="文字列" />
+		<Item Id="clipboard-setting/capture-type/rtf" Word="書式付文字列" />
+		<Item Id="clipboard-setting/capture-type/html" Word="HTML" />
+		<Item Id="clipboard-setting/capture-type/image" Word="画像" />
+		<Item Id="clipboard-setting/capture-type/files" Word="ファイル" />
+		<Item Id="clipboard-setting/show" Word="表示切り替えキー" />
+		<Item Id="clipboard-setting/save-count" Word="保存件数(0:全件)" />
+		<Item Id="clipboard-setting/wait-time" Word="前回コピーからの待機時間" />
+		<Item Id="clipboard-setting/dup" Word="重複判定(-1:全て対象)" />
+		<Item Id="clipboard-setting/font" Word="フォント" />
+		<Item Id="clipboard-setting/limit-enabled" Word="制限" />
+		<Item Id="clipboard-setting/limit/text/unit" Word="文字" />
+		<Item Id="clipboard-setting/limit/rtf/unit" Word="byte" />
+		<Item Id="clipboard-setting/limit/html/unit" Word="byte" />
+		<Item Id="clipboard-setting/limit/image/width" Word="横" />
+		<Item Id="clipboard-setting/limit/image/height" Word="縦" />
+		<Item Id="clipboard-setting/limit/image/unit" Word="px" />
+
+		<Item Id="template-setting/topmost" Word="最前面" />
+		<Item Id="template-setting/visible" Word="テンプレートウィンドウを表示する" />
+		<Item Id="template-setting/show" Word="表示切り替えキー" />
+		<Item Id="template-setting/font" Word="フォント" />
+
+		<!-- ログメッセージ -->
+		<Item Id="log/pause/skip"                  Word="pause skip" />
+		<Item Id="log/create/toolbar-setting" Word="ツールバー新規作成" />
+		<Item Id="log/accept/ok" Word="使用許諾: OK" />
+		<Item Id="log/accept/ng" Word="使用許諾: NG" />
+		<Item Id="log/screen/change-count" Word="ディスプレイ: 接続数変更" />
+		<Item Id="log/screen/change-setting" Word="ディスプレイ: 設定変更検出" />
+		<Item Id="log/session/switch" Word="セッション: 変更検出" />
+		<Item Id="log/session/ending" Word="セッション: 終了" />
+		<Item Id="log/window/save" Word="ウィンドウ状態保存: @[LOG-WINDOW-SAVE-TYPE]" />
+		<Item Id="log/update/check" Word="アップデート確認: 開始" />
+		<Item Id="log/update/error" Word="アップデート確認: 失敗" />
+		<Item Id="log/update/newest" Word="アップデート確認: 最新版です" />
+		<Item Id="log/update/check-stop" Word="アップデート確認: 取り消し" />
+		<Item Id="log/update/nic" Word="NICが有効ではありません。" />
+		<Item Id="log/group/change" Word="グループ変更: @[LOG-GROUP-CHNAGE]" />
+		<Item Id="log/clipboard/prev-time/message" Word="クリップボード: 待ち時間中のため無視" />
+		<Item Id="log/clipboard/prev-time/detail"  Word="前回取込時間: @[LOG-CLIP-WAIT_TIME-PREV]${br}今回取込時間: @[LOG-CLIP-WAIT_TIME-CURRENT]${br}設定時間: @[LOG-CLIP-WAIT_TIME-SETTING]${br}待機時間: @[LOG-CLIP-WAIT_TIME-WAIT]" />
+		<Item Id="log/clipboard/capture/not-support"  Word="クリップボード: 取り込めないデータ" />
+		<Item Id="log/clipboard/filter/empty"  Word="クリップボード: 取込制限により無視" />
+		<Item Id="log/clipboard/filter/message" Word="クリップボードフィルタ: @[LOG-CLIP-FILTER-TYPE]の取込制限" />
+		<Item Id="log/clipboard/filter-length/detail"  Word="取込サイズ: @[LOG-CLIP-FILTER_LENGTH-CURRENT]${br}制限サイズ: @[LOG-CLIP-FILTER_LENGTH-SETTING]" />
+		<Item Id="log/clipboard/filter-image/detail"  Word="取込サイズ:${br}	横: @[LOG-CLIP-FILTER_IMAGE_WIDTH-CURRENT]${br}	縦: @[LOG-CLIP-FILTER_IMAGE_HEIGHT-CURRENT]${br}制限サイズ:${br}	横: @[LOG-CLIP-FILTER_IMAGE_WIDTH-SETTING]${br}	縦: @[LOG-CLIP-FILTER_IMAGE_HEIGHT-SETTING]" />
+		<Item Id="log/clipboard/dup-item/message"  Word="クリップボード: 重複するクリップボードアイテムが存在するため無視" />
+		<Item Id="log/auto-regist/message"  Word="ホームウィンドウ処理でのログ" />
+		<Item Id="log/hotkey/unregist/command"           Word="ホットキー解除失敗: コマンド" />
+		<Item Id="log/hotkey/unregist/hidden-file"       Word="ホットキー解除失敗: 隠しファイル" />
+		<Item Id="log/hotkey/unregist/extension"         Word="ホットキー解除失敗: 拡張子" />
+		<Item Id="log/hotkey/unregist/create-note"       Word="ホットキー解除失敗: ノート作成" />
+		<Item Id="log/hotkey/unregist/hide-note"         Word="ホットキー解除失敗: ノート非表示" />
+		<Item Id="log/hotkey/unregist/compact-note"      Word="ホットキー解除失敗: ノート最小化" />
+		<Item Id="log/hotkey/unregist/show-front-note"   Word="ホットキー解除失敗: ノート前面表示" />
+		<Item Id="log/hotkey/unregist/clipboard"         Word="ホットキー解除失敗: クリップボード" />
+		<Item Id="log/hotkey/unregist/template"          Word="ホットキー解除失敗: テンプレート" />
+		<Item Id="log/hotkey/regist/command"             Word="ホットキー登録失敗: コマンド" />
+		<Item Id="log/hotkey/regist/hidden-file"         Word="ホットキー登録失敗: 隠しファイル" />
+		<Item Id="log/hotkey/regist/extension"           Word="ホットキー登録失敗: 拡張子" />
+		<Item Id="log/hotkey/regist/create-note"         Word="ホットキー登録失敗: ノート作成" />
+		<Item Id="log/hotkey/regist/hide-note"           Word="ホットキー登録失敗: ノート非表示" />
+		<Item Id="log/hotkey/regist/compact-note"        Word="ホットキー登録失敗: ノート最小化" />
+		<Item Id="log/hotkey/regist/show-front-note"     Word="ホットキー登録失敗: ノート前面表示" />
+		<Item Id="log/hotkey/regist/clipboard"           Word="ホットキー登録失敗: クリップボード" />
+		<Item Id="log/hotkey/regist/template"            Word="ホットキー登録失敗: テンプレート" />
 		
 		<!-- テンプレート -->
-		<Word Name="template/replace/text/name/APPLICATION"  Text="${template-APPLICATION}" />
-		<Word Name="template/replace/text/name/VER"          Text="@[APPLICATION] ${template-VER}" />
-		<Word Name="template/replace/text/name/VER:NUMBER"   Text="@[APPLICATION] ${template-VER:NUMBER}" />
-		<Word Name="template/replace/text/name/VER:HASH"     Text="@[APPLICATION] ${template-VER:HASH}" />
-		<Word Name="template/replace/text/name/VER-NUMBER"   Text="@[APPLICATION] ${template-VER:NUMBER}" />
-		<Word Name="template/replace/text/name/VER-HASH"     Text="@[APPLICATION] ${template-VER:HASH}" />
-		<Word Name="template/replace/text/name/VER-FULL"     Text="@[APPLICATION] ${template-VER}" />
-		<Word Name="template/replace/text/name/TIMESTAMP"    Text="${template-TIMESTAMP}" />
-		<Word Name="template/replace/text/name/Y"            Text="西暦" />
-		<Word Name="template/replace/text/name/Y:04"         Text="西暦(4桁)" />
-		<Word Name="template/replace/text/name/M"            Text="月" />
-		<Word Name="template/replace/text/name/M:02"         Text="月(2桁)" />
-		<Word Name="template/replace/text/name/M:S"          Text="月(ロケールでの短い名称)" />
-		<Word Name="template/replace/text/name/M:L"          Text="月(ロケールでの長い名称)" />
-		<Word Name="template/replace/text/name/D"            Text="日" />
-		<Word Name="template/replace/text/name/D:02"         Text="日(2桁)" />
-		<Word Name="template/replace/text/name/h"            Text="時" />
-		<Word Name="template/replace/text/name/h:02"         Text="時(2桁)" />
-		<Word Name="template/replace/text/name/m"            Text="分" />
-		<Word Name="template/replace/text/name/m:02"         Text="分(2桁)" />
-		<Word Name="template/replace/text/name/s"            Text="秒" />
-		<Word Name="template/replace/text/name/s:02"         Text="秒(2桁)" />
-		<Word Name="template/replace/text/name/CLIP"         Text="${template-CLIP}" />
-		<Word Name="template/replace/text/name/CLIP:NOBREAK" Text="改行なし${template-CLIP}" />
-		<Word Name="template/replace/text/name/CLIP:HEAD"    Text="先頭行のみ${template-CLIP}" />
-		<Word Name="template/replace/text/name/CLIP:TAIL"    Text="最終行のみ${template-CLIP}" />
-		<Word Name="template/replace/program/name/&lt;#  #&gt;"  Text="コード" />
-		<Word Name="template/replace/program/name/&lt;#=  #&gt;"  Text="式" />
-		<Word Name="template/replace/program/name/&lt;#+  #&gt;"  Text="定義" />
-		<Word Name="template/replace/program/name/APPLICATION"  Text="${template-APPLICATION}" />
-		<Word Name="template/replace/program/name/VER"          Text="@[APPLICATION] ${template-VER}" />
-		<Word Name="template/replace/program/name/VER:NUMBER"   Text="@[APPLICATION] ${template-VER:NUMBER}" />
-		<Word Name="template/replace/program/name/VER:HASH"     Text="@[APPLICATION] ${template-VER:HASH}" />
-		<Word Name="template/replace/program/name/TIMESTAMP"    Text="${template-TIMESTAMP}" />
-		<Word Name="template/replace/program/name/CLIP"         Text="${template-CLIP}" />
+		<Item Id="template/keyword/text/TIMESTAMP"    Word="タイムスタンプ" />
+		<Item Id="template/keyword/text/Y"            Word="西暦" />
+		<Item Id="template/keyword/text/Y:04"         Word="西暦(4桁)" />
+		<Item Id="template/keyword/text/M"            Word="月" />
+		<Item Id="template/keyword/text/M:02"         Word="月(2桁)" />
+		<Item Id="template/keyword/text/M:S"          Word="月(ロケールでの短い名称)" />
+		<Item Id="template/keyword/text/M:L"          Word="月(ロケールでの長い名称)" />
+		<Item Id="template/keyword/text/D"            Word="日" />
+		<Item Id="template/keyword/text/D:02"         Word="日(2桁)" />
+		<Item Id="template/keyword/text/h"            Word="時" />
+		<Item Id="template/keyword/text/h:02"         Word="時(2桁)" />
+		<Item Id="template/keyword/text/m"            Word="分" />
+		<Item Id="template/keyword/text/m:02"         Word="分(2桁)" />
+		<Item Id="template/keyword/text/s"            Word="秒" />
+		<Item Id="template/keyword/text/s:02"         Word="秒(2桁)" />
+		<Item Id="template/keyword/text/CLIP"         Word="クリップボード" />
+		<Item Id="template/keyword/text/CLIP:NOBREAK" Word="改行なしクリップボード" />
+		<Item Id="template/keyword/text/CLIP:HEAD"    Word="先頭行のみクリップボード" />
+		<Item Id="template/keyword/text/CLIP:TAIL"    Word="最終行のみクリップボード" />
+		<Item Id="template/keyword/text/APPLICATION:NAME"              Word="アプリケーション名称" />
+		<Item Id="template/keyword/text/APPLICATION:VERSION"           Word="@[APPLICATION:NAME] バージョン" />
+		<Item Id="template/keyword/text/APPLICATION:VERSION-NUMBER"    Word="@[APPLICATION:NAME] バージョン番号" />
+		<Item Id="template/keyword/text/APPLICATION:VERSION-REVISION"  Word="@[APPLICATION:NAME] リビジョン" />
+		<Item Id="template/keyword/text/APPLICATION:VERSION-NUMBER"    Word="@[APPLICATION:NAME] リビジョン" />
 		
-		<Word Name="template/convert/error/text"     Text="" />
-		<Word Name="template/convert/error/program"  Text="" />
+		<Item Id="template/keyword/program/&lt;#  #&gt;"  Word="コード" />
+		<Item Id="template/keyword/program/&lt;#=  #&gt;"  Word="式" />
+		<Item Id="template/keyword/program/&lt;#+  #&gt;"  Word="定義" />
+		<Item Id="template/keyword/program/TIMESTAMP"          Word="現在日時" />
+		<Item Id="template/keyword/program/CLIP"               Word="クリップボードテキスト" />
+		<Item Id="template/keyword/program/APPLICATION:NAME"     Word="アプリケーション名称" />
+		<Item Id="template/keyword/program/APPLICATION:VERSION"  Word="@[APPLICATION:NAME] バージョン文字列" />
+		<Item Id="template/keyword/program/APPLICATION:VERSION-NUMBER"  Word="@[APPLICATION:NAME] バージョン番号" />
+		<Item Id="template/keyword/program/APPLICATION:VERSION-REVISION"  Word="@[APPLICATION:NAME] リビジョン" />
 
-		<!-- ログ出力項目 -->
-		<Word Name="log/init/db-data/load"      Text="DB読み込み" />
-		<Word Name="log/init/db-data/mkdir"     Text="DB用ディレクトリ作成" />
-		<Word Name="log/init/db-data/version"   Text="バージョンテーブル確認" />
-		<Word Name="log/init/db-data/create"    Text="DB: @[TABLE-NAME] 作成" />
-		<Word Name="log/init/db-data/check"     Text="DB: @[TABLE-NAME] チェック" />
+		<!-- enum -->
 		
-		<Word Name="log/update/check"          Text="アップデートチェック開始" />
-		<Word Name="log/update/exec"           Text="アップデート処理開始" />
-		<Word Name="log/update/exit"           Text="アップデートのため終了" />
-		<Word Name="log/update/error"          Text="アップデートチェック失敗" />
-		<Word Name="log/update/error-timeout"  Text="アップデート処理タイムアウト" />
-		<Word Name="log/update/error-process"  Text="アップデートプロセス異常終了" />
-		<Word Name="log/update/check-stop"     Text="アップデートチェック中止" />
-		<Word Name="log/update/newest"         Text="最新版です" />
-		<Word Name="log/update/nic"            Text="ネットワークインターフェイス非活性" />
+		<Item Id="enum/ModifierKeys" Word="修飾キー" />
+		<Item Id="enum/ModifierKeys/Alt" Word="Alt" />
+		<Item Id="enum/ModifierKeys/Control" Word="Control" />
+		<Item Id="enum/ModifierKeys/Shift" Word="Shift" />
+		<Item Id="enum/ModifierKeys/Windows" Word="Windows" />
+		<!-- key 106 -->
+		<Item Id="enum/Key/separator" Word=" + " />
+		
+		<Item Id="enum/Key/None" Word="None" />
+		<Item Id="enum/Key/NumPad0" Word="0" />
+		<Item Id="enum/Key/NumPad1" Word="1" />
+		<Item Id="enum/Key/NumPad2" Word="2" />
+		<Item Id="enum/Key/NumPad3" Word="3" />
+		<Item Id="enum/Key/NumPad4" Word="4" />
+		<Item Id="enum/Key/NumPad5" Word="5" />
+		<Item Id="enum/Key/NumPad6" Word="6" />
+		<Item Id="enum/Key/NumPad7" Word="7" />
+		<Item Id="enum/Key/NumPad8" Word="8" />
+		<Item Id="enum/Key/NumPad9" Word="9" />
+		
+		<Item Id="enum/Key/D0" Word="Num 0" />
+		<Item Id="enum/Key/D1" Word="Num 1" />
+		<Item Id="enum/Key/D2" Word="Num 2" />
+		<Item Id="enum/Key/D3" Word="Num 3" />
+		<Item Id="enum/Key/D4" Word="Num 4" />
+		<Item Id="enum/Key/D5" Word="Num 5" />
+		<Item Id="enum/Key/D6" Word="Num 6" />
+		<Item Id="enum/Key/D7" Word="Num 7" />
+		<Item Id="enum/Key/D8" Word="Num 8" />
+		<Item Id="enum/Key/D9" Word="Num 9" />
 
-		<Word Name="log/init/ui/start"  Text="UI初期化開始" />
-		<Word Name="log/init/ui/end"    Text="UI初期化終了" />
+		<Item Id="enum/Key/OemMinus"         Word="-" />
+		<Item Id="enum/Key/OemQuotes"        Word="^" />
+		<Item Id="enum/Key/Oem5"             Word="¥" />
+		<Item Id="enum/Key/Oem3"             Word="@" />
+		<Item Id="enum/Key/OemOpenBrackets"  Word="[" />
+		<Item Id="enum/Key/OemPlus"          Word=":" />
+		<Item Id="enum/Key/Oem1"             Word=":" />
+		<Item Id="enum/Key/Oem6"             Word="]" />
+		<Item Id="enum/Key/OemComma"         Word="," />
+		<Item Id="enum/Key/OemPeriod"        Word="." />
+		<Item Id="enum/Key/OemQuestion"      Word="/" />
+		<Item Id="enum/Key/OemBackslash"     Word="\" />
+		<Item Id="enum/Key/ImeNonConvert"    Word="無変換" />
+		<Item Id="enum/Key/ImeConvert"       Word="変換" />
 		
-		<Word Name="log/exec/run-item"  Text="アイテム実行" />
-		<Word Name="log/output/error"   Text="ログ出力異常" />
+		<Item Id="enum/Key/Add"       Word="Num +" />
+		<Item Id="enum/Key/Subtract"  Word="Num -" />
+		<Item Id="enum/Key/Multiply"  Word="Num *" />
+		<Item Id="enum/Key/Divide"    Word="Num /" />
+		<Item Id="enum/Key/Decimal"   Word="Num ." />
+		
+		<Item Id="enum/Key/Insert"   Word="Insert" />
+		<Item Id="enum/Key/Delete"   Word="Delete" />
+		<Item Id="enum/Key/Home"     Word="Home" />
+		<Item Id="enum/Key/End"      Word="End" />
+		<Item Id="enum/Key/PageUp"   Word="PgUp" />
+		<Item Id="enum/Key/Next"     Word="PgDn" />
+		<Item Id="enum/Key/Scroll"   Word="ScrLk" />
+		<Item Id="enum/Key/Pause"    Word="Pause" />
+		<Item Id="enum/Key/Cancel"   Word="Break" />
+		
+		<Item Id="enum/Key/MediaStop"          Word="再生" />
+		<Item Id="enum/Key/MediaPlayPause"     Word="停止" />
+		<Item Id="enum/Key/MediaPreviousTrack" Word="前" />
+		<Item Id="enum/Key/MediaNextTrack"     Word="次" />
 
-		<Word Name="applications/hash/title"    Text="ハッシュチェック" />
-		<Word Name="applications/hash/comment"  Text="指定ファイルからハッシュ値を取得します。" />
-	
-		<!-- デフォルトランチャーグループ -->
-		<Word Name="default/group/main"      Text="メイングループ" />
-		<Word Name="default/group/embedded"  Text="組み込みアプリケーション" />
-		<Word Name="default/group/programs"  Text="プログラム" />
-		<!-- デフォルトランチャータグ -->
-		<Word Name="default/tag/web-browser" Text="ブラウザ" />
-		<Word Name="default/tag/office"      Text="オフィス" />
-		<Word Name="default/tag/editor"      Text="エディタ" />
-		<Word Name="default/tag/development" Text="開発" />
-		<Word Name="default/tag/file"        Text="ファイル操作" />
-		<Word Name="default/tag/image"       Text="画像関連" />
+		<Item Id="enum/IconScale/Small"  Word="小" />
+		<Item Id="enum/IconScale/Normal" Word="中" />
+		<Item Id="enum/IconScale/Big"    Word="大" />
+		<Item Id="enum/IconScale/Large"  Word="特大" />
+
+		<Item Id="enum/DockType/None"    Word="フロート" />
+		<Item Id="enum/DockType/Top"     Word="デスクトップ: 上" />
+		<Item Id="enum/DockType/Left"    Word="デスクトップ: 左" />
+		<Item Id="enum/DockType/Right"   Word="デスクトップ: 右" />
+		<Item Id="enum/DockType/Bottom"  Word="デスクトップ: 下" />
+
+		<Item Id="enum/TemplateReplaceMode"         Word="置き換え種別" />
+		<Item Id="enum/TemplateReplaceMode/None"    Word="通常" />
+		<Item Id="enum/TemplateReplaceMode/Text"    Word="文字列置き換え" />
+		<Item Id="enum/TemplateReplaceMode/Program" Word="T4置き換え" />
+
+		<Item Id="enum/ClipboardType/Text" Word="文字列" />
+		<Item Id="enum/ClipboardType/Rtf" Word="書式付文字列" />
+		<Item Id="enum/ClipboardType/Html" Word="HTML" />
+		<Item Id="enum/ClipboardType/Image" Word="画像" />
+		<Item Id="enum/ClipboardType/Files" Word="ファイル" />
 		
-		<!-- デフォルトランチャーアイテム -->
-		<Word Name="default/item/iexplorer"  Text="Internet Explorer" />
-		<Word Name="default/item/firefox"    Text="FireFox" />
-		<Word Name="default/item/waterfox"   Text="Waterfox" />
-		<Word Name="default/item/opera"      Text="Opera" />
-	
-		<Word Name="default/item/ms-excel"     Text="Microsoft Excel" />
-		<Word Name="default/item/ms-word"      Text="Microsoft Word" />
-		<Word Name="default/item/ms-power"     Text="Microsoft PowerPoint" />
-		<Word Name="default/item/ms-outlook"   Text="Microsoft Outlook" />
+		<Item Id="enum/WindowSaveType"           Word="ウィンドウ保存" />
+		<Item Id="enum/WindowSaveType/Temporary" Word="一時保存" />
+		<Item Id="enum/WindowSaveType/Timer"     Word="タイマー" />
+		<Item Id="enum/WindowSaveType/System"    Word="環境変更" />
 		
-		<Word Name="default/item/sakura"       Text="サクラエディタ" />
+		<Item Id="enum/LauncherKind/File"      Word="ファイル" />
+		<Item Id="enum/LauncherKind/Directory" Word="##Directory##" />
+		<Item Id="enum/LauncherKind/Command"   Word="コマンド" />
+		
+		
+		
+		<!-- 変換 -->
+		<Item Id="forms-convert/launcher-item/LauncherType/dir-file-convert/message"  Word="旧バージョン変換: ランチャーの種類変更" />
+		<Item Id="forms-convert/launcher-item/LauncherType/dir-file-convert/detail"   Word="@[FORMS-CONVERT-LAUNCHER-ITEM-NAME]の種別@[FORMS-CONVERT-LAUNCHER-ITEM-TYPE]は@[FORMS-CONVERT-LAUNCHER-ITEM-TYPE:FILE]に変換" />
+		<Item Id="forms-convert/launcher-item/LauncherType/not-support/message"       Word="旧バージョン変換: 未サポート" />
+		<Item Id="forms-convert/launcher-item/LauncherType/not-support/detail"        Word="@[FORMS-CONVERT-LAUNCHER-ITEM-NAME]の種別@[FORMS-CONVERT-LAUNCHER-ITEM-TYPE]は未サポートのため除外" />
+		
+		
 	</Words>
 </Language>

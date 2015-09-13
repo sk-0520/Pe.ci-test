@@ -1,0 +1,48 @@
+﻿<AV:CommonDataUserControl
+	x:Class="ContentTypeTextNet.Pe.PeMain.View.Parts.Control.SettingPage.LauncherItemSettingControl"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:SC="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=SharedLibrary"
+	xmlns:AV="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Control"
+	xmlns:AP="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
+	xmlns:AC="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Converter"
+	
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+	mc:Ignorable="d" 
+	d:DesignHeight="300" d:DesignWidth="300"
+>
+	<AV:CommonDataUserControl.Resources>
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceDictionary Source="/View/Parts/Resource/GridSplitterDictionary.xaml"/>
+				<ResourceDictionary Source="/View/Parts/Resource/ImageDictionary.xaml"/>
+			</ResourceDictionary.MergedDictionaries>
+			<SC:LogicalIsNotNullConverter x:Key="LogicalIsNotNullConverter" />
+			<AC:LauncherViewModelConverter x:Key="LauncherViewModelConverter" />
+		</ResourceDictionary>
+	</AV:CommonDataUserControl.Resources>
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*" />
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="7*"/>
+			<ColumnDefinition Width="Auto"/>
+			<ColumnDefinition Width="13*"/>
+		</Grid.ColumnDefinitions>
+		<AV:LauncherItemsListControl
+			x:Name="listItems" 
+			Grid.Column="0" 
+			CanListEdit="True" 
+			DataContext="{Binding LauncherItems}" 
+			AppendCommand="{Binding DataContext.AppendItemCommand, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}}" 
+			RemoveCommand="{Binding DataContext.RemoveItemCommand, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}}" 
+		/>
+		<GridSplitter Grid.Column="1" Style="{StaticResource DefaultVericalGridSplitter}" />
+		<AV:LauncherItemEditControl
+			Grid.Column="2"
+			DataContext="{Binding SelectedLauncherItem, ElementName=listItems, Converter={StaticResource LauncherViewModelConverter}}" 
+			IsEnabled="{Binding SelectedLauncherItem, ElementName=listItems,Converter={StaticResource LogicalIsNotNullConverter}}"
+		/>
+	</Grid>
+</AV:CommonDataUserControl>
