@@ -63,9 +63,24 @@
 				}
 				FileLogging = true;
 			}
+
+			string mutexName = string.Empty;
+			if(commandLine.HasValue("mutex")) {
+					mutexName = commandLine.GetValue("mutex");
+			}
+			if(string.IsNullOrWhiteSpace(mutexName)) {
+				mutexName = Constants.ApplicationName;
+#if DEBUG
+				mutexName += "_debug";
+				//mutexName += new Random().Next().ToString();
+#endif
+			}
+			MutexName = mutexName;
 		}
 
 		#region property
+
+		public string MutexName { get; private set; }
 
 		/// <summary>
 		/// ユーザールートディレクトリ。

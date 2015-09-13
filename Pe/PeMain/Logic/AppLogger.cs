@@ -75,7 +75,9 @@
 		protected override void Dispose(bool disposing)
 		{
 			if (!IsDisposed) {
-				Information("exit!");
+				if(disposing) {
+					Information("exit!");
+				}
 			}
 			base.Dispose(disposing);
 		}

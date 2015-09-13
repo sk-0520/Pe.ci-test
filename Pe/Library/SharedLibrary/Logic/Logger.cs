@@ -102,7 +102,9 @@
 		protected override void Dispose(bool disposing)
 		{
 			if(!IsDisposed) {
-				ClearFileWriter();
+				if(disposing) {
+					ClearFileWriter();
+				}
 			}
 
 			base.Dispose(disposing);
