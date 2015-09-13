@@ -85,5 +85,15 @@
 			;
 			return result;
 		}
+
+		public static string ConvertProgramFileName(string filePath, string startPath)
+		{
+			var startIndex = filePath.IndexOf(startPath);
+			if(startIndex != -1) {
+				return filePath.Substring(startIndex);
+			}
+
+			return filePath;
+		}
 	}
 }
