@@ -1847,7 +1847,7 @@
 					notify.DuplicationItem = clipboardItems.FirstOrDefault(c => clipboardData.Hash.IsEqual(c.Hash));
 					return notify;
 				}
-				return null;
+				return notify;
 			}).ContinueWith(t => {
 				if(t.Result.EmptyFromFiltered) {
 					CommonData.Logger.Information(CommonData.Language["log/clipboard/filter/empty"]);
