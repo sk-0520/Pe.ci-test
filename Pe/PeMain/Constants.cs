@@ -28,7 +28,7 @@
 		}
 
 		[ConstantsProperty]
-		const string applicationName = "Pe-WPF";
+		const string applicationName = "Pe";
 		public const string updateProgramDirectoryName = "Updater";
 		public const string updateProgramName = "Updater" + ".exe";
 		/// <summary>
