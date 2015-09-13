@@ -28,6 +28,7 @@
 				<ResourceDictionary Source="/View/Parts/Resource/ComboBoxDictionary.xaml"/>
 				<ResourceDictionary Source="/View/Parts/Resource/PopupDictionary.xaml"/>
 				<ResourceDictionary Source="/View/Parts/Resource/TextBoxDictionary.xaml"/>
+				<ResourceDictionary Source="/View/Parts/Resource/TextBlockDictionary.xaml"/>
 			</ResourceDictionary.MergedDictionaries>
 			<SC:LogicalIsNotNullConverter x:Key="LogicalIsNotNullConverter" />
 			<AC:DisplayTextConverter x:Key="DisplayTextConverter" />
@@ -203,8 +204,8 @@
 				<TreeView.ItemTemplate>
 					<HierarchicalDataTemplate ItemsSource="{Binding Nodes}" >
 						<StackPanel Orientation="Horizontal">
-							<Image Style="{StaticResource DefaultImage}" Source="{Binding Image}" />
-							<TextBlock Text="{Binding DisplayText}" />
+							<Image Style="{StaticResource ItemImage}" Source="{Binding Image}" />
+							<TextBlock Style="{StaticResource ItemText}" Text="{Binding DisplayText}" />
 							<Popup Width="200" Placement="Top">
 								<Popup.IsOpen>
 									<MultiBinding Converter="{StaticResource LogicalMultiAndConverter}" Mode="OneWay">

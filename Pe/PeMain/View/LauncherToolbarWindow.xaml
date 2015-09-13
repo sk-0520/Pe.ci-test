@@ -53,6 +53,7 @@
 				<ResourceDictionary Source="/View/Parts/Resource/GripDictionary.xaml"/>
 				<ResourceDictionary Source="/View/Parts/Resource/PopupDictionary.xaml"/>
 				<ResourceDictionary Source="/View/Parts/Resource/LabelDictionary.xaml"/>
+				<ResourceDictionary Source="/View/Parts/Resource/TextBlockDictionary.xaml"/>
 			</ResourceDictionary.MergedDictionaries>
 			<xctk:InverseBoolConverter x:Key="InverseBoolConverter" />
 			<SC:LogicalMultiEqualConverter x:Key="LogicalMultiEqualConverter" />
@@ -538,8 +539,8 @@
 									</Grid.ColumnDefinitions>
 									<Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource TitleLabel}">
 										<StackPanel Orientation="Horizontal">
-											<Image Source="{x:Static AM:AppResource.CommonRunImage}" Style="{StaticResource DefaultImage}" />
-											<TextBlock Text="execute" AA:Language.Word="toolbar/execute" />
+											<Image Source="{x:Static AM:AppResource.CommonRunImage}" Style="{StaticResource ItemImage}" />
+											<TextBlock Style="{StaticResource ItemText}" Text="execute" AA:Language.Word="toolbar/execute" />
 										</StackPanel>
 									</Label>
 									<Button Grid.Row="1" Grid.Column="0" Content="normal" AA:Language.Word="toolbar/execute/normal" IsEnabled="{Binding ExistsCommand}" Command="{Binding RunCommand}" Style="{StaticResource PopupClose}" />
@@ -549,8 +550,8 @@
 
 									<Label Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource TitleLabel}">
 										<StackPanel Orientation="Horizontal">
-											<Image Source="{x:Static AM:AppResource.CommonFileImage}" Style="{StaticResource DefaultImage}" />
-											<TextBlock Text="file" AA:Language.Word="toolbar/file" />
+											<Image Source="{x:Static AM:AppResource.CommonFileImage}" Style="{StaticResource ItemImage}" />
+											<TextBlock Style="{StaticResource ItemText}" Text="file" AA:Language.Word="toolbar/file" />
 										</StackPanel>
 									</Label>
 									<Button Grid.Row="4" Grid.Column="0" Content="parent dir" AA:Language.Word="toolbar/file/parent-dir" IsEnabled="{Binding ExistsParentDirectory}" Command="{Binding OpenDirectory}" CommandParameter="{x:Static ADD:LauncherCommandType.ParentDirectory}" Style="{StaticResource PopupClose}" />
@@ -560,8 +561,8 @@
 
 									<Label Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource TitleLabel}">
 										<StackPanel Orientation="Horizontal">
-											<Image Source="{x:Static AM:AppResource.CommonCopyImage}" Style="{StaticResource DefaultImage}" />
-											<TextBlock Text="clipboard" AA:Language.Word="toolbar/clipboard" />
+											<Image Source="{x:Static AM:AppResource.CommonCopyImage}" Style="{StaticResource ItemImage}" />
+											<TextBlock Style="{StaticResource ItemText}" Text="clipboard" AA:Language.Word="toolbar/clipboard" />
 										</StackPanel>
 									</Label>
 									<Button Grid.Row="7" Grid.Column="0" Content="command"    AA:Language.Word="toolbar/clipboard/command"    IsEnabled="{Binding HasDataCommand}" Command="{Binding CopyText}" CommandParameter="{x:Static ADD:LauncherCommandType.Command}" Style="{StaticResource PopupClose}" />
@@ -572,8 +573,8 @@
 
 									<Label Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource TitleLabel}">
 										<StackPanel Orientation="Horizontal">
-											<Image Source="{x:Static AM:AppResource.CommonOthersImage}" Style="{StaticResource DefaultImage}" />
-											<TextBlock Text="others" AA:Language.Word="toolbar/others" />
+											<Image Source="{x:Static AM:AppResource.CommonOthersImage}" Style="{StaticResource ItemImage}" />
+											<TextBlock Style="{StaticResource ItemText}" Text="others" AA:Language.Word="toolbar/others" />
 										</StackPanel>
 									</Label>
 									<Button Grid.Row="10" Grid.Column="0" Content="customize" AA:Language.Word="toolbar/others/customize" Style="{StaticResource PopupClose}" Command="{Binding OpenCustomize}" />
@@ -626,8 +627,8 @@
 
 									<Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource TitleLabel}">
 										<StackPanel Orientation="Horizontal">
-											<Image Source="{x:Static AM:AppResource.CommonRunImage}" Style="{StaticResource DefaultImage}" />
-											<TextBlock Text="execute" AA:Language.Word="toolbar/execute" />
+											<Image Source="{x:Static AM:AppResource.CommonRunImage}" Style="{StaticResource ItemImage}" />
+											<TextBlock Style="{StaticResource ItemText}" Text="execute" AA:Language.Word="toolbar/execute" />
 										</StackPanel>
 									</Label>
 									<Button Grid.Row="1" Grid.Column="0" Content="normal" AA:Language.Word="toolbar/execute/normal" IsEnabled="{Binding HasDataCommand}" Command="{Binding RunCommand}" Style="{StaticResource PopupClose}" />
@@ -637,8 +638,8 @@
 
 									<Label Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource TitleLabel}">
 										<StackPanel Orientation="Horizontal">
-											<Image Source="{x:Static AM:AppResource.CommonCopyImage}" Style="{StaticResource DefaultImage}" />
-											<TextBlock Text="clipboard" AA:Language.Word="toolbar/clipboard" />
+											<Image Source="{x:Static AM:AppResource.CommonCopyImage}" Style="{StaticResource ItemImage}" />
+											<TextBlock Style="{StaticResource ItemText}" Text="clipboard" AA:Language.Word="toolbar/clipboard" />
 										</StackPanel>
 									</Label>
 									<Button Grid.Row="4" Grid.Column="0" Content="command" AA:Language.Word="toolbar/clipboard/command" IsEnabled="{Binding HasDataCommand}" Command="{Binding CopyText}" CommandParameter="{x:Static ADD:LauncherCommandType.Command}" Style="{StaticResource PopupClose}" />
@@ -647,8 +648,8 @@
 
 									<Label Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource TitleLabel}">
 										<StackPanel Orientation="Horizontal">
-											<Image Source="{x:Static AM:AppResource.CommonOthersImage}" Style="{StaticResource DefaultImage}" />
-											<TextBlock Text="others" AA:Language.Word="toolbar/others" />
+											<Image Source="{x:Static AM:AppResource.CommonOthersImage}" Style="{StaticResource ItemImage}" />
+											<TextBlock Style="{StaticResource ItemText}" Text="others" AA:Language.Word="toolbar/others" />
 										</StackPanel>
 									</Label>
 									<Button Grid.Row="7" Grid.Column="0" Content="customize" AA:Language.Word="toolbar/others/customize" Style="{StaticResource PopupClose}" Command="{Binding OpenCustomize}" />

@@ -11,5 +11,8 @@
 		<Setter Property="RenderOptions.BitmapScalingMode" Value="NearestNeighbor" />
 	</Style>
 	
+	<Style x:Key="ItemImage" TargetType="Image" BasedOn="{StaticResource DefaultImage}">
+		<Setter Property="Margin" Value="2" />
+	</Style>
 	
 </ResourceDictionary>
