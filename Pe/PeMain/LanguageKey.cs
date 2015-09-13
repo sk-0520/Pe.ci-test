@@ -80,8 +80,8 @@
 		public const string logClipboardFilterImageWidthSetting = "LOG-CLIP-FILTER_IMAGE_WIDTH-SETTING";
 		public const string logClipboardFilterImageHeightCurrent = "LOG-CLIP-FILTER_IMAGE_HEIGHT-CURRENT";
 		public const string logClipboardFilterImageHeightSetting = "LOG-CLIP-FILTER_IMAGE_HEIGHT-SETTING";
-		
 		public const string logWindowSaveType = "LOG-WINDOW-SAVE-TYPE";
+		public const string logGroupChange = "LOG-GROUP-CHNAGE";
 
 		public const string formsConvertLauncherItemName = "FORMS-CONVERT-LAUNCHER-ITEM-NAME";
 		public const string formsConvertLauncherItemType = "FORMS-CONVERT-LAUNCHER-ITEM-TYPE";

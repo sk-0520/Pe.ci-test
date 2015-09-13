@@ -50,6 +50,7 @@
 				this._mainWorker.SetView(this._notifyIcon);
 				if (!startupNotifiyData.ExistsSetting && !startupNotifiyData.ExistsFormsSetting) {
 					// 現行設定も旧設定もなければ完全に初回とする
+					systemLogger.Information("application: first");
 					Application.Current.Dispatcher.BeginInvoke(new Action(() => {
 						this._mainWorker.ShowHomeDialog();
 						this._mainWorker.ResetToolbar();

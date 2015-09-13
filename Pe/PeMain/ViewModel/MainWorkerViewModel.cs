@@ -1539,23 +1539,25 @@
 					}
 					break;
 
-				case WindowKind.LauncherStream: {
+				case WindowKind.LauncherStream: 
+					{
 						window = new LauncherItemStreamWindow();
 						window.SetCommonData(CommonData, extensionData);
 					}
 					break;
 
-				case WindowKind.Note: {
+				case WindowKind.Note: 
+					{
 						var noteItem = (NoteIndexItemModel)extensionData;
 						if(!noteItem.IsVisible) {
-							CommonData.Logger.Trace("hidden -> show", noteItem);
+							CommonData.Logger.Debug("hidden -> show", noteItem);
 							noteItem.IsVisible = true;
 						}
 						window = new NoteWindow();
 						window.SetCommonData(CommonData, noteItem);
 					}
 					break;
-
+					
 				case WindowKind.Screen: {
 						window = new ScreenWindow();
 						window.SetCommonData(CommonData, extensionData);
@@ -1595,7 +1597,7 @@
 				var pair = cachingItems[index];
 				Debug.Assert(pair.Id == guid);
 				cachingItems.RemoveAt(index);
-				CommonData.Logger.Trace("cache dispose: " + pair.Id.ToString(), pair.Body);
+				CommonData.Logger.Debug("cache dispose: " + pair.Id.ToString(), pair.Body);
 				pair.Body.Dispose();
 			}
 			items.Remove(guid);
@@ -1666,7 +1668,7 @@
 					var itemPairList = cachingItems.StockItems.ToArray();
 					cachingItems.StockItems.Clear();
 					foreach(var pair in itemPairList) {
-						CommonData.Logger.Trace("cache dispose: " + pair.Id.ToString(), pair.Body);
+						CommonData.Logger.Debug("cache dispose: " + pair.Id.ToString(), pair.Body);
 						pair.Body.Dispose();
 					}
 				}
@@ -1678,7 +1680,7 @@
 		{
 			var body = cachingItems.GetFromId(guid);
 			if(body != null) {
-				CommonData.Logger.Trace("load cache: " + guid.ToString(), body);
+				CommonData.Logger.Debug("load cache: " + guid.ToString(), body);
 				return body;
 			}
 			//var fileType = IndexItemUtility.GetBodyFileType(indexKind);
@@ -1896,13 +1898,13 @@
 					SendInformationTips(CommonData.Language["notify/info/command/show/title"], CommonData.Language["notify/info/command/show/message"], LogKind.Information);
 					break;
 
-				case HotKeyId.HideFile: {
+				case HotKeyId.HiddenFile: {
 						SwitchShellHideFile();
 						string message;
 						if(SystemEnvironmentUtility.IsHiddenFileShow()) {
-							message = "notify/info/hidefile/message/show";
+							message = "notify/info/hiddenfile/message/show";
 						} else {
-							message = "notify/info/hidefile/message/hide";
+							message = "notify/info/hiddenfile/message/hide";
 						}
 						SendInformationTips(CommonData.Language["notify/info/hidefile/title"], CommonData.Language[message], LogKind.Information);
 					}
@@ -1920,7 +1922,8 @@
 					}
 					break;
 
-				case HotKeyId.CreateNote: {
+				case HotKeyId.CreateNote: 
+					{
 						var devicePoint = MouseUtility.GetDevicePosition();
 						// TODO: 論理座標取れてない！
 						var logcalPoint = devicePoint;
@@ -1928,6 +1931,7 @@
 						var window = CreateNoteItem(logcalPoint, noteSize, true);
 						SendInformationTips(CommonData.Language["notify/info/note/create/title"], CommonData.Language["notify/info/note/create/message"], LogKind.Information);
 						//WindowsUtility.ShowNoActive(window.Handle);
+						WindowsUtility.ShowActive(window.Handle);
 					}
 					break;
 
@@ -2058,14 +2062,13 @@
 				SaveWindowItem(WindowSaveType.System);
 			}
 
-			// TODO: スクリーン数変更とぶつかる, なーんも考えずに適当にロック
-			CommonData.Logger.Information("change screen setting", e);
+			CommonData.Logger.Information(CommonData.Language["log/screen/change-setting"]);
 			ResetToolbar();
 		}
 
 		void SystemEvents_SessionSwitch(object sender, SessionSwitchEventArgs e)
 		{
-			CommonData.Logger.Information("SessionSwitch", e);
+			CommonData.Logger.Information(CommonData.Language["log/session/switch"], e);
 			if(e.Reason == SessionSwitchReason.ConsoleConnect || e.Reason == SessionSwitchReason.SessionUnlock) {
 				ResetToolbar();
 				if(e.Reason == SessionSwitchReason.SessionUnlock) {
@@ -2078,7 +2081,7 @@
 
 		void SystemEvents_SessionEnding(object sender, SessionEndingEventArgs e)
 		{
-			CommonData.Logger.Information("SessionEnding", e);
+			CommonData.Logger.Information(CommonData.Language["log/session/ending"], e);
 			SaveSetting();
 		}
 

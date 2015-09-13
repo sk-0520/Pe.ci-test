@@ -20,7 +20,7 @@
 	using ContentTypeTextNet.Pe.PeMain.ViewModel;
 	using System.Threading;
 	using System.Windows.Media.Imaging;
-using ContentTypeTextNet.Pe.Library.PeData.Item;
+	using ContentTypeTextNet.Pe.Library.PeData.Item;
 	using ContentTypeTextNet.Library.PInvoke.Windows;
 	using ContentTypeTextNet.Library.SharedLibrary.CompatibleWindows.Utility;
 	using ContentTypeTextNet.Pe.PeMain.Define;
@@ -31,7 +31,7 @@ using ContentTypeTextNet.Pe.Library.PeData.Item;
 		public static T LoadSetting<T>(string path, FileType fileType, ILogger logger)
 			where T: ModelBase, new()
 		{
-			logger.Information("load setting", path);
+			logger.Debug("load: " + typeof(T).Name, path);
 			T result = null;
 			if(File.Exists(path)) {
 				switch(fileType) {
@@ -46,9 +46,13 @@ using ContentTypeTextNet.Pe.Library.PeData.Item;
 					default:
 						throw new NotImplementedException();
 				}
-				logger.Debug("load data", result != null ? typeof(T).Name: "null");
+				if(result != null) {
+					logger.Debug("loaded: " + typeof(T).Name);
+				} else {
+					logger.Debug("loaded: null");
+				}
 			} else {
-				logger.Debug("file not found", path);
+				logger.Debug("file not found: " + typeof(T).Name, path);
 			}
 
 			return result ?? new T();
@@ -57,7 +61,7 @@ using ContentTypeTextNet.Pe.Library.PeData.Item;
 		public static void SaveSetting<T>(string path, T model, FileType fileType, ILogger logger)
 			where T: ModelBase
 		{
-			logger.Information("save setting", path);
+			logger.Debug("save: " + typeof(T).Name, path);
 			switch(fileType) {
 				case FileType.Json:
 					SerializeUtility.SaveJsonDataToFile(path, model);
@@ -74,11 +78,11 @@ using ContentTypeTextNet.Pe.Library.PeData.Item;
 
 		public static IEnumerable<KeyValuePair<string, LanguageCollectionModel>?> GetLanguageFiles(string baseDir, ILogger logger)
 		{
-			foreach (var path in Directory.EnumerateFiles(baseDir, Constants.languageSearchPattern)) {
+			foreach(var path in Directory.EnumerateFiles(baseDir, Constants.languageSearchPattern)) {
 				LanguageCollectionModel model = null;
 				try {
 					model = SerializeUtility.LoadXmlSerializeFromFile<LanguageCollectionModel>(path);
-				} catch (Exception ex) {
+				} catch(Exception ex) {
 					logger.Error(ex);
 					continue;
 				}
@@ -98,7 +102,7 @@ using ContentTypeTextNet.Pe.Library.PeData.Item;
 		/// <returns></returns>
 		public static AppLanguageManager LoadLanguageFile(string baseDir, string name, string cultureCode, ILogger logger)
 		{
-			logger.Information("load language file", baseDir);
+			logger.Debug("load: language file", baseDir);
 			//var langPairList = new List<KeyValuePair<string, LanguageCollectionModel>?>();
 			//foreach(var path in Directory.EnumerateFiles(baseDir, Constants.languageSearchPattern)) {
 			//	try {
@@ -275,7 +279,7 @@ using ContentTypeTextNet.Pe.Library.PeData.Item;
 
 		public static void ChangeWindowFromWindowList(IList<WindowItemModel> windowList)
 		{
-			foreach (var windowItem in windowList) {
+			foreach(var windowItem in windowList) {
 				switch(windowItem.WindowState) {
 					case WindowState.Maximized:
 						NativeMethods.ShowWindow(windowItem.WindowHandle, SW.SW_MAXIMIZE);
@@ -285,8 +289,7 @@ using ContentTypeTextNet.Pe.Library.PeData.Item;
 						NativeMethods.ShowWindow(windowItem.WindowHandle, SW.SW_MINIMIZE);
 						break;
 
-					case WindowState.Normal:
-						{
+					case WindowState.Normal: {
 							if(NativeMethods.IsZoomed(windowItem.WindowHandle) || NativeMethods.IsIconic(windowItem.WindowHandle)) {
 								NativeMethods.ShowWindow(windowItem.WindowHandle, SW.SW_RESTORE);
 							}

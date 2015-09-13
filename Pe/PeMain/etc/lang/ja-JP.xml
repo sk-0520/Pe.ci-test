@@ -97,9 +97,9 @@
 
 		<Item Id="notify/info/command/show/title"      Word="コマンドウィンドウ" />
 		<Item Id="notify/info/command/show/message"    Word="コマンドウィンドウの表示" />
-		<Item Id="notify/info/hidefile/title"          Word="システム環境" />
-		<Item Id="notify/info/hidefile/message/show"   Word="隠しファイルの表示" />
-		<Item Id="notify/info/hidefile/message/hide"   Word="隠しファイルの非表示" />
+		<Item Id="notify/info/hiddenfile/title"        Word="システム環境" />
+		<Item Id="notify/info/hiddenfile/message/show" Word="隠しファイルの表示" />
+		<Item Id="notify/info/hiddenfile/message/hide" Word="隠しファイルの非表示" />
 		<Item Id="notify/info/extension/title"         Word="システム環境" />
 		<Item Id="notify/info/extension/message/show"  Word="拡張子を表示" />
 		<Item Id="notify/info/extension/message/hide"  Word="拡張子を非表示" />
@@ -415,12 +415,16 @@
 		<Item Id="log/accept/ok" Word="使用許諾: OK" />
 		<Item Id="log/accept/ng" Word="使用許諾: NG" />
 		<Item Id="log/screen/change-count" Word="ディスプレイ: 接続数変更" />
+		<Item Id="log/screen/change-setting" Word="ディスプレイ: 設定変更検出" />
+		<Item Id="log/session/switch" Word="セッション: 変更検出" />
+		<Item Id="log/session/ending" Word="セッション: 終了" />
 		<Item Id="log/window/save" Word="ウィンドウ状態保存: @[LOG-WINDOW-SAVE-TYPE]" />
 		<Item Id="log/update/check" Word="アップデート確認: 開始" />
 		<Item Id="log/update/error" Word="アップデート確認: 失敗" />
 		<Item Id="log/update/newest" Word="アップデート確認: 最新版です" />
 		<Item Id="log/update/check-stop" Word="アップデート確認: 取り消し" />
 		<Item Id="log/update/nic" Word="NICが有効ではありません。" />
+		<Item Id="log/group/change" Word="グループ変更: @[LOG-GROUP-CHNAGE]" />
 		<Item Id="log/clipboard/prev-time/message" Word="クリップボード: 待ち時間中のため無視" />
 		<Item Id="log/clipboard/prev-time/detail"  Word="前回取込時間: @[LOG-CLIP-WAIT_TIME-PREV]${br}今回取込時間: @[LOG-CLIP-WAIT_TIME-CURRENT]${br}設定時間: @[LOG-CLIP-WAIT_TIME-SETTING]${br}待機時間: @[LOG-CLIP-WAIT_TIME-WAIT]" />
 		<Item Id="log/clipboard/capture/not-support"  Word="クリップボード: 取り込めないデータ" />

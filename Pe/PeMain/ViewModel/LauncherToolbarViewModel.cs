@@ -582,7 +582,10 @@
 				var result = CreateCommand(
 					o => {
 						var group = (LauncherGroupItemModel)o;
-						AppNonProcess.Logger.Debug(group.ToString());
+						var map = new Dictionary<string, string>() {
+							{ LanguageKey.logGroupChange, group.Name }
+						};
+						AppNonProcess.Logger.Trace(AppNonProcess.Language["log/group/change", map], group);
 						SelectedGroup = group;
 					}
 				);
@@ -1158,7 +1161,7 @@
 				if(HasView) {
 					return UIUtility.ToLogicalPixel(View, DockScreen.DeviceWorkingArea);
 				} else {
-					AppNonProcess.Logger.SafeDebug("device pixel");
+					//AppNonProcess.Logger.SafeDebug("device pixel");
 					return DockScreen.DeviceWorkingArea;
 				}
 			}

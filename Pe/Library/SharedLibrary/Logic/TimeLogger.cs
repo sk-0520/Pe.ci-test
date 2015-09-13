@@ -102,7 +102,7 @@
 		{
 			if(!IsDisposed) {
 				InstanceStopWatch.Stop();
-				Puts(MakeMessage("STOP"), Detail);
+				Puts(MakeMessage("END"), Detail);
 
 				Puts = null;
 			}

@@ -9,7 +9,7 @@
 	public enum HotKeyId: ushort
 	{
 		ShowCommand = 0x0001,
-		HideFile,
+		HiddenFile,
 		Extension,
 		CreateNote,
 		HideNote,
