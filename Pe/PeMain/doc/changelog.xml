@@ -86,7 +86,7 @@
 					<comment>多分初期化でやりたかった内容が補正側に入ってた</comment>
 				</comments>
 			</note>
-			<note rev="">
+			<note rev="23ccf7333b12b872df02a94f9ad5712bd188dbb5">
 				<message>#292: アップデート更新内容表示ウィンドウのデザインが適当</message>
 				<comments>
 					<comment>XAMLだけ修正したので次回更新内容表示時に反映されてるはず</comment>
