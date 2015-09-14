@@ -93,6 +93,7 @@
 
 			obj.NoteKind = NoteKind;
 			obj.IsLocked = IsLocked;
+			obj.IsCompacted = IsCompacted;
 			Font.DeepCloneTo(obj.Font);
 
 			obj.ForeColor = ForeColor;
