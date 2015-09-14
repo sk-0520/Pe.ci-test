@@ -79,7 +79,7 @@
 			</note>
 		</group>
 		<group type="fixes" dummy="==================================================================">
-			<note rev="">
+			<note rev="d6fca24face6fd17b58fa3ca145d958953cbc283">
 				<message>#291: 各ノートの設定が反映されない</message>
 				<comments>
 					<comment>データ補正時に固定・最小化を無効にしてた</comment>
