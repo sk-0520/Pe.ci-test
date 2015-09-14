@@ -87,7 +87,10 @@
 				</comments>
 			</note>
 			<note rev="">
-				<message></message>
+				<message>#292: アップデート更新内容表示ウィンドウのデザインが適当</message>
+				<comments>
+					<comment>XAMLだけ修正したので次回更新内容表示時に反映されてるはず</comment>
+				</comments>
 			</note>
 			<note rev="">
 				<message></message>
