@@ -9,8 +9,10 @@
 	x:TypeArguments="AVM:UpdateConfirmViewModel"
 	AA:Language.Word="window/update"
 	Title="UpdateWindow" 
-	Height="300" 
-	Width="300"
+	Height="480" 
+	Width="640"
+	WindowStartupLocation="CenterScreen"
+	Topmost="True"
 	Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"
 	Foreground="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}"
 >
@@ -30,9 +32,9 @@
 		</Grid.RowDefinitions>
 
 		<WebBrowser x:Name="webUpdate" Grid.Row="0" />
-		
+
 		<StackPanel Grid.Row="1">
-			<TextBlock x:Name="viewVersion" Text="now -> new?" AA:Language.Word="update/confirm" Foreground="{Binding VersionForeground}" Background="{Binding VersionBackground}" />
+			<TextBlock x:Name="viewVersion" Text="A.BB.C.DDDDDD-0123456789ABCDEFabcdef123456789098765432 -> a.bb.c ?" AA:Language.Word="update/confirm" Foreground="{Binding VersionForeground}" Background="{Binding VersionBackground}" />
 		</StackPanel>
 
 		<StackPanel Grid.Row="2" Style="{StaticResource ResourceKey=DialogResultPanel}" >
