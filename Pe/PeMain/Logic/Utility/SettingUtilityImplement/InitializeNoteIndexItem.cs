@@ -22,8 +22,6 @@
 		static void V_Last(NoteIndexItemModel indexItem, Version previousVersion, INonProcess nonProcess)
 		{
 			indexItem.NoteKind = EnumUtility.GetNormalization(indexItem.NoteKind, NoteKind.Text);
-			indexItem.IsLocked =false;
-			indexItem.IsCompacted = false;
 			indexItem.Font.Size = Constants.noteFontSize.GetClamp(indexItem.Font.Size);
 
 			if(string.IsNullOrWhiteSpace(indexItem.Font.Family)) {
@@ -49,7 +47,9 @@
 			indexItem.Font.Family = FontUtility.GetOriginalFontFamilyName(SystemFonts.MessageFontFamily);
 			indexItem.WindowWidth = Constants.noteDefualtSize.Width;
 			indexItem.WindowHeight = Constants.noteDefualtSize.Height;
-
+			indexItem.IsLocked = false;
+			indexItem.IsCompacted = false;
+			indexItem.IsTopmost = false;
 		}
 	}
 }
