@@ -55,27 +55,10 @@
 		</group>
 	</log>
 	-->
-	<log date="YYYY/MM/DD" version="0.63.1" type="rc" dummy="################################################################################">
+	<log date="2015/09/14" version="0.64.0" dummy="################################################################################">
 		<group type="note" dummy="==================================================================">
 			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-		</group>
-		<group type="features" dummy="==================================================================">
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
+				<message>簡単だけど放置するのもなんだかなぁ課題を早めに解消</message>
 			</note>
 		</group>
 		<group type="fixes" dummy="==================================================================">
@@ -92,22 +75,8 @@
 					<comment>XAMLだけ修正したので次回更新内容表示時に反映されてるはず</comment>
 				</comments>
 			</note>
-			<note rev="">
+			<note rev="fa0e1bbfeca222aa184fde19d6709ec452797fff">
 				<message>#293: 個人設定テーマ変更時に落ちる</message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-		</group>
-		<group type="developer" dummy="==================================================================">
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
 			</note>
 		</group>
 	</log>
