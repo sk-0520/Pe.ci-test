@@ -8,6 +8,7 @@
 	using System.Windows.Data;
 	using System.Windows.Markup;
 	using System.Windows.Media;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 
 	/// <summary>
 	/// <para>http://sourcechord.hatenablog.com/entry/2014/04/25/013631</para>
@@ -16,9 +17,10 @@
 	{
 		public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
 		{
-			var fontFamily = value as FontFamily;
-			var currentLang = XmlLanguage.GetLanguage(culture.IetfLanguageTag);
-			return fontFamily.FamilyNames.FirstOrDefault(o => o.Key == currentLang).Value ?? fontFamily.Source;
+			return CastUtility.AsFunc<FontFamily, string>(value, fontFamily => {
+				var currentLang = XmlLanguage.GetLanguage(culture.IetfLanguageTag);
+				return fontFamily.FamilyNames.FirstOrDefault(o => o.Key == currentLang).Value ?? fontFamily.Source;
+			});
 		}
 
 		public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
