@@ -93,6 +93,9 @@
 				</comments>
 			</note>
 			<note rev="">
+				<message>#293: 個人設定テーマ変更時に落ちる</message>
+			</note>
+			<note rev="">
 				<message></message>
 			</note>
 		</group>
