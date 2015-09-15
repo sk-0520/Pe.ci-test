@@ -90,8 +90,8 @@
 			</note>
 		</group>
 		<group type="developer" dummy="==================================================================">
-			<note rev="">
-				<message></message>
+			<note rev="fa987ecba4c62c0fe4c35b06be72adb1c2bfcbaf">
+				<message>ソース管理を git 1 から git 2 に変更</message>
 			</note>
 			<note rev="">
 				<message></message>
