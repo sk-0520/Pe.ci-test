@@ -390,9 +390,9 @@
 		</ContextMenu>
 	</AW:CommonDataWindow.ContextMenu>
 
-	<StackPanel Orientation="{Binding Orientation, Mode=OneWay}" Visibility="{Binding HideVisibility}" >
-
-		<Rectangle 
+	<DockPanel Visibility="{Binding ToolbarContentVisibility}">
+		<Rectangle
+			DockPanel.Dock="{Binding GripDock}"
 			AllowDrop="False"
 			Width="{Binding CaptionWidth, Mode=OneWay}" 
 			Height="{Binding CaptionHeight, Mode=OneWay}" 
@@ -400,267 +400,271 @@
 			Style="{StaticResource DefaultGrip}"
 		/>
 
-		<!-- メインボタン -->
-		<xctk:DropDownButton AllowDrop="False" Style="{StaticResource LauncherDropDown}">
-			<xctk:DropDownButton.Content>
-				<StackPanel Orientation="Horizontal">
-					<Image Style="{StaticResource ToolbarImage}"/>
-					<TextBlock Style="{StaticResource ToolbarText}" />
-				</StackPanel>
-			</xctk:DropDownButton.Content>
-			<xctk:DropDownButton.DropDownContent>
-				<StackPanel>
-					<Label Content="toolbar pos" AA:Language.Word="toolbar/position" Style="{StaticResource TitleLabel}" />
-					<Grid>
-						<Grid.Resources>
-							<Style x:Key="PopupClose" TargetType="Button" BasedOn="{StaticResource PopupClose}">
-								<Setter Property="Command" Value="{Binding PositionChangeCommand}" />
-								<Setter Property="Margin" Value="2" />
-								<Setter Property="Content" Value="{Binding CommandParameter, RelativeSource={RelativeSource Self}, Converter={StaticResource ToolbarDockTypeImageConverter}}" />
-							</Style>
-						</Grid.Resources>
-						<Grid.ColumnDefinitions>
-							<ColumnDefinition />
-							<ColumnDefinition />
-							<ColumnDefinition />
-						</Grid.ColumnDefinitions>
-						<Grid.RowDefinitions>
-							<RowDefinition />
-							<RowDefinition />
-							<RowDefinition />
-						</Grid.RowDefinitions>
-						<Button Grid.Row="0" Grid.Column="1" CommandParameter="{x:Static SD:DockType.Top}"    Style="{StaticResource PopupClose}" />
-						<Button Grid.Row="1" Grid.Column="0" CommandParameter="{x:Static SD:DockType.Left}"   Style="{StaticResource PopupClose}" />
-						<Button Grid.Row="1" Grid.Column="1" CommandParameter="{x:Static SD:DockType.None}"   Style="{StaticResource PopupClose}" />
-						<Button Grid.Row="1" Grid.Column="2" CommandParameter="{x:Static SD:DockType.Right}"  Style="{StaticResource PopupClose}" />
-						<Button Grid.Row="2" Grid.Column="1" CommandParameter="{x:Static SD:DockType.Bottom}" Style="{StaticResource PopupClose}" />
-					</Grid>
-					<Separator />
-					<MenuItem Header="topmost" AA:Language.Word="toolbar/topmost" Style="{StaticResource PopupCloseMenu}" IsChecked="{Binding IsTopmost}" Command="{Binding SwitchTopMostCommand}"  />
-					<MenuItem Header="auto hide" AA:Language.Word="toolbar/autohide" Style="{StaticResource PopupCloseMenu}" IsChecked="{Binding AutoHide}" Command="{Binding SwitchAutoHideCommand}"/>
-					<Separator />
-					<MenuItem Header="hide" AA:Language.Word="toolbar/hide" Style="{StaticResource PopupCloseMenu}" Command="{Binding ChangeVisibleCommand}" >
-						<MenuItem.CommandParameter>
-							<sys:Boolean>false</sys:Boolean>
-						</MenuItem.CommandParameter>
-					</MenuItem>
-					<Separator />
-					<ItemsControl ItemsSource="{Binding GroupItems, Mode=OneWay}">
-						<ItemsControl.ItemTemplate>
-							<DataTemplate>
-								<MenuItem Style="{StaticResource GroupMenu}" />
-							</DataTemplate>
-						</ItemsControl.ItemTemplate>
-					</ItemsControl>
-				</StackPanel>
-			</xctk:DropDownButton.DropDownContent>
-			<xctk:DropDownButton.ToolTip>
-				<ToolTip Style="{StaticResource ToolbarTooltip}">
-					<StackPanel Orientation="Horizontal">
-						<Image Source="{x:Static AM:AppResource.ApplicationIconNormal}" Style="{StaticResource ToolbarToolTipImage}" />
-						<TextBlock Text="{Binding ToolTipTitle}" Style="{StaticResource ToolbarToolTipTitle}" />
-					</StackPanel>
-				</ToolTip>
-			</xctk:DropDownButton.ToolTip>
-		</xctk:DropDownButton>
-
-		<ItemsControl ItemsSource="{Binding LauncherItems, Mode=OneWay}" IsTabStop="False">
-			<ItemsControl.ItemsPanel>
-				<ItemsPanelTemplate>
-					<StackPanel Orientation="{Binding Orientation, Mode=OneWay}" />
-				</ItemsPanelTemplate>
-			</ItemsControl.ItemsPanel>
-			<ItemsControl.ItemTemplate>
-				<DataTemplate>
-					<VirtualizingStackPanel
-						Orientation="Vertical"
-						SA:DragTarget.UsingDragTarget="True"
-						SA:DragTarget.DragEnterCommand="{Binding DragOverCommand}"
-						SA:DragTarget.DragOverCommand="{Binding DragOverCommand}"
-						SA:DragTarget.DragDropCommand="{Binding DragDropCommand}"
-					>
-						<VirtualizingStackPanel.ToolTip>
-							<ToolTip Style="{StaticResource ToolbarTooltip}">
-								<StackPanel>
-									<StackPanel Orientation="Horizontal">
-										<Image Source="{Binding ToolTipImage}" Style="{StaticResource ToolbarToolTipImage}" />
-										<TextBlock Text="{Binding ToolTipTitle}" Style="{StaticResource ToolbarToolTipTitle}" FontFamily="{DynamicResource {x:Static SystemFonts.CaptionFontFamilyKey}}" />
-									</StackPanel>
-									<StackPanel Orientation="Horizontal" Visibility="{Binding HasToolTipMessage, Converter={StaticResource BooleanVisibilityConverter}}">
-										<TextBlock Text="{Binding ToolTipMessage}" FontFamily="{DynamicResource {x:Static SystemFonts.SmallCaptionFontFamilyKey}}" />
-									</StackPanel>
-								</StackPanel>
-							</ToolTip>
-						</VirtualizingStackPanel.ToolTip>
-
-						<!-- ファイル -->
-						<xctk:SplitButton Visibility="{Binding VisibilityFile, Mode=OneWay}" Style="{StaticResource LauncherSplit}" Command="{Binding RunCommand}">
-							<i:Interaction.Triggers>
-								<i:EventTrigger EventName="Opened">
-									<i:InvokeCommandAction Command="{Binding OpenDropDownCommand}" />
-								</i:EventTrigger>
-								<!-- むりか
-								<i:EventTrigger EventName="MouseDown">
-									<i:InvokeCommandAction Command="{Binding DataContext.MouseDownCommand, ElementName=root}" CommandParameter="{Binding}" />
-								</i:EventTrigger>
-								-->
-							</i:Interaction.Triggers>
-							<xctk:SplitButton.Content>
-								<StackPanel Orientation="Horizontal">
-									<Image Style="{StaticResource ToolbarImage}"/>
-									<TextBlock Style="{StaticResource ToolbarText}" />
-								</StackPanel>
-							</xctk:SplitButton.Content>
-							<xctk:SplitButton.DropDownContent>
-								<Grid>
-									<Grid.RowDefinitions>
-										<RowDefinition />
-										<RowDefinition />
-
-										<RowDefinition />
-
-										<RowDefinition />
-										<RowDefinition />
-
-										<RowDefinition />
-
-										<RowDefinition />
-										<RowDefinition />
-
-										<RowDefinition />
-
-										<RowDefinition />
-										<RowDefinition />
-									</Grid.RowDefinitions>
-									<Grid.ColumnDefinitions>
-										<ColumnDefinition />
-										<ColumnDefinition />
-										<ColumnDefinition />
-									</Grid.ColumnDefinitions>
-									<Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource TitleLabel}">
-										<StackPanel Orientation="Horizontal">
-											<Image Source="{x:Static AM:AppResource.CommonRunImage}" Style="{StaticResource ItemImage}" />
-											<TextBlock Style="{StaticResource ItemText}" Text="execute" AA:Language.Word="toolbar/execute" />
-										</StackPanel>
-									</Label>
-									<Button Grid.Row="1" Grid.Column="0" Content="normal" AA:Language.Word="toolbar/execute/normal" IsEnabled="{Binding ExistsCommand}" Command="{Binding RunCommand}" Style="{StaticResource PopupClose}" />
-									<Button Grid.Row="1" Grid.Column="1" Content="extra"  AA:Language.Word="toolbar/execute/extra"  IsEnabled="{Binding ExistsCommand}" Command="{Binding RunExCommand}" Style="{StaticResource PopupClose}" />
-
-									<Separator Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" />
-
-									<Label Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource TitleLabel}">
-										<StackPanel Orientation="Horizontal">
-											<Image Source="{x:Static AM:AppResource.CommonFileImage}" Style="{StaticResource ItemImage}" />
-											<TextBlock Style="{StaticResource ItemText}" Text="file" AA:Language.Word="toolbar/file" />
-										</StackPanel>
-									</Label>
-									<Button Grid.Row="4" Grid.Column="0" Content="parent dir" AA:Language.Word="toolbar/file/parent-dir" IsEnabled="{Binding ExistsParentDirectory}" Command="{Binding OpenDirectory}" CommandParameter="{x:Static ADD:LauncherCommandType.ParentDirectory}" Style="{StaticResource PopupClose}" />
-									<Button Grid.Row="4" Grid.Column="1" Content="work dir"   AA:Language.Word="toolbar/file/work-dir"   IsEnabled="{Binding ExistsWorkDirectory}" Command="{Binding OpenDirectory}" CommandParameter="{x:Static ADD:LauncherCommandType.WorkDirectory}" Style="{StaticResource PopupClose}" />
-
-									<Separator Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3" />
-
-									<Label Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource TitleLabel}">
-										<StackPanel Orientation="Horizontal">
-											<Image Source="{x:Static AM:AppResource.CommonCopyImage}" Style="{StaticResource ItemImage}" />
-											<TextBlock Style="{StaticResource ItemText}" Text="clipboard" AA:Language.Word="toolbar/clipboard" />
-										</StackPanel>
-									</Label>
-									<Button Grid.Row="7" Grid.Column="0" Content="command"    AA:Language.Word="toolbar/clipboard/command"    IsEnabled="{Binding HasDataCommand}" Command="{Binding CopyText}" CommandParameter="{x:Static ADD:LauncherCommandType.Command}" Style="{StaticResource PopupClose}" />
-									<Button Grid.Row="7" Grid.Column="1" Content="parent dir" AA:Language.Word="toolbar/clipboard/parent-dir" IsEnabled="{Binding HasDataParentDirectory}" Command="{Binding CopyText}" CommandParameter="{x:Static ADD:LauncherCommandType.ParentDirectory}" Style="{StaticResource PopupClose}" />
-									<Button Grid.Row="7" Grid.Column="2" Content="work dir"   AA:Language.Word="toolbar/clipboard/work-dir"   IsEnabled="{Binding HasDataWorkDirectory}" Command="{Binding CopyText}" CommandParameter="{x:Static ADD:LauncherCommandType.WorkDirectory}" Style="{StaticResource PopupClose}" />
-
-									<Separator Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="3" />
-
-									<Label Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource TitleLabel}">
-										<StackPanel Orientation="Horizontal">
-											<Image Source="{x:Static AM:AppResource.CommonOthersImage}" Style="{StaticResource ItemImage}" />
-											<TextBlock Style="{StaticResource ItemText}" Text="others" AA:Language.Word="toolbar/others" />
-										</StackPanel>
-									</Label>
-									<Button Grid.Row="10" Grid.Column="0" Content="customize" AA:Language.Word="toolbar/others/customize" Style="{StaticResource PopupClose}" Command="{Binding OpenCustomize}" />
-									<Button Grid.Row="10" Grid.Column="1" Content="property"  AA:Language.Word="toolbar/others/property"  IsEnabled="{Binding ExistsCommand}" Command="{Binding OpenProperty}" Style="{StaticResource PopupClose}" />
-								</Grid>
-							</xctk:SplitButton.DropDownContent>
-						</xctk:SplitButton>
-
-						<!-- ディレクトリ -->
-						<!--<xctk:DropDownButton Visibility="{Binding VisibilityDirectory, Mode=OneWay}" Style="{StaticResource LauncherDropDown}">
+		<Grid HorizontalAlignment="{Binding ToolbarButtonHorizontalAlignment}" VerticalAlignment="{Binding ToolbarButtonVerticalAlignment}">
+			<StackPanel Orientation="{Binding ToolbarButtonOrientation}">
+				<!-- メインボタン -->
+				<xctk:DropDownButton AllowDrop="False" Style="{StaticResource LauncherDropDown}">
+					<xctk:DropDownButton.Content>
+						<StackPanel Orientation="Horizontal">
+							<Image Style="{StaticResource ToolbarImage}"/>
+							<TextBlock Style="{StaticResource ToolbarText}" />
+						</StackPanel>
+					</xctk:DropDownButton.Content>
+					<xctk:DropDownButton.DropDownContent>
+						<StackPanel>
+							<Label Content="toolbar pos" AA:Language.Word="toolbar/position" Style="{StaticResource TitleLabel}" />
+							<Grid>
+								<Grid.Resources>
+									<Style x:Key="PopupClose" TargetType="Button" BasedOn="{StaticResource PopupClose}">
+										<Setter Property="Command" Value="{Binding PositionChangeCommand}" />
+										<Setter Property="Margin" Value="2" />
+										<Setter Property="Content" Value="{Binding CommandParameter, RelativeSource={RelativeSource Self}, Converter={StaticResource ToolbarDockTypeImageConverter}}" />
+									</Style>
+								</Grid.Resources>
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition />
+									<ColumnDefinition />
+									<ColumnDefinition />
+								</Grid.ColumnDefinitions>
+								<Grid.RowDefinitions>
+									<RowDefinition />
+									<RowDefinition />
+									<RowDefinition />
+								</Grid.RowDefinitions>
+								<Button Grid.Row="0" Grid.Column="1" CommandParameter="{x:Static SD:DockType.Top}"    Style="{StaticResource PopupClose}" />
+								<Button Grid.Row="1" Grid.Column="0" CommandParameter="{x:Static SD:DockType.Left}"   Style="{StaticResource PopupClose}" />
+								<Button Grid.Row="1" Grid.Column="1" CommandParameter="{x:Static SD:DockType.None}"   Style="{StaticResource PopupClose}" />
+								<Button Grid.Row="1" Grid.Column="2" CommandParameter="{x:Static SD:DockType.Right}"  Style="{StaticResource PopupClose}" />
+								<Button Grid.Row="2" Grid.Column="1" CommandParameter="{x:Static SD:DockType.Bottom}" Style="{StaticResource PopupClose}" />
+							</Grid>
+							<Separator />
+							<MenuItem Header="topmost" AA:Language.Word="toolbar/topmost" Style="{StaticResource PopupCloseMenu}" IsChecked="{Binding IsTopmost}" Command="{Binding SwitchTopMostCommand}"  />
+							<MenuItem Header="auto hide" AA:Language.Word="toolbar/autohide" Style="{StaticResource PopupCloseMenu}" IsChecked="{Binding AutoHide}" Command="{Binding SwitchAutoHideCommand}"/>
+							<Separator />
+							<MenuItem Header="hide" AA:Language.Word="toolbar/hide" Style="{StaticResource PopupCloseMenu}" Command="{Binding ChangeVisibleCommand}" >
+								<MenuItem.CommandParameter>
+									<sys:Boolean>false</sys:Boolean>
+								</MenuItem.CommandParameter>
+							</MenuItem>
+							<Separator />
+							<ItemsControl ItemsSource="{Binding GroupItems, Mode=OneWay}">
+								<ItemsControl.ItemTemplate>
+									<DataTemplate>
+										<MenuItem Style="{StaticResource GroupMenu}" />
+									</DataTemplate>
+								</ItemsControl.ItemTemplate>
+							</ItemsControl>
+						</StackPanel>
+					</xctk:DropDownButton.DropDownContent>
+					<xctk:DropDownButton.ToolTip>
+						<ToolTip Style="{StaticResource ToolbarTooltip}">
 							<StackPanel Orientation="Horizontal">
-								<Image Style="{StaticResource ToolbarImage}"/>
-								<TextBlock Style="{StaticResource ToolbarText}" />
+								<Image Source="{x:Static AM:AppResource.ApplicationIconNormal}" Style="{StaticResource ToolbarToolTipImage}" />
+								<TextBlock Text="{Binding ToolTipTitle}" Style="{StaticResource ToolbarToolTipTitle}" />
 							</StackPanel>
-						</xctk:DropDownButton>-->
+						</ToolTip>
+					</xctk:DropDownButton.ToolTip>
+				</xctk:DropDownButton>
+				<!-- ランチャーアイテム一覧 -->
+				<ItemsControl ItemsSource="{Binding LauncherItems, Mode=OneWay}" IsTabStop="False">
+					<ItemsControl.ItemsPanel>
+						<ItemsPanelTemplate>
+							<StackPanel Orientation="{Binding ToolbarButtonOrientation, Mode=OneWay}" />
+						</ItemsPanelTemplate>
+					</ItemsControl.ItemsPanel>
+					<ItemsControl.ItemTemplate>
+						<DataTemplate>
+							<VirtualizingStackPanel
+							Orientation="Vertical"
+							SA:DragTarget.UsingDragTarget="True"
+							SA:DragTarget.DragEnterCommand="{Binding DragOverCommand}"
+							SA:DragTarget.DragOverCommand="{Binding DragOverCommand}"
+							SA:DragTarget.DragDropCommand="{Binding DragDropCommand}"
+						>
+								<VirtualizingStackPanel.ToolTip>
+									<ToolTip Style="{StaticResource ToolbarTooltip}">
+										<StackPanel>
+											<StackPanel Orientation="Horizontal">
+												<Image Source="{Binding ToolTipImage}" Style="{StaticResource ToolbarToolTipImage}" />
+												<TextBlock Text="{Binding ToolTipTitle}" Style="{StaticResource ToolbarToolTipTitle}" FontFamily="{DynamicResource {x:Static SystemFonts.CaptionFontFamilyKey}}" />
+											</StackPanel>
+											<StackPanel Orientation="Horizontal" Visibility="{Binding HasToolTipMessage, Converter={StaticResource BooleanVisibilityConverter}}">
+												<TextBlock Text="{Binding ToolTipMessage}" FontFamily="{DynamicResource {x:Static SystemFonts.SmallCaptionFontFamilyKey}}" />
+											</StackPanel>
+										</StackPanel>
+									</ToolTip>
+								</VirtualizingStackPanel.ToolTip>
 
-						<!-- コマンド -->
-						<xctk:SplitButton Visibility="{Binding VisibilityCommand, Mode=OneWay}" Style="{StaticResource LauncherSplit}"  Command="{Binding RunCommand}" >
-							<i:Interaction.Triggers>
-								<i:EventTrigger EventName="Opened">
-									<i:InvokeCommandAction Command="{Binding OpenDropDownCommand}"></i:InvokeCommandAction>
-								</i:EventTrigger>
-							</i:Interaction.Triggers>
-							<xctk:SplitButton.Content>
+								<!-- ファイル -->
+								<xctk:SplitButton Visibility="{Binding VisibilityFile, Mode=OneWay}" Style="{StaticResource LauncherSplit}" Command="{Binding RunCommand}">
+									<i:Interaction.Triggers>
+										<i:EventTrigger EventName="Opened">
+											<i:InvokeCommandAction Command="{Binding OpenDropDownCommand}" />
+										</i:EventTrigger>
+										<!-- むりか
+									<i:EventTrigger EventName="MouseDown">
+										<i:InvokeCommandAction Command="{Binding DataContext.MouseDownCommand, ElementName=root}" CommandParameter="{Binding}" />
+									</i:EventTrigger>
+									-->
+									</i:Interaction.Triggers>
+									<xctk:SplitButton.Content>
+										<StackPanel Orientation="Horizontal">
+											<Image Style="{StaticResource ToolbarImage}"/>
+											<TextBlock Style="{StaticResource ToolbarText}" />
+										</StackPanel>
+									</xctk:SplitButton.Content>
+									<xctk:SplitButton.DropDownContent>
+										<Grid>
+											<Grid.RowDefinitions>
+												<RowDefinition />
+												<RowDefinition />
+
+												<RowDefinition />
+
+												<RowDefinition />
+												<RowDefinition />
+
+												<RowDefinition />
+
+												<RowDefinition />
+												<RowDefinition />
+
+												<RowDefinition />
+
+												<RowDefinition />
+												<RowDefinition />
+											</Grid.RowDefinitions>
+											<Grid.ColumnDefinitions>
+												<ColumnDefinition />
+												<ColumnDefinition />
+												<ColumnDefinition />
+											</Grid.ColumnDefinitions>
+											<Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource TitleLabel}">
+												<StackPanel Orientation="Horizontal">
+													<Image Source="{x:Static AM:AppResource.CommonRunImage}" Style="{StaticResource ItemImage}" />
+													<TextBlock Style="{StaticResource ItemText}" Text="execute" AA:Language.Word="toolbar/execute" />
+												</StackPanel>
+											</Label>
+											<Button Grid.Row="1" Grid.Column="0" Content="normal" AA:Language.Word="toolbar/execute/normal" IsEnabled="{Binding ExistsCommand}" Command="{Binding RunCommand}" Style="{StaticResource PopupClose}" />
+											<Button Grid.Row="1" Grid.Column="1" Content="extra"  AA:Language.Word="toolbar/execute/extra"  IsEnabled="{Binding ExistsCommand}" Command="{Binding RunExCommand}" Style="{StaticResource PopupClose}" />
+
+											<Separator Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" />
+
+											<Label Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource TitleLabel}">
+												<StackPanel Orientation="Horizontal">
+													<Image Source="{x:Static AM:AppResource.CommonFileImage}" Style="{StaticResource ItemImage}" />
+													<TextBlock Style="{StaticResource ItemText}" Text="file" AA:Language.Word="toolbar/file" />
+												</StackPanel>
+											</Label>
+											<Button Grid.Row="4" Grid.Column="0" Content="parent dir" AA:Language.Word="toolbar/file/parent-dir" IsEnabled="{Binding ExistsParentDirectory}" Command="{Binding OpenDirectory}" CommandParameter="{x:Static ADD:LauncherCommandType.ParentDirectory}" Style="{StaticResource PopupClose}" />
+											<Button Grid.Row="4" Grid.Column="1" Content="work dir"   AA:Language.Word="toolbar/file/work-dir"   IsEnabled="{Binding ExistsWorkDirectory}" Command="{Binding OpenDirectory}" CommandParameter="{x:Static ADD:LauncherCommandType.WorkDirectory}" Style="{StaticResource PopupClose}" />
+
+											<Separator Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3" />
+
+											<Label Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource TitleLabel}">
+												<StackPanel Orientation="Horizontal">
+													<Image Source="{x:Static AM:AppResource.CommonCopyImage}" Style="{StaticResource ItemImage}" />
+													<TextBlock Style="{StaticResource ItemText}" Text="clipboard" AA:Language.Word="toolbar/clipboard" />
+												</StackPanel>
+											</Label>
+											<Button Grid.Row="7" Grid.Column="0" Content="command"    AA:Language.Word="toolbar/clipboard/command"    IsEnabled="{Binding HasDataCommand}" Command="{Binding CopyText}" CommandParameter="{x:Static ADD:LauncherCommandType.Command}" Style="{StaticResource PopupClose}" />
+											<Button Grid.Row="7" Grid.Column="1" Content="parent dir" AA:Language.Word="toolbar/clipboard/parent-dir" IsEnabled="{Binding HasDataParentDirectory}" Command="{Binding CopyText}" CommandParameter="{x:Static ADD:LauncherCommandType.ParentDirectory}" Style="{StaticResource PopupClose}" />
+											<Button Grid.Row="7" Grid.Column="2" Content="work dir"   AA:Language.Word="toolbar/clipboard/work-dir"   IsEnabled="{Binding HasDataWorkDirectory}" Command="{Binding CopyText}" CommandParameter="{x:Static ADD:LauncherCommandType.WorkDirectory}" Style="{StaticResource PopupClose}" />
+
+											<Separator Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="3" />
+
+											<Label Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource TitleLabel}">
+												<StackPanel Orientation="Horizontal">
+													<Image Source="{x:Static AM:AppResource.CommonOthersImage}" Style="{StaticResource ItemImage}" />
+													<TextBlock Style="{StaticResource ItemText}" Text="others" AA:Language.Word="toolbar/others" />
+												</StackPanel>
+											</Label>
+											<Button Grid.Row="10" Grid.Column="0" Content="customize" AA:Language.Word="toolbar/others/customize" Style="{StaticResource PopupClose}" Command="{Binding OpenCustomize}" />
+											<Button Grid.Row="10" Grid.Column="1" Content="property"  AA:Language.Word="toolbar/others/property"  IsEnabled="{Binding ExistsCommand}" Command="{Binding OpenProperty}" Style="{StaticResource PopupClose}" />
+										</Grid>
+									</xctk:SplitButton.DropDownContent>
+								</xctk:SplitButton>
+
+								<!-- ディレクトリ -->
+								<!--<xctk:DropDownButton Visibility="{Binding VisibilityDirectory, Mode=OneWay}" Style="{StaticResource LauncherDropDown}">
 								<StackPanel Orientation="Horizontal">
 									<Image Style="{StaticResource ToolbarImage}"/>
 									<TextBlock Style="{StaticResource ToolbarText}" />
 								</StackPanel>
-							</xctk:SplitButton.Content>
-							<xctk:SplitButton.DropDownContent>
-								<Grid>
-									<Grid.RowDefinitions>
-										<RowDefinition />
-										<RowDefinition />
+							</xctk:DropDownButton>-->
 
-										<RowDefinition />
-
-										<RowDefinition />
-										<RowDefinition />
-
-										<RowDefinition />
-
-										<RowDefinition />
-										<RowDefinition />
-									</Grid.RowDefinitions>
-									<Grid.ColumnDefinitions>
-										<ColumnDefinition />
-										<ColumnDefinition />
-									</Grid.ColumnDefinitions>
-
-									<Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource TitleLabel}">
+								<!-- コマンド -->
+								<xctk:SplitButton Visibility="{Binding VisibilityCommand, Mode=OneWay}" Style="{StaticResource LauncherSplit}"  Command="{Binding RunCommand}" >
+									<i:Interaction.Triggers>
+										<i:EventTrigger EventName="Opened">
+											<i:InvokeCommandAction Command="{Binding OpenDropDownCommand}"></i:InvokeCommandAction>
+										</i:EventTrigger>
+									</i:Interaction.Triggers>
+									<xctk:SplitButton.Content>
 										<StackPanel Orientation="Horizontal">
-											<Image Source="{x:Static AM:AppResource.CommonRunImage}" Style="{StaticResource ItemImage}" />
-											<TextBlock Style="{StaticResource ItemText}" Text="execute" AA:Language.Word="toolbar/execute" />
+											<Image Style="{StaticResource ToolbarImage}"/>
+											<TextBlock Style="{StaticResource ToolbarText}" />
 										</StackPanel>
-									</Label>
-									<Button Grid.Row="1" Grid.Column="0" Content="normal" AA:Language.Word="toolbar/execute/normal" IsEnabled="{Binding HasDataCommand}" Command="{Binding RunCommand}" Style="{StaticResource PopupClose}" />
-									<Button Grid.Row="1" Grid.Column="1" Content="extra"  AA:Language.Word="toolbar/execute/extra"  IsEnabled="{Binding HasDataCommand}" Command="{Binding RunExCommand}" Style="{StaticResource PopupClose}" />
+									</xctk:SplitButton.Content>
+									<xctk:SplitButton.DropDownContent>
+										<Grid>
+											<Grid.RowDefinitions>
+												<RowDefinition />
+												<RowDefinition />
 
-									<Separator Grid.Row="2" Grid.ColumnSpan="2"/>
+												<RowDefinition />
 
-									<Label Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource TitleLabel}">
-										<StackPanel Orientation="Horizontal">
-											<Image Source="{x:Static AM:AppResource.CommonCopyImage}" Style="{StaticResource ItemImage}" />
-											<TextBlock Style="{StaticResource ItemText}" Text="clipboard" AA:Language.Word="toolbar/clipboard" />
-										</StackPanel>
-									</Label>
-									<Button Grid.Row="4" Grid.Column="0" Content="command" AA:Language.Word="toolbar/clipboard/command" IsEnabled="{Binding HasDataCommand}" Command="{Binding CopyText}" CommandParameter="{x:Static ADD:LauncherCommandType.Command}" Style="{StaticResource PopupClose}" />
+												<RowDefinition />
+												<RowDefinition />
 
-									<Separator Grid.Row="5" Grid.ColumnSpan="2"/>
+												<RowDefinition />
 
-									<Label Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource TitleLabel}">
-										<StackPanel Orientation="Horizontal">
-											<Image Source="{x:Static AM:AppResource.CommonOthersImage}" Style="{StaticResource ItemImage}" />
-											<TextBlock Style="{StaticResource ItemText}" Text="others" AA:Language.Word="toolbar/others" />
-										</StackPanel>
-									</Label>
-									<Button Grid.Row="7" Grid.Column="0" Content="customize" AA:Language.Word="toolbar/others/customize" Style="{StaticResource PopupClose}" Command="{Binding OpenCustomize}" />
-								</Grid>
-							</xctk:SplitButton.DropDownContent>
-						</xctk:SplitButton>
-					</VirtualizingStackPanel>
-				</DataTemplate>
-			</ItemsControl.ItemTemplate>
-		</ItemsControl>
-	</StackPanel>
+												<RowDefinition />
+												<RowDefinition />
+											</Grid.RowDefinitions>
+											<Grid.ColumnDefinitions>
+												<ColumnDefinition />
+												<ColumnDefinition />
+											</Grid.ColumnDefinitions>
+
+											<Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource TitleLabel}">
+												<StackPanel Orientation="Horizontal">
+													<Image Source="{x:Static AM:AppResource.CommonRunImage}" Style="{StaticResource ItemImage}" />
+													<TextBlock Style="{StaticResource ItemText}" Text="execute" AA:Language.Word="toolbar/execute" />
+												</StackPanel>
+											</Label>
+											<Button Grid.Row="1" Grid.Column="0" Content="normal" AA:Language.Word="toolbar/execute/normal" IsEnabled="{Binding HasDataCommand}" Command="{Binding RunCommand}" Style="{StaticResource PopupClose}" />
+											<Button Grid.Row="1" Grid.Column="1" Content="extra"  AA:Language.Word="toolbar/execute/extra"  IsEnabled="{Binding HasDataCommand}" Command="{Binding RunExCommand}" Style="{StaticResource PopupClose}" />
+
+											<Separator Grid.Row="2" Grid.ColumnSpan="2"/>
+
+											<Label Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource TitleLabel}">
+												<StackPanel Orientation="Horizontal">
+													<Image Source="{x:Static AM:AppResource.CommonCopyImage}" Style="{StaticResource ItemImage}" />
+													<TextBlock Style="{StaticResource ItemText}" Text="clipboard" AA:Language.Word="toolbar/clipboard" />
+												</StackPanel>
+											</Label>
+											<Button Grid.Row="4" Grid.Column="0" Content="command" AA:Language.Word="toolbar/clipboard/command" IsEnabled="{Binding HasDataCommand}" Command="{Binding CopyText}" CommandParameter="{x:Static ADD:LauncherCommandType.Command}" Style="{StaticResource PopupClose}" />
+
+											<Separator Grid.Row="5" Grid.ColumnSpan="2"/>
+
+											<Label Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource TitleLabel}">
+												<StackPanel Orientation="Horizontal">
+													<Image Source="{x:Static AM:AppResource.CommonOthersImage}" Style="{StaticResource ItemImage}" />
+													<TextBlock Style="{StaticResource ItemText}" Text="others" AA:Language.Word="toolbar/others" />
+												</StackPanel>
+											</Label>
+											<Button Grid.Row="7" Grid.Column="0" Content="customize" AA:Language.Word="toolbar/others/customize" Style="{StaticResource PopupClose}" Command="{Binding OpenCustomize}" />
+										</Grid>
+									</xctk:SplitButton.DropDownContent>
+								</xctk:SplitButton>
+							</VirtualizingStackPanel>
+						</DataTemplate>
+					</ItemsControl.ItemTemplate>
+				</ItemsControl>
+			</StackPanel>
+		</Grid>
+	</DockPanel>
 
 
 </AW:ViewModelCommonDataWindow>

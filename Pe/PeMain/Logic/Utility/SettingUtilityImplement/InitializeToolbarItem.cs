@@ -9,6 +9,7 @@
 	using ContentTypeTextNet.Library.SharedLibrary.Define;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+	using ContentTypeTextNet.Pe.Library.PeData.Define;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 	using ContentTypeTextNet.Pe.Library.PeData.Setting;
 
@@ -27,6 +28,7 @@
 			setting.Font.Size = Constants.toolbarFontSize.GetClamp(setting.Font.Size);
 			setting.IconScale = EnumUtility.GetNormalization(setting.IconScale, IconScale.Normal);
 			setting.TextWidth = Constants.toolbarTextLength.GetClamp((int)setting.TextWidth);
+			setting.ButtonPosition = EnumUtility.GetNormalization(setting.ButtonPosition, ToolbarButtonPosition.Near);
 
 			if(SettingUtility.IsIllegalPlusNumber(setting.FloatToolbar.WidthButtonCount)) {
 				setting.FloatToolbar.WidthButtonCount = 1;
@@ -54,6 +56,7 @@
 			setting.DockType = DockType.Right;
 			setting.DefaultGroupId = Guid.Empty;
 			setting.MenuPositionCorrection = false;
+			setting.ButtonPosition = ToolbarButtonPosition.Near;
 		}
 	}
 }
