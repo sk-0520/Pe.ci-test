@@ -98,6 +98,11 @@
 		public const string languageDefaultFileName = "default.xml";
 		public const string languageSearchPattern = "*.xml";
 
+		[ConstantsProperty]
+		public const string archiveSearchPattern = "*.zip";
+		[ConstantsProperty]
+		public const string backupSearchPattern = "*.zip";
+
 		public const string dialogFilterText = "*.txt";
 		public const string dialogFilterRtf = "*.rtf";
 		public const string dialogFilterHtml = "*.html";

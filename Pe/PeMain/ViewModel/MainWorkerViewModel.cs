@@ -625,7 +625,7 @@
 			var backupDir = Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserBackupDirectoryPath);
 
 			// 旧データの削除
-			FileUtility.RotateFiles(backupDir, "*.zip", OrderBy.Asc, Constants.BackupSettingCount, ex => {
+			FileUtility.RotateFiles(backupDir, Constants.BackupSearchPattern, OrderBy.Asc, Constants.BackupSettingCount, ex => {
 				CommonData.Logger.Error(ex);
 				return true;
 			});
