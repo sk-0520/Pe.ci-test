@@ -24,7 +24,7 @@
 	/// <summary>
 	/// LauncherItemsListControl.xaml の相互作用ロジック
 	/// </summary>
-	public partial class LauncherItemsListControl : CommonDataUserControl//, INotifyPropertyChanged
+	public partial class LauncherListControl : CommonDataUserControl//, INotifyPropertyChanged
 	{
 		//#region variable
 
@@ -32,7 +32,7 @@
 
 		//#endregion
 
-		public LauncherItemsListControl()
+		public LauncherListControl()
 		{
 			InitializeComponent();
 
@@ -64,13 +64,13 @@
 		public static readonly DependencyProperty SelectedLauncherItemProperty = DependencyProperty.Register(
 			"SelectedLauncherItem",
 			typeof(LauncherListItemViewModel),
-			typeof(LauncherItemsListControl),
+			typeof(LauncherListControl),
 			new FrameworkPropertyMetadata(new PropertyChangedCallback(OnSelectedLauncherItem))
 		);
 
 		private static void OnSelectedLauncherItem(DependencyObject d, DependencyPropertyChangedEventArgs e)
 		{
-			var control = d as LauncherItemsListControl;
+			var control = d as LauncherListControl;
 			if (control != null) {
 				var viewModel = e.NewValue as LauncherListItemViewModel;
 				if (viewModel != null) {
@@ -121,13 +121,13 @@
 		public static readonly DependencyProperty SelectedLauncherModelProperty = DependencyProperty.Register(
 			"SelectedLauncherModel",
 			typeof(LauncherItemModel),
-			typeof(LauncherItemsListControl),
+			typeof(LauncherListControl),
 			new FrameworkPropertyMetadata(new PropertyChangedCallback(OnSelectedLauncherModel))
 		);
 
 		private static void OnSelectedLauncherModel(DependencyObject d, DependencyPropertyChangedEventArgs e)
 		{
-			var control = d as LauncherItemsListControl;
+			var control = d as LauncherListControl;
 			if (control != null) {
 				var model = e.NewValue as LauncherItemModel;
 				if (model != null) {
@@ -163,7 +163,7 @@
 		public static readonly DependencyProperty CanListEditProperty = DependencyProperty.Register(
 			"CanListEdit",
 			typeof(bool),
-			typeof(LauncherItemsListControl),
+			typeof(LauncherListControl),
 			new FrameworkPropertyMetadata(new PropertyChangedCallback(OnChangedCanListEdit))
 		);
 
@@ -179,13 +179,13 @@
 
 		private static void OnChangedCanListEdit(DependencyObject d, DependencyPropertyChangedEventArgs e)
 		{
-			var control = d as LauncherItemsListControl;
+			var control = d as LauncherListControl;
 			if(control != null) {
 				ChangedCanListEdit(control, (bool)e.NewValue);
 			}
 		}
 
-		static void ChangedCanListEdit(LauncherItemsListControl control, bool value)
+		static void ChangedCanListEdit(LauncherListControl control, bool value)
 		{
 			var converter = new BooleanVisibilityConverter();
 			var visibility = (Visibility)converter.Convert(value, typeof(bool), null, null);
@@ -202,13 +202,13 @@
 		public static readonly DependencyProperty AppendCommandProperty = DependencyProperty.Register(
 			"AppendCommand",
 			typeof(ICommand),
-			typeof(LauncherItemsListControl),
+			typeof(LauncherListControl),
 			new FrameworkPropertyMetadata(new PropertyChangedCallback(OnAppendCommandChanged))
 		);
 
 		private static void OnAppendCommandChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
 		{
-			var control = d as LauncherItemsListControl;
+			var control = d as LauncherListControl;
 			if(control != null) {
 				control.AppendCommand = e.NewValue as ICommand;
 			}
@@ -227,13 +227,13 @@
 		public static readonly DependencyProperty RemoveCommandProperty = DependencyProperty.Register(
 			"RemoveCommand",
 			typeof(ICommand),
-			typeof(LauncherItemsListControl),
+			typeof(LauncherListControl),
 			new FrameworkPropertyMetadata(new PropertyChangedCallback(OnRemoveCommandChanged))
 		);
 
 		private static void OnRemoveCommandChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
 		{
-			var control = d as LauncherItemsListControl;
+			var control = d as LauncherListControl;
 			if(control != null) {
 				control.RemoveCommand = e.NewValue as ICommand;
 			}
@@ -252,13 +252,13 @@
 		public static readonly DependencyProperty DoubleClickCommandProperty = DependencyProperty.Register(
 			"DoubleClickCommand",
 			typeof(ICommand),
-			typeof(LauncherItemsListControl),
+			typeof(LauncherListControl),
 			new FrameworkPropertyMetadata(new PropertyChangedCallback(OnDoubleClickCommandChanged))
 		);
 
 		private static void OnDoubleClickCommandChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
 		{
-			var control = d as LauncherItemsListControl;
+			var control = d as LauncherListControl;
 			if(control != null) {
 				control.DoubleClickCommand = e.NewValue as ICommand;
 			}

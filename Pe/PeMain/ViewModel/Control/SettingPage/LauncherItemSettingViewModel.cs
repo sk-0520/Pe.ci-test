@@ -22,7 +22,7 @@
 	{
 		#region variable
 
-		LauncherItemsListViewModel _launcherItems;
+		LauncherListViewModel _launcherItems;
 		bool _isItemEdited;
 
 		#endregion
@@ -46,12 +46,12 @@
 			}
 		}
 
-		public LauncherItemsListViewModel LauncherItems
+		public LauncherListViewModel LauncherItems
 		{
 			get
 			{
 				if(this._launcherItems == null) {
-					this._launcherItems = new LauncherItemsListViewModel(
+					this._launcherItems = new LauncherListViewModel(
 						LauncherItemSetting.Items,
 						AppNonProcess,
 						AppSender

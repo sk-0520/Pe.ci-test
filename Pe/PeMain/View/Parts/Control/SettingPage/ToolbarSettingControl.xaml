@@ -236,7 +236,7 @@
 			</TreeView>
 		</Grid>
 		<GridSplitter Grid.Column="2" Style="{StaticResource DefaultVericalGridSplitter}" />
-		<AV:LauncherItemsListControl
+		<AV:LauncherListControl
 			Grid.Column="3"
 			DataContext="{Binding LauncherItems}"
 			x:Name="listItems"

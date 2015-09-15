@@ -30,7 +30,7 @@
 			<ColumnDefinition Width="Auto"/>
 			<ColumnDefinition Width="13*"/>
 		</Grid.ColumnDefinitions>
-		<AV:LauncherItemsListControl
+		<AV:LauncherListControl
 			x:Name="listItems" 
 			Grid.Column="0" 
 			CanListEdit="True" 
