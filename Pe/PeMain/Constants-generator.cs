@@ -21,7 +21,7 @@
 		/*
 		このソースは自動生成のため Constants-generator.tt を編集すること。
 
-		生成元ConstantsPropertyフィールド数: 4
+		生成元ConstantsPropertyフィールド数: 5
 		生成元ConstantsRangeフィールド数: 21
 		*/
 
@@ -44,6 +44,17 @@
 			get
 			{
 				return formsVersion;
+			}
+		}
+
+		#endregion
+		#region buildProcess
+
+		public static String BuildProcess
+		{
+			get
+			{
+				return buildProcess;
 			}
 		}
 
