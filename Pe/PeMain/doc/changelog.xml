@@ -68,7 +68,7 @@
 			</note>
 		</group>
 		<group type="features" dummy="==================================================================">
-			<note rev="">
+			<note rev="b561d8baa4e4433b021f9e90b2c12bd7d319b19a">
 				<message>#287: ツールバーアイコンの開始位置を変更可能にする</message>
 				<comments>
 					<comment>フロート状態以外で最上位(上 or 左, デフォルト)・中央・最下位(下 or 右)にツールバーのボタンを寄せます</comment>
