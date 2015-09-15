@@ -37,6 +37,7 @@
 			<AC:ToolbarDockTypeImageConverter x:Key="ToolbarDockTypeImageConverter" />
 			<ACE:DockTypeLanguageConverter  x:Key="DockTypeLanguageConverter" />
 			<ACE:IconScaleLanguageConverter x:Key="IconScaleLanguageConverter" />
+			<ACE:ToolbarButtonPositionLanguageConverter x:Key="ToolbarButtonPositionLanguageConverter" />
 			<SC:LogicalMultiAndConverter x:Key="LogicalMultiAndConverter" />
 		</ResourceDictionary>
 	</AV:CommonDataUserControl.Resources>
@@ -82,7 +83,7 @@
 				</ComboBox>
 
 				<Label Grid.Row="1" Grid.Column="0" Content="dock" AA:Language.Word="toolbar-setting/toolbar/position" Style="{StaticResource HeaderLabel}" />
-				<ComboBox Grid.Column="1" Grid.Row="1" ItemsSource="{Binding Source={x:Static AP:EnumList.DockTypeList}}" SelectedItem="{Binding SelectedToolbar.DockType, Mode=TwoWay}" Style="{StaticResource DefaultComboBox}">
+				<ComboBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Source={x:Static AP:EnumList.DockTypeList}}" SelectedItem="{Binding SelectedToolbar.DockType, Mode=TwoWay}" Style="{StaticResource DefaultComboBox}">
 					<ComboBox.Resources>
 						<windows:Size x:Key="ImageSize" Width="16" Height="16" />
 					</ComboBox.Resources>
@@ -103,8 +104,24 @@
 					</ComboBox.ItemTemplate>
 				</ComboBox>
 
-				<Label Grid.Row="2" Grid.Column="0" Content="icon" AA:Language.Word="toolbar-setting/toolbar/icon" Style="{StaticResource HeaderLabel}" />
-				<ComboBox Grid.Column="1" Grid.Row="2" ItemsSource="{Binding Source={x:Static AP:EnumList.PlainIconScaleList}}" SelectedItem="{Binding SelectedToolbar.IconScale, Mode=TwoWay}"  Style="{StaticResource DefaultComboBox}">
+				<Label Grid.Row="2" Grid.Column="0" Content="pos" AA:Language.Word="toolbar-setting/toolbar/button" Style="{StaticResource HeaderLabel}" />
+				<ComboBox Grid.Row="2" Grid.Column="1" ItemsSource="{Binding Source={x:Static AP:EnumList.ToolbarButtonPositionList}}" SelectedItem="{Binding SelectedToolbar.ButtonPosition, Mode=TwoWay}"  Style="{StaticResource DefaultComboBox}">
+					<ComboBox.ItemTemplate>
+						<DataTemplate>
+							<TextBlock>
+								<TextBlock.Text>
+									<MultiBinding Converter="{StaticResource ToolbarButtonPositionLanguageConverter}" >
+										<Binding Path="" />
+										<Binding Path="CommonData.Language" RelativeSource="{RelativeSource AncestorType=AV:CommonDataUserControl}" />
+									</MultiBinding>
+								</TextBlock.Text>
+							</TextBlock>
+						</DataTemplate>
+					</ComboBox.ItemTemplate>
+				</ComboBox>
+
+				<Label Grid.Row="3" Grid.Column="0" Content="icon" AA:Language.Word="toolbar-setting/toolbar/icon" Style="{StaticResource HeaderLabel}" />
+				<ComboBox Grid.Row="3" Grid.Column="1" ItemsSource="{Binding Source={x:Static AP:EnumList.PlainIconScaleList}}" SelectedItem="{Binding SelectedToolbar.IconScale, Mode=TwoWay}"  Style="{StaticResource DefaultComboBox}">
 					<ComboBox.ItemTemplate>
 						<DataTemplate>
 							<TextBlock>
@@ -119,9 +136,10 @@
 					</ComboBox.ItemTemplate>
 				</ComboBox>
 
-				<Label Grid.Row="3" Grid.Column="0" VerticalAlignment="Top" Content="font" AA:Language.Word="toolbar-setting/toolbar/font" Style="{StaticResource HeaderLabel}" />
+				<Label Grid.Row="4" Grid.Column="0" VerticalAlignment="Top" Content="font" AA:Language.Word="toolbar-setting/toolbar/font" Style="{StaticResource HeaderLabel}" />
 				<AV:FontSelectControl
-					Grid.Row="3" Grid.Column="1"
+					Grid.Row="4"
+					Grid.Column="1"
 					FamilyName="{Binding SelectedToolbar.FontFamily}"
 					IsBold="{Binding SelectedToolbar.FontBold}"
 					IsItalic="{Binding SelectedToolbar.FontItalic}"
@@ -130,25 +148,25 @@
 					SizeMaximum="{x:Static AM:Constants.ToolbarFontMaximumSize}"
 				/>
 
-				<Label Grid.Row="4" Grid.Column="0" Content="text length" AA:Language.Word="toolbar-setting/toolbar/text-length" Style="{StaticResource HeaderLabel}" />
+				<Label Grid.Row="5" Grid.Column="0" Content="text length" AA:Language.Word="toolbar-setting/toolbar/text-length" Style="{StaticResource HeaderLabel}" />
 				<AV:DoubleSliderControl
-					Grid.Row="4"
+					Grid.Row="5"
 					Grid.Column="1"
 					Value="{Binding SelectedToolbar.TextWidth, Mode=TwoWay}"
 					Minimum="{Binding Source={x:Static AM:Constants.ToolbarTextMinimumLength}}"
 					Maximum="{Binding Source={x:Static AM:Constants.ToolbarTextMaximumLength}}"
 				/>
 
-				<Label Grid.Row="5" Grid.Column="0" Content="hide wait" AA:Language.Word="toolbar-setting/toolbar/auto-hide-time" Style="{StaticResource HeaderLabel}" />
+				<Label Grid.Row="6" Grid.Column="0" Content="hide wait" AA:Language.Word="toolbar-setting/toolbar/auto-hide-time" Style="{StaticResource HeaderLabel}" />
 				<AV:TimeSliderControl
-					Grid.Row="5"
+					Grid.Row="6"
 					Grid.Column="1"
 					Value="{Binding SelectedToolbar.HideWaitTime, Mode=TwoWay}"
 					Minimum="{Binding Source={x:Static AM:Constants.ToolbarHideWaitMinimumTime}}"
 					Maximum="{Binding Source={x:Static AM:Constants.ToolbarHideWaitMaximumTime}}"
 				/>
 
-				<StackPanel Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Top">
+				<StackPanel Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Top">
 					<CheckBox Content="show text" AA:Language.Word="toolbar-setting/toolbar/show-text"  IsChecked="{Binding SelectedToolbar.TextVisible}" />
 					<CheckBox Content="auto hide" AA:Language.Word="toolbar-setting/toolbar/auto-hide" IsChecked="{Binding SelectedToolbar.AutoHide}" />
 					<CheckBox Content="topmost" AA:Language.Word="toolbar-setting/toolbar/topmost" IsChecked="{Binding SelectedToolbar.IsTopmost}" />
