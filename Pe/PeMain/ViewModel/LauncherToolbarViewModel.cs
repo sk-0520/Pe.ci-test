@@ -125,7 +125,7 @@
 			return map[dockType];
 		}
 
-		static Orientation GetOrientation(DockType dockType)
+		static Orientation GetToolbarButtonOrientation(DockType dockType)
 		{
 			switch(dockType) {
 				case DockType.Left:
@@ -240,7 +240,7 @@
 			}
 		}
 
-		public Visibility HideVisibility
+		public Visibility ToolbarContentVisibility
 		{
 			get
 			{
@@ -248,6 +248,89 @@
 					? Visibility.Collapsed
 					: Visibility.Visible
 				;
+			}
+		}
+
+		public Dock GripDock
+		{
+			get
+			{
+				switch(DockType) {
+					case DockType.Left:
+					case DockType.Right:
+						return Dock.Top;
+
+					case DockType.Top:
+					case DockType.Bottom:
+					case DockType.None:
+						return Dock.Left;
+
+					default:
+						throw new NotImplementedException();
+				}
+			}
+		}
+
+		public HorizontalAlignment ToolbarButtonHorizontalAlignment
+		{
+			get
+			{
+				switch(DockType) {
+					case DockType.None:
+					case DockType.Left:
+					case DockType.Right:
+						return HorizontalAlignment.Left;
+
+					case DockType.Top:
+					case DockType.Bottom:
+						switch(Model.Toolbar.ButtonPosition) {
+							case ToolbarButtonPosition.Near:
+								return HorizontalAlignment.Left;
+
+							case ToolbarButtonPosition.Center:
+								return HorizontalAlignment.Center;
+
+							case ToolbarButtonPosition.Far:
+								return HorizontalAlignment.Right;
+
+							default:
+								throw new NotImplementedException();
+						}
+
+					default:
+						throw new NotImplementedException();
+				}
+			}
+		}
+		public VerticalAlignment  ToolbarButtonVerticalAlignment
+		{
+			get
+			{
+				switch(DockType) {
+					case DockType.None:
+					case DockType.Top:
+					case DockType.Bottom:
+						return VerticalAlignment.Center;
+
+					case DockType.Left:
+					case DockType.Right:
+						switch(Model.Toolbar.ButtonPosition) {
+							case ToolbarButtonPosition.Near:
+								return VerticalAlignment.Top;
+
+							case ToolbarButtonPosition.Center:
+								return VerticalAlignment.Center;
+
+							case ToolbarButtonPosition.Far:
+								return VerticalAlignment.Bottom;
+
+							default:
+								throw new NotImplementedException();
+						}
+
+					default:
+						throw new NotImplementedException();
+				}
 			}
 		}
 
@@ -296,7 +379,7 @@
 		{
 			get
 			{
-				if(Orientation == Orientation.Horizontal) {
+				if(ToolbarButtonOrientation == Orientation.Horizontal) {
 					return this._captionWidth;
 				} else {
 					return HasView ? View.Width : ButtonSize.Width;
@@ -307,7 +390,7 @@
 		{
 			get
 			{
-				if(Orientation == Orientation.Vertical) {
+				if(ToolbarButtonOrientation == Orientation.Vertical) {
 					return this._captionWidth;
 				} else {
 					return HasView ? View.Height : ButtonSize.Height;
@@ -328,9 +411,9 @@
 		}
 
 
-		public Orientation Orientation
+		public Orientation ToolbarButtonOrientation
 		{
-			get { return GetOrientation(DockType); }
+			get { return GetToolbarButtonOrientation(DockType); }
 		}
 
 		public Size MinSize
@@ -690,7 +773,7 @@
 				HideWidth = GetHideWidth(dockType);
 				MinSize = new Size(0, 0);
 			} else {
-				var orientation = GetOrientation(dockType);
+				var orientation = GetToolbarButtonOrientation(dockType);
 				MinSize = GetMinSize(dockType, orientation, BorderThickness, ButtonSize, this._captionWidth);
 			}
 
@@ -873,7 +956,7 @@
 			get
 			{
 				if(DockType == DockType.None) {
-					return CalculateViewWidth(DockType, Orientation, BorderThickness, this._captionWidth);
+					return CalculateViewWidth(DockType, ToolbarButtonOrientation, BorderThickness, this._captionWidth);
 				} else {
 					return IsHidden
 						? HideLogicalBarArea.Width
@@ -883,7 +966,7 @@
 			set
 			{
 				if(DockType == DockType.None) {
-					Model.Toolbar.FloatToolbar.WidthButtonCount = CalculateButtonWidthCount(DockType, Orientation, BorderThickness, this._captionWidth, value);
+					Model.Toolbar.FloatToolbar.WidthButtonCount = CalculateButtonWidthCount(DockType, ToolbarButtonOrientation, BorderThickness, this._captionWidth, value);
 					OnPropertyChanged();
 					OnPropertyChanged("CaptionHeight");
 				} else if(!IsHidden && ShowLogicalBarArea.Width != value) {
@@ -897,7 +980,7 @@
 			get
 			{
 				if(DockType == DockType.None) {
-					return CalculateViewHeight(DockType, Orientation, BorderThickness, this._captionWidth);
+					return CalculateViewHeight(DockType, ToolbarButtonOrientation, BorderThickness, this._captionWidth);
 				} else {
 					return IsHidden
 						? HideLogicalBarArea.Height
@@ -907,7 +990,7 @@
 			set
 			{
 				if(DockType == DockType.None) {
-					Model.Toolbar.FloatToolbar.HeightButtonCount = CalculateButtonHeightCount(DockType, Orientation, BorderThickness, this._captionWidth, value);
+					Model.Toolbar.FloatToolbar.HeightButtonCount = CalculateButtonHeightCount(DockType, ToolbarButtonOrientation, BorderThickness, this._captionWidth, value);
 					OnPropertyChanged();
 					OnPropertyChanged("CaptionWidth");
 				} else if(!IsHidden && ShowLogicalBarArea.Height != value) {
@@ -985,12 +1068,15 @@
 					Model.Toolbar.DockType = value;
 					OnPropertyChanged();
 					View.InvalidateArrange();
-					OnPropertyChanged("Orientation");
+					OnPropertyChanged("ToolbarButtonOrientation");
 					OnPropertyChanged("CaptionVisibility");
 					OnPropertyChanged("CaptionWidth");
 					OnPropertyChanged("CaptionHeight");
 					OnPropertyChanged("DropDownPlacement");
 					CallOnPropertyChange(new[] {
+						"GripDock",
+						"ToolbarButtonHorizontalAlignment",
+						"ToolbarButtonVerticalAlignment",
 						"FirstWidth",
 						"SecondWidth",
 						"IsEnabledCorrection",
@@ -1036,11 +1122,11 @@
 				//if (this._isHidden != value) {
 				//	this._isHidden = value;
 				//	OnPropertyChanged();
-				//	OnPropertyChanged("HideVisibility");
+				//	OnPropertyChanged("ToolbarContentVisibility");
 				//}
 				if(SetVariableValue(ref this._isHidden, value)) {
 					CallOnPropertyChange(
-						"HideVisibility",
+						"ToolbarContentVisibility",
 						"IsTopmost"
 					);
 				}
@@ -1135,7 +1221,7 @@
 		{
 			get
 			{
-				var captionSize = GetCaptionSize(Orientation, this._captionWidth);
+				var captionSize = GetCaptionSize(ToolbarButtonOrientation, this._captionWidth);
 				var result = new Thickness(
 					BorderThickness.Left + captionSize.Width,
 					BorderThickness.Top + captionSize.Height,
@@ -1171,7 +1257,6 @@
 		/// 最大化・最小化を抑制するか。
 		/// </summary>
 		public bool UsingMaxMinSuppression { get { return true; } }
-
 
 		#endregion
 
