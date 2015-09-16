@@ -56,12 +56,6 @@
 				Application.Current.Shutdown();
 			} else {
 				this._mainWorker = new MainWorkerViewModel(constants, systemLogger);
-				if(this._mainWorker != null) {
-					new Thread(() => {
-						Thread.Sleep(TimeSpan.FromSeconds(5));
-						throw new NotImplementedException();
-					}).Start();
-				}
 				var startupNotifiyData = this._mainWorker.Initialize();
 				if(startupNotifiyData.AcceptRunning) {
 					//LanguageUtility.RecursiveSetLanguage(this._notifyIcon, this._mainWorker.Language);

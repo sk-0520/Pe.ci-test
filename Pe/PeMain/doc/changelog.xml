@@ -97,7 +97,7 @@
 				<message>ソース管理を git 1 から git 2 に変更</message>
 			</note>
 			<note rev="">
-				<message></message>
+				<message>#295: 未補足の例外を受け取る</message>
 			</note>
 			<note rev="">
 				<message></message>
