@@ -1188,16 +1188,21 @@
 			Debug.Assert(Clipboard != null);
 			Clipboard.IsVisible = !Clipboard.IsVisible;
 			if(Clipboard.IsVisible) {
-				WindowsUtility.ShowActive(ClipboardWindow.Handle);
+				ClipboardWindow.Dispatcher.BeginInvoke(new Action(() => {
+					WindowsUtility.ShowActive(ClipboardWindow.Handle);
+				}), DispatcherPriority.SystemIdle);
 			}
 		}
 
 		void SwitchShowTemplateWindow()
 		{
 			Debug.Assert(Template != null);
+
 			Template.IsVisible = !Template.IsVisible;
-			if(Clipboard.IsVisible) {
-				WindowsUtility.ShowActive(TemplateWindow.Handle);
+			if(Template.IsVisible) {
+				TemplateWindow.Dispatcher.BeginInvoke(new Action(() => {
+					WindowsUtility.ShowActive(TemplateWindow.Handle);
+				}), DispatcherPriority.SystemIdle);
 			}
 		}
 
@@ -1245,7 +1250,9 @@
 			Command.WindowTop = logicalPosition.Y;
 			Command.Visibility = Visibility.Visible;
 
-			WindowsUtility.ShowActive(CommandWindow.Handle);
+			CommandWindow.Dispatcher.BeginInvoke(new Action(() => {
+				WindowsUtility.ShowActive(CommandWindow.Handle);
+			}), DispatcherPriority.SystemIdle);
 		}
 
 		Updater CheckUpdate(bool force)
@@ -1941,8 +1948,7 @@
 						//WindowsUtility.ShowNoActive(window.Handle);
 						Application.Current.Dispatcher.BeginInvoke(new Action(() => {
 							WindowsUtility.ShowActive(window.Handle);
-							window.Activate();
-						}), DispatcherPriority.ApplicationIdle);
+						}), DispatcherPriority.SystemIdle);
 					}
 					break;
 

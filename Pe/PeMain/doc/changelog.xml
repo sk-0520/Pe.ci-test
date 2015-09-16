@@ -86,7 +86,10 @@
 				<message>"294: アップデート確認用文言が重複してる</message>
 			</note>
 			<note rev="">
-				<message></message>
+				<message>#306: テンプレートウィンドウ表示切替時にアクティブ化されない</message>
+				<comments>
+					<comment>初回表示時の対応をクリップボード, ノート, コマンドウィンドウにも適用</comment>
+				</comments>
 			</note>
 			<note rev="">
 				<message></message>
