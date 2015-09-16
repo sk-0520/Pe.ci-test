@@ -82,10 +82,10 @@
 			</note>
 		</group>
 		<group type="fixes" dummy="==================================================================">
-			<note rev="">
+			<note rev="cd73f95fbea85bb3feb8b7759bdedf4c8ff7b3ea">
 				<message>"294: アップデート確認用文言が重複してる</message>
 			</note>
-			<note rev="">
+			<note rev="91539fe4e31c3b453e0f11e6ac84464d811dfe59">
 				<message>#306: テンプレートウィンドウ表示切替時にアクティブ化されない</message>
 				<comments>
 					<comment>初回表示時の対応をクリップボード, ノート, コマンドウィンドウにも適用</comment>
