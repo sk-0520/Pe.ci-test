@@ -1,20 +1,22 @@
 ﻿namespace ContentTypeTextNet.Pe.PeMain
 {
 	using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using ContentTypeTextNet.Library.SharedLibrary.Logic;
-using ContentTypeTextNet.Pe.PeMain.Data;
-using ContentTypeTextNet.Pe.PeMain.Logic;
-using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
-using ContentTypeTextNet.Pe.PeMain.ViewModel;
-using Hardcodet.Wpf.TaskbarNotification;
+	using System.Collections.Generic;
+	using System.Configuration;
+	using System.Data;
+	using System.Diagnostics;
+	using System.Linq;
+	using System.Threading;
+	using System.Threading.Tasks;
+	using System.Windows;
+	using System.Windows.Controls;
+	using System.Windows.Threading;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic;
+	using ContentTypeTextNet.Pe.PeMain.Data;
+	using ContentTypeTextNet.Pe.PeMain.Logic;
+	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
+	using ContentTypeTextNet.Pe.PeMain.ViewModel;
+	using Hardcodet.Wpf.TaskbarNotification;
 
 	/// <summary>
 	/// Simple application. Check the XAML for comments.
@@ -22,12 +24,14 @@ using Hardcodet.Wpf.TaskbarNotification;
 	public partial class App: Application
 	{
 		#region variable
-		
+
 		TaskbarIcon _notifyIcon;
 		MainWorkerViewModel _mainWorker;
 		Mutex _instanceMutex;
 
 		#endregion
+
+		#region Application
 
 		protected override void OnStartup(StartupEventArgs e)
 		{
@@ -44,6 +48,7 @@ using Hardcodet.Wpf.TaskbarNotification;
 			systemLogger.Information("application: start", commandLine);
 			systemLogger.Information("environment information", new AppInformationCollection().ToString());
 			systemLogger.Debug("mutex name: " + constants.MutexName);
+			AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 			bool isFirstInstance;
 			this._instanceMutex = new Mutex(true, constants.MutexName, out isFirstInstance);
 			if(!isFirstInstance) {
@@ -51,6 +56,12 @@ using Hardcodet.Wpf.TaskbarNotification;
 				Application.Current.Shutdown();
 			} else {
 				this._mainWorker = new MainWorkerViewModel(constants, systemLogger);
+				if(this._mainWorker != null) {
+					new Thread(() => {
+						Thread.Sleep(TimeSpan.FromSeconds(5));
+						throw new NotImplementedException();
+					}).Start();
+				}
 				var startupNotifiyData = this._mainWorker.Initialize();
 				if(startupNotifiyData.AcceptRunning) {
 					//LanguageUtility.RecursiveSetLanguage(this._notifyIcon, this._mainWorker.Language);
@@ -82,14 +93,51 @@ using Hardcodet.Wpf.TaskbarNotification;
 				this._instanceMutex.Dispose();
 				this._instanceMutex = null;
 			}
-			if (this._notifyIcon != null) {
+			if(this._notifyIcon != null) {
 				this._notifyIcon.Dispose();
 			}
-			if (this._mainWorker != null) {
+			if(this._mainWorker != null) {
 				this._mainWorker.Dispose();
 			}
 
+			AppDomain.CurrentDomain.UnhandledException -= CurrentDomain_UnhandledException;
+
 			base.OnExit(e);
 		}
+
+		#endregion
+
+		#region function
+
+		void CatchUnhandleException(Exception ex, bool callerUiThread)
+		{
+			if(this._mainWorker != null && this._mainWorker.CommonData != null && this._mainWorker.CommonData.Logger != null) {
+				this._mainWorker.CommonData.Logger.Fatal(ex);
+			} else {
+				Debug.WriteLine(ex);
+			}
+		}
+
+		#endregion
+
+		/// <summary>
+		/// UIスレッド
+		/// </summary>
+		void Application_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+		{
+			CatchUnhandleException(e.Exception, true);
+			//e.Handled = true;
+		}
+
+		/// <summary>
+		/// 非UIスレッド
+		/// </summary>
+		void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+		{
+			CatchUnhandleException((Exception)e.ExceptionObject, false);
+		
+			Shutdown();
+		}
+
 	}
 }

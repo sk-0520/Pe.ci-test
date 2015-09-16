@@ -41,7 +41,7 @@
 	using Hardcodet.Wpf.TaskbarNotification;
 	using Microsoft.Win32;
 
-	public sealed class MainWorkerViewModel: ViewModelBase, IAppSender, IClipboardWatcher, IHavingView<TaskbarIcon>
+	public sealed class MainWorkerViewModel: ViewModelBase, IAppSender, IClipboardWatcher, IHavingView<TaskbarIcon>, IHavingCommonData
 	{
 		#region variable
 
@@ -72,7 +72,6 @@
 				Constants.CacheIndexTemplate,
 				Constants.CacheIndexClipboard
 			);
-
 		}
 
 		#region property
@@ -80,7 +79,12 @@
 		bool ResetToolbarRunning { get; set; }
 		DateTime PrevResetToolbar { get; set; }
 
-		Data.CommonData CommonData { get; set; }
+		#region IHavingCommonData
+
+		public Data.CommonData CommonData { get; private set; }
+
+		#endregion
+
 		public LanguageManager Language { get { return CommonData.Language; } }
 
 		public bool IsPause { get; set; }
