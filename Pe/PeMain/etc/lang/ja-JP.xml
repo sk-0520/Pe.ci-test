@@ -421,6 +421,7 @@
 		<Item Id="log/session/switch" Word="セッション: 変更検出" />
 		<Item Id="log/session/ending" Word="セッション: 終了" />
 		<Item Id="log/window/save" Word="ウィンドウ状態保存: @[LOG-WINDOW-SAVE-TYPE]" />
+		<Item Id="log/update/state" Word="アップデート確認: 状態" />
 		<Item Id="log/update/check" Word="アップデート確認: 開始" />
 		<Item Id="log/update/error" Word="アップデート確認: 失敗" />
 		<Item Id="log/update/newest" Word="アップデート確認: 最新版です" />
