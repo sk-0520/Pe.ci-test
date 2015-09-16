@@ -96,7 +96,7 @@
 			<note rev="fa987ecba4c62c0fe4c35b06be72adb1c2bfcbaf">
 				<message>ソース管理を git 1 から git 2 に変更</message>
 			</note>
-			<note rev="27d6a05146dfd46e10a06fc9629f1d1553426f48">
+			<note rev="70a855acb0d0a980b0506a4ccff1028f3c42ca05">
 				<message>#295: 未補足の例外を受け取る</message>
 			</note>
 			<note rev="">
