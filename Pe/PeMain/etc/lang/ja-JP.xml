@@ -345,6 +345,7 @@
 		<Item Id="toolbar-setting/screen" Word="識別" />
 		<Item Id="toolbar-setting/toolbar/group" Word="初期グループ" />
 		<Item Id="toolbar-setting/toolbar/position" Word="ツールバー位置" />
+		<Item Id="toolbar-setting/toolbar/button" Word="ボタン位置" />
 		<Item Id="toolbar-setting/toolbar/icon" Word="アイコンサイズ" />
 		<Item Id="toolbar-setting/toolbar/font" Word="フォント" />
 		<Item Id="toolbar-setting/toolbar/text-length" Word="テキストの長さ" />
@@ -590,6 +591,9 @@
 		<Item Id="enum/LauncherKind/Directory" Word="##Directory##" />
 		<Item Id="enum/LauncherKind/Command"   Word="コマンド" />
 		
+		<Item Id="enum/ToolbarButtonPosition/Near"   Word="左-上" />
+		<Item Id="enum/ToolbarButtonPosition/Center" Word="中央" />
+		<Item Id="enum/ToolbarButtonPosition/Far"    Word="右-下" />
 		
 		
 		<!-- 変換 -->

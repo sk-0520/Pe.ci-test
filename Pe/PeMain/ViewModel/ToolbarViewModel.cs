@@ -18,6 +18,7 @@
 	using System.Windows.Media;
 	using System.Windows;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.Pe.Library.PeData.Define;
 
 	public class ToolbarViewModel : SingleModelWrapperViewModelBase<ToolbarItemModel>, IHavingAppNonProcess
 	{
@@ -152,6 +153,12 @@
 		{
 			get { return VisibleVisibilityProperty.GetVisible(Model); }
 			set { VisibleVisibilityProperty.SetVisible(Model, value, OnPropertyChanged); }
+		}
+
+		public ToolbarButtonPosition ButtonPosition
+		{
+			get { return Model.ButtonPosition; }
+			set { SetModelValue(value); }
 		}
 
 		#endregion

@@ -304,7 +304,7 @@
     <Compile Include="ViewModel\ClipboardViewModel.cs" />
     <Compile Include="ViewModel\Control\EnvironmentVariablesEditViewModel.cs" />
     <Compile Include="ViewModel\Control\LauncherItemEditViewModel.cs" />
-    <Compile Include="ViewModel\Control\LauncherItemsListViewModel.cs" />
+    <Compile Include="ViewModel\Control\LauncherListViewModel.cs" />
     <Compile Include="ViewModel\Control\SettingPage\ClipboardSettingViewModel.cs" />
     <Compile Include="ViewModel\Control\SettingPage\CommandSettingViewModel.cs" />
     <Compile Include="ViewModel\Control\SettingPage\NoteSettingViewModel.cs" />
@@ -363,8 +363,8 @@
     <Compile Include="View\Parts\Control\LauncherItemEditControl.xaml.cs">
       <DependentUpon>LauncherItemEditControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Parts\Control\LauncherItemsListControl.xaml.cs">
-      <DependentUpon>LauncherItemsListControl.xaml</DependentUpon>
+    <Compile Include="View\Parts\Control\LauncherListControl.xaml.cs">
+      <DependentUpon>LauncherListControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Parts\Control\AppHotkeyControl.cs" />
     <Compile Include="View\Parts\Control\SettingPage\ClipboardSettingControl.xaml.cs">
@@ -393,6 +393,7 @@
     <Compile Include="View\Parts\Converter\EnumLanguageConverter\TemplateReplaceModeLanguageConverter.cs" />
     <Compile Include="View\Parts\Converter\EnumLanguageConverter\IconScaleLanguageConverter.cs" />
     <Compile Include="View\Parts\Converter\EnumLanguageConverter\DockTypeLanguageConverter.cs" />
+    <Compile Include="View\Parts\Converter\EnumLanguageConverter\ToolbarButtonPositionLanguageConverter.cs" />
     <Compile Include="View\Parts\Converter\FontFamilyToNameConverter.cs" />
     <Compile Include="View\Parts\Converter\LogFileNameConverter.cs" />
     <Compile Include="View\Parts\Converter\ReverseClipboardItemListConverter.cs" />
@@ -554,7 +555,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Parts\Control\LauncherItemsListControl.xaml">
+    <Page Include="View\Parts\Control\LauncherListControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

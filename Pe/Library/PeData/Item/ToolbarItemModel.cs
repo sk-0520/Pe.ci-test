@@ -82,6 +82,12 @@
 		[DataMember]
 		public bool MenuPositionCorrection { get; set; }
 
+		/// <summary>
+		/// ボタン位置。
+		/// </summary>
+		[DataMember]
+		public ToolbarButtonPosition ButtonPosition { get; set; }
+
 		#endregion
 
 		#region IVisible
@@ -146,6 +152,7 @@
 			obj.IsVisible = IsVisible;
 			obj.IsTopmost = IsTopmost;
 			obj.MenuPositionCorrection = MenuPositionCorrection;
+			obj.ButtonPosition = ButtonPosition;
 			obj.Id = Id;
 			Font.DeepCloneTo(obj.Font);
 		}
