@@ -6,6 +6,8 @@
 	using System.Text;
 	using System.Threading.Tasks;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+	using ContentTypeTextNet.Pe.Library.PeData.Define;
 	using ContentTypeTextNet.Pe.Library.PeData.Setting;
 
 	internal static class InitializeLauncherItemSetting
@@ -17,13 +19,17 @@
 		}
 
 		static void V_Last(LauncherItemSettingModel setting, Version previousVersion, INonProcess nonProcess)
-		{ }
+		{
+			setting.FileDropMode = EnumUtility.GetNormalization(setting.FileDropMode, LauncherItemFileDropMode.ShowExecuteWindow);
+		}
 
 		static void V_First(LauncherItemSettingModel setting, Version previousVersion, INonProcess nonProcess)
 		{
 			if(previousVersion != null) {
 				return;
 			}
+
+			setting.FileDropMode = LauncherItemFileDropMode.ShowExecuteWindow;
 		}
 	}
 }
