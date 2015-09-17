@@ -78,9 +78,6 @@
 				<message>#290: ツールバーのアイコン上にファイルをD&amp;Dした際の挙動を変更可能にする</message>
 			</note>
 			<note rev="">
-				<message>ツールバーへファイルD&amp;Dを行い、指定して実行ウィンドウを表示すると前面に表示されない不具合の修正</message>
-			</note>
-			<note rev="">
 				<message></message>
 			</note>
 			<note rev="">
@@ -99,6 +96,9 @@
 			</note>
 			<note rev="a1ed556bb986f9a720d1203fee5876a8ea3490cc">
 				<message>コマンドウィンドウのリスト項目描画方法を他のリストに合わせた</message>
+			</note>
+			<note rev="">
+				<message>ツールバーへファイルD&amp;Dを行い、指定して実行ウィンドウを表示すると前面に表示されない不具合の修正</message>
 			</note>
 			<note rev="">
 				<message></message>
