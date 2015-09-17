@@ -75,6 +75,7 @@
     <Compile Include="Define\GroupKind.cs" />
     <Compile Include="Define\HashType.cs" />
     <Compile Include="Define\IndexKind.cs" />
+    <Compile Include="Define\LauncherItemFileDropMode.cs" />
     <Compile Include="Define\ToolbarButtonPosition.cs" />
     <Compile Include="Define\LauncherKind.cs" />
     <Compile Include="Define\LauncherCommandType.cs" />
