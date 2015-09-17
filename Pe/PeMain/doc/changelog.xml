@@ -92,6 +92,12 @@
 				</comments>
 			</note>
 			<note rev="">
+				<message>コマンドウィンドウのリスト項目描画方法を他のリストに合わせた</message>
+			</note>
+			<note rev="">
+				<message></message>
+			</note>
+			<note rev="">
 				<message></message>
 			</note>
 		</group>
