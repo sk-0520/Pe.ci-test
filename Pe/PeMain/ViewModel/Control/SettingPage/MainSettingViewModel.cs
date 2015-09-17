@@ -1,28 +1,29 @@
 ﻿namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control.SettingPage
 {
 	using System;
-	using System.Collections.Generic;
-	using System.IO;
-	using System.Linq;
-	using System.Text;
-	using System.Threading.Tasks;
-	using System.Windows;
-	using System.Windows.Media;
-	using ContentTypeTextNet.Library.SharedLibrary.Data;
-	using ContentTypeTextNet.Library.SharedLibrary.IF;
-	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
-	using ContentTypeTextNet.Library.SharedLibrary.Model;
-	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
-	using ContentTypeTextNet.Pe.Library.PeData.Item;
-	using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
-	using ContentTypeTextNet.Pe.PeMain.Data;
-	using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
-	using ContentTypeTextNet.Pe.PeMain.IF;
-	using ContentTypeTextNet.Pe.PeMain.Logic.Property;
-	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
-	using ContentTypeTextNet.Pe.PeMain.View.Parts.Control.SettingPage;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Media;
+using ContentTypeTextNet.Library.SharedLibrary.Data;
+using ContentTypeTextNet.Library.SharedLibrary.IF;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+using ContentTypeTextNet.Pe.Library.PeData.Define;
+using ContentTypeTextNet.Pe.Library.PeData.Item;
+using ContentTypeTextNet.Pe.Library.PeData.Setting;
+using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
+using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
+using ContentTypeTextNet.Pe.PeMain.IF;
+using ContentTypeTextNet.Pe.PeMain.Logic.Property;
+using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
+using ContentTypeTextNet.Pe.PeMain.View.Parts.Control.SettingPage;
 
-	public class MainSettingViewModel : SettingPageViewModelBase<MainSettingControl>
+	public class MainSettingViewModel: SettingPageViewModelBase<MainSettingControl>
 	{
 		#region variavle
 
@@ -31,7 +32,7 @@
 
 		#endregion
 
-		public MainSettingViewModel(RunningInformationSettingModel runningInformation, LanguageSettingModel language, LoggingSettingModel logging, SystemEnvironmentSettingModel systemEnvironment, StreamSettingModel stream, WindowSaveSettingModel windowSave,MainSettingControl view, IAppNonProcess appNonProcess, SettingNotifyData settingNotifiyItem)
+		public MainSettingViewModel(RunningInformationSettingModel runningInformation, LanguageSettingModel language, LoggingSettingModel logging, SystemEnvironmentSettingModel systemEnvironment, StreamSettingModel stream, WindowSaveSettingModel windowSave, LauncherItemSettingModel launcherItem, MainSettingControl view, IAppNonProcess appNonProcess, SettingNotifyData settingNotifiyItem)
 			: base(view, appNonProcess, settingNotifiyItem)
 		{
 			RunningInformation = runningInformation;
@@ -40,6 +41,7 @@
 			SystemEnvironment = systemEnvironment;
 			Stream = stream;
 			WindowSave = windowSave;
+			LauncherItem = launcherItem;
 		}
 
 		#region property
@@ -50,12 +52,13 @@
 		SystemEnvironmentSettingModel SystemEnvironment { get; set; }
 		StreamSettingModel Stream { get; set; }
 		WindowSaveSettingModel WindowSave { get; set; }
+		LauncherItemSettingModel LauncherItem { get; set; }
 
 		public bool Startup
 		{
 			get
 			{
-				if (!SettingNotifiyItem.StartupRegist.HasValue) {
+				if(!SettingNotifiyItem.StartupRegist.HasValue) {
 					var path = Environment.ExpandEnvironmentVariables(Constants.StartupShortcutPath);
 					SettingNotifiyItem.StartupRegist = File.Exists(path);
 				}
@@ -64,7 +67,7 @@
 			}
 			set
 			{
-				if (SettingNotifiyItem.StartupRegist != value) {
+				if(SettingNotifiyItem.StartupRegist != value) {
 					SettingNotifiyItem.StartupRegist = value;
 					OnPropertyChanged();
 				}
@@ -75,7 +78,7 @@
 		{
 			get
 			{
-				if (this._languageList == null) {
+				if(this._languageList == null) {
 					var list = AppUtility.GetLanguageFiles(Constants.ApplicationLanguageDirectoryPath, AppNonProcess.Logger)
 						.Where(p => string.Compare(Path.GetFileName(p.Value.Key), Constants.languageDefaultFileName, true) != 0)
 					;
@@ -87,7 +90,7 @@
 					//);
 					bool isSelectedLanguage = false;
 					var langList = new List<DisplayData<string>>();
-					foreach (var item in list.Select((l, i) => new { Language = l, Index = i})) {
+					foreach(var item in list.Select((l, i) => new { Language = l, Index = i })) {
 						var displayText = string.Format("{0}({1})", item.Language.Value.Value.Name, item.Language.Value.Value.CultureCode);
 						if(!isSelectedLanguage && item.Language.Value.Value.Name == Language.Name) {
 							this._languageSelectedIndex = item.Index;
@@ -111,7 +114,7 @@
 		public string SelectedLanguage
 		{
 			get { return Language.Name; }
-			set 
+			set
 			{
 				Language.Name = value;
 				OnPropertyChanged();
@@ -306,6 +309,16 @@
 			set { SetPropertyValue(WindowSave, value, "SaveCount"); }
 		}
 
+
+		#endregion
+
+		#region LauncherItem
+
+		public LauncherItemFileDropMode FileDropMode
+		{
+			get { return LauncherItem.FileDropMode; }
+			set { SetPropertyValue(LauncherItem, value); }
+		}
 
 		#endregion
 

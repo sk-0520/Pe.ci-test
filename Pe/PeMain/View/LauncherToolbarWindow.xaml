@@ -475,12 +475,12 @@
 					<ItemsControl.ItemTemplate>
 						<DataTemplate>
 							<VirtualizingStackPanel
-							Orientation="Vertical"
-							SA:DragTarget.UsingDragTarget="True"
-							SA:DragTarget.DragEnterCommand="{Binding DragOverCommand}"
-							SA:DragTarget.DragOverCommand="{Binding DragOverCommand}"
-							SA:DragTarget.DragDropCommand="{Binding DragDropCommand}"
-						>
+								Orientation="Vertical"
+								SA:DragTarget.UsingDragTarget="True"
+								SA:DragTarget.DragEnterCommand="{Binding DragOverCommand}"
+								SA:DragTarget.DragOverCommand="{Binding DragOverCommand}"
+								SA:DragTarget.DragDropCommand="{Binding DragDropCommand}"
+							>
 								<VirtualizingStackPanel.ToolTip>
 									<ToolTip Style="{StaticResource ToolbarTooltip}">
 										<StackPanel>

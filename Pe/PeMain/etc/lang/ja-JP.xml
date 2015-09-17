@@ -336,6 +336,10 @@
 		<Item Id="main-setting/stream/color" Word="色設定" />
 		<Item Id="main-setting/stream/color/std-out" Word="基本" />
 		<Item Id="main-setting/stream/color/std-err" Word="エラー" />
+		<Item Id="main-setting/launcher" Word="ランチャー" />
+		<Item Id="main-setting/launcher/drop-mode" Word="ファイルD&amp;D時の挙動" />
+		<Item Id="main-setting/launcher/drop-mode/window" Word="指定して実行ウィンドウを表示" />
+		<Item Id="main-setting/launcher/drop-mode/arguments" Word="オプションとして実行" />
 		<Item Id="main-setting/window-save" Word="ウィンドウ位置保存" />
 		<Item Id="main-setting/window-save/enabled" Word="ウィンドウ位置を保存する" />
 		<Item Id="main-setting/window-save/count" Word="保存件数" />
