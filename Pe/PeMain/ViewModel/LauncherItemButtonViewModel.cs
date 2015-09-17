@@ -1,30 +1,31 @@
 ﻿namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 {
 	using System;
-	using System.Collections.Generic;
-	using System.Diagnostics;
-	using System.IO;
-	using System.Linq;
-	using System.Text;
-	using System.Threading.Tasks;
-	using System.Windows;
-	using System.Windows.Input;
-	using System.Windows.Media;
-	using ContentTypeTextNet.Library.SharedLibrary.CompatibleWindows;
-	using ContentTypeTextNet.Library.SharedLibrary.Data;
-	using ContentTypeTextNet.Library.SharedLibrary.Define;
-	using ContentTypeTextNet.Library.SharedLibrary.IF;
-	using ContentTypeTextNet.Library.SharedLibrary.Logic;
-	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
-	using ContentTypeTextNet.Library.SharedLibrary.Model;
-	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
-	using ContentTypeTextNet.Pe.Library.PeData.Define;
-	using ContentTypeTextNet.Pe.Library.PeData.Item;
-	using ContentTypeTextNet.Pe.PeMain.Data;
-	using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
-	using ContentTypeTextNet.Pe.PeMain.Define;
-	using ContentTypeTextNet.Pe.PeMain.IF;
-	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Input;
+using System.Windows.Media;
+using ContentTypeTextNet.Library.SharedLibrary.CompatibleWindows;
+using ContentTypeTextNet.Library.SharedLibrary.Data;
+using ContentTypeTextNet.Library.SharedLibrary.Define;
+using ContentTypeTextNet.Library.SharedLibrary.IF;
+using ContentTypeTextNet.Library.SharedLibrary.Logic;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+using ContentTypeTextNet.Pe.Library.PeData.Define;
+using ContentTypeTextNet.Pe.Library.PeData.Item;
+using ContentTypeTextNet.Pe.Library.PeData.Setting;
+using ContentTypeTextNet.Pe.PeMain.Data;
+using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
+using ContentTypeTextNet.Pe.PeMain.Define;
+using ContentTypeTextNet.Pe.PeMain.IF;
+using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
 	public class LauncherItemButtonViewModel: LauncherItemSimpleViewModel, IHavingAppSender
 	{
@@ -42,16 +43,17 @@
 
 		#endregion
 
-		public LauncherItemButtonViewModel(LauncherItemModel model, ScreenModel dockScreen, IAppNonProcess nonPorocess, IAppSender appSender)
+		public LauncherItemButtonViewModel(LauncherItemModel model, ScreenModel dockScreen, LauncherItemSettingModel launcherItemSetting, IAppNonProcess nonPorocess, IAppSender appSender)
 			: base(model, nonPorocess, appSender)
 		{
 			DockScreen = dockScreen;
+			LauncherItemSetting = launcherItemSetting;
 		}
 
 		#region property
 
 		protected ScreenModel DockScreen { get; set; }
-
+		protected LauncherItemSettingModel LauncherItemSetting { get; private set; }
 
 		public IconScale IconScale 
 		{
@@ -310,11 +312,33 @@
 						var eventData = (EventData<DragEventArgs>)o;
 						if (eventData.EventArgs.Data.GetDataPresent(DataFormats.FileDrop)) {
 							var filePathList = eventData.EventArgs.Data.GetData(DataFormats.FileDrop) as string[];
-							// TODO: 指定して実行を無視して実行, #290
-							var data = new LauncherItemWithScreen(Model, DockScreen, filePathList);
-							var window = AppSender.SendCreateWindow(WindowKind.LauncherExecute, data, null);
 
-							window.Show();
+							switch(LauncherItemSetting.FileDropMode) {
+								case LauncherItemFileDropMode.ShowExecuteWindow: 
+									{
+										var data = new LauncherItemWithScreen(Model, DockScreen, filePathList);
+										var window = AppSender.SendCreateWindow(WindowKind.LauncherExecute, data, null);
+										window.Show();
+									}
+									break;
+
+								case LauncherItemFileDropMode.ArgumentExecute: 
+									{
+										var dummyModel = (LauncherItemModel)Model.DeepClone();
+										var option = string.Join(" ", filePathList.WhitespaceToQuotation());
+										dummyModel.Option = option;
+										try {
+											ExecuteUtility.RunItem(dummyModel, DockScreen, AppNonProcess, AppSender);
+											SettingUtility.IncrementLauncherItem(Model, option, null, AppNonProcess);
+										} catch(Exception ex) {
+											AppNonProcess.Logger.Warning(ex);
+										}
+									}
+									break;
+
+								default:
+									throw new NotImplementedException();
+							}
 
 							eventData.EventArgs.Handled = true;
 						}
