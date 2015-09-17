@@ -75,6 +75,7 @@
 						CommonData.MainSetting.SystemEnvironment,
 						CommonData.MainSetting.Stream,
 						CommonData.MainSetting.WindowSave,
+						CommonData.LauncherItemSetting,
 						HasView ? View.controlMainSetting:null,
 						CommonData.NonProcess,
 						SettingNotifiyItem
