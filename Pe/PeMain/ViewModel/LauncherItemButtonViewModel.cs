@@ -1,31 +1,34 @@
 ﻿namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 {
 	using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Input;
-using System.Windows.Media;
-using ContentTypeTextNet.Library.SharedLibrary.CompatibleWindows;
-using ContentTypeTextNet.Library.SharedLibrary.Data;
-using ContentTypeTextNet.Library.SharedLibrary.Define;
-using ContentTypeTextNet.Library.SharedLibrary.IF;
-using ContentTypeTextNet.Library.SharedLibrary.Logic;
-using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
-using ContentTypeTextNet.Library.SharedLibrary.Model;
-using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
-using ContentTypeTextNet.Pe.Library.PeData.Define;
-using ContentTypeTextNet.Pe.Library.PeData.Item;
-using ContentTypeTextNet.Pe.Library.PeData.Setting;
-using ContentTypeTextNet.Pe.PeMain.Data;
-using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
-using ContentTypeTextNet.Pe.PeMain.Define;
-using ContentTypeTextNet.Pe.PeMain.IF;
-using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
+	using System.Collections.Generic;
+	using System.Diagnostics;
+	using System.IO;
+	using System.Linq;
+	using System.Text;
+	using System.Threading.Tasks;
+	using System.Windows;
+	using System.Windows.Input;
+	using System.Windows.Media;
+	using System.Windows.Threading;
+	using ContentTypeTextNet.Library.PInvoke.Windows;
+	using ContentTypeTextNet.Library.SharedLibrary.CompatibleWindows;
+	using ContentTypeTextNet.Library.SharedLibrary.CompatibleWindows.Utility;
+	using ContentTypeTextNet.Library.SharedLibrary.Data;
+	using ContentTypeTextNet.Library.SharedLibrary.Define;
+	using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+	using ContentTypeTextNet.Library.SharedLibrary.Model;
+	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+	using ContentTypeTextNet.Pe.Library.PeData.Define;
+	using ContentTypeTextNet.Pe.Library.PeData.Item;
+	using ContentTypeTextNet.Pe.Library.PeData.Setting;
+	using ContentTypeTextNet.Pe.PeMain.Data;
+	using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
+	using ContentTypeTextNet.Pe.PeMain.Define;
+	using ContentTypeTextNet.Pe.PeMain.IF;
+	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
 	public class LauncherItemButtonViewModel: LauncherItemSimpleViewModel, IHavingAppSender
 	{
@@ -319,6 +322,9 @@ using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 										var data = new LauncherItemWithScreen(Model, DockScreen, filePathList);
 										var window = AppSender.SendCreateWindow(WindowKind.LauncherExecute, data, null);
 										window.Show();
+										window.Dispatcher.BeginInvoke(new Action(() => {
+											WindowsUtility.ShowActive(HandleUtility.GetWindowHandle(window));
+										}), DispatcherPriority.SystemIdle);
 									}
 									break;
 

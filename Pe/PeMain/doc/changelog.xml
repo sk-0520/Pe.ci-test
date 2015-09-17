@@ -78,6 +78,12 @@
 				<message>#290: ツールバーのアイコン上にファイルをD&amp;Dした際の挙動を変更可能にする</message>
 			</note>
 			<note rev="">
+				<message>ツールバーへファイルD&amp;Dを行い、指定して実行ウィンドウを表示すると前面に表示されない不具合の修正</message>
+			</note>
+			<note rev="">
+				<message></message>
+			</note>
+			<note rev="">
 				<message></message>
 			</note>
 		</group>
