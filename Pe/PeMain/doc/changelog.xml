@@ -109,6 +109,9 @@
 				<message>#295: 未補足の例外を受け取る</message>
 			</note>
 			<note rev="">
+				<message>#304: beta版実行用バッチファイルがWPF版の設定データ構成に未対応</message>
+			</note>
+			<note rev="">
 				<message></message>
 			</note>
 		</group>
