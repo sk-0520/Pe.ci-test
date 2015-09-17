@@ -91,7 +91,7 @@
 					<comment>初回表示時の対応をクリップボード, ノート, コマンドウィンドウにも適用</comment>
 				</comments>
 			</note>
-			<note rev="">
+			<note rev="a1ed556bb986f9a720d1203fee5876a8ea3490cc">
 				<message>コマンドウィンドウのリスト項目描画方法を他のリストに合わせた</message>
 			</note>
 			<note rev="">
