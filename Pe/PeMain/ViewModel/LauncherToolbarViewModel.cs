@@ -1129,10 +1129,10 @@
 						"ToolbarContentVisibility",
 						"IsTopmost"
 					);
-					if(HasView) {
-						View.Dispatcher.BeginInvoke(new Action(() => {
+					if(!this._isHidden) {
+						HavingViewUtility.BeginInvoke(this, () => {
 							NativeMethods.SetForegroundWindow(View.Handle);
-						}), DispatcherPriority.SystemIdle);
+						}, DispatcherPriority.SystemIdle);
 					}
 				}
 			}
