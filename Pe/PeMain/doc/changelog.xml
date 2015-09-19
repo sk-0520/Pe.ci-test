@@ -101,6 +101,9 @@
 				<message>ツールバーへファイルD&amp;Dを行い、指定して実行ウィンドウを表示すると前面に表示されない不具合の修正</message>
 			</note>
 			<note rev="">
+				<message>#310: 自動的に隠す状態のツールバーを表示した際にZ位置が下位に存在する</message>
+			</note>
+			<note rev="">
 				<message></message>
 			</note>
 			<note rev="">

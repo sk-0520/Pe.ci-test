@@ -1129,6 +1129,11 @@
 						"ToolbarContentVisibility",
 						"IsTopmost"
 					);
+					if(!this._isHidden) {
+						HavingViewUtility.BeginInvoke(this, () => {
+							NativeMethods.SetForegroundWindow(View.Handle);
+						}, DispatcherPriority.SystemIdle);
+					}
 				}
 			}
 		}
