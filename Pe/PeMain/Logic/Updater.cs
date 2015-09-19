@@ -158,7 +158,7 @@
 				Directory.CreateDirectory(this._downloadPath);
 			}
 			// #158
-			FileUtility.RotateFiles(this._downloadPath, "*.zip", ContentTypeTextNet.Library.SharedLibrary.Define.OrderBy.Desc, Constants.updateArchiveCount, e => {
+			FileUtility.RotateFiles(this._downloadPath, Constants.ArchiveSearchPattern, ContentTypeTextNet.Library.SharedLibrary.Define.OrderBy.Desc, Constants.updateArchiveCount, e => {
 				this._commonData.Logger.Warning(e);
 				return true;
 			});

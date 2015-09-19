@@ -6,10 +6,18 @@
 	xmlns:AV="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Control"
 	xmlns:AP="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
 	xmlns:AC="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Converter"
+	xmlns:AA="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Attached"
+	xmlns:SA="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Attached;assembly=SharedLibrary"
+
+	SA:DragTarget.UsingDragTarget="True"
+	SA:DragTarget.DragEnterCommand="{Binding DragOverCommand}"
+	SA:DragTarget.DragOverCommand="{Binding DragOverCommand}"
+	SA:DragTarget.DragDropCommand="{Binding DragDropCommand}"
 	
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
 	mc:Ignorable="d" 
 	d:DesignHeight="300" d:DesignWidth="300"
+	
 >
 	<AV:CommonDataUserControl.Resources>
 		<ResourceDictionary>
@@ -30,7 +38,7 @@
 			<ColumnDefinition Width="Auto"/>
 			<ColumnDefinition Width="13*"/>
 		</Grid.ColumnDefinitions>
-		<AV:LauncherItemsListControl
+		<AV:LauncherListControl
 			x:Name="listItems" 
 			Grid.Column="0" 
 			CanListEdit="True" 

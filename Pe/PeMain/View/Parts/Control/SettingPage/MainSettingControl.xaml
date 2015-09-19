@@ -9,6 +9,7 @@
 	xmlns:AP="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
 	xmlns:AA="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Attached"
 	xmlns:SC="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=SharedLibrary"
+	xmlns:ADD="clr-namespace:ContentTypeTextNet.Pe.Library.PeData.Define;assembly=PeData"
 	
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
 	mc:Ignorable="d" 
@@ -25,6 +26,7 @@
 				<ResourceDictionary Source="/View/Parts/Resource/AppHotkeyDictionary.xaml"/>
 			</ResourceDictionary.MergedDictionaries>
 			<SC:GridDistanceConverter x:Key="GridDistanceConverter" />
+			<SC:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
 		</ResourceDictionary>
 	</AV:CommonDataUserControl.Resources>
 	<Grid>
@@ -136,47 +138,57 @@
 				</GroupBox>
 			</StackPanel>
 
-			<GroupBox Grid.Column="2" Header="stream" AA:Language.Word="main-setting/stream" Style="{StaticResource DefaultGroupBox}">
-				<Grid>
-					<Grid.Resources>
-						<sys:Double x:Key="FontWidth">120</sys:Double>
-						<sys:Double x:Key="ColorWidth">60</sys:Double>
-					</Grid.Resources>
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="Auto" />
-						<ColumnDefinition Width="Auto" />
-						<ColumnDefinition Width="Auto" />
-					</Grid.ColumnDefinitions>
-					<Grid.RowDefinitions>
-						<RowDefinition />
-						<RowDefinition />
-						<RowDefinition />
-						<RowDefinition />
-					</Grid.RowDefinitions>
+			<StackPanel Grid.Column="2">
+				<GroupBox HorizontalAlignment="Stretch" Header="stream" AA:Language.Word="main-setting/stream" Style="{StaticResource DefaultGroupBox}">
+					<Grid>
+						<Grid.Resources>
+							<sys:Double x:Key="FontWidth">120</sys:Double>
+							<sys:Double x:Key="ColorWidth">60</sys:Double>
+						</Grid.Resources>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="Auto" />
+							<ColumnDefinition Width="Auto" />
+							<ColumnDefinition Width="Auto" />
+						</Grid.ColumnDefinitions>
+						<Grid.RowDefinitions>
+							<RowDefinition />
+							<RowDefinition />
+							<RowDefinition />
+							<RowDefinition />
+						</Grid.RowDefinitions>
 
-					<Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Top" Content="font" AA:Language.Word="main-setting/stream/font" Style="{StaticResource HeaderLabel}" />
-					<AV:FontSelectControl
-						Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"
-						Width="{StaticResource FontWidth}"
-						FamilyName="{Binding StreamFontFamily}"
-						IsBold="{Binding StreamFontBold}"
-						IsItalic="{Binding StreamFontItalic}"
-						Size="{Binding StreamFontSize}"
-						SizeMinimum="{x:Static AM:Constants.StreamFontMinimumSize}"
-						SizeMaximum="{x:Static AM:Constants.StreamFontMaximumSize}"
-					/>
+						<Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Top" Content="font" AA:Language.Word="main-setting/stream/font" Style="{StaticResource HeaderLabel}" />
+						<AV:FontSelectControl
+							Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"
+							Width="{StaticResource FontWidth}"
+							FamilyName="{Binding StreamFontFamily}"
+							IsBold="{Binding StreamFontBold}"
+							IsItalic="{Binding StreamFontItalic}"
+							Size="{Binding StreamFontSize}"
+							SizeMinimum="{x:Static AM:Constants.StreamFontMinimumSize}"
+							SizeMaximum="{x:Static AM:Constants.StreamFontMaximumSize}"
+						/>
 
-					<Label Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Content="color" AA:Language.Word="main-setting/stream/color" Style="{StaticResource TitleLabel}" />
+						<Label Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Content="color" AA:Language.Word="main-setting/stream/color" Style="{StaticResource TitleLabel}" />
 
-					<Label Grid.Row="2" Grid.Column="0" Content="std-out" AA:Language.Word="main-setting/stream/color/std-out" Style="{StaticResource HeaderLabel}" />
-					<xctk:ColorPicker Grid.Row="2" Grid.Column="1" Width="{StaticResource ColorWidth}" SelectedColor="{Binding StdOutputForeColor}" Style="{StaticResource DefaultColorPicker}" />
-					<xctk:ColorPicker Grid.Row="2" Grid.Column="2" Width="{StaticResource ColorWidth}" SelectedColor="{Binding StdOutputBackColor}" Style="{StaticResource DefaultColorPicker}" />
+						<Label Grid.Row="2" Grid.Column="0" Content="std-out" AA:Language.Word="main-setting/stream/color/std-out" Style="{StaticResource HeaderLabel}" />
+						<xctk:ColorPicker Grid.Row="2" Grid.Column="1" Width="{StaticResource ColorWidth}" SelectedColor="{Binding StdOutputForeColor}" Style="{StaticResource DefaultColorPicker}" />
+						<xctk:ColorPicker Grid.Row="2" Grid.Column="2" Width="{StaticResource ColorWidth}" SelectedColor="{Binding StdOutputBackColor}" Style="{StaticResource DefaultColorPicker}" />
 
-					<Label Grid.Row="3" Grid.Column="0" Content="std-err" AA:Language.Word="main-setting/stream/color/std-err" Style="{StaticResource HeaderLabel}" />
-					<xctk:ColorPicker Grid.Row="3" Grid.Column="1" Width="{StaticResource ColorWidth}" SelectedColor="{Binding ErrOutputForeColor}" Style="{StaticResource DefaultColorPicker}" />
-					<xctk:ColorPicker Grid.Row="3" Grid.Column="2" Width="{StaticResource ColorWidth}" SelectedColor="{Binding ErrOutputBackColor}" Style="{StaticResource DefaultColorPicker}" />
-				</Grid>
-			</GroupBox>
+						<Label Grid.Row="3" Grid.Column="0" Content="std-err" AA:Language.Word="main-setting/stream/color/std-err" Style="{StaticResource HeaderLabel}" />
+						<xctk:ColorPicker Grid.Row="3" Grid.Column="1" Width="{StaticResource ColorWidth}" SelectedColor="{Binding ErrOutputForeColor}" Style="{StaticResource DefaultColorPicker}" />
+						<xctk:ColorPicker Grid.Row="3" Grid.Column="2" Width="{StaticResource ColorWidth}" SelectedColor="{Binding ErrOutputBackColor}" Style="{StaticResource DefaultColorPicker}" />
+					</Grid>
+				</GroupBox>
+				<GroupBox HorizontalAlignment="Stretch" Header="launcher" AA:Language.Word="main-setting/launcher" Style="{StaticResource DefaultGroupBox}">
+					<GroupBox Header="drop mode" AA:Language.Word="main-setting/launcher/drop-mode">
+						<StackPanel Orientation="Vertical">
+							<RadioButton Content="window" AA:Language.Word="main-setting/launcher/drop-mode/window" IsChecked="{Binding FileDropMode, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static ADD:LauncherItemFileDropMode.ShowExecuteWindow}}" />
+							<RadioButton Content="arguments" AA:Language.Word="main-setting/launcher/drop-mode/arguments" IsChecked="{Binding FileDropMode, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static ADD:LauncherItemFileDropMode.ArgumentExecute}}" />
+						</StackPanel>
+					</GroupBox>
+				</GroupBox>
+			</StackPanel>
 
 
 		</Grid>

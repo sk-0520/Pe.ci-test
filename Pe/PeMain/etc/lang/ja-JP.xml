@@ -336,6 +336,10 @@
 		<Item Id="main-setting/stream/color" Word="色設定" />
 		<Item Id="main-setting/stream/color/std-out" Word="基本" />
 		<Item Id="main-setting/stream/color/std-err" Word="エラー" />
+		<Item Id="main-setting/launcher" Word="ランチャー" />
+		<Item Id="main-setting/launcher/drop-mode" Word="ファイルD&amp;D時の挙動" />
+		<Item Id="main-setting/launcher/drop-mode/window" Word="指定して実行ウィンドウを表示" />
+		<Item Id="main-setting/launcher/drop-mode/arguments" Word="オプションとして実行" />
 		<Item Id="main-setting/window-save" Word="ウィンドウ位置保存" />
 		<Item Id="main-setting/window-save/enabled" Word="ウィンドウ位置を保存する" />
 		<Item Id="main-setting/window-save/count" Word="保存件数" />
@@ -345,6 +349,7 @@
 		<Item Id="toolbar-setting/screen" Word="識別" />
 		<Item Id="toolbar-setting/toolbar/group" Word="初期グループ" />
 		<Item Id="toolbar-setting/toolbar/position" Word="ツールバー位置" />
+		<Item Id="toolbar-setting/toolbar/button" Word="ボタン位置" />
 		<Item Id="toolbar-setting/toolbar/icon" Word="アイコンサイズ" />
 		<Item Id="toolbar-setting/toolbar/font" Word="フォント" />
 		<Item Id="toolbar-setting/toolbar/text-length" Word="テキストの長さ" />
@@ -420,6 +425,7 @@
 		<Item Id="log/session/switch" Word="セッション: 変更検出" />
 		<Item Id="log/session/ending" Word="セッション: 終了" />
 		<Item Id="log/window/save" Word="ウィンドウ状態保存: @[LOG-WINDOW-SAVE-TYPE]" />
+		<Item Id="log/update/state" Word="アップデート確認: 状態" />
 		<Item Id="log/update/check" Word="アップデート確認: 開始" />
 		<Item Id="log/update/error" Word="アップデート確認: 失敗" />
 		<Item Id="log/update/newest" Word="アップデート確認: 最新版です" />
@@ -590,6 +596,9 @@
 		<Item Id="enum/LauncherKind/Directory" Word="##Directory##" />
 		<Item Id="enum/LauncherKind/Command"   Word="コマンド" />
 		
+		<Item Id="enum/ToolbarButtonPosition/Near"   Word="左-上" />
+		<Item Id="enum/ToolbarButtonPosition/Center" Word="中央" />
+		<Item Id="enum/ToolbarButtonPosition/Far"    Word="右-下" />
 		
 		
 		<!-- 変換 -->

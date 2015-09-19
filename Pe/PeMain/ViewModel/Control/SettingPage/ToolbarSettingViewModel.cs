@@ -39,7 +39,7 @@
 
 		#region variable
 
-		LauncherItemsListViewModel _launcherItems;
+		LauncherListViewModel _launcherItems;
 		//TODO: クソみたいな二重管理がつらい
 		CollectionModel<GroupRootViewModel> _groupTree;
 
@@ -80,12 +80,12 @@
 
 		LauncherItemSettingModel LauncherItemSetting { get; set; }
 
-		public LauncherItemsListViewModel LauncherItems
+		public LauncherListViewModel LauncherItems
 		{
 			get
 			{
 				if (this._launcherItems == null) {
-					this._launcherItems = new LauncherItemsListViewModel(
+					this._launcherItems = new LauncherListViewModel(
 						LauncherItemSetting.Items,
 						AppNonProcess,
 						AppSender

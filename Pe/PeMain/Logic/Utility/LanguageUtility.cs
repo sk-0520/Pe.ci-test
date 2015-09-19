@@ -209,7 +209,6 @@
 					}
 				}
 			}
-
 		}
 
 		static string GetEnumKeyName(Type type, object value)
@@ -217,59 +216,16 @@
 			return "enum/" + type.Name + "/" + value.ToString();
 		}
 
-		static string GetTextFromDockType(DockType value, ILanguage language)
-		{
-			var key = GetEnumKeyName(value.GetType(), value);
-			return language[key];
-		}
-
-		static string GetTextFromIconScale(IconScale value, ILanguage language)
-		{
-			var key = GetEnumKeyName(value.GetType(), value);
-			return language[key];
-		}
-
-		static string GetTextFromClipboardType(ClipboardType value, ILanguage language)
-		{
-			var key = GetEnumKeyName(value.GetType(), value);
-			return language[key];
-		}
-
-		static string GetTextFromTemplateReplaceMode(TemplateReplaceMode value, ILanguage language)
-		{
-			var key = GetEnumKeyName(value.GetType(), value);
-			return language[key];
-		}
-
-		public static string GetTextFromEnum_Impl<TEnum>(TEnum value, ILanguage language)
-		{
-			var key = GetEnumKeyName(value.GetType(), value);
-			return language[key];
-		}
-
 		public static string GetTextFromEnum<TEnum>(TEnum value, ILanguage language)
 		{
 			return GetTextFromEnum(typeof(TEnum), value, language);
 		}
 
-		public static string GetTextFromEnum(Type type, object value, ILanguage language)
+		static string GetTextFromEnum(Type type, object value, ILanguage language)
 		{
-			// 何やってんだこれ...
-			var map = new Dictionary<Type, Func<string>>() {
-				{ typeof(DockType), () => GetTextFromDockType((DockType)value, language) },
-				{ typeof(IconScale), () => GetTextFromIconScale((IconScale)value, language) },
-				{ typeof(ClipboardType), () => GetTextFromClipboardType((ClipboardType)value, language) },
-				{ typeof(TemplateReplaceMode), () => GetTextFromTemplateReplaceMode((TemplateReplaceMode)value, language) },
-				{ typeof(WindowSaveType), () => GetTextFromEnum_Impl((WindowSaveType)value, language) },
-				{ typeof(LauncherKind), () => GetTextFromEnum_Impl((LauncherKind)value, language) },
-			};
+			var key = GetEnumKeyName(type, value);
 
-			Func<string> getText;
-			if(map.TryGetValue(type, out getText)) {
-				return getText();
-			} else {
-				return string.Format("####{0}####", value);
-			}
+			return language[key];
 		}
 
 		public static string GetTextFromSingleKey(Key value, ILanguage language)

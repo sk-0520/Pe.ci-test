@@ -14,9 +14,7 @@ if exist "%BETA_ROOT_DIR%" (
 ) else (
 	rem 既存データをパクってくる
 	mkdir "%BETA_DIR%"  2>NUL
-	copy  "%RELEASE_DIR%\*.xml"      "%BETA_DIR%" /Y
-	copy  "%RELEASE_DIR%\*.sqlite3"  "%BETA_DIR%" /Y
-	copy  "%RELEASE_DIR%\*.gz"       "%BETA_DIR%" /Y
+	robocopy /MIR "%RELEASE_DIR%\setting" "%BETA_DIR%\setting"
 )
 
 start PeMain.exe /setting-root=%BETA_ROOT_DIR% /log=%BETA_ROOT_DIR%\logs /mutex=Pe_beta

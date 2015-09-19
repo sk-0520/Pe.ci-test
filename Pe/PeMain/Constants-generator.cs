@@ -21,7 +21,7 @@
 		/*
 		このソースは自動生成のため Constants-generator.tt を編集すること。
 
-		生成元ConstantsPropertyフィールド数: 4
+		生成元ConstantsPropertyフィールド数: 7
 		生成元ConstantsRangeフィールド数: 21
 		*/
 
@@ -48,6 +48,17 @@
 		}
 
 		#endregion
+		#region buildProcess
+
+		public static String BuildProcess
+		{
+			get
+			{
+				return buildProcess;
+			}
+		}
+
+		#endregion
 		#region startupShortcutPath
 
 		public static String StartupShortcutPath
@@ -66,6 +77,28 @@
 			get
 			{
 				return applicationName;
+			}
+		}
+
+		#endregion
+		#region archiveSearchPattern
+
+		public static String ArchiveSearchPattern
+		{
+			get
+			{
+				return archiveSearchPattern;
+			}
+		}
+
+		#endregion
+		#region backupSearchPattern
+
+		public static String BackupSearchPattern
+		{
+			get
+			{
+				return backupSearchPattern;
 			}
 		}
 
