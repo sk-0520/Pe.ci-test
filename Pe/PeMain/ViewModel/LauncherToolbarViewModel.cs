@@ -1298,7 +1298,7 @@
 		{
 			Debug.Assert(HasView);
 
-			View.Loaded += View_Loaded;
+			//View.Loaded += View_Loaded;
 			View.UserClosing += View_UserClosing;
 
 			base.InitializeView();
@@ -1309,7 +1309,7 @@
 			Debug.Assert(HasView);
 
 			View.UserClosing -= View_UserClosing;
-			View.Loaded -= View_Loaded;
+			//View.Loaded -= View_Loaded;
 
 			base.UninitializeView();
 		}
@@ -1366,12 +1366,12 @@
 			);
 		}
 
-		void View_Loaded(object sender, RoutedEventArgs e)
-		{
-			var value = WindowsUtility.GetWindowLong(View.Handle, (int)GWL.GWL_STYLE).ToInt32();
-			var resetValue = value & ~(int)(WS.WS_MAXIMIZEBOX | WS.WS_MINIMIZEBOX);
-			WindowsUtility.SetWindowLong(View.Handle, (int)GWL.GWL_STYLE, new IntPtr(resetValue));
-		}
+		//void View_Loaded(object sender, RoutedEventArgs e)
+		//{
+		//	var value = WindowsUtility.GetWindowLong(View.Handle, (int)GWL.GWL_STYLE).ToInt32();
+		//	var resetValue = value & ~(int)(WS.WS_MAXIMIZEBOX | WS.WS_MINIMIZEBOX);
+		//	WindowsUtility.SetWindowLong(View.Handle, (int)GWL.GWL_STYLE, new IntPtr(resetValue));
+		//}
 
 		void View_UserClosing(object sender, CancelEventArgs e)
 		{
