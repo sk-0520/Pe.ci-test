@@ -67,11 +67,6 @@
 
 		protected override void CreateViewModel()
 		{
-			var model = new LauncherToolbarDataModel() {
-				LauncherItems = CommonData.LauncherItemSetting.Items,
-				GroupItems = CommonData.LauncherGroupSetting.Groups,
-			};
-
 			ToolbarItemModel toolbar;
 			var screen = (ScreenModel)ExtensionData;
 			if (!CommonData.MainSetting.Toolbar.Items.TryGetValue(screen.DeviceName, out toolbar)) {
@@ -81,7 +76,8 @@
 				CommonData.MainSetting.Toolbar.Items.Add(toolbar);
 			}
 			SettingUtility.InitializeToolbarItem(toolbar, Constants.applicationVersionNumber, CommonData.NonProcess);
-			model.Toolbar = toolbar;
+			var model = new LauncherToolbarDataModel(toolbar, CommonData.LauncherItemSetting, CommonData.LauncherItemSetting.Items, CommonData.LauncherGroupSetting.Groups);
+			//model.Toolbar = toolbar;
 
 			ViewModel = new LauncherToolbarViewModel(model, this, screen, CommonData.NonProcess, CommonData.AppSender);
 		}

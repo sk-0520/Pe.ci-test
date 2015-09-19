@@ -6,6 +6,7 @@
 	using System.Text;
 	using System.Threading.Tasks;
 	using System.Windows;
+	using System.Windows.Threading;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 
 	public static class HavingViewUtility
@@ -15,5 +16,20 @@
 		{
 			return view.View != null;
 		}
+
+		public static DispatcherOperation BeginInvoke<TView>(IHavingView<TView> view, Action action, DispatcherPriority priority, params object[] args)
+			where TView: UIElement
+		{
+			Func<Action, DispatcherPriority, object[], DispatcherOperation> beginInvoke;
+			
+			if(view.HasView) {
+				beginInvoke = view.View.Dispatcher.BeginInvoke;
+			} else {
+				beginInvoke = Dispatcher.CurrentDispatcher.BeginInvoke;
+			}
+
+			return beginInvoke(action, priority, args);
+		}
+
 	}
 }

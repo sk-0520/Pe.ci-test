@@ -55,7 +55,7 @@ using ContentTypeTextNet.Pe.PeMain.Data;
 				return false;
 			}
 
-			if(model.LastExecuteVersion < Constants.acceptVersion) {
+			if(model.LastExecuteVersion < Constants.AcceptVersion) {
 				// 前回バージョンから強制定期に使用許諾が必要
 				nonProcess.Logger.Debug("last version < accept version");
 				return false;

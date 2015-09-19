@@ -55,6 +55,56 @@
 		</group>
 	</log>
 	-->
+	<log date="2015/09/19" version="0.65.0" dummy="################################################################################">
+		<group type="features" dummy="==================================================================">
+			<note rev="b561d8baa4e4433b021f9e90b2c12bd7d319b19a">
+				<message>#287: ツールバーアイコンの開始位置を変更可能にする</message>
+				<comments>
+					<comment>フロート状態以外で最上位(上 or 左, デフォルト)・中央・最下位(下 or 右)にツールバーのボタンを寄せます</comment>
+				</comments>
+			</note>
+			<note rev="51e07c2071b7f6cd841aab500be6a4ceb0856c9a">
+				<message>#290: ツールバーのアイコン上にファイルをD&amp;Dした際の挙動を変更可能にする</message>
+			</note>
+		</group>
+		<group type="fixes" dummy="==================================================================">
+			<note rev="cd73f95fbea85bb3feb8b7759bdedf4c8ff7b3ea">
+				<message>"294: アップデート確認用文言が重複してる</message>
+			</note>
+			<note rev="91539fe4e31c3b453e0f11e6ac84464d811dfe59">
+				<message>#306: テンプレートウィンドウ表示切替時にアクティブ化されない</message>
+				<comments>
+					<comment>初回表示時の対応をクリップボード, ノート, コマンドウィンドウにも適用</comment>
+				</comments>
+			</note>
+			<note rev="a1ed556bb986f9a720d1203fee5876a8ea3490cc">
+				<message>コマンドウィンドウのリスト項目描画方法を他のリストに合わせた</message>
+			</note>
+			<note rev="c19fca46eb915a09ea17d35638686eca40393860">
+				<message>ツールバーへファイルD&amp;Dを行い、指定して実行ウィンドウを表示すると前面に表示されない不具合の修正</message>
+			</note>
+			<note rev="c6b8719644cb947355bca808dfd75e348ffc15f0">
+				<message>#310: 自動的に隠す状態のツールバーを表示した際にZ位置が下位に存在する</message>
+			</note>
+			<note rev="ef80cfa3e9677d507e6dca32e4fdcc4d75dc9506">
+				<message>#301: 自動的に隠す状態のツールバーがシステム的に復帰したとき描画されていない</message>
+			</note>
+			<note rev="363bd30fcdf946bb2cb1748476bc984dbdfad37d">
+				<message>#308: 設定ダイアログのランチャー項目にファイルのD&amp;Dでアイテム登録できない</message>
+			</note>
+		</group>
+		<group type="developer" dummy="==================================================================">
+			<note rev="fa987ecba4c62c0fe4c35b06be72adb1c2bfcbaf">
+				<message>ソース管理を git 1 から git 2 に変更</message>
+			</note>
+			<note rev="70a855acb0d0a980b0506a4ccff1028f3c42ca05">
+				<message>#295: 未補足の例外を受け取る</message>
+			</note>
+			<note rev="d9f9204da73a4bb6244cefc93d641ef129647f51">
+				<message>#304: beta版実行用バッチファイルがWPF版の設定データ構成に未対応</message>
+			</note>
+		</group>
+	</log>
 	<log date="2015/09/14" version="0.64.0" dummy="################################################################################">
 		<group type="note" dummy="==================================================================">
 			<note rev="">

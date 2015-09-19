@@ -19,7 +19,7 @@
 			var tag = (TEnum)values[0];
 			var lang = (ILanguage)values[1];
 
-			return LanguageUtility.GetTextFromEnum(typeof(TEnum), tag, lang);
+			return LanguageUtility.GetTextFromEnum(tag, lang);
 		}
 
 		public object[] ConvertBack(object value, Type[] targetTypes, object parameter, System.Globalization.CultureInfo culture)

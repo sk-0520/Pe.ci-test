@@ -41,7 +41,7 @@
 	using Hardcodet.Wpf.TaskbarNotification;
 	using Microsoft.Win32;
 
-	public sealed class MainWorkerViewModel: ViewModelBase, IAppSender, IClipboardWatcher, IHavingView<TaskbarIcon>
+	public sealed class MainWorkerViewModel: ViewModelBase, IAppSender, IClipboardWatcher, IHavingView<TaskbarIcon>, IHavingCommonData
 	{
 		#region variable
 
@@ -72,7 +72,6 @@
 				Constants.CacheIndexTemplate,
 				Constants.CacheIndexClipboard
 			);
-
 		}
 
 		#region property
@@ -80,7 +79,12 @@
 		bool ResetToolbarRunning { get; set; }
 		DateTime PrevResetToolbar { get; set; }
 
-		Data.CommonData CommonData { get; set; }
+		#region IHavingCommonData
+
+		public Data.CommonData CommonData { get; private set; }
+
+		#endregion
+
 		public LanguageManager Language { get { return CommonData.Language; } }
 
 		public bool IsPause { get; set; }
@@ -625,7 +629,7 @@
 			var backupDir = Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserBackupDirectoryPath);
 
 			// 旧データの削除
-			FileUtility.RotateFiles(backupDir, "*.zip", OrderBy.Asc, Constants.BackupSettingCount, ex => {
+			FileUtility.RotateFiles(backupDir, Constants.BackupSearchPattern, OrderBy.Asc, Constants.BackupSettingCount, ex => {
 				CommonData.Logger.Error(ex);
 				return true;
 			});
@@ -1184,16 +1188,21 @@
 			Debug.Assert(Clipboard != null);
 			Clipboard.IsVisible = !Clipboard.IsVisible;
 			if(Clipboard.IsVisible) {
-				WindowsUtility.ShowActive(ClipboardWindow.Handle);
+				ClipboardWindow.Dispatcher.BeginInvoke(new Action(() => {
+					WindowsUtility.ShowActive(ClipboardWindow.Handle);
+				}), DispatcherPriority.SystemIdle);
 			}
 		}
 
 		void SwitchShowTemplateWindow()
 		{
 			Debug.Assert(Template != null);
+
 			Template.IsVisible = !Template.IsVisible;
-			if(Clipboard.IsVisible) {
-				WindowsUtility.ShowActive(TemplateWindow.Handle);
+			if(Template.IsVisible) {
+				TemplateWindow.Dispatcher.BeginInvoke(new Action(() => {
+					WindowsUtility.ShowActive(TemplateWindow.Handle);
+				}), DispatcherPriority.SystemIdle);
 			}
 		}
 
@@ -1241,14 +1250,16 @@
 			Command.WindowTop = logicalPosition.Y;
 			Command.Visibility = Visibility.Visible;
 
-			WindowsUtility.ShowActive(CommandWindow.Handle);
+			CommandWindow.Dispatcher.BeginInvoke(new Action(() => {
+				WindowsUtility.ShowActive(CommandWindow.Handle);
+			}), DispatcherPriority.SystemIdle);
 		}
 
 		Updater CheckUpdate(bool force)
 		{
 
 			var updateData = new Updater(CommonData.VariableConstants.UserArchiveDirectoryPath, CommonData.MainSetting.RunningInformation.CheckUpdateRC, CommonData);
-			CommonData.Logger.Information(CommonData.Language["log/update/check"], string.Format("force = {0}, setting = {1}", force, CommonData.MainSetting.RunningInformation.CheckUpdateRelease));
+			CommonData.Logger.Debug(CommonData.Language["log/update/state"], string.Format("force = {0}, setting = {1}", force, CommonData.MainSetting.RunningInformation.CheckUpdateRelease));
 			if(force || !IsPause && this.CommonData.MainSetting.RunningInformation.CheckUpdateRelease) {
 				var updateInfo = updateData.Check();
 			}
@@ -1937,8 +1948,7 @@
 						//WindowsUtility.ShowNoActive(window.Handle);
 						Application.Current.Dispatcher.BeginInvoke(new Action(() => {
 							WindowsUtility.ShowActive(window.Handle);
-							window.Activate();
-						}), DispatcherPriority.ApplicationIdle);
+						}), DispatcherPriority.SystemIdle);
 					}
 					break;
 

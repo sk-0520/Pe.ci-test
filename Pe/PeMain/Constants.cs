@@ -35,7 +35,7 @@
 		/// 前回バージョンがこれ未満なら使用許諾を表示
 		/// </summary>
 		[ConstantsProperty]
-		public static readonly Version acceptVersion = new Version(0, 63, 0, 0);
+		static readonly Version acceptVersion = new Version(0, 63, 0, 0);
 
 		/// <summary>
 		/// Forms版のバージョン。
@@ -43,15 +43,16 @@
 		[ConstantsProperty]
 		static readonly Version formsVersion = new Version(0, 62, 0, 42674);
 
-		public const string shortcutNameDebug = applicationName + "(DEBUG).lnk";
-		public const string shortcutNameBeta = applicationName + "(BETA).lnk";
-		public const string shortcutNameRelease = applicationName + ".lnk";
+		const string shortcutNameDebug = applicationName + "(DEBUG).lnk";
+		const string shortcutNameBeta = applicationName + "(BETA).lnk";
+		const string shortcutNameRelease = applicationName + ".lnk";
 
-		public const string buildTypeDebug = "DEBUG";
-		public const string buildTypeBeta = "β";
-		public const string buildTypeRelease = "RELEASE";
+		const string buildTypeDebug = "DEBUG";
+		const string buildTypeBeta = "β";
+		const string buildTypeRelease = "RELEASE";
 
-		public static readonly string buildProcess = Environment.Is64BitProcess ? "64" : "32";
+		[ConstantsProperty]
+		static readonly string buildProcess = Environment.Is64BitProcess ? "64" : "32";
 
 		public const string keyGuidName = "${GUID}";
 		public const string keyIndexExt = "${EXT}";
@@ -96,6 +97,11 @@
 
 		public const string languageDefaultFileName = "default.xml";
 		public const string languageSearchPattern = "*.xml";
+
+		[ConstantsProperty]
+		public const string archiveSearchPattern = "*.zip";
+		[ConstantsProperty]
+		public const string backupSearchPattern = "*.zip";
 
 		public const string dialogFilterText = "*.txt";
 		public const string dialogFilterRtf = "*.rtf";
@@ -387,7 +393,7 @@
 
 		//public static string ApplicationName { get { return applicationName; } }
 		//public static string BuildType { get { return buildType; } }
-		public static string BuildProcess { get { return buildProcess; } }
+		//public static string BuildProcess { get { return buildProcess; } }
 		public static string ApplicationVersion { get { return applicationVersion; } }
 		public static Version ApplicationVersionNumber { get { return applicationVersionNumber; } }
 		public static string ApplicationVersionRevision { get { return applicationVersionRevision; } }

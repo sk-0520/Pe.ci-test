@@ -53,5 +53,19 @@ using ContentTypeTextNet.Pe.Library.PeData.Define;
 				return result;
 			}
 		}
+
+		public static IEnumerable<ToolbarButtonPosition> ToolbarButtonPositionList
+		{
+			get
+			{
+				var result = new[] {
+					ToolbarButtonPosition.Near,
+					ToolbarButtonPosition.Center,
+					ToolbarButtonPosition.Far,
+				};
+
+				return result;
+			}
+		}
 	}
 }
