@@ -5,7 +5,9 @@
 	using System.Linq;
 	using System.Text;
 	using System.Threading.Tasks;
+	using System.Windows;
 	using System.Windows.Input;
+	using ContentTypeTextNet.Library.SharedLibrary.Data;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
@@ -94,6 +96,68 @@
 				);
 
 				return result;
+			}
+		}
+
+		public ICommand DragOverCommand
+		{
+			get
+			{
+				var reslut = CreateCommand(
+					o => {
+						var eventData = (EventData<DragEventArgs>)o;
+
+						eventData.EventArgs.Effects = DragDropEffects.None;
+						
+						if(eventData.EventArgs.Data.GetDataPresent(DataFormats.FileDrop)) {
+							var filePathList = eventData.EventArgs.Data.GetData(DataFormats.FileDrop) as string[];
+							if(filePathList != null && filePathList.Count() == 1) {
+								eventData.EventArgs.Effects = DragDropEffects.Copy;
+							}
+						}
+
+						eventData.EventArgs.Handled = true;
+					}
+				);
+
+				return reslut;
+			}
+		}
+
+		public ICommand DragDropCommand
+		{
+			get
+			{
+				var reslut = CreateCommand(
+					o => {
+						var eventData = (EventData<DragEventArgs>)o;
+						if(eventData.EventArgs.Data.GetDataPresent(DataFormats.FileDrop)) {
+							var filePathList = eventData.EventArgs.Data.GetData(DataFormats.FileDrop) as string[];
+							if(filePathList != null && filePathList.Count() == 1) {
+								// TODO: LauncherToolbarViewModel.DragDropCommandと重複。いつか見た光景。
+								var filePath = filePathList.First();
+								var loadShorcut = true;
+								if(PathUtility.IsShortcut(filePath)) {
+									var dialogResult = MessageBox.Show(
+										AppNonProcess.Language["confirm/shortcut/message"],
+										AppNonProcess.Language["confirm/shortcut/caption"],
+										MessageBoxButton.YesNoCancel,
+										MessageBoxImage.Question
+									);
+									if(dialogResult == MessageBoxResult.Cancel) {
+										// やめる
+										return;
+									}
+									loadShorcut = dialogResult == MessageBoxResult.Yes;
+								}
+								var item = LauncherItemUtility.CreateFromFile(filePath, loadShorcut, AppNonProcess);
+								LauncherItems.LauncherItemPairList.Add(item, null);
+							}
+						}
+					}
+				);
+
+				return reslut;
 			}
 		}
 
