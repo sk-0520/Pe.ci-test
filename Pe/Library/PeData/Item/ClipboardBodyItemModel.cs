@@ -15,6 +15,9 @@
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
 	using ContentTypeTextNet.Pe.Library.PeData.Define;
 
+	/// <summary>
+	/// クリップデータのボディ部。
+	/// </summary>
 	[DataContract, Serializable]
 	public class ClipboardBodyItemModel: IndexBodyItemModelBase
 	{
@@ -24,27 +27,42 @@
 			Files = new CollectionModel<string>();
 		}
 
-		#region ClipboardBodyItemModel
+		#region property
 
+		/// <summary>
+		/// テキストデータ。
+		/// </summary>
 		[DataMember]
 		public string Text { get; set; }
+		/// <summary>
+		/// RTFデータ。
+		/// </summary>
 		[DataMember]
 		public string Rtf { get; set; }
+		/// <summary>
+		/// HTMLデータ。
+		/// </summary>
 		[DataMember]
 		public string Html { get; set; }
-
+		/// <summary>
+		/// 画像データ。
+		/// <para>コード上ではこちらを使用する。</para>
+		/// </summary>
 		[IgnoreDataMember, XmlIgnore]
 		public BitmapSource Image { get; set; }
-
+		/// <summary>
+		/// 画像データの内部実装。
+		/// </summary>
 		[DataMember(Name = "Image")]
 		public byte[] Image_Impl
 		{
-			get {
-				if (Image != null) {
+			get
+			{
+				if(Image != null) {
 					var encoder = new PngBitmapEncoder();
 					//var encoder = new BmpBitmapEncoder();
 					encoder.Frames.Add(BitmapFrame.Create((BitmapSource)Image.Clone()));
-					using (var stream = new MemoryStream()) {
+					using(var stream = new MemoryStream()) {
 						encoder.Save(stream);
 						return stream.ToArray();
 					}
@@ -54,14 +72,14 @@
 			}
 			set
 			{
-				if (value == null) {
+				if(value == null) {
 					Image = null;
 				} else {
 					if(Image != null) {
 						return;
 					}
 
-					using (var stream = new MemoryStream(value)) {
+					using(var stream = new MemoryStream(value)) {
 						var bitmapImage = new BitmapImage();
 						bitmapImage.BeginInit();
 						try {
@@ -79,7 +97,9 @@
 				}
 			}
 		}
-
+		/// <summary>
+		/// ファイルデータ。
+		/// </summary>
 		[DataMember]
 		public CollectionModel<string> Files { get; set; }
 

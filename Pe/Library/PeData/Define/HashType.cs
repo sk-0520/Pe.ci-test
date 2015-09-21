@@ -11,6 +11,9 @@
 	/// </summary>
 	public enum HashType
 	{
-		SHA1
+		/// <summary>
+		/// SHA1。
+		/// </summary>
+		SHA1,
 	}
 }

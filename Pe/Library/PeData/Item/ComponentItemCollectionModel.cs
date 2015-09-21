@@ -8,6 +8,9 @@
 	using System.Xml.Serialization;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
 
+	/// <summary>
+	/// コンポーネント情報統括。
+	/// </summary>
 	[Serializable, XmlRoot("Components")]
 	public class ComponentItemCollectionModel: CollectionModel<ComponentItemModel>
 	{ }

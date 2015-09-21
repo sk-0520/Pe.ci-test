@@ -11,6 +11,9 @@
 	using ContentTypeTextNet.Library.SharedLibrary.Define;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 
+	/// <summary>
+	/// フロート状態ツールバー設定データ。
+	/// </summary>
 	[Serializable]
 	public class FloatToolbarItemModel: ItemModelBase, IDeepClone
 	{

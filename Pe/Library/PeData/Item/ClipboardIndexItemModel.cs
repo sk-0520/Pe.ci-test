@@ -9,6 +9,9 @@
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
 	using ContentTypeTextNet.Pe.Library.PeData.Define;
 
+	/// <summary>
+	/// クリップボードのインデックス個別データ。
+	/// </summary>
 	public class ClipboardIndexItemModel: IndexItemModelBase
 	{
 		public ClipboardIndexItemModel()
@@ -17,9 +20,15 @@
 			Hash = new HashItemModel();
 		}
 
-		#region
+		#region property
 
+		/// <summary>
+		/// 保持するクリップボードの型。
+		/// </summary>
 		public ClipboardType Type { get; set; }
+		/// <summary>
+		/// 自身のデータ(インデックス + ボディ)を示すハッシュデータ。
+		/// </summary>
 		public HashItemModel Hash { get; set; }
 
 		#endregion

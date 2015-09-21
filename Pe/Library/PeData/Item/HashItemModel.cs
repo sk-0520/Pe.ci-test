@@ -9,6 +9,9 @@
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Pe.Library.PeData.Define;
 
+	/// <summary>
+	/// ハッシュデータ。
+	/// </summary>
 	[Serializable]
 	public class HashItemModel : ItemModelBase, IDeepClone, IIsEqual
 	{

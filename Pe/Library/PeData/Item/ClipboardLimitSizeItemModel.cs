@@ -8,24 +8,42 @@
 	using System.Threading.Tasks;
 	using System.Windows;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
-using ContentTypeTextNet.Pe.Library.PeData.Define;
+	using ContentTypeTextNet.Pe.Library.PeData.Define;
 
+	/// <summary>
+	/// クリップボード取込制限データ。
+	/// </summary>
 	[Serializable]
-	public class ClipboardLimitSizeItemModel : ItemModelBase, IDeepClone
+	public class ClipboardLimitSizeItemModel: ItemModelBase, IDeepClone
 	{
 		/// <summary>
 		/// 取り込み制限対象。
 		/// </summary>
 		[DataMember]
 		public ClipboardType LimitType { get; set; }
+		/// <summary>
+		/// テキストデータの取込有効長。
+		/// </summary>
 		[DataMember]
 		public int Text { get; set; }
+		/// <summary>
+		/// RTFデータの取込有効長。
+		/// </summary>
 		[DataMember]
 		public int Rtf { get; set; }
+		/// <summary>
+		/// HTMLデータの取込有効長。
+		/// </summary>
 		[DataMember]
 		public int Html { get; set; }
+		/// <summary>
+		/// 画像データの取込有効幅。
+		/// </summary>
 		[DataMember]
 		public int ImageWidth { get; set; }
+		/// <summary>
+		/// 画像データの取込有効高。
+		/// </summary>
 		[DataMember]
 		public int ImageHeight { get; set; }
 

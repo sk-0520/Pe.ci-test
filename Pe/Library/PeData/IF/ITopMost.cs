@@ -7,7 +7,7 @@
 	using System.Threading.Tasks;
 
 	/// <summary>
-	/// 最前面を保持する。
+	/// 最前面状態を保持する。
 	/// </summary>
 	public interface ITopMost
 	{

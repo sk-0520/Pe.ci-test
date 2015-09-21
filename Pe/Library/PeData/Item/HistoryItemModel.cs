@@ -44,12 +44,19 @@
 
 		#region function
 
+		/// <summary>
+		/// 更新。
+		/// </summary>
+		/// <param name="dateTime"></param>
 		public virtual void Update(DateTime dateTime)
 		{
 			UpdateCount += 1;
 			UpdateTimestamp = DateTime.Now;
 		}
-		public virtual void Update()
+		/// <summary>
+		/// 更新。
+		/// </summary>
+		public void Update()
 		{
 			Update(DateTime.Now);
 		}
