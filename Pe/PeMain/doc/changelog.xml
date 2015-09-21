@@ -80,7 +80,7 @@
 		</group>
 		<group type="fixes" dummy="==================================================================">
 			<note rev="">
-				<message></message>
+				<message>#315: 隠しファイルを表示するホットキー通知のタイトルがローカライズされていない</message>
 			</note>
 			<note rev="">
 				<message></message>

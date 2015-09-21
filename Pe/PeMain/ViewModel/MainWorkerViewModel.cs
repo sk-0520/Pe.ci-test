@@ -1921,7 +1921,7 @@
 						} else {
 							message = "notify/info/hiddenfile/message/hide";
 						}
-						SendInformationTips(CommonData.Language["notify/info/hidefile/title"], CommonData.Language[message], LogKind.Information);
+						SendInformationTips(CommonData.Language["notify/info/hiddenfile/title"], CommonData.Language[message], LogKind.Information);
 					}
 					break;
 
