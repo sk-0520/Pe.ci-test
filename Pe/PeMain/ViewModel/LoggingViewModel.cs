@@ -90,7 +90,14 @@
 		public bool IsVisible
 		{
 			get { return VisibleVisibilityProperty.GetVisible(Model); }
-			set { VisibleVisibilityProperty.SetVisible(Model, value, OnPropertyChanged); }
+			set { 
+				VisibleVisibilityProperty.SetVisible(Model, value, OnPropertyChanged);
+				if(IsVisible && HasView && View.listLog.HasItems ) {
+					View.Dispatcher.BeginInvoke(new Action(() => {
+						View.listLog.ScrollIntoView(View.listLog.Items[View.listLog.Items.Count - 1]);
+					}));
+				}
+			}
 		}
 
 		#endregion
@@ -245,8 +252,8 @@
 			}
 			if(HasView) {
 				View.Dispatcher.BeginInvoke(new Action(() => {
+					View.listLog.SelectedItem = item;
 					if(!View.IsActive && View.IsVisible) {
-						View.listLog.SelectedItem = item;
 						View.listLog.ScrollIntoView(View.listLog.SelectedItem);
 					}
 				}));

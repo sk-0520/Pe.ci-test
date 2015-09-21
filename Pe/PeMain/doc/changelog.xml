@@ -83,6 +83,9 @@
 				<message>#315: 隠しファイルを表示するホットキー通知のタイトルがローカライズされていない</message>
 			</note>
 			<note rev="">
+				<message>#307: ログ追加時にログウィンドウが表示された場合に項目が選択されていない</message>
+			</note>
+			<note rev="">
 				<message></message>
 			</note>
 			<note rev="">
