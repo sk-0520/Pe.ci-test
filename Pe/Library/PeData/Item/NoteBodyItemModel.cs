@@ -10,6 +10,9 @@
 	using ContentTypeTextNet.Pe.Library.PeData.Define;
 	using ContentTypeTextNet.Pe.Library.PeData.IF;
 
+	/// <summary>
+	/// ノートインデックスのボディ部データ。
+	/// </summary>
 	[DataContract, Serializable]
 	public class NoteBodyItemModel : IndexBodyItemModelBase
 	{
@@ -19,6 +22,9 @@
 
 		#region property
 
+		/// <summary>
+		/// テキストデータ。
+		/// </summary>
 		[DataMember]
 		public string Text { get; set; }
 

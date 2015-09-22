@@ -11,6 +11,9 @@
 	using ContentTypeTextNet.Pe.Library.PeData.IF;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 
+	/// <summary>
+	/// ランチャーアイテム統括データ。
+	/// </summary>
 	[Serializable]
 	public class LauncherItemCollectionModel: GuidCollectionBase<LauncherItemModel>
 	{

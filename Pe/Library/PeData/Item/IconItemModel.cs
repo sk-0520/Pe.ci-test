@@ -10,6 +10,9 @@
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
 	using ContentTypeTextNet.Pe.Library.PeData.IF;
 
+	/// <summary>
+	/// アイコンのパスを保持。
+	/// </summary>
 	[Serializable]
 	public sealed class IconItemModel: IconPathModel, IItemModel, IDeepClone
 	{
@@ -30,6 +33,8 @@
 
 		public void Dispose()
 		{
+			// IItemModelのIFに合わせるためだけの実装
+
 			if (IsDisposed) {
 				return;
 			}

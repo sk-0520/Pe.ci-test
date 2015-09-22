@@ -13,6 +13,9 @@
 	using ContentTypeTextNet.Pe.Library.PeData.Define;
 	using ContentTypeTextNet.Pe.Library.PeData.IF;
 
+	/// <summary>
+	/// ランチャーグループ。
+	/// </summary>
 	[Serializable]
 	public class LauncherGroupItemModel: GuidModelBase, IName
 	{
