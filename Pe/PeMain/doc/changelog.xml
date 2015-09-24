@@ -69,7 +69,7 @@
 		</group>
 		<group type="features" dummy="==================================================================">
 			<note rev="">
-				<message></message>
+				<message>#327: リサイズ可能なウィンドウでデザインに問題なければリサイズグリップをつける</message>
 			</note>
 			<note rev="">
 				<message></message>
