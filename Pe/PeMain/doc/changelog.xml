@@ -72,7 +72,10 @@
 				<message>#327: リサイズ可能なウィンドウでデザインに問題なければリサイズグリップをつける</message>
 			</note>
 			<note rev="">
-				<message></message>
+				<message>#319: 重複したクリップボードをリストの上位に移動させる</message>
+				<comments>
+					<comment>0.65.0以下からアップデートした場合、本機能は規定値(有効)に設定されます</comment>
+				</comments>
 			</note>
 			<note rev="">
 				<message></message>

@@ -153,6 +153,7 @@
 			obj.WindowState = WindowState;
 			obj.IsTopmost = IsTopmost;
 			obj.IsVisible = IsVisible;
+			obj.DuplicationMoveHead = DuplicationMoveHead;
 			Font.DeepCloneTo(obj.Font);
 			LimitSize.DeepCloneTo(obj.LimitSize);
 		}

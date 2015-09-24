@@ -76,7 +76,7 @@
 
 		static void V_0_65_0(ClipboardSettingModel setting, Version previousVersion, INonProcess nonProcess)
 		{
-			if(new Version(0, 66, 0) <= previousVersion) {
+			if(new Version(0, 65, 0, 43015) < previousVersion) {
 				return;
 			}
 

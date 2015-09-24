@@ -391,6 +391,7 @@
 		<Item Id="clipboard-setting/topmost" Word="最前面" />
 		<Item Id="clipboard-setting/visible" Word="クリップボードウィンドウを表示する" />
 		<Item Id="clipboard-setting/using-clipboard" Word="テキスト転送にクリップボードを経由する" />
+		<Item Id="clipboard-setting/dup-move-head" Word="重複アイテムをリストの最上部に移動する" />
 		<Item Id="clipboard-setting/capture-type" Word="取込対象" />
 		<Item Id="clipboard-setting/capture-type/text" Word="文字列" />
 		<Item Id="clipboard-setting/capture-type/rtf" Word="書式付文字列" />
