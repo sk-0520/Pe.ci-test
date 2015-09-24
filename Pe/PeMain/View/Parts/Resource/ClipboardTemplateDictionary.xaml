@@ -12,6 +12,16 @@
 	<Style x:Key="ClipboardTemplateDefualtWindow" TargetType="Window">
 		<Setter Property="WindowStyle" Value="ToolWindow" />
 		<Setter Property="ShowInTaskbar" Value="False" />
+		<Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" />
+		<Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}" />
+		<Setter Property="ResizeMode" Value="CanResizeWithGrip" />
+		<Setter Property="Visibility" Value="{Binding Visibility}" />
+		<Setter Property="WindowState" Value="{Binding WindowState}" />
+		<Setter Property="Left" Value="{Binding WindowLeft, Mode=TwoWay}" />
+		<Setter Property="Top" Value="{Binding WindowTop, Mode=TwoWay}" />
+		<Setter Property="Width" Value="{Binding WindowWidth, Mode=TwoWay}" />
+		<Setter Property="Height" Value="{Binding WindowHeight, Mode=TwoWay}" />
+		<Setter Property="Topmost" Value="{Binding IsTopmost}" />
 	</Style>
 	<Style x:Key="ClipboardTemplateDefualtToolbar" TargetType="ToolBar" BasedOn="{StaticResource DefaultToolbar}">
 		<Setter Property="HorizontalAlignment" Value="Stretch" />
