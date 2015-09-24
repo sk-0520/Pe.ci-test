@@ -701,6 +701,9 @@
 				CreateClipboard();
 				CreateCommandWindow();
 
+				// #326
+				ReceiveClipboardChanged();
+
 				return startupNotifyData;
 			}
 		}

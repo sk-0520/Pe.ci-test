@@ -86,6 +86,9 @@
 				<message>#307: ログ追加時にログウィンドウが表示された場合に項目が選択されていない</message>
 			</note>
 			<note rev="">
+				<message>#326: 起動時にクリップボード取込処理を実施する</message>
+			</note>
+			<note rev="">
 				<message></message>
 			</note>
 			<note rev="">
