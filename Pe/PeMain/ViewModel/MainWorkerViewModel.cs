@@ -1896,7 +1896,19 @@
 						CommonData.Logger.Error(ex);
 					}
 				} else {
-					CommonData.Logger.Information(CommonData.Language["log/clipboard/dup-item/message"], dupItem);
+					if(Clipboard.DuplicationMoveHead) {
+						CommonData.Logger.Information(CommonData.Language["log/clipboard/dup-item/move"], dupItem);
+
+						Clipboard.IndexPairList.Remove(dupItem);
+						var nowTime = DateTime.Now;
+						dupItem.History.CreateTimestamp = nowTime;
+						dupItem.History.Update(nowTime);
+						Clipboard.IndexPairList.Add(dupItem, null);
+//						Clipboard.Items.Refresh();
+						SendSaveIndex(IndexKind.Clipboard, Timing.Delay);
+					} else {
+						CommonData.Logger.Information(CommonData.Language["log/clipboard/dup-item/ignore"], dupItem);
+					}
 				}
 
 				t.Dispose();

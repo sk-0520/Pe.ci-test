@@ -133,6 +133,11 @@
 
 		#endregion
 
+		public bool DuplicationMoveHead
+		{
+			get { return Model.DuplicationMoveHead; }
+		}
+
 		#endregion
 
 		#region command
