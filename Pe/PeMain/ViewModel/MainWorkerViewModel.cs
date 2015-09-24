@@ -1897,6 +1897,15 @@
 					}
 				} else {
 					CommonData.Logger.Information(CommonData.Language["log/clipboard/dup-item/message"], dupItem);
+					if(Clipboard.DuplicationMoveHead) {
+						Clipboard.IndexPairList.Remove(dupItem);
+						var nowTime = DateTime.Now;
+						dupItem.History.CreateTimestamp = nowTime;
+						dupItem.History.Update(nowTime);
+						Clipboard.IndexPairList.Add(dupItem, null);
+//						Clipboard.Items.Refresh();
+						SendSaveIndex(IndexKind.Clipboard, Timing.Delay);
+					}
 				}
 
 				t.Dispose();

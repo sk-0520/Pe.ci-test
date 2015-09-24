@@ -16,6 +16,7 @@
 		public static void Correction(ClipboardSettingModel setting, Version previousVersion, INonProcess nonProcess)
 		{
 			V_First(setting, previousVersion, nonProcess);
+			V_0_65_0(setting, previousVersion, nonProcess);
 			V_Last(setting, previousVersion, nonProcess);
 		}
 
@@ -69,8 +70,19 @@
 			setting.LimitSize.Rtf = Constants.clipboardLimitRtfSize.median;
 			setting.LimitSize.Html = Constants.clipboardLimitHtmlSize.median;
 			setting.LimitSize.ImageWidth = Constants.clipboardLimitImageWidthSize.median;
-			setting.LimitSize.ImageHeight = Constants.clipboardLimitImageHeightSize.median
-		;
+			setting.LimitSize.ImageHeight = Constants.clipboardLimitImageHeightSize.median;
+			setting.DuplicationMoveHead = true;
+		}
+
+		static void V_0_65_0(ClipboardSettingModel setting, Version previousVersion, INonProcess nonProcess)
+		{
+			if(new Version(0, 66, 0) <= previousVersion) {
+				return;
+			}
+
+			nonProcess.Logger.Trace("version setting: 0.65.0");
+
+			setting.DuplicationMoveHead = true;
 		}
 	}
 }
