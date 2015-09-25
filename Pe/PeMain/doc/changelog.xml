@@ -78,6 +78,12 @@
 				</comments>
 			</note>
 			<note rev="">
+				<message>#314: 各ウィンドウのタイトルバーにそれっぽい値を設定する</message>
+				<comments>
+					<comment>ユーザー視点的に何の影響もない</comment>
+				</comments>
+			</note>
+			<note rev="">
 				<message></message>
 			</note>
 		</group>

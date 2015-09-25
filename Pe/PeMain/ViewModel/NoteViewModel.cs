@@ -1,6 +1,7 @@
 ﻿namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 {
 	using System;
+	using System.Collections.Generic;
 	using System.ComponentModel;
 	using System.Linq;
 	using System.Windows;
@@ -103,6 +104,12 @@
 			{
 				if (SetModelValue(value)) {
 					CallOnPropertyChangeDisplayItem();
+					if(HasView) {
+						var map = new Dictionary<string, string>() {
+							{ LanguageKey.noteTitle, Name },
+						};
+						LanguageUtility.SetTitle(View, AppNonProcess.Language, map);
+					}
 				}
 			}
 		}
