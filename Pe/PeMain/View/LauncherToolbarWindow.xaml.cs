@@ -145,6 +145,13 @@
 			base.OnClosed(e);
 		}
 
+		public override void ApplyLanguage(Dictionary<string, string> map)
+		{
+			map[LanguageKey.toolbarScreenName] = ScreenUtility.GetScreenName(ViewModel.DockScreen, CommonData.Logger);
+
+			base.ApplyLanguage(map);
+		}
+
 		#endregion
 
 		#region IApplicationDesktopToolbar

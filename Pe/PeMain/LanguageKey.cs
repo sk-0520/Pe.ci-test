@@ -89,6 +89,8 @@
 
 		public const string windowCollectionCount = "WINDOW-COLLECTION-COUNT";
 
+		public const string toolbarScreenName = "TOOLBAR-SCREEN-NAME";
+
 		#endregion
 	}
 }
