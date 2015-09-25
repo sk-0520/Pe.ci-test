@@ -91,6 +91,8 @@
 
 		public const string toolbarScreenName = "TOOLBAR-SCREEN-NAME";
 
+		public const string noteTitle = "NOTE-TITLE";
+
 		#endregion
 	}
 }

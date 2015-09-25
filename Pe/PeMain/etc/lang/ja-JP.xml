@@ -27,6 +27,7 @@
 		<Item Id="window/setting" Word="@[APPLICATION:NAME] ${setting}"  />
 		<Item Id="window/accept" Word="@[APPLICATION:NAME] 使用許諾"  />
 		<Item Id="window/toolbar" Word="${toolbar}: @[TOOLBAR-SCREEN-NAME]" />
+		<Item Id="window/note" Word="ノート: @[NOTE-TITLE]" />
 		<Item Id="window/clipboard" Word="クリップボード"  />
 		<Item Id="window/template" Word="テンプレート"  />
 		<Item Id="window/execute" Word="@[LAUNCHER-ITEM-EXECUTE]を指定して実行"  />
