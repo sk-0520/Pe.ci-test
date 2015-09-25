@@ -98,6 +98,9 @@
 				<message>#326: 起動時にクリップボード取込処理を実施する</message>
 			</note>
 			<note rev="">
+				<message>#302: 各アイテムの更新日時等をきちんと更新する</message>
+			</note>
+			<note rev="">
 				<message></message>
 			</note>
 			<note rev="">
