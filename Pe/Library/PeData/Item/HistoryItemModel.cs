@@ -8,6 +8,7 @@
 	using System.Threading.Tasks;
 	using System.Xml.Serialization;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 
 	/// <summary>
 	/// 履歴保持アイテム。
@@ -50,7 +51,7 @@
 		/// <param name="dateTime"></param>
 		public virtual void Update(DateTime dateTime)
 		{
-			UpdateCount += 1;
+			UpdateCount = RangeUtility.Increment(UpdateCount);
 			UpdateTimestamp = DateTime.Now;
 		}
 		/// <summary>

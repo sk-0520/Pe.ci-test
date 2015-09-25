@@ -1886,6 +1886,7 @@
 							Hash = clipboardData.Hash,
 						};
 						Clipboard.IndexPairList.Add(index, null);
+						index.History.Update();
 						SendSaveIndex(IndexKind.Clipboard, Timing.Delay);
 						SendSaveIndexBody(clipboardData.Body, index.Id, Timing.Delay);
 						if(!ClipboardWindow.IsActive && ClipboardWindow.IsVisible) {
