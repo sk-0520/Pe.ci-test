@@ -113,7 +113,7 @@
 		</group>
 		<group type="developer" dummy="==================================================================">
 			<note rev="">
-				<message></message>
+				<message>#309: ログデータ保持に生データを持たないようにする</message>
 			</note>
 			<note rev="">
 				<message></message>
