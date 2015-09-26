@@ -39,8 +39,8 @@
 			{
 				if (this._bodyModel == null) {
 					var body = AppSender.SendLoadIndexBody(IndexKind.Template, Model.Id);
-					body.Disposing += Body_Disposing;
 					this._bodyModel = (TemplateBodyItemModel)body;
+					this._bodyModel.Disposing += Body_Disposing;
 					if(IsDisposed) {
 						// 再度読み込まれた
 						IsDisposed = false;

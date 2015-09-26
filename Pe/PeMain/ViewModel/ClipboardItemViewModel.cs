@@ -51,10 +51,15 @@
 				if(this._bodyModel == null) {
 					var body = AppSender.SendLoadIndexBody(IndexKind.Clipboard, Model.Id);
 					this._bodyModel = (ClipboardBodyItemModel)body;
+					this._bodyModel.Disposing += Body_Disposing;
 					if(Model.Type.HasFlag(ClipboardType.Html)) {
 						HtmlModel = ClipboardUtility.ConvertClipboardHtmlFromFromRawHtml(this._bodyModel.Html ?? string.Empty, AppNonProcess);
 					} else {
 						HtmlModel = null;
+					}
+					if(IsDisposed) {
+						// 再度読み込まれた
+						IsDisposed = false;
 					}
 				}
 
@@ -327,6 +332,21 @@
 
 		#endregion
 
+		#region IIsDispose
+
+		protected override void Dispose(bool disposing)
+		{
+			if(!IsDisposed) {
+				if(this._bodyModel != null) {
+					this._bodyModel.Disposing -= Body_Disposing;
+					this._bodyModel = null;
+				}
+			}
+			base.Dispose(disposing);
+		}
+
+		#endregion
+
 		#region SingleModelWrapperViewModelBase
 
 		#endregion
@@ -342,5 +362,11 @@
 		public IAppNonProcess AppNonProcess { get; private set; }
 
 		#endregion
+
+		private void Body_Disposing(object sender, EventArgs e)
+		{
+			Dispose();
+		}
+
 	}
 }

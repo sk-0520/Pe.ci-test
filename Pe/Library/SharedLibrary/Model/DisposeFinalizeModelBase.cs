@@ -20,7 +20,8 @@
 
 		#region IIsDisposed
 
-		public event EventHandler Disposing = delegate { };
+		[field: NonSerialized]
+		public event EventHandler Disposing;
 
 		[IgnoreDataMember, XmlIgnore]
 		public bool IsDisposed { get; protected set; }
@@ -31,7 +32,9 @@
 				return;
 			}
 
-			Disposing(this, EventArgs.Empty);
+			if(Disposing != null) {
+				Disposing(this, EventArgs.Empty);
+			}
 
 			IsDisposed = true;
 			GC.SuppressFinalize(this);
