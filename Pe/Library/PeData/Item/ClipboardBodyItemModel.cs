@@ -122,6 +122,7 @@
 				//	}));
 				//}
 				Image = null;
+				Image_Impl = null;
 			}
 
 			base.Dispose(disposing);
