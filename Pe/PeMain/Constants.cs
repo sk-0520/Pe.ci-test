@@ -378,7 +378,6 @@
 		public static string UriHelp { get { return ConfigurationManager.AppSettings["uri-help"]; } }
 		public static string UriFeedback { get { return ConfigurationManager.AppSettings["uri-feedback"]; } }
 
-		public static int CacheIndexNote { get { return int.Parse(ConfigurationManager.AppSettings["cache-index-note"]); } }
 		public static int CacheIndexTemplate { get { return int.Parse(ConfigurationManager.AppSettings["cache-index-template"]); } }
 		public static int CacheIndexClipboard { get { return int.Parse(ConfigurationManager.AppSettings["cache-index-clipboard"]); } }
 

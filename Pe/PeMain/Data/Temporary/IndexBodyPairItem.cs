@@ -5,10 +5,11 @@
 	using System.Linq;
 	using System.Text;
 	using System.Threading.Tasks;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic;
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 
-	public class IndexBodyPairItem<TIndexBody>
+	public class IndexBodyPairItem<TIndexBody>: DisposeFinalizeBase
 		where TIndexBody : IndexBodyItemModelBase
 	{
 		public IndexBodyPairItem(Guid id, TIndexBody body)
@@ -21,6 +22,19 @@
 
 		public Guid Id { get; private set; }
 		public TIndexBody Body { get; private set; }
+
+		#endregion
+
+		#region DisposeFinalizeBase
+
+		protected override void Dispose(bool disposing)
+		{
+			if(!IsDisposed) {
+				Body.Dispose();
+				Body = null;
+			}
+			base.Dispose(disposing);
+		}
 
 		#endregion
 	}

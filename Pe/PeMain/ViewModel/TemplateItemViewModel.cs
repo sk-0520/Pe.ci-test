@@ -12,7 +12,7 @@
 	using ContentTypeTextNet.Pe.PeMain.Logic;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
-	public class TemplateItemViewModel: SingleModelWrapperViewModelBase<TemplateIndexItemModel>, IHavingAppSender, IHavingAppNonProcess, IUnload
+	public class TemplateItemViewModel: SingleModelWrapperViewModelBase<TemplateIndexItemModel>, IHavingAppSender, IHavingAppNonProcess
 	{
 		#region variable
 
@@ -39,7 +39,12 @@
 			{
 				if (this._bodyModel == null) {
 					var body = AppSender.SendLoadIndexBody(IndexKind.Template, Model.Id);
+					body.Disposing += Body_Disposing;
 					this._bodyModel = (TemplateBodyItemModel)body;
+					if(IsDisposed) {
+						// 再度読み込まれた
+						IsDisposed = false;
+					}
 				}
 
 				return this._bodyModel;
@@ -202,14 +207,6 @@
 			ResetChangeFlag();
 		}
 
-		void ClearProcessor()
-		{
-			if(Processor != null) {
-				Processor.Dispose();
-				Processor = null;
-			}
-		}
-
 		#endregion
 
 		#region SingleModelWrapperViewModelBase
@@ -217,8 +214,16 @@
 		protected override void Dispose(bool disposing)
 		{
 			if (!IsDisposed) {
-				ClearProcessor();
+				if(Processor != null) {
+					Processor.Dispose();
+					Processor = null;
+				}
+				if(this._bodyModel != null) {
+					this._bodyModel.Disposing -= Body_Disposing;
+					this._bodyModel = null;
+				}
 			}
+
 			base.Dispose(disposing);
 		}
 
@@ -236,19 +241,9 @@
 
 		#endregion
 
-		#region IUnload
-
-		public bool IsUnloaded { get; private set; }
-
-		public void Unload()
+		void Body_Disposing(object sender, EventArgs e)
 		{
-			if (!IsUnloaded) {
-				ClearProcessor();
-				this._bodyModel = null;
-				IsUnloaded = true;
-			}
+			Dispose();
 		}
-
-		#endregion
 	}
 }

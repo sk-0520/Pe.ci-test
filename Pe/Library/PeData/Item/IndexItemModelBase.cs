@@ -31,12 +31,15 @@
 
 		#endregion
 
+		#region property
+
 		/// <summary>
 		/// 履歴。
 		/// </summary>
 		[DataMember]
 		public HistoryItemModel History { get; set; }
 
+		#endregion
 
 		#region IDeepClone
 

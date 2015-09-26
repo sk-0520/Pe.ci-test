@@ -68,7 +68,6 @@
 			OtherWindows = new HashSet<Window>();
 
 			IndexBodyCaching = new IndexBodyCaching(
-				Constants.CacheIndexNote,
 				Constants.CacheIndexTemplate,
 				Constants.CacheIndexClipboard
 			);
@@ -1683,11 +1682,11 @@
 				var pairItem = new IndexBodyPairItem<TIndexBody>(guid, indexBody);
 				cachingItems.Add(pairItem);
 				if(cachingItems.StockItems.Any()) {
-					var itemPairList = cachingItems.StockItems.ToArray();
+					var removedPairList = cachingItems.StockItems.ToArray();
 					cachingItems.StockItems.Clear();
-					foreach(var pair in itemPairList) {
-						CommonData.Logger.Debug("cache dispose: " + pair.Id.ToString(), pair.Body);
-						pair.Body.Dispose();
+					foreach(var removePair in removedPairList) {
+						CommonData.Logger.Debug("cache dispose: " + removePair.Id.ToString(), removePair.Body);
+						removePair.Dispose();
 					}
 				}
 			}

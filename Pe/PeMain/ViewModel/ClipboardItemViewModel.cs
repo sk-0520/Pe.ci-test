@@ -21,7 +21,7 @@
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
-	public class ClipboardItemViewModel : SingleModelWrapperViewModelBase<ClipboardIndexItemModel>, IHavingAppSender, IHavingAppNonProcess, IUnload
+	public class ClipboardItemViewModel : SingleModelWrapperViewModelBase<ClipboardIndexItemModel>, IHavingAppSender, IHavingAppNonProcess
 	{
 		#region define
 
@@ -48,7 +48,6 @@
 		{
 			get
 			{
-				lock(Model)
 				if(this._bodyModel == null) {
 					var body = AppSender.SendLoadIndexBody(IndexKind.Clipboard, Model.Id);
 					this._bodyModel = (ClipboardBodyItemModel)body;
@@ -57,7 +56,6 @@
 					} else {
 						HtmlModel = null;
 					}
-					IsUnloaded = false;
 				}
 
 				return this._bodyModel;
@@ -342,20 +340,6 @@
 		#region IHavingAppNonProcess
 
 		public IAppNonProcess AppNonProcess { get; private set; }
-
-		#endregion
-
-		#region IUnload
-
-		public bool IsUnloaded { get; private set; }
-
-		public void Unload()
-		{
-			if (!IsUnloaded) {
-				this._bodyModel = null;
-				IsUnloaded = true;
-			}
-		}
 
 		#endregion
 	}
