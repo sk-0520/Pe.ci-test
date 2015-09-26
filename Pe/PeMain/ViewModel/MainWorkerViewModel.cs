@@ -938,7 +938,7 @@
 			ClipboardWindow.SetCommonData(CommonData, null);
 		}
 
-		void RemoveCLipboard()
+		void RemoveClipboard()
 		{
 			ClipboardWindow.Close();
 			ClipboardWindow = null;
@@ -946,7 +946,7 @@
 
 		void ResetClipboard()
 		{
-			RemoveCLipboard();
+			RemoveClipboard();
 			CreateClipboard();
 		}
 
@@ -1517,9 +1517,12 @@
 						}
 						break;
 
-					case WindowKind.Note: {
+					case WindowKind.Note: 
+						{
 							var noteWindow = (NoteWindow)window;
 							NoteWindows.Remove(noteWindow);
+							var viewModel = noteWindow.ViewModel;
+							ClearIndex(IndexKind.Note, viewModel.Model.Id, IndexBodyCaching.NoteItems);
 
 							CallPropertyChangeNoteMenu();
 							break;
@@ -1605,8 +1608,7 @@
 			}
 		}
 
-		void RemoveIndex<TItemModel, TIndexBody>(IndexKind indexKind, Guid guid, IndexItemCollectionModel<TItemModel> items, Data.IndexBodyPairItemCollection<TIndexBody> cachingItems)
-			where TItemModel: IndexItemModelBase
+		void ClearIndex<TIndexBody>(IndexKind indexKind, Guid guid, Data.IndexBodyPairItemCollection<TIndexBody> cachingItems)
 			where TIndexBody: IndexBodyItemModelBase
 		{
 			var index = cachingItems.IndexOf(guid);
@@ -1617,6 +1619,14 @@
 				CommonData.Logger.Debug("cache dispose: " + pair.Id.ToString(), pair.Body);
 				pair.Body.Dispose();
 			}
+		}
+
+		void RemoveIndex<TItemModel, TIndexBody>(IndexKind indexKind, Guid guid, IndexItemCollectionModel<TItemModel> items, Data.IndexBodyPairItemCollection<TIndexBody> cachingItems)
+			where TItemModel: IndexItemModelBase
+			where TIndexBody: IndexBodyItemModelBase
+		{
+			ClearIndex(indexKind, guid, cachingItems);
+
 			items.Remove(guid);
 
 			// ボディ部のファイルも削除する。
