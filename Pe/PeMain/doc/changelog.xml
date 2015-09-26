@@ -105,6 +105,13 @@
 				</comments>
 			</note>
 			<note rev="">
+				<message>#311: インデックスデータ統括クラスのデータ破棄処理を政治家的に有耶無耶にしたい</message>
+				<comments>
+					<comment>ヘッダ部とデータ部で管理されているノート・クリップボード・テンプレートのメモリ管理方法が改善されました</comment>
+					<comment>特にクリップボードの画像データによるメモリ圧迫が改善された気がします</comment>
+				</comments>
+			</note>
+			<note rev="">
 				<message></message>
 			</note>
 			<note rev="">

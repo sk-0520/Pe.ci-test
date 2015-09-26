@@ -21,7 +21,7 @@
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
-	public class ClipboardItemViewModel : SingleModelWrapperViewModelBase<ClipboardIndexItemModel>, IHavingAppSender, IHavingAppNonProcess, IUnload
+	public class ClipboardItemViewModel : SingleModelWrapperViewModelBase<ClipboardIndexItemModel>, IHavingAppSender, IHavingAppNonProcess
 	{
 		#region define
 
@@ -48,16 +48,19 @@
 		{
 			get
 			{
-				lock(Model)
 				if(this._bodyModel == null) {
 					var body = AppSender.SendLoadIndexBody(IndexKind.Clipboard, Model.Id);
 					this._bodyModel = (ClipboardBodyItemModel)body;
+					this._bodyModel.Disposing += Body_Disposing;
 					if(Model.Type.HasFlag(ClipboardType.Html)) {
 						HtmlModel = ClipboardUtility.ConvertClipboardHtmlFromFromRawHtml(this._bodyModel.Html ?? string.Empty, AppNonProcess);
 					} else {
 						HtmlModel = null;
 					}
-					IsUnloaded = false;
+					if(IsDisposed) {
+						// 再度読み込まれた
+						IsDisposed = false;
+					}
 				}
 
 				return this._bodyModel;
@@ -329,6 +332,21 @@
 
 		#endregion
 
+		#region IIsDispose
+
+		protected override void Dispose(bool disposing)
+		{
+			if(!IsDisposed) {
+				if(this._bodyModel != null) {
+					this._bodyModel.Disposing -= Body_Disposing;
+					this._bodyModel = null;
+				}
+			}
+			base.Dispose(disposing);
+		}
+
+		#endregion
+
 		#region SingleModelWrapperViewModelBase
 
 		#endregion
@@ -345,18 +363,10 @@
 
 		#endregion
 
-		#region IUnload
-
-		public bool IsUnloaded { get; private set; }
-
-		public void Unload()
+		private void Body_Disposing(object sender, EventArgs e)
 		{
-			if (!IsUnloaded) {
-				this._bodyModel = null;
-				IsUnloaded = true;
-			}
+			Dispose();
 		}
 
-		#endregion
 	}
 }

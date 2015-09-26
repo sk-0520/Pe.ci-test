@@ -78,7 +78,6 @@
 							map[type].IsSelected = true;
 						}
 						if (prevViewModel != null) {
-							prevViewModel.Unload();
 						}
 					}
 				}
