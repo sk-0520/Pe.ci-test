@@ -115,6 +115,8 @@
 
 		#region IIsDisposed
 
+		public event EventHandler Disposing = delegate { };
+
 		[IgnoreDataMember, XmlIgnore]
 		public bool IsDisposed { get; private set; }
 
@@ -123,6 +125,8 @@
 			if(IsDisposed) {
 				return;
 			}
+
+			Disposing(this, EventArgs.Empty);
 
 			IsDisposed = true;
 			GC.SuppressFinalize(this);

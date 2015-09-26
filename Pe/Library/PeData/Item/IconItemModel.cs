@@ -29,6 +29,8 @@
 
 		#region IItemModel
 
+		public event EventHandler Disposing = delegate { };
+
 		public bool IsDisposed { get; set; }
 
 		public void Dispose()
@@ -38,6 +40,9 @@
 			if (IsDisposed) {
 				return;
 			}
+
+			Disposing(this, EventArgs.Empty);
+
 			IsDisposed = true;
 			GC.SuppressFinalize(this);
 		}
