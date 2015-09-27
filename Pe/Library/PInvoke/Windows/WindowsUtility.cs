@@ -135,7 +135,7 @@
 		{
 			NativeMethods.SetWindowPos(
 				hWnd,
-				IntPtr.Zero,
+				new IntPtr((int)HWND.HWND_TOP),
 				0, 0,
 				0, 0,
 				SWP.SWP_NOACTIVATE | SWP.SWP_NOMOVE | SWP.SWP_NOSIZE | SWP.SWP_SHOWWINDOW
