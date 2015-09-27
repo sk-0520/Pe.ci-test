@@ -1020,7 +1020,7 @@
 			SettingUtility.InitializeNoteIndexItem(noteItem, null, CommonData.NonProcess);
 
 			var window = CreateNoteWindow(noteItem, appendIndex);
-			WindowsUtility.ShowNoActive(window.Handle);
+			WindowsUtility.ShowNoActiveForeground(window.Handle);
 
 			return window;
 		}
@@ -1181,7 +1181,7 @@
 		void FrontNoteItems()
 		{
 			foreach(var window in NoteWindows) {
-				WindowsUtility.ShowNoActive(window.Handle);
+				WindowsUtility.ShowNoActiveForeground(window.Handle);
 			}
 		}
 
