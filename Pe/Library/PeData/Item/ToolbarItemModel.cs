@@ -12,6 +12,9 @@
 	using ContentTypeTextNet.Pe.Library.PeData.Define;
 	using ContentTypeTextNet.Pe.Library.PeData.IF;
 
+	/// <summary>
+	/// ツールバーデータ。
+	/// </summary>
 	[Serializable]
 	public class ToolbarItemModel: ModelBase, IVisible, ITopMost, ITId<string>, IDeepClone
 	{
@@ -71,7 +74,9 @@
 		/// </summary>
 		[DataMember]
 		public double TextWidth { get; set; }
-
+		/// <summary>
+		/// フォント情報。
+		/// </summary>
 		[DataMember]
 		public FontModel Font { get; set; }
 

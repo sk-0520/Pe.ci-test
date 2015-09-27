@@ -8,7 +8,7 @@
 	using System.Windows;
 
 	/// <summary>
-	/// 表示・非表示を保持する。
+	/// 表示・非表示状態を保持する。
 	/// </summary>
 	public interface IVisible
 	{

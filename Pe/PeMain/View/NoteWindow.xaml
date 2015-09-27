@@ -19,6 +19,7 @@
 	ResizeMode="CanResize"
 	AllowsTransparency="True"
 	WindowStartupLocation="Manual"
+	AA:Language.Word="window/note"
 	Title="NoteWindow"
 	Left="{Binding WindowLeft, Mode=TwoWay}"
 	Top="{Binding WindowTop, Mode=TwoWay}"

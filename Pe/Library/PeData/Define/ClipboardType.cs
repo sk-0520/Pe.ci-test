@@ -6,6 +6,9 @@
 	using System.Text;
 	using System.Threading.Tasks;
 
+	/// <summary>
+	/// クリップボードの型情報。
+	/// </summary>
 	[Flags]
 	public enum ClipboardType: int
 	{

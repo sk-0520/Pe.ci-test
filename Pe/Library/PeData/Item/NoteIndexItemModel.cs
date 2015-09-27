@@ -17,7 +17,7 @@
 	using ContentTypeTextNet.Pe.Library.PeData.IF;
 
 	/// <summary>
-	/// 
+	/// ノートインデックスのヘッダ部。
 	/// </summary>
 	[Serializable]
 	public class NoteIndexItemModel: IndexItemModelBase, IWindowArea, ITopMost, IVisible, IColorPair
@@ -30,14 +30,25 @@
 
 		#region property
 
+		/// <summary>
+		/// ノート種別。
+		/// </summary>
 		[DataMember]
 		public NoteKind NoteKind { get; set; }
 
+		/// <summary>
+		/// 固定されているか。
+		/// </summary>
 		[DataMember]
 		public bool IsLocked { get; set; }
+		/// <summary>
+		/// 最小化されているか。
+		/// </summary>
 		[DataMember]
 		public bool IsCompacted { get; set; }
-
+		/// <summary>
+		/// フォント情報。
+		/// </summary>
 		[DataMember]
 		public FontModel Font { get; set; }
 

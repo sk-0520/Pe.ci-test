@@ -12,6 +12,9 @@
 	using ContentTypeTextNet.Pe.Library.PeData.Define;
 	using ContentTypeTextNet.Pe.Library.PeData.IF;
 
+	/// <summary>
+	/// ランチャーアイテム。
+	/// </summary>
 	[Serializable]
 	public class LauncherItemModel: GuidModelBase, IName
 	{

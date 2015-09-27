@@ -13,11 +13,8 @@
 
 	public class IndexBodyCaching
 	{
-		public IndexBodyCaching(int noteLimit, int templateLimit, int clipboardLimit)
+		public IndexBodyCaching(int templateLimit, int clipboardLimit)
 		{
-			if (noteLimit <= 0) {
-				noteLimit = Constants.indexBodyCachingSize;
-			}
 			if (templateLimit <= 0) {
 				templateLimit = Constants.indexBodyCachingSize;
 			}
@@ -25,7 +22,7 @@
 				clipboardLimit = Constants.indexBodyCachingSize;
 			}
 
-			NoteItems = new IndexBodyPairItemCollection<NoteBodyItemModel>(noteLimit);
+			NoteItems = new IndexBodyPairItemCollection<NoteBodyItemModel>(0);
 			TemplateItems = new IndexBodyPairItemCollection<TemplateBodyItemModel>(templateLimit);
 			ClipboardItems = new IndexBodyPairItemCollection<ClipboardBodyItemModel>(clipboardLimit);
 

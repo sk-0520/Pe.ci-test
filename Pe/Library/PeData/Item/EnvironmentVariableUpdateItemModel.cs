@@ -11,6 +11,9 @@
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
 	using ContentTypeTextNet.Pe.Library.PeData.IF;
 
+	/// <summary>
+	/// 環境変数更新データ。
+	/// </summary>
 	public class EnvironmentVariableUpdateItemModel: ItemModelBase, ITId<string>, IDeepClone
 	{
 		#region define
@@ -24,6 +27,9 @@
 
 		#region property
 
+		/// <summary>
+		/// 値。
+		/// </summary>
 		[DataMember]
 		public string Value { get; set; }
 
@@ -31,6 +37,9 @@
 
 		#region ITId
 
+		/// <summary>
+		/// 変数名。
+		/// </summary>
 		[DataMember, XmlAttribute]
 		public string Id { get; set; }
 

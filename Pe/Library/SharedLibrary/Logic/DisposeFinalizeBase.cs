@@ -23,6 +23,9 @@
 
 		#region IIsDisposed
 
+		[field: NonSerialized]
+		public event EventHandler Disposing;
+
 		[IgnoreDataMember, XmlIgnore]
 		public bool IsDisposed { get; protected set; }
 
@@ -30,6 +33,10 @@
 		{
 			if(IsDisposed) {
 				return;
+			}
+
+			if(Disposing != null) {
+				Disposing(this, EventArgs.Empty);
 			}
 
 			IsDisposed = true;

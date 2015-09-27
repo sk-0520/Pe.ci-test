@@ -9,6 +9,9 @@
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Pe.Library.PeData.Define;
 
+	/// <summary>
+	/// テンプレートインデックスのヘッダ部。
+	/// </summary>
 	public class TemplateIndexItemModel: IndexItemModelBase
 	{
 		public TemplateIndexItemModel()

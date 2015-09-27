@@ -7,7 +7,7 @@
 	using System.Threading.Tasks;
 
 	/// <summary>
-	/// ランチャーにファイルをD&Dした際の挙動。
+	/// ランチャーにファイルをD&amp;Dした際の挙動。
 	/// </summary>
 	public enum LauncherItemFileDropMode
 	{

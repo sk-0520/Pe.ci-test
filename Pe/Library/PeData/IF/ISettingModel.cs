@@ -6,6 +6,9 @@
 	using System.Text;
 	using System.Threading.Tasks;
 
+	/// <summary>
+	/// 設定データ基底。
+	/// </summary>
 	public interface ISettingModel: IPeData
 	{ }
 }

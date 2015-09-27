@@ -55,6 +55,69 @@
 		</group>
 	</log>
 	-->
+	<log date="2015/09/28" version="0.66.0" dummy="################################################################################">
+		<group type="note" dummy="==================================================================">
+			<note rev="">
+				<message>出張が終わらない。おうち帰らせて</message>
+			</note>
+		</group>
+		<group type="features" dummy="==================================================================">
+			<note rev="230f76f39afee3fa64c673af2df71390834d269d">
+				<message>#327: リサイズ可能なウィンドウでデザインに問題なければリサイズグリップをつける</message>
+			</note>
+			<note rev="2d9bec4652ef1457356d1bd95c2095f9c982c5c2">
+				<message>#319: 重複したクリップボードをリストの上位に移動させる</message>
+				<comments>
+					<comment>0.65.0以下からアップデートした場合、本機能は規定値(有効)に設定されます</comment>
+				</comments>
+			</note>
+			<note rev="8e97ff6e76e8326e721dbf5045b2d22a94f97c4c">
+				<message>#314: 各ウィンドウのタイトルバーにそれっぽい値を設定する</message>
+				<comments>
+					<comment>ユーザー視点的に何の影響もない</comment>
+				</comments>
+			</note>
+		</group>
+		<group type="fixes" dummy="==================================================================">
+			<note rev="9b1fec690e71e599aa505495d5a6ecf59fe6caef">
+				<message>#315: 隠しファイルを表示するホットキー通知のタイトルがローカライズされていない</message>
+			</note>
+			<note rev="b481cf35c57dc0494e13944e7abe8be9d9bb1657">
+				<message>#307: ログ追加時にログウィンドウが表示された場合に項目が選択されていない</message>
+			</note>
+			<note rev="20af45367aabb78aa58dfa0ee41385707636d307">
+				<message>#326: 起動時にクリップボード取込処理を実施する</message>
+			</note>
+			<note rev="14612accee7d5d837eb32e5a5d70fec6ff389b52">
+				<message>#302: 各アイテムの更新日時等をきちんと更新する</message>
+				<comments>
+					<comment>見える範囲で実装</comment>
+					<comment>正直ハンドリングしてない部分までは無理</comment>
+				</comments>
+			</note>
+			<note rev="6fdafabb76e13fdd4f57ab7c5feff5744e7bec0c">
+				<message>#311: インデックスデータ統括クラスのデータ破棄処理を政治家的に有耶無耶にしたい</message>
+				<comments>
+					<comment>ヘッダ部とデータ部で管理されているノート・クリップボード・テンプレートのメモリ管理方法が改善されました</comment>
+					<comment>特にクリップボードの画像データによるメモリ圧迫が改善された気がします</comment>
+				</comments>
+			</note>
+			<note rev="710cc8fc398faf32245604488ce8d60897ebba63">
+				<message>#316: 自動的に隠す状態のツールバーが表示されたときにアクティブウィンドウがツールバーになる</message>
+				<comments>
+					<comment>わっけわかんねぇわ</comment>
+				</comments>
+			</note>
+			<note rev="d22cdf872ce1686e2f28c485d234a1b571dc6692">
+				<message>テンプレートアイテムの置き換え方法変更時にリスト表示部分が追従していないかった</message>
+			</note>
+		</group>
+		<group type="developer" dummy="==================================================================">
+			<note rev="487fe490847d6c987ad9e5eaf4e82348a569243b">
+				<message>#309: ログデータ保持に生データを持たないようにする</message>
+			</note>
+		</group>
+	</log>
 	<log date="2015/09/19" version="0.65.0" dummy="################################################################################">
 		<group type="features" dummy="==================================================================">
 			<note rev="b561d8baa4e4433b021f9e90b2c12bd7d319b19a">
@@ -69,7 +132,7 @@
 		</group>
 		<group type="fixes" dummy="==================================================================">
 			<note rev="cd73f95fbea85bb3feb8b7759bdedf4c8ff7b3ea">
-				<message>"294: アップデート確認用文言が重複してる</message>
+				<message>#294: アップデート確認用文言が重複してる</message>
 			</note>
 			<note rev="91539fe4e31c3b453e0f11e6ac84464d811dfe59">
 				<message>#306: テンプレートウィンドウ表示切替時にアクティブ化されない</message>

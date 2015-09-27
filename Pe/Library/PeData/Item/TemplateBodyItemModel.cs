@@ -9,6 +9,9 @@
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Pe.Library.PeData.Define;
 
+	/// <summary>
+	/// テンプレートインデックスのボディ部。
+	/// </summary>
 	[DataContract, Serializable]
 	public class TemplateBodyItemModel : IndexBodyItemModelBase
 	{

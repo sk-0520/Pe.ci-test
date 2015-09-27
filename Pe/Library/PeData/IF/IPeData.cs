@@ -7,6 +7,9 @@
 	using System.Threading.Tasks;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 
+	/// <summary>
+	/// Peで使用される永続化データの基底。
+	/// </summary>
 	public interface IPeData: IIsDisposed
 	{ }
 }

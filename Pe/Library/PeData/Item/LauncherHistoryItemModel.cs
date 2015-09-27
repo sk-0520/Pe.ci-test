@@ -11,6 +11,9 @@
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
 
+	/// <summary>
+	/// ランチャーアイテム履歴データ。
+	/// </summary>
 	[Serializable]
 	public class LauncherHistoryItemModel: HistoryItemModel, IDeepClone
 	{

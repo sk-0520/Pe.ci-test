@@ -93,15 +93,18 @@
 			IsDisposed = false;
 		}
 
-		#region IIsDisposed
-
-		[IgnoreDataMember, XmlIgnore]
-		public bool IsDisposed { get; private set; }
-
 		~DictionaryModel()
 		{
 			Dispose(false);
 		}
+
+		#region IIsDisposed
+
+		[field: NonSerialized]
+		public event EventHandler Disposing;
+
+		[IgnoreDataMember, XmlIgnore]
+		public bool IsDisposed { get; private set; }
 
 		protected virtual void Dispose(bool disposing)
 		{
@@ -113,6 +116,10 @@
 				foreach(var value in Values.Cast<IDisposable>().ToArray()) {
 					value.Dispose();
 				}
+			}
+
+			if(Disposing != null) {
+				Disposing(this, EventArgs.Empty);
 			}
 
 			IsDisposed = true;

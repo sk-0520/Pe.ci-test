@@ -9,6 +9,9 @@
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
 	using ContentTypeTextNet.Pe.Library.PeData.IF;
 
+	/// <summary>
+	/// 環境変数設定データ統括。
+	/// </summary>
 	[Serializable]
 	public class EnvironmentVariableUpdateItemCollectionModel: TIdCollectionModel<string, EnvironmentVariableUpdateItemModel>
 	{

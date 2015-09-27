@@ -84,8 +84,16 @@
 		[DataMember]
 		public double ItemsListWidth { get; set; }
 
+		/// <summary>
+		/// フォント。
+		/// </summary>
 		[DataMember]
 		public FontModel Font { get; set; }
+
+		/// <summary>
+		/// 重複アイテムを上へ移動するか。
+		/// </summary>
+		public bool DuplicationMoveHead { get; set; }
 
 		#endregion
 
@@ -145,6 +153,7 @@
 			obj.WindowState = WindowState;
 			obj.IsTopmost = IsTopmost;
 			obj.IsVisible = IsVisible;
+			obj.DuplicationMoveHead = DuplicationMoveHead;
 			Font.DeepCloneTo(obj.Font);
 			LimitSize.DeepCloneTo(obj.LimitSize);
 		}

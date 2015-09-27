@@ -56,7 +56,7 @@
 						prevViewModel.PropertyChanged -= SelectedViewModel_PropertyChanged;
 
 						SaveItemViewModel(prevViewModel);
-						prevViewModel.Unload();
+						prevViewModel = null;
 					}
 				}
 			}

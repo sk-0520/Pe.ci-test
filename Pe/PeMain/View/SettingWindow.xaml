@@ -16,6 +16,7 @@
 	BorderBrush="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" 
 	WindowStartupLocation="CenterScreen"
 	Icon="/PeMain;component/Resources/Icon/App.ico"
+	ResizeMode="CanResizeWithGrip"
 >
 	<AW:CommonDataWindow.Resources>
 		<ResourceDictionary Source="/View/Parts/Resource/DialogDictionary.xaml"/>

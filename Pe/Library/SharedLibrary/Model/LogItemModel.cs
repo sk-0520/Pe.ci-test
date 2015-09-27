@@ -40,7 +40,7 @@
 		/// <para>判定にはHasDetailを使用。</para>
 		/// </summary>
 		[DataMember]
-		public object Detail { get; set; }
+		public string Detail { get; set; }
 		/// <summary>
 		/// 詳細はあるか。
 		/// </summary>
@@ -50,7 +50,7 @@
 			get
 			{
 				if (HasDetail) {
-					return Detail.ToString();
+					return Detail;
 				} else {
 					return string.Empty;
 				}

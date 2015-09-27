@@ -8,6 +8,7 @@
 	using System.Threading.Tasks;
 	using System.Xml.Serialization;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 
 	/// <summary>
 	/// 履歴保持アイテム。
@@ -44,12 +45,19 @@
 
 		#region function
 
+		/// <summary>
+		/// 更新。
+		/// </summary>
+		/// <param name="dateTime"></param>
 		public virtual void Update(DateTime dateTime)
 		{
-			UpdateCount += 1;
+			UpdateCount = RangeUtility.Increment(UpdateCount);
 			UpdateTimestamp = DateTime.Now;
 		}
-		public virtual void Update()
+		/// <summary>
+		/// 更新。
+		/// </summary>
+		public void Update()
 		{
 			Update(DateTime.Now);
 		}

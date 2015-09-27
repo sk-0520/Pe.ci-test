@@ -24,8 +24,7 @@
 
 		/// <summary>
 		/// 丸め。
-		/// 
-		/// valueがmin未満かmaxより多ければminかmaxの適応する方に丸める。
+		/// <para>valueがmin未満かmaxより多ければminかmaxの適応する方に丸める。</para>
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		/// <param name="value"></param>
@@ -43,5 +42,34 @@
 				return value;
 			}
 		}
+
+		/// <summary>
+		/// それっぽくインクリメント。
+		/// </summary>
+		/// <param name="value"></param>
+		/// <returns>最大値であればそのまま返す。</returns>
+		public static int Increment(int value)
+		{
+			if(value == int.MaxValue) {
+				return value;
+			}
+
+			return value + 1;
+		}
+
+		/// <summary>
+		/// それっぽくインクリメント。
+		/// </summary>
+		/// <param name="value"></param>
+		/// <returns>最大値であればそのまま返す。</returns>
+		public static uint Increment(uint value)
+		{
+			if(value == uint.MaxValue) {
+				return value;
+			}
+
+			return value + 1;
+		}
+
 	}
 }

@@ -78,7 +78,6 @@
 							map[type].IsSelected = true;
 						}
 						if (prevViewModel != null) {
-							prevViewModel.Unload();
 						}
 					}
 				}
@@ -132,6 +131,11 @@
 		}
 
 		#endregion
+
+		public bool DuplicationMoveHead
+		{
+			get { return Model.DuplicationMoveHead; }
+		}
 
 		#endregion
 

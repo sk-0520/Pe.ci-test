@@ -1131,7 +1131,7 @@
 					);
 					if(!this._isHidden) {
 						HavingViewUtility.BeginInvoke(this, () => {
-							NativeMethods.SetForegroundWindow(View.Handle);
+							WindowsUtility.ShowNoActiveForeground(View.Handle);
 						}, DispatcherPriority.SystemIdle);
 					}
 				}
