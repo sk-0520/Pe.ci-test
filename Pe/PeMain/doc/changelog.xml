@@ -112,21 +112,15 @@
 				</comments>
 			</note>
 			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
+				<message>#316: 自動的に隠す状態のツールバーが表示されたときにアクティブウィンドウがツールバーになる</message>
+				<comments>
+					<comment>わっけわかんねぇわ</comment>
+				</comments>
 			</note>
 		</group>
 		<group type="developer" dummy="==================================================================">
 			<note rev="">
 				<message>#309: ログデータ保持に生データを持たないようにする</message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
 			</note>
 		</group>
 	</log>
