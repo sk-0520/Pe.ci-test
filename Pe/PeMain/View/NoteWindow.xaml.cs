@@ -92,6 +92,13 @@
 			return base.WndProc(hWnd, msg, wParam, lParam, ref handled);
 		}
 
+		public override void ApplyLanguage(Dictionary<string, string> map)
+		{
+			map[LanguageKey.noteTitle] = ViewModel.Name;
+			
+			base.ApplyLanguage(map);
+		}
+
 		#endregion
 
 		#region IHavingWindowKind

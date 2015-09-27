@@ -9,12 +9,13 @@
 	x:TypeArguments="AVM:UpdateConfirmViewModel"
 	AA:Language.Word="window/update"
 	Title="UpdateWindow" 
-	Height="480" 
-	Width="640"
+	MinWidth="700"
+	MinHeight="480" 
 	WindowStartupLocation="CenterScreen"
 	Topmost="True"
 	Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"
 	Foreground="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}"
+	ResizeMode="CanResizeWithGrip"
 >
 	<AW:CommonDataWindow.Resources>
 		<ResourceDictionary>

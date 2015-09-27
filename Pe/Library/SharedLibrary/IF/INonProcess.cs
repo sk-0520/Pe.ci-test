@@ -12,7 +12,13 @@
 	/// </summary>
 	public interface INonProcess
 	{
+		/// <summary>
+		/// ログ取り。
+		/// </summary>
 		ILogger Logger { get; }
+		/// <summary>
+		/// 言語。
+		/// </summary>
 		ILanguage Language { get; }
 	}
 }

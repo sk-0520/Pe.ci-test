@@ -148,7 +148,7 @@ using ContentTypeTextNet.Pe.PeMain.Data;
 			IncrementList(launcherItem.History.WorkDirectoryPaths, workDirPath);
 			
 			launcherItem.History.ExecuteTimestamp = dateTime;
-			launcherItem.History.ExecuteCount += 1;
+			launcherItem.History.ExecuteCount = RangeUtility.Increment(launcherItem.History.ExecuteCount);
 
 			launcherItem.History.Update(dateTime);
 		}

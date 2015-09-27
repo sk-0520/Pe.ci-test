@@ -9,6 +9,9 @@
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Pe.Library.PeData.IF;
 
+	/// <summary>
+	/// 前景色・背景色データ。
+	/// </summary>
 	public class ColorPairItemModel: ItemModelBase, IDeepClone, IColorPair
 	{
 		public ColorPairItemModel()
@@ -24,7 +27,13 @@
 
 		#region IColorPair
 		
+		/// <summary>
+		/// 前景色。
+		/// </summary>
 		public Color ForeColor { get; set; }
+		/// <summary>
+		/// 背景色。
+		/// </summary>
 		public Color BackColor { get; set; }
 
 		#endregion

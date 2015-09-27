@@ -10,6 +10,9 @@
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
 
+	/// <summary>
+	/// インデックスデータのヘッダ部。
+	/// </summary>
 	public abstract class IndexItemModelBase: GuidModelBase, IName
 	{
 		public IndexItemModelBase()
@@ -20,9 +23,19 @@
 
 		#region IName
 
+		/// <summary>
+		/// 名前。
+		/// </summary>
 		[DataMember, XmlAttribute]
 		public string Name { get; set; }
 
+		#endregion
+
+		#region property
+
+		/// <summary>
+		/// 履歴。
+		/// </summary>
 		[DataMember]
 		public HistoryItemModel History { get; set; }
 

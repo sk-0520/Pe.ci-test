@@ -10,6 +10,9 @@
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
 
+	/// <summary>
+	/// 環境変数設定データ。
+	/// </summary>
 	[Serializable]
 	public class EnvironmentVariablesItemModel: ItemModelBase, IDeepClone
 	{
@@ -27,13 +30,13 @@
 		public bool Edit { get; set; }
 
 		/// <summary>
-		/// 追加・変更対象
+		/// 追加・変更対象。
 		/// </summary>
 		[DataMember]
 		public EnvironmentVariableUpdateItemCollectionModel Update { get; set; }
 
 		/// <summary>
-		/// 削除変数
+		/// 削除対象。
 		/// </summary>
 		[DataMember]
 		public CollectionModel<string> Remove { get; set; }

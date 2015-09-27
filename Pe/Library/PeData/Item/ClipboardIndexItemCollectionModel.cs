@@ -6,6 +6,9 @@
 	using System.Text;
 	using System.Threading.Tasks;
 
+	/// <summary>
+	/// クリップボードのインデックスデータ統括。
+	/// </summary>
 	public class ClipboardIndexItemCollectionModel: IndexItemCollectionModel<ClipboardIndexItemModel>
 	{
 		public ClipboardIndexItemCollectionModel()

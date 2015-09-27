@@ -255,7 +255,6 @@
     <Compile Include="IF\IMenuItem.cs" />
     <Compile Include="IF\INoteMenuItem.cs" />
     <Compile Include="IF\IRefreshFromViewModel.cs" />
-    <Compile Include="IF\IUnload.cs" />
     <Compile Include="IF\ViewExtend\ICaptionDoubleClickData.cs" />
     <Compile Include="IF\IClipboardWatcher.cs" />
     <Compile Include="IF\ICommonData.cs" />

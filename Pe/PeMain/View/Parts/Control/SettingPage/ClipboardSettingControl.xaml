@@ -41,6 +41,7 @@
 				<CheckBox Content="topmost" AA:Language.Word="clipboard-setting/topmost" IsChecked="{Binding IsTopmost}" />
 				<CheckBox Content="visible" AA:Language.Word="clipboard-setting/visible" IsChecked="{Binding IsVisible}" />
 				<CheckBox Content="using clipboard" AA:Language.Word="clipboard-setting/using-clipboard" IsChecked="{Binding UsingClipboard}"/>
+				<CheckBox Content="dup to head" AA:Language.Word="clipboard-setting/dup-move-head" IsChecked="{Binding DuplicationMoveHead}"/>
 			</StackPanel>
 
 			<Grid Grid.Row="1" Grid.Column="0" >

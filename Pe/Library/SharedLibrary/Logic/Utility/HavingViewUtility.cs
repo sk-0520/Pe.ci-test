@@ -31,5 +31,18 @@
 			return beginInvoke(action, priority, args);
 		}
 
+		public static DispatcherOperation BeginInvoke<TView>(IHavingView<TView> view, Action action, params object[] args)
+			where TView: UIElement
+		{
+			Func<Action, object[], DispatcherOperation> beginInvoke;
+
+			if(view.HasView) {
+				beginInvoke = view.View.Dispatcher.BeginInvoke;
+			} else {
+				beginInvoke = Dispatcher.CurrentDispatcher.BeginInvoke;
+			}
+
+			return beginInvoke(action, args);
+		}
 	}
 }

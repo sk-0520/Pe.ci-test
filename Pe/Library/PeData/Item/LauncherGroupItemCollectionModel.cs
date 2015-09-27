@@ -9,6 +9,9 @@
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
 	using ContentTypeTextNet.Pe.Library.PeData.IF;
 
+	/// <summary>
+	/// ランチャーグループ統括データ。
+	/// </summary>
 	[Serializable]
 	public class LauncherGroupItemCollectionModel: GuidCollectionBase<LauncherGroupItemModel>
 	{

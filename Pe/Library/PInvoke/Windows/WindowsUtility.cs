@@ -127,11 +127,15 @@
 			NativeMethods.SetWindowPos(handle, IntPtr.Zero, 0, 0, 0, 0, SWP.SWP_FRAMECHANGED | SWP.SWP_NOSIZE | SWP.SWP_NOMOVE | SWP.SWP_NOZORDER | SWP.SWP_NOOWNERZORDER | SWP.SWP_NOACTIVATE);
 		}
 
-		public static void ShowNoActive(IntPtr hWnd)
+		/// <summary>
+		/// アクティブ状態を変更せずに最前面に移動させる。
+		/// </summary>
+		/// <param name="hWnd"></param>
+		public static void ShowNoActiveForeground(IntPtr hWnd)
 		{
 			NativeMethods.SetWindowPos(
 				hWnd,
-				IntPtr.Zero,
+				new IntPtr((int)HWND.HWND_TOP),
 				0, 0,
 				0, 0,
 				SWP.SWP_NOACTIVATE | SWP.SWP_NOMOVE | SWP.SWP_NOSIZE | SWP.SWP_SHOWWINDOW

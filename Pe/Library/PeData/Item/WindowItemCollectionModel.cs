@@ -13,6 +13,9 @@
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
 
+	/// <summary>
+	/// ウィンドウアイテムの統括データ。
+	/// </summary>
 	public class WindowItemCollectionModel: CollectionModel<WindowItemModel>, IName
 	{
 		public WindowItemCollectionModel()
@@ -21,6 +24,9 @@
 
 		#region property
 
+		/// <summary>
+		/// 収集日時。
+		/// </summary>
 		public DateTime DateTime { get; set; }
 
 		#endregion

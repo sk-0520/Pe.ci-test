@@ -246,6 +246,11 @@
 
 		#endregion
 
+		public bool DuplicationMoveHead
+		{
+			get { return Clipboard.DuplicationMoveHead; }
+			set { SetPropertyValue(Clipboard, value); }
+		}
 
 		#endregion
 

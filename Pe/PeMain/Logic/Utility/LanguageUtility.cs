@@ -35,7 +35,13 @@
 
 		public static bool SetTitle(Window ui, ILanguage language, IReadOnlyDictionary<string, string> map = null)
 		{
-			return SetUI_Impl(ui, language, map, (key, hint) => ui.Title = language[key, map]);
+			return SetUI_Impl(ui, language, map, (key, hint) => {
+#if DEBUG || BETA
+				ui.Title = "(" + Constants.BuildType + ")" + language[key, map];
+#else
+				ui.Title = language[key, map];
+#endif
+			});
 		}
 
 		public static bool SetContent(ContentControl ui, ILanguage language, IReadOnlyDictionary<string, string> map = null)

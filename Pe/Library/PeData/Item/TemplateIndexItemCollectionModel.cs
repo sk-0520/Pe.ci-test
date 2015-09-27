@@ -10,6 +10,9 @@
 	using System.Xml.Serialization;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 
+	/// <summary>
+	/// テンプレートインデックス統括データ。
+	/// </summary>
 	public class TemplateIndexItemCollectionModel: IndexItemCollectionModel<TemplateIndexItemModel>
 	{
 		public TemplateIndexItemCollectionModel()

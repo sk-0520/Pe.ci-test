@@ -84,10 +84,10 @@
 			if (string.IsNullOrEmpty(message) && detail != null && detail is Exception) {
 				var ex = (Exception)detail;
 				result.Message = ex.Message;
-				result.Detail = ex;
+				result.Detail = ex.ToString();
 			} else {
 				result.Message = message;
-				result.Detail = detail;
+				result.Detail = detail != null ? detail.ToString(): null;
 			}
 
 			return result;
