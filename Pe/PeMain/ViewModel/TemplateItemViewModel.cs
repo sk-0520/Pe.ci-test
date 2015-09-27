@@ -178,7 +178,7 @@
 			var propertyNames = new[] {
 				"IsReplace",
 //				"ItemTypeImage",
-//				"ItemTypeText",
+				"ItemTypeText",
 			};
 			CallOnPropertyChange(propertyNames);
 		}

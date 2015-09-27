@@ -117,6 +117,9 @@
 					<comment>わっけわかんねぇわ</comment>
 				</comments>
 			</note>
+			<note rev="">
+				<message>テンプレートアイテムの置き換え方法変更時にリスト表示部分が追従していないかった</message>
+			</note>
 		</group>
 		<group type="developer" dummy="==================================================================">
 			<note rev="">
