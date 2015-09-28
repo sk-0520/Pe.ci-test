@@ -93,6 +93,7 @@
 		/// <summary>
 		/// 重複アイテムを上へ移動するか。
 		/// </summary>
+		[DataMember]
 		public bool DuplicationMoveHead { get; set; }
 
 		#endregion

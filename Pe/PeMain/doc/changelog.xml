@@ -80,7 +80,7 @@
 		</group>
 		<group type="fixes" dummy="==================================================================">
 			<note rev="">
-				<message></message>
+				<message>#329: クリップボード設定「重複アイテムをリストの最上部に移動する」が保存されない</message>
 			</note>
 			<note rev="">
 				<message></message>
