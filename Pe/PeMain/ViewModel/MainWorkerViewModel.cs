@@ -1448,10 +1448,14 @@
 			ReceiveInformationTips(title, message, logKind);
 		}
 
+		public void SendApplicationCommand(ApplicationCommand applicationCommand, object arg)
+		{
+			ReceiveApplicationCommand(applicationCommand, arg);
+		}
+
 		#endregion
 
 		#region IAppSender-Implement
-
 
 		void ReceiveAppendWindow(Window window)
 		{
@@ -2042,6 +2046,30 @@
 			action[logKind](title, message);
 		}
 
+		void ReceiveApplicationCommand(ApplicationCommand applicationCommand, object arg)
+		{
+			switch(applicationCommand) {
+				case ApplicationCommand.MemoryGarbageCollect: 
+					{
+						var prevTime = DateTime.Now;
+						var prevUsingMemory = GC.GetTotalMemory(false);
+						GC.Collect();
+						GC.WaitForPendingFinalizers();
+						var gcUsingMemory = GC.GetTotalMemory(true);
+						var gcTime = DateTime.Now;
+						var detail = new [] {
+							prevTime.ToString() + " " + prevUsingMemory.ToString(),
+							"GC",
+							gcTime.ToString() + " " + gcUsingMemory.ToString(),
+						};
+						CommonData.Logger.Debug(applicationCommand.ToString(), string.Join(Environment.NewLine, detail));
+					}
+					break;
+
+				default:
+					throw new NotImplementedException();
+			}
+		}
 
 		#endregion
 

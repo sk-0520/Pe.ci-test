@@ -470,6 +470,7 @@
 					foreach(var oldItem in oldItems) {
 						oldItem.Dispose();
 					}
+					AppSender.SendApplicationCommand(ApplicationCommand.MemoryGarbageCollect, null);
 				}
 			}
 		}
@@ -484,7 +485,6 @@
 							IconScale = Model.Toolbar.IconScale,
 						});
 					;
-
 					this._launcherItems = new CollectionModel<LauncherItemButtonViewModel>(list);
 
 					//if (HasView) {
