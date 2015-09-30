@@ -145,6 +145,7 @@
     <Compile Include="ConstantsRangeAttribute.cs">
       <DependentUpon>Constants.cs</DependentUpon>
     </Compile>
+    <Compile Include="Data\ApplicationCommandArg.cs" />
     <Compile Include="Data\Temporary\AboutNotifyData.cs" />
     <Compile Include="Data\Temporary\ClipboardCaptureNotifyData.cs" />
     <Compile Include="Data\Temporary\ItemWithScreen.cs" />

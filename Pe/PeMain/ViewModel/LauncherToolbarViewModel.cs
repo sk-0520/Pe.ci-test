@@ -470,7 +470,8 @@
 					foreach(var oldItem in oldItems) {
 						oldItem.Dispose();
 					}
-					AppSender.SendApplicationCommand(ApplicationCommand.MemoryGarbageCollect, null);
+
+					AppSender.SendApplicationCommand(ApplicationCommand.MemoryGarbageCollect, ApplicationCommandArg.Empty);
 				}
 			}
 		}

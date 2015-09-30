@@ -1448,8 +1448,10 @@
 			ReceiveInformationTips(title, message, logKind);
 		}
 
-		public void SendApplicationCommand(ApplicationCommand applicationCommand, object arg)
+		public void SendApplicationCommand(ApplicationCommand applicationCommand, Data.ApplicationCommandArg arg)
 		{
+			CheckUtility.DebugEnforceNotNull(arg);
+
 			ReceiveApplicationCommand(applicationCommand, arg);
 		}
 
@@ -2048,6 +2050,8 @@
 
 		void ReceiveApplicationCommand(ApplicationCommand applicationCommand, object arg)
 		{
+			Debug.Assert(arg != null);
+
 			switch(applicationCommand) {
 				case ApplicationCommand.MemoryGarbageCollect: 
 					{
