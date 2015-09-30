@@ -83,6 +83,9 @@
 				<message>#329: クリップボード設定「重複アイテムをリストの最上部に移動する」が保存されない</message>
 			</note>
 			<note rev="">
+				<message>設定ウィンドウのツールバー項目において「表示時間」とそれ以降の項目が重なっていた</message>
+			</note>
+			<note rev="">
 				<message></message>
 			</note>
 			<note rev="">
