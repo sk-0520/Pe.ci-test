@@ -40,6 +40,7 @@
 	using ContentTypeTextNet.Pe.PeMain.View.Parts.Window;
 	using Hardcodet.Wpf.TaskbarNotification;
 	using Microsoft.Win32;
+	using System.Runtime;
 
 	public sealed class MainWorkerViewModel: ViewModelBase, IAppSender, IClipboardWatcher, IHavingView<TaskbarIcon>, IHavingCommonData
 	{
@@ -2057,6 +2058,7 @@
 					{
 						var prevTime = DateTime.Now;
 						var prevUsingMemory = GC.GetTotalMemory(false);
+						GCSettings.LargeObjectHeapCompactionMode = GCLargeObjectHeapCompactionMode.CompactOnce;
 						GC.Collect();
 						GC.WaitForPendingFinalizers();
 						var gcUsingMemory = GC.GetTotalMemory(true);
