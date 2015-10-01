@@ -470,7 +470,7 @@
 					foreach(var oldItem in oldItems) {
 						oldItem.Dispose();
 					}
-
+					// 調査中
 					AppSender.SendApplicationCommand(ApplicationCommand.MemoryGarbageCollect, ApplicationCommandArg.Empty);
 				}
 			}
