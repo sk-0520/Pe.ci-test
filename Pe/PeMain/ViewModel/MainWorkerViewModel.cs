@@ -1920,8 +1920,8 @@
 						var nowTime = DateTime.Now;
 						dupItem.History.CreateTimestamp = nowTime;
 						dupItem.History.Update(nowTime);
-						Clipboard.IndexPairList.Add(dupItem, null);
-//						Clipboard.Items.Refresh();
+						var item = Clipboard.IndexPairList.Add(dupItem, null);
+						Clipboard.SelectedViewModel = item.ViewModel;
 						SendSaveIndex(IndexKind.Clipboard, Timing.Delay);
 					} else {
 						CommonData.Logger.Information(CommonData.Language["log/clipboard/dup-item/ignore"], dupItem);
