@@ -441,7 +441,7 @@
 			{
 				var result = CreateCommand(
 					o => {
-						FrontNoteItems();
+						MoveFrontNoteItems();
 					}
 				);
 
@@ -1179,10 +1179,12 @@
 			}
 		}
 
-		void FrontNoteItems()
+		void MoveFrontNoteItems()
 		{
 			foreach(var window in NoteWindows) {
-				WindowsUtility.ShowNoActiveForeground(window.Handle);
+				Application.Current.Dispatcher.BeginInvoke(new Action(() => {
+						WindowsUtility.ShowNoActiveForeground(window.Handle);
+				}), DispatcherPriority.SystemIdle);
 			}
 		}
 
@@ -1441,7 +1443,7 @@
 
 		public void SendInputHotKey(HotKeyId hotKeyId, HotKeyModel hotKeyModel)
 		{
-			ReceiveHotKey(hotKeyId, hotKeyModel);
+			ReceiveInputHotKey(hotKeyId, hotKeyModel);
 		}
 
 		public void SendInformationTips(string title, string message, LogKind logKind)
@@ -1932,7 +1934,7 @@
 			}, TaskScheduler.FromCurrentSynchronizationContext());
 		}
 
-		void ReceiveHotKey(HotKeyId hotKeyId, HotKeyModel hotKeyModel)
+		void ReceiveInputHotKey(HotKeyId hotKeyId, HotKeyModel hotKeyModel)
 		{
 			if(IsPause) {
 				PuaseOutputLog();
@@ -1995,7 +1997,7 @@
 					break;
 
 				case HotKeyId.ShowFrontNote:
-					FrontNoteItems();
+					MoveFrontNoteItems();
 					SendInformationTips(CommonData.Language["notify/info/note/front/title"], CommonData.Language["notify/info/note/front/message"], LogKind.Information);
 					break;
 

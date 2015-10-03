@@ -89,7 +89,10 @@
 				<message>#330: リスト最上部へ移動したクリップボードアイテムを選択状態にする</message>
 			</note>
 			<note rev="">
-				<message></message>
+				<message>#332: ホットキーからノートの前面移動を行っても前面移動しない</message>
+				<comments>
+					<comment>出来たりできなかったり。。</comment>
+				</comments>
 			</note>
 			<note rev="">
 				<message></message>
