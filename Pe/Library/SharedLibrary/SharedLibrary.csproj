@@ -144,6 +144,7 @@
     <Compile Include="Logic\Extension\FileSystemInfoUtility.cs" />
     <Compile Include="Logic\LogListener.cs" />
     <Compile Include="Logic\MVMPairCreateDelegationCollection.cs" />
+    <Compile Include="Logic\RetryBase.cs" />
     <Compile Include="Logic\Utility\CastUtility.cs" />
     <Compile Include="Logic\Utility\FontUtility.cs" />
     <Compile Include="Logic\Utility\LogUtility.cs" />
