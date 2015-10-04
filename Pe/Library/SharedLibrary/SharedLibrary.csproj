@@ -108,6 +108,7 @@
     <Compile Include="Data\InformationGroup.cs" />
     <Compile Include="Data\DialogFilterValueItem.cs" />
     <Compile Include="Data\DisplayData.cs" />
+    <Compile Include="Define\DelegateRetryExecute.cs" />
     <Compile Include="Define\QueryCondition.cs" />
     <Compile Include="Define\DockType.cs" />
     <Compile Include="Define\IconScale.cs" />
@@ -146,6 +147,7 @@
     <Compile Include="Logic\MVMPairCreateDelegationCollection.cs" />
     <Compile Include="Logic\RetryBase.cs" />
     <Compile Include="Logic\DelegateRetry.cs" />
+    <Compile Include="Logic\TimeRetry.cs" />
     <Compile Include="Logic\Utility\CastUtility.cs" />
     <Compile Include="Logic\Utility\FontUtility.cs" />
     <Compile Include="Logic\Utility\LogUtility.cs" />
