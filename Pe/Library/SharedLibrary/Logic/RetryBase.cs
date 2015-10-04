@@ -10,7 +10,7 @@
 	/// <summary>
 	/// 定型の再試行処理を行う。
 	/// </summary>
-	public class RetryBase<T>
+	public abstract class RetryBase<T>
 	{
 		#region variable
 		
@@ -40,7 +40,7 @@
 		#region function
 
 		protected abstract bool Execute(int waitCurrentCount, ref T result);
-		protected abstract bool Wait(int waitCurrentCount);
+		protected abstract void Wait(int waitCurrentCount);
 
 		public void Run()
 		{
