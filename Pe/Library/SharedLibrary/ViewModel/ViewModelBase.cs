@@ -156,6 +156,7 @@
 				foreach(var pair in this._createdCommands) {
 					pair.Value.Dispose();
 				}
+				this._createdCommands = null;
 			}
 			base.Dispose(disposing);
 		}
