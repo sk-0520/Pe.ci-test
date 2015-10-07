@@ -1,4 +1,4 @@
-﻿namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
+﻿namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Utility
 {
 	using System;
 	using System.Collections.Generic;

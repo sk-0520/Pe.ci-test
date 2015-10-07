@@ -18,7 +18,6 @@
 	using ContentTypeTextNet.Library.SharedLibrary.IF.WindowsViewExtend;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
-	using ContentTypeTextNet.Pe.PeMain.Logic.Extension;
 
 	/// <summary>
 	/// Windowにアプリケーションデスクトップツールバー機能を付与する。

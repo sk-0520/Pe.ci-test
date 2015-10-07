@@ -11,7 +11,6 @@
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.IF;
-	using ContentTypeTextNet.Pe.PeMain.Logic.Extension;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
 	public abstract class CommonDataUserControl : UserControl, ICommonData
