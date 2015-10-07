@@ -802,7 +802,7 @@
 		/// <summary>
 		/// ログの生成。
 		/// </summary>
-		void CreateLogger(CollectionModel<LogItemModel> logItems)
+		void CreateLogger(FixedSizeCollectionModel<LogItemModel> logItems)
 		{
 			using(var timeLogger = CommonData.NonProcess.CreateTimeLogger()) {
 				LoggingWindow = new LoggingWindow();
@@ -824,7 +824,7 @@
 			}
 		}
 
-		CollectionModel<LogItemModel> RemoveLogger()
+		FixedSizeCollectionModel<LogItemModel> RemoveLogger()
 		{
 			var resultItems = Logging.LogItems;
 

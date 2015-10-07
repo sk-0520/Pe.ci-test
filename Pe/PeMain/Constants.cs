@@ -146,6 +146,13 @@
 			72
 		);
 
+		[ConstantsRange]
+		public static readonly TripleRange<int> loggingStockLength = new TripleRange<int>(
+			0,
+			1 * 1024,
+			5 * 1024
+		);
+
 		public static Size loggingDefaultWindowSize = new Size(320, 480);
 
 		[ConstantsRange]

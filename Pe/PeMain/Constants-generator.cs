@@ -21,8 +21,8 @@
 		/*
 		このソースは自動生成のため Constants-generator.tt を編集すること。
 
-		生成元ConstantsPropertyフィールド数: 7
-		生成元ConstantsRangeフィールド数: 21
+		生成元ConstantsPropertyフィールド数: 8
+		生成元ConstantsRangeフィールド数: 22
 		*/
 
 		// ConstantsPropertyAttribute
@@ -104,7 +104,50 @@
 
 		#endregion
 
+
 		// ConstantsRangeAttribute
+		#region loggingStockLength
+
+		/// <summary>
+		/// Constants.loggingStockLength.minimum取得用プロパティ。
+		/// <para>XAMLで使用することを想定</para>
+		/// </summary>
+		public static Int32 LoggingStockMinimumLength
+		{
+			get
+			{
+				return loggingStockLength.minimum;
+			}
+		}
+		
+
+		/// <summary>
+		/// Constants.loggingStockLength.median取得用プロパティ。
+		/// <para>XAMLで使用することを想定</para>
+		/// </summary>
+		public static Int32 LoggingStockMedianLength
+		{
+			get
+			{
+				return loggingStockLength.median;
+			}
+		}
+		
+
+		/// <summary>
+		/// Constants.loggingStockLength.maximum取得用プロパティ。
+		/// <para>XAMLで使用することを想定</para>
+		/// </summary>
+		public static Int32 LoggingStockMaximumLength
+		{
+			get
+			{
+				return loggingStockLength.maximum;
+			}
+		}
+		
+
+		#endregion
 		#region streamFontSize
 
 		/// <summary>
