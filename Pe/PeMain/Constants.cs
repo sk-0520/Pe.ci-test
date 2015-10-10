@@ -147,7 +147,7 @@
 		);
 
 		[ConstantsRange]
-		public static readonly TripleRange<int> loggingStockLength = new TripleRange<int>(
+		public static readonly TripleRange<int> loggingStockCount = new TripleRange<int>(
 			0,
 			1 * 1024,
 			5 * 1024
@@ -385,6 +385,7 @@
 		public static string UriHelp { get { return ConfigurationManager.AppSettings["uri-help"]; } }
 		public static string UriFeedback { get { return ConfigurationManager.AppSettings["uri-feedback"]; } }
 
+		public static int LoggingStockCount { get { return int.Parse(ConfigurationManager.AppSettings["logging-stock-count"]); } }
 		public static int CacheIndexTemplate { get { return int.Parse(ConfigurationManager.AppSettings["cache-index-template"]); } }
 		public static int CacheIndexClipboard { get { return int.Parse(ConfigurationManager.AppSettings["cache-index-clipboard"]); } }
 

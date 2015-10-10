@@ -39,7 +39,8 @@
 				LogItems = logItems;
 				View.Loaded += View_Loaded;
 			} else {
-				LogItems = new FixedSizeCollectionModel<LogItemModel>(Constants.LoggingStockMedianLength);
+				var loggingCount = Constants.loggingStockCount.GetClamp(Constants.LoggingStockCount);
+				LogItems = new FixedSizeCollectionModel<LogItemModel>(loggingCount);
 			}
 		}
 
