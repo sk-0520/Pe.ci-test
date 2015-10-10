@@ -99,8 +99,8 @@
 			</note>
 		</group>
 		<group type="developer" dummy="==================================================================">
-			<note rev="">
-				<message></message>
+			<note rev="1ece2f0d33addf2ffd2cce1e16581733322563f6">
+				<message>ログの保持上限数を持たせた</message>
 			</note>
 			<note rev="">
 				<message></message>
