@@ -95,6 +95,12 @@
 				</comments>
 			</note>
 			<note rev="">
+				<message>#331: 自動的に隠す状態のツールバーが表示された際にアクティブウィンドウ云々</message>
+				<comments>
+					<comment>たぶんなおった、もう勘弁してください</comment>
+				</comments>
+			</note>
+			<note rev="">
 				<message></message>
 			</note>
 		</group>

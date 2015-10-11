@@ -267,7 +267,7 @@
 				var deviceArea = UIUtility.ToDevicePixel(View, RestrictionViewModel.ShowLogicalBarArea);
 				NativeMethods.MoveWindow(Handle, (int)deviceArea.X, (int)deviceArea.Y, (int)deviceArea.Width, (int)deviceArea.Height, true);
 				RestrictionViewModel.IsHidden = false;
-				NativeMethods.SetForegroundWindow(Handle);
+				WindowsUtility.ShowNoActiveForeground(Handle);
 			}
 		}
 
