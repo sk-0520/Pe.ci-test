@@ -1849,15 +1849,30 @@
 			}
 			this._clipboardPreviousTime = now;
 
-			ClipboardData clipboardData;
+			ClipboardData clipboardData = null;
 			try {
-				clipboardData = ClipboardUtility.GetClipboardData(CommonData.MainSetting.Clipboard.CaptureType, MessageWindow.Handle, CommonData.NonProcess.Logger);
+				var retry = new TimeRetry<ClipboardData>();
+				retry.WaitTime = Constants.clipboardGetDataRetryWaitTime;
+				retry.WaitMaxCount = Constants.clipboardGetDataRetryMaxCount;
+				retry.ExecuteFunc = (int waitCurrentCount, ref ClipboardData result) => {
+					var data = ClipboardUtility.GetClipboardData(CommonData.MainSetting.Clipboard.CaptureType, MessageWindow.Handle, CommonData.NonProcess.Logger);
+					var hasData = data != null;
+					if(hasData) {
+						result = data;
+					}
+					return hasData;
+				};
+				retry.Run();
+				if(!retry.WaitOver) {
+					clipboardData = retry.Result;
+				}
+
 			} catch(AccessViolationException ex) {
 				// #251
 				CommonData.Logger.Error(ex);
 				return;
 			}
-			if(clipboardData.Type == ClipboardType.None) {
+			if(clipboardData == null || clipboardData.Type == ClipboardType.None) {
 				CommonData.NonProcess.Logger.Trace(CommonData.NonProcess.Language["log/clipboard/capture/not-support"]);
 				return;
 			}

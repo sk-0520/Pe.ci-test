@@ -27,11 +27,11 @@
 		/// <summary>
 		/// 最大待ち回数。
 		/// </summary>
-		public int WaitMaxCount { get; private set; }
+		public int WaitMaxCount { get; set; }
 		/// <summary>
 		/// 待ち過ぎた。
 		/// </summary>
-		public bool WaitOver { get { return WaitCurrentCount < WaitMaxCount;  } }
+		public bool WaitOver { get { return WaitMaxCount < WaitCurrentCount; } }
 
 		public T Result { get { return this._result; } }
 

@@ -216,6 +216,9 @@
 			TimeSpan.FromSeconds(1)
 		);
 
+		public static readonly TimeSpan clipboardGetDataRetryWaitTime = TimeSpan.FromMilliseconds(250);
+		public static int clipboardGetDataRetryMaxCount = 3;
+
 		public const ClipboardType clipboardCaptureType = ClipboardType.All;
 		public const ClipboardType clipboardLimitType = ClipboardType.All ^ ClipboardType.Text;
 

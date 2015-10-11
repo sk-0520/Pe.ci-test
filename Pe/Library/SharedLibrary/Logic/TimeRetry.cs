@@ -8,7 +8,7 @@
 	using System.Threading.Tasks;
 	using ContentTypeTextNet.Library.SharedLibrary.Define;
 
-	public abstract class TimeRetry<T>: RetryBase<T>
+	public class TimeRetry<T>: RetryBase<T>
 	{
 		#region property
 
