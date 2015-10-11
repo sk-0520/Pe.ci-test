@@ -57,7 +57,7 @@
 			</ResourceDictionary.MergedDictionaries>
 			<xctk:InverseBoolConverter x:Key="InverseBoolConverter" />
 			<SC:LogicalMultiEqualConverter x:Key="LogicalMultiEqualConverter" />
-			<SC:BooleanVisibilityConverter x:Key="BooleanVisibilityConverter" />
+			<BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 			<SC:BooleanFontWeightConverter x:Key="BooleanFontWeightConverter" />
 			<SC:BooleanFontStyleConverter x:Key="BooleanFontStyleConverter" />
 
@@ -488,7 +488,7 @@
 												<Image Source="{Binding ToolTipImage}" Style="{StaticResource ToolbarToolTipImage}" />
 												<TextBlock Text="{Binding ToolTipTitle}" Style="{StaticResource ToolbarToolTipTitle}" FontFamily="{DynamicResource {x:Static SystemFonts.CaptionFontFamilyKey}}" />
 											</StackPanel>
-											<StackPanel Orientation="Horizontal" Visibility="{Binding HasToolTipMessage, Converter={StaticResource BooleanVisibilityConverter}}">
+											<StackPanel Orientation="Horizontal" Visibility="{Binding HasToolTipMessage, Converter={StaticResource BooleanToVisibilityConverter}}">
 												<TextBlock Text="{Binding ToolTipMessage}" FontFamily="{DynamicResource {x:Static SystemFonts.SmallCaptionFontFamilyKey}}" />
 											</StackPanel>
 										</StackPanel>
