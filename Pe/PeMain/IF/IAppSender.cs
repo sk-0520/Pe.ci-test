@@ -87,6 +87,6 @@
 		/// </summary>
 		/// <param name="applicationCommand"></param>
 		/// <param name="arg"></param>
-		void SendApplicationCommand(ApplicationCommand applicationCommand, ApplicationCommandArg arg);
+		void SendApplicationCommand(ApplicationCommand applicationCommand, object sender, ApplicationCommandArg arg);
 	}
 }

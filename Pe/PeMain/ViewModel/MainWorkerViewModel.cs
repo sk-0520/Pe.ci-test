@@ -271,6 +271,8 @@
 
 								SaveSetting();
 								ResetSetting();
+
+								CommonData.AppSender.SendApplicationCommand(ApplicationCommand.MemoryGarbageCollect, this, Data.ApplicationCommandArg.Empty);
 							} else {
 								ResetCache(true);
 							}
@@ -619,7 +621,7 @@
 				AppUtility.SaveSetting(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingLauncherGroupItemSettingFilePath), CommonData.LauncherGroupSetting, Constants.fileTypeLauncherGroupSetting, CommonData.Logger);
 
 				foreach(var indexKind in EnumUtility.GetMembers<IndexKind>()) {
-					SendSaveIndex(indexKind, Timing.Instantly);
+					CommonData.AppSender.SendSaveIndex(indexKind, Timing.Instantly);
 				}
 			}
 		}
@@ -702,7 +704,9 @@
 				CreateCommandWindow();
 
 				// #326
-				ReceiveClipboardChanged();
+				CommonData.AppSender.SendClipboardChanged();
+
+				CommonData.AppSender.SendApplicationCommand(ApplicationCommand.MemoryGarbageCollect, this, Data.ApplicationCommandArg.Empty);
 
 				return startupNotifyData;
 			}
@@ -851,7 +855,7 @@
 				foreach(var screen in Screen.AllScreens.OrderBy(s => !s.Primary)) {
 					//var toolbar = new LauncherToolbarWindow();
 					//toolbar.SetCommonData(CommonData, screen);
-					SendCreateWindow(WindowKind.LauncherToolbar, screen, null);
+					CommonData.AppSender.SendCreateWindow(WindowKind.LauncherToolbar, screen, null);
 				}
 			}
 
@@ -976,6 +980,8 @@
 		{
 			CommonData.Logger.Information(CommonData.Language["log/screen/change-count"]);
 			ResetToolbar();
+
+			CommonData.AppSender.SendApplicationCommand(ApplicationCommand.MemoryGarbageCollect, this, Data.ApplicationCommandArg.Empty);
 		}
 
 		/// <summary>
@@ -1028,7 +1034,7 @@
 
 		NoteWindow CreateNoteWindow(NoteIndexItemModel noteItem, bool appendIndex)
 		{
-			var window = (NoteWindow)SendCreateWindow(WindowKind.Note, noteItem, null);
+			var window = (NoteWindow)CommonData.AppSender.SendCreateWindow(WindowKind.Note, noteItem, null);
 			if(appendIndex) {
 				CommonData.NoteIndexSetting.Items.Add(noteItem);
 			}
@@ -1451,11 +1457,11 @@
 			ReceiveInformationTips(title, message, logKind);
 		}
 
-		public void SendApplicationCommand(ApplicationCommand applicationCommand, Data.ApplicationCommandArg arg)
+		public void SendApplicationCommand(ApplicationCommand applicationCommand, object sender, Data.ApplicationCommandArg arg)
 		{
 			CheckUtility.DebugEnforceNotNull(arg);
 
-			ReceiveApplicationCommand(applicationCommand, arg);
+			ReceiveApplicationCommand(applicationCommand, sender, arg);
 		}
 
 		#endregion
@@ -1598,7 +1604,7 @@
 					throw new NotImplementedException();
 			}
 
-			SendAppendWindow(window);
+			CommonData.AppSender.SendAppendWindow(window);
 			return window;
 		}
 
@@ -1641,7 +1647,7 @@
 			// ボディ部のファイルも削除する。
 			IndexItemUtility.RemoveBody(indexKind, guid, CommonData.NonProcess);
 
-			SendSaveIndex(indexKind, Timing.Delay);
+			CommonData.AppSender.SendSaveIndex(indexKind, Timing.Delay);
 		}
 
 		void ReceiveRemoveIndex(IndexKind indexKind, Guid guid, Timing timing)
@@ -1905,8 +1911,8 @@
 						};
 						Clipboard.IndexPairList.Add(index, null);
 						index.History.Update();
-						SendSaveIndex(IndexKind.Clipboard, Timing.Delay);
-						SendSaveIndexBody(clipboardData.Body, index.Id, Timing.Delay);
+						CommonData.AppSender.SendSaveIndex(IndexKind.Clipboard, Timing.Delay);
+						CommonData.AppSender.SendSaveIndexBody(clipboardData.Body, index.Id, Timing.Delay);
 						if(!ClipboardWindow.IsActive && ClipboardWindow.IsVisible) {
 							ClipboardWindow.listItems.SelectedItem = ClipboardWindow.listItems.Items[0];
 							ClipboardWindow.listItems.ScrollIntoView(ClipboardWindow.listItems.SelectedItem);
@@ -1924,7 +1930,7 @@
 						dupItem.History.Update(nowTime);
 						var item = Clipboard.IndexPairList.Add(dupItem, null);
 						Clipboard.SelectedViewModel = item.ViewModel;
-						SendSaveIndex(IndexKind.Clipboard, Timing.Delay);
+						CommonData.AppSender.SendSaveIndex(IndexKind.Clipboard, Timing.Delay);
 					} else {
 						CommonData.Logger.Information(CommonData.Language["log/clipboard/dup-item/ignore"], dupItem);
 					}
@@ -1944,7 +1950,7 @@
 			switch(hotKeyId) {
 				case HotKeyId.ShowCommand:
 					ShowCommandWindow();
-					SendInformationTips(CommonData.Language["notify/info/command/show/title"], CommonData.Language["notify/info/command/show/message"], LogKind.Information);
+					CommonData.AppSender.SendInformationTips(CommonData.Language["notify/info/command/show/title"], CommonData.Language["notify/info/command/show/message"], LogKind.Information);
 					break;
 
 				case HotKeyId.HiddenFile: {
@@ -1955,7 +1961,7 @@
 						} else {
 							message = "notify/info/hiddenfile/message/hide";
 						}
-						SendInformationTips(CommonData.Language["notify/info/hiddenfile/title"], CommonData.Language[message], LogKind.Information);
+						CommonData.AppSender.SendInformationTips(CommonData.Language["notify/info/hiddenfile/title"], CommonData.Language[message], LogKind.Information);
 					}
 					break;
 
@@ -1967,7 +1973,7 @@
 						} else {
 							message = "notify/info/extension/message/hide";
 						}
-						SendInformationTips(CommonData.Language["notify/info/extension/title"], CommonData.Language[message], LogKind.Information);
+						CommonData.AppSender.SendInformationTips(CommonData.Language["notify/info/extension/title"], CommonData.Language[message], LogKind.Information);
 					}
 					break;
 
@@ -1978,7 +1984,7 @@
 						var logcalPoint = devicePoint;
 						var noteSize = Constants.noteDefualtSize;
 						var window = CreateNoteItem(logcalPoint, noteSize, true);
-						SendInformationTips(CommonData.Language["notify/info/note/create/title"], CommonData.Language["notify/info/note/create/message"], LogKind.Information);
+						CommonData.AppSender.SendInformationTips(CommonData.Language["notify/info/note/create/title"], CommonData.Language["notify/info/note/create/message"], LogKind.Information);
 						//WindowsUtility.ShowNoActive(window.Handle);
 						Application.Current.Dispatcher.BeginInvoke(new Action(() => {
 							WindowsUtility.ShowActive(window.Handle);
@@ -1988,17 +1994,17 @@
 
 				case HotKeyId.HideNote:
 					HideNoteItems();
-					SendInformationTips(CommonData.Language["notify/info/note/hide/title"], CommonData.Language["notify/info/note/hide/message"], LogKind.Information);
+					CommonData.AppSender.SendInformationTips(CommonData.Language["notify/info/note/hide/title"], CommonData.Language["notify/info/note/hide/message"], LogKind.Information);
 					break;
 
 				case HotKeyId.CompactNote:
 					CompactNoteItems();
-					SendInformationTips(CommonData.Language["notify/info/note/compact/title"], CommonData.Language["notify/info/note/compact/message"], LogKind.Information);
+					CommonData.AppSender.SendInformationTips(CommonData.Language["notify/info/note/compact/title"], CommonData.Language["notify/info/note/compact/message"], LogKind.Information);
 					break;
 
 				case HotKeyId.ShowFrontNote:
 					MoveFrontNoteItems();
-					SendInformationTips(CommonData.Language["notify/info/note/front/title"], CommonData.Language["notify/info/note/front/message"], LogKind.Information);
+					CommonData.AppSender.SendInformationTips(CommonData.Language["notify/info/note/front/title"], CommonData.Language["notify/info/note/front/message"], LogKind.Information);
 					break;
 
 				case HotKeyId.SwitchClipboardShow: {
@@ -2009,7 +2015,7 @@
 						} else {
 							message = "notify/info/clipboard/message/hide";
 						}
-						SendInformationTips(CommonData.Language["notify/info/clipboard/title"], CommonData.Language[message], LogKind.Information);
+						CommonData.AppSender.SendInformationTips(CommonData.Language["notify/info/clipboard/title"], CommonData.Language[message], LogKind.Information);
 					}
 					break;
 
@@ -2021,7 +2027,7 @@
 						} else {
 							message = "notify/info/template/message/hide";
 						}
-						SendInformationTips(CommonData.Language["notify/info/template/title"], CommonData.Language[message], LogKind.Information);
+						CommonData.AppSender.SendInformationTips(CommonData.Language["notify/info/template/title"], CommonData.Language[message], LogKind.Information);
 					}
 					break;
 
@@ -2051,7 +2057,7 @@
 			action[logKind](title, message);
 		}
 
-		void ReceiveApplicationCommand(ApplicationCommand applicationCommand, object arg)
+		void ReceiveApplicationCommand(ApplicationCommand applicationCommand, object sender, Data.ApplicationCommandArg arg)
 		{
 			Debug.Assert(arg != null);
 

@@ -460,8 +460,8 @@
 					foreach(var oldItem in oldItems) {
 						oldItem.Dispose();
 					}
-					// TODO: 調査中
-					AppSender.SendApplicationCommand(ApplicationCommand.MemoryGarbageCollect, ApplicationCommandArg.Empty);
+
+					AppSender.SendApplicationCommand(ApplicationCommand.MemoryGarbageCollect, this, ApplicationCommandArg.Empty);
 				}
 			}
 		}
