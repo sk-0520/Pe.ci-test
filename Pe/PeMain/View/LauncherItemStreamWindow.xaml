@@ -28,7 +28,7 @@
 				<ResourceDictionary Source="/View/Parts/Resource/ToolbarDictionary.xaml" />
 			</ResourceDictionary.MergedDictionaries>
 			<SC:LogicalNotConverter x:Key="LogicalNotConverter" />
-			<SC:BooleanVisibilityConverter x:Key="BooleanVisibilityConverter" />
+			<BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 			<SC:BooleanFontWeightConverter x:Key="BooleanFontWeightConverter" />
 			<SC:BooleanFontStyleConverter x:Key="BooleanFontStyleConverter" />
 		</ResourceDictionary>
@@ -88,7 +88,7 @@
 							<SolidColorBrush Color="{Binding StdOutputBackColor}" />
 						</RichTextBox.Background>-->
 					</RichTextBox>
-					<xctk:WatermarkTextBox Grid.Row="1" Visibility="{Binding UsingInput, Converter={StaticResource BooleanVisibilityConverter}}" Text="{Binding InputConsole, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding ProcessRunning, Mode=OneWay, Converter={StaticResource LogicalNotConverter}}" >
+					<xctk:WatermarkTextBox Grid.Row="1" Visibility="{Binding UsingInput, Converter={StaticResource BooleanToVisibilityConverter}}" Text="{Binding InputConsole, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding ProcessRunning, Mode=OneWay, Converter={StaticResource LogicalNotConverter}}" >
 						<xctk:WatermarkTextBox.Watermark>
 							<TextBlock Text="input" AA:Language.Word="stream/stream/input" />
 						</xctk:WatermarkTextBox.Watermark>

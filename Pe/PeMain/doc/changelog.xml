@@ -109,7 +109,11 @@
 				<message>ログの保持上限数を持たせた</message>
 			</note>
 			<note rev="">
-				<message></message>
+				<message>#325: 可能な限り標準提供されているConverterを使用する</message>
+				<comments>
+					<comment>BooleanToVisibilityConverter くらいしかなかった</comment>
+					<comment>今後見つけ次第修正していく</comment>
+				</comments>
 			</note>
 			<note rev="">
 				<message></message>

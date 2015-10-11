@@ -187,7 +187,7 @@
 
 		static void ChangedCanListEdit(LauncherListControl control, bool value)
 		{
-			var converter = new BooleanVisibilityConverter();
+			var converter = new BooleanToVisibilityConverter();
 			var visibility = (Visibility)converter.Convert(value, typeof(bool), null, null);
 			var elements = new UIElement[] { control.toolAppend, control.toolRemove, control.toolSeparator };
 			foreach(var element in elements) {

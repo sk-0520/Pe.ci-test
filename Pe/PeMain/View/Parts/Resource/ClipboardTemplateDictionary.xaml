@@ -38,11 +38,11 @@
 
 	<Style x:Key="ClipboardTemplateCommandArea" TargetType="Border">
 		<Style.Resources>
-			<SC:BooleanVisibilityConverter x:Key="BooleanVisibilityConverter" />
+			<BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 		</Style.Resources>
 		<!--<Setter Property="BorderThickness" Value="4" />
 		<Setter Property="BorderBrush" Value="Yellow" />-->
-		<Setter Property="Visibility" Value="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType=ListBoxItem}, Mode=OneWay, Converter={StaticResource BooleanVisibilityConverter}}" />
+		<Setter Property="Visibility" Value="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType=ListBoxItem}, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" />
 		<Setter Property="VerticalAlignment" Value="Bottom" />
 		<Setter Property="HorizontalAlignment" Value="Left" />
 		<Setter Property="Width" Value="Auto" />
