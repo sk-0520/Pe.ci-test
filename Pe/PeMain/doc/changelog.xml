@@ -107,6 +107,9 @@
 				</comments>
 			</note>
 			<note rev="">
+				<message>#312: ツールバー設定画面のランチャーアイテムが選択されている状態でスクロールバーがスクロールできない</message>
+			</note>
+			<note rev="">
 				<message></message>
 			</note>
 		</group>
