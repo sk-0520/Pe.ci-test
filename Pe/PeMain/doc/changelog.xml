@@ -90,8 +90,8 @@
 			</note>
 		</group>
 		<group type="developer" dummy="==================================================================">
-			<note rev="">
-				<message></message>
+			<note rev="0a9554ea3fd284d790ec6f0877efc54ef7b430b0">
+				<message>#334: 開発環境をVS2013からVS2015に変更</message>
 			</note>
 			<note rev="">
 				<message></message>
