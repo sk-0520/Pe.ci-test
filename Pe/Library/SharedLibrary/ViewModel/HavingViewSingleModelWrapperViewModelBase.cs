@@ -66,6 +66,19 @@
 
 		#endregion
 
+		#region SingleModelWrapperViewModelBase
+
+		protected override void Dispose(bool disposing)
+		{
+			if(!IsDisposed) {
+				View = null;
+			}
+
+			base.Dispose(disposing);
+		}
+
+		#endregion
+
 		void View_Closed(object sender, EventArgs e)
 		{
 			Debug.Assert(HasView);

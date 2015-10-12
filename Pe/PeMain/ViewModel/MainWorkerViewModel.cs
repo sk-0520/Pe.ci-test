@@ -40,6 +40,7 @@
 	using ContentTypeTextNet.Pe.PeMain.View.Parts.Window;
 	using Hardcodet.Wpf.TaskbarNotification;
 	using Microsoft.Win32;
+	using System.Runtime;
 
 	public sealed class MainWorkerViewModel: ViewModelBase, IAppSender, IClipboardWatcher, IHavingView<TaskbarIcon>, IHavingCommonData
 	{
@@ -270,6 +271,8 @@
 
 								SaveSetting();
 								ResetSetting();
+
+								CommonData.AppSender.SendApplicationCommand(ApplicationCommand.MemoryGarbageCollect, this, Data.ApplicationCommandArg.Empty);
 							} else {
 								ResetCache(true);
 							}
@@ -440,7 +443,7 @@
 			{
 				var result = CreateCommand(
 					o => {
-						FrontNoteItems();
+						MoveFrontNoteItems();
 					}
 				);
 
@@ -618,7 +621,7 @@
 				AppUtility.SaveSetting(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingLauncherGroupItemSettingFilePath), CommonData.LauncherGroupSetting, Constants.fileTypeLauncherGroupSetting, CommonData.Logger);
 
 				foreach(var indexKind in EnumUtility.GetMembers<IndexKind>()) {
-					SendSaveIndex(indexKind, Timing.Instantly);
+					CommonData.AppSender.SendSaveIndex(indexKind, Timing.Instantly);
 				}
 			}
 		}
@@ -701,7 +704,9 @@
 				CreateCommandWindow();
 
 				// #326
-				ReceiveClipboardChanged();
+				CommonData.AppSender.SendClipboardChanged();
+
+				CommonData.AppSender.SendApplicationCommand(ApplicationCommand.MemoryGarbageCollect, this, Data.ApplicationCommandArg.Empty);
 
 				return startupNotifyData;
 			}
@@ -801,7 +806,7 @@
 		/// <summary>
 		/// ログの生成。
 		/// </summary>
-		void CreateLogger(CollectionModel<LogItemModel> logItems)
+		void CreateLogger(FixedSizeCollectionModel<LogItemModel> logItems)
 		{
 			using(var timeLogger = CommonData.NonProcess.CreateTimeLogger()) {
 				LoggingWindow = new LoggingWindow();
@@ -823,7 +828,7 @@
 			}
 		}
 
-		CollectionModel<LogItemModel> RemoveLogger()
+		FixedSizeCollectionModel<LogItemModel> RemoveLogger()
 		{
 			var resultItems = Logging.LogItems;
 
@@ -850,7 +855,7 @@
 				foreach(var screen in Screen.AllScreens.OrderBy(s => !s.Primary)) {
 					//var toolbar = new LauncherToolbarWindow();
 					//toolbar.SetCommonData(CommonData, screen);
-					SendCreateWindow(WindowKind.LauncherToolbar, screen, null);
+					CommonData.AppSender.SendCreateWindow(WindowKind.LauncherToolbar, screen, null);
 				}
 			}
 
@@ -975,6 +980,8 @@
 		{
 			CommonData.Logger.Information(CommonData.Language["log/screen/change-count"]);
 			ResetToolbar();
+
+			CommonData.AppSender.SendApplicationCommand(ApplicationCommand.MemoryGarbageCollect, this, Data.ApplicationCommandArg.Empty);
 		}
 
 		/// <summary>
@@ -1027,7 +1034,7 @@
 
 		NoteWindow CreateNoteWindow(NoteIndexItemModel noteItem, bool appendIndex)
 		{
-			var window = (NoteWindow)SendCreateWindow(WindowKind.Note, noteItem, null);
+			var window = (NoteWindow)CommonData.AppSender.SendCreateWindow(WindowKind.Note, noteItem, null);
 			if(appendIndex) {
 				CommonData.NoteIndexSetting.Items.Add(noteItem);
 			}
@@ -1178,10 +1185,12 @@
 			}
 		}
 
-		void FrontNoteItems()
+		void MoveFrontNoteItems()
 		{
 			foreach(var window in NoteWindows) {
-				WindowsUtility.ShowNoActiveForeground(window.Handle);
+				Application.Current.Dispatcher.BeginInvoke(new Action(() => {
+						WindowsUtility.ShowNoActiveForeground(window.Handle);
+				}), DispatcherPriority.SystemIdle);
 			}
 		}
 
@@ -1440,7 +1449,7 @@
 
 		public void SendInputHotKey(HotKeyId hotKeyId, HotKeyModel hotKeyModel)
 		{
-			ReceiveHotKey(hotKeyId, hotKeyModel);
+			ReceiveInputHotKey(hotKeyId, hotKeyModel);
 		}
 
 		public void SendInformationTips(string title, string message, LogKind logKind)
@@ -1448,10 +1457,16 @@
 			ReceiveInformationTips(title, message, logKind);
 		}
 
+		public void SendApplicationCommand(ApplicationCommand applicationCommand, object sender, Data.ApplicationCommandArg arg)
+		{
+			CheckUtility.DebugEnforceNotNull(arg);
+
+			ReceiveApplicationCommand(applicationCommand, sender, arg);
+		}
+
 		#endregion
 
 		#region IAppSender-Implement
-
 
 		void ReceiveAppendWindow(Window window)
 		{
@@ -1589,7 +1604,7 @@
 					throw new NotImplementedException();
 			}
 
-			SendAppendWindow(window);
+			CommonData.AppSender.SendAppendWindow(window);
 			return window;
 		}
 
@@ -1632,7 +1647,7 @@
 			// ボディ部のファイルも削除する。
 			IndexItemUtility.RemoveBody(indexKind, guid, CommonData.NonProcess);
 
-			SendSaveIndex(indexKind, Timing.Delay);
+			CommonData.AppSender.SendSaveIndex(indexKind, Timing.Delay);
 		}
 
 		void ReceiveRemoveIndex(IndexKind indexKind, Guid guid, Timing timing)
@@ -1834,15 +1849,30 @@
 			}
 			this._clipboardPreviousTime = now;
 
-			ClipboardData clipboardData;
+			ClipboardData clipboardData = null;
 			try {
-				clipboardData = ClipboardUtility.GetClipboardData(CommonData.MainSetting.Clipboard.CaptureType, MessageWindow.Handle, CommonData.NonProcess.Logger);
+				var retry = new TimeRetry<ClipboardData>();
+				retry.WaitTime = Constants.clipboardGetDataRetryWaitTime;
+				retry.WaitMaxCount = Constants.clipboardGetDataRetryMaxCount;
+				retry.ExecuteFunc = (int waitCurrentCount, ref ClipboardData result) => {
+					var data = ClipboardUtility.GetClipboardData(CommonData.MainSetting.Clipboard.CaptureType, MessageWindow.Handle, CommonData.NonProcess.Logger);
+					var hasData = data != null;
+					if(hasData) {
+						result = data;
+					}
+					return hasData;
+				};
+				retry.Run();
+				if(!retry.WaitOver) {
+					clipboardData = retry.Result;
+				}
+
 			} catch(AccessViolationException ex) {
 				// #251
 				CommonData.Logger.Error(ex);
 				return;
 			}
-			if(clipboardData.Type == ClipboardType.None) {
+			if(clipboardData == null || clipboardData.Type == ClipboardType.None) {
 				CommonData.NonProcess.Logger.Trace(CommonData.NonProcess.Language["log/clipboard/capture/not-support"]);
 				return;
 			}
@@ -1896,8 +1926,8 @@
 						};
 						Clipboard.IndexPairList.Add(index, null);
 						index.History.Update();
-						SendSaveIndex(IndexKind.Clipboard, Timing.Delay);
-						SendSaveIndexBody(clipboardData.Body, index.Id, Timing.Delay);
+						CommonData.AppSender.SendSaveIndex(IndexKind.Clipboard, Timing.Delay);
+						CommonData.AppSender.SendSaveIndexBody(clipboardData.Body, index.Id, Timing.Delay);
 						if(!ClipboardWindow.IsActive && ClipboardWindow.IsVisible) {
 							ClipboardWindow.listItems.SelectedItem = ClipboardWindow.listItems.Items[0];
 							ClipboardWindow.listItems.ScrollIntoView(ClipboardWindow.listItems.SelectedItem);
@@ -1913,9 +1943,9 @@
 						var nowTime = DateTime.Now;
 						dupItem.History.CreateTimestamp = nowTime;
 						dupItem.History.Update(nowTime);
-						Clipboard.IndexPairList.Add(dupItem, null);
-//						Clipboard.Items.Refresh();
-						SendSaveIndex(IndexKind.Clipboard, Timing.Delay);
+						var item = Clipboard.IndexPairList.Add(dupItem, null);
+						Clipboard.SelectedViewModel = item.ViewModel;
+						CommonData.AppSender.SendSaveIndex(IndexKind.Clipboard, Timing.Delay);
 					} else {
 						CommonData.Logger.Information(CommonData.Language["log/clipboard/dup-item/ignore"], dupItem);
 					}
@@ -1925,7 +1955,7 @@
 			}, TaskScheduler.FromCurrentSynchronizationContext());
 		}
 
-		void ReceiveHotKey(HotKeyId hotKeyId, HotKeyModel hotKeyModel)
+		void ReceiveInputHotKey(HotKeyId hotKeyId, HotKeyModel hotKeyModel)
 		{
 			if(IsPause) {
 				PuaseOutputLog();
@@ -1935,7 +1965,7 @@
 			switch(hotKeyId) {
 				case HotKeyId.ShowCommand:
 					ShowCommandWindow();
-					SendInformationTips(CommonData.Language["notify/info/command/show/title"], CommonData.Language["notify/info/command/show/message"], LogKind.Information);
+					CommonData.AppSender.SendInformationTips(CommonData.Language["notify/info/command/show/title"], CommonData.Language["notify/info/command/show/message"], LogKind.Information);
 					break;
 
 				case HotKeyId.HiddenFile: {
@@ -1946,7 +1976,7 @@
 						} else {
 							message = "notify/info/hiddenfile/message/hide";
 						}
-						SendInformationTips(CommonData.Language["notify/info/hiddenfile/title"], CommonData.Language[message], LogKind.Information);
+						CommonData.AppSender.SendInformationTips(CommonData.Language["notify/info/hiddenfile/title"], CommonData.Language[message], LogKind.Information);
 					}
 					break;
 
@@ -1958,7 +1988,7 @@
 						} else {
 							message = "notify/info/extension/message/hide";
 						}
-						SendInformationTips(CommonData.Language["notify/info/extension/title"], CommonData.Language[message], LogKind.Information);
+						CommonData.AppSender.SendInformationTips(CommonData.Language["notify/info/extension/title"], CommonData.Language[message], LogKind.Information);
 					}
 					break;
 
@@ -1969,7 +1999,7 @@
 						var logcalPoint = devicePoint;
 						var noteSize = Constants.noteDefualtSize;
 						var window = CreateNoteItem(logcalPoint, noteSize, true);
-						SendInformationTips(CommonData.Language["notify/info/note/create/title"], CommonData.Language["notify/info/note/create/message"], LogKind.Information);
+						CommonData.AppSender.SendInformationTips(CommonData.Language["notify/info/note/create/title"], CommonData.Language["notify/info/note/create/message"], LogKind.Information);
 						//WindowsUtility.ShowNoActive(window.Handle);
 						Application.Current.Dispatcher.BeginInvoke(new Action(() => {
 							WindowsUtility.ShowActive(window.Handle);
@@ -1979,17 +2009,17 @@
 
 				case HotKeyId.HideNote:
 					HideNoteItems();
-					SendInformationTips(CommonData.Language["notify/info/note/hide/title"], CommonData.Language["notify/info/note/hide/message"], LogKind.Information);
+					CommonData.AppSender.SendInformationTips(CommonData.Language["notify/info/note/hide/title"], CommonData.Language["notify/info/note/hide/message"], LogKind.Information);
 					break;
 
 				case HotKeyId.CompactNote:
 					CompactNoteItems();
-					SendInformationTips(CommonData.Language["notify/info/note/compact/title"], CommonData.Language["notify/info/note/compact/message"], LogKind.Information);
+					CommonData.AppSender.SendInformationTips(CommonData.Language["notify/info/note/compact/title"], CommonData.Language["notify/info/note/compact/message"], LogKind.Information);
 					break;
 
 				case HotKeyId.ShowFrontNote:
-					FrontNoteItems();
-					SendInformationTips(CommonData.Language["notify/info/note/front/title"], CommonData.Language["notify/info/note/front/message"], LogKind.Information);
+					MoveFrontNoteItems();
+					CommonData.AppSender.SendInformationTips(CommonData.Language["notify/info/note/front/title"], CommonData.Language["notify/info/note/front/message"], LogKind.Information);
 					break;
 
 				case HotKeyId.SwitchClipboardShow: {
@@ -2000,7 +2030,7 @@
 						} else {
 							message = "notify/info/clipboard/message/hide";
 						}
-						SendInformationTips(CommonData.Language["notify/info/clipboard/title"], CommonData.Language[message], LogKind.Information);
+						CommonData.AppSender.SendInformationTips(CommonData.Language["notify/info/clipboard/title"], CommonData.Language[message], LogKind.Information);
 					}
 					break;
 
@@ -2012,7 +2042,7 @@
 						} else {
 							message = "notify/info/template/message/hide";
 						}
-						SendInformationTips(CommonData.Language["notify/info/template/title"], CommonData.Language[message], LogKind.Information);
+						CommonData.AppSender.SendInformationTips(CommonData.Language["notify/info/template/title"], CommonData.Language[message], LogKind.Information);
 					}
 					break;
 
@@ -2042,6 +2072,33 @@
 			action[logKind](title, message);
 		}
 
+		void ReceiveApplicationCommand(ApplicationCommand applicationCommand, object sender, Data.ApplicationCommandArg arg)
+		{
+			Debug.Assert(arg != null);
+
+			switch(applicationCommand) {
+				case ApplicationCommand.MemoryGarbageCollect: 
+					{
+						var prevTime = DateTime.Now;
+						var prevUsingMemory = GC.GetTotalMemory(false);
+						GCSettings.LargeObjectHeapCompactionMode = GCLargeObjectHeapCompactionMode.CompactOnce;
+						GC.Collect();
+						GC.WaitForPendingFinalizers();
+						var gcUsingMemory = GC.GetTotalMemory(true);
+						var gcTime = DateTime.Now;
+						var detail = new [] {
+							prevTime.ToString() + " " + prevUsingMemory.ToString(),
+							"GC",
+							gcTime.ToString() + " " + gcUsingMemory.ToString(),
+						};
+						CommonData.Logger.Debug(applicationCommand.ToString(), string.Join(Environment.NewLine, detail));
+					}
+					break;
+
+				default:
+					throw new NotImplementedException();
+			}
+		}
 
 		#endregion
 

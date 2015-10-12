@@ -55,5 +55,18 @@
 		}
 
 		#endregion
+
+		#region ViewModelBase
+
+		protected override void Dispose(bool disposing)
+		{
+			if(!IsDisposed) {
+				Model = default(TModel);
+			}
+
+			base.Dispose(disposing);
+		}
+
+		#endregion
 	}
 }

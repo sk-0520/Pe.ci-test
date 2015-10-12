@@ -99,7 +99,7 @@
 
 		static Thickness GetButtonPadding()
 		{
-			return new Thickness(3,2,3,2);
+			return new Thickness(3, 2, 3, 2);
 		}
 
 		static Thickness GetIconMargin()
@@ -302,7 +302,7 @@
 				}
 			}
 		}
-		public VerticalAlignment  ToolbarButtonVerticalAlignment
+		public VerticalAlignment ToolbarButtonVerticalAlignment
 		{
 			get
 			{
@@ -341,10 +341,11 @@
 		public Thickness ButtonPadding { get; set; }
 		public Thickness IconMargin { get; set; }
 
-		public double FirstWidth { 
+		public double FirstWidth
+		{
 			get
 			{
-				if (IsEnabledCorrection) {
+				if(IsEnabledCorrection) {
 					return MenuWidth;
 				} else {
 					return ContentWidth;
@@ -355,7 +356,7 @@
 		{
 			get
 			{
-				if (!IsEnabledCorrection) {
+				if(!IsEnabledCorrection) {
 					return MenuWidth;
 				} else {
 					return ContentWidth;
@@ -451,17 +452,6 @@
 			}
 			set
 			{
-				//if(this._selectedGroup != value) {
-				//	this._selectedGroup = value;
-				//	OnPropertyChanged();
-				//	OnPropertyChanged("GroupItems");
-				//	var oldItems = this._launcherItems;
-				//	this._launcherItems = null;
-				//	OnPropertyChanged("LauncherItems");
-				//	foreach(var oldItem in oldItems) {
-				//		oldItem.Dispose();
-				//	}
-				//}
 				if(SetVariableValue(ref this._selectedGroup, value)) {
 					OnPropertyChanged("GroupItems");
 					var oldItems = this._launcherItems;
@@ -470,6 +460,8 @@
 					foreach(var oldItem in oldItems) {
 						oldItem.Dispose();
 					}
+
+					AppSender.SendApplicationCommand(ApplicationCommand.MemoryGarbageCollect, this, ApplicationCommandArg.Empty);
 				}
 			}
 		}
@@ -484,12 +476,7 @@
 							IconScale = Model.Toolbar.IconScale,
 						});
 					;
-
 					this._launcherItems = new CollectionModel<LauncherItemButtonViewModel>(list);
-
-					//if (HasView) {
-					//	View.ApplyLanguage();
-					//}
 				}
 
 				return this._launcherItems;
@@ -576,8 +563,8 @@
 		{
 			get
 			{
-				if (IsEnabledCorrection) {
-						return 1;
+				if(IsEnabledCorrection) {
+					return 1;
 				}
 
 				return 0;
@@ -588,11 +575,11 @@
 		{
 			get
 			{
-				if (!IsEnabledCorrection) {
+				if(!IsEnabledCorrection) {
 					return 1;
-				} else {
-					return 0;
 				}
+
+				return 0;
 			}
 		}
 
@@ -699,9 +686,9 @@
 				var result = CreateCommand(
 					o => {
 						var eventData = (EventData<DragEventArgs>)o;
-						if (eventData.EventArgs.Data.GetDataPresent(DataFormats.FileDrop)) {
+						if(eventData.EventArgs.Data.GetDataPresent(DataFormats.FileDrop)) {
 							var filePathList = eventData.EventArgs.Data.GetData(DataFormats.FileDrop) as string[];
-							if (filePathList != null && filePathList.Count() == 1) {
+							if(filePathList != null && filePathList.Count() == 1) {
 								eventData.EventArgs.Effects = DragDropEffects.Copy;
 							} else {
 								eventData.EventArgs.Effects = DragDropEffects.None;
@@ -725,19 +712,19 @@
 				var result = CreateCommand(
 					o => {
 						var eventData = (EventData<DragEventArgs>)o;
-						if (eventData.EventArgs.Data.GetDataPresent(DataFormats.FileDrop)) {
+						if(eventData.EventArgs.Data.GetDataPresent(DataFormats.FileDrop)) {
 							var filePathList = eventData.EventArgs.Data.GetData(DataFormats.FileDrop) as string[];
-							if (filePathList != null && filePathList.Count() == 1) {
+							if(filePathList != null && filePathList.Count() == 1) {
 								var filePath = filePathList.First();
 								var loadShorcut = true;
-								if (PathUtility.IsShortcut(filePath)) {
+								if(PathUtility.IsShortcut(filePath)) {
 									var dialogResult = MessageBox.Show(
 										AppNonProcess.Language["confirm/shortcut/message"],
 										AppNonProcess.Language["confirm/shortcut/caption"],
 										MessageBoxButton.YesNoCancel,
 										MessageBoxImage.Question
 									);
-									if (dialogResult == MessageBoxResult.Cancel) {
+									if(dialogResult == MessageBoxResult.Cancel) {
 										// やめる
 										return;
 									}
@@ -746,7 +733,7 @@
 								var item = LauncherItemUtility.CreateFromFile(filePath, loadShorcut, AppNonProcess);
 								SelectedGroup.LauncherItems.Add(item.Id);
 								Model.LauncherItems.Add(item);
-								var view = HasView ? View: null;
+								var view = HasView ? View : null;
 								AppSender.SendRefreshView(WindowKind.LauncherToolbar, view);
 							}
 						}
@@ -860,7 +847,7 @@
 
 		public bool IsTopmost
 		{
-			get 
+			get
 			{
 				if(NowFullScreen) {
 					if(HasView) {
@@ -1009,25 +996,26 @@
 		/// <summary>
 		/// 他ウィンドウがフルスクリーン表示。
 		/// </summary>
-		public bool NowFullScreen {
+		public bool NowFullScreen
+		{
 			get { return this._nowFullScreen; }
 			// TODO: 二回取得しちゃってワケわかめ状態
-			set 
+			set
 			{
 				if(Model.Toolbar.IsTopmost) {
 					var prevFullScreen = this._nowFullScreen;
 
 					AppNonProcess.Logger.Debug(string.Format("fullscreen: [OLD]:{0} -> [NEW]:{1}", this._nowFullScreen, value));
-					if (SetVariableValue(ref this._nowFullScreen, value)) {
+					if(SetVariableValue(ref this._nowFullScreen, value)) {
 						var nowTime = DateTime.Now;
-						if (this._nowFullScreen) {
+						if(this._nowFullScreen) {
 							AppNonProcess.Logger.Debug("fullscreen: first, cancel-flag on");
 							OnPropertyChanged("IsTopmost");
 							this._prevFullScreenTime = DateTime.Now;
 						} else {
 							var nowSpan = nowTime - _prevFullScreenTime;
 							AppNonProcess.Logger.Debug(string.Format("fullscreen: catch cancel, WAIT:{0}, NOW:{1}", Constants.FullScreenIgnoreTime, nowSpan));
-							if (nowSpan < Constants.FullScreenIgnoreTime) {
+							if(nowSpan < Constants.FullScreenIgnoreTime) {
 								// 二重で発行されたので無視する
 								AppNonProcess.Logger.Debug("fullscreen: ignore cancel");
 								this._nowFullScreen = prevFullScreen;
@@ -1035,7 +1023,7 @@
 							} else {
 								AppNonProcess.Logger.Debug(string.Format("fullscreen: [CHANGE]:{0}, [IsTopmost]:{1}", this._nowFullScreen, IsTopmost));
 								OnPropertyChanged("IsTopmost");
-								if (this._nowFullScreen && this._prevFullScreenCancel) {
+								if(this._nowFullScreen && this._prevFullScreenCancel) {
 									// 前回フルクリーンが二重発行されてた場合は解除する
 									this._prevFullScreenCancel = false;
 									AppNonProcess.Logger.Debug("fullscreen: cancel-flag off, topmost: " + IsTopmost);

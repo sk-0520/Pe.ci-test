@@ -30,7 +30,7 @@
 
 	public class LoggingViewModel : HavingViewSingleModelWrapperViewModelBase<LoggingSettingModel, LoggingWindow>, ILogAppender, IWindowStatus, IHavingNonProcess
 	{
-		public LoggingViewModel(LoggingSettingModel model, LoggingWindow view, CollectionModel<LogItemModel> logItems, INonProcess nonProcess)
+		public LoggingViewModel(LoggingSettingModel model, LoggingWindow view, FixedSizeCollectionModel<LogItemModel> logItems, INonProcess nonProcess)
 			: base(model, view)
 		{
 			NonProcess = nonProcess;
@@ -39,13 +39,14 @@
 				LogItems = logItems;
 				View.Loaded += View_Loaded;
 			} else {
-				LogItems = new CollectionModel<LogItemModel>();
+				var loggingCount = Constants.loggingStockCount.GetClamp(Constants.LoggingStockCount);
+				LogItems = new FixedSizeCollectionModel<LogItemModel>(loggingCount);
 			}
 		}
 
 		#region property
 
-		public CollectionModel<LogItemModel> LogItems { get; set; }
+		public FixedSizeCollectionModel<LogItemModel> LogItems { get; set; }
 
 		#region IWindowStatus
 

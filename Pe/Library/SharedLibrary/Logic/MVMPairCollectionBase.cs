@@ -79,11 +79,14 @@
 			return index;
 		}
 
-		public void Add(TModel model, object data)
+		public MVMPair<TModel, TViewModel> Add(TModel model, object data)
 		{
 			var viewModel = CreateViewModel(model, data);
 
-			Add(MVMPair.Create(model, viewModel));
+			var item = MVMPair.Create(model, viewModel);
+			Add(item);
+
+			return item;
 		}
 
 		public void RemoveAt(int index)

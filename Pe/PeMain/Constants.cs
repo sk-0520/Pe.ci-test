@@ -146,6 +146,13 @@
 			72
 		);
 
+		[ConstantsRange]
+		public static readonly TripleRange<int> loggingStockCount = new TripleRange<int>(
+			0,
+			1 * 1024,
+			5 * 1024
+		);
+
 		public static Size loggingDefaultWindowSize = new Size(320, 480);
 
 		[ConstantsRange]
@@ -208,6 +215,9 @@
 			TimeSpan.FromMilliseconds(250),
 			TimeSpan.FromSeconds(1)
 		);
+
+		public static readonly TimeSpan clipboardGetDataRetryWaitTime = TimeSpan.FromMilliseconds(250);
+		public static int clipboardGetDataRetryMaxCount = 3;
 
 		public const ClipboardType clipboardCaptureType = ClipboardType.All;
 		public const ClipboardType clipboardLimitType = ClipboardType.All ^ ClipboardType.Text;
@@ -378,6 +388,7 @@
 		public static string UriHelp { get { return ConfigurationManager.AppSettings["uri-help"]; } }
 		public static string UriFeedback { get { return ConfigurationManager.AppSettings["uri-feedback"]; } }
 
+		public static int LoggingStockCount { get { return int.Parse(ConfigurationManager.AppSettings["logging-stock-count"]); } }
 		public static int CacheIndexTemplate { get { return int.Parse(ConfigurationManager.AppSettings["cache-index-template"]); } }
 		public static int CacheIndexClipboard { get { return int.Parse(ConfigurationManager.AppSettings["cache-index-clipboard"]); } }
 

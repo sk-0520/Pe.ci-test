@@ -20,7 +20,6 @@
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 	using ContentTypeTextNet.Pe.PeMain.View.Parts.Window;
 	using ContentTypeTextNet.Pe.PeMain.ViewModel;
-	using ContentTypeTextNet.Pe.PeMain.Logic.Extension;
 	using System.Windows.Threading;
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Attribute;

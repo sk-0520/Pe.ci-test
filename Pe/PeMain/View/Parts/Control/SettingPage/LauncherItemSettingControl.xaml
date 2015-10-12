@@ -42,6 +42,7 @@
 			x:Name="listItems" 
 			Grid.Column="0" 
 			CanListEdit="True" 
+			SelectedLauncherItem="{Binding DataContext.SelectedLauncherItem, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}}"
 			DataContext="{Binding LauncherItems}" 
 			AppendCommand="{Binding DataContext.AppendItemCommand, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}}" 
 			RemoveCommand="{Binding DataContext.RemoveItemCommand, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}}" 
