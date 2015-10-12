@@ -55,6 +55,63 @@
 		</group>
 	</log>
 	-->
+	<log date="2015/10/12" version="0.67.0" dummy="################################################################################">
+		<group type="note" dummy="==================================================================">
+			<note rev="">
+				<message>出張おわったー、ちまちま修正できるー</message>
+			</note>
+		</group>
+		<group type="fixes" dummy="==================================================================">
+			<note rev="3cf6990dd4c4ebdda3cd73a0beefc469f5dd924e">
+				<message>#329: クリップボード設定「重複アイテムをリストの最上部に移動する」が保存されない</message>
+			</note>
+			<note rev="5a07c456577c1eadb2a50c87c51ec70f51602ece">
+				<message>設定ウィンドウのツールバー項目において「表示時間」とそれ以降の項目が重なっていた</message>
+			</note>
+			<note rev="aeedf9d364628f7a0c7af9377aff6e03ee9c8391">
+				<message>#330: リスト最上部へ移動したクリップボードアイテムを選択状態にする</message>
+			</note>
+			<note rev="30dcf8f94ed52a6aa802ff1925e20e324239c8bd">
+				<message>#332: ホットキーからノートの前面移動を行っても前面移動しない</message>
+				<comments>
+					<comment>出来たりできなかったり。。</comment>
+				</comments>
+			</note>
+			<note rev="39c8f9cdea51d327c9a6aea405264d3f73b4a6c4">
+				<message>#331: 自動的に隠す状態のツールバーが表示された際にアクティブウィンドウ云々</message>
+				<comments>
+					<comment>たぶんなおった、もう勘弁してください</comment>
+				</comments>
+			</note>
+			<note rev="53998305f8990f54f00ad054016af46f78e76e94">
+				<message>#321: クリップボードの取り込み処理で失敗すれば再試行する</message>
+				<comments>
+					<comment>☆ 突 貫 工 事 ☆</comment>
+				</comments>
+			</note>
+			<note rev="bdf5bfe81e2d912e077ba72db00789e348ce75d6">
+				<message>#312: ツールバー設定画面のランチャーアイテムが選択されている状態でスクロールバーがスクロールできない</message>
+			</note>
+			<note rev="f6ca1c3a1345c6d895300ccee5823c6fa4bee05e">
+				<message>#305: メモリ消費を抑える</message>
+				<comments>
+					<comment>継続課題のため終了はしない</comment>
+				</comments>
+			</note>
+		</group>
+		<group type="developer" dummy="==================================================================">
+			<note rev="1ece2f0d33addf2ffd2cce1e16581733322563f6">
+				<message>ログの保持上限数を持たせた</message>
+			</note>
+			<note rev="9a1153b4dd0a5beab92c295e2c213859ce78974a">
+				<message>#325: 可能な限り標準提供されているConverterを使用する</message>
+				<comments>
+					<comment>BooleanToVisibilityConverter くらいしかなかった</comment>
+					<comment>今後見つけ次第修正していく</comment>
+				</comments>
+			</note>
+		</group>
+	</log>
 	<log date="2015/09/28" version="0.66.0" dummy="################################################################################">
 		<group type="note" dummy="==================================================================">
 			<note rev="">

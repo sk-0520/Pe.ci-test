@@ -493,9 +493,11 @@
 
 			var hitTestResults = VisualTreeHelper.HitTest(treeView, position);
 			IToolbarNode result = null;
-			CastUtility.AsAction<FrameworkElement>(hitTestResults.VisualHit, element => {
-				result = element.DataContext as IToolbarNode;
-			});
+			if(hitTestResults != null) {
+				CastUtility.AsAction<FrameworkElement>(hitTestResults.VisualHit, element => {
+					result = element.DataContext as IToolbarNode;
+				});
+			}
 
 			return result;
 		}
@@ -545,6 +547,13 @@
 			}
 
 			if(!IsDragging) {
+				//IInputElement dropNode = View.treeGroup.InputHitTest(this._dragStartPosition);
+				//Debug.WriteLine(dropNode);
+				var isScrollDrag = GetToolbarNode(View.treeGroup, e.GetPosition(View.treeGroup)) == null;
+				if(isScrollDrag) {
+					return;
+				}
+
 				var nowPosition = e.GetPosition(null);
 				var size = new Size(10, 10);
 

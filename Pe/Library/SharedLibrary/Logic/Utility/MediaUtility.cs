@@ -92,7 +92,8 @@ using System.Windows.Media.Imaging;
 					bitmapSource,
 					PixelFormats.Bgra32,
 					null,
-					0);
+					0
+				);
 				bitmapSource.Freeze();
 			}
 			int width = (int)bitmapSource.Width;
@@ -125,12 +126,24 @@ using System.Windows.Media.Imaging;
 			}
 		}
 
+		/// <summary>
+		/// 画像の中から一番多そうな色を取得する。
+		/// </summary>
+		/// <param name="bitmapSource"></param>
+		/// <returns></returns>
 		public static Color GetPredominantColorFromBitmapSource(BitmapSource bitmapSource)
 		{
-			return GetPredominantColor(GetColors(GetPixels(bitmapSource)));
-			//return Colors.Red;
+			var pixels = GetPixels(bitmapSource);
+			var colors = GetColors(pixels);
+			//return GetPredominantColor(colors.Select((c, i) => new { c, i }).Where(ci => (ci.i % 8) == 0).Select(ci => ci.c));
+			return GetPredominantColor(colors);
 		}
 
+		/// <summary>
+		/// 渡された色の中から一番多そうな色を取得する。
+		/// </summary>
+		/// <param name="colors"></param>
+		/// <returns></returns>
 		public static Color GetPredominantColor(IEnumerable<Color> colors)
 		{
 			var map = new Dictionary<Color, int>();

@@ -82,5 +82,11 @@
 		/// <param name="message"></param>
 		/// <param name="logKind">諸事情によりHardcodet.Wpf.TaskbarNotification.BalloonIconじゃなくてLogKind の None, Information, Warning, Errorをそれぞれ指定</param>
 		void SendInformationTips(string title, string message, LogKind logKind);
+		/// <summary>
+		/// アプリケーション内コマンド実行。
+		/// </summary>
+		/// <param name="applicationCommand"></param>
+		/// <param name="arg"></param>
+		void SendApplicationCommand(ApplicationCommand applicationCommand, object sender, ApplicationCommandArg arg);
 	}
 }

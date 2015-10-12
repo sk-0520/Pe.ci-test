@@ -37,7 +37,7 @@
 			<SC:LogicalIsNotNullConverter x:Key="LogicalIsNotNullConverter" />
 			<SC:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
 			<SC:GridDistanceConverter x:Key="GridDistanceConverter" />
-			<SC:BooleanVisibilityConverter x:Key="BooleanVisibilityConverter" />
+			<BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 			<AC:ReverseClipboardItemListConverter x:Key="ReverseClipboardItemListConverter" />
 			<AC:DisplayTextConverter x:Key="DisplayTextConverter" />
 			<SC:BooleanFontWeightConverter x:Key="BooleanFontWeightConverter" />
@@ -192,7 +192,7 @@
 						<TextBox Grid.Column="1" HorizontalAlignment="Stretch" Text="{Binding SelectedViewModel.Name, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DefaultTextBox}" />
 					</Grid>
 					<TabControl x:Name="tabClipboard" Grid.Row="1">
-						<TabItem x:Name="pageText" Visibility="{Binding SelectedViewModel.EnabledClipboardTypesText, Converter={StaticResource BooleanVisibilityConverter}}">
+						<TabItem x:Name="pageText" Visibility="{Binding SelectedViewModel.EnabledClipboardTypesText, Converter={StaticResource BooleanToVisibilityConverter}}">
 							<TabItem.Header>
 								<StackPanel Orientation="Horizontal">
 									<Image Style="{StaticResource ClipboardText}" />
@@ -210,7 +210,7 @@
 								FontFamily="{Binding FontFamily, Mode=OneWay}" FontWeight="{Binding FontBold, Converter={StaticResource BooleanFontWeightConverter}, Mode=OneWay}" FontStyle="{Binding FontItalic, Converter={StaticResource BooleanFontStyleConverter}, Mode=OneWay}" FontSize="{Binding FontSize, Mode=OneWay}"
 							/>
 						</TabItem>
-						<TabItem x:Name="pageRtf" Visibility="{Binding SelectedViewModel.EnabledClipboardTypesRtf, Converter={StaticResource BooleanVisibilityConverter}}">
+						<TabItem x:Name="pageRtf" Visibility="{Binding SelectedViewModel.EnabledClipboardTypesRtf, Converter={StaticResource BooleanToVisibilityConverter}}">
 							<TabItem.Header>
 								<StackPanel Orientation="Horizontal">
 									<Image Style="{StaticResource ClipboardRtf}" />
@@ -232,7 +232,7 @@
 							</xctk:RichTextBox>
 							<!--<RichTextBox IsReadOnly="True" Document="{Binding Rtf, Mode=OneWay}" />-->
 						</TabItem>
-						<TabItem x:Name="pageHtml" Visibility="{Binding SelectedViewModel.EnabledClipboardTypesHtml, Converter={StaticResource BooleanVisibilityConverter}}">
+						<TabItem x:Name="pageHtml" Visibility="{Binding SelectedViewModel.EnabledClipboardTypesHtml, Converter={StaticResource BooleanToVisibilityConverter}}">
 							<TabItem.Header>
 								<StackPanel Orientation="Horizontal">
 									<Image Style="{StaticResource ClipboardHtml}" />
@@ -257,7 +257,7 @@
 								<WebBrowser Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" AA:Browser.Html="{Binding SelectedViewModel.HtmlCode}" />
 							</Grid>
 						</TabItem>
-						<TabItem x:Name="pageImage" Visibility="{Binding SelectedViewModel.EnabledClipboardTypesImage, Converter={StaticResource BooleanVisibilityConverter}}">
+						<TabItem x:Name="pageImage" Visibility="{Binding SelectedViewModel.EnabledClipboardTypesImage, Converter={StaticResource BooleanToVisibilityConverter}}">
 							<TabItem.Header>
 								<StackPanel Orientation="Horizontal">
 									<Image Style="{StaticResource ClipboardImage}" />
@@ -312,7 +312,7 @@
 								</ScrollViewer>
 							</Grid>
 						</TabItem>
-						<TabItem x:Name="pageFiles" Visibility="{Binding SelectedViewModel.EnabledClipboardTypesFiles, Converter={StaticResource BooleanVisibilityConverter}}">
+						<TabItem x:Name="pageFiles" Visibility="{Binding SelectedViewModel.EnabledClipboardTypesFiles, Converter={StaticResource BooleanToVisibilityConverter}}">
 							<TabItem.Header>
 								<StackPanel Orientation="Horizontal">
 									<Image Style="{StaticResource ClipboardFiles}" />

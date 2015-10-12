@@ -33,7 +33,7 @@
 
 		protected override void CreateViewModel()
 		{
-			ViewModel = new LoggingViewModel(CommonData.MainSetting.Logging, this, ExtensionData as CollectionModel<LogItemModel>, CommonData.NonProcess);
+			ViewModel = new LoggingViewModel(CommonData.MainSetting.Logging, this, ExtensionData as FixedSizeCollectionModel<LogItemModel>, CommonData.NonProcess);
 		}
 
 		protected override void ApplyViewModel()

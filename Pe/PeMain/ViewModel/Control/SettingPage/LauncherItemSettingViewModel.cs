@@ -26,6 +26,7 @@
 
 		LauncherListViewModel _launcherItems;
 		bool _isItemEdited;
+		LauncherListItemViewModel _selectedLauncherItem;
 
 		#endregion
 
@@ -62,6 +63,12 @@
 
 				return this._launcherItems;
 			}
+		}
+
+		public LauncherListItemViewModel SelectedLauncherItem
+		{
+			get { return this._selectedLauncherItem; }
+			set { SetVariableValue(ref this._selectedLauncherItem, value); }
 		}
 
 		#endregion
@@ -151,7 +158,8 @@
 									loadShorcut = dialogResult == MessageBoxResult.Yes;
 								}
 								var item = LauncherItemUtility.CreateFromFile(filePath, loadShorcut, AppNonProcess);
-								LauncherItems.LauncherItemPairList.Add(item, null);
+								var pair = LauncherItems.LauncherItemPairList.Add(item, null);
+								SelectedLauncherItem = pair.ViewModel;
 							}
 						}
 					}

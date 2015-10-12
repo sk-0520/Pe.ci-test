@@ -17,7 +17,9 @@
 	{
 		#region variable
 
-		HashSet<DelegateCommand> _createdCommands = new HashSet<DelegateCommand>();
+		//Dictionary<string, DelegateCommand> _createdCommands = new Dictionary<string, DelegateCommand>();
+		Caching<string, DelegateCommand> _createdCommands = new Caching<string, DelegateCommand>();
+
 		bool _isChanged = false;
 
 		#endregion
@@ -88,22 +90,21 @@
 			return false;
 		}
 
-		protected virtual ICommand CreateCommand(Action<object> executeCommand)
+		static string MakeCommandKey(string callerMember, int callerLineNumer)
 		{
-			var result = new DelegateCommand(executeCommand);
-
-			this._createdCommands.Add(result);
-
-			return result;
+			return callerMember + "?" + callerLineNumer.ToString();
 		}
 
-		protected virtual ICommand CreateCommand(Action<object> executeCommand, Func<object, bool> canExecuteCommand)
+		protected virtual ICommand CreateCommand(Action<object> executeCommand, [CallerMemberName] string callerMember = "", [CallerLineNumber] int callerLineNumer = -1)
 		{
-			var result = new DelegateCommand(executeCommand, canExecuteCommand);
+			var key = MakeCommandKey(callerMember, callerLineNumer);
+			return this._createdCommands.Get(key, () => new DelegateCommand(executeCommand));
+		}
 
-			this._createdCommands.Add(result);
-
-			return result;
+		protected virtual ICommand CreateCommand(Action<object> executeCommand, Func<object, bool> canExecuteCommand, [CallerMemberName] string callerMember = "", [CallerLineNumber] int callerLineNumer = -1)
+		{
+			var key = MakeCommandKey(callerMember, callerLineNumer);
+			return this._createdCommands.Get(key, () => new DelegateCommand(executeCommand, canExecuteCommand));
 		}
 
 		/// <summary>
@@ -152,9 +153,10 @@
 		protected override void Dispose(bool disposing)
 		{
 			if(!IsDisposed) {
-				foreach(var command in this._createdCommands) {
-					command.Dispose();
+				foreach(var pair in this._createdCommands) {
+					pair.Value.Dispose();
 				}
+				this._createdCommands = null;
 			}
 			base.Dispose(disposing);
 		}

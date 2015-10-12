@@ -4,6 +4,7 @@
 	using System.Collections.Generic;
 	using System.Linq;
 	using System.Reflection;
+	using System.Runtime.Serialization;
 	using System.Text;
 	using System.Threading.Tasks;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
@@ -74,6 +75,20 @@
 			var joinString = ReflectionUtility.JoinNameValueStrings(nameValueStrings);
 
 			return string.Format("{0}=>{1}", name, joinString);
+		}
+
+		public static IEnumerable<MemberInfo> GetSerializeMembers(object obj)
+		{
+			var type = obj.GetType();
+			var members = type
+				.GetMembers(BindingFlags.GetProperty | BindingFlags.SetProperty | BindingFlags.GetField | BindingFlags.SetField)
+				.Where(m => m.CustomAttributes.Any(c => {
+					return c.AttributeType.GetCustomAttributes(typeof(DataContractAttribute), true).Any();
+					})
+				)
+			;
+
+			return members;
 		}
 	}
 }

@@ -34,5 +34,18 @@
 		public bool HasView { get { return HavingViewUtility.GetHasView(this); } }
 
 		#endregion
+
+		#region ViewModelBase
+
+		protected override void Dispose(bool disposing)
+		{
+			if(!IsDisposed) {
+				View = null;
+			}
+
+			base.Dispose(disposing);
+		}
+
+		#endregion
 	}
 }

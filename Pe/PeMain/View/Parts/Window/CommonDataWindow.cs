@@ -18,7 +18,6 @@
 	using ContentTypeTextNet.Pe.Library.PeData.IF;
 	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.IF;
-	using ContentTypeTextNet.Pe.PeMain.Logic.Extension;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
 	public abstract class CommonDataWindow: UserClosableWindowWindowBase, ICommonData

@@ -145,6 +145,7 @@
     <Compile Include="ConstantsRangeAttribute.cs">
       <DependentUpon>Constants.cs</DependentUpon>
     </Compile>
+    <Compile Include="Data\ApplicationCommandArg.cs" />
     <Compile Include="Data\Temporary\AboutNotifyData.cs" />
     <Compile Include="Data\Temporary\ClipboardCaptureNotifyData.cs" />
     <Compile Include="Data\Temporary\ItemWithScreen.cs" />
@@ -152,6 +153,7 @@
     <Compile Include="Data\Temporary\LauncherItemWithScreen.cs" />
     <Compile Include="Data\Temporary\NotifyDataBase.cs" />
     <Compile Include="Data\Temporary\StartupNotifyData.cs" />
+    <Compile Include="Define\ApplicationCommand.cs" />
     <Compile Include="Define\WindowSaveType.cs" />
     <Compile Include="Logic\Updater.cs" />
     <Compile Include="Data\Temporary\UpdateInformation.cs" />
