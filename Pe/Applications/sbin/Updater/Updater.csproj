@@ -69,7 +69,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Link\CommandLine.cs" />
+    <Compile Include="..\..\..\Library\SharedLibrary\Logic\CommandLine.cs">
+      <Link>Link\CommandLine.cs</Link>
+    </Compile>
     <Compile Include="Update.cs" />
     <Compile Include="Updater.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
