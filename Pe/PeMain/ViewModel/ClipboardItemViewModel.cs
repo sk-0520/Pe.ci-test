@@ -1,372 +1,389 @@
-﻿namespace ContentTypeTextNet.Pe.PeMain.ViewModel
+﻿/**
+This file is part of Pe.
+
+Pe is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Pe is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Pe.  If not, see <http://www.gnu.org/licenses/>.
+*/
+namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 {
-	using System;
-	using System.Collections.Generic;
-	using System.IO;
-	using System.Linq;
-	using System.Runtime.CompilerServices;
-	using System.Text;
-	using System.Threading.Tasks;
-	using System.Windows.Documents;
-	using System.Windows.Input;
-	using System.Windows.Media;
-	using System.Windows.Media.Imaging;
-	using ContentTypeTextNet.Library.SharedLibrary.IF;
-	using ContentTypeTextNet.Library.SharedLibrary.View.Window;
-	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
-	using ContentTypeTextNet.Pe.Library.PeData.Define;
-	using ContentTypeTextNet.Pe.Library.PeData.Item;
-	//using ContentTypeTextNet.Pe.PeMain.Data;
-	using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
-	using ContentTypeTextNet.Pe.PeMain.IF;
-	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Runtime.CompilerServices;
+    using System.Text;
+    using System.Threading.Tasks;
+    using System.Windows.Documents;
+    using System.Windows.Input;
+    using System.Windows.Media;
+    using System.Windows.Media.Imaging;
+    using ContentTypeTextNet.Library.SharedLibrary.IF;
+    using ContentTypeTextNet.Library.SharedLibrary.View.Window;
+    using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+    using ContentTypeTextNet.Pe.Library.PeData.Define;
+    using ContentTypeTextNet.Pe.Library.PeData.Item;
+    //using ContentTypeTextNet.Pe.PeMain.Data;
+    using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
+    using ContentTypeTextNet.Pe.PeMain.IF;
+    using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
-	public class ClipboardItemViewModel : SingleModelWrapperViewModelBase<ClipboardIndexItemModel>, IHavingAppSender, IHavingAppNonProcess
-	{
-		#region define
+    public class ClipboardItemViewModel: SingleModelWrapperViewModelBase<ClipboardIndexItemModel>, IHavingAppSender, IHavingAppNonProcess
+    {
+        #region define
 
-		const string defineEnabled = "Type";
+        const string defineEnabled = "Type";
 
-		#endregion
+        #endregion
 
-		#region varable
-		
-		ClipboardBodyItemModel _bodyModel = null;
+        #region varable
 
-		#endregion
+        ClipboardBodyItemModel _bodyModel = null;
 
-		public ClipboardItemViewModel(ClipboardIndexItemModel model, IAppSender appSender, IAppNonProcess appNonProcess)
-			:base(model)
-		{
-			AppSender = appSender;
-			AppNonProcess = appNonProcess;
-		}
+        #endregion
 
-		#region property
+        public ClipboardItemViewModel(ClipboardIndexItemModel model, IAppSender appSender, IAppNonProcess appNonProcess)
+            : base(model)
+        {
+            AppSender = appSender;
+            AppNonProcess = appNonProcess;
+        }
 
-		ClipboardBodyItemModel BodyModel
-		{
-			get
-			{
-				if(this._bodyModel == null) {
-					var body = AppSender.SendLoadIndexBody(IndexKind.Clipboard, Model.Id);
-					this._bodyModel = (ClipboardBodyItemModel)body;
-					this._bodyModel.Disposing += Body_Disposing;
-					if(Model.Type.HasFlag(ClipboardType.Html)) {
-						HtmlModel = ClipboardUtility.ConvertClipboardHtmlFromFromRawHtml(this._bodyModel.Html ?? string.Empty, AppNonProcess);
-					} else {
-						HtmlModel = null;
-					}
-					if(IsDisposed) {
-						// 再度読み込まれた
-						IsDisposed = false;
-					}
-				}
+        #region property
 
-				return this._bodyModel;
-			}
-		}
+        ClipboardBodyItemModel BodyModel
+        {
+            get
+            {
+                if(this._bodyModel == null) {
+                    var body = AppSender.SendLoadIndexBody(IndexKind.Clipboard, Model.Id);
+                    this._bodyModel = (ClipboardBodyItemModel)body;
+                    this._bodyModel.Disposing += Body_Disposing;
+                    if(Model.Type.HasFlag(ClipboardType.Html)) {
+                        HtmlModel = ClipboardUtility.ConvertClipboardHtmlFromFromRawHtml(this._bodyModel.Html ?? string.Empty, AppNonProcess);
+                    } else {
+                        HtmlModel = null;
+                    }
+                    if(IsDisposed) {
+                        // 再度読み込まれた
+                        IsDisposed = false;
+                    }
+                }
 
-		ContentTypeTextNet.Pe.PeMain.Data.ClipboardHtmlData HtmlModel { get; set; }
+                return this._bodyModel;
+            }
+        }
 
-
-		public ImageSource ItemTypeImage
-		{
-			get
-			{
-				var type = ClipboardUtility.GetSingleClipboardType(Model.Type);
-				var map = new Dictionary<ClipboardType, ImageSource>() {
-					{ ClipboardType.Text, AppResource.ClipboardTextImage },
-					{ ClipboardType.Rtf, AppResource.ClipboardRtfImage },
-					{ ClipboardType.Html, AppResource.ClipboardHtmlImage },
-					{ ClipboardType.Image, AppResource.ClipboardImageImage },
-					{ ClipboardType.Files, AppResource.ClipboardFileImage },
-				};
-
-				return map[type];
-			}
-		}
-
-		public DateTime CreateTimestamp { get { return Model.History.CreateTimestamp; } }
-
-		public string Name
-		{
-			get { return Model.Name; }
-			set { SetModelValue(value); }
-		}
-
-		#region Type
-
-		public bool EnabledClipboardTypesText
-		{
-			get { return Model.Type.HasFlag(ClipboardType.Text); }
-			set { SetClipboardType(Model, Model.Type, ClipboardType.Text, defineEnabled); }
-		}
-		public bool EnabledClipboardTypesRtf
-		{
-			get { return Model.Type.HasFlag(ClipboardType.Rtf); }
-			set { SetClipboardType(Model, Model.Type, ClipboardType.Rtf, defineEnabled); }
-		}
-		public bool EnabledClipboardTypesHtml
-		{
-			get { return Model.Type.HasFlag(ClipboardType.Html); }
-			set { SetClipboardType(Model, Model.Type, ClipboardType.Html, defineEnabled); }
-		}
-		public bool EnabledClipboardTypesImage
-		{
-			get { return Model.Type.HasFlag(ClipboardType.Image); }
-			set { SetClipboardType(Model, Model.Type, ClipboardType.Image, defineEnabled); }
-		}
-		public bool EnabledClipboardTypesFiles
-		{
-			get { return Model.Type.HasFlag(ClipboardType.Files); }
-			set { SetClipboardType(Model, Model.Type, ClipboardType.Files, defineEnabled); }
-		}
-	
-		#endregion
-
-		public string Text
-		{
-			get { return BodyModel.Text ?? string.Empty; }
-		}
-
-		//public FlowDocument Rtf
-		//{
-		//	get
-		//	{
-		//		//return BodyModel.Rtf;
-		//		var result = new FlowDocument();
-		//		return result;
-		//	}
-		//}
-
-		public string Rtf
-		{
-			get { return BodyModel.Rtf ?? string.Empty; }
-			set { /* dummy Mode=OneWay */}
-		}
-
-		public string HtmlCode
-		{
-			get 
-			{
-				if(HtmlModel != null) {
-					return HtmlModel.ToHtml();
-				} else {
-					return null;
-				}
-			}
-		}
-
-		public string HtmlUri
-		{
-			get 
-			{
-				if(HtmlModel != null && HtmlModel.SourceURL != null) {
-					return HtmlModel.SourceURL.OriginalString;
-				} else {
-					return string.Empty;
-				}
-			}
-		}
-
-		public BitmapSource Image
-		{
-			get {
-				if(BodyModel.Image != null) {
-					return BodyModel.Image;
-				} else {
-					return null;
-				}
-			}
-		}
-
-		public IEnumerable<ClipboardFileItemViewModel> Files
-		{
-			get
-			{
-				if(BodyModel.Files != null && BodyModel.Files.Any()) {
-					return BodyModel.Files.Select(f => new ClipboardFileItemViewModel() {
-						Path = f,
-						Name = SystemEnvironmentUtility.IsExtensionShow() ? Path.GetFileName(f) : Path.GetFileNameWithoutExtension(f),
-					});
-				} else {
-					return null;
-				}
-			}
-		}
+        ContentTypeTextNet.Pe.PeMain.Data.ClipboardHtmlData HtmlModel { get; set; }
 
 
-		#endregion
+        public ImageSource ItemTypeImage
+        {
+            get
+            {
+                var type = ClipboardUtility.GetSingleClipboardType(Model.Type);
+                var map = new Dictionary<ClipboardType, ImageSource>() {
+                    { ClipboardType.Text, AppResource.ClipboardTextImage },
+                    { ClipboardType.Rtf, AppResource.ClipboardRtfImage },
+                    { ClipboardType.Html, AppResource.ClipboardHtmlImage },
+                    { ClipboardType.Image, AppResource.ClipboardImageImage },
+                    { ClipboardType.Files, AppResource.ClipboardFileImage },
+                };
 
-		#region command
+                return map[type];
+            }
+        }
 
-		public ICommand SendItemCommand
-		{
-			get
-			{
-				var result = CreateCommand(
-					o => {
-						var apiWindow = (WindowsAPIWindowBase)o;
-						var hWnd = apiWindow.Handle;
+        public DateTime CreateTimestamp { get { return Model.History.CreateTimestamp; } }
 
-						ClipboardUtility.OutputTextForNextWindow(hWnd, Text, AppNonProcess, AppNonProcess.ClipboardWatcher);
-					}
-				);
+        public string Name
+        {
+            get { return Model.Name; }
+            set { SetModelValue(value); }
+        }
 
-				return result;
-			}
-		}
+        #region Type
 
-		public ICommand CopyItemCommand
-		{
-			get
-			{
-				var result = CreateCommand(
-					o => {
-						var clipboardItem = new ClipboardData() {
-							Type = Model.Type,
-							Body = BodyModel,
-						};
+        public bool EnabledClipboardTypesText
+        {
+            get { return Model.Type.HasFlag(ClipboardType.Text); }
+            set { SetClipboardType(Model, Model.Type, ClipboardType.Text, defineEnabled); }
+        }
+        public bool EnabledClipboardTypesRtf
+        {
+            get { return Model.Type.HasFlag(ClipboardType.Rtf); }
+            set { SetClipboardType(Model, Model.Type, ClipboardType.Rtf, defineEnabled); }
+        }
+        public bool EnabledClipboardTypesHtml
+        {
+            get { return Model.Type.HasFlag(ClipboardType.Html); }
+            set { SetClipboardType(Model, Model.Type, ClipboardType.Html, defineEnabled); }
+        }
+        public bool EnabledClipboardTypesImage
+        {
+            get { return Model.Type.HasFlag(ClipboardType.Image); }
+            set { SetClipboardType(Model, Model.Type, ClipboardType.Image, defineEnabled); }
+        }
+        public bool EnabledClipboardTypesFiles
+        {
+            get { return Model.Type.HasFlag(ClipboardType.Files); }
+            set { SetClipboardType(Model, Model.Type, ClipboardType.Files, defineEnabled); }
+        }
 
-						ClipboardUtility.CopyClipboardItem(clipboardItem, AppNonProcess.ClipboardWatcher);
-					}
-				);
+        #endregion
 
-				return result;
-			}
-		}
+        public string Text
+        {
+            get { return BodyModel.Text ?? string.Empty; }
+        }
 
-		public ICommand CopyTextCommand
-		{
-			get
-			{
-				var result = CreateCommand(
-					o => {
-						ClipboardUtility.CopyText(Text, AppNonProcess.ClipboardWatcher);
-					}
-				);
+        //public FlowDocument Rtf
+        //{
+        //	get
+        //	{
+        //		//return BodyModel.Rtf;
+        //		var result = new FlowDocument();
+        //		return result;
+        //	}
+        //}
 
-				return result;
-			}
-		}
+        public string Rtf
+        {
+            get { return BodyModel.Rtf ?? string.Empty; }
+            set { /* dummy Mode=OneWay */}
+        }
 
-		public ICommand CopyRtfCommand
-		{
-			get
-			{
-				var result = CreateCommand(
-					o => {
-						ClipboardUtility.CopyRtf(Rtf, AppNonProcess.ClipboardWatcher);
-					}
-				);
+        public string HtmlCode
+        {
+            get
+            {
+                if(HtmlModel != null) {
+                    return HtmlModel.ToHtml();
+                } else {
+                    return null;
+                }
+            }
+        }
 
-				return result;
-			}
-		}
+        public string HtmlUri
+        {
+            get
+            {
+                if(HtmlModel != null && HtmlModel.SourceURL != null) {
+                    return HtmlModel.SourceURL.OriginalString;
+                } else {
+                    return string.Empty;
+                }
+            }
+        }
 
-		public ICommand CopyHtmlCommand
-		{
-			get
-			{
-				var result = CreateCommand(
-					o => {
-						ClipboardUtility.CopyHtml(BodyModel.Html, AppNonProcess.ClipboardWatcher);
-					}
-				);
+        public BitmapSource Image
+        {
+            get
+            {
+                if(BodyModel.Image != null) {
+                    return BodyModel.Image;
+                } else {
+                    return null;
+                }
+            }
+        }
 
-				return result;
-			}
-		}
+        public IEnumerable<ClipboardFileItemViewModel> Files
+        {
+            get
+            {
+                if(BodyModel.Files != null && BodyModel.Files.Any()) {
+                    return BodyModel.Files.Select(f => new ClipboardFileItemViewModel() {
+                        Path = f,
+                        Name = SystemEnvironmentUtility.IsExtensionShow() ? Path.GetFileName(f) : Path.GetFileNameWithoutExtension(f),
+                    });
+                } else {
+                    return null;
+                }
+            }
+        }
 
-		public ICommand CopyImageCommand
-		{
-			get
-			{
-				var result = CreateCommand(
-					o => {
-						ClipboardUtility.CopyImage(BodyModel.Image, AppNonProcess.ClipboardWatcher);
-					}
-				);
 
-				return result;
-			}
-		}
+        #endregion
 
-		public ICommand CopyFilesCommand
-		{
-			get
-			{
-				var result = CreateCommand(
-					o => {
-						ClipboardUtility.CopyFile(BodyModel.Files, AppNonProcess.ClipboardWatcher);
-					}
-				);
+        #region command
 
-				return result;
-			}
-		}
+        public ICommand SendItemCommand
+        {
+            get
+            {
+                var result = CreateCommand(
+                    o => {
+                        var apiWindow = (WindowsAPIWindowBase)o;
+                        var hWnd = apiWindow.Handle;
 
-		public ICommand CopyHtmlUriCommand
-		{
-			get
-			{
-				var result = CreateCommand(
-					o => {
-						ClipboardUtility.CopyText(HtmlUri, AppNonProcess.ClipboardWatcher);
-					}
-				);
+                        ClipboardUtility.OutputTextForNextWindow(hWnd, Text, AppNonProcess, AppNonProcess.ClipboardWatcher);
+                    }
+                );
 
-				return result;
-			}
-		}
+                return result;
+            }
+        }
 
-		#endregion
+        public ICommand CopyItemCommand
+        {
+            get
+            {
+                var result = CreateCommand(
+                    o => {
+                        var clipboardItem = new ClipboardData() {
+                            Type = Model.Type,
+                            Body = BodyModel,
+                        };
 
-		#region function
+                        ClipboardUtility.CopyClipboardItem(clipboardItem, AppNonProcess.ClipboardWatcher);
+                    }
+                );
 
-		void SetClipboardType(object obj, ClipboardType nowValue, ClipboardType clipboardType, string memberName, [CallerMemberName]string propertyName = "")
-		{
-			SetPropertyValue(obj, nowValue ^ clipboardType, memberName, propertyName);
-		}
+                return result;
+            }
+        }
 
-		#endregion
+        public ICommand CopyTextCommand
+        {
+            get
+            {
+                var result = CreateCommand(
+                    o => {
+                        ClipboardUtility.CopyText(Text, AppNonProcess.ClipboardWatcher);
+                    }
+                );
 
-		#region IIsDispose
+                return result;
+            }
+        }
 
-		protected override void Dispose(bool disposing)
-		{
-			if(!IsDisposed) {
-				if(this._bodyModel != null) {
-					this._bodyModel.Disposing -= Body_Disposing;
-					this._bodyModel = null;
-				}
-			}
-			base.Dispose(disposing);
-		}
+        public ICommand CopyRtfCommand
+        {
+            get
+            {
+                var result = CreateCommand(
+                    o => {
+                        ClipboardUtility.CopyRtf(Rtf, AppNonProcess.ClipboardWatcher);
+                    }
+                );
 
-		#endregion
+                return result;
+            }
+        }
 
-		#region SingleModelWrapperViewModelBase
+        public ICommand CopyHtmlCommand
+        {
+            get
+            {
+                var result = CreateCommand(
+                    o => {
+                        ClipboardUtility.CopyHtml(BodyModel.Html, AppNonProcess.ClipboardWatcher);
+                    }
+                );
 
-		#endregion
+                return result;
+            }
+        }
 
-		#region IHavingAppSender
+        public ICommand CopyImageCommand
+        {
+            get
+            {
+                var result = CreateCommand(
+                    o => {
+                        ClipboardUtility.CopyImage(BodyModel.Image, AppNonProcess.ClipboardWatcher);
+                    }
+                );
 
-		public IAppSender AppSender { get; private set; }
+                return result;
+            }
+        }
 
-		#endregion
+        public ICommand CopyFilesCommand
+        {
+            get
+            {
+                var result = CreateCommand(
+                    o => {
+                        ClipboardUtility.CopyFile(BodyModel.Files, AppNonProcess.ClipboardWatcher);
+                    }
+                );
 
-		#region IHavingAppNonProcess
+                return result;
+            }
+        }
 
-		public IAppNonProcess AppNonProcess { get; private set; }
+        public ICommand CopyHtmlUriCommand
+        {
+            get
+            {
+                var result = CreateCommand(
+                    o => {
+                        ClipboardUtility.CopyText(HtmlUri, AppNonProcess.ClipboardWatcher);
+                    }
+                );
 
-		#endregion
+                return result;
+            }
+        }
 
-		private void Body_Disposing(object sender, EventArgs e)
-		{
-			Dispose();
-		}
+        #endregion
 
-	}
+        #region function
+
+        void SetClipboardType(object obj, ClipboardType nowValue, ClipboardType clipboardType, string memberName, [CallerMemberName]string propertyName = "")
+        {
+            SetPropertyValue(obj, nowValue ^ clipboardType, memberName, propertyName);
+        }
+
+        #endregion
+
+        #region IIsDispose
+
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                if(this._bodyModel != null) {
+                    this._bodyModel.Disposing -= Body_Disposing;
+                    this._bodyModel = null;
+                }
+            }
+            base.Dispose(disposing);
+        }
+
+        #endregion
+
+        #region SingleModelWrapperViewModelBase
+
+        #endregion
+
+        #region IHavingAppSender
+
+        public IAppSender AppSender { get; private set; }
+
+        #endregion
+
+        #region IHavingAppNonProcess
+
+        public IAppNonProcess AppNonProcess { get; private set; }
+
+        #endregion
+
+        private void Body_Disposing(object sender, EventArgs e)
+        {
+            Dispose();
+        }
+
+    }
 }
