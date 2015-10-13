@@ -2086,7 +2086,7 @@
 						GC.WaitForPendingFinalizers();
 						var gcUsingMemory = GC.GetTotalMemory(true);
 						var gcTime = DateTime.Now;
-						var detail = new [] {
+						var detail = new[] {
 							prevTime.ToString() + " " + prevUsingMemory.ToString(),
 							"GC",
 							gcTime.ToString() + " " + gcUsingMemory.ToString(),

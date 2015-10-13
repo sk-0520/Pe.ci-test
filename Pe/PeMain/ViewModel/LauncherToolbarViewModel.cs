@@ -456,7 +456,7 @@
 					OnPropertyChanged("GroupItems");
 					var oldItems = this._launcherItems;
 					this._launcherItems = null;
-					OnPropertyChanged("LauncherItems");
+					OnPropertyChanged(nameof(LauncherItems));
 					foreach(var oldItem in oldItems) {
 						oldItem.Dispose();
 					}

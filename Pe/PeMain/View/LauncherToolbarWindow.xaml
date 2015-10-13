@@ -356,7 +356,7 @@
 
 			<!--メニューを閉じる用-->
 			<Style x:Key="PopupClose">
-				<EventSetter  Event="Button.Click" Handler="Element_Click" />
+				<EventSetter  Event="Button.Click"   Handler="Element_Click" />
 				<EventSetter  Event="MenuItem.Click" Handler="Element_Click" />
 			</Style>
 
