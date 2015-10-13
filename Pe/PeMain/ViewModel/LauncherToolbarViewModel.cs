@@ -453,7 +453,7 @@
 			set
 			{
 				if(SetVariableValue(ref this._selectedGroup, value)) {
-					OnPropertyChanged("GroupItems");
+					OnPropertyChanged(nameof(GroupItems));
 					var oldItems = this._launcherItems;
 					this._launcherItems = null;
 					OnPropertyChanged(nameof(LauncherItems));
@@ -955,7 +955,7 @@
 				if(DockType == DockType.None) {
 					Model.Toolbar.FloatToolbar.WidthButtonCount = CalculateButtonWidthCount(DockType, ToolbarButtonOrientation, BorderThickness, this._captionWidth, value);
 					OnPropertyChanged();
-					OnPropertyChanged("CaptionHeight");
+					OnPropertyChanged(nameof(CaptionHeight));
 				} else if(!IsHidden && ShowLogicalBarArea.Width != value) {
 					this._showLogicalBarArea.Width = value;
 					OnPropertyChanged();
@@ -979,7 +979,7 @@
 				if(DockType == DockType.None) {
 					Model.Toolbar.FloatToolbar.HeightButtonCount = CalculateButtonHeightCount(DockType, ToolbarButtonOrientation, BorderThickness, this._captionWidth, value);
 					OnPropertyChanged();
-					OnPropertyChanged("CaptionWidth");
+					OnPropertyChanged(nameof(CaptionWidth));
 				} else if(!IsHidden && ShowLogicalBarArea.Height != value) {
 					this._showLogicalBarArea.Height = value;
 					OnPropertyChanged();
@@ -1010,7 +1010,7 @@
 						var nowTime = DateTime.Now;
 						if(this._nowFullScreen) {
 							AppNonProcess.Logger.Debug("fullscreen: first, cancel-flag on");
-							OnPropertyChanged("IsTopmost");
+							OnPropertyChanged(nameof(IsTopmost));
 							this._prevFullScreenTime = DateTime.Now;
 						} else {
 							var nowSpan = nowTime - _prevFullScreenTime;
@@ -1022,7 +1022,7 @@
 								this._prevFullScreenCancel = true;
 							} else {
 								AppNonProcess.Logger.Debug(string.Format("fullscreen: [CHANGE]:{0}, [IsTopmost]:{1}", this._nowFullScreen, IsTopmost));
-								OnPropertyChanged("IsTopmost");
+								OnPropertyChanged(nameof(IsTopmost));
 								if(this._nowFullScreen && this._prevFullScreenCancel) {
 									// 前回フルクリーンが二重発行されてた場合は解除する
 									this._prevFullScreenCancel = false;
@@ -1056,23 +1056,24 @@
 					Model.Toolbar.DockType = value;
 					OnPropertyChanged();
 					View.InvalidateArrange();
-					OnPropertyChanged("ToolbarButtonOrientation");
-					OnPropertyChanged("CaptionVisibility");
-					OnPropertyChanged("CaptionWidth");
-					OnPropertyChanged("CaptionHeight");
-					OnPropertyChanged("DropDownPlacement");
-					CallOnPropertyChange(new[] {
-						"GripDock",
-						"ToolbarButtonHorizontalAlignment",
-						"ToolbarButtonVerticalAlignment",
-						"FirstWidth",
-						"SecondWidth",
-						"IsEnabledCorrection",
-						"PositionContentButton",
-						"PositionMenuButton",
-						"ResizeMode",
-						"IsTopmost",
-					});
+					var propertyNames = new[] {
+						nameof(ToolbarButtonOrientation),
+						nameof(CaptionVisibility),
+						nameof(CaptionWidth),
+						nameof(CaptionHeight),
+						nameof(DropDownPlacement),
+						nameof(GripDock),
+						nameof(ToolbarButtonHorizontalAlignment),
+						nameof(ToolbarButtonVerticalAlignment),
+						nameof(FirstWidth),
+						nameof(SecondWidth),
+						nameof(IsEnabledCorrection),
+						nameof(PositionContentButton),
+						nameof(PositionMenuButton),
+						nameof(ResizeMode),
+						nameof(IsTopmost),
+					};
+					CallOnPropertyChange(propertyNames);
 					View.UpdateLayout();
 				}
 			}
@@ -1114,8 +1115,8 @@
 				//}
 				if(SetVariableValue(ref this._isHidden, value)) {
 					CallOnPropertyChange(
-						"ToolbarContentVisibility",
-						"IsTopmost"
+						nameof(ToolbarContentVisibility),
+                        nameof(IsTopmost)
 					);
 					if(!this._isHidden) {
 						HavingViewUtility.BeginInvoke(this, () => {
@@ -1305,7 +1306,7 @@
 		protected override void CallOnPropertyChangeDisplayItem()
 		{
 			base.CallOnPropertyChangeDisplayItem();
-			OnPropertyChanged("MenuIcon");
+			OnPropertyChanged(nameof(MenuIcon));
 		}
 
 		#endregion
@@ -1348,10 +1349,6 @@
 			if(viewBrush != null) {
 				BorderBrush = viewBrush;
 			}
-			CallOnPropertyChange(
-				"ToolbarForeground",
-				"ToolbarTextEffect"
-			);
 		}
 
 		//void View_Loaded(object sender, RoutedEventArgs e)
