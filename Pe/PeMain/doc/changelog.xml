@@ -94,7 +94,10 @@
 				<message>#334: 開発環境をVS2013からVS2015に変更</message>
 			</note>
 			<note rev="">
-				<message></message>
+				<message>#274: 各ソースファイルにライセンス情報を記載する</message>
+			</note>
+			<note rev="">
+				<message>#336: コーディング規約変更: TAB -> SPACE</message>
 			</note>
 			<note rev="">
 				<message></message>

@@ -1,260 +1,276 @@
-﻿namespace ContentTypeTextNet.Library.SharedLibrary.Model
+﻿/**
+This file is part of SharedLibrary.
+
+SharedLibrary is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+SharedLibrary is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with SharedLibrary.  If not, see <http://www.gnu.org/licenses/>.
+*/
+namespace ContentTypeTextNet.Library.SharedLibrary.Model
 {
-	using System;
-	using System.Collections;
-	using System.Collections.Generic;
-	using System.Collections.ObjectModel;
-	using System.Linq;
-	using System.Runtime.Serialization;
-	using System.Text;
-	using System.Threading.Tasks;
-	using ContentTypeTextNet.Library.SharedLibrary.IF;
-	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
-	using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
-	using System.Xml.Serialization;
-	using System.Reflection;
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.Linq;
+    using System.Runtime.Serialization;
+    using System.Text;
+    using System.Threading.Tasks;
+    using ContentTypeTextNet.Library.SharedLibrary.IF;
+    using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+    using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
+    using System.Xml.Serialization;
+    using System.Reflection;
 
-	[Serializable]
-	public class TIdCollectionModel<TKey, TValue> : FixedSizeCollectionModel<TValue>
-		where TValue: ITId<TKey>
-		where TKey: IComparable
-	{
-		#region variable
+    [Serializable]
+    public class TIdCollectionModel<TKey, TValue>: FixedSizeCollectionModel<TValue>
+        where TValue : ITId<TKey>
+        where TKey : IComparable
+    {
+        #region variable
 
-		protected Dictionary<TKey, TValue> _map = new Dictionary<TKey, TValue>();
-		//protected bool _isReadOnly = false;
+        protected Dictionary<TKey, TValue> _map = new Dictionary<TKey, TValue>();
+        //protected bool _isReadOnly = false;
 
-		#endregion
+        #endregion
 
-		public TIdCollectionModel()
-			: base()
-		{ }
+        public TIdCollectionModel()
+            : base()
+        { }
 
-		public TIdCollectionModel(int limitSize)
-			: base(limitSize, true)
-		{ }
+        public TIdCollectionModel(int limitSize)
+            : base(limitSize, true)
+        { }
 
-		public TIdCollectionModel(int limitSize, bool isFifo)
-			: base(limitSize, isFifo)
-		{ }
+        public TIdCollectionModel(int limitSize, bool isFifo)
+            : base(limitSize, isFifo)
+        { }
 
-		public TIdCollectionModel(IEnumerable<TValue> collection)
-			: base(collection, DefaultLimit)
-		{ }
+        public TIdCollectionModel(IEnumerable<TValue> collection)
+            : base(collection, DefaultLimit)
+        { }
 
-		public TIdCollectionModel(IEnumerable<TValue> collection, int limitSize)
-			: base(collection, limitSize, true)
-		{ }
+        public TIdCollectionModel(IEnumerable<TValue> collection, int limitSize)
+            : base(collection, limitSize, true)
+        { }
 
-		public TIdCollectionModel(IEnumerable<TValue> collection, int limitSize, bool isFifo)
-			: base(collection)
-		{ }
+        public TIdCollectionModel(IEnumerable<TValue> collection, int limitSize, bool isFifo)
+            : base(collection)
+        { }
 
 
-		#region property
+        #region property
 
-		public IEnumerable<TKey> Keys { get { return this.Select(i => i.Id); } }
+        public IEnumerable<TKey> Keys { get { return this.Select(i => i.Id); } }
 
-		#endregion
+        #endregion
 
-		#region function
+        #region function
 
-		static string GetIdString(TKey id)
-		{
-			return string.Format("Id = {0}", id);
-		}
-		static string GetIdString(ITId<TKey> id)
-		{
-			return GetIdString(id);
-		}
-		static bool IsEqual(TKey a, TKey b)
-		{
-			return a.CompareTo(b) == 0;
-		}
-		static bool IsEqual(TValue a, TValue b)
-		{
-			return IsEqual(a.Id, b.Id);
-		}
-		
-		void CheckId(TValue item)
-		{
-			CheckUtility.Enforce<ArgumentException>(item.IsSafeId(item.Id));
-		}
+        static string GetIdString(TKey id)
+        {
+            return string.Format("Id = {0}", id);
+        }
+        static string GetIdString(ITId<TKey> id)
+        {
+            return GetIdString(id);
+        }
+        static bool IsEqual(TKey a, TKey b)
+        {
+            return a.CompareTo(b) == 0;
+        }
+        static bool IsEqual(TValue a, TValue b)
+        {
+            return IsEqual(a.Id, b.Id);
+        }
 
-		void Add(TValue value, bool check)
-		{
-			if (check) {
-				if (value == null) {
-					throw new ArgumentNullException("value");
-				}
+        void CheckId(TValue item)
+        {
+            CheckUtility.Enforce<ArgumentException>(item.IsSafeId(item.Id));
+        }
 
-				if(this.Any(i => IsEqual(value, i))) {
-					throw new ArgumentException(GetIdString(value));
-				}
+        void Add(TValue value, bool check)
+        {
+            if(check) {
+                if(value == null) {
+                    throw new ArgumentNullException("value");
+                }
 
-				CheckId(value);
-			}
+                if(this.Any(i => IsEqual(value, i))) {
+                    throw new ArgumentException(GetIdString(value));
+                }
 
-			base.Add(value);
-			this._map[value.Id] = value;
-		}
+                CheckId(value);
+            }
 
-		public int IndexOf(TKey key)
-		{
-			return Items.FindIndex(i => IsEqual(key, i.Id));
-		}
+            base.Add(value);
+            this._map[value.Id] = value;
+        }
 
-		/// <summary>
-		/// 要素を設定する。
-		/// <para>既に存在する場合は上書きされる。</para>
-		/// </summary>
-		/// <param name="value"></param>
-		/// <exception cref="ArgumentNullException">valueがnull</exception>
-		public void Set(TValue value)
-		{
-			if (value == null) {
-				throw new ArgumentNullException("value");
-			}
+        public int IndexOf(TKey key)
+        {
+            return Items.FindIndex(i => IsEqual(key, i.Id));
+        }
 
-			var index = IndexOf(value.Id);
-			if(index != -1) {
-				Items[index] = value;
-				this._map[value.Id] = value;
-			} else {
-				CheckId(value);
-				Add(value, false);
-			}
-		}
+        /// <summary>
+        /// 要素を設定する。
+        /// <para>既に存在する場合は上書きされる。</para>
+        /// </summary>
+        /// <param name="value"></param>
+        /// <exception cref="ArgumentNullException">valueがnull</exception>
+        public void Set(TValue value)
+        {
+            if(value == null) {
+                throw new ArgumentNullException("value");
+            }
 
-		/// <summary>
-		/// IDの入れ替え。
-		/// <para>オブジェクトの入れ替えでないことに注意。</para>
-		/// </summary>
-		/// <param name="keyA"></param>
-		/// <param name="keyB"></param>
-		public void SwapId(TKey keyA, TKey keyB)
-		{
-			var valueA = this[keyA];
-			var valueB = this[keyB];
-			valueA.Id = keyB;
-			valueB.Id = keyA;
-			this._map[keyA] = valueB;
-			this._map[keyB] = valueA;
-		}
+            var index = IndexOf(value.Id);
+            if(index != -1) {
+                Items[index] = value;
+                this._map[value.Id] = value;
+            } else {
+                CheckId(value);
+                Add(value, false);
+            }
+        }
 
-		public bool TryGetValue(TKey key, out TValue result)
-		{
-			if (this._map.TryGetValue(key, out result)) {
-				return true;
-			}
+        /// <summary>
+        /// IDの入れ替え。
+        /// <para>オブジェクトの入れ替えでないことに注意。</para>
+        /// </summary>
+        /// <param name="keyA"></param>
+        /// <param name="keyB"></param>
+        public void SwapId(TKey keyA, TKey keyB)
+        {
+            var valueA = this[keyA];
+            var valueB = this[keyB];
+            valueA.Id = keyB;
+            valueB.Id = keyA;
+            this._map[keyA] = valueB;
+            this._map[keyB] = valueA;
+        }
 
-			var item = Items.FirstOrDefault(i => IsEqual(key, i.Id));
-			if (item != null) {
-				result = item;
-				return true;
-			}
-			result = default(TValue);
-			return false;
-		}
+        public bool TryGetValue(TKey key, out TValue result)
+        {
+            if(this._map.TryGetValue(key, out result)) {
+                return true;
+            }
 
-		public bool Contains(TKey key)
-		{
-			TValue temp;
-			if (this._map.TryGetValue(key, out temp)) {
-				return true;
-			}
+            var item = Items.FirstOrDefault(i => IsEqual(key, i.Id));
+            if(item != null) {
+                result = item;
+                return true;
+            }
+            result = default(TValue);
+            return false;
+        }
 
-			return Items.Any(i => IsEqual(key, i.Id));
-		}
+        public bool Contains(TKey key)
+        {
+            TValue temp;
+            if(this._map.TryGetValue(key, out temp)) {
+                return true;
+            }
 
-		void ChangeId(TKey src, TKey dst)
-		{
-			TValue tempValue;
-			if (TryGetValue(dst, out tempValue)) {
-				throw new ArgumentException(string.Format("exists key({0})", dst));
-			}
+            return Items.Any(i => IsEqual(key, i.Id));
+        }
 
-			var srcValue = this[src];
-			srcValue.Id = dst;
-			this._map.Remove(src);
-			this._map[dst] = srcValue;
-		}
+        void ChangeId(TKey src, TKey dst)
+        {
+            TValue tempValue;
+            if(TryGetValue(dst, out tempValue)) {
+                throw new ArgumentException(string.Format("exists key({0})", dst));
+            }
 
-		#endregion
+            var srcValue = this[src];
+            srcValue.Id = dst;
+            this._map.Remove(src);
+            this._map[dst] = srcValue;
+        }
 
-		#region FixedSizeCollectionModel
+        #endregion
 
-		/// <summary>
-		/// 要素を追加する。
-		/// </summary>
-		/// <param name="value"></param>
-		/// <exception cref="ArgumentNullException">valueがnull</exception>
-		/// <exception cref="ArgumentException">value.Idがすでに存在する</exception>
-		public new void Add(TValue value)
-		{
-			CheckId(value);
+        #region FixedSizeCollectionModel
 
-			Add(value, true);
-		}
+        /// <summary>
+        /// 要素を追加する。
+        /// </summary>
+        /// <param name="value"></param>
+        /// <exception cref="ArgumentNullException">valueがnull</exception>
+        /// <exception cref="ArgumentException">value.Idがすでに存在する</exception>
+        public new void Add(TValue value)
+        {
+            CheckId(value);
 
-		public new void Clear()
-		{
-			base.Clear();
-			this._map.Clear();
-		}
+            Add(value, true);
+        }
 
-		public new void ClearItems()
-		{
-			base.ClearItems();
-			this._map.Clear();
-		}
+        public new void Clear()
+        {
+            base.Clear();
+            this._map.Clear();
+        }
 
-		public new bool Remove(TValue item)
-		{
-			if(base.Remove(item)) {
-				this._map.Remove(item.Id);
-				return true;
-			}
+        public new void ClearItems()
+        {
+            base.ClearItems();
+            this._map.Clear();
+        }
 
-			return false;
-		}
+        public new bool Remove(TValue item)
+        {
+            if(base.Remove(item)) {
+                this._map.Remove(item.Id);
+                return true;
+            }
 
-		public bool Remove(TKey key)
-		{
-			var index = IndexOf(key);
-			if(index != -1) {
-				Items.RemoveAt(index);
-				this._map.Remove(key);
+            return false;
+        }
 
-				return true;
-			}
+        public bool Remove(TKey key)
+        {
+            var index = IndexOf(key);
+            if(index != -1) {
+                Items.RemoveAt(index);
+                this._map.Remove(key);
 
-			return false;
-		}
+                return true;
+            }
 
-		#region indexer
+            return false;
+        }
 
-		public TValue this[TKey key]
-		{
-			get
-			{
-				TValue result;
-				if(this._map.TryGetValue(key, out result)) {
-					return result;
-				}
+        #region indexer
 
-				result = Items.FirstOrDefault(i => key.CompareTo(i.Id) == 0);
-				if(result != null) {
-					this._map[result.Id] = result;
-					return result;
-				}
+        public TValue this[TKey key]
+        {
+            get
+            {
+                TValue result;
+                if(this._map.TryGetValue(key, out result)) {
+                    return result;
+                }
 
-				throw new IndexOutOfRangeException(GetIdString(key));
-			}
-		}
+                result = Items.FirstOrDefault(i => key.CompareTo(i.Id) == 0);
+                if(result != null) {
+                    this._map[result.Id] = result;
+                    return result;
+                }
 
-		#endregion
+                throw new IndexOutOfRangeException(GetIdString(key));
+            }
+        }
 
-		#endregion
-	}
+        #endregion
+
+        #endregion
+    }
 }
