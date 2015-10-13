@@ -93,10 +93,10 @@
 			<note rev="0a9554ea3fd284d790ec6f0877efc54ef7b430b0">
 				<message>#334: 開発環境をVS2013からVS2015に変更</message>
 			</note>
-			<note rev="">
+			<note rev="f142bc9b0cc232c77d3f0b41ee9f15df84713473">
 				<message>#274: 各ソースファイルにライセンス情報を記載する</message>
 			</note>
-			<note rev="">
+			<note rev="f142bc9b0cc232c77d3f0b41ee9f15df84713473">
 				<message>#336: コーディング規約変更: TAB -> SPACE</message>
 			</note>
 			<note rev="">
