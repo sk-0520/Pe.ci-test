@@ -1,60 +1,76 @@
-﻿namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
+﻿/**
+This file is part of Pe.
+
+Pe is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Pe is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Pe.  If not, see <http://www.gnu.org/licenses/>.
+*/
+namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Runtime.Serialization;
-	using System.Text;
-	using System.Threading.Tasks;
-	using ContentTypeTextNet.Library.SharedLibrary.IF;
-	using ContentTypeTextNet.Library.SharedLibrary.Model;
-	using ContentTypeTextNet.Pe.Library.PeData.Item;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Runtime.Serialization;
+    using System.Text;
+    using System.Threading.Tasks;
+    using ContentTypeTextNet.Library.SharedLibrary.IF;
+    using ContentTypeTextNet.Library.SharedLibrary.Model;
+    using ContentTypeTextNet.Pe.Library.PeData.Item;
 
-	[Serializable]
-	public class StreamSettingModel : SettingModelBase, IDeepClone
-	{
-		public StreamSettingModel()
-			: base()
-		{
-			OutputColor = new ColorPairItemModel();
-			ErrorColor = new ColorPairItemModel();
+    [Serializable]
+    public class StreamSettingModel: SettingModelBase, IDeepClone
+    {
+        public StreamSettingModel()
+            : base()
+        {
+            OutputColor = new ColorPairItemModel();
+            ErrorColor = new ColorPairItemModel();
 
-			Font = new FontModel();
-		}
+            Font = new FontModel();
+        }
 
-		#region property
+        #region property
 
-		[DataMember]
-		public ColorPairItemModel OutputColor { get; set; }
-		[DataMember]
-		public ColorPairItemModel ErrorColor { get; set; }
+        [DataMember]
+        public ColorPairItemModel OutputColor { get; set; }
+        [DataMember]
+        public ColorPairItemModel ErrorColor { get; set; }
 
-		[DataMember]
-		public FontModel Font { get; set; }
+        [DataMember]
+        public FontModel Font { get; set; }
 
-		#endregion
+        #endregion
 
-		#region IDeepClone
+        #region IDeepClone
 
-		public void DeepCloneTo(IDeepClone target)
-		{
-			var obj = (StreamSettingModel)target;
+        public void DeepCloneTo(IDeepClone target)
+        {
+            var obj = (StreamSettingModel)target;
 
-			OutputColor.DeepCloneTo(obj.OutputColor);
-			ErrorColor.DeepCloneTo(obj.ErrorColor);
+            OutputColor.DeepCloneTo(obj.OutputColor);
+            ErrorColor.DeepCloneTo(obj.ErrorColor);
 
-			Font.DeepCloneTo(obj.Font);
-		}
+            Font.DeepCloneTo(obj.Font);
+        }
 
-		public IDeepClone DeepClone()
-		{
-			var result = new StreamSettingModel();
+        public IDeepClone DeepClone()
+        {
+            var result = new StreamSettingModel();
 
-			DeepCloneTo(result);
+            DeepCloneTo(result);
 
-			return result;
-		}
+            return result;
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }

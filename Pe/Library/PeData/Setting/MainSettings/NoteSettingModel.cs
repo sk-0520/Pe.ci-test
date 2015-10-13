@@ -1,86 +1,102 @@
-﻿namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
+﻿/**
+This file is part of Pe.
+
+Pe is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Pe is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Pe.  If not, see <http://www.gnu.org/licenses/>.
+*/
+namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Runtime.Serialization;
-	using System.Text;
-	using System.Threading.Tasks;
-	using System.Windows.Media;
-	using ContentTypeTextNet.Library.SharedLibrary.IF;
-	using ContentTypeTextNet.Library.SharedLibrary.Model;
-	using ContentTypeTextNet.Pe.Library.PeData.Define;
-	using ContentTypeTextNet.Pe.Library.PeData.IF;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Runtime.Serialization;
+    using System.Text;
+    using System.Threading.Tasks;
+    using System.Windows.Media;
+    using ContentTypeTextNet.Library.SharedLibrary.IF;
+    using ContentTypeTextNet.Library.SharedLibrary.Model;
+    using ContentTypeTextNet.Pe.Library.PeData.Define;
+    using ContentTypeTextNet.Pe.Library.PeData.IF;
 
-	public class NoteSettingModel: SettingModelBase, IColorPair, IDeepClone
-	{
-		public NoteSettingModel()
-			: base()
-		{
-			CreateHotKey = new HotKeyModel();
-			HideHotKey = new HotKeyModel();
-			CompactHotKey = new HotKeyModel();
-			ShowFrontHotKey = new HotKeyModel();
+    public class NoteSettingModel: SettingModelBase, IColorPair, IDeepClone
+    {
+        public NoteSettingModel()
+            : base()
+        {
+            CreateHotKey = new HotKeyModel();
+            HideHotKey = new HotKeyModel();
+            CompactHotKey = new HotKeyModel();
+            ShowFrontHotKey = new HotKeyModel();
 
-			Font = new FontModel();
-		}
+            Font = new FontModel();
+        }
 
-		#region property
+        #region property
 
-		/// <summary>
-		/// 新規作成時のホットキー
-		/// </summary>
-		[DataMember]
-		public HotKeyModel CreateHotKey { get; set; }
-		[DataMember]
-		public HotKeyModel HideHotKey { get; set; }
-		[DataMember]
-		public HotKeyModel CompactHotKey { get; set; }
-		[DataMember]
-		public HotKeyModel ShowFrontHotKey { get; set; }
+        /// <summary>
+        /// 新規作成時のホットキー
+        /// </summary>
+        [DataMember]
+        public HotKeyModel CreateHotKey { get; set; }
+        [DataMember]
+        public HotKeyModel HideHotKey { get; set; }
+        [DataMember]
+        public HotKeyModel CompactHotKey { get; set; }
+        [DataMember]
+        public HotKeyModel ShowFrontHotKey { get; set; }
 
-		[DataMember]
-		public FontModel Font { get; set; }
+        [DataMember]
+        public FontModel Font { get; set; }
 
-		[DataMember]
-		public NoteTitle NoteTitle { get; set; }
+        [DataMember]
+        public NoteTitle NoteTitle { get; set; }
 
-		#endregion
+        #endregion
 
-		#region IColorPair
+        #region IColorPair
 
-		[DataMember]
-		public Color ForeColor { get; set; }
-		[DataMember]
-		public Color BackColor { get; set; }
+        [DataMember]
+        public Color ForeColor { get; set; }
+        [DataMember]
+        public Color BackColor { get; set; }
 
-		#endregion
+        #endregion
 
-		#region IDeepClone
+        #region IDeepClone
 
-		public void DeepCloneTo(IDeepClone target)
-		{
-			var obj = (NoteSettingModel)target;
+        public void DeepCloneTo(IDeepClone target)
+        {
+            var obj = (NoteSettingModel)target;
 
-			CreateHotKey.DeepCloneTo(obj.CreateHotKey);
-			HideHotKey.DeepCloneTo(obj.HideHotKey);
-			CompactHotKey.DeepCloneTo(obj.CompactHotKey);
-			ShowFrontHotKey.DeepCloneTo(obj.ShowFrontHotKey);
-			obj.ForeColor = ForeColor;
-			obj.BackColor = BackColor;
-			Font.DeepCloneTo(obj.Font);
-			obj.NoteTitle = NoteTitle;
-		}
+            CreateHotKey.DeepCloneTo(obj.CreateHotKey);
+            HideHotKey.DeepCloneTo(obj.HideHotKey);
+            CompactHotKey.DeepCloneTo(obj.CompactHotKey);
+            ShowFrontHotKey.DeepCloneTo(obj.ShowFrontHotKey);
+            obj.ForeColor = ForeColor;
+            obj.BackColor = BackColor;
+            Font.DeepCloneTo(obj.Font);
+            obj.NoteTitle = NoteTitle;
+        }
 
-		public IDeepClone DeepClone()
-		{
-			var result = new NoteSettingModel();
+        public IDeepClone DeepClone()
+        {
+            var result = new NoteSettingModel();
 
-			DeepCloneTo(result);
+            DeepCloneTo(result);
 
-			return result;
-		}
+            return result;
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }

@@ -1,76 +1,92 @@
-﻿namespace ContentTypeTextNet.Pe.Library.PeData.Item
+﻿/**
+This file is part of Pe.
+
+Pe is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Pe is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Pe.  If not, see <http://www.gnu.org/licenses/>.
+*/
+namespace ContentTypeTextNet.Pe.Library.PeData.Item
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Runtime.Serialization;
-	using System.Text;
-	using System.Threading.Tasks;
-	using ContentTypeTextNet.Library.SharedLibrary.IF;
-	using ContentTypeTextNet.Library.SharedLibrary.Model;
-	using ContentTypeTextNet.Pe.Library.PeData.IF;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Runtime.Serialization;
+    using System.Text;
+    using System.Threading.Tasks;
+    using ContentTypeTextNet.Library.SharedLibrary.IF;
+    using ContentTypeTextNet.Library.SharedLibrary.Model;
+    using ContentTypeTextNet.Pe.Library.PeData.IF;
 
-	/// <summary>
-	/// アイコンのパスを保持。
-	/// </summary>
-	[Serializable]
-	public sealed class IconItemModel: IconPathModel, IItemModel, IDeepClone
-	{
-		public IconItemModel()
-			: base()
-		{
-			IsDisposed = false;
-		}
+    /// <summary>
+    /// アイコンのパスを保持。
+    /// </summary>
+    [Serializable]
+    public sealed class IconItemModel: IconPathModel, IItemModel, IDeepClone
+    {
+        public IconItemModel()
+            : base()
+        {
+            IsDisposed = false;
+        }
 
-		~IconItemModel()
-		{
-			Dispose();
-		}
+        ~IconItemModel()
+        {
+            Dispose();
+        }
 
-		#region IItemModel
+        #region IItemModel
 
-		[field: NonSerialized]
-		public event EventHandler Disposing;
+        [field: NonSerialized]
+        public event EventHandler Disposing;
 
-		public bool IsDisposed { get; set; }
+        public bool IsDisposed { get; set; }
 
-		public void Dispose()
-		{
-			// IItemModelのIFに合わせるためだけの実装
+        public void Dispose()
+        {
+            // IItemModelのIFに合わせるためだけの実装
 
-			if (IsDisposed) {
-				return;
-			}
+            if(IsDisposed) {
+                return;
+            }
 
-			if(Disposing != null) {
-				Disposing(this, EventArgs.Empty);
-			}
+            if(Disposing != null) {
+                Disposing(this, EventArgs.Empty);
+            }
 
-			IsDisposed = true;
-			GC.SuppressFinalize(this);
-		}
+            IsDisposed = true;
+            GC.SuppressFinalize(this);
+        }
 
-		#endregion
+        #endregion
 
-		#region IDeepClone
+        #region IDeepClone
 
-		public void DeepCloneTo(IDeepClone target)
-		{
-			var obj = (IconItemModel)target;
+        public void DeepCloneTo(IDeepClone target)
+        {
+            var obj = (IconItemModel)target;
 
-			obj.Path = Path;
-			obj.Index = Index;
-		}
+            obj.Path = Path;
+            obj.Index = Index;
+        }
 
-		public IDeepClone DeepClone()
-		{
-			var result = new IconItemModel();
+        public IDeepClone DeepClone()
+        {
+            var result = new IconItemModel();
 
-			DeepCloneTo(result);
+            DeepCloneTo(result);
 
-			return result;
-		}
+            return result;
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }
