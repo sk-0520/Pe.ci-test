@@ -173,7 +173,6 @@ namespace ContentTypeTextNet.Pe.PeMain.View.Parts.Control
 
         #endregion
 
-
         #region CanListEditProperty
 
         public static readonly DependencyProperty CanListEditProperty = DependencyProperty.Register(

@@ -201,7 +201,6 @@
       <DependentUpon>CommandWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Parts\Attached\MenuIcon.cs" />
-    <Compile Include="View\Parts\Control\ConfirmationButton.cs" />
     <Compile Include="View\Parts\Control\DoubleSliderControl.xaml.cs">
       <DependentUpon>DoubleSliderControl.xaml</DependentUpon>
     </Compile>
@@ -210,6 +209,9 @@
     </Compile>
     <Compile Include="View\Parts\Control\IntegerSliderControl.xaml.cs">
       <DependentUpon>IntegerSliderControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Parts\Control\LockedButton.xaml.cs">
+      <DependentUpon>LockedButton.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Parts\Control\TimeSliderControl.xaml.cs">
       <DependentUpon>TimeSliderControl.xaml</DependentUpon>
@@ -436,6 +438,7 @@
     <Compile Include="View\UpdateConfirmWindow.xaml.cs">
       <DependentUpon>UpdateConfirmWindow.xaml</DependentUpon>
     </Compile>
+    <Resource Include="Resources\Image\Common\CommonLock.png" />
     <Resource Include="Resources\Image\Common\CommonOthers.png" />
     <Resource Include="Resources\Image\About\AboutComponentKindWebPage.png" />
     <Resource Include="Resources\Image\Home\HomeFlag.png" />
@@ -558,6 +561,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Parts\Control\LauncherListControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Parts\Control\LockedButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

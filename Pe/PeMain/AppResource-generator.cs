@@ -21,7 +21,7 @@
         /*
         このソースは自動生成のため AppResource-generator.tt を編集すること。
 
-        生成元フィールド数: 73
+        生成元フィールド数: 74
         */
         #region Icon: Application
 
@@ -1103,6 +1103,28 @@
             get { return GetImage(CommonOthersPath); }
         }
         #endregion CommonOthers
+        #region Image: CommonLock
+
+        /// <summary>
+        /// [Image] CommonLockのリソースパスを取得。
+        /// <para>/Resources/Image/Common/CommonLock.png</para>
+        /// </summary>
+        public static string CommonLockPath
+        {
+            get { return commonLock; }
+        }
+
+        /// <summary>
+        /// [Image] CommonLockのイメージソースを取得。
+        /// <para>初回のみ生成を行う。</para>
+        /// <para>CommonLockPath: /Resources/Image/Common/CommonLock.png</para>
+        /// </summary>
+        /// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
+        public static BitmapSource CommonLockImage
+        {
+            get { return GetImage(CommonLockPath); }
+        }
+        #endregion CommonLock
         #region Image: HomeSearch
 
         /// <summary>

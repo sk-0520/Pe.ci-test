@@ -302,6 +302,20 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
         }
 
+        public ICommand RemoveItemCommand
+        {
+            get
+            {
+                var result = CreateCommand(
+                    o => {
+                        MessageBox.Show("123");
+                    }
+                );
+
+                return result;
+            }
+        }
+
         public ICommand DragOverCommand
         {
             get

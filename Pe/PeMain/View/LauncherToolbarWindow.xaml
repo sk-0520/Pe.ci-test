@@ -13,6 +13,7 @@
   xmlns:AP="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
   xmlns:AW="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Window"
   xmlns:AC="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Converter"
+  xmlns:ACC="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Control"
   xmlns:ADD="clr-namespace:ContentTypeTextNet.Pe.Library.PeData.Define;assembly=PeData"
   xmlns:SD="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.Define;assembly=SharedLibrary"
   x:Class="ContentTypeTextNet.Pe.PeMain.View.LauncherToolbarWindow"
@@ -576,7 +577,7 @@
                       </Label>
                       <Button Grid.Row="10" Grid.Column="0" Content="customize" AA:Language.Word="toolbar/others/customize" Style="{StaticResource PopupClose}" Command="{Binding OpenCustomize}" />
                       <Button Grid.Row="10" Grid.Column="1" Content="property"  AA:Language.Word="toolbar/others/property"  IsEnabled="{Binding ExistsCommand}" Command="{Binding OpenProperty}" Style="{StaticResource PopupClose}" />
-                      <Button Grid.Row="10" Grid.Column="2" Content="remove"    Style="{StaticResource PopupClose}" />
+                      <ACC:LockedButton Grid.Row="10" Grid.Column="2" Content="remove" AA:Language.Word="toolbar/others/property" IsEnabled="{Binding ExistsCommand}" Command="{Binding RemoveItemCommand}" />
                     </Grid>
                   </xctk:SplitButton.DropDownContent>
                 </xctk:SplitButton>
