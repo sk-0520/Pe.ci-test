@@ -563,9 +563,9 @@
                           <TextBlock Style="{StaticResource ItemText}" Text="clipboard" AA:Language.Word="toolbar/clipboard" />
                         </StackPanel>
                       </Label>
-                      <Button Grid.Row="7" Grid.Column="0" Content="command"    AA:Language.Word="toolbar/clipboard/command"    IsEnabled="{Binding HasDataCommand}" Command="{Binding CopyText}" CommandParameter="{x:Static ADD:LauncherCommandType.Command}" Style="{StaticResource PopupClose}" />
-                      <Button Grid.Row="7" Grid.Column="1" Content="parent dir" AA:Language.Word="toolbar/clipboard/parent-dir" IsEnabled="{Binding HasDataParentDirectory}" Command="{Binding CopyText}" CommandParameter="{x:Static ADD:LauncherCommandType.ParentDirectory}" Style="{StaticResource PopupClose}" />
-                      <Button Grid.Row="7" Grid.Column="2" Content="work dir"   AA:Language.Word="toolbar/clipboard/work-dir"   IsEnabled="{Binding HasDataWorkDirectory}" Command="{Binding CopyText}" CommandParameter="{x:Static ADD:LauncherCommandType.WorkDirectory}" Style="{StaticResource PopupClose}" />
+                      <Button Grid.Row="7" Grid.Column="0" Content="command"    AA:Language.Word="toolbar/clipboard/command"    IsEnabled="{Binding HasDataCommand}" Command="{Binding CopyTextCommand}" CommandParameter="{x:Static ADD:LauncherCommandType.Command}" Style="{StaticResource PopupClose}" />
+                      <Button Grid.Row="7" Grid.Column="1" Content="parent dir" AA:Language.Word="toolbar/clipboard/parent-dir" IsEnabled="{Binding HasDataParentDirectory}" Command="{Binding CopyTextCommand}" CommandParameter="{x:Static ADD:LauncherCommandType.ParentDirectory}" Style="{StaticResource PopupClose}" />
+                      <Button Grid.Row="7" Grid.Column="2" Content="work dir"   AA:Language.Word="toolbar/clipboard/work-dir"   IsEnabled="{Binding HasDataWorkDirectory}" Command="{Binding CopyTextCommand}" CommandParameter="{x:Static ADD:LauncherCommandType.WorkDirectory}" Style="{StaticResource PopupClose}" />
 
                       <Separator Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="3" />
 
@@ -575,8 +575,8 @@
                           <TextBlock Style="{StaticResource ItemText}" Text="others" AA:Language.Word="toolbar/others" />
                         </StackPanel>
                       </Label>
-                      <Button Grid.Row="10" Grid.Column="0" Content="customize" AA:Language.Word="toolbar/others/customize" Style="{StaticResource PopupClose}" Command="{Binding OpenCustomize}" />
-                      <Button Grid.Row="10" Grid.Column="1" Content="property"  AA:Language.Word="toolbar/others/property"  IsEnabled="{Binding ExistsCommand}" Command="{Binding OpenProperty}" Style="{StaticResource PopupClose}" />
+                      <Button Grid.Row="10" Grid.Column="0" Content="customize" AA:Language.Word="toolbar/others/customize" Style="{StaticResource PopupClose}" Command="{Binding OpenCustomizeCommand}" />
+                      <Button Grid.Row="10" Grid.Column="1" Content="property"  AA:Language.Word="toolbar/others/property"  IsEnabled="{Binding ExistsCommand}" Command="{Binding OpenPropertyCommand}" Style="{StaticResource PopupClose}" />
                       <ACC:LockedButton Grid.Row="10" Grid.Column="2" Content="remove" AA:Language.Word="toolbar/others/property" IsEnabled="{Binding ExistsCommand}" Command="{Binding RemoveItemCommand}" />
                     </Grid>
                   </xctk:SplitButton.DropDownContent>
@@ -641,7 +641,7 @@
                           <TextBlock Style="{StaticResource ItemText}" Text="clipboard" AA:Language.Word="toolbar/clipboard" />
                         </StackPanel>
                       </Label>
-                      <Button Grid.Row="4" Grid.Column="0" Content="command" AA:Language.Word="toolbar/clipboard/command" IsEnabled="{Binding HasDataCommand}" Command="{Binding CopyText}" CommandParameter="{x:Static ADD:LauncherCommandType.Command}" Style="{StaticResource PopupClose}" />
+                      <Button Grid.Row="4" Grid.Column="0" Content="command" AA:Language.Word="toolbar/clipboard/command" IsEnabled="{Binding HasDataCommand}" Command="{Binding CopyTextCommand}" CommandParameter="{x:Static ADD:LauncherCommandType.Command}" Style="{StaticResource PopupClose}" />
 
                       <Separator Grid.Row="5" Grid.ColumnSpan="2"/>
 
@@ -651,7 +651,7 @@
                           <TextBlock Style="{StaticResource ItemText}" Text="others" AA:Language.Word="toolbar/others" />
                         </StackPanel>
                       </Label>
-                      <Button Grid.Row="7" Grid.Column="0" Content="customize" AA:Language.Word="toolbar/others/customize" Style="{StaticResource PopupClose}" Command="{Binding OpenCustomize}" />
+                      <Button Grid.Row="7" Grid.Column="0" Content="customize" AA:Language.Word="toolbar/others/customize" Style="{StaticResource PopupClose}" Command="{Binding OpenCustomizeCommand}" />
                     </Grid>
                   </xctk:SplitButton.DropDownContent>
                 </xctk:SplitButton>

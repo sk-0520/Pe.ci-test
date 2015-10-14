@@ -249,7 +249,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
         }
 
-        public ICommand CopyText
+        public ICommand CopyTextCommand
         {
             get
             {
@@ -271,7 +271,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
         }
 
-        public ICommand OpenCustomize
+        public ICommand OpenCustomizeCommand
         {
             get
             {
@@ -287,7 +287,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
         }
 
-        public ICommand OpenProperty
+        public ICommand OpenPropertyCommand
         {
             get
             {
