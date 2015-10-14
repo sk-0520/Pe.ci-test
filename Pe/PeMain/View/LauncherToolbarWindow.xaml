@@ -501,11 +501,6 @@
                     <i:EventTrigger EventName="Opened">
                       <i:InvokeCommandAction Command="{Binding OpenDropDownCommand}" />
                     </i:EventTrigger>
-                    <!-- むりか
-                  <i:EventTrigger EventName="MouseDown">
-                    <i:InvokeCommandAction Command="{Binding DataContext.MouseDownCommand, ElementName=root}" CommandParameter="{Binding}" />
-                  </i:EventTrigger>
-                  -->
                   </i:Interaction.Triggers>
                   <xctk:SplitButton.Content>
                     <StackPanel Orientation="Horizontal">
@@ -581,6 +576,7 @@
                       </Label>
                       <Button Grid.Row="10" Grid.Column="0" Content="customize" AA:Language.Word="toolbar/others/customize" Style="{StaticResource PopupClose}" Command="{Binding OpenCustomize}" />
                       <Button Grid.Row="10" Grid.Column="1" Content="property"  AA:Language.Word="toolbar/others/property"  IsEnabled="{Binding ExistsCommand}" Command="{Binding OpenProperty}" Style="{StaticResource PopupClose}" />
+                      <Button Grid.Row="10" Grid.Column="2" Content="remove"    Style="{StaticResource PopupClose}" />
                     </Grid>
                   </xctk:SplitButton.DropDownContent>
                 </xctk:SplitButton>
