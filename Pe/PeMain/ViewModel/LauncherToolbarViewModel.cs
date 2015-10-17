@@ -735,6 +735,20 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
         }
 
+        public ICommand RemoveItemCommand
+        {
+            get
+            {
+                var result = CreateCommand(
+                    o => {
+                        MessageBox.Show(o.ToString());
+                    }
+                );
+
+                return result;
+            }
+        }
+
         #endregion
 
         #region function

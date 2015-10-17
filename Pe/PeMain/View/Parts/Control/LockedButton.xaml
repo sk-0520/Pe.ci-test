@@ -32,7 +32,7 @@
         <ToggleButton x:Name="selectUnlock" Grid.Row="0" Grid.Column="0" IsChecked="false">
           <Image Source="{x:Static AM:AppResource.CommonLockImage}" Style="{StaticResource DefaultImage}" />
         </ToggleButton>
-        <Button Grid.Row="0" Grid.Column="1" IsEnabled="{Binding IsChecked, ElementName=selectUnlock}" Command="{Binding Command, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}}" >
+        <Button Grid.Row="0" Grid.Column="1" IsEnabled="{Binding IsChecked, ElementName=selectUnlock}" Command="{Binding Command, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}}"  CommandParameter="{Binding CommandParameter, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}}" >
           <ContentPresenter />
         </Button>
       </Grid>

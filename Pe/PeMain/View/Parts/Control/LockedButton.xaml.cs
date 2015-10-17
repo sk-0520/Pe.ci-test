@@ -67,5 +67,28 @@ namespace ContentTypeTextNet.Pe.PeMain.View.Parts.Control
 
         #endregion
 
+        #region CommandParameterProperty
+
+        public static readonly DependencyProperty CommandParameterProperty = DependencyProperty.Register(
+            DependencyPropertyUtility.GetName(nameof(CommandParameterProperty)),
+            typeof(object),
+            typeof(LockedButton),
+            new FrameworkPropertyMetadata(new PropertyChangedCallback(OnCommandParameterChanged))
+        );
+
+        private static void OnCommandParameterChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = d as LockedButton;
+            control.CommandParameter = e.NewValue;
+        }
+
+        public object CommandParameter
+        {
+            get { return GetValue(CommandParameterProperty); }
+            set { SetValue(CommandParameterProperty, value); }
+        }
+
+        #endregion
+
     }
 }
