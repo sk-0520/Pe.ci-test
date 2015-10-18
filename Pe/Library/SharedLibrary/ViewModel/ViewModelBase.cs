@@ -173,6 +173,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.ViewModel
                 foreach(var pair in this._createdCommands) {
                     pair.Value.Dispose();
                 }
+                this._createdCommands.Clear();
                 this._createdCommands = null;
             }
             base.Dispose(disposing);

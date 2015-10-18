@@ -140,6 +140,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
                 // TODO: 16pxアイコンも作りたいなぁ
                 var image = ImageUtility.MakeBitmapBitmapSourceDefualtDpi(element);
+                FreezableUtility.SafeFreeze(image);
 
                 return image;
             }
@@ -187,6 +188,20 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         #region IHavingAppSender
 
         public IAppSender AppSender { get; private set; }
+
+        #endregion
+
+        #region SingleModelWrapperViewModelBase
+
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                AppNonProcess = null;
+                AppSender = null;
+            }
+
+            base.Dispose(disposing);
+        }
 
         #endregion
     }

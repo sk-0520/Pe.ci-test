@@ -497,6 +497,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                             oldItem.Dispose();
                         }
                         oldItems.Dispose();
+                        oldItems = null;
                     }
 
                     AppSender.SendApplicationCommand(ApplicationCommand.MemoryGarbageCollect, this, ApplicationCommandArg.Empty);

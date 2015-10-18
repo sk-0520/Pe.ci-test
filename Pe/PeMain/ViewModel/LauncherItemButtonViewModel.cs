@@ -46,7 +46,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
     using ContentTypeTextNet.Pe.PeMain.IF;
     using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
-    public class LauncherItemButtonViewModel: LauncherItemSimpleViewModel, IHavingAppSender
+    public class LauncherItemButtonViewModel: LauncherItemSimpleViewModel
     {
         #region varable
 
@@ -408,6 +408,20 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                     }
                     break;
             }
+        }
+
+        #endregion
+
+        #region LauncherItemSimpleViewModel
+
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                DockScreen = null;
+                LauncherItemSetting = null;
+            }
+
+            base.Dispose(disposing);
         }
 
         #endregion
