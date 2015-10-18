@@ -68,23 +68,23 @@
       <AC:ToolbarDockTypeImageConverter x:Key="ToolbarDockTypeImageConverter" />
 
       <Style x:Key="ToolbarImage" TargetType="{x:Type Image}">
-        <Setter Property="Source" Value="{Binding ToolbarImage, Mode=OneWay}" />
-        <Setter Property="Width" Value="{Binding DataContext.IconSize.Width, Mode=OneWay, Source={x:Reference root}}" />
-        <Setter Property="Height" Value="{Binding DataContext.IconSize.Height, Mode=OneWay, Source={x:Reference root}}" />
-        <Setter Property="Margin" Value="{Binding DataContext.IconMargin, Mode=OneWay, Source={x:Reference root}}" />
+        <Setter Property="Source" Value="{Binding ToolbarImage, Mode=OneTime}" />
+        <Setter Property="Width" Value="{Binding DataContext.IconSize.Width, Mode=OneTime, Source={x:Reference root}}" />
+        <Setter Property="Height" Value="{Binding DataContext.IconSize.Height, Mode=OneTime, Source={x:Reference root}}" />
+        <Setter Property="Margin" Value="{Binding DataContext.IconMargin, Mode=OneTime, Source={x:Reference root}}" />
       </Style>
       <Style x:Key="ToolbarText" TargetType="TextBlock">
-        <Setter Property="Text" Value="{Binding ToolbarText, Mode=OneWay}" />
+        <Setter Property="Text" Value="{Binding ToolbarText, Mode=OneTime}" />
         <Setter Property="TextTrimming" Value="CharacterEllipsis" />
         <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="Width" Value="{Binding DataContext.TextWidth, Mode=OneWay, Source={x:Reference root}}" />
+        <Setter Property="Width" Value="{Binding DataContext.TextWidth, Mode=OneTime, Source={x:Reference root}}" />
         <!--<Setter Property="Width" Value="80" />-->
-        <Setter Property="Visibility" Value="{Binding DataContext.TextVisible, Mode=OneWay, Source={x:Reference root}}" />
-        <Setter Property="FontFamily" Value="{Binding DataContext.FontFamily, Mode=OneWay, Source={x:Reference root}}" />
-        <Setter Property="FontWeight" Value="{Binding DataContext.FontBold, Converter={StaticResource BooleanFontWeightConverter}, Mode=OneWay, Source={x:Reference root}}" />
+        <Setter Property="Visibility" Value="{Binding DataContext.TextVisible, Mode=OneTime, Source={x:Reference root}}" />
+        <Setter Property="FontFamily" Value="{Binding DataContext.FontFamily, Mode=OneTime, Source={x:Reference root}}" />
+        <Setter Property="FontWeight" Value="{Binding DataContext.FontBold, Converter={StaticResource BooleanFontWeightConverter}, Mode=OneTime, Source={x:Reference root}}" />
         <!--<Setter Property="FontWeight" Value="Bold" />-->
-        <Setter Property="FontStyle" Value="{Binding DataContext.FontItalic, Converter={StaticResource BooleanFontStyleConverter}, Mode=OneWay, Source={x:Reference root}}" />
-        <Setter Property="FontSize" Value="{Binding DataContext.FontSize, Mode=OneWay, Source={x:Reference root}}" />
+        <Setter Property="FontStyle" Value="{Binding DataContext.FontItalic, Converter={StaticResource BooleanFontStyleConverter}, Mode=OneTime, Source={x:Reference root}}" />
+        <Setter Property="FontSize" Value="{Binding DataContext.FontSize, Mode=OneTime, Source={x:Reference root}}" />
         <!--<Setter Property="Foreground" Value="{Binding DataContext.ToolbarForeground, ElementName=root}" />
         <Setter Property="Effect" Value="{Binding DataContext.ToolbarTextEffect, ElementName=root}" />-->
         <Setter Property="Foreground" Value="White" />
@@ -128,9 +128,9 @@
 
       <Style x:Key="LauncherBaseButton">
         <Setter Property="Control.Margin" Value="0" />
-        <Setter Property="Control.Padding" Value="{Binding DataContext.ButtonPadding, Mode=OneWay, Source={x:Reference root}}" />
-        <Setter Property="Control.Width" Value="{Binding DataContext.ButtonSize.Width, Mode=OneWay, Source={x:Reference root}}" />
-        <Setter Property="Control.Height" Value="{Binding DataContext.ButtonSize.Height, Mode=OneWay, Source={x:Reference root}}" />
+        <Setter Property="Control.Padding" Value="{Binding DataContext.ButtonPadding, Mode=OneTime, Source={x:Reference root}}" />
+        <Setter Property="Control.Width" Value="{Binding DataContext.ButtonSize.Width, Mode=OneTime, Source={x:Reference root}}" />
+        <Setter Property="Control.Height" Value="{Binding DataContext.ButtonSize.Height, Mode=OneTime, Source={x:Reference root}}" />
       </Style>
 
       <Style x:Key="LauncherButtonFace" TargetType="Grid" BasedOn="{StaticResource ParentElement}">
@@ -481,9 +481,6 @@
                 SA:DragTarget.DragOverCommand="{Binding DragOverCommand}"
                 SA:DragTarget.DragDropCommand="{Binding DragDropCommand}"
               >
-                <ContentControl.Resources>
-                  
-                </ContentControl.Resources>
                 <ContentControl.ToolTip>
                   <ToolTip Style="{StaticResource ToolbarTooltip}">
                     <StackPanel>

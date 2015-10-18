@@ -404,7 +404,6 @@
     <Compile Include="View\Parts\Converter\SelectedIndexNumberConverter.cs" />
     <Compile Include="View\Parts\Converter\SelectedNodeAndLauncherItemConverter.cs" />
     <Compile Include="View\Parts\Converter\HotTrackConverter.cs" />
-    <Compile Include="View\Parts\Converter\LauncherListDisplayImageConverter.cs" />
     <Compile Include="View\Parts\Converter\LauncherViewModelBaseConverter.cs" />
     <Compile Include="View\Parts\Converter\EnumLanguageConverter\EnumLanguageConverterBase.cs" />
     <Compile Include="View\Parts\Converter\TimeSpanMillisecondConverter.cs" />

@@ -24,7 +24,6 @@
       </ResourceDictionary.MergedDictionaries>
       <SC:LogicalNotConverter x:Key="LogicalNotConverter" />
       <SC:LogicalIsNotNullConverter x:Key="LogicalIsNotNullConverter" />
-      <AC:LauncherListDisplayImageConverter x:Key="LauncherListDisplayImageConverter" />
       <AC:DisplayTextConverter x:Key="DisplayTextConverter" />
     </ResourceDictionary>
   </AV:CommonDataUserControl.Resources>

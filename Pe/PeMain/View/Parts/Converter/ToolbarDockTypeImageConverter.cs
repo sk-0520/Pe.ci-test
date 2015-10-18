@@ -25,6 +25,7 @@ namespace ContentTypeTextNet.Pe.PeMain.View.Parts.Converter
     using System.Windows.Data;
     using ContentTypeTextNet.Library.SharedLibrary.Define;
     using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
+    using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
     using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
     public class ToolbarDockTypeImageConverter: IValueConverter
@@ -33,7 +34,7 @@ namespace ContentTypeTextNet.Pe.PeMain.View.Parts.Converter
 
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            var dockType = (DockType)value;
+            var dockType = CastUtility.GetCastWPFValue<DockType>(value, DockType.None);
             var usingImageSize = imageSize;
             if(parameter is Size) {
                 usingImageSize = (Size)parameter;

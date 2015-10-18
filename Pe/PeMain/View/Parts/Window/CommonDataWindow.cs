@@ -119,7 +119,7 @@ namespace ContentTypeTextNet.Pe.PeMain.View.Parts.Window
         {
             base.OnClosed(e);
 
-            CommonData = null;
+            //CommonData = null;
             DataContext = null;
         }
 
