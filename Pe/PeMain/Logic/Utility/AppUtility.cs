@@ -215,7 +215,14 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 
         public static BitmapSource LoadLauncherItemIcon(IconScale iconScale, LauncherItemModel launcherItem, LauncherIconCaching launcherIconCaching, INonProcess nonProcess)
         {
-            return launcherIconCaching[iconScale].Get(launcherItem, () => LauncherItemUtility.GetIcon(launcherItem, iconScale, nonProcess));
+            return launcherIconCaching[iconScale].Get(
+                launcherItem, 
+                () => {
+                    var icon = LauncherItemUtility.GetIcon(launcherItem, iconScale, nonProcess);
+                    FreezableUtility.SafeFreeze(icon);
+                    return icon;
+                }
+            );
         }
 
         /// <summary>
