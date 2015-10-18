@@ -1,43 +1,59 @@
-﻿namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
+﻿/**
+This file is part of Pe.
+
+Pe is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Pe is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Pe.  If not, see <http://www.gnu.org/licenses/>.
+*/
+namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Runtime.Serialization;
-	using System.Text;
-	using System.Threading.Tasks;
-	using ContentTypeTextNet.Library.SharedLibrary.IF;
-	using ContentTypeTextNet.Pe.Library.PeData.Item;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Runtime.Serialization;
+    using System.Text;
+    using System.Threading.Tasks;
+    using ContentTypeTextNet.Library.SharedLibrary.IF;
+    using ContentTypeTextNet.Pe.Library.PeData.Item;
 
-	[Serializable]
-	public class ToolbarSettingModel: SettingModelBase, IDeepClone
-	{
-		public ToolbarSettingModel()
-		{
-			Items = new ToolbarItemCollectionModel();
-		}
+    [Serializable]
+    public class ToolbarSettingModel: SettingModelBase, IDeepClone
+    {
+        public ToolbarSettingModel()
+        {
+            Items = new ToolbarItemCollectionModel();
+        }
 
-		[DataMember]
-		public ToolbarItemCollectionModel Items { get; set; }
+        [DataMember]
+        public ToolbarItemCollectionModel Items { get; set; }
 
-		#region IDeepClone
+        #region IDeepClone
 
-		public void DeepCloneTo(IDeepClone target)
-		{
-			var obj = (ToolbarSettingModel)target;
+        public void DeepCloneTo(IDeepClone target)
+        {
+            var obj = (ToolbarSettingModel)target;
 
-			obj.Items.InitializeRange(Items.Select(i => (ToolbarItemModel)i.DeepClone()));
-		}
+            obj.Items.InitializeRange(Items.Select(i => (ToolbarItemModel)i.DeepClone()));
+        }
 
-		public IDeepClone DeepClone()
-		{
-			var result = new ToolbarSettingModel();
+        public IDeepClone DeepClone()
+        {
+            var result = new ToolbarSettingModel();
 
-			DeepCloneTo(result);
+            DeepCloneTo(result);
 
-			return result;
-		}
+            return result;
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }

@@ -129,7 +129,6 @@
     <Compile Include="IF\ViewExtend\IApplicationDesktopToolbarData.cs" />
     <Compile Include="IF\IDeepClone.cs" />
     <Compile Include="IF\IDisplayText.cs" />
-    <Compile Include="IF\IGetMembers.cs" />
     <Compile Include="IF\IHavingNonProcess.cs" />
     <Compile Include="IF\IHavingWndProc.cs" />
     <Compile Include="IF\ILanguage.cs" />
@@ -149,7 +148,9 @@
     <Compile Include="Logic\DelegateRetry.cs" />
     <Compile Include="Logic\TimeRetry.cs" />
     <Compile Include="Logic\Utility\CastUtility.cs" />
+    <Compile Include="Logic\Utility\DependencyPropertyUtility.cs" />
     <Compile Include="Logic\Utility\FontUtility.cs" />
+    <Compile Include="Logic\Utility\FreezableUtility.cs" />
     <Compile Include="Logic\Utility\LogUtility.cs" />
     <Compile Include="Model\CollectionModel.cs" />
     <Compile Include="Model\FixedSizeCollectionModel.cs" />

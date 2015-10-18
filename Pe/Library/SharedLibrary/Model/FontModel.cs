@@ -1,51 +1,67 @@
-﻿namespace ContentTypeTextNet.Library.SharedLibrary.Model
+﻿/**
+This file is part of SharedLibrary.
+
+SharedLibrary is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+SharedLibrary is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with SharedLibrary.  If not, see <http://www.gnu.org/licenses/>.
+*/
+namespace ContentTypeTextNet.Library.SharedLibrary.Model
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Runtime.Serialization;
-	using System.Text;
-	using System.Threading.Tasks;
-	using ContentTypeTextNet.Library.SharedLibrary.IF;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Runtime.Serialization;
+    using System.Text;
+    using System.Threading.Tasks;
+    using ContentTypeTextNet.Library.SharedLibrary.IF;
 
 
-	[Serializable]
-	public class FontModel: ModelBase, IDeepClone
-	{
-		#region property
+    [Serializable]
+    public class FontModel: ModelBase, IDeepClone
+    {
+        #region property
 
-		[DataMember]
-		public string Family { get; set; }
-		[DataMember]
-		public double Size { get; set; }
-		[DataMember]
-		public bool Bold { get; set; }
-		[DataMember]
-		public bool Italic { get; set; }
+        [DataMember]
+        public string Family { get; set; }
+        [DataMember]
+        public double Size { get; set; }
+        [DataMember]
+        public bool Bold { get; set; }
+        [DataMember]
+        public bool Italic { get; set; }
 
-		#endregion
+        #endregion
 
-		#region IDeepClone
+        #region IDeepClone
 
-		public void DeepCloneTo(IDeepClone target)
-		{
-			var obj = (FontModel)target;
+        public void DeepCloneTo(IDeepClone target)
+        {
+            var obj = (FontModel)target;
 
-			obj.Family = Family;
-			obj.Size = Size;
-			obj.Bold = Bold;
-			obj.Italic = Italic;
-		}
+            obj.Family = Family;
+            obj.Size = Size;
+            obj.Bold = Bold;
+            obj.Italic = Italic;
+        }
 
-		public IDeepClone DeepClone()
-		{
-			var result = new FontModel();
+        public IDeepClone DeepClone()
+        {
+            var result = new FontModel();
 
-			DeepCloneTo(result);
+            DeepCloneTo(result);
 
-			return result;
-		}
+            return result;
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }

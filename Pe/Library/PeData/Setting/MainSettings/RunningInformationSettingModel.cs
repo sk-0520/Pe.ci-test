@@ -1,86 +1,102 @@
-﻿namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
+﻿/**
+This file is part of Pe.
+
+Pe is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Pe is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Pe.  If not, see <http://www.gnu.org/licenses/>.
+*/
+namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Runtime.Serialization;
-	using System.Text;
-	using System.Threading.Tasks;
-	using ContentTypeTextNet.Library.SharedLibrary.IF;
-	using ContentTypeTextNet.Pe.Library.PeData.Item;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Runtime.Serialization;
+    using System.Text;
+    using System.Threading.Tasks;
+    using ContentTypeTextNet.Library.SharedLibrary.IF;
+    using ContentTypeTextNet.Pe.Library.PeData.Item;
 
-	/// <summary>
-	/// 実行情報。
-	/// </summary>
-	[Serializable]
-	public class RunningInformationSettingModel : SettingModelBase, IDeepClone
-	{
-		public RunningInformationSettingModel()
-			: base()
-		{ }
+    /// <summary>
+    /// 実行情報。
+    /// </summary>
+    [Serializable]
+    public class RunningInformationSettingModel: SettingModelBase, IDeepClone
+    {
+        public RunningInformationSettingModel()
+            : base()
+        { }
 
-		#region property
+        #region property
 
-		/// <summary>
-		/// 実行が許可されているか。
-		/// </summary>
-		[DataMember]
-		public bool Accept { get; set; }
-		/// <summary>
-		/// 前回終了時のバージョン。
-		/// </summary>
-		[DataMember]
-		public Version LastExecuteVersion { get; set; }
-		/// <summary>
-		/// アップデートチェックを行うか。
-		/// </summary>
-		[DataMember]
-		public bool CheckUpdateRelease { get; set; }
-		/// <summary>
-		/// RCアップデートチェックを行うか。
-		/// </summary>
-		[DataMember]
-		public bool CheckUpdateRC { get; set; }
-		/// <summary>
-		/// アップデートチェックで無視するバージョン。
-		/// </summary>
-		[DataMember]
-		public Version IgnoreUpdateVersion { get; set; }
-		/// <summary>
-		/// プログラム実行回数。
-		/// </summary>
-		[DataMember]
-		public int ExecuteCount { get; set; }
+        /// <summary>
+        /// 実行が許可されているか。
+        /// </summary>
+        [DataMember]
+        public bool Accept { get; set; }
+        /// <summary>
+        /// 前回終了時のバージョン。
+        /// </summary>
+        [DataMember]
+        public Version LastExecuteVersion { get; set; }
+        /// <summary>
+        /// アップデートチェックを行うか。
+        /// </summary>
+        [DataMember]
+        public bool CheckUpdateRelease { get; set; }
+        /// <summary>
+        /// RCアップデートチェックを行うか。
+        /// </summary>
+        [DataMember]
+        public bool CheckUpdateRC { get; set; }
+        /// <summary>
+        /// アップデートチェックで無視するバージョン。
+        /// </summary>
+        [DataMember]
+        public Version IgnoreUpdateVersion { get; set; }
+        /// <summary>
+        /// プログラム実行回数。
+        /// </summary>
+        [DataMember]
+        public int ExecuteCount { get; set; }
 
-		#endregion
+        #endregion
 
-		#region IDeepClone
+        #region IDeepClone
 
-		public void DeepCloneTo(IDeepClone target)
-		{
-			var obj = (RunningInformationSettingModel)target;
+        public void DeepCloneTo(IDeepClone target)
+        {
+            var obj = (RunningInformationSettingModel)target;
 
-			obj.Accept = Accept;
-			if(LastExecuteVersion != null) {
-				obj.LastExecuteVersion = (Version)LastExecuteVersion.Clone();
-			}
-			obj.CheckUpdateRelease = CheckUpdateRelease;
-			obj.CheckUpdateRC = CheckUpdateRC;
-			if(IgnoreUpdateVersion != null) {
-				obj.IgnoreUpdateVersion = (Version)IgnoreUpdateVersion.Clone();
-			}
-			obj.ExecuteCount = ExecuteCount;
-		}
+            obj.Accept = Accept;
+            if(LastExecuteVersion != null) {
+                obj.LastExecuteVersion = (Version)LastExecuteVersion.Clone();
+            }
+            obj.CheckUpdateRelease = CheckUpdateRelease;
+            obj.CheckUpdateRC = CheckUpdateRC;
+            if(IgnoreUpdateVersion != null) {
+                obj.IgnoreUpdateVersion = (Version)IgnoreUpdateVersion.Clone();
+            }
+            obj.ExecuteCount = ExecuteCount;
+        }
 
-		public IDeepClone DeepClone()
-		{
-			var result = new RunningInformationSettingModel();
+        public IDeepClone DeepClone()
+        {
+            var result = new RunningInformationSettingModel();
 
-			DeepCloneTo(result);
+            DeepCloneTo(result);
 
-			return result;
-		}
+            return result;
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }

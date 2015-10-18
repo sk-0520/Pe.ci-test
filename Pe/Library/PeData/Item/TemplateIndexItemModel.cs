@@ -1,53 +1,69 @@
-﻿namespace ContentTypeTextNet.Pe.Library.PeData.Item
+﻿/**
+This file is part of Pe.
+
+Pe is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Pe is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Pe.  If not, see <http://www.gnu.org/licenses/>.
+*/
+namespace ContentTypeTextNet.Pe.Library.PeData.Item
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Runtime.Serialization;
-	using System.Text;
-	using System.Threading.Tasks;
-	using ContentTypeTextNet.Library.SharedLibrary.IF;
-	using ContentTypeTextNet.Pe.Library.PeData.Define;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Runtime.Serialization;
+    using System.Text;
+    using System.Threading.Tasks;
+    using ContentTypeTextNet.Library.SharedLibrary.IF;
+    using ContentTypeTextNet.Pe.Library.PeData.Define;
 
-	/// <summary>
-	/// テンプレートインデックスのヘッダ部。
-	/// </summary>
-	public class TemplateIndexItemModel: IndexItemModelBase
-	{
-		public TemplateIndexItemModel()
-			: base()
-		{ }
+    /// <summary>
+    /// テンプレートインデックスのヘッダ部。
+    /// </summary>
+    public class TemplateIndexItemModel: IndexItemModelBase
+    {
+        public TemplateIndexItemModel()
+            : base()
+        { }
 
-		#region property
+        #region property
 
-		/// <summary>
-		/// 置換処理を行うか。
-		/// </summary>
-		[DataMember]
-		public TemplateReplaceMode TemplateReplaceMode { get; set; }
+        /// <summary>
+        /// 置換処理を行うか。
+        /// </summary>
+        [DataMember]
+        public TemplateReplaceMode TemplateReplaceMode { get; set; }
 
-		#endregion
+        #endregion
 
-		#region IndexItemModelBase
+        #region IndexItemModelBase
 
-		public override void DeepCloneTo(IDeepClone target)
-		{
-			base.DeepCloneTo(target);
+        public override void DeepCloneTo(IDeepClone target)
+        {
+            base.DeepCloneTo(target);
 
-			var obj = (TemplateIndexItemModel)target;
+            var obj = (TemplateIndexItemModel)target;
 
-			obj.TemplateReplaceMode = TemplateReplaceMode;
-		}
+            obj.TemplateReplaceMode = TemplateReplaceMode;
+        }
 
-		public override IDeepClone DeepClone()
-		{
-			var result = new TemplateIndexItemModel();
+        public override IDeepClone DeepClone()
+        {
+            var result = new TemplateIndexItemModel();
 
-			DeepCloneTo(result);
+            DeepCloneTo(result);
 
-			return result;
-		}
+            return result;
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }

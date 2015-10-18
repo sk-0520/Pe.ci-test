@@ -141,6 +141,7 @@
 		<Item Id="toolbar/others" Word="その他" />
 		<Item Id="toolbar/others/customize" Word="編集" />
 		<Item Id="toolbar/others/property" Word="プロパティ" />
+		<Item Id="toolbar/others/remove" Word="削除" />
 		
 		<Item Id="execute/command" Word="コマンド" />
 		<Item Id="execute/option" Word="オプション" />
