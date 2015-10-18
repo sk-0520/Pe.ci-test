@@ -83,7 +83,7 @@
 		</group>
 		<group type="fixes" dummy="==================================================================">
 			<note rev="">
-				<message></message>
+				<message>#337: コマンド入力後に再度コマンド入力すると前回入力値が残っている</message>
 			</note>
 			<note rev="">
 				<message></message>

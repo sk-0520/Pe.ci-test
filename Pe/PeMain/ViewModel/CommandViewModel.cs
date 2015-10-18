@@ -132,6 +132,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 SetVariableValue(ref this._visibility, value);
                 if(HasView) {
                     if(Visibility == Visibility.Visible) {
+                        InputText = string.Empty;
                         View.Activate();
                         //View.inputCommand.Focus();
                     }
