@@ -55,7 +55,7 @@
 		</group>
 	</log>
 	-->
-	<log date="2015/10/18" version="0.68.0" dummy="################################################################################">
+	<log date="2015/10/18" version="0.68.1" dummy="################################################################################">
 		<group type="note" dummy="==================================================================">
 			<note rev="">
 				<message>[事前通知]: 0.70.0 で Forms 版データ引き継ぎ処理を廃止します</message>
@@ -76,6 +76,12 @@
 				<comments>
 					<comment>焼け石に水かもだけど ViewModel を破棄した時に Model の参照を外す</comment>
 					<comment>ツールバーのGUI構築方法を改善</comment>
+				</comments>
+			</note>
+			<note rev="">
+				<message>0.68.0が動かない</message>
+				<comments>
+					<comment>依存プロパティ実装修正の確認漏れ</comment>
 				</comments>
 			</note>
 		</group>
