@@ -577,8 +577,7 @@
                       </Label>
                       <Button Grid.Row="10" Grid.Column="0" Content="customize" AA:Language.Word="toolbar/others/customize" Style="{StaticResource PopupClose}" Command="{Binding OpenCustomizeCommand}" />
                       <Button Grid.Row="10" Grid.Column="1" Content="property"  AA:Language.Word="toolbar/others/property"  IsEnabled="{Binding ExistsCommand}" Command="{Binding OpenPropertyCommand}" Style="{StaticResource PopupClose}" />
-                      <!--<ACC:LockedButton Grid.Row="10" Grid.Column="2" Content="remove" AA:Language.Word="toolbar/others/property" IsEnabled="{Binding ExistsCommand}" Command="{Binding DataContext.RemoveItemCommand, RelativeSource={RelativeSource AncestorType=Window}}" />-->
-                      <ACC:LockedButton Grid.Row="10" Grid.Column="2" Content="remove" AA:Language.Word="toolbar/others/property" IsEnabled="{Binding ExistsCommand}" Command="{Binding DataContext.RemoveItemCommand, Source={x:Reference root}}"  CommandParameter="{Binding}"  />
+                      <ACC:LockedButton Grid.Row="10" Grid.Column="2" Content="remove" AA:Language.Word="toolbar/others/remove" Command="{Binding DataContext.RemoveItemCommand, Source={x:Reference root}}"  CommandParameter="{Binding}"  />
                     </Grid>
                   </xctk:SplitButton.DropDownContent>
                 </xctk:SplitButton>
@@ -653,6 +652,7 @@
                         </StackPanel>
                       </Label>
                       <Button Grid.Row="7" Grid.Column="0" Content="customize" AA:Language.Word="toolbar/others/customize" Style="{StaticResource PopupClose}" Command="{Binding OpenCustomizeCommand}" />
+                      <ACC:LockedButton Grid.Row="7" Grid.Column="1" Content="remove" AA:Language.Word="toolbar/others/remove" Command="{Binding DataContext.RemoveItemCommand, Source={x:Reference root}}"  CommandParameter="{Binding}"  />
                     </Grid>
                   </xctk:SplitButton.DropDownContent>
                 </xctk:SplitButton>
