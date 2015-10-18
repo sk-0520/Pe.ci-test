@@ -26,6 +26,7 @@ namespace ContentTypeTextNet.Pe.PeMain
     using ContentTypeTextNet.Library.SharedLibrary.Define;
     using ContentTypeTextNet.Library.SharedLibrary.IF;
     using ContentTypeTextNet.Library.SharedLibrary.Logic;
+    using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
     using ContentTypeTextNet.Pe.PeMain.Logic;
 
     partial class AppResource
@@ -61,7 +62,9 @@ namespace ContentTypeTextNet.Pe.PeMain
         {
             return _imageCaching.Get(path, () => {
                 var uri = SharedConstants.GetEntryUri(path);
-                return new BitmapImage(uri);
+                var image = new BitmapImage(uri);
+                FreezableUtility.SafeFreeze(image);
+                return image;
             });
         }
 
@@ -69,7 +72,9 @@ namespace ContentTypeTextNet.Pe.PeMain
         {
             return _iconCaching[iconScale].Get(path, () => {
                 using(var icon = new IconWrapper(path, iconScale)) {
-                    return icon.MakeBitmapSource();
+                    var image = icon.MakeBitmapSource();
+                    FreezableUtility.SafeFreeze(image);
+                    return image;
                 }
             });
         }

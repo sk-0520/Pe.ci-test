@@ -36,6 +36,8 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         #region variable
 
         Color _backColor;
+        Brush _foreground;
+        Brush _background;
 
         #endregion
 
@@ -57,33 +59,17 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                     (byte)rand.Next(0x00, 0xff)
                 );
             }
+            this._foreground = MakeBrush(MediaUtility.GetAutoColor(this._backColor));
+            this._background = MakeBrush(this._backColor);
         }
 
         #region property
 
         ScreenModel Screen { get; set; }
 
-        public Brush Foreground
-        {
-            get
-            {
-                var result = new SolidColorBrush();
-                result.Color = MediaUtility.GetNoneAlphaColor(MediaUtility.GetAutoColor(this._backColor));
+        public Brush Foreground { get { return this._foreground; } }
 
-                return result;
-            }
-        }
-
-        public Brush Background
-        {
-            get
-            {
-                var result = new SolidColorBrush();
-                result.Color = this._backColor;
-
-                return result;
-            }
-        }
+        public Brush Background { get { return this._background; } }
 
         public string ScreenName
         {
@@ -104,6 +90,16 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         #region function
 
+        Brush MakeBrush(Color color)
+        {
+            var brush = new SolidColorBrush() {
+                Color = color,
+            };
+            FreezableUtility.SafeFreeze(brush);
+
+            return brush;
+        }
+
         #endregion
 
         #region HavingViewModelBase
@@ -120,6 +116,17 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             View.Loaded -= View_Loaded;
 
             base.UninitializeView();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                Screen = null;
+                this._foreground = null;
+                this._background = null;
+            }
+
+            base.Dispose(disposing);
         }
 
         #endregion
