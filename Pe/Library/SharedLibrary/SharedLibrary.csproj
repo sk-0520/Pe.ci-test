@@ -151,6 +151,7 @@
     <Compile Include="Logic\Utility\CastUtility.cs" />
     <Compile Include="Logic\Utility\DependencyPropertyUtility.cs" />
     <Compile Include="Logic\Utility\FontUtility.cs" />
+    <Compile Include="Logic\Utility\FreezableUtility.cs" />
     <Compile Include="Logic\Utility\LogUtility.cs" />
     <Compile Include="Model\CollectionModel.cs" />
     <Compile Include="Model\FixedSizeCollectionModel.cs" />

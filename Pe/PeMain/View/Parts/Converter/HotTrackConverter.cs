@@ -87,6 +87,8 @@ namespace ContentTypeTextNet.Pe.PeMain.View.Parts.Converter
             brush.GradientStops.Add(new GradientStop(Color.FromArgb(0xFF, color.R, color.G, color.B), 1.00));
             brush.GradientStops.Add(new GradientStop(Color.FromArgb(0xef, color.R, color.G, color.B), 1 - length));
             brush.GradientStops.Add(new GradientStop(Color.FromArgb(0x00, color.R, color.G, color.B), 0.00));
+
+            FreezableUtility.SafeFreeze(brush);
             return brush;
         }
 
