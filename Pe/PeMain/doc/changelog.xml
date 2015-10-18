@@ -78,7 +78,7 @@
 					<comment>ツールバーのGUI構築方法を改善</comment>
 				</comments>
 			</note>
-			<note rev="">
+			<note rev="220788077df6490e37381ace0db75aecf537882a">
 				<message>0.68.0が動かない</message>
 				<comments>
 					<comment>依存プロパティ実装修正の確認漏れ</comment>
