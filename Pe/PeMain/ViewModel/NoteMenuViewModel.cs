@@ -86,5 +86,19 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         public IAppSender AppSender { get; private set; }
 
         #endregion
+
+        #region SingleModelWrapperViewModelBase
+
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                NonProcess = null;
+                AppSender = null;
+            }
+
+            base.Dispose(disposing);
+        }
+
+        #endregion
     }
 }

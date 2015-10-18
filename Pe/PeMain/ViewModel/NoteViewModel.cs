@@ -67,7 +67,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             AppNonProcess = appNonProcess;
             AppSender = appSender;
 
-            this._borderBrush = MakeBorderBrush();
+            BorderBrush = MakeBorderBrush();
 
             SetCompactArea();
         }
@@ -448,33 +448,6 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
         }
 
-        public ICommand OpenPopupCommand
-        {
-            get
-            {
-                var result = CreateCommand(
-                    o => {
-                        //var comboBox = (ComboBox)o;
-                        //if (comboBox.SelectedValue == null && comboBox.ItemsSource != null) {
-                        //	AppNonProcess.Logger.Information(string.Join(Environment.NewLine, comboBox.ItemsSource.Cast<FontFamily>().Select(f => f.Source)));
-                        //	var fontFamily = FontFamily;
-                        //	var index = comboBox.ItemsSource.Cast<FontFamily>()
-                        //		.ToArray()
-                        //		.FindIndex(f => f.Source == fontFamily.Source)
-                        //	;
-                        //	if (index != -1) {
-                        //		comboBox.SelectedIndex = index;
-                        //	}
-                        //	//System.Diagnostics.Debug.WriteLine(comboBox.ItemsSource);
-                        //	//comboBox.SelectedItem = FontFamily;
-                        //}
-                    }
-                );
-
-                return result;
-            }
-        }
-
         #endregion
 
         #region HavingViewSingleModelWrapperViewModelBase
@@ -566,7 +539,10 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         Brush MakeBorderBrush()
         {
-            return new SolidColorBrush(Model.BackColor);
+            var brush = new SolidColorBrush(Model.BackColor);
+            FreezableUtility.SafeFreeze(brush);
+
+            return brush;
         }
 
         #endregion
@@ -770,6 +746,20 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
                 return result;
             }
+        }
+
+        #endregion
+
+        #region HavingViewSingleModelWrapperViewModelBase
+
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                AppNonProcess = null;
+                AppSender = null;
+            }
+
+            base.Dispose(disposing);
         }
 
         #endregion
