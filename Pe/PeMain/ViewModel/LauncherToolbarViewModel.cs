@@ -491,6 +491,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                     var oldItems = LauncherItems;
                     //this._launcherItems = null;
                     //OnPropertyChanged(nameof(LauncherItems));
+                    LauncherItems = null;
                     LauncherItems = GetLauncherItemButtons(SelectedGroup);
                     if(oldItems != null) {
                         foreach(var oldItem in oldItems) {

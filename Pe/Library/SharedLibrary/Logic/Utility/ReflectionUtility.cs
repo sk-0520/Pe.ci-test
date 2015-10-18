@@ -30,7 +30,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Utility
         public static IEnumerable<PropertyInfo> FilterSharedLibrary(IEnumerable<PropertyInfo> propertyInfos)
         {
             var filter = new[] {
-                "PropertyInfos",
+                //"PropertyInfos",
                 "DisplayText",
             };
             return propertyInfos
@@ -82,13 +82,15 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Utility
         /// <summary>
         /// メンバ名と値を保持するオブジェクトを文字列にする。
         /// </summary>
-        /// <param name="getMembers"></param>
+        /// <param name="obj"></param>
         /// <returns></returns>
-        public static string GetObjectString(IGetMembers getMembers)
+        public static string GetObjectString(object obj)
         {
-            var name = getMembers.GetType().Name;
-            var nameValueStrings = getMembers.GetNameValueList();
-            var joinString = ReflectionUtility.JoinNameValueStrings(nameValueStrings);
+            var name = obj.GetType().Name;
+            var propertyInfos = FilterSharedLibrary(obj.GetType().GetProperties());
+            var nameValueMap = GetMembers(obj, propertyInfos);
+            var nameValueStrings = GetNameValueStrings(nameValueMap);
+            var joinString = JoinNameValueStrings(nameValueStrings);
 
             return string.Format("{0}=>{1}", name, joinString);
         }
@@ -100,8 +102,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Utility
                 .GetMembers(BindingFlags.GetProperty | BindingFlags.SetProperty | BindingFlags.GetField | BindingFlags.SetField)
                 .Where(m => m.CustomAttributes.Any(c => {
                     return c.AttributeType.GetCustomAttributes(typeof(DataContractAttribute), true).Any();
-                })
-                )
+                }))
             ;
 
             return members;

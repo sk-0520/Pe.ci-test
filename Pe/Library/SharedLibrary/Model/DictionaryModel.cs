@@ -57,8 +57,8 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Model
 
         #region variable
 
-        [IgnoreDataMember, XmlIgnore]
-        IEnumerable<PropertyInfo> _propertyInfos = null;
+        //[IgnoreDataMember, XmlIgnore]
+        //IEnumerable<PropertyInfo> _propertyInfos = null;
 
         #endregion
 
@@ -157,24 +157,24 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Model
             get { return GetType().FullName; }
         }
 
-        [IgnoreDataMember, XmlIgnore]
-        public IEnumerable<PropertyInfo> PropertyInfos
-        {
-            get
-            {
-                if(this._propertyInfos == null) {
-                    this._propertyInfos = ReflectionUtility.FilterSharedLibrary(GetType().GetProperties());
-                }
+        //[IgnoreDataMember, XmlIgnore]
+        //public IEnumerable<PropertyInfo> PropertyInfos
+        //{
+        //    get
+        //    {
+        //        if(this._propertyInfos == null) {
+        //            this._propertyInfos = ReflectionUtility.FilterSharedLibrary(GetType().GetProperties());
+        //        }
 
-                return this._propertyInfos;
-            }
-        }
+        //        return this._propertyInfos;
+        //    }
+        //}
 
-        public IEnumerable<string> GetNameValueList()
-        {
-            var nameValueMap = ReflectionUtility.GetMembers(this, PropertyInfos);
-            return ReflectionUtility.GetNameValueStrings(nameValueMap);
-        }
+        //public IEnumerable<string> GetNameValueList()
+        //{
+        //    var nameValueMap = ReflectionUtility.GetMembers(this, PropertyInfos);
+        //    return ReflectionUtility.GetNameValueStrings(nameValueMap);
+        //}
 
         public virtual void Correction()
         { }

@@ -22,7 +22,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.IF
     using System.Text;
     using System.Threading.Tasks;
 
-    public interface IModel: IGetMembers, IDisplayText
+    public interface IModel: IDisplayText
     {
         /// <summary>
         /// 補正。
