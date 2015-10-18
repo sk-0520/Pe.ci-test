@@ -45,7 +45,7 @@ namespace ContentTypeTextNet.Pe.PeMain.View.Parts.Control
         #region CommandProperty
 
         public static readonly DependencyProperty CommandProperty = DependencyProperty.Register(
-            DependencyPropertyUtility.GetName(nameof(CommandProperty)),
+            "CommandProperty",
             typeof(ICommand),
             typeof(LockedButton),
             new FrameworkPropertyMetadata(new PropertyChangedCallback(OnCommandChanged))
@@ -70,7 +70,7 @@ namespace ContentTypeTextNet.Pe.PeMain.View.Parts.Control
         #region CommandParameterProperty
 
         public static readonly DependencyProperty CommandParameterProperty = DependencyProperty.Register(
-            DependencyPropertyUtility.GetName(nameof(CommandParameterProperty)),
+            "CommandParameterProperty",
             typeof(object),
             typeof(LockedButton),
             new FrameworkPropertyMetadata(new PropertyChangedCallback(OnCommandParameterChanged))

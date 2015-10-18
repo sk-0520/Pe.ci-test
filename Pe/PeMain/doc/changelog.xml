@@ -93,9 +93,6 @@
 		<group type="developer" dummy="==================================================================">
 			<note rev="0a9554ea3fd284d790ec6f0877efc54ef7b430b0">
 				<message>#334: 開発環境をVS2013からVS2015に変更</message>
-				<comments>
-					<comment>部分的にC# 6.0使ってるから .NET Framework 4.5.1 で動くのか微妙、調べたところ動くらしいけど心肺</comment>
-				</comments>
 			</note>
 			<note rev="f142bc9b0cc232c77d3f0b41ee9f15df84713473">
 				<message>#274: 各ソースファイルにライセンス情報を記載する</message>
