@@ -55,7 +55,7 @@
 		</group>
 	</log>
 	-->
-	<log date="2015/10/18" version="0.68.0" dummy="################################################################################">
+	<log date="2015/10/18" version="0.68.1" dummy="################################################################################">
 		<group type="note" dummy="==================================================================">
 			<note rev="">
 				<message>[事前通知]: 0.70.0 で Forms 版データ引き継ぎ処理を廃止します</message>
@@ -78,6 +78,12 @@
 					<comment>ツールバーのGUI構築方法を改善</comment>
 				</comments>
 			</note>
+			<note rev="220788077df6490e37381ace0db75aecf537882a">
+				<message>0.68.0が動かない</message>
+				<comments>
+					<comment>依存プロパティ実装修正の確認漏れ</comment>
+				</comments>
+			</note>
 		</group>
 		<group type="fixes" dummy="==================================================================">
 			<note rev="42390940f9be507dba8087a5645d34500109f3e5">
@@ -93,9 +99,6 @@
 		<group type="developer" dummy="==================================================================">
 			<note rev="0a9554ea3fd284d790ec6f0877efc54ef7b430b0">
 				<message>#334: 開発環境をVS2013からVS2015に変更</message>
-				<comments>
-					<comment>部分的にC# 6.0使ってるから .NET Framework 4.5.1 で動くのか微妙、調べたところ動くらしいけど心肺</comment>
-				</comments>
 			</note>
 			<note rev="f142bc9b0cc232c77d3f0b41ee9f15df84713473">
 				<message>#274: 各ソースファイルにライセンス情報を記載する</message>

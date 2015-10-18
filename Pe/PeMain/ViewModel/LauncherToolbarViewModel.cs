@@ -471,7 +471,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             set
             {
                 if(SetVariableValue(ref this._selectedGroup, value)) {
-                    OnPropertyChanged(nameof(GroupItems));
+                    OnPropertyChanged("GroupItems");
                     var oldItems = LauncherItems;
                     //this._launcherItems = null;
                     //OnPropertyChanged(nameof(LauncherItems));
@@ -960,7 +960,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 if(DockType == DockType.None) {
                     Model.Toolbar.FloatToolbar.WidthButtonCount = CalculateButtonWidthCount(DockType, ToolbarButtonOrientation, BorderThickness, this._captionWidth, value);
                     OnPropertyChanged();
-                    OnPropertyChanged(nameof(CaptionHeight));
+                    OnPropertyChanged("CaptionHeight");
                 } else if(!IsHidden && ShowLogicalBarArea.Width != value) {
                     this._showLogicalBarArea.Width = value;
                     OnPropertyChanged();
@@ -984,7 +984,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 if(DockType == DockType.None) {
                     Model.Toolbar.FloatToolbar.HeightButtonCount = CalculateButtonHeightCount(DockType, ToolbarButtonOrientation, BorderThickness, this._captionWidth, value);
                     OnPropertyChanged();
-                    OnPropertyChanged(nameof(CaptionWidth));
+                    OnPropertyChanged("CaptionWidth");
                 } else if(!IsHidden && ShowLogicalBarArea.Height != value) {
                     this._showLogicalBarArea.Height = value;
                     OnPropertyChanged();
@@ -1015,7 +1015,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                         var nowTime = DateTime.Now;
                         if(this._nowFullScreen) {
                             AppNonProcess.Logger.Debug("fullscreen: first, cancel-flag on");
-                            OnPropertyChanged(nameof(IsTopmost));
+                            OnPropertyChanged("IsTopmost");
                             this._prevFullScreenTime = DateTime.Now;
                         } else {
                             var nowSpan = nowTime - _prevFullScreenTime;
@@ -1027,7 +1027,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                                 this._prevFullScreenCancel = true;
                             } else {
                                 AppNonProcess.Logger.Debug(string.Format("fullscreen: [CHANGE]:{0}, [IsTopmost]:{1}", this._nowFullScreen, IsTopmost));
-                                OnPropertyChanged(nameof(IsTopmost));
+                                OnPropertyChanged("IsTopmost");
                                 if(this._nowFullScreen && this._prevFullScreenCancel) {
                                     // 前回フルクリーンが二重発行されてた場合は解除する
                                     this._prevFullScreenCancel = false;
@@ -1062,21 +1062,21 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                     OnPropertyChanged();
                     View.InvalidateArrange();
                     var propertyNames = new[] {
-                        nameof(ToolbarButtonOrientation),
-                        nameof(CaptionVisibility),
-                        nameof(CaptionWidth),
-                        nameof(CaptionHeight),
-                        nameof(DropDownPlacement),
-                        nameof(GripDock),
-                        nameof(ToolbarButtonHorizontalAlignment),
-                        nameof(ToolbarButtonVerticalAlignment),
-                        nameof(FirstWidth),
-                        nameof(SecondWidth),
-                        nameof(IsEnabledCorrection),
-                        nameof(PositionContentButton),
-                        nameof(PositionMenuButton),
-                        nameof(ResizeMode),
-                        nameof(IsTopmost),
+                        "ToolbarButtonOrientation",
+                        "CaptionVisibility",
+                        "CaptionWidth",
+                        "CaptionHeight",
+                        "DropDownPlacement",
+                        "GripDock",
+                        "ToolbarButtonHorizontalAlignment",
+                        "ToolbarButtonVerticalAlignment",
+                        "FirstWidth",
+                        "SecondWidth",
+                        "IsEnabledCorrection",
+                        "PositionContentButton",
+                        "PositionMenuButton",
+                        "ResizeMode",
+                        "IsTopmost",
                     };
                     CallOnPropertyChange(propertyNames);
                     View.UpdateLayout();
@@ -1120,8 +1120,8 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 //}
                 if(SetVariableValue(ref this._isHidden, value)) {
                     CallOnPropertyChange(
-                        nameof(ToolbarContentVisibility),
-                        nameof(IsTopmost)
+                        "ToolbarContentVisibility",
+                        "IsTopmost"
                     );
                     if(!this._isHidden) {
                         HavingViewUtility.BeginInvoke(this, () => {
@@ -1311,7 +1311,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         protected override void CallOnPropertyChangeDisplayItem()
         {
             base.CallOnPropertyChangeDisplayItem();
-            OnPropertyChanged(nameof(MenuIcon));
+            OnPropertyChanged("MenuIcon");
         }
 
         #endregion
