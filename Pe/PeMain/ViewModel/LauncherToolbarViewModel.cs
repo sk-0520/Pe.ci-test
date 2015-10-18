@@ -735,6 +735,24 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
         }
 
+        public ICommand RemoveItemCommand
+        {
+            get
+            {
+                var result = CreateCommand(
+                    o => {
+                        CastUtility.AsAction<LauncherItemButtonViewModel>(o, vm => {
+                            Model.LauncherItems.Remove(vm.Model.Id);
+                            AppSender.SendRefreshView(WindowKind.LauncherToolbar, View);
+                            vm.Dispose();
+                        });
+                    }
+                );
+
+                return result;
+            }
+        }
+
         #endregion
 
         #region function
