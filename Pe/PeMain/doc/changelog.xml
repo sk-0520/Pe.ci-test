@@ -55,58 +55,53 @@
 		</group>
 	</log>
 	-->
-	<log date="YYYY/MM/DD" version="0.67.1" type="rc" dummy="################################################################################">
+	<log date="2015/10/18" version="0.68.0" dummy="################################################################################">
 		<group type="note" dummy="==================================================================">
 			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
+				<message>[事前通知]: 0.70.0 で Forms 版データ引き継ぎ処理を廃止します</message>
+				<comments>
+					<comment>実装は残しててもいいんだけど名前空間被っててコーディングしんどいのですよ</comment>
+				</comments>
 			</note>
 		</group>
 		<group type="features" dummy="==================================================================">
-			<note rev="">
+			<note rev="1b17cbf88727190b88d7d0dd45868c1651fc2039">
 				<message>#289: ランチャーアイテムを設定画面へ遷移せずに削除する</message>
 				<comments>
 					<comment>削除用ボタンのUI実装によりノート側の削除ボタンも変更</comment>
 				</comments>
 			</note>
 			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
+				<message>#305: メモリ消費を抑える</message>
+				<comments>
+					<comment>焼け石に水かもだけど ViewModel を破棄した時に Model の参照を外す</comment>
+					<comment>ツールバーのGUI構築方法を改善</comment>
+				</comments>
 			</note>
 		</group>
 		<group type="fixes" dummy="==================================================================">
-			<note rev="">
+			<note rev="42390940f9be507dba8087a5645d34500109f3e5">
 				<message>#337: コマンド入力後に再度コマンド入力すると前回入力値が残っている</message>
 			</note>
-			<note rev="">
+			<note rev="c5171876096b8c063d0a0fb4df4e8173a2bd0089">
 				<message>ツールバーの設定「メニューボタンを調整する」は有効を規定値にした</message>
 				<comments>
 					<comment>旧バージョンからのバージョンアップには影響しません</comment>
 				</comments>
 			</note>
-			<note rev="">
-				<message></message>
-			</note>
 		</group>
 		<group type="developer" dummy="==================================================================">
 			<note rev="0a9554ea3fd284d790ec6f0877efc54ef7b430b0">
 				<message>#334: 開発環境をVS2013からVS2015に変更</message>
+				<comments>
+					<comment>部分的にC# 6.0使ってるから .NET Framework 4.5.1 で動くのか微妙、調べたところ動くらしいけど心肺</comment>
+				</comments>
 			</note>
 			<note rev="f142bc9b0cc232c77d3f0b41ee9f15df84713473">
 				<message>#274: 各ソースファイルにライセンス情報を記載する</message>
 			</note>
 			<note rev="f142bc9b0cc232c77d3f0b41ee9f15df84713473">
 				<message>#336: コーディング規約変更: TAB -> SPACE</message>
-			</note>
-			<note rev="">
-				<message></message>
 			</note>
 		</group>
 	</log>
