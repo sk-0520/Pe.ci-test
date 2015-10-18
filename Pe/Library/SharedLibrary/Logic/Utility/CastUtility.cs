@@ -18,9 +18,12 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Utility
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
+    using System.Windows;
+    using IF;
 
     public static class CastUtility
     {
@@ -71,6 +74,37 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Utility
             where TCast : class
         {
             return AsFunc<TCast, TResult>(arg, func, default(TResult));
+        }
+
+        /// <summary>
+        /// キャスト値をキャストに成功・失敗に関わらず取得する。
+        /// </summary>
+        /// <typeparam name="T">キャストする型。</typeparam>
+        /// <param name="value">対象の値。</param>
+        /// <param name="failReturnValue">キャスト失敗時に使用する値。</param>
+        /// <param name="logger"></param>
+        /// <returns>valueをTにキャストした値。失敗時はfailReturnValueが返される。</returns>
+        public static T GetCastValue<T>(object value, T failReturnValue, ILogger logger = null)
+        {
+            try {
+                return (T)value;
+            } catch(InvalidCastException ex) {
+                if(logger != null) {
+                    logger.Warning(ex);
+                } else {
+                    Debug.WriteLine(ex);
+                }
+                return failReturnValue;
+            }
+        }
+
+        public static T GetCastWPFValue<T>(object value, T failReturnValue, ILogger logger = null)
+        {
+            if(value == DependencyProperty.UnsetValue) {
+                return failReturnValue;
+            }
+
+            return GetCastValue(value, failReturnValue, logger);
         }
     }
 }

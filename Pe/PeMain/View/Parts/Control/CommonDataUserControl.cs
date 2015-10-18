@@ -31,6 +31,11 @@ namespace ContentTypeTextNet.Pe.PeMain.View.Parts.Control
 
     public abstract class CommonDataUserControl: UserControl, ICommonData
     {
+        public CommonDataUserControl()
+        {
+            this.Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
+        }
+
         #region property
 
         //StartupWindowStatus Startup { get; set; }
@@ -44,8 +49,6 @@ namespace ContentTypeTextNet.Pe.PeMain.View.Parts.Control
         {
             CommonData = commonData;
             ExtensionData = extensionData;
-
-            //ApplyLanguage();
         }
 
         public CommonData CommonData { get; private set; }
@@ -75,5 +78,14 @@ namespace ContentTypeTextNet.Pe.PeMain.View.Parts.Control
         //}
 
         #endregion
+
+        void Dispatcher_ShutdownStarted(object sender, EventArgs e)
+        {
+            this.Dispatcher.ShutdownStarted -= Dispatcher_ShutdownStarted;
+
+            CommonData = null;
+            ExtensionData = null;
+        }
+
     }
 }

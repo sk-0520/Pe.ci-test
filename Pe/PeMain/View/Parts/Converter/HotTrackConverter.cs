@@ -27,6 +27,7 @@ namespace ContentTypeTextNet.Pe.PeMain.View.Parts.Converter
     using System.Windows.Input;
     using System.Windows.Media;
     using ContentTypeTextNet.Library.SharedLibrary.Define;
+    using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 
     public class HotTrackConverter: IMultiValueConverter
     {
@@ -50,14 +51,8 @@ namespace ContentTypeTextNet.Pe.PeMain.View.Parts.Converter
         //}
         public object Convert(object[] values, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            Color color;
-            try {
-                color = (Color)values[0];
-            } catch(InvalidCastException ex) {
-                Debug.WriteLine(ex);
-                color = SystemColors.DesktopColor;
-            }
-            var dockType = (DockType)values[1];
+            var color = CastUtility.GetCastWPFValue(values[0], SystemColors.DesktopColor);
+            var dockType = CastUtility.GetCastWPFValue(values[1], DockType.None);
             var length = (double)values[2];
             var isEnabledCorrection = values[3] as bool?;
 

@@ -30,7 +30,9 @@ namespace ContentTypeTextNet.Pe.PeMain.View.Parts.Control
     public class AppHotkeyControl: HotkeyControl, ICommonData
     {
         public AppHotkeyControl()
-        { }
+        {
+            this.Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
+        }
 
         #region property
 
@@ -85,5 +87,13 @@ namespace ContentTypeTextNet.Pe.PeMain.View.Parts.Control
         }
 
         #endregion
+
+        void Dispatcher_ShutdownStarted(object sender, EventArgs e)
+        {
+            this.Dispatcher.ShutdownStarted -= Dispatcher_ShutdownStarted;
+
+            CommonData = null;
+            ExtensionData = null;
+        }
     }
 }

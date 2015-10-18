@@ -273,11 +273,11 @@
                 </ToggleButton>
                 <!-- MENU -->
                 <Popup 
-                x:Name="PART_Popup" 
-                Style="{StaticResource DropDownPopupMenu}"
-                IsOpen="{Binding IsChecked, ElementName=PART_DropDownButton}"
-                Opened="PART_Popup_Opened"
-              >
+                  x:Name="PART_Popup" 
+                  Style="{StaticResource DropDownPopupMenu}"
+                  IsOpen="{Binding IsChecked, ElementName=PART_DropDownButton}"
+                  Opened="PART_Popup_Opened"
+                >
                   <Border Style="{StaticResource MenuPopupBorder}">
                     <ContentPresenter Content="{TemplateBinding DropDownContent}" />
                   </Border>

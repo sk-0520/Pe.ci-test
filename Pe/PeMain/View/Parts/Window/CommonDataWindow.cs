@@ -40,7 +40,9 @@ namespace ContentTypeTextNet.Pe.PeMain.View.Parts.Window
     {
         public CommonDataWindow()
             : base()
-        { }
+        {
+            this.Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
+        }
 
         #region property
 
@@ -113,6 +115,23 @@ namespace ContentTypeTextNet.Pe.PeMain.View.Parts.Window
             SetChildCommonData();
         }
 
+        protected override void OnClosed(EventArgs e)
+        {
+            base.OnClosed(e);
+
+            CommonData = null;
+            DataContext = null;
+        }
+
         #endregion
+
+        void Dispatcher_ShutdownStarted(object sender, EventArgs e)
+        {
+            this.Dispatcher.ShutdownStarted -= Dispatcher_ShutdownStarted;
+
+            CommonData = null;
+            DataContext = null;
+        }
+
     }
 }
