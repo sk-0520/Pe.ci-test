@@ -741,7 +741,11 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             {
                 var result = CreateCommand(
                     o => {
-                        MessageBox.Show(o.ToString());
+                        CastUtility.AsAction<LauncherItemButtonViewModel>(o, vm => {
+                            Model.LauncherItems.Remove(vm.Model.Id);
+                            AppSender.SendRefreshView(WindowKind.LauncherToolbar, View);
+                            vm.Dispose();
+                        });
                     }
                 );
 
