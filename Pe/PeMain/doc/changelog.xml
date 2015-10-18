@@ -69,7 +69,10 @@
 		</group>
 		<group type="features" dummy="==================================================================">
 			<note rev="">
-				<message></message>
+				<message>#289: ランチャーアイテムを設定画面へ遷移せずに削除する</message>
+				<comments>
+					<comment>削除用ボタンのUI実装によりノート側の削除ボタンも変更</comment>
+				</comments>
 			</note>
 			<note rev="">
 				<message></message>

@@ -296,7 +296,8 @@
             <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="operation" AA:Language.Word="note/operation" Style="{StaticResource TitleLabel}" />
             <Button Grid.Row="1" Grid.Column="0"  Content="copy" AA:Language.Word="note/operation/copy" Command="{Binding CopyBodyCommand}" />
             <Button Grid.Row="1" Grid.Column="1"  Content="hide" AA:Language.Word="note/operation/hide" Command="{Binding HideCommand}" />
-            <Button Grid.Row="1" Grid.Column="2"  Content="remove" AA:Language.Word="note/operation/remove" Command="{Binding RemoveCommand}" />
+            <!--<Button Grid.Row="1" Grid.Column="2"  Content="remove" AA:Language.Word="note/operation/remove" Command="{Binding RemoveCommand}" />-->
+            <AV:LockedButton  Grid.Row="1" Grid.Column="2" Content="remove" AA:Language.Word="note/operation/remove" Command="{Binding RemoveCommand}" />
           </Grid>
         </StackPanel>
       </Border>
