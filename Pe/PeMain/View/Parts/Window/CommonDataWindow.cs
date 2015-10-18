@@ -1,102 +1,137 @@
-﻿namespace ContentTypeTextNet.Pe.PeMain.View.Parts.Window
+﻿/**
+This file is part of Pe.
+
+Pe is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Pe is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Pe.  If not, see <http://www.gnu.org/licenses/>.
+*/
+namespace ContentTypeTextNet.Pe.PeMain.View.Parts.Window
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Diagnostics;
-	using System.Linq;
-	using System.Text;
-	using System.Threading;
-	using System.Threading.Tasks;
-	using System.Windows;
-	using System.Windows.Controls;
-	using System.Windows.Markup;
-	using ContentTypeTextNet.Library.SharedLibrary.IF;
-	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
-	using ContentTypeTextNet.Library.SharedLibrary.View;
-	using ContentTypeTextNet.Library.SharedLibrary.View.Window;
-	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
-	using ContentTypeTextNet.Pe.Library.PeData.IF;
-	using ContentTypeTextNet.Pe.PeMain.Data;
-	using ContentTypeTextNet.Pe.PeMain.IF;
-	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.Linq;
+    using System.Text;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Markup;
+    using ContentTypeTextNet.Library.SharedLibrary.IF;
+    using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+    using ContentTypeTextNet.Library.SharedLibrary.View;
+    using ContentTypeTextNet.Library.SharedLibrary.View.Window;
+    using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+    using ContentTypeTextNet.Pe.Library.PeData.IF;
+    using ContentTypeTextNet.Pe.PeMain.Data;
+    using ContentTypeTextNet.Pe.PeMain.IF;
+    using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
-	public abstract class CommonDataWindow: UserClosableWindowWindowBase, ICommonData
-	{
-		public CommonDataWindow()
-			:base()
-		{ }
+    public abstract class CommonDataWindow: UserClosableWindowWindowBase, ICommonData
+    {
+        public CommonDataWindow()
+            : base()
+        {
+            this.Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
+        }
 
-		#region property
+        #region property
 
-		//StartupWindowStatus Startup { get; set; }
-		protected object ExtensionData { get; private set; }
+        //StartupWindowStatus Startup { get; set; }
+        protected object ExtensionData { get; private set; }
 
-		#endregion
+        #endregion
 
-		#region function
+        #region function
 
-		protected virtual void ApplySetting()
-		{
-			Debug.Assert(CommonData != null);
+        protected virtual void ApplySetting()
+        {
+            Debug.Assert(CommonData != null);
 
-			this.Language = XmlLanguage.GetLanguage(Thread.CurrentThread.CurrentCulture.Name);
+            this.Language = XmlLanguage.GetLanguage(Thread.CurrentThread.CurrentCulture.Name);
 
-			CreateViewModel();
-			ApplyViewModel();
-		}
+            CreateViewModel();
+            ApplyViewModel();
+        }
 
-		protected virtual void CreateViewModel()
-		{ }
+        protected virtual void CreateViewModel()
+        { }
 
-		public virtual void ApplyLanguage(Dictionary<string, string> map)
-		{
-			Debug.Assert(CommonData != null);
+        public virtual void ApplyLanguage(Dictionary<string, string> map)
+        {
+            Debug.Assert(CommonData != null);
 
-			LanguageUtility.RecursiveSetLanguage(this, CommonData.Language, map);
-		}
+            LanguageUtility.RecursiveSetLanguage(this, CommonData.Language, map);
+        }
 
-		protected virtual void ApplyViewModel()
-		{
-			Debug.Assert(CommonData != null);
-		}
+        protected virtual void ApplyViewModel()
+        {
+            Debug.Assert(CommonData != null);
+        }
 
-		protected virtual void SetChildCommonData()
-		{
-			Debug.Assert(CommonData != null);
+        protected virtual void SetChildCommonData()
+        {
+            Debug.Assert(CommonData != null);
 
-			foreach(var ui in UIUtility.FindLogicalChildren<Control>(this).OfType<ICommonData>()) {
-				ui.SetCommonData(CommonData, ExtensionData);
-			}
-		}
+            foreach(var ui in UIUtility.FindLogicalChildren<Control>(this).OfType<ICommonData>()) {
+                ui.SetCommonData(CommonData, ExtensionData);
+            }
+        }
 
 
-		#endregion
+        #endregion
 
-		#region ICommonData
+        #region ICommonData
 
-		public void SetCommonData(CommonData commonData, object extensionData)
-		{
-			CommonData = commonData;
-			ExtensionData = extensionData;
+        public void SetCommonData(CommonData commonData, object extensionData)
+        {
+            CommonData = commonData;
+            ExtensionData = extensionData;
 
-			ApplySetting();
-		}
+            ApplySetting();
+        }
 
-		public CommonData CommonData { get; private set; }
+        public CommonData CommonData { get; private set; }
 
-		#endregion
+        #endregion
 
-		#region UserClosableWindowWindowBase
+        #region UserClosableWindowWindowBase
 
-		protected override void OnLoaded(object sender, RoutedEventArgs e)
-		{
-			base.OnLoaded(sender, e);
+        protected override void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            base.OnLoaded(sender, e);
 
-			var map = new Dictionary<string, string>();
-			ApplyLanguage(map);
-			SetChildCommonData();
-		}
+            var map = new Dictionary<string, string>();
+            ApplyLanguage(map);
+            SetChildCommonData();
+        }
 
-		#endregion
-	}
+        protected override void OnClosed(EventArgs e)
+        {
+            base.OnClosed(e);
+
+            //CommonData = null;
+            DataContext = null;
+        }
+
+        #endregion
+
+        void Dispatcher_ShutdownStarted(object sender, EventArgs e)
+        {
+            this.Dispatcher.ShutdownStarted -= Dispatcher_ShutdownStarted;
+
+            CommonData = null;
+            DataContext = null;
+        }
+
+    }
 }

@@ -210,6 +210,9 @@
     <Compile Include="View\Parts\Control\IntegerSliderControl.xaml.cs">
       <DependentUpon>IntegerSliderControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Parts\Control\LockedButton.xaml.cs">
+      <DependentUpon>LockedButton.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Parts\Control\TimeSliderControl.xaml.cs">
       <DependentUpon>TimeSliderControl.xaml</DependentUpon>
     </Compile>
@@ -401,7 +404,6 @@
     <Compile Include="View\Parts\Converter\SelectedIndexNumberConverter.cs" />
     <Compile Include="View\Parts\Converter\SelectedNodeAndLauncherItemConverter.cs" />
     <Compile Include="View\Parts\Converter\HotTrackConverter.cs" />
-    <Compile Include="View\Parts\Converter\LauncherListDisplayImageConverter.cs" />
     <Compile Include="View\Parts\Converter\LauncherViewModelBaseConverter.cs" />
     <Compile Include="View\Parts\Converter\EnumLanguageConverter\EnumLanguageConverterBase.cs" />
     <Compile Include="View\Parts\Converter\TimeSpanMillisecondConverter.cs" />
@@ -435,6 +437,7 @@
     <Compile Include="View\UpdateConfirmWindow.xaml.cs">
       <DependentUpon>UpdateConfirmWindow.xaml</DependentUpon>
     </Compile>
+    <Resource Include="Resources\Image\Common\CommonLock.png" />
     <Resource Include="Resources\Image\Common\CommonOthers.png" />
     <Resource Include="Resources\Image\About\AboutComponentKindWebPage.png" />
     <Resource Include="Resources\Image\Home\HomeFlag.png" />
@@ -557,6 +560,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Parts\Control\LauncherListControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Parts\Control\LockedButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

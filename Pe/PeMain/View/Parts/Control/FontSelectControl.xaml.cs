@@ -1,255 +1,271 @@
-﻿namespace ContentTypeTextNet.Pe.PeMain.View.Parts.Control
+﻿/**
+This file is part of Pe.
+
+Pe is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Pe is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Pe.  If not, see <http://www.gnu.org/licenses/>.
+*/
+namespace ContentTypeTextNet.Pe.PeMain.View.Parts.Control
 {
-	using System.Windows;
-	using System.Windows.Controls;
-	using System.Windows.Data;
-	using System.Windows.Documents;
-	using System.Windows.Input;
-	using System.Windows.Media;
-	using System.Windows.Media.Imaging;
-	using System.Windows.Navigation;
-	using System.Windows.Shapes;
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Data;
+    using System.Windows.Documents;
+    using System.Windows.Input;
+    using System.Windows.Media;
+    using System.Windows.Media.Imaging;
+    using System.Windows.Navigation;
+    using System.Windows.Shapes;
 
-	/// <summary>
-	/// FontSelectControl.xaml の相互作用ロジック
-	/// </summary>
-	public partial class FontSelectControl : CommonDataUserControl
-	{
-		public FontSelectControl()
-		{
-			InitializeComponent();
-		}
+    /// <summary>
+    /// FontSelectControl.xaml の相互作用ロジック
+    /// </summary>
+    public partial class FontSelectControl: CommonDataUserControl
+    {
+        public FontSelectControl()
+        {
+            InitializeComponent();
+        }
 
-		#region FamilyNameProperty
+        #region FamilyNameProperty
 
-		public static readonly DependencyProperty FamilyNameProperty = DependencyProperty.Register(
-			"FamilyName",
-			typeof(FontFamily),
-			typeof(FontSelectControl),
-			new FrameworkPropertyMetadata(
-				SystemFonts.MessageFontFamily,
-				FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
-				new PropertyChangedCallback(OnFamilyNameChanged)
-			)
-		);
+        public static readonly DependencyProperty FamilyNameProperty = DependencyProperty.Register(
+            "FamilyName",
+            typeof(FontFamily),
+            typeof(FontSelectControl),
+            new FrameworkPropertyMetadata(
+                SystemFonts.MessageFontFamily,
+                FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
+                new PropertyChangedCallback(OnFamilyNameChanged)
+            )
+        );
 
-		public FontFamily FamilyName
-		{
-			get { return (FontFamily)GetValue(FamilyNameProperty); }
-			set { SetValue(FamilyNameProperty, value); }
-		}
+        public FontFamily FamilyName
+        {
+            get { return (FontFamily)GetValue(FamilyNameProperty); }
+            set { SetValue(FamilyNameProperty, value); }
+        }
 
-		static void OnFamilyNameChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-		{
-			var ctrl = d as FontSelectControl;
-			if (ctrl != null) {
-				ctrl.FamilyName = (FontFamily)e.NewValue;
-			}
-		}
+        static void OnFamilyNameChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var ctrl = d as FontSelectControl;
+            if(ctrl != null) {
+                ctrl.FamilyName = (FontFamily)e.NewValue;
+            }
+        }
 
-		#endregion
+        #endregion
 
-		#region IsBoldProperty
+        #region IsBoldProperty
 
-		public static readonly DependencyProperty IsBoldProperty = DependencyProperty.Register(
-			"IsBold",
-			typeof(bool),
-			typeof(FontSelectControl),
-			new FrameworkPropertyMetadata(
-				default(bool),
-				FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
-				new PropertyChangedCallback(OnIsBoldChanged)
-			)
-		);
+        public static readonly DependencyProperty IsBoldProperty = DependencyProperty.Register(
+            "IsBold",
+            typeof(bool),
+            typeof(FontSelectControl),
+            new FrameworkPropertyMetadata(
+                default(bool),
+                FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
+                new PropertyChangedCallback(OnIsBoldChanged)
+            )
+        );
 
-		public bool IsBold
-		{
-			get { return (bool)GetValue(IsBoldProperty); }
-			set { SetValue(IsBoldProperty, value); }
-		}
+        public bool IsBold
+        {
+            get { return (bool)GetValue(IsBoldProperty); }
+            set { SetValue(IsBoldProperty, value); }
+        }
 
-		static void OnIsBoldChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-		{
-			var ctrl = d as FontSelectControl;
-			if (ctrl != null) {
-				ctrl.IsBold = (bool)e.NewValue;
-			}
-		}
+        static void OnIsBoldChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var ctrl = d as FontSelectControl;
+            if(ctrl != null) {
+                ctrl.IsBold = (bool)e.NewValue;
+            }
+        }
 
-		#endregion
+        #endregion
 
-		#region IsItalicProperty
+        #region IsItalicProperty
 
-		public static readonly DependencyProperty IsItalicProperty = DependencyProperty.Register(
-			"IsItalic",
-			typeof(bool),
-			typeof(FontSelectControl),
-			new FrameworkPropertyMetadata(
-				default(bool),
-				FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
-				new PropertyChangedCallback(OnIsItalicChanged)
-			)
-		);
+        public static readonly DependencyProperty IsItalicProperty = DependencyProperty.Register(
+            "IsItalic",
+            typeof(bool),
+            typeof(FontSelectControl),
+            new FrameworkPropertyMetadata(
+                default(bool),
+                FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
+                new PropertyChangedCallback(OnIsItalicChanged)
+            )
+        );
 
-		public bool IsItalic
-		{
-			get { return (bool)GetValue(IsItalicProperty); }
-			set { SetValue(IsItalicProperty, value); }
-		}
+        public bool IsItalic
+        {
+            get { return (bool)GetValue(IsItalicProperty); }
+            set { SetValue(IsItalicProperty, value); }
+        }
 
-		static void OnIsItalicChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-		{
-			var ctrl = d as FontSelectControl;
-			if (ctrl != null) {
-				ctrl.IsItalic = (bool)e.NewValue;
-			}
-		}
+        static void OnIsItalicChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var ctrl = d as FontSelectControl;
+            if(ctrl != null) {
+                ctrl.IsItalic = (bool)e.NewValue;
+            }
+        }
 
-		#endregion
+        #endregion
 
-		#region SizeProperty
+        #region SizeProperty
 
-		public static readonly DependencyProperty SizeProperty = DependencyProperty.Register(
-			"Size",
-			typeof(double),
-			typeof(FontSelectControl),
-			new FrameworkPropertyMetadata(
-				SystemFonts.MessageFontSize,
-				FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
-				new PropertyChangedCallback(OnSizeChanged)
-			)
-		);
+        public static readonly DependencyProperty SizeProperty = DependencyProperty.Register(
+            "Size",
+            typeof(double),
+            typeof(FontSelectControl),
+            new FrameworkPropertyMetadata(
+                SystemFonts.MessageFontSize,
+                FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
+                new PropertyChangedCallback(OnSizeChanged)
+            )
+        );
 
-		public double Size
-		{
-			get { return (double)GetValue(SizeProperty); }
-			set { SetValue(SizeProperty, value); }
-		}
+        public double Size
+        {
+            get { return (double)GetValue(SizeProperty); }
+            set { SetValue(SizeProperty, value); }
+        }
 
-		static void OnSizeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-		{
-			var ctrl = d as FontSelectControl;
-			if (ctrl != null) {
-				ctrl.Size = (double)e.NewValue;
-			}
-		}
+        static void OnSizeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var ctrl = d as FontSelectControl;
+            if(ctrl != null) {
+                ctrl.Size = (double)e.NewValue;
+            }
+        }
 
-		#endregion
+        #endregion
 
-		#region SizeMinimumProperty
+        #region SizeMinimumProperty
 
-		public static readonly DependencyProperty SizeMinimumProperty = DependencyProperty.Register(
-			"SizeMinimum",
-			typeof(double),
-			typeof(FontSelectControl),
-			new FrameworkPropertyMetadata(
-				0.0,
-				new PropertyChangedCallback(OnSizeMinimumChanged)
-			)
-		);
+        public static readonly DependencyProperty SizeMinimumProperty = DependencyProperty.Register(
+            "SizeMinimum",
+            typeof(double),
+            typeof(FontSelectControl),
+            new FrameworkPropertyMetadata(
+                0.0,
+                new PropertyChangedCallback(OnSizeMinimumChanged)
+            )
+        );
 
-		public double SizeMinimum
-		{
-			get { return (double)GetValue(SizeMinimumProperty); }
-			set { SetValue(SizeMinimumProperty, value); }
-		}
+        public double SizeMinimum
+        {
+            get { return (double)GetValue(SizeMinimumProperty); }
+            set { SetValue(SizeMinimumProperty, value); }
+        }
 
-		static void OnSizeMinimumChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-		{
-			var ctrl = d as FontSelectControl;
-			if (ctrl != null) {
-				ctrl.SizeMinimum = (double)e.NewValue;
-			}
-		}
+        static void OnSizeMinimumChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var ctrl = d as FontSelectControl;
+            if(ctrl != null) {
+                ctrl.SizeMinimum = (double)e.NewValue;
+            }
+        }
 
-		#endregion
+        #endregion
 
-		#region SizeMaximumProperty
+        #region SizeMaximumProperty
 
-		public static readonly DependencyProperty SizeMaximumProperty = DependencyProperty.Register(
-			"SizeMaximum",
-			typeof(double),
-			typeof(FontSelectControl),
-			new FrameworkPropertyMetadata(
-				100.0,
-				new PropertyChangedCallback(OnSizeMaximumChanged)
-			)
-		);
+        public static readonly DependencyProperty SizeMaximumProperty = DependencyProperty.Register(
+            "SizeMaximum",
+            typeof(double),
+            typeof(FontSelectControl),
+            new FrameworkPropertyMetadata(
+                100.0,
+                new PropertyChangedCallback(OnSizeMaximumChanged)
+            )
+        );
 
-		public double SizeMaximum
-		{
-			get { return (double)GetValue(SizeMaximumProperty); }
-			set { SetValue(SizeMaximumProperty, value); }
-		}
+        public double SizeMaximum
+        {
+            get { return (double)GetValue(SizeMaximumProperty); }
+            set { SetValue(SizeMaximumProperty, value); }
+        }
 
-		static void OnSizeMaximumChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-		{
-			var ctrl = d as FontSelectControl;
-			if (ctrl != null) {
-				ctrl.SizeMaximum = (double)e.NewValue;
-			}
-		}
+        static void OnSizeMaximumChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var ctrl = d as FontSelectControl;
+            if(ctrl != null) {
+                ctrl.SizeMaximum = (double)e.NewValue;
+            }
+        }
 
-		#endregion
+        #endregion
 
-		#region IsEnabledBoldProperty
+        #region IsEnabledBoldProperty
 
-		public static readonly DependencyProperty IsEnabledBoldProperty = DependencyProperty.Register(
-			"IsEnabledBold",
-			typeof(bool),
-			typeof(FontSelectControl),
-			new FrameworkPropertyMetadata(
-				true,
-				FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
-				new PropertyChangedCallback(OnIsEnabledBoldChanged)
-			)
-		);
+        public static readonly DependencyProperty IsEnabledBoldProperty = DependencyProperty.Register(
+            "IsEnabledBold",
+            typeof(bool),
+            typeof(FontSelectControl),
+            new FrameworkPropertyMetadata(
+                true,
+                FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
+                new PropertyChangedCallback(OnIsEnabledBoldChanged)
+            )
+        );
 
-		public bool IsEnabledBold
-		{
-			get { return (bool)GetValue(IsEnabledBoldProperty); }
-			set { SetValue(IsEnabledBoldProperty, value); }
-		}
+        public bool IsEnabledBold
+        {
+            get { return (bool)GetValue(IsEnabledBoldProperty); }
+            set { SetValue(IsEnabledBoldProperty, value); }
+        }
 
-		static void OnIsEnabledBoldChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-		{
-			var ctrl = d as FontSelectControl;
-			if (ctrl != null) {
-				ctrl.IsEnabledBold = (bool)e.NewValue;
-			}
-		}
+        static void OnIsEnabledBoldChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var ctrl = d as FontSelectControl;
+            if(ctrl != null) {
+                ctrl.IsEnabledBold = (bool)e.NewValue;
+            }
+        }
 
-		#endregion
+        #endregion
 
 
-		#region IsEnabledItalicProperty
+        #region IsEnabledItalicProperty
 
-		public static readonly DependencyProperty IsEnabledItalicProperty = DependencyProperty.Register(
-			"IsEnabledItalic",
-			typeof(bool),
-			typeof(FontSelectControl),
-			new FrameworkPropertyMetadata(
-				true,
-				FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
-				new PropertyChangedCallback(OnIsEnabledItalicChanged)
-			)
-		);
+        public static readonly DependencyProperty IsEnabledItalicProperty = DependencyProperty.Register(
+            "IsEnabledItalic",
+            typeof(bool),
+            typeof(FontSelectControl),
+            new FrameworkPropertyMetadata(
+                true,
+                FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
+                new PropertyChangedCallback(OnIsEnabledItalicChanged)
+            )
+        );
 
-		public bool IsEnabledItalic
-		{
-			get { return (bool)GetValue(IsEnabledItalicProperty); }
-			set { SetValue(IsEnabledItalicProperty, value); }
-		}
+        public bool IsEnabledItalic
+        {
+            get { return (bool)GetValue(IsEnabledItalicProperty); }
+            set { SetValue(IsEnabledItalicProperty, value); }
+        }
 
-		static void OnIsEnabledItalicChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-		{
-			var ctrl = d as FontSelectControl;
-			if (ctrl != null) {
-				ctrl.IsEnabledItalic = (bool)e.NewValue;
-			}
-		}
+        static void OnIsEnabledItalicChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var ctrl = d as FontSelectControl;
+            if(ctrl != null) {
+                ctrl.IsEnabledItalic = (bool)e.NewValue;
+            }
+        }
 
-		#endregion
+        #endregion
 
-	}
+    }
 }
