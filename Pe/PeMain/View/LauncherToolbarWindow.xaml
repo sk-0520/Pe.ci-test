@@ -79,7 +79,7 @@
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="Width" Value="{Binding DataContext.TextWidth, Mode=OneTime, Source={x:Reference root}}" />
         <!--<Setter Property="Width" Value="80" />-->
-        <Setter Property="Visibility" Value="{Binding DataContext.TextVisible, Mode=OneTime, Source={x:Reference root}}" />
+        <Setter Property="Visibility" Value="{Binding DataContext.TextVisible, Mode=OneWay, Source={x:Reference root}}" />
         <Setter Property="FontFamily" Value="{Binding DataContext.FontFamily, Mode=OneTime, Source={x:Reference root}}" />
         <Setter Property="FontWeight" Value="{Binding DataContext.FontBold, Converter={StaticResource BooleanFontWeightConverter}, Mode=OneTime, Source={x:Reference root}}" />
         <!--<Setter Property="FontWeight" Value="Bold" />-->
