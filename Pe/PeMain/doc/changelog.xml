@@ -86,7 +86,10 @@
 				<message>#337: コマンド入力後に再度コマンド入力すると前回入力値が残っている</message>
 			</note>
 			<note rev="">
-				<message></message>
+				<message>ツールバーの設定「メニューボタンを調整する」は有効を規定値にした</message>
+				<comments>
+					<comment>旧バージョンからのバージョンアップには影響しません</comment>
+				</comments>
 			</note>
 			<note rev="">
 				<message></message>

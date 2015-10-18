@@ -71,7 +71,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityImplement
             setting.FloatToolbar.HeightButtonCount = 1;
             setting.DockType = DockType.Right;
             setting.DefaultGroupId = Guid.Empty;
-            setting.MenuPositionCorrection = false;
+            setting.MenuPositionCorrection = true;
             setting.ButtonPosition = ToolbarButtonPosition.Near;
         }
     }
