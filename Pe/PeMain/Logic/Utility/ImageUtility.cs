@@ -109,23 +109,28 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         public static FrameworkElement MakeOverlayImage(ImageSource parent, ImageSource child)
         {
             var canvas = new Canvas();
-            canvas.Width = parent.Width;
-            canvas.Height = parent.Height;
+            canvas.BeginInit();
+            try {
+                canvas.Width = parent.Width;
+                canvas.Height = parent.Height;
 
-            var parentImage = new Image() {
-                Source = parent,
-            };
-            var childImage = new Image() {
-                Source = child,
-            };
+                var parentImage = new Image() {
+                    Source = parent,
+                };
+                var childImage = new Image() {
+                    Source = child,
+                };
 
-            canvas.Children.Add(parentImage);
-            canvas.Children.Add(childImage);
+                canvas.Children.Add(parentImage);
+                canvas.Children.Add(childImage);
 
-            Canvas.SetLeft(childImage, parent.Width - child.Width);
-            Canvas.SetTop(childImage, parent.Height - child.Height);
+                Canvas.SetLeft(childImage, parent.Width - child.Width);
+                Canvas.SetTop(childImage, parent.Height - child.Height);
 
-            return canvas;
+                return canvas;
+            } finally {
+                canvas.EndInit();
+            }
         }
     }
 }
