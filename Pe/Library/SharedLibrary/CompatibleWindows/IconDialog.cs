@@ -28,6 +28,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.CompatibleWindows
     public class IconDialog: CommonDialog
     {
         public IconDialog()
+            : base()
         {
             Reset();
         }
