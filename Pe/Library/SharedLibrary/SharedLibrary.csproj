@@ -99,6 +99,7 @@
     <Compile Include="CompatibleWindows\Utility\HandleUtility.cs" />
     <Compile Include="CompatibleWindows\Utility\MouseUtility.cs" />
     <Compile Include="CompatibleWindows\Utility\PodStructUtility.cs" />
+    <Compile Include="Logic\NotifyPropertyChangedObject.cs" />
     <Compile Include="Logic\WeakEventListener.cs" />
     <Compile Include="Model\CallerModel.cs" />
     <Compile Include="Data\Database\DatabaseDataBase.cs" />

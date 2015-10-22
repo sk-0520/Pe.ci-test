@@ -30,12 +30,12 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic
     {
         public WeakEventListener(EventHandler<TEventArgs> handler)
         {
-            Hander = handler;
+            Handler = handler;
         }
 
         #region property
 
-        protected EventHandler<TEventArgs> Hander { get; private set; }
+        protected EventHandler<TEventArgs> Handler { get; private set; }
 
         #endregion
 
@@ -47,7 +47,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic
                 return CastUtility.AsFunc<TEventArgs, bool>(
                     e,
                     te => {
-                        Hander(sender, te);
+                        Handler(sender, te);
                         return true;
                     },
                     false
