@@ -182,7 +182,9 @@ namespace ContentTypeTextNet.Library.SharedLibrary.ViewModel
                 }
                 this._createdCommands.Clear();
                 this._createdCommands = null;
+                IsChanged = false;
             }
+
             base.Dispose(disposing);
         }
 
