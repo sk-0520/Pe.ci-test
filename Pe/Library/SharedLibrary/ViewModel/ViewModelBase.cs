@@ -109,7 +109,14 @@ namespace ContentTypeTextNet.Library.SharedLibrary.ViewModel
 
         static string MakeCommandKey(string callerMember, int callerLineNumer)
         {
-            return callerMember + "?" + callerLineNumer.ToString();
+            var sb = new StringBuilder(callerMember.Length + 1 + 8);
+            sb
+                .Append(callerMember)
+                .Append('?')
+                .Append(callerLineNumer)
+            ;
+
+            return sb.ToString();
         }
 
         protected virtual ICommand CreateCommand(Action<object> executeCommand, [CallerMemberName] string callerMember = "", [CallerLineNumber] int callerLineNumer = -1)

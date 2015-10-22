@@ -17,6 +17,7 @@ along with SharedLibrary.  If not, see <http://www.gnu.org/licenses/>.
 namespace ContentTypeTextNet.Library.SharedLibrary.Logic
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
@@ -26,10 +27,21 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic
     /// <summary>
     /// 生成データを保持しておく。
     /// </summary>
-    /// <typeparam name="Tkey"></typeparam>
+    /// <typeparam name="TKey"></typeparam>
     /// <typeparam name="TValue"></typeparam>
-    public class Caching<Tkey, TValue>: Dictionary<Tkey, TValue>
+    public class Caching<TKey, TValue>: IEnumerable<KeyValuePair<TKey, TValue>>
     {
+        public Caching()
+        {
+            Cache = new Dictionary<TKey, TValue>();
+        }
+
+        #region property
+
+        protected Dictionary<TKey, TValue> Cache { get; private set; }
+
+        #endregion
+
         #region function
 
         /// <summary>
@@ -39,36 +51,48 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic
         /// <param name="key"></param>
         /// <param name="creator"></param>
         /// <returns></returns>
-        public TValue Get(Tkey key, Func<TValue> creator)
+        public TValue Get(TKey key, Func<TValue> creator)
         {
             TValue result;
-            if(!TryGetValue(key, out result)) {
+            if(!Cache.TryGetValue(key, out result)) {
                 result = creator();
-                this[key] = result;
+                Cache[key] = result;
             }
 
             return result;
         }
 
-        public bool ClearCache(Tkey key)
+        public bool ClearCache(TKey key)
         {
             TValue result;
-            if(!TryGetValue(key, out result)) {
-                result = default(TValue);
-                Remove(key);
-                return true;
+            if(!Cache.TryGetValue(key, out result)) {
+                return Cache.Remove(key);
             } else {
                 return false;
             }
         }
 
-        public new void Clear()
+        public void Clear()
         {
-            foreach(var key in this.Keys) {
+            foreach(var key in Cache.Keys) {
                 ClearCache(key);
             }
 
-            base.Clear();
+            Cache.Clear();
+        }
+
+        #endregion
+
+        #region IEnumerable
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
+        {
+            return Cache.GetEnumerator();
         }
 
         #endregion

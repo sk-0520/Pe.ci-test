@@ -26,29 +26,50 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
     using ContentTypeTextNet.Library.SharedLibrary.Logic;
     using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 
-    public class IconCaching<TChildKey>: Dictionary<IconScale, Caching<TChildKey, BitmapSource>>
+    public class IconCaching<TChildKey>
     {
         public IconCaching()
         {
             Initialize();
         }
 
+        #region property
+
+        protected Dictionary<IconScale, Caching<TChildKey, BitmapSource>> Cache { get; private set; }
+
+        #endregion
+
+        #region indexer
+
+        public Caching<TChildKey, BitmapSource> this[IconScale key]
+        {
+            get
+            {
+                return Cache[key];
+            }
+        }
+
+        #endregion
+
         #region function
 
         protected void Initialize()
         {
-            foreach(var iconScale in EnumUtility.GetMembers<IconScale>()) {
-                this.Add(iconScale, new Caching<TChildKey, BitmapSource>());
-            }
+            Cache = EnumUtility.GetMembers<IconScale>()
+                .ToDictionary(
+                    k => k,
+                    v => new Caching<TChildKey, BitmapSource>()
+                )
+            ;
         }
 
-        public new void Clear()
+        public void Clear()
         {
-            foreach(var value in this.Values) {
+            foreach(var value in Cache.Values) {
                 value.Clear();
             }
 
-            base.Clear();
+            Cache.Clear();
 
             Initialize();
         }
