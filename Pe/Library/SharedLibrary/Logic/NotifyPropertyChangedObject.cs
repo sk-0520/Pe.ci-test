@@ -9,6 +9,9 @@
     using System.Threading.Tasks;
     using Utility;
 
+    /// <summary>
+    /// なんかをとりあえず通知する。
+    /// </summary>
     public class NotifyPropertyChangedObject: DisposeFinalizeBase, INotifyPropertyChanged
     {
         #region function
@@ -62,14 +65,21 @@
             return false;
         }
 
+        /// <summary>
+        /// 指定メンバが変更された通知する。
+        /// </summary>
+        /// <param name="propertyName">メンバ1。</param>
+        /// <param name="propertyNames">メンバn。</param>
         protected void CallOnPropertyChange(string propertyName, params string[] propertyNames)
         {
-            var paramList = new List<string>(1 + (propertyNames != null ? propertyNames.Length : 0));
-            paramList.Add(propertyName);
-            if(propertyNames != null && propertyNames.Any()) {
+            if(propertyNames == null || propertyNames.Length == 0) {
+                OnPropertyChanged(propertyName);
+            } else {
+                var paramList = new List<string>(1 + propertyNames.Length);
+                paramList.Add(propertyName);
                 paramList.AddRange(propertyNames);
+                CallOnPropertyChange(paramList);
             }
-            CallOnPropertyChange(paramList);
         }
 
         protected void CallOnPropertyChange(IEnumerable<string> propertyNames)
@@ -81,7 +91,9 @@
 
         protected void CallOnPropertyChangedEvent(object sender, PropertyChangedEventArgs e)
         {
-            PropertyChanged(sender, e);
+            if(PropertyChanged != null) {
+                PropertyChanged(sender, e);
+            }
         }
 
         #endregion
@@ -103,7 +115,7 @@
         /// <summary>
         /// プロパティが変更された際に発生。
         /// </summary>
-        public virtual event PropertyChangedEventHandler PropertyChanged = delegate { };
+        public virtual event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
         /// PropertyChanged呼び出し。

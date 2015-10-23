@@ -30,6 +30,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic
     {
         public WeakEventListener(EventHandler<TEventArgs> handler)
         {
+            CheckUtility.EnforceNotNull(handler);
             Handler = handler;
         }
 
