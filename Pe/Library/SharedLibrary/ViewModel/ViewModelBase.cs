@@ -33,7 +33,6 @@ namespace ContentTypeTextNet.Library.SharedLibrary.ViewModel
     {
         #region variable
 
-        //Dictionary<string, DelegateCommand> _createdCommands = new Dictionary<string, DelegateCommand>();
         Caching<string, DelegateCommand> _createdCommands = new Caching<string, DelegateCommand>();
 
         bool _isChanged = false;
@@ -45,13 +44,12 @@ namespace ContentTypeTextNet.Library.SharedLibrary.ViewModel
         {
             ResetChangeFlag();
 
-            WeakPropertyChangedEventLisner = new WeakEventListener<PropertyChangedEventManager, PropertyChangedEventArgs>(CallOnPropertyChangedEvent);
-            //PropertyChangedEventManager.AddListener(this, WeakPropertyChangedEventLisner, string.Empty);
+            //WeakPropertyChangedEventLisner = new WeakEventListener<PropertyChangedEventManager, PropertyChangedEventArgs>(CallOnPropertyChangedEvent);
         }
 
         #region property
 
-        protected WeakEventListener<PropertyChangedEventManager, PropertyChangedEventArgs> WeakPropertyChangedEventLisner { get; private set; }
+        //protected WeakEventListener<PropertyChangedEventManager, PropertyChangedEventArgs> WeakPropertyChangedEventLisner { get; private set; }
 
         public bool IsChanged
         {
@@ -131,7 +129,6 @@ namespace ContentTypeTextNet.Library.SharedLibrary.ViewModel
         #endregion
 
         #region INotifyPropertyChanged
-
 
         /// <summary>
         /// PropertyChanged呼び出し。
