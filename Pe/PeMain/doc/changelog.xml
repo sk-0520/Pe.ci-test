@@ -80,7 +80,7 @@
 		</group>
 		<group type="fixes" dummy="==================================================================">
 			<note rev="">
-				<message></message>
+				<message>#341: メインボタンのアイコンがなんかずれてる</message>
 			</note>
 			<note rev="">
 				<message></message>

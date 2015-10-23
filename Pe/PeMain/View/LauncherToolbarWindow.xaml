@@ -69,8 +69,8 @@
 
       <Style x:Key="ToolbarImage" TargetType="{x:Type Image}">
         <Setter Property="Source" Value="{Binding ToolbarImage, Mode=OneTime}" />
-        <Setter Property="Width" Value="{Binding DataContext.IconSize.Width, Mode=OneTime, Source={x:Reference root}}" />
-        <Setter Property="Height" Value="{Binding DataContext.IconSize.Height, Mode=OneTime, Source={x:Reference root}}" />
+        <Setter Property="Width" Value="{Binding DataContext.IconWidth, Mode=OneTime, Source={x:Reference root}}" />
+        <Setter Property="Height" Value="{Binding DataContext.IconHeight, Mode=OneTime, Source={x:Reference root}}" />
         <Setter Property="Margin" Value="{Binding DataContext.IconMargin, Mode=OneTime, Source={x:Reference root}}" />
       </Style>
       <Style x:Key="ToolbarText" TargetType="TextBlock">
@@ -129,8 +129,8 @@
       <Style x:Key="LauncherBaseButton">
         <Setter Property="Control.Margin" Value="0" />
         <Setter Property="Control.Padding" Value="{Binding DataContext.ButtonPadding, Mode=OneTime, Source={x:Reference root}}" />
-        <Setter Property="Control.Width" Value="{Binding DataContext.ButtonSize.Width, Mode=OneTime, Source={x:Reference root}}" />
-        <Setter Property="Control.Height" Value="{Binding DataContext.ButtonSize.Height, Mode=OneTime, Source={x:Reference root}}" />
+        <Setter Property="Control.Width" Value="{Binding DataContext.ButtonWidth, Mode=OneWay, Source={x:Reference root}}" />
+        <Setter Property="Control.Height" Value="{Binding DataContext.ButtonHeight, Mode=OneWay, Source={x:Reference root}}" />
       </Style>
 
       <Style x:Key="LauncherButtonFace" TargetType="Grid" BasedOn="{StaticResource ParentElement}">

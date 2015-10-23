@@ -56,6 +56,9 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
     using System.Windows.Threading;
     using System.Threading;
 
+    /// <summary>
+    /// プロパティが状態持ちすぎててしんどいなぁ。
+    /// </summary>
     public class LauncherToolbarViewModel: HavingViewSingleModelWrapperViewModelBase<LauncherToolbarDataModel, LauncherToolbarWindow>, IApplicationDesktopToolbarData, IVisualStyleData, IHavingAppNonProcess, IWindowAreaCorrectionData, IWindowHitTestData, IHavingAppSender, IRefreshFromViewModel, IMenuItem
     {
         #region define
@@ -352,8 +355,28 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
         }
 
-        public Size IconSize { get; set; }
-        public Size ButtonSize { get; set; }
+        Size IconSize { get; set; }
+        public double IconWidth
+        {
+            get { return IconSize.Width; }
+            set { SetPropertyValue(IconSize, value, "Width"); }
+        }
+        public double IconHeight
+        {
+            get { return IconSize.Height; }
+            set { SetPropertyValue(IconSize, value, "Height"); }
+        }
+        Size ButtonSize { get; set; }
+        public double ButtonWidth
+        {
+            get { return ButtonSize.Width; }
+            set { SetPropertyValue(ButtonSize, value, "Width"); }
+        }
+        public double ButtonHeight
+        {
+            get { return ButtonSize.Height; }
+            set { SetPropertyValue(ButtonSize, value, "Height"); }
+        }
         public double MenuWidth { get; set; }
         public double ContentWidth { get { return ButtonSize.Width - MenuWidth; } }
         public Thickness ButtonPadding { get; set; }
