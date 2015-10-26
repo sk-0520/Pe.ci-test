@@ -200,6 +200,8 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         DateTime _prevFullScreenTime;
         bool _prevFullScreenCancel;
 
+        CollectionModel<LauncherGroupItemViewModel> _groupItems;
+
         #endregion
 
         public LauncherToolbarViewModel(LauncherToolbarDataModel model, LauncherToolbarWindow view, ScreenModel screen, IAppNonProcess appNonProcess, IAppSender appSender)
@@ -230,6 +232,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 CalculateWindowStatus(DockType);
             }
 
+            GroupItems = GetGroupItems(SelectedGroup);
             LauncherItems = GetLauncherItemButtons(SelectedGroup);
         }
 
@@ -470,7 +473,11 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
         }
 
-        public IEnumerable<LauncherGroupItemModel> GroupItems { get { return Model.GroupItems; } }
+        public CollectionModel<LauncherGroupItemViewModel> GroupItems
+        {
+            get { return this._groupItems; }
+            set { SetVariableValue(ref this._groupItems, value); }
+        }
 
         public LauncherGroupItemModel SelectedGroup
         {
@@ -494,18 +501,26 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             set
             {
                 if(SetVariableValue(ref this._selectedGroup, value)) {
-                    OnPropertyChanged("GroupItems");
-                    var oldItems = LauncherItems;
-                    //this._launcherItems = null;
-                    //OnPropertyChanged(nameof(LauncherItems));
+                    var oldGroupItems = GroupItems;
+                    GroupItems = null;
+                    GroupItems = GetGroupItems(this._selectedGroup);
+                    if(oldGroupItems != null) {
+                        foreach(var oldGroupItem in oldGroupItems) {
+                            oldGroupItem.Dispose();
+                        }
+                        oldGroupItems.Dispose();
+                        oldGroupItems = null;
+                    }
+
+                    var oldLauncherItems = LauncherItems;
                     LauncherItems = null;
                     LauncherItems = GetLauncherItemButtons(SelectedGroup);
-                    if(oldItems != null) {
-                        foreach(var oldItem in oldItems) {
+                    if(oldLauncherItems != null) {
+                        foreach(var oldItem in oldLauncherItems) {
                             oldItem.Dispose();
                         }
-                        oldItems.Dispose();
-                        oldItems = null;
+                        oldLauncherItems.Dispose();
+                        oldLauncherItems = null;
                     }
 
                     AppSender.SendApplicationCommand(ApplicationCommand.MemoryGarbageCollect, this, ApplicationCommandArg.Empty);
@@ -651,12 +666,12 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             {
                 var result = CreateCommand(
                     o => {
-                        var group = (LauncherGroupItemModel)o;
+                        var group = (LauncherGroupItemViewModel)o;
                         var map = new Dictionary<string, string>() {
-                            { LanguageKey.logGroupChange, group.Name }
+                            { LanguageKey.logGroupChange, group.Model.Name }
                         };
                         AppNonProcess.Logger.Trace(AppNonProcess.Language["log/group/change", map], group);
-                        SelectedGroup = group;
+                        SelectedGroup = group.Model;
                     }
                 );
 
@@ -857,6 +872,14 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             //MinSize = GetMinSize(DockType, Orientation, BorderThickness, ButtonSize);
         }
 
+        CollectionModel<LauncherGroupItemViewModel> GetGroupItems(LauncherGroupItemModel selectedItemModel)
+        {
+            var items = new CollectionModel<LauncherGroupItemViewModel>(Model.GroupItems.Select(i => new LauncherGroupItemViewModel(i)));
+            var selectedViewModel = items.FirstOrDefault(i => i.Model == selectedItemModel);
+            selectedViewModel.IsChecked = true;
+
+            return items;
+        }
         #endregion
 
         #region IHavingAppSender

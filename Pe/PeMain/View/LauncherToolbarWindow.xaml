@@ -367,17 +367,10 @@
       </Style>
 
       <Style x:Key="GroupMenu" TargetType="MenuItem" BasedOn="{StaticResource PopupCloseMenu}">
-        <Setter Property="Header" Value="{Binding Converter={StaticResource DisplayTextConverter}}" />
+        <Setter Property="Header" Value="{Binding DisplayText}" />
         <Setter Property="Command" Value="{Binding DataContext.GroupChangeCommand, Source={x:Reference root}}" />
         <Setter Property="CommandParameter" Value="{Binding}" />
-        <Setter Property="IsChecked">
-          <Setter.Value>
-            <MultiBinding Converter="{StaticResource LogicalMultiEqualConverter}" Mode="OneWay">
-              <Binding RelativeSource="{RelativeSource Self}" Path="DataContext"  />
-              <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Window}" Path="DataContext.SelectedGroup"  />
-            </MultiBinding>
-          </Setter.Value>
-        </Setter>
+        <Setter Property="IsChecked" Value="{Binding IsChecked}" />
       </Style>
 
     </ResourceDictionary>
