@@ -58,7 +58,16 @@
 	<log date="YYYY/MM/DD" version="0.68.2" type="rc" dummy="################################################################################">
 		<group type="note" dummy="==================================================================">
 			<note rev="">
-				<message></message>
+				<message>[事前通知]: 0.70.0 で Forms 版データ引き継ぎ処理を廃止します</message>
+				<comments>
+					<comment>実装は残しててもいいんだけど名前空間被っててコーディングしんどいのですよ</comment>
+				</comments>
+			</note>
+			<note rev="">
+				<message>[事前通知]: 0.72.0 で .NET Framework の対応バージョンを を 4.5.1 から 4.6 に変更します</message>
+				<comments>
+					<comment>nameof! nameof! nameof!</comment>
+				</comments>
 			</note>
 			<note rev="">
 				<message></message>
