@@ -158,8 +158,8 @@
             <Setter Property="Background" TargetName="ParentElement">
               <Setter.Value>
                 <MultiBinding Converter="{StaticResource HotTrackConverter}">
-                  <Binding Path="ToolbarHotTrack" />
-                  <Binding Path="DataContext.DockType" ElementName="root" />
+                  <Binding Path="ToolbarHotTrack" Mode="OneTime" />
+                  <Binding Path="DataContext.DockType" ElementName="root" Mode="OneTime" />
                   <Binding Source="{StaticResource ButtonOver}" />
                   <Binding Source="{x:Null}" />
                 </MultiBinding>
@@ -170,8 +170,8 @@
             <Setter Property="Background" TargetName="ParentElement">
               <Setter.Value>
                 <MultiBinding Converter="{StaticResource HotTrackConverter}">
-                  <Binding Path="ToolbarHotTrack" />
-                  <Binding Path="DataContext.DockType" ElementName="root" />
+                  <Binding Path="ToolbarHotTrack" Mode="OneTime" />
+                  <Binding Path="DataContext.DockType" ElementName="root" Mode="OneTime" />
                   <Binding Source="{StaticResource ButtonPressed}" />
                   <Binding Source="{x:Null}" />
                 </MultiBinding>
@@ -182,8 +182,8 @@
             <Setter Property="Background" TargetName="ParentElement">
               <Setter.Value>
                 <MultiBinding Converter="{StaticResource HotTrackConverter}">
-                  <Binding Path="ToolbarHotTrack" />
-                  <Binding Path="DataContext.DockType" ElementName="root" />
+                  <Binding Path="ToolbarHotTrack" Mode="OneTime" />
+                  <Binding Path="DataContext.DockType" ElementName="root" Mode="OneTime" />
                   <Binding Source="{StaticResource ButtonCheckd}" />
                   <Binding Source="{x:Null}" />
                 </MultiBinding>
@@ -202,10 +202,10 @@
             <Setter Property="Background" TargetName="ParentElement">
               <Setter.Value>
                 <MultiBinding Converter="{StaticResource HotTrackConverter}">
-                  <Binding Path="ToolbarHotTrack" />
-                  <Binding Path="DataContext.DockType" ElementName="root" Converter="{StaticResource DockTypeMenuTuneConverter}" />
+                  <Binding Path="ToolbarHotTrack" Mode="OneTime" />
+                  <Binding Path="DataContext.DockType" ElementName="root" Converter="{StaticResource DockTypeMenuTuneConverter}" Mode="OneTime" />
                   <Binding Source="{StaticResource ButtonOver}" />
-                  <Binding Path="DataContext.IsEnabledCorrection" ElementName="root" />
+                  <Binding Path="DataContext.IsEnabledCorrection" ElementName="root" Mode="OneTime" />
                 </MultiBinding>
               </Setter.Value>
             </Setter>
@@ -214,10 +214,10 @@
             <Setter Property="Background" TargetName="ParentElement">
               <Setter.Value>
                 <MultiBinding Converter="{StaticResource HotTrackConverter}">
-                  <Binding Path="ToolbarHotTrack" />
-                  <Binding Path="DataContext.DockType" ElementName="root" Converter="{StaticResource DockTypeMenuTuneConverter}"/>
+                  <Binding Path="ToolbarHotTrack" Mode="OneTime" />
+                  <Binding Path="DataContext.DockType" ElementName="root" Converter="{StaticResource DockTypeMenuTuneConverter}" Mode="OneTime" />
                   <Binding Source="{StaticResource ButtonPressed}" />
-                  <Binding Path="DataContext.IsEnabledCorrection" ElementName="root" />
+                  <Binding Path="DataContext.IsEnabledCorrection" ElementName="root" Mode="OneTime" />
                 </MultiBinding>
               </Setter.Value>
             </Setter>
@@ -226,10 +226,10 @@
             <Setter Property="Background" TargetName="ParentElement">
               <Setter.Value>
                 <MultiBinding Converter="{StaticResource HotTrackConverter}">
-                  <Binding Path="ToolbarHotTrack" />
-                  <Binding Path="DataContext.DockType" ElementName="root" Converter="{StaticResource DockTypeMenuTuneConverter}"/>
+                  <Binding Path="ToolbarHotTrack" Mode="OneTime" />
+                  <Binding Path="DataContext.DockType" ElementName="root" Converter="{StaticResource DockTypeMenuTuneConverter}" Mode="OneTime" />
                   <Binding Source="{StaticResource ButtonCheckd}" />
-                  <Binding Path="DataContext.IsEnabledCorrection" ElementName="root" />
+                  <Binding Path="DataContext.IsEnabledCorrection" ElementName="root" Mode="OneTime" />
                 </MultiBinding>
               </Setter.Value>
             </Setter>
