@@ -478,11 +478,11 @@
                   <ToolTip Style="{StaticResource ToolbarTooltip}">
                     <StackPanel>
                       <StackPanel Orientation="Horizontal">
-                        <Image Source="{Binding ToolTipImage}" Style="{StaticResource ToolbarToolTipImage}" />
-                        <TextBlock Text="{Binding ToolTipTitle}" Style="{StaticResource ToolbarToolTipTitle}" FontFamily="{DynamicResource {x:Static SystemFonts.CaptionFontFamilyKey}}" />
+                        <Image Source="{Binding ToolTipImage, Mode=OneTime}" Style="{StaticResource ToolbarToolTipImage}" />
+                        <TextBlock Text="{Binding ToolTipTitle, Mode=OneTime}" Style="{StaticResource ToolbarToolTipTitle}" FontFamily="{DynamicResource {x:Static SystemFonts.CaptionFontFamilyKey}}" />
                       </StackPanel>
                       <StackPanel Orientation="Horizontal" Visibility="{Binding HasToolTipMessage, Converter={StaticResource BooleanToVisibilityConverter}}">
-                        <TextBlock Text="{Binding ToolTipMessage}" FontFamily="{DynamicResource {x:Static SystemFonts.SmallCaptionFontFamilyKey}}" />
+                        <TextBlock Text="{Binding ToolTipMessage, Mode=OneTime}" FontFamily="{DynamicResource {x:Static SystemFonts.SmallCaptionFontFamilyKey}}" />
                       </StackPanel>
                     </StackPanel>
                   </ToolTip>
