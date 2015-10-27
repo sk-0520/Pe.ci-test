@@ -232,7 +232,8 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 CalculateWindowStatus(DockType);
             }
 
-            GroupItems = GetGroupItems(SelectedGroup);
+            GroupItems = CreateGroupItems();
+            SetSelectedGroup(SelectedGroup, GroupItems);
             LauncherItems = GetLauncherItemButtons(SelectedGroup);
         }
 
@@ -501,16 +502,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             set
             {
                 if(SetVariableValue(ref this._selectedGroup, value)) {
-                    var oldGroupItems = GroupItems;
-                    GroupItems = null;
-                    GroupItems = GetGroupItems(this._selectedGroup);
-                    if(oldGroupItems != null) {
-                        foreach(var oldGroupItem in oldGroupItems) {
-                            oldGroupItem.Dispose();
-                        }
-                        oldGroupItems.Dispose();
-                        oldGroupItems = null;
-                    }
+                    SetSelectedGroup(this._selectedGroup, GroupItems);
 
                     var oldLauncherItems = LauncherItems;
                     LauncherItems = null;
@@ -872,14 +864,19 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             //MinSize = GetMinSize(DockType, Orientation, BorderThickness, ButtonSize);
         }
 
-        CollectionModel<LauncherGroupItemViewModel> GetGroupItems(LauncherGroupItemModel selectedItemModel)
+        CollectionModel<LauncherGroupItemViewModel> CreateGroupItems()
         {
             var items = new CollectionModel<LauncherGroupItemViewModel>(Model.GroupItems.Select(i => new LauncherGroupItemViewModel(i)));
-            var selectedViewModel = items.FirstOrDefault(i => i.Model == selectedItemModel);
-            selectedViewModel.IsChecked = true;
-
             return items;
         }
+
+        static void SetSelectedGroup(LauncherGroupItemModel selectedItemModel, CollectionModel<LauncherGroupItemViewModel> items)
+        {
+            foreach(var item in items) {
+                item.IsChecked = item.Model == selectedItemModel;
+            }
+        }
+
         #endregion
 
         #region IHavingAppSender
