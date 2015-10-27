@@ -110,7 +110,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Utility
                     null,
                     0
                 );
-                bitmapSource.Freeze();
+                FreezableUtility.SafeFreeze(bitmapSource);
             }
             int width = (int)bitmapSource.Width;
             int height = (int)bitmapSource.Height;
