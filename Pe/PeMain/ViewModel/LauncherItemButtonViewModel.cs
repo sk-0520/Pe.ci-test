@@ -92,6 +92,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         public string ToolbarText { get { return DisplayText; } }
         public ImageSource ToolbarImage { get { return GetIcon(IconScale); } }
+        //public ImageSource ToolbarImage { get { return null; } }
         public Color ToolbarHotTrack { get { return GetIconColor(IconScale); } }
         public string ToolTipTitle { get { return ToolbarText; } }
 

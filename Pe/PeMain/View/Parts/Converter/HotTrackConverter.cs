@@ -31,24 +31,6 @@ namespace ContentTypeTextNet.Pe.PeMain.View.Parts.Converter
 
     public class HotTrackConverter: IMultiValueConverter
     {
-
-        //public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-        //{
-        //	var color = (Color)value;
-        //	var ui = (UIElement)parameter;
-
-        //	var brush = new LinearGradientBrush();
-        //	brush.EndPoint = new System.Windows.Point(0.5, 1.0);
-        //	brush.StartPoint = new System.Windows.Point(0.5, 0.0);
-        //	brush.GradientStops.Add(new GradientStop(System.Windows.Media.Color.FromArgb(0xFF, color.R, color.G, color.B), 0.00));
-        //	brush.GradientStops.Add(new GradientStop(System.Windows.Media.Color.FromArgb(0x00, color.R, color.G, color.B), 1.00));
-        //	return brush;
-        //}
-
-        //public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-        //{
-        //	throw new NotImplementedException();
-        //}
         public object Convert(object[] values, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             var color = CastUtility.GetCastWPFValue(values[0], SystemColors.DesktopColor);
