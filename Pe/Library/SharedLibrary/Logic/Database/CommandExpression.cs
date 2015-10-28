@@ -23,11 +23,11 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Database
     using System.Text;
     using System.Threading.Tasks;
     using ContentTypeTextNet.Library.SharedLibrary.Define;
+    using Utility;
 
     /// <summary>
     /// 条件式からコマンドの構築。
-    /// 
-    /// DBManagerに渡すコマンドに対してさらに実装側で条件分岐を行う。
+    /// <para>DBManagerに渡すコマンドに対してさらに実装側で条件分岐を行う。</para>
     /// </summary>
     public class CommandExpression
     {
@@ -37,75 +37,115 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Database
         public CommandExpression()
         {
             Condition = false;
-            TrueCommand = string.Empty;
-            QueryCondition = QueryCondition.Command;
-            FalseCommand = string.Empty;
-            FalseExpression = null;
+            True = new QueryParts();
+            False = new QueryParts();
         }
 
         /// <summary>
         /// 条件を真とし、真の文字列コマンドを設定する。
         /// </summary>
-        /// <param name="trueCommand"></param>
+        /// <param name="trueCommand">コマンド。</param>
         public CommandExpression(string trueCommand)
             : this()
         {
             Condition = true;
-            TrueCommand = trueCommand;
+
+            True.QueryPattern = QueryPattern.Command;
+            True.Command = trueCommand;
         }
 
         /// <summary>
         /// 条件式を指定値で生成。
-        /// 
-        /// 偽の場合は空文字列となる。
+        /// <para>偽の場合は空文字列となる。</para>
         /// </summary>
-        /// <param name="condition">条件</param>
+        /// <param name="condition">条件。</param>
         /// <param name="trueCommand">真の場合のコマンド。</param>
         public CommandExpression(bool condition, string trueCommand)
             : this()
         {
             Condition = condition;
-            TrueCommand = trueCommand;
-            QueryCondition = QueryCondition.Command;
+
+            True.QueryPattern = QueryPattern.Command;
+            True.Command = trueCommand;
+
+            False.QueryPattern = QueryPattern.Command;
+            False.Command = string.Empty;
         }
 
         /// <summary>
         /// 条件式を指定値で生成。
         /// </summary>
-        /// <param name="condition">条件</param>
-        /// <param name="trueCommand">真の場合のコマンド</param>
-        /// <param name="falseCommand">偽の場合のコマンド</param>
+        /// <param name="condition">条件。</param>
+        /// <param name="trueCommand">真の場合のコマンド。</param>
+        /// <param name="falseCommand">偽の場合のコマンド。</param>
         public CommandExpression(bool condition, string trueCommand, string falseCommand)
             : this()
         {
             Condition = condition;
-            TrueCommand = trueCommand;
-            QueryCondition = QueryCondition.Command;
-            FalseCommand = falseCommand;
+
+            True.QueryPattern = QueryPattern.Command;
+            True.Command = trueCommand;
+
+            False.QueryPattern = QueryPattern.Command;
+            False.Command = falseCommand;
+        }
+
+        /// <summary>
+        /// 条件式を指定値で生成。
+        /// </summary>
+        /// <param name="condition">条件。</param>
+        /// <param name="trueCommand">真の場合のコマンド。</param>
+        /// <param name="falseCommandExpression">偽の場合の条件式。</param>
+        public CommandExpression(bool condition, string trueCommand, CommandExpression falseCommandExpression)
+            : this()
+        {
+            CheckUtility.EnforceNotNull(falseCommandExpression);
+
+            Condition = condition;
+
+            True.QueryPattern = QueryPattern.Command;
+            True.Command = trueCommand;
+
+            False.QueryPattern = QueryPattern.Expression;
+            False.Expression = falseCommandExpression;
+        }
+
+        /// <summary>
+        /// 条件式を指定値で生成。
+        /// </summary>
+        /// <param name="condition">条件。</param>
+        /// <param name="trueCommandExpression">真の場合の条件式。</param>
+        /// <param name="falseCommandExpression">偽の場合の条件式。</param>
+        public CommandExpression(bool condition, CommandExpression trueCommandExpression, CommandExpression falseCommandExpression)
+            : this()
+        {
+            CheckUtility.EnforceNotNull(trueCommandExpression);
+            CheckUtility.EnforceNotNull(falseCommandExpression);
+
+            Condition = condition;
+
+            True.QueryPattern = QueryPattern.Expression;
+            True.Expression = trueCommandExpression;
+
+            False.QueryPattern = QueryPattern.Expression;
+            False.Expression = falseCommandExpression;
         }
 
         #region property
 
         /// <summary>
-        /// 条件
+        /// 条件。
         /// </summary>
         public bool Condition { get; private set; }
+
         /// <summary>
-        /// 条件が真の場合のコマンド
+        /// 真の場合に使用するクエリ。
         /// </summary>
-        public string TrueCommand { get; private set; }
+        public QueryParts True { get; private set; }
         /// <summary>
-        /// 条件が偽の場合にコマンドと式のどちらを使用するか
+        /// 偽の場合に使用するクエリ。
         /// </summary>
-        public QueryCondition QueryCondition { get; private set; }
-        /// <summary>
-        /// 条件が偽の場合のコマンド
-        /// </summary>
-        public string FalseCommand { get; private set; }
-        /// <summary>
-        /// 条件が偽の場合の式
-        /// </summary>
-        public CommandExpression FalseExpression { get; private set; }
+        public QueryParts False { get; private set; }
 
         #endregion
 
@@ -118,16 +158,9 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Database
         public string ToCode()
         {
             if(Condition) {
-                return TrueCommand;
-            }
-
-            if(QueryCondition == QueryCondition.Command) {
-                // 文字列
-                return FalseCommand;
+                return True.ToCode();
             } else {
-                Debug.Assert(QueryCondition == QueryCondition.Expression);
-                // 式
-                return FalseExpression.ToCode();
+                return False.ToCode();
             }
         }
 
