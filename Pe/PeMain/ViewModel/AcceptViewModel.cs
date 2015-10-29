@@ -90,11 +90,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         {
             Model.Accept = result;
             if(HasView) {
-                if(result) {
-                    View.DialogResult = true;
-                } else {
-                    View.DialogResult = false;
-                }
+                View.DialogResult = result;
             }
         }
 
