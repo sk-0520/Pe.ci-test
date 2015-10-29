@@ -79,15 +79,15 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Utility
         /// <summary>
         /// キャスト値をキャストに成功・失敗に関わらず取得する。
         /// </summary>
-        /// <typeparam name="T">キャストする型。</typeparam>
+        /// <typeparam name="TResult">キャストする型。</typeparam>
         /// <param name="value">対象の値。</param>
         /// <param name="failReturnValue">キャスト失敗時に使用する値。</param>
         /// <param name="logger"></param>
         /// <returns>valueをTにキャストした値。失敗時はfailReturnValueが返される。</returns>
-        public static T GetCastValue<T>(object value, T failReturnValue, ILogger logger = null)
+        public static TResult GetCastValue<TResult>(object value, TResult failReturnValue, ILogger logger = null)
         {
             try {
-                return (T)value;
+                return (TResult)value;
             } catch(InvalidCastException ex) {
                 if(logger != null) {
                     logger.Warning(ex);
@@ -98,7 +98,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Utility
             }
         }
 
-        public static T GetCastWPFValue<T>(object value, T failReturnValue, ILogger logger = null)
+        public static TResult GetCastWPFValue<TResult>(object value, TResult failReturnValue, ILogger logger = null)
         {
             if(value == DependencyProperty.UnsetValue) {
                 return failReturnValue;

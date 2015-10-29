@@ -22,15 +22,15 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Data
     using System.Text;
     using System.Threading.Tasks;
 
-    public class DialogFilterValueItem<T>: DialogFilterItem
+    public class DialogFilterValueItem<TValue>: DialogFilterItem
     {
-        public DialogFilterValueItem(T value, string displayText, IEnumerable<string> wildcard)
+        public DialogFilterValueItem(TValue value, string displayText, IEnumerable<string> wildcard)
             : base(displayText, wildcard)
         {
             Value = value;
         }
 
-        public DialogFilterValueItem(T value, string displayText, params string[] wildcard)
+        public DialogFilterValueItem(TValue value, string displayText, params string[] wildcard)
             : base(displayText, wildcard)
         {
             Value = value;
@@ -38,7 +38,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Data
 
         #region property
 
-        public T Value { get; private set; }
+        public TValue Value { get; private set; }
 
         #endregion
 

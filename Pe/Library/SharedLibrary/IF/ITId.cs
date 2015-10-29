@@ -22,26 +22,26 @@ namespace ContentTypeTextNet.Library.SharedLibrary.IF
     using System.Text;
     using System.Threading.Tasks;
 
-    public interface ITId<T>
-        where T : IComparable
+    public interface ITId<TId>
+        where TId : IComparable
     {
         /// <summary>
         /// ID。
         /// </summary>
-        T Id { get; set; }
+        TId Id { get; set; }
 
         /// <summary>
         /// IDが設定可能なものか。
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        bool IsSafeId(T id);
+        bool IsSafeId(TId id);
 
         /// <summary>
         /// IDを設定可能なものに変更。
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        T ToSafeId(T id);
+        TId ToSafeId(TId id);
     }
 }

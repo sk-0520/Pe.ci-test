@@ -19,14 +19,14 @@
         /// <summary>
         /// 変数変更用ヘルパ。
         /// </summary>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TValue"></typeparam>
         /// <param name="variable">格納する変数。</param>
         /// <param name="value">変更データ。</param>
         /// <param name="propertyName"></param>
         /// <returns>変更があった場合は真を返す。</returns>
-        protected bool SetVariableValue<T>(ref T variable, T value, [CallerMemberName] string propertyName = "")
+        protected bool SetVariableValue<TValue>(ref TValue variable, TValue value, [CallerMemberName] string propertyName = "")
         {
-            if(!IComparable<T>.Equals(variable, value)) {
+            if(!IComparable<TValue>.Equals(variable, value)) {
                 variable = value;
                 OnPropertyChanged(propertyName);
 
@@ -40,22 +40,22 @@
         /// プロパティ変更用ヘルパ。
         /// TODO: キャッシュする。
         /// </summary>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TValue"></typeparam>
         /// <param name="obj">対象オブジェクト。</param>
         /// <param name="value">変更データ。</param>
         /// <param name="targetMemberName">対象オブジェクトのメンバ名。</param>
         /// <param name="propertyName"></param>
         /// <returns>変更があった場合は真を返す。</returns>
-        protected bool SetPropertyValue<T>(object obj, T value, [CallerMemberName] string targetMemberName = "", [CallerMemberName] string callerPropertyName = "")
+        protected bool SetPropertyValue<TValue>(object obj, TValue value, [CallerMemberName] string targetMemberName = "", [CallerMemberName] string callerPropertyName = "")
         {
             CheckUtility.DebugEnforceNotNull(obj);
 
             var type = obj.GetType();
             var propertyInfo = type.GetProperty(targetMemberName);
 
-            var nowValue = (T)propertyInfo.GetValue(obj);
+            var nowValue = (TValue)propertyInfo.GetValue(obj);
 
-            if(!IComparable<T>.Equals(nowValue, value)) {
+            if(!IComparable<TValue>.Equals(nowValue, value)) {
                 propertyInfo.SetValue(obj, value);
                 OnPropertyChanged(callerPropertyName);
 

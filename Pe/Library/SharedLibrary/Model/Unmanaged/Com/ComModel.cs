@@ -19,16 +19,16 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Model.Unmanaged.Com
     /// <summary>
     /// 何かしらのCOMを管理。
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    public class ComModel<T>: ComModelBase
+    /// <typeparam name="TCom"></typeparam>
+    public class ComModel<TCom>: ComModelBase
     {
-        public ComModel(T com)
+        public ComModel(TCom com)
             : base(com)
         {
             Com = com;
         }
 
-        public T Com { get; private set; }
+        public TCom Com { get; private set; }
     }
 
 }

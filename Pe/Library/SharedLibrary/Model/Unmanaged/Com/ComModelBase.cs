@@ -35,7 +35,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Model.Unmanaged.Com
         }
 
         /// <summary>
-        /// COMオブジェクト。
+        /// COM生オブジェクト。
         /// </summary>
         public object RawCom { get; private set; }
 
