@@ -92,7 +92,11 @@
 				<message>#341: メインボタンのアイコンがなんかずれてる</message>
 			</note>
 			<note rev="">
-				<message></message>
+				<message>#305: メモリ消費を抑える</message>
+				<comments>
+					<comment>使いまわせる ViewModel は再生成を抑える</comment>
+					<comment>意味あんのか知らんけど一部バインドを初回のみに変更</comment>
+				</comments>
 			</note>
 			<note rev="">
 				<message></message>
