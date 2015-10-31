@@ -41,8 +41,6 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic
 
         public string LanguageFilePath { get; private set; }
 
-        public string CultureCode { get { return Model.CultureCode; } }
-
         #endregion
 
         #region function
@@ -99,6 +97,12 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic
             //};
         }
 
+        #endregion
+
+        #region ILanguage
+
+        public string CultureCode { get { return Model.CultureCode; } }
+
         public string GetReplacedWordText(string words, DateTime dateTime, IReadOnlyDictionary<string, string> map)
         {
             var plainText = GetPlainText(words);
@@ -116,15 +120,15 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic
             return replacedDefineText;
         }
 
-        #endregion
-
-        #region indexer
-
         public string this[string key, IReadOnlyDictionary<string, string> map = null]
         {
             get { return GetReplacedWordText(key, DateTime.Now, map); }
         }
 
+        public string GuiTextToPlainText(string guiText)
+        {
+            return null;
+        }
         #endregion
     }
 }
