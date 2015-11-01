@@ -53,10 +53,10 @@
 		<Item Id="clipboard/name/files" Word="@[CLIP-TYPE]: @[CLIP-FILES-COUNT]" />
 		<Item Id="window-collection/name" Word="@[TIMESTAMP], ウィンドウ数: @[WINDOW-COLLECTION-COUNT]" />
 		
-		<Item Id="accept/ok" Word="使用する" />
-		<Item Id="accept/ng" Word="使用しない" />
-		<Item Id="update-check/release" Word="アップデートを確認する" />
-		<Item Id="update-check/rc" Word="RC版も確認対象とする" />
+		<Item Id="accept/ok" Word="使用する(_A)" />
+		<Item Id="accept/ng" Word="使用しない(_Q)" />
+		<Item Id="update-check/release" Word="アップデートを確認する(_U)" />
+		<Item Id="update-check/rc" Word="RC版も確認対象とする(_R)" />
 
 		<Item Id="home/auto-regist/title"   Word="ランチャー自動登録" />
 		<Item Id="home/auto-regist/message" Word="使用環境から自動的にランチャーアイテムを構築します。${br}※実装中機能になります。" />

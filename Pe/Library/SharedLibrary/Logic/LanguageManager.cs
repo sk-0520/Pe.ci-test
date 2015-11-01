@@ -20,6 +20,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
+    using System.Text.RegularExpressions;
     using System.Threading.Tasks;
     using ContentTypeTextNet.Library.SharedLibrary.IF;
     using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
@@ -127,7 +128,18 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic
 
         public string GuiTextToPlainText(string guiText)
         {
-            return null;
+            var reg = new Regex(@"^(?<HEAD>.*?)(?<L>\(?)(?<KEY>_\w)(?<R>\)?)(?<TAIL>.*)$", RegexOptions.ExplicitCapture);
+            var match = reg.Match(guiText);
+            if(match.Success) {
+                if(0 < match.Groups["L"].Length && 0 < match.Groups["R"].Length) {
+                    return match.Groups["HEAD"].Value + match.Groups["TAIL"].Value;
+                } else {
+                    var key = match.Groups["KEY"].Value.Substring(1);
+                    return match.Groups["HEAD"].Value + key + match.Groups["TAIL"].Value;
+                }
+            }
+
+            return guiText;
         }
         #endregion
     }
