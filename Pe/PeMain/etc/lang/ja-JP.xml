@@ -187,26 +187,26 @@
 		<Item Id="note/operation/hide" Word="非表示(_X)" />
 		<Item Id="note/operation/remove" Word="削除" />
 		
-		<Item Id="clipboard/enabled" Word="クリップボード取込" />
+		<Item Id="clipboard/enabled" Word="クリップボード取込(_C)" />
 		<Item Id="clipboard/enabled:hint" Word="クリップボードにコピーされたデータを取り込みます" />
 		<Item Id="clipboard/target" Word="取込対象" />
-		<Item Id="clipboard/type/text" Word="文字列" />
-		<Item Id="clipboard/type/rtf" Word="書式付文字列" />
-		<Item Id="clipboard/type/html" Word="HTML" />
-		<Item Id="clipboard/type/image" Word="画像" />
-		<Item Id="clipboard/type/files" Word="ファイル" />
+		<Item Id="clipboard/type/text" Word="文字列(_T)" />
+		<Item Id="clipboard/type/rtf" Word="書式付文字列(_R)" />
+		<Item Id="clipboard/type/html" Word="_HTML" />
+		<Item Id="clipboard/type/image" Word="画像(_I)" />
+		<Item Id="clipboard/type/files" Word="ファイル(_F)" />
 		<Item Id="clipboard/html/uri" Word="URI" />
-		<Item Id="clipboard/image/fit" Word="ウィンドウに合わせる" />
-		<Item Id="clipboard/image/raw" Word="原寸表示" />
+		<Item Id="clipboard/image/fit" Word="ウィンドウに合わせる(_W)" />
+		<Item Id="clipboard/image/raw" Word="原寸表示(_S)" />
 		<Item Id="clipboard/files/name" Word="ファイル名" />
 		<Item Id="clipboard/files/path" Word="パス" />
 		<Item Id="clipboard/save-count" Word="保存対象件数" />
 		<Item Id="clipboard/save-count/all" Word="全件" />
-		<Item Id="clipboard/save" Word="ファイルに保存" />
-		<Item Id="clipboard/remove" Word="削除" />
-		<Item Id="clipboard/clear" Word="クリップボードを削除" />
+		<Item Id="clipboard/save" Word="ファイルに保存(_S)" />
+		<Item Id="clipboard/remove" Word="削除(_D)" />
+		<Item Id="clipboard/clear" Word="クリップボードを削除(_E)" />
 		<Item Id="clipboard/topmost" Word="最前面" />
-		<Item Id="clipboard/using-clipboard" Word="クリップボード経由の転送" />
+		<Item Id="clipboard/using-clipboard" Word="クリップボード経由の転送(_U)" />
 		<Item Id="clipboard/command/send"  Word="転送" />
 		<Item Id="clipboard/command/copy"  Word="コピー" />
 		<Item Id="clipboard/command/text"  Word="文字列のコピー" />
@@ -214,7 +214,7 @@
 		<Item Id="clipboard/command/html"  Word="HTMLのコピー" />
 		<Item Id="clipboard/command/image" Word="画像のコピー" />
 		<Item Id="clipboard/command/file"  Word="ファイルのコピー" />
-		<Item Id="clipboard/item/name" Word="クリップボード名" />
+		<Item Id="clipboard/item/name" Word="クリップボード名(_E)" />
 		
 		<Item Id="template/create" Word="新規作成" />
 		<Item Id="template/save" Word="ファイルに保存" />
