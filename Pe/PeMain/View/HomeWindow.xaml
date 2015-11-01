@@ -42,10 +42,7 @@
           </Style>
           <Style TargetType="Button">
             <Setter Property="Margin" Value="16" />
-            <Setter Property="Padding" Value="16,4,16,4" />
-          </Style>
-          <Style TargetType="Label">
-            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="Padding" Value="16" />
           </Style>
           <Style TargetType="TextBlock">
             <Setter Property="Margin" Value="16,4,16,4" />
@@ -62,32 +59,23 @@
           <ColumnDefinition Width="Auto" />
           <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
-        <Button Grid.Row="0" Grid.Column="0" Command="{Binding ResistItemsCommand}">
-          <StackPanel>
-            <Image Source="{x:Static AM:AppResource.HomeSearchImage}" />
-            <Label Content="auto resist" AA:Language.Word="home/auto-regist/title" />
-          </StackPanel>
+        <Button Grid.Row="0" Grid.Column="0" AA:Language.Hint="home/auto-regist/title" Command="{Binding ResistItemsCommand}">
+          <Image Source="{x:Static AM:AppResource.HomeSearchImage}" />
         </Button>
         <TextBlock Grid.Row="1" Grid.Column="0" Text="('_')" AA:Language.Word="home/auto-regist/message" />
-        
-        <Button Grid.Row="0" Grid.Column="1" Command="{Binding ShowNotifyAreaCommand}">
-          <StackPanel>
-            <Image Source="{x:Static AM:AppResource.HomeFlagImage}" />
-            <Label Content="notify area" AA:Language.Word="home/notify-area/title" />
-          </StackPanel>
+
+        <Button Grid.Row="0" Grid.Column="1" AA:Language.Hint="home/notify-area/title" Command="{Binding ShowNotifyAreaCommand}">
+          <Image Source="{x:Static AM:AppResource.HomeFlagImage}" />
         </Button>
         <TextBlock Grid.Row="1" Grid.Column="1" Text="('_')" AA:Language.Word="home/notify-area/message" />
-        
-        <Button Grid.Row="0" Grid.Column="2" Command="{Binding ResistStartupCommand}">
-          <StackPanel>
-            <Image Source="{x:Static AM:AppResource.HomeWindowsImage}" />
-            <Label Content="startup" AA:Language.Word="home/startup/title" />
-          </StackPanel>
+
+        <Button Grid.Row="0" Grid.Column="2" AA:Language.Hint="home/startup/title" Command="{Binding ResistStartupCommand}">
+          <Image Source="{x:Static AM:AppResource.HomeWindowsImage}" />
         </Button>
         <TextBlock Grid.Row="1" Grid.Column="2" Text="('_')" AA:Language.Word="home/startup/message" />
       </Grid>
     </Grid>
-    
+
     <StackPanel Grid.Row="1" Style="{StaticResource DialogResultPanel}">
       <Button Command="{Binding CloseCommand}" Style="{StaticResource DialogAcceptButton}" />
     </StackPanel>

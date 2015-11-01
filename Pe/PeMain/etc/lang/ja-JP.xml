@@ -3,7 +3,6 @@
 	<Define>
 		<Item Id="br" Word="&#x0d;&#x0a;" />
 		
-		<Item Id="ok"  Word="OK" />
 		<Item Id="cancel" Word="キャンセル" />
 		<Item Id="yes" Word="はい" />
 		<Item Id="no" Word="いいえ" />
@@ -38,8 +37,8 @@
 		<Item Id="window/screen" Word="スクリーン" />
 		<Item Id="window/about" Word="@[APPLICATION:NAME] 情報" />
 
-		<Item Id="common/ok" Word="${ok}"  />
-		<Item Id="common/cancel" Word="${cancel}"  />
+		<Item Id="common/ok" Word="_OK"  />
+		<Item Id="common/cancel" Word="キャンセル(_C)"  />
 
 		<Item Id="dialog/filter/txt" Word="テキスト形式" />
 		<Item Id="dialog/filter/rtf" Word="リッチテキスト形式" />
