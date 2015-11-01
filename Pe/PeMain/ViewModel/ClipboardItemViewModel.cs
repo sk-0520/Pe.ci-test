@@ -364,10 +364,6 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         #endregion
 
-        #region SingleModelWrapperViewModelBase
-
-        #endregion
-
         #region IHavingAppSender
 
         public IAppSender AppSender { get; private set; }

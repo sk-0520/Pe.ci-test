@@ -48,7 +48,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.ViewModel
         /// <summary>
         /// モデル。
         /// </summary>
-        public TModel Model { get; private set; }
+        public virtual TModel Model { get; protected set; }
 
         #endregion
 
