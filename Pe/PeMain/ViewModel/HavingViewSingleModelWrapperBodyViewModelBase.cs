@@ -24,11 +24,13 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
     using ContentTypeTextNet.Library.SharedLibrary.IF;
     using ContentTypeTextNet.Library.SharedLibrary.Model;
     using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+    using ContentTypeTextNet.Pe.Library.PeData.Define;
+    using ContentTypeTextNet.Pe.Library.PeData.Item;
     using ContentTypeTextNet.Pe.PeMain.IF;
 
     public abstract class HavingViewSingleModelWrapperBodyViewModelBase<TIndexItemModelBase, TIndexBodyItemModel>: SingleModelWrapperViewModelBase<TIndexItemModelBase>, IHavingAppSender, IHavingAppNonProcess
-        where TIndexItemModelBase: class, IModel
-        where TIndexBodyItemModel: IModel, IIsDisposed
+        where TIndexItemModelBase: IndexItemModelBase
+        where TIndexBodyItemModel: IndexBodyItemModelBase
     {
         #region variable
 
@@ -52,6 +54,43 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         /// </summary>
         WeakReference WeakModel { get; set; }
 
+        protected abstract IndexKind IndexKind { get; }
+
+        protected TIndexBodyItemModel BodyModel
+        {
+            get
+            {
+                if(this._bodyModel == null) {
+                    this._bodyModel = LoadBodyItem();
+                    CorrectionBodyModel(this._bodyModel);
+                    this._bodyModel.Disposing += Body_Disposing;
+                    if(IsDisposed) {
+                        // 再度読み込まれた
+                        IsDisposed = false;
+                    }
+                }
+
+                return this._bodyModel;
+            }
+        }
+
+        #endregion
+
+        #region function
+
+        /// <summary>
+        /// 本体部読み込み時に補正を行う。
+        /// </summary>
+        protected virtual void CorrectionBodyModel(TIndexBodyItemModel bodyModel)
+        { }
+
+        protected virtual TIndexBodyItemModel LoadBodyItem()
+        {
+            var rawBody = AppSender.SendLoadIndexBody(IndexKind, Model.Id);
+            var body = (TIndexBodyItemModel)rawBody;
+            return body;
+        }
+
         #endregion
 
         #region SingleModelWrapperViewModelBase
@@ -61,9 +100,10 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             if(!IsDisposed) {
                 if(this._bodyModel != null) {
                     this._bodyModel.Disposing -= Body_Disposing;
-                    this._bodyModel = default(TIndexBodyItemModel);
+                    this._bodyModel = null;
                 }
             }
+
             base.Dispose(disposing);
         }
 
@@ -71,7 +111,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         {
             get
             {
-                if(base.Model != null) {
+                if(base.Model == null) {
                     base.Model = (TIndexItemModelBase)WeakModel.Target;
                 }
 
@@ -98,7 +138,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         #endregion
 
-        private void Body_Disposing(object sender, EventArgs e)
+        protected void Body_Disposing(object sender, EventArgs e)
         {
             Dispose();
         }

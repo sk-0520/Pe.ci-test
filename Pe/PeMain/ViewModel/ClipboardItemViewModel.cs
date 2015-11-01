@@ -37,7 +37,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
     using ContentTypeTextNet.Pe.PeMain.IF;
     using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
-    public class ClipboardItemViewModel: SingleModelWrapperViewModelBase<ClipboardIndexItemModel>, IHavingAppSender, IHavingAppNonProcess
+    public class ClipboardItemViewModel: HavingViewSingleModelWrapperBodyViewModelBase<ClipboardIndexItemModel, ClipboardBodyItemModel>
     {
         #region define
 
@@ -45,46 +45,13 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         #endregion
 
-        #region varable
-
-        ClipboardBodyItemModel _bodyModel = null;
-
-        #endregion
-
         public ClipboardItemViewModel(ClipboardIndexItemModel model, IAppSender appSender, IAppNonProcess appNonProcess)
-            : base(model)
-        {
-            AppSender = appSender;
-            AppNonProcess = appNonProcess;
-        }
+            : base(model, appSender, appNonProcess)
+        { }
 
         #region property
 
-        ClipboardBodyItemModel BodyModel
-        {
-            get
-            {
-                if(this._bodyModel == null) {
-                    var body = AppSender.SendLoadIndexBody(IndexKind.Clipboard, Model.Id);
-                    this._bodyModel = (ClipboardBodyItemModel)body;
-                    this._bodyModel.Disposing += Body_Disposing;
-                    if(Model.Type.HasFlag(ClipboardType.Html)) {
-                        HtmlModel = ClipboardUtility.ConvertClipboardHtmlFromFromRawHtml(this._bodyModel.Html ?? string.Empty, AppNonProcess);
-                    } else {
-                        HtmlModel = null;
-                    }
-                    if(IsDisposed) {
-                        // 再度読み込まれた
-                        IsDisposed = false;
-                    }
-                }
-
-                return this._bodyModel;
-            }
-        }
-
         ContentTypeTextNet.Pe.PeMain.Data.ClipboardHtmlData HtmlModel { get; set; }
-
 
         public ImageSource ItemTypeImage
         {
@@ -349,37 +316,19 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         #endregion
 
-        #region IIsDispose
+        #region HavingViewSingleModelWrapperBodyViewModelBase
 
-        protected override void Dispose(bool disposing)
+        protected override IndexKind IndexKind { get { return IndexKind.Clipboard; } }
+
+        protected override void CorrectionBodyModel(ClipboardBodyItemModel bodyModel)
         {
-            if(!IsDisposed) {
-                if(this._bodyModel != null) {
-                    this._bodyModel.Disposing -= Body_Disposing;
-                    this._bodyModel = null;
-                }
+            if(Model.Type.HasFlag(ClipboardType.Html)) {
+                HtmlModel = ClipboardUtility.ConvertClipboardHtmlFromFromRawHtml(bodyModel.Html ?? string.Empty, AppNonProcess);
+            } else {
+                HtmlModel = null;
             }
-            base.Dispose(disposing);
         }
 
         #endregion
-
-        #region IHavingAppSender
-
-        public IAppSender AppSender { get; private set; }
-
-        #endregion
-
-        #region IHavingAppNonProcess
-
-        public IAppNonProcess AppNonProcess { get; private set; }
-
-        #endregion
-
-        private void Body_Disposing(object sender, EventArgs e)
-        {
-            Dispose();
-        }
-
     }
 }

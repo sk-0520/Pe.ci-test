@@ -115,11 +115,13 @@ namespace ContentTypeTextNet.Library.SharedLibrary.ViewModel
         protected override void Dispose(bool disposing)
         {
             if(!IsDisposed) {
-                foreach(var pair in this._createdCommands) {
-                    pair.Value.Dispose();
+                if(this._createdCommands != null) {
+                    foreach(var pair in this._createdCommands) {
+                        pair.Value.Dispose();
+                    }
+                    this._createdCommands.Clear();
+                    this._createdCommands = null;
                 }
-                this._createdCommands.Clear();
-                this._createdCommands = null;
                 IsChanged = false;
             }
 
