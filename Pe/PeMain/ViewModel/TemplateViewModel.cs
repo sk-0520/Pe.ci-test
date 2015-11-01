@@ -230,7 +230,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 var result = CreateCommand(
                     o => {
                         if(SelectedViewModel != null && SelectedViewModel.IsChanged) {
-                            SelectedViewModel.SaveBody();
+                            SelectedViewModel.SaveBody(Timing.Delay);
                         }
                     }
                 );
@@ -370,7 +370,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         void SaveItemViewModel(TemplateItemViewModel vm)
         {
             if(vm.IsChanged) {
-                vm.SaveBody();
+                vm.SaveBody(Timing.Delay);
             }
         }
 

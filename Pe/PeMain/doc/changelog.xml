@@ -99,6 +99,12 @@
 				</comments>
 			</note>
 			<note rev="">
+				<message>#342: クリップボードやテンプレートの項目を一定数選択していくと古い選択アイテムが表示されなくなる</message>
+				<comments>
+					<comment>#311と#305で死んでしもうてた</comment>
+				</comments>
+			</note>
+			<note rev="">
 				<message></message>
 			</note>
 		</group>

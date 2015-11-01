@@ -26,6 +26,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
     using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
     using ContentTypeTextNet.Pe.Library.PeData.Define;
     using ContentTypeTextNet.Pe.Library.PeData.Item;
+    using Define;
     using ContentTypeTextNet.Pe.PeMain.IF;
 
     public abstract class HavingViewSingleModelWrapperBodyViewModelBase<TIndexItemModelBase, TIndexBodyItemModel>: SingleModelWrapperViewModelBase<TIndexItemModelBase>, IHavingAppSender, IHavingAppNonProcess
@@ -95,6 +96,21 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             var body = (TIndexBodyItemModel)rawBody;
             return body;
         }
+
+        public virtual void SaveBody(Timing timing)
+        {
+            if(!IsLoadedBodyModel) {
+                // 読み込んでない。
+                return;
+            }
+            
+            BodyModel.History.Update();
+            AppNonProcess.Logger.Information("save body:" + Model.Name, BodyModel);
+            AppSender.SendSaveIndexBody(BodyModel, Model.Id, timing);
+
+            ResetChangeFlag();
+        }
+
 
         #endregion
 

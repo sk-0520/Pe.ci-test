@@ -189,18 +189,6 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
         }
 
-        public void SaveBody()
-        {
-            if(!IsLoadedBodyModel) {
-                // 読み込んでない。
-                return;
-            }
-            BodyModel.History.Update();
-            AppNonProcess.Logger.Information("save body:" + Name, BodyModel);
-            AppSender.SendSaveIndexBody(BodyModel, Model.Id, Timing.Delay);
-            ResetChangeFlag();
-        }
-
         #endregion
 
         #region HavingViewSingleModelWrapperBodyViewModelBase
