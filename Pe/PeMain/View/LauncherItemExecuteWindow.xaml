@@ -64,8 +64,8 @@
       <Label Grid.Row="0" Grid.Column="0" Content="command" AA:Language.Word="execute/command" Style="{StaticResource HeaderLabel}" />
       <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" IsReadOnly="True" Text="{Binding Command, Mode=OneTime}" Style="{StaticResource DefaultTextBox}" Margin="{StaticResource ControlMargin}" />
 
-      <Label Grid.Row="1" Grid.Column="0" Content="option" AA:Language.Word="execute/option" Style="{StaticResource HeaderLabel}" />
-      <ComboBox Grid.Row="1" Grid.Column="1" IsEditable="True" Text="{Binding Option}" ItemsSource="{Binding Options}" Style="{StaticResource DefaultComboBox}" Margin="{StaticResource ControlMargin}" />
+      <Label Grid.Row="1" Grid.Column="0" Target="{Binding ElementName=selectOption}" Content="option" AA:Language.Word="execute/option" Style="{StaticResource HeaderLabel}" />
+      <ComboBox Name="selectOption" Grid.Row="1" Grid.Column="1" IsEditable="True" Text="{Binding Option}" ItemsSource="{Binding Options}" Style="{StaticResource DefaultComboBox}" Margin="{StaticResource ControlMargin}" />
       <Button Grid.Row="1" Grid.Column="2" Command="{Binding SelectOptionFilesCommand}" AA:Language.Hint="execute/option/file" Margin="{StaticResource ControlMargin}">
         <Image Style="{StaticResource DefaultImage}" Source="{x:Static AM:AppResource.CommonFileImage}" />
       </Button>
@@ -73,8 +73,8 @@
         <Image Style="{StaticResource DefaultImage}" Source="{x:Static AM:AppResource.CommonFolderImage}" />
       </Button>
 
-      <Label Grid.Row="2" Grid.Column="0" Content="work dir" AA:Language.Word="execute/work-dir" Style="{StaticResource HeaderLabel}" />
-      <ComboBox Grid.Row="2" Grid.Column="1" IsEditable="True" Text="{Binding WorkDirectoryPath}" ItemsSource="{Binding WorkDirectoryPaths}" Style="{StaticResource DefaultComboBox}" Margin="{StaticResource ControlMargin}" />
+      <Label Grid.Row="2" Grid.Column="0" Target="{Binding ElementName=selectDirectory}" Content="work dir" AA:Language.Word="execute/work-dir" Style="{StaticResource HeaderLabel}" />
+      <ComboBox Name="selectDirectory" Grid.Row="2" Grid.Column="1" IsEditable="True" Text="{Binding WorkDirectoryPath}" ItemsSource="{Binding WorkDirectoryPaths}" Style="{StaticResource DefaultComboBox}" Margin="{StaticResource ControlMargin}" />
       <Button Grid.Row="2" Grid.Column="2" Command="{Binding SelectWorkDirectoryDirectoryCommand}" AA:Language.Hint="execute/work-dir/dir" Margin="{StaticResource ControlMargin}">
         <Image Style="{StaticResource DefaultImage}" Source="{x:Static AM:AppResource.CommonFolderImage}" />
       </Button>
