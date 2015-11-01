@@ -124,22 +124,22 @@
 		<Item Id="new/launcher-name" Word="ランチャーアイテム" />
 
 		<Item Id="toolbar/position" Word="ツールバー位置" />
-		<Item Id="toolbar/topmost" Word="最前面で表示する" />
-		<Item Id="toolbar/autohide" Word="自動的に隠す" />
-		<Item Id="toolbar/hide" Word="非表示" />
+		<Item Id="toolbar/topmost" Word="最前面で表示する(_T)" />
+		<Item Id="toolbar/autohide" Word="自動的に隠す(_A)" />
+		<Item Id="toolbar/hide" Word="非表示(_H)" />
 		<Item Id="toolbar/execute" Word="実行" />
-		<Item Id="toolbar/execute/normal" Word="通常実行" />
-		<Item Id="toolbar/execute/extra" Word="指定して実行" />
+		<Item Id="toolbar/execute/normal" Word="通常実行(_E)" />
+		<Item Id="toolbar/execute/extra" Word="指定して実行(_R)" />
 		<Item Id="toolbar/file" Word="ファイル" />
-		<Item Id="toolbar/file/parent-dir" Word="親ディレクトリ" />
-		<Item Id="toolbar/file/work-dir" Word="作業ディレクトリ" />
+		<Item Id="toolbar/file/parent-dir" Word="親ディレクトリ(_O)" />
+		<Item Id="toolbar/file/work-dir" Word="作業ディレクトリ(_W)" />
 		<Item Id="toolbar/clipboard" Word="クリップボード" />
-		<Item Id="toolbar/clipboard/command" Word="コマンド" />
-		<Item Id="toolbar/clipboard/parent-dir" Word="親ディレクトリ" />
-		<Item Id="toolbar/clipboard/work-dir" Word="作業ディレクトリ" />
+		<Item Id="toolbar/clipboard/command" Word="コマンド(_C)" />
+		<Item Id="toolbar/clipboard/parent-dir" Word="親ディレクトリ(_O)" />
+		<Item Id="toolbar/clipboard/work-dir" Word="作業ディレクトリ(_W)" />
 		<Item Id="toolbar/others" Word="その他" />
-		<Item Id="toolbar/others/customize" Word="編集" />
-		<Item Id="toolbar/others/property" Word="プロパティ" />
+		<Item Id="toolbar/others/customize" Word="編集(_E)" />
+		<Item Id="toolbar/others/property" Word="プロパティ(_P)" />
 		<Item Id="toolbar/others/remove" Word="削除" />
 		
 		<Item Id="execute/command" Word="コマンド" />
