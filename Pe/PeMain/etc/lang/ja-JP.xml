@@ -216,20 +216,18 @@
 		<Item Id="clipboard/command/file"  Word="ファイルのコピー" />
 		<Item Id="clipboard/item/name" Word="クリップボード名(_E)" />
 		
-		<Item Id="template/create" Word="新規作成" />
-		<Item Id="template/save" Word="ファイルに保存" />
-		<Item Id="template/remove" Word="削除" />
+		<Item Id="template/create" Word="新規作成(_N)" />
+		<Item Id="template/save" Word="ファイルに保存(_S)" />
+		<Item Id="template/remove" Word="削除(_D)" />
 		<Item Id="template/topmost" Word="最前面" />
-		<Item Id="template/using-clipboard" Word="クリップボード経由の転送" />
+		<Item Id="template/using-clipboard" Word="クリップボード経由の転送(_U)" />
 		<Item Id="template/command/send" Word="転送" />
 		<Item Id="template/command/copy" Word="コピー" />
 		<Item Id="template/command/up" Word="上へ移動" />
 		<Item Id="template/command/down" Word="下へ移動" />
-		<Item Id="template/item/name" Word="テンプレート名" />
-		<Item Id="template/item/replace" Word="置き換え処理" />
-		<Item Id="template/item/t4" Word="T4" />
-		<Item Id="template/item/source" Word="テキストテンプレート" />
-		<Item Id="template/item/preview" Word="プレビュー" />
+		<Item Id="template/item/name" Word="テンプレート名(_E)" />
+		<Item Id="template/item/source" Word="テキストテンプレート(_T)" />
+		<Item Id="template/item/preview" Word="プレビュー(_P)" />
 		<Item Id="template/replace/plain" Word="通常" />
 		<Item Id="template/replace/text" Word="文字列置き換え" />
 		<Item Id="template/replace/program" Word="T4置き換え" />
