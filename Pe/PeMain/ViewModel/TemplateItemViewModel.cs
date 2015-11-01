@@ -28,44 +28,22 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
     using ContentTypeTextNet.Pe.PeMain.Logic;
     using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
-    public class TemplateItemViewModel: SingleModelWrapperViewModelBase<TemplateIndexItemModel>, IHavingAppSender, IHavingAppNonProcess
+    public class TemplateItemViewModel: HavingViewSingleModelWrapperBodyViewModelBase<TemplateIndexItemModel, TemplateBodyItemModel>
     {
         #region variable
 
-        TemplateBodyItemModel _bodyModel = null;
         bool _replaceViewSelected = false;
         string _replaced;
 
         #endregion
 
         public TemplateItemViewModel(TemplateIndexItemModel model, IAppSender appSender, IAppNonProcess appNonProcess)
-            : base(model)
-        {
-            AppSender = appSender;
-            AppNonProcess = appNonProcess;
-        }
+            : base(model, appSender, appNonProcess)
+        { }
 
         #region property
 
         ProgramTemplateProcessor Processor { get; set; }
-
-        TemplateBodyItemModel BodyModel
-        {
-            get
-            {
-                if(this._bodyModel == null) {
-                    var body = AppSender.SendLoadIndexBody(IndexKind.Template, Model.Id);
-                    this._bodyModel = (TemplateBodyItemModel)body;
-                    this._bodyModel.Disposing += Body_Disposing;
-                    if(IsDisposed) {
-                        // 再度読み込まれた
-                        IsDisposed = false;
-                    }
-                }
-
-                return this._bodyModel;
-            }
-        }
 
         public string Name
         {
@@ -213,7 +191,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         public void SaveBody()
         {
-            if(this._bodyModel == null) {
+            if(!IsLoadedBodyModel) {
                 // 読み込んでない。
                 return;
             }
@@ -225,7 +203,9 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         #endregion
 
-        #region SingleModelWrapperViewModelBase
+        #region HavingViewSingleModelWrapperBodyViewModelBase
+
+        protected override IndexKind IndexKind { get { return IndexKind.Template; } }
 
         protected override void Dispose(bool disposing)
         {
@@ -234,32 +214,11 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                     Processor.Dispose();
                     Processor = null;
                 }
-                if(this._bodyModel != null) {
-                    this._bodyModel.Disposing -= Body_Disposing;
-                    this._bodyModel = null;
-                }
             }
 
             base.Dispose(disposing);
         }
 
         #endregion
-
-        #region IHavingAppSender
-
-        public IAppSender AppSender { get; private set; }
-
-        #endregion
-
-        #region IHavingAppNonProcess
-
-        public IAppNonProcess AppNonProcess { get; private set; }
-
-        #endregion
-
-        void Body_Disposing(object sender, EventArgs e)
-        {
-            Dispose();
-        }
     }
 }

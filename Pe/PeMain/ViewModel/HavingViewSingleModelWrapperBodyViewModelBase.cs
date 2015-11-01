@@ -56,11 +56,16 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         protected abstract IndexKind IndexKind { get; }
 
+        protected bool IsLoadedBodyModel
+        {
+            get { return this._bodyModel != null; }
+        }
+
         protected TIndexBodyItemModel BodyModel
         {
             get
             {
-                if(this._bodyModel == null) {
+                if(!IsLoadedBodyModel) {
                     this._bodyModel = LoadBodyItem();
                     CorrectionBodyModel(this._bodyModel);
                     this._bodyModel.Disposing += Body_Disposing;
