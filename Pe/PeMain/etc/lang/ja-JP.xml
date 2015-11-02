@@ -57,6 +57,7 @@
 		<Item Id="update-check/release" Word="アップデートを確認する(_U)" />
 		<Item Id="update-check/rc" Word="RC版も確認対象とする(_R)" />
 
+		<Item Id="home/close" Word="閉じる(_S)" />
 		<Item Id="home/auto-regist/title"   Word="ランチャー自動登録" />
 		<Item Id="home/auto-regist/message" Word="使用環境から自動的にランチャーアイテムを構築します。${br}※実装中機能になります。" />
 		<Item Id="home/notify-area/title"   Word="通知領域設定" />
