@@ -236,8 +236,8 @@
 		<Item Id="command/tag" Word="@[LAUNCHER-ITEM-TAG] (@[LAUNCHER-ITEM-NAME])" />
 		<Item Id="command/drive" Word="@[DRIVE-VOLUME] (@[DRIVE-PATH])" />
 
-		<Item Id="logging/save"  Word="ログ保存" />
-		<Item Id="logging/clear" Word="ログクリア" />
+		<Item Id="logging/save"  Word="ログ保存(_S)" />
+		<Item Id="logging/clear" Word="ログクリア(_R)" />
 		<Item Id="logging/timestamp" Word="タイムスタンプ" />
 		<Item Id="logging/message" Word="概要" />
 		<Item Id="logging/detail/caller"        Word="呼び出し元" />

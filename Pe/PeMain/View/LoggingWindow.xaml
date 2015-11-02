@@ -51,13 +51,13 @@
       <Button Command="{Binding SaveCommand}">
         <StackPanel Orientation="Horizontal">
           <Image Source="{x:Static AM:AppResource.CommonSaveImage}" Style="{StaticResource DefaultImage}" />
-          <TextBlock Text="save" AA:Language.Word="logging/save" />
+          <Label Content="save" AA:Language.Word="logging/save" Style="{StaticResource ContentTextLabel}" />
         </StackPanel>
       </Button>
       <Button Command="{Binding ClearCommand}">
         <StackPanel Orientation="Horizontal">
           <Image Source="{x:Static AM:AppResource.CommonClearImage}" Style="{StaticResource DefaultImage}" />
-          <TextBlock Text="clear" AA:Language.Word="logging/clear" />
+          <Label Content="clear" AA:Language.Word="logging/clear" Style="{StaticResource ContentTextLabel}" />
         </StackPanel>
       </Button>
     </ToolBar>
