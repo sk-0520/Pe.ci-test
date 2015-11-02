@@ -247,13 +247,13 @@
 
 		<Item Id="update/confirm" Word="バージョン @[UPDATE-NOW-VERSION] → @[UPDATE-NEW-VERSION] @[UPDATE-NEW-TYPE] へ更新しますか？" />
 		
-		<Item Id="setting/main" Word="本体設定" />
-		<Item Id="setting/launcher" Word="ランチャー" />
-		<Item Id="setting/toolbar" Word="ツールバー" />
-		<Item Id="setting/command" Word="コマンド" />
-		<Item Id="setting/note" Word="ノート" />
-		<Item Id="setting/clipboard" Word="クリップボード" />
-		<Item Id="setting/template" Word="テンプレート" />
+		<Item Id="setting/main" Word="本体設定(_G)" />
+		<Item Id="setting/launcher" Word="ランチャー(_L)" />
+		<Item Id="setting/toolbar" Word="ツールバー(_T)" />
+		<Item Id="setting/command" Word="コマンド(_C)" />
+		<Item Id="setting/note" Word="ノート(_N)" />
+		<Item Id="setting/clipboard" Word="クリップボード(_C)" />
+		<Item Id="setting/template" Word="テンプレート(_T)" />
 		
 		<Item Id="screen/primary" Word="メインディスプレイ" />
 		<Item Id="screen/click-key" Word="マウスクリックかキー入力で識別画面を閉じてください" />
