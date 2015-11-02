@@ -265,18 +265,18 @@
 		<Item Id="about/link/forum" Word="フォーラム" />
 		<Item Id="about/link/feedback" Word="フィードバック" />
 		<Item Id="about/copy" Word="報告用情報のコピー" />
-		<Item Id="about/copy/short" Word="短い情報" />
+		<Item Id="about/copy/short" Word="短い情報(_S)" />
 		<Item Id="about/copy/long" Word="長い情報" />
 		<Item Id="about/component" Word="コンポーネント" />
 		<Item Id="about/license" Word="ライセンス" />
 		
-		<Item Id="about/app" Word="@[APPLICATION:NAME]" />
-		<Item Id="about/data" Word="データ" />
-		<Item Id="about/history" Word="更新履歴" />
-		<Item Id="about/update" Word="アップデート" />
+		<Item Id="about/app" Word="本体(_P)" />
+		<Item Id="about/data" Word="データ(_D)" />
+		<Item Id="about/history" Word="更新履歴(_H)" />
+		<Item Id="about/update" Word="アップデート(_U)" />
 		<Item Id="about/update/dialog/caption" Word="アップデートチェック" />
 		<Item Id="about/update/dialog/message" Word="情報ダイアログを閉じてアップデートチェックを開始しますか" />
-		<Item Id="about/close" Word="閉じる" />
+		<Item Id="about/close" Word="閉じる(_S)" />
 
 		<Item Id="confirm/shortcut/caption" Word="ショートカット登録方法" />
 		<Item Id="confirm/shortcut/message" Word="D&amp;Dされたパスはショートカットファイルです。&#x0d;&#x0a;&#x0d;&#x0a;ショートカット先を登録するには「${yes}」を、&#x0d;&#x0a;ショートカットファイルそのものを登録するには「${no}」を選択してください。" />

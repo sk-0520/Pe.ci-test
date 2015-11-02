@@ -190,26 +190,26 @@
       </Grid.ColumnDefinitions>
       <Button Grid.Column="0" Command="{Binding OpenApplicationDirectoryCommand}">
         <StackPanel Orientation="Horizontal">
-          <Image Source="{x:Static AM:AppResource.ApplicationIconSmall}" Style="{StaticResource DefaultImage}" />
-          <TextBlock Text="app" AA:Language.Word="{x:Static AM:Constants.ApplicationName}" />
+          <Image Source="{x:Static AM:AppResource.ApplicationIconSmall}" Style="{StaticResource ItemImage}" />
+          <Label Content="app" AA:Language.Word="about/app" Style="{StaticResource ContentTextLabel}" />
         </StackPanel>
       </Button>
       <Button Grid.Column="1" Command="{Binding OpenUserSettingDirectoryCommand}">
         <StackPanel Orientation="Horizontal">
-          <Image Source="{x:Static AM:AppResource.CommonFolderImage}" Style="{StaticResource DefaultImage}" />
-          <TextBlock Text="data" AA:Language.Word="about/data" />
+          <Image Source="{x:Static AM:AppResource.CommonFolderImage}" Style="{StaticResource ItemImage}" />
+          <Label Content="data" AA:Language.Word="about/data" Style="{StaticResource ContentTextLabel}" />
         </StackPanel>
       </Button>
       <Button Grid.Column="2" Command="{Binding OpenHistoryCommand}">
         <StackPanel Orientation="Horizontal">
-          <Image Source="{x:Static AM:AppResource.AboutHistoryImage}" Style="{StaticResource DefaultImage}" />
-          <TextBlock Text="history" AA:Language.Word="about/history" />
+          <Image Source="{x:Static AM:AppResource.AboutHistoryImage}" Style="{StaticResource ItemImage}" />
+          <Label Content="history" AA:Language.Word="about/history" Style="{StaticResource ContentTextLabel}" />
         </StackPanel>
       </Button>
       <Button Grid.Column="3" Command="{Binding UpdateCommand}">
         <StackPanel Orientation="Horizontal">
-          <Image Source="{x:Static AM:AppResource.AboutUpdateImage}" Style="{StaticResource DefaultImage}" />
-          <TextBlock Text="update" AA:Language.Word="about/update" />
+          <Image Source="{x:Static AM:AppResource.AboutUpdateImage}" Style="{StaticResource ItemImage}" />
+          <Label Content="update" AA:Language.Word="about/update" Style="{StaticResource ContentTextLabel}" />
         </StackPanel>
       </Button>
 
