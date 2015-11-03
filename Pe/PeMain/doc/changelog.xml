@@ -111,6 +111,12 @@
 				</comments>
 			</note>
 			<note rev="">
+				<message>#343: ランチャー自動登録ボタンのアイコンが環境に表示できない</message>
+				<comments>
+					<comment>旗マークも単色なんでふちどりしておいた</comment>
+				</comments>
+			</note>
+			<note rev="">
 				<message></message>
 			</note>
 		</group>
