@@ -293,22 +293,22 @@
 		<Item Id="font/weight" Word="ボールド" />
 		<Item Id="font/style" Word="イタリック" />
 
-		<Item Id="launcher-item-edit/general" Word="基本設定" />
+		<Item Id="launcher-item-edit/general" Word="基本設定(_G)" />
 		<Item Id="launcher-item-edit/general/kind" Word="アイテムの種類" />
-		<Item Id="launcher-item-edit/general/kind/file" Word="ファイル" />
-		<Item Id="launcher-item-edit/general/kind/command" Word="コマンド" />
-		<Item Id="launcher-item-edit/general/name" Word="名前" />
-		<Item Id="launcher-item-edit/general/command" Word="コマンド" />
-		<Item Id="launcher-item-edit/general/option" Word="オプション" />
-		<Item Id="launcher-item-edit/general/work-dir" Word="作業ディレクトリ" />
-		<Item Id="launcher-item-edit/general/icon" Word="アイコン" />
-		<Item Id="launcher-item-edit/env" Word="環境変数" />
-		<Item Id="launcher-item-edit/others" Word="その他" />
-		<Item Id="launcher-item-edit/others/stream-output" Word="標準出力" />
-		<Item Id="launcher-item-edit/others/stream-input" Word="標準入力" />
-		<Item Id="launcher-item-edit/others/admin" Word="管理者権限" />
-		<Item Id="launcher-item-edit/others/tag" Word="タグ(カンマ区切り)" />
-		<Item Id="launcher-item-edit/others/memo" Word="備考" />
+		<Item Id="launcher-item-edit/general/kind/file" Word="ファイル(_F)" />
+		<Item Id="launcher-item-edit/general/kind/command" Word="コマンド(_M)" />
+		<Item Id="launcher-item-edit/general/name" Word="名前(_N)" />
+		<Item Id="launcher-item-edit/general/command" Word="コマンド(_C)" />
+		<Item Id="launcher-item-edit/general/option" Word="オプション(_O)" />
+		<Item Id="launcher-item-edit/general/work-dir" Word="作業ディレクトリ(_W)" />
+		<Item Id="launcher-item-edit/general/icon" Word="アイコン(_I)" />
+		<Item Id="launcher-item-edit/env" Word="環境変数(_V)" />
+		<Item Id="launcher-item-edit/others" Word="その他(_O)" />
+		<Item Id="launcher-item-edit/others/stream-output" Word="標準出力(_O)" />
+		<Item Id="launcher-item-edit/others/stream-input" Word="標準入力(_I)" />
+		<Item Id="launcher-item-edit/others/admin" Word="管理者権限(_A)" />
+		<Item Id="launcher-item-edit/others/tag" Word="タグ(カンマ区切り)(_T)" />
+		<Item Id="launcher-item-edit/others/memo" Word="備考(_R)" />
 
 		<Item Id="launcher-list-items/append" Word="アイテムの追加" />
 		<Item Id="launcher-list-items/remove" Word="アイテムの削除" />
