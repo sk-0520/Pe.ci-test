@@ -58,7 +58,7 @@
 	<log date="YYYY/MM/DD" version="0.69.1" type="rc" dummy="################################################################################">
 		<group type="note" dummy="==================================================================">
 			<note rev="">
-				<message>#346: Forms版→WPF版用データコンバーターの廃止</message>
+				<message class="compatibility">#346: Forms版→WPF版用データコンバーターの廃止</message>
 				<comments>
 					<comment>本バージョンを持ってForms版からのデータ引き継ぎサポートを終了します</comment>
 				</comments>
@@ -70,7 +70,10 @@
 				</comments>
 			</note>
 			<note rev="">
-				<message></message>
+				<message class="compatibility">#104による0.39.0 未満のアップデートチェック用URI互換を破棄</message>
+				<comments>
+					<comment>消しても誰も困らんだろ……</comment>
+				</comments>
 			</note>
 		</group>
 		<group type="features" dummy="==================================================================">
