@@ -132,7 +132,7 @@
 		</group>
 		<group type="developer" dummy="==================================================================">
 			<note rev="">
-				<message></message>
+				<message>#340: masterからdevelopmentマージはFFする</message>
 			</note>
 			<note rev="">
 				<message></message>
