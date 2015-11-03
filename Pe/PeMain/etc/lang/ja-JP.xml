@@ -411,9 +411,9 @@
 		<Item Id="clipboard-setting/limit/image/height" Word="縦" />
 		<Item Id="clipboard-setting/limit/image/unit" Word="px" />
 
-		<Item Id="template-setting/topmost" Word="最前面" />
-		<Item Id="template-setting/visible" Word="テンプレートウィンドウを表示する" />
-		<Item Id="template-setting/show" Word="表示切り替えキー" />
+		<Item Id="template-setting/topmost" Word="最前面(_T)" />
+		<Item Id="template-setting/visible" Word="テンプレートウィンドウを表示する(_V)" />
+		<Item Id="template-setting/show" Word="表示切り替えキー(_K)" />
 		<Item Id="template-setting/font" Word="フォント" />
 
 		<!-- ログメッセージ -->

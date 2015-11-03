@@ -36,8 +36,8 @@
       <CheckBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="topmost" AA:Language.Word="template-setting/topmost" IsChecked="{Binding IsTopmost}" />
       <CheckBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Content="visible" AA:Language.Word="template-setting/visible" IsChecked="{Binding IsVisible}" />
 
-      <Label Grid.Row="2" Grid.Column="0" Content="show" AA:Language.Word="template-setting/show" Style="{StaticResource HeaderLabel}" />
-      <AV:AppHotkeyControl Grid.Row="2" Grid.Column="1" Hotkey="{Binding ToggleHotKey}" Style="{StaticResource DefaultAppHotkey}" />
+      <Label Grid.Row="2" Grid.Column="0" Content="show" AA:Language.Word="template-setting/show" Style="{StaticResource HeaderLabel}" Target="{Binding ElementName=inputToggleHotKey}" />
+      <AV:AppHotkeyControl x:Name="inputToggleHotKey" Grid.Row="2" Grid.Column="1" Hotkey="{Binding ToggleHotKey}" Style="{StaticResource DefaultAppHotkey}" />
 
       <Label Grid.Row="3" Grid.Column="0" VerticalAlignment="Top" Content="font" AA:Language.Word="template-setting/font" Style="{StaticResource HeaderLabel}" />
       <AV:FontSelectControl
