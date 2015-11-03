@@ -346,19 +346,19 @@
 		<Item Id="main-setting/window-save/interval" Word="保存間隔" />
 		
 		
-		<Item Id="toolbar-setting/screen" Word="識別" />
-		<Item Id="toolbar-setting/toolbar/group" Word="初期グループ" />
-		<Item Id="toolbar-setting/toolbar/position" Word="ツールバー位置" />
-		<Item Id="toolbar-setting/toolbar/button" Word="ボタン位置" />
-		<Item Id="toolbar-setting/toolbar/icon" Word="アイコンサイズ" />
+		<Item Id="toolbar-setting/screen" Word="識別(_I)" />
+		<Item Id="toolbar-setting/toolbar/group" Word="初期グループ(_R)" />
+		<Item Id="toolbar-setting/toolbar/position" Word="ツールバー位置(_P)" />
+		<Item Id="toolbar-setting/toolbar/button" Word="ボタン位置(_B)" />
+		<Item Id="toolbar-setting/toolbar/icon" Word="アイコンサイズ(_S)" />
 		<Item Id="toolbar-setting/toolbar/font" Word="フォント" />
 		<Item Id="toolbar-setting/toolbar/text-length" Word="テキストの長さ" />
 		<Item Id="toolbar-setting/toolbar/auto-hide-time" Word="表示時間" />
-		<Item Id="toolbar-setting/toolbar/show-text" Word="テキストを表示する" />
-		<Item Id="toolbar-setting/toolbar/auto-hide" Word="自動的に隠す" />
-		<Item Id="toolbar-setting/toolbar/topmost" Word="最前面で表示する" />
-		<Item Id="toolbar-setting/toolbar/visible" Word="ツールバーの表示" />
-		<Item Id="toolbar-setting/toolbar/menu-posotion" Word="メニューボタンを調整する" />
+		<Item Id="toolbar-setting/toolbar/show-text" Word="テキストを表示する(_T)" />
+		<Item Id="toolbar-setting/toolbar/auto-hide" Word="自動的に隠す(_A)" />
+		<Item Id="toolbar-setting/toolbar/topmost" Word="最前面で表示する(_T)" />
+		<Item Id="toolbar-setting/toolbar/visible" Word="ツールバーの表示(_V)" />
+		<Item Id="toolbar-setting/toolbar/menu-posotion" Word="メニューボタンを調整する(_C)" />
 		<Item Id="toolbar-setting/group/node/add/group" Word="グループ追加" />
 		<Item Id="toolbar-setting/group/node/add/item" Word="選択中ランチャーアイテムの追加" />
 		<Item Id="toolbar-setting/group/node/up" Word="選択中ノードを上に移動" />
