@@ -44,8 +44,8 @@
           <ColumnDefinition Width="200" />
           <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
-        <Label Grid.Row="0" Grid.Column="0" Content="language" AA:Language.Word="main-setting/general/lang" Style="{StaticResource HeaderLabel}" />
-        <ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding LanguageList}" DisplayMemberPath="DisplayText" SelectedValuePath="Value" SelectedValue="{Binding SelectedLanguage}" Style="{StaticResource DefaultComboBox}" />
+        <Label Grid.Row="0" Grid.Column="0" Content="language" AA:Language.Word="main-setting/general/lang" Style="{StaticResource HeaderLabel}" Target="{Binding ElementName=selectLanguage}" />
+        <ComboBox x:Name="selectLanguage" Grid.Row="0" Grid.Column="1" ItemsSource="{Binding LanguageList}" DisplayMemberPath="DisplayText" SelectedValuePath="Value" SelectedValue="{Binding SelectedLanguage}" Style="{StaticResource DefaultComboBox}" />
         <CheckBox Grid.Row="0" Grid.Column="2" Margin="32,0,0,0" Content="startup" AA:Language.Word="main-setting/general/startup" IsChecked="{Binding Startup}" Style="{StaticResource DefaultCheckBox}" />
       </Grid>
     </GroupBox>
