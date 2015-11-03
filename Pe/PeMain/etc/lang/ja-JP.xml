@@ -374,17 +374,17 @@
 		<Item Id="command-setting/find/file" Word="ファイルを検索する(_F)" />
 
 		<Item Id="note-setting/key" Word="キー設定" />
-		<Item Id="note-setting/key/create" Word="作成" />
-		<Item Id="note-setting/key/hide" Word="隠す" />
-		<Item Id="note-setting/key/compact" Word="最小化" />
-		<Item Id="note-setting/key/front" Word="前面表示" />
+		<Item Id="note-setting/key/create" Word="作成(_C)" />
+		<Item Id="note-setting/key/hide" Word="隠す(_N)" />
+		<Item Id="note-setting/key/compact" Word="最小化(_C)" />
+		<Item Id="note-setting/key/front" Word="前面表示(_F)" />
 		<Item Id="note-setting/style" Word="標準スタイル" />
 		<Item Id="note-setting/style/font" Word="フォント" />
 		<Item Id="note-setting/style/fore-color" Word="前景色" />
 		<Item Id="note-setting/style/back-color" Word="背景色" />
 		<Item Id="note-setting/title" Word="初期タイトル" />
-		<Item Id="note-setting/title/timestamp" Word="タイムスタンプ" />
-		<Item Id="note-setting/title/default" Word="デフォルト" />
+		<Item Id="note-setting/title/timestamp" Word="タイムスタンプ(_T)" />
+		<Item Id="note-setting/title/default" Word="デフォルト(_D)" />
 
 		<Item Id="clipboard-setting/enabled" Word="クリップボード取込を有効にする" />
 		<Item Id="clipboard-setting/copy-app" Word="@[APPLICATION:NAME] でのコピー操作も取込対象にする" />

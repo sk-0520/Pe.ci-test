@@ -48,17 +48,17 @@
             <ColumnDefinition Width="*" />
           </Grid.ColumnDefinitions>
 
-          <Label Grid.Row="0" Grid.Column="0" Content="create" AA:Language.Word="note-setting/key/create" Style="{StaticResource HeaderLabel}" />
-          <AV:AppHotkeyControl Grid.Row="0" Grid.Column="1" Hotkey="{Binding CreateHotKey}" Style="{StaticResource DefaultAppHotkey}" />
+          <Label Grid.Row="0" Grid.Column="0" Content="create" AA:Language.Word="note-setting/key/create" Style="{StaticResource HeaderLabel}" Target="{Binding ElementName=inputCreateHotkey}" />
+          <AV:AppHotkeyControl x:Name="inputCreateHotkey" Grid.Row="0" Grid.Column="1" Hotkey="{Binding CreateHotKey}" Style="{StaticResource DefaultAppHotkey}" />
 
-          <Label Grid.Row="1" Grid.Column="0" Content="hide" AA:Language.Word="note-setting/key/hide" Style="{StaticResource HeaderLabel}" />
-          <AV:AppHotkeyControl Grid.Row="1" Grid.Column="1" Hotkey="{Binding HideHotKey}" Style="{StaticResource DefaultAppHotkey}" />
+          <Label Grid.Row="1" Grid.Column="0" Content="hide" AA:Language.Word="note-setting/key/hide" Style="{StaticResource HeaderLabel}" Target="{Binding ElementName=inputHideHotkey}" />
+          <AV:AppHotkeyControl x:Name="inputHideHotkey" Grid.Row="1" Grid.Column="1" Hotkey="{Binding HideHotKey}" Style="{StaticResource DefaultAppHotkey}" />
 
-          <Label Grid.Row="2" Grid.Column="0" Content="compact" AA:Language.Word="note-setting/key/compact" Style="{StaticResource HeaderLabel}" />
-          <AV:AppHotkeyControl Grid.Row="2" Grid.Column="1" Hotkey="{Binding CompactHotKey}" Style="{StaticResource DefaultAppHotkey}" />
+          <Label Grid.Row="2" Grid.Column="0" Content="compact" AA:Language.Word="note-setting/key/compact" Style="{StaticResource HeaderLabel}" Target="{Binding ElementName=inputCompactHotkey}" />
+          <AV:AppHotkeyControl x:Name="inputCompactHotkey" Grid.Row="2" Grid.Column="1" Hotkey="{Binding CompactHotKey}" Style="{StaticResource DefaultAppHotkey}" />
 
-          <Label Grid.Row="3" Grid.Column="0" Content="front" AA:Language.Word="note-setting/key/front" Style="{StaticResource HeaderLabel}" />
-          <AV:AppHotkeyControl Grid.Row="3" Grid.Column="1" Hotkey="{Binding ShowFrontHotKey}" Style="{StaticResource DefaultAppHotkey}" />
+          <Label Grid.Row="3" Grid.Column="0" Content="front" AA:Language.Word="note-setting/key/front" Style="{StaticResource HeaderLabel}" Target="{Binding ElementName=inputShowFrontHotkey}" />
+          <AV:AppHotkeyControl x:Name="inputShowFrontHotkey" Grid.Row="3" Grid.Column="1" Hotkey="{Binding ShowFrontHotKey}" Style="{StaticResource DefaultAppHotkey}" />
         </Grid>
       </GroupBox>
       
