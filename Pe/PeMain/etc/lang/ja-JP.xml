@@ -74,28 +74,28 @@
 		<Item Id="home/auto-regist/group/program"    Word="プログラム" />
 
 		<Item Id="tasktray/tooltip" Word="ぴーいー" />
-		<Item Id="tasktray/setting" Word="@[APPLICATION:NAME] ${setting}" />
-		<Item Id="tasktray/toolbar" Word="${toolbar}" />
-		<Item Id="tasktray/note" Word="ノート" />
-		<Item Id="tasktray/note/create" Word="新規作成" />
-		<Item Id="tasktray/note/compact" Word="最小化" />
-		<Item Id="tasktray/note/hide" Word="非表示" />
-		<Item Id="tasktray/note/front" Word="前面表示" />
-		<Item Id="tasktray/note/show" Word="表示中一覧" />
-		<Item Id="tasktray/note/hidden" Word="非表示一覧" />
-		<Item Id="tasktray/template" Word="テンプレート" />
-		<Item Id="tasktray/command" Word="コマンド" />
-		<Item Id="tasktray/log" Word="ログ" />
-		<Item Id="tasktray/system-env" Word="システム環境" />
-		<Item Id="tasktray/system-env/shell-hidden" Word="隠しファイルを表示する" />
-		<Item Id="tasktray/system-env/shell-ext" Word="拡張子を表示する" />
-		<Item Id="tasktray/system-env/clipboard" Word="クリップボード" />
-		<Item Id="tasktray/system-env/window/save" Word="現在のウィンドウ状態を保存" />
-		<Item Id="tasktray/system-env/window/load" Word="保存しているウィンドウ状態を復帰" />
-		<Item Id="tasktray/system-env/window/timer" Word="タイマー保存" />
-		<Item Id="tasktray/system-env/window/system" Word="システム変更" />
-		<Item Id="tasktray/about" Word="@[APPLICATION:NAME] 情報" />
-		<Item Id="tasktray/exit" Word="終了" />
+		<Item Id="tasktray/setting" Word="@[APPLICATION:NAME] ${setting}(_S)" />
+		<Item Id="tasktray/toolbar" Word="${toolbar}(_T)" />
+		<Item Id="tasktray/note" Word="ノート(_N)" />
+		<Item Id="tasktray/note/create" Word="新規作成(_C)" />
+		<Item Id="tasktray/note/compact" Word="最小化(_N)" />
+		<Item Id="tasktray/note/hide" Word="非表示(_H)" />
+		<Item Id="tasktray/note/front" Word="前面表示(_F)" />
+		<Item Id="tasktray/note/show" Word="表示中一覧(_V)" />
+		<Item Id="tasktray/note/hidden" Word="非表示一覧(_U)" />
+		<Item Id="tasktray/template" Word="テンプレート(_T)" />
+		<Item Id="tasktray/command" Word="コマンド(_M)" />
+		<Item Id="tasktray/log" Word="ログ(_L)" />
+		<Item Id="tasktray/system-env" Word="システム環境(_E)" />
+		<Item Id="tasktray/system-env/shell-hidden" Word="隠しファイルを表示する(_H)" />
+		<Item Id="tasktray/system-env/shell-ext" Word="拡張子を表示する(_E)" />
+		<Item Id="tasktray/system-env/clipboard" Word="クリップボード(_C)" />
+		<Item Id="tasktray/system-env/window/save" Word="現在のウィンドウ状態を保存(_S)" />
+		<Item Id="tasktray/system-env/window/load" Word="保存しているウィンドウ状態を復帰(_L)" />
+		<Item Id="tasktray/system-env/window/timer" Word="タイマー保存(_T)" />
+		<Item Id="tasktray/system-env/window/system" Word="システム変更(_Y)" />
+		<Item Id="tasktray/about" Word="@[APPLICATION:NAME] 情報(_A)" />
+		<Item Id="tasktray/exit" Word="終了(_X)" />
 
 		<Item Id="notify/info/command/show/title"      Word="コマンドウィンドウ" />
 		<Item Id="notify/info/command/show/message"    Word="コマンドウィンドウの表示" />
