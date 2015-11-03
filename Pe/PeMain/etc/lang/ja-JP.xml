@@ -284,7 +284,7 @@
 
 		<!-- control -->
 		
-		<Item Id="environment/edit" Word="環境変数を編集する" />
+		<Item Id="environment/edit" Word="環境変数を編集する(_E)" />
 		<Item Id="environment/update" Word="変更" />
 		<Item Id="environment/remove" Word="削除" />
 		<Item Id="environment/key" Word="キー" />

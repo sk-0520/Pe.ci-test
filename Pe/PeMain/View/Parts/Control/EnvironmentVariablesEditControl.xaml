@@ -28,7 +28,7 @@
       <RowDefinition Height="*"/>
     </Grid.RowDefinitions>
     <CheckBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="16,4,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" IsChecked="{Binding Edit}" Content="edit" AA:Language.Word="environment/edit" />
-    <GroupBox  Grid.Row="1" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Header="update" AA:Language.Word="environment/update" Style="{StaticResource DefaultGroupBox}" >
+    <GroupBox Grid.Row="1" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Header="update" AA:Language.Word="environment/update" Style="{StaticResource DefaultGroupBox}" >
       <ACC:AppDataGrid x:Name="gridEnv" CanUserAddRows="True" AutoGenerateColumns="False" ItemsSource="{Binding Update}" >
         <ACC:AppDataGrid.Columns>
           <DataGridTextColumn Binding="{Binding Id}">
