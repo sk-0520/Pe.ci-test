@@ -55,7 +55,7 @@
 		</group>
 	</log>
 	-->
-	<log date="YYYY/MM/DD" version="0.68.2" type="rc" dummy="################################################################################">
+	<log date="2015/11/03" version="0.69.0" dummy="################################################################################">
 		<group type="note" dummy="==================================================================">
 			<note rev="">
 				<message>[事前通知]: 0.70.0 で Forms 版データ引き継ぎ処理を廃止します</message>
@@ -69,26 +69,9 @@
 					<comment>nameof! nameof! nameof!</comment>
 				</comments>
 			</note>
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-		</group>
-		<group type="features" dummy="==================================================================">
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
 		</group>
 		<group type="fixes" dummy="==================================================================">
-			<note rev="">
+			<note rev="cc1b9e1b348cbfd8f016b181a62da6de722f0e7e">
 				<message>#341: メインボタンのアイコンがなんかずれてる</message>
 			</note>
 			<note rev="">
@@ -98,47 +81,38 @@
 					<comment>意味あんのか知らんけど一部バインドを初回のみに変更</comment>
 				</comments>
 			</note>
-			<note rev="">
+			<note rev="a5c46b69fd1872f0c69325f2604c193f6d0ea86c">
 				<message>#342: クリップボードやテンプレートの項目を一定数選択していくと古い選択アイテムが表示されなくなる</message>
 				<comments>
 					<comment>#311と#305で死んでしもうてた</comment>
 				</comments>
 			</note>
-			<note rev="">
+			<note rev="87b43b7580856087ea3dfb25a73bfe2331e678db">
 				<message>#298: メニュー・ラベルにショートカットキーを表示する</message>
 				<comments>
 					<comment>WPF版作成時に未実装だった</comment>
 				</comments>
 			</note>
-			<note rev="">
+			<note rev="59b025d28ae3026b9eb8a944b01c2f4ee273a79b">
 				<message>#343: ランチャー自動登録ボタンのアイコンが環境に表示できない</message>
 				<comments>
 					<comment>旗マークも単色なんでふちどりしておいた</comment>
 				</comments>
 			</note>
-			<note rev="">
+			<note rev="b20ae7d9a4d6e759b264f5355cd1cf45c2e3b2e1">
 				<message>#345: グループ名変更UIが邪魔</message>
 				<comments>
 					<comment>左側に出すように変更</comment>
 					<comment>OSの利き手設定によって表示方向が右だったりするけど気にしない</comment>
 				</comments>
 			</note>
-			<note rev="">
+			<note rev="81ff02dcbe710f93077f3e09901d2ee787643d18">
 				<message>#344: ホットキーコントロールをWindows提供(HOTKEY_CLASS)の挙動に合わせる</message>
-			</note>
-			<note rev="">
-				<message></message>
 			</note>
 		</group>
 		<group type="developer" dummy="==================================================================">
-			<note rev="">
+			<note rev="c2b66c7720199c68b4bb9538203534cd51763f19">
 				<message>#340: masterからdevelopmentマージはFFする</message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
 			</note>
 		</group>
 	</log>
