@@ -104,9 +104,9 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Database
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public T To<T>(object value)
+        public TResult To<TResult>(object value)
         {
-            return (T)(To(value, typeof(T)));
+            return (TResult)(To(value, typeof(TResult)));
         }
 
         /// <summary>

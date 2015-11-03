@@ -57,20 +57,20 @@
       <Button Command="{Binding CreateItemCommand}">
         <StackPanel Orientation="Horizontal">
           <Image Style="{StaticResource DefaultImage}" Source="{Binding Source={x:Static AM:AppResource.CommonAddImage}}" />
-          <TextBlock Text="create" AA:Language.Word="template/create" />
+          <Label Content="create" AA:Language.Word="template/create" Style="{StaticResource ContentTextLabel}" />
         </StackPanel>
       </Button>
       <Button Command="{Binding SaveItemCommand}" IsEnabled="{Binding IsEnabled,ElementName=content}">
         <StackPanel Orientation="Horizontal">
           <Image Style="{StaticResource DefaultImage}" Source="{Binding Source={x:Static AM:AppResource.CommonSaveImage}}" />
-          <TextBlock Text="save" AA:Language.Word="template/save" />
+          <Label Content="save" AA:Language.Word="template/save" Style="{StaticResource ContentTextLabel}" />
         </StackPanel>
       </Button>
       <Separator />
       <Button Command="{Binding RemoveItemCommand}" IsEnabled="{Binding IsEnabled,ElementName=content}" >
         <StackPanel Orientation="Horizontal">
           <Image Style="{StaticResource DefaultImage}" Source="{Binding Source={x:Static AM:AppResource.CommonRemoveImage}}" />
-          <TextBlock Text="remove" AA:Language.Word="template/remove" />
+          <Label Content="remove" AA:Language.Word="template/remove" Style="{StaticResource ContentTextLabel}" />
         </StackPanel>
       </Button>
       <Separator />
@@ -80,7 +80,7 @@
       <ToggleButton IsChecked="{Binding AppNonProcess.ClipboardWatcher.UsingClipboard}">
         <StackPanel Orientation="Horizontal">
           <Image Style="{StaticResource DefaultImage}" Source="{Binding Source={x:Static AM:AppResource.CommonUsingClipboardImage}}" />
-          <TextBlock Text="use clipboard" AA:Language.Word="template/using-clipboard" />
+          <Label Content="use clipboard" AA:Language.Word="template/using-clipboard" Style="{StaticResource ContentTextLabel}" />
         </StackPanel>
       </ToggleButton>
     </ToolBar>
@@ -173,7 +173,7 @@
           <TabItem.Header>
             <StackPanel Orientation="Horizontal">
               <Image Source="{x:Static AM:AppResource.TemplateTemplateImage}" Style="{StaticResource DefaultImage}" />
-              <TextBlock Text="source" AA:Language.Word="template/item/source" />
+              <Label Content="source" AA:Language.Word="template/item/source" Style="{StaticResource ContentTextLabel}" />
             </StackPanel>
           </TabItem.Header>
           <Grid>
@@ -187,8 +187,8 @@
                 <ColumnDefinition Width="7*"/>
                 <ColumnDefinition Width="3*"/>
               </Grid.ColumnDefinitions>
-              <Label Grid.Column="0"  VerticalAlignment="Center" Content="name" AA:Language.Word="template/item/name" Style="{StaticResource HeaderLabel}"/>
-              <TextBox Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Text="{Binding SelectedViewModel.Name, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DefaultTextBox}" />
+              <Label Grid.Column="0" VerticalAlignment="Center" Content="name" AA:Language.Word="template/item/name" Target="{Binding ElementName=inputName}" Style="{StaticResource HeaderLabel}"/>
+              <TextBox x:Name="inputName" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Text="{Binding SelectedViewModel.Name, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DefaultTextBox}" />
               <!--<CheckBox Grid.Column="2" Margin="4,0,4,0" VerticalAlignment="Center" Content="replace" AA:Language.Word="template/item/replace" IsChecked="{Binding SelectedViewModel.IsReplace}" />
               <CheckBox Grid.Column="3" VerticalAlignment="Center" Content="T4" AA:Language.Word="template/item/t4" IsChecked="{Binding SelectedViewModel.IsProgrammableReplace}" />-->
               <ComboBox Grid.Column="2" HorizontalAlignment="Stretch" ItemsSource="{Binding Source={x:Static AP:EnumList.TemplateReplaceModeList}}" SelectedItem="{Binding SelectedViewModel.TemplateReplaceMode}" Style="{StaticResource DefaultComboBox}">
@@ -254,7 +254,7 @@
           <TabItem.Header>
             <StackPanel Orientation="Horizontal">
               <Image Source="{x:Static AM:AppResource.TemplatePreviewImage}" Style="{StaticResource DefaultImage}" />
-              <TextBlock Text="preview" AA:Language.Word="template/item/preview" />
+              <Label Content="preview" AA:Language.Word="template/item/preview" Style="{StaticResource ContentTextLabel}" />
             </StackPanel>
           </TabItem.Header>
           <TextBox

@@ -22,5 +22,5 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Define
     using System.Text;
     using System.Threading.Tasks;
 
-    public delegate bool DelegateRetryExecute<T>(int waitCurrentCount, ref T result);
+    public delegate bool DelegateRetryExecute<TResult>(int waitCurrentCount, ref TResult result);
 }

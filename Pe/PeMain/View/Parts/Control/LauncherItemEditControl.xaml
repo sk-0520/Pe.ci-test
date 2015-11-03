@@ -19,7 +19,7 @@
         <ResourceDictionary Source="/View/Parts/Resource/ImageDictionary.xaml"/>
         <ResourceDictionary Source="/View/Parts/Resource/TextBoxDictionary.xaml"/>
         <ResourceDictionary Source="/View/Parts/Resource/GroupBoxDictionary.xaml"/>
-        <ResourceDictionary Source="/View/Parts/Resource/labelDictionary.xaml"/>
+        <ResourceDictionary Source="/View/Parts/Resource/LabelDictionary.xaml"/>
       </ResourceDictionary.MergedDictionaries>
       <SC:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
       <Thickness x:Key="ControlMargin" Top="4" Bottom="4" />
@@ -27,7 +27,10 @@
   </AV:CommonDataUserControl.Resources>
 
   <TabControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-    <TabItem HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Header="general" AA:Language.Word="launcher-item-edit/general">
+    <TabItem HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+      <TabItem.Header>
+        <Label Content="general" AA:Language.Word="launcher-item-edit/general" Style="{StaticResource ContentTextLabel}" />
+      </TabItem.Header>
       <Grid>
         <Grid.RowDefinitions>
           <RowDefinition Height="Auto" />
@@ -66,11 +69,11 @@
             <ColumnDefinition Width="Auto" />
           </Grid.ColumnDefinitions>
 
-          <Label Grid.Row="0" Grid.Column="0" Content="name" AA:Language.Word="launcher-item-edit/general/name" />
-          <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
+          <Label Grid.Row="0" Grid.Column="0" Content="name" AA:Language.Word="launcher-item-edit/general/name" Target="{Binding ElementName=inputName}" />
+          <TextBox x:Name="inputName" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
 
-          <Label Grid.Row="1" Grid.Column="0" Content="command" AA:Language.Word="launcher-item-edit/general/command" />
-          <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Command, UpdateSourceTrigger=PropertyChanged}" />
+          <Label Grid.Row="1" Grid.Column="0" Content="command" AA:Language.Word="launcher-item-edit/general/command" Target="{Binding ElementName=inputCommand}" />
+          <TextBox x:Name="inputCommand" Grid.Row="1" Grid.Column="1" Text="{Binding Command, UpdateSourceTrigger=PropertyChanged}" />
           <Button Grid.Row="1" Grid.Column="2" Command="{Binding SelectCommandFileCommand}">
             <!-- file -->
             <Image Source="{x:Static AM:AppResource.CommonFileImage}" Style="{StaticResource DefaultImage}" />
@@ -80,8 +83,8 @@
             <Image Source="{x:Static AM:AppResource.CommonFolderImage}" Style="{StaticResource DefaultImage}" />
           </Button>
 
-          <Label Grid.Row="2" Grid.Column="0" Content="option" AA:Language.Word="launcher-item-edit/general/option" />
-          <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Option, UpdateSourceTrigger=PropertyChanged}" />
+          <Label Grid.Row="2" Grid.Column="0" Content="option" AA:Language.Word="launcher-item-edit/general/option" Target="{Binding ElementName=inputOption}" />
+          <TextBox x:Name="inputOption" Grid.Row="2" Grid.Column="1" Text="{Binding Option, UpdateSourceTrigger=PropertyChanged}" />
           <Button Grid.Row="2" Grid.Column="2" Command="{Binding SelectOptionFilesCommand}">
             <!-- file -->
             <Image Source="{x:Static AM:AppResource.CommonFileImage}" Style="{StaticResource DefaultImage}" />
@@ -91,26 +94,32 @@
             <Image Source="{x:Static AM:AppResource.CommonFolderImage}" Style="{StaticResource DefaultImage}" />
           </Button>
 
-          <Label Grid.Row="3" Grid.Column="0" Content="work dir" AA:Language.Word="launcher-item-edit/general/work-dir" />
-          <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding WorkDirectoryPath, UpdateSourceTrigger=PropertyChanged}" />
+          <Label Grid.Row="3" Grid.Column="0" Content="work dir" AA:Language.Word="launcher-item-edit/general/work-dir" Target="{Binding ElementName=inputWorkDirectory}" />
+          <TextBox x:Name="inputWorkDirectory" Grid.Row="3" Grid.Column="1" Text="{Binding WorkDirectoryPath, UpdateSourceTrigger=PropertyChanged}" />
           <Button Grid.Row="3" Grid.Column="2" Command="{Binding SelectWorkDirectoryCommand}">
             <!-- dir -->
             <Image Source="{x:Static AM:AppResource.CommonFolderImage}" Style="{StaticResource DefaultImage}" />
           </Button>
 
-          <Label Grid.Row="4" Grid.Column="0" Content="icon path" AA:Language.Word="launcher-item-edit/general/icon" />
-          <TextBox Grid.Row="4" Grid.Column="1" IsReadOnly="True" Text="{Binding IconDisplayText, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
-          <Button Grid.Row="4" Grid.Column="2" Command="{Binding SelectIconCommand}">
+          <Label Grid.Row="4" Grid.Column="0" Content="icon path" AA:Language.Word="launcher-item-edit/general/icon" Target="{Binding ElementName=commandIcon}" />
+          <TextBox x:Name="inputIcon" Grid.Row="4" Grid.Column="1" IsReadOnly="True" Text="{Binding IconDisplayText, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+          <Button x:Name="commandIcon" Grid.Row="4" Grid.Column="2" Command="{Binding SelectIconCommand}">
             <!-- file -->
             <Image Source="{x:Static AM:AppResource.CommonFileImage}" Style="{StaticResource DefaultImage}" />
           </Button>
         </Grid>
       </Grid>
     </TabItem>
-    <TabItem Header="env" AA:Language.Word="launcher-item-edit/env">
+    <TabItem>
+      <TabItem.Header>
+        <Label Content="env" AA:Language.Word="launcher-item-edit/env" Style="{StaticResource ContentTextLabel}" />
+      </TabItem.Header>
       <AV:EnvironmentVariablesEditControl Margin="0" DataContext="{Binding EnvironmentVariables, Mode=OneWay}"/>
     </TabItem>
-    <TabItem Header="others" AA:Language.Word="launcher-item-edit/others">
+    <TabItem>
+      <TabItem.Header>
+        <Label Content="others" AA:Language.Word="launcher-item-edit/others" Style="{StaticResource ContentTextLabel}" />
+      </TabItem.Header>
       <Grid>
         <Grid.RowDefinitions>
           <RowDefinition Height="Auto" />
@@ -130,11 +139,11 @@
         
         <CheckBox Grid.Row="1" Grid.Column="0"  IsChecked="{Binding Administrator}" Content="admin" AA:Language.Word="launcher-item-edit/others/admin" />
 
-        <Label Grid.Row="2" Grid.Column="0" Content="tag" AA:Language.Word="launcher-item-edit/others/tag" Style="{StaticResource HeaderLabel}" />
-        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Tags, UpdateSourceTrigger=PropertyChanged}" />
+        <Label Grid.Row="2" Grid.Column="0" Content="tag" AA:Language.Word="launcher-item-edit/others/tag" Style="{StaticResource HeaderLabel}" Target="{Binding ElementName=inputTags}" />
+        <TextBox x:Name="inputTags" Grid.Row="2" Grid.Column="1" Text="{Binding Tags, UpdateSourceTrigger=PropertyChanged}" />
 
-        <Label Grid.Row="3" Grid.Column="0" VerticalAlignment="Top" Content="memo" AA:Language.Word="launcher-item-edit/others/memo" Style="{StaticResource HeaderLabel}" />
-        <TextBox Grid.Row="3" Grid.Column="1" AcceptsReturn="True" Text="{Binding Comment, UpdateSourceTrigger=PropertyChanged}" />
+        <Label Grid.Row="3" Grid.Column="0" VerticalAlignment="Top" Content="memo" AA:Language.Word="launcher-item-edit/others/memo" Style="{StaticResource HeaderLabel}" Target="{Binding ElementName=inputComment}" />
+        <TextBox x:Name="inputComment" Grid.Row="3" Grid.Column="1" AcceptsReturn="True" Text="{Binding Comment, UpdateSourceTrigger=PropertyChanged}" />
       </Grid>
     </TabItem>
   </TabControl>

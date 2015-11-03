@@ -30,12 +30,19 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.T4Template
     /// <summary>
     /// テンプレートクラスをAppDomain間で利用できるようするProxy
     /// </summary>
-    public class RuntimeTextTemplateProxy: MarshalByRefObject, IRuntimeTextTemplate
+    public class RuntimeTextTemplateProxy: MarshalByRefObject, IRuntimeTextTemplate, IIsDisposed
     {
+        #region IIsDisposed
+
+        [field: NonSerialized]
+        public event EventHandler Disposing;
+
         /// <summary>
         /// 破棄済みフラグ
         /// </summary>
-        private bool _disposed;
+        public bool IsDisposed { get; private set; }
+
+        #endregion
 
         /// <summary>
         /// コンパイル後の生成オブジェクト。
@@ -70,19 +77,23 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.T4Template
 
         public void Dispose()
         {
-            GC.SuppressFinalize(this);
             Dispose(true);
         }
 
         protected virtual void Dispose(bool disposing)
         {
-            if(!_disposed) {
+            if(!IsDisposed) {
                 InstanceTemplateHost = null;
                 InstanceTemplateTransformText = null;
                 InstanceTemplate = null;
 
+                if(Disposing != null) {
+                    Disposing(this, EventArgs.Empty);
+                }
+
                 RemotingServices.Disconnect(this);
-                _disposed = true;
+                GC.SuppressFinalize(this);
+                IsDisposed = true;
             }
         }
 

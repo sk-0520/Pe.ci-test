@@ -47,6 +47,8 @@ namespace ContentTypeTextNet.Library.SharedLibrary.View.Control
             Key.RightCtrl,
             Key.LeftAlt,
             Key.RightAlt,
+            Key.Back,
+            Key.Delete,
             Key.LWin,
             Key.RWin,
         };

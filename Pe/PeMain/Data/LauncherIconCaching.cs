@@ -41,8 +41,8 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 
         public void Remove(LauncherItemModel model)
         {
-            foreach(var cache in this.Values) {
-                cache.Remove(model);
+            foreach(var cache in Cache.Values) {
+                cache.ClearCache(model);
             }
         }
 

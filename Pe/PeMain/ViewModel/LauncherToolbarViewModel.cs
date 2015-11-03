@@ -56,6 +56,9 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
     using System.Windows.Threading;
     using System.Threading;
 
+    /// <summary>
+    /// プロパティが状態持ちすぎててしんどいなぁ。
+    /// </summary>
     public class LauncherToolbarViewModel: HavingViewSingleModelWrapperViewModelBase<LauncherToolbarDataModel, LauncherToolbarWindow>, IApplicationDesktopToolbarData, IVisualStyleData, IHavingAppNonProcess, IWindowAreaCorrectionData, IWindowHitTestData, IHavingAppSender, IRefreshFromViewModel, IMenuItem
     {
         #region define
@@ -197,6 +200,8 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         DateTime _prevFullScreenTime;
         bool _prevFullScreenCancel;
 
+        CollectionModel<LauncherGroupItemViewModel> _groupItems;
+
         #endregion
 
         public LauncherToolbarViewModel(LauncherToolbarDataModel model, LauncherToolbarWindow view, ScreenModel screen, IAppNonProcess appNonProcess, IAppSender appSender)
@@ -227,6 +232,8 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 CalculateWindowStatus(DockType);
             }
 
+            GroupItems = CreateGroupItems();
+            SetSelectedGroup(SelectedGroup, GroupItems);
             LauncherItems = GetLauncherItemButtons(SelectedGroup);
         }
 
@@ -352,8 +359,28 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
         }
 
-        public Size IconSize { get; set; }
-        public Size ButtonSize { get; set; }
+        Size IconSize { get; set; }
+        public double IconWidth
+        {
+            get { return IconSize.Width; }
+            set { SetPropertyValue(IconSize, value, "Width"); }
+        }
+        public double IconHeight
+        {
+            get { return IconSize.Height; }
+            set { SetPropertyValue(IconSize, value, "Height"); }
+        }
+        Size ButtonSize { get; set; }
+        public double ButtonWidth
+        {
+            get { return ButtonSize.Width; }
+            set { SetPropertyValue(ButtonSize, value, "Width"); }
+        }
+        public double ButtonHeight
+        {
+            get { return ButtonSize.Height; }
+            set { SetPropertyValue(ButtonSize, value, "Height"); }
+        }
         public double MenuWidth { get; set; }
         public double ContentWidth { get { return ButtonSize.Width - MenuWidth; } }
         public Thickness ButtonPadding { get; set; }
@@ -447,7 +474,11 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
         }
 
-        public IEnumerable<LauncherGroupItemModel> GroupItems { get { return Model.GroupItems; } }
+        public CollectionModel<LauncherGroupItemViewModel> GroupItems
+        {
+            get { return this._groupItems; }
+            set { SetVariableValue(ref this._groupItems, value); }
+        }
 
         public LauncherGroupItemModel SelectedGroup
         {
@@ -471,18 +502,17 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             set
             {
                 if(SetVariableValue(ref this._selectedGroup, value)) {
-                    OnPropertyChanged("GroupItems");
-                    var oldItems = LauncherItems;
-                    //this._launcherItems = null;
-                    //OnPropertyChanged(nameof(LauncherItems));
-                    LauncherItems = null;
+                    SetSelectedGroup(this._selectedGroup, GroupItems);
+
+                    var oldLauncherItems = LauncherItems;
+                    LauncherItems.Clear();
                     LauncherItems = GetLauncherItemButtons(SelectedGroup);
-                    if(oldItems != null) {
-                        foreach(var oldItem in oldItems) {
+                    if(oldLauncherItems != null) {
+                        foreach(var oldItem in oldLauncherItems) {
                             oldItem.Dispose();
                         }
-                        oldItems.Dispose();
-                        oldItems = null;
+                        oldLauncherItems.Dispose();
+                        oldLauncherItems = null;
                     }
 
                     AppSender.SendApplicationCommand(ApplicationCommand.MemoryGarbageCollect, this, ApplicationCommandArg.Empty);
@@ -628,12 +658,12 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             {
                 var result = CreateCommand(
                     o => {
-                        var group = (LauncherGroupItemModel)o;
+                        var group = (LauncherGroupItemViewModel)o;
                         var map = new Dictionary<string, string>() {
-                            { LanguageKey.logGroupChange, group.Name }
+                            { LanguageKey.logGroupChange, group.Model.Name }
                         };
                         AppNonProcess.Logger.Trace(AppNonProcess.Language["log/group/change", map], group);
-                        SelectedGroup = group;
+                        SelectedGroup = group.Model;
                     }
                 );
 
@@ -832,6 +862,19 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             //View.UpdateLayout()
             //DockType = dockType;
             //MinSize = GetMinSize(DockType, Orientation, BorderThickness, ButtonSize);
+        }
+
+        CollectionModel<LauncherGroupItemViewModel> CreateGroupItems()
+        {
+            var items = new CollectionModel<LauncherGroupItemViewModel>(Model.GroupItems.Select(i => new LauncherGroupItemViewModel(i)));
+            return items;
+        }
+
+        static void SetSelectedGroup(LauncherGroupItemModel selectedItemModel, CollectionModel<LauncherGroupItemViewModel> items)
+        {
+            foreach(var item in items) {
+                item.IsChecked = item.Model == selectedItemModel;
+            }
         }
 
         #endregion

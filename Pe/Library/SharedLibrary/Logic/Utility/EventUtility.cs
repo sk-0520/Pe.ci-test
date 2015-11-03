@@ -25,15 +25,20 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Utility
 
     public static class EventUtility
     {
-        public static Delegate CreateEvent(Delegate handler, Action<Delegate> releaseEvent, out EventDisposer eventDisposer, [CallerFilePath] string callerFile = "", [CallerLineNumber] int callerLine = -1, [CallerMemberName] string callerMember = "")
+        public static Delegate Create(Delegate handler, Action<Delegate> releaseEvent, out EventDisposer eventDisposer, [CallerFilePath] string callerFile = "", [CallerLineNumber] int callerLine = -1, [CallerMemberName] string callerMember = "")
         {
             eventDisposer = new EventDisposer();
             return eventDisposer.Handling(handler, releaseEvent, callerFile, callerLine, callerMember);
         }
         public static Delegate Auto(Delegate handler, Action<Delegate> releaseEvent, [CallerFilePath] string callerFile = "", [CallerLineNumber] int callerLine = -1, [CallerMemberName] string callerMember = "")
         {
-            EventDisposer eventDisposer;
-            return CreateEvent(handler, releaseEvent, out eventDisposer, callerFile, callerLine, callerMember);
+            EventDisposer eventDisposer = null;
+            var result = Create(handler, dg => {
+                releaseEvent(dg);
+                eventDisposer.Dispose();
+                eventDisposer = null;
+            }, out eventDisposer, callerFile, callerLine, callerMember);
+            return result;
         }
 
         public static TEventHandler Create<TEventHandler>(TEventHandler handler, Action<TEventHandler> releaseEvent, out EventDisposer<TEventHandler> eventDisposer, [CallerFilePath] string callerFile = "", [CallerLineNumber] int callerLine = -1, [CallerMemberName] string callerMember = "")
@@ -43,8 +48,13 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Utility
         }
         public static TEventHandler Auto<TEventHandler>(TEventHandler handler, Action<TEventHandler> releaseEvent, [CallerFilePath] string callerFile = "", [CallerLineNumber] int callerLine = -1, [CallerMemberName] string callerMember = "")
         {
-            EventDisposer<TEventHandler> eventDisposer;
-            return Create(handler, releaseEvent, out eventDisposer, callerFile, callerLine, callerMember);
+            EventDisposer<TEventHandler> eventDisposer = null;
+            var result = Create(handler, e => {
+                releaseEvent(e);
+                eventDisposer.Dispose();
+                eventDisposer = null;
+            }, out eventDisposer, callerFile, callerLine, callerMember);
+            return result;
         }
     }
 }

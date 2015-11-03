@@ -27,5 +27,6 @@ namespace ContentTypeTextNet.Library.SharedLibrary.IF
         string CultureCode { get; }
         string GetReplacedWordText(string words, DateTime dateTime, IReadOnlyDictionary<string, string> map);
         string this[string key, IReadOnlyDictionary<string, string> map = null] { get; }
+        string GuiTextToPlainText(string guiText);
     }
 }

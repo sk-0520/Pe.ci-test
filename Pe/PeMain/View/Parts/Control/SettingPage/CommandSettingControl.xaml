@@ -37,9 +37,9 @@
         <ColumnDefinition Width="Auto"/>
         <ColumnDefinition Width="Auto"/>
       </Grid.ColumnDefinitions>
-      
-      <Label Grid.Row="0" Grid.Column="0" Content="icon" AA:Language.Word="command-setting/icon" Style="{StaticResource HeaderLabel}" />
-      <ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding Source={x:Static AP:EnumList.PlainIconScaleList}}" SelectedItem="{Binding IconScale}" Style="{StaticResource DefaultComboBox}">
+
+      <Label Grid.Row="0" Grid.Column="0" Content="icon" AA:Language.Word="command-setting/icon" Style="{StaticResource HeaderLabel}" Target="{Binding ElementName=selectIcon}" />
+      <ComboBox x:Name="selectIcon" Grid.Row="0" Grid.Column="1" ItemsSource="{Binding Source={x:Static AP:EnumList.PlainIconScaleList}}" SelectedItem="{Binding IconScale}" Style="{StaticResource DefaultComboBox}">
         <ComboBox.ItemTemplate>
           <DataTemplate>
             <TextBlock>
@@ -54,8 +54,8 @@
         </ComboBox.ItemTemplate>
       </ComboBox>
 
-      <Label Grid.Row="1" Grid.Column="0" Content="hotkey" AA:Language.Word="command-setting/hotkey" Style="{StaticResource HeaderLabel}" />
-      <AV:AppHotkeyControl Grid.Column="1" Grid.Row="1" Hotkey="{Binding ShowHotkey}" Style="{StaticResource DefaultAppHotkey}" />
+      <Label Grid.Row="1" Grid.Column="0" Content="hotkey" AA:Language.Word="command-setting/hotkey" Style="{StaticResource HeaderLabel}" Target="{Binding ElementName=inputShowHotkey}" />
+      <AV:AppHotkeyControl x:Name="inputShowHotkey" Grid.Column="1" Grid.Row="1" Hotkey="{Binding ShowHotkey}" Style="{StaticResource DefaultAppHotkey}" />
 
       <Label Grid.Row="2" Grid.Column="0" Content="hide time" AA:Language.Word="command-setting/hide-time" Style="{StaticResource HeaderLabel}" />
       <AV:TimeSliderControl Grid.Row="2" Grid.Column="1" Value="{Binding HideTime}"  Minimum="{Binding Source={x:Static AM:Constants.CommandHideMinimumTime}}" Maximum="{Binding Source={x:Static AM:Constants.CommandHideMaximumTime}}" />

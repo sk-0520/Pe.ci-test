@@ -69,8 +69,8 @@
 
       <Style x:Key="ToolbarImage" TargetType="{x:Type Image}">
         <Setter Property="Source" Value="{Binding ToolbarImage, Mode=OneTime}" />
-        <Setter Property="Width" Value="{Binding DataContext.IconSize.Width, Mode=OneTime, Source={x:Reference root}}" />
-        <Setter Property="Height" Value="{Binding DataContext.IconSize.Height, Mode=OneTime, Source={x:Reference root}}" />
+        <Setter Property="Width" Value="{Binding DataContext.IconWidth, Mode=OneTime, Source={x:Reference root}}" />
+        <Setter Property="Height" Value="{Binding DataContext.IconHeight, Mode=OneTime, Source={x:Reference root}}" />
         <Setter Property="Margin" Value="{Binding DataContext.IconMargin, Mode=OneTime, Source={x:Reference root}}" />
       </Style>
       <Style x:Key="ToolbarText" TargetType="TextBlock">
@@ -129,8 +129,8 @@
       <Style x:Key="LauncherBaseButton">
         <Setter Property="Control.Margin" Value="0" />
         <Setter Property="Control.Padding" Value="{Binding DataContext.ButtonPadding, Mode=OneTime, Source={x:Reference root}}" />
-        <Setter Property="Control.Width" Value="{Binding DataContext.ButtonSize.Width, Mode=OneTime, Source={x:Reference root}}" />
-        <Setter Property="Control.Height" Value="{Binding DataContext.ButtonSize.Height, Mode=OneTime, Source={x:Reference root}}" />
+        <Setter Property="Control.Width" Value="{Binding DataContext.ButtonWidth, Mode=OneWay, Source={x:Reference root}}" />
+        <Setter Property="Control.Height" Value="{Binding DataContext.ButtonHeight, Mode=OneWay, Source={x:Reference root}}" />
       </Style>
 
       <Style x:Key="LauncherButtonFace" TargetType="Grid" BasedOn="{StaticResource ParentElement}">
@@ -158,8 +158,8 @@
             <Setter Property="Background" TargetName="ParentElement">
               <Setter.Value>
                 <MultiBinding Converter="{StaticResource HotTrackConverter}">
-                  <Binding Path="ToolbarHotTrack" />
-                  <Binding Path="DataContext.DockType" ElementName="root" />
+                  <Binding Path="ToolbarHotTrack" Mode="OneTime" />
+                  <Binding Path="DataContext.DockType" ElementName="root" Mode="OneTime" />
                   <Binding Source="{StaticResource ButtonOver}" />
                   <Binding Source="{x:Null}" />
                 </MultiBinding>
@@ -170,8 +170,8 @@
             <Setter Property="Background" TargetName="ParentElement">
               <Setter.Value>
                 <MultiBinding Converter="{StaticResource HotTrackConverter}">
-                  <Binding Path="ToolbarHotTrack" />
-                  <Binding Path="DataContext.DockType" ElementName="root" />
+                  <Binding Path="ToolbarHotTrack" Mode="OneTime" />
+                  <Binding Path="DataContext.DockType" ElementName="root" Mode="OneTime" />
                   <Binding Source="{StaticResource ButtonPressed}" />
                   <Binding Source="{x:Null}" />
                 </MultiBinding>
@@ -182,8 +182,8 @@
             <Setter Property="Background" TargetName="ParentElement">
               <Setter.Value>
                 <MultiBinding Converter="{StaticResource HotTrackConverter}">
-                  <Binding Path="ToolbarHotTrack" />
-                  <Binding Path="DataContext.DockType" ElementName="root" />
+                  <Binding Path="ToolbarHotTrack" Mode="OneTime" />
+                  <Binding Path="DataContext.DockType" ElementName="root" Mode="OneTime" />
                   <Binding Source="{StaticResource ButtonCheckd}" />
                   <Binding Source="{x:Null}" />
                 </MultiBinding>
@@ -202,10 +202,10 @@
             <Setter Property="Background" TargetName="ParentElement">
               <Setter.Value>
                 <MultiBinding Converter="{StaticResource HotTrackConverter}">
-                  <Binding Path="ToolbarHotTrack" />
-                  <Binding Path="DataContext.DockType" ElementName="root" Converter="{StaticResource DockTypeMenuTuneConverter}" />
+                  <Binding Path="ToolbarHotTrack" Mode="OneTime" />
+                  <Binding Path="DataContext.DockType" ElementName="root" Converter="{StaticResource DockTypeMenuTuneConverter}" Mode="OneTime" />
                   <Binding Source="{StaticResource ButtonOver}" />
-                  <Binding Path="DataContext.IsEnabledCorrection" ElementName="root" />
+                  <Binding Path="DataContext.IsEnabledCorrection" ElementName="root" Mode="OneTime" />
                 </MultiBinding>
               </Setter.Value>
             </Setter>
@@ -214,10 +214,10 @@
             <Setter Property="Background" TargetName="ParentElement">
               <Setter.Value>
                 <MultiBinding Converter="{StaticResource HotTrackConverter}">
-                  <Binding Path="ToolbarHotTrack" />
-                  <Binding Path="DataContext.DockType" ElementName="root" Converter="{StaticResource DockTypeMenuTuneConverter}"/>
+                  <Binding Path="ToolbarHotTrack" Mode="OneTime" />
+                  <Binding Path="DataContext.DockType" ElementName="root" Converter="{StaticResource DockTypeMenuTuneConverter}" Mode="OneTime" />
                   <Binding Source="{StaticResource ButtonPressed}" />
-                  <Binding Path="DataContext.IsEnabledCorrection" ElementName="root" />
+                  <Binding Path="DataContext.IsEnabledCorrection" ElementName="root" Mode="OneTime" />
                 </MultiBinding>
               </Setter.Value>
             </Setter>
@@ -226,10 +226,10 @@
             <Setter Property="Background" TargetName="ParentElement">
               <Setter.Value>
                 <MultiBinding Converter="{StaticResource HotTrackConverter}">
-                  <Binding Path="ToolbarHotTrack" />
-                  <Binding Path="DataContext.DockType" ElementName="root" Converter="{StaticResource DockTypeMenuTuneConverter}"/>
+                  <Binding Path="ToolbarHotTrack" Mode="OneTime" />
+                  <Binding Path="DataContext.DockType" ElementName="root" Converter="{StaticResource DockTypeMenuTuneConverter}" Mode="OneTime" />
                   <Binding Source="{StaticResource ButtonCheckd}" />
-                  <Binding Path="DataContext.IsEnabledCorrection" ElementName="root" />
+                  <Binding Path="DataContext.IsEnabledCorrection" ElementName="root" Mode="OneTime" />
                 </MultiBinding>
               </Setter.Value>
             </Setter>
@@ -367,17 +367,10 @@
       </Style>
 
       <Style x:Key="GroupMenu" TargetType="MenuItem" BasedOn="{StaticResource PopupCloseMenu}">
-        <Setter Property="Header" Value="{Binding Converter={StaticResource DisplayTextConverter}}" />
+        <Setter Property="Header" Value="{Binding DisplayText}" />
         <Setter Property="Command" Value="{Binding DataContext.GroupChangeCommand, Source={x:Reference root}}" />
         <Setter Property="CommandParameter" Value="{Binding}" />
-        <Setter Property="IsChecked">
-          <Setter.Value>
-            <MultiBinding Converter="{StaticResource LogicalMultiEqualConverter}" Mode="OneWay">
-              <Binding RelativeSource="{RelativeSource Self}" Path="DataContext"  />
-              <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Window}" Path="DataContext.SelectedGroup"  />
-            </MultiBinding>
-          </Setter.Value>
-        </Setter>
+        <Setter Property="IsChecked" Value="{Binding IsChecked}" />
       </Style>
 
     </ResourceDictionary>
@@ -485,11 +478,11 @@
                   <ToolTip Style="{StaticResource ToolbarTooltip}">
                     <StackPanel>
                       <StackPanel Orientation="Horizontal">
-                        <Image Source="{Binding ToolTipImage}" Style="{StaticResource ToolbarToolTipImage}" />
-                        <TextBlock Text="{Binding ToolTipTitle}" Style="{StaticResource ToolbarToolTipTitle}" FontFamily="{DynamicResource {x:Static SystemFonts.CaptionFontFamilyKey}}" />
+                        <Image Source="{Binding ToolTipImage, Mode=OneTime}" Style="{StaticResource ToolbarToolTipImage}" />
+                        <TextBlock Text="{Binding ToolTipTitle, Mode=OneTime}" Style="{StaticResource ToolbarToolTipTitle}" FontFamily="{DynamicResource {x:Static SystemFonts.CaptionFontFamilyKey}}" />
                       </StackPanel>
                       <StackPanel Orientation="Horizontal" Visibility="{Binding HasToolTipMessage, Converter={StaticResource BooleanToVisibilityConverter}}">
-                        <TextBlock Text="{Binding ToolTipMessage}" FontFamily="{DynamicResource {x:Static SystemFonts.SmallCaptionFontFamilyKey}}" />
+                        <TextBlock Text="{Binding ToolTipMessage, Mode=OneTime}" FontFamily="{DynamicResource {x:Static SystemFonts.SmallCaptionFontFamilyKey}}" />
                       </StackPanel>
                     </StackPanel>
                   </ToolTip>

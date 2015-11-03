@@ -27,13 +27,13 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Utility
         /// <summary>
         /// min &lt;= value &lt;= max
         /// </summary>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TValue"></typeparam>
         /// <param name="value"></param>
         /// <param name="min"></param>
         /// <param name="max"></param>
         /// <returns></returns>
-        public static bool Between<T>(T value, T min, T max)
-            where T : IComparable
+        public static bool Between<TValue>(TValue value, TValue min, TValue max)
+            where TValue : IComparable
         {
             return min.CompareTo(value) <= 0 && 0 <= max.CompareTo(value);
         }
@@ -42,13 +42,13 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Utility
         /// 丸め。
         /// <para>valueがmin未満かmaxより多ければminかmaxの適応する方に丸める。</para>
         /// </summary>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TValue"></typeparam>
         /// <param name="value"></param>
         /// <param name="min"></param>
         /// <param name="max"></param>
         /// <returns></returns>
-        public static T Clamp<T>(T value, T min, T max)
-            where T : IComparable
+        public static TValue Clamp<TValue>(TValue value, TValue min, TValue max)
+            where TValue : IComparable
         {
             if(min.CompareTo(value) > 0) {
                 return min;

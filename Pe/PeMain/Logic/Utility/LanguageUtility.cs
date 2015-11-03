@@ -190,12 +190,6 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         /// <param name="map"></param>
         public static void RecursiveSetLanguage(DependencyObject root, ILanguage language, IReadOnlyDictionary<string, string> map = null)
         {
-            var window = root as Window;
-            if(window != null) {
-                SetTitle(window, language, map);
-                //window.ApplyTemplate();
-            }
-
             var processedElements = new HashSet<DependencyObject>();
 
             foreach(var dependencyObject in UIUtility.FindChildren<DependencyObject>(root)) {
@@ -230,6 +224,14 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
                         }
                     }
                 }
+            }
+            foreach(var fe in processedElements.OfType<FrameworkElement>()) {
+                fe.ApplyTemplate();
+            }
+            var window = root as Window;
+            if(window != null) {
+                SetTitle(window, language, map);
+                window.ApplyTemplate();
             }
         }
 

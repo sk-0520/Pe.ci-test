@@ -21,3 +21,4 @@ TemporaryGeneratedFile_*
 *.pdb
 Thumbs.db
 .vs/
+*.tss

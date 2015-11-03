@@ -74,8 +74,8 @@
           <RowDefinition Height="Auto" />
           <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <Label Grid.Row="0" Grid.Column="0" Content="group" AA:Language.Word="toolbar-setting/toolbar/group" Style="{StaticResource HeaderLabel}" />
-        <ComboBox Grid.Column="1" SelectedValuePath="Id" ItemsSource="{Binding DefaultGroupList}" SelectedValue="{Binding SelectedToolbar.DefaultGroupId}" SelectedIndex="{Binding DefaultGroupIndex}" Style="{StaticResource DefaultComboBox}" >
+        <Label Grid.Row="0" Grid.Column="0" Content="group" AA:Language.Word="toolbar-setting/toolbar/group" Style="{StaticResource HeaderLabel}" Target="{Binding ElementName=selectGroup}" />
+        <ComboBox x:Name="selectGroup" Grid.Column="1" SelectedValuePath="Id" ItemsSource="{Binding DefaultGroupList}" SelectedValue="{Binding SelectedToolbar.DefaultGroupId}" SelectedIndex="{Binding DefaultGroupIndex}" Style="{StaticResource DefaultComboBox}" >
           <ComboBox.ItemTemplate>
             <ItemContainerTemplate>
               <ContentPresenter Content="{Binding Converter={StaticResource DisplayTextConverter}}" />
@@ -83,8 +83,8 @@
           </ComboBox.ItemTemplate>
         </ComboBox>
 
-        <Label Grid.Row="1" Grid.Column="0" Content="dock" AA:Language.Word="toolbar-setting/toolbar/position" Style="{StaticResource HeaderLabel}" />
-        <ComboBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Source={x:Static AP:EnumList.DockTypeList}}" SelectedItem="{Binding SelectedToolbar.DockType, Mode=TwoWay}" Style="{StaticResource DefaultComboBox}">
+        <Label Grid.Row="1" Grid.Column="0" Content="dock" AA:Language.Word="toolbar-setting/toolbar/position" Style="{StaticResource HeaderLabel}" Target="{Binding ElementName=selectDockType}" />
+        <ComboBox x:Name="selectDockType" Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Source={x:Static AP:EnumList.DockTypeList}}" SelectedItem="{Binding SelectedToolbar.DockType, Mode=TwoWay}" Style="{StaticResource DefaultComboBox}">
           <ComboBox.Resources>
             <windows:Size x:Key="ImageSize" Width="16" Height="16" />
           </ComboBox.Resources>
@@ -105,8 +105,8 @@
           </ComboBox.ItemTemplate>
         </ComboBox>
 
-        <Label Grid.Row="2" Grid.Column="0" Content="pos" AA:Language.Word="toolbar-setting/toolbar/button" Style="{StaticResource HeaderLabel}" />
-        <ComboBox Grid.Row="2" Grid.Column="1" ItemsSource="{Binding Source={x:Static AP:EnumList.ToolbarButtonPositionList}}" SelectedItem="{Binding SelectedToolbar.ButtonPosition, Mode=TwoWay}"  Style="{StaticResource DefaultComboBox}">
+        <Label Grid.Row="2" Grid.Column="0" Content="pos" AA:Language.Word="toolbar-setting/toolbar/button" Style="{StaticResource HeaderLabel}" Target="{Binding ElementName=selectButtonPosition}" />
+        <ComboBox x:Name="selectButtonPosition" Grid.Row="2" Grid.Column="1" ItemsSource="{Binding Source={x:Static AP:EnumList.ToolbarButtonPositionList}}" SelectedItem="{Binding SelectedToolbar.ButtonPosition, Mode=TwoWay}"  Style="{StaticResource DefaultComboBox}">
           <ComboBox.ItemTemplate>
             <DataTemplate>
               <TextBlock>
@@ -121,8 +121,8 @@
           </ComboBox.ItemTemplate>
         </ComboBox>
 
-        <Label Grid.Row="3" Grid.Column="0" Content="icon" AA:Language.Word="toolbar-setting/toolbar/icon" Style="{StaticResource HeaderLabel}" />
-        <ComboBox Grid.Row="3" Grid.Column="1" ItemsSource="{Binding Source={x:Static AP:EnumList.PlainIconScaleList}}" SelectedItem="{Binding SelectedToolbar.IconScale, Mode=TwoWay}"  Style="{StaticResource DefaultComboBox}">
+        <Label Grid.Row="3" Grid.Column="0" Content="icon" AA:Language.Word="toolbar-setting/toolbar/icon" Style="{StaticResource HeaderLabel}" Target="{Binding ElementName=selectIcon}" />
+        <ComboBox x:Name="selectIcon" Grid.Row="3" Grid.Column="1" ItemsSource="{Binding Source={x:Static AP:EnumList.PlainIconScaleList}}" SelectedItem="{Binding SelectedToolbar.IconScale, Mode=TwoWay}"  Style="{StaticResource DefaultComboBox}">
           <ComboBox.ItemTemplate>
             <DataTemplate>
               <TextBlock>
@@ -137,8 +137,9 @@
           </ComboBox.ItemTemplate>
         </ComboBox>
 
-        <Label Grid.Row="4" Grid.Column="0" VerticalAlignment="Top" Content="font" AA:Language.Word="toolbar-setting/toolbar/font" Style="{StaticResource HeaderLabel}" />
+        <Label Grid.Row="4" Grid.Column="0" VerticalAlignment="Top" Content="font" AA:Language.Word="toolbar-setting/toolbar/font" Style="{StaticResource HeaderLabel}" Target="{Binding ElementName=selectFont}" />
         <AV:FontSelectControl
+          x:Name="selectFont"
           Grid.Row="4"
           Grid.Column="1"
           FamilyName="{Binding SelectedToolbar.FontFamily}"
@@ -225,7 +226,7 @@
             <StackPanel Orientation="Horizontal">
               <Image Style="{StaticResource ItemImage}" Source="{Binding Image}" />
               <TextBlock Style="{StaticResource ItemText}" Text="{Binding DisplayText}" />
-              <Popup Width="200" Placement="Bottom">
+              <Popup Width="200" Placement="Left">
                 <Popup.IsOpen>
                   <MultiBinding Converter="{StaticResource LogicalMultiAndConverter}" Mode="OneWay">
                     <Binding Path="IsSelected" Mode="OneWay" />

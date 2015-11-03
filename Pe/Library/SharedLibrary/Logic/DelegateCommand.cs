@@ -36,8 +36,10 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic
 
         //#endregion
 
-        public DelegateCommand()
-        { }
+        DelegateCommand()
+        {
+            CanExecuteChangedList = new List<WeakReference>();
+        }
 
         public DelegateCommand(Action<object> executeCommand)
             : this()
@@ -63,11 +65,13 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic
         /// <summary>
         /// コマンド。
         /// </summary>
-        public Action<object> ExecuteCommand { get; set; }
+        public Action<object> ExecuteCommand { get; private set; }
         /// <summary>
         /// 実行可否。
         /// </summary>
-        public Func<object, bool> CanExecuteCommand { get; set; }
+        public Func<object, bool> CanExecuteCommand { get; private set; }
+
+        protected IList<WeakReference> CanExecuteChangedList { get; private set; }
 
         #endregion
 
@@ -78,7 +82,12 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic
             if(!IsDisposed) {
                 CanExecuteCommand = null;
                 ExecuteCommand = null;
+                foreach(var wr in CanExecuteChangedList) {
+                    CommandManager.RequerySuggested -= (EventHandler)wr.Target;
+                }
+                CanExecuteChangedList.Clear();
             }
+
             base.Dispose(disposing);
         }
 
@@ -100,10 +109,21 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic
             }
         }
 
-        event EventHandler ICommand.CanExecuteChanged
+        public event EventHandler CanExecuteChanged
         {
-            add { CommandManager.RequerySuggested += value; }
-            remove { CommandManager.RequerySuggested -= value; }
+            add
+            {
+                CommandManager.RequerySuggested += value;
+                CanExecuteChangedList.Add(new WeakReference(value));
+            }
+            remove
+            {
+                CommandManager.RequerySuggested -= value;
+                var targets = CanExecuteChangedList.Where(i => (EventHandler)i.Target == value).ToArray();
+                foreach(var target in targets) {
+                    CanExecuteChangedList.Remove(target);
+                }
+            }
         }
 
         #endregion

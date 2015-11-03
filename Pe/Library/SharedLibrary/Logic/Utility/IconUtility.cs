@@ -267,7 +267,10 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Utility
                 try {
                     var iconList = LoadIconResource(iconPath);
                     if(iconIndex < iconList.Count) {
-                        return (BitmapSource)DrawingUtility.ImageSourceFromBinaryIcon(iconList[iconIndex], iconScale.ToSize());
+                        var binary = iconList[iconIndex];
+                        iconList.Clear();
+                        var image = (BitmapSource)DrawingUtility.ImageSourceFromBinaryIcon(binary, iconScale.ToSize());
+                        return image;
                     }
                 } catch(Exception ex) {
                     logger.SafeDebug(ex);

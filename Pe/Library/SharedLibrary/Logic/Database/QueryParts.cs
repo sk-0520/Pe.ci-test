@@ -14,34 +14,52 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with SharedLibrary.  If not, see <http://www.gnu.org/licenses/>.
 */
-namespace ContentTypeTextNet.Library.SharedLibrary.IF
+namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Database
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
+    using Define;
 
-    public interface ITId<TId>
-        where TId : IComparable
+    public class QueryParts
     {
-        /// <summary>
-        /// ID。
-        /// </summary>
-        TId Id { get; set; }
+        public QueryParts()
+        {
+            Command = string.Empty;
+        }
+
+        #region property
 
         /// <summary>
-        /// IDが設定可能なものか。
+        /// 条件が真の場合にコマンドと式のどちらを使用するか
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        bool IsSafeId(TId id);
-
+        public QueryPattern QueryPattern { get; set; }
         /// <summary>
-        /// IDを設定可能なものに変更。
+        /// 条件が真の場合のコマンド
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        TId ToSafeId(TId id);
+        public string Command { get; set; }
+        /// <summary>
+        /// 条件が真の場合の式
+        /// </summary>
+        public CommandExpression Expression { get; set; }
+
+        #endregion
+
+        #region function
+
+        public virtual string ToCode()
+        {
+            if(QueryPattern == QueryPattern.Command) {
+                return Command;
+            } else {
+                Debug.Assert(QueryPattern == QueryPattern.Expression);
+                return Expression.ToCode();
+            }
+        }
+
+        #endregion
     }
 }

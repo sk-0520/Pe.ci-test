@@ -288,13 +288,13 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Database
         /// </summary>
         /// <param name="code"></param>
         /// <returns>Tの集合</returns>
-        private IEnumerable<T> GetDtoListImpl<T>(string code)
-            where T : DatabaseDataBase, new()
+        private IEnumerable<TDto> GetDtoListImpl<TDto>(string code)
+            where TDto : DatabaseDataBase, new()
         {
-            var targetInfos = GetTargetInfoList<T>();
+            var targetInfos = GetTargetInfoList<TDto>();
             using(var reader = ExecuteReader(code)) {
                 while(reader.Read()) {
-                    var dto = new T();
+                    var dto = new TDto();
                     foreach(var targetInfo in targetInfos) {
                         var rawValue = reader[targetInfo.EntityMappingAttribute.PhysicalName];
                         var property = targetInfo.PropertyInfo;
@@ -311,10 +311,10 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Database
         /// </summary>
         /// <param name="code"></param>
         /// <returns>T単体</returns>
-        public T GetResultSingle<T>(string code)
-            where T : DataTransferObject, new()
+        public TDto GetResultSingle<TDto>(string code)
+            where TDto : DataTransferObject, new()
         {
-            return GetDtoListImpl<T>(code).Single();
+            return GetDtoListImpl<TDto>(code).Single();
         }
 
         /// <summary>
@@ -322,22 +322,22 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Database
         /// </summary>
         /// <param name="code"></param>
         /// <returns>T集合</returns>
-        public IEnumerable<T> GetResultList<T>(string code)
-            where T : DataTransferObject, new()
+        public IEnumerable<TDto> GetResultList<TDto>(string code)
+            where TDto : DataTransferObject, new()
         {
-            return GetDtoListImpl<T>(code);
+            return GetDtoListImpl<TDto>(code);
         }
 
         /// <summary>
         /// 対象のエンティティからエンティティ一覧情報を取得
         /// </summary>
         /// <returns></returns>
-        private EntityMappingSet GetEntitySet<T>()
-            where T : DatabaseRow
+        private EntityMappingSet GetEntitySet<TRow>()
+            where TRow : DatabaseRow
         {
-            var tableAttribute = (EntityMappingAttribute)typeof(T).GetCustomAttribute(typeof(EntityMappingAttribute));
+            var tableAttribute = (EntityMappingAttribute)typeof(TRow).GetCustomAttribute(typeof(EntityMappingAttribute));
             var tableName = tableAttribute.PhysicalName;
-            var columnPropName = GetTargetInfoList<T>();
+            var columnPropName = GetTargetInfoList<TRow>();
 
             return new EntityMappingSet(tableName, columnPropName);
         }
@@ -358,10 +358,10 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Database
         /// </summary>
         /// <param name="rowList"></param>
         /// <param name="func">実行するコマンドを生成する処理</param>
-        private void ExecuteEntityCommand<T>(IList<T> rowList, Func<EntityMappingSet, string> func)
-            where T : DatabaseRow
+        private void ExecuteEntityCommand<TRow>(IList<TRow> rowList, Func<EntityMappingSet, string> func)
+            where TRow : DatabaseRow
         {
-            var entitySet = GetEntitySet<T>();
+            var entitySet = GetEntitySet<TRow>();
             var code = func(entitySet);
             foreach(var entity in rowList) {
                 SetParameterFromEntitySet(entity, entitySet);
@@ -373,8 +373,8 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Database
         /// Rowの挿入。
         /// </summary>
         /// <param name="rowList"></param>
-        public void ExecuteInsert<T>(IList<T> rowList)
-            where T : DatabaseRow
+        public void ExecuteInsert<TRow>(IList<TRow> rowList)
+            where TRow : DatabaseRow
         {
             ExecuteEntityCommand(rowList, DBManager.CreateInsertCommandCode);
         }
@@ -383,8 +383,8 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Database
         /// Rowの更新。
         /// </summary>
         /// <param name="rowList"></param>
-        public void ExecuteUpdate<T>(IList<T> rowList)
-            where T : DatabaseRow
+        public void ExecuteUpdate<TRow>(IList<TRow> rowList)
+            where TRow : DatabaseRow
         {
             ExecuteEntityCommand(rowList, DBManager.CreateUpdateCommandCode);
         }
@@ -393,8 +393,8 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Database
         /// Rowの削除。
         /// </summary>
         /// <param name="rowList"></param>
-        public void ExecuteDelete<T>(IList<T> rowList)
-            where T : DatabaseRow
+        public void ExecuteDelete<TRow>(IList<TRow> rowList)
+            where TRow : DatabaseRow
         {
             ExecuteEntityCommand(rowList, DBManager.CreateDeleteCommandCode);
         }
@@ -404,14 +404,14 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Database
         /// </summary>
         /// <param name="row"></param>
         /// <returns>対象のデータが設定された行。見つからない場合は null。</returns>
-        public T GetRow<T>(T row)
-            where T : DatabaseRow, new()
+        public TRow GetRow<TRow>(TRow row)
+            where TRow : DatabaseRow, new()
         {
-            var entitySet = GetEntitySet<T>();
+            var entitySet = GetEntitySet<TRow>();
             var code = DBManager.CreateSelectCommandCode(entitySet);
             SetParameterFromEntitySet(row, entitySet);
 
-            return GetDtoListImpl<T>(code).SingleOrDefault();
+            return GetDtoListImpl<TRow>(code).SingleOrDefault();
         }
 
         /// <summary>
@@ -419,11 +419,11 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Database
         /// </summary>
         /// <param name="src"></param>
         /// <returns></returns>
-        public virtual T CreateKeyRow<T>(T src)
-            where T : DatabaseRow, new()
+        public virtual TRow CreateKeyRow<TRow>(TRow src)
+            where TRow : DatabaseRow, new()
         {
-            var targetInfos = GetTargetInfoList<T>();
-            var keyEntity = new T();
+            var targetInfos = GetTargetInfoList<TRow>();
+            var keyEntity = new TRow();
             foreach(var targetInfo in targetInfos.Where(t => t.EntityMappingAttribute.PrimaryKey)) {
                 var value = targetInfo.PropertyInfo.GetValue(src);
                 targetInfo.PropertyInfo.SetValue(keyEntity, value);

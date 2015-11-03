@@ -25,7 +25,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Define
     /// <summary>
     /// コマンドと条件式のどちらを使用するか。
     /// </summary>
-    public enum QueryCondition
+    public enum QueryPattern
     {
         /// <summary>
         /// コマンドを使用する。

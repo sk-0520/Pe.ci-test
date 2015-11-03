@@ -19,7 +19,12 @@
   ResizeMode="CanResizeWithGrip"
 >
   <AW:CommonDataWindow.Resources>
-    <ResourceDictionary Source="/View/Parts/Resource/DialogDictionary.xaml"/>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/View/Parts/Resource/DialogDictionary.xaml"/>
+        <ResourceDictionary Source="/View/Parts/Resource/LabelDictionary.xaml"/>
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
   </AW:CommonDataWindow.Resources>
   <Grid>
     <Grid.RowDefinitions>
@@ -33,25 +38,46 @@
           <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" />
         </Style>
       </TabControl.Resources>
-      <TabItem x:Name="pageMain" Header="main" AA:Language.Word="setting/main">
+      <TabItem x:Name="pageMain">
+        <TabItem.Header>
+          <Label Content="main" AA:Language.Word="setting/main" Style="{StaticResource ContentTextLabel}" />
+        </TabItem.Header>
         <AS:MainSettingControl x:Name="controlMainSetting" DataContext="{Binding MainSetting}" VerticalAlignment="Stretch" />
       </TabItem>
-      <TabItem Header="launcher" AA:Language.Word="setting/launcher">
+      <TabItem>
+        <TabItem.Header>
+          <Label Content="launcher" AA:Language.Word="setting/launcher" Style="{StaticResource ContentTextLabel}" />
+        </TabItem.Header>
         <AS:LauncherItemSettingControl x:Name="controlLauncherItemSetting" DataContext="{Binding LauncherItemSetting}" VerticalAlignment="Stretch"/>
       </TabItem>
-      <TabItem x:Name="pageToolbar" Header="toolbar" AA:Language.Word="setting/toolbar">
+      <TabItem x:Name="pageToolbar">
+        <TabItem.Header>
+          <Label Content="toolbar" AA:Language.Word="setting/toolbar" Style="{StaticResource ContentTextLabel}" />
+        </TabItem.Header>
         <AS:ToolbarSettingControl x:Name="controlToolbarSetting" DataContext="{Binding ToolbarSetting}" VerticalAlignment="Stretch"/>
       </TabItem>
-      <TabItem Header="command" AA:Language.Word="setting/command">
+      <TabItem>
+        <TabItem.Header>
+          <Label Content="command" AA:Language.Word="setting/command" Style="{StaticResource ContentTextLabel}" />
+        </TabItem.Header>
         <AS:CommandSettingControl x:Name="controlCommandSetting" DataContext="{Binding CommandSetting}" VerticalAlignment="Stretch" />
       </TabItem>
-      <TabItem Header="note" AA:Language.Word="setting/note">
+      <TabItem>
+        <TabItem.Header>
+          <Label Content="note" AA:Language.Word="setting/note" Style="{StaticResource ContentTextLabel}" />
+        </TabItem.Header>
         <AS:NoteSettingControl x:Name="controlNoteSetting" DataContext="{Binding NoteSetting}" VerticalAlignment="Stretch" />
       </TabItem>
-      <TabItem Header="clipboard" AA:Language.Word="setting/clipboard">
+      <TabItem>
+        <TabItem.Header>
+          <Label Content="clipboard" AA:Language.Word="setting/clipboard" Style="{StaticResource ContentTextLabel}" />
+        </TabItem.Header>
         <AS:ClipboardSettingControl x:Name="controlClipboardSetting" DataContext="{Binding ClipboardSetting}" VerticalAlignment="Stretch" />
       </TabItem>
-      <TabItem Header="template" AA:Language.Word="setting/template">
+      <TabItem>
+        <TabItem.Header>
+          <Label Content="template" AA:Language.Word="setting/template" Style="{StaticResource ContentTextLabel}" />
+        </TabItem.Header>
         <AS:TemplateSettingControl x:Name="controlTemplateSetting" DataContext="{Binding TemplateSetting}" VerticalAlignment="Stretch" />
       </TabItem>
     </TabControl>

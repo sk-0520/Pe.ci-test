@@ -20,6 +20,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
+    using System.Text.RegularExpressions;
     using System.Threading.Tasks;
     using ContentTypeTextNet.Library.SharedLibrary.IF;
     using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
@@ -40,8 +41,6 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic
         #region property
 
         public string LanguageFilePath { get; private set; }
-
-        public string CultureCode { get { return Model.CultureCode; } }
 
         #endregion
 
@@ -99,6 +98,12 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic
             //};
         }
 
+        #endregion
+
+        #region ILanguage
+
+        public string CultureCode { get { return Model.CultureCode; } }
+
         public string GetReplacedWordText(string words, DateTime dateTime, IReadOnlyDictionary<string, string> map)
         {
             var plainText = GetPlainText(words);
@@ -116,15 +121,26 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic
             return replacedDefineText;
         }
 
-        #endregion
-
-        #region indexer
-
         public string this[string key, IReadOnlyDictionary<string, string> map = null]
         {
             get { return GetReplacedWordText(key, DateTime.Now, map); }
         }
 
+        public string GuiTextToPlainText(string guiText)
+        {
+            var reg = new Regex(@"^(?<HEAD>.*?)(?<L>\(?)(?<KEY>_\w)(?<R>\)?)(?<TAIL>.*)$", RegexOptions.ExplicitCapture);
+            var match = reg.Match(guiText);
+            if(match.Success) {
+                if(0 < match.Groups["L"].Length && 0 < match.Groups["R"].Length) {
+                    return match.Groups["HEAD"].Value + match.Groups["TAIL"].Value;
+                } else {
+                    var key = match.Groups["KEY"].Value.Substring(1);
+                    return match.Groups["HEAD"].Value + key + match.Groups["TAIL"].Value;
+                }
+            }
+
+            return guiText;
+        }
         #endregion
     }
 }

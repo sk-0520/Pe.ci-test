@@ -190,7 +190,9 @@
     <Compile Include="ViewModel\CommandViewModel.cs" />
     <Compile Include="ViewModel\ComponentItemViewModel.cs" />
     <Compile Include="ViewModel\Control\LauncherListItemViewModel.cs" />
+    <Compile Include="ViewModel\HavingViewSingleModelWrapperBodyViewModelBase.cs" />
     <Compile Include="ViewModel\HomeViewModel.cs" />
+    <Compile Include="ViewModel\LauncherGroupItemViewModel.cs" />
     <Compile Include="ViewModel\ScreenViewModel.cs" />
     <Compile Include="ViewModel\TemplateKeywordViewModel.cs" />
     <Compile Include="ViewModel\UpdateConfirmViewModel.cs" />
