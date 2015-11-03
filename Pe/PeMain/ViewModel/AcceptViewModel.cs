@@ -106,10 +106,10 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 { LanguageKey.acceptHelp, Constants.UriHelp },
                 { LanguageKey.acceptStyle, File.ReadAllText(Path.Combine(Constants.ApplicationStyleDirectoryPath, Constants.styleCommonFileName), Encoding.UTF8) },
                 { LanguageKey.acceptApplicationName, Constants.ApplicationName },
-                { LanguageKey.acceptOk, language["accept/ok"] },
-                { LanguageKey.acceptNg, language["accept/ng"] },
-                { LanguageKey.acceptRelease, language["update-check/release"] },
-                { LanguageKey.acceptRc, language["update-check/rc"] },
+                { LanguageKey.acceptOk, language.GuiTextToPlainText(language["accept/ok"]) },
+                { LanguageKey.acceptNg, language.GuiTextToPlainText(language["accept/ng"]) },
+                { LanguageKey.acceptRelease, language.GuiTextToPlainText(language["update-check/release"]) },
+                { LanguageKey.acceptRc, language.GuiTextToPlainText(language["update-check/rc"]) },
             };
             var replacedAcceptSource = acceptSource.ReplaceRangeFromDictionary("${", "}", acceptMap);
 

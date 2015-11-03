@@ -105,6 +105,12 @@
 				</comments>
 			</note>
 			<note rev="">
+				<message>#298: メニュー・ラベルにショートカットキーを表示する</message>
+				<comments>
+					<comment>WPF版作成時に未実装だった</comment>
+				</comments>
+			</note>
+			<note rev="">
 				<message></message>
 			</note>
 		</group>

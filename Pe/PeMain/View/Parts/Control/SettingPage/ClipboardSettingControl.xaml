@@ -57,8 +57,8 @@
           <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Label Grid.Row="0" Grid.Column="0" Content="show" AA:Language.Word="clipboard-setting/show" Style="{StaticResource HeaderLabel}" />
-        <AV:AppHotkeyControl Grid.Row="0" Grid.Column="1" Hotkey="{Binding ToggleHotKey}" Style="{StaticResource DefaultAppHotkey}" />
+        <Label Grid.Row="0" Grid.Column="0" Content="show" AA:Language.Word="clipboard-setting/show" Style="{StaticResource HeaderLabel}" Target="{Binding ElementName=inputToggleHotKey}" />
+        <AV:AppHotkeyControl x:Name="inputToggleHotKey" Grid.Row="0" Grid.Column="1" Hotkey="{Binding ToggleHotKey}" Style="{StaticResource DefaultAppHotkey}" />
 
         <Label Grid.Row="1" Grid.Column="0" Content="save count" AA:Language.Word="clipboard-setting/save-count" Style="{StaticResource HeaderLabel}" />
         <AV:IntegerSliderControl Grid.Row="1" Grid.Column="1" Value="{Binding SaveCount}" Minimum="{Binding Source={x:Static AM:Constants.ClipboardSaveMinimumCount}}" Maximum="{Binding Source={x:Static AM:Constants.ClipboardSaveMaximumCount}}"/>
