@@ -365,13 +365,13 @@
 		<Item Id="toolbar-setting/group/node/down" Word="選択中ノードを下に移動" />
 		<Item Id="toolbar-setting/group/node/remove" Word="選択中ノードを削除" />
 		
-		<Item Id="command-setting/icon" Word="アイコンサイズ" />
-		<Item Id="command-setting/hotkey" Word="呼び出しキー" />
+		<Item Id="command-setting/icon" Word="アイコンサイズ(_I)" />
+		<Item Id="command-setting/hotkey" Word="呼び出しキー(_H)" />
 		<Item Id="command-setting/hide-time" Word="表示時間" />
 		<Item Id="command-setting/font" Word="フォント" />
 		<Item Id="command-setting/find" Word="検索条件" />
-		<Item Id="command-setting/find/tag" Word="タグを検索する" />
-		<Item Id="command-setting/find/file" Word="ファイルを検索する" />
+		<Item Id="command-setting/find/tag" Word="タグを検索する(_T)" />
+		<Item Id="command-setting/find/file" Word="ファイルを検索する(_F)" />
 
 		<Item Id="note-setting/key" Word="キー設定" />
 		<Item Id="note-setting/key/create" Word="作成" />
