@@ -78,8 +78,8 @@ namespace ContentTypeTextNet.Pe.PeMain
                     this._notifyIcon = (TaskbarIcon)FindResource("root");
                     this._notifyIcon.DataContext = this._mainWorker;
                     this._mainWorker.SetView(this._notifyIcon);
-                    if(!startupNotifiyData.ExistsSetting && !startupNotifiyData.ExistsFormsSetting) {
-                        // 現行設定も旧設定もなければ完全に初回とする
+                    if(!startupNotifiyData.ExistsSetting) {
+                        // 設定データがなければ完全に初回とする
                         systemLogger.Information("application: first");
                         Application.Current.Dispatcher.BeginInvoke(new Action(() => {
                             this._mainWorker.ShowHomeDialog();

@@ -295,11 +295,6 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
             Implement.InitializeClipboardIndexSetting.Correction(setting, previousVersion, nonProcess);
         }
 
-        public static void ConvertFormsSetting(CommonData commonData)
-        {
-            Implement.ConvertFormsSetting.Convert(commonData);
-        }
-
         #endregion
     }
 }

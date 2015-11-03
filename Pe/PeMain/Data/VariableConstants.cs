@@ -120,9 +120,6 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
         /// </summary>
         public string UserArchiveDirectoryPath { get { return Path.Combine(UserDirectoryPath, Constants.archiveDirectoryName); } }
 
-        public string FormsUserSettingMainSettinFilePath { get { return Path.Combine(UserDirectoryPath, Constants.formsMainSettingFileName); } }
-        public string FormsUserSettingLauncherItemsSettinFilePath { get { return Path.Combine(UserDirectoryPath, Constants.formsLauncherItemsSettingFileName); } }
-
         public string UserSettingMainSettingFilePath { get { return Path.Combine(UserSettingDirectoryPath, this._mainSettingFileName); } }
 
         public string UserSettingLauncherItemSettingFilePath { get { return Path.Combine(UserSettingDirectoryPath, this._launcherItemSettingFileName); } }

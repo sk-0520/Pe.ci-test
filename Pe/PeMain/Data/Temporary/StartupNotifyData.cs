@@ -27,7 +27,6 @@ namespace ContentTypeTextNet.Pe.PeMain.Data.Temporary
         #region property
 
         public bool ExistsSetting { get; set; }
-        public bool ExistsFormsSetting { get; set; }
 
         public bool AcceptRunning { get; set; }
 

@@ -58,10 +58,16 @@
 	<log date="YYYY/MM/DD" version="0.69.1" type="rc" dummy="################################################################################">
 		<group type="note" dummy="==================================================================">
 			<note rev="">
-				<message></message>
+				<message>#346: Forms版→WPF版用データコンバーターの廃止</message>
+				<comments>
+					<comment>本バージョンを持ってForms版からのデータ引き継ぎサポートを終了します</comment>
+				</comments>
 			</note>
 			<note rev="">
-				<message></message>
+				<message>[事前通知]: 0.72.0 で .NET Framework の対応バージョンを を 4.5.1 から 4.6 に変更します</message>
+				<comments>
+					<comment>nameof! nameof! nameof!</comment>
+				</comments>
 			</note>
 			<note rev="">
 				<message></message>

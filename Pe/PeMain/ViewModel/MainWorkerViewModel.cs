@@ -619,10 +619,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
                 var result = new StartupNotifyData();
                 result.ExistsSetting = File.Exists(mainSettingPath);
-                if(!result.ExistsSetting) {
-                    var formsMainSettingPath = Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.FormsUserSettingMainSettinFilePath);
-                    result.ExistsFormsSetting = File.Exists(formsMainSettingPath);
-                }
+
                 return result;
             }
         }
@@ -685,10 +682,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         {
             using(var timeLogger = CommonData.NonProcess.CreateTimeLogger()) {
                 var startupNotifyData = LoadSetting();
-                if(startupNotifyData.ExistsFormsSetting) {
-                    // Forms版からのデータ変換
-                    SettingUtility.ConvertFormsSetting(CommonData);
-                }
+
                 // 前回バージョンが色々必要なのでインクリメント前の生情報を保持しておく。
                 var previousVersion = (Version)CommonData.MainSetting.RunningInformation.LastExecuteVersion;
                 ResetCulture(CommonData.NonProcess);
