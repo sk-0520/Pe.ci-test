@@ -117,6 +117,16 @@
 				</comments>
 			</note>
 			<note rev="">
+				<message>#345: グループ名変更UIが邪魔</message>
+				<comments>
+					<comment>左側に出すように変更</comment>
+					<comment>OSの利き手設定によって表示方向が右だったりするけど気にしない</comment>
+				</comments>
+			</note>
+			<note rev="">
+				<message></message>
+			</note>
+			<note rev="">
 				<message></message>
 			</note>
 		</group>
