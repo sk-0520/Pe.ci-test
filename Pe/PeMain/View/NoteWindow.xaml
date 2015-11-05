@@ -45,6 +45,7 @@
       <SC:BooleanFontWeightConverter x:Key="BooleanFontWeightConverter" />
       <SC:BooleanFontStyleConverter x:Key="BooleanFontStyleConverter" />
       <AC:FontFamilyToNameConverter x:Key="FontFamilyToNameConverter" />
+      <AC:BooleanToTextWrappingConverter x:Key="BooleanToTextWrappingConverter" />
     </ResourceDictionary>
   </AW:CommonDataWindow.Resources>
   <AW:CommonDataWindow.Foreground>
@@ -174,7 +175,7 @@
       </Button>
     </Grid>
     <TextBox
-      x:Name="body" Grid.Row="1" AcceptsReturn="True" AcceptsTab="True" Background="Transparent" BorderThickness="0" Padding="2" TextWrapping="Wrap" 
+      x:Name="body" Grid.Row="1" AcceptsReturn="True" AcceptsTab="True" Background="Transparent" BorderThickness="0" Padding="2" TextWrapping="{Binding AutoLineFeed, Converter={StaticResource BooleanToTextWrappingConverter}, Mode=OneWay}"
       Text="{Binding Body}" IsReadOnly="{Binding IsBodyReadOnly}" IsEnabled="{Binding IsCompacted, Converter={StaticResource LogicalNotConverter}}" 
       FontFamily="{Binding FontFamily, Mode=OneWay}" FontWeight="{Binding FontBold, Converter={StaticResource BooleanFontWeightConverter}, Mode=OneWay}" FontStyle="{Binding FontItalic, Converter={StaticResource BooleanFontStyleConverter}, Mode=OneWay}" FontSize="{Binding FontSize, Mode=OneWay}"
     >
@@ -268,6 +269,7 @@
             <Grid.RowDefinitions>
               <RowDefinition />
               <RowDefinition />
+              <RowDefinition />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
               <ColumnDefinition Width="33*" />
@@ -275,9 +277,12 @@
               <ColumnDefinition Width="33*" />
             </Grid.ColumnDefinitions>
             <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="state" AA:Language.Word="note/state"  Style="{StaticResource TitleLabel}" />
+            
             <CheckBox Grid.Row="1" Grid.Column="0" IsChecked="{Binding IsLocked}" Content="lock" AA:Language.Word="note/state/lock" />
             <CheckBox Grid.Row="1" Grid.Column="1" IsChecked="{Binding IsCompacted}" Content="compact" AA:Language.Word="note/state/compact" />
             <CheckBox Grid.Row="1" Grid.Column="2" IsChecked="{Binding IsTopmost}" Content="topmost" AA:Language.Word="note/state/topmost" />
+            
+            <CheckBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" IsChecked="{Binding AutoLineFeed}" Content="topmost" AA:Language.Word="note/state/autolinefeed" />
           </Grid>
           <Grid Style="{StaticResource Group}">
             <Grid.RowDefinitions>

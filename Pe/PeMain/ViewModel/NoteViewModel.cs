@@ -169,6 +169,12 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
         }
 
+        public bool AutoLineFeed
+        {
+            get { return Model.AutoLineFeed; }
+            set { SetModelValue(value); }
+        }
+
         public string Body
         {
             get
