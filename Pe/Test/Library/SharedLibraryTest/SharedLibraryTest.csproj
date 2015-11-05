@@ -100,6 +100,7 @@
     <Compile Include="Logic\Extension\TextExtensionTest.cs" />
     <Compile Include="Logic\T4Template\T4TemplateProcessorTest.cs" />
     <Compile Include="Logic\Utility\CheckUtilityTest.cs" />
+    <Compile Include="Logic\Utility\DeepCloneUtilityTest.cs" />
     <Compile Include="Logic\Utility\DependencyPropertyUtilityTest.cs" />
     <Compile Include="Logic\Utility\EnumUtilityTest.cs" />
     <Compile Include="Logic\Utility\MediaUtilityTest.cs" />
