@@ -183,6 +183,7 @@
 		<Item Id="note/state/lock" Word="固定(_L)" />
 		<Item Id="note/state/compact" Word="最小化(_N)" />
 		<Item Id="note/state/topmost" Word="最前面(_T)" />
+		<Item Id="note/state/autolinefeed" Word="テキストを右端で折返す(_R)" />
 		<Item Id="note/operation" Word="操作" />
 		<Item Id="note/operation/copy" Word="コピー(_C)" />
 		<Item Id="note/operation/hide" Word="非表示(_X)" />

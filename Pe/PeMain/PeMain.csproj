@@ -217,6 +217,7 @@
     <Compile Include="View\Parts\Control\TimeSliderControl.xaml.cs">
       <DependentUpon>TimeSliderControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Parts\Converter\BooleanToTextWrappingConverter.cs" />
     <Compile Include="View\Parts\Converter\CommandItemConverter.cs" />
     <Compile Include="AppResourceAttribute.cs">
       <DependentUpon>AppResource.cs</DependentUpon>

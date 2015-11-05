@@ -125,6 +125,7 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
             obj.NoteKind = NoteKind;
             obj.IsLocked = IsLocked;
             obj.IsCompacted = IsCompacted;
+            obj.AutoLineFeed = AutoLineFeed;
             Font.DeepCloneTo(obj.Font);
 
             obj.ForeColor = ForeColor;
