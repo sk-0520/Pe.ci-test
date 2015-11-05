@@ -55,6 +55,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
     using System.Windows.Media.Effects;
     using System.Windows.Threading;
     using System.Threading;
+    using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility.UI;
 
     /// <summary>
     /// プロパティが状態持ちすぎててしんどいなぁ。

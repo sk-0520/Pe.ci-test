@@ -32,6 +32,7 @@ namespace ContentTypeTextNet.Pe.PeMain.View
     using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
     using ContentTypeTextNet.Pe.PeMain.View.Parts.Window;
     using ContentTypeTextNet.Pe.PeMain.ViewModel;
+    using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility.UI;
 
     /// <summary>
     /// TemplateWindow.xaml の相互作用ロジック

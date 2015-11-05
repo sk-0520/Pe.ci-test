@@ -14,7 +14,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with SharedLibrary.  If not, see <http://www.gnu.org/licenses/>.
 */
-namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Utility
+namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Utility.UI
 {
     using System;
     using System.Collections.Generic;

@@ -39,6 +39,7 @@ namespace ContentTypeTextNet.Pe.PeMain.View
     using ContentTypeTextNet.Pe.PeMain.View.Parts.ViewExtend;
     using ContentTypeTextNet.Pe.PeMain.View.Parts.Window;
     using ContentTypeTextNet.Pe.PeMain.ViewModel;
+    using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility.UI;
 
     /// <summary>
     /// NoteWindow.xaml の相互作用ロジック

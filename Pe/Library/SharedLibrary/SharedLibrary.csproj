@@ -234,7 +234,7 @@
     <Compile Include="Logic\Utility\CheckUtility.cs" />
     <Compile Include="Logic\Utility\DockTypeUtility.cs" />
     <Compile Include="Logic\Utility\EventUtility.cs" />
-    <Compile Include="Logic\Utility\UIUtility.cs" />
+    <Compile Include="Logic\Utility\UI\UIUtility.cs" />
     <Compile Include="Logic\Utility\PathUtility.cs" />
     <Compile Include="Logic\Utility\TextUtility.cs" />
     <Compile Include="Model\DictionaryModel.cs" />

@@ -30,6 +30,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.View.ViewExtend
     using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
     using System.Runtime.InteropServices;
     using ContentTypeTextNet.Library.SharedLibrary.Model.Unmanaged;
+    using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility.UI;
 
     public class WindowAreaCorrection: WindowsViewExtendBase<IWindowAreaCorrectionData>
     {

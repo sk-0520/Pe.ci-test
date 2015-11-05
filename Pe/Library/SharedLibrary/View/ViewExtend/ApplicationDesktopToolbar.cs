@@ -34,6 +34,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.View.ViewExtend
     using ContentTypeTextNet.Library.SharedLibrary.IF.WindowsViewExtend;
     using ContentTypeTextNet.Library.SharedLibrary.Logic;
     using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+    using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility.UI;
 
     /// <summary>
     /// Windowにアプリケーションデスクトップツールバー機能を付与する。

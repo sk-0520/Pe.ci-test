@@ -56,6 +56,7 @@ namespace ContentTypeTextNet.Pe.PeMain.View
     using ContentTypeTextNet.Pe.PeMain.Data;
     using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
     using ContentTypeTextNet.Pe.PeMain.Define;
+    using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility.UI;
 
     /// <summary>
     /// ToolbarWindow.xaml の相互作用ロジック
