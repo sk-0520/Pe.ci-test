@@ -7,7 +7,7 @@
     <ProjectGuid>{FBF5E5E8-2D88-45A7-B1EA-9E3FB68E97E4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ContentTypeTextNet.Pe.Library.Package</RootNamespace>
+    <RootNamespace>ContentTypeTextNet</RootNamespace>
     <AssemblyName>Package</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

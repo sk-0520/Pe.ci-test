@@ -7,7 +7,7 @@
     <ProjectGuid>{9E8E373E-CD97-411D-8C45-10AC4A86CAE8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ContentTypeTextNet.Library.SharedLibrary</RootNamespace>
+    <RootNamespace>ContentTypeTextNet</RootNamespace>
     <AssemblyName>SharedLibrary</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
