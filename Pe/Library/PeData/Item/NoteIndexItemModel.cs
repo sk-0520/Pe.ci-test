@@ -67,7 +67,11 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
         /// </summary>
         [DataMember]
         public FontModel Font { get; set; }
-
+        /// <summary>
+        /// 自動改行するか。
+        /// </summary>
+        [DataMember]
+        public bool AutoLineFeed { get; set; }
         #endregion
 
         #region IColorPair
