@@ -101,6 +101,7 @@
     <Compile Include="CompatibleWindows\Utility\PodStructUtility.cs" />
     <Compile Include="Logic\Database\QueryParts.cs" />
     <Compile Include="Logic\NotifyPropertyChangedObject.cs" />
+    <Compile Include="Logic\Utility\UI\WebBrowserUtility.cs" />
     <Compile Include="Logic\WeakEventListener.cs" />
     <Compile Include="Model\CallerModel.cs" />
     <Compile Include="Data\Database\DatabaseDataBase.cs" />

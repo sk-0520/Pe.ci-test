@@ -254,7 +254,7 @@
                 <Button Grid.Row="0" Grid.Column="2" Command="{Binding SelectedViewModel.CopyHtmlUriCommand}">
                   <Image Source="{x:Static AM:AppResource.CommonCopyImage}" Style="{StaticResource DefaultImage}" />
                 </Button>
-                <WebBrowser Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" AA:Browser.Html="{Binding SelectedViewModel.HtmlCode}" />
+                <WebBrowser x:Name="webHtml" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" AA:Browser.Html="{Binding SelectedViewModel.HtmlCode}" />
               </Grid>
             </TabItem>
             <TabItem x:Name="pageImage" Visibility="{Binding SelectedViewModel.EnabledClipboardTypesImage, Converter={StaticResource BooleanToVisibilityConverter}}">

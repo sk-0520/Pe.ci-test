@@ -89,6 +89,9 @@
 		</group>
 		<group type="fixes" dummy="==================================================================">
 			<note rev="">
+				<message>#349: HTMLクリップボード内のスクリプトエラーを無視する</message>
+			</note>
+			<note rev="">
 				<message></message>
 			</note>
 			<note rev="">
