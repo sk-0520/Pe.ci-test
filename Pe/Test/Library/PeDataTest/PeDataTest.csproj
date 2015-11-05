@@ -6,7 +6,7 @@
     <ProjectGuid>{DDD3B4E3-D632-4EAC-A999-80B1B6207EB5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ContentTypeTextNet</RootNamespace>
+    <RootNamespace>ContentTypeTextNet.Test.Library.PeDataTest</RootNamespace>
     <AssemblyName>PeDataTest</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

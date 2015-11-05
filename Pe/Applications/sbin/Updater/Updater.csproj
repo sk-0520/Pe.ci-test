@@ -7,7 +7,7 @@
     <ProjectGuid>{7CC3600F-2EC1-4905-AF5C-6191D37A3824}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ContentTypeTextNet</RootNamespace>
+    <RootNamespace>ContentTypeTextNet.Pe.SystemApplications.Updater</RootNamespace>
     <AssemblyName>Updater</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

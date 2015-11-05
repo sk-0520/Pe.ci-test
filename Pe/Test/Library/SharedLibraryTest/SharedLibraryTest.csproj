@@ -6,7 +6,7 @@
     <ProjectGuid>{832871FC-65A1-432E-AEB0-1085AAD4F9D3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ContentTypeTextNet</RootNamespace>
+    <RootNamespace>ContentTypeTextNet.Test.Library.SharedLibraryTest</RootNamespace>
     <AssemblyName>SharedLibraryTest</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
