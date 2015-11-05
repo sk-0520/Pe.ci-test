@@ -85,6 +85,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attribute\IsDeepCloneAttribute.cs" />
     <Compile Include="Attribute\EntityMappingAttribute.cs" />
     <Compile Include="Attribute\PixelKindAttribute.cs" />
     <Compile Include="CompatibleForms\CompatibleFormWindow.cs" />
