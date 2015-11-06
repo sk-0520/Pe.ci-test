@@ -52,6 +52,7 @@ namespace ContentTypeTextNet.Test.Library.SharedLibraryTest.Logic.Utility
                 return result;
             }
         }
+
         [Test]
         public void DeepCopy_PlainStruct_Test()
         {
@@ -59,7 +60,42 @@ namespace ContentTypeTextNet.Test.Library.SharedLibraryTest.Logic.Utility
             s.public_field_target = 10;
             s.public_field_untarget = 20;
             var d = s.DeepClone();
-            Assert.AreEqual(s, d);
+            Assert.AreNotEqual(s, d);
         }
+
+        class PlainClass: IDeepClone
+        {
+#pragma warning disable 169
+            [IsDeepClone]
+            int private_field_target;
+            [IsDeepClone]
+            public int public_field_target;
+            int private_field_untarget;
+            public int public_field_untarget;
+#pragma warning restore 169
+
+            public void DeepCloneTo(IDeepClone target)
+            {
+                DeepCloneUtility.DeepCopy(target, this);
+            }
+
+            public IDeepClone DeepClone()
+            {
+                var result = new PlainClass();
+                DeepCloneTo(result);
+                return result;
+            }
+        }
+        [Test]
+        public void DeepCopy_PlainClass_Test()
+        {
+            var s = new PlainClass();
+            s.public_field_target = 10;
+            s.public_field_untarget = 20;
+            var d = s.DeepClone();
+            Assert.AreNotEqual(s, d);
+        }
+
+
     }
 }
