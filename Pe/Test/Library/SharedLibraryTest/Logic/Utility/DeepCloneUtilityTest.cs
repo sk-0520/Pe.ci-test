@@ -33,11 +33,11 @@ namespace ContentTypeTextNet.Test.Library.SharedLibraryTest.Logic.Utility
         {
 #pragma warning disable 169
             [IsDeepClone]
-            int private_field_target;
+            int private_target;
             [IsDeepClone]
-            public int public_field_target;
-            int private_field_untarget;
-            public int public_field_untarget;
+            public int public_target;
+            int private_untarget;
+            public int public_untarget;
 #pragma warning restore 169
 
             public void DeepCloneTo(IDeepClone target)
@@ -57,21 +57,24 @@ namespace ContentTypeTextNet.Test.Library.SharedLibraryTest.Logic.Utility
         public void DeepCopy_PlainStruct_Test()
         {
             var s = new PlainStruct();
-            s.public_field_target = 10;
-            s.public_field_untarget = 20;
-            var d = s.DeepClone();
+            s.public_target = 10;
+            s.public_untarget = 20;
+            var d = (PlainStruct)s.DeepClone();
             Assert.AreNotEqual(s, d);
+            Assert.AreEqual(s.public_target, d.public_target);
+            Assert.AreNotEqual(s.public_untarget, d.public_untarget);
         }
 
         class PlainClass: IDeepClone
         {
 #pragma warning disable 169
             [IsDeepClone]
-            int private_field_target;
+            int private_target;
             [IsDeepClone]
-            public int public_field_target;
-            int private_field_untarget;
-            public int public_field_untarget;
+            public int public_target;
+            int private_untarget;
+            public int public_untarget;
+
 #pragma warning restore 169
 
             public void DeepCloneTo(IDeepClone target)
@@ -90,12 +93,43 @@ namespace ContentTypeTextNet.Test.Library.SharedLibraryTest.Logic.Utility
         public void DeepCopy_PlainClass_Test()
         {
             var s = new PlainClass();
-            s.public_field_target = 10;
-            s.public_field_untarget = 20;
+            s.public_target = 10;
+            s.public_untarget = 20;
             var d = s.DeepClone();
             Assert.AreNotEqual(s, d);
         }
 
+        struct PropertyStruct: IDeepClone
+        {
+#pragma warning disable 169
+            [IsDeepClone]
+            int private_target { get; set; }
+            [IsDeepClone]
+            public int public_target { get; set; }
+            int private_untarget { get; set; }
+            public int public_untarget { get; set; }
+#pragma warning restore 169
 
+            public void DeepCloneTo(IDeepClone target)
+            {
+                DeepCloneUtility.DeepCopy(target, this);
+            }
+
+            public IDeepClone DeepClone()
+            {
+                var result = new PropertyStruct();
+                DeepCloneTo(result);
+                return result;
+            }
+        }
+        [Test]
+        public void DeepCopy_PropertyStruct_Test()
+        {
+            var s = new PropertyStruct();
+            s.public_target = 10;
+            s.public_untarget = 20;
+            var d = s.DeepClone();
+            Assert.AreNotEqual(s, d);
+        }
     }
 }

@@ -41,6 +41,6 @@ namespace ContentTypeTextNet.Library.SharedLibrary.IF
         /// <para>おおよそDeepCloneの内部実装。</para>
         /// </summary>
         /// <param name="target"></param>
-        void DeepCloneTo(IDeepClone target);
+        void DeepCloneTo(ref IDeepClone target);
     }
 }
