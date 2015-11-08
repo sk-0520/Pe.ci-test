@@ -22,6 +22,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Model
     using System.Runtime.Serialization;
     using System.Text;
     using System.Threading.Tasks;
+    using Attribute;
 
     /// <summary>
     /// アイコンのパスを保持。
@@ -34,12 +35,12 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Model
         /// <summary>
         /// パス。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public string Path { get; set; }
         /// <summary>
         /// アイコンインデックス。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public int Index { get; set; }
 
         #endregion
