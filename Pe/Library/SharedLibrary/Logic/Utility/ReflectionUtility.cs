@@ -95,5 +95,46 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Utility
             return string.Format("{0}=>{1}", name, joinString);
         }
 
+        public static object GetMemberValue(FieldInfo fieldInfo, object obj)
+        {
+            return fieldInfo.GetValue(obj);
+        }
+        public static object GetMemberValue(PropertyInfo propertyInfo, object obj)
+        {
+            return propertyInfo.GetValue(obj);
+        }
+        public static object GetMemberValue(MemberInfo memberInfo, object obj)
+        {
+            if(memberInfo.MemberType.HasFlag(MemberTypes.Property)) {
+                return GetMemberValue((PropertyInfo)memberInfo, obj);
+            } else if(memberInfo.MemberType.HasFlag(MemberTypes.Field)) {
+                return GetMemberValue((FieldInfo)memberInfo, obj);
+            } else {
+                throw new NotImplementedException();
+            }
+        }
+
+        public static void SetMemberValue<T>(FieldInfo fieldInfo, ref T obj, object value)
+        {
+            if(obj.GetType().IsValueType) {
+                fieldInfo.SetValueDirect(__makeref(obj), value);
+            } else {
+                fieldInfo.SetValue(obj, value);
+            }
+        }
+        public static void SetMemberValue<T>(PropertyInfo propertyInfo, ref T obj, object value)
+        {
+            propertyInfo.SetValue(obj, value);
+        }
+        public static void SetMemberValue<T>(MemberInfo memberInfo, ref T obj, object value)
+        {
+            if(memberInfo.MemberType.HasFlag(MemberTypes.Property)) {
+                SetMemberValue((PropertyInfo)memberInfo, ref obj, value);
+            } else if(memberInfo.MemberType.HasFlag(MemberTypes.Field)) {
+                SetMemberValue((FieldInfo)memberInfo, ref obj, value);
+            } else {
+                throw new NotImplementedException();
+            }
+        }
     }
 }

@@ -31,32 +31,34 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Utility
         public static IEnumerable<MemberInfo> GetMembers(IDeepClone deepCone)
         {
             return deepCone.GetType().GetMembers(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public)
-                .Where(p => p.GetCustomAttributes(typeof(IsDeepCloneAttribute)).Any())
+                .Where(m => m.GetCustomAttributes(typeof(IsDeepCloneAttribute)).Any())
+                .Where(m => m.MemberType.HasFlag(MemberTypes.Field) || m.MemberType.HasFlag(MemberTypes.Property))
             ;
         }
 
-        public static void DeepCopy(IDeepClone dst, IDeepClone src)
+        public static TDeepClone DeepCopy<TDeepClone>(TDeepClone src)
+            where TDeepClone:  IDeepClone, new()
         {
-            if(dst.GetType() != src.GetType()) {
-                throw new ArgumentException(string.Format("dst[{0}] != src[{1}]", dst.GetType(), src.GetType()));
-            }
+            var dst = new TDeepClone();
 
-            var properties = GetMembers(src);
-            
-            foreach(var property in properties.OfType<FieldInfo>()) {
-                var srcValue = property.GetValue(src);
+            var memberInfos = GetMembers(src);
+
+            foreach(var memberInfo in memberInfos) {
+                var srcValue = ReflectionUtility.GetMemberValue(memberInfo, src);
                 var srcClone = srcValue as IDeepClone;
                 if(srcClone != null) {
-                    var dstClone = (IDeepClone)property.GetValue(dst);
-                    srcClone.DeepCloneTo(dstClone);
+                    //var dstClone = (IDeepClone)property.GetValue(dst);
+                    var dstClone = srcClone.DeepClone();
                     if(dstClone.GetType().IsValueType) {
                         // 構造体は値の再設定が必要(多分)
-                        property.SetValue(dst, dstClone);
+                        ReflectionUtility.SetMemberValue(memberInfo, ref dst, dstClone);
                     }
                 } else {
-                    property.SetValue(dst, srcValue);
+                    ReflectionUtility.SetMemberValue(memberInfo, ref dst, srcValue);
                 }
             }
+
+            return dst;
         }
 
     }

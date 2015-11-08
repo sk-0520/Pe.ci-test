@@ -40,16 +40,17 @@ namespace ContentTypeTextNet.Test.Library.SharedLibraryTest.Logic.Utility
             public int public_untarget;
 #pragma warning restore 169
 
-            public void DeepCloneTo(IDeepClone target)
-            {
-                DeepCloneUtility.DeepCopy(target, this);
-            }
+            //public void DeepCloneTo(IDeepClone target)
+            //{
+            //    DeepCloneUtility.DeepCopy(target, this);
+            //}
 
             public IDeepClone DeepClone()
             {
-                var result = new PlainStruct();
-                DeepCloneTo(result);
-                return result;
+                //var result = new PlainStruct();
+                //DeepCloneTo(result);
+                //return result;
+                return DeepCloneUtility.DeepCopy(this);
             }
         }
 
@@ -77,16 +78,17 @@ namespace ContentTypeTextNet.Test.Library.SharedLibraryTest.Logic.Utility
 
 #pragma warning restore 169
 
-            public void DeepCloneTo(IDeepClone target)
-            {
-                DeepCloneUtility.DeepCopy(target, this);
-            }
+            //public void DeepCloneTo(IDeepClone target)
+            //{
+            //    DeepCloneUtility.DeepCopy(target, this);
+            //}
 
             public IDeepClone DeepClone()
             {
-                var result = new PlainClass();
-                DeepCloneTo(result);
-                return result;
+                //var result = new PlainClass();
+                //DeepCloneTo(result);
+                //return result;
+                return DeepCloneUtility.DeepCopy(this);
             }
         }
         [Test]
@@ -110,16 +112,17 @@ namespace ContentTypeTextNet.Test.Library.SharedLibraryTest.Logic.Utility
             public int public_untarget { get; set; }
 #pragma warning restore 169
 
-            public void DeepCloneTo(IDeepClone target)
-            {
-                DeepCloneUtility.DeepCopy(target, this);
-            }
+            //public void DeepCloneTo(IDeepClone target)
+            //{
+            //    DeepCloneUtility.DeepCopy(target, this);
+            //}
 
             public IDeepClone DeepClone()
             {
-                var result = new PropertyStruct();
-                DeepCloneTo(result);
-                return result;
+                //var result = new PropertyStruct();
+                //DeepCloneTo(result);
+                //return result;
+                return DeepCloneUtility.DeepCopy(this);
             }
         }
         [Test]
