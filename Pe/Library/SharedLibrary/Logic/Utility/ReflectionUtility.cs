@@ -20,6 +20,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Utility
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
+    using System.Runtime.CompilerServices;
     using System.Runtime.Serialization;
     using System.Text;
     using System.Threading.Tasks;
@@ -124,7 +125,13 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Utility
         }
         public static void SetMemberValue<T>(PropertyInfo propertyInfo, ref T obj, object value)
         {
-            propertyInfo.SetValue(obj, value);
+            if(obj.GetType().IsValueType) {
+                var box = RuntimeHelpers.GetObjectValue(obj);
+                propertyInfo.SetValue(box, value);
+                obj = (T)box;
+            } else {
+                propertyInfo.SetValue(obj, value);
+            }
         }
         public static void SetMemberValue<T>(MemberInfo memberInfo, ref T obj, object value)
         {

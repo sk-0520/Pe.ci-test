@@ -49,10 +49,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Utility
                 if(srcClone != null) {
                     //var dstClone = (IDeepClone)property.GetValue(dst);
                     var dstClone = srcClone.DeepClone();
-                    if(dstClone.GetType().IsValueType) {
-                        // 構造体は値の再設定が必要(多分)
-                        ReflectionUtility.SetMemberValue(memberInfo, ref dst, dstClone);
-                    }
+                    ReflectionUtility.SetMemberValue(memberInfo, ref dst, dstClone);
                 } else {
                     ReflectionUtility.SetMemberValue(memberInfo, ref dst, srcValue);
                 }

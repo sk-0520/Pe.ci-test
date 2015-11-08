@@ -97,8 +97,10 @@ namespace ContentTypeTextNet.Test.Library.SharedLibraryTest.Logic.Utility
             var s = new PlainClass();
             s.public_target = 10;
             s.public_untarget = 20;
-            var d = s.DeepClone();
+            var d = (PlainClass)s.DeepClone();
             Assert.AreNotEqual(s, d);
+            Assert.AreEqual(s.public_target, d.public_target);
+            Assert.AreNotEqual(s.public_untarget, d.public_untarget);
         }
 
         struct PropertyStruct: IDeepClone
@@ -131,8 +133,76 @@ namespace ContentTypeTextNet.Test.Library.SharedLibraryTest.Logic.Utility
             var s = new PropertyStruct();
             s.public_target = 10;
             s.public_untarget = 20;
-            var d = s.DeepClone();
+            var d = (PropertyStruct)s.DeepClone();
             Assert.AreNotEqual(s, d);
+            Assert.AreEqual(s.public_target, d.public_target);
+            Assert.AreNotEqual(s.public_untarget, d.public_untarget);
+        }
+
+        struct NestStruct: IDeepClone
+        {
+#pragma warning disable 649
+            [IsDeepClone]
+            public PlainStruct plainStruct_target;
+
+            public PlainStruct plainStruct_untarget;
+#pragma warning restore 649
+
+            public IDeepClone DeepClone()
+            {
+                return DeepCloneUtility.DeepCopy(this);
+            }
+        }
+        [Test]
+        public void DeepCopy_NestStruct_Test()
+        {
+            var s = new NestStruct();
+            s.plainStruct_target.public_target = 10;
+            s.plainStruct_target.public_untarget = 20;
+            s.plainStruct_untarget.public_target = 100;
+            s.plainStruct_untarget.public_untarget = 200;
+            var d = (NestStruct)s.DeepClone();
+            Assert.AreNotEqual(s, d);
+            Assert.AreEqual(s.plainStruct_target.public_target, d.plainStruct_target.public_target);
+            Assert.AreNotEqual(s.plainStruct_target.public_untarget, d.plainStruct_target.public_untarget);
+
+            Assert.AreNotEqual(s.plainStruct_untarget.public_target, d.plainStruct_untarget.public_target);
+            Assert.AreNotEqual(s.plainStruct_untarget.public_untarget, d.plainStruct_untarget.public_untarget);
+        }
+
+        class NestClass: IDeepClone
+        {
+            public NestClass()
+            {
+                plainClass_target = new PlainClass();
+                plainClass_untarget = new PlainClass();
+            }
+#pragma warning disable 649
+            [IsDeepClone]
+            public PlainClass plainClass_target;
+
+            public PlainClass plainClass_untarget;
+#pragma warning restore 649
+
+            public IDeepClone DeepClone()
+            {
+                return DeepCloneUtility.DeepCopy(this);
+            }
+        }
+        [Test]
+        public void DeepCopy_NestClass_Test()
+        {
+            var s = new NestClass();
+            s.plainClass_target.public_target = 10;
+            s.plainClass_target.public_untarget = 20;
+            s.plainClass_untarget.public_target = 100;
+            s.plainClass_untarget.public_untarget = 200;
+            var d = (NestClass)s.DeepClone();
+            Assert.AreEqual(s.plainClass_target.public_target, d.plainClass_target.public_target);
+            Assert.AreNotEqual(s.plainClass_target.public_untarget, d.plainClass_target.public_untarget);
+
+            Assert.AreNotEqual(s.plainClass_untarget.public_target, d.plainClass_untarget.public_target);
+            Assert.AreNotEqual(s.plainClass_untarget.public_untarget, d.plainClass_untarget.public_untarget);
         }
     }
 }
