@@ -84,7 +84,8 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
             ShowFrontHotKey.DeepCloneTo(obj.ShowFrontHotKey);
             obj.ForeColor = ForeColor;
             obj.BackColor = BackColor;
-            Font.DeepCloneTo(obj.Font);
+            //Font.DeepCloneTo(obj.Font);
+            obj.Font = (FontModel)Font.DeepClone();
             obj.NoteTitle = NoteTitle;
         }
 

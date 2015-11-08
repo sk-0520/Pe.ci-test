@@ -126,7 +126,8 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
             obj.IsLocked = IsLocked;
             obj.IsCompacted = IsCompacted;
             obj.AutoLineFeed = AutoLineFeed;
-            Font.DeepCloneTo(obj.Font);
+            //Font.DeepCloneTo(obj.Font);
+            obj.Font = (FontModel)Font.DeepClone();
 
             obj.ForeColor = ForeColor;
             obj.BackColor = BackColor;

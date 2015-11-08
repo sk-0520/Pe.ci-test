@@ -91,7 +91,8 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting
             Clipboard.DeepCloneTo(obj.Clipboard);
             Template.DeepCloneTo(obj.Template);
             Note.DeepCloneTo(obj.Note);
-            Stream.DeepCloneTo(obj.Stream);
+            //Stream.DeepCloneTo(obj.Stream);
+            obj.Stream = (StreamSettingModel)Stream.DeepClone();
         }
 
         public IDeepClone DeepClone()

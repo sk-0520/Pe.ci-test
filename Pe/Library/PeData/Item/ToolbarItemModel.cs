@@ -175,7 +175,8 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
             obj.MenuPositionCorrection = MenuPositionCorrection;
             obj.ButtonPosition = ButtonPosition;
             obj.Id = Id;
-            Font.DeepCloneTo(obj.Font);
+            //Font.DeepCloneTo(obj.Font);
+            obj.Font = (FontModel)Font.DeepClone();
         }
 
         public IDeepClone DeepClone()

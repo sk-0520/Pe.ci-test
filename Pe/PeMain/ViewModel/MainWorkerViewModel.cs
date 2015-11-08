@@ -1012,7 +1012,8 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 ForeColor = CommonData.MainSetting.Note.ForeColor,
                 BackColor = CommonData.MainSetting.Note.BackColor,
             };
-            CommonData.MainSetting.Note.Font.DeepCloneTo(noteItem.Font);
+            //CommonData.MainSetting.Note.Font.DeepCloneTo(noteItem.Font);
+            noteItem.Font = (FontModel)CommonData.MainSetting.Note.Font.DeepClone();
             //TODO: 外部化
             switch(CommonData.MainSetting.Note.NoteTitle) {
                 case NoteTitle.Timestamp:
