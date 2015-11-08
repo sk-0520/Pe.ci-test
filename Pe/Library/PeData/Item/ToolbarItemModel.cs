@@ -162,7 +162,8 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
             var obj = (ToolbarItemModel)target;
 
             obj.DockType = DockType;
-            FloatToolbar.DeepCloneTo(obj.FloatToolbar);
+            //FloatToolbar.DeepCloneTo(obj.FloatToolbar);
+            obj.FloatToolbar = (FloatToolbarItemModel)FloatToolbar.DeepClone();
             obj.IconScale = IconScale;
             obj.AutoHide = AutoHide;
             obj.HideWaitTime = HideWaitTime;
