@@ -171,7 +171,8 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
             obj.IsTopmost = IsTopmost;
             obj.IsVisible = IsVisible;
             obj.DuplicationMoveHead = DuplicationMoveHead;
-            Font.DeepCloneTo(obj.Font);
+            //Font.DeepCloneTo(obj.Font);
+            obj.Font = (FontModel)Font.DeepClone();
             LimitSize.DeepCloneTo(obj.LimitSize);
         }
 

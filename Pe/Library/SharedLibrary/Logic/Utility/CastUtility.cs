@@ -34,13 +34,15 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Utility
         /// <typeparam name="TSource"></typeparam>
         /// <param name="arg"></param>
         /// <param name="action"></param>
-        public static void AsAction<TCast>(object arg, Action<TCast> action)
+        public static bool AsAction<TCast>(object arg, Action<TCast> action)
             where TCast : class
         {
             var obj = arg as TCast;
             if(obj != null) {
                 action(obj);
+                return true;
             }
+            return false;
         }
 
         /// <summary>

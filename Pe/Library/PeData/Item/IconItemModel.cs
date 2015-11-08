@@ -22,7 +22,9 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
     using System.Runtime.Serialization;
     using System.Text;
     using System.Threading.Tasks;
+    using ContentTypeTextNet.Library.SharedLibrary.Attribute;
     using ContentTypeTextNet.Library.SharedLibrary.IF;
+    using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
     using ContentTypeTextNet.Library.SharedLibrary.Model;
     using ContentTypeTextNet.Pe.Library.PeData.IF;
 
@@ -70,21 +72,22 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
 
         #region IDeepClone
 
-        public void DeepCloneTo(IDeepClone target)
-        {
-            var obj = (IconItemModel)target;
+        //public void DeepCloneTo(IDeepClone target)
+        //{
+        //    var obj = (IconItemModel)target;
 
-            obj.Path = Path;
-            obj.Index = Index;
-        }
+        //    obj.Path = Path;
+        //    obj.Index = Index;
+        //}
 
         public IDeepClone DeepClone()
         {
-            var result = new IconItemModel();
+            //var result = new IconItemModel();
 
-            DeepCloneTo(result);
+            //DeepCloneTo(result);
 
-            return result;
+            //return result;
+            return DeepCloneUtility.DeepCopy(this);
         }
 
         #endregion

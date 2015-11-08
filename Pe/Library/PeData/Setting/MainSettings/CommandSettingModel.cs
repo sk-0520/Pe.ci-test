@@ -91,7 +91,8 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
             obj.FindTag = FindTag;
             obj.FindFile = FindFile;
             obj.WindowWidth = WindowWidth;
-            Font.DeepCloneTo(obj.Font);
+            //Font.DeepCloneTo(obj.Font);
+            obj.Font = (FontModel)Font.DeepClone();
         }
 
         public IDeepClone DeepClone()

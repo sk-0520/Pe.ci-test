@@ -103,7 +103,11 @@
 		</group>
 		<group type="developer" dummy="==================================================================">
 			<note rev="">
-				<message></message>
+				<message>#351: データ複製の事故防止</message>
+				<comments>
+					<comment>基本ロジックと一部データには適用</comment>
+					<comment>全データに設定するのは労力的にしんどいので追々適用していく</comment>
+				</comments>
 			</note>
 			<note rev="">
 				<message></message>
