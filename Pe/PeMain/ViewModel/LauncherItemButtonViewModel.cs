@@ -227,7 +227,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
         }
 
-        public ICommand OpenDirectory
+        public ICommand OpenDirectoryCommand
         {
             get
             {

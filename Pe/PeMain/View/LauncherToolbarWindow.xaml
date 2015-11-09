@@ -549,8 +549,8 @@
                                       <TextBlock Style="{StaticResource ItemText}" Text="file" AA:Language.Word="toolbar/file" />
                                     </StackPanel>
                                   </Label>
-                                  <Button Grid.Row="4" Grid.Column="0" Content="parent dir" AA:Language.Word="toolbar/file/parent-dir" IsEnabled="{Binding ExistsParentDirectory}" Command="{Binding OpenDirectory}" CommandParameter="{x:Static ADD:LauncherCommandType.ParentDirectory}" Style="{StaticResource PopupClose}" />
-                                  <Button Grid.Row="4" Grid.Column="1" Content="work dir"   AA:Language.Word="toolbar/file/work-dir"   IsEnabled="{Binding ExistsWorkDirectory}" Command="{Binding OpenDirectory}" CommandParameter="{x:Static ADD:LauncherCommandType.WorkDirectory}" Style="{StaticResource PopupClose}" />
+                                  <Button Grid.Row="4" Grid.Column="0" Content="parent dir" AA:Language.Word="toolbar/file/parent-dir" IsEnabled="{Binding ExistsParentDirectory}" Command="{Binding OpenDirectoryCommand}" CommandParameter="{x:Static ADD:LauncherCommandType.ParentDirectory}" Style="{StaticResource PopupClose}" />
+                                  <Button Grid.Row="4" Grid.Column="1" Content="work dir"   AA:Language.Word="toolbar/file/work-dir"   IsEnabled="{Binding ExistsWorkDirectory}" Command="{Binding OpenDirectoryCommand}" CommandParameter="{x:Static ADD:LauncherCommandType.WorkDirectory}" Style="{StaticResource PopupClose}" />
 
                                   <Separator Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3" />
 
