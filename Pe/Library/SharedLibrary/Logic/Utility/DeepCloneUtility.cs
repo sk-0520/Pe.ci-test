@@ -36,7 +36,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Utility
             ;
         }
 
-        public static TDeepClone DeepCopy<TDeepClone>(TDeepClone src)
+        public static TDeepClone Copy<TDeepClone>(TDeepClone src)
             where TDeepClone:  IDeepClone, new()
         {
             var dst = new TDeepClone();

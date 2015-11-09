@@ -61,7 +61,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Model
             //DeepCloneTo(result);
 
             //return result;
-            return DeepCloneUtility.DeepCopy(this);
+            return DeepCloneUtility.Copy(this);
         }
 
         #endregion

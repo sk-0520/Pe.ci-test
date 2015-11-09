@@ -87,7 +87,7 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
             //DeepCloneTo(result);
 
             //return result;
-            return DeepCloneUtility.DeepCopy(this);
+            return DeepCloneUtility.Copy(this);
         }
 
         #endregion

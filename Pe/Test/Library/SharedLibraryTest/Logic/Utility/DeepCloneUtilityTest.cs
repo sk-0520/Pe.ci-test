@@ -50,7 +50,7 @@ namespace ContentTypeTextNet.Test.Library.SharedLibraryTest.Logic.Utility
                 //var result = new PlainStruct();
                 //DeepCloneTo(result);
                 //return result;
-                return DeepCloneUtility.DeepCopy(this);
+                return DeepCloneUtility.Copy(this);
             }
         }
 
@@ -88,7 +88,7 @@ namespace ContentTypeTextNet.Test.Library.SharedLibraryTest.Logic.Utility
                 //var result = new PlainClass();
                 //DeepCloneTo(result);
                 //return result;
-                return DeepCloneUtility.DeepCopy(this);
+                return DeepCloneUtility.Copy(this);
             }
         }
         [Test]
@@ -124,7 +124,7 @@ namespace ContentTypeTextNet.Test.Library.SharedLibraryTest.Logic.Utility
                 //var result = new PropertyStruct();
                 //DeepCloneTo(result);
                 //return result;
-                return DeepCloneUtility.DeepCopy(this);
+                return DeepCloneUtility.Copy(this);
             }
         }
         [Test]
@@ -150,7 +150,7 @@ namespace ContentTypeTextNet.Test.Library.SharedLibraryTest.Logic.Utility
 
             public IDeepClone DeepClone()
             {
-                return DeepCloneUtility.DeepCopy(this);
+                return DeepCloneUtility.Copy(this);
             }
         }
         [Test]
@@ -186,7 +186,7 @@ namespace ContentTypeTextNet.Test.Library.SharedLibraryTest.Logic.Utility
 
             public IDeepClone DeepClone()
             {
-                return DeepCloneUtility.DeepCopy(this);
+                return DeepCloneUtility.Copy(this);
             }
         }
         [Test]

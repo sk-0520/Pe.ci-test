@@ -71,7 +71,7 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
             //DeepCloneTo(result);
 
             //return result;
-            return DeepCloneUtility.DeepCopy(this);
+            return DeepCloneUtility.Copy(this);
         }
 
         #endregion
