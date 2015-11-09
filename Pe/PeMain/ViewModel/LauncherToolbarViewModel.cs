@@ -506,7 +506,6 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                     SetSelectedGroup(this._selectedGroup, GroupItems);
 
                     var oldLauncherItems = LauncherItems;
-                    LauncherItems.Clear();
                     LauncherItems = GetLauncherItemButtons(SelectedGroup);
                     if(oldLauncherItems != null) {
                         foreach(var oldItem in oldLauncherItems) {
