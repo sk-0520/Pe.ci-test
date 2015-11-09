@@ -8,6 +8,7 @@
   xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
   xmlns:SC="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=SharedLibrary"
   xmlns:SA="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Attached;assembly=SharedLibrary"
+  xmlns:SL="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.Logic;assembly=SharedLibrary"
   xmlns:AM="clr-namespace:ContentTypeTextNet.Pe.PeMain"
   xmlns:AVM="clr-namespace:ContentTypeTextNet.Pe.PeMain.ViewModel"
   xmlns:AP="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
@@ -50,11 +51,11 @@
   <AW:CommonDataWindow.Resources>
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="/View/Parts/Resource/ImageDictionary.xaml"/>
-        <ResourceDictionary Source="/View/Parts/Resource/GripDictionary.xaml"/>
-        <ResourceDictionary Source="/View/Parts/Resource/PopupDictionary.xaml"/>
-        <ResourceDictionary Source="/View/Parts/Resource/LabelDictionary.xaml"/>
-        <ResourceDictionary Source="/View/Parts/Resource/TextBlockDictionary.xaml"/>
+        <SL:CachedResourceDictionary Source="/View/Parts/Resource/ImageDictionary.xaml" />
+        <SL:CachedResourceDictionary Source="/View/Parts/Resource/GripDictionary.xaml"/>
+        <SL:CachedResourceDictionary Source="/View/Parts/Resource/PopupDictionary.xaml"/>
+        <SL:CachedResourceDictionary Source="/View/Parts/Resource/LabelDictionary.xaml"/>
+        <SL:CachedResourceDictionary Source="/View/Parts/Resource/TextBlockDictionary.xaml"/>
       </ResourceDictionary.MergedDictionaries>
       <xctk:InverseBoolConverter x:Key="InverseBoolConverter" />
       <SC:LogicalMultiEqualConverter x:Key="LogicalMultiEqualConverter" />
