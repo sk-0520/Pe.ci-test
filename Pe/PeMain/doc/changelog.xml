@@ -92,7 +92,10 @@
 				<message>#349: HTMLクリップボード内のスクリプトエラーを無視する</message>
 			</note>
 			<note rev="">
-				<message></message>
+				<message>#305: メモリ消費を抑える</message>
+				<comments>
+					<comment>到達不能な破棄処理を有効にした</comment>
+				</comments>
 			</note>
 			<note rev="">
 				<message></message>
@@ -110,7 +113,11 @@
 				</comments>
 			</note>
 			<note rev="">
-				<message></message>
+				<message>IDE0001の抑制</message>
+				<comments>
+					<comment>usingする名前空間をVS2013スタイルで留める</comment>
+					<comment>親以降の名前空間が同じ名称結構多くて完全修飾の方が分かりやすいのですよ</comment>
+				</comments>
 			</note>
 			<note rev="">
 				<message></message>
