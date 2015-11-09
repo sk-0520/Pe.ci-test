@@ -100,6 +100,7 @@
     <Compile Include="CompatibleWindows\Utility\HandleUtility.cs" />
     <Compile Include="CompatibleWindows\Utility\MouseUtility.cs" />
     <Compile Include="CompatibleWindows\Utility\PodStructUtility.cs" />
+    <Compile Include="Logic\CachedResourceDictionary.cs" />
     <Compile Include="Logic\Database\QueryParts.cs" />
     <Compile Include="Logic\NotifyPropertyChangedObject.cs" />
     <Compile Include="Logic\Utility\DeepCloneUtility.cs" />
