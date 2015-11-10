@@ -30,6 +30,8 @@ namespace ContentTypeTextNet.Pe.PeMain.Data.Temporary
 
         public bool AcceptRunning { get; set; }
 
+        public bool QuickExecute { get; set; }
+
         #endregion
     }
 }

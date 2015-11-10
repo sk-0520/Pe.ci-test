@@ -92,6 +92,12 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 #endif
             }
             MutexName = mutexName;
+
+            if(commandLine.HasOption("accept")) {
+                var acceptValue = commandLine.GetValue("accept").Trim();
+                ForceAccept = acceptValue == "force";
+            }
+
         }
 
         #region property
@@ -137,6 +143,15 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
         public string LanguageCode { get { return this._languageCode; } }
 
         public bool FileLogging { get; private set; }
+        public bool ForceAccept { get; private set; }
+
+        public bool IsQuickExecute
+        {
+            get
+            {
+                return ForceAccept;
+            }
+        }
 
         #endregion
     }

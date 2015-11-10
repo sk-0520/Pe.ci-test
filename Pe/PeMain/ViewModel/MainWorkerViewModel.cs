@@ -95,6 +95,8 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         bool ResetToolbarRunning { get; set; }
         DateTime PrevResetToolbar { get; set; }
 
+        public bool IsQuickExecute { get; private set; }
+
         #region IHavingCommonData
 
         public Data.CommonData CommonData { get; private set; }
@@ -629,7 +631,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             using(var timeLogger = CommonData.NonProcess.CreateTimeLogger()) {
                 BackupSetting();
 
-                AppUtility.SaveSetting(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingMainSettingFilePath), CommonData.MainSetting, Constants.fileTypeMainSetting, CommonData.Logger);
+                SaveMainSetting();
                 AppUtility.SaveSetting(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingLauncherItemSettingFilePath), CommonData.LauncherItemSetting, Constants.fileTypeLauncherItemSetting, CommonData.Logger);
                 AppUtility.SaveSetting(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingLauncherGroupItemSettingFilePath), CommonData.LauncherGroupSetting, Constants.fileTypeLauncherGroupSetting, CommonData.Logger);
 
@@ -637,6 +639,11 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                     CommonData.AppSender.SendSaveIndex(indexKind, Timing.Instantly);
                 }
             }
+        }
+
+        void SaveMainSetting()
+        {
+            AppUtility.SaveSetting(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingMainSettingFilePath), CommonData.MainSetting, Constants.fileTypeMainSetting, CommonData.Logger);
         }
 
         void BackupSetting()
@@ -683,40 +690,46 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             using(var timeLogger = CommonData.NonProcess.CreateTimeLogger()) {
                 var startupNotifyData = LoadSetting();
 
-                // 前回バージョンが色々必要なのでインクリメント前の生情報を保持しておく。
-                var previousVersion = (Version)CommonData.MainSetting.RunningInformation.LastExecuteVersion;
-                ResetCulture(CommonData.NonProcess);
-                startupNotifyData.AcceptRunning = InitializeAccept();
-                if(!startupNotifyData.AcceptRunning) {
-                    return startupNotifyData;
-                }
-                if(previousVersion == null) {
-                    foreach(var screen in Screen.AllScreens) {
-                        var toolbar = new ToolbarItemModel();
-                        toolbar.Id = screen.DeviceName;
-                        CommonData.Logger.Information(CommonData.Language["log/create/toolbar-setting"], screen);
-                        CommonData.MainSetting.Toolbar.Items.Add(toolbar);
+                if(CommonData.VariableConstants.IsQuickExecute) {
+                    if(CommonData.VariableConstants.ForceAccept) {
+                        CommonData.MainSetting.RunningInformation.Accept = false;
+                        SaveSetting();
                     }
+                } else {
+                    // 前回バージョンが色々必要なのでインクリメント前の生情報を保持しておく。
+                    var previousVersion = (Version)CommonData.MainSetting.RunningInformation.LastExecuteVersion;
+                    ResetCulture(CommonData.NonProcess);
+                    startupNotifyData.AcceptRunning = InitializeAccept();
+                    if(!startupNotifyData.AcceptRunning) {
+                        return startupNotifyData;
+                    }
+                    if(previousVersion == null) {
+                        foreach(var screen in Screen.AllScreens) {
+                            var toolbar = new ToolbarItemModel();
+                            toolbar.Id = screen.DeviceName;
+                            CommonData.Logger.Information(CommonData.Language["log/create/toolbar-setting"], screen);
+                            CommonData.MainSetting.Toolbar.Items.Add(toolbar);
+                        }
+                    }
+                    InitializeSetting(previousVersion);
+                    InitializeStatus();
+                    CallPropertyChangeHotkey();
+                    InitializeSystem();
+
+                    CreateMessage();
+                    CreateLogger(null);
+
+                    CreateToolbar();
+                    CreateNote();
+                    CreateTemplate();
+                    CreateClipboard();
+                    CreateCommandWindow();
+
+                    // #326
+                    CommonData.AppSender.SendClipboardChanged();
+
+                    CommonData.AppSender.SendApplicationCommand(ApplicationCommand.MemoryGarbageCollect, this, Data.ApplicationCommandArg.Empty);
                 }
-                InitializeSetting(previousVersion);
-                InitializeStatus();
-                CallPropertyChangeHotkey();
-                InitializeSystem();
-                //InitializeStatic();
-
-                CreateMessage();
-                CreateLogger(null);
-
-                CreateToolbar();
-                CreateNote();
-                CreateTemplate();
-                CreateClipboard();
-                CreateCommandWindow();
-
-                // #326
-                CommonData.AppSender.SendClipboardChanged();
-
-                CommonData.AppSender.SendApplicationCommand(ApplicationCommand.MemoryGarbageCollect, this, Data.ApplicationCommandArg.Empty);
 
                 return startupNotifyData;
             }
