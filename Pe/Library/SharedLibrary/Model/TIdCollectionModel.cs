@@ -30,13 +30,15 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Model
     using System.Xml.Serialization;
     using System.Reflection;
 
-    [Serializable]
+    [Serializable, DataContract]
     public class TIdCollectionModel<TKey, TValue>: FixedSizeCollectionModel<TValue>
         where TValue : ITId<TKey>
         where TKey : IComparable
     {
         #region variable
 
+        [IgnoreDataMember, XmlIgnore]
+        [field: NonSerialized]
         protected Dictionary<TKey, TValue> _map = new Dictionary<TKey, TValue>();
         //protected bool _isReadOnly = false;
 

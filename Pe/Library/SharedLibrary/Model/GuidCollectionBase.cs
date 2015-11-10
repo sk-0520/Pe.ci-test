@@ -25,7 +25,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Model
     using ContentTypeTextNet.Library.SharedLibrary.IF;
     using ContentTypeTextNet.Library.SharedLibrary.Model;
 
-    [Serializable]
+    [Serializable, DataContract]
     public abstract class GuidCollectionBase<TValue>: TIdCollectionModel<Guid, TValue>
         where TValue : GuidModelBase
     {

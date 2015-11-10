@@ -24,7 +24,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Model
     using System.Threading.Tasks;
     using Attribute;
     using ContentTypeTextNet.Library.SharedLibrary.IF;
-    using Logic.Utility;
+    using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 
     [Serializable, DataContract]
     public class FontModel: ModelBase, IDeepClone
