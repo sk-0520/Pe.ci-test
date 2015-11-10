@@ -98,7 +98,7 @@
 				</comments>
 			</note>
 			<note rev="">
-				<message></message>
+				<message>#348: 情報ダイアログの「短い情報」に不要な'_'が存在する</message>
 			</note>
 			<note rev="">
 				<message></message>

@@ -267,7 +267,7 @@
 		<Item Id="about/link/forum" Word="フォーラム" />
 		<Item Id="about/link/feedback" Word="フィードバック" />
 		<Item Id="about/copy" Word="報告用情報のコピー" />
-		<Item Id="about/copy/short" Word="短い情報(_S)" />
+		<Item Id="about/copy/short" Word="短い情報" />
 		<Item Id="about/copy/long" Word="長い情報" />
 		<Item Id="about/component" Word="コンポーネント" />
 		<Item Id="about/license" Word="ライセンス" />
