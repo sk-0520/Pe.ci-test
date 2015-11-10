@@ -23,7 +23,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Attribute
     using System.Threading.Tasks;
 
     /// <summary>
-    /// 
+    /// DeepCloneUtilityで複製対象とするメンバ。
     /// </summary>
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false, Inherited = true)]
     public class IsDeepCloneAttribute: Attribute

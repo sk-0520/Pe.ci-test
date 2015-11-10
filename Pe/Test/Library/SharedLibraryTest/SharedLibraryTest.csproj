@@ -99,6 +99,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="Data\TripleRangeTest.cs" />
     <Compile Include="Logic\CommandLineTest.cs" />
     <Compile Include="Logic\Extension\LinqExtensionTest.cs" />
     <Compile Include="Logic\Extension\TextExtensionTest.cs" />
@@ -109,6 +110,7 @@
     <Compile Include="Logic\Utility\EnumUtilityTest.cs" />
     <Compile Include="Logic\Utility\MediaUtilityTest.cs" />
     <Compile Include="Logic\Utility\PathUtilityTest.cs" />
+    <Compile Include="Logic\Utility\RangeUtilityTest.cs" />
     <Compile Include="Logic\Utility\T4TemplateUtilityTest.cs" />
     <Compile Include="Logic\Utility\TextUtilityTest.cs" />
     <Compile Include="Model\FixeSizedCollectionModelTest.cs" />

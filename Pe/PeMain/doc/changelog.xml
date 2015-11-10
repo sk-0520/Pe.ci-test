@@ -72,7 +72,7 @@
 			<note rev="">
 				<message class="compatibility">#104による0.39.0 未満のアップデートチェック用URI互換を破棄</message>
 				<comments>
-					<comment>消しても誰も困らんだろ……</comment>
+					<comment>事前通知なしに消しても誰も困らんだろ……</comment>
 				</comments>
 			</note>
 		</group>
