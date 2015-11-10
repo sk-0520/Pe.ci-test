@@ -73,6 +73,10 @@ namespace ContentTypeTextNet.Pe.PeMain
             } else {
                 this._mainWorker = new MainWorkerViewModel(constants, systemLogger);
                 var startupNotifiyData = this._mainWorker.Initialize();
+                if(startupNotifiyData.QuickExecute) {
+                    systemLogger.Information("application: quick exec");
+                    Application.Current.Shutdown();
+                }
                 if(startupNotifiyData.AcceptRunning) {
                     //LanguageUtility.RecursiveSetLanguage(this._notifyIcon, this._mainWorker.Language);
                     this._notifyIcon = (TaskbarIcon)FindResource("root");
