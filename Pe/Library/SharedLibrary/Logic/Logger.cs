@@ -42,9 +42,13 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic
 
         public Logger()
             : base()
-        { }
+        {
+            Writer = new HashSet<TextWriter>();
+        }
 
         #region property
+
+        protected HashSet<TextWriter> Writer { get; private set; }
 
         /// <summary>
         /// ファイルログに使用するファイルパス。
@@ -81,7 +85,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic
         {
             get
             {
-                return !string.IsNullOrWhiteSpace(this._filePath) && LoggerConfig.PutsFile;
+                return !string.IsNullOrWhiteSpace(this._filePath) && LoggerConfig.PutsStream;
             }
         }
 
@@ -126,11 +130,17 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic
             base.Dispose(disposing);
         }
 
-        protected override void PutsFile(LogItemModel item)
+        protected override void PutsStream(LogItemModel item)
         {
             if(FileWriter != null) {
                 FileWriter.WriteLine(LogUtility.MakeLogDetailText(item));
                 FileWriter.Flush();
+            }
+            lock(Writer) {
+                foreach(var writer in Writer) {
+                    writer.WriteLine(LogUtility.MakeLogDetailText(item));
+                    writer.Flush();
+                }
             }
         }
 

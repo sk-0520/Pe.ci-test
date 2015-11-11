@@ -46,7 +46,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic
         /// ファイル出力。
         /// </summary>
         /// <param name="item"></param>
-        protected abstract void PutsFile(LogItemModel item);
+        protected abstract void PutsStream(LogItemModel item);
 
         /// <summary>
         /// コンソール出力。
@@ -73,7 +73,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic
         protected virtual void Puts(LogItemModel item)
         {
             var putsList = new[] {
-                new Tuple<bool, Action<LogItemModel>>(LoggerConfig.PutsFile, PutsFile),
+                new Tuple<bool, Action<LogItemModel>>(LoggerConfig.PutsStream, PutsStream),
                 new Tuple<bool, Action<LogItemModel>>(LoggerConfig.PutsConsole, PutsConsole),
 #if DEBUG
 				new Tuple<bool, Action<LogItemModel>>(LoggerConfig.PutsDebug, PutsDebug),

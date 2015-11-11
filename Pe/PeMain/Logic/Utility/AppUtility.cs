@@ -139,6 +139,14 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
             return new AppLanguageManager(lang.Value, lang.Key);
         }
 
+        static StreamWriter CreateFileLoggerStream(string baseDir, string name)
+        {
+            var filePath = PathUtility.AppendExtension(Path.Combine(baseDir, name), "log");
+            FileUtility.MakeFileParentDirectory(filePath);
+
+            return new StreamWriter(new FileStream(filePath, FileMode.Append, FileAccess.Write, FileShare.Read), Encoding.UTF8);
+        }
+
         /// <summary>
         /// ログ取りくん作成。
         /// <para>UI・設定に影響されない</para>
@@ -151,10 +159,11 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
             var logger = new AppLogger();
 
             if(outputFile) {
-                logger.LoggerConfig.PutsFile = true;
+                logger.LoggerConfig.PutsStream = true;
                 var filePath = PathUtility.AppendExtension(Path.Combine(baseDir, Constants.GetNowTimestampFileName()), "log");
                 FileUtility.MakeFileParentDirectory(filePath);
                 logger.FilePath = filePath;
+                //CreateFileLoggerStream(baseDir, PathUtility.AppendExtension(Constants.GetNowTimestampFileName(), "log"));
             }
 
             return logger;

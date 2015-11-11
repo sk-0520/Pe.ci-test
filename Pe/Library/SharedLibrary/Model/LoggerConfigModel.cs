@@ -90,10 +90,10 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Model
             }
         }
         /// <summary>
-        /// ファイル出力を行うか。
+        /// ストリーム出力を行うか。
         /// </summary>
         [DataMember]
-        public bool PutsFile { get; set; }
+        public bool PutsStream { get; set; }
         /// <summary>
         /// コンソール出力を行うか。
         /// </summary>
