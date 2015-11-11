@@ -2228,7 +2228,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         void SystemEvents_SessionEnding(object sender, SessionEndingEventArgs e)
         {
             CastUtility.AsAction<AppLogger>(CommonData.Logger, logger => {
-                var stream = AppUtility.CreateFileLoggerStream(Environment.ExpandEnvironmentVariables(Constants.LogDirectoryPath), "session-ending.log");
+                var stream = AppUtility.CreateFileLoggerStream(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.LogDirectoryPath), "session-ending.log");
                 logger.AttachmentStream(stream, true);
                 CommonData.Logger.Trace("#355 start");
             });

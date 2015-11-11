@@ -141,7 +141,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 
         public static StreamWriter CreateFileLoggerStream(string baseDir, string name)
         {
-            var filePath = Path.Combine(baseDir, name));
+            var filePath = Path.Combine(baseDir, name);
             FileUtility.MakeFileParentDirectory(filePath);
 
             return new StreamWriter(new FileStream(filePath, FileMode.Append, FileAccess.Write, FileShare.Read), Encoding.UTF8);
