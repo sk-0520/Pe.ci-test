@@ -126,6 +126,14 @@
 				<message>#354: ログ出力用ストリームをごにょごにょ</message>
 			</note>
 			<note rev="">
+				<message>#355: 終了時にログを強制出力する</message>
+				<comments>
+					<comment>#353のため#354の下準備から#355まで実装</comment>
+					<comment>一番親元の作業オブジェクトに追加したのでView側で固まってたら再調査が必要なので保留とする</comment>
+					<comment>ステータスは課題を参照のこと</comment>
+				</comments>
+			</note>
+			<note rev="">
 				<message></message>
 			</note>
 		</group>

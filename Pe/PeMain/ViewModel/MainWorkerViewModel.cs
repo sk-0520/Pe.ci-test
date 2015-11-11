@@ -648,32 +648,34 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         void BackupSetting()
         {
-            var backupDir = Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserBackupDirectoryPath);
+            using(var timeLogger = CommonData.NonProcess.CreateTimeLogger()) {
+                var backupDir = Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserBackupDirectoryPath);
 
-            // 旧データの削除
-            FileUtility.RotateFiles(backupDir, Constants.BackupSearchPattern, OrderBy.Asc, Constants.BackupSettingCount, ex => {
-                CommonData.Logger.Error(ex);
-                return true;
-            });
+                // 旧データの削除
+                FileUtility.RotateFiles(backupDir, Constants.BackupSearchPattern, OrderBy.Asc, Constants.BackupSettingCount, ex => {
+                    CommonData.Logger.Error(ex);
+                    return true;
+                });
 
-            var fileName = PathUtility.AppendExtension(Constants.GetNowTimestampFileName(), "zip");
-            var backupFileFilePath = Path.Combine(backupDir, fileName);
-            FileUtility.MakeFileParentDirectory(backupFileFilePath);
+                var fileName = PathUtility.AppendExtension(Constants.GetNowTimestampFileName(), "zip");
+                var backupFileFilePath = Path.Combine(backupDir, fileName);
+                FileUtility.MakeFileParentDirectory(backupFileFilePath);
 
-            // zip
-            var targetFiles = new[] {
-                CommonData.VariableConstants.UserSettingMainSettingFilePath,
-                CommonData.VariableConstants.UserSettingLauncherItemSettingFilePath,
-                CommonData.VariableConstants.UserSettingLauncherGroupItemSettingFilePath,
-                CommonData.VariableConstants.UserSettingNoteIndexFilePath,
-                CommonData.VariableConstants.UserSettingNoteDirectoryPath,
-                CommonData.VariableConstants.UserSettingTemplateIndexFilePath,
-                CommonData.VariableConstants.UserSettingTemplateDirectoryPath,
-                CommonData.VariableConstants.UserSettingClipboardIndexFilePath,
-                CommonData.VariableConstants.UserSettingClipboardDirectoryPath,
-            };
-            var basePath = Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingDirectoryPath);
-            FileUtility.CreateZipFile(backupFileFilePath, basePath, targetFiles.Select(Environment.ExpandEnvironmentVariables));
+                // zip
+                var targetFiles = new[] {
+                    CommonData.VariableConstants.UserSettingMainSettingFilePath,
+                    CommonData.VariableConstants.UserSettingLauncherItemSettingFilePath,
+                    CommonData.VariableConstants.UserSettingLauncherGroupItemSettingFilePath,
+                    CommonData.VariableConstants.UserSettingNoteIndexFilePath,
+                    CommonData.VariableConstants.UserSettingNoteDirectoryPath,
+                    CommonData.VariableConstants.UserSettingTemplateIndexFilePath,
+                    CommonData.VariableConstants.UserSettingTemplateDirectoryPath,
+                    CommonData.VariableConstants.UserSettingClipboardIndexFilePath,
+                    CommonData.VariableConstants.UserSettingClipboardDirectoryPath,
+                };
+                var basePath = Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingDirectoryPath);
+                FileUtility.CreateZipFile(backupFileFilePath, basePath, targetFiles.Select(Environment.ExpandEnvironmentVariables));
+            }
         }
 
         void ApplyLanguage()
@@ -2225,6 +2227,11 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         void SystemEvents_SessionEnding(object sender, SessionEndingEventArgs e)
         {
+            CastUtility.AsAction<AppLogger>(CommonData.Logger, logger => {
+                var stream = AppUtility.CreateFileLoggerStream(Environment.ExpandEnvironmentVariables(Constants.LogDirectoryPath), "session-ending.log");
+                logger.AttachmentStream(stream, true);
+                CommonData.Logger.Trace("#355 start");
+            });
             CommonData.Logger.Information(CommonData.Language["log/session/ending"], e);
             SaveSetting();
         }
