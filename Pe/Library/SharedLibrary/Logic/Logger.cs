@@ -33,69 +33,21 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic
     /// </summary>
     public class Logger: LoggerBase, IIsDisposed
     {
-        #region varable
-
-        string _filePath = null;
-        TextWriter _fileWriter = null;
-
-        #endregion
-
         public Logger()
             : base()
-        { }
+        {
+            Writer = new HashSet<TextWriter>();
+            ManageWriter = new HashSet<TextWriter>();
+        }
 
         #region property
 
-        /// <summary>
-        /// ファイルログに使用するファイルパス。
-        /// <para>値設定が有効なものであれば既存ファイルを閉じて指定されたファイルに追記していく。</para>
-        /// </summary>
-        public string FilePath
-        {
-            get { return this._filePath; }
-            set
-            {
-                if(this._filePath != value) {
-                    ClearFileWriter();
-                }
-
-                this._filePath = value;
-            }
-        }
-
-        /// <summary>
-        /// FilePathで設定されたパスのファイルストリーム。
-        /// </summary>
-        protected TextWriter FileWriter
-        {
-            get
-            {
-                if(this._fileWriter == null && CanFilePuts) {
-                    this._fileWriter = new StreamWriter(new FileStream(this._filePath, FileMode.Append, FileAccess.Write, FileShare.Read), Encoding.UTF8);
-                }
-
-                return this._fileWriter;
-            }
-        }
-        public bool CanFilePuts
-        {
-            get
-            {
-                return !string.IsNullOrWhiteSpace(this._filePath) && LoggerConfig.PutsFile;
-            }
-        }
-
+        protected HashSet<TextWriter> Writer { get; private set; }
+        protected HashSet<TextWriter> ManageWriter { get; private set; }
+        
         #endregion
 
         #region function
-
-        void ClearFileWriter()
-        {
-            if(this._fileWriter != null) {
-                this._fileWriter.Dispose();
-                this._fileWriter = null;
-            }
-        }
 
         protected string PutsOutput(LogItemModel item, char c)
         {
@@ -119,18 +71,24 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic
         {
             if(!IsDisposed) {
                 if(disposing) {
-                    ClearFileWriter();
+                    foreach(var writer in ManageWriter) {
+                        writer.Dispose();
+                    }
                 }
+                Writer.Clear();
+                ManageWriter.Clear();
             }
 
             base.Dispose(disposing);
         }
 
-        protected override void PutsFile(LogItemModel item)
+        protected override void PutsStream(LogItemModel item)
         {
-            if(FileWriter != null) {
-                FileWriter.WriteLine(LogUtility.MakeLogDetailText(item));
-                FileWriter.Flush();
+            lock(Writer) {
+                foreach(var writer in Writer) {
+                    writer.WriteLine(LogUtility.MakeLogDetailText(item));
+                    writer.Flush();
+                }
             }
         }
 
@@ -151,6 +109,29 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic
         /// <param name="item"></param>
         protected override void PutsCustom(LogItemModel item)
         { }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="writer"></param>
+        /// <param name="loggerManage">本クラスに所有権を譲るか</param>
+        public void AttachmentStream(TextWriter writer, bool loggerManage)
+        {
+            lock(Writer) {
+                Writer.Add(writer);
+                if(loggerManage) {
+                    ManageWriter.Add(writer);
+                }
+            }
+        }
+
+        public void DetachmentStream(TextWriter writer)
+        {
+            lock (Writer) {
+                Writer.Remove(writer);
+                ManageWriter.Remove(writer);
+            }
+        }
 
         #endregion
     }

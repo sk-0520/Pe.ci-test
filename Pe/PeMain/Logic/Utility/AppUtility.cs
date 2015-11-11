@@ -139,6 +139,14 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
             return new AppLanguageManager(lang.Value, lang.Key);
         }
 
+        public static StreamWriter CreateFileLoggerStream(string baseDir, string name)
+        {
+            var filePath = PathUtility.AppendExtension(Path.Combine(baseDir, name), "log");
+            FileUtility.MakeFileParentDirectory(filePath);
+
+            return new StreamWriter(new FileStream(filePath, FileMode.Append, FileAccess.Write, FileShare.Read), Encoding.UTF8);
+        }
+
         /// <summary>
         /// ログ取りくん作成。
         /// <para>UI・設定に影響されない</para>
@@ -151,10 +159,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
             var logger = new AppLogger();
 
             if(outputFile) {
-                logger.LoggerConfig.PutsFile = true;
-                var filePath = PathUtility.AppendExtension(Path.Combine(baseDir, Constants.GetNowTimestampFileName()), "log");
-                FileUtility.MakeFileParentDirectory(filePath);
-                logger.FilePath = filePath;
+                logger.LoggerConfig.PutsStream = true;
+                var stream = CreateFileLoggerStream(baseDir, PathUtility.AppendExtension(Constants.GetNowTimestampFileName(), "log"));
+                logger.AttachmentStream(stream, true);
             }
 
             return logger;
@@ -235,10 +242,10 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
             // http://msdn.microsoft.com/en-us/library/windows/desktop/ms633574(v=vs.85).aspx
             var skipClassName = new[] {
                 "Shell_TrayWnd", // タスクバー
-				"Button",
+                "Button",
                 "Progman", // プログラムマネージャ
-				"#32769", // デスクトップ
-				"WorkerW",
+                "#32769", // デスクトップ
+                "WorkerW",
                 "SysShadow",
                 "SideBar_HTMLHostWindow",
             };
