@@ -123,6 +123,9 @@
 				<message>#347: 一旦外していた使用許諾のユーザー操作再設定を復帰する</message>
 			</note>
 			<note rev="">
+				<message>#354: ログ出力用ストリームをごにょごにょ</message>
+			</note>
+			<note rev="">
 				<message></message>
 			</note>
 		</group>

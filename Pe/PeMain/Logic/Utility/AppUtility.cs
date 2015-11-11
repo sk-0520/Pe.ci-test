@@ -139,7 +139,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
             return new AppLanguageManager(lang.Value, lang.Key);
         }
 
-        static StreamWriter CreateFileLoggerStream(string baseDir, string name)
+        public static StreamWriter CreateFileLoggerStream(string baseDir, string name)
         {
             var filePath = PathUtility.AppendExtension(Path.Combine(baseDir, name), "log");
             FileUtility.MakeFileParentDirectory(filePath);
@@ -160,10 +160,8 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 
             if(outputFile) {
                 logger.LoggerConfig.PutsStream = true;
-                var filePath = PathUtility.AppendExtension(Path.Combine(baseDir, Constants.GetNowTimestampFileName()), "log");
-                FileUtility.MakeFileParentDirectory(filePath);
-                logger.FilePath = filePath;
-                //CreateFileLoggerStream(baseDir, PathUtility.AppendExtension(Constants.GetNowTimestampFileName(), "log"));
+                var stream = CreateFileLoggerStream(baseDir, PathUtility.AppendExtension(Constants.GetNowTimestampFileName(), "log"));
+                logger.AttachmentStream(stream, true);
             }
 
             return logger;
@@ -244,10 +242,10 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
             // http://msdn.microsoft.com/en-us/library/windows/desktop/ms633574(v=vs.85).aspx
             var skipClassName = new[] {
                 "Shell_TrayWnd", // タスクバー
-				"Button",
+                "Button",
                 "Progman", // プログラムマネージャ
-				"#32769", // デスクトップ
-				"WorkerW",
+                "#32769", // デスクトップ
+                "WorkerW",
                 "SysShadow",
                 "SideBar_HTMLHostWindow",
             };
