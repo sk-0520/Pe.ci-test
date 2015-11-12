@@ -94,7 +94,7 @@
 		</group>
 		<group type="developer" dummy="==================================================================">
 			<note rev="">
-				<message></message>
+				<message>アップデートコンソールの最後に少しだけ待ち時間(5秒)を設定</message>
 			</note>
 			<note rev="">
 				<message></message>
