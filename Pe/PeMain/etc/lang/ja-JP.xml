@@ -443,6 +443,7 @@
 		<Item Id="log/clipboard/filter-image/detail"  Word="取込サイズ:${br}	横: @[LOG-CLIP-FILTER_IMAGE_WIDTH-CURRENT]${br}	縦: @[LOG-CLIP-FILTER_IMAGE_HEIGHT-CURRENT]${br}制限サイズ:${br}	横: @[LOG-CLIP-FILTER_IMAGE_WIDTH-SETTING]${br}	縦: @[LOG-CLIP-FILTER_IMAGE_HEIGHT-SETTING]" />
 		<Item Id="log/clipboard/dup-item/move"    Word="クリップボード: 重複するクリップボードアイテムをリスト最上位へ移動" />
 		<Item Id="log/clipboard/dup-item/ignore"  Word="クリップボード: 重複するクリップボードアイテムが存在するため取り込まない" />
+		<Item Id="log/clipboard/get-error"  Word="クリップボード: 全取得試行失敗" />
 		<Item Id="log/auto-regist/message"  Word="ホームウィンドウ処理でのログ" />
 		<Item Id="log/hotkey/unregist/command"           Word="ホットキー解除失敗: コマンド" />
 		<Item Id="log/hotkey/unregist/hidden-file"       Word="ホットキー解除失敗: 隠しファイル" />

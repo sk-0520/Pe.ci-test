@@ -259,57 +259,53 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         /// <param name="enabledTypes"></param>
         /// <param name="logger"></param>
         /// <returns></returns>
-        static ClipboardData GetClipboardDataFromFramework(ClipboardType enabledTypes, ILogger logger)
+        static ClipboardData GetClipboardDataFromFramework(ClipboardType enabledTypes)
         {
             var clipboardData = new ClipboardData();
 
-            try {
-                var clipboardObject = Clipboard.GetDataObject();
-                if(clipboardObject != null) {
-                    if(enabledTypes.HasFlag(ClipboardType.Text)) {
-                        if(clipboardObject.GetDataPresent(DataFormats.UnicodeText)) {
-                            clipboardData.Body.Text = (string)clipboardObject.GetData(DataFormats.UnicodeText);
-                            clipboardData.Type |= ClipboardType.Text;
-                        } else if(clipboardObject.GetDataPresent(DataFormats.Text)) {
-                            clipboardData.Body.Text = (string)clipboardObject.GetData(DataFormats.Text);
-                            clipboardData.Type |= ClipboardType.Text;
-                        }
-                    }
-
-                    if(enabledTypes.HasFlag(ClipboardType.Rtf) && clipboardObject.GetDataPresent(DataFormats.Rtf)) {
-                        clipboardData.Body.Rtf = (string)clipboardObject.GetData(DataFormats.Rtf);
-                        clipboardData.Type |= ClipboardType.Rtf;
-                    }
-
-                    if(enabledTypes.HasFlag(ClipboardType.Html) && clipboardObject.GetDataPresent(DataFormats.Html)) {
-                        clipboardData.Body.Html = (string)clipboardObject.GetData(DataFormats.Html);
-                        clipboardData.Type |= ClipboardType.Html;
-                    }
-
-                    if(enabledTypes.HasFlag(ClipboardType.Image) && clipboardObject.GetDataPresent(DataFormats.Bitmap)) {
-                        var image = clipboardObject.GetData(DataFormats.Bitmap) as BitmapSource;
-                        if(image != null) {
-                            var bitmap = new FormatConvertedBitmap(image, PixelFormats.Bgr32, null, 0);
-                            if(bitmap.CanFreeze) {
-                                bitmap.Freeze();
-                            }
-                            clipboardData.Body.Image = bitmap;
-                            clipboardData.Type |= ClipboardType.Image;
-                        }
-                    }
-
-                    if(enabledTypes.HasFlag(ClipboardType.Files) && clipboardObject.GetDataPresent(DataFormats.FileDrop)) {
-                        var files = clipboardObject.GetData(DataFormats.FileDrop) as string[];
-                        if(files != null) {
-                            var sortedFiles = files.OrderBy(s => s, new CaseInsensitiveComparer());
-                            clipboardData.Body.Files.AddRange(sortedFiles);
-                            clipboardData.Body.Text = string.Join(Environment.NewLine, sortedFiles);
-                            clipboardData.Type |= ClipboardType.Text | ClipboardType.Files;
-                        }
+            var clipboardObject = Clipboard.GetDataObject();
+            if(clipboardObject != null) {
+                if(enabledTypes.HasFlag(ClipboardType.Text)) {
+                    if(clipboardObject.GetDataPresent(DataFormats.UnicodeText)) {
+                        clipboardData.Body.Text = (string)clipboardObject.GetData(DataFormats.UnicodeText);
+                        clipboardData.Type |= ClipboardType.Text;
+                    } else if(clipboardObject.GetDataPresent(DataFormats.Text)) {
+                        clipboardData.Body.Text = (string)clipboardObject.GetData(DataFormats.Text);
+                        clipboardData.Type |= ClipboardType.Text;
                     }
                 }
-            } catch(COMException ex) {
-                logger.Error(ex);
+
+                if(enabledTypes.HasFlag(ClipboardType.Rtf) && clipboardObject.GetDataPresent(DataFormats.Rtf)) {
+                    clipboardData.Body.Rtf = (string)clipboardObject.GetData(DataFormats.Rtf);
+                    clipboardData.Type |= ClipboardType.Rtf;
+                }
+
+                if(enabledTypes.HasFlag(ClipboardType.Html) && clipboardObject.GetDataPresent(DataFormats.Html)) {
+                    clipboardData.Body.Html = (string)clipboardObject.GetData(DataFormats.Html);
+                    clipboardData.Type |= ClipboardType.Html;
+                }
+
+                if(enabledTypes.HasFlag(ClipboardType.Image) && clipboardObject.GetDataPresent(DataFormats.Bitmap)) {
+                    var image = clipboardObject.GetData(DataFormats.Bitmap) as BitmapSource;
+                    if(image != null) {
+                        var bitmap = new FormatConvertedBitmap(image, PixelFormats.Bgr32, null, 0);
+                        if(bitmap.CanFreeze) {
+                            bitmap.Freeze();
+                        }
+                        clipboardData.Body.Image = bitmap;
+                        clipboardData.Type |= ClipboardType.Image;
+                    }
+                }
+
+                if(enabledTypes.HasFlag(ClipboardType.Files) && clipboardObject.GetDataPresent(DataFormats.FileDrop)) {
+                    var files = clipboardObject.GetData(DataFormats.FileDrop) as string[];
+                    if(files != null) {
+                        var sortedFiles = files.OrderBy(s => s, new CaseInsensitiveComparer());
+                        clipboardData.Body.Files.AddRange(sortedFiles);
+                        clipboardData.Body.Text = string.Join(Environment.NewLine, sortedFiles);
+                        clipboardData.Type |= ClipboardType.Text | ClipboardType.Files;
+                    }
+                }
             }
 
             return clipboardData;
@@ -482,9 +478,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         /// <param name="logger"></param>
         /// <param name="calcHash">ハッシュ値の算出を行うか。</param>
         /// <returns></returns>
-        static ClipboardData GetClipboardData_Impl(ClipboardType enabledTypes, IntPtr hWnd, ILogger logger)
+        static ClipboardData GetClipboardData_Impl(ClipboardType enabledTypes, IntPtr hWnd)
         {
-            var clipboardItem = GetClipboardDataFromFramework(enabledTypes, logger);
+            var clipboardItem = GetClipboardDataFromFramework(enabledTypes);
 
             return clipboardItem;
         }
@@ -493,9 +489,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         /// </summary>
         /// <param name="enabledTypes">取り込み対象とするクリップボード種別。</param>
         /// <returns>生成されたクリップボードアイテム。nullが返ることはない。</returns>
-        public static ClipboardData GetClipboardData(ClipboardType enabledTypes, IntPtr hWnd, ILogger logger)
+        public static ClipboardData GetClipboardData(ClipboardType enabledTypes, IntPtr hWnd)
         {
-            return GetClipboardData_Impl(enabledTypes, hWnd, logger);
+            return GetClipboardData_Impl(enabledTypes, hWnd);
         }
 
         static void OutputFilter(ClipboardType clipboardType, int settingLength, int currentLength, INonProcess nonProcess, int frame = 2, [CallerFilePath] string callerFile = "", [CallerLineNumber] int callerLine = -1, [CallerMemberName] string callerMember = "")
@@ -606,7 +602,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
             NativeMethods.SetForegroundWindow(hWnd);
             if(clipboardWatcher.UsingClipboard) {
                 // 現在クリップボードを一時退避
-                var clipboardItem = ClipboardUtility.GetClipboardData_Impl(ClipboardType.All, hWnd, nonProcess.Logger);
+                var clipboardItem = ClipboardUtility.GetClipboardData_Impl(ClipboardType.All, hWnd);
                 try {
                     ClipboardUtility.CopyText(outputText, clipboardWatcher);
                     NativeMethods.SendMessage(hWnd, WM.WM_PASTE, IntPtr.Zero, IntPtr.Zero);
@@ -637,7 +633,11 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
                 windowHandles.Add(hWnd);
             } while(!NativeMethods.IsWindowVisible(hWnd));
 
-            OutputTextForWindowHandle(hWnd, outputText, nonProcess, clipboardWatcher);
+            try {
+                OutputTextForWindowHandle(hWnd, outputText, nonProcess, clipboardWatcher);
+            } catch(Exception ex) {
+                nonProcess.Logger.Error(ex);
+            }
         }
 
         private static IEnumerable<ClipboardType> GetEnabledClipboardTypeList(ClipboardType types, IEnumerable<ClipboardType> list)

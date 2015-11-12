@@ -65,7 +65,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 
         protected void ResetVariable()
         {
-            var clipboardData = ClipboardUtility.GetClipboardData(ClipboardType.Text, IntPtr.Zero, Logger);
+            var clipboardData = ClipboardUtility.GetClipboardData(ClipboardType.Text, IntPtr.Zero);
 
             Variable[TemplateReplaceKey.programTimestamp] = DateTime.Now;
             Variable[TemplateReplaceKey.programClipboard] = clipboardData.Body.Text ?? string.Empty;

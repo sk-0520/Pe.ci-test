@@ -57,6 +57,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
     using Microsoft.Win32;
     using System.Runtime;
     using Data;
+    using System.Runtime.InteropServices;
 
     public sealed class MainWorkerViewModel: ViewModelBase, IAppSender, IClipboardWatcher, IHavingView<TaskbarIcon>, IHavingCommonData
     {
@@ -1894,11 +1895,18 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
             ClipboardData clipboardData = null;
             try {
+                var exceptions = new List<Exception>();
                 var retry = new TimeRetry<ClipboardData>();
                 retry.WaitTime = Constants.clipboardGetDataRetryWaitTime;
                 retry.WaitMaxCount = Constants.clipboardGetDataRetryMaxCount;
                 retry.ExecuteFunc = (int waitCurrentCount, ref ClipboardData result) => {
-                    var data = ClipboardUtility.GetClipboardData(CommonData.MainSetting.Clipboard.CaptureType, MessageWindow.Handle, CommonData.NonProcess.Logger);
+                    ClipboardData data = null;
+                    try {
+                        data = ClipboardUtility.GetClipboardData(CommonData.MainSetting.Clipboard.CaptureType, MessageWindow.Handle);
+                    }
+                    catch(Exception ex) {
+                        exceptions.Add(ex);
+                    }
                     var hasData = data != null;
                     if(hasData) {
                         result = data;
@@ -1908,6 +1916,15 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 retry.Run();
                 if(!retry.WaitOver) {
                     clipboardData = retry.Result;
+                } else if(exceptions.Any()) {
+                    if(exceptions.Count == 1) {
+                        CommonData.Logger.Error(exceptions.First());
+                    } else {
+                        CommonData.Logger.Error(
+                            CommonData.Language["log/clipboard/get-error"],
+                            string.Join(Environment.NewLine, exceptions.Select(ex => ex.ToString()))
+                        );
+                    }
                 }
 
             } catch(AccessViolationException ex) {
