@@ -160,7 +160,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 
             if(outputFile) {
                 logger.LoggerConfig.PutsStream = true;
-                var stream = CreateFileLoggerStream(baseDir, PathUtility.AppendExtension(Constants.GetNowTimestampFileName(), "log"));
+                var stream = CreateFileLoggerStream(baseDir, PathUtility.AppendExtension(Constants.GetNowTimestampFileName(), Constants.logFileExtension));
                 logger.AttachmentStream(stream, true);
             }
 

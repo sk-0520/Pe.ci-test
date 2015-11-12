@@ -130,6 +130,8 @@ namespace ContentTypeTextNet.Pe.PeMain
 
         public const string languageAcceptDocumentExtension = "accept.html";
 
+        public const string logFileExtension = "log";
+
         public const string extensionBinaryFile = "dat";
         public const string extensionJsonFile = "json";
 
@@ -373,6 +375,13 @@ namespace ContentTypeTextNet.Pe.PeMain
         /// </summary>
         [ConstantsProperty]
         static readonly string startupShortcutPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Startup), ShortcutName);
+
+        #region
+
+        [ConstantsProperty]
+        const string issue_355_logFileName = "session-ending.log";
+
+        #endregion
 
         #region app.config
 
