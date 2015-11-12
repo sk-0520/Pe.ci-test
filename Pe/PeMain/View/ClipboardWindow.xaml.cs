@@ -30,6 +30,7 @@ namespace ContentTypeTextNet.Pe.PeMain.View
     using System.Windows.Media.Imaging;
     using System.Windows.Shapes;
     using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+    using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility.UI;
     using ContentTypeTextNet.Pe.PeMain.View.Parts.Window;
     using ContentTypeTextNet.Pe.PeMain.ViewModel;
 
@@ -48,6 +49,8 @@ namespace ContentTypeTextNet.Pe.PeMain.View
         protected override void OnLoaded(object sender, RoutedEventArgs e)
         {
             UIUtility.SetStyleToolWindow(this, false, false);
+            //WebBrowserUtility.SetSilent(this.webHtml, true);
+            this.webHtml.Navigated += WebHtml_Navigated;
 
             base.OnLoaded(sender, e);
         }
@@ -70,7 +73,18 @@ namespace ContentTypeTextNet.Pe.PeMain.View
             base.ApplyViewModel();
         }
 
+        protected override void OnClosed(EventArgs e)
+        {
+            this.webHtml.Navigated -= WebHtml_Navigated;
+
+            base.OnClosed(e);
+        }
+
         #endregion
 
+        private void WebHtml_Navigated(object sender, System.Windows.Navigation.NavigationEventArgs e)
+        {
+            WebBrowserUtility.SetSilent(this.webHtml, true);
+        }
     }
 }

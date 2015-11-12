@@ -20,6 +20,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Utility
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
+    using System.Runtime.CompilerServices;
     using System.Runtime.Serialization;
     using System.Text;
     using System.Threading.Tasks;
@@ -95,17 +96,52 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Utility
             return string.Format("{0}=>{1}", name, joinString);
         }
 
-        public static IEnumerable<MemberInfo> GetSerializeMembers(object obj)
+        public static object GetMemberValue(FieldInfo fieldInfo, object obj)
         {
-            var type = obj.GetType();
-            var members = type
-                .GetMembers(BindingFlags.GetProperty | BindingFlags.SetProperty | BindingFlags.GetField | BindingFlags.SetField)
-                .Where(m => m.CustomAttributes.Any(c => {
-                    return c.AttributeType.GetCustomAttributes(typeof(DataContractAttribute), true).Any();
-                }))
-            ;
+            return fieldInfo.GetValue(obj);
+        }
+        public static object GetMemberValue(PropertyInfo propertyInfo, object obj)
+        {
+            return propertyInfo.GetValue(obj);
+        }
+        public static object GetMemberValue(MemberInfo memberInfo, object obj)
+        {
+            if(memberInfo.MemberType.HasFlag(MemberTypes.Property)) {
+                return GetMemberValue((PropertyInfo)memberInfo, obj);
+            } else if(memberInfo.MemberType.HasFlag(MemberTypes.Field)) {
+                return GetMemberValue((FieldInfo)memberInfo, obj);
+            } else {
+                throw new NotImplementedException();
+            }
+        }
 
-            return members;
+        public static void SetMemberValue<T>(FieldInfo fieldInfo, ref T obj, object value)
+        {
+            if(obj.GetType().IsValueType) {
+                fieldInfo.SetValueDirect(__makeref(obj), value);
+            } else {
+                fieldInfo.SetValue(obj, value);
+            }
+        }
+        public static void SetMemberValue<T>(PropertyInfo propertyInfo, ref T obj, object value)
+        {
+            if(obj.GetType().IsValueType) {
+                var box = RuntimeHelpers.GetObjectValue(obj);
+                propertyInfo.SetValue(box, value);
+                obj = (T)box;
+            } else {
+                propertyInfo.SetValue(obj, value);
+            }
+        }
+        public static void SetMemberValue<T>(MemberInfo memberInfo, ref T obj, object value)
+        {
+            if(memberInfo.MemberType.HasFlag(MemberTypes.Property)) {
+                SetMemberValue((PropertyInfo)memberInfo, ref obj, value);
+            } else if(memberInfo.MemberType.HasFlag(MemberTypes.Field)) {
+                SetMemberValue((FieldInfo)memberInfo, ref obj, value);
+            } else {
+                throw new NotImplementedException();
+            }
         }
     }
 }

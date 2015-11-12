@@ -11,6 +11,7 @@ set RELEASE_DIR=%APPDATA%\Pe
 
 if exist "%BETA_ROOT_DIR%" (
 	rem ベータ用ディレクトリがあるのでコピらない
+	echo "existis: beta setting"
 ) else (
 	rem 既存データをパクってくる
 	mkdir "%BETA_DIR%"  2>NUL
@@ -18,5 +19,4 @@ if exist "%BETA_ROOT_DIR%" (
 )
 
 start PeMain.exe /setting-root=%BETA_ROOT_DIR% /log=%BETA_ROOT_DIR%\logs /mutex=Pe_beta
-
 

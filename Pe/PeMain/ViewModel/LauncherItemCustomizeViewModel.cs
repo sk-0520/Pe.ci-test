@@ -41,18 +41,12 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
     /// </summary>
     public class LauncherItemCustomizeViewModel: LauncherItemEditViewModel, IHavingView<LauncherItemCustomizeWindow>, IHavingAppSender
     {
-        #region variable
-
-        LauncherItemModel _srcModel;
-
-        #endregion
-
         public LauncherItemCustomizeViewModel(LauncherItemModel model, LauncherItemCustomizeWindow view, ScreenModel screen, IAppNonProcess nonPorocess, IAppSender appSender)
             : base((LauncherItemModel)model.DeepClone(), null, nonPorocess, appSender)
         {
             View = view;
             Screen = screen;
-            this._srcModel = model;
+            SourceModel = model;
 
             if(HasView) {
                 ScreenUtility.AttachmentStartupMoveScreenCenter(view, Screen);
@@ -62,6 +56,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         #region proeprty
 
+        LauncherItemModel SourceModel { get; set; }
         ScreenModel Screen { get; set; }
 
         #endregion
@@ -74,24 +69,24 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             {
                 var result = CreateCommand(
                     o => {
-                        this._srcModel.Name = Model.Name;
-                        this._srcModel.LauncherKind = Model.LauncherKind;
-                        this._srcModel.Command = Model.Command;
-                        this._srcModel.Option = Model.Option;
-                        this._srcModel.WorkDirectoryPath = Model.WorkDirectoryPath;
-                        this._srcModel.Icon = Model.Icon;
-                        this._srcModel.History = Model.History;
-                        this._srcModel.Comment = Model.Comment;
-                        this._srcModel.Tag = Model.Tag;
-                        this._srcModel.StdStream = Model.StdStream;
-                        this._srcModel.Administrator = Model.Administrator;
-                        this._srcModel.EnvironmentVariables = Model.EnvironmentVariables;
+                        SourceModel.Name = Model.Name;
+                        SourceModel.LauncherKind = Model.LauncherKind;
+                        SourceModel.Command = Model.Command;
+                        SourceModel.Option = Model.Option;
+                        SourceModel.WorkDirectoryPath = Model.WorkDirectoryPath;
+                        SourceModel.Icon = Model.Icon;
+                        SourceModel.History = Model.History;
+                        SourceModel.Comment = Model.Comment;
+                        SourceModel.Tag = Model.Tag;
+                        SourceModel.StdStream = Model.StdStream;
+                        SourceModel.Administrator = Model.Administrator;
+                        SourceModel.EnvironmentVariables = Model.EnvironmentVariables;
 
                         if(HasView) {
                             View.Close();
                         }
                         SettingUtility.IncrementLauncherItem(Model, null, null, AppNonProcess);
-                        AppNonProcess.LauncherIconCaching.Remove(this._srcModel);
+                        AppNonProcess.LauncherIconCaching.Remove(this.SourceModel);
                         AppSender.SendRefreshView(WindowKind.LauncherToolbar, null);
                     }
                 );

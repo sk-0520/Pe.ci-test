@@ -26,6 +26,7 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <NoWarn>IDE0001</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <OutputPath>bin\x64\Release\</OutputPath>
@@ -36,6 +37,7 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <NoWarn>IDE0001</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -46,6 +48,7 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <NoWarn>IDE0001</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <OutputPath>bin\x86\Release\</OutputPath>
@@ -56,6 +59,7 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <NoWarn>IDE0001</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Mono.TextTemplating">
@@ -83,6 +87,7 @@
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="System" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <Choose>
@@ -94,19 +99,22 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="Data\TripleRangeTest.cs" />
     <Compile Include="Logic\CommandLineTest.cs" />
     <Compile Include="Logic\Extension\LinqExtensionTest.cs" />
     <Compile Include="Logic\Extension\TextExtensionTest.cs" />
     <Compile Include="Logic\T4Template\T4TemplateProcessorTest.cs" />
     <Compile Include="Logic\Utility\CheckUtilityTest.cs" />
+    <Compile Include="Logic\Utility\DeepCloneUtilityTest.cs" />
     <Compile Include="Logic\Utility\DependencyPropertyUtilityTest.cs" />
     <Compile Include="Logic\Utility\EnumUtilityTest.cs" />
     <Compile Include="Logic\Utility\MediaUtilityTest.cs" />
     <Compile Include="Logic\Utility\PathUtilityTest.cs" />
-    <Compile Include="Logic\Utility\ReflectionUtilityTest.cs" />
+    <Compile Include="Logic\Utility\RangeUtilityTest.cs" />
     <Compile Include="Logic\Utility\T4TemplateUtilityTest.cs" />
     <Compile Include="Logic\Utility\TextUtilityTest.cs" />
     <Compile Include="Model\FixeSizedCollectionModelTest.cs" />
+    <Compile Include="Model\FontModelTest.cs" />
     <Compile Include="Model\HotkeyModelTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

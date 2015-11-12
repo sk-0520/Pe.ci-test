@@ -34,6 +34,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
     using ContentTypeTextNet.Pe.PeMain.Define;
     using ContentTypeTextNet.Pe.PeMain.View.Parts.Attached;
     using ContentTypeTextNet.Pe.PeMain.View.Parts.Control;
+    using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility.UI;
 
     public static class LanguageUtility
     {

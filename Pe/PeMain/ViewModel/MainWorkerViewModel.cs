@@ -46,7 +46,6 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
     using ContentTypeTextNet.Pe.Library.PeData.Define;
     using ContentTypeTextNet.Pe.Library.PeData.Item;
     using ContentTypeTextNet.Pe.Library.PeData.Setting;
-    using Data = ContentTypeTextNet.Pe.PeMain.Data;
     using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
     using ContentTypeTextNet.Pe.PeMain.Define;
     using ContentTypeTextNet.Pe.PeMain.IF;
@@ -57,6 +56,8 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
     using Hardcodet.Wpf.TaskbarNotification;
     using Microsoft.Win32;
     using System.Runtime;
+    using Data;
+    using System.Runtime.InteropServices;
 
     public sealed class MainWorkerViewModel: ViewModelBase, IAppSender, IClipboardWatcher, IHavingView<TaskbarIcon>, IHavingCommonData
     {
@@ -70,16 +71,16 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         #endregion
 
-        public MainWorkerViewModel(Data.VariableConstants variableConstants, ILogger logger)
+        public MainWorkerViewModel(VariableConstants variableConstants, ILogger logger)
         {
-            CommonData = new Data.CommonData() {
+            CommonData = new CommonData() {
                 Logger = logger,
                 VariableConstants = variableConstants,
                 AppSender = this,
                 ClipboardWatcher = this,
             };
 
-            WindowSaveData = new Data.WindowSaveData();
+            WindowSaveData = new WindowSaveData();
 
             StreamWindows = new HashSet<LauncherItemStreamWindow>();
             OtherWindows = new HashSet<Window>();
@@ -95,9 +96,11 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         bool ResetToolbarRunning { get; set; }
         DateTime PrevResetToolbar { get; set; }
 
+        public bool IsQuickExecute { get; private set; }
+
         #region IHavingCommonData
 
-        public Data.CommonData CommonData { get; private set; }
+        public CommonData CommonData { get; private set; }
 
         #endregion
 
@@ -135,7 +138,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         MessageWindow MessageWindow { get; set; }
 
-        Data.WindowSaveData WindowSaveData { get; set; }
+        WindowSaveData WindowSaveData { get; set; }
 
         public ImageSource ApplicationIcon
         {
@@ -249,7 +252,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             {
                 var result = CreateCommand(
                     o => {
-                        var cloneCommonData = new Data.CommonData() {
+                        var cloneCommonData = new CommonData() {
                             AppSender = CommonData.AppSender,
                             ClipboardWatcher = CommonData.ClipboardWatcher,
                             Language = CommonData.Language,
@@ -288,7 +291,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                                 SaveSetting();
                                 ResetSetting();
 
-                                CommonData.AppSender.SendApplicationCommand(ApplicationCommand.MemoryGarbageCollect, this, Data.ApplicationCommandArg.Empty);
+                                CommonData.AppSender.SendApplicationCommand(ApplicationCommand.MemoryGarbageCollect, this, ApplicationCommandArg.Empty);
                             } else {
                                 ResetCache(true);
                             }
@@ -619,10 +622,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
                 var result = new StartupNotifyData();
                 result.ExistsSetting = File.Exists(mainSettingPath);
-                if(!result.ExistsSetting) {
-                    var formsMainSettingPath = Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.FormsUserSettingMainSettinFilePath);
-                    result.ExistsFormsSetting = File.Exists(formsMainSettingPath);
-                }
+
                 return result;
             }
         }
@@ -632,7 +632,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             using(var timeLogger = CommonData.NonProcess.CreateTimeLogger()) {
                 BackupSetting();
 
-                AppUtility.SaveSetting(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingMainSettingFilePath), CommonData.MainSetting, Constants.fileTypeMainSetting, CommonData.Logger);
+                SaveMainSetting();
                 AppUtility.SaveSetting(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingLauncherItemSettingFilePath), CommonData.LauncherItemSetting, Constants.fileTypeLauncherItemSetting, CommonData.Logger);
                 AppUtility.SaveSetting(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingLauncherGroupItemSettingFilePath), CommonData.LauncherGroupSetting, Constants.fileTypeLauncherGroupSetting, CommonData.Logger);
 
@@ -642,34 +642,41 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
         }
 
+        void SaveMainSetting()
+        {
+            AppUtility.SaveSetting(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingMainSettingFilePath), CommonData.MainSetting, Constants.fileTypeMainSetting, CommonData.Logger);
+        }
+
         void BackupSetting()
         {
-            var backupDir = Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserBackupDirectoryPath);
+            using(var timeLogger = CommonData.NonProcess.CreateTimeLogger()) {
+                var backupDir = Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserBackupDirectoryPath);
 
-            // 旧データの削除
-            FileUtility.RotateFiles(backupDir, Constants.BackupSearchPattern, OrderBy.Asc, Constants.BackupSettingCount, ex => {
-                CommonData.Logger.Error(ex);
-                return true;
-            });
+                // 旧データの削除
+                FileUtility.RotateFiles(backupDir, Constants.BackupSearchPattern, OrderBy.Asc, Constants.BackupSettingCount, ex => {
+                    CommonData.Logger.Error(ex);
+                    return true;
+                });
 
-            var fileName = PathUtility.AppendExtension(Constants.GetNowTimestampFileName(), "zip");
-            var backupFileFilePath = Path.Combine(backupDir, fileName);
-            FileUtility.MakeFileParentDirectory(backupFileFilePath);
+                var fileName = PathUtility.AppendExtension(Constants.GetNowTimestampFileName(), "zip");
+                var backupFileFilePath = Path.Combine(backupDir, fileName);
+                FileUtility.MakeFileParentDirectory(backupFileFilePath);
 
-            // zip
-            var targetFiles = new[] {
-                CommonData.VariableConstants.UserSettingMainSettingFilePath,
-                CommonData.VariableConstants.UserSettingLauncherItemSettingFilePath,
-                CommonData.VariableConstants.UserSettingLauncherGroupItemSettingFilePath,
-                CommonData.VariableConstants.UserSettingNoteIndexFilePath,
-                CommonData.VariableConstants.UserSettingNoteDirectoryPath,
-                CommonData.VariableConstants.UserSettingTemplateIndexFilePath,
-                CommonData.VariableConstants.UserSettingTemplateDirectoryPath,
-                CommonData.VariableConstants.UserSettingClipboardIndexFilePath,
-                CommonData.VariableConstants.UserSettingClipboardDirectoryPath,
-            };
-            var basePath = Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingDirectoryPath);
-            FileUtility.CreateZipFile(backupFileFilePath, basePath, targetFiles.Select(Environment.ExpandEnvironmentVariables));
+                // zip
+                var targetFiles = new[] {
+                    CommonData.VariableConstants.UserSettingMainSettingFilePath,
+                    CommonData.VariableConstants.UserSettingLauncherItemSettingFilePath,
+                    CommonData.VariableConstants.UserSettingLauncherGroupItemSettingFilePath,
+                    CommonData.VariableConstants.UserSettingNoteIndexFilePath,
+                    CommonData.VariableConstants.UserSettingNoteDirectoryPath,
+                    CommonData.VariableConstants.UserSettingTemplateIndexFilePath,
+                    CommonData.VariableConstants.UserSettingTemplateDirectoryPath,
+                    CommonData.VariableConstants.UserSettingClipboardIndexFilePath,
+                    CommonData.VariableConstants.UserSettingClipboardDirectoryPath,
+                };
+                var basePath = Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingDirectoryPath);
+                FileUtility.CreateZipFile(backupFileFilePath, basePath, targetFiles.Select(Environment.ExpandEnvironmentVariables));
+            }
         }
 
         void ApplyLanguage()
@@ -685,44 +692,47 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         {
             using(var timeLogger = CommonData.NonProcess.CreateTimeLogger()) {
                 var startupNotifyData = LoadSetting();
-                if(startupNotifyData.ExistsFormsSetting) {
-                    // Forms版からのデータ変換
-                    SettingUtility.ConvertFormsSetting(CommonData);
-                }
-                // 前回バージョンが色々必要なのでインクリメント前の生情報を保持しておく。
-                var previousVersion = (Version)CommonData.MainSetting.RunningInformation.LastExecuteVersion;
-                ResetCulture(CommonData.NonProcess);
-                startupNotifyData.AcceptRunning = InitializeAccept();
-                if(!startupNotifyData.AcceptRunning) {
-                    return startupNotifyData;
-                }
-                if(previousVersion == null) {
-                    foreach(var screen in Screen.AllScreens) {
-                        var toolbar = new ToolbarItemModel();
-                        toolbar.Id = screen.DeviceName;
-                        CommonData.Logger.Information(CommonData.Language["log/create/toolbar-setting"], screen);
-                        CommonData.MainSetting.Toolbar.Items.Add(toolbar);
+
+                if(CommonData.VariableConstants.IsQuickExecute) {
+                    if(CommonData.VariableConstants.ForceAccept) {
+                        CommonData.MainSetting.RunningInformation.Accept = false;
+                        SaveSetting();
                     }
+                } else {
+                    // 前回バージョンが色々必要なのでインクリメント前の生情報を保持しておく。
+                    var previousVersion = (Version)CommonData.MainSetting.RunningInformation.LastExecuteVersion;
+                    ResetCulture(CommonData.NonProcess);
+                    startupNotifyData.AcceptRunning = InitializeAccept();
+                    if(!startupNotifyData.AcceptRunning) {
+                        return startupNotifyData;
+                    }
+                    if(previousVersion == null) {
+                        foreach(var screen in Screen.AllScreens) {
+                            var toolbar = new ToolbarItemModel();
+                            toolbar.Id = screen.DeviceName;
+                            CommonData.Logger.Information(CommonData.Language["log/create/toolbar-setting"], screen);
+                            CommonData.MainSetting.Toolbar.Items.Add(toolbar);
+                        }
+                    }
+                    InitializeSetting(previousVersion);
+                    InitializeStatus();
+                    CallPropertyChangeHotkey();
+                    InitializeSystem();
+
+                    CreateMessage();
+                    CreateLogger(null);
+
+                    CreateToolbar();
+                    CreateNote();
+                    CreateTemplate();
+                    CreateClipboard();
+                    CreateCommandWindow();
+
+                    // #326
+                    CommonData.AppSender.SendClipboardChanged();
+
+                    CommonData.AppSender.SendApplicationCommand(ApplicationCommand.MemoryGarbageCollect, this, ApplicationCommandArg.Empty);
                 }
-                InitializeSetting(previousVersion);
-                InitializeStatus();
-                CallPropertyChangeHotkey();
-                InitializeSystem();
-                //InitializeStatic();
-
-                CreateMessage();
-                CreateLogger(null);
-
-                CreateToolbar();
-                CreateNote();
-                CreateTemplate();
-                CreateClipboard();
-                CreateCommandWindow();
-
-                // #326
-                CommonData.AppSender.SendClipboardChanged();
-
-                CommonData.AppSender.SendApplicationCommand(ApplicationCommand.MemoryGarbageCollect, this, Data.ApplicationCommandArg.Empty);
 
                 return startupNotifyData;
             }
@@ -997,7 +1007,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             CommonData.Logger.Information(CommonData.Language["log/screen/change-count"]);
             ResetToolbar();
 
-            CommonData.AppSender.SendApplicationCommand(ApplicationCommand.MemoryGarbageCollect, this, Data.ApplicationCommandArg.Empty);
+            CommonData.AppSender.SendApplicationCommand(ApplicationCommand.MemoryGarbageCollect, this, ApplicationCommandArg.Empty);
         }
 
         /// <summary>
@@ -1018,7 +1028,8 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 ForeColor = CommonData.MainSetting.Note.ForeColor,
                 BackColor = CommonData.MainSetting.Note.BackColor,
             };
-            CommonData.MainSetting.Note.Font.DeepCloneTo(noteItem.Font);
+            //CommonData.MainSetting.Note.Font.DeepCloneTo(noteItem.Font);
+            noteItem.Font = (FontModel)CommonData.MainSetting.Note.Font.DeepClone();
             //TODO: 外部化
             switch(CommonData.MainSetting.Note.NoteTitle) {
                 case NoteTitle.Timestamp:
@@ -1475,7 +1486,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             ReceiveInformationTips(title, message, logKind);
         }
 
-        public void SendApplicationCommand(ApplicationCommand applicationCommand, object sender, Data.ApplicationCommandArg arg)
+        public void SendApplicationCommand(ApplicationCommand applicationCommand, object sender, ApplicationCommandArg arg)
         {
             CheckUtility.DebugEnforceNotNull(arg);
 
@@ -1653,7 +1664,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
         }
 
-        void ClearIndex<TIndexBody>(IndexKind indexKind, Guid guid, Data.IndexBodyPairItemCollection<TIndexBody> cachingItems)
+        void ClearIndex<TIndexBody>(IndexKind indexKind, Guid guid, IndexBodyPairItemCollection<TIndexBody> cachingItems)
             where TIndexBody : IndexBodyItemModelBase
         {
             var index = cachingItems.IndexOf(guid);
@@ -1666,7 +1677,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
         }
 
-        void RemoveIndex<TItemModel, TIndexBody>(IndexKind indexKind, Guid guid, IndexItemCollectionModel<TItemModel> items, Data.IndexBodyPairItemCollection<TIndexBody> cachingItems)
+        void RemoveIndex<TItemModel, TIndexBody>(IndexKind indexKind, Guid guid, IndexItemCollectionModel<TItemModel> items, IndexBodyPairItemCollection<TIndexBody> cachingItems)
             where TItemModel : IndexItemModelBase
             where TIndexBody : IndexBodyItemModelBase
         {
@@ -1733,7 +1744,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
         }
 
-        void AppendCachingItems<TIndexBody>(Guid guid, TIndexBody indexBody, Data.IndexBodyPairItemCollection<TIndexBody> cachingItems)
+        void AppendCachingItems<TIndexBody>(Guid guid, TIndexBody indexBody, IndexBodyPairItemCollection<TIndexBody> cachingItems)
             where TIndexBody : IndexBodyItemModelBase
         {
             if(!cachingItems.Any(p => p.Id == guid)) {
@@ -1750,7 +1761,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
         }
 
-        IndexBodyItemModelBase GetIndexBody<TIndexBody>(IndexKind indexKind, Guid guid, Data.IndexBodyPairItemCollection<TIndexBody> cachingItems)
+        IndexBodyItemModelBase GetIndexBody<TIndexBody>(IndexKind indexKind, Guid guid, IndexBodyPairItemCollection<TIndexBody> cachingItems)
             where TIndexBody : IndexBodyItemModelBase, new()
         {
             var body = cachingItems.GetFromId(guid);
@@ -1784,7 +1795,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
         }
 
-        void SaveIndexBody<TIndexBody>(IndexBodyItemModelBase indexBody, Guid guid, Data.IndexBodyPairItemCollection<TIndexBody> cachingItems, Timing timing)
+        void SaveIndexBody<TIndexBody>(IndexBodyItemModelBase indexBody, Guid guid, IndexBodyPairItemCollection<TIndexBody> cachingItems, Timing timing)
             where TIndexBody : IndexBodyItemModelBase
         {
             //var fileType = IndexItemUtility.GetIndexBodyFileType(indexBody.IndexKind);
@@ -1816,7 +1827,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
         }
 
-        void ReceiveDeviceChanged(Data.ChangedDevice changedDevice)
+        void ReceiveDeviceChanged(ChangedDevice changedDevice)
         {
             //CommonData.Logger.Information("catch: changed device");
             // TODO: まだ作ってないので暫定的に。
@@ -1884,11 +1895,18 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
             ClipboardData clipboardData = null;
             try {
+                var exceptions = new List<Exception>();
                 var retry = new TimeRetry<ClipboardData>();
                 retry.WaitTime = Constants.clipboardGetDataRetryWaitTime;
                 retry.WaitMaxCount = Constants.clipboardGetDataRetryMaxCount;
                 retry.ExecuteFunc = (int waitCurrentCount, ref ClipboardData result) => {
-                    var data = ClipboardUtility.GetClipboardData(CommonData.MainSetting.Clipboard.CaptureType, MessageWindow.Handle, CommonData.NonProcess.Logger);
+                    ClipboardData data = null;
+                    try {
+                        data = ClipboardUtility.GetClipboardData(CommonData.MainSetting.Clipboard.CaptureType, MessageWindow.Handle);
+                    }
+                    catch(Exception ex) {
+                        exceptions.Add(ex);
+                    }
                     var hasData = data != null;
                     if(hasData) {
                         result = data;
@@ -1898,6 +1916,15 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 retry.Run();
                 if(!retry.WaitOver) {
                     clipboardData = retry.Result;
+                } else if(exceptions.Any()) {
+                    if(exceptions.Count == 1) {
+                        CommonData.Logger.Error(exceptions.First());
+                    } else {
+                        CommonData.Logger.Error(
+                            CommonData.Language["log/clipboard/get-error"],
+                            string.Join(Environment.NewLine, exceptions.Select(ex => ex.ToString()))
+                        );
+                    }
                 }
 
             } catch(AccessViolationException ex) {
@@ -2109,7 +2136,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             action[logKind](title, message);
         }
 
-        void ReceiveApplicationCommand(ApplicationCommand applicationCommand, object sender, Data.ApplicationCommandArg arg)
+        void ReceiveApplicationCommand(ApplicationCommand applicationCommand, object sender, ApplicationCommandArg arg)
         {
             Debug.Assert(arg != null);
 
@@ -2217,6 +2244,11 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         void SystemEvents_SessionEnding(object sender, SessionEndingEventArgs e)
         {
+            CastUtility.AsAction<AppLogger>(CommonData.Logger, logger => {
+                var stream = AppUtility.CreateFileLoggerStream(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.LogDirectoryPath), Constants.Issue_355_logFileName);
+                logger.AttachmentStream(stream, true);
+                CommonData.Logger.Trace("#355 start");
+            });
             CommonData.Logger.Information(CommonData.Language["log/session/ending"], e);
             SaveSetting();
         }

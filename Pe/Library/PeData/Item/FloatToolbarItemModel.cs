@@ -26,11 +26,12 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
     using ContentTypeTextNet.Library.SharedLibrary.Attribute;
     using ContentTypeTextNet.Library.SharedLibrary.Define;
     using ContentTypeTextNet.Library.SharedLibrary.IF;
+    using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 
     /// <summary>
     /// フロート状態ツールバー設定データ。
     /// </summary>
-    [Serializable]
+    [Serializable, DataContract]
     public class FloatToolbarItemModel: ItemModelBase, IDeepClone
     {
         public FloatToolbarItemModel()
@@ -40,45 +41,46 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
         /// <summary>
         /// 横に表示するアイテム数。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public int WidthButtonCount { get; set; }
         /// <summary>
         /// 縦に表示するアイテム数。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public int HeightButtonCount { get; set; }
         /// <summary>
         /// 論理X座標。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         [PixelKind(Px.Logical)]
         public double Left { get; set; }
         /// <summary>
         /// 論理Y座標。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         [PixelKind(Px.Logical)]
         public double Top { get; set; }
 
         #region IDeepClone
 
-        public void DeepCloneTo(IDeepClone target)
-        {
-            var obj = (FloatToolbarItemModel)target;
+        //public void DeepCloneTo(IDeepClone target)
+        //{
+        //    var obj = (FloatToolbarItemModel)target;
 
-            obj.WidthButtonCount = WidthButtonCount;
-            obj.HeightButtonCount = HeightButtonCount;
-            obj.Left = Left;
-            obj.Top = Top;
-        }
+        //    obj.WidthButtonCount = WidthButtonCount;
+        //    obj.HeightButtonCount = HeightButtonCount;
+        //    obj.Left = Left;
+        //    obj.Top = Top;
+        //}
 
         public IDeepClone DeepClone()
         {
-            var result = new FloatToolbarItemModel();
+            //var result = new FloatToolbarItemModel();
 
-            DeepCloneTo(result);
+            //DeepCloneTo(result);
 
-            return result;
+            //return result;
+            return DeepCloneUtility.Copy(this);
         }
 
         #endregion

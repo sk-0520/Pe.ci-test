@@ -22,11 +22,13 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
     using System.Runtime.Serialization;
     using System.Text;
     using System.Threading.Tasks;
+    using ContentTypeTextNet.Library.SharedLibrary.Attribute;
     using ContentTypeTextNet.Library.SharedLibrary.IF;
+    using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
     using ContentTypeTextNet.Library.SharedLibrary.Model;
     using ContentTypeTextNet.Pe.Library.PeData.Item;
 
-    [Serializable]
+    [Serializable, DataContract]
     public class StreamSettingModel: SettingModelBase, IDeepClone
     {
         public StreamSettingModel()
@@ -40,35 +42,36 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
 
         #region property
 
-        [DataMember]
+        [DataMember, IsDeepClone]
         public ColorPairItemModel OutputColor { get; set; }
-        [DataMember]
+        [DataMember, IsDeepClone]
         public ColorPairItemModel ErrorColor { get; set; }
 
-        [DataMember]
+        [DataMember, IsDeepClone]
         public FontModel Font { get; set; }
 
         #endregion
 
         #region IDeepClone
 
-        public void DeepCloneTo(IDeepClone target)
-        {
-            var obj = (StreamSettingModel)target;
+        //public void DeepCloneTo(IDeepClone target)
+        //{
+        //    var obj = (StreamSettingModel)target;
 
-            OutputColor.DeepCloneTo(obj.OutputColor);
-            ErrorColor.DeepCloneTo(obj.ErrorColor);
+        //    OutputColor.DeepCloneTo(obj.OutputColor);
+        //    ErrorColor.DeepCloneTo(obj.ErrorColor);
 
-            Font.DeepCloneTo(obj.Font);
-        }
+        //    Font.DeepCloneTo(obj.Font);
+        //}
 
         public IDeepClone DeepClone()
         {
-            var result = new StreamSettingModel();
+            //var result = new StreamSettingModel();
 
-            DeepCloneTo(result);
+            //DeepCloneTo(result);
 
-            return result;
+            //return result;
+            return DeepCloneUtility.Copy(this);
         }
 
         #endregion

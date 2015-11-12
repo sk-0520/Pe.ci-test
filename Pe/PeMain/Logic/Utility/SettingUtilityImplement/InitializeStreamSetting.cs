@@ -23,6 +23,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityImplement
     using System.Threading.Tasks;
     using System.Windows.Media;
     using ContentTypeTextNet.Library.SharedLibrary.IF;
+    using Library.PeData.Item;
     using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
 
     internal static class InitializeStreamSetting
@@ -59,8 +60,10 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityImplement
             }
 
             setting.Font.Size = Constants.streamFontSize.median;
-            Constants.streamOutputColor.DeepCloneTo(setting.OutputColor);
-            Constants.streamErrorColor.DeepCloneTo(setting.ErrorColor);
+            //Constants.streamOutputColor.DeepCloneTo(setting.OutputColor);
+            //Constants.streamErrorColor.DeepCloneTo(setting.ErrorColor);
+            setting.OutputColor = (ColorPairItemModel)Constants.streamOutputColor.DeepClone();
+            setting.ErrorColor = (ColorPairItemModel)Constants.streamErrorColor.DeepClone();
         }
     }
 }

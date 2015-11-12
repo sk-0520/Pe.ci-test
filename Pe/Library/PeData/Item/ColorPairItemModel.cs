@@ -19,15 +19,19 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Runtime.Serialization;
     using System.Text;
     using System.Threading.Tasks;
     using System.Windows.Media;
+    using ContentTypeTextNet.Library.SharedLibrary.Attribute;
     using ContentTypeTextNet.Library.SharedLibrary.IF;
+    using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
     using ContentTypeTextNet.Pe.Library.PeData.IF;
 
     /// <summary>
     /// 前景色・背景色データ。
     /// </summary>
+    [Serializable, DataContract]
     public class ColorPairItemModel: ItemModelBase, IDeepClone, IColorPair
     {
         public ColorPairItemModel()
@@ -46,31 +50,34 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
         /// <summary>
         /// 前景色。
         /// </summary>
+        [DataMember, IsDeepClone]
         public Color ForeColor { get; set; }
         /// <summary>
         /// 背景色。
         /// </summary>
+        [DataMember, IsDeepClone]
         public Color BackColor { get; set; }
 
         #endregion
 
         #region IDeepClone
 
-        public void DeepCloneTo(IDeepClone target)
-        {
-            var obj = (ColorPairItemModel)target;
+        //public void DeepCloneTo(IDeepClone target)
+        //{
+        //    var obj = (ColorPairItemModel)target;
 
-            obj.ForeColor = ForeColor;
-            obj.BackColor = BackColor;
-        }
+        //    obj.ForeColor = ForeColor;
+        //    obj.BackColor = BackColor;
+        //}
 
         public IDeepClone DeepClone()
         {
-            var result = new ColorPairItemModel();
+            //var result = new ColorPairItemModel();
 
-            DeepCloneTo(result);
+            //DeepCloneTo(result);
 
-            return result;
+            //return result;
+            return DeepCloneUtility.Copy(this);
         }
 
         #endregion

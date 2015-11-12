@@ -59,10 +59,10 @@ var usingRangeFieldInfos = fieldInfos
     foreach(var fa in usingPropertyFieldInfos) {
         var baseName = fa.FieldInfo.Name.ToUpper()[0] + fa.FieldInfo.Name.Substring(1);
         var fieldType = Generator.GetGenericType(fa.FieldInfo.FieldType);
-
+        var attribute = Generator.GetAttribute(fa.Attribute);
 #>
         #region <#= fa.FieldInfo.Name #>
-
+        <#= attribute #>
         public static <#= fieldType #> <#= baseName #>
         {
             get
@@ -131,6 +131,20 @@ internal static class Generator
         //builder.Append('>');
 
         return builder.ToString();
+    }
+
+    public static string GetAttribute(ConstantsPropertyAttribute cp)
+    {
+        if(cp.HasAttribute) {
+            var result = new List<string>() { Environment.NewLine };
+            if(cp.IsObsolete) {
+                result.Add("[Obsolete]");
+            }
+
+            return string.Join(Environment.NewLine, result);
+        }
+        
+        return string.Empty;
     }
 }
 #>

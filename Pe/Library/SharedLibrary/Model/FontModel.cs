@@ -22,44 +22,46 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Model
     using System.Runtime.Serialization;
     using System.Text;
     using System.Threading.Tasks;
+    using Attribute;
     using ContentTypeTextNet.Library.SharedLibrary.IF;
+    using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 
-
-    [Serializable]
+    [Serializable, DataContract]
     public class FontModel: ModelBase, IDeepClone
     {
         #region property
 
-        [DataMember]
+        [DataMember, IsDeepClone]
         public string Family { get; set; }
-        [DataMember]
+        [DataMember, IsDeepClone]
         public double Size { get; set; }
-        [DataMember]
+        [DataMember, IsDeepClone]
         public bool Bold { get; set; }
-        [DataMember]
+        [DataMember, IsDeepClone]
         public bool Italic { get; set; }
 
         #endregion
 
         #region IDeepClone
 
-        public void DeepCloneTo(IDeepClone target)
-        {
-            var obj = (FontModel)target;
+        //public void DeepCloneTo(IDeepClone target)
+        //{
+        //    var obj = (FontModel)target;
 
-            obj.Family = Family;
-            obj.Size = Size;
-            obj.Bold = Bold;
-            obj.Italic = Italic;
-        }
+        //    obj.Family = Family;
+        //    obj.Size = Size;
+        //    obj.Bold = Bold;
+        //    obj.Italic = Italic;
+        //}
 
         public IDeepClone DeepClone()
         {
-            var result = new FontModel();
+            //var result = new FontModel();
 
-            DeepCloneTo(result);
+            //DeepCloneTo(result);
 
-            return result;
+            //return result;
+            return DeepCloneUtility.Copy(this);
         }
 
         #endregion

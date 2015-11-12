@@ -115,7 +115,8 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
             obj.WindowState = WindowState;
             obj.IsTopmost = IsTopmost;
             obj.IsVisible = IsVisible;
-            Font.DeepCloneTo(obj.Font);
+            //Font.DeepCloneTo(obj.Font);
+            obj.Font = (FontModel)Font.DeepClone();
         }
 
         public IDeepClone DeepClone()

@@ -25,6 +25,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <NoWarn>IDE0001</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <OutputPath>$(SolutionDir)..\Output\$(Configuration)\$(Platform)</OutputPath>
@@ -36,6 +37,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <NoWarn>IDE0001</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -47,6 +49,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <NoWarn>IDE0001</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <OutputPath>$(SolutionDir)..\Output\$(Configuration)\$(Platform)</OutputPath>
@@ -58,6 +61,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <NoWarn>IDE0001</NoWarn>
   </PropertyGroup>
   <PropertyGroup />
   <PropertyGroup>
@@ -162,6 +166,7 @@
     <Compile Include="Define\Timing.cs" />
     <Content Include="doc\changelog.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="doc\license\Pe.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -178,7 +183,6 @@
     <Compile Include="Logic\Utility\LauncherToolbarUtility.cs" />
     <Compile Include="Logic\Utility\NoteUtility.cs" />
     <Compile Include="Logic\Utility\PopupUtility.cs" />
-    <Compile Include="Logic\Utility\SettingUtilityImplement\ConvertFormsSetting.cs" />
     <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeCommandSetting.cs" />
     <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeLauncherGroupItem.cs" />
     <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeLauncherItem.cs" />
@@ -218,6 +222,7 @@
     <Compile Include="View\Parts\Control\TimeSliderControl.xaml.cs">
       <DependentUpon>TimeSliderControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Parts\Converter\BooleanToTextWrappingConverter.cs" />
     <Compile Include="View\Parts\Converter\CommandItemConverter.cs" />
     <Compile Include="AppResourceAttribute.cs">
       <DependentUpon>AppResource.cs</DependentUpon>
@@ -482,6 +487,9 @@
     <Content Include="bat\beta.bat">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="bat\accept.bat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Constants-generator.tt">
       <DependentUpon>Constants.cs</DependentUpon>
       <Parameters>&lt;%3fxml version="1.0" encoding="utf-16"%3f&gt;
@@ -714,11 +722,6 @@
     <ProjectReference Include="..\Library\PeData\PeData.csproj">
       <Project>{b3c0d8c0-2382-4058-8cec-3c62de401c3f}</Project>
       <Name>PeData</Name>
-      <Private>False</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\Library\PeFormsData\PeFormsData.csproj">
-      <Project>{1e6d2b54-a9a1-4ad8-a44c-65afd7189228}</Project>
-      <Name>PeFormsData</Name>
       <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\Library\PInvoke\PInvoke.csproj">

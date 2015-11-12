@@ -92,6 +92,12 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 #endif
             }
             MutexName = mutexName;
+
+            if(commandLine.HasOption("accept")) {
+                var acceptValue = commandLine.GetValue("accept").Trim();
+                ForceAccept = acceptValue == "force";
+            }
+
         }
 
         #region property
@@ -120,9 +126,6 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
         /// </summary>
         public string UserArchiveDirectoryPath { get { return Path.Combine(UserDirectoryPath, Constants.archiveDirectoryName); } }
 
-        public string FormsUserSettingMainSettinFilePath { get { return Path.Combine(UserDirectoryPath, Constants.formsMainSettingFileName); } }
-        public string FormsUserSettingLauncherItemsSettinFilePath { get { return Path.Combine(UserDirectoryPath, Constants.formsLauncherItemsSettingFileName); } }
-
         public string UserSettingMainSettingFilePath { get { return Path.Combine(UserSettingDirectoryPath, this._mainSettingFileName); } }
 
         public string UserSettingLauncherItemSettingFilePath { get { return Path.Combine(UserSettingDirectoryPath, this._launcherItemSettingFileName); } }
@@ -140,6 +143,15 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
         public string LanguageCode { get { return this._languageCode; } }
 
         public bool FileLogging { get; private set; }
+        public bool ForceAccept { get; private set; }
+
+        public bool IsQuickExecute
+        {
+            get
+            {
+                return ForceAccept;
+            }
+        }
 
         #endregion
     }

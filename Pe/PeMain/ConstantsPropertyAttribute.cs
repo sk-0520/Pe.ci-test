@@ -25,7 +25,27 @@ namespace ContentTypeTextNet.Pe.PeMain
     public class ConstantsPropertyAttribute: Attribute
     {
         public ConstantsPropertyAttribute()
-            : base()
+            : this(isObsolete: false)
         { }
+
+        public ConstantsPropertyAttribute(bool isObsolete)
+            : base()
+        {
+            IsObsolete = isObsolete;
+        }
+
+        #region
+
+        public bool IsObsolete { get; private set; }
+
+        public bool HasAttribute
+        {
+            get
+            {
+                return IsObsolete;
+            }
+        }
+
+        #endregion
     }
 }

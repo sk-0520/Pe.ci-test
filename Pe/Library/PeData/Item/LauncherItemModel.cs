@@ -132,7 +132,8 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
             obj.Comment = Comment;
             obj.Administrator = Administrator;
 
-            Icon.DeepCloneTo(obj.Icon);
+            //Icon.DeepCloneTo(obj.Icon);
+            obj.Icon = (IconItemModel)Icon.DeepClone();
             History.DeepCloneTo(obj.History);
             Tag.DeepCloneTo(obj.Tag);
             StdStream.DeepCloneTo(obj.StdStream);

@@ -162,7 +162,8 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
             var obj = (ToolbarItemModel)target;
 
             obj.DockType = DockType;
-            FloatToolbar.DeepCloneTo(obj.FloatToolbar);
+            //FloatToolbar.DeepCloneTo(obj.FloatToolbar);
+            obj.FloatToolbar = (FloatToolbarItemModel)FloatToolbar.DeepClone();
             obj.IconScale = IconScale;
             obj.AutoHide = AutoHide;
             obj.HideWaitTime = HideWaitTime;
@@ -175,7 +176,8 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
             obj.MenuPositionCorrection = MenuPositionCorrection;
             obj.ButtonPosition = ButtonPosition;
             obj.Id = Id;
-            Font.DeepCloneTo(obj.Font);
+            //Font.DeepCloneTo(obj.Font);
+            obj.Font = (FontModel)Font.DeepClone();
         }
 
         public IDeepClone DeepClone()

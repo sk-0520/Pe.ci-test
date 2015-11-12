@@ -73,13 +73,17 @@ namespace ContentTypeTextNet.Pe.PeMain
             } else {
                 this._mainWorker = new MainWorkerViewModel(constants, systemLogger);
                 var startupNotifiyData = this._mainWorker.Initialize();
+                if(startupNotifiyData.QuickExecute) {
+                    systemLogger.Information("application: quick exec");
+                    Application.Current.Shutdown();
+                }
                 if(startupNotifiyData.AcceptRunning) {
                     //LanguageUtility.RecursiveSetLanguage(this._notifyIcon, this._mainWorker.Language);
                     this._notifyIcon = (TaskbarIcon)FindResource("root");
                     this._notifyIcon.DataContext = this._mainWorker;
                     this._mainWorker.SetView(this._notifyIcon);
-                    if(!startupNotifiyData.ExistsSetting && !startupNotifiyData.ExistsFormsSetting) {
-                        // 現行設定も旧設定もなければ完全に初回とする
+                    if(!startupNotifiyData.ExistsSetting) {
+                        // 設定データがなければ完全に初回とする
                         systemLogger.Information("application: first");
                         Application.Current.Dispatcher.BeginInvoke(new Action(() => {
                             this._mainWorker.ShowHomeDialog();

@@ -55,6 +55,80 @@
 		</group>
 	</log>
 	-->
+	<log date="2015/11/12" version="0.70.0" dummy="################################################################################">
+		<group type="note" dummy="==================================================================">
+			<note rev="">
+				<message class="compatibility">#346: Forms版→WPF版用データコンバーターの廃止</message>
+				<comments>
+					<comment>本バージョンを持ってForms版からのデータ引き継ぎサポートを終了します</comment>
+				</comments>
+			</note>
+			<note rev="">
+				<message class="compatibility">#104による0.39.0 未満のアップデートチェック用URI互換を破棄</message>
+				<comments>
+					<comment>事前通知なしに消しても誰も困らんだろ……</comment>
+				</comments>
+			</note>
+			<note rev="">
+				<message>[事前通知]: 0.72.0 で .NET Framework の対応バージョンを を 4.5.1 から 4.6 に変更します</message>
+				<comments>
+					<comment>nameof! nameof! nameof!</comment>
+				</comments>
+			</note>
+		</group>
+		<group type="features" dummy="==================================================================">
+			<note rev="">
+				<message>#322: ノート本文の自動改行を設定可能にする</message>
+			</note>
+		</group>
+		<group type="fixes" dummy="==================================================================">
+			<note rev="">
+				<message>#349: HTMLクリップボード内のスクリプトエラーを無視する</message>
+			</note>
+			<note rev="">
+				<message>#305: メモリ消費を抑える</message>
+				<comments>
+					<comment>到達不能な破棄処理を有効にした</comment>
+				</comments>
+			</note>
+			<note rev="">
+				<message>#348: 情報ダイアログの「短い情報」に不要な'_'が存在する</message>
+			</note>
+			<note rev="">
+				<message>#356: クリップボード取込失敗→再取込で失敗しなかった場合はエラーを表示しない</message>
+			</note>
+		</group>
+		<group type="developer" dummy="==================================================================">
+			<note rev="">
+				<message>#351: データ複製の事故防止</message>
+				<comments>
+					<comment>基本ロジックと一部データには適用</comment>
+					<comment>全データに設定するのは労力的にしんどいので追々適用していく</comment>
+				</comments>
+			</note>
+			<note rev="">
+				<message>IDE0001の抑制</message>
+				<comments>
+					<comment>usingする名前空間をVS2013スタイルで留める</comment>
+					<comment>親以降の名前空間が同じ名称結構多くて完全修飾の方が分かりやすいのですよ</comment>
+				</comments>
+			</note>
+			<note rev="">
+				<message>#347: 一旦外していた使用許諾のユーザー操作再設定を復帰する</message>
+			</note>
+			<note rev="">
+				<message>#354: ログ出力用ストリームをごにょごにょ</message>
+			</note>
+			<note rev="">
+				<message>#355: 終了時にログを強制出力する</message>
+				<comments>
+					<comment>#353のため#354の下準備から#355まで実装</comment>
+					<comment>一番親元の作業オブジェクトに追加したのでView側で固まってたら再調査が必要なので保留とする</comment>
+					<comment>ステータスは課題を参照のこと</comment>
+				</comments>
+			</note>
+		</group>
+	</log>
 	<log date="2015/11/03" version="0.69.0" dummy="################################################################################">
 		<group type="note" dummy="==================================================================">
 			<note rev="">

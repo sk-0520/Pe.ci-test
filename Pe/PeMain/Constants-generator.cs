@@ -21,13 +21,13 @@
         /*
         このソースは自動生成のため Constants-generator.tt を編集すること。
 
-        生成元ConstantsPropertyフィールド数: 7
+        生成元ConstantsPropertyフィールド数: 8
         生成元ConstantsRangeフィールド数: 22
         */
 
         // ConstantsPropertyAttribute
         #region acceptVersion
-
+        
         public static Version AcceptVersion
         {
             get
@@ -38,7 +38,7 @@
 
         #endregion
         #region formsVersion
-
+        
         public static Version FormsVersion
         {
             get
@@ -49,7 +49,7 @@
 
         #endregion
         #region buildProcess
-
+        
         public static String BuildProcess
         {
             get
@@ -60,7 +60,7 @@
 
         #endregion
         #region startupShortcutPath
-
+        
         public static String StartupShortcutPath
         {
             get
@@ -71,7 +71,7 @@
 
         #endregion
         #region applicationName
-
+        
         public static String ApplicationName
         {
             get
@@ -82,7 +82,7 @@
 
         #endregion
         #region archiveSearchPattern
-
+        
         public static String ArchiveSearchPattern
         {
             get
@@ -93,12 +93,25 @@
 
         #endregion
         #region backupSearchPattern
-
+        
         public static String BackupSearchPattern
         {
             get
             {
                 return backupSearchPattern;
+            }
+        }
+
+        #endregion
+        #region issue_355_logFileName
+        
+
+
+        public static String Issue_355_logFileName
+        {
+            get
+            {
+                return issue_355_logFileName;
             }
         }
 

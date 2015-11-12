@@ -32,6 +32,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityImplement
         public static void Correction(NoteIndexItemModel indexItem, Version previousVersion, INonProcess nonProcess)
         {
             V_First(indexItem, previousVersion, nonProcess);
+            V_0_69_0(indexItem, previousVersion, nonProcess);
             V_Last(indexItem, previousVersion, nonProcess);
         }
 
@@ -66,6 +67,19 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityImplement
             indexItem.IsLocked = false;
             indexItem.IsCompacted = false;
             indexItem.IsTopmost = false;
+            indexItem.AutoLineFeed = true;
         }
+
+        static void V_0_69_0(NoteIndexItemModel indexItem, Version previousVersion, INonProcess nonProcess)
+        {
+            if(new Version(0,69,0,38641) < previousVersion) {
+                return;
+            }
+
+            nonProcess.Logger.Trace("version setting: 0.69.0");
+
+            indexItem.AutoLineFeed = true;
+        }
+
     }
 }

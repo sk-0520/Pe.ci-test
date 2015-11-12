@@ -22,6 +22,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <NoWarn>IDE0001</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <OutputPath>$(SolutionDir)..\Output\$(Configuration)\$(Platform)\lib</OutputPath>
@@ -33,6 +34,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <NoWarn>IDE0001</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -44,6 +46,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <NoWarn>IDE0001</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <OutputPath>$(SolutionDir)..\Output\$(Configuration)\$(Platform)\lib</OutputPath>
@@ -55,6 +58,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <NoWarn>IDE0001</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Mono.TextTemplating">
@@ -85,6 +89,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attribute\IsDeepCloneAttribute.cs" />
     <Compile Include="Attribute\EntityMappingAttribute.cs" />
     <Compile Include="Attribute\PixelKindAttribute.cs" />
     <Compile Include="CompatibleForms\CompatibleFormWindow.cs" />
@@ -99,8 +104,11 @@
     <Compile Include="CompatibleWindows\Utility\HandleUtility.cs" />
     <Compile Include="CompatibleWindows\Utility\MouseUtility.cs" />
     <Compile Include="CompatibleWindows\Utility\PodStructUtility.cs" />
+    <Compile Include="Logic\CachedResourceDictionary.cs" />
     <Compile Include="Logic\Database\QueryParts.cs" />
     <Compile Include="Logic\NotifyPropertyChangedObject.cs" />
+    <Compile Include="Logic\Utility\DeepCloneUtility.cs" />
+    <Compile Include="Logic\Utility\UI\WebBrowserUtility.cs" />
     <Compile Include="Logic\WeakEventListener.cs" />
     <Compile Include="Model\CallerModel.cs" />
     <Compile Include="Data\Database\DatabaseDataBase.cs" />
@@ -233,7 +241,7 @@
     <Compile Include="Logic\Utility\CheckUtility.cs" />
     <Compile Include="Logic\Utility\DockTypeUtility.cs" />
     <Compile Include="Logic\Utility\EventUtility.cs" />
-    <Compile Include="Logic\Utility\UIUtility.cs" />
+    <Compile Include="Logic\Utility\UI\UIUtility.cs" />
     <Compile Include="Logic\Utility\PathUtility.cs" />
     <Compile Include="Logic\Utility\TextUtility.cs" />
     <Compile Include="Model\DictionaryModel.cs" />

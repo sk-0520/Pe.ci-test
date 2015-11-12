@@ -67,7 +67,11 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
         /// </summary>
         [DataMember]
         public FontModel Font { get; set; }
-
+        /// <summary>
+        /// 自動改行するか。
+        /// </summary>
+        [DataMember]
+        public bool AutoLineFeed { get; set; }
         #endregion
 
         #region IColorPair
@@ -121,7 +125,9 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
             obj.NoteKind = NoteKind;
             obj.IsLocked = IsLocked;
             obj.IsCompacted = IsCompacted;
-            Font.DeepCloneTo(obj.Font);
+            obj.AutoLineFeed = AutoLineFeed;
+            //Font.DeepCloneTo(obj.Font);
+            obj.Font = (FontModel)Font.DeepClone();
 
             obj.ForeColor = ForeColor;
             obj.BackColor = BackColor;
