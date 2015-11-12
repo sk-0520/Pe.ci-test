@@ -55,7 +55,7 @@
 		</group>
 	</log>
 	-->
-	<log date="YYYY/MM/DD" version="0.69.1" type="rc" dummy="################################################################################">
+	<log date="2015/11/12" version="0.70.0" dummy="################################################################################">
 		<group type="note" dummy="==================================================================">
 			<note rev="">
 				<message class="compatibility">#346: Forms版→WPF版用データコンバーターの廃止</message>
@@ -64,27 +64,21 @@
 				</comments>
 			</note>
 			<note rev="">
-				<message>[事前通知]: 0.72.0 で .NET Framework の対応バージョンを を 4.5.1 から 4.6 に変更します</message>
-				<comments>
-					<comment>nameof! nameof! nameof!</comment>
-				</comments>
-			</note>
-			<note rev="">
 				<message class="compatibility">#104による0.39.0 未満のアップデートチェック用URI互換を破棄</message>
 				<comments>
 					<comment>事前通知なしに消しても誰も困らんだろ……</comment>
+				</comments>
+			</note>
+			<note rev="">
+				<message>[事前通知]: 0.72.0 で .NET Framework の対応バージョンを を 4.5.1 から 4.6 に変更します</message>
+				<comments>
+					<comment>nameof! nameof! nameof!</comment>
 				</comments>
 			</note>
 		</group>
 		<group type="features" dummy="==================================================================">
 			<note rev="">
 				<message>#322: ノート本文の自動改行を設定可能にする</message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
 			</note>
 		</group>
 		<group type="fixes" dummy="==================================================================">
@@ -102,9 +96,6 @@
 			</note>
 			<note rev="">
 				<message>#356: クリップボード取込失敗→再取込で失敗しなかった場合はエラーを表示しない</message>
-			</note>
-			<note rev="">
-				<message></message>
 			</note>
 		</group>
 		<group type="developer" dummy="==================================================================">
@@ -135,9 +126,6 @@
 					<comment>一番親元の作業オブジェクトに追加したのでView側で固まってたら再調査が必要なので保留とする</comment>
 					<comment>ステータスは課題を参照のこと</comment>
 				</comments>
-			</note>
-			<note rev="">
-				<message></message>
 			</note>
 		</group>
 	</log>
