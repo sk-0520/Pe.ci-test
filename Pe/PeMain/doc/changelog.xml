@@ -83,7 +83,7 @@
 		</group>
 		<group type="fixes" dummy="==================================================================">
 			<note rev="">
-				<message></message>
+				<message>0.70.0修正内容の各Revision記載漏れ</message>
 			</note>
 			<note rev="">
 				<message></message>
@@ -126,7 +126,7 @@
 			</note>
 		</group>
 		<group type="features" dummy="==================================================================">
-			<note rev="">
+			<note rev="2d414ef51fb09e3346d1f775da19a7f712bff648">
 				<message>#322: ノート本文の自動改行を設定可能にする</message>
 			</note>
 		</group>
@@ -134,41 +134,41 @@
 			<note rev="">
 				<message>#349: HTMLクリップボード内のスクリプトエラーを無視する</message>
 			</note>
-			<note rev="">
+			<note rev="0c18841b28e87d85a510c0501328ada6b74c31a0">
 				<message>#305: メモリ消費を抑える</message>
 				<comments>
 					<comment>到達不能な破棄処理を有効にした</comment>
 				</comments>
 			</note>
-			<note rev="">
+			<note rev="82289f6d51a41a3746ef859e3464f6da347017b1">
 				<message>#348: 情報ダイアログの「短い情報」に不要な'_'が存在する</message>
 			</note>
-			<note rev="">
+			<note rev="825eb2b7bd5229ed1758727c1b3031bd5ea5fbf0">
 				<message>#356: クリップボード取込失敗→再取込で失敗しなかった場合はエラーを表示しない</message>
 			</note>
 		</group>
 		<group type="developer" dummy="==================================================================">
-			<note rev="">
+			<note rev="0df522de1a43b6f562dfca085d629b7343810e57">
 				<message>#351: データ複製の事故防止</message>
 				<comments>
 					<comment>基本ロジックと一部データには適用</comment>
 					<comment>全データに設定するのは労力的にしんどいので追々適用していく</comment>
 				</comments>
 			</note>
-			<note rev="">
+			<note rev="cc4defd86c3103b3aea443cbaeb186d59c716776">
 				<message>IDE0001の抑制</message>
 				<comments>
 					<comment>usingする名前空間をVS2013スタイルで留める</comment>
 					<comment>親以降の名前空間が同じ名称結構多くて完全修飾の方が分かりやすいのですよ</comment>
 				</comments>
 			</note>
-			<note rev="">
+			<note rev="008f6c8ba23142fecd4830c635f67f837761bf57">
 				<message>#347: 一旦外していた使用許諾のユーザー操作再設定を復帰する</message>
 			</note>
-			<note rev="">
+			<note rev="c16e57c6f551b4106ed59f2ca1dfe9cda6fb99d0">
 				<message>#354: ログ出力用ストリームをごにょごにょ</message>
 			</note>
-			<note rev="">
+			<note rev="36cf532b7ad735efc7009bf777bc0239f21d80c7">
 				<message>#355: 終了時にログを強制出力する</message>
 				<comments>
 					<comment>#353のため#354の下準備から#355まで実装</comment>
