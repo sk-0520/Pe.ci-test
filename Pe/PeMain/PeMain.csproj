@@ -484,7 +484,7 @@
     <Content Include="bat\log.bat">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="bat\beta.bat">
+    <Content Include="bat\beta-.bat">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="bat\accept.bat">
