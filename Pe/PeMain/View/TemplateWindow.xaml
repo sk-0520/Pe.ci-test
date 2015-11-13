@@ -24,7 +24,7 @@
   <AW:CommonDataWindow.Resources>
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="/View/Parts/Resource/ClipboardTemplateDictionary.xaml"/>
+        <ResourceDictionary Source="/View/Parts/Resource/IndexItemsDictionary.xaml"/>
         <ResourceDictionary Source="/View/Parts/Resource/ImageDictionary.xaml"/>
         <ResourceDictionary Source="/View/Parts/Resource/TextBoxDictionary.xaml"/>
         <ResourceDictionary Source="/View/Parts/Resource/GridSplitterDictionary.xaml"/>
