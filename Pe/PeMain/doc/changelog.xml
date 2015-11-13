@@ -86,6 +86,16 @@
 				<message>0.70.0修正内容の各Revision記載漏れ</message>
 			</note>
 			<note rev="">
+				<message>#355: 終了時にログを強制出力する</message>
+				<comments>
+					<comment>0.70.0での実装は色々残念だった</comment>
+					<comment>&gt;ログ保存位置を指定していない場合(標準動作)は %APPDATA%\logs に強制出力ログファイル(session-ending.log)が作成されていました</comment>
+					<comment>&gt;&gt;%APPDATA%直下に汎用的な名前でディレクトリを作っちゃったのでPe側では削除できません</comment>
+					<comment>&gt;&gt;&gt;気になるのであれば削除しといてください</comment>
+					<comment>まぁそもそも出力失敗してるから0byteファイルなんですけどね！</comment>
+				</comments>
+			</note>
+			<note rev="">
 				<message></message>
 			</note>
 			<note rev="">
