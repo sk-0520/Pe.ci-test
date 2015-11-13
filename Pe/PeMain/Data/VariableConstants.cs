@@ -43,7 +43,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
         #region variable
 
         string _settingRootDirectoryPath = _baseDirPath;
-        string _logRootDirectoryPath = Path.Combine(_baseDirPath, Constants.logDirectoryName);
+        string _logRootDirectoryPath = string.Empty;
 
         string _mainSettingFileName = Constants.mainSettingFileName;
         string _launcherItemSettingFileName = Constants.launcherItemSettingFileName;
@@ -73,6 +73,8 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
             if(commandLine.HasOption("setting-root")) {
                 this._settingRootDirectoryPath = Environment.ExpandEnvironmentVariables(commandLine.GetValue("setting-root"));
             }
+
+            this._logRootDirectoryPath = Path.Combine(UserDirectoryPath, Constants.logDirectoryName);
             if(commandLine.HasOption("log")) {
                 if(commandLine.HasValue("log")) {
                     this._logRootDirectoryPath = Environment.ExpandEnvironmentVariables(commandLine.GetValue("log"));
