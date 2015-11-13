@@ -24,12 +24,13 @@
   <AW:CommonDataWindow.Resources>
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="/View/Parts/Resource/ClipboardTemplateDictionary.xaml"/>
+        <ResourceDictionary Source="/View/Parts/Resource/IndexItemsDictionary.xaml"/>
         <ResourceDictionary Source="/View/Parts/Resource/ImageDictionary.xaml"/>
         <ResourceDictionary Source="/View/Parts/Resource/TextBoxDictionary.xaml"/>
         <ResourceDictionary Source="/View/Parts/Resource/GridSplitterDictionary.xaml"/>
         <ResourceDictionary Source="/View/Parts/Resource/LabelDictionary.xaml"/>
         <ResourceDictionary Source="/View/Parts/Resource/ComboBoxDictionary.xaml"/>
+        <ResourceDictionary Source="/View/Parts/Resource/TextBlockDictionary.xaml"/>
       </ResourceDictionary.MergedDictionaries>
       <SC:LogicalNotConverter x:Key="LogicalNotConverter" />
       <SC:LogicalIsNotNullConverter x:Key="LogicalIsNotNullConverter" />
@@ -104,10 +105,10 @@
                   <StackPanel>
                     <TextBlock Text="{Binding Name}" />
                     <Border Style="{StaticResource IndexItemsStyleInfo}">
-                      <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                      <StackPanel Orientation="Horizontal">
                         <Image Margin="0,0,2,0">
                           <Image.Style>
-                            <Style TargetType="Image" BasedOn="{StaticResource DefaultImage}">
+                            <Style TargetType="Image" BasedOn="{StaticResource ItemImage}">
                               <Style.Triggers>
                                 <DataTrigger Binding="{Binding TemplateReplaceMode}" Value="{x:Static ADD:TemplateReplaceMode.None}">
                                   <Setter Property="Source" Value="{x:Static AM:AppResource.TemplateReplaceNoneImage}" />
@@ -123,7 +124,7 @@
                           </Image.Style>
                         </Image>
                         <!-- AA:Language使うの結構手間だった -->
-                        <TextBlock Text="{Binding ItemTypeText}" />
+                        <TextBlock Style="{StaticResource ItemText}" Text="{Binding ItemTypeText}" />
                       </StackPanel>
                     </Border>
                   </StackPanel>

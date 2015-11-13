@@ -96,6 +96,13 @@
 				</comments>
 			</note>
 			<note rev="">
+				<message>#320: クリップボードの一覧アイテムの横幅とリストの横幅を合わせる</message>
+				<comments>
+					<comment>修正の簡易さからアイコンとタイムスタンプを左寄せにした</comment>
+					<comment>ついでにテンプレートも同じスタイルに設定</comment>
+				</comments>
+			</note>
+			<note rev="">
 				<message></message>
 			</note>
 			<note rev="">
