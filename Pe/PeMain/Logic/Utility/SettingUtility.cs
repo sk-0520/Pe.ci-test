@@ -293,6 +293,14 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         public static void InitializeClipboardIndexSetting(ClipboardIndexSettingModel setting, Version previousVersion, INonProcess nonProcess)
         {
             Implement.InitializeClipboardIndexSetting.Correction(setting, previousVersion, nonProcess);
+            foreach(var clipboardItend in setting.Items) {
+                InitializeClipboardIndexItem(clipboardItend, previousVersion, nonProcess);
+            }
+        }
+
+        private static void InitializeClipboardIndexItem(ClipboardIndexItemModel clipboardItend, Version previousVersion, INonProcess nonProcess)
+        {
+            Implement.InitializeClipboardIndexItem.Correction(clipboardItend, previousVersion, nonProcess);
         }
 
         #endregion

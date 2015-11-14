@@ -107,6 +107,12 @@
 				<message>#352: アイコン+文字列のスタイル整理</message>
 			</note>
 			<note rev="">
+				<message>#357: クリップボードの最上位移動アイテムの作成タイムスタンプを更新するのおかしいっすよね</message>
+				<comments>
+					<comment>今までは作成日時を元に並び替えてたけどソート用の項目で並び替えるようにしたので作成日のタイムスタンプは保たれるようになりました</comment>
+				</comments>
+			</note>
+			<note rev="">
 				<message></message>
 			</note>
 			<note rev="">
