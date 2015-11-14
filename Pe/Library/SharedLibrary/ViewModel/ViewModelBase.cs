@@ -54,7 +54,13 @@ namespace ContentTypeTextNet.Library.SharedLibrary.ViewModel
         public bool IsChanged
         {
             get { return this._isChanged; }
-            private set { SetVariableValue(ref this._isChanged, value); }
+            private set
+            {
+                if(this._isChanged != value) {
+                    this._isChanged = value;
+                    CallOnPropertyChangedEvent(this, new PropertyChangedEventArgs("IsChanged"));
+                }
+            }
         }
 
         #endregion
