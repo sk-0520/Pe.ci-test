@@ -10,9 +10,12 @@
     </Style.Triggers>
     <Setter Property="RenderOptions.BitmapScalingMode" Value="NearestNeighbor" />
   </Style>
-  
+
+  <Thickness x:Key="ItemImageMargin">2</Thickness>
+
   <Style x:Key="ItemImage" TargetType="Image" BasedOn="{StaticResource DefaultImage}">
-    <Setter Property="Margin" Value="2" />
+    <Setter Property="Margin" Value="{StaticResource ItemImageMargin}" />
   </Style>
+
   
 </ResourceDictionary>

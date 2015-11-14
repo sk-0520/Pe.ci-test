@@ -77,30 +77,30 @@
         <Separator />
         <Button Command="{Binding SaveItemCommand}" IsEnabled="{Binding IsEnabled,ElementName=content}">
           <StackPanel Orientation="Horizontal">
-            <Image Style="{StaticResource DefaultImage}" Source="{x:Static AM:AppResource.CommonSaveImage}" />
+            <Image Style="{StaticResource ItemImage}" Source="{x:Static AM:AppResource.CommonSaveImage}" />
             <Label Content="save" AA:Language.Word="clipboard/save" Style="{StaticResource ContentTextLabel}" />
           </StackPanel>
         </Button>
         <Separator />
         <Button Command="{Binding RemoveItemCommand}" IsEnabled="{Binding IsEnabled,ElementName=content}">
           <StackPanel Orientation="Horizontal">
-            <Image Style="{StaticResource DefaultImage}" Source="{x:Static AM:AppResource.CommonRemoveImage}" />
+            <Image Style="{StaticResource ItemImage}" Source="{x:Static AM:AppResource.CommonRemoveImage}" />
             <Label Content="remove" AA:Language.Word="clipboard/remove" Style="{StaticResource ContentTextLabel}" />
           </StackPanel>
         </Button>
         <Button Command="{Binding ClipboardClearCommand}">
           <StackPanel Orientation="Horizontal">
-            <Image Style="{StaticResource DefaultImage}" Source="{x:Static AM:AppResource.ClipboardClearImage}" />
+            <Image Style="{StaticResource ItemImage}" Source="{x:Static AM:AppResource.ClipboardClearImage}" />
             <Label Content="clipboard clear" AA:Language.Word="clipboard/clear" Style="{StaticResource ContentTextLabel}" />
           </StackPanel>
         </Button>
         <Separator />
         <ToggleButton IsChecked="{Binding IsTopmost}" AA:Language.Hint="clipboard/topmost">
-          <Image Style="{StaticResource DefaultImage}" Source="{x:Static AM:AppResource.CommonPinImage}" />
+          <Image Style="{StaticResource ItemImage}" Source="{x:Static AM:AppResource.CommonPinImage}" />
         </ToggleButton>
         <ToggleButton IsChecked="{Binding AppNonProcess.ClipboardWatcher.UsingClipboard}">
           <StackPanel Orientation="Horizontal">
-            <Image Style="{StaticResource DefaultImage}" Source="{x:Static AM:AppResource.CommonUsingClipboardImage}" />
+            <Image Style="{StaticResource ItemImage}" Source="{x:Static AM:AppResource.CommonUsingClipboardImage}" />
             <Label Content="use clipboard" AA:Language.Word="clipboard/using-clipboard" Style="{StaticResource ContentTextLabel}" />
           </StackPanel>
         </ToggleButton>
@@ -196,7 +196,7 @@
             <TabItem x:Name="pageText" Visibility="{Binding SelectedViewModel.EnabledClipboardTypesText, Converter={StaticResource BooleanToVisibilityConverter}}">
               <TabItem.Header>
                 <StackPanel Orientation="Horizontal">
-                  <Image Style="{StaticResource ClipboardText}" />
+                  <Image Style="{StaticResource ClipboardText}" Margin="{StaticResource ItemImageMargin}" />
                   <Label Content="text" AA:Language.Word="clipboard/type/text" Style="{StaticResource ContentTextLabel}" />
                 </StackPanel>
               </TabItem.Header>
@@ -214,7 +214,7 @@
             <TabItem x:Name="pageRtf" Visibility="{Binding SelectedViewModel.EnabledClipboardTypesRtf, Converter={StaticResource BooleanToVisibilityConverter}}">
               <TabItem.Header>
                 <StackPanel Orientation="Horizontal">
-                  <Image Style="{StaticResource ClipboardRtf}" />
+                  <Image Style="{StaticResource ClipboardRtf}" Margin="{StaticResource ItemImageMargin}" />
                   <Label Content="rft" AA:Language.Word="clipboard/type/rtf" Style="{StaticResource ContentTextLabel}" />
                 </StackPanel>
               </TabItem.Header>
@@ -236,7 +236,7 @@
             <TabItem x:Name="pageHtml" Visibility="{Binding SelectedViewModel.EnabledClipboardTypesHtml, Converter={StaticResource BooleanToVisibilityConverter}}">
               <TabItem.Header>
                 <StackPanel Orientation="Horizontal">
-                  <Image Style="{StaticResource ClipboardHtml}" />
+                  <Image Style="{StaticResource ClipboardHtml}" Margin="{StaticResource ItemImageMargin}" />
                   <Label Content="html" AA:Language.Word="clipboard/type/html" Style="{StaticResource ContentTextLabel}" />
                 </StackPanel>
               </TabItem.Header>
@@ -261,7 +261,7 @@
             <TabItem x:Name="pageImage" Visibility="{Binding SelectedViewModel.EnabledClipboardTypesImage, Converter={StaticResource BooleanToVisibilityConverter}}">
               <TabItem.Header>
                 <StackPanel Orientation="Horizontal">
-                  <Image Style="{StaticResource ClipboardImage}" />
+                  <Image Style="{StaticResource ClipboardImage}" Margin="{StaticResource ItemImageMargin}" />
                   <Label Content="image" AA:Language.Word="clipboard/type/image" Style="{StaticResource ContentTextLabel}" />
                 </StackPanel>
               </TabItem.Header>
@@ -316,7 +316,7 @@
             <TabItem x:Name="pageFiles" Visibility="{Binding SelectedViewModel.EnabledClipboardTypesFiles, Converter={StaticResource BooleanToVisibilityConverter}}">
               <TabItem.Header>
                 <StackPanel Orientation="Horizontal">
-                  <Image Style="{StaticResource ClipboardFiles}" />
+                  <Image Style="{StaticResource ClipboardFiles}" Margin="{StaticResource ItemImageMargin}" />
                   <Label Content="files" AA:Language.Word="clipboard/type/files" Style="{StaticResource ContentTextLabel}" />
                 </StackPanel>
               </TabItem.Header>
