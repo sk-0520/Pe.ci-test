@@ -2001,7 +2001,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
                         Clipboard.IndexPairList.Remove(dupItem);
                         var nowTime = DateTime.Now;
-                        dupItem.History.CreateTimestamp = nowTime;
+                        dupItem.Sort = nowTime;
                         dupItem.History.Update(nowTime);
                         var item = Clipboard.IndexPairList.Add(dupItem, null);
                         Clipboard.SelectedViewModel = item.ViewModel;
