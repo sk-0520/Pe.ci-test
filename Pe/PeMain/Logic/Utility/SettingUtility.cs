@@ -288,17 +288,25 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         public static void InitializeTemplateIndexSetting(TemplateIndexSettingModel setting, Version previousVersion, INonProcess nonProcess)
         {
             Implement.InitializeTemplateIndexSetting.Correction(setting, previousVersion, nonProcess);
+            foreach(var templateItem in setting.Items) {
+                InitializeTemplateIndexSetting(templateItem, previousVersion, nonProcess);
+            }
+        }
+
+        public static void InitializeTemplateIndexSetting(TemplateIndexItemModel model, Version previousVersion, INonProcess nonProcess)
+        {
+            Implement.InitializeTemplateIndexItem.Correction(model, previousVersion, nonProcess);
         }
 
         public static void InitializeClipboardIndexSetting(ClipboardIndexSettingModel setting, Version previousVersion, INonProcess nonProcess)
         {
             Implement.InitializeClipboardIndexSetting.Correction(setting, previousVersion, nonProcess);
-            foreach(var clipboardItend in setting.Items) {
-                InitializeClipboardIndexItem(clipboardItend, previousVersion, nonProcess);
+            foreach(var clipboardItem in setting.Items) {
+                InitializeClipboardIndexItem(clipboardItem, previousVersion, nonProcess);
             }
         }
 
-        private static void InitializeClipboardIndexItem(ClipboardIndexItemModel clipboardItend, Version previousVersion, INonProcess nonProcess)
+        public static void InitializeClipboardIndexItem(ClipboardIndexItemModel clipboardItend, Version previousVersion, INonProcess nonProcess)
         {
             Implement.InitializeClipboardIndexItem.Correction(clipboardItend, previousVersion, nonProcess);
         }

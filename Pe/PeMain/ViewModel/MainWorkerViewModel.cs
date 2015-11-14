@@ -1984,6 +1984,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                             Type = clipboardData.Type,
                             Hash = clipboardData.Hash,
                         };
+                        SettingUtility.InitializeClipboardIndexItem(index, null, CommonData.NonProcess);
                         Clipboard.IndexPairList.Add(index, null);
                         index.History.Update();
                         CommonData.AppSender.SendSaveIndex(IndexKind.Clipboard, Timing.Delay);
