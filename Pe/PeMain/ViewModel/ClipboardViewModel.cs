@@ -59,7 +59,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         public ClipboardViewModel(ClipboardSettingModel model, ClipboardWindow view, ClipboardIndexSettingModel indexModel, IAppNonProcess appNonProcess, IAppSender appSender)
             : base(model, view, indexModel, appNonProcess, appSender)
         {
-            Items.SortDescriptions.Add(new SortDescription("CreateTimestamp", ListSortDirection.Descending));
+            Items.SortDescriptions.Add(new SortDescription("Sort", ListSortDirection.Descending));
         }
 
         #region property
