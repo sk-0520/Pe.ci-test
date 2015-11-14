@@ -26,5 +26,6 @@
   </Style>
   <Style x:Key="DialogCancelButton" TargetType="Button" BasedOn="{StaticResource ResourceKey=DialogButton}">
     <Setter Property="AA:Language.Word" Value="common/cancel" />
+    <Setter Property="IsCancel" Value="True" />
   </Style>
 </ResourceDictionary>
