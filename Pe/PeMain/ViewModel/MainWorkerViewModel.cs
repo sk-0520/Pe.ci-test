@@ -89,6 +89,21 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 Constants.CacheIndexTemplate,
                 Constants.CacheIndexClipboard
             );
+
+            var indexTimer = new Dictionary<IndexKind, TimeSpan>() {
+                { IndexKind.Clipboard, Constants.SaveIndexClipboardTime },
+                { IndexKind.Template, Constants.SaveIndexTemplateTime },
+                { IndexKind.Note, Constants.SaveIndexNoteTime },
+            };
+            IndexSaveTimers = EnumUtility.GetMembers<IndexKind>()
+                .ToDictionary(
+                    ik => ik,
+                    ik => new IndexDispatcherTimer(ik) { Interval = indexTimer[ik] }
+                )
+            ;
+            foreach(var timer in IndexSaveTimers.Values) {
+                timer.Tick += IndexTimer_Tick;
+            }
         }
 
         #region property
@@ -210,6 +225,8 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 return result;
             }
         }
+
+        IDictionary<IndexKind, IndexDispatcherTimer> IndexSaveTimers { get; set; }
 
         #endregion
 
@@ -582,6 +599,11 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 File.Delete(startupPath);
             }
 #endif
+            StopIndexTimer();
+            foreach(var timer in IndexSaveTimers.Values) {
+                timer.Tick -= IndexTimer_Tick;
+            }
+
             if(saveSetting) {
                 SaveSetting();
             }
@@ -1084,6 +1106,13 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             //InitializeStatic();
         }
 
+        void StopIndexTimer()
+        {
+            foreach(var timer in IndexSaveTimers.Values.Where(t => t.IsEnabled)) {
+                timer.Stop();
+            }
+        }
+
         void ResetSetting()
         {
             ResetCache(false);
@@ -1397,6 +1426,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         {
             try {
                 IsPause = true;
+                StopIndexTimer();
                 action();
             } finally {
                 IsPause = false;
@@ -1717,30 +1747,49 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
         }
 
-        void SaveIndex<TIndexSetting>(IndexKind indexKind, Timing timing, TIndexSetting indexSetting, FileType fileType, string filePath)
+        void SaveIndex_Impl<TIndexSetting>(IndexKind indexKind, TIndexSetting indexSetting, FileType fileType, string filePath)
             where TIndexSetting : ModelBase
         {
             var path = Environment.ExpandEnvironmentVariables(filePath);
             AppUtility.SaveSetting(path, indexSetting, fileType, CommonData.Logger);
         }
 
-        void ReceiveSaveIndex(IndexKind indexKind, Timing timing)
+        void SaveIndex(IndexKind indexKind)
         {
             switch(indexKind) {
                 case IndexKind.Note:
-                    SaveIndex(indexKind, timing, CommonData.NoteIndexSetting, Constants.fileTypeNoteIndex, CommonData.VariableConstants.UserSettingNoteIndexFilePath);
+                    SaveIndex_Impl(indexKind, CommonData.NoteIndexSetting, Constants.fileTypeNoteIndex, CommonData.VariableConstants.UserSettingNoteIndexFilePath);
                     break;
 
                 case IndexKind.Template:
-                    SaveIndex(indexKind, timing, CommonData.TemplateIndexSetting, Constants.fileTypeTemplateIndex, CommonData.VariableConstants.UserSettingTemplateIndexFilePath);
+                    SaveIndex_Impl(indexKind, CommonData.TemplateIndexSetting, Constants.fileTypeTemplateIndex, CommonData.VariableConstants.UserSettingTemplateIndexFilePath);
                     break;
 
                 case IndexKind.Clipboard:
-                    SaveIndex(indexKind, timing, CommonData.ClipboardIndexSetting, Constants.fileTypeClipboardIndex, CommonData.VariableConstants.UserSettingClipboardIndexFilePath);
+                    SaveIndex_Impl(indexKind, CommonData.ClipboardIndexSetting, Constants.fileTypeClipboardIndex, CommonData.VariableConstants.UserSettingClipboardIndexFilePath);
                     break;
 
                 default:
                     throw new NotImplementedException();
+            }
+        }
+
+        void ReceiveSaveIndex(IndexKind indexKind, Timing timing)
+        {
+            lock(IndexSaveTimers) {
+                var targetTimer = IndexSaveTimers[indexKind];
+                if(targetTimer.IsEnabled) {
+                    targetTimer.Stop();
+                    Debug.WriteLine(string.Format("delay stop: {0}", indexKind));
+                }
+
+                if(timing == Timing.Instantly) {
+                    SaveIndex(indexKind);
+                } else {
+                    Debug.Assert(timing == Timing.Delay);
+                    CommonData.Logger.Debug(string.Format("delay start: {0}", indexKind), targetTimer.Interval);
+                    targetTimer.Start();
+                }
             }
         }
 
@@ -2272,5 +2321,14 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 LanguageUtility.RecursiveSetLanguage(((TaskbarIcon)sender).ContextMenu, CommonData.Language);
             }
         }
+
+        private void IndexTimer_Tick(object sender, EventArgs e)
+        {
+            var timer = (IndexDispatcherTimer)sender;
+            timer.Stop();
+            CommonData.Logger.Debug(string.Format("delay save: {0}", timer.IndexKind));
+            SaveIndex(timer.IndexKind);
+        }
+
     }
 }

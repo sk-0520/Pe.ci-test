@@ -34,7 +34,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Utility
         {
             EventDisposer eventDisposer = null;
             var result = Create(handler, dg => {
-                releaseEvent(dg);
+                //releaseEvent(dg);
                 eventDisposer.Dispose();
                 eventDisposer = null;
             }, out eventDisposer, callerFile, callerLine, callerMember);
@@ -50,7 +50,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Utility
         {
             EventDisposer<TEventHandler> eventDisposer = null;
             var result = Create(handler, e => {
-                releaseEvent(e);
+                //releaseEvent(e);
                 eventDisposer.Dispose();
                 eventDisposer = null;
             }, out eventDisposer, callerFile, callerLine, callerMember);

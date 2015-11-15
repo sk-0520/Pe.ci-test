@@ -171,6 +171,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                         var indexModel = SettingUtility.CreateTemplateIndexItem(IndexModel.Items, AppNonProcess);
                         var pair = IndexPairList.Insert(0, indexModel, null);
                         SelectedViewModel = pair.ViewModel;
+                        AppSender.SendSaveIndex(IndexKind.Template, Timing.Delay);
                     }
                 );
 
