@@ -85,6 +85,7 @@ namespace ContentTypeTextNet.Pe.PeMain
         public const string clipboardImageHeight = "CLIP-IMAGE-HEIGHT";
         public const string clipboardFileCount = "CLIP-FILES-COUNT";
 
+        public const string logExecuteItemName = "LOG-EXECUTE-ITEM-NAME";
         public const string logClipboardWaitTimePrev = "LOG-CLIP-WAIT_TIME-PREV";
         public const string logClipboardWaitTimeCurrent = "LOG-CLIP-WAIT_TIME-CURRENT";
         public const string logClipboardWaitTimeSetting = "LOG-CLIP-WAIT_TIME-SETTING";

@@ -422,6 +422,7 @@
 		<Item Id="log/create/toolbar-setting" Word="ツールバー新規作成" />
 		<Item Id="log/accept/ok" Word="使用許諾: OK" />
 		<Item Id="log/accept/ng" Word="使用許諾: NG" />
+		<Item Id="log/execute/item" Word="アイテム起動: @[LOG-EXECUTE-ITEM-NAME]" />
 		<Item Id="log/screen/change-count" Word="ディスプレイ: 接続数変更" />
 		<Item Id="log/screen/change-setting" Word="ディスプレイ: 設定変更検出" />
 		<Item Id="log/session/switch" Word="セッション: 変更検出" />

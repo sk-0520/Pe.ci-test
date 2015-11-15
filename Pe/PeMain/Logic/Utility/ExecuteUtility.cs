@@ -133,7 +133,10 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         }
         public static Process RunItem(LauncherItemModel launcherItem, ScreenModel screen, INonProcess nonProcess, IAppSender appSender)
         {
-            nonProcess.Logger.Information(launcherItem.ToString());
+            var map = new Dictionary<string, string>() {
+                {  LanguageKey.logExecuteItemName, DisplayTextUtility.GetDisplayName( launcherItem) },
+            };
+            nonProcess.Logger.Information(nonProcess.Language["log/execute/item", map], launcherItem);
 
             switch(launcherItem.LauncherKind) {
                 case LauncherKind.File:
