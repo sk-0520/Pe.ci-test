@@ -90,12 +90,20 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 Constants.CacheIndexClipboard
             );
 
-            IndexSaveTiming = EnumUtility.GetMembers<IndexKind>()
+            var indexTimer = new Dictionary<IndexKind, TimeSpan>() {
+                { IndexKind.Clipboard, Constants.SaveIndexClipboardTime },
+                { IndexKind.Template, Constants.SaveIndexTemplateTime },
+                { IndexKind.Note, Constants.SaveIndexNoteTime },
+            };
+            IndexSaveTimers = EnumUtility.GetMembers<IndexKind>()
                 .ToDictionary(
                     ik => ik,
-                    ik => default(DispatcherTimer)
+                    ik => new IndexDispatcherTimer(ik) { Interval = indexTimer[ik] }
                 )
             ;
+            foreach(var timer in IndexSaveTimers.Values) {
+                timer.Tick += IndexTimer_Tick;
+            }
         }
 
         #region property
@@ -218,7 +226,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
         }
 
-        IDictionary<IndexKind, DispatcherTimer> IndexSaveTiming { get; set; }
+        IDictionary<IndexKind, IndexDispatcherTimer> IndexSaveTimers { get; set; }
 
         #endregion
 
@@ -1093,6 +1101,13 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             //InitializeStatic();
         }
 
+        void StopIndexTimer()
+        {
+            foreach(var timer in IndexSaveTimers.Values.Where(t => t.IsEnabled)) {
+                timer.Stop();
+            }
+        }
+
         void ResetSetting()
         {
             ResetCache(false);
@@ -1406,6 +1421,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         {
             try {
                 IsPause = true;
+                StopIndexTimer();
                 action();
             } finally {
                 IsPause = false;
@@ -1755,51 +1771,20 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         void ReceiveSaveIndex(IndexKind indexKind, Timing timing)
         {
-            lock(IndexSaveTiming) {
-                var runningTimer = IndexSaveTiming[indexKind];
-                if(runningTimer != null) {
-                    if(runningTimer.IsEnabled) {
-                        runningTimer.Stop();
-                        Debug.WriteLine("remove!" + indexKind);
-                    }
+            lock(IndexSaveTimers) {
+                var targetTimer = IndexSaveTimers[indexKind];
+                if(targetTimer.IsEnabled) {
+                    targetTimer.Stop();
+                    Debug.WriteLine("remove!" + indexKind);
                 }
-                IndexSaveTiming[indexKind] = null;
 
                 if(timing == Timing.Instantly) {
                     SaveIndex(indexKind);
                 } else {
                     Debug.Assert(timing == Timing.Delay);
-                    var map = new Dictionary<IndexKind, TimeSpan>() {
-                    { IndexKind.Clipboard, Constants.SaveIndexClipboardTime },
-                    { IndexKind.Template, Constants.SaveIndexTemplateTime },
-                    { IndexKind.Note, Constants.SaveIndexNoteTime },
-                };
-                    var timer = new DispatcherTimer() {
-                        Interval = map[indexKind],
-                    };
-                    Debug.WriteLine("create!" + indexKind);
-                    IndexSaveTiming[indexKind] = timer;
-                    EventDisposer<EventHandler> ev = null;
-                    timer.Tick += EventUtility.Create<EventHandler>(
-                        (sender, e) => {
-                            timer.Stop();
-                            Debug.WriteLine("event!" + indexKind);
-                        },
-                        releaseEvent => {
-                            timer.Tick -= releaseEvent;
-                            ev = null;
-                            Debug.WriteLine("event release!" + indexKind);
-                        },
-                        out ev
-                    );
-                    timer.Start();
+                    targetTimer.Start();
                 }
             }
-        }
-
-        private void Timer_Tick1(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
         }
 
         void AppendCachingItems<TIndexBody>(Guid guid, TIndexBody indexBody, IndexBodyPairItemCollection<TIndexBody> cachingItems)
@@ -2330,5 +2315,13 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 LanguageUtility.RecursiveSetLanguage(((TaskbarIcon)sender).ContextMenu, CommonData.Language);
             }
         }
+
+        private void IndexTimer_Tick(object sender, EventArgs e)
+        {
+            var timer = (IndexDispatcherTimer)sender;
+            timer.Stop();
+            SaveIndex(timer.IndexKind);
+        }
+
     }
 }
