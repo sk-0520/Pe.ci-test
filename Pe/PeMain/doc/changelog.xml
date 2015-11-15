@@ -77,7 +77,10 @@
 				<message>#360: キャンセルボタンとESCキーをリンクさせる</message>
 			</note>
 			<note rev="">
-				<message></message>
+				<message>#303: 設定ファイル更新を頻繁に行わない</message>
+				<comments>
+					<comment>ノート・テンプレート・クリップボードの一覧データ保存時に一定時間待機するように改修しました</comment>
+				</comments>
 			</note>
 			<note rev="">
 				<message></message>
