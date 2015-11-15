@@ -257,9 +257,10 @@ namespace ContentTypeTextNet.Pe.PeMain
         [ConstantsRange]
         public static readonly TripleRange<int> clipboardDuplicationCount = new TripleRange<int>(
             -1,
-            50,
+            -1,
             256
         );
+
         public const double clipboardItemsListWidth = 220;
         public static readonly Size clipboardDefaultWindowSize = new Size(580, 380);
         [ConstantsRange]
@@ -381,6 +382,10 @@ namespace ContentTypeTextNet.Pe.PeMain
         [ConstantsProperty]
         const string issue_355_logFileName = "session-ending.log";
 
+        [ConstantsProperty]
+        const int issue_363_oldMediumCount = 50;
+
+
         #endregion
 
         #region app.config
@@ -416,6 +421,9 @@ namespace ContentTypeTextNet.Pe.PeMain
         public static int LoggingStockCount { get { return int.Parse(ConfigurationManager.AppSettings["logging-stock-count"]); } }
         public static int CacheIndexTemplate { get { return int.Parse(ConfigurationManager.AppSettings["cache-index-template"]); } }
         public static int CacheIndexClipboard { get { return int.Parse(ConfigurationManager.AppSettings["cache-index-clipboard"]); } }
+        public static TimeSpan SaveIndexClipboardTime { get { return TimeSpan.Parse(ConfigurationManager.AppSettings["save-index-clipboard-time"]); } }
+        public static TimeSpan SaveIndexTemplateTime { get { return TimeSpan.Parse(ConfigurationManager.AppSettings["save-index-template-time"]); } }
+        public static TimeSpan SaveIndexNoteTime { get { return TimeSpan.Parse(ConfigurationManager.AppSettings["save-index-note-time"]); } }
 
         public static int BackupSettingCount { get { return int.Parse(ConfigurationManager.AppSettings["backup-setting"]); } }
         public static int BackupArchiveCount { get { return int.Parse(ConfigurationManager.AppSettings["backup-archive"]); } }

@@ -17,6 +17,7 @@ along with Updater.  If not, see <http://www.gnu.org/licenses/>.
 namespace ContentTypeTextNet.Pe.SystemApplications.Updater
 {
     using System;
+    using System.Threading;
     using ContentTypeTextNet.Library.SharedLibrary.Logic;
 
     /// <summary>
@@ -105,6 +106,12 @@ namespace ContentTypeTextNet.Pe.SystemApplications.Updater
                 Console.WriteLine(ex);
                 result = -1;
             }
+
+            if(update != null && !update.CheckOnly) {
+                Console.WriteLine(";-)");
+                Thread.Sleep(TimeSpan.FromSeconds(5));
+            }
+
             if(update != null && update.Wait && !update.WaitSkip) {
                 Console.WriteLine("Press any key to continue ...");
                 Console.ReadKey(false);

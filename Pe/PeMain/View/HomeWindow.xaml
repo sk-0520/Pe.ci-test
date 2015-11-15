@@ -77,7 +77,7 @@
     </Grid>
 
     <StackPanel Grid.Row="1" Style="{StaticResource DialogResultPanel}">
-      <Button IsDefault="True"  Content="ok" AA:Language.Word="home/close" Command="{Binding CloseCommand}" Style="{StaticResource DialogButton}" />
+      <Button IsDefault="True" IsCancel="True" Content="ok" AA:Language.Word="home/close" Command="{Binding CloseCommand}" Style="{StaticResource DialogButton}" />
     </StackPanel>
   </Grid>
 </AW:ViewModelCommonDataWindow>

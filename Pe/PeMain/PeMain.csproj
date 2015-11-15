@@ -50,6 +50,7 @@
     <Prefer32Bit>true</Prefer32Bit>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <NoWarn>IDE0001</NoWarn>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <OutputPath>$(SolutionDir)..\Output\$(Configuration)\$(Platform)</OutputPath>
@@ -81,6 +82,7 @@
     <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>False</Private>
     </Reference>
@@ -159,6 +161,7 @@
     <Compile Include="Data\Temporary\StartupNotifyData.cs" />
     <Compile Include="Define\ApplicationCommand.cs" />
     <Compile Include="Define\WindowSaveType.cs" />
+    <Compile Include="Logic\IndexDispatcherTimer.cs" />
     <Compile Include="Logic\Updater.cs" />
     <Compile Include="Data\Temporary\UpdateInformation.cs" />
     <Compile Include="Define\AboutCopyKind.cs" />
@@ -183,11 +186,13 @@
     <Compile Include="Logic\Utility\LauncherToolbarUtility.cs" />
     <Compile Include="Logic\Utility\NoteUtility.cs" />
     <Compile Include="Logic\Utility\PopupUtility.cs" />
+    <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeClipboardIndexItem.cs" />
     <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeCommandSetting.cs" />
     <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeLauncherGroupItem.cs" />
     <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeLauncherItem.cs" />
     <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeLoggingSetting.cs" />
     <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeStreamSetting.cs" />
+    <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeTemplateIndexItem.cs" />
     <Compile Include="TemplateReplaceKey.cs" />
     <Compile Include="ViewModel\AboutViewModel.cs" />
     <Compile Include="ViewModel\CommandItemViewModel.cs" />
@@ -617,7 +622,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Parts\Resource\ClipboardTemplateDictionary.xaml">
+    <Page Include="View\Parts\Resource\IndexItemsDictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

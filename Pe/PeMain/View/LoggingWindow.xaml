@@ -50,13 +50,13 @@
     <ToolBar Grid.Row="0" Height="Auto" Style="{StaticResource DefaultToolbar}" FontFamily="{DynamicResource {x:Static SystemFonts.MenuFontFamilyKey}}" FontSize="{DynamicResource {x:Static SystemFonts.MenuFontSizeKey}}" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" >
       <Button Command="{Binding SaveCommand}">
         <StackPanel Orientation="Horizontal">
-          <Image Source="{x:Static AM:AppResource.CommonSaveImage}" Style="{StaticResource DefaultImage}" />
+          <Image Source="{x:Static AM:AppResource.CommonSaveImage}" Style="{StaticResource ItemImage}" />
           <Label Content="save" AA:Language.Word="logging/save" Style="{StaticResource ContentTextLabel}" />
         </StackPanel>
       </Button>
       <Button Command="{Binding ClearCommand}">
         <StackPanel Orientation="Horizontal">
-          <Image Source="{x:Static AM:AppResource.CommonClearImage}" Style="{StaticResource DefaultImage}" />
+          <Image Source="{x:Static AM:AppResource.CommonClearImage}" Style="{StaticResource ItemImage}" />
           <Label Content="clear" AA:Language.Word="logging/clear" Style="{StaticResource ContentTextLabel}" />
         </StackPanel>
       </Button>

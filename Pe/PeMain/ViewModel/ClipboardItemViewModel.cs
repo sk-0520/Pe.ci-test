@@ -180,6 +180,11 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
         }
 
+        public DateTime Sort
+        {
+            get { return Model.Sort; }
+            set { SetModelValue(value); }
+        }
 
         #endregion
 

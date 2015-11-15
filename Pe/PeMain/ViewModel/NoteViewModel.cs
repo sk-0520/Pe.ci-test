@@ -70,6 +70,8 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             BorderBrush = MakeBorderBrush();
 
             SetCompactArea();
+
+            ResetChangeFlag();
         }
 
         #region property

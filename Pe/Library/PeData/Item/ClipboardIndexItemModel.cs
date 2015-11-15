@@ -19,8 +19,10 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Runtime.Serialization;
     using System.Text;
     using System.Threading.Tasks;
+    using ContentTypeTextNet.Library.SharedLibrary.Attribute;
     using ContentTypeTextNet.Library.SharedLibrary.IF;
     using ContentTypeTextNet.Library.SharedLibrary.Model;
     using ContentTypeTextNet.Pe.Library.PeData.Define;
@@ -34,6 +36,7 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
             : base()
         {
             Hash = new HashItemModel();
+            Sort = History.CreateTimestamp;
         }
 
         #region property
@@ -41,11 +44,20 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
         /// <summary>
         /// 保持するクリップボードの型。
         /// </summary>
+        [DataMember]
         public ClipboardType Type { get; set; }
         /// <summary>
         /// 自身のデータ(インデックス + ボディ)を示すハッシュデータ。
         /// </summary>
+        [DataMember]
         public HashItemModel Hash { get; set; }
+
+        /// <summary>
+        /// 並べ替えに用いる基準値。
+        /// </summary>
+        [DataMember]
+        [IsDeepClone]
+        public DateTime Sort { get; set; }
 
         #endregion
 
@@ -58,6 +70,7 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
             var obj = (ClipboardIndexItemModel)target;
 
             obj.Type = Type;
+            obj.Sort = Sort;
             Hash.DeepCloneTo(obj.Hash);
         }
 
