@@ -1717,31 +1717,36 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
         }
 
-        void SaveIndex<TIndexSetting>(IndexKind indexKind, Timing timing, TIndexSetting indexSetting, FileType fileType, string filePath)
+        void SaveIndex_Impl<TIndexSetting>(IndexKind indexKind, TIndexSetting indexSetting, FileType fileType, string filePath)
             where TIndexSetting : ModelBase
         {
             var path = Environment.ExpandEnvironmentVariables(filePath);
             AppUtility.SaveSetting(path, indexSetting, fileType, CommonData.Logger);
         }
 
-        void ReceiveSaveIndex(IndexKind indexKind, Timing timing)
+        void SaveIndex(IndexKind indexKind)
         {
             switch(indexKind) {
                 case IndexKind.Note:
-                    SaveIndex(indexKind, timing, CommonData.NoteIndexSetting, Constants.fileTypeNoteIndex, CommonData.VariableConstants.UserSettingNoteIndexFilePath);
+                    SaveIndex_Impl(indexKind, CommonData.NoteIndexSetting, Constants.fileTypeNoteIndex, CommonData.VariableConstants.UserSettingNoteIndexFilePath);
                     break;
 
                 case IndexKind.Template:
-                    SaveIndex(indexKind, timing, CommonData.TemplateIndexSetting, Constants.fileTypeTemplateIndex, CommonData.VariableConstants.UserSettingTemplateIndexFilePath);
+                    SaveIndex_Impl(indexKind, CommonData.TemplateIndexSetting, Constants.fileTypeTemplateIndex, CommonData.VariableConstants.UserSettingTemplateIndexFilePath);
                     break;
 
                 case IndexKind.Clipboard:
-                    SaveIndex(indexKind, timing, CommonData.ClipboardIndexSetting, Constants.fileTypeClipboardIndex, CommonData.VariableConstants.UserSettingClipboardIndexFilePath);
+                    SaveIndex_Impl(indexKind, CommonData.ClipboardIndexSetting, Constants.fileTypeClipboardIndex, CommonData.VariableConstants.UserSettingClipboardIndexFilePath);
                     break;
 
                 default:
                     throw new NotImplementedException();
             }
+        }
+
+        void ReceiveSaveIndex(IndexKind indexKind, Timing timing)
+        {
+            SaveIndex(indexKind);
         }
 
         void AppendCachingItems<TIndexBody>(Guid guid, TIndexBody indexBody, IndexBodyPairItemCollection<TIndexBody> cachingItems)
