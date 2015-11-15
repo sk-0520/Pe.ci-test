@@ -89,6 +89,13 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 Constants.CacheIndexTemplate,
                 Constants.CacheIndexClipboard
             );
+
+            IndexSaveTiming = EnumUtility.GetMembers<IndexKind>()
+                .ToDictionary(
+                    ik => ik,
+                    ik => default(DispatcherTimer)
+                )
+            ;
         }
 
         #region property
@@ -210,6 +217,8 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 return result;
             }
         }
+
+        IDictionary<IndexKind, DispatcherTimer> IndexSaveTiming { get; set; }
 
         #endregion
 
@@ -1746,7 +1755,51 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         void ReceiveSaveIndex(IndexKind indexKind, Timing timing)
         {
-            SaveIndex(indexKind);
+            lock(IndexSaveTiming) {
+                var runningTimer = IndexSaveTiming[indexKind];
+                if(runningTimer != null) {
+                    if(runningTimer.IsEnabled) {
+                        runningTimer.Stop();
+                        Debug.WriteLine("remove!" + indexKind);
+                    }
+                }
+                IndexSaveTiming[indexKind] = null;
+
+                if(timing == Timing.Instantly) {
+                    SaveIndex(indexKind);
+                } else {
+                    Debug.Assert(timing == Timing.Delay);
+                    var map = new Dictionary<IndexKind, TimeSpan>() {
+                    { IndexKind.Clipboard, Constants.SaveIndexClipboardTime },
+                    { IndexKind.Template, Constants.SaveIndexTemplateTime },
+                    { IndexKind.Note, Constants.SaveIndexNoteTime },
+                };
+                    var timer = new DispatcherTimer() {
+                        Interval = map[indexKind],
+                    };
+                    Debug.WriteLine("create!" + indexKind);
+                    IndexSaveTiming[indexKind] = timer;
+                    EventDisposer<EventHandler> ev = null;
+                    timer.Tick += EventUtility.Create<EventHandler>(
+                        (sender, e) => {
+                            timer.Stop();
+                            Debug.WriteLine("event!" + indexKind);
+                        },
+                        releaseEvent => {
+                            timer.Tick -= releaseEvent;
+                            ev = null;
+                            Debug.WriteLine("event release!" + indexKind);
+                        },
+                        out ev
+                    );
+                    timer.Start();
+                }
+            }
+        }
+
+        private void Timer_Tick1(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         void AppendCachingItems<TIndexBody>(Guid guid, TIndexBody indexBody, IndexBodyPairItemCollection<TIndexBody> cachingItems)
