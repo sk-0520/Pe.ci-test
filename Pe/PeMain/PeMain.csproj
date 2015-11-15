@@ -161,6 +161,7 @@
     <Compile Include="Data\Temporary\StartupNotifyData.cs" />
     <Compile Include="Define\ApplicationCommand.cs" />
     <Compile Include="Define\WindowSaveType.cs" />
+    <Compile Include="Logic\IndexDispatcherTimer.cs" />
     <Compile Include="Logic\Updater.cs" />
     <Compile Include="Data\Temporary\UpdateInformation.cs" />
     <Compile Include="Define\AboutCopyKind.cs" />
