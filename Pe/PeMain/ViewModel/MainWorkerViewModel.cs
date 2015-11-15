@@ -599,6 +599,11 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 File.Delete(startupPath);
             }
 #endif
+            StopIndexTimer();
+            foreach(var timer in IndexSaveTimers.Values) {
+                timer.Tick -= IndexTimer_Tick;
+            }
+
             if(saveSetting) {
                 SaveSetting();
             }
@@ -1775,13 +1780,14 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 var targetTimer = IndexSaveTimers[indexKind];
                 if(targetTimer.IsEnabled) {
                     targetTimer.Stop();
-                    Debug.WriteLine("remove!" + indexKind);
+                    Debug.WriteLine(string.Format("delay stop: {0}", indexKind));
                 }
 
                 if(timing == Timing.Instantly) {
                     SaveIndex(indexKind);
                 } else {
                     Debug.Assert(timing == Timing.Delay);
+                    CommonData.Logger.Debug(string.Format("delay start: {0}", indexKind), targetTimer.Interval);
                     targetTimer.Start();
                 }
             }
@@ -2320,6 +2326,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         {
             var timer = (IndexDispatcherTimer)sender;
             timer.Stop();
+            CommonData.Logger.Debug(string.Format("delay save: {0}", timer.IndexKind));
             SaveIndex(timer.IndexKind);
         }
 
