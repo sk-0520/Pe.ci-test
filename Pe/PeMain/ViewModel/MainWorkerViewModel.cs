@@ -2008,7 +2008,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
                     // 毎回ファイル読むのもなぁ
                     // 指定範囲内に同じデータがあれば追加しない
-                    IEnumerable<ClipboardIndexItemModel> clipboardItems = CommonData.ClipboardIndexSetting.Items;
+                    var clipboardItems = CommonData.ClipboardIndexSetting.Items.Reverse();
                     if(CommonData.MainSetting.Clipboard.DuplicationCount != Constants.clipboardDuplicationCount.minimum) {
                         clipboardItems = clipboardItems.Take(CommonData.MainSetting.Clipboard.DuplicationCount);
                     }

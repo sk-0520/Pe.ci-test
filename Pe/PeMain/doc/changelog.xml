@@ -117,7 +117,12 @@
 				</comments>
 			</note>
 			<note rev="">
-				<message></message>
+				<message>#361: クリップボード重複判定で範囲指定した場合になんか変</message>
+				<comments>
+					<comment>実装見ると変ではなかったけど直観的ではなかったので動作変更</comment>
+					<comment>範囲指定した場合、今までは一番古いものを基準としたが本バージョンから新しいものを基準とするように変更</comment>
+					<comment>でもまぁ#363に食われるだろうけど</comment>
+				</comments>
 			</note>
 			<note rev="">
 				<message></message>
