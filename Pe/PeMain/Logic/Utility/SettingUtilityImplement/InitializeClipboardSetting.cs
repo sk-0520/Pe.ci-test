@@ -33,6 +33,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityImplement
         {
             V_First(setting, previousVersion, nonProcess);
             V_0_65_0(setting, previousVersion, nonProcess);
+            V_0_70_0(setting, previousVersion, nonProcess);
             V_Last(setting, previousVersion, nonProcess);
         }
 
@@ -99,6 +100,19 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityImplement
             nonProcess.Logger.Trace("version setting: 0.65.0");
 
             setting.DuplicationMoveHead = true;
+        }
+
+        static void V_0_70_0(ClipboardSettingModel setting, Version previousVersion, INonProcess nonProcess)
+        {
+            if(new Version(0,70,0,40764) < previousVersion) {
+                return;
+            }
+
+            nonProcess.Logger.Trace("version setting: 0.70.0");
+
+            if(setting.DuplicationCount == Constants.Issue_363_oldMediumCount) {
+                setting.DuplicationCount = Constants.ClipboardDuplicationMedianCount;
+            }
         }
     }
 }

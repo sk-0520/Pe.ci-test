@@ -125,6 +125,12 @@
 				</comments>
 			</note>
 			<note rev="">
+				<message>#363: クリップボード重複判定の初期値を全件対象にする</message>
+				<comments>
+					<comment>本バージョンへアップデートした際に重複判定件数が 50(0.70.0以下の標準値) であれば -1(全件) に変換されます</comment>
+				</comments>
+			</note>
+			<note rev="">
 				<message></message>
 			</note>
 		</group>

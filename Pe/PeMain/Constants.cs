@@ -257,9 +257,10 @@ namespace ContentTypeTextNet.Pe.PeMain
         [ConstantsRange]
         public static readonly TripleRange<int> clipboardDuplicationCount = new TripleRange<int>(
             -1,
-            50,
+            -1,
             256
         );
+
         public const double clipboardItemsListWidth = 220;
         public static readonly Size clipboardDefaultWindowSize = new Size(580, 380);
         [ConstantsRange]
@@ -380,6 +381,10 @@ namespace ContentTypeTextNet.Pe.PeMain
 
         [ConstantsProperty]
         const string issue_355_logFileName = "session-ending.log";
+
+        [ConstantsProperty]
+        const int issue_363_oldMediumCount = 50;
+
 
         #endregion
 

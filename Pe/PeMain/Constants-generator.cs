@@ -21,7 +21,7 @@
         /*
         このソースは自動生成のため Constants-generator.tt を編集すること。
 
-        生成元ConstantsPropertyフィールド数: 8
+        生成元ConstantsPropertyフィールド数: 9
         生成元ConstantsRangeフィールド数: 22
         */
 
@@ -105,13 +105,22 @@
         #endregion
         #region issue_355_logFileName
         
-
-
         public static String Issue_355_logFileName
         {
             get
             {
                 return issue_355_logFileName;
+            }
+        }
+
+        #endregion
+        #region issue_363_oldMediumCount
+        
+        public static Int32 Issue_363_oldMediumCount
+        {
+            get
+            {
+                return issue_363_oldMediumCount;
             }
         }
 
