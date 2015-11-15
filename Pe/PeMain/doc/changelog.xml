@@ -55,7 +55,7 @@
 		</group>
 	</log>
 	-->
-	<log date="YYYY/MM/DD" version="0.xx.1" type="rc" dummy="################################################################################">
+	<log date="2015/11/15" version="0.71.0" dummy="################################################################################">
 		<group type="note" dummy="==================================================================">
 			<note rev="">
 				<message>[事前通知]: #335: .NET Frameworkのバージョンを4.6に変更</message>
@@ -65,32 +65,23 @@
 					<comment>#355の影響で0.72.0→0.73.0に先延ばし</comment>
 				</comments>
 			</note>
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
 		</group>
 		<group type="features" dummy="==================================================================">
-			<note rev="">
+			<note rev="48e14eea7bd107e1ff299d29973074940bd3f4b6">
 				<message>#360: キャンセルボタンとESCキーをリンクさせる</message>
 			</note>
-			<note rev="">
+			<note rev="43183959f9c4e3e127ed9272117770b0095e9091">
 				<message>#303: 設定ファイル更新を頻繁に行わない</message>
 				<comments>
 					<comment>ノート・テンプレート・クリップボードの一覧データ保存時に一定時間待機するように改修しました</comment>
 				</comments>
 			</note>
-			<note rev="">
-				<message></message>
-			</note>
 		</group>
 		<group type="fixes" dummy="==================================================================">
-			<note rev="">
+			<note rev="54f075926e318317e9b4617c485bd63f137e77fd">
 				<message>0.70.0修正内容の各Revision記載漏れ</message>
 			</note>
-			<note rev="">
+			<note rev="771b804cc396463d68c84945d5007ba4213a7b82">
 				<message>#355: 終了時にログを強制出力する</message>
 				<comments>
 					<comment>0.70.0での実装は色々残念だった</comment>
@@ -100,23 +91,23 @@
 					<comment>まぁそもそも出力失敗してるから0byteファイルなんですけどね！</comment>
 				</comments>
 			</note>
-			<note rev="">
+			<note rev="041d0f3e46a5ee30e925035925c2598b0a6d14ea">
 				<message>#320: クリップボードの一覧アイテムの横幅とリストの横幅を合わせる</message>
 				<comments>
 					<comment>修正の簡易さからアイコンとタイムスタンプを左寄せにした</comment>
 					<comment>ついでにテンプレートも同じスタイルに設定</comment>
 				</comments>
 			</note>
-			<note rev="">
+			<note rev="a2498f3b825a320d3aa53e7405675cd558323ab0">
 				<message>#352: アイコン+文字列のスタイル整理</message>
 			</note>
-			<note rev="">
+			<note rev="c30b577b7ccd0d1974f0c63d190b48cca9a92d1e">
 				<message>#357: クリップボードの最上位移動アイテムの作成タイムスタンプを更新するのおかしいっすよね</message>
 				<comments>
 					<comment>今までは作成日時を元に並び替えてたけどソート用の項目で並び替えるようにしたので作成日のタイムスタンプは保たれるようになりました</comment>
 				</comments>
 			</note>
-			<note rev="">
+			<note rev="3dfa48c8831e4f3434d89dde92dd09545041b038">
 				<message>#361: クリップボード重複判定で範囲指定した場合になんか変</message>
 				<comments>
 					<comment>実装見ると変ではなかったけど直観的ではなかったので動作変更</comment>
@@ -124,25 +115,21 @@
 					<comment>でもまぁ#363に食われるだろうけど</comment>
 				</comments>
 			</note>
-			<note rev="">
+			<note rev="43183959f9c4e3e127ed9272117770b0095e9091">
 				<message>#363: クリップボード重複判定の初期値を全件対象にする</message>
 				<comments>
-					<comment>本バージョンへアップデートした際に重複判定件数が 50(0.70.0以下の標準値) であれば -1(全件) に変換されます</comment>
+					<comment>本バージョンへアップデートした際に重複判定件数が 50(0.70.0以下の規定値) であれば -1(全件) に変換されます</comment>
+					<comment>0.71.0から -1 が規定値になります</comment>
 				</comments>
-			</note>
-			<note rev="">
-				<message></message>
 			</note>
 		</group>
 		<group type="developer" dummy="==================================================================">
-			<note rev="">
+			<note rev="ad28f66eeea13df30319465b6dff233c36340067">
 				<message>アップデートコンソールの最後に少しだけ待ち時間(5秒)を設定</message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
+				<comments>
+					<comment>有効になるのは次回アップデート時です</comment>
+					<comment>これと言ってユーザー側に意味はありません</comment>
+				</comments>
 			</note>
 		</group>
 	</log>
