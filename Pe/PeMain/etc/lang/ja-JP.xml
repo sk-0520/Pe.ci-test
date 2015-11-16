@@ -94,7 +94,9 @@
 		<Item Id="tasktray/system-env/window/load" Word="保存しているウィンドウ状態を復帰(_L)" />
 		<Item Id="tasktray/system-env/window/timer" Word="タイマー保存(_T)" />
 		<Item Id="tasktray/system-env/window/system" Word="システム変更(_Y)" />
-		<Item Id="tasktray/about" Word="@[APPLICATION:NAME] 情報(_A)" />
+		<Item Id="tasktray/info" Word="ヘルプ(_H)" />
+		<Item Id="tasktray/info/about" Word="@[APPLICATION:NAME] 情報(_A)" />
+		<Item Id="tasktray/info/feedback" Word="フィードバック(_F)" />
 		<Item Id="tasktray/exit" Word="終了(_X)" />
 
 		<Item Id="notify/info/command/show/title"      Word="コマンドウィンドウ" />
@@ -501,6 +503,10 @@
 		<Item Id="template/keyword/program/APPLICATION:VERSION-NUMBER"  Word="@[APPLICATION:NAME] バージョン番号" />
 		<Item Id="template/keyword/program/APPLICATION:VERSION-REVISION"  Word="@[APPLICATION:NAME] リビジョン" />
 
+		<!-- HTMLViewer -->
+		<Item Id="html-viewer/feedback/title"  Word="ｆｅｅｄｂａｃｋ" />
+
+		
 		<!-- enum -->
 		
 		<Item Id="enum/ModifierKeys" Word="修飾キー" />

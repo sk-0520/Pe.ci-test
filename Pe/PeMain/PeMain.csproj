@@ -175,8 +175,13 @@
     <Content Include="doc\license\Pe.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="etc\html\feedback.html" />
+    <Content Include="etc\html\feedback.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="etc\script\changelog.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="etc\script\jquery.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="etc\script\Updater\UpdaterScript.cs">
@@ -184,6 +189,7 @@
     </Content>
     <Compile Include="LanguageKey.cs" />
     <Compile Include="Logic\Property\FontModelProperty.cs" />
+    <Compile Include="Logic\Utility\HtmlViewerUtility.cs" />
     <Compile Include="Logic\Utility\ImageUtility.cs" />
     <Compile Include="Logic\Utility\LauncherToolbarUtility.cs" />
     <Compile Include="Logic\Utility\NoteUtility.cs" />

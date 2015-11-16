@@ -56,8 +56,9 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
     using Hardcodet.Wpf.TaskbarNotification;
     using Microsoft.Win32;
     using System.Runtime;
-    using Data;
+    using ContentTypeTextNet.Pe.PeMain.Data;
     using System.Runtime.InteropServices;
+    using ContentTypeTextNet.Pe.PeMain.Data.Model;
 
     public sealed class MainWorkerViewModel: ViewModelBase, IAppSender, IClipboardWatcher, IHavingView<TaskbarIcon>, IHavingCommonData
     {
@@ -395,6 +396,26 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                                 CheckUpdateProcessWait(true);
                             }
                         });
+                    }
+                );
+
+                return result;
+            }
+        }
+
+        public ICommand FeedbackCommand
+        {
+            get
+            {
+                var result = CreateCommand(
+                    o => {
+                        var model = new HtmlViewerModel() {
+                            HtmlSource = File.ReadAllText(Path.Combine(Constants.ApplicationHtmlDirectoryPath, Constants.HtmlFeedbackFileName)),
+                        };
+                        model.ReplaceKeys["URI-FEEDBACK"] = Constants.UriFeedback;
+
+                        var window = SendCreateWindow(WindowKind.HtmlViewer, model, null);
+                        window.ShowDialog();
                     }
                 );
 
@@ -1669,6 +1690,12 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                     }
                     break;
 
+                case WindowKind.HtmlViewer:
+                    {
+                        window = new HtmlViewerWindow();
+                        window.SetCommonData(CommonData, extensionData);
+                    }
+                    break;
 
                 default:
                     throw new NotImplementedException();

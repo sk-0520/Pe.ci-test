@@ -18,21 +18,97 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
+    using System.Windows;
+    using System.Windows.Controls;
     using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
     using ContentTypeTextNet.Pe.PeMain.Data.Model;
     using ContentTypeTextNet.Pe.PeMain.IF;
+    using Logic.Utility;
     using ContentTypeTextNet.Pe.PeMain.View;
+    using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 
     public class HtmlViewerViewModel: HavingViewSingleModelWrapperViewModelBase<HtmlViewerModel, HtmlViewerWindow>, IHavingAppNonProcess
     {
+        #region variable
+
+        string _windowTitle;
+
+        #endregion
+
         public HtmlViewerViewModel(HtmlViewerModel model, HtmlViewerWindow view, IAppNonProcess appNonProcess)
             : base(model, view)
         {
             AppNonProcess = appNonProcess;
+            WindowTitle = AppNonProcess.Language[Model.TitleLanguageKey];
+            View.WindowStartupLocation = Model.WindowStartupLocation;
         }
+
+        #region property
+
+        public string WindowTitle {
+            get { return this._windowTitle; }
+            set { SetVariableValue(ref this._windowTitle, value); }
+        }
+
+        public double WindowWidth
+        {
+            get { return Model.WindowWidth; }
+            set { SetModelValue(value); }
+        }
+
+        public double WindowHeight
+        {
+            get { return Model.WindowHeight; }
+            set { SetModelValue(value); }
+        }
+
+        public bool Topmost
+        {
+            get { return Model.Topmost; }
+            set { SetModelValue(value); }
+        }
+
+        public WindowStyle WindowStyle
+        {
+            get { return Model.WindowStyle; }
+            set { SetModelValue(value); }
+        }
+
+        public WindowState WindowState
+        {
+            get { return Model.WindowState; }
+            set { SetModelValue(value); }
+        }
+
+        public bool IgnoreScriptError
+        {
+            get { return Model.IgnoreScriptError; }
+        }
+
+        #endregion
+
+        #region function
+
+        public void InitializeHtmlViewer(WebBrowser browser)
+        {
+            var map = HtmlViewerUtility.CreateBaseDictionary(AppNonProcess.Language);
+            foreach(var pair in Model.ReplaceKeys) {
+                map[pair.Key] = pair.Value;
+            }
+            var timestamp = DateTime.Now;
+
+            // TODO: 二重処理何とかならんか
+            var replacedLanguage = Model.HtmlSource.ReplaceRange("@{", "}", key => AppNonProcess.Language.GetReplacedWordText(key, timestamp, null));
+            var replacedSysyem = AppNonProcess.Language.GetReplacedWordText(replacedLanguage, timestamp, map);
+            
+            browser.NavigateToString(replacedSysyem);
+        }
+
+        #endregion
 
         #region IHavingAppNonProcess
 

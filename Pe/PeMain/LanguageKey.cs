@@ -50,8 +50,7 @@ namespace ContentTypeTextNet.Pe.PeMain
 
         #endregion
 
-        // 言語ファイルの置き換え文字列
-        #region replace
+        #region 言語ファイルの置き換え文字列
 
         public const string acceptWeb = "ACCEPT-WEB";
         public const string acceptDevelopment = "ACCEPT-DEVELOPMENT";

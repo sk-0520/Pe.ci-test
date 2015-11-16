@@ -1,0 +1,129 @@
+﻿<!DOCTYPE html>
+<html lang="@[LANG]" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="utf-8" />
+	<title>@[APPLICATION-NAME]: @{html-viewer/feedback/title}</title>
+	@[HTML:STYLE-COMMON]
+	@[HTML:SCRIPT-JQUERY]
+</head>
+<body>
+	<h1>@{html-viewer/feedback/title}</h1>
+	<form action="@[URI-FEEDBACK]" method="post">
+		<div style="display: none">
+			<input type="hidden" name="webapp-key" value="FEEDBACK" />
+		</div>
+		<ul>
+			<li>
+				<h2><!--操作性-->@{FEEDBACK-OPERABILITY}</h2>
+				<div>
+					<ul>
+						<li>@{FEEDBACK-OPERABILITY-GOOD}</li>
+						<li><input type="radio" name="input-operability" value="5" /></li>
+						<li><input type="radio" name="input-operability" value="4" /></li>
+						<li><input type="radio" name="input-operability" value="3" /></li>
+						<li><input type="radio" name="input-operability" value="2" /></li>
+						<li><input type="radio" name="input-operability" value="1" /></li>
+						<li>@{FEEDBACK-OPERABILITY-BAD}</li>
+					</ul>
+				</div>
+			</li>
+			<li>
+				<h2><!--機能性-->@{FEEDBACK-FUNCTIONALITY}</h2>
+				<div>
+					<ul>
+						<li>@{FEEDBACK-FUNCTIONALITY-GOOD}</li>
+						<li><input type="radio" name="input-functionality" value="5" /></li>
+						<li><input type="radio" name="input-functionality" value="4" /></li>
+						<li><input type="radio" name="input-functionality" value="3" /></li>
+						<li><input type="radio" name="input-functionality" value="2" /></li>
+						<li><input type="radio" name="input-functionality" value="1" /></li>
+						<li>@{FEEDBACK-FUNCTIONALITY-BAD}</li>
+					</ul>
+				</div>
+			</li>
+			<li>
+				<h2><!--機能要望-->@{FEEDBACK-FUNCTION}</h2>
+				<div>
+					<textarea name="input-function"></textarea>
+				</div>
+			</li>
+			<li>
+				<h2><!--不具合報告-->@{FEEDBACK-FAILURE}</h2>
+				<div>
+					<textarea name="input-failure"></textarea>
+				</div>
+			</li>
+			<li>
+				<h2><!--その他-->@{FEEDBACK-OTHERS}</h2>
+				<div>
+					<textarea name="input-others"></textarea>
+				</div>
+			</li>
+			<li>
+				<h2><!--自動入力-->@{FEEDBACK-AUTO}</h2>
+				<div>
+					<table>
+						<thead>
+							<tr>
+								<th>@{FEEDBACK-AUTO-KEY}</th>
+								<th>@{FEEDBACK-AUTO-VALUE}</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td></td>
+								<td><input type="text" name="version" value="@[APPLICATION-VERSION]" /></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td><input type="text" name="language" readonly="readonly" value="@[APPLICATION-LANGUAGE]" /></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td><input type="text" name="os" readonly="readonly" value="@[USER-OS]" /></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td><input type="text" name="platform" readonly="readonly" value="@[USER-PLATFORM]" /></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td><input type="text" name="process" readonly="readonly" value="@[USER-PROCESS]" /></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td><input type="text" name="setting-dir" readonly="readonly" value="@[USER-SETTING-DIR]" /></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td><input type="text" name="setting-count-clipboard" readonly="readonly" value="@[USER-SETTING-COUNT-CLIPBOARD]" /></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td><input type="text" name="setting-count-template" readonly="readonly" value="@[USER-SETTING-COUNT-TEMPLATE]" /></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td><input type="text" name="setting-count-note" readonly="readonly" value="@[USER-SETTING-COUNT-NOTE]" /></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</li>
+			<li>
+				<h2><!--送信前-->@{FEEDBACK-CONFIRM}</h2>
+				<ul>
+					<li><input type="checkbox" name="input-confirm-public" /></li>
+					<li><input type="text" name="input-confirm-mail" /></li>
+				</ul>
+			</li>
+		</ul>
+		<p>
+			@{FEEDBACK-WARNIN}
+		</p>
+		<p>
+			<input type="submit" value="@{FEEDBACK-SUBMIT}" />
+		</p>
+	</form>
+</body>
+</html>

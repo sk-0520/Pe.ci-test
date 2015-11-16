@@ -28,7 +28,10 @@ namespace ContentTypeTextNet.Pe.PeMain.View
     using System.Windows.Input;
     using System.Windows.Media;
     using System.Windows.Media.Imaging;
+    using System.Windows.Navigation;
     using System.Windows.Shapes;
+    using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility.UI;
+    using ContentTypeTextNet.Pe.PeMain.Data.Model;
     using ContentTypeTextNet.Pe.PeMain.View.Parts.Window;
     using ContentTypeTextNet.Pe.PeMain.ViewModel;
 
@@ -41,11 +44,12 @@ namespace ContentTypeTextNet.Pe.PeMain.View
         {
             InitializeComponent();
         }
+
         #region ViewModelCommonDataWindow
 
         protected override void CreateViewModel()
         {
-            //ViewModel = new HomeViewModel(this, CommonData.LauncherGroupSetting, CommonData.LauncherItemSetting, CommonData.NonProcess);
+            ViewModel = new HtmlViewerViewModel((HtmlViewerModel)ExtensionData, this, CommonData.NonProcess);
         }
 
         protected override void ApplyViewModel()
@@ -53,8 +57,29 @@ namespace ContentTypeTextNet.Pe.PeMain.View
             base.ApplyViewModel();
 
             DataContext = ViewModel;
+
+            ViewModel.InitializeHtmlViewer(this.webDocument);
+        }
+
+        protected override void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            base.OnLoaded(sender, e);
+
+                this.webDocument.Navigated += WebHtml_Navigated;
+        }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            this.webDocument.Navigated -= WebHtml_Navigated;
+
+            base.OnClosed(e);
         }
 
         #endregion
+
+        private void WebHtml_Navigated(object sender, NavigationEventArgs e)
+        {
+            WebBrowserUtility.SetSilent(this.webDocument, ViewModel.IgnoreScriptError);
+        }
     }
 }

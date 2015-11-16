@@ -21,7 +21,7 @@
         /*
         このソースは自動生成のため Constants-generator.tt を編集すること。
 
-        生成元ConstantsPropertyフィールド数: 9
+        生成元ConstantsPropertyフィールド数: 12
         生成元ConstantsRangeフィールド数: 22
         */
 
@@ -77,6 +77,39 @@
             get
             {
                 return applicationName;
+            }
+        }
+
+        #endregion
+        #region styleCommonFileName
+        
+        public static String StyleCommonFileName
+        {
+            get
+            {
+                return styleCommonFileName;
+            }
+        }
+
+        #endregion
+        #region scriptJQueryFileName
+        
+        public static String ScriptJQueryFileName
+        {
+            get
+            {
+                return scriptJQueryFileName;
+            }
+        }
+
+        #endregion
+        #region htmlFeedbackFileName
+        
+        public static String HtmlFeedbackFileName
+        {
+            get
+            {
+                return htmlFeedbackFileName;
             }
         }
 
