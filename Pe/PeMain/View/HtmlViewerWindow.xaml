@@ -1,0 +1,15 @@
+﻿<AW:ViewModelCommonDataWindow  
+  x:Class="ContentTypeTextNet.Pe.PeMain.View.HtmlViewerWindow"
+ x:TypeArguments="AVM:HtmlViewerViewModel"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:AVM="clr-namespace:ContentTypeTextNet.Pe.PeMain.ViewModel"
+   xmlns:AW="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Window"
+  
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="HtmlViewerWindow" Height="300" Width="300">
+    <Grid>
+        
+    </Grid>
+</AW:ViewModelCommonDataWindow>
