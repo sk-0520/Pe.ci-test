@@ -504,7 +504,23 @@
 		<Item Id="template/keyword/program/APPLICATION:VERSION-REVISION"  Word="@[APPLICATION:NAME] リビジョン" />
 
 		<!-- HTMLViewer -->
-		<Item Id="html-viewer/feedback/title"  Word="ｆｅｅｄｂａｃｋ" />
+		<Item Id="html-viewer/feedback/title"               Word="ｆｅｅｄｂａｃｋ" />
+		<Item Id="html-viewer/feedback/operability"         Word="ｆｅｅｄｂａｃｋ" />
+		<Item Id="html-viewer/feedback/operability/good"    Word="ｆｅｅｄｂａｃｋ" />
+		<Item Id="html-viewer/feedback/operability/bad"     Word="ｆｅｅｄｂａｃｋ" />
+		<Item Id="html-viewer/feedback/functionality"       Word="ｆｅｅｄｂａｃｋ" />
+		<Item Id="html-viewer/feedback/functionality/good"  Word="ｆｅｅｄｂａｃｋ" />
+		<Item Id="html-viewer/feedback/functionality/bad"   Word="ｆｅｅｄｂａｃｋ" />
+		<Item Id="html-viewer/feedback/function"            Word="ｆｅｅｄｂａｃｋ" />
+		<Item Id="html-viewer/feedback/failure"             Word="ｆｅｅｄｂａｃｋ" />
+		<Item Id="html-viewer/feedback/others"              Word="ｆｅｅｄｂａｃｋ" />
+		<Item Id="html-viewer/feedback/auto"                Word="ｆｅｅｄｂａｃｋ" />
+		<Item Id="html-viewer/feedback/auto/key"            Word="ｆｅｅｄｂａｃｋ" />
+		<Item Id="html-viewer/feedback/auto/value"          Word="ｆｅｅｄｂａｃｋ" />
+		<Item Id="html-viewer/feedback/auto/key/"  Word="ｆｅｅｄｂａｃｋ" />
+		<Item Id="html-viewer/feedback/auto/key/"  Word="ｆｅｅｄｂａｃｋ" />
+		<Item Id="html-viewer/feedback/auto/key/"  Word="ｆｅｅｄｂａｃｋ" />
+		<Item Id="html-viewer/feedback/auto/key/"  Word="ｆｅｅｄｂａｃｋ" />
 
 		
 		<!-- enum -->

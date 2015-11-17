@@ -5,90 +5,119 @@
 	<title>@[APPLICATION-NAME]: @{html-viewer/feedback/title}</title>
 	@[HTML:STYLE-COMMON]
 	@[HTML:SCRIPT-JQUERY]
+	<script>
+		//$(function()
+		//{
+		//	$('form').submit(function(e) {
+		//		e.preventDefault();
+		//		var $f = $(this);
+		//		alert($f.prop('action'));
+		//		alert($f.prop('method'));
+		//		$.ajax({
+		//			url: $f.prop('action'),
+		//			type: $f.prop('method'),
+		//			data: $f.serialize(),
+		//			timeout: 10000,
+		//			dataType: 'json'
+		//		})
+		//		.done(function(data) {
+		//			// 通信が成功したときの処理
+		//			alert("1"+data);
+		//		})
+		//		.fail(function(data) {
+		//			// 通信が失敗したときの処理
+		//			alert("2" + data);
+		//		})
+		//		.always(function(data) {
+		//			// 通信が完了したとき
+		//		});
+		//	});
+		//});
+	</script>
 </head>
 <body>
 	<h1>@{html-viewer/feedback/title}</h1>
-	<form action="@[URI-FEEDBACK]" method="post">
+	<form id="form" action="@[URI-FEEDBACK]" method="post">
 		<div style="display: none">
-			<input type="hidden" name="webapp-key" value="FEEDBACK" />
+			<input type="hidden" name="webapp_key" value="FEEDBACK" />
 		</div>
 		<ul>
 			<li>
-				<h2><!--操作性-->@{FEEDBACK-OPERABILITY}</h2>
+				<h2><!--操作性-->@{html-viewer/feedback/operability}</h2>
 				<div>
 					<ul>
-						<li>@{FEEDBACK-OPERABILITY-GOOD}</li>
+						<li>@{html-viewer/feedback/operability/good}</li>
 						<li><input type="radio" name="input-operability" value="5" /></li>
 						<li><input type="radio" name="input-operability" value="4" /></li>
 						<li><input type="radio" name="input-operability" value="3" /></li>
 						<li><input type="radio" name="input-operability" value="2" /></li>
 						<li><input type="radio" name="input-operability" value="1" /></li>
-						<li>@{FEEDBACK-OPERABILITY-BAD}</li>
+						<li>@{html-viewer/feedback/operability/bad}</li>
 					</ul>
 				</div>
 			</li>
 			<li>
-				<h2><!--機能性-->@{FEEDBACK-FUNCTIONALITY}</h2>
+				<h2><!--機能性-->@{html-viewer/feedback/functionality}</h2>
 				<div>
 					<ul>
-						<li>@{FEEDBACK-FUNCTIONALITY-GOOD}</li>
+						<li>@{html-viewer/feedback/functionality/good}</li>
 						<li><input type="radio" name="input-functionality" value="5" /></li>
 						<li><input type="radio" name="input-functionality" value="4" /></li>
 						<li><input type="radio" name="input-functionality" value="3" /></li>
 						<li><input type="radio" name="input-functionality" value="2" /></li>
 						<li><input type="radio" name="input-functionality" value="1" /></li>
-						<li>@{FEEDBACK-FUNCTIONALITY-BAD}</li>
+						<li>@{html-viewer/feedback/functionality/bad}</li>
 					</ul>
 				</div>
 			</li>
 			<li>
-				<h2><!--機能要望-->@{FEEDBACK-FUNCTION}</h2>
+				<h2><!--機能要望-->@{html-viewer/feedback/function}</h2>
 				<div>
 					<textarea name="input-function"></textarea>
 				</div>
 			</li>
 			<li>
-				<h2><!--不具合報告-->@{FEEDBACK-FAILURE}</h2>
+				<h2><!--不具合報告-->@{html-viewer/feedback/failure}</h2>
 				<div>
 					<textarea name="input-failure"></textarea>
 				</div>
 			</li>
 			<li>
-				<h2><!--その他-->@{FEEDBACK-OTHERS}</h2>
+				<h2><!--その他-->@{html-viewer/feedback/others}</h2>
 				<div>
 					<textarea name="input-others"></textarea>
 				</div>
 			</li>
 			<li>
-				<h2><!--自動入力-->@{FEEDBACK-AUTO}</h2>
+				<h2><!--自動入力-->@{html-viewer/feedback/auto}</h2>
 				<div>
 					<table>
 						<thead>
 							<tr>
-								<th>@{FEEDBACK-AUTO-KEY}</th>
-								<th>@{FEEDBACK-AUTO-VALUE}</th>
+								<th>@{html-viewer/feedback/auto/key}</th>
+								<th>@{html-viewer/feedback/auto/value}</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr>
 								<td></td>
-								<td><input type="text" name="version" value="@[APPLICATION-VERSION]" /></td>
+								<td><input type="text" name="auto-version" value="@[APPLICATION-VERSION]" /></td>
 							</tr>
 							<tr>
 								<td></td>
-								<td><input type="text" name="language" readonly="readonly" value="@[APPLICATION-LANGUAGE]" /></td>
+								<td><input type="text" name="auto-language" readonly="readonly" value="@[APPLICATION-LANGUAGE]" /></td>
 							</tr>
 							<tr>
 								<td></td>
-								<td><input type="text" name="os" readonly="readonly" value="@[USER-OS]" /></td>
+								<td><input type="text" name="auto-os" readonly="readonly" value="@[USER-OS]" /></td>
 							</tr>
 							<tr>
 								<td></td>
-								<td><input type="text" name="platform" readonly="readonly" value="@[USER-PLATFORM]" /></td>
+								<td><input type="text" name="auto-platform" readonly="readonly" value="@[USER-PLATFORM]" /></td>
 							</tr>
 							<tr>
 								<td></td>
-								<td><input type="text" name="process" readonly="readonly" value="@[USER-PROCESS]" /></td>
+								<td><input type="text" name="auto-process" readonly="readonly" value="@[USER-PROCESS]" /></td>
 							</tr>
 							<tr>
 								<td></td>
@@ -113,8 +142,9 @@
 			<li>
 				<h2><!--送信前-->@{FEEDBACK-CONFIRM}</h2>
 				<ul>
-					<li><input type="checkbox" name="input-confirm-public" /></li>
-					<li><input type="text" name="input-confirm-mail" /></li>
+					<li><input type="checkbox" name="webapp-confirm" /></li>
+					<li><input type="text" name="input-user-mail" /></li>
+					<li><input type="text" name="input-user-name" /></li>
 				</ul>
 			</li>
 		</ul>
