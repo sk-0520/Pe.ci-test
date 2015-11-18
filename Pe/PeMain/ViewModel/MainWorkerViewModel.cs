@@ -742,6 +742,11 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                         SaveSetting();
                     }
                 } else {
+                    var ieVersion = SystemEnvironmentUtility.GetInternetExplorerVersion();
+                    CommonData.Logger.Information("IE version: " + ieVersion);
+                    SystemEnvironmentUtility.SetUsingBrowserVersionForExecutingAssembly(ieVersion);
+                    Application.Current.Exit += Current_Exit;
+
                     // 前回バージョンが色々必要なのでインクリメント前の生情報を保持しておく。
                     var previousVersion = (Version)CommonData.MainSetting.RunningInformation.LastExecuteVersion;
                     ResetCulture(CommonData.NonProcess);
@@ -2357,5 +2362,10 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             SaveIndex(timer.IndexKind);
         }
 
+        private void Current_Exit(object sender, ExitEventArgs e)
+        {
+            Application.Current.Exit -= Current_Exit;
+            SystemEnvironmentUtility.ResetUsingBrowserVersionForExecutingAssembly();
+        }
     }
 }
