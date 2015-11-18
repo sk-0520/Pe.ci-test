@@ -89,6 +89,11 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             get { return Model.IgnoreScriptError; }
         }
 
+        public bool UsingSystemContextMenu
+        {
+            get { return Model.UsingSystemContextMenu; }
+        }
+
         #endregion
 
         #region function

@@ -6,40 +6,53 @@
 	@[HTML:STYLE-COMMON]
 	@[HTML:SCRIPT-JQUERY]
 	<script>
-		//$(function()
-		//{
-		//	$('form').submit(function(e) {
-		//		e.preventDefault();
-		//		var $f = $(this);
-		//		alert($f.prop('action'));
-		//		alert($f.prop('method'));
-		//		$.ajax({
-		//			url: $f.prop('action'),
-		//			type: $f.prop('method'),
-		//			data: $f.serialize(),
-		//			timeout: 10000,
-		//			dataType: 'json'
-		//		})
-		//		.done(function(data) {
-		//			// 通信が成功したときの処理
-		//			alert("1"+data);
-		//		})
-		//		.fail(function(data) {
-		//			// 通信が失敗したときの処理
-		//			alert("2" + data);
-		//		})
-		//		.always(function(data) {
-		//			// 通信が完了したとき
-		//		});
-		//	});
-		//});
+	$.ajaxSetup({ ifModified: true });
+		$.support.cors = true;
+		
+		$(function() {
+			$('#form').submit(function(e) {
+				if(!validateInput()) {
+					return false;
+				}
+				e.preventDefault();
+				var $form = $(this);
+				$.ajax({
+					url: $form.prop('action'),
+					type: $form.prop('method'),
+					data: $form.serialize(),
+					cache: false,
+					timeout: 10000,
+					scriptCharset: 'utf-8',
+					dataType: 'json'
+				})
+				.done(submitSuccess)
+				.fail(submitFailure)
+			});
+		});
+
+		function validateInput()
+		{
+			return true;
+		}
+
+		function submitSuccess(json)
+		{
+			alert("1"+json.message)
+		}
+
+		function submitFailure(json)
+		{
+			alert("2"+json)
+		}
+		
 	</script>
 </head>
 <body>
 	<h1>@{html-viewer/feedback/title}</h1>
+	<div id="message"></div>
 	<form id="form" action="@[URI-FEEDBACK]" method="post">
 		<div style="display: none">
-			<input type="hidden" name="webapp_key" value="FEEDBACK" />
+			<input type="hidden" name="app-key" value="FEEDBACK" />
 		</div>
 		<ul>
 			<li>
@@ -68,6 +81,17 @@
 						<li><input type="radio" name="input-functionality" value="1" /></li>
 						<li>@{html-viewer/feedback/functionality/bad}</li>
 					</ul>
+				</div>
+			</li>
+			<li>
+				<h2></h2>
+				<div>
+					<select name="input-main">
+						<option value=""></option>
+						<option value="">ランチャー</option>
+						<option value=""></option>
+						<option value=""></option>
+					</select>
 				</div>
 			</li>
 			<li>
@@ -101,11 +125,15 @@
 						<tbody>
 							<tr>
 								<td></td>
+								<td><input type="text" name="auto-id" value="@[USER-SETTING-USER-ID]" /></td>
+							</tr>
+							<tr>
+								<td></td>
 								<td><input type="text" name="auto-version" value="@[APPLICATION-VERSION]" /></td>
 							</tr>
 							<tr>
 								<td></td>
-								<td><input type="text" name="auto-language" readonly="readonly" value="@[APPLICATION-LANGUAGE]" /></td>
+								<td><input type="text" name="auto-build" value="@[APPLICATION-BUILD]" /></td>
 							</tr>
 							<tr>
 								<td></td>
@@ -113,11 +141,35 @@
 							</tr>
 							<tr>
 								<td></td>
+								<td><input type="text" name="auto-clr" readonly="readonly" value="@[APPLICATION-LANGUAGE]" /></td>
+							</tr>
+							<tr>
+								<td></td>
 								<td><input type="text" name="auto-platform" readonly="readonly" value="@[USER-PLATFORM]" /></td>
 							</tr>
 							<tr>
 								<td></td>
-								<td><input type="text" name="auto-process" readonly="readonly" value="@[USER-PROCESS]" /></td>
+								<td><input type="text" name="auto-cpu-sys" readonly="readonly" value="@[USER-PLATFORM]" /></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td><input type="text" name="auto-cpu-app" readonly="readonly" value="@[USER-PLATFORM]" /></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td><input type="text" name="auto-memory" readonly="readonly" value="@[USER-PROCESS]" /></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td><input type="text" name="auto-display-count" readonly="readonly" value="@[USER-PROCESS]" /></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td><input type="text" name="auto-lang-sys" readonly="readonly" value="@[APPLICATION-LANGUAGE]" /></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td><input type="text" name="auto-lang-app" readonly="readonly" value="@[APPLICATION-LANGUAGE]" /></td>
 							</tr>
 							<tr>
 								<td></td>
@@ -142,7 +194,7 @@
 			<li>
 				<h2><!--送信前-->@{FEEDBACK-CONFIRM}</h2>
 				<ul>
-					<li><input type="checkbox" name="webapp-confirm" /></li>
+					<li><input type="checkbox" name="app-confirm" /></li>
 					<li><input type="text" name="input-user-mail" /></li>
 					<li><input type="text" name="input-user-name" /></li>
 				</ul>
@@ -152,7 +204,7 @@
 			@{FEEDBACK-WARNIN}
 		</p>
 		<p>
-			<input type="submit" value="@{FEEDBACK-SUBMIT}" />
+			<input id="submit" type="submit" value="@{FEEDBACK-SUBMIT}" />
 		</p>
 	</form>
 </body>

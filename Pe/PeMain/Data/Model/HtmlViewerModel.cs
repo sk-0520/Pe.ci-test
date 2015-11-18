@@ -50,6 +50,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Data.Model
         public WindowState WindowState { get; set; }
 
         public bool IgnoreScriptError { get; set; }
+        public bool UsingSystemContextMenu { get; set; }
 
         public string HtmlSource { get; set; }
 
