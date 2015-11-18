@@ -21,9 +21,11 @@
 					type: $form.prop('method'),
 					data: $form.serialize(),
 					cache: false,
+					crossDomain: true,
 					timeout: 10000,
-					scriptCharset: 'utf-8',
-					dataType: 'json'
+					//scriptCharset: 'utf-8',
+					dataType: 'json',
+					ifModified: false
 				})
 				.done(submitSuccess)
 				.fail(submitFailure)
