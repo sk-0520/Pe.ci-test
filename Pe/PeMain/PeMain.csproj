@@ -178,6 +178,9 @@
     <Content Include="etc\html\feedback.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="etc\script\autosize.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="etc\script\changelog.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -461,6 +464,9 @@
     <Compile Include="View\UpdateConfirmWindow.xaml.cs">
       <DependentUpon>UpdateConfirmWindow.xaml</DependentUpon>
     </Compile>
+    <Content Include="etc\style\feedback.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Resource Include="Resources\Image\Common\CommonLock.png" />
     <Resource Include="Resources\Image\Common\CommonOthers.png" />
     <Resource Include="Resources\Image\About\AboutComponentKindWebPage.png" />

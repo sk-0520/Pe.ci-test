@@ -1,9 +1,12 @@
 ﻿body
 {
-	font-family: "Meiryo UI";
-	
 	color: #111; 
 	background: #fff;
+}
+
+body, input, textarea {
+	font-family: Consolas, "Meiryo UI", monospace;
+
 }
 
 h1

@@ -1,0 +1,43 @@
+﻿ul.questionnaire {
+	list-style: none;
+}
+
+ul.questionnaire li.item {
+
+}
+
+ul.questionnaire li.item *.input ul.level {
+}
+
+ul.questionnaire li.item *.input ul.level li {
+	display: inline-block;
+}
+
+ul.questionnaire li.item *.input ul.level li.unset {
+	margin-right: 3em;
+}
+
+ul.questionnaire li.item *.input ul.level li.good {
+	margin-right: 1em;
+}
+
+ul.questionnaire li.item *.input ul.level li.bad {
+	margin-left: 1em;
+}
+
+ul.questionnaire li.item *.title {
+	display:inline-block;
+	width: 4.5em;
+}
+
+*.comment {
+	font-size: 90%;
+}
+
+p.warning {
+
+}
+
+
+
+

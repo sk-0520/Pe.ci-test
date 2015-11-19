@@ -504,24 +504,42 @@
 		<Item Id="template/keyword/program/APPLICATION:VERSION-REVISION"  Word="@[APPLICATION:NAME] リビジョン" />
 
 		<!-- HTMLViewer -->
-		<Item Id="html-viewer/feedback/title"               Word="ｆｅｅｄｂａｃｋ" />
-		<Item Id="html-viewer/feedback/operability"         Word="ｆｅｅｄｂａｃｋ" />
-		<Item Id="html-viewer/feedback/operability/good"    Word="ｆｅｅｄｂａｃｋ" />
-		<Item Id="html-viewer/feedback/operability/bad"     Word="ｆｅｅｄｂａｃｋ" />
-		<Item Id="html-viewer/feedback/functionality"       Word="ｆｅｅｄｂａｃｋ" />
-		<Item Id="html-viewer/feedback/functionality/good"  Word="ｆｅｅｄｂａｃｋ" />
-		<Item Id="html-viewer/feedback/functionality/bad"   Word="ｆｅｅｄｂａｃｋ" />
-		<Item Id="html-viewer/feedback/function"            Word="ｆｅｅｄｂａｃｋ" />
-		<Item Id="html-viewer/feedback/failure"             Word="ｆｅｅｄｂａｃｋ" />
-		<Item Id="html-viewer/feedback/others"              Word="ｆｅｅｄｂａｃｋ" />
-		<Item Id="html-viewer/feedback/auto"                Word="ｆｅｅｄｂａｃｋ" />
-		<Item Id="html-viewer/feedback/auto/key"            Word="ｆｅｅｄｂａｃｋ" />
-		<Item Id="html-viewer/feedback/auto/value"          Word="ｆｅｅｄｂａｃｋ" />
-		<Item Id="html-viewer/feedback/auto/key/"  Word="ｆｅｅｄｂａｃｋ" />
-		<Item Id="html-viewer/feedback/auto/key/"  Word="ｆｅｅｄｂａｃｋ" />
-		<Item Id="html-viewer/feedback/auto/key/"  Word="ｆｅｅｄｂａｃｋ" />
-		<Item Id="html-viewer/feedback/auto/key/"  Word="ｆｅｅｄｂａｃｋ" />
-
+		<!-- フィードバック -->
+		<Item Id="html-viewer/feedback"                     Word="フィードバック" />
+		<Item Id="html-viewer/feedback/message/title"       Word="フィードバック処理完了" />
+		<Item Id="html-viewer/feedback/message/success"     Word="ご協力ありがとうございます。" />
+		<Item Id="html-viewer/feedback/message/failure"     Word="入力内容に誤りがあります" />
+		<Item Id="html-viewer/feedback/message/message"     Word="入力された内容と受信した内容、処理内容は以下になります。" />
+		<Item Id="html-viewer/feedback/title"               Word="フィードバック" />
+		<Item Id="html-viewer/feedback/message"             Word="@[APPLICATION:NAME] を使用した感想や機能改善、不具合等の報告にご協力ください。" />
+		<Item Id="html-viewer/feedback/operability"         Word="操作性" />
+		<Item Id="html-viewer/feedback/operability/unset"   Word="入力しない" />
+		<Item Id="html-viewer/feedback/operability/good"    Word="良い" />
+		<Item Id="html-viewer/feedback/operability/bad"     Word="悪い" />
+		<Item Id="html-viewer/feedback/functionality"       Word="機能性" />
+		<Item Id="html-viewer/feedback/functionality/unset" Word="入力しない" />
+		<Item Id="html-viewer/feedback/functionality/good"  Word="良い" />
+		<Item Id="html-viewer/feedback/functionality/bad"   Word="悪い" />
+		<Item Id="html-viewer/feedback/main"                Word="主に使用するの機能" />
+		<Item Id="html-viewer/feedback/main/toolbar"        Word="ツールバーランチャー" />
+		<Item Id="html-viewer/feedback/main/command"        Word="コマンド型ランチャー" />
+		<Item Id="html-viewer/feedback/function"            Word="機能要望" />
+		<Item Id="html-viewer/feedback/failure"             Word="不具合" />
+		<Item Id="html-viewer/feedback/others"              Word="その他" />
+		<Item Id="html-viewer/feedback/auto"                Word="自動設定項目" />
+		<Item Id="html-viewer/feedback/auto/swicth"         Word="表示/非表示" />
+		<Item Id="html-viewer/feedback/auto/key"            Word="キー" />
+		<Item Id="html-viewer/feedback/auto/value"          Word="値" />
+		<Item Id="html-viewer/feedback/confirm"    Word="ユーザー確認項目" />
+		<Item Id="html-viewer/feedback/confirm/confirm"         Word="入力内容を公開してもよい" />
+		<Item Id="html-viewer/feedback/confirm/confirm-comment" Word="名前・メールアドレス以外のユーザーが入力した内容が対象になります。" />
+		<Item Id="html-viewer/feedback/confirm/mail"            Word="E-mail" />
+		<Item Id="html-viewer/feedback/confirm/mail-comment"    Word="" />
+		<Item Id="html-viewer/feedback/confirm/name"            Word="名前" />
+		<Item Id="html-viewer/feedback/confirm/name-comment"    Word="" />
+		<Item Id="html-viewer/feedback/warning"   Word="ちゅうい" />
+		<Item Id="html-viewer/feedback/submit"    Word="送信" />
+		
 		
 		<!-- enum -->
 		

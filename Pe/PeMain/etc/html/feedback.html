@@ -4,119 +4,102 @@
 	<meta charset="utf-8" />
 	<title>@[APPLICATION-NAME]: @{html-viewer/feedback/title}</title>
 	@[HTML:STYLE-COMMON]
-	@[HTML:SCRIPT-JQUERY]
+	@[HTML:STYLE-CUSTOM]
+	@[HTML:SCRIPT-COMMON]
+	@[HTML:SCRIPT-CUSTOM]
 	<script>
-	$.ajaxSetup({ ifModified: true });
-		$.support.cors = true;
-		
 		$(function() {
-			$('#form').submit(function(e) {
-				if(!validateInput()) {
-					return false;
-				}
+			// 自動入力工区の切り替え
+			$('#switch-auto-input').click(function(e) {
 				e.preventDefault();
-				var $form = $(this);
-				$.ajax({
-					url: $form.prop('action'),
-					type: $form.prop('method'),
-					data: $form.serialize(),
-					cache: false,
-					crossDomain: true,
-					timeout: 10000,
-					//scriptCharset: 'utf-8',
-					dataType: 'json',
-					ifModified: false
-				})
-				.done(submitSuccess)
-				.fail(submitFailure)
+				$('#auto-input').slideToggle(250);
 			});
+
+			// 自動入力項目のキー設定
+			$('#auto-input').find('tbody').find('tr').each(function() {
+				var $tr = $(this);
+				var $value = $tr.find('input[readonly]').first();
+				var name = $value.prop('name');
+				$tr.find('.auto-key').text(name);
+			});
+
+			// autoresize
+			$('textarea').autosize();
 		});
-
-		function validateInput()
-		{
-			return true;
-		}
-
-		function submitSuccess(json)
-		{
-			alert("1"+json.message)
-		}
-
-		function submitFailure(json)
-		{
-			alert("2"+json)
-		}
-		
 	</script>
 </head>
 <body>
 	<h1>@{html-viewer/feedback/title}</h1>
-	<div id="message"></div>
+	<p id="message">@{html-viewer/feedback/message}</p>
 	<form id="form" action="@[URI-FEEDBACK]" method="post">
 		<div style="display: none">
 			<input type="hidden" name="app-key" value="FEEDBACK" />
+			<input type="hidden" name="msg-title"   value="@{html-viewer/feedback/message/title}" />
+			<input type="hidden" name="msg-success" value="@{html-viewer/feedback/message/success}" />
+			<input type="hidden" name="msg-failure" value="@{html-viewer/feedback/message/failure}" />
+			<input type="hidden" name="msg-message" value="@{html-viewer/feedback/message/message}" />
 		</div>
-		<ul>
-			<li>
-				<h2><!--操作性-->@{html-viewer/feedback/operability}</h2>
-				<div>
-					<ul>
-						<li>@{html-viewer/feedback/operability/good}</li>
+		<ul class="questionnaire">
+			<li class="item">
+				<p><!--操作性-->@{html-viewer/feedback/operability}</p>
+				<div class="input">
+					<ul class="level">
+						<li class="unset"><input type="radio" name="input-operability" value="" />@{html-viewer/feedback/operability/unset}</li>
+						<li class="good">@{html-viewer/feedback/operability/good}</li>
 						<li><input type="radio" name="input-operability" value="5" /></li>
 						<li><input type="radio" name="input-operability" value="4" /></li>
 						<li><input type="radio" name="input-operability" value="3" /></li>
 						<li><input type="radio" name="input-operability" value="2" /></li>
 						<li><input type="radio" name="input-operability" value="1" /></li>
-						<li>@{html-viewer/feedback/operability/bad}</li>
+						<li class="bad">@{html-viewer/feedback/operability/bad}</li>
 					</ul>
 				</div>
 			</li>
-			<li>
-				<h2><!--機能性-->@{html-viewer/feedback/functionality}</h2>
-				<div>
-					<ul>
-						<li>@{html-viewer/feedback/functionality/good}</li>
+			<li class="item">
+				<p><!--機能性-->@{html-viewer/feedback/functionality}</p>
+				<div class="input">
+					<ul class="level">
+						<li class="unset"><input type="radio" name="input-functionality" value="" />@{html-viewer/feedback/functionality/unset}</li>
+						<li class="good">@{html-viewer/feedback/functionality/good}</li>
 						<li><input type="radio" name="input-functionality" value="5" /></li>
 						<li><input type="radio" name="input-functionality" value="4" /></li>
 						<li><input type="radio" name="input-functionality" value="3" /></li>
 						<li><input type="radio" name="input-functionality" value="2" /></li>
 						<li><input type="radio" name="input-functionality" value="1" /></li>
-						<li>@{html-viewer/feedback/functionality/bad}</li>
+						<li class="bad">@{html-viewer/feedback/functionality/bad}</li>
 					</ul>
 				</div>
 			</li>
-			<li>
-				<h2></h2>
-				<div>
-					<select name="input-main">
-						<option value=""></option>
-						<option value="">ランチャー</option>
-						<option value=""></option>
-						<option value=""></option>
-					</select>
+			<li class="item">
+				<p><!--主に使用するの機能-->@{html-viewer/feedback/main}</p>
+				<div class="input">
+					<ul>
+						<li><input name="input-main" type="checkbox" value="10" />@{html-viewer/feedback/main/toolbar}</li>
+						<li><input name="input-main" type="checkbox" value="20" />@{html-viewer/feedback/main/command}</li>
+					</ul>
 				</div>
 			</li>
-			<li>
-				<h2><!--機能要望-->@{html-viewer/feedback/function}</h2>
-				<div>
+			<li class="item">
+				<p><!--機能要望-->@{html-viewer/feedback/function}</p>
+				<div class="input">
 					<textarea name="input-function"></textarea>
 				</div>
 			</li>
-			<li>
-				<h2><!--不具合報告-->@{html-viewer/feedback/failure}</h2>
-				<div>
+			<li class="item">
+				<p><!--不具合報告-->@{html-viewer/feedback/failure}</p>
+				<div class="input">
 					<textarea name="input-failure"></textarea>
 				</div>
 			</li>
-			<li>
-				<h2><!--その他-->@{html-viewer/feedback/others}</h2>
-				<div>
+			<li class="item">
+				<p><!--その他-->@{html-viewer/feedback/others}</p>
+				<div class="input">
 					<textarea name="input-others"></textarea>
 				</div>
 			</li>
-			<li>
-				<h2><!--自動入力-->@{html-viewer/feedback/auto}</h2>
-				<div>
+			<li class="item">
+				<p><!--自動入力-->@{html-viewer/feedback/auto}(<button id="switch-auto-input">@{html-viewer/feedback/auto/swicth}</button>)</p>
+				<div id="auto-input" class="input" style="display: none;">
 					<table>
 						<thead>
 							<tr>
@@ -126,87 +109,96 @@
 						</thead>
 						<tbody>
 							<tr>
-								<td></td>
-								<td><input type="text" name="auto-id" value="@[USER-SETTING-USER-ID]" /></td>
+								<td class="auto-key"></td>
+								<td><input type="text" name="auto-id" readonly="readonly" value="@[USER-SETTING-USER-ID]" /></td>
 							</tr>
 							<tr>
-								<td></td>
-								<td><input type="text" name="auto-version" value="@[APPLICATION-VERSION]" /></td>
+								<td class="auto-key"></td>
+								<td><input type="text" name="auto-version" readonly="readonly" value="@[APPLICATION-VERSION]" /></td>
 							</tr>
 							<tr>
-								<td></td>
-								<td><input type="text" name="auto-build" value="@[APPLICATION-BUILD]" /></td>
+								<td class="auto-key"></td>
+								<td><input type="text" name="auto-build" readonly="readonly" value="@[APPLICATION-BUILD]" /></td>
 							</tr>
 							<tr>
-								<td></td>
+								<td class="auto-key"></td>
 								<td><input type="text" name="auto-os" readonly="readonly" value="@[USER-OS]" /></td>
 							</tr>
 							<tr>
-								<td></td>
+								<td class="auto-key"></td>
 								<td><input type="text" name="auto-clr" readonly="readonly" value="@[APPLICATION-LANGUAGE]" /></td>
 							</tr>
 							<tr>
-								<td></td>
+								<td class="auto-key"></td>
 								<td><input type="text" name="auto-platform" readonly="readonly" value="@[USER-PLATFORM]" /></td>
 							</tr>
 							<tr>
-								<td></td>
+								<td class="auto-key"></td>
 								<td><input type="text" name="auto-cpu-sys" readonly="readonly" value="@[USER-PLATFORM]" /></td>
 							</tr>
 							<tr>
-								<td></td>
+								<td class="auto-key"></td>
 								<td><input type="text" name="auto-cpu-app" readonly="readonly" value="@[USER-PLATFORM]" /></td>
 							</tr>
 							<tr>
-								<td></td>
+								<td class="auto-key"></td>
 								<td><input type="text" name="auto-memory" readonly="readonly" value="@[USER-PROCESS]" /></td>
 							</tr>
 							<tr>
-								<td></td>
+								<td class="auto-key"></td>
 								<td><input type="text" name="auto-display-count" readonly="readonly" value="@[USER-PROCESS]" /></td>
 							</tr>
 							<tr>
-								<td></td>
+								<td class="auto-key"></td>
 								<td><input type="text" name="auto-lang-sys" readonly="readonly" value="@[APPLICATION-LANGUAGE]" /></td>
 							</tr>
 							<tr>
-								<td></td>
+								<td class="auto-key"></td>
 								<td><input type="text" name="auto-lang-app" readonly="readonly" value="@[APPLICATION-LANGUAGE]" /></td>
 							</tr>
 							<tr>
-								<td></td>
+								<td class="auto-key"></td>
 								<td><input type="text" name="setting-dir" readonly="readonly" value="@[USER-SETTING-DIR]" /></td>
 							</tr>
 							<tr>
-								<td></td>
+								<td class="auto-key"></td>
 								<td><input type="text" name="setting-count-clipboard" readonly="readonly" value="@[USER-SETTING-COUNT-CLIPBOARD]" /></td>
 							</tr>
 							<tr>
-								<td></td>
+								<td class="auto-key"></td>
 								<td><input type="text" name="setting-count-template" readonly="readonly" value="@[USER-SETTING-COUNT-TEMPLATE]" /></td>
 							</tr>
 							<tr>
-								<td></td>
+								<td class="auto-key"></td>
 								<td><input type="text" name="setting-count-note" readonly="readonly" value="@[USER-SETTING-COUNT-NOTE]" /></td>
 							</tr>
 						</tbody>
 					</table>
 				</div>
 			</li>
-			<li>
-				<h2><!--送信前-->@{FEEDBACK-CONFIRM}</h2>
+			<li class="item">
+				<p><!--ユーザー確認項目-->@{html-viewer/feedback/confirm}</p>
 				<ul>
-					<li><input type="checkbox" name="app-confirm" /></li>
-					<li><input type="text" name="input-user-mail" /></li>
-					<li><input type="text" name="input-user-name" /></li>
+					<li>
+						<input type="checkbox" name="app-confirm" />@{html-viewer/feedback/confirm/confirm}<br />
+						<span class="comment">@{html-viewer/feedback/confirm/confirm-comment}</span>
+					</li>
+					<li>
+						<span class="title">@{html-viewer/feedback/confirm/mail}</span><input type="text" name="input-user-mail" /><br />
+						<span class="comment">@{html-viewer/feedback/confirm/mail-comment}</span>
+					</li>
+					<li>
+						<span class="title">@{html-viewer/feedback/confirm/name}</span><input type="text" name="input-user-name" /><br />
+						<span class="comment">@{html-viewer/feedback/confirm/name-comment}</span>
+					</li>
 				</ul>
 			</li>
 		</ul>
-		<p>
-			@{FEEDBACK-WARNIN}
+		<p class="warning">
+			@{html-viewer/feedback/warning}
 		</p>
 		<p>
-			<input id="submit" type="submit" value="@{FEEDBACK-SUBMIT}" />
+			<input id="submit" type="submit" value="@{html-viewer/feedback/submit}" />
 		</p>
 	</form>
 </body>

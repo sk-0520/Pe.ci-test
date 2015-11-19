@@ -410,7 +410,9 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 var result = CreateCommand(
                     o => {
                         var model = new HtmlViewerModel() {
+                            TitleLanguageKey = LanguageKey.htmlViewerTitleFeedBack,
                             HtmlSource = File.ReadAllText(Path.Combine(Constants.ApplicationHtmlDirectoryPath, Constants.HtmlFeedbackFileName)),
+                            CustomStylesheet = File.ReadAllText(Path.Combine(Constants.ApplicationStyleDirectoryPath, Constants.StyleFeedbackFileName)),
                         };
                         model.ReplaceKeys["URI-FEEDBACK"] = Constants.UriFeedback;
 

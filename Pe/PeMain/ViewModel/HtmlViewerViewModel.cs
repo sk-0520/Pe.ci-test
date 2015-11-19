@@ -45,6 +45,8 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             AppNonProcess = appNonProcess;
             WindowTitle = AppNonProcess.Language[Model.TitleLanguageKey];
             View.WindowStartupLocation = Model.WindowStartupLocation;
+            View.Width = Model.WindowWidth;
+            View.Height = Model.WindowHeight;
         }
 
         #region property
@@ -100,7 +102,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         public void InitializeHtmlViewer(WebBrowser browser)
         {
-            var map = HtmlViewerUtility.CreateBaseDictionary(AppNonProcess.Language);
+            var map = HtmlViewerUtility.CreateBaseDictionary(AppNonProcess.Language, Model.CustomStylesheet, Model.CustomScript);
             foreach(var pair in Model.ReplaceKeys) {
                 map[pair.Key] = pair.Value;
             }

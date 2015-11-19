@@ -21,7 +21,7 @@
         /*
         このソースは自動生成のため Constants-generator.tt を編集すること。
 
-        生成元ConstantsPropertyフィールド数: 12
+        生成元ConstantsPropertyフィールド数: 14
         生成元ConstantsRangeフィールド数: 22
         */
 
@@ -103,6 +103,17 @@
         }
 
         #endregion
+        #region scriptAutosizeFileName
+        
+        public static String ScriptAutosizeFileName
+        {
+            get
+            {
+                return scriptAutosizeFileName;
+            }
+        }
+
+        #endregion
         #region htmlFeedbackFileName
         
         public static String HtmlFeedbackFileName
@@ -110,6 +121,17 @@
             get
             {
                 return htmlFeedbackFileName;
+            }
+        }
+
+        #endregion
+        #region styleFeedbackFileName
+        
+        public static String StyleFeedbackFileName
+        {
+            get
+            {
+                return styleFeedbackFileName;
             }
         }
 

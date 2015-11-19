@@ -31,9 +31,10 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
             return File.ReadAllText(Path.Combine(Constants.ApplicationStyleDirectoryPath, Constants.styleCommonFileName));
         }
 
-        public static string ReadJQueryScript()
+        public static IEnumerable< string> ReadCommonScript()
         {
-            return File.ReadAllText(Path.Combine(Constants.ApplicationScriptDirectoryPath, Constants.ScriptJQueryFileName));
+            yield return File.ReadAllText(Path.Combine(Constants.ApplicationScriptDirectoryPath, Constants.ScriptJQueryFileName));
+            yield return File.ReadAllText(Path.Combine(Constants.ApplicationScriptDirectoryPath, Constants.ScriptAutosizeFileName));
         }
 
         static string ＷrapElement(string tagName, string value, IReadOnlyDictionary<string, string> attribute = null)
@@ -50,7 +51,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
                 { "LANG", language.CultureCode },
                 { "HTML:STYLE-COMMON", ＷrapElement("style", ReadCommonStylesheet()) },
                 { "HTML:STYLE-CUSTOM", ＷrapElement("style", customStyle)},
-                { "HTML:SCRIPT-JQUERY", ＷrapElement("script", ReadJQueryScript()) },
+                { "HTML:SCRIPT-COMMON", string.Join(Environment.NewLine, ReadCommonScript().Select(s => ＷrapElement("script", s))) },
                 { "HTML:SCRIPT-CUSTOM", ＷrapElement("script", customScript) },
             };
 

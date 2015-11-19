@@ -115,7 +115,11 @@ namespace ContentTypeTextNet.Pe.PeMain
         [ConstantsProperty]
         const string scriptJQueryFileName = "jquery.js";
         [ConstantsProperty]
+        const string scriptAutosizeFileName = "autosize.js";
+        [ConstantsProperty]
         const string htmlFeedbackFileName = "feedback.html";
+        [ConstantsProperty]
+        const string styleFeedbackFileName = "feedback.css";
 
 
         public const string languageDefaultFileName = "default.xml";
