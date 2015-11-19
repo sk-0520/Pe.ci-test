@@ -44,7 +44,7 @@
 				<p><!--操作性-->@{html-viewer/feedback/operability}</p>
 				<div class="input">
 					<ul class="level">
-						<li class="unset"><input type="radio" name="input-operability" value="" />@{html-viewer/feedback/operability/unset}</li>
+						<li class="unset"><label><input type="radio" name="input-operability" value="" checked="checked" />@{html-viewer/feedback/operability/unset}</label></li>
 						<li class="good">@{html-viewer/feedback/operability/good}</li>
 						<li><input type="radio" name="input-operability" value="5" /></li>
 						<li><input type="radio" name="input-operability" value="4" /></li>
@@ -59,7 +59,7 @@
 				<p><!--機能性-->@{html-viewer/feedback/functionality}</p>
 				<div class="input">
 					<ul class="level">
-						<li class="unset"><input type="radio" name="input-functionality" value="" />@{html-viewer/feedback/functionality/unset}</li>
+						<li class="unset"><label><input type="radio" name="input-functionality" value="" checked="checked" />@{html-viewer/feedback/functionality/unset}</label></li>
 						<li class="good">@{html-viewer/feedback/functionality/good}</li>
 						<li><input type="radio" name="input-functionality" value="5" /></li>
 						<li><input type="radio" name="input-functionality" value="4" /></li>
@@ -74,8 +74,11 @@
 				<p><!--主に使用するの機能-->@{html-viewer/feedback/main}</p>
 				<div class="input">
 					<ul>
-						<li><input name="input-main" type="checkbox" value="10" />@{html-viewer/feedback/main/toolbar}</li>
-						<li><input name="input-main" type="checkbox" value="20" />@{html-viewer/feedback/main/command}</li>
+						<li><label><input name="input-main" type="checkbox" value="100:toolbar"   />@{html-viewer/feedback/main/toolbar}</label></li>
+						<li><label><input name="input-main" type="checkbox" value="200:command"   />@{html-viewer/feedback/main/command}</label></li>
+						<li><label><input name="input-main" type="checkbox" value="300:note"      />@{html-viewer/feedback/main/note}</label></li>
+						<li><label><input name="input-main" type="checkbox" value="400:clipboard" />@{html-viewer/feedback/main/clipboard}</label></li>
+						<li><label><input name="input-main" type="checkbox" value="500:template"  />@{html-viewer/feedback/main/template}</label></li>
 					</ul>
 				</div>
 			</li>
@@ -180,16 +183,16 @@
 				<p><!--ユーザー確認項目-->@{html-viewer/feedback/confirm}</p>
 				<ul>
 					<li>
-						<input type="checkbox" name="app-confirm" />@{html-viewer/feedback/confirm/confirm}<br />
-						<span class="comment">@{html-viewer/feedback/confirm/confirm-comment}</span>
+						<label><input type="checkbox" name="app-confirm" value="true" />@{html-viewer/feedback/confirm/confirm}</label>
+						<p class="comment">@{html-viewer/feedback/confirm/confirm-comment}</p>
 					</li>
 					<li>
-						<span class="title">@{html-viewer/feedback/confirm/mail}</span><input type="text" name="input-user-mail" /><br />
-						<span class="comment">@{html-viewer/feedback/confirm/mail-comment}</span>
+						<label><span class="title">@{html-viewer/feedback/confirm/mail}</span><input type="text" name="input-user-mail" /></label>
+						<p class="comment">@{html-viewer/feedback/confirm/mail-comment}</p>
 					</li>
 					<li>
-						<span class="title">@{html-viewer/feedback/confirm/name}</span><input type="text" name="input-user-name" /><br />
-						<span class="comment">@{html-viewer/feedback/confirm/name-comment}</span>
+						<label><span class="title">@{html-viewer/feedback/confirm/name}</span><input type="text" name="input-user-name" /></label>
+						<p class="comment">@{html-viewer/feedback/confirm/name-comment}</p>
 					</li>
 				</ul>
 			</li>
@@ -197,9 +200,9 @@
 		<p class="warning">
 			@{html-viewer/feedback/warning}
 		</p>
-		<p>
+		<div class="action">
 			<input id="submit" type="submit" value="@{html-viewer/feedback/submit}" />
-		</p>
+		</div>
 	</form>
 </body>
 </html>

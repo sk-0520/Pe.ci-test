@@ -21,7 +21,7 @@
         /*
         このソースは自動生成のため Constants-generator.tt を編集すること。
 
-        生成元ConstantsPropertyフィールド数: 14
+        生成元ConstantsPropertyフィールド数: 15
         生成元ConstantsRangeフィールド数: 22
         */
 
@@ -154,6 +154,17 @@
             get
             {
                 return backupSearchPattern;
+            }
+        }
+
+        #endregion
+        #region htmlViewerTagReplaceBreak
+        
+        public static String HtmlViewerTagReplaceBreak
+        {
+            get
+            {
+                return htmlViewerTagReplaceBreak;
             }
         }
 

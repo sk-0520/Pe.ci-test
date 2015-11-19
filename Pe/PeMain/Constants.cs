@@ -362,6 +362,9 @@ namespace ContentTypeTextNet.Pe.PeMain
         );
         public static readonly Size noteDefualtSize = new Size(200, 200);
 
+        [ConstantsProperty]
+        const string htmlViewerTagReplaceBreak = ",,";
+
         /// <summary>
         /// 実行パス
         /// </summary>

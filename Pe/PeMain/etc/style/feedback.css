@@ -1,9 +1,17 @@
-﻿ul.questionnaire {
+﻿body {
+	margin: 1.5em;
+}
+
+ul.questionnaire {
 	list-style: none;
 }
 
 ul.questionnaire li.item {
+	margin-bottom: 1.5em;
+}
 
+ul.questionnaire li.item *.input {
+	margin-left: 1.5em;
 }
 
 ul.questionnaire li.item *.input ul.level {
@@ -30,14 +38,25 @@ ul.questionnaire li.item *.title {
 	width: 4.5em;
 }
 
+textarea {
+	width: 30em;
+	height: 4em;
+}
+
 *.comment {
-	font-size: 90%;
+	font-size: 80%;
+	margin-top: 0.2ex;
+	margin-bottom: 0.5em;
 }
 
 p.warning {
-
+	font-weight: bold;
+	border: 1px dotted #f00;
+	padding: 1em;
 }
 
-
+div.action {
+	text-align: center;
+}
 
 

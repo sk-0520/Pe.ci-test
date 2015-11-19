@@ -20,6 +20,8 @@
 
 		<Item Id="setting" Word="設定" />
 		<Item Id="toolbar" Word="ツールバー" />
+
+		<Item Id="hv-br"   Word=",," />
 	</Define>
 	<Words>
 		<Item Id="window/home"    Word="@[APPLICATION:NAME] ホーム"  />
@@ -507,9 +509,9 @@
 		<!-- フィードバック -->
 		<Item Id="html-viewer/feedback"                     Word="フィードバック" />
 		<Item Id="html-viewer/feedback/message/title"       Word="フィードバック処理完了" />
-		<Item Id="html-viewer/feedback/message/success"     Word="ご協力ありがとうございます。" />
-		<Item Id="html-viewer/feedback/message/failure"     Word="入力内容に誤りがあります" />
-		<Item Id="html-viewer/feedback/message/message"     Word="入力された内容と受信した内容、処理内容は以下になります。" />
+		<Item Id="html-viewer/feedback/message/success"     Word="ご協力ありがとうございます。本データを削除したい場合は下記IDをお伝えください(IDの再発行は出来ないためユーザー側で保管してください)。" />
+		<Item Id="html-viewer/feedback/message/failure"     Word="入力内容に誤りがあります(@[APPLICATION:NAME]から実施した場合、本メッセージが表示されない想定ですのでお手数ですがご報告願います)。" />
+		<Item Id="html-viewer/feedback/message/message"     Word="送信された内容と処理内容は以下になります。" />
 		<Item Id="html-viewer/feedback/title"               Word="フィードバック" />
 		<Item Id="html-viewer/feedback/message"             Word="@[APPLICATION:NAME] を使用した感想や機能改善、不具合等の報告にご協力ください。" />
 		<Item Id="html-viewer/feedback/operability"         Word="操作性" />
@@ -523,6 +525,9 @@
 		<Item Id="html-viewer/feedback/main"                Word="主に使用するの機能" />
 		<Item Id="html-viewer/feedback/main/toolbar"        Word="ツールバーランチャー" />
 		<Item Id="html-viewer/feedback/main/command"        Word="コマンド型ランチャー" />
+		<Item Id="html-viewer/feedback/main/note"           Word="ノート" />
+		<Item Id="html-viewer/feedback/main/clipboard"      Word="クリップボード" />
+		<Item Id="html-viewer/feedback/main/template"       Word="テンプレート" />
 		<Item Id="html-viewer/feedback/function"            Word="機能要望" />
 		<Item Id="html-viewer/feedback/failure"             Word="不具合" />
 		<Item Id="html-viewer/feedback/others"              Word="その他" />
@@ -530,16 +535,21 @@
 		<Item Id="html-viewer/feedback/auto/swicth"         Word="表示/非表示" />
 		<Item Id="html-viewer/feedback/auto/key"            Word="キー" />
 		<Item Id="html-viewer/feedback/auto/value"          Word="値" />
-		<Item Id="html-viewer/feedback/confirm"    Word="ユーザー確認項目" />
+		<Item Id="html-viewer/feedback/confirm"             Word="ユーザー確認項目" />
 		<Item Id="html-viewer/feedback/confirm/confirm"         Word="入力内容を公開してもよい" />
-		<Item Id="html-viewer/feedback/confirm/confirm-comment" Word="名前・メールアドレス以外のユーザーが入力した内容が対象になります。" />
+		<Item Id="html-viewer/feedback/confirm/confirm-comment" Word="「機能要望」・「不具合」・「その他」の入力内容をそのまま課題に記載しても良い場合チェックしてください(あからさまな個人情報は削除します)。" />
 		<Item Id="html-viewer/feedback/confirm/mail"            Word="E-mail" />
-		<Item Id="html-viewer/feedback/confirm/mail-comment"    Word="" />
+		<Item Id="html-viewer/feedback/confirm/mail-comment"    Word="返信が必要な場合や連絡をしても構わない場合に入力してください。" />
 		<Item Id="html-viewer/feedback/confirm/name"            Word="名前" />
-		<Item Id="html-viewer/feedback/confirm/name-comment"    Word="" />
-		<Item Id="html-viewer/feedback/warning"   Word="ちゅうい" />
+		<Item Id="html-viewer/feedback/confirm/name-comment"    Word="連絡する際に用いる名前を入力してください。" />
+		<Item Id="html-viewer/feedback/warning"   Word="入力された値は Google Apps Script を経由してデータ収集され、改修・調査等に使用します。${hv-br}データは Google Drive に蓄積されます。${hv-br}開発側で管理運用するため特定個人間での受け渡しの発生する可能性があります。${hv-br}ユーザー識別子(auto-id)は設定で変更できます。" />
 		<Item Id="html-viewer/feedback/submit"    Word="送信" />
 		
+
+
+
+
+
 		
 		<!-- enum -->
 		

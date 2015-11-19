@@ -109,7 +109,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             var timestamp = DateTime.Now;
 
             // TODO: 二重処理何とかならんか
-            var replacedLanguage = Model.HtmlSource.ReplaceRange("@{", "}", key => AppNonProcess.Language.GetReplacedWordText(key, timestamp, null));
+            var replacedLanguage = Model.HtmlSource.ReplaceRange("@{", "}", key => AppNonProcess.Language.GetReplacedWordText(key, timestamp, null).Replace(Constants.HtmlViewerTagReplaceBreak, "<br />"));
             var replacedSysyem = AppNonProcess.Language.GetReplacedWordText(replacedLanguage, timestamp, map);
             
             browser.NavigateToString(replacedSysyem);
