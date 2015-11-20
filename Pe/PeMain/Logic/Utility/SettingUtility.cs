@@ -36,12 +36,16 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
     using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
     using Implement = ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityImplement;
     using ContentTypeTextNet.Pe.PeMain.Data;
+    using System.Security.Cryptography;
+    using System.IO;
 
     /// <summary>
     /// 設定データを上手いことなんやかんやする。
     /// </summary>
     public static class SettingUtility
     {
+        #region check
+
         internal static bool IsIllegalPlusNumber(double number)
         {
             return double.IsNaN(number) || number <= 0;
@@ -56,6 +60,10 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         {
             return s == null;
         }
+
+        #endregion
+
+        #region function
 
         public static bool CheckAccept(RunningInformationSettingModel model, INonProcess nonProcess)
         {
@@ -81,6 +89,63 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         }
 
         #region create
+
+        /// <summary>
+        /// 指定データからユーザー識別子を作成する。
+        /// <para>ハッシュ処理統一のために存在している</para>
+        /// </summary>
+        /// <param name="buffer">データ</param>
+        /// <returns>ユーザー識別子。</returns>
+        static string CreateUserId(byte[] buffer)
+        {
+            using(var hash = MD5.Create()) {
+                var binary = hash.ComputeHash(buffer);
+                var result = new StringBuilder(binary.Length);
+                foreach(var b in binary) {
+                    result.AppendFormat("{0:x2}", b);
+                }
+
+                return result.ToString();
+            }
+        }
+
+        /// <summary>
+        /// 実行環境からユーザー識別子を作成する。
+        /// </summary>
+        /// <returns></returns>
+        public static string CreateUserIdFromEnvironment()
+        {
+            using(var info = new InformationCollection()) {
+                var infoEnv = info.GetCPU();
+                var infoMem = info.GetMemory();
+
+                var user = CovertUtility.ToByteArray(Environment.UserName);
+                var os = CovertUtility.ToByteArray(Environment.OSVersion);
+                var cpu = CovertUtility.ToByteArray(infoEnv.Items["Name"]);
+                var mem = CovertUtility.ToByteArray(infoMem.Items["TotalVisibleMemorySize"]);
+
+                using(var stream = new MemoryStream()) {
+                    stream.Write(user, 0, user.Length);
+                    stream.Write(os, 0, os.Length);
+                    stream.Write(cpu, 0, cpu.Length);
+                    stream.Write(mem, 0, mem.Length);
+
+                    return CreateUserId(stream.GetBuffer());
+                }
+            }
+        }
+
+        /// <summary>
+        /// 時間からユーザー識別子を作成する。
+        /// <para>ランダム作成用</para>
+        /// </summary>
+        /// <param name="dateTime"></param>
+        /// <returns></returns>
+        public static string CreateUserIdFromDateTime(DateTime dateTime)
+        {
+            var timestamp = CovertUtility.ToByteArray(dateTime);
+            return CreateUserId(timestamp);
+        }
 
         static TModel CreateModelName<TModel>(IEnumerable<TModel> items, ILanguage language, string nameKey)
             where TModel : IName, new()
@@ -168,6 +233,8 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 
             launcherItem.History.Update(dateTime);
         }
+
+        #endregion
 
         #endregion
 
