@@ -22,7 +22,9 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
     using System.Runtime.Serialization;
     using System.Text;
     using System.Threading.Tasks;
+    using ContentTypeTextNet.Library.SharedLibrary.Attribute;
     using ContentTypeTextNet.Library.SharedLibrary.IF;
+    using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
     using ContentTypeTextNet.Pe.Library.PeData.Item;
 
     /// <summary>
@@ -40,61 +42,57 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
         /// <summary>
         /// 実行が許可されているか。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public bool Accept { get; set; }
         /// <summary>
         /// 前回終了時のバージョン。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public Version LastExecuteVersion { get; set; }
         /// <summary>
         /// アップデートチェックを行うか。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public bool CheckUpdateRelease { get; set; }
         /// <summary>
         /// RCアップデートチェックを行うか。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public bool CheckUpdateRC { get; set; }
         /// <summary>
         /// アップデートチェックで無視するバージョン。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public Version IgnoreUpdateVersion { get; set; }
         /// <summary>
         /// プログラム実行回数。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public int ExecuteCount { get; set; }
 
         #endregion
 
         #region IDeepClone
 
-        public void DeepCloneTo(IDeepClone target)
-        {
-            var obj = (RunningInformationSettingModel)target;
+        //public void DeepCloneTo(IDeepClone target)
+        //{
+        //    var obj = (RunningInformationSettingModel)target;
 
-            obj.Accept = Accept;
-            if(LastExecuteVersion != null) {
-                obj.LastExecuteVersion = (Version)LastExecuteVersion.Clone();
-            }
-            obj.CheckUpdateRelease = CheckUpdateRelease;
-            obj.CheckUpdateRC = CheckUpdateRC;
-            if(IgnoreUpdateVersion != null) {
-                obj.IgnoreUpdateVersion = (Version)IgnoreUpdateVersion.Clone();
-            }
-            obj.ExecuteCount = ExecuteCount;
-        }
+        //    obj.Accept = Accept;
+        //    if(LastExecuteVersion != null) {
+        //        obj.LastExecuteVersion = (Version)LastExecuteVersion.Clone();
+        //    }
+        //    obj.CheckUpdateRelease = CheckUpdateRelease;
+        //    obj.CheckUpdateRC = CheckUpdateRC;
+        //    if(IgnoreUpdateVersion != null) {
+        //        obj.IgnoreUpdateVersion = (Version)IgnoreUpdateVersion.Clone();
+        //    }
+        //    obj.ExecuteCount = ExecuteCount;
+        //}
 
         public IDeepClone DeepClone()
         {
-            var result = new RunningInformationSettingModel();
-
-            DeepCloneTo(result);
-
-            return result;
+            return (RunningInformationSettingModel)DeepCloneUtility.Copy(this);
         }
 
         #endregion
