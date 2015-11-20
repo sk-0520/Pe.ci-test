@@ -24,6 +24,7 @@ namespace ContentTypeTextNet.Pe.Test.Library.PeMainTest.Logic.Utility
     using NUnit.Framework;
     using PeMain.Logic.Utility;
 
+    [TestFixture]
     class SettingUtilityTest
     {
         [Test]
