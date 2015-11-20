@@ -44,6 +44,12 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
     /// </summary>
     public static class SettingUtility
     {
+        #region define
+
+        const int userIdLength = 32;
+
+        #endregion
+
         #region check
 
         internal static bool IsIllegalPlusNumber(double number)
@@ -86,6 +92,17 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
             }
 
             return true;
+        }
+
+        public static bool CheckUserId(RunningInformationSettingModel model)
+        {
+            var userId = model.UserId ?? string.Empty;
+            if(userId.Length != userIdLength) {
+                return false;
+            }
+
+            var hash = "0123456789abcdef";
+            return userId.All(c => hash.Contains(c));
         }
 
         #region create
@@ -299,6 +316,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         {
             CheckUtility.EnforceNotNull(setting);
 
+            InitializeRunningInformationSetting(setting.RunningInformation, previousVersion, nonProcess);
             InitializeLoggingSetting(setting.Logging, previousVersion, nonProcess);
             InitializeStreamSetting(setting.Stream, previousVersion, nonProcess);
             InitializeToolbarSetting(setting.Toolbar, previousVersion, nonProcess);
@@ -307,6 +325,11 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
             InitializeClipboardSetting(setting.Clipboard, previousVersion, nonProcess);
             InitializeTemplateSetting(setting.Template, previousVersion, nonProcess);
             InitializeCommandSetting(setting.Command, previousVersion, nonProcess);
+        }
+
+        private static void InitializeRunningInformationSetting(RunningInformationSettingModel setting, Version previousVersion, INonProcess nonProcess)
+        {
+            Implement.InitializeRunningInformationSetting.Correction(setting, previousVersion, nonProcess);
         }
 
         public static void InitializeLauncherItemSetting(LauncherItemSettingModel setting, Version previousVersion, INonProcess nonProcess)

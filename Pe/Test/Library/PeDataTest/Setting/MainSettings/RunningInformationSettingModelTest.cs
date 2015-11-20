@@ -37,6 +37,7 @@ namespace ContentTypeTextNet.Test.Library.PeDataTest.Setting.MainSettings
                 ExecuteCount = 999,
                 IgnoreUpdateVersion = new Version(1,2,3,4),
                 LastExecuteVersion = new Version(9,8,7,6),
+                UserId = "123456789",
             };
 
             var dst = (RunningInformationSettingModel)src.DeepClone();
@@ -47,6 +48,7 @@ namespace ContentTypeTextNet.Test.Library.PeDataTest.Setting.MainSettings
             Assert.AreEqual(src.ExecuteCount, dst.ExecuteCount);
             Assert.AreEqual(src.IgnoreUpdateVersion.ToString(), dst.IgnoreUpdateVersion.ToString());
             Assert.AreEqual(src.LastExecuteVersion.ToString(), dst.LastExecuteVersion.ToString());
+            Assert.AreEqual(src.UserId, dst.UserId);
         }
     }
 }

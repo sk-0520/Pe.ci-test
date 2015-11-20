@@ -70,6 +70,12 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
         [DataMember, IsDeepClone]
         public int ExecuteCount { get; set; }
 
+        /// <summary>
+        /// ユーザー識別子。
+        /// </summary>
+        [DataMember, IsDeepClone]
+        public string UserId { get; set; }
+
         #endregion
 
         #region IDeepClone
