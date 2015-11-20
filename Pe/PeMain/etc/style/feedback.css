@@ -22,15 +22,15 @@ ul.questionnaire li.item *.input ul.level li {
 }
 
 ul.questionnaire li.item *.input ul.level li.unset {
-	margin-right: 3em;
+	margin-right: 2ex;
 }
 
 ul.questionnaire li.item *.input ul.level li.good {
-	margin-right: 1em;
+	margin-right: 1ex;
 }
 
 ul.questionnaire li.item *.input ul.level li.bad {
-	margin-left: 1em;
+	margin-left: 1ex;
 }
 
 ul.questionnaire li.item *.title {
@@ -39,7 +39,7 @@ ul.questionnaire li.item *.title {
 }
 
 textarea {
-	width: 30em;
+	width: 80%;
 	height: 4em;
 }
 
@@ -58,5 +58,3 @@ p.warning {
 div.action {
 	text-align: center;
 }
-
-
