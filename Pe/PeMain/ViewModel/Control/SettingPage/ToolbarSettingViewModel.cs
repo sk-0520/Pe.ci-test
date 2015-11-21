@@ -34,6 +34,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control.SettingPage
     using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
     using ContentTypeTextNet.Library.SharedLibrary.Model;
     using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+    using Library.PeData.Define;
     using ContentTypeTextNet.Pe.Library.PeData.Item;
     using ContentTypeTextNet.Pe.Library.PeData.Setting;
     using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
@@ -208,6 +209,16 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control.SettingPage
             get { return this._isDragging; }
             set { SetVariableValue(ref this._isDragging, value); }
         }
+
+        #region LauncherItemSetting
+
+        public LauncherItemFileDropMode FileDropMode
+        {
+            get { return LauncherItemSetting.FileDropMode; }
+            set { SetPropertyValue(LauncherItemSetting, value); }
+        }
+
+        #endregion
 
         #endregion
 

@@ -75,35 +75,35 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic
         /// http://www.wmifun.net/library/win32_processor.html
         /// </summary>
         /// <returns></returns>
-        protected virtual InformationGroup GetCPU()
+        public virtual InformationGroup GetCPU()
         {
             var keys = new[] {
-				// アドレス幅
-				"AddressWidth",
-				// アーキテクチャ
-				"Architecture",
-				// 状態
-				"Availability",
-				// エラーコード
-				"ConfigManagerErrorCode",
-				// 構成
-				"ConfigManagerUserConfig",
-				// 使用状況から起こる状態の変化
-				"CpuStatus",
-				// 現在の速度 (MHz)
-				"CurrentClockSpeed",
-				// 電圧
-				"CurrentVoltage",
-				// データ幅
-				"DataWidth",
-				// 説明
-				"Description",
-				// デバイス
-				"DeviceID",
-				// 外部クロックの周波数
-				"ExtClock",
-				// プロセッサ ファミリ
-				"Family",
+                // アドレス幅
+                "AddressWidth",
+                // アーキテクチャ
+                "Architecture",
+                // 状態
+                "Availability",
+                // エラーコード
+                "ConfigManagerErrorCode",
+                // 構成
+                "ConfigManagerUserConfig",
+                // 使用状況から起こる状態の変化
+                "CpuStatus",
+                // 現在の速度 (MHz)
+                "CurrentClockSpeed",
+                // 電圧
+                "CurrentVoltage",
+                // データ幅
+                "DataWidth",
+                // 説明
+                "Description",
+                // デバイス
+                "DeviceID",
+                // 外部クロックの周波数
+                "ExtClock",
+                // プロセッサ ファミリ
+                "Family",
                 "L2CacheSize",
                 "L2CacheSpeed",
                 "L3CacheSize",
@@ -146,17 +146,17 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic
         /// メモリ情報取得
         /// </summary>
         /// <returns></returns>
-        protected virtual InformationGroup GetMemory()
+        public virtual InformationGroup GetMemory()
         {
             var keys = new[] {
-				// 物理メモリ(合計:KB)
-				"TotalVisibleMemorySize",
-				// 物理メモリ(空き)
-				"FreePhysicalMemory",
-				// 仮想メモリ(合計)
-				"TotalVirtualMemorySize",
-				// 仮想メモリ(空き)
-				"FreeVirtualMemory",
+                // 物理メモリ(合計:KB)
+                "TotalVisibleMemorySize",
+                // 物理メモリ(空き)
+                "FreePhysicalMemory",
+                // 仮想メモリ(合計)
+                "TotalVirtualMemorySize",
+                // 仮想メモリ(空き)
+                "FreeVirtualMemory",
             };
             var result = GetInfo(this._managementOS, "memory", keys);
             return result;

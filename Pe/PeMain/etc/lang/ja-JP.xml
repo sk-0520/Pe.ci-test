@@ -342,13 +342,13 @@
 		<Item Id="main-setting/stream/color/std-out" Word="基本" />
 		<Item Id="main-setting/stream/color/std-err" Word="エラー" />
 		<Item Id="main-setting/launcher" Word="ランチャー" />
-		<Item Id="main-setting/launcher/drop-mode" Word="ファイルD&amp;D時の挙動" />
-		<Item Id="main-setting/launcher/drop-mode/window" Word="指定して実行ウィンドウを表示(_R)" />
-		<Item Id="main-setting/launcher/drop-mode/arguments" Word="オプションとして実行(_O)" />
 		<Item Id="main-setting/window-save" Word="ウィンドウ位置保存" />
 		<Item Id="main-setting/window-save/enabled" Word="ウィンドウ位置を保存する(_W)" />
 		<Item Id="main-setting/window-save/count" Word="保存件数" />
 		<Item Id="main-setting/window-save/interval" Word="保存間隔" />
+		<Item Id="main-setting/privacy" Word="プライバシー" />
+		<Item Id="main-setting/privacy/create/environment" Word="環境から作成" />
+		<Item Id="main-setting/privacy/create/random"      Word="ランダム作成" />
 		
 		
 		<Item Id="toolbar-setting/screen" Word="識別(_I)" />
@@ -369,6 +369,9 @@
 		<Item Id="toolbar-setting/group/node/up" Word="選択中ノードを上に移動" />
 		<Item Id="toolbar-setting/group/node/down" Word="選択中ノードを下に移動" />
 		<Item Id="toolbar-setting/group/node/remove" Word="選択中ノードを削除" />
+		<Item Id="toolbar-setting/launcher/drop-mode" Word="ファイルD&amp;D時の挙動" />
+		<Item Id="toolbar-setting/launcher/drop-mode/window" Word="指定して実行ウィンドウを表示(_R)" />
+		<Item Id="toolbar-setting/launcher/drop-mode/arguments" Word="オプションとして実行(_O)" />
 		
 		<Item Id="command-setting/icon" Word="アイコンサイズ(_I)" />
 		<Item Id="command-setting/hotkey" Word="呼び出しキー(_H)" />
