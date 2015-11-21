@@ -415,6 +415,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                             CustomStylesheet = File.ReadAllText(Path.Combine(Constants.ApplicationStyleDirectoryPath, Constants.StyleFeedbackFileName)),
                         };
                         model.ReplaceKeys["URI-FEEDBACK"] = Constants.UriFeedback;
+                        model.ReplaceKeys["USER-SETTING-USER-ID"] = CommonData.MainSetting.RunningInformation.UserId;
 
                         var window = SendCreateWindow(WindowKind.HtmlViewer, model, null);
                         window.ShowDialog();
