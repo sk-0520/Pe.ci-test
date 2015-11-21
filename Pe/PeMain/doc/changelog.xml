@@ -69,7 +69,12 @@
 		</group>
 		<group type="features" dummy="==================================================================">
 			<note rev="">
-				<message></message>
+				<message>#378: ユーザー識別子を作成・保持する</message>
+				<comments>
+					<comment>フィードバック等のユーザ情報収集時に使用されます</comment>
+					<comment>設定画面の本体設定タブで再設定が可能です</comment>
+					<comment>UI追加に伴いランチャーD&amp;D設定はランチャータブへ移動しました</comment>
+				</cooments>
 			</note>
 			<note rev="">
 				<message></message>

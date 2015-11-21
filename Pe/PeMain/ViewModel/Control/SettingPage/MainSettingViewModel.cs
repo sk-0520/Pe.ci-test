@@ -23,6 +23,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control.SettingPage
     using System.Text;
     using System.Threading.Tasks;
     using System.Windows;
+    using System.Windows.Input;
     using System.Windows.Media;
     using ContentTypeTextNet.Library.SharedLibrary.Data;
     using ContentTypeTextNet.Library.SharedLibrary.IF;
@@ -48,7 +49,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control.SettingPage
 
         #endregion
 
-        public MainSettingViewModel(RunningInformationSettingModel runningInformation, LanguageSettingModel language, LoggingSettingModel logging, SystemEnvironmentSettingModel systemEnvironment, StreamSettingModel stream, WindowSaveSettingModel windowSave, LauncherItemSettingModel launcherItem, MainSettingControl view, IAppNonProcess appNonProcess, SettingNotifyData settingNotifiyItem)
+        public MainSettingViewModel(RunningInformationSettingModel runningInformation, LanguageSettingModel language, LoggingSettingModel logging, SystemEnvironmentSettingModel systemEnvironment, StreamSettingModel stream, WindowSaveSettingModel windowSave, MainSettingControl view, IAppNonProcess appNonProcess, SettingNotifyData settingNotifiyItem)
             : base(view, appNonProcess, settingNotifiyItem)
         {
             RunningInformation = runningInformation;
@@ -57,7 +58,6 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control.SettingPage
             SystemEnvironment = systemEnvironment;
             Stream = stream;
             WindowSave = windowSave;
-            LauncherItem = launcherItem;
         }
 
         #region property
@@ -68,7 +68,6 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control.SettingPage
         SystemEnvironmentSettingModel SystemEnvironment { get; set; }
         StreamSettingModel Stream { get; set; }
         WindowSaveSettingModel WindowSave { get; set; }
-        LauncherItemSettingModel LauncherItem { get; set; }
 
         public bool Startup
         {
@@ -204,6 +203,13 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control.SettingPage
             set { SetPropertyValue(RunningInformation, value, "CheckUpdateRC"); }
         }
 
+        public string UserId
+        {
+            get { return RunningInformation.UserId; }
+            set { SetPropertyValue(RunningInformation, value); }
+        }
+        
+
         #endregion
 
         #region SystemEnvironment
@@ -328,12 +334,38 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control.SettingPage
 
         #endregion
 
-        #region LauncherItem
+        #endregion
 
-        public LauncherItemFileDropMode FileDropMode
+        #region command
+
+        #region runnunginfo
+
+        public ICommand CreateUserIdFromEnvironmentCommand
         {
-            get { return LauncherItem.FileDropMode; }
-            set { SetPropertyValue(LauncherItem, value); }
+            get
+            {
+                var result = CreateCommand(
+                    o => {
+                        UserId = SettingUtility.CreateUserIdFromEnvironment();
+                    }
+                );
+
+                return result;
+            }
+        }
+
+        public ICommand CreateUserIdFromRandomCommand
+        {
+            get
+            {
+                var result = CreateCommand(
+                    o => {
+                        UserId = SettingUtility.CreateUserIdFromDateTime(DateTime.Now);
+                    }
+                );
+
+                return result;
+            }
         }
 
         #endregion
