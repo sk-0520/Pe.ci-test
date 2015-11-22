@@ -415,7 +415,17 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                             CustomStylesheet = File.ReadAllText(Path.Combine(Constants.ApplicationStyleDirectoryPath, Constants.StyleFeedbackFileName)),
                         };
                         model.ReplaceKeys["URI-FEEDBACK"] = Constants.UriFeedback;
-                        model.ReplaceKeys["USER-SETTING-USER-ID"] = CommonData.MainSetting.RunningInformation.UserId;
+                        var map = HtmlViewerUtility.MakeCommonParameter(
+                            CommonData.MainSetting.RunningInformation,
+                            CommonData.Language,
+                            CommonData.VariableConstants,
+                            CommonData.ClipboardIndexSetting.Items,
+                            CommonData.NoteIndexSetting.Items,
+                            CommonData.TemplateIndexSetting.Items
+                        );
+                        foreach(var pair in map) {
+                            model.ReplaceKeys[pair.Key] = pair.Value;
+                        }
 
                         var window = SendCreateWindow(WindowKind.HtmlViewer, model, null);
                         window.ShowDialog();

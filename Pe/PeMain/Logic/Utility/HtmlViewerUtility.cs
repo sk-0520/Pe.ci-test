@@ -18,14 +18,27 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.IO;
     using System.Linq;
+    using System.Runtime.InteropServices;
     using System.Text;
     using System.Threading.Tasks;
+    using ContentTypeTextNet.Library.SharedLibrary.CompatibleForms;
     using ContentTypeTextNet.Library.SharedLibrary.IF;
+    using Library.PeData.Item;
+    using Data;
+    using Library.PeData.Setting.MainSettings;
+    using ContentTypeTextNet.Library.SharedLibrary.Logic;
 
     public static class HtmlViewerUtility
     {
+        #region define
+
+        public const string appKey = "app-key";
+
+        #endregion
+
         public static string ReadCommonStylesheet()
         {
             return File.ReadAllText(Path.Combine(Constants.ApplicationStyleDirectoryPath, Constants.styleCommonFileName));
@@ -60,6 +73,32 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         public static Dictionary<string, string> CreateBaseDictionary(ILanguage language)
         {
             return CreateBaseDictionary(language, null, null);
+        }
+
+        public static Dictionary<string, string> MakeCommonParameter(RunningInformationSettingModel runningInfo, ILanguage language, VariableConstants vc, ClipboardIndexItemCollectionModel clipboard, NoteIndexItemCollectionModel note, TemplateIndexItemCollectionModel template)
+        {
+            var result = new Dictionary<string, string>() {
+                { "USER-SETTING:USER-ID", runningInfo.UserId },
+                { "APPLICATION:BUILD", Constants.BuildType },
+                { "ENVIRONMENT:OS", Environment.OSVersion.ToString() },
+                { "ENVIRONMENT:CLR", RuntimeEnvironment.GetSystemVersion() },
+                { "APPLICATION:CPU", Constants.BuildProcess },
+                { "ENVIRONMENT:CPU", Environment.Is64BitOperatingSystem ? "64" : "32" },
+                { "ENVIRONMENT:DISPLAY-COUNT", Screen.AllScreens.Length.ToString() },
+                { "ENVIRONMENT:LANGUAGE", CultureInfo.InstalledUICulture.Name },
+                { "APPLICATION:LANGUAGE", language.CultureCode },
+                { "USER-SETTING:DIR", vc.UserSettingDirectoryPath },
+                { "USER-SETTING:CLIPBOARD-COUNT", clipboard.Count.ToString() },
+                { "USER-SETTING:TEMPLATE-COUNT", template.Count.ToString() },
+                { "USER-SETTING:NOTE-COUNT", note.Count.ToString() },
+            };
+            using(var info = new InformationCollection()) {
+                var infoMem = info.GetMemory();
+                result["ENVIRONMENT:MEMORY"] = infoMem.Items["TotalVisibleMemorySize"].ToString();
+            }
+            //ENVIRONMENT:PLATFORM
+
+            return result;
         }
     }
 }
