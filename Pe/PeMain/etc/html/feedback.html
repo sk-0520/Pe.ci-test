@@ -2,7 +2,7 @@
 <html lang="@[LANG]" xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<meta charset="utf-8" />
-	<title>@[APPLICATION-NAME]: @{html-viewer/feedback/title}</title>
+	<title>@[APPLICATION:NAME]: @{html-viewer/feedback/title}</title>
 	@[HTML:STYLE-COMMON]
 	@[HTML:STYLE-CUSTOM]
 	@[HTML:SCRIPT-COMMON]
@@ -39,12 +39,12 @@
 
 		function check() {
 			var inputList = [
-				{ name: 'input-operability', isMulti: false },
-				{ name: 'input-functionality', isMulti: false },
-				{ name: 'input-main', isMulti: true },
-				{ name: 'input-function', isMulti: false },
-				{ name: 'input-failure', isMulti: false },
-				{ name: 'input-others', isMulti: false }
+				{ name: 'input-operability', isRadion: true, isMulti: false },
+				{ name: 'input-functionality', isRadion: true, isMulti: false },
+				{ name: 'input-main', isRadion: false, isMulti: true },
+				{ name: 'input-function', isRadion: false, isMulti: false },
+				{ name: 'input-failure', isRadion: false, isMulti: false },
+				{ name: 'input-others', isRadion: false, isMulti: false }
 			];
 			var notInputCount = 0;
 			for (var i = 0, iMax = inputList.length; i < iMax; i++) {
@@ -60,10 +60,12 @@
 					if (!hasValueCount) {
 						notInputCount += 1;
 					}
-				} else {
-					if (!$.trim($input.val()).length) {
+				} else if(inputItem.isRadion) {
+					if(!$('[name=' + inputItem.name + ']:checked').val().length) {
 						notInputCount += 1;
 					}
+				} else if(!$.trim($input.val()).length) {
+					notInputCount += 1;
 				}
 			}
 			if (inputList.length == notInputCount) {
@@ -180,10 +182,6 @@
 							<tr>
 								<td class="auto-key"></td>
 								<td><input type="text" name="auto-clr" readonly="readonly" value="@[ENVIRONMENT:CLR]" /></td>
-							</tr>
-							<tr>
-								<td class="auto-key"></td>
-								<td><input type="text" name="auto-platform" readonly="readonly" value="@[ENVIRONMENT:PLATFORM]" /></td>
 							</tr>
 							<tr>
 								<td class="auto-key"></td>

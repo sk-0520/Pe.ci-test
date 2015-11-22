@@ -96,7 +96,6 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
                 var infoMem = info.GetMemory();
                 result["ENVIRONMENT:MEMORY"] = infoMem.Items["TotalVisibleMemorySize"].ToString();
             }
-            //ENVIRONMENT:PLATFORM
 
             return result;
         }
