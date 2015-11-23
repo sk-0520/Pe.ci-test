@@ -87,6 +87,8 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
                 { "ENVIRONMENT:DISPLAY-COUNT", Screen.AllScreens.Length.ToString() },
                 { "ENVIRONMENT:LANGUAGE", CultureInfo.InstalledUICulture.Name },
                 { "APPLICATION:LANGUAGE", language.CultureCode },
+                { "APPLICATION:FIRST-VERSION", runningInfo.FirstRunning.Version.ToString() },
+                { "APPLICATION:FIRST-TIMESTAMP", runningInfo.FirstRunning.Timestamp.ToString("o") },
                 { "USER-SETTING:DIR", vc.UserSettingDirectoryPath },
                 { "USER-SETTING:CLIPBOARD-COUNT", clipboard.Count.ToString() },
                 { "USER-SETTING:TEMPLATE-COUNT", template.Count.ToString() },
