@@ -113,6 +113,12 @@
 				<message>#372: 情報ダイアログは最前面表示にする必要ない</message>
 			</note>
 			<note rev="">
+				<message>#376: クリップボード・テンプレレートの転送にクリップボードを経由した場合にクリップボードオープンのエラーが発生する可能性あり</message>
+				<comments>
+					<comment>本改修に伴いクリップボードが空であれば転送後も空にするように修正</comment>
+				</comments>
+			</note>
+			<note rev="">
 				<message></message>
 			</note>
 		</group>
