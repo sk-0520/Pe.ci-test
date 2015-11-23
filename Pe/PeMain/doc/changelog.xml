@@ -95,7 +95,10 @@
 		</group>
 		<group type="fixes" dummy="==================================================================">
 			<note rev="">
-				<message></message>
+				<message>#384: 短い報告用情報のビルド種別の項目名をTypeからBuildTypeに変更する</message>
+				<comments>
+					<comment>CLIもCLRに変更</comment>
+				</comments>
 			</note>
 			<note rev="">
 				<message></message>
