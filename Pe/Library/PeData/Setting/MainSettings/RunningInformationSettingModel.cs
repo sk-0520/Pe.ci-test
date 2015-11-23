@@ -35,7 +35,9 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
     {
         public RunningInformationSettingModel()
             : base()
-        { }
+        {
+            FirstRunning = new FirstRunningItemModel();
+        }
 
         #region property
 
@@ -75,6 +77,12 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
         /// </summary>
         [DataMember, IsDeepClone]
         public string UserId { get; set; }
+
+        /// <summary>
+        /// 初回起動情報。
+        /// </summary>
+        [DataMember, IsDeepClone]
+        public FirstRunningItemModel FirstRunning { get; set; }
 
         #endregion
 

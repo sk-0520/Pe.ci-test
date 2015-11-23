@@ -102,6 +102,7 @@
     <Compile Include="Item\ColorPairItemModel.cs" />
     <Compile Include="Item\ComponentItemModel.cs" />
     <Compile Include="Item\ComponentItemCollectionModel.cs" />
+    <Compile Include="Item\FirstRunningItemModel.cs" />
     <Compile Include="Item\HashItemModel.cs" />
     <Compile Include="Item\IndexBodyItemModelBase.cs" />
     <Compile Include="Item\IndexItemCollectionModel.cs" />

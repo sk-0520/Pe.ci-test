@@ -90,6 +90,15 @@
 				</comments>
 			</note>
 			<note rev="">
+				<message>#373: 初回起動時の情報を保持する</message>
+				<comments>
+					<comment>本バージョンからの設定項目追加なので古いバージョン情報は持てません</comment>
+				</comments>
+			</note>
+			<note rev="">
+				<message></message>
+			</note>
+			<note rev="">
 				<message></message>
 			</note>
 		</group>
