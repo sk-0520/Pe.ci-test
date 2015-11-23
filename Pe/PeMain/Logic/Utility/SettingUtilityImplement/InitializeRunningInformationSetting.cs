@@ -22,6 +22,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityImplement
     using System.Text;
     using System.Threading.Tasks;
     using ContentTypeTextNet.Library.SharedLibrary.IF;
+    using Library.PeData.Item;
     using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
 
     internal static class InitializeRunningInformationSetting
@@ -38,6 +39,11 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityImplement
             if(!SettingUtility.CheckUserId(setting)) {
                 setting.UserId = SettingUtility.CreateUserIdFromEnvironment();
             }
+
+            if(setting.FirstRunning.Version == null) {
+                setting.FirstRunning.Timestamp = DateTime.Now;
+                setting.FirstRunning.Version = Constants.ApplicationVersionNumber;
+            }
         }
 
         private static void V_0_71_0(RunningInformationSettingModel setting, Version previousVersion, INonProcess nonProcess)
@@ -49,6 +55,10 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityImplement
             nonProcess.Logger.Trace("version setting: 0.71.0");
 
             setting.UserId = SettingUtility.CreateUserIdFromEnvironment();
+            setting.FirstRunning = new FirstRunningItemModel() {
+                Timestamp = DateTime.Now,
+                Version = previousVersion
+            };
         }
 
         static void V_First(RunningInformationSettingModel setting, Version previousVersion, INonProcess nonProcess)
