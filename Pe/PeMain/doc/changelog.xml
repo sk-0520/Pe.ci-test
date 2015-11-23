@@ -58,7 +58,12 @@
 	<log date="YYYY/MM/DD" version="0.71.1" type="rc" dummy="################################################################################">
 		<group type="note" dummy="==================================================================">
 			<note rev="">
-				<message></message>
+				<message>[事前通知]: #335: .NET Frameworkのバージョンを4.6に変更</message>
+				<comments>
+					<comment>0.73.0 で .NET Framework の対応バージョンを を 4.5.1 から 4.6 に変更します</comment>
+					<comment>nameof! nameof! nameof!</comment>
+					<comment>#355の影響で0.72.0→0.73.0に先延ばし</comment>
+				</comments>
 			</note>
 			<note rev="">
 				<message></message>
