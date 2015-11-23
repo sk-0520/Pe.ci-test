@@ -36,6 +36,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
     using ContentTypeTextNet.Library.SharedLibrary.CompatibleForms.Utility;
     using ContentTypeTextNet.Library.SharedLibrary.Define;
     using ContentTypeTextNet.Library.SharedLibrary.IF;
+    using ContentTypeTextNet.Library.SharedLibrary.Logic;
     using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
     using ContentTypeTextNet.Pe.Library.PeData.Define;
     using ContentTypeTextNet.Pe.Library.PeData.Item;
@@ -675,6 +676,56 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
             };
 
             return GetEnabledClipboardTypeList(types, list).First();
+        }
+
+        /// <summary>
+        /// 同一設定でうまいことデータを取得する。
+        /// </summary>
+        /// <param name="captureType"></param>
+        /// <param name="window"></param>
+        /// <param name="nonProcess"></param>
+        /// <returns></returns>
+        public static ClipboardData GetClipboardDataDefault(ClipboardType captureType, IWindowsHandle window, INonProcess nonProcess)
+        {
+            try {
+                var exceptions = new List<Exception>();
+                var retry = new TimeRetry<ClipboardData>() {
+                    WaitTime = Constants.clipboardGetDataRetryWaitTime,
+                    WaitMaxCount = Constants.clipboardGetDataRetryMaxCount,
+                    ExecuteFunc = (int waitCurrentCount, ref ClipboardData result) => {
+                        ClipboardData data = null;
+                        try {
+                            data = ClipboardUtility.GetClipboardData(captureType, window.Handle);
+                        } catch(Exception ex) {
+                            exceptions.Add(ex);
+                        }
+                        var hasData = data != null;
+                        if(hasData) {
+                            result = data;
+                        }
+                        return hasData;
+                    }
+                };
+                retry.Run();
+
+                if(!retry.WaitOver) {
+                    return retry.Result;
+                } else if(exceptions.Any()) {
+                    if(exceptions.Count == 1) {
+                        nonProcess.Logger.Error(exceptions.First());
+                    } else {
+                        nonProcess.Logger.Error(
+                            nonProcess.Language["log/clipboard/get-error"],
+                            string.Join(Environment.NewLine, exceptions.Select(ex => ex.ToString()))
+                        );
+                    }
+                }
+            } catch(AccessViolationException ex) {
+                // #251
+                nonProcess.Logger.Error(ex);
+            }
+
+            return null;
         }
     }
 }

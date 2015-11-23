@@ -1987,45 +1987,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
             this._clipboardPreviousTime = now;
 
-            ClipboardData clipboardData = null;
-            try {
-                var exceptions = new List<Exception>();
-                var retry = new TimeRetry<ClipboardData>();
-                retry.WaitTime = Constants.clipboardGetDataRetryWaitTime;
-                retry.WaitMaxCount = Constants.clipboardGetDataRetryMaxCount;
-                retry.ExecuteFunc = (int waitCurrentCount, ref ClipboardData result) => {
-                    ClipboardData data = null;
-                    try {
-                        data = ClipboardUtility.GetClipboardData(CommonData.MainSetting.Clipboard.CaptureType, MessageWindow.Handle);
-                    }
-                    catch(Exception ex) {
-                        exceptions.Add(ex);
-                    }
-                    var hasData = data != null;
-                    if(hasData) {
-                        result = data;
-                    }
-                    return hasData;
-                };
-                retry.Run();
-                if(!retry.WaitOver) {
-                    clipboardData = retry.Result;
-                } else if(exceptions.Any()) {
-                    if(exceptions.Count == 1) {
-                        CommonData.Logger.Error(exceptions.First());
-                    } else {
-                        CommonData.Logger.Error(
-                            CommonData.Language["log/clipboard/get-error"],
-                            string.Join(Environment.NewLine, exceptions.Select(ex => ex.ToString()))
-                        );
-                    }
-                }
-
-            } catch(AccessViolationException ex) {
-                // #251
-                CommonData.Logger.Error(ex);
-                return;
-            }
+            var clipboardData = ClipboardUtility.GetClipboardDataDefault(CommonData.MainSetting.Clipboard.CaptureType, MessageWindow, CommonData.NonProcess);
             if(clipboardData == null || clipboardData.Type == ClipboardType.None) {
                 CommonData.NonProcess.Logger.Trace(CommonData.NonProcess.Language["log/clipboard/capture/not-support"]);
                 return;
