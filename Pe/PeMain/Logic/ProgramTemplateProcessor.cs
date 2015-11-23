@@ -31,7 +31,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
     /// C#限定でムリくりアプリケーション用テンプレート処理。
     /// </summary>
     [Serializable]
-    public class ProgramTemplateProcessor: T4TemplateProcessor
+    public class ProgramTemplateProcessor: T4TemplateProcessor, IHavingNonProcess
     {
         #region define
 
@@ -39,13 +39,17 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 
         #endregion
 
-        public ProgramTemplateProcessor(ILogger logger = null)
-            : base(logger)
-        { }
+        public ProgramTemplateProcessor(INonProcess nonProcess)
+            : base(nonProcess != null ? nonProcess.Logger: null)
+        {
+            NonProcess = nonProcess;
+        }
 
-        public ProgramTemplateProcessor(TextTemplatingEngineHost host, ILogger logger = null)
-            : base(host, logger)
-        { }
+        public ProgramTemplateProcessor(TextTemplatingEngineHost host, INonProcess nonProcess)
+            : base(host, nonProcess != null ? nonProcess.Logger : null)
+        {
+            NonProcess = nonProcess;
+        }
 
         #region property
 
@@ -65,10 +69,10 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 
         protected void ResetVariable()
         {
-            var clipboardData = ClipboardUtility.GetClipboardData(ClipboardType.Text, IntPtr.Zero);
+            var clipboardData = ClipboardUtility.GetClipboardDataDefault(ClipboardType.Text, IntPtr.Zero, NonProcess);
 
             Variable[TemplateReplaceKey.programTimestamp] = DateTime.Now;
-            Variable[TemplateReplaceKey.programClipboard] = clipboardData.Body.Text ?? string.Empty;
+            Variable[TemplateReplaceKey.programClipboard] = clipboardData != null ? clipboardData.Body.Text ?? string.Empty: string.Empty;
             Variable[TemplateReplaceKey.programApplicationName] = Constants.ApplicationName;
             Variable[TemplateReplaceKey.programApplicationVersion] = Constants.ApplicationVersion;
             Variable[TemplateReplaceKey.programApplicationVersionNumber] = Constants.ApplicationVersionNumber;
@@ -123,6 +127,12 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 
             return base.TransformText_Impl();
         }
+
+        #endregion
+
+        #region IHavingNonProcess
+
+        public INonProcess NonProcess { get; private set; }
 
         #endregion
     }

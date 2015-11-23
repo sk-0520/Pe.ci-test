@@ -76,7 +76,19 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
             }
 
             try {
-                action();
+                // TODO: 再試行用ロジック未使用, 定数直打ち
+                var count = 0;
+                var maxCount = 5;
+                do {
+                    try {
+                        action();
+                        Debug.WriteLine("Copy: OK");
+                        break;
+                    } catch(Exception ex) {
+                        Debug.WriteLine(ex);
+                        Debug.WriteLine("Copy: NG");
+                    }
+                } while(count++ < maxCount);
             } finally {
                 if(enabledWatch.HasValue) {
                     Debug.Assert(!watcher.ClipboardEnabledApplicationCopy);

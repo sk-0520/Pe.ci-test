@@ -119,6 +119,12 @@
 				</comments>
 			</note>
 			<note rev="">
+				<message>#377: テンプレートの置換処理(文字列orT4)でクリップボードを使用した場合にクリップボードオープンのエラーが発生する可能性あり</message>
+				<comments>
+					<comment>本改修に伴いコピー操作の再試行を実装(全処理に影響)</comment>
+				</comments>
+			</note>
+			<note rev="">
 				<message></message>
 			</note>
 		</group>
