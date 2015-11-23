@@ -91,6 +91,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Item\ColorPairItemModelTest.cs" />
+    <Compile Include="Item\FirstRunningItemModelTest.cs" />
     <Compile Include="Item\FloatToolbarItemModelTest.cs" />
     <Compile Include="Item\IconItemModelTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
