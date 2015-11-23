@@ -79,7 +79,7 @@
 					<comment>フィードバック等のユーザ情報収集時に使用されます</comment>
 					<comment>設定画面の本体設定タブで再設定が可能です</comment>
 					<comment>UI追加に伴いランチャーD&amp;D設定はランチャータブへ移動しました</comment>
-				</cooments>
+				</comments>
 			</note>
 			<note rev="">
 				<message>#297: フィードバックをPe内で気楽に入力</message>
@@ -87,7 +87,7 @@
 					<comment>通知領域Peアイコンコンテキストメニュー 情報→フィードバックで入力できます</comment>
 					<comment>入力データの送信にはインターネット接続が必要になります</comment>
 					<comment>データに関しては追々ヘルプ書きます</comment>
-				</cooments>
+				</comments>
 			</note>
 			<note rev="">
 				<message></message>
