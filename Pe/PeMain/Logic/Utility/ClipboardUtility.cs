@@ -603,14 +603,21 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
             NativeMethods.SetForegroundWindow(hWnd);
             if(clipboardWatcher.UsingClipboard) {
                 // 現在クリップボードを一時退避
-                var clipboardItem = ClipboardUtility.GetClipboardData_Impl(ClipboardType.All, hWnd);
-                try {
-                    ClipboardUtility.CopyText(outputText, clipboardWatcher);
-                    NativeMethods.SendMessage(hWnd, WM.WM_PASTE, IntPtr.Zero, IntPtr.Zero);
-                } finally {
-                    if(clipboardItem.Type != ClipboardType.None) {
-                        ClipboardUtility.CopyClipboardItem(clipboardItem, clipboardWatcher);
+                //var clipboardItem = ClipboardUtility.GetClipboardData_Impl(ClipboardType.All, hWnd);
+                var clipboardData = ClipboardUtility.GetClipboardDataDefault(ClipboardType.All, hWnd, nonProcess);
+                if(clipboardData != null) {
+                    try {
+                        ClipboardUtility.CopyText(outputText, clipboardWatcher);
+                        NativeMethods.SendMessage(hWnd, WM.WM_PASTE, IntPtr.Zero, IntPtr.Zero);
+                    } finally {
+                        if(clipboardData.Type != ClipboardType.None) {
+                            ClipboardUtility.CopyClipboardItem(clipboardData, clipboardWatcher);
+                        } else {
+                            Clipboard.Clear();
+                        }
                     }
+                } else {
+                    nonProcess.Logger.Error(nonProcess.Language["log/clipboard/using-error"]);
                 }
             } else {
                 SendKeysUtility.Send(outputText);
@@ -682,10 +689,10 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         /// 同一設定でうまいことデータを取得する。
         /// </summary>
         /// <param name="captureType"></param>
-        /// <param name="window"></param>
+        /// <param name="hWnd"></param>
         /// <param name="nonProcess"></param>
         /// <returns></returns>
-        public static ClipboardData GetClipboardDataDefault(ClipboardType captureType, IWindowsHandle window, INonProcess nonProcess)
+        public static ClipboardData GetClipboardDataDefault(ClipboardType captureType, IntPtr hWnd, INonProcess nonProcess)
         {
             try {
                 var exceptions = new List<Exception>();
@@ -695,7 +702,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
                     ExecuteFunc = (int waitCurrentCount, ref ClipboardData result) => {
                         ClipboardData data = null;
                         try {
-                            data = ClipboardUtility.GetClipboardData(captureType, window.Handle);
+                            data = ClipboardUtility.GetClipboardData(captureType, hWnd);
                         } catch(Exception ex) {
                             exceptions.Add(ex);
                         }

@@ -1987,7 +1987,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
             this._clipboardPreviousTime = now;
 
-            var clipboardData = ClipboardUtility.GetClipboardDataDefault(CommonData.MainSetting.Clipboard.CaptureType, MessageWindow, CommonData.NonProcess);
+            var clipboardData = ClipboardUtility.GetClipboardDataDefault(CommonData.MainSetting.Clipboard.CaptureType, MessageWindow.Handle, CommonData.NonProcess);
             if(clipboardData == null || clipboardData.Type == ClipboardType.None) {
                 CommonData.NonProcess.Logger.Trace(CommonData.NonProcess.Language["log/clipboard/capture/not-support"]);
                 return;

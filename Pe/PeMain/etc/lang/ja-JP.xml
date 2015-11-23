@@ -452,6 +452,7 @@
 		<Item Id="log/clipboard/dup-item/move"    Word="クリップボード: 重複するクリップボードアイテムをリスト最上位へ移動" />
 		<Item Id="log/clipboard/dup-item/ignore"  Word="クリップボード: 重複するクリップボードアイテムが存在するため取り込まない" />
 		<Item Id="log/clipboard/get-error"  Word="クリップボード: 全取得試行失敗" />
+		<Item Id="log/clipboard/using-error"  Word="クリップボード: データ転送使用不可" />
 		<Item Id="log/auto-regist/message"  Word="ホームウィンドウ処理でのログ" />
 		<Item Id="log/hotkey/unregist/command"           Word="ホットキー解除失敗: コマンド" />
 		<Item Id="log/hotkey/unregist/hidden-file"       Word="ホットキー解除失敗: 隠しファイル" />
