@@ -65,7 +65,7 @@ namespace ContentTypeTextNet.Pe.PeMain.View
         {
             base.OnLoaded(sender, e);
 
-                this.webDocument.Navigated += WebHtml_Navigated;
+            this.webDocument.Navigated += WebHtml_Navigated;
         }
 
         protected override void OnClosed(EventArgs e)

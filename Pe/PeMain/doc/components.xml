@@ -4,7 +4,7 @@
 	<Component Kind="Library" Name="WPF NotifyIcon" Uri="http://www.hardcodet.net/wpf-notifyicon" License="CPOL" />
 	<Component Kind="Library" Name="Json.NET" Uri="http://www.newtonsoft.com/json" License="MIT" />
 	<Component Kind="Library" Name="Extended WPF Toolkit™ Community Edition" Uri="http://wpftoolkit.codeplex.com/" License="Ms-PL" />
-	<Component Kind="Library" Name="jQuery" Uri="https://jquery.com/" License=" 	MIT" />
+	<Component Kind="Library" Name="jQuery" Uri="https://jquery.com/" License="MIT" />
 	<Component Kind="Library" Name="Autosize" Uri="http://www.jacklmoore.com/autosize" License="MIT" />
 	
 	<Component Kind="Source" Name="IconExtractor" Uri="https://github.com/TsudaKageyu/IconExtractor" License="BSD License" />

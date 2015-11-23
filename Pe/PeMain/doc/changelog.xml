@@ -77,7 +77,12 @@
 				</cooments>
 			</note>
 			<note rev="">
-				<message></message>
+				<message>#297: フィードバックをPe内で気楽に入力</message>
+				<comments>
+					<comment>通知領域Peアイコンコンテキストメニュー 情報→フィードバックで入力できます</comment>
+					<comment>入力データの送信にはインターネット接続が必要になります</comment>
+					<comment>データに関しては追々ヘルプ書きます</comment>
+				</cooments>
 			</note>
 			<note rev="">
 				<message></message>

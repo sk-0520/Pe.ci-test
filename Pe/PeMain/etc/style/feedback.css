@@ -33,6 +33,10 @@ ul.questionnaire li.item *.input ul.level li.bad {
 	margin-left: 1ex;
 }
 
+ul.questionnaire li.item *.input ul.main {
+	list-style: none;
+}
+
 ul.questionnaire li.item *.title {
 	display:inline-block;
 	width: 4.5em;

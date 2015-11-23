@@ -96,9 +96,9 @@
 		<Item Id="tasktray/system-env/window/load" Word="保存しているウィンドウ状態を復帰(_L)" />
 		<Item Id="tasktray/system-env/window/timer" Word="タイマー保存(_T)" />
 		<Item Id="tasktray/system-env/window/system" Word="システム変更(_Y)" />
-		<Item Id="tasktray/info" Word="ヘルプ(_H)" />
-		<Item Id="tasktray/info/about" Word="@[APPLICATION:NAME] 情報(_A)" />
+		<Item Id="tasktray/info" Word="情報(_I)" />
 		<Item Id="tasktray/info/feedback" Word="フィードバック(_F)" />
+		<Item Id="tasktray/info/about" Word="@[APPLICATION:NAME] 情報(_A)" />
 		<Item Id="tasktray/exit" Word="終了(_X)" />
 
 		<Item Id="notify/info/command/show/title"      Word="コマンドウィンドウ" />
@@ -510,7 +510,7 @@
 
 		<!-- HTMLViewer -->
 		<!-- フィードバック -->
-		<Item Id="html-viewer/feedback"                     Word="フィードバック" />
+		<Item Id="html-viewer/feedback"                     Word="@[APPLICATION:NAME] フィードバック" />
 		<Item Id="html-viewer/feedback/message/title"       Word="フィードバック処理完了" />
 		<Item Id="html-viewer/feedback/message/success"     Word="ご協力ありがとうございます。本データを削除したい場合は下記IDをお伝えください(IDの再発行は出来ないためユーザー側で保管してください)。" />
 		<Item Id="html-viewer/feedback/message/failure"     Word="入力内容に誤りがあります(@[APPLICATION:NAME]から実施した場合、本メッセージが表示されない想定ですのでお手数ですがご報告願います)。" />

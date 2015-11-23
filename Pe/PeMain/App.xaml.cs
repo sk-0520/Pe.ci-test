@@ -93,11 +93,6 @@ namespace ContentTypeTextNet.Pe.PeMain
                     } else {
                         this._mainWorker.CheckUpdateProcessAsync();
                     }
-#if DEBUG
-                    this._mainWorker.FeedbackCommand.Execute(null);
-#else
-#   error !!!不要なDEBUGディレクティブ!!!
-#endif
                 } else {
                     // 終了
                     systemLogger.Information("application: cancel exec");
