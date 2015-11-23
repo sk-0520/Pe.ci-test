@@ -45,13 +45,18 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Utility
 
             foreach(var memberInfo in memberInfos) {
                 var srcValue = ReflectionUtility.GetMemberValue(memberInfo, src);
-                var srcClone = srcValue as IDeepClone;
-                if(srcClone != null) {
-                    //var dstClone = (IDeepClone)property.GetValue(dst);
-                    var dstClone = srcClone.DeepClone();
+                var srcDeepClone = srcValue as IDeepClone;
+                if(srcDeepClone != null) {
+                    var dstClone = srcDeepClone.DeepClone();
                     ReflectionUtility.SetMemberValue(memberInfo, ref dst, dstClone);
                 } else {
-                    ReflectionUtility.SetMemberValue(memberInfo, ref dst, srcValue);
+                    var srcCloneable = srcValue as ICloneable;
+                    if(srcCloneable != null) {
+                        var dstClone = srcCloneable.Clone();
+                        ReflectionUtility.SetMemberValue(memberInfo, ref dst, srcValue);
+                    } else {
+                        ReflectionUtility.SetMemberValue(memberInfo, ref dst, srcValue);
+                    }
                 }
             }
 

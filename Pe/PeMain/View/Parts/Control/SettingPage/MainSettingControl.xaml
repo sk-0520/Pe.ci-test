@@ -138,7 +138,7 @@
         </GroupBox>
       </StackPanel>
 
-      <StackPanel Grid.Column="2">
+      <StackPanel Grid.Column="2" HorizontalAlignment="Stretch">
         <GroupBox HorizontalAlignment="Stretch" Header="stream" AA:Language.Word="main-setting/stream" Style="{StaticResource DefaultGroupBox}">
           <Grid>
             <Grid.Resources>
@@ -180,14 +180,25 @@
             <xctk:ColorPicker Grid.Row="3" Grid.Column="2" Width="{StaticResource ColorWidth}" SelectedColor="{Binding ErrOutputBackColor}" Style="{StaticResource DefaultColorPicker}" />
           </Grid>
         </GroupBox>
-        <GroupBox HorizontalAlignment="Stretch" Header="launcher" AA:Language.Word="main-setting/launcher" Style="{StaticResource DefaultGroupBox}">
-          <GroupBox Header="drop mode" AA:Language.Word="main-setting/launcher/drop-mode">
-            <StackPanel Orientation="Vertical">
-              <RadioButton Content="window" AA:Language.Word="main-setting/launcher/drop-mode/window" IsChecked="{Binding FileDropMode, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static ADD:LauncherItemFileDropMode.ShowExecuteWindow}}" />
-              <RadioButton Content="arguments" AA:Language.Word="main-setting/launcher/drop-mode/arguments" IsChecked="{Binding FileDropMode, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static ADD:LauncherItemFileDropMode.ArgumentExecute}}" />
-            </StackPanel>
-          </GroupBox>
+
+        <GroupBox HorizontalAlignment="Stretch" Header="privacy" AA:Language.Word="main-setting/privacy" Style="{StaticResource DefaultGroupBox}">
+          <StackPanel HorizontalAlignment="Stretch">
+            <Grid HorizontalAlignment="Stretch">
+              <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+              </Grid.RowDefinitions>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5*" />
+                <ColumnDefinition Width="5*" />
+              </Grid.ColumnDefinitions>
+              <xctk:AutoSelectTextBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" AutoSelectBehavior="OnFocus" IsReadOnly="True" Style="{StaticResource DefaultTextBox}" Text="{Binding UserId, Mode=OneWay}" />
+              <Button Grid.Row="1" Grid.Column="0" Content="env" AA:Language.Word="main-setting/privacy/create/environment" Command="{Binding CreateUserIdFromEnvironmentCommand}" />
+              <Button Grid.Row="1" Grid.Column="1" Content="rnd" AA:Language.Word="main-setting/privacy/create/random"      Command="{Binding CreateUserIdFromRandomCommand}" />
+            </Grid>
+          </StackPanel>
         </GroupBox>
+
       </StackPanel>
 
 

@@ -144,10 +144,17 @@
       </MenuItem>
     </MenuItem>
     <Separator />
-    <MenuItem AA:Language.Word="tasktray/about" Header="about" Command="{Binding AboutCommand}">
-      <MenuItem.Icon>
-        <Image Source="{x:Static AM:AppResource.ApplicationIconSmall}" Style="{StaticResource DefaultImage}" />
-      </MenuItem.Icon>
+    <MenuItem AA:Language.Word="tasktray/info" >
+      <MenuItem AA:Language.Word="tasktray/info/feedback" Header="feedback" Command="{Binding FeedbackCommand}">
+        <MenuItem.Icon>
+          <Image Source="{x:Static AM:AppResource.CommonCommentImage}" Style="{StaticResource DefaultImage}" />
+        </MenuItem.Icon>
+      </MenuItem>
+      <MenuItem AA:Language.Word="tasktray/info/about" Header="about" Command="{Binding AboutCommand}">
+        <MenuItem.Icon>
+          <Image Source="{x:Static AM:AppResource.ApplicationIconSmall}" Style="{StaticResource DefaultImage}" />
+        </MenuItem.Icon>
+      </MenuItem>
     </MenuItem>
     <MenuItem AA:Language.Word="tasktray/exit" Header="exit" Command="{Binding ExitApplicationCommand}">
       <MenuItem.Icon>

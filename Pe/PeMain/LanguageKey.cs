@@ -24,8 +24,7 @@ namespace ContentTypeTextNet.Pe.PeMain
 
     public static class LanguageKey
     {
-        // 内部使用
-        #region common
+        #region 内部使用
 
         public const string applicationName = "APPLICATION:NAME";
         public const string applicationVersion = "APPLICATION:VERSION";
@@ -50,8 +49,7 @@ namespace ContentTypeTextNet.Pe.PeMain
 
         #endregion
 
-        // 言語ファイルの置き換え文字列
-        #region replace
+        #region 言語ファイルの置き換え文字列
 
         public const string acceptWeb = "ACCEPT-WEB";
         public const string acceptDevelopment = "ACCEPT-DEVELOPMENT";
@@ -109,6 +107,12 @@ namespace ContentTypeTextNet.Pe.PeMain
         public const string toolbarScreenName = "TOOLBAR-SCREEN-NAME";
 
         public const string noteTitle = "NOTE-TITLE";
+
+        #endregion
+
+        #region HtmlViewer
+
+        public const string htmlViewerTitleFeedBack = "html-viewer/feedback";
 
         #endregion
     }

@@ -41,6 +41,7 @@ namespace ContentTypeTextNet.Pe.PeMain
             //icon();
             //font();
             //box();
+            //browser();
         }
 
         void icon()
@@ -88,6 +89,11 @@ namespace ContentTypeTextNet.Pe.PeMain
             using(var stm = File.Create(@"Z:\image.png")) {
                 encoder.Save(stm);
             }
+        }
+
+        void browser()
+        {
+            SystemEnvironmentUtility.SetUsingBrowserVersionForExecutingAssembly(8000);
         }
 
 

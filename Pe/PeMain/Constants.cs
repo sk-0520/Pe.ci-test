@@ -80,6 +80,7 @@ namespace ContentTypeTextNet.Pe.PeMain
         public const string languageDirectoryName = "lang";
         public const string styleDirectoryName = "style";
         public const string scriptDirectoryName = "script";
+        const string htmlDirectoryName = "html";
         public const string documentDirectoryName = "doc";
 
         public const string logDirectoryName = "logs";
@@ -109,7 +110,17 @@ namespace ContentTypeTextNet.Pe.PeMain
         public const string templateSaveDirectoryName = "templates";
         public const string templateIndexFileName = "template-index.json";
 
+        [ConstantsProperty]
         public const string styleCommonFileName = "common.css";
+        [ConstantsProperty]
+        const string scriptJQueryFileName = "jquery.js";
+        [ConstantsProperty]
+        const string scriptAutosizeFileName = "autosize.js";
+        [ConstantsProperty]
+        const string htmlFeedbackFileName = "feedback.html";
+        [ConstantsProperty]
+        const string styleFeedbackFileName = "feedback.css";
+
 
         public const string languageDefaultFileName = "default.xml";
         public const string languageSearchPattern = "*.xml";
@@ -351,6 +362,9 @@ namespace ContentTypeTextNet.Pe.PeMain
         );
         public static readonly Size noteDefualtSize = new Size(200, 200);
 
+        [ConstantsProperty]
+        const string htmlViewerTagReplaceBreak = ",,";
+
         /// <summary>
         /// 実行パス
         /// </summary>
@@ -469,6 +483,10 @@ namespace ContentTypeTextNet.Pe.PeMain
         /// etc/script
         /// </summary>
         public static string ApplicationScriptDirectoryPath { get { return Path.Combine(ApplicationEtcDirectoryPath, scriptDirectoryName); } }
+        /// <summary>
+        /// etc/html
+        /// </summary>
+        public static string ApplicationHtmlDirectoryPath { get { return Path.Combine(ApplicationEtcDirectoryPath, htmlDirectoryName); } }
         /// <summary>
         /// doc/
         /// </summary>

@@ -21,7 +21,7 @@
         /*
         このソースは自動生成のため Constants-generator.tt を編集すること。
 
-        生成元ConstantsPropertyフィールド数: 9
+        生成元ConstantsPropertyフィールド数: 15
         生成元ConstantsRangeフィールド数: 22
         */
 
@@ -81,6 +81,61 @@
         }
 
         #endregion
+        #region styleCommonFileName
+        
+        public static String StyleCommonFileName
+        {
+            get
+            {
+                return styleCommonFileName;
+            }
+        }
+
+        #endregion
+        #region scriptJQueryFileName
+        
+        public static String ScriptJQueryFileName
+        {
+            get
+            {
+                return scriptJQueryFileName;
+            }
+        }
+
+        #endregion
+        #region scriptAutosizeFileName
+        
+        public static String ScriptAutosizeFileName
+        {
+            get
+            {
+                return scriptAutosizeFileName;
+            }
+        }
+
+        #endregion
+        #region htmlFeedbackFileName
+        
+        public static String HtmlFeedbackFileName
+        {
+            get
+            {
+                return htmlFeedbackFileName;
+            }
+        }
+
+        #endregion
+        #region styleFeedbackFileName
+        
+        public static String StyleFeedbackFileName
+        {
+            get
+            {
+                return styleFeedbackFileName;
+            }
+        }
+
+        #endregion
         #region archiveSearchPattern
         
         public static String ArchiveSearchPattern
@@ -99,6 +154,17 @@
             get
             {
                 return backupSearchPattern;
+            }
+        }
+
+        #endregion
+        #region htmlViewerTagReplaceBreak
+        
+        public static String HtmlViewerTagReplaceBreak
+        {
+            get
+            {
+                return htmlViewerTagReplaceBreak;
             }
         }
 

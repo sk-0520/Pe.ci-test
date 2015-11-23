@@ -12,6 +12,7 @@
   xmlns:ACE="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Converter.EnumLanguageConverter"
   xmlns:SC="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=SharedLibrary"
   xmlns:AD="clr-namespace:ContentTypeTextNet.Pe.PeMain.Define"
+  xmlns:ADD="clr-namespace:ContentTypeTextNet.Pe.Library.PeData.Define;assembly=PeData"
   
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
   mc:Ignorable="d" 
@@ -39,16 +40,21 @@
       <ACE:IconScaleLanguageConverter x:Key="IconScaleLanguageConverter" />
       <ACE:ToolbarButtonPositionLanguageConverter x:Key="ToolbarButtonPositionLanguageConverter" />
       <SC:LogicalMultiAndConverter x:Key="LogicalMultiAndConverter" />
+      <SC:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
     </ResourceDictionary>
   </AV:CommonDataUserControl.Resources>
   <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="*" />
+      <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
     <Grid.ColumnDefinitions>
       <ColumnDefinition Width="270"/>
       <ColumnDefinition Width="180*"/>
       <ColumnDefinition Width="Auto"/>
       <ColumnDefinition Width="140*"/>
     </Grid.ColumnDefinitions>
-    <GroupBox HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Style="{StaticResource DefaultGroupBox}">
+    <GroupBox Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Style="{StaticResource DefaultGroupBox}">
       <GroupBox.Header>
         <Grid HorizontalAlignment="Stretch">
           <Grid.ColumnDefinitions>
@@ -95,7 +101,8 @@
                 <TextBlock VerticalAlignment="Center">
                   <TextBlock.Text>
                     <MultiBinding Converter="{StaticResource DockTypeLanguageConverter}" >
-                      <Binding Path="" /><!-- *{Binding}* -->
+                      <Binding Path="" />
+                      <!-- *{Binding}* -->
                       <Binding Path="CommonData.Language" RelativeSource="{RelativeSource AncestorType=AV:CommonDataUserControl}" />
                     </MultiBinding>
                   </TextBlock.Text>
@@ -177,7 +184,7 @@
         </StackPanel>
       </Grid>
     </GroupBox>
-    <Grid Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+    <Grid Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
       <Grid.RowDefinitions>
         <RowDefinition Height="Auto" />
         <RowDefinition Height="*" />
@@ -255,13 +262,22 @@
         </TreeView.ItemContainerStyle>
       </TreeView>
     </Grid>
-    <GridSplitter Grid.Column="2" Style="{StaticResource DefaultVericalGridSplitter}" />
+    <GridSplitter Grid.Row="0" Grid.Column="2" Style="{StaticResource DefaultVericalGridSplitter}" />
     <AV:LauncherListControl
+      Grid.Row="0"
       Grid.Column="3"
       DataContext="{Binding LauncherItems}"
       x:Name="listItems"
       SelectedLauncherModel="{Binding DataContext.SelectedLauncherItem, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}, Mode=TwoWay}"
       DoubleClickCommand="{Binding DataContext.AppendChildLauncherItemCommand, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}}"
     />
+
+    <GroupBox Grid.Row="1" Grid.ColumnSpan="4" Header="drop mode" AA:Language.Word="toolbar-setting/launcher/drop-mode" Style="{StaticResource DefaultGroupBox}">
+      <StackPanel Orientation="Horizontal">
+        <RadioButton Content="window" AA:Language.Word="toolbar-setting/launcher/drop-mode/window" IsChecked="{Binding FileDropMode, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static ADD:LauncherItemFileDropMode.ShowExecuteWindow}}" />
+        <RadioButton Margin="8,0,0,0"  Content="arguments" AA:Language.Word="toolbar-setting/launcher/drop-mode/arguments" IsChecked="{Binding FileDropMode, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static ADD:LauncherItemFileDropMode.ArgumentExecute}}" />
+      </StackPanel>
+    </GroupBox>
+
   </Grid>
 </AV:CommonDataUserControl>

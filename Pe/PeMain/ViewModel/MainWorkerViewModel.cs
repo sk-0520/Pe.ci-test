@@ -56,8 +56,9 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
     using Hardcodet.Wpf.TaskbarNotification;
     using Microsoft.Win32;
     using System.Runtime;
-    using Data;
+    using ContentTypeTextNet.Pe.PeMain.Data;
     using System.Runtime.InteropServices;
+    using ContentTypeTextNet.Pe.PeMain.Data.Model;
 
     public sealed class MainWorkerViewModel: ViewModelBase, IAppSender, IClipboardWatcher, IHavingView<TaskbarIcon>, IHavingCommonData
     {
@@ -402,6 +403,39 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
         }
 
+        public ICommand FeedbackCommand
+        {
+            get
+            {
+                var result = CreateCommand(
+                    o => {
+                        var model = new HtmlViewerModel() {
+                            TitleLanguageKey = LanguageKey.htmlViewerTitleFeedBack,
+                            HtmlSource = File.ReadAllText(Path.Combine(Constants.ApplicationHtmlDirectoryPath, Constants.HtmlFeedbackFileName)),
+                            CustomStylesheet = File.ReadAllText(Path.Combine(Constants.ApplicationStyleDirectoryPath, Constants.StyleFeedbackFileName)),
+                        };
+                        model.ReplaceKeys["URI-FEEDBACK"] = Constants.UriFeedback;
+                        var map = HtmlViewerUtility.MakeCommonParameter(
+                            CommonData.MainSetting.RunningInformation,
+                            CommonData.Language,
+                            CommonData.VariableConstants,
+                            CommonData.ClipboardIndexSetting.Items,
+                            CommonData.NoteIndexSetting.Items,
+                            CommonData.TemplateIndexSetting.Items
+                        );
+                        foreach(var pair in map) {
+                            model.ReplaceKeys[pair.Key] = pair.Value;
+                        }
+
+                        var window = SendCreateWindow(WindowKind.HtmlViewer, model, null);
+                        window.ShowDialog();
+                    }
+                );
+
+                return result;
+            }
+        }
+
         /// <summary>
         /// プログラム終了。
         /// </summary>
@@ -721,6 +755,11 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                         SaveSetting();
                     }
                 } else {
+                    var ieVersion = SystemEnvironmentUtility.GetInternetExplorerVersion();
+                    CommonData.Logger.Information("IE version: " + ieVersion);
+                    SystemEnvironmentUtility.SetUsingBrowserVersionForExecutingAssembly(ieVersion);
+                    Application.Current.Exit += Current_Exit;
+
                     // 前回バージョンが色々必要なのでインクリメント前の生情報を保持しておく。
                     var previousVersion = (Version)CommonData.MainSetting.RunningInformation.LastExecuteVersion;
                     ResetCulture(CommonData.NonProcess);
@@ -1669,6 +1708,12 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                     }
                     break;
 
+                case WindowKind.HtmlViewer:
+                    {
+                        window = new HtmlViewerWindow();
+                        window.SetCommonData(CommonData, extensionData);
+                    }
+                    break;
 
                 default:
                     throw new NotImplementedException();
@@ -2330,5 +2375,10 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             SaveIndex(timer.IndexKind);
         }
 
+        private void Current_Exit(object sender, ExitEventArgs e)
+        {
+            Application.Current.Exit -= Current_Exit;
+            SystemEnvironmentUtility.ResetUsingBrowserVersionForExecutingAssembly();
+        }
     }
 }
