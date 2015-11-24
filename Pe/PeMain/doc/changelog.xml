@@ -99,6 +99,15 @@
 				<message>#390: コマンドランチャーでディレクトリパスを入力した際に親ディレクトリも表示する</message>
 			</note>
 			<note rev="">
+				<message>#389: ランチャーアイテム選択リストのフィルタリング機能の一致方法を改善する</message>
+				<comments>
+					<comment>コマンドランチャーとランチャーアイテム一覧で実装が分かれていたのを統合しました</comment>
+					<comment>入力文字列の先頭1文字で検索方法が変わります</comment>
+					<comment>大文字: 前方一致 + 大文字小文字を区別する</comment>
+					<comment>小文字: 部分一致 + 大文字小文字を区別しない</comment>
+				</comments>
+			</note>
+			<note rev="">
 				<message></message>
 			</note>
 		</group>
