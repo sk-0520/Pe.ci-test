@@ -192,6 +192,7 @@
     </Content>
     <Compile Include="LanguageKey.cs" />
     <Compile Include="Logic\Property\FontModelProperty.cs" />
+    <Compile Include="Logic\UserInformationSender.cs" />
     <Compile Include="Logic\Utility\HtmlViewerUtility.cs" />
     <Compile Include="Logic\Utility\ImageUtility.cs" />
     <Compile Include="Logic\Utility\LauncherToolbarUtility.cs" />
