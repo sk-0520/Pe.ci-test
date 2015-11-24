@@ -96,7 +96,7 @@
 				</comments>
 			</note>
 			<note rev="">
-				<message></message>
+				<message>#390: コマンドランチャーでディレクトリパスを入力した際に親ディレクトリも表示する</message>
 			</note>
 			<note rev="">
 				<message></message>
