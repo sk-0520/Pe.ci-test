@@ -291,7 +291,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 return GetAllCommandItems();
             }
             var items = LauncherItemSetting.Items
-                .Where(i => i.Name.StartsWith(filter, StringComparison.CurrentCultureIgnoreCase))
+                .Where(i => LauncherItemUtility.FilterItemName(i, filter))
                 .Select(i => new CommandItemViewModel(Model.IconScale, i, AppNonProcess, AppSender))
             ;
 
