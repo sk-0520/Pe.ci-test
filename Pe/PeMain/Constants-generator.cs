@@ -171,6 +171,8 @@
         #endregion
         #region issue_355_logFileName
         
+
+[Obsolete]
         public static String Issue_355_logFileName
         {
             get

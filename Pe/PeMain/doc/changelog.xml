@@ -66,7 +66,11 @@
 				</comments>
 			</note>
 			<note rev="">
-				<message></message>
+				<message>#355: 終了時にログを強制出力する</message>
+				<comments>
+					<comment>うまくいかんし#355自体は対応やめます</comment>
+					<comment>#393で頑張りますん</comment>
+				</comments>
 			</note>
 			<note rev="">
 				<message></message>

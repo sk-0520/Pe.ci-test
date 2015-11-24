@@ -2301,18 +2301,8 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         void SystemEvents_SessionEnding(object sender, SessionEndingEventArgs e)
         {
-            var logger = (AppLogger)CommonData.Logger;
-            using(var stream = AppUtility.CreateFileLoggerStream(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.LogDirectoryPath), Constants.Issue_355_logFileName)) {
-                stream.AutoFlush = true;
-                try {
-                    logger.AttachmentStream(stream, false);
-                    CommonData.Logger.Trace("#355 start");
-                    CommonData.Logger.Information(CommonData.Language["log/session/ending"], e);
-                    SaveSetting();
-                } finally {
-                    logger.DetachmentStream(stream);
-                }
-            }
+            CommonData.Logger.Information(CommonData.Language["log/session/ending"], e);
+            SaveSetting();
         }
 
         void Window_Closed(object sender, EventArgs e)
