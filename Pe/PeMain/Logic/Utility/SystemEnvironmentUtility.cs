@@ -140,10 +140,10 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
             if(version == webbrowserDefaultVersion) {
                 ResetUsingBrowserVersion(programName);
             } else {
-                using(var key = Registry.CurrentUser.OpenSubKey(webbrowserEmulationPath, true)) {
+                using(var key = Registry.CurrentUser.CreateSubKey(webbrowserEmulationPath)) {
                     key.SetValue(programName, version, RegistryValueKind.DWord);
                 }
-                using(var key = Registry.CurrentUser.OpenSubKey(webbrowserRenderingPath, true)) {
+                using(var key = Registry.CurrentUser.CreateSubKey(webbrowserRenderingPath)) {
                     key.SetValue(programName, version, RegistryValueKind.DWord);
                 }
             }
@@ -193,10 +193,14 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         public static void ResetUsingBrowserVersion(string programName)
         {
             using(var key = Registry.CurrentUser.OpenSubKey(webbrowserEmulationPath, true)) {
-                key.DeleteValue(programName, false);
+                if(key != null) {
+                    key.DeleteValue(programName, false);
+                }
             }
             using(var key = Registry.CurrentUser.OpenSubKey(webbrowserRenderingPath, true)) {
-                key.DeleteValue(programName, false);
+                if(key != null) {
+                    key.DeleteValue(programName, false);
+                }
             }
         }
 
