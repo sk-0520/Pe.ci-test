@@ -138,6 +138,15 @@
 				</comments>
 			</note>
 			<note rev="">
+				<message>#394: システム環境情報取得時の取得エラーの例外キャッチをやめる</message>
+			</note>
+			<note rev="">
+				<message></message>
+			</note>
+			<note rev="">
+				<message></message>
+			</note>
+			<note rev="">
 				<message></message>
 			</note>
 		</group>

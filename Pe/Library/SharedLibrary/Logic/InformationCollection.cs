@@ -25,6 +25,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic
     using System.Text;
     using System.Threading.Tasks;
     using ContentTypeTextNet.Library.SharedLibrary.CompatibleForms;
+    using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
     using ContentTypeTextNet.Library.SharedLibrary.Data;
 
     /// <summary>
@@ -51,19 +52,27 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic
             Dispose(true);
         }
 
-        protected virtual InformationGroup GetInfo(ManagementClass managementClass, string groupName, IEnumerable<string> keys)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="managementClass"></param>
+        /// <param name="groupName"></param>
+        /// <param name="selectKeys">取り出すキー名を指定。nullで制限なし。</param>
+        /// <returns></returns>
+        protected virtual InformationGroup GetInfo(ManagementClass managementClass, string groupName, IEnumerable<string> selectKeys)
         {
             var result = new InformationGroup(groupName);
-            if(keys != null) {
-                using(var mc = managementClass.GetInstances()) {
-                    foreach(var mo in mc) {
-                        foreach(var key in keys) {
-                            try {
-                                result.Items[key] = mo[key];
-                            } catch(ManagementException ex) {
-                                result.Items[key] = ex;
-                            }
-                        }
+            using(var mc = managementClass.GetInstances()) {
+                foreach(var mo in mc) {
+                    var collection = mo.Properties
+                        .OfType<PropertyData>()
+                        .If(
+                            selectKeys != null,
+                            ps => ps.Where(p => selectKeys.Contains(p.Name))
+                        )
+                    ;
+                    foreach(var property in collection) {
+                        result.Items[property.Name] = property.Value;
                     }
                 }
             }
