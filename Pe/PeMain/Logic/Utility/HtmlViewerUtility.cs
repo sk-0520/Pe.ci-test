@@ -95,7 +95,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
                 { "USER-SETTING:TEMPLATE-COUNT", template.Count.ToString() },
                 { "USER-SETTING:NOTE-COUNT", note.Count.ToString() },
             };
-            using(var info = new InformationCollection()) {
+            using(var info = new AppInformationCollection()) {
                 var infoMem = info.GetMemory();
                 result["ENVIRONMENT:MEMORY"] = infoMem.Items["TotalVisibleMemorySize"].ToString();
             }

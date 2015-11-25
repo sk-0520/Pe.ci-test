@@ -132,7 +132,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         /// <returns></returns>
         public static string CreateUserIdFromEnvironment()
         {
-            using(var info = new InformationCollection()) {
+            using(var info = new AppInformationCollection()) {
                 var infoEnv = info.GetCPU();
                 var infoMem = info.GetMemory();
 
