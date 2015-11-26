@@ -81,73 +81,11 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic
         }
 
         /// <summary>
-        /// http://www.wmifun.net/library/win32_processor.html
         /// </summary>
         /// <returns></returns>
         public virtual InformationGroup GetCPU()
         {
-            var keys = new[] {
-                // アドレス幅
-                "AddressWidth",
-                // アーキテクチャ
-                "Architecture",
-                // 状態
-                "Availability",
-                // エラーコード
-                "ConfigManagerErrorCode",
-                // 構成
-                "ConfigManagerUserConfig",
-                // 使用状況から起こる状態の変化
-                "CpuStatus",
-                // 現在の速度 (MHz)
-                "CurrentClockSpeed",
-                // 電圧
-                "CurrentVoltage",
-                // データ幅
-                "DataWidth",
-                // 説明
-                "Description",
-                // デバイス
-                "DeviceID",
-                // 外部クロックの周波数
-                "ExtClock",
-                // プロセッサ ファミリ
-                "Family",
-                "L2CacheSize",
-                "L2CacheSpeed",
-                "L3CacheSize",
-                "L3CacheSpeed",
-                "Level",
-                "LoadPercentage",
-                "Manufacturer",
-                "MaxClockSpeed",
-                "Name",
-                "NumberOfCores",
-                "NumberOfLogicalProcessors",
-                "OtherFamilyDescription",
-                "PNPDeviceID",
-                "PowerManagementCapabilities",
-                "PowerManagementSupported",
-                "ProcessorId",
-                "ProcessorType",
-                "Revision",
-                "Role",
-                "SecondLevelAddressTranslationExtensions",
-                "SocketDesignation",
-                "Status",
-                "StatusInfo",
-                "Stepping",
-                "SystemCreationClassName",
-                "SystemName",
-                "UniqueId",
-                "UpgradeMethod",
-                "Version",
-                "VirtualizationFirmwareEnabled",
-                "VMMonitorModeExtensions",
-                "VoltageCaps",
-            };
-
-            var result = GetInfo(this._managementCPU, "CPU", keys);
+            var result = GetInfo(this._managementCPU, "CPU", null);
             return result;
         }
 
@@ -157,17 +95,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic
         /// <returns></returns>
         public virtual InformationGroup GetMemory()
         {
-            var keys = new[] {
-                // 物理メモリ(合計:KB)
-                "TotalVisibleMemorySize",
-                // 物理メモリ(空き)
-                "FreePhysicalMemory",
-                // 仮想メモリ(合計)
-                "TotalVirtualMemorySize",
-                // 仮想メモリ(空き)
-                "FreeVirtualMemory",
-            };
-            var result = GetInfo(this._managementOS, "memory", keys);
+            var result = GetInfo(this._managementOS, "memory", null);
             return result;
         }
 
