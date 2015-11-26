@@ -431,6 +431,7 @@ namespace ContentTypeTextNet.Pe.PeMain
         public static string UriForum { get { return ConfigurationManager.AppSettings["uri-forum"]; } }
         public static string UriHelp { get { return ConfigurationManager.AppSettings["uri-help"]; } }
         public static string UriFeedback { get { return ConfigurationManager.AppSettings["uri-feedback"]; } }
+        public static string UriUserInformation { get { return ConfigurationManager.AppSettings["uri-user-information"]; } }
 
         public static int LoggingStockCount { get { return int.Parse(ConfigurationManager.AppSettings["logging-stock-count"]); } }
         public static int CacheIndexTemplate { get { return int.Parse(ConfigurationManager.AppSettings["cache-index-template"]); } }

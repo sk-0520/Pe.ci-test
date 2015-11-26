@@ -19,10 +19,48 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Net.Http;
     using System.Text;
     using System.Threading.Tasks;
+    using ContentTypeTextNet.Library.SharedLibrary.Logic;
+    using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
 
-    public class UserInformationSender
+    public class UserInformationSender: DisposeFinalizeBase
     {
+        public UserInformationSender(Uri uri, RunningInformationSettingModel runningInformation)
+            : base()
+        {
+            Uri = uri;
+            AppInformationCollection = new AppInformationCollection();
+            RunningInformation = runningInformation;
+        }
+
+        #region property
+
+        public Uri Uri { get; private set; }
+        public RunningInformationSettingModel RunningInformation { get; private set; }
+    AppInformationCollection AppInformationCollection { get; set; }
+
+        #endregion
+
+        public Task<HttpResponseMessage> SendAync()
+        {
+            var net = new HttpClient();
+            // LINQでうまい方法が思いつかん
+            var map = new Dictionary<string, string>();
+            foreach(var info in AppInformationCollection.Get()) {
+                foreach(var item in info.Items) {
+                    var key = string.Format("{0}-{1}", info.Title, item.Key);
+                    map[key] = item.Value != null ? item.Value.ToString() : string.Empty;
+                }
+            }
+            map["app-key"] = "USER";
+            map["auto-id"] = RunningInformation.UserId;
+
+            System.Diagnostics.Debug.WriteLine(string.Join("\t", map.Keys));
+
+            var body = new FormUrlEncodedContent(map);
+                return net.PostAsync(Uri, body);
+        }
     }
 }

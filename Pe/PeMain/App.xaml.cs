@@ -93,6 +93,7 @@ namespace ContentTypeTextNet.Pe.PeMain
                     } else {
                         this._mainWorker.CheckUpdateProcessAsync();
                     }
+                    this._mainWorker.SendUserInformationPost();
                 } else {
                     // 終了
                     systemLogger.Information("application: cancel exec");

@@ -1562,6 +1562,11 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             ReceiveApplicationCommand(applicationCommand, sender, arg);
         }
 
+        public void SendUserInformationPost()
+        {
+            ReceiveUserInformationPost();
+        }
+
         #endregion
 
         #region IAppSender-Implement
@@ -2218,6 +2223,19 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
                 default:
                     throw new NotImplementedException();
+            }
+        }
+
+        async void ReceiveUserInformationPost()
+        {
+            // ネットワーク接続可能か？
+            var nic = NetworkInterface.GetIsNetworkAvailable();
+            if(!nic) {
+                return;
+            }
+
+            using(var ui = new UserInformationSender(new Uri(Constants.UriUserInformation), CommonData.MainSetting.RunningInformation)) {
+                var res = await ui.SendAync();
             }
         }
 
