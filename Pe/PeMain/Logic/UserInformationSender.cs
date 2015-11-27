@@ -39,13 +39,18 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 
         public Uri Uri { get; private set; }
         public RunningInformationSettingModel RunningInformation { get; private set; }
-    AppInformationCollection AppInformationCollection { get; set; }
+
+        AppInformationCollection AppInformationCollection { get; set; }
+        protected HttpClient Sender { get; private set; }
+        protected FormUrlEncodedContent SendData { get; private set; }
 
         #endregion
 
+        #region function
+
         public Task<HttpResponseMessage> SendAync()
         {
-            var net = new HttpClient();
+            Sender = new HttpClient();
             // LINQでうまい方法が思いつかん
             var map = new Dictionary<string, string>();
             foreach(var info in AppInformationCollection.Get()) {
@@ -57,10 +62,33 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
             map["app-key"] = "USER";
             map["auto-id"] = RunningInformation.UserId;
 
+#if DEBUG
             System.Diagnostics.Debug.WriteLine(string.Join("\t", map.Keys));
-
-            var body = new FormUrlEncodedContent(map);
-                return net.PostAsync(Uri, body);
+#endif
+            SendData = new FormUrlEncodedContent(map);
+            return Sender.PostAsync(Uri, SendData);
         }
+
+        #endregion
+
+        #region DisposeFinalizeBase
+
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                if(Sender != null) {
+                    Sender.Dispose();
+                    Sender = null;
+                }
+                if(SendData != null) {
+                    SendData.Dispose();
+                    SendData = null;
+                }
+            }
+
+            base.Dispose(disposing);
+        }
+
+        #endregion
     }
 }
