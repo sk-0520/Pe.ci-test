@@ -33,6 +33,8 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
             Uri = uri;
             AppInformationCollection = new AppInformationCollection();
             RunningInformation = runningInformation;
+
+            CreateSendData();
         }
 
         #region property
@@ -42,15 +44,14 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 
         AppInformationCollection AppInformationCollection { get; set; }
         protected HttpClient Sender { get; private set; }
-        protected FormUrlEncodedContent SendData { get; private set; }
+        public FormUrlEncodedContent SendData { get; private set; }
 
         #endregion
 
         #region function
 
-        public Task<HttpResponseMessage> SendAync()
+        void CreateSendData()
         {
-            Sender = new HttpClient();
             // LINQでうまい方法が思いつかん
             var map = new Dictionary<string, string>();
             foreach(var info in AppInformationCollection.Get()) {
@@ -60,12 +61,19 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
                 }
             }
             map["app-key"] = "USER";
+            map["app-result"] = "json";
             map["auto-id"] = RunningInformation.UserId;
 
 #if DEBUG
             System.Diagnostics.Debug.WriteLine(string.Join("\t", map.Keys));
 #endif
             SendData = new FormUrlEncodedContent(map);
+        }
+
+        public Task<HttpResponseMessage> SendAync()
+        {
+            Sender = new HttpClient();
+
             return Sender.PostAsync(Uri, SendData);
         }
 

@@ -59,6 +59,8 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
     using ContentTypeTextNet.Pe.PeMain.Data;
     using System.Runtime.InteropServices;
     using ContentTypeTextNet.Pe.PeMain.Data.Model;
+    using System.Net;
+    using System.Text;
 
     public sealed class MainWorkerViewModel: ViewModelBase, IAppSender, IClipboardWatcher, IHavingView<TaskbarIcon>, IHavingCommonData
     {
@@ -2233,9 +2235,37 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             if(!nic) {
                 return;
             }
+            // TODO: 許可されているか
+
 
             using(var ui = new UserInformationSender(new Uri(Constants.UriUserInformation), CommonData.MainSetting.RunningInformation)) {
-                var res = await ui.SendAync();
+                CommonData.Logger.Information(
+                    CommonData.Language["log/user-info/send/start"],
+                    await ui.SendData.ReadAsStringAsync()
+                );
+
+                var response = await ui.SendAync();
+                if(response.StatusCode != HttpStatusCode.OK) {
+                    // ログ出力用に生の文字列を取得する(ストリーム→データ変換した方が楽だけど生じゃなくなる)
+                    var result = await response.Content.ReadAsStringAsync();
+                    CommonData.Logger.Information(
+                        CommonData.Language["log/user-info/send/get-data"],
+                        result
+                    );
+                    using(var stream = new MemoryStream(Encoding.UTF8.GetBytes(result))) {
+                        var model = SerializeUtility.LoadJsonDataFromStream<ResponseDataModel>(stream);
+                        if(model.Success) {
+                            CommonData.Logger.Information(CommonData.Language["log/user-info/send/ok"]);
+                        } else {
+                            CommonData.Logger.Information(CommonData.Language["log/user-info/send/ng"]);
+                        }
+                    }
+                } else {
+                    CommonData.Logger.Information(
+                        CommonData.Language["log/user-info/send/get-failuer"],
+                        response.Headers
+                    );
+                }
             }
         }
 
