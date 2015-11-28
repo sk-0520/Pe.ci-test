@@ -477,7 +477,6 @@
 		<Item Id="log/privacy/nic"          Word="NICが有効ではありません" />
 		<Item Id="log/privacy/send"         Word="ユーザー情報送信準備" />
 		<Item Id="log/privacy/send/start"   Word="ユーザー情報送信開始" />
-		<Item Id="log/privacy/send/end"     Word="ユーザー情報送信完了" />
 		<Item Id="log/privacy/send/end/ok"  Word="ユーザー情報送信成功" />
 		<Item Id="log/privacy/send/end/ng"  Word="ユーザー情報送信失敗" />
 		<Item Id="log/privacy/send/failure" Word="ユーザー情報送信エラー" />

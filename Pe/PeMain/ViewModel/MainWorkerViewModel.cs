@@ -1564,9 +1564,9 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             ReceiveApplicationCommand(applicationCommand, sender, arg);
         }
 
-        public void SendUserInformationPost()
+        public void SendUserInformation()
         {
-            ReceiveUserInformationPost();
+            ReceiveUserInformation();
         }
 
         #endregion
@@ -2228,7 +2228,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
         }
 
-        async void ReceiveUserInformationPost()
+        async void ReceiveUserInformation()
         {
             // TODO: 許可されているか
             if(!CommonData.MainSetting.RunningInformation.SendPersonalInformation) {
@@ -2253,11 +2253,10 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 if(response.StatusCode == HttpStatusCode.OK) {
                     // ログ出力用に生の文字列を取得する(ストリーム→データ変換した方が楽だけど生じゃなくなる)
                     var result = await response.Content.ReadAsStringAsync();
-                    CommonData.Logger.Information(CommonData.Language["log/privacy/send/end"], result);
                     using(var stream = new MemoryStream(Encoding.UTF8.GetBytes(result))) {
                         var model = SerializeUtility.LoadJsonDataFromStream<ResponseDataModel>(stream);
                         var langKey = model.Success ? "log/privacy/send/end/ok" : "log/privacy/send/end/ng";
-                        CommonData.Logger.Information(CommonData.Language[langKey], model);
+                        CommonData.Logger.Information(CommonData.Language[langKey], new { Model = model, Raw = result});
                     }
                 } else {
                     CommonData.Logger.Information(CommonData.Language["log/privacy/send/failure"], response.Headers);

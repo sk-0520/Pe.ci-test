@@ -107,6 +107,6 @@ namespace ContentTypeTextNet.Pe.PeMain.IF
         /// <summary>
         /// ユーザー情報収集開始。
         /// </summary>
-        void SendUserInformationPost();
+        void SendUserInformation();
     }
 }
