@@ -474,12 +474,13 @@
 		<Item Id="log/hotkey/regist/show-front-note"     Word="ホットキー登録失敗: ノート前面表示" />
 		<Item Id="log/hotkey/regist/clipboard"           Word="ホットキー登録失敗: クリップボード" />
 		<Item Id="log/hotkey/regist/template"            Word="ホットキー登録失敗: テンプレート" />
-		<Item Id="log/privacy/nic"          Word="NICが有効ではありません" />
-		<Item Id="log/privacy/send"         Word="ユーザー情報送信準備" />
-		<Item Id="log/privacy/send/start"   Word="ユーザー情報送信開始" />
-		<Item Id="log/privacy/send/end/ok"  Word="ユーザー情報送信成功" />
-		<Item Id="log/privacy/send/end/ng"  Word="ユーザー情報送信失敗" />
-		<Item Id="log/privacy/send/failure" Word="ユーザー情報送信エラー" />
+		<Item Id="log/privacy/nic"              Word="NICが有効ではありません" />
+		<Item Id="log/privacy/send"             Word="ユーザー情報送信準備" />
+		<Item Id="log/privacy/send/start"       Word="ユーザー情報送信開始" />
+		<Item Id="log/privacy/send/end/ok"      Word="ユーザー情報送信成功" />
+		<Item Id="log/privacy/send/end/ng"      Word="ユーザー情報送信失敗" />
+		<Item Id="log/privacy/send/end/detail"  Word="ID: @[LOG-PRIVACY-SEND-DATA-ID]${br}---------------${br}受信整形データ:${br}@[LOG-PRIVACY-SEND-RECV-DATA]${br}---------------${br}受信生データ${br}@[LOG-PRIVACY-SEND-RECV-RAW]" />
+		<Item Id="log/privacy/send/failure"     Word="ユーザー情報送信エラー" />
 		
 		
 		<!-- テンプレート -->

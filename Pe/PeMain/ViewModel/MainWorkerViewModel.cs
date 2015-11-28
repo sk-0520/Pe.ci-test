@@ -2256,7 +2256,12 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                     using(var stream = new MemoryStream(Encoding.UTF8.GetBytes(result))) {
                         var model = SerializeUtility.LoadJsonDataFromStream<ResponseDataModel>(stream);
                         var langKey = model.Success ? "log/privacy/send/end/ok" : "log/privacy/send/end/ng";
-                        CommonData.Logger.Information(CommonData.Language[langKey], new { Model = model, Raw = result});
+                        var map = new Dictionary<string, string>() {
+                            { LanguageKey.logPrivacySendDataId, model.UserDataId },
+                            { LanguageKey.logPrivacySendRecvData, model.ToString() },
+                            { LanguageKey.logPrivacySendRecvRaw, result },
+                        };
+                        CommonData.Logger.Information(CommonData.Language[langKey], CommonData.Language["log/privacy/send/end/detail", map]);
                     }
                 } else {
                     CommonData.Logger.Information(CommonData.Language["log/privacy/send/failure"], response.Headers);
