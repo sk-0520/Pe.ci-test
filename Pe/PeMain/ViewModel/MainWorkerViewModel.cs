@@ -2250,7 +2250,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                     await ui.SendData.ReadAsStringAsync()
                 );
                 var response = await ui.SendAync();
-                if(response.StatusCode != HttpStatusCode.OK) {
+                if(response.StatusCode == HttpStatusCode.OK) {
                     // ログ出力用に生の文字列を取得する(ストリーム→データ変換した方が楽だけど生じゃなくなる)
                     var result = await response.Content.ReadAsStringAsync();
                     CommonData.Logger.Information(CommonData.Language["log/privacy/send/end"], result);

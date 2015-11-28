@@ -56,8 +56,9 @@
 		
 		<Item Id="accept/ok" Word="使用する(_A)" />
 		<Item Id="accept/ng" Word="使用しない(_Q)" />
-		<Item Id="update-check/release" Word="アップデートを確認する(_U)" />
-		<Item Id="update-check/rc" Word="RC版も確認対象とする(_R)" />
+		<Item Id="accept/update-check/release" Word="アップデートを確認する(_U)" />
+		<Item Id="accept/update-check/rc" Word="RC版も確認対象とする(_R)" />
+		<Item Id="accept/send-user-info"  Word="ユーザー情報送信を許可(_S)" />
 
 		<Item Id="home/close" Word="閉じる(_S)" />
 		<Item Id="home/auto-regist/title"   Word="ランチャー自動登録" />
@@ -349,7 +350,7 @@
 		<Item Id="main-setting/privacy" Word="プライバシー" />
 		<Item Id="main-setting/privacy/create/environment" Word="環境から作成(_C)" />
 		<Item Id="main-setting/privacy/create/random"      Word="ランダム作成(_R)" />
-		<Item Id="main-setting/privacy/send-user-info"     Word="ユーザー情報を送信する(_S)" />
+		<Item Id="main-setting/privacy/send-user-info"     Word="ユーザー情報送信を許可(_S)" />
 		
 		
 		<Item Id="toolbar-setting/screen" Word="識別(_I)" />

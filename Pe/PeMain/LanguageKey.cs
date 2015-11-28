@@ -63,7 +63,7 @@ namespace ContentTypeTextNet.Pe.PeMain
         public const string acceptNg = "ACCEPT-NG";
         public const string acceptRelease = "ACCEPT-CHECK-RELEASE";
         public const string acceptRc = "ACCEPT-CHECK-RC";
-
+        public const string acceptSendUserInformation = "ACCEPT-SEND-USER-INFO";
 
         public const string commandItemTag = "LAUNCHER-ITEM-TAG";
         public const string commandItemName = "LAUNCHER-ITEM-NAME";
