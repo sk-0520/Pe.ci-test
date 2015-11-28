@@ -84,6 +84,12 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
         [DataMember, IsDeepClone]
         public FirstRunningItemModel FirstRunning { get; set; }
 
+        /// <summary>
+        /// ユーザー情報を送信しても良いか。
+        /// </summary>
+        [DataMember, IsDeepClone]
+        public bool SendPersonalInformation { get; set; }
+
         #endregion
 
         #region IDeepClone
