@@ -291,7 +291,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 return GetAllCommandItems();
             }
             var items = LauncherItemSetting.Items
-                .Where(i => i.Name.StartsWith(filter, StringComparison.CurrentCultureIgnoreCase))
+                .Where(i => LauncherItemUtility.FilterItemName(i, filter))
                 .Select(i => new CommandItemViewModel(Model.IconScale, i, AppNonProcess, AppSender))
             ;
 
@@ -336,6 +336,10 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                                 .Where(fs => showHiddenFile ? true : !fs.IsHidden())
                                 .Select(fs => new CommandItemViewModel(Model.IconScale, fs.FullName, fs.IsDirectory(), fs.IsHidden(), AppNonProcess, AppSender))
                             ;
+                            if(isDir) {
+                                var parentItem = new CommandItemViewModel(Model.IconScale, inputPath, true, File.GetAttributes(inputPath).HasFlag(FileAttributes.Hidden), AppNonProcess, AppSender);
+                                files = new[] { parentItem }.Concat(files);
+                            }
                         } catch(IOException ex) {
                             AppNonProcess.Logger.Warning(ex);
                         } catch(UnauthorizedAccessException ex) {

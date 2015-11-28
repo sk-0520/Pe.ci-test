@@ -26,6 +26,24 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Extension
     public static class LinqExtension
     {
         /// <summary>
+        /// シーケンスを真偽値により処理を分岐させる。
+        /// </summary>
+        /// <typeparam name="TSource"></typeparam>
+        /// <typeparam name="TResult"></typeparam>
+        /// <param name="seq">入力シーケンス</param>
+        /// <param name="cond">条件</param>
+        /// <param name="t">真の場合に返すシーケンス</param>
+        /// <returns></returns>
+        public static IEnumerable<TSource> If<TSource>(this IEnumerable<TSource> seq, bool cond, Func<IEnumerable<TSource>, IEnumerable<TSource>> t)
+        {
+            if(cond) {
+                return t(seq);
+            } else {
+                return seq;
+            }
+        }
+
+        /// <summary>
         /// シーケンスを真偽値により処理を分岐させる
         /// </summary>
         /// <typeparam name="TSource"></typeparam>

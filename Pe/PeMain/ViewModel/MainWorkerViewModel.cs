@@ -56,8 +56,11 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
     using Hardcodet.Wpf.TaskbarNotification;
     using Microsoft.Win32;
     using System.Runtime;
-    using Data;
+    using ContentTypeTextNet.Pe.PeMain.Data;
     using System.Runtime.InteropServices;
+    using ContentTypeTextNet.Pe.PeMain.Data.Model;
+    using System.Net;
+    using System.Text;
 
     public sealed class MainWorkerViewModel: ViewModelBase, IAppSender, IClipboardWatcher, IHavingView<TaskbarIcon>, IHavingCommonData
     {
@@ -402,6 +405,39 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
         }
 
+        public ICommand FeedbackCommand
+        {
+            get
+            {
+                var result = CreateCommand(
+                    o => {
+                        var model = new HtmlViewerModel() {
+                            TitleLanguageKey = LanguageKey.htmlViewerTitleFeedBack,
+                            HtmlSource = File.ReadAllText(Path.Combine(Constants.ApplicationHtmlDirectoryPath, Constants.HtmlFeedbackFileName)),
+                            CustomStylesheet = File.ReadAllText(Path.Combine(Constants.ApplicationStyleDirectoryPath, Constants.StyleFeedbackFileName)),
+                        };
+                        model.ReplaceKeys["URI-FEEDBACK"] = Constants.UriFeedback;
+                        var map = HtmlViewerUtility.MakeCommonParameter(
+                            CommonData.MainSetting.RunningInformation,
+                            CommonData.Language,
+                            CommonData.VariableConstants,
+                            CommonData.ClipboardIndexSetting.Items,
+                            CommonData.NoteIndexSetting.Items,
+                            CommonData.TemplateIndexSetting.Items
+                        );
+                        foreach(var pair in map) {
+                            model.ReplaceKeys[pair.Key] = pair.Value;
+                        }
+
+                        var window = SendCreateWindow(WindowKind.HtmlViewer, model, null);
+                        window.ShowDialog();
+                    }
+                );
+
+                return result;
+            }
+        }
+
         /// <summary>
         /// プログラム終了。
         /// </summary>
@@ -721,6 +757,11 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                         SaveSetting();
                     }
                 } else {
+                    var ieVersion = SystemEnvironmentUtility.GetInternetExplorerVersion();
+                    CommonData.Logger.Information("IE version: " + ieVersion);
+                    SystemEnvironmentUtility.SetUsingBrowserVersionForExecutingAssembly(ieVersion);
+                    Application.Current.Exit += Current_Exit;
+
                     // 前回バージョンが色々必要なのでインクリメント前の生情報を保持しておく。
                     var previousVersion = (Version)CommonData.MainSetting.RunningInformation.LastExecuteVersion;
                     ResetCulture(CommonData.NonProcess);
@@ -1523,6 +1564,11 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             ReceiveApplicationCommand(applicationCommand, sender, arg);
         }
 
+        public void SendUserInformation()
+        {
+            ReceiveUserInformation();
+        }
+
         #endregion
 
         #region IAppSender-Implement
@@ -1669,6 +1715,12 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                     }
                     break;
 
+                case WindowKind.HtmlViewer:
+                    {
+                        window = new HtmlViewerWindow();
+                        window.SetCommonData(CommonData, extensionData);
+                    }
+                    break;
 
                 default:
                     throw new NotImplementedException();
@@ -1942,45 +1994,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
             this._clipboardPreviousTime = now;
 
-            ClipboardData clipboardData = null;
-            try {
-                var exceptions = new List<Exception>();
-                var retry = new TimeRetry<ClipboardData>();
-                retry.WaitTime = Constants.clipboardGetDataRetryWaitTime;
-                retry.WaitMaxCount = Constants.clipboardGetDataRetryMaxCount;
-                retry.ExecuteFunc = (int waitCurrentCount, ref ClipboardData result) => {
-                    ClipboardData data = null;
-                    try {
-                        data = ClipboardUtility.GetClipboardData(CommonData.MainSetting.Clipboard.CaptureType, MessageWindow.Handle);
-                    }
-                    catch(Exception ex) {
-                        exceptions.Add(ex);
-                    }
-                    var hasData = data != null;
-                    if(hasData) {
-                        result = data;
-                    }
-                    return hasData;
-                };
-                retry.Run();
-                if(!retry.WaitOver) {
-                    clipboardData = retry.Result;
-                } else if(exceptions.Any()) {
-                    if(exceptions.Count == 1) {
-                        CommonData.Logger.Error(exceptions.First());
-                    } else {
-                        CommonData.Logger.Error(
-                            CommonData.Language["log/clipboard/get-error"],
-                            string.Join(Environment.NewLine, exceptions.Select(ex => ex.ToString()))
-                        );
-                    }
-                }
-
-            } catch(AccessViolationException ex) {
-                // #251
-                CommonData.Logger.Error(ex);
-                return;
-            }
+            var clipboardData = ClipboardUtility.GetClipboardDataDefault(CommonData.MainSetting.Clipboard.CaptureType, MessageWindow.Handle, CommonData.NonProcess);
             if(clipboardData == null || clipboardData.Type == ClipboardType.None) {
                 CommonData.NonProcess.Logger.Trace(CommonData.NonProcess.Language["log/clipboard/capture/not-support"]);
                 return;
@@ -2214,6 +2228,55 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
         }
 
+        async void ReceiveUserInformation()
+        {
+            // TODO: 許可されているか
+            if(!CommonData.MainSetting.RunningInformation.SendPersonalInformation) {
+                return;
+            }
+
+            CommonData.Logger.Trace(CommonData.Language["log/privacy/send"]);
+
+            // ネットワーク接続可能か？
+            var nic = NetworkInterface.GetIsNetworkAvailable();
+            if(!nic) {
+                CommonData.Logger.Information(CommonData.Language["log/privacy/nic"]);
+                return;
+            }
+
+            using(var ui = new UserInformationSender(new Uri(Constants.UriUserInformation), CommonData.MainSetting.RunningInformation)) {
+                CommonData.Logger.Information(
+                    CommonData.Language["log/privacy/send/start"],
+                    await ui.SendData.ReadAsStringAsync()
+                );
+                var response = await ui.SendAync();
+                if(response.StatusCode == HttpStatusCode.OK) {
+                    // ログ出力用に生の文字列を取得する(ストリーム→データ変換した方が楽だけど生じゃなくなる)
+                    var result = await response.Content.ReadAsStringAsync();
+                    using(var stream = new MemoryStream(Encoding.UTF8.GetBytes(result))) {
+                        var model = SerializeUtility.LoadJsonDataFromStream<ResponseDataModel>(stream);
+                        string langKey;
+                        LogPutDelegate logPut;
+                        if(model.Success) {
+                            langKey = "log/privacy/send/end/ok";
+                            logPut = CommonData.Logger.Information;
+                        } else {
+                            langKey = "log/privacy/send/end/ng";
+                            logPut = CommonData.Logger.Warning;
+                        }
+                        var map = new Dictionary<string, string>() {
+                            { LanguageKey.logPrivacySendDataId, model.UserDataId },
+                            { LanguageKey.logPrivacySendRecvData, model.ToString() },
+                            { LanguageKey.logPrivacySendRecvRaw, result },
+                        };
+                        logPut(CommonData.Language[langKey], CommonData.Language["log/privacy/send/end/detail", map]);
+                    }
+                } else {
+                    CommonData.Logger.Error(CommonData.Language["log/privacy/send/failure"], response.Headers);
+                }
+            }
+        }
+
         #endregion
 
         #endregion
@@ -2286,6 +2349,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 ResetToolbar();
                 if(e.Reason == SessionSwitchReason.SessionUnlock) {
                     CheckUpdateProcessAsync();
+                    CommonData.AppSender.SendUserInformation();
                 }
             } else if(e.Reason == SessionSwitchReason.ConsoleDisconnect) {
                 SaveSetting();
@@ -2294,18 +2358,8 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         void SystemEvents_SessionEnding(object sender, SessionEndingEventArgs e)
         {
-            var logger = (AppLogger)CommonData.Logger;
-            using(var stream = AppUtility.CreateFileLoggerStream(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.LogDirectoryPath), Constants.Issue_355_logFileName)) {
-                stream.AutoFlush = true;
-                try {
-                    logger.AttachmentStream(stream, false);
-                    CommonData.Logger.Trace("#355 start");
-                    CommonData.Logger.Information(CommonData.Language["log/session/ending"], e);
-                    SaveSetting();
-                } finally {
-                    logger.DetachmentStream(stream);
-                }
-            }
+            CommonData.Logger.Information(CommonData.Language["log/session/ending"], e);
+            SaveSetting();
         }
 
         void Window_Closed(object sender, EventArgs e)
@@ -2330,5 +2384,10 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             SaveIndex(timer.IndexKind);
         }
 
+        private void Current_Exit(object sender, ExitEventArgs e)
+        {
+            Application.Current.Exit -= Current_Exit;
+            SystemEnvironmentUtility.ResetUsingBrowserVersionForExecutingAssembly();
+        }
     }
 }

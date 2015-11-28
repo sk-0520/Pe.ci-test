@@ -107,6 +107,9 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic
         public string GetReplacedWordText(string words, DateTime dateTime, IReadOnlyDictionary<string, string> map)
         {
             var plainText = GetPlainText(words);
+            if(string.IsNullOrWhiteSpace(plainText)) {
+                return plainText ?? string.Format("<{0}>", words);
+            }
 
             var usingMap = GetSystemMap(dateTime);
             if(map != null && map.Any()) {

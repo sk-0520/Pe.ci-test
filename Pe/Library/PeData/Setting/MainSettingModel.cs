@@ -81,7 +81,8 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting
         {
             var obj = (MainSettingModel)target;
 
-            RunningInformation.DeepCloneTo(obj.RunningInformation);
+            //RunningInformation.DeepCloneTo(obj.RunningInformation);
+            obj.RunningInformation = (RunningInformationSettingModel)RunningInformation.DeepClone();
             Language.DeepCloneTo(obj.Language);
             Logging.DeepCloneTo(obj.Logging);
             Toolbar.DeepCloneTo(obj.Toolbar);

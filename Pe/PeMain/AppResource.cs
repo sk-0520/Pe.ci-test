@@ -102,6 +102,8 @@ namespace ContentTypeTextNet.Pe.PeMain
         const string commonOthers = "/Resources/Image/Common/CommonOthers.png";
         [AppResource(AppResourceType.Image)]
         const string commonLock = "/Resources/Image/Common/CommonLock.png";
+        [AppResource(AppResourceType.Image)]
+        const string commonComment = "/Resources/Image/Common/CommonComment.png";
 
         [AppResource(AppResourceType.Image)]
         const string homeSearch = "/Resources/Image/Home/homeSearch.png";

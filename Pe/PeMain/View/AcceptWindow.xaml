@@ -21,7 +21,12 @@
   Icon="/PeMain;component/Resources/Icon/App.ico"
 >
   <AW:CommonDataWindow.Resources>
-    <ResourceDictionary Source="/View/Parts/Resource/DialogDictionary.xaml"/>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/View/Parts/Resource/DialogDictionary.xaml"/>
+        <ResourceDictionary Source="/View/Parts/Resource/CheckBoxDictionary.xaml"/>
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
   </AW:CommonDataWindow.Resources>
   <Grid>
     <Grid.RowDefinitions>
@@ -32,12 +37,11 @@
     <WebBrowser x:Name="webDocument" Grid.Row="0" />
     <StackPanel VerticalAlignment="Center" HorizontalAlignment="Left" Orientation="Horizontal" Grid.Row="1" Margin="8,8,8,0">
       <StackPanel.Resources>
-        <Style TargetType="{x:Type CheckBox}">
-          <Setter Property="Margin" Value="0,4,10,4"/>
-        </Style>
+        <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource DefaultHorizontalCheckBox}" />
       </StackPanel.Resources>
-      <CheckBox IsChecked="{Binding CheckUpdateRelease}" AA:Language.Word="update-check/release" Content="release" />
-      <CheckBox IsChecked="{Binding CheckUpdateRC}" AA:Language.Word="update-check/rc" Content="rc" />
+      <CheckBox Content="release"  AA:Language.Word="accept/update-check/release" IsChecked="{Binding CheckUpdateRelease}" />
+      <CheckBox Content="rc" AA:Language.Word="accept/update-check/rc" IsChecked="{Binding CheckUpdateRC}" />
+      <CheckBox Content="send" AA:Language.Word="accept/send-user-info" IsChecked="{Binding SendPersonalInformation}" />
     </StackPanel>
     <StackPanel Style="{StaticResource ResourceKey=DialogResultPanel}"  Grid.Row="2">
       <Button Style="{StaticResource ResourceKey=DialogButton}" AA:Language.Word="accept/ok" Content="ok" Command="{Binding OkCommand}"  />

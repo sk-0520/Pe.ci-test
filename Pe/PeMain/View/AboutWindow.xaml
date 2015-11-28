@@ -9,7 +9,6 @@
   xmlns:AA="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Attached"
   xmlns:AVM="clr-namespace:ContentTypeTextNet.Pe.PeMain.ViewModel"
   x:TypeArguments="AVM:AboutViewModel"
-  Topmost="True"
   Title="AboutWindow" 
   AA:Language.Word="window/about"
   Width="800"

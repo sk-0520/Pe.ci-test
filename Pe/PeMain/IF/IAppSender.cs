@@ -104,5 +104,9 @@ namespace ContentTypeTextNet.Pe.PeMain.IF
         /// <param name="applicationCommand"></param>
         /// <param name="arg"></param>
         void SendApplicationCommand(ApplicationCommand applicationCommand, object sender, ApplicationCommandArg arg);
+        /// <summary>
+        /// ユーザー情報収集開始。
+        /// </summary>
+        void SendUserInformation();
     }
 }

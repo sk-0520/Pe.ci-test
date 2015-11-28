@@ -146,9 +146,9 @@
         <TextBox
           Grid.Row="1"
           AllowDrop="False"
-          HorizontalScrollBarVisibility="Disabled"
+          HorizontalScrollBarVisibility="Auto"
           VerticalScrollBarVisibility="Auto"
-          TextWrapping="Wrap"
+          TextWrapping="NoWrap"
           IsUndoEnabled="False"
           IsReadOnly="True" 
           Text="{Binding SelectedValue.DetailText, ElementName=listLog, Mode=OneWay}"

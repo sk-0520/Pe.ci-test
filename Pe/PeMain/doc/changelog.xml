@@ -8,7 +8,7 @@
 					<comment></comment>
 				</comments>
 			</note>
-	<log date="YYYY/MM/DD" version="0.70.1" type="rc" dummy="################################################################################">
+	<log date="YYYY/MM/DD" version="0.xx.1" type="rc" dummy="################################################################################">
 		<group type="note" dummy="==================================================================">
 			<note rev="">
 				<message></message>
@@ -55,6 +55,124 @@
 		</group>
 	</log>
 	-->
+	<log date="YYYY/MM/DD" version="0.71.1" type="rc" dummy="################################################################################">
+		<group type="note" dummy="==================================================================">
+			<note rev="">
+				<message>[事前通知]: #335: .NET Frameworkのバージョンを4.6に変更</message>
+				<comments>
+					<comment>0.73.0 で .NET Framework の対応バージョンを を 4.5.1 から 4.6 に変更します</comment>
+					<comment>nameof! nameof! nameof!</comment>
+					<comment>#355の影響で0.72.0→0.73.0に先延ばし</comment>
+				</comments>
+			</note>
+			<note rev="">
+				<message>[対応しない]: #355: 終了時にログを強制出力する</message>
+				<comments>
+					<comment>うまくいかんし#355自体は対応やめます</comment>
+					<comment>#393で頑張りますん</comment>
+				</comments>
+			</note>
+			<note rev="">
+				<message>[プライバシー]: #179, #297の実装で設定によりインターネット通信の発生する可能性があるためアップデート後に使用許諾が表示されます</message>
+			</note>
+		</group>
+		<group type="features" dummy="==================================================================">
+			<note rev="">
+				<message>#378: ユーザー識別子を作成・保持する</message>
+				<comments>
+					<comment>フィードバック等のユーザ情報収集時に使用されます</comment>
+					<comment>設定画面の本体設定タブで再設定が可能です</comment>
+					<comment>UI追加に伴いランチャーD&amp;D設定はランチャータブへ移動しました</comment>
+				</comments>
+			</note>
+			<note rev="">
+				<message>#297: フィードバックをPe内で気楽に入力</message>
+				<comments>
+					<comment>通知領域Peアイコンコンテキストメニュー 情報→フィードバックで入力できます</comment>
+					<comment>入力データの送信にはインターネット接続が必要になります</comment>
+					<comment>データに関しては追々ヘルプ書きます</comment>
+				</comments>
+			</note>
+			<note rev="">
+				<message>#373: 初回起動時の情報を保持する</message>
+				<comments>
+					<comment>本バージョンからの設定項目追加なので古いバージョン情報は持てません</comment>
+				</comments>
+			</note>
+			<note rev="">
+				<message>#390: コマンドランチャーでディレクトリパスを入力した際に親ディレクトリも表示する</message>
+			</note>
+			<note rev="">
+				<message>#389: ランチャーアイテム選択リストのフィルタリング機能の一致方法を改善する</message>
+				<comments>
+					<comment>コマンドランチャーとランチャーアイテム一覧で実装が分かれていたのを統合しました</comment>
+					<comment>入力文字列の先頭1文字で検索方法が変わります</comment>
+					<comment>大文字: 前方一致 + 大文字小文字を区別する</comment>
+					<comment>小文字: 部分一致 + 大文字小文字を区別しない</comment>
+				</comments>
+			</note>
+			<note rev="">
+				<message>#179: 使用ユーザー情報の収集</message>
+				<comments>
+					<comment>#297での実装と環境を流用してユーザー情報を収集します</comment>
+					<comment>今のところ実行タイミングは起動時・セッション開始時になります(自動アップデート確認と同じタイミング)</comment>
+					<comment>設定→プライバシー から「ユーザー情報送信を許可」が有効になっている場合のみ送信処理が行われます</comment>
+					<comment>送信内容はヘルプに記載する予定ですがまだヘルプが書けていません</comment>
+					<comment>内容を確認したい場合はログを確認してください。要求・応答メッセージが出力されています</comment>
+					<comment>本機能実装により本バージョンアップデートには使用許諾が表示されます</comment>
+				</comments>
+			</note>
+			<note rev="">
+				<message></message>
+			</note>
+		</group>
+		<group type="fixes" dummy="==================================================================">
+			<note rev="">
+				<message>#384: 短い報告用情報のビルド種別の項目名をTypeからBuildTypeに変更する</message>
+				<comments>
+					<comment>CLIもCLRに変更</comment>
+				</comments>
+			</note>
+			<note rev="">
+				<message>#372: 情報ダイアログは最前面表示にする必要ない</message>
+			</note>
+			<note rev="">
+				<message>#376: クリップボード・テンプレレートの転送にクリップボードを経由した場合にクリップボードオープンのエラーが発生する可能性あり</message>
+				<comments>
+					<comment>本改修に伴いクリップボードが空であれば転送後も空にするように修正</comment>
+				</comments>
+			</note>
+			<note rev="">
+				<message>#377: テンプレートの置換処理(文字列orT4)でクリップボードを使用した場合にクリップボードオープンのエラーが発生する可能性あり</message>
+				<comments>
+					<comment>本改修に伴いコピー操作の再試行を実装(全処理に影響)</comment>
+				</comments>
+			</note>
+			<note rev="">
+				<message>#394: システム環境情報取得時の取得エラーの例外キャッチをやめる</message>
+			</note>
+			<note rev="">
+				<message></message>
+			</note>
+			<note rev="">
+				<message></message>
+			</note>
+			<note rev="">
+				<message></message>
+			</note>
+		</group>
+		<group type="developer" dummy="==================================================================">
+			<note rev="">
+				<message></message>
+			</note>
+			<note rev="">
+				<message></message>
+			</note>
+			<note rev="">
+				<message></message>
+			</note>
+		</group>
+	</log>
 	<log date="2015/11/15" version="0.71.0" dummy="################################################################################">
 		<group type="note" dummy="==================================================================">
 			<note rev="">

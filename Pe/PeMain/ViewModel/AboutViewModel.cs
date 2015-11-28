@@ -194,11 +194,11 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                                     var list = new List<string>();
                                     list.Add("Software: " + Constants.ApplicationName);
                                     list.Add("Version: " + Constants.ApplicationVersion);
-                                    list.Add("Type: " + Constants.BuildType);
+                                    list.Add("BuildType: " + Constants.BuildType);
                                     list.Add("Process: " + Constants.BuildProcess);
                                     list.Add("Platform: " + (Environment.Is64BitOperatingSystem ? "64" : "32"));
                                     list.Add("OS: " + System.Environment.OSVersion);
-                                    list.Add("CLI: " + System.Runtime.InteropServices.RuntimeEnvironment.GetSystemVersion());
+                                    list.Add("CLR: " + System.Runtime.InteropServices.RuntimeEnvironment.GetSystemVersion());
                                     var text = Environment.NewLine + separator + Environment.NewLine + string.Join(Environment.NewLine, list.Select(s => "    " + s)) + Environment.NewLine + Environment.NewLine;
                                     ClipboardUtility.CopyText(text, AppNonProcess.ClipboardWatcher);
                                 }

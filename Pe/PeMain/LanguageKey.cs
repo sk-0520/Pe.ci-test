@@ -24,8 +24,7 @@ namespace ContentTypeTextNet.Pe.PeMain
 
     public static class LanguageKey
     {
-        // 内部使用
-        #region common
+        #region 内部使用
 
         public const string applicationName = "APPLICATION:NAME";
         public const string applicationVersion = "APPLICATION:VERSION";
@@ -50,8 +49,7 @@ namespace ContentTypeTextNet.Pe.PeMain
 
         #endregion
 
-        // 言語ファイルの置き換え文字列
-        #region replace
+        #region 言語ファイルの置き換え文字列
 
         public const string acceptWeb = "ACCEPT-WEB";
         public const string acceptDevelopment = "ACCEPT-DEVELOPMENT";
@@ -65,7 +63,7 @@ namespace ContentTypeTextNet.Pe.PeMain
         public const string acceptNg = "ACCEPT-NG";
         public const string acceptRelease = "ACCEPT-CHECK-RELEASE";
         public const string acceptRc = "ACCEPT-CHECK-RC";
-
+        public const string acceptSendUserInformation = "ACCEPT-SEND-USER-INFO";
 
         public const string commandItemTag = "LAUNCHER-ITEM-TAG";
         public const string commandItemName = "LAUNCHER-ITEM-NAME";
@@ -85,6 +83,7 @@ namespace ContentTypeTextNet.Pe.PeMain
         public const string clipboardImageHeight = "CLIP-IMAGE-HEIGHT";
         public const string clipboardFileCount = "CLIP-FILES-COUNT";
 
+        public const string logExecuteItemName = "LOG-EXECUTE-ITEM-NAME";
         public const string logClipboardWaitTimePrev = "LOG-CLIP-WAIT_TIME-PREV";
         public const string logClipboardWaitTimeCurrent = "LOG-CLIP-WAIT_TIME-CURRENT";
         public const string logClipboardWaitTimeSetting = "LOG-CLIP-WAIT_TIME-SETTING";
@@ -99,6 +98,10 @@ namespace ContentTypeTextNet.Pe.PeMain
         public const string logWindowSaveType = "LOG-WINDOW-SAVE-TYPE";
         public const string logGroupChange = "LOG-GROUP-CHNAGE";
 
+        public const string logPrivacySendDataId = "LOG-PRIVACY-SEND-DATA-ID";
+        public const string logPrivacySendRecvData = "LOG-PRIVACY-SEND-RECV-DATA";
+        public const string logPrivacySendRecvRaw = "LOG-PRIVACY-SEND-RECV-RAW";
+
         public const string formsConvertLauncherItemName = "FORMS-CONVERT-LAUNCHER-ITEM-NAME";
         public const string formsConvertLauncherItemType = "FORMS-CONVERT-LAUNCHER-ITEM-TYPE";
         public const string formsConvertLauncherItemTypeFile = "FORMS-CONVERT-LAUNCHER-ITEM-TYPE:FILE";
@@ -108,6 +111,12 @@ namespace ContentTypeTextNet.Pe.PeMain
         public const string toolbarScreenName = "TOOLBAR-SCREEN-NAME";
 
         public const string noteTitle = "NOTE-TITLE";
+
+        #endregion
+
+        #region HtmlViewer
+
+        public const string htmlViewerTitleFeedBack = "html-viewer/feedback";
 
         #endregion
     }
