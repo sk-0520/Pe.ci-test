@@ -440,7 +440,7 @@
 		<Item Id="log/update/error" Word="アップデート確認: 失敗" />
 		<Item Id="log/update/newest" Word="アップデート確認: 最新版です" />
 		<Item Id="log/update/check-stop" Word="アップデート確認: 取り消し" />
-		<Item Id="log/update/nic" Word="NICが有効ではありません。" />
+		<Item Id="log/update/nic" Word="NICが有効ではありません" />
 		<Item Id="log/group/change" Word="グループ変更: @[LOG-GROUP-CHNAGE]" />
 		<Item Id="log/clipboard/prev-time/message" Word="クリップボード: 待ち時間中のため無視" />
 		<Item Id="log/clipboard/prev-time/detail"  Word="前回取込時間: @[LOG-CLIP-WAIT_TIME-PREV]${br}今回取込時間: @[LOG-CLIP-WAIT_TIME-CURRENT]${br}設定時間: @[LOG-CLIP-WAIT_TIME-SETTING]${br}待機時間: @[LOG-CLIP-WAIT_TIME-WAIT]" />
@@ -472,6 +472,14 @@
 		<Item Id="log/hotkey/regist/show-front-note"     Word="ホットキー登録失敗: ノート前面表示" />
 		<Item Id="log/hotkey/regist/clipboard"           Word="ホットキー登録失敗: クリップボード" />
 		<Item Id="log/hotkey/regist/template"            Word="ホットキー登録失敗: テンプレート" />
+		<Item Id="log/privacy/nic"          Word="NICが有効ではありません" />
+		<Item Id="log/privacy/send"         Word="ユーザー情報送信準備" />
+		<Item Id="log/privacy/send/start"   Word="ユーザー情報送信開始" />
+		<Item Id="log/privacy/send/end"     Word="ユーザー情報送信完了" />
+		<Item Id="log/privacy/send/end/ok"  Word="ユーザー情報送信成功" />
+		<Item Id="log/privacy/send/end/ng"  Word="ユーザー情報送信失敗" />
+		<Item Id="log/privacy/send/failure" Word="ユーザー情報送信エラー" />
+		
 		
 		<!-- テンプレート -->
 		<Item Id="template/keyword/text/TIMESTAMP"    Word="タイムスタンプ" />

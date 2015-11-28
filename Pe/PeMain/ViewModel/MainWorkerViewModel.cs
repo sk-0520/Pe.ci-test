@@ -2230,41 +2230,37 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         async void ReceiveUserInformationPost()
         {
+            // TODO: 許可されているか
+            if(!CommonData.MainSetting.RunningInformation.SendPersonalInformation) {
+                return;
+            }
+
+            CommonData.Logger.Trace(CommonData.Language["log/privacy/send"]);
+
             // ネットワーク接続可能か？
             var nic = NetworkInterface.GetIsNetworkAvailable();
             if(!nic) {
+                CommonData.Logger.Information(CommonData.Language["log/privacy/nic"]);
                 return;
             }
-            // TODO: 許可されているか
-
 
             using(var ui = new UserInformationSender(new Uri(Constants.UriUserInformation), CommonData.MainSetting.RunningInformation)) {
                 CommonData.Logger.Information(
-                    CommonData.Language["log/user-info/send/start"],
+                    CommonData.Language["log/privacy/send/start"],
                     await ui.SendData.ReadAsStringAsync()
                 );
-
                 var response = await ui.SendAync();
                 if(response.StatusCode != HttpStatusCode.OK) {
                     // ログ出力用に生の文字列を取得する(ストリーム→データ変換した方が楽だけど生じゃなくなる)
                     var result = await response.Content.ReadAsStringAsync();
-                    CommonData.Logger.Information(
-                        CommonData.Language["log/user-info/send/get-data"],
-                        result
-                    );
+                    CommonData.Logger.Information(CommonData.Language["log/privacy/send/end"], result);
                     using(var stream = new MemoryStream(Encoding.UTF8.GetBytes(result))) {
                         var model = SerializeUtility.LoadJsonDataFromStream<ResponseDataModel>(stream);
-                        if(model.Success) {
-                            CommonData.Logger.Information(CommonData.Language["log/user-info/send/ok"]);
-                        } else {
-                            CommonData.Logger.Information(CommonData.Language["log/user-info/send/ng"]);
-                        }
+                        var langKey = model.Success ? "log/privacy/send/end/ok" : "log/privacy/send/end/ng";
+                        CommonData.Logger.Information(CommonData.Language[langKey], model);
                     }
                 } else {
-                    CommonData.Logger.Information(
-                        CommonData.Language["log/user-info/send/get-failuer"],
-                        response.Headers
-                    );
+                    CommonData.Logger.Information(CommonData.Language["log/privacy/send/failure"], response.Headers);
                 }
             }
         }
