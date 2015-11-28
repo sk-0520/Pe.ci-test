@@ -66,14 +66,14 @@
 				</comments>
 			</note>
 			<note rev="">
-				<message>#355: 終了時にログを強制出力する</message>
+				<message>[対応しない]: #355: 終了時にログを強制出力する</message>
 				<comments>
 					<comment>うまくいかんし#355自体は対応やめます</comment>
 					<comment>#393で頑張りますん</comment>
 				</comments>
 			</note>
 			<note rev="">
-				<message></message>
+				<message>[プライバシー]: #179, #297の実装で設定によりインターネット通信の発生する可能性があるためアップデート後に使用許諾が表示されます</message>
 			</note>
 		</group>
 		<group type="features" dummy="==================================================================">
@@ -109,6 +109,17 @@
 					<comment>入力文字列の先頭1文字で検索方法が変わります</comment>
 					<comment>大文字: 前方一致 + 大文字小文字を区別する</comment>
 					<comment>小文字: 部分一致 + 大文字小文字を区別しない</comment>
+				</comments>
+			</note>
+			<note rev="">
+				<message>#179: 使用ユーザー情報の収集</message>
+				<comments>
+					<comment>#297での実装と環境を流用してユーザー情報を収集します</comment>
+					<comment>今のところ実行タイミングは起動時・セッション開始時になります(自動アップデート確認と同じタイミング)</comment>
+					<comment>設定→プライバシー から「ユーザー情報送信を許可」が有効になっている場合のみ送信処理が行われます</comment>
+					<comment>送信内容はヘルプに記載する予定ですがまだヘルプが書けていません</comment>
+					<comment>内容を確認したい場合はログを確認してください。要求・応答メッセージが出力されています</comment>
+					<comment>本機能実装により本バージョンアップデートには使用許諾が表示されます</comment>
 				</comments>
 			</note>
 			<note rev="">

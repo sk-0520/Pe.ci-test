@@ -95,7 +95,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic
         /// <returns></returns>
         public virtual InformationGroup GetMemory()
         {
-            var result = GetInfo(this._managementOS, "memory", null);
+            var result = GetInfo(this._managementOS, "Memory", null);
             return result;
         }
 

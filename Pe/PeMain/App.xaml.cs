@@ -89,11 +89,12 @@ namespace ContentTypeTextNet.Pe.PeMain
                             this._mainWorker.ShowHomeDialog();
                             this._mainWorker.ResetToolbar();
                             this._mainWorker.CheckUpdateProcessAsync();
+                            this._mainWorker.SendUserInformation();
                         }), System.Windows.Threading.DispatcherPriority.ApplicationIdle);
                     } else {
                         this._mainWorker.CheckUpdateProcessAsync();
+                        this._mainWorker.SendUserInformation();
                     }
-                    this._mainWorker.SendUserInformation();
                 } else {
                     // 終了
                     systemLogger.Information("application: cancel exec");

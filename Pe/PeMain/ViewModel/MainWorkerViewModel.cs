@@ -2255,16 +2255,24 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                     var result = await response.Content.ReadAsStringAsync();
                     using(var stream = new MemoryStream(Encoding.UTF8.GetBytes(result))) {
                         var model = SerializeUtility.LoadJsonDataFromStream<ResponseDataModel>(stream);
-                        var langKey = model.Success ? "log/privacy/send/end/ok" : "log/privacy/send/end/ng";
+                        string langKey;
+                        LogPutDelegate logPut;
+                        if(model.Success) {
+                            langKey = "log/privacy/send/end/ok";
+                            logPut = CommonData.Logger.Information;
+                        } else {
+                            langKey = "log/privacy/send/end/ng";
+                            logPut = CommonData.Logger.Warning;
+                        }
                         var map = new Dictionary<string, string>() {
                             { LanguageKey.logPrivacySendDataId, model.UserDataId },
                             { LanguageKey.logPrivacySendRecvData, model.ToString() },
                             { LanguageKey.logPrivacySendRecvRaw, result },
                         };
-                        CommonData.Logger.Information(CommonData.Language[langKey], CommonData.Language["log/privacy/send/end/detail", map]);
+                        logPut(CommonData.Language[langKey], CommonData.Language["log/privacy/send/end/detail", map]);
                     }
                 } else {
-                    CommonData.Logger.Information(CommonData.Language["log/privacy/send/failure"], response.Headers);
+                    CommonData.Logger.Error(CommonData.Language["log/privacy/send/failure"], response.Headers);
                 }
             }
         }
@@ -2341,6 +2349,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 ResetToolbar();
                 if(e.Reason == SessionSwitchReason.SessionUnlock) {
                     CheckUpdateProcessAsync();
+                    CommonData.AppSender.SendUserInformation();
                 }
             } else if(e.Reason == SessionSwitchReason.ConsoleDisconnect) {
                 SaveSetting();
