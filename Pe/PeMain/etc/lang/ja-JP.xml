@@ -347,8 +347,9 @@
 		<Item Id="main-setting/window-save/count" Word="保存件数" />
 		<Item Id="main-setting/window-save/interval" Word="保存間隔" />
 		<Item Id="main-setting/privacy" Word="プライバシー" />
-		<Item Id="main-setting/privacy/create/environment" Word="環境から作成" />
-		<Item Id="main-setting/privacy/create/random"      Word="ランダム作成" />
+		<Item Id="main-setting/privacy/create/environment" Word="環境から作成(_C)" />
+		<Item Id="main-setting/privacy/create/random"      Word="ランダム作成(_R)" />
+		<Item Id="main-setting/privacy/send-user-info"     Word="ユーザー情報を送信する(_S)" />
 		
 		
 		<Item Id="toolbar-setting/screen" Word="識別(_I)" />

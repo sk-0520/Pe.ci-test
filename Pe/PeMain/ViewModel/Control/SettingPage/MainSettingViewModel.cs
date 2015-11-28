@@ -209,6 +209,11 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control.SettingPage
             set { SetPropertyValue(RunningInformation, value); }
         }
         
+        public bool SendPersonalInformation
+        {
+            get { return RunningInformation.SendPersonalInformation; }
+            set { SetPropertyValue(RunningInformation, value); }
+        }
 
         #endregion
 

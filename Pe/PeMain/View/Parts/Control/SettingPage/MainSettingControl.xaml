@@ -187,6 +187,7 @@
               <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
               </Grid.RowDefinitions>
               <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="5*" />
@@ -195,6 +196,7 @@
               <xctk:AutoSelectTextBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" AutoSelectBehavior="OnFocus" IsReadOnly="True" Style="{StaticResource DefaultTextBox}" Text="{Binding UserId, Mode=OneWay}" />
               <Button Grid.Row="1" Grid.Column="0" Content="env" AA:Language.Word="main-setting/privacy/create/environment" Command="{Binding CreateUserIdFromEnvironmentCommand}" />
               <Button Grid.Row="1" Grid.Column="1" Content="rnd" AA:Language.Word="main-setting/privacy/create/random"      Command="{Binding CreateUserIdFromRandomCommand}" />
+              <CheckBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Content="send" AA:Language.Word="main-setting/privacy/send-user-info" Style="{StaticResource DefaultVerticalCheckBox}" IsChecked="{Binding SendPersonalInformation}" />
             </Grid>
           </StackPanel>
         </GroupBox>
