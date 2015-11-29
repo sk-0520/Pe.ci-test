@@ -25,6 +25,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic
     using System.Text;
     using System.Threading.Tasks;
     using ContentTypeTextNet.Library.SharedLibrary.CompatibleForms;
+    using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
     using ContentTypeTextNet.Library.SharedLibrary.Data;
 
     /// <summary>
@@ -51,19 +52,27 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic
             Dispose(true);
         }
 
-        protected virtual InformationGroup GetInfo(ManagementClass managementClass, string groupName, IEnumerable<string> keys)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="managementClass"></param>
+        /// <param name="groupName"></param>
+        /// <param name="selectKeys">取り出すキー名を指定。nullで制限なし。</param>
+        /// <returns></returns>
+        protected virtual InformationGroup GetInfo(ManagementClass managementClass, string groupName, IEnumerable<string> selectKeys)
         {
             var result = new InformationGroup(groupName);
-            if(keys != null) {
-                using(var mc = managementClass.GetInstances()) {
-                    foreach(var mo in mc) {
-                        foreach(var key in keys) {
-                            try {
-                                result.Items[key] = mo[key];
-                            } catch(ManagementException ex) {
-                                result.Items[key] = ex;
-                            }
-                        }
+            using(var mc = managementClass.GetInstances()) {
+                foreach(var mo in mc) {
+                    var collection = mo.Properties
+                        .OfType<PropertyData>()
+                        .If(
+                            selectKeys != null,
+                            ps => ps.Where(p => selectKeys.Contains(p.Name))
+                        )
+                    ;
+                    foreach(var property in collection) {
+                        result.Items[property.Name] = property.Value;
                     }
                 }
             }
@@ -72,73 +81,11 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic
         }
 
         /// <summary>
-        /// http://www.wmifun.net/library/win32_processor.html
         /// </summary>
         /// <returns></returns>
-        protected virtual InformationGroup GetCPU()
+        public virtual InformationGroup GetCPU()
         {
-            var keys = new[] {
-				// アドレス幅
-				"AddressWidth",
-				// アーキテクチャ
-				"Architecture",
-				// 状態
-				"Availability",
-				// エラーコード
-				"ConfigManagerErrorCode",
-				// 構成
-				"ConfigManagerUserConfig",
-				// 使用状況から起こる状態の変化
-				"CpuStatus",
-				// 現在の速度 (MHz)
-				"CurrentClockSpeed",
-				// 電圧
-				"CurrentVoltage",
-				// データ幅
-				"DataWidth",
-				// 説明
-				"Description",
-				// デバイス
-				"DeviceID",
-				// 外部クロックの周波数
-				"ExtClock",
-				// プロセッサ ファミリ
-				"Family",
-                "L2CacheSize",
-                "L2CacheSpeed",
-                "L3CacheSize",
-                "L3CacheSpeed",
-                "Level",
-                "LoadPercentage",
-                "Manufacturer",
-                "MaxClockSpeed",
-                "Name",
-                "NumberOfCores",
-                "NumberOfLogicalProcessors",
-                "OtherFamilyDescription",
-                "PNPDeviceID",
-                "PowerManagementCapabilities",
-                "PowerManagementSupported",
-                "ProcessorId",
-                "ProcessorType",
-                "Revision",
-                "Role",
-                "SecondLevelAddressTranslationExtensions",
-                "SocketDesignation",
-                "Status",
-                "StatusInfo",
-                "Stepping",
-                "SystemCreationClassName",
-                "SystemName",
-                "UniqueId",
-                "UpgradeMethod",
-                "Version",
-                "VirtualizationFirmwareEnabled",
-                "VMMonitorModeExtensions",
-                "VoltageCaps",
-            };
-
-            var result = GetInfo(this._managementCPU, "CPU", keys);
+            var result = GetInfo(this._managementCPU, "CPU", null);
             return result;
         }
 
@@ -146,19 +93,9 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic
         /// メモリ情報取得
         /// </summary>
         /// <returns></returns>
-        protected virtual InformationGroup GetMemory()
+        public virtual InformationGroup GetMemory()
         {
-            var keys = new[] {
-				// 物理メモリ(合計:KB)
-				"TotalVisibleMemorySize",
-				// 物理メモリ(空き)
-				"FreePhysicalMemory",
-				// 仮想メモリ(合計)
-				"TotalVirtualMemorySize",
-				// 仮想メモリ(空き)
-				"FreeVirtualMemory",
-            };
-            var result = GetInfo(this._managementOS, "memory", keys);
+            var result = GetInfo(this._managementOS, "Memory", null);
             return result;
         }
 

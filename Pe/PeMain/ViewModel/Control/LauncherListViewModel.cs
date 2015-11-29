@@ -32,6 +32,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control
     using ContentTypeTextNet.Pe.Library.PeData.Setting;
     using ContentTypeTextNet.Pe.PeMain.Data;
     using ContentTypeTextNet.Pe.PeMain.IF;
+    using Logic.Utility;
 
     public class LauncherListViewModel: SingleModelWrapperViewModelBase<LauncherItemCollectionModel>, IHavingAppNonProcess, IHavingAppSender
     {
@@ -94,7 +95,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control
         {
             var s = this._filterText_impl ?? string.Empty;
             var vm = (LauncherListItemViewModel)o;
-            return vm.Model.Name.StartsWith(s, StringComparison.CurrentCultureIgnoreCase);
+            return LauncherItemUtility.FilterItemName(vm.Model, s);
         }
 
         #endregion

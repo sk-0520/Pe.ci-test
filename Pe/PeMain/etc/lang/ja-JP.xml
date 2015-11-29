@@ -20,6 +20,8 @@
 
 		<Item Id="setting" Word="設定" />
 		<Item Id="toolbar" Word="ツールバー" />
+
+		<Item Id="hv-br"   Word=",," />
 	</Define>
 	<Words>
 		<Item Id="window/home"    Word="@[APPLICATION:NAME] ホーム"  />
@@ -54,8 +56,9 @@
 		
 		<Item Id="accept/ok" Word="使用する(_A)" />
 		<Item Id="accept/ng" Word="使用しない(_Q)" />
-		<Item Id="update-check/release" Word="アップデートを確認する(_U)" />
-		<Item Id="update-check/rc" Word="RC版も確認対象とする(_R)" />
+		<Item Id="accept/update-check/release" Word="アップデートを確認する(_U)" />
+		<Item Id="accept/update-check/rc" Word="RC版も確認対象とする(_R)" />
+		<Item Id="accept/send-user-info"  Word="ユーザー情報送信を許可(_S)" />
 
 		<Item Id="home/close" Word="閉じる(_S)" />
 		<Item Id="home/auto-regist/title"   Word="ランチャー自動登録" />
@@ -94,7 +97,9 @@
 		<Item Id="tasktray/system-env/window/load" Word="保存しているウィンドウ状態を復帰(_L)" />
 		<Item Id="tasktray/system-env/window/timer" Word="タイマー保存(_T)" />
 		<Item Id="tasktray/system-env/window/system" Word="システム変更(_Y)" />
-		<Item Id="tasktray/about" Word="@[APPLICATION:NAME] 情報(_A)" />
+		<Item Id="tasktray/info" Word="情報(_I)" />
+		<Item Id="tasktray/info/feedback" Word="フィードバック(_F)" />
+		<Item Id="tasktray/info/about" Word="@[APPLICATION:NAME] 情報(_A)" />
 		<Item Id="tasktray/exit" Word="終了(_X)" />
 
 		<Item Id="notify/info/command/show/title"      Word="コマンドウィンドウ" />
@@ -338,13 +343,14 @@
 		<Item Id="main-setting/stream/color/std-out" Word="基本" />
 		<Item Id="main-setting/stream/color/std-err" Word="エラー" />
 		<Item Id="main-setting/launcher" Word="ランチャー" />
-		<Item Id="main-setting/launcher/drop-mode" Word="ファイルD&amp;D時の挙動" />
-		<Item Id="main-setting/launcher/drop-mode/window" Word="指定して実行ウィンドウを表示(_R)" />
-		<Item Id="main-setting/launcher/drop-mode/arguments" Word="オプションとして実行(_O)" />
 		<Item Id="main-setting/window-save" Word="ウィンドウ位置保存" />
 		<Item Id="main-setting/window-save/enabled" Word="ウィンドウ位置を保存する(_W)" />
 		<Item Id="main-setting/window-save/count" Word="保存件数" />
 		<Item Id="main-setting/window-save/interval" Word="保存間隔" />
+		<Item Id="main-setting/privacy" Word="プライバシー" />
+		<Item Id="main-setting/privacy/create/environment" Word="環境から作成(_C)" />
+		<Item Id="main-setting/privacy/create/random"      Word="ランダム作成(_R)" />
+		<Item Id="main-setting/privacy/send-user-info"     Word="ユーザー情報送信を許可(_S)" />
 		
 		
 		<Item Id="toolbar-setting/screen" Word="識別(_I)" />
@@ -365,6 +371,9 @@
 		<Item Id="toolbar-setting/group/node/up" Word="選択中ノードを上に移動" />
 		<Item Id="toolbar-setting/group/node/down" Word="選択中ノードを下に移動" />
 		<Item Id="toolbar-setting/group/node/remove" Word="選択中ノードを削除" />
+		<Item Id="toolbar-setting/launcher/drop-mode" Word="ファイルD&amp;D時の挙動" />
+		<Item Id="toolbar-setting/launcher/drop-mode/window" Word="指定して実行ウィンドウを表示(_R)" />
+		<Item Id="toolbar-setting/launcher/drop-mode/arguments" Word="オプションとして実行(_O)" />
 		
 		<Item Id="command-setting/icon" Word="アイコンサイズ(_I)" />
 		<Item Id="command-setting/hotkey" Word="呼び出しキー(_H)" />
@@ -422,6 +431,7 @@
 		<Item Id="log/create/toolbar-setting" Word="ツールバー新規作成" />
 		<Item Id="log/accept/ok" Word="使用許諾: OK" />
 		<Item Id="log/accept/ng" Word="使用許諾: NG" />
+		<Item Id="log/execute/item" Word="アイテム起動: @[LOG-EXECUTE-ITEM-NAME]" />
 		<Item Id="log/screen/change-count" Word="ディスプレイ: 接続数変更" />
 		<Item Id="log/screen/change-setting" Word="ディスプレイ: 設定変更検出" />
 		<Item Id="log/session/switch" Word="セッション: 変更検出" />
@@ -432,7 +442,7 @@
 		<Item Id="log/update/error" Word="アップデート確認: 失敗" />
 		<Item Id="log/update/newest" Word="アップデート確認: 最新版です" />
 		<Item Id="log/update/check-stop" Word="アップデート確認: 取り消し" />
-		<Item Id="log/update/nic" Word="NICが有効ではありません。" />
+		<Item Id="log/update/nic" Word="NICが有効ではありません" />
 		<Item Id="log/group/change" Word="グループ変更: @[LOG-GROUP-CHNAGE]" />
 		<Item Id="log/clipboard/prev-time/message" Word="クリップボード: 待ち時間中のため無視" />
 		<Item Id="log/clipboard/prev-time/detail"  Word="前回取込時間: @[LOG-CLIP-WAIT_TIME-PREV]${br}今回取込時間: @[LOG-CLIP-WAIT_TIME-CURRENT]${br}設定時間: @[LOG-CLIP-WAIT_TIME-SETTING]${br}待機時間: @[LOG-CLIP-WAIT_TIME-WAIT]" />
@@ -444,6 +454,7 @@
 		<Item Id="log/clipboard/dup-item/move"    Word="クリップボード: 重複するクリップボードアイテムをリスト最上位へ移動" />
 		<Item Id="log/clipboard/dup-item/ignore"  Word="クリップボード: 重複するクリップボードアイテムが存在するため取り込まない" />
 		<Item Id="log/clipboard/get-error"  Word="クリップボード: 全取得試行失敗" />
+		<Item Id="log/clipboard/using-error"  Word="クリップボード: データ転送使用不可" />
 		<Item Id="log/auto-regist/message"  Word="ホームウィンドウ処理でのログ" />
 		<Item Id="log/hotkey/unregist/command"           Word="ホットキー解除失敗: コマンド" />
 		<Item Id="log/hotkey/unregist/hidden-file"       Word="ホットキー解除失敗: 隠しファイル" />
@@ -463,6 +474,14 @@
 		<Item Id="log/hotkey/regist/show-front-note"     Word="ホットキー登録失敗: ノート前面表示" />
 		<Item Id="log/hotkey/regist/clipboard"           Word="ホットキー登録失敗: クリップボード" />
 		<Item Id="log/hotkey/regist/template"            Word="ホットキー登録失敗: テンプレート" />
+		<Item Id="log/privacy/nic"              Word="NICが有効ではありません" />
+		<Item Id="log/privacy/send"             Word="ユーザー情報送信準備" />
+		<Item Id="log/privacy/send/start"       Word="ユーザー情報送信開始" />
+		<Item Id="log/privacy/send/end/ok"      Word="ユーザー情報送信成功" />
+		<Item Id="log/privacy/send/end/ng"      Word="ユーザー情報送信失敗" />
+		<Item Id="log/privacy/send/end/detail"  Word="DATA-ID: @[LOG-PRIVACY-SEND-DATA-ID]${br}---------------${br}受信整形データ:${br}@[LOG-PRIVACY-SEND-RECV-DATA]${br}---------------${br}受信生データ${br}@[LOG-PRIVACY-SEND-RECV-RAW]" />
+		<Item Id="log/privacy/send/failure"     Word="ユーザー情報送信エラー" />
+		
 		
 		<!-- テンプレート -->
 		<Item Id="template/keyword/text/TIMESTAMP"    Word="タイムスタンプ" />
@@ -500,6 +519,53 @@
 		<Item Id="template/keyword/program/APPLICATION:VERSION-NUMBER"  Word="@[APPLICATION:NAME] バージョン番号" />
 		<Item Id="template/keyword/program/APPLICATION:VERSION-REVISION"  Word="@[APPLICATION:NAME] リビジョン" />
 
+		<!-- HTMLViewer -->
+		<!-- フィードバック -->
+		<Item Id="html-viewer/feedback"                     Word="@[APPLICATION:NAME] フィードバック" />
+		<Item Id="html-viewer/feedback/message/title"       Word="フィードバック処理完了" />
+		<Item Id="html-viewer/feedback/message/success"     Word="ご協力ありがとうございます。本データを削除したい場合は下記DATA-IDをお伝えください(DATA-IDの再発行は出来ません。ユーザー側で保管してください)。" />
+		<Item Id="html-viewer/feedback/message/failure"     Word="入力内容に誤りがあります(@[APPLICATION:NAME]から実施した場合、本メッセージが表示されない想定ですのでお手数ですがご報告願います)。" />
+		<Item Id="html-viewer/feedback/message/message"     Word="送信された内容と処理内容は以下になります。" />
+		<Item Id="html-viewer/feedback/local/not-input"     Word="いずれかは入力してください。" />
+		<Item Id="html-viewer/feedback/title"               Word="フィードバック" />
+		<Item Id="html-viewer/feedback/message"             Word="@[APPLICATION:NAME] を使用した感想や機能改善、不具合等の報告にご協力ください。" />
+		<Item Id="html-viewer/feedback/operability"         Word="操作性" />
+		<Item Id="html-viewer/feedback/operability/unset"   Word="入力しない" />
+		<Item Id="html-viewer/feedback/operability/good"    Word="良い" />
+		<Item Id="html-viewer/feedback/operability/bad"     Word="悪い" />
+		<Item Id="html-viewer/feedback/functionality"       Word="機能性" />
+		<Item Id="html-viewer/feedback/functionality/unset" Word="入力しない" />
+		<Item Id="html-viewer/feedback/functionality/good"  Word="良い" />
+		<Item Id="html-viewer/feedback/functionality/bad"   Word="悪い" />
+		<Item Id="html-viewer/feedback/main"                Word="主に使用するの機能" />
+		<Item Id="html-viewer/feedback/main/toolbar"        Word="ツールバーランチャー" />
+		<Item Id="html-viewer/feedback/main/command"        Word="コマンド型ランチャー" />
+		<Item Id="html-viewer/feedback/main/note"           Word="ノート" />
+		<Item Id="html-viewer/feedback/main/clipboard"      Word="クリップボード" />
+		<Item Id="html-viewer/feedback/main/template"       Word="テンプレート" />
+		<Item Id="html-viewer/feedback/function"            Word="機能要望" />
+		<Item Id="html-viewer/feedback/failure"             Word="不具合" />
+		<Item Id="html-viewer/feedback/others"              Word="その他" />
+		<Item Id="html-viewer/feedback/auto"                Word="自動設定項目" />
+		<Item Id="html-viewer/feedback/auto/swicth"         Word="表示/非表示" />
+		<Item Id="html-viewer/feedback/auto/key"            Word="キー" />
+		<Item Id="html-viewer/feedback/auto/value"          Word="値" />
+		<Item Id="html-viewer/feedback/confirm"             Word="ユーザー確認項目" />
+		<Item Id="html-viewer/feedback/confirm/confirm"         Word="入力内容を公開してもよい" />
+		<Item Id="html-viewer/feedback/confirm/confirm-comment" Word="「機能要望」・「不具合」・「その他」の入力内容をそのまま課題に記載しても良い場合チェックしてください(あからさまな個人情報は削除します)。" />
+		<Item Id="html-viewer/feedback/confirm/mail"            Word="E-mail" />
+		<Item Id="html-viewer/feedback/confirm/mail-comment"    Word="返信が必要な場合や連絡をしても構わない場合に入力してください。" />
+		<Item Id="html-viewer/feedback/confirm/name"            Word="名前" />
+		<Item Id="html-viewer/feedback/confirm/name-comment"    Word="連絡する際に用いる名前を入力してください。" />
+		<Item Id="html-viewer/feedback/warning"   Word="入力された値は Google Apps Script を経由してデータ収集され、改修・調査等に使用します。${hv-br}データは Google Drive に蓄積されます。${hv-br}開発側で管理運用するため特定個人間での受け渡しの発生する可能性があります。${hv-br}ユーザー識別子(auto-id)は設定で変更できます。" />
+		<Item Id="html-viewer/feedback/submit"    Word="送信" />
+		
+
+
+
+
+
+		
 		<!-- enum -->
 		
 		<Item Id="enum/ModifierKeys" Word="修飾キー" />

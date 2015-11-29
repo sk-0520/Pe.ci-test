@@ -151,5 +151,25 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 
             return result;
         }
+
+
+        public static bool FilterItemName(LauncherItemModel model, string pattern)
+        {
+            CheckUtility.DebugEnforceNotNull(model);
+
+            if(string.IsNullOrWhiteSpace(pattern)) {
+                return true;
+            }
+
+            var s = pattern.Trim();
+
+            if(char.IsUpper(s[0])) {
+                // 前方一致 + 大文字小文字区別あり
+                return model.Name.StartsWith(s, StringComparison.InvariantCulture);
+            } else {
+                // 部分一致 + 大文字小文字区別無し
+                return model.Name.IndexOf(s, StringComparison.InvariantCultureIgnoreCase) != -1;
+            }
+        }
     }
 }

@@ -609,6 +609,11 @@
 
                                     <RowDefinition />
                                     <RowDefinition />
+                                    
+                                    <RowDefinition />
+
+                                    <RowDefinition />
+                                    <RowDefinition />
 
                                     <RowDefinition />
 
@@ -633,22 +638,33 @@
 
                                   <Label Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource TitleLabel}">
                                     <StackPanel Orientation="Horizontal">
-                                      <Image Source="{x:Static AM:AppResource.CommonCopyImage}" Style="{StaticResource ItemImage}" />
-                                      <TextBlock Style="{StaticResource ItemText}" Text="clipboard" AA:Language.Word="toolbar/clipboard" />
+                                      <Image Source="{x:Static AM:AppResource.CommonFileImage}" Style="{StaticResource ItemImage}" />
+                                      <TextBlock Style="{StaticResource ItemText}" Text="file" AA:Language.Word="toolbar/file" />
                                     </StackPanel>
                                   </Label>
-                                  <Button Grid.Row="4" Grid.Column="0" Content="command" AA:Language.Word="toolbar/clipboard/command" IsEnabled="{Binding HasDataCommand}" Command="{Binding CopyTextCommand, Mode=OneTime}" CommandParameter="{x:Static ADD:LauncherCommandType.Command}" Style="{StaticResource PopupClose}" />
+                                  <Button Grid.Row="4" Grid.Column="0" Content="work dir"   AA:Language.Word="toolbar/file/work-dir"   IsEnabled="{Binding ExistsWorkDirectory}" Command="{Binding OpenDirectoryCommand, Mode=OneTime}" CommandParameter="{x:Static ADD:LauncherCommandType.WorkDirectory}" Style="{StaticResource PopupClose}" />
 
                                   <Separator Grid.Row="5" Grid.ColumnSpan="2"/>
 
                                   <Label Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource TitleLabel}">
                                     <StackPanel Orientation="Horizontal">
+                                      <Image Source="{x:Static AM:AppResource.CommonCopyImage}" Style="{StaticResource ItemImage}" />
+                                      <TextBlock Style="{StaticResource ItemText}" Text="clipboard" AA:Language.Word="toolbar/clipboard" />
+                                    </StackPanel>
+                                  </Label>
+                                  <Button Grid.Row="7" Grid.Column="0" Content="command" AA:Language.Word="toolbar/clipboard/command" IsEnabled="{Binding HasDataCommand}" Command="{Binding CopyTextCommand, Mode=OneTime}" CommandParameter="{x:Static ADD:LauncherCommandType.Command}" Style="{StaticResource PopupClose}" />
+                                  <Button Grid.Row="7" Grid.Column="1" Content="work dir"   AA:Language.Word="toolbar/clipboard/work-dir"   IsEnabled="{Binding HasDataWorkDirectory}" Command="{Binding CopyTextCommand, Mode=OneTime}" CommandParameter="{x:Static ADD:LauncherCommandType.WorkDirectory}" Style="{StaticResource PopupClose}" />
+
+                                  <Separator Grid.Row="8" Grid.ColumnSpan="2"/>
+
+                                  <Label Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource TitleLabel}">
+                                    <StackPanel Orientation="Horizontal">
                                       <Image Source="{x:Static AM:AppResource.CommonOthersImage}" Style="{StaticResource ItemImage}" />
                                       <TextBlock Style="{StaticResource ItemText}" Text="others" AA:Language.Word="toolbar/others" />
                                     </StackPanel>
                                   </Label>
-                                  <Button Grid.Row="7" Grid.Column="0" Content="customize" AA:Language.Word="toolbar/others/customize" Style="{StaticResource PopupClose}" Command="{Binding OpenCustomizeCommand, Mode=OneTime}" />
-                                  <ACC:LockedButton Grid.Row="7" Grid.Column="1" Content="remove" AA:Language.Word="toolbar/others/remove" Command="{Binding DataContext.RemoveItemCommand, Source={x:Reference root}}"  CommandParameter="{Binding}"  />
+                                  <Button Grid.Row="10" Grid.Column="0" Content="customize" AA:Language.Word="toolbar/others/customize" Style="{StaticResource PopupClose}" Command="{Binding OpenCustomizeCommand, Mode=OneTime}" />
+                                  <ACC:LockedButton Grid.Row="10" Grid.Column="1" Content="remove" AA:Language.Word="toolbar/others/remove" Command="{Binding DataContext.RemoveItemCommand, Source={x:Reference root}}"  CommandParameter="{Binding}"  />
                                 </Grid>
                               </xctk:SplitButton.DropDownContent>
                             </xctk:SplitButton>

@@ -36,6 +36,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
     using ContentTypeTextNet.Library.SharedLibrary.CompatibleForms.Utility;
     using ContentTypeTextNet.Library.SharedLibrary.Define;
     using ContentTypeTextNet.Library.SharedLibrary.IF;
+    using ContentTypeTextNet.Library.SharedLibrary.Logic;
     using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
     using ContentTypeTextNet.Pe.Library.PeData.Define;
     using ContentTypeTextNet.Pe.Library.PeData.Item;
@@ -75,7 +76,19 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
             }
 
             try {
-                action();
+                // TODO: 再試行用ロジック未使用, 定数直打ち
+                var count = 0;
+                var maxCount = 5;
+                do {
+                    try {
+                        action();
+                        Debug.WriteLine("Copy: OK");
+                        break;
+                    } catch(Exception ex) {
+                        Debug.WriteLine(ex);
+                        Debug.WriteLine("Copy: NG");
+                    }
+                } while(count++ < maxCount);
             } finally {
                 if(enabledWatch.HasValue) {
                     Debug.Assert(!watcher.ClipboardEnabledApplicationCopy);
@@ -602,14 +615,21 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
             NativeMethods.SetForegroundWindow(hWnd);
             if(clipboardWatcher.UsingClipboard) {
                 // 現在クリップボードを一時退避
-                var clipboardItem = ClipboardUtility.GetClipboardData_Impl(ClipboardType.All, hWnd);
-                try {
-                    ClipboardUtility.CopyText(outputText, clipboardWatcher);
-                    NativeMethods.SendMessage(hWnd, WM.WM_PASTE, IntPtr.Zero, IntPtr.Zero);
-                } finally {
-                    if(clipboardItem.Type != ClipboardType.None) {
-                        ClipboardUtility.CopyClipboardItem(clipboardItem, clipboardWatcher);
+                //var clipboardItem = ClipboardUtility.GetClipboardData_Impl(ClipboardType.All, hWnd);
+                var clipboardData = ClipboardUtility.GetClipboardDataDefault(ClipboardType.All, hWnd, nonProcess);
+                if(clipboardData != null) {
+                    try {
+                        ClipboardUtility.CopyText(outputText, clipboardWatcher);
+                        NativeMethods.SendMessage(hWnd, WM.WM_PASTE, IntPtr.Zero, IntPtr.Zero);
+                    } finally {
+                        if(clipboardData.Type != ClipboardType.None) {
+                            ClipboardUtility.CopyClipboardItem(clipboardData, clipboardWatcher);
+                        } else {
+                            Clipboard.Clear();
+                        }
                     }
+                } else {
+                    nonProcess.Logger.Error(nonProcess.Language["log/clipboard/using-error"]);
                 }
             } else {
                 SendKeysUtility.Send(outputText);
@@ -675,6 +695,56 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
             };
 
             return GetEnabledClipboardTypeList(types, list).First();
+        }
+
+        /// <summary>
+        /// 同一設定でうまいことデータを取得する。
+        /// </summary>
+        /// <param name="captureType"></param>
+        /// <param name="hWnd"></param>
+        /// <param name="nonProcess"></param>
+        /// <returns></returns>
+        public static ClipboardData GetClipboardDataDefault(ClipboardType captureType, IntPtr hWnd, INonProcess nonProcess)
+        {
+            try {
+                var exceptions = new List<Exception>();
+                var retry = new TimeRetry<ClipboardData>() {
+                    WaitTime = Constants.clipboardGetDataRetryWaitTime,
+                    WaitMaxCount = Constants.clipboardGetDataRetryMaxCount,
+                    ExecuteFunc = (int waitCurrentCount, ref ClipboardData result) => {
+                        ClipboardData data = null;
+                        try {
+                            data = ClipboardUtility.GetClipboardData(captureType, hWnd);
+                        } catch(Exception ex) {
+                            exceptions.Add(ex);
+                        }
+                        var hasData = data != null;
+                        if(hasData) {
+                            result = data;
+                        }
+                        return hasData;
+                    }
+                };
+                retry.Run();
+
+                if(!retry.WaitOver) {
+                    return retry.Result;
+                } else if(exceptions.Any()) {
+                    if(exceptions.Count == 1) {
+                        nonProcess.Logger.Error(exceptions.First());
+                    } else {
+                        nonProcess.Logger.Error(
+                            nonProcess.Language["log/clipboard/get-error"],
+                            string.Join(Environment.NewLine, exceptions.Select(ex => ex.ToString()))
+                        );
+                    }
+                }
+            } catch(AccessViolationException ex) {
+                // #251
+                nonProcess.Logger.Error(ex);
+            }
+
+            return null;
         }
     }
 }

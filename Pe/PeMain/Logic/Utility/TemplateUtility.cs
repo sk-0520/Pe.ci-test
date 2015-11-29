@@ -74,7 +74,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
                 return processor;
             }
 
-            var result = new ProgramTemplateProcessor() {
+            var result = new ProgramTemplateProcessor(appNonProcess) {
                 CultureCode = appNonProcess.Language.CultureCode,
                 TemplateSource = source,
             };

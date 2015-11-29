@@ -28,6 +28,7 @@ namespace ContentTypeTextNet.Pe.PeMain
     using System.Windows.Media.Imaging;
     using ContentTypeTextNet.Library.SharedLibrary.Define;
     using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+    using Logic;
     using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
     partial class App
@@ -41,6 +42,7 @@ namespace ContentTypeTextNet.Pe.PeMain
             //icon();
             //font();
             //box();
+            //browser();
         }
 
         void icon()
@@ -90,6 +92,10 @@ namespace ContentTypeTextNet.Pe.PeMain
             }
         }
 
+        void browser()
+        {
+            SystemEnvironmentUtility.SetUsingBrowserVersionForExecutingAssembly(8000);
+        }
 
 #endif
     }

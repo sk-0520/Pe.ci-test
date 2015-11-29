@@ -27,5 +27,6 @@ namespace ContentTypeTextNet.Pe.PeMain.Define
         LauncherStream,
         Note,
         Screen,
+        HtmlViewer,
     }
 }
