@@ -167,7 +167,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
                 { "wait",           "true" },
                 { "no-wait-update", "true" },
                 { "event",           eventName },
-                { "script",          Path.Combine(Constants.applicationRootDirectoryPath, Constants.scriptDirectoryName, "Updater", "UpdaterScript.cs") },
+                { "script",          Path.Combine(Constants.ApplicationEtcDirectoryPath, Constants.scriptDirectoryName, "Updater", "UpdaterScript.cs") },
             };
             FileUtility.MakeFileParentDirectory(this._downloadPath);
             if(!Directory.Exists(this._downloadPath)) {

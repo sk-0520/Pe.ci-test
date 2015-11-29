@@ -80,7 +80,10 @@
 		</group>
 		<group type="fixes" dummy="==================================================================">
 			<note rev="">
-				<message></message>
+				<message>#398: 自動アップデート時の最終調整スクリプトが実行されない</message>
+				<comments>
+					<comment>いつからおかしくなっていたかは未調査だけどパス間違ってた</comment>
+				</comments>
 			</note>
 			<note rev="">
 				<message></message>
