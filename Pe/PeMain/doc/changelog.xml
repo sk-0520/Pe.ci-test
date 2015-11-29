@@ -55,7 +55,7 @@
 		</group>
 	</log>
 	-->
-	<log date="YYYY/MM/DD" version="0.71.1" type="rc" dummy="################################################################################">
+	<log date="2015/11/30" version="0.72.0" dummy="################################################################################">
 		<group type="note" dummy="==================================================================">
 			<note rev="">
 				<message>[事前通知]: #335: .NET Frameworkのバージョンを4.6に変更</message>
@@ -73,7 +73,24 @@
 				</comments>
 			</note>
 			<note rev="">
-				<message>[プライバシー]: #179, #297の実装で設定によりインターネット通信の発生する可能性があるためアップデート後に使用許諾が表示されます</message>
+				<message>[プライバシー]: #179, #297実装で設定によりインターネット通信の発生する可能性があるためアップデート後に使用許諾が表示されます</message>
+				<comments>
+					<comment>送信データを破棄したい場合は DATA-ID をお伝えください</comment>
+				</comments>
+			</note>
+			<note rev="">
+				<message>#297: フィードバックをPe内で気楽に入力</message>
+				<comments>
+					<comment>過去に記入して頂いたフィードバックは破棄します</comment>
+					<comment>ていうか余裕なくてあんまり見れてませんでした。ごめんちゃい</comment>
+				</comments>
+			</note>
+			<note rev="">
+				<message>#381: 匿名で課題作成を行えるようにする</message>
+				<comments>
+					<comment>課題への記入を匿名でも行えるようにするか悩み中です</comment>
+					<comment>フィードバック機能も実装したし賛成・反対意見をもらえるとありがたいです</comment>
+				</comments>
 			</note>
 		</group>
 		<group type="features" dummy="==================================================================">
@@ -82,6 +99,8 @@
 				<comments>
 					<comment>フィードバック等のユーザ情報収集時に使用されます</comment>
 					<comment>設定画面の本体設定タブで再設定が可能です</comment>
+					<comment>規定値ではユーザー環境のユーザー名・OS・CPU・メモリをコネコネしてMD5を算出します</comment>
+					<comment>ランダム生成した時間は現在時間からMD5を算出します</comment>
 					<comment>UI追加に伴いランチャーD&amp;D設定はランチャータブへ移動しました</comment>
 				</comments>
 			</note>
@@ -91,6 +110,10 @@
 					<comment>通知領域Peアイコンコンテキストメニュー 情報→フィードバックで入力できます</comment>
 					<comment>入力データの送信にはインターネット接続が必要になります</comment>
 					<comment>データに関しては追々ヘルプ書きます</comment>
+					<comment>入力データを破棄したい場合は DATA-ID をお伝えください</comment>
+					<comment>本対応によりレジストリ情報の一部に書き込みが行われます。Pe起動時に書き込まれ終了時に破棄されます。キーは下記になります</comment>
+					<comment>HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_BROWSER_EMULATION</comment>
+					<comment>HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_DOCUMENT_COMPATIBLE_MODE</comment>
 				</comments>
 			</note>
 			<note rev="">
@@ -119,6 +142,7 @@
 					<comment>設定→プライバシー から「ユーザー情報送信を許可」が有効になっている場合のみ送信処理が行われます</comment>
 					<comment>送信内容はヘルプに記載する予定ですがまだヘルプが書けていません</comment>
 					<comment>内容を確認したい場合はログを確認してください。要求・応答メッセージが出力されています</comment>
+					<comment>送信データを破棄したい場合は DATA-ID をお伝えください</comment>
 					<comment>本機能実装により本バージョンアップデートには使用許諾が表示されます</comment>
 				</comments>
 			</note>
@@ -156,20 +180,6 @@
 			</note>
 			<note rev="">
 				<message>#386: ランチャー登録時に新規作成したアイテムを選択状態にする</message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-		</group>
-		<group type="developer" dummy="==================================================================">
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
 			</note>
 		</group>
 	</log>

@@ -51,7 +51,7 @@ namespace ContentTypeTextNet.Pe.PeMain
         /// 前回バージョンがこれ未満なら使用許諾を表示
         /// </summary>
         [ConstantsProperty]
-        static readonly Version acceptVersion = new Version(0, 63, 0, 0);
+        static readonly Version acceptVersion = new Version(0, 72, 0, 0);
 
         /// <summary>
         /// Forms版のバージョン。

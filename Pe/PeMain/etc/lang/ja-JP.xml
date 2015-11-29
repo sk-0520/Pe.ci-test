@@ -479,7 +479,7 @@
 		<Item Id="log/privacy/send/start"       Word="ユーザー情報送信開始" />
 		<Item Id="log/privacy/send/end/ok"      Word="ユーザー情報送信成功" />
 		<Item Id="log/privacy/send/end/ng"      Word="ユーザー情報送信失敗" />
-		<Item Id="log/privacy/send/end/detail"  Word="ID: @[LOG-PRIVACY-SEND-DATA-ID]${br}---------------${br}受信整形データ:${br}@[LOG-PRIVACY-SEND-RECV-DATA]${br}---------------${br}受信生データ${br}@[LOG-PRIVACY-SEND-RECV-RAW]" />
+		<Item Id="log/privacy/send/end/detail"  Word="DATA-ID: @[LOG-PRIVACY-SEND-DATA-ID]${br}---------------${br}受信整形データ:${br}@[LOG-PRIVACY-SEND-RECV-DATA]${br}---------------${br}受信生データ${br}@[LOG-PRIVACY-SEND-RECV-RAW]" />
 		<Item Id="log/privacy/send/failure"     Word="ユーザー情報送信エラー" />
 		
 		
@@ -523,7 +523,7 @@
 		<!-- フィードバック -->
 		<Item Id="html-viewer/feedback"                     Word="@[APPLICATION:NAME] フィードバック" />
 		<Item Id="html-viewer/feedback/message/title"       Word="フィードバック処理完了" />
-		<Item Id="html-viewer/feedback/message/success"     Word="ご協力ありがとうございます。本データを削除したい場合は下記IDをお伝えください(IDの再発行は出来ないためユーザー側で保管してください)。" />
+		<Item Id="html-viewer/feedback/message/success"     Word="ご協力ありがとうございます。本データを削除したい場合は下記DATA-IDをお伝えください(DATA-IDの再発行は出来ません。ユーザー側で保管してください)。" />
 		<Item Id="html-viewer/feedback/message/failure"     Word="入力内容に誤りがあります(@[APPLICATION:NAME]から実施した場合、本メッセージが表示されない想定ですのでお手数ですがご報告願います)。" />
 		<Item Id="html-viewer/feedback/message/message"     Word="送信された内容と処理内容は以下になります。" />
 		<Item Id="html-viewer/feedback/local/not-input"     Word="いずれかは入力してください。" />
