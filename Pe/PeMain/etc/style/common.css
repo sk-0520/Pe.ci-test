@@ -1,7 +1,7 @@
-﻿body
-{
-	color: #111; 
+﻿body {
+	color: #111;
 	background: #fff;
+	margin: 1.5em;
 }
 
 body, input, textarea {
