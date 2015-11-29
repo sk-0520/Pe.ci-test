@@ -66,27 +66,13 @@
 				</comments>
 			</note>
 			<note rev="">
-				<message>[対応しない]: #355: 終了時にログを強制出力する</message>
-				<comments>
-					<comment>うまくいかんし#355自体は対応やめます</comment>
-					<comment>#393で頑張りますん</comment>
-				</comments>
-			</note>
-			<note rev="">
 				<message>[プライバシー]: #179, #297実装で設定によりインターネット通信の発生する可能性があるためアップデート後に使用許諾が表示されます</message>
 				<comments>
 					<comment>送信データを破棄したい場合は DATA-ID をお伝えください</comment>
 				</comments>
 			</note>
 			<note rev="">
-				<message>#297: フィードバックをPe内で気楽に入力</message>
-				<comments>
-					<comment>過去に記入して頂いたフィードバックは破棄します</comment>
-					<comment>ていうか余裕なくてあんまり見れてませんでした。ごめんちゃい</comment>
-				</comments>
-			</note>
-			<note rev="">
-				<message>#381: 匿名で課題作成を行えるようにする</message>
+				<message>[悩み中] #381: 匿名で課題作成を行えるようにする</message>
 				<comments>
 					<comment>課題への記入を匿名でも行えるようにするか悩み中です</comment>
 					<comment>フィードバック機能も実装したし賛成・反対意見をもらえるとありがたいです</comment>
@@ -94,7 +80,7 @@
 			</note>
 		</group>
 		<group type="features" dummy="==================================================================">
-			<note rev="">
+			<note rev="6f51246421c002bc4111f89be8a0e11acc9d0a7d">
 				<message>#378: ユーザー識別子を作成・保持する</message>
 				<comments>
 					<comment>フィードバック等のユーザ情報収集時に使用されます</comment>
@@ -104,7 +90,7 @@
 					<comment>UI追加に伴いランチャーD&amp;D設定はランチャータブへ移動しました</comment>
 				</comments>
 			</note>
-			<note rev="">
+			<note rev="e12fb70455ac9c9b6cd68bc4892c219b5f3782d2">
 				<message>#297: フィードバックをPe内で気楽に入力</message>
 				<comments>
 					<comment>通知領域Peアイコンコンテキストメニュー 情報→フィードバックで入力できます</comment>
@@ -114,18 +100,20 @@
 					<comment>本対応によりレジストリ情報の一部に書き込みが行われます。Pe起動時に書き込まれ終了時に破棄されます。キーは下記になります</comment>
 					<comment>HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_BROWSER_EMULATION</comment>
 					<comment>HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_DOCUMENT_COMPATIBLE_MODE</comment>
+					<comment>過去に記入して頂いたフィードバックは破棄します</comment>
+					<comment>ていうか余裕なくてあんまり見れてませんでした。ごめんちゃい</comment>
 				</comments>
 			</note>
-			<note rev="">
+			<note rev="69dde0aac6b6c9337963bfce803becb7905d5575">
 				<message>#373: 初回起動時の情報を保持する</message>
 				<comments>
 					<comment>本バージョンからの設定項目追加なので古いバージョン情報は持てません</comment>
 				</comments>
 			</note>
-			<note rev="">
+			<note rev="d92cc38c8e24c965659efc20b857b32195941107">
 				<message>#390: コマンドランチャーでディレクトリパスを入力した際に親ディレクトリも表示する</message>
 			</note>
-			<note rev="">
+			<note rev="3db332ff1e05dc55cbe81a94b47fdedb50dd731f">
 				<message>#389: ランチャーアイテム選択リストのフィルタリング機能の一致方法を改善する</message>
 				<comments>
 					<comment>コマンドランチャーとランチャーアイテム一覧で実装が分かれていたのを統合しました</comment>
@@ -134,7 +122,7 @@
 					<comment>小文字: 部分一致 + 大文字小文字を区別しない</comment>
 				</comments>
 			</note>
-			<note rev="">
+			<note rev="645424bc282f00ec958fe56b12011b1b528d81e0">
 				<message>#179: 使用ユーザー情報の収集</message>
 				<comments>
 					<comment>#297での実装と環境を流用してユーザー情報を収集します</comment>
@@ -146,27 +134,27 @@
 					<comment>本機能実装により本バージョンアップデートには使用許諾が表示されます</comment>
 				</comments>
 			</note>
-			<note rev="">
-				<message></message>
+			<note rev="8c4546823c1ea43d24e95df3991340af95246ad7">
+				<message>アイテム起動時のログ内容をまともにした</message>
 			</note>
 		</group>
 		<group type="fixes" dummy="==================================================================">
-			<note rev="">
+			<note rev="2ce7e8c9f6f7869980752736b0b9f6632b68b9b7">
 				<message>#384: 短い報告用情報のビルド種別の項目名をTypeからBuildTypeに変更する</message>
 				<comments>
 					<comment>CLIもCLRに変更</comment>
 				</comments>
 			</note>
-			<note rev="">
+			<note rev="ec6efd3d9c19ed1619421b36181ecfc87d130e73">
 				<message>#372: 情報ダイアログは最前面表示にする必要ない</message>
 			</note>
-			<note rev="">
+			<note rev="86031a0fbf868d2734ee229f5fa2c7399b38f4c0">
 				<message>#376: クリップボード・テンプレレートの転送にクリップボードを経由した場合にクリップボードオープンのエラーが発生する可能性あり</message>
 				<comments>
 					<comment>本改修に伴いクリップボードが空であれば転送後も空にするように修正</comment>
 				</comments>
 			</note>
-			<note rev="">
+			<note rev="b4ef13c1afe0ec2e8f37bda937043db37a5d9b02">
 				<message>#377: テンプレートの置換処理(文字列orT4)でクリップボードを使用した場合にクリップボードオープンのエラーが発生する可能性あり</message>
 				<comments>
 					<comment>本改修に伴いコピー操作の再試行を実装(全処理に影響)</comment>
@@ -175,11 +163,20 @@
 			<note rev="">
 				<message>#394: システム環境情報取得時の取得エラーの例外キャッチをやめる</message>
 			</note>
-			<note rev="">
+			<note rev="cbe3ae2273912e7337104e55cfa5b023ed517305">
 				<message>#385: コマンド型アイテムのツールバーメニューに作業ディレクトリがない</message>
 			</note>
-			<note rev="">
+			<note rev="a6b6c4b54d6e8aae0736e7ff177f887e7d135333">
 				<message>#386: ランチャー登録時に新規作成したアイテムを選択状態にする</message>
+			</note>
+		</group>
+		<group type="developer" dummy="==================================================================">
+			<note rev="b1f2262d22cd9f350df4818832e06c173ceb578b">
+				<message>#355: 終了時にログを強制出力する</message>
+				<comments>
+					<comment>うまくいかんし#355自体は対応やめます</comment>
+					<comment>#393で頑張りますん</comment>
+				</comments>
 			</note>
 		</group>
 	</log>
