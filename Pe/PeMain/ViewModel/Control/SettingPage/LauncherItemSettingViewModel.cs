@@ -99,7 +99,8 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control.SettingPage
                 var result = CreateCommand(
                     o => {
                         var model = SettingUtility.CreateLauncherItem(LauncherItemSetting.Items, AppNonProcess);
-                        LauncherItems.LauncherItemPairList.Add(model, null);
+                        var pair = LauncherItems.LauncherItemPairList.Add(model, null);
+                        SelectedLauncherItem = pair.ViewModel;
                     }
                 );
 
