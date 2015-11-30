@@ -1163,7 +1163,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 //}
                 if(SetVariableValue(ref this._isHidden, value)) {
                     CallOnPropertyChange(
-                        "ToolbarContentVisibility",
+                        nameof(ToolbarContentVisibility),
                         "IsTopmost"
                     );
                     if(!this._isHidden) {
