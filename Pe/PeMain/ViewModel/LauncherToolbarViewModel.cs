@@ -243,27 +243,13 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         public Thickness BorderThickness
         {
             get { return this._borderThickness; }
-            set
-            {
-                //if (this._borderThickness != value) {
-                //	this._borderThickness = value;
-                //	OnPropertyChanged();
-                //}
-                SetVariableValue(ref this._borderThickness, value);
-            }
+            set { SetVariableValue(ref this._borderThickness, value); }
         }
 
         public Brush BorderBrush
         {
             get { return this._borderBrush; }
-            set
-            {
-                //if (this._borderBrush != value) {
-                //	this._borderBrush = value;
-                //	OnPropertyChanged();
-                //}
-                SetVariableValue(ref this._borderBrush, value);
-            }
+            set { SetVariableValue(ref this._borderBrush, value); }
         }
 
         public Visibility ToolbarContentVisibility
@@ -364,23 +350,23 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         public double IconWidth
         {
             get { return IconSize.Width; }
-            set { SetPropertyValue(IconSize, value, "Width"); }
+            set { SetPropertyValue(IconSize, value, nameof(IconSize.Width)); }
         }
         public double IconHeight
         {
             get { return IconSize.Height; }
-            set { SetPropertyValue(IconSize, value, "Height"); }
+            set { SetPropertyValue(IconSize, value, nameof(IconSize.Height)); }
         }
         Size ButtonSize { get; set; }
         public double ButtonWidth
         {
             get { return ButtonSize.Width; }
-            set { SetPropertyValue(ButtonSize, value, "Width"); }
+            set { SetPropertyValue(ButtonSize, value, nameof(ButtonSize.Width)); }
         }
         public double ButtonHeight
         {
             get { return ButtonSize.Height; }
-            set { SetPropertyValue(ButtonSize, value, "Height"); }
+            set { SetPropertyValue(ButtonSize, value, nameof(ButtonSize.Height)); }
         }
         public double MenuWidth { get; set; }
         public double ContentWidth { get { return ButtonSize.Width - MenuWidth; } }
@@ -1003,7 +989,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 if(DockType == DockType.None) {
                     Model.Toolbar.FloatToolbar.WidthButtonCount = CalculateButtonWidthCount(DockType, ToolbarButtonOrientation, BorderThickness, this._captionWidth, value);
                     OnPropertyChanged();
-                    OnPropertyChanged("CaptionHeight");
+                    OnPropertyChanged(nameof(CaptionHeight));
                 } else if(!IsHidden && ShowLogicalBarArea.Width != value) {
                     this._showLogicalBarArea.Width = value;
                     OnPropertyChanged();
@@ -1027,7 +1013,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 if(DockType == DockType.None) {
                     Model.Toolbar.FloatToolbar.HeightButtonCount = CalculateButtonHeightCount(DockType, ToolbarButtonOrientation, BorderThickness, this._captionWidth, value);
                     OnPropertyChanged();
-                    OnPropertyChanged("CaptionWidth");
+                    OnPropertyChanged(nameof(CaptionWidth));
                 } else if(!IsHidden && ShowLogicalBarArea.Height != value) {
                     this._showLogicalBarArea.Height = value;
                     OnPropertyChanged();
@@ -1058,7 +1044,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                         var nowTime = DateTime.Now;
                         if(this._nowFullScreen) {
                             AppNonProcess.Logger.Debug("fullscreen: first, cancel-flag on");
-                            OnPropertyChanged("IsTopmost");
+                            OnPropertyChanged(nameof(IsTopmost));
                             this._prevFullScreenTime = DateTime.Now;
                         } else {
                             var nowSpan = nowTime - _prevFullScreenTime;
@@ -1070,7 +1056,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                                 this._prevFullScreenCancel = true;
                             } else {
                                 AppNonProcess.Logger.Debug(string.Format("fullscreen: [CHANGE]:{0}, [IsTopmost]:{1}", this._nowFullScreen, IsTopmost));
-                                OnPropertyChanged("IsTopmost");
+                                OnPropertyChanged(nameof(IsTopmost));
                                 if(this._nowFullScreen && this._prevFullScreenCancel) {
                                     // 前回フルクリーンが二重発行されてた場合は解除する
                                     this._prevFullScreenCancel = false;
@@ -1105,21 +1091,21 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                     OnPropertyChanged();
                     View.InvalidateArrange();
                     var propertyNames = new[] {
-                        "ToolbarButtonOrientation",
-                        "CaptionVisibility",
-                        "CaptionWidth",
-                        "CaptionHeight",
-                        "DropDownPlacement",
-                        "GripDock",
-                        "ToolbarButtonHorizontalAlignment",
-                        "ToolbarButtonVerticalAlignment",
-                        "FirstWidth",
-                        "SecondWidth",
-                        "IsEnabledCorrection",
-                        "PositionContentButton",
-                        "PositionMenuButton",
-                        "ResizeMode",
-                        "IsTopmost",
+                        nameof(ToolbarButtonOrientation),
+                        nameof(CaptionVisibility),
+                        nameof(CaptionWidth),
+                        nameof(CaptionHeight),
+                        nameof(DropDownPlacement),
+                        nameof(GripDock),
+                        nameof(ToolbarButtonHorizontalAlignment),
+                        nameof(ToolbarButtonVerticalAlignment),
+                        nameof(FirstWidth),
+                        nameof(SecondWidth),
+                        nameof(IsEnabledCorrection),
+                        nameof(PositionContentButton),
+                        nameof(PositionMenuButton),
+                        nameof(ResizeMode),
+                        nameof(IsTopmost),
                     };
                     CallOnPropertyChange(propertyNames);
                     View.UpdateLayout();
@@ -1164,7 +1150,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 if(SetVariableValue(ref this._isHidden, value)) {
                     CallOnPropertyChange(
                         nameof(ToolbarContentVisibility),
-                        "IsTopmost"
+                        nameof(IsTopmost)
                     );
                     if(!this._isHidden) {
                         HavingViewUtility.BeginInvoke(this, () => {
@@ -1354,7 +1340,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         protected override void CallOnPropertyChangeDisplayItem()
         {
             base.CallOnPropertyChangeDisplayItem();
-            OnPropertyChanged("MenuIcon");
+            OnPropertyChanged(nameof(MenuIcon));
         }
 
         #endregion
