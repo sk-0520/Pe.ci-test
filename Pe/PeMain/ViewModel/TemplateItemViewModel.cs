@@ -170,9 +170,8 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         void OnPropertyChangedItemType()
         {
             var propertyNames = new[] {
-                "IsReplace",
-//				"ItemTypeImage",
-				"ItemTypeText",
+                nameof(IsReplace),
+                nameof(ItemTypeText),
             };
             CallOnPropertyChange(propertyNames);
         }
