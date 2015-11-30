@@ -63,7 +63,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 if(SetVariableValue(ref this._selectedViewModel, value)) {
                     View.pageSource.IsSelected = true;
 
-                    CallOnPropertyChange("KeywordList");
+                    CallOnPropertyChange(nameof(KeywordList));
                     if(this._selectedViewModel != null) {
                         this._selectedViewModel.PropertyChanged += SelectedViewModel_PropertyChanged;
                     }
@@ -521,13 +521,13 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         void SelectedViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             var refreshTargets = new[] {
-                "TemplateReplaceMode",
+                nameof(TemplateItemViewModel.TemplateReplaceMode),
             };
             if(SelectedViewModel != null && refreshTargets.Any(s => s == e.PropertyName)) {
                 if(HasView) {
                     LanguageUtility.RecursiveSetLanguage(View.listItems, AppNonProcess.Language);
                 }
-                CallOnPropertyChange("KeywordList");
+                CallOnPropertyChange(nameof(KeywordList));
             }
         }
 
