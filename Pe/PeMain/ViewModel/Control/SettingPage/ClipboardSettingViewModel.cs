@@ -77,27 +77,27 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control.SettingPage
         public bool CaptureTypeText
         {
             get { return Clipboard.CaptureType.HasFlag(ClipboardType.Text); }
-            set { SetClipboardType(Clipboard, Clipboard.CaptureType, ClipboardType.Text, defineCaptureType); }
+            set { SetClipboardType(Clipboard, Clipboard.CaptureType, ClipboardType.Text, nameof(Clipboard.CaptureType)); }
         }
         public bool CaptureTypeRtf
         {
             get { return Clipboard.CaptureType.HasFlag(ClipboardType.Rtf); }
-            set { SetClipboardType(Clipboard, Clipboard.CaptureType, ClipboardType.Rtf, defineCaptureType); }
+            set { SetClipboardType(Clipboard, Clipboard.CaptureType, ClipboardType.Rtf, nameof(Clipboard.CaptureType)); }
         }
         public bool CaptureTypeHtml
         {
             get { return Clipboard.CaptureType.HasFlag(ClipboardType.Html); }
-            set { SetClipboardType(Clipboard, Clipboard.CaptureType, ClipboardType.Html, defineCaptureType); }
+            set { SetClipboardType(Clipboard, Clipboard.CaptureType, ClipboardType.Html, nameof(Clipboard.CaptureType)); }
         }
         public bool CaptureTypeImage
         {
             get { return Clipboard.CaptureType.HasFlag(ClipboardType.Image); }
-            set { SetClipboardType(Clipboard, Clipboard.CaptureType, ClipboardType.Image, defineCaptureType); }
+            set { SetClipboardType(Clipboard, Clipboard.CaptureType, ClipboardType.Image, nameof(Clipboard.CaptureType)); }
         }
         public bool CaptureTypeFiles
         {
             get { return Clipboard.CaptureType.HasFlag(ClipboardType.Files); }
-            set { SetClipboardType(Clipboard, Clipboard.CaptureType, ClipboardType.Files, defineCaptureType); }
+            set { SetClipboardType(Clipboard, Clipboard.CaptureType, ClipboardType.Files, nameof(Clipboard.CaptureType)); }
         }
 
         #endregion
@@ -107,27 +107,27 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control.SettingPage
         public bool LimitTypeText
         {
             get { return Clipboard.LimitSize.LimitType.HasFlag(ClipboardType.Text); }
-            set { SetClipboardType(Clipboard.LimitSize, Clipboard.LimitSize.LimitType, ClipboardType.Text, defineLimitType); }
+            set { SetClipboardType(Clipboard.LimitSize, Clipboard.LimitSize.LimitType, ClipboardType.Text, nameof(Clipboard.LimitSize.LimitType)); }
         }
         public bool LimitTypeRtf
         {
             get { return Clipboard.LimitSize.LimitType.HasFlag(ClipboardType.Rtf); }
-            set { SetClipboardType(Clipboard.LimitSize, Clipboard.LimitSize.LimitType, ClipboardType.Rtf, defineLimitType); }
+            set { SetClipboardType(Clipboard.LimitSize, Clipboard.LimitSize.LimitType, ClipboardType.Rtf, nameof(Clipboard.LimitSize.LimitType)); }
         }
         public bool LimitTypeHtml
         {
             get { return Clipboard.LimitSize.LimitType.HasFlag(ClipboardType.Html); }
-            set { SetClipboardType(Clipboard.LimitSize, Clipboard.LimitSize.LimitType, ClipboardType.Html, defineLimitType); }
+            set { SetClipboardType(Clipboard.LimitSize, Clipboard.LimitSize.LimitType, ClipboardType.Html, nameof(Clipboard.LimitSize.LimitType)); }
         }
         public bool LimitTypeImage
         {
             get { return Clipboard.LimitSize.LimitType.HasFlag(ClipboardType.Image); }
-            set { SetClipboardType(Clipboard.LimitSize, Clipboard.LimitSize.LimitType, ClipboardType.Image, defineLimitType); }
+            set { SetClipboardType(Clipboard.LimitSize, Clipboard.LimitSize.LimitType, ClipboardType.Image, nameof(Clipboard.LimitSize.LimitType)); }
         }
         public bool LimitTypeFiles
         {
             get { return Clipboard.LimitSize.LimitType.HasFlag(ClipboardType.Files); }
-            set { SetClipboardType(Clipboard.LimitSize, Clipboard.LimitSize.LimitType, ClipboardType.Files, defineLimitType); }
+            set { SetClipboardType(Clipboard.LimitSize, Clipboard.LimitSize.LimitType, ClipboardType.Files, nameof(Clipboard.LimitSize.LimitType)); }
         }
 
         #endregion
@@ -137,27 +137,27 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control.SettingPage
         public int LimitSizeText
         {
             get { return Clipboard.LimitSize.Text; }
-            set { SetPropertyValue(Clipboard.LimitSize, value, "Text"); }
+            set { SetPropertyValue(Clipboard.LimitSize, value, nameof(Clipboard.LimitSize.Text)); }
         }
         public int LimitSizeRtf
         {
             get { return Clipboard.LimitSize.Rtf; }
-            set { SetPropertyValue(Clipboard.LimitSize, value, "Rtf"); }
+            set { SetPropertyValue(Clipboard.LimitSize, value, nameof(Clipboard.LimitSize.Rtf)); }
         }
         public int LimitSizeHtml
         {
             get { return Clipboard.LimitSize.Html; }
-            set { SetPropertyValue(Clipboard.LimitSize, value, "Html"); }
+            set { SetPropertyValue(Clipboard.LimitSize, value, nameof(Clipboard.LimitSize.Html)); }
         }
         public int LimitSizeImageWidth
         {
             get { return Clipboard.LimitSize.ImageWidth; }
-            set { SetPropertyValue(Clipboard.LimitSize, value, "ImageWidth"); }
+            set { SetPropertyValue(Clipboard.LimitSize, value, nameof(Clipboard.LimitSize.ImageWidth)); }
         }
         public int LimitSizeImageHeight
         {
             get { return Clipboard.LimitSize.ImageHeight; }
-            set { SetPropertyValue(Clipboard.LimitSize, value, "ImageHeight"); }
+            set { SetPropertyValue(Clipboard.LimitSize, value, nameof(Clipboard.LimitSize.ImageHeight)); }
         }
 
         #endregion
