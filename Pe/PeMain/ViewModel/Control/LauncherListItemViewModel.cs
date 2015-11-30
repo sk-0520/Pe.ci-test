@@ -54,7 +54,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control
         {
             CallOnPropertyChangeDisplayItem();
             AppNonProcess.LauncherIconCaching.Remove(Model);
-            OnPropertyChanged("Image");
+            OnPropertyChanged(nameof(Image));
         }
     }
 }
