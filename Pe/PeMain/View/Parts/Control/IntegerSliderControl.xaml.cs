@@ -30,6 +30,7 @@ namespace ContentTypeTextNet.Pe.PeMain.View.Parts.Control
     using System.Windows.Media.Imaging;
     using System.Windows.Navigation;
     using System.Windows.Shapes;
+    using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 
     /// <summary>
     /// IntegerSliderControl.xaml の相互作用ロジック
@@ -44,7 +45,7 @@ namespace ContentTypeTextNet.Pe.PeMain.View.Parts.Control
         #region ValueProperty
 
         public static readonly DependencyProperty ValueProperty = DependencyProperty.Register(
-            "Value",
+            DependencyPropertyUtility.GetName(nameof(ValueProperty)),
             typeof(int),
             typeof(IntegerSliderControl),
             new FrameworkPropertyMetadata(
@@ -73,7 +74,7 @@ namespace ContentTypeTextNet.Pe.PeMain.View.Parts.Control
         #region MaximumProperty
 
         public static readonly DependencyProperty MaximumProperty = DependencyProperty.Register(
-            "Maximum",
+            DependencyPropertyUtility.GetName(nameof(MaximumProperty)),
             typeof(int),
             typeof(IntegerSliderControl),
             new FrameworkPropertyMetadata(
@@ -101,7 +102,7 @@ namespace ContentTypeTextNet.Pe.PeMain.View.Parts.Control
         #region MinimumProperty
 
         public static readonly DependencyProperty MinimumProperty = DependencyProperty.Register(
-            "Minimum",
+            DependencyPropertyUtility.GetName(nameof(MinimumProperty)),
             typeof(int),
             typeof(IntegerSliderControl),
             new FrameworkPropertyMetadata(

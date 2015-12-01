@@ -478,21 +478,22 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control.SettingPage
 
         private void CallOnPropertyChangeDefaultGroupListFromRemove(Guid prevDefaultId)
         {
-            OnPropertyChanged("DefaultGroupList");
+            OnPropertyChanged(nameof(DefaultGroupList));
             if(SelectedToolbar.DefaultGroupId == Guid.Empty) {
                 // 値設定するとバインドが死ぬのでインデックス指定
                 DefaultGroupIndex = 0;
-                OnPropertyChanged("DefaultGroupId");
+                // BUGS: "DefaultGroupId" が何を指すのか分からん
+                //OnPropertyChanged("DefaultGroupId");
             } else if(SelectedToolbar.DefaultGroupId == prevDefaultId) {
                 SelectedToolbar.DefaultGroupId = Guid.Empty;
-                OnPropertyChanged("DefaultGroupId");
+                //OnPropertyChanged("DefaultGroupId");
             }
             //OnPropertyChanged("DefaultGroupList");
         }
 
         void CallOnPropertyChangeDefaultGroupList(Guid groupId)
         {
-            OnPropertyChanged("DefaultGroupList");
+            OnPropertyChanged(nameof(DefaultGroupList));
             DefaultGroupIndex = DefaultGroupList
                 .Select((g, i) => new { Id = g.Id, Index = i })
                 .FirstOrDefault(p => groupId == p.Id)
@@ -545,7 +546,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control.SettingPage
             //	vm.Refresh();
             //}
             this._launcherItems = null;
-            OnPropertyChanged("LauncherItems");
+            OnPropertyChanged(nameof(LauncherItems));
 
             foreach(var node in this._groupTree.SelectMany(t => t.Nodes)) {
                 node.Refresh();

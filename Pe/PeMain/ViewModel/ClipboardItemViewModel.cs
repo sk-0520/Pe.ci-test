@@ -83,27 +83,27 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         public bool EnabledClipboardTypesText
         {
             get { return Model.Type.HasFlag(ClipboardType.Text); }
-            set { SetClipboardType(Model, Model.Type, ClipboardType.Text, defineEnabled); }
+            set { SetClipboardType(Model, Model.Type, ClipboardType.Text, nameof(Model.Type)); }
         }
         public bool EnabledClipboardTypesRtf
         {
             get { return Model.Type.HasFlag(ClipboardType.Rtf); }
-            set { SetClipboardType(Model, Model.Type, ClipboardType.Rtf, defineEnabled); }
+            set { SetClipboardType(Model, Model.Type, ClipboardType.Rtf, nameof(Model.Type)); }
         }
         public bool EnabledClipboardTypesHtml
         {
             get { return Model.Type.HasFlag(ClipboardType.Html); }
-            set { SetClipboardType(Model, Model.Type, ClipboardType.Html, defineEnabled); }
+            set { SetClipboardType(Model, Model.Type, ClipboardType.Html, nameof(Model.Type)); }
         }
         public bool EnabledClipboardTypesImage
         {
             get { return Model.Type.HasFlag(ClipboardType.Image); }
-            set { SetClipboardType(Model, Model.Type, ClipboardType.Image, defineEnabled); }
+            set { SetClipboardType(Model, Model.Type, ClipboardType.Image, nameof(Model.Type)); }
         }
         public bool EnabledClipboardTypesFiles
         {
             get { return Model.Type.HasFlag(ClipboardType.Files); }
-            set { SetClipboardType(Model, Model.Type, ClipboardType.Files, defineEnabled); }
+            set { SetClipboardType(Model, Model.Type, ClipboardType.Files, nameof(Model.Type)); }
         }
 
         #endregion

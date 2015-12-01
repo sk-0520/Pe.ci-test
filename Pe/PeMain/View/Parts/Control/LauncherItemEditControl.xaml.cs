@@ -30,6 +30,7 @@ namespace ContentTypeTextNet.Pe.PeMain.View.Parts.Control
     using System.Windows.Media.Imaging;
     using System.Windows.Navigation;
     using System.Windows.Shapes;
+    using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 
     /// <summary>
     /// LauncherItemEditControl.xaml の相互作用ロジック
@@ -50,7 +51,7 @@ namespace ContentTypeTextNet.Pe.PeMain.View.Parts.Control
         #region IsEditedProperty
 
         public static readonly DependencyProperty IsEditedProperty = DependencyProperty.Register(
-            "IsEdited",
+            DependencyPropertyUtility.GetName(nameof(IsEditedProperty)),
             typeof(bool),
             typeof(LauncherItemEditControl),
             new FrameworkPropertyMetadata(new PropertyChangedCallback(OnIsEditedChanged))

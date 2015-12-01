@@ -99,13 +99,13 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         public virtual bool StdStreamOutput
         {
             get { return Model.StdStream.OutputWatch; }
-            set { SetPropertyValue(Model.StdStream, value, "OutputWatch"); }
+            set { SetPropertyValue(Model.StdStream, value, nameof(Model.StdStream.OutputWatch)); }
         }
 
         public virtual bool StdStreamInput
         {
             get { return Model.StdStream.InputUsing; }
-            set { SetPropertyValue(Model.StdStream, value, "InputUsing"); }
+            set { SetPropertyValue(Model.StdStream, value, nameof(Model.StdStream.InputUsing)); }
         }
 
 

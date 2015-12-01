@@ -110,7 +110,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             set
             {
                 if(SetVariableValue(ref this._titleEditVisibility, value)) {
-                    OnPropertyChanged("TitleCaptionVisibility");
+                    OnPropertyChanged(nameof(TitleCaptionVisibility));
                 }
             }
         }
@@ -138,8 +138,8 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             set
             {
                 if(SetModelValue(value)) {
-                    OnPropertyChanged("CaptionButtonVisibility");
-                    OnPropertyChanged("IsBodyReadOnly");
+                    OnPropertyChanged(nameof(CaptionButtonVisibility));
+                    OnPropertyChanged(nameof(IsBodyReadOnly));
                 }
             }
         }
@@ -154,7 +154,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                         SetCompactArea();
                     }
                     CallOnPropertyChangeDisplayItem();
-                    OnPropertyChanged("WindowHeight");
+                    OnPropertyChanged(nameof(WindowHeight));
                 }
             }
         }
@@ -199,7 +199,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                     this._indexBody = new NoteBodyItemModel();
                 }
                 var indexBody = IndexBody;
-                if(SetPropertyValue(indexBody, value, "Text")) {
+                if(SetPropertyValue(indexBody, value, nameof(indexBody.Text))) {
                     indexBody.History.Update();
                     AppSender.SendSaveIndexBody(IndexBody, Model.Id, Timing.Delay);
                 }
@@ -426,7 +426,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 var result = CreateCommand(
                     o => {
                         this._editingBody = true;
-                        OnPropertyChanged("IsBodyReadOnly");
+                        OnPropertyChanged(nameof(IsBodyReadOnly));
                         if(HasView) {
                             if(View.body.SelectionLength == 0) {
                                 View.body.SelectAll();
@@ -463,7 +463,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         protected override void InitializeView()
         {
             SetCompactArea();
-            OnPropertyChanged("IsBodyReadOnly");
+            OnPropertyChanged(nameof(IsBodyReadOnly));
 
             View.UserClosing += View_UserClosing;
             PopupUtility.Attachment(View, View.popup);
@@ -483,8 +483,8 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             base.CallOnPropertyChangeDisplayItem();
 
             var propertyNames = new[] {
-                "MenuIcon",
-                "MenuText",
+                nameof(MenuIcon),
+                nameof(MenuText),
             };
             CallOnPropertyChange(propertyNames);
         }
@@ -499,7 +499,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             set
             {
                 if(ColorPairProperty.SetNoneAlphaForekColor(Model, value, OnPropertyChanged)) {
-                    CallOnPropertyChange("ForeColorBrush");
+                    CallOnPropertyChange(nameof(ForeColorBrush));
                     CallOnPropertyChangeDisplayItem();
                 }
             }
@@ -541,7 +541,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         {
             if(this._editingBody) {
                 this._editingBody = false;
-                OnPropertyChanged("IsBodyReadOnly");
+                OnPropertyChanged(nameof(IsBodyReadOnly));
             }
         }
 

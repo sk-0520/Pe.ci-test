@@ -58,7 +58,10 @@
 	<log date="YYYY/MM/DD" version="0.72.1" type="rc" dummy="################################################################################">
 		<group type="note" dummy="==================================================================">
 			<note rev="">
-				<message></message>
+				<message>#335: .NET Frameworkのバージョンを4.6に変更</message>
+				<comments>
+					<comment>本バージョンから .NET Framework 4.6 が必要になります</comment>
+				</comments>
 			</note>
 			<note rev="">
 				<message></message>
@@ -94,7 +97,11 @@
 		</group>
 		<group type="developer" dummy="==================================================================">
 			<note rev="">
-				<message></message>
+				<message class="compatibility">#335: .NET Frameworkのバージョンを4.6に変更</message>
+				<comments>
+					<comment>やっとこさ nameof が使えるようになったので目についた範囲を修正</comment>
+					<comment>実装の移行はのんびりやっていく</comment>
+				</comments>
 			</note>
 			<note rev="">
 				<message></message>

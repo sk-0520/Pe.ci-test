@@ -190,8 +190,8 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             {
                 SetVariableValue(ref this._selectedCommandItem, value);
                 CallOnPropertyChange(
-                    "IsSelectedCommandItem",
-                    "IsNotSelectedCommandItem"
+                    nameof(IsSelectedCommandItem),
+                    nameof(IsNotSelectedCommandItem)
                 );
             }
         }
@@ -275,7 +275,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         void CallOnPropertyChangeIsOpen()
         {
-            OnPropertyChanged("IsOpen");
+            OnPropertyChanged(nameof(IsOpen));
         }
 
         IEnumerable<CommandItemViewModel> GetAllCommandItems()

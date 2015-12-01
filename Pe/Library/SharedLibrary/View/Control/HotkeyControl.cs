@@ -24,6 +24,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.View.Control
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Input;
+    using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
     using ContentTypeTextNet.Library.SharedLibrary.Model;
 
     /// <summary>
@@ -81,7 +82,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.View.Control
         #region DependencyProperty
 
         public static readonly DependencyProperty HotkeyProperty = DependencyProperty.Register(
-            "Hotkey",
+            DependencyPropertyUtility.GetName(nameof(HotkeyProperty)),
             typeof(HotKeyModel),
             typeof(HotkeyControl),
             new FrameworkPropertyMetadata(

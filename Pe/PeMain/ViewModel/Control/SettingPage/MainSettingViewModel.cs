@@ -194,13 +194,13 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control.SettingPage
         public bool RunningCheckUpdateRelease
         {
             get { return RunningInformation.CheckUpdateRelease; }
-            set { SetPropertyValue(RunningInformation, value, "CheckUpdateRelease"); }
+            set { SetPropertyValue(RunningInformation, value, nameof(RunningInformation.CheckUpdateRelease)); }
         }
 
         public bool RunningCheckUpdateRC
         {
             get { return RunningInformation.CheckUpdateRC; }
-            set { SetPropertyValue(RunningInformation, value, "CheckUpdateRC"); }
+            set { SetPropertyValue(RunningInformation, value, nameof(RunningInformation.CheckUpdateRC)); }
         }
 
         public string UserId
@@ -222,13 +222,13 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control.SettingPage
         public HotKeyModel SysEnvHideFileHotkey
         {
             get { return SystemEnvironment.HideFileHotkey; }
-            set { SetPropertyValue(SystemEnvironment, value, "HideFileHotkey"); }
+            set { SetPropertyValue(SystemEnvironment, value, nameof(SystemEnvironment.HideFileHotkey)); }
         }
 
         public HotKeyModel SysEnvExtensionHotkey
         {
             get { return SystemEnvironment.ExtensionHotkey; }
-            set { SetPropertyValue(SystemEnvironment, value, "ExtensionHotkey"); }
+            set { SetPropertyValue(SystemEnvironment, value, nameof(SystemEnvironment.ExtensionHotkey)); }
         }
 
         #endregion
@@ -238,23 +238,23 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control.SettingPage
         public Color StdOutputForeColor
         {
             get { return Stream.OutputColor.ForeColor; }
-            set { SetPropertyValue(Stream.OutputColor, value, "ForeColor"); }
+            set { SetPropertyValue(Stream.OutputColor, value, nameof(Stream.OutputColor.ForeColor)); }
         }
         public Color StdOutputBackColor
         {
             get { return Stream.OutputColor.BackColor; }
-            set { SetPropertyValue(Stream.OutputColor, value, "BackColor"); }
+            set { SetPropertyValue(Stream.OutputColor, value, nameof(Stream.OutputColor.BackColor)); }
         }
 
         public Color ErrOutputForeColor
         {
             get { return Stream.ErrorColor.ForeColor; }
-            set { SetPropertyValue(Stream.ErrorColor, value, "ForeColor"); }
+            set { SetPropertyValue(Stream.ErrorColor, value, nameof(Stream.ErrorColor.ForeColor)); }
         }
         public Color ErrOutputBackColor
         {
             get { return Stream.ErrorColor.BackColor; }
-            set { SetPropertyValue(Stream.ErrorColor, value, "BackColor"); }
+            set { SetPropertyValue(Stream.ErrorColor, value, nameof(Stream.ErrorColor.BackColor)); }
         }
 
         //public FontFamily StreamFontFamily
@@ -321,19 +321,19 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control.SettingPage
         public bool WindowSaveIsEnabled
         {
             get { return WindowSave.IsEnabled; }
-            set { SetPropertyValue(WindowSave, value, "IsEnabled"); }
+            set { SetPropertyValue(WindowSave, value, nameof(WindowSave.IsEnabled)); }
         }
 
         public TimeSpan WindowSaveIntervalTime
         {
             get { return WindowSave.SaveIntervalTime; }
-            set { SetPropertyValue(WindowSave, value, "SaveIntervalTime"); }
+            set { SetPropertyValue(WindowSave, value, nameof(WindowSave.SaveIntervalTime)); }
         }
 
         public int WindowSaveCount
         {
             get { return WindowSave.SaveCount; }
-            set { SetPropertyValue(WindowSave, value, "SaveCount"); }
+            set { SetPropertyValue(WindowSave, value, nameof(WindowSave.SaveCount)); }
         }
 
 

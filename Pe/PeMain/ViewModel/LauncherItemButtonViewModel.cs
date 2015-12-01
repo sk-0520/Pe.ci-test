@@ -85,7 +85,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 //	OnPropertyChanged("ToolbarImage");
                 //}
                 if(SetVariableValue(ref this._iconScale, value)) {
-                    OnPropertyChanged("ToolbarImage");
+                    OnPropertyChanged(nameof(ToolbarImage));
                 }
             }
         }
@@ -107,75 +107,33 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         public bool ExistsCommand
         {
             get { return this._existsCommand; }
-            set
-            {
-                //if(this._existsCommand != value) {
-                //	this._existsCommand = value;
-                //	OnPropertyChanged();
-                //}
-                SetVariableValue(ref this._existsCommand, value);
-            }
+            set { SetVariableValue(ref this._existsCommand, value); }
         }
         public bool ExistsParentDirectory
         {
             get { return this._existsParentDir; }
-            set
-            {
-                //if(this._existsParentDir != value) {
-                //	this._existsParentDir = value;
-                //	OnPropertyChanged();
-                //}
-                SetVariableValue(ref this._existsParentDir, value);
-            }
+            set { SetVariableValue(ref this._existsParentDir, value); }
         }
         public bool ExistsWorkDirectory
         {
             get { return this._existsWorkDir; }
-            set
-            {
-                //if(this._existsWorkDir != value) {
-                //	this._existsWorkDir = value;
-                //	OnPropertyChanged();
-                //}
-                SetVariableValue(ref this._existsWorkDir, value);
-            }
+            set { SetVariableValue(ref this._existsWorkDir, value); }
         }
 
         public bool HasDataCommand
         {
             get { return this._hasDataCommand; }
-            set
-            {
-                //if(this._hasDataCommand != value) {
-                //	this._hasDataCommand = value;
-                //	OnPropertyChanged();
-                //}
-                SetVariableValue(ref this._hasDataCommand, value);
-            }
+            set { SetVariableValue(ref this._hasDataCommand, value); }
         }
         public bool HasDataParentDirectory
         {
             get { return this._hasDataParentDir; }
-            set
-            {
-                //if(this._hasDataParentDir != value) {
-                //	this._hasDataParentDir = value;
-                //	OnPropertyChanged();
-                //}
-                SetVariableValue(ref this._hasDataParentDir, value);
-            }
+            set { SetVariableValue(ref this._hasDataParentDir, value); }
         }
         public bool HasDataWorkDirectory
         {
             get { return this._hasDataWorkDir; }
-            set
-            {
-                //if(this._hasDataWorkDir != value) {
-                //	this._hasDataWorkDir = value;
-                //	OnPropertyChanged();
-                //}
-                SetVariableValue(ref this._hasDataWorkDir, value);
-            }
+            set { SetVariableValue(ref this._hasDataWorkDir, value); }
         }
 
         #endregion

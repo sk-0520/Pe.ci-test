@@ -76,7 +76,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         protected override void CallOnPropertyChangeDisplayItem()
         {
             base.CallOnPropertyChangeDisplayItem();
-            OnPropertyChanged("Image");
+            OnPropertyChanged(nameof(Image));
         }
 
         #endregion

@@ -325,7 +325,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         void RefreshProcess()
         {
             Process.Refresh();
-            OnPropertyChanged("Process");
+            OnPropertyChanged(nameof(Process));
         }
 
         void KillProcess()
