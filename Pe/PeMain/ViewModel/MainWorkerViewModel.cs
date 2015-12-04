@@ -2249,30 +2249,34 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                     CommonData.Language["log/privacy/send/start"],
                     await ui.SendData.ReadAsStringAsync()
                 );
-                var response = await ui.SendAync();
-                if(response.StatusCode == HttpStatusCode.OK) {
-                    // ログ出力用に生の文字列を取得する(ストリーム→データ変換した方が楽だけど生じゃなくなる)
-                    var result = await response.Content.ReadAsStringAsync();
-                    using(var stream = new MemoryStream(Encoding.UTF8.GetBytes(result))) {
-                        var model = SerializeUtility.LoadJsonDataFromStream<ResponseDataModel>(stream);
-                        string langKey;
-                        LogPutDelegate logPut;
-                        if(model.Success) {
-                            langKey = "log/privacy/send/end/ok";
-                            logPut = CommonData.Logger.Information;
-                        } else {
-                            langKey = "log/privacy/send/end/ng";
-                            logPut = CommonData.Logger.Warning;
-                        }
-                        var map = new Dictionary<string, string>() {
+                try {
+                    var response = await ui.SendAync();
+                    if(response.StatusCode == HttpStatusCode.OK) {
+                        // ログ出力用に生の文字列を取得する(ストリーム→データ変換した方が楽だけど生じゃなくなる)
+                        var result = await response.Content.ReadAsStringAsync();
+                        using(var stream = new MemoryStream(Encoding.UTF8.GetBytes(result))) {
+                            var model = SerializeUtility.LoadJsonDataFromStream<ResponseDataModel>(stream);
+                            string langKey;
+                            LogPutDelegate logPut;
+                            if(model.Success) {
+                                langKey = "log/privacy/send/end/ok";
+                                logPut = CommonData.Logger.Information;
+                            } else {
+                                langKey = "log/privacy/send/end/ng";
+                                logPut = CommonData.Logger.Warning;
+                            }
+                            var map = new Dictionary<string, string>() {
                             { LanguageKey.logPrivacySendDataId, model.UserDataId },
                             { LanguageKey.logPrivacySendRecvData, model.ToString() },
                             { LanguageKey.logPrivacySendRecvRaw, result },
                         };
-                        logPut(CommonData.Language[langKey], CommonData.Language["log/privacy/send/end/detail", map]);
+                            logPut(CommonData.Language[langKey], CommonData.Language["log/privacy/send/end/detail", map]);
+                        }
+                    } else {
+                        CommonData.Logger.Error(CommonData.Language["log/privacy/send/failure"], response.Headers);
                     }
-                } else {
-                    CommonData.Logger.Error(CommonData.Language["log/privacy/send/failure"], response.Headers);
+                } catch(Exception ex) {
+                    CommonData.Logger.Warning(CommonData.Language["log/privacy/send/failure"], ex);
                 }
             }
         }

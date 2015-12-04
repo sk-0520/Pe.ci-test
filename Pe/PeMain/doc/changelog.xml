@@ -114,6 +114,16 @@
 				<message>#403: 情報ダイアログに旧フィードバックリンクが残ってる</message>
 			</note>
 			<note rev="">
+				<message>#399: ネットワーク接続ができない状態でユーザー情報送信を許可した場合に落ちる</message>
+				<comments>
+					<comment>アップデート確認と同じ処理方法だと思ってたら全然違ってた</comment>
+					<comment>みんな大好き try ... catch(Exception) で対応</comment>
+				</comments>
+			</note>
+			<note rev="">
+				<message></message>
+			</note>
+			<note rev="">
 				<message></message>
 			</note>
 		</group>
