@@ -74,6 +74,11 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control.SettingPage
 
         #region CaptureType
 
+        public ClipboardType CaptureType
+        {
+            get { return Clipboard.CaptureType; }
+        }
+
         public bool CaptureTypeText
         {
             get { return Clipboard.CaptureType.HasFlag(ClipboardType.Text); }
@@ -285,6 +290,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control.SettingPage
                 }
             }
             SetPropertyValue(obj, value, memberName, propertyName);
+            CallOnPropertyChange(nameof(CaptureType));
         }
 
         #endregion

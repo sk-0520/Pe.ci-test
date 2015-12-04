@@ -89,7 +89,11 @@
 				</comments>
 			</note>
 			<note rev="">
-				<message></message>
+				<message>#401: クリップボードの取込対象・制限のON/OFFが効いていない</message>
+				<comments>
+					<comment>1. 設定UIでの制御ができていなかった</comment>
+					<comment>2. 設定補正時に強制ONになっていた</comment>
+				</comments>
 			</note>
 			<note rev="">
 				<message></message>
