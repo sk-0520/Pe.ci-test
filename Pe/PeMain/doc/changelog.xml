@@ -58,13 +58,19 @@
 	<log date="YYYY/MM/DD" version="0.72.1" type="rc" dummy="################################################################################">
 		<group type="note" dummy="==================================================================">
 			<note rev="">
-				<message>#335: .NET Frameworkのバージョンを4.6に変更</message>
+				<message class="compatibility">#335: .NET Frameworkのバージョンを4.6に変更</message>
 				<comments>
 					<comment>本バージョンから .NET Framework 4.6 が必要になります</comment>
 				</comments>
 			</note>
 			<note rev="">
-				<message></message>
+				<message>本バージョンからアップデートチェックに使用するアドレスが変更となります</message>
+				<comments>
+					<comment>XML -&gt; https://bitbucket.org/sk_0520/pe/downloads/update.xml</comment>
+					<comment>HTML(Release) -&gt; https://bitbucket.org/sk_0520/pe/downloads/update-release.html</comment>
+					<comment>HTML(RC) -&gt; https://bitbucket.org/sk_0520/pe/downloads/update-rc.html</comment>
+					<comment>bitbucketのダウンローダーはレスポンスに`Content-Disposition: attachment;`があるけど大丈夫だろ</comment>
+				</comments>
 			</note>
 			<note rev="">
 				<message></message>
@@ -72,7 +78,10 @@
 		</group>
 		<group type="features" dummy="==================================================================">
 			<note rev="">
-				<message></message>
+				<message>#367: バージョンチェック用XMLと更新履歴用XMLのURI変更</message>
+				<comments>
+					<comment>数世代はcontent-type-text.net側も保守するつもり</comment>
+				</comments>
 			</note>
 			<note rev="">
 				<message></message>
@@ -110,7 +119,7 @@
 		</group>
 		<group type="developer" dummy="==================================================================">
 			<note rev="">
-				<message class="compatibility">#335: .NET Frameworkのバージョンを4.6に変更</message>
+				<message>#335: .NET Frameworkのバージョンを4.6に変更</message>
 				<comments>
 					<comment>やっとこさ nameof が使えるようになったので目についた範囲を修正</comment>
 					<comment>実装の移行はのんびりやっていく</comment>
