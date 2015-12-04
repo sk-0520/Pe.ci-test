@@ -74,30 +74,35 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control.SettingPage
 
         #region CaptureType
 
+        public ClipboardType CaptureType
+        {
+            get { return Clipboard.CaptureType; }
+        }
+
         public bool CaptureTypeText
         {
             get { return Clipboard.CaptureType.HasFlag(ClipboardType.Text); }
-            set { SetClipboardType(Clipboard, Clipboard.CaptureType, ClipboardType.Text, nameof(Clipboard.CaptureType)); }
+            set { SetClipboardType(Clipboard, Clipboard.CaptureType, value, ClipboardType.Text, nameof(Clipboard.CaptureType)); }
         }
         public bool CaptureTypeRtf
         {
             get { return Clipboard.CaptureType.HasFlag(ClipboardType.Rtf); }
-            set { SetClipboardType(Clipboard, Clipboard.CaptureType, ClipboardType.Rtf, nameof(Clipboard.CaptureType)); }
+            set { SetClipboardType(Clipboard, Clipboard.CaptureType, value, ClipboardType.Rtf, nameof(Clipboard.CaptureType)); }
         }
         public bool CaptureTypeHtml
         {
             get { return Clipboard.CaptureType.HasFlag(ClipboardType.Html); }
-            set { SetClipboardType(Clipboard, Clipboard.CaptureType, ClipboardType.Html, nameof(Clipboard.CaptureType)); }
+            set { SetClipboardType(Clipboard, Clipboard.CaptureType, value, ClipboardType.Html, nameof(Clipboard.CaptureType)); }
         }
         public bool CaptureTypeImage
         {
             get { return Clipboard.CaptureType.HasFlag(ClipboardType.Image); }
-            set { SetClipboardType(Clipboard, Clipboard.CaptureType, ClipboardType.Image, nameof(Clipboard.CaptureType)); }
+            set { SetClipboardType(Clipboard, Clipboard.CaptureType, value, ClipboardType.Image, nameof(Clipboard.CaptureType)); }
         }
         public bool CaptureTypeFiles
         {
             get { return Clipboard.CaptureType.HasFlag(ClipboardType.Files); }
-            set { SetClipboardType(Clipboard, Clipboard.CaptureType, ClipboardType.Files, nameof(Clipboard.CaptureType)); }
+            set { SetClipboardType(Clipboard, Clipboard.CaptureType, value, ClipboardType.Files, nameof(Clipboard.CaptureType)); }
         }
 
         #endregion
@@ -107,27 +112,27 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control.SettingPage
         public bool LimitTypeText
         {
             get { return Clipboard.LimitSize.LimitType.HasFlag(ClipboardType.Text); }
-            set { SetClipboardType(Clipboard.LimitSize, Clipboard.LimitSize.LimitType, ClipboardType.Text, nameof(Clipboard.LimitSize.LimitType)); }
+            set { SetClipboardType(Clipboard.LimitSize, Clipboard.LimitSize.LimitType, value, ClipboardType.Text, nameof(Clipboard.LimitSize.LimitType)); }
         }
         public bool LimitTypeRtf
         {
             get { return Clipboard.LimitSize.LimitType.HasFlag(ClipboardType.Rtf); }
-            set { SetClipboardType(Clipboard.LimitSize, Clipboard.LimitSize.LimitType, ClipboardType.Rtf, nameof(Clipboard.LimitSize.LimitType)); }
+            set { SetClipboardType(Clipboard.LimitSize, Clipboard.LimitSize.LimitType, value, ClipboardType.Rtf, nameof(Clipboard.LimitSize.LimitType)); }
         }
         public bool LimitTypeHtml
         {
             get { return Clipboard.LimitSize.LimitType.HasFlag(ClipboardType.Html); }
-            set { SetClipboardType(Clipboard.LimitSize, Clipboard.LimitSize.LimitType, ClipboardType.Html, nameof(Clipboard.LimitSize.LimitType)); }
+            set { SetClipboardType(Clipboard.LimitSize, Clipboard.LimitSize.LimitType, value, ClipboardType.Html, nameof(Clipboard.LimitSize.LimitType)); }
         }
         public bool LimitTypeImage
         {
             get { return Clipboard.LimitSize.LimitType.HasFlag(ClipboardType.Image); }
-            set { SetClipboardType(Clipboard.LimitSize, Clipboard.LimitSize.LimitType, ClipboardType.Image, nameof(Clipboard.LimitSize.LimitType)); }
+            set { SetClipboardType(Clipboard.LimitSize, Clipboard.LimitSize.LimitType, value, ClipboardType.Image, nameof(Clipboard.LimitSize.LimitType)); }
         }
         public bool LimitTypeFiles
         {
             get { return Clipboard.LimitSize.LimitType.HasFlag(ClipboardType.Files); }
-            set { SetClipboardType(Clipboard.LimitSize, Clipboard.LimitSize.LimitType, ClipboardType.Files, nameof(Clipboard.LimitSize.LimitType)); }
+            set { SetClipboardType(Clipboard.LimitSize, Clipboard.LimitSize.LimitType, value, ClipboardType.Files, nameof(Clipboard.LimitSize.LimitType)); }
         }
 
         #endregion
@@ -272,9 +277,20 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control.SettingPage
 
         #region function
 
-        void SetClipboardType(object obj, ClipboardType nowValue, ClipboardType clipboardType, string memberName, [CallerMemberName]string propertyName = "")
+        void SetClipboardType(object obj, ClipboardType nowValue, bool set, ClipboardType clipboardType, string memberName, [CallerMemberName]string propertyName = "")
         {
-            SetPropertyValue(obj, nowValue ^ clipboardType, memberName, propertyName);
+            var value = nowValue;
+            if(set) {
+                if(!nowValue.HasFlag(clipboardType)) {
+                    value ^= clipboardType;
+                }
+            } else {
+                if(nowValue.HasFlag(clipboardType)) {
+                    value ^= clipboardType;
+                }
+            }
+            SetPropertyValue(obj, value, memberName, propertyName);
+            CallOnPropertyChange(nameof(CaptureType));
         }
 
         #endregion

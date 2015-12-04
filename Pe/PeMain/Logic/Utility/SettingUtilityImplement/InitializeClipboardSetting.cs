@@ -42,7 +42,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityImplement
             setting.WaitTime = Constants.clipboardWaitTime.GetClamp(setting.WaitTime);
             setting.DuplicationCount = Constants.clipboardDuplicationCount.GetClamp(setting.DuplicationCount);
             setting.Font.Size = Constants.clipboardFontSize.GetClamp(setting.Font.Size);
-            setting.CaptureType = EnumUtility.GetNormalization(setting.CaptureType, Constants.clipboardCaptureType);
+            //setting.CaptureType = EnumUtility.GetNormalization(setting.CaptureType, Constants.clipboardCaptureType);
 
             if(SettingUtility.IsIllegalPlusNumber(setting.ItemsListWidth)) {
                 setting.ItemsListWidth = Constants.clipboardItemsListWidth;
@@ -55,7 +55,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityImplement
                 setting.WindowHeight = Constants.clipboardDefaultWindowSize.Height;
             }
 
-            setting.LimitSize.LimitType = EnumUtility.GetNormalization(setting.LimitSize.LimitType, Constants.clipboardLimitType);
+            //setting.LimitSize.LimitType = EnumUtility.GetNormalization(setting.LimitSize.LimitType, Constants.clipboardLimitType);
             setting.LimitSize.Text = Constants.clipboardLimitTextSize.GetClamp(setting.LimitSize.Text);
             setting.LimitSize.Rtf = Constants.clipboardLimitRtfSize.GetClamp(setting.LimitSize.Rtf);
             setting.LimitSize.Html = Constants.clipboardLimitHtmlSize.GetClamp(setting.LimitSize.Html);

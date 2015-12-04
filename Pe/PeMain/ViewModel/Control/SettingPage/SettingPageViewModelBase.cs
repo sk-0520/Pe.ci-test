@@ -34,10 +34,6 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control.SettingPage
     {
         public SettingPageViewModelBase(TView view, IAppNonProcess appNonProcess, SettingNotifyData settingNotifiyItem)
         {
-            CheckUtility.DebugEnforceNotNull(view);
-            CheckUtility.DebugEnforceNotNull(appNonProcess);
-            CheckUtility.DebugEnforceNotNull(settingNotifiyItem);
-
             View = view;
             AppNonProcess = appNonProcess;
             SettingNotifiyItem = settingNotifiyItem;
