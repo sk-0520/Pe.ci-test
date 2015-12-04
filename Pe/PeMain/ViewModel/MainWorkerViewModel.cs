@@ -430,7 +430,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                         }
 
                         var window = SendCreateWindow(WindowKind.HtmlViewer, model, null);
-                        window.ShowDialog();
+                        window.Show();
                     }
                 );
 
