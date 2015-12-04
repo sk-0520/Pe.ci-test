@@ -74,6 +74,12 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
         [DataMember]
         public bool ShowTriggerFatal { get; set; }
 
+        /// <summary>
+        /// 詳細部分を折り返し表示するか。
+        /// </summary>
+        [DataMember]
+        public bool DetailWordWrap { get; set; }
+
         #endregion
 
         #region IWindowStatus
@@ -130,6 +136,7 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
             obj.WindowState = WindowState;
             obj.IsTopmost = IsTopmost;
             obj.IsVisible = IsVisible;
+            obj.DetailWordWrap = DetailWordWrap;
         }
 
         public IDeepClone DeepClone()
