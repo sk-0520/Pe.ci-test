@@ -39,6 +39,8 @@ namespace ContentTypeTextNet.Pe.PeMain
     /// </summary>
     public static partial class AppResource
     {
+        #region icon
+
         [AppResource(AppResourceType.Icon)]
         const string application = "/Resources/Icon/App.ico";
         [AppResource(AppResourceType.Icon)]
@@ -54,6 +56,13 @@ namespace ContentTypeTextNet.Pe.PeMain
         const string applicationTasktrayBeta = "/Resources/Icon/Tasktray/App-beta.ico";
         [AppResource(AppResourceType.Icon)]
         const string applicationTasktrayRelease = "/Resources/Icon/Tasktray/App-release.ico";
+
+        #endregion
+
+        #region image
+
+        #region common
+
         [AppResource(AppResourceType.Image)]
         const string commonFiltering = "/Resources/Image/Common/CommonFiltering.png";
         [AppResource(AppResourceType.Image)]
@@ -104,6 +113,12 @@ namespace ContentTypeTextNet.Pe.PeMain
         const string commonLock = "/Resources/Image/Common/CommonLock.png";
         [AppResource(AppResourceType.Image)]
         const string commonComment = "/Resources/Image/Common/CommonComment.png";
+        [AppResource(AppResourceType.Image)]
+        const string commonWordWrap = "/Resources/Image/Common/CommonWordWrap.png";
+
+        #endregion
+
+        #region home
 
         [AppResource(AppResourceType.Image)]
         const string homeSearch = "/Resources/Image/Home/homeSearch.png";
@@ -112,11 +127,23 @@ namespace ContentTypeTextNet.Pe.PeMain
         [AppResource(AppResourceType.Image)]
         const string homeWindows = "/Resources/Image/Home/homeWindows.png";
 
+        #endregion
+
+        #region toolbar
+
         [AppResource(AppResourceType.Image)]
         const string toolbarToolbar = "/Resources/Image/Toolbar/Toolbar.png";
 
+        #endregion
+
+        #region stream
+
         [AppResource(AppResourceType.Image)]
         const string streamKill = "/Resources/Image/Stream/StreamKill.png";
+
+        #endregion
+
+        #region note
 
         [AppResource(AppResourceType.Image)]
         const string noteNote = "/Resources/Image/Note/Note.png";
@@ -124,6 +151,10 @@ namespace ContentTypeTextNet.Pe.PeMain
         const string noteHide = "/Resources/Image/Note/NoteHide.png";
         [AppResource(AppResourceType.Image)]
         const string noteFront = "/Resources/Image/Note/NoteFront.png";
+
+        #endregion
+
+        #region template
 
         [AppResource(AppResourceType.Image)]
         const string templateTemplate = "/Resources/Image/Template/Template.png";
@@ -135,6 +166,10 @@ namespace ContentTypeTextNet.Pe.PeMain
         const string templateReplaceProgram = "/Resources/Image/Template/TemplateReplaceProgram.png";
         [AppResource(AppResourceType.Image)]
         const string templatePreview = "/Resources/Image/Template/TemplatePreview.png";
+
+        #endregion
+
+        #region clipboard
 
         [AppResource(AppResourceType.Image)]
         const string clipboardClipboard = "/Resources/Image/Clipboard/Clipboard.png";
@@ -155,8 +190,16 @@ namespace ContentTypeTextNet.Pe.PeMain
         [AppResource(AppResourceType.Image)]
         const string clipboardImageRaw = "/Resources/Image/Clipboard/ClipboardImageRaw.png";
 
+        #endregion
+
+        #region command
+
         [AppResource(AppResourceType.Image)]
         const string commandCommand = "/Resources/Image/Command/Command.png";
+
+        #endregion
+
+        #region window
 
         [AppResource(AppResourceType.Image)]
         const string windowListSystem = "/Resources/Image/Window/WindowListSystem.png";
@@ -166,6 +209,10 @@ namespace ContentTypeTextNet.Pe.PeMain
         const string windowLoad = "/Resources/Image/Window/WindowLoad.png";
         [AppResource(AppResourceType.Image)]
         const string windowSave = "/Resources/Image/Window/WindowSave.png";
+
+        #endregion
+
+        #region log
 
         [AppResource(AppResourceType.Image)]
         const string logLog = "/Resources/Image/Log/Log.png";
@@ -182,6 +229,10 @@ namespace ContentTypeTextNet.Pe.PeMain
         [AppResource(AppResourceType.Image)]
         const string logFatal = "/Resources/Image/Log/LogFatal.png";
 
+        #endregion
+
+        #region about
+
         [AppResource(AppResourceType.Image)]
         const string aboutUpdate = "/Resources/Image/About/AboutUpdate.png";
         [AppResource(AppResourceType.Image)]
@@ -195,11 +246,19 @@ namespace ContentTypeTextNet.Pe.PeMain
         [AppResource(AppResourceType.Image)]
         const string aboutComponentKindWebPage = "/Resources/Image/About/AboutComponentKindWebPage.png";
 
+        #endregion
+
+        #region setting
+
         [AppResource(AppResourceType.Image)]
         const string settingSetting = "/Resources/Image/Setting/Setting.png";
         [AppResource(AppResourceType.Image)]
         const string settingLauncherGroupItem = "/Resources/Image/Setting/SettingLauncherGroupItem.png";
         [AppResource(AppResourceType.Image)]
         const string settingLauncherGroupParent = "/Resources/Image/Setting/SettingLauncherGroupParent.png";
+
+        #endregion
+
+        #endregion
     }
 }
