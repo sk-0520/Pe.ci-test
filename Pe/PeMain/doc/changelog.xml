@@ -96,6 +96,12 @@
 				</comments>
 			</note>
 			<note rev="">
+				<message>#368: 環境によりツールバー設定の項目がはみ出る</message>
+			</note>
+			<note rev="">
+				<message></message>
+			</note>
+			<note rev="">
 				<message></message>
 			</note>
 		</group>
