@@ -97,9 +97,12 @@
 			</note>
 			<note rev="">
 				<message>#368: 環境によりツールバー設定の項目がはみ出る</message>
+				<comments>
+					<comment>どの環境でもはみ出てた</comment>
+				</comments>
 			</note>
 			<note rev="">
-				<message></message>
+				<message>#403: 情報ダイアログに旧フィードバックリンクが残ってる</message>
 			</note>
 			<note rev="">
 				<message></message>
