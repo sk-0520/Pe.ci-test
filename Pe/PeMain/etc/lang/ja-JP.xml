@@ -251,6 +251,9 @@
 		<Item Id="logging/detail/caller/member" Word="メソッド" />
 		<Item Id="logging/detail/caller/file"   Word="ファイル" />
 		<Item Id="logging/detail/caller/number" Word="行数" />
+		<Item Id="logging/item/save"  Word="選択中ログの保存" />
+		<Item Id="logging/item/clear" Word="選択中ログの削除" />
+		<Item Id="logging/ward-wrap" Word="詳細を折り返して表示する" />
 
 		<Item Id="update/confirm" Word="バージョン @[UPDATE-NOW-VERSION] → @[UPDATE-NEW-VERSION] @[UPDATE-NEW-TYPE] へ更新しますか？" />
 		

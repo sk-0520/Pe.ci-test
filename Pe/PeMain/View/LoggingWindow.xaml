@@ -115,7 +115,25 @@
           <RowDefinition Height="Auto" />
           <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="Auto" />
+          <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <ToolBarTray Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Orientation="Vertical">
+          <ToolBar Style="{StaticResource DefaultToolbar}" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch">
+            <Button AA:Language.Hint="logging/item/save">
+              <Image Source="{x:Static AM:AppResource.CommonSaveImage}" Style="{StaticResource DefaultImage}" />
+            </Button>
+            <Button AA:Language.Hint="logging/item/clear">
+              <Image Source="{x:Static AM:AppResource.CommonRemoveImage}" Style="{StaticResource DefaultImage}" />
+            </Button>
+            <Separator />
+            <ToggleButton AA:Language.Hint="logging/ward-wrap">
+              <Image Source="{x:Static AM:AppResource.CommonWordWrapImage}" Style="{StaticResource DefaultImage}" />
+            </ToggleButton>
+          </ToolBar>
+        </ToolBarTray>
+        <Grid Grid.Row="0" Grid.Column="1">
           <Grid>
             <Grid.RowDefinitions>
               <RowDefinition Height="Auto" />
@@ -145,6 +163,7 @@
         </Grid>
         <TextBox
           Grid.Row="1"
+          Grid.Column="1"
           AllowDrop="False"
           HorizontalScrollBarVisibility="Auto"
           VerticalScrollBarVisibility="Auto"
