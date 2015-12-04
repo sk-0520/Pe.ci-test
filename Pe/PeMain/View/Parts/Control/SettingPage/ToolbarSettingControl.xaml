@@ -49,7 +49,7 @@
       <RowDefinition Height="Auto" />
     </Grid.RowDefinitions>
     <Grid.ColumnDefinitions>
-      <ColumnDefinition Width="270"/>
+      <ColumnDefinition Width="320"/>
       <ColumnDefinition Width="180*"/>
       <ColumnDefinition Width="Auto"/>
       <ColumnDefinition Width="140*"/>
