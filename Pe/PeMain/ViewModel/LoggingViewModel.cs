@@ -45,7 +45,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
     using Microsoft.Win32;
     using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 
-    public class LoggingViewModel: HavingViewSingleModelWrapperViewModelBase<LoggingSettingModel, LoggingWindow>, ILogAppender, IWindowStatus, IHavingNonProcess
+    public class LoggingViewModel: HavingViewSingleModelWrapperViewModelBase<LoggingSettingModel, LoggingWindow>, ILogAppender, IWindowStatus, IHavingAppNonProcess
     {
         #region variable
 
@@ -53,10 +53,10 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         #endregion
 
-        public LoggingViewModel(LoggingSettingModel model, LoggingWindow view, FixedSizeCollectionModel<LogItemModel> logItems, INonProcess nonProcess)
+        public LoggingViewModel(LoggingSettingModel model, LoggingWindow view, FixedSizeCollectionModel<LogItemModel> logItems, IAppNonProcess appNonProcess)
             : base(model, view)
         {
-            NonProcess = nonProcess;
+            AppNonProcess = appNonProcess;
 
             if(logItems != null) {
                 LogItems = logItems;
@@ -192,7 +192,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                         Debug.Assert(SelectedItem != null);
                         var logItem = SelectedItem;
                         var filter = new DialogFilterList() {
-                            new DialogFilterItem(NonProcess.Language["dialog/filter/log"], Constants.dialogFilterLog),
+                            new DialogFilterItem(AppNonProcess.Language["dialog/filter/log"], Constants.dialogFilterLog),
                         };
                         var name = PathUtility.ToSafeNameDefault(logItem.Message ?? string.Empty).SplitLines().First();
                         if(string.IsNullOrWhiteSpace(name)) {
@@ -240,6 +240,25 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
         }
 
+        public ICommand ItemCopyCommand
+        {
+            get
+            {
+                var result = CreateCommand(
+                    o => {
+                        Debug.Assert(SelectedItem != null);
+                        var logData = LogUtility.MakeLogDetailText(SelectedItem);
+                        ClipboardUtility.CopyText(logData, AppNonProcess.ClipboardWatcher);
+                    },
+                    o => {
+                        return SelectedItem != null;
+                    }
+                );
+
+                return result;
+            }
+        }
+
         #endregion
 
         #region function
@@ -247,7 +266,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         bool SaveFileInDialog(IEnumerable<LogItemModel> logItems)
         {
             var filter = new DialogFilterList() {
-                new DialogFilterItem(NonProcess.Language["dialog/filter/log"], Constants.dialogFilterLog),
+                new DialogFilterItem(AppNonProcess.Language["dialog/filter/log"], Constants.dialogFilterLog),
             };
             //var dialog = new SaveFileDialog() {
             //	AddExtension = true,
@@ -356,9 +375,9 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         #endregion
 
-        #region IHavingNonProcess
+        #region IHavingAppNonProcess
 
-        public INonProcess NonProcess { get; private set; }
+        public IAppNonProcess AppNonProcess { get; private set; }
 
         #endregion
 

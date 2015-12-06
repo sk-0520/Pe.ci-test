@@ -125,6 +125,9 @@
             <Button AA:Language.Hint="logging/item/save" Command="{Binding ItemSaveCommand}">
               <Image Source="{x:Static AM:AppResource.CommonSaveImage}" Style="{StaticResource DefaultImage}" />
             </Button>
+            <Button AA:Language.Hint="logging/item/copy" Command="{Binding ItemCopyCommand}">
+              <Image Source="{x:Static AM:AppResource.CommonCopyImage}" Style="{StaticResource DefaultImage}" />
+            </Button>
             <Button AA:Language.Hint="logging/item/clear" Command="{Binding ItemRemoveCommand}">
               <Image Source="{x:Static AM:AppResource.CommonRemoveImage}" Style="{StaticResource DefaultImage}" />
             </Button>
