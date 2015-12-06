@@ -338,7 +338,7 @@ namespace ContentTypeTextNet.Pe.SystemApplications.Updater
         void ExecuteScript(string scriptFilePath, string baseDirectoryPath, string platform)
         {
             if(!File.Exists(scriptFilePath)) {
-                Console.WriteLine("not found script file");
+                Console.WriteLine("not found script file: " + scriptFilePath);
                 return;
             }
 

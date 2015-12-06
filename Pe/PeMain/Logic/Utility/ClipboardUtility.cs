@@ -82,11 +82,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
                 do {
                     try {
                         action();
-                        Debug.WriteLine("Copy: OK");
                         break;
                     } catch(Exception ex) {
                         Debug.WriteLine(ex);
-                        Debug.WriteLine("Copy: NG");
                     }
                 } while(count++ < maxCount);
             } finally {

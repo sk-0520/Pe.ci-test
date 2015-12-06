@@ -84,7 +84,8 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting
             //RunningInformation.DeepCloneTo(obj.RunningInformation);
             obj.RunningInformation = (RunningInformationSettingModel)RunningInformation.DeepClone();
             Language.DeepCloneTo(obj.Language);
-            Logging.DeepCloneTo(obj.Logging);
+            //Logging.DeepCloneTo(obj.Logging);
+            obj.Logging = (LoggingSettingModel)Logging.DeepClone();
             Toolbar.DeepCloneTo(obj.Toolbar);
             WindowSave.DeepCloneTo(obj.WindowSave);
             SystemEnvironment.DeepCloneTo(obj.SystemEnvironment);

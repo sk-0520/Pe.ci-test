@@ -55,6 +55,86 @@
 		</group>
 	</log>
 	-->
+	<log date="2015/12/06" version="0.73.0" dummy="################################################################################">
+		<group type="note" dummy="==================================================================">
+			<note rev="">
+				<message class="compatibility">#335: .NET Frameworkのバージョンを4.6に変更</message>
+				<comments>
+					<comment>本バージョンから .NET Framework 4.6 が必要になります</comment>
+					<comment>.NET Framework 4.6 は https://www.microsoft.com/ja-jp/download/details.aspx?id=48130 からダウンロードできます</comment>
+				</comments>
+			</note>
+			<note rev="">
+				<message>本バージョンからアップデートチェックに使用するアドレスが変更となります</message>
+				<comments>
+					<comment>XML -&gt; https://bitbucket.org/sk_0520/pe/downloads/update.xml</comment>
+					<comment>HTML(Release) -&gt; https://bitbucket.org/sk_0520/pe/downloads/update-release.html</comment>
+					<comment>HTML(RC) -&gt; https://bitbucket.org/sk_0520/pe/downloads/update-rc.html</comment>
+					<comment>bitbucketのダウンローダーはレスポンスに`Content-Disposition: attachment;`があるけど大丈夫だろ</comment>
+				</comments>
+			</note>
+		</group>
+		<group type="features" dummy="==================================================================">
+			<note rev="">
+				<message>#367: バージョンチェック用XMLと更新履歴用XMLのURI変更</message>
+				<comments>
+					<comment>数世代はcontent-type-text.net側も保守するつもり</comment>
+				</comments>
+			</note>
+			<note rev="">
+				<message>#395: ログウィンドウに個別の出力・コピー・削除機能を設ける</message>
+			</note>
+		</group>
+		<group type="fixes" dummy="==================================================================">
+			<note rev="">
+				<message>#398: 自動アップデート時の最終調整スクリプトが実行されない</message>
+				<comments>
+					<comment>いつからおかしくなっていたかは未調査だけどパス間違ってた</comment>
+				</comments>
+			</note>
+			<note rev="">
+				<message>#401: クリップボードの取込対象・制限のON/OFFが効いていない</message>
+				<comments>
+					<comment>1. 設定UIでの制御ができていなかった</comment>
+					<comment>2. 設定補正時に強制ONになっていた</comment>
+				</comments>
+			</note>
+			<note rev="">
+				<message>#368: 環境によりツールバー設定の項目がはみ出る</message>
+				<comments>
+					<comment>どの環境でもはみ出てた</comment>
+				</comments>
+			</note>
+			<note rev="">
+				<message>#403: 情報ダイアログに旧フィードバックリンクが残ってる</message>
+			</note>
+			<note rev="">
+				<message>#399: ネットワーク接続ができない状態でユーザー情報送信を許可した場合に落ちる</message>
+				<comments>
+					<comment>アップデート確認と同じ処理方法だと思ってたら全然違ってた</comment>
+					<comment>みんな大好き try ... catch(Exception) で対応</comment>
+				</comments>
+			</note>
+			<note rev="">
+				<message>#400: フィードバック入力ウィンドウをモードレスにする</message>
+			</note>
+		</group>
+		<group type="developer" dummy="==================================================================">
+			<note rev="">
+				<message>#335: .NET Frameworkのバージョンを4.6に変更</message>
+				<comments>
+					<comment>やっとこさ nameof が使えるようになったので目についた範囲を修正</comment>
+					<comment>実装の移行はのんびりやっていく</comment>
+				</comments>
+			</note>
+			<note rev="">
+				<message>#25: ヘルプファイルの記述</message>
+				<comments>
+					<comment>次回バージョンで記載しますん</comment>
+				</comments>
+			</note>
+		</group>
+	</log>
 	<log date="2015/11/30" version="0.72.0" dummy="################################################################################">
 		<group type="note" dummy="==================================================================">
 			<note rev="">

@@ -25,6 +25,7 @@ namespace ContentTypeTextNet.Pe.PeMain.View.Parts.Control
     using System.Windows.Media.Imaging;
     using System.Windows.Navigation;
     using System.Windows.Shapes;
+    using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 
     /// <summary>
     /// FontSelectControl.xaml の相互作用ロジック
@@ -39,7 +40,7 @@ namespace ContentTypeTextNet.Pe.PeMain.View.Parts.Control
         #region FamilyNameProperty
 
         public static readonly DependencyProperty FamilyNameProperty = DependencyProperty.Register(
-            "FamilyName",
+            DependencyPropertyUtility.GetName(nameof(FamilyNameProperty)),
             typeof(FontFamily),
             typeof(FontSelectControl),
             new FrameworkPropertyMetadata(
@@ -68,7 +69,7 @@ namespace ContentTypeTextNet.Pe.PeMain.View.Parts.Control
         #region IsBoldProperty
 
         public static readonly DependencyProperty IsBoldProperty = DependencyProperty.Register(
-            "IsBold",
+            DependencyPropertyUtility.GetName(nameof(IsBoldProperty)),
             typeof(bool),
             typeof(FontSelectControl),
             new FrameworkPropertyMetadata(
@@ -97,7 +98,7 @@ namespace ContentTypeTextNet.Pe.PeMain.View.Parts.Control
         #region IsItalicProperty
 
         public static readonly DependencyProperty IsItalicProperty = DependencyProperty.Register(
-            "IsItalic",
+            DependencyPropertyUtility.GetName(nameof(IsItalicProperty)),
             typeof(bool),
             typeof(FontSelectControl),
             new FrameworkPropertyMetadata(
@@ -126,7 +127,7 @@ namespace ContentTypeTextNet.Pe.PeMain.View.Parts.Control
         #region SizeProperty
 
         public static readonly DependencyProperty SizeProperty = DependencyProperty.Register(
-            "Size",
+            DependencyPropertyUtility.GetName(nameof(SizeProperty)),
             typeof(double),
             typeof(FontSelectControl),
             new FrameworkPropertyMetadata(
@@ -155,7 +156,7 @@ namespace ContentTypeTextNet.Pe.PeMain.View.Parts.Control
         #region SizeMinimumProperty
 
         public static readonly DependencyProperty SizeMinimumProperty = DependencyProperty.Register(
-            "SizeMinimum",
+            DependencyPropertyUtility.GetName(nameof(SizeMinimumProperty)),
             typeof(double),
             typeof(FontSelectControl),
             new FrameworkPropertyMetadata(
@@ -183,7 +184,7 @@ namespace ContentTypeTextNet.Pe.PeMain.View.Parts.Control
         #region SizeMaximumProperty
 
         public static readonly DependencyProperty SizeMaximumProperty = DependencyProperty.Register(
-            "SizeMaximum",
+            DependencyPropertyUtility.GetName(nameof(SizeMaximumProperty)),
             typeof(double),
             typeof(FontSelectControl),
             new FrameworkPropertyMetadata(
@@ -211,7 +212,7 @@ namespace ContentTypeTextNet.Pe.PeMain.View.Parts.Control
         #region IsEnabledBoldProperty
 
         public static readonly DependencyProperty IsEnabledBoldProperty = DependencyProperty.Register(
-            "IsEnabledBold",
+            DependencyPropertyUtility.GetName(nameof(IsEnabledBoldProperty)),
             typeof(bool),
             typeof(FontSelectControl),
             new FrameworkPropertyMetadata(
@@ -241,7 +242,7 @@ namespace ContentTypeTextNet.Pe.PeMain.View.Parts.Control
         #region IsEnabledItalicProperty
 
         public static readonly DependencyProperty IsEnabledItalicProperty = DependencyProperty.Register(
-            "IsEnabledItalic",
+            DependencyPropertyUtility.GetName(nameof(IsEnabledItalicProperty)),
             typeof(bool),
             typeof(FontSelectControl),
             new FrameworkPropertyMetadata(

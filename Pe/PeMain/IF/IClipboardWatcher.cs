@@ -22,6 +22,9 @@ namespace ContentTypeTextNet.Pe.PeMain.IF
     using System.Text;
     using System.Threading.Tasks;
 
+    /// <summary>
+    /// クリップボード監視状態保持。
+    /// </summary>
     public interface IClipboardWatcher
     {
         /// <summary>
@@ -41,6 +44,5 @@ namespace ContentTypeTextNet.Pe.PeMain.IF
         /// 転送にクリップボードを使用する。
         /// </summary>
         bool UsingClipboard { get; set; }
-
     }
 }

@@ -119,11 +119,6 @@
             <TextBlock Text="forum" AA:Language.Word="about/link/forum" />
           </Hyperlink>
         </TextBlock>
-        <TextBlock Style="{StaticResource LinkText}">
-          <Hyperlink Command="{Binding OpenLinkCommand}" CommandParameter="{x:Static AM:Constants.UriFeedback}">
-            <TextBlock Text="feedback" AA:Language.Word="about/link/feedback" />
-          </Hyperlink>
-        </TextBlock>
       </StackPanel>
 
       <ListView Grid.Row="0" Grid.Column="2" ItemsSource="{Binding ComponentItems}">

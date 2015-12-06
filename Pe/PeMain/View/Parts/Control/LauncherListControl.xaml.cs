@@ -32,6 +32,7 @@ namespace ContentTypeTextNet.Pe.PeMain.View.Parts.Control
     using System.Windows.Media.Imaging;
     using System.Windows.Navigation;
     using System.Windows.Shapes;
+    using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
     using ContentTypeTextNet.Library.SharedLibrary.View.Converter;
     using ContentTypeTextNet.Pe.Library.PeData.Item;
     using ContentTypeTextNet.Pe.PeMain.ViewModel;
@@ -78,7 +79,7 @@ namespace ContentTypeTextNet.Pe.PeMain.View.Parts.Control
         #region SelectedLauncherItemProperty
 
         public static readonly DependencyProperty SelectedLauncherItemProperty = DependencyProperty.Register(
-            "SelectedLauncherItem",
+            DependencyPropertyUtility.GetName(nameof(SelectedLauncherItemProperty)),
             typeof(LauncherListItemViewModel),
             typeof(LauncherListControl),
             new FrameworkPropertyMetadata(new PropertyChangedCallback(OnSelectedLauncherItem))
@@ -135,7 +136,7 @@ namespace ContentTypeTextNet.Pe.PeMain.View.Parts.Control
         #region SelectedLauncherModelProperty
 
         public static readonly DependencyProperty SelectedLauncherModelProperty = DependencyProperty.Register(
-            "SelectedLauncherModel",
+            DependencyPropertyUtility.GetName(nameof(SelectedLauncherModelProperty)),
             typeof(LauncherItemModel),
             typeof(LauncherListControl),
             new FrameworkPropertyMetadata(new PropertyChangedCallback(OnSelectedLauncherModel))
@@ -176,7 +177,7 @@ namespace ContentTypeTextNet.Pe.PeMain.View.Parts.Control
         #region CanListEditProperty
 
         public static readonly DependencyProperty CanListEditProperty = DependencyProperty.Register(
-            "CanListEdit",
+            DependencyPropertyUtility.GetName(nameof(CanListEditProperty)),
             typeof(bool),
             typeof(LauncherListControl),
             new FrameworkPropertyMetadata(new PropertyChangedCallback(OnChangedCanListEdit))
@@ -215,7 +216,7 @@ namespace ContentTypeTextNet.Pe.PeMain.View.Parts.Control
         #region AppendCommandProperty
 
         public static readonly DependencyProperty AppendCommandProperty = DependencyProperty.Register(
-            "AppendCommand",
+            DependencyPropertyUtility.GetName(nameof(AppendCommandProperty)),
             typeof(ICommand),
             typeof(LauncherListControl),
             new FrameworkPropertyMetadata(new PropertyChangedCallback(OnAppendCommandChanged))
@@ -240,7 +241,7 @@ namespace ContentTypeTextNet.Pe.PeMain.View.Parts.Control
         #region RemoveCommandProperty
 
         public static readonly DependencyProperty RemoveCommandProperty = DependencyProperty.Register(
-            "RemoveCommand",
+            DependencyPropertyUtility.GetName(nameof(RemoveCommandProperty)),
             typeof(ICommand),
             typeof(LauncherListControl),
             new FrameworkPropertyMetadata(new PropertyChangedCallback(OnRemoveCommandChanged))
@@ -265,7 +266,7 @@ namespace ContentTypeTextNet.Pe.PeMain.View.Parts.Control
         #region DoubleClickCommandProperty
 
         public static readonly DependencyProperty DoubleClickCommandProperty = DependencyProperty.Register(
-            "DoubleClickCommand",
+            DependencyPropertyUtility.GetName(nameof(DoubleClickCommandProperty)),
             typeof(ICommand),
             typeof(LauncherListControl),
             new FrameworkPropertyMetadata(new PropertyChangedCallback(OnDoubleClickCommandChanged))

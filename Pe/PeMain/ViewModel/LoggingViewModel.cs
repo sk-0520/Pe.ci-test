@@ -43,13 +43,20 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
     using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
     using ContentTypeTextNet.Pe.PeMain.View;
     using Microsoft.Win32;
+    using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 
-    public class LoggingViewModel: HavingViewSingleModelWrapperViewModelBase<LoggingSettingModel, LoggingWindow>, ILogAppender, IWindowStatus, IHavingNonProcess
+    public class LoggingViewModel: HavingViewSingleModelWrapperViewModelBase<LoggingSettingModel, LoggingWindow>, ILogAppender, IWindowStatus, IHavingAppNonProcess
     {
-        public LoggingViewModel(LoggingSettingModel model, LoggingWindow view, FixedSizeCollectionModel<LogItemModel> logItems, INonProcess nonProcess)
+        #region variable
+
+        LogItemModel _selectedItem;
+
+        #endregion
+
+        public LoggingViewModel(LoggingSettingModel model, LoggingWindow view, FixedSizeCollectionModel<LogItemModel> logItems, IAppNonProcess appNonProcess)
             : base(model, view)
         {
-            NonProcess = nonProcess;
+            AppNonProcess = appNonProcess;
 
             if(logItems != null) {
                 LogItems = logItems;
@@ -62,7 +69,19 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         #region property
 
+        public LogItemModel SelectedItem
+        {
+            get { return this._selectedItem; }
+            set { SetVariableValue(ref this._selectedItem, value); }
+        }
+
         public FixedSizeCollectionModel<LogItemModel> LogItems { get; set; }
+
+        public bool DetailWordWrap
+        {
+            get { return Model.DetailWordWrap; }
+            set { SetModelValue(value); }
+        }
 
         #region IWindowStatus
 
@@ -164,6 +183,82 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
         }
 
+        public ICommand ItemSaveCommand
+        {
+            get
+            {
+                var result = CreateCommand(
+                    o => {
+                        Debug.Assert(SelectedItem != null);
+                        var logItem = SelectedItem;
+                        var filter = new DialogFilterList() {
+                            new DialogFilterItem(AppNonProcess.Language["dialog/filter/log"], Constants.dialogFilterLog),
+                        };
+                        var name = PathUtility.ToSafeNameDefault(logItem.Message ?? string.Empty).SplitLines().First();
+                        if(string.IsNullOrWhiteSpace(name)) {
+                            name = Constants.GetNowTimestampFileName();
+                        }
+
+                        var dialogResut = DialogUtility.ShowSaveFileDialog(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), name, filter);
+                        if(dialogResut != null) {
+                            SaveFile(dialogResut, new [] { logItem });
+                        }
+                    },
+                    o => {
+                        return SelectedItem != null;
+                    }
+                );
+
+                return result;
+            }
+        }
+
+        public ICommand ItemRemoveCommand
+        {
+            get
+            {
+                var result = CreateCommand(
+                    o => {
+                        Debug.Assert(SelectedItem != null);
+                        var index = LogItems.IndexOf(SelectedItem);
+                        Debug.Assert(index != -1);
+                        LogItems.RemoveAt(index);
+                        if(index == LogItems.Count) {
+                            if(LogItems.Any()) {
+                                SelectedItem = LogItems[index - 1];
+                            }
+                        } else {
+                            SelectedItem = LogItems[index];
+                        }
+                    },
+                    o => {
+                        return SelectedItem != null;
+                    }
+                );
+
+                return result;
+            }
+        }
+
+        public ICommand ItemCopyCommand
+        {
+            get
+            {
+                var result = CreateCommand(
+                    o => {
+                        Debug.Assert(SelectedItem != null);
+                        var logData = LogUtility.MakeLogDetailText(SelectedItem);
+                        ClipboardUtility.CopyText(logData, AppNonProcess.ClipboardWatcher);
+                    },
+                    o => {
+                        return SelectedItem != null;
+                    }
+                );
+
+                return result;
+            }
+        }
+
         #endregion
 
         #region function
@@ -171,7 +266,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         bool SaveFileInDialog(IEnumerable<LogItemModel> logItems)
         {
             var filter = new DialogFilterList() {
-                new DialogFilterItem(NonProcess.Language["dialog/filter/log"], Constants.dialogFilterLog),
+                new DialogFilterItem(AppNonProcess.Language["dialog/filter/log"], Constants.dialogFilterLog),
             };
             //var dialog = new SaveFileDialog() {
             //	AddExtension = true,
@@ -280,9 +375,9 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         #endregion
 
-        #region IHavingNonProcess
+        #region IHavingAppNonProcess
 
-        public INonProcess NonProcess { get; private set; }
+        public IAppNonProcess AppNonProcess { get; private set; }
 
         #endregion
 

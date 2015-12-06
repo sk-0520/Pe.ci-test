@@ -18,18 +18,19 @@ del /Q %ERROR%
 rmdir /S /Q "%OUTPUTx86%"
 rmdir /S /Q "%OUTPUTx64%"
 
-if "%PROCESSOR_ARCHITECTURE%" NEQ "x86" (
-	set MB=%windir%\microsoft.net\framework64\%DOTNETVER%\msbuild
-) else (
-	set MB=%windir%\microsoft.net\framework\%DOTNETVER%\msbuild
-)
+rem if "%PROCESSOR_ARCHITECTURE%" NEQ "x86" (
+rem 	set MB=%windir%\microsoft.net\framework64\%DOTNETVER%\msbuild
+rem ) else (
+rem 	set MB=%windir%\microsoft.net\framework\%DOTNETVER%\msbuild
+rem )
+set MB=%ProgramFiles(x86)%\MSBuild\14.0\Bin\msbuild
 
 echo build x86
-"%MB%" Pe\Pe.sln /p:DefineConstants="BUILD;%1" /p:Configuration=Release;Platform=x86 /t:Rebuild /m
+"%MB%" Pe\Pe.sln /p:DefineConstants="BUILD;%1" /p:Configuration=Release;Platform=x86 /t:Rebuild /m /p:TargetFrameworkVersion=v4.6
 set ERROR_X86=%ERRORLEVEL%
 
 echo build x64
-"%MB%" Pe\Pe.sln /p:DefineConstants="BUILD;%1" /p:Configuration=Release;Platform=x64 /t:Rebuild /m
+"%MB%" Pe\Pe.sln /p:DefineConstants="BUILD;%1" /p:Configuration=Release;Platform=x64 /t:Rebuild /m /p:TargetFrameworkVersion=v4.6
 set ERROR_X64=%ERRORLEVEL%
 
 if not %ERROR_X86% == 0 echo "build error x86: %ERROR_X86%" >> "%ERROR%"

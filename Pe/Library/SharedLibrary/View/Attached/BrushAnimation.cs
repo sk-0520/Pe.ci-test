@@ -25,6 +25,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.View.Attached
     using System.Windows.Controls;
     using System.Windows.Media;
     using System.Windows.Media.Animation;
+    using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 
     /// <summary>
     /// <para>http://stackoverflow.com/questions/8096852/brush-to-brush-animation?answertab=votes#tab-top</para>
@@ -93,8 +94,8 @@ namespace ContentTypeTextNet.Library.SharedLibrary.View.Attached
         }
 
         public static readonly DependencyProperty FromProperty =
-            DependencyProperty.Register("From", typeof(Brush), typeof(BrushAnimation));
+            DependencyProperty.Register(DependencyPropertyUtility.GetName(nameof(FromProperty)), typeof(Brush), typeof(BrushAnimation));
         public static readonly DependencyProperty ToProperty =
-            DependencyProperty.Register("To", typeof(Brush), typeof(BrushAnimation));
+            DependencyProperty.Register(DependencyPropertyUtility.GetName(nameof(ToProperty)), typeof(Brush), typeof(BrushAnimation));
     }
 }
