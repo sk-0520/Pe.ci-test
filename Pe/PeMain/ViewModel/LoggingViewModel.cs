@@ -43,6 +43,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
     using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
     using ContentTypeTextNet.Pe.PeMain.View;
     using Microsoft.Win32;
+    using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 
     public class LoggingViewModel: HavingViewSingleModelWrapperViewModelBase<LoggingSettingModel, LoggingWindow>, ILogAppender, IWindowStatus, IHavingNonProcess
     {
@@ -188,7 +189,20 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             {
                 var result = CreateCommand(
                     o => {
-                        Debug.WriteLine(SelectedItem);
+                        Debug.Assert(SelectedItem != null);
+                        var logItem = SelectedItem;
+                        var filter = new DialogFilterList() {
+                            new DialogFilterItem(NonProcess.Language["dialog/filter/log"], Constants.dialogFilterLog),
+                        };
+                        var name = PathUtility.ToSafeNameDefault(logItem.Message ?? string.Empty).SplitLines().First();
+                        if(string.IsNullOrWhiteSpace(name)) {
+                            name = Constants.GetNowTimestampFileName();
+                        }
+
+                        var dialogResut = DialogUtility.ShowSaveFileDialog(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), name, filter);
+                        if(dialogResut != null) {
+                            SaveFile(dialogResut, new [] { logItem });
+                        }
                     },
                     o => {
                         return SelectedItem != null;
