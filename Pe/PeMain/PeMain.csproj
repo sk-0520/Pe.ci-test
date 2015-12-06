@@ -474,6 +474,7 @@
     <Content Include="etc\style\feedback.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Image\Common\CommonWordWrap.png" />
     <Resource Include="Resources\Image\Common\CommonComment.png" />
     <Resource Include="Resources\Image\Common\CommonLock.png" />
     <Resource Include="Resources\Image\Common\CommonOthers.png" />
