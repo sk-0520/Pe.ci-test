@@ -55,12 +55,13 @@
 		</group>
 	</log>
 	-->
-	<log date="YYYY/MM/DD" version="0.72.1" type="rc" dummy="################################################################################">
+	<log date="2015/12/06" version="0.73.0" dummy="################################################################################">
 		<group type="note" dummy="==================================================================">
 			<note rev="">
 				<message class="compatibility">#335: .NET Frameworkのバージョンを4.6に変更</message>
 				<comments>
 					<comment>本バージョンから .NET Framework 4.6 が必要になります</comment>
+					<comment>.NET Framework 4.6 は https://www.microsoft.com/ja-jp/download/details.aspx?id=48130 からダウンロードできます</comment>
 				</comments>
 			</note>
 			<note rev="">
@@ -72,9 +73,6 @@
 					<comment>bitbucketのダウンローダーはレスポンスに`Content-Disposition: attachment;`があるけど大丈夫だろ</comment>
 				</comments>
 			</note>
-			<note rev="">
-				<message></message>
-			</note>
 		</group>
 		<group type="features" dummy="==================================================================">
 			<note rev="">
@@ -85,9 +83,6 @@
 			</note>
 			<note rev="">
 				<message>#395: ログウィンドウに個別の出力・コピー・削除機能を設ける</message>
-			</note>
-			<note rev="">
-				<message></message>
 			</note>
 		</group>
 		<group type="fixes" dummy="==================================================================">
@@ -123,15 +118,6 @@
 			<note rev="">
 				<message>#400: フィードバック入力ウィンドウをモードレスにする</message>
 			</note>
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
 		</group>
 		<group type="developer" dummy="==================================================================">
 			<note rev="">
@@ -142,10 +128,10 @@
 				</comments>
 			</note>
 			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
+				<message>#25: ヘルプファイルの記述</message>
+				<comments>
+					<comment>次回バージョンで記載しますん</comment>
+				</comments>
 			</note>
 		</group>
 	</log>
