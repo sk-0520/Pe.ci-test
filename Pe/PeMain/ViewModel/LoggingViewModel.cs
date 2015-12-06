@@ -46,6 +46,12 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
     public class LoggingViewModel: HavingViewSingleModelWrapperViewModelBase<LoggingSettingModel, LoggingWindow>, ILogAppender, IWindowStatus, IHavingNonProcess
     {
+        #region variable
+
+        LogItemModel _selectedItem;
+
+        #endregion
+
         public LoggingViewModel(LoggingSettingModel model, LoggingWindow view, FixedSizeCollectionModel<LogItemModel> logItems, INonProcess nonProcess)
             : base(model, view)
         {
@@ -61,6 +67,12 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         }
 
         #region property
+
+        public LogItemModel SelectedItem
+        {
+            get { return this._selectedItem; }
+            set { SetVariableValue(ref this._selectedItem, value); }
+        }
 
         public FixedSizeCollectionModel<LogItemModel> LogItems { get; set; }
 
@@ -163,6 +175,50 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 var result = CreateCommand(
                     o => {
                         LogItems.Clear();
+                    }
+                );
+
+                return result;
+            }
+        }
+
+        public ICommand ItemSaveCommand
+        {
+            get
+            {
+                var result = CreateCommand(
+                    o => {
+                        Debug.WriteLine(SelectedItem);
+                    },
+                    o => {
+                        return SelectedItem != null;
+                    }
+                );
+
+                return result;
+            }
+        }
+
+        public ICommand ItemRemoveCommand
+        {
+            get
+            {
+                var result = CreateCommand(
+                    o => {
+                        Debug.Assert(SelectedItem != null);
+                        var index = LogItems.IndexOf(SelectedItem);
+                        Debug.Assert(index != -1);
+                        LogItems.RemoveAt(index);
+                        if(index == LogItems.Count) {
+                            if(LogItems.Any()) {
+                                SelectedItem = LogItems[index - 1];
+                            }
+                        } else {
+                            SelectedItem = LogItems[index];
+                        }
+                    },
+                    o => {
+                        return SelectedItem != null;
                     }
                 );
 

@@ -68,7 +68,7 @@
         <RowDefinition Height="Auto"/>
         <RowDefinition Height="103*"/>
       </Grid.RowDefinitions>
-      <ListView Grid.Row="0" ItemsSource="{Binding LogItems}" x:Name="listLog">
+      <ListView Grid.Row="0" ItemsSource="{Binding LogItems}" x:Name="listLog" SelectedItem="{Binding SelectedItem}">
         <ListView.View>
           <GridView>
             <GridViewColumn Header="timestamp" AA:Language.Word="logging/timestamp">
@@ -122,10 +122,10 @@
         </Grid.ColumnDefinitions>
         <ToolBarTray Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Orientation="Vertical">
           <ToolBar Style="{StaticResource DefaultToolbar}" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch">
-            <Button AA:Language.Hint="logging/item/save">
+            <Button AA:Language.Hint="logging/item/save" Command="{Binding ItemSaveCommand}">
               <Image Source="{x:Static AM:AppResource.CommonSaveImage}" Style="{StaticResource DefaultImage}" />
             </Button>
-            <Button AA:Language.Hint="logging/item/clear">
+            <Button AA:Language.Hint="logging/item/clear" Command="{Binding ItemRemoveCommand}">
               <Image Source="{x:Static AM:AppResource.CommonRemoveImage}" Style="{StaticResource DefaultImage}" />
             </Button>
             <Separator />
