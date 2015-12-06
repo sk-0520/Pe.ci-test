@@ -26,6 +26,7 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
     using ContentTypeTextNet.Library.SharedLibrary.Attribute;
     using ContentTypeTextNet.Library.SharedLibrary.Define;
     using ContentTypeTextNet.Library.SharedLibrary.IF;
+    using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
     using ContentTypeTextNet.Pe.Library.PeData.IF;
     using ContentTypeTextNet.Pe.Library.PeData.Item;
 
@@ -41,75 +42,75 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
         /// <summary>
         /// ログ追加時にUIを表示るか。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public bool AddShow { get; set; }
         /// <summary>
         /// デバッグ時に表示する
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public bool ShowTriggerDebug { get; set; }
         /// <summary>
         /// トレース時に表示する
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public bool ShowTriggerTrace { get; set; }
         /// <summary>
         /// 情報時に表示する
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public bool ShowTriggerInformation { get; set; }
         /// <summary>
         /// 警告時に表示する
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public bool ShowTriggerWarning { get; set; }
         /// <summary>
         /// エラー時に表示する
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public bool ShowTriggerError { get; set; }
         /// <summary>
         /// 致命時に表示する
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public bool ShowTriggerFatal { get; set; }
 
         /// <summary>
         /// 詳細部分を折り返し表示するか。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public bool DetailWordWrap { get; set; }
 
         #endregion
 
         #region IWindowStatus
 
-        [DataMember]
+        [DataMember, IsDeepClone]
         [PixelKind(Px.Logical)]
         public double WindowTop { get; set; }
-        [DataMember]
+        [DataMember, IsDeepClone]
         [PixelKind(Px.Logical)]
         public double WindowLeft { get; set; }
-        [DataMember]
+        [DataMember, IsDeepClone]
         [PixelKind(Px.Logical)]
         public double WindowWidth { get; set; }
-        [DataMember]
+        [DataMember, IsDeepClone]
         [PixelKind(Px.Logical)]
         public double WindowHeight { get; set; }
-        [DataMember]
+        [DataMember, IsDeepClone]
         [PixelKind(Px.Logical)]
         public WindowState WindowState { get; set; }
 
         #region ITopMost
 
-        [DataMember]
+        [DataMember, IsDeepClone]
         public bool IsTopmost { get; set; }
 
         #endregion
 
         #region IVisible
 
-        [DataMember]
+        [DataMember, IsDeepClone]
         public bool IsVisible { get; set; }
 
         #endregion
@@ -118,34 +119,9 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
 
         #region IDeepClone
 
-        public void DeepCloneTo(IDeepClone target)
-        {
-            var obj = (LoggingSettingModel)target;
-
-            obj.AddShow = AddShow;
-            obj.ShowTriggerDebug = ShowTriggerDebug;
-            obj.ShowTriggerTrace = ShowTriggerTrace;
-            obj.ShowTriggerInformation = ShowTriggerInformation;
-            obj.ShowTriggerWarning = ShowTriggerWarning;
-            obj.ShowTriggerError = ShowTriggerError;
-            obj.ShowTriggerFatal = ShowTriggerFatal;
-            obj.WindowTop = WindowTop;
-            obj.WindowLeft = WindowLeft;
-            obj.WindowWidth = WindowWidth;
-            obj.WindowHeight = WindowHeight;
-            obj.WindowState = WindowState;
-            obj.IsTopmost = IsTopmost;
-            obj.IsVisible = IsVisible;
-            obj.DetailWordWrap = DetailWordWrap;
-        }
-
         public IDeepClone DeepClone()
         {
-            var result = new LoggingSettingModel();
-
-            DeepCloneTo(result);
-
-            return result;
+            return DeepCloneUtility.Copy(this);
         }
 
         #endregion
