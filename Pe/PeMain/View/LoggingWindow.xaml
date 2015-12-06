@@ -39,6 +39,7 @@
       </ResourceDictionary.MergedDictionaries>
       <AC:SelectedIndexNumberConverter x:Key="SelectedIndexNumberConverter" />
       <AC:LogFileNameConverter x:Key="LogFileNameConverter" />
+      <AC:BooleanToTextWrappingConverter x:Key="BooleanToTextWrappingConverter" />
     </ResourceDictionary>
   </AW:CommonDataWindow.Resources>
   <Grid>
@@ -128,7 +129,7 @@
               <Image Source="{x:Static AM:AppResource.CommonRemoveImage}" Style="{StaticResource DefaultImage}" />
             </Button>
             <Separator />
-            <ToggleButton AA:Language.Hint="logging/ward-wrap">
+            <ToggleButton AA:Language.Hint="logging/ward-wrap" IsChecked="{Binding DetailWordWrap}">
               <Image Source="{x:Static AM:AppResource.CommonWordWrapImage}" Style="{StaticResource DefaultImage}" />
             </ToggleButton>
           </ToolBar>
@@ -167,7 +168,7 @@
           AllowDrop="False"
           HorizontalScrollBarVisibility="Auto"
           VerticalScrollBarVisibility="Auto"
-          TextWrapping="NoWrap"
+          TextWrapping="{Binding DetailWordWrap, Mode=OneWay, Converter={StaticResource BooleanToTextWrappingConverter}}"
           IsUndoEnabled="False"
           IsReadOnly="True" 
           Text="{Binding SelectedValue.DetailText, ElementName=listLog, Mode=OneWay}"

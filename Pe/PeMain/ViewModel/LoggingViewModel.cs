@@ -64,6 +64,12 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         public FixedSizeCollectionModel<LogItemModel> LogItems { get; set; }
 
+        public bool DetailWordWrap
+        {
+            get { return Model.DetailWordWrap; }
+            set { SetModelValue(value); }
+        }
+
         #region IWindowStatus
 
         public double WindowLeft
