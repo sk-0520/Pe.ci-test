@@ -711,10 +711,12 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 var backupDir = Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserBackupDirectoryPath);
 
                 // 旧データの削除
-                FileUtility.RotateFiles(backupDir, Constants.BackupSearchPattern, OrderBy.Asc, Constants.BackupSettingCount, ex => {
-                    CommonData.Logger.Error(ex);
-                    return true;
-                });
+                using(var tl = CommonData.NonProcess.CreateTimeLogger()) {
+                    FileUtility.RotateFiles(backupDir, Constants.BackupSearchPattern, OrderBy.Desc, Constants.BackupSettingCount, ex => {
+                        CommonData.Logger.Error(ex);
+                        return true;
+                    });
+                }
 
                 var fileName = PathUtility.AppendExtension(Constants.GetNowTimestampFileName(), "zip");
                 var backupFileFilePath = Path.Combine(backupDir, fileName);
