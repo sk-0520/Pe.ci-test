@@ -51,6 +51,13 @@ var menuList = [
 		title: {
 			'ja-JP': 'コマンド'
 		}
+	},
+	{
+		name: 'execute',
+		level: 1,
+		title: {
+			'ja-JP': '指定して実行'
+		}
 	}
 ];
 
