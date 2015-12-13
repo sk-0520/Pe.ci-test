@@ -58,6 +58,13 @@ var menuList = [
 		title: {
 			'ja-JP': '指定して実行'
 		}
+	},
+	{
+		name: 'stream',
+		level: 1,
+		title: {
+			'ja-JP': '標準入出力'
+		}
 	}
 ];
 
