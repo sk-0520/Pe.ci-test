@@ -100,6 +100,13 @@ var menuList = [
 		title: {
 			'ja-JP': 'テンプレート'
 		}
+	},
+	{
+		name: 'setting',
+		level: 0,
+		title: {
+			'ja-JP': '設定'
+		}
 	}
 ];
 
