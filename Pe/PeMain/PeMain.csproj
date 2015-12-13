@@ -177,6 +177,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="doc\help.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="doc\help\html\toolbar.ja-JP.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -223,30 +226,30 @@
     <Content Include="doc\help\html\top.ja-JP.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Compile Include="doc\help\image\dock_type-bottom.png">
+    <None Include="doc\help\image\dock_type-bottom.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="doc\help\image\dock_type-left.png">
+    </None>
+    <None Include="doc\help\image\dock_type-left.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="doc\help\image\dock_type-none.png">
+    </None>
+    <None Include="doc\help\image\dock_type-none.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="doc\help\image\dock_type-right.png">
+    </None>
+    <None Include="doc\help\image\dock_type-right.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="doc\help\image\dock_type-top.png">
+    </None>
+    <None Include="doc\help\image\dock_type-top.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="doc\help\image\note-ui.ja-JP.png">
+    </None>
+    <None Include="doc\help\image\note-ui.ja-JP.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="doc\help\image\CommonLock.png">
+    </None>
+    <None Include="doc\help\image\CommonLock.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="doc\help\image\notifyarea.png">
+    </None>
+    <None Include="doc\help\image\notifyarea.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
+    </None>
     <Content Include="doc\help\script\help.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -852,9 +855,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="doc\readme-ja.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="doc\components.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
