@@ -65,6 +65,13 @@ var menuList = [
 		title: {
 			'ja-JP': '標準入出力'
 		}
+	},
+	{
+		name: 'note',
+		level: 0,
+		title: {
+			'ja-JP': 'ノート'
+		}
 	}
 ];
 

@@ -186,6 +186,7 @@
     <Content Include="doc\help\html\command.ja-JP.html" />
     <Content Include="doc\help\html\execute.ja-JP.html" />
     <Content Include="doc\help\html\stream.ja-JP.html" />
+    <Content Include="doc\help\html\note.ja-JP.html" />
     <Content Include="doc\help\html\_.ja-JP.html" />
     <Content Include="doc\help\html\privacy.ja-JP.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -204,6 +205,8 @@
     <Resource Include="doc\help\image\dock_type-none.png" />
     <Resource Include="doc\help\image\dock_type-right.png" />
     <Resource Include="doc\help\image\dock_type-top.png" />
+    <Resource Include="doc\help\image\note-ui.ja-JP.png" />
+    <Resource Include="doc\help\image\CommonLock.png" />
     <Content Include="doc\help\script\help.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
