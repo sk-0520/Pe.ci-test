@@ -9,6 +9,13 @@ var menuList = [
 		title: {
 			'ja-JP': 'ヘルプ'
 		}
+	},
+	{
+		name: 'install_uninstall_data',
+		level: 0,
+		title: {
+			'ja-JP': 'インストール・アンインストール・使用データについて'
+		}
 	}
 ];
 

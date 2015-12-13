@@ -99,3 +99,27 @@ p.uri
 p {
 	margin: 0.8ex;
 }
+
+table {
+	border: 3px double #707000;
+	empty-cells: unset;
+	border-collapse: collapse;
+}
+
+td {
+	border: 1px solid #707030;
+	padding: 0.8ex;
+}
+
+th {
+	background: #707030;
+	color: azure;
+	border: 1px solid azure;
+	padding: 0.8em;
+}
+
+
+
+
+
+
