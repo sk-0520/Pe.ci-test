@@ -154,6 +154,7 @@ $(function() {
 
 	var param = 'lang=' + lang;
 	var $ul = $('<ul>');
+	var $top = null;
 	for (var i = 0 ; i < menuList.length; i++) {
 		var menuItem = menuList[i];
 
@@ -163,6 +164,7 @@ $(function() {
 		var title = menuItem.title[lang];
 		var target = menuItem.name + '.' + lang + '.html?' + param;
 		if (menuItem.name == page) {
+			$top = $li;
 			$li.text(title);
 			$('h1').text(title);
 			$('title').text(title + helpTitle[lang]);
@@ -175,6 +177,10 @@ $(function() {
 
 		$ul.append($li);
 	}
-	$menu.append($ul)
+	$menu.append($ul);
+	if ($top) {
+		var y = $top.offset().top - $menu.offset().top;
+		$menu.scrollTop(y);
+	}
 });
 

@@ -1,7 +1,7 @@
 ﻿
 #main-menu, #content {
 	position: fixed;
-	top: 50pt;
+	top: 55pt;
 	bottom: 0;
 	overflow: auto;
 }
@@ -53,7 +53,7 @@ p.screenshot{
 }
 
 p.tips, ul.tips {
-	border: 1px dotted #ffd800;
+	border: 4px dotted #ffd800;
 	padding: 0.5em;
 }
 
