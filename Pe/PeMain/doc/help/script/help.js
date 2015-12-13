@@ -28,7 +28,14 @@ var menuList = [
 		name: 'internet',
 		level: 0,
 		title: {
-			'ja-JP': ' インターネット通信とその内容'
+			'ja-JP': 'インターネット通信とその内容'
+		}
+	},
+	{
+		name: 'launcher',
+		level: 0,
+		title: {
+			'ja-JP': 'ランチャー'
 		}
 	}
 ];
