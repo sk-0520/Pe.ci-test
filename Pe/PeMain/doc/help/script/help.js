@@ -12,21 +12,21 @@ var menuList = [
 	},
 	{
 		name: 'install_uninstall_data',
-		level: 0,
+		level: 1,
 		title: {
 			'ja-JP': 'インストール・アンインストール・使用データについて'
 		}
 	},
 	{
 		name: 'privacy',
-		level: 0,
+		level: 1,
 		title: {
 			'ja-JP': 'ユーザー情報について'
 		}
 	},
 	{
 		name: 'internet',
-		level: 0,
+		level: 1,
 		title: {
 			'ja-JP': 'インターネット通信とその内容'
 		}
@@ -43,6 +43,13 @@ var menuList = [
 		level: 1,
 		title: {
 			'ja-JP': 'ツールバー'
+		}
+	},
+	{
+		name: 'command',
+		level: 1,
+		title: {
+			'ja-JP': 'コマンド'
 		}
 	}
 ];
