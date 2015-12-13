@@ -1,11 +1,13 @@
 ﻿
+var titleTail = ' Pe';
 var defaultLanguageKey = 'ja-JP';
 
 var menuList = [
 	{
-		name: 'top',
+		name: 'help',
+		level: 0,
 		title: {
-			'ja-JP': 'トップ'
+			'ja-JP': 'ヘルプ'
 		}
 	}
 ];
@@ -15,20 +17,19 @@ var menuList = [
 // http://stackoverflow.com/questions/19491336/get-url-parameter-jquery?answertab=votes#tab-top
 function getParameter(key)
 {
-	var sPageURL = decodeURIComponent(window.location.search.substring(1));
-	var sURLVariables = sPageURL.split('&');
+	var pageUri = decodeURIComponent(window.location.search.substring(1));
+	var params = pageUri.split('&');
 
-	for (var i = 0; i < sURLVariables.length; i++) {
-		var sParameterName = sURLVariables[i].split('=');
+	for (var i = 0; i < params.length; i++) {
+		var paramNames = params[i].split('=');
 
-		if (sParameterName[0] === key) {
-			return sParameterName[1] === undefined ? true : sParameterName[1];
+		if (paramNames[0] === key) {
+			return paramNames[1] === undefined ? true : paramNames[1];
 		}
 	}
 }
 
-function getLanguageCode()
-{
+function getLanguageCode() {
 	var lang = getParameter('lang');
 	if (!lang || typeof lang !== 'string') {
 		return defaultLanguageKey;
@@ -37,9 +38,17 @@ function getLanguageCode()
 	return lang;
 }
 
+function getPageName() {
+	var pageUri = location.pathname.substring(1)
+	var index = pageUri.lastIndexOf('/');
+	var fileName = pageUri.substring(index + 1);
+	return fileName.split('.')[0];
+}
+
 $(function() {
 	var lang = getLanguageCode();
-	
+	var page = getPageName();
+
 	var $menu = $('#main-menu');
 
 	var param = 'lang=' + lang;
@@ -50,8 +59,13 @@ $(function() {
 		var $li = $('<li>');
 		var $link = $('<a>');
 
+		$li.addClass('level-' + menuItem.level);
 		var title = menuItem.title[lang];
 		var target = menuItem.name + '.' + lang + '.html?' + param;
+		if (menuItem.name == page) {
+			$('h1').text(title);
+			$('title').text(title + titleTail);
+		}
 
 		$link.text(title);
 		$link.attr('href', target);

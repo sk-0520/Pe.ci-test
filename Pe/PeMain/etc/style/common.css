@@ -96,3 +96,6 @@ p.uri
 	font-size: 90%;
 }
 
+p {
+	margin: 0.8ex;
+}
