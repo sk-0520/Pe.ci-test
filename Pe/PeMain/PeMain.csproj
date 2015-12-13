@@ -177,6 +177,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="doc\help\html\toolbar.ja-JP.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="doc\help\html\launcher.ja-JP.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -193,6 +196,11 @@
     <Content Include="doc\help\html\help.ja-JP.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="doc\help\image\dock_type-bottom.png" />
+    <Resource Include="doc\help\image\dock_type-left.png" />
+    <Resource Include="doc\help\image\dock_type-none.png" />
+    <Resource Include="doc\help\image\dock_type-right.png" />
+    <Resource Include="doc\help\image\dock_type-top.png" />
     <Content Include="doc\help\script\help.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -878,9 +886,7 @@
     <Resource Include="Resources\Icon\Tasktray\App-debug.ico" />
     <Resource Include="Resources\Icon\Tasktray\App-release.ico" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="doc\help\image\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>copy "$(OutDir)etc\lang\ja-JP.xml" "$(OutDir)etc\lang\default.xml"

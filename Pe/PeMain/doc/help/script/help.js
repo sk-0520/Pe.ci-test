@@ -37,6 +37,13 @@ var menuList = [
 		title: {
 			'ja-JP': 'ランチャー'
 		}
+	},
+	{
+		name: 'toolbar',
+		level: 1,
+		title: {
+			'ja-JP': 'ツールバー'
+		}
 	}
 ];
 

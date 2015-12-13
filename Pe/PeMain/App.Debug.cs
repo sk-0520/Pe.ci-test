@@ -30,6 +30,7 @@ namespace ContentTypeTextNet.Pe.PeMain
     using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
     using Logic;
     using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
+    using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 
     partial class App
     {
@@ -43,6 +44,7 @@ namespace ContentTypeTextNet.Pe.PeMain
             //font();
             //box();
             //browser();
+            //toolbar();
         }
 
         void icon()
@@ -95,6 +97,28 @@ namespace ContentTypeTextNet.Pe.PeMain
         void browser()
         {
             SystemEnvironmentUtility.SetUsingBrowserVersionForExecutingAssembly(8000);
+        }
+
+        void toolbar()
+        {
+            Size imageSize = new Size(IconScale.Small.ToWidth() * 2, IconScale.Small.ToHeight());
+            var dts = new[] {
+                DockType.None,
+                DockType.Top,
+                DockType.Bottom,
+                DockType.Left,
+                DockType.Right,
+            };
+            foreach(var dt in dts) {
+                var icon = LauncherToolbarUtility.MakeDockIcon(dt, imageSize);
+                var image = ImageUtility.MakeBitmapBitmapSourceDefualtDpi(icon);
+
+                var encoder = new PngBitmapEncoder();
+                encoder.Frames.Add(BitmapFrame.Create(image));
+                using(var s = File.OpenWrite(@"Z:\" + dt.ToString() + ".png")) {
+                    encoder.Save(s);
+                }
+            }
         }
 
 #endif
