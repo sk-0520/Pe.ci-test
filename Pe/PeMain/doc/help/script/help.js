@@ -93,6 +93,13 @@ var menuList = [
 		title: {
 			'ja-JP': 'クリップボード'
 		}
+	},
+	{
+		name: 'template',
+		level: 0,
+		title: {
+			'ja-JP': 'テンプレート'
+		}
 	}
 ];
 
