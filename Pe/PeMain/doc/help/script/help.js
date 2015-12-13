@@ -86,6 +86,13 @@ var menuList = [
 		title: {
 			'ja-JP': '通知領域'
 		}
+	},
+	{
+		name: 'clipboard',
+		level: 0,
+		title: {
+			'ja-JP': 'クリップボード'
+		}
 	}
 ];
 

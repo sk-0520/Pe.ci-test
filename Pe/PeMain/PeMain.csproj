@@ -189,6 +189,7 @@
     <Content Include="doc\help\html\note.ja-JP.html" />
     <Content Include="doc\help\html\log.ja-JP.html" />
     <Content Include="doc\help\html\notifyarea.ja-JP.html" />
+    <Content Include="doc\help\html\clipboard.ja-JP.html" />
     <Content Include="doc\help\html\_.ja-JP.html" />
     <Content Include="doc\help\html\privacy.ja-JP.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
