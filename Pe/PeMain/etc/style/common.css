@@ -104,6 +104,9 @@ table {
 	border: 3px double #707000;
 	empty-cells: unset;
 	border-collapse: collapse;
+	margin-left: auto;
+	margin-right: auto;
+	table-layout: fixed;
 }
 
 td {

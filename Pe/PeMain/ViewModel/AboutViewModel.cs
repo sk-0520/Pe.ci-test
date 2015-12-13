@@ -43,12 +43,12 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         #endregion
 
-        public AboutViewModel(AboutWindow view, AboutNotifyData notifiy, IAppNonProcess appNonProcess)
+        public AboutViewModel(AboutWindow view, AboutNotifyData notify, IAppNonProcess appNonProcess)
             : base(view)
         {
-            CheckUtility.DebugEnforceNotNull(notifiy);
+            CheckUtility.DebugEnforceNotNull(notify);
 
-            Notifiy = notifiy;
+            Notify = notify;
             AppNonProcess = appNonProcess;
 
             var componentFilePath = Path.Combine(Constants.ApplicationDocumentDirectoryPath, Constants.componentListFileNam);
@@ -57,7 +57,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         #region property
 
-        AboutNotifyData Notifiy { get; set; }
+        AboutNotifyData Notify { get; set; }
         ComponentItemCollectionModel ComponentCollection { get; set; }
         public IEnumerable<ComponentItemViewModel> ComponentItems
         {
@@ -131,7 +131,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                             MessageBoxImage.Information
                         );
                         if(messageResult == MessageBoxResult.Yes) {
-                            Notifiy.CheckUpdate = true;
+                            Notify.CheckUpdate = true;
 
                             CloseView();
                         }

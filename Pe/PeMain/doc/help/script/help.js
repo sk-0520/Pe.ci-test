@@ -72,6 +72,20 @@ var menuList = [
 		title: {
 			'ja-JP': 'ノート'
 		}
+	},
+	{
+		name: 'log',
+		level: 0,
+		title: {
+			'ja-JP': 'ログ'
+		}
+	},
+	{
+		name: 'notifyarea',
+		level: 0,
+		title: {
+			'ja-JP': '通知領域'
+		}
 	}
 ];
 
