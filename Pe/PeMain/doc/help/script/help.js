@@ -1,13 +1,16 @@
 ﻿
-var titleTail = ' Pe';
 var defaultLanguageKey = 'ja-JP';
+
+var helpTitle = {
+	'ja-JP': ' : Pe ヘルプ'
+};
 
 var menuList = [
 	{
-		name: 'help',
+		name: 'top',
 		level: 0,
 		title: {
-			'ja-JP': 'ヘルプ'
+			'ja-JP': 'はじめに'
 		}
 	},
 	{
@@ -155,20 +158,21 @@ $(function() {
 		var menuItem = menuList[i];
 
 		var $li = $('<li>');
-		var $link = $('<a>');
 
 		$li.addClass('level-' + menuItem.level);
 		var title = menuItem.title[lang];
 		var target = menuItem.name + '.' + lang + '.html?' + param;
 		if (menuItem.name == page) {
+			$li.text(title);
 			$('h1').text(title);
-			$('title').text(title + titleTail);
+			$('title').text(title + helpTitle[lang]);
+		} else {
+			var $link = $('<a>');
+			$link.text(title);
+			$link.attr('href', target);
+			$li.append($link);
 		}
 
-		$link.text(title);
-		$link.attr('href', target);
-
-		$li.append($link);
 		$ul.append($li);
 	}
 	$menu.append($ul)

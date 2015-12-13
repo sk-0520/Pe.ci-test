@@ -1,9 +1,50 @@
 ﻿
-li.level-0 {
-	margin-left: 0em;
+#main-menu, #content {
+	position: fixed;
+	top: 50pt;
+	bottom: 0;
+	overflow: auto;
 }
 
-li.level-1 {
+#main-menu {
+	left: 0;
+	width: 20%;
+}
+
+#content {
+	left: 20%;
+	right: 0;
+	padding-left: 1em;
+	padding-right: 3em;
+}
+
+#main-menu ul {
+	list-style: none;
+	padding-left: 2em;
+	padding-right: 1ex;
+}
+
+#main-menu li {
+	line-height: 1.5em;
+	margin-bottom: 2px;
+}
+#main-menu li a {
+	display: block;
+	text-decoration: none;
+}
+#main-menu li a:link, #main-menu li a:visited {
+	color: blue;
+}
+#main-menu li a:hover {
+	color: red;
+}
+
+#main-menu li.level-0 {
+	margin-left: 0em;
+	padding:0;
+}
+
+#main-menu li.level-1 {
 	margin-left: 1em;
 }
 
