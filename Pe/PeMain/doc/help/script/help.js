@@ -16,6 +16,20 @@ var menuList = [
 		title: {
 			'ja-JP': 'インストール・アンインストール・使用データについて'
 		}
+	},
+	{
+		name: 'privacy',
+		level: 0,
+		title: {
+			'ja-JP': 'ユーザー情報について'
+		}
+	},
+	{
+		name: 'internet',
+		level: 0,
+		title: {
+			'ja-JP': ' インターネット通信とその内容'
+		}
 	}
 ];
 
