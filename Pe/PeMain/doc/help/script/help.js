@@ -112,7 +112,7 @@ var menuList = [
 		}
 	}
 ];
-
+//----------------------------------------------------------------------
 
 
 // http://stackoverflow.com/questions/19491336/get-url-parameter-jquery?answertab=votes#tab-top
@@ -146,10 +146,7 @@ function getPageName() {
 	return fileName.split('.')[0];
 }
 
-$(function() {
-	var lang = getLanguageCode();
-	var page = getPageName();
-
+function createMenu(lang, pageName) {
 	var $menu = $('#main-menu');
 
 	var param = 'lang=' + lang;
@@ -160,14 +157,17 @@ $(function() {
 
 		var $li = $('<li>');
 
+		$li.addClass('item');
 		$li.addClass('level-' + menuItem.level);
+		
 		var title = menuItem.title[lang];
 		var target = menuItem.name + '.' + lang + '.html?' + param;
-		if (menuItem.name == page) {
+		if (menuItem.name == pageName) {
 			$top = $li;
 			$li.text(title);
 			$('h1').text(title);
 			$('title').text(title + helpTitle[lang]);
+			$li.addClass('level-active');
 		} else {
 			var $link = $('<a>');
 			$link.text(title);
@@ -178,9 +178,23 @@ $(function() {
 		$ul.append($li);
 	}
 	$menu.append($ul);
+	
 	if ($top) {
 		var y = $top.offset().top - $menu.offset().top;
 		$menu.scrollTop(y);
 	}
+}
+
+function setPadding() {
+	var $content = $('#content');
+	$content.append($('<div>').addClass('padding'));
+}
+
+$(function() {
+	var lang = getLanguageCode();
+	var pageName = getPageName();
+
+	createMenu(lang, pageName);
+	setPadding();
 });
 
