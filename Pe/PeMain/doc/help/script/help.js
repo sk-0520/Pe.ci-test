@@ -110,6 +110,13 @@ var menuList = [
 		title: {
 			'ja-JP': '設定'
 		}
+	},
+	{
+		name: 'setting-general',
+		level: 1,
+		title: {
+			'ja-JP': '本体'
+		}
 	}
 ];
 //----------------------------------------------------------------------
@@ -146,6 +153,15 @@ function getPageName() {
 	return fileName.split('.')[0];
 }
 
+function getPageTitle(lang, menuItem) {
+	var title = menuItem.title[lang];
+	if (title) {
+		return title;
+	}
+
+	return menuItem.title[defaultLanguageKey];
+}
+
 function createMenu(lang, pageName) {
 	var $menu = $('#main-menu');
 
@@ -160,7 +176,7 @@ function createMenu(lang, pageName) {
 		$li.addClass('item');
 		$li.addClass('level-' + menuItem.level);
 		
-		var title = menuItem.title[lang];
+		var title = getPageTitle(lang, menuItem);
 		var target = menuItem.name + '.' + lang + '.html?' + param;
 		if (menuItem.name == pageName) {
 			$top = $li;
@@ -185,6 +201,28 @@ function createMenu(lang, pageName) {
 	}
 }
 
+function createLink(lang) {
+	var param = 'lang=' + lang;
+
+	$('#content').find('.page').each(function() {
+		var $page = $(this);
+		var pageName = $page.text();
+		for (var i = 0; i < menuList.length; i++) {
+			var menuItem = menuList[i];
+			if (menuItem.name == pageName) {
+				var title = getPageTitle(lang, menuItem);
+				var target = menuItem.name + '.' + lang + '.html?' + param;
+
+				var $link = $('<a>');
+				$link.text(title);
+				$link.attr('href', target);
+				$page.empty().append($link);
+				break;
+			}
+		}
+	});
+}
+
 function setPadding() {
 	var $content = $('#content');
 	$content.append($('<div>').addClass('padding'));
@@ -195,6 +233,7 @@ $(function() {
 	var pageName = getPageName();
 
 	createMenu(lang, pageName);
+	createLink(lang);
 	setPadding();
 });
 

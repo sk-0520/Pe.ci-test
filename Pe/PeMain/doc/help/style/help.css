@@ -72,3 +72,11 @@ p.tips, ul.tips {
 	padding: 0.5em;
 }
 
+dl.ui-help {
+	margin: 1em;
+}
+dl.ui-help dt {
+}
+dl.ui-help dd {
+}
+
