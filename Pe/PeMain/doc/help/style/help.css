@@ -67,11 +67,6 @@ p.screenshot{
 	text-align: center;
 }
 
-p.tips, ul.tips {
-	border: 4px dotted #ffd800;
-	padding: 0.5em;
-}
-
 dl.ui-help {
 	margin: 1em;
 }
@@ -79,4 +74,18 @@ dl.ui-help dt {
 }
 dl.ui-help dd {
 }
+
+
+p.tips, p.warning  {
+	padding: 0.5em;
+}
+p.tips {
+	border: 4px dotted #ffff88;
+}
+p.warning {
+	border: 4px dotted #ff8888;
+}
+p.bug {
+}
+
 

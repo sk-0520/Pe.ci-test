@@ -1,8 +1,12 @@
 ﻿
+var issuesPageUri = '';
 var defaultLanguageKey = 'ja-JP';
 
-var helpTitle = {
-	'ja-JP': ' : Pe ヘルプ'
+var helpLanguage = {
+	'ja-JP': { 
+		title: ' : Pe ヘルプ',
+		outLink: '外部リンク'
+	}
 };
 
 var menuList = [
@@ -117,6 +121,13 @@ var menuList = [
 		title: {
 			'ja-JP': '本体'
 		}
+	},
+	{
+		name: 'setting-launcher',
+		level: 1,
+		title: {
+			'ja-JP': 'ランチャー'
+		}
 	}
 ];
 //----------------------------------------------------------------------
@@ -182,7 +193,7 @@ function createMenu(lang, pageName) {
 			$top = $li;
 			$li.text(title);
 			$('h1').text(title);
-			$('title').text(title + helpTitle[lang]);
+			$('title').text(title + helpLanguage[lang].title);
 			$li.addClass('level-active');
 		} else {
 			var $link = $('<a>');
@@ -204,15 +215,16 @@ function createMenu(lang, pageName) {
 function createLink(lang) {
 	var param = 'lang=' + lang;
 
-	$('#content').find('.page').each(function() {
+	var $content = $('#content');
+	$content.find('.page').each(function() {
 		var $page = $(this);
+		// TODO: 内部リンク
 		var pageName = $page.text();
 		for (var i = 0; i < menuList.length; i++) {
 			var menuItem = menuList[i];
 			if (menuItem.name == pageName) {
 				var title = getPageTitle(lang, menuItem);
 				var target = menuItem.name + '.' + lang + '.html?' + param;
-
 				var $link = $('<a>');
 				$link.text(title);
 				$link.attr('href', target);
@@ -220,6 +232,15 @@ function createLink(lang) {
 				break;
 			}
 		}
+	});
+	$content.find('.issue').each(function() {
+		var $issue = $(this);
+		var $link = $('<a>');
+		var number = $issue.text();
+		var target = issueLink + number;
+		$link.text(number);
+		$link.attr('href', target);
+		$issue.empty().append($link);
 	});
 }
 

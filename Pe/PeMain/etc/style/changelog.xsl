@@ -10,6 +10,12 @@
 				@import url('../etc/style/common.css');
 				</style>
 				<script src="../etc/script/changelog.js"></script>
+				<script src="../etc/script/jquery.js"></script>
+				<script>
+				$(function() {
+					makeIssueLink();
+				});
+				</script>
 			</head>
 			<body>
 				<h1>Pe更新履歴</h1>
