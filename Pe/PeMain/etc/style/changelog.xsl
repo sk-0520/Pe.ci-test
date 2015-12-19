@@ -8,6 +8,7 @@
 				<title>Pe更新履歴</title>
 				<style>
 				@import url('../etc/style/common.css');
+				@import url('../etc/style/changelog.css');
 				</style>
 				<script src="../etc/script/changelog.js"></script>
 				<script src="../etc/script/jquery.js"></script>

@@ -76,16 +76,5 @@ dl.ui-help dd {
 }
 
 
-p.tips, p.warning  {
-	padding: 0.5em;
-}
-p.tips {
-	border: 4px dotted #ffff88;
-}
-p.warning {
-	border: 4px dotted #ff8888;
-}
-p.bug {
-}
 
 
