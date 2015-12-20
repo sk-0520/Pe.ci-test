@@ -21,38 +21,40 @@
     </ResourceDictionary>
   </AV:CommonDataUserControl.Resources>
   <Grid>
-    <Grid >
-      <Grid.RowDefinitions>
-        <RowDefinition Height="Auto" />
-        <RowDefinition Height="Auto" />
-        <RowDefinition Height="Auto" />
-        <RowDefinition Height="Auto" />
-      </Grid.RowDefinitions>
-      <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="Auto"/>
-        <ColumnDefinition Width="Auto"/>
-      </Grid.ColumnDefinitions>
+    <GroupBox VerticalAlignment="Top" HorizontalAlignment="Left" Header="general" AA:Language.Word="template-setting/general" Style="{StaticResource DefaultGroupBox}">
+      <Grid>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="Auto"/>
+          <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
 
-      <CheckBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="topmost" AA:Language.Word="template-setting/topmost" IsChecked="{Binding IsTopmost}" />
-      <CheckBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Content="visible" AA:Language.Word="template-setting/visible" IsChecked="{Binding IsVisible}" />
+        <CheckBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="topmost" AA:Language.Word="template-setting/topmost" IsChecked="{Binding IsTopmost}" />
+        <CheckBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Content="visible" AA:Language.Word="template-setting/visible" IsChecked="{Binding IsVisible}" />
 
-      <Label Grid.Row="2" Grid.Column="0" Content="show" AA:Language.Word="template-setting/show" Style="{StaticResource HeaderLabel}" Target="{Binding ElementName=inputToggleHotKey}" />
-      <AV:AppHotkeyControl x:Name="inputToggleHotKey" Grid.Row="2" Grid.Column="1" Hotkey="{Binding ToggleHotKey}" Style="{StaticResource DefaultAppHotkey}" />
+        <Label Grid.Row="2" Grid.Column="0" Content="show" AA:Language.Word="template-setting/show" Style="{StaticResource HeaderLabel}" Target="{Binding ElementName=inputToggleHotKey}" />
+        <AV:AppHotkeyControl x:Name="inputToggleHotKey" Grid.Row="2" Grid.Column="1" Hotkey="{Binding ToggleHotKey}" Style="{StaticResource DefaultAppHotkey}" />
 
-      <Label Grid.Row="3" Grid.Column="0" VerticalAlignment="Top" Content="font" AA:Language.Word="template-setting/font" Style="{StaticResource HeaderLabel}" />
-      <AV:FontSelectControl
-        Grid.Row="3" Grid.Column="1"
-        IsEnabledBold="False"
-        FamilyName="{Binding FontFamily}"
-        IsBold="{Binding FontBold}"
-        IsItalic="{Binding FontItalic}"
-        Size="{Binding FontSize}"
-        SizeMinimum="{x:Static AM:Constants.TemplateFontMinimumSize}"
-        SizeMaximum="{x:Static AM:Constants.TemplateFontMaximumSize}"
-        Width="{StaticResource FontSelectWidth}"
-      />
+        <Label Grid.Row="3" Grid.Column="0" VerticalAlignment="Top" Content="font" AA:Language.Word="template-setting/font" Style="{StaticResource HeaderLabel}" />
+        <AV:FontSelectControl
+          Grid.Row="3" Grid.Column="1"
+          IsEnabledBold="False"
+          FamilyName="{Binding FontFamily}"
+          IsBold="{Binding FontBold}"
+          IsItalic="{Binding FontItalic}"
+          Size="{Binding FontSize}"
+          SizeMinimum="{x:Static AM:Constants.TemplateFontMinimumSize}"
+          SizeMaximum="{x:Static AM:Constants.TemplateFontMaximumSize}"
+          Width="{StaticResource FontSelectWidth}"
+        />
 
-    </Grid>
-
+      </Grid>
+    </GroupBox>
+ 
   </Grid>
 </AV:CommonDataUserControl>
