@@ -46,21 +46,33 @@ th {
 
 img {
 	vertical-align: middle;
+	box-shadow:rgba(0, 0, 0, 0.5) 0px 0px 2px 1px;
 }
 
-p.tips, p.warning, p.bug {
+p.tips, p.warning, p.bug, p.ref {
 	padding: 0.5em;
+	border-style: dashed;
+	border-width: 4px;
 }
 p.tips {
-	border: 4px dotted #ffff88;
+	border-color: #ff8;
 }
 p.warning {
-	border: 4px dotted #ff8888;
+	border-color: #f8f;
 }
 p.bug {
+	border-color: #f88;
+}
+p.ref {
+	border-color: #88f;
 }
 
 span.value {
 	font-family: monospace;
 }
+
+em.ui {
+	font-style: normal;
+}
+
 

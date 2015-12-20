@@ -39,6 +39,13 @@ var menuList = [
 		}
 	},
 	{
+		name: 'notifyarea',
+		level: 0,
+		title: {
+			'ja-JP': '通知領域'
+		}
+	},
+	{
 		name: 'launcher',
 		level: 0,
 		title: {
@@ -81,20 +88,6 @@ var menuList = [
 		}
 	},
 	{
-		name: 'log',
-		level: 0,
-		title: {
-			'ja-JP': 'ログ'
-		}
-	},
-	{
-		name: 'notifyarea',
-		level: 0,
-		title: {
-			'ja-JP': '通知領域'
-		}
-	},
-	{
 		name: 'clipboard',
 		level: 0,
 		title: {
@@ -106,6 +99,13 @@ var menuList = [
 		level: 0,
 		title: {
 			'ja-JP': 'テンプレート'
+		}
+	},
+	{
+		name: 'log',
+		level: 0,
+		title: {
+			'ja-JP': 'ログ'
 		}
 	},
 	{
@@ -163,7 +163,50 @@ var menuList = [
 		title: {
 			'ja-JP': 'テンプレート'
 		}
+	},
+	{
+		name: '*others',
+		level: 0,
+		title: {
+			'ja-JP': 'その他'
+		}
+	},
+	{
+		name: 'others-item-file-dd',
+		level: 1,
+		title: {
+			'ja-JP': 'ファイルのD&D'
+		}
+	},
+	{
+		name: 'others-item-filtering',
+		level: 1,
+		title: {
+			'ja-JP': 'フィルタリング'
+		}
+	},
+	{
+		name: 'others-icon-size',
+		level: 1,
+		title: {
+			'ja-JP': 'アイコンサイズ'
+		}
+	},
+	{
+		name: 'others-launcher-item-editor',
+		level: 1,
+		title: {
+			'ja-JP': 'ランチャーアイテム編集'
+		}
+	},
+	{
+		name: 'others-environment-variables-editor',
+		level: 1,
+		title: {
+			'ja-JP': '環境変数編集'
+		}
 	}
+	//
 ];
 //----------------------------------------------------------------------
 
@@ -230,6 +273,8 @@ function createMenu(lang, pageName) {
 			$('h1').text(title);
 			$('title').text(title + helpLanguage[lang].title);
 			$li.addClass('level-active');
+		} else if (menuItem.name.charAt(0) == '*') {
+			$li.text(title);
 		} else {
 			var $link = $('<a>');
 			$link.text(title);
