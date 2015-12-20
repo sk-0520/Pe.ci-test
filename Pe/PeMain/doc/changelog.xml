@@ -99,7 +99,7 @@
 		</group>
 		<group type="developer" dummy="==================================================================">
 			<note rev="">
-				<message></message>
+				<message>開発環境を Microsoft Visual Studio Community 2015 Update 1 に変更</message>
 			</note>
 			<note rev="">
 				<message></message>
