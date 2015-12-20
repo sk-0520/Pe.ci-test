@@ -1,11 +1,12 @@
-﻿
+﻿// 言語設定は一応考えるけど今のところ ja-JP で動けばそれでいい。テストもしてない。
+
 var defaultLanguageKey = 'ja-JP';
 
 var helpLanguage = {
 	'ja-JP': { 
 		title: ' : Pe ヘルプ',
 		outLink: '外部リンク',
-		tips: {
+		hint: {
 			icon: '📝',
 			text: 'ヒント',
 		},
@@ -337,12 +338,24 @@ function createLink(lang) {
 		$link.attr('href', target);
 		$issue.empty().append($link);
 	});
+	$content.find('a').each(function() {
+		var $link = $(this);
+		var uri = $link.attr('href');
+		if (uri.match(/https?:\/\//)) {
+			var help = helpLanguage[lang];
+			var $out = $('<span>')
+				.text(help.outLink)
+				.addClass('out-link')
+			;
+			$link.append($out);
+		}
+	});
 }
 
 function createComment(lang) {
 	var $content = $('#content');
 	var help = helpLanguage[lang];
-	$content.find('.tips, .warning, .bug, .ref').each(function() {
+	$content.find('.hint, .warning, .bug, .ref').each(function() {
 		var $element = $(this);
 		var className = $element.attr('class');
 		var comment = help[className];

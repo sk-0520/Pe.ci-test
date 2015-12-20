@@ -86,11 +86,6 @@ dl.ui-help {
 		margin-bottom: 1em;
 	}
 
-p.tips em.title, p.warning em.title, p.bug em.title, p.ref em.title {
-	display: block;
-	font-style: normal;
-}
-
 em.title span.icon {
 	margin: 4px;
 	text-shadow: 1px 1px 2px #000;
@@ -100,18 +95,18 @@ em.title span.text {
 	font-size: 90%;
 }
 
-p.tips em.title span.icon {
+div.hint em.title span.icon {
 	color: #ffb;
 }
 
-p.warning em.title span.icon {
+div.warning em.title span.icon {
 	color: #ffb;
 }
 
-p.bug em.title span.icon {
+div.bug em.title span.icon {
 	color: #fbb;
 }
 
-p.ref em.title span.icon {
+div.ref em.title span.icon {
 	color: #ddd;
 }

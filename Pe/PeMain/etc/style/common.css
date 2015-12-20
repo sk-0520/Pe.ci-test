@@ -1,8 +1,7 @@
 ﻿body {
-	color: #111;
+	color: #111111;
 	background: #fafafa;
 	margin: 1.5em;
-
 }
 
 body, input, textarea {
@@ -56,43 +55,64 @@ img {
 	margin: 1px 1px 2px 2px;
 }
 
-p.tips, p.warning, p.bug, p.ref {
+div.hint, div.warning, div.bug, div.ref {
 	padding: 0.5em;
-	border-style: dashed;
-	border-width: 4px;
+	margin: 1ex;
+	border-radius: 0 0 0.5em 0.5em;
+	border-top: 3px double;
+	border-left: 1px solid;
+	border-right: 1px solid;
+	border-bottom: 1px solid;
 }
 
-p.tips {
+	div.hint em.title, div.warning em.title, div.bug em.title, div.ref em.title {
+		display: block;
+		font-style: normal;
+		margin-bottom: 0.7ex;
+	}
+
+
+div.hint {
 	border-color: #ff8;
+	background: #ffe;
 }
 
-p.warning {
+div.warning {
 	border-color: #f8f;
+	background: #fef;
 }
 
-p.bug {
+div.bug {
 	border-color: #f88;
+	background: #fee;
 }
 
-p.ref {
+div.ref {
 	border-color: #88f;
+	background: #eef;
+}
+
+code, samp, strong.value, em.ui {
+	font-family: monospace;
+	padding: 2px 4px;
+	margin: 2px 4px;
+	display: inline-block;
 }
 
 code {
 	border: 1px solid #888;
 	background: #eef;
-	font-family: monospace;
-	padding: 2px;
-	margin: 2px;
+}
+
+samp {
+	border: 1px solid #8bb581;
+	background: #c8f7c4;
 }
 
 strong.value {
 	border: 1px solid #f80;
 	background: #fee;
 	border-radius: 2px;
-	padding: 2px;
-	margin: 2px;
-	font-family: monospace;
 }
 
 em.ui {
@@ -100,8 +120,6 @@ em.ui {
 	background: #eee;
 	font-style: normal;
 	border-radius: 2px;
-	padding: 2px 4px;
-	margin: 2px 4px;
 }
 
 /* https://dl.dropboxusercontent.com/u/921159/Keyboard/page.html */
@@ -120,4 +138,14 @@ kbd {
 	display: inline-block;
 }
 
+a *.out-link {
+	font-size: 60%;
+}
 
+	a *.out-link:before {
+		content: '[';
+	}
+
+	a *.out-link:after {
+		content: ']';
+	}
