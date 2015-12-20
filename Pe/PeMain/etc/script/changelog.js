@@ -2,7 +2,7 @@
 var issueLink = 'https://bitbucket.org/sk_0520/pe/issue/';
 var revisionLink = 'https://bitbucket.org/sk_0520/pe/commits/';
 
-window.onload = function()
+function makeIssueLink()
 {
 	var itemList = document.getElementsByTagName('li');
 	for(var i = 0; i < itemList.length; i++) {

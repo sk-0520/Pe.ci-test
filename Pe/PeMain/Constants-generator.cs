@@ -21,7 +21,7 @@
         /*
         このソースは自動生成のため Constants-generator.tt を編集すること。
 
-        生成元ConstantsPropertyフィールド数: 15
+        生成元ConstantsPropertyフィールド数: 16
         生成元ConstantsRangeフィールド数: 22
         */
 
@@ -136,6 +136,17 @@
         }
 
         #endregion
+        #region helpIndexFileName
+        
+        public static String HelpIndexFileName
+        {
+            get
+            {
+                return helpIndexFileName;
+            }
+        }
+
+        #endregion
         #region archiveSearchPattern
         
         public static String ArchiveSearchPattern
@@ -171,8 +182,6 @@
         #endregion
         #region issue_355_logFileName
         
-
-[Obsolete]
         public static String Issue_355_logFileName
         {
             get

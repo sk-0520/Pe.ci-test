@@ -28,62 +28,65 @@
     <Grid>
       <Grid.RowDefinitions>
         <RowDefinition Height="Auto" />
-        <RowDefinition Height="Auto" />
       </Grid.RowDefinitions>
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="Auto" />
         <ColumnDefinition Width="Auto" />
       </Grid.ColumnDefinitions>
-      
-      <StackPanel Grid.Row="0" Grid.Column="0">
-        <CheckBox Content="enabled" AA:Language.Word="clipboard-setting/enabled" IsChecked="{Binding IsEnabled}" />
-        <CheckBox Content="copy app" AA:Language.Word="clipboard-setting/copy-app" IsChecked="{Binding EnabledApplicationCopy}"/>
-        <CheckBox Content="topmost" AA:Language.Word="clipboard-setting/topmost" IsChecked="{Binding IsTopmost}" />
-        <CheckBox Content="visible" AA:Language.Word="clipboard-setting/visible" IsChecked="{Binding IsVisible}" />
-        <CheckBox Content="using clipboard" AA:Language.Word="clipboard-setting/using-clipboard" IsChecked="{Binding UsingClipboard}"/>
-        <CheckBox Content="dup to head" AA:Language.Word="clipboard-setting/dup-move-head" IsChecked="{Binding DuplicationMoveHead}"/>
-      </StackPanel>
 
-      <Grid Grid.Row="1" Grid.Column="0" >
-        <Grid.RowDefinitions>
-          <RowDefinition Height="Auto"/>
-          <RowDefinition Height="Auto"/>
-          <RowDefinition Height="Auto"/>
-          <RowDefinition Height="Auto"/>
-          <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-          <ColumnDefinition Width="Auto"/>
-          <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
+      <GroupBox Grid.Row="0" Grid.Column="0" Header="general" AA:Language.Word="clipboard-setting/general" Style="{StaticResource DefaultGroupBox}">
+        <StackPanel>
+          <StackPanel>
+            <CheckBox Content="enabled" AA:Language.Word="clipboard-setting/enabled" IsChecked="{Binding IsEnabled}" />
+            <CheckBox Content="copy app" AA:Language.Word="clipboard-setting/copy-app" IsChecked="{Binding EnabledApplicationCopy}"/>
+            <CheckBox Content="topmost" AA:Language.Word="clipboard-setting/topmost" IsChecked="{Binding IsTopmost}" />
+            <CheckBox Content="visible" AA:Language.Word="clipboard-setting/visible" IsChecked="{Binding IsVisible}" />
+            <CheckBox Content="using clipboard" AA:Language.Word="clipboard-setting/using-clipboard" IsChecked="{Binding UsingClipboard}"/>
+            <CheckBox Content="dup to head" AA:Language.Word="clipboard-setting/dup-move-head" IsChecked="{Binding DuplicationMoveHead}"/>
+          </StackPanel>
 
-        <Label Grid.Row="0" Grid.Column="0" Content="show" AA:Language.Word="clipboard-setting/show" Style="{StaticResource HeaderLabel}" Target="{Binding ElementName=inputToggleHotKey}" />
-        <AV:AppHotkeyControl x:Name="inputToggleHotKey" Grid.Row="0" Grid.Column="1" Hotkey="{Binding ToggleHotKey}" Style="{StaticResource DefaultAppHotkey}" />
+          <Grid>
+            <Grid.RowDefinitions>
+              <RowDefinition Height="Auto"/>
+              <RowDefinition Height="Auto"/>
+              <RowDefinition Height="Auto"/>
+              <RowDefinition Height="Auto"/>
+              <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="Auto"/>
+              <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
-        <Label Grid.Row="1" Grid.Column="0" Content="save count" AA:Language.Word="clipboard-setting/save-count" Style="{StaticResource HeaderLabel}" />
-        <AV:IntegerSliderControl Grid.Row="1" Grid.Column="1" Value="{Binding SaveCount}" Minimum="{Binding Source={x:Static AM:Constants.ClipboardSaveMinimumCount}}" Maximum="{Binding Source={x:Static AM:Constants.ClipboardSaveMaximumCount}}"/>
+            <Label Grid.Row="0" Grid.Column="0" Content="show" AA:Language.Word="clipboard-setting/show" Style="{StaticResource HeaderLabel}" Target="{Binding ElementName=inputToggleHotKey}" />
+            <AV:AppHotkeyControl x:Name="inputToggleHotKey" Grid.Row="0" Grid.Column="1" Hotkey="{Binding ToggleHotKey}" Style="{StaticResource DefaultAppHotkey}" />
 
-        <Label Grid.Row="2" Grid.Column="0" Content="wait time" AA:Language.Word="clipboard-setting/wait-time" Style="{StaticResource HeaderLabel}" />
-        <AV:TimeSliderControl Grid.Row="2" Grid.Column="1" Value="{Binding WaitTime}"  Minimum="{Binding Source={x:Static AM:Constants.ClipboardWaitMinimumTime}}" Maximum="{Binding Source={x:Static AM:Constants.ClipboardWaitMaximumTime}}" />
+            <Label Grid.Row="1" Grid.Column="0" Content="save count" AA:Language.Word="clipboard-setting/save-count" Style="{StaticResource HeaderLabel}" />
+            <AV:IntegerSliderControl Grid.Row="1" Grid.Column="1" Value="{Binding SaveCount}" Minimum="{Binding Source={x:Static AM:Constants.ClipboardSaveMinimumCount}}" Maximum="{Binding Source={x:Static AM:Constants.ClipboardSaveMaximumCount}}"/>
 
-        <Label Grid.Row="3" Grid.Column="0" Content="dup" AA:Language.Word="clipboard-setting/dup" Style="{StaticResource HeaderLabel}" />
-        <!--<xctk:IntegerUpDown Grid.Row="3" Grid.Column="1" Value="{Binding DuplicationCount}" Minimum="{Binding Source={x:Static AM:Constants.ClipboardDuplicationMinimumCount}}" Maximum="{Binding Source={x:Static AM:Constants.ClipboardDuplicationMaximumCount}}"  />-->
-        <AV:IntegerSliderControl Grid.Row="3" Grid.Column="1" Value="{Binding DuplicationCount}" Minimum="{Binding Source={x:Static AM:Constants.ClipboardDuplicationMinimumCount}}" Maximum="{Binding Source={x:Static AM:Constants.ClipboardDuplicationMaximumCount}}" />
+            <Label Grid.Row="2" Grid.Column="0" Content="wait time" AA:Language.Word="clipboard-setting/wait-time" Style="{StaticResource HeaderLabel}" />
+            <AV:TimeSliderControl Grid.Row="2" Grid.Column="1" Value="{Binding WaitTime}"  Minimum="{Binding Source={x:Static AM:Constants.ClipboardWaitMinimumTime}}" Maximum="{Binding Source={x:Static AM:Constants.ClipboardWaitMaximumTime}}" />
 
-        <Label Grid.Row="4" Grid.Column="0" VerticalAlignment="Top" Content="font" AA:Language.Word="clipboard-setting/font" Style="{StaticResource HeaderLabel}" />
-        <AV:FontSelectControl
-          Grid.Row="4" Grid.Column="1"
-          FamilyName="{Binding FontFamily}"
-          IsBold="{Binding FontBold}"
-          IsItalic="{Binding FontItalic}"
-          Size="{Binding FontSize}"
-          SizeMinimum="{x:Static AM:Constants.ClipboardFontMinimumSize}"
-          SizeMaximum="{x:Static AM:Constants.ClipboardFontMaximumSize}"
-          Width="{StaticResource FontSelectWidth}"
-        />
-      </Grid>
+            <Label Grid.Row="3" Grid.Column="0" Content="dup" AA:Language.Word="clipboard-setting/dup" Style="{StaticResource HeaderLabel}" />
+            <!--<xctk:IntegerUpDown Grid.Row="3" Grid.Column="1" Value="{Binding DuplicationCount}" Minimum="{Binding Source={x:Static AM:Constants.ClipboardDuplicationMinimumCount}}" Maximum="{Binding Source={x:Static AM:Constants.ClipboardDuplicationMaximumCount}}"  />-->
+            <AV:IntegerSliderControl Grid.Row="3" Grid.Column="1" Value="{Binding DuplicationCount}" Minimum="{Binding Source={x:Static AM:Constants.ClipboardDuplicationMinimumCount}}" Maximum="{Binding Source={x:Static AM:Constants.ClipboardDuplicationMaximumCount}}" />
 
-      <GroupBox Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Header="capture type" AA:Language.Word="clipboard-setting/capture-type" Style="{StaticResource DefaultGroupBox}" >
+            <Label Grid.Row="4" Grid.Column="0" VerticalAlignment="Top" Content="font" AA:Language.Word="clipboard-setting/font" Style="{StaticResource HeaderLabel}" />
+            <AV:FontSelectControl
+              Grid.Row="4" Grid.Column="1"
+              FamilyName="{Binding FontFamily}"
+              IsBold="{Binding FontBold}"
+              IsItalic="{Binding FontItalic}"
+              Size="{Binding FontSize}"
+              SizeMinimum="{x:Static AM:Constants.ClipboardFontMinimumSize}"
+              SizeMaximum="{x:Static AM:Constants.ClipboardFontMaximumSize}"
+              Width="{StaticResource FontSelectWidth}"
+            />
+          </Grid>
+        </StackPanel>
+      </GroupBox>
+
+      <GroupBox Grid.Row="0" Grid.Column="1" Header="capture type" AA:Language.Word="clipboard-setting/capture-type" Style="{StaticResource DefaultGroupBox}" >
         <Grid>
           <Grid.Resources>
             <Style TargetType="CheckBox">

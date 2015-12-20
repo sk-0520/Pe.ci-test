@@ -115,6 +115,8 @@ namespace ContentTypeTextNet.Pe.PeMain
         const string commonComment = "/Resources/Image/Common/CommonComment.png";
         [AppResource(AppResourceType.Image)]
         const string commonWordWrap = "/Resources/Image/Common/CommonWordWrap.png";
+        [AppResource(AppResourceType.Image)]
+        const string commonHelp = "/Resources/Image/Common/CommonHelp.png";
 
         #endregion
 

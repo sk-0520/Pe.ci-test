@@ -133,12 +133,12 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         public static string CreateUserIdFromEnvironment()
         {
             using(var info = new AppInformationCollection()) {
-                var infoEnv = info.GetCPU();
+                var infoCpu = info.GetCPU();
                 var infoMem = info.GetMemory();
 
                 var user = CovertUtility.ToByteArray(Environment.UserName);
                 var os = CovertUtility.ToByteArray(Environment.OSVersion);
-                var cpu = CovertUtility.ToByteArray(infoEnv.Items["Name"]);
+                var cpu = CovertUtility.ToByteArray(infoCpu.Items["Name"]);
                 var mem = CovertUtility.ToByteArray(infoMem.Items["TotalVisibleMemorySize"]);
 
                 using(var stream = new MemoryStream()) {
