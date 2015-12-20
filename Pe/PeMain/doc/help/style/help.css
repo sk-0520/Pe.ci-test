@@ -78,7 +78,8 @@ dl.ui-help {
 }
 
 	dl.ui-help dt {
-		border-bottom: 1px dotted #dedfff;
+		border-bottom: 2px dotted #7f9ed7;
+		padding-left: 0.5em;
 	}
 
 	dl.ui-help dd {

@@ -18,6 +18,12 @@ h2 {
 	background: #ccc;
 }
 
+h3 {
+	padding: 0.2ex 0.5ex;
+	border-left: 1ex solid #fff5bc;
+	border-bottom: 3px double #fff5bc;
+}
+
 p {
 	margin: 0.8ex;
 }
@@ -98,6 +104,7 @@ em.ui {
 	margin: 2px 4px;
 }
 
+/* https://dl.dropboxusercontent.com/u/921159/Keyboard/page.html */
 kbd {
 	font-family: Consolas, monospace;
 	min-width: 2ex;

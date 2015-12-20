@@ -39,9 +39,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 
         #endregion
 
-        public static string ReadCommonStylesheet()
+        public static IEnumerable<string> ReadCommonStylesheet()
         {
-            return File.ReadAllText(Path.Combine(Constants.ApplicationStyleDirectoryPath, Constants.styleCommonFileName));
+            yield return File.ReadAllText(Path.Combine(Constants.ApplicationStyleDirectoryPath, Constants.styleCommonFileName));
         }
 
         public static IEnumerable< string> ReadCommonScript()
@@ -62,7 +62,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         {
             var result = new Dictionary<string, string>() {
                 { "LANG", language.CultureCode },
-                { "HTML:STYLE-COMMON", ＷrapElement("style", ReadCommonStylesheet()) },
+                { "HTML:STYLE-COMMON", string.Join(Environment.NewLine,  ReadCommonStylesheet().Select(s => ＷrapElement("style", s))) },
                 { "HTML:STYLE-CUSTOM", ＷrapElement("style", customStyle)},
                 { "HTML:SCRIPT-COMMON", string.Join(Environment.NewLine, ReadCommonScript().Select(s => ＷrapElement("script", s))) },
                 { "HTML:SCRIPT-CUSTOM", ＷrapElement("script", customScript) },
