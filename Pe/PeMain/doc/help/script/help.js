@@ -303,8 +303,10 @@ function createMenu(lang, pageName) {
 	$menu.append($ul);
 	
 	if ($top) {
-		var y = $top.offset().top - $menu.offset().top;
-		$menu.scrollTop(y);
+		if ($menu.height() < $top.offset().top) {
+			var y = $top.offset().top - $menu.offset().top;
+			$menu.scrollTop(y);
+		}
 	}
 }
 
@@ -377,6 +379,9 @@ function setPadding() {
 $(function() {
 	var lang = getLanguageCode();
 	var pageName = getPageName();
+	if (pageName == 'help') {
+		return;
+	}
 
 	createMenu(lang, pageName);
 	createLink(lang);

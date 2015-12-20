@@ -21,7 +21,7 @@
         /*
         このソースは自動生成のため AppResource-generator.tt を編集すること。
 
-        生成元フィールド数: 76
+        生成元フィールド数: 77
         */
         #region Icon: Application
 
@@ -1169,6 +1169,28 @@
             get { return GetImage(CommonWordWrapPath); }
         }
         #endregion CommonWordWrap
+        #region Image: CommonHelp
+
+        /// <summary>
+        /// [Image] CommonHelpのリソースパスを取得。
+        /// <para>/Resources/Image/Common/CommonHelp.png</para>
+        /// </summary>
+        public static string CommonHelpPath
+        {
+            get { return commonHelp; }
+        }
+
+        /// <summary>
+        /// [Image] CommonHelpのイメージソースを取得。
+        /// <para>初回のみ生成を行う。</para>
+        /// <para>CommonHelpPath: /Resources/Image/Common/CommonHelp.png</para>
+        /// </summary>
+        /// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
+        public static BitmapSource CommonHelpImage
+        {
+            get { return GetImage(CommonHelpPath); }
+        }
+        #endregion CommonHelp
         #region Image: HomeSearch
 
         /// <summary>

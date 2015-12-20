@@ -93,7 +93,7 @@ div.ref {
 }
 
 code, samp, strong.value, em.ui {
-	font-family: monospace;
+	font-family: Consolas, monospace;
 	padding: 2px 4px;
 	margin: 2px 4px;
 	display: inline-block;

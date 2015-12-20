@@ -438,6 +438,26 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
         }
 
+        public ICommand HelpCommand
+        {
+            get
+            {
+                var result = CreateCommand(
+                    o => {
+                        var helpPath = Path.Combine(Constants.ApplicationDocumentDirectoryPath, Constants.HelpIndexFileName);
+                        var helpCallPath = helpPath + "?lang=" + CommonData.Language.CultureCode;
+                        try {
+                            ExecuteUtility.OpenFile(helpPath, CommonData.NonProcess);
+                        } catch(Exception ex) {
+                            CommonData.Logger.Error(ex);
+                        }
+                    }
+                );
+
+                return result;
+            }
+        }
+
         /// <summary>
         /// プログラム終了。
         /// </summary>

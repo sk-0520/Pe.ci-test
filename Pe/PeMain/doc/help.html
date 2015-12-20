@@ -8,6 +8,7 @@
 		@import url('help/style/help.css');
 	</style>
 	<script src="../etc/script/jquery.js"></script>
+	<script src="help/script/help.js"></script>
 	<script>
 		var langMap = {
 			'ja': 'JP'
@@ -33,7 +34,7 @@
 					break;
 				}
 			}
-			if (!langCode) {
+			if (!langCode || !helpLanguage[langCode]) {
 				langCode = 'ja-JP';
 			}
 			window.location.href = 'help/html/top.' + langCode + '.html?lang=' + langCode;
@@ -42,6 +43,11 @@
 </head>
 <body>
 	<h1>Pe: Help Document</h1>
+	<noscript>
+		<p>
+			本ヘルプファイルの表示には JavaScript を有効にしてください。
+		</p>
+	</noscript>
 	<p>
 		ヘルプドキュメントを読み込み中です。
 	</p>

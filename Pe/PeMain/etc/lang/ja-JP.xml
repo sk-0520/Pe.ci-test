@@ -98,6 +98,7 @@
 		<Item Id="tasktray/system-env/window/timer" Word="タイマー保存(_T)" />
 		<Item Id="tasktray/system-env/window/system" Word="システム変更(_Y)" />
 		<Item Id="tasktray/info" Word="情報(_I)" />
+		<Item Id="tasktray/info/help"     Word="ヘルプ(_H)" />
 		<Item Id="tasktray/info/feedback" Word="フィードバック(_F)" />
 		<Item Id="tasktray/info/about" Word="@[APPLICATION:NAME] 情報(_A)" />
 		<Item Id="tasktray/exit" Word="終了(_X)" />

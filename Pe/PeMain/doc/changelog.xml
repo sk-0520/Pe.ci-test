@@ -58,7 +58,12 @@
 	<log date="YYYY/MM/DD" version="0.74.1" type="rc" dummy="################################################################################">
 		<group type="note" dummy="==================================================================">
 			<note rev="">
-				<message></message>
+				<message>#25: ヘルプファイルの記述</message>
+				<comments>
+					<comment>通知領域コンテキストメニュー→情報→ヘルプ</comment>
+					<comment>ひっさしぶりに生のHTML/CSS書いた</comment>
+					<comment>読み込み時の細かい処理は追々調整する</comment>
+				</comments>
 			</note>
 			<note rev="">
 				<message></message>
