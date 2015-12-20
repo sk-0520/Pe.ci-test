@@ -58,6 +58,17 @@
 	<log date="YYYY/MM/DD" version="0.74.1" type="rc" dummy="################################################################################">
 		<group type="note" dummy="==================================================================">
 			<note rev="">
+				<message></message>
+			</note>
+			<note rev="">
+				<message></message>
+			</note>
+			<note rev="">
+				<message></message>
+			</note>
+		</group>
+		<group type="features" dummy="==================================================================">
+			<note rev="">
 				<message>#25: ヘルプファイルの記述</message>
 				<comments>
 					<comment>通知領域コンテキストメニュー→情報→ヘルプ</comment>
@@ -72,18 +83,10 @@
 				<message></message>
 			</note>
 		</group>
-		<group type="features" dummy="==================================================================">
+		<group type="fixes" dummy="==================================================================">
 			<note rev="">
 				<message>#406: ファイルのローテート処理で最新ファイルを削除している</message>
 			</note>
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-		</group>
-		<group type="fixes" dummy="==================================================================">
 			<note rev="">
 				<message>0.73.0の変更履歴にリビジョン記入してなかった</message>
 			</note>
