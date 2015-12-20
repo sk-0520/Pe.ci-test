@@ -17,9 +17,10 @@
 	padding-left: 1em;
 	padding-right: 3em;
 }
-#content div.padding {
-	height: 4em;
-}
+
+	#content div.padding {
+		height: 4em;
+	}
 
 #main-menu ul {
 	list-style: none;
@@ -31,50 +32,82 @@
 	line-height: 1.5em;
 	margin-bottom: 2px;
 }
-#main-menu li a {
-	display: block;
-	text-decoration: none;
-}
-#main-menu li a:link, #main-menu li a:visited {
-	color: blue;
-}
-#main-menu li a:hover {
-	color: red;
-}
 
-#main-menu li.item {
-	border: 1px solid #ccc;
-	border-left: 3px solid #ccc;
-	border-radius: 0px 6px 6px 0px;
-	padding: 4px;
-}
+	#main-menu li a {
+		display: block;
+		text-decoration: none;
+	}
 
-#main-menu li.item li.level-0 {
-	margin-left: 0em;
-}
+		#main-menu li a:link, #main-menu li a:visited {
+			color: blue;
+		}
 
-#main-menu li.level-active {
-	border: 1px solid #f88;
-	border-left: 3px solid #f88;
-	box-shadow:rgba(255, 140, 140, 0.5) 0px 0px 2px 1px;
-}
+		#main-menu li a:hover {
+			color: red;
+		}
 
-#main-menu li.level-1 {
-	margin-left: 1ex;
-}
+	#main-menu li.item {
+		border: 1px solid #ccc;
+		border-left: 3px solid #ccc;
+		border-radius: 0px 6px 6px 0px;
+		padding: 4px;
+	}
 
-p.screenshot{
+		#main-menu li.item li.level-0 {
+			margin-left: 0em;
+		}
+
+	#main-menu li.level-active {
+		border: 1px solid #f88;
+		border-left: 3px solid #f88;
+		box-shadow: rgba(255, 140, 140, 0.5) 0px 0px 2px 1px;
+	}
+
+	#main-menu li.level-1 {
+		margin-left: 1ex;
+	}
+
+p.screenshot {
 	text-align: center;
 }
 
 dl.ui-help {
 	margin: 1em;
 }
-dl.ui-help dt {
+
+	dl.ui-help dt {
+		border-bottom: 1px dotted #dedfff;
+	}
+
+	dl.ui-help dd {
+		margin-bottom: 1em;
+	}
+
+p.tips em.title, p.warning em.title, p.bug em.title, p.ref em.title {
+	display: block;
+	font-style: normal;
 }
-dl.ui-help dd {
+
+em.title span.icon {
+	margin: 4px;
+	text-shadow: 1px 1px 2px #000;
+}
+em.title span.text {
+	font-size: 90%;
 }
 
+p.tips em.title span.icon {
+	color: #ffb;
+}
 
+p.warning em.title span.icon {
+	color: #ffb;
+}
 
+p.bug em.title span.icon {
+	color: #fbb;
+}
 
+p.ref em.title span.icon {
+	color: #bbf;
+}

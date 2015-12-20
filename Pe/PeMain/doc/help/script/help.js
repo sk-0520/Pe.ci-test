@@ -1,11 +1,26 @@
 ﻿
-var issuesPageUri = '';
 var defaultLanguageKey = 'ja-JP';
 
 var helpLanguage = {
 	'ja-JP': { 
 		title: ' : Pe ヘルプ',
-		outLink: '外部リンク'
+		outLink: '外部リンク',
+		tips: {
+			icon: '📝',
+			text: 'ヒント',
+		},
+		warning: {
+			icon: '⚠',
+			text: '注意'
+		},
+		bug: {
+			icon: '🐞',
+			text: 'バグ'
+		},
+		ref: {
+			icon: '🔗',
+			text: '参照'
+		}
 	}
 };
 
@@ -324,6 +339,23 @@ function createLink(lang) {
 	});
 }
 
+function createComment(lang) {
+	var $content = $('#content');
+	var help = helpLanguage[lang];
+	$content.find('.tips, .warning, .bug, .ref').each(function() {
+		var $element = $(this);
+		var className = $element.attr('class');
+		var comment = help[className];
+		var $title = $('<em>').addClass('title');
+		var $icon = $('<span>').addClass('icon').text(comment.icon);
+		var $text = $('<span>').addClass('text').text(comment.text);
+
+		$title.append($icon);
+		$title.append($text);
+		$element.prepend($title);
+	});
+}
+
 function setPadding() {
 	var $content = $('#content');
 	$content.append($('<div>').addClass('padding'));
@@ -335,6 +367,7 @@ $(function() {
 
 	createMenu(lang, pageName);
 	createLink(lang);
+	createComment(lang);
 	setPadding();
 });
 

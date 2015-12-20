@@ -8,13 +8,11 @@ body, input, textarea {
 	font-family: Consolas, "Meiryo UI", monospace;
 }
 
-h1
-{
+h1 {
 	border-bottom: 3px double #888;
 }
 
-h2
-{
+h2 {
 	padding: 0.2ex 0.5ex;
 	background: #ccc;
 }
@@ -41,12 +39,13 @@ th {
 	background: #707030;
 	color: azure;
 	border: 1px solid azure;
-	padding: 0.8em;
+	padding: inherit 0.8em;
 }
 
 img {
 	vertical-align: middle;
-	box-shadow:rgba(0, 0, 0, 0.5) 0px 0px 2px 1px;
+	box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 2px 1px;
+	padding: 1px;
 }
 
 p.tips, p.warning, p.bug, p.ref {
@@ -54,25 +53,46 @@ p.tips, p.warning, p.bug, p.ref {
 	border-style: dashed;
 	border-width: 4px;
 }
+
 p.tips {
 	border-color: #ff8;
 }
+
 p.warning {
 	border-color: #f8f;
 }
+
 p.bug {
 	border-color: #f88;
 }
+
 p.ref {
 	border-color: #88f;
 }
 
-em.ui {
-	font-style: normal;
+code {
+	border: 1px solid #888;
+	background: #eef;
+	font-family: monospace;
+	padding: 2px;
+	margin: 2px;
 }
 
 strong.value {
+	border: 1px solid #f80;
+	background: #fee;
+	border-radius: 2px;
+	padding: 2px;
+	margin: 2px;
 	font-family: monospace;
 }
 
+em.ui {
+	border: 1px outset #888;
+	background: #eee;
+	font-style: normal;
+	border-radius: 2px;
+	padding: 2px 4px;
+	margin: 2px 4px;
+}
 
