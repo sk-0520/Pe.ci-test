@@ -67,12 +67,12 @@ p.ref {
 	border-color: #88f;
 }
 
-span.value {
-	font-family: monospace;
-}
-
 em.ui {
 	font-style: normal;
+}
+
+strong.value {
+	font-family: monospace;
 }
 
 
