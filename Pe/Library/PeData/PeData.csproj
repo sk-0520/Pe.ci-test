@@ -81,6 +81,7 @@
     <Compile Include="Define\HashType.cs" />
     <Compile Include="Define\IndexKind.cs" />
     <Compile Include="Define\LauncherItemFileDropMode.cs" />
+    <Compile Include="Define\Notification.cs" />
     <Compile Include="Define\ToolbarButtonPosition.cs" />
     <Compile Include="Define\LauncherKind.cs" />
     <Compile Include="Define\LauncherCommandType.cs" />
@@ -118,6 +119,7 @@
     <Compile Include="Item\WindowItemModel.cs" />
     <Compile Include="Setting\ClipboardIndexSettingModel.cs" />
     <Compile Include="Setting\IndexSettingModelBase.cs" />
+    <Compile Include="Setting\MainSettings\GeneralSettingModel.cs" />
     <Compile Include="Setting\MainSettings\ClipboardSettingModel.cs" />
     <Compile Include="Setting\MainSettings\CommandSettingModel.cs" />
     <Compile Include="Item\EnvironmentVariablesItemModel.cs" />

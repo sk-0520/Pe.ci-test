@@ -339,6 +339,7 @@
     <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeLauncherGroupItem.cs" />
     <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeLauncherItem.cs" />
     <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeLoggingSetting.cs" />
+    <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeGeneralSetting.cs" />
     <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeRunningInformationSetting.cs" />
     <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeStreamSetting.cs" />
     <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeTemplateIndexItem.cs" />
