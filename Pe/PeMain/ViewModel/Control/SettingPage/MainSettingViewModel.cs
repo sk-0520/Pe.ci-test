@@ -49,7 +49,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control.SettingPage
 
         #endregion
 
-        public MainSettingViewModel(RunningInformationSettingModel runningInformation, LanguageSettingModel language, LoggingSettingModel logging, SystemEnvironmentSettingModel systemEnvironment, StreamSettingModel stream, WindowSaveSettingModel windowSave, MainSettingControl view, IAppNonProcess appNonProcess, SettingNotifyData settingNotifiyItem)
+        public MainSettingViewModel(RunningInformationSettingModel runningInformation, LanguageSettingModel language, LoggingSettingModel logging, SystemEnvironmentSettingModel systemEnvironment, StreamSettingModel stream, WindowSaveSettingModel windowSave, GeneralSettingModel general, MainSettingControl view, IAppNonProcess appNonProcess, SettingNotifyData settingNotifiyItem)
             : base(view, appNonProcess, settingNotifiyItem)
         {
             RunningInformation = runningInformation;
@@ -58,6 +58,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control.SettingPage
             SystemEnvironment = systemEnvironment;
             Stream = stream;
             WindowSave = windowSave;
+            General = general;
         }
 
         #region property
@@ -68,6 +69,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control.SettingPage
         SystemEnvironmentSettingModel SystemEnvironment { get; set; }
         StreamSettingModel Stream { get; set; }
         WindowSaveSettingModel WindowSave { get; set; }
+        GeneralSettingModel General { get; set; }
 
         public bool Startup
         {
@@ -336,6 +338,16 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control.SettingPage
             set { SetPropertyValue(WindowSave, value, nameof(WindowSave.SaveCount)); }
         }
 
+
+        #endregion
+
+        #region GeneralSettingModel
+
+        public Notification Notification
+        {
+            get { return General.Notification; }
+            set { SetPropertyValue(General, value); }
+        }
 
         #endregion
 

@@ -1370,15 +1370,15 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         void CallPropertyChangeHotkey()
         {
             var propertyNames = new[] {
-                "CreateNoteHotKey",
-                "CompactNoteItemsHotKey",
-                "HideNoteItemsHotKey",
-                "FrontNoteItemsHotKey",
-                "SwitchTemplateWindowHotKey",
-                "ShowCommandWindowHotKey",
-                "SwitchShellHideFileHotKey",
-                "SwitchShellExtensionHotKey",
-                "SwitchClipboardWindowHotKey",
+                nameof(CreateNoteHotKey),
+                nameof(CompactNoteItemsHotKey),
+                nameof(HideNoteItemsHotKey),
+                nameof(FrontNoteItemsHotKey),
+                nameof(SwitchTemplateWindowHotKey),
+                nameof(ShowCommandWindowHotKey),
+                nameof(SwitchShellHideFileHotKey),
+                nameof(SwitchShellExtensionHotKey),
+                nameof(SwitchClipboardWindowHotKey),
             };
             CallOnPropertyChange(propertyNames);
         }
@@ -2214,15 +2214,27 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         void ReceiveInformationTips(string title, string message, LogKind logKind)
         {
-            var map = new Dictionary<LogKind, BalloonIcon>() {
-                { LogKind.None, BalloonIcon.None },
-                { LogKind.Information, BalloonIcon.Info },
-                { LogKind.Warning, BalloonIcon.Warning },
-                { LogKind.Error, BalloonIcon.Error },
-            };
-
             if(HasView) {
-                View.ShowBalloonTip(title, message, map[logKind]);
+                var map = new Dictionary<LogKind, BalloonIcon>() {
+                    { LogKind.None, BalloonIcon.None },
+                    { LogKind.Information, BalloonIcon.Info },
+                    { LogKind.Warning, BalloonIcon.Warning },
+                    { LogKind.Error, BalloonIcon.Error },
+                };
+                switch(CommonData.MainSetting.General.Notification) {
+                    case Notification.System:
+                        View.ShowBalloonTip(title, message, map[logKind]);
+                        break;
+
+                    case Notification.Silent:
+                        throw new NotImplementedException(nameof(Notification.Silent));
+
+                    case Notification.None:
+                        break;
+
+                    default:
+                        throw new NotImplementedException();
+                }
             }
             var action = new Dictionary<LogKind, LogPutDelegate>() {
                 { LogKind.None, CommonData.Logger.Trace },

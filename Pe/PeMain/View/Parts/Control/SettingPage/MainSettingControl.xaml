@@ -23,6 +23,7 @@
         <ResourceDictionary Source="/View/Parts/Resource/ComboBoxDictionary.xaml"/>
         <ResourceDictionary Source="/View/Parts/Resource/LabelDictionary.xaml"/>
         <ResourceDictionary Source="/View/Parts/Resource/CheckBoxDictionary.xaml"/>
+        <ResourceDictionary Source="/View/Parts/Resource/RadioButtonDictionary.xaml"/>
         <ResourceDictionary Source="/View/Parts/Resource/AppHotkeyDictionary.xaml"/>
       </ResourceDictionary.MergedDictionaries>
       <SC:GridDistanceConverter x:Key="GridDistanceConverter" />
@@ -135,6 +136,16 @@
               Maximum="{Binding Source={x:Static AM:Constants.WindowSaveIntervalMaximumTime}}"
             />
           </Grid>
+        </GroupBox>
+
+        <GroupBox Header="notification" AA:Language.Word="main-setting/general/notification" Style="{StaticResource DefaultGroupBox}">
+          <StackPanel Orientation="Horizontal">
+            <StackPanel.Resources>
+              <Style TargetType="RadioButton" BasedOn="{StaticResource DefaultHorizontalRadioButton}" />
+            </StackPanel.Resources>
+            <RadioButton Content="none"   AA:Language.Word="main-setting/general/notification/none"   IsChecked="{Binding Notification, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static ADD:Notification.None}}" />
+            <RadioButton Content="system" AA:Language.Word="main-setting/general/notification/system" IsChecked="{Binding Notification, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static ADD:Notification.System}}" />
+          </StackPanel>
         </GroupBox>
       </StackPanel>
 

@@ -306,6 +306,12 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
             Implement.InitializeCommandSetting.Correction(setting, previousVersion, nonProcess);
         }
 
+        private static void InitializeGeneralSetting(GeneralSettingModel setting, Version previousVersion, INonProcess nonProcess)
+        {
+            Implement.InitializeGeneralSetting.Correction(setting, previousVersion, nonProcess);
+        }
+
+
         /// <summary>
         /// 本体設定を補正。
         /// </summary>
@@ -325,6 +331,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
             InitializeClipboardSetting(setting.Clipboard, previousVersion, nonProcess);
             InitializeTemplateSetting(setting.Template, previousVersion, nonProcess);
             InitializeCommandSetting(setting.Command, previousVersion, nonProcess);
+            InitializeGeneralSetting(setting.General, previousVersion, nonProcess);
         }
 
         private static void InitializeRunningInformationSetting(RunningInformationSettingModel setting, Version previousVersion, INonProcess nonProcess)
