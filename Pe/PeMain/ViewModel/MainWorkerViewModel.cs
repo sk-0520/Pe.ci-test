@@ -725,21 +725,22 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             AppUtility.SaveSetting(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingMainSettingFilePath), CommonData.MainSetting, Constants.fileTypeMainSetting, CommonData.Logger);
         }
 
-        void BackupSetting()
+        void RotateSetting(string backupDirectory, string backupPattern, int backupCount)
+        {
+            // 旧データの削除
+            using(var timeLogger = CommonData.NonProcess.CreateTimeLogger()) {
+                FileUtility.RotateFiles(backupDirectory, backupPattern, OrderBy.Desc, backupCount, ex => {
+                    CommonData.Logger.Error(ex);
+                    return true;
+                });
+            }
+        }
+
+        void MakeSettingArchive(string backupDirectory, string settingBaseDirectory)
         {
             using(var timeLogger = CommonData.NonProcess.CreateTimeLogger()) {
-                var backupDir = Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserBackupDirectoryPath);
-
-                // 旧データの削除
-                using(var tl = CommonData.NonProcess.CreateTimeLogger()) {
-                    FileUtility.RotateFiles(backupDir, Constants.BackupSearchPattern, OrderBy.Desc, Constants.BackupSettingCount, ex => {
-                        CommonData.Logger.Error(ex);
-                        return true;
-                    });
-                }
-
                 var fileName = PathUtility.AppendExtension(Constants.GetNowTimestampFileName(), "zip");
-                var backupFileFilePath = Path.Combine(backupDir, fileName);
+                var backupFileFilePath = Path.Combine(backupDirectory, fileName);
                 FileUtility.MakeFileParentDirectory(backupFileFilePath);
 
                 // zip
@@ -754,8 +755,18 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                     CommonData.VariableConstants.UserSettingClipboardIndexFilePath,
                     CommonData.VariableConstants.UserSettingClipboardDirectoryPath,
                 };
-                var basePath = Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingDirectoryPath);
+                var basePath = Environment.ExpandEnvironmentVariables(settingBaseDirectory);
                 FileUtility.CreateZipFile(backupFileFilePath, basePath, targetFiles.Select(Environment.ExpandEnvironmentVariables));
+            }
+        }
+
+        void BackupSetting()
+        {
+            using(var timeLogger = CommonData.NonProcess.CreateTimeLogger()) {
+                var backupDir = Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserBackupDirectoryPath);
+
+                RotateSetting(backupDir, Constants.BackupSearchPattern, Constants.BackupSettingCount);
+                MakeSettingArchive(backupDir, CommonData.VariableConstants.UserSettingDirectoryPath);
             }
         }
 
