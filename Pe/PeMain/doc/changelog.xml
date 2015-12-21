@@ -77,6 +77,13 @@
 				</comments>
 			</note>
 			<note rev="">
+				<message>#392: ホットキー処理を実施した際のトースト(バルーン)表示を選択制にする</message>
+				<comments>
+					<comment>設定→本体設定→操作通知</comment>
+					<comment>Windows 10 で出まくるの鬱陶しいので初期値は「なし」に設定</comment>
+				</comments>
+			</note>
+			<note rev="">
 				<message></message>
 			</note>
 			<note rev="">

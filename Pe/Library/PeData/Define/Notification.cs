@@ -28,6 +28,10 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Define
     public enum Notification
     {
         /// <summary>
+        /// 通知しない。
+        /// </summary>
+        None,
+        /// <summary>
         /// システムに依存。
         /// </summary>
         System,
@@ -35,9 +39,5 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Define
         /// 静かに通知。
         /// </summary>
         Silent,
-        /// <summary>
-        /// 通知しない。
-        /// </summary>
-        None,
     }
 }

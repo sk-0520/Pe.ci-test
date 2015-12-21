@@ -44,7 +44,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityImplement
                 return;
             }
 
-            setting.Notification = Notification.System;
+            setting.Notification = Notification.None;
         }
     }
 }

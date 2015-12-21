@@ -356,6 +356,9 @@
 		<Item Id="main-setting/privacy/create/environment" Word="環境から作成(_C)" />
 		<Item Id="main-setting/privacy/create/random"      Word="ランダム作成(_R)" />
 		<Item Id="main-setting/privacy/send-user-info"     Word="ユーザー情報送信を許可(_S)" />
+		<Item Id="main-setting/general/notification"        Word="操作通知(_A)" />
+		<Item Id="main-setting/general/notification/system" Word="システム依存(_S)" />
+		<Item Id="main-setting/general/notification/none"   Word="なし(_N)" />
 		
 		
 		<Item Id="toolbar-setting/screen" Word="識別(_I)" />

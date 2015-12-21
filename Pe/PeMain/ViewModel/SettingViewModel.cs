@@ -91,6 +91,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                         CommonData.MainSetting.SystemEnvironment,
                         CommonData.MainSetting.Stream,
                         CommonData.MainSetting.WindowSave,
+                        CommonData.MainSetting.General,
                         HasView ? View.controlMainSetting : null,
                         CommonData.NonProcess,
                         SettingNotifiyItem
