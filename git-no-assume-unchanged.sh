@@ -1,3 +1,4 @@
+echo search...
 git ls-files -v | grep '^[[:lower:]]'
 echo "exec? (y/n)"
 read isExec
