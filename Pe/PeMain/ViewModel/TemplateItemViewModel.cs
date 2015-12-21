@@ -156,6 +156,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                     o => {
                         SetReplacedValue();
                         ClipboardUtility.CopyText(Replaced, AppNonProcess.ClipboardWatcher);
+                        AppNonProcess.Logger.Trace("copy: " + Name);
                     }
                 );
 
