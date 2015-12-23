@@ -355,7 +355,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         {
             Debug.Assert(!AttachmentOutputLogging);
 
-            var stream = AppUtility.CreateFileLoggerStream(Path.GetDirectoryName(filePath), Path.GetFileName(filePath));
+            var stream = AppUtility.CreateFileLoggerStream(filePath);
             AttachmentOutputWriter = stream;
             logger.AttachmentStream(stream, true);
 

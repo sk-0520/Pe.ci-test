@@ -246,7 +246,7 @@
 
 		<Item Id="logging/save"  Word="ログ保存(_S)" />
 		<Item Id="logging/clear" Word="ログクリア(_R)" />
-		<Item Id="logging/attachment" Word="アタッチ(_A)" />
+		<Item Id="logging/attachment" Word="ログを継続出力(_A)" />
 		<Item Id="logging/timestamp" Word="タイムスタンプ" />
 		<Item Id="logging/message" Word="概要" />
 		<Item Id="logging/detail/caller"        Word="呼び出し元" />

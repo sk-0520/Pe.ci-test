@@ -120,16 +120,6 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         public static AppLanguageManager LoadLanguageFile(string baseDir, string name, string cultureCode, ILogger logger)
         {
             logger.Debug("load: language file", baseDir);
-            //var langPairList = new List<KeyValuePair<string, LanguageCollectionModel>?>();
-            //foreach(var path in Directory.EnumerateFiles(baseDir, Constants.languageSearchPattern)) {
-            //	try {
-            //		var model = SerializeUtility.LoadXmlSerializeFromFile<LanguageCollectionModel>(path);
-            //		var pair = new KeyValuePair<string, LanguageCollectionModel>(path, model);
-            //		langPairList.Add(pair);
-            //	} catch(Exception ex) {
-            //		logger.Error(ex);
-            //	}
-            //}
             var langPairList = GetLanguageFiles(baseDir, logger);
 
             var defaultPath = Path.Combine(baseDir, Constants.languageDefaultFileName);
@@ -140,12 +130,19 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
             return new AppLanguageManager(lang.Value, lang.Key);
         }
 
-        public static StreamWriter CreateFileLoggerStream(string baseDir, string name)
+        /// <summary>
+        /// ファイルに対するログ出力用ストリームの作成。
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <returns>自動的にフラッシュするストリーム。</returns>
+        public static StreamWriter CreateFileLoggerStream(string filePath)
         {
-            var filePath = Path.Combine(baseDir, name);
             FileUtility.MakeFileParentDirectory(filePath);
 
-            return new StreamWriter(new FileStream(filePath, FileMode.Append, FileAccess.Write, FileShare.Read), Encoding.UTF8);
+            var stream = new StreamWriter(new FileStream(filePath, FileMode.Append, FileAccess.Write, FileShare.Read), Encoding.UTF8) {
+                AutoFlush = true,
+            };
+            return stream;
         }
 
         /// <summary>
@@ -161,7 +158,8 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 
             if(outputFile) {
                 logger.LoggerConfig.PutsStream = true;
-                var stream = CreateFileLoggerStream(baseDir, PathUtility.AppendExtension(Constants.GetNowTimestampFileName(), Constants.logFileExtension));
+                var path = Path.Combine(baseDir, PathUtility.AppendExtension(Constants.GetNowTimestampFileName(), Constants.logFileExtension));
+                var stream = CreateFileLoggerStream(path);
                 logger.AttachmentStream(stream, true);
             }
 
@@ -187,8 +185,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 
         /// <summary>
         /// アイコン読み込み処理。
-        /// 
-        /// なんやかんや色々あるけどアイコン再読み込みとか泥臭い処理を頑張る最上位の子。
+        /// <para>なんやかんや色々あるけどアイコン再読み込みとか泥臭い処理を頑張る最上位の子。</para>
         /// </summary>
         /// <param name="iconPath">アイコンパス(とインデックス)。</param>
         /// <param name="iconScale">アイコンサイズ。</param>
@@ -196,7 +193,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         /// <param name="waitMaxCount">待ちを何回繰り返すか</param>
         /// <param name="logger"></param>
         /// <param name="callerMember"></param>
-        /// <returns></returns>
+        /// <returns>読み込まれたアイコン。読み込みできなかった場合は null を返す。</returns>
         public static BitmapSource LoadIcon(IconPathModel iconPath, IconScale iconScale, TimeSpan waitTime, int waitMaxCount, ILogger logger = null, [CallerMemberName] string callerMember = "")
         {
             Debug.Assert(FileUtility.Exists(iconPath.Path));
@@ -216,6 +213,14 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
             return null;
         }
 
+        /// <summary>
+        /// LoadIconを規定値で使用。
+        /// </summary>
+        /// <param name="iconPath"></param>
+        /// <param name="iconScale"></param>
+        /// <param name="logger"></param>
+        /// <param name="callerMember"></param>
+        /// <returns></returns>
         public static BitmapSource LoadIconDefault(IconPathModel iconPath, IconScale iconScale, ILogger logger = null, [CallerMemberName] string callerMember = "")
         {
             return LoadIcon(iconPath, iconScale, Constants.iconLoadWaitTime, Constants.iconLoadRetryMax, logger, callerMember);

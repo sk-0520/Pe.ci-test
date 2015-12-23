@@ -87,7 +87,6 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic
             lock(Writer) {
                 foreach(var writer in Writer) {
                     writer.WriteLine(LogUtility.MakeLogDetailText(item));
-                    writer.Flush();
                 }
             }
         }

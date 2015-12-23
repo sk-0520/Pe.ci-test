@@ -43,7 +43,8 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic
         #region function
 
         /// <summary>
-        /// ファイル出力。
+        /// ストリーム出力。
+        /// <para>ストリームのフラッシュまでは面倒を見ない</para>
         /// </summary>
         /// <param name="item"></param>
         protected abstract void PutsStream(LogItemModel item);
@@ -76,9 +77,9 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic
                 new Tuple<bool, Action<LogItemModel>>(LoggerConfig.PutsStream, PutsStream),
                 new Tuple<bool, Action<LogItemModel>>(LoggerConfig.PutsConsole, PutsConsole),
 #if DEBUG
-				new Tuple<bool, Action<LogItemModel>>(LoggerConfig.PutsDebug, PutsDebug),
+                new Tuple<bool, Action<LogItemModel>>(LoggerConfig.PutsDebug, PutsDebug),
 #endif
-				new Tuple<bool, Action<LogItemModel>>(LoggerConfig.PutsCustom, PutsCustom),
+                new Tuple<bool, Action<LogItemModel>>(LoggerConfig.PutsCustom, PutsCustom),
             };
             foreach(var puts in putsList.Where(p => p.Item1)) {
                 puts.Item2(item);
