@@ -37,40 +37,33 @@ namespace ContentTypeTextNet.Pe.SystemApplications.Updater
     using ContentTypeTextNet.Library.SharedLibrary.Logic;
     using Microsoft.CSharp;
 
-    class Value<T>
-    {
-        public bool HasValue { get; set; }
-        public T Data { get; set; }
-        public void Import(string s)
-        {
-            Data = (T)Convert.ChangeType(s, typeof(T));
-        }
-    }
     /// <summary>
-    /// 更新処理もろもろ
+    /// 更新処理もろもろ。
     /// </summary>
-    public class Update
+    public class UpdateProcess
     {
         const string scriptFileName = "UpdaterScript.cs";
 
         private CommandLine _commandLine;
 
-        Value<int> _pid = new Value<int>();
+        ArgumentValue<int> _pid = new ArgumentValue<int>();
 
-        Value<Tuple<ushort, ushort, ushort>> _version = new Value<Tuple<ushort, ushort, ushort>>();
+        ArgumentValue<Tuple<ushort, ushort, ushort>> _version = new ArgumentValue<Tuple<ushort, ushort, ushort>>();
 
-        Value<string> _uri = new Value<string>();
-        Value<string> _downloadDir = new Value<string>();
-        Value<string> _expandDir = new Value<string>();
-        Value<string> _platform = new Value<string>();
-        Value<bool> _getRC = new Value<bool>();
-        Value<bool> _checkOnly = new Value<bool>();
-        Value<bool> _wait = new Value<bool>();
-        Value<bool> _noWaitUpdate = new Value<bool>();
-        Value<string> _eventName = new Value<string>();
-        Value<string> _scriptPath = new Value<string>();
+        ArgumentValue<string> _uri = new ArgumentValue<string>();
+        ArgumentValue<string> _downloadDir = new ArgumentValue<string>();
+        ArgumentValue<string> _expandDir = new ArgumentValue<string>();
+        ArgumentValue<string> _platform = new ArgumentValue<string>();
+        ArgumentValue<bool> _getRC = new ArgumentValue<bool>();
+        ArgumentValue<bool> _checkOnly = new ArgumentValue<bool>();
+        ArgumentValue<bool> _wait = new ArgumentValue<bool>();
+        ArgumentValue<bool> _noWaitUpdate = new ArgumentValue<bool>();
+        ArgumentValue<string> _eventName = new ArgumentValue<string>();
+        ArgumentValue<string> _scriptPath = new ArgumentValue<string>();
 
-
+        /// <summary>
+        /// アップデートチェックのみを行うか。
+        /// </summary>
         public bool CheckOnly { get { return this._checkOnly.Data; } }
         public bool Wait { get { return this._wait.Data; } }
         public bool WaitSkip { get; private set; }
@@ -80,7 +73,7 @@ namespace ContentTypeTextNet.Pe.SystemApplications.Updater
         public string VersionText { get; private set; }
         public string DownloadFileUrl { get; private set; }
 
-        public Update(CommandLine commandLine)
+        public UpdateProcess(CommandLine commandLine)
         {
             Debug.Assert(commandLine.Length > 0);
 
@@ -115,7 +108,7 @@ namespace ContentTypeTextNet.Pe.SystemApplications.Updater
             ChangeTemporaryColor(ex.StackTrace, ConsoleColor.Black, ConsoleColor.DarkRed);
         }
 
-        void Set<T>(string key, Value<T> value)
+        void Set<T>(string key, ArgumentValue<T> value)
         {
             if(this._commandLine.HasOption(key)) {
                 try {
@@ -130,7 +123,7 @@ namespace ContentTypeTextNet.Pe.SystemApplications.Updater
             }
         }
 
-        void Set<T>(string key, Value<T> value, Action<Value<T>, string> custom)
+        void Set<T>(string key, ArgumentValue<T> value, Action<ArgumentValue<T>, string> custom)
         {
             if(this._commandLine.HasOption(key)) {
                 try {
