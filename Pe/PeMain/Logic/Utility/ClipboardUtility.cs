@@ -784,7 +784,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
             var text = string.Join("", lines);
 
             var timeTitle = TimeSpan.FromMilliseconds(100);
-            var timeHeader = TimeSpan.FromMilliseconds(500);
+            var timeHeading = TimeSpan.FromMilliseconds(500);
 
             // <title>
             try {
@@ -797,11 +797,12 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
                     RegexOptions.IgnoreCase 
                     | RegexOptions.Multiline
                     | RegexOptions.IgnorePatternWhitespace
+                    | RegexOptions.ExplicitCapture
                     ,
                     timeTitle
                 );
                 var matchTitle = regTitle.Match(text);
-                if(!converted && matchTitle.Success && matchTitle.Groups.Count > 1) {
+                if(!converted && matchTitle.Success && 0 < matchTitle.Groups.Count) {
                     text = matchTitle.Groups["TITLE"].Value.Trim();
                     converted = true;
                 }
@@ -810,12 +811,25 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
                 nonProcess.Logger.Warning(ex);
             }
 
-            // <h1>
+            // <h1-6>
             try {
-                var regHeader = new Regex("<h1(?:.*)?>(.+)</h1>", RegexOptions.IgnoreCase | RegexOptions.Multiline);
-                var matchHeader = regHeader.Match(text);
-                if(!converted && matchHeader.Success && matchHeader.Groups.Count > 1) {
-                    text = matchHeader.Groups[1].Value.Trim();
+                // TODO: 終了タグが一致しない
+                var regHeader = new Regex(
+                    @"
+                    <h[1-6]>
+                        (?<HEADING>.+?)
+                    </h[1-6]>
+                    ", 
+                    RegexOptions.IgnoreCase 
+                    | RegexOptions.Multiline
+                    | RegexOptions.IgnorePatternWhitespace
+                    | RegexOptions.ExplicitCapture
+                    ,
+                    timeHeading
+               );
+                var matchHeading = regHeader.Match(text);
+                if(!converted && matchHeading.Success && 0 < matchHeading.Groups.Count) {
+                    text = matchHeading.Groups["HEADING"].Value.Trim();
                     Debug.WriteLine(text);
                     converted = true;
                 }
