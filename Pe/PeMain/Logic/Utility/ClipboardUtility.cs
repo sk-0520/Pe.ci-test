@@ -783,15 +783,26 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
             var lines = html.SplitLines().Take(takeCount);
             var text = string.Join("", lines);
 
-            var timeTitle = TimeSpan.FromMilliseconds(500);
+            var timeTitle = TimeSpan.FromMilliseconds(100);
             var timeHeader = TimeSpan.FromMilliseconds(500);
 
             // <title>
             try {
-                var regTitle = new Regex("<title>(.+)</title>", RegexOptions.IgnoreCase | RegexOptions.Multiline, timeTitle);
+                var regTitle = new Regex(
+                    @"
+                    <title>
+                        (?<TITLE>.+)
+                    </title>
+                    ",
+                    RegexOptions.IgnoreCase 
+                    | RegexOptions.Multiline
+                    | RegexOptions.IgnorePatternWhitespace
+                    ,
+                    timeTitle
+                );
                 var matchTitle = regTitle.Match(text);
                 if(!converted && matchTitle.Success && matchTitle.Groups.Count > 1) {
-                    text = matchTitle.Groups[1].Value.Trim();
+                    text = matchTitle.Groups["TITLE"].Value.Trim();
                     converted = true;
                 }
             } catch(RegexMatchTimeoutException ex) {
