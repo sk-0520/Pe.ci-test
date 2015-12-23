@@ -41,6 +41,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
     using ContentTypeTextNet.Library.SharedLibrary.CompatibleWindows.Utility;
     using ContentTypeTextNet.Pe.PeMain.Define;
     using System.Windows;
+    using System.Windows.Media;
 
     public static class AppUtility
     {
@@ -341,6 +342,16 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
                         throw new NotImplementedException();
                 }
             }
+        }
+
+        public static Color GetHotTrackColor(BitmapSource bitmapSource)
+        {
+            var pixels = MediaUtility.GetPixels(bitmapSource);
+            var colors = MediaUtility.GetColors(pixels)
+                .Select(c => MediaUtility.ConvertRawColorFromColor(c))
+                .Select(c => MediaUtility.ConvertColorFromRawColor(c))
+            ;
+            return MediaUtility.GetPredominantColor(colors);
         }
     }
 }

@@ -26,6 +26,24 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Utility
 
     public static class MediaUtility
     {
+        public static uint ConvertRawColorFromColor(Color color)
+        {
+            return (uint)(
+                  (color.A << 24) 
+                | (color.R << 16) 
+                | (color.G << 8) 
+                | (color.B << 0)
+            );
+        }
+        public static Color ConvertColorFromRawColor(uint rawColor)
+        {
+            return Color.FromArgb(
+                (byte)(rawColor >> 24), 
+                (byte)(rawColor >> 16), 
+                (byte)(rawColor >> 8), 
+                (byte)(rawColor >> 0)
+            );
+        }
         /// <summary>
         /// 色反転。
         /// <para>透明度は保ったまま。</para>
@@ -141,6 +159,19 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Utility
                 yield return Color.FromArgb(a, r, g, b);
             }
         }
+
+        ///// <summary>
+        ///// 指定ビットマップソースから全色情報を取得。
+        ///// </summary>
+        ///// <param name="bitmapSource"></param>
+        ///// <returns></returns>
+        //public static IEnumerable<Color> GetColorsFromBitmapSource(BitmapSource bitmapSource)
+        //{
+        //    var pixels = MediaUtility.GetPixels(bitmapSource);
+        //    var colors = MediaUtility.GetColors(pixels);
+
+        //    return colors;
+        //}
 
         /// <summary>
         /// 画像の中から一番多そうな色を取得する。
