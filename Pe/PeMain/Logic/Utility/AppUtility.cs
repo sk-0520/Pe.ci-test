@@ -359,7 +359,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
             var pixels = MediaUtility.GetPixels(bitmapSource);
             var colors = MediaUtility.GetColors(pixels)
                 .Where(c => c.A > baseAplha)
-                .Where(c => c.R >= skipDark && c.G >= skipDark && c.B >= skipDark)
+                .Where(c => !(c.R >= skipDark && c.G >= skipDark && c.B >= skipDark))
                 .Where(c => !(c.R <= skipLight && c.G <= skipLight && c.B <= skipLight))
                 .Where(c => c.R <= baseLight || c.G <= baseLight || c.B <= baseLight)
             ;

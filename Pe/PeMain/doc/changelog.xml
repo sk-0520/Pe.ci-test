@@ -106,6 +106,9 @@
 			</note>
 			<note rev="">
 				<message>#405: ホットトラックの色算出に黒・白・灰色は計算に含まないように変更する</message>
+				<comments>
+					<comment>色の勉強しないと難しいなぁ</comment>
+				</comments>
 			</note>
 			<note rev="">
 				<message>#387: ランチャーアイテム登録中にアイコンの反映が行われない</message>
