@@ -38,12 +38,13 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
     using ContentTypeTextNet.Library.SharedLibrary.IF;
     using ContentTypeTextNet.Library.SharedLibrary.Logic;
     using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+    using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
     using ContentTypeTextNet.Pe.Library.PeData.Define;
     using ContentTypeTextNet.Pe.Library.PeData.Item;
     //	using ContentTypeTextNet.Pe.PeMain.Data;
     using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
     using ContentTypeTextNet.Pe.PeMain.IF;
-
+    using System.Windows.Controls;
     public class ClipboardUtility
     {
         #region define
@@ -743,6 +744,76 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
             }
 
             return null;
+        }
+
+
+        public static string MakeClipboardNameFromText(string text)
+        {
+            var result = text
+                .SplitLines()
+                .Where(s => !string.IsNullOrWhiteSpace(s))
+                .Select(s => s.Trim())
+                .FirstOrDefault()
+            ;
+
+            return result;
+        }
+
+        public static string MakeClipboardNameFromRtf(string rtf)
+        {
+            var rt = new RichTextBox();
+            string plainText;
+            using(var reader = new MemoryStream(Encoding.ASCII.GetBytes(rtf))) {
+                rt.Selection.Load(reader, DataFormats.Rtf);
+                using(var writer = new MemoryStream()) {
+                    rt.Selection.Save(writer, DataFormats.Text);
+                    plainText = Encoding.UTF8.GetString(writer.ToArray());
+                }
+            }
+
+            var result = MakeClipboardNameFromText(plainText);
+
+            return result;
+        }
+
+        public static string MakeClipboardNameFromHtml(string html, INonProcess nonProcess)
+        {
+            var takeCount = 64;
+            var converted = false;
+            var lines = html.SplitLines().Take(takeCount);
+            var text = string.Join("", lines);
+
+            var timeTitle = TimeSpan.FromMilliseconds(500);
+            var timeHeader = TimeSpan.FromMilliseconds(500);
+
+            // <title>
+            try {
+                var regTitle = new Regex("<title>(.+)</title>", RegexOptions.IgnoreCase | RegexOptions.Multiline, timeTitle);
+                var matchTitle = regTitle.Match(text);
+                if(!converted && matchTitle.Success && matchTitle.Groups.Count > 1) {
+                    text = matchTitle.Groups[1].Value.Trim();
+                    converted = true;
+                }
+            } catch(RegexMatchTimeoutException ex) {
+                //logger.Puts(LogType.Warning, ex.Message, new ExceptionMessage("<title>", ex));
+                nonProcess.Logger.Warning(ex);
+            }
+
+            // <h1>
+            try {
+                var regHeader = new Regex("<h1(?:.*)?>(.+)</h1>", RegexOptions.IgnoreCase | RegexOptions.Multiline);
+                var matchHeader = regHeader.Match(text);
+                if(!converted && matchHeader.Success && matchHeader.Groups.Count > 1) {
+                    text = matchHeader.Groups[1].Value.Trim();
+                    Debug.WriteLine(text);
+                    converted = true;
+                }
+            } catch(RegexMatchTimeoutException ex) {
+                //logger.Puts(LogType.Warning, ex.Message, new ExceptionMessage("<header>", ex));
+                nonProcess.Logger.Warning(ex);
+            }
+
+            return converted ? text : string.Empty;
         }
     }
 }
