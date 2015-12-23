@@ -178,12 +178,12 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Utility
         /// </summary>
         /// <param name="bitmapSource"></param>
         /// <returns></returns>
-        public static Color GetPredominantColorFromBitmapSource(BitmapSource bitmapSource)
+        public static Color GetPredominantColorFromBitmapSource(BitmapSource bitmapSource, byte baseAlpha)
         {
             var pixels = GetPixels(bitmapSource);
             var colors = GetColors(pixels);
             //return GetPredominantColor(colors.Select((c, i) => new { c, i }).Where(ci => (ci.i % 8) == 0).Select(ci => ci.c));
-            return GetPredominantColor(colors);
+            return GetPredominantColor(colors, baseAlpha);
         }
 
         /// <summary>
@@ -191,18 +191,22 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Utility
         /// </summary>
         /// <param name="colors"></param>
         /// <returns></returns>
-        public static Color GetPredominantColor(IEnumerable<Color> colors)
+        public static Color GetPredominantColor(IEnumerable<Color> colors, byte baseAlpha)
         {
             var map = new Dictionary<Color, int>();
             int tempValue;
-            foreach(var color in colors.Where(c => c.A > 120)) {
+            foreach(var color in colors.Where(c => c.A > baseAlpha)) {
                 if(map.TryGetValue(color, out tempValue)) {
                     map[color] += 1;
                 } else {
                     map[color] = 1;
                 }
             }
-            return map.OrderByDescending(p => p.Value).First().Key;
+            if(map.Any()) {
+                return map.OrderByDescending(p => p.Value).First().Key;
+            } else {
+                return Colors.Transparent;
+            }
         }
 
     }

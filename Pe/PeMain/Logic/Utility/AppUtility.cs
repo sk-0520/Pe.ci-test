@@ -346,12 +346,19 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 
         public static Color GetHotTrackColor(BitmapSource bitmapSource)
         {
+            byte baseAplha = 120;
+            var skipDark = 80;
+            var skipLight = 170;
+            var baseLight = 128;
+
             var pixels = MediaUtility.GetPixels(bitmapSource);
             var colors = MediaUtility.GetColors(pixels)
-                .Select(c => MediaUtility.ConvertRawColorFromColor(c))
-                .Select(c => MediaUtility.ConvertColorFromRawColor(c))
+                .Where(c => c.A > baseAplha)
+                .Where(c => c.R >= skipDark && c.G >= skipDark && c.B >= skipDark)
+                .Where(c => !(c.R <= skipLight && c.G <= skipLight && c.B <= skipLight))
+                .Where(c => c.R <= baseLight || c.G <= baseLight || c.B <= baseLight)
             ;
-            return MediaUtility.GetPredominantColor(colors);
+            return MediaUtility.GetPredominantColor(colors, baseAplha);
         }
     }
 }
