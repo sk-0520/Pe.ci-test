@@ -55,20 +55,9 @@
 		</group>
 	</log>
 	-->
-	<log date="YYYY/MM/DD" version="0.74.1" type="rc" dummy="################################################################################">
-		<group type="note" dummy="==================================================================">
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-		</group>
+	<log date="2015/12/23" version="0.74.0" dummy="################################################################################">
 		<group type="features" dummy="==================================================================">
-			<note rev="">
+			<note rev="e7fe3b78cd68c8ec7b41b8c6f2966ed18a9a3488">
 				<message>#25: ヘルプファイルの記述</message>
 				<comments>
 					<comment>通知領域コンテキストメニュー→情報→ヘルプ</comment>
@@ -76,62 +65,47 @@
 					<comment>読み込み時の細かい処理は追々調整する</comment>
 				</comments>
 			</note>
-			<note rev="">
+			<note rev="82221341f524f7ac80bdf75935f3bbf5349c07b5">
 				<message>#392: ホットキー処理を実施した際のトースト(バルーン)表示を選択制にする</message>
 				<comments>
 					<comment>設定→本体設定→操作通知</comment>
 					<comment>Windows 10 で出まくるの鬱陶しいので初期値は「なし」に設定</comment>
 				</comments>
 			</note>
-			<note rev="">
+			<note rev="a383696689fde08f647937b5361a60a3a3901c5c">
 				<message>#370: クリップボードHTMLデータからクリップボード名を算出できない場合はテキストから取得する</message>
 			</note>
-			<note rev="">
+			<note rev="a3819ed98e56e3f45ff44cea38c267d3145b5bde">
 				<message>#393: ログ出力をコマンドライン指定でなくGUI側でいつでも出力できるようにする</message>
 				<comments>
 					<comment>#355の逆襲</comment>
 					<comment>本実装に伴いファイルへのログ出力実装を変更したけ通常使用には無関係</comment>
 				</comments>
 			</note>
-			<note rev="">
-				<message></message>
-			</note>
 		</group>
 		<group type="fixes" dummy="==================================================================">
-			<note rev="">
+			<note rev="a2ecce5d3cadfeffae6e0f33f059b1dc75563cd7">
 				<message>#406: ファイルのローテート処理で最新ファイルを削除している</message>
 			</note>
-			<note rev="">
+			<note rev="db117745015f1f5f9c672b9a19bf4c42242a5e41">
 				<message>0.73.0の変更履歴にリビジョン記入してなかった</message>
 			</note>
-			<note rev="">
+			<note rev="d82438892c577157aeb4df9f53a9cdb3164d3696">
 				<message>#405: ホットトラックの色算出に黒・白・灰色は計算に含まないように変更する</message>
 				<comments>
 					<comment>色の勉強しないと難しいなぁ</comment>
 				</comments>
 			</note>
-			<note rev="">
+			<note rev="9c649e1814181584f6ae510ccf22cc6071efcf57">
 				<message>#387: ランチャーアイテム登録中にアイコンの反映が行われない</message>
 				<comments>
 					<comment>コマンド項目修正は毎回ディスク見に行くのアホっぽいから500msの遅延更新</comment>
 				</comments>
 			</note>
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
 		</group>
 		<group type="developer" dummy="==================================================================">
 			<note rev="">
 				<message>開発環境を Microsoft Visual Studio Community 2015 Update 1 に変更</message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
 			</note>
 		</group>
 	</log>
