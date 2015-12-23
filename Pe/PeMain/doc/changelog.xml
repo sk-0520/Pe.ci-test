@@ -84,7 +84,7 @@
 				</comments>
 			</note>
 			<note rev="">
-				<message></message>
+				<message>#370: クリップボードHTMLデータからクリップボード名を算出できない場合はテキストから取得する</message>
 			</note>
 			<note rev="">
 				<message></message>

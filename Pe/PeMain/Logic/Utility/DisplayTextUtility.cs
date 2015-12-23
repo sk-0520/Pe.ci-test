@@ -107,9 +107,16 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 
                     break;
 
-                case ClipboardType.Html:
+                case ClipboardType.Html: 
                     {
                         var text = ClipboardUtility.MakeClipboardNameFromHtml(clipboardData.Body.Html, nonProcess);
+
+                        if(string.IsNullOrWhiteSpace(text) && clipboardData.Type.HasFlag(ClipboardType.Rtf)) {
+                            text = ClipboardUtility.MakeClipboardNameFromRtf(clipboardData.Body.Rtf);
+                        }
+                        if(string.IsNullOrWhiteSpace(text) && clipboardData.Type.HasFlag(ClipboardType.Text)) {
+                            text = ClipboardUtility.MakeClipboardNameFromRtf(clipboardData.Body.Text);
+                        }
 
                         if(string.IsNullOrWhiteSpace(text)) {
                             result = LanguageUtility.GetTextFromEnum(type, nonProcess.Language);
