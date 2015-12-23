@@ -91,7 +91,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         /// </summary>
         /// <param name="defaultPath"></param>
         /// <param name="filter"></param>
-        /// <returns>選択されたパス、未選択の場合は null を返す。</returns>
+        /// <returns>選択されたパスを返す。未選択の場合は null を返す。</returns>
         public static string ShowSaveFileDialog(string directoryPath, string fileName, DialogFilterList filter = null, DialogFilterItem initItem = null)
         {
             var usingDirectoryPath = Environment.ExpandEnvironmentVariables(directoryPath);

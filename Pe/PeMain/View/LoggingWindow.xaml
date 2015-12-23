@@ -62,7 +62,7 @@
         </StackPanel>
       </Button>
       <Separator />
-      <ToggleButton>
+      <ToggleButton IsChecked="{Binding AttachmentOutputLogging}">
         <StackPanel Orientation="Horizontal">
           <Image Source="{x:Static AM:AppResource.LogAttachmentImage}" Style="{StaticResource ItemImage}" />
           <Label Content="attachment" AA:Language.Word="logging/attachment" Style="{StaticResource ContentTextLabel}" />
