@@ -780,7 +780,10 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         {
             var takeCount = 64;
             var converted = false;
-            var lines = html.SplitLines().Take(takeCount);
+            var lines = Regex.Replace(html, @"<!--.*?-->", string.Empty, RegexOptions.Multiline)
+                .SplitLines()
+                .Take(takeCount)
+            ;
             var text = string.Join("", lines);
 
             var timeTitle = TimeSpan.FromMilliseconds(100);
@@ -811,31 +814,52 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
                 nonProcess.Logger.Warning(ex);
             }
 
-            // <h1-6>
-            try {
-                // TODO: 終了タグが一致しない
-                var regHeader = new Regex(
+            if(!converted) {
+                // <h1-6>
+                try {
+                    // TODO: 終了タグが一致しない
+                    var regHeader = new Regex(
+                        @"
+                        <h[1-6]>
+                            (?<HEADING>.+?)
+                        </h[1-6]>
+                        ",
+                        RegexOptions.IgnoreCase
+                        | RegexOptions.Multiline
+                        | RegexOptions.IgnorePatternWhitespace
+                        | RegexOptions.ExplicitCapture
+                        ,
+                        timeHeading
+                   );
+                    var matchHeading = regHeader.Match(text);
+                    if(matchHeading.Success && 0 < matchHeading.Groups.Count) {
+                        text = matchHeading.Groups["HEADING"].Value.Trim();
+                        Debug.WriteLine(text);
+                        converted = true;
+                    }
+                } catch(RegexMatchTimeoutException ex) {
+                    //logger.Puts(LogType.Warning, ex.Message, new ExceptionMessage("<header>", ex));
+                    nonProcess.Logger.Warning(ex);
+                }
+            }
+
+            // まだ何かタグに囲まれている場合はそれを除外
+            if(converted && text != null) {
+                var regPlain = new Regex(
                     @"
-                    <h[1-6]>
-                        (?<HEADING>.+?)
-                    </h[1-6]>
-                    ", 
-                    RegexOptions.IgnoreCase 
+                        (<.+>)?
+                            (?<TEXT>.+)
+                        (</.+>)?
+                        ",
+                    RegexOptions.IgnoreCase
                     | RegexOptions.Multiline
                     | RegexOptions.IgnorePatternWhitespace
                     | RegexOptions.ExplicitCapture
-                    ,
-                    timeHeading
                );
-                var matchHeading = regHeader.Match(text);
-                if(!converted && matchHeading.Success && 0 < matchHeading.Groups.Count) {
-                    text = matchHeading.Groups["HEADING"].Value.Trim();
-                    Debug.WriteLine(text);
-                    converted = true;
+                var matchPlain = regPlain.Match(text);
+                if(matchPlain.Success && 0 < matchPlain.Groups.Count) {
+                    text = matchPlain.Groups["TEXT"].Value.Trim();
                 }
-            } catch(RegexMatchTimeoutException ex) {
-                //logger.Puts(LogType.Warning, ex.Message, new ExceptionMessage("<header>", ex));
-                nonProcess.Logger.Warning(ex);
             }
 
             return converted ? text : string.Empty;
