@@ -828,7 +828,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         Color GetAppIconColor()
         {
-            return MediaUtility.GetPredominantColorFromBitmapSource(GetAppIcon());
+            return AppUtility.GetHotTrackColor(GetAppIcon());
         }
 
         public void ChangingWindowMode(DockType dockType)

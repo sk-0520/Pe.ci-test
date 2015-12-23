@@ -62,6 +62,7 @@
       <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
       <SC:BooleanFontWeightConverter x:Key="BooleanFontWeightConverter" />
       <SC:BooleanFontStyleConverter x:Key="BooleanFontStyleConverter" />
+      <SC:ComplementaryColorConverter x:Key="ComplementaryColorConverter" />
 
       <AC:DisplayTextConverter x:Key="DisplayTextConverter" />
       <AC:HotTrackConverter x:Key="HotTrackConverter" />
@@ -159,6 +160,7 @@
             <Setter Property="Background" TargetName="ParentElement">
               <Setter.Value>
                 <MultiBinding Converter="{StaticResource HotTrackConverter}">
+                  <Binding Path="DataContext.VisualAlphaColor" ElementName="root"  Mode="OneTime" Converter="{StaticResource ComplementaryColorConverter}" />
                   <Binding Path="ToolbarHotTrack" Mode="OneTime" />
                   <Binding Path="DataContext.DockType" ElementName="root" Mode="OneTime" />
                   <Binding Source="{StaticResource ButtonOver}" />
@@ -171,6 +173,7 @@
             <Setter Property="Background" TargetName="ParentElement">
               <Setter.Value>
                 <MultiBinding Converter="{StaticResource HotTrackConverter}">
+                  <Binding Path="DataContext.VisualAlphaColor" ElementName="root"  Mode="OneTime" Converter="{StaticResource ComplementaryColorConverter}" />
                   <Binding Path="ToolbarHotTrack" Mode="OneTime" />
                   <Binding Path="DataContext.DockType" ElementName="root" Mode="OneTime" />
                   <Binding Source="{StaticResource ButtonPressed}" />
@@ -183,6 +186,7 @@
             <Setter Property="Background" TargetName="ParentElement">
               <Setter.Value>
                 <MultiBinding Converter="{StaticResource HotTrackConverter}">
+                  <Binding Path="DataContext.VisualAlphaColor" ElementName="root"  Mode="OneTime" Converter="{StaticResource ComplementaryColorConverter}" />
                   <Binding Path="ToolbarHotTrack" Mode="OneTime" />
                   <Binding Path="DataContext.DockType" ElementName="root" Mode="OneTime" />
                   <Binding Source="{StaticResource ButtonCheckd}" />
@@ -203,6 +207,7 @@
             <Setter Property="Background" TargetName="ParentElement">
               <Setter.Value>
                 <MultiBinding Converter="{StaticResource HotTrackConverter}">
+                  <Binding Path="DataContext.VisualAlphaColor" ElementName="root"  Mode="OneTime" Converter="{StaticResource ComplementaryColorConverter}" />
                   <Binding Path="ToolbarHotTrack" Mode="OneTime" />
                   <Binding Path="DataContext.DockType" ElementName="root" Converter="{StaticResource DockTypeMenuTuneConverter}" Mode="OneTime" />
                   <Binding Source="{StaticResource ButtonOver}" />
@@ -215,6 +220,7 @@
             <Setter Property="Background" TargetName="ParentElement">
               <Setter.Value>
                 <MultiBinding Converter="{StaticResource HotTrackConverter}">
+                  <Binding Path="DataContext.VisualAlphaColor" ElementName="root" Mode="OneTime" Converter="{StaticResource ComplementaryColorConverter}" />
                   <Binding Path="ToolbarHotTrack" Mode="OneTime" />
                   <Binding Path="DataContext.DockType" ElementName="root" Converter="{StaticResource DockTypeMenuTuneConverter}" Mode="OneTime" />
                   <Binding Source="{StaticResource ButtonPressed}" />
@@ -227,6 +233,7 @@
             <Setter Property="Background" TargetName="ParentElement">
               <Setter.Value>
                 <MultiBinding Converter="{StaticResource HotTrackConverter}">
+                  <Binding Path="DataContext.VisualAlphaColor" ElementName="root" Mode="OneTime" Converter="{StaticResource ComplementaryColorConverter}" />
                   <Binding Path="ToolbarHotTrack" Mode="OneTime" />
                   <Binding Path="DataContext.DockType" ElementName="root" Converter="{StaticResource DockTypeMenuTuneConverter}" Mode="OneTime" />
                   <Binding Source="{StaticResource ButtonCheckd}" />

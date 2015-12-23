@@ -33,10 +33,14 @@ namespace ContentTypeTextNet.Pe.PeMain.View.Parts.Converter
     {
         public object Convert(object[] values, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            var color = CastUtility.GetCastWPFValue(values[0], SystemColors.DesktopColor);
-            var dockType = CastUtility.GetCastWPFValue(values[1], DockType.None);
-            var length = (double)values[2];
-            var isEnabledCorrection = values[3] as bool?;
+            var hotColor = CastUtility.GetCastWPFValue(values[1], SystemColors.DesktopColor);
+            if(hotColor == Colors.Transparent) {
+                hotColor = CastUtility.GetCastWPFValue(values[0], Colors.LightSkyBlue);
+            }
+
+            var dockType = CastUtility.GetCastWPFValue(values[2], DockType.None);
+            var length = (double)values[3];
+            var isEnabledCorrection = values[4] as bool?;
 
             if(isEnabledCorrection.GetValueOrDefault() && dockType == DockType.Right) {
                 dockType = DockType.Left;
@@ -66,9 +70,9 @@ namespace ContentTypeTextNet.Pe.PeMain.View.Parts.Converter
             }
             //brush.EndPoint = new Point(0.5, 1.0);
             //brush.StartPoint = new Point(0.5, 0.0);
-            brush.GradientStops.Add(new GradientStop(Color.FromArgb(0xFF, color.R, color.G, color.B), 1.00));
-            brush.GradientStops.Add(new GradientStop(Color.FromArgb(0xef, color.R, color.G, color.B), 1 - length));
-            brush.GradientStops.Add(new GradientStop(Color.FromArgb(0x00, color.R, color.G, color.B), 0.00));
+            brush.GradientStops.Add(new GradientStop(Color.FromArgb(0xFF, hotColor.R, hotColor.G, hotColor.B), 1.00));
+            brush.GradientStops.Add(new GradientStop(Color.FromArgb(0xef, hotColor.R, hotColor.G, hotColor.B), 1 - length));
+            brush.GradientStops.Add(new GradientStop(Color.FromArgb(0x00, hotColor.R, hotColor.G, hotColor.B), 0.00));
 
             FreezableUtility.SafeFreeze(brush);
             return brush;

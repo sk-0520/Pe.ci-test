@@ -26,6 +26,24 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Utility
 
     public static class MediaUtility
     {
+        public static uint ConvertRawColorFromColor(Color color)
+        {
+            return (uint)(
+                  (color.A << 24) 
+                | (color.R << 16) 
+                | (color.G << 8) 
+                | (color.B << 0)
+            );
+        }
+        public static Color ConvertColorFromRawColor(uint rawColor)
+        {
+            return Color.FromArgb(
+                (byte)(rawColor >> 24), 
+                (byte)(rawColor >> 16), 
+                (byte)(rawColor >> 8), 
+                (byte)(rawColor >> 0)
+            );
+        }
         /// <summary>
         /// 色反転。
         /// <para>透明度は保ったまま。</para>
@@ -142,17 +160,30 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Utility
             }
         }
 
+        ///// <summary>
+        ///// 指定ビットマップソースから全色情報を取得。
+        ///// </summary>
+        ///// <param name="bitmapSource"></param>
+        ///// <returns></returns>
+        //public static IEnumerable<Color> GetColorsFromBitmapSource(BitmapSource bitmapSource)
+        //{
+        //    var pixels = MediaUtility.GetPixels(bitmapSource);
+        //    var colors = MediaUtility.GetColors(pixels);
+
+        //    return colors;
+        //}
+
         /// <summary>
         /// 画像の中から一番多そうな色を取得する。
         /// </summary>
         /// <param name="bitmapSource"></param>
         /// <returns></returns>
-        public static Color GetPredominantColorFromBitmapSource(BitmapSource bitmapSource)
+        public static Color GetPredominantColorFromBitmapSource(BitmapSource bitmapSource, byte baseAlpha)
         {
             var pixels = GetPixels(bitmapSource);
             var colors = GetColors(pixels);
             //return GetPredominantColor(colors.Select((c, i) => new { c, i }).Where(ci => (ci.i % 8) == 0).Select(ci => ci.c));
-            return GetPredominantColor(colors);
+            return GetPredominantColor(colors, baseAlpha);
         }
 
         /// <summary>
@@ -160,18 +191,22 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Utility
         /// </summary>
         /// <param name="colors"></param>
         /// <returns></returns>
-        public static Color GetPredominantColor(IEnumerable<Color> colors)
+        public static Color GetPredominantColor(IEnumerable<Color> colors, byte baseAlpha)
         {
             var map = new Dictionary<Color, int>();
             int tempValue;
-            foreach(var color in colors.Where(c => c.A > 120)) {
+            foreach(var color in colors.Where(c => c.A > baseAlpha)) {
                 if(map.TryGetValue(color, out tempValue)) {
                     map[color] += 1;
                 } else {
                     map[color] = 1;
                 }
             }
-            return map.OrderByDescending(p => p.Value).First().Key;
+            if(map.Any()) {
+                return map.OrderByDescending(p => p.Value).First().Key;
+            } else {
+                return Colors.Transparent;
+            }
         }
 
     }
