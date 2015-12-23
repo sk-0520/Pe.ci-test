@@ -230,6 +230,8 @@ namespace ContentTypeTextNet.Pe.PeMain
         const string logError = "/Resources/Image/Log/LogError.png";
         [AppResource(AppResourceType.Image)]
         const string logFatal = "/Resources/Image/Log/LogFatal.png";
+        [AppResource(AppResourceType.Image)]
+        const string logAttachment = "/Resources/Image/Log/LogAttachment.png";
 
         #endregion
 

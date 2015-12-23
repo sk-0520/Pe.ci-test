@@ -87,6 +87,13 @@
 				<message>#370: クリップボードHTMLデータからクリップボード名を算出できない場合はテキストから取得する</message>
 			</note>
 			<note rev="">
+				<message>#393: ログ出力をコマンドライン指定でなくGUI側でいつでも出力できるようにする</message>
+				<comments>
+					<comment>#355の逆襲</comment>
+					<comment>本実装に伴いファイルへのログ出力実装を変更したけ通常使用には無関係</comment>
+				</comments>
+			</note>
+			<note rev="">
 				<message></message>
 			</note>
 		</group>

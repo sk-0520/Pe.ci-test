@@ -87,7 +87,6 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic
             lock(Writer) {
                 foreach(var writer in Writer) {
                     writer.WriteLine(LogUtility.MakeLogDetailText(item));
-                    writer.Flush();
                 }
             }
         }
@@ -114,12 +113,12 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic
         /// 
         /// </summary>
         /// <param name="writer"></param>
-        /// <param name="loggerManage">本クラスに所有権を譲るか</param>
-        public void AttachmentStream(TextWriter writer, bool loggerManage)
+        /// <param name="cedeManage">本クラスに所有権を譲るか</param>
+        public void AttachmentStream(TextWriter writer, bool cedeManage)
         {
             lock(Writer) {
                 Writer.Add(writer);
-                if(loggerManage) {
+                if(cedeManage) {
                     ManageWriter.Add(writer);
                 }
             }
