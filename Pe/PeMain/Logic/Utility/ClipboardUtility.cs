@@ -784,7 +784,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
                 .SplitLines()
                 .Take(takeCount)
             ;
-            var text = string.Join("", lines);
+            var text = string.Join(string.Empty, lines);
 
             var timeTitle = TimeSpan.FromMilliseconds(100);
             var timeHeading = TimeSpan.FromMilliseconds(500);
@@ -820,7 +820,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
                     // TODO: 終了タグが一致しない
                     var regHeader = new Regex(
                         @"
-                        <h[1-6]>
+                        <h[1-6](.*)?>
                             (?<HEADING>.+?)
                         </h[1-6]>
                         ",
@@ -860,6 +860,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
                 if(matchPlain.Success && 0 < matchPlain.Groups.Count) {
                     text = matchPlain.Groups["TEXT"].Value.Trim();
                 }
+
+                // 文字参照をテキスト化
+                text = System.Net.WebUtility.HtmlDecode(text);
             }
 
             return converted ? text : string.Empty;
