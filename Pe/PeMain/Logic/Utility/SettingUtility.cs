@@ -133,12 +133,12 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         public static string CreateUserIdFromEnvironment()
         {
             using(var info = new AppInformationCollection()) {
-                var infoEnv = info.GetCPU();
+                var infoCpu = info.GetCPU();
                 var infoMem = info.GetMemory();
 
                 var user = CovertUtility.ToByteArray(Environment.UserName);
                 var os = CovertUtility.ToByteArray(Environment.OSVersion);
-                var cpu = CovertUtility.ToByteArray(infoEnv.Items["Name"]);
+                var cpu = CovertUtility.ToByteArray(infoCpu.Items["Name"]);
                 var mem = CovertUtility.ToByteArray(infoMem.Items["TotalVisibleMemorySize"]);
 
                 using(var stream = new MemoryStream()) {
@@ -306,6 +306,12 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
             Implement.InitializeCommandSetting.Correction(setting, previousVersion, nonProcess);
         }
 
+        private static void InitializeGeneralSetting(GeneralSettingModel setting, Version previousVersion, INonProcess nonProcess)
+        {
+            Implement.InitializeGeneralSetting.Correction(setting, previousVersion, nonProcess);
+        }
+
+
         /// <summary>
         /// 本体設定を補正。
         /// </summary>
@@ -325,6 +331,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
             InitializeClipboardSetting(setting.Clipboard, previousVersion, nonProcess);
             InitializeTemplateSetting(setting.Template, previousVersion, nonProcess);
             InitializeCommandSetting(setting.Command, previousVersion, nonProcess);
+            InitializeGeneralSetting(setting.General, previousVersion, nonProcess);
         }
 
         private static void InitializeRunningInformationSetting(RunningInformationSettingModel setting, Version previousVersion, INonProcess nonProcess)

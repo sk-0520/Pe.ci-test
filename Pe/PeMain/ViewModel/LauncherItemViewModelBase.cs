@@ -61,7 +61,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             set { throw new NotSupportedException(); }
         }
 
-        public string Command
+        public virtual string Command
         {
             get { return Model.Command; }
             set
@@ -161,7 +161,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         {
             if(this._iconColor == Colors.Transparent) {
                 var icon = GetIcon(iconScale);
-                this._iconColor = MediaUtility.GetPredominantColorFromBitmapSource(icon);
+                this._iconColor = AppUtility.GetHotTrackColor(icon);
             }
 
             return this._iconColor;

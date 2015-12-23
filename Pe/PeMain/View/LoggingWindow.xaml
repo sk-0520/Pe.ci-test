@@ -61,6 +61,13 @@
           <Label Content="clear" AA:Language.Word="logging/clear" Style="{StaticResource ContentTextLabel}" />
         </StackPanel>
       </Button>
+      <Separator />
+      <ToggleButton IsChecked="{Binding AttachmentOutputLogging}">
+        <StackPanel Orientation="Horizontal">
+          <Image Source="{x:Static AM:AppResource.LogAttachmentImage}" Style="{StaticResource ItemImage}" />
+          <Label Content="attachment" AA:Language.Word="logging/attachment" Style="{StaticResource ContentTextLabel}" />
+        </StackPanel>
+      </ToggleButton>
     </ToolBar>
     <Grid Grid.Row="1">
       <Grid.RowDefinitions>
@@ -121,7 +128,7 @@
           <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <ToolBarTray Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Orientation="Vertical">
-          <ToolBar Style="{StaticResource DefaultToolbar}" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch">
+          <ToolBar Style="{StaticResource DefaultToolbar}" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
             <Button AA:Language.Hint="logging/item/save" Command="{Binding ItemSaveCommand}">
               <Image Source="{x:Static AM:AppResource.CommonSaveImage}" Style="{StaticResource DefaultImage}" />
             </Button>

@@ -84,12 +84,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
             switch(type) {
                 case ClipboardType.Text:
                     {
-                        var text = clipboardData.Body.Text
-                            .SplitLines()
-                            .Where(s => !string.IsNullOrWhiteSpace(s))
-                            .Select(s => s.Trim())
-                            .FirstOrDefault()
-                        ;
+                        var text = ClipboardUtility.MakeClipboardNameFromText(clipboardData.Body.Text);
 
                         if(string.IsNullOrWhiteSpace(text)) {
                             result = LanguageUtility.GetTextFromEnum(type, nonProcess.Language);
@@ -101,22 +96,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 
                 case ClipboardType.Rtf:
                     {
-                        var rt = new RichTextBox();
-                        string plainText;
-                        using(var reader = new MemoryStream(Encoding.ASCII.GetBytes(clipboardData.Body.Rtf))) {
-                            rt.Selection.Load(reader, DataFormats.Rtf);
-                            using(var writer = new MemoryStream()) {
-                                rt.Selection.Save(writer, DataFormats.Text);
-                                plainText = Encoding.UTF8.GetString(writer.ToArray());
-                            }
-                        }
-
-                        var text = plainText
-                            .SplitLines()
-                            .Where(s => !string.IsNullOrWhiteSpace(s))
-                            .Select(s => s.Trim())
-                            .FirstOrDefault()
-                        ;
+                        var text = ClipboardUtility.MakeClipboardNameFromRtf(clipboardData.Body.Rtf);
 
                         if(string.IsNullOrWhiteSpace(text)) {
                             result = LanguageUtility.GetTextFromEnum(type, nonProcess.Language);
@@ -127,45 +107,18 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 
                     break;
 
-                case ClipboardType.Html:
+                case ClipboardType.Html: 
                     {
-                        var takeCount = 64;
-                        var converted = false;
-                        var lines = clipboardData.Body.Html.SplitLines().Take(takeCount);
-                        var text = string.Join("", lines);
-                        //var text = clipboardItem.Html.Replace('\r', ' ').Replace('\n', ' ');
+                        var text = ClipboardUtility.MakeClipboardNameFromHtml(clipboardData.Body.Html, nonProcess);
 
-                        var timeTitle = TimeSpan.FromMilliseconds(500);
-                        var timeHeader = TimeSpan.FromMilliseconds(500);
-
-                        // <title>
-                        try {
-                            var regTitle = new Regex("<title>(.+)</title>", RegexOptions.IgnoreCase | RegexOptions.Multiline, timeTitle);
-                            var matchTitle = regTitle.Match(text);
-                            if(!converted && matchTitle.Success && matchTitle.Groups.Count > 1) {
-                                text = matchTitle.Groups[1].Value.Trim();
-                                converted = true;
-                            }
-                        } catch(RegexMatchTimeoutException ex) {
-                            //logger.Puts(LogType.Warning, ex.Message, new ExceptionMessage("<title>", ex));
-                            nonProcess.Logger.Warning(ex);
+                        if(string.IsNullOrWhiteSpace(text) && clipboardData.Type.HasFlag(ClipboardType.Rtf)) {
+                            text = ClipboardUtility.MakeClipboardNameFromRtf(clipboardData.Body.Rtf);
+                        }
+                        if(string.IsNullOrWhiteSpace(text) && clipboardData.Type.HasFlag(ClipboardType.Text)) {
+                            text = ClipboardUtility.MakeClipboardNameFromRtf(clipboardData.Body.Text);
                         }
 
-                        // <h1>
-                        try {
-                            var regHeader = new Regex("<h1(?:.*)?>(.+)</h1>", RegexOptions.IgnoreCase | RegexOptions.Multiline);
-                            var matchHeader = regHeader.Match(text);
-                            if(!converted && matchHeader.Success && matchHeader.Groups.Count > 1) {
-                                text = matchHeader.Groups[1].Value.Trim();
-                                Debug.WriteLine(text);
-                                converted = true;
-                            }
-                        } catch(RegexMatchTimeoutException ex) {
-                            //logger.Puts(LogType.Warning, ex.Message, new ExceptionMessage("<header>", ex));
-                            nonProcess.Logger.Warning(ex);
-                        }
-
-                        if(!converted || string.IsNullOrWhiteSpace(text)) {
+                        if(string.IsNullOrWhiteSpace(text)) {
                             result = LanguageUtility.GetTextFromEnum(type, nonProcess.Language);
                         } else {
                             result = text;

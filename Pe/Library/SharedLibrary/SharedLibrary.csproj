@@ -218,6 +218,7 @@
     <Compile Include="View\Control\TemplateBindingToolbar.cs" />
     <Compile Include="View\Converter\BooleanFontStyleConverter.cs" />
     <Compile Include="View\Converter\BooleanFontWeightConverter.cs" />
+    <Compile Include="View\Converter\ComplementaryColorConverter.cs" />
     <Compile Include="View\Converter\GridDistanceConverter.cs" />
     <Compile Include="View\Converter\EnumToBooleanConverter .cs" />
     <Compile Include="View\Converter\HasTextLengthConverter.cs" />

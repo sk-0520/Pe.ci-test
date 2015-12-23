@@ -35,27 +35,22 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control
     {
         #region define
 
-        class NullRefreshFromViewModel: IRefreshFromViewModel
-        {
-            public void Refresh()
-            { }
-        }
+        void NullRefresh()
+        { }
 
         #endregion
 
-        public LauncherItemEditViewModel(LauncherItemModel model, IRefreshFromViewModel refreshFromViewModel, IAppNonProcess nonPorocess, IAppSender appSender)
+        public LauncherItemEditViewModel(LauncherItemModel model, Action refreshText, Action refreshImage, IAppNonProcess nonPorocess, IAppSender appSender)
             : base(model, nonPorocess, appSender)
         {
-            if(refreshFromViewModel == null) {
-                RefreshFromViewModel = new NullRefreshFromViewModel();
-            } else {
-                RefreshFromViewModel = refreshFromViewModel;
-            }
+            RefreshText = refreshText ?? NullRefresh;
+            RefreshImage = refreshImage ?? NullRefresh;
         }
 
         #region property
 
-        public IRefreshFromViewModel RefreshFromViewModel { get; private set; }
+        public Action RefreshText { get; private set; }
+        public Action RefreshImage { get; private set; }
 
         public string Name
         {
@@ -64,16 +59,33 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control
             {
                 if(SetModelValue(value)) {
                     CallOnPropertyChangeDisplayItem();
+                    RefreshText();
                 }
             }
         }
 
-
-
         public override LauncherKind LauncherKind
         {
             get { return base.LauncherKind; }
-            set { SetModelValue(value); }
+            set
+            {
+                if(SetModelValue(value)) {
+                    CallOnPropertyChangeDisplayItem();
+                    RefreshImage();
+                }
+            }
+        }
+
+        public override string Command
+        {
+            get { return base.Command; }
+            set
+            {
+                if(SetModelValue(value)) {
+                    CallOnPropertyChangeDisplayItem();
+                    RefreshImage();
+                }
+            }
         }
 
         public string IconDisplayText
@@ -188,9 +200,9 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control
                         if(dialogResult.GetValueOrDefault()) {
                             Icon.Path = dialog.Icon.Path;
                             Icon.Index = dialog.Icon.Index;
-                            OnPropertyChanged("IconDisplayText");
 
-                            RefreshFromViewModel.Refresh();
+                            CallOnPropertyChange(nameof(IconDisplayText));
+                            RefreshImage();
                         }
                     }
                 );
@@ -199,16 +211,6 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control
             }
         }
 
-
-        #endregion
-
-        #region LauncherItemSimpleViewModel
-
-        protected override void CallOnPropertyChangeDisplayItem()
-        {
-            base.CallOnPropertyChangeDisplayItem();
-            RefreshFromViewModel.Refresh();
-        }
 
         #endregion
     }

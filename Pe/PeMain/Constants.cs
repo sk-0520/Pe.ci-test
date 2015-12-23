@@ -82,6 +82,7 @@ namespace ContentTypeTextNet.Pe.PeMain
         public const string scriptDirectoryName = "script";
         const string htmlDirectoryName = "html";
         public const string documentDirectoryName = "doc";
+        const string helpDirectoryName = "help";
 
         public const string logDirectoryName = "logs";
         public const string settingDirectoryName = "setting";
@@ -121,6 +122,8 @@ namespace ContentTypeTextNet.Pe.PeMain
         [ConstantsProperty]
         const string styleFeedbackFileName = "feedback.css";
 
+        [ConstantsProperty]
+        const string helpIndexFileName = "help.html";
 
         public const string languageDefaultFileName = "default.xml";
         public const string languageSearchPattern = "*.xml";
@@ -492,6 +495,10 @@ namespace ContentTypeTextNet.Pe.PeMain
         /// doc/
         /// </summary>
         public static string ApplicationDocumentDirectoryPath { get { return Path.Combine(applicationRootDirectoryPath, documentDirectoryName); } }
+        /// <summary>
+        /// doc/help
+        /// </summary>
+        public static string ApplicationHelpDirectoryPath { get { return Path.Combine(ApplicationDocumentDirectoryPath, helpDirectoryName); } }
 
         #endregion
 

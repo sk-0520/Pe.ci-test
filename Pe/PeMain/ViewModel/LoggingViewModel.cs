@@ -44,6 +44,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
     using ContentTypeTextNet.Pe.PeMain.View;
     using Microsoft.Win32;
     using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
+    using ContentTypeTextNet.Pe.PeMain.Logic;
 
     public class LoggingViewModel: HavingViewSingleModelWrapperViewModelBase<LoggingSettingModel, LoggingWindow>, ILogAppender, IWindowStatus, IHavingAppNonProcess
     {
@@ -69,6 +70,8 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         #region property
 
+        TextWriter AttachmentOutputWriter { get; set; }
+
         public LogItemModel SelectedItem
         {
             get { return this._selectedItem; }
@@ -81,6 +84,29 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         {
             get { return Model.DetailWordWrap; }
             set { SetModelValue(value); }
+        }
+
+        public bool AttachmentOutputLogging
+        {
+            get { return AttachmentOutputWriter != null; }
+            set
+            {
+                CastUtility.AsAction<AppLogger>(this.AppNonProcess.Logger, logger => {
+                    if(AttachmentOutputLogging) {
+                        DetachmentLogger(logger);
+                    } else {
+                        var dir = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
+                        var fileName = PathUtility.AppendExtension(Constants.GetNowTimestampFileName(), "log");
+                        var filter = new DialogFilterList() {
+                            new DialogFilterItem(AppNonProcess.Language["dialog/filter/log"], Constants.dialogFilterLog),
+                        };
+                        var path = DialogUtility.ShowSaveFileDialog(dir, fileName, filter);
+                        if(path != null) {
+                            AttachmentLogger(logger, path);
+                        }
+                    }
+                });
+            }
         }
 
         #region IWindowStatus
@@ -323,6 +349,28 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                     IsVisible = true;
                 }
             }
+        }
+
+        void AttachmentLogger(AppLogger logger, string filePath)
+        {
+            Debug.Assert(!AttachmentOutputLogging);
+
+            var stream = AppUtility.CreateFileLoggerStream(filePath);
+            AttachmentOutputWriter = stream;
+            logger.AttachmentStream(stream, true);
+
+            CallOnPropertyChange(nameof(AttachmentOutputLogging));
+        }
+
+        void DetachmentLogger(AppLogger logger)
+        {
+            Debug.Assert(AttachmentOutputLogging);
+
+            logger.DetachmentStream(AttachmentOutputWriter);
+            AttachmentOutputWriter.Dispose();
+            AttachmentOutputWriter = null;
+
+            CallOnPropertyChange(nameof(AttachmentOutputLogging));
         }
 
         #endregion

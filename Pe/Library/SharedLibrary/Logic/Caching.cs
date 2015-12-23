@@ -65,7 +65,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic
         public bool ClearCache(TKey key)
         {
             TValue result;
-            if(!Cache.TryGetValue(key, out result)) {
+            if(Cache.TryGetValue(key, out result)) {
                 return Cache.Remove(key);
             } else {
                 return false;
@@ -74,7 +74,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic
 
         public void Clear()
         {
-            foreach(var key in Cache.Keys) {
+            foreach(var key in Cache.Keys.ToArray()) {
                 ClearCache(key);
             }
 

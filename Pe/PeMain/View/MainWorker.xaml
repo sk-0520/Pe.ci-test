@@ -145,6 +145,11 @@
     </MenuItem>
     <Separator />
     <MenuItem AA:Language.Word="tasktray/info" >
+      <MenuItem AA:Language.Word="tasktray/info/help" Header="help" Command="{Binding HelpCommand}">
+        <MenuItem.Icon>
+          <Image Source="{x:Static AM:AppResource.CommonHelpImage}" Style="{StaticResource DefaultImage}" />
+        </MenuItem.Icon>
+      </MenuItem>
       <MenuItem AA:Language.Word="tasktray/info/feedback" Header="feedback" Command="{Binding FeedbackCommand}">
         <MenuItem.Icon>
           <Image Source="{x:Static AM:AppResource.CommonCommentImage}" Style="{StaticResource DefaultImage}" />

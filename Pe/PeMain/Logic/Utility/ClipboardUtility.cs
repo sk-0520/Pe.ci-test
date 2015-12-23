@@ -38,12 +38,13 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
     using ContentTypeTextNet.Library.SharedLibrary.IF;
     using ContentTypeTextNet.Library.SharedLibrary.Logic;
     using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+    using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
     using ContentTypeTextNet.Pe.Library.PeData.Define;
     using ContentTypeTextNet.Pe.Library.PeData.Item;
     //	using ContentTypeTextNet.Pe.PeMain.Data;
     using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
     using ContentTypeTextNet.Pe.PeMain.IF;
-
+    using System.Windows.Controls;
     public class ClipboardUtility
     {
         #region define
@@ -743,6 +744,128 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
             }
 
             return null;
+        }
+
+
+        public static string MakeClipboardNameFromText(string text)
+        {
+            var result = text
+                .SplitLines()
+                .Where(s => !string.IsNullOrWhiteSpace(s))
+                .Select(s => s.Trim())
+                .FirstOrDefault()
+            ;
+
+            return result;
+        }
+
+        public static string MakeClipboardNameFromRtf(string rtf)
+        {
+            var rt = new RichTextBox();
+            string plainText;
+            using(var reader = new MemoryStream(Encoding.ASCII.GetBytes(rtf))) {
+                rt.Selection.Load(reader, DataFormats.Rtf);
+                using(var writer = new MemoryStream()) {
+                    rt.Selection.Save(writer, DataFormats.Text);
+                    plainText = Encoding.UTF8.GetString(writer.ToArray());
+                }
+            }
+
+            var result = MakeClipboardNameFromText(plainText);
+
+            return result;
+        }
+
+        public static string MakeClipboardNameFromHtml(string html, INonProcess nonProcess)
+        {
+            var takeCount = 64;
+            var converted = false;
+            var lines = Regex.Replace(html, @"<!--.*?-->", string.Empty, RegexOptions.Multiline)
+                .SplitLines()
+                .Take(takeCount)
+            ;
+            var text = string.Join(string.Empty, lines);
+
+            var timeTitle = TimeSpan.FromMilliseconds(100);
+            var timeHeading = TimeSpan.FromMilliseconds(500);
+
+            // <title>
+            try {
+                var regTitle = new Regex(
+                    @"
+                    <title>
+                        (?<TITLE>.+)
+                    </title>
+                    ",
+                    RegexOptions.IgnoreCase 
+                    | RegexOptions.Multiline
+                    | RegexOptions.IgnorePatternWhitespace
+                    | RegexOptions.ExplicitCapture
+                    ,
+                    timeTitle
+                );
+                var matchTitle = regTitle.Match(text);
+                if(!converted && matchTitle.Success && 0 < matchTitle.Groups.Count) {
+                    text = matchTitle.Groups["TITLE"].Value.Trim();
+                    converted = true;
+                }
+            } catch(RegexMatchTimeoutException ex) {
+                //logger.Puts(LogType.Warning, ex.Message, new ExceptionMessage("<title>", ex));
+                nonProcess.Logger.Warning(ex);
+            }
+
+            if(!converted) {
+                // <h1-6>
+                try {
+                    // TODO: 終了タグが一致しない
+                    var regHeader = new Regex(
+                        @"
+                        <h[1-6](.*)?>
+                            (?<HEADING>.+?)
+                        </h[1-6]>
+                        ",
+                        RegexOptions.IgnoreCase
+                        | RegexOptions.Multiline
+                        | RegexOptions.IgnorePatternWhitespace
+                        | RegexOptions.ExplicitCapture
+                        ,
+                        timeHeading
+                   );
+                    var matchHeading = regHeader.Match(text);
+                    if(matchHeading.Success && 0 < matchHeading.Groups.Count) {
+                        text = matchHeading.Groups["HEADING"].Value.Trim();
+                        Debug.WriteLine(text);
+                        converted = true;
+                    }
+                } catch(RegexMatchTimeoutException ex) {
+                    //logger.Puts(LogType.Warning, ex.Message, new ExceptionMessage("<header>", ex));
+                    nonProcess.Logger.Warning(ex);
+                }
+            }
+
+            // まだ何かタグに囲まれている場合はそれを除外
+            if(converted && text != null) {
+                var regPlain = new Regex(
+                    @"
+                        (<.+>)?
+                            (?<TEXT>.+)
+                        (</.+>)?
+                        ",
+                    RegexOptions.IgnoreCase
+                    | RegexOptions.Multiline
+                    | RegexOptions.IgnorePatternWhitespace
+                    | RegexOptions.ExplicitCapture
+               );
+                var matchPlain = regPlain.Match(text);
+                if(matchPlain.Success && 0 < matchPlain.Groups.Count) {
+                    text = matchPlain.Groups["TEXT"].Value.Trim();
+                }
+
+                // 文字参照をテキスト化
+                text = System.Net.WebUtility.HtmlDecode(text);
+            }
+
+            return converted ? text : string.Empty;
         }
     }
 }

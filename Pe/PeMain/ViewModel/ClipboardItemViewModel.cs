@@ -219,6 +219,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                         };
 
                         ClipboardUtility.CopyClipboardItem(clipboardItem, AppNonProcess.ClipboardWatcher);
+                        AppNonProcess.Logger.Trace("copy: " + Name);
                     }
                 );
 

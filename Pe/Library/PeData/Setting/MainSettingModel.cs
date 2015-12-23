@@ -22,6 +22,7 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting
     using System.Runtime.Serialization;
     using System.Text;
     using System.Threading.Tasks;
+    using ContentTypeTextNet.Library.SharedLibrary.Attribute;
     using ContentTypeTextNet.Library.SharedLibrary.IF;
     using ContentTypeTextNet.Pe.Library.PeData.Item;
     using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
@@ -46,6 +47,7 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting
             Template = new TemplateSettingModel();
             Note = new NoteSettingModel();
             Stream = new StreamSettingModel();
+            General = new GeneralSettingModel();
         }
 
         #region property
@@ -72,6 +74,11 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting
         public NoteSettingModel Note { get; set; }
         [DataMember]
         public StreamSettingModel Stream { get; set; }
+        /// <summary>
+        /// 基本設定。
+        /// </summary>
+        [DataMember, IsDeepClone]
+        public GeneralSettingModel General { get; set; }
 
         #endregion
 
@@ -95,6 +102,7 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting
             Note.DeepCloneTo(obj.Note);
             //Stream.DeepCloneTo(obj.Stream);
             obj.Stream = (StreamSettingModel)Stream.DeepClone();
+            obj.General = (GeneralSettingModel)General.DeepClone();
         }
 
         public IDeepClone DeepClone()

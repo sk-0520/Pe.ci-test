@@ -55,9 +55,63 @@
 		</group>
 	</log>
 	-->
+	<log date="2015/12/23" version="0.74.0" dummy="################################################################################">
+		<group type="features" dummy="==================================================================">
+			<note rev="e7fe3b78cd68c8ec7b41b8c6f2966ed18a9a3488">
+				<message>#25: ヘルプファイルの記述</message>
+				<comments>
+					<comment>通知領域コンテキストメニュー→情報→ヘルプ</comment>
+					<comment>ひっさしぶりに生のHTML/CSS書いた</comment>
+					<comment>読み込み時の細かい処理は追々調整する</comment>
+				</comments>
+			</note>
+			<note rev="82221341f524f7ac80bdf75935f3bbf5349c07b5">
+				<message>#392: ホットキー処理を実施した際のトースト(バルーン)表示を選択制にする</message>
+				<comments>
+					<comment>設定→本体設定→操作通知</comment>
+					<comment>Windows 10 で出まくるの鬱陶しいので初期値は「なし」に設定</comment>
+				</comments>
+			</note>
+			<note rev="a383696689fde08f647937b5361a60a3a3901c5c">
+				<message>#370: クリップボードHTMLデータからクリップボード名を算出できない場合はテキストから取得する</message>
+			</note>
+			<note rev="a3819ed98e56e3f45ff44cea38c267d3145b5bde">
+				<message>#393: ログ出力をコマンドライン指定でなくGUI側でいつでも出力できるようにする</message>
+				<comments>
+					<comment>#355の逆襲</comment>
+					<comment>本実装に伴いファイルへのログ出力実装を変更したけ通常使用には無関係</comment>
+				</comments>
+			</note>
+		</group>
+		<group type="fixes" dummy="==================================================================">
+			<note rev="a2ecce5d3cadfeffae6e0f33f059b1dc75563cd7">
+				<message>#406: ファイルのローテート処理で最新ファイルを削除している</message>
+			</note>
+			<note rev="db117745015f1f5f9c672b9a19bf4c42242a5e41">
+				<message>0.73.0の変更履歴にリビジョン記入してなかった</message>
+			</note>
+			<note rev="d82438892c577157aeb4df9f53a9cdb3164d3696">
+				<message>#405: ホットトラックの色算出に黒・白・灰色は計算に含まないように変更する</message>
+				<comments>
+					<comment>色の勉強しないと難しいなぁ</comment>
+				</comments>
+			</note>
+			<note rev="9c649e1814181584f6ae510ccf22cc6071efcf57">
+				<message>#387: ランチャーアイテム登録中にアイコンの反映が行われない</message>
+				<comments>
+					<comment>コマンド項目修正は毎回ディスク見に行くのアホっぽいから500msの遅延更新</comment>
+				</comments>
+			</note>
+		</group>
+		<group type="developer" dummy="==================================================================">
+			<note rev="">
+				<message>開発環境を Microsoft Visual Studio Community 2015 Update 1 に変更</message>
+			</note>
+		</group>
+	</log>
 	<log date="2015/12/06" version="0.73.0" dummy="################################################################################">
 		<group type="note" dummy="==================================================================">
-			<note rev="">
+			<note rev="de74c412a997761664c9b76cb5c113fea0e694a9">
 				<message class="compatibility">#335: .NET Frameworkのバージョンを4.6に変更</message>
 				<comments>
 					<comment>本バージョンから .NET Framework 4.6 が必要になります</comment>
@@ -75,52 +129,52 @@
 			</note>
 		</group>
 		<group type="features" dummy="==================================================================">
-			<note rev="">
+			<note rev="138734edf8e7cbc14169022e95de481ef3251a6c">
 				<message>#367: バージョンチェック用XMLと更新履歴用XMLのURI変更</message>
 				<comments>
 					<comment>数世代はcontent-type-text.net側も保守するつもり</comment>
 				</comments>
 			</note>
-			<note rev="">
+			<note rev="fe883254caa678c861f3444be15d405d514354b0">
 				<message>#395: ログウィンドウに個別の出力・コピー・削除機能を設ける</message>
 			</note>
 		</group>
 		<group type="fixes" dummy="==================================================================">
-			<note rev="">
+			<note rev="7e111254355b9c9c88a9bcd74a3d9bfb2d745cc5">
 				<message>#398: 自動アップデート時の最終調整スクリプトが実行されない</message>
 				<comments>
 					<comment>いつからおかしくなっていたかは未調査だけどパス間違ってた</comment>
 				</comments>
 			</note>
-			<note rev="">
+			<note rev="d57c692a9c443570e941bfae5900c134ae1adb66">
 				<message>#401: クリップボードの取込対象・制限のON/OFFが効いていない</message>
 				<comments>
 					<comment>1. 設定UIでの制御ができていなかった</comment>
 					<comment>2. 設定補正時に強制ONになっていた</comment>
 				</comments>
 			</note>
-			<note rev="">
+			<note rev="05af853ddf4ad923f967d75f25857ff47cbf4028">
 				<message>#368: 環境によりツールバー設定の項目がはみ出る</message>
 				<comments>
 					<comment>どの環境でもはみ出てた</comment>
 				</comments>
 			</note>
-			<note rev="">
+			<note rev="637e4bc45dec70801710630344d22161eaf320d7">
 				<message>#403: 情報ダイアログに旧フィードバックリンクが残ってる</message>
 			</note>
-			<note rev="">
+			<note rev="a30390e605e378c4d9d1a1211d1b6ed0f5beaca8">
 				<message>#399: ネットワーク接続ができない状態でユーザー情報送信を許可した場合に落ちる</message>
 				<comments>
 					<comment>アップデート確認と同じ処理方法だと思ってたら全然違ってた</comment>
 					<comment>みんな大好き try ... catch(Exception) で対応</comment>
 				</comments>
 			</note>
-			<note rev="">
+			<note rev="3464fde3b34c700868429b87c06ad76c5000f3aa">
 				<message>#400: フィードバック入力ウィンドウをモードレスにする</message>
 			</note>
 		</group>
 		<group type="developer" dummy="==================================================================">
-			<note rev="">
+			<note rev="de74c412a997761664c9b76cb5c113fea0e694a9">
 				<message>#335: .NET Frameworkのバージョンを4.6に変更</message>
 				<comments>
 					<comment>やっとこさ nameof が使えるようになったので目についた範囲を修正</comment>

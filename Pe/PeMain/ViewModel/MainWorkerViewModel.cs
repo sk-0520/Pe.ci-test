@@ -438,6 +438,26 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
         }
 
+        public ICommand HelpCommand
+        {
+            get
+            {
+                var result = CreateCommand(
+                    o => {
+                        var helpPath = Path.Combine(Constants.ApplicationDocumentDirectoryPath, Constants.HelpIndexFileName);
+                        var helpCallPath = helpPath + "?lang=" + CommonData.Language.CultureCode;
+                        try {
+                            ExecuteUtility.OpenFile(helpPath, CommonData.NonProcess);
+                        } catch(Exception ex) {
+                            CommonData.Logger.Error(ex);
+                        }
+                    }
+                );
+
+                return result;
+            }
+        }
+
         /// <summary>
         /// プログラム終了。
         /// </summary>
@@ -705,19 +725,22 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             AppUtility.SaveSetting(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingMainSettingFilePath), CommonData.MainSetting, Constants.fileTypeMainSetting, CommonData.Logger);
         }
 
-        void BackupSetting()
+        void RotateSetting(string backupDirectory, string backupPattern, int backupCount)
         {
+            // 旧データの削除
             using(var timeLogger = CommonData.NonProcess.CreateTimeLogger()) {
-                var backupDir = Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserBackupDirectoryPath);
-
-                // 旧データの削除
-                FileUtility.RotateFiles(backupDir, Constants.BackupSearchPattern, OrderBy.Asc, Constants.BackupSettingCount, ex => {
+                FileUtility.RotateFiles(backupDirectory, backupPattern, OrderBy.Desc, backupCount, ex => {
                     CommonData.Logger.Error(ex);
                     return true;
                 });
+            }
+        }
 
+        void MakeSettingArchive(string backupDirectory, string settingBaseDirectory)
+        {
+            using(var timeLogger = CommonData.NonProcess.CreateTimeLogger()) {
                 var fileName = PathUtility.AppendExtension(Constants.GetNowTimestampFileName(), "zip");
-                var backupFileFilePath = Path.Combine(backupDir, fileName);
+                var backupFileFilePath = Path.Combine(backupDirectory, fileName);
                 FileUtility.MakeFileParentDirectory(backupFileFilePath);
 
                 // zip
@@ -732,8 +755,18 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                     CommonData.VariableConstants.UserSettingClipboardIndexFilePath,
                     CommonData.VariableConstants.UserSettingClipboardDirectoryPath,
                 };
-                var basePath = Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingDirectoryPath);
+                var basePath = Environment.ExpandEnvironmentVariables(settingBaseDirectory);
                 FileUtility.CreateZipFile(backupFileFilePath, basePath, targetFiles.Select(Environment.ExpandEnvironmentVariables));
+            }
+        }
+
+        void BackupSetting()
+        {
+            using(var timeLogger = CommonData.NonProcess.CreateTimeLogger()) {
+                var backupDir = Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserBackupDirectoryPath);
+
+                RotateSetting(backupDir, Constants.BackupSearchPattern, Constants.BackupSettingCount);
+                MakeSettingArchive(backupDir, CommonData.VariableConstants.UserSettingDirectoryPath);
             }
         }
 
@@ -1337,15 +1370,15 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         void CallPropertyChangeHotkey()
         {
             var propertyNames = new[] {
-                "CreateNoteHotKey",
-                "CompactNoteItemsHotKey",
-                "HideNoteItemsHotKey",
-                "FrontNoteItemsHotKey",
-                "SwitchTemplateWindowHotKey",
-                "ShowCommandWindowHotKey",
-                "SwitchShellHideFileHotKey",
-                "SwitchShellExtensionHotKey",
-                "SwitchClipboardWindowHotKey",
+                nameof(CreateNoteHotKey),
+                nameof(CompactNoteItemsHotKey),
+                nameof(HideNoteItemsHotKey),
+                nameof(FrontNoteItemsHotKey),
+                nameof(SwitchTemplateWindowHotKey),
+                nameof(ShowCommandWindowHotKey),
+                nameof(SwitchShellHideFileHotKey),
+                nameof(SwitchShellExtensionHotKey),
+                nameof(SwitchClipboardWindowHotKey),
             };
             CallOnPropertyChange(propertyNames);
         }
@@ -2181,15 +2214,27 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         void ReceiveInformationTips(string title, string message, LogKind logKind)
         {
-            var map = new Dictionary<LogKind, BalloonIcon>() {
-                { LogKind.None, BalloonIcon.None },
-                { LogKind.Information, BalloonIcon.Info },
-                { LogKind.Warning, BalloonIcon.Warning },
-                { LogKind.Error, BalloonIcon.Error },
-            };
-
             if(HasView) {
-                View.ShowBalloonTip(title, message, map[logKind]);
+                var map = new Dictionary<LogKind, BalloonIcon>() {
+                    { LogKind.None, BalloonIcon.None },
+                    { LogKind.Information, BalloonIcon.Info },
+                    { LogKind.Warning, BalloonIcon.Warning },
+                    { LogKind.Error, BalloonIcon.Error },
+                };
+                switch(CommonData.MainSetting.General.Notification) {
+                    case Notification.System:
+                        View.ShowBalloonTip(title, message, map[logKind]);
+                        break;
+
+                    case Notification.Silent:
+                        throw new NotImplementedException(nameof(Notification.Silent));
+
+                    case Notification.None:
+                        break;
+
+                    default:
+                        throw new NotImplementedException();
+                }
             }
             var action = new Dictionary<LogKind, LogPutDelegate>() {
                 { LogKind.None, CommonData.Logger.Trace },
