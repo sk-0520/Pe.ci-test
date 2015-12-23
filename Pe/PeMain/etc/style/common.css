@@ -92,7 +92,7 @@ div.ref {
 	background: #eef;
 }
 
-code, samp, strong.value, em.ui {
+code, samp, strong.value, em.ui, dfn {
 	font-family: Consolas, monospace;
 	padding: 2px 4px;
 	margin: 2px 4px;
@@ -107,6 +107,11 @@ code {
 samp {
 	border: 1px solid #8bb581;
 	background: #c8f7c4;
+}
+
+dfn {
+	border: 1px solid #707030;
+	background: #fffbcd;
 }
 
 strong.value {
