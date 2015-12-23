@@ -8,11 +8,6 @@
 [ダウンロード](https://bitbucket.org/sk_0520/pe/downloads)を参照。
 
 
-# オンラインヘルプ
-
-[Wiki](https://bitbucket.org/sk_0520/pe/wiki/Home)を参照。
-
-
 # フォーラム
 
 [Google Groups](https://groups.google.com/d/forum/pe_development)を参照。
