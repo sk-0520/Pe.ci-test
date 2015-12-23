@@ -123,6 +123,9 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
 
         #region IndexBodyItemModelBase
 
+        /// <summary>
+        /// インデックス種別。
+        /// </summary>
         public override IndexKind IndexKind { get { return IndexKind.Clipboard; } }
 
         protected override void Dispose(bool disposing)
