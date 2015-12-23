@@ -34,7 +34,8 @@ namespace ContentTypeTextNet.Pe.PeMain.View.Parts.Converter
             if(viewModel != null) {
                 // TODO: parameterで切り替えれた方があとあと便利そう。
                 // TODO: ダサい
-                var result = new LauncherItemEditViewModel(viewModel.Model, viewModel, viewModel.AppNonProcess, viewModel.AppSender);
+                var result = new LauncherItemEditViewModel(viewModel.Model, viewModel.RefreshText, viewModel.RefreshImage, viewModel.AppNonProcess, viewModel.AppSender);
+
                 return result;
             }
             return null;

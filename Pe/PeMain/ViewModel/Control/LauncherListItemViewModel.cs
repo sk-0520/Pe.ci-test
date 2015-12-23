@@ -50,9 +50,23 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control
 
         #endregion
 
+        #region IRefreshFromViewModel
+
         public void Refresh()
         {
+            RefreshText();
+            RefreshImage();
+        }
+
+        #endregion
+
+        public void RefreshText()
+        {
             CallOnPropertyChangeDisplayItem();
+        }
+
+        public void RefreshImage()
+        {
             AppNonProcess.LauncherIconCaching.Remove(Model);
             OnPropertyChanged(nameof(Image));
         }

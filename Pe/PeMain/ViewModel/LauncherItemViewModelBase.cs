@@ -61,7 +61,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             set { throw new NotSupportedException(); }
         }
 
-        public string Command
+        public virtual string Command
         {
             get { return Model.Command; }
             set

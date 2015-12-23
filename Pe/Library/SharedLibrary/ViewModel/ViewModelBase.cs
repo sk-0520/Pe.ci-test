@@ -105,7 +105,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.ViewModel
         /// </summary>
         protected virtual void CallOnPropertyChangeDisplayItem()
         {
-            OnPropertyChanged("DisplayText");
+            OnPropertyChanged(nameof(DisplayText));
         }
 
         #endregion

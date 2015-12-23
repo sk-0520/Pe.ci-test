@@ -101,6 +101,15 @@
 				<message>#405: ホットトラックの色算出に黒・白・灰色は計算に含まないように変更する</message>
 			</note>
 			<note rev="">
+				<message>#387: ランチャーアイテム登録中にアイコンの反映が行われない</message>
+				<comments>
+					<comment>コマンド項目修正は毎回ディスク見に行くのアホっぽいから500msの遅延更新</comment>
+				</comments>
+			</note>
+			<note rev="">
+				<message></message>
+			</note>
+			<note rev="">
 				<message></message>
 			</note>
 		</group>

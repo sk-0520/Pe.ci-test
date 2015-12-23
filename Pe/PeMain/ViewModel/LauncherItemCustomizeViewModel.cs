@@ -42,7 +42,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
     public class LauncherItemCustomizeViewModel: LauncherItemEditViewModel, IHavingView<LauncherItemCustomizeWindow>, IHavingAppSender
     {
         public LauncherItemCustomizeViewModel(LauncherItemModel model, LauncherItemCustomizeWindow view, ScreenModel screen, IAppNonProcess nonPorocess, IAppSender appSender)
-            : base((LauncherItemModel)model.DeepClone(), null, nonPorocess, appSender)
+            : base((LauncherItemModel)model.DeepClone(), null, null, nonPorocess, appSender)
         {
             View = view;
             Screen = screen;
