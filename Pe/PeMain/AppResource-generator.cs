@@ -21,7 +21,7 @@
         /*
         このソースは自動生成のため AppResource-generator.tt を編集すること。
 
-        生成元フィールド数: 77
+        生成元フィールド数: 78
         */
         #region Icon: Application
 
@@ -1939,6 +1939,28 @@
             get { return GetImage(LogFatalPath); }
         }
         #endregion LogFatal
+        #region Image: LogAttachment
+
+        /// <summary>
+        /// [Image] LogAttachmentのリソースパスを取得。
+        /// <para>/Resources/Image/Log/LogAttachment.png</para>
+        /// </summary>
+        public static string LogAttachmentPath
+        {
+            get { return logAttachment; }
+        }
+
+        /// <summary>
+        /// [Image] LogAttachmentのイメージソースを取得。
+        /// <para>初回のみ生成を行う。</para>
+        /// <para>LogAttachmentPath: /Resources/Image/Log/LogAttachment.png</para>
+        /// </summary>
+        /// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
+        public static BitmapSource LogAttachmentImage
+        {
+            get { return GetImage(LogAttachmentPath); }
+        }
+        #endregion LogAttachment
         #region Image: AboutUpdate
 
         /// <summary>
