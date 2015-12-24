@@ -58,7 +58,7 @@
                 if(editor.Document != null) {
                     var caretOffset = editor.CaretOffset;
                     editor.Document.Text = dependencyPropertyChangedEventArgs.NewValue as string ?? string.Empty;
-                    if(caretOffset < editor.CaretOffset) {
+                    if(caretOffset <= editor.Document.Text.Length) {
                         editor.CaretOffset = caretOffset;
                     }
                 }

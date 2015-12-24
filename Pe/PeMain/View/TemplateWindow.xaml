@@ -229,6 +229,7 @@
                 x:Name="editSource"
                 SyntaxHighlighting="C#"
                 ShowLineNumbers="True"
+                FontFamily="{Binding FontFamily, Mode=OneWay}" FontWeight="{Binding FontBold, Converter={StaticResource BooleanFontWeightConverter}, Mode=OneWay}" FontStyle="{Binding FontItalic, Converter={StaticResource BooleanFontStyleConverter}, Mode=OneWay}" FontSize="{Binding FontSize, Mode=OneWay}"
               >
                 <i:Interaction.Behaviors>
                   <AA:AvalonEditBehaviour Code="{Binding SelectedViewModel.Source, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>

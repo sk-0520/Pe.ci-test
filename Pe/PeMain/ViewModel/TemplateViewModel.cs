@@ -61,7 +61,11 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             {
                 var prevViewModel = this._selectedViewModel;
                 if(SetVariableValue(ref this._selectedViewModel, value)) {
-                    View.pageSource.IsSelected = true;
+                    if(HasView) {
+                        View.pageSource.IsSelected = true;
+                        View.editSource.Document.UndoStack.ClearAll();
+                        View.editSource.Select(0, 0);
+                    }
 
                     CallOnPropertyChange(nameof(KeywordList));
                     if(this._selectedViewModel != null) {
