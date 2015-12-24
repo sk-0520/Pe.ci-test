@@ -84,9 +84,10 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic
 
         protected override void PutsStream(LogItemModel item)
         {
-            lock(Writer) {
+            var s = LogUtility.MakeLogDetailText(item);
+            lock (Writer) {
                 foreach(var writer in Writer) {
-                    writer.WriteLine(LogUtility.MakeLogDetailText(item));
+                    writer.WriteLine(s);
                 }
             }
         }

@@ -80,7 +80,11 @@
 		</group>
 		<group type="fixes" dummy="==================================================================">
 			<note rev="">
-				<message></message>
+				<message>#410: ログのファイル出力うまくいってない？</message>
+				<comments>
+					<comment>#393, #355でどうにもうまくいかなかった原因</comment>
+					<comment>なんかロジック的には正しかったけど内部使用しているパラメータの扱いがミスってた</comment>
+				</comments>
 			</note>
 			<note rev="">
 				<message></message>
