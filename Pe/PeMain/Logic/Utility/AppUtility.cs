@@ -139,7 +139,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         {
             FileUtility.MakeFileParentDirectory(filePath);
 
-            var stream = new StreamWriter(new FileStream(filePath, FileMode.Append, FileAccess.Write, FileShare.Read), Encoding.UTF8) {
+            var stream = new StreamWriter(filePath, true, Encoding.UTF8) {
                 AutoFlush = true,
             };
             return stream;
