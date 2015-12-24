@@ -19,8 +19,9 @@
   SizeToContent="Height"
   ResizeMode="NoResize"
   Icon="{Binding ViewIcon}"
-  Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"
-  Foreground="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}"
+  Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
+  Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"
+  BorderBrush="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" 
 >
   <AW:CommonDataWindow.Resources>
     <ResourceDictionary>

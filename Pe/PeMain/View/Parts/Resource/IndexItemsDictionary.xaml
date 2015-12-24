@@ -12,8 +12,9 @@
   <Style x:Key="ClipboardTemplateDefualtWindow" TargetType="Window">
     <Setter Property="WindowStyle" Value="ToolWindow" />
     <Setter Property="ShowInTaskbar" Value="False" />
-    <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" />
-    <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}" />
+    <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+    <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" />
     <Setter Property="ResizeMode" Value="CanResizeWithGrip" />
     <Setter Property="Visibility" Value="{Binding Visibility}" />
     <Setter Property="WindowState" Value="{Binding WindowState}" />

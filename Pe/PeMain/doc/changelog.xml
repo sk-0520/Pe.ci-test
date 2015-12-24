@@ -87,7 +87,10 @@
 				</comments>
 			</note>
 			<note rev="">
-				<message></message>
+				<message>#402: ウィンドウの背景色をシステムに合わせる</message>
+				<comments>
+					<comment>コントロールの色に合わせた</comment>
+				</comments>
 			</note>
 			<note rev="">
 				<message></message>

@@ -12,6 +12,7 @@
   Title="SettingWindow" 
   Width="840"
   Height="540" 
+  Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
   Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"
   BorderBrush="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" 
   WindowStartupLocation="CenterScreen"
@@ -33,11 +34,11 @@
     </Grid.RowDefinitions>
 
     <TabControl VerticalAlignment="Stretch" SelectedItem="{Binding SelectedTab}">
-      <TabControl.Resources>
+      <!--<TabControl.Resources>
         <Style TargetType="{x:Type TabItem}">
           <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" />
         </Style>
-      </TabControl.Resources>
+      </TabControl.Resources>-->
       <TabItem x:Name="pageMain">
         <TabItem.Header>
           <Label Content="main" AA:Language.Word="setting/main" Style="{StaticResource ContentTextLabel}" />
