@@ -120,13 +120,28 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         public static AppLanguageManager LoadLanguageFile(string baseDir, string name, string cultureCode, ILogger logger)
         {
             logger.Debug("load: language file", baseDir);
-            var langPairList = GetLanguageFiles(baseDir, logger);
-
             var defaultPath = Path.Combine(baseDir, Constants.languageDefaultFileName);
+
+            var langPairList = GetLanguageFiles(baseDir, logger)
+                .Where(p => string.Compare(p?.Key, defaultPath, true) != 0)
+            ;
+
+            var baseLang = SerializeUtility.LoadXmlSerializeFromFile<LanguageCollectionModel>(defaultPath);
+
             var lang = langPairList.FirstOrDefault(p => p.Value.Value.Name == name)
                 ?? langPairList.FirstOrDefault(l => l.Value.Value.CultureCode == cultureCode)
-                ?? new KeyValuePair<string, LanguageCollectionModel>(defaultPath, SerializeUtility.LoadXmlSerializeFromFile<LanguageCollectionModel>(defaultPath))
+                ?? new KeyValuePair<string, LanguageCollectionModel>(defaultPath, baseLang)
             ;
+            if(lang.Value !=  baseLang) {
+                // マージ
+                var useLang = lang.Value;
+
+                var dk = baseLang.Define.Select(l => l.Id).Except(useLang.Define.Select(l => l.Id));
+                useLang.Define.AddRange(baseLang.Define.Where(l => dk.Any(k => k == l.Id)).ToArray());
+
+                var dw = baseLang.Words.Select(l => l.Id).Except(useLang.Words.Select(l => l.Id));
+                useLang.Words.AddRange(baseLang.Words.Where(l => dw.Any(k => k == l.Id)).ToArray());
+            }
             return new AppLanguageManager(lang.Value, lang.Key);
         }
 

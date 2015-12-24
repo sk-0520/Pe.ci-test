@@ -69,7 +69,10 @@
 		</group>
 		<group type="features" dummy="==================================================================">
 			<note rev="">
-				<message></message>
+				<message>#397: 言語ファイル読み込みにはdefault.xmlを親とする</message>
+				<comments>
+					<comment>そもそも条件的にdefault.xmlしか読めてなかったぜ！</comment>
+				</comments>
 			</note>
 			<note rev="">
 				<message></message>
