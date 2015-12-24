@@ -136,11 +136,11 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
                 // マージ
                 var useLang = lang.Value;
 
-                var dk = baseLang.Define.Select(l => l.Id).Except(useLang.Define.Select(l => l.Id));
+                var dk = baseLang.Define.Select(l => l.Id).Except(useLang.Define.Select(l => l.Id)).ToArray();
                 useLang.Define.AddRange(baseLang.Define.Where(l => dk.Any(k => k == l.Id)).ToArray());
 
-                var dw = baseLang.Words.Select(l => l.Id).Except(useLang.Words.Select(l => l.Id));
-                useLang.Words.AddRange(baseLang.Words.Where(l => dw.Any(k => k == l.Id)).ToArray());
+                var wk = baseLang.Words.Select(l => l.Id).Except(useLang.Words.Select(l => l.Id)).ToArray();
+                useLang.Words.AddRange(baseLang.Words.Where(l => wk.Any(k => k == l.Id)).ToArray());
             }
             return new AppLanguageManager(lang.Value, lang.Key);
         }
