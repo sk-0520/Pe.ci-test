@@ -107,9 +107,14 @@
                     <TextBlock Text="{Binding Name}" />
                     <Border Style="{StaticResource IndexItemsStyleInfo}">
                       <StackPanel Orientation="Horizontal">
-                        <Image Margin="0,0,2,0">
+                        <Image>
                           <Image.Style>
                             <Style TargetType="Image" BasedOn="{StaticResource ItemImage}">
+                              <Setter Property="Margin">
+                                <Setter.Value>
+                                  <Thickness Left="0" Top="0" Right="{StaticResource ItemImageSpace}" Bottom="0" />
+                                </Setter.Value>
+                              </Setter>
                               <Style.Triggers>
                                 <DataTrigger Binding="{Binding TemplateReplaceMode}" Value="{x:Static ADD:TemplateReplaceMode.None}">
                                   <Setter Property="Source" Value="{x:Static AM:AppResource.TemplateReplaceNoneImage}" />
@@ -196,14 +201,38 @@
               <ComboBox Grid.Column="2" HorizontalAlignment="Stretch" ItemsSource="{Binding Source={x:Static AP:EnumList.TemplateReplaceModeList}}" SelectedItem="{Binding SelectedViewModel.TemplateReplaceMode}" Style="{StaticResource DefaultComboBox}">
                 <ComboBox.ItemTemplate>
                   <DataTemplate>
-                    <TextBlock>
-                      <TextBlock.Text>
-                        <MultiBinding Converter="{StaticResource TemplateReplaceModeLanguageConverter}" >
-                          <Binding Path="" />
-                          <Binding Path="CommonData.Language" RelativeSource="{RelativeSource AncestorType=Window}" />
-                        </MultiBinding>
-                      </TextBlock.Text>
-                    </TextBlock>
+                    <StackPanel Orientation="Horizontal">
+                      <Image>
+                        <Image.Style>
+                          <Style TargetType="Image" BasedOn="{StaticResource ItemImage}">
+                            <Setter Property="Margin">
+                              <Setter.Value>
+                                <Thickness Left="0" Top="0" Right="{StaticResource ItemImageSpace}" Bottom="0" />
+                              </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                              <DataTrigger Binding="{Binding}" Value="{x:Static ADD:TemplateReplaceMode.None}">
+                                <Setter Property="Source" Value="{x:Static AM:AppResource.TemplateReplaceNoneImage}" />
+                              </DataTrigger>
+                              <DataTrigger Binding="{Binding}" Value="{x:Static ADD:TemplateReplaceMode.Text}">
+                                <Setter Property="Source" Value="{x:Static AM:AppResource.TemplateReplaceTextImage}" />
+                              </DataTrigger>
+                              <DataTrigger Binding="{Binding}" Value="{x:Static ADD:TemplateReplaceMode.Program}">
+                                <Setter Property="Source" Value="{x:Static AM:AppResource.TemplateReplaceProgramImage}" />
+                              </DataTrigger>
+                            </Style.Triggers>
+                          </Style>
+                        </Image.Style>
+                      </Image>
+                      <TextBlock>
+                        <TextBlock.Text>
+                          <MultiBinding Converter="{StaticResource TemplateReplaceModeLanguageConverter}" >
+                            <Binding Path="" />
+                            <Binding Path="CommonData.Language" RelativeSource="{RelativeSource AncestorType=Window}" />
+                          </MultiBinding>
+                        </TextBlock.Text>
+                      </TextBlock>
+                    </StackPanel>
                   </DataTemplate>
                 </ComboBox.ItemTemplate>
               </ComboBox>
