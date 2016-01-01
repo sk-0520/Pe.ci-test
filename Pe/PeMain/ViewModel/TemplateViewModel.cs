@@ -499,6 +499,8 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
             View.UserClosing += View_UserClosing;
 
+            //View.editSource.Options
+
             base.InitializeView();
         }
 

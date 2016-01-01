@@ -227,10 +227,23 @@
               />-->
               <avalonEdit:TextEditor
                 x:Name="editSource"
-                SyntaxHighlighting="C#"
                 ShowLineNumbers="True"
                 FontFamily="{Binding FontFamily, Mode=OneWay}" FontWeight="{Binding FontBold, Converter={StaticResource BooleanFontWeightConverter}, Mode=OneWay}" FontStyle="{Binding FontItalic, Converter={StaticResource BooleanFontStyleConverter}, Mode=OneWay}" FontSize="{Binding FontSize, Mode=OneWay}"
               >
+                <avalonEdit:TextEditor.Options>
+                  <avalonEdit:TextEditorOptions 
+                    EnableHyperlinks="False"
+                    EnableEmailHyperlinks="False"
+                    EnableRectangularSelection="True"
+                    EnableTextDragDrop="True"
+                    CutCopyWholeLine="True"
+                    HighlightCurrentLine="True"
+                    ShowEndOfLine="True"
+                    ShowColumnRuler="True"
+                    ShowSpaces="True"
+                    ShowTabs="True"
+                  />
+                </avalonEdit:TextEditor.Options>
                 <i:Interaction.Behaviors>
                   <AA:AvalonEditBehaviour Code="{Binding SelectedViewModel.Source, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                 </i:Interaction.Behaviors>
