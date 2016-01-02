@@ -27,6 +27,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
     using ContentTypeTextNet.Pe.PeMain.IF;
     using ContentTypeTextNet.Pe.PeMain.Logic;
     using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
+    using ICSharpCode.AvalonEdit.Document;
 
     public class TemplateItemViewModel: HavingViewSingleModelWrapperBodyViewModelBase<TemplateIndexItemModel, TemplateBodyItemModel>
     {
@@ -34,6 +35,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         bool _replaceViewSelected = false;
         string _replaced;
+        TextDocument _document;
 
         #endregion
 
@@ -81,28 +83,23 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             set { SetPropertyValue(BodyModel, value); }
         }
 
+        public TextDocument Document
+        {
+            get
+            {
+                if(this._document == null) {
+                    this._document = new TextDocument(Source ?? string.Empty);
+                    this._document.TextChanged += Document_TextChanged;
+                }
+                return this._document;
+            }
+        }
+
         public string Replaced
         {
             get { return this._replaced; }
             set { SetVariableValue(ref this._replaced, value); }
         }
-
-        //public ImageSource ItemTypeImage
-        //{
-        //	get
-        //	{
-        //		switch(TemplateReplaceMode) {
-        //			case Library.PeData.Define.TemplateReplaceMode.None:
-        //				return AppResource.TemplatePlainImage;
-        //			case Library.PeData.Define.TemplateReplaceMode.Text:
-        //				return AppResource.TemplateReplaceImage;
-        //			case Library.PeData.Define.TemplateReplaceMode.Program:
-        //				return AppResource.TemplateProgrammableImage;
-        //			default:
-        //				throw new NotImplementedException();
-        //		}
-        //	}
-        //}
 
         public bool IsReplace
         {
@@ -202,11 +199,21 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                     Processor.Dispose();
                     Processor = null;
                 }
+                if(this._document != null) {
+                    this._document.TextChanged -= Document_TextChanged;
+                    this._document = null;
+                }
             }
 
             base.Dispose(disposing);
         }
 
         #endregion
+
+        private void Document_TextChanged(object sender, EventArgs e)
+        {
+            Source = Document.Text;
+        }
+
     }
 }

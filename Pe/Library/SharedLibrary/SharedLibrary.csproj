@@ -110,6 +110,7 @@
     <Compile Include="Logic\NotifyPropertyChangedObject.cs" />
     <Compile Include="Logic\Utility\CovertUtility.cs" />
     <Compile Include="Logic\Utility\DeepCloneUtility.cs" />
+    <Compile Include="Logic\Utility\CodeUtility.cs" />
     <Compile Include="Logic\Utility\UI\WebBrowserUtility.cs" />
     <Compile Include="Logic\WeakEventListener.cs" />
     <Compile Include="Model\CallerModel.cs" />
