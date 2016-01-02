@@ -32,6 +32,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 
     public static class TemplateUtility
     {
+        internal const string textReplaceKeywordHead = "@[";
+        internal const string textReplaceKeywordTail = "]";
+
         static IReadOnlyDictionary<string, string> GetTemplateMap(INonProcess nonProcess)
         {
             var map = new Dictionary<string, string>();
@@ -99,19 +102,26 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
             return processor.TransformText();
         }
 
-        static string ToPlainTextReplace(TemplateIndexItemModel indexModel, TemplateBodyItemModel bodyModel, DateTime dateTime, INonProcess appNonProcess)
+        public static IDictionary<string, string> GetTextTemplateMap(DateTime timestamp, INonProcess nonProcess)
+        {
+            var templateMap = GetTemplateMap(nonProcess);
+            var appMap = AppLanguageManager.GetAppMap(DateTime.Now, nonProcess.Language);
+
+            var result = templateMap.Concat(appMap).ToDictionary(p => p.Key, p => p.Value);
+
+            return result;
+        }
+
+        static string ToPlainTextReplace(TemplateIndexItemModel indexModel, TemplateBodyItemModel bodyModel, DateTime dateTime, INonProcess nonProcess)
         {
             var src = bodyModel.Source ?? string.Empty;
             if(string.IsNullOrWhiteSpace(src)) {
                 return src;
             }
 
-            var templateMap = GetTemplateMap(appNonProcess);
-            var appMap = AppLanguageManager.GetAppMap(DateTime.Now, appNonProcess.Language);
+            var map = GetTextTemplateMap(dateTime, nonProcess);
 
-            var map = templateMap.Concat(appMap).ToDictionary(p => p.Key, p => p.Value);
-
-            var result = src.ReplaceRangeFromDictionary("@[", "]", map);
+            var result = src.ReplaceRangeFromDictionary(textReplaceKeywordHead, textReplaceKeywordTail, map);
 
             return result;
         }
