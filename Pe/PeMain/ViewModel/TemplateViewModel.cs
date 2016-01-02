@@ -74,7 +74,9 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 if(SetVariableValue(ref this._selectedViewModel, value)) {
                     if(HasView) {
                         View.pageSource.IsSelected = true;
-                        View.editSource.Document.UndoStack.ClearAll();
+                        //if(View.editSource.Document != null) {
+                        //    View.editSource.Document.UndoStack.ClearAll();
+                        //}
                         View.editSource.Select(0, 0);
                     }
 
@@ -505,6 +507,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         static XshdRuleSet GetCSharpRuleSet()
         {
             var xshd = CodeUtility.Block(() => {
+                // TODO: もっと良さげなアクセス方法があるはず
                 var avalonEdit = typeof(ICSharpCode.AvalonEdit.TextEditor).Assembly;
                 using(var stream = avalonEdit.GetManifestResourceStream("ICSharpCode.AvalonEdit.Highlighting.Resources.CSharp-Mode.xshd")) {
                     using(var reader = new XmlTextReader(stream)) {
@@ -612,6 +615,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             var propertyNames = new[] {
                 nameof(KeywordList),
                 nameof(SyntaxHighlighting),
+                //nameof(TemplateItemViewModel.Document),
             };
             CallOnPropertyChange(propertyNames);
         }

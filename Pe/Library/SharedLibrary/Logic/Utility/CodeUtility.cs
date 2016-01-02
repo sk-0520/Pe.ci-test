@@ -25,8 +25,17 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Utility
     using System.Text.RegularExpressions;
     using System.Threading.Tasks;
 
+    /// <summary>
+    /// 名前適当すぎてやばい。
+    /// </summary>
     public static class CodeUtility
     {
+        /// <summary>
+        /// ブロックを強制的に作る。
+        /// </summary>
+        /// <typeparam name="TResult"></typeparam>
+        /// <param name="func"></param>
+        /// <returns></returns>
         public static TResult Block<TResult>(Func<TResult> func)
         {
             return func();
