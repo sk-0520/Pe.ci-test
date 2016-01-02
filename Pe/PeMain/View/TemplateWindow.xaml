@@ -267,10 +267,11 @@
                     EnableEmailHyperlinks="False"
                     EnableRectangularSelection="True"
                     EnableTextDragDrop="True"
+                    EnableImeSupport="True"
                     CutCopyWholeLine="True"
                     HighlightCurrentLine="True"
                     ShowEndOfLine="True"
-                    ShowColumnRuler="True"
+                    ShowColumnRuler="False"
                     ShowSpaces="True"
                     ShowTabs="True"
                   />

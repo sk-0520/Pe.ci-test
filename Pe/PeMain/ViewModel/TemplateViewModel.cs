@@ -74,10 +74,6 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 if(SetVariableValue(ref this._selectedViewModel, value)) {
                     if(HasView) {
                         View.pageSource.IsSelected = true;
-                        //if(View.editSource.Document != null) {
-                        //    View.editSource.Document.UndoStack.ClearAll();
-                        //}
-                        View.editSource.Select(0, 0);
                     }
 
                     CallReplaceModeChange();
@@ -541,7 +537,8 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             // 標準コントロール
             var t4StandardControlColor = new XshdColor() {
                 Name = "T4-STANDARD",
-                Foreground = new SimpleHighlightingBrush(Colors.Red),
+                Foreground = new SimpleHighlightingBrush(Constants.TemplateT4ControlColor.ForeColor),
+                Background = new SimpleHighlightingBrush(Constants.TemplateT4ControlColor.BackColor),
             };
             var t4StandardControlSpan = new XshdSpan() {
                 Multiline = true,
@@ -553,37 +550,39 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             };
 
             // クラス
-            var t4ClassColor = new XshdColor() {
+            var t4ClassControlColor = new XshdColor() {
                 Name = "T4-CLASS",
-                Foreground = new SimpleHighlightingBrush(Colors.Green),
+                Foreground = new SimpleHighlightingBrush(Constants.TemplateT4ClassColor.ForeColor),
+                Background = new SimpleHighlightingBrush(Constants.TemplateT4ClassColor.BackColor),
             };
             var t4ClassSpan = new XshdSpan() {
                 Multiline = true,
-                BeginColorReference = new XshdReference<XshdColor>(null, t4ClassColor.Name),
+                BeginColorReference = new XshdReference<XshdColor>(null, t4ClassControlColor.Name),
                 BeginRegex = @"<#\+",
-                EndColorReference = new XshdReference<XshdColor>(null, t4ClassColor.Name),
+                EndColorReference = new XshdReference<XshdColor>(null, t4ClassControlColor.Name),
                 EndRegex = "#>",
                 RuleSetReference = new XshdReference<XshdRuleSet>(null, csName),
             };
 
             // 式
-            var t4ExpressionColor = new XshdColor() {
+            var t4ExpressionControlColor = new XshdColor() {
                 Name = "T4-EXPRESSION",
-                Foreground = new SimpleHighlightingBrush(Colors.Blue),
+                Foreground = new SimpleHighlightingBrush(Constants.TemplateT4ExpressionColor.ForeColor),
+                Background = new SimpleHighlightingBrush(Constants.TemplateT4ExpressionColor.BackColor),
             };
             var t4ExpressionSpan = new XshdSpan() {
                 Multiline = true,
-                BeginColorReference = new XshdReference<XshdColor>(null, t4ExpressionColor.Name),
+                BeginColorReference = new XshdReference<XshdColor>(null, t4ExpressionControlColor.Name),
                 BeginRegex = "<#=",
-                EndColorReference = new XshdReference<XshdColor>(null, t4ExpressionColor.Name),
+                EndColorReference = new XshdReference<XshdColor>(null, t4ExpressionControlColor.Name),
                 EndRegex = "#>",
                 RuleSetReference = new XshdReference<XshdRuleSet>(null, csName),
             };
 
             var ruleSet = new XshdRuleSet();
             ruleSet.Elements.Add(t4StandardControlColor);
-            ruleSet.Elements.Add(t4ClassColor);
-            ruleSet.Elements.Add(t4ExpressionColor);
+            ruleSet.Elements.Add(t4ClassControlColor);
+            ruleSet.Elements.Add(t4ExpressionControlColor);
 
             ruleSet.Elements.Add(t4ExpressionSpan);
             ruleSet.Elements.Add(t4ClassSpan);
