@@ -336,6 +336,24 @@ namespace ContentTypeTextNet.Pe.PeMain
             defaultFontSize.median,
             defaultFontSize.maximum
         );
+        static readonly Color templateStandardControlColor = Color.FromRgb(0, 255, 0);
+        static readonly Color templateClassControlColor = Color.FromRgb(0, 255, 0);
+        static readonly Color templateExpressionControlColor = Color.FromRgb(0, 255, 0);
+        [ConstantsProperty]
+        static readonly ColorPairItemModel templateT4ControlColor = new ColorPairItemModel(
+            Colors.Black,
+            Colors.Yellow
+        );
+        [ConstantsProperty]
+        static readonly ColorPairItemModel templateT4ClassColor = new ColorPairItemModel(
+            Colors.SteelBlue,
+            Colors.Yellow
+        );
+        [ConstantsProperty]
+        static readonly ColorPairItemModel templateT4ExpressionColor = new ColorPairItemModel(
+            Colors.Blue,
+            Colors.Yellow
+        );
 
         [ConstantsRange]
         public static readonly TripleRange<TimeSpan> windowSaveIntervalTime = new TripleRange<TimeSpan>(

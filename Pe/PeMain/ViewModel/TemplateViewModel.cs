@@ -38,7 +38,13 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
     using Microsoft.Win32;
     using System.ComponentModel;
     using ContentTypeTextNet.Pe.PeMain.Define;
-
+    using ICSharpCode.AvalonEdit.Highlighting.Xshd;
+    using ICSharpCode.AvalonEdit.Highlighting;
+    using System.Xml;
+    using ContentTypeTextNet.Library.SharedLibrary.IF;
+    using System.Text.RegularExpressions;
+    using ContentTypeTextNet.Library.SharedLibrary.Define;
+    using System.Reflection;
     public class TemplateViewModel: HavingViewSingleModelWrapperIndexViewModelBase<TemplateSettingModel, TemplateWindow, TemplateIndexItemCollectionModel, TemplateIndexItemModel, TemplateItemViewModel>
     {
         #region variable
@@ -46,11 +52,16 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         TemplateItemViewModel _selectedViewModel;
         TemplateKeywordViewModel _selectedKeyword;
 
+        IHighlightingDefinition _highlightText;
+        IHighlightingDefinition _highlightProgram;
+
         #endregion
 
         public TemplateViewModel(TemplateSettingModel model, TemplateWindow view, TemplateIndexSettingModel indexModel, IAppNonProcess appNonProcess, IAppSender appSender)
             : base(model, view, indexModel, appNonProcess, appSender)
-        { }
+        {
+            InitializeSyntax();
+        }
 
         #region property
 
@@ -61,9 +72,11 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             {
                 var prevViewModel = this._selectedViewModel;
                 if(SetVariableValue(ref this._selectedViewModel, value)) {
-                    View.pageSource.IsSelected = true;
+                    if(HasView) {
+                        View.pageSource.IsSelected = true;
+                    }
 
-                    CallOnPropertyChange(nameof(KeywordList));
+                    CallReplaceModeChange();
                     if(this._selectedViewModel != null) {
                         this._selectedViewModel.PropertyChanged += SelectedViewModel_PropertyChanged;
                     }
@@ -151,6 +164,28 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                             .TextKeyList
                             .Select(k => new TemplateKeywordViewModel(k, SelectedViewModel.TemplateReplaceMode, Tuple.Create("@[", "]"), AppNonProcess))
                         ;
+                    }
+                } else {
+                    return null;
+                }
+            }
+        }
+
+        public IHighlightingDefinition SyntaxHighlighting
+        {
+            get
+            {
+                
+                if(SelectedViewModel != null) {
+                    switch(SelectedViewModel.TemplateReplaceMode) {
+                        case TemplateReplaceMode.None:
+                            return null;
+                        case TemplateReplaceMode.Text:
+                            return this._highlightText;
+                        case TemplateReplaceMode.Program:
+                            return this._highlightProgram;
+                        default:
+                            throw new NotImplementedException();
                     }
                 } else {
                     return null;
@@ -425,6 +460,165 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
         }
 
+        static XshdSyntaxDefinition GetSyntaxText(INonProcess nonProcess)
+        {
+            // 予約語
+            var keywordColor = new XshdColor() {
+                Name = "KEYWORD",
+                FontWeight = FontWeights.Bold,
+            };
+            var keywordKeywords = new XshdKeywords() {
+                ColorReference = new XshdReference<XshdColor>(keywordColor),
+            };
+            // 値は使用しない
+            var keys = TemplateUtility.GetTextTemplateMap(DateTime.MinValue, nonProcess).Keys;
+            foreach(var key in keys.Select(k => $"{TemplateUtility.textReplaceKeywordHead}{k}{TemplateUtility.textReplaceKeywordTail}")) {
+                keywordKeywords.Words.Add(key);
+            }
+
+            // 入力中 or なんか変な場合のワード
+            var unknownColor = new XshdColor() {
+                Name = "UNKNOWN",
+                Underline = true,
+            };
+            var unknownRule = new XshdRule() {
+                ColorReference = new XshdReference<XshdColor>(unknownColor),
+            };
+            unknownRule.Regex 
+                = Regex.Escape(TemplateUtility.textReplaceKeywordHead) 
+                + "(.*?)"
+                + Regex.Escape(TemplateUtility.textReplaceKeywordTail)
+            ;
+
+            var ruleSet = new XshdRuleSet();
+            ruleSet.Elements.Add(keywordKeywords);
+            ruleSet.Elements.Add(unknownRule);
+
+            var def = new XshdSyntaxDefinition();
+            def.Elements.Add(ruleSet);
+
+            return def;
+        }
+
+        static XshdRuleSet GetCSharpRuleSet()
+        {
+            var xshd = CodeUtility.Block(() => {
+                // TODO: もっと良さげなアクセス方法があるはず
+                var avalonEdit = typeof(ICSharpCode.AvalonEdit.TextEditor).Assembly;
+                using(var stream = avalonEdit.GetManifestResourceStream("ICSharpCode.AvalonEdit.Highlighting.Resources.CSharp-Mode.xshd")) {
+                    using(var reader = new XmlTextReader(stream)) {
+                        return HighlightingLoader.LoadXshd(reader);
+                    }
+                }
+            });
+
+            var ruleSet = xshd.Elements.OfType<XshdRuleSet>().Single(x => x.Name == null);
+
+            // プリプロセッサ ディレクティブいらない
+            var preprocessor = ruleSet.Elements.Single(e => CastUtility.AsFunc<XshdSpan, bool>(e, span => span.SpanColorReference.ReferencedElement == "Preprocessor"));
+            ruleSet.Elements.Remove(preprocessor);
+            var targetElements = xshd.Elements
+                .Where(e => e != ruleSet)
+            ;
+            foreach(var elemtnt in targetElements) {
+                ruleSet.Elements.Add(elemtnt);
+            }
+
+            return ruleSet;
+        }
+
+        static XshdSyntaxDefinition GetSyntaxProgram(INonProcess nonProcess)
+        {
+            // c#
+            var csName = "C#";
+            var csRuleSet = GetCSharpRuleSet();
+            csRuleSet.Name = csName;
+
+            // 標準コントロール
+            var t4StandardControlColor = new XshdColor() {
+                Name = "T4-STANDARD",
+                Foreground = new SimpleHighlightingBrush(Constants.TemplateT4ControlColor.ForeColor),
+                Background = new SimpleHighlightingBrush(Constants.TemplateT4ControlColor.BackColor),
+            };
+            var t4StandardControlSpan = new XshdSpan() {
+                Multiline = true,
+                BeginColorReference = new XshdReference<XshdColor>(null, t4StandardControlColor.Name),
+                BeginRegex = "<#",
+                EndColorReference = new XshdReference<XshdColor>(null, t4StandardControlColor.Name),
+                EndRegex = "#>",
+                RuleSetReference = new XshdReference<XshdRuleSet>(null, csName),
+            };
+
+            // クラス
+            var t4ClassControlColor = new XshdColor() {
+                Name = "T4-CLASS",
+                Foreground = new SimpleHighlightingBrush(Constants.TemplateT4ClassColor.ForeColor),
+                Background = new SimpleHighlightingBrush(Constants.TemplateT4ClassColor.BackColor),
+            };
+            var t4ClassSpan = new XshdSpan() {
+                Multiline = true,
+                BeginColorReference = new XshdReference<XshdColor>(null, t4ClassControlColor.Name),
+                BeginRegex = @"<#\+",
+                EndColorReference = new XshdReference<XshdColor>(null, t4ClassControlColor.Name),
+                EndRegex = "#>",
+                RuleSetReference = new XshdReference<XshdRuleSet>(null, csName),
+            };
+
+            // 式
+            var t4ExpressionControlColor = new XshdColor() {
+                Name = "T4-EXPRESSION",
+                Foreground = new SimpleHighlightingBrush(Constants.TemplateT4ExpressionColor.ForeColor),
+                Background = new SimpleHighlightingBrush(Constants.TemplateT4ExpressionColor.BackColor),
+            };
+            var t4ExpressionSpan = new XshdSpan() {
+                Multiline = true,
+                BeginColorReference = new XshdReference<XshdColor>(null, t4ExpressionControlColor.Name),
+                BeginRegex = "<#=",
+                EndColorReference = new XshdReference<XshdColor>(null, t4ExpressionControlColor.Name),
+                EndRegex = "#>",
+                RuleSetReference = new XshdReference<XshdRuleSet>(null, csName),
+            };
+
+            var ruleSet = new XshdRuleSet();
+            ruleSet.Elements.Add(t4StandardControlColor);
+            ruleSet.Elements.Add(t4ClassControlColor);
+            ruleSet.Elements.Add(t4ExpressionControlColor);
+
+            ruleSet.Elements.Add(t4ExpressionSpan);
+            ruleSet.Elements.Add(t4ClassSpan);
+            ruleSet.Elements.Add(t4StandardControlSpan);
+
+            var def = new XshdSyntaxDefinition() {
+                Name = "T4",
+            };
+            def.Elements.Add(ruleSet);
+            def.Elements.Add(csRuleSet);
+
+            return def;
+        }
+
+        void InitializeSyntax()
+        {
+            var syntaxText = GetSyntaxText(AppNonProcess);
+            this._highlightText = HighlightingLoader.Load(syntaxText, HighlightingManager.Instance);
+
+            var syntaxProgram = GetSyntaxProgram(AppNonProcess);
+            this._highlightProgram = HighlightingLoader.Load(syntaxProgram, HighlightingManager.Instance);
+        }
+
+        void CallReplaceModeChange()
+        {
+            if(HasView) {
+                LanguageUtility.RecursiveSetLanguage(View.listItems, AppNonProcess.Language);
+            }
+            var propertyNames = new[] {
+                nameof(KeywordList),
+                nameof(SyntaxHighlighting),
+                //nameof(TemplateItemViewModel.Document),
+            };
+            CallOnPropertyChange(propertyNames);
+        }
+
         #endregion
 
         #region IWindowStatus
@@ -524,10 +718,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 nameof(TemplateItemViewModel.TemplateReplaceMode),
             };
             if(SelectedViewModel != null && refreshTargets.Any(s => s == e.PropertyName)) {
-                if(HasView) {
-                    LanguageUtility.RecursiveSetLanguage(View.listItems, AppNonProcess.Language);
-                }
-                CallOnPropertyChange(nameof(KeywordList));
+                CallReplaceModeChange();
             }
         }
 

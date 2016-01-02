@@ -75,7 +75,11 @@
 				</comments>
 			</note>
 			<note rev="">
-				<message></message>
+				<message>#237: テンプレート入力エディタを高機能にする</message>
+				<comments>
+					<comment>AvalonEditを使用</comment>
+					<comment>今回実装分では単純に色設定のみ</comment>
+				</comments>
 			</note>
 			<note rev="">
 				<message></message>
