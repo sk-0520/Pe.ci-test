@@ -43,6 +43,8 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
     using System.Xml;
     using ContentTypeTextNet.Library.SharedLibrary.IF;
     using System.Text.RegularExpressions;
+    using ContentTypeTextNet.Library.SharedLibrary.Define;
+    using System.Reflection;
     public class TemplateViewModel: HavingViewSingleModelWrapperIndexViewModelBase<TemplateSettingModel, TemplateWindow, TemplateIndexItemCollectionModel, TemplateIndexItemModel, TemplateItemViewModel>
     {
         #region variable
@@ -500,11 +502,106 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             return def;
         }
 
+        static XshdRuleSet GetCSharpRuleSet()
+        {
+            var xshd = CodeUtility.Block(() => {
+                var avalonEdit = typeof(ICSharpCode.AvalonEdit.TextEditor).Assembly;
+                using(var stream = avalonEdit.GetManifestResourceStream("ICSharpCode.AvalonEdit.Highlighting.Resources.CSharp-Mode.xshd")) {
+                    using(var reader = new XmlTextReader(stream)) {
+                        return HighlightingLoader.LoadXshd(reader);
+                    }
+                }
+            });
+
+            var ruleSet = xshd.Elements.OfType<XshdRuleSet>().Single(x => x.Name == null);
+
+            // プリプロセッサ ディレクティブいらない
+            var preprocessor = ruleSet.Elements.Single(e => CastUtility.AsFunc<XshdSpan, bool>(e, span => span.SpanColorReference.ReferencedElement == "Preprocessor"));
+            ruleSet.Elements.Remove(preprocessor);
+            var targetElements = xshd.Elements
+                .Where(e => e != ruleSet)
+            ;
+            foreach(var elemtnt in targetElements) {
+                ruleSet.Elements.Add(elemtnt);
+            }
+
+            return ruleSet;
+        }
+
+        static XshdSyntaxDefinition GetSyntaxProgram(INonProcess nonProcess)
+        {
+            // c#
+            var csName = "C#";
+            var csRuleSet = GetCSharpRuleSet();
+            csRuleSet.Name = csName;
+
+            // 標準コントロール
+            var t4StandardControlColor = new XshdColor() {
+                Name = "T4-STANDARD",
+                Foreground = new SimpleHighlightingBrush(Colors.Red),
+            };
+            var t4StandardControlSpan = new XshdSpan() {
+                Multiline = true,
+                BeginColorReference = new XshdReference<XshdColor>(null, t4StandardControlColor.Name),
+                BeginRegex = "<#",
+                EndColorReference = new XshdReference<XshdColor>(null, t4StandardControlColor.Name),
+                EndRegex = "#>",
+                RuleSetReference = new XshdReference<XshdRuleSet>(null, csName),
+            };
+
+            // クラス
+            var t4ClassColor = new XshdColor() {
+                Name = "T4-CLASS",
+                Foreground = new SimpleHighlightingBrush(Colors.Green),
+            };
+            var t4ClassSpan = new XshdSpan() {
+                Multiline = true,
+                BeginColorReference = new XshdReference<XshdColor>(null, t4ClassColor.Name),
+                BeginRegex = @"<#\+",
+                EndColorReference = new XshdReference<XshdColor>(null, t4ClassColor.Name),
+                EndRegex = "#>",
+                RuleSetReference = new XshdReference<XshdRuleSet>(null, csName),
+            };
+
+            // 式
+            var t4ExpressionColor = new XshdColor() {
+                Name = "T4-EXPRESSION",
+                Foreground = new SimpleHighlightingBrush(Colors.Blue),
+            };
+            var t4ExpressionSpan = new XshdSpan() {
+                Multiline = true,
+                BeginColorReference = new XshdReference<XshdColor>(null, t4ExpressionColor.Name),
+                BeginRegex = "<#=",
+                EndColorReference = new XshdReference<XshdColor>(null, t4ExpressionColor.Name),
+                EndRegex = "#>",
+                RuleSetReference = new XshdReference<XshdRuleSet>(null, csName),
+            };
+
+            var ruleSet = new XshdRuleSet();
+            ruleSet.Elements.Add(t4StandardControlColor);
+            ruleSet.Elements.Add(t4ClassColor);
+            ruleSet.Elements.Add(t4ExpressionColor);
+
+            ruleSet.Elements.Add(t4ExpressionSpan);
+            ruleSet.Elements.Add(t4ClassSpan);
+            ruleSet.Elements.Add(t4StandardControlSpan);
+
+            var def = new XshdSyntaxDefinition() {
+                Name = "T4",
+            };
+            def.Elements.Add(ruleSet);
+            def.Elements.Add(csRuleSet);
+
+            return def;
+        }
+
         void InitializeSyntax()
         {
             var syntaxText = GetSyntaxText(AppNonProcess);
             this._highlightText = HighlightingLoader.Load(syntaxText, HighlightingManager.Instance);
-            this._highlightProgram = HighlightingLoader.Load(syntaxText, HighlightingManager.Instance);
+
+            var syntaxProgram = GetSyntaxProgram(AppNonProcess);
+            this._highlightProgram = HighlightingLoader.Load(syntaxProgram, HighlightingManager.Instance);
         }
 
         void CallReplaceModeChange()
