@@ -98,7 +98,10 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Utility
                 throw new InvalidOperationException(typeof(T).ToString());
             }
 
-            using(var xmlReader = XmlReader.Create(stream)) {
+            var xmlSetting = new XmlReaderSettings() {
+                CloseInput = false,
+            };
+            using(var xmlReader = XmlReader.Create(stream, xmlSetting)) {
                 var serializer = new DataContractSerializer(typeof(T));
                 var result = (T)serializer.ReadObject(xmlReader);
                 result.Correction();
@@ -182,6 +185,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Utility
                 OmitXmlDeclaration = false,
                 Indent = true,
                 IndentChars = "\t",
+                CloseOutput = false,
             };
             using(var xmlWriter = XmlWriter.Create(stream, xmlSetting)) {
                 var serializer = new DataContractSerializer(typeof(T));
@@ -239,7 +243,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Utility
         }
 
         /// <summary>
-        /// XMLストリーム読み込み。
+        /// Jsonストリーム読み込み。
         /// <para>DataContractを使用。</para>
         /// </summary>
         /// <typeparam name="T"></typeparam>
@@ -254,7 +258,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Utility
 
             //var serializer = new DataContractJsonSerializer(typeof(T));
             //return (T)serializer.ReadObject(stream);
-            using(var reader = new StreamReader(stream)) {
+            using(var reader = new StreamReader(stream, DefaultEncoding, true, DefaultBufferSize, true)) {
                 var result = JsonConvert.DeserializeObject<T>(reader.ReadToEnd());
                 result.Correction();
                 return result;
@@ -262,7 +266,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Utility
         }
 
         /// <summary>
-        /// XMLファイル読み込み。
+        /// Jsonファイル読み込み。
         /// <para>DataContractを使用。</para>
         /// </summary>
         /// <typeparam name="T"></typeparam>
