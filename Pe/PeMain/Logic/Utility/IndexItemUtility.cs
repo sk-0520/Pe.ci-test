@@ -135,6 +135,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
             foreach(var removeFileGuid in removeTargetList) {
                 RemoveBody(indexKind, removeFileGuid, appNonProcess);
             }
+
+            // 一時データ削除
+            AppUtility.GarbageCollectionTemporaryFile(parentDirPath, appNonProcess.Logger);
         }
 
         public static TIndexBody LoadBody<TIndexBody>(IndexKind indexKind, Guid guid, IAppNonProcess appNonProcess)

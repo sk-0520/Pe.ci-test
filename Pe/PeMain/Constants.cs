@@ -149,6 +149,10 @@ namespace ContentTypeTextNet.Pe.PeMain
         public const string extensionBinaryFile = "dat";
         public const string extensionJsonFile = "json";
 
+        const string extensionTemporaryFile = "tmp";
+        [ConstantsProperty]
+        const string temporaryFileSearchPattern = "*." + extensionTemporaryFile;
+
         public const FileType fileTypeMainSetting = FileType.Json;
         public const FileType fileTypeLauncherItemSetting = FileType.Json;
         public const FileType fileTypeLauncherGroupSetting = FileType.Json;
@@ -538,7 +542,7 @@ namespace ContentTypeTextNet.Pe.PeMain
         /// <returns></returns>
         public static string GetTemporaryExtension(string role)
         {
-            return "." + Constants.GetNowTimestampFileName() + "." + role + ".tmp";
+            return "." + Constants.GetNowTimestampFileName() + "." + role + "." + extensionTemporaryFile;
         }
 
         #endregion

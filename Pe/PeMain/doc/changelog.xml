@@ -58,7 +58,10 @@
 	<log date="YYYY/MM/DD" version="0.74.1" type="rc" dummy="################################################################################">
 		<group type="note" dummy="==================================================================">
 			<note rev="">
-				<message></message>
+				<message class="compatibility">#415の影響によユーザー設定ディレクトリ(標準だと %APPDATA%\Pe\settings あたり)の *.tmp ファイルが削除対象となりました</message>
+				<comments>
+					<comment>Pe の設定ファイルが配置されるディレクトリなのでユーザー側でどうこうしてるとは思えないけど一応周知</comment>
+				</comments>
 			</note>
 			<note rev="">
 				<message></message>
@@ -82,7 +85,7 @@
 				</comments>
 			</note>
 			<note rev="">
-				<message></message>
+				<message>#415: 設定ファイルへの書き込みはデータ出力後にファイルを置き換える</message>
 			</note>
 		</group>
 		<group type="fixes" dummy="==================================================================">

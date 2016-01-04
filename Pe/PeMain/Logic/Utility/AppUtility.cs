@@ -145,9 +145,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
             if(usingTemporary) {
                 // すでにファイルが存在する場合は退避させる
                 var existisOldFile = File.Exists(path);
-                var oldPath = path + Constants.GetTemporaryExtension("old");
+                var srcPath = path + Constants.GetTemporaryExtension("src");
                 if(existisOldFile) {
-                    File.Move(path, oldPath);
+                    File.Move(path, srcPath);
                 }
                 bool swapError = false;
                 try {
@@ -159,16 +159,41 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
                 }
                 if(swapError) {
                     // 旧ファイルの復帰
-                    if(!File.Exists(path) && File.Exists(oldPath)) {
-                        File.Move(oldPath, path);
+                    if(!File.Exists(path) && File.Exists(srcPath)) {
+                        File.Move(srcPath, path);
                     }
                 } else {
                     // 旧ファイルの削除
                     if(existisOldFile) {
-                        File.Delete(oldPath);
+                        File.Delete(srcPath);
                     }
                 }
             }
+        }
+
+        public static void GarbageCollectionTemporaryFile(string parentDirectoryPath, ILogger logger)
+        {
+            logger.Debug("gc: temp files", parentDirectoryPath);
+
+            if(!Directory.Exists(parentDirectoryPath)) {
+                logger.Debug("gc: not found directory", parentDirectoryPath);
+                return;
+            }
+            var pathList = Directory
+                .EnumerateFiles(parentDirectoryPath, Constants.TemporaryFileSearchPattern, SearchOption.TopDirectoryOnly)
+            ;
+            long targetFileCount = 0;
+            long removedFileCount = 0;
+            foreach(var path in pathList) {
+                targetFileCount += 1;
+                try {
+                    File.Delete(path);
+                    removedFileCount += 1;
+                } catch(Exception ex) {
+                    logger.Warning(path, ex);
+                }
+            }
+            logger.Debug($"gc: {removedFileCount}/{targetFileCount}", parentDirectoryPath);
         }
 
         public static IEnumerable<KeyValuePair<string, LanguageCollectionModel>?> GetLanguageFiles(string baseDir, ILogger logger)

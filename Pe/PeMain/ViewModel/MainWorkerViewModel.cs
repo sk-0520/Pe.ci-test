@@ -667,8 +667,15 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 IndexItemUtility.GarbageCollectionBody(IndexKind.Note, CommonData.NoteIndexSetting.Items, CommonData.NonProcess);
                 IndexItemUtility.GarbageCollectionBody(IndexKind.Template, CommonData.TemplateIndexSetting.Items, CommonData.NonProcess);
                 IndexItemUtility.GarbageCollectionBody(IndexKind.Clipboard, CommonData.ClipboardIndexSetting.Items, CommonData.NonProcess);
+                GarbageCollectionMainSettingTemporary();
             }
             Application.Current.Shutdown();
+        }
+
+        void GarbageCollectionMainSettingTemporary()
+        {
+            var userSettingDirPath = Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingDirectoryPath);
+            AppUtility.GarbageCollectionTemporaryFile(userSettingDirPath, CommonData.Logger);
         }
 
         public void SetView(TaskbarIcon view)
