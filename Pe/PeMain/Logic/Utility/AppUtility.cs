@@ -104,8 +104,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         /// <param name="path"></param>
         /// <param name="model"></param>
         /// <param name="fileType"></param>
+        /// <param name="usingTemporary">一時出力を使用するか</param>
         /// <param name="logger"></param>
-        public static void SaveSetting<T>(string path, T model, FileType fileType, ILogger logger)
+        public static void SaveSetting<T>(string path, T model, FileType fileType, bool usingTemporary, ILogger logger)
             where T : ModelBase
         {
             var saveDataName = typeof(T).Name;
@@ -113,48 +114,59 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 
             // 一時ファイル用パス
             var tempPath = path + Constants.GetTemporaryExtension("out");
-            if(FileUtility.Exists(tempPath)) {
-                logger.Debug($"save existis temp path: {saveDataName}", tempPath);
-                FileUtility.Delete(tempPath);
+
+            // 出力に使用するパス
+            string outputPath = null;
+
+            if(usingTemporary) {
+                outputPath = tempPath;
+                if(FileUtility.Exists(tempPath)) {
+                    logger.Debug($"save existis temp path: {saveDataName}", tempPath);
+                    FileUtility.Delete(tempPath);
+                }
+            } else {
+                outputPath = path;
             }
 
             // 一時ファイルへ出力
             switch(fileType) {
                 case FileType.Json:
-                    SerializeUtility.SaveJsonDataToFile(tempPath, model);
+                    SerializeUtility.SaveJsonDataToFile(outputPath, model);
                     break;
 
                 case FileType.Binary:
-                    SerializeUtility.SaveBinaryDataToFile(tempPath, model);
+                    SerializeUtility.SaveBinaryDataToFile(outputPath, model);
                     break;
 
                 default:
                     throw new NotImplementedException();
             }
 
-            // すでにファイルが存在する場合は退避させる
-            var existisOldFile = File.Exists(path);
-            var oldPath = path + Constants.GetTemporaryExtension("old");
-            if(existisOldFile) {
-                File.Move(path, oldPath);
-            }
-            bool swapError = false;
-            try {
-                // 入れ替え
-                File.Move(tempPath, path);
-            } catch(IOException ex) {
-                logger.Warning(ex);
-                swapError = true;
-            }
-            if(swapError) {
-                // 旧ファイルの復帰
-                if(!File.Exists(path) && File.Exists(oldPath)) {
-                    File.Move(oldPath, path);
-                }
-            } else {
-                // 旧ファイルの削除
+            if(usingTemporary) {
+                // すでにファイルが存在する場合は退避させる
+                var existisOldFile = File.Exists(path);
+                var oldPath = path + Constants.GetTemporaryExtension("old");
                 if(existisOldFile) {
-                    File.Delete(oldPath);
+                    File.Move(path, oldPath);
+                }
+                bool swapError = false;
+                try {
+                    // 入れ替え
+                    File.Move(tempPath, path);
+                } catch(IOException ex) {
+                    logger.Warning(ex);
+                    swapError = true;
+                }
+                if(swapError) {
+                    // 旧ファイルの復帰
+                    if(!File.Exists(path) && File.Exists(oldPath)) {
+                        File.Move(oldPath, path);
+                    }
+                } else {
+                    // 旧ファイルの削除
+                    if(existisOldFile) {
+                        File.Delete(oldPath);
+                    }
                 }
             }
         }

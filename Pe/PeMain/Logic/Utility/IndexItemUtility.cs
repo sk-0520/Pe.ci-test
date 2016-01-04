@@ -153,7 +153,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
             var fileType = IndexItemUtility.GetBodyFileType(indexBody.IndexKind);
             var path = IndexItemUtility.GetBodyFilePath(indexBody.IndexKind, guid, appNonProcess.VariableConstants);
             var bodyItem = (TIndexBody)indexBody;
-            AppUtility.SaveSetting(path, bodyItem, fileType, appNonProcess.Logger);
+            AppUtility.SaveSetting(path, bodyItem, fileType, true, appNonProcess.Logger);
         }
 
 

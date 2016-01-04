@@ -711,8 +711,8 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 BackupSetting();
 
                 SaveMainSetting();
-                AppUtility.SaveSetting(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingLauncherItemSettingFilePath), CommonData.LauncherItemSetting, Constants.fileTypeLauncherItemSetting, CommonData.Logger);
-                AppUtility.SaveSetting(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingLauncherGroupItemSettingFilePath), CommonData.LauncherGroupSetting, Constants.fileTypeLauncherGroupSetting, CommonData.Logger);
+                AppUtility.SaveSetting(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingLauncherItemSettingFilePath), CommonData.LauncherItemSetting, Constants.fileTypeLauncherItemSetting, true, CommonData.Logger);
+                AppUtility.SaveSetting(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingLauncherGroupItemSettingFilePath), CommonData.LauncherGroupSetting, Constants.fileTypeLauncherGroupSetting, true, CommonData.Logger);
 
                 foreach(var indexKind in EnumUtility.GetMembers<IndexKind>()) {
                     CommonData.AppSender.SendSaveIndex(indexKind, Timing.Instantly);
@@ -722,7 +722,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         void SaveMainSetting()
         {
-            AppUtility.SaveSetting(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingMainSettingFilePath), CommonData.MainSetting, Constants.fileTypeMainSetting, CommonData.Logger);
+            AppUtility.SaveSetting(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingMainSettingFilePath), CommonData.MainSetting, Constants.fileTypeMainSetting, true, CommonData.Logger);
         }
 
         void RotateSetting(string backupDirectory, string backupPattern, int backupCount)
@@ -1836,7 +1836,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             where TIndexSetting : ModelBase
         {
             var path = Environment.ExpandEnvironmentVariables(filePath);
-            AppUtility.SaveSetting(path, indexSetting, fileType, CommonData.Logger);
+            AppUtility.SaveSetting(path, indexSetting, fileType, true, CommonData.Logger);
         }
 
         void SaveIndex(IndexKind indexKind)
