@@ -45,24 +45,38 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 
     public static class AppUtility
     {
+        /// <summary>
+        /// 設定ファイルの読込。
+        /// <para>設定ファイルが読み込めない場合、new Tを使用する。</para>
+        /// </summary>
+        /// <typeparam name="T">読み込むデータ型</typeparam>
+        /// <param name="path">読み込むファイル</param>
+        /// <param name="fileType">ファイル種別</param>
+        /// <param name="logger">ログ出力</param>
+        /// <returns>読み込んだデータ。読み込めなかった場合は new T を返す。</returns>
         public static T LoadSetting<T>(string path, FileType fileType, ILogger logger)
             where T : ModelBase, new()
         {
             logger.Debug("load: " + typeof(T).Name, path);
             T result = null;
             if(File.Exists(path)) {
-                switch(fileType) {
-                    case FileType.Json:
-                        result = SerializeUtility.LoadJsonDataFromFile<T>(path);
-                        break;
+                try {
+                    switch(fileType) {
+                        case FileType.Json:
+                            result = SerializeUtility.LoadJsonDataFromFile<T>(path);
+                            break;
 
-                    case FileType.Binary:
-                        result = SerializeUtility.LoadBinaryDataFromFile<T>(path);
-                        break;
+                        case FileType.Binary:
+                            result = SerializeUtility.LoadBinaryDataFromFile<T>(path);
+                            break;
 
-                    default:
-                        throw new NotImplementedException();
+                        default:
+                            throw new NotImplementedException();
+                    }
+                } catch(Exception ex) {
+                    logger.Debug(ex);
                 }
+
                 if(result != null) {
                     logger.Debug("loaded: " + typeof(T).Name);
                 } else {
