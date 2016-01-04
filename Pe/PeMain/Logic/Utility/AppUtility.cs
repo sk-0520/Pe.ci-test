@@ -97,21 +97,65 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
             return result ?? new T();
         }
 
+        /// <summary>
+        /// 設定ファイルの出力。
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="path"></param>
+        /// <param name="model"></param>
+        /// <param name="fileType"></param>
+        /// <param name="logger"></param>
         public static void SaveSetting<T>(string path, T model, FileType fileType, ILogger logger)
             where T : ModelBase
         {
-            logger.Debug("save: " + typeof(T).Name, path);
+            var saveDataName = typeof(T).Name;
+            logger.Debug($"save: {saveDataName}", path);
+
+            // 一時ファイル用パス
+            var tempPath = path + Constants.GetTemporaryExtension("out");
+            if(FileUtility.Exists(tempPath)) {
+                logger.Debug($"save existis temp path: {saveDataName}", tempPath);
+                FileUtility.Delete(tempPath);
+            }
+
+            // 一時ファイルへ出力
             switch(fileType) {
                 case FileType.Json:
-                    SerializeUtility.SaveJsonDataToFile(path, model);
+                    SerializeUtility.SaveJsonDataToFile(tempPath, model);
                     break;
 
                 case FileType.Binary:
-                    SerializeUtility.SaveBinaryDataToFile(path, model);
+                    SerializeUtility.SaveBinaryDataToFile(tempPath, model);
                     break;
 
                 default:
                     throw new NotImplementedException();
+            }
+
+            // すでにファイルが存在する場合は退避させる
+            var existisOldFile = File.Exists(path);
+            var oldPath = path + Constants.GetTemporaryExtension("old");
+            if(existisOldFile) {
+                File.Move(path, oldPath);
+            }
+            bool swapError = false;
+            try {
+                // 入れ替え
+                File.Move(tempPath, path);
+            } catch(IOException ex) {
+                logger.Warning(ex);
+                swapError = true;
+            }
+            if(swapError) {
+                // 旧ファイルの復帰
+                if(!File.Exists(path) && File.Exists(oldPath)) {
+                    File.Move(oldPath, path);
+                }
+            } else {
+                // 旧ファイルの削除
+                if(existisOldFile) {
+                    File.Delete(oldPath);
+                }
             }
         }
 

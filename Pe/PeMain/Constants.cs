@@ -530,8 +530,17 @@ namespace ContentTypeTextNet.Pe.PeMain
         public static string GetNowTimestampFileName()
         {
             return GetTimestampFileName(DateTime.Now);
-
         }
+
+        /// <summary>
+        /// 一時ファイル用拡張子の作成
+        /// </summary>
+        /// <returns></returns>
+        public static string GetTemporaryExtension(string role)
+        {
+            return "." + Constants.GetNowTimestampFileName() + "." + role + ".tmp";
+        }
+
         #endregion
     }
 }
