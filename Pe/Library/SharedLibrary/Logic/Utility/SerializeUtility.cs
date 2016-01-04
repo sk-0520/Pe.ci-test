@@ -36,6 +36,9 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Utility
     /// </summary>
     public static class SerializeUtility
     {
+        public static int DefaultBufferSize { get; } = 512;
+        public static Encoding DefaultEncoding { get; } = Encoding.UTF8;
+
         /// <summary>
         /// DataContract属性を保持しているか。
         /// <para>http://stackoverflow.com/questions/221687/can-you-use-where-to-require-an-attribute-in-c</para>
@@ -292,7 +295,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Utility
             };
 
             var jsonString = JsonConvert.SerializeObject(model, setting);
-            using(var writer = new StreamWriter(stream)) {
+            using(var writer = new StreamWriter(stream, DefaultEncoding, DefaultBufferSize, true)) {
                 writer.Write(jsonString);
             }
         }
