@@ -79,6 +79,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Converter\ByteArrayConverter.cs" />
     <Compile Include="Define\ClipboardType.cs" />
     <Compile Include="Define\ComponentKind.cs" />
     <Compile Include="Define\GroupKind.cs" />
