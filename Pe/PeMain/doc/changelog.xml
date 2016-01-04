@@ -100,12 +100,24 @@
 				</comments>
 			</note>
 			<note rev="">
+				<message>#411: Json.NETを 7.0.1 → 8.0.1 にする</message>
+				<comments>
+					<comment>おっきな対応は#412で実施</comment>
+				</comments>
+			</note>
+			<note rev="">
+				<message>#412: HashItemModel.Code の保存形式を変換する</message>
+			</note>
+			<note rev="">
+				<message></message>
+			</note>
+			<note rev="">
 				<message></message>
 			</note>
 		</group>
 		<group type="developer" dummy="==================================================================">
 			<note rev="">
-				<message></message>
+				<message>#416: シリアライズ処理に使用した元ストリームは呼び出し側で面倒を見る</message>
 			</note>
 			<note rev="">
 				<message></message>
