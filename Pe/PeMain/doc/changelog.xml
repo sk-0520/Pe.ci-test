@@ -109,6 +109,9 @@
 				<message>#412: HashItemModel.Code の保存形式を変換する</message>
 			</note>
 			<note rev="">
+				<message>#414: パース出来ない設定ファイルの読込で落ちる</message>
+			</note>
+			<note rev="">
 				<message></message>
 			</note>
 			<note rev="">

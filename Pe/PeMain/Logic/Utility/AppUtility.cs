@@ -57,33 +57,41 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         public static T LoadSetting<T>(string path, FileType fileType, ILogger logger)
             where T : ModelBase, new()
         {
-            logger.Debug("load: " + typeof(T).Name, path);
+            var loadDataName = typeof(T).Name;
+            logger.Debug($"load: {loadDataName}", path);
+
             T result = null;
+
             if(File.Exists(path)) {
                 try {
-                    switch(fileType) {
-                        case FileType.Json:
-                            result = SerializeUtility.LoadJsonDataFromFile<T>(path);
-                            break;
+                    var fileInfo = new FileInfo(path);
+                    if(fileInfo.Length == 0) {
+                        logger.Debug($"load file is empty: {loadDataName}", fileInfo);
+                    } else {
+                        switch(fileType) {
+                            case FileType.Json:
+                                result = SerializeUtility.LoadJsonDataFromFile<T>(path);
+                                break;
 
-                        case FileType.Binary:
-                            result = SerializeUtility.LoadBinaryDataFromFile<T>(path);
-                            break;
+                            case FileType.Binary:
+                                result = SerializeUtility.LoadBinaryDataFromFile<T>(path);
+                                break;
 
-                        default:
-                            throw new NotImplementedException();
+                            default:
+                                throw new NotImplementedException();
+                        }
                     }
                 } catch(Exception ex) {
-                    logger.Debug(ex);
+                    logger.Warning($"loading: {loadDataName}", ex.ToString());
                 }
 
                 if(result != null) {
-                    logger.Debug("loaded: " + typeof(T).Name);
+                    logger.Debug($"loading: {loadDataName}");
                 } else {
-                    logger.Debug("loaded: null");
+                    logger.Debug($"loading: {loadDataName} is null");
                 }
             } else {
-                logger.Debug("file not found: " + typeof(T).Name, path);
+                logger.Debug($"load file not found: {loadDataName}", path);
             }
 
             return result ?? new T();
