@@ -16,12 +16,13 @@
     using ContentTypeTextNet.Pe.PeMain.Logic;
     using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
     using ContentTypeTextNet.Pe.Library.PeData.Item;
+
     partial class Constants
     {
         /*
         このソースは自動生成のため Constants-generator.tt を編集すること。
 
-        生成元ConstantsPropertyフィールド数: 19
+        生成元ConstantsPropertyフィールド数: 20
         生成元ConstantsRangeフィールド数: 22
         */
 
@@ -198,6 +199,17 @@
             get
             {
                 return backupSearchPattern;
+            }
+        }
+
+        #endregion
+        #region temporaryFileSearchPattern
+        
+        public static String TemporaryFileSearchPattern
+        {
+            get
+            {
+                return temporaryFileSearchPattern;
             }
         }
 

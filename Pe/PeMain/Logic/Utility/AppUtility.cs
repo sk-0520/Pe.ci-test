@@ -97,22 +97,103 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
             return result ?? new T();
         }
 
-        public static void SaveSetting<T>(string path, T model, FileType fileType, ILogger logger)
+        /// <summary>
+        /// 設定ファイルの出力。
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="path"></param>
+        /// <param name="model"></param>
+        /// <param name="fileType"></param>
+        /// <param name="usingTemporary">一時出力を使用するか</param>
+        /// <param name="logger"></param>
+        public static void SaveSetting<T>(string path, T model, FileType fileType, bool usingTemporary, ILogger logger)
             where T : ModelBase
         {
-            logger.Debug("save: " + typeof(T).Name, path);
+            var saveDataName = typeof(T).Name;
+            logger.Debug($"save: {saveDataName}", path);
+
+            // 一時ファイル用パス
+            var tempPath = path + Constants.GetTemporaryExtension("out");
+
+            // 出力に使用するパス
+            string outputPath = null;
+
+            if(usingTemporary) {
+                outputPath = tempPath;
+                if(FileUtility.Exists(tempPath)) {
+                    logger.Debug($"save existis temp path: {saveDataName}", tempPath);
+                    FileUtility.Delete(tempPath);
+                }
+            } else {
+                outputPath = path;
+            }
+
+            // 一時ファイルへ出力
             switch(fileType) {
                 case FileType.Json:
-                    SerializeUtility.SaveJsonDataToFile(path, model);
+                    SerializeUtility.SaveJsonDataToFile(outputPath, model);
                     break;
 
                 case FileType.Binary:
-                    SerializeUtility.SaveBinaryDataToFile(path, model);
+                    SerializeUtility.SaveBinaryDataToFile(outputPath, model);
                     break;
 
                 default:
                     throw new NotImplementedException();
             }
+
+            if(usingTemporary) {
+                // すでにファイルが存在する場合は退避させる
+                var existisOldFile = File.Exists(path);
+                var srcPath = path + Constants.GetTemporaryExtension("src");
+                if(existisOldFile) {
+                    File.Move(path, srcPath);
+                }
+                bool swapError = false;
+                try {
+                    // 入れ替え
+                    File.Move(tempPath, path);
+                } catch(IOException ex) {
+                    logger.Warning(ex);
+                    swapError = true;
+                }
+                if(swapError) {
+                    // 旧ファイルの復帰
+                    if(!File.Exists(path) && File.Exists(srcPath)) {
+                        File.Move(srcPath, path);
+                    }
+                } else {
+                    // 旧ファイルの削除
+                    if(existisOldFile) {
+                        File.Delete(srcPath);
+                    }
+                }
+            }
+        }
+
+        public static void GarbageCollectionTemporaryFile(string parentDirectoryPath, ILogger logger)
+        {
+            logger.Debug("gc: temp files", parentDirectoryPath);
+
+            if(!Directory.Exists(parentDirectoryPath)) {
+                logger.Debug("gc: not found directory", parentDirectoryPath);
+                return;
+            }
+            var pathList = Directory
+                .EnumerateFiles(parentDirectoryPath, Constants.TemporaryFileSearchPattern, SearchOption.TopDirectoryOnly)
+            ;
+            long targetFileCount = 0;
+            long removedFileCount = 0;
+            foreach(var path in pathList) {
+                targetFileCount += 1;
+                try {
+                    File.Delete(path);
+                    removedFileCount += 1;
+                } catch(Exception ex) {
+                    logger.Warning(path, ex);
+                }
+            }
+            logger.Debug($"gc: {removedFileCount}/{targetFileCount}", parentDirectoryPath);
         }
 
         public static IEnumerable<KeyValuePair<string, LanguageCollectionModel>?> GetLanguageFiles(string baseDir, ILogger logger)

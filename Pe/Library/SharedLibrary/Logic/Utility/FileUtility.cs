@@ -84,6 +84,17 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Utility
             return File.Exists(path) || Directory.Exists(path);
         }
 
+        public static void Delete(string path)
+        {
+            if(File.Exists(path)) {
+                File.Delete(path);
+            } else if(Directory.Exists(path)) {
+                Directory.Delete(path, true);
+            } else {
+                throw new IOException($"not found: {path}");
+            }
+        }
+
         /// <summary>
         /// 指定条件で不要ファイルを削除。
         /// </summary>

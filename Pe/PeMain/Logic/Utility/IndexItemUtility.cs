@@ -135,6 +135,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
             foreach(var removeFileGuid in removeTargetList) {
                 RemoveBody(indexKind, removeFileGuid, appNonProcess);
             }
+
+            // 一時データ削除
+            AppUtility.GarbageCollectionTemporaryFile(parentDirPath, appNonProcess.Logger);
         }
 
         public static TIndexBody LoadBody<TIndexBody>(IndexKind indexKind, Guid guid, IAppNonProcess appNonProcess)
@@ -153,7 +156,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
             var fileType = IndexItemUtility.GetBodyFileType(indexBody.IndexKind);
             var path = IndexItemUtility.GetBodyFilePath(indexBody.IndexKind, guid, appNonProcess.VariableConstants);
             var bodyItem = (TIndexBody)indexBody;
-            AppUtility.SaveSetting(path, bodyItem, fileType, appNonProcess.Logger);
+            AppUtility.SaveSetting(path, bodyItem, fileType, true, appNonProcess.Logger);
         }
 
 
