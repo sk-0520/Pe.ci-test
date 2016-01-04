@@ -65,11 +65,13 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Converter
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
             var array = value as byte[];
+            string output = null;
             if(array == null) {
-                serializer.Serialize(writer, "null");
+                output = "null";
             } else {
-                serializer.Serialize(writer, Convert.ToBase64String(array));
+                output = Convert.ToBase64String(array, Base64FormattingOptions.None);
             }
+            serializer.Serialize(writer, output);
         }
 
         #endregion

@@ -34,6 +34,7 @@ namespace ContentTypeTextNet.Pe.PeMain
     using System.Security.Cryptography;
     using System.Runtime.Serialization;
     using ContentTypeTextNet.Library.SharedLibrary.Model;
+    using Library.PeData.Item;
     partial class App
     {
 #if DEBUG
@@ -124,33 +125,22 @@ namespace ContentTypeTextNet.Pe.PeMain
             }
         }
 
-        [DataContract]
-        public class json_debug: ModelBase
-        {
-            [DataMember]
-            public DateTime DateTime1 { get; set; }
-            [DataMember]
-            public byte[] ByteArray { get; set; }
-            [DataMember]
-            public string Text { get; set; }
-            [DataMember]
-            public DateTime DateTime2 { get; set; }
-        }
-
         void json()
         {
-            var hash = new SHA1CryptoServiceProvider();
-            var jd = new json_debug() {
-                DateTime1 = DateTime.MinValue,
-                DateTime2 = DateTime.MaxValue,
-                Text = "JSON TEST",
-                ByteArray = hash.ComputeHash(new byte[] { 0, 1, 2, 3, 4 }),
+            var src = new HashItemModel() {
+                Code = new byte[1024],
+                Type = Library.PeData.Define.HashType.SHA1,
             };
+            var rnd = new Random();
+            foreach(var i in Enumerable.Range(0, src.Code.Length)) {
+                src.Code[i] = (byte)rnd.Next(byte.MaxValue);
+            }
+
             var stream = new MemoryStream();
-            SerializeUtility.SaveJsonDataToStream(stream, jd);
+            SerializeUtility.SaveJsonDataToStream(stream, src);
             var saved = Encoding.UTF8.GetString(stream.GetBuffer());
             stream.Seek(0, SeekOrigin.Begin);
-            var jd2 = SerializeUtility.LoadJsonDataFromStream<json_debug>(stream);
+            var dst = SerializeUtility.LoadJsonDataFromStream<HashItemModel>(stream);
         }
 
 #endif

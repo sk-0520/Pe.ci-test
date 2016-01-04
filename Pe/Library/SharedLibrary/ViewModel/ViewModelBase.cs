@@ -33,7 +33,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.ViewModel
     {
         #region variable
 
-        Caching<string, DelegateCommand> _createdCommands = new Caching<string, DelegateCommand>();
+        Caching<string, DelegateCommand> _createdCommands = null;
 
         bool _isChanged = false;
 
@@ -63,6 +63,18 @@ namespace ContentTypeTextNet.Library.SharedLibrary.ViewModel
             }
         }
 
+        Caching<string, DelegateCommand> CreatedCommands
+        {
+            get
+            {
+                if(this._createdCommands == null) {
+                    this._createdCommands = new Caching<string, DelegateCommand>();
+                }
+
+                return this._createdCommands;
+            }
+        }
+
         #endregion
 
         #region function
@@ -82,13 +94,13 @@ namespace ContentTypeTextNet.Library.SharedLibrary.ViewModel
         protected virtual ICommand CreateCommand(Action<object> executeCommand, [CallerMemberName] string callerMember = "", [CallerLineNumber] int callerLineNumer = -1)
         {
             var key = MakeCommandKey(callerMember, callerLineNumer);
-            return this._createdCommands.Get(key, () => new DelegateCommand(executeCommand));
+            return CreatedCommands.Get(key, () => new DelegateCommand(executeCommand));
         }
 
         protected virtual ICommand CreateCommand(Action<object> executeCommand, Func<object, bool> canExecuteCommand, [CallerMemberName] string callerMember = "", [CallerLineNumber] int callerLineNumer = -1)
         {
             var key = MakeCommandKey(callerMember, callerLineNumer);
-            return this._createdCommands.Get(key, () => new DelegateCommand(executeCommand, canExecuteCommand));
+            return CreatedCommands.Get(key, () => new DelegateCommand(executeCommand, canExecuteCommand));
         }
 
         /// <summary>

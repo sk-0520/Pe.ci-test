@@ -29,7 +29,7 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
     /// <summary>
     /// ハッシュデータ。
     /// </summary>
-    [Serializable]
+    [Serializable, DataContract]
     public class HashItemModel: ItemModelBase, IDeepClone, IIsEqual
     {
         public HashItemModel()
