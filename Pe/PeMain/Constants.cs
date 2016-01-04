@@ -149,6 +149,10 @@ namespace ContentTypeTextNet.Pe.PeMain
         public const string extensionBinaryFile = "dat";
         public const string extensionJsonFile = "json";
 
+        const string extensionTemporaryFile = "tmp";
+        [ConstantsProperty]
+        const string temporaryFileSearchPattern = "*." + extensionTemporaryFile;
+
         public const FileType fileTypeMainSetting = FileType.Json;
         public const FileType fileTypeLauncherItemSetting = FileType.Json;
         public const FileType fileTypeLauncherGroupSetting = FileType.Json;
@@ -336,6 +340,24 @@ namespace ContentTypeTextNet.Pe.PeMain
             defaultFontSize.median,
             defaultFontSize.maximum
         );
+        static readonly Color templateStandardControlColor = Color.FromRgb(0, 255, 0);
+        static readonly Color templateClassControlColor = Color.FromRgb(0, 255, 0);
+        static readonly Color templateExpressionControlColor = Color.FromRgb(0, 255, 0);
+        [ConstantsProperty]
+        static readonly ColorPairItemModel templateT4ControlColor = new ColorPairItemModel(
+            Colors.Black,
+            Colors.Yellow
+        );
+        [ConstantsProperty]
+        static readonly ColorPairItemModel templateT4ClassColor = new ColorPairItemModel(
+            Colors.SteelBlue,
+            Colors.Yellow
+        );
+        [ConstantsProperty]
+        static readonly ColorPairItemModel templateT4ExpressionColor = new ColorPairItemModel(
+            Colors.Blue,
+            Colors.Yellow
+        );
 
         [ConstantsRange]
         public static readonly TripleRange<TimeSpan> windowSaveIntervalTime = new TripleRange<TimeSpan>(
@@ -512,8 +534,17 @@ namespace ContentTypeTextNet.Pe.PeMain
         public static string GetNowTimestampFileName()
         {
             return GetTimestampFileName(DateTime.Now);
-
         }
+
+        /// <summary>
+        /// 一時ファイル用拡張子の作成
+        /// </summary>
+        /// <returns></returns>
+        public static string GetTemporaryExtension(string role)
+        {
+            return "." + Constants.GetNowTimestampFileName() + "." + role + "." + extensionTemporaryFile;
+        }
+
         #endregion
     }
 }

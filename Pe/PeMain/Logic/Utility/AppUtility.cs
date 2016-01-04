@@ -45,52 +45,155 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 
     public static class AppUtility
     {
+        /// <summary>
+        /// 設定ファイルの読込。
+        /// <para>設定ファイルが読み込めない場合、new Tを使用する。</para>
+        /// </summary>
+        /// <typeparam name="T">読み込むデータ型</typeparam>
+        /// <param name="path">読み込むファイル</param>
+        /// <param name="fileType">ファイル種別</param>
+        /// <param name="logger">ログ出力</param>
+        /// <returns>読み込んだデータ。読み込めなかった場合は new T を返す。</returns>
         public static T LoadSetting<T>(string path, FileType fileType, ILogger logger)
             where T : ModelBase, new()
         {
-            logger.Debug("load: " + typeof(T).Name, path);
+            var loadDataName = typeof(T).Name;
+            logger.Debug($"load: {loadDataName}", path);
+
             T result = null;
+
             if(File.Exists(path)) {
-                switch(fileType) {
-                    case FileType.Json:
-                        result = SerializeUtility.LoadJsonDataFromFile<T>(path);
-                        break;
+                try {
+                    var fileInfo = new FileInfo(path);
+                    if(fileInfo.Length == 0) {
+                        logger.Debug($"load file is empty: {loadDataName}", fileInfo);
+                    } else {
+                        switch(fileType) {
+                            case FileType.Json:
+                                result = SerializeUtility.LoadJsonDataFromFile<T>(path);
+                                break;
 
-                    case FileType.Binary:
-                        result = SerializeUtility.LoadBinaryDataFromFile<T>(path);
-                        break;
+                            case FileType.Binary:
+                                result = SerializeUtility.LoadBinaryDataFromFile<T>(path);
+                                break;
 
-                    default:
-                        throw new NotImplementedException();
+                            default:
+                                throw new NotImplementedException();
+                        }
+                    }
+                } catch(Exception ex) {
+                    logger.Warning($"loading: {loadDataName}", ex.ToString());
                 }
+
                 if(result != null) {
-                    logger.Debug("loaded: " + typeof(T).Name);
+                    logger.Debug($"loading: {loadDataName}");
                 } else {
-                    logger.Debug("loaded: null");
+                    logger.Debug($"loading: {loadDataName} is null");
                 }
             } else {
-                logger.Debug("file not found: " + typeof(T).Name, path);
+                logger.Debug($"load file not found: {loadDataName}", path);
             }
 
             return result ?? new T();
         }
 
-        public static void SaveSetting<T>(string path, T model, FileType fileType, ILogger logger)
+        /// <summary>
+        /// 設定ファイルの出力。
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="path"></param>
+        /// <param name="model"></param>
+        /// <param name="fileType"></param>
+        /// <param name="usingTemporary">一時出力を使用するか</param>
+        /// <param name="logger"></param>
+        public static void SaveSetting<T>(string path, T model, FileType fileType, bool usingTemporary, ILogger logger)
             where T : ModelBase
         {
-            logger.Debug("save: " + typeof(T).Name, path);
+            var saveDataName = typeof(T).Name;
+            logger.Debug($"save: {saveDataName}", path);
+
+            // 一時ファイル用パス
+            var tempPath = path + Constants.GetTemporaryExtension("out");
+
+            // 出力に使用するパス
+            string outputPath = null;
+
+            if(usingTemporary) {
+                outputPath = tempPath;
+                if(FileUtility.Exists(tempPath)) {
+                    logger.Debug($"save existis temp path: {saveDataName}", tempPath);
+                    FileUtility.Delete(tempPath);
+                }
+            } else {
+                outputPath = path;
+            }
+
+            // 一時ファイルへ出力
             switch(fileType) {
                 case FileType.Json:
-                    SerializeUtility.SaveJsonDataToFile(path, model);
+                    SerializeUtility.SaveJsonDataToFile(outputPath, model);
                     break;
 
                 case FileType.Binary:
-                    SerializeUtility.SaveBinaryDataToFile(path, model);
+                    SerializeUtility.SaveBinaryDataToFile(outputPath, model);
                     break;
 
                 default:
                     throw new NotImplementedException();
             }
+
+            if(usingTemporary) {
+                // すでにファイルが存在する場合は退避させる
+                var existisOldFile = File.Exists(path);
+                var srcPath = path + Constants.GetTemporaryExtension("src");
+                if(existisOldFile) {
+                    File.Move(path, srcPath);
+                }
+                bool swapError = false;
+                try {
+                    // 入れ替え
+                    File.Move(tempPath, path);
+                } catch(IOException ex) {
+                    logger.Warning(ex);
+                    swapError = true;
+                }
+                if(swapError) {
+                    // 旧ファイルの復帰
+                    if(!File.Exists(path) && File.Exists(srcPath)) {
+                        File.Move(srcPath, path);
+                    }
+                } else {
+                    // 旧ファイルの削除
+                    if(existisOldFile) {
+                        File.Delete(srcPath);
+                    }
+                }
+            }
+        }
+
+        public static void GarbageCollectionTemporaryFile(string parentDirectoryPath, ILogger logger)
+        {
+            logger.Debug("gc: temp files", parentDirectoryPath);
+
+            if(!Directory.Exists(parentDirectoryPath)) {
+                logger.Debug("gc: not found directory", parentDirectoryPath);
+                return;
+            }
+            var pathList = Directory
+                .EnumerateFiles(parentDirectoryPath, Constants.TemporaryFileSearchPattern, SearchOption.TopDirectoryOnly)
+            ;
+            long targetFileCount = 0;
+            long removedFileCount = 0;
+            foreach(var path in pathList) {
+                targetFileCount += 1;
+                try {
+                    File.Delete(path);
+                    removedFileCount += 1;
+                } catch(Exception ex) {
+                    logger.Warning(path, ex);
+                }
+            }
+            logger.Debug($"gc: {removedFileCount}/{targetFileCount}", parentDirectoryPath);
         }
 
         public static IEnumerable<KeyValuePair<string, LanguageCollectionModel>?> GetLanguageFiles(string baseDir, ILogger logger)
@@ -120,13 +223,28 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         public static AppLanguageManager LoadLanguageFile(string baseDir, string name, string cultureCode, ILogger logger)
         {
             logger.Debug("load: language file", baseDir);
-            var langPairList = GetLanguageFiles(baseDir, logger);
-
             var defaultPath = Path.Combine(baseDir, Constants.languageDefaultFileName);
+
+            var langPairList = GetLanguageFiles(baseDir, logger)
+                .Where(p => string.Compare(p?.Key, defaultPath, true) != 0)
+            ;
+
+            var baseLang = SerializeUtility.LoadXmlSerializeFromFile<LanguageCollectionModel>(defaultPath);
+
             var lang = langPairList.FirstOrDefault(p => p.Value.Value.Name == name)
                 ?? langPairList.FirstOrDefault(l => l.Value.Value.CultureCode == cultureCode)
-                ?? new KeyValuePair<string, LanguageCollectionModel>(defaultPath, SerializeUtility.LoadXmlSerializeFromFile<LanguageCollectionModel>(defaultPath))
+                ?? new KeyValuePair<string, LanguageCollectionModel>(defaultPath, baseLang)
             ;
+            if(lang.Value !=  baseLang) {
+                // マージ
+                var useLang = lang.Value;
+
+                var dk = baseLang.Define.Select(l => l.Id).Except(useLang.Define.Select(l => l.Id)).ToArray();
+                useLang.Define.AddRange(baseLang.Define.Where(l => dk.Any(k => k == l.Id)).ToArray());
+
+                var wk = baseLang.Words.Select(l => l.Id).Except(useLang.Words.Select(l => l.Id)).ToArray();
+                useLang.Words.AddRange(baseLang.Words.Where(l => wk.Any(k => k == l.Id)).ToArray());
+            }
             return new AppLanguageManager(lang.Value, lang.Key);
         }
 
@@ -139,7 +257,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         {
             FileUtility.MakeFileParentDirectory(filePath);
 
-            var stream = new StreamWriter(new FileStream(filePath, FileMode.Append, FileAccess.Write, FileShare.Read), Encoding.UTF8) {
+            var stream = new StreamWriter(filePath, true, Encoding.UTF8) {
                 AutoFlush = true,
             };
             return stream;

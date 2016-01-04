@@ -31,7 +31,10 @@ namespace ContentTypeTextNet.Pe.PeMain
     using Logic;
     using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
     using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
-
+    using System.Security.Cryptography;
+    using System.Runtime.Serialization;
+    using ContentTypeTextNet.Library.SharedLibrary.Model;
+    using Library.PeData.Item;
     partial class App
     {
 #if DEBUG
@@ -45,6 +48,7 @@ namespace ContentTypeTextNet.Pe.PeMain
             //box();
             //browser();
             //toolbar();
+            //json();
         }
 
         void icon()
@@ -119,6 +123,24 @@ namespace ContentTypeTextNet.Pe.PeMain
                     encoder.Save(s);
                 }
             }
+        }
+
+        void json()
+        {
+            var src = new HashItemModel() {
+                Code = new byte[1024],
+                Type = Library.PeData.Define.HashType.SHA1,
+            };
+            var rnd = new Random();
+            foreach(var i in Enumerable.Range(0, src.Code.Length)) {
+                src.Code[i] = (byte)rnd.Next(byte.MaxValue);
+            }
+
+            var stream = new MemoryStream();
+            SerializeUtility.SaveJsonDataToStream(stream, src);
+            var saved = Encoding.UTF8.GetString(stream.GetBuffer());
+            stream.Seek(0, SeekOrigin.Begin);
+            var dst = SerializeUtility.LoadJsonDataFromStream<HashItemModel>(stream);
         }
 
 #endif

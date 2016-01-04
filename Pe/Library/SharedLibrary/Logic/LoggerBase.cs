@@ -81,7 +81,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic
 #endif
                 new Tuple<bool, Action<LogItemModel>>(LoggerConfig.PutsCustom, PutsCustom),
             };
-            foreach(var puts in putsList.Where(p => p.Item1)) {
+            foreach(var puts in putsList.Where(p => p.Item1).ToArray()) {
                 puts.Item2(item);
             }
         }

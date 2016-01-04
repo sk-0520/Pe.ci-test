@@ -15,13 +15,14 @@
     using ContentTypeTextNet.Library.SharedLibrary.Model;
     using ContentTypeTextNet.Pe.PeMain.Logic;
     using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
+    using ContentTypeTextNet.Pe.Library.PeData.Item;
 
     partial class Constants
     {
         /*
         このソースは自動生成のため Constants-generator.tt を編集すること。
 
-        生成元ConstantsPropertyフィールド数: 16
+        生成元ConstantsPropertyフィールド数: 20
         生成元ConstantsRangeフィールド数: 22
         */
 
@@ -55,6 +56,39 @@
             get
             {
                 return buildProcess;
+            }
+        }
+
+        #endregion
+        #region templateT4ControlColor
+        
+        public static ColorPairItemModel TemplateT4ControlColor
+        {
+            get
+            {
+                return templateT4ControlColor;
+            }
+        }
+
+        #endregion
+        #region templateT4ClassColor
+        
+        public static ColorPairItemModel TemplateT4ClassColor
+        {
+            get
+            {
+                return templateT4ClassColor;
+            }
+        }
+
+        #endregion
+        #region templateT4ExpressionColor
+        
+        public static ColorPairItemModel TemplateT4ExpressionColor
+        {
+            get
+            {
+                return templateT4ExpressionColor;
             }
         }
 
@@ -165,6 +199,17 @@
             get
             {
                 return backupSearchPattern;
+            }
+        }
+
+        #endregion
+        #region temporaryFileSearchPattern
+        
+        public static String TemporaryFileSearchPattern
+        {
+            get
+            {
+                return temporaryFileSearchPattern;
             }
         }
 

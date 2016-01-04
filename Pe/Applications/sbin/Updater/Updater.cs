@@ -76,7 +76,7 @@ namespace ContentTypeTextNet.Pe.SystemApplications.Updater
     {
         public static int Main(string[] args)
         {
-            Update update = null;
+            UpdateProcess update = null;
             int result = 0;
             try {
                 var commandLine = new CommandLine(args);
@@ -84,7 +84,7 @@ namespace ContentTypeTextNet.Pe.SystemApplications.Updater
                     throw new UpdaterException(UpdaterCode.NotFoundArgument);
                 }
 
-                update = new Update(commandLine);
+                update = new UpdateProcess(commandLine);
                 update.Check();
                 if(update.IsVersionUp) {
                     if(update.CheckOnly) {

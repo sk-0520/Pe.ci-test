@@ -24,11 +24,12 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
     using System.Threading.Tasks;
     using ContentTypeTextNet.Library.SharedLibrary.IF;
     using ContentTypeTextNet.Pe.Library.PeData.Define;
-
+    using Converter;
+    using Newtonsoft.Json;
     /// <summary>
     /// ハッシュデータ。
     /// </summary>
-    [Serializable]
+    [Serializable, DataContract]
     public class HashItemModel: ItemModelBase, IDeepClone, IIsEqual
     {
         public HashItemModel()
@@ -46,7 +47,7 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
         /// <summary>
         /// ハッシュ値。
         /// </summary>
-        [DataMember]
+        [DataMember, JsonConverter(typeof(ByteArrayConverter))]
         public byte[] Code { get; set; }
 
         #endregion

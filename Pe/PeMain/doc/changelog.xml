@@ -55,6 +55,72 @@
 		</group>
 	</log>
 	-->
+	<log date="2016/01/04" version="0.75.0" dummy="################################################################################">
+		<group type="note" dummy="==================================================================">
+			<note rev="">
+				<message>あけおめ</message>
+			</note>
+			<note rev="">
+				<message class="compatibility">#415の影響によりユーザー設定ディレクトリ(標準だと %APPDATA%\Pe\settings あたり)の *.tmp ファイルが削除対象となりました</message>
+				<comments>
+					<comment>Pe の設定ファイルが配置されるディレクトリなのでユーザー側でどうこうしてるとは思えないけど一応周知</comment>
+				</comments>
+			</note>
+		</group>
+		<group type="features" dummy="==================================================================">
+			<note rev="8fd925990917f64b7324b01740b61de81ac02a67">
+				<message>#397: 言語ファイル読み込みにはdefault.xmlを親とする</message>
+				<comments>
+					<comment>そもそも条件的にdefault.xmlしか読めてなかったぜ！</comment>
+				</comments>
+			</note>
+			<note rev="b3ba79bd33e51aabc0cc80864d72a03beb049d91">
+				<message>#237: テンプレート入力エディタを高機能にする</message>
+				<comments>
+					<comment>AvalonEditを使用</comment>
+					<comment>今回実装分では単純に色設定のみ</comment>
+				</comments>
+			</note>
+			<note rev="65717cf3e0b63971a383c92cb40d2f0117af6d54">
+				<message>#415: 設定ファイルへの書き込みはデータ出力後にファイルを置き換える</message>
+			</note>
+			<note rev="dd26b9ee23c5cc45794741be9af2bffbd49d7d11">
+				<message>#411: Json.NETを 7.0.1 → 8.0.1 にする</message>
+				<comments>
+					<comment>おっきな対応は#412で実施</comment>
+				</comments>
+			</note>
+		</group>
+		<group type="fixes" dummy="==================================================================">
+			<note rev="1662115601ef2c0fc4f0c4d63f5ede8d8867f598">
+				<message>#410: ログのファイル出力うまくいってない？</message>
+				<comments>
+					<comment>#393, #355でどうにもうまくいかなかった原因</comment>
+					<comment>なんかロジック的には正しかったけど内部使用しているパラメータの扱いがミスってた</comment>
+				</comments>
+			</note>
+			<note rev="48ba67dbea1926477bb85fa9ff3763511b7ef84d">
+				<message>#402: ウィンドウの背景色をシステムに合わせる</message>
+				<comments>
+					<comment>コントロールの色に合わせた</comment>
+				</comments>
+			</note>
+			<note rev="ac36b67564191a961462fdf93420a1c9d9f93d36">
+				<message>#412: HashItemModel.Code の保存形式を変換する</message>
+				<comments>
+					<comment>今回リリースで一番の不安処理</comment>
+				</comments>
+			</note>
+			<note rev="6c53ec47572fc29a78dda532bbc278544957a335">
+				<message>#414: パース出来ない設定ファイルの読込で落ちる</message>
+			</note>
+		</group>
+		<group type="developer" dummy="==================================================================">
+			<note rev="bdca07370be06b8919af45c5b5703622a82fc3b1">
+				<message>#416: シリアライズ処理に使用した元ストリームは呼び出し側で面倒を見る</message>
+			</note>
+		</group>
+	</log>
 	<log date="2015/12/23" version="0.74.0" dummy="################################################################################">
 		<group type="features" dummy="==================================================================">
 			<note rev="e7fe3b78cd68c8ec7b41b8c6f2966ed18a9a3488">

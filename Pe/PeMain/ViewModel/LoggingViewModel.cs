@@ -357,7 +357,11 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
             var stream = AppUtility.CreateFileLoggerStream(filePath);
             AttachmentOutputWriter = stream;
+                
             logger.AttachmentStream(stream, true);
+            if(!logger.LoggerConfig.PutsStream) {
+                logger.LoggerConfig.PutsStream = true;
+            }
 
             CallOnPropertyChange(nameof(AttachmentOutputLogging));
         }
@@ -369,6 +373,9 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             logger.DetachmentStream(AttachmentOutputWriter);
             AttachmentOutputWriter.Dispose();
             AttachmentOutputWriter = null;
+            if(!AppNonProcess.VariableConstants.FileLogging) {
+                logger.LoggerConfig.PutsStream = false;
+            }
 
             CallOnPropertyChange(nameof(AttachmentOutputLogging));
         }

@@ -1,16 +1,11 @@
 # Pe
 
-プログラムランチャー。
+Pe は Windows 上で動作するデスクトップユーティリティです。
 
 
 # ダウンロード
 
 [ダウンロード](https://bitbucket.org/sk_0520/pe/downloads)を参照。
-
-
-# オンラインヘルプ
-
-[Wiki](https://bitbucket.org/sk_0520/pe/wiki/Home)を参照。
 
 
 # フォーラム
