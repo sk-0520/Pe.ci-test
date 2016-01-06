@@ -45,7 +45,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic
             : this()
         {
             if(executeCommand == null) {
-                throw new ArgumentNullException("executeCommand");
+                throw new ArgumentNullException(nameof(executeCommand));
             }
             ExecuteCommand = executeCommand;
         }
@@ -54,7 +54,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic
             : this(command)
         {
             if(canExecuteCommand == null) {
-                throw new ArgumentNullException("canExecuteCommand");
+                throw new ArgumentNullException(nameof(canExecuteCommand));
             }
 
             CanExecuteCommand = canExecuteCommand;

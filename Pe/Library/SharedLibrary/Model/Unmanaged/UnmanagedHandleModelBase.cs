@@ -28,7 +28,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Model.Unmanaged
             : base()
         {
             if(hHandle == IntPtr.Zero) {
-                throw new ArgumentNullException("hHandle");
+                throw new ArgumentNullException(nameof(hHandle));
             }
 
             Handle = hHandle;

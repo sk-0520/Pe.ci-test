@@ -42,7 +42,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Utility.UI
         public static void SetSilent(WebBrowser browser, bool silent)
         {
             if(browser == null)
-                throw new ArgumentNullException("browser");
+                throw new ArgumentNullException(nameof(browser));
 
             // get an IWebBrowser2 from the document
             IOleServiceProvider sp = browser.Document as IOleServiceProvider;

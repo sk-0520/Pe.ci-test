@@ -47,17 +47,17 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic
         public TEventHandler Handling(TEventHandler eventHandler, Action<TEventHandler> releaseEvent, [CallerFilePath] string callerFile = "", [CallerLineNumber] int callerLine = -1, [CallerMemberName] string callerMember = "")
         {
             if(EventHandler != null) {
-                throw new InvalidOperationException("EventHandler");
+                throw new InvalidOperationException(nameof(EventHandler));
             }
             if(ReleaseEvent != null) {
-                throw new InvalidOperationException("ReleaseEvent");
+                throw new InvalidOperationException(nameof(ReleaseEvent));
             }
 
             if(eventHandler == null) {
-                throw new ArgumentNullException("eventHandler");
+                throw new ArgumentNullException(nameof(eventHandler));
             }
             if(releaseEvent == null) {
-                throw new ArgumentNullException("releaseEvent");
+                throw new ArgumentNullException(nameof(releaseEvent));
             }
 
             CallerFile = callerFile;

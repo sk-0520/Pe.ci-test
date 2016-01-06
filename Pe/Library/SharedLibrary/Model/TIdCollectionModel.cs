@@ -103,7 +103,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Model
         {
             if(check) {
                 if(value == null) {
-                    throw new ArgumentNullException("value");
+                    throw new ArgumentNullException(nameof(value));
                 }
 
                 if(this.Any(i => IsEqual(value, i))) {
@@ -131,7 +131,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Model
         public void Set(TValue value)
         {
             if(value == null) {
-                throw new ArgumentNullException("value");
+                throw new ArgumentNullException(nameof(value));
             }
 
             var index = IndexOf(value.Id);
