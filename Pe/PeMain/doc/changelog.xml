@@ -91,7 +91,7 @@
 		</group>
 		<group type="developer" dummy="==================================================================">
 			<note rev="">
-				<message></message>
+				<message>#418: 独立可能なライブラリを独立させる</message>
 			</note>
 			<note rev="">
 				<message></message>

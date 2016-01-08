@@ -73,8 +73,18 @@
       <HintPath>..\..\packages\Newtonsoft.Json.8.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="PInvoke, Version=1.0.5851.26985, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\ContentTypeTextNet.PInvoke.1.0.0.5\lib\net46\PInvoke.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="SharedLibrary, Version=0.1.5851.27152, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.11\lib\net46\SharedLibrary.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
@@ -120,14 +130,6 @@
     <ProjectReference Include="..\PeData\PeData.csproj">
       <Project>{b3c0d8c0-2382-4058-8cec-3c62de401c3f}</Project>
       <Name>PeData</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\PInvoke\PInvoke.csproj">
-      <Project>{13a7d6df-6702-49cb-86f1-0980a3c1d6c6}</Project>
-      <Name>PInvoke</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SharedLibrary\SharedLibrary.csproj">
-      <Project>{9e8e373e-cd97-411d-8c45-10ac4a86cae8}</Project>
-      <Name>SharedLibrary</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
