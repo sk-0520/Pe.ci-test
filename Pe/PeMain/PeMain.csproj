@@ -87,13 +87,13 @@
       <HintPath>..\packages\Newtonsoft.Json.8.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="PInvoke, Version=1.0.5850.27269, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ContentTypeTextNet.PInvoke.1.0.0.1\lib\net46\PInvoke.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="PInvoke">
+      <HintPath>..\packages\ContentTypeTextNet.PInvoke.1.0.0.3\lib\net46\PInvoke.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="SharedLibrary, Version=0.1.5850.27458, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.1\lib\net46\SharedLibrary.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="SharedLibrary">
+      <HintPath>..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.9\lib\net46\SharedLibrary.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
