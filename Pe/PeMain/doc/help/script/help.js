@@ -37,7 +37,14 @@ var menuList = [
 		name: 'install_uninstall_data',
 		level: 1,
 		title: {
-			'ja-JP': 'インストール・アンインストール・使用データについて'
+			'ja-JP': 'インストール・アンインストール・保存データについて'
+		}
+	},
+	{
+		name: 'platform',
+		level: 2,
+		title: {
+			'ja-JP': '32/64bitについて'
 		}
 	},
 	{

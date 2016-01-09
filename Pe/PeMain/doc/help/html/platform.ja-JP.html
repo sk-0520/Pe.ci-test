@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta charset="utf-8" />
+		<title>ヘルプ</title>
+		<link rel="shortcut icon" href="../image/favicon.ico" type="image/vnd.microsoft.icon" />
+		<style>
+			@import url('../../../etc/style/common.css');
+			@import url('../style/help.css');
+		</style>
+		<script src="../../../etc/script/jquery.js"></script>
+		<script src="../../../etc/script/changelog.js"></script>
+		<script src="../script/help.js"></script>
+	</head>
+	<body>
+		<h1>ヘルプ</h1>
+		<section id="content">
+			<p>
+				<strong>原則として自身の使用しているプロセッサ幅(32bit/64bit)のPeを使用するのが無難です。</strong>
+			</p>
+
+			<h2>ウィルス検出について</h2>
+			<p>
+				開発中はそうでもなかったのにいざリリースした時に Avast がウィルス検出するようになりました。
+			</p>
+
+			<ul>
+				<li>Windows 7 pro(x64)</li>
+				<li>Avast: virus 140921-0, 2014/09/21 16:09:31</li>
+				<li>Avast: program 2014.9.0.2021</li>
+			</ul>
+			
+			<p>
+				Pe はその性格から 64bit ネイティブで動作さることによる利点は精神衛生以外にはこれと言ってないので32bit版でもいいのですが、だからと言って32bit版ばんじゃーいとは言えない状況です。
+			</p>
+			<p>
+				ちなみに設定データは 32/64bit で共有されるため再登録する必要はありません。
+			</p>
+
+			<h2>開発について</h2>
+			<p>
+				コード自体は 32/64bit で共用しているので原理的には大丈夫なんです、原理的には。。。
+			</p>
+			<p>
+				VSでデザイナ使用時にx86へ切り替える程度でこれと言って固定して開発しているわけではありませんがなんとなーくx86/x64をいい感じ平均的にやっていけたらなーレベルで切り替えてます。
+			</p>
+			
+			<h2>使用について</h2>
+			<p>
+				冒頭に記述している通り、自身の使用環境に合わせるのが最適なんですが諸々の事情で64bitCPUでも32bitプログラムを使用しないといけないかもしれないので、作者としてはどっちでもお好きにどうぞとしか言いようがありません。
+			</p>
+			<p>
+				Windows から提供される環境変数 <var>PROGRAMFILES</var> と <var>PROGRAMFILES(X86)</var> が 32/64bit でそれぞれ扱いが変わってきたりするので自動登録などでは登録できるのに使用できないことがあります。
+			</p>
+		</section>
+		<nav id="main-menu"></nav>
+	</body>
+</html>
