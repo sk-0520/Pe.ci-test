@@ -74,10 +74,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\..\Library\SharedLibrary\Logic\CommandLine.cs">
-      <Link>Link\CommandLine.cs</Link>
-    </Compile>
     <Compile Include="ArgumentValue.cs" />
+    <Compile Include="Library\SharedLibrary\Logic\CommandLine.cs" />
     <Compile Include="UpdateProcess.cs" />
     <Compile Include="Updater.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
