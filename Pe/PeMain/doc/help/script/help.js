@@ -221,6 +221,20 @@ var menuList = [
 		title: {
 			'ja-JP': '環境変数編集'
 		}
+	},
+	{
+		name: 'development',
+		level: 1,
+		title: {
+			'ja-JP': '開発について'
+		}
+	},
+	{
+		name: 'development-source',
+		level: 2,
+		title: {
+			'ja-JP': 'ソースコードについて'
+		}
 	}
 	//
 ];
