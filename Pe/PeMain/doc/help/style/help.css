@@ -69,6 +69,10 @@
 		margin-left: 1ex;
 	}
 
+	#main-menu li.level-2 {
+		margin-left: 2ex;
+	}
+
 p.screenshot {
 	text-align: center;
 }
