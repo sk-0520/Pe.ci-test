@@ -763,7 +763,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                     CommonData.VariableConstants.UserSettingClipboardDirectoryPath,
                 };
                 var basePath = Environment.ExpandEnvironmentVariables(settingBaseDirectory);
-                FileUtility.CreateZipFile(backupFileFilePath, basePath, targetFiles.Select(Environment.ExpandEnvironmentVariables));
+                ArchiveUtility.CreateZipFile(backupFileFilePath, basePath, targetFiles.Select(Environment.ExpandEnvironmentVariables));
             }
         }
 
