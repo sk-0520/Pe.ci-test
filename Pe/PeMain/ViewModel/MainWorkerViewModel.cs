@@ -1906,7 +1906,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
         }
 
-        IndexBodyItemModelBase GetIndexBody<TIndexBody>(IndexKind indexKind, Guid guid, IndexBodyPairItemCollection<TIndexBody> cachingItems)
+        IndexBodyItemModelBase GetIndexBody<TIndexBody>(IndexKind indexKind, Guid guid, IndexBodyPairItemCollection<TIndexBody> cachingItems, IndexBodyArchive archive)
             where TIndexBody : IndexBodyItemModelBase, new()
         {
             var body = cachingItems.GetFromId(guid);
@@ -1927,20 +1927,20 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         {
             switch(indexKind) {
                 case IndexKind.Note:
-                    return GetIndexBody<NoteBodyItemModel>(indexKind, guid, IndexBodyCaching.NoteItems);
+                    return GetIndexBody<NoteBodyItemModel>(indexKind, guid, IndexBodyCaching.NoteItems, IndexBodyCaching.NoteArchive);
 
                 case IndexKind.Template:
-                    return GetIndexBody<TemplateBodyItemModel>(indexKind, guid, IndexBodyCaching.TemplateItems);
+                    return GetIndexBody<TemplateBodyItemModel>(indexKind, guid, IndexBodyCaching.TemplateItems, IndexBodyCaching.NoteArchive);
 
                 case IndexKind.Clipboard:
-                    return GetIndexBody<ClipboardBodyItemModel>(indexKind, guid, IndexBodyCaching.ClipboardItems);
+                    return GetIndexBody<ClipboardBodyItemModel>(indexKind, guid, IndexBodyCaching.ClipboardItems, IndexBodyCaching.NoteArchive);
 
                 default:
                     throw new NotImplementedException();
             }
         }
 
-        void SaveIndexBody<TIndexBody>(IndexBodyItemModelBase indexBody, Guid guid, IndexBodyPairItemCollection<TIndexBody> cachingItems, Timing timing)
+        void SaveIndexBody<TIndexBody>(IndexBodyItemModelBase indexBody, Guid guid, IndexBodyPairItemCollection<TIndexBody> cachingItems, IndexBodyArchive archive, Timing timing)
             where TIndexBody : IndexBodyItemModelBase
         {
             //var fileType = IndexItemUtility.GetIndexBodyFileType(indexBody.IndexKind);
@@ -1956,15 +1956,15 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         {
             switch(indexBody.IndexKind) {
                 case IndexKind.Note:
-                    SaveIndexBody<NoteBodyItemModel>(indexBody, guid, IndexBodyCaching.NoteItems, timing);
+                    SaveIndexBody<NoteBodyItemModel>(indexBody, guid, IndexBodyCaching.NoteItems, IndexBodyCaching.NoteArchive, timing);
                     break;
 
                 case IndexKind.Template:
-                    SaveIndexBody<TemplateBodyItemModel>(indexBody, guid, IndexBodyCaching.TemplateItems, timing);
+                    SaveIndexBody<TemplateBodyItemModel>(indexBody, guid, IndexBodyCaching.TemplateItems, IndexBodyCaching.TemplateArchive, timing);
                     break;
 
                 case IndexKind.Clipboard:
-                    SaveIndexBody<ClipboardBodyItemModel>(indexBody, guid, IndexBodyCaching.ClipboardItems, timing);
+                    SaveIndexBody<ClipboardBodyItemModel>(indexBody, guid, IndexBodyCaching.ClipboardItems, IndexBodyCaching.ClipboardArchive, timing);
                     break;
 
                 default:

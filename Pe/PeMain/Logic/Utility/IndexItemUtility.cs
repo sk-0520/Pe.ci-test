@@ -146,7 +146,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
             var fileType = IndexItemUtility.GetBodyFileType(indexKind);
             var path = IndexItemUtility.GetBodyFilePath(indexKind, guid, appNonProcess.VariableConstants);
             var result = AppUtility.LoadSetting<TIndexBody>(path, fileType, appNonProcess.Logger);
-
+            
             return result;
         }
 
