@@ -157,6 +157,13 @@ namespace ContentTypeTextNet.Pe.PeMain
         const string indexJsonFileSearchPattern = "*." + extensionJsonFile;
 
         [ConstantsProperty]
+        public const string bodyArchiveFileName = "archive.zip";
+        [ConstantsProperty]
+        public static readonly TimeSpan bodyArchiveTimeSpan = TimeSpan.FromDays(1);
+        [ConstantsProperty]
+        public const int bodyArchiveFileSize = 1024;
+
+        [ConstantsProperty]
         const string extensionTemporaryFile = "tmp";
         [ConstantsProperty]
         const string temporaryFileSearchPattern = "*." + extensionTemporaryFile;

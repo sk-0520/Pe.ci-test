@@ -19,10 +19,12 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.IO.Compression;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
     using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
+    using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
     using ContentTypeTextNet.Pe.Library.PeData.Define;
     using ContentTypeTextNet.Pe.Library.PeData.Item;
     using ContentTypeTextNet.Pe.PeMain.Data;
@@ -96,6 +98,13 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
             return path;
         }
 
+        public static string GetBodyArchiveFilePath(IndexKind indexKind, VariableConstants variableConstants)
+        {
+            var dir = GetBodyParentDirectory(indexKind, variableConstants);
+            var path = Path.Combine(dir, Constants.bodyArchiveFileName);
+            return path;
+        }
+
         public static bool RemoveBody(IndexKind indexKind, Guid guid, IAppNonProcess appNonProcess)
         {
             var path = IndexItemUtility.GetBodyFilePath(indexKind, guid, appNonProcess.VariableConstants);
@@ -108,13 +117,14 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
             }
         }
 
-        public static void GarbageCollectionBody<TItemModel>(IndexKind indexKind, IndexItemCollectionModel<TItemModel> items, IAppNonProcess appNonProcess)
+        public static void GarbageCollectionBody<TItemModel>(IndexKind indexKind, IndexItemCollectionModel<TItemModel> items, IndexBodyArchive archive, IAppNonProcess appNonProcess)
             where TItemModel : IndexItemModelBase
         {
             var parentDirPath = Environment.ExpandEnvironmentVariables(GetBodyParentDirectory(indexKind, appNonProcess.VariableConstants));
             if(!Directory.Exists(parentDirPath)) {
                 return;
             }
+            // 実ファイルは存在するがインデックスに存在しないものを破棄
             var searchPattern = "*" + Path.GetExtension(GetBodyFileName(indexKind, GetBodyFileType(indexKind), Guid.Empty));
             var fileNameList = Directory
                 .EnumerateFiles(parentDirPath, searchPattern, SearchOption.TopDirectoryOnly)
@@ -138,16 +148,103 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 
             // 一時データ削除
             AppUtility.GarbageCollectionTemporaryFile(parentDirPath, appNonProcess.Logger);
+
+            // データアーカイブ
+            var timestamp = DateTime.Now;
+            GarbageCollectionBodyArchive(indexKind, items, archive, timestamp, Constants.bodyArchiveTimeSpan, Constants.bodyArchiveFileSize, appNonProcess);
         }
 
-        public static TIndexBody LoadBody<TIndexBody>(IndexKind indexKind, Guid guid, IAppNonProcess appNonProcess)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="TItemModel"></typeparam>
+        /// <param name="indexKind"></param>
+        /// <param name="items"></param>
+        /// <param name="archive"></param>
+        /// <param name="archiveTimestamp"></param>
+        /// <param name="fileSize"></param>
+        /// <param name="appNonProcess"></param>
+        static void GarbageCollectionBodyArchive<TItemModel>(IndexKind indexKind, IndexItemCollectionModel<TItemModel> items, IndexBodyArchive archive, DateTime archiveBaseTime, TimeSpan archiveTimeSpan, int fileSize, IAppNonProcess appNonProcess)
+            where TItemModel : IndexItemModelBase
+        {
+            //var archivePath = Environment.ExpandEnvironmentVariables(GetBodyArchiveFilePath(indexKind, appNonProcess.VariableConstants));
+            if(archive.EnabledArchive) {
+                // TODO: アーカイブにあるがインデックスにないものは破棄
+                //var itemIds = items
+                //    .Select(i => GetBodyFileName(indexKind, GetBodyFileType(indexKind), i.Id))
+                //    .ToArray()
+                //;
+            }
+
+            var targetTime = archiveBaseTime - archiveTimeSpan;
+            var oldItems = items
+                .Where(i => i.History.UpdateTimestamp < targetTime)
+                .ToArray()
+            ;
+            if(oldItems.Any()) {
+                if(!archive.EnabledArchive) {
+                    archive.OpenArchiveFile(indexKind, appNonProcess.VariableConstants);
+                }
+                var removePathList = new List<string>(oldItems.Length);
+                foreach(var item in oldItems) {
+                    var itemName = GetBodyFileName(indexKind, GetBodyFileType(indexKind), item.Id);
+
+                    var itemPath = GetBodyFilePath(indexKind, item.Id, appNonProcess.VariableConstants);
+                    var fileInfo = new FileInfo(itemPath);
+                    if(fileInfo.Length > fileSize) {
+                        // 指定サイズより大きい場合は除外する
+                        continue;
+                    }
+                    removePathList.Add(itemPath);
+                    var oldEntry = archive.Body.GetEntry(itemName);
+                    if(oldEntry != null) {
+                        // 既に存在していれば削除しておく
+                        oldEntry.Delete();
+                    }
+                    var buffer = FileUtility.ToBinary(itemPath);
+                    var entry = archive.Body.CreateEntry(itemName, CompressionLevel.NoCompression);
+                    using(var stream = new BinaryWriter(entry.Open())) {
+                        stream.Write(buffer);
+                    }
+                }
+                archive.Flush();
+                foreach(var path in removePathList) {
+                    try {
+                        File.Delete(path);
+                    } catch(Exception ex) {
+                        appNonProcess.Logger.Warning(ex);
+                    }
+                }
+            }
+        }
+
+        public static TIndexBody LoadBody<TIndexBody>(IndexKind indexKind, Guid guid, IndexBodyArchive archive, IAppNonProcess appNonProcess)
             where TIndexBody : IndexBodyItemModelBase, new()
         {
             var fileType = IndexItemUtility.GetBodyFileType(indexKind);
             var path = IndexItemUtility.GetBodyFilePath(indexKind, guid, appNonProcess.VariableConstants);
-            var result = AppUtility.LoadSetting<TIndexBody>(path, fileType, appNonProcess.Logger);
-            
-            return result;
+            if(File.Exists(path)) {
+                // 実ファイルが存在すれば実ファイルを優先する
+                var result = AppUtility.LoadSetting<TIndexBody>(path, fileType, appNonProcess.Logger);
+                return result;
+            } else {
+                // アーカイブから取得するがアーカイブにもなければ初期値を返す
+                CheckUtility.DebugEnforceNotNull(archive);
+                if(archive.Body == null) {
+                    // アーカイブはまだ作成されていない
+                    return new TIndexBody();
+                }
+                var entoryName = IndexItemUtility.GetBodyFileName(indexKind, fileType, guid);
+                var entry = archive.Body.GetEntry(entoryName);
+                if(entry == null) {
+                    // アーカイブに存在しない
+                    return new TIndexBody();
+                }
+                using(var stream = entry.Open()) {
+                    var result = AppUtility.LoadSetting<TIndexBody>(stream, fileType, appNonProcess.Logger);
+                    return result;
+                }
+            }
         }
 
         public static void SaveBody<TIndexBody>(TIndexBody indexBody, Guid guid, IAppNonProcess appNonProcess)

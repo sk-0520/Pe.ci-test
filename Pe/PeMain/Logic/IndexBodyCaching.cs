@@ -18,6 +18,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.IO.Compression;
     using System.Linq;
     using System.Text;
@@ -28,10 +29,11 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
     using ContentTypeTextNet.Pe.Library.PeData.Item;
     using ContentTypeTextNet.Pe.PeMain.Data;
     using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
-
+    using Library.PeData.Define;
+    using Utility;
     public class IndexBodyCaching: DisposeFinalizeBase
     {
-        public IndexBodyCaching(int templateLimit, int clipboardLimit)
+        public IndexBodyCaching(int templateLimit, int clipboardLimit, VariableConstants variableConstants)
         {
             if(templateLimit <= 0) {
                 templateLimit = Constants.indexBodyCachingSize;
@@ -43,6 +45,10 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
             NoteItems = new IndexBodyPairItemCollection<NoteBodyItemModel>(0);
             TemplateItems = new IndexBodyPairItemCollection<TemplateBodyItemModel>(templateLimit);
             ClipboardItems = new IndexBodyPairItemCollection<ClipboardBodyItemModel>(clipboardLimit);
+
+            NoteArchive.OpenIfExists(IndexKind.Note, variableConstants);
+            TemplateArchive.OpenIfExists(IndexKind.Template, variableConstants);
+            ClipboardArchive.OpenIfExists(IndexKind.Clipboard, variableConstants);
 
             NoteItems.StockRemovedItem = true;
             TemplateItems.StockRemovedItem = true;
@@ -57,6 +63,10 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
         public IndexBodyArchive TemplateArchive { get; } = new IndexBodyArchive();
         public IndexBodyPairItemCollection<ClipboardBodyItemModel> ClipboardItems { get; private set; }
         public IndexBodyArchive ClipboardArchive { get; } = new IndexBodyArchive();
+
+        #endregion
+
+        #region function
 
         #endregion
 

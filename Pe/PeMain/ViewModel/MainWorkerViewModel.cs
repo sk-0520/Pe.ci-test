@@ -91,8 +91,10 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
             IndexBodyCaching = new IndexBodyCaching(
                 Constants.CacheIndexTemplate,
-                Constants.CacheIndexClipboard
+                Constants.CacheIndexClipboard,
+                CommonData.VariableConstants
             );
+
 
             var indexTimer = new Dictionary<IndexKind, TimeSpan>() {
                 { IndexKind.Clipboard, Constants.SaveIndexClipboardTime },
@@ -665,9 +667,9 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 SaveSetting();
             }
             if(gc) {
-                IndexItemUtility.GarbageCollectionBody(IndexKind.Note, CommonData.NoteIndexSetting.Items, CommonData.NonProcess);
-                IndexItemUtility.GarbageCollectionBody(IndexKind.Template, CommonData.TemplateIndexSetting.Items, CommonData.NonProcess);
-                IndexItemUtility.GarbageCollectionBody(IndexKind.Clipboard, CommonData.ClipboardIndexSetting.Items, CommonData.NonProcess);
+                IndexItemUtility.GarbageCollectionBody(IndexKind.Note, CommonData.NoteIndexSetting.Items, IndexBodyCaching.NoteArchive, CommonData.NonProcess);
+                IndexItemUtility.GarbageCollectionBody(IndexKind.Template, CommonData.TemplateIndexSetting.Items, IndexBodyCaching.TemplateArchive, CommonData.NonProcess);
+                IndexItemUtility.GarbageCollectionBody(IndexKind.Clipboard, CommonData.ClipboardIndexSetting.Items, IndexBodyCaching.ClipboardArchive, CommonData.NonProcess);
                 GarbageCollectionMainSettingTemporary();
             }
             Application.Current.Shutdown();
@@ -1532,6 +1534,10 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             UninitializeSystem();
 
             if(!IsDisposed) {
+                if(IndexBodyCaching != null) {
+                    IndexBodyCaching.Dispose();
+                    IndexBodyCaching = null;
+                }
                 if(CommonData != null) {
                     CommonData.Dispose();
                     CommonData = null;
@@ -1917,7 +1923,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             //var fileType = IndexItemUtility.GetBodyFileType(indexKind);
             //var path = IndexItemUtility.GetBodyFilePath(indexKind, guid, CommonData.VariableConstants);
             //var result = AppUtility.LoadSetting<TIndexBody>(path, fileType, CommonData.Logger);
-            var result = IndexItemUtility.LoadBody<TIndexBody>(indexKind, guid, CommonData.NonProcess);
+            var result = IndexItemUtility.LoadBody<TIndexBody>(indexKind, guid, archive, CommonData.NonProcess);
 
             AppendCachingItems(guid, result, cachingItems);
             return result;

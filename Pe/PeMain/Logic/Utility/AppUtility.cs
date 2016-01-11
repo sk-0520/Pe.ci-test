@@ -45,6 +45,40 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 
     public static class AppUtility
     {
+        public static T LoadSetting<T>(Stream stream, FileType fileType, ILogger logger)
+            where T : ModelBase, new()
+        {
+            var loadDataName = typeof(T).Name;
+            logger.Debug($"load: {loadDataName}");
+
+            T result = null;
+
+            if(stream != null) {
+                switch(fileType) {
+                    case FileType.Json:
+                        result = SerializeUtility.LoadJsonDataFromStream<T>(stream);
+                        break;
+
+                    case FileType.Binary:
+                        result = SerializeUtility.LoadBinaryDataFromStream<T>(stream);
+                        break;
+
+                    default:
+                        throw new NotImplementedException();
+                }
+
+                if(result != null) {
+                    logger.Debug($"loading: {loadDataName}");
+                } else {
+                    logger.Debug($"loading: {loadDataName} is null");
+                }
+            } else {
+                logger.Debug($"load stream is null: {loadDataName}");
+            }
+
+            return result ?? new T();
+        }
+
         /// <summary>
         /// 設定ファイルの読込。
         /// <para>設定ファイルが読み込めない場合、new Tを使用する。</para>
