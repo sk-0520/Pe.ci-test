@@ -169,7 +169,8 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         {
             //var archivePath = Environment.ExpandEnvironmentVariables(GetBodyArchiveFilePath(indexKind, appNonProcess.VariableConstants));
             if(archive.EnabledArchive) {
-                // TODO: アーカイブにあるがインデックスにないものは破棄
+                // アーカイブには存在するがインデックスに存在しないものを破棄
+                // TODO: 共通化できそうなので今は未実装
                 //var itemIds = items
                 //    .Select(i => GetBodyFileName(indexKind, GetBodyFileType(indexKind), i.Id))
                 //    .ToArray()
@@ -190,6 +191,12 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
                     var itemName = GetBodyFileName(indexKind, GetBodyFileType(indexKind), item.Id);
 
                     var itemPath = GetBodyFilePath(indexKind, item.Id, appNonProcess.VariableConstants);
+                    if(File.Exists(itemPath)) {
+                        // インデックスに存在するがファイルが存在しない物は無視する
+                        // NOTE: 不整合を起こしていることになるが読み込み時に新規作成される実装のため該当データじたいは不正ではない
+                        continue;
+                    }
+
                     var fileInfo = new FileInfo(itemPath);
                     if(fileInfo.Length > fileSize) {
                         // 指定サイズより大きい場合は除外する

@@ -760,10 +760,13 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                     new ArchiveParameter() { RelativePath = CommonData.VariableConstants.UserSettingLauncherItemSettingFilePath, },
                     new ArchiveParameter() { RelativePath = CommonData.VariableConstants.UserSettingLauncherGroupItemSettingFilePath, },
                     new ArchiveParameter() { RelativePath = CommonData.VariableConstants.UserSettingNoteIndexFilePath, },
+                    new ArchiveParameter() { RelativePath = CommonData.VariableConstants.UserSettingNoteBodyArchivePath, },
                     new ArchiveParameter() { RelativePath = CommonData.VariableConstants.UserSettingNoteDirectoryPath, SearchPattern = Constants.IndexJsonFileSearchPattern, SearchOption = SearchOption.TopDirectoryOnly, },
                     new ArchiveParameter() { RelativePath = CommonData.VariableConstants.UserSettingTemplateIndexFilePath, },
+                    new ArchiveParameter() { RelativePath = CommonData.VariableConstants.UserSettingTemplateBodyArchivePath, },
                     new ArchiveParameter() { RelativePath = CommonData.VariableConstants.UserSettingTemplateDirectoryPath, SearchPattern = Constants.IndexJsonFileSearchPattern, SearchOption = SearchOption.TopDirectoryOnly, },
                     new ArchiveParameter() { RelativePath = CommonData.VariableConstants.UserSettingClipboardIndexFilePath, },
+                    new ArchiveParameter() { RelativePath = CommonData.VariableConstants.UserSettingClipboardBodyArchivePath, },
                     new ArchiveParameter() { RelativePath = CommonData.VariableConstants.UserSettingClipboardDirectoryPath, CompressionLevel = CompressionLevel.Fastest, SearchPattern = Constants.IndexBinaryFileSearchPattern, SearchOption = SearchOption.TopDirectoryOnly },
                 };
                 foreach(var ap in archiveParameters) {
