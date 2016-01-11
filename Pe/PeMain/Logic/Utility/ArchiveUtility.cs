@@ -25,7 +25,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
     using System.Text;
     using System.Threading.Tasks;
     using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
-
+    using Data.Temporary;
     internal static class ArchiveUtility
     {
         struct FilePathAndBuffer
@@ -55,18 +55,14 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
             return entry;
         }
 
-        static ZipArchiveEntry WriteArchive(ZipArchive archive, string path, string baseDirectoryPath, CompressionLevel compressionLevel)
+        static ZipArchiveEntry WriteArchive(ZipArchive archive, string relativePath, string baseDirectoryPath, CompressionLevel compressionLevel)
         {
-            var entryPath = GetArchiveEntryPath(path, baseDirectoryPath);
-            while(entryPath.First() == Path.DirectorySeparatorChar) {
-                entryPath = entryPath.Substring(1);
-            }
-
+            var path = Path.Combine(baseDirectoryPath, relativePath);
             var buffer = FileUtility.ToBinary(path);
-            return WriteArchive(archive, entryPath, buffer, compressionLevel);
+            return WriteArchive(archive, relativePath, buffer, compressionLevel);
         }
 
-        static string GetArchiveEntryPath(string path, string baseDirectoryPath)
+        public static string GetArchiveEntryPath(string path, string baseDirectoryPath)
         {
             var entryPath = path.Substring(baseDirectoryPath.Length);
             while(entryPath.First() == Path.DirectorySeparatorChar) {
@@ -81,20 +77,21 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         /// </summary>
         /// <param name="saveFilePath">保存先パス。</param>
         /// <param name="baseDirectoryPath">基準とするディレクトリパス。</param>
-        /// <param name="targetFiles">取り込み対象パス。ディレクトリを指定した場合は、以下のファイル・ディレクトリをすべてその対象とする</param>
-        public static void CreateZipFile(string saveFilePath, string baseDirectoryPath, IEnumerable<string> targetFiles)
+        /// <param name="archiveParameters">取り込み対象パス。ディレクトリを指定した場合は、以下のファイル・ディレクトリをすべてその対象とする</param>
+        public static void CreateZipFile(string saveFilePath, string baseDirectoryPath, IEnumerable<ArchiveParameter> archiveParameters)
         {
             using(var zip = new ZipArchive(new FileStream(saveFilePath, FileMode.Create), ZipArchiveMode.Create)) {
-                foreach(var filePath in targetFiles) {
-                    if(File.Exists(filePath)) {
-                        WriteArchive(zip, filePath, baseDirectoryPath, CompressionLevel.Optimal);
-                    } else if(Directory.Exists(filePath)) {
-                        var list = Directory.EnumerateFiles(filePath, "*", SearchOption.AllDirectories)
+                foreach(var archiveParameter in archiveParameters) {
+                    var fullPath = archiveParameter.GetFullPath(baseDirectoryPath);
+                    if(File.Exists(fullPath)) {
+                        WriteArchive(zip, archiveParameter.RelativePath, baseDirectoryPath, archiveParameter.CompressionLevel);
+                    } else if(Directory.Exists(fullPath)) {
+                        var list = Directory.EnumerateFiles(fullPath, archiveParameter.SearchPattern, archiveParameter.SearchOption)
                             .AsParallel()
                             .Select(f => new FilePathAndBuffer(GetArchiveEntryPath(f, baseDirectoryPath), FileUtility.ToBinary(f)))
                         ;
                         foreach(var pb in list) {
-                            WriteArchive(zip, pb.Path, pb.Buffer, CompressionLevel.NoCompression);
+                            WriteArchive(zip, pb.Path, pb.Buffer, archiveParameter.CompressionLevel);
                         }
                     }
                 }

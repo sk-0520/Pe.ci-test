@@ -61,6 +61,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
     using ContentTypeTextNet.Pe.PeMain.Data.Model;
     using System.Net;
     using System.Text;
+    using System.IO.Compression;
 
     public sealed class MainWorkerViewModel: ViewModelBase, IAppSender, IClipboardWatcher, IHavingView<TaskbarIcon>, IHavingCommonData
     {
@@ -751,19 +752,22 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 FileUtility.MakeFileParentDirectory(backupFileFilePath);
 
                 // zip
-                var targetFiles = new[] {
-                    CommonData.VariableConstants.UserSettingMainSettingFilePath,
-                    CommonData.VariableConstants.UserSettingLauncherItemSettingFilePath,
-                    CommonData.VariableConstants.UserSettingLauncherGroupItemSettingFilePath,
-                    CommonData.VariableConstants.UserSettingNoteIndexFilePath,
-                    CommonData.VariableConstants.UserSettingNoteDirectoryPath,
-                    CommonData.VariableConstants.UserSettingTemplateIndexFilePath,
-                    CommonData.VariableConstants.UserSettingTemplateDirectoryPath,
-                    CommonData.VariableConstants.UserSettingClipboardIndexFilePath,
-                    CommonData.VariableConstants.UserSettingClipboardDirectoryPath,
-                };
                 var basePath = Environment.ExpandEnvironmentVariables(settingBaseDirectory);
-                ArchiveUtility.CreateZipFile(backupFileFilePath, basePath, targetFiles.Select(Environment.ExpandEnvironmentVariables));
+                var archiveParameters = new[] {
+                    new ArchiveParameter() { RelativePath = CommonData.VariableConstants.UserSettingMainSettingFilePath, },
+                    new ArchiveParameter() { RelativePath = CommonData.VariableConstants.UserSettingLauncherItemSettingFilePath, },
+                    new ArchiveParameter() { RelativePath = CommonData.VariableConstants.UserSettingLauncherGroupItemSettingFilePath, },
+                    new ArchiveParameter() { RelativePath = CommonData.VariableConstants.UserSettingNoteIndexFilePath, },
+                    new ArchiveParameter() { RelativePath = CommonData.VariableConstants.UserSettingNoteDirectoryPath, SearchPattern = Constants.IndexJsonFileSearchPattern, SearchOption = SearchOption.TopDirectoryOnly, },
+                    new ArchiveParameter() { RelativePath = CommonData.VariableConstants.UserSettingTemplateIndexFilePath, },
+                    new ArchiveParameter() { RelativePath = CommonData.VariableConstants.UserSettingTemplateDirectoryPath, SearchPattern = Constants.IndexJsonFileSearchPattern, SearchOption = SearchOption.TopDirectoryOnly, },
+                    new ArchiveParameter() { RelativePath = CommonData.VariableConstants.UserSettingClipboardIndexFilePath, },
+                    new ArchiveParameter() { RelativePath = CommonData.VariableConstants.UserSettingClipboardDirectoryPath, CompressionLevel = CompressionLevel.Fastest, SearchPattern = Constants.IndexBinaryFileSearchPattern, SearchOption = SearchOption.TopDirectoryOnly },
+                };
+                foreach(var ap in archiveParameters) {
+                    ap.RelativePath = ArchiveUtility.GetArchiveEntryPath(Environment.ExpandEnvironmentVariables(ap.RelativePath), basePath);
+                }
+                ArchiveUtility.CreateZipFile(backupFileFilePath, basePath, archiveParameters);
             }
         }
 

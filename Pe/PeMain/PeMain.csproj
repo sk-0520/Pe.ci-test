@@ -181,6 +181,7 @@
     <Compile Include="Data\Model\KeyInfoModel.cs" />
     <Compile Include="Data\Model\ResponseDataModel.cs" />
     <Compile Include="Data\Temporary\AboutNotifyData.cs" />
+    <Compile Include="Data\Temporary\ArchiveParameter.cs" />
     <Compile Include="Data\Temporary\ClipboardCaptureNotifyData.cs" />
     <Compile Include="Data\Temporary\ItemWithScreen.cs" />
     <Compile Include="Data\Temporary\LauncherGroupAndItems.cs" />
@@ -188,6 +189,7 @@
     <Compile Include="Data\Temporary\NotifyDataBase.cs" />
     <Compile Include="Data\Temporary\StartupNotifyData.cs" />
     <Compile Include="Define\ApplicationCommand.cs" />
+    <Compile Include="Define\ArchiveType.cs" />
     <Compile Include="Define\WindowSaveType.cs" />
     <Compile Include="Logic\IndexDispatcherTimer.cs" />
     <Compile Include="Logic\Updater.cs" />

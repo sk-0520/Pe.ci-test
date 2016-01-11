@@ -146,9 +146,17 @@ namespace ContentTypeTextNet.Pe.PeMain
 
         public const string logFileExtension = "log";
 
-        public const string extensionBinaryFile = "dat";
-        public const string extensionJsonFile = "json";
+        [ConstantsProperty]
+        const string extensionBinaryFile = "dat";
+        [ConstantsProperty]
+        const string extensionJsonFile = "json";
 
+        [ConstantsProperty]
+        const string indexBinaryFileSearchPattern = "*." + extensionBinaryFile;
+        [ConstantsProperty]
+        const string indexJsonFileSearchPattern = "*." + extensionJsonFile;
+
+        [ConstantsProperty]
         const string extensionTemporaryFile = "tmp";
         [ConstantsProperty]
         const string temporaryFileSearchPattern = "*." + extensionTemporaryFile;

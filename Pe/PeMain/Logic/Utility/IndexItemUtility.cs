@@ -34,8 +34,8 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         public static string GetBodyFileName(IndexKind indexKind, FileType fileType, Guid guid)
         {
             var ext = new Dictionary<FileType, string>() {
-                { FileType.Json,   Constants.extensionJsonFile },
-                { FileType.Binary, Constants.extensionBinaryFile },
+                { FileType.Json,   Constants.ExtensionJsonFile },
+                { FileType.Binary, Constants.ExtensionBinaryFile },
             };
 
             var map = new Dictionary<string, string>() {
