@@ -25,9 +25,10 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
     using System.Threading.Tasks;
     using ContentTypeTextNet.Library.SharedLibrary.Logic;
     using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
-    using Data;
-    using Library.PeData.Define;
-    using Logic.Utility;
+    using ContentTypeTextNet.Pe.PeMain.Data;
+    using ContentTypeTextNet.Pe.Library.PeData.Define;
+    using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
+
     public class IndexBodyArchive: DisposeFinalizeBase
     {
         #region property

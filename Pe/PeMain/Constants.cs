@@ -159,9 +159,9 @@ namespace ContentTypeTextNet.Pe.PeMain
         [ConstantsProperty]
         public const string bodyArchiveFileName = "archive.zip";
         [ConstantsProperty]
-        public static readonly TimeSpan bodyArchiveTimeSpan = TimeSpan.FromDays(1);
+        public static readonly TimeSpan bodyArchiveTimeSpan = TimeSpan.FromMilliseconds(1);
         [ConstantsProperty]
-        public const int bodyArchiveFileSize = 1024;
+        public const int bodyArchiveFileSize = 1024*100;
 
         [ConstantsProperty]
         const string extensionTemporaryFile = "tmp";

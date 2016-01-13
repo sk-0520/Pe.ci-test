@@ -23,6 +23,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
+    using ContentTypeTextNet.Library.SharedLibrary.IF;
     using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
     using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
     using ContentTypeTextNet.Pe.Library.PeData.Define;
@@ -103,13 +104,27 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         /// <param name="indexKind"></param>
         /// <param name="fileType"></param>
         /// <param name="guid"></param>
+        /// <param name="parentDirectoryPath"></param>
+        /// <returns></returns>
+        static string GetBodyFilePath(IndexKind indexKind, FileType fileType, Guid guid, string parentDirectoryPath)
+        {
+            var fileName = GetBodyFileName(indexKind, fileType, guid);
+            var path = Path.Combine(parentDirectoryPath, fileName);
+
+            return path;
+        }
+        /// <summary>
+        /// インデックスのボディファイルパスを取得。
+        /// </summary>
+        /// <param name="indexKind"></param>
+        /// <param name="fileType"></param>
+        /// <param name="guid"></param>
         /// <param name="variableConstants"></param>
         /// <returns></returns>
         public static string GetBodyFilePath(IndexKind indexKind, FileType fileType, Guid guid, VariableConstants variableConstants)
         {
             var dirPath = IndexItemUtility.GetBodyFileParentDirectory(indexKind, variableConstants);
-            var fileName = IndexItemUtility.GetBodyFileName(indexKind, fileType, guid);
-            var path = Path.Combine(dirPath, fileName);
+            var path = GetBodyFilePath(indexKind, fileType, guid, dirPath);
 
             return path;
         }
@@ -138,6 +153,81 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
             return path;
         }
 
+        static bool CompareArchiveEntryName(ZipArchiveEntry entry, string name)
+        {
+            return string.Compare(entry.FullName, name, true) == 0;
+        }
+
+        /// <summary>
+        /// ボディファイルは物理ファイルか。
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        static bool ExistisRealBodyFile(IndexKind indexKind, Guid guid, string parentDirectoryPath)
+        {
+            if(!Directory.Exists(parentDirectoryPath)) {
+                return false;
+            }
+
+            var fileType = GetBodyFileType(indexKind);
+            var path = Environment.ExpandEnvironmentVariables(GetBodyFilePath(indexKind, fileType, guid, parentDirectoryPath));
+
+            return File.Exists(path);
+        }
+
+        static bool ExistisArchiveBodyFile(IndexKind indexKind, Guid guid, IndexBodyArchive archive, string parentDirectoryPath)
+        {
+            if(ExistisRealBodyFile(indexKind, guid, parentDirectoryPath)) {
+                return false;
+            }
+
+            if(!archive.EnabledArchive) {
+                return false;
+            }
+
+            //if(!Directory.Exists(parentDirectoryPath)) {
+            //    return false;
+            //}
+
+            var entryName = GetBodyFileName(indexKind, guid);
+            return archive.Body.Entries.Any(z => CompareArchiveEntryName(z, entryName));
+        }
+
+        static bool RemoveRealBodyFile(IndexKind indexKind, Guid guid, string parentDirectoryPath, ILogger logger)
+        {
+            var path = Environment.ExpandEnvironmentVariables(GetBodyFilePath(indexKind, GetBodyFileType(indexKind), guid, parentDirectoryPath));
+            try {
+                File.Delete(path);
+                return true;
+            } catch(Exception ex) {
+                logger.Error(ex);
+                return false;
+            }
+        }
+
+        static bool RemoveArchiveBodyFile(IndexKind indexKind, Guid guid, IndexBodyArchive archive, ILogger logger)
+        {
+            if(!archive.EnabledArchive) {
+                return false;
+            }
+
+            var entryName = GetBodyFileName(indexKind, guid);
+            // 同じパスで複数ファイルが格納されている可能性あり
+            var targetEntryList = archive.Body.Entries
+                .Where(z => CompareArchiveEntryName(z, entryName))
+                .ToArray()
+            ;
+            try {
+                foreach(var entry in targetEntryList) {
+                    entry.Delete();
+                }
+                return true;
+            } catch(Exception ex) {
+                logger.Error(ex);
+                return false;
+            }
+        }
+
         /// <summary>
         /// ボディファイルを削除。
         /// </summary>
@@ -148,13 +238,16 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         /// <returns></returns>
         public static bool RemoveBody(IndexKind indexKind, Guid guid, IndexBodyArchive archive, IAppNonProcess appNonProcess)
         {
-            var path = IndexItemUtility.GetBodyFilePath(indexKind, guid, appNonProcess.VariableConstants);
-            var expandedPath = Environment.ExpandEnvironmentVariables(path);
-            try {
-                File.Delete(path);
-                return true;
-            } catch(Exception ex) {
-                appNonProcess.Logger.Error(ex);
+            var parentDir = Environment.ExpandEnvironmentVariables(GetBodyFileParentDirectory(indexKind, appNonProcess.VariableConstants));
+            if(ExistisRealBodyFile(indexKind, guid, parentDir)) {
+                return RemoveRealBodyFile(indexKind, guid, parentDir, appNonProcess.Logger);
+            } else if(ExistisArchiveBodyFile(indexKind, guid, archive, parentDir)) {
+                var result = RemoveArchiveBodyFile(indexKind, guid, archive, appNonProcess.Logger);
+                if(result) {
+                    archive.Flush();
+                }
+                return result;
+            } else {
                 return false;
             }
         }
@@ -241,7 +334,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
                     var itemName = GetBodyFileName(indexKind, GetBodyFileType(indexKind), item.Id);
 
                     var itemPath = Environment.ExpandEnvironmentVariables(GetBodyFilePath(indexKind, item.Id, appNonProcess.VariableConstants));
-                    if(File.Exists(itemPath)) {
+                    if(!File.Exists(itemPath)) {
                         // インデックスに存在するがファイルが存在しない物は無視する
                         // NOTE: 不整合を起こしていることになるが読み込み時に新規作成される実装のため該当データじたいは不正ではない
                         continue;
