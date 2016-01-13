@@ -667,9 +667,9 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 SaveSetting();
             }
             if(gc) {
-                IndexItemUtility.GarbageCollectionBody(IndexKind.Note, CommonData.NoteIndexSetting.Items, IndexBodyCaching.NoteArchive, CommonData.NonProcess);
-                IndexItemUtility.GarbageCollectionBody(IndexKind.Template, CommonData.TemplateIndexSetting.Items, IndexBodyCaching.TemplateArchive, CommonData.NonProcess);
-                IndexItemUtility.GarbageCollectionBody(IndexKind.Clipboard, CommonData.ClipboardIndexSetting.Items, IndexBodyCaching.ClipboardArchive, CommonData.NonProcess);
+                IndexItemUtility.GarbageCollectionBody(IndexKind.Note, CommonData.NoteIndexSetting.Items, IndexBodyCaching.NoteItems.Archive, CommonData.NonProcess);
+                IndexItemUtility.GarbageCollectionBody(IndexKind.Template, CommonData.TemplateIndexSetting.Items, IndexBodyCaching.TemplateItems.Archive, CommonData.NonProcess);
+                IndexItemUtility.GarbageCollectionBody(IndexKind.Clipboard, CommonData.ClipboardIndexSetting.Items, IndexBodyCaching.ClipboardItems.Archive, CommonData.NonProcess);
                 GarbageCollectionMainSettingTemporary();
             }
             Application.Current.Shutdown();
@@ -1812,7 +1812,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
         }
 
-        void RemoveIndex<TItemModel, TIndexBody>(IndexKind indexKind, Guid guid, IndexItemCollectionModel<TItemModel> items, IndexBodyPairItemCollection<TIndexBody> cachingItems, IndexBodyArchive archive)
+        void RemoveIndex<TItemModel, TIndexBody>(IndexKind indexKind, Guid guid, IndexItemCollectionModel<TItemModel> items, IndexBodyPairItemCollection<TIndexBody> cachingItems)
             where TItemModel : IndexItemModelBase
             where TIndexBody : IndexBodyItemModelBase
         {
@@ -1821,7 +1821,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             items.Remove(guid);
 
             // ボディ部のファイルも削除する。
-            IndexItemUtility.RemoveBody(indexKind, guid, archive, CommonData.NonProcess);
+            IndexItemUtility.RemoveBody(indexKind, guid, cachingItems.Archive, CommonData.NonProcess);
 
             CommonData.AppSender.SendSaveIndex(indexKind, Timing.Delay);
         }
@@ -1831,19 +1831,19 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             switch(indexKind) {
                 case IndexKind.Note:
                     {
-                        RemoveIndex(indexKind, guid, CommonData.NoteIndexSetting.Items, IndexBodyCaching.NoteItems, IndexBodyCaching.NoteArchive);
+                        RemoveIndex(indexKind, guid, CommonData.NoteIndexSetting.Items, IndexBodyCaching.NoteItems);
                     }
                     break;
 
                 case IndexKind.Template:
                     {
-                        RemoveIndex(indexKind, guid, CommonData.TemplateIndexSetting.Items, IndexBodyCaching.TemplateItems, IndexBodyCaching.TemplateArchive);
+                        RemoveIndex(indexKind, guid, CommonData.TemplateIndexSetting.Items, IndexBodyCaching.TemplateItems);
                     }
                     break;
 
                 case IndexKind.Clipboard:
                     {
-                        RemoveIndex(indexKind, guid, CommonData.ClipboardIndexSetting.Items, IndexBodyCaching.ClipboardItems, IndexBodyCaching.ClipboardArchive);
+                        RemoveIndex(indexKind, guid, CommonData.ClipboardIndexSetting.Items, IndexBodyCaching.ClipboardItems);
                     }
                     break;
 
@@ -1915,7 +1915,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
         }
 
-        IndexBodyItemModelBase GetIndexBody<TIndexBody>(IndexKind indexKind, Guid guid, IndexBodyPairItemCollection<TIndexBody> cachingItems, IndexBodyArchive archive)
+        IndexBodyItemModelBase GetIndexBody<TIndexBody>(IndexKind indexKind, Guid guid, IndexBodyPairItemCollection<TIndexBody> cachingItems)
             where TIndexBody : IndexBodyItemModelBase, new()
         {
             var body = cachingItems.GetFromId(guid);
@@ -1926,7 +1926,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             //var fileType = IndexItemUtility.GetBodyFileType(indexKind);
             //var path = IndexItemUtility.GetBodyFilePath(indexKind, guid, CommonData.VariableConstants);
             //var result = AppUtility.LoadSetting<TIndexBody>(path, fileType, CommonData.Logger);
-            var result = IndexItemUtility.LoadBody<TIndexBody>(indexKind, guid, archive, CommonData.NonProcess);
+            var result = IndexItemUtility.LoadBody<TIndexBody>(indexKind, guid, cachingItems.Archive, CommonData.NonProcess);
 
             AppendCachingItems(guid, result, cachingItems);
             return result;
@@ -1936,20 +1936,20 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         {
             switch(indexKind) {
                 case IndexKind.Note:
-                    return GetIndexBody<NoteBodyItemModel>(indexKind, guid, IndexBodyCaching.NoteItems, IndexBodyCaching.NoteArchive);
+                    return GetIndexBody<NoteBodyItemModel>(indexKind, guid, IndexBodyCaching.NoteItems);
 
                 case IndexKind.Template:
-                    return GetIndexBody<TemplateBodyItemModel>(indexKind, guid, IndexBodyCaching.TemplateItems, IndexBodyCaching.TemplateArchive);
+                    return GetIndexBody<TemplateBodyItemModel>(indexKind, guid, IndexBodyCaching.TemplateItems);
 
                 case IndexKind.Clipboard:
-                    return GetIndexBody<ClipboardBodyItemModel>(indexKind, guid, IndexBodyCaching.ClipboardItems, IndexBodyCaching.ClipboardArchive);
+                    return GetIndexBody<ClipboardBodyItemModel>(indexKind, guid, IndexBodyCaching.ClipboardItems);
 
                 default:
                     throw new NotImplementedException();
             }
         }
 
-        void SaveIndexBody<TIndexBody>(IndexBodyItemModelBase indexBody, Guid guid, IndexBodyPairItemCollection<TIndexBody> cachingItems, IndexBodyArchive archive, Timing timing)
+        void SaveIndexBody<TIndexBody>(IndexBodyItemModelBase indexBody, Guid guid, IndexBodyPairItemCollection<TIndexBody> cachingItems, Timing timing)
             where TIndexBody : IndexBodyItemModelBase
         {
             //var fileType = IndexItemUtility.GetIndexBodyFileType(indexBody.IndexKind);
@@ -1957,7 +1957,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             var bodyItem = (TIndexBody)indexBody;
             //AppUtility.SaveSetting(path, bodyItem, fileType, CommonData.Logger);
             //AppendCachingItems(guid, bodyItem, cachingItems);
-            IndexItemUtility.SaveBody(bodyItem, guid, archive, CommonData.NonProcess);
+            IndexItemUtility.SaveBody(bodyItem, guid, cachingItems.Archive, CommonData.NonProcess);
             AppendCachingItems(guid, bodyItem, cachingItems);
         }
 
@@ -1965,15 +1965,15 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         {
             switch(indexBody.IndexKind) {
                 case IndexKind.Note:
-                    SaveIndexBody<NoteBodyItemModel>(indexBody, guid, IndexBodyCaching.NoteItems, IndexBodyCaching.NoteArchive, timing);
+                    SaveIndexBody<NoteBodyItemModel>(indexBody, guid, IndexBodyCaching.NoteItems, timing);
                     break;
 
                 case IndexKind.Template:
-                    SaveIndexBody<TemplateBodyItemModel>(indexBody, guid, IndexBodyCaching.TemplateItems, IndexBodyCaching.TemplateArchive, timing);
+                    SaveIndexBody<TemplateBodyItemModel>(indexBody, guid, IndexBodyCaching.TemplateItems, timing);
                     break;
 
                 case IndexKind.Clipboard:
-                    SaveIndexBody<ClipboardBodyItemModel>(indexBody, guid, IndexBodyCaching.ClipboardItems, IndexBodyCaching.ClipboardArchive, timing);
+                    SaveIndexBody<ClipboardBodyItemModel>(indexBody, guid, IndexBodyCaching.ClipboardItems, timing);
                     break;
 
                 default:

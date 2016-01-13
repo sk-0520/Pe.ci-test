@@ -49,7 +49,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
             where T : ModelBase, new()
         {
             var loadDataName = typeof(T).Name;
-            logger.Debug($"load: {loadDataName}");
+            logger.Debug($"read: {loadDataName}");
 
             T result = null;
 
@@ -68,12 +68,12 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
                 }
 
                 if(result != null) {
-                    logger.Debug($"loading: {loadDataName}");
+                    logger.Debug($"reading: {loadDataName}");
                 } else {
-                    logger.Debug($"loading: {loadDataName} is null");
+                    logger.Debug($"reading: {loadDataName} is null");
                 }
             } else {
-                logger.Debug($"load stream is null: {loadDataName}");
+                logger.Debug($"read stream is null: {loadDataName}");
             }
 
             return result ?? new T();
@@ -135,7 +135,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
             where T : ModelBase
         {
             var saveDataName = typeof(T).Name;
-            logger.Debug($"save: {saveDataName}");
+            logger.Debug($"write: {saveDataName}");
 
             // ファイルへ出力
             switch(fileType) {

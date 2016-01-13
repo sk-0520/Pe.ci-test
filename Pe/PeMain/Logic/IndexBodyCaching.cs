@@ -42,13 +42,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
                 clipboardLimit = Constants.indexBodyCachingSize;
             }
 
-            NoteItems = new IndexBodyPairItemCollection<NoteBodyItemModel>(0);
-            TemplateItems = new IndexBodyPairItemCollection<TemplateBodyItemModel>(templateLimit);
-            ClipboardItems = new IndexBodyPairItemCollection<ClipboardBodyItemModel>(clipboardLimit);
-
-            NoteArchive.OpenIfExists(IndexKind.Note, variableConstants);
-            TemplateArchive.OpenIfExists(IndexKind.Template, variableConstants);
-            ClipboardArchive.OpenIfExists(IndexKind.Clipboard, variableConstants);
+            NoteItems = new IndexBodyPairItemCollection<NoteBodyItemModel>(0, IndexKind.Note, variableConstants);
+            TemplateItems = new IndexBodyPairItemCollection<TemplateBodyItemModel>(templateLimit, IndexKind.Template, variableConstants);
+            ClipboardItems = new IndexBodyPairItemCollection<ClipboardBodyItemModel>(clipboardLimit, IndexKind.Clipboard, variableConstants);
 
             NoteItems.StockRemovedItem = true;
             TemplateItems.StockRemovedItem = true;
@@ -58,11 +54,8 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
         #region property
 
         public IndexBodyPairItemCollection<NoteBodyItemModel> NoteItems { get; private set; }
-        public IndexBodyArchive NoteArchive { get; } = new IndexBodyArchive();
         public IndexBodyPairItemCollection<TemplateBodyItemModel> TemplateItems { get; private set; }
-        public IndexBodyArchive TemplateArchive { get; } = new IndexBodyArchive();
         public IndexBodyPairItemCollection<ClipboardBodyItemModel> ClipboardItems { get; private set; }
-        public IndexBodyArchive ClipboardArchive { get; } = new IndexBodyArchive();
 
         #endregion
 
@@ -75,12 +68,12 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
         protected override void Dispose(bool disposing)
         {
             if(!IsDisposed) {
-                var archives = new[] {
-                    NoteArchive,
-                    TemplateArchive,
-                    ClipboardArchive,
+                var items = new IDisposable[] {
+                    NoteItems,
+                    TemplateItems,
+                    ClipboardItems,
                 };
-                foreach(var archive in archives) {
+                foreach(var archive in items) {
                     archive.Dispose();
                 }
             }
