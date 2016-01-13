@@ -368,8 +368,39 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
             }
         }
 
+        static TIndexBody LoadRealBodyFile<TIndexBody>(IndexKind indexKind, Guid guid, string parentDirectoryPath, ILogger logger)
+            where TIndexBody : IndexBodyItemModelBase, new()
+        {
+            var fileType = GetBodyFileType(indexKind);
+            var path = Environment.ExpandEnvironmentVariables(GetBodyFilePath(indexKind, fileType, guid, parentDirectoryPath));
+
+            var result = AppUtility.LoadSetting<TIndexBody>(path, fileType, logger);
+            return result;
+        }
+
+        static TIndexBody LoadArchiveBodyFile<TIndexBody>(IndexKind indexKind, Guid guid, IndexBodyArchive archive, ILogger logger)
+            where TIndexBody : IndexBodyItemModelBase, new()
+        {
+            if(!archive.EnabledArchive) {
+                // アーカイブはまだ作成されていない
+                return new TIndexBody();
+            }
+            var fileType = GetBodyFileType(indexKind);
+            var entoryName = GetBodyFileName(indexKind, fileType, guid);
+            var entry = archive.Body.GetEntry(entoryName);
+            if(entry == null) {
+                // アーカイブに存在しない
+                return new TIndexBody();
+            }
+            using(var stream = entry.Open()) {
+                var result = AppUtility.LoadSetting<TIndexBody>(stream, fileType, logger);
+                return result;
+            }
+        }
+
         /// <summary>
         /// ボディファイルを読み込む。
+        /// <para>実ファイルをアーカイブより優先する。</para>
         /// </summary>
         /// <typeparam name="TIndexBody"></typeparam>
         /// <param name="indexKind"></param>
@@ -380,29 +411,14 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         public static TIndexBody LoadBody<TIndexBody>(IndexKind indexKind, Guid guid, IndexBodyArchive archive, IAppNonProcess appNonProcess)
             where TIndexBody : IndexBodyItemModelBase, new()
         {
-            var fileType = IndexItemUtility.GetBodyFileType(indexKind);
-            var path = Environment.ExpandEnvironmentVariables(IndexItemUtility.GetBodyFilePath(indexKind, guid, appNonProcess.VariableConstants));
-            if(File.Exists(path)) {
-                // 実ファイルが存在すれば実ファイルを優先する
-                var result = AppUtility.LoadSetting<TIndexBody>(path, fileType, appNonProcess.Logger);
-                return result;
+            var parentDir = Environment.ExpandEnvironmentVariables(GetBodyFileParentDirectory(indexKind, appNonProcess.VariableConstants));
+            if(ExistisRealBodyFile(indexKind, guid, parentDir)) {
+                return LoadRealBodyFile<TIndexBody>(indexKind, guid, parentDir, appNonProcess.Logger);
+            } else if(ExistisArchiveBodyFile(indexKind, guid, archive, parentDir)) {
+                return LoadArchiveBodyFile<TIndexBody>(indexKind, guid, archive, appNonProcess.Logger);
             } else {
-                // アーカイブから取得するがアーカイブにもなければ初期値を返す
-                CheckUtility.DebugEnforceNotNull(archive);
-                if(archive.Body == null) {
-                    // アーカイブはまだ作成されていない
-                    return new TIndexBody();
-                }
-                var entoryName = IndexItemUtility.GetBodyFileName(indexKind, fileType, guid);
-                var entry = archive.Body.GetEntry(entoryName);
-                if(entry == null) {
-                    // アーカイブに存在しない
-                    return new TIndexBody();
-                }
-                using(var stream = entry.Open()) {
-                    var result = AppUtility.LoadSetting<TIndexBody>(stream, fileType, appNonProcess.Logger);
-                    return result;
-                }
+                // なんもない
+                return new TIndexBody();
             }
         }
 

@@ -1939,10 +1939,10 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                     return GetIndexBody<NoteBodyItemModel>(indexKind, guid, IndexBodyCaching.NoteItems, IndexBodyCaching.NoteArchive);
 
                 case IndexKind.Template:
-                    return GetIndexBody<TemplateBodyItemModel>(indexKind, guid, IndexBodyCaching.TemplateItems, IndexBodyCaching.NoteArchive);
+                    return GetIndexBody<TemplateBodyItemModel>(indexKind, guid, IndexBodyCaching.TemplateItems, IndexBodyCaching.TemplateArchive);
 
                 case IndexKind.Clipboard:
-                    return GetIndexBody<ClipboardBodyItemModel>(indexKind, guid, IndexBodyCaching.ClipboardItems, IndexBodyCaching.NoteArchive);
+                    return GetIndexBody<ClipboardBodyItemModel>(indexKind, guid, IndexBodyCaching.ClipboardItems, IndexBodyCaching.ClipboardArchive);
 
                 default:
                     throw new NotImplementedException();
