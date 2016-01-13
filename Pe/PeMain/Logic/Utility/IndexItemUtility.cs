@@ -34,6 +34,8 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 
     public static class IndexItemUtility
     {
+        const CompressionLevel defaultCompressionLevel = CompressionLevel.Fastest;
+
         /// <summary>
         /// インデックスデータ種別からインデックスのボディファイルのファイル種別を取得する。
         /// </summary>
@@ -252,6 +254,29 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
             }
         }
 
+        static IList<Guid> GetUnindexedGuid<TItemModel>(IndexKind indexKind, IndexItemCollectionModel<TItemModel> items, IEnumerable<Guid> guids)
+            where TItemModel : IndexItemModelBase
+        {
+            var itemList = items.ToList();
+            var removeTargetList = new List<Guid>();
+            foreach(var guid in guids) {
+                var targetIndex = itemList.FindIndex(i => i.Id == guid);
+                if(targetIndex == -1) {
+                    removeTargetList.Add(guid);
+                } else {
+                    itemList.RemoveAt(targetIndex);
+                }
+            }
+
+            return removeTargetList;
+        }
+
+        static bool CheckGuidParse(string s)
+        {
+            Guid temp;
+            return Guid.TryParse(s, out temp);
+        }
+
         /// <summary>
         /// インデックスデータをGC。
         /// </summary>
@@ -269,24 +294,15 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
             }
             // 実ファイルは存在するがインデックスに存在しないものを破棄
             var searchPattern = "*" + Path.GetExtension(GetBodyFileName(indexKind, GetBodyFileType(indexKind), Guid.Empty));
-            var fileNameList = Directory
+            var fileNames = Directory
                 .EnumerateFiles(parentDirPath, searchPattern, SearchOption.TopDirectoryOnly)
-                .Select(s => Path.GetFileName(s))
+                .Select(s => Path.GetFileNameWithoutExtension(s))
+                .Where(s => CheckGuidParse(s))
+                .Select(s => new Guid(s))
             ;
-            var itemList = items.ToList();
-            var removeTargetList = new List<Guid>();
-            foreach(var fileName in fileNameList) {
-                var guidName = Path.GetFileNameWithoutExtension(fileName);
-                var targetIndex = itemList.FindIndex(i => string.Compare(i.Id.ToString(), guidName, true) == 0);
-                if(targetIndex == -1) {
-                    removeTargetList.Add(new Guid(guidName));
-                } else {
-                    itemList.RemoveAt(targetIndex);
-                }
-            }
-
+            var removeTargetList = GetUnindexedGuid(indexKind, items, fileNames);
             foreach(var removeFileGuid in removeTargetList) {
-                RemoveBody(indexKind, removeFileGuid, archive, appNonProcess);
+                RemoveRealBodyFile(indexKind, removeFileGuid, parentDirPath, appNonProcess.Logger);
             }
 
             // 一時データ削除
@@ -310,14 +326,18 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         static void GarbageCollectionBodyArchive<TItemModel>(IndexKind indexKind, IndexItemCollectionModel<TItemModel> items, IndexBodyArchive archive, DateTime archiveBaseTime, TimeSpan archiveTimeSpan, int fileSize, IAppNonProcess appNonProcess)
             where TItemModel : IndexItemModelBase
         {
-            //var archivePath = Environment.ExpandEnvironmentVariables(GetBodyArchiveFilePath(indexKind, appNonProcess.VariableConstants));
             if(archive.EnabledArchive) {
                 // アーカイブには存在するがインデックスに存在しないものを破棄
-                // TODO: 共通化できそうなので今は未実装
-                //var itemIds = items
-                //    .Select(i => GetBodyFileName(indexKind, GetBodyFileType(indexKind), i.Id))
-                //    .ToArray()
-                //;
+                var guids = archive.Body.Entries
+                    .Select(e => Path.GetFileNameWithoutExtension(e.FullName))
+                    .Where(s => CheckGuidParse(s))
+                    .Select(s => new Guid(s))
+                ;
+                
+                var removeTargetList = GetUnindexedGuid(indexKind, items, guids);
+                foreach(var guid in removeTargetList) {
+                    RemoveArchiveBodyFile(indexKind, guid, archive, appNonProcess.Logger);
+                }
             }
 
             var targetTime = archiveBaseTime - archiveTimeSpan;
@@ -352,7 +372,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
                         oldEntry.Delete();
                     }
                     var buffer = FileUtility.ToBinary(itemPath);
-                    var entry = archive.Body.CreateEntry(itemName, CompressionLevel.NoCompression);
+                    var entry = archive.Body.CreateEntry(itemName, defaultCompressionLevel);
                     using(var stream = new BinaryWriter(entry.Open())) {
                         stream.Write(buffer);
                     }
@@ -422,6 +442,33 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
             }
         }
 
+        static void SaveRealBodyFile<TIndexBody>(TIndexBody indexBody, Guid guid, string parentDirectoryPath, ILogger logger)
+            where TIndexBody : IndexBodyItemModelBase
+        {
+            var fileType = IndexItemUtility.GetBodyFileType(indexBody.IndexKind);
+            var path = Environment.ExpandEnvironmentVariables(IndexItemUtility.GetBodyFilePath(indexBody.IndexKind, fileType,  guid, parentDirectoryPath));
+            var bodyItem = (TIndexBody)indexBody;
+            AppUtility.SaveSetting(path, bodyItem, fileType, true, logger);
+        }
+
+        static void SaveArchiveBodyFile<TIndexBody>(TIndexBody indexBody, Guid guid, IndexBodyArchive archive, ILogger logger)
+            where TIndexBody : IndexBodyItemModelBase
+        {
+            var fileType = GetBodyFileType(indexBody.IndexKind);
+            var entryName = GetBodyFileName(indexBody.IndexKind, fileType, guid);
+            CheckUtility.Enforce(archive.EnabledArchive);
+            var oldEntry = archive.Body.GetEntry(entryName);
+            if(oldEntry != null) {
+                oldEntry.Delete();
+            }
+
+            var entry = archive.Body.CreateEntry(entryName, defaultCompressionLevel);
+            using(var stream = entry.Open()) {
+                AppUtility.SaveSetting(stream, indexBody, fileType, logger);
+            }
+        }
+
+
         /// <summary>
         /// ボディファイルを保存。
         /// </summary>
@@ -429,15 +476,18 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         /// <param name="indexBody"></param>
         /// <param name="guid"></param>
         /// <param name="appNonProcess"></param>
-        public static void SaveBody<TIndexBody>(TIndexBody indexBody, Guid guid, IAppNonProcess appNonProcess)
+        public static void SaveBody<TIndexBody>(TIndexBody indexBody, Guid guid, IndexBodyArchive archive, IAppNonProcess appNonProcess)
             where TIndexBody : IndexBodyItemModelBase
         {
-            var fileType = IndexItemUtility.GetBodyFileType(indexBody.IndexKind);
-            var path = Environment.ExpandEnvironmentVariables(IndexItemUtility.GetBodyFilePath(indexBody.IndexKind, guid, appNonProcess.VariableConstants));
-            var bodyItem = (TIndexBody)indexBody;
-            AppUtility.SaveSetting(path, bodyItem, fileType, true, appNonProcess.Logger);
+            var parentDir = Environment.ExpandEnvironmentVariables(GetBodyFileParentDirectory(indexBody.IndexKind, appNonProcess.VariableConstants));
+            if(ExistisRealBodyFile(indexBody.IndexKind, guid, parentDir)) {
+                SaveRealBodyFile(indexBody, guid, parentDir, appNonProcess.Logger);
+            } else if(ExistisArchiveBodyFile(indexBody.IndexKind, guid, archive, parentDir)) {
+                SaveArchiveBodyFile(indexBody, guid, archive, appNonProcess.Logger);
+            } else {
+                SaveRealBodyFile(indexBody, guid, parentDir, appNonProcess.Logger);
+            }
         }
-
 
     }
 }

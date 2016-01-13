@@ -131,6 +131,27 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
             return result ?? new T();
         }
 
+        public static void SaveSetting<T>(Stream stream, T model, FileType fileType, ILogger logger)
+            where T : ModelBase
+        {
+            var saveDataName = typeof(T).Name;
+            logger.Debug($"save: {saveDataName}");
+
+            // ファイルへ出力
+            switch(fileType) {
+                case FileType.Json:
+                    SerializeUtility.SaveJsonDataToStream(stream, model);
+                    break;
+
+                case FileType.Binary:
+                    SerializeUtility.SaveBinaryDataToStream(stream, model);
+                    break;
+
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+
         /// <summary>
         /// 設定ファイルの出力。
         /// </summary>
@@ -162,7 +183,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
                 outputPath = path;
             }
 
-            // 一時ファイルへ出力
+            // ファイルへ出力
             switch(fileType) {
                 case FileType.Json:
                     SerializeUtility.SaveJsonDataToFile(outputPath, model);
