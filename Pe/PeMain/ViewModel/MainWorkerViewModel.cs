@@ -1812,7 +1812,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
         }
 
-        void RemoveIndex<TItemModel, TIndexBody>(IndexKind indexKind, Guid guid, IndexItemCollectionModel<TItemModel> items, IndexBodyPairItemCollection<TIndexBody> cachingItems)
+        void RemoveIndex<TItemModel, TIndexBody>(IndexKind indexKind, Guid guid, IndexItemCollectionModel<TItemModel> items, IndexBodyPairItemCollection<TIndexBody> cachingItems, IndexBodyArchive archive)
             where TItemModel : IndexItemModelBase
             where TIndexBody : IndexBodyItemModelBase
         {
@@ -1821,7 +1821,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             items.Remove(guid);
 
             // ボディ部のファイルも削除する。
-            IndexItemUtility.RemoveBody(indexKind, guid, CommonData.NonProcess);
+            IndexItemUtility.RemoveBody(indexKind, guid, archive, CommonData.NonProcess);
 
             CommonData.AppSender.SendSaveIndex(indexKind, Timing.Delay);
         }
@@ -1831,19 +1831,19 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             switch(indexKind) {
                 case IndexKind.Note:
                     {
-                        RemoveIndex(indexKind, guid, CommonData.NoteIndexSetting.Items, IndexBodyCaching.NoteItems);
+                        RemoveIndex(indexKind, guid, CommonData.NoteIndexSetting.Items, IndexBodyCaching.NoteItems, IndexBodyCaching.NoteArchive);
                     }
                     break;
 
                 case IndexKind.Template:
                     {
-                        RemoveIndex(indexKind, guid, CommonData.TemplateIndexSetting.Items, IndexBodyCaching.TemplateItems);
+                        RemoveIndex(indexKind, guid, CommonData.TemplateIndexSetting.Items, IndexBodyCaching.TemplateItems, IndexBodyCaching.TemplateArchive);
                     }
                     break;
 
                 case IndexKind.Clipboard:
                     {
-                        RemoveIndex(indexKind, guid, CommonData.ClipboardIndexSetting.Items, IndexBodyCaching.ClipboardItems);
+                        RemoveIndex(indexKind, guid, CommonData.ClipboardIndexSetting.Items, IndexBodyCaching.ClipboardItems, IndexBodyCaching.ClipboardArchive);
                     }
                     break;
 

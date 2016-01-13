@@ -33,6 +33,46 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 
     public static class IndexItemUtility
     {
+        /// <summary>
+        /// インデックスデータ種別からインデックスのボディファイルのファイル種別を取得する。
+        /// </summary>
+        /// <param name="indexKind"></param>
+        /// <returns></returns>
+        public static FileType GetBodyFileType(IndexKind indexKind)
+        {
+            var map = new Dictionary<IndexKind, FileType>() {
+                { IndexKind.Note, Constants.fileTypeNoteBody },
+                { IndexKind.Template, Constants.fileTypeTemplateBody },
+                { IndexKind.Clipboard, Constants.fileTypeClipboardBody },
+            };
+
+            return map[indexKind];
+        }
+
+        /// <summary>
+        /// インデックスデータ種別からボディファイルの配置ディレクトリを取得する。
+        /// </summary>
+        /// <param name="indexKind"></param>
+        /// <param name="variableConstants"></param>
+        /// <returns></returns>
+        public static string GetBodyFileParentDirectory(IndexKind indexKind, VariableConstants variableConstants)
+        {
+            var map = new Dictionary<IndexKind, string>() {
+                { IndexKind.Note, variableConstants.UserSettingNoteDirectoryPath },
+                { IndexKind.Template, variableConstants.UserSettingTemplateDirectoryPath },
+                { IndexKind.Clipboard, variableConstants.UserSettingClipboardDirectoryPath},
+            };
+
+            return map[indexKind];
+        }
+
+        /// <summary>
+        /// インデックスのボディファイルの名前を取得する。
+        /// </summary>
+        /// <param name="indexKind"></param>
+        /// <param name="fileType"></param>
+        /// <param name="guid"></param>
+        /// <returns></returns>
         public static string GetBodyFileName(IndexKind indexKind, FileType fileType, Guid guid)
         {
             var ext = new Dictionary<FileType, string>() {
@@ -41,73 +81,75 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
             };
 
             var map = new Dictionary<string, string>() {
-                { Constants.keyGuidName, guid.ToString() },
+                { Constants.keyGuidName, guid.ToString("D") },
                 { Constants.keyIndexExt, ext[fileType]},
             };
             return Constants.indexBodyBaseFileName.ReplaceFromDictionary(map);
         }
-
-        public static FileType GetBodyFileType(IndexKind indexKind)
+        /// <summary>
+        /// インデックスのボディファイルの名前を取得する。
+        /// </summary>
+        /// <param name="indexKind"></param>
+        /// <param name="guid"></param>
+        /// <returns></returns>
+        public static string GetBodyFileName(IndexKind indexKind, Guid guid)
         {
-            switch(indexKind) {
-                case IndexKind.Note:
-                    return Constants.fileTypeNoteBody;
-
-                case IndexKind.Template:
-                    return Constants.fileTypeTemplateBody;
-
-                case IndexKind.Clipboard:
-                    return Constants.fileTypeClipboardBody;
-
-                default:
-                    throw new NotImplementedException();
-            }
-        }
-
-        public static string GetBodyParentDirectory(IndexKind indexKind, VariableConstants variableConstants)
-        {
-            switch(indexKind) {
-                case IndexKind.Note:
-                    return variableConstants.UserSettingNoteDirectoryPath;
-
-                case IndexKind.Template:
-                    return variableConstants.UserSettingTemplateDirectoryPath;
-
-                case IndexKind.Clipboard:
-                    return variableConstants.UserSettingClipboardDirectoryPath;
-
-                default:
-                    throw new NotImplementedException();
-            }
+            return GetBodyFileName(indexKind, GetBodyFileType(indexKind), guid);
         }
 
         /// <summary>
         /// インデックスのボディファイルパスを取得。
         /// </summary>
         /// <param name="indexKind"></param>
+        /// <param name="fileType"></param>
         /// <param name="guid"></param>
         /// <param name="variableConstants"></param>
-        /// <returns>環境変数展開済みファイルパス。</returns>
-        public static string GetBodyFilePath(IndexKind indexKind, Guid guid, VariableConstants variableConstants)
+        /// <returns></returns>
+        public static string GetBodyFilePath(IndexKind indexKind, FileType fileType, Guid guid, VariableConstants variableConstants)
         {
-            var dirPath = IndexItemUtility.GetBodyParentDirectory(indexKind, variableConstants);
-            var fileType = IndexItemUtility.GetBodyFileType(indexKind);
+            var dirPath = IndexItemUtility.GetBodyFileParentDirectory(indexKind, variableConstants);
             var fileName = IndexItemUtility.GetBodyFileName(indexKind, fileType, guid);
-            var path = Environment.ExpandEnvironmentVariables(Path.Combine(dirPath, fileName));
+            var path = Path.Combine(dirPath, fileName);
 
             return path;
         }
+        /// <summary>
+        /// インデックスのボディファイルパスを取得。
+        /// </summary>
+        /// <param name="indexKind"></param>
+        /// <param name="guid"></param>
+        /// <param name="variableConstants"></param>
+        /// <returns></returns>
+        public static string GetBodyFilePath(IndexKind indexKind, Guid guid, VariableConstants variableConstants)
+        {
+            return GetBodyFilePath(indexKind, GetBodyFileType(indexKind), guid, variableConstants);
+        }
 
+        /// <summary>
+        /// インデックスのボディファイル格納アーカイブパスを取得。
+        /// </summary>
+        /// <param name="indexKind"></param>
+        /// <param name="variableConstants"></param>
+        /// <returns></returns>
         public static string GetBodyArchiveFilePath(IndexKind indexKind, VariableConstants variableConstants)
         {
-            var dir = GetBodyParentDirectory(indexKind, variableConstants);
+            var dir = GetBodyFileParentDirectory(indexKind, variableConstants);
             var path = Path.Combine(dir, Constants.bodyArchiveFileName);
             return path;
         }
 
-        public static bool RemoveBody(IndexKind indexKind, Guid guid, IAppNonProcess appNonProcess)
+        /// <summary>
+        /// ボディファイルを削除。
+        /// </summary>
+        /// <param name="indexKind"></param>
+        /// <param name="guid"></param>
+        /// <param name="archive"></param>
+        /// <param name="appNonProcess"></param>
+        /// <returns></returns>
+        public static bool RemoveBody(IndexKind indexKind, Guid guid, IndexBodyArchive archive, IAppNonProcess appNonProcess)
         {
             var path = IndexItemUtility.GetBodyFilePath(indexKind, guid, appNonProcess.VariableConstants);
+            var expandedPath = Environment.ExpandEnvironmentVariables(path);
             try {
                 File.Delete(path);
                 return true;
@@ -117,10 +159,18 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
             }
         }
 
+        /// <summary>
+        /// インデックスデータをGC。
+        /// </summary>
+        /// <typeparam name="TItemModel"></typeparam>
+        /// <param name="indexKind"></param>
+        /// <param name="items"></param>
+        /// <param name="archive"></param>
+        /// <param name="appNonProcess"></param>
         public static void GarbageCollectionBody<TItemModel>(IndexKind indexKind, IndexItemCollectionModel<TItemModel> items, IndexBodyArchive archive, IAppNonProcess appNonProcess)
             where TItemModel : IndexItemModelBase
         {
-            var parentDirPath = Environment.ExpandEnvironmentVariables(GetBodyParentDirectory(indexKind, appNonProcess.VariableConstants));
+            var parentDirPath = Environment.ExpandEnvironmentVariables(GetBodyFileParentDirectory(indexKind, appNonProcess.VariableConstants));
             if(!Directory.Exists(parentDirPath)) {
                 return;
             }
@@ -143,7 +193,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
             }
 
             foreach(var removeFileGuid in removeTargetList) {
-                RemoveBody(indexKind, removeFileGuid, appNonProcess);
+                RemoveBody(indexKind, removeFileGuid, archive, appNonProcess);
             }
 
             // 一時データ削除
@@ -155,7 +205,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         }
 
         /// <summary>
-        /// 
+        /// アーカイブのGC。
         /// </summary>
         /// <typeparam name="TItemModel"></typeparam>
         /// <param name="indexKind"></param>
@@ -190,7 +240,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
                 foreach(var item in oldItems) {
                     var itemName = GetBodyFileName(indexKind, GetBodyFileType(indexKind), item.Id);
 
-                    var itemPath = GetBodyFilePath(indexKind, item.Id, appNonProcess.VariableConstants);
+                    var itemPath = Environment.ExpandEnvironmentVariables(GetBodyFilePath(indexKind, item.Id, appNonProcess.VariableConstants));
                     if(File.Exists(itemPath)) {
                         // インデックスに存在するがファイルが存在しない物は無視する
                         // NOTE: 不整合を起こしていることになるが読み込み時に新規作成される実装のため該当データじたいは不正ではない
@@ -225,11 +275,20 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
             }
         }
 
+        /// <summary>
+        /// ボディファイルを読み込む。
+        /// </summary>
+        /// <typeparam name="TIndexBody"></typeparam>
+        /// <param name="indexKind"></param>
+        /// <param name="guid"></param>
+        /// <param name="archive"></param>
+        /// <param name="appNonProcess"></param>
+        /// <returns></returns>
         public static TIndexBody LoadBody<TIndexBody>(IndexKind indexKind, Guid guid, IndexBodyArchive archive, IAppNonProcess appNonProcess)
             where TIndexBody : IndexBodyItemModelBase, new()
         {
             var fileType = IndexItemUtility.GetBodyFileType(indexKind);
-            var path = IndexItemUtility.GetBodyFilePath(indexKind, guid, appNonProcess.VariableConstants);
+            var path = Environment.ExpandEnvironmentVariables(IndexItemUtility.GetBodyFilePath(indexKind, guid, appNonProcess.VariableConstants));
             if(File.Exists(path)) {
                 // 実ファイルが存在すれば実ファイルを優先する
                 var result = AppUtility.LoadSetting<TIndexBody>(path, fileType, appNonProcess.Logger);
@@ -254,11 +313,18 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
             }
         }
 
+        /// <summary>
+        /// ボディファイルを保存。
+        /// </summary>
+        /// <typeparam name="TIndexBody"></typeparam>
+        /// <param name="indexBody"></param>
+        /// <param name="guid"></param>
+        /// <param name="appNonProcess"></param>
         public static void SaveBody<TIndexBody>(TIndexBody indexBody, Guid guid, IAppNonProcess appNonProcess)
             where TIndexBody : IndexBodyItemModelBase
         {
             var fileType = IndexItemUtility.GetBodyFileType(indexBody.IndexKind);
-            var path = IndexItemUtility.GetBodyFilePath(indexBody.IndexKind, guid, appNonProcess.VariableConstants);
+            var path = Environment.ExpandEnvironmentVariables(IndexItemUtility.GetBodyFilePath(indexBody.IndexKind, guid, appNonProcess.VariableConstants));
             var bodyItem = (TIndexBody)indexBody;
             AppUtility.SaveSetting(path, bodyItem, fileType, true, appNonProcess.Logger);
         }

@@ -22,9 +22,18 @@ namespace ContentTypeTextNet.Pe.PeMain.Define
     using System.Text;
     using System.Threading.Tasks;
 
+    /// <summary>
+    /// ファイル種別。
+    /// </summary>
     public enum FileType
     {
+        /// <summary>
+        /// Json。
+        /// </summary>
         Json,
+        /// <summary>
+        /// バイナリ。
+        /// </summary>
         Binary,
     }
 }
