@@ -177,6 +177,7 @@
       <DependentUpon>Constants.cs</DependentUpon>
     </Compile>
     <Compile Include="Data\ApplicationCommandArg.cs" />
+    <Compile Include="Define\IndexBodyKind.cs" />
     <Compile Include="Logic\IndexBodyArchive.cs" />
     <Compile Include="Data\Model\HtmlViewerModel.cs" />
     <Compile Include="Data\Model\KeyInfoModel.cs" />

@@ -1957,7 +1957,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             var bodyItem = (TIndexBody)indexBody;
             //AppUtility.SaveSetting(path, bodyItem, fileType, CommonData.Logger);
             //AppendCachingItems(guid, bodyItem, cachingItems);
-            IndexItemUtility.SaveBody(bodyItem, guid, cachingItems.Archive, CommonData.NonProcess);
+            IndexItemUtility.SaveBody(bodyItem, guid, cachingItems.Archive, IndexBodyKind.File, CommonData.NonProcess);
             AppendCachingItems(guid, bodyItem, cachingItems);
         }
 

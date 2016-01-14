@@ -18,6 +18,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.IO;
     using System.IO.Compression;
     using System.Linq;
@@ -428,7 +429,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         /// <param name="archive"></param>
         /// <param name="appNonProcess"></param>
         /// <returns></returns>
-        public static TIndexBody LoadBody<TIndexBody>(IndexKind indexKind, Guid guid, IndexBodyArchive archive, IAppNonProcess appNonProcess)
+        internal static TIndexBody LoadBody<TIndexBody>(IndexKind indexKind, Guid guid, IndexBodyArchive archive, IAppNonProcess appNonProcess)
             where TIndexBody : IndexBodyItemModelBase, new()
         {
             var parentDir = Environment.ExpandEnvironmentVariables(GetBodyFileParentDirectory(indexKind, appNonProcess.VariableConstants));
@@ -476,18 +477,35 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         /// <param name="indexBody"></param>
         /// <param name="guid"></param>
         /// <param name="appNonProcess"></param>
-        public static void SaveBody<TIndexBody>(TIndexBody indexBody, Guid guid, IndexBodyArchive archive, IAppNonProcess appNonProcess)
+        internal static void SaveBody<TIndexBody>(TIndexBody indexBody, Guid guid, IndexBodyArchive archive, IndexBodyKind indexBodyKind, IAppNonProcess appNonProcess)
             where TIndexBody : IndexBodyItemModelBase
         {
             var parentDir = Environment.ExpandEnvironmentVariables(GetBodyFileParentDirectory(indexBody.IndexKind, appNonProcess.VariableConstants));
-            if(ExistisRealBodyFile(indexBody.IndexKind, guid, parentDir)) {
-                SaveRealBodyFile(indexBody, guid, parentDir, appNonProcess.Logger);
-            } else if(ExistisArchiveBodyFile(indexBody.IndexKind, guid, archive, parentDir)) {
-                SaveArchiveBodyFile(indexBody, guid, archive, appNonProcess.Logger);
-            } else {
-                SaveRealBodyFile(indexBody, guid, parentDir, appNonProcess.Logger);
+            switch(indexBodyKind) {
+                case IndexBodyKind.Default:
+                    if(ExistisRealBodyFile(indexBody.IndexKind, guid, parentDir)) {
+                        goto IndexBodyKind_File;
+                    } else if(ExistisArchiveBodyFile(indexBody.IndexKind, guid, archive, parentDir)) {
+                        goto IndexBodyKind_Archive;
+                    } else {
+                        goto IndexBodyKind_File;
+                    }
+                    throw new NotImplementedException("到達不可");
+
+                case IndexBodyKind.File: IndexBodyKind_File:
+                    SaveRealBodyFile(indexBody, guid, parentDir, appNonProcess.Logger);
+                    break;
+
+                case IndexBodyKind.Archive: IndexBodyKind_Archive:
+                    if(!archive.EnabledArchive) {
+                        archive.OpenArchiveFile(indexBody.IndexKind, appNonProcess.VariableConstants);
+                    }
+                    SaveArchiveBodyFile(indexBody, guid, archive, appNonProcess.Logger);
+                    break;
+
+                default:
+                    throw new NotImplementedException();
             }
         }
-
     }
 }
