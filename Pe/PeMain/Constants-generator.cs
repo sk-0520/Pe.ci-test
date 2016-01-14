@@ -22,7 +22,7 @@
         /*
         このソースは自動生成のため Constants-generator.tt を編集すること。
 
-        生成元ConstantsPropertyフィールド数: 25
+        生成元ConstantsPropertyフィールド数: 29
         生成元ConstantsRangeフィールド数: 22
         */
 
@@ -56,6 +56,17 @@
             get
             {
                 return buildProcess;
+            }
+        }
+
+        #endregion
+        #region bodyArchiveTimeSpan
+        
+        public static TimeSpan BodyArchiveTimeSpan
+        {
+            get
+            {
+                return bodyArchiveTimeSpan;
             }
         }
 
@@ -203,6 +214,17 @@
         }
 
         #endregion
+        #region formatGuidFileName
+        
+        public static String FormatGuidFileName
+        {
+            get
+            {
+                return formatGuidFileName;
+            }
+        }
+
+        #endregion
         #region extensionBinaryFile
         
         public static String ExtensionBinaryFile
@@ -243,6 +265,28 @@
             get
             {
                 return indexJsonFileSearchPattern;
+            }
+        }
+
+        #endregion
+        #region bodyArchiveFileName
+        
+        public static String BodyArchiveFileName
+        {
+            get
+            {
+                return bodyArchiveFileName;
+            }
+        }
+
+        #endregion
+        #region bodyArchiveFileSize
+        
+        public static Int32 BodyArchiveFileSize
+        {
+            get
+            {
+                return bodyArchiveFileSize;
             }
         }
 

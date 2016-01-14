@@ -134,12 +134,15 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
         public string UserSettingLauncherGroupItemSettingFilePath { get { return Path.Combine(UserSettingDirectoryPath, this._launcherGroupItemSettingFileName); } }
 
         public string UserSettingNoteDirectoryPath { get { return Path.Combine(UserSettingDirectoryPath, this._noteDirectoryFileName); } }
+        public string UserSettingNoteBodyArchivePath { get { return Path.Combine(UserSettingNoteDirectoryPath, Constants.BodyArchiveFileName); } }
         public string UserSettingNoteIndexFilePath { get { return Path.Combine(UserSettingDirectoryPath, this._noteIndexFileName); } }
 
         public string UserSettingClipboardDirectoryPath { get { return Path.Combine(UserSettingDirectoryPath, this._clipboardDirectoryFileName); } }
+        public string UserSettingClipboardBodyArchivePath { get { return Path.Combine(UserSettingClipboardDirectoryPath, Constants.BodyArchiveFileName); } }
         public string UserSettingClipboardIndexFilePath { get { return Path.Combine(UserSettingDirectoryPath, this._clipboardIndexFileName); } }
 
         public string UserSettingTemplateDirectoryPath { get { return Path.Combine(UserSettingDirectoryPath, this._templateDirectoryFileName); } }
+        public string UserSettingTemplateBodyArchivePath { get { return Path.Combine(UserSettingTemplateDirectoryPath, Constants.BodyArchiveFileName); } }
         public string UserSettingTemplateIndexFilePath { get { return Path.Combine(UserSettingDirectoryPath, this._templateIndexFileName); } }
 
         public string LanguageCode { get { return this._languageCode; } }

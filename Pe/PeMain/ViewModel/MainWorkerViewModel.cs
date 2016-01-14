@@ -91,8 +91,10 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
             IndexBodyCaching = new IndexBodyCaching(
                 Constants.CacheIndexTemplate,
-                Constants.CacheIndexClipboard
+                Constants.CacheIndexClipboard,
+                CommonData.VariableConstants
             );
+
 
             var indexTimer = new Dictionary<IndexKind, TimeSpan>() {
                 { IndexKind.Clipboard, Constants.SaveIndexClipboardTime },
@@ -665,9 +667,9 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 SaveSetting();
             }
             if(gc) {
-                IndexItemUtility.GarbageCollectionBody(IndexKind.Note, CommonData.NoteIndexSetting.Items, CommonData.NonProcess);
-                IndexItemUtility.GarbageCollectionBody(IndexKind.Template, CommonData.TemplateIndexSetting.Items, CommonData.NonProcess);
-                IndexItemUtility.GarbageCollectionBody(IndexKind.Clipboard, CommonData.ClipboardIndexSetting.Items, CommonData.NonProcess);
+                IndexItemUtility.GarbageCollectionBody(IndexKind.Note, CommonData.NoteIndexSetting.Items, IndexBodyCaching.NoteItems.Archive, CommonData.NonProcess);
+                IndexItemUtility.GarbageCollectionBody(IndexKind.Template, CommonData.TemplateIndexSetting.Items, IndexBodyCaching.TemplateItems.Archive, CommonData.NonProcess);
+                IndexItemUtility.GarbageCollectionBody(IndexKind.Clipboard, CommonData.ClipboardIndexSetting.Items, IndexBodyCaching.ClipboardItems.Archive, CommonData.NonProcess);
                 GarbageCollectionMainSettingTemporary();
             }
             Application.Current.Shutdown();
@@ -758,10 +760,13 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                     new ArchiveParameter() { RelativePath = CommonData.VariableConstants.UserSettingLauncherItemSettingFilePath, },
                     new ArchiveParameter() { RelativePath = CommonData.VariableConstants.UserSettingLauncherGroupItemSettingFilePath, },
                     new ArchiveParameter() { RelativePath = CommonData.VariableConstants.UserSettingNoteIndexFilePath, },
+                    new ArchiveParameter() { RelativePath = CommonData.VariableConstants.UserSettingNoteBodyArchivePath, },
                     new ArchiveParameter() { RelativePath = CommonData.VariableConstants.UserSettingNoteDirectoryPath, SearchPattern = Constants.IndexJsonFileSearchPattern, SearchOption = SearchOption.TopDirectoryOnly, },
                     new ArchiveParameter() { RelativePath = CommonData.VariableConstants.UserSettingTemplateIndexFilePath, },
+                    new ArchiveParameter() { RelativePath = CommonData.VariableConstants.UserSettingTemplateBodyArchivePath, },
                     new ArchiveParameter() { RelativePath = CommonData.VariableConstants.UserSettingTemplateDirectoryPath, SearchPattern = Constants.IndexJsonFileSearchPattern, SearchOption = SearchOption.TopDirectoryOnly, },
                     new ArchiveParameter() { RelativePath = CommonData.VariableConstants.UserSettingClipboardIndexFilePath, },
+                    new ArchiveParameter() { RelativePath = CommonData.VariableConstants.UserSettingClipboardBodyArchivePath, },
                     new ArchiveParameter() { RelativePath = CommonData.VariableConstants.UserSettingClipboardDirectoryPath, CompressionLevel = CompressionLevel.Fastest, SearchPattern = Constants.IndexBinaryFileSearchPattern, SearchOption = SearchOption.TopDirectoryOnly },
                 };
                 foreach(var ap in archiveParameters) {
@@ -1532,6 +1537,10 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             UninitializeSystem();
 
             if(!IsDisposed) {
+                if(IndexBodyCaching != null) {
+                    IndexBodyCaching.Dispose();
+                    IndexBodyCaching = null;
+                }
                 if(CommonData != null) {
                     CommonData.Dispose();
                     CommonData = null;
@@ -1812,7 +1821,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             items.Remove(guid);
 
             // ボディ部のファイルも削除する。
-            IndexItemUtility.RemoveBody(indexKind, guid, CommonData.NonProcess);
+            IndexItemUtility.RemoveBody(indexKind, guid, cachingItems.Archive, CommonData.NonProcess);
 
             CommonData.AppSender.SendSaveIndex(indexKind, Timing.Delay);
         }
@@ -1917,7 +1926,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             //var fileType = IndexItemUtility.GetBodyFileType(indexKind);
             //var path = IndexItemUtility.GetBodyFilePath(indexKind, guid, CommonData.VariableConstants);
             //var result = AppUtility.LoadSetting<TIndexBody>(path, fileType, CommonData.Logger);
-            var result = IndexItemUtility.LoadBody<TIndexBody>(indexKind, guid, CommonData.NonProcess);
+            var result = IndexItemUtility.LoadBody<TIndexBody>(indexKind, guid, cachingItems.Archive, CommonData.NonProcess);
 
             AppendCachingItems(guid, result, cachingItems);
             return result;
@@ -1948,7 +1957,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             var bodyItem = (TIndexBody)indexBody;
             //AppUtility.SaveSetting(path, bodyItem, fileType, CommonData.Logger);
             //AppendCachingItems(guid, bodyItem, cachingItems);
-            IndexItemUtility.SaveBody(bodyItem, guid, CommonData.NonProcess);
+            IndexItemUtility.SaveBody(bodyItem, guid, cachingItems.Archive, IndexBodyKind.File, CommonData.NonProcess);
             AppendCachingItems(guid, bodyItem, cachingItems);
         }
 

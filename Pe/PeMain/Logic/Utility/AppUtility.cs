@@ -45,6 +45,40 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 
     public static class AppUtility
     {
+        public static T LoadSetting<T>(Stream stream, FileType fileType, ILogger logger)
+            where T : ModelBase, new()
+        {
+            var loadDataName = typeof(T).Name;
+            logger.Debug($"read: {loadDataName}");
+
+            T result = null;
+
+            if(stream != null) {
+                switch(fileType) {
+                    case FileType.Json:
+                        result = SerializeUtility.LoadJsonDataFromStream<T>(stream);
+                        break;
+
+                    case FileType.Binary:
+                        result = SerializeUtility.LoadBinaryDataFromStream<T>(stream);
+                        break;
+
+                    default:
+                        throw new NotImplementedException();
+                }
+
+                if(result != null) {
+                    logger.Debug($"reading: {loadDataName}");
+                } else {
+                    logger.Debug($"reading: {loadDataName} is null");
+                }
+            } else {
+                logger.Debug($"read stream is null: {loadDataName}");
+            }
+
+            return result ?? new T();
+        }
+
         /// <summary>
         /// 設定ファイルの読込。
         /// <para>設定ファイルが読み込めない場合、new Tを使用する。</para>
@@ -97,6 +131,27 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
             return result ?? new T();
         }
 
+        public static void SaveSetting<T>(Stream stream, T model, FileType fileType, ILogger logger)
+            where T : ModelBase
+        {
+            var saveDataName = typeof(T).Name;
+            logger.Debug($"write: {saveDataName}");
+
+            // ファイルへ出力
+            switch(fileType) {
+                case FileType.Json:
+                    SerializeUtility.SaveJsonDataToStream(stream, model);
+                    break;
+
+                case FileType.Binary:
+                    SerializeUtility.SaveBinaryDataToStream(stream, model);
+                    break;
+
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+
         /// <summary>
         /// 設定ファイルの出力。
         /// </summary>
@@ -128,7 +183,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
                 outputPath = path;
             }
 
-            // 一時ファイルへ出力
+            // ファイルへ出力
             switch(fileType) {
                 case FileType.Json:
                     SerializeUtility.SaveJsonDataToFile(outputPath, model);
