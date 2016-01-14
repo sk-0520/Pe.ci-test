@@ -85,7 +85,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
             };
 
             var map = new Dictionary<string, string>() {
-                { Constants.keyGuidName, guid.ToString("D") },
+                { Constants.keyGuidName, guid.ToString(Constants.FormatGuidFileName) },
                 { Constants.keyIndexExt, ext[fileType]},
             };
             return Constants.indexBodyBaseFileName.ReplaceFromDictionary(map);
@@ -152,7 +152,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         public static string GetBodyArchiveFilePath(IndexKind indexKind, VariableConstants variableConstants)
         {
             var dir = GetBodyFileParentDirectory(indexKind, variableConstants);
-            var path = Path.Combine(dir, Constants.bodyArchiveFileName);
+            var path = Path.Combine(dir, Constants.BodyArchiveFileName);
             return path;
         }
 
@@ -311,7 +311,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 
             // データアーカイブ
             var timestamp = DateTime.Now;
-            GarbageCollectionBodyArchive(indexKind, items, archive, timestamp, Constants.bodyArchiveTimeSpan, Constants.bodyArchiveFileSize, appNonProcess);
+            GarbageCollectionBodyArchive(indexKind, items, archive, timestamp, Constants.BodyArchiveTimeSpan, Constants.BodyArchiveFileSize, appNonProcess);
         }
 
         /// <summary>
@@ -501,6 +501,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
                         archive.OpenArchiveFile(indexBody.IndexKind, appNonProcess.VariableConstants);
                     }
                     SaveArchiveBodyFile(indexBody, guid, archive, appNonProcess.Logger);
+                    archive.Flush();
                     break;
 
                 default:

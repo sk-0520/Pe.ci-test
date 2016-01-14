@@ -140,7 +140,9 @@ namespace ContentTypeTextNet.Pe.PeMain
         public const string dialogFilterLog = "*.log";
         public const string dialogFilterAll = "*.*";
 
-        public const string timestampFileName = "yyyy-MM-dd_HH-mm-ss";
+        const string formatTimestampFileName = "yyyy-MM-dd_HH-mm-ss";
+        [ConstantsProperty]
+        const string formatGuidFileName = "d";
 
         public const string languageAcceptDocumentExtension = "accept.html";
 
@@ -157,11 +159,11 @@ namespace ContentTypeTextNet.Pe.PeMain
         const string indexJsonFileSearchPattern = "*." + extensionJsonFile;
 
         [ConstantsProperty]
-        public const string bodyArchiveFileName = "archive.zip";
+        static readonly string bodyArchiveFileName = Guid.Empty.ToString(formatGuidFileName) + ".zip";
         [ConstantsProperty]
-        public static readonly TimeSpan bodyArchiveTimeSpan = TimeSpan.FromMilliseconds(1);
+        static readonly TimeSpan bodyArchiveTimeSpan = TimeSpan.FromMilliseconds(1);
         [ConstantsProperty]
-        public const int bodyArchiveFileSize = 1024*100;
+        const int bodyArchiveFileSize = 1024*100;
 
         [ConstantsProperty]
         const string extensionTemporaryFile = "tmp";
@@ -543,7 +545,7 @@ namespace ContentTypeTextNet.Pe.PeMain
 
         public static string GetTimestampFileName(DateTime dateTime)
         {
-            return dateTime.ToString(timestampFileName);
+            return dateTime.ToString(formatTimestampFileName);
         }
 
         public static string GetNowTimestampFileName()
