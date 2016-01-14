@@ -204,6 +204,8 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 var result = CreateCommand(
                     o => {
                         var indexModel = SettingUtility.CreateTemplateIndexItem(IndexModel.Items, AppNonProcess);
+                        SettingUtility.UpdateUniqueGuid(indexModel, IndexPairList.ModelList);
+
                         var pair = IndexPairList.Insert(0, indexModel, null);
                         SelectedViewModel = pair.ViewModel;
                         AppSender.SendSaveIndex(IndexKind.Template, Timing.Delay);

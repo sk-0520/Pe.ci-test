@@ -69,7 +69,10 @@
 		</group>
 		<group type="features" dummy="==================================================================">
 			<note rev="">
-				<message></message>
+				<message>#408: GUID重複に備える</message>
+				<comments>
+					<comment>Peの開発が続いている間にこの処理が日の目を見ることは100%ないだろなぁ</comment>
+				</comments>
 			</note>
 			<note rev="">
 				<message></message>

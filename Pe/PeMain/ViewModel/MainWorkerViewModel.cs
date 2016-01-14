@@ -1166,7 +1166,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
 
             SettingUtility.InitializeNoteIndexItem(noteItem, null, CommonData.NonProcess);
-
+            
             var window = CreateNoteWindow(noteItem, appendIndex);
             WindowsUtility.ShowNoActiveForeground(window.Handle);
 
@@ -1177,6 +1177,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         {
             var window = (NoteWindow)CommonData.AppSender.SendCreateWindow(WindowKind.Note, noteItem, null);
             if(appendIndex) {
+                SettingUtility.UpdateUniqueGuid(noteItem, CommonData.NoteIndexSetting.Items);
                 CommonData.NoteIndexSetting.Items.Add(noteItem);
             }
 
@@ -2073,7 +2074,6 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                         return notify;
                     }
 
-                    // 毎回ファイル読むのもなぁ
                     // 指定範囲内に同じデータがあれば追加しない
                     var clipboardItems = CommonData.ClipboardIndexSetting.Items.Reverse();
                     if(CommonData.MainSetting.Clipboard.DuplicationCount != Constants.clipboardDuplicationCount.minimum) {
@@ -2101,6 +2101,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                             Hash = clipboardData.Hash,
                         };
                         SettingUtility.InitializeClipboardIndexItem(index, null, CommonData.NonProcess);
+                        SettingUtility.UpdateUniqueGuid(index, Clipboard.IndexPairList.ModelList);
                         Clipboard.IndexPairList.Add(index, null);
                         index.History.Update();
                         CommonData.AppSender.SendSaveIndex(IndexKind.Clipboard, Timing.Delay);

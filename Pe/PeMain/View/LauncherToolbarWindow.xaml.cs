@@ -86,15 +86,14 @@ namespace ContentTypeTextNet.Pe.PeMain.View
             ToolbarItemModel toolbar;
             var screen = (ScreenModel)ExtensionData;
             if(!CommonData.MainSetting.Toolbar.Items.TryGetValue(screen.DeviceName, out toolbar)) {
+                CommonData.Logger.Information("create toolbar", screen);
                 toolbar = new ToolbarItemModel();
                 toolbar.Id = screen.DeviceName;
-                CommonData.Logger.Information("create toolbar", screen);
                 CommonData.MainSetting.Toolbar.Items.Add(toolbar);
             }
             SettingUtility.InitializeToolbarItem(toolbar, Constants.applicationVersionNumber, CommonData.NonProcess);
-            var model = new LauncherToolbarDataModel(toolbar, CommonData.LauncherItemSetting, CommonData.LauncherItemSetting.Items, CommonData.LauncherGroupSetting.Groups);
-            //model.Toolbar = toolbar;
 
+            var model = new LauncherToolbarDataModel(toolbar, CommonData.LauncherItemSetting, CommonData.LauncherItemSetting.Items, CommonData.LauncherGroupSetting.Groups);
             ViewModel = new LauncherToolbarViewModel(model, this, screen, CommonData.NonProcess, CommonData.AppSender);
         }
 
