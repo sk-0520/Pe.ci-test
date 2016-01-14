@@ -69,7 +69,10 @@
 		</group>
 		<group type="features" dummy="==================================================================">
 			<note rev="">
-				<message></message>
+				<message>#408: GUID重複に備える</message>
+				<comments>
+					<comment>Peの開発が続いている間にこの処理が日の目を見ることは100%ないだろなぁ</comment>
+				</comments>
 			</note>
 			<note rev="">
 				<message></message>
@@ -80,7 +83,16 @@
 		</group>
 		<group type="fixes" dummy="==================================================================">
 			<note rev="">
-				<message></message>
+				<message>#353: Windowsの終了・ユーザーのログオフを妨げる</message>
+				<comments>
+					<comment>調査結果としては設定ファイルのバックアップ、特にクリップボード全件保存の場合に各データファイルのバックアップに時間がかかっていた</comment>
+					<comment>クリップボード・ノート・テンプレートの実データが閾値に該当するものをアーカイブした状態で保持するように変更</comment>
+					<comment>クリップボード閾値: 更新が 3 日前で 256KB 以下</comment>
+					<comment>ノート閾値: 更新が 7 日前で 1KB 以下</comment>
+					<comment>テンプレート閾値: 更新が 10 日前で 4KB 以下</comment>
+					<comment>閾値は App.config(PeMain.config) で定義されてるので内容については #364 で対応予定</comment>
+					<comment>Pe 終了時にバックアップ→本処理の流れで実施されるためアップデート後の二回目終了時に効力が現れます</comment>
+				</comments>
 			</note>
 			<note rev="">
 				<message></message>

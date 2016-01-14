@@ -140,15 +140,28 @@ namespace ContentTypeTextNet.Pe.PeMain
         public const string dialogFilterLog = "*.log";
         public const string dialogFilterAll = "*.*";
 
-        public const string timestampFileName = "yyyy-MM-dd_HH-mm-ss";
+        const string formatTimestampFileName = "yyyy-MM-dd_HH-mm-ss";
+        [ConstantsProperty]
+        const string formatGuidFileName = "d";
 
         public const string languageAcceptDocumentExtension = "accept.html";
 
         public const string logFileExtension = "log";
 
-        public const string extensionBinaryFile = "dat";
-        public const string extensionJsonFile = "json";
+        [ConstantsProperty]
+        const string extensionBinaryFile = "dat";
+        [ConstantsProperty]
+        const string extensionJsonFile = "json";
 
+        [ConstantsProperty]
+        const string indexBinaryFileSearchPattern = "*." + extensionBinaryFile;
+        [ConstantsProperty]
+        const string indexJsonFileSearchPattern = "*." + extensionJsonFile;
+
+        [ConstantsProperty]
+        static readonly string bodyArchiveFileName = Guid.Empty.ToString(formatGuidFileName) + ".zip";
+
+        [ConstantsProperty]
         const string extensionTemporaryFile = "tmp";
         [ConstantsProperty]
         const string temporaryFileSearchPattern = "*." + extensionTemporaryFile;
@@ -470,6 +483,15 @@ namespace ContentTypeTextNet.Pe.PeMain
 
         public static TimeSpan FullScreenIgnoreTime { get; private set; }
 
+        public static TimeSpan TemplateBodyArchiveTimeSpan { get { return TimeSpan.Parse(ConfigurationManager.AppSettings["template-archive-time"]); } }
+        public static long TemplateBodyArchiveFileSize { get { return long.Parse(ConfigurationManager.AppSettings["template-archive-size"]); } }
+
+        public static TimeSpan NoteBodyArchiveTimeSpan { get { return TimeSpan.Parse(ConfigurationManager.AppSettings["note-archive-time"]); } }
+        public static long NoteBodyArchiveFileSize { get { return long.Parse(ConfigurationManager.AppSettings["note-archive-size"]); } }
+
+        public static TimeSpan ClipboardBodyArchiveTimeSpan { get { return TimeSpan.Parse(ConfigurationManager.AppSettings["clipboard-archive-time"]); } }
+        public static long ClipboardBodyArchiveFileSize { get { return long.Parse(ConfigurationManager.AppSettings["clipboard-archive-size"]); } }
+
         #endregion
 
         #region property
@@ -528,7 +550,7 @@ namespace ContentTypeTextNet.Pe.PeMain
 
         public static string GetTimestampFileName(DateTime dateTime)
         {
-            return dateTime.ToString(timestampFileName);
+            return dateTime.ToString(formatTimestampFileName);
         }
 
         public static string GetNowTimestampFileName()

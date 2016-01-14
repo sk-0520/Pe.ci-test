@@ -93,9 +93,9 @@
       <Private>True</Private>
       <Private>False</Private>
     </Reference>
-    <Reference Include="SharedLibrary, Version=0.1.5851.27152, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="SharedLibrary, Version=0.1.5854.14746, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.11\lib\net46\SharedLibrary.dll</HintPath>
+      <HintPath>..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.13\lib\net46\SharedLibrary.dll</HintPath>
       <Private>True</Private>
       <Private>False</Private>
     </Reference>
@@ -103,6 +103,8 @@
     <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web.Extensions" />
@@ -175,10 +177,13 @@
       <DependentUpon>Constants.cs</DependentUpon>
     </Compile>
     <Compile Include="Data\ApplicationCommandArg.cs" />
+    <Compile Include="Define\IndexBodyKind.cs" />
+    <Compile Include="Logic\IndexBodyArchive.cs" />
     <Compile Include="Data\Model\HtmlViewerModel.cs" />
     <Compile Include="Data\Model\KeyInfoModel.cs" />
     <Compile Include="Data\Model\ResponseDataModel.cs" />
     <Compile Include="Data\Temporary\AboutNotifyData.cs" />
+    <Compile Include="Data\Temporary\ArchiveParameter.cs" />
     <Compile Include="Data\Temporary\ClipboardCaptureNotifyData.cs" />
     <Compile Include="Data\Temporary\ItemWithScreen.cs" />
     <Compile Include="Data\Temporary\LauncherGroupAndItems.cs" />
@@ -186,6 +191,7 @@
     <Compile Include="Data\Temporary\NotifyDataBase.cs" />
     <Compile Include="Data\Temporary\StartupNotifyData.cs" />
     <Compile Include="Define\ApplicationCommand.cs" />
+    <Compile Include="Define\ArchiveType.cs" />
     <Compile Include="Define\WindowSaveType.cs" />
     <Compile Include="Logic\IndexDispatcherTimer.cs" />
     <Compile Include="Logic\Updater.cs" />
@@ -359,6 +365,7 @@
     <Compile Include="LanguageKey.cs" />
     <Compile Include="Logic\Property\FontModelProperty.cs" />
     <Compile Include="Logic\UserInformationSender.cs" />
+    <Compile Include="Logic\Utility\ArchiveUtility.cs" />
     <Compile Include="Logic\Utility\HtmlViewerUtility.cs" />
     <Compile Include="Logic\Utility\ImageUtility.cs" />
     <Compile Include="Logic\Utility\LauncherToolbarUtility.cs" />

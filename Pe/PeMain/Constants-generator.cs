@@ -22,7 +22,7 @@
         /*
         このソースは自動生成のため Constants-generator.tt を編集すること。
 
-        生成元ConstantsPropertyフィールド数: 20
+        生成元ConstantsPropertyフィールド数: 27
         生成元ConstantsRangeフィールド数: 22
         */
 
@@ -56,6 +56,17 @@
             get
             {
                 return buildProcess;
+            }
+        }
+
+        #endregion
+        #region bodyArchiveFileName
+        
+        public static String BodyArchiveFileName
+        {
+            get
+            {
+                return bodyArchiveFileName;
             }
         }
 
@@ -199,6 +210,72 @@
             get
             {
                 return backupSearchPattern;
+            }
+        }
+
+        #endregion
+        #region formatGuidFileName
+        
+        public static String FormatGuidFileName
+        {
+            get
+            {
+                return formatGuidFileName;
+            }
+        }
+
+        #endregion
+        #region extensionBinaryFile
+        
+        public static String ExtensionBinaryFile
+        {
+            get
+            {
+                return extensionBinaryFile;
+            }
+        }
+
+        #endregion
+        #region extensionJsonFile
+        
+        public static String ExtensionJsonFile
+        {
+            get
+            {
+                return extensionJsonFile;
+            }
+        }
+
+        #endregion
+        #region indexBinaryFileSearchPattern
+        
+        public static String IndexBinaryFileSearchPattern
+        {
+            get
+            {
+                return indexBinaryFileSearchPattern;
+            }
+        }
+
+        #endregion
+        #region indexJsonFileSearchPattern
+        
+        public static String IndexJsonFileSearchPattern
+        {
+            get
+            {
+                return indexJsonFileSearchPattern;
+            }
+        }
+
+        #endregion
+        #region extensionTemporaryFile
+        
+        public static String ExtensionTemporaryFile
+        {
+            get
+            {
+                return extensionTemporaryFile;
             }
         }
 
