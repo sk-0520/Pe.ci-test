@@ -160,10 +160,6 @@ namespace ContentTypeTextNet.Pe.PeMain
 
         [ConstantsProperty]
         static readonly string bodyArchiveFileName = Guid.Empty.ToString(formatGuidFileName) + ".zip";
-        [ConstantsProperty]
-        static readonly TimeSpan bodyArchiveTimeSpan = TimeSpan.FromMilliseconds(1);
-        [ConstantsProperty]
-        const int bodyArchiveFileSize = 1024*100;
 
         [ConstantsProperty]
         const string extensionTemporaryFile = "tmp";
@@ -486,6 +482,15 @@ namespace ContentTypeTextNet.Pe.PeMain
         public static int BackupArchiveCount { get { return int.Parse(ConfigurationManager.AppSettings["backup-archive"]); } }
 
         public static TimeSpan FullScreenIgnoreTime { get; private set; }
+
+        public static TimeSpan TemplateBodyArchiveTimeSpan { get { return TimeSpan.Parse(ConfigurationManager.AppSettings["template-archive-time"]); } }
+        public static long TemplateBodyArchiveFileSize { get { return long.Parse(ConfigurationManager.AppSettings["template-archive-size"]); } }
+
+        public static TimeSpan NoteBodyArchiveTimeSpan { get { return TimeSpan.Parse(ConfigurationManager.AppSettings["note-archive-time"]); } }
+        public static long NoteBodyArchiveFileSize { get { return long.Parse(ConfigurationManager.AppSettings["note-archive-size"]); } }
+
+        public static TimeSpan ClipboardBodyArchiveTimeSpan { get { return TimeSpan.Parse(ConfigurationManager.AppSettings["clipboard-archive-time"]); } }
+        public static long ClipboardBodyArchiveFileSize { get { return long.Parse(ConfigurationManager.AppSettings["clipboard-archive-size"]); } }
 
         #endregion
 

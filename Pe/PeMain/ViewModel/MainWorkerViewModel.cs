@@ -667,9 +667,10 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 SaveSetting();
             }
             if(gc) {
-                IndexItemUtility.GarbageCollectionBody(IndexKind.Note, CommonData.NoteIndexSetting.Items, IndexBodyCaching.NoteItems.Archive, CommonData.NonProcess);
-                IndexItemUtility.GarbageCollectionBody(IndexKind.Template, CommonData.TemplateIndexSetting.Items, IndexBodyCaching.TemplateItems.Archive, CommonData.NonProcess);
-                IndexItemUtility.GarbageCollectionBody(IndexKind.Clipboard, CommonData.ClipboardIndexSetting.Items, IndexBodyCaching.ClipboardItems.Archive, CommonData.NonProcess);
+                var timestamp = DateTime.Now;
+                IndexItemUtility.GarbageCollectionBody(IndexKind.Note, CommonData.NoteIndexSetting.Items, IndexBodyCaching.NoteItems.Archive, timestamp, Constants.NoteBodyArchiveTimeSpan, Constants.NoteBodyArchiveFileSize, CommonData.NonProcess);
+                IndexItemUtility.GarbageCollectionBody(IndexKind.Template, CommonData.TemplateIndexSetting.Items, IndexBodyCaching.TemplateItems.Archive, timestamp, Constants.TemplateBodyArchiveTimeSpan, Constants.TemplateBodyArchiveFileSize, CommonData.NonProcess);
+                IndexItemUtility.GarbageCollectionBody(IndexKind.Clipboard, CommonData.ClipboardIndexSetting.Items, IndexBodyCaching.ClipboardItems.Archive, timestamp, Constants.ClipboardBodyArchiveTimeSpan, Constants.ClipboardBodyArchiveFileSize, CommonData.NonProcess);
                 GarbageCollectionMainSettingTemporary();
             }
             Application.Current.Shutdown();

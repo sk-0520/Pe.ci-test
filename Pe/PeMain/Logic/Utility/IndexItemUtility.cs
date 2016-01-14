@@ -286,7 +286,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         /// <param name="items"></param>
         /// <param name="archive"></param>
         /// <param name="appNonProcess"></param>
-        public static void GarbageCollectionBody<TItemModel>(IndexKind indexKind, IndexItemCollectionModel<TItemModel> items, IndexBodyArchive archive, IAppNonProcess appNonProcess)
+        public static void GarbageCollectionBody<TItemModel>(IndexKind indexKind, IndexItemCollectionModel<TItemModel> items, IndexBodyArchive archive, DateTime archiveBaseTimestamp, TimeSpan archiveTimespan, long archiveFileSize, IAppNonProcess appNonProcess)
             where TItemModel : IndexItemModelBase
         {
             var parentDirPath = Environment.ExpandEnvironmentVariables(GetBodyFileParentDirectory(indexKind, appNonProcess.VariableConstants));
@@ -310,8 +310,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
             AppUtility.GarbageCollectionTemporaryFile(parentDirPath, appNonProcess.Logger);
 
             // データアーカイブ
-            var timestamp = DateTime.Now;
-            GarbageCollectionBodyArchive(indexKind, items, archive, timestamp, Constants.BodyArchiveTimeSpan, Constants.BodyArchiveFileSize, appNonProcess);
+            GarbageCollectionBodyArchive(indexKind, items, archive, archiveBaseTimestamp, archiveTimespan, archiveFileSize, appNonProcess);
         }
 
         /// <summary>
@@ -324,7 +323,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         /// <param name="archiveTimestamp"></param>
         /// <param name="fileSize"></param>
         /// <param name="appNonProcess"></param>
-        static void GarbageCollectionBodyArchive<TItemModel>(IndexKind indexKind, IndexItemCollectionModel<TItemModel> items, IndexBodyArchive archive, DateTime archiveBaseTime, TimeSpan archiveTimeSpan, int fileSize, IAppNonProcess appNonProcess)
+        static void GarbageCollectionBodyArchive<TItemModel>(IndexKind indexKind, IndexItemCollectionModel<TItemModel> items, IndexBodyArchive archive, DateTime archiveBaseTime, TimeSpan archiveTimeSpan, long fileSize, IAppNonProcess appNonProcess)
             where TItemModel : IndexItemModelBase
         {
             if(archive.EnabledArchive) {
