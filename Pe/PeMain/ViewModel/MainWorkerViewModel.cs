@@ -1925,9 +1925,6 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 CommonData.Logger.Debug("load cache: " + guid.ToString(), body.DisplayText);
                 return body;
             }
-            //var fileType = IndexItemUtility.GetBodyFileType(indexKind);
-            //var path = IndexItemUtility.GetBodyFilePath(indexKind, guid, CommonData.VariableConstants);
-            //var result = AppUtility.LoadSetting<TIndexBody>(path, fileType, CommonData.Logger);
             var result = IndexItemUtility.LoadBody<TIndexBody>(indexKind, guid, cachingItems.Archive, CommonData.NonProcess);
 
             AppendCachingItems(guid, result, cachingItems);
@@ -1954,11 +1951,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         void SaveIndexBody<TIndexBody>(IndexBodyItemModelBase indexBody, Guid guid, IndexBodyPairItemCollection<TIndexBody> cachingItems, Timing timing)
             where TIndexBody : IndexBodyItemModelBase
         {
-            //var fileType = IndexItemUtility.GetIndexBodyFileType(indexBody.IndexKind);
-            //var path = IndexItemUtility.GetIndexBodyFilePath(indexBody.IndexKind, guid, CommonData.VariableConstants);
             var bodyItem = (TIndexBody)indexBody;
-            //AppUtility.SaveSetting(path, bodyItem, fileType, CommonData.Logger);
-            //AppendCachingItems(guid, bodyItem, cachingItems);
             IndexItemUtility.SaveBody(bodyItem, guid, cachingItems.Archive, IndexBodyKind.File, CommonData.NonProcess);
             AppendCachingItems(guid, bodyItem, cachingItems);
         }

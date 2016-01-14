@@ -373,6 +373,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
                     }
                     var buffer = FileUtility.ToBinary(itemPath);
                     var entry = archive.Body.CreateEntry(itemName, defaultCompressionLevel);
+                    entry.LastWriteTime = item.History.UpdateTimestamp;
                     using(var stream = new BinaryWriter(entry.Open())) {
                         stream.Write(buffer);
                     }
@@ -450,7 +451,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
             var bodyItem = (TIndexBody)indexBody;
             AppUtility.SaveSetting(path, bodyItem, fileType, true, logger);
         }
-
+        // BUGS: タイムスタンプのことなーんも考えてなかった
         static void SaveArchiveBodyFile<TIndexBody>(TIndexBody indexBody, Guid guid, IndexBodyArchive archive, ILogger logger)
             where TIndexBody : IndexBodyItemModelBase
         {
