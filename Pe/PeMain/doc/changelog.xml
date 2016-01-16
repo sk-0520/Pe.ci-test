@@ -87,6 +87,9 @@
 				</comments>
 			</note>
 			<note rev="">
+				<message>#364: App.configの設定値をキャッシュする</message>
+			</note>
+			<note rev="">
 				<message></message>
 			</note>
 		</group>
