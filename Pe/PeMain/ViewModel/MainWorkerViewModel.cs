@@ -615,7 +615,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                         if(!IsPause) {
                             var dialogResult = ShowHomeDialog();
                             if(dialogResult) {
-                                ResetToolbar();
+                                ResetToolbarWindow();
                             }
                         }
                     }
@@ -835,10 +835,10 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                     CreateMessage();
                     CreateLogger(null);
 
-                    CreateToolbar();
-                    CreateNote();
-                    CreateTemplate();
-                    CreateClipboard();
+                    CreateToolbarWindow();
+                    CreateNoteWindows();
+                    CreateTemplateWindow();
+                    CreateClipboardWindow();
                     CreateCommandWindow();
 
                     // #326
@@ -986,7 +986,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         /// <summary>
         /// ツールバーの生成。
         /// </summary>
-        void CreateToolbar()
+        void CreateToolbarWindow()
         {
             using(var timeLogger = CommonData.NonProcess.CreateTimeLogger()) {
                 LauncherToolbarWindows = new List<LauncherToolbarWindow>();
@@ -998,10 +998,10 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 }
             }
 
-            OnPropertyChanged("LauncherToolbars");
+            OnPropertyChanged(nameof(LauncherToolbars));
         }
 
-        void RemoveToolbar()
+        void RemoveToolbarWindow()
         {
             foreach(var window in LauncherToolbarWindows.Where(w => w.IsLoaded).ToArray()) {
                 window.Close();
@@ -1010,7 +1010,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             LauncherToolbarWindows = null;
         }
 
-        internal void ResetToolbar()
+        internal void ResetToolbarWindow()
         {
             CommonData.Logger.Debug("toolbar: reset");
             if(ResetToolbarRunning) {
@@ -1022,15 +1022,15 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             ResetToolbarRunning = true;
 
             Dispatcher.CurrentDispatcher.Invoke(new Action(() => {
-                RemoveToolbar();
-                CreateToolbar();
+                RemoveToolbarWindow();
+                CreateToolbarWindow();
                 PrevResetToolbar = DateTime.Now;
                 ResetToolbarRunning = false;
                 CommonData.Logger.Debug("toolbar-reset: end");
             }), DispatcherPriority.SystemIdle);
         }
 
-        void CreateNote()
+        void CreateNoteWindows()
         {
             using(var timeLogger = CommonData.NonProcess.CreateTimeLogger()) {
                 NoteWindows = new List<NoteWindow>();
@@ -1041,7 +1041,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
         }
 
-        void RemoveNote()
+        void RemoveNoteWindows()
         {
             foreach(var window in NoteWindows.ToArray()) {
                 window.Close();
@@ -1050,31 +1050,31 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             NoteWindows = null;
         }
 
-        void ResetNote()
+        void ResetNoteWindows()
         {
-            RemoveNote();
-            CreateNote();
+            RemoveNoteWindows();
+            CreateNoteWindows();
         }
 
-        void CreateTemplate()
+        void CreateTemplateWindow()
         {
             TemplateWindow = new TemplateWindow();
             TemplateWindow.SetCommonData(CommonData, null);
         }
 
-        void RemoveTemplate()
+        void RemoveTemplateWindow()
         {
             TemplateWindow.Close();
             TemplateWindow = null;
         }
 
-        void ResetTemplate()
+        void ResetTemplateWindow()
         {
-            RemoveTemplate();
-            CreateTemplate();
+            RemoveTemplateWindow();
+            CreateTemplateWindow();
         }
 
-        void CreateClipboard()
+        void CreateClipboardWindow()
         {
             CommonData.ClipboardIndexSetting.Items.LimitSize = CommonData.MainSetting.Clipboard.SaveCount;
 
@@ -1082,16 +1082,16 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             ClipboardWindow.SetCommonData(CommonData, null);
         }
 
-        void RemoveClipboard()
+        void RemoveClipboardWindow()
         {
             ClipboardWindow.Close();
             ClipboardWindow = null;
         }
 
-        void ResetClipboard()
+        void ResetClipboardWindow()
         {
-            RemoveClipboard();
-            CreateClipboard();
+            RemoveClipboardWindow();
+            CreateClipboardWindow();
         }
 
         void CreateCommandWindow()
@@ -1118,7 +1118,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         void ChangedScreenCount()
         {
             CommonData.Logger.Information(CommonData.Language["log/screen/change-count"]);
-            ResetToolbar();
+            ResetToolbarWindow();
 
             CommonData.AppSender.SendApplicationCommand(ApplicationCommand.MemoryGarbageCollect, this, ApplicationCommandArg.Empty);
         }
@@ -1216,11 +1216,11 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             MessageWindow.SetCommonData(CommonData, null);
             ResetLogger();
 
-            ResetToolbar();
-            ResetNote();
+            ResetToolbarWindow();
+            ResetNoteWindows();
 
-            ResetTemplate();
-            ResetClipboard();
+            ResetTemplateWindow();
+            ResetClipboardWindow();
 
             ResetCommandWindow();
 
@@ -2403,14 +2403,14 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
 
             CommonData.Logger.Information(CommonData.Language["log/screen/change-setting"]);
-            ResetToolbar();
+            ResetToolbarWindow();
         }
 
         void SystemEvents_SessionSwitch(object sender, SessionSwitchEventArgs e)
         {
             CommonData.Logger.Information(CommonData.Language["log/session/switch"], e);
             if(e.Reason == SessionSwitchReason.ConsoleConnect || e.Reason == SessionSwitchReason.SessionUnlock) {
-                ResetToolbar();
+                ResetToolbarWindow();
                 if(e.Reason == SessionSwitchReason.SessionUnlock) {
                     CheckUpdateProcessAsync();
                     CommonData.AppSender.SendUserInformation();
