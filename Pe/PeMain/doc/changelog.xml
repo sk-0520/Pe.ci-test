@@ -90,6 +90,12 @@
 				<message>#364: App.configの設定値をキャッシュする</message>
 			</note>
 			<note rev="">
+				<message>#423: HTMLクリップボードのURIを規定プログラムで開く</message>
+			</note>
+			<note rev="">
+				<message></message>
+			</note>
+			<note rev="">
 				<message></message>
 			</note>
 		</group>

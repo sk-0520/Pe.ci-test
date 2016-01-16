@@ -250,7 +250,11 @@
                   <ColumnDefinition Width="*" />
                   <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <Label Grid.Row="0" Grid.Column="0" Content="uri" AA:Language.Word="clipboard/html/uri" Style="{StaticResource HeaderLabel}" />
+                <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource HeaderText}">
+                  <Hyperlink Command="{Binding SelectedViewModel.OpenUriCommand}">
+                    <TextBlock Text="uri" AA:Language.Word="clipboard/html/uri" />
+                  </Hyperlink>
+                </TextBlock>
                 <TextBox Grid.Row="0" Grid.Column="1" IsReadOnly="True" Text="{Binding SelectedViewModel.HtmlUri, Mode=OneWay}" Style="{StaticResource DefaultTextBox}" />
                 <Button Grid.Row="0" Grid.Column="2" Command="{Binding SelectedViewModel.CopyHtmlUriCommand}">
                   <Image Source="{x:Static AM:AppResource.CommonCopyImage}" Style="{StaticResource DefaultImage}" />

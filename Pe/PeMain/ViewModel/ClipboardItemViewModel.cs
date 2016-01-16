@@ -311,6 +311,27 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
         }
 
+        public ICommand OpenUriCommand
+        {
+            get
+            {
+                var result = CreateCommand(
+                    o => {
+                        try {
+                            ExecuteUtility.ExecuteCommand(HtmlUri, AppNonProcess);
+                        } catch(Exception ex) {
+                            AppNonProcess.Logger.Warning(ex);
+                        }
+                    },
+                    o => {
+                        return EnabledClipboardTypesHtml && !string.IsNullOrWhiteSpace(HtmlUri);
+                    }
+                );
+
+                return result;
+            }
+        }
+
         #endregion
 
         #region function
