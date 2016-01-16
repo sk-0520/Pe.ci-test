@@ -77,11 +77,14 @@
 			<note rev="">
 				<message>#420: Extended WPF Toolkit™ Community Editionのバージョンアップ</message>
 				<comments>
-					<comment>v2.5 → v2.6</comment>
+					<comment>2.5 → 2.6</comment>
 				</comments>
 			</note>
 			<note rev="">
-				<message></message>
+				<message>#421: Json.NETのバージョンアップ</message>
+				<comments>
+					<comment>8.01 → 8.02</comment>
+				</comments>
 			</note>
 			<note rev="">
 				<message></message>
