@@ -127,7 +127,10 @@
 				<message>#419: 開発に関する諸々をヘルプファイルに記載する</message>
 			</note>
 			<note rev="">
-				<message></message>
+				<message>#404: バージョンチェック用XMLと更新履歴用XMLのURI変更の旧URI保守</message>
+				<comments>
+					<comment>Vector に 0.75.0 上げたしもういいだろ</comment>
+				</comments>
 			</note>
 			<note rev="">
 				<message></message>
