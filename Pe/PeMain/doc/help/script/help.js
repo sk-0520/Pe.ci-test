@@ -230,6 +230,20 @@ var menuList = [
 		}
 	},
 	{
+		name: 'others-setting-data',
+		level: 1,
+		title: {
+			'ja-JP': '設定データ'
+		}
+	},
+	{
+		name: 'others-setting-data-app-config',
+		level: 2,
+		title: {
+			'ja-JP': '構成ファイル'
+		}
+	},
+	{
 		name: 'development',
 		level: 1,
 		title: {

@@ -92,12 +92,17 @@ div.ref {
 	background: #eef;
 }
 
-code, samp, strong.value, em.ui, dfn {
+code, samp, strong.value, em.ui, dfn, em.file, em.dir {
 	font-family: Consolas, monospace;
 	padding: 2px 4px;
 	margin: 2px 4px;
 	display: inline-block;
 }
+
+	em.dir:before, em.file:before {
+		display: inline-block;
+		vertical-align: middle;
+	}
 
 code {
 	border: 1px solid #888;
@@ -126,6 +131,19 @@ em.ui {
 	font-style: normal;
 	border-radius: 2px;
 }
+
+em.dir, em.file {
+	border: 1px dotted #762020;
+	font-style: normal;
+}
+
+	em.file:before {
+		content: url('../image/common-file.png');
+	}
+
+	em.dir:before {
+		content: url('../image/common-folder.png');
+	}
 
 /* https://dl.dropboxusercontent.com/u/921159/Keyboard/page.html */
 kbd {

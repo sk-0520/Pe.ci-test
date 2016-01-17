@@ -90,8 +90,8 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             OtherWindows = new HashSet<Window>();
 
             IndexBodyCaching = new IndexBodyCaching(
-                Constants.CacheIndexTemplate,
-                Constants.CacheIndexClipboard,
+                Constants.CacheIndexBodyTemplate,
+                Constants.CacheIndexBodyClipboard,
                 CommonData.VariableConstants
             );
 

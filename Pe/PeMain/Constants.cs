@@ -470,13 +470,12 @@ namespace ContentTypeTextNet.Pe.PeMain
         public static string UriChangelogRelease { get { return ReplaceAppConfig(appCaching.Get("uri-changelog-release")); } }
         public static string UriChangelogRc { get { return ReplaceAppConfig(appCaching.Get("uri-changelog-rc")); } }
         public static string UriForum { get { return appCaching.Get("uri-forum"); } }
-        public static string UriHelp { get { return appCaching.Get("uri-help"); } }
         public static string UriFeedback { get { return appCaching.Get("uri-feedback"); } }
         public static string UriUserInformation { get { return appCaching.Get("uri-user-information"); } }
 
         public static int LoggingStockCount { get { return appCaching.Get("logging-stock-count", int.Parse); } }
-        public static int CacheIndexTemplate { get { return appCaching.Get("cache-index-template", int.Parse); } }
-        public static int CacheIndexClipboard { get { return appCaching.Get("cache-index-clipboard", int.Parse); } }
+        public static int CacheIndexBodyTemplate { get { return appCaching.Get("cache-index-body-template", int.Parse); } }
+        public static int CacheIndexBodyClipboard { get { return appCaching.Get("cache-index-body-clipboard", int.Parse); } }
         public static TimeSpan SaveIndexClipboardTime { get { return appCaching.Get("save-index-clipboard-time", TimeSpan.Parse); } }
         public static TimeSpan SaveIndexTemplateTime { get { return appCaching.Get("save-index-template-time", TimeSpan.Parse); } }
         public static TimeSpan SaveIndexNoteTime { get { return appCaching.Get("save-index-note-time", TimeSpan.Parse); } }

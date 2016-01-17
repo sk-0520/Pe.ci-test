@@ -56,7 +56,7 @@ namespace ContentTypeTextNet.Pe.PeMain
         public const string acceptMail = "ACCEPT-MAIL";
         public const string acceptForum = "ACCEPT-FORUM";
         public const string acceptFeedback = "ACCEPT-FEEDBACK";
-        public const string acceptHelp = "ACCEPT-HELP";
+        //public const string acceptHelp = "ACCEPT-HELP";
         public const string acceptStyle = "ACCEPT-STYLE";
         public const string acceptApplicationName = "ACCEPT-APP";
         public const string acceptOk = "ACCEPT-OK";
