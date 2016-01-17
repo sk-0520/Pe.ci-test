@@ -92,14 +92,14 @@ div.ref {
 	background: #eef;
 }
 
-code, samp, strong.value, em.ui, dfn, span.file, span.dir {
+code, samp, strong.value, em.ui, dfn, em.file, em.dir {
 	font-family: Consolas, monospace;
 	padding: 2px 4px;
 	margin: 2px 4px;
 	display: inline-block;
 }
 
-	span.dir:before, span.file:before {
+	em.dir:before, em.file:before {
 		display: inline-block;
 		vertical-align: middle;
 	}
@@ -132,15 +132,16 @@ em.ui {
 	border-radius: 2px;
 }
 
-span.dir:before, span.file {
+em.dir, em.file {
 	border: 1px dotted #762020;
+	font-style: normal;
 }
 
-	span.file:before {
+	em.file:before {
 		content: url('../image/common-file.png');
 	}
 
-	code.dir:before {
+	em.dir:before {
 		content: url('../image/common-folder.png');
 	}
 
