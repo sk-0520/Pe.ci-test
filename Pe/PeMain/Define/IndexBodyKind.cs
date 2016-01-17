@@ -22,18 +22,10 @@ namespace ContentTypeTextNet.Pe.PeMain.Define
     using System.Text;
     using System.Threading.Tasks;
 
-    /// <summary>
-    /// ファイル種別。
-    /// </summary>
-    public enum FileType
+    internal enum IndexBodyKind
     {
-        /// <summary>
-        /// Json。
-        /// </summary>
-        Json,
-        /// <summary>
-        /// バイナリ。
-        /// </summary>
-        Binary,
+        Default,
+        File,
+        Archive,
     }
 }

@@ -87,7 +87,7 @@ namespace ContentTypeTextNet.Pe.PeMain
                         systemLogger.Information("application: first");
                         Application.Current.Dispatcher.BeginInvoke(new Action(() => {
                             this._mainWorker.ShowHomeDialog();
-                            this._mainWorker.ResetToolbar();
+                            this._mainWorker.ResetToolbarWindow();
                             this._mainWorker.CheckUpdateProcessAsync();
                             this._mainWorker.SendUserInformation();
                         }), System.Windows.Threading.DispatcherPriority.ApplicationIdle);

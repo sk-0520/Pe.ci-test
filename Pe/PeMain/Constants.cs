@@ -32,16 +32,19 @@ namespace ContentTypeTextNet.Pe.PeMain
     using ContentTypeTextNet.Pe.PeMain.Define;
     using ContentTypeTextNet.Pe.Library.PeData.Item;
     using ContentTypeTextNet.Pe.Library.PeData.Define;
+    using ContentTypeTextNet.Pe.PeMain.Logic;
 
     /// <summary>
     /// 定数。
     /// </summary>
     public static partial class Constants
     {
-        static Constants()
-        {
-            FullScreenIgnoreTime = TimeSpan.Parse(ConfigurationManager.AppSettings["fullscreen-ignore-time"]);
-        }
+        //static Constants()
+        //{
+        //    FullScreenIgnoreTime = appCaching.Get("fullscreen-ignore-time"]);
+        //}
+
+        static readonly ConfigurationCaching appCaching = new ConfigurationCaching();
 
         [ConstantsProperty]
         const string applicationName = "Pe";
@@ -140,15 +143,28 @@ namespace ContentTypeTextNet.Pe.PeMain
         public const string dialogFilterLog = "*.log";
         public const string dialogFilterAll = "*.*";
 
-        public const string timestampFileName = "yyyy-MM-dd_HH-mm-ss";
+        const string formatTimestampFileName = "yyyy-MM-dd_HH-mm-ss";
+        [ConstantsProperty]
+        const string formatGuidFileName = "d";
 
         public const string languageAcceptDocumentExtension = "accept.html";
 
         public const string logFileExtension = "log";
 
-        public const string extensionBinaryFile = "dat";
-        public const string extensionJsonFile = "json";
+        [ConstantsProperty]
+        const string extensionBinaryFile = "dat";
+        [ConstantsProperty]
+        const string extensionJsonFile = "json";
 
+        [ConstantsProperty]
+        const string indexBinaryFileSearchPattern = "*." + extensionBinaryFile;
+        [ConstantsProperty]
+        const string indexJsonFileSearchPattern = "*." + extensionJsonFile;
+
+        [ConstantsProperty]
+        static readonly string bodyArchiveFileName = Guid.Empty.ToString(formatGuidFileName) + ".zip";
+
+        [ConstantsProperty]
         const string extensionTemporaryFile = "tmp";
         [ConstantsProperty]
         const string temporaryFileSearchPattern = "*." + extensionTemporaryFile;
@@ -447,28 +463,36 @@ namespace ContentTypeTextNet.Pe.PeMain
             return replacedText;
         }
 
-        public static string UriAbout { get { return ConfigurationManager.AppSettings["uri-about"]; } }
-        public static string MailAbout { get { return ConfigurationManager.AppSettings["mail-about"]; } }
-        public static string UriDevelopment { get { return ConfigurationManager.AppSettings["uri-development"]; } }
-        public static string UriUpdate { get { return ReplaceAppConfig(ConfigurationManager.AppSettings["uri-update"]); } }
-        public static string UriChangelogRelease { get { return ReplaceAppConfig(ConfigurationManager.AppSettings["uri-changelog-release"]); } }
-        public static string UriChangelogRc { get { return ReplaceAppConfig(ConfigurationManager.AppSettings["uri-changelog-rc"]); } }
-        public static string UriForum { get { return ConfigurationManager.AppSettings["uri-forum"]; } }
-        public static string UriHelp { get { return ConfigurationManager.AppSettings["uri-help"]; } }
-        public static string UriFeedback { get { return ConfigurationManager.AppSettings["uri-feedback"]; } }
-        public static string UriUserInformation { get { return ConfigurationManager.AppSettings["uri-user-information"]; } }
+        public static string UriAbout { get { return appCaching.Get("uri-about"); } }
+        public static string MailAbout { get { return appCaching.Get("mail-about"); } }
+        public static string UriDevelopment { get { return appCaching.Get("uri-development"); } }
+        public static string UriUpdate { get { return ReplaceAppConfig(appCaching.Get("uri-update")); } }
+        public static string UriChangelogRelease { get { return ReplaceAppConfig(appCaching.Get("uri-changelog-release")); } }
+        public static string UriChangelogRc { get { return ReplaceAppConfig(appCaching.Get("uri-changelog-rc")); } }
+        public static string UriForum { get { return appCaching.Get("uri-forum"); } }
+        public static string UriFeedback { get { return appCaching.Get("uri-feedback"); } }
+        public static string UriUserInformation { get { return appCaching.Get("uri-user-information"); } }
 
-        public static int LoggingStockCount { get { return int.Parse(ConfigurationManager.AppSettings["logging-stock-count"]); } }
-        public static int CacheIndexTemplate { get { return int.Parse(ConfigurationManager.AppSettings["cache-index-template"]); } }
-        public static int CacheIndexClipboard { get { return int.Parse(ConfigurationManager.AppSettings["cache-index-clipboard"]); } }
-        public static TimeSpan SaveIndexClipboardTime { get { return TimeSpan.Parse(ConfigurationManager.AppSettings["save-index-clipboard-time"]); } }
-        public static TimeSpan SaveIndexTemplateTime { get { return TimeSpan.Parse(ConfigurationManager.AppSettings["save-index-template-time"]); } }
-        public static TimeSpan SaveIndexNoteTime { get { return TimeSpan.Parse(ConfigurationManager.AppSettings["save-index-note-time"]); } }
+        public static int LoggingStockCount { get { return appCaching.Get("logging-stock-count", int.Parse); } }
+        public static int CacheIndexBodyTemplate { get { return appCaching.Get("cache-index-body-template", int.Parse); } }
+        public static int CacheIndexBodyClipboard { get { return appCaching.Get("cache-index-body-clipboard", int.Parse); } }
+        public static TimeSpan SaveIndexClipboardTime { get { return appCaching.Get("save-index-clipboard-time", TimeSpan.Parse); } }
+        public static TimeSpan SaveIndexTemplateTime { get { return appCaching.Get("save-index-template-time", TimeSpan.Parse); } }
+        public static TimeSpan SaveIndexNoteTime { get { return appCaching.Get("save-index-note-time", TimeSpan.Parse); } }
 
-        public static int BackupSettingCount { get { return int.Parse(ConfigurationManager.AppSettings["backup-setting"]); } }
-        public static int BackupArchiveCount { get { return int.Parse(ConfigurationManager.AppSettings["backup-archive"]); } }
+        public static int BackupSettingCount { get { return appCaching.Get("backup-setting", int.Parse); } }
+        public static int BackupArchiveCount { get { return appCaching.Get("backup-archive", int.Parse); } }
 
-        public static TimeSpan FullScreenIgnoreTime { get; private set; }
+        public static TimeSpan FullScreenIgnoreTime { get { return appCaching.Get("fullscreen-ignore-time", TimeSpan.Parse); } }
+
+        public static TimeSpan TemplateBodyArchiveTimeSpan { get { return appCaching.Get("template-archive-time", TimeSpan.Parse); } }
+        public static long TemplateBodyArchiveFileSize { get { return appCaching.Get("template-archive-size", long.Parse); } }
+
+        public static TimeSpan NoteBodyArchiveTimeSpan { get { return appCaching.Get("note-archive-time", TimeSpan.Parse); } }
+        public static long NoteBodyArchiveFileSize { get { return appCaching.Get("note-archive-size", long.Parse); } }
+
+        public static TimeSpan ClipboardBodyArchiveTimeSpan { get { return appCaching.Get("clipboard-archive-time", TimeSpan.Parse); } }
+        public static long ClipboardBodyArchiveFileSize { get { return appCaching.Get("clipboard-archive-size", long.Parse); } }
 
         #endregion
 
@@ -528,7 +552,7 @@ namespace ContentTypeTextNet.Pe.PeMain
 
         public static string GetTimestampFileName(DateTime dateTime)
         {
-            return dateTime.ToString(timestampFileName);
+            return dateTime.ToString(formatTimestampFileName);
         }
 
         public static string GetNowTimestampFileName()

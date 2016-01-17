@@ -55,6 +55,63 @@
 		</group>
 	</log>
 	-->
+	<log date="2016/01/17" version="0.76.0" dummy="################################################################################">
+		<group type="features" dummy="==================================================================">
+			<note rev="">
+				<message>#408: GUID重複に備える</message>
+				<comments>
+					<comment>Peの開発が続いている間にこの処理が日の目を見ることは100%ないだろなぁ</comment>
+				</comments>
+			</note>
+			<note rev="22b018037285e9837520b463ef1a450ee8d8a27a">
+				<message>#420: Extended WPF Toolkit™ Community Editionのバージョンアップ</message>
+				<comments>
+					<comment>2.5 → 2.6</comment>
+				</comments>
+			</note>
+			<note rev="9863916ffe321091f3ba2f75a7fcbce67591aa7d">
+				<message>#421: Json.NETのバージョンアップ</message>
+				<comments>
+					<comment>8.01 → 8.02</comment>
+				</comments>
+			</note>
+			<note rev="3d58546d546d42157abe6401ab303fa2567c58db">
+				<message>#364: App.configの設定値をキャッシュする</message>
+			</note>
+			<note rev="4366619ab4277922fd8ff5acdd11c66caa8ef2d7">
+				<message>#423: HTMLクリップボードのURIを規定プログラムで開く</message>
+			</note>
+			<note rev="c925ad58ff0c3a344fe892ab9f53e0781e31c6ea">
+				<message>#362: App.config(PeMain)の説明</message>
+			</note>
+		</group>
+		<group type="fixes" dummy="==================================================================">
+			<note rev="ea0a8ccaf4ca30ac4335ee094fd53dd18c8ee9d7">
+				<message>#353: Windowsの終了・ユーザーのログオフを妨げる</message>
+				<comments>
+					<comment>調査結果としては設定ファイルのバックアップ、特にクリップボード全件保存の場合に各データファイルのバックアップに時間がかかっていた</comment>
+					<comment>クリップボード・ノート・テンプレートの実データが閾値に該当するものをアーカイブした状態で保持するように変更</comment>
+					<comment>クリップボード閾値: 更新が 3 日前で 256KB 以下</comment>
+					<comment>ノート閾値: 更新が 7 日前で 1KB 以下</comment>
+					<comment>テンプレート閾値: 更新が 10 日前で 4KB 以下</comment>
+					<comment>閾値は App.config(PeMain.config) で定義されてるので内容については #364 を参照してください</comment>
+					<comment>Pe 終了時にバックアップ→本処理の流れで実施されるためアップデート後の二回目終了時に効力が現れます</comment>
+					<comment>デバッグ版ではうまくいったよ！デバッグ版ではね！</comment>
+				</comments>
+			</note>
+			<note rev="73c2e58b179dbf215f632dd69591134ab80c68fb">
+				<message>#375: 起動時に各UI制御を行う</message>
+			</note>
+		</group>
+		<group type="developer" dummy="==================================================================">
+			<note rev="a0afdd9051b074b019d90e8c0b53a87d3db1517d">
+				<message>#418: 独立可能なライブラリを独立させる</message>
+			</note>
+			<note rev="678005664f3a275d022d1b094720eb142c097a8d">
+				<message>#419: 開発に関する諸々をヘルプファイルに記載する</message>
+			</note>
+		</group>
+	</log>
 	<log date="2016/01/04" version="0.75.0" dummy="################################################################################">
 		<group type="note" dummy="==================================================================">
 			<note rev="">

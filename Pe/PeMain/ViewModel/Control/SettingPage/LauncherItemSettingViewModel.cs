@@ -99,6 +99,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control.SettingPage
                 var result = CreateCommand(
                     o => {
                         var model = SettingUtility.CreateLauncherItem(LauncherItemSetting.Items, AppNonProcess);
+                        SettingUtility.UpdateUniqueGuid(model, LauncherItems.LauncherItemPairList.ModelList);
                         var pair = LauncherItems.LauncherItemPairList.Add(model, null);
                         SelectedLauncherItem = pair.ViewModel;
                     }
@@ -176,6 +177,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control.SettingPage
                                     loadShorcut = dialogResult == MessageBoxResult.Yes;
                                 }
                                 var item = LauncherItemUtility.CreateFromFile(filePath, loadShorcut, AppNonProcess);
+                                SettingUtility.UpdateUniqueGuid(item, LauncherItems.LauncherItemPairList.ModelList);
                                 var pair = LauncherItems.LauncherItemPairList.Add(item, null);
                                 SelectedLauncherItem = pair.ViewModel;
                             }

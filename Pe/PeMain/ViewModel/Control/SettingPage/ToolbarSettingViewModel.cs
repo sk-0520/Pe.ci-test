@@ -231,6 +231,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control.SettingPage
                 var result = CreateCommand(
                     o => {
                         var model = SettingUtility.CreateLauncherGroup(GroupSettingModel.Groups, AppNonProcess);
+                        SettingUtility.UpdateUniqueGuid(model, GroupSettingModel.Groups);
                         GroupSettingModel.Groups.Add(model);
                         var vm = new GroupRootViewModel(model, LauncherItemSetting.Items, AppNonProcess);
                         this._groupTree.Add(vm);

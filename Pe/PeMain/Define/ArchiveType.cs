@@ -1,4 +1,4 @@
-﻿/**
+﻿/*
 This file is part of Pe.
 
 Pe is free software: you can redistribute it and/or modify
@@ -23,17 +23,13 @@ namespace ContentTypeTextNet.Pe.PeMain.Define
     using System.Threading.Tasks;
 
     /// <summary>
-    /// ファイル種別。
+    /// アーカイブ種別。
     /// </summary>
-    public enum FileType
+    internal enum ArchiveType
     {
         /// <summary>
-        /// Json。
+        /// ZIP形式。
         /// </summary>
-        Json,
-        /// <summary>
-        /// バイナリ。
-        /// </summary>
-        Binary,
+        Zip
     }
 }

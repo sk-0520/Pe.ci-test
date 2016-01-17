@@ -61,6 +61,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
     using ContentTypeTextNet.Pe.PeMain.Data.Model;
     using System.Net;
     using System.Text;
+    using System.IO.Compression;
 
     public sealed class MainWorkerViewModel: ViewModelBase, IAppSender, IClipboardWatcher, IHavingView<TaskbarIcon>, IHavingCommonData
     {
@@ -89,9 +90,11 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             OtherWindows = new HashSet<Window>();
 
             IndexBodyCaching = new IndexBodyCaching(
-                Constants.CacheIndexTemplate,
-                Constants.CacheIndexClipboard
+                Constants.CacheIndexBodyTemplate,
+                Constants.CacheIndexBodyClipboard,
+                CommonData.VariableConstants
             );
+
 
             var indexTimer = new Dictionary<IndexKind, TimeSpan>() {
                 { IndexKind.Clipboard, Constants.SaveIndexClipboardTime },
@@ -612,7 +615,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                         if(!IsPause) {
                             var dialogResult = ShowHomeDialog();
                             if(dialogResult) {
-                                ResetToolbar();
+                                ResetToolbarWindow();
                             }
                         }
                     }
@@ -664,9 +667,10 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 SaveSetting();
             }
             if(gc) {
-                IndexItemUtility.GarbageCollectionBody(IndexKind.Note, CommonData.NoteIndexSetting.Items, CommonData.NonProcess);
-                IndexItemUtility.GarbageCollectionBody(IndexKind.Template, CommonData.TemplateIndexSetting.Items, CommonData.NonProcess);
-                IndexItemUtility.GarbageCollectionBody(IndexKind.Clipboard, CommonData.ClipboardIndexSetting.Items, CommonData.NonProcess);
+                var timestamp = DateTime.Now;
+                IndexItemUtility.GarbageCollectionBody(IndexKind.Note, CommonData.NoteIndexSetting.Items, IndexBodyCaching.NoteItems.Archive, timestamp, Constants.NoteBodyArchiveTimeSpan, Constants.NoteBodyArchiveFileSize, CommonData.NonProcess);
+                IndexItemUtility.GarbageCollectionBody(IndexKind.Template, CommonData.TemplateIndexSetting.Items, IndexBodyCaching.TemplateItems.Archive, timestamp, Constants.TemplateBodyArchiveTimeSpan, Constants.TemplateBodyArchiveFileSize, CommonData.NonProcess);
+                IndexItemUtility.GarbageCollectionBody(IndexKind.Clipboard, CommonData.ClipboardIndexSetting.Items, IndexBodyCaching.ClipboardItems.Archive, timestamp, Constants.ClipboardBodyArchiveTimeSpan, Constants.ClipboardBodyArchiveFileSize, CommonData.NonProcess);
                 GarbageCollectionMainSettingTemporary();
             }
             Application.Current.Shutdown();
@@ -751,19 +755,25 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 FileUtility.MakeFileParentDirectory(backupFileFilePath);
 
                 // zip
-                var targetFiles = new[] {
-                    CommonData.VariableConstants.UserSettingMainSettingFilePath,
-                    CommonData.VariableConstants.UserSettingLauncherItemSettingFilePath,
-                    CommonData.VariableConstants.UserSettingLauncherGroupItemSettingFilePath,
-                    CommonData.VariableConstants.UserSettingNoteIndexFilePath,
-                    CommonData.VariableConstants.UserSettingNoteDirectoryPath,
-                    CommonData.VariableConstants.UserSettingTemplateIndexFilePath,
-                    CommonData.VariableConstants.UserSettingTemplateDirectoryPath,
-                    CommonData.VariableConstants.UserSettingClipboardIndexFilePath,
-                    CommonData.VariableConstants.UserSettingClipboardDirectoryPath,
-                };
                 var basePath = Environment.ExpandEnvironmentVariables(settingBaseDirectory);
-                FileUtility.CreateZipFile(backupFileFilePath, basePath, targetFiles.Select(Environment.ExpandEnvironmentVariables));
+                var archiveParameters = new[] {
+                    new ArchiveParameter() { RelativePath = CommonData.VariableConstants.UserSettingMainSettingFilePath, },
+                    new ArchiveParameter() { RelativePath = CommonData.VariableConstants.UserSettingLauncherItemSettingFilePath, },
+                    new ArchiveParameter() { RelativePath = CommonData.VariableConstants.UserSettingLauncherGroupItemSettingFilePath, },
+                    new ArchiveParameter() { RelativePath = CommonData.VariableConstants.UserSettingNoteIndexFilePath, },
+                    new ArchiveParameter() { RelativePath = CommonData.VariableConstants.UserSettingNoteBodyArchivePath, },
+                    new ArchiveParameter() { RelativePath = CommonData.VariableConstants.UserSettingNoteDirectoryPath, SearchPattern = Constants.IndexJsonFileSearchPattern, SearchOption = SearchOption.TopDirectoryOnly, },
+                    new ArchiveParameter() { RelativePath = CommonData.VariableConstants.UserSettingTemplateIndexFilePath, },
+                    new ArchiveParameter() { RelativePath = CommonData.VariableConstants.UserSettingTemplateBodyArchivePath, },
+                    new ArchiveParameter() { RelativePath = CommonData.VariableConstants.UserSettingTemplateDirectoryPath, SearchPattern = Constants.IndexJsonFileSearchPattern, SearchOption = SearchOption.TopDirectoryOnly, },
+                    new ArchiveParameter() { RelativePath = CommonData.VariableConstants.UserSettingClipboardIndexFilePath, },
+                    new ArchiveParameter() { RelativePath = CommonData.VariableConstants.UserSettingClipboardBodyArchivePath, },
+                    new ArchiveParameter() { RelativePath = CommonData.VariableConstants.UserSettingClipboardDirectoryPath, CompressionLevel = CompressionLevel.Fastest, SearchPattern = Constants.IndexBinaryFileSearchPattern, SearchOption = SearchOption.TopDirectoryOnly },
+                };
+                foreach(var ap in archiveParameters) {
+                    ap.RelativePath = ArchiveUtility.GetArchiveEntryPath(Environment.ExpandEnvironmentVariables(ap.RelativePath), basePath);
+                }
+                ArchiveUtility.CreateZipFile(backupFileFilePath, basePath, archiveParameters);
             }
         }
 
@@ -825,10 +835,10 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                     CreateMessage();
                     CreateLogger(null);
 
-                    CreateToolbar();
-                    CreateNote();
-                    CreateTemplate();
-                    CreateClipboard();
+                    CreateToolbarWindow();
+                    CreateNoteWindows();
+                    CreateTemplateWindow();
+                    CreateClipboardWindow();
                     CreateCommandWindow();
 
                     // #326
@@ -976,7 +986,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         /// <summary>
         /// ツールバーの生成。
         /// </summary>
-        void CreateToolbar()
+        void CreateToolbarWindow()
         {
             using(var timeLogger = CommonData.NonProcess.CreateTimeLogger()) {
                 LauncherToolbarWindows = new List<LauncherToolbarWindow>();
@@ -988,10 +998,10 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 }
             }
 
-            OnPropertyChanged("LauncherToolbars");
+            OnPropertyChanged(nameof(LauncherToolbars));
         }
 
-        void RemoveToolbar()
+        void RemoveToolbarWindow()
         {
             foreach(var window in LauncherToolbarWindows.Where(w => w.IsLoaded).ToArray()) {
                 window.Close();
@@ -1000,7 +1010,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             LauncherToolbarWindows = null;
         }
 
-        internal void ResetToolbar()
+        internal void ResetToolbarWindow()
         {
             CommonData.Logger.Debug("toolbar: reset");
             if(ResetToolbarRunning) {
@@ -1012,15 +1022,15 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             ResetToolbarRunning = true;
 
             Dispatcher.CurrentDispatcher.Invoke(new Action(() => {
-                RemoveToolbar();
-                CreateToolbar();
+                RemoveToolbarWindow();
+                CreateToolbarWindow();
                 PrevResetToolbar = DateTime.Now;
                 ResetToolbarRunning = false;
                 CommonData.Logger.Debug("toolbar-reset: end");
             }), DispatcherPriority.SystemIdle);
         }
 
-        void CreateNote()
+        void CreateNoteWindows()
         {
             using(var timeLogger = CommonData.NonProcess.CreateTimeLogger()) {
                 NoteWindows = new List<NoteWindow>();
@@ -1031,7 +1041,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
         }
 
-        void RemoveNote()
+        void RemoveNoteWindows()
         {
             foreach(var window in NoteWindows.ToArray()) {
                 window.Close();
@@ -1040,31 +1050,31 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             NoteWindows = null;
         }
 
-        void ResetNote()
+        void ResetNoteWindows()
         {
-            RemoveNote();
-            CreateNote();
+            RemoveNoteWindows();
+            CreateNoteWindows();
         }
 
-        void CreateTemplate()
+        void CreateTemplateWindow()
         {
             TemplateWindow = new TemplateWindow();
             TemplateWindow.SetCommonData(CommonData, null);
         }
 
-        void RemoveTemplate()
+        void RemoveTemplateWindow()
         {
             TemplateWindow.Close();
             TemplateWindow = null;
         }
 
-        void ResetTemplate()
+        void ResetTemplateWindow()
         {
-            RemoveTemplate();
-            CreateTemplate();
+            RemoveTemplateWindow();
+            CreateTemplateWindow();
         }
 
-        void CreateClipboard()
+        void CreateClipboardWindow()
         {
             CommonData.ClipboardIndexSetting.Items.LimitSize = CommonData.MainSetting.Clipboard.SaveCount;
 
@@ -1072,16 +1082,16 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             ClipboardWindow.SetCommonData(CommonData, null);
         }
 
-        void RemoveClipboard()
+        void RemoveClipboardWindow()
         {
             ClipboardWindow.Close();
             ClipboardWindow = null;
         }
 
-        void ResetClipboard()
+        void ResetClipboardWindow()
         {
-            RemoveClipboard();
-            CreateClipboard();
+            RemoveClipboardWindow();
+            CreateClipboardWindow();
         }
 
         void CreateCommandWindow()
@@ -1108,7 +1118,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         void ChangedScreenCount()
         {
             CommonData.Logger.Information(CommonData.Language["log/screen/change-count"]);
-            ResetToolbar();
+            ResetToolbarWindow();
 
             CommonData.AppSender.SendApplicationCommand(ApplicationCommand.MemoryGarbageCollect, this, ApplicationCommandArg.Empty);
         }
@@ -1157,7 +1167,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
 
             SettingUtility.InitializeNoteIndexItem(noteItem, null, CommonData.NonProcess);
-
+            
             var window = CreateNoteWindow(noteItem, appendIndex);
             WindowsUtility.ShowNoActiveForeground(window.Handle);
 
@@ -1168,6 +1178,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         {
             var window = (NoteWindow)CommonData.AppSender.SendCreateWindow(WindowKind.Note, noteItem, null);
             if(appendIndex) {
+                SettingUtility.UpdateUniqueGuid(noteItem, CommonData.NoteIndexSetting.Items);
                 CommonData.NoteIndexSetting.Items.Add(noteItem);
             }
 
@@ -1205,11 +1216,11 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             MessageWindow.SetCommonData(CommonData, null);
             ResetLogger();
 
-            ResetToolbar();
-            ResetNote();
+            ResetToolbarWindow();
+            ResetNoteWindows();
 
-            ResetTemplate();
-            ResetClipboard();
+            ResetTemplateWindow();
+            ResetClipboardWindow();
 
             ResetCommandWindow();
 
@@ -1528,6 +1539,10 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             UninitializeSystem();
 
             if(!IsDisposed) {
+                if(IndexBodyCaching != null) {
+                    IndexBodyCaching.Dispose();
+                    IndexBodyCaching = null;
+                }
                 if(CommonData != null) {
                     CommonData.Dispose();
                     CommonData = null;
@@ -1808,7 +1823,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             items.Remove(guid);
 
             // ボディ部のファイルも削除する。
-            IndexItemUtility.RemoveBody(indexKind, guid, CommonData.NonProcess);
+            IndexItemUtility.RemoveBody(indexKind, guid, cachingItems.Archive, CommonData.NonProcess);
 
             CommonData.AppSender.SendSaveIndex(indexKind, Timing.Delay);
         }
@@ -1910,10 +1925,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 CommonData.Logger.Debug("load cache: " + guid.ToString(), body.DisplayText);
                 return body;
             }
-            //var fileType = IndexItemUtility.GetBodyFileType(indexKind);
-            //var path = IndexItemUtility.GetBodyFilePath(indexKind, guid, CommonData.VariableConstants);
-            //var result = AppUtility.LoadSetting<TIndexBody>(path, fileType, CommonData.Logger);
-            var result = IndexItemUtility.LoadBody<TIndexBody>(indexKind, guid, CommonData.NonProcess);
+            var result = IndexItemUtility.LoadBody<TIndexBody>(indexKind, guid, cachingItems.Archive, CommonData.NonProcess);
 
             AppendCachingItems(guid, result, cachingItems);
             return result;
@@ -1939,12 +1951,8 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         void SaveIndexBody<TIndexBody>(IndexBodyItemModelBase indexBody, Guid guid, IndexBodyPairItemCollection<TIndexBody> cachingItems, Timing timing)
             where TIndexBody : IndexBodyItemModelBase
         {
-            //var fileType = IndexItemUtility.GetIndexBodyFileType(indexBody.IndexKind);
-            //var path = IndexItemUtility.GetIndexBodyFilePath(indexBody.IndexKind, guid, CommonData.VariableConstants);
             var bodyItem = (TIndexBody)indexBody;
-            //AppUtility.SaveSetting(path, bodyItem, fileType, CommonData.Logger);
-            //AppendCachingItems(guid, bodyItem, cachingItems);
-            IndexItemUtility.SaveBody(bodyItem, guid, CommonData.NonProcess);
+            IndexItemUtility.SaveBody(bodyItem, guid, cachingItems.Archive, IndexBodyKind.File, CommonData.NonProcess);
             AppendCachingItems(guid, bodyItem, cachingItems);
         }
 
@@ -2060,7 +2068,6 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                         return notify;
                     }
 
-                    // 毎回ファイル読むのもなぁ
                     // 指定範囲内に同じデータがあれば追加しない
                     var clipboardItems = CommonData.ClipboardIndexSetting.Items.Reverse();
                     if(CommonData.MainSetting.Clipboard.DuplicationCount != Constants.clipboardDuplicationCount.minimum) {
@@ -2088,6 +2095,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                             Hash = clipboardData.Hash,
                         };
                         SettingUtility.InitializeClipboardIndexItem(index, null, CommonData.NonProcess);
+                        SettingUtility.UpdateUniqueGuid(index, Clipboard.IndexPairList.ModelList);
                         Clipboard.IndexPairList.Add(index, null);
                         index.History.Update();
                         CommonData.AppSender.SendSaveIndex(IndexKind.Clipboard, Timing.Delay);
@@ -2395,14 +2403,14 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
 
             CommonData.Logger.Information(CommonData.Language["log/screen/change-setting"]);
-            ResetToolbar();
+            ResetToolbarWindow();
         }
 
         void SystemEvents_SessionSwitch(object sender, SessionSwitchEventArgs e)
         {
             CommonData.Logger.Information(CommonData.Language["log/session/switch"], e);
             if(e.Reason == SessionSwitchReason.ConsoleConnect || e.Reason == SessionSwitchReason.SessionUnlock) {
-                ResetToolbar();
+                ResetToolbarWindow();
                 if(e.Reason == SessionSwitchReason.SessionUnlock) {
                     CheckUpdateProcessAsync();
                     CommonData.AppSender.SendUserInformation();

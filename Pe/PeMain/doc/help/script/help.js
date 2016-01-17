@@ -37,7 +37,14 @@ var menuList = [
 		name: 'install_uninstall_data',
 		level: 1,
 		title: {
-			'ja-JP': 'インストール・アンインストール・使用データについて'
+			'ja-JP': 'インストール・アンインストール・保存データについて'
+		}
+	},
+	{
+		name: 'platform',
+		level: 2,
+		title: {
+			'ja-JP': '32/64bitについて'
 		}
 	},
 	{
@@ -220,6 +227,34 @@ var menuList = [
 		level: 1,
 		title: {
 			'ja-JP': '環境変数編集'
+		}
+	},
+	{
+		name: 'others-setting-data',
+		level: 1,
+		title: {
+			'ja-JP': '設定データ'
+		}
+	},
+	{
+		name: 'others-setting-data-app-config',
+		level: 2,
+		title: {
+			'ja-JP': '構成ファイル'
+		}
+	},
+	{
+		name: 'development',
+		level: 1,
+		title: {
+			'ja-JP': '開発について'
+		}
+	},
+	{
+		name: 'development-source',
+		level: 2,
+		title: {
+			'ja-JP': 'ソースコードについて'
 		}
 	}
 	//

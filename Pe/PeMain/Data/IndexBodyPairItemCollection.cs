@@ -24,13 +24,24 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
     using ContentTypeTextNet.Library.SharedLibrary.Model;
     using ContentTypeTextNet.Pe.Library.PeData.Item;
     using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
-
+    using ContentTypeTextNet.Pe.PeMain.Logic;
+    using Library.PeData.Define;
     public class IndexBodyPairItemCollection<TIndexBody>: FixedSizeCollectionModel<IndexBodyPairItem<TIndexBody>>
         where TIndexBody : IndexBodyItemModelBase
     {
-        public IndexBodyPairItemCollection(int limitSize)
+        public IndexBodyPairItemCollection(int limitSize, IndexKind indexKind, VariableConstants variableConstants)
             : base(limitSize)
-        { }
+        {
+            IndexKind = indexKind;
+            Archive.OpenIfExists(indexKind, variableConstants);
+        }
+
+        #region property
+
+        public IndexKind IndexKind { get; private set; }
+        public IndexBodyArchive Archive { get; } = new IndexBodyArchive();
+
+        #endregion
 
         #region function
 
@@ -60,6 +71,15 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
             }
 
             return result.Index;
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                Archive.Dispose();
+            }
+
+            base.Dispose(disposing);
         }
 
         #endregion

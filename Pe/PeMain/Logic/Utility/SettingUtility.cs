@@ -105,6 +105,26 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
             return userId.All(c => hash.Contains(c));
         }
 
+        /// <summary>
+        /// GUIDを一意なものに変更する。
+        /// <para>関連する部分までは面倒見ない。</para>
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="list"></param>
+        internal static int UpdateUniqueGuid(GuidModelBase model, IReadOnlyList<GuidModelBase> list, int maxRetryCount = 10000)
+        {
+            int count = 0;
+            while(list.Any(l => l.Id == model.Id)) {
+                if(maxRetryCount < count++) {
+                    throw new Exception($"over {nameof(maxRetryCount)}({maxRetryCount})");
+                }
+                model.Id = Guid.NewGuid();
+            }
+
+            return count;
+        }
+
+
         #region create
 
         /// <summary>
@@ -203,6 +223,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
             var result = CreateModelName(items, nonProcess.Language, "new/template-name");
             return result;
         }
+
 
         #endregion
 

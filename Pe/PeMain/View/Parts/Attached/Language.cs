@@ -80,7 +80,7 @@ namespace ContentTypeTextNet.Pe.PeMain.View.Parts.Attached
         static void Validate(DependencyObject dependencyObject)
         {
             if(dependencyObject == null) {
-                throw new ArgumentNullException("dependencyObject");
+                throw new ArgumentNullException(nameof(dependencyObject));
             }
         }
 
