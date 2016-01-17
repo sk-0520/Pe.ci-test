@@ -80,7 +80,7 @@
 		</group>
 		<group type="fixes" dummy="==================================================================">
 			<note rev="">
-				<message></message>
+				<message>#426: ヘルプファイルのファイルとディレクトリアイコンが出力ディレクトリに出力されていない</message>
 			</note>
 			<note rev="">
 				<message></message>

@@ -364,8 +364,12 @@
     <Content Include="etc\html\feedback.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Resource Include="etc\image\common-file.png" />
-    <Resource Include="etc\image\common-folder.png" />
+    <None Include="etc\image\common-file.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="etc\image\common-folder.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <Content Include="etc\script\autosize.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
