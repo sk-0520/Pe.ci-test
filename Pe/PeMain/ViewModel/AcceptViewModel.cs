@@ -107,7 +107,6 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 { LanguageKey.acceptDevelopment, Constants.UriDevelopment },
                 { LanguageKey.acceptMail, Constants.MailAbout },
                 { LanguageKey.acceptForum, Constants.UriForum },
-                { LanguageKey.acceptHelp, Constants.UriHelp },
                 { LanguageKey.acceptStyle, File.ReadAllText(Path.Combine(Constants.ApplicationStyleDirectoryPath, Constants.styleCommonFileName), Encoding.UTF8) },
                 { LanguageKey.acceptApplicationName, Constants.ApplicationName },
                 { LanguageKey.acceptOk, language.GuiTextToPlainText(language["accept/ok"]) },

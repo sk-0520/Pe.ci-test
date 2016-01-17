@@ -1,0 +1,246 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta charset="utf-8" />
+		<title>ヘルプ</title>
+		<link rel="shortcut icon" href="../image/favicon.ico" type="image/vnd.microsoft.icon" />
+		<style>
+			@import url('../../../etc/style/common.css');
+			@import url('../style/help.css');
+		</style>
+		<script src="../../../etc/script/jquery.js"></script>
+		<script src="../../../etc/script/changelog.js"></script>
+		<script src="../script/help.js"></script>
+	</head>
+	<body>
+		<h1>ヘルプ</h1>
+		<section id="content">
+			<p>
+				Pe が外部に持つ設定データは主に三種類あります。
+			</p>
+			<ol>
+				<li>プログラム自身が持つ設定</li>
+				<li><strong>構成ファイル</strong></li>
+				<li>ユーザー設定</li>
+			</ol>
+			<p>
+				本ページでは<strong>構成ファイル</strong>に対する説明になります。
+			</p>
+
+			<h2>構成ファイルについて</h2>
+			<p>
+				構成ファイルは Pe の配置ディレクトリにある<span class="file">PeMain.exe.config</span>です。
+			</p>
+			<p>
+				ユーザーの設定項目ではないが同一アプリケーションでも設定値を変更したい場合に編集・反映することが目的です。
+			</p>
+			<p>
+				ユーザー設定項目でないため設定値の誤入力は考慮されません。
+				<br />
+				そのため記述が誤っていた場合でも Pe はそれを正として疑うことなく処理します。
+			</p>
+
+			<h2>設定内容</h2>
+			<div class="warning">
+				<p>
+					記述内容によっては Pe が正常に動作しません。
+				</p>
+			</div>
+
+			<table>
+				<thead>
+					<tr>
+						<th>項目名</th>
+						<th>型(CTS)</th>
+						<th>役割</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><dfn>uri-about</dfn></td>
+						<td><code>System.String</code></td>
+						<td>
+							配布 Pe を作成している Web サイトへのURI。
+							<br />
+							独自に Pe を配布する場合に設定することを想定しています。
+						</td>
+					</tr>
+					<tr>
+						<td><dfn>mail-about</dfn></td>
+						<td><code>System.String</code></td>
+						<td>配布 Pe を作成した者への連絡先メールアドレス。</td>
+					</tr>
+					<tr>
+						<td><dfn>uri-development</dfn></td>
+						<td><code>System.String</code></td>
+						<td>
+							配布 Pe の開発 Web サイトへのURI。
+							<br />
+							ソースコードへのアクセス手段が記述された Web ページを想定しています。
+						</td>
+					</tr>
+					<tr>
+						<td><dfn>uri-update</dfn></td>
+						<td><code>System.String</code></td>
+						<td>
+							アップデートチェック時に取得するバージョンが記載されたURI。
+							<a class="tips" href="#parameter">パラメータ</a>
+						</td>
+					</tr>
+					<tr>
+						<td><dfn>uri-changelog-release</dfn></td>
+						<td><code>System.String</code></td>
+						<td>
+							アップデートチェックのリリース版更新履歴が記載されたURI。
+							<a class="tips" href="#parameter">パラメータ</a>
+						</td>
+					</tr>
+					<tr>
+						<td><dfn>uri-changelog-rc</dfn></td>
+						<td><code>System.String</code></td>
+						<td>
+							アップデートチェックのRC版更新履歴が記載されたURI。
+							<a class="tips" href="#parameter">パラメータ</a>
+						</td>
+					</tr>
+					<tr>
+						<td><dfn>uri-forum</dfn></td>
+						<td><code>System.String</code></td>
+						<td>フォーラムへのURI。</td>
+					</tr>
+					<tr>
+						<td><dfn>uri-feedback</dfn></td>
+						<td><code>System.String</code></td>
+						<td>フィードバック送信先URI。</td>
+					</tr>
+					<tr>
+						<td><dfn>uri-user-information</dfn></td>
+						<td><code>System.String</code></td>
+						<td>ユーザー情報送信先URI。</td>
+					</tr>
+					<tr>
+						<td><dfn>logging-stock-count</dfn></td>
+						<td><code>System.Int32</code></td>
+						<td>ログウィンドウに表示するログアイテムの最大数。</td>
+					</tr>
+					<tr>
+						<td><dfn>cache-index-body-template</dfn></td>
+						<td><code>System.Int32</code></td>
+						<td>
+							テンプレート実データのキャッシュ数。
+							<a class="tips" href="#index-cache">キャッシュ</a>
+						</td>
+					</tr>
+					<tr>
+						<td><dfn>cache-index-body-clipboard</dfn></td>
+						<td><code>System.Int32</code></td>
+						<td>
+							クリップボード実データのキャッシュ数。
+							<a class="tips" href="#index-cache">キャッシュ</a>
+						</td>
+					</tr>
+					<tr>
+						<td><dfn>backup-setting</dfn></td>
+						<td><code>System.Int32</code></td>
+						<td>設定データのバックアップ上限数。</td>
+					</tr>
+					<tr>
+						<td><dfn>backup-archive</dfn></td>
+						<td><code>System.Int32</code></td>
+						<td>自動アップデート処理時にダウンロードする配布アーカイブの保存件数。</td>
+					</tr>
+					<tr>
+						<td><dfn>fullscreen-ignore-time</dfn></td>
+						<td><code>System.TimeSpan</code></td>
+						<td>
+							ツールバーがフルスクリーンを検知した際に続けて検知したフルスクリーンの無効化を無視するまでの時間。
+							<div class="bug">
+								<p>
+									そもそも不要な設定項目です。
+									(Forms版ではなかったし)
+								</p>
+								<p>
+									WPF版に作り替えた時なにかをミスってんのかどうかわからないけどフルスクリーン検知した瞬間にフルスクリーン解除を検知するから暫定対処。
+								</p>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td><dfn>save-index-template-time</dfn></td>
+						<td><code>System.TimeSpan</code></td>
+						<td>
+							テンプレートインデックスデータをストレージに保存するまでの間隔。
+							<a class="tips" href="#index">インデックス</a>
+						</td>
+					</tr>
+					<tr>
+						<td><dfn>save-index-clipboard-time</dfn></td>
+						<td><code>System.TimeSpan</code></td>
+						<td>
+							クリップボードインデックスデータをストレージに保存するまでの間隔。
+							<a class="tips" href="#index">インデックス</a>
+						</td>
+					</tr>
+					<tr>
+						<td><dfn>save-index-note-time</dfn></td>
+						<td><code>System.TimeSpan</code></td>
+						<td>
+							ノートインデックスデータをストレージに保存するまでの間隔。
+							<a class="tips" href="#index">インデックス</a>
+						</td>
+					</tr>
+					<tr>
+						<td><dfn>template-archive-size</dfn></td>
+						<td><code>System.Int64</code></td>
+						<td>
+							テンプレートインデックス実データのアーカイブ対象サイズ。
+							<a class="tips" href="#index-archive">アーカイブ</a>
+						</td>
+					</tr>
+					<tr>
+						<td><dfn>template-archive-time</dfn></td>
+						<td><code>System.TimeSpan</code></td>
+						<td>
+							テンプレートインデックス実データのアーカイブ対象更新時間。
+							<a class="tips" href="#index-archive">アーカイブ</a>
+						</td>
+					</tr>
+					<tr>
+						<td><dfn>note-archive-size</dfn></td>
+						<td><code>System.Int64</code></td>
+						<td>
+							ノートインデックス実データのアーカイブ対象サイズ。
+							<a class="tips" href="#index-archive">アーカイブ</a>
+						</td>
+					</tr>
+					<tr>
+						<td><dfn>note-archive-time</dfn></td>
+						<td><code>System.TimeSpan</code></td>
+						<td>
+							ノートインデックス実データのアーカイブ対象更新時間。
+							<a class="tips" href="#index-archive">アーカイブ</a>
+						</td>
+					</tr>
+					<tr>
+						<td><dfn>clipboard-archive-size</dfn></td>
+						<td><code>System.Int64</code></td>
+						<td>
+							クリップボードインデックス実データのアーカイブ対象サイズ。
+							<a class="tips" href="#index-archive">アーカイブ</a>
+						</td>
+					</tr>
+					<tr>
+						<td><dfn>clipboard-archive-time</dfn></td>
+						<td><code>System.TimeSpan</code></td>
+						<td>
+							クリップボードインデックス実データのアーカイブ対象更新時間。
+							<a class="tips" href="#index-archive">アーカイブ</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+		</section>
+		<nav id="main-menu"></nav>
+	</body>
+</html>

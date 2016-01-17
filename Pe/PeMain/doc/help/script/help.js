@@ -230,6 +230,13 @@ var menuList = [
 		}
 	},
 	{
+		name: 'others-app-config',
+		level: 1,
+		title: {
+			'ja-JP': '構成ファイル'
+		}
+	},
+	{
 		name: 'development',
 		level: 1,
 		title: {
