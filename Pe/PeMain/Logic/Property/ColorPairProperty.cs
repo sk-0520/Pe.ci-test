@@ -64,24 +64,24 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Property
 
         public static Color GetNoneAlphaForeColor(IColorPair model)
         {
-            var result = MediaUtility.GetNoneAlphaColor(GetForeColor(model));
+            var result = MediaUtility.GetNonTransparentColor(GetForeColor(model));
             return result;
         }
 
         public static bool SetNoneAlphaForekColor(IColorPair model, Color value, Action<string> onPropertyChanged, [CallerMemberName] string propertyName = "")
         {
-            return SetForeColor(model, MediaUtility.GetNoneAlphaColor(value), onPropertyChanged, propertyName);
+            return SetForeColor(model, MediaUtility.GetNonTransparentColor(value), onPropertyChanged, propertyName);
         }
 
         public static Color GetNoneAlphaBackColor(IColorPair model)
         {
-            var result = MediaUtility.GetNoneAlphaColor(GetBackColor(model));
+            var result = MediaUtility.GetNonTransparentColor(GetBackColor(model));
             return result;
         }
 
         public static bool SetNoneAlphaBackColor(IColorPair model, Color value, Action<string> onPropertyChanged, [CallerMemberName] string propertyName = "")
         {
-            return SetBackColor(model, MediaUtility.GetNoneAlphaColor(value), onPropertyChanged, propertyName);
+            return SetBackColor(model, MediaUtility.GetNonTransparentColor(value), onPropertyChanged, propertyName);
         }
 
 
