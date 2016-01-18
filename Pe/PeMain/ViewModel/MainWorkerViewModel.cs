@@ -90,11 +90,10 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             OtherWindows = new HashSet<Window>();
 
             IndexBodyCaching = new IndexBodyCaching(
-                Constants.CacheIndexBodyTemplate,
-                Constants.CacheIndexBodyClipboard,
+                Constants.CacheIndexBodyTemplate, 
+                Constants.CacheIndexBodyClipboard, 
                 CommonData.VariableConstants
             );
-
 
             var indexTimer = new Dictionary<IndexKind, TimeSpan>() {
                 { IndexKind.Clipboard, Constants.SaveIndexClipboardTime },
@@ -110,6 +109,17 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             foreach(var timer in IndexSaveTimers.Values) {
                 timer.Tick += IndexTimer_Tick;
             }
+        }
+
+        private MainWorkerViewModel(MainWorkerViewModel vm)
+        {
+            CommonData = vm.CommonData;
+            LauncherToolbarWindows = new List<LauncherToolbarWindow>();
+            NoteWindows = new List<NoteWindow>();
+            TemplateWindow = vm.TemplateWindow;
+            ClipboardWindow = vm.ClipboardWindow;
+            LoggingWindow = vm.LoggingWindow;
+            WindowSaveData = vm.WindowSaveData;
         }
 
         #region property
@@ -659,9 +669,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
 #endif
             StopIndexTimer();
-            foreach(var timer in IndexSaveTimers.Values) {
-                timer.Tick -= IndexTimer_Tick;
-            }
+            DisposeIndexTimer();
 
             if(saveSetting) {
                 SaveSetting();
@@ -1145,14 +1153,12 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             noteItem.Font = (FontModel)CommonData.MainSetting.Note.Font.DeepClone();
             //TODO: 外部化
             switch(CommonData.MainSetting.Note.NoteTitle) {
-                case NoteTitle.Timestamp:
-                    {
+                case NoteTitle.Timestamp: {
                         noteItem.Name = CommonData.Language["note/title/timestamp"];
                     }
                     break;
 
-                case NoteTitle.DefaultCaption:
-                    {
+                case NoteTitle.DefaultCaption: {
                         //TODO: ユニークはまぁ優先度下げ下げ
                         var map = new Dictionary<string, string>() {
                             { LanguageKey.noteTitleCount, CommonData.NoteIndexSetting.Items.Count.ToString() },
@@ -1167,7 +1173,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
 
             SettingUtility.InitializeNoteIndexItem(noteItem, null, CommonData.NonProcess);
-            
+
             var window = CreateNoteWindow(noteItem, appendIndex);
             WindowsUtility.ShowNoActiveForeground(window.Handle);
 
@@ -1226,14 +1232,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
             // バインドの無理やり付け替え
             if(HasView) {
-                var temp = new MainWorkerViewModel(new ContentTypeTextNet.Pe.PeMain.Data.VariableConstants(), new Logger()) {
-                    CommonData = this.CommonData,
-                    LauncherToolbarWindows = new List<LauncherToolbarWindow>(),
-                    NoteWindows = new List<NoteWindow>(),
-                    TemplateWindow = this.TemplateWindow,
-                    ClipboardWindow = this.ClipboardWindow,
-                    LoggingWindow = this.LoggingWindow,
-                };
+                var temp = new MainWorkerViewModel(this);
                 var stock = View.DataContext;
                 View.DataContext = temp;
                 View.DataContext = stock;
@@ -1530,6 +1529,14 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             CommonData.Logger.Debug(CommonData.Language["log/pause/skip"], null, frame, callerFile, callerLine, callerMember);
         }
 
+        void DisposeIndexTimer()
+        {
+            foreach(var timer in IndexSaveTimers.Values) {
+                timer.Tick -= IndexTimer_Tick;
+            }
+            IndexSaveTimers.Clear();
+        }
+
         #endregion
 
         #region ViewModelBase
@@ -1635,29 +1642,25 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             var windowKind = window as IHavingWindowKind;
             if(windowKind != null) {
                 switch(windowKind.WindowKind) {
-                    case WindowKind.LauncherToolbar:
-                        {
+                    case WindowKind.LauncherToolbar: {
                             var toolbarWindow = (LauncherToolbarWindow)window;
                             LauncherToolbarWindows.Add(toolbarWindow);
                         }
                         break;
 
                     case WindowKind.LauncherExecute:
-                    case WindowKind.LauncherCustomize:
-                        {
+                    case WindowKind.LauncherCustomize: {
                             OtherWindows.Add(window);
                         }
                         break;
 
-                    case WindowKind.LauncherStream:
-                        {
+                    case WindowKind.LauncherStream: {
                             var streamWindow = (LauncherItemStreamWindow)window;
                             StreamWindows.Add(streamWindow);
                         }
                         break;
 
-                    case WindowKind.Note:
-                        {
+                    case WindowKind.Note: {
                             var noteWindow = (NoteWindow)window;
                             NoteWindows.Add(noteWindow);
 
@@ -1678,29 +1681,25 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             var havingWindwKind = window as IHavingWindowKind;
             if(havingWindwKind != null) {
                 switch(havingWindwKind.WindowKind) {
-                    case WindowKind.LauncherToolbar:
-                        {
+                    case WindowKind.LauncherToolbar: {
                             var toolbarWindow = (LauncherToolbarWindow)window;
                             LauncherToolbarWindows.Remove(toolbarWindow);
                         }
                         break;
 
                     case WindowKind.LauncherExecute:
-                    case WindowKind.LauncherCustomize:
-                        {
+                    case WindowKind.LauncherCustomize: {
                             OtherWindows.Remove(window);
                         }
                         break;
 
-                    case WindowKind.LauncherStream:
-                        {
+                    case WindowKind.LauncherStream: {
                             var streamWindow = (LauncherItemStreamWindow)window;
                             StreamWindows.Remove(streamWindow);
                         }
                         break;
 
-                    case WindowKind.Note:
-                        {
+                    case WindowKind.Note: {
                             var noteWindow = (NoteWindow)window;
                             NoteWindows.Remove(noteWindow);
                             var viewModel = noteWindow.ViewModel;
@@ -1723,36 +1722,31 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             CommonDataWindow window = null;
 
             switch(kind) {
-                case WindowKind.LauncherToolbar:
-                    {
+                case WindowKind.LauncherToolbar: {
                         window = new LauncherToolbarWindow();
                         window.SetCommonData(CommonData, (ScreenModel)extensionData);
                     }
                     break;
 
-                case WindowKind.LauncherExecute:
-                    {
+                case WindowKind.LauncherExecute: {
                         window = new LauncherItemExecuteWindow();
                         window.SetCommonData(CommonData, extensionData);
                     }
                     break;
 
-                case WindowKind.LauncherCustomize:
-                    {
+                case WindowKind.LauncherCustomize: {
                         window = new LauncherItemCustomizeWindow();
                         window.SetCommonData(CommonData, extensionData);
                     }
                     break;
 
-                case WindowKind.LauncherStream:
-                    {
+                case WindowKind.LauncherStream: {
                         window = new LauncherItemStreamWindow();
                         window.SetCommonData(CommonData, extensionData);
                     }
                     break;
 
-                case WindowKind.Note:
-                    {
+                case WindowKind.Note: {
                         var noteItem = (NoteIndexItemModel)extensionData;
                         if(!noteItem.IsVisible) {
                             CommonData.Logger.Debug("hidden -> show", noteItem);
@@ -1763,15 +1757,13 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                     }
                     break;
 
-                case WindowKind.Screen:
-                    {
+                case WindowKind.Screen: {
                         window = new ScreenWindow();
                         window.SetCommonData(CommonData, extensionData);
                     }
                     break;
 
-                case WindowKind.HtmlViewer:
-                    {
+                case WindowKind.HtmlViewer: {
                         window = new HtmlViewerWindow();
                         window.SetCommonData(CommonData, extensionData);
                     }
@@ -1788,8 +1780,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         void ReceiveRefreshView(WindowKind kind, Window fromView)
         {
             switch(kind) {
-                case WindowKind.LauncherToolbar:
-                    {
+                case WindowKind.LauncherToolbar: {
                         foreach(var toolbar in LauncherToolbars) {
                             toolbar.Refresh();
                         }
@@ -1831,20 +1822,17 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         void ReceiveRemoveIndex(IndexKind indexKind, Guid guid, Timing timing)
         {
             switch(indexKind) {
-                case IndexKind.Note:
-                    {
+                case IndexKind.Note: {
                         RemoveIndex(indexKind, guid, CommonData.NoteIndexSetting.Items, IndexBodyCaching.NoteItems);
                     }
                     break;
 
-                case IndexKind.Template:
-                    {
+                case IndexKind.Template: {
                         RemoveIndex(indexKind, guid, CommonData.TemplateIndexSetting.Items, IndexBodyCaching.TemplateItems);
                     }
                     break;
 
-                case IndexKind.Clipboard:
-                    {
+                case IndexKind.Clipboard: {
                         RemoveIndex(indexKind, guid, CommonData.ClipboardIndexSetting.Items, IndexBodyCaching.ClipboardItems);
                     }
                     break;
@@ -1883,18 +1871,20 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         void ReceiveSaveIndex(IndexKind indexKind, Timing timing)
         {
-            lock(IndexSaveTimers) {
-                var targetTimer = IndexSaveTimers[indexKind];
-                if(targetTimer.IsEnabled) {
-                    targetTimer.Stop();
-                    Debug.WriteLine(string.Format("delay stop: {0}", indexKind));
-                }
-
+            lock (IndexSaveTimers) {
                 if(timing == Timing.Instantly) {
                     SaveIndex(indexKind);
                 } else {
                     Debug.Assert(timing == Timing.Delay);
+
+                    var targetTimer = IndexSaveTimers[indexKind];
+                    if(targetTimer.IsEnabled) {
+                        targetTimer.Stop();
+                        Debug.WriteLine(string.Format("delay stop: {0}", indexKind));
+                    }
+
                     CommonData.Logger.Debug(string.Format("delay start: {0}", indexKind), targetTimer.Interval);
+
                     targetTimer.Start();
                 }
             }
@@ -2140,8 +2130,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                     CommonData.AppSender.SendInformationTips(CommonData.Language["notify/info/command/show/title"], CommonData.Language["notify/info/command/show/message"], LogKind.Information);
                     break;
 
-                case HotKeyId.HiddenFile:
-                    {
+                case HotKeyId.HiddenFile: {
                         SwitchShellHideFile();
                         string message;
                         if(SystemEnvironmentUtility.IsHiddenFileShow()) {
@@ -2153,8 +2142,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                     }
                     break;
 
-                case HotKeyId.Extension:
-                    {
+                case HotKeyId.Extension: {
                         SwitchShellExtension();
                         string message;
                         if(SystemEnvironmentUtility.IsExtensionShow()) {
@@ -2166,8 +2154,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                     }
                     break;
 
-                case HotKeyId.CreateNote:
-                    {
+                case HotKeyId.CreateNote: {
                         var devicePoint = MouseUtility.GetDevicePosition();
                         // TODO: 論理座標取れてない！
                         var logcalPoint = devicePoint;
@@ -2196,8 +2183,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                     CommonData.AppSender.SendInformationTips(CommonData.Language["notify/info/note/front/title"], CommonData.Language["notify/info/note/front/message"], LogKind.Information);
                     break;
 
-                case HotKeyId.SwitchClipboardShow:
-                    {
+                case HotKeyId.SwitchClipboardShow: {
                         SwitchShowClipboardWindow();
                         string message;
                         if(Clipboard.IsVisible) {
@@ -2209,8 +2195,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                     }
                     break;
 
-                case HotKeyId.SwitchTemplateShow:
-                    {
+                case HotKeyId.SwitchTemplateShow: {
                         SwitchShowTemplateWindow();
                         string message;
                         if(Template.IsVisible) {
@@ -2265,8 +2250,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             Debug.Assert(arg != null);
 
             switch(applicationCommand) {
-                case ApplicationCommand.MemoryGarbageCollect:
-                    {
+                case ApplicationCommand.MemoryGarbageCollect: {
                         var prevTime = DateTime.Now;
                         var prevUsingMemory = GC.GetTotalMemory(false);
                         GCSettings.LargeObjectHeapCompactionMode = GCLargeObjectHeapCompactionMode.CompactOnce;
