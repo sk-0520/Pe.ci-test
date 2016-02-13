@@ -14,29 +14,28 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Updater.  If not, see <http://www.gnu.org/licenses/>.
 */
+using System;
+using System.CodeDom.Compiler;
+using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Diagnostics;
+using System.IO;
+using System.IO.Compression;
+using System.Linq;
+using System.Net;
+using System.Reflection;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading;
+using System.Xml.Linq;
+using ContentTypeTextNet.Library.SharedLibrary.Logic;
+using Microsoft.CSharp;
 
 //#define NO_DOWNLOAD
 //#define NO_EXPAND
 
 namespace ContentTypeTextNet.Pe.SystemApplications.Updater
 {
-    using System;
-    using System.CodeDom.Compiler;
-    using System.Collections.Generic;
-    using System.Collections.Specialized;
-    using System.Diagnostics;
-    using System.IO;
-    using System.IO.Compression;
-    using System.Linq;
-    using System.Net;
-    using System.Reflection;
-    using System.Text;
-    using System.Text.RegularExpressions;
-    using System.Threading;
-    using System.Xml.Linq;
-    using ContentTypeTextNet.Library.SharedLibrary.Logic;
-    using Microsoft.CSharp;
-
     /// <summary>
     /// 更新処理もろもろ。
     /// </summary>
