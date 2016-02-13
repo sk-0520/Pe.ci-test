@@ -1,4 +1,4 @@
-﻿/**
+﻿/*
 This file is part of Pe.
 
 Pe is free software: you can redistribute it and/or modify
@@ -14,22 +14,22 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Pe.  If not, see <http://www.gnu.org/licenses/>.
 */
+using System;
+using System.Windows.Input;
+using System.Windows.Media;
+using ContentTypeTextNet.Library.SharedLibrary.View.Window;
+using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+using ContentTypeTextNet.Pe.Library.PeData.Define;
+using ContentTypeTextNet.Pe.Library.PeData.Item;
+using ContentTypeTextNet.Pe.PeMain.Define;
+using ContentTypeTextNet.Pe.PeMain.IF;
+using ContentTypeTextNet.Pe.PeMain.Logic;
+using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
+using ICSharpCode.AvalonEdit.Document;
+
 namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 {
-    using System;
-    using System.Windows.Input;
-    using System.Windows.Media;
-    using ContentTypeTextNet.Library.SharedLibrary.View.Window;
-    using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
-    using ContentTypeTextNet.Pe.Library.PeData.Define;
-    using ContentTypeTextNet.Pe.Library.PeData.Item;
-    using ContentTypeTextNet.Pe.PeMain.Define;
-    using ContentTypeTextNet.Pe.PeMain.IF;
-    using ContentTypeTextNet.Pe.PeMain.Logic;
-    using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
-    using ICSharpCode.AvalonEdit.Document;
-
-    public class TemplateItemViewModel: HavingViewSingleModelWrapperBodyViewModelBase<TemplateIndexItemModel, TemplateBodyItemModel>
+    public class TemplateItemViewModel: HasViewSingleModelWrapperBodyViewModelBase<TemplateIndexItemModel, TemplateBodyItemModel>
     {
         #region variable
 
@@ -188,7 +188,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         #endregion
 
-        #region HavingViewSingleModelWrapperBodyViewModelBase
+        #region HasViewSingleModelWrapperBodyViewModelBase
 
         protected override IndexKind IndexKind { get { return IndexKind.Template; } }
 

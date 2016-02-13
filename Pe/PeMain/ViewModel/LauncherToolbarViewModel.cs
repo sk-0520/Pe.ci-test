@@ -1,4 +1,4 @@
-﻿/**
+﻿/*
 This file is part of Pe.
 
 Pe is free software: you can redistribute it and/or modify
@@ -14,53 +14,53 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Pe.  If not, see <http://www.gnu.org/licenses/>.
 */
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media;
+using ContentTypeTextNet.Library.PInvoke.Windows;
+using ContentTypeTextNet.Library.SharedLibrary.Attribute;
+using ContentTypeTextNet.Library.SharedLibrary.CompatibleWindows.Utility;
+using ContentTypeTextNet.Library.SharedLibrary.Define;
+using ContentTypeTextNet.Library.SharedLibrary.IF;
+using ContentTypeTextNet.Library.SharedLibrary.Logic;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+using ContentTypeTextNet.Pe.Library.PeData.Define;
+using ContentTypeTextNet.Pe.Library.PeData.Item;
+using ContentTypeTextNet.Pe.PeMain.IF;
+using ContentTypeTextNet.Pe.PeMain.Logic.Property;
+using ContentTypeTextNet.Pe.PeMain.View;
+using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
+using ContentTypeTextNet.Pe.PeMain.Data;
+using System.ComponentModel;
+using ContentTypeTextNet.Library.SharedLibrary.CompatibleForms;
+using System.Diagnostics;
+using ContentTypeTextNet.Library.SharedLibrary.IF.WindowsViewExtend;
+using System.Windows.Controls.Primitives;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
+using ContentTypeTextNet.Library.SharedLibrary.Data;
+using ContentTypeTextNet.Pe.PeMain.Define;
+using System.Windows.Media.Effects;
+using System.Windows.Threading;
+using System.Threading;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility.UI;
+
 namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Collections.ObjectModel;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    using System.Windows;
-    using System.Windows.Controls;
-    using System.Windows.Input;
-    using System.Windows.Media;
-    using ContentTypeTextNet.Library.PInvoke.Windows;
-    using ContentTypeTextNet.Library.SharedLibrary.Attribute;
-    using ContentTypeTextNet.Library.SharedLibrary.CompatibleWindows.Utility;
-    using ContentTypeTextNet.Library.SharedLibrary.Define;
-    using ContentTypeTextNet.Library.SharedLibrary.IF;
-    using ContentTypeTextNet.Library.SharedLibrary.Logic;
-    using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
-    using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
-    using ContentTypeTextNet.Library.SharedLibrary.Model;
-    using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
-    using ContentTypeTextNet.Pe.Library.PeData.Define;
-    using ContentTypeTextNet.Pe.Library.PeData.Item;
-    using ContentTypeTextNet.Pe.PeMain.IF;
-    using ContentTypeTextNet.Pe.PeMain.Logic.Property;
-    using ContentTypeTextNet.Pe.PeMain.View;
-    using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
-    using ContentTypeTextNet.Pe.PeMain.Data;
-    using System.ComponentModel;
-    using ContentTypeTextNet.Library.SharedLibrary.CompatibleForms;
-    using System.Diagnostics;
-    using ContentTypeTextNet.Library.SharedLibrary.IF.WindowsViewExtend;
-    using System.Windows.Controls.Primitives;
-    using System.Windows.Media.Imaging;
-    using System.Windows.Shapes;
-    using ContentTypeTextNet.Library.SharedLibrary.Data;
-    using ContentTypeTextNet.Pe.PeMain.Define;
-    using System.Windows.Media.Effects;
-    using System.Windows.Threading;
-    using System.Threading;
-    using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility.UI;
-
     /// <summary>
     /// プロパティが状態持ちすぎててしんどいなぁ。
     /// </summary>
-    public class LauncherToolbarViewModel: HavingViewSingleModelWrapperViewModelBase<LauncherToolbarDataModel, LauncherToolbarWindow>, IApplicationDesktopToolbarData, IVisualStyleData, IHavingAppNonProcess, IWindowAreaCorrectionData, IWindowHitTestData, IHavingAppSender, IRefreshFromViewModel, IMenuItem
+    public class LauncherToolbarViewModel: HasViewSingleModelWrapperViewModelBase<LauncherToolbarDataModel, LauncherToolbarWindow>, IApplicationDesktopToolbarData, IVisualStyleData, IHasAppNonProcess, IWindowAreaCorrectionData, IWindowHitTestData, IHasAppSender, IRefreshFromViewModel, IMenuItem
     {
         #region define
         #endregion
@@ -1153,7 +1153,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                         nameof(IsTopmost)
                     );
                     if(!this._isHidden) {
-                        HavingViewUtility.BeginInvoke(this, () => {
+                        HasViewUtility.BeginInvoke(this, () => {
                             WindowsUtility.ShowNoActiveForeground(View.Handle);
                         }, DispatcherPriority.SystemIdle);
                     }
@@ -1315,7 +1315,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         #endregion
 
-        #region HavingViewSingleModelWrapperViewModelBase
+        #region HasViewSingleModelWrapperViewModelBase
 
         protected override void InitializeView()
         {

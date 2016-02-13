@@ -88,16 +88,14 @@
       <HintPath>..\..\..\packages\NUnitTestAdapter.2.0.0\lib\NUnit.VisualStudio.TestAdapter.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="PInvoke, Version=1.0.5851.26985, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\packages\ContentTypeTextNet.PInvoke.1.0.0.5\lib\net46\PInvoke.dll</HintPath>
+    <Reference Include="PInvoke">
+      <HintPath>..\..\..\packages\ContentTypeTextNet.PInvoke.1.0.0.6\lib\net46\PInvoke.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="SharedLibrary, Version=0.1.5859.21613, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.14\lib\net46\SharedLibrary.dll</HintPath>
+    <Reference Include="SharedLibrary">
+      <HintPath>..\..\..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.21\lib\net46\SharedLibrary.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />

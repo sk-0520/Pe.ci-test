@@ -21,6 +21,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
@@ -30,11 +31,23 @@ using ContentTypeTextNet.Pe.Library.PeData.Item;
 using ContentTypeTextNet.Pe.Library.PeData.Setting;
 using ContentTypeTextNet.Pe.PeMain.Data;
 using ContentTypeTextNet.Pe.PeMain.IF;
-using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
-namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control
+namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 {
-    public class LauncherListViewModel: SingleModelWrapperViewModelBase<LauncherItemCollectionModel>, IHasAppNonProcess, IHasAppSender
+    /// <summary>
+    /// 何やってんのかもうわっけわからんけどテンプレートとクリップボードで共有したいのさ。
+    /// </summary>
+    /// <typeparam name="TModel"></typeparam>
+    /// <typeparam name="TView"></typeparam>
+    /// <typeparam name="TCollectionModel"></typeparam>
+    /// <typeparam name="TItemModel"></typeparam>
+    /// <typeparam name="TItemViewModel"></typeparam>
+    public abstract class HasViewSingleModelWrapperIndexViewModelBase<TModel, TView, TCollectionModel, TItemModel, TItemViewModel>: HasViewSingleModelWrapperViewModelBase<TModel, TView>, IHasAppNonProcess, IHasAppSender
+        where TModel : IModel
+        where TView : UIElement
+        where TCollectionModel : IndexItemCollectionModel<TItemModel>, new()
+        where TItemModel : IndexItemModelBase
+        where TItemViewModel : SingleModelWrapperViewModelBase<TItemModel>
     {
         #region variable
 
@@ -43,19 +56,20 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control
 
         #endregion
 
-        public LauncherListViewModel(LauncherItemCollectionModel model, IAppNonProcess appNonProcess, IAppSender appSender)
-            : base(model)
+        public HasViewSingleModelWrapperIndexViewModelBase(TModel model, TView view, IndexSettingModelBase<TCollectionModel, TItemModel> indexModel, IAppNonProcess appNonProcess, IAppSender appSender)
+            : base(model, view)
         {
             AppNonProcess = appNonProcess;
             AppSender = appSender;
 
-            LauncherItemPairList = new MVMPairCreateDelegationCollection<LauncherItemModel, LauncherListItemViewModel>(
-                Model,
-                default(object),
-                CreateItemViewModel
-            );
+            IndexModel = indexModel;
 
-            Items = CollectionViewSource.GetDefaultView(LauncherItemPairList.ViewModelList);
+            IndexPairList = new MVMPairCreateDelegationCollection<TItemModel, TItemViewModel>(
+                IndexModel.Items,
+                default(object),
+                CreateIndexViewModel
+            );
+            Items = CollectionViewSource.GetDefaultView(IndexPairList.ViewModelList);
             Items.Filter = FilterAction;
             Items.Refresh();
         }
@@ -63,7 +77,13 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control
 
         #region property
 
-        internal MVMPairCreateDelegationCollection<LauncherItemModel, LauncherListItemViewModel> LauncherItemPairList { get; private set; }
+        protected IndexSettingModelBase<TCollectionModel, TItemModel> IndexModel { get; private set; }
+
+        public MVMPairCreateDelegationCollection<TItemModel, TItemViewModel> IndexPairList { get; private set; }
+
+        public CollectionModel<TItemViewModel> IndexItems { get { return IndexPairList.ViewModelList; } }
+
+        public ICollectionView Items { get; private set; }
 
         public string FilterText
         {
@@ -80,29 +100,24 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control
             }
         }
 
-        public ICollectionView Items { get; private set; }
 
         #endregion
 
         #region function
 
-        LauncherListItemViewModel CreateItemViewModel(LauncherItemModel model, object data)
-        {
-            return new LauncherListItemViewModel(model, AppNonProcess, AppSender);
-        }
+        protected abstract TItemViewModel CreateIndexViewModel(TItemModel model, object data);
 
         bool FilterAction(object o)
         {
             var s = this._filterText_impl ?? string.Empty;
-            var vm = (LauncherListItemViewModel)o;
-            return LauncherItemUtility.FilterItemName(vm.Model, s);
+            var vm = (TItemViewModel)o;
+            return FilterAction_Impl(s, vm);
         }
 
-        #endregion
-
-        #region IHavingClipboardWatcher
-
-        public IClipboardWatcher ClipboardWatcher { get; set; }
+        protected virtual bool FilterAction_Impl(string filterText, TItemViewModel viewModelItem)
+        {
+            return viewModelItem.Model.Name.StartsWith(filterText, StringComparison.CurrentCultureIgnoreCase);
+        }
 
         #endregion
 

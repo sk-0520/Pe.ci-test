@@ -1,4 +1,4 @@
-﻿/**
+﻿/*
 This file is part of Updater.
 
 Updater is free software: you can redistribute it and/or modify
@@ -14,12 +14,12 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Updater.  If not, see <http://www.gnu.org/licenses/>.
 */
+using System;
+using System.Threading;
+using ContentTypeTextNet.Library.SharedLibrary.Logic;
+
 namespace ContentTypeTextNet.Pe.SystemApplications.Updater
 {
-    using System;
-    using System.Threading;
-    using ContentTypeTextNet.Library.SharedLibrary.Logic;
-
     /// <summary>
     /// 
     /// </summary>

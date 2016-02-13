@@ -1,4 +1,4 @@
-﻿/**
+﻿/*
 This file is part of Pe.
 
 Pe is free software: you can redistribute it and/or modify
@@ -39,7 +39,7 @@ namespace ContentTypeTextNet.Pe.PeMain.View
     /// <summary>
     /// LauncherSettingWindow.xaml の相互作用ロジック
     /// </summary>
-    public partial class LauncherItemCustomizeWindow: ViewModelCommonDataWindow<LauncherItemCustomizeViewModel>, IHavingWindowKind
+    public partial class LauncherItemCustomizeWindow: ViewModelCommonDataWindow<LauncherItemCustomizeViewModel>, IHasWindowKind
     {
         public LauncherItemCustomizeWindow()
         {
@@ -71,7 +71,7 @@ namespace ContentTypeTextNet.Pe.PeMain.View
 
         #endregion
 
-        #region IHavingWindowKind
+        #region IHasWindowKind
 
         public WindowKind WindowKind { get { return WindowKind.LauncherCustomize; } }
 

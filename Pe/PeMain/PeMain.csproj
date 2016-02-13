@@ -89,14 +89,13 @@
       <Private>True</Private>
       <Private>False</Private>
     </Reference>
-    <Reference Include="PInvoke, Version=1.0.5851.26985, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\ContentTypeTextNet.PInvoke.1.0.0.5\lib\net46\PInvoke.dll</HintPath>
+    <Reference Include="PInvoke">
+      <HintPath>..\packages\ContentTypeTextNet.PInvoke.1.0.0.6\lib\net46\PInvoke.dll</HintPath>
       <Private>True</Private>
       <Private>False</Private>
     </Reference>
     <Reference Include="SharedLibrary">
-      <HintPath>..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.14\lib\net46\SharedLibrary.dll</HintPath>
+      <HintPath>..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.21\lib\net46\SharedLibrary.dll</HintPath>
       <Private>True</Private>
       <Private>False</Private>
     </Reference>
@@ -406,7 +405,7 @@
     <Compile Include="ViewModel\CommandViewModel.cs" />
     <Compile Include="ViewModel\ComponentItemViewModel.cs" />
     <Compile Include="ViewModel\Control\LauncherListItemViewModel.cs" />
-    <Compile Include="ViewModel\HavingViewSingleModelWrapperBodyViewModelBase.cs" />
+    <Compile Include="ViewModel\HasViewSingleModelWrapperBodyViewModelBase.cs" />
     <Compile Include="ViewModel\HomeViewModel.cs" />
     <Compile Include="ViewModel\HtmlViewerViewModel.cs" />
     <Compile Include="ViewModel\LauncherGroupItemViewModel.cs" />
@@ -477,16 +476,16 @@
     <Compile Include="Define\WindowKind.cs" />
     <Compile Include="IF\IAppNonProcess.cs" />
     <Compile Include="IF\IAppSender.cs" />
-    <Compile Include="IF\IHavingAppNonProcess.cs" />
-    <Compile Include="IF\IHavingAppSender.cs" />
-    <Compile Include="IF\IHavingWindowKind.cs" />
+    <Compile Include="IF\IHasAppNonProcess.cs" />
+    <Compile Include="IF\IHasAppSender.cs" />
+    <Compile Include="IF\IHasWindowKind.cs" />
     <Compile Include="IF\IMenuItem.cs" />
     <Compile Include="IF\INoteMenuItem.cs" />
     <Compile Include="IF\IRefreshFromViewModel.cs" />
     <Compile Include="IF\ViewExtend\ICaptionDoubleClickData.cs" />
     <Compile Include="IF\IClipboardWatcher.cs" />
     <Compile Include="IF\ICommonData.cs" />
-    <Compile Include="IF\IHavingCommonData.cs" />
+    <Compile Include="IF\IHasCommonData.cs" />
     <Compile Include="IF\ILogAppender.cs" />
     <Compile Include="IF\IToolbarNode.cs" />
     <Compile Include="Logic\AppInformationCollection.cs" />
@@ -544,7 +543,7 @@
     <Compile Include="ViewModel\GroupItemViewMode.cs" />
     <Compile Include="ViewModel\GroupRootViewModel.cs" />
     <Compile Include="ViewModel\GroupViewModelBase.cs" />
-    <Compile Include="ViewModel\HavingViewSingleModelWrapperIndexViewModelBase.cs" />
+    <Compile Include="ViewModel\HasViewSingleModelWrapperIndexViewModelBase.cs" />
     <Compile Include="ViewModel\LauncherItemExecuteViewModel.cs" />
     <Compile Include="ViewModel\LauncherItemCustomizeViewModel.cs" />
     <Compile Include="ViewModel\LauncherItemSimpleViewModel.cs" />

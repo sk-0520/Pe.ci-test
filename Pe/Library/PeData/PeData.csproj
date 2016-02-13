@@ -68,17 +68,17 @@
       <Private>True</Private>
       <Private>False</Private>
     </Reference>
-    <Reference Include="PInvoke, Version=1.0.5851.26985, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="PInvoke, Version=1.0.5887.14264, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\ContentTypeTextNet.PInvoke.1.0.0.5\lib\net46\PInvoke.dll</HintPath>
+      <HintPath>..\..\packages\ContentTypeTextNet.PInvoke.1.0.0.6\lib\net46\PInvoke.dll</HintPath>
       <Private>True</Private>
       <Private>False</Private>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="SharedLibrary, Version=0.1.5859.21613, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="SharedLibrary, Version=0.1.5887.14366, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.14\lib\net46\SharedLibrary.dll</HintPath>
+      <HintPath>..\..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.21\lib\net46\SharedLibrary.dll</HintPath>
       <Private>True</Private>
       <Private>False</Private>
     </Reference>
@@ -180,7 +180,9 @@
     <Compile Include="Setting\TemplateIndexSettingModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
