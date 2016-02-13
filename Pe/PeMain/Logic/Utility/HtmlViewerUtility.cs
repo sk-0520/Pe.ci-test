@@ -24,10 +24,10 @@ using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.CompatibleForms;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
-using Library.PeData.Item;
-using Data;
-using Library.PeData.Setting.MainSettings;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
+using ContentTypeTextNet.Pe.Library.PeData.Item;
+using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
+using ContentTypeTextNet.Pe.PeMain.Data;
 
 namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 {

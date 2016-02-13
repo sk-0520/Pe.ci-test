@@ -83,7 +83,7 @@ namespace ContentTypeTextNet.Pe.PeMain.View.Parts.Window
         {
             Debug.Assert(CommonData != null);
 
-            foreach(var ui in UIUtility.FindLogicalChildren<Control>(this).OfType<ICommonData>()) {
+            foreach(var ui in UIUtility.FindLogicalChildren<System.Windows.Controls.Control>(this).OfType<ICommonData>()) {
                 ui.SetCommonData(CommonData, ExtensionData);
             }
         }

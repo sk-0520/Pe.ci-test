@@ -20,7 +20,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Threading;
-using Library.PeData.Define;
+using ContentTypeTextNet.Pe.Library.PeData.Define;
 
 namespace ContentTypeTextNet.Pe.PeMain.Logic
 {

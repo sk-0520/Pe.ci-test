@@ -26,13 +26,12 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using ContentTypeTextNet.Library.SharedLibrary.Define;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
-using Logic;
 using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using System.Security.Cryptography;
 using System.Runtime.Serialization;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
-using Library.PeData.Item;
+using ContentTypeTextNet.Pe.Library.PeData.Item;
 
 namespace ContentTypeTextNet.Pe.PeMain
 {

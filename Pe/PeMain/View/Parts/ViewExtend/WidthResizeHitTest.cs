@@ -29,7 +29,7 @@ namespace ContentTypeTextNet.Pe.PeMain.View.Parts.ViewExtend
 {
     public class WidthResizeHitTest: CaptionCursorHitTest
     {
-        public WidthResizeHitTest(Window view, IWindowHitTestData restrictionViewModel, INonProcess nonProcess)
+        public WidthResizeHitTest(System.Windows.Window view, IWindowHitTestData restrictionViewModel, INonProcess nonProcess)
             : base(view, restrictionViewModel, nonProcess)
         { }
 

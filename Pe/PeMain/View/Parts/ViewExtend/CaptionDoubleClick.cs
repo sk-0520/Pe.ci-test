@@ -30,7 +30,7 @@ namespace ContentTypeTextNet.Pe.PeMain.View.Parts.ViewExtend
 {
     public class CaptionDoubleClick: WindowsViewExtendBase<ICaptionDoubleClickData>
     {
-        public CaptionDoubleClick(Window view, ICaptionDoubleClickData restrictionViewModel, INonProcess nonProcess)
+        public CaptionDoubleClick(System.Windows.Window view, ICaptionDoubleClickData restrictionViewModel, INonProcess nonProcess)
             : base(view, restrictionViewModel, nonProcess)
         { }
 
