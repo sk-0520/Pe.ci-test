@@ -14,28 +14,28 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Pe.  If not, see <http://www.gnu.org/licenses/>.
 */
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Text;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media;
+using ContentTypeTextNet.Library.SharedLibrary.Define;
+using ContentTypeTextNet.Library.SharedLibrary.IF;
+using ContentTypeTextNet.Library.SharedLibrary.Logic;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.Pe.Library.PeData.Define;
+using ContentTypeTextNet.Pe.PeMain.Define;
+using ContentTypeTextNet.Pe.PeMain.View.Parts.Attached;
+using ContentTypeTextNet.Pe.PeMain.View.Parts.Control;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility.UI;
+
 namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Linq;
-    using System.Text;
-    using System.Windows;
-    using System.Windows.Controls;
-    using System.Windows.Input;
-    using System.Windows.Media;
-    using ContentTypeTextNet.Library.SharedLibrary.Define;
-    using ContentTypeTextNet.Library.SharedLibrary.IF;
-    using ContentTypeTextNet.Library.SharedLibrary.Logic;
-    using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
-    using ContentTypeTextNet.Library.SharedLibrary.Model;
-    using ContentTypeTextNet.Pe.Library.PeData.Define;
-    using ContentTypeTextNet.Pe.PeMain.Define;
-    using ContentTypeTextNet.Pe.PeMain.View.Parts.Attached;
-    using ContentTypeTextNet.Pe.PeMain.View.Parts.Control;
-    using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility.UI;
-
     public static class LanguageUtility
     {
         static bool SetUI_Impl(DependencyObject baseElement, ILanguage language, IReadOnlyDictionary<string, string> map, Action<string, string> action)

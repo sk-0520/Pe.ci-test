@@ -14,11 +14,11 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Pe.  If not, see <http://www.gnu.org/licenses/>.
 */
+using System.Runtime.Serialization;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
+
 namespace ContentTypeTextNet.Pe.PeMain.Data.Model
 {
-    using System.Runtime.Serialization;
-    using ContentTypeTextNet.Library.SharedLibrary.Model;
-
     [DataContract]
     public class KeyInfoModel: ModelBase
     {

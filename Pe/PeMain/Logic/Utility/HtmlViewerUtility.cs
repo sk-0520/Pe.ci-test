@@ -14,23 +14,23 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Pe.  If not, see <http://www.gnu.org/licenses/>.
 */
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Runtime.InteropServices;
+using System.Text;
+using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.CompatibleForms;
+using ContentTypeTextNet.Library.SharedLibrary.IF;
+using Library.PeData.Item;
+using Data;
+using Library.PeData.Setting.MainSettings;
+using ContentTypeTextNet.Library.SharedLibrary.Logic;
+
 namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Globalization;
-    using System.IO;
-    using System.Linq;
-    using System.Runtime.InteropServices;
-    using System.Text;
-    using System.Threading.Tasks;
-    using ContentTypeTextNet.Library.SharedLibrary.CompatibleForms;
-    using ContentTypeTextNet.Library.SharedLibrary.IF;
-    using Library.PeData.Item;
-    using Data;
-    using Library.PeData.Setting.MainSettings;
-    using ContentTypeTextNet.Library.SharedLibrary.Logic;
-
     public static class HtmlViewerUtility
     {
         #region define

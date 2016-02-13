@@ -14,15 +14,15 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Pe.  If not, see <http://www.gnu.org/licenses/>.
 */
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Input;
+
 namespace ContentTypeTextNet.Pe.PeMain.IF
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    using System.Windows.Input;
-
     public interface INoteMenuItem: IMenuItem
     {
         ICommand NoteMenuSelectedCommand { get; }

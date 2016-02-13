@@ -14,37 +14,38 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Pe.  If not, see <http://www.gnu.org/licenses/>.
 */
+using System;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Collections.Generic;
+using System.Windows;
+using System.Windows.Input;
+using System.Windows.Media;
+using ContentTypeTextNet.Library.SharedLibrary.Data;
+using ContentTypeTextNet.Library.SharedLibrary.Logic;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.Pe.Library.PeData.Define;
+using ContentTypeTextNet.Pe.Library.PeData.Item;
+using ContentTypeTextNet.Pe.Library.PeData.Setting;
+using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
+using ContentTypeTextNet.Pe.PeMain.IF;
+using ContentTypeTextNet.Pe.PeMain.Logic.Property;
+using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
+using ContentTypeTextNet.Pe.PeMain.View;
+using Microsoft.Win32;
+using System.ComponentModel;
+using ContentTypeTextNet.Pe.PeMain.Define;
+using ICSharpCode.AvalonEdit.Highlighting.Xshd;
+using ICSharpCode.AvalonEdit.Highlighting;
+using System.Xml;
+using ContentTypeTextNet.Library.SharedLibrary.IF;
+using System.Text.RegularExpressions;
+using ContentTypeTextNet.Library.SharedLibrary.Define;
+using System.Reflection;
+
 namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 {
-    using System;
-    using System.Diagnostics;
-    using System.IO;
-    using System.Linq;
-    using System.Collections.Generic;
-    using System.Windows;
-    using System.Windows.Input;
-    using System.Windows.Media;
-    using ContentTypeTextNet.Library.SharedLibrary.Data;
-    using ContentTypeTextNet.Library.SharedLibrary.Logic;
-    using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
-    using ContentTypeTextNet.Pe.Library.PeData.Define;
-    using ContentTypeTextNet.Pe.Library.PeData.Item;
-    using ContentTypeTextNet.Pe.Library.PeData.Setting;
-    using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
-    using ContentTypeTextNet.Pe.PeMain.IF;
-    using ContentTypeTextNet.Pe.PeMain.Logic.Property;
-    using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
-    using ContentTypeTextNet.Pe.PeMain.View;
-    using Microsoft.Win32;
-    using System.ComponentModel;
-    using ContentTypeTextNet.Pe.PeMain.Define;
-    using ICSharpCode.AvalonEdit.Highlighting.Xshd;
-    using ICSharpCode.AvalonEdit.Highlighting;
-    using System.Xml;
-    using ContentTypeTextNet.Library.SharedLibrary.IF;
-    using System.Text.RegularExpressions;
-    using ContentTypeTextNet.Library.SharedLibrary.Define;
-    using System.Reflection;
     public class TemplateViewModel: HasViewSingleModelWrapperIndexViewModelBase<TemplateSettingModel, TemplateWindow, TemplateIndexItemCollectionModel, TemplateIndexItemModel, TemplateItemViewModel>
     {
         #region variable

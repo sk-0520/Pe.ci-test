@@ -14,24 +14,24 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Pe.  If not, see <http://www.gnu.org/licenses/>.
 */
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Shapes;
+using ContentTypeTextNet.Library.PInvoke.Windows;
+using ContentTypeTextNet.Library.SharedLibrary.CompatibleWindows.Utility;
+using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+using ContentTypeTextNet.Pe.Library.PeData.Item;
+using ContentTypeTextNet.Pe.PeMain.IF;
+using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
+
 namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    using System.Windows;
-    using System.Windows.Input;
-    using System.Windows.Media;
-    using System.Windows.Shapes;
-    using ContentTypeTextNet.Library.PInvoke.Windows;
-    using ContentTypeTextNet.Library.SharedLibrary.CompatibleWindows.Utility;
-    using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
-    using ContentTypeTextNet.Pe.Library.PeData.Item;
-    using ContentTypeTextNet.Pe.PeMain.IF;
-    using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
-
     public class WindowItemCollectionViewModel: SingleModelWrapperViewModelBase<WindowItemCollectionModel>, IMenuItem
     {
         public WindowItemCollectionViewModel(WindowItemCollectionModel model)

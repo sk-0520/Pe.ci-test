@@ -14,20 +14,20 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Pe.  If not, see <http://www.gnu.org/licenses/>.
 */
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.IF;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
+using ContentTypeTextNet.Pe.Library.PeData.Item;
+
 namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Collections.ObjectModel;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    using ContentTypeTextNet.Library.SharedLibrary.IF;
-    using ContentTypeTextNet.Library.SharedLibrary.Model;
-    using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
-    using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
-    using ContentTypeTextNet.Pe.Library.PeData.Item;
-
     public class EnvironmentVariablesEditViewModel: SingleModelWrapperViewModelBase<EnvironmentVariablesItemModel>, IHasNonProcess
     {
         public EnvironmentVariablesEditViewModel(EnvironmentVariablesItemModel model, INonProcess nonProcess)

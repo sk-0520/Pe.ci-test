@@ -14,20 +14,20 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Pe.  If not, see <http://www.gnu.org/licenses/>.
 */
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Windows;
+using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.IF;
+using ContentTypeTextNet.Library.SharedLibrary.View.ViewExtend;
+using ContentTypeTextNet.Pe.PeMain.IF.ViewExtend;
+using ContentTypeTextNet.Library.PInvoke.Windows;
+using System.ComponentModel;
+
 namespace ContentTypeTextNet.Pe.PeMain.View.Parts.ViewExtend
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Windows;
-    using System.Threading.Tasks;
-    using ContentTypeTextNet.Library.SharedLibrary.IF;
-    using ContentTypeTextNet.Library.SharedLibrary.View.ViewExtend;
-    using ContentTypeTextNet.Pe.PeMain.IF.ViewExtend;
-    using ContentTypeTextNet.Library.PInvoke.Windows;
-    using System.ComponentModel;
-
     public class CaptionDoubleClick: WindowsViewExtendBase<ICaptionDoubleClickData>
     {
         public CaptionDoubleClick(Window view, ICaptionDoubleClickData restrictionViewModel, INonProcess nonProcess)

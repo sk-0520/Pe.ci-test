@@ -14,16 +14,16 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Pe.  If not, see <http://www.gnu.org/licenses/>.
 */
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.Pe.Library.PeData.Item;
+
 namespace ContentTypeTextNet.Pe.PeMain.Data.Temporary
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    using ContentTypeTextNet.Library.SharedLibrary.Model;
-    using ContentTypeTextNet.Pe.Library.PeData.Item;
-
     public class LauncherItemWithScreen: ItemWithScreen<LauncherItemModel>
     {
         public LauncherItemWithScreen(LauncherItemModel model, ScreenModel screen, IEnumerable<string> options)

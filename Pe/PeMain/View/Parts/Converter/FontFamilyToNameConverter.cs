@@ -14,18 +14,18 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Pe.  If not, see <http://www.gnu.org/licenses/>.
 */
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Data;
+using System.Windows.Markup;
+using System.Windows.Media;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+
 namespace ContentTypeTextNet.Pe.PeMain.View.Parts.Converter
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    using System.Windows.Data;
-    using System.Windows.Markup;
-    using System.Windows.Media;
-    using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
-
     /// <summary>
     /// <para>http://sourcechord.hatenablog.com/entry/2014/04/25/013631</para>
     /// </summary>

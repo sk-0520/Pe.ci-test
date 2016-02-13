@@ -14,18 +14,18 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Pe.  If not, see <http://www.gnu.org/licenses/>.
 */
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.IF;
+using Library.PeData.Item;
+using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
+using ContentTypeTextNet.Pe.Library.PeData.Define;
+
 namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityImplement
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    using ContentTypeTextNet.Library.SharedLibrary.IF;
-    using Library.PeData.Item;
-    using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
-    using ContentTypeTextNet.Pe.Library.PeData.Define;
-
     internal static class InitializeGeneralSetting
     {
         public static void Correction(GeneralSettingModel setting, Version previousVersion, INonProcess nonProcess)

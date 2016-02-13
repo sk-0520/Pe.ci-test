@@ -14,35 +14,35 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Pe.  If not, see <http://www.gnu.org/licenses/>.
 */
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Text;
+using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.Define;
+using ContentTypeTextNet.Library.SharedLibrary.IF;
+using ContentTypeTextNet.Library.SharedLibrary.Logic;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+using ContentTypeTextNet.Pe.Library.PeData.Setting;
+using ContentTypeTextNet.Pe.PeMain.Data;
+using ContentTypeTextNet.Pe.PeMain.ViewModel;
+using System.Threading;
+using System.Windows.Media.Imaging;
+using ContentTypeTextNet.Pe.Library.PeData.Item;
+using ContentTypeTextNet.Library.PInvoke.Windows;
+using ContentTypeTextNet.Library.SharedLibrary.CompatibleWindows.Utility;
+using ContentTypeTextNet.Pe.PeMain.Define;
+using System.Windows;
+using System.Windows.Media;
+
 namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.IO;
-    using System.Linq;
-    using System.Runtime.CompilerServices;
-    using System.Text;
-    using System.Threading.Tasks;
-    using ContentTypeTextNet.Library.SharedLibrary.Define;
-    using ContentTypeTextNet.Library.SharedLibrary.IF;
-    using ContentTypeTextNet.Library.SharedLibrary.Logic;
-    using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
-    using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
-    using ContentTypeTextNet.Library.SharedLibrary.Model;
-    using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
-    using ContentTypeTextNet.Pe.Library.PeData.Setting;
-    using ContentTypeTextNet.Pe.PeMain.Data;
-    using ContentTypeTextNet.Pe.PeMain.ViewModel;
-    using System.Threading;
-    using System.Windows.Media.Imaging;
-    using ContentTypeTextNet.Pe.Library.PeData.Item;
-    using ContentTypeTextNet.Library.PInvoke.Windows;
-    using ContentTypeTextNet.Library.SharedLibrary.CompatibleWindows.Utility;
-    using ContentTypeTextNet.Pe.PeMain.Define;
-    using System.Windows;
-    using System.Windows.Media;
-
     public static class AppUtility
     {
         public static T LoadSetting<T>(Stream stream, FileType fileType, ILogger logger)

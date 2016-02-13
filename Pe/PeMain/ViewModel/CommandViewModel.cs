@@ -14,41 +14,41 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Pe.  If not, see <http://www.gnu.org/licenses/>.
 */
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using ContentTypeTextNet.Library.SharedLibrary.Define;
+using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
+using ContentTypeTextNet.Pe.Library.PeData.IF;
+using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
+using ContentTypeTextNet.Pe.PeMain.Logic.Property;
+using ContentTypeTextNet.Pe.PeMain.View;
+using System.Diagnostics;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.Pe.Library.PeData.Setting;
+using ContentTypeTextNet.Pe.PeMain.Define;
+using ContentTypeTextNet.Pe.PeMain.IF;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using System.IO;
+using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
+using System.Windows.Input;
+using System.Windows.Controls;
+using ContentTypeTextNet.Library.SharedLibrary.IF.WindowsViewExtend;
+using ContentTypeTextNet.Library.SharedLibrary.Attribute;
+using System.Windows.Media;
+using ContentTypeTextNet.Pe.Library.PeData.Item;
+using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
+using ContentTypeTextNet.Library.SharedLibrary.CompatibleForms;
+using ContentTypeTextNet.Library.PInvoke.Windows;
+using System.Windows.Threading;
+using System.ComponentModel;
+
 namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    using System.Windows;
-    using ContentTypeTextNet.Library.SharedLibrary.Define;
-    using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
-    using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
-    using ContentTypeTextNet.Pe.Library.PeData.IF;
-    using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
-    using ContentTypeTextNet.Pe.PeMain.Logic.Property;
-    using ContentTypeTextNet.Pe.PeMain.View;
-    using System.Diagnostics;
-    using ContentTypeTextNet.Library.SharedLibrary.Model;
-    using ContentTypeTextNet.Pe.Library.PeData.Setting;
-    using ContentTypeTextNet.Pe.PeMain.Define;
-    using ContentTypeTextNet.Pe.PeMain.IF;
-    using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
-    using System.IO;
-    using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
-    using System.Windows.Input;
-    using System.Windows.Controls;
-    using ContentTypeTextNet.Library.SharedLibrary.IF.WindowsViewExtend;
-    using ContentTypeTextNet.Library.SharedLibrary.Attribute;
-    using System.Windows.Media;
-    using ContentTypeTextNet.Pe.Library.PeData.Item;
-    using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
-    using ContentTypeTextNet.Library.SharedLibrary.CompatibleForms;
-    using ContentTypeTextNet.Library.PInvoke.Windows;
-    using System.Windows.Threading;
-    using System.ComponentModel;
-
     public class CommandViewModel: HasViewSingleModelWrapperViewModelBase<CommandSettingModel, CommandWindow>, IHasAppNonProcess, IHasAppSender, IWindowHitTestData, IVisualStyleData
     {
         #region define

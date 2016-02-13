@@ -14,17 +14,17 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Pe.  If not, see <http://www.gnu.org/licenses/>.
 */
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+
 namespace ContentTypeTextNet.Pe.PeMain.View.Parts.Attached
 {
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    using System.Windows;
-    using System.Windows.Controls;
-
     /// <summary>
     /// <para>http://stackoverflow.com/questions/4202961/can-i-bind-html-to-a-wpf-web-browser-control?answertab=votes#tab-top</para>
     /// </summary>
