@@ -35,7 +35,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
     using ContentTypeTextNet.Pe.PeMain.View;
     using ContentTypeTextNet.Pe.PeMain.View.Parts;
 
-    public class HomeViewModel: HavingViewModelBase<HomeWindow>, IHavingAppNonProcess
+    public class HomeViewModel: HasViewModelBase<HomeWindow>, IHavingAppNonProcess
     {
         public HomeViewModel(HomeWindow view, LauncherGroupSettingModel launcherGroupSetting, LauncherItemSettingModel launcherItemSetting, IAppNonProcess appNonProcess)
             : base(view)

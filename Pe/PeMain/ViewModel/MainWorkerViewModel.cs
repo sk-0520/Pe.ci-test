@@ -63,7 +63,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
     using System.Text;
     using System.IO.Compression;
 
-    public sealed class MainWorkerViewModel: ViewModelBase, IAppSender, IClipboardWatcher, IHavingView<TaskbarIcon>, IHavingCommonData
+    public sealed class MainWorkerViewModel: ViewModelBase, IAppSender, IClipboardWatcher, IHasView<TaskbarIcon>, IHavingCommonData
     {
         #region variable
 
@@ -748,7 +748,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         {
             // 旧データの削除
             using(var timeLogger = CommonData.NonProcess.CreateTimeLogger()) {
-                FileUtility.RotateFiles(backupDirectory, backupPattern, OrderBy.Desc, backupCount, ex => {
+                FileUtility.RotateFiles(backupDirectory, backupPattern, OrderBy.Descending, backupCount, ex => {
                     CommonData.Logger.Error(ex);
                     return true;
                 });
@@ -2352,11 +2352,11 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         #endregion
 
-        #region IHavingView
+        #region IHasView
 
         public TaskbarIcon View { get; private set; }
 
-        public bool HasView { get { return HavingViewUtility.GetHasView(this); } }
+        public bool HasView { get { return HasViewUtility.GetHasView(this); } }
 
         #endregion
 

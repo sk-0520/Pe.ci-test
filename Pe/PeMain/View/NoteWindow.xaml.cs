@@ -94,7 +94,7 @@ namespace ContentTypeTextNet.Pe.PeMain.View
 
         protected override IntPtr WndProc(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
-            var extends = new IHavingWndProc[] {
+            var extends = new IHasWndProc[] {
                 CaptionDoubleClick,
                 WindowAreaCorrection,
                 WindowHitTest,

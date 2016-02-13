@@ -32,7 +32,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
     using ContentTypeTextNet.Pe.PeMain.Logic;
     using ContentTypeTextNet.Pe.PeMain.View;
 
-    public class UpdateConfirmViewModel: HavingViewModelBase<UpdateConfirmWindow>
+    public class UpdateConfirmViewModel: HasViewModelBase<UpdateConfirmWindow>
     {
         public UpdateConfirmViewModel(UpdateConfirmWindow view, Updater updater)
             : base(view)

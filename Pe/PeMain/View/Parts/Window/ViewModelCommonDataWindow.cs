@@ -32,7 +32,7 @@ namespace ContentTypeTextNet.Pe.PeMain.View.Parts.Window
     using ContentTypeTextNet.Pe.PeMain.IF;
     using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
-    public class ViewModelCommonDataWindow<TViewModel>: CommonDataWindow, IHavingViewModel<TViewModel>
+    public class ViewModelCommonDataWindow<TViewModel>: CommonDataWindow, IHasViewModel<TViewModel>
         where TViewModel : ViewModelBase
     {
         public ViewModelCommonDataWindow()

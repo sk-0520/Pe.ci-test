@@ -37,7 +37,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
     using ContentTypeTextNet.Pe.PeMain.ViewModel.Control;
     using Microsoft.Win32;
 
-    public class LauncherItemExecuteViewModel: LauncherItemSimpleViewModel, IHavingView<LauncherItemExecuteWindow>
+    public class LauncherItemExecuteViewModel: LauncherItemSimpleViewModel, IHasView<LauncherItemExecuteWindow>
     {
         #region variable
 
@@ -245,11 +245,11 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         #endregion
 
-        #region IHavingView
+        #region IHasView
 
         public LauncherItemExecuteWindow View { get; private set; }
 
-        public bool HasView { get { return HavingViewUtility.GetHasView(this); } }
+        public bool HasView { get { return HasViewUtility.GetHasView(this); } }
 
         #endregion
     }

@@ -60,7 +60,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
     /// <summary>
     /// プロパティが状態持ちすぎててしんどいなぁ。
     /// </summary>
-    public class LauncherToolbarViewModel: HavingViewSingleModelWrapperViewModelBase<LauncherToolbarDataModel, LauncherToolbarWindow>, IApplicationDesktopToolbarData, IVisualStyleData, IHavingAppNonProcess, IWindowAreaCorrectionData, IWindowHitTestData, IHavingAppSender, IRefreshFromViewModel, IMenuItem
+    public class LauncherToolbarViewModel: HasViewSingleModelWrapperViewModelBase<LauncherToolbarDataModel, LauncherToolbarWindow>, IApplicationDesktopToolbarData, IVisualStyleData, IHavingAppNonProcess, IWindowAreaCorrectionData, IWindowHitTestData, IHavingAppSender, IRefreshFromViewModel, IMenuItem
     {
         #region define
         #endregion
@@ -1153,7 +1153,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                         nameof(IsTopmost)
                     );
                     if(!this._isHidden) {
-                        HavingViewUtility.BeginInvoke(this, () => {
+                        HasViewUtility.BeginInvoke(this, () => {
                             WindowsUtility.ShowNoActiveForeground(View.Handle);
                         }, DispatcherPriority.SystemIdle);
                     }

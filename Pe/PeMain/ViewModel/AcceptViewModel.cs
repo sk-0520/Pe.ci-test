@@ -35,7 +35,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
     using ContentTypeTextNet.Pe.PeMain.View;
     using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
 
-    public class AcceptViewModel: HavingViewSingleModelWrapperViewModelBase<RunningInformationSettingModel, AcceptWindow>
+    public class AcceptViewModel: HasViewSingleModelWrapperViewModelBase<RunningInformationSettingModel, AcceptWindow>
     {
         public AcceptViewModel(RunningInformationSettingModel model, AcceptWindow view)
             : base(model, view)

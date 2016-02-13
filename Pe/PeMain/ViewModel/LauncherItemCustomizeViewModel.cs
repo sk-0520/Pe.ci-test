@@ -39,7 +39,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
     /// <summary>
     /// <para>内部でモデルを元保持して最後に再設定する。</para>
     /// </summary>
-    public class LauncherItemCustomizeViewModel: LauncherItemEditViewModel, IHavingView<LauncherItemCustomizeWindow>, IHavingAppSender
+    public class LauncherItemCustomizeViewModel: LauncherItemEditViewModel, IHasView<LauncherItemCustomizeWindow>, IHavingAppSender
     {
         public LauncherItemCustomizeViewModel(LauncherItemModel model, LauncherItemCustomizeWindow view, ScreenModel screen, IAppNonProcess nonPorocess, IAppSender appSender)
             : base((LauncherItemModel)model.DeepClone(), null, null, nonPorocess, appSender)
@@ -117,7 +117,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         public LauncherItemCustomizeWindow View { get; private set; }
 
-        public bool HasView { get { return HavingViewUtility.GetHasView(this); } }
+        public bool HasView { get { return HasViewUtility.GetHasView(this); } }
 
         #endregion
     }

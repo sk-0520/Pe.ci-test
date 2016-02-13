@@ -28,7 +28,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control
     using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
     using ContentTypeTextNet.Pe.Library.PeData.Item;
 
-    public class EnvironmentVariablesEditViewModel: SingleModelWrapperViewModelBase<EnvironmentVariablesItemModel>, IHavingNonProcess
+    public class EnvironmentVariablesEditViewModel: SingleModelWrapperViewModelBase<EnvironmentVariablesItemModel>, IHasNonProcess
     {
         public EnvironmentVariablesEditViewModel(EnvironmentVariablesItemModel model, INonProcess nonProcess)
             : base(model)
@@ -61,7 +61,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control
 
         #endregion
 
-        #region IHavingNonProcess
+        #region IHasNonProcess
 
         public INonProcess NonProcess { get; private set; }
 

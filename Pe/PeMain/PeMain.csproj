@@ -543,7 +543,7 @@
     <Compile Include="ViewModel\GroupItemViewMode.cs" />
     <Compile Include="ViewModel\GroupRootViewModel.cs" />
     <Compile Include="ViewModel\GroupViewModelBase.cs" />
-    <Compile Include="ViewModel\HavingViewSingleModelWrapperIndexViewModelBase.cs" />
+    <Compile Include="ViewModel\HasViewSingleModelWrapperIndexViewModelBase.cs" />
     <Compile Include="ViewModel\LauncherItemExecuteViewModel.cs" />
     <Compile Include="ViewModel\LauncherItemCustomizeViewModel.cs" />
     <Compile Include="ViewModel\LauncherItemSimpleViewModel.cs" />

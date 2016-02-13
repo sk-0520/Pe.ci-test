@@ -26,7 +26,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
     using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
     using ContentTypeTextNet.Pe.Library.PeData.Define;
 
-    public class TemplateKeywordViewModel: ViewModelBase, IHavingNonProcess
+    public class TemplateKeywordViewModel: ViewModelBase, IHasNonProcess
     {
         public TemplateKeywordViewModel(string key, TemplateReplaceMode replaceMode, Tuple<string, string> bracket, INonProcess nonProcess)
         {
@@ -96,7 +96,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         #endregion
 
-        #region IHavingNonProcess
+        #region IHasNonProcess
 
         public INonProcess NonProcess { get; private set; }
 

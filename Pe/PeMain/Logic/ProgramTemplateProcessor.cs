@@ -31,7 +31,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
     /// C#限定でムリくりアプリケーション用テンプレート処理。
     /// </summary>
     [Serializable]
-    public class ProgramTemplateProcessor: T4TemplateProcessor, IHavingNonProcess
+    public class ProgramTemplateProcessor: T4TemplateProcessor, IHasNonProcess
     {
         #region define
 
@@ -130,7 +130,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 
         #endregion
 
-        #region IHavingNonProcess
+        #region IHasNonProcess
 
         public INonProcess NonProcess { get; private set; }
 

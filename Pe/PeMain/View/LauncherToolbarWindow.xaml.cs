@@ -132,7 +132,7 @@ namespace ContentTypeTextNet.Pe.PeMain.View
             //}
 
 
-            var extends = new IHavingWndProc[] {
+            var extends = new IHasWndProc[] {
                 VisualStyle,
                 Appbar,
                 WindowAreaCorrection,

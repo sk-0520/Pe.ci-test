@@ -43,7 +43,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
     using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
     using ContentTypeTextNet.Pe.PeMain.View;
 
-    public class LauncherItemStreamViewModel: LauncherItemSimpleViewModel, IHavingView<LauncherItemStreamWindow>
+    public class LauncherItemStreamViewModel: LauncherItemSimpleViewModel, IHasView<LauncherItemStreamWindow>
     {
         #region variable
 
@@ -378,11 +378,11 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         #endregion
 
-        #region IHavingView
+        #region IHasView
 
         public LauncherItemStreamWindow View { get; private set; }
 
-        public bool HasView { get { return HavingViewUtility.GetHasView(this); } }
+        public bool HasView { get { return HasViewUtility.GetHasView(this); } }
 
         #endregion
 

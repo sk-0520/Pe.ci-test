@@ -31,7 +31,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
     using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
     using ContentTypeTextNet.Pe.PeMain.View;
 
-    public class ScreenViewModel: HavingViewModelBase<ScreenWindow>, IHavingAppNonProcess
+    public class ScreenViewModel: HasViewModelBase<ScreenWindow>, IHavingAppNonProcess
     {
         #region variable
 
@@ -102,7 +102,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         #endregion
 
-        #region HavingViewModelBase
+        #region HasViewModelBase
 
         protected override void InitializeView()
         {

@@ -45,7 +45,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
     using System.Text.RegularExpressions;
     using ContentTypeTextNet.Library.SharedLibrary.Define;
     using System.Reflection;
-    public class TemplateViewModel: HavingViewSingleModelWrapperIndexViewModelBase<TemplateSettingModel, TemplateWindow, TemplateIndexItemCollectionModel, TemplateIndexItemModel, TemplateItemViewModel>
+    public class TemplateViewModel: HasViewSingleModelWrapperIndexViewModelBase<TemplateSettingModel, TemplateWindow, TemplateIndexItemCollectionModel, TemplateIndexItemModel, TemplateItemViewModel>
     {
         #region variable
 
@@ -504,7 +504,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         static XshdRuleSet GetCSharpRuleSet()
         {
-            var xshd = CodeUtility.Block(() => {
+            var xshd = RestrictUtility.Block(() => {
                 // TODO: もっと良さげなアクセス方法があるはず
                 var avalonEdit = typeof(ICSharpCode.AvalonEdit.TextEditor).Assembly;
                 using(var stream = avalonEdit.GetManifestResourceStream("ICSharpCode.AvalonEdit.Highlighting.Resources.CSharp-Mode.xshd")) {

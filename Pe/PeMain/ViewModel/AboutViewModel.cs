@@ -35,7 +35,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
     using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
     using ContentTypeTextNet.Pe.Library.PeData.Item;
 
-    public class AboutViewModel: HavingViewModelBase<AboutWindow>, IHavingAppNonProcess
+    public class AboutViewModel: HasViewModelBase<AboutWindow>, IHavingAppNonProcess
     {
         #region define
 

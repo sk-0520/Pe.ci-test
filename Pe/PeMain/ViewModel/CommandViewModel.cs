@@ -49,7 +49,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
     using System.Windows.Threading;
     using System.ComponentModel;
 
-    public class CommandViewModel: HavingViewSingleModelWrapperViewModelBase<CommandSettingModel, CommandWindow>, IHavingAppNonProcess, IHavingAppSender, IWindowHitTestData, IVisualStyleData
+    public class CommandViewModel: HasViewSingleModelWrapperViewModelBase<CommandSettingModel, CommandWindow>, IHavingAppNonProcess, IHavingAppSender, IWindowHitTestData, IVisualStyleData
     {
         #region define
 
