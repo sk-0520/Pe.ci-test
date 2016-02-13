@@ -14,18 +14,18 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Pe.  If not, see <http://www.gnu.org/licenses/>.
 */
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using ContentTypeTextNet.Pe.Library.PeData.IF;
+using ContentTypeTextNet.Pe.PeMain.Logic.Property;
+using NUnit.Framework;
+
 namespace ContentTypeTextNet.Pe.Test.Library.PeMainTest.Logic.Property
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    using System.Windows;
-    using ContentTypeTextNet.Pe.Library.PeData.IF;
-    using ContentTypeTextNet.Pe.PeMain.Logic.Property;
-    using NUnit.Framework;
-
     [TestFixture]
     class VisibleVisibilityPropertyTest
     {
