@@ -29,7 +29,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control.SettingPage
     using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
     using ContentTypeTextNet.Pe.PeMain.IF;
 
-    public abstract class SettingPageViewModelBase<TView>: ViewModelBase, IHavingAppNonProcess, IHasView<TView>
+    public abstract class SettingPageViewModelBase<TView>: ViewModelBase, IHasAppNonProcess, IHasView<TView>
         where TView : UserControl
     {
         public SettingPageViewModelBase(TView view, IAppNonProcess appNonProcess, SettingNotifyData settingNotifiyItem)
@@ -45,7 +45,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control.SettingPage
 
         #endregion
 
-        #region IHavingAppNonProcess
+        #region IHasAppNonProcess
 
         public IAppNonProcess AppNonProcess { get; private set; }
 

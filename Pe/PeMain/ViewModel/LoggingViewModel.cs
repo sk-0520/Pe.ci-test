@@ -46,7 +46,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
     using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
     using ContentTypeTextNet.Pe.PeMain.Logic;
 
-    public class LoggingViewModel: HasViewSingleModelWrapperViewModelBase<LoggingSettingModel, LoggingWindow>, ILogAppender, IWindowStatus, IHavingAppNonProcess
+    public class LoggingViewModel: HasViewSingleModelWrapperViewModelBase<LoggingSettingModel, LoggingWindow>, ILogAppender, IWindowStatus, IHasAppNonProcess
     {
         #region variable
 
@@ -382,7 +382,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         #endregion
 
-        #region HavingViewSingleModelWrapperViewModelBase
+        #region HasViewSingleModelWrapperViewModelBase
 
         protected override void InitializeView()
         {
@@ -430,7 +430,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         #endregion
 
-        #region IHavingAppNonProcess
+        #region IHasAppNonProcess
 
         public IAppNonProcess AppNonProcess { get; private set; }
 

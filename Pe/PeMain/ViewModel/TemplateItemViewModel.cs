@@ -29,7 +29,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
     using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
     using ICSharpCode.AvalonEdit.Document;
 
-    public class TemplateItemViewModel: HavingViewSingleModelWrapperBodyViewModelBase<TemplateIndexItemModel, TemplateBodyItemModel>
+    public class TemplateItemViewModel: HasViewSingleModelWrapperBodyViewModelBase<TemplateIndexItemModel, TemplateBodyItemModel>
     {
         #region variable
 
@@ -188,7 +188,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         #endregion
 
-        #region HavingViewSingleModelWrapperBodyViewModelBase
+        #region HasViewSingleModelWrapperBodyViewModelBase
 
         protected override IndexKind IndexKind { get { return IndexKind.Template; } }
 

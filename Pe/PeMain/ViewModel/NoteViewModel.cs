@@ -40,7 +40,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
     using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
     using ContentTypeTextNet.Pe.PeMain.View;
 
-    public class NoteViewModel: HasViewSingleModelWrapperViewModelBase<NoteIndexItemModel, NoteWindow>, IHavingAppNonProcess, IWindowHitTestData, IWindowAreaCorrectionData, ICaptionDoubleClickData, IHavingAppSender, IColorPair, INoteMenuItem
+    public class NoteViewModel: HasViewSingleModelWrapperViewModelBase<NoteIndexItemModel, NoteWindow>, IHasAppNonProcess, IWindowHitTestData, IWindowAreaCorrectionData, ICaptionDoubleClickData, IHasAppSender, IColorPair, INoteMenuItem
     {
         #region static
 
@@ -458,7 +458,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         #endregion
 
-        #region HavingViewSingleModelWrapperViewModelBase
+        #region HasViewSingleModelWrapperViewModelBase
 
         protected override void InitializeView()
         {
@@ -637,7 +637,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         #endregion
 
-        #region IHavingAppNonProcess
+        #region IHasAppNonProcess
 
         public IAppNonProcess AppNonProcess { get; private set; }
 
@@ -758,7 +758,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         #endregion
 
-        #region HavingViewSingleModelWrapperViewModelBase
+        #region HasViewSingleModelWrapperViewModelBase
 
         protected override void Dispose(bool disposing)
         {

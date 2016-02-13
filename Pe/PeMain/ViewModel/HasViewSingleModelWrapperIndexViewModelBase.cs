@@ -42,7 +42,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
     /// <typeparam name="TCollectionModel"></typeparam>
     /// <typeparam name="TItemModel"></typeparam>
     /// <typeparam name="TItemViewModel"></typeparam>
-    public abstract class HasViewSingleModelWrapperIndexViewModelBase<TModel, TView, TCollectionModel, TItemModel, TItemViewModel>: HasViewSingleModelWrapperViewModelBase<TModel, TView>, IHavingAppNonProcess, IHavingAppSender
+    public abstract class HasViewSingleModelWrapperIndexViewModelBase<TModel, TView, TCollectionModel, TItemModel, TItemViewModel>: HasViewSingleModelWrapperViewModelBase<TModel, TView>, IHasAppNonProcess, IHasAppSender
         where TModel : IModel
         where TView : UIElement
         where TCollectionModel : IndexItemCollectionModel<TItemModel>, new()
@@ -121,7 +121,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         #endregion
 
-        #region IHavingAppNonProcess
+        #region IHasAppNonProcess
 
         public IAppNonProcess AppNonProcess { get; private set; }
 

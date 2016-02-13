@@ -28,7 +28,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
     using ContentTypeTextNet.Pe.PeMain.IF;
     using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
-    public class ComponentItemViewModel: SingleModelWrapperViewModelBase<ComponentItemModel>, IHavingAppNonProcess
+    public class ComponentItemViewModel: SingleModelWrapperViewModelBase<ComponentItemModel>, IHasAppNonProcess
     {
         public ComponentItemViewModel(ComponentItemModel model, IAppNonProcess appNonProcess)
             : base(model)
@@ -77,7 +77,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         #endregion
 
-        #region IHavingAppNonProcess
+        #region IHasAppNonProcess
 
         public IAppNonProcess AppNonProcess { get; private set; }
 

@@ -35,7 +35,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
     using ContentTypeTextNet.Pe.PeMain.IF;
     using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
-    public abstract class LauncherItemViewModelBase: SingleModelWrapperViewModelBase<LauncherItemModel>, IHavingAppNonProcess, IHavingAppSender
+    public abstract class LauncherItemViewModelBase: SingleModelWrapperViewModelBase<LauncherItemModel>, IHasAppNonProcess, IHasAppSender
     {
         #region variable
 
@@ -179,7 +179,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         #endregion
 
-        #region IHavingAppNonProcess
+        #region IHasAppNonProcess
 
         public IAppNonProcess AppNonProcess { get; private set; }
 

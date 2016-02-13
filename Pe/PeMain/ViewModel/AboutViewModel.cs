@@ -35,7 +35,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
     using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
     using ContentTypeTextNet.Pe.Library.PeData.Item;
 
-    public class AboutViewModel: HasViewModelBase<AboutWindow>, IHavingAppNonProcess
+    public class AboutViewModel: HasViewModelBase<AboutWindow>, IHasAppNonProcess
     {
         #region define
 
@@ -259,7 +259,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         #endregion
 
-        #region IHavingAppNonProcess
+        #region IHasAppNonProcess
 
         public IAppNonProcess AppNonProcess { get; private set; }
 

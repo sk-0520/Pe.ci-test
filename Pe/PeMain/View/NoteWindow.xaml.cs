@@ -44,7 +44,7 @@ namespace ContentTypeTextNet.Pe.PeMain.View
     /// <summary>
     /// NoteWindow.xaml の相互作用ロジック
     /// </summary>
-    public partial class NoteWindow: ViewModelCommonDataWindow<NoteViewModel>, IHavingWindowKind
+    public partial class NoteWindow: ViewModelCommonDataWindow<NoteViewModel>, IHasWindowKind
     {
         public NoteWindow()
         {
@@ -118,7 +118,7 @@ namespace ContentTypeTextNet.Pe.PeMain.View
 
         #endregion
 
-        #region IHavingWindowKind
+        #region IHasWindowKind
 
         public WindowKind WindowKind { get { return WindowKind.Note; } }
 

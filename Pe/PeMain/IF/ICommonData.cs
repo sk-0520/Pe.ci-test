@@ -23,7 +23,7 @@ namespace ContentTypeTextNet.Pe.PeMain.IF
     using System.Threading.Tasks;
     using ContentTypeTextNet.Pe.PeMain.Data;
 
-    public interface ICommonData: IHavingCommonData
+    public interface ICommonData: IHasCommonData
     {
         void SetCommonData(CommonData commonData, object extensionData);
     }

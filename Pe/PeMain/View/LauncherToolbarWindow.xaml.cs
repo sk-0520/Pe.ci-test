@@ -61,7 +61,7 @@ namespace ContentTypeTextNet.Pe.PeMain.View
     /// <summary>
     /// ToolbarWindow.xaml の相互作用ロジック
     /// </summary>
-    public partial class LauncherToolbarWindow: ViewModelCommonDataWindow<LauncherToolbarViewModel>, IApplicationDesktopToolbar, IHavingWindowKind
+    public partial class LauncherToolbarWindow: ViewModelCommonDataWindow<LauncherToolbarViewModel>, IApplicationDesktopToolbar, IHasWindowKind
     {
         public LauncherToolbarWindow()
         {
@@ -189,7 +189,7 @@ namespace ContentTypeTextNet.Pe.PeMain.View
 
         #endregion
 
-        #region IHavingWindowKind
+        #region IHasWindowKind
 
         public WindowKind WindowKind { get { return WindowKind.LauncherToolbar; } }
 

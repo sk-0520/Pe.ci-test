@@ -39,7 +39,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
     /// <summary>
     /// <para>内部でモデルを元保持して最後に再設定する。</para>
     /// </summary>
-    public class LauncherItemCustomizeViewModel: LauncherItemEditViewModel, IHasView<LauncherItemCustomizeWindow>, IHavingAppSender
+    public class LauncherItemCustomizeViewModel: LauncherItemEditViewModel, IHasView<LauncherItemCustomizeWindow>, IHasAppSender
     {
         public LauncherItemCustomizeViewModel(LauncherItemModel model, LauncherItemCustomizeWindow view, ScreenModel screen, IAppNonProcess nonPorocess, IAppSender appSender)
             : base((LauncherItemModel)model.DeepClone(), null, null, nonPorocess, appSender)

@@ -36,7 +36,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control.SettingPage
     using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
     using ContentTypeTextNet.Pe.PeMain.View.Parts.Control.SettingPage;
 
-    public class LauncherItemSettingViewModel: SettingPageLauncherIconCacheViewModelBase<LauncherItemSettingControl>, IHavingAppSender
+    public class LauncherItemSettingViewModel: SettingPageLauncherIconCacheViewModelBase<LauncherItemSettingControl>, IHasAppSender
     {
         #region variable
 

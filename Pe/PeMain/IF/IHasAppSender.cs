@@ -21,10 +21,9 @@ namespace ContentTypeTextNet.Pe.PeMain.IF
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
-    using ContentTypeTextNet.Pe.PeMain.Data;
 
-    public interface IHavingCommonData
+    public interface IHasAppSender
     {
-        CommonData CommonData { get; }
+        IAppSender AppSender { get; }
     }
 }

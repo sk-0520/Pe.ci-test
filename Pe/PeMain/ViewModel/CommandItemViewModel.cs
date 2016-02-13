@@ -35,7 +35,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
     /// <summary>
     /// <para>モデルはなし。</para>
     /// </summary>
-    public class CommandItemViewModel: ViewModelBase, IHavingAppNonProcess, IHavingAppSender
+    public class CommandItemViewModel: ViewModelBase, IHasAppNonProcess, IHasAppSender
     {
         #region variable
 
@@ -144,7 +144,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         #endregion
 
-        #region IHavingAppNonProcess
+        #region IHasAppNonProcess
 
         public IAppNonProcess AppNonProcess { get; private set; }
 

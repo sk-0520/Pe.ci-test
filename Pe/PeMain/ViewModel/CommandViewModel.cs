@@ -49,7 +49,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
     using System.Windows.Threading;
     using System.ComponentModel;
 
-    public class CommandViewModel: HasViewSingleModelWrapperViewModelBase<CommandSettingModel, CommandWindow>, IHavingAppNonProcess, IHavingAppSender, IWindowHitTestData, IVisualStyleData
+    public class CommandViewModel: HasViewSingleModelWrapperViewModelBase<CommandSettingModel, CommandWindow>, IHasAppNonProcess, IHasAppSender, IWindowHitTestData, IVisualStyleData
     {
         #region define
 
@@ -495,7 +495,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         #endregion
 
-        #region IHavingAppNonProcess
+        #region IHasAppNonProcess
 
         public IAppNonProcess AppNonProcess { get; private set; }
 
@@ -507,7 +507,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         #endregion
 
-        #region HavingViewSingleModelWrapperIndexViewModelBase
+        #region HasViewSingleModelWrapperIndexViewModelBase
 
         protected override void InitializeView()
         {

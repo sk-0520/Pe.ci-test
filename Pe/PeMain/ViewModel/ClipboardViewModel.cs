@@ -376,7 +376,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         #endregion
 
-        #region HavingViewSingleModelWrapperIndexViewModelBase
+        #region HasViewSingleModelWrapperIndexViewModelBase
 
         protected override void InitializeView()
         {

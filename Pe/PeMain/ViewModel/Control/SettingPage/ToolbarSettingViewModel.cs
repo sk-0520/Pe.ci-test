@@ -46,7 +46,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control.SettingPage
     using ContentTypeTextNet.Pe.PeMain.View;
     using ContentTypeTextNet.Pe.PeMain.View.Parts.Control.SettingPage;
 
-    public class ToolbarSettingViewModel: SettingPageLauncherIconCacheViewModelBase<ToolbarSettingControl>, IRefreshFromViewModel, IHavingAppSender
+    public class ToolbarSettingViewModel: SettingPageLauncherIconCacheViewModelBase<ToolbarSettingControl>, IRefreshFromViewModel, IHasAppSender
     {
         #region define
 

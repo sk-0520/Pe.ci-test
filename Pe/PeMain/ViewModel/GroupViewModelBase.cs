@@ -30,7 +30,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
     using ContentTypeTextNet.Pe.PeMain.IF;
     using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
-    public abstract class GroupViewModelBase<TModel>: SingleModelWrapperViewModelBase<TModel>, IHavingAppNonProcess, IToolbarNode, IRefreshFromViewModel
+    public abstract class GroupViewModelBase<TModel>: SingleModelWrapperViewModelBase<TModel>, IHasAppNonProcess, IToolbarNode, IRefreshFromViewModel
         where TModel : IModel, ITId<Guid>, IName
     {
         #region variable
@@ -66,7 +66,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         #endregion
 
-        #region IHavingAppNonProcess
+        #region IHasAppNonProcess
 
         public IAppNonProcess AppNonProcess { get; private set; }
 

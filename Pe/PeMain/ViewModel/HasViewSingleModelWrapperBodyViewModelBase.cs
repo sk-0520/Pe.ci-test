@@ -29,7 +29,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
     using Define;
     using ContentTypeTextNet.Pe.PeMain.IF;
 
-    public abstract class HavingViewSingleModelWrapperBodyViewModelBase<TIndexItemModelBase, TIndexBodyItemModel>: SingleModelWrapperViewModelBase<TIndexItemModelBase>, IHavingAppSender, IHavingAppNonProcess
+    public abstract class HasViewSingleModelWrapperBodyViewModelBase<TIndexItemModelBase, TIndexBodyItemModel>: SingleModelWrapperViewModelBase<TIndexItemModelBase>, IHasAppSender, IHasAppNonProcess
         where TIndexItemModelBase: IndexItemModelBase
         where TIndexBodyItemModel: IndexBodyItemModelBase
     {
@@ -39,7 +39,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         #endregion
 
-        public HavingViewSingleModelWrapperBodyViewModelBase(TIndexItemModelBase model, IAppSender appSender, IAppNonProcess appNonProcess)
+        public HasViewSingleModelWrapperBodyViewModelBase(TIndexItemModelBase model, IAppSender appSender, IAppNonProcess appNonProcess)
             : base(model)
         {
             WeakModel = new WeakReference(Model);
@@ -153,7 +153,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         #endregion
 
-        #region  IHavingAppNonProcess
+        #region  IHasAppNonProcess
 
         public IAppNonProcess AppNonProcess { get; private set; }
 

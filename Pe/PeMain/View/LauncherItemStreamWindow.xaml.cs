@@ -39,7 +39,7 @@ namespace ContentTypeTextNet.Pe.PeMain.View
     /// <summary>
     /// StreamWindow.xaml の相互作用ロジック
     /// </summary>
-    public partial class LauncherItemStreamWindow: ViewModelCommonDataWindow<LauncherItemStreamViewModel>, IHavingWindowKind
+    public partial class LauncherItemStreamWindow: ViewModelCommonDataWindow<LauncherItemStreamViewModel>, IHasWindowKind
     {
         public LauncherItemStreamWindow()
         {
@@ -71,7 +71,7 @@ namespace ContentTypeTextNet.Pe.PeMain.View
 
         #endregion
 
-        #region IHavingWindowKind
+        #region IHasWindowKind
 
         public WindowKind WindowKind { get { return WindowKind.LauncherStream; } }
 

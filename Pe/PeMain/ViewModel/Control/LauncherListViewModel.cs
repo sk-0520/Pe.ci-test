@@ -34,7 +34,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control
     using ContentTypeTextNet.Pe.PeMain.IF;
     using Logic.Utility;
 
-    public class LauncherListViewModel: SingleModelWrapperViewModelBase<LauncherItemCollectionModel>, IHavingAppNonProcess, IHavingAppSender
+    public class LauncherListViewModel: SingleModelWrapperViewModelBase<LauncherItemCollectionModel>, IHasAppNonProcess, IHasAppSender
     {
         #region variable
 
@@ -106,7 +106,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control
 
         #endregion
 
-        #region IHavingAppNonProcess
+        #region IHasAppNonProcess
 
         public IAppNonProcess AppNonProcess { get; private set; }
 

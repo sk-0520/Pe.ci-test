@@ -33,7 +33,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
     using ContentTypeTextNet.Pe.PeMain.View;
     using ContentTypeTextNet.Pe.PeMain.ViewModel.Control.SettingPage;
 
-    public class SettingViewModel: ViewModelBase, IHavingCommonData, IHasView<SettingWindow>
+    public class SettingViewModel: ViewModelBase, IHasCommonData, IHasView<SettingWindow>
     {
         #region variable
 
@@ -208,7 +208,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
         }
 
-        #region IHavingCommonData
+        #region IHasCommonData
 
         public CommonData CommonData { get; private set; }
 

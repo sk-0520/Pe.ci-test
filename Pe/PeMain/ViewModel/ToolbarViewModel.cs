@@ -36,7 +36,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
     using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
     using ContentTypeTextNet.Pe.Library.PeData.Define;
 
-    public class ToolbarViewModel: SingleModelWrapperViewModelBase<ToolbarItemModel>, IHavingAppNonProcess
+    public class ToolbarViewModel: SingleModelWrapperViewModelBase<ToolbarItemModel>, IHasAppNonProcess
     {
         public ToolbarViewModel(ToolbarItemModel toolbarItemModel, LauncherGroupItemCollectionModel group, IAppNonProcess appNonProcess)
             : base(toolbarItemModel)
@@ -179,7 +179,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         #endregion
 
-        #region IHavingAppNonProcess
+        #region IHasAppNonProcess
 
         public IAppNonProcess AppNonProcess { get; set; }
 

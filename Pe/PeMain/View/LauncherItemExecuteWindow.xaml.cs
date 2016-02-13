@@ -42,7 +42,7 @@ namespace ContentTypeTextNet.Pe.PeMain.View
     /// <summary>
     /// LauncherExecuteWindow.xaml の相互作用ロジック
     /// </summary>
-    public partial class LauncherItemExecuteWindow: ViewModelCommonDataWindow<LauncherItemExecuteViewModel>, IHavingWindowKind
+    public partial class LauncherItemExecuteWindow: ViewModelCommonDataWindow<LauncherItemExecuteViewModel>, IHasWindowKind
     {
         public LauncherItemExecuteWindow()
         {
@@ -81,7 +81,7 @@ namespace ContentTypeTextNet.Pe.PeMain.View
 
         #endregion
 
-        #region IHavingWindowKind
+        #region IHasWindowKind
 
         public WindowKind WindowKind { get { return WindowKind.LauncherExecute; } }
 

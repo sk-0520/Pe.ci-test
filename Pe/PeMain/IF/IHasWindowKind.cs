@@ -21,9 +21,10 @@ namespace ContentTypeTextNet.Pe.PeMain.IF
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
+    using ContentTypeTextNet.Pe.PeMain.Define;
 
-    public interface IHavingAppNonProcess
+    public interface IHasWindowKind
     {
-        IAppNonProcess AppNonProcess { get; }
+        WindowKind WindowKind { get; }
     }
 }

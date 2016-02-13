@@ -31,7 +31,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
     using ContentTypeTextNet.Pe.PeMain.View;
     using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 
-    public class HtmlViewerViewModel: HasViewSingleModelWrapperViewModelBase<HtmlViewerModel, HtmlViewerWindow>, IHavingAppNonProcess
+    public class HtmlViewerViewModel: HasViewSingleModelWrapperViewModelBase<HtmlViewerModel, HtmlViewerWindow>, IHasAppNonProcess
     {
         #region variable
 
@@ -117,7 +117,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         #endregion
 
-        #region IHavingAppNonProcess
+        #region IHasAppNonProcess
 
         public IAppNonProcess AppNonProcess { get; private set; }
 

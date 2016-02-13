@@ -63,7 +63,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
     using System.Text;
     using System.IO.Compression;
 
-    public sealed class MainWorkerViewModel: ViewModelBase, IAppSender, IClipboardWatcher, IHasView<TaskbarIcon>, IHavingCommonData
+    public sealed class MainWorkerViewModel: ViewModelBase, IAppSender, IClipboardWatcher, IHasView<TaskbarIcon>, IHasCommonData
     {
         #region variable
 
@@ -129,7 +129,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         public bool IsQuickExecute { get; private set; }
 
-        #region IHavingCommonData
+        #region IHasCommonData
 
         public CommonData CommonData { get; private set; }
 
@@ -1639,7 +1639,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         {
             window.Closed += Window_Closed;
 
-            var windowKind = window as IHavingWindowKind;
+            var windowKind = window as IHasWindowKind;
             if(windowKind != null) {
                 switch(windowKind.WindowKind) {
                     case WindowKind.LauncherToolbar: {
@@ -1678,7 +1678,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         void RemoveWindow(Window window)
         {
-            var havingWindwKind = window as IHavingWindowKind;
+            var havingWindwKind = window as IHasWindowKind;
             if(havingWindwKind != null) {
                 switch(havingWindwKind.WindowKind) {
                     case WindowKind.LauncherToolbar: {

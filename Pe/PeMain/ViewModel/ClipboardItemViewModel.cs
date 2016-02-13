@@ -37,7 +37,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
     using ContentTypeTextNet.Pe.PeMain.IF;
     using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
-    public class ClipboardItemViewModel: HavingViewSingleModelWrapperBodyViewModelBase<ClipboardIndexItemModel, ClipboardBodyItemModel>
+    public class ClipboardItemViewModel: HasViewSingleModelWrapperBodyViewModelBase<ClipboardIndexItemModel, ClipboardBodyItemModel>
     {
         #region define
 
@@ -343,7 +343,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         #endregion
 
-        #region HavingViewSingleModelWrapperBodyViewModelBase
+        #region HasViewSingleModelWrapperBodyViewModelBase
 
         protected override IndexKind IndexKind { get { return IndexKind.Clipboard; } }
 

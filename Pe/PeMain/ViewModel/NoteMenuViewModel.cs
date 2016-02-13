@@ -33,7 +33,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
     using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
     using ContentTypeTextNet.Pe.PeMain.View;
 
-    public class NoteMenuViewModel: SingleModelWrapperViewModelBase<NoteIndexItemModel>, INoteMenuItem, IHavingAppSender, IHasNonProcess
+    public class NoteMenuViewModel: SingleModelWrapperViewModelBase<NoteIndexItemModel>, INoteMenuItem, IHasAppSender, IHasNonProcess
     {
         public NoteMenuViewModel(NoteIndexItemModel model, INonProcess nonProcess, IAppSender appSender)
             : base(model)

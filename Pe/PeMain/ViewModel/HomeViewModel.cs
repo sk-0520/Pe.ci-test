@@ -35,7 +35,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
     using ContentTypeTextNet.Pe.PeMain.View;
     using ContentTypeTextNet.Pe.PeMain.View.Parts;
 
-    public class HomeViewModel: HasViewModelBase<HomeWindow>, IHavingAppNonProcess
+    public class HomeViewModel: HasViewModelBase<HomeWindow>, IHasAppNonProcess
     {
         public HomeViewModel(HomeWindow view, LauncherGroupSettingModel launcherGroupSetting, LauncherItemSettingModel launcherItemSetting, IAppNonProcess appNonProcess)
             : base(view)
@@ -210,7 +210,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         #endregion
 
-        #region IHavingAppNonProcess
+        #region IHasAppNonProcess
 
         public IAppNonProcess AppNonProcess { get; private set; }
 
