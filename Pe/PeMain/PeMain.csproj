@@ -80,8 +80,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="Mono.TextTemplating">
-      <HintPath>..\packages\Mono.TextTemplating.1.1.0\lib\net45\Mono.TextTemplating.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\packages\Mono.TextTemplating.1.0.0\lib\Mono.TextTemplating.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -96,7 +95,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="SharedLibrary">
-      <HintPath>..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.23\lib\net46\SharedLibrary.dll</HintPath>
+      <HintPath>..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.26\lib\net46\SharedLibrary.dll</HintPath>
       <Private>True</Private>
       <Private>False</Private>
     </Reference>

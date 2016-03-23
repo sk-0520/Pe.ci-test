@@ -61,7 +61,7 @@
   <ItemGroup>
     <Reference Include="Mono.TextTemplating, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\packages\Mono.TextTemplating.1.1.0\lib\net45\Mono.TextTemplating.dll</HintPath>
+      <HintPath>..\..\..\packages\Mono.TextTemplating.1.0.0\lib\Mono.TextTemplating.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -95,9 +95,9 @@
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="SharedLibrary, Version=0.1.5920.24610, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="SharedLibrary, Version=0.1.5926.14502, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.23\lib\net46\SharedLibrary.dll</HintPath>
+      <HintPath>..\..\..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.26\lib\net46\SharedLibrary.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
