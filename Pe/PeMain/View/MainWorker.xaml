@@ -8,7 +8,7 @@
   xmlns:AV="clr-namespace:ContentTypeTextNet.Pe.PeMain.ViewModel"
   xmlns:AA="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Attached"
   xmlns:ACC="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Control"
-  xmlns:SC="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=SharedLibrary"
+  xmlns:SC="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=ContentTypeTextNet.SharedLibrary"
 >
   <ResourceDictionary.MergedDictionaries>
     <ResourceDictionary Source="/View/Parts/Resource/ImageDictionary.xaml"/>

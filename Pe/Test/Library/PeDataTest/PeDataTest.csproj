@@ -59,6 +59,14 @@
     <NoWarn>IDE0001</NoWarn>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ContentTypeTextNet.PInvoke">
+      <HintPath>..\..\..\packages\ContentTypeTextNet.PInvoke.1.0.0.9\lib\net46\ContentTypeTextNet.PInvoke.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ContentTypeTextNet.SharedLibrary">
+      <HintPath>..\..\..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.29\lib\net46\ContentTypeTextNet.SharedLibrary.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Mono.TextTemplating, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\packages\Mono.TextTemplating.1.0.0\lib\Mono.TextTemplating.dll</HintPath>
@@ -89,17 +97,8 @@
       <HintPath>..\..\..\packages\NUnitTestAdapter.2.0.0\lib\NUnit.VisualStudio.TestAdapter.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="PInvoke">
-      <HintPath>..\..\..\packages\ContentTypeTextNet.PInvoke.1.0.0.6\lib\net46\PInvoke.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="SharedLibrary, Version=0.1.5926.14502, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.26\lib\net46\SharedLibrary.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
   </ItemGroup>
   <Choose>

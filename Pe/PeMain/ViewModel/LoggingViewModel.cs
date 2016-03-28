@@ -413,7 +413,9 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                     LogItems.Add(item);
                 }));
             } else {
-                LogItems.Add(item);
+                Application.Current.Dispatcher.BeginInvoke(new Action(() => {
+                    LogItems.Add(item);
+                }));
             }
             if(Model.AddShow) {
                 ShowTrigger(item);
