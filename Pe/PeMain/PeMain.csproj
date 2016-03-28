@@ -184,6 +184,7 @@
     </Compile>
     <Compile Include="Data\ApplicationCommandArg.cs" />
     <Compile Include="Define\IndexBodyKind.cs" />
+    <Compile Include="IF\IRuntimeTextTemplate.cs" />
     <Compile Include="Logic\ConfigurationCaching.cs" />
     <Compile Include="Logic\IndexBodyArchive.cs" />
     <Compile Include="Data\Model\HtmlViewerModel.cs" />
@@ -201,6 +202,10 @@
     <Compile Include="Define\ArchiveType.cs" />
     <Compile Include="Define\WindowSaveType.cs" />
     <Compile Include="Logic\IndexDispatcherTimer.cs" />
+    <Compile Include="Logic\T4Template\RuntimeTextTemplateProxy.cs" />
+    <Compile Include="Logic\T4Template\T4TemplateProcessor.cs" />
+    <Compile Include="Logic\T4Template\TextTemplatingEngineHost.cs" />
+    <Compile Include="Logic\T4Template\TextTemplatingSession.cs" />
     <Compile Include="Logic\Updater.cs" />
     <Compile Include="Data\Temporary\UpdateInformation.cs" />
     <Compile Include="Define\AboutCopyKind.cs" />
@@ -399,6 +404,7 @@
     <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeRunningInformationSetting.cs" />
     <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeStreamSetting.cs" />
     <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeTemplateIndexItem.cs" />
+    <Compile Include="Logic\Utility\T4TemplateUtility.cs" />
     <Compile Include="TemplateReplaceKey.cs" />
     <Compile Include="ViewModel\AboutViewModel.cs" />
     <Compile Include="ViewModel\CommandItemViewModel.cs" />

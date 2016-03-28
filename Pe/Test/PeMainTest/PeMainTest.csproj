@@ -119,8 +119,10 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Logic\Property\VisibleVisibilityPropertyTest.cs" />
+    <Compile Include="Logic\T4Template\T4TemplateProcessorTest.cs" />
     <Compile Include="Logic\Utility\DisplayTextUtilityTest.cs" />
     <Compile Include="Logic\Utility\SettingUtilityTest.cs" />
+    <Compile Include="Logic\Utility\T4TemplateUtilityTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\LauncherViewModelTest.cs" />
     <Compile Include="ViewModel\SettingPage\ClipboardSettingViewModelTest.cs" />
