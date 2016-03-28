@@ -20,10 +20,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
-using ContentTypeTextNet.Library.SharedLibrary.Logic.T4Template;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 using ContentTypeTextNet.Pe.Library.PeData.Define;
+using ContentTypeTextNet.Pe.PeMain.Logic.T4Template;
 
 namespace ContentTypeTextNet.Pe.PeMain.Logic
 {

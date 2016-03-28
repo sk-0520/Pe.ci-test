@@ -74,10 +74,12 @@
     <Reference Include="ContentTypeTextNet.PInvoke">
       <HintPath>..\packages\ContentTypeTextNet.PInvoke.1.0.0.9\lib\net46\ContentTypeTextNet.PInvoke.dll</HintPath>
       <Private>True</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="ContentTypeTextNet.SharedLibrary">
       <HintPath>..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.29\lib\net46\ContentTypeTextNet.SharedLibrary.dll</HintPath>
       <Private>True</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Hardcodet.Wpf.TaskbarNotification, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Hardcodet.NotifyIcon.Wpf.1.0.5\lib\net451\Hardcodet.Wpf.TaskbarNotification.dll</HintPath>

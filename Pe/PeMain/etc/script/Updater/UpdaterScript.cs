@@ -35,6 +35,8 @@ public class UpdaterScript
             @"lib\System.Data.SQLite.dll",
             @"lib\SystemSkin.dll",
             @"lib\Utility.dll",
+            @"lib\PInvoke.dll",
+            @"lib\SharedLibrary.dll",
         };
         var tagetPathList = targets.Select(s => Path.Combine(baseDirectoryPath, s));
         foreach(var targetPath in tagetPathList) {
