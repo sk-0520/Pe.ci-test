@@ -95,6 +95,9 @@
 			</note>
 			<note rev="">
 				<message>[myget/NuGet] ShaerdLibrary更新に伴い関連ライブラリの更新</message>
+				<comments>
+					<comment>#431: PeからSharedLibraryへ統合した処理に委譲</comment>
+				</comments>
 			</note>
 			<note rev="">
 				<message></message>
