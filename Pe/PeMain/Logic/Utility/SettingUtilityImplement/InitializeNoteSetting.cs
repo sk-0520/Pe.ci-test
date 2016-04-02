@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
@@ -37,6 +38,10 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityImplement
 
         static void V_Last(NoteSettingModel setting, Version previousVersion, INonProcess nonProcess)
         {
+            if(previousVersion == null) {
+                setting.Font.Size = Constants.noteFontSize.median;
+                setting.Font.Family = FontUtility.GetOriginalFontFamilyName(SystemFonts.MessageFontFamily);
+            }
             setting.Font.Size = Constants.noteFontSize.GetClamp(setting.Font.Size);
             setting.NoteTitle = EnumUtility.GetNormalization(setting.NoteTitle, NoteTitle.Timestamp);
 

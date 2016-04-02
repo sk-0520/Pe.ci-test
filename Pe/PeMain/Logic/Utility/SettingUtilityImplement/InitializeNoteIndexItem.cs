@@ -60,10 +60,10 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityImplement
             }
 
             indexItem.NoteKind = NoteKind.Text;
-            indexItem.Font.Size = Constants.noteFontSize.median;
-            indexItem.Font.Family = FontUtility.GetOriginalFontFamilyName(SystemFonts.MessageFontFamily);
-            indexItem.WindowWidth = Constants.noteDefualtSize.Width;
-            indexItem.WindowHeight = Constants.noteDefualtSize.Height;
+            //indexItem.Font.Size = Constants.noteFontSize.median;
+            //indexItem.Font.Family = FontUtility.GetOriginalFontFamilyName(SystemFonts.MessageFontFamily);
+            //indexItem.WindowWidth = Constants.noteDefualtSize.Width;
+            //indexItem.WindowHeight = Constants.noteDefualtSize.Height;
             indexItem.IsLocked = false;
             indexItem.IsCompacted = false;
             indexItem.IsTopmost = false;
