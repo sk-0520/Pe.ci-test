@@ -476,7 +476,6 @@
     <Compile Include="Data\VariableConstants.cs" />
     <Compile Include="Data\WindowSaveData.cs" />
     <Compile Include="Define\HotKeyId.cs" />
-    <Compile Include="Define\FileType.cs" />
     <Compile Include="Define\ImageScale.cs" />
     <Compile Include="Define\ToolbarNodeKind.cs" />
     <Compile Include="Define\WindowKind.cs" />

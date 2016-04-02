@@ -22,6 +22,7 @@ using System.IO.Compression;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.Define;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
@@ -42,9 +43,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         /// </summary>
         /// <param name="indexKind"></param>
         /// <returns></returns>
-        public static FileType GetBodyFileType(IndexKind indexKind)
+        public static SerializeFileType GetBodyFileType(IndexKind indexKind)
         {
-            var map = new Dictionary<IndexKind, FileType>() {
+            var map = new Dictionary<IndexKind, SerializeFileType>() {
                 { IndexKind.Note, Constants.fileTypeNoteBody },
                 { IndexKind.Template, Constants.fileTypeTemplateBody },
                 { IndexKind.Clipboard, Constants.fileTypeClipboardBody },
@@ -77,11 +78,11 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         /// <param name="fileType"></param>
         /// <param name="guid"></param>
         /// <returns></returns>
-        public static string GetBodyFileName(IndexKind indexKind, FileType fileType, Guid guid)
+        public static string GetBodyFileName(IndexKind indexKind, SerializeFileType fileType, Guid guid)
         {
-            var ext = new Dictionary<FileType, string>() {
-                { FileType.Json,   Constants.ExtensionJsonFile },
-                { FileType.Binary, Constants.ExtensionBinaryFile },
+            var ext = new Dictionary<SerializeFileType, string>() {
+                { SerializeFileType.Json,   Constants.ExtensionJsonFile },
+                { SerializeFileType.Binary, Constants.ExtensionBinaryFile },
             };
 
             var map = new Dictionary<string, string>() {
@@ -109,7 +110,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         /// <param name="guid"></param>
         /// <param name="parentDirectoryPath"></param>
         /// <returns></returns>
-        static string GetBodyFilePath(IndexKind indexKind, FileType fileType, Guid guid, string parentDirectoryPath)
+        static string GetBodyFilePath(IndexKind indexKind, SerializeFileType fileType, Guid guid, string parentDirectoryPath)
         {
             var fileName = GetBodyFileName(indexKind, fileType, guid);
             var path = Path.Combine(parentDirectoryPath, fileName);
@@ -124,7 +125,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         /// <param name="guid"></param>
         /// <param name="variableConstants"></param>
         /// <returns></returns>
-        public static string GetBodyFilePath(IndexKind indexKind, FileType fileType, Guid guid, VariableConstants variableConstants)
+        public static string GetBodyFilePath(IndexKind indexKind, SerializeFileType fileType, Guid guid, VariableConstants variableConstants)
         {
             var dirPath = IndexItemUtility.GetBodyFileParentDirectory(indexKind, variableConstants);
             var path = GetBodyFilePath(indexKind, fileType, guid, dirPath);
@@ -395,7 +396,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
             var fileType = GetBodyFileType(indexKind);
             var path = Environment.ExpandEnvironmentVariables(GetBodyFilePath(indexKind, fileType, guid, parentDirectoryPath));
 
-            var result = AppUtility.LoadSetting<TIndexBody>(path, fileType, logger);
+            var result = SerializeUtility.LoadSetting<TIndexBody>(path, fileType, logger);
             return result;
         }
 
@@ -414,7 +415,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
                 return new TIndexBody();
             }
             using(var stream = entry.Open()) {
-                var result = AppUtility.LoadSetting<TIndexBody>(stream, fileType, logger);
+                var result = SerializeUtility.LoadSetting<TIndexBody>(stream, fileType, logger);
                 return result;
             }
         }
@@ -449,7 +450,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
             var fileType = IndexItemUtility.GetBodyFileType(indexBody.IndexKind);
             var path = Environment.ExpandEnvironmentVariables(IndexItemUtility.GetBodyFilePath(indexBody.IndexKind, fileType,  guid, parentDirectoryPath));
             var bodyItem = (TIndexBody)indexBody;
-            AppUtility.SaveSetting(path, bodyItem, fileType, true, logger);
+            SerializeUtility.SaveSetting(path, bodyItem, fileType, true, logger);
         }
         // BUGS: タイムスタンプのことなーんも考えてなかった
         static void SaveArchiveBodyFile<TIndexBody>(TIndexBody indexBody, Guid guid, IndexBodyArchive archive, ILogger logger)
@@ -465,7 +466,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 
             var entry = archive.Body.CreateEntry(entryName, defaultCompressionLevel);
             using(var stream = entry.Open()) {
-                AppUtility.SaveSetting(stream, indexBody, fileType, logger);
+                SerializeUtility.SaveSetting(stream, indexBody, fileType, logger);
             }
         }
 

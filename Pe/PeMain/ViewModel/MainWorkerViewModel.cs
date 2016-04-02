@@ -708,14 +708,14 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             using(var timeLogger = CommonData.NonProcess.CreateTimeLogger()) {
                 // 各種設定の読込
                 var mainSettingPath = Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingMainSettingFilePath);
-                CommonData.MainSetting = AppUtility.LoadSetting<MainSettingModel>(mainSettingPath, Constants.fileTypeMainSetting, CommonData.Logger);
+                CommonData.MainSetting = SerializeUtility.LoadSetting<MainSettingModel>(mainSettingPath, Constants.fileTypeMainSetting, CommonData.Logger);
                 ApplyLanguage();
-                CommonData.LauncherItemSetting = AppUtility.LoadSetting<LauncherItemSettingModel>(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingLauncherItemSettingFilePath), Constants.fileTypeLauncherItemSetting, CommonData.Logger);
-                CommonData.LauncherGroupSetting = AppUtility.LoadSetting<LauncherGroupSettingModel>(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingLauncherGroupItemSettingFilePath), Constants.fileTypeLauncherGroupSetting, CommonData.Logger);
+                CommonData.LauncherItemSetting = SerializeUtility.LoadSetting<LauncherItemSettingModel>(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingLauncherItemSettingFilePath), Constants.fileTypeLauncherItemSetting, CommonData.Logger);
+                CommonData.LauncherGroupSetting = SerializeUtility.LoadSetting<LauncherGroupSettingModel>(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingLauncherGroupItemSettingFilePath), Constants.fileTypeLauncherGroupSetting, CommonData.Logger);
                 // インデックスファイル読み込み
-                CommonData.NoteIndexSetting = AppUtility.LoadSetting<NoteIndexSettingModel>(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingNoteIndexFilePath), Constants.fileTypeNoteIndex, CommonData.Logger);
-                CommonData.ClipboardIndexSetting = AppUtility.LoadSetting<ClipboardIndexSettingModel>(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingClipboardIndexFilePath), Constants.fileTypeTemplateIndex, CommonData.Logger);
-                CommonData.TemplateIndexSetting = AppUtility.LoadSetting<TemplateIndexSettingModel>(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingTemplateIndexFilePath), Constants.fileTypeClipboardIndex, CommonData.Logger);
+                CommonData.NoteIndexSetting = SerializeUtility.LoadSetting<NoteIndexSettingModel>(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingNoteIndexFilePath), Constants.fileTypeNoteIndex, CommonData.Logger);
+                CommonData.ClipboardIndexSetting = SerializeUtility.LoadSetting<ClipboardIndexSettingModel>(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingClipboardIndexFilePath), Constants.fileTypeTemplateIndex, CommonData.Logger);
+                CommonData.TemplateIndexSetting = SerializeUtility.LoadSetting<TemplateIndexSettingModel>(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingTemplateIndexFilePath), Constants.fileTypeClipboardIndex, CommonData.Logger);
 
                 var result = new StartupNotifyData();
                 result.ExistsSetting = File.Exists(mainSettingPath);
@@ -730,8 +730,8 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 BackupSetting();
 
                 SaveMainSetting();
-                AppUtility.SaveSetting(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingLauncherItemSettingFilePath), CommonData.LauncherItemSetting, Constants.fileTypeLauncherItemSetting, true, CommonData.Logger);
-                AppUtility.SaveSetting(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingLauncherGroupItemSettingFilePath), CommonData.LauncherGroupSetting, Constants.fileTypeLauncherGroupSetting, true, CommonData.Logger);
+                SerializeUtility.SaveSetting(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingLauncherItemSettingFilePath), CommonData.LauncherItemSetting, Constants.fileTypeLauncherItemSetting, true, CommonData.Logger);
+                SerializeUtility.SaveSetting(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingLauncherGroupItemSettingFilePath), CommonData.LauncherGroupSetting, Constants.fileTypeLauncherGroupSetting, true, CommonData.Logger);
 
                 foreach(var indexKind in EnumUtility.GetMembers<IndexKind>()) {
                     CommonData.AppSender.SendSaveIndex(indexKind, Timing.Instantly);
@@ -741,7 +741,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         void SaveMainSetting()
         {
-            AppUtility.SaveSetting(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingMainSettingFilePath), CommonData.MainSetting, Constants.fileTypeMainSetting, true, CommonData.Logger);
+            SerializeUtility.SaveSetting(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingMainSettingFilePath), CommonData.MainSetting, Constants.fileTypeMainSetting, true, CommonData.Logger);
         }
 
         void RotateSetting(string backupDirectory, string backupPattern, int backupCount)
@@ -1842,11 +1842,11 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
         }
 
-        void SaveIndex_Impl<TIndexSetting>(IndexKind indexKind, TIndexSetting indexSetting, FileType fileType, string filePath)
+        void SaveIndex_Impl<TIndexSetting>(IndexKind indexKind, TIndexSetting indexSetting, SerializeFileType fileType, string filePath)
             where TIndexSetting : ModelBase
         {
             var path = Environment.ExpandEnvironmentVariables(filePath);
-            AppUtility.SaveSetting(path, indexSetting, fileType, true, CommonData.Logger);
+            SerializeUtility.SaveSetting(path, indexSetting, fileType, true, CommonData.Logger);
         }
 
         void SaveIndex(IndexKind indexKind)

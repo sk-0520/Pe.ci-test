@@ -31,6 +31,7 @@ using ContentTypeTextNet.Pe.PeMain.Define;
 using ContentTypeTextNet.Pe.Library.PeData.Item;
 using ContentTypeTextNet.Pe.Library.PeData.Define;
 using ContentTypeTextNet.Pe.PeMain.Logic;
+using ContentTypeTextNet.Library.SharedLibrary.Define;
 
 namespace ContentTypeTextNet.Pe.PeMain
 {
@@ -169,15 +170,15 @@ namespace ContentTypeTextNet.Pe.PeMain
         [ConstantsProperty]
         const string temporaryFileSearchPattern = "*." + extensionTemporaryFile;
 
-        public const FileType fileTypeMainSetting = FileType.Json;
-        public const FileType fileTypeLauncherItemSetting = FileType.Json;
-        public const FileType fileTypeLauncherGroupSetting = FileType.Json;
-        public const FileType fileTypeNoteIndex = FileType.Json;
-        public const FileType fileTypeNoteBody = FileType.Json;
-        public const FileType fileTypeTemplateIndex = FileType.Json;
-        public const FileType fileTypeTemplateBody = FileType.Json;
-        public const FileType fileTypeClipboardIndex = FileType.Json;
-        public const FileType fileTypeClipboardBody = FileType.Binary;
+        public const SerializeFileType fileTypeMainSetting = SerializeFileType.Json;
+        public const SerializeFileType fileTypeLauncherItemSetting = SerializeFileType.Json;
+        public const SerializeFileType fileTypeLauncherGroupSetting = SerializeFileType.Json;
+        public const SerializeFileType fileTypeNoteIndex = SerializeFileType.Json;
+        public const SerializeFileType fileTypeNoteBody = SerializeFileType.Json;
+        public const SerializeFileType fileTypeTemplateIndex = SerializeFileType.Json;
+        public const SerializeFileType fileTypeTemplateBody = SerializeFileType.Json;
+        public const SerializeFileType fileTypeClipboardIndex = SerializeFileType.Json;
+        public const SerializeFileType fileTypeClipboardBody = SerializeFileType.Binary;
 
         public static readonly TimeSpan iconLoadWaitTime = TimeSpan.FromMilliseconds(250);
         public const int iconLoadRetryMax = 3;
