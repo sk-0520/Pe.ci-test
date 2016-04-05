@@ -433,67 +433,13 @@ namespace ContentTypeTextNet.Pe.PeMain
         [ConstantsProperty]
         static readonly string startupShortcutPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Startup), ShortcutName);
 
-        #region
+        #region issue
 
         [ConstantsProperty]
         const string issue_355_logFileName = "session-ending.log";
 
         [ConstantsProperty]
         const int issue_363_oldMediumCount = 50;
-
-
-        #endregion
-
-        #region app.config
-
-        /// <summary>
-        /// 文字列リテラルを書式で変換。
-        /// 
-        /// {...} を置き換える。
-        /// * TIMESTAMP: そんとき
-        /// </summary>
-        /// <param name="src"></param>
-        /// <returns></returns>
-        private static string ReplaceAppConfig(string src)
-        {
-            var map = new Dictionary<string, string>() {
-                { "TIMESTAMP", DateTime.Now.ToBinary().ToString() },
-            };
-            var replacedText = src.ReplaceRangeFromDictionary("{", "}", map);
-
-            return replacedText;
-        }
-
-        public static string UriAbout { get { return appCaching.Get("uri-about"); } }
-        public static string MailAbout { get { return appCaching.Get("mail-about"); } }
-        public static string UriDevelopment { get { return appCaching.Get("uri-development"); } }
-        public static string UriUpdate { get { return ReplaceAppConfig(appCaching.Get("uri-update")); } }
-        public static string UriChangelogRelease { get { return ReplaceAppConfig(appCaching.Get("uri-changelog-release")); } }
-        public static string UriChangelogRc { get { return ReplaceAppConfig(appCaching.Get("uri-changelog-rc")); } }
-        public static string UriForum { get { return appCaching.Get("uri-forum"); } }
-        public static string UriFeedback { get { return appCaching.Get("uri-feedback"); } }
-        public static string UriUserInformation { get { return appCaching.Get("uri-user-information"); } }
-
-        public static int LoggingStockCount { get { return appCaching.Get("logging-stock-count", int.Parse); } }
-        public static int CacheIndexBodyTemplate { get { return appCaching.Get("cache-index-body-template", int.Parse); } }
-        public static int CacheIndexBodyClipboard { get { return appCaching.Get("cache-index-body-clipboard", int.Parse); } }
-        public static TimeSpan SaveIndexClipboardTime { get { return appCaching.Get("save-index-clipboard-time", TimeSpan.Parse); } }
-        public static TimeSpan SaveIndexTemplateTime { get { return appCaching.Get("save-index-template-time", TimeSpan.Parse); } }
-        public static TimeSpan SaveIndexNoteTime { get { return appCaching.Get("save-index-note-time", TimeSpan.Parse); } }
-
-        public static int BackupSettingCount { get { return appCaching.Get("backup-setting", int.Parse); } }
-        public static int BackupArchiveCount { get { return appCaching.Get("backup-archive", int.Parse); } }
-
-        public static TimeSpan FullScreenIgnoreTime { get { return appCaching.Get("fullscreen-ignore-time", TimeSpan.Parse); } }
-
-        public static TimeSpan TemplateBodyArchiveTimeSpan { get { return appCaching.Get("template-archive-time", TimeSpan.Parse); } }
-        public static long TemplateBodyArchiveFileSize { get { return appCaching.Get("template-archive-size", long.Parse); } }
-
-        public static TimeSpan NoteBodyArchiveTimeSpan { get { return appCaching.Get("note-archive-time", TimeSpan.Parse); } }
-        public static long NoteBodyArchiveFileSize { get { return appCaching.Get("note-archive-size", long.Parse); } }
-
-        public static TimeSpan ClipboardBodyArchiveTimeSpan { get { return appCaching.Get("clipboard-archive-time", TimeSpan.Parse); } }
-        public static long ClipboardBodyArchiveFileSize { get { return appCaching.Get("clipboard-archive-size", long.Parse); } }
 
         #endregion
 

@@ -71,15 +71,13 @@
   </PropertyGroup>
   <PropertyGroup />
   <ItemGroup>
-    <Reference Include="ContentTypeTextNet.PInvoke, Version=1.0.5938.26137, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\ContentTypeTextNet.PInvoke.1.0.0.13\lib\net46\ContentTypeTextNet.PInvoke.dll</HintPath>
+    <Reference Include="ContentTypeTextNet.PInvoke">
+      <HintPath>..\packages\ContentTypeTextNet.PInvoke.1.0.0.14\lib\net46\ContentTypeTextNet.PInvoke.dll</HintPath>
       <Private>True</Private>
       <Private>False</Private>
     </Reference>
-    <Reference Include="ContentTypeTextNet.SharedLibrary, Version=0.1.5938.26358, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.31\lib\net46\ContentTypeTextNet.SharedLibrary.dll</HintPath>
+    <Reference Include="ContentTypeTextNet.SharedLibrary">
+      <HintPath>..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.32\lib\net46\ContentTypeTextNet.SharedLibrary.dll</HintPath>
       <Private>True</Private>
       <Private>False</Private>
     </Reference>
@@ -169,6 +167,9 @@
     </Compile>
     <Compile Include="AppResource-Implement.cs">
       <DependentUpon>AppResource.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Constants-AppConfig.cs">
+      <DependentUpon>Constants.cs</DependentUpon>
     </Compile>
     <Compile Include="Constants-generator.cs">
       <AutoGen>True</AutoGen>
@@ -704,6 +705,7 @@
     <None Include="App.Debug.config">
       <DependentUpon>App.config</DependentUpon>
       <IsTransformFile>True</IsTransformFile>
+      <SubType>Designer</SubType>
     </None>
     <None Include="AppResource-generator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

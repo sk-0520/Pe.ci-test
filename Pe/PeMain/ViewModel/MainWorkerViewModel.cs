@@ -188,6 +188,8 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
         }
 
+        bool NowIdling { get; set; }
+        DispatcherTimer IdleWatchTimer { get; set; }
         DispatcherTimer WindowSaveTimer { get; set; }
 
         public IEnumerable<WindowItemCollectionViewModel> WindowTimerItems
@@ -896,19 +898,39 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
         }
 
-        void InitializeStatus()
+        void InitializeWindowSaveTimer()
         {
-            WindowSaveData.TimerItems.LimitSize = CommonData.MainSetting.WindowSave.SaveCount;
-            WindowSaveData.SystemItems.LimitSize = CommonData.MainSetting.WindowSave.SaveCount;
-
             if(WindowSaveTimer != null) {
                 WindowSaveTimer.Stop();
+                WindowSaveTimer.Tick -= Timer_Tick;
             }
 
             WindowSaveTimer = new DispatcherTimer();
             WindowSaveTimer.Tick += Timer_Tick;
             WindowSaveTimer.Interval = CommonData.MainSetting.WindowSave.SaveIntervalTime;
             WindowSaveTimer.Start();
+        }
+
+        void InitializeIdleWatchTimer()
+        {
+            if(IdleWatchTimer != null) {
+                IdleWatchTimer.Stop();
+                IdleWatchTimer.Tick -= Timer_Tick;
+            }
+
+            IdleWatchTimer = new DispatcherTimer();
+            IdleWatchTimer.Tick += Timer_Tick;
+            IdleWatchTimer.Interval = Constants.IdleWatchTime;
+            IdleWatchTimer.Start();
+        }
+
+        void InitializeStatus()
+        {
+            WindowSaveData.TimerItems.LimitSize = CommonData.MainSetting.WindowSave.SaveCount;
+            WindowSaveData.SystemItems.LimitSize = CommonData.MainSetting.WindowSave.SaveCount;
+
+            InitializeWindowSaveTimer();
+            InitializeIdleWatchTimer();
         }
 
         void InitializeSystem()
@@ -1535,6 +1557,23 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 timer.Tick -= IndexTimer_Tick;
             }
             IndexSaveTimers.Clear();
+        }
+
+        static bool CheckIsIdle()
+        {
+            var lastInputInfo = new LASTINPUTINFO() {
+                cbSize = (uint)LASTINPUTINFO.SizeOf,
+            };
+            if(NativeMethods.GetLastInputInfo(ref lastInputInfo)) {
+                //BUGS: オーバーフロー未考慮！
+                var lastInputTime = lastInputInfo.dwTime;
+                var nowTime = Environment.TickCount;
+                var elapsedTime = TimeSpan.FromMilliseconds(nowTime - lastInputTime);
+                Debug.WriteLine($"idle: {elapsedTime}");
+                return Constants.IdleJudgeTime < elapsedTime;
+            }
+
+            return false;
         }
 
         #endregion
@@ -2373,6 +2412,15 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 if(timer == WindowSaveTimer) {
                     if(CommonData.MainSetting.WindowSave.IsEnabled) {
                         SaveWindowItemAsync(WindowSaveType.Timer);
+                    }
+                } else if(timer == IdleWatchTimer) {
+                    if(CheckIsIdle()) {
+                        if(!NowIdling) {
+                            NowIdling = true;
+                            CommonData.Logger.Information("IDLE!");
+                        }
+                    } else {
+                        NowIdling = false;
                     }
                 }
             } finally {
