@@ -1,4 +1,4 @@
-﻿/**
+﻿/*
 This file is part of Pe.
 
 Pe is free software: you can redistribute it and/or modify
@@ -14,22 +14,22 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Pe.  If not, see <http://www.gnu.org/licenses/>.
 */
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.Pe.PeMain.Data;
+using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
+using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
+using Microsoft.Win32.SafeHandles;
+
 namespace ContentTypeTextNet.Pe.PeMain.Logic
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.IO;
-    using System.Linq;
-    using System.Text;
-    using System.Threading;
-    using System.Threading.Tasks;
-    using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
-    using ContentTypeTextNet.Pe.PeMain.Data;
-    using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
-    using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
-    using Microsoft.Win32.SafeHandles;
-
     /// <summary>
     /// <para>ベタ移植したはいいけどロジックもちすぎ</para>
     /// </summary>
@@ -174,7 +174,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
                 Directory.CreateDirectory(this._downloadPath);
             }
             // #158
-            FileUtility.RotateFiles(this._downloadPath, Constants.ArchiveSearchPattern, ContentTypeTextNet.Library.SharedLibrary.Define.OrderBy.Desc, Constants.updateArchiveCount, e => {
+            FileUtility.RotateFiles(this._downloadPath, Constants.ArchiveSearchPattern, ContentTypeTextNet.Library.SharedLibrary.Define.OrderBy.Descending, Constants.updateArchiveCount, e => {
                 this._commonData.Logger.Warning(e);
                 return true;
             });

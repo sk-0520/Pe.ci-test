@@ -71,6 +71,16 @@
   </PropertyGroup>
   <PropertyGroup />
   <ItemGroup>
+    <Reference Include="ContentTypeTextNet.PInvoke">
+      <HintPath>..\packages\ContentTypeTextNet.PInvoke.1.0.0.16\lib\net46\ContentTypeTextNet.PInvoke.dll</HintPath>
+      <Private>True</Private>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ContentTypeTextNet.SharedLibrary">
+      <HintPath>..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.33\lib\net46\ContentTypeTextNet.SharedLibrary.dll</HintPath>
+      <Private>True</Private>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Hardcodet.Wpf.TaskbarNotification, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Hardcodet.NotifyIcon.Wpf.1.0.5\lib\net451\Hardcodet.Wpf.TaskbarNotification.dll</HintPath>
       <Private>False</Private>
@@ -85,18 +95,7 @@
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="PInvoke, Version=1.0.5851.26985, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\ContentTypeTextNet.PInvoke.1.0.0.5\lib\net46\PInvoke.dll</HintPath>
-      <Private>True</Private>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="SharedLibrary">
-      <HintPath>..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.14\lib\net46\SharedLibrary.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
       <Private>False</Private>
     </Reference>
@@ -169,6 +168,9 @@
     <Compile Include="AppResource-Implement.cs">
       <DependentUpon>AppResource.cs</DependentUpon>
     </Compile>
+    <Compile Include="Constants-AppConfig.cs">
+      <DependentUpon>Constants.cs</DependentUpon>
+    </Compile>
     <Compile Include="Constants-generator.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -185,6 +187,7 @@
     </Compile>
     <Compile Include="Data\ApplicationCommandArg.cs" />
     <Compile Include="Define\IndexBodyKind.cs" />
+    <Compile Include="IF\IRuntimeTextTemplate.cs" />
     <Compile Include="Logic\ConfigurationCaching.cs" />
     <Compile Include="Logic\IndexBodyArchive.cs" />
     <Compile Include="Data\Model\HtmlViewerModel.cs" />
@@ -202,6 +205,10 @@
     <Compile Include="Define\ArchiveType.cs" />
     <Compile Include="Define\WindowSaveType.cs" />
     <Compile Include="Logic\IndexDispatcherTimer.cs" />
+    <Compile Include="Logic\T4Template\RuntimeTextTemplateProxy.cs" />
+    <Compile Include="Logic\T4Template\T4TemplateProcessor.cs" />
+    <Compile Include="Logic\T4Template\TextTemplatingEngineHost.cs" />
+    <Compile Include="Logic\T4Template\TextTemplatingSession.cs" />
     <Compile Include="Logic\Updater.cs" />
     <Compile Include="Data\Temporary\UpdateInformation.cs" />
     <Compile Include="Define\AboutCopyKind.cs" />
@@ -364,8 +371,12 @@
     <Content Include="etc\html\feedback.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Resource Include="etc\image\common-file.png" />
-    <Resource Include="etc\image\common-folder.png" />
+    <None Include="etc\image\common-file.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="etc\image\common-folder.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <Content Include="etc\script\autosize.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -396,13 +407,14 @@
     <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeRunningInformationSetting.cs" />
     <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeStreamSetting.cs" />
     <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeTemplateIndexItem.cs" />
+    <Compile Include="Logic\Utility\T4TemplateUtility.cs" />
     <Compile Include="TemplateReplaceKey.cs" />
     <Compile Include="ViewModel\AboutViewModel.cs" />
     <Compile Include="ViewModel\CommandItemViewModel.cs" />
     <Compile Include="ViewModel\CommandViewModel.cs" />
     <Compile Include="ViewModel\ComponentItemViewModel.cs" />
     <Compile Include="ViewModel\Control\LauncherListItemViewModel.cs" />
-    <Compile Include="ViewModel\HavingViewSingleModelWrapperBodyViewModelBase.cs" />
+    <Compile Include="ViewModel\HasViewSingleModelWrapperBodyViewModelBase.cs" />
     <Compile Include="ViewModel\HomeViewModel.cs" />
     <Compile Include="ViewModel\HtmlViewerViewModel.cs" />
     <Compile Include="ViewModel\LauncherGroupItemViewModel.cs" />
@@ -467,22 +479,21 @@
     <Compile Include="Data\VariableConstants.cs" />
     <Compile Include="Data\WindowSaveData.cs" />
     <Compile Include="Define\HotKeyId.cs" />
-    <Compile Include="Define\FileType.cs" />
     <Compile Include="Define\ImageScale.cs" />
     <Compile Include="Define\ToolbarNodeKind.cs" />
     <Compile Include="Define\WindowKind.cs" />
     <Compile Include="IF\IAppNonProcess.cs" />
     <Compile Include="IF\IAppSender.cs" />
-    <Compile Include="IF\IHavingAppNonProcess.cs" />
-    <Compile Include="IF\IHavingAppSender.cs" />
-    <Compile Include="IF\IHavingWindowKind.cs" />
+    <Compile Include="IF\IHasAppNonProcess.cs" />
+    <Compile Include="IF\IHasAppSender.cs" />
+    <Compile Include="IF\IHasWindowKind.cs" />
     <Compile Include="IF\IMenuItem.cs" />
     <Compile Include="IF\INoteMenuItem.cs" />
     <Compile Include="IF\IRefreshFromViewModel.cs" />
     <Compile Include="IF\ViewExtend\ICaptionDoubleClickData.cs" />
     <Compile Include="IF\IClipboardWatcher.cs" />
     <Compile Include="IF\ICommonData.cs" />
-    <Compile Include="IF\IHavingCommonData.cs" />
+    <Compile Include="IF\IHasCommonData.cs" />
     <Compile Include="IF\ILogAppender.cs" />
     <Compile Include="IF\IToolbarNode.cs" />
     <Compile Include="Logic\AppInformationCollection.cs" />
@@ -540,7 +551,7 @@
     <Compile Include="ViewModel\GroupItemViewMode.cs" />
     <Compile Include="ViewModel\GroupRootViewModel.cs" />
     <Compile Include="ViewModel\GroupViewModelBase.cs" />
-    <Compile Include="ViewModel\HavingViewSingleModelWrapperIndexViewModelBase.cs" />
+    <Compile Include="ViewModel\HasViewSingleModelWrapperIndexViewModelBase.cs" />
     <Compile Include="ViewModel\LauncherItemExecuteViewModel.cs" />
     <Compile Include="ViewModel\LauncherItemCustomizeViewModel.cs" />
     <Compile Include="ViewModel\LauncherItemSimpleViewModel.cs" />
@@ -694,6 +705,7 @@
     <None Include="App.Debug.config">
       <DependentUpon>App.config</DependentUpon>
       <IsTransformFile>True</IsTransformFile>
+      <SubType>Designer</SubType>
     </None>
     <None Include="AppResource-generator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -728,6 +740,7 @@
   <ItemGroup>
     <None Include="App.config">
       <TransformOnBuild>true</TransformOnBuild>
+      <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup>

@@ -10,7 +10,7 @@
   xmlns:AP="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
   xmlns:AC="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Converter"
   xmlns:ACE="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Converter.EnumLanguageConverter"
-  xmlns:SC="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=SharedLibrary"
+  xmlns:SC="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=ContentTypeTextNet.SharedLibrary"
   xmlns:AD="clr-namespace:ContentTypeTextNet.Pe.PeMain.Define"
   xmlns:ADD="clr-namespace:ContentTypeTextNet.Pe.Library.PeData.Define;assembly=PeData"
   

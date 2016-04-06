@@ -5,7 +5,7 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
   xmlns:AVM="clr-namespace:ContentTypeTextNet.Pe.PeMain.ViewModel"
-  xmlns:SD="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.Define;assembly=SharedLibrary"
+  xmlns:SD="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.Define;assembly=ContentTypeTextNet.SharedLibrary"
   xmlns:AM="clr-namespace:ContentTypeTextNet.Pe.PeMain"
   xmlns:AP="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
   xmlns:AW="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Window"

@@ -8,7 +8,7 @@
   xmlns:AV="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Control"
   xmlns:AP="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
   xmlns:AA="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Attached"
-  xmlns:SC="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=SharedLibrary"
+  xmlns:SC="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=ContentTypeTextNet.SharedLibrary"
   xmlns:ADD="clr-namespace:ContentTypeTextNet.Pe.Library.PeData.Define;assembly=PeData"
   
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 

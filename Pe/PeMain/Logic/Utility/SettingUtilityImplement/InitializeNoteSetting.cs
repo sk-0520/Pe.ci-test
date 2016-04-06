@@ -1,4 +1,4 @@
-﻿/**
+﻿/*
 This file is part of Pe.
 
 Pe is free software: you can redistribute it and/or modify
@@ -14,19 +14,20 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Pe.  If not, see <http://www.gnu.org/licenses/>.
 */
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Media;
+using ContentTypeTextNet.Library.SharedLibrary.IF;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.Pe.Library.PeData.Define;
+using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
+
 namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityImplement
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    using System.Windows.Media;
-    using ContentTypeTextNet.Library.SharedLibrary.IF;
-    using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
-    using ContentTypeTextNet.Pe.Library.PeData.Define;
-    using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
-
     internal static class InitializeNoteSetting
     {
         public static void Correction(NoteSettingModel setting, Version previousVersion, INonProcess nonProcess)
@@ -37,6 +38,10 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityImplement
 
         static void V_Last(NoteSettingModel setting, Version previousVersion, INonProcess nonProcess)
         {
+            if(previousVersion == null) {
+                setting.Font.Size = Constants.noteFontSize.median;
+                setting.Font.Family = FontUtility.GetOriginalFontFamilyName(SystemFonts.MessageFontFamily);
+            }
             setting.Font.Size = Constants.noteFontSize.GetClamp(setting.Font.Size);
             setting.NoteTitle = EnumUtility.GetNormalization(setting.NoteTitle, NoteTitle.Timestamp);
 

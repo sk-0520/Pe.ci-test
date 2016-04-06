@@ -1,4 +1,4 @@
-﻿/**
+﻿/*
 This file is part of Pe.
 
 Pe is free software: you can redistribute it and/or modify
@@ -14,26 +14,26 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Pe.  If not, see <http://www.gnu.org/licenses/>.
 */
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Input;
+using System.Windows.Media;
+using ContentTypeTextNet.Library.SharedLibrary.IF;
+using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+using ContentTypeTextNet.Pe.Library.PeData.Item;
+using ContentTypeTextNet.Pe.PeMain.Data;
+using ContentTypeTextNet.Pe.PeMain.Define;
+using ContentTypeTextNet.Pe.PeMain.IF;
+using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
+using ContentTypeTextNet.Pe.PeMain.View;
+
 namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    using System.Windows;
-    using System.Windows.Input;
-    using System.Windows.Media;
-    using ContentTypeTextNet.Library.SharedLibrary.IF;
-    using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
-    using ContentTypeTextNet.Pe.Library.PeData.Item;
-    using ContentTypeTextNet.Pe.PeMain.Data;
-    using ContentTypeTextNet.Pe.PeMain.Define;
-    using ContentTypeTextNet.Pe.PeMain.IF;
-    using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
-    using ContentTypeTextNet.Pe.PeMain.View;
-
-    public class NoteMenuViewModel: SingleModelWrapperViewModelBase<NoteIndexItemModel>, INoteMenuItem, IHavingAppSender, IHavingNonProcess
+    public class NoteMenuViewModel: SingleModelWrapperViewModelBase<NoteIndexItemModel>, INoteMenuItem, IHasAppSender, IHasNonProcess
     {
         public NoteMenuViewModel(NoteIndexItemModel model, INonProcess nonProcess, IAppSender appSender)
             : base(model)
@@ -75,7 +75,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         #endregion
 
-        #region IHavingNonProcess
+        #region IHasNonProcess
 
         public INonProcess NonProcess { get; private set; }
 

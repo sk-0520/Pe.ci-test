@@ -55,6 +55,52 @@
 		</group>
 	</log>
 	-->
+	<log date="2016/04/07" version="0.77.0" dummy="################################################################################">
+		<group type="note" dummy="==================================================================">
+			<note rev="">
+				<message>ひさびさリリース。ランチャーと関係ないツール作ったりダークソウル3したりで忙しいのです</message>
+			</note>
+		</group>
+		<group type="features" dummy="==================================================================">
+			<note rev="91bbd100ea168425f2dd48fdb4b01f548bd10535">
+				<message>#428: 各種データのアーカイブ化タイミングを再検討</message>
+				<comments>
+					<comment>端末が一定時間アイドル状態であれば各データをアーカイブするよう変更</comment>
+					<comment>設定値はApp.config(PeMain.exe.config)</comment>
+					<comment>変更に伴いクリップボードのアーカイブ間隔を変更</comment>
+					<comment>アイドル監視時間: 8分</comment>
+					<comment>アイドル判定時間: 70分</comment>
+					<comment>クリップボード閾値: 3時間</comment>
+				</comments>
+			</note>
+		</group>
+		<group type="fixes" dummy="==================================================================">
+			<note rev="95a0ed24751b74615f10cb768b1c8302f35ee447">
+				<message>#426: ヘルプファイルのファイルとディレクトリアイコンが出力ディレクトリに出力されていない</message>
+			</note>
+			<note rev="762ceb36f86045633c129a8cedb44ae98526f8df">
+				<message>#432: ノートの標準フォント設定が反映されない</message>
+			</note>
+			<note rev="105dee68a5329f80b4febf68c6d63da48ec48cd7">
+				<message>#429: フィルタリング中のクリップボードコピーで落ちる</message>
+				<comments>
+					<comment>例外捕まえただけの暫定対応</comment>
+					<comment>原因調査してないので今後やっていく</comment>
+				</comments>
+			</note>
+		</group>
+		<group type="developer" dummy="==================================================================">
+			<note rev="84cde1568d8eb67a2aa6860e2dc7d9e995209103">
+				<message>名前空間とかライセンス表記とかがさっと修正</message>
+			</note>
+			<note rev="f3add1826547df139e487c4e9446ed71d89bd196">
+				<message>[myget/NuGet] ShaerdLibrary更新に伴い関連ライブラリの更新</message>
+				<comments>
+					<comment>#431: PeからSharedLibraryへ統合した処理に委譲</comment>
+				</comments>
+			</note>
+		</group>
+	</log>
 	<log date="2016/01/18" version="0.76.1" dummy="################################################################################">
 		<group type="note" dummy="==================================================================">
 			<note rev="">

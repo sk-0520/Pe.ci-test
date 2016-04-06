@@ -1,4 +1,4 @@
-﻿/**
+﻿/*
 This file is part of Pe.
 
 Pe is free software: you can redistribute it and/or modify
@@ -14,26 +14,26 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Pe.  If not, see <http://www.gnu.org/licenses/>.
 */
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Diagnostics;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Threading;
+using ContentTypeTextNet.Library.SharedLibrary.Logic;
+using ContentTypeTextNet.Pe.PeMain.Data;
+using ContentTypeTextNet.Pe.PeMain.Logic;
+using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
+using ContentTypeTextNet.Pe.PeMain.ViewModel;
+using Hardcodet.Wpf.TaskbarNotification;
+
 namespace ContentTypeTextNet.Pe.PeMain
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Configuration;
-    using System.Data;
-    using System.Diagnostics;
-    using System.Linq;
-    using System.Threading;
-    using System.Threading.Tasks;
-    using System.Windows;
-    using System.Windows.Controls;
-    using System.Windows.Threading;
-    using ContentTypeTextNet.Library.SharedLibrary.Logic;
-    using ContentTypeTextNet.Pe.PeMain.Data;
-    using ContentTypeTextNet.Pe.PeMain.Logic;
-    using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
-    using ContentTypeTextNet.Pe.PeMain.ViewModel;
-    using Hardcodet.Wpf.TaskbarNotification;
-
     /// <summary>
     /// Simple application. Check the XAML for comments.
     /// </summary>

@@ -12,25 +12,25 @@
 <#@ import namespace="System.Text.RegularExpressions" #>
 <#@ import namespace="ContentTypeTextNet.Pe.PeMain" #>
 <#@ output extension=".cs" #>
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
+using ContentTypeTextNet.Library.SharedLibrary.CompatibleForms.Utility;
+using ContentTypeTextNet.Library.SharedLibrary.CompatibleWindows;
+using ContentTypeTextNet.Library.SharedLibrary.Define;
+using ContentTypeTextNet.Library.SharedLibrary.IF;
+using ContentTypeTextNet.Library.SharedLibrary.Logic;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.Pe.PeMain.Logic;
+using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
+using ContentTypeTextNet.Pe.Library.PeData.Item;
+
 namespace ContentTypeTextNet.Pe.PeMain
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    using System.Windows.Media.Imaging;
-    using ContentTypeTextNet.Library.SharedLibrary.CompatibleForms.Utility;
-    using ContentTypeTextNet.Library.SharedLibrary.CompatibleWindows;
-    using ContentTypeTextNet.Library.SharedLibrary.Define;
-    using ContentTypeTextNet.Library.SharedLibrary.IF;
-    using ContentTypeTextNet.Library.SharedLibrary.Logic;
-    using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
-    using ContentTypeTextNet.Library.SharedLibrary.Model;
-    using ContentTypeTextNet.Pe.PeMain.Logic;
-    using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
-    using ContentTypeTextNet.Pe.Library.PeData.Item;
-
     partial class Constants
     {
 <#

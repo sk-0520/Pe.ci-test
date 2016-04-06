@@ -1,4 +1,4 @@
-﻿/**
+﻿/*
 This file is part of Pe.
 
 Pe is free software: you can redistribute it and/or modify
@@ -14,27 +14,27 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Pe.  If not, see <http://www.gnu.org/licenses/>.
 */
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Data;
+using ContentTypeTextNet.Library.SharedLibrary.IF;
+using ContentTypeTextNet.Library.SharedLibrary.Logic;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+using ContentTypeTextNet.Pe.Library.PeData.Item;
+using ContentTypeTextNet.Pe.Library.PeData.Setting;
+using ContentTypeTextNet.Pe.PeMain.Data;
+using ContentTypeTextNet.Pe.PeMain.IF;
+using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
+
 namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Collections.ObjectModel;
-    using System.ComponentModel;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    using System.Windows.Data;
-    using ContentTypeTextNet.Library.SharedLibrary.IF;
-    using ContentTypeTextNet.Library.SharedLibrary.Logic;
-    using ContentTypeTextNet.Library.SharedLibrary.Model;
-    using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
-    using ContentTypeTextNet.Pe.Library.PeData.Item;
-    using ContentTypeTextNet.Pe.Library.PeData.Setting;
-    using ContentTypeTextNet.Pe.PeMain.Data;
-    using ContentTypeTextNet.Pe.PeMain.IF;
-    using Logic.Utility;
-
-    public class LauncherListViewModel: SingleModelWrapperViewModelBase<LauncherItemCollectionModel>, IHavingAppNonProcess, IHavingAppSender
+    public class LauncherListViewModel: SingleModelWrapperViewModelBase<LauncherItemCollectionModel>, IHasAppNonProcess, IHasAppSender
     {
         #region variable
 
@@ -106,7 +106,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control
 
         #endregion
 
-        #region IHavingAppNonProcess
+        #region IHasAppNonProcess
 
         public IAppNonProcess AppNonProcess { get; private set; }
 

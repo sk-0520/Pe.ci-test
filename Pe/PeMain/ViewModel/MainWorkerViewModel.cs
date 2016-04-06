@@ -1,4 +1,4 @@
-﻿/**
+﻿/*
 This file is part of Pe.
 
 Pe is free software: you can redistribute it and/or modify
@@ -14,56 +14,56 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Pe.  If not, see <http://www.gnu.org/licenses/>.
 */
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Net.NetworkInformation;
+using System.Runtime.CompilerServices;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Threading;
+using ContentTypeTextNet.Library.PInvoke.Windows;
+using ContentTypeTextNet.Library.SharedLibrary.Attribute;
+using ContentTypeTextNet.Library.SharedLibrary.CompatibleForms;
+using ContentTypeTextNet.Library.SharedLibrary.CompatibleWindows.Utility;
+using ContentTypeTextNet.Library.SharedLibrary.Define;
+using ContentTypeTextNet.Library.SharedLibrary.IF;
+using ContentTypeTextNet.Library.SharedLibrary.Logic;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+using ContentTypeTextNet.Pe.Library.PeData.Define;
+using ContentTypeTextNet.Pe.Library.PeData.Item;
+using ContentTypeTextNet.Pe.Library.PeData.Setting;
+using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
+using ContentTypeTextNet.Pe.PeMain.Define;
+using ContentTypeTextNet.Pe.PeMain.IF;
+using ContentTypeTextNet.Pe.PeMain.Logic;
+using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
+using ContentTypeTextNet.Pe.PeMain.View;
+using ContentTypeTextNet.Pe.PeMain.View.Parts.Window;
+using Hardcodet.Wpf.TaskbarNotification;
+using Microsoft.Win32;
+using System.Runtime;
+using ContentTypeTextNet.Pe.PeMain.Data;
+using System.Runtime.InteropServices;
+using ContentTypeTextNet.Pe.PeMain.Data.Model;
+using System.Net;
+using System.Text;
+using System.IO.Compression;
+
 namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Globalization;
-    using System.IO;
-    using System.Linq;
-    using System.Net.NetworkInformation;
-    using System.Runtime.CompilerServices;
-    using System.Threading;
-    using System.Threading.Tasks;
-    using System.Windows;
-    using System.Windows.Controls;
-    using System.Windows.Input;
-    using System.Windows.Media;
-    using System.Windows.Media.Imaging;
-    using System.Windows.Threading;
-    using ContentTypeTextNet.Library.PInvoke.Windows;
-    using ContentTypeTextNet.Library.SharedLibrary.Attribute;
-    using ContentTypeTextNet.Library.SharedLibrary.CompatibleForms;
-    using ContentTypeTextNet.Library.SharedLibrary.CompatibleWindows.Utility;
-    using ContentTypeTextNet.Library.SharedLibrary.Define;
-    using ContentTypeTextNet.Library.SharedLibrary.IF;
-    using ContentTypeTextNet.Library.SharedLibrary.Logic;
-    using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
-    using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
-    using ContentTypeTextNet.Library.SharedLibrary.Model;
-    using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
-    using ContentTypeTextNet.Pe.Library.PeData.Define;
-    using ContentTypeTextNet.Pe.Library.PeData.Item;
-    using ContentTypeTextNet.Pe.Library.PeData.Setting;
-    using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
-    using ContentTypeTextNet.Pe.PeMain.Define;
-    using ContentTypeTextNet.Pe.PeMain.IF;
-    using ContentTypeTextNet.Pe.PeMain.Logic;
-    using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
-    using ContentTypeTextNet.Pe.PeMain.View;
-    using ContentTypeTextNet.Pe.PeMain.View.Parts.Window;
-    using Hardcodet.Wpf.TaskbarNotification;
-    using Microsoft.Win32;
-    using System.Runtime;
-    using ContentTypeTextNet.Pe.PeMain.Data;
-    using System.Runtime.InteropServices;
-    using ContentTypeTextNet.Pe.PeMain.Data.Model;
-    using System.Net;
-    using System.Text;
-    using System.IO.Compression;
-
-    public sealed class MainWorkerViewModel: ViewModelBase, IAppSender, IClipboardWatcher, IHavingView<TaskbarIcon>, IHavingCommonData
+    public sealed class MainWorkerViewModel: ViewModelBase, IAppSender, IClipboardWatcher, IHasView<TaskbarIcon>, IHasCommonData
     {
         #region variable
 
@@ -129,7 +129,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         public bool IsQuickExecute { get; private set; }
 
-        #region IHavingCommonData
+        #region IHasCommonData
 
         public CommonData CommonData { get; private set; }
 
@@ -188,6 +188,8 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
         }
 
+        bool NowIdling { get; set; }
+        DispatcherTimer IdleWatchTimer { get; set; }
         DispatcherTimer WindowSaveTimer { get; set; }
 
         public IEnumerable<WindowItemCollectionViewModel> WindowTimerItems
@@ -660,7 +662,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             return isAppReload;
         }
 
-        void ExitApplication(bool saveSetting, bool gc)
+        void ExitApplication(bool saveSetting, bool runGc)
         {
 #if DEBUG
             var startupPath = Environment.ExpandEnvironmentVariables(Constants.StartupShortcutPath);
@@ -674,20 +676,30 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             if(saveSetting) {
                 SaveSetting();
             }
-            if(gc) {
+            if(runGc) {
                 var timestamp = DateTime.Now;
-                IndexItemUtility.GarbageCollectionBody(IndexKind.Note, CommonData.NoteIndexSetting.Items, IndexBodyCaching.NoteItems.Archive, timestamp, Constants.NoteBodyArchiveTimeSpan, Constants.NoteBodyArchiveFileSize, CommonData.NonProcess);
-                IndexItemUtility.GarbageCollectionBody(IndexKind.Template, CommonData.TemplateIndexSetting.Items, IndexBodyCaching.TemplateItems.Archive, timestamp, Constants.TemplateBodyArchiveTimeSpan, Constants.TemplateBodyArchiveFileSize, CommonData.NonProcess);
-                IndexItemUtility.GarbageCollectionBody(IndexKind.Clipboard, CommonData.ClipboardIndexSetting.Items, IndexBodyCaching.ClipboardItems.Archive, timestamp, Constants.ClipboardBodyArchiveTimeSpan, Constants.ClipboardBodyArchiveFileSize, CommonData.NonProcess);
-                GarbageCollectionMainSettingTemporary();
+                GarbageCollectionAll(timestamp);
             }
             Application.Current.Shutdown();
+        }
+
+        void GarbageCollectionBodyItems(DateTime timestamp)
+        {
+            IndexItemUtility.GarbageCollectionBody(IndexKind.Note, CommonData.NoteIndexSetting.Items, IndexBodyCaching.NoteItems.Archive, timestamp, Constants.NoteBodyArchiveTimeSpan, Constants.NoteBodyArchiveFileSize, CommonData.NonProcess);
+            IndexItemUtility.GarbageCollectionBody(IndexKind.Template, CommonData.TemplateIndexSetting.Items, IndexBodyCaching.TemplateItems.Archive, timestamp, Constants.TemplateBodyArchiveTimeSpan, Constants.TemplateBodyArchiveFileSize, CommonData.NonProcess);
+            IndexItemUtility.GarbageCollectionBody(IndexKind.Clipboard, CommonData.ClipboardIndexSetting.Items, IndexBodyCaching.ClipboardItems.Archive, timestamp, Constants.ClipboardBodyArchiveTimeSpan, Constants.ClipboardBodyArchiveFileSize, CommonData.NonProcess);
         }
 
         void GarbageCollectionMainSettingTemporary()
         {
             var userSettingDirPath = Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingDirectoryPath);
             AppUtility.GarbageCollectionTemporaryFile(userSettingDirPath, CommonData.Logger);
+        }
+
+        void GarbageCollectionAll(DateTime timestamp)
+        {
+            GarbageCollectionBodyItems(timestamp);
+            GarbageCollectionMainSettingTemporary();
         }
 
         public void SetView(TaskbarIcon view)
@@ -708,14 +720,14 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             using(var timeLogger = CommonData.NonProcess.CreateTimeLogger()) {
                 // 各種設定の読込
                 var mainSettingPath = Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingMainSettingFilePath);
-                CommonData.MainSetting = AppUtility.LoadSetting<MainSettingModel>(mainSettingPath, Constants.fileTypeMainSetting, CommonData.Logger);
+                CommonData.MainSetting = SerializeUtility.LoadSetting<MainSettingModel>(mainSettingPath, Constants.fileTypeMainSetting, CommonData.Logger);
                 ApplyLanguage();
-                CommonData.LauncherItemSetting = AppUtility.LoadSetting<LauncherItemSettingModel>(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingLauncherItemSettingFilePath), Constants.fileTypeLauncherItemSetting, CommonData.Logger);
-                CommonData.LauncherGroupSetting = AppUtility.LoadSetting<LauncherGroupSettingModel>(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingLauncherGroupItemSettingFilePath), Constants.fileTypeLauncherGroupSetting, CommonData.Logger);
+                CommonData.LauncherItemSetting = SerializeUtility.LoadSetting<LauncherItemSettingModel>(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingLauncherItemSettingFilePath), Constants.fileTypeLauncherItemSetting, CommonData.Logger);
+                CommonData.LauncherGroupSetting = SerializeUtility.LoadSetting<LauncherGroupSettingModel>(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingLauncherGroupItemSettingFilePath), Constants.fileTypeLauncherGroupSetting, CommonData.Logger);
                 // インデックスファイル読み込み
-                CommonData.NoteIndexSetting = AppUtility.LoadSetting<NoteIndexSettingModel>(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingNoteIndexFilePath), Constants.fileTypeNoteIndex, CommonData.Logger);
-                CommonData.ClipboardIndexSetting = AppUtility.LoadSetting<ClipboardIndexSettingModel>(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingClipboardIndexFilePath), Constants.fileTypeTemplateIndex, CommonData.Logger);
-                CommonData.TemplateIndexSetting = AppUtility.LoadSetting<TemplateIndexSettingModel>(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingTemplateIndexFilePath), Constants.fileTypeClipboardIndex, CommonData.Logger);
+                CommonData.NoteIndexSetting = SerializeUtility.LoadSetting<NoteIndexSettingModel>(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingNoteIndexFilePath), Constants.fileTypeNoteIndex, CommonData.Logger);
+                CommonData.ClipboardIndexSetting = SerializeUtility.LoadSetting<ClipboardIndexSettingModel>(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingClipboardIndexFilePath), Constants.fileTypeTemplateIndex, CommonData.Logger);
+                CommonData.TemplateIndexSetting = SerializeUtility.LoadSetting<TemplateIndexSettingModel>(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingTemplateIndexFilePath), Constants.fileTypeClipboardIndex, CommonData.Logger);
 
                 var result = new StartupNotifyData();
                 result.ExistsSetting = File.Exists(mainSettingPath);
@@ -730,8 +742,8 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 BackupSetting();
 
                 SaveMainSetting();
-                AppUtility.SaveSetting(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingLauncherItemSettingFilePath), CommonData.LauncherItemSetting, Constants.fileTypeLauncherItemSetting, true, CommonData.Logger);
-                AppUtility.SaveSetting(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingLauncherGroupItemSettingFilePath), CommonData.LauncherGroupSetting, Constants.fileTypeLauncherGroupSetting, true, CommonData.Logger);
+                SerializeUtility.SaveSetting(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingLauncherItemSettingFilePath), CommonData.LauncherItemSetting, Constants.fileTypeLauncherItemSetting, true, CommonData.Logger);
+                SerializeUtility.SaveSetting(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingLauncherGroupItemSettingFilePath), CommonData.LauncherGroupSetting, Constants.fileTypeLauncherGroupSetting, true, CommonData.Logger);
 
                 foreach(var indexKind in EnumUtility.GetMembers<IndexKind>()) {
                     CommonData.AppSender.SendSaveIndex(indexKind, Timing.Instantly);
@@ -741,14 +753,14 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         void SaveMainSetting()
         {
-            AppUtility.SaveSetting(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingMainSettingFilePath), CommonData.MainSetting, Constants.fileTypeMainSetting, true, CommonData.Logger);
+            SerializeUtility.SaveSetting(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingMainSettingFilePath), CommonData.MainSetting, Constants.fileTypeMainSetting, true, CommonData.Logger);
         }
 
         void RotateSetting(string backupDirectory, string backupPattern, int backupCount)
         {
             // 旧データの削除
             using(var timeLogger = CommonData.NonProcess.CreateTimeLogger()) {
-                FileUtility.RotateFiles(backupDirectory, backupPattern, OrderBy.Desc, backupCount, ex => {
+                FileUtility.RotateFiles(backupDirectory, backupPattern, OrderBy.Descending, backupCount, ex => {
                     CommonData.Logger.Error(ex);
                     return true;
                 });
@@ -896,19 +908,39 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
         }
 
-        void InitializeStatus()
+        void InitializeWindowSaveTimer()
         {
-            WindowSaveData.TimerItems.LimitSize = CommonData.MainSetting.WindowSave.SaveCount;
-            WindowSaveData.SystemItems.LimitSize = CommonData.MainSetting.WindowSave.SaveCount;
-
             if(WindowSaveTimer != null) {
                 WindowSaveTimer.Stop();
+                WindowSaveTimer.Tick -= Timer_Tick;
             }
 
             WindowSaveTimer = new DispatcherTimer();
             WindowSaveTimer.Tick += Timer_Tick;
             WindowSaveTimer.Interval = CommonData.MainSetting.WindowSave.SaveIntervalTime;
             WindowSaveTimer.Start();
+        }
+
+        void InitializeIdleWatchTimer()
+        {
+            if(IdleWatchTimer != null) {
+                IdleWatchTimer.Stop();
+                IdleWatchTimer.Tick -= Timer_Tick;
+            }
+
+            IdleWatchTimer = new DispatcherTimer();
+            IdleWatchTimer.Tick += Timer_Tick;
+            IdleWatchTimer.Interval = Constants.IdleWatchTime;
+            IdleWatchTimer.Start();
+        }
+
+        void InitializeStatus()
+        {
+            WindowSaveData.TimerItems.LimitSize = CommonData.MainSetting.WindowSave.SaveCount;
+            WindowSaveData.SystemItems.LimitSize = CommonData.MainSetting.WindowSave.SaveCount;
+
+            InitializeWindowSaveTimer();
+            InitializeIdleWatchTimer();
         }
 
         void InitializeSystem()
@@ -1537,6 +1569,23 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             IndexSaveTimers.Clear();
         }
 
+        static bool CheckIsIdle()
+        {
+            var lastInputInfo = new LASTINPUTINFO() {
+                cbSize = (uint)LASTINPUTINFO.SizeOf,
+            };
+            if(NativeMethods.GetLastInputInfo(ref lastInputInfo)) {
+                var lastInputTime = lastInputInfo.dwTime;
+                var nowTime = NativeMethods.GetTickCount();
+                if(lastInputTime < nowTime) {
+                    var elapsedTime = TimeSpan.FromMilliseconds(nowTime - lastInputTime);
+                    return Constants.IdleJudgeTime < elapsedTime;
+                }
+            }
+
+            return false;
+        }
+
         #endregion
 
         #region ViewModelBase
@@ -1639,7 +1688,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         {
             window.Closed += Window_Closed;
 
-            var windowKind = window as IHavingWindowKind;
+            var windowKind = window as IHasWindowKind;
             if(windowKind != null) {
                 switch(windowKind.WindowKind) {
                     case WindowKind.LauncherToolbar: {
@@ -1678,7 +1727,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         void RemoveWindow(Window window)
         {
-            var havingWindwKind = window as IHavingWindowKind;
+            var havingWindwKind = window as IHasWindowKind;
             if(havingWindwKind != null) {
                 switch(havingWindwKind.WindowKind) {
                     case WindowKind.LauncherToolbar: {
@@ -1842,11 +1891,11 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
         }
 
-        void SaveIndex_Impl<TIndexSetting>(IndexKind indexKind, TIndexSetting indexSetting, FileType fileType, string filePath)
+        void SaveIndex_Impl<TIndexSetting>(IndexKind indexKind, TIndexSetting indexSetting, SerializeFileType fileType, string filePath)
             where TIndexSetting : ModelBase
         {
             var path = Environment.ExpandEnvironmentVariables(filePath);
-            AppUtility.SaveSetting(path, indexSetting, fileType, true, CommonData.Logger);
+            SerializeUtility.SaveSetting(path, indexSetting, fileType, true, CommonData.Logger);
         }
 
         void SaveIndex(IndexKind indexKind)
@@ -2352,11 +2401,11 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         #endregion
 
-        #region IHavingView
+        #region IHasView
 
         public TaskbarIcon View { get; private set; }
 
-        public bool HasView { get { return HavingViewUtility.GetHasView(this); } }
+        public bool HasView { get { return HasViewUtility.GetHasView(this); } }
 
         #endregion
 
@@ -2373,6 +2422,18 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 if(timer == WindowSaveTimer) {
                     if(CommonData.MainSetting.WindowSave.IsEnabled) {
                         SaveWindowItemAsync(WindowSaveType.Timer);
+                    }
+                } else if(timer == IdleWatchTimer) {
+                    if(CheckIsIdle()) {
+                        if(!NowIdling) {
+                            NowIdling = true;
+                            using(CommonData.NonProcess.CreateTimeLogger(CommonData.Language["log/idle/gc"])) {
+                                var timestamp = DateTime.Now;
+                                GarbageCollectionAll(timestamp);
+                            }
+                        }
+                    } else {
+                        NowIdling = false;
                     }
                 }
             } finally {

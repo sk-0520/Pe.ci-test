@@ -1,4 +1,4 @@
-﻿/**
+﻿/*
 This file is part of Pe.
 
 Pe is free software: you can redistribute it and/or modify
@@ -14,19 +14,19 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Pe.  If not, see <http://www.gnu.org/licenses/>.
 */
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.Serialization;
+using System.Text;
+using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.Attribute;
+using ContentTypeTextNet.Library.SharedLibrary.IF;
+using ContentTypeTextNet.Pe.Library.PeData.Item;
+using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
+
 namespace ContentTypeTextNet.Pe.Library.PeData.Setting
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Runtime.Serialization;
-    using System.Text;
-    using System.Threading.Tasks;
-    using ContentTypeTextNet.Library.SharedLibrary.Attribute;
-    using ContentTypeTextNet.Library.SharedLibrary.IF;
-    using ContentTypeTextNet.Pe.Library.PeData.Item;
-    using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
-
     /// <summary>
     /// 各設定の統括。
     /// <para>その他の大きいやつは別クラスで管理しとく。</para>

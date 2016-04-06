@@ -1,4 +1,4 @@
-﻿/**
+﻿/*
 This file is part of Pe.
 
 Pe is free software: you can redistribute it and/or modify
@@ -14,25 +14,26 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Pe.  If not, see <http://www.gnu.org/licenses/>.
 */
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.IO.Compression;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.Define;
+using ContentTypeTextNet.Library.SharedLibrary.IF;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.Pe.Library.PeData.Define;
+using ContentTypeTextNet.Pe.Library.PeData.Item;
+using ContentTypeTextNet.Pe.PeMain.Data;
+using ContentTypeTextNet.Pe.PeMain.Define;
+using ContentTypeTextNet.Pe.PeMain.IF;
+
 namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.IO;
-    using System.IO.Compression;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    using ContentTypeTextNet.Library.SharedLibrary.IF;
-    using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
-    using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
-    using ContentTypeTextNet.Pe.Library.PeData.Define;
-    using ContentTypeTextNet.Pe.Library.PeData.Item;
-    using ContentTypeTextNet.Pe.PeMain.Data;
-    using ContentTypeTextNet.Pe.PeMain.Define;
-    using ContentTypeTextNet.Pe.PeMain.IF;
-
     public static class IndexItemUtility
     {
         const CompressionLevel defaultCompressionLevel = CompressionLevel.Fastest;
@@ -42,9 +43,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         /// </summary>
         /// <param name="indexKind"></param>
         /// <returns></returns>
-        public static FileType GetBodyFileType(IndexKind indexKind)
+        public static SerializeFileType GetBodyFileType(IndexKind indexKind)
         {
-            var map = new Dictionary<IndexKind, FileType>() {
+            var map = new Dictionary<IndexKind, SerializeFileType>() {
                 { IndexKind.Note, Constants.fileTypeNoteBody },
                 { IndexKind.Template, Constants.fileTypeTemplateBody },
                 { IndexKind.Clipboard, Constants.fileTypeClipboardBody },
@@ -77,11 +78,11 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         /// <param name="fileType"></param>
         /// <param name="guid"></param>
         /// <returns></returns>
-        public static string GetBodyFileName(IndexKind indexKind, FileType fileType, Guid guid)
+        public static string GetBodyFileName(IndexKind indexKind, SerializeFileType fileType, Guid guid)
         {
-            var ext = new Dictionary<FileType, string>() {
-                { FileType.Json,   Constants.ExtensionJsonFile },
-                { FileType.Binary, Constants.ExtensionBinaryFile },
+            var ext = new Dictionary<SerializeFileType, string>() {
+                { SerializeFileType.Json,   Constants.ExtensionJsonFile },
+                { SerializeFileType.Binary, Constants.ExtensionBinaryFile },
             };
 
             var map = new Dictionary<string, string>() {
@@ -109,7 +110,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         /// <param name="guid"></param>
         /// <param name="parentDirectoryPath"></param>
         /// <returns></returns>
-        static string GetBodyFilePath(IndexKind indexKind, FileType fileType, Guid guid, string parentDirectoryPath)
+        static string GetBodyFilePath(IndexKind indexKind, SerializeFileType fileType, Guid guid, string parentDirectoryPath)
         {
             var fileName = GetBodyFileName(indexKind, fileType, guid);
             var path = Path.Combine(parentDirectoryPath, fileName);
@@ -124,7 +125,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         /// <param name="guid"></param>
         /// <param name="variableConstants"></param>
         /// <returns></returns>
-        public static string GetBodyFilePath(IndexKind indexKind, FileType fileType, Guid guid, VariableConstants variableConstants)
+        public static string GetBodyFilePath(IndexKind indexKind, SerializeFileType fileType, Guid guid, VariableConstants variableConstants)
         {
             var dirPath = IndexItemUtility.GetBodyFileParentDirectory(indexKind, variableConstants);
             var path = GetBodyFilePath(indexKind, fileType, guid, dirPath);
@@ -335,9 +336,14 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
                 ;
                 
                 var removeTargetList = GetUnindexedGuid(indexKind, items, guids);
+                int removedFileCount = 0;
                 foreach(var guid in removeTargetList) {
-                    RemoveArchiveBodyFile(indexKind, guid, archive, appNonProcess.Logger);
+                    var removed = RemoveArchiveBodyFile(indexKind, guid, archive, appNonProcess.Logger);
+                    if(removed) {
+                        removedFileCount += 1;
+                    }
                 }
+                appNonProcess.Logger.Debug($"{indexKind} remove[index]: {removedFileCount}/{removeTargetList.Count}");
             }
 
             var targetTime = archiveBaseTime - archiveTimeSpan;
@@ -350,6 +356,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
                     archive.OpenArchiveFile(indexKind, appNonProcess.VariableConstants);
                 }
                 var removePathList = new List<string>(oldItems.Length);
+                var archiveItemCount = 0;
                 foreach(var item in oldItems) {
                     var itemName = GetBodyFileName(indexKind, GetBodyFileType(indexKind), item.Id);
 
@@ -377,15 +384,20 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
                     using(var stream = new BinaryWriter(entry.Open())) {
                         stream.Write(buffer);
                     }
+                    archiveItemCount += 1;
                 }
                 archive.Flush();
+                appNonProcess.Logger.Debug($"{indexKind} archive: {archiveItemCount}/{oldItems.Length}");
+                int removedFileCount = 0;
                 foreach(var path in removePathList) {
                     try {
                         File.Delete(path);
+                        removedFileCount += 1;
                     } catch(Exception ex) {
                         appNonProcess.Logger.Warning(ex);
                     }
                 }
+                appNonProcess.Logger.Debug($"{indexKind} remove[archive]: {removedFileCount}/{removePathList.Count}");
             }
         }
 
@@ -395,7 +407,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
             var fileType = GetBodyFileType(indexKind);
             var path = Environment.ExpandEnvironmentVariables(GetBodyFilePath(indexKind, fileType, guid, parentDirectoryPath));
 
-            var result = AppUtility.LoadSetting<TIndexBody>(path, fileType, logger);
+            var result = SerializeUtility.LoadSetting<TIndexBody>(path, fileType, logger);
             return result;
         }
 
@@ -414,7 +426,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
                 return new TIndexBody();
             }
             using(var stream = entry.Open()) {
-                var result = AppUtility.LoadSetting<TIndexBody>(stream, fileType, logger);
+                var result = SerializeUtility.LoadSetting<TIndexBody>(stream, fileType, logger);
                 return result;
             }
         }
@@ -449,7 +461,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
             var fileType = IndexItemUtility.GetBodyFileType(indexBody.IndexKind);
             var path = Environment.ExpandEnvironmentVariables(IndexItemUtility.GetBodyFilePath(indexBody.IndexKind, fileType,  guid, parentDirectoryPath));
             var bodyItem = (TIndexBody)indexBody;
-            AppUtility.SaveSetting(path, bodyItem, fileType, true, logger);
+            SerializeUtility.SaveSetting(path, bodyItem, fileType, true, logger);
         }
         // BUGS: タイムスタンプのことなーんも考えてなかった
         static void SaveArchiveBodyFile<TIndexBody>(TIndexBody indexBody, Guid guid, IndexBodyArchive archive, ILogger logger)
@@ -465,7 +477,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 
             var entry = archive.Body.CreateEntry(entryName, defaultCompressionLevel);
             using(var stream = entry.Open()) {
-                AppUtility.SaveSetting(stream, indexBody, fileType, logger);
+                SerializeUtility.SaveSetting(stream, indexBody, fileType, logger);
             }
         }
 

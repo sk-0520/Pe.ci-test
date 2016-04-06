@@ -1,4 +1,4 @@
-﻿/**
+﻿/*
 This file is part of Pe.
 
 Pe is free software: you can redistribute it and/or modify
@@ -14,21 +14,21 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Pe.  If not, see <http://www.gnu.org/licenses/>.
 */
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Input;
+using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+using ContentTypeTextNet.Pe.Library.PeData.Define;
+using ContentTypeTextNet.Pe.Library.PeData.Item;
+using ContentTypeTextNet.Pe.PeMain.IF;
+using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
+
 namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    using System.Windows.Input;
-    using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
-    using ContentTypeTextNet.Pe.Library.PeData.Define;
-    using ContentTypeTextNet.Pe.Library.PeData.Item;
-    using ContentTypeTextNet.Pe.PeMain.IF;
-    using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
-
-    public class ComponentItemViewModel: SingleModelWrapperViewModelBase<ComponentItemModel>, IHavingAppNonProcess
+    public class ComponentItemViewModel: SingleModelWrapperViewModelBase<ComponentItemModel>, IHasAppNonProcess
     {
         public ComponentItemViewModel(ComponentItemModel model, IAppNonProcess appNonProcess)
             : base(model)
@@ -77,7 +77,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         #endregion
 
-        #region IHavingAppNonProcess
+        #region IHasAppNonProcess
 
         public IAppNonProcess AppNonProcess { get; private set; }
 

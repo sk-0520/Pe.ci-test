@@ -493,8 +493,9 @@
 		<Item Id="log/privacy/send/end/ng"      Word="ユーザー情報送信失敗" />
 		<Item Id="log/privacy/send/end/detail"  Word="DATA-ID: @[LOG-PRIVACY-SEND-DATA-ID]${br}---------------${br}受信整形データ:${br}@[LOG-PRIVACY-SEND-RECV-DATA]${br}---------------${br}受信生データ${br}@[LOG-PRIVACY-SEND-RECV-RAW]" />
 		<Item Id="log/privacy/send/failure"     Word="ユーザー情報送信エラー" />
+		<Item Id="log/idle/gc"                  Word="アイドル中処理" />
 		
-		
+
 		<!-- テンプレート -->
 		<Item Id="template/keyword/text/TIMESTAMP"    Word="タイムスタンプ" />
 		<Item Id="template/keyword/text/Y"            Word="西暦" />

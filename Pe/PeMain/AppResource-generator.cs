@@ -1,21 +1,21 @@
-﻿namespace ContentTypeTextNet.Pe.PeMain
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    using System.Windows.Media.Imaging;
-    using ContentTypeTextNet.Library.SharedLibrary.CompatibleForms.Utility;
-    using ContentTypeTextNet.Library.SharedLibrary.CompatibleWindows;
-    using ContentTypeTextNet.Library.SharedLibrary.Define;
-    using ContentTypeTextNet.Library.SharedLibrary.IF;
-    using ContentTypeTextNet.Library.SharedLibrary.Logic;
-    using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
-    using ContentTypeTextNet.Library.SharedLibrary.Model;
-    using ContentTypeTextNet.Pe.PeMain.Logic;
-    using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
+using ContentTypeTextNet.Library.SharedLibrary.CompatibleForms.Utility;
+using ContentTypeTextNet.Library.SharedLibrary.CompatibleWindows;
+using ContentTypeTextNet.Library.SharedLibrary.Define;
+using ContentTypeTextNet.Library.SharedLibrary.IF;
+using ContentTypeTextNet.Library.SharedLibrary.Logic;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.Pe.PeMain.Logic;
+using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
+namespace ContentTypeTextNet.Pe.PeMain
+{
     partial class AppResource
     {
         /*

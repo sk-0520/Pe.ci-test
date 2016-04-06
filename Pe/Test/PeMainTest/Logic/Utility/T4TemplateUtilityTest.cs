@@ -1,4 +1,4 @@
-﻿/**
+﻿/*
 This file is part of Pe.
 
 Pe is free software: you can redistribute it and/or modify
@@ -14,26 +14,26 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Pe.  If not, see <http://www.gnu.org/licenses/>.
 */
-namespace ContentTypeTextNet.Pe.PeMain.Define
+namespace ContentTypeTextNet.Pe.Test.Library.PeMainTest.Logic.Utility
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
-
-    /// <summary>
-    /// ファイル種別。
-    /// </summary>
-    public enum FileType
+    using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+    using NUnit.Framework;
+    using PeMain.Logic.Utility;
+    [TestFixture]
+    class T4TemplateUtilityTest
     {
-        /// <summary>
-        /// Json。
-        /// </summary>
-        Json,
-        /// <summary>
-        /// バイナリ。
-        /// </summary>
-        Binary,
+        [TestCase("abc", "abc")]
+        [TestCase("<#= 1 + 1 #>", "2")]
+        public void TransformTextTest(string src, string result)
+        {
+            var s = @"<#@ template language=""C#"" hostSpecific=""true"" #>" + Environment.NewLine + src;
+            var output = T4TemplateUtility.TransformText(s);
+            Assert.IsTrue(output == result);
+        }
     }
 }

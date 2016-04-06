@@ -1,4 +1,4 @@
-﻿/**
+﻿/*
 This file is part of Pe.
 
 Pe is free software: you can redistribute it and/or modify
@@ -14,22 +14,22 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Pe.  If not, see <http://www.gnu.org/licenses/>.
 */
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Controls;
+using ContentTypeTextNet.Library.SharedLibrary.IF;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+using ContentTypeTextNet.Pe.PeMain.Data;
+using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
+using ContentTypeTextNet.Pe.PeMain.IF;
+
 namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control.SettingPage
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    using System.Windows.Controls;
-    using ContentTypeTextNet.Library.SharedLibrary.IF;
-    using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
-    using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
-    using ContentTypeTextNet.Pe.PeMain.Data;
-    using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
-    using ContentTypeTextNet.Pe.PeMain.IF;
-
-    public abstract class SettingPageViewModelBase<TView>: ViewModelBase, IHavingAppNonProcess, IHavingView<TView>
+    public abstract class SettingPageViewModelBase<TView>: ViewModelBase, IHasAppNonProcess, IHasView<TView>
         where TView : UserControl
     {
         public SettingPageViewModelBase(TView view, IAppNonProcess appNonProcess, SettingNotifyData settingNotifiyItem)
@@ -45,13 +45,13 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control.SettingPage
 
         #endregion
 
-        #region IHavingAppNonProcess
+        #region IHasAppNonProcess
 
         public IAppNonProcess AppNonProcess { get; private set; }
 
         #endregion
 
-        #region IHavingView
+        #region IHasView
 
         public TView View { get; private set; }
 
@@ -59,7 +59,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control.SettingPage
         {
             get
             {
-                return HavingViewUtility.GetHasView(this);
+                return HasViewUtility.GetHasView(this);
             }
         }
 

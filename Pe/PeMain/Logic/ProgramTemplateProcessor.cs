@@ -1,4 +1,4 @@
-﻿/**
+﻿/*
 This file is part of Pe.
 
 Pe is free software: you can redistribute it and/or modify
@@ -14,24 +14,24 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Pe.  If not, see <http://www.gnu.org/licenses/>.
 */
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.IF;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
+using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
+using ContentTypeTextNet.Pe.Library.PeData.Define;
+using ContentTypeTextNet.Pe.PeMain.Logic.T4Template;
+
 namespace ContentTypeTextNet.Pe.PeMain.Logic
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    using ContentTypeTextNet.Library.SharedLibrary.IF;
-    using ContentTypeTextNet.Library.SharedLibrary.Logic.T4Template;
-    using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
-    using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
-    using ContentTypeTextNet.Pe.Library.PeData.Define;
-
     /// <summary>
     /// C#限定でムリくりアプリケーション用テンプレート処理。
     /// </summary>
     [Serializable]
-    public class ProgramTemplateProcessor: T4TemplateProcessor, IHavingNonProcess
+    public class ProgramTemplateProcessor: T4TemplateProcessor, IHasNonProcess
     {
         #region define
 
@@ -130,7 +130,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 
         #endregion
 
-        #region IHavingNonProcess
+        #region IHasNonProcess
 
         public INonProcess NonProcess { get; private set; }
 

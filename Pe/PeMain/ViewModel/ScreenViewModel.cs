@@ -1,4 +1,4 @@
-﻿/**
+﻿/*
 This file is part of Pe.
 
 Pe is free software: you can redistribute it and/or modify
@@ -14,24 +14,24 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Pe.  If not, see <http://www.gnu.org/licenses/>.
 */
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Media;
+using ContentTypeTextNet.Library.PInvoke.Windows;
+using ContentTypeTextNet.Library.SharedLibrary.CompatibleWindows.Utility;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+using ContentTypeTextNet.Pe.PeMain.IF;
+using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
+using ContentTypeTextNet.Pe.PeMain.View;
+
 namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    using System.Windows.Media;
-    using ContentTypeTextNet.Library.PInvoke.Windows;
-    using ContentTypeTextNet.Library.SharedLibrary.CompatibleWindows.Utility;
-    using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
-    using ContentTypeTextNet.Library.SharedLibrary.Model;
-    using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
-    using ContentTypeTextNet.Pe.PeMain.IF;
-    using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
-    using ContentTypeTextNet.Pe.PeMain.View;
-
-    public class ScreenViewModel: HavingViewModelBase<ScreenWindow>, IHavingAppNonProcess
+    public class ScreenViewModel: HasViewModelBase<ScreenWindow>, IHasAppNonProcess
     {
         #region variable
 
@@ -102,7 +102,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         #endregion
 
-        #region HavingViewModelBase
+        #region HasViewModelBase
 
         protected override void InitializeView()
         {
@@ -131,7 +131,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         #endregion
 
-        #region IHavingAppNonProcess
+        #region IHasAppNonProcess
 
         public IAppNonProcess AppNonProcess { get; private set; }
 

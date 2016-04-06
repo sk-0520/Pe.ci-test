@@ -1,4 +1,4 @@
-﻿/**
+﻿/*
 This file is part of Pe.
 
 Pe is free software: you can redistribute it and/or modify
@@ -14,26 +14,27 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Pe.  If not, see <http://www.gnu.org/licenses/>.
 */
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
+using System.IO;
+using System.Diagnostics;
+using System.Configuration;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
+using System.Windows;
+using System.Windows.Media;
+using ContentTypeTextNet.Pe.PeMain.Define;
+using ContentTypeTextNet.Pe.Library.PeData.Item;
+using ContentTypeTextNet.Pe.Library.PeData.Define;
+using ContentTypeTextNet.Pe.PeMain.Logic;
+using ContentTypeTextNet.Library.SharedLibrary.Define;
+
 namespace ContentTypeTextNet.Pe.PeMain
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Reflection;
-    using System.Text;
-    using System.Threading.Tasks;
-    using System.IO;
-    using System.Diagnostics;
-    using System.Configuration;
-    using ContentTypeTextNet.Library.SharedLibrary.Model;
-    using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
-    using System.Windows;
-    using System.Windows.Media;
-    using ContentTypeTextNet.Pe.PeMain.Define;
-    using ContentTypeTextNet.Pe.Library.PeData.Item;
-    using ContentTypeTextNet.Pe.Library.PeData.Define;
-    using ContentTypeTextNet.Pe.PeMain.Logic;
-
     /// <summary>
     /// 定数。
     /// </summary>
@@ -169,15 +170,15 @@ namespace ContentTypeTextNet.Pe.PeMain
         [ConstantsProperty]
         const string temporaryFileSearchPattern = "*." + extensionTemporaryFile;
 
-        public const FileType fileTypeMainSetting = FileType.Json;
-        public const FileType fileTypeLauncherItemSetting = FileType.Json;
-        public const FileType fileTypeLauncherGroupSetting = FileType.Json;
-        public const FileType fileTypeNoteIndex = FileType.Json;
-        public const FileType fileTypeNoteBody = FileType.Json;
-        public const FileType fileTypeTemplateIndex = FileType.Json;
-        public const FileType fileTypeTemplateBody = FileType.Json;
-        public const FileType fileTypeClipboardIndex = FileType.Json;
-        public const FileType fileTypeClipboardBody = FileType.Binary;
+        public const SerializeFileType fileTypeMainSetting = SerializeFileType.Json;
+        public const SerializeFileType fileTypeLauncherItemSetting = SerializeFileType.Json;
+        public const SerializeFileType fileTypeLauncherGroupSetting = SerializeFileType.Json;
+        public const SerializeFileType fileTypeNoteIndex = SerializeFileType.Json;
+        public const SerializeFileType fileTypeNoteBody = SerializeFileType.Json;
+        public const SerializeFileType fileTypeTemplateIndex = SerializeFileType.Json;
+        public const SerializeFileType fileTypeTemplateBody = SerializeFileType.Json;
+        public const SerializeFileType fileTypeClipboardIndex = SerializeFileType.Json;
+        public const SerializeFileType fileTypeClipboardBody = SerializeFileType.Binary;
 
         public static readonly TimeSpan iconLoadWaitTime = TimeSpan.FromMilliseconds(250);
         public const int iconLoadRetryMax = 3;
@@ -432,67 +433,13 @@ namespace ContentTypeTextNet.Pe.PeMain
         [ConstantsProperty]
         static readonly string startupShortcutPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Startup), ShortcutName);
 
-        #region
+        #region issue
 
         [ConstantsProperty]
         const string issue_355_logFileName = "session-ending.log";
 
         [ConstantsProperty]
         const int issue_363_oldMediumCount = 50;
-
-
-        #endregion
-
-        #region app.config
-
-        /// <summary>
-        /// 文字列リテラルを書式で変換。
-        /// 
-        /// {...} を置き換える。
-        /// * TIMESTAMP: そんとき
-        /// </summary>
-        /// <param name="src"></param>
-        /// <returns></returns>
-        private static string ReplaceAppConfig(string src)
-        {
-            var map = new Dictionary<string, string>() {
-                { "TIMESTAMP", DateTime.Now.ToBinary().ToString() },
-            };
-            var replacedText = src.ReplaceRangeFromDictionary("{", "}", map);
-
-            return replacedText;
-        }
-
-        public static string UriAbout { get { return appCaching.Get("uri-about"); } }
-        public static string MailAbout { get { return appCaching.Get("mail-about"); } }
-        public static string UriDevelopment { get { return appCaching.Get("uri-development"); } }
-        public static string UriUpdate { get { return ReplaceAppConfig(appCaching.Get("uri-update")); } }
-        public static string UriChangelogRelease { get { return ReplaceAppConfig(appCaching.Get("uri-changelog-release")); } }
-        public static string UriChangelogRc { get { return ReplaceAppConfig(appCaching.Get("uri-changelog-rc")); } }
-        public static string UriForum { get { return appCaching.Get("uri-forum"); } }
-        public static string UriFeedback { get { return appCaching.Get("uri-feedback"); } }
-        public static string UriUserInformation { get { return appCaching.Get("uri-user-information"); } }
-
-        public static int LoggingStockCount { get { return appCaching.Get("logging-stock-count", int.Parse); } }
-        public static int CacheIndexBodyTemplate { get { return appCaching.Get("cache-index-body-template", int.Parse); } }
-        public static int CacheIndexBodyClipboard { get { return appCaching.Get("cache-index-body-clipboard", int.Parse); } }
-        public static TimeSpan SaveIndexClipboardTime { get { return appCaching.Get("save-index-clipboard-time", TimeSpan.Parse); } }
-        public static TimeSpan SaveIndexTemplateTime { get { return appCaching.Get("save-index-template-time", TimeSpan.Parse); } }
-        public static TimeSpan SaveIndexNoteTime { get { return appCaching.Get("save-index-note-time", TimeSpan.Parse); } }
-
-        public static int BackupSettingCount { get { return appCaching.Get("backup-setting", int.Parse); } }
-        public static int BackupArchiveCount { get { return appCaching.Get("backup-archive", int.Parse); } }
-
-        public static TimeSpan FullScreenIgnoreTime { get { return appCaching.Get("fullscreen-ignore-time", TimeSpan.Parse); } }
-
-        public static TimeSpan TemplateBodyArchiveTimeSpan { get { return appCaching.Get("template-archive-time", TimeSpan.Parse); } }
-        public static long TemplateBodyArchiveFileSize { get { return appCaching.Get("template-archive-size", long.Parse); } }
-
-        public static TimeSpan NoteBodyArchiveTimeSpan { get { return appCaching.Get("note-archive-time", TimeSpan.Parse); } }
-        public static long NoteBodyArchiveFileSize { get { return appCaching.Get("note-archive-size", long.Parse); } }
-
-        public static TimeSpan ClipboardBodyArchiveTimeSpan { get { return appCaching.Get("clipboard-archive-time", TimeSpan.Parse); } }
-        public static long ClipboardBodyArchiveFileSize { get { return appCaching.Get("clipboard-archive-size", long.Parse); } }
 
         #endregion
 
