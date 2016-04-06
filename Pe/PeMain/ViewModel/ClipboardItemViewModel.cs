@@ -218,8 +218,13 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                             Body = BodyModel,
                         };
 
-                        ClipboardUtility.CopyClipboardItem(clipboardItem, AppNonProcess.ClipboardWatcher);
-                        AppNonProcess.Logger.Trace("copy: " + Name);
+                        //TODO: #429暫定対応なので原因解明が必要
+                        try {
+                            ClipboardUtility.CopyClipboardItem(clipboardItem, AppNonProcess.ClipboardWatcher);
+                            AppNonProcess.Logger.Trace("copy: " + Name);
+                        } catch(ArgumentNullException ex) {
+                            AppNonProcess.Logger.Warning(ex);
+                        }
                     }
                 );
 

@@ -94,6 +94,13 @@
 				<message>#432: ノートの標準フォント設定が反映されない</message>
 			</note>
 			<note rev="">
+				<message>#429: フィルタリング中のクリップボードコピーで落ちる</message>
+				<comments>
+					<comment>例外捕まえただけの暫定対応</comment>
+					<comment>原因調査してないので今後やっていく</comment>
+				</comments>
+			</note>
+			<note rev="">
 				<message></message>
 			</note>
 		</group>
