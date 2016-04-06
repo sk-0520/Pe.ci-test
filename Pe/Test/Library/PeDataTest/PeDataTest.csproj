@@ -59,12 +59,14 @@
     <NoWarn>IDE0001</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ContentTypeTextNet.PInvoke">
-      <HintPath>..\..\..\packages\ContentTypeTextNet.PInvoke.1.0.0.9\lib\net46\ContentTypeTextNet.PInvoke.dll</HintPath>
+    <Reference Include="ContentTypeTextNet.PInvoke, Version=1.0.5940.17989, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\packages\ContentTypeTextNet.PInvoke.1.0.0.16\lib\net46\ContentTypeTextNet.PInvoke.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="ContentTypeTextNet.SharedLibrary">
-      <HintPath>..\..\..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.29\lib\net46\ContentTypeTextNet.SharedLibrary.dll</HintPath>
+    <Reference Include="ContentTypeTextNet.SharedLibrary, Version=0.1.5939.27915, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.32\lib\net46\ContentTypeTextNet.SharedLibrary.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Mono.TextTemplating, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">

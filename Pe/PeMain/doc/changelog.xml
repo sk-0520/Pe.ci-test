@@ -69,7 +69,15 @@
 		</group>
 		<group type="features" dummy="==================================================================">
 			<note rev="">
-				<message></message>
+				<message>#428: 各種データのアーカイブ化タイミングを再検討</message>
+				<comments>
+					<comment>端末が一定時間アイドル状態であれば各データをアーカイブするよう変更</comment>
+					<comment>設定値はApp.config(PeMain.exe.config)</comment>
+					<comment>変更に伴いクリップボードのアーカイブ間隔を変更</comment>
+					<comment>アイドル監視時間: 8分</comment>
+					<comment>アイドル判定時間: 70分</comment>
+					<comment>クリップボード閾値: 3時間</comment>
+				</comments>
 			</note>
 			<note rev="">
 				<message></message>

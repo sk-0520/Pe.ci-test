@@ -336,9 +336,14 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
                 ;
                 
                 var removeTargetList = GetUnindexedGuid(indexKind, items, guids);
+                int removedFileCount = 0;
                 foreach(var guid in removeTargetList) {
-                    RemoveArchiveBodyFile(indexKind, guid, archive, appNonProcess.Logger);
+                    var removed = RemoveArchiveBodyFile(indexKind, guid, archive, appNonProcess.Logger);
+                    if(removed) {
+                        removedFileCount += 1;
+                    }
                 }
+                appNonProcess.Logger.Debug($"{indexKind} remove[index]: {removedFileCount}/{removeTargetList.Count}");
             }
 
             var targetTime = archiveBaseTime - archiveTimeSpan;
@@ -351,6 +356,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
                     archive.OpenArchiveFile(indexKind, appNonProcess.VariableConstants);
                 }
                 var removePathList = new List<string>(oldItems.Length);
+                var archiveItemCount = 0;
                 foreach(var item in oldItems) {
                     var itemName = GetBodyFileName(indexKind, GetBodyFileType(indexKind), item.Id);
 
@@ -378,15 +384,20 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
                     using(var stream = new BinaryWriter(entry.Open())) {
                         stream.Write(buffer);
                     }
+                    archiveItemCount += 1;
                 }
                 archive.Flush();
+                appNonProcess.Logger.Debug($"{indexKind} archive: {archiveItemCount}/{oldItems.Length}");
+                int removedFileCount = 0;
                 foreach(var path in removePathList) {
                     try {
                         File.Delete(path);
+                        removedFileCount += 1;
                     } catch(Exception ex) {
                         appNonProcess.Logger.Warning(ex);
                     }
                 }
+                appNonProcess.Logger.Debug($"{indexKind} remove[archive]: {removedFileCount}/{removePathList.Count}");
             }
         }
 

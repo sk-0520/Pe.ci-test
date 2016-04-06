@@ -188,6 +188,8 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
         }
 
+        bool NowIdling { get; set; }
+        DispatcherTimer IdleWatchTimer { get; set; }
         DispatcherTimer WindowSaveTimer { get; set; }
 
         public IEnumerable<WindowItemCollectionViewModel> WindowTimerItems
@@ -660,7 +662,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             return isAppReload;
         }
 
-        void ExitApplication(bool saveSetting, bool gc)
+        void ExitApplication(bool saveSetting, bool runGc)
         {
 #if DEBUG
             var startupPath = Environment.ExpandEnvironmentVariables(Constants.StartupShortcutPath);
@@ -674,20 +676,30 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             if(saveSetting) {
                 SaveSetting();
             }
-            if(gc) {
+            if(runGc) {
                 var timestamp = DateTime.Now;
-                IndexItemUtility.GarbageCollectionBody(IndexKind.Note, CommonData.NoteIndexSetting.Items, IndexBodyCaching.NoteItems.Archive, timestamp, Constants.NoteBodyArchiveTimeSpan, Constants.NoteBodyArchiveFileSize, CommonData.NonProcess);
-                IndexItemUtility.GarbageCollectionBody(IndexKind.Template, CommonData.TemplateIndexSetting.Items, IndexBodyCaching.TemplateItems.Archive, timestamp, Constants.TemplateBodyArchiveTimeSpan, Constants.TemplateBodyArchiveFileSize, CommonData.NonProcess);
-                IndexItemUtility.GarbageCollectionBody(IndexKind.Clipboard, CommonData.ClipboardIndexSetting.Items, IndexBodyCaching.ClipboardItems.Archive, timestamp, Constants.ClipboardBodyArchiveTimeSpan, Constants.ClipboardBodyArchiveFileSize, CommonData.NonProcess);
-                GarbageCollectionMainSettingTemporary();
+                GarbageCollectionAll(timestamp);
             }
             Application.Current.Shutdown();
+        }
+
+        void GarbageCollectionBodyItems(DateTime timestamp)
+        {
+            IndexItemUtility.GarbageCollectionBody(IndexKind.Note, CommonData.NoteIndexSetting.Items, IndexBodyCaching.NoteItems.Archive, timestamp, Constants.NoteBodyArchiveTimeSpan, Constants.NoteBodyArchiveFileSize, CommonData.NonProcess);
+            IndexItemUtility.GarbageCollectionBody(IndexKind.Template, CommonData.TemplateIndexSetting.Items, IndexBodyCaching.TemplateItems.Archive, timestamp, Constants.TemplateBodyArchiveTimeSpan, Constants.TemplateBodyArchiveFileSize, CommonData.NonProcess);
+            IndexItemUtility.GarbageCollectionBody(IndexKind.Clipboard, CommonData.ClipboardIndexSetting.Items, IndexBodyCaching.ClipboardItems.Archive, timestamp, Constants.ClipboardBodyArchiveTimeSpan, Constants.ClipboardBodyArchiveFileSize, CommonData.NonProcess);
         }
 
         void GarbageCollectionMainSettingTemporary()
         {
             var userSettingDirPath = Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingDirectoryPath);
             AppUtility.GarbageCollectionTemporaryFile(userSettingDirPath, CommonData.Logger);
+        }
+
+        void GarbageCollectionAll(DateTime timestamp)
+        {
+            GarbageCollectionBodyItems(timestamp);
+            GarbageCollectionMainSettingTemporary();
         }
 
         public void SetView(TaskbarIcon view)
@@ -896,19 +908,39 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
         }
 
-        void InitializeStatus()
+        void InitializeWindowSaveTimer()
         {
-            WindowSaveData.TimerItems.LimitSize = CommonData.MainSetting.WindowSave.SaveCount;
-            WindowSaveData.SystemItems.LimitSize = CommonData.MainSetting.WindowSave.SaveCount;
-
             if(WindowSaveTimer != null) {
                 WindowSaveTimer.Stop();
+                WindowSaveTimer.Tick -= Timer_Tick;
             }
 
             WindowSaveTimer = new DispatcherTimer();
             WindowSaveTimer.Tick += Timer_Tick;
             WindowSaveTimer.Interval = CommonData.MainSetting.WindowSave.SaveIntervalTime;
             WindowSaveTimer.Start();
+        }
+
+        void InitializeIdleWatchTimer()
+        {
+            if(IdleWatchTimer != null) {
+                IdleWatchTimer.Stop();
+                IdleWatchTimer.Tick -= Timer_Tick;
+            }
+
+            IdleWatchTimer = new DispatcherTimer();
+            IdleWatchTimer.Tick += Timer_Tick;
+            IdleWatchTimer.Interval = Constants.IdleWatchTime;
+            IdleWatchTimer.Start();
+        }
+
+        void InitializeStatus()
+        {
+            WindowSaveData.TimerItems.LimitSize = CommonData.MainSetting.WindowSave.SaveCount;
+            WindowSaveData.SystemItems.LimitSize = CommonData.MainSetting.WindowSave.SaveCount;
+
+            InitializeWindowSaveTimer();
+            InitializeIdleWatchTimer();
         }
 
         void InitializeSystem()
@@ -1535,6 +1567,23 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 timer.Tick -= IndexTimer_Tick;
             }
             IndexSaveTimers.Clear();
+        }
+
+        static bool CheckIsIdle()
+        {
+            var lastInputInfo = new LASTINPUTINFO() {
+                cbSize = (uint)LASTINPUTINFO.SizeOf,
+            };
+            if(NativeMethods.GetLastInputInfo(ref lastInputInfo)) {
+                var lastInputTime = lastInputInfo.dwTime;
+                var nowTime = NativeMethods.GetTickCount();
+                if(lastInputTime < nowTime) {
+                    var elapsedTime = TimeSpan.FromMilliseconds(nowTime - lastInputTime);
+                    return Constants.IdleJudgeTime < elapsedTime;
+                }
+            }
+
+            return false;
         }
 
         #endregion
@@ -2373,6 +2422,18 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 if(timer == WindowSaveTimer) {
                     if(CommonData.MainSetting.WindowSave.IsEnabled) {
                         SaveWindowItemAsync(WindowSaveType.Timer);
+                    }
+                } else if(timer == IdleWatchTimer) {
+                    if(CheckIsIdle()) {
+                        if(!NowIdling) {
+                            NowIdling = true;
+                            using(CommonData.NonProcess.CreateTimeLogger(CommonData.Language["log/idle/gc"])) {
+                                var timestamp = DateTime.Now;
+                                GarbageCollectionAll(timestamp);
+                            }
+                        }
+                    } else {
+                        NowIdling = false;
                     }
                 }
             } finally {
