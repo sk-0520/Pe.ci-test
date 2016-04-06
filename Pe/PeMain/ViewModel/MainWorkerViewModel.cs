@@ -1579,7 +1579,6 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 var nowTime = NativeMethods.GetTickCount();
                 if(lastInputTime < nowTime) {
                     var elapsedTime = TimeSpan.FromMilliseconds(nowTime - lastInputTime);
-                    Debug.WriteLine($"idle: {elapsedTime}");
                     return Constants.IdleJudgeTime < elapsedTime;
                 }
             }
@@ -2428,9 +2427,8 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                     if(CheckIsIdle()) {
                         if(!NowIdling) {
                             NowIdling = true;
-                            using(CommonData.NonProcess.CreateTimeLogger()) {
+                            using(CommonData.NonProcess.CreateTimeLogger(CommonData.Language["log/idle/gc"])) {
                                 var timestamp = DateTime.Now;
-
                                 GarbageCollectionAll(timestamp);
                             }
                         }
