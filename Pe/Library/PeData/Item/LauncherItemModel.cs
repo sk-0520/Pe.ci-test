@@ -104,6 +104,13 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
         [DataMember]
         public EnvironmentVariablesItemModel EnvironmentVariables { get; set; }
 
+        /// <summary>
+        /// コマンド入力時の列挙対象か。
+        /// <para>完全一致時は設定値に関わらず表示される。</para>
+        /// </summary>
+        [DataMember]
+        public bool IsCommandAutocomplete { get; set; }
+
         #endregion
 
         #region IName
@@ -131,6 +138,7 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
             obj.Option = Option;
             obj.Comment = Comment;
             obj.Administrator = Administrator;
+            obj.IsCommandAutocomplete = IsCommandAutocomplete;
 
             //Icon.DeepCloneTo(obj.Icon);
             obj.Icon = (IconItemModel)Icon.DeepClone();

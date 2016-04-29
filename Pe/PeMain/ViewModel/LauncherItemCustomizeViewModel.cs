@@ -80,6 +80,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                         SourceModel.Tag = Model.Tag;
                         SourceModel.StdStream = Model.StdStream;
                         SourceModel.Administrator = Model.Administrator;
+                        SourceModel.IsCommandAutocomplete = Model.IsCommandAutocomplete;
                         SourceModel.EnvironmentVariables = Model.EnvironmentVariables;
 
                         if(HasView) {
