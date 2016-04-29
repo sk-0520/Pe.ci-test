@@ -20,6 +20,7 @@
         <ResourceDictionary Source="/View/Parts/Resource/TextBoxDictionary.xaml"/>
         <ResourceDictionary Source="/View/Parts/Resource/GroupBoxDictionary.xaml"/>
         <ResourceDictionary Source="/View/Parts/Resource/LabelDictionary.xaml"/>
+        <ResourceDictionary Source="/View/Parts/Resource/CheckBoxDictionary.xaml"/>
       </ResourceDictionary.MergedDictionaries>
       <SC:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
       <Thickness x:Key="ControlMargin" Top="4" Bottom="4" />
@@ -124,7 +125,6 @@
         <Grid.RowDefinitions>
           <RowDefinition Height="Auto" />
           <RowDefinition Height="Auto" />
-          <RowDefinition Height="Auto" />
           <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -132,18 +132,22 @@
           <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal">
-          <CheckBox Grid.Row="0" Grid.Column="0" IsChecked="{Binding StdStreamOutput}" Content="stream-o" AA:Language.Word="launcher-item-edit/others/stream-output" />
-          <CheckBox Grid.Row="0" Grid.Column="0" Margin="8,0,0,0" IsChecked="{Binding StdStreamInput}"  Content="stream-i" AA:Language.Word="launcher-item-edit/others/stream-input" />
+        <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" >
+          <StackPanel Orientation="Horizontal">
+            <CheckBox Content="stream-o" AA:Language.Word="launcher-item-edit/others/stream-output" Style="{StaticResource DefaultHorizontalCheckBox}" IsChecked="{Binding StdStreamOutput}" />
+            <CheckBox Content="stream-i" AA:Language.Word="launcher-item-edit/others/stream-input" Style="{StaticResource DefaultHorizontalCheckBox}" IsChecked="{Binding StdStreamInput}" />
+          </StackPanel>
+          <StackPanel Orientation="Horizontal">
+            <CheckBox Content="admin" AA:Language.Word="launcher-item-edit/others/admin" Style="{StaticResource DefaultHorizontalCheckBox}" IsChecked="{Binding Administrator}" />
+            <CheckBox Content="command-auto" AA:Language.Word="launcher-item-edit/others/command-autocomplete" Style="{StaticResource DefaultHorizontalCheckBox}" IsChecked="{Binding IsCommandAutocomplete}" />
+          </StackPanel>
         </StackPanel>
-        
-        <CheckBox Grid.Row="1" Grid.Column="0"  IsChecked="{Binding Administrator}" Content="admin" AA:Language.Word="launcher-item-edit/others/admin" />
 
-        <Label Grid.Row="2" Grid.Column="0" Content="tag" AA:Language.Word="launcher-item-edit/others/tag" Style="{StaticResource HeaderLabel}" Target="{Binding ElementName=inputTags}" />
-        <TextBox x:Name="inputTags" Grid.Row="2" Grid.Column="1" Text="{Binding Tags, UpdateSourceTrigger=PropertyChanged}" />
+        <Label Grid.Row="1" Grid.Column="0" Content="tag" AA:Language.Word="launcher-item-edit/others/tag" Style="{StaticResource HeaderLabel}" Target="{Binding ElementName=inputTags}" />
+        <TextBox x:Name="inputTags" Grid.Row="1" Grid.Column="1" Text="{Binding Tags, UpdateSourceTrigger=PropertyChanged}" />
 
-        <Label Grid.Row="3" Grid.Column="0" VerticalAlignment="Top" Content="memo" AA:Language.Word="launcher-item-edit/others/memo" Style="{StaticResource HeaderLabel}" Target="{Binding ElementName=inputComment}" />
-        <TextBox x:Name="inputComment" Grid.Row="3" Grid.Column="1" AcceptsReturn="True" Text="{Binding Comment, UpdateSourceTrigger=PropertyChanged}" />
+        <Label Grid.Row="2" Grid.Column="0" VerticalAlignment="Top" Content="memo" AA:Language.Word="launcher-item-edit/others/memo" Style="{StaticResource HeaderLabel}" Target="{Binding ElementName=inputComment}" />
+        <TextBox x:Name="inputComment" Grid.Row="2" Grid.Column="1" AcceptsReturn="True" Text="{Binding Comment, UpdateSourceTrigger=PropertyChanged}" />
       </Grid>
     </TabItem>
   </TabControl>

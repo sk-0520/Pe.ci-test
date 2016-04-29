@@ -319,6 +319,7 @@
 		<Item Id="launcher-item-edit/others/stream-output" Word="標準出力(_O)" />
 		<Item Id="launcher-item-edit/others/stream-input" Word="標準入力(_I)" />
 		<Item Id="launcher-item-edit/others/admin" Word="管理者権限(_A)" />
+		<Item Id="launcher-item-edit/others/command-autocomplete" Word="コマンド入力補完対象(_C)" />
 		<Item Id="launcher-item-edit/others/tag" Word="タグ(カンマ区切り)(_T)" />
 		<Item Id="launcher-item-edit/others/memo" Word="備考(_R)" />
 
