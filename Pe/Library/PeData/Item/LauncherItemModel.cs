@@ -138,6 +138,7 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
             obj.Option = Option;
             obj.Comment = Comment;
             obj.Administrator = Administrator;
+            obj.IsCommandAutocomplete = IsCommandAutocomplete;
 
             //Icon.DeepCloneTo(obj.Icon);
             obj.Icon = (IconItemModel)Icon.DeepClone();
