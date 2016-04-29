@@ -171,5 +171,24 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
                 return model.Name.IndexOf(s, StringComparison.InvariantCultureIgnoreCase) != -1;
             }
         }
+
+        public static bool IsPerfectMatchItemName(LauncherItemModel model, string pattern)
+        {
+            CheckUtility.DebugEnforceNotNull(model);
+
+            if(string.IsNullOrWhiteSpace(pattern)) {
+                return false;
+            }
+
+            var s = pattern.Trim();
+
+            if(char.IsUpper(s[0])) {
+                // 大文字小文字区別あり
+                return model.Name == s;
+            } else {
+                // 大文字小文字区別無し
+                return string.Compare(model.Name, s, true) == 0;
+            }
+        }
     }
 }

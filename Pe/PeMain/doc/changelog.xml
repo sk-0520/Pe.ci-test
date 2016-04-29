@@ -69,7 +69,12 @@
 		</group>
 		<group type="features" dummy="==================================================================">
 			<note rev="">
-				<message></message>
+				<message>#436: コマンド入力で列挙するかどうか条件設定を追加する</message>
+				<comments>
+					<comment>コマンド入力保管対象を設定することで切り替えます(デフォルトで有効)</comment>
+					<comment>入力補完時に有効設定アイテムのみ列挙し、入力が完全一致する場合は設定が無効でも列挙されます</comment>
+					<comment>0.77.0 以下からのアップデートは全アイテムがデフォルト値に強制されます</comment>
+				</comments>
 			</note>
 			<note rev="">
 				<message></message>
