@@ -91,13 +91,13 @@
 		</group>
 		<group type="developer" dummy="==================================================================">
 			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
 				<message>開発環境をVisual Studio 2015 Update 2 に変更</message>
+			</note>
+			<note rev="">
+				<message>[nuget] Extended.Wpf.Toolkit を 2.7.0 に更新</message>
+			</note>
+			<note rev="">
+				<message></message>
 			</note>
 		</group>
 	</log>
