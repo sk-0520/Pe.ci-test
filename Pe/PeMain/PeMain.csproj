@@ -353,6 +353,8 @@
     <Content Include="doc\help\html\top.ja-JP.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Image\Toolbar\ToolbarGroupFile.png" />
+    <Resource Include="Resources\Image\Toolbar\ToolbarGroupFolder.png" />
     <Resource Include="Resources\Image\Log\LogAttachment.png" />
     <Resource Include="Resources\Image\Common\CommonHelp.png" />
     <None Include="doc\help\image\dock_type-bottom.png">

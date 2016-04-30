@@ -65,6 +65,12 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
         [DataMember, XmlAttribute]
         public string Name { get; set; }
 
+        /// <summary>
+        /// グループアイコン。
+        /// </summary>
+        [DataMember]
+        public LauncherGroupIconType GroupIconType { get; set; }
+
         #endregion
 
         #region IDeepClone
@@ -77,6 +83,7 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
 
             obj.Name = Name;
             obj.GroupKind = GroupKind;
+            obj.GroupIconType = GroupIconType;
             obj.LauncherItems.InitializeRange(LauncherItems);
         }
 

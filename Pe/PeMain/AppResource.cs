@@ -136,6 +136,12 @@ namespace ContentTypeTextNet.Pe.PeMain
         [AppResource(AppResourceType.Image)]
         const string toolbarToolbar = "/Resources/Image/Toolbar/Toolbar.png";
 
+        [AppResource(AppResourceType.Image)]
+        const string toolbarToolbarGroupFolder = "/Resources/Image/Toolbar/ToolbarGroupFolder.png";
+
+        [AppResource(AppResourceType.Image)]
+        const string toolbarToolbarGroupFile = "/Resources/Image/Toolbar/ToolbarGroupFile.png";
+
         #endregion
 
         #region stream

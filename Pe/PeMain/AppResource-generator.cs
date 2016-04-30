@@ -21,7 +21,7 @@ namespace ContentTypeTextNet.Pe.PeMain
         /*
         このソースは自動生成のため AppResource-generator.tt を編集すること。
 
-        生成元フィールド数: 78
+        生成元フィールド数: 80
         */
         #region Icon: Application
 
@@ -1279,6 +1279,50 @@ namespace ContentTypeTextNet.Pe.PeMain
             get { return GetImage(ToolbarToolbarPath); }
         }
         #endregion ToolbarToolbar
+        #region Image: ToolbarToolbarGroupFolder
+
+        /// <summary>
+        /// [Image] ToolbarToolbarGroupFolderのリソースパスを取得。
+        /// <para>/Resources/Image/Toolbar/ToolbarGroupFolder.png</para>
+        /// </summary>
+        public static string ToolbarToolbarGroupFolderPath
+        {
+            get { return toolbarToolbarGroupFolder; }
+        }
+
+        /// <summary>
+        /// [Image] ToolbarToolbarGroupFolderのイメージソースを取得。
+        /// <para>初回のみ生成を行う。</para>
+        /// <para>ToolbarToolbarGroupFolderPath: /Resources/Image/Toolbar/ToolbarGroupFolder.png</para>
+        /// </summary>
+        /// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
+        public static BitmapSource ToolbarToolbarGroupFolderImage
+        {
+            get { return GetImage(ToolbarToolbarGroupFolderPath); }
+        }
+        #endregion ToolbarToolbarGroupFolder
+        #region Image: ToolbarToolbarGroupFile
+
+        /// <summary>
+        /// [Image] ToolbarToolbarGroupFileのリソースパスを取得。
+        /// <para>/Resources/Image/Toolbar/ToolbarGroupFile.png</para>
+        /// </summary>
+        public static string ToolbarToolbarGroupFilePath
+        {
+            get { return toolbarToolbarGroupFile; }
+        }
+
+        /// <summary>
+        /// [Image] ToolbarToolbarGroupFileのイメージソースを取得。
+        /// <para>初回のみ生成を行う。</para>
+        /// <para>ToolbarToolbarGroupFilePath: /Resources/Image/Toolbar/ToolbarGroupFile.png</para>
+        /// </summary>
+        /// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
+        public static BitmapSource ToolbarToolbarGroupFileImage
+        {
+            get { return GetImage(ToolbarToolbarGroupFilePath); }
+        }
+        #endregion ToolbarToolbarGroupFile
         #region Image: StreamKill
 
         /// <summary>

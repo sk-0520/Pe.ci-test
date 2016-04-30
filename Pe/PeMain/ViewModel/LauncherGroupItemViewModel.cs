@@ -23,6 +23,14 @@ using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Pe.Library.PeData.Item;
 using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
+using System.Windows.Media;
+using ContentTypeTextNet.Pe.Library.PeData.Define;
+using System.Windows;
+using System.Windows.Media.Imaging;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using System.Windows.Controls;
+using ContentTypeTextNet.Library.SharedLibrary.Define;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 
 namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 {
@@ -44,6 +52,19 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         {
             get { return this._isChecked; }
             set { SetVariableValue(ref this._isChecked, value); }
+        }
+
+        public ImageSource GroupIcon
+        {
+            get
+            {
+                var bitmapMap = new Dictionary<LauncherGroupIconType, BitmapSource>() {
+                    { LauncherGroupIconType.Folder, AppResource.ToolbarToolbarGroupFolderImage },
+                    { LauncherGroupIconType.File, AppResource.ToolbarToolbarGroupFileImage },
+                };
+                var bitmap = bitmapMap[Model.GroupIconType];
+                return bitmap;
+            }
         }
 
         #endregion
