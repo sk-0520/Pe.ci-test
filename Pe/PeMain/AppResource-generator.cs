@@ -21,7 +21,7 @@ namespace ContentTypeTextNet.Pe.PeMain
         /*
         このソースは自動生成のため AppResource-generator.tt を編集すること。
 
-        生成元フィールド数: 80
+        生成元フィールド数: 82
         */
         #region Icon: Application
 
@@ -1279,50 +1279,94 @@ namespace ContentTypeTextNet.Pe.PeMain
             get { return GetImage(ToolbarToolbarPath); }
         }
         #endregion ToolbarToolbar
-        #region Image: ToolbarToolbarGroupFolder
+        #region Image: ToolbarToolbarGroupFolderBody
 
         /// <summary>
-        /// [Image] ToolbarToolbarGroupFolderのリソースパスを取得。
-        /// <para>/Resources/Image/Toolbar/ToolbarGroupFolder.png</para>
+        /// [Image] ToolbarToolbarGroupFolderBodyのリソースパスを取得。
+        /// <para>/Resources/Image/Toolbar/ToolbarGroupFolderBody.png</para>
         /// </summary>
-        public static string ToolbarToolbarGroupFolderPath
+        public static string ToolbarToolbarGroupFolderBodyPath
         {
-            get { return toolbarToolbarGroupFolder; }
+            get { return toolbarToolbarGroupFolderBody; }
         }
 
         /// <summary>
-        /// [Image] ToolbarToolbarGroupFolderのイメージソースを取得。
+        /// [Image] ToolbarToolbarGroupFolderBodyのイメージソースを取得。
         /// <para>初回のみ生成を行う。</para>
-        /// <para>ToolbarToolbarGroupFolderPath: /Resources/Image/Toolbar/ToolbarGroupFolder.png</para>
+        /// <para>ToolbarToolbarGroupFolderBodyPath: /Resources/Image/Toolbar/ToolbarGroupFolderBody.png</para>
         /// </summary>
         /// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
-        public static BitmapSource ToolbarToolbarGroupFolderImage
+        public static BitmapSource ToolbarToolbarGroupFolderBodyImage
         {
-            get { return GetImage(ToolbarToolbarGroupFolderPath); }
+            get { return GetImage(ToolbarToolbarGroupFolderBodyPath); }
         }
-        #endregion ToolbarToolbarGroupFolder
-        #region Image: ToolbarToolbarGroupFile
+        #endregion ToolbarToolbarGroupFolderBody
+        #region Image: ToolbarToolbarGroupFolderBorder
 
         /// <summary>
-        /// [Image] ToolbarToolbarGroupFileのリソースパスを取得。
-        /// <para>/Resources/Image/Toolbar/ToolbarGroupFile.png</para>
+        /// [Image] ToolbarToolbarGroupFolderBorderのリソースパスを取得。
+        /// <para>/Resources/Image/Toolbar/ToolbarGroupFolderBorder.png</para>
         /// </summary>
-        public static string ToolbarToolbarGroupFilePath
+        public static string ToolbarToolbarGroupFolderBorderPath
         {
-            get { return toolbarToolbarGroupFile; }
+            get { return toolbarToolbarGroupFolderBorder; }
         }
 
         /// <summary>
-        /// [Image] ToolbarToolbarGroupFileのイメージソースを取得。
+        /// [Image] ToolbarToolbarGroupFolderBorderのイメージソースを取得。
         /// <para>初回のみ生成を行う。</para>
-        /// <para>ToolbarToolbarGroupFilePath: /Resources/Image/Toolbar/ToolbarGroupFile.png</para>
+        /// <para>ToolbarToolbarGroupFolderBorderPath: /Resources/Image/Toolbar/ToolbarGroupFolderBorder.png</para>
         /// </summary>
         /// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
-        public static BitmapSource ToolbarToolbarGroupFileImage
+        public static BitmapSource ToolbarToolbarGroupFolderBorderImage
         {
-            get { return GetImage(ToolbarToolbarGroupFilePath); }
+            get { return GetImage(ToolbarToolbarGroupFolderBorderPath); }
         }
-        #endregion ToolbarToolbarGroupFile
+        #endregion ToolbarToolbarGroupFolderBorder
+        #region Image: ToolbarToolbarGroupFileBody
+
+        /// <summary>
+        /// [Image] ToolbarToolbarGroupFileBodyのリソースパスを取得。
+        /// <para>/Resources/Image/Toolbar/ToolbarGroupFileBody.png</para>
+        /// </summary>
+        public static string ToolbarToolbarGroupFileBodyPath
+        {
+            get { return toolbarToolbarGroupFileBody; }
+        }
+
+        /// <summary>
+        /// [Image] ToolbarToolbarGroupFileBodyのイメージソースを取得。
+        /// <para>初回のみ生成を行う。</para>
+        /// <para>ToolbarToolbarGroupFileBodyPath: /Resources/Image/Toolbar/ToolbarGroupFileBody.png</para>
+        /// </summary>
+        /// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
+        public static BitmapSource ToolbarToolbarGroupFileBodyImage
+        {
+            get { return GetImage(ToolbarToolbarGroupFileBodyPath); }
+        }
+        #endregion ToolbarToolbarGroupFileBody
+        #region Image: ToolbarToolbarGroupFileBorder
+
+        /// <summary>
+        /// [Image] ToolbarToolbarGroupFileBorderのリソースパスを取得。
+        /// <para>/Resources/Image/Toolbar/ToolbarGroupFileBorder.png</para>
+        /// </summary>
+        public static string ToolbarToolbarGroupFileBorderPath
+        {
+            get { return toolbarToolbarGroupFileBorder; }
+        }
+
+        /// <summary>
+        /// [Image] ToolbarToolbarGroupFileBorderのイメージソースを取得。
+        /// <para>初回のみ生成を行う。</para>
+        /// <para>ToolbarToolbarGroupFileBorderPath: /Resources/Image/Toolbar/ToolbarGroupFileBorder.png</para>
+        /// </summary>
+        /// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
+        public static BitmapSource ToolbarToolbarGroupFileBorderImage
+        {
+            get { return GetImage(ToolbarToolbarGroupFileBorderPath); }
+        }
+        #endregion ToolbarToolbarGroupFileBorder
         #region Image: StreamKill
 
         /// <summary>

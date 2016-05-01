@@ -374,18 +374,14 @@
         <Setter Property="VerticalContentAlignment" Value="Stretch"/>
       </Style>
 
+      <Image x:Key="GroupIcon" x:Shared="false" Source="{Binding GroupIcon}" />
+
       <Style x:Key="GroupMenu" TargetType="MenuItem" BasedOn="{StaticResource PopupCloseMenu}">
         <Setter Property="Header" Value="{Binding DisplayText}" />
         <Setter Property="Command" Value="{Binding DataContext.GroupChangeCommand, Source={x:Reference root}}" />
         <Setter Property="CommandParameter" Value="{Binding}" />
         <!--<Setter Property="IsChecked" Value="{Binding IsChecked}" />-->
-        <Setter Property="Icon">
-          <Setter.Value>
-            <Image Source="{Binding GroupIcon}" />
-          </Setter.Value>
-        </Setter>
-        
-        
+        <Setter Property="Icon" Value="{StaticResource GroupIcon}" />
       </Style>
 
     </ResourceDictionary>

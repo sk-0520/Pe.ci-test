@@ -270,9 +270,9 @@ namespace ContentTypeTextNet.Pe.PeMain
         );
 
         [ConstantsProperty]
-        public const LauncherGroupIconType launcherGroupIconType = LauncherGroupIconType.File;
+        public const LauncherGroupIconType launcherGroupIconType = LauncherGroupIconType.Folder;
         [ConstantsProperty]
-        public static readonly Color launcherGroupIconColor = Colors.LightYellow;
+        public static readonly Color launcherGroupIconColor = Color.FromRgb(0xdc, 0xb6, 0x7a);
 
         public static readonly TimeSpan clipboardGetDataRetryWaitTime = TimeSpan.FromMilliseconds(250);
         public static int clipboardGetDataRetryMaxCount = 3;

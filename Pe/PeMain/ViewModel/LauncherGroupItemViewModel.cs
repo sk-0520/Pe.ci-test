@@ -31,6 +31,8 @@ using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using System.Windows.Controls;
 using ContentTypeTextNet.Library.SharedLibrary.Define;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
+using System.Windows.Shapes;
+using ContentTypeTextNet.Library.SharedLibrary.Logic;
 
 namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 {
@@ -72,23 +74,48 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         #region function
 
-        static BitmapSource GetRawGroupIconImage(LauncherGroupIconType groupIconType)
+        static Tuple<BitmapSource, BitmapSource> GetRawGroupIconImage(LauncherGroupIconType groupIconType)
         {
-            var bitmapMap = new Dictionary<LauncherGroupIconType, BitmapSource>() {
-                { LauncherGroupIconType.Folder, AppResource.ToolbarToolbarGroupFolderImage },
-                { LauncherGroupIconType.File, AppResource.ToolbarToolbarGroupFileImage },
+            var bitmapMap = new Dictionary<LauncherGroupIconType, Tuple<BitmapSource, BitmapSource>>() {
+                { LauncherGroupIconType.Folder, Tuple.Create(AppResource.ToolbarToolbarGroupFolderBodyImage, AppResource.ToolbarToolbarGroupFolderBorderImage) },
+                { LauncherGroupIconType.File, Tuple.Create(AppResource.ToolbarToolbarGroupFileBodyImage, AppResource.ToolbarToolbarGroupFileBorderImage) },
             };
 
-            var bitmap = bitmapMap[groupIconType];
-            FreezableUtility.SafeFreeze(bitmap);
-            return bitmap;
+            var bitmapPair = bitmapMap[groupIconType];
+            foreach(var bitmap in new[] { bitmapPair.Item1, bitmapPair.Item2 }) {
+                FreezableUtility.SafeFreeze(bitmap);
+            }
+            return bitmapPair;
         }
 
         static BitmapSource CreateGroupIconImage(LauncherGroupIconType groupIconType, Color color)
         {
-            var rawImage = GetRawGroupIconImage(groupIconType);
+            var rawImagePair = GetRawGroupIconImage(groupIconType);
 
-            return rawImage;
+            var size = IconScale.Small.ToSize();
+            var canvas = new Canvas();
+            using(Initializer.BeginInitialize(canvas)) {
+                canvas.Width = size.Width;
+                canvas.Height = size.Height;
+                var colorItems = new[] {
+                    new { Width = size.Width, Height = size.Height, Image = rawImagePair.Item1, Aplha = 200, Color = color },
+                    new { Width = size.Width, Height = size.Height, Image = rawImagePair.Item2, Aplha = 230, Color = MediaUtility.GetAutoColor(color) },
+                };
+                foreach(var colorItem in colorItems) {
+                    var convBody = new Rectangle();
+                    using(Initializer.BeginInitialize(convBody)) {
+                        convBody.Width = colorItem.Width;
+                        convBody.Height = colorItem.Height;
+                        var bodyColor = Color.FromArgb((byte)colorItem.Aplha, colorItem.Color.R, colorItem.Color.G, colorItem.Color.B);
+                        convBody.Fill = new SolidColorBrush(bodyColor);
+                        convBody.OpacityMask = new ImageBrush(colorItem.Image);
+                    }
+                    canvas.Children.Add(convBody);
+                }
+            }
+
+            var result = ImageUtility.MakeBitmapBitmapSourceDefualtDpi(canvas);
+            return result;
         }
 
         #endregion

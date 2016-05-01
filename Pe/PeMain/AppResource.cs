@@ -137,10 +137,14 @@ namespace ContentTypeTextNet.Pe.PeMain
         const string toolbarToolbar = "/Resources/Image/Toolbar/Toolbar.png";
 
         [AppResource(AppResourceType.Image)]
-        const string toolbarToolbarGroupFolder = "/Resources/Image/Toolbar/ToolbarGroupFolder.png";
+        const string toolbarToolbarGroupFolderBody = "/Resources/Image/Toolbar/ToolbarGroupFolderBody.png";
+        [AppResource(AppResourceType.Image)]
+        const string toolbarToolbarGroupFolderBorder = "/Resources/Image/Toolbar/ToolbarGroupFolderBorder.png";
 
         [AppResource(AppResourceType.Image)]
-        const string toolbarToolbarGroupFile = "/Resources/Image/Toolbar/ToolbarGroupFile.png";
+        const string toolbarToolbarGroupFileBody = "/Resources/Image/Toolbar/ToolbarGroupFileBody.png";
+        [AppResource(AppResourceType.Image)]
+        const string toolbarToolbarGroupFileBorder = "/Resources/Image/Toolbar/ToolbarGroupFileBorder.png";
 
         #endregion
 
