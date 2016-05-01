@@ -48,6 +48,8 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         #region property
 
+        BitmapSource GroupIconImage { get; set; }
+
         public bool IsChecked
         {
             get { return this._isChecked; }
@@ -58,13 +60,35 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         {
             get
             {
-                var bitmapMap = new Dictionary<LauncherGroupIconType, BitmapSource>() {
-                    { LauncherGroupIconType.Folder, AppResource.ToolbarToolbarGroupFolderImage },
-                    { LauncherGroupIconType.File, AppResource.ToolbarToolbarGroupFileImage },
-                };
-                var bitmap = bitmapMap[Model.GroupIconType];
-                return bitmap;
+                if(GroupIconImage == null) {
+                    GroupIconImage = CreateGroupIconImage(Model.GroupIconType, Model.GroupIconColor);
+                }
+
+                return GroupIconImage;
             }
+        }
+
+        #endregion
+
+        #region function
+
+        static BitmapSource GetRawGroupIconImage(LauncherGroupIconType groupIconType)
+        {
+            var bitmapMap = new Dictionary<LauncherGroupIconType, BitmapSource>() {
+                { LauncherGroupIconType.Folder, AppResource.ToolbarToolbarGroupFolderImage },
+                { LauncherGroupIconType.File, AppResource.ToolbarToolbarGroupFileImage },
+            };
+
+            var bitmap = bitmapMap[groupIconType];
+            FreezableUtility.SafeFreeze(bitmap);
+            return bitmap;
+        }
+
+        static BitmapSource CreateGroupIconImage(LauncherGroupIconType groupIconType, Color color)
+        {
+            var rawImage = GetRawGroupIconImage(groupIconType);
+
+            return rawImage;
         }
 
         #endregion
