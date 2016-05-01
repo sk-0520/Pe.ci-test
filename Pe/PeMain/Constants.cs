@@ -269,6 +269,11 @@ namespace ContentTypeTextNet.Pe.PeMain
             TimeSpan.FromSeconds(1)
         );
 
+        [ConstantsProperty]
+        public const LauncherGroupIconType launcherGroupIconType = LauncherGroupIconType.File;
+        [ConstantsProperty]
+        public static readonly Color launcherGroupIconColor = Colors.LightYellow;
+
         public static readonly TimeSpan clipboardGetDataRetryWaitTime = TimeSpan.FromMilliseconds(250);
         public static int clipboardGetDataRetryMaxCount = 3;
 
