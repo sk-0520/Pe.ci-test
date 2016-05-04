@@ -374,7 +374,15 @@
         <Setter Property="VerticalContentAlignment" Value="Stretch"/>
       </Style>
 
-      <Image x:Key="GroupIcon" x:Shared="false" Width="16" Height="16" Source="{Binding GroupIcon}" Style="{StaticResource DefaultImage}" />
+      <Image 
+        x:Key="GroupIcon"
+        x:Shared="false" 
+        Width="16" 
+        Height="16" 
+        Source="{Binding GroupIcon}" 
+        Style="{StaticResource DefaultImage}" 
+        AA:MenuIcon.IsStrong="{Binding IsChecked}"
+      />
 
       <Style x:Key="GroupMenu" TargetType="MenuItem" BasedOn="{StaticResource PopupCloseMenu}">
         <Setter Property="Header" Value="{Binding DisplayText}" />
@@ -382,6 +390,7 @@
         <Setter Property="CommandParameter" Value="{Binding}" />
         <!--<Setter Property="IsChecked" Value="{Binding IsChecked}" />-->
         <Setter Property="Icon" Value="{StaticResource GroupIcon}" />
+        <Setter Property="FontWeight" Value="{Binding IsChecked, Converter={StaticResource BooleanFontWeightConverter}}" />
       </Style>
 
     </ResourceDictionary>
