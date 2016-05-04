@@ -68,13 +68,13 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
         }
 
-        public Color GroupIconColor
+        public override Color GroupIconColor
         {
             get { return Model.GroupIconColor; }
             set { SetModelValue(value); }
         }
 
-        public LauncherGroupIconType GroupIconType
+        public override LauncherGroupIconType GroupIconType
         {
             get { return Model.GroupIconType; }
             set { SetModelValue(value); }

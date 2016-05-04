@@ -4,6 +4,7 @@
   xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:windows="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
   xmlns:AM="clr-namespace:ContentTypeTextNet.Pe.PeMain"
   xmlns:AV="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Control"
   xmlns:AA="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Attached"
@@ -30,6 +31,7 @@
         <ResourceDictionary Source="/View/Parts/Resource/PopupDictionary.xaml"/>
         <ResourceDictionary Source="/View/Parts/Resource/TextBoxDictionary.xaml"/>
         <ResourceDictionary Source="/View/Parts/Resource/TextBlockDictionary.xaml"/>
+        <ResourceDictionary Source="/View/Parts/Resource/ColorPickerDictionary.xaml"/>
       </ResourceDictionary.MergedDictionaries>
       <SC:LogicalIsNotNullConverter x:Key="LogicalIsNotNullConverter" />
       <AC:DisplayTextConverter x:Key="DisplayTextConverter" />
@@ -241,14 +243,24 @@
                   </MultiBinding>
                 </Popup.IsOpen>
                 <Border Style="{StaticResource MenuPopupBorder}">
-                  <Grid>
-                    <Grid.ColumnDefinitions>
-                      <ColumnDefinition Width="Auto" />
-                      <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <Image Grid.Column="0" AA:IconSize.IconScale="Small" Source="{x:Static AM:AppResource.CommonEditImage}" Style="{StaticResource DefaultImage}" />
-                    <TextBox Grid.Column="1" Text="{Binding Name}" Style="{StaticResource DefaultTextBox}" />
-                  </Grid>
+                  <StackPanel>
+                    <Grid>
+                      <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                      </Grid.ColumnDefinitions>
+                      <Image Grid.Column="0" AA:IconSize.IconScale="Small" Source="{x:Static AM:AppResource.CommonEditImage}" Style="{StaticResource DefaultImage}" />
+                      <TextBox Grid.Column="1" Text="{Binding Name}" Style="{StaticResource DefaultTextBox}" />
+                    </Grid>
+                    <Grid>
+                      <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                      </Grid.ColumnDefinitions>
+                      <ComboBox Grid.Column="0" SelectedItem="{Binding GroupIconType}" ItemsSource="{Binding DataContext.GroupIconTypeList, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl }}" />
+                      <xctk:ColorPicker Grid.Column="1" Style="{StaticResource DefaultColorPicker}" SelectedColor="{Binding GroupIconColor}" />
+                    </Grid>
+                  </StackPanel>
                 </Border>
               </Popup>
             </StackPanel>

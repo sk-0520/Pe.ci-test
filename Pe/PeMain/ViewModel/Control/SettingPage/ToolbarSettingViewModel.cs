@@ -127,6 +127,14 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control.SettingPage
             }
         }
 
+        public IEnumerable<LauncherGroupIconType> GroupIconTypeList
+        {
+            get
+            {
+                return EnumUtility.GetMembers<LauncherGroupIconType>();
+            }
+        }
+
         public ToolbarViewModel SelectedToolbar
         {
             get { return this._selectedToolbar; }
