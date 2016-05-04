@@ -38,6 +38,7 @@
       <AC:SelectedNodeAndLauncherItemConverter x:Key="SelectedNodeAndLauncherItemConverter" />
       <AC:TreeListLauncherItemRelationConverter x:Key="TreeListLauncherItemRelationConverter" />
       <AC:ToolbarDockTypeImageConverter x:Key="ToolbarDockTypeImageConverter" />
+      <AC:LauncherGroupIconTypeImageConverter x:Key="LauncherGroupIconTypeImageConverter" />
       <ACE:DockTypeLanguageConverter  x:Key="DockTypeLanguageConverter" />
       <ACE:IconScaleLanguageConverter x:Key="IconScaleLanguageConverter" />
       <ACE:ToolbarButtonPositionLanguageConverter x:Key="ToolbarButtonPositionLanguageConverter" />
@@ -257,8 +258,30 @@
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
                       </Grid.ColumnDefinitions>
-                      <ComboBox Grid.Column="0" SelectedItem="{Binding GroupIconType}" ItemsSource="{Binding DataContext.GroupIconTypeList, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl }}" />
-                      <xctk:ColorPicker Grid.Column="1" Style="{StaticResource DefaultColorPicker}" SelectedColor="{Binding GroupIconColor}" />
+                      <ComboBox Grid.Column="0" SelectedItem="{Binding GroupIconType}" ItemsSource="{Binding DataContext.GroupIconTypeList, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl }}">
+                        <ComboBox.ItemTemplate>
+                          <DataTemplate>
+                            <Image Width="16" Height="16">
+                              <Image.Style>
+                                <Style TargetType="Image" BasedOn="{StaticResource ItemImage}">
+                                  <Setter Property="Source">
+                                    <Setter.Value>
+                                      <MultiBinding Converter="{StaticResource LauncherGroupIconTypeImageConverter}">
+                                        <MultiBinding.Bindings>
+                                          <Binding Path=""/>
+                                          <!-- *{Binding}* -->
+                                          <Binding Path="DataContext.GroupIconColor" RelativeSource="{RelativeSource AncestorType=TreeViewItem}" />
+                                        </MultiBinding.Bindings>
+                                      </MultiBinding>
+                                    </Setter.Value>
+                                  </Setter>
+                                </Style>
+                              </Image.Style>
+                            </Image>
+                          </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                      </ComboBox>
+                      <xctk:ColorPicker x:Name="treeItem" Grid.Column="1" Style="{StaticResource DefaultColorPicker}" SelectedColor="{Binding GroupIconColor}" />
                     </Grid>
                   </StackPanel>
                 </Border>

@@ -679,6 +679,7 @@
     <Compile Include="View\Parts\Converter\EnumLanguageConverter\DockTypeLanguageConverter.cs" />
     <Compile Include="View\Parts\Converter\EnumLanguageConverter\ToolbarButtonPositionLanguageConverter.cs" />
     <Compile Include="View\Parts\Converter\FontFamilyToNameConverter.cs" />
+    <Compile Include="View\Parts\Converter\LauncherGroupIconTypeImageConverter.cs" />
     <Compile Include="View\Parts\Converter\LogFileNameConverter.cs" />
     <Compile Include="View\Parts\Converter\ReverseClipboardItemListConverter.cs" />
     <Compile Include="View\Parts\Converter\SelectedIndexNumberConverter.cs" />
