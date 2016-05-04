@@ -38,6 +38,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         #region variable
 
         bool _isSelected;
+        bool _isColorOpen;
 
         #endregion
 
@@ -54,6 +55,11 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         public abstract Color GroupIconColor { get; set; }
         public abstract LauncherGroupIconType GroupIconType { get; set; }
 
+        public bool IsColorOpen
+        {
+            get { return this._isColorOpen; }
+            set { SetVariableValue(ref this._isColorOpen, value); }
+        }
 
         #endregion
 

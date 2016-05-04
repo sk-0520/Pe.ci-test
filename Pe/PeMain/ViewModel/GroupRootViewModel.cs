@@ -36,7 +36,9 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
     public class GroupRootViewModel: GroupViewModelBase<LauncherGroupItemModel>
     {
         #region variable
+
         CollectionModel<GroupItemViewMode> _nodes;
+
         #endregion
 
         public GroupRootViewModel(LauncherGroupItemModel model, LauncherItemCollectionModel items, IAppNonProcess appNonProcess)
