@@ -63,7 +63,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             get
             {
                 if(GroupIconImage == null) {
-                    GroupIconImage = CreateGroupIconImage(Model.GroupIconType, Model.GroupIconColor);
+                    GroupIconImage = LauncherGroupUtility.CreateGroupIconImage(Model.GroupIconType, Model.GroupIconColor);
                 }
 
                 return GroupIconImage;
@@ -73,45 +73,6 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         #endregion
 
         #region function
-
-        static BitmapSource GetRawGroupIconImage(LauncherGroupIconType groupIconType)
-        {
-            var bitmapMap = new Dictionary<LauncherGroupIconType, BitmapSource>() {
-                { LauncherGroupIconType.Folder, AppResource.ToolbarToolbarGroupFolderImage },
-                { LauncherGroupIconType.File, AppResource.ToolbarToolbarGroupFileImage },
-            };
-
-            var bitmap = bitmapMap[groupIconType];
-               FreezableUtility.SafeFreeze(bitmap);
-            return bitmap;
-        }
-
-        static BitmapSource CreateGroupIconImage(LauncherGroupIconType groupIconType, Color color)
-        {
-            var rawImage = GetRawGroupIconImage(groupIconType);
-
-            var pixels = MediaUtility.GetPixels(rawImage);
-            var pixcelWidth = 4;
-            for(var i = 0; i < pixels.Length; i += pixcelWidth) {
-                // 0:b 1:g 2:r 3:a
-                var b = pixels[i + 0];
-                var g = pixels[i + 1];
-                var r = pixels[i + 2];
-                pixels[i + 0] = (byte)(b + (1 - b / 255.0) * color.B);
-                pixels[i + 1] = (byte)(g + (1 - g / 255.0) * color.G);
-                pixels[i + 2] = (byte)(r + (1 - r / 255.0) * color.R);
-            }
-
-            var result = new WriteableBitmap(rawImage);
-            result.Lock();
-            result.WritePixels(new Int32Rect(0, 0, rawImage.PixelWidth, rawImage.PixelHeight), pixels, rawImage.PixelWidth * pixcelWidth, 0);
-            result.Unlock();
-
-            FreezableUtility.SafeFreeze(result);
-
-            return result;
-        }
-
         #endregion
 
         #region SingleModelWrapperViewModelBase
