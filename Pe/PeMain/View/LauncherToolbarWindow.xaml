@@ -374,7 +374,7 @@
         <Setter Property="VerticalContentAlignment" Value="Stretch"/>
       </Style>
 
-      <Image x:Key="GroupIcon" x:Shared="false" Source="{Binding GroupIcon}" />
+      <Image x:Key="GroupIcon" x:Shared="false" Width="16" Height="16" Source="{Binding GroupIcon}" Style="{StaticResource DefaultImage}" />
 
       <Style x:Key="GroupMenu" TargetType="MenuItem" BasedOn="{StaticResource PopupCloseMenu}">
         <Setter Property="Header" Value="{Binding DisplayText}" />

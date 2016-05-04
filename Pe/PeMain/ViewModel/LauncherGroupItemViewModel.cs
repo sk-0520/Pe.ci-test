@@ -74,47 +74,41 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         #region function
 
-        static Tuple<BitmapSource, BitmapSource> GetRawGroupIconImage(LauncherGroupIconType groupIconType)
+        static BitmapSource GetRawGroupIconImage(LauncherGroupIconType groupIconType)
         {
-            var bitmapMap = new Dictionary<LauncherGroupIconType, Tuple<BitmapSource, BitmapSource>>() {
-                { LauncherGroupIconType.Folder, Tuple.Create(AppResource.ToolbarToolbarGroupFolderBodyImage, AppResource.ToolbarToolbarGroupFolderBorderImage) },
-                { LauncherGroupIconType.File, Tuple.Create(AppResource.ToolbarToolbarGroupFileBodyImage, AppResource.ToolbarToolbarGroupFileBorderImage) },
+            var bitmapMap = new Dictionary<LauncherGroupIconType, BitmapSource>() {
+                { LauncherGroupIconType.Folder, AppResource.ToolbarToolbarGroupFolderImage },
+                { LauncherGroupIconType.File, AppResource.ToolbarToolbarGroupFileImage },
             };
 
-            var bitmapPair = bitmapMap[groupIconType];
-            foreach(var bitmap in new[] { bitmapPair.Item1, bitmapPair.Item2 }) {
-                FreezableUtility.SafeFreeze(bitmap);
-            }
-            return bitmapPair;
+            var bitmap = bitmapMap[groupIconType];
+               FreezableUtility.SafeFreeze(bitmap);
+            return bitmap;
         }
 
         static BitmapSource CreateGroupIconImage(LauncherGroupIconType groupIconType, Color color)
         {
-            var rawImagePair = GetRawGroupIconImage(groupIconType);
+            var rawImage = GetRawGroupIconImage(groupIconType);
 
-            var size = IconScale.Small.ToSize();
-            var canvas = new Canvas();
-            using(Initializer.BeginInitialize(canvas)) {
-                canvas.Width = size.Width;
-                canvas.Height = size.Height;
-                var colorItems = new[] {
-                    new { Width = size.Width, Height = size.Height, Image = rawImagePair.Item1, Aplha = 200, Color = color },
-                    new { Width = size.Width, Height = size.Height, Image = rawImagePair.Item2, Aplha = 230, Color = MediaUtility.GetAutoColor(color) },
-                };
-                foreach(var colorItem in colorItems) {
-                    var convBody = new Rectangle();
-                    using(Initializer.BeginInitialize(convBody)) {
-                        convBody.Width = colorItem.Width;
-                        convBody.Height = colorItem.Height;
-                        var bodyColor = Color.FromArgb((byte)colorItem.Aplha, colorItem.Color.R, colorItem.Color.G, colorItem.Color.B);
-                        convBody.Fill = new SolidColorBrush(bodyColor);
-                        convBody.OpacityMask = new ImageBrush(colorItem.Image);
-                    }
-                    canvas.Children.Add(convBody);
-                }
+            var pixels = MediaUtility.GetPixels(rawImage);
+            var pixcelWidth = 4;
+            for(var i = 0; i < pixels.Length; i += pixcelWidth) {
+                // 0:b 1:g 2:r 3:a
+                var b = pixels[i + 0];
+                var g = pixels[i + 1];
+                var r = pixels[i + 2];
+                pixels[i + 0] = (byte)(b + (1 - b / 255.0) * color.B);
+                pixels[i + 1] = (byte)(g + (1 - g / 255.0) * color.G);
+                pixels[i + 2] = (byte)(r + (1 - r / 255.0) * color.R);
             }
 
-            var result = ImageUtility.MakeBitmapBitmapSourceDefualtDpi(canvas);
+            var result = new WriteableBitmap(rawImage);
+            result.Lock();
+            result.WritePixels(new Int32Rect(0, 0, rawImage.PixelWidth, rawImage.PixelHeight), pixels, rawImage.PixelWidth * pixcelWidth, 0);
+            result.Unlock();
+
+            FreezableUtility.SafeFreeze(result);
+
             return result;
         }
 
