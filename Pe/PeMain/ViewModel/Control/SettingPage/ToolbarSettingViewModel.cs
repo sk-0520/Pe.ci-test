@@ -127,6 +127,14 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control.SettingPage
             }
         }
 
+        public IEnumerable<LauncherGroupIconType> GroupIconTypeList
+        {
+            get
+            {
+                return EnumUtility.GetMembers<LauncherGroupIconType>();
+            }
+        }
+
         public ToolbarViewModel SelectedToolbar
         {
             get { return this._selectedToolbar; }
@@ -580,6 +588,13 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control.SettingPage
                 //Debug.WriteLine(dropNode);
                 var isScrollDrag = GetToolbarNode(View.treeGroup, e.GetPosition(View.treeGroup)) == null;
                 if(isScrollDrag) {
+                    // スクロールバーD&DはアイテムD&Dしない
+                    return;
+                }
+                var treeView = (TreeView)sender;
+                var selectedRootNode = treeView.SelectedItem as GroupRootViewModel;
+                if(selectedRootNode != null && selectedRootNode.IsColorOpen) {
+                    // カラーピッカー設定中はアイテムD&Dしない
                     return;
                 }
 
@@ -589,7 +604,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control.SettingPage
                 var isDragX = Math.Abs(nowPosition.X - this._dragStartPosition.X) > size.Width;
                 var isDragY = Math.Abs(nowPosition.Y - this._dragStartPosition.Y) > size.Height;
                 if(isDragX || isDragY) {
-                    var treeView = (TreeView)sender;
+                    //var treeView = (TreeView)sender;
                     treeView.AllowDrop = true;
                     CastUtility.AsAction<IToolbarNode>(treeView.SelectedItem, selectedNode => {
                         var item = new DataObject(DragNodeFormat, selectedNode);

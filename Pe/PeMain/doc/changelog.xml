@@ -77,7 +77,10 @@
 				</comments>
 			</note>
 			<note rev="">
-				<message></message>
+				<message>#339: グループにアイコンを設定する</message>
+				<comments>
+					<comment>使用可能なアイコンは Pe 組み込みのアイコンのみに制限されます(ネットワーク上のアイコンとか使うと遅いので)</comment>
+				</comments>
 			</note>
 			<note rev="">
 				<message></message>

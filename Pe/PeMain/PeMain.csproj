@@ -77,7 +77,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="ContentTypeTextNet.SharedLibrary">
-      <HintPath>..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.33\lib\net46\ContentTypeTextNet.SharedLibrary.dll</HintPath>
+      <HintPath>..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.34\lib\net46\ContentTypeTextNet.SharedLibrary.dll</HintPath>
       <Private>True</Private>
       <Private>False</Private>
     </Reference>
@@ -353,6 +353,20 @@
     <Content Include="doc\help\html\top.ja-JP.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Image\Toolbar\ToolbarGroup\ToolbarGroupBookmark.png" />
+    <Resource Include="Resources\Image\Toolbar\ToolbarGroup\ToolbarGroupBuilder.png" />
+    <Resource Include="Resources\Image\Toolbar\ToolbarGroup\ToolbarGroupBuilding.png" />
+    <Resource Include="Resources\Image\Toolbar\ToolbarGroup\ToolbarGroupConfig.png" />
+    <Resource Include="Resources\Image\Toolbar\ToolbarGroup\ToolbarGroupGear.png" />
+    <Resource Include="Resources\Image\Toolbar\ToolbarGroup\ToolbarGroupLibrary.png" />
+    <Resource Include="Resources\Image\Toolbar\ToolbarGroup\ToolbarGroupLightBulb.png" />
+    <Resource Include="Resources\Image\Toolbar\ToolbarGroup\ToolbarGroupLock.png" />
+    <Resource Include="Resources\Image\Toolbar\ToolbarGroup\ToolbarGroupServer.png" />
+    <Resource Include="Resources\Image\Toolbar\ToolbarGroup\ToolbarGroupShortcut.png" />
+    <Resource Include="Resources\Image\Toolbar\ToolbarGroup\ToolbarGroupStorage.png" />
+    <Resource Include="Resources\Image\Toolbar\ToolbarGroup\ToolbarGroupUser.png" />
+    <Resource Include="Resources\Image\Toolbar\ToolbarGroup\ToolbarGroupFile.png" />
+    <Resource Include="Resources\Image\Toolbar\ToolbarGroup\ToolbarGroupFolder.png" />
     <Resource Include="Resources\Image\Log\LogAttachment.png" />
     <Resource Include="Resources\Image\Common\CommonHelp.png" />
     <None Include="doc\help\image\dock_type-bottom.png">
@@ -430,6 +444,7 @@
     <Compile Include="Logic\Utility\ArchiveUtility.cs" />
     <Compile Include="Logic\Utility\HtmlViewerUtility.cs" />
     <Compile Include="Logic\Utility\ImageUtility.cs" />
+    <Compile Include="Logic\Utility\LauncherGroupUtility.cs" />
     <Compile Include="Logic\Utility\LauncherToolbarUtility.cs" />
     <Compile Include="Logic\Utility\NoteUtility.cs" />
     <Compile Include="Logic\Utility\PopupUtility.cs" />
@@ -664,6 +679,7 @@
     <Compile Include="View\Parts\Converter\EnumLanguageConverter\DockTypeLanguageConverter.cs" />
     <Compile Include="View\Parts\Converter\EnumLanguageConverter\ToolbarButtonPositionLanguageConverter.cs" />
     <Compile Include="View\Parts\Converter\FontFamilyToNameConverter.cs" />
+    <Compile Include="View\Parts\Converter\LauncherGroupIconTypeImageConverter.cs" />
     <Compile Include="View\Parts\Converter\LogFileNameConverter.cs" />
     <Compile Include="View\Parts\Converter\ReverseClipboardItemListConverter.cs" />
     <Compile Include="View\Parts\Converter\SelectedIndexNumberConverter.cs" />

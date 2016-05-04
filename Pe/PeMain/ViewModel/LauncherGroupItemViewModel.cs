@@ -23,6 +23,16 @@ using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Pe.Library.PeData.Item;
 using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
+using System.Windows.Media;
+using ContentTypeTextNet.Pe.Library.PeData.Define;
+using System.Windows;
+using System.Windows.Media.Imaging;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using System.Windows.Controls;
+using ContentTypeTextNet.Library.SharedLibrary.Define;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
+using System.Windows.Shapes;
+using ContentTypeTextNet.Library.SharedLibrary.Logic;
 
 namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 {
@@ -40,12 +50,29 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         #region property
 
+        BitmapSource GroupIconImage { get; set; }
+
         public bool IsChecked
         {
             get { return this._isChecked; }
             set { SetVariableValue(ref this._isChecked, value); }
         }
 
+        public ImageSource GroupIcon
+        {
+            get
+            {
+                if(GroupIconImage == null) {
+                    GroupIconImage = LauncherGroupUtility.CreateGroupIconImage(Model.GroupIconType, Model.GroupIconColor);
+                }
+
+                return GroupIconImage;
+            }
+        }
+
+        #endregion
+
+        #region function
         #endregion
 
         #region SingleModelWrapperViewModelBase

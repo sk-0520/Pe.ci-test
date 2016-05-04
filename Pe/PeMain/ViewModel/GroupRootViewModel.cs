@@ -20,9 +20,11 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+using ContentTypeTextNet.Pe.Library.PeData.Define;
 using ContentTypeTextNet.Pe.Library.PeData.Item;
 using ContentTypeTextNet.Pe.PeMain.Data;
 using ContentTypeTextNet.Pe.PeMain.Define;
@@ -34,7 +36,9 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
     public class GroupRootViewModel: GroupViewModelBase<LauncherGroupItemModel>
     {
         #region variable
+
         CollectionModel<GroupItemViewMode> _nodes;
+
         #endregion
 
         public GroupRootViewModel(LauncherGroupItemModel model, LauncherItemCollectionModel items, IAppNonProcess appNonProcess)
@@ -64,6 +68,18 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 }
                 return this._nodes;
             }
+        }
+
+        public override Color GroupIconColor
+        {
+            get { return Model.GroupIconColor; }
+            set { SetModelValue(value); }
+        }
+
+        public override LauncherGroupIconType GroupIconType
+        {
+            get { return Model.GroupIconType; }
+            set { SetModelValue(value); }
         }
 
         #endregion

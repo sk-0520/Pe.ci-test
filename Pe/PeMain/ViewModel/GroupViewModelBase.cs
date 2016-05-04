@@ -20,9 +20,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+using ContentTypeTextNet.Pe.Library.PeData.Define;
 using ContentTypeTextNet.Pe.PeMain.Data;
 using ContentTypeTextNet.Pe.PeMain.Define;
 using ContentTypeTextNet.Pe.PeMain.IF;
@@ -36,6 +38,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         #region variable
 
         bool _isSelected;
+        bool _isColorOpen;
 
         #endregion
 
@@ -48,6 +51,15 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         #region property
 
         public Guid Id { get { return Model.Id; } }
+
+        public abstract Color GroupIconColor { get; set; }
+        public abstract LauncherGroupIconType GroupIconType { get; set; }
+
+        public bool IsColorOpen
+        {
+            get { return this._isColorOpen; }
+            set { SetVariableValue(ref this._isColorOpen, value); }
+        }
 
         #endregion
 

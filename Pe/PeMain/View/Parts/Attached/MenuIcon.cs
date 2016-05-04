@@ -22,6 +22,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Effects;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
 namespace ContentTypeTextNet.Pe.PeMain.View.Parts.Attached
@@ -45,7 +46,7 @@ namespace ContentTypeTextNet.Pe.PeMain.View.Parts.Attached
         #region IsStrongProperty
 
         public static readonly DependencyProperty IsStrongProperty = DependencyProperty.RegisterAttached(
-            "IsStrong",
+            DependencyPropertyUtility.GetName(nameof(IsStrongProperty)),
             typeof(bool),
             typeof(MenuIcon),
             new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnIsStrongChanged)

@@ -21,6 +21,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 using System.Xml.Serialization;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
@@ -65,6 +66,18 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
         [DataMember, XmlAttribute]
         public string Name { get; set; }
 
+        /// <summary>
+        /// グループアイコン。
+        /// </summary>
+        [DataMember]
+        public LauncherGroupIconType GroupIconType { get; set; }
+
+        /// <summary>
+        /// グループアイコンの色。
+        /// </summary>
+        [DataMember]
+        public Color GroupIconColor { get; set; }
+
         #endregion
 
         #region IDeepClone
@@ -77,6 +90,8 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
 
             obj.Name = Name;
             obj.GroupKind = GroupKind;
+            obj.GroupIconType = GroupIconType;
+            obj.GroupIconColor = GroupIconColor;
             obj.LauncherItems.InitializeRange(LauncherItems);
         }
 
