@@ -34,6 +34,18 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
             var bitmapMap = new Dictionary<LauncherGroupIconType, BitmapSource>() {
                 { LauncherGroupIconType.Folder, AppResource.ToolbarToolbarGroupFolderImage },
                 { LauncherGroupIconType.File, AppResource.ToolbarToolbarGroupFileImage },
+                { LauncherGroupIconType.Bookmark,AppResource.ToolbarToolbarGroupBookmarkImage },
+                { LauncherGroupIconType.Builder,AppResource.ToolbarToolbarGroupBuilderImage },
+                { LauncherGroupIconType.Building,AppResource.ToolbarToolbarGroupBuildingImage },
+                { LauncherGroupIconType.Config,AppResource.ToolbarToolbarGroupConfigImage },
+                { LauncherGroupIconType.Gear,AppResource.ToolbarToolbarGroupGearImage },
+                { LauncherGroupIconType.Library,AppResource.ToolbarToolbarGroupLibraryImage },
+                { LauncherGroupIconType.LightBulb,AppResource.ToolbarToolbarGroupLightBulbImage },
+                { LauncherGroupIconType.Lock,AppResource.ToolbarToolbarGroupLockImage },
+                { LauncherGroupIconType.Server,AppResource.ToolbarToolbarGroupServerImage },
+                { LauncherGroupIconType.Shortcut,AppResource.ToolbarToolbarGroupShortcutImage },
+                { LauncherGroupIconType.Storage,AppResource.ToolbarToolbarGroupStorageImage },
+                { LauncherGroupIconType.User,AppResource.ToolbarToolbarGroupUserImage },
             };
 
             var bitmap = bitmapMap[groupIconType];

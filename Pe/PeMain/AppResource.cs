@@ -137,9 +137,33 @@ namespace ContentTypeTextNet.Pe.PeMain
         const string toolbarToolbar = "/Resources/Image/Toolbar/Toolbar.png";
 
         [AppResource(AppResourceType.Image)]
+        const string toolbarToolbarGroupFile = "/Resources/Image/Toolbar/ToolbarGroup/ToolbarGroupFile.png";
+        [AppResource(AppResourceType.Image)]
         const string toolbarToolbarGroupFolder = "/Resources/Image/Toolbar/ToolbarGroup/ToolbarGroupFolder.png";
         [AppResource(AppResourceType.Image)]
-        const string toolbarToolbarGroupFile = "/Resources/Image/Toolbar/ToolbarGroup/ToolbarGroupFile.png";
+        const string toolbarToolbarGroupBookmark = "/Resources/Image/Toolbar/ToolbarGroup/ToolbarGroupBookmark.png";
+        [AppResource(AppResourceType.Image)]
+        const string toolbarToolbarGroupBuilder = "/Resources/Image/Toolbar/ToolbarGroup/ToolbarGroupBuilder.png";
+        [AppResource(AppResourceType.Image)]
+        const string toolbarToolbarGroupBuilding = "/Resources/Image/Toolbar/ToolbarGroup/ToolbarGroupBuilding.png";
+        [AppResource(AppResourceType.Image)]
+        const string toolbarToolbarGroupConfig = "/Resources/Image/Toolbar/ToolbarGroup/ToolbarGroupConfig.png";
+        [AppResource(AppResourceType.Image)]
+        const string toolbarToolbarGroupGear = "/Resources/Image/Toolbar/ToolbarGroup/ToolbarGroupGear.png";
+        [AppResource(AppResourceType.Image)]
+        const string toolbarToolbarGroupLibrary = "/Resources/Image/Toolbar/ToolbarGroup/ToolbarGroupLibrary.png";
+        [AppResource(AppResourceType.Image)]
+        const string toolbarToolbarGroupLightBulb = "/Resources/Image/Toolbar/ToolbarGroup/ToolbarGroupLightBulb.png";
+        [AppResource(AppResourceType.Image)]
+        const string toolbarToolbarGroupLock = "/Resources/Image/Toolbar/ToolbarGroup/ToolbarGroupLock.png";
+        [AppResource(AppResourceType.Image)]
+        const string toolbarToolbarGroupServer = "/Resources/Image/Toolbar/ToolbarGroup/ToolbarGroupServer.png";
+        [AppResource(AppResourceType.Image)]
+        const string toolbarToolbarGroupShortcut = "/Resources/Image/Toolbar/ToolbarGroup/ToolbarGroupShortcut.png";
+        [AppResource(AppResourceType.Image)]
+        const string toolbarToolbarGroupStorage = "/Resources/Image/Toolbar/ToolbarGroup/ToolbarGroupStorage.png";
+        [AppResource(AppResourceType.Image)]
+        const string toolbarToolbarGroupUser = "/Resources/Image/Toolbar/ToolbarGroup/ToolbarGroupUser.png";
 
         #endregion
 

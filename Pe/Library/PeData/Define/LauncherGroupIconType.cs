@@ -35,5 +35,53 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Define
         /// ファイル。
         /// </summary>
         File,
+        /// <summary>
+        /// ブックマーク。
+        /// </summary>
+        Bookmark,
+        /// <summary>
+        /// ビルダ。
+        /// </summary>
+        Builder,
+        /// <summary>
+        /// ビル。
+        /// </summary>
+        Building,
+        /// <summary>
+        /// 設定。
+        /// </summary>
+        Config,
+        /// <summary>
+        /// ギア。
+        /// </summary>
+        Gear,
+        /// <summary>
+        /// ライブラリ。
+        /// </summary>
+        Library,
+        /// <summary>
+        /// ライト。
+        /// </summary>
+        LightBulb,
+        /// <summary>
+        /// ロック。
+        /// </summary>
+        Lock,
+        /// <summary>
+        /// サーバー。
+        /// </summary>
+        Server,
+        /// <summary>
+        /// ショートカット。
+        /// </summary>
+        Shortcut,
+        /// <summary>
+        /// ストレージ。
+        /// </summary>
+        Storage,
+        /// <summary>
+        /// ユーザー。
+        /// </summary>
+        User,
     }
 }
