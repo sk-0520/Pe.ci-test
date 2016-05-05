@@ -121,11 +121,11 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
             return templateSource.ToString();
         }
 
-        protected override string TransformText_Impl()
+        protected override string TransformTextCore()
         {
             ResetVariable();
 
-            return base.TransformText_Impl();
+            return base.TransformTextCore();
         }
 
         #endregion

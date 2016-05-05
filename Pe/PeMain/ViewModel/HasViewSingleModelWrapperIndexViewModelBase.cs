@@ -52,7 +52,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         #region variable
 
         string _filterText;
-        string _filterText_impl;
+        string _filterTextCore;
 
         #endregion
 
@@ -91,10 +91,10 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             set
             {
                 SetVariableValue(ref this._filterText, value);
-                this._filterText_impl = this._filterText;
+                this._filterTextCore = this._filterText;
                 Items.Refresh();
                 if(Items.IsEmpty && !string.IsNullOrWhiteSpace(this._filterText)) {
-                    this._filterText_impl = string.Empty;
+                    this._filterTextCore = string.Empty;
                     Items.Refresh();
                 }
             }
@@ -109,12 +109,12 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         bool FilterAction(object o)
         {
-            var s = this._filterText_impl ?? string.Empty;
+            var s = this._filterTextCore ?? string.Empty;
             var vm = (TItemViewModel)o;
-            return FilterAction_Impl(s, vm);
+            return FilterActionCore(s, vm);
         }
 
-        protected virtual bool FilterAction_Impl(string filterText, TItemViewModel viewModelItem)
+        protected virtual bool FilterActionCore(string filterText, TItemViewModel viewModelItem)
         {
             return viewModelItem.Model.Name.StartsWith(filterText, StringComparison.CurrentCultureIgnoreCase);
         }

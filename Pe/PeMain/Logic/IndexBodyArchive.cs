@@ -48,7 +48,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
             return Environment.ExpandEnvironmentVariables(IndexItemUtility.GetBodyArchiveFilePath(indexKind, variableConstants));
         }
 
-        void OpenArchiveFile_Impl()
+        void OpenArchiveFileCore()
         {
             FileUtility.MakeFileParentDirectory(Path);
             Body = new ZipArchive(new FileStream(Path, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.Read), ZipArchiveMode.Update);
@@ -57,7 +57,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
         public void OpenArchiveFile(IndexKind indexKind, VariableConstants variableConstants)
         {
             Path = GetFilePath(indexKind, variableConstants);
-            OpenArchiveFile_Impl();
+            OpenArchiveFileCore();
         }
 
         public void OpenIfExists(IndexKind indexKind, VariableConstants variableConstants)
@@ -72,7 +72,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
         {
             if(EnabledArchive) {
                 Body.Dispose();
-                OpenArchiveFile_Impl();
+                OpenArchiveFileCore();
             }
         }
 

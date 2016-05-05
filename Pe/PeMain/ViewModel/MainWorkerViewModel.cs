@@ -1891,7 +1891,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
         }
 
-        void SaveIndex_Impl<TIndexSetting>(IndexKind indexKind, TIndexSetting indexSetting, SerializeFileType fileType, string filePath)
+        void SaveIndexCore<TIndexSetting>(IndexKind indexKind, TIndexSetting indexSetting, SerializeFileType fileType, string filePath)
             where TIndexSetting : ModelBase
         {
             var path = Environment.ExpandEnvironmentVariables(filePath);
@@ -1902,15 +1902,15 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         {
             switch(indexKind) {
                 case IndexKind.Note:
-                    SaveIndex_Impl(indexKind, CommonData.NoteIndexSetting, Constants.fileTypeNoteIndex, CommonData.VariableConstants.UserSettingNoteIndexFilePath);
+                    SaveIndexCore(indexKind, CommonData.NoteIndexSetting, Constants.fileTypeNoteIndex, CommonData.VariableConstants.UserSettingNoteIndexFilePath);
                     break;
 
                 case IndexKind.Template:
-                    SaveIndex_Impl(indexKind, CommonData.TemplateIndexSetting, Constants.fileTypeTemplateIndex, CommonData.VariableConstants.UserSettingTemplateIndexFilePath);
+                    SaveIndexCore(indexKind, CommonData.TemplateIndexSetting, Constants.fileTypeTemplateIndex, CommonData.VariableConstants.UserSettingTemplateIndexFilePath);
                     break;
 
                 case IndexKind.Clipboard:
-                    SaveIndex_Impl(indexKind, CommonData.ClipboardIndexSetting, Constants.fileTypeClipboardIndex, CommonData.VariableConstants.UserSettingClipboardIndexFilePath);
+                    SaveIndexCore(indexKind, CommonData.ClipboardIndexSetting, Constants.fileTypeClipboardIndex, CommonData.VariableConstants.UserSettingClipboardIndexFilePath);
                     break;
 
                 default:

@@ -60,7 +60,7 @@ namespace ContentTypeTextNet.Pe.PeMain.View
             base.OnLoaded(sender, e);
             Visibility = System.Windows.Visibility.Collapsed;
 
-            ApplySetting_Impl();
+            ApplySettingCore();
         }
 
         protected override IntPtr WndProc(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
@@ -105,7 +105,7 @@ namespace ContentTypeTextNet.Pe.PeMain.View
         {
             base.ApplySetting();
             if(IsHandleCreated) {
-                ApplySetting_Impl();
+                ApplySettingCore();
             }
         }
 
@@ -113,7 +113,7 @@ namespace ContentTypeTextNet.Pe.PeMain.View
 
         #region function
 
-        void ApplySetting_Impl()
+        void ApplySettingCore()
         {
             ApplyHotKey();
             RegistClipboardListener();
