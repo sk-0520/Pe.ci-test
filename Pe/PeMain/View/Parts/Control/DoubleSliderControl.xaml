@@ -27,15 +27,20 @@
     </Grid.ColumnDefinitions>
     <Slider
       x:Name="PART_Slider"
+      Grid.Column="0"
       Style="{StaticResource TypeSliderStyle}"
       Value="{Binding Value, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}}"
       Maximum="{Binding Maximum, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}, Mode=OneWay}"
       Minimum="{Binding Minimum, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}, Mode=OneWay}"
     />
-    <TextBox
+    <xctk:DoubleUpDown
       x:Name="PART_UpDown"
-      Style="{StaticResource TypeValueStyle}"
-      Text="{Binding Value, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}}"
+      Grid.Column="1"
+      ClipValueToMinMax="True"
+      AllowTextInput="False"
+      Value="{Binding Value, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}}"
+      Maximum="{Binding Maximum, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}, Mode=OneWay}"
+      Minimum="{Binding Minimum, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}, Mode=OneWay}"
     />
   </Grid>
 </AV:CommonDataUserControl>
