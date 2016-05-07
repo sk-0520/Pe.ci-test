@@ -392,12 +392,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             {
                 var result = CreateCommand(
                     o => {
-                        TitleEditVisibility = Visibility.Visible;
-                        this._editingTitle = true;
-                        if(HasView) {
-                            View.title.SelectAll();
-                            View.title.Focus();
-                        }
+                        EditTitle();
                     }
                 );
 
@@ -425,14 +420,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             {
                 var result = CreateCommand(
                     o => {
-                        this._editingBody = true;
-                        OnPropertyChanged(nameof(IsBodyReadOnly));
-                        if(HasView) {
-                            if(View.body.SelectionLength == 0) {
-                                View.body.SelectAll();
-                            }
-                            View.body.Focus();
-                        }
+                        EditBody();
                     }
                 );
 
@@ -526,6 +514,16 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             this._compactHeight = CaptionArea.Height + ResizeThickness.GetVertical();
         }
 
+        void EditTitle()
+        {
+            TitleEditVisibility = Visibility.Visible;
+            this._editingTitle = true;
+            if(HasView) {
+                View.title.SelectAll();
+                View.title.Focus();
+            }
+        }
+
         void EndEditTitle()
         {
             if(this._editingTitle) {
@@ -534,6 +532,18 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                     Name = View.title.Text;
                 }
                 TitleEditVisibility = Visibility.Collapsed;
+            }
+        }
+
+        void EditBody()
+        {
+            this._editingBody = true;
+            OnPropertyChanged(nameof(IsBodyReadOnly));
+            if(HasView) {
+                if(View.body.SelectionLength == 0) {
+                    View.body.SelectAll();
+                }
+                View.body.Focus();
             }
         }
 
@@ -724,7 +734,14 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         #region ICaptionDoubleClickData
 
         public void OnCaptionDoubleClick(object sender, CancelEventArgs e)
-        { }
+        {
+            if(IsLocked) {
+                e.Cancel = true;
+                return;
+            }
+
+            EditTitle();
+        }
 
         #endregion
 

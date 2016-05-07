@@ -83,6 +83,12 @@
 				</comments>
 			</note>
 			<note rev="">
+				<message>#443: ノートのキャプションバーをダブルクリックでタイトル入力を行う</message>
+			</note>
+			<note rev="">
+				<message></message>
+			</note>
+			<note rev="">
 				<message></message>
 			</note>
 		</group>
