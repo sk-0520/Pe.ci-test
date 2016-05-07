@@ -33,11 +33,14 @@
       Maximum="{Binding Maximum, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}, Mode=OneWay}"
       Minimum="{Binding Minimum, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}, Mode=OneWay}"
     />
-    <TextBox
+    <xctk:IntegerUpDown
       x:Name="PART_UpDown"
       Grid.Column="1"
-      Style="{StaticResource TypeValueStyle}"
-      Text="{Binding Value, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}}"
+      ClipValueToMinMax="True"
+      AllowTextInput="False"
+      Value="{Binding Value, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}}"
+      Maximum="{Binding Maximum, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}, Mode=OneWay}"
+      Minimum="{Binding Minimum, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}, Mode=OneWay}"
     />
   </Grid>
-  </AV:CommonDataUserControl>
+</AV:CommonDataUserControl>
