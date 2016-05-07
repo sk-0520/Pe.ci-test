@@ -100,6 +100,9 @@
 				<message>#317: 数値の範囲指定入力欄のテキストボックスをアップダウンコントロールにする</message>
 			</note>
 			<note rev="">
+				<message>#318: 時間の範囲指定入力欄のテキストボックスをアップダウンコントロールにする</message>
+			</note>
+			<note rev="">
 				<message></message>
 			</note>
 		</group>
