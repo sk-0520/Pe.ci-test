@@ -114,6 +114,9 @@
 				<message>[nuget] Extended.Wpf.Toolkit を 2.7.0 に更新</message>
 			</note>
 			<note rev="">
+				<message>[nuget] Hardcodet.Wpf.TaskbarNotification を 1.0.8 に更新</message>
+			</note>
+			<note rev="">
 				<message></message>
 			</note>
 		</group>
