@@ -103,6 +103,12 @@
 				<message>#318: 時間の範囲指定入力欄のテキストボックスをアップダウンコントロールにする</message>
 			</note>
 			<note rev="">
+				<message>#444: ノート設定の標準スタイルに折り返しを追加する</message>
+				<comments>
+					<comment>折り返しと最前面を追加した</comment>
+				</comments>
+			</note>
+			<note rev="">
 				<message></message>
 			</note>
 		</group>

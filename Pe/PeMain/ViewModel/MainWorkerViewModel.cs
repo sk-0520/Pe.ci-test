@@ -1177,9 +1177,6 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 WindowTop = point.Y,
                 WindowWidth = size.Width,
                 WindowHeight = size.Height,
-                IsVisible = true,
-                ForeColor = CommonData.MainSetting.Note.ForeColor,
-                BackColor = CommonData.MainSetting.Note.BackColor,
             };
             //CommonData.MainSetting.Note.Font.DeepCloneTo(noteItem.Font);
             noteItem.Font = (FontModel)CommonData.MainSetting.Note.Font.DeepClone();
@@ -1205,6 +1202,10 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
 
             SettingUtility.InitializeNoteIndexItem(noteItem, null, CommonData.NonProcess);
+            noteItem.ForeColor = CommonData.MainSetting.Note.ForeColor;
+            noteItem.BackColor = CommonData.MainSetting.Note.BackColor;
+            noteItem.IsTopmost = CommonData.MainSetting.Note.IsTopmost;
+            noteItem.AutoLineFeed = CommonData.MainSetting.Note.AutoLineFeed;
 
             var window = CreateNoteWindow(noteItem, appendIndex);
             WindowsUtility.ShowNoActiveForeground(window.Handle);
