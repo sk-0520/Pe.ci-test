@@ -31,4 +31,10 @@
     <Setter Property="Width" Value="50" />
     <Setter Property="TextAlignment" Value="Right" />
   </Style>
+  <Style x:Key="TypeValueStyle2">
+    <Setter Property="Control.Padding" Value="{StaticResource TextBoxPadding}" />
+    <Setter Property="Control.Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+    <Setter Property="Control.Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
+    <Setter Property="Control.Width" Value="50" />
+  </Style>
 </ResourceDictionary>
