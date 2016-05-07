@@ -33,6 +33,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityImplement
         public static void Correction(NoteSettingModel setting, Version previousVersion, INonProcess nonProcess)
         {
             V_First(setting, previousVersion, nonProcess);
+
+            V_0_77_0(setting, previousVersion, nonProcess);
+
             V_Last(setting, previousVersion, nonProcess);
         }
 
@@ -53,6 +56,24 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityImplement
             }
         }
 
+        /// <summary>
+        /// 0.77.0.340 以下のバージョン補正。
+        /// </summary>
+        /// <param name="item"></param>
+        /// <param name="previousVersion"></param>
+        /// <param name="nonProcess"></param>
+        static void V_0_77_0(NoteSettingModel setting, Version previousVersion, INonProcess nonProcess)
+        {
+            if(new Version(0, 77, 0, 340) < previousVersion) {
+                return;
+            }
+
+            nonProcess.Logger.Trace("version setting: 0.77.0");
+
+            setting.IsTopmost = false;
+            setting.AutoLineFeed = true;
+        }
+
         static void V_First(NoteSettingModel setting, Version previousVersion, INonProcess nonProcess)
         {
             if(previousVersion != null) {
@@ -63,6 +84,8 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityImplement
             setting.ForeColor = Constants.noteColor.ForeColor;
             setting.BackColor = Constants.noteColor.BackColor;
             setting.NoteTitle = NoteTitle.Timestamp;
+            setting.IsTopmost = false;
+            setting.AutoLineFeed = true;
         }
     }
 }

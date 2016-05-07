@@ -282,8 +282,8 @@
             <CheckBox Grid.Row="1" Grid.Column="0" IsChecked="{Binding IsLocked}" Content="lock" AA:Language.Word="note/state/lock" />
             <CheckBox Grid.Row="1" Grid.Column="1" IsChecked="{Binding IsCompacted}" Content="compact" AA:Language.Word="note/state/compact" />
             <CheckBox Grid.Row="1" Grid.Column="2" IsChecked="{Binding IsTopmost}" Content="topmost" AA:Language.Word="note/state/topmost" />
-            
-            <CheckBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" IsChecked="{Binding AutoLineFeed}" Content="topmost" AA:Language.Word="note/state/autolinefeed" />
+
+            <CheckBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" IsChecked="{Binding AutoLineFeed}" Content="autolinefeed" AA:Language.Word="note/state/autolinefeed" />
           </Grid>
           <Grid Style="{StaticResource Group}">
             <Grid.RowDefinitions>
