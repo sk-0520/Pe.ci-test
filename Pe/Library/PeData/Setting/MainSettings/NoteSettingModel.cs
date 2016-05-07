@@ -28,7 +28,7 @@ using ContentTypeTextNet.Pe.Library.PeData.IF;
 
 namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
 {
-    public class NoteSettingModel: SettingModelBase, IColorPair, IDeepClone
+    public class NoteSettingModel: SettingModelBase, IColorPair, IDeepClone, ITopMost
     {
         public NoteSettingModel()
             : base()
@@ -61,6 +61,9 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
         [DataMember]
         public NoteTitle NoteTitle { get; set; }
 
+        [DataMember]
+        public bool AutoLineFeed { get; set; }
+
         #endregion
 
         #region IColorPair
@@ -69,6 +72,13 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
         public Color ForeColor { get; set; }
         [DataMember]
         public Color BackColor { get; set; }
+
+        #endregion
+
+        #region ITopMost
+
+        [DataMember]
+        public bool IsTopmost { get; set; }
 
         #endregion
 
@@ -87,6 +97,8 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
             //Font.DeepCloneTo(obj.Font);
             obj.Font = (FontModel)Font.DeepClone();
             obj.NoteTitle = NoteTitle;
+            obj.IsTopmost = IsTopmost;
+            obj.AutoLineFeed = AutoLineFeed;
         }
 
         public IDeepClone DeepClone()

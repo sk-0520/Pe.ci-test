@@ -71,6 +71,8 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
           </Grid.RowDefinitions>
           <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
@@ -94,6 +96,10 @@
 
           <Label Grid.Row="2" Grid.Column="0" Content="back" AA:Language.Word="note-setting/style/back-color" Style="{StaticResource HeaderLabel}" />
           <xctk:ColorPicker Grid.Row="2" Grid.Column="1" Style="{StaticResource DefaultColorPicker}" SelectedColor="{Binding BackColor}" />
+
+          <CheckBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Content="topmost" AA:Language.Word="note/state/topmost" IsChecked="{Binding IsTopmost}" />
+          
+          <CheckBox Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Content="autolinefeed" AA:Language.Word="note/state/autolinefeed" IsChecked="{Binding AutoLineFeed}" />
         </Grid>
       </GroupBox>
 
