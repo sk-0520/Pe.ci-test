@@ -88,7 +88,7 @@
 		</group>
 		<group type="fixes" dummy="==================================================================">
 			<note rev="">
-				<message></message>
+				<message>#438: ノートの移動ができない</message>
 			</note>
 			<note rev="">
 				<message></message>
