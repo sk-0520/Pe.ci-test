@@ -21,6 +21,7 @@
         <ResourceDictionary Source="/View/Parts/Resource/GroupBoxDictionary.xaml"/>
         <ResourceDictionary Source="/View/Parts/Resource/LabelDictionary.xaml"/>
         <ResourceDictionary Source="/View/Parts/Resource/CheckBoxDictionary.xaml"/>
+        <ResourceDictionary Source="/View/Parts/Resource/RadioButtonDictionary.xaml"/>
       </ResourceDictionary.MergedDictionaries>
       <SC:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
       <Thickness x:Key="ControlMargin" Top="4" Bottom="4" />
@@ -39,8 +40,8 @@
         </Grid.RowDefinitions>
         <GroupBox Grid.Row="0" Header="kind" AA:Language.Word="launcher-item-edit/general/kind" Style="{StaticResource DefaultGroupBox}" >
           <StackPanel Orientation="Horizontal">
-            <RadioButton Content="file" AA:Language.Word="launcher-item-edit/general/kind/file" IsChecked="{Binding LauncherKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static ADD:LauncherKind.File}}" />
-            <RadioButton Margin="8,0,0,0" Content="command" AA:Language.Word="launcher-item-edit/general/kind/command" IsChecked="{Binding LauncherKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static ADD:LauncherKind.Command}}" />
+            <RadioButton Content="file" AA:Language.Word="launcher-item-edit/general/kind/file" IsChecked="{Binding LauncherKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static ADD:LauncherKind.File}}" Style="{StaticResource DefaultVerticalRadioButton}" />
+            <RadioButton Content="command" AA:Language.Word="launcher-item-edit/general/kind/command" IsChecked="{Binding LauncherKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static ADD:LauncherKind.Command}}" Style="{StaticResource DefaultVerticalRadioButton}" />
           </StackPanel>
         </GroupBox>
         <Grid Grid.Row="1">
@@ -144,10 +145,10 @@
         </StackPanel>
 
         <Label Grid.Row="1" Grid.Column="0" Content="tag" AA:Language.Word="launcher-item-edit/others/tag" Style="{StaticResource HeaderLabel}" Target="{Binding ElementName=inputTags}" />
-        <TextBox x:Name="inputTags" Grid.Row="1" Grid.Column="1" Text="{Binding Tags, UpdateSourceTrigger=PropertyChanged}" />
+        <TextBox x:Name="inputTags" Grid.Row="1" Grid.Column="1" Text="{Binding Tags, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DefaultTextBox}" />
 
         <Label Grid.Row="2" Grid.Column="0" VerticalAlignment="Top" Content="memo" AA:Language.Word="launcher-item-edit/others/memo" Style="{StaticResource HeaderLabel}" Target="{Binding ElementName=inputComment}" />
-        <TextBox x:Name="inputComment" Grid.Row="2" Grid.Column="1" AcceptsReturn="True" Text="{Binding Comment, UpdateSourceTrigger=PropertyChanged}" />
+        <TextBox x:Name="inputComment" Grid.Row="2" Grid.Column="1" AcceptsReturn="True" Text="{Binding Comment, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DefaultTextBox}" />
       </Grid>
     </TabItem>
   </TabControl>
