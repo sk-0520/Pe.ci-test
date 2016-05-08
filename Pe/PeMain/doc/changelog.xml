@@ -55,20 +55,9 @@
 		</group>
 	</log>
 	-->
-	<log date="YYYY/MM/DD" version="0.77.1" type="rc" dummy="################################################################################">
-		<group type="note" dummy="==================================================================">
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-		</group>
+	<log date="2016/05/08" version="0.78.0" dummy="################################################################################">
 		<group type="features" dummy="==================================================================">
-			<note rev="">
+			<note rev="46e2b6b4383e448e2d232d201ded0a636dad9615">
 				<message>#436: コマンド入力で列挙するかどうか条件設定を追加する</message>
 				<comments>
 					<comment>コマンド入力保管対象を設定することで切り替えます(デフォルトで有効)</comment>
@@ -76,54 +65,45 @@
 					<comment>0.77.0 以下からのアップデートは全アイテムがデフォルト値に強制されます</comment>
 				</comments>
 			</note>
-			<note rev="">
+			<note rev="11fa3c838fdd8da9712267c7580c3413f929f380">
 				<message>#339: グループにアイコンを設定する</message>
 				<comments>
 					<comment>使用可能なアイコンは Pe 組み込みのアイコンのみに制限されます(ネットワーク上のアイコンとか使うと遅いので)</comment>
 				</comments>
 			</note>
-			<note rev="">
+			<note rev="f0c5f9fedd871003676c76c2d4df369694139569">
 				<message>#443: ノートのキャプションバーをダブルクリックでタイトル入力を行う</message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
 			</note>
 		</group>
 		<group type="fixes" dummy="==================================================================">
-			<note rev="">
+			<note rev="0fedad90fe8fc77ff45396a40d2e3192fce134cc">
 				<message>#438: ノートの移動ができない</message>
 			</note>
-			<note rev="">
+			<note rev="2f91c0c618d69d6fb1cf3f921c9a079656605f86">
 				<message>#317: 数値の範囲指定入力欄のテキストボックスをアップダウンコントロールにする</message>
 			</note>
-			<note rev="">
+			<note rev="df865b16d902ac5d0bbb28facd73aa2f62dde466">
 				<message>#318: 時間の範囲指定入力欄のテキストボックスをアップダウンコントロールにする</message>
 			</note>
-			<note rev="">
+			<note rev="94e9872eec5a070a8fd8baf178824b3592eb8565">
 				<message>#444: ノート設定の標準スタイルに折り返しを追加する</message>
 				<comments>
 					<comment>折り返しと最前面を追加した</comment>
 				</comments>
 			</note>
-			<note rev="">
+			<note rev="feb09bba3193d9eb109353449c1ba3e32451551b">
 				<message>#445: 指定して実行ウィンドウの初期フォーカスをオプションに設定すべき</message>
 			</note>
 		</group>
 		<group type="developer" dummy="==================================================================">
-			<note rev="">
-				<message>開発環境をVisual Studio 2015 Update 2 に変更</message>
+			<note rev="de0e98d3692a86165feceb89dbefce7eeca545df">
+				<message>開発環境を Visual Studio 2015 Update 2 に変更</message>
 			</note>
-			<note rev="">
+			<note rev="8f28de02237d714724c8f7e4619e13f22f71d441">
 				<message>[nuget] Extended.Wpf.Toolkit を 2.7.0 に更新</message>
 			</note>
-			<note rev="">
+			<note rev="a4620d2ee9c5a0f5214da04d4c75a5cd841b307f">
 				<message>[nuget] Hardcodet.Wpf.TaskbarNotification を 1.0.8 に更新</message>
-			</note>
-			<note rev="">
-				<message></message>
 			</note>
 		</group>
 	</log>
