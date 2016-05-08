@@ -109,7 +109,7 @@
 				</comments>
 			</note>
 			<note rev="">
-				<message></message>
+				<message>#445: 指定して実行ウィンドウの初期フォーカスをオプションに設定すべき</message>
 			</note>
 		</group>
 		<group type="developer" dummy="==================================================================">

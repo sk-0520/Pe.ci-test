@@ -66,7 +66,11 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
             if(HasView) {
                 ScreenUtility.AttachmentStartupMoveScreenCenter(View, Screen);
+                View.Dispatcher.BeginInvoke(new Action(() => {
+                    View.selectOption.Focus();
+                }), System.Windows.Threading.DispatcherPriority.SystemIdle);
             }
+
         }
 
         #region property
