@@ -134,6 +134,17 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control.SettingPage
             set { SetPropertyValue(Note, value); }
         }
 
+        public bool IsTopmost
+        {
+            get { return TopMostProperty.GetTopMost(Note); }
+            set { TopMostProperty.SetTopMost(Note, value, OnPropertyChanged); }
+        }
+
+        public bool AutoLineFeed
+        {
+            get { return Note.AutoLineFeed; }
+            set { SetPropertyValue(Note, value); }
+        }
 
         #endregion
 

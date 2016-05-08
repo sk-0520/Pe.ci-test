@@ -60,7 +60,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control.SettingPage
             set { SetPropertyValue(Clipboard, value); }
         }
 
-        public bool EnabledApplicationCopy
+        public bool IsEnabledApplicationCopy
         {
             get { return Clipboard.IsEnabledApplicationCopy; }
             set { SetPropertyValue(Clipboard, value); }

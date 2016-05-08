@@ -38,7 +38,7 @@
         <StackPanel>
           <StackPanel>
             <CheckBox Content="enabled" AA:Language.Word="clipboard-setting/enabled" IsChecked="{Binding IsEnabled}" />
-            <CheckBox Content="copy app" AA:Language.Word="clipboard-setting/copy-app" IsChecked="{Binding EnabledApplicationCopy}"/>
+            <CheckBox Content="copy app" AA:Language.Word="clipboard-setting/copy-app" IsChecked="{Binding IsEnabledApplicationCopy}"/>
             <CheckBox Content="topmost" AA:Language.Word="clipboard-setting/topmost" IsChecked="{Binding IsTopmost}" />
             <CheckBox Content="visible" AA:Language.Word="clipboard-setting/visible" IsChecked="{Binding IsVisible}" />
             <CheckBox Content="using clipboard" AA:Language.Word="clipboard-setting/using-clipboard" IsChecked="{Binding UsingClipboard}"/>

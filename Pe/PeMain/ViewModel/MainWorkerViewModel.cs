@@ -1177,9 +1177,6 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 WindowTop = point.Y,
                 WindowWidth = size.Width,
                 WindowHeight = size.Height,
-                IsVisible = true,
-                ForeColor = CommonData.MainSetting.Note.ForeColor,
-                BackColor = CommonData.MainSetting.Note.BackColor,
             };
             //CommonData.MainSetting.Note.Font.DeepCloneTo(noteItem.Font);
             noteItem.Font = (FontModel)CommonData.MainSetting.Note.Font.DeepClone();
@@ -1205,6 +1202,10 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
 
             SettingUtility.InitializeNoteIndexItem(noteItem, null, CommonData.NonProcess);
+            noteItem.ForeColor = CommonData.MainSetting.Note.ForeColor;
+            noteItem.BackColor = CommonData.MainSetting.Note.BackColor;
+            noteItem.IsTopmost = CommonData.MainSetting.Note.IsTopmost;
+            noteItem.AutoLineFeed = CommonData.MainSetting.Note.AutoLineFeed;
 
             var window = CreateNoteWindow(noteItem, appendIndex);
             WindowsUtility.ShowNoActiveForeground(window.Handle);
@@ -1891,7 +1892,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
         }
 
-        void SaveIndex_Impl<TIndexSetting>(IndexKind indexKind, TIndexSetting indexSetting, SerializeFileType fileType, string filePath)
+        void SaveIndexCore<TIndexSetting>(IndexKind indexKind, TIndexSetting indexSetting, SerializeFileType fileType, string filePath)
             where TIndexSetting : ModelBase
         {
             var path = Environment.ExpandEnvironmentVariables(filePath);
@@ -1902,15 +1903,15 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         {
             switch(indexKind) {
                 case IndexKind.Note:
-                    SaveIndex_Impl(indexKind, CommonData.NoteIndexSetting, Constants.fileTypeNoteIndex, CommonData.VariableConstants.UserSettingNoteIndexFilePath);
+                    SaveIndexCore(indexKind, CommonData.NoteIndexSetting, Constants.fileTypeNoteIndex, CommonData.VariableConstants.UserSettingNoteIndexFilePath);
                     break;
 
                 case IndexKind.Template:
-                    SaveIndex_Impl(indexKind, CommonData.TemplateIndexSetting, Constants.fileTypeTemplateIndex, CommonData.VariableConstants.UserSettingTemplateIndexFilePath);
+                    SaveIndexCore(indexKind, CommonData.TemplateIndexSetting, Constants.fileTypeTemplateIndex, CommonData.VariableConstants.UserSettingTemplateIndexFilePath);
                     break;
 
                 case IndexKind.Clipboard:
-                    SaveIndex_Impl(indexKind, CommonData.ClipboardIndexSetting, Constants.fileTypeClipboardIndex, CommonData.VariableConstants.UserSettingClipboardIndexFilePath);
+                    SaveIndexCore(indexKind, CommonData.ClipboardIndexSetting, Constants.fileTypeClipboardIndex, CommonData.VariableConstants.UserSettingClipboardIndexFilePath);
                     break;
 
                 default:

@@ -115,6 +115,12 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             set { SetModelValue(value); }
         }
 
+        public bool IsCommandAutocomplete
+        {
+            get { return Model.IsCommandAutocomplete; }
+            set { SetModelValue(value); }
+        }
+
         public string Tags
         {
             get { return string.Join(", ", Model.Tag.Items.Concat(new[] { string.Empty })); }

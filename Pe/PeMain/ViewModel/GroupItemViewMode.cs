@@ -20,11 +20,13 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using ContentTypeTextNet.Library.SharedLibrary.Define;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+using ContentTypeTextNet.Pe.Library.PeData.Define;
 using ContentTypeTextNet.Pe.Library.PeData.Item;
 using ContentTypeTextNet.Pe.PeMain.Data;
 using ContentTypeTextNet.Pe.PeMain.Define;
@@ -44,6 +46,18 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         public CollectionModel<GroupItemViewMode> Nodes
         {
             get { return null; }
+        }
+
+        public override Color GroupIconColor
+        {
+            get { return Colors.Transparent; }
+            set { throw new NotSupportedException(); }
+        }
+
+        public override LauncherGroupIconType GroupIconType
+        {
+            get { return LauncherGroupIconType.Folder; }
+            set { throw new NotSupportedException(); }
         }
 
         #endregion

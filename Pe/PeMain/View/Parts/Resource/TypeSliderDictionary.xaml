@@ -3,6 +3,7 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:sys="clr-namespace:System;assembly=mscorlib"
   xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+  xmlns:AV="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Control"
 >
   <ResourceDictionary.MergedDictionaries>
     <ResourceDictionary Source="/View/Parts/Resource/TextBoxDictionary.xaml"/>
@@ -30,5 +31,11 @@
     <Setter Property="TextBox.HorizontalAlignment" Value="Left" />
     <Setter Property="Width" Value="50" />
     <Setter Property="TextAlignment" Value="Right" />
+  </Style>
+  <Style x:Key="TypeValueStyle2">
+    <Setter Property="Control.Padding" Value="{StaticResource TextBoxPadding}" />
+    <Setter Property="Control.Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+    <Setter Property="Control.Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
+    <Setter Property="Control.Width" Value="80" />
   </Style>
 </ResourceDictionary>

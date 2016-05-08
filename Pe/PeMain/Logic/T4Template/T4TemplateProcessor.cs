@@ -362,7 +362,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.T4Template
                     eventHost.Error += WithEvent_Error;
                 }
 
-                GeneratProgramSource_Impl();
+                GeneratProgramSourceCore();
             } finally {
                 if(eventHost != null) {
                     eventHost.Error -= WithEvent_Error;
@@ -373,7 +373,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.T4Template
         /// <summary>
         /// T4を言語ソースに変換する実装。
         /// </summary>
-        protected virtual void GeneratProgramSource_Impl()
+        protected virtual void GeneratProgramSourceCore()
         {
             if(string.IsNullOrWhiteSpace(NamespaceName)) {
                 throw new InvalidOperationException("Namespace");
@@ -445,7 +445,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.T4Template
         /// <param name="option">コンパイルオプション。</param>
         public void CompileProgramSource(WarningLevel warningLevel, bool warningIsError, IDictionary<string, string> option)
         {
-            CompileProgramSource_Impl(
+            CompileProgramSourceCore(
                 warningLevel,
                 warningIsError,
                 option
@@ -458,7 +458,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.T4Template
         /// <param name="warningLevel">警告レベル。</param>
         /// <param name="warningIsError">警告をエラーとして扱うか。</param>
         /// <param name="option">コンパイルオプション。</param>
-        protected virtual void CompileProgramSource_Impl(WarningLevel warningLevel, bool warningIsError, IDictionary<string, string> option)
+        protected virtual void CompileProgramSourceCore(WarningLevel warningLevel, bool warningIsError, IDictionary<string, string> option)
         {
             if(!Generated) {
                 throw new InvalidOperationException("Generated");
@@ -531,7 +531,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.T4Template
         {
             try {
                 Error = null;
-                return TransformText_Impl();
+                return TransformTextCore();
             } catch(Exception ex) {
                 Error = ex;
                 return ex.ToString();
@@ -542,7 +542,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.T4Template
         /// コンパイル済みプログラムから出力する実装。
         /// </summary>
         /// <returns></returns>
-        protected virtual string TransformText_Impl()
+        protected virtual string TransformTextCore()
         {
             if(!Compiled) {
                 throw new InvalidOperationException("Compiled");

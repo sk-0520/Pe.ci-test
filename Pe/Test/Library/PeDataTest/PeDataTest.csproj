@@ -59,14 +59,14 @@
     <NoWarn>IDE0001</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ContentTypeTextNet.PInvoke, Version=1.0.5940.17989, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="ContentTypeTextNet.PInvoke, Version=1.0.5971.12277, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\packages\ContentTypeTextNet.PInvoke.1.0.0.16\lib\net46\ContentTypeTextNet.PInvoke.dll</HintPath>
+      <HintPath>..\..\..\packages\ContentTypeTextNet.PInvoke.1.0.0.17\lib\net46\ContentTypeTextNet.PInvoke.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="ContentTypeTextNet.SharedLibrary, Version=0.1.5940.26026, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="ContentTypeTextNet.SharedLibrary, Version=0.1.5971.12350, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.33\lib\net46\ContentTypeTextNet.SharedLibrary.dll</HintPath>
+      <HintPath>..\..\..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.37\lib\net46\ContentTypeTextNet.SharedLibrary.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Mono.TextTemplating, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -87,9 +87,10 @@
       <HintPath>..\..\..\packages\NUnitTestAdapter.2.0.0\lib\nunit.core.interfaces.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="nunit.framework, Version=2.6.4.14350, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+    <Reference Include="nunit.framework, Version=3.2.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
+      <HintPath>..\..\..\packages\NUnit.3.2.1\lib\net45\nunit.framework.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="nunit.util">
       <HintPath>..\..\..\packages\NUnitTestAdapter.2.0.0\lib\nunit.util.dll</HintPath>

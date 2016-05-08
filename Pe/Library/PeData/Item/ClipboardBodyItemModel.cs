@@ -70,7 +70,7 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
         /// 画像データの内部実装。
         /// </summary>
         [DataMember(Name = "Image")]
-        public byte[] Image_Impl
+        public byte[] ImageCore
         {
             get
             {
@@ -141,7 +141,7 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
                 //	}));
                 //}
                 Image = null;
-                Image_Impl = null;
+                ImageCore = null;
             }
 
             base.Dispose(disposing);
@@ -156,9 +156,9 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
             obj.Text = Text;
             obj.Rtf = Rtf;
             obj.Html = Html;
-            if(Image_Impl != null) {
-                obj.Image_Impl = new byte[Image_Impl.Length];
-                Image_Impl.CopyTo(obj.Image_Impl, 0);
+            if(ImageCore != null) {
+                obj.ImageCore = new byte[ImageCore.Length];
+                ImageCore.CopyTo(obj.ImageCore, 0);
             }
             obj.Files.InitializeRange(Files);
         }

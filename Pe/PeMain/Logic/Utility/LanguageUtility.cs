@@ -38,7 +38,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 {
     public static class LanguageUtility
     {
-        static bool SetUI_Impl(DependencyObject baseElement, ILanguage language, IReadOnlyDictionary<string, string> map, Action<string, string> action)
+        static bool SetUICore(DependencyObject baseElement, ILanguage language, IReadOnlyDictionary<string, string> map, Action<string, string> action)
         {
             var key = Language.GetWord(baseElement);
             var hint = Language.GetHint(baseElement);
@@ -52,7 +52,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 
         public static bool SetTitle(Window ui, ILanguage language, IReadOnlyDictionary<string, string> map = null)
         {
-            return SetUI_Impl(ui, language, map, (key, hint) => {
+            return SetUICore(ui, language, map, (key, hint) => {
 #if DEBUG || BETA
                 ui.Title = "(" + Constants.BuildType + ")" + language[key, map];
 #else
@@ -63,7 +63,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 
         public static bool SetContent(ContentControl ui, ILanguage language, IReadOnlyDictionary<string, string> map = null)
         {
-            return SetUI_Impl(ui, language, map, (key, hint) => {
+            return SetUICore(ui, language, map, (key, hint) => {
                 if(!ui.HasContent || ui.Content is string) {
                     ui.Content = language[key, map];
                 }
@@ -74,7 +74,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         }
         public static bool SetContent(ContentPresenter ui, ILanguage language, IReadOnlyDictionary<string, string> map = null)
         {
-            return SetUI_Impl(ui, language, map, (key, hint) => {
+            return SetUICore(ui, language, map, (key, hint) => {
                 if(ui.Content is string) {
                     ui.Content = language[key, map];
                 }
@@ -87,7 +87,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 
         public static bool SetText(TextBlock ui, ILanguage language, IReadOnlyDictionary<string, string> map = null)
         {
-            return SetUI_Impl(ui, language, map, (key, hint) => {
+            return SetUICore(ui, language, map, (key, hint) => {
                 ui.Text = language[key, map];
                 if(!string.IsNullOrEmpty(hint)) {
                     ui.ToolTip = language[hint, map];
@@ -97,7 +97,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 
         public static bool SetHeader(HeaderedItemsControl ui, ILanguage language, IReadOnlyDictionary<string, string> map = null)
         {
-            return SetUI_Impl(ui, language, map, (key, hint) => {
+            return SetUICore(ui, language, map, (key, hint) => {
                 if(!ui.HasHeader || ui.Header is string) {
                     ui.Header = language[key, map];
                 }
@@ -108,7 +108,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         }
         public static bool SetHeader(HeaderedContentControl ui, ILanguage language, IReadOnlyDictionary<string, string> map = null)
         {
-            return SetUI_Impl(ui, language, map, (key, hint) => {
+            return SetUICore(ui, language, map, (key, hint) => {
                 if(!ui.HasHeader || ui.Header is string) {
                     ui.Header = language[key, map];
                 }
@@ -121,7 +121,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         public static bool SetColumn(GridViewColumnHeader ui, ILanguage language, IReadOnlyDictionary<string, string> map = null)
         {
             if(ui.Column != null) {
-                return SetUI_Impl(ui.Column, language, map, (key, hint) => {
+                return SetUICore(ui.Column, language, map, (key, hint) => {
                     if(!ui.HasContent || ui.Content is string) {
                         ui.Content = language[key, map];
                     }

@@ -411,7 +411,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
                 binaryHeight = BitConverter.GetBytes(image.PixelHeight);
             }
 
-            var binaryImage = bodyItem.Image_Impl;
+            var binaryImage = bodyItem.ImageCore;
             var binaryList = new[] {
                 binaryWidth,
                 binaryHeight,
@@ -491,7 +491,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         /// <param name="logger"></param>
         /// <param name="calcHash">ハッシュ値の算出を行うか。</param>
         /// <returns></returns>
-        static ClipboardData GetClipboardData_Impl(ClipboardType enabledTypes, IntPtr hWnd)
+        static ClipboardData GetClipboardDataCore(ClipboardType enabledTypes, IntPtr hWnd)
         {
             var clipboardItem = GetClipboardDataFromFramework(enabledTypes);
 
@@ -504,7 +504,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         /// <returns>生成されたクリップボードアイテム。nullが返ることはない。</returns>
         public static ClipboardData GetClipboardData(ClipboardType enabledTypes, IntPtr hWnd)
         {
-            return GetClipboardData_Impl(enabledTypes, hWnd);
+            return GetClipboardDataCore(enabledTypes, hWnd);
         }
 
         static void OutputFilter(ClipboardType clipboardType, int settingLength, int currentLength, INonProcess nonProcess, int frame = 2, [CallerFilePath] string callerFile = "", [CallerLineNumber] int callerLine = -1, [CallerMemberName] string callerMember = "")

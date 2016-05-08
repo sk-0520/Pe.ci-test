@@ -25,6 +25,7 @@ using ContentTypeTextNet.Library.SharedLibrary.View.ViewExtend;
 using ContentTypeTextNet.Pe.PeMain.IF.ViewExtend;
 using ContentTypeTextNet.Library.PInvoke.Windows;
 using System.ComponentModel;
+using System.Diagnostics;
 
 namespace ContentTypeTextNet.Pe.PeMain.View.Parts.ViewExtend
 {
@@ -47,17 +48,15 @@ namespace ContentTypeTextNet.Pe.PeMain.View.Parts.ViewExtend
 
         public override IntPtr WndProc(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
-            if(msg == (int)WM.WM_SYSCOMMAND) {
-                var sc = WindowsUtility.ConvertSCFromWParam(wParam);
-                if(sc == SC.SC_MAXIMIZE) {
-                    var e = new CancelEventArgs();
-                    RestrictionViewModel.OnCaptionDoubleClick(this, e);
-                    if(!e.Cancel) {
-                        handled = true;
-                        return IntPtr.Zero;
-                    }
+            if(msg == (int)WM.WM_NCLBUTTONDBLCLK) {
+                var e = new CancelEventArgs();
+                RestrictionViewModel.OnCaptionDoubleClick(this, e);
+                if(!e.Cancel) {
+                    handled = true;
+                    return IntPtr.Zero;
                 }
             }
+
             return base.WndProc(hWnd, msg, wParam, lParam, ref handled);
         }
 

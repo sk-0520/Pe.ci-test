@@ -292,12 +292,15 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
             var items = LauncherItemSetting.Items
                 .Where(i => LauncherItemUtility.FilterItemName(i, filter))
+                .Where(i => i.IsCommandAutocomplete || LauncherItemUtility.IsPerfectMatchItemName(i, filter))
                 .Select(i => new CommandItemViewModel(Model.IconScale, i, AppNonProcess, AppSender))
             ;
 
             IEnumerable<CommandItemViewModel> tags = null;
             if(Model.FindTag) {
                 tags = LauncherItemSetting.Items
+                    // 補完対象外はタグ検索にヒットさせない
+                    .Where(i => i.IsCommandAutocomplete)
                     .Where(i => i.Tag.Items.Any(t => t.StartsWith(filter)))
                     .Select(i => new CommandItemViewModel(Model.IconScale, i, i.Tag.Items.First(t => t.StartsWith(filter)), AppNonProcess, AppSender))
                 ;

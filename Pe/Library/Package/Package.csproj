@@ -58,18 +58,18 @@
     <NoWarn>IDE0001</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ContentTypeTextNet.PInvoke, Version=1.0.5940.17989, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="ContentTypeTextNet.PInvoke, Version=1.0.5971.12277, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\ContentTypeTextNet.PInvoke.1.0.0.16\lib\net46\ContentTypeTextNet.PInvoke.dll</HintPath>
+      <HintPath>..\..\packages\ContentTypeTextNet.PInvoke.1.0.0.17\lib\net46\ContentTypeTextNet.PInvoke.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="ContentTypeTextNet.SharedLibrary, Version=0.1.5940.26026, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="ContentTypeTextNet.SharedLibrary, Version=0.1.5971.12350, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.33\lib\net46\ContentTypeTextNet.SharedLibrary.dll</HintPath>
+      <HintPath>..\..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.37\lib\net46\ContentTypeTextNet.SharedLibrary.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Hardcodet.Wpf.TaskbarNotification, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Hardcodet.NotifyIcon.Wpf.1.0.5\lib\net451\Hardcodet.Wpf.TaskbarNotification.dll</HintPath>
+      <HintPath>..\..\packages\Hardcodet.NotifyIcon.Wpf.1.0.8\lib\net451\Hardcodet.Wpf.TaskbarNotification.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="ICSharpCode.AvalonEdit, Version=5.0.1.0, Culture=neutral, PublicKeyToken=9cc39be672370310, processorArchitecture=MSIL">
@@ -97,33 +97,33 @@
     <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
     <Reference Include="Xceed.Wpf.AvalonDock">
-      <HintPath>..\..\packages\Extended.Wpf.Toolkit.2.6\lib\net40\Xceed.Wpf.AvalonDock.dll</HintPath>
+      <HintPath>..\..\packages\Extended.Wpf.Toolkit.2.7\lib\net40\Xceed.Wpf.AvalonDock.dll</HintPath>
       <Private>True</Private>
       <Private>False</Private>
     </Reference>
     <Reference Include="Xceed.Wpf.AvalonDock.Themes.Aero">
-      <HintPath>..\..\packages\Extended.Wpf.Toolkit.2.6\lib\net40\Xceed.Wpf.AvalonDock.Themes.Aero.dll</HintPath>
+      <HintPath>..\..\packages\Extended.Wpf.Toolkit.2.7\lib\net40\Xceed.Wpf.AvalonDock.Themes.Aero.dll</HintPath>
       <Private>True</Private>
       <Private>False</Private>
     </Reference>
     <Reference Include="Xceed.Wpf.AvalonDock.Themes.Metro">
-      <HintPath>..\..\packages\Extended.Wpf.Toolkit.2.6\lib\net40\Xceed.Wpf.AvalonDock.Themes.Metro.dll</HintPath>
+      <HintPath>..\..\packages\Extended.Wpf.Toolkit.2.7\lib\net40\Xceed.Wpf.AvalonDock.Themes.Metro.dll</HintPath>
       <Private>True</Private>
       <Private>False</Private>
     </Reference>
     <Reference Include="Xceed.Wpf.AvalonDock.Themes.VS2010">
-      <HintPath>..\..\packages\Extended.Wpf.Toolkit.2.6\lib\net40\Xceed.Wpf.AvalonDock.Themes.VS2010.dll</HintPath>
+      <HintPath>..\..\packages\Extended.Wpf.Toolkit.2.7\lib\net40\Xceed.Wpf.AvalonDock.Themes.VS2010.dll</HintPath>
       <Private>True</Private>
       <Private>False</Private>
     </Reference>
     <Reference Include="Xceed.Wpf.DataGrid">
-      <HintPath>..\..\packages\Extended.Wpf.Toolkit.2.6\lib\net40\Xceed.Wpf.DataGrid.dll</HintPath>
+      <HintPath>..\..\packages\Extended.Wpf.Toolkit.2.7\lib\net40\Xceed.Wpf.DataGrid.dll</HintPath>
       <Private>True</Private>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Xceed.Wpf.Toolkit, Version=2.6.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+    <Reference Include="Xceed.Wpf.Toolkit, Version=2.7.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Extended.Wpf.Toolkit.2.6\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
+      <HintPath>..\..\packages\Extended.Wpf.Toolkit.2.7\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
