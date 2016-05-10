@@ -60,7 +60,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
     /// <summary>
     /// プロパティが状態持ちすぎててしんどいなぁ。
     /// </summary>
-    public class LauncherToolbarViewModel: HasViewSingleModelWrapperViewModelBase<LauncherToolbarDataModel, LauncherToolbarWindow>, IApplicationDesktopToolbarData, IVisualStyleData, IHasAppNonProcess, IWindowAreaCorrectionData, IWindowHitTestData, IHasAppSender, IRefreshFromViewModel, IMenuItem
+    public class LauncherToolbarViewModel: HasViewSingleModelWrapperViewModelBase<LauncherToolbarDataModel, LauncherToolbarWindow>, IApplicationDesktopToolbarData, IVisualStyleData, IHasAppNonProcess, IWindowAreaCorrectionData, IWindowHitTestData, IHasAppSender, IRefreshFromViewModel, IMenuItem, ILauncherButton
     {
         #region define
         #endregion
@@ -210,6 +210,8 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         bool _nowFullScreen;
         DateTime _prevFullScreenTime;
         bool _prevFullScreenCancel;
+
+        bool _isMenuOpen;
 
         CollectionModel<LauncherGroupItemViewModel> _groupItems;
 
@@ -523,12 +525,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             set { SetVariableValue(ref this._launcherItems, value); }
         }
 
-        public ImageSource ToolbarImage { get { return GetAppIcon(); } }
-        public string ToolbarText { get { return DisplayTextUtility.GetDisplayName(SelectedGroup); } }
-        public Color ToolbarHotTrack { get { return GetAppIconColor(); } }
         public Visibility TextVisible { get { return Model.Toolbar.TextVisible ? Visibility.Visible : Visibility.Collapsed; } }
-
-        public string ToolTipTitle { get { return ToolbarText; } }
 
         public PlacementMode DropDownPlacement
         {
@@ -1384,6 +1381,26 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 var canvas = LauncherToolbarUtility.MakeScreenIcon(DockScreen, IconScale.Small);
                 return canvas;
             }
+        }
+
+        #endregion
+
+        #region ILauncherButton
+
+        public ImageSource ToolbarImage { get { return GetAppIcon(); } }
+        public string ToolbarText { get { return DisplayTextUtility.GetDisplayName(SelectedGroup); } }
+        public Color ToolbarHotTrack { get { return GetAppIconColor(); } }
+
+        public string ToolTipTitle { get { return ToolbarText; } }
+
+        public string ToolTipMessage { get { throw new NotSupportedException(); } }
+        public bool HasToolTipMessage { get { return false; } }
+        public ImageSource ToolTipImage { get { throw new NotSupportedException(); } }
+
+        public bool IsMenuOpen
+        {
+            get { return this._isMenuOpen; }
+            set { SetVariableValue(ref this._isMenuOpen, value); }
         }
 
         #endregion

@@ -66,6 +66,8 @@ namespace ContentTypeTextNet.Pe.PeMain.View
         public LauncherToolbarWindow()
         {
             InitializeComponent();
+
+            UsingContextMenu = ContextMenu;
         }
 
         #region property
@@ -76,6 +78,8 @@ namespace ContentTypeTextNet.Pe.PeMain.View
         VisualStyle VisualStyle { get; set; }
         WindowAreaCorrection WindowAreaCorrection { get; set; }
         WidthResizeHitTest WindowHitTest { get; set; }
+
+        ContextMenu UsingContextMenu { get; } 
 
         #endregion
 
@@ -215,6 +219,8 @@ namespace ContentTypeTextNet.Pe.PeMain.View
             foreach(var button in UIUtility.FindVisualChildren<DropDownButton>(this).Where(b => b.IsOpen)) {
                 button.IsOpen = false;
             }
+
+            ContextMenu = UsingContextMenu;
         }
 
         private void PART_ToggleButton_MouseDown(object sender, MouseButtonEventArgs e)
@@ -232,6 +238,39 @@ namespace ContentTypeTextNet.Pe.PeMain.View
             var popup = (Popup)sender;
 
             LanguageUtility.RecursiveSetLanguage(popup, CommonData.Language);
+        }
+
+        private void LauncherButton_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            // マウス中央ボタンかshift右クリックでボタンメニューを表示する
+            var pressedMiddleButton = e.MiddleButton == MouseButtonState.Pressed;
+            var pressedExRightButton = e.RightButton == MouseButtonState.Pressed && Keyboard.Modifiers.HasFlag(ModifierKeys.Shift);
+            var isMenuOpen = pressedMiddleButton || pressedExRightButton;
+            if(isMenuOpen) {
+                var launcherButton = (ILauncherButton)((FrameworkElement)sender).DataContext;
+                if(pressedMiddleButton) {
+                    // マウス中央ボタンが押された場合は即座にボタンメニューを開く
+                    launcherButton.IsMenuOpen = true;
+                } else {
+                    // 右クリック時は一旦コンテキストメニューを破棄してマウスボタンアップ時に処理する
+                    Debug.Assert(pressedExRightButton);
+                    ContextMenu = null;
+                }
+
+                return;
+            }
+        }
+
+        private void LauncherButton_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            // コンテキストメニューが破棄されている場合は右クリックからのボタンメニュー呼び出しとする
+            if(ContextMenu == null) {
+                e.Handled = true;
+                var launcherButton = (ILauncherButton)((FrameworkElement)sender).DataContext;
+                launcherButton.IsMenuOpen = true;
+
+                ContextMenu = UsingContextMenu;
+            }
         }
     }
 }

@@ -246,6 +246,7 @@
       </ControlTemplate>
 
       <Style x:Key="LauncherDropDown" TargetType="xctk:DropDownButton" BasedOn="{StaticResource LauncherBaseButton}">
+        <Setter Property="IsOpen" Value="{Binding IsMenuOpen, Mode=TwoWay}" />
         <Setter Property="Template">
           <Setter.Value>
             <ControlTemplate TargetType="{x:Type xctk:DropDownButton}">
@@ -283,7 +284,7 @@
                 <Popup 
                   x:Name="PART_Popup" 
                   Style="{StaticResource DropDownPopupMenu}"
-                  IsOpen="{Binding IsChecked, ElementName=PART_DropDownButton}"
+                  IsOpen="{TemplateBinding IsOpen}"
                   Opened="PART_Popup_Opened"
                 >
                   <Border Style="{StaticResource MenuPopupBorder}">
@@ -297,6 +298,7 @@
       </Style>
 
       <Style x:Key="LauncherSplit" TargetType="xctk:SplitButton" BasedOn="{StaticResource LauncherBaseButton}">
+        <Setter Property="IsOpen" Value="{Binding IsMenuOpen, Mode=TwoWay}" />
         <Setter Property="Template">
           <Setter.Value>
             <ControlTemplate TargetType="{x:Type xctk:SplitButton}">
@@ -480,6 +482,7 @@
             </ToolTip>
           </xctk:DropDownButton.ToolTip>
         </xctk:DropDownButton>
+        
         <!-- ランチャーアイテム一覧 -->
         <ItemsControl ItemsSource="{Binding LauncherItems, Mode=OneWay}" IsTabStop="False">
           <ItemsControl.ItemsPanel>
@@ -494,6 +497,8 @@
                 SA:DragTarget.DragEnterCommand="{Binding DragOverCommand}"
                 SA:DragTarget.DragOverCommand="{Binding DragOverCommand}"
                 SA:DragTarget.DragDropCommand="{Binding DragDropCommand}"
+                MouseDown="LauncherButton_MouseDown"
+                MouseUp="LauncherButton_MouseUp"
               >
                 <ContentControl.ToolTip>
                   <ToolTip Style="{StaticResource ToolbarTooltip}">
