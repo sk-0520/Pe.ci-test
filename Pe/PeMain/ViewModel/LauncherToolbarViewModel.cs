@@ -223,7 +223,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             AppSender = appSender;
 
             this._captionWidth = GetCaptionWidth();
-            MenuWidth = GetMenuWidth(Model.Toolbar.VisibleMenuButton, 20);
+            MenuWidth = GetMenuWidth(VisibleMenu, 20);
             IconSize = GetIconSize(Model.Toolbar.IconScale);
             ButtonPadding = GetButtonPadding();
             IconMargin = GetIconMargin();
@@ -379,6 +379,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             set { SetPropertyValue(ButtonSize, value, nameof(ButtonSize.Height)); }
         }
         public double MenuWidth { get; set; }
+        public bool VisibleMenu { get { return Model.Toolbar.VisibleMenuButton; } }
         public double ContentWidth { get { return ButtonSize.Width - MenuWidth; } }
         public Thickness ButtonPadding { get; set; }
         public Thickness IconMargin { get; set; }
