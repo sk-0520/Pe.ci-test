@@ -60,7 +60,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
     /// <summary>
     /// プロパティが状態持ちすぎててしんどいなぁ。
     /// </summary>
-    public class LauncherToolbarViewModel: HasViewSingleModelWrapperViewModelBase<LauncherToolbarDataModel, LauncherToolbarWindow>, IApplicationDesktopToolbarData, IVisualStyleData, IHasAppNonProcess, IWindowAreaCorrectionData, IWindowHitTestData, IHasAppSender, IRefreshFromViewModel, IMenuItem
+    public class LauncherToolbarViewModel: HasViewSingleModelWrapperViewModelBase<LauncherToolbarDataModel, LauncherToolbarWindow>, IApplicationDesktopToolbarData, IVisualStyleData, IHasAppNonProcess, IWindowAreaCorrectionData, IWindowHitTestData, IHasAppSender, IRefreshFromViewModel, IMenuItem, ILauncherButton
     {
         #region define
         #endregion
@@ -112,9 +112,19 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             return iconScale.ToSize();
         }
 
-        static double GetMenuWidth()
+        /// <summary>
+        /// メニューボタンを表示するか。
+        /// </summary>
+        /// <param name="hasMenu">表示するか。</param>
+        /// <param name="menuWidth">表示する場合のサイズ。</param>
+        /// <returns></returns>
+        static double GetMenuWidth(bool hasMenu, double menuWidth)
         {
-            return 20;
+            if(hasMenu) {
+                return menuWidth;
+            }
+
+            return 0;
         }
 
         static Thickness GetButtonPadding()
@@ -201,6 +211,8 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         DateTime _prevFullScreenTime;
         bool _prevFullScreenCancel;
 
+        bool _isMenuOpen;
+
         CollectionModel<LauncherGroupItemViewModel> _groupItems;
 
         #endregion
@@ -213,7 +225,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             AppSender = appSender;
 
             this._captionWidth = GetCaptionWidth();
-            MenuWidth = GetMenuWidth();
+            MenuWidth = GetMenuWidth(IsVisibleMenu, 20);
             IconSize = GetIconSize(Model.Toolbar.IconScale);
             ButtonPadding = GetButtonPadding();
             IconMargin = GetIconMargin();
@@ -369,6 +381,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             set { SetPropertyValue(ButtonSize, value, nameof(ButtonSize.Height)); }
         }
         public double MenuWidth { get; set; }
+        public bool IsVisibleMenu { get { return Model.Toolbar.IsVisibleMenuButton; } }
         public double ContentWidth { get { return ButtonSize.Width - MenuWidth; } }
         public Thickness ButtonPadding { get; set; }
         public Thickness IconMargin { get; set; }
@@ -512,12 +525,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             set { SetVariableValue(ref this._launcherItems, value); }
         }
 
-        public ImageSource ToolbarImage { get { return GetAppIcon(); } }
-        public string ToolbarText { get { return DisplayTextUtility.GetDisplayName(SelectedGroup); } }
-        public Color ToolbarHotTrack { get { return GetAppIconColor(); } }
         public Visibility TextVisible { get { return Model.Toolbar.TextVisible ? Visibility.Visible : Visibility.Collapsed; } }
-
-        public string ToolTipTitle { get { return ToolbarText; } }
 
         public PlacementMode DropDownPlacement
         {
@@ -1373,6 +1381,26 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 var canvas = LauncherToolbarUtility.MakeScreenIcon(DockScreen, IconScale.Small);
                 return canvas;
             }
+        }
+
+        #endregion
+
+        #region ILauncherButton
+
+        public ImageSource ToolbarImage { get { return GetAppIcon(); } }
+        public string ToolbarText { get { return DisplayTextUtility.GetDisplayName(SelectedGroup); } }
+        public Color ToolbarHotTrack { get { return GetAppIconColor(); } }
+
+        public string ToolTipTitle { get { return ToolbarText; } }
+
+        public string ToolTipMessage { get { throw new NotSupportedException(); } }
+        public bool HasToolTipMessage { get { return false; } }
+        public ImageSource ToolTipImage { get { throw new NotSupportedException(); } }
+
+        public bool IsMenuOpen
+        {
+            get { return this._isMenuOpen; }
+            set { SetVariableValue(ref this._isMenuOpen, value); }
         }
 
         #endregion

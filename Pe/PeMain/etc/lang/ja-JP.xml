@@ -376,6 +376,7 @@
 		<Item Id="toolbar-setting/toolbar/topmost" Word="最前面で表示する(_T)" />
 		<Item Id="toolbar-setting/toolbar/visible" Word="ツールバーの表示(_V)" />
 		<Item Id="toolbar-setting/toolbar/menu-posotion" Word="メニューボタンを調整する(_C)" />
+		<Item Id="toolbar-setting/toolbar/menu-visible" Word="メニューボタンを表示する(_M)" />
 		<Item Id="toolbar-setting/group/node/add/group" Word="グループ追加" />
 		<Item Id="toolbar-setting/group/node/add/item" Word="選択中ランチャーアイテムの追加" />
 		<Item Id="toolbar-setting/group/node/up" Word="選択中ノードを上に移動" />

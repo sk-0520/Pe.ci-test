@@ -223,6 +223,7 @@
     </Compile>
     <Compile Include="Data\ApplicationCommandArg.cs" />
     <Compile Include="Define\IndexBodyKind.cs" />
+    <Compile Include="IF\ILauncherButton.cs" />
     <Compile Include="IF\IRuntimeTextTemplate.cs" />
     <Compile Include="Logic\ConfigurationCaching.cs" />
     <Compile Include="Logic\IndexBodyArchive.cs" />
