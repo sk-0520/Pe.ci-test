@@ -109,6 +109,12 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
         [DataMember]
         public ToolbarButtonPosition ButtonPosition { get; set; }
 
+        /// <summary>
+        /// メニューボタンを表示するか。
+        /// </summary>
+        [DataMember]
+        public bool VisibleMenuButton { get; set; }
+
         #endregion
 
         #region IVisible

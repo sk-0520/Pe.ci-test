@@ -112,9 +112,19 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             return iconScale.ToSize();
         }
 
-        static double GetMenuWidth()
+        /// <summary>
+        /// メニューボタンを表示するか。
+        /// </summary>
+        /// <param name="hasMenu">表示するか。</param>
+        /// <param name="menuWidth">表示する場合のサイズ。</param>
+        /// <returns></returns>
+        static double GetMenuWidth(bool hasMenu, double menuWidth)
         {
-            return 20;
+            if(hasMenu) {
+                return menuWidth;
+            }
+
+            return 0;
         }
 
         static Thickness GetButtonPadding()
@@ -213,7 +223,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             AppSender = appSender;
 
             this._captionWidth = GetCaptionWidth();
-            MenuWidth = GetMenuWidth();
+            MenuWidth = GetMenuWidth(Model.Toolbar.VisibleMenuButton, 20);
             IconSize = GetIconSize(Model.Toolbar.IconScale);
             ButtonPadding = GetButtonPadding();
             IconMargin = GetIconMargin();
