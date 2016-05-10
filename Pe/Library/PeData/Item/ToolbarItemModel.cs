@@ -113,7 +113,7 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
         /// メニューボタンを表示するか。
         /// </summary>
         [DataMember]
-        public bool VisibleMenuButton { get; set; }
+        public bool IsVisibleMenuButton { get; set; }
 
         #endregion
 

@@ -275,7 +275,7 @@
                       RecognizesAccessKey="true"
                       Grid.Column="{Binding DataContext.PositionContentButton, ElementName=root}"
                     />
-                    <Grid x:Name="arrowGlyph" Grid.Column="{Binding DataContext.PositionMenuButton, ElementName=root}" Style="{StaticResource ArrowParent}" Visibility="{Binding DataContext.VisibleMenu, ElementName=root, Mode=OneTime, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <Grid x:Name="arrowGlyph" Grid.Column="{Binding DataContext.PositionMenuButton, ElementName=root}" Style="{StaticResource ArrowParent}" Visibility="{Binding DataContext.IsVisibleMenu, ElementName=root, Mode=OneTime, Converter={StaticResource BooleanToVisibilityConverter}}">
                       <Path Style="{StaticResource ArrowContent}" />
                     </Grid>
                   </Grid>
@@ -340,7 +340,7 @@
                       Template="{StaticResource LauncherMenuButton}"
                       MouseDown="PART_ToggleButton_MouseDown"
                       Click="PART_ToggleButton_Click"
-                      Visibility="{Binding DataContext.VisibleMenu, ElementName=root, Mode=OneTime, Converter={StaticResource BooleanToVisibilityConverter}}"
+                      Visibility="{Binding DataContext.IsVisibleMenu, ElementName=root, Mode=OneTime, Converter={StaticResource BooleanToVisibilityConverter}}"
                     >
                       <Grid x:Name="arrowGlyph" Style="{StaticResource ArrowParent}">
                         <Path Style="{StaticResource ArrowContent}" />
