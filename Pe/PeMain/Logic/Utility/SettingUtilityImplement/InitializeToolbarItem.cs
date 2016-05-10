@@ -34,6 +34,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityImplement
         public static void Correction(ToolbarItemModel setting, Version previousVersion, INonProcess nonProcess)
         {
             V_First(setting, previousVersion, nonProcess);
+
+            V_0_78_0(setting, previousVersion, nonProcess);
+
             V_Last(setting, previousVersion, nonProcess);
         }
 
@@ -52,6 +55,23 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityImplement
             if(SettingUtility.IsIllegalPlusNumber(setting.FloatToolbar.HeightButtonCount)) {
                 setting.FloatToolbar.HeightButtonCount = 1;
             }
+        }
+
+        /// <summary>
+        /// 0.78.0.27501 以下のバージョン補正。
+        /// </summary>
+        /// <param name="item"></param>
+        /// <param name="previousVersion"></param>
+        /// <param name="nonProcess"></param>
+        static void V_0_78_0(ToolbarItemModel setting, Version previousVersion, INonProcess nonProcess)
+        {
+            if(new Version(0, 78, 0, 27501) < previousVersion) {
+                return;
+            }
+
+            nonProcess.Logger.Trace("version setting: 0.78.0");
+
+            setting.IsVisibleMenuButton = true;
         }
 
         static void V_First(ToolbarItemModel setting, Version previousVersion, INonProcess nonProcess)
@@ -73,6 +93,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityImplement
             setting.DefaultGroupId = Guid.Empty;
             setting.MenuPositionCorrection = true;
             setting.ButtonPosition = ToolbarButtonPosition.Near;
+            setting.IsVisibleMenuButton = true;
         }
     }
 }
