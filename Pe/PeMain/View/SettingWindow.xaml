@@ -11,7 +11,7 @@
   AA:Language.Word="window/setting"
   Title="SettingWindow" 
   Width="840"
-  Height="540" 
+  Height="550" 
   Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
   Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"
   BorderBrush="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" 

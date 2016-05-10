@@ -177,6 +177,12 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             set { SetModelValue(value); }
         }
 
+        public bool IsVisibleMenuButton
+        {
+            get { return Model.IsVisibleMenuButton; }
+            set { SetModelValue(value); }
+        }
+
         #endregion
 
         #region IHasAppNonProcess

@@ -69,7 +69,11 @@
 		</group>
 		<group type="features" dummy="==================================================================">
 			<note rev="">
-				<message></message>
+				<message>#350: ツールバーのメニューボタン「▼」の今後の身の振り方について</message>
+				<comments>
+					<comment>ツールバー設定からランチャーのメニューボタンを表示するかどうか設定可能にしました</comment>
+					<comment>メニューボタン非表示状態でメニューを表示するには「マウス中央ボタン」、「Shift + 右クリック」のどちらかの操作が必要です</comment>
+				</comments>
 			</note>
 			<note rev="">
 				<message></message>
