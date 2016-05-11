@@ -95,7 +95,10 @@
 		</group>
 		<group type="developer" dummy="==================================================================">
 			<note rev="">
-				<message></message>
+				<message>#446: CIビルド時にpdbファイルは削除しないようにする</message>
+				<comments>
+					<comment>なんか急にしたくなっただけ</comment>
+				</comments>
 			</note>
 			<note rev="">
 				<message></message>
