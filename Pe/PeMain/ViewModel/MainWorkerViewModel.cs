@@ -736,13 +736,16 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
         }
 
+        /// <summary>
+        /// アプリケーション設定保存。
+        /// </summary>
         void SaveSetting()
         {
             using(var timeLogger = CommonData.NonProcess.CreateTimeLogger()) {
                 BackupSetting();
 
                 SaveMainSetting();
-                SerializeUtility.SaveSetting(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingLauncherItemSettingFilePath), CommonData.LauncherItemSetting, Constants.fileTypeLauncherItemSetting, true, CommonData.Logger);
+                SaveLauncherItemSetting();
                 SerializeUtility.SaveSetting(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingLauncherGroupItemSettingFilePath), CommonData.LauncherGroupSetting, Constants.fileTypeLauncherGroupSetting, true, CommonData.Logger);
 
                 foreach(var indexKind in EnumUtility.GetMembers<IndexKind>()) {
@@ -751,9 +754,25 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
         }
 
+        /// <summary>
+        /// 本体設定保存。
+        /// </summary>
         void SaveMainSetting()
         {
             SerializeUtility.SaveSetting(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingMainSettingFilePath), CommonData.MainSetting, Constants.fileTypeMainSetting, true, CommonData.Logger);
+        }
+
+        /// <summary>
+        /// ランチャーアイテム保存。
+        /// <para>保存時にアイテムは名前順でソートする。</para>
+        /// </summary>
+        void SaveLauncherItemSetting()
+        {
+            var saveModel = (LauncherItemSettingModel)CommonData.LauncherItemSetting.DeepClone();
+            var sortedItems = saveModel.Items.OrderBy(i => i.Name).ToArray();
+            saveModel.Items.InitializeRange(sortedItems);
+
+            SerializeUtility.SaveSetting(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingLauncherItemSettingFilePath), saveModel, Constants.fileTypeLauncherItemSetting, true, CommonData.Logger);
         }
 
         void RotateSetting(string backupDirectory, string backupPattern, int backupCount)
