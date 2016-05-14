@@ -592,6 +592,43 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
         }
 
+        public CollectionModel<object> HiddenLauncherItems
+        {
+            get
+            {
+                var buttonArea = new Size(
+                    WindowWidth - BorderThickness.GetHorizon(),
+                    WindowHeight - BorderThickness.GetVertical()
+                );
+
+                if(NowFloatWindow) {
+                    buttonArea.Width -= CaptionWidth;
+                }
+
+                var isHorizontal = ToolbarButtonOrientation == Orientation.Horizontal;
+
+                var barRange = isHorizontal
+                    ? buttonArea.Width
+                    : buttonArea.Height
+                ;
+                var buttonRange = isHorizontal
+                    ? ButtonWidth
+                    : ButtonHeight
+                ;
+
+                return new CollectionModel<object>(new object[] {
+                    buttonArea.Width,
+                    buttonArea.Height,
+                    LauncherItems.Count,
+                    LauncherItems.Count + 1,
+                    barRange / buttonRange ,
+                    LauncherItems.Count + 1 - (barRange / buttonRange ),
+                    barRange,
+                });
+            }
+        }
+
+
         #endregion
 
         #region command

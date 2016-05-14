@@ -471,6 +471,15 @@
                   </DataTemplate>
                 </ItemsControl.ItemTemplate>
               </ItemsControl>
+              
+              <ItemsControl ItemsSource="{Binding HiddenLauncherItems, Mode=OneWay}">
+                <!--<ItemsControl.ItemTemplate>
+                  <DataTemplate>
+                    <MenuItem Style="{StaticResource HiddenLauncherItems}" />
+                  </DataTemplate>
+                </ItemsControl.ItemTemplate>-->
+              </ItemsControl>
+              
             </StackPanel>
           </xctk:DropDownButton.DropDownContent>
           <xctk:DropDownButton.ToolTip>
