@@ -513,6 +513,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                         oldLauncherItems.Dispose();
                         oldLauncherItems = null;
                     }
+                    CallOnPropertyChange(nameof(HiddenLauncherItems));
 
                     AppSender.SendApplicationCommand(ApplicationCommand.MemoryGarbageCollect, this, ApplicationCommandArg.Empty);
                 }
@@ -1044,6 +1045,8 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                     this._showLogicalBarArea.Width = value;
                     OnPropertyChanged();
                 }
+
+                CallOnPropertyChange(nameof(HiddenLauncherItems));
             }
         }
         public double WindowHeight
@@ -1068,6 +1071,8 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                     this._showLogicalBarArea.Height = value;
                     OnPropertyChanged();
                 }
+
+                CallOnPropertyChange(nameof(HiddenLauncherItems));
             }
         }
 
@@ -1139,6 +1144,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
                     Model.Toolbar.DockType = value;
                     OnPropertyChanged();
+
                     View.InvalidateArrange();
                     var propertyNames = new[] {
                         nameof(ToolbarButtonOrientation),
@@ -1156,8 +1162,10 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                         nameof(PositionMenuButton),
                         nameof(ResizeMode),
                         nameof(IsTopmost),
+                        nameof(HiddenLauncherItems),
                     };
                     CallOnPropertyChange(propertyNames);
+
                     View.UpdateLayout();
                 }
             }
