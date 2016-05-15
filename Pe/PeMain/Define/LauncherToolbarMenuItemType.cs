@@ -13,29 +13,26 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with Pe.  If not, see <http://www.gnu.org/licenses/>.
-*/
-using System;
+*/using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Media;
 
-namespace ContentTypeTextNet.Pe.PeMain.IF
+namespace ContentTypeTextNet.Pe.PeMain.Define
 {
-    public interface ILauncherButton
+    /// <summary>
+    /// ランチャーツールバーのメニューアイテム種別。
+    /// </summary>
+    public enum LauncherToolbarMenuItemType
     {
-        ImageSource MenuImage { get; }
-        ImageSource ToolbarImage { get; }
-        string ToolbarText { get; }
-        Color ToolbarHotTrack { get; }
-
-        string ToolTipTitle { get; }
-
-        string ToolTipMessage { get; }
-        bool HasToolTipMessage { get; }
-        ImageSource ToolTipImage { get; }
-
-        bool IsMenuOpen { get; set; }
+        /// <summary>
+        /// ランチャーアイテム。
+        /// </summary>
+        LauncherItem,
+        /// <summary>
+        /// グループアイテム。
+        /// </summary>
+        GroupItem,
     }
 }

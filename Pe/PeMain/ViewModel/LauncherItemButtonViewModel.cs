@@ -46,7 +46,7 @@ using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
 namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 {
-    public class LauncherItemButtonViewModel: LauncherItemSimpleViewModel, ILauncherButton
+    public class LauncherItemButtonViewModel: LauncherItemSimpleViewModel, ILauncherButton, ILauncherToolbarMenuItem
     {
         #region varable
 
@@ -368,6 +368,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         public string ToolbarText { get { return DisplayText; } }
         public ImageSource ToolbarImage { get { return GetIcon(IconScale); } }
+        public ImageSource MenuImage { get { return GetIcon(IconScale.Small); } }
         public Color ToolbarHotTrack { get { return GetIconColor(IconScale); } }
         public string ToolTipTitle { get { return ToolbarText; } }
 
@@ -380,6 +381,14 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             get { return this._isMenuOpen; }
             set { SetVariableValue(ref this._isMenuOpen, value); }
         }
+
+        #endregion
+
+        #region ILauncherToolbarMenuItem
+
+        public LauncherToolbarMenuItemType LauncherToolbarMenuItemType { get { return LauncherToolbarMenuItemType.LauncherItem; } }
+
+        public int RowIndex { get; set; }
 
         #endregion
 

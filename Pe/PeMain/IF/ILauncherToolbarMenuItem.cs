@@ -20,22 +20,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
+using ContentTypeTextNet.Pe.PeMain.Define;
 
 namespace ContentTypeTextNet.Pe.PeMain.IF
 {
-    public interface ILauncherButton
+    public interface ILauncherToolbarMenuItem
     {
         ImageSource MenuImage { get; }
-        ImageSource ToolbarImage { get; }
-        string ToolbarText { get; }
-        Color ToolbarHotTrack { get; }
-
-        string ToolTipTitle { get; }
-
-        string ToolTipMessage { get; }
-        bool HasToolTipMessage { get; }
-        ImageSource ToolTipImage { get; }
-
-        bool IsMenuOpen { get; set; }
+        LauncherToolbarMenuItemType LauncherToolbarMenuItemType { get; }
+        int RowIndex { get; }
     }
 }

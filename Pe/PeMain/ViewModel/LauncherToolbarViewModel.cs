@@ -513,6 +513,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                         oldLauncherItems.Dispose();
                         oldLauncherItems = null;
                     }
+                    RefreshHiddenItem();
 
                     AppSender.SendApplicationCommand(ApplicationCommand.MemoryGarbageCollect, this, ApplicationCommandArg.Empty);
                 }
@@ -591,6 +592,25 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 return Model.Toolbar.MenuPositionCorrection && DockType == DockType.Right;
             }
         }
+
+        public CollectionModel<LauncherItemButtonViewModel> HiddenLauncherItems
+        {
+            get
+            {
+                var items = MakeHiddenItem();
+
+                return items;
+            }
+        }
+
+        public int LauncherMenuCount
+        {
+            get
+            {
+                return Math.Max(GroupItems.Count, HiddenLauncherItems.Count);
+            }
+        }
+
 
         #endregion
 
@@ -860,8 +880,12 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         CollectionModel<LauncherGroupItemViewModel> CreateGroupItems()
         {
-            var items = new CollectionModel<LauncherGroupItemViewModel>(Model.GroupItems.Select(i => new LauncherGroupItemViewModel(i)));
-            return items;
+            var items = Model.GroupItems
+                .Select((model, index) => new LauncherGroupItemViewModel(model) {
+                    RowIndex = index,
+                })
+            ;
+            return new CollectionModel<LauncherGroupItemViewModel>(items);
         }
 
         static void SetSelectedGroup(LauncherGroupItemModel selectedItemModel, CollectionModel<LauncherGroupItemViewModel> items)
@@ -869,6 +893,56 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             foreach(var item in items) {
                 item.IsChecked = item.Model == selectedItemModel;
             }
+        }
+
+        CollectionModel<LauncherItemButtonViewModel> MakeHiddenItem()
+        {
+            if(WindowWidth == 0 || WindowHeight == 0) {
+                return new CollectionModel<LauncherItemButtonViewModel>();
+            }
+
+            var trayArea = new Size(
+                WindowWidth - BorderThickness.GetHorizon(),
+                WindowHeight - BorderThickness.GetVertical()
+            );
+
+            if(NowFloatWindow) {
+                trayArea.Width -= CaptionWidth;
+            }
+
+            var isHorizontal = ToolbarButtonOrientation == Orientation.Horizontal;
+
+            var trayAreaLength = isHorizontal
+                ? trayArea.Width
+                : trayArea.Height
+            ;
+            var buttonLength = isHorizontal
+                ? ButtonWidth
+                : ButtonHeight
+            ;
+
+            var appButtonCount = 1;
+            var showingItemCount = (int)(trayAreaLength / buttonLength) - appButtonCount;
+            var hiddenItemCount = LauncherItems.Count - showingItemCount;
+
+            var hiddenItems = LauncherItems
+                .Skip(showingItemCount)
+                .Select((item, index) => new { Item = item, Index = index })
+            ;
+            foreach(var pair in hiddenItems) {
+                pair.Item.RowIndex = pair.Index;
+            }
+
+            return new CollectionModel<LauncherItemButtonViewModel>(hiddenItems.Select(i => i.Item));
+        }
+
+        void RefreshHiddenItem()
+        {
+            var propertyNames = new[] {
+                nameof(HiddenLauncherItems),
+                nameof(LauncherMenuCount),
+            };
+            CallOnPropertyChange(propertyNames);
         }
 
         #endregion
@@ -989,7 +1063,8 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 } else {
                     return IsHidden
                         ? HideLogicalBarArea.Width
-                        : ShowLogicalBarArea.Width;
+                        : ShowLogicalBarArea.Width
+                    ;
                 }
             }
             set
@@ -997,10 +1072,14 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 if(DockType == DockType.None) {
                     Model.Toolbar.FloatToolbar.WidthButtonCount = CalculateButtonWidthCount(DockType, ToolbarButtonOrientation, BorderThickness, this._captionWidth, value);
                     OnPropertyChanged();
-                    OnPropertyChanged(nameof(CaptionHeight));
+                    CallOnPropertyChange(nameof(CaptionHeight));
+                    RefreshHiddenItem();
                 } else if(!IsHidden && ShowLogicalBarArea.Width != value) {
                     this._showLogicalBarArea.Width = value;
                     OnPropertyChanged();
+                    if(ToolbarButtonOrientation == Orientation.Horizontal) {
+                        RefreshHiddenItem();
+                    }
                 }
             }
         }
@@ -1013,7 +1092,8 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 } else {
                     return IsHidden
                         ? HideLogicalBarArea.Height
-                        : ShowLogicalBarArea.Height;
+                        : ShowLogicalBarArea.Height
+                    ;
                 }
             }
             set
@@ -1021,10 +1101,13 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 if(DockType == DockType.None) {
                     Model.Toolbar.FloatToolbar.HeightButtonCount = CalculateButtonHeightCount(DockType, ToolbarButtonOrientation, BorderThickness, this._captionWidth, value);
                     OnPropertyChanged();
-                    OnPropertyChanged(nameof(CaptionWidth));
+                    CallOnPropertyChange(nameof(CaptionWidth));
                 } else if(!IsHidden && ShowLogicalBarArea.Height != value) {
                     this._showLogicalBarArea.Height = value;
                     OnPropertyChanged();
+                    if(ToolbarButtonOrientation == Orientation.Vertical) {
+                        RefreshHiddenItem();
+                    }
                 }
             }
         }
@@ -1052,7 +1135,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                         var nowTime = DateTime.Now;
                         if(this._nowFullScreen) {
                             AppNonProcess.Logger.Debug("fullscreen: first, cancel-flag on");
-                            OnPropertyChanged(nameof(IsTopmost));
+                            CallOnPropertyChange(nameof(IsTopmost));
                             this._prevFullScreenTime = DateTime.Now;
                         } else {
                             var nowSpan = nowTime - _prevFullScreenTime;
@@ -1064,7 +1147,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                                 this._prevFullScreenCancel = true;
                             } else {
                                 AppNonProcess.Logger.Debug(string.Format("fullscreen: [CHANGE]:{0}, [IsTopmost]:{1}", this._nowFullScreen, IsTopmost));
-                                OnPropertyChanged(nameof(IsTopmost));
+                                CallOnPropertyChange(nameof(IsTopmost));
                                 if(this._nowFullScreen && this._prevFullScreenCancel) {
                                     // 前回フルクリーンが二重発行されてた場合は解除する
                                     this._prevFullScreenCancel = false;
@@ -1097,6 +1180,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
                     Model.Toolbar.DockType = value;
                     OnPropertyChanged();
+
                     View.InvalidateArrange();
                     var propertyNames = new[] {
                         nameof(ToolbarButtonOrientation),
@@ -1116,6 +1200,8 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                         nameof(IsTopmost),
                     };
                     CallOnPropertyChange(propertyNames);
+                    RefreshHiddenItem();
+
                     View.UpdateLayout();
                 }
             }
@@ -1348,7 +1434,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         protected override void CallOnPropertyChangeDisplayItem()
         {
             base.CallOnPropertyChangeDisplayItem();
-            OnPropertyChanged(nameof(MenuIcon));
+            CallOnPropertyChange(nameof(MenuIcon));
         }
 
         #endregion
@@ -1388,6 +1474,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         #region ILauncherButton
 
         public ImageSource ToolbarImage { get { return GetAppIcon(); } }
+        public ImageSource MenuImage { get { throw new NotSupportedException(); } }
         public string ToolbarText { get { return DisplayTextUtility.GetDisplayName(SelectedGroup); } }
         public Color ToolbarHotTrack { get { return GetAppIconColor(); } }
 

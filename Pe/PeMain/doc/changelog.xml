@@ -84,7 +84,11 @@
 		</group>
 		<group type="fixes" dummy="==================================================================">
 			<note rev="">
-				<message></message>
+				<message>#383: ツールバーに表示しきれずはみ出したアイテムに救いの手を差し伸べる</message>
+				<comments>
+					<comment>ツールバーのコンテキストメニューからはみ出したアイテムを選択できます</comment>
+					<comment>ただしこの場合は通常実行の挙動に限定されます</comment>
+				</comments>
 			</note>
 			<note rev="">
 				<message></message>
