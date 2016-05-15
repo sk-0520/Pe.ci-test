@@ -592,39 +592,13 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
         }
 
-        public CollectionModel<object> HiddenLauncherItems
+        public CollectionModel<LauncherItemButtonViewModel> HiddenLauncherItems
         {
             get
             {
-                var buttonArea = new Size(
-                    WindowWidth - BorderThickness.GetHorizon(),
-                    WindowHeight - BorderThickness.GetVertical()
-                );
+                var items = MakeHiddenItem();
 
-                if(NowFloatWindow) {
-                    buttonArea.Width -= CaptionWidth;
-                }
-
-                var isHorizontal = ToolbarButtonOrientation == Orientation.Horizontal;
-
-                var barRange = isHorizontal
-                    ? buttonArea.Width
-                    : buttonArea.Height
-                ;
-                var buttonRange = isHorizontal
-                    ? ButtonWidth
-                    : ButtonHeight
-                ;
-
-                return new CollectionModel<object>(new object[] {
-                    buttonArea.Width,
-                    buttonArea.Height,
-                    LauncherItems.Count,
-                    LauncherItems.Count + 1,
-                    barRange / buttonRange ,
-                    LauncherItems.Count + 1 - (barRange / buttonRange ),
-                    barRange,
-                });
+                return items;
             }
         }
 
@@ -906,6 +880,37 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             foreach(var item in items) {
                 item.IsChecked = item.Model == selectedItemModel;
             }
+        }
+
+        CollectionModel<LauncherItemButtonViewModel> MakeHiddenItem()
+        {
+            var trayArea = new Size(
+                WindowWidth - BorderThickness.GetHorizon(),
+                WindowHeight - BorderThickness.GetVertical()
+            );
+
+            if(NowFloatWindow) {
+                trayArea.Width -= CaptionWidth;
+            }
+
+            var isHorizontal = ToolbarButtonOrientation == Orientation.Horizontal;
+
+            var trayAreaLength = isHorizontal
+                ? trayArea.Width
+                : trayArea.Height
+            ;
+            var buttonLength = isHorizontal
+                ? ButtonWidth
+                : ButtonHeight
+            ;
+
+            var appButtonCount = 1;
+            var showingItemCount = (int)(trayAreaLength / buttonLength) - appButtonCount;
+            var hiddenItemCount = LauncherItems.Count - showingItemCount;
+
+            var hiddenItems = LauncherItems.Skip(showingItemCount);
+
+            return new CollectionModel<LauncherItemButtonViewModel>(hiddenItems);
         }
 
         #endregion
