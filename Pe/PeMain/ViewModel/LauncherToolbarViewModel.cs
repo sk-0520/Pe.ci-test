@@ -513,7 +513,12 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                         oldLauncherItems.Dispose();
                         oldLauncherItems = null;
                     }
-                    CallOnPropertyChange(nameof(HiddenLauncherItems));
+                    var propertyNames = new[] {
+                        nameof(HiddenLauncherItems),
+                        nameof(LauncherMenuCount),
+                    };
+                    CallOnPropertyChange(propertyNames);
+                    
 
                     AppSender.SendApplicationCommand(ApplicationCommand.MemoryGarbageCollect, this, ApplicationCommandArg.Empty);
                 }
@@ -600,6 +605,14 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 var items = MakeHiddenItem();
 
                 return items;
+            }
+        }
+
+        public int LauncherMenuCount
+        {
+            get
+            {
+                return Math.Max(GroupItems.Count, HiddenLauncherItems.Count);
             }
         }
 
@@ -873,7 +886,9 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         CollectionModel<LauncherGroupItemViewModel> CreateGroupItems()
         {
             var items = Model.GroupItems
-                .Select((model, index) => new LauncherGroupItemViewModel(model))
+                .Select((model, index) => new LauncherGroupItemViewModel(model) {
+                    RowIndex = index,
+                })
             ;
             return new CollectionModel<LauncherGroupItemViewModel>(items);
         }
@@ -1054,7 +1069,11 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                     OnPropertyChanged();
                 }
 
-                CallOnPropertyChange(nameof(HiddenLauncherItems));
+                var propertyNames = new[] {
+                    nameof(HiddenLauncherItems),
+                    nameof(LauncherMenuCount),
+                };
+                CallOnPropertyChange(propertyNames);
             }
         }
         public double WindowHeight
@@ -1080,7 +1099,11 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                     OnPropertyChanged();
                 }
 
-                CallOnPropertyChange(nameof(HiddenLauncherItems));
+                var propertyNames = new[] {
+                    nameof(HiddenLauncherItems),
+                    nameof(LauncherMenuCount),
+                };
+                CallOnPropertyChange(propertyNames);
             }
         }
 
@@ -1171,6 +1194,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                         nameof(ResizeMode),
                         nameof(IsTopmost),
                         nameof(HiddenLauncherItems),
+                        nameof(LauncherMenuCount),
                     };
                     CallOnPropertyChange(propertyNames);
 

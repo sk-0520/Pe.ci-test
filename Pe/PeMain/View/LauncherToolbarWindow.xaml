@@ -6,6 +6,7 @@
   xmlns:windows="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
   xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+  xmlns:cttn_app_library_package="clr-namespace:ContentTypeTextNet.Pe.Library.Package;assembly=Package"
   xmlns:SC="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=ContentTypeTextNet.SharedLibrary"
   xmlns:SA="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Attached;assembly=ContentTypeTextNet.SharedLibrary"
   xmlns:SL="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.Logic;assembly=ContentTypeTextNet.SharedLibrary"
@@ -426,9 +427,7 @@
       </ContextMenu.ItemContainerStyle>
       <ContextMenu.ItemsPanel>
         <ItemsPanelTemplate>
-          <Grid>
-            <Grid.RowDefinitions>
-            </Grid.RowDefinitions>
+          <Grid cttn_app_library_package:GridHelpers.RowCount="{Binding LauncherMenuCount}">
             <Grid.ColumnDefinitions>
               <ColumnDefinition />
               <ColumnDefinition />
