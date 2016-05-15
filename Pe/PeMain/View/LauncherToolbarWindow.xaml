@@ -378,32 +378,56 @@
       </Style>
 
       <Image 
-        x:Key="GroupIcon"
+        x:Key="LauncherToolbarItemImage"
         x:Shared="false" 
         Width="16" 
         Height="16" 
-        Source="{Binding GroupIcon}" 
-        Style="{StaticResource DefaultImage}" 
-        AA:MenuIcon.IsStrong="{Binding IsChecked}"
-      />
+        Source="{Binding MenuImage}" 
+      >
+        <Image.Style>
+          <Style TargetType="Image" BasedOn="{StaticResource DefaultImage}">
+            <Style.Triggers>
+              <DataTrigger Binding="{Binding LauncherToolbarMenuItemType}" Value="GroupItem">
+                <Setter Property="AA:MenuIcon.IsStrong" Value="{Binding IsChecked}" />
+              </DataTrigger>
+            </Style.Triggers>
+          </Style>
+        </Image.Style>
+      </Image>
 
-      <Style x:Key="GroupMenu" TargetType="MenuItem" BasedOn="{StaticResource PopupCloseMenu}">
+      <Style x:Key="LauncherMenuItem" TargetType="MenuItem" BasedOn="{StaticResource PopupCloseMenu}">
+        <Style.Triggers>
+          <DataTrigger Binding="{Binding LauncherToolbarMenuItemType}" Value="LauncherItem">
+            <Setter Property="Command" Value="{Binding RunCommand}" />
+          </DataTrigger>
+          <DataTrigger Binding="{Binding LauncherToolbarMenuItemType}" Value="GroupItem">
+            <Setter Property="Command" Value="{Binding DataContext.GroupChangeCommand, Source={x:Reference root}}" />
+            <Setter Property="FontWeight" Value="{Binding IsChecked, Converter={StaticResource BooleanFontWeightConverter}}" />
+          </DataTrigger>
+        </Style.Triggers>
         <Setter Property="Header" Value="{Binding DisplayText}" />
-        <Setter Property="Command" Value="{Binding DataContext.GroupChangeCommand, Source={x:Reference root}}" />
         <Setter Property="CommandParameter" Value="{Binding}" />
-        <!--<Setter Property="IsChecked" Value="{Binding IsChecked}" />-->
-        <Setter Property="Icon" Value="{StaticResource GroupIcon}" />
-        <Setter Property="FontWeight" Value="{Binding IsChecked, Converter={StaticResource BooleanFontWeightConverter}}" />
+        <Setter Property="Icon" Value="{StaticResource LauncherToolbarItemImage}" />
       </Style>
 
+      <CollectionViewSource x:Key="ContextGroupItems" Source="{Binding GroupItems}" />
+      <CollectionViewSource x:Key="ContextHiddenItems" Source="{Binding HiddenLauncherItems}" />
+      
     </ResourceDictionary>
   </AW:CommonDataWindow.Resources>
 
   <AW:CommonDataWindow.ContextMenu>
-    <ContextMenu ItemsSource="{Binding GroupItems, Mode=OneWay}">
+    <ContextMenu >
       <ContextMenu.ItemContainerStyle>
-        <Style TargetType="MenuItem" BasedOn="{StaticResource GroupMenu}" />
+        <Style TargetType="MenuItem" BasedOn="{StaticResource LauncherMenuItem}" />
       </ContextMenu.ItemContainerStyle>
+      <ContextMenu.ItemsSource>
+        <CompositeCollection>
+          <CollectionContainer Collection="{Binding Source={StaticResource ContextGroupItems}}" />
+          
+          <CollectionContainer Collection="{Binding Source={StaticResource ContextHiddenItems}}" />
+        </CompositeCollection>
+      </ContextMenu.ItemsSource>
     </ContextMenu>
   </AW:CommonDataWindow.ContextMenu>
 
@@ -467,27 +491,10 @@
               <ItemsControl ItemsSource="{Binding GroupItems, Mode=OneWay}">
                 <ItemsControl.ItemTemplate>
                   <DataTemplate>
-                    <MenuItem Style="{StaticResource GroupMenu}" />
+                    <MenuItem Style="{StaticResource LauncherMenuItem}" />
                   </DataTemplate>
                 </ItemsControl.ItemTemplate>
               </ItemsControl>
-              
-              <ItemsControl ItemsSource="{Binding HiddenLauncherItems, Mode=OneWay}">
-                <ItemsControl.ItemTemplate>
-                  <DataTemplate>
-                    <MenuItem 
-                      Style="{StaticResource PopupCloseMenu}"
-                      Header="{Binding DisplayText}"
-                      Command="{Binding RunCommand}"
-                    >
-                      <MenuItem.Icon>
-                        <Image Source="{Binding MenuImage}" Style="{StaticResource DefaultImage}" />
-                      </MenuItem.Icon>
-                    </MenuItem>
-                  </DataTemplate>
-                </ItemsControl.ItemTemplate>
-              </ItemsControl>
-              
             </StackPanel>
           </xctk:DropDownButton.DropDownContent>
           <xctk:DropDownButton.ToolTip>

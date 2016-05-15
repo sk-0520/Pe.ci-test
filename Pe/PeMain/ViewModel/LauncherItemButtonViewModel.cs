@@ -46,7 +46,7 @@ using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
 namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 {
-    public class LauncherItemButtonViewModel: LauncherItemSimpleViewModel, ILauncherButton
+    public class LauncherItemButtonViewModel: LauncherItemSimpleViewModel, ILauncherButton, ILauncherToolbarMenuItem
     {
         #region varable
 
@@ -381,6 +381,12 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             get { return this._isMenuOpen; }
             set { SetVariableValue(ref this._isMenuOpen, value); }
         }
+
+        #endregion
+
+        #region ILauncherToolbarMenuItem
+
+        public LauncherToolbarMenuItemType LauncherToolbarMenuItemType { get { return LauncherToolbarMenuItemType.LauncherItem; } }
 
         #endregion
 
