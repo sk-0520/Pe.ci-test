@@ -473,11 +473,19 @@
               </ItemsControl>
               
               <ItemsControl ItemsSource="{Binding HiddenLauncherItems, Mode=OneWay}">
-                <!--<ItemsControl.ItemTemplate>
+                <ItemsControl.ItemTemplate>
                   <DataTemplate>
-                    <MenuItem Style="{StaticResource HiddenLauncherItems}" />
+                    <MenuItem 
+                      Style="{StaticResource PopupCloseMenu}"
+                      Header="{Binding DisplayText}"
+                      Command="{Binding RunCommand}"
+                    >
+                      <MenuItem.Icon>
+                        <Image Source="{Binding MenuImage}" Style="{StaticResource DefaultImage}" />
+                      </MenuItem.Icon>
+                    </MenuItem>
                   </DataTemplate>
-                </ItemsControl.ItemTemplate>-->
+                </ItemsControl.ItemTemplate>
               </ItemsControl>
               
             </StackPanel>

@@ -25,6 +25,7 @@ namespace ContentTypeTextNet.Pe.PeMain.IF
 {
     public interface ILauncherButton
     {
+        ImageSource MenuImage { get; }
         ImageSource ToolbarImage { get; }
         string ToolbarText { get; }
         Color ToolbarHotTrack { get; }

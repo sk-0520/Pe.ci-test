@@ -1438,6 +1438,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         #region ILauncherButton
 
         public ImageSource ToolbarImage { get { return GetAppIcon(); } }
+        public ImageSource MenuImage { get { throw new NotSupportedException(); } }
         public string ToolbarText { get { return DisplayTextUtility.GetDisplayName(SelectedGroup); } }
         public Color ToolbarHotTrack { get { return GetAppIconColor(); } }
 
