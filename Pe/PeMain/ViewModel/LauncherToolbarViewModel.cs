@@ -872,8 +872,10 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         CollectionModel<LauncherGroupItemViewModel> CreateGroupItems()
         {
-            var items = new CollectionModel<LauncherGroupItemViewModel>(Model.GroupItems.Select(i => new LauncherGroupItemViewModel(i)));
-            return items;
+            var items = Model.GroupItems
+                .Select((model, index) => new LauncherGroupItemViewModel(model))
+            ;
+            return new CollectionModel<LauncherGroupItemViewModel>(items);
         }
 
         static void SetSelectedGroup(LauncherGroupItemModel selectedItemModel, CollectionModel<LauncherGroupItemViewModel> items)
@@ -909,9 +911,15 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             var showingItemCount = (int)(trayAreaLength / buttonLength) - appButtonCount;
             var hiddenItemCount = LauncherItems.Count - showingItemCount;
 
-            var hiddenItems = LauncherItems.Skip(showingItemCount);
+            var hiddenItems = LauncherItems
+                .Skip(showingItemCount)
+                .Select((item, index) => new { Item = item, Index = index })
+            ;
+            foreach(var pair in hiddenItems) {
+                pair.Item.RowIndex = pair.Index;
+            }
 
-            return new CollectionModel<LauncherItemButtonViewModel>(hiddenItems);
+            return new CollectionModel<LauncherItemButtonViewModel>(hiddenItems.Select(i => i.Item));
         }
 
         #endregion

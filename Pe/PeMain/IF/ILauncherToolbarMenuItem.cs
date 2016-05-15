@@ -28,5 +28,6 @@ namespace ContentTypeTextNet.Pe.PeMain.IF
     {
         ImageSource MenuImage { get; }
         LauncherToolbarMenuItemType LauncherToolbarMenuItemType { get; }
+        int RowIndex { get; }
     }
 }

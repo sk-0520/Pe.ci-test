@@ -81,6 +81,8 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
         }
 
+        public int RowIndex { get; set; }
+
         #endregion
 
         #region SingleModelWrapperViewModelBase

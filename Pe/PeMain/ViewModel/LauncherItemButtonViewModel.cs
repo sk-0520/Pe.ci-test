@@ -388,6 +388,8 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         public LauncherToolbarMenuItemType LauncherToolbarMenuItemType { get { return LauncherToolbarMenuItemType.LauncherItem; } }
 
+        public int RowIndex { get; set; }
+
         #endregion
 
         #region LauncherItemSimpleViewModel

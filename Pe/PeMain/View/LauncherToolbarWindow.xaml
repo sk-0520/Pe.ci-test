@@ -398,13 +398,16 @@
       <Style x:Key="LauncherMenuItem" TargetType="MenuItem" BasedOn="{StaticResource PopupCloseMenu}">
         <Style.Triggers>
           <DataTrigger Binding="{Binding LauncherToolbarMenuItemType}" Value="LauncherItem">
+            <Setter Property="Grid.Column" Value="1" />
             <Setter Property="Command" Value="{Binding RunCommand}" />
           </DataTrigger>
           <DataTrigger Binding="{Binding LauncherToolbarMenuItemType}" Value="GroupItem">
+            <Setter Property="Grid.Column" Value="0" />
             <Setter Property="Command" Value="{Binding DataContext.GroupChangeCommand, Source={x:Reference root}}" />
             <Setter Property="FontWeight" Value="{Binding IsChecked, Converter={StaticResource BooleanFontWeightConverter}}" />
           </DataTrigger>
         </Style.Triggers>
+        <Setter Property="Grid.Row" Value="{Binding RowIndex}" />
         <Setter Property="Header" Value="{Binding DisplayText}" />
         <Setter Property="CommandParameter" Value="{Binding}" />
         <Setter Property="Icon" Value="{StaticResource LauncherToolbarItemImage}" />
@@ -417,14 +420,25 @@
   </AW:CommonDataWindow.Resources>
 
   <AW:CommonDataWindow.ContextMenu>
-    <ContextMenu >
+    <ContextMenu>
       <ContextMenu.ItemContainerStyle>
         <Style TargetType="MenuItem" BasedOn="{StaticResource LauncherMenuItem}" />
       </ContextMenu.ItemContainerStyle>
+      <ContextMenu.ItemsPanel>
+        <ItemsPanelTemplate>
+          <Grid>
+            <Grid.RowDefinitions>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition />
+              <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+          </Grid>
+        </ItemsPanelTemplate>
+      </ContextMenu.ItemsPanel>
       <ContextMenu.ItemsSource>
         <CompositeCollection>
           <CollectionContainer Collection="{Binding Source={StaticResource ContextGroupItems}}" />
-          
           <CollectionContainer Collection="{Binding Source={StaticResource ContextHiddenItems}}" />
         </CompositeCollection>
       </ContextMenu.ItemsSource>

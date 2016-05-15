@@ -7,7 +7,8 @@
 	<Component Kind="Library" Name="jQuery" Uri="https://jquery.com/" License="MIT" />
 	<Component Kind="Library" Name="Autosize" Uri="http://www.jacklmoore.com/autosize" License="MIT" />
 	<Component Kind="Library" Name="AvalonEdit" Uri="http://avalonedit.net/" License="MIT" />
-	
+	<Component Kind="Library" Name="GridHelpers" Uri="http://www.pinvoke.net/" License="" />
+
 	<Component Kind="Source" Name="IconExtractor" Uri="https://github.com/TsudaKageyu/IconExtractor" License="BSD License" />
 	<Component Kind="Source" Name="Invoke.net" Uri="http://www.pinvoke.net/" License="" />
 	
