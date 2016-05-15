@@ -938,9 +938,6 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         void RefreshHiddenItem()
         {
-            //var prev = PresentationTraceSources.DataBindingSource.Switch.Level;
-            //PresentationTraceSources.DataBindingSource.Switch.Level = SourceLevels.Critical;
-
             var propertyNames = new[] {
                 nameof(HiddenLauncherItems),
                 nameof(LauncherMenuCount),
@@ -1138,7 +1135,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                         var nowTime = DateTime.Now;
                         if(this._nowFullScreen) {
                             AppNonProcess.Logger.Debug("fullscreen: first, cancel-flag on");
-                            OnPropertyChanged(nameof(IsTopmost));
+                            CallOnPropertyChange(nameof(IsTopmost));
                             this._prevFullScreenTime = DateTime.Now;
                         } else {
                             var nowSpan = nowTime - _prevFullScreenTime;
@@ -1150,7 +1147,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                                 this._prevFullScreenCancel = true;
                             } else {
                                 AppNonProcess.Logger.Debug(string.Format("fullscreen: [CHANGE]:{0}, [IsTopmost]:{1}", this._nowFullScreen, IsTopmost));
-                                OnPropertyChanged(nameof(IsTopmost));
+                                CallOnPropertyChange(nameof(IsTopmost));
                                 if(this._nowFullScreen && this._prevFullScreenCancel) {
                                     // 前回フルクリーンが二重発行されてた場合は解除する
                                     this._prevFullScreenCancel = false;
@@ -1437,7 +1434,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         protected override void CallOnPropertyChangeDisplayItem()
         {
             base.CallOnPropertyChangeDisplayItem();
-            OnPropertyChanged(nameof(MenuIcon));
+            CallOnPropertyChange(nameof(MenuIcon));
         }
 
         #endregion
