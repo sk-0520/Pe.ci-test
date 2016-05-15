@@ -513,12 +513,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                         oldLauncherItems.Dispose();
                         oldLauncherItems = null;
                     }
-                    var propertyNames = new[] {
-                        nameof(HiddenLauncherItems),
-                        nameof(LauncherMenuCount),
-                    };
-                    CallOnPropertyChange(propertyNames);
-                    
+                    RefreshHiddenItem();
 
                     AppSender.SendApplicationCommand(ApplicationCommand.MemoryGarbageCollect, this, ApplicationCommandArg.Empty);
                 }
@@ -902,6 +897,10 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         CollectionModel<LauncherItemButtonViewModel> MakeHiddenItem()
         {
+            if(WindowWidth == 0 || WindowHeight == 0) {
+                return new CollectionModel<LauncherItemButtonViewModel>();
+            }
+
             var trayArea = new Size(
                 WindowWidth - BorderThickness.GetHorizon(),
                 WindowHeight - BorderThickness.GetVertical()
@@ -935,6 +934,18 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
 
             return new CollectionModel<LauncherItemButtonViewModel>(hiddenItems.Select(i => i.Item));
+        }
+
+        void RefreshHiddenItem()
+        {
+            //var prev = PresentationTraceSources.DataBindingSource.Switch.Level;
+            //PresentationTraceSources.DataBindingSource.Switch.Level = SourceLevels.Critical;
+
+            var propertyNames = new[] {
+                nameof(HiddenLauncherItems),
+                nameof(LauncherMenuCount),
+            };
+            CallOnPropertyChange(propertyNames);
         }
 
         #endregion
@@ -1055,7 +1066,8 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 } else {
                     return IsHidden
                         ? HideLogicalBarArea.Width
-                        : ShowLogicalBarArea.Width;
+                        : ShowLogicalBarArea.Width
+                    ;
                 }
             }
             set
@@ -1063,17 +1075,15 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 if(DockType == DockType.None) {
                     Model.Toolbar.FloatToolbar.WidthButtonCount = CalculateButtonWidthCount(DockType, ToolbarButtonOrientation, BorderThickness, this._captionWidth, value);
                     OnPropertyChanged();
-                    OnPropertyChanged(nameof(CaptionHeight));
+                    CallOnPropertyChange(nameof(CaptionHeight));
+                    RefreshHiddenItem();
                 } else if(!IsHidden && ShowLogicalBarArea.Width != value) {
                     this._showLogicalBarArea.Width = value;
                     OnPropertyChanged();
+                    if(ToolbarButtonOrientation == Orientation.Horizontal) {
+                        RefreshHiddenItem();
+                    }
                 }
-
-                var propertyNames = new[] {
-                    nameof(HiddenLauncherItems),
-                    nameof(LauncherMenuCount),
-                };
-                CallOnPropertyChange(propertyNames);
             }
         }
         public double WindowHeight
@@ -1085,7 +1095,8 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 } else {
                     return IsHidden
                         ? HideLogicalBarArea.Height
-                        : ShowLogicalBarArea.Height;
+                        : ShowLogicalBarArea.Height
+                    ;
                 }
             }
             set
@@ -1093,17 +1104,14 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 if(DockType == DockType.None) {
                     Model.Toolbar.FloatToolbar.HeightButtonCount = CalculateButtonHeightCount(DockType, ToolbarButtonOrientation, BorderThickness, this._captionWidth, value);
                     OnPropertyChanged();
-                    OnPropertyChanged(nameof(CaptionWidth));
+                    CallOnPropertyChange(nameof(CaptionWidth));
                 } else if(!IsHidden && ShowLogicalBarArea.Height != value) {
                     this._showLogicalBarArea.Height = value;
                     OnPropertyChanged();
+                    if(ToolbarButtonOrientation == Orientation.Vertical) {
+                        RefreshHiddenItem();
+                    }
                 }
-
-                var propertyNames = new[] {
-                    nameof(HiddenLauncherItems),
-                    nameof(LauncherMenuCount),
-                };
-                CallOnPropertyChange(propertyNames);
             }
         }
 
@@ -1193,10 +1201,9 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                         nameof(PositionMenuButton),
                         nameof(ResizeMode),
                         nameof(IsTopmost),
-                        nameof(HiddenLauncherItems),
-                        nameof(LauncherMenuCount),
                     };
                     CallOnPropertyChange(propertyNames);
+                    RefreshHiddenItem();
 
                     View.UpdateLayout();
                 }
