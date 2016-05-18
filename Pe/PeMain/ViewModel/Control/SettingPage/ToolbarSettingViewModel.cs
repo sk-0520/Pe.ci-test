@@ -436,6 +436,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control.SettingPage
             if(o == null) {
                 return;
             }
+
             var toolbarNode = (IToolbarNode)o;
             if(toolbarNode.ToolbarNodeKind == ToolbarNodeKind.Group) {
                 var groupViewModel = (GroupRootViewModel)toolbarNode;
@@ -455,8 +456,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control.SettingPage
                 ;
                 GroupSettingModel.Groups.Remove(groupModel);
                 GroupSettingModel.Groups.Insert(nextIndex, groupModel);
-                this._groupTree.Remove(groupViewModel);
-                this._groupTree.Insert(nextIndex, groupViewModel);
+                this._groupTree.SwapIndex(srcIndex, nextIndex);
                 CallOnPropertyChangeDefaultGroupList(SelectedToolbar.DefaultGroupId);
             } else {
                 Debug.Assert(toolbarNode.ToolbarNodeKind == ToolbarNodeKind.Item);
@@ -479,8 +479,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control.SettingPage
 
                 targetIdList.Remove(itemViewModel.Id);
                 targetIdList.Insert(nextIndex, itemViewModel.Id);
-                groupViewModel.Nodes.Remove(itemViewModel);
-                groupViewModel.Nodes.Insert(nextIndex, itemViewModel);
+                groupViewModel.Nodes.SwapIndex(srcIndex, nextIndex);
             }
             toolbarNode.IsSelected = true;
         }
@@ -555,7 +554,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control.SettingPage
             //	vm.Refresh();
             //}
             this._launcherItems = null;
-            OnPropertyChanged(nameof(LauncherItems));
+            CallOnPropertyChange(nameof(LauncherItems));
 
             foreach(var node in this._groupTree.SelectMany(t => t.Nodes)) {
                 node.Refresh();

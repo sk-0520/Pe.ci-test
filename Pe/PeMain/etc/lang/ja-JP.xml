@@ -125,7 +125,11 @@
 		<Item Id="notify/info/template/title"          Word="テンプレート" />
 		<Item Id="notify/info/template/message/show"   Word="ウィンドウの表示" />
 		<Item Id="notify/info/template/message/hide"   Word="ウィンドウの非表示" />
-
+		<Item Id="notify/info/toolbar-force-hide/title"     Word="ツールバー非表示" />
+		<Item Id="notify/info/toolbar-force-hide/message"   Word="自動的に隠す設定のツールバーを強制的に隠す状態に設定" />
+		<Item Id="notify/info/suppress-f1/title"     Word="F1キー抑制" />
+		<Item Id="notify/info/suppress-f1/message"   Word="F1キーの押下をシステム上無視しました。${br}システムに対してF1キーを有効にするには設定から変更するかF1キーを二連続で入力してください" />
+		
 		<Item Id="new/group-name" Word="新規グループ" />
 		<Item Id="new/template-name" Word="新規テンプレート" />
 		<Item Id="new/launcher-name" Word="ランチャーアイテム" />
@@ -157,7 +161,7 @@
 		<Item Id="execute/work-dir/dir" Word="作業ディレクトリを選択" />
 		<Item Id="execute/others" Word="その他" />
 		<Item Id="execute/others/stream-output" Word="標準出力(_O)" />
-		<Item Id="execute/others/stream-input"  Word="標準入力(_I)" />
+		<Item Id="execute/others/stream-input"  Word="標準入力(_I)" />info
 		<Item Id="execute/others/admin" Word="管理者権限で実行(_A)" />
 		<Item Id="execute/environment" Word="環境編集の編集(_V)" />
 		
@@ -344,6 +348,7 @@
 		<Item Id="main-setting/system-env" Word="システム環境" />
 		<Item Id="main-setting/system-env/shell-hidden" Word="隠しファイル切替(_H)" />
 		<Item Id="main-setting/system-env/shell-ext" Word="拡張子切替(_E)" />
+		<Item Id="main-setting/system-env/suppress-f1" Word="F1キーを抑制(_F)" />
 		<Item Id="main-setting/stream" Word="標準入出力" />
 		<Item Id="main-setting/stream/font" Word="フォント(_F)" />
 		<Item Id="main-setting/stream/color" Word="色設定" />
@@ -376,11 +381,13 @@
 		<Item Id="toolbar-setting/toolbar/topmost" Word="最前面で表示する(_T)" />
 		<Item Id="toolbar-setting/toolbar/visible" Word="ツールバーの表示(_V)" />
 		<Item Id="toolbar-setting/toolbar/menu-posotion" Word="メニューボタンを調整する(_C)" />
+		<Item Id="toolbar-setting/toolbar/menu-visible" Word="メニューボタンを表示する(_M)" />
 		<Item Id="toolbar-setting/group/node/add/group" Word="グループ追加" />
 		<Item Id="toolbar-setting/group/node/add/item" Word="選択中ランチャーアイテムの追加" />
 		<Item Id="toolbar-setting/group/node/up" Word="選択中ノードを上に移動" />
 		<Item Id="toolbar-setting/group/node/down" Word="選択中ノードを下に移動" />
 		<Item Id="toolbar-setting/group/node/remove" Word="選択中ノードを削除" />
+		<Item Id="toolbar-setting/group/item/not-found" Word="リンク切れアイテム(@[ID])" />
 		<Item Id="toolbar-setting/launcher/drop-mode" Word="ファイルD&amp;D時の挙動" />
 		<Item Id="toolbar-setting/launcher/drop-mode/window" Word="指定して実行ウィンドウを表示(_R)" />
 		<Item Id="toolbar-setting/launcher/drop-mode/arguments" Word="オプションとして実行(_O)" />

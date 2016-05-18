@@ -184,6 +184,7 @@
           <CheckBox Content="topmost" AA:Language.Word="toolbar-setting/toolbar/topmost" IsChecked="{Binding SelectedToolbar.IsTopmost}" />
           <CheckBox Content="visible" AA:Language.Word="toolbar-setting/toolbar/visible" IsChecked="{Binding SelectedToolbar.IsVisible}" />
           <CheckBox Content="menu position" AA:Language.Word="toolbar-setting/toolbar/menu-posotion" IsChecked="{Binding SelectedToolbar.MenuPositionCorrection}" />
+          <CheckBox Content="menu visible" AA:Language.Word="toolbar-setting/toolbar/menu-visible" IsChecked="{Binding SelectedToolbar.IsVisibleMenuButton}" />
         </StackPanel>
       </Grid>
     </GroupBox>

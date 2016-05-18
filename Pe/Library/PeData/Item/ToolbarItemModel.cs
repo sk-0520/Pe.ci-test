@@ -109,6 +109,12 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
         [DataMember]
         public ToolbarButtonPosition ButtonPosition { get; set; }
 
+        /// <summary>
+        /// メニューボタンを表示するか。
+        /// </summary>
+        [DataMember]
+        public bool IsVisibleMenuButton { get; set; }
+
         #endregion
 
         #region IVisible
@@ -175,6 +181,7 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
             obj.IsTopmost = IsTopmost;
             obj.MenuPositionCorrection = MenuPositionCorrection;
             obj.ButtonPosition = ButtonPosition;
+            obj.IsVisibleMenuButton = IsVisibleMenuButton;
             obj.Id = Id;
             //Font.DeepCloneTo(obj.Font);
             obj.Font = (FontModel)Font.DeepClone();

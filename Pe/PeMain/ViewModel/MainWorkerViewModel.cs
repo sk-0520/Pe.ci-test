@@ -60,6 +60,7 @@ using ContentTypeTextNet.Pe.PeMain.Data.Model;
 using System.Net;
 using System.Text;
 using System.IO.Compression;
+using ContentTypeTextNet.Pe.Library.FormsCushion.MouseKeyHookCompatibility;
 
 namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 {
@@ -123,6 +124,10 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         }
 
         #region property
+
+        MouseKeyHookCompatibility Hook { get; set; }
+        TimeSpan PrevHideToolbarKeyDownTime { get; set; } = TimeSpan.Zero;
+        TimeSpan PrevSuppressFunction1KeyDownTime { get; set; } = TimeSpan.Zero;
 
         bool ResetToolbarRunning { get; set; }
         DateTime PrevResetToolbar { get; set; }
@@ -736,13 +741,16 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
         }
 
+        /// <summary>
+        /// アプリケーション設定保存。
+        /// </summary>
         void SaveSetting()
         {
             using(var timeLogger = CommonData.NonProcess.CreateTimeLogger()) {
                 BackupSetting();
 
                 SaveMainSetting();
-                SerializeUtility.SaveSetting(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingLauncherItemSettingFilePath), CommonData.LauncherItemSetting, Constants.fileTypeLauncherItemSetting, true, CommonData.Logger);
+                SaveLauncherItemSetting();
                 SerializeUtility.SaveSetting(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingLauncherGroupItemSettingFilePath), CommonData.LauncherGroupSetting, Constants.fileTypeLauncherGroupSetting, true, CommonData.Logger);
 
                 foreach(var indexKind in EnumUtility.GetMembers<IndexKind>()) {
@@ -751,9 +759,25 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
         }
 
+        /// <summary>
+        /// 本体設定保存。
+        /// </summary>
         void SaveMainSetting()
         {
             SerializeUtility.SaveSetting(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingMainSettingFilePath), CommonData.MainSetting, Constants.fileTypeMainSetting, true, CommonData.Logger);
+        }
+
+        /// <summary>
+        /// ランチャーアイテム保存。
+        /// <para>保存時にアイテムは名前順でソートする。</para>
+        /// </summary>
+        void SaveLauncherItemSetting()
+        {
+            var saveModel = (LauncherItemSettingModel)CommonData.LauncherItemSetting.DeepClone();
+            var sortedItems = saveModel.Items.OrderBy(i => i.Name).ToArray();
+            saveModel.Items.InitializeRange(sortedItems);
+
+            SerializeUtility.SaveSetting(Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingLauncherItemSettingFilePath), saveModel, Constants.fileTypeLauncherItemSetting, true, CommonData.Logger);
         }
 
         void RotateSetting(string backupDirectory, string backupPattern, int backupCount)
@@ -851,6 +875,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                     InitializeStatus();
                     CallPropertyChangeHotkey();
                     InitializeSystem();
+                    InitializeHook();
 
                     CreateMessage();
                     CreateLogger(null);
@@ -962,6 +987,21 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             SystemEvents.SessionSwitch -= SystemEvents_SessionSwitch;
             SystemEvents.SessionEnding -= SystemEvents_SessionEnding;
             SystemEvents.DisplaySettingsChanging -= SystemEvents_DisplaySettingsChanging;
+        }
+
+        void InitializeHook()
+        {
+            Hook = new MouseKeyHookCompatibility();
+
+            Hook.KeyDown += Hook_KeyDown;
+        }
+
+        void UninitializeHook()
+        {
+            if(Hook != null) {
+                Hook.Dispose();
+                Hook = null;
+            }
         }
 
         [Obsolete]
@@ -1587,12 +1627,68 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             return false;
         }
 
+        /// <summary>
+        /// グローバルフック: キュー入力。
+        /// <para>ポーズ判定は各処理で実施する(処理によっては継続する可能性もあるので)。</para>
+        /// </summary>
+        /// <param name="e"></param>
+        void ReceiveHookKeyDown(MouseKeyHookKeyEventArgs e)
+        {
+            if(e.Key == Key.Escape && e.IsDown) {
+                ReceiveHookKeyDownForHideToolbar(e);
+            } else if(e.Key == Key.F1 && e.IsDown) {
+                ReceiveHookKeyDownForSuppressFunction1(e);
+            }
+        }
+
+        void ReceiveHookKeyDownForHideToolbar(MouseKeyHookKeyEventArgs e)
+        {
+            if(IsPause) {
+                PuaseOutputLog();
+                return;
+            }
+
+            var time = e.Timestamp - PrevHideToolbarKeyDownTime;
+            if(time < SystemInformation.DoubleClickTime) {
+                var hiddenView = false;
+                foreach(var toolbarView in LauncherToolbarWindows) {
+                    var viewModel = toolbarView.ViewModel;
+                    if(viewModel.DockType != DockType.None && viewModel.AutoHide && !viewModel.IsHidden && viewModel.IsVisible) {
+                        toolbarView.Appbar.HideView(true);
+                        hiddenView = true;
+                    }
+                }
+                if(hiddenView) {
+                    SendInformationTips(CommonData.Language["notify/info/toolbar-force-hide/title"], CommonData.Language["notify/info/toolbar-force-hide/message"], LogKind.Information);
+                }
+            }
+
+            PrevHideToolbarKeyDownTime = e.Timestamp;
+        }
+
+        void ReceiveHookKeyDownForSuppressFunction1(MouseKeyHookKeyEventArgs e)
+        {
+            if(!CommonData.MainSetting.SystemEnvironment.SuppressFunction1Key) {
+                return;
+            }
+
+            var time = e.Timestamp - PrevSuppressFunction1KeyDownTime;
+            if(time > SystemInformation.DoubleClickTime) {
+                // 抑制!
+                SendInformationTips(CommonData.Language["notify/info/suppress-f1/title"], CommonData.Language["notify/info/suppress-f1/message"], LogKind.Information);
+                e.Handled = true;
+            }
+
+            PrevSuppressFunction1KeyDownTime = e.Timestamp;
+        }
+
         #endregion
 
         #region ViewModelBase
 
         protected override void Dispose(bool disposing)
         {
+            UninitializeHook();
             UninitializeSystem();
 
             if(!IsDisposed) {
@@ -2499,5 +2595,11 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             Application.Current.Exit -= Current_Exit;
             SystemEnvironmentUtility.ResetUsingBrowserVersionForExecutingAssembly();
         }
+
+        private void Hook_KeyDown(object sender, MouseKeyHookKeyEventArgs e)
+        {
+            ReceiveHookKeyDown(e);
+        }
+
     }
 }

@@ -33,14 +33,17 @@ using ContentTypeTextNet.Library.SharedLibrary.Define;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using System.Windows.Shapes;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
+using ContentTypeTextNet.Pe.PeMain.IF;
+using ContentTypeTextNet.Pe.PeMain.Define;
 
 namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 {
-    public class LauncherGroupItemViewModel: SingleModelWrapperViewModelBase<LauncherGroupItemModel>
+    public class LauncherGroupItemViewModel: SingleModelWrapperViewModelBase<LauncherGroupItemModel>, ILauncherToolbarMenuItem
     {
         #region variable
 
         bool _isChecked;
+        ImageSource _menuImage;
 
         #endregion
 
@@ -50,7 +53,6 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         #region property
 
-        BitmapSource GroupIconImage { get; set; }
 
         public bool IsChecked
         {
@@ -58,21 +60,29 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             set { SetVariableValue(ref this._isChecked, value); }
         }
 
-        public ImageSource GroupIcon
-        {
-            get
-            {
-                if(GroupIconImage == null) {
-                    GroupIconImage = LauncherGroupUtility.CreateGroupIconImage(Model.GroupIconType, Model.GroupIconColor);
-                }
-
-                return GroupIconImage;
-            }
-        }
-
         #endregion
 
         #region function
+        #endregion
+
+        #region ILauncherToolbarMenuItem
+
+        public LauncherToolbarMenuItemType LauncherToolbarMenuItemType { get { return LauncherToolbarMenuItemType.GroupItem; } }
+
+        public ImageSource MenuImage
+        {
+            get
+            {
+                if(_menuImage == null) {
+                    _menuImage = LauncherGroupUtility.CreateGroupIconImage(Model.GroupIconType, Model.GroupIconColor);
+                }
+
+                return _menuImage;
+            }
+        }
+
+        public int RowIndex { get; set; }
+
         #endregion
 
         #region SingleModelWrapperViewModelBase

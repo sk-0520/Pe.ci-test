@@ -46,7 +46,7 @@ using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
 namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 {
-    public class LauncherItemButtonViewModel: LauncherItemSimpleViewModel
+    public class LauncherItemButtonViewModel: LauncherItemSimpleViewModel, ILauncherButton, ILauncherToolbarMenuItem
     {
         #region varable
 
@@ -59,6 +59,8 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         bool _hasDataCommand;
         bool _hasDataParentDir;
         bool _hasDataWorkDir;
+
+        bool _isMenuOpen;
 
         #endregion
 
@@ -89,16 +91,6 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 }
             }
         }
-
-        public string ToolbarText { get { return DisplayText; } }
-        public ImageSource ToolbarImage { get { return GetIcon(IconScale); } }
-        //public ImageSource ToolbarImage { get { return null; } }
-        public Color ToolbarHotTrack { get { return GetIconColor(IconScale); } }
-        public string ToolTipTitle { get { return ToolbarText; } }
-
-        public string ToolTipMessage { get { return Model.Comment; } }
-        public bool HasToolTipMessage { get { return !string.IsNullOrEmpty(ToolTipMessage); } }
-        public ImageSource ToolTipImage { get { return GetIcon(IconScale.Normal); } }
 
         public Visibility VisibilityFile { get { return ToVisibility(Model.LauncherKind == LauncherKind.File); } }
         //public Visibility VisibilityDirectory { get { return ToVisibility(Model.LauncherKind == LauncherKind.Directory); } }
@@ -329,6 +321,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 return result;
             }
         }
+
         #endregion
 
         #region function
@@ -368,6 +361,34 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                     break;
             }
         }
+
+        #endregion
+
+        #region ILauncherButton
+
+        public string ToolbarText { get { return DisplayText; } }
+        public ImageSource ToolbarImage { get { return GetIcon(IconScale); } }
+        public ImageSource MenuImage { get { return GetIcon(IconScale.Small); } }
+        public Color ToolbarHotTrack { get { return GetIconColor(IconScale); } }
+        public string ToolTipTitle { get { return ToolbarText; } }
+
+        public string ToolTipMessage { get { return Model.Comment; } }
+        public bool HasToolTipMessage { get { return !string.IsNullOrEmpty(ToolTipMessage); } }
+        public ImageSource ToolTipImage { get { return GetIcon(IconScale.Normal); } }
+
+        public bool IsMenuOpen
+        {
+            get { return this._isMenuOpen; }
+            set { SetVariableValue(ref this._isMenuOpen, value); }
+        }
+
+        #endregion
+
+        #region ILauncherToolbarMenuItem
+
+        public LauncherToolbarMenuItemType LauncherToolbarMenuItemType { get { return LauncherToolbarMenuItemType.LauncherItem; } }
+
+        public int RowIndex { get; set; }
 
         #endregion
 

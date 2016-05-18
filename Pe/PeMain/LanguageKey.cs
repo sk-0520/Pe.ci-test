@@ -112,6 +112,8 @@ namespace ContentTypeTextNet.Pe.PeMain
 
         public const string noteTitle = "NOTE-TITLE";
 
+        public const string settingGroupNotFoundItem = "ID";
+
         #endregion
 
         #region HtmlViewer
