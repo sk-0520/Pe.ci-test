@@ -127,7 +127,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         MouseKeyHookCompatibility Hook { get; set; }
         TimeSpan PrevHideToolbarKeyDownTime { get; set; } = TimeSpan.Zero;
-        TimeSpan PrevF1SkipKeyDownTime { get; set; } = TimeSpan.Zero;
+        TimeSpan PrevSuppressFunction1KeyDownTime { get; set; } = TimeSpan.Zero;
 
         bool ResetToolbarRunning { get; set; }
         DateTime PrevResetToolbar { get; set; }
@@ -1637,7 +1637,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             if(e.Key == Key.Escape && e.IsDown) {
                 ReceiveHookKeyDownForHideToolbar(e);
             } else if(e.Key == Key.F1 && e.IsDown) {
-                ReceiveHookKeyDownForSkip(e);
+                ReceiveHookKeyDownForSuppressFunction1(e);
             }
         }
 
@@ -1666,16 +1666,20 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             PrevHideToolbarKeyDownTime = e.Timestamp;
         }
 
-        void ReceiveHookKeyDownForSkip(MouseKeyHookKeyEventArgs e)
+        void ReceiveHookKeyDownForSuppressFunction1(MouseKeyHookKeyEventArgs e)
         {
-            var time = e.Timestamp - PrevF1SkipKeyDownTime;
+            if(!CommonData.MainSetting.SystemEnvironment.SuppressFunction1Key) {
+                return;
+            }
+
+            var time = e.Timestamp - PrevSuppressFunction1KeyDownTime;
             if(time > SystemInformation.DoubleClickTime) {
                 // 抑制!
-                CommonData.Logger.Information("よくせい");
+                SendInformationTips(CommonData.Language["notify/info/suppress-f1/title"], CommonData.Language["notify/info/suppress-f1/message"], LogKind.Information);
                 e.Handled = true;
             }
 
-            PrevF1SkipKeyDownTime = e.Timestamp;
+            PrevSuppressFunction1KeyDownTime = e.Timestamp;
         }
 
         #endregion

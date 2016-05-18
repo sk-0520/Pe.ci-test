@@ -91,6 +91,7 @@
             <Grid.RowDefinitions>
               <RowDefinition />
               <RowDefinition />
+              <RowDefinition />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
               <ColumnDefinition />
@@ -101,6 +102,8 @@
 
             <Label Grid.Row="1" Grid.Column="0" Content="extension" AA:Language.Word="main-setting/system-env/shell-ext" Style="{StaticResource HeaderLabel}" />
             <AV:AppHotkeyControl Grid.Row="1" Grid.Column="1" Hotkey="{Binding SysEnvExtensionHotkey}" Style="{StaticResource DefaultAppHotkey}" />
+
+            <CheckBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Content="suppress-f1" AA:Language.Word="main-setting/system-env/suppress-f1" IsChecked="{Binding SysSuppressFunction1Key}" Style="{StaticResource DefaultVerticalCheckBox}" />
           </Grid>
         </GroupBox>
 
