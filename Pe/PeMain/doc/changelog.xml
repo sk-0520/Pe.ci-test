@@ -79,6 +79,12 @@
 				<message>#449: ランチャーアイテムの並び順を保存時にソートする</message>
 			</note>
 			<note rev="">
+				<message>#455: ツールバーを強制的に隠した状態にする</message>
+				<comments>
+					<comment>ツールバーの「自動的に隠す」が設定されている場合に ESC キーを二回入力すると表示中のツールバーが隠れた状態になります</comment>
+				</comments>
+			</note>
+			<note rev="">
 				<message></message>
 			</note>
 		</group>

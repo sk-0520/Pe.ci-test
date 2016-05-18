@@ -1626,22 +1626,31 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             return false;
         }
 
-        void ReceiveKeyDown(MouseKeyHookKeyEventArgs e)
+        /// <summary>
+        /// グローバルフック: キュー入力。
+        /// <para>ポーズ判定は各処理で実施する(処理によっては継続する可能性もあるので)。</para>
+        /// </summary>
+        /// <param name="e"></param>
+        void ReceiveHookKeyDown(MouseKeyHookKeyEventArgs e)
         {
-            CommonData.Logger.Information($"{e.Key}, {e.ModifierKeys}, {e.IsDown}");
             if(e.Key == Key.Escape && e.IsDown) {
-                ReceiveKeyDownForHideToolbar(e);
+                ReceiveHookKeyDownForHideToolbar(e);
             }
         }
 
-        void ReceiveKeyDownForHideToolbar(MouseKeyHookKeyEventArgs e)
+        void ReceiveHookKeyDownForHideToolbar(MouseKeyHookKeyEventArgs e)
         {
+            if(IsPause) {
+                PuaseOutputLog();
+                return;
+            }
+
             var time = e.Timestamp - PrevHideToolbarKeyDownTime;
             if(time < SystemInformation.DoubleClickTime) {
                 var hiddenView = false;
                 foreach(var toolbarView in LauncherToolbarWindows) {
                     var viewModel = toolbarView.ViewModel;
-                    if(viewModel.DockType != DockType.None && viewModel.AutoHide) {
+                    if(viewModel.DockType != DockType.None && viewModel.AutoHide && !viewModel.IsHidden && viewModel.IsVisible) {
                         toolbarView.Appbar.HideView(true);
                         hiddenView = true;
                     }
@@ -2569,7 +2578,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         private void Hook_KeyDown(object sender, MouseKeyHookKeyEventArgs e)
         {
-            ReceiveKeyDown(e);
+            ReceiveHookKeyDown(e);
         }
 
     }
