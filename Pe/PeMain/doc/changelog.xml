@@ -115,7 +115,10 @@
 				<message>[nuget] Extended.Wpf.Toolkit を 2.8.0 に更新</message>
 			</note>
 			<note rev="">
-				<message></message>
+				<message>#457: グローバルフック実装</message>
+				<comments>
+					<comment>Forms 版で使用していた Gma.System.MouseKeyHook を使用</comment>
+				</comments>
 			</note>
 		</group>
 	</log>
