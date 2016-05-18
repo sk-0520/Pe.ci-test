@@ -127,6 +127,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         MouseKeyHookCompatibility Hook { get; set; }
         TimeSpan PrevHideToolbarKeyDownTime { get; set; } = TimeSpan.Zero;
+        TimeSpan PrevF1SkipKeyDownTime { get; set; } = TimeSpan.Zero;
 
         bool ResetToolbarRunning { get; set; }
         DateTime PrevResetToolbar { get; set; }
@@ -1635,6 +1636,8 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         {
             if(e.Key == Key.Escape && e.IsDown) {
                 ReceiveHookKeyDownForHideToolbar(e);
+            } else if(e.Key == Key.F1 && e.IsDown) {
+                ReceiveHookKeyDownForSkip(e);
             }
         }
 
@@ -1659,7 +1662,20 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                     SendInformationTips(CommonData.Language["notify/info/toolbar-force-hide/title"], CommonData.Language["notify/info/toolbar-force-hide/message"], LogKind.Information);
                 }
             }
+
             PrevHideToolbarKeyDownTime = e.Timestamp;
+        }
+
+        void ReceiveHookKeyDownForSkip(MouseKeyHookKeyEventArgs e)
+        {
+            var time = e.Timestamp - PrevF1SkipKeyDownTime;
+            if(time > SystemInformation.DoubleClickTime) {
+                // 抑制!
+                CommonData.Logger.Information("よくせい");
+                e.Handled = true;
+            }
+
+            PrevF1SkipKeyDownTime = e.Timestamp;
         }
 
         #endregion
