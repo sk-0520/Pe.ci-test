@@ -50,20 +50,39 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ContentTypeTextNet.PInvoke, Version=1.0.5972.22732, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\ContentTypeTextNet.PInvoke.1.0.0.18\lib\net46\ContentTypeTextNet.PInvoke.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ContentTypeTextNet.SharedLibrary, Version=0.1.5981.37064, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.41\lib\net46\ContentTypeTextNet.SharedLibrary.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Gma.System.MouseKeyHook">
       <HintPath>..\..\packages\MouseKeyHook.5.4.0\lib\net40\Gma.System.MouseKeyHook.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MouseKeyHookCompatibility\MouseKeyHookCompatibility.cs" />
+    <Compile Include="MouseKeyHookCompatibility\MouseKeyHookKeyEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
