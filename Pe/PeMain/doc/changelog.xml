@@ -107,6 +107,9 @@
 				<message>#456: グループ設定でノード操作時のちらつきを抑制</message>
 			</note>
 			<note rev="">
+				<message>#450: ノートのサイズ変更枠ダブルクリックでもサイズ変更出来てしまう</message>
+			</note>
+			<note rev="">
 				<message></message>
 			</note>
 		</group>
