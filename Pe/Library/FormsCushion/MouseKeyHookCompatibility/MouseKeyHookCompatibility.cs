@@ -101,6 +101,8 @@ namespace ContentTypeTextNet.Pe.Library.FormsCushion.MouseKeyHookCompatibility
             } else if(e.IsKeyUp){
                 KeyUp(sender, usingEvent);
             }
+
+            e.Handled = usingEvent.Handled;
         }
 
         private void OnKeyDown(object sender, KeyEventArgsExt e)

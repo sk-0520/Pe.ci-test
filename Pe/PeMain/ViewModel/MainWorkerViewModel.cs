@@ -127,6 +127,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         MouseKeyHookCompatibility Hook { get; set; }
         TimeSpan PrevHideToolbarKeyDownTime { get; set; } = TimeSpan.Zero;
+        TimeSpan PrevSuppressFunction1KeyDownTime { get; set; } = TimeSpan.Zero;
 
         bool ResetToolbarRunning { get; set; }
         DateTime PrevResetToolbar { get; set; }
@@ -1635,6 +1636,8 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         {
             if(e.Key == Key.Escape && e.IsDown) {
                 ReceiveHookKeyDownForHideToolbar(e);
+            } else if(e.Key == Key.F1 && e.IsDown) {
+                ReceiveHookKeyDownForSuppressFunction1(e);
             }
         }
 
@@ -1659,7 +1662,24 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                     SendInformationTips(CommonData.Language["notify/info/toolbar-force-hide/title"], CommonData.Language["notify/info/toolbar-force-hide/message"], LogKind.Information);
                 }
             }
+
             PrevHideToolbarKeyDownTime = e.Timestamp;
+        }
+
+        void ReceiveHookKeyDownForSuppressFunction1(MouseKeyHookKeyEventArgs e)
+        {
+            if(!CommonData.MainSetting.SystemEnvironment.SuppressFunction1Key) {
+                return;
+            }
+
+            var time = e.Timestamp - PrevSuppressFunction1KeyDownTime;
+            if(time > SystemInformation.DoubleClickTime) {
+                // 抑制!
+                SendInformationTips(CommonData.Language["notify/info/suppress-f1/title"], CommonData.Language["notify/info/suppress-f1/message"], LogKind.Information);
+                e.Handled = true;
+            }
+
+            PrevSuppressFunction1KeyDownTime = e.Timestamp;
         }
 
         #endregion

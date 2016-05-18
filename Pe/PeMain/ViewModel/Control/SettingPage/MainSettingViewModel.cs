@@ -233,6 +233,12 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control.SettingPage
             set { SetPropertyValue(SystemEnvironment, value, nameof(SystemEnvironment.ExtensionHotkey)); }
         }
 
+        public bool SysSuppressFunction1Key
+        {
+            get { return SystemEnvironment.SuppressFunction1Key; }
+            set { SetPropertyValue(SystemEnvironment, value, nameof(SystemEnvironment.SuppressFunction1Key)); }
+        }
+
         #endregion
 
         #region StreamSettingModel

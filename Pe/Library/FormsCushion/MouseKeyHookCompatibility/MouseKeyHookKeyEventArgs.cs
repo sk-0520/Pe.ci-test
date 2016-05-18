@@ -39,6 +39,10 @@ namespace ContentTypeTextNet.Pe.Library.FormsCushion.MouseKeyHookCompatibility
         public ModifierKeys ModifierKeys { get; }
         public bool IsDown { get; }
         public TimeSpan Timestamp { get; }
+        /// <summary>
+        /// イベントが処理されたかどうかを示す値を取得または設定します。
+        /// </summary>
+        public bool Handled { get; set; }
 
         #endregion
 

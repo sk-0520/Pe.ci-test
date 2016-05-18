@@ -48,6 +48,11 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
         /// </summary>
         [DataMember]
         public HotKeyModel ExtensionHotkey { get; set; }
+        /// <summary>
+        /// F1キーを抑制するか。
+        /// </summary>
+        [DataMember]
+        public bool SuppressFunction1Key { get; set; }
 
         #endregion
 
@@ -59,6 +64,7 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
 
             HideFileHotkey.DeepCloneTo(obj.HideFileHotkey);
             ExtensionHotkey.DeepCloneTo(obj.ExtensionHotkey);
+            obj.SuppressFunction1Key = SuppressFunction1Key;
         }
 
         public IDeepClone DeepClone()
