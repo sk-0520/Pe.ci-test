@@ -55,6 +55,52 @@
 		</group>
 	</log>
 	-->
+	<log date="YYYY/MM/DD" version="0.79.1" type="rc" dummy="################################################################################">
+		<group type="note" dummy="==================================================================">
+			<note rev="">
+				<message></message>
+			</note>
+			<note rev="">
+				<message></message>
+			</note>
+			<note rev="">
+				<message></message>
+			</note>
+		</group>
+		<group type="features" dummy="==================================================================">
+			<note rev="">
+				<message></message>
+			</note>
+			<note rev="">
+				<message></message>
+			</note>
+			<note rev="">
+				<message></message>
+			</note>
+		</group>
+		<group type="fixes" dummy="==================================================================">
+			<note rev="">
+				<message></message>
+			</note>
+			<note rev="">
+				<message></message>
+			</note>
+			<note rev="">
+				<message></message>
+			</note>
+		</group>
+		<group type="developer" dummy="==================================================================">
+			<note rev="">
+				<message></message>
+			</note>
+			<note rev="">
+				<message></message>
+			</note>
+			<note rev="">
+				<message></message>
+			</note>
+		</group>
+	</log>
 	<log date="2016/05/18" version="0.79.0" dummy="################################################################################">
 		<group type="features" dummy="==================================================================">
 			<note rev="17f2f45d998dbf266ad0c5c40a6771d4f9ec1afe">
