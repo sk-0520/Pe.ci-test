@@ -126,6 +126,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         #region property
 
         MouseKeyHookCompatibility Hook { get; set; }
+        TimeSpan PrevHideToolbarKeyDownTime { get; set; } = TimeSpan.Zero;
 
         bool ResetToolbarRunning { get; set; }
         DateTime PrevResetToolbar { get; set; }
@@ -1625,6 +1626,33 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             return false;
         }
 
+        void ReceiveKeyDown(MouseKeyHookKeyEventArgs e)
+        {
+            CommonData.Logger.Information($"{e.Key}, {e.ModifierKeys}, {e.IsDown}");
+            if(e.Key == Key.Escape && e.IsDown) {
+                ReceiveKeyDownForHideToolbar(e);
+            }
+        }
+
+        void ReceiveKeyDownForHideToolbar(MouseKeyHookKeyEventArgs e)
+        {
+            var time = e.Timestamp - PrevHideToolbarKeyDownTime;
+            if(time < SystemInformation.DoubleClickTime) {
+                var hiddenView = false;
+                foreach(var toolbarView in LauncherToolbarWindows) {
+                    var viewModel = toolbarView.ViewModel;
+                    if(viewModel.DockType != DockType.None && viewModel.AutoHide) {
+                        toolbarView.Appbar.HideView(true);
+                        hiddenView = true;
+                    }
+                }
+                if(hiddenView) {
+                    SendInformationTips(CommonData.Language["notify/info/toolbar-force-hide/title"], CommonData.Language["notify/info/toolbar-force-hide/message"], LogKind.Information);
+                }
+            }
+            PrevHideToolbarKeyDownTime = e.Timestamp;
+        }
+
         #endregion
 
         #region ViewModelBase
@@ -2541,7 +2569,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         private void Hook_KeyDown(object sender, MouseKeyHookKeyEventArgs e)
         {
-            CommonData.Logger.Information($"{e.Key}, {e.ModifierKeys}, {e.IsDown}");
+            ReceiveKeyDown(e);
         }
 
     }
