@@ -93,8 +93,12 @@
 			<note rev="">
 				<message>#447: グループ内ランチャーアイテムを上下矢印UIで移動させると落ちる</message>
 				<comments>
-					<comment>ランチャーアイテム側で削除したアイテムがグループ配下側で内部的に保持されたまま不可視だったことが原因なのでこれを可視化して</comment>
+					<comment>ランチャーアイテム側で削除したアイテムがグループ配下側で内部的に保持されたまま不可視だったことが原因なのでこれを可視化した</comment>
+					<comment>ついでに #456 対応</comment>
 				</comments>
+			</note>
+			<note rev="">
+				<message>#456: グループ設定でノード操作時のちらつきを抑制</message>
 			</note>
 			<note rev="">
 				<message></message>
