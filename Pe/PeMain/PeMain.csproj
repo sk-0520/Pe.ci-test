@@ -1011,6 +1011,11 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Library\FormsCushion\FormsCushion.csproj">
+      <Project>{ec316a73-527d-43a9-b809-eb06257e4358}</Project>
+      <Name>FormsCushion</Name>
+      <Private>False</Private>
+    </ProjectReference>
     <ProjectReference Include="..\Library\Package\Package.csproj">
       <Project>{fbf5e5e8-2d88-45a7-b1ea-9e3fb68e97e4}</Project>
       <Name>Package</Name>

@@ -135,6 +135,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\FormsCushion\FormsCushion.csproj">
+      <Project>{ec316a73-527d-43a9-b809-eb06257e4358}</Project>
+      <Name>FormsCushion</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PeData\PeData.csproj">
       <Project>{b3c0d8c0-2382-4058-8cec-3c62de401c3f}</Project>
       <Name>PeData</Name>
