@@ -60,6 +60,7 @@ using ContentTypeTextNet.Pe.PeMain.Data.Model;
 using System.Net;
 using System.Text;
 using System.IO.Compression;
+using ContentTypeTextNet.Pe.Library.FormsCushion.MouseKeyHookCompatibility;
 
 namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 {
@@ -123,6 +124,8 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         }
 
         #region property
+
+        MouseKeyHookCompatibility Hook { get; set; }
 
         bool ResetToolbarRunning { get; set; }
         DateTime PrevResetToolbar { get; set; }
@@ -870,6 +873,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                     InitializeStatus();
                     CallPropertyChangeHotkey();
                     InitializeSystem();
+                    InitializeHook();
 
                     CreateMessage();
                     CreateLogger(null);
@@ -981,6 +985,21 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             SystemEvents.SessionSwitch -= SystemEvents_SessionSwitch;
             SystemEvents.SessionEnding -= SystemEvents_SessionEnding;
             SystemEvents.DisplaySettingsChanging -= SystemEvents_DisplaySettingsChanging;
+        }
+
+        void InitializeHook()
+        {
+            Hook = new MouseKeyHookCompatibility();
+
+            Hook.KeyDown += Hook_KeyDown;
+        }
+
+        void UninitializeHook()
+        {
+            if(Hook != null) {
+                Hook.Dispose();
+                Hook = null;
+            }
         }
 
         [Obsolete]
@@ -1612,6 +1631,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         protected override void Dispose(bool disposing)
         {
+            UninitializeHook();
             UninitializeSystem();
 
             if(!IsDisposed) {
@@ -2518,5 +2538,11 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             Application.Current.Exit -= Current_Exit;
             SystemEnvironmentUtility.ResetUsingBrowserVersionForExecutingAssembly();
         }
+
+        private void Hook_KeyDown(object sender, MouseKeyHookKeyEventArgs e)
+        {
+            CommonData.Logger.Information($"{e.Key}, {e.ModifierKeys}, {e.IsDown}");
+        }
+
     }
 }
