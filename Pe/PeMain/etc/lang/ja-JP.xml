@@ -125,7 +125,9 @@
 		<Item Id="notify/info/template/title"          Word="テンプレート" />
 		<Item Id="notify/info/template/message/show"   Word="ウィンドウの表示" />
 		<Item Id="notify/info/template/message/hide"   Word="ウィンドウの非表示" />
-
+		<Item Id="notify/info/toolbar-force-hide/title"     Word="ツールバー非表示" />
+		<Item Id="notify/info/toolbar-force-hide/message"   Word="自動的に隠す設定のツールバーを強制的に隠す状態に設定" />
+		
 		<Item Id="new/group-name" Word="新規グループ" />
 		<Item Id="new/template-name" Word="新規テンプレート" />
 		<Item Id="new/launcher-name" Word="ランチャーアイテム" />

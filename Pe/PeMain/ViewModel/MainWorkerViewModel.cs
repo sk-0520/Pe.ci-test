@@ -60,6 +60,7 @@ using ContentTypeTextNet.Pe.PeMain.Data.Model;
 using System.Net;
 using System.Text;
 using System.IO.Compression;
+using ContentTypeTextNet.Pe.Library.FormsCushion.MouseKeyHookCompatibility;
 
 namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 {
@@ -123,6 +124,9 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         }
 
         #region property
+
+        MouseKeyHookCompatibility Hook { get; set; }
+        TimeSpan PrevHideToolbarKeyDownTime { get; set; } = TimeSpan.Zero;
 
         bool ResetToolbarRunning { get; set; }
         DateTime PrevResetToolbar { get; set; }
@@ -870,6 +874,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                     InitializeStatus();
                     CallPropertyChangeHotkey();
                     InitializeSystem();
+                    InitializeHook();
 
                     CreateMessage();
                     CreateLogger(null);
@@ -981,6 +986,21 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             SystemEvents.SessionSwitch -= SystemEvents_SessionSwitch;
             SystemEvents.SessionEnding -= SystemEvents_SessionEnding;
             SystemEvents.DisplaySettingsChanging -= SystemEvents_DisplaySettingsChanging;
+        }
+
+        void InitializeHook()
+        {
+            Hook = new MouseKeyHookCompatibility();
+
+            Hook.KeyDown += Hook_KeyDown;
+        }
+
+        void UninitializeHook()
+        {
+            if(Hook != null) {
+                Hook.Dispose();
+                Hook = null;
+            }
         }
 
         [Obsolete]
@@ -1606,12 +1626,49 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             return false;
         }
 
+        /// <summary>
+        /// グローバルフック: キュー入力。
+        /// <para>ポーズ判定は各処理で実施する(処理によっては継続する可能性もあるので)。</para>
+        /// </summary>
+        /// <param name="e"></param>
+        void ReceiveHookKeyDown(MouseKeyHookKeyEventArgs e)
+        {
+            if(e.Key == Key.Escape && e.IsDown) {
+                ReceiveHookKeyDownForHideToolbar(e);
+            }
+        }
+
+        void ReceiveHookKeyDownForHideToolbar(MouseKeyHookKeyEventArgs e)
+        {
+            if(IsPause) {
+                PuaseOutputLog();
+                return;
+            }
+
+            var time = e.Timestamp - PrevHideToolbarKeyDownTime;
+            if(time < SystemInformation.DoubleClickTime) {
+                var hiddenView = false;
+                foreach(var toolbarView in LauncherToolbarWindows) {
+                    var viewModel = toolbarView.ViewModel;
+                    if(viewModel.DockType != DockType.None && viewModel.AutoHide && !viewModel.IsHidden && viewModel.IsVisible) {
+                        toolbarView.Appbar.HideView(true);
+                        hiddenView = true;
+                    }
+                }
+                if(hiddenView) {
+                    SendInformationTips(CommonData.Language["notify/info/toolbar-force-hide/title"], CommonData.Language["notify/info/toolbar-force-hide/message"], LogKind.Information);
+                }
+            }
+            PrevHideToolbarKeyDownTime = e.Timestamp;
+        }
+
         #endregion
 
         #region ViewModelBase
 
         protected override void Dispose(bool disposing)
         {
+            UninitializeHook();
             UninitializeSystem();
 
             if(!IsDisposed) {
@@ -2518,5 +2575,11 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             Application.Current.Exit -= Current_Exit;
             SystemEnvironmentUtility.ResetUsingBrowserVersionForExecutingAssembly();
         }
+
+        private void Hook_KeyDown(object sender, MouseKeyHookKeyEventArgs e)
+        {
+            ReceiveHookKeyDown(e);
+        }
+
     }
 }

@@ -78,36 +78,39 @@ namespace ContentTypeTextNet.Pe.Library.FormsCushion.MouseKeyHookCompatibility
             return result;
         }
 
-        void OnKeyCore(object sender, System.Windows.Forms.KeyEventArgs e, bool isDown)
+        void OnKeyCore(object sender, KeyEventArgsExt e)
         {
+            if(e.IsKeyDown) {
+                if(KeyDown == null) {
+                    return;
+                }
+            } else if(e.IsKeyUp) {
+                if(KeyUp == null) {
+                    return;
+                }
+            }
+
             var wpfKey = ConvertWpfKeyFromFromsKey(e.KeyValue);
             var wpfModKey = ConvertWpfModKeyFromFromsModKey(e.Modifiers);
+            var timestamp = TimeSpan.FromMilliseconds(e.Timestamp);
 
-            var usingEvent = new MouseKeyHookKeyEventArgs(sender, wpfKey, wpfModKey, isDown);
-
-            if(isDown) {
+            var usingEvent = new MouseKeyHookKeyEventArgs(sender, wpfKey, wpfModKey, e.IsKeyDown, timestamp);
+            
+            if(e.IsKeyDown) {
                 KeyDown(sender, usingEvent);
-            } else {
+            } else if(e.IsKeyUp){
                 KeyUp(sender, usingEvent);
             }
         }
 
-        private void OnKeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
+        private void OnKeyDown(object sender, KeyEventArgsExt e)
         {
-            if(KeyDown == null) {
-                return;
-            }
-
-            OnKeyCore(sender, e, true);
+            OnKeyCore(sender, e);
         }
 
-        private void OnKeyUp(object sender, KeyEventArgs e)
+        private void OnKeyUp(object sender, KeyEventArgsExt e)
         {
-            if(KeyUp == null) {
-                return;
-            }
-
-            OnKeyCore(sender, e, false);
+            OnKeyCore(sender, e);
         }
 
         #endregion
@@ -129,12 +132,12 @@ namespace ContentTypeTextNet.Pe.Library.FormsCushion.MouseKeyHookCompatibility
 
         private void HookEvent_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
         {
-            OnKeyDown(sender, e);
+            OnKeyDown(sender, (KeyEventArgsExt)e);
         }
 
         private void HookEvent_KeyUp(object sender, System.Windows.Forms.KeyEventArgs e)
         {
-            OnKeyUp(sender, e);
+            OnKeyUp(sender, (KeyEventArgsExt)e);
         }
     }
 }

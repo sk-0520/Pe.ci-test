@@ -25,11 +25,12 @@ namespace ContentTypeTextNet.Pe.Library.FormsCushion.MouseKeyHookCompatibility
 {
     public class MouseKeyHookKeyEventArgs: EventArgs
     {
-        public MouseKeyHookKeyEventArgs(object sender, Key key, ModifierKeys modifierKeys, bool isDown)
+        public MouseKeyHookKeyEventArgs(object sender, Key key, ModifierKeys modifierKeys, bool isDown, TimeSpan timestamp)
         {
             Key = key;
             ModifierKeys = modifierKeys;
             IsDown = isDown;
+            Timestamp = timestamp;
         }
 
         #region property
@@ -37,6 +38,7 @@ namespace ContentTypeTextNet.Pe.Library.FormsCushion.MouseKeyHookCompatibility
         public Key Key { get; }
         public ModifierKeys ModifierKeys { get; }
         public bool IsDown { get; }
+        public TimeSpan Timestamp { get; }
 
         #endregion
 
