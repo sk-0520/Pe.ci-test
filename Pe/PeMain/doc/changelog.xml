@@ -91,7 +91,10 @@
 				</comments>
 			</note>
 			<note rev="">
-				<message></message>
+				<message>#447: グループ内ランチャーアイテムを上下矢印UIで移動させると落ちる</message>
+				<comments>
+					<comment>ランチャーアイテム側で削除したアイテムがグループ配下側で内部的に保持されたまま不可視だったことが原因なのでこれを可視化して</comment>
+				</comments>
 			</note>
 			<note rev="">
 				<message></message>

@@ -382,6 +382,7 @@
 		<Item Id="toolbar-setting/group/node/up" Word="選択中ノードを上に移動" />
 		<Item Id="toolbar-setting/group/node/down" Word="選択中ノードを下に移動" />
 		<Item Id="toolbar-setting/group/node/remove" Word="選択中ノードを削除" />
+		<Item Id="toolbar-setting/group/item/not-found" Word="リンク切れアイテム(@[ID])" />
 		<Item Id="toolbar-setting/launcher/drop-mode" Word="ファイルD&amp;D時の挙動" />
 		<Item Id="toolbar-setting/launcher/drop-mode/window" Word="指定して実行ウィンドウを表示(_R)" />
 		<Item Id="toolbar-setting/launcher/drop-mode/arguments" Word="オプションとして実行(_O)" />

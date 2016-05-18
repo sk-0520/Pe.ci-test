@@ -61,6 +61,15 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                         if(Items.Contains(s)) {
                             var item = Items[s];
                             list.Add(new GroupItemViewMode(item, AppNonProcess));
+                        } else {
+                            var map = new Dictionary<string, string>() {
+                                { LanguageKey.settingGroupNotFoundItem, s.ToString() },
+                            };
+                            var item = new LauncherItemModel() {
+                                Id = s,
+                                Name = AppNonProcess.Language["toolbar-setting/group/item/not-found", map],
+                            };
+                            list.Add(new GroupItemViewMode(item, AppNonProcess));
                         }
                     }
 

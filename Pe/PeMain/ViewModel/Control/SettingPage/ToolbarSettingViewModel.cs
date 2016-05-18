@@ -436,6 +436,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control.SettingPage
             if(o == null) {
                 return;
             }
+
             var toolbarNode = (IToolbarNode)o;
             if(toolbarNode.ToolbarNodeKind == ToolbarNodeKind.Group) {
                 var groupViewModel = (GroupRootViewModel)toolbarNode;
@@ -555,7 +556,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control.SettingPage
             //	vm.Refresh();
             //}
             this._launcherItems = null;
-            OnPropertyChanged(nameof(LauncherItems));
+            CallOnPropertyChange(nameof(LauncherItems));
 
             foreach(var node in this._groupTree.SelectMany(t => t.Nodes)) {
                 node.Refresh();
