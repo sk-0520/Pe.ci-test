@@ -55,62 +55,53 @@
 		</group>
 	</log>
 	-->
-	<log date="YYYY/MM/DD" version="0.78.1" type="rc" dummy="################################################################################">
-		<group type="note" dummy="==================================================================">
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-		</group>
+	<log date="2016/05/18" version="0.79.0" dummy="################################################################################">
 		<group type="features" dummy="==================================================================">
-			<note rev="">
+			<note rev="17f2f45d998dbf266ad0c5c40a6771d4f9ec1afe">
 				<message>#350: ツールバーのメニューボタン「▼」の今後の身の振り方について</message>
 				<comments>
 					<comment>ツールバー設定からランチャーのメニューボタンを表示するかどうか設定可能にしました</comment>
 					<comment>メニューボタン非表示状態でメニューを表示するには「マウス中央ボタン」、「Shift + 右クリック」のどちらかの操作が必要です</comment>
 				</comments>
 			</note>
-			<note rev="">
+			<note rev="3cb7beb228d348d0557e2c33d35e03255fd10931">
 				<message>#449: ランチャーアイテムの並び順を保存時にソートする</message>
 			</note>
-			<note rev="">
+			<note rev="018e9be333d09bb4732be0c3195e465bbb76f115">
 				<message>#455: ツールバーを強制的に隠した状態にする</message>
 				<comments>
 					<comment>ツールバーの「自動的に隠す」が設定されている場合に ESC キーを二回入力すると表示中のツールバーが隠れた状態になります</comment>
 				</comments>
 			</note>
-			<note rev="">
-				<message></message>
+			<note rev="ab7dcc91053c6c622c76f550e633bce6649a31c0">
+				<message>#454: F1抑制機能を付ける</message>
+				<comments>
+					<comment>F1キーの誤入力を防ぐ機能です</comment>
+					<comment>本機能が有効な時にF1を入力したい場合は F1 を二回入力してください</comment>
+					<comment>設定箇所: 設定→本体設定→システム環境→F1キーを抑制</comment>
+				</comments>
 			</note>
 		</group>
 		<group type="fixes" dummy="==================================================================">
-			<note rev="">
+			<note rev="e60fdbe111507ab6f0be5bdf0f968710f93d0d58">
 				<message>#383: ツールバーに表示しきれずはみ出したアイテムに救いの手を差し伸べる</message>
 				<comments>
 					<comment>ツールバーのコンテキストメニューからはみ出したアイテムを選択できます</comment>
 					<comment>ただしこの場合は通常実行の挙動に限定されます</comment>
 				</comments>
 			</note>
-			<note rev="">
+			<note rev="46f4de86ff4829edd6d637e04331b49dc8062751">
 				<message>#447: グループ内ランチャーアイテムを上下矢印UIで移動させると落ちる</message>
 				<comments>
 					<comment>ランチャーアイテム側で削除したアイテムがグループ配下側で内部的に保持されたまま不可視だったことが原因なのでこれを可視化した</comment>
 					<comment>ついでに #456 対応</comment>
 				</comments>
 			</note>
-			<note rev="">
+			<note rev="bea456a776693cc4331dbd639fe8d730a448927c">
 				<message>#456: グループ設定でノード操作時のちらつきを抑制</message>
 			</note>
-			<note rev="">
+			<note rev="dfcdc936844ae25d8c94d7bdc9acb2f1519349bd">
 				<message>#450: ノートのサイズ変更枠ダブルクリックでもサイズ変更出来てしまう</message>
-			</note>
-			<note rev="">
-				<message></message>
 			</note>
 		</group>
 		<group type="developer" dummy="==================================================================">
@@ -120,10 +111,10 @@
 					<comment>なんか急にしたくなっただけ</comment>
 				</comments>
 			</note>
-			<note rev="">
+			<note rev="b5446023f209716ec684fd0f91ac34d1ca4773e9">
 				<message>[nuget] Extended.Wpf.Toolkit を 2.8.0 に更新</message>
 			</note>
-			<note rev="">
+			<note rev="17e9a097b60c769ef71c5660ff5b3771be43d9c5">
 				<message>#457: グローバルフック実装</message>
 				<comments>
 					<comment>Forms 版で使用していた Gma.System.MouseKeyHook を使用</comment>
