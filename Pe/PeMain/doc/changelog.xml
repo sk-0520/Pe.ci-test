@@ -91,7 +91,7 @@
 		</group>
 		<group type="developer" dummy="==================================================================">
 			<note rev="">
-				<message></message>
+				<message>[nuget] ICSharpCode.AvalonEdit を 5.0.3 に更新</message>
 			</note>
 			<note rev="">
 				<message></message>
