@@ -88,7 +88,7 @@ namespace ContentTypeTextNet.Pe.PeMain
         void box()
         {
             var canvas = ImageUtility.CreateBox(Colors.Red, Colors.Yellow, new Size(16, 16));
-            var box16 = ImageUtility.MakeBitmapBitmapSourceDefualtDpi(canvas);
+            var box16 = ImageUtility.MakeBitmapSourceDefualtDpi(canvas);
 
             var encoder = new PngBitmapEncoder();
             encoder.Frames.Add(BitmapFrame.Create(box16));
@@ -115,7 +115,7 @@ namespace ContentTypeTextNet.Pe.PeMain
             };
             foreach(var dt in dts) {
                 var icon = LauncherToolbarUtility.MakeDockIcon(dt, imageSize);
-                var image = ImageUtility.MakeBitmapBitmapSourceDefualtDpi(icon);
+                var image = ImageUtility.MakeBitmapSourceDefualtDpi(icon);
 
                 var encoder = new PngBitmapEncoder();
                 encoder.Frames.Add(BitmapFrame.Create(image));
