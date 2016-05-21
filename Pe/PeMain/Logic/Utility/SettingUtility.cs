@@ -374,7 +374,8 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 
         public static void InitializeLauncherItem(LauncherItemModel item, Version previousVersion, INonProcess nonProcess)
         {
-            Implement.InitializeLauncherItem.Correction(item, previousVersion, nonProcess);
+            var init = new Implement.InitializeLauncherItem(item, previousVersion, nonProcess);
+            init.Correction();
         }
 
         public static void InitializeLauncherGroupSetting(LauncherGroupSettingModel setting, Version previousVersion, INonProcess nonProcess)
