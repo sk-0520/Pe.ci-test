@@ -286,7 +286,8 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 
         private static void InitializeStreamSetting(StreamSettingModel setting, Version previousVersion, INonProcess nonProcess)
         {
-            Implement.InitializeStreamSetting.Correction(setting, previousVersion, nonProcess);
+            var init = new Implement.InitializeStreamSetting(setting, previousVersion, nonProcess);
+            init.Correction();
         }
 
         public static void InitializeToolbarSetting(ToolbarSettingModel setting, Version previousVersion, INonProcess nonProcess)

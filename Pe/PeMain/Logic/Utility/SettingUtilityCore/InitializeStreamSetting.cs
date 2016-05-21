@@ -26,44 +26,80 @@ using ContentTypeTextNet.Pe.Library.PeData.Item;
 
 namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
 {
-    internal static class InitializeStreamSetting
+    internal sealed class InitializeStreamSetting: InitializeBase<StreamSettingModel>
     {
-        internal static void Correction(StreamSettingModel setting, Version previousVersion, INonProcess nonProcess)
+        public InitializeStreamSetting(StreamSettingModel model, Version previousVersion, INonProcess nonProcess)
+            :base(model, previousVersion, nonProcess)
+        { }
+
+        #region InitializeBase
+
+        protected override void V_LastCore()
         {
-            V_First(setting, previousVersion, nonProcess);
-            V_Last(setting, previousVersion, nonProcess);
+            Model.Font.Size = Constants.streamFontSize.GetClamp(Model.Font.Size);
+
+            if(Model.OutputColor.ForeColor == default(Color)) {
+                Model.OutputColor.ForeColor = Constants.streamOutputColor.ForeColor;
+            }
+            if(Model.OutputColor.BackColor == default(Color)) {
+                Model.OutputColor.BackColor = Constants.streamOutputColor.BackColor;
+            }
+
+            if(Model.ErrorColor.ForeColor == default(Color)) {
+                Model.ErrorColor.ForeColor = Constants.streamErrorColor.ForeColor;
+            }
+            if(Model.ErrorColor.BackColor == default(Color)) {
+                Model.ErrorColor.BackColor = Constants.streamErrorColor.BackColor;
+            }
         }
 
-        static void V_Last(StreamSettingModel setting, Version previousVersion, INonProcess nonProcess)
+        protected override void V_FirstCore()
         {
-            setting.Font.Size = Constants.streamFontSize.GetClamp(setting.Font.Size);
-
-            if(setting.OutputColor.ForeColor == default(Color)) {
-                setting.OutputColor.ForeColor = Constants.streamOutputColor.ForeColor;
-            }
-            if(setting.OutputColor.BackColor == default(Color)) {
-                setting.OutputColor.BackColor = Constants.streamOutputColor.BackColor;
-            }
-
-            if(setting.ErrorColor.ForeColor == default(Color)) {
-                setting.ErrorColor.ForeColor = Constants.streamErrorColor.ForeColor;
-            }
-            if(setting.ErrorColor.BackColor == default(Color)) {
-                setting.ErrorColor.BackColor = Constants.streamErrorColor.BackColor;
-            }
-        }
-
-        private static void V_First(StreamSettingModel setting, Version previousVersion, INonProcess nonProcess)
-        {
-            if(previousVersion != null) {
-                return;
-            }
-
-            setting.Font.Size = Constants.streamFontSize.median;
+            Model.Font.Size = Constants.streamFontSize.median;
             //Constants.streamOutputColor.DeepCloneTo(setting.OutputColor);
             //Constants.streamErrorColor.DeepCloneTo(setting.ErrorColor);
-            setting.OutputColor = (ColorPairItemModel)Constants.streamOutputColor.DeepClone();
-            setting.ErrorColor = (ColorPairItemModel)Constants.streamErrorColor.DeepClone();
+            Model.OutputColor = (ColorPairItemModel)Constants.streamOutputColor.DeepClone();
+            Model.ErrorColor = (ColorPairItemModel)Constants.streamErrorColor.DeepClone();
         }
+
+        #endregion
+
+        //internal static void Correction(StreamSettingModel setting, Version previousVersion, INonProcess nonProcess)
+        //{
+        //    V_First(setting, previousVersion, nonProcess);
+        //    V_Last(setting, previousVersion, nonProcess);
+        //}
+
+        //static void V_Last(StreamSettingModel setting, Version previousVersion, INonProcess nonProcess)
+        //{
+        //    setting.Font.Size = Constants.streamFontSize.GetClamp(setting.Font.Size);
+
+        //    if(setting.OutputColor.ForeColor == default(Color)) {
+        //        setting.OutputColor.ForeColor = Constants.streamOutputColor.ForeColor;
+        //    }
+        //    if(setting.OutputColor.BackColor == default(Color)) {
+        //        setting.OutputColor.BackColor = Constants.streamOutputColor.BackColor;
+        //    }
+
+        //    if(setting.ErrorColor.ForeColor == default(Color)) {
+        //        setting.ErrorColor.ForeColor = Constants.streamErrorColor.ForeColor;
+        //    }
+        //    if(setting.ErrorColor.BackColor == default(Color)) {
+        //        setting.ErrorColor.BackColor = Constants.streamErrorColor.BackColor;
+        //    }
+        //}
+
+        //private static void V_First(StreamSettingModel setting, Version previousVersion, INonProcess nonProcess)
+        //{
+        //    if(previousVersion != null) {
+        //        return;
+        //    }
+
+        //    setting.Font.Size = Constants.streamFontSize.median;
+        //    //Constants.streamOutputColor.DeepCloneTo(setting.OutputColor);
+        //    //Constants.streamErrorColor.DeepCloneTo(setting.ErrorColor);
+        //    setting.OutputColor = (ColorPairItemModel)Constants.streamOutputColor.DeepClone();
+        //    setting.ErrorColor = (ColorPairItemModel)Constants.streamErrorColor.DeepClone();
+        //}
     }
 }
