@@ -24,22 +24,36 @@ using ContentTypeTextNet.Pe.Library.PeData.Setting;
 
 namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
 {
-    internal static class InitializeTemplateIndexSetting
+    internal sealed class InitializeTemplateIndexSetting: InitializeBase<TemplateIndexSettingModel>
     {
-        public static void Correction(TemplateIndexSettingModel setting, Version previousVersion, INonProcess nonProcess)
-        {
-            V_First(setting, previousVersion, nonProcess);
-            V_Last(setting, previousVersion, nonProcess);
-        }
-
-        static void V_Last(TemplateIndexSettingModel setting, Version previousVersion, INonProcess nonProcess)
+        public InitializeTemplateIndexSetting(TemplateIndexSettingModel model, Version previousVersion, INonProcess nonProcess)
+            : base(model, previousVersion, nonProcess)
         { }
 
-        static void V_First(TemplateIndexSettingModel setting, Version previousVersion, INonProcess nonProcess)
-        {
-            if(previousVersion != null) {
-                return;
-            }
-        }
+        #region InitializeBase
+
+        protected override void V_LastCore()
+        { }
+
+        protected override void V_FirstCore()
+        { }
+
+        #endregion
+
+        //public static void Correction(TemplateIndexSettingModel setting, Version previousVersion, INonProcess nonProcess)
+        //{
+        //    V_First(setting, previousVersion, nonProcess);
+        //    V_Last(setting, previousVersion, nonProcess);
+        //}
+
+        //static void V_Last(TemplateIndexSettingModel setting, Version previousVersion, INonProcess nonProcess)
+        //{ }
+
+        //static void V_First(TemplateIndexSettingModel setting, Version previousVersion, INonProcess nonProcess)
+        //{
+        //    if(previousVersion != null) {
+        //        return;
+        //    }
+        //}
     }
 }

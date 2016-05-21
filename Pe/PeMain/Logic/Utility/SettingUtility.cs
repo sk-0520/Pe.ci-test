@@ -418,7 +418,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 
         public static void InitializeTemplateIndexSetting(TemplateIndexSettingModel setting, Version previousVersion, INonProcess nonProcess)
         {
-            Implement.InitializeTemplateIndexSetting.Correction(setting, previousVersion, nonProcess);
+            var initSetting = new Implement.InitializeTemplateIndexSetting(setting, previousVersion, nonProcess);
+            initSetting.Correction();
+
             foreach(var templateItem in setting.Items) {
                 InitializeTemplateIndexSetting(templateItem, previousVersion, nonProcess);
             }
