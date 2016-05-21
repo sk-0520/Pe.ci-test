@@ -26,37 +26,63 @@ using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
 
 namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
 {
-    internal static class InitializeCommandSetting
+    internal sealed class InitializeCommandSetting: InitializeBase<CommandSettingModel>
     {
-        public static void Correction(CommandSettingModel setting, Version previousVersion, INonProcess nonProcess)
+        public InitializeCommandSetting(CommandSettingModel setting, Version previousVersion, INonProcess nonProcess)
+            :base(setting, previousVersion, nonProcess)
+        { }
+
+        #region InitializeBase
+
+        protected override void V_LastCore()
         {
-            V_First(setting, previousVersion, nonProcess);
-            V_Last(setting, previousVersion, nonProcess);
+            Model.IconScale = EnumUtility.GetNormalization(Model.IconScale, IconScale.Small);
+            Model.WindowWidth = Constants.commandWindowWidth.GetClamp(Model.WindowWidth);
+            Model.Font.Size = Constants.commandFontSize.GetClamp(Model.Font.Size);
+            Model.HideTime = Constants.commandHideTime.GetClamp(Model.HideTime);
         }
 
-        static void V_Last(CommandSettingModel setting, Version previousVersion, INonProcess nonProcess)
+        protected override void V_FirstCore()
         {
-            setting.IconScale = EnumUtility.GetNormalization(setting.IconScale, IconScale.Small);
-            setting.WindowWidth = Constants.commandWindowWidth.GetClamp(setting.WindowWidth);
-            setting.Font.Size = Constants.commandFontSize.GetClamp(setting.Font.Size);
-            setting.HideTime = Constants.commandHideTime.GetClamp(setting.HideTime);
-
+            Model.IconScale = IconScale.Small;
+            Model.HideTime = Constants.commandHideTime.median;
+            Model.WindowWidth = Constants.commandWindowWidth.median;
+            Model.Font.Size = Constants.commandFontSize.median;
+            Model.FindTag = true;
+            Model.FindFile = false;
         }
 
-        static void V_First(CommandSettingModel setting, Version previousVersion, INonProcess nonProcess)
-        {
-            if(previousVersion != null) {
-                return;
-            }
+        #endregion
 
-            nonProcess.Logger.Trace("version setting: first");
+        //public static void Correction(CommandSettingModel setting, Version previousVersion, INonProcess nonProcess)
+        //{
+        //    V_First(setting, previousVersion, nonProcess);
+        //    V_Last(setting, previousVersion, nonProcess);
+        //}
 
-            setting.IconScale = IconScale.Small;
-            setting.HideTime = Constants.commandHideTime.median;
-            setting.WindowWidth = Constants.commandWindowWidth.median;
-            setting.Font.Size = Constants.commandFontSize.median;
-            setting.FindTag = true;
-            setting.FindFile = false;
-        }
+        //static void V_Last(CommandSettingModel setting, Version previousVersion, INonProcess nonProcess)
+        //{
+        //    setting.IconScale = EnumUtility.GetNormalization(setting.IconScale, IconScale.Small);
+        //    setting.WindowWidth = Constants.commandWindowWidth.GetClamp(setting.WindowWidth);
+        //    setting.Font.Size = Constants.commandFontSize.GetClamp(setting.Font.Size);
+        //    setting.HideTime = Constants.commandHideTime.GetClamp(setting.HideTime);
+
+        //}
+
+        //static void V_First(CommandSettingModel setting, Version previousVersion, INonProcess nonProcess)
+        //{
+        //    if(previousVersion != null) {
+        //        return;
+        //    }
+
+        //    nonProcess.Logger.Trace("version setting: first");
+
+        //    setting.IconScale = IconScale.Small;
+        //    setting.HideTime = Constants.commandHideTime.median;
+        //    setting.WindowWidth = Constants.commandWindowWidth.median;
+        //    setting.Font.Size = Constants.commandFontSize.median;
+        //    setting.FindTag = true;
+        //    setting.FindFile = false;
+        //}
     }
 }

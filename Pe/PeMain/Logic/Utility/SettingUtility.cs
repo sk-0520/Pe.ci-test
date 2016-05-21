@@ -325,7 +325,8 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 
         public static void InitializeCommandSetting(CommandSettingModel setting, Version previousVersion, INonProcess nonProcess)
         {
-            Implement.InitializeCommandSetting.Correction(setting, previousVersion, nonProcess);
+            var init = new Implement.InitializeCommandSetting(setting, previousVersion, nonProcess);
+            init.Correction();
         }
 
         private static void InitializeGeneralSetting(GeneralSettingModel setting, Version previousVersion, INonProcess nonProcess)
