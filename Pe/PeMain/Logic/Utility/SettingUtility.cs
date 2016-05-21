@@ -408,7 +408,8 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 
         public static void InitializeNoteIndexItem(NoteIndexItemModel indexItem, Version previousVersion, INonProcess nonProcess)
         {
-            Implement.InitializeNoteIndexItem.Correction(indexItem, previousVersion, nonProcess);
+            var init = new Implement.InitializeNoteIndexItem(indexItem, previousVersion, nonProcess);
+            init.Correction();
         }
 
         public static void InitializeTemplateIndexSetting(TemplateIndexSettingModel setting, Version previousVersion, INonProcess nonProcess)
