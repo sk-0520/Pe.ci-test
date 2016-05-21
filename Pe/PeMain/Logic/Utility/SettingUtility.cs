@@ -426,7 +426,8 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 
         public static void InitializeClipboardIndexItem(ClipboardIndexItemModel clipboardItend, Version previousVersion, INonProcess nonProcess)
         {
-            Implement.InitializeClipboardIndexItem.Correction(clipboardItend, previousVersion, nonProcess);
+            var init = new Implement.InitializeClipboardIndexItem(clipboardItend, previousVersion, nonProcess);
+            init.Correction();
         }
 
         #endregion

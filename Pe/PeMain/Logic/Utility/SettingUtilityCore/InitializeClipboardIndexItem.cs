@@ -24,32 +24,51 @@ using ContentTypeTextNet.Pe.Library.PeData.Item;
 
 namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
 {
-    internal static class InitializeClipboardIndexItem
+    internal class InitializeClipboardIndexItem: InitializeBase<ClipboardIndexItemModel>
     {
-        public static void Correction(ClipboardIndexItemModel model, Version previousVersion, INonProcess nonProcess)
-        {
-            V_First(model, previousVersion, nonProcess);
-            V_0_70_0(model, previousVersion, nonProcess);
-            V_Last(model, previousVersion, nonProcess);
-        }
-
-        static void V_Last(ClipboardIndexItemModel model, Version previousVersion, INonProcess nonProcess)
+        public InitializeClipboardIndexItem(ClipboardIndexItemModel model, Version previousVersion, INonProcess nonProcess)
+            : base(model, previousVersion, nonProcess)
         { }
 
-        static void V_First(ClipboardIndexItemModel model, Version previousVersion, INonProcess nonProcess)
+        #region InitializeBase
+
+        protected override void V_LastCore()
+        { }
+
+        protected override void V_FirstCore()
+        { }
+
+        protected override void V_0_70_0Core()
         {
-            if(previousVersion != null) {
-                return;
-            }
+            Model.Sort = Model.History.CreateTimestamp;
         }
 
-        private static void V_0_70_0(ClipboardIndexItemModel model, Version previousVersion, INonProcess nonProcess)
-        {
-            if(new Version(0,70, 0, 40764) < previousVersion) {
-                return;
-            }
+        #endregion
 
-            model.Sort = model.History.CreateTimestamp;
-        }
+        //public static void Correction(ClipboardIndexItemModel model, Version previousVersion, INonProcess nonProcess)
+        //{
+        //    V_First(model, previousVersion, nonProcess);
+        //    V_0_70_0(model, previousVersion, nonProcess);
+        //    V_Last(model, previousVersion, nonProcess);
+        //}
+
+        //static void V_Last(ClipboardIndexItemModel model, Version previousVersion, INonProcess nonProcess)
+        //{ }
+
+        //static void V_First(ClipboardIndexItemModel model, Version previousVersion, INonProcess nonProcess)
+        //{
+        //    if(previousVersion != null) {
+        //        return;
+        //    }
+        //}
+
+        //private static void V_0_70_0(ClipboardIndexItemModel model, Version previousVersion, INonProcess nonProcess)
+        //{
+        //    if(new Version(0,70, 0, 40764) < previousVersion) {
+        //        return;
+        //    }
+
+        //    model.Sort = model.History.CreateTimestamp;
+        //}
     }
 }
