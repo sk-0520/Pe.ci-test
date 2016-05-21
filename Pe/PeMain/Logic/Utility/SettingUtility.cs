@@ -308,7 +308,8 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 
         public static void InitializeWindowSaveSetting(WindowSaveSettingModel model, Version previousVersion, INonProcess nonProcess)
         {
-            Implement.InitializeWindowSaveSetting.Correction(model, previousVersion, nonProcess);
+            var init = new Implement.InitializeWindowSaveSetting(model, previousVersion, nonProcess);
+            init.Correction();
         }
 
         public static void InitializeNoteSetting(NoteSettingModel model, Version previousVersion, INonProcess nonProcess)
