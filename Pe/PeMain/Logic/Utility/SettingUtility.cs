@@ -292,7 +292,8 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 
         public static void InitializeToolbarSetting(ToolbarSettingModel setting, Version previousVersion, INonProcess nonProcess)
         {
-            Implement.InitializeToolbarSetting.Correction(setting, previousVersion, nonProcess);
+            var initSetting = new Implement.InitializeToolbarSetting(setting, previousVersion, nonProcess);
+            initSetting.Correction();
 
             foreach(var toolbar in setting.Items) {
                 InitializeToolbarItem(toolbar, previousVersion, nonProcess);
