@@ -453,6 +453,7 @@
     <Compile Include="Logic\Utility\LauncherToolbarUtility.cs" />
     <Compile Include="Logic\Utility\NoteUtility.cs" />
     <Compile Include="Logic\Utility\PopupUtility.cs" />
+    <Compile Include="Logic\Utility\SettingUtilityCore\InitializeBase.cs" />
     <Compile Include="Logic\Utility\SettingUtilityCore\InitializeClipboardIndexItem.cs" />
     <Compile Include="Logic\Utility\SettingUtilityCore\InitializeCommandSetting.cs" />
     <Compile Include="Logic\Utility\SettingUtilityCore\InitializeLauncherGroupItem.cs" />
