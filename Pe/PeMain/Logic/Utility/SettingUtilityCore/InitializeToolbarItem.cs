@@ -29,71 +29,119 @@ using ContentTypeTextNet.Pe.Library.PeData.Setting;
 
 namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
 {
-    internal static class InitializeToolbarItem
+    internal sealed class InitializeToolbarItem: InitializeBase<ToolbarItemModel>
     {
-        public static void Correction(ToolbarItemModel setting, Version previousVersion, INonProcess nonProcess)
+        public InitializeToolbarItem(ToolbarItemModel model, Version previousVersion, INonProcess nonProcess)
+            : base(model, previousVersion, nonProcess)
+        { }
+
+        #region InitializeBase
+
+        protected override void V_LastCore()
         {
-            V_First(setting, previousVersion, nonProcess);
+            Model.HideWaitTime = Constants.toolbarHideWaitTime.GetClamp(Model.HideWaitTime);
+            Model.HideAnimateTime = Constants.toolbarHideAnimateTime.GetClamp(Model.HideAnimateTime);
+            Model.Font.Size = Constants.toolbarFontSize.GetClamp(Model.Font.Size);
+            Model.IconScale = EnumUtility.GetNormalization(Model.IconScale, IconScale.Normal);
+            Model.TextWidth = Constants.toolbarTextLength.GetClamp((int)Model.TextWidth);
+            Model.ButtonPosition = EnumUtility.GetNormalization(Model.ButtonPosition, ToolbarButtonPosition.Near);
 
-            V_0_78_0(setting, previousVersion, nonProcess);
-
-            V_Last(setting, previousVersion, nonProcess);
-        }
-
-        static void V_Last(ToolbarItemModel setting, Version previousVersion, INonProcess nonProcess)
-        {
-            setting.HideWaitTime = Constants.toolbarHideWaitTime.GetClamp(setting.HideWaitTime);
-            setting.HideAnimateTime = Constants.toolbarHideAnimateTime.GetClamp(setting.HideAnimateTime);
-            setting.Font.Size = Constants.toolbarFontSize.GetClamp(setting.Font.Size);
-            setting.IconScale = EnumUtility.GetNormalization(setting.IconScale, IconScale.Normal);
-            setting.TextWidth = Constants.toolbarTextLength.GetClamp((int)setting.TextWidth);
-            setting.ButtonPosition = EnumUtility.GetNormalization(setting.ButtonPosition, ToolbarButtonPosition.Near);
-
-            if(SettingUtility.IsIllegalPlusNumber(setting.FloatToolbar.WidthButtonCount)) {
-                setting.FloatToolbar.WidthButtonCount = 1;
+            if(SettingUtility.IsIllegalPlusNumber(Model.FloatToolbar.WidthButtonCount)) {
+                Model.FloatToolbar.WidthButtonCount = 1;
             }
-            if(SettingUtility.IsIllegalPlusNumber(setting.FloatToolbar.HeightButtonCount)) {
-                setting.FloatToolbar.HeightButtonCount = 1;
+            if(SettingUtility.IsIllegalPlusNumber(Model.FloatToolbar.HeightButtonCount)) {
+                Model.FloatToolbar.HeightButtonCount = 1;
             }
         }
 
-        /// <summary>
-        /// 0.78.0.27501 以下のバージョン補正。
-        /// </summary>
-        /// <param name="setting"></param>
-        /// <param name="previousVersion"></param>
-        /// <param name="nonProcess"></param>
-        static void V_0_78_0(ToolbarItemModel setting, Version previousVersion, INonProcess nonProcess)
+        protected override void V_FirstCore()
         {
-            if(new Version(0, 78, 0, 27501) < previousVersion) {
-                return;
-            }
-
-            nonProcess.Logger.Trace("version setting: 0.78.0");
-
-            setting.IsVisibleMenuButton = true;
+            Model.IsVisible = true;
+            Model.IsTopmost = true;
+            Model.TextWidth = Constants.toolbarTextLength.median;
+            Model.IconScale = IconScale.Normal;
+            Model.HideWaitTime = Constants.toolbarHideWaitTime.median;
+            Model.HideAnimateTime = Constants.toolbarHideAnimateTime.median;
+            Model.Font.Size = Constants.toolbarFontSize.median;
+            Model.FloatToolbar.WidthButtonCount = 1;
+            Model.FloatToolbar.HeightButtonCount = 1;
+            Model.DockType = DockType.Right;
+            Model.DefaultGroupId = Guid.Empty;
+            Model.MenuPositionCorrection = true;
+            Model.ButtonPosition = ToolbarButtonPosition.Near;
+            Model.IsVisibleMenuButton = true;
         }
 
-        static void V_First(ToolbarItemModel setting, Version previousVersion, INonProcess nonProcess)
+        protected override void V_0_78_0Core()
         {
-            if(previousVersion != null) {
-                return;
-            }
-
-            setting.IsVisible = true;
-            setting.IsTopmost = true;
-            setting.TextWidth = Constants.toolbarTextLength.median;
-            setting.IconScale = IconScale.Normal;
-            setting.HideWaitTime = Constants.toolbarHideWaitTime.median;
-            setting.HideAnimateTime = Constants.toolbarHideAnimateTime.median;
-            setting.Font.Size = Constants.toolbarFontSize.median;
-            setting.FloatToolbar.WidthButtonCount = 1;
-            setting.FloatToolbar.HeightButtonCount = 1;
-            setting.DockType = DockType.Right;
-            setting.DefaultGroupId = Guid.Empty;
-            setting.MenuPositionCorrection = true;
-            setting.ButtonPosition = ToolbarButtonPosition.Near;
-            setting.IsVisibleMenuButton = true;
+            Model.IsVisibleMenuButton = true;
         }
+
+        #endregion
+
+        //public static void Correction(ToolbarItemModel setting, Version previousVersion, INonProcess nonProcess)
+        //{
+        //    V_First(setting, previousVersion, nonProcess);
+
+        //    V_0_78_0(setting, previousVersion, nonProcess);
+
+        //    V_Last(setting, previousVersion, nonProcess);
+        //}
+
+        //static void V_Last(ToolbarItemModel setting, Version previousVersion, INonProcess nonProcess)
+        //{
+        //    setting.HideWaitTime = Constants.toolbarHideWaitTime.GetClamp(setting.HideWaitTime);
+        //    setting.HideAnimateTime = Constants.toolbarHideAnimateTime.GetClamp(setting.HideAnimateTime);
+        //    setting.Font.Size = Constants.toolbarFontSize.GetClamp(setting.Font.Size);
+        //    setting.IconScale = EnumUtility.GetNormalization(setting.IconScale, IconScale.Normal);
+        //    setting.TextWidth = Constants.toolbarTextLength.GetClamp((int)setting.TextWidth);
+        //    setting.ButtonPosition = EnumUtility.GetNormalization(setting.ButtonPosition, ToolbarButtonPosition.Near);
+
+        //    if(SettingUtility.IsIllegalPlusNumber(setting.FloatToolbar.WidthButtonCount)) {
+        //        setting.FloatToolbar.WidthButtonCount = 1;
+        //    }
+        //    if(SettingUtility.IsIllegalPlusNumber(setting.FloatToolbar.HeightButtonCount)) {
+        //        setting.FloatToolbar.HeightButtonCount = 1;
+        //    }
+        //}
+
+        ///// <summary>
+        ///// 0.78.0.27501 以下のバージョン補正。
+        ///// </summary>
+        ///// <param name="setting"></param>
+        ///// <param name="previousVersion"></param>
+        ///// <param name="nonProcess"></param>
+        //static void V_0_78_0(ToolbarItemModel setting, Version previousVersion, INonProcess nonProcess)
+        //{
+        //    if(new Version(0, 78, 0, 27501) < previousVersion) {
+        //        return;
+        //    }
+
+        //    nonProcess.Logger.Trace("version setting: 0.78.0");
+
+        //    setting.IsVisibleMenuButton = true;
+        //}
+
+        //static void V_First(ToolbarItemModel setting, Version previousVersion, INonProcess nonProcess)
+        //{
+        //    if(previousVersion != null) {
+        //        return;
+        //    }
+
+        //    setting.IsVisible = true;
+        //    setting.IsTopmost = true;
+        //    setting.TextWidth = Constants.toolbarTextLength.median;
+        //    setting.IconScale = IconScale.Normal;
+        //    setting.HideWaitTime = Constants.toolbarHideWaitTime.median;
+        //    setting.HideAnimateTime = Constants.toolbarHideAnimateTime.median;
+        //    setting.Font.Size = Constants.toolbarFontSize.median;
+        //    setting.FloatToolbar.WidthButtonCount = 1;
+        //    setting.FloatToolbar.HeightButtonCount = 1;
+        //    setting.DockType = DockType.Right;
+        //    setting.DefaultGroupId = Guid.Empty;
+        //    setting.MenuPositionCorrection = true;
+        //    setting.ButtonPosition = ToolbarButtonPosition.Near;
+        //    setting.IsVisibleMenuButton = true;
+        //}
     }
 }

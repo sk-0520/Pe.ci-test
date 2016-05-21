@@ -301,7 +301,8 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 
         public static void InitializeToolbarItem(ToolbarItemModel model, Version previousVersion, INonProcess nonProcess)
         {
-            Implement.InitializeToolbarItem.Correction(model, previousVersion, nonProcess);
+            var init = new Implement.InitializeToolbarItem(model, previousVersion, nonProcess);
+            init.Correction();
         }
 
         public static void InitializeWindowSaveSetting(WindowSaveSettingModel model, Version previousVersion, INonProcess nonProcess)
