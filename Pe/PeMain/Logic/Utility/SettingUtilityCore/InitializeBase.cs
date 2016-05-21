@@ -83,6 +83,8 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
                 return;
             }
 
+            NonProcess.Logger.Trace($"Correction: {typeof(TModel).Name} - first");
+
             Correction_First();
         }
 
@@ -110,6 +112,8 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
             if(targetVersion < PreviousVersion) {
                 return;
             }
+
+            NonProcess.Logger.Trace($"Correction: {typeof(TModel).Name} - {targetVersion}");
 
             action();
         }
