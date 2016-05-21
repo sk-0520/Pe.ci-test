@@ -280,7 +280,8 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 
         public static void InitializeLoggingSetting(LoggingSettingModel setting, Version previousVersion, INonProcess nonProcess)
         {
-            Implement.InitializeLoggingSetting.Correction(setting, previousVersion, nonProcess);
+            var init = new Implement.InitializeLoggingSetting(setting, previousVersion, nonProcess);
+            init.Correction();
         }
 
         private static void InitializeStreamSetting(StreamSettingModel setting, Version previousVersion, INonProcess nonProcess)

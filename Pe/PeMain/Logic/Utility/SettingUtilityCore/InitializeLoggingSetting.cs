@@ -24,42 +24,74 @@ using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
 
 namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
 {
-    public static class InitializeLoggingSetting
+    internal sealed class InitializeLoggingSetting: InitializeBase<LoggingSettingModel>
     {
-        public static void Correction(LoggingSettingModel setting, Version previousVersion, INonProcess nonProcess)
+        public InitializeLoggingSetting(LoggingSettingModel setting, Version previousVersion, INonProcess nonProcess)
+            :base(setting, previousVersion, nonProcess)
+        { }
+
+        #region InitializeLoggingSetting
+
+        protected override void V_LastCore()
         {
-            V_First(setting, previousVersion, nonProcess);
-            V_Last(setting, previousVersion, nonProcess);
+            if(SettingUtility.IsIllegalPlusNumber(Model.WindowWidth)) {
+                Model.WindowWidth = Constants.loggingDefaultWindowSize.Width;
+            }
+            if(SettingUtility.IsIllegalPlusNumber(Model.WindowHeight)) {
+                Model.WindowHeight = Constants.loggingDefaultWindowSize.Height;
+            }
         }
 
-        static void V_Last(LoggingSettingModel setting, Version previousVersion, INonProcess nonProcess)
+        protected override void V_FirstCore()
         {
-            if(SettingUtility.IsIllegalPlusNumber(setting.WindowWidth)) {
-                setting.WindowWidth = Constants.loggingDefaultWindowSize.Width;
-            }
-            if(SettingUtility.IsIllegalPlusNumber(setting.WindowHeight)) {
-                setting.WindowHeight = Constants.loggingDefaultWindowSize.Height;
-            }
+            Model.WindowWidth = Constants.loggingDefaultWindowSize.Width;
+            Model.WindowHeight = Constants.loggingDefaultWindowSize.Height;
+            Model.AddShow = true;
+            Model.IsVisible = false;
+            Model.ShowTriggerDebug = false;
+            Model.ShowTriggerTrace = false;
+            Model.ShowTriggerInformation = false;
+            Model.ShowTriggerWarning = true;
+            Model.ShowTriggerError = true;
+            Model.ShowTriggerFatal = true;
         }
 
-        static void V_First(LoggingSettingModel setting, Version previousVersion, INonProcess nonProcess)
-        {
-            if(previousVersion != null) {
-                return;
-            }
+        #endregion
 
-            nonProcess.Logger.Trace("version setting: first");
+        //public static void Correction(LoggingSettingModel setting, Version previousVersion, INonProcess nonProcess)
+        //{
+        //    V_First(setting, previousVersion, nonProcess);
+        //    V_Last(setting, previousVersion, nonProcess);
+        //}
 
-            setting.WindowWidth = Constants.loggingDefaultWindowSize.Width;
-            setting.WindowHeight = Constants.loggingDefaultWindowSize.Height;
-            setting.AddShow = true;
-            setting.IsVisible = false;
-            setting.ShowTriggerDebug = false;
-            setting.ShowTriggerTrace = false;
-            setting.ShowTriggerInformation = false;
-            setting.ShowTriggerWarning = true;
-            setting.ShowTriggerError = true;
-            setting.ShowTriggerFatal = true;
-        }
+        //static void V_Last(LoggingSettingModel setting, Version previousVersion, INonProcess nonProcess)
+        //{
+        //    if(SettingUtility.IsIllegalPlusNumber(setting.WindowWidth)) {
+        //        setting.WindowWidth = Constants.loggingDefaultWindowSize.Width;
+        //    }
+        //    if(SettingUtility.IsIllegalPlusNumber(setting.WindowHeight)) {
+        //        setting.WindowHeight = Constants.loggingDefaultWindowSize.Height;
+        //    }
+        //}
+
+        //static void V_First(LoggingSettingModel setting, Version previousVersion, INonProcess nonProcess)
+        //{
+        //    if(previousVersion != null) {
+        //        return;
+        //    }
+
+        //    nonProcess.Logger.Trace("version setting: first");
+
+        //    setting.WindowWidth = Constants.loggingDefaultWindowSize.Width;
+        //    setting.WindowHeight = Constants.loggingDefaultWindowSize.Height;
+        //    setting.AddShow = true;
+        //    setting.IsVisible = false;
+        //    setting.ShowTriggerDebug = false;
+        //    setting.ShowTriggerTrace = false;
+        //    setting.ShowTriggerInformation = false;
+        //    setting.ShowTriggerWarning = true;
+        //    setting.ShowTriggerError = true;
+        //    setting.ShowTriggerFatal = true;
+        //}
     }
 }
