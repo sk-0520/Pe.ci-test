@@ -24,44 +24,80 @@ using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
 
 namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
 {
-    internal static class InitializeTemplateSetting
+    internal sealed class InitializeTemplateSetting: InitializeBase<TemplateSettingModel>
     {
-        public static void Correction(TemplateSettingModel setting, Version previousVersion, INonProcess nonProcess)
+        public InitializeTemplateSetting(TemplateSettingModel model, Version previousVersion, INonProcess nonProcess)
+            :base(model, previousVersion, nonProcess)
+        { }
+
+        #region InitializeBase
+
+        protected override void V_LastCore()
         {
-            V_First(setting, previousVersion, nonProcess);
-            V_Last(setting, previousVersion, nonProcess);
+            Model.Font.Size = Constants.templateFontSize.GetClamp(Model.Font.Size);
+
+            if(SettingUtility.IsIllegalPlusNumber(Model.ItemsListWidth)) {
+                Model.ItemsListWidth = Constants.templateItemsListWidth;
+            }
+            if(SettingUtility.IsIllegalPlusNumber(Model.ReplaceListWidth)) {
+                Model.ReplaceListWidth = Constants.templateReplaceListWidth;
+            }
+
+            if(SettingUtility.IsIllegalPlusNumber(Model.WindowWidth)) {
+                Model.WindowWidth = Constants.templateDefaultWindowSize.Width;
+            }
+            if(SettingUtility.IsIllegalPlusNumber(Model.WindowHeight)) {
+                Model.WindowHeight = Constants.templateDefaultWindowSize.Height;
+            }
         }
 
-        static void V_Last(TemplateSettingModel setting, Version previousVersion, INonProcess nonProcess)
+        protected override void V_FirstCore()
         {
-            setting.Font.Size = Constants.templateFontSize.GetClamp(setting.Font.Size);
-
-            if(SettingUtility.IsIllegalPlusNumber(setting.ItemsListWidth)) {
-                setting.ItemsListWidth = Constants.templateItemsListWidth;
-            }
-            if(SettingUtility.IsIllegalPlusNumber(setting.ReplaceListWidth)) {
-                setting.ReplaceListWidth = Constants.templateReplaceListWidth;
-            }
-
-            if(SettingUtility.IsIllegalPlusNumber(setting.WindowWidth)) {
-                setting.WindowWidth = Constants.templateDefaultWindowSize.Width;
-            }
-            if(SettingUtility.IsIllegalPlusNumber(setting.WindowHeight)) {
-                setting.WindowHeight = Constants.templateDefaultWindowSize.Height;
-            }
+            Model.Font.Size = Constants.templateFontSize.median;
+            Model.ItemsListWidth = Constants.templateItemsListWidth;
+            Model.ReplaceListWidth = Constants.templateReplaceListWidth;
+            Model.WindowWidth = Constants.templateDefaultWindowSize.Width;
+            Model.WindowHeight = Constants.templateDefaultWindowSize.Height;
         }
 
-        static void V_First(TemplateSettingModel setting, Version previousVersion, INonProcess nonProcess)
-        {
-            if(previousVersion != null) {
-                return;
-            }
+        #endregion
 
-            setting.Font.Size = Constants.templateFontSize.median;
-            setting.ItemsListWidth = Constants.templateItemsListWidth;
-            setting.ReplaceListWidth = Constants.templateReplaceListWidth;
-            setting.WindowWidth = Constants.templateDefaultWindowSize.Width;
-            setting.WindowHeight = Constants.templateDefaultWindowSize.Height;
-        }
+        //public static void Correction(TemplateSettingModel setting, Version previousVersion, INonProcess nonProcess)
+        //{
+        //    V_First(setting, previousVersion, nonProcess);
+        //    V_Last(setting, previousVersion, nonProcess);
+        //}
+
+        //static void V_Last(TemplateSettingModel setting, Version previousVersion, INonProcess nonProcess)
+        //{
+        //    setting.Font.Size = Constants.templateFontSize.GetClamp(setting.Font.Size);
+
+        //    if(SettingUtility.IsIllegalPlusNumber(setting.ItemsListWidth)) {
+        //        setting.ItemsListWidth = Constants.templateItemsListWidth;
+        //    }
+        //    if(SettingUtility.IsIllegalPlusNumber(setting.ReplaceListWidth)) {
+        //        setting.ReplaceListWidth = Constants.templateReplaceListWidth;
+        //    }
+
+        //    if(SettingUtility.IsIllegalPlusNumber(setting.WindowWidth)) {
+        //        setting.WindowWidth = Constants.templateDefaultWindowSize.Width;
+        //    }
+        //    if(SettingUtility.IsIllegalPlusNumber(setting.WindowHeight)) {
+        //        setting.WindowHeight = Constants.templateDefaultWindowSize.Height;
+        //    }
+        //}
+
+        //static void V_First(TemplateSettingModel setting, Version previousVersion, INonProcess nonProcess)
+        //{
+        //    if(previousVersion != null) {
+        //        return;
+        //    }
+
+        //    setting.Font.Size = Constants.templateFontSize.median;
+        //    setting.ItemsListWidth = Constants.templateItemsListWidth;
+        //    setting.ReplaceListWidth = Constants.templateReplaceListWidth;
+        //    setting.WindowWidth = Constants.templateDefaultWindowSize.Width;
+        //    setting.WindowHeight = Constants.templateDefaultWindowSize.Height;
+        //}
     }
 }

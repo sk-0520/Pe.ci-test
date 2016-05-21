@@ -323,7 +323,8 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 
         public static void InitializeTemplateSetting(TemplateSettingModel setting, Version previousVersion, INonProcess nonProcess)
         {
-            Implement.InitializeTemplateSetting.Correction(setting, previousVersion, nonProcess);
+            var init = new Implement.InitializeTemplateSetting(setting, previousVersion, nonProcess);
+            init.Correction();
         }
 
         public static void InitializeCommandSetting(CommandSettingModel setting, Version previousVersion, INonProcess nonProcess)
