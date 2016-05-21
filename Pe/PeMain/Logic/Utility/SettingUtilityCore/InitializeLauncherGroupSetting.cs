@@ -32,7 +32,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
 
         #region InitializeBase
 
-        protected override void V_LastCore()
+        protected override void Correction_Last()
         {
             if(!Model.Groups.Any()) {
                 var initGroup = SettingUtility.CreateLauncherGroup(Model.Groups, NonProcess);
@@ -41,31 +41,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
             }
         }
 
-        protected override void V_FirstCore()
+        protected override void Correction_First()
         { }
 
         #endregion
-
-        //public static void Correction(LauncherGroupSettingModel setting, Version previousVersion, INonProcess nonProcess)
-        //{
-        //    V_First(setting, previousVersion, nonProcess);
-        //    V_Last(setting, previousVersion, nonProcess);
-        //}
-
-        //static void V_Last(LauncherGroupSettingModel setting, Version previousVersion, INonProcess nonProcess)
-        //{
-        //    if(!setting.Groups.Any()) {
-        //        var initGroup = SettingUtility.CreateLauncherGroup(setting.Groups, nonProcess);
-
-        //        setting.Groups.Add(initGroup);
-        //    }
-        //}
-
-        //static void V_First(LauncherGroupSettingModel setting, Version previousVersion, INonProcess nonProcess)
-        //{
-        //    if(previousVersion != null) {
-        //        return;
-        //    }
-        //}
     }
 }

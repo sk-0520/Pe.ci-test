@@ -34,69 +34,25 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
 
         #region InitializeBase
 
-        protected override void V_LastCore()
+        protected override void Correction_Last()
         {
             Model.GroupKind = EnumUtility.GetNormalization(Model.GroupKind, GroupKind.LauncherItems);
             Model.GroupIconType = EnumUtility.GetNormalization(Model.GroupIconType, LauncherGroupIconType.File);
         }
 
-        protected override void V_FirstCore()
+        protected override void Correction_First()
         {
             Model.GroupKind = GroupKind.LauncherItems;
             Model.GroupIconType = Constants.launcherGroupIconType;
             Model.GroupIconColor = Constants.launcherGroupIconColor;
         }
 
-        protected override void V_0_77_0Core()
+        protected override void Correction_0_77_0()
         {
             Model.GroupIconType = Constants.launcherGroupIconType;
             Model.GroupIconColor = Constants.launcherGroupIconColor;
         }
 
         #endregion
-
-        //public static void Correction(LauncherGroupItemModel item, Version previousVersion, INonProcess nonProcess)
-        //{
-        //    V_First(item, previousVersion, nonProcess);
-
-        //    V_0_77_0(item, previousVersion, nonProcess);
-
-        //    V_Last(item, previousVersion, nonProcess);
-        //}
-
-        //static void V_Last(LauncherGroupItemModel item, Version previousVersion, INonProcess nonProcess)
-        //{
-        //    item.GroupKind = EnumUtility.GetNormalization(item.GroupKind, GroupKind.LauncherItems);
-        //    item.GroupIconType = EnumUtility.GetNormalization(item.GroupIconType, LauncherGroupIconType.File);
-        //}
-
-        ///// <summary>
-        ///// 0.77.0.340 以下のバージョン補正。
-        ///// </summary>
-        ///// <param name="item"></param>
-        ///// <param name="previousVersion"></param>
-        ///// <param name="nonProcess"></param>
-        //static void V_0_77_0(LauncherGroupItemModel item, Version previousVersion, INonProcess nonProcess)
-        //{
-        //    if(new Version(0, 77, 0, 340) < previousVersion) {
-        //        return;
-        //    }
-
-        //    nonProcess.Logger.Trace("version setting: 0.77.0");
-
-        //    item.GroupIconType = Constants.launcherGroupIconType;
-        //    item.GroupIconColor = Constants.launcherGroupIconColor;
-        //}
-
-        //static void V_First(LauncherGroupItemModel item, Version previousVersion, INonProcess nonProcess)
-        //{
-        //    if(previousVersion != null) {
-        //        return;
-        //    }
-
-        //    item.GroupKind = GroupKind.LauncherItems;
-        //    item.GroupIconType = Constants.launcherGroupIconType;
-        //    item.GroupIconColor = Constants.launcherGroupIconColor;
-        //}
     }
 }

@@ -34,7 +34,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
 
         #region InitializeBase
 
-        protected override void V_LastCore()
+        protected override void Correction_Last()
         {
             Model.IconScale = EnumUtility.GetNormalization(Model.IconScale, IconScale.Small);
             Model.WindowWidth = Constants.commandWindowWidth.GetClamp(Model.WindowWidth);
@@ -42,7 +42,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
             Model.HideTime = Constants.commandHideTime.GetClamp(Model.HideTime);
         }
 
-        protected override void V_FirstCore()
+        protected override void Correction_First()
         {
             Model.IconScale = IconScale.Small;
             Model.HideTime = Constants.commandHideTime.median;
@@ -53,36 +53,5 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
         }
 
         #endregion
-
-        //public static void Correction(CommandSettingModel setting, Version previousVersion, INonProcess nonProcess)
-        //{
-        //    V_First(setting, previousVersion, nonProcess);
-        //    V_Last(setting, previousVersion, nonProcess);
-        //}
-
-        //static void V_Last(CommandSettingModel setting, Version previousVersion, INonProcess nonProcess)
-        //{
-        //    setting.IconScale = EnumUtility.GetNormalization(setting.IconScale, IconScale.Small);
-        //    setting.WindowWidth = Constants.commandWindowWidth.GetClamp(setting.WindowWidth);
-        //    setting.Font.Size = Constants.commandFontSize.GetClamp(setting.Font.Size);
-        //    setting.HideTime = Constants.commandHideTime.GetClamp(setting.HideTime);
-
-        //}
-
-        //static void V_First(CommandSettingModel setting, Version previousVersion, INonProcess nonProcess)
-        //{
-        //    if(previousVersion != null) {
-        //        return;
-        //    }
-
-        //    nonProcess.Logger.Trace("version setting: first");
-
-        //    setting.IconScale = IconScale.Small;
-        //    setting.HideTime = Constants.commandHideTime.median;
-        //    setting.WindowWidth = Constants.commandWindowWidth.median;
-        //    setting.Font.Size = Constants.commandFontSize.median;
-        //    setting.FindTag = true;
-        //    setting.FindFile = false;
-        //}
     }
 }

@@ -33,27 +33,14 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
 
         #region InitializeGeneralSetting
 
-        protected override void V_LastCore()
+        protected override void Correction_Last()
         { }
 
-        protected override void V_FirstCore()
+        protected override void Correction_First()
         {
             Model.Notification = Notification.None;
         }
 
         #endregion
-
-        //static void V_Last(GeneralSettingModel setting, Version previousVersion, INonProcess nonProcess)
-        //{
-        //}
-
-        //static void V_First(GeneralSettingModel setting, Version previousVersion, INonProcess nonProcess)
-        //{
-        //    if(previousVersion != null) {
-        //        return;
-        //    }
-
-        //    setting.Notification = Notification.None;
-        //}
     }
 }

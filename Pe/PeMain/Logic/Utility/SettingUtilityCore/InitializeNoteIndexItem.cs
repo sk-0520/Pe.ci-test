@@ -35,7 +35,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
 
         #region InitializeNoteIndexItem
 
-        protected override void V_LastCore()
+        protected override void Correction_Last()
         {
             Model.NoteKind = EnumUtility.GetNormalization(Model.NoteKind, NoteKind.Text);
             Model.Font.Size = Constants.noteFontSize.GetClamp(Model.Font.Size);
@@ -52,7 +52,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
             }
         }
 
-        protected override void V_FirstCore()
+        protected override void Correction_First()
         {
             Model.NoteKind = NoteKind.Text;
             //indexItem.Font.Size = Constants.noteFontSize.median;
@@ -65,64 +65,11 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
             Model.AutoLineFeed = true;
         }
 
-        protected override void V_0_69_0Core()
+        protected override void Correction_0_69_0()
         {
             Model.AutoLineFeed = true;
         }
 
         #endregion
-
-        //public static void Correction(NoteIndexItemModel indexItem, Version previousVersion, INonProcess nonProcess)
-        //{
-        //    V_First(indexItem, previousVersion, nonProcess);
-        //    V_0_69_0(indexItem, previousVersion, nonProcess);
-        //    V_Last(indexItem, previousVersion, nonProcess);
-        //}
-
-        //static void V_Last(NoteIndexItemModel indexItem, Version previousVersion, INonProcess nonProcess)
-        //{
-        //    indexItem.NoteKind = EnumUtility.GetNormalization(indexItem.NoteKind, NoteKind.Text);
-        //    indexItem.Font.Size = Constants.noteFontSize.GetClamp(indexItem.Font.Size);
-
-        //    if(string.IsNullOrWhiteSpace(indexItem.Font.Family)) {
-        //        indexItem.Font.Family = FontUtility.GetOriginalFontFamilyName(SystemFonts.MessageFontFamily);
-        //    }
-
-        //    if(SettingUtility.IsIllegalPlusNumber(indexItem.WindowWidth)) {
-        //        indexItem.WindowWidth = Constants.noteDefualtSize.Width;
-        //    }
-        //    if(SettingUtility.IsIllegalPlusNumber(indexItem.WindowHeight)) {
-        //        indexItem.WindowHeight = Constants.noteDefualtSize.Height;
-        //    }
-        //}
-
-        //static void V_First(NoteIndexItemModel indexItem, Version previousVersion, INonProcess nonProcess)
-        //{
-        //    if(previousVersion != null) {
-        //        return;
-        //    }
-
-        //    indexItem.NoteKind = NoteKind.Text;
-        //    //indexItem.Font.Size = Constants.noteFontSize.median;
-        //    //indexItem.Font.Family = FontUtility.GetOriginalFontFamilyName(SystemFonts.MessageFontFamily);
-        //    //indexItem.WindowWidth = Constants.noteDefualtSize.Width;
-        //    //indexItem.WindowHeight = Constants.noteDefualtSize.Height;
-        //    indexItem.IsLocked = false;
-        //    indexItem.IsCompacted = false;
-        //    indexItem.IsTopmost = false;
-        //    indexItem.AutoLineFeed = true;
-        //}
-
-        //static void V_0_69_0(NoteIndexItemModel indexItem, Version previousVersion, INonProcess nonProcess)
-        //{
-        //    if(new Version(0,69,0,38641) < previousVersion) {
-        //        return;
-        //    }
-
-        //    nonProcess.Logger.Trace("version setting: 0.69.0");
-
-        //    indexItem.AutoLineFeed = true;
-        //}
-
     }
 }

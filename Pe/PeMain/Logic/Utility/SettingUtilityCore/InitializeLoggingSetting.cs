@@ -32,7 +32,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
 
         #region InitializeLoggingSetting
 
-        protected override void V_LastCore()
+        protected override void Correction_Last()
         {
             if(SettingUtility.IsIllegalPlusNumber(Model.WindowWidth)) {
                 Model.WindowWidth = Constants.loggingDefaultWindowSize.Width;
@@ -42,7 +42,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
             }
         }
 
-        protected override void V_FirstCore()
+        protected override void Correction_First()
         {
             Model.WindowWidth = Constants.loggingDefaultWindowSize.Width;
             Model.WindowHeight = Constants.loggingDefaultWindowSize.Height;
@@ -57,41 +57,5 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
         }
 
         #endregion
-
-        //public static void Correction(LoggingSettingModel setting, Version previousVersion, INonProcess nonProcess)
-        //{
-        //    V_First(setting, previousVersion, nonProcess);
-        //    V_Last(setting, previousVersion, nonProcess);
-        //}
-
-        //static void V_Last(LoggingSettingModel setting, Version previousVersion, INonProcess nonProcess)
-        //{
-        //    if(SettingUtility.IsIllegalPlusNumber(setting.WindowWidth)) {
-        //        setting.WindowWidth = Constants.loggingDefaultWindowSize.Width;
-        //    }
-        //    if(SettingUtility.IsIllegalPlusNumber(setting.WindowHeight)) {
-        //        setting.WindowHeight = Constants.loggingDefaultWindowSize.Height;
-        //    }
-        //}
-
-        //static void V_First(LoggingSettingModel setting, Version previousVersion, INonProcess nonProcess)
-        //{
-        //    if(previousVersion != null) {
-        //        return;
-        //    }
-
-        //    nonProcess.Logger.Trace("version setting: first");
-
-        //    setting.WindowWidth = Constants.loggingDefaultWindowSize.Width;
-        //    setting.WindowHeight = Constants.loggingDefaultWindowSize.Height;
-        //    setting.AddShow = true;
-        //    setting.IsVisible = false;
-        //    setting.ShowTriggerDebug = false;
-        //    setting.ShowTriggerTrace = false;
-        //    setting.ShowTriggerInformation = false;
-        //    setting.ShowTriggerWarning = true;
-        //    setting.ShowTriggerError = true;
-        //    setting.ShowTriggerFatal = true;
-        //}
     }
 }

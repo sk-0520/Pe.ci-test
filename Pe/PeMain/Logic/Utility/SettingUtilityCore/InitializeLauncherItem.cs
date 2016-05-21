@@ -34,7 +34,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
 
         #region InitializeBase
 
-        protected override void V_LastCore()
+        protected override void Correction_Last()
         {
             Model.LauncherKind = EnumUtility.GetNormalization(Model.LauncherKind, LauncherKind.File);
             // あるだけ
@@ -47,66 +47,17 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
             }
         }
 
-        protected override void V_FirstCore()
+        protected override void Correction_First()
         {
             Model.LauncherKind = LauncherKind.File;
             Model.IsCommandAutocomplete = true;
         }
 
-        protected override void V_0_77_0Core()
+        protected override void Correction_0_77_0()
         {
             Model.IsCommandAutocomplete = true;
         }
 
         #endregion
-
-        //public static void Correction(LauncherItemModel item, Version previousVersion, INonProcess nonProcess)
-        //{
-        //    V_First(item, previousVersion, nonProcess);
-
-        //    V_0_77_0(item, previousVersion, nonProcess);
-
-        //    V_Last(item, previousVersion, nonProcess);
-        //}
-
-        //static void V_Last(LauncherItemModel item, Version previousVersion, INonProcess nonProcess)
-        //{
-        //    item.LauncherKind = EnumUtility.GetNormalization(item.LauncherKind, LauncherKind.File);
-        //    // あるだけ
-        //    if(item.LauncherKind == LauncherKind.Directory) {
-        //        item.LauncherKind = LauncherKind.File;
-        //    }
-
-        //    if(SettingUtility.IsIllegalString(item.Command)) {
-        //        item.Command = string.Empty;
-        //    }
-        //}
-
-        ///// <summary>
-        ///// 0.77.0.340 以下のバージョン補正。
-        ///// </summary>
-        ///// <param name="item"></param>
-        ///// <param name="previousVersion"></param>
-        ///// <param name="nonProcess"></param>
-        //static void V_0_77_0(LauncherItemModel item, Version previousVersion, INonProcess nonProcess)
-        //{
-        //    if(new Version(0, 77, 0, 340) < previousVersion) {
-        //        return;
-        //    }
-
-        //    nonProcess.Logger.Trace("version setting: 0.77.0");
-
-        //    item.IsCommandAutocomplete = true;
-        //}
-
-        //static void V_First(LauncherItemModel item, Version previousVersion, INonProcess nonProcess)
-        //{
-        //    if(previousVersion != null) {
-        //        return;
-        //    }
-
-        //    item.LauncherKind = LauncherKind.File;
-        //    item.IsCommandAutocomplete = true;
-        //}
     }
 }

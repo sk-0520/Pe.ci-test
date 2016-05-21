@@ -32,7 +32,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
 
         #region InitializeBase
 
-        protected override void V_LastCore()
+        protected override void Correction_Last()
         {
             Model.Font.Size = Constants.templateFontSize.GetClamp(Model.Font.Size);
 
@@ -51,7 +51,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
             }
         }
 
-        protected override void V_FirstCore()
+        protected override void Correction_First()
         {
             Model.Font.Size = Constants.templateFontSize.median;
             Model.ItemsListWidth = Constants.templateItemsListWidth;
@@ -61,43 +61,5 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
         }
 
         #endregion
-
-        //public static void Correction(TemplateSettingModel setting, Version previousVersion, INonProcess nonProcess)
-        //{
-        //    V_First(setting, previousVersion, nonProcess);
-        //    V_Last(setting, previousVersion, nonProcess);
-        //}
-
-        //static void V_Last(TemplateSettingModel setting, Version previousVersion, INonProcess nonProcess)
-        //{
-        //    setting.Font.Size = Constants.templateFontSize.GetClamp(setting.Font.Size);
-
-        //    if(SettingUtility.IsIllegalPlusNumber(setting.ItemsListWidth)) {
-        //        setting.ItemsListWidth = Constants.templateItemsListWidth;
-        //    }
-        //    if(SettingUtility.IsIllegalPlusNumber(setting.ReplaceListWidth)) {
-        //        setting.ReplaceListWidth = Constants.templateReplaceListWidth;
-        //    }
-
-        //    if(SettingUtility.IsIllegalPlusNumber(setting.WindowWidth)) {
-        //        setting.WindowWidth = Constants.templateDefaultWindowSize.Width;
-        //    }
-        //    if(SettingUtility.IsIllegalPlusNumber(setting.WindowHeight)) {
-        //        setting.WindowHeight = Constants.templateDefaultWindowSize.Height;
-        //    }
-        //}
-
-        //static void V_First(TemplateSettingModel setting, Version previousVersion, INonProcess nonProcess)
-        //{
-        //    if(previousVersion != null) {
-        //        return;
-        //    }
-
-        //    setting.Font.Size = Constants.templateFontSize.median;
-        //    setting.ItemsListWidth = Constants.templateItemsListWidth;
-        //    setting.ReplaceListWidth = Constants.templateReplaceListWidth;
-        //    setting.WindowWidth = Constants.templateDefaultWindowSize.Width;
-        //    setting.WindowHeight = Constants.templateDefaultWindowSize.Height;
-        //}
     }
 }

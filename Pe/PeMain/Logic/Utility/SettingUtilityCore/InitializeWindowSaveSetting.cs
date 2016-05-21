@@ -32,13 +32,13 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
 
         #region InitializeBase
 
-        protected override void V_LastCore()
+        protected override void Correction_Last()
         {
             Model.SaveCount = Constants.windowSaveCount.GetClamp(Model.SaveCount);
             Model.SaveIntervalTime = Constants.windowSaveIntervalTime.GetClamp(Model.SaveIntervalTime);
         }
 
-        protected override void V_FirstCore()
+        protected override void Correction_First()
         {
             Model.IsEnabled = true;
             Model.SaveCount = Constants.windowSaveCount.median;
@@ -46,28 +46,5 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
         }
 
         #endregion
-
-        //public static void Correction(WindowSaveSettingModel setting, Version previousVersion, INonProcess nonProcess)
-        //{
-        //    V_First(setting, previousVersion, nonProcess);
-        //    V_Last(setting, previousVersion, nonProcess);
-        //}
-
-        //static void V_Last(WindowSaveSettingModel setting, Version previousVersion, INonProcess nonProcess)
-        //{
-        //    setting.SaveCount = Constants.windowSaveCount.GetClamp(setting.SaveCount);
-        //    setting.SaveIntervalTime = Constants.windowSaveIntervalTime.GetClamp(setting.SaveIntervalTime);
-        //}
-
-        //static void V_First(WindowSaveSettingModel setting, Version previousVersion, INonProcess nonProcess)
-        //{
-        //    if(previousVersion != null) {
-        //        return;
-        //    }
-
-        //    setting.IsEnabled = true;
-        //    setting.SaveCount = Constants.windowSaveCount.median;
-        //    setting.SaveIntervalTime = Constants.windowSaveIntervalTime.median;
-        //}
     }
 }

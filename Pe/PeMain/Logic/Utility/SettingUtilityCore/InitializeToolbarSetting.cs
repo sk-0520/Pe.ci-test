@@ -32,28 +32,12 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
 
         #region InitializeBase
 
-        protected override void V_LastCore()
+        protected override void Correction_Last()
         { }
 
-        protected override void V_FirstCore()
+        protected override void Correction_First()
         { }
 
         #endregion
-
-        //public static void Correction(ToolbarSettingModel setting, Version previousVersion, INonProcess nonProcess)
-        //{
-        //    V_First(setting, previousVersion, nonProcess);
-        //    V_Last(setting, previousVersion, nonProcess);
-        //}
-
-        //static void V_Last(ToolbarSettingModel setting, Version previousVersion, INonProcess nonProcess)
-        //{ }
-
-        //static void V_First(ToolbarSettingModel setting, Version previousVersion, INonProcess nonProcess)
-        //{
-        //    if(previousVersion != null) {
-        //        return;
-        //    }
-        //}
     }
 }

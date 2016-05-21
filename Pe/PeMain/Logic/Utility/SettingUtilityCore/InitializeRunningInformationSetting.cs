@@ -33,7 +33,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
 
         #region InitializeBase
 
-        protected override void V_LastCore()
+        protected override void Correction_Last()
         {
             if(!SettingUtility.CheckUserId(Model)) {
                 Model.UserId = SettingUtility.CreateUserIdFromEnvironment();
@@ -45,12 +45,12 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
             }
         }
 
-        protected override void V_FirstCore()
+        protected override void Correction_First()
         {
             Model.UserId = SettingUtility.CreateUserIdFromEnvironment();
         }
 
-        protected override void V_0_71_0Core()
+        protected override void Correction_0_71_0()
         {
             Model.UserId = SettingUtility.CreateUserIdFromEnvironment();
             Model.FirstRunning = new FirstRunningItemModel() {
@@ -60,48 +60,5 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
         }
 
         #endregion
-
-        //public static void Correction(RunningInformationSettingModel setting, Version previousVersion, INonProcess nonProcess)
-        //{
-        //    V_First(setting, previousVersion, nonProcess);
-        //    V_0_71_0(setting, previousVersion, nonProcess);
-        //    V_Last(setting, previousVersion, nonProcess);
-        //}
-
-        //static void V_Last(RunningInformationSettingModel setting, Version previousVersion, INonProcess nonProcess)
-        //{
-        //    if(!SettingUtility.CheckUserId(setting)) {
-        //        setting.UserId = SettingUtility.CreateUserIdFromEnvironment();
-        //    }
-
-        //    if(setting.FirstRunning.Version == null) {
-        //        setting.FirstRunning.Timestamp = DateTime.Now;
-        //        setting.FirstRunning.Version = Constants.ApplicationVersionNumber;
-        //    }
-        //}
-
-        //private static void V_0_71_0(RunningInformationSettingModel setting, Version previousVersion, INonProcess nonProcess)
-        //{
-        //    if(new Version(0,71,0,27279) < previousVersion) {
-        //        return;
-        //    }
-
-        //    nonProcess.Logger.Trace("version setting: 0.71.0");
-
-        //    setting.UserId = SettingUtility.CreateUserIdFromEnvironment();
-        //    setting.FirstRunning = new FirstRunningItemModel() {
-        //        Timestamp = DateTime.Now,
-        //        Version = previousVersion
-        //    };
-        //}
-
-        //static void V_First(RunningInformationSettingModel setting, Version previousVersion, INonProcess nonProcess)
-        //{
-        //    if(previousVersion != null) {
-        //        return;
-        //    }
-
-        //    setting.UserId = SettingUtility.CreateUserIdFromEnvironment();
-        //}
     }
 }
