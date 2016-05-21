@@ -46,10 +46,10 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
             Model.TextWidth = Constants.toolbarTextLength.GetClamp((int)Model.TextWidth);
             Model.ButtonPosition = EnumUtility.GetNormalization(Model.ButtonPosition, ToolbarButtonPosition.Near);
 
-            if(SettingUtility.IsIllegalPlusNumber(Model.FloatToolbar.WidthButtonCount)) {
+            if(IsIllegalPlusNumber(Model.FloatToolbar.WidthButtonCount)) {
                 Model.FloatToolbar.WidthButtonCount = 1;
             }
-            if(SettingUtility.IsIllegalPlusNumber(Model.FloatToolbar.HeightButtonCount)) {
+            if(IsIllegalPlusNumber(Model.FloatToolbar.HeightButtonCount)) {
                 Model.FloatToolbar.HeightButtonCount = 1;
             }
         }

@@ -42,7 +42,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
                 Model.LauncherKind = LauncherKind.File;
             }
 
-            if(SettingUtility.IsIllegalString(Model.Command)) {
+            if(IsIllegalString(Model.Command)) {
                 Model.Command = string.Empty;
             }
         }

@@ -36,17 +36,17 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
         {
             Model.Font.Size = Constants.templateFontSize.GetClamp(Model.Font.Size);
 
-            if(SettingUtility.IsIllegalPlusNumber(Model.ItemsListWidth)) {
+            if(IsIllegalPlusNumber(Model.ItemsListWidth)) {
                 Model.ItemsListWidth = Constants.templateItemsListWidth;
             }
-            if(SettingUtility.IsIllegalPlusNumber(Model.ReplaceListWidth)) {
+            if(IsIllegalPlusNumber(Model.ReplaceListWidth)) {
                 Model.ReplaceListWidth = Constants.templateReplaceListWidth;
             }
 
-            if(SettingUtility.IsIllegalPlusNumber(Model.WindowWidth)) {
+            if(IsIllegalPlusNumber(Model.WindowWidth)) {
                 Model.WindowWidth = Constants.templateDefaultWindowSize.Width;
             }
-            if(SettingUtility.IsIllegalPlusNumber(Model.WindowHeight)) {
+            if(IsIllegalPlusNumber(Model.WindowHeight)) {
                 Model.WindowHeight = Constants.templateDefaultWindowSize.Height;
             }
         }

@@ -42,14 +42,14 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
             Model.Font.Size = Constants.clipboardFontSize.GetClamp(Model.Font.Size);
             //setting.CaptureType = EnumUtility.GetNormalization(setting.CaptureType, Constants.clipboardCaptureType);
 
-            if(SettingUtility.IsIllegalPlusNumber(Model.ItemsListWidth)) {
+            if(IsIllegalPlusNumber(Model.ItemsListWidth)) {
                 Model.ItemsListWidth = Constants.clipboardItemsListWidth;
             }
 
-            if(SettingUtility.IsIllegalPlusNumber(Model.WindowWidth)) {
+            if(IsIllegalPlusNumber(Model.WindowWidth)) {
                 Model.WindowWidth = Constants.clipboardDefaultWindowSize.Width;
             }
-            if(SettingUtility.IsIllegalPlusNumber(Model.WindowHeight)) {
+            if(IsIllegalPlusNumber(Model.WindowHeight)) {
                 Model.WindowHeight = Constants.clipboardDefaultWindowSize.Height;
             }
 

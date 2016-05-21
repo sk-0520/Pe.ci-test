@@ -44,10 +44,10 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
                 Model.Font.Family = FontUtility.GetOriginalFontFamilyName(SystemFonts.MessageFontFamily);
             }
 
-            if(SettingUtility.IsIllegalPlusNumber(Model.WindowWidth)) {
+            if(IsIllegalPlusNumber(Model.WindowWidth)) {
                 Model.WindowWidth = Constants.noteDefualtSize.Width;
             }
-            if(SettingUtility.IsIllegalPlusNumber(Model.WindowHeight)) {
+            if(IsIllegalPlusNumber(Model.WindowHeight)) {
                 Model.WindowHeight = Constants.noteDefualtSize.Height;
             }
         }

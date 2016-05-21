@@ -50,25 +50,6 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 
         #endregion
 
-        #region check
-
-        internal static bool IsIllegalPlusNumber(double number)
-        {
-            return double.IsNaN(number) || number <= 0;
-        }
-
-        internal static bool IsIllegalPlusNumber(int number)
-        {
-            return number <= 0;
-        }
-
-        internal static bool IsIllegalString(string s)
-        {
-            return s == null;
-        }
-
-        #endregion
-
         #region function
 
         public static bool CheckAccept(RunningInformationSettingModel model, INonProcess nonProcess)

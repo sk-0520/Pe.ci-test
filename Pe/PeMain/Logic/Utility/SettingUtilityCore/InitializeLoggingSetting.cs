@@ -34,10 +34,10 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
 
         protected override void Correction_Last()
         {
-            if(SettingUtility.IsIllegalPlusNumber(Model.WindowWidth)) {
+            if(IsIllegalPlusNumber(Model.WindowWidth)) {
                 Model.WindowWidth = Constants.loggingDefaultWindowSize.Width;
             }
-            if(SettingUtility.IsIllegalPlusNumber(Model.WindowHeight)) {
+            if(IsIllegalPlusNumber(Model.WindowHeight)) {
                 Model.WindowHeight = Constants.loggingDefaultWindowSize.Height;
             }
         }

@@ -53,6 +53,21 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
 
         #region function
 
+        protected static bool IsIllegalPlusNumber(double number)
+        {
+            return double.IsNaN(number) || number <= 0;
+        }
+
+        protected static bool IsIllegalPlusNumber(int number)
+        {
+            return number <= 0;
+        }
+
+        protected static bool IsIllegalString(string s)
+        {
+            return s == null;
+        }
+
         /// <summary>
         /// 補正処理実施。
         /// </summary>
