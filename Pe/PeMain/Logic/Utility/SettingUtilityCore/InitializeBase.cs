@@ -86,11 +86,26 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
 
         void V_Upper()
         {
+            V_0_65_0();
             V_0_70_0();
         }
 
         /// <summary>
-        /// 設定データが 0.70.0.40764 以下のバージョン補正。
+        /// 設定データが 0.65.0 以下のバージョン補正。
+        /// </summary>
+        protected virtual void V_0_65_0Core()
+        { }
+        void V_0_65_0()
+        {
+            if(new Version(0, 65, 0, 43015) < PreviousVersion) {
+                return;
+            }
+
+            V_0_65_0Core();
+        }
+
+        /// <summary>
+        /// 設定データが 0.70.0 以下のバージョン補正。
         /// </summary>
         protected virtual void V_0_70_0Core()
         { }

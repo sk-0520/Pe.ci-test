@@ -314,7 +314,8 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 
         public static void InitializeClipboardSetting(ClipboardSettingModel setting, Version previousVersion, INonProcess nonProcess)
         {
-            Implement.InitializeClipboardSetting.Correction(setting, previousVersion, nonProcess);
+            var init = new Implement.InitializeClipboardSetting(setting, previousVersion, nonProcess);
+            init.Correction();
         }
 
         public static void InitializeTemplateSetting(TemplateSettingModel setting, Version previousVersion, INonProcess nonProcess)

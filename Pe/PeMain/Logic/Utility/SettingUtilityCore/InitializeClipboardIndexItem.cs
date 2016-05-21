@@ -24,7 +24,7 @@ using ContentTypeTextNet.Pe.Library.PeData.Item;
 
 namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
 {
-    internal class InitializeClipboardIndexItem: InitializeBase<ClipboardIndexItemModel>
+    internal sealed class InitializeClipboardIndexItem: InitializeBase<ClipboardIndexItemModel>
     {
         public InitializeClipboardIndexItem(ClipboardIndexItemModel model, Version previousVersion, INonProcess nonProcess)
             : base(model, previousVersion, nonProcess)
