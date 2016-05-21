@@ -379,7 +379,8 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 
         public static void InitializeLauncherGroupSetting(LauncherGroupSettingModel setting, Version previousVersion, INonProcess nonProcess)
         {
-            Implement.InitializeLauncherGroupSetting.Correction(setting, previousVersion, nonProcess);
+            var initGroup = new Implement.InitializeLauncherGroupSetting(setting, previousVersion, nonProcess);
+            initGroup.Correction();
 
             foreach(var item in setting.Groups) {
                 InitializeLauncherGroupItem(item, previousVersion, nonProcess);

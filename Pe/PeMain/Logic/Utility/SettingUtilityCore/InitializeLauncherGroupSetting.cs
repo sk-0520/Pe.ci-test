@@ -24,28 +24,48 @@ using ContentTypeTextNet.Pe.Library.PeData.Setting;
 
 namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
 {
-    internal static class InitializeLauncherGroupSetting
+    internal sealed class InitializeLauncherGroupSetting: InitializeBase<LauncherGroupSettingModel>
     {
-        public static void Correction(LauncherGroupSettingModel setting, Version previousVersion, INonProcess nonProcess)
-        {
-            V_First(setting, previousVersion, nonProcess);
-            V_Last(setting, previousVersion, nonProcess);
-        }
+        public InitializeLauncherGroupSetting(LauncherGroupSettingModel model, Version previousVersion, INonProcess nonProcess)
+            : base(model, previousVersion, nonProcess)
+        { }
 
-        static void V_Last(LauncherGroupSettingModel setting, Version previousVersion, INonProcess nonProcess)
-        {
-            if(!setting.Groups.Any()) {
-                var initGroup = SettingUtility.CreateLauncherGroup(setting.Groups, nonProcess);
+        #region InitializeBase
 
-                setting.Groups.Add(initGroup);
+        protected override void V_LastCore()
+        {
+            if(!Model.Groups.Any()) {
+                var initGroup = SettingUtility.CreateLauncherGroup(Model.Groups, NonProcess);
+
+                Model.Groups.Add(initGroup);
             }
         }
 
-        static void V_First(LauncherGroupSettingModel setting, Version previousVersion, INonProcess nonProcess)
-        {
-            if(previousVersion != null) {
-                return;
-            }
-        }
+        protected override void V_FirstCore()
+        { }
+
+        #endregion
+
+        //public static void Correction(LauncherGroupSettingModel setting, Version previousVersion, INonProcess nonProcess)
+        //{
+        //    V_First(setting, previousVersion, nonProcess);
+        //    V_Last(setting, previousVersion, nonProcess);
+        //}
+
+        //static void V_Last(LauncherGroupSettingModel setting, Version previousVersion, INonProcess nonProcess)
+        //{
+        //    if(!setting.Groups.Any()) {
+        //        var initGroup = SettingUtility.CreateLauncherGroup(setting.Groups, nonProcess);
+
+        //        setting.Groups.Add(initGroup);
+        //    }
+        //}
+
+        //static void V_First(LauncherGroupSettingModel setting, Version previousVersion, INonProcess nonProcess)
+        //{
+        //    if(previousVersion != null) {
+        //        return;
+        //    }
+        //}
     }
 }
