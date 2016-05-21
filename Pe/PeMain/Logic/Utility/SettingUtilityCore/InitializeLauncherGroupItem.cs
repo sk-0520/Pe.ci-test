@@ -26,50 +26,77 @@ using ContentTypeTextNet.Pe.Library.PeData.Item;
 
 namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
 {
-    internal static class InitializeLauncherGroupItem
+    internal sealed class InitializeLauncherGroupItem: InitializeBase<LauncherGroupItemModel>
     {
-        public static void Correction(LauncherGroupItemModel item, Version previousVersion, INonProcess nonProcess)
+        public InitializeLauncherGroupItem(LauncherGroupItemModel model, Version previousVersion, INonProcess nonProcess)
+            : base(model, previousVersion, nonProcess)
+        { }
+
+        #region InitializeBase
+
+        protected override void V_LastCore()
         {
-            V_First(item, previousVersion, nonProcess);
-
-            V_0_77_0(item, previousVersion, nonProcess);
-
-            V_Last(item, previousVersion, nonProcess);
+            Model.GroupKind = EnumUtility.GetNormalization(Model.GroupKind, GroupKind.LauncherItems);
+            Model.GroupIconType = EnumUtility.GetNormalization(Model.GroupIconType, LauncherGroupIconType.File);
         }
 
-        static void V_Last(LauncherGroupItemModel item, Version previousVersion, INonProcess nonProcess)
+        protected override void V_FirstCore()
         {
-            item.GroupKind = EnumUtility.GetNormalization(item.GroupKind, GroupKind.LauncherItems);
-            item.GroupIconType = EnumUtility.GetNormalization(item.GroupIconType, LauncherGroupIconType.File);
+            Model.GroupKind = GroupKind.LauncherItems;
+            Model.GroupIconType = Constants.launcherGroupIconType;
+            Model.GroupIconColor = Constants.launcherGroupIconColor;
         }
 
-        /// <summary>
-        /// 0.77.0.340 以下のバージョン補正。
-        /// </summary>
-        /// <param name="item"></param>
-        /// <param name="previousVersion"></param>
-        /// <param name="nonProcess"></param>
-        static void V_0_77_0(LauncherGroupItemModel item, Version previousVersion, INonProcess nonProcess)
+        protected override void V_0_77_0Core()
         {
-            if(new Version(0, 77, 0, 340) < previousVersion) {
-                return;
-            }
-
-            nonProcess.Logger.Trace("version setting: 0.77.0");
-
-            item.GroupIconType = Constants.launcherGroupIconType;
-            item.GroupIconColor = Constants.launcherGroupIconColor;
+            Model.GroupIconType = Constants.launcherGroupIconType;
+            Model.GroupIconColor = Constants.launcherGroupIconColor;
         }
 
-        static void V_First(LauncherGroupItemModel item, Version previousVersion, INonProcess nonProcess)
-        {
-            if(previousVersion != null) {
-                return;
-            }
+        #endregion
 
-            item.GroupKind = GroupKind.LauncherItems;
-            item.GroupIconType = Constants.launcherGroupIconType;
-            item.GroupIconColor = Constants.launcherGroupIconColor;
-        }
+        //public static void Correction(LauncherGroupItemModel item, Version previousVersion, INonProcess nonProcess)
+        //{
+        //    V_First(item, previousVersion, nonProcess);
+
+        //    V_0_77_0(item, previousVersion, nonProcess);
+
+        //    V_Last(item, previousVersion, nonProcess);
+        //}
+
+        //static void V_Last(LauncherGroupItemModel item, Version previousVersion, INonProcess nonProcess)
+        //{
+        //    item.GroupKind = EnumUtility.GetNormalization(item.GroupKind, GroupKind.LauncherItems);
+        //    item.GroupIconType = EnumUtility.GetNormalization(item.GroupIconType, LauncherGroupIconType.File);
+        //}
+
+        ///// <summary>
+        ///// 0.77.0.340 以下のバージョン補正。
+        ///// </summary>
+        ///// <param name="item"></param>
+        ///// <param name="previousVersion"></param>
+        ///// <param name="nonProcess"></param>
+        //static void V_0_77_0(LauncherGroupItemModel item, Version previousVersion, INonProcess nonProcess)
+        //{
+        //    if(new Version(0, 77, 0, 340) < previousVersion) {
+        //        return;
+        //    }
+
+        //    nonProcess.Logger.Trace("version setting: 0.77.0");
+
+        //    item.GroupIconType = Constants.launcherGroupIconType;
+        //    item.GroupIconColor = Constants.launcherGroupIconColor;
+        //}
+
+        //static void V_First(LauncherGroupItemModel item, Version previousVersion, INonProcess nonProcess)
+        //{
+        //    if(previousVersion != null) {
+        //        return;
+        //    }
+
+        //    item.GroupKind = GroupKind.LauncherItems;
+        //    item.GroupIconType = Constants.launcherGroupIconType;
+        //    item.GroupIconColor = Constants.launcherGroupIconColor;
+        //}
     }
 }

@@ -388,7 +388,8 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 
         public static void InitializeLauncherGroupItem(LauncherGroupItemModel item, Version previousVersion, INonProcess nonProcess)
         {
-            Implement.InitializeLauncherGroupItem.Correction(item, previousVersion, nonProcess);
+            var init = new Implement.InitializeLauncherGroupItem(item, previousVersion, nonProcess);
+            init.Correction();
         }
 
         public static void InitializeNoteIndexSetting(NoteIndexSettingModel setting, Version previousVersion, INonProcess nonProcess)
