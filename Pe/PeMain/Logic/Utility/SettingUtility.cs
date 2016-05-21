@@ -365,7 +365,8 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 
         public static void InitializeLauncherItemSetting(LauncherItemSettingModel setting, Version previousVersion, INonProcess nonProcess)
         {
-            Implement.InitializeLauncherItemSetting.Correction(setting, previousVersion, nonProcess);
+            var initSetting = new Implement.InitializeLauncherItemSetting(setting, previousVersion, nonProcess);
+            initSetting.Correction();
 
             foreach(var item in setting.Items) {
                 InitializeLauncherItem(item, previousVersion, nonProcess);

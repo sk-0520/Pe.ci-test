@@ -26,26 +26,44 @@ using ContentTypeTextNet.Pe.Library.PeData.Setting;
 
 namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
 {
-    internal static class InitializeLauncherItemSetting
+    internal sealed class InitializeLauncherItemSetting: InitializeBase<LauncherItemSettingModel>
     {
-        public static void Correction(LauncherItemSettingModel setting, Version previousVersion, INonProcess nonProcess)
+        public InitializeLauncherItemSetting(LauncherItemSettingModel model, Version previousVersion, INonProcess nonProcess)
+            :base(model, previousVersion, nonProcess)
+        { }
+
+        #region InitializeBase
+
+        protected override void V_LastCore()
         {
-            V_First(setting, previousVersion, nonProcess);
-            V_Last(setting, previousVersion, nonProcess);
+            Model.FileDropMode = EnumUtility.GetNormalization(Model.FileDropMode, LauncherItemFileDropMode.ShowExecuteWindow);
         }
 
-        static void V_Last(LauncherItemSettingModel setting, Version previousVersion, INonProcess nonProcess)
+        protected override void V_FirstCore()
         {
-            setting.FileDropMode = EnumUtility.GetNormalization(setting.FileDropMode, LauncherItemFileDropMode.ShowExecuteWindow);
+            Model.FileDropMode = LauncherItemFileDropMode.ShowExecuteWindow;
         }
 
-        static void V_First(LauncherItemSettingModel setting, Version previousVersion, INonProcess nonProcess)
-        {
-            if(previousVersion != null) {
-                return;
-            }
+        #endregion
 
-            setting.FileDropMode = LauncherItemFileDropMode.ShowExecuteWindow;
-        }
+        //public static void Correction(LauncherItemSettingModel setting, Version previousVersion, INonProcess nonProcess)
+        //{
+        //    V_First(setting, previousVersion, nonProcess);
+        //    V_Last(setting, previousVersion, nonProcess);
+        //}
+
+        //static void V_Last(LauncherItemSettingModel setting, Version previousVersion, INonProcess nonProcess)
+        //{
+        //    setting.FileDropMode = EnumUtility.GetNormalization(setting.FileDropMode, LauncherItemFileDropMode.ShowExecuteWindow);
+        //}
+
+        //static void V_First(LauncherItemSettingModel setting, Version previousVersion, INonProcess nonProcess)
+        //{
+        //    if(previousVersion != null) {
+        //        return;
+        //    }
+
+        //    setting.FileDropMode = LauncherItemFileDropMode.ShowExecuteWindow;
+        //}
     }
 }
