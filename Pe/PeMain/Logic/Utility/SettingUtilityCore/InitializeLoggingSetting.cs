@@ -22,7 +22,7 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
 
-namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityImplement
+namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
 {
     public static class InitializeLoggingSetting
     {

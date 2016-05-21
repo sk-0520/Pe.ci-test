@@ -32,7 +32,7 @@ using ContentTypeTextNet.Pe.Library.PeData.Define;
 using ContentTypeTextNet.Pe.Library.PeData.Item;
 using ContentTypeTextNet.Pe.Library.PeData.Setting;
 using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
-using Implement = ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityImplement;
+using Implement = ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore;
 using ContentTypeTextNet.Pe.PeMain.Data;
 using System.Security.Cryptography;
 using System.IO;

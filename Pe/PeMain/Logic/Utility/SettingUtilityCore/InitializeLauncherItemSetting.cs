@@ -24,7 +24,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Pe.Library.PeData.Define;
 using ContentTypeTextNet.Pe.Library.PeData.Setting;
 
-namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityImplement
+namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
 {
     internal static class InitializeLauncherItemSetting
     {

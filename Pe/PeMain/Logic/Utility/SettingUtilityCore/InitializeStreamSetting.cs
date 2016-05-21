@@ -24,7 +24,7 @@ using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
 using ContentTypeTextNet.Pe.Library.PeData.Item;
 
-namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityImplement
+namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
 {
     internal static class InitializeStreamSetting
     {
