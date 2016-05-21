@@ -26,55 +26,38 @@ using ContentTypeTextNet.Pe.Library.PeData.Item;
 
 namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
 {
-    internal static class InitializeLauncherItem
+    internal sealed class InitializeLauncherItem: InitializeBase<LauncherItemModel>
     {
-        public static void Correction(LauncherItemModel item, Version previousVersion, INonProcess nonProcess)
+        public InitializeLauncherItem(LauncherItemModel model, Version previousVersion, INonProcess nonProcess)
+            :base(model, previousVersion, nonProcess)
+        { }
+
+        #region InitializeBase
+
+        protected override void Correction_Last()
         {
-            V_First(item, previousVersion, nonProcess);
-
-            V_0_77_0(item, previousVersion, nonProcess);
-
-            V_Last(item, previousVersion, nonProcess);
-        }
-
-        static void V_Last(LauncherItemModel item, Version previousVersion, INonProcess nonProcess)
-        {
-            item.LauncherKind = EnumUtility.GetNormalization(item.LauncherKind, LauncherKind.File);
+            Model.LauncherKind = EnumUtility.GetNormalization(Model.LauncherKind, LauncherKind.File);
             // あるだけ
-            if(item.LauncherKind == LauncherKind.Directory) {
-                item.LauncherKind = LauncherKind.File;
+            if(Model.LauncherKind == LauncherKind.Directory) {
+                Model.LauncherKind = LauncherKind.File;
             }
 
-            if(SettingUtility.IsIllegalString(item.Command)) {
-                item.Command = string.Empty;
+            if(SettingUtility.IsIllegalString(Model.Command)) {
+                Model.Command = string.Empty;
             }
         }
 
-        /// <summary>
-        /// 0.77.0.340 以下のバージョン補正。
-        /// </summary>
-        /// <param name="item"></param>
-        /// <param name="previousVersion"></param>
-        /// <param name="nonProcess"></param>
-        static void V_0_77_0(LauncherItemModel item, Version previousVersion, INonProcess nonProcess)
+        protected override void Correction_First()
         {
-            if(new Version(0, 77, 0, 340) < previousVersion) {
-                return;
-            }
-
-            nonProcess.Logger.Trace("version setting: 0.77.0");
-
-            item.IsCommandAutocomplete = true;
+            Model.LauncherKind = LauncherKind.File;
+            Model.IsCommandAutocomplete = true;
         }
 
-        static void V_First(LauncherItemModel item, Version previousVersion, INonProcess nonProcess)
+        protected override void Correction_0_77_0()
         {
-            if(previousVersion != null) {
-                return;
-            }
-
-            item.LauncherKind = LauncherKind.File;
-            item.IsCommandAutocomplete = true;
+            Model.IsCommandAutocomplete = true;
         }
+
+        #endregion
     }
 }

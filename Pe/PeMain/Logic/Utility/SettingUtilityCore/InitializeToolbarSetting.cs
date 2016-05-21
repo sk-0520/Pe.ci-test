@@ -24,22 +24,20 @@ using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
 
 namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
 {
-    internal static class InitializeToolbarSetting
+    internal sealed class InitializeToolbarSetting: InitializeBase<ToolbarSettingModel>
     {
-        public static void Correction(ToolbarSettingModel setting, Version previousVersion, INonProcess nonProcess)
-        {
-            V_First(setting, previousVersion, nonProcess);
-            V_Last(setting, previousVersion, nonProcess);
-        }
-
-        static void V_Last(ToolbarSettingModel setting, Version previousVersion, INonProcess nonProcess)
+        public InitializeToolbarSetting(ToolbarSettingModel model, Version previousVersion, INonProcess nonProcess)
+            :base(model, previousVersion, nonProcess)
         { }
 
-        static void V_First(ToolbarSettingModel setting, Version previousVersion, INonProcess nonProcess)
-        {
-            if(previousVersion != null) {
-                return;
-            }
-        }
+        #region InitializeBase
+
+        protected override void Correction_Last()
+        { }
+
+        protected override void Correction_First()
+        { }
+
+        #endregion
     }
 }

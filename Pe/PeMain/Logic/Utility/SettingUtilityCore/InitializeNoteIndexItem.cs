@@ -27,59 +27,49 @@ using ContentTypeTextNet.Pe.Library.PeData.Item;
 
 namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
 {
-    internal static class InitializeNoteIndexItem
+    internal sealed class InitializeNoteIndexItem: InitializeBase<NoteIndexItemModel>
     {
-        public static void Correction(NoteIndexItemModel indexItem, Version previousVersion, INonProcess nonProcess)
+        public InitializeNoteIndexItem(NoteIndexItemModel model, Version previousVersion, INonProcess nonProcess)
+            : base(model, previousVersion, nonProcess)
+        { }
+
+        #region InitializeNoteIndexItem
+
+        protected override void Correction_Last()
         {
-            V_First(indexItem, previousVersion, nonProcess);
-            V_0_69_0(indexItem, previousVersion, nonProcess);
-            V_Last(indexItem, previousVersion, nonProcess);
+            Model.NoteKind = EnumUtility.GetNormalization(Model.NoteKind, NoteKind.Text);
+            Model.Font.Size = Constants.noteFontSize.GetClamp(Model.Font.Size);
+
+            if(string.IsNullOrWhiteSpace(Model.Font.Family)) {
+                Model.Font.Family = FontUtility.GetOriginalFontFamilyName(SystemFonts.MessageFontFamily);
+            }
+
+            if(SettingUtility.IsIllegalPlusNumber(Model.WindowWidth)) {
+                Model.WindowWidth = Constants.noteDefualtSize.Width;
+            }
+            if(SettingUtility.IsIllegalPlusNumber(Model.WindowHeight)) {
+                Model.WindowHeight = Constants.noteDefualtSize.Height;
+            }
         }
 
-        static void V_Last(NoteIndexItemModel indexItem, Version previousVersion, INonProcess nonProcess)
+        protected override void Correction_First()
         {
-            indexItem.NoteKind = EnumUtility.GetNormalization(indexItem.NoteKind, NoteKind.Text);
-            indexItem.Font.Size = Constants.noteFontSize.GetClamp(indexItem.Font.Size);
-
-            if(string.IsNullOrWhiteSpace(indexItem.Font.Family)) {
-                indexItem.Font.Family = FontUtility.GetOriginalFontFamilyName(SystemFonts.MessageFontFamily);
-            }
-
-            if(SettingUtility.IsIllegalPlusNumber(indexItem.WindowWidth)) {
-                indexItem.WindowWidth = Constants.noteDefualtSize.Width;
-            }
-            if(SettingUtility.IsIllegalPlusNumber(indexItem.WindowHeight)) {
-                indexItem.WindowHeight = Constants.noteDefualtSize.Height;
-            }
-        }
-
-        static void V_First(NoteIndexItemModel indexItem, Version previousVersion, INonProcess nonProcess)
-        {
-            if(previousVersion != null) {
-                return;
-            }
-
-            indexItem.NoteKind = NoteKind.Text;
+            Model.NoteKind = NoteKind.Text;
             //indexItem.Font.Size = Constants.noteFontSize.median;
             //indexItem.Font.Family = FontUtility.GetOriginalFontFamilyName(SystemFonts.MessageFontFamily);
             //indexItem.WindowWidth = Constants.noteDefualtSize.Width;
             //indexItem.WindowHeight = Constants.noteDefualtSize.Height;
-            indexItem.IsLocked = false;
-            indexItem.IsCompacted = false;
-            indexItem.IsTopmost = false;
-            indexItem.AutoLineFeed = true;
+            Model.IsLocked = false;
+            Model.IsCompacted = false;
+            Model.IsTopmost = false;
+            Model.AutoLineFeed = true;
         }
 
-        static void V_0_69_0(NoteIndexItemModel indexItem, Version previousVersion, INonProcess nonProcess)
+        protected override void Correction_0_69_0()
         {
-            if(new Version(0,69,0,38641) < previousVersion) {
-                return;
-            }
-
-            nonProcess.Logger.Trace("version setting: 0.69.0");
-
-            indexItem.AutoLineFeed = true;
+            Model.AutoLineFeed = true;
         }
 
+        #endregion
     }
 }

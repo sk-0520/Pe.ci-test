@@ -25,7 +25,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
     /// </summary>
     /// <typeparam name="TModel">設定データ。</typeparam>
     internal abstract class InitializeBase<TModel>
-        where TModel: ModelBase
+        where TModel : ModelBase
     {
         public InitializeBase(TModel model, Version previousVersion, INonProcess nonProcess)
         {
@@ -51,56 +51,110 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
 
         #endregion
 
+        #region function
+
         /// <summary>
         /// 補正処理実施。
         /// </summary>
         public void Correction()
         {
-            V_First();
-            V_Upper();
-            V_Last();
+            Correction_FirstCore();
+            Correction_Versions();
+            Correction_LastCore();
         }
 
         /// <summary>
         /// 最終補正処理。
         /// </summary>
-        protected abstract void V_LastCore();
-        void V_Last()
+        protected abstract void Correction_Last();
+        void Correction_LastCore()
         {
-            V_LastCore();
+            Correction_Last();
         }
 
         /// <summary>
         /// 初回データ補正。
         /// <para>前回バージョンがない場合にのみ実施される。</para>
         /// </summary>
-        protected abstract void V_FirstCore();
-        void V_First()
+        protected abstract void Correction_First();
+        void Correction_FirstCore()
         {
             if(PreviousVersion != null) {
                 return;
             }
 
-            V_FirstCore();
+            NonProcess.Logger.Trace($"Correction: {typeof(TModel).Name} - first");
+
+            Correction_First();
         }
 
-        void V_Upper()
+        void Correction_Versions()
         {
-            V_0_70_0();
+            CheckAndCorrection(0, 65, 0, 43015, Correction_0_65_0);
+            CheckAndCorrection(0, 69, 0, 38641, Correction_0_69_0);
+            CheckAndCorrection(0, 70, 0, 40764, Correction_0_70_0);
+            CheckAndCorrection(0, 71, 0, 27279, Correction_0_71_0);
+            CheckAndCorrection(0, 77, 0, 340, Correction_0_77_0);
+            CheckAndCorrection(0, 78, 0, 27501, Correction_0_78_0);
         }
 
         /// <summary>
-        /// 設定データが 0.70.0.40764 以下のバージョン補正。
+        /// 指定バージョンは補正対象バージョンかチェックし、補正対象であれば補正処理を呼び出す。
         /// </summary>
-        protected virtual void V_0_70_0Core()
-        { }
-        void V_0_70_0()
+        /// <param name="major"></param>
+        /// <param name="minor"></param>
+        /// <param name="build"></param>
+        /// <param name="revision"></param>
+        /// <param name="action">補正処理。</param>
+        void CheckAndCorrection(int major, int minor, int build, int revision, Action action)
         {
-            if(new Version(0, 70, 0, 40764) < PreviousVersion) {
+            var targetVersion = new Version(major, minor, build, revision);
+            if(targetVersion < PreviousVersion) {
                 return;
             }
 
-            V_0_70_0Core();
+            NonProcess.Logger.Trace($"Correction: {typeof(TModel).Name} - {targetVersion}");
+
+            action();
         }
+
+        /// <summary>
+        /// 設定データが 0.65.0 以下のバージョン補正。
+        /// </summary>
+        protected virtual void Correction_0_65_0()
+        { }
+
+        /// <summary>
+        /// 設定データが 0.69.0 以下のバージョン補正。
+        /// </summary>
+        protected virtual void Correction_0_69_0()
+        { }
+
+        /// <summary>
+        /// 設定データが 0.70.0 以下のバージョン補正。
+        /// </summary>
+        protected virtual void Correction_0_70_0()
+        { }
+
+
+        /// <summary>
+        /// 設定データが 0.71.0 以下のバージョン補正。
+        /// </summary>
+        protected virtual void Correction_0_71_0()
+        { }
+
+        /// <summary>
+        /// 設定データが 0.77.0 以下のバージョン補正。
+        /// </summary>
+        protected virtual void Correction_0_77_0()
+        { }
+
+        /// <summary>
+        /// 設定データが 0.78.0 以下のバージョン補正。
+        /// </summary>
+        protected virtual void Correction_0_78_0()
+        { }
+
+        #endregion
     }
 }

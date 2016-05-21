@@ -24,29 +24,27 @@ using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
 
 namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
 {
-    internal static class InitializeWindowSaveSetting
+    internal sealed class InitializeWindowSaveSetting: InitializeBase<WindowSaveSettingModel>
     {
-        public static void Correction(WindowSaveSettingModel setting, Version previousVersion, INonProcess nonProcess)
+        public InitializeWindowSaveSetting(WindowSaveSettingModel model, Version previousVersion, INonProcess nonProcess)
+            :base(model, previousVersion, nonProcess)
+        { }
+
+        #region InitializeBase
+
+        protected override void Correction_Last()
         {
-            V_First(setting, previousVersion, nonProcess);
-            V_Last(setting, previousVersion, nonProcess);
+            Model.SaveCount = Constants.windowSaveCount.GetClamp(Model.SaveCount);
+            Model.SaveIntervalTime = Constants.windowSaveIntervalTime.GetClamp(Model.SaveIntervalTime);
         }
 
-        static void V_Last(WindowSaveSettingModel setting, Version previousVersion, INonProcess nonProcess)
+        protected override void Correction_First()
         {
-            setting.SaveCount = Constants.windowSaveCount.GetClamp(setting.SaveCount);
-            setting.SaveIntervalTime = Constants.windowSaveIntervalTime.GetClamp(setting.SaveIntervalTime);
+            Model.IsEnabled = true;
+            Model.SaveCount = Constants.windowSaveCount.median;
+            Model.SaveIntervalTime = Constants.windowSaveIntervalTime.median;
         }
 
-        static void V_First(WindowSaveSettingModel setting, Version previousVersion, INonProcess nonProcess)
-        {
-            if(previousVersion != null) {
-                return;
-            }
-
-            setting.IsEnabled = true;
-            setting.SaveCount = Constants.windowSaveCount.median;
-            setting.SaveIntervalTime = Constants.windowSaveIntervalTime.median;
-        }
+        #endregion
     }
 }

@@ -25,49 +25,40 @@ using ContentTypeTextNet.Pe.Library.PeData.Item;
 
 namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
 {
-    internal static class InitializeRunningInformationSetting
+    internal sealed class InitializeRunningInformationSetting: InitializeBase<RunningInformationSettingModel>
     {
-        public static void Correction(RunningInformationSettingModel setting, Version previousVersion, INonProcess nonProcess)
+        public InitializeRunningInformationSetting(RunningInformationSettingModel model, Version previousVersion, INonProcess nonProcess)
+            : base(model, previousVersion, nonProcess)
+        { }
+
+        #region InitializeBase
+
+        protected override void Correction_Last()
         {
-            V_First(setting, previousVersion, nonProcess);
-            V_0_71_0(setting, previousVersion, nonProcess);
-            V_Last(setting, previousVersion, nonProcess);
+            if(!SettingUtility.CheckUserId(Model)) {
+                Model.UserId = SettingUtility.CreateUserIdFromEnvironment();
+            }
+
+            if(Model.FirstRunning.Version == null) {
+                Model.FirstRunning.Timestamp = DateTime.Now;
+                Model.FirstRunning.Version = Constants.ApplicationVersionNumber;
+            }
         }
 
-        static void V_Last(RunningInformationSettingModel setting, Version previousVersion, INonProcess nonProcess)
+        protected override void Correction_First()
         {
-            if(!SettingUtility.CheckUserId(setting)) {
-                setting.UserId = SettingUtility.CreateUserIdFromEnvironment();
-            }
-
-            if(setting.FirstRunning.Version == null) {
-                setting.FirstRunning.Timestamp = DateTime.Now;
-                setting.FirstRunning.Version = Constants.ApplicationVersionNumber;
-            }
+            Model.UserId = SettingUtility.CreateUserIdFromEnvironment();
         }
 
-        private static void V_0_71_0(RunningInformationSettingModel setting, Version previousVersion, INonProcess nonProcess)
+        protected override void Correction_0_71_0()
         {
-            if(new Version(0,71,0,27279) < previousVersion) {
-                return;
-            }
-
-            nonProcess.Logger.Trace("version setting: 0.71.0");
-
-            setting.UserId = SettingUtility.CreateUserIdFromEnvironment();
-            setting.FirstRunning = new FirstRunningItemModel() {
+            Model.UserId = SettingUtility.CreateUserIdFromEnvironment();
+            Model.FirstRunning = new FirstRunningItemModel() {
                 Timestamp = DateTime.Now,
-                Version = previousVersion
+                Version = PreviousVersion,
             };
         }
 
-        static void V_First(RunningInformationSettingModel setting, Version previousVersion, INonProcess nonProcess)
-        {
-            if(previousVersion != null) {
-                return;
-            }
-
-            setting.UserId = SettingUtility.CreateUserIdFromEnvironment();
-        }
+        #endregion
     }
 }
