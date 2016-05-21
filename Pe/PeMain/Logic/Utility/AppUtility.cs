@@ -281,7 +281,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
             var defaultPath = Path.Combine(baseDir, Constants.languageDefaultFileName);
 
             var langPairList = GetLanguageFiles(baseDir, logger)
-                .Where(p => string.Compare(p?.Key, defaultPath, true) != 0)
+                .Where(p => string.Compare(p?.Key, defaultPath, StringComparison.OrdinalIgnoreCase) != 0)
             ;
 
             var baseLang = SerializeUtility.LoadXmlSerializeFromFile<LanguageCollectionModel>(defaultPath);
@@ -323,7 +323,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         /// <para>UI・設定に影響されない</para>
         /// </summary>
         /// <param name="outputFile"></param>
-        /// <param name="path"></param>
+        /// <param name="baseDir"></param>
         /// <returns></returns>
         public static AppLogger CreateSystemLogger(bool outputFile, string baseDir)
         {

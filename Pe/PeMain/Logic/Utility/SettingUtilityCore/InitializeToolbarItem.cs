@@ -60,7 +60,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
         /// <summary>
         /// 0.78.0.27501 以下のバージョン補正。
         /// </summary>
-        /// <param name="item"></param>
+        /// <param name="setting"></param>
         /// <param name="previousVersion"></param>
         /// <param name="nonProcess"></param>
         static void V_0_78_0(ToolbarItemModel setting, Version previousVersion, INonProcess nonProcess)

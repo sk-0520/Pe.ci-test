@@ -37,7 +37,10 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="message"></param>
+        /// <param name="hWnd"></param>
+        /// <param name="msg"></param>
+        /// <param name="wParam"></param>
+        /// <param name="lParam"></param>
         public ChangedDevice(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam)
         {
             this._hWnd = hWnd;

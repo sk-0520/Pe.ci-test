@@ -97,7 +97,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control.SettingPage
             {
                 if(this._languageList == null) {
                     var list = AppUtility.GetLanguageFiles(Constants.ApplicationLanguageDirectoryPath, AppNonProcess.Logger)
-                        .Where(p => string.Compare(Path.GetFileName(p.Value.Key), Constants.languageDefaultFileName, true) != 0)
+                        .Where(p => string.Compare(Path.GetFileName(p.Value.Key), Constants.languageDefaultFileName, StringComparison.OrdinalIgnoreCase) != 0)
                     ;
                     //this._languageList = list.Select(
                     //	p => new ListItem<LanguageSettingModel>(

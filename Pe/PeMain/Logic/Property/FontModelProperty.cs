@@ -93,6 +93,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Property
 
         public static bool SetSize(FontModel model, double value, Action<string> onPropertyChanged, [CallerMemberName] string propertyName = "")
         {
+            //TODO: epsilon
             if(model.Size != value) {
                 model.Size = value;
                 onPropertyChanged(propertyName);
