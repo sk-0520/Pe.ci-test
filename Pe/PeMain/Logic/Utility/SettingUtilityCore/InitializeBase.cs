@@ -89,6 +89,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
             V_0_65_0();
             V_0_69_0();
             V_0_70_0();
+            V_0_71_0();
             V_0_77_0();
         }
 
@@ -132,6 +133,20 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
             }
 
             V_0_70_0Core();
+        }
+
+        /// <summary>
+        /// 設定データが 0.71.0 以下のバージョン補正。
+        /// </summary>
+        protected virtual void V_0_71_0Core()
+        { }
+        void V_0_71_0()
+        {
+            if(new Version(0, 71, 0, 27279) < PreviousVersion) {
+                return;
+            }
+
+            V_0_71_0Core();
         }
 
         /// <summary>

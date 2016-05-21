@@ -362,7 +362,8 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 
         private static void InitializeRunningInformationSetting(RunningInformationSettingModel setting, Version previousVersion, INonProcess nonProcess)
         {
-            Implement.InitializeRunningInformationSetting.Correction(setting, previousVersion, nonProcess);
+            var init = new Implement.InitializeRunningInformationSetting(setting, previousVersion, nonProcess);
+            init.Correction();
         }
 
         public static void InitializeLauncherItemSetting(LauncherItemSettingModel setting, Version previousVersion, INonProcess nonProcess)
