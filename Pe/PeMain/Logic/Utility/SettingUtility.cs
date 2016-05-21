@@ -310,7 +310,8 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 
         public static void InitializeNoteSetting(NoteSettingModel model, Version previousVersion, INonProcess nonProcess)
         {
-            Implement.InitializeNoteSetting.Correction(model, previousVersion, nonProcess);
+            var init = new Implement.InitializeNoteSetting(model, previousVersion, nonProcess);
+            init.Correction();
         }
 
         public static void InitializeClipboardSetting(ClipboardSettingModel setting, Version previousVersion, INonProcess nonProcess)

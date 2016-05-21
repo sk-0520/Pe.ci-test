@@ -28,64 +28,105 @@ using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
 
 namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
 {
-    internal static class InitializeNoteSetting
+    internal sealed class InitializeNoteSetting: InitializeBase<NoteSettingModel>
     {
-        public static void Correction(NoteSettingModel setting, Version previousVersion, INonProcess nonProcess)
+        public InitializeNoteSetting(NoteSettingModel model, Version previousVersion, INonProcess nonProcess)
+            :base(model, previousVersion, nonProcess)
+        { }
+
+        #region InitializeBase
+
+        protected override void V_LastCore()
         {
-            V_First(setting, previousVersion, nonProcess);
-
-            V_0_77_0(setting, previousVersion, nonProcess);
-
-            V_Last(setting, previousVersion, nonProcess);
-        }
-
-        static void V_Last(NoteSettingModel setting, Version previousVersion, INonProcess nonProcess)
-        {
-            if(previousVersion == null) {
-                setting.Font.Size = Constants.noteFontSize.median;
-                setting.Font.Family = FontUtility.GetOriginalFontFamilyName(SystemFonts.MessageFontFamily);
+            if(PreviousVersion == null) {
+                Model.Font.Size = Constants.noteFontSize.median;
+                Model.Font.Family = FontUtility.GetOriginalFontFamilyName(SystemFonts.MessageFontFamily);
             }
-            setting.Font.Size = Constants.noteFontSize.GetClamp(setting.Font.Size);
-            setting.NoteTitle = EnumUtility.GetNormalization(setting.NoteTitle, NoteTitle.Timestamp);
+            Model.Font.Size = Constants.noteFontSize.GetClamp(Model.Font.Size);
+            Model.NoteTitle = EnumUtility.GetNormalization(Model.NoteTitle, NoteTitle.Timestamp);
 
-            if(setting.ForeColor == default(Color)) {
-                setting.ForeColor = Constants.noteColor.ForeColor;
+            if(Model.ForeColor == default(Color)) {
+                Model.ForeColor = Constants.noteColor.ForeColor;
             }
-            if(setting.BackColor == default(Color)) {
-                setting.BackColor = Constants.noteColor.BackColor;
+            if(Model.BackColor == default(Color)) {
+                Model.BackColor = Constants.noteColor.BackColor;
             }
         }
 
-        /// <summary>
-        /// 0.77.0.340 以下のバージョン補正。
-        /// </summary>
-        /// <param name="item"></param>
-        /// <param name="previousVersion"></param>
-        /// <param name="nonProcess"></param>
-        static void V_0_77_0(NoteSettingModel setting, Version previousVersion, INonProcess nonProcess)
+        protected override void V_FirstCore()
         {
-            if(new Version(0, 77, 0, 340) < previousVersion) {
-                return;
-            }
-
-            nonProcess.Logger.Trace("version setting: 0.77.0");
-
-            setting.IsTopmost = false;
-            setting.AutoLineFeed = true;
+            Model.Font.Size = Constants.noteFontSize.median;
+            Model.ForeColor = Constants.noteColor.ForeColor;
+            Model.BackColor = Constants.noteColor.BackColor;
+            Model.NoteTitle = NoteTitle.Timestamp;
+            Model.IsTopmost = false;
+            Model.AutoLineFeed = true;
         }
 
-        static void V_First(NoteSettingModel setting, Version previousVersion, INonProcess nonProcess)
+        protected override void V_0_77_0Core()
         {
-            if(previousVersion != null) {
-                return;
-            }
-
-            setting.Font.Size = Constants.noteFontSize.median;
-            setting.ForeColor = Constants.noteColor.ForeColor;
-            setting.BackColor = Constants.noteColor.BackColor;
-            setting.NoteTitle = NoteTitle.Timestamp;
-            setting.IsTopmost = false;
-            setting.AutoLineFeed = true;
+            Model.IsTopmost = false;
+            Model.AutoLineFeed = true;
         }
+
+        #endregion
+
+        //public static void Correction(NoteSettingModel setting, Version previousVersion, INonProcess nonProcess)
+        //{
+        //    V_First(setting, previousVersion, nonProcess);
+
+        //    V_0_77_0(setting, previousVersion, nonProcess);
+
+        //    V_Last(setting, previousVersion, nonProcess);
+        //}
+
+        //static void V_Last(NoteSettingModel setting, Version previousVersion, INonProcess nonProcess)
+        //{
+        //    if(previousVersion == null) {
+        //        setting.Font.Size = Constants.noteFontSize.median;
+        //        setting.Font.Family = FontUtility.GetOriginalFontFamilyName(SystemFonts.MessageFontFamily);
+        //    }
+        //    setting.Font.Size = Constants.noteFontSize.GetClamp(setting.Font.Size);
+        //    setting.NoteTitle = EnumUtility.GetNormalization(setting.NoteTitle, NoteTitle.Timestamp);
+
+        //    if(setting.ForeColor == default(Color)) {
+        //        setting.ForeColor = Constants.noteColor.ForeColor;
+        //    }
+        //    if(setting.BackColor == default(Color)) {
+        //        setting.BackColor = Constants.noteColor.BackColor;
+        //    }
+        //}
+
+        ///// <summary>
+        ///// 0.77.0.340 以下のバージョン補正。
+        ///// </summary>
+        ///// <param name="item"></param>
+        ///// <param name="previousVersion"></param>
+        ///// <param name="nonProcess"></param>
+        //static void V_0_77_0(NoteSettingModel setting, Version previousVersion, INonProcess nonProcess)
+        //{
+        //    if(new Version(0, 77, 0, 340) < previousVersion) {
+        //        return;
+        //    }
+
+        //    nonProcess.Logger.Trace("version setting: 0.77.0");
+
+        //    setting.IsTopmost = false;
+        //    setting.AutoLineFeed = true;
+        //}
+
+        //static void V_First(NoteSettingModel setting, Version previousVersion, INonProcess nonProcess)
+        //{
+        //    if(previousVersion != null) {
+        //        return;
+        //    }
+
+        //    setting.Font.Size = Constants.noteFontSize.median;
+        //    setting.ForeColor = Constants.noteColor.ForeColor;
+        //    setting.BackColor = Constants.noteColor.BackColor;
+        //    setting.NoteTitle = NoteTitle.Timestamp;
+        //    setting.IsTopmost = false;
+        //    setting.AutoLineFeed = true;
+        //}
     }
 }
