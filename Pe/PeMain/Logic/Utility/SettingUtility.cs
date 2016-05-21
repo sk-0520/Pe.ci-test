@@ -426,7 +426,8 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 
         public static void InitializeTemplateIndexSetting(TemplateIndexItemModel model, Version previousVersion, INonProcess nonProcess)
         {
-            Implement.InitializeTemplateIndexItem.Correction(model, previousVersion, nonProcess);
+            var init = new Implement.InitializeTemplateIndexItem(model, previousVersion, nonProcess);
+            init.Correction();
         }
 
         public static void InitializeClipboardIndexSetting(ClipboardIndexSettingModel setting, Version previousVersion, INonProcess nonProcess)

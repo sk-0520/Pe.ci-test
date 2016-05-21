@@ -25,22 +25,37 @@ using ContentTypeTextNet.Pe.Library.PeData.Setting;
 
 namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
 {
-    internal static class InitializeTemplateIndexItem
+    internal sealed class InitializeTemplateIndexItem: InitializeBase<TemplateIndexItemModel>
     {
-        public static void Correction(TemplateIndexItemModel model, Version previousVersion, INonProcess nonProcess)
-        {
-            V_First(model, previousVersion, nonProcess);
-            V_Last(model, previousVersion, nonProcess);
-        }
-
-        static void V_Last(TemplateIndexItemModel model, Version previousVersion, INonProcess nonProcess)
+        public InitializeTemplateIndexItem(TemplateIndexItemModel model, Version previousVersion, INonProcess nonProcess)
+            :base(model, previousVersion, nonProcess)
         { }
 
-        static void V_First(TemplateIndexItemModel model, Version previousVersion, INonProcess nonProcess)
-        {
-            if(previousVersion != null) {
-                return;
-            }
-        }
+        #region InitializeBase
+
+        protected override void V_LastCore()
+        { }
+
+        protected override void V_FirstCore()
+        { }
+
+        #endregion
+
+
+        //public static void Correction(TemplateIndexItemModel model, Version previousVersion, INonProcess nonProcess)
+        //{
+        //    V_First(model, previousVersion, nonProcess);
+        //    V_Last(model, previousVersion, nonProcess);
+        //}
+
+        //static void V_Last(TemplateIndexItemModel model, Version previousVersion, INonProcess nonProcess)
+        //{ }
+
+        //static void V_First(TemplateIndexItemModel model, Version previousVersion, INonProcess nonProcess)
+        //{
+        //    if(previousVersion != null) {
+        //        return;
+        //    }
+        //}
     }
 }
