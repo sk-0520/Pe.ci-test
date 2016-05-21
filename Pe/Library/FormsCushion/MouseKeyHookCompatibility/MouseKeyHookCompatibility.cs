@@ -19,7 +19,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
+using Forms = System.Windows.Forms;
+using Wpf = System.Windows.Input;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using Gma.System.MouseKeyHook;
 
@@ -36,12 +37,12 @@ namespace ContentTypeTextNet.Pe.Library.FormsCushion.MouseKeyHookCompatibility
 
         #region variable
 
-        IReadOnlyDictionary<System.Windows.Forms.Keys, System.Windows.Input.ModifierKeys> modKeyMap = new Dictionary<System.Windows.Forms.Keys, System.Windows.Input.ModifierKeys>() {
-            { System.Windows.Forms.Keys.Shift, System.Windows.Input.ModifierKeys.Shift },
-            { System.Windows.Forms.Keys.Alt, System.Windows.Input.ModifierKeys.Alt},
-            { System.Windows.Forms.Keys.Control, System.Windows.Input.ModifierKeys.Control },
-            { System.Windows.Forms.Keys.LWin, System.Windows.Input.ModifierKeys.Windows },
-            { System.Windows.Forms.Keys.RWin, System.Windows.Input.ModifierKeys.Windows },
+        IReadOnlyDictionary<Forms.Keys, Wpf.ModifierKeys> modKeyMap = new Dictionary<Forms.Keys, Wpf.ModifierKeys>() {
+            { Forms.Keys.Shift, Wpf.ModifierKeys.Shift },
+            { Forms.Keys.Alt, Wpf.ModifierKeys.Alt},
+            { Forms.Keys.Control, Wpf.ModifierKeys.Control },
+            { Forms.Keys.LWin, Wpf.ModifierKeys.Windows },
+            { Forms.Keys.RWin, Wpf.ModifierKeys.Windows },
         };
 
         #endregion
@@ -62,17 +63,17 @@ namespace ContentTypeTextNet.Pe.Library.FormsCushion.MouseKeyHookCompatibility
 
         #region function
 
-        System.Windows.Input.Key ConvertWpfKeyFromFromsKey(int keyValue)
+        Wpf.Key ConvertWpfKeyFromFromsKey(int keyValue)
         {
-            return System.Windows.Input.KeyInterop.KeyFromVirtualKey(keyValue);
+            return Wpf.KeyInterop.KeyFromVirtualKey(keyValue);
         }
 
-        System.Windows.Input.ModifierKeys ConvertWpfModKeyFromFromsModKey(System.Windows.Forms.Keys keyValue)
+        Wpf.ModifierKeys ConvertWpfModKeyFromFromsModKey(Forms.Keys keyValue)
         {
             var result = modKeyMap
                 .Where(p => p.Key == keyValue)
                 .Select(p => p.Value)
-                .Aggregate(System.Windows.Input.ModifierKeys.None, (k, a) => k | a)
+                .Aggregate(Wpf.ModifierKeys.None, (k, a) => k | a)
             ;
 
             return result;
@@ -132,12 +133,12 @@ namespace ContentTypeTextNet.Pe.Library.FormsCushion.MouseKeyHookCompatibility
 
         #endregion
 
-        private void HookEvent_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
+        private void HookEvent_KeyDown(object sender, Forms.KeyEventArgs e)
         {
             OnKeyDown(sender, (KeyEventArgsExt)e);
         }
 
-        private void HookEvent_KeyUp(object sender, System.Windows.Forms.KeyEventArgs e)
+        private void HookEvent_KeyUp(object sender, Forms.KeyEventArgs e)
         {
             OnKeyUp(sender, (KeyEventArgsExt)e);
         }

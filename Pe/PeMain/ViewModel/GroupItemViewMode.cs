@@ -77,7 +77,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         public override string Name
         {
             get { return Model.Name; }
-            set { }
+            set { throw new NotSupportedException(); }
         }
 
         public override bool CanEdit { get { return false; } }

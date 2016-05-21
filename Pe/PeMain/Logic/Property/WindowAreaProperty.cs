@@ -33,6 +33,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Property
 
         public static bool SetWindowLeft(IWindowArea model, double value, Action<string> onPropertyChanged, [CallerMemberName] string propertyName = "")
         {
+            //TODO: epsilon
             if(model.WindowLeft != value) {
                 model.WindowLeft = value;
                 onPropertyChanged(propertyName);
@@ -50,6 +51,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Property
 
         public static bool SetWindowTop(IWindowArea model, double value, Action<string> onPropertyChanged, [CallerMemberName] string propertyName = "")
         {
+            //TODO: epsilon
             if(model.WindowTop != value) {
                 model.WindowTop = value;
                 onPropertyChanged(propertyName);
@@ -67,6 +69,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Property
 
         public static bool SetWindowWidth(IWindowArea model, double value, Action<string> onPropertyChanged, [CallerMemberName] string propertyName = "")
         {
+            //TODO: epsilon
             if(model.WindowWidth != value) {
                 model.WindowWidth = value;
                 onPropertyChanged(propertyName);
@@ -84,6 +87,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Property
 
         public static bool SetWindowHeight(IWindowArea model, double value, Action<string> onPropertyChanged, [CallerMemberName] string propertyName = "")
         {
+            //TODO: epsilon
             if(model.WindowHeight != value) {
                 model.WindowHeight = value;
                 onPropertyChanged(propertyName);

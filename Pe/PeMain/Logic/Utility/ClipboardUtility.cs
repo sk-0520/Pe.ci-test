@@ -54,7 +54,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         {
             public int Compare(string x, string y)
             {
-                return string.Compare(x, y, true);
+                return string.Compare(x, y, StringComparison.OrdinalIgnoreCase);
             }
         }
 
@@ -270,7 +270,6 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         /// .NET Frameworkからクリップボードデータを取得
         /// </summary>
         /// <param name="enabledTypes"></param>
-        /// <param name="logger"></param>
         /// <returns></returns>
         static ClipboardData GetClipboardDataFromFramework(ClipboardType enabledTypes)
         {
@@ -345,7 +344,6 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         /// </summary>
         /// <param name="hashType"></param>
         /// <param name="s"></param>
-        /// <param name="nonProcess"></param>
         /// <returns></returns>
         static byte[] CalculateHashCodeFromString(HashType hashType, string s)
         {
@@ -360,7 +358,6 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         /// </summary>
         /// <param name="hashType"></param>
         /// <param name="bodyItem"></param>
-        /// <param name="nonProcess"></param>
         /// <returns></returns>
         static byte[] CalculateHashCodeFromText(HashType hashType, ClipboardBodyItemModel bodyItem)
         {
@@ -372,7 +369,6 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         /// </summary>
         /// <param name="hashType"></param>
         /// <param name="bodyItem"></param>
-        /// <param name="nonProcess"></param>
         /// <returns></returns>
         static byte[] CalculateHashCodeFromRtf(HashType hashType, ClipboardBodyItemModel bodyItem)
         {
@@ -384,7 +380,6 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         /// </summary>
         /// <param name="hashType"></param>
         /// <param name="bodyItem"></param>
-        /// <param name="nonProcess"></param>
         /// <returns></returns>
         static byte[] CalculateHashCodeFromHtml(HashType hashType, ClipboardBodyItemModel bodyItem)
         {
@@ -396,7 +391,6 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         /// </summary>
         /// <param name="hashType"></param>
         /// <param name="bodyItem"></param>
-        /// <param name="nonProcess"></param>
         /// <returns></returns>
         static byte[] CalculateHashCodeFromImage(HashType hashType, ClipboardBodyItemModel bodyItem)
         {
@@ -426,11 +420,10 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         /// </summary>
         /// <param name="hashType"></param>
         /// <param name="bodyItem"></param>
-        /// <param name="nonProcess"></param>
         /// <returns></returns>
         static byte[] CalculateHashCodeFromFiles(HashType hashType, ClipboardBodyItemModel bodyItem)
         {
-            var binaryList = bodyItem.Files.Select((s, i) => Encoding.Unicode.GetBytes(s + i.ToString()));
+            var binaryList = bodyItem.Files.Select((s, i) => Encoding.Unicode.GetBytes($"{s}{i}"));
             return CalculateHashCodeFromBinaryList(hashType, binaryList);
         }
 
@@ -439,7 +432,6 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         /// </summary>
         /// <param name="hashType"></param>
         /// <param name="binaryList"></param>
-        /// <param name="nonProcess"></param>
         /// <returns></returns>
         static byte[] CalculateHashCodeFromBinaryList(HashType hashType, IEnumerable<byte[]> binaryList)
         {
@@ -461,7 +453,6 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         /// <param name="hashType"></param>
         /// <param name="clipboardType"></param>
         /// <param name="bodyItem"></param>
-        /// <param name="nonProcess"></param>
         /// <returns></returns>
         public static byte[] CalculateHashCode(HashType hashType, ClipboardType clipboardType, ClipboardBodyItemModel bodyItem)
         {
@@ -488,8 +479,6 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         /// </summary>
         /// <param name="enabledTypes"></param>
         /// <param name="hWnd"></param>
-        /// <param name="logger"></param>
-        /// <param name="calcHash">ハッシュ値の算出を行うか。</param>
         /// <returns></returns>
         static ClipboardData GetClipboardDataCore(ClipboardType enabledTypes, IntPtr hWnd)
         {

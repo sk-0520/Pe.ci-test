@@ -49,7 +49,7 @@ namespace ContentTypeTextNet.Pe.PeMain.IF
         /// ウィンドウ状態を更新。
         /// </summary>
         /// <param name="windowKind"></param>
-        /// <param name="from"></param>
+        /// <param name="fromView"></param>
         void SendRefreshView(WindowKind windowKind, Window fromView);
         /// <summary>
         /// 対象インデックスから指定IDを削除。

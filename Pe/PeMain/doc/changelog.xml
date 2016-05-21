@@ -94,7 +94,7 @@
 				<message>[nuget] ICSharpCode.AvalonEdit を 5.0.3 に更新</message>
 			</note>
 			<note rev="">
-				<message></message>
+				<message>データ補正処理を統一</message>
 			</note>
 			<note rev="">
 				<message></message>

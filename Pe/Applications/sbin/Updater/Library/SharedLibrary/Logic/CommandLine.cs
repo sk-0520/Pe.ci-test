@@ -119,7 +119,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic
         /// <returns></returns>
         private KeyValuePair<string, string> SplitKeyValue(string pair)
         {
-            var index = pair.IndexOf(KeyValueSeparator);
+            var index = pair.IndexOf(KeyValueSeparator, StringComparison.Ordinal);
             if(index != -1) {
                 var key = string.Concat(pair.Take(index));
                 var value = string.Concat(pair.Skip(index + KeyValueHeader.Length));
@@ -141,14 +141,14 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic
         {
             return Options
                 .Where(s => s.Length >= keyOption.Length)
-                .Where(s => s.StartsWith(keyOption))
-                .Where(s => s == keyOption || s.StartsWith(keyOption + this.KeyValueSeparator))
+                .Where(s => s.StartsWith(keyOption, StringComparison.Ordinal))
+                .Where(s => s == keyOption || s.StartsWith(keyOption + this.KeyValueSeparator, StringComparison.Ordinal))
             ;
         }
 
         private string KeyToValue(string keyOption, int index)
         {
-            var pairs = Options.Where(s => s.StartsWith(keyOption));
+            var pairs = Options.Where(s => s.StartsWith(keyOption, StringComparison.Ordinal));
             var pair = SplitKeyValue(pairs.ElementAt(index));
             return pair.Value;
         }
@@ -160,7 +160,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic
 
         private bool HasKeyOption(string keyOption)
         {
-            return Options.Any(s => s.StartsWith(keyOption));
+            return Options.Any(s => s.StartsWith(keyOption, StringComparison.Ordinal));
         }
 
         /// <summary>
@@ -191,12 +191,12 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic
         /// <param name="option">オプション。</param>
         /// <param name="index">指定オプション内で何番目(0ベース)を対象とするか。</param>
         /// <returns></returns>
-        public bool HasValue(string option, int index = 0)
+        public bool HasValue(string option, int index)
         {
             var keyOption = GetKeyOption(option);
             if(HasKeyOption(keyOption)) {
-                var pairs = Options.Where(s => s.StartsWith(keyOption));
-                return pairs.ElementAt(index).IndexOf(KeyValueSeparator) != -1;
+                var pairs = Options.Where(s => s.StartsWith(keyOption, StringComparison.Ordinal));
+                return pairs.ElementAt(index).IndexOf(KeyValueSeparator, StringComparison.Ordinal) != -1;
             }
 
             return false;
@@ -204,7 +204,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic
 
         private int CountKeyOption(string keyOption)
         {
-            return Options.Count(s => s.StartsWith(keyOption));
+            return Options.Count(s => s.StartsWith(keyOption, StringComparison.Ordinal));
         }
 
         /// <summary>

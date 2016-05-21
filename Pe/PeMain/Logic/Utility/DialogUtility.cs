@@ -89,8 +89,10 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         /// <summary>
         /// ファイルを保存するダイアログ。
         /// </summary>
-        /// <param name="defaultPath"></param>
+        /// <param name="directoryPath"></param>
+        /// <param name="fileName"></param>
         /// <param name="filter"></param>
+        /// <param name="initItem"></param>
         /// <returns>選択されたパスを返す。未選択の場合は null を返す。</returns>
         public static string ShowSaveFileDialog(string directoryPath, string fileName, DialogFilterList filter = null, DialogFilterItem initItem = null)
         {

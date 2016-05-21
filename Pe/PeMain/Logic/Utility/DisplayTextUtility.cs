@@ -34,19 +34,6 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 {
     public static class DisplayTextUtility
     {
-        ///// <summary>
-        ///// 文字列IDとINameを保持したデータから表示文字列を取得。
-        ///// </summary>
-        ///// <typeparam name="TModel"></typeparam>
-        ///// <param name="model"></param>
-        ///// <returns></returns>
-        //public static string GetDisplayName<TModel,T>(TModel model)
-        //	where TModel: ITId<T>, IName
-        //	where T: IComparable
-        //{
-        //	return GetDisplayName(model, model);
-        //}
-
         public static string GetDisplayName<T>(ITId<T> id, IName name)
             where T : IComparable
         {
@@ -56,17 +43,6 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 
             return name.Name ?? string.Empty;
         }
-
-        //public static string GetDisplayName<T>(ITId<T> id)
-        //	where T: IComparable
-        //{
-        //	var name = id as IName;
-        //	if(name != null) {
-        //		return GetDisplayName(id, name);
-        //	}
-
-        //	return id.Id == null ? id.Id.ToString(): string.Empty;
-        //}
 
         public static string GetDisplayName(IName name)
         {

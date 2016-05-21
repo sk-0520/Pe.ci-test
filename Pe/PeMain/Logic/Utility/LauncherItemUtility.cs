@@ -187,7 +187,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
                 return model.Name == s;
             } else {
                 // 大文字小文字区別無し
-                return string.Compare(model.Name, s, true) == 0;
+                return string.Compare(model.Name, s, StringComparison.OrdinalIgnoreCase) == 0;
             }
         }
     }

@@ -159,13 +159,15 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 
         static bool CompareArchiveEntryName(ZipArchiveEntry entry, string name)
         {
-            return string.Compare(entry.FullName, name, true) == 0;
+            return string.Compare(entry.FullName, name, StringComparison.OrdinalIgnoreCase) == 0;
         }
 
         /// <summary>
         /// ボディファイルは物理ファイルか。
         /// </summary>
-        /// <param name="path"></param>
+        /// <param name="indexKind"></param>
+        /// <param name="guid"></param>
+        /// <param name="parentDirectoryPath"></param>
         /// <returns></returns>
         static bool ExistisRealBodyFile(IndexKind indexKind, Guid guid, string parentDirectoryPath)
         {
@@ -321,7 +323,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         /// <param name="indexKind"></param>
         /// <param name="items"></param>
         /// <param name="archive"></param>
-        /// <param name="archiveTimestamp"></param>
+        /// <param name="archiveTimeSpan"></param>
         /// <param name="fileSize"></param>
         /// <param name="appNonProcess"></param>
         static void GarbageCollectionBodyArchive<TItemModel>(IndexKind indexKind, IndexItemCollectionModel<TItemModel> items, IndexBodyArchive archive, DateTime archiveBaseTime, TimeSpan archiveTimeSpan, long fileSize, IAppNonProcess appNonProcess)

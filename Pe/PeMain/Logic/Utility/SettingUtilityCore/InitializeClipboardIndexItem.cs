@@ -20,26 +20,29 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
-using ContentTypeTextNet.Pe.Library.PeData.Setting;
+using ContentTypeTextNet.Pe.Library.PeData.Item;
 
-namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityImplement
+namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
 {
-    internal static class InitializeClipboardIndexSetting
+    internal sealed class InitializeClipboardIndexItem: InitializeBase<ClipboardIndexItemModel>
     {
-        public static void Correction(ClipboardIndexSettingModel setting, Version previousVersion, INonProcess nonProcess)
-        {
-            V_First(setting, previousVersion, nonProcess);
-            V_Last(setting, previousVersion, nonProcess);
-        }
-
-        static void V_Last(ClipboardIndexSettingModel setting, Version previousVersion, INonProcess nonProcess)
+        public InitializeClipboardIndexItem(ClipboardIndexItemModel model, Version previousVersion, INonProcess nonProcess)
+            : base(model, previousVersion, nonProcess)
         { }
 
-        static void V_First(ClipboardIndexSettingModel setting, Version previousVersion, INonProcess nonProcess)
+        #region InitializeBase
+
+        protected override void Correction_Last()
+        { }
+
+        protected override void Correction_First()
+        { }
+
+        protected override void Correction_0_70_0()
         {
-            if(previousVersion != null) {
-                return;
-            }
+            Model.Sort = Model.History.CreateTimestamp;
         }
+
+        #endregion
     }
 }

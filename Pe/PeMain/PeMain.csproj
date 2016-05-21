@@ -26,7 +26,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <NoWarn>IDE0001</NoWarn>
+    <NoWarn>RECS0154</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <OutputPath>$(SolutionDir)..\Output\$(Configuration)\$(Platform)</OutputPath>
@@ -38,7 +38,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <NoWarn>IDE0001</NoWarn>
+    <NoWarn>RECS0154</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -50,7 +50,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <NoWarn>IDE0001</NoWarn>
+    <NoWarn>RECS0154</NoWarn>
     <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
@@ -63,7 +63,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <NoWarn>IDE0001</NoWarn>
+    <NoWarn>RECS0154</NoWarn>
   </PropertyGroup>
   <PropertyGroup />
   <PropertyGroup>
@@ -72,12 +72,12 @@
   <PropertyGroup />
   <ItemGroup>
     <Reference Include="ContentTypeTextNet.PInvoke">
-      <HintPath>..\packages\ContentTypeTextNet.PInvoke.1.0.0.20\lib\net46\ContentTypeTextNet.PInvoke.dll</HintPath>
+      <HintPath>..\packages\ContentTypeTextNet.PInvoke.1.0.0.22\lib\net46\ContentTypeTextNet.PInvoke.dll</HintPath>
       <Private>True</Private>
       <Private>False</Private>
     </Reference>
     <Reference Include="ContentTypeTextNet.SharedLibrary">
-      <HintPath>..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.45\lib\net46\ContentTypeTextNet.SharedLibrary.dll</HintPath>
+      <HintPath>..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.47\lib\net46\ContentTypeTextNet.SharedLibrary.dll</HintPath>
       <Private>True</Private>
       <Private>False</Private>
     </Reference>
@@ -453,15 +453,16 @@
     <Compile Include="Logic\Utility\LauncherToolbarUtility.cs" />
     <Compile Include="Logic\Utility\NoteUtility.cs" />
     <Compile Include="Logic\Utility\PopupUtility.cs" />
-    <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeClipboardIndexItem.cs" />
-    <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeCommandSetting.cs" />
-    <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeLauncherGroupItem.cs" />
-    <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeLauncherItem.cs" />
-    <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeLoggingSetting.cs" />
-    <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeGeneralSetting.cs" />
-    <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeRunningInformationSetting.cs" />
-    <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeStreamSetting.cs" />
-    <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeTemplateIndexItem.cs" />
+    <Compile Include="Logic\Utility\SettingUtilityCore\InitializeBase.cs" />
+    <Compile Include="Logic\Utility\SettingUtilityCore\InitializeClipboardIndexItem.cs" />
+    <Compile Include="Logic\Utility\SettingUtilityCore\InitializeCommandSetting.cs" />
+    <Compile Include="Logic\Utility\SettingUtilityCore\InitializeLauncherGroupItem.cs" />
+    <Compile Include="Logic\Utility\SettingUtilityCore\InitializeLauncherItem.cs" />
+    <Compile Include="Logic\Utility\SettingUtilityCore\InitializeLoggingSetting.cs" />
+    <Compile Include="Logic\Utility\SettingUtilityCore\InitializeGeneralSetting.cs" />
+    <Compile Include="Logic\Utility\SettingUtilityCore\InitializeRunningInformationSetting.cs" />
+    <Compile Include="Logic\Utility\SettingUtilityCore\InitializeStreamSetting.cs" />
+    <Compile Include="Logic\Utility\SettingUtilityCore\InitializeTemplateIndexItem.cs" />
     <Compile Include="Logic\Utility\T4TemplateUtility.cs" />
     <Compile Include="TemplateReplaceKey.cs" />
     <Compile Include="ViewModel\AboutViewModel.cs" />
@@ -572,18 +573,18 @@
     <Compile Include="Logic\Utility\DisplayTextUtility.cs" />
     <Compile Include="Logic\Utility\LauncherItemUtility.cs" />
     <Compile Include="Logic\Utility\SettingUtility.cs" />
-    <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeClipboardIndexSetting.cs" />
-    <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeClipboardSetting.cs" />
-    <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeLauncherGroupSetting.cs" />
-    <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeLauncherItemSetting.cs" />
-    <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeNoteIndexItem.cs" />
-    <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeNoteIndexSetting.cs" />
-    <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeNoteSetting.cs" />
-    <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeTemplateIndexSetting.cs" />
-    <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeTemplateSetting.cs" />
-    <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeToolbarItem.cs" />
-    <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeToolbarSetting.cs" />
-    <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeWindowSaveSetting.cs" />
+    <Compile Include="Logic\Utility\SettingUtilityCore\InitializeClipboardIndexSetting.cs" />
+    <Compile Include="Logic\Utility\SettingUtilityCore\InitializeClipboardSetting.cs" />
+    <Compile Include="Logic\Utility\SettingUtilityCore\InitializeLauncherGroupSetting.cs" />
+    <Compile Include="Logic\Utility\SettingUtilityCore\InitializeLauncherItemSetting.cs" />
+    <Compile Include="Logic\Utility\SettingUtilityCore\InitializeNoteIndexItem.cs" />
+    <Compile Include="Logic\Utility\SettingUtilityCore\InitializeNoteIndexSetting.cs" />
+    <Compile Include="Logic\Utility\SettingUtilityCore\InitializeNoteSetting.cs" />
+    <Compile Include="Logic\Utility\SettingUtilityCore\InitializeTemplateIndexSetting.cs" />
+    <Compile Include="Logic\Utility\SettingUtilityCore\InitializeTemplateSetting.cs" />
+    <Compile Include="Logic\Utility\SettingUtilityCore\InitializeToolbarItem.cs" />
+    <Compile Include="Logic\Utility\SettingUtilityCore\InitializeToolbarSetting.cs" />
+    <Compile Include="Logic\Utility\SettingUtilityCore\InitializeWindowSaveSetting.cs" />
     <Compile Include="Logic\Utility\SystemEnvironmentUtility.cs" />
     <Compile Include="Logic\Utility\SystemExecuteUtility.cs" />
     <Compile Include="Logic\Utility\TemplateUtility.cs" />

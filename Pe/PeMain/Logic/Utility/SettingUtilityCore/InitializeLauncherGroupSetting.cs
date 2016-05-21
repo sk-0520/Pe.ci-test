@@ -22,24 +22,28 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Pe.Library.PeData.Setting;
 
-namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityImplement
+namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
 {
-    internal static class InitializeTemplateIndexSetting
+    internal sealed class InitializeLauncherGroupSetting: InitializeBase<LauncherGroupSettingModel>
     {
-        public static void Correction(TemplateIndexSettingModel setting, Version previousVersion, INonProcess nonProcess)
-        {
-            V_First(setting, previousVersion, nonProcess);
-            V_Last(setting, previousVersion, nonProcess);
-        }
-
-        static void V_Last(TemplateIndexSettingModel setting, Version previousVersion, INonProcess nonProcess)
+        public InitializeLauncherGroupSetting(LauncherGroupSettingModel model, Version previousVersion, INonProcess nonProcess)
+            : base(model, previousVersion, nonProcess)
         { }
 
-        static void V_First(TemplateIndexSettingModel setting, Version previousVersion, INonProcess nonProcess)
+        #region InitializeBase
+
+        protected override void Correction_Last()
         {
-            if(previousVersion != null) {
-                return;
+            if(!Model.Groups.Any()) {
+                var initGroup = SettingUtility.CreateLauncherGroup(Model.Groups, NonProcess);
+
+                Model.Groups.Add(initGroup);
             }
         }
+
+        protected override void Correction_First()
+        { }
+
+        #endregion
     }
 }

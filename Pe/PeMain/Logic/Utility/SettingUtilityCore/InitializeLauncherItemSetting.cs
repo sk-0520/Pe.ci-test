@@ -20,32 +20,30 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.Pe.Library.PeData.Define;
 using ContentTypeTextNet.Pe.Library.PeData.Setting;
 
-namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityImplement
+namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
 {
-    internal static class InitializeLauncherGroupSetting
+    internal sealed class InitializeLauncherItemSetting: InitializeBase<LauncherItemSettingModel>
     {
-        public static void Correction(LauncherGroupSettingModel setting, Version previousVersion, INonProcess nonProcess)
+        public InitializeLauncherItemSetting(LauncherItemSettingModel model, Version previousVersion, INonProcess nonProcess)
+            :base(model, previousVersion, nonProcess)
+        { }
+
+        #region InitializeBase
+
+        protected override void Correction_Last()
         {
-            V_First(setting, previousVersion, nonProcess);
-            V_Last(setting, previousVersion, nonProcess);
+            Model.FileDropMode = EnumUtility.GetNormalization(Model.FileDropMode, LauncherItemFileDropMode.ShowExecuteWindow);
         }
 
-        static void V_Last(LauncherGroupSettingModel setting, Version previousVersion, INonProcess nonProcess)
+        protected override void Correction_First()
         {
-            if(!setting.Groups.Any()) {
-                var initGroup = SettingUtility.CreateLauncherGroup(setting.Groups, nonProcess);
-
-                setting.Groups.Add(initGroup);
-            }
+            Model.FileDropMode = LauncherItemFileDropMode.ShowExecuteWindow;
         }
 
-        static void V_First(LauncherGroupSettingModel setting, Version previousVersion, INonProcess nonProcess)
-        {
-            if(previousVersion != null) {
-                return;
-            }
-        }
+        #endregion
     }
 }

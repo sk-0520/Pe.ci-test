@@ -32,7 +32,7 @@ using ContentTypeTextNet.Pe.Library.PeData.Define;
 using ContentTypeTextNet.Pe.Library.PeData.Item;
 using ContentTypeTextNet.Pe.Library.PeData.Setting;
 using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
-using Implement = ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityImplement;
+using Implement = ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore;
 using ContentTypeTextNet.Pe.PeMain.Data;
 using System.Security.Cryptography;
 using System.IO;
@@ -47,25 +47,6 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         #region define
 
         const int userIdLength = 32;
-
-        #endregion
-
-        #region check
-
-        internal static bool IsIllegalPlusNumber(double number)
-        {
-            return double.IsNaN(number) || number <= 0;
-        }
-
-        internal static bool IsIllegalPlusNumber(int number)
-        {
-            return number <= 0;
-        }
-
-        internal static bool IsIllegalString(string s)
-        {
-            return s == null;
-        }
 
         #endregion
 
@@ -280,17 +261,20 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 
         public static void InitializeLoggingSetting(LoggingSettingModel setting, Version previousVersion, INonProcess nonProcess)
         {
-            Implement.InitializeLoggingSetting.Correction(setting, previousVersion, nonProcess);
+            var init = new Implement.InitializeLoggingSetting(setting, previousVersion, nonProcess);
+            init.Correction();
         }
 
         private static void InitializeStreamSetting(StreamSettingModel setting, Version previousVersion, INonProcess nonProcess)
         {
-            Implement.InitializeStreamSetting.Correction(setting, previousVersion, nonProcess);
+            var init = new Implement.InitializeStreamSetting(setting, previousVersion, nonProcess);
+            init.Correction();
         }
 
         public static void InitializeToolbarSetting(ToolbarSettingModel setting, Version previousVersion, INonProcess nonProcess)
         {
-            Implement.InitializeToolbarSetting.Correction(setting, previousVersion, nonProcess);
+            var initSetting = new Implement.InitializeToolbarSetting(setting, previousVersion, nonProcess);
+            initSetting.Correction();
 
             foreach(var toolbar in setting.Items) {
                 InitializeToolbarItem(toolbar, previousVersion, nonProcess);
@@ -299,37 +283,44 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 
         public static void InitializeToolbarItem(ToolbarItemModel model, Version previousVersion, INonProcess nonProcess)
         {
-            Implement.InitializeToolbarItem.Correction(model, previousVersion, nonProcess);
+            var init = new Implement.InitializeToolbarItem(model, previousVersion, nonProcess);
+            init.Correction();
         }
 
         public static void InitializeWindowSaveSetting(WindowSaveSettingModel model, Version previousVersion, INonProcess nonProcess)
         {
-            Implement.InitializeWindowSaveSetting.Correction(model, previousVersion, nonProcess);
+            var init = new Implement.InitializeWindowSaveSetting(model, previousVersion, nonProcess);
+            init.Correction();
         }
 
         public static void InitializeNoteSetting(NoteSettingModel model, Version previousVersion, INonProcess nonProcess)
         {
-            Implement.InitializeNoteSetting.Correction(model, previousVersion, nonProcess);
+            var init = new Implement.InitializeNoteSetting(model, previousVersion, nonProcess);
+            init.Correction();
         }
 
         public static void InitializeClipboardSetting(ClipboardSettingModel setting, Version previousVersion, INonProcess nonProcess)
         {
-            Implement.InitializeClipboardSetting.Correction(setting, previousVersion, nonProcess);
+            var init = new Implement.InitializeClipboardSetting(setting, previousVersion, nonProcess);
+            init.Correction();
         }
 
         public static void InitializeTemplateSetting(TemplateSettingModel setting, Version previousVersion, INonProcess nonProcess)
         {
-            Implement.InitializeTemplateSetting.Correction(setting, previousVersion, nonProcess);
+            var init = new Implement.InitializeTemplateSetting(setting, previousVersion, nonProcess);
+            init.Correction();
         }
 
         public static void InitializeCommandSetting(CommandSettingModel setting, Version previousVersion, INonProcess nonProcess)
         {
-            Implement.InitializeCommandSetting.Correction(setting, previousVersion, nonProcess);
+            var init = new Implement.InitializeCommandSetting(setting, previousVersion, nonProcess);
+            init.Correction();
         }
 
         private static void InitializeGeneralSetting(GeneralSettingModel setting, Version previousVersion, INonProcess nonProcess)
         {
-            Implement.InitializeGeneralSetting.Correction(setting, previousVersion, nonProcess);
+            var init = new Implement.InitializeGeneralSetting(setting, previousVersion, nonProcess);
+            init.Correction();
         }
 
 
@@ -357,12 +348,14 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 
         private static void InitializeRunningInformationSetting(RunningInformationSettingModel setting, Version previousVersion, INonProcess nonProcess)
         {
-            Implement.InitializeRunningInformationSetting.Correction(setting, previousVersion, nonProcess);
+            var init = new Implement.InitializeRunningInformationSetting(setting, previousVersion, nonProcess);
+            init.Correction();
         }
 
         public static void InitializeLauncherItemSetting(LauncherItemSettingModel setting, Version previousVersion, INonProcess nonProcess)
         {
-            Implement.InitializeLauncherItemSetting.Correction(setting, previousVersion, nonProcess);
+            var initSetting = new Implement.InitializeLauncherItemSetting(setting, previousVersion, nonProcess);
+            initSetting.Correction();
 
             foreach(var item in setting.Items) {
                 InitializeLauncherItem(item, previousVersion, nonProcess);
@@ -371,12 +364,14 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 
         public static void InitializeLauncherItem(LauncherItemModel item, Version previousVersion, INonProcess nonProcess)
         {
-            Implement.InitializeLauncherItem.Correction(item, previousVersion, nonProcess);
+            var init = new Implement.InitializeLauncherItem(item, previousVersion, nonProcess);
+            init.Correction();
         }
 
         public static void InitializeLauncherGroupSetting(LauncherGroupSettingModel setting, Version previousVersion, INonProcess nonProcess)
         {
-            Implement.InitializeLauncherGroupSetting.Correction(setting, previousVersion, nonProcess);
+            var initGroup = new Implement.InitializeLauncherGroupSetting(setting, previousVersion, nonProcess);
+            initGroup.Correction();
 
             foreach(var item in setting.Groups) {
                 InitializeLauncherGroupItem(item, previousVersion, nonProcess);
@@ -385,12 +380,14 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 
         public static void InitializeLauncherGroupItem(LauncherGroupItemModel item, Version previousVersion, INonProcess nonProcess)
         {
-            Implement.InitializeLauncherGroupItem.Correction(item, previousVersion, nonProcess);
+            var init = new Implement.InitializeLauncherGroupItem(item, previousVersion, nonProcess);
+            init.Correction();
         }
 
         public static void InitializeNoteIndexSetting(NoteIndexSettingModel setting, Version previousVersion, INonProcess nonProcess)
         {
-            Implement.InitializeNoteIndexSetting.Correction(setting, previousVersion, nonProcess);
+            var initSetting = new Implement.InitializeNoteIndexSetting(setting, previousVersion, nonProcess);
+            initSetting.Correction();
 
             CheckUtility.EnforceNotNull(setting);
             foreach(var noteIndex in setting.Items) {
@@ -400,12 +397,15 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 
         public static void InitializeNoteIndexItem(NoteIndexItemModel indexItem, Version previousVersion, INonProcess nonProcess)
         {
-            Implement.InitializeNoteIndexItem.Correction(indexItem, previousVersion, nonProcess);
+            var init = new Implement.InitializeNoteIndexItem(indexItem, previousVersion, nonProcess);
+            init.Correction();
         }
 
         public static void InitializeTemplateIndexSetting(TemplateIndexSettingModel setting, Version previousVersion, INonProcess nonProcess)
         {
-            Implement.InitializeTemplateIndexSetting.Correction(setting, previousVersion, nonProcess);
+            var initSetting = new Implement.InitializeTemplateIndexSetting(setting, previousVersion, nonProcess);
+            initSetting.Correction();
+
             foreach(var templateItem in setting.Items) {
                 InitializeTemplateIndexSetting(templateItem, previousVersion, nonProcess);
             }
@@ -413,12 +413,14 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 
         public static void InitializeTemplateIndexSetting(TemplateIndexItemModel model, Version previousVersion, INonProcess nonProcess)
         {
-            Implement.InitializeTemplateIndexItem.Correction(model, previousVersion, nonProcess);
+            var init = new Implement.InitializeTemplateIndexItem(model, previousVersion, nonProcess);
+            init.Correction();
         }
 
         public static void InitializeClipboardIndexSetting(ClipboardIndexSettingModel setting, Version previousVersion, INonProcess nonProcess)
         {
-            Implement.InitializeClipboardIndexSetting.Correction(setting, previousVersion, nonProcess);
+            var init = new Implement.InitializeClipboardIndexSetting(setting, previousVersion, nonProcess);
+            init.Correction();
             foreach(var clipboardItem in setting.Items) {
                 InitializeClipboardIndexItem(clipboardItem, previousVersion, nonProcess);
             }
@@ -426,7 +428,8 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 
         public static void InitializeClipboardIndexItem(ClipboardIndexItemModel clipboardItend, Version previousVersion, INonProcess nonProcess)
         {
-            Implement.InitializeClipboardIndexItem.Correction(clipboardItend, previousVersion, nonProcess);
+            var init = new Implement.InitializeClipboardIndexItem(clipboardItend, previousVersion, nonProcess);
+            init.Correction();
         }
 
         #endregion

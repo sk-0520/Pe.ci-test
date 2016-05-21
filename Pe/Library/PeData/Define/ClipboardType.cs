@@ -26,7 +26,7 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Define
     /// クリップボードの型情報。
     /// </summary>
     [Flags]
-    public enum ClipboardType: int
+    public enum ClipboardType
     {
         /// <summary>
         /// 無し。
