@@ -43,12 +43,12 @@ namespace ContentTypeTextNet.Pe.PeMain
         /// </summary>
         void DebugProcess()
         {
-            debugIcon();
-            debugFont();
-            debugBox();
-            debugBrowser();
-            debugToolbar();
-            debugJson();
+            //debugIcon();
+            //debugFont();
+            //debugBox();
+            //debugBrowser();
+            //debugToolbar();
+            //debugJson();
         }
 
         void debugIcon()

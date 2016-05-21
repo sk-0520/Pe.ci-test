@@ -134,16 +134,6 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
             Canvas.SetLeft(toolbarElement, drawArea.Location.X);
             Canvas.SetTop(toolbarElement, drawArea.Location.Y);
 
-            //using(var g = Graphics.FromImage(image)) {
-            //	using(var box = CommonData.Skin.CreateColorBoxImage(AppUtility.GetToolbarPositionColor(true, false), AppUtility.GetToolbarPositionColor(false, false), imageSize)) {
-            //		g.DrawImage(box, Point.Empty);
-            //	}
-            //	using(var box = CommonData.Skin.CreateColorBoxImage(AppUtility.GetToolbarPositionColor(true, true), AppUtility.GetToolbarPositionColor(false, true), drawArea.Size)) {
-            //		g.DrawImage(box, drawArea.Location);
-            //	}
-            //}
-
-            //return image;
             return canvas;
         }
     }
