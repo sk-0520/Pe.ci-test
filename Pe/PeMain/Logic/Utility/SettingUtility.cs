@@ -398,7 +398,8 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 
         public static void InitializeNoteIndexSetting(NoteIndexSettingModel setting, Version previousVersion, INonProcess nonProcess)
         {
-            Implement.InitializeNoteIndexSetting.Correction(setting, previousVersion, nonProcess);
+            var initSetting = new Implement.InitializeNoteIndexSetting(setting, previousVersion, nonProcess);
+            initSetting.Correction();
 
             CheckUtility.EnforceNotNull(setting);
             foreach(var noteIndex in setting.Items) {

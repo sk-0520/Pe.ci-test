@@ -24,18 +24,32 @@ using ContentTypeTextNet.Pe.Library.PeData.Setting;
 
 namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
 {
-    internal static class InitializeNoteIndexSetting
+    internal sealed class InitializeNoteIndexSetting: InitializeBase<NoteIndexSettingModel>
     {
-        public static void Correction(NoteIndexSettingModel setting, Version previousVersion, INonProcess nonProcess)
-        {
-            V_First(setting, previousVersion, nonProcess);
-            V_Last(setting, previousVersion, nonProcess);
-        }
-
-        static void V_Last(NoteIndexSettingModel setting, Version previousVersion, INonProcess nonProcess)
+        public InitializeNoteIndexSetting(NoteIndexSettingModel model, Version previousVersion, INonProcess nonProcess)
+            : base(model, previousVersion, nonProcess)
         { }
 
-        static void V_First(NoteIndexSettingModel setting, Version previousVersion, INonProcess nonProcess)
+        #region InitializeBase
+
+        protected override void V_LastCore()
         { }
+
+        protected override void V_FirstCore()
+        { }
+
+        #endregion
+
+        //public static void Correction(NoteIndexSettingModel setting, Version previousVersion, INonProcess nonProcess)
+        //{
+        //    V_First(setting, previousVersion, nonProcess);
+        //    V_Last(setting, previousVersion, nonProcess);
+        //}
+
+        //static void V_Last(NoteIndexSettingModel setting, Version previousVersion, INonProcess nonProcess)
+        //{ }
+
+        //static void V_First(NoteIndexSettingModel setting, Version previousVersion, INonProcess nonProcess)
+        //{ }
     }
 }
