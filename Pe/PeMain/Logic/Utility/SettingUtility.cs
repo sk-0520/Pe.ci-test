@@ -418,7 +418,8 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 
         public static void InitializeClipboardIndexSetting(ClipboardIndexSettingModel setting, Version previousVersion, INonProcess nonProcess)
         {
-            Implement.InitializeClipboardIndexSetting.Correction(setting, previousVersion, nonProcess);
+            var init = new Implement.InitializeClipboardIndexSetting(setting, previousVersion, nonProcess);
+            init.Correction();
             foreach(var clipboardItem in setting.Items) {
                 InitializeClipboardIndexItem(clipboardItem, previousVersion, nonProcess);
             }

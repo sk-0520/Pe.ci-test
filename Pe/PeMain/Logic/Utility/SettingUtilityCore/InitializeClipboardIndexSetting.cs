@@ -24,22 +24,36 @@ using ContentTypeTextNet.Pe.Library.PeData.Setting;
 
 namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
 {
-    internal static class InitializeClipboardIndexSetting
+    internal sealed class InitializeClipboardIndexSetting:InitializeBase<ClipboardIndexSettingModel>
     {
-        public static void Correction(ClipboardIndexSettingModel setting, Version previousVersion, INonProcess nonProcess)
-        {
-            V_First(setting, previousVersion, nonProcess);
-            V_Last(setting, previousVersion, nonProcess);
-        }
-
-        static void V_Last(ClipboardIndexSettingModel setting, Version previousVersion, INonProcess nonProcess)
+        public InitializeClipboardIndexSetting(ClipboardIndexSettingModel setting, Version previousVersion, INonProcess nonProcess)
+            :base(setting, previousVersion, nonProcess)
         { }
 
-        static void V_First(ClipboardIndexSettingModel setting, Version previousVersion, INonProcess nonProcess)
-        {
-            if(previousVersion != null) {
-                return;
-            }
-        }
+        #region InitializeBase
+
+        protected override void V_LastCore()
+        { }
+
+        protected override void V_FirstCore()
+        { }
+
+        #endregion
+
+        //public static void Correction(ClipboardIndexSettingModel setting, Version previousVersion, INonProcess nonProcess)
+        //{
+        //    V_First(setting, previousVersion, nonProcess);
+        //    V_Last(setting, previousVersion, nonProcess);
+        //}
+
+        //static void V_Last(ClipboardIndexSettingModel setting, Version previousVersion, INonProcess nonProcess)
+        //{ }
+
+        //static void V_First(ClipboardIndexSettingModel setting, Version previousVersion, INonProcess nonProcess)
+        //{
+        //    if(previousVersion != null) {
+        //        return;
+        //    }
+        //}
     }
 }
