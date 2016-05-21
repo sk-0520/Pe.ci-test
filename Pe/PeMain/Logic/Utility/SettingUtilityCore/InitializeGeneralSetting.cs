@@ -25,25 +25,35 @@ using ContentTypeTextNet.Pe.Library.PeData.Define;
 
 namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
 {
-    internal static class InitializeGeneralSetting
+    internal sealed class InitializeGeneralSetting: InitializeBase<GeneralSettingModel>
     {
-        public static void Correction(GeneralSettingModel setting, Version previousVersion, INonProcess nonProcess)
+        public InitializeGeneralSetting(GeneralSettingModel model, Version previousVersion, INonProcess nonProcess)
+            :base(model, previousVersion, nonProcess)
+        { }
+
+        #region InitializeGeneralSetting
+
+        protected override void V_LastCore()
+        { }
+
+        protected override void V_FirstCore()
         {
-            V_First(setting, previousVersion, nonProcess);
-            V_Last(setting, previousVersion, nonProcess);
+            Model.Notification = Notification.None;
         }
 
-        static void V_Last(GeneralSettingModel setting, Version previousVersion, INonProcess nonProcess)
-        {
-        }
+        #endregion
 
-        static void V_First(GeneralSettingModel setting, Version previousVersion, INonProcess nonProcess)
-        {
-            if(previousVersion != null) {
-                return;
-            }
+        //static void V_Last(GeneralSettingModel setting, Version previousVersion, INonProcess nonProcess)
+        //{
+        //}
 
-            setting.Notification = Notification.None;
-        }
+        //static void V_First(GeneralSettingModel setting, Version previousVersion, INonProcess nonProcess)
+        //{
+        //    if(previousVersion != null) {
+        //        return;
+        //    }
+
+        //    setting.Notification = Notification.None;
+        //}
     }
 }

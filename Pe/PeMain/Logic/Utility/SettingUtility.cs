@@ -331,7 +331,8 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 
         private static void InitializeGeneralSetting(GeneralSettingModel setting, Version previousVersion, INonProcess nonProcess)
         {
-            Implement.InitializeGeneralSetting.Correction(setting, previousVersion, nonProcess);
+            var init = new Implement.InitializeGeneralSetting(setting, previousVersion, nonProcess);
+            init.Correction();
         }
 
 
