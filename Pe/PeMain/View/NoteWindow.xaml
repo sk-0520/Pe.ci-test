@@ -223,7 +223,7 @@
             <DataTrigger Binding="{Binding NoteKind}" Value="Rtf">
               <Setter Property="Content">
                 <Setter.Value>
-                  <xctk:RichTextBox Style="{StaticResource Editor}" Text="{Binding BodyRtf}">
+                  <xctk:RichTextBox Style="{StaticResource Editor}" Text="{Binding BodyRtf}" IsDocumentEnabled="True">
                     <xctk:RichTextBox.TextFormatter>
                       <xctk:RtfFormatter />
                     </xctk:RichTextBox.TextFormatter>
@@ -281,7 +281,7 @@
             <Button Grid.Row="1" Grid.Column="0" Content="title" AA:Language.Word="note/input/title" Command="{Binding EditTitleCommand}" />
             <Button Grid.Row="1" Grid.Column="1" Content="body" AA:Language.Word="note/input/body"  Command="{Binding EditBodyCommand}" IsEnabled="{Binding IsCompacted, Converter={StaticResource LogicalNotConverter}}" />
           </Grid>
-          <Grid Style="{StaticResource Group}">
+          <!--<Grid Style="{StaticResource Group}">
             <Grid.RowDefinitions>
               <RowDefinition />
               <RowDefinition />
@@ -295,9 +295,10 @@
             
             <RadioButton Grid.Row="1" Grid.Column="0" Content="text" AA:Language.Word="note/kind/text" Style="{StaticResource DefaultHorizontalRadioButton}" IsChecked="{Binding NoteKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_library_pedata_define:NoteKind.Text}}" />
             <RadioButton Grid.Row="1" Grid.Column="1" Content="rtf" AA:Language.Word="note/kind/rtf"  Style="{StaticResource DefaultHorizontalRadioButton}" IsChecked="{Binding NoteKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_library_pedata_define:NoteKind.Rtf}}" />
-          </Grid>
+          </Grid>-->
           <Grid Style="{StaticResource Group}">
             <Grid.RowDefinitions>
+              <RowDefinition />
               <RowDefinition />
               <RowDefinition />
               <RowDefinition />
@@ -308,15 +309,30 @@
               <ColumnDefinition Width="3*" />
               <ColumnDefinition Width="7*" />
             </Grid.ColumnDefinitions>
+            
             <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="style" AA:Language.Word="note/style" Style="{StaticResource TitleLabel}" />
-            <Label Grid.Row="1" Grid.Column="0" Target="{Binding ElementName=selectForeground}" Content="fore" AA:Language.Word="note/style/fore-color" />
-            <xctk:ColorPicker x:Name="selectForeground" Grid.Row="1" Grid.Column="1" Style="{StaticResource DefaultColorPicker}" SelectedColor="{Binding ForeColor}" />
-            <Label Grid.Row="2" Grid.Column="0" Target="{Binding ElementName=selectBackground}" Content="back" AA:Language.Word="note/style/back-color" Style="{StaticResource HeaderLabel}"/>
-            <xctk:ColorPicker x:Name="selectBackground" Grid.Row="2" Grid.Column="1" Style="{StaticResource DefaultColorPicker}" SelectedColor="{Binding BackColor}" />
-            <Label Grid.Row="3" Grid.Column="0" Target="{Binding ElementName=selectFont}" Content="font" AA:Language.Word="note/style/font" Style="{StaticResource HeaderLabel}" />
+            
+            <Label Grid.Row="1" Grid.Column="0"  Content="kind" AA:Language.Word="note/style/kind" />
+            <Grid Grid.Row="1" Grid.Column="1">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5*" />
+                <ColumnDefinition Width="5*" />
+              </Grid.ColumnDefinitions>
+
+              <RadioButton Grid.Column="0" Content="text" AA:Language.Word="note/style/kind/text" Style="{StaticResource DefaultHorizontalRadioButton}" IsChecked="{Binding NoteKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_library_pedata_define:NoteKind.Text}}" />
+              <RadioButton Grid.Column="1" Content="rtf" AA:Language.Word="note/style/kind/rtf"  Style="{StaticResource DefaultHorizontalRadioButton}" IsChecked="{Binding NoteKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_library_pedata_define:NoteKind.Rtf}}" />
+            </Grid>
+            
+            <Label Grid.Row="2" Grid.Column="0" Target="{Binding ElementName=selectForeground}" Content="fore" AA:Language.Word="note/style/fore-color" />
+            <xctk:ColorPicker x:Name="selectForeground" Grid.Row="2" Grid.Column="1" Style="{StaticResource DefaultColorPicker}" SelectedColor="{Binding ForeColor}" />
+            
+            <Label Grid.Row="3" Grid.Column="0" Target="{Binding ElementName=selectBackground}" Content="back" AA:Language.Word="note/style/back-color" Style="{StaticResource HeaderLabel}"/>
+            <xctk:ColorPicker x:Name="selectBackground" Grid.Row="3" Grid.Column="1" Style="{StaticResource DefaultColorPicker}" SelectedColor="{Binding BackColor}" />
+            
+            <Label Grid.Row="4" Grid.Column="0" Target="{Binding ElementName=selectFont}" Content="font" AA:Language.Word="note/style/font" Style="{StaticResource HeaderLabel}" />
             <AV:FontSelectControl
               x:Name="selectFont"
-              Grid.Row="3" Grid.Column="1"
+              Grid.Row="4" Grid.Column="1"
               FamilyName="{Binding FontFamily}"
               IsBold="{Binding FontBold}"
               IsItalic="{Binding FontItalic}"

@@ -186,6 +186,9 @@
 		<Item Id="note/input/title" Word="タイトル(_S)" />
 		<Item Id="note/input/body" Word="本文(_B)" />
 		<Item Id="note/style" Word="書式" />
+		<Item Id="note/style/kind" Word="前景" />
+		<Item Id="note/style/kind/text" Word="テキスト(_T)" />
+		<Item Id="note/style/kind/rtf"  Word="書式付き文字列(_R)" />
 		<Item Id="note/style/fore-color" Word="前景(_F)" />
 		<Item Id="note/style/back-color" Word="背景(_B)" />
 		<Item Id="note/style/font" Word="フォント(_F)" />

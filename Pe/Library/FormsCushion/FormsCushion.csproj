@@ -114,6 +114,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConvertRichText.cs" />
     <Compile Include="MouseKeyHookCompatibility\MouseKeyHookCompatibility.cs" />
     <Compile Include="MouseKeyHookCompatibility\MouseKeyHookKeyEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

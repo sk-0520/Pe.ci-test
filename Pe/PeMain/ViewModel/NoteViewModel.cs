@@ -17,6 +17,7 @@ along with Pe.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -30,6 +31,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility.UI;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+using ContentTypeTextNet.Pe.Library.FormsCushion;
 using ContentTypeTextNet.Pe.Library.PeData.Define;
 using ContentTypeTextNet.Pe.Library.PeData.IF;
 using ContentTypeTextNet.Pe.Library.PeData.Item;
@@ -297,7 +299,27 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         public NoteKind NoteKind
         {
             get { return Model.NoteKind; }
-            set { SetModelValue(value); }
+            set
+            {
+                var prev = Model.NoteKind;
+                if(prev != value) {
+                    var convertedValue = ConvertBodyValue(prev, value);
+                    if(SetModelValue(value)) {
+                        switch(value) {
+                            case NoteKind.Text:
+                                BodyText = convertedValue;
+                                break;
+
+                            case NoteKind.Rtf:
+                                BodyRtf = convertedValue;
+                                break;
+
+                            default:
+                                throw new NotImplementedException();
+                        }
+                    }
+                }
+            }
         }
 
         #endregion
@@ -614,6 +636,31 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
             return brush;
         }
+
+        string ConvertBodyValue(NoteKind prevKind, NoteKind nextKind)
+        {
+            Debug.Assert(prevKind != nextKind);
+
+            var converter = new ConvertRichText();
+
+            switch(nextKind) {
+                case NoteKind.Text:
+                    //if(string.IsNullOrWhiteSpace(BodyText)) {
+                        return converter.ToPlainText(BodyRtf);
+                    //}
+
+                case NoteKind.Rtf: {
+                        var text = converter.ToPlainText(BodyRtf);
+                        //if(string.IsNullOrWhiteSpace(text)) {
+                            return converter.ToRichText(BodyText);
+                        //}
+                    }
+
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+
 
         #endregion
 
