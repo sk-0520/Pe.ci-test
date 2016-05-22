@@ -274,7 +274,7 @@
                   <RowDefinition Height="Auto" />
                   <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                <ToolBar Grid.Row="0" Style="{StaticResource DefaultToolbar}">
+                <ToolBar Grid.Row="0" Style="{StaticResource DefaultHorizontalToolbar}">
                   <RadioButton x:Name="imageFit" IsChecked="{Binding ImageScale, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static AD:ImageScale.Fit}}" >
                     <StackPanel Orientation="Horizontal">
                       <Image Style="{StaticResource DefaultImage}" Source="{x:Static AM:AppResource.ClipboardImageFitImage}" />

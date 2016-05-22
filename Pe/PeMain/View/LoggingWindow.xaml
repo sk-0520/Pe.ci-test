@@ -49,7 +49,7 @@
       <RowDefinition Height="*" />
       <RowDefinition Height="Auto" />
     </Grid.RowDefinitions>
-    <ToolBar Grid.Row="0" Height="Auto" Style="{StaticResource DefaultToolbar}" FontFamily="{DynamicResource {x:Static SystemFonts.MenuFontFamilyKey}}" FontSize="{DynamicResource {x:Static SystemFonts.MenuFontSizeKey}}" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" >
+    <ToolBar Grid.Row="0" Height="Auto" Style="{StaticResource DefaultHorizontalToolbar}" FontFamily="{DynamicResource {x:Static SystemFonts.MenuFontFamilyKey}}" FontSize="{DynamicResource {x:Static SystemFonts.MenuFontSizeKey}}" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" >
       <Button Command="{Binding SaveCommand}">
         <StackPanel Orientation="Horizontal">
           <Image Source="{x:Static AM:AppResource.CommonSaveImage}" Style="{StaticResource ItemImage}" />
@@ -128,8 +128,8 @@
           <ColumnDefinition Width="Auto" />
           <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <ToolBarTray Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Orientation="Vertical">
-          <ToolBar Style="{StaticResource DefaultToolbar}" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
+        <ToolBarTray Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Style="{StaticResource DefaultVerticalToolBarTray}">
+          <ToolBar Style="{StaticResource DefaultVerticalToolbar}" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
             <Button AA:Language.Hint="logging/item/save" Command="{Binding ItemSaveCommand}">
               <Image Source="{x:Static AM:AppResource.CommonSaveImage}" Style="{StaticResource DefaultImage}" />
             </Button>

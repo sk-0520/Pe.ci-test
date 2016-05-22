@@ -24,7 +24,7 @@
     <Setter Property="Height" Value="{Binding WindowHeight, Mode=TwoWay}" />
     <Setter Property="Topmost" Value="{Binding IsTopmost}" />
   </Style>
-  <Style x:Key="ClipboardTemplateDefualtToolbar" TargetType="ToolBar" BasedOn="{StaticResource DefaultToolbar}">
+  <Style x:Key="ClipboardTemplateDefualtToolbar" TargetType="ToolBar" BasedOn="{StaticResource DefaultHorizontalToolbar}">
     <Setter Property="HorizontalAlignment" Value="Stretch" />
     <Setter Property="VerticalAlignment" Value="Stretch" />
   </Style>

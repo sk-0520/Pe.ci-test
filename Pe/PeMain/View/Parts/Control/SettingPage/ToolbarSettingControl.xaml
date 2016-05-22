@@ -194,7 +194,7 @@
         <RowDefinition Height="*" />
       </Grid.RowDefinitions>
       <!--<ToolBarTray HorizontalAlignment="Stretch" VerticalAlignment="Stretch">-->
-      <ToolBar Style="{StaticResource DefaultToolbar}">
+      <ToolBar Style="{StaticResource DefaultHorizontalToolbar}">
         <!--<StackPanel Orientation="Horizontal">-->
         <Button AA:Language.Hint="toolbar-setting/group/node/add/group" Command="{Binding CreateGroupCommand}">
           <Image Source="{x:Static AM:AppResource.SettingLauncherGroupParentImage}" Style="{StaticResource DefaultImage}" />
