@@ -218,6 +218,9 @@
                     <xctk:RichTextBox.TextFormatter>
                       <xctk:RtfFormatter />
                     </xctk:RichTextBox.TextFormatter>
+                    <xctk:RichTextBoxFormatBarManager.FormatBar>
+                      <xctk:RichTextBoxFormatBar />
+                    </xctk:RichTextBoxFormatBarManager.FormatBar>
                     <xctk:RichTextBox.Style>
                       <Style TargetType="xctk:RichTextBox">
                         <Style.Triggers>
