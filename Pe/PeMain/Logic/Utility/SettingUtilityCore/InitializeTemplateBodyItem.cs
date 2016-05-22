@@ -25,10 +25,10 @@ using ContentTypeTextNet.Pe.Library.PeData.Setting;
 
 namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
 {
-    internal sealed class InitializeTemplateBodyItem: InitializeBase<TemplateBodyItemModel>
+    internal sealed class InitializeTemplateBodyItem: InitializeBodyBase<TemplateBodyItemModel>
     {
-        public InitializeTemplateBodyItem(TemplateBodyItemModel model, Version previousVersion, INonProcess nonProcess)
-            :base(model, previousVersion, nonProcess)
+        public InitializeTemplateBodyItem(TemplateBodyItemModel model, bool isCreate, INonProcess nonProcess)
+            :base(model, isCreate, nonProcess)
         { }
 
         #region InitializeBase
@@ -36,7 +36,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
         protected override void Correction_Last()
         { }
 
-        protected override void Correction_First()
+        protected override void Correction_FirstCore()
         { }
 
         #endregion

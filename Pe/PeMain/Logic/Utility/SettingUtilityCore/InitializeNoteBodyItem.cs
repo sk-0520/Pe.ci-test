@@ -24,10 +24,10 @@ using ContentTypeTextNet.Pe.Library.PeData.Item;
 
 namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
 {
-    internal sealed class InitializeNoteBodyItem: InitializeBase<NoteBodyItemModel>
+    internal sealed class InitializeNoteBodyItem: InitializeBodyBase<NoteBodyItemModel>
     {
-        public InitializeNoteBodyItem(NoteBodyItemModel model, Version previousVersion, INonProcess nonProcess)
-            : base(model, previousVersion, nonProcess)
+        public InitializeNoteBodyItem(NoteBodyItemModel model, bool isCreate, INonProcess nonProcess)
+            : base(model, isCreate, nonProcess)
         { }
 
         #region InitializeNoteIndexItem
@@ -35,7 +35,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
         protected override void Correction_Last()
         { }
 
-        protected override void Correction_First()
+        protected override void Correction_FirstCore()
         { }
 
         #endregion

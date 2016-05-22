@@ -402,9 +402,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
             init.Correction();
         }
 
-        internal static void InitializeNoteBodyItem(NoteBodyItemModel model, Version previousVersion, INonProcess nonProcess)
+        internal static void InitializeNoteBodyItem(NoteBodyItemModel model, bool isCreate, INonProcess nonProcess)
         {
-            var init = new Implement.InitializeNoteBodyItem(model, previousVersion, nonProcess);
+            var init = new Implement.InitializeNoteBodyItem(model, isCreate, nonProcess);
             init.Correction();
         }
 
@@ -424,9 +424,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
             init.Correction();
         }
 
-        internal static void InitializeTemplateBodyItem(TemplateBodyItemModel model, Version previousVersion, INonProcess nonProcess)
+        internal static void InitializeTemplateBodyItem(TemplateBodyItemModel model, bool isCreate, INonProcess nonProcess)
         {
-            var init = new Implement.InitializeTemplateBodyItem(model, previousVersion, nonProcess);
+            var init = new Implement.InitializeTemplateBodyItem(model, isCreate, nonProcess);
             init.Correction();
         }
 
@@ -445,9 +445,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
             init.Correction();
         }
 
-        internal static void InitializeClipboardBodyItem(ClipboardBodyItemModel model, Version previousVersion, INonProcess nonProcess)
+        internal static void InitializeClipboardBodyItem(ClipboardBodyItemModel model, bool isCreate, INonProcess nonProcess)
         {
-            var init = new Implement.InitializeClipboardBodyItem(model, previousVersion, nonProcess);
+            var init = new Implement.InitializeClipboardBodyItem(model, isCreate, nonProcess);
             init.Correction();
         }
 

@@ -24,10 +24,10 @@ using ContentTypeTextNet.Pe.Library.PeData.Item;
 
 namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
 {
-    internal sealed class InitializeClipboardBodyItem: InitializeBase<ClipboardBodyItemModel>
+    internal sealed class InitializeClipboardBodyItem: InitializeBodyBase<ClipboardBodyItemModel>
     {
-        public InitializeClipboardBodyItem(ClipboardBodyItemModel model, Version previousVersion, INonProcess nonProcess)
-            : base(model, previousVersion, nonProcess)
+        public InitializeClipboardBodyItem(ClipboardBodyItemModel model, bool isCreate, INonProcess nonProcess)
+            : base(model, isCreate, nonProcess)
         { }
 
         #region InitializeBase
@@ -35,7 +35,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
         protected override void Correction_Last()
         { }
 
-        protected override void Correction_First()
+        protected override void Correction_FirstCore()
         { }
 
         #endregion
