@@ -7,7 +7,7 @@
 	<Component Kind="Library" Name="jQuery" Uri="https://jquery.com/" License="MIT" />
 	<Component Kind="Library" Name="Autosize" Uri="http://www.jacklmoore.com/autosize" License="MIT" />
 	<Component Kind="Library" Name="AvalonEdit" Uri="http://avalonedit.net/" License="MIT" />
-	<Component Kind="Library" Name="GridHelpers" Uri="http://www.pinvoke.net/" License="" />
+	<Component Kind="Library" Name="GridHelpers" Uri="https://rachel53461.wordpress.com/2011/09/17/wpf-grids-rowcolumn-count-properties/" License="" />
 	<Component Kind="Library" Name="Gma.System.MouseKeyHook" Uri="https://github.com/gmamaladze/globalmousekeyhook" License="MIT " />
 	
 	<Component Kind="Source" Name="IconExtractor" Uri="https://github.com/TsudaKageyu/IconExtractor" License="BSD License" />
