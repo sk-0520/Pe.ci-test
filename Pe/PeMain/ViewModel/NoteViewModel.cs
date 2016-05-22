@@ -429,12 +429,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             {
                 var result = CreateCommand(
                     o => {
-                        if(string.IsNullOrEmpty(BodyText)) {
-                            AppNonProcess.Logger.Information("empty body");
-                            return;
-                        }
-
-                        ClipboardUtility.CopyText(BodyText, AppNonProcess.ClipboardWatcher);
+                        CopyBody();
                     }
                 );
 
@@ -583,6 +578,41 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
         }
 
+        void CopyBody()
+        {
+            switch(NoteKind) {
+                case NoteKind.Text:
+                    if(string.IsNullOrEmpty(BodyText)) {
+                        AppNonProcess.Logger.Information("empty body");
+                        return;
+                    }
+
+                    ClipboardUtility.CopyText(BodyText, AppNonProcess.ClipboardWatcher);
+                    break;
+
+                case NoteKind.Rtf:
+                    var rtf = BodyRtf;
+                    if(string.IsNullOrEmpty(rtf)) {
+                        AppNonProcess.Logger.Information("empty body");
+                        return;
+                    }
+                    var converter = new RichTextConverter();
+                    var text = converter.ToPlainText(rtf);
+                    if(string.IsNullOrEmpty(text)) {
+                        AppNonProcess.Logger.Information("empty body(RTF->Text)", rtf);
+                        return;
+                    }
+                    var dataObject = new DataObject();
+                    dataObject.SetText(text, TextDataFormat.UnicodeText);
+                    dataObject.SetText(rtf, TextDataFormat.Rtf);
+                    ClipboardUtility.CopyDataObject(dataObject, AppNonProcess.ClipboardWatcher);
+                    break;
+
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+
         void SetCompactArea()
         {
             this._compactHeight = CaptionArea.Height + ResizeThickness.GetVertical();
@@ -642,7 +672,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         {
             Debug.Assert(prevKind != nextKind);
 
-            var converter = new ConvertRichText();
+            var converter = new RichTextConverter();
 
             switch(nextKind) {
                 case NoteKind.Text:

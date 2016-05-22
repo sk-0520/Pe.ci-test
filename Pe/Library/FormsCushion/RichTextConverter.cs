@@ -13,7 +13,7 @@ namespace ContentTypeTextNet.Pe.Library.FormsCushion
     /// <summary>
     /// <para>https://msdn.microsoft.com/ja-jp/library/cc488002.aspx</para>
     /// </summary>
-    public class ConvertRichText
+    public class RichTextConverter
     {
         public string ToPlainText(string rtf)
         {
