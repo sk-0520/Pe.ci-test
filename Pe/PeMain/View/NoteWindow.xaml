@@ -333,7 +333,7 @@
               Size="{Binding FontSize}"
               SizeMinimum="{x:Static AM:Constants.NoteFontMinimumSize}"
               SizeMaximum="{x:Static AM:Constants.NoteFontMaximumSize}"
-              Width="{StaticResource FontSelectWidth}"
+              MinWidth="{StaticResource FontSelectWidth}"
               IsEnabledBold="{Binding NoteKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_library_pedata_define:NoteKind.Text}}"
               IsEnabledItalic="{Binding NoteKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_library_pedata_define:NoteKind.Text}}"
             />
