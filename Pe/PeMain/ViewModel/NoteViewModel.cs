@@ -237,37 +237,6 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
         }
 
-        //public FontFamily FontFamily
-        //{
-        //	get { return FontUtility.MakeFontFamily(Model.Font.Family, SystemFonts.MessageFontFamily); }
-        //	set 
-        //	{
-        //		if(value != null) {
-        //			var fontFamily = FontUtility.GetOriginalFontFamilyName(value);
-        //			SetPropertyValue(Model.Font, fontFamily, "Family");
-        //		}
-        //	}
-        //}
-
-        //public bool FontBold
-        //{
-        //	get { return Model.Font.Bold; }
-        //	set { SetPropertyValue(Model.Font, value, "Bold"); }
-        //}
-
-        //public bool FontItalic
-        //{
-        //	get { return Model.Font.Italic; }
-        //	set { SetPropertyValue(Model.Font, value, "Italic"); }
-        //}
-
-        //public double FontSize
-        //{
-        //	get { return Model.Font.Size; }
-        //	set { SetPropertyValue(Model.Font, value, "Size"); }
-
-        //}
-
         #region font
 
         public FontFamily FontFamily
@@ -520,74 +489,16 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         #endregion
 
-        #region HasViewSingleModelWrapperViewModelBase
-
-        protected override void InitializeView()
-        {
-            SetCompactArea();
-            OnPropertyChanged(nameof(IsBodyReadOnly));
-
-            View.UserClosing += View_UserClosing;
-            PopupUtility.Attachment(View, View.popup);
-            View.popup.Opened += Popup_Opened;
-
-            base.InitializeView();
-        }
-
-        protected override void UninitializeView()
-        {
-            View.popup.Opened -= Popup_Opened;
-            View.UserClosing -= View_UserClosing;
-
-            base.UninitializeView();
-        }
-
-        protected override void CallOnPropertyChangeDisplayItem()
-        {
-            base.CallOnPropertyChangeDisplayItem();
-
-            var propertyNames = new[] {
-                nameof(MenuIcon),
-                nameof(MenuText),
-            };
-            CallOnPropertyChange(propertyNames);
-        }
-
-        #endregion
-
-        #region IColorPair
-
-        public Color ForeColor
-        {
-            get { return ColorPairProperty.GetNoneAlphaForeColor(Model); }
-            set
-            {
-                if(ColorPairProperty.SetNoneAlphaForekColor(Model, value, OnPropertyChanged)) {
-                    CallOnPropertyChange(nameof(ForeColorBrush));
-                    CallOnPropertyChangeDisplayItem();
-                }
-            }
-        }
-
-        public Color BackColor
-        {
-            get { return ColorPairProperty.GetNoneAlphaBackColor(Model); }
-            set
-            {
-                if(ColorPairProperty.SetNoneAlphaBackColor(Model, value, OnPropertyChanged)) {
-                    BorderBrush = MakeBorderBrush();
-                    CallOnPropertyChangeDisplayItem();
-                }
-            }
-        }
-
-        #endregion
-
         #region function
+
+        TextBoxBase GetBodyEditor()
+        {
+            return UIUtility.FindLogicalChildren<TextBoxBase>(View.content).First();
+        }
 
         void DoTargetEditor(Action<TextBox> textAction, Action<Xceed.Wpf.Toolkit.RichTextBox> rtfAction)
         {
-            var editor = UIUtility.FindLogicalChildren<TextBoxBase>(View.content).First();
+            var editor = GetBodyEditor();
 
             switch(NoteKind) {
                 case NoteKind.Text:
@@ -679,11 +590,20 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             this._editingBody = true;
             OnPropertyChanged(nameof(IsBodyReadOnly));
             if(HasView) {
-                //TODO: いったん外す
-                //if(View.body.SelectionLength == 0) {
-                //    View.body.SelectAll();
-                //}
-                //View.body.Focus();
+                DoTargetEditor(
+                    c => {
+                        if(c.SelectionLength == 0) {
+                            c.SelectAll();
+                        }
+                        c.Focus();
+                    },
+                    c => {
+                        if(c.Selection.Text.Length == 0) {
+                            c.SelectAll();
+                        }
+                        c.Focus();
+                    }
+                );
             }
         }
 
@@ -712,13 +632,13 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             switch(nextKind) {
                 case NoteKind.Text:
                     //if(string.IsNullOrWhiteSpace(BodyText)) {
-                        return converter.ToPlainText(BodyRtf);
-                    //}
+                    return converter.ToPlainText(BodyRtf);
+                //}
 
                 case NoteKind.Rtf: {
                         var text = converter.ToPlainText(BodyRtf);
                         //if(string.IsNullOrWhiteSpace(text)) {
-                            return converter.ToRichText(BodyText, Model.Font);
+                        return converter.ToRichText(BodyText, Model.Font);
                         //}
                     }
 
@@ -727,6 +647,68 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
         }
 
+        #endregion
+
+        #region HasViewSingleModelWrapperViewModelBase
+
+        protected override void InitializeView()
+        {
+            SetCompactArea();
+            OnPropertyChanged(nameof(IsBodyReadOnly));
+
+            View.UserClosing += View_UserClosing;
+            PopupUtility.Attachment(View, View.popup);
+            View.popup.Opened += Popup_Opened;
+
+            base.InitializeView();
+        }
+
+        protected override void UninitializeView()
+        {
+            View.popup.Opened -= Popup_Opened;
+            View.UserClosing -= View_UserClosing;
+
+            base.UninitializeView();
+        }
+
+        protected override void CallOnPropertyChangeDisplayItem()
+        {
+            base.CallOnPropertyChangeDisplayItem();
+
+            var propertyNames = new[] {
+                nameof(MenuIcon),
+                nameof(MenuText),
+            };
+            CallOnPropertyChange(propertyNames);
+        }
+
+        #endregion
+
+        #region IColorPair
+
+        public Color ForeColor
+        {
+            get { return ColorPairProperty.GetNoneAlphaForeColor(Model); }
+            set
+            {
+                if(ColorPairProperty.SetNoneAlphaForekColor(Model, value, OnPropertyChanged)) {
+                    CallOnPropertyChange(nameof(ForeColorBrush));
+                    CallOnPropertyChangeDisplayItem();
+                }
+            }
+        }
+
+        public Color BackColor
+        {
+            get { return ColorPairProperty.GetNoneAlphaBackColor(Model); }
+            set
+            {
+                if(ColorPairProperty.SetNoneAlphaBackColor(Model, value, OnPropertyChanged)) {
+                    BorderBrush = MakeBorderBrush();
+                    CallOnPropertyChangeDisplayItem();
+                }
+            }
+        }
 
         #endregion
 
@@ -768,7 +750,6 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 }
             }
         }
-
         public double WindowTop
         {
             get { return WindowAreaProperty.GetWindowTop(Model); }
