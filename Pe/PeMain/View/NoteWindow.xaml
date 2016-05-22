@@ -178,24 +178,66 @@
         <TextBlock Text="r" Style="{StaticResource CaptionCommand}" />
       </Button>
     </Grid>
-    <TextBox
-      x:Name="body" Grid.Row="1" AcceptsReturn="True" AcceptsTab="True" Background="Transparent" BorderThickness="0" Padding="2" TextWrapping="{Binding AutoLineFeed, Converter={StaticResource BooleanToTextWrappingConverter}, Mode=OneWay}"
-      Text="{Binding Body}" IsReadOnly="{Binding IsBodyReadOnly}" IsEnabled="{Binding IsCompacted, Converter={StaticResource LogicalNotConverter}}" 
-      FontFamily="{Binding FontFamily, Mode=OneWay}" FontWeight="{Binding FontBold, Converter={StaticResource BooleanFontWeightConverter}, Mode=OneWay}" FontStyle="{Binding FontItalic, Converter={StaticResource BooleanFontStyleConverter}, Mode=OneWay}" FontSize="{Binding FontSize, Mode=OneWay}"
-    >
-      <TextBox.Style>
-        <Style TargetType="TextBox">
+    <ContentControl x:Name="content" Grid.Row="1">
+      <ContentControl.Style>
+        <Style TargetType="ContentControl">
           <Style.Triggers>
-            <DataTrigger Binding="{Binding IsLocked}" Value="True">
-              <Setter Property="Cursor" Value="Arrow" />
+            <DataTrigger Binding="{Binding NoteKind}" Value="Text">
+              <Setter Property="Content">
+                <Setter.Value>
+                  <TextBox
+                    AcceptsReturn="True" AcceptsTab="True" Background="Transparent" BorderThickness="0" Padding="2" TextWrapping="{Binding AutoLineFeed, Converter={StaticResource BooleanToTextWrappingConverter}, Mode=OneWay}"
+                    Text="{Binding BodyText}" IsReadOnly="{Binding IsBodyReadOnly}" IsEnabled="{Binding IsCompacted, Converter={StaticResource LogicalNotConverter}}" 
+                    FontFamily="{Binding FontFamily, Mode=OneWay}" FontWeight="{Binding FontBold, Converter={StaticResource BooleanFontWeightConverter}, Mode=OneWay}" FontStyle="{Binding FontItalic, Converter={StaticResource BooleanFontStyleConverter}, Mode=OneWay}" FontSize="{Binding FontSize, Mode=OneWay}"
+                  >
+                    <TextBox.Style>
+                      <Style TargetType="TextBox">
+                        <Style.Triggers>
+                          <DataTrigger Binding="{Binding IsLocked}" Value="True">
+                            <Setter Property="Cursor" Value="Arrow" />
+                          </DataTrigger>
+                        </Style.Triggers>
+                      </Style>
+                    </TextBox.Style>
+                    <TextBox.Foreground>
+                      <SolidColorBrush Color="{Binding ForeColor}" />
+                    </TextBox.Foreground>
+                  </TextBox>
+
+                </Setter.Value>
+              </Setter>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding NoteKind}" Value="Rtf">
+              <Setter Property="Content">
+                <Setter.Value>
+                  <xctk:RichTextBox 
+                    AcceptsReturn="True" Background="Transparent" BorderThickness="0" Padding="2" 
+                    Text="{Binding BodyRtf, UpdateSourceTrigger=LostFocus}" IsReadOnly="{Binding IsBodyReadOnly}" IsEnabled="{Binding IsCompacted, Converter={StaticResource LogicalNotConverter}}" 
+                    FontFamily="{Binding FontFamily, Mode=OneWay}" FontWeight="{Binding FontBold, Converter={StaticResource BooleanFontWeightConverter}, Mode=OneWay}" FontStyle="{Binding FontItalic, Converter={StaticResource BooleanFontStyleConverter}, Mode=OneWay}" FontSize="{Binding FontSize, Mode=OneWay}"
+                  >
+                    <xctk:RichTextBox.TextFormatter>
+                      <xctk:RtfFormatter />
+                    </xctk:RichTextBox.TextFormatter>
+                    <xctk:RichTextBox.Style>
+                      <Style TargetType="xctk:RichTextBox">
+                        <Style.Triggers>
+                          <DataTrigger Binding="{Binding IsLocked}" Value="True">
+                            <Setter Property="Cursor" Value="Arrow" />
+                          </DataTrigger>
+                        </Style.Triggers>
+                      </Style>
+                    </xctk:RichTextBox.Style>
+                    <!--<xctk:RichTextBox.Foreground>
+                      <SolidColorBrush Color="{Binding ForeColor}" />
+                    </xctk:RichTextBox.Foreground>-->
+                  </xctk:RichTextBox>
+                </Setter.Value>
+              </Setter>
             </DataTrigger>
           </Style.Triggers>
         </Style>
-      </TextBox.Style>
-      <TextBox.Foreground>
-        <SolidColorBrush Color="{Binding ForeColor}" />
-      </TextBox.Foreground>
-    </TextBox>
+      </ContentControl.Style>
+    </ContentControl>
 
     <Popup x:Name="popup" PlacementTarget="{Binding ElementName=root}" Placement="Left" IsOpen="{Binding IsActive, ElementName=root, Mode=OneWay}">
       <Popup.Resources>

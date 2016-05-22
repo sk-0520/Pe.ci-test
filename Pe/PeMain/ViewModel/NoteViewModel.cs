@@ -20,6 +20,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 using ContentTypeTextNet.Library.SharedLibrary.Attribute;
@@ -27,6 +28,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Define;
 using ContentTypeTextNet.Library.SharedLibrary.IF.WindowsViewExtend;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility.UI;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.Pe.Library.PeData.Define;
 using ContentTypeTextNet.Pe.Library.PeData.IF;
@@ -76,7 +78,20 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         #region property
 
-        NoteBodyItemModel IndexBody { get { return this._indexBody as NoteBodyItemModel; } }
+        NoteBodyItemModel IndexBody {
+            get
+            {
+                if(this._indexBody == null) {
+                    this._indexBody = AppSender.SendLoadIndexBody(Library.PeData.Define.IndexKind.Note, Model.Id);
+                    if(this._indexBody == null) {
+                        var bodyItem = new NoteBodyItemModel();
+                        SettingUtility.InitializeNoteBodyItem(bodyItem, true, AppNonProcess);
+                        this._indexBody = bodyItem;
+                    }
+                }
+                return this._indexBody as NoteBodyItemModel;
+            }
+        }
 
         public bool IsTemporary { get; set; }
 
@@ -177,33 +192,38 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             set { SetModelValue(value); }
         }
 
-        public string Body
+        public string BodyText
         {
             get
             {
-                if(IndexBody == null) {
-                    this._indexBody = AppSender.SendLoadIndexBody(Library.PeData.Define.IndexKind.Note, Model.Id);
-                    if(this._indexBody == null) {
-                        var bodyItem = new NoteBodyItemModel();
-                        SettingUtility.InitializeNoteBodyItem(bodyItem, true, AppNonProcess);
-                        this._indexBody = bodyItem;
-                    }
-                }
-                var indexBody = IndexBody;
-                return indexBody.Text ?? string.Empty;
+                return IndexBody.Text ?? string.Empty;
             }
             set
             {
                 if(IsTemporary) {
                     return;
                 }
-                if(IndexBody == null) {
-                    var bodyItem = new NoteBodyItemModel();
-                    SettingUtility.InitializeNoteBodyItem(bodyItem, true, AppNonProcess);
-                    this._indexBody = bodyItem;
-                }
                 var indexBody = IndexBody;
                 if(SetPropertyValue(indexBody, value, nameof(indexBody.Text))) {
+                    indexBody.History.Update();
+                    AppSender.SendSaveIndexBody(IndexBody, Model.Id, Timing.Delay);
+                }
+            }
+        }
+
+        public string BodyRtf
+        {
+            get
+            {
+                return IndexBody.Rtf ?? string.Empty;
+            }
+            set
+            {
+                if(IsTemporary) {
+                    return;
+                }
+                var indexBody = IndexBody;
+                if(SetPropertyValue(indexBody, value, nameof(indexBody.Rtf))) {
                     indexBody.History.Update();
                     AppSender.SendSaveIndexBody(IndexBody, Model.Id, Timing.Delay);
                 }
@@ -304,7 +324,11 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                         }
                         if(HasView) {
                             // フォーカス外れたときにうまいこと反映されない対策
-                            Body = View.body.Text;
+                            DoTargetEditor(
+                                c => BodyText = c.Text,
+                                c => BodyRtf = c.Text
+                            );
+
                             ResetChangeFlag();
                         }
                     }
@@ -382,12 +406,12 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             {
                 var result = CreateCommand(
                     o => {
-                        if(string.IsNullOrEmpty(Body)) {
+                        if(string.IsNullOrEmpty(BodyText)) {
                             AppNonProcess.Logger.Information("empty body");
                             return;
                         }
 
-                        ClipboardUtility.CopyText(Body, AppNonProcess.ClipboardWatcher);
+                        ClipboardUtility.CopyText(BodyText, AppNonProcess.ClipboardWatcher);
                     }
                 );
 
@@ -518,6 +542,24 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         #region function
 
+        void DoTargetEditor(Action<TextBox> textAction, Action<Xceed.Wpf.Toolkit.RichTextBox> rtfAction)
+        {
+            var editor = UIUtility.FindLogicalChildren<TextBoxBase>(View.content).First();
+
+            switch(NoteKind) {
+                case NoteKind.Text:
+                    CastUtility.AsAction(editor, textAction);
+                    break;
+
+                case NoteKind.Rtf:
+                    CastUtility.AsAction(editor, rtfAction);
+                    break;
+
+                default:
+                    throw new NotSupportedException();
+            }
+        }
+
         void SetCompactArea()
         {
             this._compactHeight = CaptionArea.Height + ResizeThickness.GetVertical();
@@ -549,10 +591,11 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             this._editingBody = true;
             OnPropertyChanged(nameof(IsBodyReadOnly));
             if(HasView) {
-                if(View.body.SelectionLength == 0) {
-                    View.body.SelectAll();
-                }
-                View.body.Focus();
+                //TODO: いったん外す
+                //if(View.body.SelectionLength == 0) {
+                //    View.body.SelectAll();
+                //}
+                //View.body.Focus();
             }
         }
 
