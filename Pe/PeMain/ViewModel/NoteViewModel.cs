@@ -184,7 +184,9 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 if(IndexBody == null) {
                     this._indexBody = AppSender.SendLoadIndexBody(Library.PeData.Define.IndexKind.Note, Model.Id);
                     if(this._indexBody == null) {
-                        this._indexBody = new NoteBodyItemModel();
+                        var bodyItem = new NoteBodyItemModel();
+                        SettingUtility.InitializeNoteBodyItem(bodyItem, null, AppNonProcess);
+                        this._indexBody = bodyItem;
                     }
                 }
                 var indexBody = IndexBody;

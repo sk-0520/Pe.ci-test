@@ -44,6 +44,12 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
         [DataMember]
         public string Text { get; set; }
 
+        /// <summary>
+        /// RTFデータ。
+        /// </summary>
+        [DataMember]
+        public string Rtf { get; set; }
+
         #endregion
 
         #region IndexBodyItemModelBase
@@ -56,6 +62,7 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
 
             var obj = (NoteBodyItemModel)target;
             obj.Text = Text;
+            obj.Rtf = Rtf;
         }
 
         public override IDeepClone DeepClone()

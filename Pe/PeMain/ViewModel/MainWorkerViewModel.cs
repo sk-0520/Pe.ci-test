@@ -2062,6 +2062,13 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 return body;
             }
             var result = IndexItemUtility.LoadBody<TIndexBody>(indexKind, guid, cachingItems.Archive, CommonData.NonProcess);
+            // 補正処理
+            //switch(indexKind) {
+            //    case IndexKind.Clipboard:
+            //    case IndexKind.Template:
+            //    case IndexKind.Note:
+            //        //SettingUtility.InitializeNoteBodyItem(result, )
+            //}
 
             AppendCachingItems(guid, result, cachingItems);
             return result;

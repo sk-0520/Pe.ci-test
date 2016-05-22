@@ -454,14 +454,17 @@
     <Compile Include="Logic\Utility\NoteUtility.cs" />
     <Compile Include="Logic\Utility\PopupUtility.cs" />
     <Compile Include="Logic\Utility\SettingUtilityCore\InitializeBase.cs" />
+    <Compile Include="Logic\Utility\SettingUtilityCore\InitializeClipboardBodyItem.cs" />
     <Compile Include="Logic\Utility\SettingUtilityCore\InitializeClipboardIndexItem.cs" />
     <Compile Include="Logic\Utility\SettingUtilityCore\InitializeCommandSetting.cs" />
     <Compile Include="Logic\Utility\SettingUtilityCore\InitializeLauncherGroupItem.cs" />
     <Compile Include="Logic\Utility\SettingUtilityCore\InitializeLauncherItem.cs" />
     <Compile Include="Logic\Utility\SettingUtilityCore\InitializeLoggingSetting.cs" />
     <Compile Include="Logic\Utility\SettingUtilityCore\InitializeGeneralSetting.cs" />
+    <Compile Include="Logic\Utility\SettingUtilityCore\InitializeNoteBodyItem.cs" />
     <Compile Include="Logic\Utility\SettingUtilityCore\InitializeRunningInformationSetting.cs" />
     <Compile Include="Logic\Utility\SettingUtilityCore\InitializeStreamSetting.cs" />
+    <Compile Include="Logic\Utility\SettingUtilityCore\InitializeTemplateBodyItem.cs" />
     <Compile Include="Logic\Utility\SettingUtilityCore\InitializeTemplateIndexItem.cs" />
     <Compile Include="Logic\Utility\T4TemplateUtility.cs" />
     <Compile Include="TemplateReplaceKey.cs" />
