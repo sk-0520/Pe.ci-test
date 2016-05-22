@@ -89,6 +89,9 @@
 				<message>#462: GridHelpersのリンク先が間違っている</message>
 			</note>
 			<note rev="">
+				<message>#458: クリップボード取り込み待機時間の設定UIが直感的でない</message>
+			</note>
+			<note rev="">
 				<message></message>
 			</note>
 		</group>

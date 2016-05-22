@@ -429,7 +429,7 @@
 		<Item Id="clipboard-setting/capture-type/files" Word="ファイル(_F)" />
 		<Item Id="clipboard-setting/show" Word="表示切り替えキー(_K)" />
 		<Item Id="clipboard-setting/save-count" Word="保存件数(0:全件)" />
-		<Item Id="clipboard-setting/wait-time" Word="前回コピーからの待機時間" />
+		<Item Id="clipboard-setting/wait-time" Word="前回コピーからの待機時間(ミリ秒)" />
 		<Item Id="clipboard-setting/dup" Word="重複判定(-1:全て対象)" />
 		<Item Id="clipboard-setting/font" Word="フォント" />
 		<Item Id="clipboard-setting/limit-enabled" Word="制限" />

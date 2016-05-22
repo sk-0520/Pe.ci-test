@@ -7,6 +7,7 @@
   xmlns:AM="clr-namespace:ContentTypeTextNet.Pe.PeMain"
   xmlns:SC="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=ContentTypeTextNet.SharedLibrary"
   xmlns:AA="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Attached"
+  xmlns:app_view_parts_converter="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Converter"
   xmlns:ADD="clr-namespace:ContentTypeTextNet.Pe.Library.PeData.Define;assembly=PeData"
 
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
@@ -22,6 +23,7 @@
         <ResourceDictionary Source="/View/Parts/Resource/FontSelectDictionary.xaml"/>
       </ResourceDictionary.MergedDictionaries>
       <SC:GridDistanceConverter x:Key="GridDistanceConverter" />
+      <app_view_parts_converter:TimeSpanMillisecondConverter x:Key="TimeSpanMillisecondConverter" />
     </ResourceDictionary>
   </AV:CommonDataUserControl.Resources>
   <Grid>
@@ -65,7 +67,7 @@
             <AV:IntegerSliderControl Grid.Row="1" Grid.Column="1" Value="{Binding SaveCount}" Minimum="{Binding Source={x:Static AM:Constants.ClipboardSaveMinimumCount}}" Maximum="{Binding Source={x:Static AM:Constants.ClipboardSaveMaximumCount}}"/>
 
             <Label Grid.Row="2" Grid.Column="0" Content="wait time" AA:Language.Word="clipboard-setting/wait-time" Style="{StaticResource HeaderLabel}" />
-            <AV:TimeSliderControl Grid.Row="2" Grid.Column="1" Value="{Binding WaitTime}"  Minimum="{Binding Source={x:Static AM:Constants.ClipboardWaitMinimumTime}}" Maximum="{Binding Source={x:Static AM:Constants.ClipboardWaitMaximumTime}}" />
+            <AV:IntegerSliderControl Grid.Row="2" Grid.Column="1" Value="{Binding WaitTime, Converter={StaticResource TimeSpanMillisecondConverter}}"  Minimum="{Binding Source={x:Static AM:Constants.ClipboardWaitMinimumTime}, Converter={StaticResource TimeSpanMillisecondConverter}}" Maximum="{Binding Source={x:Static AM:Constants.ClipboardWaitMaximumTime}, Converter={StaticResource TimeSpanMillisecondConverter}}" />
 
             <Label Grid.Row="3" Grid.Column="0" Content="dup" AA:Language.Word="clipboard-setting/dup" Style="{StaticResource HeaderLabel}" />
             <!--<xctk:IntegerUpDown Grid.Row="3" Grid.Column="1" Value="{Binding DuplicationCount}" Minimum="{Binding Source={x:Static AM:Constants.ClipboardDuplicationMinimumCount}}" Maximum="{Binding Source={x:Static AM:Constants.ClipboardDuplicationMaximumCount}}"  />-->

@@ -23,6 +23,7 @@ using System.Windows.Data;
 
 namespace ContentTypeTextNet.Pe.PeMain.View.Parts.Converter
 {
+    [ValueConversion(typeof(TimeSpan), typeof(int))]
     public class TimeSpanMillisecondConverter: IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
@@ -33,7 +34,7 @@ namespace ContentTypeTextNet.Pe.PeMain.View.Parts.Converter
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            var ms = (double)value;
+            var ms = (int)value;
             return TimeSpan.FromMilliseconds(ms);
         }
     }
