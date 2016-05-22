@@ -4,7 +4,11 @@
 >
   <Style x:Key="DefaultToolbar" TargetType="ToolBar">
     <Setter Property="ToolBarTray.IsLocked" Value="True" />
+  </Style>
+  <Style x:Key="DefaultHorizontalToolbar" TargetType="ToolBar" BasedOn="{StaticResource DefaultToolbar}">
     <Setter Property="HorizontalAlignment" Value="Stretch" />
-    <!--<Setter Property="VerticalAlignment" Value="Stretch" />-->
+  </Style>
+  <Style x:Key="DefaultVerticalToolbar" TargetType="ToolBar" BasedOn="{StaticResource DefaultToolbar}">
+    <Setter Property="VerticalAlignment" Value="Stretch" />
   </Style>
 </ResourceDictionary>
