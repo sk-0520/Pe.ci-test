@@ -44,6 +44,7 @@
         <ResourceDictionary Source="/View/Parts/Resource/FontSelectDictionary.xaml"/>
         <ResourceDictionary Source="/View/Parts/Resource/RadioButtonDictionary.xaml"/>
       </ResourceDictionary.MergedDictionaries>
+      <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
       <SC:LogicalNotConverter x:Key="LogicalNotConverter"/>
       <SC:BooleanFontWeightConverter x:Key="BooleanFontWeightConverter" />
       <SC:BooleanFontStyleConverter x:Key="BooleanFontStyleConverter" />
@@ -315,11 +316,18 @@
             <Label Grid.Row="1" Grid.Column="0"  Content="kind" AA:Language.Word="note/style/kind" />
             <Grid Grid.Row="1" Grid.Column="1">
               <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="5*" />
-                <ColumnDefinition Width="5*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
               </Grid.ColumnDefinitions>
 
-              <RadioButton Grid.Column="0" Content="text" AA:Language.Word="note/style/kind/text" Style="{StaticResource DefaultHorizontalRadioButton}" IsChecked="{Binding NoteKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_library_pedata_define:NoteKind.Text}}" />
+              <RadioButton x:Name="selectText" Grid.Column="0" Content="text" AA:Language.Word="note/style/kind/text" Style="{StaticResource DefaultHorizontalRadioButton}" IsChecked="{Binding NoteKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_library_pedata_define:NoteKind.Text}}" />
+              <Button
+                Grid.Column="0" Content="warning" AA:Language.Word="note/style/kind/text-warning" AA:Language.Hint="note/style/kind/text-warning:hint"
+                Width="{Binding ActualWidth, ElementName=selectText}"
+                Visibility="{Binding FormatWarning, Converter={StaticResource BooleanToVisibilityConverter}}"
+                Command="{Binding AcceptFormatWarningCommand}"
+              >
+              </Button>
               <RadioButton Grid.Column="1" Content="rtf" AA:Language.Word="note/style/kind/rtf"  Style="{StaticResource DefaultHorizontalRadioButton}" IsChecked="{Binding NoteKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_library_pedata_define:NoteKind.Rtf}}" />
             </Grid>
             

@@ -64,6 +64,8 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         Brush _borderBrush;
 
+        bool _formatWarning;
+
         #endregion
 
         public NoteViewModel(NoteIndexItemModel model, NoteWindow view, IAppNonProcess appNonProcess, IAppSender appSender)
@@ -75,6 +77,8 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             BorderBrush = MakeBorderBrush();
 
             SetCompactArea();
+
+            ResetFormatWarning();
 
             ResetChangeFlag();
         }
@@ -318,9 +322,16 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                             default:
                                 throw new NotImplementedException();
                         }
+                        ResetFormatWarning();
                     }
                 }
             }
+        }
+
+        public bool FormatWarning
+        {
+            get { return this._formatWarning; }
+            set { SetVariableValue(ref this._formatWarning, value); }
         }
 
         #endregion
@@ -495,6 +506,18 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
         }
 
+        public ICommand AcceptFormatWarningCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        AcceptFormatWarning();
+                    }
+                );
+            }
+        }
+
         #endregion
 
         #region HasViewSingleModelWrapperViewModelBase
@@ -506,12 +529,14 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
             View.UserClosing += View_UserClosing;
             PopupUtility.Attachment(View, View.popup);
+            View.popup.Opened += Popup_Opened;
 
             base.InitializeView();
         }
 
         protected override void UninitializeView()
         {
+            View.popup.Opened -= Popup_Opened;
             View.UserClosing -= View_UserClosing;
 
             base.UninitializeView();
@@ -611,6 +636,16 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 default:
                     throw new NotImplementedException();
             }
+        }
+
+        void ResetFormatWarning()
+        {
+            FormatWarning = NoteKind == NoteKind.Rtf;
+        }
+
+        void AcceptFormatWarning()
+        {
+            FormatWarning = false;
         }
 
         void SetCompactArea()
@@ -922,6 +957,11 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         private void View_UserClosing(object sender, CancelEventArgs e)
         {
             IsVisible = false;
+        }
+
+        private void Popup_Opened(object sender, EventArgs e)
+        {
+            ResetFormatWarning();
         }
 
     }
