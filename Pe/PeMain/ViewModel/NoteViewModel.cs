@@ -198,7 +198,9 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                     return;
                 }
                 if(IndexBody == null) {
-                    this._indexBody = new NoteBodyItemModel();
+                    var bodyItem = new NoteBodyItemModel();
+                    SettingUtility.InitializeNoteBodyItem(bodyItem, true, AppNonProcess);
+                    this._indexBody = bodyItem;
                 }
                 var indexBody = IndexBody;
                 if(SetPropertyValue(indexBody, value, nameof(indexBody.Text))) {
@@ -272,6 +274,11 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         #endregion
 
+        public NoteKind NoteKind
+        {
+            get { return Model.NoteKind; }
+            set { SetModelValue(value); }
+        }
 
         #endregion
 

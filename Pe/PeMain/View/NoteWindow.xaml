@@ -12,6 +12,7 @@
   xmlns:AW="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Window"
   xmlns:SC="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=ContentTypeTextNet.SharedLibrary"
   xmlns:AC="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Converter"
+  xmlns:app_library_pedata_define="clr-namespace:ContentTypeTextNet.Pe.Library.PeData.Define;assembly=PeData"
   x:Class="ContentTypeTextNet.Pe.PeMain.View.NoteWindow"
   x:TypeArguments="AVM:NoteViewModel"
   ShowInTaskbar="False" 
@@ -41,10 +42,12 @@
         <ResourceDictionary Source="/View/Parts/Resource/ColorPickerDictionary.xaml"/>
         <ResourceDictionary Source="/View/Parts/Resource/LabelDictionary.xaml"/>
         <ResourceDictionary Source="/View/Parts/Resource/FontSelectDictionary.xaml"/>
+        <ResourceDictionary Source="/View/Parts/Resource/RadioButtonDictionary.xaml"/>
       </ResourceDictionary.MergedDictionaries>
       <SC:LogicalNotConverter x:Key="LogicalNotConverter"/>
       <SC:BooleanFontWeightConverter x:Key="BooleanFontWeightConverter" />
       <SC:BooleanFontStyleConverter x:Key="BooleanFontStyleConverter" />
+      <SC:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
       <AC:FontFamilyToNameConverter x:Key="FontFamilyToNameConverter" />
       <AC:BooleanToTextWrappingConverter x:Key="BooleanToTextWrappingConverter" />
     </ResourceDictionary>
@@ -235,6 +238,21 @@
             <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="input" AA:Language.Word="note/input" Style="{StaticResource TitleLabel}" />
             <Button Grid.Row="1" Grid.Column="0" Content="title" AA:Language.Word="note/input/title" Command="{Binding EditTitleCommand}" />
             <Button Grid.Row="1" Grid.Column="1" Content="body" AA:Language.Word="note/input/body"  Command="{Binding EditBodyCommand}" IsEnabled="{Binding IsCompacted, Converter={StaticResource LogicalNotConverter}}" />
+          </Grid>
+          <Grid Style="{StaticResource Group}">
+            <Grid.RowDefinitions>
+              <RowDefinition />
+              <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="5*" />
+              <ColumnDefinition Width="5*" />
+            </Grid.ColumnDefinitions>
+            
+            <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="kind" AA:Language.Word="note/kind" Style="{StaticResource TitleLabel}" />
+            
+            <RadioButton Grid.Row="1" Grid.Column="0" Content="text" AA:Language.Word="note/kind/text" Style="{StaticResource DefaultHorizontalRadioButton}" IsChecked="{Binding NoteKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_library_pedata_define:NoteKind.Text}}" />
+            <RadioButton Grid.Row="1" Grid.Column="1" Content="rtf" AA:Language.Word="note/kind/rtf"  Style="{StaticResource DefaultHorizontalRadioButton}" IsChecked="{Binding NoteKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_library_pedata_define:NoteKind.Rtf}}" />
           </Grid>
           <Grid Style="{StaticResource Group}">
             <Grid.RowDefinitions>
