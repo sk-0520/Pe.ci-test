@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
+using Drawing = System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
+using Forms = System.Windows.Forms;
 using ContentTypeTextNet.Library.SharedLibrary.CompatibleForms.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
+using System.Windows.Media;
 
 namespace ContentTypeTextNet.Pe.Library.FormsCushion
 {
@@ -17,30 +18,33 @@ namespace ContentTypeTextNet.Pe.Library.FormsCushion
     {
         public string ToPlainText(string rtf)
         {
-            using(var richTextBox = new RichTextBox() {
+            using(var richTextBox = new Forms.RichTextBox() {
                 Rtf = rtf,
             }) {
                 return richTextBox.Text;
             }
         }
 
-        string ToRichText(string text, Font font)
+        string ToRichText(string text, Drawing.Font font, Drawing.Color foreColor)
         {
-            using(var richTextBox = new RichTextBox() {
+            using(var richTextBox = new Forms.RichTextBox() {
                 Text = text,
                 Font = font,
+                ForeColor = foreColor,
             }) {
                 return richTextBox.Rtf;
             }
         }
-        public string ToRichText(string text, FontModel font)
+        public string ToRichText(string text, FontModel font, Color foreColor)
         {
-            var style = (FontStyle)0;
-            if(font.Italic) style |= FontStyle.Italic;
-            if(font.Bold) style |= FontStyle.Bold;
+            var style = (Drawing.FontStyle)0;
+            if(font.Italic) style |= Drawing.FontStyle.Italic;
+            if(font.Bold) style |= Drawing.FontStyle.Bold;
 
-            using(var formsFont = new Font(font.Family, DrawingUtility.ConvertFontSizeFromWpf(font.Size), style)) {
-                return ToRichText(text, formsFont);
+            var drawingForeColor = Drawing.Color.FromArgb(foreColor.R, foreColor.G, foreColor.B);
+
+            using(var formsFont = new Drawing.Font(font.Family, DrawingUtility.ConvertFontSizeFromWpf(font.Size), style)) {
+                return ToRichText(text, formsFont, drawingForeColor);
             }
         }
     }

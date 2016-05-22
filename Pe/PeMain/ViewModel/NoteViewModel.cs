@@ -631,16 +631,10 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
             switch(nextKind) {
                 case NoteKind.Text:
-                    //if(string.IsNullOrWhiteSpace(BodyText)) {
                     return converter.ToPlainText(BodyRtf);
-                //}
 
-                case NoteKind.Rtf: {
-                        var text = converter.ToPlainText(BodyRtf);
-                        //if(string.IsNullOrWhiteSpace(text)) {
-                        return converter.ToRichText(BodyText, Model.Font);
-                        //}
-                    }
+                case NoteKind.Rtf:
+                    return converter.ToRichText(BodyText, Model.Font, Model.ForeColor);
 
                 default:
                     throw new NotImplementedException();
