@@ -128,8 +128,8 @@
           <ColumnDefinition Width="Auto" />
           <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <ToolBarTray Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Orientation="Vertical" >
-          <ToolBar Style="{StaticResource DefaultVerticalToolbar}" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
+        <ToolBarTray Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Style="{StaticResource DefaultVerticalToolBarTray}">
+          <ToolBar Style="{StaticResource DefaultVerticalToolbar}" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
             <Button AA:Language.Hint="logging/item/save" Command="{Binding ItemSaveCommand}">
               <Image Source="{x:Static AM:AppResource.CommonSaveImage}" Style="{StaticResource DefaultImage}" />
             </Button>

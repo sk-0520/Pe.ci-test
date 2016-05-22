@@ -59,7 +59,7 @@
     </ToolBar>-->
     <!--</ToolBarTray>-->
     <DockPanel>
-      <ToolBar DockPanel.Dock="Top" Style="{StaticResource DefaultHorizontalToolbar}">
+      <ToolBar Style="{StaticResource DefaultHorizontalToolbar}">
         <ToolBar.Resources>
           <Style TargetType="ToolBarPanel">
             <Setter Property="Orientation" Value="Vertical"/>
