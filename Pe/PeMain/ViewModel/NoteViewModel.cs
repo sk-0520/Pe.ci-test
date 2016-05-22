@@ -30,6 +30,7 @@ using ContentTypeTextNet.Library.SharedLibrary.IF.WindowsViewExtend;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility.UI;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.Pe.Library.FormsCushion;
 using ContentTypeTextNet.Pe.Library.PeData.Define;
@@ -652,7 +653,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 case NoteKind.Rtf: {
                         var text = converter.ToPlainText(BodyRtf);
                         //if(string.IsNullOrWhiteSpace(text)) {
-                            return converter.ToRichText(BodyText);
+                            return converter.ToRichText(BodyText, Model.Font);
                         //}
                     }
 
