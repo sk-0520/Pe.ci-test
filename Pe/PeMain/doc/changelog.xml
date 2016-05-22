@@ -80,7 +80,10 @@
 		</group>
 		<group type="fixes" dummy="==================================================================">
 			<note rev="">
-				<message></message>
+				<message>#461: Windows8, 8.1, 10 でのツールバーがきもい</message>
+				<comments>
+					<comment>妥協の産物</comment>
+				</comments>
 			</note>
 			<note rev="">
 				<message></message>
