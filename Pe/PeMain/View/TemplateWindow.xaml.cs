@@ -31,6 +31,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Pe.PeMain.View.Parts.Window;
 using ContentTypeTextNet.Pe.PeMain.ViewModel;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility.UI;
+using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
 namespace ContentTypeTextNet.Pe.PeMain.View
 {
