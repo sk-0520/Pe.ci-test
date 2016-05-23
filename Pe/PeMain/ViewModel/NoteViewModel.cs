@@ -719,8 +719,19 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 if(ChangeRtfSelectedColor(value, Run.ForegroundProperty)) {
                     return;
                 }
+                var prevColor = Model.ForeColor;
 
                 if(ColorPairProperty.SetNoneAlphaForekColor(Model, value, OnPropertyChanged)) {
+                    DoRichTextEditor(c => {
+                        var foreColor = ForeColorBrush;
+                        FreezableUtility.SafeFreeze(foreColor);
+                        foreach(var block in c.Document.Blocks) {
+                            var blockBrush = block.Foreground as SolidColorBrush;
+                            if(blockBrush != null && blockBrush.Color == prevColor) {
+                                block.Foreground = foreColor;
+                            }
+                        }
+                    });
                     CallOnPropertyChange(nameof(ForeColorBrush));
                     CallOnPropertyChangeDisplayItem();
                 }
