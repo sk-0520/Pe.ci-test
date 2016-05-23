@@ -319,10 +319,20 @@
             
             <Label Grid.Row="2" Grid.Column="0" Target="{Binding ElementName=selectForeground}" Content="fore" AA:Language.Word="note/style/fore-color" />
             <xctk:ColorPicker x:Name="selectForeground" Grid.Row="2" Grid.Column="1" Style="{StaticResource DefaultColorPicker}" SelectedColor="{Binding ForeColor}" />
-            
+
             <Label Grid.Row="3" Grid.Column="0" Target="{Binding ElementName=selectBackground}" Content="back" AA:Language.Word="note/style/back-color" Style="{StaticResource HeaderLabel}"/>
-            <xctk:ColorPicker x:Name="selectBackground" Grid.Row="3" Grid.Column="1" Style="{StaticResource DefaultColorPicker}" SelectedColor="{Binding BackColor}" />
-            
+            <xctk:ColorPicker x:Name="selectBackground" Grid.Row="3" Grid.Column="1" SelectedColor="{Binding BackColor}" >
+              <xctk:ColorPicker.Style>
+                <Style TargetType="xctk:ColorPicker" BasedOn="{StaticResource DefaultColorPicker}">
+                  <Style.Triggers>
+                    <DataTrigger Binding="{Binding NoteKind}" Value="Rtf">
+                      <Setter Property="UsingAlphaChannel" Value="True" />
+                    </DataTrigger> 
+                  </Style.Triggers>
+                </Style>
+              </xctk:ColorPicker.Style>
+            </xctk:ColorPicker>
+
             <Label Grid.Row="4" Grid.Column="0" Target="{Binding ElementName=selectFont}" Content="font" AA:Language.Word="note/style/font" Style="{StaticResource HeaderLabel}" />
             <AV:FontSelectControl
               x:Name="selectFont"
