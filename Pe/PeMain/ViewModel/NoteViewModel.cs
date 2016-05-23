@@ -244,7 +244,12 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         public FontFamily FontFamily
         {
             get { return FontModelProperty.GetFamilyDefault(Model.Font); }
-            set { FontModelProperty.SetFamily(Model.Font, value, OnPropertyChanged); }
+            set
+            {
+                if(FontModelProperty.SetFamily(Model.Font, value, OnPropertyChanged)) {
+                    ChangeRtfValue(Run.FontFamilyProperty, value);
+                }
+            }
         }
 
         public bool FontBold
@@ -279,6 +284,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             {
                 var prev = Model.NoteKind;
                 if(prev != value) {
+                    IfResertRtfEvent();
                     var convertedValue = ConvertBodyValue(prev, value);
                     if(SetModelValue(value)) {
                         switch(value) {
@@ -288,6 +294,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
                             case NoteKind.Rtf:
                                 BodyRtf = convertedValue;
+                                SetRtfEvent();
                                 break;
 
                             default:
@@ -655,18 +662,46 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
         }
 
-        bool ChangeRtfSelectedColor(Color color, DependencyProperty dependencyProperty, [CallerMemberName] string callerMemberName = "")
+        void SetRtfEvent()
+        {
+            DoRichTextEditor(c => {
+                c.TextInput += Rtf_TextInput;
+            });
+        }
+
+        void IfResertRtfEvent()
+        {
+            DoRichTextEditor(c => {
+
+            });
+        }
+
+        bool ChangeRtfValue(DependencyProperty dependencyProperty, object value, [CallerMemberName] string callerMemberName = "")
         {
             var isChanged = false;
 
             DoRichTextEditor(c => {
                 if(!c.Selection.IsEmpty) {
-                    var brush = new SolidColorBrush(color);
-                    FreezableUtility.SafeFreeze(brush);
-                    c.Selection.ApplyPropertyValue(dependencyProperty, brush);
+                    c.Selection.ApplyPropertyValue(dependencyProperty, value);
                     isChanged = true;
                     OnPropertyChanged(callerMemberName);
                 }
+            });
+
+            return isChanged;
+        }
+
+        bool ChangeRtfValue(DependencyProperty dependencyProperty, Func<object> value, [CallerMemberName] string callerMemberName = "")
+        {
+            return ChangeRtfValue(dependencyProperty, value(), callerMemberName);
+        }
+
+        bool ChangeRtfSelectedColor(Color color, DependencyProperty dependencyProperty, [CallerMemberName] string callerMemberName = "")
+        {
+            var isChanged = ChangeRtfValue(dependencyProperty, () => {
+                var brush = new SolidColorBrush(color);
+                FreezableUtility.SafeFreeze(brush);
+                return brush;
             });
 
             return isChanged;
@@ -988,6 +1023,18 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         {
             ResetFormatWarning();
         }
+
+        private void Rtf_TextInput(object sender, TextCompositionEventArgs e)
+        {
+            var rtf = (Xceed.Wpf.Toolkit.RichTextBox)sender;
+            TextPointer textPointer = rtf.CaretPosition.GetInsertionPosition(LogicalDirection.Forward);
+            Run run = new Run(e.Text, textPointer);
+            run.FontFamily = FontFamily;
+            run.FontWeight = FontBold ? FontWeights.Bold : FontWeights.Normal;
+            run.FontStyle = FontItalic ? FontStyles.Italic : FontStyles.Normal;
+            run.FontSize = FontSize;
+        }
+
 
     }
 }
