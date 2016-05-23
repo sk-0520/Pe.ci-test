@@ -225,13 +225,13 @@
             <DataTrigger Binding="{Binding NoteKind}" Value="Rtf">
               <Setter Property="Content">
                 <Setter.Value>
-                  <xctk:RichTextBox Style="{StaticResource Editor}" Text="{Binding BodyRtf}" IsDocumentEnabled="True">
+                  <xctk:RichTextBox Style="{StaticResource Editor}" Text="{Binding BodyRtf}" >
                     <xctk:RichTextBox.TextFormatter>
                       <xctk:RtfFormatter />
                     </xctk:RichTextBox.TextFormatter>
-                    <xctk:RichTextBoxFormatBarManager.FormatBar>
+                    <!--<xctk:RichTextBoxFormatBarManager.FormatBar>
                       <xctk:RichTextBoxFormatBar />
-                    </xctk:RichTextBoxFormatBarManager.FormatBar>
+                    </xctk:RichTextBoxFormatBarManager.FormatBar>-->
                   </xctk:RichTextBox>
                 </Setter.Value>
               </Setter>

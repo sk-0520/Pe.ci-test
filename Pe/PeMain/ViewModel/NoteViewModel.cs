@@ -19,9 +19,11 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using ContentTypeTextNet.Library.SharedLibrary.Attribute;
@@ -514,6 +516,18 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
         }
 
+        /// <summary>
+        /// RTFに対する処理を実施。
+        /// </summary>
+        /// <param name="rtfAction"></param>
+        void DoRichTextEditor(Action<Xceed.Wpf.Toolkit.RichTextBox> rtfAction)
+        {
+            if(NoteKind == NoteKind.Rtf) {
+                var editor = (Xceed.Wpf.Toolkit.RichTextBox)GetBodyEditor();
+                rtfAction(editor);
+            }
+        }
+
         void CopyBody()
         {
             switch(NoteKind) {
@@ -641,6 +655,23 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
         }
 
+        bool ChangeRtfSelectedColor(Color color, DependencyProperty dependencyProperty, [CallerMemberName] string callerMemberName = "")
+        {
+            var isChanged = false;
+
+            DoRichTextEditor(c => {
+                if(!c.Selection.IsEmpty) {
+                    var brush = new SolidColorBrush(color);
+                    FreezableUtility.SafeFreeze(brush);
+                    c.Selection.ApplyPropertyValue(dependencyProperty, brush);
+                    isChanged = true;
+                    OnPropertyChanged(callerMemberName);
+                }
+            });
+
+            return isChanged;
+        }
+
         #endregion
 
         #region HasViewSingleModelWrapperViewModelBase
@@ -685,6 +716,10 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             get { return ColorPairProperty.GetNoneAlphaForeColor(Model); }
             set
             {
+                if(ChangeRtfSelectedColor(value, Run.ForegroundProperty)) {
+                    return;
+                }
+
                 if(ColorPairProperty.SetNoneAlphaForekColor(Model, value, OnPropertyChanged)) {
                     CallOnPropertyChange(nameof(ForeColorBrush));
                     CallOnPropertyChangeDisplayItem();
@@ -697,6 +732,10 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             get { return ColorPairProperty.GetNoneAlphaBackColor(Model); }
             set
             {
+                if(ChangeRtfSelectedColor(value, Run.BackgroundProperty)) {
+                    return;
+                }
+
                 if(ColorPairProperty.SetNoneAlphaBackColor(Model, value, OnPropertyChanged)) {
                     BorderBrush = MakeBorderBrush();
                     CallOnPropertyChangeDisplayItem();
