@@ -80,7 +80,6 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
             SetCompactArea();
 
-            ResetFormatWarning();
 
             ResetChangeFlag();
         }
@@ -103,6 +102,8 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         }
 
         public bool IsTemporary { get; set; }
+
+        bool SelectionChanging { get; set; } = false;
 
         public Brush BorderBrush
         {
@@ -247,7 +248,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             set
             {
                 if(FontModelProperty.SetFamily(Model.Font, value, OnPropertyChanged)) {
-                    ChangeRtfSelectionValue(Run.FontFamilyProperty, value);
+                    NotSelectionChanging(() => ChangeRtfSelectionValue(Run.FontFamilyProperty, value));
                 }
             }
         }
@@ -284,7 +285,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             {
                 var prev = Model.NoteKind;
                 if(prev != value) {
-                    IfResertRtfEvent();
+                    ResertRtfEvent();
                     var convertedValue = ConvertBodyValue(prev, value);
                     if(SetModelValue(value)) {
                         switch(value) {
@@ -665,12 +666,14 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         void SetRtfEvent()
         {
             DoRichTextEditor(c => {
+                c.SelectionChanged += RichTextBox_SelectionChanged;
             });
         }
 
-        void IfResertRtfEvent()
+        void ResertRtfEvent()
         {
             DoRichTextEditor(c => {
+                c.SelectionChanged -= RichTextBox_SelectionChanged;
             });
         }
 
@@ -717,6 +720,13 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             return isChanged;
         }
 
+        void NotSelectionChanging(Action action)
+        {
+            if(!SelectionChanging) {
+                action();
+            }
+        }
+
         #endregion
 
         #region HasViewSingleModelWrapperViewModelBase
@@ -729,6 +739,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             View.UserClosing += View_UserClosing;
             PopupUtility.Attachment(View, View.popup);
             View.popup.Opened += Popup_Opened;
+            View.Loaded += View_Loaded;
 
             base.InitializeView();
         }
@@ -737,6 +748,8 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         {
             View.popup.Opened -= Popup_Opened;
             View.UserClosing -= View_UserClosing;
+
+            ResertRtfEvent();
 
             base.UninitializeView();
         }
@@ -1034,7 +1047,28 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             ResetFormatWarning();
         }
 
+        private void View_Loaded(object sender, RoutedEventArgs e)
+        {
+            View.Loaded -= View_Loaded;
 
+            ResetFormatWarning();
+            SetRtfEvent();
+
+            ResetChangeFlag();
+        }
+
+        private void RichTextBox_SelectionChanged(object sender, RoutedEventArgs e)
+        {
+            var richTextBox = (Xceed.Wpf.Toolkit.RichTextBox)sender;
+            SelectionChanging = true;
+            try {
+                var fontFamily = CastUtility.GetCastWPFValue(richTextBox.Selection.GetPropertyValue(Run.FontFamilyProperty), FontFamily);
+                FontFamily = fontFamily;
+
+            } finally {
+                SelectionChanging = false;
+            }
+        }
 
     }
 }
