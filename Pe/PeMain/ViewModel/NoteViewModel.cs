@@ -247,7 +247,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             set
             {
                 if(FontModelProperty.SetFamily(Model.Font, value, OnPropertyChanged)) {
-                    ChangeRtfValue(Run.FontFamilyProperty, value);
+                    ChangeRtfSelectionValue(Run.FontFamilyProperty, value);
                 }
             }
         }
@@ -665,18 +665,28 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         void SetRtfEvent()
         {
             DoRichTextEditor(c => {
-                c.TextInput += Rtf_TextInput;
             });
         }
 
         void IfResertRtfEvent()
         {
             DoRichTextEditor(c => {
-
             });
         }
 
-        bool ChangeRtfValue(DependencyProperty dependencyProperty, object value, [CallerMemberName] string callerMemberName = "")
+        void ChangeRtfCurrentValue(DependencyProperty dependencyProperty, object value, Xceed.Wpf.Toolkit.RichTextBox richTextBox, [CallerMemberName] string callerMemberName = "")
+        {
+            richTextBox.Selection.ApplyPropertyValue(dependencyProperty, value);
+        }
+
+        void ChangeRtfCurrentValue(DependencyProperty dependencyProperty, object value, [CallerMemberName] string callerMemberName = "")
+        {
+            DoRichTextEditor(c => {
+                ChangeRtfCurrentValue(dependencyProperty, value, c);
+            });
+        }
+
+        bool ChangeRtfSelectionValue(DependencyProperty dependencyProperty, object value, [CallerMemberName] string callerMemberName = "")
         {
             var isChanged = false;
 
@@ -693,7 +703,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         bool ChangeRtfValue(DependencyProperty dependencyProperty, Func<object> value, [CallerMemberName] string callerMemberName = "")
         {
-            return ChangeRtfValue(dependencyProperty, value(), callerMemberName);
+            return ChangeRtfSelectionValue(dependencyProperty, value(), callerMemberName);
         }
 
         bool ChangeRtfSelectedColor(Color color, DependencyProperty dependencyProperty, [CallerMemberName] string callerMemberName = "")
@@ -1024,16 +1034,6 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             ResetFormatWarning();
         }
 
-        private void Rtf_TextInput(object sender, TextCompositionEventArgs e)
-        {
-            var rtf = (Xceed.Wpf.Toolkit.RichTextBox)sender;
-            TextPointer textPointer = rtf.CaretPosition.GetInsertionPosition(LogicalDirection.Forward);
-            Run run = new Run(e.Text, textPointer);
-            run.FontFamily = FontFamily;
-            run.FontWeight = FontBold ? FontWeights.Bold : FontWeights.Normal;
-            run.FontStyle = FontItalic ? FontStyles.Italic : FontStyles.Normal;
-            run.FontSize = FontSize;
-        }
 
 
     }
