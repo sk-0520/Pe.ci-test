@@ -86,7 +86,8 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         #region property
 
-        NoteBodyItemModel IndexBody {
+        NoteBodyItemModel IndexBody
+        {
             get
             {
                 if(this._indexBody == null) {
@@ -248,7 +249,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             set
             {
                 if(FontModelProperty.SetFamily(Model.Font, value, OnPropertyChanged)) {
-                    NotSelectionChanging(() => ChangeRtfSelectionValue(Run.FontFamilyProperty, value));
+                    NotSelectionChanging(ChangeRtfSelectionValue, Run.FontFamilyProperty, value);
                 }
             }
         }
@@ -256,19 +257,34 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         public bool FontBold
         {
             get { return FontModelProperty.GetBold(Model.Font); }
-            set { FontModelProperty.SetBold(Model.Font, value, OnPropertyChanged); }
+            set
+            {
+                if(FontModelProperty.SetBold(Model.Font, value, OnPropertyChanged)) {
+                    NotSelectionChanging(ChangeRtfSelectionValue, Run.FontWeightProperty, value ? FontWeights.Bold : FontWeights.Normal);
+                }
+            }
         }
 
         public bool FontItalic
         {
             get { return FontModelProperty.GetItalic(Model.Font); }
-            set { FontModelProperty.SetItalic(Model.Font, value, OnPropertyChanged); }
+            set
+            {
+                if(FontModelProperty.SetItalic(Model.Font, value, OnPropertyChanged)) {
+                    NotSelectionChanging(ChangeRtfSelectionValue, Run.FontStyleProperty, value ? FontStyles.Italic : FontStyles.Normal);
+                }
+            }
         }
 
         public double FontSize
         {
             get { return FontModelProperty.GetSize(Model.Font); }
-            set { FontModelProperty.SetSize(Model.Font, value, OnPropertyChanged); }
+            set
+            {
+                if(FontModelProperty.SetSize(Model.Font, value, OnPropertyChanged)) {
+                    NotSelectionChanging(ChangeRtfSelectionValue, Run.FontSizeProperty, value);
+                }
+            }
         }
 
         public Brush ForeColorBrush
@@ -720,10 +736,10 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             return isChanged;
         }
 
-        void NotSelectionChanging(Action action)
+        void NotSelectionChanging(Func<DependencyProperty, object, string, bool> action, DependencyProperty dependencyProperty, object value, [CallerMemberName] string callerMemberName = "")
         {
             if(!SelectionChanging) {
-                action();
+                action(dependencyProperty, value, callerMemberName);
             }
         }
 
@@ -1064,6 +1080,15 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             try {
                 var fontFamily = CastUtility.GetCastWPFValue(richTextBox.Selection.GetPropertyValue(Run.FontFamilyProperty), FontFamily);
                 FontFamily = fontFamily;
+
+                var fontWeight = CastUtility.GetCastWPFValue(richTextBox.Selection.GetPropertyValue(Run.FontWeightProperty), FontBold ? FontWeights.Bold : FontWeights.Normal);
+                FontBold = fontWeight != FontWeights.Normal;
+
+                var fontStyle = CastUtility.GetCastWPFValue(richTextBox.Selection.GetPropertyValue(Run.FontStyleProperty), FontItalic ? FontStyles.Italic : FontStyles.Normal);
+                FontItalic = fontStyle != FontStyles.Normal;
+
+                var fontSize = CastUtility.GetCastWPFValue(richTextBox.Selection.GetPropertyValue(Run.FontSizeProperty), FontSize);
+                FontSize = fontSize;
 
             } finally {
                 SelectionChanging = false;
