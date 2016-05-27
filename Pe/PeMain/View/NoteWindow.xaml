@@ -336,28 +336,31 @@
             </xctk:ColorPicker>
 
             <Label Grid.Row="4" Grid.Column="0" Target="{Binding ElementName=selectFont}" Content="font" AA:Language.Word="note/style/font" Style="{StaticResource HeaderLabel}" />
-            <AV:FontSelectControl
-              x:Name="selectFont"
-              Grid.Row="4" Grid.Column="1"
-              FamilyName="{Binding FontFamily}"
-              IsBold="{Binding FontBold}"
-              IsItalic="{Binding FontItalic}"
-              Size="{Binding FontSize}"
-              SizeMinimum="{x:Static AM:Constants.NoteFontMinimumSize}"
-              SizeMaximum="{x:Static AM:Constants.NoteFontMaximumSize}"
-              MinWidth="{StaticResource FontSelectWidth}"
-            >
-              <AV:FontSelectControl.Style>
-                <Style TargetType="AV:FontSelectControl">
-                  <Setter Property="IsEnabledBold" Value="True" />
-                  <Setter Property="IsEnabledItalic" Value="True" />
-                </Style>
-              </AV:FontSelectControl.Style>
-            </AV:FontSelectControl>
-            <!--
-              IsEnabledBold="{Binding NoteKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_library_pedata_define:NoteKind.Text}}"
-              IsEnabledItalic="{Binding NoteKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_library_pedata_define:NoteKind.Text}}"
-            -->
+            <StackPanel Grid.Row="4" Grid.Column="1">
+              <AV:FontSelectControl
+                x:Name="selectFont"
+                Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"
+                FamilyName="{Binding FontFamily}"
+                IsBold="{Binding FontBold}"
+                IsItalic="{Binding FontItalic}"
+                Size="{Binding FontSize}"
+                SizeMinimum="{x:Static AM:Constants.NoteFontMinimumSize}"
+                SizeMaximum="{x:Static AM:Constants.NoteFontMaximumSize}"
+                MinWidth="{StaticResource FontSelectWidth}"
+              >
+                <AV:FontSelectControl.Style>
+                  <Style TargetType="AV:FontSelectControl">
+                    <Setter Property="IsEnabledBold" Value="True" />
+                    <Setter Property="IsEnabledItalic" Value="True" />
+                  </Style>
+                </AV:FontSelectControl.Style>
+              </AV:FontSelectControl>
+              <WrapPanel Orientation="Horizontal">
+                <ToggleButton IsChecked="{Binding TextUnderline}">u</ToggleButton>
+                <ToggleButton IsChecked="{Binding TextStrikethrough}">s</ToggleButton>
+
+              </WrapPanel>
+            </StackPanel>
           </Grid>
           <Grid Style="{StaticResource Group}">
             <Grid.RowDefinitions>

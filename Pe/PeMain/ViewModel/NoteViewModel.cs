@@ -68,6 +68,9 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         bool _formatWarning;
 
+        bool _textUnderline;
+        bool _textStrikethrough;
+
         #endregion
 
         public NoteViewModel(NoteIndexItemModel model, NoteWindow view, IAppNonProcess appNonProcess, IAppSender appSender)
@@ -293,6 +296,29 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         }
 
         #endregion
+
+        public bool TextUnderline
+        {
+            get{return this._textUnderline;}
+            set
+            {
+                if(SetVariableValue(ref this._textUnderline, value)) {
+                    
+                    NotSelectionChanging(() => ChangeRtfSelectionDecorations(TextDecorations.Underline.First(), value));
+                }
+            }
+        }
+
+        public bool TextStrikethrough
+        {
+            get { return this._textStrikethrough; }
+            set
+            {
+                if(SetVariableValue(ref this._textStrikethrough, value)) {
+                    NotSelectionChanging(() => ChangeRtfSelectionDecorations(TextDecorations.Strikethrough.First(), value));
+                }
+            }
+        }
 
         public NoteKind NoteKind
         {
@@ -705,6 +731,26 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             });
         }
 
+        bool ChangeRtfSelectionDecorations(TextDecoration textDecoration, bool isSet, [CallerMemberName] string callerMemberName = "")
+        {
+            var isChanged = false;
+
+            DoRichTextEditor(c => {
+                if(!c.Selection.IsEmpty) {
+                    var nowDecorations = c.Selection.GetPropertyValue(Inline.TextDecorationsProperty) as TextDecorationCollection ?? new TextDecorationCollection();
+                    var setDecorations = isSet 
+                        ? new TextDecorationCollection(nowDecorations.Union(new[] { textDecoration }))
+                        : new TextDecorationCollection(nowDecorations.Except(new[] { textDecoration }))
+                    ;
+                    c.Selection.ApplyPropertyValue(Run.TextDecorationsProperty, setDecorations);
+                    isChanged = true;
+                    OnPropertyChanged(callerMemberName);
+                }
+            });
+
+            return isChanged;
+        }
+
         bool ChangeRtfSelectionValue(DependencyProperty dependencyProperty, object value, [CallerMemberName] string callerMemberName = "")
         {
             var isChanged = false;
@@ -734,6 +780,13 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             });
 
             return isChanged;
+        }
+
+        void NotSelectionChanging(Action action, [CallerMemberName] string callerMemberName = "")
+        {
+            if(!SelectionChanging) {
+                action();
+            }
         }
 
         void NotSelectionChanging(Func<DependencyProperty, object, string, bool> action, DependencyProperty dependencyProperty, object value, [CallerMemberName] string callerMemberName = "")
@@ -1089,6 +1142,12 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
                 var fontSize = CastUtility.GetCastWPFValue(richTextBox.Selection.GetPropertyValue(Run.FontSizeProperty), FontSize);
                 FontSize = fontSize;
+
+                var textDecoration = richTextBox.Selection.GetPropertyValue(Run.TextDecorationsProperty) as TextDecorationCollection;
+                if(textDecoration!= null) {
+                    TextUnderline = textDecoration.Any(t => t == TextDecorations.Underline.First());
+                    TextStrikethrough = textDecoration.Any(t => t == TextDecorations.Strikethrough.First());
+                }
 
             } finally {
                 SelectionChanging = false;
