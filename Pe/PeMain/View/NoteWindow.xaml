@@ -15,7 +15,7 @@
   xmlns:app_library_pedata_define="clr-namespace:ContentTypeTextNet.Pe.Library.PeData.Define;assembly=PeData"
   x:Class="ContentTypeTextNet.Pe.PeMain.View.NoteWindow"
   x:TypeArguments="AVM:NoteViewModel"
-  ShowInTaskbar="False" 
+  ShowInTaskbar="False"
   WindowStyle="None"
   ResizeMode="CanResize"
   AllowsTransparency="True"
@@ -31,7 +31,7 @@
   BorderThickness="{Binding ResizeThickness}"
   BorderBrush="{Binding BorderBrush}"
   ShowActivated="False"
-  
+
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
   d:DesignWidth="300" d:DesignHeight="300"
 >
@@ -193,10 +193,6 @@
               <Setter Property="Cursor" Value="Arrow" />
             </MultiDataTrigger>
           </Style.Triggers>
-          <Setter Property="FontFamily" Value="{Binding FontFamily, Mode=OneWay}" />
-          <Setter Property="FontWeight" Value="{Binding FontBold, Converter={StaticResource BooleanFontWeightConverter}, Mode=OneWay}" />
-          <Setter Property="FontStyle" Value="{Binding FontItalic, Converter={StaticResource BooleanFontStyleConverter}, Mode=OneWay}" />
-          <Setter Property="FontSize" Value="{Binding FontSize, Mode=OneWay}" />
           <Setter Property="AcceptsReturn" Value="True" />
           <Setter Property="AcceptsTab" Value="True" />
           <Setter Property="BorderThickness" Value="0" />
@@ -204,7 +200,7 @@
           <Setter Property="Background" Value="Transparent" />
           <Setter Property="IsReadOnly" Value="{Binding IsBodyReadOnly}" />
           <Setter Property="IsEnabled" Value="{Binding IsCompacted, Converter={StaticResource LogicalNotConverter}}" />
-          
+
           <!--<Setter Property="xctk:RichTextBox.Margin" Value="10" />-->
         </Style>
       </ContentControl.Resources>
@@ -214,7 +210,13 @@
             <DataTrigger Binding="{Binding NoteKind}" Value="Text">
               <Setter Property="Content">
                 <Setter.Value>
-                  <TextBox Style="{StaticResource Editor}" Text="{Binding BodyText}" TextWrapping="{Binding AutoLineFeed, Converter={StaticResource BooleanToTextWrappingConverter}, Mode=OneWay}">
+                  <TextBox
+                    Style="{StaticResource Editor}" Text="{Binding BodyText}" TextWrapping="{Binding AutoLineFeed, Converter={StaticResource BooleanToTextWrappingConverter}, Mode=OneWay}"
+                    FontFamily="{Binding FontFamily, Mode=OneWay}"
+                    FontWeight="{Binding FontBold, Converter={StaticResource BooleanFontWeightConverter}, Mode=OneWay}"
+                    FontStyle="{Binding FontItalic, Converter={StaticResource BooleanFontStyleConverter}, Mode=OneWay}"
+                    FontSize="{Binding FontSize, Mode=OneWay}"
+                  >
                     <TextBox.Foreground>
                       <SolidColorBrush Color="{Binding ForeColor}" />
                     </TextBox.Foreground>
@@ -225,13 +227,13 @@
             <DataTrigger Binding="{Binding NoteKind}" Value="Rtf">
               <Setter Property="Content">
                 <Setter.Value>
-                  <xctk:RichTextBox Style="{StaticResource Editor}" Text="{Binding BodyRtf}" IsDocumentEnabled="True">
+                  <xctk:RichTextBox Style="{StaticResource Editor}" Text="{Binding BodyRtf}" >
                     <xctk:RichTextBox.TextFormatter>
                       <xctk:RtfFormatter />
                     </xctk:RichTextBox.TextFormatter>
-                    <xctk:RichTextBoxFormatBarManager.FormatBar>
+                    <!--<xctk:RichTextBoxFormatBarManager.FormatBar>
                       <xctk:RichTextBoxFormatBar />
-                    </xctk:RichTextBoxFormatBarManager.FormatBar>
+                    </xctk:RichTextBoxFormatBarManager.FormatBar>-->
                   </xctk:RichTextBox>
                 </Setter.Value>
               </Setter>
@@ -263,10 +265,10 @@
           <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
         </Style>
       </Popup.Resources>
-      <Border 
-        Padding="4" 
-        BorderThickness="2" 
-        BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" 
+      <Border
+        Padding="4"
+        BorderThickness="2"
+        BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"
         Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"
       >
         <StackPanel>
@@ -296,9 +298,9 @@
               <ColumnDefinition Width="3*" />
               <ColumnDefinition Width="7*" />
             </Grid.ColumnDefinitions>
-            
+
             <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="style" AA:Language.Word="note/style" Style="{StaticResource TitleLabel}" />
-            
+
             <Label Grid.Row="1" Grid.Column="0"  Content="kind" AA:Language.Word="note/style/kind" />
             <Grid Grid.Row="1" Grid.Column="1">
               <Grid.ColumnDefinitions>
@@ -316,27 +318,68 @@
               </Button>
               <RadioButton Grid.Column="1" Content="rtf" AA:Language.Word="note/style/kind/rtf"  Style="{StaticResource DefaultHorizontalRadioButton}" IsChecked="{Binding NoteKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_library_pedata_define:NoteKind.Rtf}}" />
             </Grid>
-            
+
             <Label Grid.Row="2" Grid.Column="0" Target="{Binding ElementName=selectForeground}" Content="fore" AA:Language.Word="note/style/fore-color" />
             <xctk:ColorPicker x:Name="selectForeground" Grid.Row="2" Grid.Column="1" Style="{StaticResource DefaultColorPicker}" SelectedColor="{Binding ForeColor}" />
-            
+
             <Label Grid.Row="3" Grid.Column="0" Target="{Binding ElementName=selectBackground}" Content="back" AA:Language.Word="note/style/back-color" Style="{StaticResource HeaderLabel}"/>
-            <xctk:ColorPicker x:Name="selectBackground" Grid.Row="3" Grid.Column="1" Style="{StaticResource DefaultColorPicker}" SelectedColor="{Binding BackColor}" />
-            
+            <xctk:ColorPicker x:Name="selectBackground" Grid.Row="3" Grid.Column="1" SelectedColor="{Binding BackColor}" >
+              <xctk:ColorPicker.Style>
+                <Style TargetType="xctk:ColorPicker" BasedOn="{StaticResource DefaultColorPicker}">
+                  <Style.Triggers>
+                    <DataTrigger Binding="{Binding NoteKind}" Value="Rtf">
+                      <Setter Property="UsingAlphaChannel" Value="True" />
+                    </DataTrigger>
+                  </Style.Triggers>
+                </Style>
+              </xctk:ColorPicker.Style>
+            </xctk:ColorPicker>
+
             <Label Grid.Row="4" Grid.Column="0" Target="{Binding ElementName=selectFont}" Content="font" AA:Language.Word="note/style/font" Style="{StaticResource HeaderLabel}" />
-            <AV:FontSelectControl
-              x:Name="selectFont"
-              Grid.Row="4" Grid.Column="1"
-              FamilyName="{Binding FontFamily}"
-              IsBold="{Binding FontBold}"
-              IsItalic="{Binding FontItalic}"
-              Size="{Binding FontSize}"
-              SizeMinimum="{x:Static AM:Constants.NoteFontMinimumSize}"
-              SizeMaximum="{x:Static AM:Constants.NoteFontMaximumSize}"
-              MinWidth="{StaticResource FontSelectWidth}"
-              IsEnabledBold="{Binding NoteKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_library_pedata_define:NoteKind.Text}}"
-              IsEnabledItalic="{Binding NoteKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_library_pedata_define:NoteKind.Text}}"
-            />
+            <StackPanel Grid.Row="4" Grid.Column="1">
+              <AV:FontSelectControl
+                x:Name="selectFont"
+                Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"
+                FamilyName="{Binding FontFamily}"
+                IsBold="{Binding FontBold}"
+                IsItalic="{Binding FontItalic}"
+                Size="{Binding FontSize}"
+                SizeMinimum="{x:Static AM:Constants.NoteFontMinimumSize}"
+                SizeMaximum="{x:Static AM:Constants.NoteFontMaximumSize}"
+                MinWidth="{StaticResource FontSelectWidth}"
+              >
+                <AV:FontSelectControl.Style>
+                  <Style TargetType="AV:FontSelectControl">
+                    <Setter Property="IsEnabledBold" Value="True" />
+                    <Setter Property="IsEnabledItalic" Value="True" />
+                  </Style>
+                </AV:FontSelectControl.Style>
+                <AV:FontSelectControl.AdditionalContent>
+                  <ContentControl>
+                    <ContentControl.Style>
+                      <Style TargetType="ContentControl">
+                        <Style.Triggers>
+                          <DataTrigger Binding="{Binding NoteKind}" Value="Rtf">
+                            <Setter Property="Content">
+                              <Setter.Value>
+                                <WrapPanel Orientation="Horizontal">
+                                  <ToggleButton IsChecked="{Binding TextUnderline}">
+                                    <Image Style="{StaticResource DefaultImage}" Source="{x:Static AM:AppResource.NoteFormatUnderlineImage}" />
+                                  </ToggleButton>
+                                  <ToggleButton IsChecked="{Binding TextStrikethrough}">
+                                    <Image Style="{StaticResource DefaultImage}" Source="{x:Static AM:AppResource.NoteFormatStrikethroughImage}" />
+                                  </ToggleButton>
+                                </WrapPanel>
+                              </Setter.Value>
+                            </Setter>
+                          </DataTrigger>
+                        </Style.Triggers>
+                      </Style>
+                    </ContentControl.Style>
+                  </ContentControl>
+                </AV:FontSelectControl.AdditionalContent>
+              </AV:FontSelectControl>
+            </StackPanel>
           </Grid>
           <Grid Style="{StaticResource Group}">
             <Grid.RowDefinitions>
@@ -350,7 +393,7 @@
               <ColumnDefinition Width="33*" />
             </Grid.ColumnDefinitions>
             <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="state" AA:Language.Word="note/state"  Style="{StaticResource TitleLabel}" />
-            
+
             <CheckBox Grid.Row="1" Grid.Column="0" IsChecked="{Binding IsLocked}" Content="lock" AA:Language.Word="note/state/lock" Style="{StaticResource DefaultHorizontalCheckBox}" />
             <CheckBox Grid.Row="1" Grid.Column="1" IsChecked="{Binding IsCompacted}" Content="compact" AA:Language.Word="note/state/compact" Style="{StaticResource DefaultHorizontalCheckBox}" />
             <CheckBox Grid.Row="1" Grid.Column="2" IsChecked="{Binding IsTopmost}" Content="topmost" AA:Language.Word="note/state/topmost" Style="{StaticResource DefaultHorizontalCheckBox}" />

@@ -182,6 +182,10 @@ namespace ContentTypeTextNet.Pe.PeMain
         const string noteHide = "/Resources/Image/Note/NoteHide.png";
         [AppResource(AppResourceType.Image)]
         const string noteFront = "/Resources/Image/Note/NoteFront.png";
+        [AppResource(AppResourceType.Image)]
+        const string noteFormatUnderline = "/Resources/Image/Note/NoteFormatUnderline.png";
+        [AppResource(AppResourceType.Image)]
+        const string noteFormatStrikethrough = "/Resources/Image/Note/NoteFormatStrikethrough.png";
 
         #endregion
 

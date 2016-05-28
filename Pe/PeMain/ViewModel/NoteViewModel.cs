@@ -19,9 +19,11 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using ContentTypeTextNet.Library.SharedLibrary.Attribute;
@@ -66,6 +68,9 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         bool _formatWarning;
 
+        bool _textUnderline;
+        bool _textStrikethrough;
+
         #endregion
 
         public NoteViewModel(NoteIndexItemModel model, NoteWindow view, IAppNonProcess appNonProcess, IAppSender appSender)
@@ -78,14 +83,14 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
             SetCompactArea();
 
-            ResetFormatWarning();
 
             ResetChangeFlag();
         }
 
         #region property
 
-        NoteBodyItemModel IndexBody {
+        NoteBodyItemModel IndexBody
+        {
             get
             {
                 if(this._indexBody == null) {
@@ -101,6 +106,8 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         }
 
         public bool IsTemporary { get; set; }
+
+        bool SelectionChanging { get; set; } = false;
 
         public Brush BorderBrush
         {
@@ -242,25 +249,45 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         public FontFamily FontFamily
         {
             get { return FontModelProperty.GetFamilyDefault(Model.Font); }
-            set { FontModelProperty.SetFamily(Model.Font, value, OnPropertyChanged); }
+            set
+            {
+                if(FontModelProperty.SetFamily(Model.Font, value, OnPropertyChanged)) {
+                    NotSelectionChanging(() => ChangeRtfSelectionValue(Run.FontFamilyProperty, value));
+                }
+            }
         }
 
         public bool FontBold
         {
             get { return FontModelProperty.GetBold(Model.Font); }
-            set { FontModelProperty.SetBold(Model.Font, value, OnPropertyChanged); }
+            set
+            {
+                if(FontModelProperty.SetBold(Model.Font, value, OnPropertyChanged)) {
+                    NotSelectionChanging(() => ChangeRtfSelectionValue(Run.FontWeightProperty, value ? FontWeights.Bold : FontWeights.Normal));
+                }
+            }
         }
 
         public bool FontItalic
         {
             get { return FontModelProperty.GetItalic(Model.Font); }
-            set { FontModelProperty.SetItalic(Model.Font, value, OnPropertyChanged); }
+            set
+            {
+                if(FontModelProperty.SetItalic(Model.Font, value, OnPropertyChanged)) {
+                    NotSelectionChanging(() => ChangeRtfSelectionValue(Run.FontStyleProperty, value ? FontStyles.Italic : FontStyles.Normal));
+                }
+            }
         }
 
         public double FontSize
         {
             get { return FontModelProperty.GetSize(Model.Font); }
-            set { FontModelProperty.SetSize(Model.Font, value, OnPropertyChanged); }
+            set
+            {
+                if(FontModelProperty.SetSize(Model.Font, value, OnPropertyChanged)) {
+                    NotSelectionChanging(() => ChangeRtfSelectionValue(Run.FontSizeProperty, value));
+                }
+            }
         }
 
         public Brush ForeColorBrush
@@ -270,6 +297,29 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         #endregion
 
+        public bool TextUnderline
+        {
+            get{return this._textUnderline;}
+            set
+            {
+                if(SetVariableValue(ref this._textUnderline, value)) {
+                    
+                    NotSelectionChanging(() => ChangeRtfSelectionDecorations(TextDecorations.Underline.First(), value));
+                }
+            }
+        }
+
+        public bool TextStrikethrough
+        {
+            get { return this._textStrikethrough; }
+            set
+            {
+                if(SetVariableValue(ref this._textStrikethrough, value)) {
+                    NotSelectionChanging(() => ChangeRtfSelectionDecorations(TextDecorations.Strikethrough.First(), value));
+                }
+            }
+        }
+
         public NoteKind NoteKind
         {
             get { return Model.NoteKind; }
@@ -277,6 +327,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             {
                 var prev = Model.NoteKind;
                 if(prev != value) {
+                    ResertRtfEvent();
                     var convertedValue = ConvertBodyValue(prev, value);
                     if(SetModelValue(value)) {
                         switch(value) {
@@ -286,6 +337,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
                             case NoteKind.Rtf:
                                 BodyRtf = convertedValue;
+                                SetRtfEvent();
                                 break;
 
                             default:
@@ -514,6 +566,18 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
         }
 
+        /// <summary>
+        /// RTFに対する処理を実施。
+        /// </summary>
+        /// <param name="rtfAction"></param>
+        void DoRichTextEditor(Action<Xceed.Wpf.Toolkit.RichTextBox> rtfAction)
+        {
+            if(NoteKind == NoteKind.Rtf) {
+                var editor = (Xceed.Wpf.Toolkit.RichTextBox)GetBodyEditor();
+                rtfAction(editor);
+            }
+        }
+
         void CopyBody()
         {
             switch(NoteKind) {
@@ -641,6 +705,90 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
         }
 
+        void SetRtfEvent()
+        {
+            DoRichTextEditor(c => {
+                c.SelectionChanged += RichTextBox_SelectionChanged;
+            });
+        }
+
+        void ResertRtfEvent()
+        {
+            DoRichTextEditor(c => {
+                c.SelectionChanged -= RichTextBox_SelectionChanged;
+            });
+        }
+
+        void ChangeRtfCurrentValue(DependencyProperty dependencyProperty, object value, Xceed.Wpf.Toolkit.RichTextBox richTextBox, [CallerMemberName] string callerMemberName = "")
+        {
+            richTextBox.Selection.ApplyPropertyValue(dependencyProperty, value);
+        }
+
+        void ChangeRtfCurrentValue(DependencyProperty dependencyProperty, object value, [CallerMemberName] string callerMemberName = "")
+        {
+            DoRichTextEditor(c => {
+                ChangeRtfCurrentValue(dependencyProperty, value, c);
+            });
+        }
+
+        bool ChangeRtfSelectionDecorations(TextDecoration textDecoration, bool isSet, [CallerMemberName] string callerMemberName = "")
+        {
+            var isChanged = false;
+
+            DoRichTextEditor(c => {
+                if(!c.Selection.IsEmpty) {
+                    var nowDecorations = c.Selection.GetPropertyValue(Inline.TextDecorationsProperty) as TextDecorationCollection ?? new TextDecorationCollection();
+                    var setDecorations = isSet 
+                        ? new TextDecorationCollection(nowDecorations.Union(new[] { textDecoration }))
+                        : new TextDecorationCollection(nowDecorations.Except(new[] { textDecoration }))
+                    ;
+                    c.Selection.ApplyPropertyValue(Run.TextDecorationsProperty, setDecorations);
+                    isChanged = true;
+                    OnPropertyChanged(callerMemberName);
+                }
+            });
+
+            return isChanged;
+        }
+
+        bool ChangeRtfSelectionValue(DependencyProperty dependencyProperty, object value, [CallerMemberName] string callerMemberName = "")
+        {
+            var isChanged = false;
+
+            DoRichTextEditor(c => {
+                if(!c.Selection.IsEmpty) {
+                    c.Selection.ApplyPropertyValue(dependencyProperty, value);
+                    isChanged = true;
+                    OnPropertyChanged(callerMemberName);
+                }
+            });
+
+            return isChanged;
+        }
+
+        bool ChangeRtfValue(DependencyProperty dependencyProperty, Func<object> value, [CallerMemberName] string callerMemberName = "")
+        {
+            return ChangeRtfSelectionValue(dependencyProperty, value(), callerMemberName);
+        }
+
+        bool ChangeRtfSelectedColor(Color color, DependencyProperty dependencyProperty, [CallerMemberName] string callerMemberName = "")
+        {
+            var isChanged = ChangeRtfValue(dependencyProperty, () => {
+                var brush = new SolidColorBrush(color);
+                FreezableUtility.SafeFreeze(brush);
+                return brush;
+            });
+
+            return isChanged;
+        }
+
+        void NotSelectionChanging(Action action, [CallerMemberName] string callerMemberName = "")
+        {
+            if(!SelectionChanging) {
+                action();
+            }
+        }
+
         #endregion
 
         #region HasViewSingleModelWrapperViewModelBase
@@ -653,6 +801,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             View.UserClosing += View_UserClosing;
             PopupUtility.Attachment(View, View.popup);
             View.popup.Opened += Popup_Opened;
+            View.Loaded += View_Loaded;
 
             base.InitializeView();
         }
@@ -661,6 +810,8 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         {
             View.popup.Opened -= Popup_Opened;
             View.UserClosing -= View_UserClosing;
+
+            ResertRtfEvent();
 
             base.UninitializeView();
         }
@@ -685,7 +836,22 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             get { return ColorPairProperty.GetNoneAlphaForeColor(Model); }
             set
             {
+                if(ChangeRtfSelectedColor(value, Run.ForegroundProperty)) {
+                    return;
+                }
+                var prevColor = Model.ForeColor;
+
                 if(ColorPairProperty.SetNoneAlphaForekColor(Model, value, OnPropertyChanged)) {
+                    DoRichTextEditor(c => {
+                        var foreColor = ForeColorBrush;
+                        FreezableUtility.SafeFreeze(foreColor);
+                        foreach(var block in c.Document.Blocks) {
+                            var blockBrush = block.Foreground as SolidColorBrush;
+                            if(blockBrush != null && blockBrush.Color == prevColor) {
+                                block.Foreground = foreColor;
+                            }
+                        }
+                    });
                     CallOnPropertyChange(nameof(ForeColorBrush));
                     CallOnPropertyChangeDisplayItem();
                 }
@@ -697,6 +863,10 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             get { return ColorPairProperty.GetNoneAlphaBackColor(Model); }
             set
             {
+                if(ChangeRtfSelectedColor(value, Run.BackgroundProperty)) {
+                    return;
+                }
+
                 if(ColorPairProperty.SetNoneAlphaBackColor(Model, value, OnPropertyChanged)) {
                     BorderBrush = MakeBorderBrush();
                     CallOnPropertyChangeDisplayItem();
@@ -937,6 +1107,48 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         private void Popup_Opened(object sender, EventArgs e)
         {
             ResetFormatWarning();
+        }
+
+        private void View_Loaded(object sender, RoutedEventArgs e)
+        {
+            View.Loaded -= View_Loaded;
+
+            ResetFormatWarning();
+            SetRtfEvent();
+
+            ResetChangeFlag();
+        }
+
+        private void RichTextBox_SelectionChanged(object sender, RoutedEventArgs e)
+        {
+            var richTextBox = (Xceed.Wpf.Toolkit.RichTextBox)sender;
+            SelectionChanging = true;
+            try {
+                var fontFamily = CastUtility.GetCastWPFValue(richTextBox.Selection.GetPropertyValue(Run.FontFamilyProperty), FontFamily);
+                FontFamily = fontFamily;
+
+                var fontWeight = CastUtility.GetCastWPFValue(richTextBox.Selection.GetPropertyValue(Run.FontWeightProperty), FontBold ? FontWeights.Bold : FontWeights.Normal);
+                FontBold = fontWeight != FontWeights.Normal;
+
+                var fontStyle = CastUtility.GetCastWPFValue(richTextBox.Selection.GetPropertyValue(Run.FontStyleProperty), FontItalic ? FontStyles.Italic : FontStyles.Normal);
+                FontItalic = fontStyle != FontStyles.Normal;
+
+                var fontSize = CastUtility.GetCastWPFValue(richTextBox.Selection.GetPropertyValue(Run.FontSizeProperty), FontSize);
+                FontSize = fontSize;
+
+                // http://stackoverflow.com/questions/25217557/underline-not-detected-after-reloading-rtf?answertab=votes#tab-top
+                var caretPosition = richTextBox.CaretPosition;
+                var paragraph = richTextBox.Document.Blocks.FirstOrDefault(x => x.ContentStart.CompareTo(caretPosition) == -1 && x.ContentEnd.CompareTo(caretPosition) == 1) as Paragraph;
+                var inline = paragraph?.Inlines.FirstOrDefault(x => x.ContentStart.CompareTo(caretPosition) == -1 && x.ContentEnd.CompareTo(caretPosition) == 1) as Inline;
+                var textDecorations = inline?.TextDecorations;
+                if(textDecorations != null) {
+                    TextUnderline = textDecorations.Any(t => t == TextDecorations.Underline.First());
+                    TextStrikethrough = textDecorations.Any(t => t == TextDecorations.Strikethrough.First());
+                }
+
+            } finally {
+                SelectionChanging = false;
+            }
         }
 
     }

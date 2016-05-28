@@ -358,6 +358,8 @@
     <Content Include="doc\help\html\top.ja-JP.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Image\Note\NoteFormatStrikethrough.png" />
+    <Resource Include="Resources\Image\Note\NoteFormatUnderline.png" />
     <Resource Include="Resources\Image\Toolbar\ToolbarGroup\ToolbarGroupBookmark.png" />
     <Resource Include="Resources\Image\Toolbar\ToolbarGroup\ToolbarGroupBuilder.png" />
     <Resource Include="Resources\Image\Toolbar\ToolbarGroup\ToolbarGroupBuilding.png" />
