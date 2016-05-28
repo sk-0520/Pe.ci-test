@@ -63,11 +63,17 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
             Model.IsCompacted = false;
             Model.IsTopmost = false;
             Model.AutoLineFeed = true;
+            Model.NoteKind = NoteKind.Text;
         }
 
         protected override void Correction_0_69_0()
         {
             Model.AutoLineFeed = true;
+        }
+
+        protected override void Correction_0_79_0()
+        {
+            Model.NoteKind = NoteKind.Text;
         }
 
         #endregion

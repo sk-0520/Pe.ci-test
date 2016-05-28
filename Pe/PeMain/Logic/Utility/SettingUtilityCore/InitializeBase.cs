@@ -45,7 +45,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
         /// </summary>
         protected Version PreviousVersion { get; }
         /// <summary>
-        /// 
+        ///
         /// </summary>
         protected INonProcess NonProcess { get; }
 
@@ -67,6 +67,8 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
         {
             return s == null;
         }
+
+        #region 補正
 
         /// <summary>
         /// 補正処理実施。
@@ -111,6 +113,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
             CheckAndCorrection(0, 71, 0, 27279, Correction_0_71_0);
             CheckAndCorrection(0, 77, 0, 340, Correction_0_77_0);
             CheckAndCorrection(0, 78, 0, 27501, Correction_0_78_0);
+            CheckAndCorrection(0, 79, 0, 39972, Correction_0_79_0);
         }
 
         /// <summary>
@@ -169,6 +172,14 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
         /// </summary>
         protected virtual void Correction_0_78_0()
         { }
+
+        /// <summary>
+        /// 設定データが 0.79.0 以下のバージョン補正。
+        /// </summary>
+        protected virtual void Correction_0_79_0()
+        { }
+
+        #endregion
 
         #endregion
     }

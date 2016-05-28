@@ -64,6 +64,9 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
         [DataMember]
         public bool AutoLineFeed { get; set; }
 
+        [DataMember]
+        public NoteKind NoteKind { get; set; }
+
         #endregion
 
         #region IColorPair
@@ -99,6 +102,7 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
             obj.NoteTitle = NoteTitle;
             obj.IsTopmost = IsTopmost;
             obj.AutoLineFeed = AutoLineFeed;
+            obj.NoteKind = NoteKind;
         }
 
         public IDeepClone DeepClone()
