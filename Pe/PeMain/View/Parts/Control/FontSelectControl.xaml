@@ -47,7 +47,7 @@
       </ComboBox.ItemTemplate>
     </ComboBox>
     <ToggleButton Grid.Row="1" Grid.Column="0" IsChecked="{Binding IsBold, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}}" IsEnabled="{Binding IsEnabledBold, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}}" AA:Language.Hint="font/weight">
-      <Image Style="{StaticResource DefaultImage}" Source="{x:Static AM:AppResource.CommonFontBoldImage}" />
+      <Image HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource DefaultImage}" Source="{x:Static AM:AppResource.CommonFontBoldImage}" />
     </ToggleButton>
     <ToggleButton Grid.Row="1" Grid.Column="1" IsChecked="{Binding IsItalic, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}}" IsEnabled="{Binding IsEnabledItalic, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}}" AA:Language.Hint="font/style">
       <Image Style="{StaticResource DefaultImage}" Source="{x:Static AM:AppResource.CommonFontItalicImage}" />

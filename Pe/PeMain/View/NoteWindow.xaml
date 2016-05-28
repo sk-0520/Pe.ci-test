@@ -356,10 +356,12 @@
                 </AV:FontSelectControl.Style>
               </AV:FontSelectControl>
               <WrapPanel Orientation="Horizontal">
-                <ToggleButton IsChecked="{Binding TextUnderline}">u</ToggleButton>
-                <ToggleButton IsChecked="{Binding TextStrikethrough}">s</ToggleButton>
-                <ToggleButton>ul</ToggleButton>
-                <ToggleButton>ol</ToggleButton>
+                <ToggleButton IsChecked="{Binding TextUnderline}">
+                  <Image Style="{StaticResource DefaultImage}" Source="{x:Static AM:AppResource.NoteFormatUnderlineImage}" />
+                </ToggleButton>
+                <ToggleButton IsChecked="{Binding TextStrikethrough}">
+                  <Image Style="{StaticResource DefaultImage}" Source="{x:Static AM:AppResource.NoteFormatStrikethroughImage}" />
+                </ToggleButton>
               </WrapPanel>
             </StackPanel>
           </Grid>
