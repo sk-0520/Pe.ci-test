@@ -252,7 +252,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             set
             {
                 if(FontModelProperty.SetFamily(Model.Font, value, OnPropertyChanged)) {
-                    NotSelectionChanging(ChangeRtfSelectionValue, Run.FontFamilyProperty, value);
+                    NotSelectionChanging(() => ChangeRtfSelectionValue(Run.FontFamilyProperty, value));
                 }
             }
         }
@@ -263,7 +263,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             set
             {
                 if(FontModelProperty.SetBold(Model.Font, value, OnPropertyChanged)) {
-                    NotSelectionChanging(ChangeRtfSelectionValue, Run.FontWeightProperty, value ? FontWeights.Bold : FontWeights.Normal);
+                    NotSelectionChanging(() => ChangeRtfSelectionValue(Run.FontWeightProperty, value ? FontWeights.Bold : FontWeights.Normal));
                 }
             }
         }
@@ -274,7 +274,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             set
             {
                 if(FontModelProperty.SetItalic(Model.Font, value, OnPropertyChanged)) {
-                    NotSelectionChanging(ChangeRtfSelectionValue, Run.FontStyleProperty, value ? FontStyles.Italic : FontStyles.Normal);
+                    NotSelectionChanging(() => ChangeRtfSelectionValue(Run.FontStyleProperty, value ? FontStyles.Italic : FontStyles.Normal));
                 }
             }
         }
@@ -285,7 +285,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             set
             {
                 if(FontModelProperty.SetSize(Model.Font, value, OnPropertyChanged)) {
-                    NotSelectionChanging(ChangeRtfSelectionValue, Run.FontSizeProperty, value);
+                    NotSelectionChanging(() => ChangeRtfSelectionValue(Run.FontSizeProperty, value));
                 }
             }
         }
@@ -789,13 +789,6 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
         }
 
-        void NotSelectionChanging(Func<DependencyProperty, object, string, bool> action, DependencyProperty dependencyProperty, object value, [CallerMemberName] string callerMemberName = "")
-        {
-            if(!SelectionChanging) {
-                action(dependencyProperty, value, callerMemberName);
-            }
-        }
-
         #endregion
 
         #region HasViewSingleModelWrapperViewModelBase
@@ -1143,10 +1136,14 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 var fontSize = CastUtility.GetCastWPFValue(richTextBox.Selection.GetPropertyValue(Run.FontSizeProperty), FontSize);
                 FontSize = fontSize;
 
-                var textDecoration = richTextBox.Selection.GetPropertyValue(Run.TextDecorationsProperty) as TextDecorationCollection;
-                if(textDecoration!= null) {
-                    TextUnderline = textDecoration.Any(t => t == TextDecorations.Underline.First());
-                    TextStrikethrough = textDecoration.Any(t => t == TextDecorations.Strikethrough.First());
+                // http://stackoverflow.com/questions/25217557/underline-not-detected-after-reloading-rtf?answertab=votes#tab-top
+                var caretPosition = richTextBox.CaretPosition;
+                var paragraph = richTextBox.Document.Blocks.FirstOrDefault(x => x.ContentStart.CompareTo(caretPosition) == -1 && x.ContentEnd.CompareTo(caretPosition) == 1) as Paragraph;
+                var inline = paragraph.Inlines.FirstOrDefault(x => x.ContentStart.CompareTo(caretPosition) == -1 && x.ContentEnd.CompareTo(caretPosition) == 1) as Inline;
+                var textDecorations = inline?.TextDecorations;
+                if(textDecorations != null) {
+                    TextUnderline = textDecorations.Any(t => t == TextDecorations.Underline.First());
+                    TextStrikethrough = textDecorations.Any(t => t == TextDecorations.Strikethrough.First());
                 }
 
             } finally {
