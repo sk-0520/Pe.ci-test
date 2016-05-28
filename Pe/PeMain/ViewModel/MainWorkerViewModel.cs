@@ -91,8 +91,8 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             OtherWindows = new HashSet<Window>();
 
             IndexBodyCaching = new IndexBodyCaching(
-                Constants.CacheIndexBodyTemplate, 
-                Constants.CacheIndexBodyClipboard, 
+                Constants.CacheIndexBodyTemplate,
+                Constants.CacheIndexBodyClipboard,
                 CommonData.VariableConstants
             );
 
@@ -149,7 +149,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             get
             {
                 return IsPause;
-                //return this._isContextMenuOpen; 
+                //return this._isContextMenuOpen;
             }
             set
             {
@@ -1204,7 +1204,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="point"></param>
         /// <param name="size"></param>
@@ -1218,6 +1218,8 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 WindowWidth = size.Width,
                 WindowHeight = size.Height,
             };
+            SettingUtility.InitializeNoteIndexItem(noteItem, null, CommonData.NonProcess);
+
             //CommonData.MainSetting.Note.Font.DeepCloneTo(noteItem.Font);
             noteItem.Font = (FontModel)CommonData.MainSetting.Note.Font.DeepClone();
             //TODO: 外部化
@@ -1240,12 +1242,11 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                     throw new NotImplementedException();
             }
 
-
-            SettingUtility.InitializeNoteIndexItem(noteItem, null, CommonData.NonProcess);
             noteItem.ForeColor = CommonData.MainSetting.Note.ForeColor;
             noteItem.BackColor = CommonData.MainSetting.Note.BackColor;
             noteItem.IsTopmost = CommonData.MainSetting.Note.IsTopmost;
             noteItem.AutoLineFeed = CommonData.MainSetting.Note.AutoLineFeed;
+            noteItem.NoteKind = CommonData.MainSetting.Note.NoteKind;
 
             var window = CreateNoteWindow(noteItem, appendIndex);
             WindowsUtility.ShowNoActiveForeground(window.Handle);

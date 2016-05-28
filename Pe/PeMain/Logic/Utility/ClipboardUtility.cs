@@ -271,9 +271,10 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         /// </summary>
         /// <param name="enabledTypes"></param>
         /// <returns></returns>
-        static ClipboardData GetClipboardDataFromFramework(ClipboardType enabledTypes)
+        static ClipboardData GetClipboardDataFromFramework(ClipboardType enabledTypes, INonProcess nonProcess)
         {
             var clipboardData = new ClipboardData();
+            SettingUtility.InitializeClipboardBodyItem(clipboardData.Body, true, nonProcess);
 
             var clipboardObject = Clipboard.GetDataObject();
             if(clipboardObject != null) {
@@ -480,9 +481,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         /// <param name="enabledTypes"></param>
         /// <param name="hWnd"></param>
         /// <returns></returns>
-        static ClipboardData GetClipboardDataCore(ClipboardType enabledTypes, IntPtr hWnd)
+        static ClipboardData GetClipboardDataCore(ClipboardType enabledTypes, IntPtr hWnd, INonProcess nonProcess)
         {
-            var clipboardItem = GetClipboardDataFromFramework(enabledTypes);
+            var clipboardItem = GetClipboardDataFromFramework(enabledTypes, nonProcess);
 
             return clipboardItem;
         }
@@ -491,9 +492,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         /// </summary>
         /// <param name="enabledTypes">取り込み対象とするクリップボード種別。</param>
         /// <returns>生成されたクリップボードアイテム。nullが返ることはない。</returns>
-        public static ClipboardData GetClipboardData(ClipboardType enabledTypes, IntPtr hWnd)
+        public static ClipboardData GetClipboardData(ClipboardType enabledTypes, IntPtr hWnd, INonProcess nonProcess)
         {
-            return GetClipboardDataCore(enabledTypes, hWnd);
+            return GetClipboardDataCore(enabledTypes, hWnd, nonProcess);
         }
 
         static void OutputFilter(ClipboardType clipboardType, int settingLength, int currentLength, INonProcess nonProcess, int frame = 2, [CallerFilePath] string callerFile = "", [CallerLineNumber] int callerLine = -1, [CallerMemberName] string callerMember = "")
@@ -703,7 +704,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
                     ExecuteFunc = (int waitCurrentCount, ref ClipboardData result) => {
                         ClipboardData data = null;
                         try {
-                            data = ClipboardUtility.GetClipboardData(captureType, hWnd);
+                            data = ClipboardUtility.GetClipboardData(captureType, hWnd, nonProcess);
                         } catch(Exception ex) {
                             exceptions.Add(ex);
                         }

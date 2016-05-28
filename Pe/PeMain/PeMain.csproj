@@ -358,6 +358,8 @@
     <Content Include="doc\help\html\top.ja-JP.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Image\Note\NoteFormatStrikethrough.png" />
+    <Resource Include="Resources\Image\Note\NoteFormatUnderline.png" />
     <Resource Include="Resources\Image\Toolbar\ToolbarGroup\ToolbarGroupBookmark.png" />
     <Resource Include="Resources\Image\Toolbar\ToolbarGroup\ToolbarGroupBuilder.png" />
     <Resource Include="Resources\Image\Toolbar\ToolbarGroup\ToolbarGroupBuilding.png" />
@@ -453,15 +455,19 @@
     <Compile Include="Logic\Utility\LauncherToolbarUtility.cs" />
     <Compile Include="Logic\Utility\NoteUtility.cs" />
     <Compile Include="Logic\Utility\PopupUtility.cs" />
+    <Compile Include="Logic\Utility\SettingUtilityCore\InitializeBodyBase.cs" />
     <Compile Include="Logic\Utility\SettingUtilityCore\InitializeBase.cs" />
+    <Compile Include="Logic\Utility\SettingUtilityCore\InitializeClipboardBodyItem.cs" />
     <Compile Include="Logic\Utility\SettingUtilityCore\InitializeClipboardIndexItem.cs" />
     <Compile Include="Logic\Utility\SettingUtilityCore\InitializeCommandSetting.cs" />
     <Compile Include="Logic\Utility\SettingUtilityCore\InitializeLauncherGroupItem.cs" />
     <Compile Include="Logic\Utility\SettingUtilityCore\InitializeLauncherItem.cs" />
     <Compile Include="Logic\Utility\SettingUtilityCore\InitializeLoggingSetting.cs" />
     <Compile Include="Logic\Utility\SettingUtilityCore\InitializeGeneralSetting.cs" />
+    <Compile Include="Logic\Utility\SettingUtilityCore\InitializeNoteBodyItem.cs" />
     <Compile Include="Logic\Utility\SettingUtilityCore\InitializeRunningInformationSetting.cs" />
     <Compile Include="Logic\Utility\SettingUtilityCore\InitializeStreamSetting.cs" />
+    <Compile Include="Logic\Utility\SettingUtilityCore\InitializeTemplateBodyItem.cs" />
     <Compile Include="Logic\Utility\SettingUtilityCore\InitializeTemplateIndexItem.cs" />
     <Compile Include="Logic\Utility\T4TemplateUtility.cs" />
     <Compile Include="TemplateReplaceKey.cs" />

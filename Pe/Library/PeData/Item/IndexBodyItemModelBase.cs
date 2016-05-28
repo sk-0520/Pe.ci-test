@@ -53,6 +53,12 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
         [DataMember]
         public HistoryItemModel History { get; set; }
 
+        /// <summary>
+        /// 保存時のプログラムバージョン。
+        /// </summary>
+        [DataMember]
+        public Version PreviousVersion { get; set; }
+
         #endregion
 
         #region IDeepClone
@@ -62,6 +68,7 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
             var obj = (IndexBodyItemModelBase)target;
 
             History.DeepCloneTo(obj.History);
+            obj.PreviousVersion = (Version)PreviousVersion.Clone();
         }
 
         public abstract IDeepClone DeepClone();

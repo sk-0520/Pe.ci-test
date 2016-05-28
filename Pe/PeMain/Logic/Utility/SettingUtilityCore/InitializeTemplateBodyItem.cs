@@ -19,21 +19,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.IF;
+using ContentTypeTextNet.Pe.Library.PeData.Item;
+using ContentTypeTextNet.Pe.Library.PeData.Setting;
 
-namespace ContentTypeTextNet.Pe.Library.PeData.Define
+namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
 {
-    /// <summary>
-    /// ノート種別。
-    /// </summary>
-    public enum NoteKind
+    internal sealed class InitializeTemplateBodyItem: InitializeBodyBase<TemplateBodyItemModel>
     {
-        /// <summary>
-        /// プレーンテキスト。
-        /// </summary>
-        Text,
-        /// <summary>
-        /// 書式付き文字列。
-        /// </summary>
-        Rtf,
+        public InitializeTemplateBodyItem(TemplateBodyItemModel model, bool isCreate, INonProcess nonProcess)
+            :base(model, isCreate, nonProcess)
+        { }
+
+        #region InitializeBase
+
+        protected override void Correction_Last()
+        { }
+
+        protected override void Correction_FirstCore()
+        { }
+
+        #endregion
     }
 }

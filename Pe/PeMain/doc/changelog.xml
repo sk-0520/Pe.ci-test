@@ -69,7 +69,11 @@
 		</group>
 		<group type="features" dummy="==================================================================">
 			<note rev="">
-				<message></message>
+				<message>#448: ノートに書式を持たせる</message>
+				<comments>
+					<comment>RichTextそのままだと直感的でなくなるためワードパッドとは扱いが若干異なります</comment>
+					<comment>主に段落関連を除外しています</comment>
+				</comments>
 			</note>
 			<note rev="">
 				<message></message>

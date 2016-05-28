@@ -21,7 +21,7 @@ namespace ContentTypeTextNet.Pe.PeMain
         /*
         このソースは自動生成のため AppResource-generator.tt を編集すること。
 
-        生成元フィールド数: 92
+        生成元フィールド数: 94
         */
         #region Icon: Application
 
@@ -1675,6 +1675,50 @@ namespace ContentTypeTextNet.Pe.PeMain
             get { return GetImage(NoteFrontPath); }
         }
         #endregion NoteFront
+        #region Image: NoteFormatUnderline
+
+        /// <summary>
+        /// [Image] NoteFormatUnderlineのリソースパスを取得。
+        /// <para>/Resources/Image/Note/NoteFormatUnderline.png</para>
+        /// </summary>
+        public static string NoteFormatUnderlinePath
+        {
+            get { return noteFormatUnderline; }
+        }
+
+        /// <summary>
+        /// [Image] NoteFormatUnderlineのイメージソースを取得。
+        /// <para>初回のみ生成を行う。</para>
+        /// <para>NoteFormatUnderlinePath: /Resources/Image/Note/NoteFormatUnderline.png</para>
+        /// </summary>
+        /// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
+        public static BitmapSource NoteFormatUnderlineImage
+        {
+            get { return GetImage(NoteFormatUnderlinePath); }
+        }
+        #endregion NoteFormatUnderline
+        #region Image: NoteFormatStrikethrough
+
+        /// <summary>
+        /// [Image] NoteFormatStrikethroughのリソースパスを取得。
+        /// <para>/Resources/Image/Note/NoteFormatStrikethrough.png</para>
+        /// </summary>
+        public static string NoteFormatStrikethroughPath
+        {
+            get { return noteFormatStrikethrough; }
+        }
+
+        /// <summary>
+        /// [Image] NoteFormatStrikethroughのイメージソースを取得。
+        /// <para>初回のみ生成を行う。</para>
+        /// <para>NoteFormatStrikethroughPath: /Resources/Image/Note/NoteFormatStrikethrough.png</para>
+        /// </summary>
+        /// <returns>イメージソース。AppResourceで管理されるためユーザーコードで操作はしないこと。</returns>
+        public static BitmapSource NoteFormatStrikethroughImage
+        {
+            get { return GetImage(NoteFormatStrikethroughPath); }
+        }
+        #endregion NoteFormatStrikethrough
         #region Image: TemplateTemplate
 
         /// <summary>

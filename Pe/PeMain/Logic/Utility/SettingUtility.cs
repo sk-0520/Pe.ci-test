@@ -36,6 +36,7 @@ using Implement = ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore;
 using ContentTypeTextNet.Pe.PeMain.Data;
 using System.Security.Cryptography;
 using System.IO;
+using ContentTypeTextNet.Pe.PeMain.IF;
 
 namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 {
@@ -401,19 +402,31 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
             init.Correction();
         }
 
+        internal static void InitializeNoteBodyItem(NoteBodyItemModel model, bool isCreate, INonProcess nonProcess)
+        {
+            var init = new Implement.InitializeNoteBodyItem(model, isCreate, nonProcess);
+            init.Correction();
+        }
+
         public static void InitializeTemplateIndexSetting(TemplateIndexSettingModel setting, Version previousVersion, INonProcess nonProcess)
         {
             var initSetting = new Implement.InitializeTemplateIndexSetting(setting, previousVersion, nonProcess);
             initSetting.Correction();
 
             foreach(var templateItem in setting.Items) {
-                InitializeTemplateIndexSetting(templateItem, previousVersion, nonProcess);
+                InitializeTemplateIndexItem(templateItem, previousVersion, nonProcess);
             }
         }
 
-        public static void InitializeTemplateIndexSetting(TemplateIndexItemModel model, Version previousVersion, INonProcess nonProcess)
+        public static void InitializeTemplateIndexItem(TemplateIndexItemModel model, Version previousVersion, INonProcess nonProcess)
         {
             var init = new Implement.InitializeTemplateIndexItem(model, previousVersion, nonProcess);
+            init.Correction();
+        }
+
+        internal static void InitializeTemplateBodyItem(TemplateBodyItemModel model, bool isCreate, INonProcess nonProcess)
+        {
+            var init = new Implement.InitializeTemplateBodyItem(model, isCreate, nonProcess);
             init.Correction();
         }
 
@@ -431,6 +444,14 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
             var init = new Implement.InitializeClipboardIndexItem(clipboardItend, previousVersion, nonProcess);
             init.Correction();
         }
+
+        internal static void InitializeClipboardBodyItem(ClipboardBodyItemModel model, bool isCreate, INonProcess nonProcess)
+        {
+            var init = new Implement.InitializeClipboardBodyItem(model, isCreate, nonProcess);
+            init.Correction();
+        }
+
+
 
         #endregion
     }

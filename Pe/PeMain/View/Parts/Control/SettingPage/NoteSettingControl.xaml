@@ -1,4 +1,4 @@
-﻿<AV:CommonDataUserControl 
+﻿<AV:CommonDataUserControl
   x:Class="ContentTypeTextNet.Pe.PeMain.View.Parts.Control.SettingPage.NoteSettingControl"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -10,8 +10,8 @@
   xmlns:AA="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Attached"
   xmlns:ADD="clr-namespace:ContentTypeTextNet.Pe.Library.PeData.Define;assembly=PeData"
 
-  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-  mc:Ignorable="d" 
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  mc:Ignorable="d"
   d:DesignWidth="400" d:DesignHeight="300"
 >
   <AV:CommonDataUserControl.Resources>
@@ -23,6 +23,8 @@
         <ResourceDictionary Source="/View/Parts/Resource/LabelDictionary.xaml"/>
         <ResourceDictionary Source="/View/Parts/Resource/AppHotKeyDictionary.xaml"/>
         <ResourceDictionary Source="/View/Parts/Resource/FontSelectDictionary.xaml"/>
+        <ResourceDictionary Source="/View/Parts/Resource/RadioButtonDictionary.xaml"/>
+        <ResourceDictionary Source="/View/Parts/Resource/CheckboxDictionary.xaml"/>
       </ResourceDictionary.MergedDictionaries>
       <SC:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
     </ResourceDictionary>
@@ -34,7 +36,7 @@
         <ColumnDefinition Width="Auto" />
         <ColumnDefinition Width="Auto" />
       </Grid.ColumnDefinitions>
-      
+
       <GroupBox Grid.Column="0" Header="key" AA:Language.Word="note-setting/key" Style="{StaticResource DefaultGroupBox}" >
         <Grid>
           <Grid.RowDefinitions>
@@ -61,13 +63,14 @@
           <AV:AppHotkeyControl x:Name="inputShowFrontHotkey" Grid.Row="3" Grid.Column="1" Hotkey="{Binding ShowFrontHotKey}" Style="{StaticResource DefaultAppHotkey}" />
         </Grid>
       </GroupBox>
-      
+
       <GroupBox Grid.Column="1" Header="style" AA:Language.Word="note-setting/style" Style="{StaticResource DefaultGroupBox}">
         <Grid>
           <!--<Grid.Resources>
             <sys:Double x:Key="ColorWidth">140</sys:Double>
           </Grid.Resources>-->
           <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -97,9 +100,20 @@
           <Label Grid.Row="2" Grid.Column="0" Content="back" AA:Language.Word="note-setting/style/back-color" Style="{StaticResource HeaderLabel}" />
           <xctk:ColorPicker Grid.Row="2" Grid.Column="1" Style="{StaticResource DefaultColorPicker}" SelectedColor="{Binding BackColor}" />
 
-          <CheckBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Content="topmost" AA:Language.Word="note/state/topmost" IsChecked="{Binding IsTopmost}" />
-          
-          <CheckBox Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Content="autolinefeed" AA:Language.Word="note/state/autolinefeed" IsChecked="{Binding AutoLineFeed}" />
+          <CheckBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Content="topmost" AA:Language.Word="note/state/topmost" IsChecked="{Binding IsTopmost}" Style="{StaticResource DefaultVerticalCheckBox}" />
+
+          <CheckBox Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Content="autolinefeed" AA:Language.Word="note/state/autolinefeed" IsChecked="{Binding AutoLineFeed}" Style="{StaticResource DefaultVerticalCheckBox}" />
+
+          <Label Grid.Row="5" Grid.Column="0" Content="kind" AA:Language.Word="note/style/kind" Style="{StaticResource HeaderLabel}" />
+          <Grid Grid.Row="5" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="5*" />
+              <ColumnDefinition Width="5*" />
+            </Grid.ColumnDefinitions>
+            <!-- 横方向はパネルに任せて縦用のスタイルを適用 -->
+            <RadioButton Grid.Column="0" Content="text" AA:Language.Word="note/style/kind/text" IsChecked="{Binding NoteKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static ADD:NoteKind.Text}}" Style="{StaticResource DefaultVerticalRadioButton}" />
+            <RadioButton Grid.Column="1" Content="rtf" AA:Language.Word="note/style/kind/rtf" IsChecked="{Binding NoteKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static ADD:NoteKind.Rtf}}" Style="{StaticResource DefaultVerticalRadioButton}" />
+          </Grid>
         </Grid>
       </GroupBox>
 
