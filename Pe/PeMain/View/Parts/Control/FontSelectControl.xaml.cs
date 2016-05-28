@@ -238,7 +238,6 @@ namespace ContentTypeTextNet.Pe.PeMain.View.Parts.Control
 
         #endregion
 
-
         #region IsEnabledItalicProperty
 
         public static readonly DependencyProperty IsEnabledItalicProperty = DependencyProperty.Register(
@@ -268,5 +267,33 @@ namespace ContentTypeTextNet.Pe.PeMain.View.Parts.Control
 
         #endregion
 
+        #region AdditionalContentProperty
+
+        public static readonly DependencyProperty AdditionalContentProperty = DependencyProperty.Register(
+            DependencyPropertyUtility.GetName(nameof(AdditionalContentProperty)),
+            typeof(object),
+            typeof(FontSelectControl),
+            new FrameworkPropertyMetadata(
+                null,
+                FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
+                new PropertyChangedCallback(OnAdditionalContentPropertyChanged)
+            )
+        );
+
+        public object AdditionalContent
+        {
+            get { return GetValue(AdditionalContentProperty); }
+            set { SetValue(AdditionalContentProperty, value); }
+        }
+
+        static void OnAdditionalContentPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var ctrl = d as FontSelectControl;
+            if(ctrl != null) {
+                ctrl.AdditionalContent = e.NewValue;
+            }
+        }
+
+        #endregion
     }
 }
