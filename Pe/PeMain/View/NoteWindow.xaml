@@ -363,10 +363,10 @@
                             <Setter Property="Content">
                               <Setter.Value>
                                 <WrapPanel Orientation="Horizontal">
-                                  <ToggleButton IsChecked="{Binding TextUnderline}">
+                                  <ToggleButton IsChecked="{Binding TextUnderline}" AA:Language.Hint="note/style/font/underline:hint">
                                     <Image Style="{StaticResource DefaultImage}" Source="{x:Static AM:AppResource.NoteFormatUnderlineImage}" />
                                   </ToggleButton>
-                                  <ToggleButton IsChecked="{Binding TextStrikethrough}">
+                                  <ToggleButton IsChecked="{Binding TextStrikethrough}" AA:Language.Hint="note/style/font/strikethrough:hint">
                                     <Image Style="{StaticResource DefaultImage}" Source="{x:Static AM:AppResource.NoteFormatStrikethroughImage}" />
                                   </ToggleButton>
                                 </WrapPanel>

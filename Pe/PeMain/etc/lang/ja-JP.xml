@@ -194,6 +194,8 @@
 		<Item Id="note/style/fore-color" Word="前景(_F)" />
 		<Item Id="note/style/back-color" Word="背景(_B)" />
 		<Item Id="note/style/font" Word="フォント(_F)" />
+		<Item Id="note/style/font/underline:hint" Word="下線" />
+		<Item Id="note/style/font/strikethrough:hint" Word="取り消し線" />
 		<Item Id="note/state" Word="状態" />
 		<Item Id="note/state/lock" Word="固定(_L)" />
 		<Item Id="note/state/compact" Word="最小化(_N)" />
