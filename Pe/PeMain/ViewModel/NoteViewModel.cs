@@ -709,13 +709,25 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         {
             DoRichTextEditor(c => {
                 c.SelectionChanged += RichTextBox_SelectionChanged;
+                c.PreviewKeyDown += RichTextBox_PreviewKeyDown;
             });
+        }
+
+        private void RichTextBox_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            var richTextbox = (Xceed.Wpf.Toolkit.RichTextBox)sender;
+            if(e.Key == Key.Enter) {
+                var newPointer = richTextbox.Selection.Start.InsertLineBreak();
+                richTextbox.Selection.Select(newPointer, newPointer);
+                e.Handled = true;
+            }
         }
 
         void ResertRtfEvent()
         {
             DoRichTextEditor(c => {
                 c.SelectionChanged -= RichTextBox_SelectionChanged;
+                c.PreviewKeyDown -= RichTextBox_PreviewKeyDown;
             });
         }
 
