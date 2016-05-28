@@ -358,7 +358,8 @@
               <WrapPanel Orientation="Horizontal">
                 <ToggleButton IsChecked="{Binding TextUnderline}">u</ToggleButton>
                 <ToggleButton IsChecked="{Binding TextStrikethrough}">s</ToggleButton>
-
+                <ToggleButton>ul</ToggleButton>
+                <ToggleButton>ol</ToggleButton>
               </WrapPanel>
             </StackPanel>
           </Grid>
