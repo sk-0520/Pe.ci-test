@@ -1139,7 +1139,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 // http://stackoverflow.com/questions/25217557/underline-not-detected-after-reloading-rtf?answertab=votes#tab-top
                 var caretPosition = richTextBox.CaretPosition;
                 var paragraph = richTextBox.Document.Blocks.FirstOrDefault(x => x.ContentStart.CompareTo(caretPosition) == -1 && x.ContentEnd.CompareTo(caretPosition) == 1) as Paragraph;
-                var inline = paragraph.Inlines.FirstOrDefault(x => x.ContentStart.CompareTo(caretPosition) == -1 && x.ContentEnd.CompareTo(caretPosition) == 1) as Inline;
+                var inline = paragraph?.Inlines.FirstOrDefault(x => x.ContentStart.CompareTo(caretPosition) == -1 && x.ContentEnd.CompareTo(caretPosition) == 1) as Inline;
                 var textDecorations = inline?.TextDecorations;
                 if(textDecorations != null) {
                     TextUnderline = textDecorations.Any(t => t == TextDecorations.Underline.First());

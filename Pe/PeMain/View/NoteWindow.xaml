@@ -355,14 +355,28 @@
                   </Style>
                 </AV:FontSelectControl.Style>
               </AV:FontSelectControl>
-              <WrapPanel Orientation="Horizontal">
-                <ToggleButton IsChecked="{Binding TextUnderline}">
-                  <Image Style="{StaticResource DefaultImage}" Source="{x:Static AM:AppResource.NoteFormatUnderlineImage}" />
-                </ToggleButton>
-                <ToggleButton IsChecked="{Binding TextStrikethrough}">
-                  <Image Style="{StaticResource DefaultImage}" Source="{x:Static AM:AppResource.NoteFormatStrikethroughImage}" />
-                </ToggleButton>
-              </WrapPanel>
+              <ContentControl>
+                <ContentControl.Style>
+                  <Style TargetType="ContentControl">
+                    <Style.Triggers>
+                      <DataTrigger Binding="{Binding NoteKind}" Value="Rtf">
+                        <Setter Property="Content">
+                          <Setter.Value>
+                            <WrapPanel Orientation="Horizontal">
+                              <ToggleButton IsChecked="{Binding TextUnderline}">
+                                <Image Style="{StaticResource DefaultImage}" Source="{x:Static AM:AppResource.NoteFormatUnderlineImage}" />
+                              </ToggleButton>
+                              <ToggleButton IsChecked="{Binding TextStrikethrough}">
+                                <Image Style="{StaticResource DefaultImage}" Source="{x:Static AM:AppResource.NoteFormatStrikethroughImage}" />
+                              </ToggleButton>
+                            </WrapPanel>
+                          </Setter.Value>
+                        </Setter>
+                      </DataTrigger>
+                    </Style.Triggers>
+                  </Style>
+                </ContentControl.Style>
+              </ContentControl>
             </StackPanel>
           </Grid>
           <Grid Style="{StaticResource Group}">
