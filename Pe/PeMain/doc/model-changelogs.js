@@ -1,4 +1,10 @@
 ﻿var changelogs = [
+	/*
+						'class': 'compatibility' 'notice' 'nuget' 'myget'
+						'comments': [
+							''
+						]
+	---------------------------------------------
 	{
 		'date': 'YYYY/MM/DD',
 		'version': '0.79.1',
@@ -70,12 +76,110 @@
 				'logs': [
 					{
 						'revision': '',
+						'subject': ''
+					},
+					{
+						'revision': '',
+						'subject': ''
+					},
+					{
+						'revision': '',
+						'subject': ''
+					}
+				]
+			}
+		]
+	},
+	*/
+	{
+		'date': 'YYYY/MM/DD',
+		'version': '0.79.1',
+		'isRc': true,
+		'contents': [
+			{
+				'type': 'note',
+				'logs': [
+					{
+						'revision': '',
+						'subject': ''
+					},
+					{
+						'revision': '',
+						'subject': ''
+					},
+					{
+						'revision': '',
+						'subject': ''
+					}
+				]
+			},
+			{
+				'type': 'features',
+				'logs': [
+					{
+						'revision': '',
+						'subject': '#448: ノートに書式を持たせる',
+						'comments': [
+							'RichTextそのままだと直感的でなくなるためワードパッドとは扱いが若干異なります','主に段落関連を除外しています'
+						]
+					},
+					{
+						'revision': '',
+						'subject': '#413: ヘルプファイルに更新履歴を表示する',
+						'comments': [
+							'今バージョンから更新履歴を確認するにはヘルプ(通知領域メニュー→情報→ヘルプ→更新履歴)から確認してください',
+							'情報→更新履歴は廃止です',
+							'IE依存してたしアップデート用の出力処理と確認用の表示処理が二重で地味に負担だったのですよ'
+						]
+					},
+					{
+						'revision': '',
+						'subject': ''
+					}
+				]
+			},
+			{
+				'type': 'fixes',
+				'logs': [
+					{
+						'revision': '',
+						'subject': '#461: Windows8, 8.1, 10 でのツールバーがきもい',
+						'comments': [
+							'妥協の産物'
+						]
+					},
+					{
+						'revision': '',
+						'subject': '#462: GridHelpersのリンク先が間違っている'
+					},
+					{
+						'revision': '',
+						'subject': '#458: クリップボード取り込み待機時間の設定UIが直感的でない'
+					},
+					{
+						'revision': '',
+						'subject': ''
+					}
+				]
+			},
+			{
+				'type': 'developer',
+				'logs': [
+					{
+						'revision': '',
 						'class': 'nuget',
 						'subject': 'ICSharpCode.AvalonEdit を 5.0.3 に更新'
 					},
 					{
 						'revision': '',
 						'subject': 'データ補正処理を統一'
+					},
+					{
+						'revision': '',
+						'subject': '#284: 更新履歴の空白データ要素を表示しない',
+						'comments': [
+							'#413実装時に同時解消'
+						]
 					},
 					{
 						'revision': '',

@@ -100,7 +100,6 @@ namespace ContentTypeTextNet.Pe.PeMain
         public const string launcherItemSettingFileName = "launcher-items.json";
         public const string launcherGroupItemSettingFileName = "group-items.json";
 
-        public const string changelogFileName = "changelog.xml";
         public const string componentListFileNam = "components.xml";
 
         public const int indexBodyCachingSize = 3;

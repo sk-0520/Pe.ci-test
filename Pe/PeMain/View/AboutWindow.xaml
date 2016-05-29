@@ -1,4 +1,4 @@
-﻿<AW:ViewModelCommonDataWindow 
+﻿<AW:ViewModelCommonDataWindow
   x:Class="ContentTypeTextNet.Pe.PeMain.View.AboutWindow"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -9,15 +9,15 @@
   xmlns:AA="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Attached"
   xmlns:AVM="clr-namespace:ContentTypeTextNet.Pe.PeMain.ViewModel"
   x:TypeArguments="AVM:AboutViewModel"
-  Title="AboutWindow" 
+  Title="AboutWindow"
   AA:Language.Word="window/about"
   Width="800"
-  Height="300" 
-  ResizeMode="NoResize" WindowStartupLocation="CenterScreen" 
+  Height="300"
+  ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
   Icon="/PeMain;component/Resources/Icon/App.ico"
   Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
   Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"
-  BorderBrush="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" 
+  BorderBrush="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}"
 >
   <AW:CommonDataWindow.Resources>
     <ResourceDictionary>
@@ -177,7 +177,6 @@
         <ColumnDefinition Width="Auto" />
         <ColumnDefinition Width="Auto" />
         <ColumnDefinition Width="Auto" />
-        <ColumnDefinition Width="Auto" />
 
         <ColumnDefinition />
 
@@ -195,20 +194,14 @@
           <Label Content="data" AA:Language.Word="about/data" Style="{StaticResource ContentTextLabel}" />
         </StackPanel>
       </Button>
-      <Button Grid.Column="2" Command="{Binding OpenHistoryCommand}">
-        <StackPanel Orientation="Horizontal">
-          <Image Source="{x:Static AM:AppResource.AboutHistoryImage}" Style="{StaticResource ItemImage}" />
-          <Label Content="history" AA:Language.Word="about/history" Style="{StaticResource ContentTextLabel}" />
-        </StackPanel>
-      </Button>
-      <Button Grid.Column="3" Command="{Binding UpdateCommand}">
+      <Button Grid.Column="2" Command="{Binding UpdateCommand}">
         <StackPanel Orientation="Horizontal">
           <Image Source="{x:Static AM:AppResource.AboutUpdateImage}" Style="{StaticResource ItemImage}" />
           <Label Content="update" AA:Language.Word="about/update" Style="{StaticResource ContentTextLabel}" />
         </StackPanel>
       </Button>
 
-      <Button Grid.Column="5" IsDefault="True"  Content="ok" AA:Language.Word="about/close" Command="{Binding CloseCommand}" />
+      <Button Grid.Column="4" IsDefault="True"  Content="ok" AA:Language.Word="about/close" Command="{Binding CloseCommand}" />
     </Grid>
 
   </Grid>

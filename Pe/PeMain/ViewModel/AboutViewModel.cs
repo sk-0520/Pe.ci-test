@@ -103,21 +103,6 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
         }
 
-        public ICommand OpenHistoryCommand
-        {
-            get
-            {
-                var result = CreateCommand(
-                    o => {
-                        var path = Path.Combine(Constants.ApplicationDocumentDirectoryPath, Constants.changelogFileName);
-                        ExecuteUtility.OpenFile(path, AppNonProcess);
-                    }
-                );
-
-                return result;
-            }
-        }
-
         public ICommand UpdateCommand
         {
             get

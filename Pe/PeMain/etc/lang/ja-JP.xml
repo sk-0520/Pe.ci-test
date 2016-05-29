@@ -296,7 +296,6 @@
 		
 		<Item Id="about/app" Word="本体(_P)" />
 		<Item Id="about/data" Word="データ(_D)" />
-		<Item Id="about/history" Word="更新履歴(_H)" />
 		<Item Id="about/update" Word="アップデート(_U)" />
 		<Item Id="about/update/dialog/caption" Word="アップデートチェック" />
 		<Item Id="about/update/dialog/message" Word="情報ダイアログを閉じてアップデートチェックを開始しますか" />
