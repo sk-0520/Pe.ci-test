@@ -190,7 +190,20 @@ function makeChangeLogContent(content)
 
 function convertMessage(s)
 {
-	return s;
+	switch(s.slice('-1')) {
+		case '!':
+		case '！':
+		case '?':
+		case '？':
+		case ')':
+		case '）':
+		case '…':
+		case '。':
+			return s;
+
+		default:
+			return s + '。';
+	}
 }
 
 
