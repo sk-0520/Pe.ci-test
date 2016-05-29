@@ -150,6 +150,9 @@ function makeChangeLogContent(content)
 				hasBody = true;
 				var subject = new Element('li');
 				subject.append(convertMessage(log['subject']));
+				if(log['class']) {
+					subject.setAttibute('class', log['class']);
+				}
 				
 				if(log['revision']) {
 					var rev = new Element('a');

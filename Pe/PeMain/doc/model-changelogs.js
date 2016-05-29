@@ -70,7 +70,8 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': '[nuget] ICSharpCode.AvalonEdit を 5.0.3 に更新'
+						'class': 'nuget',
+						'subject': 'ICSharpCode.AvalonEdit を 5.0.3 に更新'
 					},
 					{
 						'revision': '',
