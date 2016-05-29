@@ -11,10 +11,49 @@
 		<script src="../../../etc/script/jquery.js"></script>
 		<script src="../../../etc/script/changelog.js"></script>
 		<script src="../script/help.js"></script>
+
+		<script src="../../model-changelogs.js"></script>
+		<script>
+			$(function() {
+				var $parent = $('#parent');
+				for(var i = 0, i_max = changelogs.length; i < i_max; i++) {
+					var log = createLog(changelogs[i]);
+					$parent.append(log.$title);
+					$parent.append(log.$content);
+				}
+			});
+
+			function createLog(log)
+			{
+				var result = {
+					$title: null,
+					$content: null
+				};
+
+				result.$title = createTitle(log);
+				result.$content = createContent(log);
+
+				return result;
+			}
+
+			function createTitle(log)
+			{
+				var $title = $('<h2>');
+				$title.text(log['version'] + ' ' + log['date']);
+
+				return $title;
+			}
+
+			function createContent(log)
+			{
+			}
+
+		</script>
 	</head>
 	<body>
 		<h1>ヘルプ</h1>
 		<section id="content">
+			<div id="parent"></div>
 		</section>
 		<nav id="main-menu"></nav>
 	</body>
