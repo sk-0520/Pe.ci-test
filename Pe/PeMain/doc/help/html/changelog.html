@@ -7,6 +7,7 @@
 		<style>
 			@import url('../../../etc/style/common.css');
 			@import url('../style/help.css');
+			@import url('../../../etc/style/changelog.css');
 		</style>
 		<script src="../../../etc/script/jquery.js"></script>
 		<script src="../../../etc/script/changelog.js"></script>
@@ -21,31 +22,131 @@
 					$parent.append(log.$title);
 					$parent.append(log.$content);
 				}
+
+				makeIssueLink();
 			});
 
-			function createLog(log)
+			function createLog(changelog)
 			{
 				var result = {
 					$title: null,
 					$content: null
 				};
 
-				result.$title = createTitle(log);
-				result.$content = createContent(log);
+				result.$title = createTitle(changelog);
+				result.$content = createContents(changelog);
 
 				return result;
 			}
 
-			function createTitle(log)
+			function createTitle(changelog)
 			{
 				var $title = $('<h2>');
-				$title.text(log['version'] + ' ' + log['date']);
+				$title.text(changelog['version'] + ', ' + changelog['date']);
+				if (changelog.isRc) {
+					$title.append($('<span>').text(' '));
+					var $rc = new $('<em>');
+					$rc.text('RC版');
+					$title.append($rc);
+				}
 
 				return $title;
 			}
 
-			function createContent(log)
+			function createContents(changelog)
 			{
+				var $dl = $('<dl>');
+				$dl.addClass('changelog');
+
+				for (var i = 0; i < changelog['contents'].length; i++) {
+					var content = createContent(changelog['contents'][i]);
+					if (content.$body != null) {
+						$dl.append(content.$head);
+						$dl.append(content.$body);
+					}
+				}
+
+				return $dl;
+			}
+
+			function createContent(content)
+			{
+				var result = {
+					$head: null,
+					$body: null
+				};
+
+				var $dt = $('<dt>');
+				$dt.addClass(content['type']);
+				$dt.text(changelogTypeMap[content['type']]);
+				result.$head = $dt;
+
+				var $dd = createBody(content['logs']);
+				result.$body = $dd;
+
+				return result;
+			}
+
+			function createBody(logs)
+			{
+				var $parent = $('<ul>');
+				var hasParent = false;
+				for (var i = 0, i_max = logs.length; i < i_max; i++) {
+					var log = logs[i];
+					var hasSubject = false;
+
+					if (log['subject'] && log['subject'].length) {
+						var $subject = $('<li>');
+						$subject.text(makeLogMessage(log['subject']));
+						hasSubject = true;
+
+						if (log['class']) {
+							$subject.addClass(log['class']);
+						}
+						if (log['revision']) {
+							var $rev = $('<a>');
+							$rev.addClass('rev');
+							$rev.text(log['revision']);
+							$subject.append($rev);
+						}
+						if (log['comments']) {
+							var $comments = $('<ul>');
+							$comments.addClass('comment');
+							var hasComment = false;
+							for (var j = 0, j_max = log['comments'].length; j < j_max; j++) {
+								var comment = log['comments'][j];
+								if (comment && comment.length) {
+									var $li = $('<li>');
+									$li.text(makeLogMessage(comment));
+									$comments.append($li);
+									hasComment = true;
+								}
+							}
+							if (hasComment) {
+								$subject.append($comments);
+							}
+						}
+					}
+					if (hasSubject) {
+						$parent.append($subject);
+						hasParent = true;
+					}
+				}
+
+				if (hasParent) {
+					var $result = $('<dd>');
+					$result.append($parent);
+
+					return $result;
+				}
+
+
+				return null;
+			}
+
+			function makeLogMessage(s)
+			{
+				return s + '。';
 			}
 
 		</script>

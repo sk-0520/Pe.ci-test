@@ -9,14 +9,11 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': 'a'
+						'subject': ''
 					},
 					{
 						'revision': '',
-						'subject': 'b',
-						'comments': [
-							'B'
-						]
+						'subject': ''
 					},
 					{
 						'revision': '',

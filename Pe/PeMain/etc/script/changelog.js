@@ -2,6 +2,13 @@
 var issueLink = 'https://bitbucket.org/sk_0520/pe/issue/';
 var revisionLink = 'https://bitbucket.org/sk_0520/pe/commits/';
 
+var changelogTypeMap = {
+	'features': '機能',
+	'fixes': '修正',
+	'developer': '開発',
+	'note': 'メモ'
+};
+
 function makeIssueLink()
 {
 	var itemList = document.getElementsByTagName('li');
@@ -16,7 +23,7 @@ function makeIssueLink()
 			linkElement.setAttribute('target', targetName);
 			linkElement.setAttribute('href', link);
 		}
-		
+
 		var text = li.innerHTML;
 		text = text.replace(/#([0-9]+)/g, "<a href='" + issueLink + "$1' target='" + targetName + "'>#$1</a>");
 		li.innerHTML = text;
