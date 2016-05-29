@@ -254,9 +254,11 @@
     <Compile Include="Define\AboutCopyKind.cs" />
     <Compile Include="Define\CommandKind.cs" />
     <Compile Include="Define\Timing.cs" />
-    <Content Include="doc\changelog.xml">
+    <Content Include="doc\help\html\changelog.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="doc\model-changelogs.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="doc\help.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -749,7 +751,6 @@
     <Resource Include="Resources\Image\About\AboutComponentKindImage.png" />
     <Resource Include="Resources\Image\About\AboutComponentKindLibrary.png" />
     <Resource Include="Resources\Image\About\AboutComponentKindSource.png" />
-    <Resource Include="Resources\Image\About\AboutHistory.png" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -1043,9 +1044,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="etc\lang\ja-JP.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="etc\style\changelog.xsl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="etc\style\common.css">

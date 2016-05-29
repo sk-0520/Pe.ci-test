@@ -273,8 +273,6 @@ namespace ContentTypeTextNet.Pe.PeMain
         [AppResource(AppResourceType.Image)]
         const string aboutUpdate = "/Resources/Image/About/AboutUpdate.png";
         [AppResource(AppResourceType.Image)]
-        const string aboutHistory = "/Resources/Image/About/AboutHistory.png";
-        [AppResource(AppResourceType.Image)]
         const string aboutComponentKindImage = "/Resources/Image/About/AboutComponentKindImage.png";
         [AppResource(AppResourceType.Image)]
         const string aboutComponentKindLibrary = "/Resources/Image/About/AboutComponentKindLibrary.png";
