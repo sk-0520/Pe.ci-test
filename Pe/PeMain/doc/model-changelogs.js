@@ -7,7 +7,7 @@
 	---------------------------------------------
 	{
 		'date': 'YYYY/MM/DD',
-		'version': '0.79.1',
+		'version': '0.xx.1',
 		'isRc': true,
 		'contents': [
 			{
@@ -32,10 +32,7 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': '#448: ノートに書式を持たせる',
-						'comments': [
-							'RichTextそのままだと直感的でなくなるためワードパッドとは扱いが若干異なります','主に段落関連を除外しています'
-						]
+						'subject': ''
 					},
 					{
 						'revision': '',
@@ -52,18 +49,15 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': '#461: Windows8, 8.1, 10 でのツールバーがきもい',
-						'comments': [
-							'妥協の産物'
-						]
+						'subject': ''
 					},
 					{
 						'revision': '',
-						'subject': '#462: GridHelpersのリンク先が間違っている'
+						'subject': ''
 					},
 					{
 						'revision': '',
-						'subject': '#458: クリップボード取り込み待機時間の設定UIが直感的でない'
+						'subject': ''
 					},
 					{
 						'revision': '',
