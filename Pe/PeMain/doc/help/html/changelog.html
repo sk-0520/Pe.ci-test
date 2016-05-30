@@ -10,6 +10,7 @@
 			@import url('../../../etc/style/changelog.css');
 		</style>
 		<script src="../../../etc/script/jquery.js"></script>
+		<script src="../../../etc/script/changelog-core.js"></script>
 		<script src="../../../etc/script/changelog.js"></script>
 		<script src="../script/help.js"></script>
 
@@ -22,15 +23,15 @@
 				for(var i = 0, i_max = changelogs.length; i < i_max; i++) {
 					var log = makeChangeLogBlock(changelogs[i]);
 					if(log.contents) {
-						htmlList.push(log.title.toString());
-						htmlList.push(log.contents.toString());
+						htmlList.push(log.title.toCode());
+						htmlList.push(log.contents.toCode());
 					}
 				}
 				var htmlSource = htmlList.join('');
 
 				$parent.html(htmlSource);
 
-				makeIssueLink();
+				makeChangelogLink();
 			});
 		</script>
 	</head>
