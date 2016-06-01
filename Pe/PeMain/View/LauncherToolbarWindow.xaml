@@ -6,7 +6,6 @@
   xmlns:windows="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
   xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-  xmlns:cttn_app_library_package="clr-namespace:ContentTypeTextNet.Pe.Library.Package;assembly=Package"
   xmlns:SC="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=ContentTypeTextNet.SharedLibrary"
   xmlns:SA="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Attached;assembly=ContentTypeTextNet.SharedLibrary"
   xmlns:SL="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.Logic;assembly=ContentTypeTextNet.SharedLibrary"
@@ -22,31 +21,31 @@
   x:TypeArguments="AVM:LauncherToolbarViewModel"
   xmlns:AA="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Attached"
   AA:Language.Word="window/toolbar"
-  Title="ToolbarWindow" 
-  Left="{Binding WindowLeft, Mode=TwoWay}" 
+  Title="ToolbarWindow"
+  Left="{Binding WindowLeft, Mode=TwoWay}"
   Top="{Binding WindowTop, Mode=TwoWay}"
   Width="{Binding WindowWidth, Mode=TwoWay}"
-  Height="{Binding WindowHeight, Mode=TwoWay}" 
-  ShowInTaskbar="False" 
+  Height="{Binding WindowHeight, Mode=TwoWay}"
+  ShowInTaskbar="False"
   WindowStyle="None"
   ResizeMode="{Binding ResizeMode}"
   AllowsTransparency="True"
   WindowStartupLocation="Manual"
-  Visibility="{Binding Visibility}" 
+  Visibility="{Binding Visibility}"
   Topmost="{Binding IsTopmost, Mode=OneWay}"
   BorderThickness="{Binding BorderThickness, Mode=OneWay}"
   BorderBrush="{Binding BorderBrush, Mode=OneWay}"
   MinWidth="{Binding MinSize.Width}"
   MinHeight="{Binding MinSize.Height}"
-  
+
   SA:DragTarget.UsingDragTarget="True"
   SA:DragTarget.DragEnterCommand="{Binding DragOverCommand}"
   SA:DragTarget.DragOverCommand="{Binding DragOverCommand}"
   SA:DragTarget.DragDropCommand="{Binding DragDropCommand}"
-  
-  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-  mc:Ignorable="d" 
-  d:DesignWidth="300" 
+
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  mc:Ignorable="d"
+  d:DesignWidth="300"
   d:DesignHeight="200"
 >
   <AW:CommonDataWindow.Resources>
@@ -252,7 +251,7 @@
           <Setter.Value>
             <ControlTemplate TargetType="{x:Type xctk:DropDownButton}">
               <Grid x:Name="MainGrid" SnapsToDevicePixels="True">
-                <ToggleButton 
+                <ToggleButton
                   x:Name="PART_DropDownButton"
                   Grid.Column="{Binding DataContext.PositionContentButton, ElementName=root}"
                   IsTabStop="False"
@@ -282,8 +281,8 @@
                   </Grid>
                 </ToggleButton>
                 <!-- MENU -->
-                <Popup 
-                  x:Name="PART_Popup" 
+                <Popup
+                  x:Name="PART_Popup"
                   Style="{StaticResource DropDownPopupMenu}"
                   IsOpen="{TemplateBinding IsOpen}"
                   Opened="PART_Popup_Opened"
@@ -331,7 +330,7 @@
                       HorizontalAlignment="Stretch"
                       RecognizesAccessKey="true"
                     />
-                    <ToggleButton 
+                    <ToggleButton
                       x:Name="PART_ToggleButton"
                       Grid.Column="{Binding DataContext.PositionMenuButton, ElementName=root}"
                       IsTabStop="False"
@@ -350,7 +349,7 @@
                   </Grid>
                 </Button>
                 <!-- MENU -->
-                <Popup 
+                <Popup
                   x:Name="PART_Popup"
                   Style="{StaticResource DropDownPopupMenu}"
                   IsOpen="{TemplateBinding IsOpen}"
@@ -378,12 +377,12 @@
         <Setter Property="VerticalContentAlignment" Value="Stretch"/>
       </Style>
 
-      <Image 
+      <Image
         x:Key="LauncherToolbarItemImage"
-        x:Shared="false" 
-        Width="16" 
-        Height="16" 
-        Source="{Binding MenuImage}" 
+        x:Shared="false"
+        Width="16"
+        Height="16"
+        Source="{Binding MenuImage}"
       >
         <Image.Style>
           <Style TargetType="Image" BasedOn="{StaticResource DefaultImage}">
@@ -416,7 +415,7 @@
 
       <CollectionViewSource x:Key="ContextGroupItems" Source="{Binding GroupItems}" />
       <CollectionViewSource x:Key="ContextHiddenItems" Source="{Binding HiddenLauncherItems}" />
-      
+
     </ResourceDictionary>
   </AW:CommonDataWindow.Resources>
 
@@ -427,7 +426,7 @@
       </ContextMenu.ItemContainerStyle>
       <ContextMenu.ItemsPanel>
         <ItemsPanelTemplate>
-          <Grid cttn_app_library_package:GridHelpers.RowCount="{Binding LauncherMenuCount}">
+          <Grid SA:GridHelpers.RowCount="{Binding LauncherMenuCount}">
             <Grid.ColumnDefinitions>
               <ColumnDefinition />
               <ColumnDefinition />
@@ -448,9 +447,9 @@
     <Rectangle
       DockPanel.Dock="{Binding GripDock}"
       AllowDrop="False"
-      Width="{Binding CaptionWidth, Mode=OneWay}" 
-      Height="{Binding CaptionHeight, Mode=OneWay}" 
-      Visibility="{Binding CaptionVisibility}" 
+      Width="{Binding CaptionWidth, Mode=OneWay}"
+      Height="{Binding CaptionHeight, Mode=OneWay}"
+      Visibility="{Binding CaptionVisibility}"
       Style="{StaticResource DefaultGrip}"
     />
 
@@ -519,7 +518,7 @@
             </ToolTip>
           </xctk:DropDownButton.ToolTip>
         </xctk:DropDownButton>
-        
+
         <!-- ランチャーアイテム一覧 -->
         <ItemsControl ItemsSource="{Binding LauncherItems, Mode=OneWay}" IsTabStop="False">
           <ItemsControl.ItemsPanel>
@@ -671,7 +670,7 @@
 
                                     <RowDefinition />
                                     <RowDefinition />
-                                    
+
                                     <RowDefinition />
 
                                     <RowDefinition />

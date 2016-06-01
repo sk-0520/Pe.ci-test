@@ -91,10 +91,14 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
         {
             var obj = (NoteSettingModel)target;
 
-            CreateHotKey.DeepCloneTo(obj.CreateHotKey);
-            HideHotKey.DeepCloneTo(obj.HideHotKey);
-            CompactHotKey.DeepCloneTo(obj.CompactHotKey);
-            ShowFrontHotKey.DeepCloneTo(obj.ShowFrontHotKey);
+            //CreateHotKey.DeepCloneTo(obj.CreateHotKey);
+            //HideHotKey.DeepCloneTo(obj.HideHotKey);
+            //CompactHotKey.DeepCloneTo(obj.CompactHotKey);
+            //ShowFrontHotKey.DeepCloneTo(obj.ShowFrontHotKey);
+            obj.CreateHotKey = (HotKeyModel)CreateHotKey.DeepClone();
+            obj.HideHotKey = (HotKeyModel)HideHotKey.DeepClone();
+            obj.CompactHotKey = (HotKeyModel)CompactHotKey.DeepClone();
+            obj.ShowFrontHotKey = (HotKeyModel)ShowFrontHotKey.DeepClone();
             obj.ForeColor = ForeColor;
             obj.BackColor = BackColor;
             //Font.DeepCloneTo(obj.Font);

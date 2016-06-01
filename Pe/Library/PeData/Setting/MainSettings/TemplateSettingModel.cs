@@ -105,7 +105,7 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
         {
             var obj = (TemplateSettingModel)target;
 
-            ToggleHotKey.DeepCloneTo(obj.ToggleHotKey);
+            obj.ToggleHotKey = (HotKeyModel)ToggleHotKey.DeepClone();
             obj.ItemsListWidth = ItemsListWidth;
             obj.ReplaceListWidth = ReplaceListWidth;
             obj.WindowTop = WindowTop;

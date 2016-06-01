@@ -144,7 +144,10 @@
 					},
 					{
 						'revision': '',
-						'subject': '#462: GridHelpersのリンク先が間違っている'
+						'subject': '#462: GridHelpersのリンク先が間違っている',
+						'comments': [
+							'修正はしたんだけど別ライブラリに移動させたので記述から消えた'
+						]
 					},
 					{
 						'revision': '',

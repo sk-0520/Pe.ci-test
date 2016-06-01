@@ -156,7 +156,8 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
 
             obj.IsEnabled = IsEnabled;
             obj.IsEnabledApplicationCopy = IsEnabledApplicationCopy;
-            ToggleHotKey.DeepCloneTo(obj.ToggleHotKey);
+            //ToggleHotKey.DeepCloneTo(obj.ToggleHotKey);
+            obj.ToggleHotKey = (HotKeyModel)ToggleHotKey.DeepClone();
             obj.CaptureType = CaptureType;
             obj.SaveCount = SaveCount;
             obj.WaitTime = WaitTime;
