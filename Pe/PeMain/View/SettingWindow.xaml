@@ -1,14 +1,14 @@
-﻿<AW:ViewModelCommonDataWindow
+﻿<app_main_view_parts_window:ViewModelCommonDataWindow
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:AP="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
-  xmlns:AW="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Window"
+  xmlns:app_main_view_parts_window="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Window"
   xmlns:AS="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Control.SettingPage" 
   x:Class="ContentTypeTextNet.Pe.PeMain.View.SettingWindow"
-  xmlns:AVM="clr-namespace:ContentTypeTextNet.Pe.PeMain.ViewModel"
-  x:TypeArguments="AVM:SettingViewModel"
-  xmlns:AA="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Attached"
-  AA:Language.Word="window/setting"
+  xmlns:app_main_viewmodel="clr-namespace:ContentTypeTextNet.Pe.PeMain.ViewModel"
+  x:TypeArguments="app_main_viewmodel:SettingViewModel"
+  xmlns:app_main_view_parts_attached="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Attached"
+  app_main_view_parts_attached:Language.Word="window/setting"
   Title="SettingWindow" 
   Width="840"
   Height="550" 
@@ -19,14 +19,14 @@
   Icon="/PeMain;component/Resources/Icon/App.ico"
   ResizeMode="CanResizeWithGrip"
 >
-  <AW:CommonDataWindow.Resources>
+  <app_main_view_parts_window:CommonDataWindow.Resources>
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/View/Parts/Resource/DialogDictionary.xaml"/>
         <ResourceDictionary Source="/View/Parts/Resource/LabelDictionary.xaml"/>
       </ResourceDictionary.MergedDictionaries>
     </ResourceDictionary>
-  </AW:CommonDataWindow.Resources>
+  </app_main_view_parts_window:CommonDataWindow.Resources>
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="*"/>
@@ -41,43 +41,43 @@
       </TabControl.Resources>-->
       <TabItem x:Name="pageMain">
         <TabItem.Header>
-          <Label Content="main" AA:Language.Word="setting/main" Style="{StaticResource ContentTextLabel}" />
+          <Label Content="main" app_main_view_parts_attached:Language.Word="setting/main" Style="{StaticResource ContentTextLabel}" />
         </TabItem.Header>
         <AS:MainSettingControl x:Name="controlMainSetting" DataContext="{Binding MainSetting}" VerticalAlignment="Stretch" />
       </TabItem>
       <TabItem>
         <TabItem.Header>
-          <Label Content="launcher" AA:Language.Word="setting/launcher" Style="{StaticResource ContentTextLabel}" />
+          <Label Content="launcher" app_main_view_parts_attached:Language.Word="setting/launcher" Style="{StaticResource ContentTextLabel}" />
         </TabItem.Header>
         <AS:LauncherItemSettingControl x:Name="controlLauncherItemSetting" DataContext="{Binding LauncherItemSetting}" VerticalAlignment="Stretch"/>
       </TabItem>
       <TabItem x:Name="pageToolbar">
         <TabItem.Header>
-          <Label Content="toolbar" AA:Language.Word="setting/toolbar" Style="{StaticResource ContentTextLabel}" />
+          <Label Content="toolbar" app_main_view_parts_attached:Language.Word="setting/toolbar" Style="{StaticResource ContentTextLabel}" />
         </TabItem.Header>
         <AS:ToolbarSettingControl x:Name="controlToolbarSetting" DataContext="{Binding ToolbarSetting}" VerticalAlignment="Stretch"/>
       </TabItem>
       <TabItem>
         <TabItem.Header>
-          <Label Content="command" AA:Language.Word="setting/command" Style="{StaticResource ContentTextLabel}" />
+          <Label Content="command" app_main_view_parts_attached:Language.Word="setting/command" Style="{StaticResource ContentTextLabel}" />
         </TabItem.Header>
         <AS:CommandSettingControl x:Name="controlCommandSetting" DataContext="{Binding CommandSetting}" VerticalAlignment="Stretch" />
       </TabItem>
       <TabItem>
         <TabItem.Header>
-          <Label Content="note" AA:Language.Word="setting/note" Style="{StaticResource ContentTextLabel}" />
+          <Label Content="note" app_main_view_parts_attached:Language.Word="setting/note" Style="{StaticResource ContentTextLabel}" />
         </TabItem.Header>
         <AS:NoteSettingControl x:Name="controlNoteSetting" DataContext="{Binding NoteSetting}" VerticalAlignment="Stretch" />
       </TabItem>
       <TabItem>
         <TabItem.Header>
-          <Label Content="clipboard" AA:Language.Word="setting/clipboard" Style="{StaticResource ContentTextLabel}" />
+          <Label Content="clipboard" app_main_view_parts_attached:Language.Word="setting/clipboard" Style="{StaticResource ContentTextLabel}" />
         </TabItem.Header>
         <AS:ClipboardSettingControl x:Name="controlClipboardSetting" DataContext="{Binding ClipboardSetting}" VerticalAlignment="Stretch" />
       </TabItem>
       <TabItem>
         <TabItem.Header>
-          <Label Content="template" AA:Language.Word="setting/template" Style="{StaticResource ContentTextLabel}" />
+          <Label Content="template" app_main_view_parts_attached:Language.Word="setting/template" Style="{StaticResource ContentTextLabel}" />
         </TabItem.Header>
         <AS:TemplateSettingControl x:Name="controlTemplateSetting" DataContext="{Binding TemplateSetting}" VerticalAlignment="Stretch" />
       </TabItem>
@@ -88,4 +88,4 @@
       <Button Content="cancel" Style="{StaticResource ResourceKey=DialogCancelButton}"  Command="{Binding CancelCommand}" />
     </StackPanel>
   </Grid>
-</AW:ViewModelCommonDataWindow>
+</app_main_view_parts_window:ViewModelCommonDataWindow>

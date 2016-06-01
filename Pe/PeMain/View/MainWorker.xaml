@@ -4,22 +4,22 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
   xmlns:Taskbar="http://www.hardcodet.net/taskbar"
-  xmlns:AM="clr-namespace:ContentTypeTextNet.Pe.PeMain"
+  xmlns:app_main="clr-namespace:ContentTypeTextNet.Pe.PeMain"
   xmlns:AV="clr-namespace:ContentTypeTextNet.Pe.PeMain.ViewModel"
-  xmlns:AA="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Attached"
-  xmlns:ACC="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Control"
-  xmlns:SC="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=ContentTypeTextNet.SharedLibrary"
+  xmlns:app_main_view_parts_attached="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Attached"
+  xmlns:app_main_view_parts_control="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Control"
+  xmlns:app_library_sharedlibrary_view_converter="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=ContentTypeTextNet.SharedLibrary"
 >
   <ResourceDictionary.MergedDictionaries>
     <ResourceDictionary Source="/View/Parts/Resource/ImageDictionary.xaml"/>
     <ResourceDictionary Source="/View/Parts/Resource/MenuItemDictionary.xaml"/>
   </ResourceDictionary.MergedDictionaries>
-  <!--<Setter Property="AA:MenuIcon.IsStrong" Value="{Binding IsVisible}" />-->
-  <ContentControl x:Shared="false" x:Key="ToolbarMenuIcon" SnapsToDevicePixels="True" AA:MenuIcon.IsStrong="{Binding IsVisible}"  Content="{Binding MenuIcon}" />
+  <!--<Setter Property="app_main_view_parts_attached:MenuIcon.IsStrong" Value="{Binding IsVisible}" />-->
+  <ContentControl x:Shared="false" x:Key="ToolbarMenuIcon" SnapsToDevicePixels="True" app_main_view_parts_attached:MenuIcon.IsStrong="{Binding IsVisible}"  Content="{Binding MenuIcon}" />
   <ContextMenu x:Shared="false" x:Key="ContextMenu" IsOpen="{Binding IsContextMenuOpen}" >
     <ContextMenu.Resources>
-      <SC:LogicalNotConverter x:Key="LogicalNotConverter"/>
-      <SC:IsNotEmptyCollectionConverter x:Key="IsNotEmptyCollectionConverter" />
+      <app_library_sharedlibrary_view_converter:LogicalNotConverter x:Key="LogicalNotConverter"/>
+      <app_library_sharedlibrary_view_converter:IsNotEmptyCollectionConverter x:Key="IsNotEmptyCollectionConverter" />
 
       <Style x:Key="NoteMenuItemStyle" TargetType="MenuItem" BasedOn="{StaticResource IMenuItem}">
         <Setter Property="Command" Value="{Binding NoteMenuSelectedCommand}" />
@@ -29,26 +29,26 @@
         <Setter Property="Command" Value="{Binding WindowMenuSelectedCommand}" />
       </Style>
     </ContextMenu.Resources>
-    <MenuItem AA:Language.Word="tasktray/setting" Header="setting" Command="{Binding ShowSettingWindowCommand}">
+    <MenuItem app_main_view_parts_attached:Language.Word="tasktray/setting" Header="setting" Command="{Binding ShowSettingWindowCommand}">
       <MenuItem.Icon>
-        <Image Source="{x:Static AM:AppResource.SettingSettingImage}" Style="{StaticResource DefaultImage}" />
+        <Image Source="{x:Static app_main:AppResource.SettingSettingImage}" Style="{StaticResource DefaultImage}" />
       </MenuItem.Icon>
     </MenuItem>
     <Separator />
-    <MenuItem AA:Language.Word="tasktray/toolbar" Header="toolbar" ItemsSource="{Binding LauncherToolbars}">
+    <MenuItem app_main_view_parts_attached:Language.Word="tasktray/toolbar" Header="toolbar" ItemsSource="{Binding LauncherToolbars}">
       <MenuItem.Resources>
         <Style TargetType="MenuItem">
           <Setter Property="Icon" Value="{DynamicResource ToolbarMenuIcon}" />
         </Style>
       </MenuItem.Resources>
       <MenuItem.Icon>
-          <Image Source="{x:Static AM:AppResource.ToolbarToolbarImage}" Style="{StaticResource DefaultImage}" />
+          <Image Source="{x:Static app_main:AppResource.ToolbarToolbarImage}" Style="{StaticResource DefaultImage}" />
       </MenuItem.Icon>
       <MenuItem.ItemContainerStyle>
           <Style TargetType="MenuItem" BasedOn="{StaticResource IMenuItem}">
           <!--<Setter Property="IsChecked
             " Value="{Binding IsVisible, Mode=OneWay}"/>-->
-          <!--<Setter Property="AA:MenuIcon.IsStrong" Value="{Binding IsVisible}" />-->
+          <!--<Setter Property="app_main_view_parts_attached:MenuIcon.IsStrong" Value="{Binding IsVisible}" />-->
           <Setter Property="Icon" Value="{StaticResource ToolbarMenuIcon}" />
           <Setter Property="Command" Value="{Binding ChangeVisibleCommand}" />
           <Setter Property="CommandParameter" Value="{Binding IsVisible, Converter={StaticResource LogicalNotConverter}}" />
@@ -63,107 +63,107 @@
         </DataTemplate>
       </MenuItem.ItemTemplate>-->
     </MenuItem>
-    <MenuItem AA:Language.Word="tasktray/note" Header="note">
+    <MenuItem app_main_view_parts_attached:Language.Word="tasktray/note" Header="note">
       <MenuItem.Icon>
-        <Image Source="{x:Static AM:AppResource.NoteNoteImage}" Style="{StaticResource DefaultImage}" />
+        <Image Source="{x:Static app_main:AppResource.NoteNoteImage}" Style="{StaticResource DefaultImage}" />
       </MenuItem.Icon>
-      <MenuItem Header="create" AA:Language.Word="tasktray/note/create" Command="{Binding CreateNoteItemCommand}" InputGestureText="{Binding CreateNoteHotKey}">
+      <MenuItem Header="create" app_main_view_parts_attached:Language.Word="tasktray/note/create" Command="{Binding CreateNoteItemCommand}" InputGestureText="{Binding CreateNoteHotKey}">
         <MenuItem.Icon>
-          <Image Source="{x:Static AM:AppResource.CommonCreateImage}" Style="{StaticResource DefaultImage}" />
+          <Image Source="{x:Static app_main:AppResource.CommonCreateImage}" Style="{StaticResource DefaultImage}" />
         </MenuItem.Icon>
       </MenuItem>
-      <MenuItem Header="compact" AA:Language.Word="tasktray/note/compact" Command="{Binding CompactNoteItemsCommand}" InputGestureText="{Binding CompactNoteItemsHotKey}" Icon="{Binding NoteCompactIcon}" SnapsToDevicePixels="True" />
-      <MenuItem Header="hide" AA:Language.Word="tasktray/note/hide" Command="{Binding HideNoteItemsCommand}"  InputGestureText="{Binding HideNoteItemsHotKey}">
+      <MenuItem Header="compact" app_main_view_parts_attached:Language.Word="tasktray/note/compact" Command="{Binding CompactNoteItemsCommand}" InputGestureText="{Binding CompactNoteItemsHotKey}" Icon="{Binding NoteCompactIcon}" SnapsToDevicePixels="True" />
+      <MenuItem Header="hide" app_main_view_parts_attached:Language.Word="tasktray/note/hide" Command="{Binding HideNoteItemsCommand}"  InputGestureText="{Binding HideNoteItemsHotKey}">
         <MenuItem.Icon>
-          <Image Source="{x:Static AM:AppResource.NoteHideImage}" Style="{StaticResource DefaultImage}" />
-        </MenuItem.Icon>
-      </MenuItem>
-      <Separator />
-      <MenuItem Header="front" AA:Language.Word="tasktray/note/front" Command="{Binding FrontNoteItemsCommand}" InputGestureText="{Binding FrontNoteItemsHotKey}">
-        <MenuItem.Icon>
-          <Image Source="{x:Static AM:AppResource.NoteFrontImage}" Style="{StaticResource DefaultImage}" />
+          <Image Source="{x:Static app_main:AppResource.NoteHideImage}" Style="{StaticResource DefaultImage}" />
         </MenuItem.Icon>
       </MenuItem>
       <Separator />
-      <MenuItem Header="show" AA:Language.Word="tasktray/note/show" ItemsSource="{Binding NoteShowItems}" ItemContainerStyle="{StaticResource NoteMenuItemStyle}" IsEnabled="{Binding ItemsSource,RelativeSource={RelativeSource Self}, Converter={StaticResource IsNotEmptyCollectionConverter}}"/>
-      <MenuItem Header="hidden" AA:Language.Word="tasktray/note/hidden" ItemsSource="{Binding NoteHiddenItems}" ItemContainerStyle="{StaticResource NoteMenuItemStyle}" IsEnabled="{Binding ItemsSource,RelativeSource={RelativeSource Self}, Converter={StaticResource IsNotEmptyCollectionConverter}}"/>
+      <MenuItem Header="front" app_main_view_parts_attached:Language.Word="tasktray/note/front" Command="{Binding FrontNoteItemsCommand}" InputGestureText="{Binding FrontNoteItemsHotKey}">
+        <MenuItem.Icon>
+          <Image Source="{x:Static app_main:AppResource.NoteFrontImage}" Style="{StaticResource DefaultImage}" />
+        </MenuItem.Icon>
+      </MenuItem>
+      <Separator />
+      <MenuItem Header="show" app_main_view_parts_attached:Language.Word="tasktray/note/show" ItemsSource="{Binding NoteShowItems}" ItemContainerStyle="{StaticResource NoteMenuItemStyle}" IsEnabled="{Binding ItemsSource,RelativeSource={RelativeSource Self}, Converter={StaticResource IsNotEmptyCollectionConverter}}"/>
+      <MenuItem Header="hidden" app_main_view_parts_attached:Language.Word="tasktray/note/hidden" ItemsSource="{Binding NoteHiddenItems}" ItemContainerStyle="{StaticResource NoteMenuItemStyle}" IsEnabled="{Binding ItemsSource,RelativeSource={RelativeSource Self}, Converter={StaticResource IsNotEmptyCollectionConverter}}"/>
     </MenuItem>
-    <MenuItem Header="template" AA:Language.Word="tasktray/template" Command="{Binding SwitchTemplateWindowCommand}" InputGestureText="{Binding SwitchTemplateWindowHotKey}">
+    <MenuItem Header="template" app_main_view_parts_attached:Language.Word="tasktray/template" Command="{Binding SwitchTemplateWindowCommand}" InputGestureText="{Binding SwitchTemplateWindowHotKey}">
       <MenuItem.Icon>
-        <Image AA:MenuIcon.IsStrong="{Binding Template.IsVisible}" Source="{x:Static AM:AppResource.TemplateTemplateImage}" Style="{StaticResource DefaultImage}" />
+        <Image app_main_view_parts_attached:MenuIcon.IsStrong="{Binding Template.IsVisible}" Source="{x:Static app_main:AppResource.TemplateTemplateImage}" Style="{StaticResource DefaultImage}" />
       </MenuItem.Icon>
     </MenuItem>
-    <MenuItem AA:Language.Word="tasktray/command" Header="command" Command="{Binding ShowCommandWindowCommand}" InputGestureText="{Binding ShowCommandWindowHotKey}">
+    <MenuItem app_main_view_parts_attached:Language.Word="tasktray/command" Header="command" Command="{Binding ShowCommandWindowCommand}" InputGestureText="{Binding ShowCommandWindowHotKey}">
       <MenuItem.Icon>
-        <Image Source="{x:Static AM:AppResource.CommandCommandImage}" Style="{StaticResource DefaultImage}" />
+        <Image Source="{x:Static app_main:AppResource.CommandCommandImage}" Style="{StaticResource DefaultImage}" />
       </MenuItem.Icon>
     </MenuItem>
-    <MenuItem AA:Language.Word="tasktray/log" Header="log" Command="{Binding SwitchLoggingWindowCommand}">
+    <MenuItem app_main_view_parts_attached:Language.Word="tasktray/log" Header="log" Command="{Binding SwitchLoggingWindowCommand}">
       <MenuItem.Icon>
-        <Image AA:MenuIcon.IsStrong="{Binding Logging.IsVisible}"  Source="{x:Static AM:AppResource.LogLogImage}" Style="{StaticResource DefaultImage}" />
+        <Image app_main_view_parts_attached:MenuIcon.IsStrong="{Binding Logging.IsVisible}"  Source="{x:Static app_main:AppResource.LogLogImage}" Style="{StaticResource DefaultImage}" />
       </MenuItem.Icon>
     </MenuItem>
     <Separator />
-    <MenuItem Header="system-env" AA:Language.Word="tasktray/system-env">
+    <MenuItem Header="system-env" app_main_view_parts_attached:Language.Word="tasktray/system-env">
       <i:Interaction.Triggers>
         <i:EventTrigger EventName="SubmenuOpened">
           <i:InvokeCommandAction Command="{Binding OpenSystemEnvironmentMenuCommand}" />
         </i:EventTrigger>
       </i:Interaction.Triggers>
       <MenuItem.Icon>
-        <Image Source="{x:Static AM:AppResource.CommonOperatingSystemImage}" Style="{StaticResource DefaultImage}" />
+        <Image Source="{x:Static app_main:AppResource.CommonOperatingSystemImage}" Style="{StaticResource DefaultImage}" />
       </MenuItem.Icon>
-      <MenuItem Header="hide file" AA:Language.Word="tasktray/system-env/shell-hidden" Command="{Binding SwitchShellHideFileCommand}" IsChecked="{Binding IsVisibledShellHideFile, Mode=OneWay}"  InputGestureText="{Binding SwitchShellHideFileHotKey}"/>
-      <MenuItem Header="extension" AA:Language.Word="tasktray/system-env/shell-ext" Command="{Binding SwitchShellExtensionCommand}" IsChecked="{Binding IsVisibledShellExtension, Mode=OneWay}"  InputGestureText="{Binding SwitchShellExtensionHotKey}"/>
+      <MenuItem Header="hide file" app_main_view_parts_attached:Language.Word="tasktray/system-env/shell-hidden" Command="{Binding SwitchShellHideFileCommand}" IsChecked="{Binding IsVisibledShellHideFile, Mode=OneWay}"  InputGestureText="{Binding SwitchShellHideFileHotKey}"/>
+      <MenuItem Header="extension" app_main_view_parts_attached:Language.Word="tasktray/system-env/shell-ext" Command="{Binding SwitchShellExtensionCommand}" IsChecked="{Binding IsVisibledShellExtension, Mode=OneWay}"  InputGestureText="{Binding SwitchShellExtensionHotKey}"/>
       <Separator />
-      <MenuItem Header="clipboard" AA:Language.Word="tasktray/system-env/clipboard" Command="{Binding SwitchClipboardWindowCommand}" InputGestureText="{Binding SwitchClipboardWindowHotKey}">
+      <MenuItem Header="clipboard" app_main_view_parts_attached:Language.Word="tasktray/system-env/clipboard" Command="{Binding SwitchClipboardWindowCommand}" InputGestureText="{Binding SwitchClipboardWindowHotKey}">
         <MenuItem.Icon>
-          <Image AA:MenuIcon.IsStrong="{Binding Clipboard.IsVisible}" Source="{x:Static AM:AppResource.ClipboardClipboardImage}" Style="{StaticResource DefaultImage}" />
+          <Image app_main_view_parts_attached:MenuIcon.IsStrong="{Binding Clipboard.IsVisible}" Source="{x:Static app_main:AppResource.ClipboardClipboardImage}" Style="{StaticResource DefaultImage}" />
         </MenuItem.Icon>
       </MenuItem>
       <Separator />
-      <MenuItem Header="window - save" AA:Language.Word="tasktray/system-env/window/save" Command="{Binding SaveTemporaryWindow}">
+      <MenuItem Header="window - save" app_main_view_parts_attached:Language.Word="tasktray/system-env/window/save" Command="{Binding SaveTemporaryWindow}">
         <MenuItem.Icon>
-          <Image Source="{x:Static AM:AppResource.WindowSaveImage}" Style="{StaticResource DefaultImage}" />
+          <Image Source="{x:Static app_main:AppResource.WindowSaveImage}" Style="{StaticResource DefaultImage}" />
         </MenuItem.Icon>
       </MenuItem>
-      <MenuItem Header="window - load" AA:Language.Word="tasktray/system-env/window/load" Command="{Binding LoadTemporaryWindow}">
+      <MenuItem Header="window - load" app_main_view_parts_attached:Language.Word="tasktray/system-env/window/load" Command="{Binding LoadTemporaryWindow}">
         <MenuItem.Icon>
-          <Image Source="{x:Static AM:AppResource.WindowLoadImage}" Style="{StaticResource DefaultImage}" />
+          <Image Source="{x:Static app_main:AppResource.WindowLoadImage}" Style="{StaticResource DefaultImage}" />
         </MenuItem.Icon>
       </MenuItem>
-      <MenuItem Header="window - timer" AA:Language.Word="tasktray/system-env/window/timer" ItemsSource="{Binding WindowTimerItems}" ItemContainerStyle="{StaticResource ResourceKey=WindowMenuItemStyle}" IsEnabled="{Binding ItemsSource,RelativeSource={RelativeSource Self}, Converter={StaticResource IsNotEmptyCollectionConverter}}">
+      <MenuItem Header="window - timer" app_main_view_parts_attached:Language.Word="tasktray/system-env/window/timer" ItemsSource="{Binding WindowTimerItems}" ItemContainerStyle="{StaticResource ResourceKey=WindowMenuItemStyle}" IsEnabled="{Binding ItemsSource,RelativeSource={RelativeSource Self}, Converter={StaticResource IsNotEmptyCollectionConverter}}">
         <MenuItem.Icon>
-          <Image Source="{x:Static AM:AppResource.WindowListTimerImage}" Style="{StaticResource DefaultImage}" />
+          <Image Source="{x:Static app_main:AppResource.WindowListTimerImage}" Style="{StaticResource DefaultImage}" />
         </MenuItem.Icon>
       </MenuItem>
-      <MenuItem Header="window - system" AA:Language.Word="tasktray/system-env/window/system" ItemsSource="{Binding WindowSystemItems}" ItemContainerStyle="{StaticResource ResourceKey=WindowMenuItemStyle}" IsEnabled="{Binding ItemsSource,RelativeSource={RelativeSource Self}, Converter={StaticResource IsNotEmptyCollectionConverter}}">
+      <MenuItem Header="window - system" app_main_view_parts_attached:Language.Word="tasktray/system-env/window/system" ItemsSource="{Binding WindowSystemItems}" ItemContainerStyle="{StaticResource ResourceKey=WindowMenuItemStyle}" IsEnabled="{Binding ItemsSource,RelativeSource={RelativeSource Self}, Converter={StaticResource IsNotEmptyCollectionConverter}}">
         <MenuItem.Icon>
-          <Image Source="{x:Static AM:AppResource.WindowListSystemImage}" Style="{StaticResource DefaultImage}" />
+          <Image Source="{x:Static app_main:AppResource.WindowListSystemImage}" Style="{StaticResource DefaultImage}" />
         </MenuItem.Icon>
       </MenuItem>
     </MenuItem>
     <Separator />
-    <MenuItem AA:Language.Word="tasktray/info" >
-      <MenuItem AA:Language.Word="tasktray/info/help" Header="help" Command="{Binding HelpCommand}">
+    <MenuItem app_main_view_parts_attached:Language.Word="tasktray/info" >
+      <MenuItem app_main_view_parts_attached:Language.Word="tasktray/info/help" Header="help" Command="{Binding HelpCommand}">
         <MenuItem.Icon>
-          <Image Source="{x:Static AM:AppResource.CommonHelpImage}" Style="{StaticResource DefaultImage}" />
+          <Image Source="{x:Static app_main:AppResource.CommonHelpImage}" Style="{StaticResource DefaultImage}" />
         </MenuItem.Icon>
       </MenuItem>
-      <MenuItem AA:Language.Word="tasktray/info/feedback" Header="feedback" Command="{Binding FeedbackCommand}">
+      <MenuItem app_main_view_parts_attached:Language.Word="tasktray/info/feedback" Header="feedback" Command="{Binding FeedbackCommand}">
         <MenuItem.Icon>
-          <Image Source="{x:Static AM:AppResource.CommonCommentImage}" Style="{StaticResource DefaultImage}" />
+          <Image Source="{x:Static app_main:AppResource.CommonCommentImage}" Style="{StaticResource DefaultImage}" />
         </MenuItem.Icon>
       </MenuItem>
-      <MenuItem AA:Language.Word="tasktray/info/about" Header="about" Command="{Binding AboutCommand}">
+      <MenuItem app_main_view_parts_attached:Language.Word="tasktray/info/about" Header="about" Command="{Binding AboutCommand}">
         <MenuItem.Icon>
-          <Image Source="{x:Static AM:AppResource.ApplicationIconSmall}" Style="{StaticResource DefaultImage}" />
+          <Image Source="{x:Static app_main:AppResource.ApplicationIconSmall}" Style="{StaticResource DefaultImage}" />
         </MenuItem.Icon>
       </MenuItem>
     </MenuItem>
-    <MenuItem AA:Language.Word="tasktray/exit" Header="exit" Command="{Binding ExitApplicationCommand}">
+    <MenuItem app_main_view_parts_attached:Language.Word="tasktray/exit" Header="exit" Command="{Binding ExitApplicationCommand}">
       <MenuItem.Icon>
-        <Image Source="{x:Static AM:AppResource.CommonCloseImage}" Style="{StaticResource DefaultImage}" />
+        <Image Source="{x:Static app_main:AppResource.CommonCloseImage}" Style="{StaticResource DefaultImage}" />
       </MenuItem.Icon>
     </MenuItem>
   </ContextMenu>

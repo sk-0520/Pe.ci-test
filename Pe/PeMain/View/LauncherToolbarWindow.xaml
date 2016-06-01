@@ -1,4 +1,4 @@
-﻿<AW:ViewModelCommonDataWindow
+﻿<app_main_view_parts_window:ViewModelCommonDataWindow
   x:Name="root"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -6,21 +6,21 @@
   xmlns:windows="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
   xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-  xmlns:SC="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=ContentTypeTextNet.SharedLibrary"
-  xmlns:SA="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Attached;assembly=ContentTypeTextNet.SharedLibrary"
-  xmlns:SL="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.Logic;assembly=ContentTypeTextNet.SharedLibrary"
-  xmlns:AM="clr-namespace:ContentTypeTextNet.Pe.PeMain"
-  xmlns:AVM="clr-namespace:ContentTypeTextNet.Pe.PeMain.ViewModel"
+  xmlns:app_library_sharedlibrary_view_converter="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=ContentTypeTextNet.SharedLibrary"
+  xmlns:app_library_sharedlibrary_view_attached="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Attached;assembly=ContentTypeTextNet.SharedLibrary"
+  xmlns:app_library_sharedlibrary_logic="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.Logic;assembly=ContentTypeTextNet.SharedLibrary"
+  xmlns:app_main="clr-namespace:ContentTypeTextNet.Pe.PeMain"
+  xmlns:app_main_viewmodel="clr-namespace:ContentTypeTextNet.Pe.PeMain.ViewModel"
   xmlns:AP="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
-  xmlns:AW="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Window"
-  xmlns:AC="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Converter"
-  xmlns:ACC="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Control"
-  xmlns:ADD="clr-namespace:ContentTypeTextNet.Pe.Library.PeData.Define;assembly=PeData"
-  xmlns:SD="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.Define;assembly=ContentTypeTextNet.SharedLibrary"
+  xmlns:app_main_view_parts_window="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Window"
+  xmlns:app_main_view_parts_attached="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Attached"
+  xmlns:app_main_view_parts_converter="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Converter"
+  xmlns:app_main_view_parts_control="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Control"
+  xmlns:app_library_pedata_define="clr-namespace:ContentTypeTextNet.Pe.Library.PeData.Define;assembly=PeData"
+  xmlns:app_library_sharedlibrary_define="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.Define;assembly=ContentTypeTextNet.SharedLibrary"
   x:Class="ContentTypeTextNet.Pe.PeMain.View.LauncherToolbarWindow"
-  x:TypeArguments="AVM:LauncherToolbarViewModel"
-  xmlns:AA="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Attached"
-  AA:Language.Word="window/toolbar"
+  x:TypeArguments="app_main_viewmodel:LauncherToolbarViewModel"
+  app_main_view_parts_attached:Language.Word="window/toolbar"
   Title="ToolbarWindow"
   Left="{Binding WindowLeft, Mode=TwoWay}"
   Top="{Binding WindowTop, Mode=TwoWay}"
@@ -38,36 +38,36 @@
   MinWidth="{Binding MinSize.Width}"
   MinHeight="{Binding MinSize.Height}"
 
-  SA:DragTarget.UsingDragTarget="True"
-  SA:DragTarget.DragEnterCommand="{Binding DragOverCommand}"
-  SA:DragTarget.DragOverCommand="{Binding DragOverCommand}"
-  SA:DragTarget.DragDropCommand="{Binding DragDropCommand}"
+  app_library_sharedlibrary_view_attached:DragTarget.UsingDragTarget="True"
+  app_library_sharedlibrary_view_attached:DragTarget.DragEnterCommand="{Binding DragOverCommand}"
+  app_library_sharedlibrary_view_attached:DragTarget.DragOverCommand="{Binding DragOverCommand}"
+  app_library_sharedlibrary_view_attached:DragTarget.DragDropCommand="{Binding DragDropCommand}"
 
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   mc:Ignorable="d"
   d:DesignWidth="300"
   d:DesignHeight="200"
 >
-  <AW:CommonDataWindow.Resources>
+  <app_main_view_parts_window:CommonDataWindow.Resources>
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>
-        <SL:CachedResourceDictionary Source="/View/Parts/Resource/ImageDictionary.xaml" />
-        <SL:CachedResourceDictionary Source="/View/Parts/Resource/GripDictionary.xaml"/>
-        <SL:CachedResourceDictionary Source="/View/Parts/Resource/PopupDictionary.xaml"/>
-        <SL:CachedResourceDictionary Source="/View/Parts/Resource/LabelDictionary.xaml"/>
-        <SL:CachedResourceDictionary Source="/View/Parts/Resource/TextBlockDictionary.xaml"/>
+        <app_library_sharedlibrary_logic:CachedResourceDictionary Source="/View/Parts/Resource/ImageDictionary.xaml" />
+        <app_library_sharedlibrary_logic:CachedResourceDictionary Source="/View/Parts/Resource/GripDictionary.xaml"/>
+        <app_library_sharedlibrary_logic:CachedResourceDictionary Source="/View/Parts/Resource/PopupDictionary.xaml"/>
+        <app_library_sharedlibrary_logic:CachedResourceDictionary Source="/View/Parts/Resource/LabelDictionary.xaml"/>
+        <app_library_sharedlibrary_logic:CachedResourceDictionary Source="/View/Parts/Resource/TextBlockDictionary.xaml"/>
       </ResourceDictionary.MergedDictionaries>
       <xctk:InverseBoolConverter x:Key="InverseBoolConverter" />
-      <SC:LogicalMultiEqualConverter x:Key="LogicalMultiEqualConverter" />
+      <app_library_sharedlibrary_view_converter:LogicalMultiEqualConverter x:Key="LogicalMultiEqualConverter" />
       <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-      <SC:BooleanFontWeightConverter x:Key="BooleanFontWeightConverter" />
-      <SC:BooleanFontStyleConverter x:Key="BooleanFontStyleConverter" />
-      <SC:ComplementaryColorConverter x:Key="ComplementaryColorConverter" />
+      <app_library_sharedlibrary_view_converter:BooleanFontWeightConverter x:Key="BooleanFontWeightConverter" />
+      <app_library_sharedlibrary_view_converter:BooleanFontStyleConverter x:Key="BooleanFontStyleConverter" />
+      <app_library_sharedlibrary_view_converter:ComplementaryColorConverter x:Key="ComplementaryColorConverter" />
 
-      <AC:DisplayTextConverter x:Key="DisplayTextConverter" />
-      <AC:HotTrackConverter x:Key="HotTrackConverter" />
-      <AC:DockTypeMenuTuneConverter x:Key="DockTypeMenuTuneConverter" />
-      <AC:ToolbarDockTypeImageConverter x:Key="ToolbarDockTypeImageConverter" />
+      <app_main_view_parts_converter:DisplayTextConverter x:Key="DisplayTextConverter" />
+      <app_main_view_parts_converter:HotTrackConverter x:Key="HotTrackConverter" />
+      <app_main_view_parts_converter:DockTypeMenuTuneConverter x:Key="DockTypeMenuTuneConverter" />
+      <app_main_view_parts_converter:ToolbarDockTypeImageConverter x:Key="ToolbarDockTypeImageConverter" />
 
       <Style x:Key="ToolbarImage" TargetType="{x:Type Image}">
         <Setter Property="Source" Value="{Binding ToolbarImage, Mode=OneTime}" />
@@ -388,7 +388,7 @@
           <Style TargetType="Image" BasedOn="{StaticResource DefaultImage}">
             <Style.Triggers>
               <DataTrigger Binding="{Binding LauncherToolbarMenuItemType}" Value="GroupItem">
-                <Setter Property="AA:MenuIcon.IsStrong" Value="{Binding IsChecked}" />
+                <Setter Property="app_main_view_parts_attached:MenuIcon.IsStrong" Value="{Binding IsChecked}" />
               </DataTrigger>
             </Style.Triggers>
           </Style>
@@ -417,16 +417,16 @@
       <CollectionViewSource x:Key="ContextHiddenItems" Source="{Binding HiddenLauncherItems}" />
 
     </ResourceDictionary>
-  </AW:CommonDataWindow.Resources>
+  </app_main_view_parts_window:CommonDataWindow.Resources>
 
-  <AW:CommonDataWindow.ContextMenu>
+  <app_main_view_parts_window:CommonDataWindow.ContextMenu>
     <ContextMenu>
       <ContextMenu.ItemContainerStyle>
         <Style TargetType="MenuItem" BasedOn="{StaticResource LauncherMenuItem}" />
       </ContextMenu.ItemContainerStyle>
       <ContextMenu.ItemsPanel>
         <ItemsPanelTemplate>
-          <Grid SA:GridHelpers.RowCount="{Binding LauncherMenuCount}">
+          <Grid app_library_sharedlibrary_view_attached:GridHelpers.RowCount="{Binding LauncherMenuCount}">
             <Grid.ColumnDefinitions>
               <ColumnDefinition />
               <ColumnDefinition />
@@ -441,7 +441,7 @@
         </CompositeCollection>
       </ContextMenu.ItemsSource>
     </ContextMenu>
-  </AW:CommonDataWindow.ContextMenu>
+  </app_main_view_parts_window:CommonDataWindow.ContextMenu>
 
   <DockPanel Visibility="{Binding ToolbarContentVisibility}">
     <Rectangle
@@ -465,7 +465,7 @@
           </xctk:DropDownButton.Content>
           <xctk:DropDownButton.DropDownContent>
             <StackPanel>
-              <Label Content="toolbar pos" AA:Language.Word="toolbar/position" Style="{StaticResource TitleLabel}" />
+              <Label Content="toolbar pos" app_main_view_parts_attached:Language.Word="toolbar/position" Style="{StaticResource TitleLabel}" />
               <Grid>
                 <Grid.Resources>
                   <Style x:Key="PopupClose" TargetType="Button" BasedOn="{StaticResource PopupClose}">
@@ -484,17 +484,17 @@
                   <RowDefinition />
                   <RowDefinition />
                 </Grid.RowDefinitions>
-                <Button Grid.Row="0" Grid.Column="1" CommandParameter="{x:Static SD:DockType.Top}"    Style="{StaticResource PopupClose}" />
-                <Button Grid.Row="1" Grid.Column="0" CommandParameter="{x:Static SD:DockType.Left}"   Style="{StaticResource PopupClose}" />
-                <Button Grid.Row="1" Grid.Column="1" CommandParameter="{x:Static SD:DockType.None}"   Style="{StaticResource PopupClose}" />
-                <Button Grid.Row="1" Grid.Column="2" CommandParameter="{x:Static SD:DockType.Right}"  Style="{StaticResource PopupClose}" />
-                <Button Grid.Row="2" Grid.Column="1" CommandParameter="{x:Static SD:DockType.Bottom}" Style="{StaticResource PopupClose}" />
+                <Button Grid.Row="0" Grid.Column="1" CommandParameter="{x:Static app_library_sharedlibrary_define:DockType.Top}"    Style="{StaticResource PopupClose}" />
+                <Button Grid.Row="1" Grid.Column="0" CommandParameter="{x:Static app_library_sharedlibrary_define:DockType.Left}"   Style="{StaticResource PopupClose}" />
+                <Button Grid.Row="1" Grid.Column="1" CommandParameter="{x:Static app_library_sharedlibrary_define:DockType.None}"   Style="{StaticResource PopupClose}" />
+                <Button Grid.Row="1" Grid.Column="2" CommandParameter="{x:Static app_library_sharedlibrary_define:DockType.Right}"  Style="{StaticResource PopupClose}" />
+                <Button Grid.Row="2" Grid.Column="1" CommandParameter="{x:Static app_library_sharedlibrary_define:DockType.Bottom}" Style="{StaticResource PopupClose}" />
               </Grid>
               <Separator />
-              <MenuItem Header="topmost" AA:Language.Word="toolbar/topmost" Style="{StaticResource PopupCloseMenu}" IsChecked="{Binding IsTopmost}" Command="{Binding SwitchTopMostCommand}"  />
-              <MenuItem Header="auto hide" AA:Language.Word="toolbar/autohide" Style="{StaticResource PopupCloseMenu}" IsChecked="{Binding AutoHide}" Command="{Binding SwitchAutoHideCommand}"/>
+              <MenuItem Header="topmost" app_main_view_parts_attached:Language.Word="toolbar/topmost" Style="{StaticResource PopupCloseMenu}" IsChecked="{Binding IsTopmost}" Command="{Binding SwitchTopMostCommand}"  />
+              <MenuItem Header="auto hide" app_main_view_parts_attached:Language.Word="toolbar/autohide" Style="{StaticResource PopupCloseMenu}" IsChecked="{Binding AutoHide}" Command="{Binding SwitchAutoHideCommand}"/>
               <Separator />
-              <MenuItem Header="hide" AA:Language.Word="toolbar/hide" Style="{StaticResource PopupCloseMenu}" Command="{Binding ChangeVisibleCommand}" >
+              <MenuItem Header="hide" app_main_view_parts_attached:Language.Word="toolbar/hide" Style="{StaticResource PopupCloseMenu}" Command="{Binding ChangeVisibleCommand}" >
                 <MenuItem.CommandParameter>
                   <sys:Boolean>false</sys:Boolean>
                 </MenuItem.CommandParameter>
@@ -512,7 +512,7 @@
           <xctk:DropDownButton.ToolTip>
             <ToolTip Style="{StaticResource ToolbarTooltip}">
               <StackPanel Orientation="Horizontal">
-                <Image Source="{x:Static AM:AppResource.ApplicationIconNormal}" Style="{StaticResource ToolbarToolTipImage}" />
+                <Image Source="{x:Static app_main:AppResource.ApplicationIconNormal}" Style="{StaticResource ToolbarToolTipImage}" />
                 <TextBlock Text="{Binding ToolTipTitle}" Style="{StaticResource ToolbarToolTipTitle}" />
               </StackPanel>
             </ToolTip>
@@ -529,10 +529,10 @@
           <ItemsControl.ItemTemplate>
             <DataTemplate>
               <ContentControl
-                SA:DragTarget.UsingDragTarget="True"
-                SA:DragTarget.DragEnterCommand="{Binding DragOverCommand}"
-                SA:DragTarget.DragOverCommand="{Binding DragOverCommand}"
-                SA:DragTarget.DragDropCommand="{Binding DragDropCommand}"
+                app_library_sharedlibrary_view_attached:DragTarget.UsingDragTarget="True"
+                app_library_sharedlibrary_view_attached:DragTarget.DragEnterCommand="{Binding DragOverCommand}"
+                app_library_sharedlibrary_view_attached:DragTarget.DragOverCommand="{Binding DragOverCommand}"
+                app_library_sharedlibrary_view_attached:DragTarget.DragDropCommand="{Binding DragDropCommand}"
                 MouseDown="LauncherButton_MouseDown"
                 MouseUp="LauncherButton_MouseUp"
               >
@@ -553,7 +553,7 @@
                   <Style TargetType="ContentControl">
                     <Style.Triggers>
                       <!-- ファイル -->
-                      <DataTrigger Binding="{Binding LauncherKind, Mode=OneTime}" Value="{x:Static ADD:LauncherKind.File}">
+                      <DataTrigger Binding="{Binding LauncherKind, Mode=OneTime}" Value="{x:Static app_library_pedata_define:LauncherKind.File}">
                         <Setter Property="Content">
                           <Setter.Value>
                             <xctk:SplitButton Style="{StaticResource LauncherSplit}" Command="{Binding RunCommand, Mode=OneTime}">
@@ -596,47 +596,47 @@
                                   </Grid.ColumnDefinitions>
                                   <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource TitleLabel}">
                                     <StackPanel Orientation="Horizontal">
-                                      <Image Source="{x:Static AM:AppResource.CommonRunImage}" Style="{StaticResource ItemImage}" />
-                                      <TextBlock Style="{StaticResource ItemText}" Text="execute" AA:Language.Word="toolbar/execute" />
+                                      <Image Source="{x:Static app_main:AppResource.CommonRunImage}" Style="{StaticResource ItemImage}" />
+                                      <TextBlock Style="{StaticResource ItemText}" Text="execute" app_main_view_parts_attached:Language.Word="toolbar/execute" />
                                     </StackPanel>
                                   </Label>
-                                  <Button Grid.Row="1" Grid.Column="0" Content="normal" AA:Language.Word="toolbar/execute/normal" IsEnabled="{Binding ExistsCommand}" Command="{Binding RunCommand, Mode=OneTime}" Style="{StaticResource PopupClose}" />
-                                  <Button Grid.Row="1" Grid.Column="1" Content="extra"  AA:Language.Word="toolbar/execute/extra"  IsEnabled="{Binding ExistsCommand}" Command="{Binding RunExCommand, Mode=OneTime}" Style="{StaticResource PopupClose}" />
+                                  <Button Grid.Row="1" Grid.Column="0" Content="normal" app_main_view_parts_attached:Language.Word="toolbar/execute/normal" IsEnabled="{Binding ExistsCommand}" Command="{Binding RunCommand, Mode=OneTime}" Style="{StaticResource PopupClose}" />
+                                  <Button Grid.Row="1" Grid.Column="1" Content="extra"  app_main_view_parts_attached:Language.Word="toolbar/execute/extra"  IsEnabled="{Binding ExistsCommand}" Command="{Binding RunExCommand, Mode=OneTime}" Style="{StaticResource PopupClose}" />
 
                                   <Separator Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" />
 
                                   <Label Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource TitleLabel}">
                                     <StackPanel Orientation="Horizontal">
-                                      <Image Source="{x:Static AM:AppResource.CommonFileImage}" Style="{StaticResource ItemImage}" />
-                                      <TextBlock Style="{StaticResource ItemText}" Text="file" AA:Language.Word="toolbar/file" />
+                                      <Image Source="{x:Static app_main:AppResource.CommonFileImage}" Style="{StaticResource ItemImage}" />
+                                      <TextBlock Style="{StaticResource ItemText}" Text="file" app_main_view_parts_attached:Language.Word="toolbar/file" />
                                     </StackPanel>
                                   </Label>
-                                  <Button Grid.Row="4" Grid.Column="0" Content="parent dir" AA:Language.Word="toolbar/file/parent-dir" IsEnabled="{Binding ExistsParentDirectory}" Command="{Binding OpenDirectoryCommand, Mode=OneTime}" CommandParameter="{x:Static ADD:LauncherCommandType.ParentDirectory}" Style="{StaticResource PopupClose}" />
-                                  <Button Grid.Row="4" Grid.Column="1" Content="work dir"   AA:Language.Word="toolbar/file/work-dir"   IsEnabled="{Binding ExistsWorkDirectory}" Command="{Binding OpenDirectoryCommand, Mode=OneTime}" CommandParameter="{x:Static ADD:LauncherCommandType.WorkDirectory}" Style="{StaticResource PopupClose}" />
+                                  <Button Grid.Row="4" Grid.Column="0" Content="parent dir" app_main_view_parts_attached:Language.Word="toolbar/file/parent-dir" IsEnabled="{Binding ExistsParentDirectory}" Command="{Binding OpenDirectoryCommand, Mode=OneTime}" CommandParameter="{x:Static app_library_pedata_define:LauncherCommandType.ParentDirectory}" Style="{StaticResource PopupClose}" />
+                                  <Button Grid.Row="4" Grid.Column="1" Content="work dir"   app_main_view_parts_attached:Language.Word="toolbar/file/work-dir"   IsEnabled="{Binding ExistsWorkDirectory}" Command="{Binding OpenDirectoryCommand, Mode=OneTime}" CommandParameter="{x:Static app_library_pedata_define:LauncherCommandType.WorkDirectory}" Style="{StaticResource PopupClose}" />
 
                                   <Separator Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3" />
 
                                   <Label Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource TitleLabel}">
                                     <StackPanel Orientation="Horizontal">
-                                      <Image Source="{x:Static AM:AppResource.CommonCopyImage}" Style="{StaticResource ItemImage}" />
-                                      <TextBlock Style="{StaticResource ItemText}" Text="clipboard" AA:Language.Word="toolbar/clipboard" />
+                                      <Image Source="{x:Static app_main:AppResource.CommonCopyImage}" Style="{StaticResource ItemImage}" />
+                                      <TextBlock Style="{StaticResource ItemText}" Text="clipboard" app_main_view_parts_attached:Language.Word="toolbar/clipboard" />
                                     </StackPanel>
                                   </Label>
-                                  <Button Grid.Row="7" Grid.Column="0" Content="command"    AA:Language.Word="toolbar/clipboard/command"    IsEnabled="{Binding HasDataCommand}" Command="{Binding CopyTextCommand, Mode=OneTime}" CommandParameter="{x:Static ADD:LauncherCommandType.Command}" Style="{StaticResource PopupClose}" />
-                                  <Button Grid.Row="7" Grid.Column="1" Content="parent dir" AA:Language.Word="toolbar/clipboard/parent-dir" IsEnabled="{Binding HasDataParentDirectory}" Command="{Binding CopyTextCommand, Mode=OneTime}" CommandParameter="{x:Static ADD:LauncherCommandType.ParentDirectory}" Style="{StaticResource PopupClose}" />
-                                  <Button Grid.Row="7" Grid.Column="2" Content="work dir"   AA:Language.Word="toolbar/clipboard/work-dir"   IsEnabled="{Binding HasDataWorkDirectory}" Command="{Binding CopyTextCommand, Mode=OneTime}" CommandParameter="{x:Static ADD:LauncherCommandType.WorkDirectory}" Style="{StaticResource PopupClose}" />
+                                  <Button Grid.Row="7" Grid.Column="0" Content="command"    app_main_view_parts_attached:Language.Word="toolbar/clipboard/command"    IsEnabled="{Binding HasDataCommand}" Command="{Binding CopyTextCommand, Mode=OneTime}" CommandParameter="{x:Static app_library_pedata_define:LauncherCommandType.Command}" Style="{StaticResource PopupClose}" />
+                                  <Button Grid.Row="7" Grid.Column="1" Content="parent dir" app_main_view_parts_attached:Language.Word="toolbar/clipboard/parent-dir" IsEnabled="{Binding HasDataParentDirectory}" Command="{Binding CopyTextCommand, Mode=OneTime}" CommandParameter="{x:Static app_library_pedata_define:LauncherCommandType.ParentDirectory}" Style="{StaticResource PopupClose}" />
+                                  <Button Grid.Row="7" Grid.Column="2" Content="work dir"   app_main_view_parts_attached:Language.Word="toolbar/clipboard/work-dir"   IsEnabled="{Binding HasDataWorkDirectory}" Command="{Binding CopyTextCommand, Mode=OneTime}" CommandParameter="{x:Static app_library_pedata_define:LauncherCommandType.WorkDirectory}" Style="{StaticResource PopupClose}" />
 
                                   <Separator Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="3" />
 
                                   <Label Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource TitleLabel}">
                                     <StackPanel Orientation="Horizontal">
-                                      <Image Source="{x:Static AM:AppResource.CommonOthersImage}" Style="{StaticResource ItemImage}" />
-                                      <TextBlock Style="{StaticResource ItemText}" Text="others" AA:Language.Word="toolbar/others" />
+                                      <Image Source="{x:Static app_main:AppResource.CommonOthersImage}" Style="{StaticResource ItemImage}" />
+                                      <TextBlock Style="{StaticResource ItemText}" Text="others" app_main_view_parts_attached:Language.Word="toolbar/others" />
                                     </StackPanel>
                                   </Label>
-                                  <Button Grid.Row="10" Grid.Column="0" Content="customize" AA:Language.Word="toolbar/others/customize" Style="{StaticResource PopupClose}" Command="{Binding OpenCustomizeCommand, Mode=OneTime}" />
-                                  <Button Grid.Row="10" Grid.Column="1" Content="property"  AA:Language.Word="toolbar/others/property"  IsEnabled="{Binding ExistsCommand}" Command="{Binding OpenPropertyCommand, Mode=OneTime}" Style="{StaticResource PopupClose}" />
-                                  <ACC:LockedButton Grid.Row="10" Grid.Column="2" Content="remove" AA:Language.Word="toolbar/others/remove" Command="{Binding DataContext.RemoveItemCommand, Source={x:Reference root}}"  CommandParameter="{Binding}"  />
+                                  <Button Grid.Row="10" Grid.Column="0" Content="customize" app_main_view_parts_attached:Language.Word="toolbar/others/customize" Style="{StaticResource PopupClose}" Command="{Binding OpenCustomizeCommand, Mode=OneTime}" />
+                                  <Button Grid.Row="10" Grid.Column="1" Content="property"  app_main_view_parts_attached:Language.Word="toolbar/others/property"  IsEnabled="{Binding ExistsCommand}" Command="{Binding OpenPropertyCommand, Mode=OneTime}" Style="{StaticResource PopupClose}" />
+                                  <app_main_view_parts_control:LockedButton Grid.Row="10" Grid.Column="2" Content="remove" app_main_view_parts_attached:Language.Word="toolbar/others/remove" Command="{Binding DataContext.RemoveItemCommand, Source={x:Reference root}}"  CommandParameter="{Binding}"  />
                                 </Grid>
                               </xctk:SplitButton.DropDownContent>
                             </xctk:SplitButton>
@@ -645,7 +645,7 @@
                       </DataTrigger>
 
                       <!-- コマンド -->
-                      <DataTrigger Binding="{Binding LauncherKind, Mode=OneTime}" Value="{x:Static ADD:LauncherKind.Command}">
+                      <DataTrigger Binding="{Binding LauncherKind, Mode=OneTime}" Value="{x:Static app_library_pedata_define:LauncherKind.Command}">
                         <Setter Property="Content">
                           <Setter.Value>
                             <xctk:SplitButton Visibility="{Binding VisibilityCommand, Mode=OneWay}" Style="{StaticResource LauncherSplit}"  Command="{Binding RunCommand, Mode=OneTime}" >
@@ -688,44 +688,44 @@
 
                                   <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource TitleLabel}">
                                     <StackPanel Orientation="Horizontal">
-                                      <Image Source="{x:Static AM:AppResource.CommonRunImage}" Style="{StaticResource ItemImage}" />
-                                      <TextBlock Style="{StaticResource ItemText}" Text="execute" AA:Language.Word="toolbar/execute" />
+                                      <Image Source="{x:Static app_main:AppResource.CommonRunImage}" Style="{StaticResource ItemImage}" />
+                                      <TextBlock Style="{StaticResource ItemText}" Text="execute" app_main_view_parts_attached:Language.Word="toolbar/execute" />
                                     </StackPanel>
                                   </Label>
-                                  <Button Grid.Row="1" Grid.Column="0" Content="normal" AA:Language.Word="toolbar/execute/normal" IsEnabled="{Binding HasDataCommand}" Command="{Binding RunCommand, Mode=OneTime}" Style="{StaticResource PopupClose}" />
-                                  <Button Grid.Row="1" Grid.Column="1" Content="extra"  AA:Language.Word="toolbar/execute/extra"  IsEnabled="{Binding HasDataCommand}" Command="{Binding RunExCommand, Mode=OneTime}" Style="{StaticResource PopupClose}" />
+                                  <Button Grid.Row="1" Grid.Column="0" Content="normal" app_main_view_parts_attached:Language.Word="toolbar/execute/normal" IsEnabled="{Binding HasDataCommand}" Command="{Binding RunCommand, Mode=OneTime}" Style="{StaticResource PopupClose}" />
+                                  <Button Grid.Row="1" Grid.Column="1" Content="extra"  app_main_view_parts_attached:Language.Word="toolbar/execute/extra"  IsEnabled="{Binding HasDataCommand}" Command="{Binding RunExCommand, Mode=OneTime}" Style="{StaticResource PopupClose}" />
 
                                   <Separator Grid.Row="2" Grid.ColumnSpan="2"/>
 
                                   <Label Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource TitleLabel}">
                                     <StackPanel Orientation="Horizontal">
-                                      <Image Source="{x:Static AM:AppResource.CommonFileImage}" Style="{StaticResource ItemImage}" />
-                                      <TextBlock Style="{StaticResource ItemText}" Text="file" AA:Language.Word="toolbar/file" />
+                                      <Image Source="{x:Static app_main:AppResource.CommonFileImage}" Style="{StaticResource ItemImage}" />
+                                      <TextBlock Style="{StaticResource ItemText}" Text="file" app_main_view_parts_attached:Language.Word="toolbar/file" />
                                     </StackPanel>
                                   </Label>
-                                  <Button Grid.Row="4" Grid.Column="0" Content="work dir"   AA:Language.Word="toolbar/file/work-dir"   IsEnabled="{Binding ExistsWorkDirectory}" Command="{Binding OpenDirectoryCommand, Mode=OneTime}" CommandParameter="{x:Static ADD:LauncherCommandType.WorkDirectory}" Style="{StaticResource PopupClose}" />
+                                  <Button Grid.Row="4" Grid.Column="0" Content="work dir"   app_main_view_parts_attached:Language.Word="toolbar/file/work-dir"   IsEnabled="{Binding ExistsWorkDirectory}" Command="{Binding OpenDirectoryCommand, Mode=OneTime}" CommandParameter="{x:Static app_library_pedata_define:LauncherCommandType.WorkDirectory}" Style="{StaticResource PopupClose}" />
 
                                   <Separator Grid.Row="5" Grid.ColumnSpan="2"/>
 
                                   <Label Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource TitleLabel}">
                                     <StackPanel Orientation="Horizontal">
-                                      <Image Source="{x:Static AM:AppResource.CommonCopyImage}" Style="{StaticResource ItemImage}" />
-                                      <TextBlock Style="{StaticResource ItemText}" Text="clipboard" AA:Language.Word="toolbar/clipboard" />
+                                      <Image Source="{x:Static app_main:AppResource.CommonCopyImage}" Style="{StaticResource ItemImage}" />
+                                      <TextBlock Style="{StaticResource ItemText}" Text="clipboard" app_main_view_parts_attached:Language.Word="toolbar/clipboard" />
                                     </StackPanel>
                                   </Label>
-                                  <Button Grid.Row="7" Grid.Column="0" Content="command" AA:Language.Word="toolbar/clipboard/command" IsEnabled="{Binding HasDataCommand}" Command="{Binding CopyTextCommand, Mode=OneTime}" CommandParameter="{x:Static ADD:LauncherCommandType.Command}" Style="{StaticResource PopupClose}" />
-                                  <Button Grid.Row="7" Grid.Column="1" Content="work dir"   AA:Language.Word="toolbar/clipboard/work-dir"   IsEnabled="{Binding HasDataWorkDirectory}" Command="{Binding CopyTextCommand, Mode=OneTime}" CommandParameter="{x:Static ADD:LauncherCommandType.WorkDirectory}" Style="{StaticResource PopupClose}" />
+                                  <Button Grid.Row="7" Grid.Column="0" Content="command" app_main_view_parts_attached:Language.Word="toolbar/clipboard/command" IsEnabled="{Binding HasDataCommand}" Command="{Binding CopyTextCommand, Mode=OneTime}" CommandParameter="{x:Static app_library_pedata_define:LauncherCommandType.Command}" Style="{StaticResource PopupClose}" />
+                                  <Button Grid.Row="7" Grid.Column="1" Content="work dir"   app_main_view_parts_attached:Language.Word="toolbar/clipboard/work-dir"   IsEnabled="{Binding HasDataWorkDirectory}" Command="{Binding CopyTextCommand, Mode=OneTime}" CommandParameter="{x:Static app_library_pedata_define:LauncherCommandType.WorkDirectory}" Style="{StaticResource PopupClose}" />
 
                                   <Separator Grid.Row="8" Grid.ColumnSpan="2"/>
 
                                   <Label Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource TitleLabel}">
                                     <StackPanel Orientation="Horizontal">
-                                      <Image Source="{x:Static AM:AppResource.CommonOthersImage}" Style="{StaticResource ItemImage}" />
-                                      <TextBlock Style="{StaticResource ItemText}" Text="others" AA:Language.Word="toolbar/others" />
+                                      <Image Source="{x:Static app_main:AppResource.CommonOthersImage}" Style="{StaticResource ItemImage}" />
+                                      <TextBlock Style="{StaticResource ItemText}" Text="others" app_main_view_parts_attached:Language.Word="toolbar/others" />
                                     </StackPanel>
                                   </Label>
-                                  <Button Grid.Row="10" Grid.Column="0" Content="customize" AA:Language.Word="toolbar/others/customize" Style="{StaticResource PopupClose}" Command="{Binding OpenCustomizeCommand, Mode=OneTime}" />
-                                  <ACC:LockedButton Grid.Row="10" Grid.Column="1" Content="remove" AA:Language.Word="toolbar/others/remove" Command="{Binding DataContext.RemoveItemCommand, Source={x:Reference root}}"  CommandParameter="{Binding}"  />
+                                  <Button Grid.Row="10" Grid.Column="0" Content="customize" app_main_view_parts_attached:Language.Word="toolbar/others/customize" Style="{StaticResource PopupClose}" Command="{Binding OpenCustomizeCommand, Mode=OneTime}" />
+                                  <app_main_view_parts_control:LockedButton Grid.Row="10" Grid.Column="1" Content="remove" app_main_view_parts_attached:Language.Word="toolbar/others/remove" Command="{Binding DataContext.RemoveItemCommand, Source={x:Reference root}}"  CommandParameter="{Binding}"  />
                                 </Grid>
                               </xctk:SplitButton.DropDownContent>
                             </xctk:SplitButton>
@@ -744,4 +744,4 @@
   </DockPanel>
 
 
-</AW:ViewModelCommonDataWindow>
+</app_main_view_parts_window:ViewModelCommonDataWindow>
