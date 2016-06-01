@@ -4,11 +4,11 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
   xmlns:Taskbar="http://www.hardcodet.net/taskbar"
+  xmlns:app_library_sharedlibrary_view_converter="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=ContentTypeTextNet.SharedLibrary"
   xmlns:app_main="clr-namespace:ContentTypeTextNet.Pe.PeMain"
-  xmlns:AV="clr-namespace:ContentTypeTextNet.Pe.PeMain.ViewModel"
+  xmlns:app_main_viewmodel="clr-namespace:ContentTypeTextNet.Pe.PeMain.ViewModel"
   xmlns:app_main_view_parts_attached="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Attached"
   xmlns:app_main_view_parts_control="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Control"
-  xmlns:app_library_sharedlibrary_view_converter="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=ContentTypeTextNet.SharedLibrary"
 >
   <ResourceDictionary.MergedDictionaries>
     <ResourceDictionary Source="/View/Parts/Resource/ImageDictionary.xaml"/>

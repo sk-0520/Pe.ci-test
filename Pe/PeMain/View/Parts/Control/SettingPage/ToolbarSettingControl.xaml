@@ -3,17 +3,16 @@
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-  xmlns:windows="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+  xmlns:app_library_sharedlibrary_view_converter="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=ContentTypeTextNet.SharedLibrary"
+  xmlns:app_library_pedata_define="clr-namespace:ContentTypeTextNet.Pe.Library.PeData.Define;assembly=PeData"
   xmlns:app_main="clr-namespace:ContentTypeTextNet.Pe.PeMain"
+  xmlns:app_main_define="clr-namespace:ContentTypeTextNet.Pe.PeMain.Define"
+  xmlns:app_main_view_parts="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
   xmlns:app_main_view_parts_control="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Control"
   xmlns:app_main_view_parts_attached="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Attached"
-  xmlns:AP="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
   xmlns:app_main_view_parts_converter="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Converter"
   xmlns:app_main_view_parts_converter_elc="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Converter.EnumLanguageConverter"
-  xmlns:app_library_sharedlibrary_view_converter="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=ContentTypeTextNet.SharedLibrary"
-  xmlns:AD="clr-namespace:ContentTypeTextNet.Pe.PeMain.Define"
-  xmlns:app_library_pedata_define="clr-namespace:ContentTypeTextNet.Pe.Library.PeData.Define;assembly=PeData"
 
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   mc:Ignorable="d"
@@ -93,9 +92,9 @@
         </ComboBox>
 
         <Label Grid.Row="1" Grid.Column="0" Content="dock" app_main_view_parts_attached:Language.Word="toolbar-setting/toolbar/position" Style="{StaticResource HeaderLabel}" Target="{Binding ElementName=selectDockType}" />
-        <ComboBox x:Name="selectDockType" Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Source={x:Static AP:EnumList.DockTypeList}}" SelectedItem="{Binding SelectedToolbar.DockType, Mode=TwoWay}" Style="{StaticResource DefaultComboBox}">
+        <ComboBox x:Name="selectDockType" Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Source={x:Static app_main_view_parts:EnumList.DockTypeList}}" SelectedItem="{Binding SelectedToolbar.DockType, Mode=TwoWay}" Style="{StaticResource DefaultComboBox}">
           <ComboBox.Resources>
-            <windows:Size x:Key="ImageSize" Width="16" Height="16" />
+            <Size x:Key="ImageSize" Width="16" Height="16" />
           </ComboBox.Resources>
           <ComboBox.ItemTemplate>
             <DataTemplate>
@@ -116,7 +115,7 @@
         </ComboBox>
 
         <Label Grid.Row="2" Grid.Column="0" Content="pos" app_main_view_parts_attached:Language.Word="toolbar-setting/toolbar/button" Style="{StaticResource HeaderLabel}" Target="{Binding ElementName=selectButtonPosition}" />
-        <ComboBox x:Name="selectButtonPosition" Grid.Row="2" Grid.Column="1" ItemsSource="{Binding Source={x:Static AP:EnumList.ToolbarButtonPositionList}}" SelectedItem="{Binding SelectedToolbar.ButtonPosition, Mode=TwoWay}"  Style="{StaticResource DefaultComboBox}">
+        <ComboBox x:Name="selectButtonPosition" Grid.Row="2" Grid.Column="1" ItemsSource="{Binding Source={x:Static app_main_view_parts:EnumList.ToolbarButtonPositionList}}" SelectedItem="{Binding SelectedToolbar.ButtonPosition, Mode=TwoWay}"  Style="{StaticResource DefaultComboBox}">
           <ComboBox.ItemTemplate>
             <DataTemplate>
               <TextBlock>
@@ -132,7 +131,7 @@
         </ComboBox>
 
         <Label Grid.Row="3" Grid.Column="0" Content="icon" app_main_view_parts_attached:Language.Word="toolbar-setting/toolbar/icon" Style="{StaticResource HeaderLabel}" Target="{Binding ElementName=selectIcon}" />
-        <ComboBox x:Name="selectIcon" Grid.Row="3" Grid.Column="1" ItemsSource="{Binding Source={x:Static AP:EnumList.PlainIconScaleList}}" SelectedItem="{Binding SelectedToolbar.IconScale, Mode=TwoWay}"  Style="{StaticResource DefaultComboBox}">
+        <ComboBox x:Name="selectIcon" Grid.Row="3" Grid.Column="1" ItemsSource="{Binding Source={x:Static app_main_view_parts:EnumList.PlainIconScaleList}}" SelectedItem="{Binding SelectedToolbar.IconScale, Mode=TwoWay}"  Style="{StaticResource DefaultComboBox}">
           <ComboBox.ItemTemplate>
             <DataTemplate>
               <TextBlock>

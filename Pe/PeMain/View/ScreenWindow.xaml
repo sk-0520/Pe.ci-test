@@ -1,15 +1,15 @@
-﻿<app_main_view_parts_window:ViewModelCommonDataWindow 
+﻿<app_main_view_parts_window:ViewModelCommonDataWindow
   x:Class="ContentTypeTextNet.Pe.PeMain.View.ScreenWindow"
   x:TypeArguments="app_main_viewmodel:ScreenViewModel"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-  xmlns:app_main_view_parts_window="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Window"
-  xmlns:app_main_view_parts_attached="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Attached"
   xmlns:app_main_viewmodel="clr-namespace:ContentTypeTextNet.Pe.PeMain.ViewModel"
+  xmlns:app_main_view_parts_attached="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Attached"
+  xmlns:app_main_view_parts_window="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Window"
   app_main_view_parts_attached:Language.Word="window/screen"
-  Title="ScreenWindow" 
+  Title="ScreenWindow"
   Width="300"
-  Height="300" 
+  Height="300"
   Icon="/PeMain;component/Resources/Icon/App.ico"
   WindowStyle="None"
   AllowsTransparency="True"
@@ -17,7 +17,7 @@
   Topmost="True"
   ShowInTaskbar="False"
   ResizeMode="NoResize"
-  
+
   Background="{Binding Background}"
   Foreground="{Binding Foreground}"
 >
@@ -27,9 +27,9 @@
     </Style>
   </app_main_view_parts_window:CommonDataWindow.Resources>
   <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-    
+
     <TextBlock Text="{Binding ScreenName}" />
-    
+
     <StackPanel Margin="20">
       <TextBlock Text="{Binding DeviceName}" />
       <TextBlock>
@@ -45,8 +45,8 @@
         </TextBlock.Style>
       </TextBlock>
     </StackPanel>
-    
+
     <TextBlock Text="click or key" app_main_view_parts_attached:Language.Word="screen/click-key" />
-    
+
   </StackPanel>
 </app_main_view_parts_window:ViewModelCommonDataWindow>

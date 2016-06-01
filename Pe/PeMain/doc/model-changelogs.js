@@ -180,7 +180,7 @@
 					},
 					{
 						'revision': '',
-						'subject': ''
+						'subject': 'XAMLの名前空間を整備'
 					}
 				]
 			}

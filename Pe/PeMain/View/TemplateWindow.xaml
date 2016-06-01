@@ -1,24 +1,24 @@
 ﻿<app_main_view_parts_window:ViewModelCommonDataWindow
   x:Class="ContentTypeTextNet.Pe.PeMain.View.TemplateWindow"
+  x:TypeArguments="app_main_viewmodel:TemplateViewModel"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
   xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
-  xmlns:AP="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
-  xmlns:app_main_view_parts_attached="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Attached"
-  xmlns:app_main_view_parts_window="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Window"
-  xmlns:app_main_viewmodel="clr-namespace:ContentTypeTextNet.Pe.PeMain.ViewModel"
-  xmlns:app_main_view_parts_converter="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Converter"
-  xmlns:app_main="clr-namespace:ContentTypeTextNet.Pe.PeMain"
   xmlns:app_library_sharedlibrary_view_converter="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=ContentTypeTextNet.SharedLibrary"
-  xmlns:app_main_view_parts_converter_elc="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Converter.EnumLanguageConverter" 
   xmlns:app_library_pedata_define="clr-namespace:ContentTypeTextNet.Pe.Library.PeData.Define;assembly=PeData"
-  x:TypeArguments="app_main_viewmodel:TemplateViewModel"
+  xmlns:app_main="clr-namespace:ContentTypeTextNet.Pe.PeMain"
+  xmlns:app_main_viewmodel="clr-namespace:ContentTypeTextNet.Pe.PeMain.ViewModel"
+  xmlns:app_main_view_parts="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
+  xmlns:app_main_view_parts_attached="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Attached"
+  xmlns:app_main_view_parts_converter="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Converter"
+  xmlns:app_main_view_parts_converter_elc="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Converter.EnumLanguageConverter"
+  xmlns:app_main_view_parts_window="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Window"
   Title="TemplateWindow"
   app_main_view_parts_attached:Language.Word="window/template"
   x:Name="root"
   Style="{DynamicResource ClipboardTemplateDefualtWindow}"
-  
+
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
   d:DesignWidth="407" d:DesignHeight="222"
 >
@@ -198,7 +198,7 @@
               <TextBox x:Name="inputName" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Text="{Binding SelectedViewModel.Name, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DefaultTextBox}" />
               <!--<CheckBox Grid.Column="2" Margin="4,0,4,0" VerticalAlignment="Center" Content="replace" app_main_view_parts_attached:Language.Word="template/item/replace" IsChecked="{Binding SelectedViewModel.IsReplace}" />
               <CheckBox Grid.Column="3" VerticalAlignment="Center" Content="T4" app_main_view_parts_attached:Language.Word="template/item/t4" IsChecked="{Binding SelectedViewModel.IsProgrammableReplace}" />-->
-              <ComboBox Grid.Column="2" HorizontalAlignment="Stretch" ItemsSource="{Binding Source={x:Static AP:EnumList.TemplateReplaceModeList}}" SelectedItem="{Binding SelectedViewModel.TemplateReplaceMode}" Style="{StaticResource DefaultComboBox}">
+              <ComboBox Grid.Column="2" HorizontalAlignment="Stretch" ItemsSource="{Binding Source={x:Static app_main_view_parts:EnumList.TemplateReplaceModeList}}" SelectedItem="{Binding SelectedViewModel.TemplateReplaceMode}" Style="{StaticResource DefaultComboBox}">
                 <ComboBox.ItemTemplate>
                   <DataTemplate>
                     <StackPanel Orientation="Horizontal">
@@ -262,7 +262,7 @@
                 Document="{Binding SelectedViewModel.Document}"
               >
                 <avalonEdit:TextEditor.Options>
-                  <avalonEdit:TextEditorOptions 
+                  <avalonEdit:TextEditorOptions
                     EnableHyperlinks="False"
                     EnableEmailHyperlinks="False"
                     EnableRectangularSelection="True"
