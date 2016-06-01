@@ -1,29 +1,28 @@
-﻿<AW:ViewModelCommonDataWindow
+﻿<app_main_view_parts_window:ViewModelCommonDataWindow
   x:Class="ContentTypeTextNet.Pe.PeMain.View.ClipboardWindow"
+  x:TypeArguments="app_main_viewmodel:ClipboardViewModel"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
   xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-  xmlns:AP="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
-  xmlns:AA="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Attached"
-  xmlns:AW="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Window"
-  xmlns:AVM="clr-namespace:ContentTypeTextNet.Pe.PeMain.ViewModel"
-  xmlns:AC="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Converter"
-  xmlns:ACC="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Control"
-  xmlns:AM="clr-namespace:ContentTypeTextNet.Pe.PeMain"
-  xmlns:AD="clr-namespace:ContentTypeTextNet.Pe.PeMain.Define"
-  xmlns:SC="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=ContentTypeTextNet.SharedLibrary"
-  xmlns:SD="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.Define;assembly=ContentTypeTextNet.SharedLibrary"
-  x:TypeArguments="AVM:ClipboardViewModel"
-  Title="ClipboardWindow" 
-  AA:Language.Word="window/clipboard"
+  xmlns:app_library_sharedlibrary_view_converter="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=ContentTypeTextNet.SharedLibrary"
+  xmlns:app_library_sharedlibrary_define="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.Define;assembly=ContentTypeTextNet.SharedLibrary"
+  xmlns:app_main="clr-namespace:ContentTypeTextNet.Pe.PeMain"
+  xmlns:app_main_define="clr-namespace:ContentTypeTextNet.Pe.PeMain.Define"
+  xmlns:app_main_viewmodel="clr-namespace:ContentTypeTextNet.Pe.PeMain.ViewModel"
+  xmlns:app_main_view_parts_attached="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Attached"
+  xmlns:app_main_view_parts_control="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Control"
+  xmlns:app_main_view_parts_converter="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Converter"
+  xmlns:app_main_view_parts_window="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Window"
+  Title="ClipboardWindow"
+  app_main_view_parts_attached:Language.Word="window/clipboard"
   x:Name="root"
   Style="{DynamicResource ClipboardTemplateDefualtWindow}"
 
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
   d:DesignWidth="407" d:DesignHeight="222"
 >
-  <AW:CommonDataWindow.Resources>
+  <app_main_view_parts_window:CommonDataWindow.Resources>
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/View/Parts/Resource/IndexItemsDictionary.xaml"/>
@@ -34,33 +33,33 @@
         <ResourceDictionary Source="/View/Parts/Resource/LabelDictionary.xaml"/>
         <ResourceDictionary Source="/View/Parts/Resource/TextBlockDictionary.xaml"/>
       </ResourceDictionary.MergedDictionaries>
-      <SC:LogicalNotConverter x:Key="LogicalNotConverter" />
-      <SC:LogicalIsNotNullConverter x:Key="LogicalIsNotNullConverter" />
-      <SC:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
-      <SC:GridDistanceConverter x:Key="GridDistanceConverter" />
+      <app_library_sharedlibrary_view_converter:LogicalNotConverter x:Key="LogicalNotConverter" />
+      <app_library_sharedlibrary_view_converter:LogicalIsNotNullConverter x:Key="LogicalIsNotNullConverter" />
+      <app_library_sharedlibrary_view_converter:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
+      <app_library_sharedlibrary_view_converter:GridDistanceConverter x:Key="GridDistanceConverter" />
       <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-      <AC:ReverseClipboardItemListConverter x:Key="ReverseClipboardItemListConverter" />
-      <AC:DisplayTextConverter x:Key="DisplayTextConverter" />
-      <SC:BooleanFontWeightConverter x:Key="BooleanFontWeightConverter" />
-      <SC:BooleanFontStyleConverter x:Key="BooleanFontStyleConverter" />
-      <AC:SelectedIndexNumberConverter x:Key="SelectedIndexNumberConverter" />
+      <app_main_view_parts_converter:ReverseClipboardItemListConverter x:Key="ReverseClipboardItemListConverter" />
+      <app_main_view_parts_converter:DisplayTextConverter x:Key="DisplayTextConverter" />
+      <app_library_sharedlibrary_view_converter:BooleanFontWeightConverter x:Key="BooleanFontWeightConverter" />
+      <app_library_sharedlibrary_view_converter:BooleanFontStyleConverter x:Key="BooleanFontStyleConverter" />
+      <app_main_view_parts_converter:SelectedIndexNumberConverter x:Key="SelectedIndexNumberConverter" />
       <Style x:Key="ClipboardText" TargetType="Image" BasedOn="{StaticResource DefaultImage}">
-        <Setter Property="Source" Value="{x:Static AM:AppResource.ClipboardTextImage}" />
+        <Setter Property="Source" Value="{x:Static app_main:AppResource.ClipboardTextImage}" />
       </Style>
       <Style x:Key="ClipboardRtf" TargetType="Image" BasedOn="{StaticResource DefaultImage}">
-        <Setter Property="Source" Value="{x:Static AM:AppResource.ClipboardRtfImage}" />
+        <Setter Property="Source" Value="{x:Static app_main:AppResource.ClipboardRtfImage}" />
       </Style>
       <Style x:Key="ClipboardHtml" TargetType="Image" BasedOn="{StaticResource DefaultImage}">
-        <Setter Property="Source" Value="{x:Static AM:AppResource.ClipboardHtmlImage}" />
+        <Setter Property="Source" Value="{x:Static app_main:AppResource.ClipboardHtmlImage}" />
       </Style>
       <Style x:Key="ClipboardImage" TargetType="Image" BasedOn="{StaticResource DefaultImage}">
-        <Setter Property="Source" Value="{x:Static AM:AppResource.ClipboardImageImage}" />
+        <Setter Property="Source" Value="{x:Static app_main:AppResource.ClipboardImageImage}" />
       </Style>
       <Style x:Key="ClipboardFiles" TargetType="Image" BasedOn="{StaticResource DefaultImage}">
-        <Setter Property="Source" Value="{x:Static AM:AppResource.ClipboardFileImage}" />
+        <Setter Property="Source" Value="{x:Static app_main:AppResource.ClipboardFileImage}" />
       </Style>
     </ResourceDictionary>
-  </AW:CommonDataWindow.Resources>
+  </app_main_view_parts_window:CommonDataWindow.Resources>
   <Grid>
     <Grid>
       <Grid.RowDefinitions>
@@ -69,39 +68,39 @@
         <RowDefinition Height="Auto"/>
       </Grid.RowDefinitions>
       <ToolBar Style="{StaticResource ClipboardTemplateDefualtToolbar}" >
-        <ToggleButton IsChecked="{Binding IsEnabled}" AA:Language.Hint="clipboard/enabled:hint">
+        <ToggleButton IsChecked="{Binding IsEnabled}" app_main_view_parts_attached:Language.Hint="clipboard/enabled:hint">
           <StackPanel Orientation="Horizontal">
-            <Label Content="enabled" AA:Language.Word="clipboard/enabled" Style="{StaticResource ContentTextLabel}" />
+            <Label Content="enabled" app_main_view_parts_attached:Language.Word="clipboard/enabled" Style="{StaticResource ContentTextLabel}" />
           </StackPanel>
         </ToggleButton>
         <Separator />
         <Button Command="{Binding SaveItemCommand}" IsEnabled="{Binding IsEnabled,ElementName=content}">
           <StackPanel Orientation="Horizontal">
-            <Image Style="{StaticResource ItemImage}" Source="{x:Static AM:AppResource.CommonSaveImage}" />
-            <Label Content="save" AA:Language.Word="clipboard/save" Style="{StaticResource ContentTextLabel}" />
+            <Image Style="{StaticResource ItemImage}" Source="{x:Static app_main:AppResource.CommonSaveImage}" />
+            <Label Content="save" app_main_view_parts_attached:Language.Word="clipboard/save" Style="{StaticResource ContentTextLabel}" />
           </StackPanel>
         </Button>
         <Separator />
         <Button Command="{Binding RemoveItemCommand}" IsEnabled="{Binding IsEnabled,ElementName=content}">
           <StackPanel Orientation="Horizontal">
-            <Image Style="{StaticResource ItemImage}" Source="{x:Static AM:AppResource.CommonRemoveImage}" />
-            <Label Content="remove" AA:Language.Word="clipboard/remove" Style="{StaticResource ContentTextLabel}" />
+            <Image Style="{StaticResource ItemImage}" Source="{x:Static app_main:AppResource.CommonRemoveImage}" />
+            <Label Content="remove" app_main_view_parts_attached:Language.Word="clipboard/remove" Style="{StaticResource ContentTextLabel}" />
           </StackPanel>
         </Button>
         <Button Command="{Binding ClipboardClearCommand}">
           <StackPanel Orientation="Horizontal">
-            <Image Style="{StaticResource ItemImage}" Source="{x:Static AM:AppResource.ClipboardClearImage}" />
-            <Label Content="clipboard clear" AA:Language.Word="clipboard/clear" Style="{StaticResource ContentTextLabel}" />
+            <Image Style="{StaticResource ItemImage}" Source="{x:Static app_main:AppResource.ClipboardClearImage}" />
+            <Label Content="clipboard clear" app_main_view_parts_attached:Language.Word="clipboard/clear" Style="{StaticResource ContentTextLabel}" />
           </StackPanel>
         </Button>
         <Separator />
-        <ToggleButton IsChecked="{Binding IsTopmost}" AA:Language.Hint="clipboard/topmost">
-          <Image Style="{StaticResource ItemImage}" Source="{x:Static AM:AppResource.CommonPinImage}" />
+        <ToggleButton IsChecked="{Binding IsTopmost}" app_main_view_parts_attached:Language.Hint="clipboard/topmost">
+          <Image Style="{StaticResource ItemImage}" Source="{x:Static app_main:AppResource.CommonPinImage}" />
         </ToggleButton>
         <ToggleButton IsChecked="{Binding AppNonProcess.ClipboardWatcher.UsingClipboard}">
           <StackPanel Orientation="Horizontal">
-            <Image Style="{StaticResource ItemImage}" Source="{x:Static AM:AppResource.CommonUsingClipboardImage}" />
-            <Label Content="use clipboard" AA:Language.Word="clipboard/using-clipboard" Style="{StaticResource ContentTextLabel}" />
+            <Image Style="{StaticResource ItemImage}" Source="{x:Static app_main:AppResource.CommonUsingClipboardImage}" />
+            <Label Content="use clipboard" app_main_view_parts_attached:Language.Word="clipboard/using-clipboard" Style="{StaticResource ContentTextLabel}" />
           </StackPanel>
         </ToggleButton>
       </ToolBar>
@@ -143,31 +142,31 @@
                           <Setter Property="Focusable" Value="False" />
                         </Style>
                       </StackPanel.Resources>
-                      <Button IsEnabled="{Binding EnabledClipboardTypesText}" Command="{Binding SendItemCommand}" CommandParameter="{Binding ElementName=root}" AA:Language.Hint="clipboard/command/send" >
+                      <Button IsEnabled="{Binding EnabledClipboardTypesText}" Command="{Binding SendItemCommand}" CommandParameter="{Binding ElementName=root}" app_main_view_parts_attached:Language.Hint="clipboard/command/send" >
                         <!-- send -->
-                        <Image Style="{StaticResource DefaultImage}" Source="{Binding Source={x:Static AM:AppResource.CommonSendImage}}" />
+                        <Image Style="{StaticResource DefaultImage}" Source="{Binding Source={x:Static app_main:AppResource.CommonSendImage}}" />
                       </Button>
-                      <Button Command="{Binding CopyItemCommand}" AA:Language.Hint="clipboard/command/copy" >
+                      <Button Command="{Binding CopyItemCommand}" app_main_view_parts_attached:Language.Hint="clipboard/command/copy" >
                         <!-- copy -->
-                        <Image Style="{StaticResource DefaultImage}" Source="{Binding Source={x:Static AM:AppResource.CommonCopyImage}}" />
+                        <Image Style="{StaticResource DefaultImage}" Source="{Binding Source={x:Static app_main:AppResource.CommonCopyImage}}" />
                       </Button>
-                      <Button Margin="2,0,0,0" Command="{Binding CopyTextCommand}" IsEnabled="{Binding EnabledClipboardTypesText}" AA:Language.Hint="clipboard/command/text" >
+                      <Button Margin="2,0,0,0" Command="{Binding CopyTextCommand}" IsEnabled="{Binding EnabledClipboardTypesText}" app_main_view_parts_attached:Language.Hint="clipboard/command/text" >
                         <!-- text -->
                         <Image Style="{StaticResource ClipboardText}" />
                       </Button>
-                      <Button Command="{Binding CopyRtfCommand}" IsEnabled="{Binding EnabledClipboardTypesRtf}" AA:Language.Hint="clipboard/command/rtf">
+                      <Button Command="{Binding CopyRtfCommand}" IsEnabled="{Binding EnabledClipboardTypesRtf}" app_main_view_parts_attached:Language.Hint="clipboard/command/rtf">
                         <!-- rft -->
                         <Image Style="{StaticResource ClipboardRtf}" />
                       </Button>
-                      <Button Command="{Binding CopyHtmlCommand}" IsEnabled="{Binding EnabledClipboardTypesHtml}" AA:Language.Hint="clipboard/command/hint" >
+                      <Button Command="{Binding CopyHtmlCommand}" IsEnabled="{Binding EnabledClipboardTypesHtml}" app_main_view_parts_attached:Language.Hint="clipboard/command/hint" >
                         <!-- html -->
                         <Image Style="{StaticResource ClipboardHtml}" />
                       </Button>
-                      <Button Command="{Binding CopyImageCommand}" IsEnabled="{Binding EnabledClipboardTypesImage}" AA:Language.Hint="clipboard/command/image">
+                      <Button Command="{Binding CopyImageCommand}" IsEnabled="{Binding EnabledClipboardTypesImage}" app_main_view_parts_attached:Language.Hint="clipboard/command/image">
                         <!-- image -->
                         <Image Style="{StaticResource ClipboardImage}" />
                       </Button>
-                      <Button Command="{Binding CopyFilesCommand}" IsEnabled="{Binding EnabledClipboardTypesFiles}" AA:Language.Hint="clipboard/command/files">
+                      <Button Command="{Binding CopyFilesCommand}" IsEnabled="{Binding EnabledClipboardTypesFiles}" app_main_view_parts_attached:Language.Hint="clipboard/command/files">
                         <!-- file -->
                         <Image Style="{StaticResource ClipboardFiles}" />
                       </Button>
@@ -189,7 +188,7 @@
               <ColumnDefinition Width="Auto" />
               <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <Label Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Content="name" AA:Language.Word="clipboard/item/name" Target="{Binding ElementName=inputName}" Style="{StaticResource HeaderLabel}" />
+            <Label Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Content="name" app_main_view_parts_attached:Language.Word="clipboard/item/name" Target="{Binding ElementName=inputName}" Style="{StaticResource HeaderLabel}" />
             <TextBox x:Name="inputName" Grid.Column="1" HorizontalAlignment="Stretch" Text="{Binding SelectedViewModel.Name, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DefaultTextBox}" />
           </Grid>
           <TabControl x:Name="tabClipboard" Grid.Row="1">
@@ -197,10 +196,10 @@
               <TabItem.Header>
                 <StackPanel Orientation="Horizontal">
                   <Image Style="{StaticResource ClipboardText}" Margin="{StaticResource ItemImageMargin}" />
-                  <Label Content="text" AA:Language.Word="clipboard/type/text" Style="{StaticResource ContentTextLabel}" />
+                  <Label Content="text" app_main_view_parts_attached:Language.Word="clipboard/type/text" Style="{StaticResource ContentTextLabel}" />
                 </StackPanel>
               </TabItem.Header>
-              <TextBox 
+              <TextBox
                 IsReadOnly="True"
                 UndoLimit="0"
                 Text="{Binding SelectedViewModel.Text, Mode=OneWay}"
@@ -215,13 +214,13 @@
               <TabItem.Header>
                 <StackPanel Orientation="Horizontal">
                   <Image Style="{StaticResource ClipboardRtf}" Margin="{StaticResource ItemImageMargin}" />
-                  <Label Content="rft" AA:Language.Word="clipboard/type/rtf" Style="{StaticResource ContentTextLabel}" />
+                  <Label Content="rft" app_main_view_parts_attached:Language.Word="clipboard/type/rtf" Style="{StaticResource ContentTextLabel}" />
                 </StackPanel>
               </TabItem.Header>
               <!-- HACK: Mode=OneWay は xctk:RichTextBox で表示できなくなる-->
-              <xctk:RichTextBox 
-                IsReadOnly="True" 
-                HorizontalScrollBarVisibility="Auto" 
+              <xctk:RichTextBox
+                IsReadOnly="True"
+                HorizontalScrollBarVisibility="Auto"
                 VerticalScrollBarVisibility="Auto"
                 Text="{Binding SelectedViewModel.Rtf}"
                 UndoLimit="0"
@@ -237,7 +236,7 @@
               <TabItem.Header>
                 <StackPanel Orientation="Horizontal">
                   <Image Style="{StaticResource ClipboardHtml}" Margin="{StaticResource ItemImageMargin}" />
-                  <Label Content="html" AA:Language.Word="clipboard/type/html" Style="{StaticResource ContentTextLabel}" />
+                  <Label Content="html" app_main_view_parts_attached:Language.Word="clipboard/type/html" Style="{StaticResource ContentTextLabel}" />
                 </StackPanel>
               </TabItem.Header>
               <Grid>
@@ -252,21 +251,21 @@
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource HeaderText}">
                   <Hyperlink Command="{Binding SelectedViewModel.OpenUriCommand}">
-                    <TextBlock Text="uri" AA:Language.Word="clipboard/html/uri" />
+                    <TextBlock Text="uri" app_main_view_parts_attached:Language.Word="clipboard/html/uri" />
                   </Hyperlink>
                 </TextBlock>
                 <TextBox Grid.Row="0" Grid.Column="1" IsReadOnly="True" Text="{Binding SelectedViewModel.HtmlUri, Mode=OneWay}" Style="{StaticResource DefaultTextBox}" />
                 <Button Grid.Row="0" Grid.Column="2" Command="{Binding SelectedViewModel.CopyHtmlUriCommand}">
-                  <Image Source="{x:Static AM:AppResource.CommonCopyImage}" Style="{StaticResource DefaultImage}" />
+                  <Image Source="{x:Static app_main:AppResource.CommonCopyImage}" Style="{StaticResource DefaultImage}" />
                 </Button>
-                <WebBrowser x:Name="webHtml" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" AA:Browser.Html="{Binding SelectedViewModel.HtmlCode}" />
+                <WebBrowser x:Name="webHtml" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" app_main_view_parts_attached:Browser.Html="{Binding SelectedViewModel.HtmlCode}" />
               </Grid>
             </TabItem>
             <TabItem x:Name="pageImage" Visibility="{Binding SelectedViewModel.EnabledClipboardTypesImage, Converter={StaticResource BooleanToVisibilityConverter}}">
               <TabItem.Header>
                 <StackPanel Orientation="Horizontal">
                   <Image Style="{StaticResource ClipboardImage}" Margin="{StaticResource ItemImageMargin}" />
-                  <Label Content="image" AA:Language.Word="clipboard/type/image" Style="{StaticResource ContentTextLabel}" />
+                  <Label Content="image" app_main_view_parts_attached:Language.Word="clipboard/type/image" Style="{StaticResource ContentTextLabel}" />
                 </StackPanel>
               </TabItem.Header>
               <Grid>
@@ -275,16 +274,16 @@
                   <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <ToolBar Grid.Row="0" Style="{StaticResource DefaultHorizontalToolbar}">
-                  <RadioButton x:Name="imageFit" IsChecked="{Binding ImageScale, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static AD:ImageScale.Fit}}" >
+                  <RadioButton x:Name="imageFit" IsChecked="{Binding ImageScale, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_define:ImageScale.Fit}}" >
                     <StackPanel Orientation="Horizontal">
-                      <Image Style="{StaticResource DefaultImage}" Source="{x:Static AM:AppResource.ClipboardImageFitImage}" />
-                      <Label Content="fit" AA:Language.Word="clipboard/image/fit" Style="{StaticResource ContentTextLabel}" />
+                      <Image Style="{StaticResource DefaultImage}" Source="{x:Static app_main:AppResource.ClipboardImageFitImage}" />
+                      <Label Content="fit" app_main_view_parts_attached:Language.Word="clipboard/image/fit" Style="{StaticResource ContentTextLabel}" />
                     </StackPanel>
                   </RadioButton>
-                  <RadioButton x:Name="imageRaw" IsChecked="{Binding ImageScale, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static AD:ImageScale.Raw}}">
+                  <RadioButton x:Name="imageRaw" IsChecked="{Binding ImageScale, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_define:ImageScale.Raw}}">
                     <StackPanel Orientation="Horizontal">
-                      <Image Style="{StaticResource DefaultImage}" Source="{x:Static AM:AppResource.ClipboardImageRawImage}" />
-                      <Label Content="raw" AA:Language.Word="clipboard/image/raw" Style="{StaticResource ContentTextLabel}" />
+                      <Image Style="{StaticResource DefaultImage}" Source="{x:Static app_main:AppResource.ClipboardImageRawImage}" />
+                      <Label Content="raw" app_main_view_parts_attached:Language.Word="clipboard/image/raw" Style="{StaticResource ContentTextLabel}" />
                     </StackPanel>
                   </RadioButton>
                 </ToolBar>
@@ -321,19 +320,19 @@
               <TabItem.Header>
                 <StackPanel Orientation="Horizontal">
                   <Image Style="{StaticResource ClipboardFiles}" Margin="{StaticResource ItemImageMargin}" />
-                  <Label Content="files" AA:Language.Word="clipboard/type/files" Style="{StaticResource ContentTextLabel}" />
+                  <Label Content="files" app_main_view_parts_attached:Language.Word="clipboard/type/files" Style="{StaticResource ContentTextLabel}" />
                 </StackPanel>
               </TabItem.Header>
-              <ACC:AppDataGrid AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single" SelectionUnit="FullRow" ItemsSource="{Binding SelectedViewModel.Files}">
-                <ACC:AppDataGrid.Columns>
+              <app_main_view_parts_control:AppDataGrid AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single" SelectionUnit="FullRow" ItemsSource="{Binding SelectedViewModel.Files}">
+                <app_main_view_parts_control:AppDataGrid.Columns>
                   <DataGridTemplateColumn>
                     <DataGridTemplateColumn.Header>
-                      <TextBlock Text="name" AA:Language.Word="clipboard/files/name" />
+                      <TextBlock Text="name" app_main_view_parts_attached:Language.Word="clipboard/files/name" />
                     </DataGridTemplateColumn.Header>
                     <DataGridTemplateColumn.CellTemplate>
                       <DataTemplate>
                         <StackPanel Orientation="Horizontal">
-                          <Image AA:IconSize.IconScale="Small" Style="{StaticResource DefaultImage}" Source="{Binding Image}"/>
+                          <Image app_main_view_parts_attached:IconSize.IconScale="Small" Style="{StaticResource DefaultImage}" Source="{Binding Image}"/>
                           <TextBlock Text="{Binding Name}"/>
                         </StackPanel>
                       </DataTemplate>
@@ -342,16 +341,16 @@
 
                   <DataGridTextColumn Binding="{Binding Path}">
                     <DataGridTextColumn.Header>
-                      <TextBlock Text="path" AA:Language.Word="clipboard/files/path" />
+                      <TextBlock Text="path" app_main_view_parts_attached:Language.Word="clipboard/files/path" />
                     </DataGridTextColumn.Header>
                   </DataGridTextColumn>
-                </ACC:AppDataGrid.Columns>
+                </app_main_view_parts_control:AppDataGrid.Columns>
 
-              </ACC:AppDataGrid>
+              </app_main_view_parts_control:AppDataGrid>
               <!--<ListView>
                 <ListView.View>
                   <GridView>
-                    <GridViewColumn Header="name" AA:Language.Word="clipboard/files/name" >
+                    <GridViewColumn Header="name" app_main_view_parts_attached:Language.Word="clipboard/files/name" >
                       <GridViewColumn.CellTemplate>
                         <DataTemplate>
                           <StackPanel Orientation="Horizontal">
@@ -363,7 +362,7 @@
                     </GridViewColumn>
                     <GridViewColumn DisplayMemberBinding="{Binding Path}">
                       <GridViewColumn.Header>
-                        <TextBlock Text="path" AA:Language.Word="clipboard/files/path" />
+                        <TextBlock Text="path" app_main_view_parts_attached:Language.Word="clipboard/files/path" />
                       </GridViewColumn.Header>
                     </GridViewColumn>
                   </GridView>
@@ -379,7 +378,7 @@
           <Run Text="/" />
           <Run Text="{Binding IndexItems.Count, Mode=OneWay}" />
           <Run Text="("/>
-          <TextBlock Text="save count" AA:Language.Word="clipboard/save-count" />
+          <TextBlock Text="save count" app_main_view_parts_attached:Language.Word="clipboard/save-count" />
           <Run Text=":" />
           <TextBlock>
             <TextBlock.Style>
@@ -387,7 +386,7 @@
                 <Setter Property="Text" Value="{Binding LimitSize, Mode=OneWay}" />
                 <Style.Triggers>
                   <DataTrigger Binding="{Binding LimitSize, Mode=OneWay}" Value="0">
-                    <Setter Property="AA:Language.Word" Value="clipboard/save-count/all" />
+                    <Setter Property="app_main_view_parts_attached:Language.Word" Value="clipboard/save-count/all" />
                   </DataTrigger>
                 </Style.Triggers>
               </Style>
@@ -398,4 +397,4 @@
       </StatusBar>
     </Grid>
   </Grid>
-</AW:ViewModelCommonDataWindow>
+</app_main_view_parts_window:ViewModelCommonDataWindow>
