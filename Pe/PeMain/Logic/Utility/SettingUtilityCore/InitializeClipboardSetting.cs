@@ -41,6 +41,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
             Model.DuplicationCount = Constants.clipboardDuplicationCount.GetClamp(Model.DuplicationCount);
             Model.Font.Size = Constants.clipboardFontSize.GetClamp(Model.Font.Size);
             //setting.CaptureType = EnumUtility.GetNormalization(setting.CaptureType, Constants.clipboardCaptureType);
+            Model.DoubleClickBehavior = EnumUtility.GetNormalization(Model.DoubleClickBehavior, IndexItemsDoubleClickBehavior.Copy);
 
             if(IsIllegalPlusNumber(Model.ItemsListWidth)) {
                 Model.ItemsListWidth = Constants.clipboardItemsListWidth;
@@ -81,6 +82,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
             Model.LimitSize.ImageWidth = Constants.clipboardLimitImageWidthSize.median;
             Model.LimitSize.ImageHeight = Constants.clipboardLimitImageHeightSize.median;
             Model.DuplicationMoveHead = true;
+            Model.DoubleClickBehavior = IndexItemsDoubleClickBehavior.Copy;
         }
 
         protected override void Correction_0_65_0()
@@ -93,6 +95,11 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
             if(Model.DuplicationCount == Constants.Issue_363_oldMediumCount) {
                 Model.DuplicationCount = Constants.ClipboardDuplicationMedianCount;
             }
+        }
+
+        protected override void Correction_0_79_0()
+        {
+            Model.DoubleClickBehavior = IndexItemsDoubleClickBehavior.Copy;
         }
 
         #endregion
