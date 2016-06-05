@@ -32,10 +32,12 @@
         <ResourceDictionary Source="/View/Parts/Resource/LabelDictionary.xaml"/>
         <ResourceDictionary Source="/View/Parts/Resource/ComboBoxDictionary.xaml"/>
         <ResourceDictionary Source="/View/Parts/Resource/TextBlockDictionary.xaml"/>
+        <ResourceDictionary Source="/View/Parts/Resource/RadioButtonDictionary.xaml"/>
       </ResourceDictionary.MergedDictionaries>
       <app_library_sharedlibrary_view_converter:LogicalNotConverter x:Key="LogicalNotConverter" />
       <app_library_sharedlibrary_view_converter:LogicalIsNotNullConverter x:Key="LogicalIsNotNullConverter" />
       <app_library_sharedlibrary_view_converter:GridDistanceConverter x:Key="GridDistanceConverter" />
+      <app_library_sharedlibrary_view_converter:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
       <app_main_view_parts_converter:DisplayTextConverter x:Key="DisplayTextConverter" />
       <app_library_sharedlibrary_view_converter:BooleanFontWeightConverter x:Key="BooleanFontWeightConverter" />
       <app_library_sharedlibrary_view_converter:BooleanFontStyleConverter x:Key="BooleanFontStyleConverter" />
@@ -328,6 +330,12 @@
         <Run Text="/" />
         <Run Text="{Binding IndexItems.Count, Mode=OneWay}" />
       </TextBlock>
+      <Separator/>
+      <StackPanel Orientation="Horizontal">
+        <Label Content="w click" app_main_view_parts_attached:Language.Word="template/command/double-click" Style="{StaticResource HeaderLabel}" />
+        <RadioButton Content="copy" app_main_view_parts_attached:Language.Word="template/command/double-click/copy" IsChecked="{Binding DoubleClickBehavior, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_library_pedata_define:IndexItemsDoubleClickBehavior.Copy}}" Style="{StaticResource DefaultHorizontalRadioButton}" />
+        <RadioButton Content="send" app_main_view_parts_attached:Language.Word="template/command/double-click/send" IsChecked="{Binding DoubleClickBehavior, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_library_pedata_define:IndexItemsDoubleClickBehavior.Send}}" Style="{StaticResource DefaultHorizontalRadioButton}" />
+      </StackPanel>
     </StatusBar>
   </Grid>
 </app_main_view_parts_window:ViewModelCommonDataWindow>

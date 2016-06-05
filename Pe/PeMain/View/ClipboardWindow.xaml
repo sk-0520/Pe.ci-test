@@ -7,6 +7,7 @@
   xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
   xmlns:app_library_sharedlibrary_view_converter="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=ContentTypeTextNet.SharedLibrary"
   xmlns:app_library_sharedlibrary_define="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.Define;assembly=ContentTypeTextNet.SharedLibrary"
+  xmlns:app_library_pedata_define="clr-namespace:ContentTypeTextNet.Pe.Library.PeData.Define;assembly=PeData"
   xmlns:app_main="clr-namespace:ContentTypeTextNet.Pe.PeMain"
   xmlns:app_main_define="clr-namespace:ContentTypeTextNet.Pe.PeMain.Define"
   xmlns:app_main_viewmodel="clr-namespace:ContentTypeTextNet.Pe.PeMain.ViewModel"
@@ -32,6 +33,7 @@
         <ResourceDictionary Source="/View/Parts/Resource/GridSplitterDictionary.xaml"/>
         <ResourceDictionary Source="/View/Parts/Resource/LabelDictionary.xaml"/>
         <ResourceDictionary Source="/View/Parts/Resource/TextBlockDictionary.xaml"/>
+        <ResourceDictionary Source="/View/Parts/Resource/RadioButtonDictionary.xaml"/>
       </ResourceDictionary.MergedDictionaries>
       <app_library_sharedlibrary_view_converter:LogicalNotConverter x:Key="LogicalNotConverter" />
       <app_library_sharedlibrary_view_converter:LogicalIsNotNullConverter x:Key="LogicalIsNotNullConverter" />
@@ -116,7 +118,7 @@
             <RowDefinition Height="*"/>
           </Grid.RowDefinitions>
           <TextBox Grid.Row="0" Text="{Binding FilterText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DefaultTextBox}" />
-          <ListBox x:Name="listItems" Grid.Row="1" ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedViewModel}" HorizontalContentAlignment="Stretch">
+          <ListBox x:Name="listItems" ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedViewModel}" HorizontalContentAlignment="Stretch" Margin="0,16,0,10" Grid.RowSpan="2">
             <ListBox.ItemTemplate>
               <DataTemplate>
                 <Grid>
@@ -394,6 +396,12 @@
           </TextBlock>
           <Run Text=")" />
         </TextBlock>
+        <Separator/>
+        <StackPanel Orientation="Horizontal">
+          <Label Content="w click" app_main_view_parts_attached:Language.Word="clipboard/command/double-click" Style="{StaticResource HeaderLabel}" />
+          <RadioButton Content="copy" app_main_view_parts_attached:Language.Word="clipboard/command/double-click/copy" IsChecked="{Binding DoubleClickBehavior, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_library_pedata_define:IndexItemsDoubleClickBehavior.Copy}}" Style="{StaticResource DefaultHorizontalRadioButton}" />
+          <RadioButton Content="send" app_main_view_parts_attached:Language.Word="clipboard/command/double-click/send" IsChecked="{Binding DoubleClickBehavior, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_library_pedata_define:IndexItemsDoubleClickBehavior.Send}}" Style="{StaticResource DefaultHorizontalRadioButton}" />
+        </StackPanel>
       </StatusBar>
     </Grid>
   </Grid>

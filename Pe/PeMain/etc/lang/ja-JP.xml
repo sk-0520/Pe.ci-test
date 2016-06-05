@@ -233,6 +233,9 @@
 		<Item Id="clipboard/command/html"  Word="HTMLのコピー" />
 		<Item Id="clipboard/command/image" Word="画像のコピー" />
 		<Item Id="clipboard/command/file"  Word="ファイルのコピー" />
+		<Item Id="clipboard/command/double-click"      Word="ダブルクリック処理" />
+		<Item Id="clipboard/command/double-click/copy" Word="コピー" />
+		<Item Id="clipboard/command/double-click/send" Word="転送" />
 		<Item Id="clipboard/item/name" Word="クリップボード名(_E)" />
 		
 		<Item Id="template/create" Word="新規作成(_N)" />
@@ -244,6 +247,9 @@
 		<Item Id="template/command/copy" Word="コピー" />
 		<Item Id="template/command/up" Word="上へ移動" />
 		<Item Id="template/command/down" Word="下へ移動" />
+		<Item Id="template/command/double-click"      Word="ダブルクリック処理" />
+		<Item Id="template/command/double-click/copy" Word="コピー" />
+		<Item Id="template/command/double-click/send" Word="転送" />
 		<Item Id="template/item/name" Word="テンプレート名(_E)" />
 		<Item Id="template/item/source" Word="テキストテンプレート(_T)" />
 		<Item Id="template/item/preview" Word="プレビュー(_P)" />
