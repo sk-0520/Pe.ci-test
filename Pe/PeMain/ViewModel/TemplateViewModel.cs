@@ -43,6 +43,7 @@ using ContentTypeTextNet.Library.SharedLibrary.IF;
 using System.Text.RegularExpressions;
 using ContentTypeTextNet.Library.SharedLibrary.Define;
 using System.Reflection;
+using ContentTypeTextNet.Pe.PeMain.Logic.Extensions;
 
 namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 {
@@ -368,6 +369,35 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 );
 
                 return result;
+            }
+        }
+
+        public ICommand ItemDoubleClickCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        if(SelectedViewModel == null) {
+                            return;
+                        }
+
+                        switch(DoubleClickBehavior) {
+                            case IndexItemsDoubleClickBehavior.Copy: {
+                                    SelectedViewModel.CopyItemCommand.ExecuteIfCanExecute(o);
+                                }
+                                break;
+
+                            case IndexItemsDoubleClickBehavior.Send: {
+                                    SelectedViewModel.SendItemCommand.ExecuteIfCanExecute(o);
+                                }
+                                break;
+
+                            default:
+                                throw new NotImplementedException();
+                        }
+                    }
+                );
             }
         }
 

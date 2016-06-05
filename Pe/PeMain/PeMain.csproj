@@ -455,6 +455,7 @@
     <Compile Include="Logic\UserInformationSender.cs" />
     <Compile Include="Logic\Utility\ArchiveUtility.cs" />
     <Compile Include="Logic\Utility\HtmlViewerUtility.cs" />
+    <Compile Include="Logic\Extensions\ICommandExtensions.cs" />
     <Compile Include="Logic\Utility\ImageUtility.cs" />
     <Compile Include="Logic\Utility\LauncherGroupUtility.cs" />
     <Compile Include="Logic\Utility\LauncherToolbarUtility.cs" />

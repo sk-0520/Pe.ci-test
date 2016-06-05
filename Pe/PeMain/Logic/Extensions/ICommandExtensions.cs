@@ -19,21 +19,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 
-namespace ContentTypeTextNet.Pe.Library.PeData.Define
+namespace ContentTypeTextNet.Pe.PeMain.Logic.Extensions
 {
-    /// <summary>
-    /// クリップボード・テンプレートアイテムのクリック動作。
-    /// </summary>
-    public enum IndexItemsDoubleClickBehavior
+    public static class ICommandExtensions
     {
-        /// <summary>
-        /// コピーする。
-        /// </summary>
-        Copy,
-        /// <summary>
-        /// 送信。
-        /// </summary>
-        Send,
+        public static void ExecuteIfCanExecute(this ICommand command, object parameter)
+        {
+            CheckUtility.EnforceNotNull(command);
+
+            if(command.CanExecute(parameter)) {
+                command.Execute(parameter);
+            }
+        }
     }
 }

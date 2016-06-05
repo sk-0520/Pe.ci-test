@@ -32,6 +32,7 @@ using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.Library.SharedLibrary.View.Window;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.Pe.Library.PeData.Define;
 using ContentTypeTextNet.Pe.Library.PeData.Item;
@@ -40,6 +41,7 @@ using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
 //	using ContentTypeTextNet.Pe.PeMain.Data;
 using ContentTypeTextNet.Pe.PeMain.Define;
 using ContentTypeTextNet.Pe.PeMain.IF;
+using ContentTypeTextNet.Pe.PeMain.Logic.Extensions;
 using ContentTypeTextNet.Pe.PeMain.Logic.Property;
 using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 using ContentTypeTextNet.Pe.PeMain.View;
@@ -221,6 +223,38 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 );
 
                 return result;
+            }
+        }
+
+        public ICommand ItemDoubleClickCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        if(SelectedViewModel == null) {
+                            return;
+                        }
+
+                        switch(DoubleClickBehavior) {
+                            case IndexItemsDoubleClickBehavior.Copy: {
+                                    SelectedViewModel.CopyItemCommand.ExecuteIfCanExecute(o);
+                                }
+                                break;
+
+                            case IndexItemsDoubleClickBehavior.Send: {
+                                    if(!SelectedViewModel.EnabledClipboardTypesText) {
+                                        return;
+                                    }
+                                    SelectedViewModel.SendItemCommand.ExecuteIfCanExecute(o);
+                                }
+                                break;
+
+                            default:
+                                throw new NotImplementedException();
+                        }
+                    }
+                );
             }
         }
 

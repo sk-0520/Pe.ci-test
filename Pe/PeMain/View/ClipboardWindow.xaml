@@ -119,6 +119,11 @@
           </Grid.RowDefinitions>
           <TextBox Grid.Row="0" Text="{Binding FilterText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DefaultTextBox}" />
           <ListBox x:Name="listItems" ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedViewModel}" HorizontalContentAlignment="Stretch" Margin="0,16,0,10" Grid.RowSpan="2">
+            <i:Interaction.Triggers>
+              <i:EventTrigger EventName="MouseDoubleClick">
+                <i:InvokeCommandAction Command="{Binding ItemDoubleClickCommand}" CommandParameter="{Binding ElementName=root}"/>
+              </i:EventTrigger>
+            </i:Interaction.Triggers>
             <ListBox.ItemTemplate>
               <DataTemplate>
                 <Grid>
