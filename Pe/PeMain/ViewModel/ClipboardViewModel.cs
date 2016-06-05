@@ -153,6 +153,12 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             get { return Model.DuplicationMoveHead; }
         }
 
+        public IndexItemsDoubleClickBehavior DoubleClickBehavior
+        {
+            get { return Model.DoubleClickBehavior; }
+            set { SetModelValue(value); }
+        }
+
         #endregion
 
         #region command

@@ -273,6 +273,12 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control.SettingPage
             set { SetPropertyValue(Clipboard, value); }
         }
 
+        public IndexItemsDoubleClickBehavior DoubleClickBehavior
+        {
+            get { return Clipboard.DoubleClickBehavior; }
+            set { SetPropertyValue(Clipboard, value); }
+        }
+
         #endregion
 
         #region function
