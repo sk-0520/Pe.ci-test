@@ -21,14 +21,17 @@
         <ResourceDictionary Source="/View/Parts/Resource/AppHotkeyDictionary.xaml"/>
         <ResourceDictionary Source="/View/Parts/Resource/LabelDictionary.xaml"/>
         <ResourceDictionary Source="/View/Parts/Resource/FontSelectDictionary.xaml"/>
+        <ResourceDictionary Source="/View/Parts/Resource/RadioButtonDictionary.xaml"/>
       </ResourceDictionary.MergedDictionaries>
       <app_library_sharedlibrary_view_converter:GridDistanceConverter x:Key="GridDistanceConverter" />
+      <app_library_sharedlibrary_view_converter:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
       <app_main_view_parts_converter:TimeSpanMillisecondConverter x:Key="TimeSpanMillisecondConverter" />
     </ResourceDictionary>
   </app_main_view_parts_control:CommonDataUserControl.Resources>
   <Grid>
     <Grid>
       <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" />
         <RowDefinition Height="Auto" />
       </Grid.RowDefinitions>
       <Grid.ColumnDefinitions>
@@ -85,8 +88,17 @@
               Width="{StaticResource FontSelectWidth}"
             />
           </Grid>
+
+          <GroupBox Header="double click" app_main_view_parts_attached:Language.Word="clipboard-setting/double-click" Style="{StaticResource DefaultGroupBox}">
+            <StackPanel Orientation="Horizontal">
+              <RadioButton Content="copy" app_main_view_parts_attached:Language.Word="clipboard-setting/double-click/copy" IsChecked="{Binding DoubleClickBehavior, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_library_pedata_define:IndexItemsDoubleClickBehavior.Copy}}" Style="{StaticResource DefaultHorizontalRadioButton}" />
+              <RadioButton Content="send" app_main_view_parts_attached:Language.Word="clipboard-setting/double-click/send" IsChecked="{Binding DoubleClickBehavior, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_library_pedata_define:IndexItemsDoubleClickBehavior.Send}}" Style="{StaticResource DefaultHorizontalRadioButton}" />
+            </StackPanel>
+          </GroupBox>
+
         </StackPanel>
       </GroupBox>
+
 
       <GroupBox Grid.Row="0" Grid.Column="1" Header="capture type" app_main_view_parts_attached:Language.Word="clipboard-setting/capture-type" Style="{StaticResource DefaultGroupBox}" >
         <Grid>

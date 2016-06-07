@@ -2,7 +2,7 @@
 <Language xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" CultureCode="ja-JP" Name="日本語">
 	<Define>
 		<Item Id="br" Word="&#x0d;&#x0a;" />
-		
+
 		<Item Id="cancel" Word="キャンセル" />
 		<Item Id="yes" Word="はい" />
 		<Item Id="no" Word="いいえ" />
@@ -15,7 +15,7 @@
 
 		<Item Id="version-release"     Word="リリース版" />
 		<Item Id="version-rc"          Word="RC版" />
-		
+
 		<Item Id="execute" Word="起動" />
 
 		<Item Id="setting" Word="設定" />
@@ -48,12 +48,12 @@
 		<Item Id="dialog/filter/png" Word="PNG形式" />
 		<Item Id="dialog/filter/log" Word="ログ形式" />
 		<Item Id="dialog/filter/*" Word="全て" />
-		
+
 		<Item Id="group/default" Word="(デフォルト)" />
 		<Item Id="clipboard/name/image" Word="@[CLIP-TYPE]: @[CLIP-IMAGE-WIDTH] × @[CLIP-IMAGE-HEIGHT]" />
 		<Item Id="clipboard/name/files" Word="@[CLIP-TYPE]: @[CLIP-FILES-COUNT]" />
 		<Item Id="window-collection/name" Word="@[TIMESTAMP], ウィンドウ数: @[WINDOW-COLLECTION-COUNT]" />
-		
+
 		<Item Id="accept/ok" Word="使用する(_A)" />
 		<Item Id="accept/ng" Word="使用しない(_Q)" />
 		<Item Id="accept/update-check/release" Word="アップデートを確認する(_U)" />
@@ -129,7 +129,7 @@
 		<Item Id="notify/info/toolbar-force-hide/message"   Word="自動的に隠す設定のツールバーを強制的に隠す状態に設定" />
 		<Item Id="notify/info/suppress-f1/title"     Word="F1キー抑制" />
 		<Item Id="notify/info/suppress-f1/message"   Word="F1キーの押下をシステム上無視しました。${br}システムに対してF1キーを有効にするには設定から変更するかF1キーを二連続で入力してください" />
-		
+
 		<Item Id="new/group-name" Word="新規グループ" />
 		<Item Id="new/template-name" Word="新規テンプレート" />
 		<Item Id="new/launcher-name" Word="ランチャーアイテム" />
@@ -152,7 +152,7 @@
 		<Item Id="toolbar/others/customize" Word="編集(_E)" />
 		<Item Id="toolbar/others/property" Word="プロパティ(_P)" />
 		<Item Id="toolbar/others/remove" Word="削除" />
-		
+
 		<Item Id="execute/command" Word="コマンド" />
 		<Item Id="execute/option" Word="オプション(_O)" />
 		<Item Id="execute/option/file" Word="オプションにファイルを選択" />
@@ -164,7 +164,7 @@
 		<Item Id="execute/others/stream-input"  Word="標準入力(_I)" />info
 		<Item Id="execute/others/admin" Word="管理者権限で実行(_A)" />
 		<Item Id="execute/environment" Word="環境編集の編集(_V)" />
-		
+
 		<Item Id="stream/topmost" Word="最前面" />
 		<Item Id="stream/save" Word="保存" />
 		<Item Id="stream/clear" Word="クリア" />
@@ -205,7 +205,7 @@
 		<Item Id="note/operation/copy" Word="コピー(_C)" />
 		<Item Id="note/operation/hide" Word="非表示(_X)" />
 		<Item Id="note/operation/remove" Word="削除" />
-		
+
 		<Item Id="clipboard/enabled" Word="クリップボード取込(_C)" />
 		<Item Id="clipboard/enabled:hint" Word="クリップボードにコピーされたデータを取り込みます" />
 		<Item Id="clipboard/target" Word="取込対象" />
@@ -233,8 +233,11 @@
 		<Item Id="clipboard/command/html"  Word="HTMLのコピー" />
 		<Item Id="clipboard/command/image" Word="画像のコピー" />
 		<Item Id="clipboard/command/file"  Word="ファイルのコピー" />
+		<Item Id="clipboard/command/double-click"      Word="ダブルクリック処理" />
+		<Item Id="clipboard/command/double-click/copy" Word="コピー" />
+		<Item Id="clipboard/command/double-click/send" Word="転送" />
 		<Item Id="clipboard/item/name" Word="クリップボード名(_E)" />
-		
+
 		<Item Id="template/create" Word="新規作成(_N)" />
 		<Item Id="template/save" Word="ファイルに保存(_S)" />
 		<Item Id="template/remove" Word="削除(_D)" />
@@ -244,13 +247,16 @@
 		<Item Id="template/command/copy" Word="コピー" />
 		<Item Id="template/command/up" Word="上へ移動" />
 		<Item Id="template/command/down" Word="下へ移動" />
+		<Item Id="template/command/double-click"      Word="ダブルクリック処理" />
+		<Item Id="template/command/double-click/copy" Word="コピー" />
+		<Item Id="template/command/double-click/send" Word="転送" />
 		<Item Id="template/item/name" Word="テンプレート名(_E)" />
 		<Item Id="template/item/source" Word="テキストテンプレート(_T)" />
 		<Item Id="template/item/preview" Word="プレビュー(_P)" />
 		<Item Id="template/replace/plain" Word="通常" />
 		<Item Id="template/replace/text" Word="文字列置き換え" />
 		<Item Id="template/replace/program" Word="T4置き換え" />
-		
+
 		<Item Id="command/selected" Word="選択中アイテム" />
 		<Item Id="command/tag" Word="@[LAUNCHER-ITEM-TAG] (@[LAUNCHER-ITEM-NAME])" />
 		<Item Id="command/drive" Word="@[DRIVE-VOLUME] (@[DRIVE-PATH])" />
@@ -270,7 +276,7 @@
 		<Item Id="logging/ward-wrap"  Word="詳細を折り返して表示する" />
 
 		<Item Id="update/confirm" Word="バージョン @[UPDATE-NOW-VERSION] → @[UPDATE-NEW-VERSION] @[UPDATE-NEW-TYPE] へ更新しますか？" />
-		
+
 		<Item Id="setting/main" Word="本体設定(_G)" />
 		<Item Id="setting/launcher" Word="ランチャー(_L)" />
 		<Item Id="setting/toolbar" Word="ツールバー(_T)" />
@@ -278,11 +284,11 @@
 		<Item Id="setting/note" Word="ノート(_N)" />
 		<Item Id="setting/clipboard" Word="クリップボード(_C)" />
 		<Item Id="setting/template" Word="テンプレート(_T)" />
-		
+
 		<Item Id="screen/primary" Word="メインディスプレイ" />
 		<Item Id="screen/click-key" Word="マウスクリックかキー入力で識別画面を閉じてください" />
-		
-		
+
+
 		<Item Id="about/link/web" Word="WEBページ" />
 		<Item Id="about/link/mail" Word="メール送信" />
 		<Item Id="about/link/dev" Word="開発ページ" />
@@ -293,7 +299,7 @@
 		<Item Id="about/copy/long" Word="長い情報" />
 		<Item Id="about/component" Word="コンポーネント" />
 		<Item Id="about/license" Word="ライセンス" />
-		
+
 		<Item Id="about/app" Word="本体(_P)" />
 		<Item Id="about/data" Word="データ(_D)" />
 		<Item Id="about/update" Word="アップデート(_U)" />
@@ -305,7 +311,7 @@
 		<Item Id="confirm/shortcut/message" Word="D&amp;Dされたパスはショートカットファイルです。&#x0d;&#x0a;&#x0d;&#x0a;ショートカット先を登録するには「${yes}」を、&#x0d;&#x0a;ショートカットファイルそのものを登録するには「${no}」を選択してください。" />
 
 		<!-- control -->
-		
+
 		<Item Id="environment/edit" Word="環境変数を編集する(_E)" />
 		<Item Id="environment/update" Word="変更" />
 		<Item Id="environment/remove" Word="削除" />
@@ -372,8 +378,8 @@
 		<Item Id="main-setting/general/notification"        Word="操作通知(_A)" />
 		<Item Id="main-setting/general/notification/system" Word="システム依存(_S)" />
 		<Item Id="main-setting/general/notification/none"   Word="なし(_N)" />
-		
-		
+
+
 		<Item Id="toolbar-setting/screen" Word="識別(_I)" />
 		<Item Id="toolbar-setting/toolbar/group" Word="初期グループ(_R)" />
 		<Item Id="toolbar-setting/toolbar/position" Word="ツールバー位置(_P)" />
@@ -397,7 +403,7 @@
 		<Item Id="toolbar-setting/launcher/drop-mode" Word="ファイルD&amp;D時の挙動" />
 		<Item Id="toolbar-setting/launcher/drop-mode/window" Word="指定して実行ウィンドウを表示(_R)" />
 		<Item Id="toolbar-setting/launcher/drop-mode/arguments" Word="オプションとして実行(_O)" />
-		
+
 		<Item Id="command-setting/general" Word="基本設定(_G)" />
 		<Item Id="command-setting/icon" Word="アイコンサイズ(_I)" />
 		<Item Id="command-setting/hotkey" Word="呼び出しキー(_H)" />
@@ -445,12 +451,18 @@
 		<Item Id="clipboard-setting/limit/image/width" Word="横" />
 		<Item Id="clipboard-setting/limit/image/height" Word="縦" />
 		<Item Id="clipboard-setting/limit/image/unit" Word="px" />
+		<Item Id="clipboard-setting/double-click"      Word="ダブルクリック処理" />
+		<Item Id="clipboard-setting/double-click/copy" Word="コピー(_C)" />
+		<Item Id="clipboard-setting/double-click/send" Word="転送(_S)" />
 
 		<Item Id="template-setting/general" Word="基本設定(_G)" />
 		<Item Id="template-setting/topmost" Word="最前面(_T)" />
 		<Item Id="template-setting/visible" Word="テンプレートウィンドウを表示する(_V)" />
 		<Item Id="template-setting/show" Word="表示切り替えキー(_K)" />
 		<Item Id="template-setting/font" Word="フォント" />
+		<Item Id="template-setting/double-click"      Word="ダブルクリック処理" />
+		<Item Id="template-setting/double-click/copy" Word="コピー(_C)" />
+		<Item Id="template-setting/double-click/send" Word="転送(_S)" />
 
 		<!-- ログメッセージ -->
 		<Item Id="log/pause/skip"                  Word="pause skip" />
@@ -508,7 +520,7 @@
 		<Item Id="log/privacy/send/end/detail"  Word="DATA-ID: @[LOG-PRIVACY-SEND-DATA-ID]${br}---------------${br}受信整形データ:${br}@[LOG-PRIVACY-SEND-RECV-DATA]${br}---------------${br}受信生データ${br}@[LOG-PRIVACY-SEND-RECV-RAW]" />
 		<Item Id="log/privacy/send/failure"     Word="ユーザー情報送信エラー" />
 		<Item Id="log/idle/gc"                  Word="アイドル中処理" />
-		
+
 
 		<!-- テンプレート -->
 		<Item Id="template/keyword/text/TIMESTAMP"    Word="タイムスタンプ" />
@@ -535,7 +547,7 @@
 		<Item Id="template/keyword/text/APPLICATION:VERSION-NUMBER"    Word="@[APPLICATION:NAME] バージョン番号" />
 		<Item Id="template/keyword/text/APPLICATION:VERSION-REVISION"  Word="@[APPLICATION:NAME] リビジョン" />
 		<Item Id="template/keyword/text/APPLICATION:VERSION-NUMBER"    Word="@[APPLICATION:NAME] リビジョン" />
-		
+
 		<Item Id="template/keyword/program/&lt;#  #&gt;"  Word="コード" />
 		<Item Id="template/keyword/program/&lt;#=  #&gt;"  Word="式" />
 		<Item Id="template/keyword/program/&lt;#+  #&gt;"  Word="定義" />
@@ -586,15 +598,15 @@
 		<Item Id="html-viewer/feedback/confirm/name-comment"    Word="連絡する際に用いる名前を入力してください。" />
 		<Item Id="html-viewer/feedback/warning"   Word="入力された値は Google Apps Script を経由してデータ収集され、改修・調査等に使用します。${hv-br}データは Google Drive に蓄積されます。${hv-br}開発側で管理運用するため特定個人間での受け渡しの発生する可能性があります。${hv-br}ユーザー識別子(auto-id)は設定で変更できます。" />
 		<Item Id="html-viewer/feedback/submit"    Word="送信" />
-		
 
 
 
 
 
-		
+
+
 		<!-- enum -->
-		
+
 		<Item Id="enum/ModifierKeys" Word="修飾キー" />
 		<Item Id="enum/ModifierKeys/Alt" Word="Alt" />
 		<Item Id="enum/ModifierKeys/Control" Word="Ctrl" />
@@ -602,7 +614,7 @@
 		<Item Id="enum/ModifierKeys/Windows" Word="Windows" />
 		<!-- key 106 -->
 		<Item Id="enum/Key/separator" Word=" + " />
-		
+
 		<Item Id="enum/Key/None" Word="なし" />
 		<Item Id="enum/Key/NumPad0" Word="Num 0" />
 		<Item Id="enum/Key/NumPad1" Word="Num 1" />
@@ -614,7 +626,7 @@
 		<Item Id="enum/Key/NumPad7" Word="Num 7" />
 		<Item Id="enum/Key/NumPad8" Word="Num 8" />
 		<Item Id="enum/Key/NumPad9" Word="Num 9" />
-		
+
 		<Item Id="enum/Key/D0" Word="0" />
 		<Item Id="enum/Key/D1" Word="1" />
 		<Item Id="enum/Key/D2" Word="2" />
@@ -640,13 +652,13 @@
 		<Item Id="enum/Key/OemBackslash"     Word="\" />
 		<Item Id="enum/Key/ImeNonConvert"    Word="無変換" />
 		<Item Id="enum/Key/ImeConvert"       Word="変換" />
-		
+
 		<Item Id="enum/Key/Add"       Word="Num +" />
 		<Item Id="enum/Key/Subtract"  Word="Num -" />
 		<Item Id="enum/Key/Multiply"  Word="Num *" />
 		<Item Id="enum/Key/Divide"    Word="Num /" />
 		<Item Id="enum/Key/Decimal"   Word="Num Del" />
-		
+
 		<Item Id="enum/Key/Insert"   Word="Insert" />
 		<Item Id="enum/Key/Delete"   Word="Delete" />
 		<Item Id="enum/Key/Home"     Word="Home" />
@@ -656,7 +668,7 @@
 		<Item Id="enum/Key/Scroll"   Word="ScrLk" />
 		<Item Id="enum/Key/Pause"    Word="Pause" />
 		<Item Id="enum/Key/Cancel"   Word="Break" />
-		
+
 		<Item Id="enum/Key/MediaStop"          Word="再生" />
 		<Item Id="enum/Key/MediaPlayPause"     Word="停止" />
 		<Item Id="enum/Key/MediaPreviousTrack" Word="前" />
@@ -683,27 +695,27 @@
 		<Item Id="enum/ClipboardType/Html" Word="HTML" />
 		<Item Id="enum/ClipboardType/Image" Word="画像" />
 		<Item Id="enum/ClipboardType/Files" Word="ファイル" />
-		
+
 		<Item Id="enum/WindowSaveType"           Word="ウィンドウ保存" />
 		<Item Id="enum/WindowSaveType/Temporary" Word="一時保存" />
 		<Item Id="enum/WindowSaveType/Timer"     Word="タイマー" />
 		<Item Id="enum/WindowSaveType/System"    Word="環境変更" />
-		
+
 		<Item Id="enum/LauncherKind/File"      Word="ファイル" />
 		<Item Id="enum/LauncherKind/Directory" Word="##Directory##" />
 		<Item Id="enum/LauncherKind/Command"   Word="コマンド" />
-		
+
 		<Item Id="enum/ToolbarButtonPosition/Near"   Word="左-上" />
 		<Item Id="enum/ToolbarButtonPosition/Center" Word="中央" />
 		<Item Id="enum/ToolbarButtonPosition/Far"    Word="右-下" />
-		
-		
+
+
 		<!-- 変換 -->
 		<Item Id="forms-convert/launcher-item/LauncherType/dir-file-convert/message"  Word="旧バージョン変換: ランチャーの種類変更" />
 		<Item Id="forms-convert/launcher-item/LauncherType/dir-file-convert/detail"   Word="@[FORMS-CONVERT-LAUNCHER-ITEM-NAME]の種別@[FORMS-CONVERT-LAUNCHER-ITEM-TYPE]は@[FORMS-CONVERT-LAUNCHER-ITEM-TYPE:FILE]に変換" />
 		<Item Id="forms-convert/launcher-item/LauncherType/not-support/message"       Word="旧バージョン変換: 未サポート" />
 		<Item Id="forms-convert/launcher-item/LauncherType/not-support/detail"        Word="@[FORMS-CONVERT-LAUNCHER-ITEM-NAME]の種別@[FORMS-CONVERT-LAUNCHER-ITEM-TYPE]は未サポートのため除外" />
-		
-		
+
+
 	</Words>
 </Language>

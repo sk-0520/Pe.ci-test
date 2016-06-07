@@ -20,6 +20,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.Pe.Library.PeData.Define;
 using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
 
 namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
@@ -35,6 +37,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
         protected override void Correction_Last()
         {
             Model.Font.Size = Constants.templateFontSize.GetClamp(Model.Font.Size);
+            Model.DoubleClickBehavior = EnumUtility.GetNormalization(Model.DoubleClickBehavior, IndexItemsDoubleClickBehavior.Copy);
 
             if(IsIllegalPlusNumber(Model.ItemsListWidth)) {
                 Model.ItemsListWidth = Constants.templateItemsListWidth;
@@ -58,6 +61,12 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
             Model.ReplaceListWidth = Constants.templateReplaceListWidth;
             Model.WindowWidth = Constants.templateDefaultWindowSize.Width;
             Model.WindowHeight = Constants.templateDefaultWindowSize.Height;
+            Model.DoubleClickBehavior = IndexItemsDoubleClickBehavior.Copy;
+        }
+
+        protected override void Correction_0_79_0()
+        {
+            Model.DoubleClickBehavior = IndexItemsDoubleClickBehavior.Copy;
         }
 
         #endregion
