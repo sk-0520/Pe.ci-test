@@ -3,7 +3,7 @@
 var defaultLanguageKey = 'ja-JP';
 
 var helpLanguage = {
-	'ja-JP': { 
+	'ja-JP': {
 		title: ' : Pe ヘルプ',
 		outLink: '外部リンク',
 		hint: {
@@ -27,7 +27,7 @@ var helpLanguage = {
 
 var menuList = [
 	{
-		name: 'top',
+		name: 'general',
 		localize: true,
 		level: 0,
 		title: {
@@ -35,7 +35,7 @@ var menuList = [
 		}
 	},
 	{
-		name: 'install_uninstall_data',
+		name: 'general-install_uninstall_data',
 		localize: true,
 		level: 1,
 		title: {
@@ -43,7 +43,7 @@ var menuList = [
 		}
 	},
 	{
-		name: 'platform',
+		name: 'general-platform',
 		localize: true,
 		level: 2,
 		title: {
@@ -51,7 +51,7 @@ var menuList = [
 		}
 	},
 	{
-		name: 'privacy',
+		name: 'general-privacy',
 		localize: true,
 		level: 1,
 		title: {
@@ -59,7 +59,7 @@ var menuList = [
 		}
 	},
 	{
-		name: 'internet',
+		name: 'general-internet',
 		localize: true,
 		level: 1,
 		title: {
@@ -83,7 +83,7 @@ var menuList = [
 		}
 	},
 	{
-		name: 'toolbar',
+		name: 'launcher-toolbar',
 		localize: true,
 		level: 1,
 		title: {
@@ -91,7 +91,7 @@ var menuList = [
 		}
 	},
 	{
-		name: 'command',
+		name: 'launcher-command',
 		localize: true,
 		level: 1,
 		title: {
@@ -99,7 +99,7 @@ var menuList = [
 		}
 	},
 	{
-		name: 'execute',
+		name: 'launcher-execute',
 		localize: true,
 		level: 1,
 		title: {
@@ -107,7 +107,7 @@ var menuList = [
 		}
 	},
 	{
-		name: 'stream',
+		name: 'launcher-stream',
 		localize: true,
 		level: 1,
 		title: {
@@ -259,6 +259,14 @@ var menuList = [
 		}
 	},
 	{
+		name: 'others-send',
+		localize: true,
+		level: 1,
+		title: {
+			'ja-JP': '転送'
+		}
+	},
+	{
 		name: 'others-setting-data',
 		localize: true,
 		level: 1,
@@ -356,7 +364,7 @@ function createMenu(lang, pageName) {
 
 		$li.addClass('item');
 		$li.addClass('level-' + menuItem.level);
-		
+
 		var title = getPageTitle(lang, menuItem);
 		var target = menuItem.name + (menuItem.localize ? '.' + lang: '') + '.html?' + param;
 		if (menuItem.name == pageName) {
@@ -377,7 +385,7 @@ function createMenu(lang, pageName) {
 		$ul.append($li);
 	}
 	$menu.append($ul);
-	
+
 	if ($top) {
 		if ($menu.height() < $top.offset().top) {
 			var y = $top.offset().top - $menu.offset().top;

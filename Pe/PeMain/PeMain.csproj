@@ -257,6 +257,9 @@
     <Content Include="doc\help\html\changelog.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="doc\help\html\others-send.ja-JP.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="doc\model-changelogs.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -278,19 +281,19 @@
     <Content Include="doc\help\html\setting-toolbar.ja-JP.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="doc\help\html\toolbar.ja-JP.html">
+    <Content Include="doc\help\html\launcher-toolbar.ja-JP.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="doc\help\html\launcher.ja-JP.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="doc\help\html\command.ja-JP.html">
+    <Content Include="doc\help\html\launcher-command.ja-JP.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="doc\help\html\execute.ja-JP.html">
+    <Content Include="doc\help\html\launcher-execute.ja-JP.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="doc\help\html\stream.ja-JP.html">
+    <Content Include="doc\help\html\launcher-stream.ja-JP.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="doc\help\html\note.ja-JP.html">
@@ -344,20 +347,20 @@
     <Content Include="doc\help\html\development-source.ja-JP.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="doc\help\html\platform.ja-JP.html">
+    <Content Include="doc\help\html\general-platform.ja-JP.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="doc\help\html\_.ja-JP.html" />
-    <Content Include="doc\help\html\privacy.ja-JP.html">
+    <Content Include="doc\help\html\general-privacy.ja-JP.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="doc\help\html\internet.ja-JP.html">
+    <Content Include="doc\help\html\general-internet.ja-JP.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="doc\help\html\install_uninstall_data.ja-JP.html">
+    <Content Include="doc\help\html\general-install_uninstall_data.ja-JP.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="doc\help\html\top.ja-JP.html">
+    <Content Include="doc\help\html\general.ja-JP.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Resource Include="Resources\Image\Note\NoteFormatStrikethrough.png" />
