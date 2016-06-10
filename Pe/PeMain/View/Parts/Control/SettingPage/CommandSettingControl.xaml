@@ -20,6 +20,7 @@
         <ResourceDictionary Source="/View/Parts/Resource/GroupBoxDictionary.xaml"/>
         <ResourceDictionary Source="/View/Parts/Resource/ComboBoxDictionary.xaml"/>
         <ResourceDictionary Source="/View/Parts/Resource/FontSelectDictionary.xaml"/>
+        <ResourceDictionary Source="/View/Parts/Resource/CheckBoxDictionary.xaml"/>
       </ResourceDictionary.MergedDictionaries>
       <app_main_view_parts_converter_elc:IconScaleLanguageConverter x:Key="IconScaleLanguageConverter" />
     </ResourceDictionary>
@@ -70,13 +71,13 @@
           Size="{Binding FontSize}"
           SizeMinimum="{x:Static app_main:Constants.CommandFontMinimumSize}"
           SizeMaximum="{x:Static app_main:Constants.CommandFontMaximumSize}"
-          Width="{StaticResource FontSelectWidth}"
+          MinWidth="{StaticResource FontSelectWidth}"
         />
 
         <GroupBox Grid.Row="4" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="2" Header="find" app_main_view_parts_attached:Language.Word="command-setting/find" Style="{StaticResource DefaultGroupBox}" >
           <StackPanel>
-            <CheckBox IsChecked="{Binding FindTag}"  Content="FindTag"  app_main_view_parts_attached:Language.Word="command-setting/find/tag" />
-            <CheckBox IsChecked="{Binding FindFile}" Content="FindFile" app_main_view_parts_attached:Language.Word="command-setting/find/file" />
+            <CheckBox IsChecked="{Binding FindTag}"  Content="FindTag"  app_main_view_parts_attached:Language.Word="command-setting/find/tag" Style="{StaticResource DefaultVerticalCheckBox}" />
+            <CheckBox IsChecked="{Binding FindFile}" Content="FindFile" app_main_view_parts_attached:Language.Word="command-setting/find/file" Style="{StaticResource DefaultVerticalCheckBox}" />
           </StackPanel>
         </GroupBox>
 
