@@ -20,6 +20,7 @@
         <ResourceDictionary Source="/View/Parts/Resource/LabelDictionary.xaml"/>
         <ResourceDictionary Source="/View/Parts/Resource/FontSelectDictionary.xaml"/>
         <ResourceDictionary Source="/View/Parts/Resource/RadioButtonDictionary.xaml"/>
+        <ResourceDictionary Source="/View/Parts/Resource/CheckBoxDictionary.xaml"/>
       </ResourceDictionary.MergedDictionaries>
       <app_library_sharedlibrary_view_converter:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
     </ResourceDictionary>
@@ -39,8 +40,8 @@
             <ColumnDefinition Width="Auto"/>
           </Grid.ColumnDefinitions>
 
-          <CheckBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="topmost" app_main_view_parts_attached:Language.Word="template-setting/topmost" IsChecked="{Binding IsTopmost}" />
-          <CheckBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Content="visible" app_main_view_parts_attached:Language.Word="template-setting/visible" IsChecked="{Binding IsVisible}" />
+          <CheckBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="visible" app_main_view_parts_attached:Language.Word="template-setting/visible" IsChecked="{Binding IsVisible}" Style="{StaticResource DefaultVerticalCheckBox}" />
+          <CheckBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Content="topmost" app_main_view_parts_attached:Language.Word="template-setting/topmost" IsChecked="{Binding IsTopmost}" Style="{StaticResource DefaultVerticalCheckBox}" />
 
           <Label Grid.Row="2" Grid.Column="0" Content="show" app_main_view_parts_attached:Language.Word="template-setting/show" Style="{StaticResource HeaderLabel}" Target="{Binding ElementName=inputToggleHotKey}" />
           <app_main_view_parts_control:AppHotkeyControl x:Name="inputToggleHotKey" Grid.Row="2" Grid.Column="1" Hotkey="{Binding ToggleHotKey}" Style="{StaticResource DefaultAppHotkey}" />
@@ -55,7 +56,7 @@
             Size="{Binding FontSize}"
             SizeMinimum="{x:Static app_main:Constants.TemplateFontMinimumSize}"
             SizeMaximum="{x:Static app_main:Constants.TemplateFontMaximumSize}"
-            Width="{StaticResource FontSelectWidth}"
+            MinWidth="{StaticResource FontSelectWidth}"
           />
 
         </Grid>
