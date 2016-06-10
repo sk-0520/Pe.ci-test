@@ -2,15 +2,15 @@
   x:Class="ContentTypeTextNet.Pe.PeMain.View.Parts.Control.LauncherItemEditControl"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:app_main_view_parts_attached="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Attached"
   xmlns:app_main_view_parts_control="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Control"
   xmlns:AP="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
   xmlns:app_main="clr-namespace:ContentTypeTextNet.Pe.PeMain"
   xmlns:app_library_sharedlibrary_view_converter="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=ContentTypeTextNet.SharedLibrary"
   xmlns:app_library_pedata_define="clr-namespace:ContentTypeTextNet.Pe.Library.PeData.Define;assembly=PeData"
-  xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-  mc:Ignorable="d" 
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  mc:Ignorable="d"
   d:DesignHeight="300" d:DesignWidth="300"
 >
   <app_main_view_parts_control:CommonDataUserControl.Resources>
@@ -40,8 +40,8 @@
         </Grid.RowDefinitions>
         <GroupBox Grid.Row="0" Header="kind" app_main_view_parts_attached:Language.Word="launcher-item-edit/general/kind" Style="{StaticResource DefaultGroupBox}" >
           <StackPanel Orientation="Horizontal">
-            <RadioButton Content="file" app_main_view_parts_attached:Language.Word="launcher-item-edit/general/kind/file" IsChecked="{Binding LauncherKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_library_pedata_define:LauncherKind.File}}" Style="{StaticResource DefaultVerticalRadioButton}" />
-            <RadioButton Content="command" app_main_view_parts_attached:Language.Word="launcher-item-edit/general/kind/command" IsChecked="{Binding LauncherKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_library_pedata_define:LauncherKind.Command}}" Style="{StaticResource DefaultVerticalRadioButton}" />
+            <RadioButton Content="file" app_main_view_parts_attached:Language.Word="launcher-item-edit/general/kind/file" IsChecked="{Binding LauncherKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_library_pedata_define:LauncherKind.File}}" Style="{StaticResource DefaultHorizontalRadioButton}" />
+            <RadioButton Content="command" app_main_view_parts_attached:Language.Word="launcher-item-edit/general/kind/command" IsChecked="{Binding LauncherKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_library_pedata_define:LauncherKind.Command}}" Style="{StaticResource DefaultHorizontalRadioButton}" />
           </StackPanel>
         </GroupBox>
         <Grid Grid.Row="1">

@@ -37,32 +37,40 @@
         <ColumnDefinition Width="Auto" />
       </Grid.ColumnDefinitions>
 
-      <GroupBox Grid.Column="0" Header="key" app_main_view_parts_attached:Language.Word="note-setting/key" Style="{StaticResource DefaultGroupBox}" >
-        <Grid>
-          <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-          </Grid.RowDefinitions>
-          <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="*" />
-          </Grid.ColumnDefinitions>
+      <StackPanel Grid.Column="0">
+        <GroupBox Header="key" app_main_view_parts_attached:Language.Word="note-setting/key" Style="{StaticResource DefaultGroupBox}" >
+          <Grid>
+            <Grid.RowDefinitions>
+              <RowDefinition Height="Auto" />
+              <RowDefinition Height="Auto" />
+              <RowDefinition Height="Auto" />
+              <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="Auto" />
+              <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
 
-          <Label Grid.Row="0" Grid.Column="0" Content="create" app_main_view_parts_attached:Language.Word="note-setting/key/create" Style="{StaticResource HeaderLabel}" Target="{Binding ElementName=inputCreateHotkey}" />
-          <app_main_view_parts_control:AppHotkeyControl x:Name="inputCreateHotkey" Grid.Row="0" Grid.Column="1" Hotkey="{Binding CreateHotKey}" Style="{StaticResource DefaultAppHotkey}" />
+            <Label Grid.Row="0" Grid.Column="0" Content="create" app_main_view_parts_attached:Language.Word="note-setting/key/create" Style="{StaticResource HeaderLabel}" Target="{Binding ElementName=inputCreateHotkey}" />
+            <app_main_view_parts_control:AppHotkeyControl x:Name="inputCreateHotkey" Grid.Row="0" Grid.Column="1" Hotkey="{Binding CreateHotKey}" Style="{StaticResource DefaultAppHotkey}" />
 
-          <Label Grid.Row="1" Grid.Column="0" Content="hide" app_main_view_parts_attached:Language.Word="note-setting/key/hide" Style="{StaticResource HeaderLabel}" Target="{Binding ElementName=inputHideHotkey}" />
-          <app_main_view_parts_control:AppHotkeyControl x:Name="inputHideHotkey" Grid.Row="1" Grid.Column="1" Hotkey="{Binding HideHotKey}" Style="{StaticResource DefaultAppHotkey}" />
+            <Label Grid.Row="1" Grid.Column="0" Content="hide" app_main_view_parts_attached:Language.Word="note-setting/key/hide" Style="{StaticResource HeaderLabel}" Target="{Binding ElementName=inputHideHotkey}" />
+            <app_main_view_parts_control:AppHotkeyControl x:Name="inputHideHotkey" Grid.Row="1" Grid.Column="1" Hotkey="{Binding HideHotKey}" Style="{StaticResource DefaultAppHotkey}" />
 
-          <Label Grid.Row="2" Grid.Column="0" Content="compact" app_main_view_parts_attached:Language.Word="note-setting/key/compact" Style="{StaticResource HeaderLabel}" Target="{Binding ElementName=inputCompactHotkey}" />
-          <app_main_view_parts_control:AppHotkeyControl x:Name="inputCompactHotkey" Grid.Row="2" Grid.Column="1" Hotkey="{Binding CompactHotKey}" Style="{StaticResource DefaultAppHotkey}" />
+            <Label Grid.Row="2" Grid.Column="0" Content="compact" app_main_view_parts_attached:Language.Word="note-setting/key/compact" Style="{StaticResource HeaderLabel}" Target="{Binding ElementName=inputCompactHotkey}" />
+            <app_main_view_parts_control:AppHotkeyControl x:Name="inputCompactHotkey" Grid.Row="2" Grid.Column="1" Hotkey="{Binding CompactHotKey}" Style="{StaticResource DefaultAppHotkey}" />
 
-          <Label Grid.Row="3" Grid.Column="0" Content="front" app_main_view_parts_attached:Language.Word="note-setting/key/front" Style="{StaticResource HeaderLabel}" Target="{Binding ElementName=inputShowFrontHotkey}" />
-          <app_main_view_parts_control:AppHotkeyControl x:Name="inputShowFrontHotkey" Grid.Row="3" Grid.Column="1" Hotkey="{Binding ShowFrontHotKey}" Style="{StaticResource DefaultAppHotkey}" />
-        </Grid>
-      </GroupBox>
+            <Label Grid.Row="3" Grid.Column="0" Content="front" app_main_view_parts_attached:Language.Word="note-setting/key/front" Style="{StaticResource HeaderLabel}" Target="{Binding ElementName=inputShowFrontHotkey}" />
+            <app_main_view_parts_control:AppHotkeyControl x:Name="inputShowFrontHotkey" Grid.Row="3" Grid.Column="1" Hotkey="{Binding ShowFrontHotKey}" Style="{StaticResource DefaultAppHotkey}" />
+          </Grid>
+        </GroupBox>
+        <GroupBox Header="title" app_main_view_parts_attached:Language.Word="note-setting/title" Style="{StaticResource DefaultGroupBox}" >
+          <StackPanel Orientation="Horizontal">
+            <RadioButton Content="timestamp" app_main_view_parts_attached:Language.Word="note-setting/title/timestamp" IsChecked="{Binding NoteTitle, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_library_pedata_define:NoteTitle.Timestamp}}" Style="{StaticResource DefaultHorizontalRadioButton}" />
+            <RadioButton Content="default" app_main_view_parts_attached:Language.Word="note-setting/title/default" IsChecked="{Binding NoteTitle, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_library_pedata_define:NoteTitle.DefaultCaption}}" Style="{StaticResource DefaultHorizontalRadioButton}" />
+          </StackPanel>
+        </GroupBox>
+      </StackPanel>
 
       <GroupBox Grid.Column="1" Header="style" app_main_view_parts_attached:Language.Word="note-setting/style" Style="{StaticResource DefaultGroupBox}">
         <Grid>
@@ -91,7 +99,7 @@
             Size="{Binding FontSize}"
             SizeMinimum="{x:Static app_main:Constants.NoteFontMinimumSize}"
             SizeMaximum="{x:Static app_main:Constants.NoteFontMaximumSize}"
-            Width="{StaticResource FontSelectWidth}"
+            MinWidth="{StaticResource FontSelectWidth}"
           />
 
           <Label Grid.Row="1" Grid.Column="0" Content="fore" app_main_view_parts_attached:Language.Word="note-setting/style/fore-color" Style="{StaticResource HeaderLabel}" />
@@ -111,17 +119,10 @@
               <ColumnDefinition Width="5*" />
             </Grid.ColumnDefinitions>
             <!-- 横方向はパネルに任せて縦用のスタイルを適用 -->
-            <RadioButton Grid.Column="0" Content="text" app_main_view_parts_attached:Language.Word="note/style/kind/text" IsChecked="{Binding NoteKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_library_pedata_define:NoteKind.Text}}" Style="{StaticResource DefaultVerticalRadioButton}" />
-            <RadioButton Grid.Column="1" Content="rtf" app_main_view_parts_attached:Language.Word="note/style/kind/rtf" IsChecked="{Binding NoteKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_library_pedata_define:NoteKind.Rtf}}" Style="{StaticResource DefaultVerticalRadioButton}" />
+            <RadioButton Grid.Column="0" Content="text" app_main_view_parts_attached:Language.Word="note/style/kind/text" IsChecked="{Binding NoteKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_library_pedata_define:NoteKind.Text}}" Style="{StaticResource DefaultHorizontalRadioButton}" />
+            <RadioButton Grid.Column="1" Content="rtf" app_main_view_parts_attached:Language.Word="note/style/kind/rtf" IsChecked="{Binding NoteKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_library_pedata_define:NoteKind.Rtf}}" Style="{StaticResource DefaultHorizontalRadioButton}" />
           </Grid>
         </Grid>
-      </GroupBox>
-
-      <GroupBox Grid.Column="2" Header="title" app_main_view_parts_attached:Language.Word="note-setting/title" Style="{StaticResource DefaultGroupBox}" >
-        <StackPanel>
-          <RadioButton Content="timestamp" app_main_view_parts_attached:Language.Word="note-setting/title/timestamp" IsChecked="{Binding NoteTitle, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_library_pedata_define:NoteTitle.Timestamp}}" />
-          <RadioButton Content="default" app_main_view_parts_attached:Language.Word="note-setting/title/default" IsChecked="{Binding NoteTitle, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_library_pedata_define:NoteTitle.DefaultCaption}}" />
-        </StackPanel>
       </GroupBox>
 
     </Grid>

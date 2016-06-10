@@ -22,6 +22,7 @@
         <ResourceDictionary Source="/View/Parts/Resource/LabelDictionary.xaml"/>
         <ResourceDictionary Source="/View/Parts/Resource/FontSelectDictionary.xaml"/>
         <ResourceDictionary Source="/View/Parts/Resource/RadioButtonDictionary.xaml"/>
+        <ResourceDictionary Source="/View/Parts/Resource/CheckBoxDictionary.xaml"/>
       </ResourceDictionary.MergedDictionaries>
       <app_library_sharedlibrary_view_converter:GridDistanceConverter x:Key="GridDistanceConverter" />
       <app_library_sharedlibrary_view_converter:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
@@ -42,10 +43,13 @@
       <GroupBox Grid.Row="0" Grid.Column="0" Header="general" app_main_view_parts_attached:Language.Word="clipboard-setting/general" Style="{StaticResource DefaultGroupBox}">
         <StackPanel>
           <StackPanel>
+            <StackPanel.Resources>
+              <Style TargetType="CheckBox" BasedOn="{StaticResource DefaultVerticalCheckBox}" />
+            </StackPanel.Resources>
             <CheckBox Content="enabled" app_main_view_parts_attached:Language.Word="clipboard-setting/enabled" IsChecked="{Binding IsEnabled}" />
             <CheckBox Content="copy app" app_main_view_parts_attached:Language.Word="clipboard-setting/copy-app" IsChecked="{Binding IsEnabledApplicationCopy}"/>
-            <CheckBox Content="topmost" app_main_view_parts_attached:Language.Word="clipboard-setting/topmost" IsChecked="{Binding IsTopmost}" />
             <CheckBox Content="visible" app_main_view_parts_attached:Language.Word="clipboard-setting/visible" IsChecked="{Binding IsVisible}" />
+            <CheckBox Content="topmost" app_main_view_parts_attached:Language.Word="clipboard-setting/topmost" IsChecked="{Binding IsTopmost}" />
             <CheckBox Content="using clipboard" app_main_view_parts_attached:Language.Word="clipboard-setting/using-clipboard" IsChecked="{Binding UsingClipboard}"/>
             <CheckBox Content="dup to head" app_main_view_parts_attached:Language.Word="clipboard-setting/dup-move-head" IsChecked="{Binding DuplicationMoveHead}"/>
           </StackPanel>
@@ -85,7 +89,7 @@
               Size="{Binding FontSize}"
               SizeMinimum="{x:Static app_main:Constants.ClipboardFontMinimumSize}"
               SizeMaximum="{x:Static app_main:Constants.ClipboardFontMaximumSize}"
-              Width="{StaticResource FontSelectWidth}"
+              MinWidth="{StaticResource FontSelectWidth}"
             />
           </Grid>
 
