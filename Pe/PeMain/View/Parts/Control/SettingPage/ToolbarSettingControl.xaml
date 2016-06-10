@@ -27,6 +27,8 @@
         <ResourceDictionary Source="/View/Parts/Resource/GroupBoxDictionary.xaml"/>
         <ResourceDictionary Source="/View/Parts/Resource/LabelDictionary.xaml"/>
         <ResourceDictionary Source="/View/Parts/Resource/ComboBoxDictionary.xaml"/>
+        <ResourceDictionary Source="/View/Parts/Resource/RadioButtonDictionary.xaml"/>
+        <ResourceDictionary Source="/View/Parts/Resource/CheckBoxDictionary.xaml"/>
         <ResourceDictionary Source="/View/Parts/Resource/PopupDictionary.xaml"/>
         <ResourceDictionary Source="/View/Parts/Resource/TextBoxDictionary.xaml"/>
         <ResourceDictionary Source="/View/Parts/Resource/TextBlockDictionary.xaml"/>
@@ -56,7 +58,7 @@
       <ColumnDefinition Width="Auto"/>
       <ColumnDefinition Width="140*"/>
     </Grid.ColumnDefinitions>
-    <GroupBox Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Style="{StaticResource DefaultGroupBox}">
+    <GroupBox Grid.Row="0" Grid.RowSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Style="{StaticResource DefaultGroupBox}">
       <GroupBox.Header>
         <Grid HorizontalAlignment="Stretch">
           <Grid.ColumnDefinitions>
@@ -178,10 +180,13 @@
         />
 
         <StackPanel Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Top">
-          <CheckBox Content="show text" app_main_view_parts_attached:Language.Word="toolbar-setting/toolbar/show-text"  IsChecked="{Binding SelectedToolbar.TextVisible}" />
-          <CheckBox Content="auto hide" app_main_view_parts_attached:Language.Word="toolbar-setting/toolbar/auto-hide" IsChecked="{Binding SelectedToolbar.AutoHide}" />
-          <CheckBox Content="topmost" app_main_view_parts_attached:Language.Word="toolbar-setting/toolbar/topmost" IsChecked="{Binding SelectedToolbar.IsTopmost}" />
+          <StackPanel.Resources>
+            <Style TargetType="CheckBox" BasedOn="{StaticResource DefaultVerticalCheckBox}" />
+          </StackPanel.Resources>
           <CheckBox Content="visible" app_main_view_parts_attached:Language.Word="toolbar-setting/toolbar/visible" IsChecked="{Binding SelectedToolbar.IsVisible}" />
+          <CheckBox Content="topmost" app_main_view_parts_attached:Language.Word="toolbar-setting/toolbar/topmost" IsChecked="{Binding SelectedToolbar.IsTopmost}" />
+          <CheckBox Content="auto hide" app_main_view_parts_attached:Language.Word="toolbar-setting/toolbar/auto-hide" IsChecked="{Binding SelectedToolbar.AutoHide}" />
+          <CheckBox Content="show text" app_main_view_parts_attached:Language.Word="toolbar-setting/toolbar/show-text"  IsChecked="{Binding SelectedToolbar.TextVisible}" />
           <CheckBox Content="menu position" app_main_view_parts_attached:Language.Word="toolbar-setting/toolbar/menu-posotion" IsChecked="{Binding SelectedToolbar.MenuPositionCorrection}" />
           <CheckBox Content="menu visible" app_main_view_parts_attached:Language.Word="toolbar-setting/toolbar/menu-visible" IsChecked="{Binding SelectedToolbar.IsVisibleMenuButton}" />
         </StackPanel>
@@ -307,10 +312,10 @@
       DoubleClickCommand="{Binding DataContext.AppendChildLauncherItemCommand, RelativeSource={RelativeSource AncestorType=app_main_view_parts_control:CommonDataUserControl}}"
     />
 
-    <GroupBox Grid.Row="1" Grid.ColumnSpan="4" Header="drop mode" app_main_view_parts_attached:Language.Word="toolbar-setting/launcher/drop-mode" Style="{StaticResource DefaultGroupBox}">
+    <GroupBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Header="drop mode" app_main_view_parts_attached:Language.Word="toolbar-setting/launcher/drop-mode" Style="{StaticResource DefaultGroupBox}">
       <StackPanel Orientation="Horizontal">
-        <RadioButton Content="window" app_main_view_parts_attached:Language.Word="toolbar-setting/launcher/drop-mode/window" IsChecked="{Binding FileDropMode, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_library_pedata_define:LauncherItemFileDropMode.ShowExecuteWindow}}" />
-        <RadioButton Margin="8,0,0,0"  Content="arguments" app_main_view_parts_attached:Language.Word="toolbar-setting/launcher/drop-mode/arguments" IsChecked="{Binding FileDropMode, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_library_pedata_define:LauncherItemFileDropMode.ArgumentExecute}}" />
+        <RadioButton Content="window" app_main_view_parts_attached:Language.Word="toolbar-setting/launcher/drop-mode/window" IsChecked="{Binding FileDropMode, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_library_pedata_define:LauncherItemFileDropMode.ShowExecuteWindow}}" Style="{StaticResource DefaultHorizontalRadioButton}" />
+        <RadioButton Margin="8,0,0,0"  Content="arguments" app_main_view_parts_attached:Language.Word="toolbar-setting/launcher/drop-mode/arguments" IsChecked="{Binding FileDropMode, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_library_pedata_define:LauncherItemFileDropMode.ArgumentExecute}}"  Style="{StaticResource DefaultHorizontalRadioButton}" />
       </StackPanel>
     </GroupBox>
 
