@@ -46,7 +46,7 @@
         </Grid.ColumnDefinitions>
         <Label Grid.Row="0" Grid.Column="0" Content="language" app_main_view_parts_attached:Language.Word="main-setting/general/lang" Style="{StaticResource HeaderLabel}" Target="{Binding ElementName=selectLanguage}" />
         <ComboBox x:Name="selectLanguage" Grid.Row="0" Grid.Column="1" ItemsSource="{Binding LanguageList}" DisplayMemberPath="DisplayText" SelectedValuePath="Value" SelectedValue="{Binding SelectedLanguage}" Style="{StaticResource DefaultComboBox}" />
-        <CheckBox Grid.Row="0" Grid.Column="2" Margin="32,0,0,0" Content="startup" app_main_view_parts_attached:Language.Word="main-setting/general/startup" IsChecked="{Binding Startup}" Style="{StaticResource DefaultCheckBox}" />
+        <CheckBox Grid.Row="0" Grid.Column="2" Margin="32,0,0,0" Content="startup" app_main_view_parts_attached:Language.Word="main-setting/general/startup" IsChecked="{Binding Startup}" Style="{StaticResource DefaultHorizontalCheckBox}" />
       </Grid>
     </GroupBox>
     <Grid Grid.Row="1">
@@ -59,25 +59,25 @@
       <StackPanel Grid.Column="0">
         <GroupBox HorizontalAlignment="Stretch" Header="update" app_main_view_parts_attached:Language.Word="main-setting/running/update/check" Style="{StaticResource DefaultGroupBox}">
           <StackPanel>
-            <CheckBox Content="update check" app_main_view_parts_attached:Language.Word="main-setting/running/update/check/release" IsChecked="{Binding RunningCheckUpdateRelease}" />
-            <CheckBox Content="update check rc" app_main_view_parts_attached:Language.Word="main-setting/running/update/check/rc" IsChecked="{Binding RunningCheckUpdateRC}" />
+            <CheckBox Content="update check" app_main_view_parts_attached:Language.Word="main-setting/running/update/check/release" IsChecked="{Binding RunningCheckUpdateRelease}" Style="{StaticResource DefaultVerticalCheckBox}" />
+            <CheckBox Content="update check rc" app_main_view_parts_attached:Language.Word="main-setting/running/update/check/rc" IsChecked="{Binding RunningCheckUpdateRC}" Style="{StaticResource DefaultVerticalCheckBox}" />
           </StackPanel>
         </GroupBox>
 
         <GroupBox HorizontalAlignment="Stretch" Header="log" app_main_view_parts_attached:Language.Word="main-setting/log" Style="{StaticResource DefaultGroupBox}" >
           <StackPanel>
-            <CheckBox Content="visible" app_main_view_parts_attached:Language.Word="main-setting/log/visible" IsChecked="{Binding LogVisible}" />
+            <CheckBox Content="visible" app_main_view_parts_attached:Language.Word="main-setting/log/visible" IsChecked="{Binding LogVisible}" Style="{StaticResource DefaultVerticalCheckBox}" />
             <GroupBox Style="{StaticResource DefaultGroupBox}">
               <GroupBox.Header>
                 <CheckBox Content="add-show" app_main_view_parts_attached:Language.Word="main-setting/log/add-show" IsChecked="{Binding LogAddShow}" />
               </GroupBox.Header>
               <StackPanel>
-                <CheckBox Content="debug"   app_main_view_parts_attached:Language.Word="main-setting/log/trigger/debug" IsChecked="{Binding LogTriggerDebug}" />
-                <CheckBox Content="trace"   app_main_view_parts_attached:Language.Word="main-setting/log/trigger/trace"  IsChecked="{Binding LogTriggerTrace}" />
-                <CheckBox Content="info"    app_main_view_parts_attached:Language.Word="main-setting/log/trigger/info" IsChecked="{Binding LogTriggerInformation}" />
-                <CheckBox Content="warning" app_main_view_parts_attached:Language.Word="main-setting/log/trigger/warning" IsChecked="{Binding LogTriggerWarning}" />
-                <CheckBox Content="error"   app_main_view_parts_attached:Language.Word="main-setting/log/trigger/error" IsChecked="{Binding LogTriggerError}" />
-                <CheckBox Content="fatal"   app_main_view_parts_attached:Language.Word="main-setting/log/trigger/fatal" IsChecked="{Binding LogTriggerFatal}" />
+                <CheckBox Content="debug"   app_main_view_parts_attached:Language.Word="main-setting/log/trigger/debug" IsChecked="{Binding LogTriggerDebug}"  Style="{StaticResource DefaultVerticalCheckBox}"/>
+                <CheckBox Content="trace"   app_main_view_parts_attached:Language.Word="main-setting/log/trigger/trace"  IsChecked="{Binding LogTriggerTrace}"  Style="{StaticResource DefaultVerticalCheckBox}"/>
+                <CheckBox Content="info"    app_main_view_parts_attached:Language.Word="main-setting/log/trigger/info" IsChecked="{Binding LogTriggerInformation}"  Style="{StaticResource DefaultVerticalCheckBox}"/>
+                <CheckBox Content="warning" app_main_view_parts_attached:Language.Word="main-setting/log/trigger/warning" IsChecked="{Binding LogTriggerWarning}"  Style="{StaticResource DefaultVerticalCheckBox}"/>
+                <CheckBox Content="error"   app_main_view_parts_attached:Language.Word="main-setting/log/trigger/error" IsChecked="{Binding LogTriggerError}"  Style="{StaticResource DefaultVerticalCheckBox}"/>
+                <CheckBox Content="fatal"   app_main_view_parts_attached:Language.Word="main-setting/log/trigger/fatal" IsChecked="{Binding LogTriggerFatal}"  Style="{StaticResource DefaultVerticalCheckBox}"/>
               </StackPanel>
             </GroupBox>
           </StackPanel>
@@ -118,7 +118,7 @@
               <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <CheckBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="enable" app_main_view_parts_attached:Language.Word="main-setting/window-save/enabled" IsChecked="{Binding WindowSaveIsEnabled}"/>
+            <CheckBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="enable" app_main_view_parts_attached:Language.Word="main-setting/window-save/enabled" IsChecked="{Binding WindowSaveIsEnabled}" Style="{StaticResource DefaultVerticalCheckBox}"/>
 
             <Label Grid.Row="1" Grid.Column="0" Content="count" app_main_view_parts_attached:Language.Word="main-setting/window-save/count" Style="{StaticResource HeaderLabel}" />
             <app_main_view_parts_control:IntegerSliderControl
@@ -196,6 +196,8 @@
 
         <GroupBox HorizontalAlignment="Stretch" Header="privacy" app_main_view_parts_attached:Language.Word="main-setting/privacy" Style="{StaticResource DefaultGroupBox}">
           <StackPanel HorizontalAlignment="Stretch">
+            <CheckBox Content="send" app_main_view_parts_attached:Language.Word="main-setting/privacy/send-user-info" Style="{StaticResource DefaultVerticalCheckBox}" IsChecked="{Binding SendPersonalInformation}" />
+            <Label Content="user id" app_main_view_parts_attached:Language.Word="main-setting/privacy/user-id" app_main_view_parts_attached:Language.Hint="main-setting/privacy/user-id:hint" />
             <Grid HorizontalAlignment="Stretch">
               <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -209,7 +211,6 @@
               <xctk:AutoSelectTextBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" AutoSelectBehavior="OnFocus" IsReadOnly="True" Style="{StaticResource DefaultTextBox}" Text="{Binding UserId, Mode=OneWay}" />
               <Button Grid.Row="1" Grid.Column="0" Content="env" app_main_view_parts_attached:Language.Word="main-setting/privacy/create/environment" Command="{Binding CreateUserIdFromEnvironmentCommand}" />
               <Button Grid.Row="1" Grid.Column="1" Content="rnd" app_main_view_parts_attached:Language.Word="main-setting/privacy/create/random"      Command="{Binding CreateUserIdFromRandomCommand}" />
-              <CheckBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Content="send" app_main_view_parts_attached:Language.Word="main-setting/privacy/send-user-info" Style="{StaticResource DefaultVerticalCheckBox}" IsChecked="{Binding SendPersonalInformation}" />
             </Grid>
           </StackPanel>
         </GroupBox>

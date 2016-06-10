@@ -34,7 +34,7 @@ namespace ContentTypeTextNet.Pe.PeMain.View.Parts.Converter
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            var ms = (int)value;
+            var ms = (double)value;
             return TimeSpan.FromMilliseconds(ms);
         }
     }

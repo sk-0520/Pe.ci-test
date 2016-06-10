@@ -372,9 +372,11 @@
 		<Item Id="main-setting/window-save/count" Word="保存件数" />
 		<Item Id="main-setting/window-save/interval" Word="保存間隔" />
 		<Item Id="main-setting/privacy" Word="プライバシー" />
-		<Item Id="main-setting/privacy/create/environment" Word="環境から作成(_C)" />
-		<Item Id="main-setting/privacy/create/random"      Word="ランダム作成(_R)" />
-		<Item Id="main-setting/privacy/send-user-info"     Word="ユーザー情報送信を許可(_S)" />
+		<Item Id="main-setting/privacy/send-user-info"      Word="ユーザー情報送信を許可(_S)" />
+		<Item Id="main-setting/privacy/user-id"             Word="ユーザー識別子" />
+		<Item Id="main-setting/privacy/user-id:hint"        Word="ユーザー情報を送信する場合、ユーザー識別子を送信します。${br}ユーザー識別子はハードウェア等から自動的に作成され特定個人とは紐づきません。" />
+		<Item Id="main-setting/privacy/create/environment"  Word="環境から作成(_C)" />
+		<Item Id="main-setting/privacy/create/random"       Word="ランダム作成(_R)" />
 		<Item Id="main-setting/general/notification"        Word="操作通知(_A)" />
 		<Item Id="main-setting/general/notification/system" Word="システム依存(_S)" />
 		<Item Id="main-setting/general/notification/none"   Word="なし(_N)" />
