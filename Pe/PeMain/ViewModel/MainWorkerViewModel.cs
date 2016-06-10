@@ -794,7 +794,8 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         void MakeSettingArchive(string backupDirectory, string settingBaseDirectory)
         {
             using(var timeLogger = CommonData.NonProcess.CreateTimeLogger()) {
-                var fileName = PathUtility.AppendExtension(Constants.GetNowTimestampFileName(), "zip");
+                var baseName = Constants.GetNowTimestampFileName() + "_ver." + Constants.ApplicationVersionNumber.ToString();
+                var fileName = PathUtility.AppendExtension(baseName, "zip");
                 var backupFileFilePath = Path.Combine(backupDirectory, fileName);
                 FileUtility.MakeFileParentDirectory(backupFileFilePath);
 
