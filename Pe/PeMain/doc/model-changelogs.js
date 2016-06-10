@@ -160,6 +160,10 @@
 					{
 						'revision': '',
 						'subject': '#451: 設定項目のUIが直観的ない部分を調整する'
+					},
+					{
+						'revision': '',
+						'subject': '#471: 構成ファイル backup-archive が使用されていない'
 					}
 				]
 			},

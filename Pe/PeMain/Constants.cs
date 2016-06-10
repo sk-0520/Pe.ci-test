@@ -182,7 +182,6 @@ namespace ContentTypeTextNet.Pe.PeMain
         public static readonly TimeSpan iconLoadWaitTime = TimeSpan.FromMilliseconds(250);
         public const int iconLoadRetryMax = 3;
 
-        public const int updateArchiveCount = 15;
 #if DEBUG
         public static readonly TimeSpan updateWaitTime = TimeSpan.FromSeconds(1);
 #else
