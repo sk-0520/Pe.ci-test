@@ -39,7 +39,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         {
             var map = new Dictionary<string, string>();
 
-            var clipboardItem = ClipboardUtility.GetClipboardData(ClipboardType.Text | ClipboardType.Files, IntPtr.Zero);
+            var clipboardItem = ClipboardUtility.GetClipboardData(ClipboardType.Text | ClipboardType.Files, IntPtr.Zero, nonProcess);
             if(clipboardItem.Type != ClipboardType.None) {
                 var clipboardText = clipboardItem.Body.Text;
                 // そのまんま
@@ -60,8 +60,6 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         /// <summary>
         /// テンプレートアイテムからテンプレートプロセッサ作成。
         /// </summary>
-        /// <param name="item">テンプレートアイテム。テンプレートプロセッサが設定される。</param>
-        /// <param name="language">使用言語。</param>
         /// <returns>作成されたテンプレートプロセッサ。</returns>
         public static ProgramTemplateProcessor MakeTemplateProcessor(string source, ProgramTemplateProcessor processor, INonProcess appNonProcess)
         {

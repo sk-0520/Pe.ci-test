@@ -182,6 +182,10 @@ namespace ContentTypeTextNet.Pe.PeMain
         const string noteHide = "/Resources/Image/Note/NoteHide.png";
         [AppResource(AppResourceType.Image)]
         const string noteFront = "/Resources/Image/Note/NoteFront.png";
+        [AppResource(AppResourceType.Image)]
+        const string noteFormatUnderline = "/Resources/Image/Note/NoteFormatUnderline.png";
+        [AppResource(AppResourceType.Image)]
+        const string noteFormatStrikethrough = "/Resources/Image/Note/NoteFormatStrikethrough.png";
 
         #endregion
 
@@ -268,8 +272,6 @@ namespace ContentTypeTextNet.Pe.PeMain
 
         [AppResource(AppResourceType.Image)]
         const string aboutUpdate = "/Resources/Image/About/AboutUpdate.png";
-        [AppResource(AppResourceType.Image)]
-        const string aboutHistory = "/Resources/Image/About/AboutHistory.png";
         [AppResource(AppResourceType.Image)]
         const string aboutComponentKindImage = "/Resources/Image/About/AboutComponentKindImage.png";
         [AppResource(AppResourceType.Image)]

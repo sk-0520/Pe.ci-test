@@ -64,6 +64,9 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
         [DataMember]
         public bool AutoLineFeed { get; set; }
 
+        [DataMember]
+        public NoteKind NoteKind { get; set; }
+
         #endregion
 
         #region IColorPair
@@ -88,10 +91,14 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
         {
             var obj = (NoteSettingModel)target;
 
-            CreateHotKey.DeepCloneTo(obj.CreateHotKey);
-            HideHotKey.DeepCloneTo(obj.HideHotKey);
-            CompactHotKey.DeepCloneTo(obj.CompactHotKey);
-            ShowFrontHotKey.DeepCloneTo(obj.ShowFrontHotKey);
+            //CreateHotKey.DeepCloneTo(obj.CreateHotKey);
+            //HideHotKey.DeepCloneTo(obj.HideHotKey);
+            //CompactHotKey.DeepCloneTo(obj.CompactHotKey);
+            //ShowFrontHotKey.DeepCloneTo(obj.ShowFrontHotKey);
+            obj.CreateHotKey = (HotKeyModel)CreateHotKey.DeepClone();
+            obj.HideHotKey = (HotKeyModel)HideHotKey.DeepClone();
+            obj.CompactHotKey = (HotKeyModel)CompactHotKey.DeepClone();
+            obj.ShowFrontHotKey = (HotKeyModel)ShowFrontHotKey.DeepClone();
             obj.ForeColor = ForeColor;
             obj.BackColor = BackColor;
             //Font.DeepCloneTo(obj.Font);
@@ -99,6 +106,7 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
             obj.NoteTitle = NoteTitle;
             obj.IsTopmost = IsTopmost;
             obj.AutoLineFeed = AutoLineFeed;
+            obj.NoteKind = NoteKind;
         }
 
         public IDeepClone DeepClone()

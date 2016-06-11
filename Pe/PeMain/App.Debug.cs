@@ -43,15 +43,15 @@ namespace ContentTypeTextNet.Pe.PeMain
         /// </summary>
         void DebugProcess()
         {
-            //icon();
-            //font();
-            //box();
-            //browser();
-            //toolbar();
-            //json();
+            //debugIcon();
+            //debugFont();
+            //debugBox();
+            //debugBrowser();
+            //debugToolbar();
+            //debugJson();
         }
 
-        void icon()
+        void debugIcon()
         {
             //var path = Environment.ExpandEnvironmentVariables(@"%PROGRAMFILES%\Waterfox\waterfox.exe");
             var pathList = new[] {
@@ -76,7 +76,7 @@ namespace ContentTypeTextNet.Pe.PeMain
             }
         }
 
-        void font()
+        void debugFont()
         {
             var names = new[] { null, "", "Arial", "ＭＳ ゴシック" };
             foreach(var name in names) {
@@ -85,10 +85,10 @@ namespace ContentTypeTextNet.Pe.PeMain
             }
         }
 
-        void box()
+        void debugBox()
         {
             var canvas = ImageUtility.CreateBox(Colors.Red, Colors.Yellow, new Size(16, 16));
-            var box16 = ImageUtility.MakeBitmapBitmapSourceDefualtDpi(canvas);
+            var box16 = ImageUtility.MakeBitmapSourceDefualtDpi(canvas);
 
             var encoder = new PngBitmapEncoder();
             encoder.Frames.Add(BitmapFrame.Create(box16));
@@ -98,12 +98,12 @@ namespace ContentTypeTextNet.Pe.PeMain
             }
         }
 
-        void browser()
+        void debugBrowser()
         {
             SystemEnvironmentUtility.SetUsingBrowserVersionForExecutingAssembly(8000);
         }
 
-        void toolbar()
+        void debugToolbar()
         {
             Size imageSize = new Size(IconScale.Small.ToWidth() * 2, IconScale.Small.ToHeight());
             var dts = new[] {
@@ -115,17 +115,17 @@ namespace ContentTypeTextNet.Pe.PeMain
             };
             foreach(var dt in dts) {
                 var icon = LauncherToolbarUtility.MakeDockIcon(dt, imageSize);
-                var image = ImageUtility.MakeBitmapBitmapSourceDefualtDpi(icon);
+                var image = ImageUtility.MakeBitmapSourceDefualtDpi(icon);
 
                 var encoder = new PngBitmapEncoder();
                 encoder.Frames.Add(BitmapFrame.Create(image));
-                using(var s = File.OpenWrite(@"Z:\" + dt.ToString() + ".png")) {
+                using(var s = File.OpenWrite($@"Z:\{dt}.png")) {
                     encoder.Save(s);
                 }
             }
         }
 
-        void json()
+        void debugJson()
         {
             var src = new HashItemModel() {
                 Code = new byte[1024],

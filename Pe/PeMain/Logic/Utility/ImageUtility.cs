@@ -61,7 +61,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         /// <param name="element"></param>
         /// <param name="dpi"></param>
         /// <returns></returns>
-        public static BitmapSource MakeBitmapBitmapSource(FrameworkElement element, Point dpi)
+        public static BitmapSource MakeBitmapSource(FrameworkElement element, Point dpi)
         {
             var size = new Size(element.Width, element.Height);
 
@@ -80,9 +80,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         /// </summary>
         /// <param name="element"></param>
         /// <returns></returns>
-        public static BitmapSource MakeBitmapBitmapSourceDefualtDpi(FrameworkElement element)
+        public static BitmapSource MakeBitmapSourceDefualtDpi(FrameworkElement element)
         {
-            return MakeBitmapBitmapSource(element, new Point(96, 96));
+            return MakeBitmapSource(element, new Point(96, 96));
         }
 
         public static Color GetMenuIconColor(bool getBoxColor, bool isActiveColor)

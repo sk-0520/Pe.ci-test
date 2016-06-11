@@ -1,0 +1,105 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta charset="utf-8" />
+		<title>ヘルプ</title>
+		<link rel="shortcut icon" href="../image/favicon.ico" type="image/vnd.microsoft.icon" />
+		<style>
+			@import url('../../../etc/style/common.css');
+			@import url('../style/help.css');
+		</style>
+		<script src="../../../etc/script/jquery.js"></script>
+		<script src="../../../etc/script/changelog.js"></script>
+		<script src="../script/help.js"></script>
+	</head>
+	<body>
+		<h1>ヘルプ</h1>
+		<section id="content">
+			<p>
+				ツールバーによるボタン型のランチャーが Pe の主機能となります。
+			</p>
+
+			<h2>配置</h2>
+			<p>
+				ツールバーはディスプレイ毎に一つ配置されて、ディスプレイ内で自由に配置することができます
+			</p>
+			<table>
+				<thead>
+					<tr>
+						<th>位置</th>
+						<th>役割</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><img src="../image/dock_type-none.png" />フロート</td>
+						<td>
+							ディスプレイ内を自由に移動可能なモードです。
+							<br />
+							左右のリサイズが可能です。
+						</td>
+					</tr>
+					<tr>
+						<td><img src="../image/dock_type-top.png" />上</td>
+						<td rowspan="4">
+							各ディスプレイのデスクトップの四辺に配置するモードです。
+							<br />
+							タスクバーみたいな配置といえばわかりやすいかと。
+						</td>
+					</tr>
+					<tr>
+						<td><img src="../image/dock_type-bottom.png" />下</td>
+					</tr>
+					<tr>
+						<td><img src="../image/dock_type-left.png" />左</td>
+					</tr>
+					<tr>
+						<td><img src="../image/dock_type-right.png" />右</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<h2>自動的に隠す</h2>
+			<p>
+				非フロート状態のツールバーにマウスカーソルが乗っていない場合、表示時間設定後にツールバーをデスクトップから隠します。
+			</p>
+			<p>
+				隠れた状態では元のツールバーの位置に細いバーが表示されます。
+				バー上にマウスカーソルを移動することで元のツールバーを表示します。
+			</p>
+			<h3>強制的に隠れた状態へ遷移させる</h3>
+			<p>
+				自動的に隠すが有効な場合に下記操作で表示時間設定を満たすことなく強制的に隠すことができます。
+			</p>
+			<ul>
+				<li><kbd>ESC</kbd>を二回入力。</li>
+				<li>ツールバー上でマウス左ダブルクリック。</li>
+			</ul>
+
+			<h2>ボタンメニュー</h2>
+			<p>
+				ランチャーボタンの<em class="ui">▼</em>をクリックすると該当ランチャーアイテムのメニュー表示を行います。
+			</p>
+			<p>
+				設定によりメニューボタンを非表示にすることもできます。
+				その際にメニューを表示するにはボタン上で、
+			</p>
+			<ul>
+				<li><kbd>Shift</kbd> + 右クリック</li>
+				<li>マウス中央ボタン(ホイール)クリック</li>
+			</ul>
+
+			<h2>コンテキストメニュー</h2>
+			<p>
+				ツールバー上で右クリックか<kbd>アプリケーションメニュー</kbd>でコンテキストメニューが表示されます。
+				メニューからグループを切り替えたりツールバーに表示しきれないランチャーアイテムを実行することができます。
+			</p>
+			<div class="ref">
+				<p>
+					グループの編集については<span class="page">setting-toolbar</span>を参照してください。
+				</p>
+			</div>
+		</section>
+		<nav id="main-menu"></nav>
+	</body>
+</html>

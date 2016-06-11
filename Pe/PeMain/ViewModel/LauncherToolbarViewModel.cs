@@ -783,6 +783,21 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
         }
 
+        public ICommand ForceHiddenToolbarCommand
+        {
+            get
+            {
+                return CreateCommand(o => {
+                    if(DockType != DockType.None && AutoHide && !IsHidden && IsVisible) {
+                        if(HasView) {
+                            View.Appbar.HideView(true);
+                        }
+                        AppSender.SendInformationTips(AppNonProcess.Language["notify/info/toolbar-force-hide/title"], AppNonProcess.Language["notify/info/toolbar-force-hide/message"], LogKind.Information);
+                    }
+                });
+            }
+        }
+
         #endregion
 
         #region function
@@ -823,7 +838,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             var list = GetLauncherItems(group)
                 .Select(m => new LauncherItemButtonViewModel(m, DockScreen, Model.LauncherItemSetting, AppNonProcess, AppSender) {
                     IconScale = Model.Toolbar.IconScale,
-                });
+                })
             ;
             return new CollectionModel<LauncherItemButtonViewModel>(list);
         }
@@ -897,6 +912,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         CollectionModel<LauncherItemButtonViewModel> MakeHiddenItem()
         {
+            //TODO: epsilon
             if(WindowWidth == 0 || WindowHeight == 0) {
                 return new CollectionModel<LauncherItemButtonViewModel>();
             }
@@ -1022,6 +1038,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
             set
             {
+                //TODO: epsilon
                 if(DockType == DockType.None && Model.Toolbar.FloatToolbar.Left != value) {
                     Model.Toolbar.FloatToolbar.Left = value;
                     OnPropertyChanged();
@@ -1045,6 +1062,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
             set
             {
+                //TODO: epsilon
                 if(DockType == DockType.None && Model.Toolbar.FloatToolbar.Top != value) {
                     Model.Toolbar.FloatToolbar.Top = value;
                     OnPropertyChanged();
@@ -1069,6 +1087,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
             set
             {
+                //TODO: epsilon
                 if(DockType == DockType.None) {
                     Model.Toolbar.FloatToolbar.WidthButtonCount = CalculateButtonWidthCount(DockType, ToolbarButtonOrientation, BorderThickness, this._captionWidth, value);
                     OnPropertyChanged();
@@ -1098,6 +1117,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
             set
             {
+                //TODO: epsilon
                 if(DockType == DockType.None) {
                     Model.Toolbar.FloatToolbar.HeightButtonCount = CalculateButtonHeightCount(DockType, ToolbarButtonOrientation, BorderThickness, this._captionWidth, value);
                     OnPropertyChanged();

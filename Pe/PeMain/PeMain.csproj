@@ -26,7 +26,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <NoWarn>IDE0001</NoWarn>
+    <NoWarn>RECS0154</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <OutputPath>$(SolutionDir)..\Output\$(Configuration)\$(Platform)</OutputPath>
@@ -38,7 +38,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <NoWarn>IDE0001</NoWarn>
+    <NoWarn>RECS0154</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -50,7 +50,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <NoWarn>IDE0001</NoWarn>
+    <NoWarn>RECS0154</NoWarn>
     <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
@@ -63,7 +63,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <NoWarn>IDE0001</NoWarn>
+    <NoWarn>RECS0154</NoWarn>
   </PropertyGroup>
   <PropertyGroup />
   <PropertyGroup>
@@ -72,12 +72,12 @@
   <PropertyGroup />
   <ItemGroup>
     <Reference Include="ContentTypeTextNet.PInvoke">
-      <HintPath>..\packages\ContentTypeTextNet.PInvoke.1.0.0.19\lib\net46\ContentTypeTextNet.PInvoke.dll</HintPath>
+      <HintPath>..\packages\ContentTypeTextNet.PInvoke.1.0.0.22\lib\net46\ContentTypeTextNet.PInvoke.dll</HintPath>
       <Private>True</Private>
       <Private>False</Private>
     </Reference>
     <Reference Include="ContentTypeTextNet.SharedLibrary">
-      <HintPath>..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.44\lib\net46\ContentTypeTextNet.SharedLibrary.dll</HintPath>
+      <HintPath>..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.51\lib\net46\ContentTypeTextNet.SharedLibrary.dll</HintPath>
       <Private>True</Private>
       <Private>False</Private>
     </Reference>
@@ -86,8 +86,9 @@
       <Private>True</Private>
       <Private>False</Private>
     </Reference>
-    <Reference Include="ICSharpCode.AvalonEdit, Version=5.0.1.0, Culture=neutral, PublicKeyToken=9cc39be672370310, processorArchitecture=MSIL">
-      <HintPath>..\packages\AvalonEdit.5.0.2\lib\Net40\ICSharpCode.AvalonEdit.dll</HintPath>
+    <Reference Include="ICSharpCode.AvalonEdit">
+      <HintPath>..\packages\AvalonEdit.5.0.3\lib\Net40\ICSharpCode.AvalonEdit.dll</HintPath>
+      <Private>True</Private>
       <Private>False</Private>
     </Reference>
     <Reference Include="Mono.TextTemplating">
@@ -253,9 +254,14 @@
     <Compile Include="Define\AboutCopyKind.cs" />
     <Compile Include="Define\CommandKind.cs" />
     <Compile Include="Define\Timing.cs" />
-    <Content Include="doc\changelog.xml">
+    <Content Include="doc\help\html\changelog.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="doc\help\html\others-send.ja-JP.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="doc\model-changelogs.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="doc\help.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -275,19 +281,19 @@
     <Content Include="doc\help\html\setting-toolbar.ja-JP.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="doc\help\html\toolbar.ja-JP.html">
+    <Content Include="doc\help\html\launcher-toolbar.ja-JP.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="doc\help\html\launcher.ja-JP.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="doc\help\html\command.ja-JP.html">
+    <Content Include="doc\help\html\launcher-command.ja-JP.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="doc\help\html\execute.ja-JP.html">
+    <Content Include="doc\help\html\launcher-execute.ja-JP.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="doc\help\html\stream.ja-JP.html">
+    <Content Include="doc\help\html\launcher-stream.ja-JP.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="doc\help\html\note.ja-JP.html">
@@ -341,22 +347,24 @@
     <Content Include="doc\help\html\development-source.ja-JP.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="doc\help\html\platform.ja-JP.html">
+    <Content Include="doc\help\html\general-platform.ja-JP.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="doc\help\html\_.ja-JP.html" />
-    <Content Include="doc\help\html\privacy.ja-JP.html">
+    <Content Include="doc\help\html\general-privacy.ja-JP.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="doc\help\html\internet.ja-JP.html">
+    <Content Include="doc\help\html\general-internet.ja-JP.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="doc\help\html\install_uninstall_data.ja-JP.html">
+    <Content Include="doc\help\html\general-install_uninstall_data.ja-JP.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="doc\help\html\top.ja-JP.html">
+    <Content Include="doc\help\html\general.ja-JP.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Image\Note\NoteFormatStrikethrough.png" />
+    <Resource Include="Resources\Image\Note\NoteFormatUnderline.png" />
     <Resource Include="Resources\Image\Toolbar\ToolbarGroup\ToolbarGroupBookmark.png" />
     <Resource Include="Resources\Image\Toolbar\ToolbarGroup\ToolbarGroupBuilder.png" />
     <Resource Include="Resources\Image\Toolbar\ToolbarGroup\ToolbarGroupBuilding.png" />
@@ -433,6 +441,9 @@
     <Content Include="etc\script\autosize.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="etc\script\changelog-core.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="etc\script\changelog.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -447,20 +458,26 @@
     <Compile Include="Logic\UserInformationSender.cs" />
     <Compile Include="Logic\Utility\ArchiveUtility.cs" />
     <Compile Include="Logic\Utility\HtmlViewerUtility.cs" />
+    <Compile Include="Logic\Extensions\ICommandExtensions.cs" />
     <Compile Include="Logic\Utility\ImageUtility.cs" />
     <Compile Include="Logic\Utility\LauncherGroupUtility.cs" />
     <Compile Include="Logic\Utility\LauncherToolbarUtility.cs" />
     <Compile Include="Logic\Utility\NoteUtility.cs" />
     <Compile Include="Logic\Utility\PopupUtility.cs" />
-    <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeClipboardIndexItem.cs" />
-    <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeCommandSetting.cs" />
-    <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeLauncherGroupItem.cs" />
-    <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeLauncherItem.cs" />
-    <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeLoggingSetting.cs" />
-    <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeGeneralSetting.cs" />
-    <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeRunningInformationSetting.cs" />
-    <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeStreamSetting.cs" />
-    <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeTemplateIndexItem.cs" />
+    <Compile Include="Logic\Utility\SettingUtilityCore\InitializeBodyBase.cs" />
+    <Compile Include="Logic\Utility\SettingUtilityCore\InitializeBase.cs" />
+    <Compile Include="Logic\Utility\SettingUtilityCore\InitializeClipboardBodyItem.cs" />
+    <Compile Include="Logic\Utility\SettingUtilityCore\InitializeClipboardIndexItem.cs" />
+    <Compile Include="Logic\Utility\SettingUtilityCore\InitializeCommandSetting.cs" />
+    <Compile Include="Logic\Utility\SettingUtilityCore\InitializeLauncherGroupItem.cs" />
+    <Compile Include="Logic\Utility\SettingUtilityCore\InitializeLauncherItem.cs" />
+    <Compile Include="Logic\Utility\SettingUtilityCore\InitializeLoggingSetting.cs" />
+    <Compile Include="Logic\Utility\SettingUtilityCore\InitializeGeneralSetting.cs" />
+    <Compile Include="Logic\Utility\SettingUtilityCore\InitializeNoteBodyItem.cs" />
+    <Compile Include="Logic\Utility\SettingUtilityCore\InitializeRunningInformationSetting.cs" />
+    <Compile Include="Logic\Utility\SettingUtilityCore\InitializeStreamSetting.cs" />
+    <Compile Include="Logic\Utility\SettingUtilityCore\InitializeTemplateBodyItem.cs" />
+    <Compile Include="Logic\Utility\SettingUtilityCore\InitializeTemplateIndexItem.cs" />
     <Compile Include="Logic\Utility\T4TemplateUtility.cs" />
     <Compile Include="TemplateReplaceKey.cs" />
     <Compile Include="ViewModel\AboutViewModel.cs" />
@@ -571,18 +588,18 @@
     <Compile Include="Logic\Utility\DisplayTextUtility.cs" />
     <Compile Include="Logic\Utility\LauncherItemUtility.cs" />
     <Compile Include="Logic\Utility\SettingUtility.cs" />
-    <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeClipboardIndexSetting.cs" />
-    <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeClipboardSetting.cs" />
-    <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeLauncherGroupSetting.cs" />
-    <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeLauncherItemSetting.cs" />
-    <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeNoteIndexItem.cs" />
-    <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeNoteIndexSetting.cs" />
-    <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeNoteSetting.cs" />
-    <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeTemplateIndexSetting.cs" />
-    <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeTemplateSetting.cs" />
-    <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeToolbarItem.cs" />
-    <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeToolbarSetting.cs" />
-    <Compile Include="Logic\Utility\SettingUtilityImplement\InitializeWindowSaveSetting.cs" />
+    <Compile Include="Logic\Utility\SettingUtilityCore\InitializeClipboardIndexSetting.cs" />
+    <Compile Include="Logic\Utility\SettingUtilityCore\InitializeClipboardSetting.cs" />
+    <Compile Include="Logic\Utility\SettingUtilityCore\InitializeLauncherGroupSetting.cs" />
+    <Compile Include="Logic\Utility\SettingUtilityCore\InitializeLauncherItemSetting.cs" />
+    <Compile Include="Logic\Utility\SettingUtilityCore\InitializeNoteIndexItem.cs" />
+    <Compile Include="Logic\Utility\SettingUtilityCore\InitializeNoteIndexSetting.cs" />
+    <Compile Include="Logic\Utility\SettingUtilityCore\InitializeNoteSetting.cs" />
+    <Compile Include="Logic\Utility\SettingUtilityCore\InitializeTemplateIndexSetting.cs" />
+    <Compile Include="Logic\Utility\SettingUtilityCore\InitializeTemplateSetting.cs" />
+    <Compile Include="Logic\Utility\SettingUtilityCore\InitializeToolbarItem.cs" />
+    <Compile Include="Logic\Utility\SettingUtilityCore\InitializeToolbarSetting.cs" />
+    <Compile Include="Logic\Utility\SettingUtilityCore\InitializeWindowSaveSetting.cs" />
     <Compile Include="Logic\Utility\SystemEnvironmentUtility.cs" />
     <Compile Include="Logic\Utility\SystemExecuteUtility.cs" />
     <Compile Include="Logic\Utility\TemplateUtility.cs" />
@@ -741,7 +758,6 @@
     <Resource Include="Resources\Image\About\AboutComponentKindImage.png" />
     <Resource Include="Resources\Image\About\AboutComponentKindLibrary.png" />
     <Resource Include="Resources\Image\About\AboutComponentKindSource.png" />
-    <Resource Include="Resources\Image\About\AboutHistory.png" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -1035,9 +1051,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="etc\lang\ja-JP.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="etc\style\changelog.xsl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="etc\style\common.css">

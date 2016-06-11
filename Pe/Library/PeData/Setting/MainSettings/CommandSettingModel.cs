@@ -87,7 +87,8 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
 
             obj.IconScale = IconScale;
             obj.HideTime = HideTime;
-            ShowHotkey.DeepCloneTo(obj.ShowHotkey);
+            //ShowHotkey.DeepCloneTo(obj.ShowHotkey);
+            obj.ShowHotkey = (HotKeyModel)ShowHotkey.DeepClone();
             obj.FindTag = FindTag;
             obj.FindFile = FindFile;
             obj.WindowWidth = WindowWidth;

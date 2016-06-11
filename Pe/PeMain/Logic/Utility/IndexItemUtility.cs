@@ -159,13 +159,15 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 
         static bool CompareArchiveEntryName(ZipArchiveEntry entry, string name)
         {
-            return string.Compare(entry.FullName, name, true) == 0;
+            return string.Compare(entry.FullName, name, StringComparison.OrdinalIgnoreCase) == 0;
         }
 
         /// <summary>
         /// ボディファイルは物理ファイルか。
         /// </summary>
-        /// <param name="path"></param>
+        /// <param name="indexKind"></param>
+        /// <param name="guid"></param>
+        /// <param name="parentDirectoryPath"></param>
         /// <returns></returns>
         static bool ExistisRealBodyFile(IndexKind indexKind, Guid guid, string parentDirectoryPath)
         {
@@ -321,7 +323,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         /// <param name="indexKind"></param>
         /// <param name="items"></param>
         /// <param name="archive"></param>
-        /// <param name="archiveTimestamp"></param>
+        /// <param name="archiveTimeSpan"></param>
         /// <param name="fileSize"></param>
         /// <param name="appNonProcess"></param>
         static void GarbageCollectionBodyArchive<TItemModel>(IndexKind indexKind, IndexItemCollectionModel<TItemModel> items, IndexBodyArchive archive, DateTime archiveBaseTime, TimeSpan archiveTimeSpan, long fileSize, IAppNonProcess appNonProcess)
@@ -445,14 +447,36 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
             where TIndexBody : IndexBodyItemModelBase, new()
         {
             var parentDir = Environment.ExpandEnvironmentVariables(GetBodyFileParentDirectory(indexKind, appNonProcess.VariableConstants));
+            TIndexBody result;
+            var isCreate = false;
             if(ExistisRealBodyFile(indexKind, guid, parentDir)) {
-                return LoadRealBodyFile<TIndexBody>(indexKind, guid, parentDir, appNonProcess.Logger);
+                result = LoadRealBodyFile<TIndexBody>(indexKind, guid, parentDir, appNonProcess.Logger);
             } else if(ExistisArchiveBodyFile(indexKind, guid, archive, parentDir)) {
-                return LoadArchiveBodyFile<TIndexBody>(indexKind, guid, archive, appNonProcess.Logger);
+                result = LoadArchiveBodyFile<TIndexBody>(indexKind, guid, archive, appNonProcess.Logger);
             } else {
                 // なんもない
-                return new TIndexBody();
+                result = new TIndexBody();
+                isCreate = true;
             }
+
+            switch(indexKind) {
+                case IndexKind.Clipboard:
+                    SettingUtility.InitializeClipboardBodyItem(result as ClipboardBodyItemModel, isCreate, appNonProcess);
+                    break;
+
+                case IndexKind.Template:
+                    SettingUtility.InitializeTemplateBodyItem(result as TemplateBodyItemModel, isCreate, appNonProcess);
+                    break;
+
+                case IndexKind.Note:
+                    SettingUtility.InitializeNoteBodyItem(result as NoteBodyItemModel, isCreate, appNonProcess);
+                    break;
+
+                default:
+                    throw new NotSupportedException();
+            }
+
+            return result;
         }
 
         static void SaveRealBodyFile<TIndexBody>(TIndexBody indexBody, Guid guid, string parentDirectoryPath, ILogger logger)
@@ -492,6 +516,8 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         internal static void SaveBody<TIndexBody>(TIndexBody indexBody, Guid guid, IndexBodyArchive archive, IndexBodyKind indexBodyKind, IAppNonProcess appNonProcess)
             where TIndexBody : IndexBodyItemModelBase
         {
+            indexBody.PreviousVersion = (Version)Constants.ApplicationVersionNumber.Clone();
+
             var parentDir = Environment.ExpandEnvironmentVariables(GetBodyFileParentDirectory(indexBody.IndexKind, appNonProcess.VariableConstants));
             switch(indexBodyKind) {
                 case IndexBodyKind.Default:

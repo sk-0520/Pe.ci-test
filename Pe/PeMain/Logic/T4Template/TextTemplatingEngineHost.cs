@@ -113,7 +113,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.T4Template
         public string ResolvePath(string fileName)
         {
             if(fileName == null) {
-                throw new ArgumentNullException("the file name cannot be null");
+                throw new ArgumentNullException(nameof(fileName), "the file name cannot be null");
             }
 
             if(!File.Exists(fileName)) {

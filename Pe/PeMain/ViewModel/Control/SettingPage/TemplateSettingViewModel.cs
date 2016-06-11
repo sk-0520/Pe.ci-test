@@ -24,6 +24,7 @@ using System.Windows.Media;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.Pe.Library.PeData.Define;
 using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
 using ContentTypeTextNet.Pe.PeMain.Data;
 using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
@@ -121,6 +122,11 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control.SettingPage
 
         #endregion
 
+        public IndexItemsDoubleClickBehavior DoubleClickBehavior
+        {
+            get { return Template.DoubleClickBehavior; }
+            set { SetPropertyValue(Template, value); }
+        }
 
         #endregion
     }

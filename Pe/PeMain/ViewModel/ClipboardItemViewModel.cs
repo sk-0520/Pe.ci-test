@@ -79,6 +79,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         }
 
         #region Type
+#pragma warning disable RECS0029 // Warns about property or indexer setters and event adders or removers that do not use the value parameter
 
         public bool EnabledClipboardTypesText
         {
@@ -106,6 +107,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             set { SetClipboardType(Model, Model.Type, ClipboardType.Files, nameof(Model.Type)); }
         }
 
+#pragma warning restore RECS0029 // Warns about property or indexer setters and event adders or removers that do not use the value parameter
         #endregion
 
         public string Text

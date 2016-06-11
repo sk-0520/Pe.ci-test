@@ -25,6 +25,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Attribute;
 using ContentTypeTextNet.Library.SharedLibrary.Define;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.Pe.Library.PeData.Define;
 using ContentTypeTextNet.Pe.Library.PeData.IF;
 using ContentTypeTextNet.Pe.Library.PeData.Item;
 
@@ -62,6 +63,12 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
 
         [DataMember]
         public FontModel Font { get; set; }
+
+        /// <summary>
+        /// アイテムダブルクリック時の処理。
+        /// </summary>
+        [DataMember]
+        public IndexItemsDoubleClickBehavior DoubleClickBehavior { get; set; }
 
         #endregion
 
@@ -105,7 +112,7 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
         {
             var obj = (TemplateSettingModel)target;
 
-            ToggleHotKey.DeepCloneTo(obj.ToggleHotKey);
+            obj.ToggleHotKey = (HotKeyModel)ToggleHotKey.DeepClone();
             obj.ItemsListWidth = ItemsListWidth;
             obj.ReplaceListWidth = ReplaceListWidth;
             obj.WindowTop = WindowTop;
@@ -117,6 +124,7 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
             obj.IsVisible = IsVisible;
             //Font.DeepCloneTo(obj.Font);
             obj.Font = (FontModel)Font.DeepClone();
+            obj.DoubleClickBehavior = DoubleClickBehavior;
         }
 
         public IDeepClone DeepClone()

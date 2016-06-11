@@ -7,12 +7,11 @@
 	<Component Kind="Library" Name="jQuery" Uri="https://jquery.com/" License="MIT" />
 	<Component Kind="Library" Name="Autosize" Uri="http://www.jacklmoore.com/autosize" License="MIT" />
 	<Component Kind="Library" Name="AvalonEdit" Uri="http://avalonedit.net/" License="MIT" />
-	<Component Kind="Library" Name="GridHelpers" Uri="http://www.pinvoke.net/" License="" />
 	<Component Kind="Library" Name="Gma.System.MouseKeyHook" Uri="https://github.com/gmamaladze/globalmousekeyhook" License="MIT " />
-	
+
 	<Component Kind="Source" Name="IconExtractor" Uri="https://github.com/TsudaKageyu/IconExtractor" License="BSD License" />
 	<Component Kind="Source" Name="Invoke.net" Uri="http://www.pinvoke.net/" License="" />
-	
+
 	<Component Kind="Image" Name="MICROSOFT VISUAL STUDIO 2013 IMAGE LIBRARY" Uri="http://msdn.microsoft.com/ja-jp/library/ms246582.aspx" License="Visual Studio 2013 Image Library EULA" />
 	<!-- home search:https://www.iconfinder.com/icons/314507/flag_icon#size=128 -->
 	<Component Kind="Image" Name="Google" Uri="https://design.google.com/" License="Free for commercial use" />
@@ -25,5 +24,5 @@
 	<Component Kind="WebPage" Name="Stack Overflow" Uri="http://stackoverflow.com/" License="" />
 	<Component Kind="WebPage" Name="Iconfinder" Uri="https://www.iconfinder.com/" License="" />
 	<Component Kind="WebPage" Name="Google Apps Script" Uri="https://developers.google.com/apps-script/" License="" />
-	
+
 </Components>

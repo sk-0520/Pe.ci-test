@@ -174,7 +174,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
                 Directory.CreateDirectory(this._downloadPath);
             }
             // #158
-            FileUtility.RotateFiles(this._downloadPath, Constants.ArchiveSearchPattern, ContentTypeTextNet.Library.SharedLibrary.Define.OrderBy.Descending, Constants.updateArchiveCount, e => {
+            FileUtility.RotateFiles(this._downloadPath, Constants.ArchiveSearchPattern, ContentTypeTextNet.Library.SharedLibrary.Define.OrderBy.Descending, Constants.BackupArchiveCount, e => {
                 this._commonData.Logger.Warning(e);
                 return true;
             });

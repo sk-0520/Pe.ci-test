@@ -62,8 +62,8 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
         {
             var obj = (SystemEnvironmentSettingModel)target;
 
-            HideFileHotkey.DeepCloneTo(obj.HideFileHotkey);
-            ExtensionHotkey.DeepCloneTo(obj.ExtensionHotkey);
+            obj.HideFileHotkey = (HotKeyModel)HideFileHotkey.DeepClone();
+            obj.ExtensionHotkey = (HotKeyModel)ExtensionHotkey.DeepClone();
             obj.SuppressFunction1Key = SuppressFunction1Key;
         }
 

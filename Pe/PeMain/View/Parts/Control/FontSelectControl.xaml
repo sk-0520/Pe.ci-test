@@ -1,30 +1,30 @@
-﻿<AV:CommonDataUserControl 
+﻿<app_main_view_parts_control:CommonDataUserControl
   x:Class="ContentTypeTextNet.Pe.PeMain.View.Parts.Control.FontSelectControl"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-  xmlns:AM="clr-namespace:ContentTypeTextNet.Pe.PeMain"
-  xmlns:AV="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Control"
-  xmlns:AA="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Attached"
+  xmlns:app_main="clr-namespace:ContentTypeTextNet.Pe.PeMain"
+  xmlns:app_main_view_parts_control="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Control"
+  xmlns:app_main_view_parts_attached="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Attached"
   xmlns:AP="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
-  xmlns:AC="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Converter"
-  xmlns:SC="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=ContentTypeTextNet.SharedLibrary"
+  xmlns:app_main_view_parts_converter="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Converter"
+  xmlns:app_library_sharedlibrary_view_converter="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=ContentTypeTextNet.SharedLibrary"
 
-  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-  mc:Ignorable="d" 
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  mc:Ignorable="d"
   d:DesignHeight="300" d:DesignWidth="300"
 >
-  <AV:CommonDataUserControl.Resources>
+  <app_main_view_parts_control:CommonDataUserControl.Resources>
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/View/Parts/Resource/ImageDictionary.xaml"/>
       </ResourceDictionary.MergedDictionaries>
-      <AC:FontFamilyToNameConverter x:Key="FontFamilyToNameConverter" />
+      <app_main_view_parts_converter:FontFamilyToNameConverter x:Key="FontFamilyToNameConverter" />
     </ResourceDictionary>
-  </AV:CommonDataUserControl.Resources>
-  
-  <Grid>
-    <Grid.RowDefinitions>
+  </app_main_view_parts_control:CommonDataUserControl.Resources>
+
+  <StackPanel Orientation="Vertical">
+    <!--<Grid.RowDefinitions>
       <RowDefinition Height="Auto" />
       <RowDefinition Height="Auto" />
     </Grid.RowDefinitions>
@@ -32,8 +32,8 @@
       <ColumnDefinition Width="Auto" />
       <ColumnDefinition Width="Auto" />
       <ColumnDefinition Width="*" />
-    </Grid.ColumnDefinitions>
-    <ComboBox x:Name="listFont" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" SelectedValue="{Binding FamilyName, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}}" SelectedValuePath="Source" ItemsSource="{Binding Source={x:Static Fonts.SystemFontFamilies}}">
+    </Grid.ColumnDefinitions>-->
+    <ComboBox x:Name="listFont" SelectedValue="{Binding FamilyName, RelativeSource={RelativeSource AncestorType=app_main_view_parts_control:CommonDataUserControl}}" SelectedValuePath="Source" ItemsSource="{Binding Source={x:Static Fonts.SystemFontFamilies}}">
       <ComboBox.ItemsPanel>
         <ItemsPanelTemplate>
           <!-- TODO: サイズ固定-->
@@ -46,12 +46,15 @@
         </DataTemplate>
       </ComboBox.ItemTemplate>
     </ComboBox>
-    <ToggleButton Grid.Row="1" Grid.Column="0" IsChecked="{Binding IsBold, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}}" IsEnabled="{Binding IsEnabledBold, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}}" AA:Language.Hint="font/weight">
-      <Image Style="{StaticResource DefaultImage}" Source="{x:Static AM:AppResource.CommonFontBoldImage}" />
-    </ToggleButton>
-    <ToggleButton Grid.Row="1" Grid.Column="1" IsChecked="{Binding IsItalic, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}}" IsEnabled="{Binding IsEnabledItalic, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}}" AA:Language.Hint="font/style">
-      <Image Style="{StaticResource DefaultImage}" Source="{x:Static AM:AppResource.CommonFontItalicImage}" />
-    </ToggleButton>
-    <xctk:DoubleUpDown Grid.Row="1" Grid.Column="2" Minimum="{Binding SizeMinimum, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}}" Maximum="{Binding SizeMaximum, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}}" Value="{Binding Size, RelativeSource={RelativeSource AncestorType=AV:CommonDataUserControl}}" />
-  </Grid>
-</AV:CommonDataUserControl>
+    <DockPanel HorizontalAlignment="Stretch" Width="Auto">
+      <ToggleButton DockPanel.Dock="Left" IsChecked="{Binding IsBold, RelativeSource={RelativeSource AncestorType=app_main_view_parts_control:CommonDataUserControl}}" IsEnabled="{Binding IsEnabledBold, RelativeSource={RelativeSource AncestorType=app_main_view_parts_control:CommonDataUserControl}}" app_main_view_parts_attached:Language.Hint="font/weight">
+        <Image Width="16" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource DefaultImage}" Source="{x:Static app_main:AppResource.CommonFontBoldImage}" />
+      </ToggleButton>
+      <ToggleButton DockPanel.Dock="Left" IsChecked="{Binding IsItalic, RelativeSource={RelativeSource AncestorType=app_main_view_parts_control:CommonDataUserControl}}" IsEnabled="{Binding IsEnabledItalic, RelativeSource={RelativeSource AncestorType=app_main_view_parts_control:CommonDataUserControl}}" app_main_view_parts_attached:Language.Hint="font/style">
+        <Image Width="16" Style="{StaticResource DefaultImage}" Source="{x:Static app_main:AppResource.CommonFontItalicImage}" />
+      </ToggleButton>
+      <ContentControl DockPanel.Dock="Left" Content="{Binding AdditionalContent, RelativeSource={RelativeSource AncestorType=app_main_view_parts_control:CommonDataUserControl}}" IsEnabled="{Binding IsEnabledItalic, RelativeSource={RelativeSource AncestorType=app_main_view_parts_control:CommonDataUserControl}}" />
+      <xctk:DoubleUpDown Minimum="{Binding SizeMinimum, RelativeSource={RelativeSource AncestorType=app_main_view_parts_control:CommonDataUserControl}}" Maximum="{Binding SizeMaximum, RelativeSource={RelativeSource AncestorType=app_main_view_parts_control:CommonDataUserControl}}" Value="{Binding Size, RelativeSource={RelativeSource AncestorType=app_main_view_parts_control:CommonDataUserControl}}" />
+    </DockPanel>
+  </StackPanel>
+</app_main_view_parts_control:CommonDataUserControl>

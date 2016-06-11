@@ -146,6 +146,12 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control.SettingPage
             set { SetPropertyValue(Note, value); }
         }
 
+        public NoteKind NoteKind
+        {
+            get { return Note.NoteKind; }
+            set { SetPropertyValue(Note, value); }
+        }
+
         #endregion
 
         #region IColorPair

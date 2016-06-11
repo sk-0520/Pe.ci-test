@@ -120,11 +120,13 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         }
 
         /// <summary>
-        /// URIアイテム実行。
+        /// コマンドアイテム実行。
         /// </summary>
-        /// <param name="launcherItem">URIアイテム</param>
-        /// <param name="commonData">共通データ</param>
-        /// <param name="parentForm">親ウィンドウ</param>
+        /// <param name="launcherItem">コマンドアイテム。</param>
+        /// <param name="screen"></param>
+        /// <param name="nonProcess"></param>
+        /// <param name="appSender"></param>
+        /// <returns></returns>
         private static Process RunCommandItem(LauncherItemModel launcherItem, ScreenModel screen, INonProcess nonProcess, IAppSender appSender)
         {
             Debug.Assert(launcherItem.LauncherKind == LauncherKind.Command);

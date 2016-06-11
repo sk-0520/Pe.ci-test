@@ -31,11 +31,11 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Converter
 
         static byte[] ToArray(string text)
         {
-            if(string.IsNullOrWhiteSpace(text) || string.Compare(text.Trim(), "null", true) == 0) {
+            if(string.IsNullOrWhiteSpace(text) || string.Compare(text.Trim(), "null", StringComparison.OrdinalIgnoreCase) == 0) {
                 return null;
-            } else {
-                return Convert.FromBase64String(text);
             }
+
+            return Convert.FromBase64String(text);
         }
 
         #endregion

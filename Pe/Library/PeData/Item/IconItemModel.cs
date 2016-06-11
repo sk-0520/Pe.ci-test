@@ -20,6 +20,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 using ContentTypeTextNet.Library.SharedLibrary.Attribute;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
@@ -50,6 +51,7 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
         [field: NonSerialized]
         public event EventHandler Disposing;
 
+        [IgnoreDataMember, XmlIgnore]
         public bool IsDisposed { get; set; }
 
         public void Dispose()
@@ -80,7 +82,7 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
         //    obj.Index = Index;
         //}
 
-        public IDeepClone DeepClone()
+        public override IDeepClone DeepClone()
         {
             //var result = new IconItemModel();
 

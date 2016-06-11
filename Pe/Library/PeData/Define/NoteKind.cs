@@ -24,13 +24,16 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Define
 {
     /// <summary>
     /// ノート種別。
-    /// <para>ほぼほぼ予約項目。</para>
     /// </summary>
     public enum NoteKind
     {
         /// <summary>
         /// プレーンテキスト。
         /// </summary>
-        Text
+        Text,
+        /// <summary>
+        /// 書式付き文字列。
+        /// </summary>
+        Rtf,
     }
 }

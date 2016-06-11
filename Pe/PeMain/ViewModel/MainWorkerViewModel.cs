@@ -91,8 +91,8 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             OtherWindows = new HashSet<Window>();
 
             IndexBodyCaching = new IndexBodyCaching(
-                Constants.CacheIndexBodyTemplate, 
-                Constants.CacheIndexBodyClipboard, 
+                Constants.CacheIndexBodyTemplate,
+                Constants.CacheIndexBodyClipboard,
                 CommonData.VariableConstants
             );
 
@@ -149,7 +149,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             get
             {
                 return IsPause;
-                //return this._isContextMenuOpen; 
+                //return this._isContextMenuOpen;
             }
             set
             {
@@ -794,7 +794,8 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         void MakeSettingArchive(string backupDirectory, string settingBaseDirectory)
         {
             using(var timeLogger = CommonData.NonProcess.CreateTimeLogger()) {
-                var fileName = PathUtility.AppendExtension(Constants.GetNowTimestampFileName(), "zip");
+                var baseName = Constants.GetNowTimestampFileName() + "_ver." + Constants.ApplicationVersionNumber.ToString();
+                var fileName = PathUtility.AppendExtension(baseName, "zip");
                 var backupFileFilePath = Path.Combine(backupDirectory, fileName);
                 FileUtility.MakeFileParentDirectory(backupFileFilePath);
 
@@ -1204,7 +1205,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="point"></param>
         /// <param name="size"></param>
@@ -1218,6 +1219,8 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 WindowWidth = size.Width,
                 WindowHeight = size.Height,
             };
+            SettingUtility.InitializeNoteIndexItem(noteItem, null, CommonData.NonProcess);
+
             //CommonData.MainSetting.Note.Font.DeepCloneTo(noteItem.Font);
             noteItem.Font = (FontModel)CommonData.MainSetting.Note.Font.DeepClone();
             //TODO: 外部化
@@ -1240,12 +1243,11 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                     throw new NotImplementedException();
             }
 
-
-            SettingUtility.InitializeNoteIndexItem(noteItem, null, CommonData.NonProcess);
             noteItem.ForeColor = CommonData.MainSetting.Note.ForeColor;
             noteItem.BackColor = CommonData.MainSetting.Note.BackColor;
             noteItem.IsTopmost = CommonData.MainSetting.Note.IsTopmost;
             noteItem.AutoLineFeed = CommonData.MainSetting.Note.AutoLineFeed;
+            noteItem.NoteKind = CommonData.MainSetting.Note.NoteKind;
 
             var window = CreateNoteWindow(noteItem, appendIndex);
             WindowsUtility.ShowNoActiveForeground(window.Handle);
@@ -1409,11 +1411,21 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         void MoveFrontNoteItems()
         {
-            foreach(var window in NoteWindows) {
-                Application.Current.Dispatcher.BeginInvoke(new Action(() => {
-                    WindowsUtility.ShowNoActiveForeground(window.Handle);
-                }), DispatcherPriority.SystemIdle);
-            }
+            var targets = NoteWindows
+                .Select(w => w.ViewModel)
+                .Where(vm => !vm.IsTopmost)
+                .ToArray()
+            ;
+            Application.Current.Dispatcher.BeginInvoke(new Action(() => {
+                foreach(var noteViewModel in targets) {
+                    noteViewModel.IsTopmost = true;
+                }
+            }), DispatcherPriority.SystemIdle).Task.ContinueWith(t => {
+                foreach(var noteViewModel in targets) {
+                    noteViewModel.IsTopmost = false;
+                }
+                t.Dispose();
+            }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         void SwitchShowClipboardWindow()

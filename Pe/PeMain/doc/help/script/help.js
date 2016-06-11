@@ -3,7 +3,7 @@
 var defaultLanguageKey = 'ja-JP';
 
 var helpLanguage = {
-	'ja-JP': { 
+	'ja-JP': {
 		title: ' : Pe ヘルプ',
 		outLink: '外部リンク',
 		hint: {
@@ -27,35 +27,40 @@ var helpLanguage = {
 
 var menuList = [
 	{
-		name: 'top',
+		name: 'general',
+		localize: true,
 		level: 0,
 		title: {
 			'ja-JP': 'はじめに'
 		}
 	},
 	{
-		name: 'install_uninstall_data',
+		name: 'general-install_uninstall_data',
+		localize: true,
 		level: 1,
 		title: {
 			'ja-JP': 'インストール・アンインストール・保存データについて'
 		}
 	},
 	{
-		name: 'platform',
+		name: 'general-platform',
+		localize: true,
 		level: 2,
 		title: {
 			'ja-JP': '32/64bitについて'
 		}
 	},
 	{
-		name: 'privacy',
+		name: 'general-privacy',
+		localize: true,
 		level: 1,
 		title: {
 			'ja-JP': 'ユーザー情報について'
 		}
 	},
 	{
-		name: 'internet',
+		name: 'general-internet',
+		localize: true,
 		level: 1,
 		title: {
 			'ja-JP': 'インターネット通信とその内容'
@@ -63,6 +68,7 @@ var menuList = [
 	},
 	{
 		name: 'notifyarea',
+		localize: true,
 		level: 0,
 		title: {
 			'ja-JP': '通知領域'
@@ -70,34 +76,39 @@ var menuList = [
 	},
 	{
 		name: 'launcher',
+		localize: true,
 		level: 0,
 		title: {
 			'ja-JP': 'ランチャー'
 		}
 	},
 	{
-		name: 'toolbar',
+		name: 'launcher-toolbar',
+		localize: true,
 		level: 1,
 		title: {
 			'ja-JP': 'ツールバー'
 		}
 	},
 	{
-		name: 'command',
+		name: 'launcher-command',
+		localize: true,
 		level: 1,
 		title: {
 			'ja-JP': 'コマンド'
 		}
 	},
 	{
-		name: 'execute',
+		name: 'launcher-execute',
+		localize: true,
 		level: 1,
 		title: {
 			'ja-JP': '指定して実行'
 		}
 	},
 	{
-		name: 'stream',
+		name: 'launcher-stream',
+		localize: true,
 		level: 1,
 		title: {
 			'ja-JP': '標準入出力'
@@ -105,6 +116,7 @@ var menuList = [
 	},
 	{
 		name: 'note',
+		localize: true,
 		level: 0,
 		title: {
 			'ja-JP': 'ノート'
@@ -112,6 +124,7 @@ var menuList = [
 	},
 	{
 		name: 'clipboard',
+		localize: true,
 		level: 0,
 		title: {
 			'ja-JP': 'クリップボード'
@@ -119,6 +132,7 @@ var menuList = [
 	},
 	{
 		name: 'template',
+		localize: true,
 		level: 0,
 		title: {
 			'ja-JP': 'テンプレート'
@@ -126,6 +140,7 @@ var menuList = [
 	},
 	{
 		name: 'log',
+		localize: true,
 		level: 0,
 		title: {
 			'ja-JP': 'ログ'
@@ -133,6 +148,7 @@ var menuList = [
 	},
 	{
 		name: 'setting',
+		localize: true,
 		level: 0,
 		title: {
 			'ja-JP': '設定'
@@ -140,6 +156,7 @@ var menuList = [
 	},
 	{
 		name: 'setting-general',
+		localize: true,
 		level: 1,
 		title: {
 			'ja-JP': '本体'
@@ -147,6 +164,7 @@ var menuList = [
 	},
 	{
 		name: 'setting-launcher',
+		localize: true,
 		level: 1,
 		title: {
 			'ja-JP': 'ランチャー'
@@ -154,6 +172,7 @@ var menuList = [
 	},
 	{
 		name: 'setting-toolbar',
+		localize: true,
 		level: 1,
 		title: {
 			'ja-JP': 'ツールバー'
@@ -161,6 +180,7 @@ var menuList = [
 	},
 	{
 		name: 'setting-command',
+		localize: true,
 		level: 1,
 		title: {
 			'ja-JP': 'コマンド'
@@ -168,6 +188,7 @@ var menuList = [
 	},
 	{
 		name: 'setting-note',
+		localize: true,
 		level: 1,
 		title: {
 			'ja-JP': 'ノート'
@@ -175,6 +196,7 @@ var menuList = [
 	},
 	{
 		name: 'setting-clipboard',
+		localize: true,
 		level: 1,
 		title: {
 			'ja-JP': 'クリップボード'
@@ -182,6 +204,7 @@ var menuList = [
 	},
 	{
 		name: 'setting-template',
+		localize: true,
 		level: 1,
 		title: {
 			'ja-JP': 'テンプレート'
@@ -189,6 +212,7 @@ var menuList = [
 	},
 	{
 		name: '*others',
+		localize: true,
 		level: 0,
 		title: {
 			'ja-JP': 'その他'
@@ -196,6 +220,7 @@ var menuList = [
 	},
 	{
 		name: 'others-item-file-dd',
+		localize: true,
 		level: 1,
 		title: {
 			'ja-JP': 'ファイルのD&D'
@@ -203,6 +228,7 @@ var menuList = [
 	},
 	{
 		name: 'others-item-filtering',
+		localize: true,
 		level: 1,
 		title: {
 			'ja-JP': 'フィルタリング'
@@ -210,6 +236,7 @@ var menuList = [
 	},
 	{
 		name: 'others-icon-size',
+		localize: true,
 		level: 1,
 		title: {
 			'ja-JP': 'アイコンサイズ'
@@ -217,6 +244,7 @@ var menuList = [
 	},
 	{
 		name: 'others-launcher-item-editor',
+		localize: true,
 		level: 1,
 		title: {
 			'ja-JP': 'ランチャーアイテム編集'
@@ -224,13 +252,23 @@ var menuList = [
 	},
 	{
 		name: 'others-environment-variables-editor',
+		localize: true,
 		level: 1,
 		title: {
 			'ja-JP': '環境変数編集'
 		}
 	},
 	{
+		name: 'others-send',
+		localize: true,
+		level: 1,
+		title: {
+			'ja-JP': '転送'
+		}
+	},
+	{
 		name: 'others-setting-data',
+		localize: true,
 		level: 1,
 		title: {
 			'ja-JP': '設定データ'
@@ -238,6 +276,7 @@ var menuList = [
 	},
 	{
 		name: 'others-setting-data-app-config',
+		localize: true,
 		level: 2,
 		title: {
 			'ja-JP': '構成ファイル'
@@ -245,6 +284,7 @@ var menuList = [
 	},
 	{
 		name: 'development',
+		localize: true,
 		level: 1,
 		title: {
 			'ja-JP': '開発について'
@@ -252,9 +292,18 @@ var menuList = [
 	},
 	{
 		name: 'development-source',
+		localize: true,
 		level: 2,
 		title: {
 			'ja-JP': 'ソースコードについて'
+		}
+	},
+	{
+		name: 'changelog',
+		localize: false,
+		level: 0,
+		title: {
+			'ja-JP': '更新履歴'
 		}
 	}
 	//
@@ -315,9 +364,9 @@ function createMenu(lang, pageName) {
 
 		$li.addClass('item');
 		$li.addClass('level-' + menuItem.level);
-		
+
 		var title = getPageTitle(lang, menuItem);
-		var target = menuItem.name + '.' + lang + '.html?' + param;
+		var target = menuItem.name + (menuItem.localize ? '.' + lang: '') + '.html?' + param;
 		if (menuItem.name == pageName) {
 			$top = $li;
 			$li.text(title);
@@ -336,7 +385,7 @@ function createMenu(lang, pageName) {
 		$ul.append($li);
 	}
 	$menu.append($ul);
-	
+
 	if ($top) {
 		if ($menu.height() < $top.offset().top) {
 			var y = $top.offset().top - $menu.offset().top;

@@ -112,6 +112,12 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
         [DataMember]
         public bool DuplicationMoveHead { get; set; }
 
+        /// <summary>
+        /// アイテムダブルクリック時の処理。
+        /// </summary>
+        [DataMember]
+        public IndexItemsDoubleClickBehavior DoubleClickBehavior { get; set; }
+
         #endregion
 
         #region IWindowStatus
@@ -156,7 +162,8 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
 
             obj.IsEnabled = IsEnabled;
             obj.IsEnabledApplicationCopy = IsEnabledApplicationCopy;
-            ToggleHotKey.DeepCloneTo(obj.ToggleHotKey);
+            //ToggleHotKey.DeepCloneTo(obj.ToggleHotKey);
+            obj.ToggleHotKey = (HotKeyModel)ToggleHotKey.DeepClone();
             obj.CaptureType = CaptureType;
             obj.SaveCount = SaveCount;
             obj.WaitTime = WaitTime;
@@ -174,6 +181,7 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
             //Font.DeepCloneTo(obj.Font);
             obj.Font = (FontModel)Font.DeepClone();
             LimitSize.DeepCloneTo(obj.LimitSize);
+            obj.DoubleClickBehavior = DoubleClickBehavior;
         }
 
         public IDeepClone DeepClone()
