@@ -1411,11 +1411,21 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
         void MoveFrontNoteItems()
         {
-            foreach(var window in NoteWindows) {
-                Application.Current.Dispatcher.BeginInvoke(new Action(() => {
-                    WindowsUtility.ShowNoActiveForeground(window.Handle);
-                }), DispatcherPriority.SystemIdle);
-            }
+            var targets = NoteWindows
+                .Select(w => w.ViewModel)
+                .Where(vm => !vm.IsTopmost)
+                .ToArray()
+            ;
+            Application.Current.Dispatcher.BeginInvoke(new Action(() => {
+                foreach(var noteViewModel in targets) {
+                    noteViewModel.IsTopmost = true;
+                }
+            }), DispatcherPriority.SystemIdle).Task.ContinueWith(t => {
+                foreach(var noteViewModel in targets) {
+                    noteViewModel.IsTopmost = false;
+                }
+                t.Dispose();
+            }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         void SwitchShowClipboardWindow()
