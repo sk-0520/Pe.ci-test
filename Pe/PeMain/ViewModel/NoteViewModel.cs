@@ -303,7 +303,6 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             set
             {
                 if(SetVariableValue(ref this._textUnderline, value)) {
-                    
                     NotSelectionChanging(() => ChangeRtfSelectionDecorations(TextDecorations.Underline.First(), value));
                 }
             }
@@ -392,34 +391,6 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 return result;
             }
         }
-
-        //public ICommand SwitchCompactCommand
-        //{
-        //	get
-        //	{
-        //		var result = CreateCommand(
-        //			o => {
-        //				IsCompacted = !IsCompacted;
-        //			}
-        //		);
-
-        //		return result;
-        //	}
-        //}
-
-        //public ICommand SwitchTopMostCommand
-        //{
-        //	get
-        //	{
-        //		var result = CreateCommand(
-        //			o => {
-        //				IsTopmost = !IsTopmost;
-        //			}
-        //		);
-
-        //		return result;
-        //	}
-        //}
 
         public ICommand HideCommand
         {
@@ -750,7 +721,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             DoRichTextEditor(c => {
                 if(!c.Selection.IsEmpty) {
                     var nowDecorations = c.Selection.GetPropertyValue(Inline.TextDecorationsProperty) as TextDecorationCollection ?? new TextDecorationCollection();
-                    var setDecorations = isSet 
+                    var setDecorations = isSet
                         ? new TextDecorationCollection(nowDecorations.Union(new[] { textDecoration }))
                         : new TextDecorationCollection(nowDecorations.Except(new[] { textDecoration }))
                     ;
