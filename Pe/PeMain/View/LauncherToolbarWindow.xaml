@@ -416,6 +416,11 @@
 
     </ResourceDictionary>
   </app_main_view_parts_window:CommonDataWindow.Resources>
+  <i:Interaction.Triggers>
+    <i:EventTrigger EventName="MouseDoubleClick">
+      <i:InvokeCommandAction Command="{Binding ForceHiddenToolbarCommand, Mode=OneTime}" />
+    </i:EventTrigger>
+  </i:Interaction.Triggers>
 
   <app_main_view_parts_window:CommonDataWindow.ContextMenu>
     <ContextMenu>
@@ -450,7 +455,6 @@
       Visibility="{Binding CaptionVisibility}"
       Style="{StaticResource DefaultGrip}"
     />
-
     <Grid HorizontalAlignment="{Binding ToolbarButtonHorizontalAlignment}" VerticalAlignment="{Binding ToolbarButtonVerticalAlignment}">
       <StackPanel Orientation="{Binding ToolbarButtonOrientation}">
         <!-- メインボタン -->

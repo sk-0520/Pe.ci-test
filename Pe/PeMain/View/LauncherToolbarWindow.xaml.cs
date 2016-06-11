@@ -79,7 +79,7 @@ namespace ContentTypeTextNet.Pe.PeMain.View
         WindowAreaCorrection WindowAreaCorrection { get; set; }
         WidthResizeHitTest WindowHitTest { get; set; }
 
-        ContextMenu UsingContextMenu { get; } 
+        ContextMenu UsingContextMenu { get; }
 
         #endregion
 

@@ -783,6 +783,21 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             }
         }
 
+        public ICommand ForceHiddenToolbarCommand
+        {
+            get
+            {
+                return CreateCommand(o => {
+                    if(DockType != DockType.None && AutoHide && !IsHidden && IsVisible) {
+                        if(HasView) {
+                            View.Appbar.HideView(true);
+                        }
+                        AppSender.SendInformationTips(AppNonProcess.Language["notify/info/toolbar-force-hide/title"], AppNonProcess.Language["notify/info/toolbar-force-hide/message"], LogKind.Information);
+                    }
+                });
+            }
+        }
+
         #endregion
 
         #region function
