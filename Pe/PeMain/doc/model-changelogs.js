@@ -150,11 +150,13 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'class': 'nuget',
+						'subject': 'Network.Json を 9.0.1 に更新'
 					},
 					{
 						'revision': '',
-						'subject': ''
+						'class': 'nuget',
+						'subject': 'Extended WPF Toolkit™ Community Edition を 2.9.0 に更新'
 					},
 					{
 						'revision': '',
