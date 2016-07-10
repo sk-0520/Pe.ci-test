@@ -129,7 +129,7 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': 'ヘルプページの先頭が general でなかったリンクミスの修正'
 					},
 					{
 						'revision': '',
