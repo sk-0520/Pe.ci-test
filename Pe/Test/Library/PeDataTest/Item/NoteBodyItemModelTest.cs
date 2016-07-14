@@ -25,34 +25,30 @@ using NUnit.Framework;
 namespace ContentTypeTextNet.Test.Library.PeDataTest.Item
 {
     [TestFixture]
-    class ClipboardBodyItemModelTest
+    class NoteBodyItemModelTest
     {
         [Test]
         public void DeepCloneTest()
         {
-            var src = new ClipboardBodyItemModel() {
-                Text = "text",
-                Rtf = "rtf",
-                Html = "html",
-                PreviousVersion = new Version(1,2,3,4),
+            var src = new NoteBodyItemModel() {
                 History = new HistoryItemModel() {
                     CreateTimestamp = DateTime.MaxValue,
                     UpdateTimestamp = DateTime.UtcNow,
-                    UpdateCount = 123,
+                    UpdateCount = 123456,
                 },
+                PreviousVersion = new Version(9, 8, 7, 6),
+                Rtf = "!!rtf!!",
+                Text = "text",
             };
-            src.Files.AddRange(new[] { "C", "D" });
 
-            var dst = (ClipboardBodyItemModel)src.DeepClone();
+            var dst = (NoteBodyItemModel)src.DeepClone();
 
             Assert.IsTrue(src.PreviousVersion == dst.PreviousVersion);
             Assert.IsTrue(src.History.CreateTimestamp == dst.History.CreateTimestamp);
             Assert.IsTrue(src.History.UpdateTimestamp == dst.History.UpdateTimestamp);
             Assert.IsTrue(src.History.UpdateCount == dst.History.UpdateCount);
-            Assert.IsTrue(src.Text == dst.Text);
             Assert.IsTrue(src.Rtf == dst.Rtf);
-            Assert.IsTrue(src.Html == dst.Html);
-            Assert.IsTrue(src.Files.SequenceEqual(dst.Files));
+            Assert.IsTrue(src.Text == dst.Text);
         }
     }
 }
