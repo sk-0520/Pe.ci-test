@@ -142,7 +142,7 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
 
             //Icon.DeepCloneTo(obj.Icon);
             obj.Icon = (IconItemModel)Icon.DeepClone();
-            History.DeepCloneTo(obj.History);
+            obj.History = (LauncherHistoryItemModel)History.DeepClone();
             Tag.DeepCloneTo(obj.Tag);
             StdStream.DeepCloneTo(obj.StdStream);
             EnvironmentVariables.DeepCloneTo(obj.EnvironmentVariables);

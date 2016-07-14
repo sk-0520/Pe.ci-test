@@ -30,15 +30,12 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
     /// <summary>
     /// ランチャーアイテム履歴データ。
     /// </summary>
-    [Serializable]
+    [DataContract, Serializable]
     public class LauncherHistoryItemModel: HistoryItemModel, IDeepClone
     {
         public LauncherHistoryItemModel()
             : base()
-        {
-            Options = new CollectionModel<string>();
-            WorkDirectoryPaths = new CollectionModel<string>();
-        }
+        { }
 
         /// <summary>
         /// 実行回数。
@@ -55,13 +52,13 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
         /// オプション。
         /// </summary>
         [DataMember, XmlArray("Options"), XmlArrayItem("Item")]
-        public CollectionModel<string> Options { get; set; }
+        public CollectionModel<string> Options { get; set; } = new CollectionModel<string>();
 
         /// <summary>
         /// 作業ディレクトリ。
         /// </summary>
         [DataMember, XmlArray("WorkDirectoryPaths"), XmlArrayItem("Item")]
-        public CollectionModel<string> WorkDirectoryPaths { get; set; }
+        public CollectionModel<string> WorkDirectoryPaths { get; set; } = new CollectionModel<string>();
 
         #region IDeepClone
 
@@ -69,13 +66,14 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
         {
             var result = new LauncherHistoryItemModel() {
                 ExecuteCount = this.ExecuteCount,
+                ExecuteTimestamp = this.ExecuteTimestamp,
                 CreateTimestamp = this.CreateTimestamp,
                 UpdateTimestamp = this.UpdateTimestamp,
                 UpdateCount = this.UpdateCount,
             };
 
-            result.WorkDirectoryPaths = new CollectionModel<string>(WorkDirectoryPaths);
-            result.Options = new CollectionModel<string>(Options);
+            result.WorkDirectoryPaths.InitializeRange(WorkDirectoryPaths);
+            result.Options.InitializeRange(Options);
 
             return result;
         }

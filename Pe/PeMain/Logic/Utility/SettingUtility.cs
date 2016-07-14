@@ -195,7 +195,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="items"></param>
         /// <param name="nonProcess"></param>

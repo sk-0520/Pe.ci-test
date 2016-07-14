@@ -67,7 +67,7 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
         {
             var obj = (IndexBodyItemModelBase)target;
 
-            History.DeepCloneTo(obj.History);
+            obj.History = (HistoryItemModel)History.DeepClone();
             obj.PreviousVersion = (Version)PreviousVersion.Clone();
         }
 

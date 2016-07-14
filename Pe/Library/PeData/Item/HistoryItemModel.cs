@@ -82,20 +82,22 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
 
         #region IDeepClone
 
-        public virtual void DeepCloneTo(IDeepClone target)
-        {
-            var obj = (HistoryItemModel)target;
+        //public virtual void DeepCloneTo(IDeepClone target)
+        //{
+        //    var obj = (HistoryItemModel)target;
 
-            obj.CreateTimestamp = CreateTimestamp;
-            obj.UpdateTimestamp = UpdateTimestamp;
-            obj.UpdateCount = UpdateCount;
-        }
+        //    obj.CreateTimestamp = CreateTimestamp;
+        //    obj.UpdateTimestamp = UpdateTimestamp;
+        //    obj.UpdateCount = UpdateCount;
+        //}
 
         public virtual IDeepClone DeepClone()
         {
             var result = new HistoryItemModel();
 
-            DeepCloneTo(result);
+            result.CreateTimestamp = CreateTimestamp;
+            result.UpdateTimestamp = UpdateTimestamp;
+            result.UpdateCount = UpdateCount;
 
             return result;
         }
