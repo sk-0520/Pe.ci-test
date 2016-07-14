@@ -22,6 +22,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Attribute;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Pe.Library.PeData.Define;
 
@@ -35,7 +36,6 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
         public ClipboardIndexItemModel()
             : base()
         {
-            Hash = new HashItemModel();
             Sort = History.CreateTimestamp;
         }
 
@@ -44,44 +44,44 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
         /// <summary>
         /// 保持するクリップボードの型。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public ClipboardType Type { get; set; }
         /// <summary>
         /// 自身のデータ(インデックス + ボディ)を示すハッシュデータ。
         /// </summary>
-        [DataMember]
-        public HashItemModel Hash { get; set; }
+        [DataMember, IsDeepClone]
+        public HashItemModel Hash { get; set; } = new HashItemModel();
 
         /// <summary>
         /// 並べ替えに用いる基準値。
         /// </summary>
-        [DataMember]
-        [IsDeepClone]
+        [DataMember, IsDeepClone]
         public DateTime Sort { get; set; }
 
         #endregion
 
         #region IndexItemModelBase
 
-        public override void DeepCloneTo(IDeepClone target)
-        {
-            base.DeepCloneTo(target);
+        //public override void DeepCloneTo(IDeepClone target)
+        //{
+        //    base.DeepCloneTo(target);
 
-            var obj = (ClipboardIndexItemModel)target;
+        //    var obj = (ClipboardIndexItemModel)target;
 
-            obj.Type = Type;
-            obj.Sort = Sort;
-            //Hash.DeepCloneTo(obj.Hash);
-            obj.Hash = (HashItemModel)Hash.DeepClone();
-        }
+        //    obj.Type = Type;
+        //    obj.Sort = Sort;
+        //    //Hash.DeepCloneTo(obj.Hash);
+        //    obj.Hash = (HashItemModel)Hash.DeepClone();
+        //}
 
         public override IDeepClone DeepClone()
         {
-            var result = new ClipboardIndexItemModel();
+            //var result = new ClipboardIndexItemModel();
 
-            DeepCloneTo(result);
+            //DeepCloneTo(result);
 
-            return result;
+            //return result;
+            return DeepCloneUtility.Copy(this);
         }
 
         #endregion
