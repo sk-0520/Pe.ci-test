@@ -64,6 +64,7 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
 
         #region IDeepClone
 
+        [Obsolete]
         public virtual void DeepCloneTo(IDeepClone target)
         {
             var obj = (IndexBodyItemModelBase)target;
