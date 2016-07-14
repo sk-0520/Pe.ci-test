@@ -21,6 +21,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using ContentTypeTextNet.Library.SharedLibrary.Attribute;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 
@@ -44,17 +45,17 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
         /// <summary>
         /// 作成日。
         /// </summary>
-        [DataMember, XmlAttribute]
+        [DataMember, XmlAttribute, IsDeepClone]
         public DateTime CreateTimestamp { get; set; }
         /// <summary>
         /// 更新日。
         /// </summary>
-        [DataMember, XmlAttribute]
+        [DataMember, XmlAttribute, IsDeepClone]
         public DateTime UpdateTimestamp { get; set; }
         /// <summary>
         /// 更新回数。
         /// </summary>
-        [DataMember, XmlAttribute]
+        [DataMember, XmlAttribute, IsDeepClone]
         public uint UpdateCount { get; set; }
 
         #endregion
@@ -93,13 +94,14 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
 
         public virtual IDeepClone DeepClone()
         {
-            var result = new HistoryItemModel();
+            //var result = new HistoryItemModel();
 
-            result.CreateTimestamp = CreateTimestamp;
-            result.UpdateTimestamp = UpdateTimestamp;
-            result.UpdateCount = UpdateCount;
+            //result.CreateTimestamp = CreateTimestamp;
+            //result.UpdateTimestamp = UpdateTimestamp;
+            //result.UpdateCount = UpdateCount;
 
-            return result;
+            //return result;
+            return DeepCloneUtility.Copy(this);
         }
 
         #endregion
