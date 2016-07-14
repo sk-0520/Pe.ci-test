@@ -20,7 +20,9 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.Attribute;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Pe.Library.PeData.Converter;
 using ContentTypeTextNet.Pe.Library.PeData.Define;
 using Newtonsoft.Json;
@@ -43,34 +45,42 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
         /// ハッシュ関数。
         /// <para>SHA-1 一択だけど将来変更する場合の保険。</para>
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public HashType Type { get; set; }
         /// <summary>
         /// ハッシュ値。
         /// </summary>
-        [DataMember, JsonConverter(typeof(ByteArrayConverter))]
+        [DataMember, IsDeepClone, JsonConverter(typeof(ByteArrayConverter))]
         public byte[] Code { get; set; }
 
         #endregion
 
         #region IDeepClone
 
-        public void DeepCloneTo(IDeepClone target)
-        {
-            var obj = (HashItemModel)target;
+        //public void DeepCloneTo(IDeepClone target)
+        //{
+        //    var obj = (HashItemModel)target;
 
-            obj.Type = Type;
-            if(Code != null && Code.Any()) {
-                obj.Code = new byte[Code.Length];
-                Code.CopyTo(obj.Code, 0);
-            }
-        }
+        //    obj.Type = Type;
+        //    if(Code != null && Code.Any()) {
+        //        obj.Code = new byte[Code.Length];
+        //        Code.CopyTo(obj.Code, 0);
+        //    }
+        //}
 
         public IDeepClone DeepClone()
         {
-            var result = new HashItemModel();
+            //var result = new HashItemModel();
 
-            DeepCloneTo(result);
+            //DeepCloneTo(result);
+
+            //return result;
+            var result = (HashItemModel)DeepCloneUtility.Copy(this);
+
+            if(Code != null && Code.Any()) {
+                result.Code = new byte[Code.Length];
+                Code.CopyTo(result.Code, 0);
+            }
 
             return result;
         }

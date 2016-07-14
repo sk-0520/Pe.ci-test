@@ -71,7 +71,8 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
 
             obj.Type = Type;
             obj.Sort = Sort;
-            Hash.DeepCloneTo(obj.Hash);
+            //Hash.DeepCloneTo(obj.Hash);
+            obj.Hash = (HashItemModel)Hash.DeepClone();
         }
 
         public override IDeepClone DeepClone()
