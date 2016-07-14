@@ -98,22 +98,21 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
 
                     using(var stream = new MemoryStream(value)) {
                         var bitmapImage = new BitmapImage();
-                        using(Initializer.BeginInitialize(bitmapImage)) {
-                            //bitmapImage.BeginInit();
-                            try {
+                        try {
+                            using(Initializer.BeginInitialize(bitmapImage)) {
+                                //bitmapImage.BeginInit();
                                 bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
                                 bitmapImage.CreateOptions = BitmapCreateOptions.None;
                                 //bitmapImage.StreamSource = new MemoryStream(value);
                                 bitmapImage.StreamSource = stream;
-                            } finally {
-                                //bitmapImage.EndInit();
-                                //bitmapImage.Freeze();
-                                FreezableUtility.SafeFreeze(bitmapImage);
                             }
-                            Image = bitmapImage;
+                        } finally {
+                            //bitmapImage.EndInit();
+                            //bitmapImage.Freeze();
+                            FreezableUtility.SafeFreeze(bitmapImage);
                         }
+                        Image = bitmapImage;
                     }
-
                 }
             }
         }
