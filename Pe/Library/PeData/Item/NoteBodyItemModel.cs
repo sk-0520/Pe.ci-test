@@ -20,7 +20,9 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.Attribute;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Pe.Library.PeData.Define;
 using ContentTypeTextNet.Pe.Library.PeData.IF;
 
@@ -41,13 +43,13 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
         /// <summary>
         /// テキストデータ。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public string Text { get; set; }
 
         /// <summary>
         /// RTFデータ。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public string Rtf { get; set; }
 
         #endregion
@@ -56,22 +58,23 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
 
         public override IndexKind IndexKind { get { return IndexKind.Note; } }
 
-        public override void DeepCloneTo(IDeepClone target)
-        {
-            base.DeepCloneTo(target);
+        //public override void DeepCloneTo(IDeepClone target)
+        //{
+        //    base.DeepCloneTo(target);
 
-            var obj = (NoteBodyItemModel)target;
-            obj.Text = Text;
-            obj.Rtf = Rtf;
-        }
+        //    var obj = (NoteBodyItemModel)target;
+        //    obj.Text = Text;
+        //    obj.Rtf = Rtf;
+        //}
 
         public override IDeepClone DeepClone()
         {
-            var result = new NoteBodyItemModel();
+            //var result = new NoteBodyItemModel();
 
-            DeepCloneTo(result);
+            //DeepCloneTo(result);
 
-            return result;
+            //return result;
+            return DeepCloneUtility.Copy(this);
         }
 
         #endregion
