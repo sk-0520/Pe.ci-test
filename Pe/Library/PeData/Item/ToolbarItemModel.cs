@@ -20,8 +20,10 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.Attribute;
 using ContentTypeTextNet.Library.SharedLibrary.Define;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Pe.Library.PeData.Define;
 using ContentTypeTextNet.Pe.Library.PeData.IF;
@@ -36,83 +38,80 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
     {
         public ToolbarItemModel()
             : base()
-        {
-            FloatToolbar = new FloatToolbarItemModel();
-            Font = new FontModel();
-        }
+        { }
 
         #region property
 
         /// <summary>
         /// ツールバー位置。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public DockType DockType { get; set; }
 
         /// <summary>
         /// フロート状態。
         /// </summary>
-        [DataMember]
-        public FloatToolbarItemModel FloatToolbar { get; set; }
+        [DataMember, IsDeepClone]
+        public FloatToolbarItemModel FloatToolbar { get; set; } = new FloatToolbarItemModel();
         /// <summary>
         /// アイコンサイズ。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public IconScale IconScale { get; set; }
         /// <summary>
         /// 自動的に隠すか。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public bool AutoHide { get; set; }
         /// <summary>
         /// 自動的に隠すまでの時間。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public TimeSpan HideWaitTime { get; set; }
         /// <summary>
         /// 自動的に隠す際のアニメーション時間。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public TimeSpan HideAnimateTime { get; set; }
         /// <summary>
         /// 初期値として使用するグループID。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public Guid DefaultGroupId { get; set; }
 
         /// <summary>
         /// テキスト表示を行うか。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public bool TextVisible { get; set; }
         /// <summary>
         /// テキストの表示幅。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public double TextWidth { get; set; }
         /// <summary>
         /// フォント情報。
         /// </summary>
-        [DataMember]
-        public FontModel Font { get; set; }
+        [DataMember, IsDeepClone]
+        public FontModel Font { get; set; } = new FontModel();
 
         /// <summary>
         /// メニューボタンの位置を補正する。
         /// <para>右側にツールバー設置時に左側にメニューボタンを配置する。</para>
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public bool MenuPositionCorrection { get; set; }
 
         /// <summary>
         /// ボタン位置。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public ToolbarButtonPosition ButtonPosition { get; set; }
 
         /// <summary>
         /// メニューボタンを表示するか。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public bool IsVisibleMenuButton { get; set; }
 
         #endregion
@@ -122,7 +121,7 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
         /// <summary>
         /// 表示。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public bool IsVisible { get; set; }
 
         #endregion
@@ -132,7 +131,7 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
         /// <summary>
         /// 最前面表示。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public bool IsTopmost { get; set; }
 
         #endregion
@@ -142,7 +141,7 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
         /// <summary>
         /// ツールバーの所属ディスプレイ名。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public string Id { get; set; }
 
         public bool IsSafeId(string s)
@@ -163,37 +162,38 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
 
         #region IDeepClone
 
-        public void DeepCloneTo(IDeepClone target)
-        {
-            var obj = (ToolbarItemModel)target;
+        //public void DeepCloneTo(IDeepClone target)
+        //{
+        //    var obj = (ToolbarItemModel)target;
 
-            obj.DockType = DockType;
-            //FloatToolbar.DeepCloneTo(obj.FloatToolbar);
-            obj.FloatToolbar = (FloatToolbarItemModel)FloatToolbar.DeepClone();
-            obj.IconScale = IconScale;
-            obj.AutoHide = AutoHide;
-            obj.HideWaitTime = HideWaitTime;
-            obj.HideAnimateTime = HideAnimateTime;
-            obj.DefaultGroupId = DefaultGroupId;
-            obj.TextVisible = TextVisible;
-            obj.TextWidth = TextWidth;
-            obj.IsVisible = IsVisible;
-            obj.IsTopmost = IsTopmost;
-            obj.MenuPositionCorrection = MenuPositionCorrection;
-            obj.ButtonPosition = ButtonPosition;
-            obj.IsVisibleMenuButton = IsVisibleMenuButton;
-            obj.Id = Id;
-            //Font.DeepCloneTo(obj.Font);
-            obj.Font = (FontModel)Font.DeepClone();
-        }
+        //    obj.DockType = DockType;
+        //    //FloatToolbar.DeepCloneTo(obj.FloatToolbar);
+        //    obj.FloatToolbar = (FloatToolbarItemModel)FloatToolbar.DeepClone();
+        //    obj.IconScale = IconScale;
+        //    obj.AutoHide = AutoHide;
+        //    obj.HideWaitTime = HideWaitTime;
+        //    obj.HideAnimateTime = HideAnimateTime;
+        //    obj.DefaultGroupId = DefaultGroupId;
+        //    obj.TextVisible = TextVisible;
+        //    obj.TextWidth = TextWidth;
+        //    obj.IsVisible = IsVisible;
+        //    obj.IsTopmost = IsTopmost;
+        //    obj.MenuPositionCorrection = MenuPositionCorrection;
+        //    obj.ButtonPosition = ButtonPosition;
+        //    obj.IsVisibleMenuButton = IsVisibleMenuButton;
+        //    obj.Id = Id;
+        //    //Font.DeepCloneTo(obj.Font);
+        //    obj.Font = (FontModel)Font.DeepClone();
+        //}
 
         public IDeepClone DeepClone()
         {
-            var result = new ToolbarItemModel();
+            //var result = new ToolbarItemModel();
 
-            DeepCloneTo(result);
+            //DeepCloneTo(result);
 
-            return result;
+            //return result;
+            return DeepCloneUtility.Copy(this);
         }
 
         #endregion
