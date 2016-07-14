@@ -26,6 +26,8 @@ using System.Windows;
 using System.Windows.Media.Imaging;
 using System.Xml.Serialization;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
+using ContentTypeTextNet.Library.SharedLibrary.Logic;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Pe.Library.PeData.Define;
 
@@ -39,9 +41,7 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
     {
         public ClipboardBodyItemModel()
             : base()
-        {
-            Files = new CollectionModel<string>();
-        }
+        { }
 
         #region property
 
@@ -97,17 +97,20 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
 
                     using(var stream = new MemoryStream(value)) {
                         var bitmapImage = new BitmapImage();
-                        bitmapImage.BeginInit();
-                        try {
-                            bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
-                            bitmapImage.CreateOptions = BitmapCreateOptions.None;
-                            //bitmapImage.StreamSource = new MemoryStream(value);
-                            bitmapImage.StreamSource = stream;
-                        } finally {
-                            bitmapImage.EndInit();
-                            bitmapImage.Freeze();
+                        using(Initializer.BeginInitialize(bitmapImage)) {
+                            //bitmapImage.BeginInit();
+                            try {
+                                bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                                bitmapImage.CreateOptions = BitmapCreateOptions.None;
+                                //bitmapImage.StreamSource = new MemoryStream(value);
+                                bitmapImage.StreamSource = stream;
+                            } finally {
+                                //bitmapImage.EndInit();
+                                //bitmapImage.Freeze();
+                                FreezableUtility.SafeFreeze(bitmapImage);
+                            }
+                            Image = bitmapImage;
                         }
-                        Image = bitmapImage;
                     }
 
                 }
@@ -117,7 +120,7 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
         /// ファイルデータ。
         /// </summary>
         [DataMember]
-        public CollectionModel<string> Files { get; set; }
+        public CollectionModel<string> Files { get; set; } = new CollectionModel<string>();
 
         #endregion
 
