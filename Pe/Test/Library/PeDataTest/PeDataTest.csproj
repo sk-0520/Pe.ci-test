@@ -143,6 +143,7 @@
     <Compile Include="Item\LauncherHistoryItemModelTest.cs" />
     <Compile Include="Item\LauncherStdStreamItemModelTest.cs" />
     <Compile Include="Item\NoteBodyItemModelTest.cs" />
+    <Compile Include="Item\NoteIndexItemModelTest.cs" />
     <Compile Include="Item\TagItemModelTest.cs" />
     <Compile Include="Item\TemplateBodyItemModelTest.cs" />
     <Compile Include="Item\ToolbarItemModelTest.cs" />
