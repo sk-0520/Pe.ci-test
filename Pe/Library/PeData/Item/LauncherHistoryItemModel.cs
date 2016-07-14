@@ -22,7 +22,9 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using ContentTypeTextNet.Library.SharedLibrary.Attribute;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 
 namespace ContentTypeTextNet.Pe.Library.PeData.Item
@@ -40,42 +42,43 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
         /// <summary>
         /// 実行回数。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public uint ExecuteCount { get; set; }
         /// <summary>
         /// 最終実行日。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public DateTime ExecuteTimestamp { get; set; }
 
         /// <summary>
         /// オプション。
         /// </summary>
-        [DataMember, XmlArray("Options"), XmlArrayItem("Item")]
+        [DataMember, IsDeepClone, XmlArray("Options"), XmlArrayItem("Item")]
         public CollectionModel<string> Options { get; set; } = new CollectionModel<string>();
 
         /// <summary>
         /// 作業ディレクトリ。
         /// </summary>
-        [DataMember, XmlArray("WorkDirectoryPaths"), XmlArrayItem("Item")]
+        [DataMember, IsDeepClone, XmlArray("WorkDirectoryPaths"), XmlArrayItem("Item")]
         public CollectionModel<string> WorkDirectoryPaths { get; set; } = new CollectionModel<string>();
 
         #region IDeepClone
 
         public override IDeepClone DeepClone()
         {
-            var result = new LauncherHistoryItemModel() {
-                ExecuteCount = this.ExecuteCount,
-                ExecuteTimestamp = this.ExecuteTimestamp,
-                CreateTimestamp = this.CreateTimestamp,
-                UpdateTimestamp = this.UpdateTimestamp,
-                UpdateCount = this.UpdateCount,
-            };
+            //var result = new LauncherHistoryItemModel() {
+            //    ExecuteCount = this.ExecuteCount,
+            //    ExecuteTimestamp = this.ExecuteTimestamp,
+            //    CreateTimestamp = this.CreateTimestamp,
+            //    UpdateTimestamp = this.UpdateTimestamp,
+            //    UpdateCount = this.UpdateCount,
+            //};
 
-            result.WorkDirectoryPaths.InitializeRange(WorkDirectoryPaths);
-            result.Options.InitializeRange(Options);
+            //result.WorkDirectoryPaths.InitializeRange(WorkDirectoryPaths);
+            //result.Options.InitializeRange(Options);
 
-            return result;
+            //return result;
+            return DeepCloneUtility.Copy(this);
         }
 
         #endregion
