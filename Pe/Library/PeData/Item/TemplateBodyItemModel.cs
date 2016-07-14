@@ -20,7 +20,9 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.Attribute;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Pe.Library.PeData.Define;
 
 namespace ContentTypeTextNet.Pe.Library.PeData.Item
@@ -34,28 +36,29 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
         /// <summary>
         /// 対象文字列。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public string Source { get; set; }
 
         #region IndexBodyItemModelBase
 
         public override IndexKind IndexKind { get { return IndexKind.Template; } }
 
-        public override void DeepCloneTo(IDeepClone target)
-        {
-            base.DeepCloneTo(target);
+        //public override void DeepCloneTo(IDeepClone target)
+        //{
+        //    base.DeepCloneTo(target);
 
-            var obj = (TemplateBodyItemModel)target;
-            obj.Source = Source;
-        }
+        //    var obj = (TemplateBodyItemModel)target;
+        //    obj.Source = Source;
+        //}
 
         public override IDeepClone DeepClone()
         {
-            var result = new TemplateBodyItemModel();
+            //var result = new TemplateBodyItemModel();
 
-            DeepCloneTo(result);
+            //DeepCloneTo(result);
 
-            return result;
+            //return result;
+            return DeepCloneUtility.Copy(this);
         }
 
         #endregion
