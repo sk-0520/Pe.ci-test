@@ -21,6 +21,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using ContentTypeTextNet.Library.SharedLibrary.Attribute;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 
@@ -33,16 +34,14 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
     {
         public IndexItemModelBase()
             : base()
-        {
-            History = new HistoryItemModel();
-        }
+        { }
 
         #region IName
 
         /// <summary>
         /// 名前。
         /// </summary>
-        [DataMember, XmlAttribute]
+        [DataMember, XmlAttribute, IsDeepClone]
         public string Name { get; set; }
 
         #endregion
@@ -52,8 +51,8 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
         /// <summary>
         /// 履歴。
         /// </summary>
-        [DataMember]
-        public HistoryItemModel History { get; set; }
+        [DataMember, IsDeepClone]
+        public HistoryItemModel History { get; set; } = new HistoryItemModel();
 
         #endregion
 
