@@ -20,7 +20,9 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.Attribute;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 
 namespace ContentTypeTextNet.Pe.Library.PeData.Item
 {
@@ -39,33 +41,34 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
         /// <summary>
         /// 標準出力(とエラー)を取得するか。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public bool OutputWatch { get; set; }
         /// <summary>
         /// 標準入力へ入力するか。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public bool InputUsing { get; set; }
 
         #endregion
 
         #region IDeepClone
 
-        public virtual void DeepCloneTo(IDeepClone target)
-        {
-            var obj = (LauncherStdStreamItemModel)target;
+        //public virtual void DeepCloneTo(IDeepClone target)
+        //{
+        //    var obj = (LauncherStdStreamItemModel)target;
 
-            obj.OutputWatch = OutputWatch;
-            obj.InputUsing = InputUsing;
-        }
+        //    obj.OutputWatch = OutputWatch;
+        //    obj.InputUsing = InputUsing;
+        //}
 
         public IDeepClone DeepClone()
         {
-            var result = new LauncherStdStreamItemModel();
+            //var result = new LauncherStdStreamItemModel();
 
-            DeepCloneTo(result);
+            //DeepCloneTo(result);
 
-            return result;
+            //return result;
+            return DeepCloneUtility.Copy(this);
         }
 
         #endregion

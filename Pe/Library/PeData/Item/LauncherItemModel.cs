@@ -145,7 +145,8 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
             obj.History = (LauncherHistoryItemModel)History.DeepClone();
             //Tag.DeepCloneTo(obj.Tag);
             obj.Tag = (TagItemModel)Tag.DeepClone();
-            StdStream.DeepCloneTo(obj.StdStream);
+            //StdStream.DeepCloneTo(obj.StdStream);
+            obj.StdStream = (LauncherStdStreamItemModel)StdStream.DeepClone();
             EnvironmentVariables.DeepCloneTo(obj.EnvironmentVariables);
         }
 
