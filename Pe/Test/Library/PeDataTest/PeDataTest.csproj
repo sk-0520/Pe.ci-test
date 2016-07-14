@@ -142,6 +142,7 @@
     <Compile Include="Item\LauncherStdStreamItemModelTest.cs" />
     <Compile Include="Item\NoteBodyItemModelTest.cs" />
     <Compile Include="Item\TagItemModelTest.cs" />
+    <Compile Include="Item\TemplateBodyItemModelTest.cs" />
     <Compile Include="Item\ToolbarItemModelTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Setting\MainSettings\LoggingSettingModelTest.cs" />

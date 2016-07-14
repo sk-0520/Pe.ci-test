@@ -31,15 +31,15 @@ namespace ContentTypeTextNet.Test.Library.PeDataTest.Item
         public void DeepCloneTest()
         {
             var src = new ClipboardBodyItemModel() {
-                Text = "text",
-                Rtf = "rtf",
-                Html = "html",
-                PreviousVersion = new Version(1,2,3,4),
+                PreviousVersion = new Version(1, 2, 3, 4),
                 History = new HistoryItemModel() {
                     CreateTimestamp = DateTime.MaxValue,
                     UpdateTimestamp = DateTime.UtcNow,
                     UpdateCount = 123,
                 },
+                Text = "text",
+                Rtf = "rtf",
+                Html = "html",
             };
             src.Files.AddRange(new[] { "C", "D" });
 
