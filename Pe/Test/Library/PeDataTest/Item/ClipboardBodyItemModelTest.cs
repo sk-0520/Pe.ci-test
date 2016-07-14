@@ -39,7 +39,7 @@ namespace ContentTypeTextNet.Test.Library.PeDataTest.Item
                     CreateTimestamp = DateTime.MaxValue,
                     UpdateTimestamp = DateTime.UtcNow,
                     UpdateCount = 123,
-                }
+                },
             };
             src.Files.AddRange(new[] { "C", "D" });
 

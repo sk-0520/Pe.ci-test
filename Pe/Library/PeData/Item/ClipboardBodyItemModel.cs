@@ -25,6 +25,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Imaging;
 using System.Xml.Serialization;
+using ContentTypeTextNet.Library.SharedLibrary.Attribute;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
@@ -48,17 +49,17 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
         /// <summary>
         /// テキストデータ。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public string Text { get; set; }
         /// <summary>
         /// RTFデータ。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public string Rtf { get; set; }
         /// <summary>
         /// HTMLデータ。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public string Html { get; set; }
         /// <summary>
         /// 画像データ。
@@ -119,7 +120,7 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
         /// <summary>
         /// ファイルデータ。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public CollectionModel<string> Files { get; set; } = new CollectionModel<string>();
 
         #endregion
@@ -150,28 +151,35 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
             base.Dispose(disposing);
         }
 
-        public override void DeepCloneTo(IDeepClone target)
+        //public override void DeepCloneTo(IDeepClone target)
+        //{
+        //    base.DeepCloneTo(target);
+
+        //    var obj = (ClipboardBodyItemModel)target;
+
+        //    obj.Text = Text;
+        //    obj.Rtf = Rtf;
+        //    obj.Html = Html;
+        //    if(ImageCore != null) {
+        //        obj.ImageCore = new byte[ImageCore.Length];
+        //        ImageCore.CopyTo(obj.ImageCore, 0);
+        //    }
+        //    obj.Files.InitializeRange(Files);
+        //}
+
+        public override IDeepClone DeepClone()
         {
-            base.DeepCloneTo(target);
+            //var result = new ClipboardBodyItemModel();
 
-            var obj = (ClipboardBodyItemModel)target;
+            //DeepCloneTo(result);
 
-            obj.Text = Text;
-            obj.Rtf = Rtf;
-            obj.Html = Html;
+            //return result;
+
+            var result = (ClipboardBodyItemModel)DeepCloneUtility.Copy(this);
             if(ImageCore != null) {
-                obj.ImageCore = new byte[ImageCore.Length];
-                ImageCore.CopyTo(obj.ImageCore, 0);
+                result.ImageCore = new byte[ImageCore.Length];
+                ImageCore.CopyTo(result.ImageCore, 0);
             }
-            obj.Files.InitializeRange(Files);
-        }
-
-        public override ContentTypeTextNet.Library.SharedLibrary.IF.IDeepClone DeepClone()
-        {
-            var result = new ClipboardBodyItemModel();
-
-            DeepCloneTo(result);
-
             return result;
         }
 
