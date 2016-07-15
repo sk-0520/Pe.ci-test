@@ -144,7 +144,7 @@
     <Compile Include="Item\HistoryItemModelTest.cs" />
     <Compile Include="Item\IconItemModelTest.cs" />
     <Compile Include="Item\LauncherGroupItemModelTest.cs" />
-    <Compile Include="Item\LauncherGroupSettingModelTest.cs" />
+    <Compile Include="Setting\LauncherGroupSettingModelTest.cs" />
     <Compile Include="Item\LauncherHistoryItemModelTest.cs" />
     <Compile Include="Item\LauncherItemModelTest.cs" />
     <Compile Include="Item\LauncherStdStreamItemModelTest.cs" />

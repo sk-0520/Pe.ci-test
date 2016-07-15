@@ -7,7 +7,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Pe.Library.PeData.Setting;
 using NUnit.Framework;
 
-namespace ContentTypeTextNet.Test.Library.PeDataTest.Item
+namespace ContentTypeTextNet.Test.Library.PeDataTest.Setting
 {
     [TestFixture]
     class LauncherGroupSettingModelTest
