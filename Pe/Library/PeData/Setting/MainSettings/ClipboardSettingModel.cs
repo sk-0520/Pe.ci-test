@@ -36,11 +36,7 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
     {
         public ClipboardSettingModel()
             : base()
-        {
-            ToggleHotKey = new HotKeyModel();
-            Font = new FontModel();
-            LimitSize = new ClipboardLimitSizeItemModel();
-        }
+        { }
 
         #region property
 
@@ -60,7 +56,7 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
         /// 表示非表示切り替えキー。
         /// </summary>
         [DataMember]
-        public HotKeyModel ToggleHotKey { get; set; }
+        public HotKeyModel ToggleHotKey { get; set; } = new HotKeyModel();
 
         /// <summary>
         /// 取り込み対象。
@@ -68,7 +64,7 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
         [DataMember]
         public ClipboardType CaptureType { get; set; }
         [DataMember]
-        public ClipboardLimitSizeItemModel LimitSize { get; set; }
+        public ClipboardLimitSizeItemModel LimitSize { get; set; } = new ClipboardLimitSizeItemModel();
 
         /// <summary>
         /// 履歴数。
@@ -104,7 +100,7 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
         /// フォント。
         /// </summary>
         [DataMember]
-        public FontModel Font { get; set; }
+        public FontModel Font { get; set; } = new FontModel();
 
         /// <summary>
         /// 重複アイテムを上へ移動するか。
