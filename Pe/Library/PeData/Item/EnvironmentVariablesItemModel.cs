@@ -34,10 +34,9 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
     {
         public EnvironmentVariablesItemModel()
             : base()
-        {
-            Update = new EnvironmentVariableUpdateItemCollectionModel();
-            Remove = new CollectionModel<string>();
-        }
+        { }
+
+        #region property
 
         /// <summary>
         /// 環境変数を変更するか。
@@ -49,13 +48,15 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
         /// 追加・変更対象。
         /// </summary>
         [DataMember]
-        public EnvironmentVariableUpdateItemCollectionModel Update { get; set; }
+        public EnvironmentVariableUpdateItemCollectionModel Update { get; set; } = new EnvironmentVariableUpdateItemCollectionModel();
 
         /// <summary>
         /// 削除対象。
         /// </summary>
         [DataMember]
-        public CollectionModel<string> Remove { get; set; }
+        public CollectionModel<string> Remove { get; set; } = new CollectionModel<string>();
+
+        #endregion
 
         #region IDeepClone
 
