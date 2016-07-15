@@ -24,6 +24,7 @@ using System.Windows;
 using ContentTypeTextNet.Library.SharedLibrary.Attribute;
 using ContentTypeTextNet.Library.SharedLibrary.Define;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Pe.Library.PeData.Define;
 using ContentTypeTextNet.Pe.Library.PeData.IF;
@@ -31,7 +32,7 @@ using ContentTypeTextNet.Pe.Library.PeData.Item;
 
 namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
 {
-    [Serializable]
+    [DataContract, Serializable]
     public class ClipboardSettingModel: SettingModelBase, IWindowStatus, IDeepClone
     {
         public ClipboardSettingModel()
@@ -43,107 +44,110 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
         /// <summary>
         /// クリップボード監視の変更を検知するか。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public bool IsEnabled { get; set; }
 
         /// <summary>
         /// アプリケーション内でのコピー操作も監視対象とするか。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public bool IsEnabledApplicationCopy { get; set; }
 
         /// <summary>
         /// 表示非表示切り替えキー。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public HotKeyModel ToggleHotKey { get; set; } = new HotKeyModel();
 
         /// <summary>
         /// 取り込み対象。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public ClipboardType CaptureType { get; set; }
-        [DataMember]
+        /// <summary>
+        /// 制限サイズ。
+        /// </summary>
+        [DataMember, IsDeepClone]
         public ClipboardLimitSizeItemModel LimitSize { get; set; } = new ClipboardLimitSizeItemModel();
 
         /// <summary>
         /// 履歴数。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public int SaveCount { get; set; }
 
         /// <summary>
         /// 待機時間。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public TimeSpan WaitTime { get; set; }
 
         /// <summary>
         /// 重複判定。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public int DuplicationCount { get; set; }
 
         /// <summary>
         /// 転送にクリップボードを使用する。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public bool UsingClipboard { get; set; }
 
         /// <summary>
         /// リスト部の幅。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public double ItemsListWidth { get; set; }
 
         /// <summary>
         /// フォント。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public FontModel Font { get; set; } = new FontModel();
 
         /// <summary>
         /// 重複アイテムを上へ移動するか。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public bool DuplicationMoveHead { get; set; }
 
         /// <summary>
         /// アイテムダブルクリック時の処理。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public IndexItemsDoubleClickBehavior DoubleClickBehavior { get; set; }
 
         #endregion
 
         #region IWindowStatus
 
-        [DataMember]
+        [DataMember, IsDeepClone]
         [PixelKind(Px.Logical)]
         public double WindowTop { get; set; }
-        [DataMember]
+        [DataMember, IsDeepClone]
         [PixelKind(Px.Logical)]
         public double WindowLeft { get; set; }
-        [DataMember]
+        [DataMember, IsDeepClone]
         [PixelKind(Px.Logical)]
         public double WindowWidth { get; set; }
-        [DataMember]
+        [DataMember, IsDeepClone]
         [PixelKind(Px.Logical)]
         public double WindowHeight { get; set; }
-        [DataMember]
+        [DataMember, IsDeepClone]
         [PixelKind(Px.Logical)]
         public WindowState WindowState { get; set; }
 
         #region ITopMost
 
-        [DataMember]
+        [DataMember, IsDeepClone]
         public bool IsTopmost { get; set; }
 
         #endregion
 
         #region IVisible
 
-        [DataMember]
+        [DataMember, IsDeepClone]
         public bool IsVisible { get; set; }
 
         #endregion
@@ -152,42 +156,43 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
 
         #region IDeepClone
 
-        public void DeepCloneTo(IDeepClone target)
-        {
-            var obj = (ClipboardSettingModel)target;
+        //public void DeepCloneTo(IDeepClone target)
+        //{
+        //    var obj = (ClipboardSettingModel)target;
 
-            obj.IsEnabled = IsEnabled;
-            obj.IsEnabledApplicationCopy = IsEnabledApplicationCopy;
-            //ToggleHotKey.DeepCloneTo(obj.ToggleHotKey);
-            obj.ToggleHotKey = (HotKeyModel)ToggleHotKey.DeepClone();
-            obj.CaptureType = CaptureType;
-            obj.SaveCount = SaveCount;
-            obj.WaitTime = WaitTime;
-            obj.DuplicationCount = DuplicationCount;
-            obj.UsingClipboard = UsingClipboard;
-            obj.ItemsListWidth = ItemsListWidth;
-            obj.WindowTop = WindowTop;
-            obj.WindowLeft = WindowLeft;
-            obj.WindowWidth = WindowWidth;
-            obj.WindowHeight = WindowHeight;
-            obj.WindowState = WindowState;
-            obj.IsTopmost = IsTopmost;
-            obj.IsVisible = IsVisible;
-            obj.DuplicationMoveHead = DuplicationMoveHead;
-            //Font.DeepCloneTo(obj.Font);
-            obj.Font = (FontModel)Font.DeepClone();
-            //LimitSize.DeepCloneTo(obj.LimitSize);
-            obj.LimitSize = (ClipboardLimitSizeItemModel)LimitSize.DeepClone();
-            obj.DoubleClickBehavior = DoubleClickBehavior;
-        }
+        //    obj.IsEnabled = IsEnabled;
+        //    obj.IsEnabledApplicationCopy = IsEnabledApplicationCopy;
+        //    //ToggleHotKey.DeepCloneTo(obj.ToggleHotKey);
+        //    obj.ToggleHotKey = (HotKeyModel)ToggleHotKey.DeepClone();
+        //    obj.CaptureType = CaptureType;
+        //    obj.SaveCount = SaveCount;
+        //    obj.WaitTime = WaitTime;
+        //    obj.DuplicationCount = DuplicationCount;
+        //    obj.UsingClipboard = UsingClipboard;
+        //    obj.ItemsListWidth = ItemsListWidth;
+        //    obj.WindowTop = WindowTop;
+        //    obj.WindowLeft = WindowLeft;
+        //    obj.WindowWidth = WindowWidth;
+        //    obj.WindowHeight = WindowHeight;
+        //    obj.WindowState = WindowState;
+        //    obj.IsTopmost = IsTopmost;
+        //    obj.IsVisible = IsVisible;
+        //    obj.DuplicationMoveHead = DuplicationMoveHead;
+        //    //Font.DeepCloneTo(obj.Font);
+        //    obj.Font = (FontModel)Font.DeepClone();
+        //    //LimitSize.DeepCloneTo(obj.LimitSize);
+        //    obj.LimitSize = (ClipboardLimitSizeItemModel)LimitSize.DeepClone();
+        //    obj.DoubleClickBehavior = DoubleClickBehavior;
+        //}
 
         public IDeepClone DeepClone()
         {
-            var result = new ClipboardSettingModel();
+            //var result = new ClipboardSettingModel();
 
-            DeepCloneTo(result);
+            //DeepCloneTo(result);
 
-            return result;
+            //return result;
+            return DeepCloneUtility.Copy(this);
         }
 
         #endregion
