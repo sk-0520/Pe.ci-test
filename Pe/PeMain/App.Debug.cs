@@ -49,6 +49,7 @@ namespace ContentTypeTextNet.Pe.PeMain
             //debugBrowser();
             //debugToolbar();
             //debugJson();
+            debugLauncherItemModel();
         }
 
         void debugIcon()
@@ -141,6 +142,12 @@ namespace ContentTypeTextNet.Pe.PeMain
             var saved = Encoding.UTF8.GetString(stream.GetBuffer());
             stream.Seek(0, SeekOrigin.Begin);
             var dst = SerializeUtility.LoadJsonDataFromStream<HashItemModel>(stream);
+        }
+
+        void debugLauncherItemModel()
+        {
+            var model = new LauncherItemModel();
+            SerializeUtility.SaveJsonDataToFile(@"z:\a.json", model);
         }
 
 #endif

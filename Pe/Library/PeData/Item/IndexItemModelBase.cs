@@ -58,15 +58,15 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
 
         #region IDeepClone
 
-        public override void DeepCloneTo(IDeepClone target)
-        {
-            base.DeepCloneTo(target);
+        //public override void DeepCloneTo(IDeepClone target)
+        //{
+        //    base.DeepCloneTo(target);
 
-            var obj = (IndexItemModelBase)target;
+        //    var obj = (IndexItemModelBase)target;
 
-            obj.Name = Name;
-            obj.History = (HistoryItemModel)History.DeepClone();
-        }
+        //    obj.Name = Name;
+        //    obj.History = (HistoryItemModel)History.DeepClone();
+        //}
 
         //public abstract IDeepClone DeepClone();
 
