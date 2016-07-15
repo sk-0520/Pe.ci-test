@@ -38,13 +38,7 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
     {
         public LauncherItemModel()
             : base()
-        {
-            Icon = new IconItemModel();
-            History = new LauncherHistoryItemModel();
-            Tag = new TagItemModel();
-            StdStream = new LauncherStdStreamItemModel();
-            EnvironmentVariables = new EnvironmentVariablesItemModel();
-        }
+        { }
 
         #region property
 
@@ -72,13 +66,13 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
         /// 表示アイコンパス。
         /// </summary>
         [DataMember, IsDeepClone]
-        public IconItemModel Icon { get; set; }
+        public IconItemModel Icon { get; set; } = new IconItemModel();
 
         /// <summary>
         /// 実行履歴
         /// </summary>
         [DataMember, IsDeepClone]
-        public LauncherHistoryItemModel History { get; set; }
+        public LauncherHistoryItemModel History { get; set; } = new LauncherHistoryItemModel();
 
         /// <summary>
         /// コメント
@@ -89,12 +83,12 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
         /// タグ
         /// </summary>
         [DataMember, IsDeepClone]
-        public TagItemModel Tag { get; set; }
+        public TagItemModel Tag { get; set; } = new TagItemModel();
         /// <summary>
         /// 標準入出力。
         /// </summary>
         [DataMember, IsDeepClone]
-        public LauncherStdStreamItemModel StdStream { get; set; }
+        public LauncherStdStreamItemModel StdStream { get; set; } = new LauncherStdStreamItemModel();
         /// <summary>
         /// 管理者として実行。
         /// </summary>
@@ -104,7 +98,7 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
         /// 環境変数。
         /// </summary>
         [DataMember, IsDeepClone]
-        public EnvironmentVariablesItemModel EnvironmentVariables { get; set; }
+        public EnvironmentVariablesItemModel EnvironmentVariables { get; set; } = new EnvironmentVariablesItemModel();
 
         /// <summary>
         /// コマンド入力時の列挙対象か。
