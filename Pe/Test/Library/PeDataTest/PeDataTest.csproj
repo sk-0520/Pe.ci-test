@@ -134,6 +134,7 @@
   <ItemGroup>
     <Compile Include="Item\ClipboardBodyItemModelTest.cs" />
     <Compile Include="Item\ClipboardIndexItemModelTest.cs" />
+    <Compile Include="Item\ClipboardLimitSizeItemModelTest.cs" />
     <Compile Include="Item\ColorPairItemModelTest.cs" />
     <Compile Include="Item\FirstRunningItemModelTest.cs" />
     <Compile Include="Item\FloatToolbarItemModelTest.cs" />
