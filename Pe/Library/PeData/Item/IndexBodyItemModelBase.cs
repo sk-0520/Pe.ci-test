@@ -64,14 +64,14 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
 
         #region IDeepClone
 
-        [Obsolete]
-        public virtual void DeepCloneTo(IDeepClone target)
-        {
-            var obj = (IndexBodyItemModelBase)target;
+        //[Obsolete]
+        //public virtual void DeepCloneTo(IDeepClone target)
+        //{
+        //    var obj = (IndexBodyItemModelBase)target;
 
-            obj.History = (HistoryItemModel)History.DeepClone();
-            obj.PreviousVersion = (Version)PreviousVersion.Clone();
-        }
+        //    obj.History = (HistoryItemModel)History.DeepClone();
+        //    obj.PreviousVersion = (Version)PreviousVersion.Clone();
+        //}
 
         public abstract IDeepClone DeepClone();
 

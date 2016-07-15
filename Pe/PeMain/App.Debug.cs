@@ -49,7 +49,7 @@ namespace ContentTypeTextNet.Pe.PeMain
             //debugBrowser();
             //debugToolbar();
             //debugJson();
-            debugLauncherItemModel();
+            //debugLauncherItemModel();
         }
 
         void debugIcon()
