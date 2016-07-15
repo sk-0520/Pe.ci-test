@@ -21,7 +21,9 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.Attribute;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 
 namespace ContentTypeTextNet.Pe.Library.PeData.Item
@@ -29,7 +31,7 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
     /// <summary>
     /// 環境変数設定データ。
     /// </summary>
-    [Serializable]
+    [DataContract, Serializable]
     public class EnvironmentVariablesItemModel: ItemModelBase, IDeepClone
     {
         public EnvironmentVariablesItemModel()
@@ -41,39 +43,45 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
         /// <summary>
         /// 環境変数を変更するか。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public bool Edit { get; set; }
 
         /// <summary>
         /// 追加・変更対象。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public EnvironmentVariableUpdateItemCollectionModel Update { get; set; } = new EnvironmentVariableUpdateItemCollectionModel();
 
         /// <summary>
         /// 削除対象。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public CollectionModel<string> Remove { get; set; } = new CollectionModel<string>();
 
         #endregion
 
         #region IDeepClone
 
-        public void DeepCloneTo(IDeepClone target)
-        {
-            var obj = (EnvironmentVariablesItemModel)target;
+        //public void DeepCloneTo(IDeepClone target)
+        //{
+        //    var obj = (EnvironmentVariablesItemModel)target;
 
-            obj.Edit = Edit;
-            obj.Update.InitializeRange(Update.Select(u => (EnvironmentVariableUpdateItemModel)u.DeepClone()));
-            obj.Remove.InitializeRange(Remove);
-        }
+        //    obj.Edit = Edit;
+        //    obj.Update.InitializeRange(Update.Select(u => (EnvironmentVariableUpdateItemModel)u.DeepClone()));
+        //    obj.Remove.InitializeRange(Remove);
+        //}
 
         public IDeepClone DeepClone()
         {
-            var result = new EnvironmentVariablesItemModel();
+            //var result = new EnvironmentVariablesItemModel();
 
-            DeepCloneTo(result);
+            //DeepCloneTo(result);
+
+            //return result;
+            var result = DeepCloneUtility.Copy(this);
+
+            result.Update = new EnvironmentVariableUpdateItemCollectionModel();
+            result.Update.InitializeRange(Update.Select(u => u.DeepClone()).Cast<EnvironmentVariableUpdateItemModel>());
 
             return result;
         }
