@@ -55,6 +55,7 @@ namespace ContentTypeTextNet.Test.Library.PeDataTest.Item
             Assert.IsTrue(src.Administrator == dst.Administrator);
             Assert.IsTrue(src.Command == dst.Command);
             Assert.IsTrue(src.Comment == dst.Comment);
+            Assert.IsTrue(src.History != dst.History);
             Assert.IsTrue(src.History.CreateTimestamp == dst.History.CreateTimestamp);
             Assert.IsTrue(src.History.ExecuteCount == dst.History.ExecuteCount);
             Assert.IsTrue(src.History.ExecuteTimestamp == dst.History.ExecuteTimestamp);
@@ -70,9 +71,16 @@ namespace ContentTypeTextNet.Test.Library.PeDataTest.Item
             Assert.IsTrue(src.StdStream.OutputWatch == dst.StdStream.OutputWatch);
             Assert.IsTrue(src.Option == dst.Option);
             Assert.IsTrue(src.WorkDirectoryPath == dst.WorkDirectoryPath);
+            Assert.IsTrue(src.StdStream != dst.StdStream);
+            Assert.IsTrue(src.StdStream.InputUsing == dst.StdStream.InputUsing);
+            Assert.IsTrue(src.StdStream.OutputWatch == dst.StdStream.OutputWatch);
+            Assert.IsTrue(src.EnvironmentVariables != dst.EnvironmentVariables);
             Assert.IsTrue(src.EnvironmentVariables.Edit == dst.EnvironmentVariables.Edit);
             Assert.IsTrue(src.EnvironmentVariables.Remove != dst.EnvironmentVariables.Remove);
             Assert.IsTrue(src.EnvironmentVariables.Update != dst.EnvironmentVariables.Update);
+            Assert.IsTrue(src.Tag != dst.Tag);
+            Assert.IsTrue(src.Tag.Items != dst.Tag.Items);
+            Assert.IsTrue(src.Tag.Items.SequenceEqual(dst.Tag.Items));
         }
     }
 }

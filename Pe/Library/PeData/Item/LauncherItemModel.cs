@@ -21,7 +21,9 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using ContentTypeTextNet.Library.SharedLibrary.Attribute;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Pe.Library.PeData.Define;
 using ContentTypeTextNet.Pe.Library.PeData.IF;
@@ -31,7 +33,7 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
     /// <summary>
     /// ランチャーアイテム。
     /// </summary>
-    [Serializable]
+    [DataContract, Serializable]
     public class LauncherItemModel: GuidModelBase, IName
     {
         public LauncherItemModel()
@@ -49,66 +51,66 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
         /// <summary>
         /// ランチャー種別。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public LauncherKind LauncherKind { get; set; }
         /// <summary>
         /// 実行時に使用される値。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public string Command { get; set; }
         /// <summary>
         /// 実行時に渡されるオプション。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public string Option { get; set; }
         /// <summary>
         /// 実行時の作業ディレクトリ。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public string WorkDirectoryPath { get; set; }
         /// <summary>
         /// 表示アイコンパス。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public IconItemModel Icon { get; set; }
 
         /// <summary>
         /// 実行履歴
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public LauncherHistoryItemModel History { get; set; }
 
         /// <summary>
         /// コメント
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public string Comment { get; set; }
         /// <summary>
         /// タグ
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public TagItemModel Tag { get; set; }
         /// <summary>
         /// 標準入出力。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public LauncherStdStreamItemModel StdStream { get; set; }
         /// <summary>
         /// 管理者として実行。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public bool Administrator { get; set; }
         /// <summary>
         /// 環境変数。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public EnvironmentVariablesItemModel EnvironmentVariables { get; set; }
 
         /// <summary>
         /// コマンド入力時の列挙対象か。
         /// <para>完全一致時は設定値に関わらず表示される。</para>
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public bool IsCommandAutocomplete { get; set; }
 
         #endregion
@@ -118,44 +120,53 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
         /// <summary>
         /// アイテム名称。
         /// </summary>
-        [DataMember, XmlAttribute]
+        [DataMember, XmlAttribute, IsDeepClone]
         public string Name { get; set; }
 
         #endregion
 
         #region IDeepClone
 
-        public override void DeepCloneTo(IDeepClone target)
-        {
-            base.DeepCloneTo(target);
+        //public override void DeepCloneTo(IDeepClone target)
+        //{
+        //    base.DeepCloneTo(target);
 
-            var obj = (LauncherItemModel)target;
+        //    var obj = (LauncherItemModel)target;
 
-            obj.Name = Name;
-            obj.LauncherKind = LauncherKind;
-            obj.Command = Command;
-            obj.WorkDirectoryPath = WorkDirectoryPath;
-            obj.Option = Option;
-            obj.Comment = Comment;
-            obj.Administrator = Administrator;
-            obj.IsCommandAutocomplete = IsCommandAutocomplete;
+        //    obj.Name = Name;
+        //    obj.LauncherKind = LauncherKind;
+        //    obj.Command = Command;
+        //    obj.WorkDirectoryPath = WorkDirectoryPath;
+        //    obj.Option = Option;
+        //    obj.Comment = Comment;
+        //    obj.Administrator = Administrator;
+        //    obj.IsCommandAutocomplete = IsCommandAutocomplete;
 
-            //Icon.DeepCloneTo(obj.Icon);
-            obj.Icon = (IconItemModel)Icon.DeepClone();
-            obj.History = (LauncherHistoryItemModel)History.DeepClone();
-            //Tag.DeepCloneTo(obj.Tag);
-            obj.Tag = (TagItemModel)Tag.DeepClone();
-            //StdStream.DeepCloneTo(obj.StdStream);
-            obj.StdStream = (LauncherStdStreamItemModel)StdStream.DeepClone();
-            //EnvironmentVariables.DeepCloneTo(obj.EnvironmentVariables);
-            obj.EnvironmentVariables = (EnvironmentVariablesItemModel)EnvironmentVariables.DeepClone();
-        }
+        //    //Icon.DeepCloneTo(obj.Icon);
+        //    obj.Icon = (IconItemModel)Icon.DeepClone();
+        //    obj.History = (LauncherHistoryItemModel)History.DeepClone();
+        //    //Tag.DeepCloneTo(obj.Tag);
+        //    obj.Tag = (TagItemModel)Tag.DeepClone();
+        //    //StdStream.DeepCloneTo(obj.StdStream);
+        //    obj.StdStream = (LauncherStdStreamItemModel)StdStream.DeepClone();
+        //    //EnvironmentVariables.DeepCloneTo(obj.EnvironmentVariables);
+        //    obj.EnvironmentVariables = (EnvironmentVariablesItemModel)EnvironmentVariables.DeepClone();
+        //}
 
         public override IDeepClone DeepClone()
         {
-            var result = new LauncherItemModel();
+            //var result = new LauncherItemModel();
 
-            DeepCloneTo(result);
+            //DeepCloneTo(result);
+
+            //return result;
+            var result = DeepCloneUtility.Copy(this);
+
+            //result.Icon = DeepCloneUtility.Copy(Icon);
+            //result.History = DeepCloneUtility.Copy(History);
+            //result.Tag = DeepCloneUtility.Copy(Tag);
+            //result.StdStream = DeepCloneUtility.Copy(StdStream);
+            //result.EnvironmentVariables = DeepCloneUtility.Copy(EnvironmentVariables);
 
             return result;
         }
