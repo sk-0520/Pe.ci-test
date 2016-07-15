@@ -82,6 +82,8 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
 
             result.Options = new CollectionModel<string>(Options);
             result.WorkDirectoryPaths = new CollectionModel<string>(WorkDirectoryPaths);
+
+            return result;
         }
 
         #endregion
