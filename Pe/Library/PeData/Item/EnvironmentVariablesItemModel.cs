@@ -83,6 +83,8 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
             result.Update = new EnvironmentVariableUpdateItemCollectionModel();
             result.Update.InitializeRange(Update.Select(u => u.DeepClone()).Cast<EnvironmentVariableUpdateItemModel>());
 
+            result.Remove = new CollectionModel<string>(Remove);
+
             return result;
         }
 

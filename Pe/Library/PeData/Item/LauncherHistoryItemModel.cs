@@ -78,7 +78,10 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
             //result.Options.InitializeRange(Options);
 
             //return result;
-            return DeepCloneUtility.Copy(this);
+            var result = DeepCloneUtility.Copy(this);
+
+            result.Options = new CollectionModel<string>(Options);
+            result.WorkDirectoryPaths = new CollectionModel<string>(WorkDirectoryPaths);
         }
 
         #endregion
