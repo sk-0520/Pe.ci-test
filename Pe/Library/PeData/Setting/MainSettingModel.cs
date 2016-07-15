@@ -96,7 +96,8 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting
             Toolbar.DeepCloneTo(obj.Toolbar);
             WindowSave.DeepCloneTo(obj.WindowSave);
             SystemEnvironment.DeepCloneTo(obj.SystemEnvironment);
-            Command.DeepCloneTo(obj.Command);
+            //Command.DeepCloneTo(obj.Command);
+            obj.Command = (CommandSettingModel)Command.DeepClone();
             //Clipboard.DeepCloneTo(obj.Clipboard);
             obj.Clipboard = (ClipboardSettingModel)Clipboard.DeepClone();
             Template.DeepCloneTo(obj.Template);
