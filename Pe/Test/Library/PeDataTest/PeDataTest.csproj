@@ -158,6 +158,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Setting\MainSettings\ClipboardSettingModelTest.cs" />
     <Compile Include="Setting\MainSettings\CommandSettingModelTest.cs" />
+    <Compile Include="Setting\MainSettings\LanguageSettingModelTest.cs" />
     <Compile Include="Setting\MainSettings\LoggingSettingModelTest.cs" />
     <Compile Include="Setting\MainSettings\RunningInformationSettingModelTest.cs" />
     <Compile Include="Setting\MainSettings\StreamSettingModelTest.cs" />
