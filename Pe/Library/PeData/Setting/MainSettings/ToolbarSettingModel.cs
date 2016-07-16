@@ -20,7 +20,9 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.Attribute;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Pe.Library.PeData.Item;
 
 namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
@@ -29,27 +31,35 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
     public class ToolbarSettingModel: SettingModelBase, IDeepClone
     {
         public ToolbarSettingModel()
-        {
-            Items = new ToolbarItemCollectionModel();
-        }
+        { }
 
-        [DataMember]
-        public ToolbarItemCollectionModel Items { get; set; }
+        #region property
+
+        [DataMember, IsDeepClone]
+        public ToolbarItemCollectionModel Items { get; set; } = new ToolbarItemCollectionModel();
+
+        #endregion
 
         #region IDeepClone
 
-        public void DeepCloneTo(IDeepClone target)
-        {
-            var obj = (ToolbarSettingModel)target;
+        //public void DeepCloneTo(IDeepClone target)
+        //{
+        //    var obj = (ToolbarSettingModel)target;
 
-            obj.Items.InitializeRange(Items.Select(i => (ToolbarItemModel)i.DeepClone()));
-        }
+        //    obj.Items.InitializeRange(Items.Select(i => (ToolbarItemModel)i.DeepClone()));
+        //}
 
         public IDeepClone DeepClone()
         {
-            var result = new ToolbarSettingModel();
+            //var result = new ToolbarSettingModel();
 
-            DeepCloneTo(result);
+            //DeepCloneTo(result);
+
+            //return result;
+            var result = DeepCloneUtility.Copy(this);
+
+            result.Items = new ToolbarItemCollectionModel();
+            result.Items.InitializeRange(Items.Select(i => i.DeepClone()).Cast<ToolbarItemModel>());
 
             return result;
         }

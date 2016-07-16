@@ -165,6 +165,7 @@
     <Compile Include="Setting\MainSettings\StreamSettingModelTest.cs" />
     <Compile Include="Setting\MainSettings\SystemEnvironmentSettingModelTest.cs" />
     <Compile Include="Setting\MainSettings\TemplateSettingModelTest.cs" />
+    <Compile Include="Setting\MainSettings\ToolbarSettingModelTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Library\PeData\PeData.csproj">
