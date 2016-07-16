@@ -31,10 +31,7 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
     {
         public SystemEnvironmentSettingModel()
             : base()
-        {
-            HideFileHotkey = new HotKeyModel();
-            ExtensionHotkey = new HotKeyModel();
-        }
+        { }
 
         #region property
 
@@ -42,12 +39,12 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
         /// 隠しファイル表示切り替えホットキー。
         /// </summary>
         [DataMember]
-        public HotKeyModel HideFileHotkey { get; set; }
+        public HotKeyModel HideFileHotkey { get; set; } = new HotKeyModel();
         /// <summary>
         /// 拡張子表示切替ホットキー。
         /// </summary>
         [DataMember]
-        public HotKeyModel ExtensionHotkey { get; set; }
+        public HotKeyModel ExtensionHotkey { get; set; } = new HotKeyModel();
         /// <summary>
         /// F1キーを抑制するか。
         /// </summary>
