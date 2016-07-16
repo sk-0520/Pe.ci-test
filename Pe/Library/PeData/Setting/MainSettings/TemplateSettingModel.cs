@@ -36,10 +36,7 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
     {
         public TemplateSettingModel()
             : base()
-        {
-            ToggleHotKey = new HotKeyModel();
-            Font = new FontModel();
-        }
+        { }
 
         #region property
 
@@ -47,7 +44,7 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
         /// 表示非表示切り替え。
         /// </summary>
         [DataMember]
-        public HotKeyModel ToggleHotKey { get; set; }
+        public HotKeyModel ToggleHotKey { get; set; } = new HotKeyModel();
 
         /// <summary>
         /// リスト部の幅。
@@ -62,7 +59,7 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
         public double ReplaceListWidth { get; set; }
 
         [DataMember]
-        public FontModel Font { get; set; }
+        public FontModel Font { get; set; } = new FontModel();
 
         /// <summary>
         /// アイテムダブルクリック時の処理。
