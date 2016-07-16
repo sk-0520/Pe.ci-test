@@ -160,6 +160,7 @@
     <Compile Include="Setting\MainSettings\CommandSettingModelTest.cs" />
     <Compile Include="Setting\MainSettings\LanguageSettingModelTest.cs" />
     <Compile Include="Setting\MainSettings\LoggingSettingModelTest.cs" />
+    <Compile Include="Setting\MainSettings\NoteSettingModelTest.cs" />
     <Compile Include="Setting\MainSettings\RunningInformationSettingModelTest.cs" />
     <Compile Include="Setting\MainSettings\StreamSettingModelTest.cs" />
   </ItemGroup>
