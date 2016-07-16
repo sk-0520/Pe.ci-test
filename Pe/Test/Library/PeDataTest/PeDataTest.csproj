@@ -169,6 +169,7 @@
     <Compile Include="Setting\MainSettings\SystemEnvironmentSettingModelTest.cs" />
     <Compile Include="Setting\MainSettings\TemplateSettingModelTest.cs" />
     <Compile Include="Setting\MainSettings\ToolbarSettingModelTest.cs" />
+    <Compile Include="Setting\MainSettings\WindowSaveSettingModelTest.cs" />
     <Compile Include="Setting\NoteIndexSettingModelTest.cs" />
     <Compile Include="Setting\TemplateIndexSettingModelTest.cs" />
   </ItemGroup>
