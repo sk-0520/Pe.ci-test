@@ -21,6 +21,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Pe.Library.PeData.Item;
 
 namespace ContentTypeTextNet.Pe.Library.PeData.Setting
@@ -34,15 +35,24 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting
 
         #region IndexSettingModelBase
 
+        //public override IDeepClone DeepClone()
+        //{
+        //    var result = new NoteIndexSettingModel();
+
+        //    DeepCloneTo(result);
+
+        //    return result;
+        //}
+
         public override IDeepClone DeepClone()
         {
-            var result = new NoteIndexSettingModel();
+            var result = DeepCloneUtility.Copy(this);
 
-            DeepCloneTo(result);
+            result.Items = new NoteIndexItemCollectionModel();
+            result.Items.InitializeRange(Items.Select(i => i.DeepClone()).Cast<NoteIndexItemModel>());
 
             return result;
         }
-
 
         #endregion
     }

@@ -20,6 +20,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.Attribute;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Pe.Library.PeData.Item;
 
@@ -31,25 +32,23 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting
     {
         public IndexSettingModelBase()
             : base()
-        {
-            Items = new TCollectionModel();
-        }
+        { }
 
         #region property
 
-        [DataMember]
-        public TCollectionModel Items { get; set; }
+        [DataMember, IsDeepClone]
+        public TCollectionModel Items { get; set; } = new TCollectionModel();
 
         #endregion
 
         #region IDeepClone
 
-        public virtual void DeepCloneTo(IDeepClone target)
-        {
-            var obj = (IndexSettingModelBase<TCollectionModel, TItemModel>)target;
+        //public virtual void DeepCloneTo(IDeepClone target)
+        //{
+        //    var obj = (IndexSettingModelBase<TCollectionModel, TItemModel>)target;
 
-            obj.Items.InitializeRange(Items.Select(i => (TItemModel)i.DeepClone()));
-        }
+        //    obj.Items.InitializeRange(Items.Select(i => (TItemModel)i.DeepClone()));
+        //}
 
         public abstract IDeepClone DeepClone();
 
