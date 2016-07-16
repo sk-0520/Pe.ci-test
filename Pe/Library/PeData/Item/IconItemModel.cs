@@ -32,7 +32,7 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
     /// <summary>
     /// アイコンのパスを保持。
     /// </summary>
-    [Serializable]
+    [DataContract, Serializable]
     public sealed class IconItemModel: IconPathModel, IItemModel, IDeepClone
     {
         public IconItemModel()

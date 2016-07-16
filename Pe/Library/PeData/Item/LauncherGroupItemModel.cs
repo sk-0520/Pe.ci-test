@@ -23,7 +23,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Xml.Serialization;
+using ContentTypeTextNet.Library.SharedLibrary.Attribute;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Pe.Library.PeData.Define;
 using ContentTypeTextNet.Pe.Library.PeData.IF;
@@ -33,7 +35,7 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
     /// <summary>
     /// ランチャーグループ。
     /// </summary>
-    [Serializable]
+    [DataContract, Serializable]
     public class LauncherGroupItemModel: GuidModelBase, IName
     {
         public LauncherGroupItemModel()
@@ -47,13 +49,13 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
         /// <summary>
         /// グループ種別。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public GroupKind GroupKind { get; set; }
 
         /// <summary>
         /// ランチャーアイテム。
         /// </summary>
-        [DataMember, XmlArrayItem("Item")]
+        [DataMember, XmlArrayItem("Item"), IsDeepClone]
         public CollectionModel<Guid> LauncherItems { get; set; }
 
         #endregion
@@ -63,43 +65,48 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
         /// <summary>
         /// グループ名称。
         /// </summary>
-        [DataMember, XmlAttribute]
+        [DataMember, XmlAttribute, IsDeepClone]
         public string Name { get; set; }
 
         /// <summary>
         /// グループアイコン。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public LauncherGroupIconType GroupIconType { get; set; }
 
         /// <summary>
         /// グループアイコンの色。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public Color GroupIconColor { get; set; }
 
         #endregion
 
         #region IDeepClone
 
-        public override void DeepCloneTo(IDeepClone target)
-        {
-            base.DeepCloneTo(target);
+        //public override void DeepCloneTo(IDeepClone target)
+        //{
+        //    base.DeepCloneTo(target);
 
-            var obj = (LauncherGroupItemModel)target;
+        //    var obj = (LauncherGroupItemModel)target;
 
-            obj.Name = Name;
-            obj.GroupKind = GroupKind;
-            obj.GroupIconType = GroupIconType;
-            obj.GroupIconColor = GroupIconColor;
-            obj.LauncherItems.InitializeRange(LauncherItems);
-        }
+        //    obj.Name = Name;
+        //    obj.GroupKind = GroupKind;
+        //    obj.GroupIconType = GroupIconType;
+        //    obj.GroupIconColor = GroupIconColor;
+        //    obj.LauncherItems.InitializeRange(LauncherItems);
+        //}
 
         public override IDeepClone DeepClone()
         {
-            var result = new LauncherGroupItemModel();
+            //var result = new LauncherGroupItemModel();
 
-            DeepCloneTo(result);
+            //DeepCloneTo(result);
+
+            //return result;
+            var result = DeepCloneUtility.Copy(this);
+
+            result.LauncherItems = new CollectionModel<Guid>(LauncherItems);
 
             return result;
         }

@@ -22,6 +22,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Attribute;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Pe.Library.PeData.Item;
 using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
 
@@ -35,83 +36,79 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting
     public sealed class MainSettingModel: SettingModelBase, IDeepClone
     {
         public MainSettingModel()
-        {
-            RunningInformation = new RunningInformationSettingModel();
-            Language = new LanguageSettingModel();
-            Logging = new LoggingSettingModel();
-            Toolbar = new ToolbarSettingModel();
-            WindowSave = new WindowSaveSettingModel();
-            SystemEnvironment = new SystemEnvironmentSettingModel();
-            Command = new CommandSettingModel();
-            Clipboard = new ClipboardSettingModel();
-            Template = new TemplateSettingModel();
-            Note = new NoteSettingModel();
-            Stream = new StreamSettingModel();
-            General = new GeneralSettingModel();
-        }
+        { }
 
         #region property
 
-        [DataMember]
-        public RunningInformationSettingModel RunningInformation { get; set; }
-        [DataMember]
-        public LanguageSettingModel Language { get; set; }
-        [DataMember]
-        public LoggingSettingModel Logging { get; set; }
-        [DataMember]
-        public ToolbarSettingModel Toolbar { get; set; }
-        [DataMember]
-        public WindowSaveSettingModel WindowSave { get; set; }
-        [DataMember]
-        public SystemEnvironmentSettingModel SystemEnvironment { get; set; }
-        [DataMember]
-        public CommandSettingModel Command { get; set; }
-        [DataMember]
-        public ClipboardSettingModel Clipboard { get; set; }
-        [DataMember]
-        public TemplateSettingModel Template { get; set; }
-        [DataMember]
-        public NoteSettingModel Note { get; set; }
-        [DataMember]
-        public StreamSettingModel Stream { get; set; }
+        [DataMember, IsDeepClone]
+        public RunningInformationSettingModel RunningInformation { get; set; } = new RunningInformationSettingModel();
+        [DataMember, IsDeepClone]
+        public LanguageSettingModel Language { get; set; } = new LanguageSettingModel();
+        [DataMember, IsDeepClone]
+        public LoggingSettingModel Logging { get; set; } = new LoggingSettingModel();
+        [DataMember, IsDeepClone]
+        public ToolbarSettingModel Toolbar { get; set; } = new ToolbarSettingModel();
+        [DataMember, IsDeepClone]
+        public WindowSaveSettingModel WindowSave { get; set; } = new WindowSaveSettingModel();
+        [DataMember, IsDeepClone]
+        public SystemEnvironmentSettingModel SystemEnvironment { get; set; } = new SystemEnvironmentSettingModel();
+        [DataMember, IsDeepClone]
+        public CommandSettingModel Command { get; set; } = new CommandSettingModel();
+        [DataMember, IsDeepClone]
+        public ClipboardSettingModel Clipboard { get; set; } = new ClipboardSettingModel();
+        [DataMember, IsDeepClone]
+        public TemplateSettingModel Template { get; set; } = new TemplateSettingModel();
+        [DataMember, IsDeepClone]
+        public NoteSettingModel Note { get; set; } = new NoteSettingModel();
+        [DataMember, IsDeepClone]
+        public StreamSettingModel Stream { get; set; } = new StreamSettingModel();
         /// <summary>
         /// 基本設定。
         /// </summary>
         [DataMember, IsDeepClone]
-        public GeneralSettingModel General { get; set; }
+        public GeneralSettingModel General { get; set; } = new GeneralSettingModel();
 
         #endregion
 
         #region IDeepClone
 
-        public void DeepCloneTo(IDeepClone target)
-        {
-            var obj = (MainSettingModel)target;
+        //public void DeepCloneTo(IDeepClone target)
+        //{
+        //    var obj = (MainSettingModel)target;
 
-            //RunningInformation.DeepCloneTo(obj.RunningInformation);
-            obj.RunningInformation = (RunningInformationSettingModel)RunningInformation.DeepClone();
-            Language.DeepCloneTo(obj.Language);
-            //Logging.DeepCloneTo(obj.Logging);
-            obj.Logging = (LoggingSettingModel)Logging.DeepClone();
-            Toolbar.DeepCloneTo(obj.Toolbar);
-            WindowSave.DeepCloneTo(obj.WindowSave);
-            SystemEnvironment.DeepCloneTo(obj.SystemEnvironment);
-            Command.DeepCloneTo(obj.Command);
-            Clipboard.DeepCloneTo(obj.Clipboard);
-            Template.DeepCloneTo(obj.Template);
-            Note.DeepCloneTo(obj.Note);
-            //Stream.DeepCloneTo(obj.Stream);
-            obj.Stream = (StreamSettingModel)Stream.DeepClone();
-            obj.General = (GeneralSettingModel)General.DeepClone();
-        }
+        //    //RunningInformation.DeepCloneTo(obj.RunningInformation);
+        //    obj.RunningInformation = (RunningInformationSettingModel)RunningInformation.DeepClone();
+        //    //Language.DeepCloneTo(obj.Language);
+        //    obj.Language = (LanguageSettingModel)Language.DeepClone();
+        //    //Logging.DeepCloneTo(obj.Logging);
+        //    obj.Logging = (LoggingSettingModel)Logging.DeepClone();
+        //    //Toolbar.DeepCloneTo(obj.Toolbar);
+        //    obj.Toolbar = (ToolbarSettingModel)Toolbar.DeepClone();
+        //    //WindowSave.DeepCloneTo(obj.WindowSave);
+        //    obj.WindowSave = (WindowSaveSettingModel)WindowSave.DeepClone();
+        //    //SystemEnvironment.DeepCloneTo(obj.SystemEnvironment);
+        //    obj.SystemEnvironment = (SystemEnvironmentSettingModel)SystemEnvironment.DeepClone();
+        //    //Command.DeepCloneTo(obj.Command);
+        //    obj.Command = (CommandSettingModel)Command.DeepClone();
+        //    //Clipboard.DeepCloneTo(obj.Clipboard);
+        //    obj.Clipboard = (ClipboardSettingModel)Clipboard.DeepClone();
+        //    //Template.DeepCloneTo(obj.Template);
+        //    obj.Template = (TemplateSettingModel)Template.DeepClone();
+        //    //Note.DeepCloneTo(obj.Note);
+        //    obj.Note = (NoteSettingModel)Note.DeepClone();
+        //    //Stream.DeepCloneTo(obj.Stream);
+        //    obj.Stream = (StreamSettingModel)Stream.DeepClone();
+        //    obj.General = (GeneralSettingModel)General.DeepClone();
+        //}
 
         public IDeepClone DeepClone()
         {
-            var result = new MainSettingModel();
+            //var result = new MainSettingModel();
 
-            DeepCloneTo(result);
+            //DeepCloneTo(result);
 
-            return result;
+            //return result;
+            return DeepCloneUtility.Copy(this);
         }
 
         #endregion

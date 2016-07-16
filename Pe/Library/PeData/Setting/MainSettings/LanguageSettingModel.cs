@@ -20,12 +20,14 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.Attribute;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Pe.Library.PeData.Item;
 
 namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
 {
-    [Serializable]
+    [DataContract, Serializable]
     public class LanguageSettingModel: SettingModelBase, IName, IDeepClone
     {
         public LanguageSettingModel()
@@ -37,27 +39,28 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
         /// <summary>
         /// 言語名もしくは言語コード。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public string Name { get; set; }
 
         #endregion
 
         #region IDeepClone
 
-        public void DeepCloneTo(IDeepClone target)
-        {
-            var obj = (LanguageSettingModel)target;
+        //public void DeepCloneTo(IDeepClone target)
+        //{
+        //    var obj = (LanguageSettingModel)target;
 
-            obj.Name = Name;
-        }
+        //    obj.Name = Name;
+        //}
 
         public IDeepClone DeepClone()
         {
-            var result = new LanguageSettingModel();
+            //var result = new LanguageSettingModel();
 
-            DeepCloneTo(result);
+            //DeepCloneTo(result);
 
-            return result;
+            //return result;
+            return DeepCloneUtility.Copy(this);
         }
 
         #endregion

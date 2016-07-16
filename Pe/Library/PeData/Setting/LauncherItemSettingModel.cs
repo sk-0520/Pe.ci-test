@@ -20,7 +20,9 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.Attribute;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Pe.Library.PeData.Define;
 using ContentTypeTextNet.Pe.Library.PeData.Item;
 
@@ -40,29 +42,35 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting
 
         #region property
 
-        [DataMember]
+        [DataMember, IsDeepClone]
         public LauncherItemCollectionModel Items { get; set; }
 
-        [DataMember]
+        [DataMember, IsDeepClone]
         public LauncherItemFileDropMode FileDropMode { get; set; }
 
         #endregion
 
         #region IDeepClone
 
-        public void DeepCloneTo(IDeepClone target)
-        {
-            var obj = (LauncherItemSettingModel)target;
+        //public void DeepCloneTo(IDeepClone target)
+        //{
+        //    var obj = (LauncherItemSettingModel)target;
 
-            obj.Items.InitializeRange(Items.Select(i => (LauncherItemModel)i.DeepClone()));
-            obj.FileDropMode = FileDropMode;
-        }
+        //    obj.Items.InitializeRange(Items.Select(i => (LauncherItemModel)i.DeepClone()));
+        //    obj.FileDropMode = FileDropMode;
+        //}
 
         public IDeepClone DeepClone()
         {
-            var result = new LauncherItemSettingModel();
+            //var result = new LauncherItemSettingModel();
 
-            DeepCloneTo(result);
+            //DeepCloneTo(result);
+
+            //return result;
+            var result = DeepCloneUtility.Copy(this);
+
+            result.Items = new LauncherItemCollectionModel();
+            result.Items.InitializeRange(Items.Select(i => i.DeepClone()).Cast< LauncherItemModel>());
 
             return result;
         }

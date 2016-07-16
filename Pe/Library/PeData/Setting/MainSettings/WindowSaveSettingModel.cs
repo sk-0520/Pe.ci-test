@@ -20,7 +20,9 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.Attribute;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Pe.Library.PeData.Item;
 
 namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
@@ -28,7 +30,7 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
     /// <summary>
     /// ウィンドウ状態復元設定。
     /// </summary>
-    [Serializable]
+    [DataContract, Serializable]
     public class WindowSaveSettingModel: SettingModelBase, IDeepClone
     {
         #region property
@@ -36,39 +38,40 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
         /// <summary>
         /// 有効。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public bool IsEnabled { get; set; }
         /// <summary>
         /// 保存数。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public int SaveCount { get; set; }
         /// <summary>
         /// 保存間隔。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public TimeSpan SaveIntervalTime { get; set; }
 
         #endregion
 
         #region IDeepClone
 
-        public void DeepCloneTo(IDeepClone target)
-        {
-            var obj = (WindowSaveSettingModel)target;
+        //public void DeepCloneTo(IDeepClone target)
+        //{
+        //    var obj = (WindowSaveSettingModel)target;
 
-            obj.IsEnabled = IsEnabled;
-            obj.SaveCount = SaveCount;
-            obj.SaveIntervalTime = SaveIntervalTime;
-        }
+        //    obj.IsEnabled = IsEnabled;
+        //    obj.SaveCount = SaveCount;
+        //    obj.SaveIntervalTime = SaveIntervalTime;
+        //}
 
         public IDeepClone DeepClone()
         {
-            var result = new WindowSaveSettingModel();
+            //var result = new WindowSaveSettingModel();
 
-            DeepCloneTo(result);
+            //DeepCloneTo(result);
 
-            return result;
+            //return result;
+            return DeepCloneUtility.Copy(this);
         }
 
         #endregion

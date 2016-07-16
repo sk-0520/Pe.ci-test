@@ -24,85 +24,84 @@ using System.Windows;
 using ContentTypeTextNet.Library.SharedLibrary.Attribute;
 using ContentTypeTextNet.Library.SharedLibrary.Define;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Pe.Library.PeData.IF;
 using ContentTypeTextNet.Pe.Library.PeData.Item;
 
 namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
 {
-    [Serializable]
+    [DataContract, Serializable]
     public class CommandSettingModel: SettingModelBase, IDeepClone
     {
         public CommandSettingModel()
             : base()
-        {
-            ShowHotkey = new HotKeyModel();
-            Font = new FontModel();
-        }
+        { }
 
         #region property
 
         /// <summary>
         /// アイコンサイズ。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public IconScale IconScale { get; set; }
         /// <summary>
         /// 非表示になるまでの時間。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public TimeSpan HideTime { get; set; }
 
         /// <summary>
         /// 呼び出しホットキー。
         /// </summary>
-        [DataMember]
-        public HotKeyModel ShowHotkey { get; set; }
+        [DataMember, IsDeepClone]
+        public HotKeyModel ShowHotkey { get; set; } = new HotKeyModel();
 
         /// <summary>
         /// タグを検索対象にする。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public bool FindTag { get; set; }
         /// <summary>
         /// ファイル検索を有効にする。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public bool FindFile { get; set; }
 
-        [DataMember]
+        [DataMember, IsDeepClone]
         [PixelKind(Px.Logical)]
         public double WindowWidth { get; set; }
 
-        [DataMember]
-        public FontModel Font { get; set; }
+        [DataMember, IsDeepClone]
+        public FontModel Font { get; set; } = new FontModel();
 
         #endregion
 
         #region IDeepClone
 
-        public void DeepCloneTo(IDeepClone target)
-        {
-            var obj = (CommandSettingModel)target;
+        //public void DeepCloneTo(IDeepClone target)
+        //{
+        //    var obj = (CommandSettingModel)target;
 
-            obj.IconScale = IconScale;
-            obj.HideTime = HideTime;
-            //ShowHotkey.DeepCloneTo(obj.ShowHotkey);
-            obj.ShowHotkey = (HotKeyModel)ShowHotkey.DeepClone();
-            obj.FindTag = FindTag;
-            obj.FindFile = FindFile;
-            obj.WindowWidth = WindowWidth;
-            //Font.DeepCloneTo(obj.Font);
-            obj.Font = (FontModel)Font.DeepClone();
-        }
+        //    obj.IconScale = IconScale;
+        //    obj.HideTime = HideTime;
+        //    //ShowHotkey.DeepCloneTo(obj.ShowHotkey);
+        //    obj.ShowHotkey = (HotKeyModel)ShowHotkey.DeepClone();
+        //    obj.FindTag = FindTag;
+        //    obj.FindFile = FindFile;
+        //    obj.WindowWidth = WindowWidth;
+        //    //Font.DeepCloneTo(obj.Font);
+        //    obj.Font = (FontModel)Font.DeepClone();
+        //}
 
         public IDeepClone DeepClone()
         {
-            var result = new CommandSettingModel();
+            //var result = new CommandSettingModel();
 
-            DeepCloneTo(result);
+            //DeepCloneTo(result);
 
-            return result;
+            //return result;
+            return DeepCloneUtility.Copy(this);
         }
 
         #endregion

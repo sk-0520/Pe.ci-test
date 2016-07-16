@@ -21,6 +21,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using ContentTypeTextNet.Library.SharedLibrary.Attribute;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Pe.Library.PeData.Define;
 using ContentTypeTextNet.Pe.Library.PeData.IF;
@@ -50,26 +51,27 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
         /// <summary>
         /// 履歴。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public HistoryItemModel History { get; set; }
 
         /// <summary>
         /// 保存時のプログラムバージョン。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public Version PreviousVersion { get; set; }
 
         #endregion
 
         #region IDeepClone
 
-        public virtual void DeepCloneTo(IDeepClone target)
-        {
-            var obj = (IndexBodyItemModelBase)target;
+        //[Obsolete]
+        //public virtual void DeepCloneTo(IDeepClone target)
+        //{
+        //    var obj = (IndexBodyItemModelBase)target;
 
-            obj.History = (HistoryItemModel)History.DeepClone();
-            obj.PreviousVersion = (Version)PreviousVersion.Clone();
-        }
+        //    obj.History = (HistoryItemModel)History.DeepClone();
+        //    obj.PreviousVersion = (Version)PreviousVersion.Clone();
+        //}
 
         public abstract IDeepClone DeepClone();
 

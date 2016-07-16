@@ -505,7 +505,8 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control.SettingPage
             DefaultGroupIndex = DefaultGroupList
                 .Select((g, i) => new { Id = g.Id, Index = i })
                 .FirstOrDefault(p => groupId == p.Id)
-                .Index
+                ?.Index
+                ?? 0
             ;
         }
 

@@ -25,7 +25,10 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Imaging;
 using System.Xml.Serialization;
+using ContentTypeTextNet.Library.SharedLibrary.Attribute;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
+using ContentTypeTextNet.Library.SharedLibrary.Logic;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Pe.Library.PeData.Define;
 
@@ -39,26 +42,24 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
     {
         public ClipboardBodyItemModel()
             : base()
-        {
-            Files = new CollectionModel<string>();
-        }
+        { }
 
         #region property
 
         /// <summary>
         /// テキストデータ。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public string Text { get; set; }
         /// <summary>
         /// RTFデータ。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public string Rtf { get; set; }
         /// <summary>
         /// HTMLデータ。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public string Html { get; set; }
         /// <summary>
         /// 画像データ。
@@ -97,27 +98,29 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
 
                     using(var stream = new MemoryStream(value)) {
                         var bitmapImage = new BitmapImage();
-                        bitmapImage.BeginInit();
                         try {
-                            bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
-                            bitmapImage.CreateOptions = BitmapCreateOptions.None;
-                            //bitmapImage.StreamSource = new MemoryStream(value);
-                            bitmapImage.StreamSource = stream;
+                            using(Initializer.BeginInitialize(bitmapImage)) {
+                                //bitmapImage.BeginInit();
+                                bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                                bitmapImage.CreateOptions = BitmapCreateOptions.None;
+                                //bitmapImage.StreamSource = new MemoryStream(value);
+                                bitmapImage.StreamSource = stream;
+                            }
                         } finally {
-                            bitmapImage.EndInit();
-                            bitmapImage.Freeze();
+                            //bitmapImage.EndInit();
+                            //bitmapImage.Freeze();
+                            FreezableUtility.SafeFreeze(bitmapImage);
                         }
                         Image = bitmapImage;
                     }
-
                 }
             }
         }
         /// <summary>
         /// ファイルデータ。
         /// </summary>
-        [DataMember]
-        public CollectionModel<string> Files { get; set; }
+        [DataMember, IsDeepClone]
+        public CollectionModel<string> Files { get; set; } = new CollectionModel<string>();
 
         #endregion
 
@@ -147,28 +150,35 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
             base.Dispose(disposing);
         }
 
-        public override void DeepCloneTo(IDeepClone target)
+        //public override void DeepCloneTo(IDeepClone target)
+        //{
+        //    base.DeepCloneTo(target);
+
+        //    var obj = (ClipboardBodyItemModel)target;
+
+        //    obj.Text = Text;
+        //    obj.Rtf = Rtf;
+        //    obj.Html = Html;
+        //    if(ImageCore != null) {
+        //        obj.ImageCore = new byte[ImageCore.Length];
+        //        ImageCore.CopyTo(obj.ImageCore, 0);
+        //    }
+        //    obj.Files.InitializeRange(Files);
+        //}
+
+        public override IDeepClone DeepClone()
         {
-            base.DeepCloneTo(target);
+            //var result = new ClipboardBodyItemModel();
 
-            var obj = (ClipboardBodyItemModel)target;
+            //DeepCloneTo(result);
 
-            obj.Text = Text;
-            obj.Rtf = Rtf;
-            obj.Html = Html;
+            //return result;
+
+            var result = (ClipboardBodyItemModel)DeepCloneUtility.Copy(this);
             if(ImageCore != null) {
-                obj.ImageCore = new byte[ImageCore.Length];
-                ImageCore.CopyTo(obj.ImageCore, 0);
+                result.ImageCore = new byte[ImageCore.Length];
+                ImageCore.CopyTo(result.ImageCore, 0);
             }
-            obj.Files.InitializeRange(Files);
-        }
-
-        public override ContentTypeTextNet.Library.SharedLibrary.IF.IDeepClone DeepClone()
-        {
-            var result = new ClipboardBodyItemModel();
-
-            DeepCloneTo(result);
-
             return result;
         }
 

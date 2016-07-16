@@ -22,7 +22,9 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using ContentTypeTextNet.Library.SharedLibrary.Attribute;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 
 namespace ContentTypeTextNet.Pe.Library.PeData.Item
@@ -35,30 +37,33 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
     {
         public TagItemModel()
             : base()
-        {
-            Items = new CollectionModel<string>();
-        }
+        { }
 
         /// <summary>
         /// タグ。
         /// </summary>
-        [DataMember, XmlArray("Items"), XmlArrayItem("Item")]
-        public CollectionModel<string> Items { get; set; }
+        [DataMember, IsDeepClone, XmlArray("Items"), XmlArrayItem("Item")]
+        public CollectionModel<string> Items { get; set; } = new CollectionModel<string>();
 
         #region IDeepClone
 
-        public virtual void DeepCloneTo(IDeepClone target)
-        {
-            var obj = (TagItemModel)target;
+        //public virtual void DeepCloneTo(IDeepClone target)
+        //{
+        //    var obj = (TagItemModel)target;
 
-            obj.Items.InitializeRange(Items);
-        }
+        //    obj.Items.InitializeRange(Items);
+        //}
 
         public IDeepClone DeepClone()
         {
-            var result = new TagItemModel();
+            //var result = new TagItemModel();
 
-            DeepCloneTo(result);
+            //DeepCloneTo(result);
+
+            //return result;
+            var result = DeepCloneUtility.Copy(this);
+
+            result.Items = new CollectionModel<string>(Items);
 
             return result;
         }

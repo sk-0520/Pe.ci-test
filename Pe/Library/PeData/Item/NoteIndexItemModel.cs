@@ -26,6 +26,7 @@ using System.Xml.Serialization;
 using ContentTypeTextNet.Library.SharedLibrary.Attribute;
 using ContentTypeTextNet.Library.SharedLibrary.Define;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Pe.Library.PeData.Define;
 using ContentTypeTextNet.Pe.Library.PeData.IF;
@@ -40,61 +41,59 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
     {
         public NoteIndexItemModel()
             : base()
-        {
-            Font = new FontModel();
-        }
+        { }
 
         #region property
 
         /// <summary>
         /// ノート種別。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public NoteKind NoteKind { get; set; }
 
         /// <summary>
         /// 固定されているか。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public bool IsLocked { get; set; }
         /// <summary>
         /// 最小化されているか。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public bool IsCompacted { get; set; }
         /// <summary>
         /// フォント情報。
         /// </summary>
-        [DataMember]
-        public FontModel Font { get; set; }
+        [DataMember, IsDeepClone]
+        public FontModel Font { get; set; } = new FontModel();
         /// <summary>
         /// 自動改行するか。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public bool AutoLineFeed { get; set; }
         #endregion
 
         #region IColorPair
 
-        [DataMember]
+        [DataMember, IsDeepClone]
         public Color ForeColor { get; set; }
-        [DataMember]
+        [DataMember, IsDeepClone]
         public Color BackColor { get; set; }
 
         #endregion
 
         #region IWindowArea
 
-        [DataMember]
+        [DataMember, IsDeepClone]
         [PixelKind(Px.Logical)]
         public double WindowTop { get; set; }
-        [DataMember]
+        [DataMember, IsDeepClone]
         [PixelKind(Px.Logical)]
         public double WindowLeft { get; set; }
-        [DataMember]
+        [DataMember, IsDeepClone]
         [PixelKind(Px.Logical)]
         public double WindowWidth { get; set; }
-        [DataMember]
+        [DataMember, IsDeepClone]
         [PixelKind(Px.Logical)]
         public double WindowHeight { get; set; }
 
@@ -102,53 +101,54 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
 
         #region ITopMost
 
-        [DataMember]
+        [DataMember, IsDeepClone]
         public bool IsTopmost { get; set; }
 
         #endregion
 
         #region IVisible
 
-        [DataMember]
+        [DataMember, IsDeepClone]
         public bool IsVisible { get; set; }
 
         #endregion
 
         #region IndexItemModelBase
 
-        public override void DeepCloneTo(IDeepClone target)
-        {
-            base.DeepCloneTo(target);
+        //public override void DeepCloneTo(IDeepClone target)
+        //{
+        //    base.DeepCloneTo(target);
 
-            var obj = (NoteIndexItemModel)target;
+        //    var obj = (NoteIndexItemModel)target;
 
-            obj.NoteKind = NoteKind;
-            obj.IsLocked = IsLocked;
-            obj.IsCompacted = IsCompacted;
-            obj.AutoLineFeed = AutoLineFeed;
-            //Font.DeepCloneTo(obj.Font);
-            obj.Font = (FontModel)Font.DeepClone();
+        //    obj.NoteKind = NoteKind;
+        //    obj.IsLocked = IsLocked;
+        //    obj.IsCompacted = IsCompacted;
+        //    obj.AutoLineFeed = AutoLineFeed;
+        //    //Font.DeepCloneTo(obj.Font);
+        //    obj.Font = (FontModel)Font.DeepClone();
 
-            obj.ForeColor = ForeColor;
-            obj.BackColor = BackColor;
+        //    obj.ForeColor = ForeColor;
+        //    obj.BackColor = BackColor;
 
-            obj.WindowTop = WindowTop;
-            obj.WindowLeft = WindowLeft;
-            obj.WindowWidth = WindowWidth;
-            obj.WindowHeight = WindowHeight;
+        //    obj.WindowTop = WindowTop;
+        //    obj.WindowLeft = WindowLeft;
+        //    obj.WindowWidth = WindowWidth;
+        //    obj.WindowHeight = WindowHeight;
 
-            obj.IsTopmost = IsTopmost;
+        //    obj.IsTopmost = IsTopmost;
 
-            obj.IsVisible = IsVisible;
-        }
+        //    obj.IsVisible = IsVisible;
+        //}
 
         public override IDeepClone DeepClone()
         {
-            var result = new NoteIndexItemModel();
+            //var result = new NoteIndexItemModel();
 
-            DeepCloneTo(result);
+            //DeepCloneTo(result);
 
-            return result;
+            //return result;
+            return DeepCloneUtility.Copy(this);
         }
 
         #endregion

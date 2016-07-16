@@ -21,6 +21,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Pe.Library.PeData.Item;
 
 namespace ContentTypeTextNet.Pe.Library.PeData.Setting
@@ -46,18 +47,23 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting
 
         #region IDeepClone
 
-        public void DeepCloneTo(IDeepClone target)
-        {
-            var obj = (LauncherGroupSettingModel)target;
+        //public void DeepCloneTo(IDeepClone target)
+        //{
+        //    var obj = (LauncherGroupSettingModel)target;
 
-            obj.Groups.InitializeRange(Groups.Select(i => (LauncherGroupItemModel)i.DeepClone()));
-        }
+        //    obj.Groups.InitializeRange(Groups.Select(i => (LauncherGroupItemModel)i.DeepClone()));
+        //}
 
         public IDeepClone DeepClone()
         {
-            var result = new LauncherGroupSettingModel();
+            //var result = new LauncherGroupSettingModel();
 
-            DeepCloneTo(result);
+            //DeepCloneTo(result);
+
+            //return result;
+            var result = DeepCloneUtility.Copy(this);
+
+            result.Groups.InitializeRange(Groups.Select(i => (LauncherGroupItemModel)i.DeepClone()));
 
             return result;
         }
