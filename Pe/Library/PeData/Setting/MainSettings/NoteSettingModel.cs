@@ -28,18 +28,12 @@ using ContentTypeTextNet.Pe.Library.PeData.IF;
 
 namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
 {
+    [Serializable]
     public class NoteSettingModel: SettingModelBase, IColorPair, IDeepClone, ITopMost
     {
         public NoteSettingModel()
             : base()
-        {
-            CreateHotKey = new HotKeyModel();
-            HideHotKey = new HotKeyModel();
-            CompactHotKey = new HotKeyModel();
-            ShowFrontHotKey = new HotKeyModel();
-
-            Font = new FontModel();
-        }
+        { }
 
         #region property
 
@@ -47,16 +41,16 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
         /// 新規作成時のホットキー
         /// </summary>
         [DataMember]
-        public HotKeyModel CreateHotKey { get; set; }
+        public HotKeyModel CreateHotKey { get; set; } = new HotKeyModel();
         [DataMember]
-        public HotKeyModel HideHotKey { get; set; }
+        public HotKeyModel HideHotKey { get; set; } = new HotKeyModel();
         [DataMember]
-        public HotKeyModel CompactHotKey { get; set; }
+        public HotKeyModel CompactHotKey { get; set; } = new HotKeyModel();
         [DataMember]
-        public HotKeyModel ShowFrontHotKey { get; set; }
+        public HotKeyModel ShowFrontHotKey { get; set; } = new HotKeyModel();
 
         [DataMember]
-        public FontModel Font { get; set; }
+        public FontModel Font { get; set; } = new FontModel();
 
         [DataMember]
         public NoteTitle NoteTitle { get; set; }
