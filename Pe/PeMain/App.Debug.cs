@@ -147,6 +147,7 @@ namespace ContentTypeTextNet.Pe.PeMain
         void debugLauncherItemModel()
         {
             var model = new LauncherItemModel();
+            model.Icon.Path = "#";
             SerializeUtility.SaveJsonDataToFile(@"z:\a.json", model);
         }
 

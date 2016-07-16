@@ -61,6 +61,7 @@ namespace ContentTypeTextNet.Test.Library.PeDataTest.Item
             Assert.IsTrue(src.History.ExecuteTimestamp == dst.History.ExecuteTimestamp);
             Assert.IsTrue(src.History.UpdateCount == dst.History.UpdateCount);
             Assert.IsTrue(src.History.UpdateTimestamp == dst.History.UpdateTimestamp);
+            Assert.IsTrue(src.Icon != dst.Icon);
             Assert.IsTrue(src.Icon.Index == dst.Icon.Index);
             Assert.IsTrue(src.Icon.Path == dst.Icon.Path);
             Assert.IsTrue(src.Id == dst.Id);
