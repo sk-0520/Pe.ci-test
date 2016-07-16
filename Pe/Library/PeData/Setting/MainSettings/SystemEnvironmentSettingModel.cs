@@ -20,7 +20,9 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.Attribute;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Pe.Library.PeData.Item;
 
@@ -38,39 +40,40 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
         /// <summary>
         /// 隠しファイル表示切り替えホットキー。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public HotKeyModel HideFileHotkey { get; set; } = new HotKeyModel();
         /// <summary>
         /// 拡張子表示切替ホットキー。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public HotKeyModel ExtensionHotkey { get; set; } = new HotKeyModel();
         /// <summary>
         /// F1キーを抑制するか。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public bool SuppressFunction1Key { get; set; }
 
         #endregion
 
         #region IDeepClone
 
-        public void DeepCloneTo(IDeepClone target)
-        {
-            var obj = (SystemEnvironmentSettingModel)target;
+        //public void DeepCloneTo(IDeepClone target)
+        //{
+        //    var obj = (SystemEnvironmentSettingModel)target;
 
-            obj.HideFileHotkey = (HotKeyModel)HideFileHotkey.DeepClone();
-            obj.ExtensionHotkey = (HotKeyModel)ExtensionHotkey.DeepClone();
-            obj.SuppressFunction1Key = SuppressFunction1Key;
-        }
+        //    obj.HideFileHotkey = (HotKeyModel)HideFileHotkey.DeepClone();
+        //    obj.ExtensionHotkey = (HotKeyModel)ExtensionHotkey.DeepClone();
+        //    obj.SuppressFunction1Key = SuppressFunction1Key;
+        //}
 
         public IDeepClone DeepClone()
         {
-            var result = new SystemEnvironmentSettingModel();
+            //var result = new SystemEnvironmentSettingModel();
 
-            DeepCloneTo(result);
+            //DeepCloneTo(result);
 
-            return result;
+            //return result;
+            return DeepCloneUtility.Copy(this);
         }
 
         #endregion
