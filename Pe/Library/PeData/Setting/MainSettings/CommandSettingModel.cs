@@ -31,7 +31,7 @@ using ContentTypeTextNet.Pe.Library.PeData.Item;
 
 namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
 {
-    [Serializable]
+    [DataContract, Serializable]
     public class CommandSettingModel: SettingModelBase, IDeepClone
     {
         public CommandSettingModel()

@@ -35,13 +35,12 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
     /// <summary>
     /// 基本設定。
     /// </summary>
-    [Serializable]
+    [DataContract, Serializable]
     public class GeneralSettingModel: SettingModelBase, IDeepClone
     {
         public GeneralSettingModel()
             : base()
-        {
-        }
+        { }
 
         #region property
 
