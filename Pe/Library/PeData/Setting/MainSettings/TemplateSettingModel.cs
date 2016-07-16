@@ -24,6 +24,7 @@ using System.Windows;
 using ContentTypeTextNet.Library.SharedLibrary.Attribute;
 using ContentTypeTextNet.Library.SharedLibrary.Define;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Pe.Library.PeData.Define;
 using ContentTypeTextNet.Pe.Library.PeData.IF;
@@ -43,60 +44,60 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
         /// <summary>
         /// 表示非表示切り替え。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public HotKeyModel ToggleHotKey { get; set; } = new HotKeyModel();
 
         /// <summary>
         /// リスト部の幅。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public double ItemsListWidth { get; set; }
 
         /// <summary>
         /// 置き換えリスト部の幅。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public double ReplaceListWidth { get; set; }
 
-        [DataMember]
+        [DataMember, IsDeepClone]
         public FontModel Font { get; set; } = new FontModel();
 
         /// <summary>
         /// アイテムダブルクリック時の処理。
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public IndexItemsDoubleClickBehavior DoubleClickBehavior { get; set; }
 
         #endregion
 
         #region IWindowStatus
 
-        [DataMember]
+        [DataMember, IsDeepClone]
         [PixelKind(Px.Logical)]
         public double WindowTop { get; set; }
-        [DataMember]
+        [DataMember, IsDeepClone]
         [PixelKind(Px.Logical)]
         public double WindowLeft { get; set; }
-        [DataMember]
+        [DataMember, IsDeepClone]
         [PixelKind(Px.Logical)]
         public double WindowWidth { get; set; }
-        [DataMember]
+        [DataMember, IsDeepClone]
         [PixelKind(Px.Logical)]
         public double WindowHeight { get; set; }
-        [DataMember]
+        [DataMember, IsDeepClone]
         [PixelKind(Px.Logical)]
         public WindowState WindowState { get; set; }
 
         #region ITopMost
 
-        [DataMember]
+        [DataMember, IsDeepClone]
         public bool IsTopmost { get; set; }
 
         #endregion
 
         #region IVisible
 
-        [DataMember]
+        [DataMember, IsDeepClone]
         public bool IsVisible { get; set; }
 
         #endregion
@@ -105,32 +106,33 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
 
         #region IDeepClone
 
-        public void DeepCloneTo(IDeepClone target)
-        {
-            var obj = (TemplateSettingModel)target;
+        //public void DeepCloneTo(IDeepClone target)
+        //{
+        //    var obj = (TemplateSettingModel)target;
 
-            obj.ToggleHotKey = (HotKeyModel)ToggleHotKey.DeepClone();
-            obj.ItemsListWidth = ItemsListWidth;
-            obj.ReplaceListWidth = ReplaceListWidth;
-            obj.WindowTop = WindowTop;
-            obj.WindowLeft = WindowLeft;
-            obj.WindowWidth = WindowWidth;
-            obj.WindowHeight = WindowHeight;
-            obj.WindowState = WindowState;
-            obj.IsTopmost = IsTopmost;
-            obj.IsVisible = IsVisible;
-            //Font.DeepCloneTo(obj.Font);
-            obj.Font = (FontModel)Font.DeepClone();
-            obj.DoubleClickBehavior = DoubleClickBehavior;
-        }
+        //    obj.ToggleHotKey = (HotKeyModel)ToggleHotKey.DeepClone();
+        //    obj.ItemsListWidth = ItemsListWidth;
+        //    obj.ReplaceListWidth = ReplaceListWidth;
+        //    obj.WindowTop = WindowTop;
+        //    obj.WindowLeft = WindowLeft;
+        //    obj.WindowWidth = WindowWidth;
+        //    obj.WindowHeight = WindowHeight;
+        //    obj.WindowState = WindowState;
+        //    obj.IsTopmost = IsTopmost;
+        //    obj.IsVisible = IsVisible;
+        //    //Font.DeepCloneTo(obj.Font);
+        //    obj.Font = (FontModel)Font.DeepClone();
+        //    obj.DoubleClickBehavior = DoubleClickBehavior;
+        //}
 
         public IDeepClone DeepClone()
         {
-            var result = new TemplateSettingModel();
+            //var result = new TemplateSettingModel();
 
-            DeepCloneTo(result);
+            //DeepCloneTo(result);
 
-            return result;
+            //return result;
+            return DeepCloneUtility.Copy(this);
         }
 
         #endregion
