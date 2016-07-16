@@ -21,14 +21,16 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
+using ContentTypeTextNet.Library.SharedLibrary.Attribute;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Pe.Library.PeData.Define;
 using ContentTypeTextNet.Pe.Library.PeData.IF;
 
 namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
 {
-    [Serializable]
+    [DataContract, Serializable]
     public class NoteSettingModel: SettingModelBase, IColorPair, IDeepClone, ITopMost
     {
         public NoteSettingModel()
@@ -40,76 +42,77 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
         /// <summary>
         /// 新規作成時のホットキー
         /// </summary>
-        [DataMember]
+        [DataMember, IsDeepClone]
         public HotKeyModel CreateHotKey { get; set; } = new HotKeyModel();
-        [DataMember]
+        [DataMember, IsDeepClone]
         public HotKeyModel HideHotKey { get; set; } = new HotKeyModel();
-        [DataMember]
+        [DataMember, IsDeepClone]
         public HotKeyModel CompactHotKey { get; set; } = new HotKeyModel();
-        [DataMember]
+        [DataMember, IsDeepClone]
         public HotKeyModel ShowFrontHotKey { get; set; } = new HotKeyModel();
 
-        [DataMember]
+        [DataMember, IsDeepClone]
         public FontModel Font { get; set; } = new FontModel();
 
-        [DataMember]
+        [DataMember, IsDeepClone]
         public NoteTitle NoteTitle { get; set; }
 
-        [DataMember]
+        [DataMember, IsDeepClone]
         public bool AutoLineFeed { get; set; }
 
-        [DataMember]
+        [DataMember, IsDeepClone]
         public NoteKind NoteKind { get; set; }
 
         #endregion
 
         #region IColorPair
 
-        [DataMember]
+        [DataMember, IsDeepClone]
         public Color ForeColor { get; set; }
-        [DataMember]
+        [DataMember, IsDeepClone]
         public Color BackColor { get; set; }
 
         #endregion
 
         #region ITopMost
 
-        [DataMember]
+        [DataMember, IsDeepClone]
         public bool IsTopmost { get; set; }
 
         #endregion
 
         #region IDeepClone
 
-        public void DeepCloneTo(IDeepClone target)
-        {
-            var obj = (NoteSettingModel)target;
+        //public void DeepCloneTo(IDeepClone target)
+        //{
+        //    var obj = (NoteSettingModel)target;
 
-            //CreateHotKey.DeepCloneTo(obj.CreateHotKey);
-            //HideHotKey.DeepCloneTo(obj.HideHotKey);
-            //CompactHotKey.DeepCloneTo(obj.CompactHotKey);
-            //ShowFrontHotKey.DeepCloneTo(obj.ShowFrontHotKey);
-            obj.CreateHotKey = (HotKeyModel)CreateHotKey.DeepClone();
-            obj.HideHotKey = (HotKeyModel)HideHotKey.DeepClone();
-            obj.CompactHotKey = (HotKeyModel)CompactHotKey.DeepClone();
-            obj.ShowFrontHotKey = (HotKeyModel)ShowFrontHotKey.DeepClone();
-            obj.ForeColor = ForeColor;
-            obj.BackColor = BackColor;
-            //Font.DeepCloneTo(obj.Font);
-            obj.Font = (FontModel)Font.DeepClone();
-            obj.NoteTitle = NoteTitle;
-            obj.IsTopmost = IsTopmost;
-            obj.AutoLineFeed = AutoLineFeed;
-            obj.NoteKind = NoteKind;
-        }
+        //    //CreateHotKey.DeepCloneTo(obj.CreateHotKey);
+        //    //HideHotKey.DeepCloneTo(obj.HideHotKey);
+        //    //CompactHotKey.DeepCloneTo(obj.CompactHotKey);
+        //    //ShowFrontHotKey.DeepCloneTo(obj.ShowFrontHotKey);
+        //    obj.CreateHotKey = (HotKeyModel)CreateHotKey.DeepClone();
+        //    obj.HideHotKey = (HotKeyModel)HideHotKey.DeepClone();
+        //    obj.CompactHotKey = (HotKeyModel)CompactHotKey.DeepClone();
+        //    obj.ShowFrontHotKey = (HotKeyModel)ShowFrontHotKey.DeepClone();
+        //    obj.ForeColor = ForeColor;
+        //    obj.BackColor = BackColor;
+        //    //Font.DeepCloneTo(obj.Font);
+        //    obj.Font = (FontModel)Font.DeepClone();
+        //    obj.NoteTitle = NoteTitle;
+        //    obj.IsTopmost = IsTopmost;
+        //    obj.AutoLineFeed = AutoLineFeed;
+        //    obj.NoteKind = NoteKind;
+        //}
 
         public IDeepClone DeepClone()
         {
-            var result = new NoteSettingModel();
+            //var result = new NoteSettingModel();
 
-            DeepCloneTo(result);
+            //DeepCloneTo(result);
 
-            return result;
+            //return result;
+            return DeepCloneUtility.Copy(this);
         }
 
         #endregion

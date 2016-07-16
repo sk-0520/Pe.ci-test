@@ -68,20 +68,25 @@ namespace ContentTypeTextNet.Test.Library.PeDataTest.Setting.MainSettings
 
             Assert.IsTrue(src.AutoLineFeed == dst.AutoLineFeed);
             Assert.IsTrue(src.BackColor == dst.BackColor);
+            Assert.IsTrue(src.CompactHotKey != dst.CompactHotKey);
             Assert.IsTrue(src.CompactHotKey.Key == dst.CompactHotKey.Key);
             Assert.IsTrue(src.CompactHotKey.ModifierKeys == dst.CompactHotKey.ModifierKeys);
+            Assert.IsTrue(src.CreateHotKey != dst.CreateHotKey);
             Assert.IsTrue(src.CreateHotKey.Key == dst.CreateHotKey.Key);
             Assert.IsTrue(src.CreateHotKey.ModifierKeys == dst.CreateHotKey.ModifierKeys);
+            Assert.IsTrue(src.Font != dst.Font);
             Assert.IsTrue(src.Font.Bold == dst.Font.Bold);
             Assert.IsTrue(src.Font.Family == dst.Font.Family);
             Assert.IsTrue(src.Font.Italic == dst.Font.Italic);
             Assert.IsTrue(src.Font.Size == dst.Font.Size);
             Assert.IsTrue(src.ForeColor == dst.ForeColor);
+            Assert.IsTrue(src.HideHotKey != dst.HideHotKey);
             Assert.IsTrue(src.HideHotKey.Key == dst.HideHotKey.Key);
             Assert.IsTrue(src.HideHotKey.ModifierKeys == dst.HideHotKey.ModifierKeys);
             Assert.IsTrue(src.IsTopmost == dst.IsTopmost);
             Assert.IsTrue(src.NoteKind == dst.NoteKind);
             Assert.IsTrue(src.NoteTitle == dst.NoteTitle);
+            Assert.IsTrue(src.ShowFrontHotKey != dst.ShowFrontHotKey);
             Assert.IsTrue(src.ShowFrontHotKey.Key == dst.ShowFrontHotKey.Key);
             Assert.IsTrue(src.ShowFrontHotKey.ModifierKeys == dst.ShowFrontHotKey.ModifierKeys);
         }

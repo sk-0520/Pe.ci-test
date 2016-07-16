@@ -102,7 +102,8 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting
             //Clipboard.DeepCloneTo(obj.Clipboard);
             obj.Clipboard = (ClipboardSettingModel)Clipboard.DeepClone();
             Template.DeepCloneTo(obj.Template);
-            Note.DeepCloneTo(obj.Note);
+            //Note.DeepCloneTo(obj.Note);
+            obj.Note = (NoteSettingModel)Note.DeepClone();
             //Stream.DeepCloneTo(obj.Stream);
             obj.Stream = (StreamSettingModel)Stream.DeepClone();
             obj.General = (GeneralSettingModel)General.DeepClone();
