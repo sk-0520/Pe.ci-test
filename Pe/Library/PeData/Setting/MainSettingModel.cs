@@ -90,7 +90,8 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting
 
             //RunningInformation.DeepCloneTo(obj.RunningInformation);
             obj.RunningInformation = (RunningInformationSettingModel)RunningInformation.DeepClone();
-            Language.DeepCloneTo(obj.Language);
+            //Language.DeepCloneTo(obj.Language);
+            obj.Language = (LanguageSettingModel)Language.DeepClone();
             //Logging.DeepCloneTo(obj.Logging);
             obj.Logging = (LoggingSettingModel)Logging.DeepClone();
             Toolbar.DeepCloneTo(obj.Toolbar);
