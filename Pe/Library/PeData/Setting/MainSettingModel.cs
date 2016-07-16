@@ -22,6 +22,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Attribute;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Pe.Library.PeData.Item;
 using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
 
@@ -71,42 +72,43 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting
 
         #region IDeepClone
 
-        public void DeepCloneTo(IDeepClone target)
-        {
-            var obj = (MainSettingModel)target;
+        //public void DeepCloneTo(IDeepClone target)
+        //{
+        //    var obj = (MainSettingModel)target;
 
-            //RunningInformation.DeepCloneTo(obj.RunningInformation);
-            obj.RunningInformation = (RunningInformationSettingModel)RunningInformation.DeepClone();
-            //Language.DeepCloneTo(obj.Language);
-            obj.Language = (LanguageSettingModel)Language.DeepClone();
-            //Logging.DeepCloneTo(obj.Logging);
-            obj.Logging = (LoggingSettingModel)Logging.DeepClone();
-            //Toolbar.DeepCloneTo(obj.Toolbar);
-            obj.Toolbar = (ToolbarSettingModel)Toolbar.DeepClone();
-            //WindowSave.DeepCloneTo(obj.WindowSave);
-            obj.WindowSave = (WindowSaveSettingModel)WindowSave.DeepClone();
-            //SystemEnvironment.DeepCloneTo(obj.SystemEnvironment);
-            obj.SystemEnvironment = (SystemEnvironmentSettingModel)SystemEnvironment.DeepClone();
-            //Command.DeepCloneTo(obj.Command);
-            obj.Command = (CommandSettingModel)Command.DeepClone();
-            //Clipboard.DeepCloneTo(obj.Clipboard);
-            obj.Clipboard = (ClipboardSettingModel)Clipboard.DeepClone();
-            //Template.DeepCloneTo(obj.Template);
-            obj.Template = (TemplateSettingModel)Template.DeepClone();
-            //Note.DeepCloneTo(obj.Note);
-            obj.Note = (NoteSettingModel)Note.DeepClone();
-            //Stream.DeepCloneTo(obj.Stream);
-            obj.Stream = (StreamSettingModel)Stream.DeepClone();
-            obj.General = (GeneralSettingModel)General.DeepClone();
-        }
+        //    //RunningInformation.DeepCloneTo(obj.RunningInformation);
+        //    obj.RunningInformation = (RunningInformationSettingModel)RunningInformation.DeepClone();
+        //    //Language.DeepCloneTo(obj.Language);
+        //    obj.Language = (LanguageSettingModel)Language.DeepClone();
+        //    //Logging.DeepCloneTo(obj.Logging);
+        //    obj.Logging = (LoggingSettingModel)Logging.DeepClone();
+        //    //Toolbar.DeepCloneTo(obj.Toolbar);
+        //    obj.Toolbar = (ToolbarSettingModel)Toolbar.DeepClone();
+        //    //WindowSave.DeepCloneTo(obj.WindowSave);
+        //    obj.WindowSave = (WindowSaveSettingModel)WindowSave.DeepClone();
+        //    //SystemEnvironment.DeepCloneTo(obj.SystemEnvironment);
+        //    obj.SystemEnvironment = (SystemEnvironmentSettingModel)SystemEnvironment.DeepClone();
+        //    //Command.DeepCloneTo(obj.Command);
+        //    obj.Command = (CommandSettingModel)Command.DeepClone();
+        //    //Clipboard.DeepCloneTo(obj.Clipboard);
+        //    obj.Clipboard = (ClipboardSettingModel)Clipboard.DeepClone();
+        //    //Template.DeepCloneTo(obj.Template);
+        //    obj.Template = (TemplateSettingModel)Template.DeepClone();
+        //    //Note.DeepCloneTo(obj.Note);
+        //    obj.Note = (NoteSettingModel)Note.DeepClone();
+        //    //Stream.DeepCloneTo(obj.Stream);
+        //    obj.Stream = (StreamSettingModel)Stream.DeepClone();
+        //    obj.General = (GeneralSettingModel)General.DeepClone();
+        //}
 
         public IDeepClone DeepClone()
         {
-            var result = new MainSettingModel();
+            //var result = new MainSettingModel();
 
-            DeepCloneTo(result);
+            //DeepCloneTo(result);
 
-            return result;
+            //return result;
+            return DeepCloneUtility.Copy(this);
         }
 
         #endregion
