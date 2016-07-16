@@ -35,50 +35,37 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting
     public sealed class MainSettingModel: SettingModelBase, IDeepClone
     {
         public MainSettingModel()
-        {
-            RunningInformation = new RunningInformationSettingModel();
-            Language = new LanguageSettingModel();
-            Logging = new LoggingSettingModel();
-            Toolbar = new ToolbarSettingModel();
-            WindowSave = new WindowSaveSettingModel();
-            SystemEnvironment = new SystemEnvironmentSettingModel();
-            Command = new CommandSettingModel();
-            Clipboard = new ClipboardSettingModel();
-            Template = new TemplateSettingModel();
-            Note = new NoteSettingModel();
-            Stream = new StreamSettingModel();
-            General = new GeneralSettingModel();
-        }
+        { }
 
         #region property
 
-        [DataMember]
-        public RunningInformationSettingModel RunningInformation { get; set; }
-        [DataMember]
-        public LanguageSettingModel Language { get; set; }
-        [DataMember]
-        public LoggingSettingModel Logging { get; set; }
-        [DataMember]
-        public ToolbarSettingModel Toolbar { get; set; }
-        [DataMember]
-        public WindowSaveSettingModel WindowSave { get; set; }
-        [DataMember]
-        public SystemEnvironmentSettingModel SystemEnvironment { get; set; }
-        [DataMember]
-        public CommandSettingModel Command { get; set; }
-        [DataMember]
-        public ClipboardSettingModel Clipboard { get; set; }
-        [DataMember]
-        public TemplateSettingModel Template { get; set; }
-        [DataMember]
-        public NoteSettingModel Note { get; set; }
-        [DataMember]
-        public StreamSettingModel Stream { get; set; }
+        [DataMember, IsDeepClone]
+        public RunningInformationSettingModel RunningInformation { get; set; } = new RunningInformationSettingModel();
+        [DataMember, IsDeepClone]
+        public LanguageSettingModel Language { get; set; } = new LanguageSettingModel();
+        [DataMember, IsDeepClone]
+        public LoggingSettingModel Logging { get; set; } = new LoggingSettingModel();
+        [DataMember, IsDeepClone]
+        public ToolbarSettingModel Toolbar { get; set; } = new ToolbarSettingModel();
+        [DataMember, IsDeepClone]
+        public WindowSaveSettingModel WindowSave { get; set; } = new WindowSaveSettingModel();
+        [DataMember, IsDeepClone]
+        public SystemEnvironmentSettingModel SystemEnvironment { get; set; } = new SystemEnvironmentSettingModel();
+        [DataMember, IsDeepClone]
+        public CommandSettingModel Command { get; set; } = new CommandSettingModel();
+        [DataMember, IsDeepClone]
+        public ClipboardSettingModel Clipboard { get; set; } = new ClipboardSettingModel();
+        [DataMember, IsDeepClone]
+        public TemplateSettingModel Template { get; set; } = new TemplateSettingModel();
+        [DataMember, IsDeepClone]
+        public NoteSettingModel Note { get; set; } = new NoteSettingModel();
+        [DataMember, IsDeepClone]
+        public StreamSettingModel Stream { get; set; } = new StreamSettingModel();
         /// <summary>
         /// 基本設定。
         /// </summary>
         [DataMember, IsDeepClone]
-        public GeneralSettingModel General { get; set; }
+        public GeneralSettingModel General { get; set; } = new GeneralSettingModel();
 
         #endregion
 
@@ -96,7 +83,8 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting
             obj.Logging = (LoggingSettingModel)Logging.DeepClone();
             //Toolbar.DeepCloneTo(obj.Toolbar);
             obj.Toolbar = (ToolbarSettingModel)Toolbar.DeepClone();
-            WindowSave.DeepCloneTo(obj.WindowSave);
+            //WindowSave.DeepCloneTo(obj.WindowSave);
+            obj.WindowSave = (WindowSaveSettingModel)WindowSave.DeepClone();
             //SystemEnvironment.DeepCloneTo(obj.SystemEnvironment);
             obj.SystemEnvironment = (SystemEnvironmentSettingModel)SystemEnvironment.DeepClone();
             //Command.DeepCloneTo(obj.Command);
