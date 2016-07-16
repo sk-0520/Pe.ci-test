@@ -157,6 +157,7 @@
     <Compile Include="Item\TemplateIndexItemModelTest.cs" />
     <Compile Include="Item\ToolbarItemModelTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Setting\LauncherItemSettingModelTest.cs" />
     <Compile Include="Setting\MainSettings\ClipboardSettingModelTest.cs" />
     <Compile Include="Setting\MainSettings\CommandSettingModelTest.cs" />
     <Compile Include="Setting\MainSettings\LanguageSettingModelTest.cs" />
