@@ -171,6 +171,10 @@
 					},
 					{
 						'revision': '',
+						'subject': '開発環境を Visual Studio 2015 Update 3 に変更'
+					},
+					{
+						'revision': '',
 						'subject': ''
 					}
 				]
