@@ -19,7 +19,7 @@
       <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/View/Parts/Resource/ImageDictionary.xaml"/>
       </ResourceDictionary.MergedDictionaries>
-      <app_main_view_parts_converter:FontFamilyToNameConverter x:Key="FontFamilyToNameConverter" />
+      <app_library_sharedlibrary_view_converter:FontFamilyToNameConverter x:Key="FontFamilyToNameConverter" />
     </ResourceDictionary>
   </app_main_view_parts_control:CommonDataUserControl.Resources>
 

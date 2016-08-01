@@ -50,7 +50,7 @@
       <app_library_sharedlibrary_view_converter:BooleanFontStyleConverter x:Key="BooleanFontStyleConverter" />
       <app_library_sharedlibrary_view_converter:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
       <app_library_sharedlibrary_view_converter:LogicalMultiAndConverter x:Key="LogicalMultiAndConverter" />
-      <app_main_view_parts_converter:FontFamilyToNameConverter x:Key="FontFamilyToNameConverter" />
+      <app_library_sharedlibrary_view_converter:FontFamilyToNameConverter x:Key="FontFamilyToNameConverter" />
       <app_main_view_parts_converter:BooleanToTextWrappingConverter x:Key="BooleanToTextWrappingConverter" />
     </ResourceDictionary>
   </app_main_view_parts_window:CommonDataWindow.Resources>

@@ -17,7 +17,7 @@
       <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/View/Parts/Resource/TypeSliderDictionary.xaml"/>
       </ResourceDictionary.MergedDictionaries>
-      <app_main_view_parts_converter:TimeSpanMillisecondConverter x:Key="TimeSpanMillisecondConverter" />
+      <app_library_sharedlibrary_view_converter:TimeSpanToMillisecondConverter x:Key="TimeSpanMillisecondConverter" />
     </ResourceDictionary>
   </app_main_view_parts_control:CommonDataUserControl.Resources>
   <Grid Style="{StaticResource TypeGridStyle}">

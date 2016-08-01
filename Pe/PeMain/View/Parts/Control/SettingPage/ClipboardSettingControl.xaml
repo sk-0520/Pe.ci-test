@@ -26,7 +26,7 @@
       </ResourceDictionary.MergedDictionaries>
       <app_library_sharedlibrary_view_converter:GridDistanceConverter x:Key="GridDistanceConverter" />
       <app_library_sharedlibrary_view_converter:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
-      <app_main_view_parts_converter:TimeSpanMillisecondConverter x:Key="TimeSpanMillisecondConverter" />
+      <app_library_sharedlibrary_view_converter:TimeSpanToMillisecondConverter x:Key="TimeSpanMillisecondConverter" />
     </ResourceDictionary>
   </app_main_view_parts_control:CommonDataUserControl.Resources>
   <Grid>

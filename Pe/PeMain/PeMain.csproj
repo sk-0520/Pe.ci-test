@@ -77,7 +77,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="ContentTypeTextNet.SharedLibrary">
-      <HintPath>..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.62\lib\net46\ContentTypeTextNet.SharedLibrary.dll</HintPath>
+      <HintPath>..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.64\lib\net46\ContentTypeTextNet.SharedLibrary.dll</HintPath>
       <Private>True</Private>
       <Private>False</Private>
     </Reference>
@@ -692,7 +692,6 @@
     <Compile Include="View\Parts\Converter\EnumLanguageConverter\IconScaleLanguageConverter.cs" />
     <Compile Include="View\Parts\Converter\EnumLanguageConverter\DockTypeLanguageConverter.cs" />
     <Compile Include="View\Parts\Converter\EnumLanguageConverter\ToolbarButtonPositionLanguageConverter.cs" />
-    <Compile Include="View\Parts\Converter\FontFamilyToNameConverter.cs" />
     <Compile Include="View\Parts\Converter\LauncherGroupIconTypeImageConverter.cs" />
     <Compile Include="View\Parts\Converter\LogFileNameConverter.cs" />
     <Compile Include="View\Parts\Converter\ReverseClipboardItemListConverter.cs" />
@@ -701,7 +700,6 @@
     <Compile Include="View\Parts\Converter\HotTrackConverter.cs" />
     <Compile Include="View\Parts\Converter\LauncherViewModelBaseConverter.cs" />
     <Compile Include="View\Parts\Converter\EnumLanguageConverter\EnumLanguageConverterBase.cs" />
-    <Compile Include="View\Parts\Converter\TimeSpanMillisecondConverter.cs" />
     <Compile Include="View\Parts\Converter\ToolbarDockTypeImageConverter.cs" />
     <Compile Include="View\Parts\Converter\TreeListLauncherItemRelationConverter.cs" />
     <Compile Include="View\Parts\EnumList.cs" />
