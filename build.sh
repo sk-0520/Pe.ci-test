@@ -1,5 +1,5 @@
 
-VERSION_PATH='Pe/PeMain/Properties/AssemblyInfo.cs'
+VERSION_PATH='Source/PeMain/Properties/AssemblyInfo.cs'
 
 # CIで止まられるとなんもできん
 if [ -z "${CI+x}" ] ; then
