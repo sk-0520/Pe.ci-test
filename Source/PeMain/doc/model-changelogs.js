@@ -86,41 +86,19 @@
 	},
 	*/
 	{
-		'date': 'YYYY/MM/DD',
-		'version': '0.81.1',
-		'isRc': true,
+		'date': '2016/08/17',
+		'version': '0.81.0',
+		'isRc': false,
 		'contents': [
 			{
 				'type': 'note',
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					}
-				]
-			},
-			{
-				'type': 'features',
-				'logs': [
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
+						'subject': '[PR] ニコニコ見るツール作った',
+						'comments': [
+							'https://bitbucket.org/sk_0520/mnmn'
+						]
 					}
 				]
 			},
@@ -128,24 +106,16 @@
 				'type': 'fixes',
 				'logs': [
 					{
-						'revision': '',
+						'revision': '4bb40c7cdd12417bd68891f5f256a72746ad64ca',
 						'subject': 'ヘルプページの先頭が general でなかったリンクミスの修正'
 					},
 					{
-						'revision': '',
+						'revision': '0f65ea0d88fb786c6bf6b87e5d4d1fc82e036037',
 						'subject': '#475: ランチャーアイテムの履歴が保存されない'
 					},
 					{
-						'revision': '',
+						'revision': '09763b1274ae206e1728ace9816d22cf55e98703',
 						'subject': 'クリップボードのフィルタ入力部分の位置が変だった'
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			},
@@ -153,35 +123,38 @@
 				'type': 'developer',
 				'logs': [
 					{
-						'revision': '',
+						'revision': '230151dd075a83391cdbd05762a7e70449bff231',
 						'class': 'nuget',
 						'subject': 'Network.Json を 9.0.1 に更新'
 					},
 					{
-						'revision': '',
+						'revision': '230151dd075a83391cdbd05762a7e70449bff231',
 						'class': 'nuget',
 						'subject': 'Extended WPF Toolkit™ Community Edition を 2.9.0 に更新'
 					},
 					{
-						'revision': '',
+						'revision': 'e98a5275da66a3862acc064e20e588f7975483a5',
 						'subject': '#464: 設定モデル複製処理の自動化',
 						'comments': [
 							'本対応で #475 修正が無意味になった'
 						]
 					},
 					{
-						'revision': '',
+						'revision': 'b0f5c995b9a7f74d849ead2523bd18dea0d9d311',
 						'subject': '開発環境を Visual Studio 2015 Update 3 に変更'
 					},
 					{
-						'revision': '',
-						'subject': 'NUnit3TestAdapter.3.4.1'
-					},
-					{
-						'revision': '',
+						'revision': '230151dd075a83391cdbd05762a7e70449bff231',
 						'class': 'nuget',
 						'subject': 'NUnit3TestAdapter を 3.4.1 に更新'
-					}
+					},
+					{
+						'revision': '36ccdfb47bd04db39695687a76386adceb3ec470',
+						'subject': 'ソースディレクトリの変更',
+						'comments': [
+							'/Pe -> /Source'
+						]
+					},
 				]
 			}
 		]
