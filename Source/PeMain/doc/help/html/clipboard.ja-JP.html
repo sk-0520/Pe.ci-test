@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta charset="utf-8" />
+		<title>ヘルプ</title>
+		<link rel="shortcut icon" href="../image/favicon.ico" type="image/vnd.microsoft.icon" />
+		<style>
+			@import url('../../../etc/style/common.css');
+			@import url('../style/help.css');
+		</style>
+		<script src="../../../etc/script/jquery.js"></script>
+		<script src="../../../etc/script/changelog.js"></script>
+		<script src="../script/help.js"></script>
+	</head>
+	<body>
+		<h1>ヘルプ</h1>
+		<section id="content">
+			<p>
+				クリップボードにコピーされたデータを履歴として残します。
+				<br />
+				取込対象データは下記になります。
+			</p>
+			<ul>
+				<li>文字列(プレーンテキスト)</li>
+				<li>書式付文字列(リッチテキストフォーマット)</li>
+				<li>HTML</li>
+				<li>画像</li>
+				<li>ファイル</li>
+			</ul>
+			<p>
+				各種データは設定画面で履歴に残すかどうか選択できます。
+			</p>
+			<p>
+				リストの該当履歴からクリップボードへコピーまたは前回のアクティブウィンドウへ転送します。
+				各ボタンで単独データ・複合データを選択できます。
+			</p>
+
+			<h2>クリップボードデータ</h2>
+			<p>
+				クリップボードはほとんどの場合に複数のデータを持ちます。
+				例えば MS Word で文章をコピーすると、文字列・書式付文字列・HTMLが Pe では取り込みの対象となります。
+			</p>
+			<p>
+				この複数のデータをPeでは複合データとして取り扱っています。
+				逆に一つだけのものを単独データとして扱います。
+			</p>
+
+			<div class="ref">
+				<p>
+					転送方法については<span class="page">others-send</span>を参照してください。
+				</p>
+			</div>
+		</section>
+		<nav id="main-menu"></nav>
+	</body>
+</html>

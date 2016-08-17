@@ -1,5 +1,5 @@
 
-VERSION_PATH='Pe/PeMain/Properties/AssemblyInfo.cs'
+VERSION_PATH='Source/PeMain/Properties/AssemblyInfo.cs'
 
 # CIで止まられるとなんもできん
 if [ -z "${CI+x}" ] ; then
@@ -21,7 +21,7 @@ find -name 'AssemblyInfo.cs' -print0 | xargs -0 sed -E -i "s/<YEAR>/`date +%Y`/"
 
 # ビルド
 pushd Build
-    cmd.exe //c build.bat ${BUILD_TYPE}
+    cmd.exe //c build.bat ${BUILD_TYPE} ${BUILD_OUTPUT}
 popd
 
 # バージョン戻し

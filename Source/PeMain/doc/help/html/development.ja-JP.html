@@ -1,0 +1,105 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta charset="utf-8" />
+		<title>ヘルプ</title>
+		<link rel="shortcut icon" href="../image/favicon.ico" type="image/vnd.microsoft.icon" />
+		<style>
+			@import url('../../../etc/style/common.css');
+			@import url('../style/help.css');
+		</style>
+		<script src="../../../etc/script/jquery.js"></script>
+		<script src="../../../etc/script/changelog.js"></script>
+		<script src="../script/help.js"></script>
+	</head>
+	<body>
+		<h1>ヘルプ</h1>
+		<section id="content">
+			<h2>開発環境</h2>
+			<table>
+				<thead>
+					<tr>
+						<th>バージョン</th>
+						<th>環境</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>0.1.0</td>
+						<td>SharpDevelop 4.4</td>
+					</tr>
+					<tr>
+						<td>0.29.0</td>
+						<td>SharpDevelop 5.0</td>
+					</tr>
+					<tr>
+						<td>0.33.0</td>
+						<td> Visual Studio Community 2013 Update 4</td>
+					</tr>
+					<tr>
+						<td>0.68.0</td>
+						<td>Visual Studio Community 2015</td>
+					</tr>
+					<tr>
+						<td>0.74.0</td>
+						<td>Visual Studio Community 2015 Update 1</td>
+					</tr>
+					<tr>
+						<td>0.78.0</td>
+						<td>Visual Studio Community 2015 Update 2</td>
+					</tr>
+					<tr>
+						<td>0.81.0</td>
+						<td>Visual Studio Community 2015 Update 3</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<h3>NuGetパッケージ</h3>
+			<p>
+				各種コンポーネントは NuGet パッケージを使用して取得しています。
+			</p>
+			<p>
+				なお、Pe 独自のアセンブリに関しては通常の NuGet パッケージソースではなく myget から取得しています。
+			</p>
+			<table>
+				<thead>
+					<tr>
+						<th>VS標準</th>
+						<th>パッケージソース</th>
+						<th>Feed</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>o</td>
+						<td>nuget.org</td>
+						<td>https://www.nuget.org/api/v2/</td>
+					</tr>
+					<tr>
+						<td>o(*)</td>
+						<td>Microsoft and .NET</td>
+						<td>https://www.nuget.org/api/v2/curated-feeds/microsoftdotnet/</td>
+					</tr>
+					<tr>
+						<td>×</td>
+						<td>content-type-text-net</td>
+						<td>https://www.myget.org/F/content-type-text-net/api/v3/index.json</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="hint">
+				<p>
+					(*)Microsoft and .NET は Visual Studio に標準で設定されていると思うけど設定可能なので準標準くらいの位置づけかと。
+				</p>
+			</div>
+			<div class="warning">
+				<p>
+					パッケージソース<strong>content-type-text-net</strong>は独自フィードであるためダウンロードを許可するよう設定変更してください。
+				</p>
+			</div>
+
+		</section>
+		<nav id="main-menu"></nav>
+	</body>
+</html>
