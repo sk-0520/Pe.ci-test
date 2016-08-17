@@ -154,7 +154,7 @@
 						'comments': [
 							'/Pe -> /Source'
 						]
-					},
+					}
 				]
 			}
 		]
