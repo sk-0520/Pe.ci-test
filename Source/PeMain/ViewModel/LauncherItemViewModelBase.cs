@@ -145,7 +145,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 );
 
                 // TODO: 16pxアイコンも作りたいなぁ
-                var image = ImageUtility.MakeBitmapSourceDefualtDpi(element);
+                var image = MediaUtility.MakeBitmapSourceDefualtDpi(element, false);
                 FreezableUtility.SafeFreeze(image);
 
                 return image;

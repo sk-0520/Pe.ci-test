@@ -30,16 +30,16 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
     internal sealed class InitializeClipboardSetting: InitializeBase<ClipboardSettingModel>
     {
         public InitializeClipboardSetting(ClipboardSettingModel setting, Version previousVersion, INonProcess nonProcess)
-            :base(setting, previousVersion, nonProcess)
+            : base(setting, previousVersion, nonProcess)
         { }
 
         #region InitializeBase
 
         protected override void Correction_Last()
         {
-            Model.WaitTime = Constants.clipboardWaitTime.GetClamp(Model.WaitTime);
-            Model.DuplicationCount = Constants.clipboardDuplicationCount.GetClamp(Model.DuplicationCount);
-            Model.Font.Size = Constants.clipboardFontSize.GetClamp(Model.Font.Size);
+            Model.WaitTime = RangeUtility.Clamp(Model.WaitTime, Constants.clipboardWaitTime);
+            Model.DuplicationCount = RangeUtility.Clamp(Model.DuplicationCount, Constants.clipboardDuplicationCount);
+            Model.Font.Size = RangeUtility.Clamp(Model.Font.Size, Constants.clipboardFontSize);
             //setting.CaptureType = EnumUtility.GetNormalization(setting.CaptureType, Constants.clipboardCaptureType);
             Model.DoubleClickBehavior = EnumUtility.GetNormalization(Model.DoubleClickBehavior, IndexItemsDoubleClickBehavior.Copy);
 
@@ -55,12 +55,12 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
             }
 
             //setting.LimitSize.LimitType = EnumUtility.GetNormalization(setting.LimitSize.LimitType, Constants.clipboardLimitType);
-            Model.LimitSize.Text = Constants.clipboardLimitTextSize.GetClamp(Model.LimitSize.Text);
-            Model.LimitSize.Rtf = Constants.clipboardLimitRtfSize.GetClamp(Model.LimitSize.Rtf);
-            Model.LimitSize.Html = Constants.clipboardLimitHtmlSize.GetClamp(Model.LimitSize.Html);
+            Model.LimitSize.Text = RangeUtility.Clamp(Model.LimitSize.Text, Constants.clipboardLimitTextSize);
+            Model.LimitSize.Rtf = RangeUtility.Clamp(Model.LimitSize.Rtf, Constants.clipboardLimitRtfSize);
+            Model.LimitSize.Html = RangeUtility.Clamp(Model.LimitSize.Html, Constants.clipboardLimitHtmlSize);
 
-            Model.LimitSize.ImageWidth = Constants.clipboardLimitImageWidthSize.GetClamp(Model.LimitSize.ImageWidth);
-            Model.LimitSize.ImageHeight = Constants.clipboardLimitImageHeightSize.GetClamp(Model.LimitSize.ImageHeight);
+            Model.LimitSize.ImageWidth = RangeUtility.Clamp(Model.LimitSize.ImageWidth, Constants.clipboardLimitImageWidthSize);
+            Model.LimitSize.ImageHeight = RangeUtility.Clamp(Model.LimitSize.ImageHeight, Constants.clipboardLimitImageHeightSize);
         }
 
         protected override void Correction_First()

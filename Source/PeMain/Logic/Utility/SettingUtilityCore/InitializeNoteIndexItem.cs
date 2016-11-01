@@ -38,7 +38,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
         protected override void Correction_Last()
         {
             Model.NoteKind = EnumUtility.GetNormalization(Model.NoteKind, NoteKind.Text);
-            Model.Font.Size = Constants.noteFontSize.GetClamp(Model.Font.Size);
+            Model.Font.Size = RangeUtility.Clamp(Model.Font.Size, Constants.noteFontSize);
 
             if(string.IsNullOrWhiteSpace(Model.Font.Family)) {
                 Model.Font.Family = FontUtility.GetOriginalFontFamilyName(SystemFonts.MessageFontFamily);

@@ -20,6 +20,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
 
 namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
@@ -27,15 +28,15 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
     internal sealed class InitializeWindowSaveSetting: InitializeBase<WindowSaveSettingModel>
     {
         public InitializeWindowSaveSetting(WindowSaveSettingModel model, Version previousVersion, INonProcess nonProcess)
-            :base(model, previousVersion, nonProcess)
+            : base(model, previousVersion, nonProcess)
         { }
 
         #region InitializeBase
 
         protected override void Correction_Last()
         {
-            Model.SaveCount = Constants.windowSaveCount.GetClamp(Model.SaveCount);
-            Model.SaveIntervalTime = Constants.windowSaveIntervalTime.GetClamp(Model.SaveIntervalTime);
+            Model.SaveCount = RangeUtility.Clamp(Model.SaveCount, Constants.windowSaveCount);
+            Model.SaveIntervalTime = RangeUtility.Clamp(Model.SaveIntervalTime, Constants.windowSaveIntervalTime);
         }
 
         protected override void Correction_First()

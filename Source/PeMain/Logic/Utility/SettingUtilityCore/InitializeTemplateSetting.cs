@@ -29,14 +29,14 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
     internal sealed class InitializeTemplateSetting: InitializeBase<TemplateSettingModel>
     {
         public InitializeTemplateSetting(TemplateSettingModel model, Version previousVersion, INonProcess nonProcess)
-            :base(model, previousVersion, nonProcess)
+            : base(model, previousVersion, nonProcess)
         { }
 
         #region InitializeBase
 
         protected override void Correction_Last()
         {
-            Model.Font.Size = Constants.templateFontSize.GetClamp(Model.Font.Size);
+            Model.Font.Size = RangeUtility.Clamp(Model.Font.Size, Constants.templateFontSize);
             Model.DoubleClickBehavior = EnumUtility.GetNormalization(Model.DoubleClickBehavior, IndexItemsDoubleClickBehavior.Copy);
 
             if(IsIllegalPlusNumber(Model.ItemsListWidth)) {
