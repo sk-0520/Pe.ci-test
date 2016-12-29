@@ -115,7 +115,7 @@ namespace ContentTypeTextNet.Pe.PeMain.View
             base.OnLoaded(sender, e);
 
             Appbar = new ApplicationDesktopToolbar(this, ViewModel, CommonData.NonProcess);
-            VisualStyle = new VisualStyle(this, ViewModel, CommonData.NonProcess);
+            VisualStyle = new ThemeStyle(this, ViewModel, CommonData.NonProcess);
             WindowAreaCorrection = new WindowAreaCorrection(this, ViewModel, CommonData.NonProcess);
             WindowHitTest = new WidthResizeHitTest(this, ViewModel, CommonData.NonProcess);
         }

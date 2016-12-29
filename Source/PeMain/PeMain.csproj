@@ -704,6 +704,7 @@
     </Compile>
     <Compile Include="View\Parts\ViewExtend\CaptionCursorHitTest.cs" />
     <Compile Include="View\Parts\ViewExtend\CaptionDoubleClick.cs" />
+    <Compile Include="View\Parts\ViewExtend\ThemeStyle.cs" />
     <Compile Include="View\Parts\ViewExtend\WidthResizeHitTest.cs" />
     <Compile Include="View\Parts\Window\ViewModelCommonDataWindow.cs" />
     <Compile Include="View\Parts\Attached\Language.cs" />
