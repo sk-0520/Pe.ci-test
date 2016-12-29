@@ -51,7 +51,7 @@ namespace ContentTypeTextNet.Pe.PeMain.View
         #region property
 
         CaptionCursorHitTest WindowHitTest { get; set; }
-        VisualStyle VisualStyle { get; set; }
+        ThemeStyle VisualStyle { get; set; }
 
         #endregion
 

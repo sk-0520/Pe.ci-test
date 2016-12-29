@@ -75,7 +75,7 @@ namespace ContentTypeTextNet.Pe.PeMain.View
         //ScreenModel Screen { get; set; }
 
         internal ApplicationDesktopToolbar Appbar { get; set; }
-        VisualStyle VisualStyle { get; set; }
+        ThemeStyle VisualStyle { get; set; }
         WindowAreaCorrection WindowAreaCorrection { get; set; }
         WidthResizeHitTest WindowHitTest { get; set; }
 
