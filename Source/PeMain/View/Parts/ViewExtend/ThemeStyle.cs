@@ -13,6 +13,15 @@ namespace ContentTypeTextNet.Pe.PeMain.View.Parts.ViewExtend
     {
         public ThemeStyle(System.Windows.Window view, IVisualStyleData restrictionViewModel, INonProcess nonProcess)
             : base(view, restrictionViewModel, nonProcess)
-        { }
+        {
+            var version = Environment.OSVersion;
+            IsWindows10 = 10 <= version.Version.Major;
+        }
+
+        #region property
+
+        public bool IsWindows10 { get; }
+
+        #endregion
     }
 }
