@@ -2578,6 +2578,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         void SystemEvents_SessionEnding(object sender, SessionEndingEventArgs e)
         {
             CommonData.Logger.Information(CommonData.Language["log/session/ending"], e);
+            RemoveToolbarWindow();
             SaveSetting();
         }
 
