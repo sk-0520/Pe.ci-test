@@ -2414,6 +2414,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                         GCSettings.LargeObjectHeapCompactionMode = GCLargeObjectHeapCompactionMode.CompactOnce;
                         GC.Collect();
                         GC.WaitForPendingFinalizers();
+                        GC.Collect();
                         var gcUsingMemory = GC.GetTotalMemory(true);
                         var gcTime = DateTime.Now;
                         var detail = new[] {
