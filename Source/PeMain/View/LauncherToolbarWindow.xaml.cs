@@ -75,7 +75,7 @@ namespace ContentTypeTextNet.Pe.PeMain.View
         //ScreenModel Screen { get; set; }
 
         internal ApplicationDesktopToolbar Appbar { get; set; }
-        VisualStyle VisualStyle { get; set; }
+        ThemeStyle VisualStyle { get; set; }
         WindowAreaCorrection WindowAreaCorrection { get; set; }
         WidthResizeHitTest WindowHitTest { get; set; }
 
@@ -115,7 +115,7 @@ namespace ContentTypeTextNet.Pe.PeMain.View
             base.OnLoaded(sender, e);
 
             Appbar = new ApplicationDesktopToolbar(this, ViewModel, CommonData.NonProcess);
-            VisualStyle = new VisualStyle(this, ViewModel, CommonData.NonProcess);
+            VisualStyle = new ThemeStyle(this, ViewModel, CommonData.NonProcess);
             WindowAreaCorrection = new WindowAreaCorrection(this, ViewModel, CommonData.NonProcess);
             WindowHitTest = new WidthResizeHitTest(this, ViewModel, CommonData.NonProcess);
         }

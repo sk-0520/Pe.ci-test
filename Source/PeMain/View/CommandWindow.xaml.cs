@@ -51,7 +51,7 @@ namespace ContentTypeTextNet.Pe.PeMain.View
         #region property
 
         CaptionCursorHitTest WindowHitTest { get; set; }
-        VisualStyle VisualStyle { get; set; }
+        ThemeStyle VisualStyle { get; set; }
 
         #endregion
 
@@ -76,7 +76,7 @@ namespace ContentTypeTextNet.Pe.PeMain.View
             base.OnLoaded(sender, e);
 
             WindowHitTest = new WidthResizeHitTest(this, ViewModel, CommonData.NonProcess);
-            VisualStyle = new VisualStyle(this, ViewModel, CommonData.NonProcess);
+            VisualStyle = new ThemeStyle(this, ViewModel, CommonData.NonProcess);
         }
 
         protected override IntPtr WndProc(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
