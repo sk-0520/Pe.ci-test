@@ -29,7 +29,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
     internal sealed class InitializeCommandSetting: InitializeBase<CommandSettingModel>
     {
         public InitializeCommandSetting(CommandSettingModel setting, Version previousVersion, INonProcess nonProcess)
-            :base(setting, previousVersion, nonProcess)
+            : base(setting, previousVersion, nonProcess)
         { }
 
         #region InitializeBase
@@ -37,9 +37,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
         protected override void Correction_Last()
         {
             Model.IconScale = EnumUtility.GetNormalization(Model.IconScale, IconScale.Small);
-            Model.WindowWidth = Constants.commandWindowWidth.GetClamp(Model.WindowWidth);
-            Model.Font.Size = Constants.commandFontSize.GetClamp(Model.Font.Size);
-            Model.HideTime = Constants.commandHideTime.GetClamp(Model.HideTime);
+            Model.WindowWidth = RangeUtility.Clamp(Model.WindowWidth, Constants.commandWindowWidth);
+            Model.Font.Size = RangeUtility.Clamp(Model.Font.Size, Constants.commandFontSize);
+            Model.HideTime = RangeUtility.Clamp(Model.HideTime, Constants.commandHideTime);
         }
 
         protected override void Correction_First()

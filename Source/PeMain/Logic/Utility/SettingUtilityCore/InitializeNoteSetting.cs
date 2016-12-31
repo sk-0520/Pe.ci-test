@@ -31,7 +31,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
     internal sealed class InitializeNoteSetting: InitializeBase<NoteSettingModel>
     {
         public InitializeNoteSetting(NoteSettingModel model, Version previousVersion, INonProcess nonProcess)
-            :base(model, previousVersion, nonProcess)
+            : base(model, previousVersion, nonProcess)
         { }
 
         #region InitializeBase
@@ -42,7 +42,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
                 Model.Font.Size = Constants.noteFontSize.median;
                 Model.Font.Family = FontUtility.GetOriginalFontFamilyName(SystemFonts.MessageFontFamily);
             }
-            Model.Font.Size = Constants.noteFontSize.GetClamp(Model.Font.Size);
+            Model.Font.Size = RangeUtility.Clamp(Model.Font.Size, Constants.noteFontSize);
             Model.NoteTitle = EnumUtility.GetNormalization(Model.NoteTitle, NoteTitle.Timestamp);
 
             if(Model.ForeColor == default(Color)) {

@@ -61,6 +61,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         /// <param name="element"></param>
         /// <param name="dpi"></param>
         /// <returns></returns>
+        [Obsolete("ContentTypeTextNet.Library.SharedLibrary.Logic.Utility.MediaUtility.MakeBitmapSource")]
         public static BitmapSource MakeBitmapSource(FrameworkElement element, Point dpi)
         {
             var size = new Size(element.Width, element.Height);
@@ -80,6 +81,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         /// </summary>
         /// <param name="element"></param>
         /// <returns></returns>
+        [Obsolete("ContentTypeTextNet.Library.SharedLibrary.Logic.Utility.MediaUtility.MakeBitmapSourceDefualtDpi")]
         public static BitmapSource MakeBitmapSourceDefualtDpi(FrameworkElement element)
         {
             return MakeBitmapSource(element, new Point(96, 96));

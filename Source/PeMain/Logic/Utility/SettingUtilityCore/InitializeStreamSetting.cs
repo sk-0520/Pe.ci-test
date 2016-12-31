@@ -23,20 +23,21 @@ using System.Windows.Media;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
 using ContentTypeTextNet.Pe.Library.PeData.Item;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 
 namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
 {
     internal sealed class InitializeStreamSetting: InitializeBase<StreamSettingModel>
     {
         public InitializeStreamSetting(StreamSettingModel model, Version previousVersion, INonProcess nonProcess)
-            :base(model, previousVersion, nonProcess)
+            : base(model, previousVersion, nonProcess)
         { }
 
         #region InitializeBase
 
         protected override void Correction_Last()
         {
-            Model.Font.Size = Constants.streamFontSize.GetClamp(Model.Font.Size);
+            Model.Font.Size = RangeUtility.Clamp(Model.Font.Size, Constants.streamFontSize);
 
             if(Model.OutputColor.ForeColor == default(Color)) {
                 Model.OutputColor.ForeColor = Constants.streamOutputColor.ForeColor;

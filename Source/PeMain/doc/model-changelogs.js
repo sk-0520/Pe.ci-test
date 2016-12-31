@@ -5,6 +5,8 @@
 							''
 						]
 	---------------------------------------------
+	*/
+	/*
 	{
 		'date': 'YYYY/MM/DD',
 		'version': '0.xx.1',
@@ -85,6 +87,50 @@
 		]
 	},
 	*/
+	{
+		'date': '2016/12/31',
+		'version': '0.82.0',
+		'isRc': false,
+		'contents': [
+			{
+				'type': 'fixes',
+				'logs': [
+					{
+						'revision': '26d84b3286f16713a3b2e2c70a50a8e5c55755f6',
+						'subject': '#481: セッション終了時にデスクトップサイズをシステムに返却する',
+						'comments': [
+							'セッション終了時にツールバーを一旦破棄するようにした'
+						]
+					},
+					{
+						'revision': '2cc7141f145df536031a3923e0e6f37251d5be1b',
+						'subject': '#437: windows10でツールバーの色をwindowsの設定に合わせる',
+						'comments': [
+							'レジストリ調べきってないので追従できてない',
+							'とりあえず Windows10 でツールバーが透明になる問題に対応が主、追々別課題でまた対応する'
+						]
+					},
+					{
+						'revision': '5fca089afbc10a5953ff96bf09404d881440c180',
+						'subject': '#479: クリップボード取り込み時に落ちる',
+						'comments': [
+							'再現できず。とりあえず lock で逃げる'
+						]
+					}
+				]
+			},
+			{
+				'type': 'developer',
+				'logs': [
+					{
+						'revision': '2ae0c328694f629ac955f4a81fa11f5191627980',
+						'class': 'nuget',
+						'subject': 'Extended.Wpf.Toolkit 2.9 -> 3.0'
+					}
+				]
+			}
+		]
+	},
 	{
 		'date': '2016/08/17',
 		'version': '0.81.1',

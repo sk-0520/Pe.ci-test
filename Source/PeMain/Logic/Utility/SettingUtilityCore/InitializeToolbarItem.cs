@@ -39,11 +39,11 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility.SettingUtilityCore
 
         protected override void Correction_Last()
         {
-            Model.HideWaitTime = Constants.toolbarHideWaitTime.GetClamp(Model.HideWaitTime);
-            Model.HideAnimateTime = Constants.toolbarHideAnimateTime.GetClamp(Model.HideAnimateTime);
-            Model.Font.Size = Constants.toolbarFontSize.GetClamp(Model.Font.Size);
+            Model.HideWaitTime = RangeUtility.Clamp(Model.HideWaitTime, Constants.toolbarHideWaitTime);
+            Model.HideAnimateTime = RangeUtility.Clamp(Model.HideAnimateTime, Constants.toolbarHideAnimateTime);
+            Model.Font.Size = RangeUtility.Clamp(Model.Font.Size, Constants.toolbarFontSize);
             Model.IconScale = EnumUtility.GetNormalization(Model.IconScale, IconScale.Normal);
-            Model.TextWidth = Constants.toolbarTextLength.GetClamp((int)Model.TextWidth);
+            Model.TextWidth = RangeUtility.Clamp((int)Model.TextWidth, Constants.toolbarTextLength);
             Model.ButtonPosition = EnumUtility.GetNormalization(Model.ButtonPosition, ToolbarButtonPosition.Near);
 
             if(IsIllegalPlusNumber(Model.FloatToolbar.WidthButtonCount)) {

@@ -63,7 +63,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 LogItems = logItems;
                 View.Loaded += View_Loaded;
             } else {
-                var loggingCount = Constants.loggingStockCount.GetClamp(Constants.LoggingStockCount);
+                var loggingCount = RangeUtility.Clamp(Constants.LoggingStockCount, Constants.loggingStockCount);
                 LogItems = new FixedSizeCollectionModel<LogItemModel>(loggingCount);
             }
         }
@@ -227,7 +227,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
                         var dialogResut = DialogUtility.ShowSaveFileDialog(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), name, filter);
                         if(dialogResut != null) {
-                            SaveFile(dialogResut, new [] { logItem });
+                            SaveFile(dialogResut, new[] { logItem });
                         }
                     },
                     o => {
@@ -357,7 +357,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
             var stream = AppUtility.CreateFileLoggerStream(filePath);
             AttachmentOutputWriter = stream;
-                
+
             logger.AttachmentStream(stream, true);
             if(!logger.LoggerConfig.PutsStream) {
                 logger.LoggerConfig.PutsStream = true;
@@ -410,11 +410,15 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         {
             if(HasView) {
                 View.Dispatcher.BeginInvoke(new Action(() => {
-                    LogItems.Add(item);
+                    lock(LogItems) {
+                        LogItems.Add(item);
+                    }
                 }));
             } else {
                 Application.Current.Dispatcher.BeginInvoke(new Action(() => {
-                    LogItems.Add(item);
+                    lock(LogItems) {
+                        LogItems.Add(item);
+                    }
                 }));
             }
             if(Model.AddShow) {

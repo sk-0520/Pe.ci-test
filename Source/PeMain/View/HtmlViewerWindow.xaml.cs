@@ -17,6 +17,7 @@ along with Pe.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -79,7 +80,16 @@ namespace ContentTypeTextNet.Pe.PeMain.View
 
         private void WebHtml_Navigated(object sender, NavigationEventArgs e)
         {
-            WebBrowserUtility.SetSilent(this.webDocument, ViewModel.IgnoreScriptError);
+            //WebBrowserUtility.SetSilent(this.webDocument, ViewModel.IgnoreScriptError);
+            dynamic activeX = this.webDocument.GetType().InvokeMember(
+                "ActiveXInstance",
+                BindingFlags.GetProperty | BindingFlags.Instance | BindingFlags.NonPublic,
+                null,
+                this.webDocument,
+                new object[] { }
+            );
+
+            activeX.Silent = true;
         }
     }
 }
