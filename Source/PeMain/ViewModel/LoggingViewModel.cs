@@ -410,11 +410,15 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         {
             if(HasView) {
                 View.Dispatcher.BeginInvoke(new Action(() => {
-                    LogItems.Add(item);
+                    lock(LogItems) {
+                        LogItems.Add(item);
+                    }
                 }));
             } else {
                 Application.Current.Dispatcher.BeginInvoke(new Action(() => {
-                    LogItems.Add(item);
+                    lock(LogItems) {
+                        LogItems.Add(item);
+                    }
                 }));
             }
             if(Model.AddShow) {
