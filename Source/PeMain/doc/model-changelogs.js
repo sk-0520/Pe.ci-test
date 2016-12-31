@@ -89,7 +89,7 @@
 	*/
 	{
 		'date': '2016/12/31',
-		'version': '0.82.0',
+		'version': '0.82.1',
 		'isRc': false,
 		'contents': [
 			{
@@ -116,6 +116,10 @@
 						'comments': [
 							'再現できず。とりあえず lock で逃げる'
 						]
+					},
+					{
+						'revision': '',
+						'subject': '64bit版プロセスでアクセントカラーが自動取得の場合に OverflowException が発生する'
 					}
 				]
 			},
