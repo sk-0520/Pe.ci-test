@@ -93,6 +93,18 @@
 		'isRc': false,
 		'contents': [
 			{
+				'type': 'note',
+				'logs': [
+					{
+						'revision': '',
+						'subject': '0.82.0 は 0.82.1 に統合',
+						'comments': [
+							'ミス大杉'
+						]
+					}
+				]
+			},
+			{
 				'type': 'fixes',
 				'logs': [
 					{
@@ -118,7 +130,7 @@
 						]
 					},
 					{
-						'revision': '',
+						'revision': '7e6ebc583dd7e4736c30f19f0dfd79cf23d30598',
 						'subject': '64bit版プロセスでアクセントカラーが自動取得の場合に OverflowException が発生する'
 					}
 				]
