@@ -143,7 +143,10 @@ namespace ContentTypeTextNet.Pe.PeMain.View.Parts.ViewExtend
                 switch(msg) {
                     case (int)WM.WM_DWMCOLORIZATIONCOLORCHANGED:
                         if(IsWindows10) {
-                            var color = MediaUtility.ConvertColorFromRawColor((uint)wParam);
+                            var color = Environment.Is64BitProcess
+                                ? MediaUtility.ConvertColorFromRawColor(Convert.ToUInt32((long)wParam))
+                                : MediaUtility.ConvertColorFromRawColor((uint)wParam)
+                            ;
                             SetColor(color);
                             SetBrush();
                         } else {
