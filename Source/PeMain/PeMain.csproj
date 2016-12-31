@@ -80,7 +80,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="ContentTypeTextNet.SharedLibrary">
-      <HintPath>..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.96\lib\net46\ContentTypeTextNet.SharedLibrary.dll</HintPath>
+      <HintPath>..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.97\lib\net46\ContentTypeTextNet.SharedLibrary.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Hardcodet.Wpf.TaskbarNotification">
