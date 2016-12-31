@@ -2242,9 +2242,11 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                             Type = clipboardData.Type,
                             Hash = clipboardData.Hash,
                         };
-                        SettingUtility.InitializeClipboardIndexItem(index, null, CommonData.NonProcess);
-                        SettingUtility.UpdateUniqueGuid(index, Clipboard.IndexPairList.ModelList);
-                        Clipboard.IndexPairList.Add(index, null);
+                        lock(Clipboard) {
+                            SettingUtility.InitializeClipboardIndexItem(index, null, CommonData.NonProcess);
+                            SettingUtility.UpdateUniqueGuid(index, Clipboard.IndexPairList.ModelList);
+                            Clipboard.IndexPairList.Add(index, null);
+                        }
                         index.History.Update();
                         CommonData.AppSender.SendSaveIndex(IndexKind.Clipboard, Timing.Delay);
                         CommonData.AppSender.SendSaveIndexBody(clipboardData.Body, index.Id, Timing.Delay);
@@ -2258,13 +2260,14 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
                 } else {
                     if(Clipboard.DuplicationMoveHead) {
                         CommonData.Logger.Information(CommonData.Language["log/clipboard/dup-item/move"], dupItem);
-
-                        Clipboard.IndexPairList.Remove(dupItem);
-                        var nowTime = DateTime.Now;
-                        dupItem.Sort = nowTime;
-                        dupItem.History.Update(nowTime);
-                        var item = Clipboard.IndexPairList.Add(dupItem, null);
-                        Clipboard.SelectedViewModel = item.ViewModel;
+                        lock(Clipboard) {
+                            Clipboard.IndexPairList.Remove(dupItem);
+                            var nowTime = DateTime.Now;
+                            dupItem.Sort = nowTime;
+                            dupItem.History.Update(nowTime);
+                            var item = Clipboard.IndexPairList.Add(dupItem, null);
+                            Clipboard.SelectedViewModel = item.ViewModel;
+                        }
                         CommonData.AppSender.SendSaveIndex(IndexKind.Clipboard, Timing.Delay);
                     } else {
                         CommonData.Logger.Information(CommonData.Language["log/clipboard/dup-item/ignore"], dupItem);

@@ -146,7 +146,10 @@
 					},
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#479: クリップボード取り込み時に落ちる',
+						'comments': [
+							'再現できず。とりあえず lock で逃げる'
+						]
 					},
 					{
 						'revision': '',
