@@ -88,56 +88,22 @@
 	},
 	*/
 	{
-		'date': 'YYYY/MM/DD',
-		'version': '0.81.2',
-		'isRc': true,
+		'date': '2016/12/31',
+		'version': '0.82.0',
+		'isRc': false,
 		'contents': [
-			{
-				'type': 'note',
-				'logs': [
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					}
-				]
-			},
-			{
-				'type': 'features',
-				'logs': [
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					}
-				]
-			},
 			{
 				'type': 'fixes',
 				'logs': [
 					{
-						'revision': '',
+						'revision': '26d84b3286f16713a3b2e2c70a50a8e5c55755f6',
 						'subject': '#481: セッション終了時にデスクトップサイズをシステムに返却する',
 						'comments': [
 							'セッション終了時にツールバーを一旦破棄するようにした'
 						]
 					},
 					{
-						'revision': '',
+						'revision': '2cc7141f145df536031a3923e0e6f37251d5be1b',
 						'subject': '#437: windows10でツールバーの色をwindowsの設定に合わせる',
 						'comments': [
 							'レジストリ調べきってないので追従できてない',
@@ -145,15 +111,11 @@
 						]
 					},
 					{
-						'revision': '',
+						'revision': '5fca089afbc10a5953ff96bf09404d881440c180',
 						'subject': '#479: クリップボード取り込み時に落ちる',
 						'comments': [
 							'再現できず。とりあえず lock で逃げる'
 						]
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			},
@@ -161,17 +123,9 @@
 				'type': 'developer',
 				'logs': [
 					{
-						'revision': '',
+						'revision': '2ae0c328694f629ac955f4a81fa11f5191627980',
 						'class': 'nuget',
 						'subject': 'Extended.Wpf.Toolkit 2.9 -> 3.0'
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			}
