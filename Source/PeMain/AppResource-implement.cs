@@ -34,7 +34,7 @@ namespace ContentTypeTextNet.Pe.PeMain
         #region static
 
         static IconCaching<string> _iconCaching = new IconCaching<string>();
-        static Caching<string, BitmapSource> _imageCaching = new Caching<string, BitmapSource>();
+        static Cacher<string, BitmapSource> _imageCaching = new Cacher<string, BitmapSource>();
 
         #endregion
 

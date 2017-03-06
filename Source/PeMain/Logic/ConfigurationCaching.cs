@@ -30,7 +30,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
     /// <summary>
     /// App.config データのキャッシュ。
     /// </summary>
-    public class ConfigurationCaching: Caching<string,object>
+    public class ConfigurationCaching: Cacher<string,object>
     {
         public TResult Get<TResult>(string key, Func<string, TResult> parser)
         {

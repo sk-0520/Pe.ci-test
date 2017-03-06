@@ -173,7 +173,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 
             var result = new TModel();
             if(items != null || items.Any()) {
-                newName = TextUtility.ToUniqueDefault(newName, items.Select(g => g.Name));
+                newName = TextUtility.ToUniqueDefault(newName, items.Select(g => g.Name), StringComparison.Ordinal);
             }
             result.Name = newName;
 

@@ -35,13 +35,13 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 
         #region property
 
-        protected Dictionary<IconScale, Caching<TChildKey, BitmapSource>> Cache { get; private set; }
+        protected Dictionary<IconScale, Cacher<TChildKey, BitmapSource>> Cache { get; private set; }
 
         #endregion
 
         #region indexer
 
-        public Caching<TChildKey, BitmapSource> this[IconScale key]
+        public Cacher<TChildKey, BitmapSource> this[IconScale key]
         {
             get
             {
@@ -58,7 +58,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
             Cache = EnumUtility.GetMembers<IconScale>()
                 .ToDictionary(
                     k => k,
-                    v => new Caching<TChildKey, BitmapSource>()
+                    v => new Cacher<TChildKey, BitmapSource>()
                 )
             ;
         }
