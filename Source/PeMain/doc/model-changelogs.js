@@ -152,7 +152,7 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': 'nuget, myget 周りアップデート'
 					},
 					{
 						'revision': '',

@@ -58,15 +58,11 @@
     <NoWarn>RECS0154</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ContentTypeTextNet.PInvoke, Version=1.0.6274.18975, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\ContentTypeTextNet.PInvoke.1.0.0.24\lib\net46\ContentTypeTextNet.PInvoke.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="ContentTypeTextNet.PInvoke, Version=1.0.6341.29050, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\ContentTypeTextNet.PInvoke.1.0.0.26\lib\net46\ContentTypeTextNet.PInvoke.dll</HintPath>
     </Reference>
-    <Reference Include="ContentTypeTextNet.SharedLibrary, Version=0.1.6274.19760, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.105\lib\net46\ContentTypeTextNet.SharedLibrary.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="ContentTypeTextNet.SharedLibrary, Version=0.1.6332.25650, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.108\lib\net46\ContentTypeTextNet.SharedLibrary.dll</HintPath>
     </Reference>
     <Reference Include="Gma.System.MouseKeyHook">
       <HintPath>..\..\packages\MouseKeyHook.5.4.0\lib\net40\Gma.System.MouseKeyHook.dll</HintPath>
@@ -85,10 +81,8 @@
       <HintPath>..\..\packages\Mono.TextTemplating.1.0.0\lib\Mono.TextTemplating.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
