@@ -49,7 +49,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             SourceModel = model;
 
             if(HasView) {
-                ScreenUtility.AttachmentStartupMoveScreenCenter(view, Screen);
+                ScreenUtility.AttachStartupMoveScreenCenter(view, Screen);
                 //View.SourceInitialized += View_SourceInitialized;
             }
         }

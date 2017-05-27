@@ -152,7 +152,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
                 logger.LoggerConfig.PutsStream = true;
                 var path = Path.Combine(baseDir, PathUtility.AppendExtension(Constants.GetNowTimestampFileName(), Constants.logFileExtension));
                 var stream = CreateFileLoggerStream(path);
-                logger.AttachmentStream(stream, true);
+                logger.AttachStream(stream, true);
             }
 
             return logger;

@@ -61,8 +61,8 @@
     <Reference Include="ContentTypeTextNet.PInvoke, Version=1.0.6341.29050, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\ContentTypeTextNet.PInvoke.1.0.0.26\lib\net46\ContentTypeTextNet.PInvoke.dll</HintPath>
     </Reference>
-    <Reference Include="ContentTypeTextNet.SharedLibrary, Version=0.1.6332.25650, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.108\lib\net46\ContentTypeTextNet.SharedLibrary.dll</HintPath>
+    <Reference Include="ContentTypeTextNet.SharedLibrary, Version=0.1.6356.6221, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.110\lib\net46\ContentTypeTextNet.SharedLibrary.dll</HintPath>
     </Reference>
     <Reference Include="Gma.System.MouseKeyHook">
       <HintPath>..\..\packages\MouseKeyHook.5.4.0\lib\net40\Gma.System.MouseKeyHook.dll</HintPath>

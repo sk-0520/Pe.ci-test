@@ -74,7 +74,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             Process.Exited += Process_Exited;
 
             if(HasView) {
-                ScreenUtility.AttachmentStartupMoveScreenCenter(View, Screen);
+                ScreenUtility.AttachStartupMoveScreenCenter(View, Screen);
             }
         }
 
