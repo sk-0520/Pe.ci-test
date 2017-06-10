@@ -131,7 +131,7 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#482: 完全透明状態は設定できないようにする'
 					},
 					{
 						'revision': '',
