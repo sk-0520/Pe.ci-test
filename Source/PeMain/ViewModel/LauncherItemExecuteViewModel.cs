@@ -65,7 +65,7 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
             this._stdStreamInput = Model.StdStream.InputUsing;
 
             if(HasView) {
-                ScreenUtility.AttachmentStartupMoveScreenCenter(View, Screen);
+                ScreenUtility.AttachStartupMoveScreenCenter(View, Screen);
                 View.Dispatcher.BeginInvoke(new Action(() => {
                     View.selectOption.Focus();
                 }), System.Windows.Threading.DispatcherPriority.SystemIdle);

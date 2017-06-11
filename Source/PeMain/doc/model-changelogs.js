@@ -88,6 +88,35 @@
 	},
 	*/
 	{
+		'date': '2017/06/11',
+		'version': '0.83.0',
+		'isRc': false,
+		'contents': [
+			{
+				'type': 'fixes',
+				'logs': [
+					{
+						'revision': '8dea8d185cd900776b76aaa37b68d2905aa8f75b',
+						'subject': '#482: 完全透明状態は設定できないようにする'
+					},
+					{
+						'revision': '99ad70bbff987819e7a185004915229d5f745f58',
+						'subject': '#483: コマンドのパスが不正な際にツールバーからアイテムメニューを開くと落ちる'
+					}
+				]
+			},
+			{
+				'type': 'developer',
+				'logs': [
+					{
+						'revision': '',
+						'subject': 'nuget, myget 周りアップデート'
+					}
+				]
+			}
+		]
+	},
+	{
 		'date': '2016/12/31',
 		'version': '0.82.1',
 		'isRc': false,

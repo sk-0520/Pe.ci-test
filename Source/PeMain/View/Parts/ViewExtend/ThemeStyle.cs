@@ -73,8 +73,12 @@ namespace ContentTypeTextNet.Pe.PeMain.View.Parts.ViewExtend
 
         private void SetColor(Color color)
         {
-            RestrictionViewModel.VisualAlphaColor = color;
             RestrictionViewModel.VisualPlainColor = Color.FromRgb(color.R, color.G, color.B);
+            if(color.A == 0) {
+                RestrictionViewModel.VisualAlphaColor = RestrictionViewModel.VisualPlainColor;
+            } else {
+                RestrictionViewModel.VisualAlphaColor = color;
+            }
         }
 
         bool SetWindowColorWindows10()
