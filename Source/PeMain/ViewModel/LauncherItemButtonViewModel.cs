@@ -350,9 +350,15 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 
                         // 親ディレクトリ
                         if(!string.IsNullOrWhiteSpace(command)) {
-                            var parentDir = Path.GetDirectoryName(command);
-                            HasDataParentDirectory = !string.IsNullOrWhiteSpace(parentDir);
-                            ExistsParentDirectory = ExistsCommand && HasDataParentDirectory && Directory.Exists(parentDir);
+                            try {
+                                var parentDir = Path.GetDirectoryName(command);
+                                HasDataParentDirectory = !string.IsNullOrWhiteSpace(parentDir);
+                                ExistsParentDirectory = ExistsCommand && HasDataParentDirectory && Directory.Exists(parentDir);
+                            } catch(ArgumentException ex) {
+                                AppNonProcess.Logger.Error(ex);
+                                HasDataParentDirectory = false;
+                                ExistsParentDirectory = false;
+                            }
                         } else {
                             HasDataParentDirectory = false;
                             ExistsParentDirectory = false;
