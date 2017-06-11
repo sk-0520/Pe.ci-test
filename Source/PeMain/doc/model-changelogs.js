@@ -88,62 +88,20 @@
 	},
 	*/
 	{
-		'date': 'YYYY/MM/DD',
-		'version': '0.82.2',
-		'isRc': true,
+		'date': '2017/06/11',
+		'version': '0.83.0',
+		'isRc': false,
 		'contents': [
-			{
-				'type': 'note',
-				'logs': [
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					}
-				]
-			},
-			{
-				'type': 'features',
-				'logs': [
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					}
-				]
-			},
 			{
 				'type': 'fixes',
 				'logs': [
 					{
-						'revision': '',
+						'revision': '8dea8d185cd900776b76aaa37b68d2905aa8f75b',
 						'subject': '#482: 完全透明状態は設定できないようにする'
 					},
 					{
-						'revision': '',
+						'revision': '99ad70bbff987819e7a185004915229d5f745f58',
 						'subject': '#483: コマンドのパスが不正な際にツールバーからアイテムメニューを開くと落ちる'
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			},
@@ -153,14 +111,6 @@
 					{
 						'revision': '',
 						'subject': 'nuget, myget 周りアップデート'
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			}
