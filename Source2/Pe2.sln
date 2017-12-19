@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2010
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeMain", "PeMain\PeMain.csproj", "{E84861D4-0C02-496E-9ECC-7A8D4730BFAC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Library", "Library", "{12D6E79E-4611-449B-8D28-5B21E805A860}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContentTypeTextNet.Package", "Library\ContentTypeTextNet.Package\ContentTypeTextNet.Package.csproj", "{BBC400D7-BEDF-41F5-9C56-9845A389122C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E84861D4-0C02-496E-9ECC-7A8D4730BFAC}.Debug|x64.ActiveCfg = Debug|x64
+		{E84861D4-0C02-496E-9ECC-7A8D4730BFAC}.Debug|x64.Build.0 = Debug|x64
+		{E84861D4-0C02-496E-9ECC-7A8D4730BFAC}.Debug|x86.ActiveCfg = Debug|x86
+		{E84861D4-0C02-496E-9ECC-7A8D4730BFAC}.Debug|x86.Build.0 = Debug|x86
+		{E84861D4-0C02-496E-9ECC-7A8D4730BFAC}.Release|x64.ActiveCfg = Release|x64
+		{E84861D4-0C02-496E-9ECC-7A8D4730BFAC}.Release|x64.Build.0 = Release|x64
+		{E84861D4-0C02-496E-9ECC-7A8D4730BFAC}.Release|x86.ActiveCfg = Release|x86
+		{E84861D4-0C02-496E-9ECC-7A8D4730BFAC}.Release|x86.Build.0 = Release|x86
+		{BBC400D7-BEDF-41F5-9C56-9845A389122C}.Debug|x64.ActiveCfg = Debug|x64
+		{BBC400D7-BEDF-41F5-9C56-9845A389122C}.Debug|x64.Build.0 = Debug|x64
+		{BBC400D7-BEDF-41F5-9C56-9845A389122C}.Debug|x86.ActiveCfg = Debug|x86
+		{BBC400D7-BEDF-41F5-9C56-9845A389122C}.Debug|x86.Build.0 = Debug|x86
+		{BBC400D7-BEDF-41F5-9C56-9845A389122C}.Release|x64.ActiveCfg = Release|x64
+		{BBC400D7-BEDF-41F5-9C56-9845A389122C}.Release|x64.Build.0 = Release|x64
+		{BBC400D7-BEDF-41F5-9C56-9845A389122C}.Release|x86.ActiveCfg = Release|x86
+		{BBC400D7-BEDF-41F5-9C56-9845A389122C}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{BBC400D7-BEDF-41F5-9C56-9845A389122C} = {12D6E79E-4611-449B-8D28-5B21E805A860}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D7815202-F125-4A07-B82C-761A14D507B7}
+	EndGlobalSection
+EndGlobal
