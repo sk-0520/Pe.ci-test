@@ -15,7 +15,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>$(SolutionDir)..\Output\$(Configuration)\$(Platform)\lib</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
@@ -28,7 +28,7 @@
     <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>$(SolutionDir)..\Output\$(Configuration)\$(Platform)\lib</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Optimize>true</Optimize>
@@ -43,11 +43,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ContentTypeTextNet.PInvoke, Version=1.0.6341.29050, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ContentTypeTextNet.PInvoke.1.0.0.26\lib\net46\ContentTypeTextNet.PInvoke.dll</HintPath>
+      <HintPath>..\..\packages\ContentTypeTextNet.PInvoke.1.0.0.26\lib\net46\ContentTypeTextNet.PInvoke.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="PresentationCore" />
@@ -282,9 +282,7 @@
     <Compile Include="View\Window\WndProcWindowBase.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="packages.config" />
     <None Include="SharedLibrary.nuspec" />
   </ItemGroup>
   <ItemGroup />
