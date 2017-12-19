@@ -156,7 +156,8 @@
 					},
 					{
 						'revision': '',
-						'subject': ''
+						'class': 'nuget',
+						'subject': 'Newtonsoft.Json: 10.0.2 -> 10.0.3'
 					},
 					{
 						'revision': '',

@@ -64,7 +64,7 @@
   <ItemGroup>
     <Reference Include="ContentTypeTextNet.PInvoke, Version=1.0.6341.29050, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\ContentTypeTextNet.PInvoke.1.0.0.26\lib\net46\ContentTypeTextNet.PInvoke.dll</HintPath>
-      <Private>False</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Mono.TextTemplating, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -72,8 +72,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\..\..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework, Version=3.9.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\NUnit.3.9.0\lib\net45\nunit.framework.dll</HintPath>
@@ -136,7 +135,7 @@
     <ProjectReference Include="..\..\..\Library\PeData\PeData.csproj">
       <Project>{b3c0d8c0-2382-4058-8cec-3c62de401c3f}</Project>
       <Name>PeData</Name>
-      <Private>False</Private>
+      <Private>True</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Library\SharedLibrary\SharedLibrary.csproj">
       <Project>{9e8e373e-cd97-411d-8c45-10ac4a86cae8}</Project>
