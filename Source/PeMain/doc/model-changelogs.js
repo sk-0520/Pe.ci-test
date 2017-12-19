@@ -152,7 +152,7 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#480: myget: SharedLibrary から Pe 限定の処理を抜き出し '
 					},
 					{
 						'revision': '',
