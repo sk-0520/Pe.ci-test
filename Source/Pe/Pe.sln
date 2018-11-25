@@ -27,8 +27,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugin", "Plugin\Plugin.csp
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "plugin", "plugin", "{CBA0649A-1EE4-46A5-BB3D-2D5861F02B1F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Embedded.Test", "Shared.Embedded.Test\Shared.Embedded.Test.csproj", "{273A0DBE-A505-4A7E-B0C3-02F63D2F8B79}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		Shared.Embedded\Shared.Embedded.projitems*{273a0dbe-a505-4a7e-b0c3-02f63d2f8b79}*SharedItemsImports = 4
 		Shared.Embedded\Shared.Embedded.projitems*{604e24f0-c0c4-426b-aa09-a3735fcc4a0c}*SharedItemsImports = 13
 		Shared.Embedded\Shared.Embedded.projitems*{c8af5720-3b88-4669-ad49-040cc55daaf9}*SharedItemsImports = 4
 	EndGlobalSection
@@ -57,6 +60,10 @@ Global
 		{B8EE86CD-F12D-4301-96E7-C1440505827E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B8EE86CD-F12D-4301-96E7-C1440505827E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B8EE86CD-F12D-4301-96E7-C1440505827E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{273A0DBE-A505-4A7E-B0C3-02F63D2F8B79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{273A0DBE-A505-4A7E-B0C3-02F63D2F8B79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{273A0DBE-A505-4A7E-B0C3-02F63D2F8B79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{273A0DBE-A505-4A7E-B0C3-02F63D2F8B79}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -68,6 +75,7 @@ Global
 		{EE735FC9-8AF1-4761-B6BC-6275790B53A0} = {68AA7E33-FE3D-4E76-A147-8EAFF01DD2FA}
 		{B022BBD8-05E8-4A43-B3ED-EA0C01624D86} = {68AA7E33-FE3D-4E76-A147-8EAFF01DD2FA}
 		{B8EE86CD-F12D-4301-96E7-C1440505827E} = {68AA7E33-FE3D-4E76-A147-8EAFF01DD2FA}
+		{273A0DBE-A505-4A7E-B0C3-02F63D2F8B79} = {2284A9DA-9D88-466D-9499-6362DBEB7E24}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D24296C9-92EF-4B96-83CF-64B7A0A24EFD}
