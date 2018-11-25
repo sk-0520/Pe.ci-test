@@ -9,6 +9,7 @@
     <Import_RootNamespace>ContentTypeTextNet.Pe.Library.Shared.Embedded</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Model\AssemblyResolveHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\CommandLine.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\TextUtility.cs" />
   </ItemGroup>

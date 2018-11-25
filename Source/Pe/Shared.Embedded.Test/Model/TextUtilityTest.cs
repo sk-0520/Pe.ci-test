@@ -17,7 +17,7 @@ namespace Shared.Embedded.Test.Model
         [DataRow("a(2)", "a", new[] { "a" })]
         [DataRow("A", "A", new[] { "A(2)" })]
         [DataRow("a(3)", "a", new[] { "a(5)", "a(2)", "a(4)", "a" })]
-        public void humanToUniqueDefaultTest(string result, string src, params string[] list)
+        public void ToUniqueDefaultTest(string result, string src, params string[] list)
         {
             Assert.IsTrue(TextUtility.ToUniqueDefault(src, list, StringComparison.Ordinal) == result);
         }
