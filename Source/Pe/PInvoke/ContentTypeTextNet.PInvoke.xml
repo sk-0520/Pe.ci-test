@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <doc>
     <assembly>
-        <name>ContentTypeTextNet.PInvoke</name>
+        <name>PInvoke</name>
     </assembly>
     <members>
         <member name="T:ContentTypeTextNet.Library.PInvoke.Windows.IMAGELISTDRAWPARAMS">
