@@ -33,6 +33,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -41,9 +42,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Shared.Link\Model\Disposer.cs">
+      <Link>Link\Model\Disposer.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared.Link\Model\ILogger.cs">
+      <Link>Link\Model\ILogger.cs</Link>
+    </Compile>
     <Compile Include="Model\Counter.cs" />
+    <Compile Include="Model\DependencyInjectionContainer.cs" />
     <Compile Include="Model\EnumUtility.cs" />
     <Compile Include="Model\KeepOpenStream.cs" />
+    <Compile Include="Model\ReaderWriterLocker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
