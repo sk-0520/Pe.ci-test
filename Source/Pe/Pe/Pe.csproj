@@ -57,6 +57,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\Database\ApplicationDatabase.cs" />
     <Compile Include="Model\Database\DatabaseAccessor.cs" />
     <Compile Include="Model\Database\DatabaseConnectionCreator.cs" />
     <Compile Include="Model\Database\DatabaseTransaction.cs" />
@@ -96,6 +97,11 @@
     <ProjectReference Include="..\Package\Package.csproj">
       <Project>{ee735fc9-8af1-4761-b6bc-6275790b53a0}</Project>
       <Name>Package</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\PInvoke\PInvoke.csproj">
+      <Project>{13a7d6df-6702-49cb-86f1-0980a3c1d6c6}</Project>
+      <Name>PInvoke</Name>
       <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\Plugin\Plugin.csproj">

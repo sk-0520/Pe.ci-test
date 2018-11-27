@@ -23,7 +23,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database
     {
         #region IDatabaseConnectionCreator
 
-        public TDbConnection CreateConnection()
+        public virtual TDbConnection CreateConnection()
         {
             var con = new TDbConnection();
             return con;

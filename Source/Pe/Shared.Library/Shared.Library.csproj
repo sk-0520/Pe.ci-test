@@ -52,6 +52,7 @@
     <Compile Include="Model\DependencyInjectionContainer.cs" />
     <Compile Include="Model\EnumUtility.cs" />
     <Compile Include="Model\KeepOpenStream.cs" />
+    <Compile Include="Model\NullLogger.cs" />
     <Compile Include="Model\ReaderWriterLocker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
