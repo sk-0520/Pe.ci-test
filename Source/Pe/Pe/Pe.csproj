@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\Database\DatabaseAccessor.cs" />
+    <Compile Include="Model\Database\DatabaseConnectionCreator.cs" />
     <Compile Include="Model\Database\DatabaseTransaction.cs" />
     <Compile Include="Model\Database\SqliteAccessor.cs" />
     <Compile Include="Program.cs" />

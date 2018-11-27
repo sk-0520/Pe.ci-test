@@ -76,19 +76,25 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database
     /// DBアクセスに対してラップする。
     /// <para>DBまで行く前にプログラム側で制御する目的。</para>
     /// </summary>
-    public abstract class DatabaseAccessorBase : ReaderWriterLocker, IDatabaseCommander, IDatabaseSqlImplementation, IDatabaseChecker
+    public abstract class DatabaseAccessorBase<TDbConnection> : ReaderWriterLocker, IDatabaseCommander, IDatabaseSqlImplementation, IDatabaseChecker
+        where TDbConnection: IDbConnection, new()
     {
-        public DatabaseAccessorBase(IDbConnection connection, ILoggerFactory loggerFactory)
+        public DatabaseAccessorBase(IDatabaseConnectionCreator<TDbConnection> connectionCreator, ILoggerFactory loggerFactory)
         {
-            ConnectionBase = connection;
+            ConnectionCreator = connectionCreator;
 
             LoggerFactory = loggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());
+
+            LazyConnection = new Lazy<TDbConnection>(() => ConnectionCreator.CreateConnection());
         }
 
         #region property
 
-        public IDbConnection ConnectionBase { get; }
+        protected IDatabaseConnectionCreator<TDbConnection> ConnectionCreator { get; }
+        Lazy<TDbConnection> LazyConnection { get; }
+        internal virtual TDbConnection Connection => LazyConnection.Value;
+
         protected ILoggerFactory LoggerFactory { get; }
         protected ILogger Logger { get; }
 
@@ -101,7 +107,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database
             var formattedSql = PreFormatSql(sql);
 
             Logger.LogDebug(formattedSql, param);
-            return ConnectionBase.Query<T>(formattedSql, param, transaction, buffered);
+            return Connection.Query<T>(formattedSql, param, transaction, buffered);
         }
 
         public virtual IEnumerable<dynamic> Query(string sql, object param, IDbTransaction transaction, bool buffered)
@@ -109,7 +115,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database
             var formattedSql = PreFormatSql(sql);
 
             Logger.LogDebug(formattedSql, param);
-            return ConnectionBase.Query(formattedSql, param, transaction, buffered);
+            return Connection.Query(formattedSql, param, transaction, buffered);
         }
 
         public virtual int Execute(string sql, object param, IDbTransaction transaction)
@@ -117,22 +123,22 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database
             var formattedSql = PreFormatSql(sql);
 
             Logger.LogDebug(formattedSql, param);
-            return ConnectionBase.Execute(formattedSql, param, transaction);
+            return Connection.Execute(formattedSql, param, transaction);
         }
 
         public void Open()
         {
-            ConnectionBase.Open();
+            Connection.Open();
         }
 
-        public virtual DatabaseTransaction BeginTransaction()
+        public virtual DatabaseTransaction<TDbConnection> BeginTransaction()
         {
-            return new DatabaseTransaction(this);
+            return new DatabaseTransaction<TDbConnection>(this);
         }
 
-        public virtual DatabaseTransaction BeginTransaction(IsolationLevel isolationLevel)
+        public virtual DatabaseTransaction<TDbConnection> BeginTransaction(IsolationLevel isolationLevel)
         {
-            return new DatabaseTransaction(this, isolationLevel);
+            return new DatabaseTransaction<TDbConnection>(this, isolationLevel);
         }
 
 
@@ -200,28 +206,12 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database
         {
             if(!IsDisposed) {
                 if(disposing) {
-                    ConnectionBase.Dispose();
+                    Connection.Dispose();
                 }
             }
 
             base.Dispose(disposing);
         }
-
-        #endregion
-    }
-
-    public class DatabaseAccessor<TConnection> : DatabaseAccessorBase
-        where TConnection : IDbConnection
-    {
-        public DatabaseAccessor(TConnection connection, ILoggerFactory loggerFactory)
-            : base(connection, loggerFactory)
-        {
-            Connection = connection;
-        }
-
-        #region property
-
-        protected TConnection Connection { get; }
 
         #endregion
     }

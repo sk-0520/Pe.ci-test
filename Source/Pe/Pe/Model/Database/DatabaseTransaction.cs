@@ -8,24 +8,25 @@ using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Database
 {
-    public class DatabaseTransaction : DisposerBase, IDatabaseCommander
+    public sealed class DatabaseTransaction<TDbConnection> : DisposerBase, IDatabaseCommander
+        where TDbConnection: IDbConnection, new()
     {
-        public DatabaseTransaction(DatabaseAccessorBase databaseAccessor)
+        public DatabaseTransaction(DatabaseAccessorBase<TDbConnection> databaseAccessor)
         {
             DatabaseAccessor = databaseAccessor;
-            Transaction = DatabaseAccessor.ConnectionBase.BeginTransaction();
+            Transaction = DatabaseAccessor.Connection.BeginTransaction();
         }
 
-        public DatabaseTransaction(DatabaseAccessorBase databaseAccessor, IsolationLevel isolationLevel)
+        public DatabaseTransaction(DatabaseAccessorBase<TDbConnection> databaseAccessor, IsolationLevel isolationLevel)
         {
             DatabaseAccessor = DatabaseAccessor;
-            Transaction = DatabaseAccessor.ConnectionBase.BeginTransaction(isolationLevel);
+            Transaction = DatabaseAccessor.Connection.BeginTransaction(isolationLevel);
         }
 
         #region property
 
-        protected DatabaseAccessorBase DatabaseAccessor { get; private set; }
-        protected IDbTransaction Transaction { get; private set; }
+        DatabaseAccessorBase<TDbConnection> DatabaseAccessor { get; set; }
+        IDbTransaction Transaction { get; set; }
 
         #endregion
 

@@ -12,7 +12,7 @@ using Dapper;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Database
 {
-    public class SqliteAccessor : DatabaseAccessor<SQLiteConnection>
+    public class SqliteAccessor : DatabaseAccessorBase<SQLiteConnection>
     {
         #region define
 
@@ -44,8 +44,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database
 #endif
         }
 
-        public SqliteAccessor(SQLiteConnection connection, ILoggerFactory loggerFactory)
-            : base(connection, loggerFactory)
+        public SqliteAccessor(IDatabaseConnectionCreator<SQLiteConnection> connectionCreator, ILoggerFactory loggerFactory)
+            : base(connectionCreator, loggerFactory)
         { }
     }
 }
