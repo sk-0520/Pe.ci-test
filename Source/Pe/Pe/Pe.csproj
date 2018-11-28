@@ -58,10 +58,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\Database\ApplicationDatabase.cs" />
-    <Compile Include="Model\Database\DatabaseAccessor.cs" />
-    <Compile Include="Model\Database\DatabaseConnectionCreator.cs" />
-    <Compile Include="Model\Database\DatabaseTransaction.cs" />
-    <Compile Include="Model\Database\SqliteAccessor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -104,11 +100,6 @@
       <Name>PInvoke</Name>
       <Private>False</Private>
     </ProjectReference>
-    <ProjectReference Include="..\Plugin\Plugin.csproj">
-      <Project>{b8ee86cd-f12d-4301-96e7-c1440505827e}</Project>
-      <Name>Plugin</Name>
-      <Private>False</Private>
-    </ProjectReference>
     <ProjectReference Include="..\Shared.Library\Shared.Library.csproj">
       <Project>{b022bbd8-05e8-4a43-b3ed-ea0c01624d86}</Project>
       <Name>Shared.Library</Name>
@@ -125,7 +116,6 @@
     <Error Condition="!Exists('..\packages\Microsoft.VisualStudio.SlowCheetah.3.1.66\build\Microsoft.VisualStudio.SlowCheetah.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.VisualStudio.SlowCheetah.3.1.66\build\Microsoft.VisualStudio.SlowCheetah.targets'))" />
     <Error Condition="!Exists('..\packages\System.Data.SQLite.Core.1.0.109.2\build\net46\System.Data.SQLite.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.Data.SQLite.Core.1.0.109.2\build\net46\System.Data.SQLite.Core.targets'))" />
   </Target>
-  <Import Project="..\packages\System.Data.SQLite.Core.1.0.109.2\build\net46\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.109.2\build\net46\System.Data.SQLite.Core.targets')" />
   <PropertyGroup>
     <PreBuildEvent>
     </PreBuildEvent>
@@ -135,4 +125,5 @@
 rem del /S /Q "$(TargetDir)x64"
 </PostBuildEvent>
   </PropertyGroup>
+  <Import Project="..\packages\System.Data.SQLite.Core.1.0.109.2\build\net46\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.109.2\build\net46\System.Data.SQLite.Core.targets')" />
 </Project>

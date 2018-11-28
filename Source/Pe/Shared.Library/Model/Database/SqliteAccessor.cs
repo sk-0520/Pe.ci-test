@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using Dapper;
 
-namespace ContentTypeTextNet.Pe.Main.Model.Database
+namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
 {
     public class SqliteAccessor : DatabaseAccessorBase<SQLiteConnection>
     {

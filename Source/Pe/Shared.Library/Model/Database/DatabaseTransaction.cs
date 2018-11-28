@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 
-namespace ContentTypeTextNet.Pe.Main.Model.Database
+namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
 {
     public sealed class DatabaseTransaction<TDbConnection> : DisposerBase, IDatabaseCommander
         where TDbConnection: IDbConnection, new()

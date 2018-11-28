@@ -58,10 +58,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Plugin\Plugin.csproj">
-      <Project>{b8ee86cd-f12d-4301-96e7-c1440505827e}</Project>
-      <Name>Plugin</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Shared.Library\Shared.Library.csproj">
       <Project>{b022bbd8-05e8-4a43-b3ed-ea0c01624d86}</Project>
       <Name>Shared.Library</Name>
