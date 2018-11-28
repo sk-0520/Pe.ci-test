@@ -67,7 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Pe\Pe.csproj">
-      <Project>{c8af5720-3b88-4669-ad49-040cc55daaf9}</Project>
+      <Project>{6f4ee2ce-f9da-4a44-aad7-d3768fe03e90}</Project>
       <Name>Pe</Name>
     </ProjectReference>
     <ProjectReference Include="..\Shared.Library\Shared.Library.csproj">
