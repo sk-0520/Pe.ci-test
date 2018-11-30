@@ -76,26 +76,27 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
     /// DBアクセスに対してラップする。
     /// <para>DBまで行く前にプログラム側で制御する目的。</para>
     /// </summary>
-    public abstract class DatabaseAccessorBase<TDbConnection> : ReaderWriterLocker, IDatabaseCommander, IDatabaseSqlImplementation, IDatabaseChecker
-        where TDbConnection: IDbConnection, new()
+    public abstract class DatabaseAccessorBase : ReaderWriterLocker, IDatabaseCommander, IDatabaseSqlImplementation, IDatabaseChecker
     {
-        public DatabaseAccessorBase(IDatabaseConnectionCreator<TDbConnection> connectionCreator, ILoggerFactory loggerFactory)
+        public DatabaseAccessorBase(IDatabaseConnectionFactory connectionFactory, ILogger logger)
         {
-            ConnectionCreator = connectionCreator;
+            ConnectionFactory = connectionFactory;
 
-            LoggerFactory = loggerFactory;
-            Logger = LoggerFactory.CreateLogger(GetType());
+            Logger = logger;
 
-            LazyConnection = new Lazy<TDbConnection>(() => ConnectionCreator.CreateConnection());
+            LazyConnection = new Lazy<IDbConnection>(() => {
+                var con = ConnectionFactory.CreateConnection();
+                con.Open();
+                return con;
+            });
         }
 
         #region property
 
-        protected IDatabaseConnectionCreator<TDbConnection> ConnectionCreator { get; }
-        Lazy<TDbConnection> LazyConnection { get; }
-        internal virtual TDbConnection Connection => LazyConnection.Value;
+        protected IDatabaseConnectionFactory ConnectionFactory { get; }
+        Lazy<IDbConnection> LazyConnection { get; }
+        public virtual IDbConnection BaseConnection => LazyConnection.Value;
 
-        protected ILoggerFactory LoggerFactory { get; }
         protected ILogger Logger { get; }
 
         #endregion
@@ -106,45 +107,60 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
         {
             var formattedSql = PreFormatSql(sql);
 
-            Logger.LogDebug(formattedSql, param);
-            return Connection.Query<T>(formattedSql, param, transaction, buffered);
+            Logger.Debug(formattedSql, param);
+            return BaseConnection.Query<T>(formattedSql, param, transaction, buffered);
         }
 
         public virtual IEnumerable<dynamic> Query(string sql, object param, IDbTransaction transaction, bool buffered)
         {
             var formattedSql = PreFormatSql(sql);
 
-            Logger.LogDebug(formattedSql, param);
-            return Connection.Query(formattedSql, param, transaction, buffered);
+            Logger.Debug(formattedSql, param);
+            return BaseConnection.Query(formattedSql, param, transaction, buffered);
         }
 
         public virtual int Execute(string sql, object param, IDbTransaction transaction)
         {
             var formattedSql = PreFormatSql(sql);
 
-            Logger.LogDebug(formattedSql, param);
-            return Connection.Execute(formattedSql, param, transaction);
+            Logger.Debug(formattedSql, param);
+            return BaseConnection.Execute(formattedSql, param, transaction);
         }
 
-        public void Open()
+        public virtual IDatabaseTransaction BeginTransaction()
         {
-            Connection.Open();
+            return new DatabaseTransaction(this);
         }
 
-        public virtual DatabaseTransaction<TDbConnection> BeginTransaction()
+        public virtual IDatabaseTransaction BeginTransaction(IsolationLevel isolationLevel)
         {
-            return new DatabaseTransaction<TDbConnection>(this);
+            return new DatabaseTransaction(this, isolationLevel);
         }
 
-        public virtual DatabaseTransaction<TDbConnection> BeginTransaction(IsolationLevel isolationLevel)
+        protected virtual void ExecuteTransactionCore(Func<IDatabaseTransaction> transactionCreator, Action<IDbCommand> action)
         {
-            return new DatabaseTransaction<TDbConnection>(this, isolationLevel);
+            var transaction = transactionCreator();
+            try {
+
+            } catch(Exception ex) {
+                Logger.Debug(ex);
+                transaction.Rollback();
+            }
         }
 
+        public void ExecuteTransaction(Action<IDbCommand> action)
+        {
+            ExecuteTransactionCore(() => new DatabaseTransaction(this), action);
+        }
+
+        public void ExecuteTransaction(Action<IDbCommand> action, IsolationLevel isolationLevel)
+        {
+            ExecuteTransactionCore(() => new DatabaseTransaction(this, isolationLevel), action);
+        }
 
         #endregion
 
-        #region IDatabaseCommand
+        #region IDatabaseCommander
 
         public IEnumerable<T> Query<T>(string sql, object param = null, bool buffered = true)
         {
@@ -206,12 +222,28 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
         {
             if(!IsDisposed) {
                 if(disposing) {
-                    Connection.Dispose();
+                    if(LazyConnection.IsValueCreated) {
+                        BaseConnection.Dispose();
+                    }
                 }
             }
 
             base.Dispose(disposing);
         }
+
+        #endregion
+    }
+
+    public abstract class DatabaseAccessorBase<TDbConnection> : DatabaseAccessorBase
+        where TDbConnection : IDbConnection
+    {
+        public DatabaseAccessorBase(IDatabaseConnectionFactory connectionFactory, ILogger logger)
+            : base(connectionFactory, logger)
+        { }
+
+        #region proeprty
+
+        public TDbConnection Connection => (TDbConnection)BaseConnection;
 
         #endregion
     }

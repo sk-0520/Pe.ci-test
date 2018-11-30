@@ -1,0 +1,99 @@
+<#@ template  debug="true" hostSpecific="true" #>
+<#@ output extension=".cs" #>
+<#@ Assembly Name="System.Core" #>
+<#@ Assembly Name="System.Windows.Forms" #>
+<#@ import namespace="System" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Diagnostics" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Collections" #>
+<#@ import namespace="System.Collections.Generic" #>
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ContentTypeTextNet.Pe.Library.Shared.Link.Model
+{
+<#
+    var logKindItems = new [] {
+        new { Key = "Trace", },
+        new { Key = "Debug", },
+        new { Key = "Information", },
+        new { Key = "Warning", },
+        new { Key = "Error", },
+        new { Key = "Fatal", },
+    };
+#>
+
+    [Flags]
+    public enum LogKind
+    {
+<# foreach(var logKindItem in logKindItems) { #>
+        <#= logKindItem.Key #>,
+<# } #>
+    }
+
+    public struct Caller
+    {
+        #region variable
+
+        readonly string memberName;
+        readonly string filePath;
+        readonly int lineNumber;
+
+        #endregion
+
+        public Caller([CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = 0)
+        {
+            this.memberName = callerMemberName;
+            this.filePath = callerFilePath;
+            this.lineNumber = callerLineNumber;
+        }
+    }
+
+    public interface ILogger
+    {
+<# foreach(var logKindItem in logKindItems) { #>
+        void <#= logKindItem.Key #>(string message, Caller caller = new Caller());
+        void <#= logKindItem.Key #>(string message, object detail, Caller caller = new Caller());
+        void <#= logKindItem.Key #>(Exception ex, Caller caller = new Caller());
+
+<# } #>
+        void Put(LogKind kind, string message, string detail, Caller caller = new Caller());
+    }
+
+    public abstract class LoggerBase : ILogger
+    {
+        protected abstract void PutCore(LogKind kind, string message, string detail, ref Caller caller);
+
+<# foreach(var logKindItem in logKindItems) { #>
+        public void <#= logKindItem.Key #>(string message, Caller caller = new Caller()) => <#= PutMessage(logKindItem.Key) #>
+        public void <#= logKindItem.Key #>(string message, object detail, Caller caller = new Caller()) => <#= PutDetail(logKindItem.Key) #>
+        public void <#= logKindItem.Key #>(Exception ex, Caller caller = new Caller()) => <#= PutException(logKindItem.Key) #>
+
+<# } #>
+        public void Put(LogKind kind, string message, string detail, Caller caller) => PutCore(kind, message, detail, ref caller);
+    }
+
+    public class NullLogger: LoggerBase
+    {
+        protected override void PutCore(LogKind kind, string message, string detail, ref Caller caller)
+        { }
+    }
+}
+
+<#+
+    string PutMessage(string kind) {
+        return "PutCore(LogKind." + kind + ", message, null, ref caller);";
+    }
+    string PutDetail(string kind) {
+        return "PutCore(LogKind." + kind + ", message, detail?.ToString(), ref caller);";
+    }
+    string PutException(string kind) {
+        return "PutCore(LogKind." + kind + ", ex.Message, ex.ToString(), ref caller);";
+    }
+#>

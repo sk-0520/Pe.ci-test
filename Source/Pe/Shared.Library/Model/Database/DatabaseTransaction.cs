@@ -8,29 +8,39 @@ using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 
 namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
 {
-    public sealed class DatabaseTransaction<TDbConnection> : DisposerBase, IDatabaseCommander
-        where TDbConnection: IDbConnection, new()
+    public interface IDatabaseTransaction: IDatabaseCommander
     {
-        public DatabaseTransaction(DatabaseAccessorBase<TDbConnection> databaseAccessor)
+        #region function
+
+        void Commit();
+
+        void Rollback();
+
+        #endregion
+    }
+
+    public sealed class DatabaseTransaction : DisposerBase, IDatabaseTransaction
+    {
+        public DatabaseTransaction(DatabaseAccessorBase databaseAccessor)
         {
             DatabaseAccessor = databaseAccessor;
-            Transaction = DatabaseAccessor.Connection.BeginTransaction();
+            Transaction = DatabaseAccessor.BaseConnection.BeginTransaction();
         }
 
-        public DatabaseTransaction(DatabaseAccessorBase<TDbConnection> databaseAccessor, IsolationLevel isolationLevel)
+        public DatabaseTransaction(DatabaseAccessorBase databaseAccessor, IsolationLevel isolationLevel)
         {
             DatabaseAccessor = DatabaseAccessor;
-            Transaction = DatabaseAccessor.Connection.BeginTransaction(isolationLevel);
+            Transaction = DatabaseAccessor.BaseConnection.BeginTransaction(isolationLevel);
         }
 
         #region property
 
-        DatabaseAccessorBase<TDbConnection> DatabaseAccessor { get; set; }
+        DatabaseAccessorBase DatabaseAccessor { get; set; }
         IDbTransaction Transaction { get; set; }
 
         #endregion
 
-        #region function
+        #region IDatabaseTransaction
 
         public void Commit()
         {
@@ -41,10 +51,6 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
         {
             Transaction.Rollback();
         }
-
-        #endregion
-
-        #region IDatabaseCommand
 
         public IEnumerable<T> Query<T>(string sql, object param = null, bool buffered = true)
         {

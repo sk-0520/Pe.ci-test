@@ -44,8 +44,8 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
 #endif
         }
 
-        public SqliteAccessor(IDatabaseConnectionCreator<SQLiteConnection> connectionCreator, ILoggerFactory loggerFactory)
-            : base(connectionCreator, loggerFactory)
+        public SqliteAccessor(IDatabaseConnectionFactory connectionFactory, ILogger logger)
+            : base(connectionFactory, logger)
         { }
     }
 }

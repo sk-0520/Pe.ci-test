@@ -66,18 +66,17 @@
     <Compile Include="..\Shared.Link\Model\Disposer.cs">
       <Link>Link\Model\Disposer.cs</Link>
     </Compile>
-    <Compile Include="..\Shared.Link\Model\ILogger.cs">
-      <Link>Link\Model\ILogger.cs</Link>
+    <Compile Include="..\Shared.Link\Model\Logger.cs">
+      <Link>Link\Model\Logger.cs</Link>
     </Compile>
     <Compile Include="Model\Counter.cs" />
     <Compile Include="Model\Database\DatabaseAccessor.cs" />
-    <Compile Include="Model\Database\DatabaseConnectionCreator.cs" />
+    <Compile Include="Model\Database\DatabaseConnectionFactory.cs" />
     <Compile Include="Model\Database\DatabaseTransaction.cs" />
     <Compile Include="Model\Database\SqliteAccessor.cs" />
     <Compile Include="Model\DependencyInjectionContainer.cs" />
     <Compile Include="Model\EnumUtility.cs" />
     <Compile Include="Model\KeepOpenStream.cs" />
-    <Compile Include="Model\NullLogger.cs" />
     <Compile Include="Model\ReaderWriterLocker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

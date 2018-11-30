@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SQLite;
 using System.IO;
 using System.Linq;
@@ -10,9 +11,9 @@ using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Database
 {
-    public class ApplicationDatabaseConnectionCreator: DatabaseConnectionCreator<SQLiteConnection>
+    public class ApplicationDatabaseConnectionFactory : IDatabaseConnectionFactory
     {
-        public ApplicationDatabaseConnectionCreator()
+        public ApplicationDatabaseConnectionFactory()
         {
             var builder = new SQLiteConnectionStringBuilder();
             builder.DataSource = ":memory:";
@@ -20,7 +21,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database
             ConnectionString = builder.ToString();
         }
 
-        public ApplicationDatabaseConnectionCreator(FileInfo file)
+        public ApplicationDatabaseConnectionFactory(FileInfo file)
         {
             var builder = new SQLiteConnectionStringBuilder();
             builder.DataSource = file.FullName;
@@ -49,9 +50,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database
 
         #endregion
 
-        #region DatabaseConnectionCreator
+        #region IDatabaseConnectionFactory
 
-        public override SQLiteConnection CreateConnection()
+        public IDbConnection CreateConnection()
         {
             return new SQLiteConnection(ConnectionString);
         }
@@ -59,11 +60,10 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database
         #endregion
     }
 
-    public class ApplicationDatabaseAccessor : Library.Shared.Library.Model.Database.SqliteAccessor
+    public class ApplicationDatabaseAccessor : SqliteAccessor
     {
-        public ApplicationDatabaseAccessor(IDatabaseConnectionCreator<SQLiteConnection> connectionCreator, ILoggerFactory loggerFactory)
-            : base(connectionCreator, loggerFactory)
-        {
-        }
+        public ApplicationDatabaseAccessor(IDatabaseConnectionFactory connectionCreator, ILogger logger)
+            : base(connectionCreator, logger)
+        { }
     }
 }

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
+using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Database;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -16,8 +17,8 @@ namespace Pe.Test.Model.Database
         [TestMethod]
         public void ConstructorTest()
         {
-            using(var a = new ApplicationDatabaseAccessor(new ApplicationDatabaseConnectionCreator(), new NullLoggerFactory())) {
-                a.Open();
+            using(var a = new ApplicationDatabaseAccessor(new ApplicationDatabaseConnectionFactory(), new NullLogger())) {
+                Assert.IsTrue(true);
             }
             Assert.IsTrue(true);
         }
