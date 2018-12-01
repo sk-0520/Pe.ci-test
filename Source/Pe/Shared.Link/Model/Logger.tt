@@ -41,9 +41,9 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Link.Model
     {
         #region variable
 
-        readonly string memberName;
-        readonly string filePath;
-        readonly int lineNumber;
+        public readonly string memberName;
+        public readonly string filePath;
+        public readonly int lineNumber;
 
         #endregion
 
@@ -83,6 +83,20 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Link.Model
     {
         protected override void PutCore(LogKind kind, string message, string detail, ref Caller caller)
         { }
+    }
+
+    public class TestLogger : LoggerBase
+    {
+        protected override void PutCore(LogKind kind, string message, string detail, ref Caller caller)
+        {
+            var header = $"{DateTime.Now:yyyy-MM-ddTHH:mm:ss} [{kind}] ";
+            var headerIndent = new string(' ', header.Length);
+            Console.WriteLine($"{header} {message} <{caller.memberName}>");
+            if(detail != null) {
+                Console.WriteLine($"{headerIndent}{detail}");
+            }
+            Console.WriteLine($"{headerIndent}{caller.filePath}({caller.lineNumber})");
+        }
     }
 }
 

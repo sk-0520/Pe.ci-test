@@ -17,7 +17,7 @@ namespace Pe.Test.Model.Database
         [TestMethod]
         public void ConstructorTest()
         {
-            using(var a = new ApplicationDatabaseAccessor(new ApplicationDatabaseConnectionFactory(), new NullLogger())) {
+            using(var a = new ApplicationDatabaseAccessor(new ApplicationDatabaseConnectionFactory(), new TestLogger())) {
                 Assert.IsTrue(true);
             }
             Assert.IsTrue(true);
