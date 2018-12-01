@@ -105,6 +105,7 @@
     <Compile Include="Model\Pixel.cs" />
     <Compile Include="Model\Range.cs" />
     <Compile Include="Model\ReaderWriterLocker.cs" />
+    <Compile Include="Model\Serializer.cs" />
     <Compile Include="Model\ShortcutFile.cs" />
     <Compile Include="Model\UIUtility.cs" />
     <Compile Include="Model\Unmanaged\ComWrapper.cs" />
