@@ -13,13 +13,13 @@ namespace Shared.Link.Test.Model
     {
         class TestLogger2: TestLogger
         {
-            protected override void PutCore(LogKind kind, string message, string detail, Caller caller)
+            protected override void PutCore(LogItem logItem)
             {
-                PutAction(kind, message, detail, caller);
-                base.PutCore(kind, message, detail, caller);
+                PutAction(logItem);
+                base.PutCore(logItem);
             }
 
-            public PutDelegate PutAction { get; set; }
+            public Action<LogItem> PutAction { get; set; }
         }
 
         [TestMethod]
@@ -27,18 +27,18 @@ namespace Shared.Link.Test.Model
         {
             var logger = new TestLogger2();
 
-            logger.PutAction = new PutDelegate((LogKind kind, string message, string detail, Caller caller) => {
-                Assert.AreEqual(kind, LogKind.Debug);
-                Assert.AreEqual(message, "message");
-                Assert.AreEqual(caller.memberName, nameof(PutTest));
-            });
+            logger.PutAction = logItem => {
+                Assert.AreEqual(logItem.Kind, LogKind.Debug);
+                Assert.AreEqual(logItem.Message, "message");
+                Assert.AreEqual(logItem.Caller.memberName, nameof(PutTest));
+            };
             logger.Debug("message");
 
-            logger.PutAction = new PutDelegate((LogKind kind, string message, string detail, Caller caller) => {
-                Assert.AreEqual(kind, LogKind.Error);
-                Assert.AreEqual(message, "message2");
-                Assert.AreEqual(caller.memberName, nameof(PutTest));
-            });
+            logger.PutAction = logItem => {
+                Assert.AreEqual(logItem.Kind, LogKind.Error);
+                Assert.AreEqual(logItem.Message, "message2");
+                Assert.AreEqual(logItem.Caller.memberName, nameof(PutTest));
+            };
             logger.Error("message2");
 
         }
