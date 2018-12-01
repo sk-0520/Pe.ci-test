@@ -72,6 +72,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
         bool IsNullTimestamp(DateTime timestamp);
     }
 
+
     /// <summary>
     /// DBアクセスに対してラップする。
     /// <para>DBまで行く前にプログラム側で制御する目的。</para>
@@ -137,25 +138,26 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
             return new DatabaseTransaction(this, isolationLevel);
         }
 
-        protected virtual void ExecuteTransactionCore(Func<IDatabaseTransaction> transactionCreator, Action<IDbCommand> action)
+        protected virtual IResultFailureValue<Exception> BatchCore(Func<IDatabaseTransaction> transactionCreator, Action<IDatabaseCommander> action)
         {
             var transaction = transactionCreator();
             try {
-
+                action(transaction);
+                return ResultFailureValue.Success<Exception>();
             } catch(Exception ex) {
-                Logger.Debug(ex);
                 transaction.Rollback();
+                return ResultFailureValue.Failure(ex);
             }
         }
 
-        public void ExecuteTransaction(Action<IDbCommand> action)
+        public IResultFailureValue<Exception> Batch(Action<IDatabaseCommander> action)
         {
-            ExecuteTransactionCore(() => new DatabaseTransaction(this), action);
+            return BatchCore(() => new DatabaseTransaction(this), action);
         }
 
-        public void ExecuteTransaction(Action<IDbCommand> action, IsolationLevel isolationLevel)
+        public IResultFailureValue<Exception> Batch(Action<IDatabaseCommander> action, IsolationLevel isolationLevel)
         {
-            ExecuteTransactionCore(() => new DatabaseTransaction(this, isolationLevel), action);
+            return BatchCore(() => new DatabaseTransaction(this, isolationLevel), action);
         }
 
         #endregion
