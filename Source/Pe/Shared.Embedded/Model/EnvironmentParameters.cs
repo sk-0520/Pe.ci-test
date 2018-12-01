@@ -72,6 +72,15 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Embedded.Model
         /// </summary>
         public DirectoryInfo MachineUpdateDirectory => CombineDirectory(MachineArchiveDirectory, "application");
 
+        /// <summary>
+        /// 設定ファイル。
+        /// </summary>
+        public FileInfo SettingFile => CombineFile(UserSettingDirectory, "setting.sqlite3");
+        /// <summary>
+        /// サムネイルファイル。
+        /// </summary>
+        public FileInfo ThumbnailFile => CombineFile(MachineDirectory, "thumbnail.sqlite3");
+
         #endregion
 
         #region function
@@ -112,14 +121,26 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Embedded.Model
             return new DirectoryInfo(defaultValue);
         }
 
-        DirectoryInfo CombineDirectory(DirectoryInfo directory, params string[] directoryNames)
+        string CombinePath(string fullPath, string[] addPaths)
         {
-            var paths = new List<string>(directoryNames.Length + 1);
-            paths.Add(directory.FullName);
-            paths.AddRange(directoryNames);
+            var paths = new List<string>(addPaths.Length + 1);
+            paths.Add(fullPath);
+            paths.AddRange(addPaths);
 
             var path = Path.Combine(paths.ToArray());
+            return path;
+        }
+
+        DirectoryInfo CombineDirectory(DirectoryInfo directory, params string[] directoryNames)
+        {
+            var path = CombinePath(directory.FullName, directoryNames);
             return new DirectoryInfo(path);
+        }
+
+        FileInfo CombineFile(DirectoryInfo directory, params string[] directoryAndFileNames)
+        {
+            var path = CombinePath(directory.FullName, directoryAndFileNames);
+            return new FileInfo(path);
         }
 
         #endregion
