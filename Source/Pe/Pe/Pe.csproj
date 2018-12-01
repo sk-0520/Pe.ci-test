@@ -90,6 +90,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\Database\ApplicationDatabase.cs" />
+    <Compile Include="Model\Database\DatabasePack.cs" />
+    <Compile Include="Model\Database\DatabaseSetup.cs" />
     <Compile Include="Model\SystemWebBrowserUtility.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
