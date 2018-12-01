@@ -100,7 +100,7 @@ namespace Shared.Library.Test.Model
                 : base(a, b, new[] { i1, i2, i3, })
             { }
 
-            [DiInjection]
+            [Di]
             private C5_Private(int a, I1 i1, int b, I1 i2, I1 i3, I1 i4)
                 : base(a, b, new[] { i1, i2, i3, i4 })
             { }
@@ -108,7 +108,7 @@ namespace Shared.Library.Test.Model
 
         class C5_Minimum : C5
         {
-            [DiInjection]
+            [Di]
             public C5_Minimum(int a, I1 i1, int b)
                 : base(a, b, new[] { i1 })
             { }
@@ -127,16 +127,16 @@ namespace Shared.Library.Test.Model
         {
             private I1 fieldUnset_private;
             public I1 fieldUnset_public;
-            [DiInjection]
+            [Di]
             private I1 fieldSet_private;
-            [DiInjection]
+            [Di]
             public I1 fieldSet_public;
 
             private I1 PropertyUnset_private { get; set; }
             public I1 PropertyUnset_public { get; set; }
-            [DiInjection]
+            [Di]
             private I1 PropertySet_private { get; set; }
-            [DiInjection]
+            [Di]
             public I1 PropertySet_public { get; set; }
         }
 
@@ -165,7 +165,7 @@ namespace Shared.Library.Test.Model
         [TestMethod]
         public void GetTest_Create()
         {
-            var dic = new DependencyInjectionContainer();
+            var dic = new DiContainer();
             dic.Add<I1, C1>(DiLifecycle.Create);
 
             var i1_1 = dic.Get<I1>();
@@ -180,7 +180,7 @@ namespace Shared.Library.Test.Model
         [TestMethod]
         public void GetTest_Singleton()
         {
-            var dic = new DependencyInjectionContainer();
+            var dic = new DiContainer();
             dic.Add<I1, C1>(DiLifecycle.Singleton);
 
             var i1_1 = dic.Get<I1>();
@@ -195,7 +195,7 @@ namespace Shared.Library.Test.Model
         [TestMethod]
         public void NewTest_I1()
         {
-            var dic = new DependencyInjectionContainer();
+            var dic = new DiContainer();
             dic.Add<I1, C1>(DiLifecycle.Create);
 
             // 引数のない人はそのまんま生成される
@@ -206,7 +206,7 @@ namespace Shared.Library.Test.Model
         [TestMethod]
         public void NewTest_C1()
         {
-            var dic = new DependencyInjectionContainer();
+            var dic = new DiContainer();
             dic.Add<I1, C1>(DiLifecycle.Create);
 
             // 引数のない人はそのまんま生成される
@@ -217,7 +217,7 @@ namespace Shared.Library.Test.Model
         [TestMethod]
         public void NewTest_C2()
         {
-            var dic = new DependencyInjectionContainer();
+            var dic = new DiContainer();
             dic.Add<I1, C1>(DiLifecycle.Create);
 
             // 引数から頑張ってパラメータ割り当て
@@ -228,7 +228,7 @@ namespace Shared.Library.Test.Model
         [TestMethod]
         public void NewTest_Manual_C3()
         {
-            var dic = new DependencyInjectionContainer();
+            var dic = new DiContainer();
             dic.Add<I1, C1>(DiLifecycle.Create);
 
             Assert.ThrowsException<Exception>(() => dic.New<C3>(new object[] { 1 }));
@@ -240,7 +240,7 @@ namespace Shared.Library.Test.Model
         [TestMethod]
         public void NewTest_Manual_C4()
         {
-            var dic = new DependencyInjectionContainer();
+            var dic = new DiContainer();
             dic.Add<I1, C1>(DiLifecycle.Create);
 
             Assert.ThrowsException<Exception>(() => dic.New<C4>(new object[] { 1 }));
@@ -252,7 +252,7 @@ namespace Shared.Library.Test.Model
         [TestMethod]
         public void NewTest_Manual_C5_LongLong()
         {
-            var dic = new DependencyInjectionContainer();
+            var dic = new DiContainer();
             dic.Add<I1, C1>(DiLifecycle.Create);
 
             var c5 = dic.New<C5_LongLong>(new object[] { 99, 1 });
@@ -262,7 +262,7 @@ namespace Shared.Library.Test.Model
         [TestMethod]
         public void NewTest_Manual_C5_Private()
         {
-            var dic = new DependencyInjectionContainer();
+            var dic = new DiContainer();
             dic.Add<I1, C1>(DiLifecycle.Create);
 
             var c5 = dic.New<C5_Private>(new object[] { 99, 1 });
@@ -272,7 +272,7 @@ namespace Shared.Library.Test.Model
         [TestMethod]
         public void NewTest_Manual_C5_Minimum()
         {
-            var dic = new DependencyInjectionContainer();
+            var dic = new DiContainer();
             dic.Add<I1, C1>(DiLifecycle.Create);
 
             var c5 = dic.New<C5_Minimum>(new object[] { 99, 1 });
@@ -282,7 +282,7 @@ namespace Shared.Library.Test.Model
         [TestMethod]
         public void InjectTest_C6()
         {
-            var dic = new DependencyInjectionContainer();
+            var dic = new DiContainer();
             dic.Add<I1, C1>(DiLifecycle.Create);
 
             var c = dic.New<C6>();
@@ -399,7 +399,7 @@ namespace Shared.Library.Test.Model
         [TestMethod]
         public void NestTest()
         {
-            var dic = new DependencyInjectionContainer();
+            var dic = new DiContainer();
             dic.Add<INest1, Nest1>(DiLifecycle.Create);
             dic.Add<INest2, Nest2>(DiLifecycle.Create);
             dic.Add<INest3, Nest3>(DiLifecycle.Create);
@@ -435,7 +435,7 @@ namespace Shared.Library.Test.Model
         [TestMethod]
         public void ScopeTest()
         {
-            var dic1 = new DependencyInjectionContainer();
+            var dic1 = new DiContainer();
 
             dic1.Add<I1, CScopeA>(DiLifecycle.Create);
             Assert.AreEqual(10, dic1.New<I1>().Func(3, 7));

@@ -97,7 +97,7 @@
     <Compile Include="Model\IMakeBitmapSource.cs" />
     <Compile Include="Model\Initializer.cs" />
     <Compile Include="Model\Model.cs" />
-    <Compile Include="Model\DependencyInjectionContainer.cs" />
+    <Compile Include="Model\DiContainer.cs" />
     <Compile Include="Model\EnumUtility.cs" />
     <Compile Include="Model\KeepOpenStream.cs" />
     <Compile Include="Model\ObservableCollectionManagerBase.cs" />

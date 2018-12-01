@@ -22,10 +22,10 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
     }
 
     [AttributeUsage(AttributeTargets.Constructor | AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false)]
-    public class DiInjectionAttribute : Attribute
+    public class DiAttribute : Attribute
     { }
 
-    public interface IDependencyInjectionContainer
+    public interface IDiContainer
     {
         /// <summary>
         /// シンプルなマッピングを追加。
@@ -74,20 +74,20 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         ;
 #endif
 
-        IScopeIDependencyInjectionContainer Scope();
+        IScopeDiContainer Scope();
     }
 
-    public interface IScopeIDependencyInjectionContainer: IDependencyInjectionContainer, IDisposable
+    public interface IScopeDiContainer: IDiContainer, IDisposable
     { }
 
     /// <summary>
     ///
     /// </summary>
-    public class DependencyInjectionContainer: IDependencyInjectionContainer
+    public class DiContainer: IDiContainer
     {
         #region property
 
-        public static IDependencyInjectionContainer Current { get; } = new DependencyInjectionContainer();
+        public static IDiContainer Current { get; } = new DiContainer();
 
         protected IDictionary<Type, Type> Mapping { get; } = new Dictionary<Type, Type>();
         protected IDictionary<Type, Func<object>> Factory { get; } = new Dictionary<Type, Func<object>>();
@@ -194,7 +194,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
                 .Select(c => new {
                     Constructor = c,
                     Parameters = c.GetParameters(),
-                    Attribute = c.GetCustomAttributes(typeof(DiInjectionAttribute), false).OfType<DiInjectionAttribute>().FirstOrDefault()
+                    Attribute = c.GetCustomAttributes(typeof(DiAttribute), false).OfType<DiAttribute>().FirstOrDefault()
                 })
                 .Where(i => i.Attribute != null ? true : i.Constructor.IsPublic)
                 .OrderBy(i => i.Attribute != null ? 0 : 1)
@@ -224,7 +224,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 #endif
         {
             var members = typeof(T).GetMembers(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.GetField | BindingFlags.SetField | BindingFlags.GetProperty | BindingFlags.SetProperty);
-            foreach(var member in members.Where(m => m.GetCustomAttribute<DiInjectionAttribute>() != null)) {
+            foreach(var member in members.Where(m => m.GetCustomAttribute<DiAttribute>() != null)) {
                 switch(member.MemberType) {
                     case MemberTypes.Field:
                         var fieldInfo = (FieldInfo)member;
@@ -312,9 +312,9 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         }
 #endif
 
-        public virtual IScopeIDependencyInjectionContainer Scope()
+        public virtual IScopeDiContainer Scope()
         {
-            var cloneContainer = new ScopeDependencyInjectionContainer();
+            var cloneContainer = new ScopeDiContainer();
             foreach(var pair in Mapping) {
                 cloneContainer.Mapping.Add(pair.Key, pair.Value);
             }
@@ -328,7 +328,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         #endregion
     }
 
-    class ScopeDependencyInjectionContainer: DependencyInjectionContainer, IScopeIDependencyInjectionContainer
+    class ScopeDiContainer: DiContainer, IScopeDiContainer
     {
         #region property
 
