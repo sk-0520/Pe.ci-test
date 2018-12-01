@@ -9,7 +9,7 @@ using ContentTypeTextNet.Library.PInvoke.Windows;
 
 namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Unmanaged
 {
-    public abstract class GdiObjectBase : UnmanagedHandleModelBase
+    public abstract class GdiObjectBase : UnmanagedHandleModelBase, IMakeBitmapSource
     {
         public GdiObjectBase(IntPtr hHandle)
             : base(hHandle)
@@ -24,6 +24,10 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Unmanaged
         #region function
 
         protected abstract BitmapSource MakeBitmapSourceCore();
+
+        #endregion
+
+        #region IMakeBitmapSource
 
         /// <summary>
         /// GDIオブジェクトから<see cref="BitmapSource"/>作成。
@@ -50,9 +54,9 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Unmanaged
         #endregion
     }
 
-    public class IconHandle : GdiObjectBase
+    public class IconHandleWrapper : GdiObjectBase
     {
-        public IconHandle(IntPtr hIcon)
+        public IconHandleWrapper(IntPtr hIcon)
             : base(hIcon)
         { }
 
@@ -89,9 +93,9 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Unmanaged
     /// <summary>
     /// ビットマップハンドルを管理。
     /// </summary>
-    public class BitmapHandle : GdiObjectBase
+    public class BitmapHandleWrapper : GdiObjectBase
     {
-        public BitmapHandle(IntPtr hBitmap)
+        public BitmapHandleWrapper(IntPtr hBitmap)
             : base(hBitmap)
         { }
 

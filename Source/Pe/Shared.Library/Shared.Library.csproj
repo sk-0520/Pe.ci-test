@@ -53,7 +53,9 @@
     <Reference Include="System.Data.SQLite, Version=1.0.109.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Data.SQLite.Core.1.0.109.2\lib\net46\System.Data.SQLite.dll</HintPath>
     </Reference>
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Prism.Wpf.7.1.0.431\lib\net45\System.Windows.Interactivity.dll</HintPath>
     </Reference>
@@ -72,22 +74,37 @@
     <Compile Include="..\Shared.Link\Model\Logger.cs">
       <Link>Link\Model\Logger.cs</Link>
     </Compile>
+    <Compile Include="Compatibility\Forms\CompatibleFormWindow.cs" />
+    <Compile Include="Compatibility\Forms\DrawingUtility.cs" />
+    <Compile Include="Compatibility\Forms\FolderBrowserDialog.cs" />
+    <Compile Include="Compatibility\Forms\IconWrapper.cs" />
+    <Compile Include="Compatibility\Windows\HandleUtility.cs" />
+    <Compile Include="Compatibility\Windows\IconDialog.cs" />
+    <Compile Include="Compatibility\Windows\IWindowsHandle.cs" />
+    <Compile Include="Compatibility\Windows\MouseUtility.cs" />
+    <Compile Include="Compatibility\Windows\PodStructUtility.cs" />
     <Compile Include="Model\Counter.cs" />
     <Compile Include="Model\Database\DatabaseAccessor.cs" />
     <Compile Include="Model\Database\DatabaseConnectionFactory.cs" />
     <Compile Include="Model\Database\DatabaseTransaction.cs" />
     <Compile Include="Model\Database\SqliteAccessor.cs" />
     <Compile Include="Model\EncodingUtility.cs" />
+    <Compile Include="Model\IconLoader.cs" />
+    <Compile Include="Model\IMakeBitmapSource.cs" />
+    <Compile Include="Model\Initializer.cs" />
     <Compile Include="Model\Model.cs" />
     <Compile Include="Model\DependencyInjectionContainer.cs" />
     <Compile Include="Model\EnumUtility.cs" />
     <Compile Include="Model\KeepOpenStream.cs" />
     <Compile Include="Model\ObservableCollectionManagerBase.cs" />
+    <Compile Include="Model\PathUtility.cs" />
+    <Compile Include="Model\Pixel.cs" />
     <Compile Include="Model\Range.cs" />
     <Compile Include="Model\ReaderWriterLocker.cs" />
     <Compile Include="Model\ShortcutFile.cs" />
-    <Compile Include="Model\Unmanaged\Com.cs" />
-    <Compile Include="Model\Unmanaged\Gdi.cs" />
+    <Compile Include="Model\UIUtility.cs" />
+    <Compile Include="Model\Unmanaged\ComWrapper.cs" />
+    <Compile Include="Model\Unmanaged\GdiWrapper.cs" />
     <Compile Include="Model\Unmanaged\GlobalAllocModel.cs" />
     <Compile Include="Model\Unmanaged\UnmanagedModelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
