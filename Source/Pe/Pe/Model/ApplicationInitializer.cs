@@ -7,6 +7,8 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Library.Shared.Embedded.Model;
+using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
+using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 
 namespace ContentTypeTextNet.Pe.Main.Model
 {
@@ -49,13 +51,20 @@ namespace ContentTypeTextNet.Pe.Main.Model
             return !file.Exists;
         }
 
-        bool ShowAcceptView()
+        bool ShowAcceptView(ILogger logger)
         {
-            var model = new ViewElement.Accept.AcceptViewElement(new Library.Shared.Link.Model.NullLogger());
-            var view = new View.Accept.AcceptWindow() {
-                DataContext = new ViewModel.Accept.AcceptViewModel(model, new Library.Shared.Link.Model.NullLogger()),
-            };
-            view.ShowDialog();
+            // ログがあったりなかったりするフワフワ状態なので一時的にDIコンテナ作成
+            using(var diContainer = DiContainer.Current.Scope()) {
+                diContainer.Add<ILogger, LoggerBase>(() => (LoggerBase)logger, DiLifecycle.Singleton);
+
+                var model = diContainer.New<ViewElement.Accept.AcceptViewElement>();
+                var view = new View.Accept.AcceptWindow() {
+                    DataContext = diContainer.New<ViewModel.Accept.AcceptViewModel>(new[] { model }),
+                };
+                diContainer.Inject(view);
+
+                view.ShowDialog();
+            }
 
             return false;
         }
@@ -76,7 +85,7 @@ namespace ContentTypeTextNet.Pe.Main.Model
             var isFirstStartup = IsFirstStartup();
             if(isFirstStartup) {
                 // 設定ファイルやらなんやらを構築する前に使用許諾を取る
-                var dialogResult = ShowAcceptView();
+                var dialogResult = ShowAcceptView(new Library.Shared.Link.Model.NullLogger());
             } else {
             }
 

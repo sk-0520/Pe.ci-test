@@ -89,6 +89,7 @@
     </Compile>
     <Compile Include="Model\ViewElement\Accept\AcceptViewElement.cs" />
     <Compile Include="ViewModel\Accept\AcceptViewModel.cs" />
+    <Compile Include="ViewModel\IDialogCommand.cs" />
     <Compile Include="View\Accept\AcceptWindow.xaml.cs">
       <DependentUpon>AcceptWindow.xaml</DependentUpon>
     </Compile>

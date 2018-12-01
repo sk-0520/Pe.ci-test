@@ -9,7 +9,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Shared.Library.Test.Model
 {
     [TestClass]
-    public class DependencyInjectionContainerTest
+    public class DiContainerTest
     {
         #region define
 
@@ -100,7 +100,7 @@ namespace Shared.Library.Test.Model
                 : base(a, b, new[] { i1, i2, i3, })
             { }
 
-            [Di]
+            [Injection]
             private C5_Private(int a, I1 i1, int b, I1 i2, I1 i3, I1 i4)
                 : base(a, b, new[] { i1, i2, i3, i4 })
             { }
@@ -108,7 +108,7 @@ namespace Shared.Library.Test.Model
 
         class C5_Minimum : C5
         {
-            [Di]
+            [Injection]
             public C5_Minimum(int a, I1 i1, int b)
                 : base(a, b, new[] { i1 })
             { }
@@ -127,16 +127,16 @@ namespace Shared.Library.Test.Model
         {
             private I1 fieldUnset_private;
             public I1 fieldUnset_public;
-            [Di]
+            [Injection]
             private I1 fieldSet_private;
-            [Di]
+            [Injection]
             public I1 fieldSet_public;
 
             private I1 PropertyUnset_private { get; set; }
             public I1 PropertyUnset_public { get; set; }
-            [Di]
+            [Injection]
             private I1 PropertySet_private { get; set; }
-            [Di]
+            [Injection]
             public I1 PropertySet_public { get; set; }
         }
 
@@ -411,6 +411,31 @@ namespace Shared.Library.Test.Model
             Assert.IsTrue(root.Nest2.Nest3.Nest4.True);
             Assert.IsTrue(root.Nest3.Nest4.True);
             Assert.IsTrue(root.Nest4.True);
+
+            Assert.IsFalse(root.Nest2 == root.Nest1.Nest2);
+            Assert.IsFalse(root.Nest3 == root.Nest1.Nest2.Nest3);
+            Assert.IsFalse(root.Nest4 == root.Nest1.Nest2.Nest3.Nest4);
+        }
+
+        [TestMethod]
+        public void NestTest_Singleton()
+        {
+            var dic = new DiContainer();
+            dic.Add<INest1, Nest1>(DiLifecycle.Singleton);
+            dic.Add<INest2, Nest2>(DiLifecycle.Singleton);
+            dic.Add<INest3, Nest3>(DiLifecycle.Singleton);
+            dic.Add<INest4, Nest4>(DiLifecycle.Singleton);
+
+            var root = dic.New<Root>();
+
+            Assert.IsTrue(root.Nest1.Nest2.Nest3.Nest4.True);
+            Assert.IsTrue(root.Nest2.Nest3.Nest4.True);
+            Assert.IsTrue(root.Nest3.Nest4.True);
+            Assert.IsTrue(root.Nest4.True);
+
+            Assert.IsTrue(root.Nest2 == root.Nest1.Nest2);
+            Assert.IsTrue(root.Nest3 == root.Nest1.Nest2.Nest3);
+            Assert.IsTrue(root.Nest4 == root.Nest1.Nest2.Nest3.Nest4);
         }
 
         #endregion

@@ -22,7 +22,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
     }
 
     [AttributeUsage(AttributeTargets.Constructor | AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false)]
-    public class DiAttribute : Attribute
+    public class InjectionAttribute : Attribute
     { }
 
     public interface IDiContainer
@@ -43,9 +43,9 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         /// </summary>
         /// <typeparam name="TInterface"></typeparam>
         /// <typeparam name="TObject"></typeparam>
-        /// <param name="lifecycle"></param>
         /// <param name="factory"></param>
-        void Add<TInterface, TObject>(DiLifecycle lifecycle, Func<object> factory)
+        /// <param name="lifecycle"></param>
+        void Add<TInterface, TObject>(Func<TObject> factory, DiLifecycle lifecycle = DiLifecycle.Create)
 #if !ENABLED_STRUCT
             where TObject : class
 #endif
@@ -125,11 +125,6 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
             }
         }
 
-        object GetCore(Type interfaceType)
-        {
-            return Factory[interfaceType]();
-        }
-
         Type GetMappingType(Type type)
         {
             return Mapping.TryGetValue(type, out var objectType) ? objectType : type;
@@ -187,14 +182,20 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
             return true;
         }
 
-        bool TryNewObject(Type type, IEnumerable<object> manualParameters, out object value)
+        bool TryNewObject(Type objectType, IEnumerable<object> manualParameters, out object value)
         {
+            // 生成可能なものはこの段階で生成
+            if(Factory.TryGetValue(objectType, out var factory)) {
+                value = factory();
+                return true;
+            }
+
             // 属性付きで引数が多いものを優先
-            var constructorItems = type.GetConstructors(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance)
+            var constructorItems = objectType.GetConstructors(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance)
                 .Select(c => new {
                     Constructor = c,
                     Parameters = c.GetParameters(),
-                    Attribute = c.GetCustomAttributes(typeof(DiAttribute), false).OfType<DiAttribute>().FirstOrDefault()
+                    Attribute = c.GetCustomAttribute<InjectionAttribute>()
                 })
                 .Where(i => i.Attribute != null ? true : i.Constructor.IsPublic)
                 .OrderBy(i => i.Attribute != null ? 0 : 1)
@@ -218,17 +219,28 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
             return false;
         }
 
+        bool TryGetInstance(Type interfaceType, IEnumerable<object> manualParameters, out object value)
+        {
+            // 生成可能なものはこの段階で生成
+            if(Factory.TryGetValue(interfaceType, out var factory)) {
+                value = factory();
+                return true;
+            }
+
+            return TryNewObject(GetMappingType(interfaceType), manualParameters, out value);
+        }
+
         void InjectCore<T>(ref T target)
 #if !ENABLED_STRUCT
             where T : class
 #endif
         {
             var members = typeof(T).GetMembers(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.GetField | BindingFlags.SetField | BindingFlags.GetProperty | BindingFlags.SetProperty);
-            foreach(var member in members.Where(m => m.GetCustomAttribute<DiAttribute>() != null)) {
+            foreach(var member in members.Where(m => m.GetCustomAttribute<InjectionAttribute>() != null)) {
                 switch(member.MemberType) {
                     case MemberTypes.Field:
                         var fieldInfo = (FieldInfo)member;
-                        if(TryNewObject(GetMappingType(fieldInfo.FieldType), Enumerable.Empty<object>(), out var fieldValue)) {
+                        if(TryGetInstance(fieldInfo.FieldType, Enumerable.Empty<object>(), out var fieldValue)) {
                             fieldInfo.SetValue(target, fieldValue);
                         } else {
                             throw new Exception($"{fieldInfo}: create fail");
@@ -237,7 +249,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 
                     case MemberTypes.Property:
                         var propertyInfo = (PropertyInfo)member;
-                        if(TryNewObject(GetMappingType(propertyInfo.PropertyType), Enumerable.Empty<object>(), out var propertyValue)) {
+                        if(TryGetInstance(propertyInfo.PropertyType, Enumerable.Empty<object>(), out var propertyValue)) {
                             propertyInfo.SetValue(target, propertyValue);
                         } else {
                             throw new Exception($"{propertyInfo}: create fail");
@@ -264,7 +276,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
             });
         }
 
-        public void Add<TInterface, TObject>(DiLifecycle lifecycle, Func<object> factory)
+        public void Add<TInterface, TObject>(Func<TObject> factory, DiLifecycle lifecycle = DiLifecycle.Create)
 #if !ENABLED_STRUCT
             where TObject : class
 #endif
@@ -274,20 +286,19 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 
         public TInterface Get<TInterface>()
         {
-            var result = GetCore(typeof(TInterface));
-            return (TInterface)result;
+            return (TInterface)Factory[typeof(TInterface)]();
         }
 
-        public T New<T>(IEnumerable<object> manualParameters)
+        public TObject New<TObject>(IEnumerable<object> manualParameters)
 #if !ENABLED_STRUCT
-            where T : class
+            where TObject : class
 #endif
         {
-            if(TryNewObject(GetMappingType(typeof(T)), manualParameters, out var raw)) {
-                return (T)raw;
+            if(TryNewObject(GetMappingType(typeof(TObject)), manualParameters, out var raw)) {
+                return (TObject)raw;
             }
 
-            throw new Exception($"{typeof(T)}: create fail");
+            throw new Exception($"{typeof(TObject)}: create fail");
         }
 
         public T New<T>()
