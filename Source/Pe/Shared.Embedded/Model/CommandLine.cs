@@ -181,7 +181,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Embedded.Model
             return s;
         }
 
-        private CommandLineKey GetKey(string key)
+        private CommandLineKey GetCommandLineKey(string key)
         {
             Debug.Assert(key.Length != 0);
 
@@ -236,7 +236,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Embedded.Model
                         if(arg.StartsWith(pair.Key)) {
                             var separatorIndex = arg.IndexOf('=');
                             if(separatorIndex == -1) {
-                                var key = GetKey(arg.Substring(pair.Key.Length));
+                                var key = GetCommandLineKey(arg.Substring(pair.Key.Length));
                                 if(key == null) {
                                     SetUnknown(arg);
                                     continue;
@@ -255,7 +255,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Embedded.Model
                                     continue;
                                 }
                             } else {
-                                var key = GetKey(arg.Substring(pair.Key.Length, separatorIndex - pair.Key.Length));
+                                var key = GetCommandLineKey(arg.Substring(pair.Key.Length, separatorIndex - pair.Key.Length));
                                 if(key == null) {
                                     SetUnknown(arg);
                                     continue;
@@ -289,6 +289,24 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Embedded.Model
             IsParsed = true;
 
             return result;
+        }
+
+        public CommandLineKey GetKey(char shortKey)
+        {
+            return KeyItems
+                .Concat(SwitchItems)
+                .Where(k => k.IsEnabledShortKey)
+                .FirstOrDefault(k => k.ShortKey == shortKey)
+            ;
+        }
+
+        public CommandLineKey GetKey(string longKey)
+        {
+            return KeyItems
+                .Concat(SwitchItems)
+                .Where(k => k.IsEnabledLongKey)
+                .FirstOrDefault(k => k.LongKey == longKey)
+            ;
         }
 
         #endregion

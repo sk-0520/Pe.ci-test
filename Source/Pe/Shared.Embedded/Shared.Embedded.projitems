@@ -11,6 +11,7 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Model\AssemblyResolveHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\CommandLine.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\EnvironmentParameters.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\TextUtility.cs" />
   </ItemGroup>
 </Project>

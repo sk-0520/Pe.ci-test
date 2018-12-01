@@ -13,7 +13,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database
 
         public DatabaseAccessorBase Main { get; }
         public DatabaseAccessorBase Image { get; }
-        public DatabaseAccessorBase Memory { get; }
+        public DatabaseAccessorBase Temporary { get; }
 
         #endregion
     }
