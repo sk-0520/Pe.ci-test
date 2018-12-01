@@ -31,13 +31,6 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
     public interface IDatabaseSqlImplementation
     {
         /// <summary>
-        /// 複数のSQLが格納されたSQLを分割する。
-        /// </summary>
-        /// <param name="baseSql"></param>
-        /// <returns></returns>
-        IEnumerable<string> SplitSql(string baseSql);
-
-        /// <summary>
         /// SQL 実行前に実行する SQL に対して変換処理を実行。
         /// </summary>
         /// <param name="sql"></param>
@@ -182,19 +175,6 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
         #endregion
 
         #region IDatabaseSqlImplementation
-
-        /// <summary>
-        /// 複数のSQLが格納されたSQLを分割する。
-        /// <para>既定では[行頭]--&lt;SPLIT&gt;[行末]が分割の対象となる</para>
-        /// </summary>
-        /// <param name="baseSql"></param>
-        /// <returns></returns>
-        public virtual IEnumerable<string> SplitSql(string baseSql)
-        {
-            var reg = new Regex(@"^--<SPLIT(\:.*)?>[\r\n]+", RegexOptions.Multiline | RegexOptions.ExplicitCapture);
-            var result = reg.Split(baseSql).Skip(1);
-            return result;
-        }
 
         /// <summary>
         /// SQL 実行前に実行する SQL に対して変換処理を実行。
