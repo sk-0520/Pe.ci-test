@@ -49,6 +49,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\DependencyInjectionContainerTest.cs" />
     <Compile Include="Model\RangeTest.cs" />
     <Compile Include="Model\ReaderWriterLockerTest.cs" />
     <Compile Include="Model\CounterTest.cs" />
