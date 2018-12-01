@@ -87,6 +87,11 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Model\ViewElement\Accept\AcceptViewElement.cs" />
+    <Compile Include="ViewModel\Accept\AcceptViewModel.cs" />
+    <Compile Include="View\Accept\AcceptWindow.xaml.cs">
+      <DependentUpon>AcceptWindow.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\ApplicationManager.cs" />
@@ -95,6 +100,7 @@
     <Compile Include="Model\Database\DatabaseSetup.cs" />
     <Compile Include="Model\ApplicationInitializer.cs" />
     <Compile Include="Model\SystemWebBrowserUtility.cs" />
+    <Compile Include="Model\ViewElement\ViewElementBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -139,6 +145,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="etc\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="View\Accept\AcceptWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <Import Project="..\Shared.Embedded\Shared.Embedded.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -46,12 +46,22 @@ namespace ContentTypeTextNet.Pe.Main.Model
         {
             var file = EnvironmentParameters.Current.SettingFile;
             file.Refresh();
-            return file.Exists;
+            return !file.Exists;
+        }
+
+        bool ShowAcceptView()
+        {
+            var model = new ViewElement.Accept.AcceptViewElement(new Library.Shared.Link.Model.NullLogger());
+            var view = new View.Accept.AcceptWindow() {
+                DataContext = new ViewModel.Accept.AcceptViewModel(model, new Library.Shared.Link.Model.NullLogger()),
+            };
+            view.ShowDialog();
+
+            return false;
         }
 
         void FirstSetup()
         {
-
         }
 
         void ExecuteSetup()
@@ -63,10 +73,11 @@ namespace ContentTypeTextNet.Pe.Main.Model
         {
             InitializeEnvironment(arguments);
 
-            if(IsFirstStartup()) {
-                FirstSetup();
+            var isFirstStartup = IsFirstStartup();
+            if(isFirstStartup) {
+                // 設定ファイルやらなんやらを構築する前に使用許諾を取る
+                var dialogResult = ShowAcceptView();
             } else {
-                ExecuteSetup();
             }
 
             return false;

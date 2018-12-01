@@ -11,12 +11,18 @@ using System.Windows.Input;
 using System.Windows.Threading;
 using System.Xml.Serialization;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
+using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using Prism.Mvvm;
 
 namespace ContentTypeTextNet.Pe.Library.Shared.Library.ViewModel
 {
     public abstract class ViewModelBase : BindableBase, IDisposable
     {
+        public ViewModelBase(ILogger logger)
+        {
+            Logger = logger;
+        }
+
         ~ViewModelBase()
         {
             Dispose(false);
@@ -24,6 +30,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.ViewModel
 
         #region property
 
+        protected ILogger Logger { get; }
         IDictionary<string, ICommand> CommandCache { get; } = new Dictionary<string, ICommand>();
         protected IEnumerable<ICommand> Commands => CommandCache.Values;
 
@@ -145,7 +152,8 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.ViewModel
     public abstract class SingleModelViewModelBase<TModel> : ViewModelBase
         where TModel : BindModelBase
     {
-        public SingleModelViewModelBase(TModel model)
+        public SingleModelViewModelBase(TModel model, ILogger logger)
+            : base(logger)
         {
             Model = model;
 
