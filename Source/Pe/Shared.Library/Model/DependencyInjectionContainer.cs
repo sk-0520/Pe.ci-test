@@ -21,7 +21,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         Singleton,
     }
 
-    [AttributeUsage(AttributeTargets.Constructor | AttributeTargets.Property, AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.Constructor | AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false)]
     public class DiInjectionAttribute : Attribute
     { }
 
@@ -77,9 +77,13 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         /// <typeparam name="TInterface"></typeparam>
         /// <typeparam name="TObject"></typeparam>
         public void Add<TInterface, TObject>(DiLifecycle lifecycle = DiLifecycle.Create)
-            where TObject : new()
+#if !ENABLED_STRUCT
+            where TObject : class
+#endif
         {
-            AddCore(typeof(TInterface), typeof(TObject), lifecycle, () => new TObject());
+            AddCore(typeof(TInterface), typeof(TObject), lifecycle, () => {
+                return New<TObject>();
+            });
         }
 
         /// <summary>
@@ -90,6 +94,9 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         /// <param name="lifecycle"></param>
         /// <param name="factory"></param>
         public void Add<TInterface, TObject>(DiLifecycle lifecycle, Func<object> factory)
+#if !ENABLED_STRUCT
+            where TObject : class
+#endif
         {
             AddCore(typeof(TInterface), typeof(TObject), lifecycle, factory);
         }
@@ -110,6 +117,12 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
             return (TInterface)result;
         }
 
+        Type GetMappingType(Type type)
+        {
+            return Mapping.TryGetValue(type, out var objectType) ? objectType : type;
+        }
+
+
         IList<object> CreateParameters(IReadOnlyCollection<ParameterInfo> parameterInfos, IEnumerable<object> manualParameters)
         {
             var manualParameterItems = new LinkedList<KeyValuePair<Type, object>>(
@@ -120,7 +133,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
             foreach(var parameterInfo in parameterInfos) {
                 if(Factory.TryGetValue(parameterInfo.ParameterType, out var factory)) {
                     arguments.Add(factory());
-                } else {
+                } else if(manualParameterItems.Any()) {
                     // コンテナ内に存在しない場合は入力パラメータを順番に使用する
                     var item = manualParameterItems.FirstOrDefault(i => i.Key == parameterInfo.ParameterType);
                     if(item.Key == default(Type)) {
@@ -129,6 +142,9 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
                     }
                     arguments.Add(item.Value);
                     manualParameterItems.Remove(item);
+                } else {
+                    // どうしようもねぇ
+                    return null;
                 }
             }
 
@@ -136,61 +152,125 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 
         }
 
-        bool NewCore<T>(ConstructorInfo constructor, IEnumerable<object> manualParameters, out T createdObject)
+        bool TryNewObjectCore(ConstructorInfo constructor, IEnumerable<object> manualParameters, out object createdObject)
         {
             var parameters = constructor.GetParameters();
 
             if(!parameters.Any()) {
-                createdObject = (T)constructor.Invoke(null);
+                createdObject = constructor.Invoke(null);
                 return true;
             }
 
             var arguments = CreateParameters(parameters, manualParameters);
             if(arguments == null) {
-                createdObject = default(T);
+                createdObject = default(object);
                 return false;
             }
             if(arguments.Count != parameters.Length) {
-                createdObject = default(T);
+                createdObject = default(object);
                 return false;
             }
 
-            createdObject = (T)constructor.Invoke(arguments.ToArray());
+            createdObject = constructor.Invoke(arguments.ToArray());
             return true;
         }
 
-        public T New<T>(IEnumerable<object> manualParameters)
+        bool TryNewObject(Type type, IEnumerable<object> manualParameters, out object value)
         {
-            var type = typeof(T);
-
-            // 引数が多いものを優先
+            // 属性付きで引数が多いものを優先
             var constructorItems = type.GetConstructors(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance)
                 .Select(c => new {
                     Constructor = c,
                     Parameters = c.GetParameters(),
                     Attribute = c.GetCustomAttributes(typeof(DiInjectionAttribute), false).OfType<DiInjectionAttribute>().FirstOrDefault()
                 })
-                .Where(i => i.Attribute != null ? true: i.Constructor.IsPublic)
+                .Where(i => i.Attribute != null ? true : i.Constructor.IsPublic)
                 .OrderBy(i => i.Attribute != null ? 0 : 1)
                 .ThenByDescending(i => i.Parameters.Length)
                 .ToList()
             ;
 
+#if false
+            if(!constructorItems.Any() && type.IsValueType) {
+                //TODO: 構造体っぽければそのまま作る
+            }
+#endif
+
             foreach(var constructorItem in constructorItems) {
-                if(NewCore<T>(constructorItem.Constructor, manualParameters, out var obj)) {
-                    return obj;
+                if(TryNewObjectCore(constructorItem.Constructor, manualParameters, out value)) {
+                    return true;
                 }
+            }
+
+            value = default(object);
+            return false;
+        }
+
+        public T New<T>(IEnumerable<object> manualParameters)
+#if !ENABLED_STRUCT
+            where T : class
+#endif
+        {
+            if(TryNewObject(GetMappingType(typeof(T)), manualParameters, out var raw)) {
+                return (T)raw;
             }
 
             throw new Exception($"{typeof(T)}: create fail");
         }
 
         public T New<T>()
+#if !ENABLED_STRUCT
+            where T: class
+#endif
         {
             return New<T>(Enumerable.Empty<object>());
         }
 
+        void InjectCore<T>(ref T target)
+#if !ENABLED_STRUCT
+            where T : class
+#endif
+        {
+            var members = typeof(T).GetMembers(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.GetField | BindingFlags.SetField | BindingFlags.GetProperty | BindingFlags.SetProperty);
+            foreach(var member in members.Where(m => m.GetCustomAttribute<DiInjectionAttribute>() != null)) {
+                switch(member.MemberType) {
+                    case MemberTypes.Field:
+                        var fieldInfo = (FieldInfo)member;
+                        if(TryNewObject(GetMappingType(fieldInfo.FieldType), Enumerable.Empty<object>(), out var fieldValue)) {
+                            fieldInfo.SetValue(target, fieldValue);
+                        } else {
+                            throw new Exception($"{fieldInfo}: create fail");
+                        }
+                        break;
 
+                    case MemberTypes.Property:
+                        var propertyInfo = (PropertyInfo)member;
+                        if(TryNewObject(GetMappingType(propertyInfo.PropertyType), Enumerable.Empty<object>(), out var propertyValue)) {
+                            propertyInfo.SetValue(target, propertyValue);
+                        } else {
+                            throw new Exception($"{propertyInfo}: create fail");
+                        }
+                        break;
+
+                    default:
+                        throw new NotImplementedException();
+                }
+            }
+        }
+
+        public void Inject<T>(T target)
+            where T : class
+        {
+            InjectCore(ref target);
+        }
+
+#if ENABLED_STRUCT
+        public void Inject<T>(ref T target)
+            where T : struct
+        {
+            InjectCore(ref target);
+        }
+#endif
         #endregion
     }
 }
