@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using ContentTypeTextNet.Pe.Main.Model;
 
 namespace ContentTypeTextNet.Pe.Main
 {
@@ -13,11 +14,20 @@ namespace ContentTypeTextNet.Pe.Main
     /// </summary>
     public partial class App : Application
     {
+        #region property
+
+        ApplicationManager ApplicationManager { get; } = new ApplicationManager();
+
+        #endregion
+
         #region Application
 
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
+            if(!ApplicationManager.Startup(this, e)) {
+                Shutdown();
+            }
         }
 
         #endregion

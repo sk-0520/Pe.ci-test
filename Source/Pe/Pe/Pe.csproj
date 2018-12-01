@@ -89,6 +89,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\ApplicationManager.cs" />
     <Compile Include="Model\Database\ApplicationDatabase.cs" />
     <Compile Include="Model\Database\DatabasePack.cs" />
     <Compile Include="Model\Database\DatabaseSetup.cs" />
