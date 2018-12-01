@@ -15,12 +15,12 @@ namespace Shared.Library.Test.Model
 
         interface I1
         {
-            int Add(int a, int b);
+            int Func(int a, int b);
         }
 
         class C1 : I1
         {
-            public int Add(int a, int b) => a + b;
+            public int Func(int a, int b) => a + b;
         }
 
         class C2
@@ -29,7 +29,7 @@ namespace Shared.Library.Test.Model
 
             I1 I1 { get; }
 
-            public int Plus(int a, int b) => I1.Add(a, b);
+            public int Plus(int a, int b) => I1.Func(a, b);
         }
 
         class C3
@@ -57,7 +57,7 @@ namespace Shared.Library.Test.Model
             int A { get; }
             int B { get; }
             I1 I1 { get; }
-            public int Get() => I1.Add(A, B);
+            public int Get() => I1.Func(A, B);
         }
 
         abstract class C5
@@ -72,7 +72,7 @@ namespace Shared.Library.Test.Model
             int A { get; }
             int B { get; }
             I1[] I1 { get; }
-            public int Get() => I1.Sum(i => i.Add(A, B));
+            public int Get() => I1.Sum(i => i.Func(A, B));
         }
 
         class C5_LongLong : C5
@@ -169,10 +169,10 @@ namespace Shared.Library.Test.Model
             dic.Add<I1, C1>(DiLifecycle.Create);
 
             var i1_1 = dic.Get<I1>();
-            Assert.AreEqual(3, i1_1.Add(1, 2));
+            Assert.AreEqual(3, i1_1.Func(1, 2));
 
             var i1_2 = dic.Get<I1>();
-            Assert.AreEqual(30, i1_2.Add(10, 20));
+            Assert.AreEqual(30, i1_2.Func(10, 20));
 
             Assert.IsFalse(i1_1 == i1_2);
         }
@@ -184,10 +184,10 @@ namespace Shared.Library.Test.Model
             dic.Add<I1, C1>(DiLifecycle.Singleton);
 
             var i1_1 = dic.Get<I1>();
-            Assert.AreEqual(3, i1_1.Add(1, 2));
+            Assert.AreEqual(3, i1_1.Func(1, 2));
 
             var i1_2 = dic.Get<I1>();
-            Assert.AreEqual(30, i1_2.Add(10, 20));
+            Assert.AreEqual(30, i1_2.Func(10, 20));
 
             Assert.IsTrue(i1_1 == i1_2);
         }
@@ -200,7 +200,7 @@ namespace Shared.Library.Test.Model
 
             // 引数のない人はそのまんま生成される
             var i1 = dic.New<I1>();
-            Assert.AreEqual(10, i1.Add(4, 6));
+            Assert.AreEqual(10, i1.Func(4, 6));
         }
 
         [TestMethod]
@@ -211,7 +211,7 @@ namespace Shared.Library.Test.Model
 
             // 引数のない人はそのまんま生成される
             var c1 = dic.New<C1>();
-            Assert.AreEqual(4, c1.Add(2, 2));
+            Assert.AreEqual(4, c1.Func(2, 2));
         }
 
         [TestMethod]
@@ -414,6 +414,66 @@ namespace Shared.Library.Test.Model
         }
 
         #endregion
+
+        class CScopeA : I1
+        {
+            public int Func(int a, int b) => a + b;
+        }
+        class CScopeB : I1
+        {
+            public int Func(int a, int b) => a - b;
+        }
+        class CScopeC : I1
+        {
+            public int Func(int a, int b) => a * b;
+        }
+        class CScopeD : I1
+        {
+            public int Func(int a, int b) => a / b;
+        }
+
+        [TestMethod]
+        public void ScopeTest()
+        {
+            var dic1 = new DependencyInjectionContainer();
+
+            dic1.Add<I1, CScopeA>(DiLifecycle.Create);
+            Assert.AreEqual(10, dic1.New<I1>().Func(3, 7));
+
+            using(var dic2 = dic1.Scope()) {
+                Assert.AreEqual(10, dic2.New<I1>().Func(3, 7));
+
+                dic2.Add<I1, CScopeB>(DiLifecycle.Create);
+                Assert.AreEqual(-4, dic2.New<I1>().Func(3, 7));
+                Assert.AreEqual(10, dic1.New<I1>().Func(3, 7));
+
+                Assert.ThrowsException<ArgumentException>(() => dic2.Add<I1, CScopeB>(DiLifecycle.Create));
+
+                using(var dic3 = dic2.Scope()) {
+                    Assert.AreEqual(-4, dic3.New<I1>().Func(3, 7));
+
+                    dic3.Add<I1, CScopeC>(DiLifecycle.Create);
+                    Assert.AreEqual(21, dic3.New<I1>().Func(3, 7));
+                    Assert.AreEqual(-4, dic2.New<I1>().Func(3, 7));
+                    Assert.AreEqual(10, dic1.New<I1>().Func(3, 7));
+
+                    Assert.ThrowsException<ArgumentException>(() => dic3.Add<I1, CScopeC>(DiLifecycle.Create));
+
+                    using(var dic4 = dic3.Scope()) {
+                        Assert.AreEqual(21, dic4.New<I1>().Func(3, 7));
+
+                        dic4.Add<I1, CScopeD>(DiLifecycle.Create);
+                        Assert.AreEqual(2, dic4.New<I1>().Func(10, 5));
+                        Assert.AreEqual(21, dic3.New<I1>().Func(3, 7));
+                        Assert.AreEqual(-4, dic2.New<I1>().Func(3, 7));
+                        Assert.AreEqual(10, dic1.New<I1>().Func(3, 7));
+
+                        Assert.ThrowsException<ArgumentException>(() => dic4.Add<I1, CScopeD>(DiLifecycle.Create));
+
+                    }
+                }
+            }
+        }
     }
 }
 

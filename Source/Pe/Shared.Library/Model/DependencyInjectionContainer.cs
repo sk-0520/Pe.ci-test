@@ -25,23 +25,78 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
     public class DiInjectionAttribute : Attribute
     { }
 
+    public interface IDependencyInjectionContainer
+    {
+        /// <summary>
+        /// シンプルなマッピングを追加。
+        /// </summary>
+        /// <typeparam name="TInterface"></typeparam>
+        /// <typeparam name="TObject"></typeparam>
+        void Add<TInterface, TObject>(DiLifecycle lifecycle = DiLifecycle.Create)
+#if !ENABLED_STRUCT
+            where TObject : class
+#endif
+        ;
+
+        /// <summary>
+        /// 自分で作る版のマッピング。
+        /// </summary>
+        /// <typeparam name="TInterface"></typeparam>
+        /// <typeparam name="TObject"></typeparam>
+        /// <param name="lifecycle"></param>
+        /// <param name="factory"></param>
+        void Add<TInterface, TObject>(DiLifecycle lifecycle, Func<object> factory)
+#if !ENABLED_STRUCT
+            where TObject : class
+#endif
+        ;
+
+        TInterface Get<TInterface>();
+
+        T New<T>(IEnumerable<object> manualParameters)
+#if !ENABLED_STRUCT
+            where T : class
+#endif
+        ;
+
+        T New<T>()
+#if !ENABLED_STRUCT
+            where T : class
+#endif
+        ;
+
+        void Inject<T>(T target)
+            where T : class
+        ;
+#if ENABLED_STRUCT
+        void Inject<T>(ref T target)
+            where T : struct
+        ;
+#endif
+
+        IScopeIDependencyInjectionContainer Scope();
+    }
+
+    public interface IScopeIDependencyInjectionContainer: IDependencyInjectionContainer, IDisposable
+    { }
+
     /// <summary>
     ///
     /// </summary>
-    public class DependencyInjectionContainer
+    public class DependencyInjectionContainer: IDependencyInjectionContainer
     {
         #region property
 
-        public static DependencyInjectionContainer Current { get; } = new DependencyInjectionContainer();
+        public static IDependencyInjectionContainer Current { get; } = new DependencyInjectionContainer();
 
-        Dictionary<Type, Type> Mapping { get; } = new Dictionary<Type, Type>();
-        Dictionary<Type, Func<object>> Factory { get; } = new Dictionary<Type, Func<object>>();
+        protected IDictionary<Type, Type> Mapping { get; } = new Dictionary<Type, Type>();
+        protected IDictionary<Type, Func<object>> Factory { get; } = new Dictionary<Type, Func<object>>();
 
         #endregion
 
         #region function
 
-        void AddCreateCore(Type interfaceType, Type objectType, Func<object> factory)
+        protected virtual void AddCreateCore(Type interfaceType, Type objectType, Func<object> factory)
         {
             Mapping.Add(interfaceType, objectType);
             Factory.Add(interfaceType, factory);
@@ -50,8 +105,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         void AddSingletonCore(Type interfaceType, Type objectType, Func<object> factory)
         {
             var lazy = new Lazy<object>(factory);
-            Mapping.Add(interfaceType, objectType);
-            Factory.Add(interfaceType, () => lazy.Value);
+            AddCreateCore(interfaceType, objectType, () => lazy.Value);
         }
 
         void AddCore(Type interfaceType, Type objectType, DiLifecycle lifecycle, Func<object> factory)
@@ -71,57 +125,15 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
             }
         }
 
-        /// <summary>
-        /// シンプルなマッピングを追加。
-        /// </summary>
-        /// <typeparam name="TInterface"></typeparam>
-        /// <typeparam name="TObject"></typeparam>
-        public void Add<TInterface, TObject>(DiLifecycle lifecycle = DiLifecycle.Create)
-#if !ENABLED_STRUCT
-            where TObject : class
-#endif
-        {
-            AddCore(typeof(TInterface), typeof(TObject), lifecycle, () => {
-                return New<TObject>();
-            });
-        }
-
-        /// <summary>
-        /// 自分で作る版のマッピング。
-        /// </summary>
-        /// <typeparam name="TInterface"></typeparam>
-        /// <typeparam name="TObject"></typeparam>
-        /// <param name="lifecycle"></param>
-        /// <param name="factory"></param>
-        public void Add<TInterface, TObject>(DiLifecycle lifecycle, Func<object> factory)
-#if !ENABLED_STRUCT
-            where TObject : class
-#endif
-        {
-            AddCore(typeof(TInterface), typeof(TObject), lifecycle, factory);
-        }
-
         object GetCore(Type interfaceType)
         {
             return Factory[interfaceType]();
-        }
-
-        /// <summary>
-        /// 登録されているオブジェクトを取得。
-        /// </summary>
-        /// <typeparam name="TInterface"></typeparam>
-        /// <returns></returns>
-        public TInterface Get<TInterface>()
-        {
-            var result = GetCore(typeof(TInterface));
-            return (TInterface)result;
         }
 
         Type GetMappingType(Type type)
         {
             return Mapping.TryGetValue(type, out var objectType) ? objectType : type;
         }
-
 
         IList<object> CreateParameters(IReadOnlyCollection<ParameterInfo> parameterInfos, IEnumerable<object> manualParameters)
         {
@@ -206,26 +218,6 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
             return false;
         }
 
-        public T New<T>(IEnumerable<object> manualParameters)
-#if !ENABLED_STRUCT
-            where T : class
-#endif
-        {
-            if(TryNewObject(GetMappingType(typeof(T)), manualParameters, out var raw)) {
-                return (T)raw;
-            }
-
-            throw new Exception($"{typeof(T)}: create fail");
-        }
-
-        public T New<T>()
-#if !ENABLED_STRUCT
-            where T: class
-#endif
-        {
-            return New<T>(Enumerable.Empty<object>());
-        }
-
         void InjectCore<T>(ref T target)
 #if !ENABLED_STRUCT
             where T : class
@@ -258,6 +250,54 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
             }
         }
 
+        #endregion
+
+        #region IDependencyInjectionContainer
+
+        public void Add<TInterface, TObject>(DiLifecycle lifecycle = DiLifecycle.Create)
+#if !ENABLED_STRUCT
+            where TObject : class
+#endif
+        {
+            AddCore(typeof(TInterface), typeof(TObject), lifecycle, () => {
+                return New<TObject>();
+            });
+        }
+
+        public void Add<TInterface, TObject>(DiLifecycle lifecycle, Func<object> factory)
+#if !ENABLED_STRUCT
+            where TObject : class
+#endif
+        {
+            AddCore(typeof(TInterface), typeof(TObject), lifecycle, factory);
+        }
+
+        public TInterface Get<TInterface>()
+        {
+            var result = GetCore(typeof(TInterface));
+            return (TInterface)result;
+        }
+
+        public T New<T>(IEnumerable<object> manualParameters)
+#if !ENABLED_STRUCT
+            where T : class
+#endif
+        {
+            if(TryNewObject(GetMappingType(typeof(T)), manualParameters, out var raw)) {
+                return (T)raw;
+            }
+
+            throw new Exception($"{typeof(T)}: create fail");
+        }
+
+        public T New<T>()
+#if !ENABLED_STRUCT
+            where T: class
+#endif
+        {
+            return New<T>(Enumerable.Empty<object>());
+        }
+
         public void Inject<T>(T target)
             where T : class
         {
@@ -271,6 +311,80 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
             InjectCore(ref target);
         }
 #endif
+
+        public virtual IScopeIDependencyInjectionContainer Scope()
+        {
+            var cloneContainer = new ScopeDependencyInjectionContainer();
+            foreach(var pair in Mapping) {
+                cloneContainer.Mapping.Add(pair.Key, pair.Value);
+            }
+            foreach(var pair in Factory) {
+                cloneContainer.Factory.Add(pair.Key, pair.Value);
+            }
+
+            return cloneContainer;
+        }
+
+        #endregion
+    }
+
+    class ScopeDependencyInjectionContainer: DependencyInjectionContainer, IScopeIDependencyInjectionContainer
+    {
+        #region property
+
+        HashSet<Type> RegisteredTypeSet { get; } = new HashSet<Type>();
+
+        #endregion
+
+        #region DependencyInjectionContainer
+
+        protected override void AddCreateCore(Type interfaceType, Type objectType, Func<object> factory)
+        {
+            if(!RegisteredTypeSet.Contains(interfaceType)) {
+                Mapping.Remove(interfaceType);
+                Factory.Remove(interfaceType);
+
+                base.AddCreateCore(interfaceType, objectType, factory);
+                RegisteredTypeSet.Add(interfaceType);
+            } else {
+                throw new ArgumentException(nameof(interfaceType));
+            }
+        }
+
+        #endregion
+
+        #region IDisposable Support
+
+        private bool disposedValue = false; // 重複する呼び出しを検出するには
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if(!this.disposedValue) {
+                if(disposing) {
+                    // TODO: マネージド状態を破棄します (マネージド オブジェクト)。
+                }
+
+                // TODO: アンマネージド リソース (アンマネージド オブジェクト) を解放し、下のファイナライザーをオーバーライドします。
+                // TODO: 大きなフィールドを null に設定します。
+
+                this.disposedValue = true;
+            }
+        }
+
+        // TODO: 上の Dispose(bool disposing) にアンマネージド リソースを解放するコードが含まれる場合にのみ、ファイナライザーをオーバーライドします。
+        // ~ScopeDependencyInjectionContainer() {
+        //   // このコードを変更しないでください。クリーンアップ コードを上の Dispose(bool disposing) に記述します。
+        //   Dispose(false);
+        // }
+
+        // このコードは、破棄可能なパターンを正しく実装できるように追加されました。
+        public void Dispose()
+        {
+            // このコードを変更しないでください。クリーンアップ コードを上の Dispose(bool disposing) に記述します。
+            Dispose(true);
+            // TODO: 上のファイナライザーがオーバーライドされる場合は、次の行のコメントを解除してください。
+            // GC.SuppressFinalize(this);
+        }
         #endregion
     }
 }
