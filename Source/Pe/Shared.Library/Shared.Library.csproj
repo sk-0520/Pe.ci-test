@@ -78,7 +78,10 @@
     <Compile Include="Compatibility\Forms\DrawingUtility.cs" />
     <Compile Include="Compatibility\Forms\FolderBrowserDialog.cs" />
     <Compile Include="Compatibility\Forms\IconWrapper.cs" />
+    <Compile Include="Compatibility\Forms\InputSender.cs" />
+    <Compile Include="Compatibility\Forms\KeyConvertUtility.cs" />
     <Compile Include="Compatibility\Forms\Screen.cs" />
+    <Compile Include="Compatibility\Forms\SystemInformation.cs" />
     <Compile Include="Compatibility\Windows\HandleUtility.cs" />
     <Compile Include="Compatibility\Windows\IconDialog.cs" />
     <Compile Include="Compatibility\Windows\IWindowsHandle.cs" />
