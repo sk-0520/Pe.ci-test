@@ -26,6 +26,10 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Unmanaged
 
         #endregion
 
+        #region function
+
+        #endregion
+
         #region UnmanagedModelBase
 
         protected override void Dispose(bool disposing)

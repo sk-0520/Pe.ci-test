@@ -85,6 +85,7 @@
     <Compile Include="Model\ObservableCollectionManagerBase.cs" />
     <Compile Include="Model\Range.cs" />
     <Compile Include="Model\ReaderWriterLocker.cs" />
+    <Compile Include="Model\ShortcutFile.cs" />
     <Compile Include="Model\Unmanaged\Com.cs" />
     <Compile Include="Model\Unmanaged\Gdi.cs" />
     <Compile Include="Model\Unmanaged\GlobalAllocModel.cs" />

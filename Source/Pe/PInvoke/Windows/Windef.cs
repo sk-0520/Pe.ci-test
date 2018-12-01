@@ -1,4 +1,4 @@
-﻿/*
+/*
 This file is part of PInvoke.
 
 PInvoke is free software: you can redistribute it and/or modify
@@ -33,36 +33,36 @@ namespace ContentTypeTextNet.Library.PInvoke.Windows
 
         public RECT(int left, int top, int right, int bottom)
         {
-            Left = left;
-            Top = top;
-            Right = right;
-            Bottom = bottom;
+            this.Left = left;
+            this.Top = top;
+            this.Right = right;
+            this.Bottom = bottom;
         }
 
         //public RECT(System.Drawing.Rectangle r) : this(r.Left, r.Top, r.Right, r.Bottom) { }
 
         public int X
         {
-            get { return Left; }
-            set { Right -= (Left - value); Left = value; }
+            get { return this.Left; }
+            set { this.Right -= (this.Left - value); this.Left = value; }
         }
 
         public int Y
         {
-            get { return Top; }
-            set { Bottom -= (Top - value); Top = value; }
+            get { return this.Top; }
+            set { this.Bottom -= (this.Top - value); this.Top = value; }
         }
 
         public int Height
         {
-            get { return Bottom - Top; }
-            set { Bottom = value + Top; }
+            get { return this.Bottom - this.Top; }
+            set { this.Bottom = value + this.Top; }
         }
 
         public int Width
         {
-            get { return Right - Left; }
-            set { Right = value + Left; }
+            get { return this.Right - this.Left; }
+            set { this.Right = value + this.Left; }
         }
 
         //public System.Drawing.Point Location
@@ -118,7 +118,7 @@ namespace ContentTypeTextNet.Library.PInvoke.Windows
 
         public override string ToString()
         {
-            return string.Format(System.Globalization.CultureInfo.CurrentCulture, "{{Left={0},Top={1},Right={2},Bottom={3}}}", Left, Top, Right, Bottom);
+            return string.Format(System.Globalization.CultureInfo.CurrentCulture, "{{Left={0},Top={1},Right={2},Bottom={3}}}", this.Left, this.Top, this.Right, this.Bottom);
         }
     }
 
