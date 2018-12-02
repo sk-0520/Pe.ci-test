@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 {
+    /// <summary>
+    /// 生成タイミング。
+    /// </summary>
     public enum DiLifecycle
     {
         /// <summary>
@@ -21,6 +24,11 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         Singleton,
     }
 
+    /// <summary>
+    /// 注入マーク。
+    /// <para><see cref="IDiContainer.New{T}(IEnumerable{object})"/> する際の対象コンストラクタを限定。</para>
+    /// <para><see cref="IDiContainer.Inject{T}(T)"/> を使用する際の対象を指定。</para>
+    /// </summary>
     [AttributeUsage(AttributeTargets.Constructor | AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false)]
     public class InjectionAttribute : Attribute
     { }
@@ -51,37 +59,74 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 #endif
         ;
 
+        /// <summary>
+        /// マッピングから実体を取得。
+        /// <para>必ずしも依存が解決されるわけではない。</para>
+        /// </summary>
+        /// <typeparam name="TInterface"></typeparam>
+        /// <returns>実体そのまま</returns>
         TInterface Get<TInterface>();
 
-        T New<T>(IEnumerable<object> manualParameters)
+        /// <summary>
+        /// コンストラクタインジェクション。
+        /// <para>依存を解決するとともにパラメータを指定。</para>
+        /// </summary>
+        /// <typeparam name="TObject"></typeparam>
+        /// <param name="manualParameters">依存関係以外のパラメータ。前方から型に一致するものが使用される。</param>
+        /// <returns></returns>
+        TObject New<TObject>(IEnumerable<object> manualParameters)
 #if !ENABLED_STRUCT
-            where T : class
+            where TObject : class
 #endif
         ;
 
-        T New<T>()
+        /// <summary>
+        /// コンストラクタインジェクション。
+        /// </summary>
+        /// <typeparam name="TObject"></typeparam>
+        /// <returns></returns>
+        TObject New<TObject>()
 #if !ENABLED_STRUCT
-            where T : class
+            where TObject : class
 #endif
         ;
 
-        void Inject<T>(T target)
-            where T : class
+        /// <summary>
+        /// <see cref="InjectionAttribute"/> を補完する。
+        /// </summary>
+        /// <typeparam name="TObject">生成済みオブジェクト</typeparam>
+        /// <param name="target"></param>
+        void Inject<TObject>(TObject target)
+            where TObject : class
         ;
 #if ENABLED_STRUCT
-        void Inject<T>(ref T target)
-            where T : struct
+        void Inject<TObject>(ref TObject target)
+            where TObject : struct
         ;
 #endif
 
+        /// <summary>
+        /// 限定的なDIコンテナを作成。
+        /// </summary>
+        /// <returns>現在マッピングを複製したDIコンテナ。</returns>
         IScopeDiContainer Scope();
     }
 
+    /// <summary>
+    /// 限定的なDIコンテナ。
+    /// </summary>
     public interface IScopeDiContainer : IDiContainer, IDisposable
     { }
 
+    /// <summary>
+    /// マッピング生成処理。
+    /// </summary>
+    /// <returns></returns>
     public delegate object DiCreator();
 
+    /// <summary>
+    /// マッピング生成キャッシュ。
+    /// </summary>
     public sealed class DiFactoryWorker
     {
         public DiFactoryWorker(DiLifecycle lifecycle, DiCreator creator, object bind)
@@ -109,6 +154,9 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         #endregion
     }
 
+    /// <summary>
+    /// コンストラクタ情報キャッシュ。
+    /// </summary>
     public sealed class DiConstructorCache
     {
         public DiConstructorCache(ConstructorInfo constructorInfo, IReadOnlyList<ParameterInfo> parameterInfos)
@@ -132,10 +180,22 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
     {
         #region property
 
+        /// <summary>
+        /// シングルトンなDIコンテナ。
+        /// </summary>
         public static IDiContainer Current { get; } = new DiContainer();
 
+        /// <summary>
+        /// 具象化 → 実体 のマッピング。
+        /// </summary>
         protected IDictionary<Type, Type> Mapping { get; } = new Dictionary<Type, Type>();
+        /// <summary>
+        /// 生成処理キャッシュ。
+        /// </summary>
         protected IDictionary<Type, DiFactoryWorker> Factory { get; } = new Dictionary<Type, DiFactoryWorker>();
+        /// <summary>
+        /// コンストラクタキャッシュ。
+        /// </summary>
         protected IDictionary<Type, DiConstructorCache> Constructors { get; } = new Dictionary<Type, DiConstructorCache>();
 
         #endregion
@@ -288,12 +348,12 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
             return TryNewObject(GetMappingType(interfaceType), manualParameters, out value);
         }
 
-        void InjectCore<T>(ref T target)
+        void InjectCore<TObject>(ref TObject target)
 #if !ENABLED_STRUCT
-            where T : class
+            where TObject : class
 #endif
         {
-            var members = typeof(T).GetMembers(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.GetField | BindingFlags.SetField | BindingFlags.GetProperty | BindingFlags.SetProperty);
+            var members = typeof(TObject).GetMembers(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.GetField | BindingFlags.SetField | BindingFlags.GetProperty | BindingFlags.SetProperty);
             foreach(var member in members.Where(m => m.GetCustomAttribute<InjectionAttribute>() != null)) {
                 switch(member.MemberType) {
                     case MemberTypes.Field:
@@ -357,23 +417,23 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
             throw new Exception($"{typeof(TObject)}: create fail");
         }
 
-        public T New<T>()
+        public TObject New<TObject>()
 #if !ENABLED_STRUCT
-            where T : class
+            where TObject : class
 #endif
         {
-            return New<T>(Enumerable.Empty<object>());
+            return New<TObject>(Enumerable.Empty<object>());
         }
 
-        public void Inject<T>(T target)
-            where T : class
+        public void Inject<TObject>(TObject target)
+            where TObject : class
         {
             InjectCore(ref target);
         }
 
 #if ENABLED_STRUCT
-        public void Inject<T>(ref T target)
-            where T : struct
+        public void Inject<TObject>(ref TObject target)
+            where TObject : struct
         {
             InjectCore(ref target);
         }
