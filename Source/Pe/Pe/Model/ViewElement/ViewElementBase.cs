@@ -9,7 +9,7 @@ using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 namespace ContentTypeTextNet.Pe.Main.Model.ViewElement
 {
     /// <summary>
-    /// ビューの DataContext になる基底クラス。
+    /// DataContext にあてる VM のモデルになる基底クラス。
     /// </summary>
     public abstract class ViewElementBase : BindModelBase
     {
