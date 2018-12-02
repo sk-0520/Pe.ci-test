@@ -43,9 +43,9 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         /// </summary>
         /// <typeparam name="TInterface"></typeparam>
         /// <typeparam name="TObject"></typeparam>
-        /// <param name="factory"></param>
+        /// <param name="creator"></param>
         /// <param name="lifecycle"></param>
-        void Add<TInterface, TObject>(Func<TObject> factory, DiLifecycle lifecycle = DiLifecycle.Create)
+        void Add<TInterface, TObject>(DiCreator creator, DiLifecycle lifecycle = DiLifecycle.Create)
 #if !ENABLED_STRUCT
             where TObject : class
 #endif
@@ -77,47 +77,65 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         IScopeDiContainer Scope();
     }
 
-    public interface IScopeDiContainer: IDiContainer, IDisposable
+    public interface IScopeDiContainer : IDiContainer, IDisposable
     { }
+
+    public delegate object DiCreator();
+
+    public class DiFactoryWorker
+    {
+        public DiFactoryWorker(DiLifecycle lifecycle, DiCreator creator)
+        {
+            Lifecycle = lifecycle;
+            Create = creator;
+        }
+
+        #region property
+
+        public DiLifecycle Lifecycle { get; }
+        public DiCreator Create { get; }
+
+        #endregion
+    }
 
     /// <summary>
     ///
     /// </summary>
-    public class DiContainer: IDiContainer
+    public class DiContainer : IDiContainer
     {
         #region property
 
         public static IDiContainer Current { get; } = new DiContainer();
 
         protected IDictionary<Type, Type> Mapping { get; } = new Dictionary<Type, Type>();
-        protected IDictionary<Type, Func<object>> Factory { get; } = new Dictionary<Type, Func<object>>();
+        protected IDictionary<Type, DiFactoryWorker> Factory { get; } = new Dictionary<Type, DiFactoryWorker>();
 
         #endregion
 
         #region function
 
-        protected virtual void AddCreateCore(Type interfaceType, Type objectType, Func<object> factory)
+        protected virtual void AddCreateCore(Type interfaceType, Type objectType, DiLifecycle lifecycle, DiCreator creator)
         {
             Mapping.Add(interfaceType, objectType);
-            Factory.Add(interfaceType, factory);
+            Factory.Add(interfaceType, new DiFactoryWorker(lifecycle, creator));
         }
 
-        void AddSingletonCore(Type interfaceType, Type objectType, Func<object> factory)
+        void AddSingletonCore(Type interfaceType, Type objectType, DiCreator creator)
         {
-            var lazy = new Lazy<object>(factory);
-            AddCreateCore(interfaceType, objectType, () => lazy.Value);
+            var lazy = new Lazy<object>(() => creator());
+            AddCreateCore(interfaceType, objectType, DiLifecycle.Singleton, () => lazy.Value);
         }
 
-        void AddCore(Type interfaceType, Type objectType, DiLifecycle lifecycle, Func<object> factory)
+        void AddCore(Type interfaceType, Type objectType, DiLifecycle lifecycle, DiCreator creator)
         {
 
             switch(lifecycle) {
                 case DiLifecycle.Create:
-                    AddCreateCore(interfaceType, objectType, factory);
+                    AddCreateCore(interfaceType, objectType, DiLifecycle.Create, creator);
                     break;
 
                 case DiLifecycle.Singleton:
-                    AddSingletonCore(interfaceType, objectType, factory);
+                    AddSingletonCore(interfaceType, objectType, creator);
                     break;
 
                 default:
@@ -138,8 +156,8 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 
             var arguments = new List<object>(parameterInfos.Count);
             foreach(var parameterInfo in parameterInfos) {
-                if(Factory.TryGetValue(parameterInfo.ParameterType, out var factory)) {
-                    arguments.Add(factory());
+                if(Factory.TryGetValue(parameterInfo.ParameterType, out var factoryWorker)) {
+                    arguments.Add(factoryWorker.Create());
                 } else if(manualParameterItems.Any()) {
                     // コンテナ内に存在しない場合は入力パラメータを順番に使用する
                     var item = manualParameterItems.FirstOrDefault(i => i.Key == parameterInfo.ParameterType);
@@ -185,8 +203,8 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         bool TryNewObject(Type objectType, IEnumerable<object> manualParameters, out object value)
         {
             // 生成可能なものはこの段階で生成
-            if(Factory.TryGetValue(objectType, out var factory)) {
-                value = factory();
+            if(Factory.TryGetValue(objectType, out var factoryWorker)) {
+                value = factoryWorker.Create();
                 return true;
             }
 
@@ -222,8 +240,8 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         bool TryGetInstance(Type interfaceType, IEnumerable<object> manualParameters, out object value)
         {
             // 生成可能なものはこの段階で生成
-            if(Factory.TryGetValue(interfaceType, out var factory)) {
-                value = factory();
+            if(Factory.TryGetValue(interfaceType, out var factoryWorker)) {
+                value = factoryWorker.Create();
                 return true;
             }
 
@@ -276,17 +294,17 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
             });
         }
 
-        public void Add<TInterface, TObject>(Func<TObject> factory, DiLifecycle lifecycle = DiLifecycle.Create)
+        public void Add<TInterface, TObject>(DiCreator creator, DiLifecycle lifecycle = DiLifecycle.Create)
 #if !ENABLED_STRUCT
             where TObject : class
 #endif
         {
-            AddCore(typeof(TInterface), typeof(TObject), lifecycle, factory);
+            AddCore(typeof(TInterface), typeof(TObject), lifecycle, creator);
         }
 
         public TInterface Get<TInterface>()
         {
-            return (TInterface)Factory[typeof(TInterface)]();
+            return (TInterface)Factory[typeof(TInterface)].Create();
         }
 
         public TObject New<TObject>(IEnumerable<object> manualParameters)
@@ -303,7 +321,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 
         public T New<T>()
 #if !ENABLED_STRUCT
-            where T: class
+            where T : class
 #endif
         {
             return New<T>(Enumerable.Empty<object>());
@@ -339,7 +357,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         #endregion
     }
 
-    class ScopeDiContainer: DiContainer, IScopeDiContainer
+    class ScopeDiContainer : DiContainer, IScopeDiContainer
     {
         #region property
 
@@ -349,13 +367,13 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 
         #region DependencyInjectionContainer
 
-        protected override void AddCreateCore(Type interfaceType, Type objectType, Func<object> factory)
+        protected override void AddCreateCore(Type interfaceType, Type objectType, DiLifecycle lifecycle, DiCreator creator)
         {
             if(!RegisteredTypeSet.Contains(interfaceType)) {
                 Mapping.Remove(interfaceType);
                 Factory.Remove(interfaceType);
 
-                base.AddCreateCore(interfaceType, objectType, factory);
+                base.AddCreateCore(interfaceType, objectType, lifecycle, creator);
                 RegisteredTypeSet.Add(interfaceType);
             } else {
                 throw new ArgumentException(nameof(interfaceType));
