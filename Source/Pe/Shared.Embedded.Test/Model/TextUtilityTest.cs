@@ -93,5 +93,17 @@ namespace Shared.Embedded.Test.Model
         {
             Assert.AreEqual(result, TextUtility.TextWidth(text));
         }
+
+        [TestMethod]
+        [DataRow("", "")]
+        [DataRow("", null)]
+        [DataRow("a", " a")]
+        [DataRow("a", "a ")]
+        [DataRow("a", " a ")]
+        [DataRow("", "   ")]
+        public void SafeTrimTest(string result, string text)
+        {
+            Assert.AreEqual(result, TextUtility.SafeTrim(text), $"`{result}` - `{text}`");
+        }
     }
 }

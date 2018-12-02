@@ -49,8 +49,9 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Link.Model
 
     public class LogItem
     {
-        public LogItem(LogKind kind, string message, string detail, Caller caller)
+        public LogItem(DateTime timestamp, LogKind kind, string message, string detail, Caller caller)
         {
+            Timestamp = timestamp;
             Kind = kind;
             Message = message;
             Detail = detail;
@@ -59,6 +60,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Link.Model
 
         #region property
 
+        public DateTime Timestamp { get; }
         public LogKind Kind { get; }
         public string Message { get; }
         public string Detail { get; }
@@ -112,7 +114,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Link.Model
         public void <#= logKindItem.Key #>(Exception exception, <#= callerArg #>) => <#= PutException(logKindItem.Key) #>
 
 <# } #>
-        public void Put(LogKind kind, string message, string detail, <#= callerArg #>) => PutCore(new LogItem(kind, message, detail, <#= callerParam #>));
+        public void Put(LogKind kind, string message, string detail, <#= callerArg #>) => PutCore(new LogItem(DateTime.Now, kind, message, detail, <#= callerParam #>));
         public ILogger CreateChild(string header) => CreateChildCore(header);
     }
 
@@ -175,12 +177,12 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Link.Model
     string callerParam = "new Caller(callerMemberName, callerFilePath, callerLineNumber)";
 
     string PutMessage(string kind) {
-        return "PutCore(new LogItem(LogKind." + kind + ", message, null, " + callerParam + "));";
+        return "PutCore(new LogItem(DateTime.Now, LogKind." + kind + ", message, null, " + callerParam + "));";
     }
     string PutDetail(string kind) {
-        return "PutCore(new LogItem(LogKind." + kind + ", message, detail?.ToString(), " + callerParam + "));";
+        return "PutCore(new LogItem(DateTime.Now, LogKind." + kind + ", message, detail?.ToString(), " + callerParam + "));";
     }
     string PutException(string kind) {
-        return "PutCore(new LogItem(LogKind." + kind + ", exception.Message, exception.ToString(), " + callerParam + "));";
+        return "PutCore(new LogItem(DateTime.Now, LogKind." + kind + ", exception.Message, exception.ToString(), " + callerParam + "));";
     }
 #>

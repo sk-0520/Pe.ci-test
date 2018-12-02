@@ -40,8 +40,9 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Link.Model
 
     public class LogItem
     {
-        public LogItem(LogKind kind, string message, string detail, Caller caller)
+        public LogItem(DateTime timestamp, LogKind kind, string message, string detail, Caller caller)
         {
+            Timestamp = timestamp;
             Kind = kind;
             Message = message;
             Detail = detail;
@@ -50,6 +51,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Link.Model
 
         #region property
 
+        public DateTime Timestamp { get; }
         public LogKind Kind { get; }
         public string Message { get; }
         public string Detail { get; }
@@ -115,31 +117,31 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Link.Model
         protected abstract void PutCore(LogItem logItem);
         protected abstract ILogger CreateChildCore(string header);
 
-        public void Trace(string message, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = 0) => PutCore(new LogItem(LogKind.Trace, message, null, new Caller(callerMemberName, callerFilePath, callerLineNumber)));
-        public void Trace(string message, object detail, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = 0) => PutCore(new LogItem(LogKind.Trace, message, detail?.ToString(), new Caller(callerMemberName, callerFilePath, callerLineNumber)));
-        public void Trace(Exception exception, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = 0) => PutCore(new LogItem(LogKind.Trace, exception.Message, exception.ToString(), new Caller(callerMemberName, callerFilePath, callerLineNumber)));
+        public void Trace(string message, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = 0) => PutCore(new LogItem(DateTime.Now, LogKind.Trace, message, null, new Caller(callerMemberName, callerFilePath, callerLineNumber)));
+        public void Trace(string message, object detail, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = 0) => PutCore(new LogItem(DateTime.Now, LogKind.Trace, message, detail?.ToString(), new Caller(callerMemberName, callerFilePath, callerLineNumber)));
+        public void Trace(Exception exception, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = 0) => PutCore(new LogItem(DateTime.Now, LogKind.Trace, exception.Message, exception.ToString(), new Caller(callerMemberName, callerFilePath, callerLineNumber)));
 
-        public void Debug(string message, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = 0) => PutCore(new LogItem(LogKind.Debug, message, null, new Caller(callerMemberName, callerFilePath, callerLineNumber)));
-        public void Debug(string message, object detail, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = 0) => PutCore(new LogItem(LogKind.Debug, message, detail?.ToString(), new Caller(callerMemberName, callerFilePath, callerLineNumber)));
-        public void Debug(Exception exception, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = 0) => PutCore(new LogItem(LogKind.Debug, exception.Message, exception.ToString(), new Caller(callerMemberName, callerFilePath, callerLineNumber)));
+        public void Debug(string message, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = 0) => PutCore(new LogItem(DateTime.Now, LogKind.Debug, message, null, new Caller(callerMemberName, callerFilePath, callerLineNumber)));
+        public void Debug(string message, object detail, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = 0) => PutCore(new LogItem(DateTime.Now, LogKind.Debug, message, detail?.ToString(), new Caller(callerMemberName, callerFilePath, callerLineNumber)));
+        public void Debug(Exception exception, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = 0) => PutCore(new LogItem(DateTime.Now, LogKind.Debug, exception.Message, exception.ToString(), new Caller(callerMemberName, callerFilePath, callerLineNumber)));
 
-        public void Information(string message, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = 0) => PutCore(new LogItem(LogKind.Information, message, null, new Caller(callerMemberName, callerFilePath, callerLineNumber)));
-        public void Information(string message, object detail, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = 0) => PutCore(new LogItem(LogKind.Information, message, detail?.ToString(), new Caller(callerMemberName, callerFilePath, callerLineNumber)));
-        public void Information(Exception exception, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = 0) => PutCore(new LogItem(LogKind.Information, exception.Message, exception.ToString(), new Caller(callerMemberName, callerFilePath, callerLineNumber)));
+        public void Information(string message, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = 0) => PutCore(new LogItem(DateTime.Now, LogKind.Information, message, null, new Caller(callerMemberName, callerFilePath, callerLineNumber)));
+        public void Information(string message, object detail, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = 0) => PutCore(new LogItem(DateTime.Now, LogKind.Information, message, detail?.ToString(), new Caller(callerMemberName, callerFilePath, callerLineNumber)));
+        public void Information(Exception exception, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = 0) => PutCore(new LogItem(DateTime.Now, LogKind.Information, exception.Message, exception.ToString(), new Caller(callerMemberName, callerFilePath, callerLineNumber)));
 
-        public void Warning(string message, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = 0) => PutCore(new LogItem(LogKind.Warning, message, null, new Caller(callerMemberName, callerFilePath, callerLineNumber)));
-        public void Warning(string message, object detail, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = 0) => PutCore(new LogItem(LogKind.Warning, message, detail?.ToString(), new Caller(callerMemberName, callerFilePath, callerLineNumber)));
-        public void Warning(Exception exception, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = 0) => PutCore(new LogItem(LogKind.Warning, exception.Message, exception.ToString(), new Caller(callerMemberName, callerFilePath, callerLineNumber)));
+        public void Warning(string message, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = 0) => PutCore(new LogItem(DateTime.Now, LogKind.Warning, message, null, new Caller(callerMemberName, callerFilePath, callerLineNumber)));
+        public void Warning(string message, object detail, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = 0) => PutCore(new LogItem(DateTime.Now, LogKind.Warning, message, detail?.ToString(), new Caller(callerMemberName, callerFilePath, callerLineNumber)));
+        public void Warning(Exception exception, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = 0) => PutCore(new LogItem(DateTime.Now, LogKind.Warning, exception.Message, exception.ToString(), new Caller(callerMemberName, callerFilePath, callerLineNumber)));
 
-        public void Error(string message, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = 0) => PutCore(new LogItem(LogKind.Error, message, null, new Caller(callerMemberName, callerFilePath, callerLineNumber)));
-        public void Error(string message, object detail, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = 0) => PutCore(new LogItem(LogKind.Error, message, detail?.ToString(), new Caller(callerMemberName, callerFilePath, callerLineNumber)));
-        public void Error(Exception exception, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = 0) => PutCore(new LogItem(LogKind.Error, exception.Message, exception.ToString(), new Caller(callerMemberName, callerFilePath, callerLineNumber)));
+        public void Error(string message, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = 0) => PutCore(new LogItem(DateTime.Now, LogKind.Error, message, null, new Caller(callerMemberName, callerFilePath, callerLineNumber)));
+        public void Error(string message, object detail, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = 0) => PutCore(new LogItem(DateTime.Now, LogKind.Error, message, detail?.ToString(), new Caller(callerMemberName, callerFilePath, callerLineNumber)));
+        public void Error(Exception exception, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = 0) => PutCore(new LogItem(DateTime.Now, LogKind.Error, exception.Message, exception.ToString(), new Caller(callerMemberName, callerFilePath, callerLineNumber)));
 
-        public void Fatal(string message, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = 0) => PutCore(new LogItem(LogKind.Fatal, message, null, new Caller(callerMemberName, callerFilePath, callerLineNumber)));
-        public void Fatal(string message, object detail, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = 0) => PutCore(new LogItem(LogKind.Fatal, message, detail?.ToString(), new Caller(callerMemberName, callerFilePath, callerLineNumber)));
-        public void Fatal(Exception exception, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = 0) => PutCore(new LogItem(LogKind.Fatal, exception.Message, exception.ToString(), new Caller(callerMemberName, callerFilePath, callerLineNumber)));
+        public void Fatal(string message, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = 0) => PutCore(new LogItem(DateTime.Now, LogKind.Fatal, message, null, new Caller(callerMemberName, callerFilePath, callerLineNumber)));
+        public void Fatal(string message, object detail, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = 0) => PutCore(new LogItem(DateTime.Now, LogKind.Fatal, message, detail?.ToString(), new Caller(callerMemberName, callerFilePath, callerLineNumber)));
+        public void Fatal(Exception exception, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = 0) => PutCore(new LogItem(DateTime.Now, LogKind.Fatal, exception.Message, exception.ToString(), new Caller(callerMemberName, callerFilePath, callerLineNumber)));
 
-        public void Put(LogKind kind, string message, string detail, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = 0) => PutCore(new LogItem(kind, message, detail, new Caller(callerMemberName, callerFilePath, callerLineNumber)));
+        public void Put(LogKind kind, string message, string detail, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = 0) => PutCore(new LogItem(DateTime.Now, kind, message, detail, new Caller(callerMemberName, callerFilePath, callerLineNumber)));
         public ILogger CreateChild(string header) => CreateChildCore(header);
     }
 
