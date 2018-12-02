@@ -120,6 +120,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 
         protected IDictionary<Type, Type> Mapping { get; } = new Dictionary<Type, Type>();
         protected IDictionary<Type, DiFactoryWorker> Factory { get; } = new Dictionary<Type, DiFactoryWorker>();
+        protected IDictionary<Type, ConstructorInfo> Constructors { get; } = new Dictionary<Type, ConstructorInfo>();
 
         #endregion
 
@@ -188,11 +189,14 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 
         }
 
-        bool TryNewObjectCore(ConstructorInfo constructor, IEnumerable<object> manualParameters, out object createdObject)
+        bool TryNewObjectCore(Type objectType, bool isCached, ConstructorInfo constructor, IEnumerable<object> manualParameters, out object createdObject)
         {
             var parameters = constructor.GetParameters();
 
             if(!parameters.Any()) {
+                if(!isCached) {
+                    Constructors.Add(objectType, constructor);
+                }
                 createdObject = constructor.Invoke(null);
                 return true;
             }
@@ -207,16 +211,23 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
                 return false;
             }
 
+            if(!isCached) {
+                Constructors.Add(objectType, constructor);
+            }
             createdObject = constructor.Invoke(arguments.ToArray());
             return true;
         }
 
-        bool TryNewObject(Type objectType, IEnumerable<object> manualParameters, out object value)
+        bool TryNewObject(Type objectType, IEnumerable<object> manualParameters, out object createdObject)
         {
             // 生成可能なものはこの段階で生成
             if(Factory.TryGetValue(objectType, out var factoryWorker)) {
-                value = factoryWorker.Create();
+                createdObject = factoryWorker.Create();
                 return true;
+            }
+
+            if(Constructors.TryGetValue(objectType, out var constructorInfo)) {
+                return TryNewObjectCore(objectType, true, constructorInfo, manualParameters, out createdObject);
             }
 
             // 属性付きで引数が多いものを優先
@@ -239,12 +250,12 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 #endif
 
             foreach(var constructorItem in constructorItems) {
-                if(TryNewObjectCore(constructorItem.Constructor, manualParameters, out value)) {
+                if(TryNewObjectCore(objectType, false, constructorItem.Constructor, manualParameters, out createdObject)) {
                     return true;
                 }
             }
 
-            value = default(object);
+            createdObject = default(object);
             return false;
         }
 
@@ -358,6 +369,9 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
             }
             foreach(var pair in Factory) {
                 cloneContainer.Factory.Add(pair.Key, pair.Value);
+            }
+            foreach(var pair in Constructors) {
+                cloneContainer.Constructors.Add(pair.Key, pair.Value);
             }
 
             return cloneContainer;
