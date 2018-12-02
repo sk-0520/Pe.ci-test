@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
@@ -132,12 +133,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         public DiFactoryWorker(DiLifecycle lifecycle, DiCreator creator, object bind)
         {
             Lifecycle = lifecycle;
-            var type = typeof(DiCreator);
-            if(lifecycle == DiLifecycle.Create) {
-                Creator = (DiCreator)Delegate.CreateDelegate(type, bind, creator.Method);
-            } else {
-                Creator = creator;
-            }
+            Creator = creator;
         }
 
         #region property
@@ -169,6 +165,53 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 
         public ConstructorInfo ConstructorInfo { get; }
         public IReadOnlyList<ParameterInfo> ParameterInfos { get; }
+        Func<object[], object> Creator { get; set; }
+
+        #endregion
+
+        #region function
+
+        public object Create(object[] parameters)
+        {
+            if(Creator == null) {
+                switch(ParameterInfos.Count) {
+                    case 0: {
+                            var newExp = System.Linq.Expressions.Expression.New(ConstructorInfo);
+                            var lambda = System.Linq.Expressions.Expression.Lambda<Func<object>>(newExp);
+                            var creator = lambda.Compile();
+                            Creator = p => creator();
+                        }
+                        break;
+
+                    //case 1: {
+                    //        var newExp = System.Linq.Expressions.Expression.New(
+                    //            ConstructorInfo,
+                    //            new[] {
+                    //                Expression.Convert(
+                    //                    Expression.Parameter(typeof(object), ParameterInfos[0].Name),
+                    //                    ParameterInfos[0].ParameterType
+                    //                )
+                    //                //System.Linq.Expressions.Expression.Parameter(typeof(object), ParameterInfos[0].Name),
+                    //            }
+                    //        );
+                    //        var lambda = System.Linq.Expressions.Expression.Lambda(
+                    //            newExp,
+                    //            System.Linq.Expressions.Expression.Parameter(ParameterInfos[0].ParameterType, ParameterInfos[0].Name)
+                    //        );
+
+                    //        var creator = lambda.Compile();
+                    //        Creator = p => creator.DynamicInvoke(p);
+                    //    }
+                    //    break;
+
+                    default:
+                        Creator = ConstructorInfo.Invoke;
+                        break;
+                }
+            }
+
+            return Creator(parameters);
+        }
 
         #endregion
     }
@@ -216,7 +259,6 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 
         void AddCore(Type interfaceType, Type objectType, DiLifecycle lifecycle, DiCreator creator)
         {
-
             switch(lifecycle) {
                 case DiLifecycle.Create:
                     AddCreateCore(interfaceType, objectType, DiLifecycle.Create, creator);
@@ -273,7 +315,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
                 if(!isCached) {
                     Constructors.Add(objectType, constructorCache);
                 }
-                createdObject = constructorCache.ConstructorInfo.Invoke(null);
+                createdObject = constructorCache.Create(null);
                 return true;
             }
 
@@ -290,7 +332,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
             if(!isCached) {
                 Constructors.Add(objectType, constructorCache);
             }
-            createdObject = constructorCache.ConstructorInfo.Invoke(arguments.ToArray());
+            createdObject = constructorCache.Create(arguments.ToArray());
             return true;
         }
 
