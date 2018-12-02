@@ -129,9 +129,11 @@
     <Compile Include="Model\Database\DatabaseTransaction.cs" />
     <Compile Include="Model\Database\SqliteAccessor.cs" />
     <Compile Include="Model\EncodingUtility.cs" />
+    <Compile Include="Model\FreezableUtility.cs" />
     <Compile Include="Model\IconLoader.cs" />
     <Compile Include="Model\IMakeBitmapSource.cs" />
     <Compile Include="Model\Initializer.cs" />
+    <Compile Include="Model\MediaUtility.cs" />
     <Compile Include="Model\Model.cs" />
     <Compile Include="Model\DiContainer.cs" />
     <Compile Include="Model\EnumUtility.cs" />
