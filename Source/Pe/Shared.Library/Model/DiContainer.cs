@@ -109,6 +109,22 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         #endregion
     }
 
+    public sealed class DiConstructorCache
+    {
+        public DiConstructorCache(ConstructorInfo constructorInfo, IReadOnlyList<ParameterInfo> parameterInfos)
+        {
+            ConstructorInfo = constructorInfo;
+            ParameterInfos = parameterInfos;
+        }
+
+        #region proeprty
+
+        public ConstructorInfo ConstructorInfo { get; }
+        public IReadOnlyList<ParameterInfo> ParameterInfos { get; }
+
+        #endregion
+    }
+
     /// <summary>
     ///
     /// </summary>
@@ -120,7 +136,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 
         protected IDictionary<Type, Type> Mapping { get; } = new Dictionary<Type, Type>();
         protected IDictionary<Type, DiFactoryWorker> Factory { get; } = new Dictionary<Type, DiFactoryWorker>();
-        protected IDictionary<Type, ConstructorInfo> Constructors { get; } = new Dictionary<Type, ConstructorInfo>();
+        protected IDictionary<Type, DiConstructorCache> Constructors { get; } = new Dictionary<Type, DiConstructorCache>();
 
         #endregion
 
@@ -189,15 +205,15 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 
         }
 
-        bool TryNewObjectCore(Type objectType, bool isCached, ConstructorInfo constructor, IEnumerable<object> manualParameters, out object createdObject)
+        bool TryNewObjectCore(Type objectType, bool isCached, DiConstructorCache constructorCache, IEnumerable<object> manualParameters, out object createdObject)
         {
-            var parameters = constructor.GetParameters();
+            var parameters = constructorCache.ParameterInfos;
 
             if(!parameters.Any()) {
                 if(!isCached) {
-                    Constructors.Add(objectType, constructor);
+                    Constructors.Add(objectType, constructorCache);
                 }
-                createdObject = constructor.Invoke(null);
+                createdObject = constructorCache.ConstructorInfo.Invoke(null);
                 return true;
             }
 
@@ -206,15 +222,15 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
                 createdObject = default(object);
                 return false;
             }
-            if(arguments.Count != parameters.Length) {
+            if(arguments.Count != parameters.Count) {
                 createdObject = default(object);
                 return false;
             }
 
             if(!isCached) {
-                Constructors.Add(objectType, constructor);
+                Constructors.Add(objectType, constructorCache);
             }
-            createdObject = constructor.Invoke(arguments.ToArray());
+            createdObject = constructorCache.ConstructorInfo.Invoke(arguments.ToArray());
             return true;
         }
 
@@ -226,8 +242,9 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
                 return true;
             }
 
-            if(Constructors.TryGetValue(objectType, out var constructorInfo)) {
-                return TryNewObjectCore(objectType, true, constructorInfo, manualParameters, out createdObject);
+            // コンストラクタのキャッシュを使用
+            if(Constructors.TryGetValue(objectType, out var constructorCache)) {
+                return TryNewObjectCore(objectType, true, constructorCache, manualParameters, out createdObject);
             }
 
             // 属性付きで引数が多いものを優先
@@ -240,6 +257,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
                 .Where(i => i.Attribute != null ? true : i.Constructor.IsPublic)
                 .OrderBy(i => i.Attribute != null ? 0 : 1)
                 .ThenByDescending(i => i.Parameters.Length)
+                .Select(i => new DiConstructorCache(i.Constructor, i.Parameters))
                 .ToList()
             ;
 
@@ -250,7 +268,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 #endif
 
             foreach(var constructorItem in constructorItems) {
-                if(TryNewObjectCore(objectType, false, constructorItem.Constructor, manualParameters, out createdObject)) {
+                if(TryNewObjectCore(objectType, false, constructorItem, manualParameters, out createdObject)) {
                     return true;
                 }
             }
