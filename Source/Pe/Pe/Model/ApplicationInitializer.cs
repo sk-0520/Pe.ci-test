@@ -55,7 +55,7 @@ namespace ContentTypeTextNet.Pe.Main.Model
         {
             // ログがあったりなかったりするフワフワ状態なので一時的にDIコンテナ作成
             using(var diContainer = DiContainer.Current.Scope()) {
-                diContainer.Add<ILogger, LoggerBase>(() => (LoggerBase)logger, DiLifecycle.Singleton);
+                diContainer.Register<ILogger, LoggerBase>(() => (LoggerBase)logger, DiLifecycle.Singleton);
 
                 var model = diContainer.New<ViewElement.Accept.AcceptViewElement>();
                 var view = new View.Accept.AcceptWindow() {

@@ -37,30 +37,6 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
     public interface IDiContainer
     {
         /// <summary>
-        /// シンプルなマッピングを追加。
-        /// </summary>
-        /// <typeparam name="TInterface"></typeparam>
-        /// <typeparam name="TObject"></typeparam>
-        void Add<TInterface, TObject>(DiLifecycle lifecycle = DiLifecycle.Create)
-#if !ENABLED_STRUCT
-            where TObject : class
-#endif
-        ;
-
-        /// <summary>
-        /// 自分で作る版のマッピング。
-        /// </summary>
-        /// <typeparam name="TInterface"></typeparam>
-        /// <typeparam name="TObject"></typeparam>
-        /// <param name="creator"></param>
-        /// <param name="lifecycle"></param>
-        void Add<TInterface, TObject>(DiCreator creator, DiLifecycle lifecycle = DiLifecycle.Create)
-#if !ENABLED_STRUCT
-            where TObject : class
-#endif
-        ;
-
-        /// <summary>
         /// マッピングから実体を取得。
         /// <para>必ずしも依存が解決されるわけではない。</para>
         /// </summary>
@@ -113,10 +89,37 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         IScopeDiContainer Scope();
     }
 
+    public interface IDiRegisterContainer: IDiContainer
+    {
+        /// <summary>
+        /// シンプルなマッピングを追加。
+        /// </summary>
+        /// <typeparam name="TInterface"></typeparam>
+        /// <typeparam name="TObject"></typeparam>
+        void Register<TInterface, TObject>(DiLifecycle lifecycle = DiLifecycle.Create)
+#if !ENABLED_STRUCT
+            where TObject : class
+#endif
+        ;
+
+        /// <summary>
+        /// 自分で作る版のマッピング。
+        /// </summary>
+        /// <typeparam name="TInterface"></typeparam>
+        /// <typeparam name="TObject"></typeparam>
+        /// <param name="creator"></param>
+        /// <param name="lifecycle"></param>
+        void Register<TInterface, TObject>(DiCreator creator, DiLifecycle lifecycle = DiLifecycle.Create)
+#if !ENABLED_STRUCT
+            where TObject : class
+#endif
+        ;
+    }
+
     /// <summary>
     /// 限定的なDIコンテナ。
     /// </summary>
-    public interface IScopeDiContainer : IDiContainer, IDisposable
+    public interface IScopeDiContainer : IDiRegisterContainer, IDisposable
     { }
 
     /// <summary>
@@ -219,14 +222,15 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
     /// <summary>
     ///
     /// </summary>
-    public class DiContainer : IDiContainer
+    public class DiContainer : IDiRegisterContainer
     {
         #region property
 
         /// <summary>
         /// シングルトンなDIコンテナ。
+        /// <para><see cref="Initializer"/>にて初期化が必要。</para>
         /// </summary>
-        public static IDiContainer Current { get; } = new DiContainer();
+        public static IDiContainer Current { get; private set; }
 
         /// <summary>
         /// 具象化 → 実体 のマッピング。
@@ -244,6 +248,15 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         #endregion
 
         #region function
+
+        public static void Initializer(Func<DiContainer, IDiContainer> creator)
+        {
+            if(Current != null) {
+                throw new InvalidOperationException();
+            }
+
+            Current = creator(new DiContainer());
+        }
 
         protected virtual void AddCreateCore(Type interfaceType, Type objectType, DiLifecycle lifecycle, DiCreator creator)
         {
@@ -426,22 +439,6 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 
         #region IDependencyInjectionContainer
 
-        public void Add<TInterface, TObject>(DiLifecycle lifecycle = DiLifecycle.Create)
-#if !ENABLED_STRUCT
-            where TObject : class
-#endif
-        {
-            AddCore(typeof(TInterface), typeof(TObject), lifecycle, New<TObject>);
-        }
-
-        public void Add<TInterface, TObject>(DiCreator creator, DiLifecycle lifecycle = DiLifecycle.Create)
-#if !ENABLED_STRUCT
-            where TObject : class
-#endif
-        {
-            AddCore(typeof(TInterface), typeof(TObject), lifecycle, creator);
-        }
-
         public TInterface Get<TInterface>()
         {
             return (TInterface)Factory[typeof(TInterface)].Create();
@@ -495,6 +492,26 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
             }
 
             return cloneContainer;
+        }
+
+        #endregion
+
+        #region IDiAddContainer
+
+        public void Register<TInterface, TObject>(DiLifecycle lifecycle = DiLifecycle.Create)
+#if !ENABLED_STRUCT
+            where TObject : class
+#endif
+        {
+            AddCore(typeof(TInterface), typeof(TObject), lifecycle, New<TObject>);
+        }
+
+        public void Register<TInterface, TObject>(DiCreator creator, DiLifecycle lifecycle = DiLifecycle.Create)
+#if !ENABLED_STRUCT
+            where TObject : class
+#endif
+        {
+            AddCore(typeof(TInterface), typeof(TObject), lifecycle, creator);
         }
 
         #endregion
