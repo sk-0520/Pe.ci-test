@@ -82,18 +82,29 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 
     public delegate object DiCreator();
 
-    public class DiFactoryWorker
+    public sealed class DiFactoryWorker
     {
-        public DiFactoryWorker(DiLifecycle lifecycle, DiCreator creator)
+        public DiFactoryWorker(DiLifecycle lifecycle, DiCreator creator, object bind)
         {
             Lifecycle = lifecycle;
-            Create = creator;
+            var type = typeof(DiCreator);
+            if(lifecycle == DiLifecycle.Create) {
+                Creator = (DiCreator)Delegate.CreateDelegate(type, bind, creator.Method);
+            } else {
+                Creator = creator;
+            }
         }
 
         #region property
 
         public DiLifecycle Lifecycle { get; }
-        public DiCreator Create { get; }
+        DiCreator Creator { get; }
+
+        #endregion
+
+        #region function
+
+        public object Create() => Creator();
 
         #endregion
     }
@@ -117,7 +128,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         protected virtual void AddCreateCore(Type interfaceType, Type objectType, DiLifecycle lifecycle, DiCreator creator)
         {
             Mapping.Add(interfaceType, objectType);
-            Factory.Add(interfaceType, new DiFactoryWorker(lifecycle, creator));
+            Factory.Add(interfaceType, new DiFactoryWorker(lifecycle, creator, this));
         }
 
         void AddSingletonCore(Type interfaceType, Type objectType, DiCreator creator)
@@ -289,9 +300,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
             where TObject : class
 #endif
         {
-            AddCore(typeof(TInterface), typeof(TObject), lifecycle, () => {
-                return New<TObject>();
-            });
+            AddCore(typeof(TInterface), typeof(TObject), lifecycle, New<TObject>);
         }
 
         public void Add<TInterface, TObject>(DiCreator creator, DiLifecycle lifecycle = DiLifecycle.Create)
