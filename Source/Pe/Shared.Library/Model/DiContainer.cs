@@ -363,7 +363,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
                 .ToList()
             ;
 
-#if false
+#if ENABLED_STRUCT
             if(!constructorItems.Any() && type.IsValueType) {
                 //TODO: 構造体っぽければそのまま作る
             }
@@ -525,6 +525,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 
         #endregion
 
+        // 自動生成にしても日本語がすごい
         #region IDisposable Support
 
         private bool disposedValue = false; // 重複する呼び出しを検出するには
