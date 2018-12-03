@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -89,7 +90,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         IScopeDiContainer Scope();
     }
 
-    public interface IDiRegisterContainer: IDiContainer
+    public interface IDiRegisterContainer : IDiContainer
     {
         /// <summary>
         /// シンプルなマッピングを追加。
@@ -174,42 +175,112 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 
         #region function
 
+        IEnumerable<ParameterExpression> CreateParameterExpressions()
+        {
+            return ParameterInfos
+                .Select((p, i) => Expression.Parameter(typeof(object), "wrapperArg_" + i.ToString()))
+            ;
+        }
+
+        IEnumerable<UnaryExpression> CreateConvertExpressions(IEnumerable<ParameterExpression> parameterExpressions)
+        {
+            return ParameterInfos
+                .Zip(parameterExpressions, (pi, pe) => Expression.Convert(pe, pi.ParameterType))
+            ;
+        }
+
+        FuncN CreateFunction<FuncN>()
+        {
+            var parameterExpressions = CreateParameterExpressions().ToArray();
+            var convertExpressions = CreateConvertExpressions(parameterExpressions).ToArray();
+            Debug.Assert(parameterExpressions.Length == convertExpressions.Length);
+
+            var constructorNew = Expression.New(
+                ConstructorInfo,
+                convertExpressions
+            );
+
+            var resultCast = Expression.Convert(constructorNew, typeof(object));
+
+            var constructorNewParams = Expression.Lambda<FuncN>(
+                resultCast,
+                "constructorNewParams_" + ParameterInfos.Count.ToString(),
+                parameterExpressions
+            );
+            var creator = constructorNewParams.Compile();
+
+            return creator;
+        }
+
         public object Create(object[] parameters)
         {
             if(Creator == null) {
-                switch(ParameterInfos.Count) {
-                    case 0: {
-                            var newExp = System.Linq.Expressions.Expression.New(ConstructorInfo);
-                            var lambda = System.Linq.Expressions.Expression.Lambda<Func<object>>(newExp);
-                            var creator = lambda.Compile();
-                            Creator = p => creator();
-                        }
-                        break;
+                if(ParameterInfos.Count == 0) {
+                    var newExp = Expression.New(ConstructorInfo);
+                    var lambda = Expression.Lambda<Func<object>>(newExp);
+                    var creator = lambda.Compile();
+                    Creator = p => creator();
+                } else if(ParameterInfos.Count < 10) {
 
-                    //case 1: {
-                    //        var newExp = System.Linq.Expressions.Expression.New(
-                    //            ConstructorInfo,
-                    //            new[] {
-                    //                Expression.Convert(
-                    //                    Expression.Parameter(typeof(object), ParameterInfos[0].Name),
-                    //                    ParameterInfos[0].ParameterType
-                    //                )
-                    //                //System.Linq.Expressions.Expression.Parameter(typeof(object), ParameterInfos[0].Name),
-                    //            }
-                    //        );
-                    //        var lambda = System.Linq.Expressions.Expression.Lambda(
-                    //            newExp,
-                    //            System.Linq.Expressions.Expression.Parameter(ParameterInfos[0].ParameterType, ParameterInfos[0].Name)
-                    //        );
+                    switch(ParameterInfos.Count) {
+                        case 1: {
+                                var creator = CreateFunction<Func<object, object>>();
+                                Creator = p => creator(p[0]);
+                            }
+                            break;
 
-                    //        var creator = lambda.Compile();
-                    //        Creator = p => creator.DynamicInvoke(p);
-                    //    }
-                    //    break;
+                        case 2: {
+                                var creator = CreateFunction<Func<object, object, object>>();
+                                Creator = p => creator(p[0], p[1]);
+                            }
+                            break;
 
-                    default:
-                        Creator = ConstructorInfo.Invoke;
-                        break;
+                        case 3: {
+                                var creator = CreateFunction<Func<object, object, object, object>>();
+                                Creator = p => creator(p[0], p[1], p[2]);
+                            }
+                            break;
+
+                        case 4: {
+                                var creator = CreateFunction<Func<object, object, object, object, object>>();
+                                Creator = p => creator(p[0], p[1], p[2], p[3]);
+                            }
+                            break;
+
+                        case 5: {
+                                var creator = CreateFunction<Func<object, object, object, object, object, object>>();
+                                Creator = p => creator(p[0], p[1], p[2], p[3], p[4]);
+                            }
+                            break;
+
+                        case 6: {
+                                var creator = CreateFunction<Func<object, object, object, object, object, object, object>>();
+                                Creator = p => creator(p[0], p[1], p[2], p[3], p[4], p[5]);
+                            }
+                            break;
+
+                        case 7: {
+                                var creator = CreateFunction<Func<object, object, object, object, object, object, object, object>>();
+                                Creator = p => creator(p[0], p[1], p[2], p[3], p[4], p[5], p[6]);
+                            }
+                            break;
+
+                        case 8: {
+                                var creator = CreateFunction<Func<object, object, object, object, object, object, object, object, object>>();
+                                Creator = p => creator(p[0], p[1], p[2], p[3], p[4], p[5], p[6], p[7]);
+                            }
+                            break;
+
+                        case 9: {
+                                var creator = CreateFunction<Func<object, object, object, object, object, object, object, object, object, object>>();
+                                Creator = p => creator(p[0], p[1], p[2], p[3], p[4], p[5], p[6], p[7], p[8]);
+                            }
+                            break;
+                    }
+                }
+
+                if(Creator == null) {
+                    Creator = ConstructorInfo.Invoke;
                 }
             }
 
