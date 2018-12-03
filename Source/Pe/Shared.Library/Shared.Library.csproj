@@ -125,9 +125,10 @@
     <Compile Include="Compatibility\Windows\PodStructUtility.cs" />
     <Compile Include="Model\Counter.cs" />
     <Compile Include="Model\Database\DatabaseAccessor.cs" />
-    <Compile Include="Model\Database\DatabaseConnectionFactory.cs" />
+    <Compile Include="Model\Database\DatabaseImplementation.cs" />
+    <Compile Include="Model\Database\DatabaseFactory.cs" />
     <Compile Include="Model\Database\DatabaseTransaction.cs" />
-    <Compile Include="Model\Database\SqliteAccessor.cs" />
+    <Compile Include="Model\Database\SqliteFactory.cs" />
     <Compile Include="Model\EncodingUtility.cs" />
     <Compile Include="Model\FreezableUtility.cs" />
     <Compile Include="Model\IconLoader.cs" />

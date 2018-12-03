@@ -11,9 +11,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database
     {
         #region property
 
-        public DatabaseAccessorBase Main { get; }
-        public DatabaseAccessorBase Image { get; }
-        public DatabaseAccessorBase Temporary { get; }
+        public DatabaseAccessor Main { get; }
+        public DatabaseAccessor Image { get; }
+        public DatabaseAccessor Temporary { get; }
 
         #endregion
     }

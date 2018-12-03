@@ -8,8 +8,14 @@ using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 
 namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
 {
-    public interface IDatabaseTransaction: IDatabaseCommander
+    public interface IDatabaseTransaction: IDatabaseCommander, IDisposable
     {
+        #region property
+
+        IDbTransaction Transaction { get; }
+
+        #endregion
+
         #region function
 
         void Commit();
@@ -19,15 +25,15 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
         #endregion
     }
 
-    public sealed class DatabaseTransaction : DisposerBase, IDatabaseTransaction
+    public class DatabaseTransaction : DisposerBase, IDatabaseTransaction
     {
-        public DatabaseTransaction(DatabaseAccessorBase databaseAccessor)
+        public DatabaseTransaction(IDatabaseAccessor databaseAccessor)
         {
             DatabaseAccessor = databaseAccessor;
             Transaction = DatabaseAccessor.BaseConnection.BeginTransaction();
         }
 
-        public DatabaseTransaction(DatabaseAccessorBase databaseAccessor, IsolationLevel isolationLevel)
+        public DatabaseTransaction(IDatabaseAccessor databaseAccessor, IsolationLevel isolationLevel)
         {
             DatabaseAccessor = DatabaseAccessor;
             Transaction = DatabaseAccessor.BaseConnection.BeginTransaction(isolationLevel);
@@ -35,15 +41,18 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
 
         #region property
 
-        DatabaseAccessorBase DatabaseAccessor { get; set; }
-        IDbTransaction Transaction { get; set; }
+        IDatabaseAccessor DatabaseAccessor { get; set; }
+        public bool Committed { get; private set; }
 
         #endregion
 
         #region IDatabaseTransaction
 
+        public IDbTransaction Transaction { get; private set; }
+
         public void Commit()
         {
+            Committed = true;
             Transaction.Commit();
         }
 
@@ -54,20 +63,22 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
 
         public IEnumerable<T> Query<T>(string sql, object param = null, bool buffered = true)
         {
-            var formattedSql = DatabaseAccessor.PreFormatSql(sql);
-            return DatabaseAccessor.Query<T>(formattedSql, param, Transaction, buffered);
+            return DatabaseAccessor.Query<T>(sql, param, this, buffered);
         }
 
         public IEnumerable<dynamic> Query(string sql, object param = null, bool buffered = true)
         {
-            var formattedSql = DatabaseAccessor.PreFormatSql(sql);
-            return DatabaseAccessor.Query(formattedSql, param, Transaction, buffered);
+            return DatabaseAccessor.Query(sql, param, this, buffered);
         }
 
         public int Execute(string sql, object param = null)
         {
-            var formattedSql = DatabaseAccessor.PreFormatSql(sql);
-            return DatabaseAccessor.Execute(formattedSql, param, Transaction);
+            return DatabaseAccessor.Execute(sql, param, this);
+        }
+
+        public DataTable GetDataTable(string sql, object param = null)
+        {
+            return DatabaseAccessor.GetDataTable(sql, param, this);
         }
 
         #endregion
@@ -78,6 +89,9 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
         {
             if(!IsDisposed) {
                 if(disposing) {
+                    if(!Committed) {
+                        Rollback();
+                    }
                     Transaction.Dispose();
                     Transaction = null;
                     DatabaseAccessor = null;

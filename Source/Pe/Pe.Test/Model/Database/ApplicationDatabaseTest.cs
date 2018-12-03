@@ -17,7 +17,7 @@ namespace Pe.Test.Model.Database
         [TestMethod]
         public void ConstructorTest()
         {
-            using(var a = new ApplicationDatabaseAccessor(new ApplicationDatabaseConnectionFactory(), new TestLogger())) {
+            using(var a = new ApplicationDatabaseAccessor(new ApplicationDatabaseFactory(), new TestLogger())) {
                 Assert.IsTrue(true);
             }
             Assert.IsTrue(true);
@@ -26,7 +26,7 @@ namespace Pe.Test.Model.Database
         [TestMethod]
         public void BatchTest()
         {
-            using(var a = new ApplicationDatabaseAccessor(new ApplicationDatabaseConnectionFactory(), new TestLogger())) {
+            using(var a = new ApplicationDatabaseAccessor(new ApplicationDatabaseFactory(), new TestLogger())) {
                 var batchResult = a.Batch(c => {
                     c.Execute("create table TEST ( num integer, str text )");
                     c.Execute("insert into TEST(num, str) values (@Num, @Str)", new { Num = 1, Str = "a" });

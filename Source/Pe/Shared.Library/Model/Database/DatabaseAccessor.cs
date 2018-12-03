@@ -22,114 +22,68 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
 
         int Execute(string sql, object param = null);
 
+        DataTable GetDataTable(string sql, object param = null);
+
         #endregion
     }
 
-    /// <summary>
-    /// SQLの実装依存的ななんつーかそんな感じの処理。
-    /// </summary>
-    public interface IDatabaseSqlImplementation
+    public interface IDatabaseAccessor: IDatabaseCommander
     {
-        /// <summary>
-        /// SQL 実行前に実行する SQL に対して変換処理を実行。
-        /// </summary>
-        /// <param name="sql"></param>
-        /// <returns></returns>
-        string PreFormatSql(string sql);
+        #region property
+
+        IDbConnection BaseConnection { get; }
+
+        #endregion
+
+        #region function
+
+        IEnumerable<T> Query<T>(string sql, object param, IDatabaseTransaction transaction, bool buffered);
+        IEnumerable<dynamic> Query(string sql, object param, IDatabaseTransaction transaction, bool buffered);
+        int Execute(string sql, object param, IDatabaseTransaction transaction);
+        DataTable GetDataTable(string sql, object param, IDatabaseTransaction transaction);
+
+        IDatabaseTransaction BeginTransaction();
+        IDatabaseTransaction BeginTransaction(IsolationLevel isolationLevel);
+
+        IResultFailureValue<Exception> Batch(Action<IDatabaseCommander> action);
+        IResultFailureValue<Exception> Batch(Action<IDatabaseCommander> action, IsolationLevel isolationLevel);
+
+        #endregion
     }
-
-    /// <summary>
-    /// DB に対してのチェック処理。
-    /// </summary>
-    public interface IDatabaseChecker
-    {
-        /// <summary>
-        /// キーとしての値が null か。
-        /// </summary>
-        /// <param name="key"></param>
-        /// <returns></returns>
-        bool IsNullKey(string key);
-
-        /// <summary>
-        /// ID としての値が null か。
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        bool IsNullId(uint id);
-
-        /// <summary>
-        /// タイムスタンプとしての値が null か。
-        /// </summary>
-        /// <param name="timestamp"></param>
-        /// <returns></returns>
-        bool IsNullTimestamp(DateTime timestamp);
-    }
-
 
     /// <summary>
     /// DBアクセスに対してラップする。
     /// <para>DBまで行く前にプログラム側で制御する目的。</para>
     /// </summary>
-    public abstract class DatabaseAccessorBase : ReaderWriterLocker, IDatabaseCommander, IDatabaseSqlImplementation, IDatabaseChecker
+    public class DatabaseAccessor : ReaderWriterLocker, IDatabaseAccessor
     {
-        public DatabaseAccessorBase(IDatabaseConnectionFactory connectionFactory, ILogger logger)
+        public DatabaseAccessor(IDatabaseFactory databaseFactory, ILogger logger)
         {
-            ConnectionFactory = connectionFactory;
+            DatabaseFactory = databaseFactory;
 
             Logger = logger;
 
             LazyConnection = new Lazy<IDbConnection>(() => {
-                var con = ConnectionFactory.CreateConnection();
+                var con = DatabaseFactory.CreateConnection();
                 con.Open();
                 return con;
             });
+
+            LazyImplementation = new Lazy<IDatabaseImplementation>(DatabaseFactory.CreateImplementation);
         }
 
         #region property
 
-        protected IDatabaseConnectionFactory ConnectionFactory { get; }
         Lazy<IDbConnection> LazyConnection { get; }
-        public virtual IDbConnection BaseConnection => LazyConnection.Value;
+
+        Lazy<IDatabaseImplementation> LazyImplementation { get; }
+        protected IDatabaseImplementation Implementation => LazyImplementation.Value;
 
         protected ILogger Logger { get; }
 
         #endregion
 
         #region function
-
-        public virtual IEnumerable<T> Query<T>(string sql, object param, IDbTransaction transaction, bool buffered)
-        {
-            var formattedSql = PreFormatSql(sql);
-
-            Logger.Debug(formattedSql, param);
-            return BaseConnection.Query<T>(formattedSql, param, transaction, buffered);
-        }
-
-        public virtual IEnumerable<dynamic> Query(string sql, object param, IDbTransaction transaction, bool buffered)
-        {
-            var formattedSql = PreFormatSql(sql);
-
-            Logger.Debug(formattedSql, param);
-            return BaseConnection.Query(formattedSql, param, transaction, buffered);
-        }
-
-        public virtual int Execute(string sql, object param, IDbTransaction transaction)
-        {
-            var formattedSql = PreFormatSql(sql);
-
-            Logger.Debug(formattedSql, param);
-            return BaseConnection.Execute(formattedSql, param, transaction);
-        }
-
-        public virtual IDatabaseTransaction BeginTransaction()
-        {
-            return new DatabaseTransaction(this);
-        }
-
-        public virtual IDatabaseTransaction BeginTransaction(IsolationLevel isolationLevel)
-        {
-            return new DatabaseTransaction(this, isolationLevel);
-        }
 
         protected virtual IResultFailureValue<Exception> BatchCore(Func<IDatabaseTransaction> transactionCreator, Action<IDatabaseCommander> action)
         {
@@ -143,6 +97,79 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
             }
         }
 
+        #endregion
+
+        #region IDatabaseAccessor
+
+        public IDatabaseFactory DatabaseFactory { get; }
+
+        public virtual IDbConnection BaseConnection => LazyConnection.Value;
+
+        public virtual IEnumerable<T> Query<T>(string sql, object param, IDatabaseTransaction transaction, bool buffered)
+        {
+            var formattedSql = Implementation.PreFormatSql(sql);
+
+            Logger.Debug(formattedSql, param);
+            return BaseConnection.Query<T>(formattedSql, param, transaction?.Transaction, buffered);
+        }
+
+        public IEnumerable<T> Query<T>(string sql, object param = null, bool buffered = true)
+        {
+            return Query<T>(sql, param, null, buffered);
+        }
+
+        public virtual IEnumerable<dynamic> Query(string sql, object param, IDatabaseTransaction transaction, bool buffered)
+        {
+            var formattedSql = Implementation.PreFormatSql(sql);
+
+            Logger.Debug(formattedSql, param);
+            return BaseConnection.Query(formattedSql, param, transaction?.Transaction, buffered);
+        }
+
+        public IEnumerable<dynamic> Query(string sql, object param = null, bool buffered = true)
+        {
+            return Query(sql, param, null, buffered);
+        }
+
+        public virtual int Execute(string sql, object param, IDatabaseTransaction transaction)
+        {
+            var formattedSql = Implementation.PreFormatSql(sql);
+
+            Logger.Debug(formattedSql, param);
+            return BaseConnection.Execute(formattedSql, param, transaction?.Transaction);
+        }
+
+        public int Execute(string sql, object param = null)
+        {
+            return Execute(sql, param, null);
+        }
+
+        public virtual DataTable GetDataTable(string sql, object param, IDatabaseTransaction transaction)
+        {
+            var formattedSql = Implementation.PreFormatSql(sql);
+
+            Logger.Debug(formattedSql, param);
+
+            var dataTable = new DataTable();
+            dataTable.Load(BaseConnection.ExecuteReader(sql, param, transaction?.Transaction));
+            return dataTable;
+        }
+
+        public DataTable GetDataTable(string sql, object param = null)
+        {
+            return GetDataTable(sql, param, null);
+        }
+
+        public virtual IDatabaseTransaction BeginTransaction()
+        {
+            return new DatabaseTransaction(this);
+        }
+
+        public virtual IDatabaseTransaction BeginTransaction(IsolationLevel isolationLevel)
+        {
+            return new DatabaseTransaction(this, isolationLevel);
+        }
+
         public IResultFailureValue<Exception> Batch(Action<IDatabaseCommander> action)
         {
             return BatchCore(() => new DatabaseTransaction(this), action);
@@ -152,49 +179,6 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
         {
             return BatchCore(() => new DatabaseTransaction(this, isolationLevel), action);
         }
-
-        #endregion
-
-        #region IDatabaseCommander
-
-        public IEnumerable<T> Query<T>(string sql, object param = null, bool buffered = true)
-        {
-            return Query<T>(sql, param, null, buffered);
-        }
-
-        public IEnumerable<dynamic> Query(string sql, object param = null, bool buffered = true)
-        {
-            return Query(sql, param, null, buffered);
-        }
-
-        public int Execute(string sql, object param = null)
-        {
-            return Execute(sql, param, null);
-        }
-
-        #endregion
-
-        #region IDatabaseSqlImplementation
-
-        /// <summary>
-        /// SQL 実行前に実行する SQL に対して変換処理を実行。
-        /// </summary>
-        /// <param name="sql"></param>
-        /// <returns></returns>
-        public virtual string PreFormatSql(string sql)
-        {
-            return sql;
-        }
-
-        #endregion
-
-        #region IDatabaseChecker
-
-        public virtual bool IsNullKey(string key) => throw new NotImplementedException();
-
-        public virtual bool IsNullId(uint id) => throw new NotImplementedException();
-
-        public virtual bool IsNullTimestamp(DateTime timestamp) => throw new NotImplementedException();
 
         #endregion
 
@@ -216,10 +200,10 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
         #endregion
     }
 
-    public abstract class DatabaseAccessorBase<TDbConnection> : DatabaseAccessorBase
+    public class DatabaseAccessor<TDbConnection> : DatabaseAccessor
         where TDbConnection : IDbConnection
     {
-        public DatabaseAccessorBase(IDatabaseConnectionFactory connectionFactory, ILogger logger)
+        public DatabaseAccessor(IDatabaseFactory connectionFactory, ILogger logger)
             : base(connectionFactory, logger)
         { }
 

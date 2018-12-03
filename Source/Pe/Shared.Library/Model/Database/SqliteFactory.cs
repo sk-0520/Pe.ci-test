@@ -12,11 +12,10 @@ using Dapper;
 
 namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
 {
-    public class SqliteAccessor : DatabaseAccessorBase<SQLiteConnection>
+    public abstract class SqliteFactory : IDatabaseFactory
     {
         #region define
 
-#if USE_DB_SQLITE
         /// <summary>
         /// booleanを制御
         /// <para>0: 偽, 0以外: 真</para>
@@ -33,19 +32,23 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
                 return (long)value != 0;
             }
         }
-#endif
 
         #endregion
 
-        static SqliteAccessor()
+        static SqliteFactory()
         {
-#if USE_DB_SQLITE
             SqlMapper.AddTypeHandler(typeof(bool), new SqliteBooleanHandler());
-#endif
         }
 
-        public SqliteAccessor(IDatabaseConnectionFactory connectionFactory, ILogger logger)
-            : base(connectionFactory, logger)
-        { }
+        #region IDatabaseFactory
+
+        public abstract IDbConnection CreateConnection();
+
+        public virtual IDbDataAdapter CreateDataAdapter() => new SQLiteDataAdapter();
+
+        public abstract IDatabaseImplementation CreateImplementation();
+
+        #endregion
+
     }
 }

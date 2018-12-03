@@ -8,12 +8,17 @@ using System.Threading.Tasks;
 namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
 {
 
-    public interface IDatabaseConnectionFactory
+    public interface IDatabaseFactory
     {
         #region function
 
         IDbConnection CreateConnection();
 
+        IDbDataAdapter CreateDataAdapter();
+
+        IDatabaseImplementation CreateImplementation();
+
         #endregion
     }
+
 }
