@@ -290,7 +290,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
     }
 
     /// <summary>
-    ///
+    /// DI コンテナ。
     /// </summary>
     public class DiContainer : IDiRegisterContainer
     {
@@ -298,7 +298,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 
         /// <summary>
         /// シングルトンなDIコンテナ。
-        /// <para><see cref="Initializer"/>にて初期化が必要。</para>
+        /// <para><see cref="Initialize"/>にて初期化が必要。</para>
         /// </summary>
         public static IDiContainer Current { get; private set; }
 
@@ -319,13 +319,13 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 
         #region function
 
-        public static void Initializer(Func<DiContainer, IDiContainer> creator)
+        public static void Initialize(Func<IDiContainer> creator)
         {
             if(Current != null) {
                 throw new InvalidOperationException();
             }
 
-            Current = creator(new DiContainer());
+            Current = creator();
         }
 
         protected virtual void RegisterCore(Type interfaceType, Type objectType, DiLifecycle lifecycle, DiCreator creator)
@@ -372,7 +372,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
             var arguments = new List<object>(parameterInfos.Count);
             foreach(var parameterInfo in parameterInfos) {
                 // 入力パラメータを優先して設定
-                if(manualParameterItems.Any()) {
+                if(manualParameterItems.Count != 0) {
                     var item = manualParameterItems.FirstOrDefault(i => i.Key == parameterInfo.ParameterType);
                     if(item.Key != default(Type)) {
                         arguments.Add(item.Value);
@@ -397,7 +397,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         {
             var parameters = constructorCache.ParameterInfos;
 
-            if(!parameters.Any()) {
+            if(parameters.Count == 0) {
                 if(!isCached) {
                     Constructors.Add(objectType, constructorCache);
                 }
