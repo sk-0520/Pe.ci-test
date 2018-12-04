@@ -19,7 +19,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         /// <summary>
         /// 毎回作る。
         /// </summary>
-        Create,
+        Transient,
         /// <summary>
         /// シングルトン。
         /// </summary>
@@ -97,7 +97,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         /// </summary>
         /// <typeparam name="TInterface"></typeparam>
         /// <typeparam name="TObject"></typeparam>
-        void Register<TInterface, TObject>(DiLifecycle lifecycle = DiLifecycle.Create)
+        void Register<TInterface, TObject>(DiLifecycle lifecycle = DiLifecycle.Transient)
 #if !ENABLED_STRUCT
             where TObject : class
 #endif
@@ -110,7 +110,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         /// <typeparam name="TObject"></typeparam>
         /// <param name="creator"></param>
         /// <param name="lifecycle"></param>
-        void Register<TInterface, TObject>(DiCreator creator, DiLifecycle lifecycle = DiLifecycle.Create)
+        void Register<TInterface, TObject>(DiCreator creator, DiLifecycle lifecycle = DiLifecycle.Transient)
 #if !ENABLED_STRUCT
             where TObject : class
 #endif
@@ -329,7 +329,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
             Current = creator(new DiContainer());
         }
 
-        protected virtual void AddCreateCore(Type interfaceType, Type objectType, DiLifecycle lifecycle, DiCreator creator)
+        protected virtual void AddTransientCore(Type interfaceType, Type objectType, DiLifecycle lifecycle, DiCreator creator)
         {
             Mapping.Add(interfaceType, objectType);
             Factory.Add(interfaceType, new DiFactoryWorker(lifecycle, creator, this));
@@ -338,14 +338,14 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         void AddSingletonCore(Type interfaceType, Type objectType, DiCreator creator)
         {
             var lazy = new Lazy<object>(() => creator());
-            AddCreateCore(interfaceType, objectType, DiLifecycle.Singleton, () => lazy.Value);
+            AddTransientCore(interfaceType, objectType, DiLifecycle.Singleton, () => lazy.Value);
         }
 
         void AddCore(Type interfaceType, Type objectType, DiLifecycle lifecycle, DiCreator creator)
         {
             switch(lifecycle) {
-                case DiLifecycle.Create:
-                    AddCreateCore(interfaceType, objectType, DiLifecycle.Create, creator);
+                case DiLifecycle.Transient:
+                    AddTransientCore(interfaceType, objectType, DiLifecycle.Transient, creator);
                     break;
 
                 case DiLifecycle.Singleton:
@@ -569,7 +569,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 
         #region IDiAddContainer
 
-        public void Register<TInterface, TObject>(DiLifecycle lifecycle = DiLifecycle.Create)
+        public void Register<TInterface, TObject>(DiLifecycle lifecycle = DiLifecycle.Transient)
 #if !ENABLED_STRUCT
             where TObject : class
 #endif
@@ -577,7 +577,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
             AddCore(typeof(TInterface), typeof(TObject), lifecycle, New<TObject>);
         }
 
-        public void Register<TInterface, TObject>(DiCreator creator, DiLifecycle lifecycle = DiLifecycle.Create)
+        public void Register<TInterface, TObject>(DiCreator creator, DiLifecycle lifecycle = DiLifecycle.Transient)
 #if !ENABLED_STRUCT
             where TObject : class
 #endif
@@ -598,13 +598,13 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 
         #region DependencyInjectionContainer
 
-        protected override void AddCreateCore(Type interfaceType, Type objectType, DiLifecycle lifecycle, DiCreator creator)
+        protected override void AddTransientCore(Type interfaceType, Type objectType, DiLifecycle lifecycle, DiCreator creator)
         {
             if(!RegisteredTypeSet.Contains(interfaceType)) {
                 Mapping.Remove(interfaceType);
                 Factory.Remove(interfaceType);
 
-                base.AddCreateCore(interfaceType, objectType, lifecycle, creator);
+                base.AddTransientCore(interfaceType, objectType, lifecycle, creator);
                 RegisteredTypeSet.Add(interfaceType);
             } else {
                 throw new ArgumentException(nameof(interfaceType));

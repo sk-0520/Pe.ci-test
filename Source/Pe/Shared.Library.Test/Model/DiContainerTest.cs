@@ -166,7 +166,7 @@ namespace Shared.Library.Test.Model
         public void GetTest_Create()
         {
             var dic = new DiContainer();
-            dic.Register<I1, C1>(DiLifecycle.Create);
+            dic.Register<I1, C1>(DiLifecycle.Transient);
 
             var i1_1 = dic.Get<I1>();
             Assert.AreEqual(3, i1_1.Func(1, 2));
@@ -196,7 +196,7 @@ namespace Shared.Library.Test.Model
         public void NewTest_I1()
         {
             var dic = new DiContainer();
-            dic.Register<I1, C1>(DiLifecycle.Create);
+            dic.Register<I1, C1>(DiLifecycle.Transient);
 
             // 引数のない人はそのまんま生成される
             var i1 = dic.New<I1>();
@@ -207,7 +207,7 @@ namespace Shared.Library.Test.Model
         public void NewTest_C1()
         {
             var dic = new DiContainer();
-            dic.Register<I1, C1>(DiLifecycle.Create);
+            dic.Register<I1, C1>(DiLifecycle.Transient);
 
             // 引数のない人はそのまんま生成される
             var c1 = dic.New<C1>();
@@ -218,7 +218,7 @@ namespace Shared.Library.Test.Model
         public void NewTest_C2()
         {
             var dic = new DiContainer();
-            dic.Register<I1, C1>(DiLifecycle.Create);
+            dic.Register<I1, C1>(DiLifecycle.Transient);
 
             // 引数から頑張ってパラメータ割り当て
             var c2 = dic.New<C2>();
@@ -229,7 +229,7 @@ namespace Shared.Library.Test.Model
         public void NewTest_Manual_C3()
         {
             var dic = new DiContainer();
-            dic.Register<I1, C1>(DiLifecycle.Create);
+            dic.Register<I1, C1>(DiLifecycle.Transient);
 
             Assert.ThrowsException<Exception>(() => dic.New<C3>(new object[] { 1 }));
 
@@ -241,7 +241,7 @@ namespace Shared.Library.Test.Model
         public void NewTest_Manual_C4()
         {
             var dic = new DiContainer();
-            dic.Register<I1, C1>(DiLifecycle.Create);
+            dic.Register<I1, C1>(DiLifecycle.Transient);
 
             Assert.ThrowsException<Exception>(() => dic.New<C4>(new object[] { 1 }));
 
@@ -253,7 +253,7 @@ namespace Shared.Library.Test.Model
         public void NewTest_Manual_C5_LongLong()
         {
             var dic = new DiContainer();
-            dic.Register<I1, C1>(DiLifecycle.Create);
+            dic.Register<I1, C1>(DiLifecycle.Transient);
 
             var c5 = dic.New<C5_LongLong>(new object[] { 99, 1 });
             Assert.AreEqual((99 + 1) * 3, c5.Get());
@@ -263,7 +263,7 @@ namespace Shared.Library.Test.Model
         public void NewTest_Manual_C5_Private()
         {
             var dic = new DiContainer();
-            dic.Register<I1, C1>(DiLifecycle.Create);
+            dic.Register<I1, C1>(DiLifecycle.Transient);
 
             var c5 = dic.New<C5_Private>(new object[] { 99, 1 });
             Assert.AreEqual((99 + 1) * 4, c5.Get());
@@ -273,7 +273,7 @@ namespace Shared.Library.Test.Model
         public void NewTest_Manual_C5_Minimum()
         {
             var dic = new DiContainer();
-            dic.Register<I1, C1>(DiLifecycle.Create);
+            dic.Register<I1, C1>(DiLifecycle.Transient);
 
             var c5 = dic.New<C5_Minimum>(new object[] { 99, 1 });
             Assert.AreEqual((99 + 1) * 1, c5.Get());
@@ -283,7 +283,7 @@ namespace Shared.Library.Test.Model
         public void InjectTest_C6()
         {
             var dic = new DiContainer();
-            dic.Register<I1, C1>(DiLifecycle.Create);
+            dic.Register<I1, C1>(DiLifecycle.Transient);
 
             var c = dic.New<C6>();
             dic.Inject(c);
@@ -400,10 +400,10 @@ namespace Shared.Library.Test.Model
         public void NestTest()
         {
             var dic = new DiContainer();
-            dic.Register<INest1, Nest1>(DiLifecycle.Create);
-            dic.Register<INest2, Nest2>(DiLifecycle.Create);
-            dic.Register<INest3, Nest3>(DiLifecycle.Create);
-            dic.Register<INest4, Nest4>(DiLifecycle.Create);
+            dic.Register<INest1, Nest1>(DiLifecycle.Transient);
+            dic.Register<INest2, Nest2>(DiLifecycle.Transient);
+            dic.Register<INest3, Nest3>(DiLifecycle.Transient);
+            dic.Register<INest4, Nest4>(DiLifecycle.Transient);
 
             var root = dic.New<Root>();
 
@@ -462,38 +462,38 @@ namespace Shared.Library.Test.Model
         {
             var dic1 = new DiContainer();
 
-            dic1.Register<I1, CScopeA>(DiLifecycle.Create);
+            dic1.Register<I1, CScopeA>(DiLifecycle.Transient);
             Assert.AreEqual(10, dic1.New<I1>().Func(3, 7));
 
             using(var dic2 = dic1.Scope()) {
                 Assert.AreEqual(10, dic2.New<I1>().Func(3, 7));
 
-                dic2.Register<I1, CScopeB>(DiLifecycle.Create);
+                dic2.Register<I1, CScopeB>(DiLifecycle.Transient);
                 Assert.AreEqual(-4, dic2.New<I1>().Func(3, 7));
                 Assert.AreEqual(10, dic1.New<I1>().Func(3, 7));
 
-                Assert.ThrowsException<ArgumentException>(() => dic2.Register<I1, CScopeB>(DiLifecycle.Create));
+                Assert.ThrowsException<ArgumentException>(() => dic2.Register<I1, CScopeB>(DiLifecycle.Transient));
 
                 using(var dic3 = dic2.Scope()) {
                     Assert.AreEqual(-4, dic3.New<I1>().Func(3, 7));
 
-                    dic3.Register<I1, CScopeC>(DiLifecycle.Create);
+                    dic3.Register<I1, CScopeC>(DiLifecycle.Transient);
                     Assert.AreEqual(21, dic3.New<I1>().Func(3, 7));
                     Assert.AreEqual(-4, dic2.New<I1>().Func(3, 7));
                     Assert.AreEqual(10, dic1.New<I1>().Func(3, 7));
 
-                    Assert.ThrowsException<ArgumentException>(() => dic3.Register<I1, CScopeC>(DiLifecycle.Create));
+                    Assert.ThrowsException<ArgumentException>(() => dic3.Register<I1, CScopeC>(DiLifecycle.Transient));
 
                     using(var dic4 = dic3.Scope()) {
                         Assert.AreEqual(21, dic4.New<I1>().Func(3, 7));
 
-                        dic4.Register<I1, CScopeD>(DiLifecycle.Create);
+                        dic4.Register<I1, CScopeD>(DiLifecycle.Transient);
                         Assert.AreEqual(2, dic4.New<I1>().Func(10, 5));
                         Assert.AreEqual(21, dic3.New<I1>().Func(3, 7));
                         Assert.AreEqual(-4, dic2.New<I1>().Func(3, 7));
                         Assert.AreEqual(10, dic1.New<I1>().Func(3, 7));
 
-                        Assert.ThrowsException<ArgumentException>(() => dic4.Register<I1, CScopeD>(DiLifecycle.Create));
+                        Assert.ThrowsException<ArgumentException>(() => dic4.Register<I1, CScopeD>(DiLifecycle.Transient));
 
                     }
                 }
