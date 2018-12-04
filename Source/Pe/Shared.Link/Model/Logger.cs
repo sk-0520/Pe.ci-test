@@ -57,7 +57,10 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Link.Model
         public string Detail { get; }
         public Caller Caller { get; }
 
-        public bool HasDetail => Message != null;
+        public bool HasDetail => Detail != null;
+
+        //TODO
+        public string ShortFilePath => Caller.filePath;
 
         #endregion
     }
@@ -102,17 +105,34 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Link.Model
 
         public LoggerBase(string header)
         {
-            Header = header;
+            CurrentHeader = header;
         }
 
         protected LoggerBase(string header, LoggerBase parentLogger)
         {
-            Header = header;
+            CurrentHeader = header;
             ParentLogger = parentLogger;
         }
 
-        public string Header { get; }
+        public string Header
+        {
+            get
+            {
+                string separator = "/";
+
+                if(ParentLogger == null) {
+                    return separator;
+                }
+
+                if(ParentLogger.Header == separator) {
+                    return separator + CurrentHeader;
+                }
+
+                return ParentLogger.Header + separator + CurrentHeader;
+            }
+        }
         protected LoggerBase ParentLogger { get; }
+        protected string CurrentHeader { get; }
 
         protected abstract void PutCore(LogItem logItem);
         protected abstract ILogger CreateChildCore(string header);

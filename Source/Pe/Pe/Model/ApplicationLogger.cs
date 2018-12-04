@@ -1,9 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Pe.Library.Shared.Embedded.Model;
+using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 
 namespace ContentTypeTextNet.Pe.Main.Model
@@ -13,77 +16,96 @@ namespace ContentTypeTextNet.Pe.Main.Model
         public ApplicationLogger()
         { }
 
-        public ApplicationLogger(string header)
-            : base(header)
-        { }
+        #region property
 
-        public ApplicationLogger(string header, LoggerBase parentLogger)
-            : base(header, parentLogger)
-        { }
-
-        #region event
-
-        public event EventHandler<LogItem> Output;
+        IDictionary<int, char> KindMap { get; } = new Dictionary<int, char>() {
+            [(int)LogKind.Trace] = 'T',
+            [(int)LogKind.Debug] = 'D',
+            [(int)LogKind.Information] = 'I',
+            [(int)LogKind.Warning] = 'W',
+            [(int)LogKind.Error] = 'E',
+            [(int)LogKind.Fatal] = 'F',
+        };
 
         #endregion
 
         #region function
 
-        protected void OnPutput(LogItem logItem)
+        void Write(LoggerBase sender, LogItem logItem)
         {
-            if(Output != null) {
-                Output(this, logItem);
-            }
-            if(ParentLogger is ApplicationLogger parentAppLogger) {
-                parentAppLogger.OnPutput(logItem);
+            var buffer = new StringBuilder();
+            buffer.AppendFormat("{0:yyyy-MM-dd HH:mm:ss.fff}", logItem.Timestamp);
+            buffer.Append(' ');
+            //buffer.AppendFormat("[{0}]", KindMap[(int)logItem.Kind]);
+            buffer.AppendFormat("{0}", logItem.Kind);
+            buffer.Append(' ');
+            buffer.Append(sender.Header);
+            buffer.Append(' ');
+            buffer.AppendFormat("<{0}>", logItem.Caller.memberName);
+            buffer.Append(' ');
+            var detailIndentWidth = buffer.Length;
+
+            buffer.Append(logItem.Message);
+            buffer.Append(' ');
+            buffer.Append(logItem.ShortFilePath);
+            buffer.AppendFormat("({0})", logItem.Caller.lineNumber);
+
+            if(logItem.HasDetail) {
+                var indent = new string(' ', detailIndentWidth);
+                foreach(var line in TextUtility.ReadLines(logItem.Detail.ToString())) {
+                    buffer.AppendLine();
+                    buffer.Append(indent);
+                    buffer.Append(line);
+                }
             }
 
+            System.Diagnostics.Debug.WriteLine(buffer.ToString());
         }
 
         #endregion
 
-        #region ApplicationLogger
+        #region LoggerBase
 
         protected override ILogger CreateChildCore(string header)
         {
-            return new ApplicationLogger(header, this);
+            return new ApplicationChildLogger(header, this, Write);
         }
 
         protected override void PutCore(LogItem logItem)
         {
-            OnPutput(logItem);
+            Write(this, logItem);
         }
 
         #endregion
     }
 
-    public class DevelopmentLogging
+    class ApplicationChildLogger : LoggerBase
     {
+        public ApplicationChildLogger(string header, LoggerBase parentLogger, Action<LoggerBase, LogItem> writer)
+            : base(header, parentLogger)
+        {
+            Writer = writer;
+        }
+
         #region property
 
-        static DevelopmentLogging Instance { get; set; }
+        Action<LoggerBase, LogItem> Writer { get; }
 
         #endregion
 
-        #region function
+        #region LoggerBase
 
-        public static void Initialize(ApplicationLogger logger)
+        protected override ILogger CreateChildCore(string header)
         {
-            var instance = new DevelopmentLogging();
-            logger.Output += instance.Logger_Output;
+            return new ApplicationChildLogger(header, this, Writer);
         }
 
-        public void Write(LogItem logItem)
+        protected override void PutCore(LogItem logItem)
         {
-            Debug.WriteLine($"{logItem.Kind} {logItem.Message}");
+            Writer(this, logItem);
         }
 
         #endregion
-
-        private void Logger_Output(object sender, LogItem e)
-        {
-            Write(e);
-        }
 
     }
 }
