@@ -195,15 +195,14 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
             var convertExpressions = CreateConvertExpressions(parameterExpressions).ToArray();
             Debug.Assert(parameterExpressions.Length == convertExpressions.Length);
 
-            var constructorNew = Expression.New(
-                ConstructorInfo,
-                convertExpressions
-            );
-
-            var resultCast = Expression.Convert(constructorNew, typeof(object));
-
             var constructorNewParams = Expression.Lambda<FuncN>(
-                resultCast,
+                Expression.Convert(
+                    Expression.New(
+                        ConstructorInfo,
+                        convertExpressions
+                    ),
+                    typeof(object)
+                ),
                 "constructorNewParams_" + ParameterInfos.Count.ToString(),
                 parameterExpressions
             );
