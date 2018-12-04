@@ -370,18 +370,19 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 
             var arguments = new List<object>(parameterInfos.Count);
             foreach(var parameterInfo in parameterInfos) {
+                // 入力パラメータを優先して設定
+                if(manualParameterItems.Any()) {
+                    var item = manualParameterItems.FirstOrDefault(i => i.Key == parameterInfo.ParameterType);
+                    if(item.Key != default(Type)) {
+                        arguments.Add(item.Value);
+                        manualParameterItems.Remove(item);
+                        continue;
+                    }
+                }
+
                 if(Factory.TryGetValue(parameterInfo.ParameterType, out var factoryWorker)) {
                     arguments.Add(factoryWorker.Create());
-                } else if(manualParameterItems.Any()) {
-                    // コンテナ内に存在しない場合は入力パラメータを順番に使用する
-                    var item = manualParameterItems.FirstOrDefault(i => i.Key == parameterInfo.ParameterType);
-                    if(item.Key == default(Type)) {
-                        // 無かったのでこのパラメータは生成できない
-                        return null;
-                    }
-                    arguments.Add(item.Value);
-                    manualParameterItems.Remove(item);
-                } else {
+                }  else {
                     // どうしようもねぇ
                     return null;
                 }
