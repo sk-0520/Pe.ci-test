@@ -53,20 +53,19 @@ namespace ContentTypeTextNet.Pe.Main.Model
 
         bool ShowAcceptView(ILogger logger)
         {
-            // ログがあったりなかったりするフワフワ状態なので一時的にDIコンテナ作成
+            // ログがあったりなかったりするフワフワ状態なので一時的にDIコンテナ作成(嬉しがってめちゃくちゃ生成)
             using(var diContainer = DiContainer.Current?.Scope() ?? new DiContainer().Scope()) {
                 diContainer.Register<ILogger, LoggerBase>(() => (LoggerBase)logger, DiLifecycle.Singleton);
+                diContainer.Register<ViewElement.Accept.AcceptViewElement, ViewElement.Accept.AcceptViewElement>(DiLifecycle.Singleton);
+                diContainer.Register<ViewModel.Accept.AcceptViewModel, ViewModel.Accept.AcceptViewModel>(DiLifecycle.Transient);
+                diContainer.DirtyRegister<View.Accept.AcceptWindow, ViewModel.Accept.AcceptViewModel>(nameof(System.Windows.FrameworkElement.DataContext));
 
-                var model = diContainer.New<ViewElement.Accept.AcceptViewElement>();
-                var view = new View.Accept.AcceptWindow() {
-                    DataContext = diContainer.New<ViewModel.Accept.AcceptViewModel>(new[] { model }),
-                };
-                diContainer.Inject(view);
-
+                var acceptModel = diContainer.New<ViewElement.Accept.AcceptViewElement>();
+                var view = diContainer.Make<View.Accept.AcceptWindow>();
                 view.ShowDialog();
-            }
 
-            return false;
+                return acceptModel.Accepted;
+            }
         }
 
         void FirstSetup()

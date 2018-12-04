@@ -209,9 +209,25 @@ namespace Shared.Library.Test.Model
             var dic = new DiContainer();
             dic.Register<I1, C1>(DiLifecycle.Transient);
 
-            // 引数のない人はそのまんま生成される
             var c1 = dic.New<C1>();
             Assert.AreEqual(4, c1.Func(2, 2));
+        }
+
+        [TestMethod]
+        public void NewTest_C1toC1()
+        {
+            var dic = new DiContainer();
+            dic.Register<C1, C1>(DiLifecycle.Transient);
+
+            var c1 = dic.New<C1>();
+            Assert.AreEqual(4, c1.Func(2, 2));
+        }
+
+        [TestMethod]
+        public void NewTest_C1toI1()
+        {
+            var dic = new DiContainer();
+            Assert.ThrowsException<ArgumentException>(() => dic.Register<C1, I1>(DiLifecycle.Transient));
         }
 
         [TestMethod]

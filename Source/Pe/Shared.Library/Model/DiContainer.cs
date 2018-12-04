@@ -409,6 +409,10 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 
         void Register(Type interfaceType, Type objectType, DiLifecycle lifecycle, DiCreator creator)
         {
+            if(!interfaceType.IsAssignableFrom(objectType)) {
+                throw new ArgumentException($"error: {interfaceType} <- {objectType}");
+            }
+
             switch(lifecycle) {
                 case DiLifecycle.Transient:
                     RegisterCore(interfaceType, objectType, DiLifecycle.Transient, creator);
@@ -490,12 +494,14 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
             return true;
         }
 
-        bool TryNewObject(Type objectType, IEnumerable<object> manualParameters, out object createdObject)
+        bool TryNewObject(Type objectType, IEnumerable<object> manualParameters, bool useFactoryCache, out object createdObject)
         {
-            // 生成可能なものはこの段階で生成
-            if(Factory.TryGetValue(objectType, out var factoryWorker)) {
-                createdObject = factoryWorker.Create();
-                return true;
+            if(useFactoryCache) {
+                // 生成可能なものはこの段階で生成
+                if(Factory.TryGetValue(objectType, out var factoryWorker)) {
+                    createdObject = factoryWorker.Create();
+                    return true;
+                }
             }
 
             // コンストラクタのキャッシュを使用
@@ -533,6 +539,15 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
             return false;
         }
 
+        object NewCore(Type type, IEnumerable<object> manualParameters, bool useFactoryCache)
+        {
+            if(TryNewObject(GetMappingType(type), manualParameters, useFactoryCache, out var raw)) {
+                return raw;
+            }
+
+            throw new Exception($"{type}: create fail");
+        }
+
         bool TryGetInstance(Type interfaceType, IEnumerable<object> manualParameters, out object value)
         {
             // 生成可能なものはこの段階で生成
@@ -541,7 +556,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
                 return true;
             }
 
-            return TryNewObject(GetMappingType(interfaceType), manualParameters, out value);
+            return TryNewObject(GetMappingType(interfaceType), manualParameters, true, out value);
         }
 
         Type GetMemberType(MemberInfo memberInfo)
@@ -630,11 +645,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 
         public object New(Type type, IEnumerable<object> manualParameters)
         {
-            if(TryNewObject(GetMappingType(type), manualParameters, out var raw)) {
-                return raw;
-            }
-
-            throw new Exception($"{type}: create fail");
+            return NewCore(type, manualParameters, true);
         }
 
         public object New(Type type)
@@ -719,7 +730,13 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
             where TObject : class
 #endif
         {
-            Register(typeof(TInterface), typeof(TObject), lifecycle, New<TObject>);
+            var interfaceType = typeof(TInterface);
+            var objectType = typeof(TObject);
+            if(interfaceType == objectType) {
+                Register(typeof(TInterface), typeof(TObject), lifecycle, () => NewCore(typeof(TObject), Enumerable.Empty<object>(), false));
+            } else {
+                Register(typeof(TInterface), typeof(TObject), lifecycle, () => NewCore(typeof(TObject), Enumerable.Empty<object>(), true));
+            }
         }
 
         public void Register<TInterface, TObject>(DiCreator creator, DiLifecycle lifecycle = DiLifecycle.Transient)
