@@ -499,6 +499,89 @@ namespace Shared.Library.Test.Model
                 }
             }
         }
+
+        class D1
+        {
+            I1 I1_1 { get; set; }
+            I1 I1_2 { get; set; }
+            public I1 I1_3 { get; set; }
+            public I1 I1_4 { get; set; }
+        }
+
+        [TestMethod]
+        public void DirtyRegisterTest()
+        {
+            var dic = new DiContainer();
+            dic.Register<I1, C1>(DiLifecycle.Transient);
+
+            dic.DirtyRegister<D1, I1>("I1_1");
+            Assert.ThrowsException<NullReferenceException>(() => dic.DirtyRegister<D1, I1>("I1_0"));
+            Assert.ThrowsException<ArgumentException>(() => dic.DirtyRegister<D1, I1>("I1_1"));
+        }
+
+        [TestMethod]
+        public void DirtyRegisterTest_New()
+        {
+            var dic = new DiContainer();
+            dic.Register<I1, C1>(DiLifecycle.Transient);
+
+            dic.DirtyRegister<D1, I1>("I1_1");
+            dic.DirtyRegister<D1, I1>(nameof(D1.I1_3));
+
+            var d = new D1();
+            dic.Inject(d);
+
+            var p = new PrivateObject(d);
+
+            Assert.IsNotNull(p.GetProperty("I1_1"));
+            Assert.IsNull(p.GetProperty("I1_2"));
+            Assert.IsNotNull(d.I1_3);
+            Assert.IsNull(d.I1_4);
+        }
+
+        interface ID2
+        {
+            I1 I1_2 { get; }
+
+            I1 I1_4 { get; }
+
+            I1 I1_6 { get; }
+        }
+
+#pragma warning disable 169, 649
+        class D2 : ID2
+        {
+            [Injection]
+            public I1 I1_1;
+            [Injection]
+            public I1 I1_2 { get; set; }
+
+            public I1 I1_3;
+            public I1 I1_4 { get; set; }
+
+            public I1 I1_5;
+            public I1 I1_6 { get; set; }
+        }
+#pragma warning restore 169, 649
+
+        [TestMethod]
+        public void MakeTest()
+        {
+            var dic = new DiContainer();
+            dic.Register<I1, C1>(DiLifecycle.Transient);
+            dic.Register<ID2, D2>(DiLifecycle.Transient);
+
+            dic.DirtyRegister<D2, I1>("I1_3");
+            dic.DirtyRegister<D2, I1>(nameof(D1.I1_4));
+
+            var d = (D2)dic.Make<ID2>();
+            Assert.IsNotNull(d.I1_1);
+            Assert.IsNotNull(d.I1_2);
+            Assert.IsNotNull(d.I1_3);
+            Assert.IsNotNull(d.I1_4);
+            Assert.IsNull(d.I1_5);
+            Assert.IsNull(d.I1_6);
+        }
     }
 }
 

@@ -149,6 +149,15 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
             where TObject : class
 #endif
         ;
+
+        /// <summary>
+        /// <see cref="IDiContainer.Inject{TObject}(TObject)"/> を行う際に <see cref="InjectionAttribute"/> を設定できないプロパティに無理やり設定する。
+        /// </summary>
+        /// <param name="baseType"></param>
+        /// <param name="memberName"></param>
+        /// <param name="objectType"></param>
+        void DirtyRegister(Type baseType, string memberName, Type objectType);
+        void DirtyRegister<TBase, TObject>(string memberName);
     }
 
     /// <summary>
@@ -323,6 +332,24 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         #endregion
     }
 
+    public sealed class DiDirtyMember
+    {
+        public DiDirtyMember(Type baseType, MemberInfo memberInfo, Type objectType)
+        {
+            BaseType = baseType;
+            MemberInfo = memberInfo;
+            ObjectType = objectType;
+        }
+
+        #region property
+
+        public Type BaseType { get; }
+        public MemberInfo MemberInfo { get; }
+        public Type ObjectType { get; }
+
+        #endregion
+    }
+
     /// <summary>
     /// DI コンテナ。
     /// </summary>
@@ -348,6 +375,8 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         /// コンストラクタキャッシュ。
         /// </summary>
         protected IDictionary<Type, DiConstructorCache> Constructors { get; } = new Dictionary<Type, DiConstructorCache>();
+
+        protected IList<DiDirtyMember> DirtyMembers { get; } = new List<DiDirtyMember>();
 
         #endregion
 
@@ -422,7 +451,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 
                 if(Factory.TryGetValue(parameterInfo.ParameterType, out var factoryWorker)) {
                     arguments[i] = factoryWorker.Create();
-                }  else {
+                } else {
                     // どうしようもねぇ
                     return null;
                 }
@@ -515,36 +544,74 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
             return TryNewObject(GetMappingType(interfaceType), manualParameters, out value);
         }
 
+        Type GetMemberType(MemberInfo memberInfo)
+        {
+            switch(memberInfo.MemberType) {
+                case MemberTypes.Field:
+                    return ((FieldInfo)memberInfo).FieldType;
+
+                case MemberTypes.Property:
+                    return ((PropertyInfo)memberInfo).PropertyType;
+
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+
+        void SetMemberValue<TObject>(ref TObject target, MemberInfo memberInfo, Type  valueType)
+        {
+            switch(memberInfo.MemberType) {
+                case MemberTypes.Field:
+                    var fieldInfo = (FieldInfo)memberInfo;
+                    if(TryGetInstance(valueType, Enumerable.Empty<object>(), out var fieldValue)) {
+                        fieldInfo.SetValue(target, fieldValue);
+                    } else {
+                        throw new Exception($"{fieldInfo}: create fail");
+                    }
+                    break;
+
+                case MemberTypes.Property:
+                    var propertyInfo = (PropertyInfo)memberInfo;
+                    if(TryGetInstance(valueType, Enumerable.Empty<object>(), out var propertyValue)) {
+                        propertyInfo.SetValue(target, propertyValue);
+                    } else {
+                        throw new Exception($"{propertyInfo}: create fail");
+                    }
+                    break;
+
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+
         void InjectCore<TObject>(ref TObject target)
 #if !ENABLED_STRUCT
             where TObject : class
 #endif
         {
-            var members = typeof(TObject).GetMembers(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.GetField | BindingFlags.SetField | BindingFlags.GetProperty | BindingFlags.SetProperty);
-            foreach(var member in members.Where(m => m.GetCustomAttribute<InjectionAttribute>() != null)) {
-                switch(member.MemberType) {
-                    case MemberTypes.Field:
-                        var fieldInfo = (FieldInfo)member;
-                        if(TryGetInstance(fieldInfo.FieldType, Enumerable.Empty<object>(), out var fieldValue)) {
-                            fieldInfo.SetValue(target, fieldValue);
-                        } else {
-                            throw new Exception($"{fieldInfo}: create fail");
-                        }
-                        break;
-
-                    case MemberTypes.Property:
-                        var propertyInfo = (PropertyInfo)member;
-                        if(TryGetInstance(propertyInfo.PropertyType, Enumerable.Empty<object>(), out var propertyValue)) {
-                            propertyInfo.SetValue(target, propertyValue);
-                        } else {
-                            throw new Exception($"{propertyInfo}: create fail");
-                        }
-                        break;
-
-                    default:
-                        throw new NotImplementedException();
-                }
+            var targetType = GetMappingType(typeof(TObject));
+            var memberItems = targetType.GetMembers(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.GetField | BindingFlags.SetField | BindingFlags.GetProperty | BindingFlags.SetProperty)
+                .Select(m => new { MemberInfo = m, IsInjectionTarget = m.GetCustomAttribute<InjectionAttribute>() != null })
+                .ToList()
+            ;
+            foreach(var memberItem in memberItems.Where(i => i.IsInjectionTarget)) {
+                SetMemberValue(ref target, memberItem.MemberInfo, GetMemberType(memberItem.MemberInfo));
             }
+
+            // 強制付け替え処理の実施
+            var dirtyPairs = memberItems
+                .Where(i => !i.IsInjectionTarget)
+                .Join(
+                    DirtyMembers.Where(d => d.BaseType.IsAssignableFrom(targetType)),
+                    m => m.MemberInfo.Name,
+                    d => d.MemberInfo.Name,
+                    (m, d) => new { Item = m, Dirty = d }
+                )
+            ;
+            foreach(var pair in dirtyPairs) {
+                SetMemberValue(ref target, pair.Item.MemberInfo, pair.Dirty.ObjectType);
+            }
+
         }
 
         #endregion
@@ -588,37 +655,13 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
             where TObject : class
 #endif
         {
-            return (TObject)New(typeof(TObject),Enumerable.Empty<object>());
+            return (TObject)New(typeof(TObject), Enumerable.Empty<object>());
         }
 
         public void Inject<TObject>(TObject target)
             where TObject : class
         {
             InjectCore(ref target);
-        }
-
-#if ENABLED_STRUCT
-        public void Inject<TObject>(ref TObject target)
-            where TObject : struct
-        {
-            InjectCore(ref target);
-        }
-#endif
-
-        public virtual IScopeDiContainer Scope()
-        {
-            var cloneContainer = new ScopeDiContainer();
-            foreach(var pair in Mapping) {
-                cloneContainer.Mapping.Add(pair.Key, pair.Value);
-            }
-            foreach(var pair in Factory) {
-                cloneContainer.Factory.Add(pair.Key, pair.Value);
-            }
-            foreach(var pair in Constructors) {
-                cloneContainer.Constructors.Add(pair.Key, pair.Value);
-            }
-
-            return cloneContainer;
         }
 
         public TObject Make<TObject>(IEnumerable<object> manualParameters)
@@ -640,6 +683,33 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         }
 
 
+#if ENABLED_STRUCT
+        public void Inject<TObject>(ref TObject target)
+            where TObject : struct
+        {
+            InjectCore(ref target);
+        }
+#endif
+
+        public virtual IScopeDiContainer Scope()
+        {
+            var cloneContainer = new ScopeDiContainer();
+            foreach(var pair in Mapping) {
+                cloneContainer.Mapping.Add(pair.Key, pair.Value);
+            }
+            foreach(var pair in Factory) {
+                cloneContainer.Factory.Add(pair.Key, pair.Value);
+            }
+            foreach(var pair in Constructors) {
+                cloneContainer.Constructors.Add(pair.Key, pair.Value);
+            }
+            foreach(var item in DirtyMembers) {
+                cloneContainer.DirtyMembers.Add(item);
+            }
+
+            return cloneContainer;
+        }
+
         #endregion
 
         #region IDiAddContainer
@@ -659,6 +729,25 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         {
             Register(typeof(TInterface), typeof(TObject), lifecycle, creator);
         }
+
+        public void DirtyRegister(Type baseType, string memberName, Type objectType)
+        {
+            var memberInfo = baseType.GetMember(memberName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.GetField | BindingFlags.SetField | BindingFlags.GetProperty | BindingFlags.SetProperty);
+            if(memberInfo == null || memberInfo.Length != 1) {
+                throw new NullReferenceException(memberName);
+            }
+            var member = new DiDirtyMember(baseType, memberInfo[0], objectType);
+            if(DirtyMembers.Any(m => m.BaseType == member.BaseType && m.MemberInfo.Name == member.MemberInfo.Name)) {
+                throw new ArgumentException($"{baseType}.{memberInfo}");
+            }
+            DirtyMembers.Add(member);
+        }
+
+        public void DirtyRegister<TBase, TObject>(string propertyName)
+        {
+            DirtyRegister(typeof(TBase), propertyName, typeof(TObject));
+        }
+
 
         #endregion
     }
