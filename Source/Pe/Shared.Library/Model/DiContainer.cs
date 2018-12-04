@@ -100,6 +100,24 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 #endif
 
         /// <summary>
+        /// <see cref="New"/>して<see cref="Inject{TObject}(TObject)"/>するイメージ。
+        /// </summary>
+        /// <typeparam name="TObject"></typeparam>
+        /// <param name="manualParameters">依存関係以外のパラメータ。前方から型に一致するものが使用される。</param>
+        /// <returns></returns>
+        TObject Make<TObject>(IEnumerable<object> manualParameters)
+#if !ENABLED_STRUCT
+            where TObject : class
+#endif
+        ;
+
+        TObject Make<TObject>()
+#if !ENABLED_STRUCT
+            where TObject : class
+#endif
+        ;
+
+        /// <summary>
         /// 限定的なDIコンテナを作成。
         /// </summary>
         /// <returns>現在マッピングを複製したDIコンテナ。</returns>
@@ -602,6 +620,25 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 
             return cloneContainer;
         }
+
+        public TObject Make<TObject>(IEnumerable<object> manualParameters)
+#if !ENABLED_STRUCT
+            where TObject : class
+#endif
+        {
+            var obj = New<TObject>(manualParameters);
+            InjectCore(ref obj);
+            return obj;
+        }
+
+        public TObject Make<TObject>()
+#if !ENABLED_STRUCT
+            where TObject : class
+#endif
+        {
+            return Make<TObject>(Enumerable.Empty<object>());
+        }
+
 
         #endregion
 
