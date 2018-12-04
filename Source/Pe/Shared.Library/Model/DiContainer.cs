@@ -131,7 +131,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         /// </summary>
         /// <typeparam name="TInterface"></typeparam>
         /// <typeparam name="TObject"></typeparam>
-        void Register<TInterface, TObject>(DiLifecycle lifecycle = DiLifecycle.Transient)
+        IDiRegisterContainer Register<TInterface, TObject>(DiLifecycle lifecycle = DiLifecycle.Transient)
 #if !ENABLED_STRUCT
             where TObject : class
 #endif
@@ -144,7 +144,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         /// <typeparam name="TObject"></typeparam>
         /// <param name="creator"></param>
         /// <param name="lifecycle"></param>
-        void Register<TInterface, TObject>(DiCreator creator, DiLifecycle lifecycle = DiLifecycle.Transient)
+        IDiRegisterContainer Register<TInterface, TObject>(DiCreator creator, DiLifecycle lifecycle = DiLifecycle.Transient)
 #if !ENABLED_STRUCT
             where TObject : class
 #endif
@@ -156,8 +156,8 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         /// <param name="baseType"></param>
         /// <param name="memberName"></param>
         /// <param name="objectType"></param>
-        void DirtyRegister(Type baseType, string memberName, Type objectType);
-        void DirtyRegister<TBase, TObject>(string memberName);
+        IDiRegisterContainer DirtyRegister(Type baseType, string memberName, Type objectType);
+        IDiRegisterContainer DirtyRegister<TBase, TObject>(string memberName);
     }
 
     /// <summary>
@@ -723,9 +723,9 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 
         #endregion
 
-        #region IDiAddContainer
+        #region IDiRegisterContainer
 
-        public void Register<TInterface, TObject>(DiLifecycle lifecycle = DiLifecycle.Transient)
+        public IDiRegisterContainer Register<TInterface, TObject>(DiLifecycle lifecycle = DiLifecycle.Transient)
 #if !ENABLED_STRUCT
             where TObject : class
 #endif
@@ -737,17 +737,21 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
             } else {
                 Register(typeof(TInterface), typeof(TObject), lifecycle, () => NewCore(typeof(TObject), Enumerable.Empty<object>(), true));
             }
+
+            return this;
         }
 
-        public void Register<TInterface, TObject>(DiCreator creator, DiLifecycle lifecycle = DiLifecycle.Transient)
+        public IDiRegisterContainer Register<TInterface, TObject>(DiCreator creator, DiLifecycle lifecycle = DiLifecycle.Transient)
 #if !ENABLED_STRUCT
             where TObject : class
 #endif
         {
             Register(typeof(TInterface), typeof(TObject), lifecycle, creator);
+
+            return this;
         }
 
-        public void DirtyRegister(Type baseType, string memberName, Type objectType)
+        public IDiRegisterContainer DirtyRegister(Type baseType, string memberName, Type objectType)
         {
             var memberInfo = baseType.GetMember(memberName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.GetField | BindingFlags.SetField | BindingFlags.GetProperty | BindingFlags.SetProperty);
             if(memberInfo == null || memberInfo.Length != 1) {
@@ -758,11 +762,15 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
                 throw new ArgumentException($"{baseType}.{memberInfo}");
             }
             DirtyMembers.Add(member);
+
+            return this;
         }
 
-        public void DirtyRegister<TBase, TObject>(string propertyName)
+        public IDiRegisterContainer DirtyRegister<TBase, TObject>(string propertyName)
         {
             DirtyRegister(typeof(TBase), propertyName, typeof(TObject));
+
+            return this;
         }
 
 

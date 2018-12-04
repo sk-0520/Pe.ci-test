@@ -8,7 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Library.Shared.Embedded.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
+using ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
+using ContentTypeTextNet.Pe.Main.Model.Database;
 
 namespace ContentTypeTextNet.Pe.Main.Model
 {
@@ -68,6 +70,24 @@ namespace ContentTypeTextNet.Pe.Main.Model
             }
         }
 
+        void Startup()
+        {
+            var container = new DiContainer();
+
+            container
+                .Register<ILogger, ApplicationLogger>(DiLifecycle.Singleton)
+            ;
+
+            var logger = (ApplicationLogger)container.Get<ILogger>();
+            DevelopmentLogging.Initialize(logger);
+            logger.Information("うんち");
+
+            //container
+            //    .Register<IDatabaseFactory, ApplicationDatabaseFactory>(DiLifecycle.Singleton)
+            //    .Register<IDatabaseAccessor, ApplicationDatabaseAccessor>(DiLifecycle.Singleton)
+            //;
+        }
+
         void FirstSetup()
         {
         }
@@ -83,9 +103,13 @@ namespace ContentTypeTextNet.Pe.Main.Model
 
             var isFirstStartup = IsFirstStartup();
             if(isFirstStartup) {
-                // 設定ファイルやらなんやらを構築する前に使用許諾を取る
+                // 設定ファイルやらなんやらを構築する前に完全初回の使用許諾を取る
                 var dialogResult = ShowAcceptView(new Library.Shared.Link.Model.NullLogger());
-            } else {
+                if(!dialogResult) {
+                    // 初回の使用許諾を得られなかったのでばいちゃ
+                    return false;
+                }
+                Startup();
             }
 
             return false;
