@@ -49,6 +49,22 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         /// コンストラクタインジェクション。
         /// <para>依存を解決するとともにパラメータを指定。</para>
         /// </summary>
+        /// <param name="type"></param>
+        /// <param name="manualParameters">依存関係以外のパラメータ。前方から型に一致するものが使用される。</param>
+        /// <returns></returns>
+        object New(Type type, IEnumerable<object> manualParameters);
+
+        /// <summary>
+        /// コンストラクタインジェクション。
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        object New(Type type);
+
+        /// <summary>
+        /// コンストラクタインジェクション。
+        /// <para>依存を解決するとともにパラメータを指定。</para>
+        /// </summary>
         /// <typeparam name="TObject"></typeparam>
         /// <param name="manualParameters">依存関係以外のパラメータ。前方から型に一致するものが使用される。</param>
         /// <returns></returns>
@@ -513,9 +529,28 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 
         #region IDependencyInjectionContainer
 
+        public object Get(Type interfaceType)
+        {
+            return Factory[interfaceType].Create();
+        }
+
         public TInterface Get<TInterface>()
         {
-            return (TInterface)Factory[typeof(TInterface)].Create();
+            return (TInterface)Get(typeof(TInterface));
+        }
+
+        public object New(Type type, IEnumerable<object> manualParameters)
+        {
+            if(TryNewObject(GetMappingType(type), manualParameters, out var raw)) {
+                return raw;
+            }
+
+            throw new Exception($"{type}: create fail");
+        }
+
+        public object New(Type type)
+        {
+            return New(type, Enumerable.Empty<object>());
         }
 
         public TObject New<TObject>(IEnumerable<object> manualParameters)
@@ -523,11 +558,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
             where TObject : class
 #endif
         {
-            if(TryNewObject(GetMappingType(typeof(TObject)), manualParameters, out var raw)) {
-                return (TObject)raw;
-            }
-
-            throw new Exception($"{typeof(TObject)}: create fail");
+            return (TObject)New(typeof(TObject), manualParameters);
         }
 
         public TObject New<TObject>()
@@ -535,7 +566,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
             where TObject : class
 #endif
         {
-            return New<TObject>(Enumerable.Empty<object>());
+            return (TObject)New(typeof(TObject),Enumerable.Empty<object>());
         }
 
         public void Inject<TObject>(TObject target)
