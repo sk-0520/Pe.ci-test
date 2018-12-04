@@ -361,7 +361,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
             return Mapping.TryGetValue(type, out var objectType) ? objectType : type;
         }
 
-        IList<object> CreateParameters(IReadOnlyCollection<ParameterInfo> parameterInfos, IEnumerable<object> manualParameters)
+        object[] CreateParameters(IReadOnlyList<ParameterInfo> parameterInfos, IEnumerable<object> manualParameters)
         {
             var manualParameterItems = manualParameters
                 .Where(o => o != null)
@@ -369,20 +369,21 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
                 .ToList()
             ;
 
-            var arguments = new List<object>(parameterInfos.Count);
-            foreach(var parameterInfo in parameterInfos) {
+            var arguments = new object[parameterInfos.Count];
+            for(var i = 0; i < parameterInfos.Count; i++) {
+                var parameterInfo = parameterInfos[i];
                 // 入力パラメータを優先して設定
                 if(manualParameterItems.Count != 0) {
-                    var item = manualParameterItems.FirstOrDefault(i => i.Key == parameterInfo.ParameterType);
+                    var item = manualParameterItems.FirstOrDefault(p => p.Key == parameterInfo.ParameterType);
                     if(item.Key != default(Type)) {
-                        arguments.Add(item.Value);
+                        arguments[i] = item.Value;
                         manualParameterItems.Remove(item);
                         continue;
                     }
                 }
 
                 if(Factory.TryGetValue(parameterInfo.ParameterType, out var factoryWorker)) {
-                    arguments.Add(factoryWorker.Create());
+                    arguments[i] = factoryWorker.Create();
                 }  else {
                     // どうしようもねぇ
                     return null;
@@ -410,7 +411,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
                 createdObject = default(object);
                 return false;
             }
-            if(arguments.Count != parameters.Count) {
+            if(arguments.Length != parameters.Count) {
                 createdObject = default(object);
                 return false;
             }
@@ -418,7 +419,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
             if(!isCached) {
                 Constructors.Add(objectType, constructorCache);
             }
-            createdObject = constructorCache.Create(arguments.ToArray());
+            createdObject = constructorCache.Create(arguments);
             return true;
         }
 
