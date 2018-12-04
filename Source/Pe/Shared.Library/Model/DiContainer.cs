@@ -329,27 +329,27 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
             Current = creator(new DiContainer());
         }
 
-        protected virtual void AddTransientCore(Type interfaceType, Type objectType, DiLifecycle lifecycle, DiCreator creator)
+        protected virtual void RegisterCore(Type interfaceType, Type objectType, DiLifecycle lifecycle, DiCreator creator)
         {
             Mapping.Add(interfaceType, objectType);
             Factory.Add(interfaceType, new DiFactoryWorker(lifecycle, creator, this));
         }
 
-        void AddSingletonCore(Type interfaceType, Type objectType, DiCreator creator)
+        void RegisterSingleton(Type interfaceType, Type objectType, DiCreator creator)
         {
             var lazy = new Lazy<object>(() => creator());
-            AddTransientCore(interfaceType, objectType, DiLifecycle.Singleton, () => lazy.Value);
+            RegisterCore(interfaceType, objectType, DiLifecycle.Singleton, () => lazy.Value);
         }
 
-        void AddCore(Type interfaceType, Type objectType, DiLifecycle lifecycle, DiCreator creator)
+        void Register(Type interfaceType, Type objectType, DiLifecycle lifecycle, DiCreator creator)
         {
             switch(lifecycle) {
                 case DiLifecycle.Transient:
-                    AddTransientCore(interfaceType, objectType, DiLifecycle.Transient, creator);
+                    RegisterCore(interfaceType, objectType, DiLifecycle.Transient, creator);
                     break;
 
                 case DiLifecycle.Singleton:
-                    AddSingletonCore(interfaceType, objectType, creator);
+                    RegisterSingleton(interfaceType, objectType, creator);
                     break;
 
                 default:
@@ -364,9 +364,11 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 
         IList<object> CreateParameters(IReadOnlyCollection<ParameterInfo> parameterInfos, IEnumerable<object> manualParameters)
         {
-            var manualParameterItems = new LinkedList<KeyValuePair<Type, object>>(
-                manualParameters.Select(o => new KeyValuePair<Type, object>(o.GetType(), o))
-            );
+            var manualParameterItems = manualParameters
+                .Where(o => o != null)
+                .Select(o => new KeyValuePair<Type, object>(o.GetType(), o))
+                .ToList()
+            ;
 
             var arguments = new List<object>(parameterInfos.Count);
             foreach(var parameterInfo in parameterInfos) {
@@ -575,7 +577,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
             where TObject : class
 #endif
         {
-            AddCore(typeof(TInterface), typeof(TObject), lifecycle, New<TObject>);
+            Register(typeof(TInterface), typeof(TObject), lifecycle, New<TObject>);
         }
 
         public void Register<TInterface, TObject>(DiCreator creator, DiLifecycle lifecycle = DiLifecycle.Transient)
@@ -583,7 +585,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
             where TObject : class
 #endif
         {
-            AddCore(typeof(TInterface), typeof(TObject), lifecycle, creator);
+            Register(typeof(TInterface), typeof(TObject), lifecycle, creator);
         }
 
         #endregion
@@ -599,13 +601,13 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 
         #region DependencyInjectionContainer
 
-        protected override void AddTransientCore(Type interfaceType, Type objectType, DiLifecycle lifecycle, DiCreator creator)
+        protected override void RegisterCore(Type interfaceType, Type objectType, DiLifecycle lifecycle, DiCreator creator)
         {
             if(!RegisteredTypeSet.Contains(interfaceType)) {
                 Mapping.Remove(interfaceType);
                 Factory.Remove(interfaceType);
 
-                base.AddTransientCore(interfaceType, objectType, lifecycle, creator);
+                base.RegisterCore(interfaceType, objectType, lifecycle, creator);
                 RegisteredTypeSet.Add(interfaceType);
             } else {
                 throw new ArgumentException(nameof(interfaceType));
