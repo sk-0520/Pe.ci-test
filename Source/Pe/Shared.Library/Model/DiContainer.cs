@@ -335,6 +335,10 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 
         #region function
 
+        /// <summary>
+        /// <see cref="Current"/> を使用するための準備処理。
+        /// </summary>
+        /// <param name="creator"></param>
         public static void Initialize(Func<IDiContainer> creator)
         {
             if(Current != null) {
