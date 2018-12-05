@@ -18,7 +18,7 @@ namespace ContentTypeTextNet.Pe.Main.Model
     {
         #region function
 
-        void SetEnvironmentVariable()
+        void InitializeEnvironmentVariable()
         {
             Environment.SetEnvironmentVariable("PE_DESKTOP", Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory));
         }
@@ -35,14 +35,12 @@ namespace ContentTypeTextNet.Pe.Main.Model
             return commandLine;
         }
 
-        void InitializeEnvironment(IEnumerable<string> arguments)
+        void InitializeEnvironment(CommandLine commandLine)
         {
-            SetEnvironmentVariable();
+            Debug.Assert(commandLine.IsParsed);
 
             var applicationDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            var commandLine = CreateCommandLine(arguments);
 
-            Debug.Assert(commandLine.IsParsed);
             EnvironmentParameters.Initialize(new DirectoryInfo(applicationDirectory), commandLine);
         }
 
@@ -70,6 +68,11 @@ namespace ContentTypeTextNet.Pe.Main.Model
             }
         }
 
+        void CreateLogger()
+        {
+
+        }
+
         void Startup()
         {
             var container = new DiContainer();
@@ -91,7 +94,10 @@ namespace ContentTypeTextNet.Pe.Main.Model
 
         public bool Initialize(IEnumerable<string> arguments)
         {
-            InitializeEnvironment(arguments);
+            InitializeEnvironmentVariable();
+
+            var commandLine = CreateCommandLine(arguments);
+            InitializeEnvironment(commandLine);
 
             var isFirstStartup = IsFirstStartup();
             if(isFirstStartup) {
