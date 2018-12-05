@@ -80,18 +80,21 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Link.Model
         ILogger CreateLogger(string header);
     }
 
-    public interface ILogger: ILogFactory
+    public interface ILoggerBase
     {
-        string Header { get; }
-
 <# foreach(var logKindItem in logKindItems) { #>
         void <#= logKindItem.Key #>(string message, <#= callerArg #>);
         //void <#= logKindItem.Key #>(string message, string detail, <#= callerArg #>);
         void <#= logKindItem.Key #>(string message, object detail, <#= callerArg #>);
         void <#= logKindItem.Key #>(Exception exception, <#= callerArg #>);
-
 <# } #>
+
         void Put(LogKind kind, string message, string detail, <#= callerArg #>);
+    }
+
+    public interface ILogger: ILoggerBase, ILogFactory
+    {
+        string Header { get; }
     }
 
     public abstract class LoggerBase : ILogger
@@ -157,7 +160,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Link.Model
         #endregion
     }
 
-    public class NullLogger: LoggerBase
+    public sealed class NullLogger: LoggerBase
     {
         protected override void PutCore(LogItem logItem)
         { }
@@ -165,17 +168,27 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Link.Model
         protected override ILogger CreateLoggerCore(string header) => new NullLogger();
     }
 
-    public class TestLogger : LoggerBase
+    public sealed class ChildLogger: LoggerBase
+    {
+        public ChildLogger(string header, LoggerBase parentLogger)
+            : base(header, parentLogger)
+        { }
+
+        protected override void PutCore(LogItem logItem)
+        {
+            throw new NotSupportedException();
+        }
+
+        protected override ILogger CreateLoggerCore(string header) => new ChildLogger(header, this);
+    }
+
+    public sealed class TestLogger : LoggerBase
     {
         public TestLogger()
             : base()
         { }
 
-        public TestLogger(string header)
-            : base(header)
-        { }
-
-        protected TestLogger(string header, LoggerBase parentLogger)
+        public TestLogger(string header, LoggerBase parentLogger)
             : base(header, parentLogger)
         { }
 
@@ -229,12 +242,12 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Link.Model
     string callerParam = "new Caller(callerLineNumber, callerFilePath, callerMemberName)";
 
     string PutMessage(string kind) {
-        return "PutCore(new LogItem(DateTime.Now, LogKind." + kind + ", message, null, " + callerParam + "));";
+        return "Put(new LogItem(DateTime.Now, LogKind." + kind + ", message, null, " + callerParam + "));";
     }
     string PutDetail(string kind) {
-        return "PutCore(new LogItem(DateTime.Now, LogKind." + kind + ", message, detail?.ToString(), " + callerParam + "));";
+        return "Put(new LogItem(DateTime.Now, LogKind." + kind + ", message, detail?.ToString(), " + callerParam + "));";
     }
     string PutException(string kind) {
-        return "PutCore(new LogItem(DateTime.Now, LogKind." + kind + ", exception.Message, exception.ToString(), " + callerParam + "));";
+        return "Put(new LogItem(DateTime.Now, LogKind." + kind + ", exception.Message, exception.ToString(), " + callerParam + "));";
     }
 #>

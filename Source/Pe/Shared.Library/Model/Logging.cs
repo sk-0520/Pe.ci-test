@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,26 +11,31 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
     public class StockLogger : LoggerBase
     {
         public StockLogger()
-        { }
+        {
+            Items = new ReadOnlyCollection<LogItem>(LogItemList);
+        }
 
-        public StockLogger(string header)
-            : base(header)
-        { }
-
-        public StockLogger(string header, LoggerBase parentLogger)
+        private StockLogger(string header, LoggerBase parentLogger)
             : base(header, parentLogger)
         { }
+
+        #region property
+
+        List<LogItem> LogItemList { get; } = new List<LogItem>();
+        public ReadOnlyCollection<LogItem> Items { get; }
+
+        #endregion
 
         #region LoggerBase
 
         protected override ILogger CreateLoggerCore(string header)
         {
-            return new StockLogger(header);
+            return new ChildLogger(header, this);
         }
 
         protected override void PutCore(LogItem logItem)
         {
-            throw new NotImplementedException();
+            LogItemList.Add(logItem);
         }
 
 
