@@ -66,7 +66,7 @@ namespace ContentTypeTextNet.Pe.Main.Model
 
         #region LoggerBase
 
-        protected override ILogger CreateChildCore(string header)
+        protected override ILogger CreateLoggerCore(string header)
         {
             return new ApplicationChildLogger(header, this, Write);
         }
@@ -95,7 +95,7 @@ namespace ContentTypeTextNet.Pe.Main.Model
 
         #region LoggerBase
 
-        protected override ILogger CreateChildCore(string header)
+        protected override ILogger CreateLoggerCore(string header)
         {
             return new ApplicationChildLogger(header, this, Writer);
         }

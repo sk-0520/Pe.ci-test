@@ -72,6 +72,10 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
             LazyImplementation = new Lazy<IDatabaseImplementation>(DatabaseFactory.CreateImplementation);
         }
 
+        public DatabaseAccessor(IDatabaseFactory databaseFactory, ILogFactory logFactory)
+            : this(databaseFactory, logFactory.CreateCurrentClass())
+        { }
+
         #region property
 
         Lazy<IDbConnection> LazyConnection { get; }
@@ -205,6 +209,11 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
     {
         public DatabaseAccessor(IDatabaseFactory connectionFactory, ILogger logger)
             : base(connectionFactory, logger)
+        { }
+
+        [Injection]
+        public DatabaseAccessor(IDatabaseFactory connectionFactory, ILogFactory logFactory)
+            : base(connectionFactory, logFactory.CreateCurrentClass())
         { }
 
         #region proeprty

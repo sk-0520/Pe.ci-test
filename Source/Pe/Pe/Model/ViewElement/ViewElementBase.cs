@@ -16,5 +16,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.ViewElement
         public ViewElementBase(ILogger logger)
             : base(logger)
         { }
+        [Injection]
+        public ViewElementBase(ILogFactory logFactory)
+            : this(logFactory.CreateCurrentClass())
+        { }
     }
 }

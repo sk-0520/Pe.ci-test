@@ -134,6 +134,7 @@
     <Compile Include="Model\IconLoader.cs" />
     <Compile Include="Model\IMakeBitmapSource.cs" />
     <Compile Include="Model\Initializer.cs" />
+    <Compile Include="Model\Logging.cs" />
     <Compile Include="Model\MediaUtility.cs" />
     <Compile Include="Model\Model.cs" />
     <Compile Include="Model\DiContainer.cs" />

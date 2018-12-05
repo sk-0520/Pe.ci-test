@@ -28,6 +28,12 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
             Collection.CollectionChanged += Collection_CollectionChanged;
         }
 
+        [Injection]
+        public ObservableCollectionManagerBase(ObservableCollection<T> collection, ILogFactory loggerFactory)
+            : this(collection, loggerFactory.CreateCurrentClass())
+        { }
+
+
         #region property
 
         protected ObservableCollection<T> Collection { get; private set; }

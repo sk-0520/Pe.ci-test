@@ -96,6 +96,10 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         {
             Logger = logger;
         }
+        [Injection]
+        public IconLoader(ILogFactory logFactory)
+            :this(logFactory.CreateCurrentClass())
+        { }
 
         #region property
 

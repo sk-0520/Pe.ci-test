@@ -32,6 +32,9 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.ViewModel
         {
             ViewModels = new ObservableCollection<TViewModel>(Collection.Select(m => ToViewModelCore(m)));
         }
+        public ModelViewModelObservableCollectionManagerBase(ObservableCollection<TModel> collection, ILogFactory logFactory)
+            : this(collection, logFactory.CreateCurrentClass())
+        { }
 
         #region property
 
@@ -144,6 +147,9 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.ViewModel
 
         public ActionModelViewModelObservableCollectionManager(ObservableCollection<TModel> collection, ILogger logger)
             : base(collection, logger)
+        { }
+        public ActionModelViewModelObservableCollectionManager(ObservableCollection<TModel> collection, ILogFactory logFactory)
+            : base(collection, logFactory.CreateCurrentClass())
         { }
 
 

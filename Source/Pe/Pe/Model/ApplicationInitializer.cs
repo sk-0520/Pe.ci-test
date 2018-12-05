@@ -56,6 +56,7 @@ namespace ContentTypeTextNet.Pe.Main.Model
             // ログがあったりなかったりするフワフワ状態なので一時的にDIコンテナ作成(嬉しがってめちゃくちゃ生成)
             using(var diContainer = DiContainer.Current?.Scope() ?? new DiContainer().Scope()) {
                 diContainer.Register<ILogger, ILogger>(() => logger, DiLifecycle.Singleton);
+                diContainer.Register<ILogFactory, ILogFactory>(() => logger, DiLifecycle.Singleton);
                 diContainer.Register<ViewElement.Accept.AcceptViewElement, ViewElement.Accept.AcceptViewElement>(DiLifecycle.Singleton);
                 diContainer.Register<ViewModel.Accept.AcceptViewModel, ViewModel.Accept.AcceptViewModel>(DiLifecycle.Transient);
                 diContainer.DirtyRegister<View.Accept.AcceptWindow, ViewModel.Accept.AcceptViewModel>(nameof(System.Windows.FrameworkElement.DataContext));
@@ -80,7 +81,6 @@ namespace ContentTypeTextNet.Pe.Main.Model
             container
                 .Register<ILogger, ApplicationLogger>(DiLifecycle.Singleton)
             ;
-
         }
 
         void FirstSetup()

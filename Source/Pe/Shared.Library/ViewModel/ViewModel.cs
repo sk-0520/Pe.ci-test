@@ -22,6 +22,9 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.ViewModel
         {
             Logger = logger;
         }
+        public ViewModelBase(ILogFactory logFactory)
+            : this(logFactory.CreateCurrentClass())
+        { }
 
         ~ViewModelBase()
         {
@@ -159,6 +162,11 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.ViewModel
 
             AttachModelEvents();
         }
+
+        public SingleModelViewModelBase(TModel model, ILogFactory logFactory)
+            : this(model, logFactory.CreateCurrentClass())
+        { }
+
 
         #region property
 

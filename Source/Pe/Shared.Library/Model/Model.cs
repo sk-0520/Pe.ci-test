@@ -40,6 +40,12 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
             Logger = logger;
         }
 
+        [Injection]
+        public DataAccessModelBase(IDatabaseCommander databaseCommander, ILogFactory logFactory)
+            : this(databaseCommander, logFactory.CreateCurrentClass())
+        { }
+
+
         #region property
 
         protected IDatabaseCommander DatabaseCommander { get; }
@@ -54,6 +60,10 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         {
             Logger = logger;
         }
+        [Injection]
+        public BindModelBase(ILogFactory logFactory)
+            : this(logFactory.CreateCurrentClass())
+        { }
 
         ~BindModelBase()
         {

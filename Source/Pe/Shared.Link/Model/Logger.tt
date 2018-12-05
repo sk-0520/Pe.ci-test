@@ -11,6 +11,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -74,19 +75,23 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Link.Model
         #endregion
     }
 
-    public interface ILogger
+    public interface ILogFactory
+    {
+        ILogger CreateLogger(string header);
+    }
+
+    public interface ILogger: ILogFactory
     {
         string Header { get; }
 
 <# foreach(var logKindItem in logKindItems) { #>
         void <#= logKindItem.Key #>(string message, <#= callerArg #>);
+        //void <#= logKindItem.Key #>(string message, string detail, <#= callerArg #>);
         void <#= logKindItem.Key #>(string message, object detail, <#= callerArg #>);
         void <#= logKindItem.Key #>(Exception exception, <#= callerArg #>);
 
 <# } #>
         void Put(LogKind kind, string message, string detail, <#= callerArg #>);
-
-        ILogger CreateChild(string header);
     }
 
     public abstract class LoggerBase : ILogger
@@ -126,16 +131,22 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Link.Model
         protected string CurrentHeader { get; }
 
         protected abstract void PutCore(LogItem logItem);
-        protected abstract ILogger CreateChildCore(string header);
+        protected abstract ILogger CreateLoggerCore(string header);
 
 <# foreach(var logKindItem in logKindItems) { #>
         public void <#= logKindItem.Key #>(string message, <#= callerArg #>) => <#= PutMessage(logKindItem.Key) #>
+        //public void <#= logKindItem.Key #>(string message, string detail, <#= callerArg #>) => <#= PutDetail(logKindItem.Key) #>
         public void <#= logKindItem.Key #>(string message, object detail, <#= callerArg #>) => <#= PutDetail(logKindItem.Key) #>
         public void <#= logKindItem.Key #>(Exception exception, <#= callerArg #>) => <#= PutException(logKindItem.Key) #>
 
 <# } #>
         public void Put(LogKind kind, string message, string detail, <#= callerArg #>) => PutCore(new LogItem(DateTime.Now, kind, message, detail, <#= callerParam #>));
-        public ILogger CreateChild(string header) => CreateChildCore(header);
+
+        #region ILogFactory
+
+        public ILogger CreateLogger(string header) => CreateLoggerCore(header);
+
+        #endregion
     }
 
     public class NullLogger: LoggerBase
@@ -143,7 +154,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Link.Model
         protected override void PutCore(LogItem logItem)
         { }
 
-        protected override ILogger CreateChildCore(string header) => new NullLogger();
+        protected override ILogger CreateLoggerCore(string header) => new NullLogger();
     }
 
     public class TestLogger : LoggerBase
@@ -171,12 +182,25 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Link.Model
             Console.WriteLine($"{headerIndent}{logItem.Caller.filePath}({logItem.Caller.lineNumber})");
         }
 
-        protected override ILogger CreateChildCore(string header)
+        protected override ILogger CreateLoggerCore(string header)
         {
             return new TestLogger(header, this);
         }
 
     }
+
+    public static class ILogFactoryExtensions
+    {
+        #region function
+
+        public static ILogger CreateCurrentClass(this ILogFactory logFactory)
+        {
+            return logFactory.CreateLogger(new StackFrame(1).GetMethod().DeclaringType.Name);
+        }
+
+        #endregion
+    }
+
 }
 
 <#+
@@ -193,8 +217,8 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Link.Model
         new LogKindItem() { Key = "Fatal", },
     };
 
-    string callerArg = "[CallerMemberName] string callerMemberName = \"\", [CallerFilePath] string callerFilePath = \"\", [CallerLineNumber] int callerLineNumber = 0";
-    string callerParam = "new Caller(callerMemberName, callerFilePath, callerLineNumber)";
+    string callerArg = "[CallerLineNumber] int callerLineNumber = 0, [CallerFilePath] string callerFilePath = \"\", [CallerMemberName] string callerMemberName = \"\"";
+    string callerParam = "new Caller(callerLineNumber, callerFilePath, callerMemberName)";
 
     string PutMessage(string kind) {
         return "PutCore(new LogItem(DateTime.Now, LogKind." + kind + ", message, null, " + callerParam + "));";
