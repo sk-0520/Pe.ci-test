@@ -81,6 +81,7 @@ namespace ContentTypeTextNet.Pe.Main.Model
             container
                 .Register<ILogger, ApplicationLogger>(DiLifecycle.Singleton)
             ;
+
         }
 
         void FirstSetup()

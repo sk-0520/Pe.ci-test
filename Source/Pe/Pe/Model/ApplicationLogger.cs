@@ -16,6 +16,10 @@ namespace ContentTypeTextNet.Pe.Main.Model
         public ApplicationLogger()
         { }
 
+        private ApplicationLogger(string header, LoggerBase parentLogger)
+            : base(header, parentLogger)
+        { }
+
         #region property
 
         IDictionary<int, char> KindMap { get; } = new Dictionary<int, char>() {
@@ -68,7 +72,7 @@ namespace ContentTypeTextNet.Pe.Main.Model
 
         protected override ILogger CreateLoggerCore(string header)
         {
-            return new ApplicationChildLogger(header, this, Write);
+            return new ApplicationLogger(header, this);
         }
 
         protected override void PutCore(LogItem logItem)
@@ -79,33 +83,5 @@ namespace ContentTypeTextNet.Pe.Main.Model
         #endregion
     }
 
-    class ApplicationChildLogger : LoggerBase
-    {
-        public ApplicationChildLogger(string header, LoggerBase parentLogger, Action<LoggerBase, LogItem> writer)
-            : base(header, parentLogger)
-        {
-            Writer = writer;
-        }
 
-        #region property
-
-        Action<LoggerBase, LogItem> Writer { get; }
-
-        #endregion
-
-        #region LoggerBase
-
-        protected override ILogger CreateLoggerCore(string header)
-        {
-            return new ApplicationChildLogger(header, this, Writer);
-        }
-
-        protected override void PutCore(LogItem logItem)
-        {
-            Writer(this, logItem);
-        }
-
-        #endregion
-
-    }
 }

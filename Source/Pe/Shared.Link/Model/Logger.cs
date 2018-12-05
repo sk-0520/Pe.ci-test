@@ -145,6 +145,14 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Link.Model
         protected string CurrentHeader { get; }
 
         protected abstract void PutCore(LogItem logItem);
+        protected void Put(LogItem logItem)
+        {
+            if(ParentLogger != null) {
+                ParentLogger.Put(logItem);
+            } else {
+                PutCore(logItem);
+            }
+        }
         protected abstract ILogger CreateLoggerCore(string header);
 
         public void Trace(string message, [CallerLineNumber] int callerLineNumber = 0, [CallerFilePath] string callerFilePath = "", [CallerMemberName] string callerMemberName = "") => PutCore(new LogItem(DateTime.Now, LogKind.Trace, message, null, new Caller(callerLineNumber, callerFilePath, callerMemberName)));
@@ -177,7 +185,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Link.Model
         public void Fatal(string message, object detail, [CallerLineNumber] int callerLineNumber = 0, [CallerFilePath] string callerFilePath = "", [CallerMemberName] string callerMemberName = "") => PutCore(new LogItem(DateTime.Now, LogKind.Fatal, message, detail?.ToString(), new Caller(callerLineNumber, callerFilePath, callerMemberName)));
         public void Fatal(Exception exception, [CallerLineNumber] int callerLineNumber = 0, [CallerFilePath] string callerFilePath = "", [CallerMemberName] string callerMemberName = "") => PutCore(new LogItem(DateTime.Now, LogKind.Fatal, exception.Message, exception.ToString(), new Caller(callerLineNumber, callerFilePath, callerMemberName)));
 
-        public void Put(LogKind kind, string message, string detail, [CallerLineNumber] int callerLineNumber = 0, [CallerFilePath] string callerFilePath = "", [CallerMemberName] string callerMemberName = "") => PutCore(new LogItem(DateTime.Now, kind, message, detail, new Caller(callerLineNumber, callerFilePath, callerMemberName)));
+        public void Put(LogKind kind, string message, string detail, [CallerLineNumber] int callerLineNumber = 0, [CallerFilePath] string callerFilePath = "", [CallerMemberName] string callerMemberName = "") => Put(new LogItem(DateTime.Now, kind, message, detail, new Caller(callerLineNumber, callerFilePath, callerMemberName)));
 
         #region ILogFactory
 

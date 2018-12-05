@@ -131,6 +131,14 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Link.Model
         protected string CurrentHeader { get; }
 
         protected abstract void PutCore(LogItem logItem);
+        protected void Put(LogItem logItem)
+        {
+            if(ParentLogger != null) {
+                ParentLogger.Put(logItem);
+            } else {
+                PutCore(logItem);
+            }
+        }
         protected abstract ILogger CreateLoggerCore(string header);
 
 <# foreach(var logKindItem in logKindItems) { #>
@@ -140,7 +148,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Link.Model
         public void <#= logKindItem.Key #>(Exception exception, <#= callerArg #>) => <#= PutException(logKindItem.Key) #>
 
 <# } #>
-        public void Put(LogKind kind, string message, string detail, <#= callerArg #>) => PutCore(new LogItem(DateTime.Now, kind, message, detail, <#= callerParam #>));
+        public void Put(LogKind kind, string message, string detail, <#= callerArg #>) => Put(new LogItem(DateTime.Now, kind, message, detail, <#= callerParam #>));
 
         #region ILogFactory
 
