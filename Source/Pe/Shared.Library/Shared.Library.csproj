@@ -129,6 +129,7 @@
     <Compile Include="Model\Database\DatabaseFactory.cs" />
     <Compile Include="Model\Database\DatabaseTransaction.cs" />
     <Compile Include="Model\Database\SqliteFactory.cs" />
+    <Compile Include="Model\DialogFilter.cs" />
     <Compile Include="Model\EncodingUtility.cs" />
     <Compile Include="Model\FreezableUtility.cs" />
     <Compile Include="Model\IconLoader.cs" />
