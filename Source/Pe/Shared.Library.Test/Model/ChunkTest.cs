@@ -107,4 +107,43 @@ namespace Shared.Library.Test.Model
 
         }
     }
+
+    [TestClass]
+    public class ChunkedListTest
+    {
+        [TestMethod]
+        public void AddTest()
+        {
+            var item = new ChunkedList<int>(2, 3);
+            item.Add(10);
+            Assert.AreEqual(1, item.Count);
+
+            item.Add(20);
+            item.Add(30);
+
+            item.Add(40);
+            item.Add(50);
+            item.Add(60);
+            Assert.ThrowsException<OutOfMemoryException>(() => item.Add(70));
+        }
+
+        [TestMethod]
+        public void ClearTest()
+        {
+            var item = new ChunkedList<int>(5, 1);
+
+            item.Add(10);
+            item.Add(20);
+            item.Add(30);
+            item.Add(40);
+            item.Add(50);
+            item.Clear();
+            Assert.AreEqual(0, item.Count);
+
+            item.Add(10);
+            item.Add(20);
+            item.Add(30);
+            Assert.AreEqual(3, item.Count);
+        }
+    }
 }
