@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,18 +30,9 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 
         #region function
 
-        void CopyTo(int sourceIndex, Array destinationArray, int destinationIndex, int destinationLength)
+        public void CopyTo(int sourceIndex, Array destinationArray, int destinationIndex, int destinationLength)
         {
             Array.Copy(Items, sourceIndex, destinationArray, destinationIndex, destinationLength);
-        }
-
-        public void CopyTo(T[] destinationArray, int sourceIndex, int destinationIndex)
-        {
-            CopyTo(sourceIndex, destinationArray, destinationIndex, Count - sourceIndex);
-        }
-        public void CopyTo(Array destinationArray, int sourceIndex, int destinationIndex)
-        {
-            CopyTo(sourceIndex, destinationArray, destinationIndex, Count - sourceIndex);
         }
 
         #endregion
@@ -200,11 +192,30 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
             return ChunkItems[chunkItemIndex];
         }
 
-        void AddCore(int chunkItemIndex, ChunkItem<T> chunkItem, T item)
+        public void CopyTo(int sourceIndex, Array destinationArray, int destinationIndex, int destinationLength)
         {
-            chunkItem.Add(item);
+            var chunkItemIndex = sourceIndex / ChunkItemCapacity;
+            var startSourceIndex = sourceIndex % ChunkItemCapacity;
 
-            Count += 1;
+            var destAddIndex = 0;
+            var destAddLength = destinationLength % ChunkItemCapacity;
+            for(int i = chunkItemIndex, j = 0; i < ChunkItemCount && j < destinationLength; i++) {
+                var item = ChunkItems[i];
+                var destLength = ChunkItemCapacity - destAddLength + destAddIndex;
+                item.CopyTo(
+                    startSourceIndex,
+                    destinationArray,
+                    destinationIndex + (j * ChunkItemCapacity) - destAddIndex,
+                    ChunkItemCapacity < destLength ? ChunkItemCapacity: destLength
+
+                );
+                if(j == 0) {
+                    destAddIndex = destAddLength;
+                    destAddLength = startSourceIndex;
+                    startSourceIndex = 0;
+                }
+                j += 1;
+            }
         }
 
         #endregion
@@ -253,7 +264,8 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         {
             var chunkItemIndex = GetLastChunkItemIndex();
             var chunkItem = GetOrCreateChunkItem(chunkItemIndex);
-            AddCore(chunkItemIndex, chunkItem, item);
+            chunkItem.Add(item);
+            Count += 1;
         }
 
         public void Clear()
@@ -290,8 +302,12 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         }
         public void CopyTo(Array array, int sourceIndex)
         {
+            /*
             var itemIndex = sourceIndex / ChunkItemCapacity;
             var startIndex = sourceIndex % ChunkItemCapacity;
+            */
+            CopyTo(sourceIndex, array, 0, Count - sourceIndex);
+            /*
             var destAddIndex = 0;
             for(int i = 0, j = 0; i < ChunkItemCount; i++) {
                 if(i < itemIndex) {
@@ -305,6 +321,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
                 }
                 j += 1;
             }
+            */
         }
 
         public IEnumerator<T> GetEnumerator()
@@ -364,6 +381,65 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         #region static
 
         public static int LargeObjectHeapSize { get; set; } = 85 * 1024;
+
+        #endregion
+    }
+
+    public class BinaryChunkedStream : Stream
+    {
+        public BinaryChunkedStream()
+            : this(new BinaryChunkedList(Capacity, ItemCapacity))
+        { }
+
+        public BinaryChunkedStream(BinaryChunkedList binaryChunkedList)
+        {
+            BinaryChunkedList = binaryChunkedList;
+        }
+
+        #region property
+
+        public static int Capacity { get; set; } = 255;
+        public static int ItemCapacity { get; set; } = 80 * 1024;
+
+        BinaryChunkedList BinaryChunkedList { get; }
+
+        #endregion
+
+        #region Stream
+
+        public override bool CanRead => true;
+
+        public override bool CanSeek => true;
+
+        public override bool CanWrite => true;
+
+        public override long Length => BinaryChunkedList.Count;
+
+        public override long Position { get; set; }
+
+        public override void Flush()
+        { }
+
+        public override int Read(byte[] buffer, int offset, int count)
+        {
+            BinaryChunkedList.CopyTo((int)Position, buffer, offset, count);
+            return count;
+        }
+
+        public override long Seek(long offset, SeekOrigin origin)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void SetLength(long value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Write(byte[] buffer, int offset, int count)
+        {
+            throw new NotImplementedException();
+        }
 
         #endregion
     }

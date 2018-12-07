@@ -27,7 +27,7 @@ namespace Shared.Library.Test.Model
 
             item.Add(20);
             item.Add(30);
-            Assert.ThrowsException<OutOfMemoryException>(() =>item.Add(40));
+            Assert.ThrowsException<OutOfMemoryException>(() => item.Add(40));
         }
 
         [TestMethod]
@@ -169,20 +169,37 @@ namespace Shared.Library.Test.Model
         [TestMethod]
         public void CopyToTest()
         {
-            var list = new ChunkedList<int>(5, 2);
-            foreach(var n in Enumerable.Range(0, 5*2)) {
-                list.Add(n);
+            var list1 = new ChunkedList<int>(5, 2);
+            foreach(var n in Enumerable.Range(0, 5 * 2)) {
+                list1.Add(n);
             }
 
-            var array1 = new int[list.Count];
-            list.CopyTo(array1, 0);
-            CollectionAssert.AreEqual(array1, Enumerable.Range(0, list.Count).ToArray());
+            var array1 = new int[list1.Count];
+            list1.CopyTo(array1, 0);
+            CollectionAssert.AreEqual(array1, Enumerable.Range(0, list1.Count).ToArray());
 
-            var array2 = new int[list.Count];
-            list.CopyTo(array2, 5);
+            var array2 = new int[list1.Count];
+            list1.CopyTo(array2, 5);
             var a = array2.Take(5).ToArray();
-            var b = Enumerable.Range(0, list.Count).Skip(5).ToArray();
-            CollectionAssert.AreEqual(a,b);
+            var b = Enumerable.Range(0, list1.Count).Skip(5).ToArray();
+            CollectionAssert.AreEqual(a, b);
+
+
+            var list2 = new ChunkedList<int>(10, 1);
+            foreach(var n in Enumerable.Range(0, 10 * 1)) {
+                list2.Add(n);
+            }
+            var array3 = new int[5];
+            list2.CopyTo(5, array3, 1, 3);
+            CollectionAssert.AreEqual(array3.ToArray(), new[] { 0, 5, 6, 7, 0 });
+
+            var list3 = new ChunkedList<int>(1, 10);
+            foreach(var n in Enumerable.Range(0, 10 * 1)) {
+                list3.Add(n);
+            }
+            var array4 = new int[5];
+            list2.CopyTo(5, array4, 1, 3);
+            CollectionAssert.AreEqual(array4.ToArray(), new[] { 0, 5, 6, 7, 0 });
         }
 
 
@@ -194,7 +211,7 @@ namespace Shared.Library.Test.Model
         [DataRow(3, 4, 3 * 4 - 4)]
         [DataRow(3, 4, 3 * 4 - 5)]
         [DataRow(3, 4, 3 * 4 - 11)]
-        [DataRow(1, 1, 1*1)]
+        [DataRow(1, 1, 1 * 1)]
         [DataRow(100, 1, 100 * 1)]
         [DataRow(1, 100, 1 * 100)]
         [DataRow(100, 1, 50)]
@@ -277,6 +294,25 @@ namespace Shared.Library.Test.Model
             for(var i = 0; i < items.Length; i++) {
                 Assert.AreEqual(items[i], list[i]);
             }
+        }
+    }
+
+    [TestClass]
+    public class BinaryChunkedStreamTest
+    {
+        [TestMethod]
+        public void ReadTest()
+        {
+            var list = new BinaryChunkedList(100, 3);
+            var items = Enumerable.Range(0, 255).Select(i => (byte)i).ToArray();
+            foreach(var item in items) {
+                list.Add(item);
+            }
+            var stream = new BinaryChunkedStream(list);
+
+            var buffer1 = new byte[10];
+            stream.Read(buffer1, 0, buffer1.Length);
+            Assert.AreEqual(buffer1, Enumerable.Range(0, 10).Select(i => (byte)i).ToArray());
         }
     }
 }
