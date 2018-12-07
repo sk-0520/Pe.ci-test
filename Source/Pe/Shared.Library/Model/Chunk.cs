@@ -8,6 +8,10 @@ using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 {
+    /// <summary>
+    /// 分割データ。
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class ChunkItem<T> : ICollection<T>, ICollection, IReadOnlyList<T>
     {
         public ChunkItem(int capacity)
@@ -132,6 +136,10 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 
     }
 
+    /// <summary>
+    /// <see cref="ChunkItem{T}"/>のリスト。
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class ChunkedList<T> : ICollection<T>, ICollection, IReadOnlyList<T>
     {
         public ChunkedList(int capacity, int itemCapacity)
@@ -338,5 +346,25 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 
         #endregion
 
+    }
+
+    /// <summary>
+    /// LOHで悲しまない専用クラス。
+    /// </summary>
+    public class BinaryChunkedList : ChunkedList<byte>
+    {
+        public BinaryChunkedList(int capacity, int itemCapacity)
+            : base(capacity, itemCapacity)
+        {
+            if(LargeObjectHeapSize <= itemCapacity) {
+                throw new ArgumentOutOfRangeException(nameof(itemCapacity));
+            }
+        }
+
+        #region static
+
+        public static int LargeObjectHeapSize { get; set; } = 85 * 1024;
+
+        #endregion
     }
 }
