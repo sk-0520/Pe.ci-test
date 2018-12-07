@@ -188,10 +188,6 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Link.Model
             : base()
         { }
 
-        public TestLogger(string header, LoggerBase parentLogger)
-            : base(header, parentLogger)
-        { }
-
         protected override void PutCore(LogItem logItem)
         {
             var header = $"{DateTime.Now:yyyy-MM-ddTHH:mm:ss} {Header}[{logItem.Kind}] ";
@@ -203,11 +199,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Link.Model
             Console.WriteLine($"{headerIndent}{logItem.Caller.filePath}({logItem.Caller.lineNumber})");
         }
 
-        protected override ILogger CreateLoggerCore(string header)
-        {
-            return new TestLogger(header, this);
-        }
-
+        protected override ILogger CreateLoggerCore(string header) => new ChildLogger(header, this);
     }
 
     public static class ILogFactoryExtensions
