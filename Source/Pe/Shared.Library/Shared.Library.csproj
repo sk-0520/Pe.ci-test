@@ -123,6 +123,7 @@
     <Compile Include="Compatibility\Windows\IWindowsHandle.cs" />
     <Compile Include="Compatibility\Windows\MouseUtility.cs" />
     <Compile Include="Compatibility\Windows\PodStructUtility.cs" />
+    <Compile Include="Model\Chunk.cs" />
     <Compile Include="Model\Counter.cs" />
     <Compile Include="Model\Database\DatabaseAccessor.cs" />
     <Compile Include="Model\Database\DatabaseImplementation.cs" />
