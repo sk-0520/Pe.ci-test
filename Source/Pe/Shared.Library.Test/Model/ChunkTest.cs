@@ -75,6 +75,19 @@ namespace Shared.Library.Test.Model
         }
 
         [TestMethod]
+        public void CopyFromTest()
+        {
+            var item = new ChunkItem<int>(4);
+
+            var array = new int[] {
+                10, 20, 30, 40
+            };
+            item.CopyFrom(0, array, 0, array.Length);
+            Assert.AreEqual(4, item.Count);
+            CollectionAssert.AreEqual(array, item.ToArray());
+        }
+
+        [TestMethod]
         public void RemoveTest()
         {
             var item = new ChunkItem<int>(4);
@@ -312,7 +325,14 @@ namespace Shared.Library.Test.Model
 
             var buffer1 = new byte[10];
             stream.Read(buffer1, 0, buffer1.Length);
-            Assert.AreEqual(buffer1, Enumerable.Range(0, 10).Select(i => (byte)i).ToArray());
+            CollectionAssert.AreEqual(buffer1, Enumerable.Range(0, 10).Select(i => (byte)i).ToArray());
+
+            var buffer2 = new byte[10];
+            var count2 = stream.Read(buffer2, 1, buffer2.Length - 2);
+            Assert.AreEqual(8, count2);
+            CollectionAssert.AreEqual(buffer2.Skip(1).Take(8).ToArray(), Enumerable.Range(10, 8).Select(i => (byte)i).ToArray());
+
+            Assert.AreEqual(18, stream.Position);
         }
     }
 }

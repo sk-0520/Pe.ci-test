@@ -35,6 +35,21 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
             Array.Copy(Items, sourceIndex, destinationArray, destinationIndex, destinationLength);
         }
 
+        public void CopyFrom(int destinationIndex, Array sourceArray, int sourceIndex, int sourceLength)
+        {
+            if(destinationIndex != 0) {
+                if(Count - 1 < destinationIndex) {
+                    throw new ArgumentOutOfRangeException(nameof(destinationIndex));
+                }
+            }
+
+            Array.Copy(sourceArray, sourceIndex, Items, destinationIndex, sourceLength);
+            if(destinationIndex == 0) {
+                Count = Math.Max(sourceLength, Count);
+            }
+        }
+
+
         #endregion
 
         #region IReadOnlyList
@@ -196,22 +211,24 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         {
             var chunkItemIndex = sourceIndex / ChunkItemCapacity;
             var startSourceIndex = sourceIndex % ChunkItemCapacity;
+            var destinationCount = destinationLength / ChunkItemCapacity + 1;
 
-            var destAddIndex = 0;
-            var destAddLength = destinationLength % ChunkItemCapacity;
-            for(int i = chunkItemIndex, j = 0; i < ChunkItemCount && j < destinationLength; i++) {
+            var destinationDataLength = 0;
+            for(int i = chunkItemIndex, j = 0; i < ChunkItemCount && j < destinationCount; i++) {
                 var item = ChunkItems[i];
-                var destLength = ChunkItemCapacity - destAddLength + destAddIndex;
+                var dataLength = j == destinationCount - 1
+                    ? destinationLength - destinationDataLength
+                    : ChunkItemCapacity - startSourceIndex
+                ;
+
                 item.CopyTo(
                     startSourceIndex,
                     destinationArray,
-                    destinationIndex + (j * ChunkItemCapacity) - destAddIndex,
-                    ChunkItemCapacity < destLength ? ChunkItemCapacity: destLength
-
+                    destinationIndex + destinationDataLength,
+                    dataLength
                 );
+                destinationDataLength += dataLength;
                 if(j == 0) {
-                    destAddIndex = destAddLength;
-                    destAddLength = startSourceIndex;
                     startSourceIndex = 0;
                 }
                 j += 1;
@@ -423,22 +440,39 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         public override int Read(byte[] buffer, int offset, int count)
         {
             BinaryChunkedList.CopyTo((int)Position, buffer, offset, count);
+            Seek(count, SeekOrigin.Current);
             return count;
         }
 
         public override long Seek(long offset, SeekOrigin origin)
         {
-            throw new NotImplementedException();
+            switch(origin) {
+                case SeekOrigin.Begin:
+                    SetLength(offset);
+                    break;
+
+                case SeekOrigin.End:
+                    SetLength(Position - offset);
+                    break;
+
+                case SeekOrigin.Current:
+                    SetLength(Position + offset);
+                    break;
+
+                default:
+                    throw new NotImplementedException();
+            }
+
+            return Position;
         }
 
         public override void SetLength(long value)
         {
-            throw new NotImplementedException();
+            Position = value;
         }
 
         public override void Write(byte[] buffer, int offset, int count)
         {
-            throw new NotImplementedException();
         }
 
         #endregion
