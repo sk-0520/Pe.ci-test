@@ -82,6 +82,9 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
             : this(logFactory.CreateCurrentClass())
         { }
 
+        #region function
+        #endregion
+
         #region DatabaseStatementLoaderBase
 
         public override string LoadStatement(string key)
