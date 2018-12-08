@@ -250,6 +250,10 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
                 if(dataLength == 0) {
                     break;
                 }
+                if(sourceArray.Length < sourceIndex + sourceDataLength + dataLength) {
+                    dataLength = sourceLength - sourceDataLength;
+                }
+
                 var chunkItem = GetOrCreateChunkItem(i);
                 chunkItem.CopyFrom(
                     startDestinationIndex,
@@ -442,7 +446,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         public static int Capacity { get; set; } = 255;
         public static int ItemCapacity { get; set; } = 80 * 1024;
 
-        BinaryChunkedList BinaryChunkedList { get; }
+        public BinaryChunkedList BinaryChunkedList { get; }
 
         #endregion
 
@@ -497,6 +501,8 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 
         public override void Write(byte[] buffer, int offset, int count)
         {
+            BinaryChunkedList.CopyFrom((int)Position, buffer, offset, count);
+            Seek(count, SeekOrigin.Current);
         }
 
         #endregion

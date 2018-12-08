@@ -370,5 +370,23 @@ namespace Shared.Library.Test.Model
 
             Assert.AreEqual(18, stream.Position);
         }
+
+        [TestMethod]
+        public void WriteTest()
+        {
+            var array = Enumerable.Range(0, 255).Select(i => (byte)i).ToArray();
+            foreach(var (cap, item) in new[] { (5, 3), (1, 1), (100, 1), (1, 100), (255, 1), (1, 255) }) {
+                var stream = new BinaryChunkedStream(new BinaryChunkedList(cap, item));
+                stream.Write(array, 40, 30);
+                var a = stream.BinaryChunkedList.Take(30).ToArray();
+                var b = array.Skip(40).Take(30).ToArray();
+                CollectionAssert.AreEqual(a, b);
+
+                stream.Write(array, 30, 255-30);
+                var a2 = stream.BinaryChunkedList.Skip(30).Take(255-30).ToArray();
+                var b2 = array.Skip(30).Take(255-30).ToArray();
+                CollectionAssert.AreEqual(a2, b2);
+            }
+        }
     }
 }
