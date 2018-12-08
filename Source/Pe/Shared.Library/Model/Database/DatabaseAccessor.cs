@@ -72,6 +72,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
             LazyImplementation = new Lazy<IDatabaseImplementation>(DatabaseFactory.CreateImplementation);
         }
 
+        [Injection]
         public DatabaseAccessor(IDatabaseFactory databaseFactory, ILogFactory logFactory)
             : this(databaseFactory, logFactory.CreateCurrentClass())
         { }
