@@ -99,18 +99,14 @@ namespace ContentTypeTextNet.Pe.Main.Model
 
         ILogger CreateLogger(string outputPath)
         {
-            var logger = new ApplicationLogger() {
+            var logger = new ApplicationLogger();
+            var logKinds = LogKind.Information | LogKind.Error | LogKind.Fatal;
 #if DEBUG
-                IsEnabledTrace = true,
-                IsEnabledDebug = true,
+            logKinds = LogKind.All;
 #elif BETA
-                IsEnabledDebug = true,
+            logKinds |= LogKind.Debug;
 #endif
-                IsEnabledInformation = true,
-                IsEnabledWarning = true,
-                IsEnabledError = true,
-                IsEnabledFatal = true,
-            };
+            logger.SetEnabled(logKinds);
 
             // ログ出力(ファイル・ディレクトリが存在しなければ終了で構わない)
             if(!string.IsNullOrWhiteSpace(outputPath)) {

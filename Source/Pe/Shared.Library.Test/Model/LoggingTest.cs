@@ -17,6 +17,7 @@ namespace Shared.Library.Test.Model
         public void PutTest()
         {
             var logger = new StockLogger();
+            logger.SetEnabled(LogKind.All);
 
             logger.Debug("1");
             Assert.AreEqual("1", logger.Items.Last().Message);

@@ -14,8 +14,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Text;
 using System.Threading.Tasks;
+using System.Reflection;
 
 namespace ContentTypeTextNet.Pe.Library.Shared.Link.Model
 {
@@ -28,6 +30,8 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Link.Model
 <# foreach(var logKindItem in logKindItems) { #>
         <#= logKindItem.Key #>,
 <# } #>
+
+        All = Trace | Debug | Information | Warning | Error | Fatal,
     }
 
     public struct Caller
@@ -50,7 +54,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Link.Model
 
     public class LogItem
     {
-        public LogItem(DateTime timestamp, LogKind kind, string header, string message, string detail, Caller caller)
+        public LogItem(DateTime timestamp, LogKind kind, string header, string message, string detail, Caller caller, int skipFrame)
         {
             Timestamp = timestamp;
             Kind = kind;
@@ -58,6 +62,10 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Link.Model
             Message = message;
             Detail = detail;
             Caller = caller;
+
+            StackTrace = new StackTrace(skipFrame + 1, true);
+            Thread = Thread.CurrentThread;
+            Assembly = Assembly.GetCallingAssembly();
         }
 
         #region property
@@ -68,6 +76,10 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Link.Model
         public string Message { get; }
         public string Detail { get; }
         public Caller Caller { get; }
+
+        public StackTrace StackTrace { get; }
+        public Thread Thread  { get; }
+        public Assembly Assembly { get; }
 
         public bool HasDetail => Detail != null;
 
@@ -120,6 +132,38 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Link.Model
             ParentLogger = parentLogger;
         }
 
+        #region property
+
+        protected LoggerBase ParentLogger { get; }
+        protected string CurrentHeader { get; }
+
+        #endregion
+
+        #region function
+
+        public virtual void SetEnabled(LogKind logKinds)
+        {
+<# foreach(var logKindItem in logKindItems) { #>
+            if(logKinds.HasFlag(LogKind.<#= logKindItem.Key #>)) {
+                IsEnabled<#= logKindItem.Key #> = true;
+            }
+<# } #>
+        }
+        public virtual void SetDisabled(LogKind logKinds)
+        {
+<# foreach(var logKindItem in logKindItems) { #>
+            if(logKinds.HasFlag(LogKind.<#= logKindItem.Key #>)) {
+                IsEnabled<#= logKindItem.Key #> = false;
+            }
+<# } #>
+        }
+
+        protected abstract void PutCore(LogItem logItem);
+
+        #endregion
+
+        #region ILoggerBase
+
         public string Header
         {
             get
@@ -138,13 +182,9 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Link.Model
             }
         }
 <# foreach(var logKindItem in logKindItems) { #>
-        public virtual bool IsEnabled<#= logKindItem.Key #> { get; set; }
+        public virtual bool IsEnabled<#= logKindItem.Key #> { get; protected set; }
 <# } #>
 
-        protected LoggerBase ParentLogger { get; }
-        protected string CurrentHeader { get; }
-
-        protected abstract void PutCore(LogItem logItem);
         protected void Put(LogItem logItem)
         {
             if(ParentLogger != null) {
@@ -173,7 +213,9 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Link.Model
         public void <#= logKindItem.Key #>(Exception exception, <#= callerArg #>) => <#= PutException(logKindItem.Key) #>
 
 <# } #>
-        public void Put(LogKind kind, string message, string detail, <#= callerArg #>) => Put(new LogItem(DateTime.Now, kind, Header, message, detail, <#= callerParam #>));
+        public void Put(LogKind kind, string message, string detail, <#= callerArg #>) => Put(new LogItem(DateTime.Now, kind, Header, message, detail, <#= callerParam #>, 1));
+
+        #endregion
 
         #region ILogFactory
 
@@ -218,11 +260,12 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Link.Model
         {
             var header = $"{DateTime.Now:yyyy-MM-ddTHH:mm:ss} {Header}[{logItem.Kind}] ";
             var headerIndent = new string(' ', header.Length);
-            Console.WriteLine($"{header} {logItem.Message} <{logItem.Caller.memberName}>");
+            Console.WriteLine($"{header}{logItem.Message} <{logItem.Caller.memberName}>");
             if(logItem.HasDetail) {
                 Console.WriteLine($"{headerIndent}{logItem.Detail}");
             }
             Console.WriteLine($"{headerIndent}{logItem.Caller.filePath}({logItem.Caller.lineNumber})");
+            Console.WriteLine($"{headerIndent}{nameof(logItem.Assembly)}: {logItem.Assembly}, {nameof(logItem.Thread)}: {logItem.Thread}");
         }
 
         protected override ILogger CreateLoggerCore(string header) => new ChildLogger(header, this);
@@ -260,12 +303,12 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Link.Model
     string callerParam = "new Caller(callerLineNumber, callerFilePath, callerMemberName)";
 
     string PutMessage(string kind) {
-        return "Put(new LogItem(DateTime.Now, LogKind." + kind + ", Header, message, null, " + callerParam + "));";
+        return "Put(new LogItem(DateTime.Now, LogKind." + kind + ", Header, message, null, " + callerParam + ", 1));";
     }
     string PutDetail(string kind) {
-        return "Put(new LogItem(DateTime.Now, LogKind." + kind + ", Header, message, detail?.ToString(), " + callerParam + "));";
+        return "Put(new LogItem(DateTime.Now, LogKind." + kind + ", Header, message, detail?.ToString(), " + callerParam + ", 1));";
     }
     string PutException(string kind) {
-        return "Put(new LogItem(DateTime.Now, LogKind." + kind + ", Header, exception.Message, exception.ToString(), " + callerParam + "));";
+        return "Put(new LogItem(DateTime.Now, LogKind." + kind + ", Header, exception.Message, exception.ToString(), " + callerParam + ", 1));";
     }
 #>
