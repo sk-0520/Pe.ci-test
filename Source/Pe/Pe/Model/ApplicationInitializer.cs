@@ -16,6 +16,12 @@ namespace ContentTypeTextNet.Pe.Main.Model
 {
     public class ApplicationInitializer
     {
+        #region property
+
+        string CommandLineKeyLog { get; } = "log";
+
+        #endregion
+
         #region function
 
         void InitializeEnvironmentVariable()
@@ -29,24 +35,25 @@ namespace ContentTypeTextNet.Pe.Main.Model
 
             commandLine.Add(longKey: EnvironmentParameters.CommandLineKeyUserDirectory, hasValue: true);
             commandLine.Add(longKey: EnvironmentParameters.CommandLineKeyMachineDirectory, hasValue: true);
+            commandLine.Add(longKey: CommandLineKeyLog, hasValue: true);
 
             commandLine.Execute();
 
             return commandLine;
         }
 
-        void InitializeEnvironment(CommandLine commandLine)
+        EnvironmentParameters InitializeEnvironment(CommandLine commandLine)
         {
             Debug.Assert(commandLine.IsParsed);
 
             var applicationDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
-            EnvironmentParameters.Initialize(new DirectoryInfo(applicationDirectory), commandLine);
+            return EnvironmentParameters.Initialize(new DirectoryInfo(applicationDirectory), commandLine);
         }
 
-        bool IsFirstStartup()
+        bool IsFirstStartup(EnvironmentParameters environmentParameters)
         {
-            var file = EnvironmentParameters.Current.SettingFile;
+            var file = environmentParameters.SettingFile;
             file.Refresh();
             return !file.Exists;
         }
@@ -54,7 +61,7 @@ namespace ContentTypeTextNet.Pe.Main.Model
         bool ShowAcceptView(ILogger logger)
         {
             // ログがあったりなかったりするフワフワ状態なので一時的にDIコンテナ作成(嬉しがってめちゃくちゃ生成)
-            using(var diContainer = DiContainer.Current?.Scope() ?? new DiContainer().Scope()) {
+            using(var diContainer = DiContainer.Instance?.Scope() ?? new DiContainer().Scope()) {
                 diContainer.Register<ILogger, ILogger>(() => logger, DiLifecycle.Singleton);
                 diContainer.Register<ILogFactory, ILogFactory>(() => logger, DiLifecycle.Singleton);
                 diContainer.Register<ViewElement.Accept.AcceptViewElement, ViewElement.Accept.AcceptViewElement>(DiLifecycle.Singleton);
@@ -69,9 +76,58 @@ namespace ContentTypeTextNet.Pe.Main.Model
             }
         }
 
-        void CreateLogger()
+        void InitializeFileSystem(EnvironmentParameters environmentParameters)
         {
+            var dirs = new[] {
+                environmentParameters.UserSettingDirectory,
+                environmentParameters.UserRoamingDirectory,
+                environmentParameters.UserBackupDirectory,
+            };
+        }
 
+        string GetCommandLineValue(CommandLine commandLine, string key, string defaultValue)
+        {
+            var commandLineKey = commandLine.GetKey(key);
+            if(commandLineKey != null) {
+                if(commandLine.Values.TryGetValue(commandLineKey, out var value)) {
+                    return value.First;
+                }
+            }
+
+            return defaultValue;
+        }
+
+        ILogger CreateLogger(string outputPath)
+        {
+            var logger = new ApplicationLogger() {
+#if DEBUG
+                IsEnabledTrace = true,
+                IsEnabledDebug = true,
+#elif BETA
+                IsEnabledDebug = true,
+#endif
+                IsEnabledInformation = true,
+                IsEnabledWarning = true,
+                IsEnabledError = true,
+                IsEnabledFatal = true,
+            };
+
+            // ログ出力(ファイル・ディレクトリが存在しなければ終了で構わない)
+            if(!string.IsNullOrWhiteSpace(outputPath)) {
+                var expandedOutputPath = Environment.ExpandEnvironmentVariables(outputPath);
+                // ディレクトリ指定であればタイムスタンプ付きでファイル生成
+                string filePath = expandedOutputPath;
+                if(Directory.Exists(expandedOutputPath)) {
+                    var fileName = PathUtility.AppendExtension(DateTime.Now.ToString("yyyy-MM-dd_HHmmss"), "log");
+                    filePath = Path.Combine(expandedOutputPath, fileName);
+                }
+                var writer = new StreamWriter(new FileStream(filePath, FileMode.Append, FileAccess.Write, FileShare.Read), Encoding.Unicode) {
+                    AutoFlush = true,
+                };
+                logger.AttachWriter(writer);
+            }
+
+            return logger;
         }
 
         void Startup()
@@ -98,9 +154,11 @@ namespace ContentTypeTextNet.Pe.Main.Model
             InitializeEnvironmentVariable();
 
             var commandLine = CreateCommandLine(arguments);
-            InitializeEnvironment(commandLine);
+            var environmentParameters = InitializeEnvironment(commandLine);
+            var logger = CreateLogger(GetCommandLineValue(commandLine, CommandLineKeyLog, string.Empty));
+            logger.Information("!!START!!");
 
-            var isFirstStartup = IsFirstStartup();
+            var isFirstStartup = IsFirstStartup(environmentParameters);
             if(isFirstStartup) {
                 // 設定ファイルやらなんやらを構築する前に完全初回の使用許諾を取る
                 var dialogResult = ShowAcceptView(new Library.Shared.Link.Model.NullLogger());
@@ -108,8 +166,9 @@ namespace ContentTypeTextNet.Pe.Main.Model
                     // 初回の使用許諾を得られなかったのでばいちゃ
                     return false;
                 }
-                Startup();
             }
+            InitializeFileSystem(environmentParameters);
+
 
             return false;
         }

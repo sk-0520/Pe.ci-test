@@ -361,7 +361,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         /// シングルトンなDIコンテナ。
         /// <para><see cref="Initialize"/>にて初期化が必要。</para>
         /// </summary>
-        public static IDiContainer Current { get; private set; }
+        public static IDiContainer Instance { get; private set; }
 
         /// <summary>
         /// 具象化 → 実体 のマッピング。
@@ -383,16 +383,16 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         #region function
 
         /// <summary>
-        /// <see cref="Current"/> を使用するための準備処理。
+        /// <see cref="Instance"/> を使用するための準備処理。
         /// </summary>
         /// <param name="creator"></param>
         public static void Initialize(Func<IDiContainer> creator)
         {
-            if(Current != null) {
+            if(Instance != null) {
                 throw new InvalidOperationException();
             }
 
-            Current = creator();
+            Instance = creator();
         }
 
         protected virtual void RegisterCore(Type interfaceType, Type objectType, DiLifecycle lifecycle, DiCreator creator)

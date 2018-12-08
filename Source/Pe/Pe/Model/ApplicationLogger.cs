@@ -11,31 +11,20 @@ using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 
 namespace ContentTypeTextNet.Pe.Main.Model
 {
-    public class ApplicationLogger : LoggerBase
+    public class ApplicationLogger : AsyncLoggerBase
     {
         public ApplicationLogger()
         { }
 
-        private ApplicationLogger(string header, LoggerBase parentLogger)
-            : base(header, parentLogger)
-        { }
-
         #region property
 
-        IDictionary<int, char> KindMap { get; } = new Dictionary<int, char>() {
-            [(int)LogKind.Trace] = 'T',
-            [(int)LogKind.Debug] = 'D',
-            [(int)LogKind.Information] = 'I',
-            [(int)LogKind.Warning] = 'W',
-            [(int)LogKind.Error] = 'E',
-            [(int)LogKind.Fatal] = 'F',
-        };
+        List<TextWriter> TextWriters { get; set; }
 
         #endregion
 
         #region function
 
-        void Write(LoggerBase sender, LogItem logItem)
+        void WriteConsole(LogItem logItem)
         {
             var buffer = new StringBuilder();
             buffer.AppendFormat("{0:yyyy-MM-dd HH:mm:ss.fff}", logItem.Timestamp);
@@ -43,7 +32,7 @@ namespace ContentTypeTextNet.Pe.Main.Model
             //buffer.AppendFormat("[{0}]", KindMap[(int)logItem.Kind]);
             buffer.AppendFormat("{0}", logItem.Kind);
             buffer.Append(' ');
-            buffer.Append(sender.Header);
+            buffer.Append(logItem.Header);
             buffer.Append(' ');
             buffer.AppendFormat("<{0}>", logItem.Caller.memberName);
             buffer.Append(' ');
@@ -66,18 +55,71 @@ namespace ContentTypeTextNet.Pe.Main.Model
             System.Diagnostics.Debug.WriteLine(buffer.ToString());
         }
 
-        #endregion
-
-        #region LoggerBase
-
-        protected override ILogger CreateLoggerCore(string header)
+        void WriteTextWriters(LogItem logItem)
         {
-            return new ApplicationLogger(header, this);
+            foreach(var writer in TextWriters) {
+                writer.WriteLine(logItem);
+            }
         }
 
-        protected override void PutCore(LogItem logItem)
+        void Write(LogItem logItem)
         {
-            Write(this, logItem);
+            WriteConsole(logItem);
+            WriteTextWriters(logItem);
+        }
+
+        public void AttachWriter(TextWriter writer)
+        {
+            if(writer == null) {
+                throw new ArgumentNullException(nameof(writer));
+            }
+
+            if(TextWriters == null) {
+                TextWriters = new List<TextWriter>();
+            }
+            TextWriters.Add(writer);
+        }
+
+        public bool DetachWriter(TextWriter writer)
+        {
+            if(writer == null) {
+                throw new ArgumentNullException(nameof(writer));
+            }
+
+            if(TextWriters == null) {
+                return false;
+            }
+
+            var result = TextWriters.Remove(writer);
+            if(!TextWriters.Any()) {
+                TextWriters = null;
+            }
+
+            return result;
+        }
+
+        #endregion
+
+        #region AsyncLoggerBase
+
+        protected override void PutItems(IReadOnlyList<LogItem> logItems)
+        {
+            foreach(var logItem in logItems) {
+                Write(logItem);
+            }
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                if(disposing) {
+                    foreach(var writer in TextWriters) {
+                        writer.Dispose();
+                    }
+                    TextWriters = null;
+                }
+            }
+            base.Dispose(disposing);
         }
 
         #endregion

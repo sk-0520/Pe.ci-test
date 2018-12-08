@@ -131,13 +131,15 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
             LogAddEvent.Set();
         }
 
+        #endregion
+
         #region IDisposable Support
 
-        private bool disposedValue = false; // 重複する呼び出しを検出するには
+        public bool IsDisposed { get; private set; } // 重複する呼び出しを検出するには
 
         protected virtual void Dispose(bool disposing)
         {
-            if(!this.disposedValue) {
+            if(!this.IsDisposed) {
                 if(disposing) {
                     // TODO: マネージド状態を破棄します (マネージド オブジェクト)。
                     CancellationTokenSource.Cancel(true);
@@ -150,7 +152,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
                 // TODO: アンマネージド リソース (アンマネージド オブジェクト) を解放し、下のファイナライザーをオーバーライドします。
                 // TODO: 大きなフィールドを null に設定します。
 
-                this.disposedValue = true;
+                this.IsDisposed = true;
             }
         }
 
@@ -168,8 +170,6 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
             // TODO: 上のファイナライザーがオーバーライドされる場合は、次の行のコメントを解除してください。
             // GC.SuppressFinalize(this);
         }
-        #endregion
-
         #endregion
     }
 

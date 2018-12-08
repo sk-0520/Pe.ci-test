@@ -14,7 +14,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Embedded.Model
         public static string CommandLineKeyUserDirectory { get; } = "user-data";
         public static string CommandLineKeyMachineDirectory { get; } = "machine-data";
 
-        public static EnvironmentParameters Current { get; private set; }
+        public static EnvironmentParameters Instance { get; private set; }
 
         /// <summary>
         /// アプリケーションの最上位ディレクトリ。
@@ -85,9 +85,9 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Embedded.Model
 
         #region function
 
-        public static void Initialize(DirectoryInfo rootDirectory, CommandLine commandLine)
+        public static EnvironmentParameters Initialize(DirectoryInfo rootDirectory, CommandLine commandLine)
         {
-            if(Current != null) {
+            if(Instance != null) {
                 throw new InvalidOperationException();
             }
             if(!commandLine.IsParsed) {
@@ -102,7 +102,9 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Embedded.Model
             current.UserRoamingDirectory = current.GetDirectory(commandLine, CommandLineKeyUserDirectory, Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), projectName));
             current.MachineDirectory = current.GetDirectory(commandLine, CommandLineKeyMachineDirectory, Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), projectName));
 
-            Current = current;
+            Instance = current;
+
+            return current;
         }
 
         DirectoryInfo GetDirectory(CommandLine commandLine, string key, string defaultValue)
