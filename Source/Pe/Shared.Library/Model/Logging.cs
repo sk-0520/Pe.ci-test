@@ -3,9 +3,11 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Pe.Library.Shared.Embedded.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 
 namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
@@ -196,6 +198,134 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         protected override void PutItems(IReadOnlyList<LogItem> logItems)
         {
             Action(logItems);
+        }
+
+        #endregion
+    }
+
+    public static class LoggingUtility
+    {
+        #region define
+
+        const string indent = "    ";
+        const string messageFormat = " [MSG] {0}";
+        const string detailPadding = "\t";
+
+        #endregion
+
+        #region function
+
+        public static string ToSimpleMessage(LogItem logItem)
+        {
+            var buffer = new StringBuilder();
+            buffer.AppendFormat("{0:yyyy-MM-dd HH:mm:ss.fff}", logItem.Timestamp);
+            buffer.Append(' ');
+            buffer.AppendFormat("{0}", logItem.Kind);
+            buffer.Append(' ');
+            buffer.AppendFormat("<{0}>", logItem.Caller.memberName);
+            buffer.Append(logItem.Message);
+
+            return logItem.ToString();
+        }
+
+        public static string ToTraceMessage(LogItem logItem)
+        {
+            var buffer = new StringBuilder();
+            buffer.AppendFormat("{0:yyyy-MM-dd HH:mm:ss.fff}", logItem.Timestamp);
+            buffer.Append(' ');
+            //buffer.AppendFormat("[{0}]", KindMap[(int)logItem.Kind]);
+            buffer.AppendFormat("{0}", logItem.Kind);
+            buffer.Append(' ');
+            buffer.Append(logItem.Thread.ManagedThreadId);
+            buffer.Append(' ');
+            buffer.Append(logItem.Header);
+            buffer.Append(' ');
+            buffer.AppendFormat("<{0}.{1}>", logItem.StackTrace.GetFrame(0).GetMethod().DeclaringType.Name, logItem.Caller.memberName);
+            buffer.Append(' ');
+            var detailIndentWidth = buffer.Length;
+
+            buffer.Append(logItem.Message);
+            buffer.Append(' ');
+            buffer.Append(logItem.ShortFilePath);
+            buffer.AppendFormat("({0})", logItem.Caller.lineNumber);
+
+            if(logItem.HasDetail) {
+                var indent = new string(' ', detailIndentWidth);
+                foreach(var line in TextUtility.ReadLines(logItem.Detail.ToString())) {
+                    buffer.AppendLine();
+                    buffer.Append(indent);
+                    buffer.Append(line);
+                }
+            }
+
+            return buffer.ToString();
+        }
+
+        static string ToShowText(MethodBase method)
+        {
+            var parameters = string.Join(
+                ", ",
+                method.GetParameters()
+                    .OrderBy(p => p.Position)
+                    .Select(p => p.ToString())
+            );
+
+            return (method?.ReflectedType?.Name ?? "(null)") + "." + (method?.Name ?? "null") + "(" + parameters + ")";
+        }
+
+        public static string ToDetailMessage(LogItem item)
+        {
+            var header = string.Format(
+                "{0}[{1}] {2} <{3}({4})> , Thread: {5}/{6}, Assembly: {7}",
+                item.Timestamp.ToString("yyyy-MM-ddTHH:mm:ss.fff"),
+                item.Kind.ToString().ToUpper().Substring(0, 1),
+                item.Caller.memberName,
+                item.ShortFilePath,
+                item.Caller.lineNumber,
+                item.Thread.ManagedThreadId,
+                item.Thread.ThreadState,
+                item.Assembly.GetName()
+            );
+            var message = string.Format(messageFormat, item.Message);
+            var detail = item.Detail;
+            if(!string.IsNullOrEmpty(detail)) {
+                var detailIndent = new string(' ', message.Length);
+                var lines = TextUtility.ReadLines(detail);
+                var nexts = lines.Skip(1).Select(s => detailIndent + detailPadding + s);
+                if(nexts.Any()) {
+                    var first = detailPadding + lines.First();
+                    detail = first + Environment.NewLine + string.Join(Environment.NewLine, nexts);
+                } else {
+                    detail = detailPadding + detail;
+                }
+            }
+            var stack = string.Join(
+                Environment.NewLine,
+                item.StackTrace.GetFrames()
+                    .Select(sf => string.Format(
+                        indent + "-[{0:x8}][{1:x8}] {2}[{3}]",
+                        sf.GetNativeOffset(),
+                        sf.GetILOffset(),
+                        ToShowText(sf.GetMethod()),
+                        sf.GetFileLineNumber()
+                    )
+                )
+            );
+
+            var result
+                = header
+                + Environment.NewLine
+                + message
+                + detail
+                + Environment.NewLine
+                + " [STK]"
+                + Environment.NewLine
+                + indent + "+[ Native ][   IL   ] Method[line]"
+                + Environment.NewLine
+                + stack
+                + Environment.NewLine
+            ;
+            return result;
         }
 
         #endregion

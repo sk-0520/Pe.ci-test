@@ -51,17 +51,16 @@ namespace ContentTypeTextNet.Pe.Main.Model
             return EnvironmentParameters.Initialize(new DirectoryInfo(applicationDirectory), commandLine);
         }
 
-        bool IsFirstStartup(EnvironmentParameters environmentParameters)
+        bool IsFirstStartup(EnvironmentParameters environmentParameters, ILogger logger)
         {
             var file = environmentParameters.SettingFile;
             file.Refresh();
             return !file.Exists;
         }
 
-        bool ShowAcceptView(ILogger logger)
+        bool ShowAcceptView(IDiScopeContainerCreator scopeContainerCreator, ILogger logger)
         {
-            // ログがあったりなかったりするフワフワ状態なので一時的にDIコンテナ作成(嬉しがってめちゃくちゃ生成)
-            using(var diContainer = DiContainer.Instance?.Scope() ?? new DiContainer().Scope()) {
+            using(var diContainer = scopeContainerCreator.Scope()) {
                 diContainer.Register<ILogger, ILogger>(() => logger, DiLifecycle.Singleton);
                 diContainer.Register<ILogFactory, ILogFactory>(() => logger, DiLifecycle.Singleton);
                 diContainer.Register<ViewElement.Accept.AcceptViewElement, ViewElement.Accept.AcceptViewElement>(DiLifecycle.Singleton);
@@ -76,7 +75,7 @@ namespace ContentTypeTextNet.Pe.Main.Model
             }
         }
 
-        void InitializeFileSystem(EnvironmentParameters environmentParameters)
+        void InitializeFileSystem(EnvironmentParameters environmentParameters, ILogger logger)
         {
             var dirs = new[] {
                 environmentParameters.UserSettingDirectory,
@@ -97,7 +96,7 @@ namespace ContentTypeTextNet.Pe.Main.Model
             return defaultValue;
         }
 
-        ILogger CreateLogger(string outputPath)
+        ApplicationLogger CreateLogger(string outputPath)
         {
             var logger = new ApplicationLogger();
             var logKinds = LogKind.Information | LogKind.Error | LogKind.Fatal;
@@ -126,12 +125,12 @@ namespace ContentTypeTextNet.Pe.Main.Model
             return logger;
         }
 
-        void Startup()
+        void Startup(ApplicationLogger logger)
         {
             var container = new DiContainer();
 
             container
-                .Register<ILogger, ApplicationLogger>(DiLifecycle.Singleton)
+                .Register<ILogFactory, ApplicationLogger>(() => logger, DiLifecycle.Singleton)
             ;
 
         }
@@ -154,16 +153,16 @@ namespace ContentTypeTextNet.Pe.Main.Model
             var logger = CreateLogger(GetCommandLineValue(commandLine, CommandLineKeyLog, string.Empty));
             logger.Information("!!START!!");
 
-            var isFirstStartup = IsFirstStartup(environmentParameters);
+            var isFirstStartup = IsFirstStartup(environmentParameters, logger);
             if(isFirstStartup) {
                 // 設定ファイルやらなんやらを構築する前に完全初回の使用許諾を取る
-                var dialogResult = ShowAcceptView(new Library.Shared.Link.Model.NullLogger());
+                var dialogResult = ShowAcceptView(new DiContainer(), logger);
                 if(!dialogResult) {
                     // 初回の使用許諾を得られなかったのでばいちゃ
                     return false;
                 }
             }
-            InitializeFileSystem(environmentParameters);
+            InitializeFileSystem(environmentParameters, logger);
 
 
             return false;

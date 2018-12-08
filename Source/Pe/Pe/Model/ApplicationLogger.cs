@@ -26,39 +26,15 @@ namespace ContentTypeTextNet.Pe.Main.Model
 
         void WriteConsole(LogItem logItem)
         {
-            var buffer = new StringBuilder();
-            buffer.AppendFormat("{0:yyyy-MM-dd HH:mm:ss.fff}", logItem.Timestamp);
-            buffer.Append(' ');
-            //buffer.AppendFormat("[{0}]", KindMap[(int)logItem.Kind]);
-            buffer.AppendFormat("{0}", logItem.Kind);
-            buffer.Append(' ');
-            buffer.Append(logItem.Header);
-            buffer.Append(' ');
-            buffer.AppendFormat("<{0}>", logItem.Caller.memberName);
-            buffer.Append(' ');
-            var detailIndentWidth = buffer.Length;
-
-            buffer.Append(logItem.Message);
-            buffer.Append(' ');
-            buffer.Append(logItem.ShortFilePath);
-            buffer.AppendFormat("({0})", logItem.Caller.lineNumber);
-
-            if(logItem.HasDetail) {
-                var indent = new string(' ', detailIndentWidth);
-                foreach(var line in TextUtility.ReadLines(logItem.Detail.ToString())) {
-                    buffer.AppendLine();
-                    buffer.Append(indent);
-                    buffer.Append(line);
-                }
-            }
-
-            System.Diagnostics.Debug.WriteLine(buffer.ToString());
+            var message = LoggingUtility.ToTraceMessage(logItem);
+            System.Diagnostics.Debug.WriteLine(message);
         }
 
         void WriteTextWriters(LogItem logItem)
         {
+            var message = LoggingUtility.ToDetailMessage(logItem);
             foreach(var writer in TextWriters) {
-                writer.WriteLine(logItem);
+                writer.WriteLine(message);
             }
         }
 

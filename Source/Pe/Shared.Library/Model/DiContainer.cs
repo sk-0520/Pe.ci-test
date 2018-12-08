@@ -35,7 +35,16 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
     public class InjectionAttribute : Attribute
     { }
 
-    public interface IDiContainer
+    public interface IDiScopeContainerCreator
+    {
+        /// <summary>
+        /// 限定的なDIコンテナを作成。
+        /// </summary>
+        /// <returns>現在マッピングを複製したDIコンテナ。</returns>
+        IScopeDiContainer Scope();
+    }
+
+    public interface IDiContainer: IDiScopeContainerCreator
     {
         /// <summary>
         /// マッピングから実体を取得。
@@ -116,12 +125,6 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
             where TObject : class
 #endif
         ;
-
-        /// <summary>
-        /// 限定的なDIコンテナを作成。
-        /// </summary>
-        /// <returns>現在マッピングを複製したDIコンテナ。</returns>
-        IScopeDiContainer Scope();
     }
 
     public interface IDiRegisterContainer : IDiContainer

@@ -6,7 +6,7 @@ using System.Text;
 
 namespace ContentTypeTextNet.Pe.Library.Shared.Embedded.Model
 {
-    public class AssemblyResolveHelper : IDisposable
+    internal class AssemblyResolveHelper : IDisposable
     {
         public AssemblyResolveHelper(DirectoryInfo libraryDirectory)
         {
