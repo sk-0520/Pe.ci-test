@@ -225,6 +225,32 @@ namespace Shared.Library.Test.Model
             CollectionAssert.AreEqual(array4.ToArray(), new[] { 0, 5, 6, 7, 0 });
         }
 
+        [TestMethod]
+        public void CopyFromTest()
+        {
+            var array = Enumerable.Range(0, 100).ToArray();
+
+            foreach(var (cap, item) in new[] { (5,3), (1,1), (100, 1), (1, 100) }) {
+                var listAll = new ChunkedList<int>(cap, item);
+                listAll.CopyFrom(0, array, 0, array.Length);
+                Assert.AreEqual(array.Length, listAll.Count);
+                CollectionAssert.AreEqual(array, listAll.ToArray());
+            }
+            foreach(var (cap, item) in new[] { (5, 3), (1, 1), (100, 1), (1, 100) }) {
+                var list10 = new ChunkedList<int>(cap, item);
+                list10.CopyFrom(0, array, 0, array.Length);
+                list10.CopyFrom(10, array, 0, 10);
+                Assert.AreEqual(array.Length, list10.Count);
+                CollectionAssert.AreEqual(array.Take(10).Concat(array.Take(10)).ToArray(), list10.Take(20).ToArray());
+            }
+            foreach(var (cap, item) in new[] { (5, 3), (1, 1), (100, 1), (1, 100) }) {
+                var list100 = new ChunkedList<int>(cap, item);
+                list100.CopyFrom(0, array, 0, array.Length);
+                list100.CopyFrom(100, array, 0, 5);
+                Assert.AreEqual(array.Length + 5, list100.Count);
+                CollectionAssert.AreEqual(array.Concat(array.Take(5)).ToArray(), list100.ToArray());
+            }
+        }
 
         [TestMethod]
         [DataRow(3, 4, 3 * 4 - 0)]

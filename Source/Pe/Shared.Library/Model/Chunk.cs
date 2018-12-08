@@ -144,6 +144,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 
     /// <summary>
     /// <see cref="ChunkItem{T}"/>のリスト。
+    /// <para><see cref="CopyTo"/>, <see cref="CopyFrom"/>で力尽きた</para>
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public class ChunkedList<T> : ICollection<T>, ICollection, IReadOnlyList<T>
@@ -237,7 +238,32 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 
         public void CopyFrom(int destinationIndex, Array sourceArray, int sourceIndex, int sourceLength)
         {
-
+            var chunkItemIndex = destinationIndex / ChunkItemSize;
+            var startDestinationIndex = destinationIndex % ChunkItemSize;
+            var sourceCount = chunkItemIndex + sourceLength / ChunkItemSize + (sourceLength % ChunkItemSize != 0 ? 1 : 0);
+            var sourceDataLength = 0;
+            for(int i = chunkItemIndex, j = 0; i < sourceCount; i++) {
+                var dataLength = j == sourceCount - 1 || sourceLength < ChunkItemSize
+                    ? sourceLength - sourceDataLength
+                    : ChunkItemSize - startDestinationIndex
+                ;
+                if(dataLength == 0) {
+                    break;
+                }
+                var chunkItem = GetOrCreateChunkItem(i);
+                chunkItem.CopyFrom(
+                    startDestinationIndex,
+                    sourceArray,
+                    sourceIndex + sourceDataLength,
+                    dataLength
+                );
+                sourceDataLength += dataLength;
+                if(j == 0) {
+                    startDestinationIndex = 0;
+                }
+                j += 1;
+            }
+            Count = Math.Max(Count, destinationIndex + sourceIndex + sourceDataLength);
         }
 
         #endregion
