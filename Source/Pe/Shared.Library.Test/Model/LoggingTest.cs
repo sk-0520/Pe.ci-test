@@ -31,10 +31,10 @@ namespace Shared.Library.Test.Model
         }
     }
 
-    [TestClass]
+    //[TestClass]
     public class ActionAsyncLoggerTest
     {
-        [TestMethod]
+        //[TestMethod]
         public void PutItemsTest()
         {
             var test = new TestLogger();
