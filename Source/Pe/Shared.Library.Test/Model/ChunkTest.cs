@@ -15,7 +15,7 @@ namespace Shared.Library.Test.Model
         public void ConstructorTest()
         {
             var item = new ChunkItem<int>(100);
-            Assert.AreEqual(100, item.Capacity);
+            Assert.AreEqual(100, item.Size);
         }
 
         [TestMethod]
@@ -67,7 +67,7 @@ namespace Shared.Library.Test.Model
             item.Add(10);
             item.Add(20);
 
-            var array = new int[item.Capacity];
+            var array = new int[item.Size];
             item.CopyTo(array, 0);
             Assert.AreEqual(2, array.Length);
             Assert.AreEqual(10, array[0]);
@@ -144,7 +144,10 @@ namespace Shared.Library.Test.Model
             list.Add(40);
             list.Add(50);
             list.Add(60);
-            Assert.ThrowsException<OutOfMemoryException>(() => list.Add(70));
+            Assert.AreEqual(2*3, list.Count);
+
+            list.Add(70);
+            Assert.AreEqual(2 * 3 + 1, list.Count);
         }
 
         [TestMethod]

@@ -11,20 +11,21 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 {
     /// <summary>
     /// 分割データ。
+    /// <para>内部的に固定長で扱う。</para>
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public class ChunkItem<T> : ICollection<T>, ICollection, IReadOnlyList<T>
     {
-        public ChunkItem(int capacity)
+        public ChunkItem(int size)
         {
-            Items = new T[capacity];
+            Items = new T[size];
         }
 
         #region property
 
         T[] Items { get; }
 
-        public int Capacity => Items.Length;
+        public int Size => Items.Length;
 
         #endregion
 
@@ -86,8 +87,8 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 
         public void Add(T item)
         {
-            if(Capacity == Count) {
-                throw new OutOfMemoryException($"{nameof(Capacity)}: {Capacity}, {nameof(Count)}: {Count}");
+            if(Size == Count) {
+                throw new OutOfMemoryException($"{nameof(Size)}: {Size}, {nameof(Count)}: {Count}");
             }
             Items[Count++] = item;
         }
@@ -147,21 +148,21 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
     /// <typeparam name="T"></typeparam>
     public class ChunkedList<T> : ICollection<T>, ICollection, IReadOnlyList<T>
     {
-        public ChunkedList(int capacity, int itemCapacity)
+        public ChunkedList(int capacity, int itemSize)
         {
             Capacity = capacity;
-            ChunkItemCapacity = itemCapacity;
+            ChunkItemSize = itemSize;
 
-            ChunkItems = new ChunkItem<T>[Capacity];
+            ChunkItems = new List<ChunkItem<T>>(Capacity);
         }
 
         #region property
 
-        ChunkItem<T>[] ChunkItems { get; }
+        List<ChunkItem<T>> ChunkItems { get; }
         int ChunkItemCount { get; set; }
 
         public int Capacity { get; }
-        public int ChunkItemCapacity { get; }
+        public int ChunkItemSize { get; }
 
         #endregion
 
@@ -175,24 +176,25 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 
             var count = Count;
             var index = 0;
-            while(ChunkItemCapacity <= count) {
-                count -= ChunkItemCapacity;
+            while(ChunkItemSize <= count) {
+                count -= ChunkItemSize;
                 index += 1;
             }
 
-            return Count / ChunkItemCapacity;
+            return Count / ChunkItemSize;
         }
 
         protected virtual ChunkItem<T> CreateChunkItem()
         {
-            return new ChunkItem<T>(ChunkItemCapacity);
+            return new ChunkItem<T>(ChunkItemSize);
         }
 
         ChunkItem<T> GetOrCreateChunkItem(int chunkItemIndex)
         {
             if(ChunkItemCount - 1 < chunkItemIndex) {
-                if(ChunkItemCount == Capacity) {
-                    throw new OutOfMemoryException($"{nameof(Capacity)}: {Capacity}, {nameof(ChunkItemCount)}: {ChunkItemCount}");
+                if(ChunkItemCount == ChunkItems.Count) {
+                    //throw new OutOfMemoryException($"{nameof(Capacity)}: {Capacity}, {nameof(ChunkItemCount)}: {ChunkItemCount}");
+                    ChunkItems.Add(null);
                 }
 
                 if(ChunkItems[chunkItemIndex] == null) {
@@ -207,16 +209,16 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 
         public void CopyTo(int sourceIndex, Array destinationArray, int destinationIndex, int destinationLength)
         {
-            var chunkItemIndex = sourceIndex / ChunkItemCapacity;
-            var startSourceIndex = sourceIndex % ChunkItemCapacity;
-            var destinationCount = destinationLength / ChunkItemCapacity + 1;
+            var chunkItemIndex = sourceIndex / ChunkItemSize;
+            var startSourceIndex = sourceIndex % ChunkItemSize;
+            var destinationCount = destinationLength / ChunkItemSize + 1;
 
             var destinationDataLength = 0;
             for(int i = chunkItemIndex, j = 0; i < ChunkItemCount && j < destinationCount; i++) {
                 var item = ChunkItems[i];
                 var dataLength = j == destinationCount - 1
                     ? destinationLength - destinationDataLength
-                    : ChunkItemCapacity - startSourceIndex
+                    : ChunkItemSize - startSourceIndex
                 ;
 
                 item.CopyTo(
@@ -250,8 +252,8 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
                     throw new IndexOutOfRangeException();
                 }
 
-                var chunkItemIndex = index / ChunkItemCapacity;
-                var workIndex = index - chunkItemIndex * ChunkItemCapacity;
+                var chunkItemIndex = index / ChunkItemSize;
+                var workIndex = index - chunkItemIndex * ChunkItemSize;
 
                 return ChunkItems[chunkItemIndex][workIndex];
             }
@@ -261,8 +263,8 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
                     throw new IndexOutOfRangeException();
                 }
 
-                var chunkItemIndex = index / ChunkItemCapacity;
-                var workIndex = index - chunkItemIndex * ChunkItemCapacity;
+                var chunkItemIndex = index / ChunkItemSize;
+                var workIndex = index - chunkItemIndex * ChunkItemSize;
 
                 ChunkItems[chunkItemIndex][workIndex] = value;
             }
@@ -290,10 +292,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 
         public void Clear()
         {
-            for(var i = 0; i < ChunkItems.Length; i++) {
-                if(i == ChunkItemCount) {
-                    break;
-                }
+            for(var i = 0; i < ChunkItemCount; i++) {
                 ChunkItems[i].Clear();
             }
 
@@ -303,11 +302,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 
         public bool Contains(T item)
         {
-            for(var i = 0; i < ChunkItems.Length; i++) {
-                if(i == ChunkItemCount) {
-                    return false;
-                }
-
+            for(var i = 0; i < ChunkItemCount; i++) {
                 if(ChunkItems[i].Contains(item)) {
                     return true;
                 }
