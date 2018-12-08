@@ -38,15 +38,13 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         public void CopyFrom(int destinationIndex, Array sourceArray, int sourceIndex, int sourceLength)
         {
             if(destinationIndex != 0) {
-                if(Count - 1 < destinationIndex) {
+                if(Count < destinationIndex) {
                     throw new ArgumentOutOfRangeException(nameof(destinationIndex));
                 }
             }
 
             Array.Copy(sourceArray, sourceIndex, Items, destinationIndex, sourceLength);
-            if(destinationIndex == 0) {
-                Count = Math.Max(sourceLength, Count);
-            }
+            Count = Math.Max(destinationIndex + sourceLength, Count);
         }
 
 
@@ -233,6 +231,11 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
                 }
                 j += 1;
             }
+        }
+
+        public void CopyFrom(int destinationIndex, Array sourceArray, int sourceIndex, int sourceLength)
+        {
+
         }
 
         #endregion

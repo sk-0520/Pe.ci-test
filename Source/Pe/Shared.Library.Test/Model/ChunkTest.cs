@@ -77,14 +77,21 @@ namespace Shared.Library.Test.Model
         [TestMethod]
         public void CopyFromTest()
         {
-            var item = new ChunkItem<int>(4);
-
             var array = new int[] {
                 10, 20, 30, 40
             };
-            item.CopyFrom(0, array, 0, array.Length);
-            Assert.AreEqual(4, item.Count);
-            CollectionAssert.AreEqual(array, item.ToArray());
+
+            var item1 = new ChunkItem<int>(4);
+            item1.CopyFrom(0, array, 0, array.Length);
+            Assert.AreEqual(4, item1.Count);
+            CollectionAssert.AreEqual(array, item1.ToArray());
+
+            var item2 = new ChunkItem<int>(4);
+            Assert.ThrowsException<ArgumentOutOfRangeException>(() => item2.CopyFrom(1, array, 1, 2));
+            item2.Add(99);
+            item2.CopyFrom(1, array, 1, 2);
+            CollectionAssert.AreEqual(new[] { 99, 20, 30 }, item2.ToArray());
+
         }
 
         [TestMethod]
