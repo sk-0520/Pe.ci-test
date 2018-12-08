@@ -70,6 +70,8 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Link.Model
 
         #region property
 
+        public static int ShortFileIndex { get; set; }
+
         public DateTime Timestamp { get; }
         public LogKind Kind { get; }
         public string Header { get; }
@@ -84,10 +86,11 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Link.Model
         public bool HasDetail => Detail != null;
 
         //TODO
-        public string ShortFilePath => Caller.filePath;
+        public string ShortFilePath => Caller.filePath.Substring(ShortFileIndex);
 
         #endregion
     }
+
 
     public interface ILogFactory
     {
@@ -278,6 +281,12 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Link.Model
         public static ILogger CreateCurrentClass(this ILogFactory logFactory)
         {
             return logFactory.CreateLogger(new StackFrame(1).GetMethod().DeclaringType.Name);
+        }
+
+        public static ILogger CreateCurrentMethod(this ILogFactory logFactory)
+        {
+            var method = new StackFrame(1).GetMethod();
+            return logFactory.CreateLogger($"{method.DeclaringType.Name}.{method.Name}");
         }
 
         #endregion

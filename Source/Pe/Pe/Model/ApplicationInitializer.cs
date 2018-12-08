@@ -61,11 +61,13 @@ namespace ContentTypeTextNet.Pe.Main.Model
         bool ShowAcceptView(IDiScopeContainerCreator scopeContainerCreator, ILogger logger)
         {
             using(var diContainer = scopeContainerCreator.Scope()) {
-                diContainer.Register<ILogger, ILogger>(() => logger, DiLifecycle.Singleton);
-                diContainer.Register<ILogFactory, ILogFactory>(() => logger, DiLifecycle.Singleton);
-                diContainer.Register<ViewElement.Accept.AcceptViewElement, ViewElement.Accept.AcceptViewElement>(DiLifecycle.Singleton);
-                diContainer.Register<ViewModel.Accept.AcceptViewModel, ViewModel.Accept.AcceptViewModel>(DiLifecycle.Transient);
-                diContainer.DirtyRegister<View.Accept.AcceptWindow, ViewModel.Accept.AcceptViewModel>(nameof(System.Windows.FrameworkElement.DataContext));
+                diContainer
+                    .Register<ILogger, ILogger>(() => logger, DiLifecycle.Singleton)
+                    .Register<ILogFactory, ILogFactory>(() => logger, DiLifecycle.Singleton)
+                    .Register<ViewElement.Accept.AcceptViewElement, ViewElement.Accept.AcceptViewElement>(DiLifecycle.Singleton)
+                    .Register<ViewModel.Accept.AcceptViewModel, ViewModel.Accept.AcceptViewModel>(DiLifecycle.Transient)
+                    .DirtyRegister<View.Accept.AcceptWindow, ViewModel.Accept.AcceptViewModel>(nameof(System.Windows.FrameworkElement.DataContext))
+                ;
 
                 var acceptModel = diContainer.New<ViewElement.Accept.AcceptViewElement>();
                 var view = diContainer.Make<View.Accept.AcceptWindow>();
@@ -78,10 +80,24 @@ namespace ContentTypeTextNet.Pe.Main.Model
         void InitializeFileSystem(EnvironmentParameters environmentParameters, ILogger logger)
         {
             var dirs = new[] {
-                environmentParameters.UserSettingDirectory,
                 environmentParameters.UserRoamingDirectory,
                 environmentParameters.UserBackupDirectory,
+                environmentParameters.UserSettingDirectory,
+                environmentParameters.MachineDirectory,
+                environmentParameters.MachineTemporaryDirectory,
+                environmentParameters.MachineArchiveDirectory,
+                environmentParameters.MachineUpdateDirectory,
             };
+
+            foreach(var dir in dirs) {
+                logger.Debug($"create {dir.FullName}");
+                try {
+                    dir.Create();
+                } catch(Exception ex) {
+                    logger.Error(ex);
+                    throw;
+                }
+            }
         }
 
         string GetCommandLineValue(CommandLine commandLine, string key, string defaultValue)
@@ -96,8 +112,14 @@ namespace ContentTypeTextNet.Pe.Main.Model
             return defaultValue;
         }
 
-        ApplicationLogger CreateLogger(string outputPath)
+        ApplicationLogger CreateLogger(string outputPath, [System.Runtime.CompilerServices.CallerFilePath] string callerFilePath = default(string))
         {
+            if(LogItem.ShortFileIndex == 0) {
+                var ignoreLoggerFilePath = Path.Combine("Pe2", "Source");
+                var ignoreLoggerFilePathIndex = callerFilePath.IndexOf(ignoreLoggerFilePath, StringComparison.OrdinalIgnoreCase);
+                LogItem.ShortFileIndex = ignoreLoggerFilePathIndex + ignoreLoggerFilePath.Length + 1/* \ の分も引いておく */;
+            }
+
             var logger = new ApplicationLogger();
             var logKinds = LogKind.Information | LogKind.Error | LogKind.Fatal;
 #if DEBUG
@@ -125,22 +147,24 @@ namespace ContentTypeTextNet.Pe.Main.Model
             return logger;
         }
 
-        void Startup(ApplicationLogger logger)
+        private void OutputStartupLog(ILogger logger)
+        {
+            logger.Information("!!START!!");
+        }
+
+        void FirstSetup(EnvironmentParameters environmentParameters, ILogger logger)
+        {
+            logger.Information("初回セットアップ");
+        }
+
+        void SetupContainer(EnvironmentParameters environmentParameters, ApplicationLogger logger)
         {
             var container = new DiContainer();
 
             container
-                .Register<ILogFactory, ApplicationLogger>(() => logger, DiLifecycle.Singleton)
+                .Register<ILogFactory, ILogFactory>(() => logger, DiLifecycle.Singleton)
+                .Register<ILogger, ApplicationLogger>(() => logger, DiLifecycle.Singleton)
             ;
-
-        }
-
-        void FirstSetup()
-        {
-        }
-
-        void ExecuteSetup()
-        {
 
         }
 
@@ -151,19 +175,24 @@ namespace ContentTypeTextNet.Pe.Main.Model
             var commandLine = CreateCommandLine(arguments);
             var environmentParameters = InitializeEnvironment(commandLine);
             var logger = CreateLogger(GetCommandLineValue(commandLine, CommandLineKeyLog, string.Empty));
-            logger.Information("!!START!!");
+            OutputStartupLog(logger);
 
             var isFirstStartup = IsFirstStartup(environmentParameters, logger);
             if(isFirstStartup) {
+                logger.Information("初回実行");
                 // 設定ファイルやらなんやらを構築する前に完全初回の使用許諾を取る
                 var dialogResult = ShowAcceptView(new DiContainer(), logger);
                 if(!dialogResult) {
                     // 初回の使用許諾を得られなかったのでばいちゃ
+                    logger.Information("使用許諾得られず");
                     return false;
                 }
             }
             InitializeFileSystem(environmentParameters, logger);
-
+            if(isFirstStartup) {
+                FirstSetup(environmentParameters, logger);
+            }
+            SetupContainer(environmentParameters, logger);
 
             return false;
         }
