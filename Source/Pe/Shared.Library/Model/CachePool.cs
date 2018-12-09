@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 
 namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 {
@@ -16,6 +17,14 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         /// </summary>
         TValue Value { get; }
 
+        /// <summary>
+        /// 生成日時。
+        /// </summary>
+        DateTime CreatedTimestamp { get; }
+        /// <summary>
+        /// 生成からの使用回数。
+        /// </summary>
+        int AccessCount { get; }
         /// <summary>
         /// 最終使用日時。
         /// </summary>
@@ -36,6 +45,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 
     public interface IWraitableCacheItem
     {
+        int AccessCount { get; set; }
         DateTime AccessTimestamp { get; set; }
     }
 
@@ -58,6 +68,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
             Value = value;
             IsManaged = isManaged;
             LifeTime = lifeTime;
+            CreatedTimestamp = DateTime.Now;
         }
 
         #region ICacheItem
@@ -66,8 +77,11 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 
         public bool IsManaged { get; }
 
+        public DateTime CreatedTimestamp { get; }
+
         #region IWraitableCacheItem
 
+        public int AccessCount { get; set; }
         public DateTime AccessTimestamp { get; set; }
 
         #endregion
@@ -77,7 +91,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         #endregion
     }
 
-    public class CachePool<TKey, TValue>
+    public class CachePool<TKey, TValue>: DisposerBase
     {
         public CachePool(TimeSpan defaultLifeTime)
         {
@@ -108,7 +122,10 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 
         void UpdateItemState(IWraitableCacheItem item)
         {
-            item.AccessTimestamp = DateTime.Now;
+            lock(item) {
+                item.AccessTimestamp = DateTime.Now;
+                item.AccessCount += 1;
+            }
         }
 
         void DisposeItem(ICacheItem<TValue> item)
@@ -130,32 +147,36 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
             return false;
         }
 
-        public TValue GetOrAdd(TKey key, bool isManaged, TimeSpan lifeTime, Func<TValue> valueFactory)
+        public TValue GetOrAdd(TKey key, bool isManaged, TimeSpan lifeTime, Func<TKey, TValue> valueFactory)
         {
-            var item = Store.GetOrAdd(key, k => CreateCacheItem(valueFactory(), isManaged, lifeTime));
+            ThrowIfDisposed();
+
+            var item = Store.GetOrAdd(key, k => CreateCacheItem(valueFactory(k), isManaged, lifeTime));
 
             if(!item.CheckEnabled(DateTime.Now)) {
                 DisposeItem(item);
                 // スレッドとか難しいことは考えないでござる
-                Store[key] = CreateCacheItem(valueFactory(), isManaged, lifeTime);
+                Store[key] = CreateCacheItem(valueFactory(key), isManaged, lifeTime);
             }
 
             UpdateItemState(item);
             return item.Value;
         }
 
-        public TValue GetOrAdd(TKey key, bool isManaged, Func<TValue> valueFactory)
+        public TValue GetOrAdd(TKey key, bool isManaged, Func<TKey, TValue> valueFactory)
         {
             return GetOrAdd(key, isManaged, DefaultLifeTime, valueFactory);
         }
 
-        public TValue GetOrAdd(TKey key, Func<TValue> valueFactory)
+        public TValue GetOrAdd(TKey key, Func<TKey, TValue> valueFactory)
         {
             return GetOrAdd(key, true, valueFactory);
         }
 
         public bool TryGetValue(TKey key, out TValue value)
         {
+            ThrowIfDisposed();
+
             if(Store.TryGetValue(key, out var item)) {
                 if(item.CheckEnabled(DateTime.Now)) {
                     if(item.CheckEnabled(DateTime.Now)) {
@@ -180,6 +201,8 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         /// <returns></returns>
         public ICacheItem<TValue> GetItem(TKey key)
         {
+            ThrowIfDisposed();
+
             if(Store.TryGetValue(key, out var item)) {
                 return item;
             }
@@ -189,6 +212,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 
         public bool Remove(TKey key)
         {
+            ThrowIfDisposed();
             return DisposeStore(key);
         }
 
@@ -198,6 +222,8 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         /// <returns>破棄されたデータ数。</returns>
         public int Refresh()
         {
+            ThrowIfDisposed();
+
             var timestamp = DateTime.Now;
             var pairs = Store
                 .ToList()
@@ -215,6 +241,25 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
             }
 
             return removeCount;
+        }
+
+        #endregion
+
+        #region DisposerBase
+
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                if(disposing) {
+                    var items = Store.Values.ToList();
+                    foreach(var item in items) {
+                        DisposeItem(item);
+                    }
+                    Store.Clear();
+                }
+            }
+
+            base.Dispose(disposing);
         }
 
         #endregion
