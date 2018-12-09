@@ -31,10 +31,10 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database
 
         public void Initialize()
         {
-            var multiSql = StatementLoader.LoadStatementByCurrent();
+
         }
 
-        public DatabasePack Execute()
+        public DatabasePack Migrate()
         {
             throw new NotImplementedException();
         }

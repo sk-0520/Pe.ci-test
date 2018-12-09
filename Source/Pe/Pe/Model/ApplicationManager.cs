@@ -27,7 +27,7 @@ namespace ContentTypeTextNet.Pe.Main.Model
         public bool Startup(App app, StartupEventArgs e)
         {
             var initializer = new ApplicationInitializer();
-            if(initializer.Initialize(e.Args)) {
+            if(!initializer.Initialize(e.Args)) {
                 return false;
             }
 

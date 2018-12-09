@@ -134,8 +134,11 @@
     </Compile>
     <Compile Include="Model\ApplicationLogger.cs" />
     <Compile Include="Model\Database\Dao\ApplicationDatabaseObjectBase.cs" />
+    <Compile Include="Model\Database\Setup\SetupBase.cs" />
+    <Compile Include="Model\Database\Setup\Setup_V_00_84_00_00.cs" />
     <Compile Include="Model\Data\Dto\CommonDto.cs" />
     <Compile Include="Model\Data\Dto\DtoBase.cs" />
+    <Compile Include="Model\Data\Dto\SetupDto.cs" />
     <Compile Include="Model\ViewElement\Accept\AcceptViewElement.cs" />
     <Compile Include="ViewModel\Accept\AcceptViewModel.cs" />
     <Compile Include="ViewModel\IDialogCommand.cs" />
@@ -193,7 +196,9 @@
       <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Setup\SetupBase\" />
+  </ItemGroup>
   <ItemGroup>
     <Page Include="View\Accept\AcceptWindow.xaml">
       <SubType>Designer</SubType>
@@ -201,7 +206,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\DatabaseSetup\Initialize.sql">
+    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Setup\Setup_V_00_84_00_00\ExecuteDefine.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
