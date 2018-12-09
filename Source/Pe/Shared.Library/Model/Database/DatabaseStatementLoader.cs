@@ -53,7 +53,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
 
         protected MethodBase GetCurrentMember(int skipFrames = 1)
         {
-            var stackFrame = new StackFrame(skipFrames - 1);
+            var stackFrame = new StackFrame(skipFrames + 1);
             return stackFrame.GetMethod();
         }
 

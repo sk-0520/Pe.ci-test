@@ -150,6 +150,12 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database
 
     public class ApplicationDatabaseStatementLoader : DatabaseStatementLoaderBase
     {
+        #region define
+
+        public const string IgnoreNamespace = "ContentTypeTextNet.Pe.Main";
+
+        #endregion
+
         public ApplicationDatabaseStatementLoader(DirectoryInfo baseDirectory, TimeSpan lifeTime, ILogger logger)
             : base(logger)
         {
@@ -176,7 +182,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database
 
         string CreateCache(string key)
         {
-            var keyPath = key.Replace('.', Path.DirectorySeparatorChar);
+            var keyPath = key.Replace('.', Path.DirectorySeparatorChar) + ".sql";
             var filePath = Path.Combine(BaseDirectory.FullName, keyPath);
 
             using(var stream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read, SqlFileBufferSize)) {
@@ -209,7 +215,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database
         public override string LoadStatementByCurrent()
         {
             var member = GetCurrentMember();
-            var key = member.DeclaringType.FullName + "." + member.Name;
+            var baseNamespace = member.DeclaringType.FullName.Substring(IgnoreNamespace.Length + 1);
+            var key = baseNamespace + "." + member.Name;
             return LoadStatement(key);
         }
 

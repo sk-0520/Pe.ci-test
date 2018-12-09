@@ -129,6 +129,8 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Link.Model
         bool IsEnabledWarning { get; }
         bool IsEnabledError { get; }
         bool IsEnabledFatal { get; }
+
+        ILogFactory Factory { get; }
     }
 
     public abstract class LoggerBase : ILogger
@@ -228,6 +230,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Link.Model
         public virtual bool IsEnabledWarning { get; protected set; }
         public virtual bool IsEnabledError { get; protected set; }
         public virtual bool IsEnabledFatal { get; protected set; }
+        public ILogFactory Factory => this;
 
         protected void Put(LogItem logItem)
         {

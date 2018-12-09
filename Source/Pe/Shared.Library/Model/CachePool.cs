@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 
@@ -55,6 +56,11 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 
         public static bool CheckEnabled<TValue>(this ICacheItem<TValue> @this, DateTime timestamp)
         {
+            if(@this.AccessTimestamp < @this.CreatedTimestamp) {
+                // 初回特典
+                return true;
+            }
+
             return timestamp < @this.AccessTimestamp + @this.LifeTime;
         }
 

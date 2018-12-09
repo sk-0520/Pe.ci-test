@@ -38,6 +38,14 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Embedded.Model
         /// </summary>
         public DirectoryInfo EtcDirectory => CombineDirectory(RootDirectory, "etc");
         /// <summary>
+        /// sql ディレクトリ。
+        /// </summary>
+        public DirectoryInfo SqlDirectory => CombineDirectory(EtcDirectory, "sql");
+        /// <summary>
+        /// Pe の sql ディレクトリ。
+        /// </summary>
+        public DirectoryInfo MainSqlDirectory => CombineDirectory(SqlDirectory, "ContentTypeTextNet.Pe.Main");
+        /// <summary>
         /// 文書ディレクトリ。
         /// </summary>
         public DirectoryInfo DocumentDirectory => CombineDirectory(RootDirectory, "doc");

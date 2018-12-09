@@ -155,6 +155,9 @@ namespace ContentTypeTextNet.Pe.Main.Model
         void FirstSetup(EnvironmentParameters environmentParameters, ILogger logger)
         {
             logger.Information("初回セットアップ");
+
+            var databaseSetup = new DatabaseSetup(environmentParameters.MainSqlDirectory, logger);
+            databaseSetup.Initialize();
         }
 
         void SetupContainer(EnvironmentParameters environmentParameters, ApplicationLogger logger)

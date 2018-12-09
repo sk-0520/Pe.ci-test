@@ -117,6 +117,8 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Link.Model
 <# foreach(var logKindItem in logKindItems) { #>
         bool IsEnabled<#= logKindItem.Key #> { get; }
 <# } #>
+
+        ILogFactory Factory { get; }
     }
 
     public abstract class LoggerBase : ILogger
@@ -187,6 +189,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Link.Model
 <# foreach(var logKindItem in logKindItems) { #>
         public virtual bool IsEnabled<#= logKindItem.Key #> { get; protected set; }
 <# } #>
+        public ILogFactory Factory => this;
 
         protected void Put(LogItem logItem)
         {
