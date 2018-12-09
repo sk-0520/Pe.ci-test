@@ -55,7 +55,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
     /// DBアクセスに対してラップする。
     /// <para>DBまで行く前にプログラム側で制御する目的。</para>
     /// </summary>
-    public class DatabaseAccessor : ReaderWriterLocker, IDatabaseAccessor
+    public class DatabaseAccessor : DisposerBase, IDatabaseAccessor
     {
         public DatabaseAccessor(IDatabaseFactory databaseFactory, ILogger logger)
         {
@@ -187,7 +187,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
 
         #endregion
 
-        #region ReaderWriterLocker
+        #region DisposerBase
 
         protected override void Dispose(bool disposing)
         {
