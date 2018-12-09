@@ -133,6 +133,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Model\ApplicationLogger.cs" />
+    <Compile Include="Model\Database\Dao\ApplicationDatabaseObjectBase.cs" />
+    <Compile Include="Model\Data\Dto\DtoBase.cs" />
     <Compile Include="Model\ViewElement\Accept\AcceptViewElement.cs" />
     <Compile Include="ViewModel\Accept\AcceptViewModel.cs" />
     <Compile Include="ViewModel\IDialogCommand.cs" />
