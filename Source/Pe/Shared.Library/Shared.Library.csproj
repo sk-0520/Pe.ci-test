@@ -143,7 +143,7 @@
     <Compile Include="Model\Model.cs" />
     <Compile Include="Model\DiContainer.cs" />
     <Compile Include="Model\EnumUtility.cs" />
-    <Compile Include="Model\KeepOpenStream.cs" />
+    <Compile Include="Model\KeepStream.cs" />
     <Compile Include="Model\ObservableCollectionManagerBase.cs" />
     <Compile Include="Model\PathUtility.cs" />
     <Compile Include="Model\Pixel.cs" />

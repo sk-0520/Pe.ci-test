@@ -10,15 +10,15 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
     /// <summary>
     /// 渡されたストリームを閉じないストリーム。
     /// <para>他のストリーム使用処理へ渡した後 閉じられると困る場合にこいつをかませて閉じないようにすることが目的。</para>
-    /// <para>用途が用途なので <see cref="KeepOpenStream.Dispose"/> しても <see cref="KeepOpenStream.BaseStream"/> は何もケアされない、つまりはひらきっっぱなことに注意。</para>
+    /// <para>用途が用途なので <see cref="KeepStream.Dispose"/> しても <see cref="KeepStream.BaseStream"/> は何もケアされない、つまりはひらきっっぱなことに注意。</para>
     /// </summary>
-    public class KeepOpenStream : Stream
+    public class KeepStream : Stream
     {
         /// <summary>
         ///
         /// </summary>
         /// <param name="stream">閉じたくないストリーム。</param>
-        public KeepOpenStream(Stream stream)
+        public KeepStream(Stream stream)
         {
             BaseStream = stream;
         }
