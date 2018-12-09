@@ -62,8 +62,8 @@ namespace ContentTypeTextNet.Pe.Main.Model
         {
             using(var diContainer = scopeContainerCreator.Scope()) {
                 diContainer
-                    .Register<ILogger, ILogger>(() => logger, DiLifecycle.Singleton)
-                    .Register<ILogFactory, ILogFactory>(() => logger, DiLifecycle.Singleton)
+                    .Register<ILogger, ILogger>(DiLifecycle.Singleton, () => logger)
+                    .Register<ILogFactory, ILogFactory>(DiLifecycle.Singleton, () => logger)
                     .Register<ViewElement.Accept.AcceptViewElement, ViewElement.Accept.AcceptViewElement>(DiLifecycle.Singleton)
                     .Register<ViewModel.Accept.AcceptViewModel, ViewModel.Accept.AcceptViewModel>(DiLifecycle.Transient)
                     .DirtyRegister<View.Accept.AcceptWindow, ViewModel.Accept.AcceptViewModel>(nameof(System.Windows.FrameworkElement.DataContext))
@@ -162,8 +162,8 @@ namespace ContentTypeTextNet.Pe.Main.Model
             var container = new DiContainer();
 
             container
-                .Register<ILogFactory, ILogFactory>(() => logger, DiLifecycle.Singleton)
-                .Register<ILogger, ApplicationLogger>(() => logger, DiLifecycle.Singleton)
+                .Register<ILogFactory, ILogFactory>(DiLifecycle.Singleton, () => logger)
+                .Register<ILogger, ApplicationLogger>(DiLifecycle.Singleton, () => logger)
             ;
 
         }

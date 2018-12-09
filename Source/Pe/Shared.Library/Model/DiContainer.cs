@@ -134,7 +134,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         /// </summary>
         /// <typeparam name="TInterface"></typeparam>
         /// <typeparam name="TObject"></typeparam>
-        IDiRegisterContainer Register<TInterface, TObject>(DiLifecycle lifecycle = DiLifecycle.Transient)
+        IDiRegisterContainer Register<TInterface, TObject>(DiLifecycle lifecycle)
 #if !ENABLED_STRUCT
             where TObject : class
 #endif
@@ -145,9 +145,9 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         /// </summary>
         /// <typeparam name="TInterface"></typeparam>
         /// <typeparam name="TObject"></typeparam>
-        /// <param name="creator"></param>
         /// <param name="lifecycle"></param>
-        IDiRegisterContainer Register<TInterface, TObject>(DiCreator creator, DiLifecycle lifecycle = DiLifecycle.Transient)
+        /// <param name="creator"></param>
+        IDiRegisterContainer Register<TInterface, TObject>(DiLifecycle lifecycle, DiCreator creator)
 #if !ENABLED_STRUCT
             where TObject : class
 #endif
@@ -728,7 +728,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 
         #region IDiRegisterContainer
 
-        public IDiRegisterContainer Register<TInterface, TObject>(DiLifecycle lifecycle = DiLifecycle.Transient)
+        public IDiRegisterContainer Register<TInterface, TObject>(DiLifecycle lifecycle)
 #if !ENABLED_STRUCT
             where TObject : class
 #endif
@@ -744,7 +744,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
             return this;
         }
 
-        public IDiRegisterContainer Register<TInterface, TObject>(DiCreator creator, DiLifecycle lifecycle = DiLifecycle.Transient)
+        public IDiRegisterContainer Register<TInterface, TObject>(DiLifecycle lifecycle, DiCreator creator)
 #if !ENABLED_STRUCT
             where TObject : class
 #endif
