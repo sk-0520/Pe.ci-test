@@ -67,39 +67,4 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
 
         #endregion
     }
-
-    /// <summary>
-    /// たぶん一番使うであろうファイルからの読み込みサポート。
-    /// </summary>
-    public class DatabaseStatementFileLoader : DatabaseStatementLoaderBase
-    {
-        public DatabaseStatementFileLoader(ILogger logger)
-            : base(logger)
-        { }
-
-        [Injection]
-        public DatabaseStatementFileLoader(ILogFactory logFactory)
-            : this(logFactory.CreateCurrentClass())
-        { }
-
-        #region property
-        #endregion
-
-        #region function
-        #endregion
-
-        #region DatabaseStatementLoaderBase
-
-        public override string LoadStatement(string key)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override string LoadStatementByCurrent()
-        {
-            throw new NotImplementedException();
-        }
-
-        #endregion
-    }
 }
