@@ -49,6 +49,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         /// </summary>
         /// <param name="iconScale"></param>
         /// <returns></returns>
+        [return: PixelKind(Px.Device)]
         public static double ToWidth(this IconScale iconScale)
         {
             return (int)iconScale;
@@ -59,6 +60,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         /// </summary>
         /// <param name="iconScale"></param>
         /// <returns></returns>
+        [return: PixelKind(Px.Device)]
         public static double ToHeight(this IconScale iconScale)
         {
             return (int)iconScale;
@@ -69,6 +71,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         /// </summary>
         /// <param name="iconScale"></param>
         /// <returns></returns>
+        [return: PixelKind(Px.Device)]
         public static Size ToSize(this IconScale iconScale)
         {
             return new Size((int)iconScale, (int)iconScale);
