@@ -27,7 +27,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database
         public ApplicationDatabaseFactory(FileInfo file)
         {
             var builder = new SQLiteConnectionStringBuilder();
-            builder.DataSource = file.FullName;
+            builder.DataSource = ToSafeFile(file).FullName;
 
             ConnectionString = builder.ToString();
         }
@@ -99,7 +99,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database
 
         #endregion
 
-        #region DatabaseChecker
+        #region DatabaseImplementation
 
         public override object GetNullValue(Type type)
         {

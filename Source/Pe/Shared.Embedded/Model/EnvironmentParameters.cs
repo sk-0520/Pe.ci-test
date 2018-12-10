@@ -81,13 +81,13 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Embedded.Model
         public DirectoryInfo MachineUpdateDirectory => CombineDirectory(MachineArchiveDirectory, "application");
 
         /// <summary>
-        /// 設定ファイル。
+        /// 設定格納DBファイル。
         /// </summary>
         public FileInfo SettingFile => CombineFile(UserSettingDirectory, "setting.sqlite3");
         /// <summary>
-        /// サムネイルファイル。
+        /// ファイル格納DBファイル。
         /// </summary>
-        public FileInfo ThumbnailFile => CombineFile(MachineDirectory, "thumbnail.sqlite3");
+        public FileInfo FileFile => CombineFile(MachineDirectory, "file.sqlite3");
 
         #endregion
 

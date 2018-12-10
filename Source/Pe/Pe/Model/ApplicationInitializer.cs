@@ -152,12 +152,48 @@ namespace ContentTypeTextNet.Pe.Main.Model
             logger.Information("!!START!!");
         }
 
+        DatabaseFactoryPack CreateDatabaseFactoryPack(EnvironmentParameters environmentParameters, ILogger logger)
+        {
+            return new DatabaseFactoryPack(
+                new ApplicationDatabaseFactory(environmentParameters.SettingFile),
+                new ApplicationDatabaseFactory(environmentParameters.FileFile),
+                new ApplicationDatabaseFactory()
+            );
+        }
+
+        DatabaseAccessorPack CreateDatabaseAccessorPack(EnvironmentParameters environmentParameters, ILogger logger)
+        {
+            var factoryPack = CreateDatabaseFactoryPack(environmentParameters, logger);
+            return DatabaseAccessorPack.Create(factoryPack, logger);
+        }
+
         void FirstSetup(EnvironmentParameters environmentParameters, ILogger logger)
         {
             logger.Information("初回セットアップ");
 
+            var accessorPack = CreateDatabaseAccessorPack(environmentParameters, logger);
+
             var databaseSetup = new DatabaseSetup(environmentParameters.MainSqlDirectory, logger);
-            databaseSetup.Initialize();
+            databaseSetup.Initialize(accessorPack);
+        }
+
+        void NormalSetup(EnvironmentParameters environmentParameters, ILogger logger)
+        {
+            logger.Information("DBセットアップ");
+
+            var accessorPack = CreateDatabaseAccessorPack(environmentParameters, logger);
+
+            var databaseSetup = new DatabaseSetup(environmentParameters.MainSqlDirectory, logger);
+
+            //前回実行バージョンの取得と取得失敗時に再セットアップ処理
+            var lastVersion = databaseSetup.GetLastVersion(accessorPack.Main);
+            if(lastVersion == null) {
+                logger.Error("last version is null");
+                logger.Warning("restart initialize");
+                databaseSetup.Initialize(accessorPack);
+            }
+
+            databaseSetup.Migrate(accessorPack, lastVersion);
         }
 
         void SetupContainer(EnvironmentParameters environmentParameters, ApplicationLogger logger)
@@ -192,9 +228,13 @@ namespace ContentTypeTextNet.Pe.Main.Model
                 }
             }
             InitializeFileSystem(environmentParameters, logger);
+
             if(isFirstStartup) {
                 FirstSetup(environmentParameters, logger);
             }
+
+            NormalSetup(environmentParameters, logger);
+
             SetupContainer(environmentParameters, logger);
 
             return false;

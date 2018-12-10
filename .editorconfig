@@ -49,6 +49,7 @@ end_of_line = lf
 
 [*.sql]
 indent_style = tab
+charset = utf-16le
 
 [*.{ts,js}]
 indent_style = tab

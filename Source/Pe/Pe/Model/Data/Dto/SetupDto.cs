@@ -27,19 +27,13 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data.Dto
 
     public class SetupDto : CommonDtoBase, IReadOnlySetupDto
     {
-        public SetupDto(Version executeVersion)
-        {
-            if(executeVersion == null) {
-                throw new ArgumentNullException(nameof(executeVersion));
-            }
-
-            ExecuteVersion = executeVersion;
-        }
+        public SetupDto()
+        { }
 
         #region IReadOnlySetupDto
 
-        public Version LastVersion {get;}
-        public Version ExecuteVersion { get; } = Assembly.GetExecutingAssembly().GetName().Version;
+        public Version LastVersion { get; set; }
+        public Version ExecuteVersion { get; set; }
 
         #endregion
     }

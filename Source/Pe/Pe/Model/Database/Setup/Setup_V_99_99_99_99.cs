@@ -10,46 +10,43 @@ using ContentTypeTextNet.Pe.Main.Model.Data.Dto;
 namespace ContentTypeTextNet.Pe.Main.Model.Database.Setup
 {
     /// <summary>
-    /// 誰が何と言おうと新生初期バージョン。
+    /// マイグレーションの最後に実行される。
     /// </summary>
-    public class Setup_V_00_84_00_00 : SetupBase
+    public class Setup_V_99_99_99_99 : SetupBase
     {
-        public Setup_V_00_84_00_00(IDatabaseStatementLoader statementLoader, ILogFactory logFactory)
+        public Setup_V_99_99_99_99(IDatabaseStatementLoader statementLoader, ILogFactory logFactory)
             : base(statementLoader, logFactory)
         { }
 
         #region SetupBase
 
-        public override Version Version { get; } = new Version(0, 84, 0, 0);
+        /// <summary>
+        /// ここまでこない :-)
+        /// </summary>
+        public override Version Version { get; } = new Version(99, 99, 99, 99);
 
         public override void ExecuteMainDefine(IDatabaseCommander commander, IReadOnlySetupDto dto)
         {
-            ExecuteSql(commander, StatementLoader.LoadStatementByCurrent());
         }
 
         public override void ExecuteMainManipulate(IDatabaseTransaction transaction, IReadOnlySetupDto dto)
         {
-            throw new NotImplementedException();
         }
 
         public override void ExecuteFileDefine(IDatabaseCommander commander, IReadOnlySetupDto dto)
         {
-            throw new NotImplementedException();
         }
 
         public override void ExecuteFileManipulate(IDatabaseTransaction transaction, IReadOnlySetupDto dto)
         {
-            throw new NotImplementedException();
         }
 
         public override void ExecuteTemporaryDefine(IDatabaseCommander commander, IReadOnlySetupDto dto)
         {
-            throw new NotImplementedException();
         }
 
         public override void ExecuteTemporaryManipulate(IDatabaseTransaction transaction, IReadOnlySetupDto dto)
         {
-            throw new NotImplementedException();
         }
 
         #endregion

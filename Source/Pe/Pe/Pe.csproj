@@ -135,7 +135,9 @@
     <Compile Include="Model\ApplicationLogger.cs" />
     <Compile Include="Model\Database\Dao\ApplicationDatabaseObjectBase.cs" />
     <Compile Include="Model\Database\Setup\SetupBase.cs" />
+    <Compile Include="Model\Database\Setup\Setup_V_99_99_99_99.cs" />
     <Compile Include="Model\Database\Setup\Setup_V_00_84_00_00.cs" />
+    <Compile Include="Model\Data\DatabaseCommonStatus.cs" />
     <Compile Include="Model\Data\Dto\CommonDto.cs" />
     <Compile Include="Model\Data\Dto\DtoBase.cs" />
     <Compile Include="Model\Data\Dto\SetupDto.cs" />
@@ -149,7 +151,7 @@
   <ItemGroup>
     <Compile Include="Model\ApplicationManager.cs" />
     <Compile Include="Model\Database\ApplicationDatabase.cs" />
-    <Compile Include="Model\Database\DatabasePack.cs" />
+    <Compile Include="Model\Database\ApplicationPack.cs" />
     <Compile Include="Model\Database\DatabaseSetup.cs" />
     <Compile Include="Model\ApplicationInitializer.cs" />
     <Compile Include="Model\SystemWebBrowserUtility.cs" />
@@ -197,7 +199,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Setup\SetupBase\" />
+    <Folder Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Setup\Setup_V_99_99_99_99\" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="View\Accept\AcceptWindow.xaml">
@@ -206,7 +208,13 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Setup\Setup_V_00_84_00_00\ExecuteDefine.sql">
+    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\DatabaseSetup\ExistsVersionTable.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\DatabaseSetup\GetLastVersion.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Setup\Setup_V_00_84_00_00\ExecuteMainDefine.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
