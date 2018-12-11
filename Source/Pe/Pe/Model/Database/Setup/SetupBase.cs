@@ -88,7 +88,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Setup
             var pairs = SplitMultiSql(sql);
             foreach(var pair in pairs) {
                 Logger.Information(pair.Key);
-                commander.Execute(pair.Value);
+                var result = commander.Execute(pair.Value);
+                Logger.Information($"result: {result}");
             }
         }
 
