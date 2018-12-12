@@ -312,6 +312,25 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Embedded.Model
         #endregion
     }
 
+    internal static class CommandLineExtensions
+    {
+        #region function
+
+        public static string GetValue(this CommandLine @this, string key, string defaultValue)
+        {
+            var commandLineKey = @this.GetKey(key);
+            if(commandLineKey != null) {
+                if(@this.Values.TryGetValue(commandLineKey, out var value)) {
+                    return value.First;
+                }
+            }
+
+            return defaultValue;
+        }
+
+        #endregion
+    }
+
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
     internal class CommandLineAttribute : Attribute
     {

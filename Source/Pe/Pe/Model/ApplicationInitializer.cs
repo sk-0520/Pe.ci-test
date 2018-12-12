@@ -101,18 +101,6 @@ namespace ContentTypeTextNet.Pe.Main.Model
             }
         }
 
-        string GetCommandLineValue(CommandLine commandLine, string key, string defaultValue)
-        {
-            var commandLineKey = commandLine.GetKey(key);
-            if(commandLineKey != null) {
-                if(commandLine.Values.TryGetValue(commandLineKey, out var value)) {
-                    return value.First;
-                }
-            }
-
-            return defaultValue;
-        }
-
         ApplicationLogger CreateLogger(string outputPath, [System.Runtime.CompilerServices.CallerFilePath] string callerFilePath = default(string))
         {
             if(LogItem.ShortFileIndex == 0) {
@@ -229,7 +217,7 @@ namespace ContentTypeTextNet.Pe.Main.Model
 
             var commandLine = CreateCommandLine(arguments);
             var environmentParameters = InitializeEnvironment(commandLine);
-            var logger = CreateLogger(GetCommandLineValue(commandLine, CommandLineKeyLog, string.Empty));
+            var logger = CreateLogger(commandLine.GetValue(CommandLineKeyLog, string.Empty));
             OutputStartupLog(logger);
 
             var isFirstStartup = IsFirstStartup(environmentParameters, logger);
