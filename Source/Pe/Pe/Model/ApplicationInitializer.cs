@@ -172,6 +172,21 @@ namespace ContentTypeTextNet.Pe.Main.Model
         {
             logger.Information("初回セットアップ");
 
+            // 初回セットアップに来ている場合既に存在するデータファイルは狂っている可能性があるので破棄する
+            var deleteTartgetFiles = new[] {
+                environmentParameters.SettingFile,
+                environmentParameters.FileFile,
+            };
+            foreach(var file in deleteTartgetFiles) {
+                logger.Trace($"delete: {file.FullName}");
+                file.Refresh();
+                try {
+                    file.Delete();
+                } catch(IOException ex) {
+                    logger.Error(ex);
+                }
+            }
+
             var accessorPack = CreateDatabaseAccessorPack(environmentParameters, logger);
 
             var databaseSetup = new DatabaseSetup(environmentParameters.MainSqlDirectory, logger.Factory);
