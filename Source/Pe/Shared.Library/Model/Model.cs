@@ -40,9 +40,8 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
             Logger = logger;
         }
 
-        [Injection]
-        public DataAccessModelBase(IDatabaseCommander databaseCommander, ILogFactory logFactory)
-            : this(databaseCommander, logFactory.CreateCurrentClass())
+        public DataAccessModelBase(IDatabaseCommander databaseCommander, ILoggerFactory loggerFactory)
+            : this(databaseCommander, loggerFactory.CreateCurrentClass())
         { }
 
 
@@ -60,9 +59,9 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         {
             Logger = logger;
         }
-        [Injection]
-        public BindModelBase(ILogFactory logFactory)
-            : this(logFactory.CreateCurrentClass())
+
+        public BindModelBase(ILoggerFactory loggerFactory)
+            : this(loggerFactory.CreateCurrentClass())
         { }
 
         ~BindModelBase()

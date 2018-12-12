@@ -83,13 +83,22 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Link.Model
     }
 
 
-    public interface ILogFactory
+    public interface ILoggerFactory
     {
         ILogger CreateLogger(string header);
     }
 
-    public interface ILoggerBase
+    public interface ILogger
     {
+        string Header { get; }
+        ILoggerFactory Factory { get; }
+
+        bool IsEnabledTrace { get; }
+        bool IsEnabledDebug { get; }
+        bool IsEnabledInformation { get; }
+        bool IsEnabledWarning { get; }
+        bool IsEnabledError { get; }
+        bool IsEnabledFatal { get; }
 
         void Trace(string message, [CallerLineNumber] int callerLineNumber = 0, [CallerFilePath] string callerFilePath = "", [CallerMemberName] string callerMemberName = "");
         //void Trace(string message, string detail, [CallerLineNumber] int callerLineNumber = 0, [CallerFilePath] string callerFilePath = "", [CallerMemberName] string callerMemberName = "");
@@ -119,18 +128,25 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Link.Model
         void Put(LogKind kind, string message, string detail, [CallerLineNumber] int callerLineNumber = 0, [CallerFilePath] string callerFilePath = "", [CallerMemberName] string callerMemberName = "");
     }
 
-    public interface ILogger: ILoggerBase, ILogFactory
+    public class LoggerFactory: ILoggerFactory
     {
-        string Header { get; }
+        public LoggerFactory(LoggerBase logger)
+        {
+            Logger = logger;
+        }
 
-        bool IsEnabledTrace { get; }
-        bool IsEnabledDebug { get; }
-        bool IsEnabledInformation { get; }
-        bool IsEnabledWarning { get; }
-        bool IsEnabledError { get; }
-        bool IsEnabledFatal { get; }
+        #region property
 
-        ILogFactory Factory { get; }
+        LoggerBase Logger { get; }
+
+        #endregion
+
+
+        #region ILoggerFactory
+
+        public ILogger CreateLogger(string header) => Logger.CreateLogger(header);
+
+        #endregion
     }
 
     public abstract class LoggerBase : ILogger
@@ -205,7 +221,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Link.Model
 
         #endregion
 
-        #region ILoggerBase
+        #region ILogger
 
         public string Header
         {
@@ -230,7 +246,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Link.Model
         public virtual bool IsEnabledWarning { get; protected set; }
         public virtual bool IsEnabledError { get; protected set; }
         public virtual bool IsEnabledFatal { get; protected set; }
-        public ILogFactory Factory => this;
+        public ILoggerFactory Factory => new LoggerFactory(this);
 
         protected void Put(LogItem logItem)
         {
@@ -310,7 +326,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Link.Model
 
         #endregion
 
-        #region ILogFactory
+        #region ILoggerFactory
 
         public ILogger CreateLogger(string header) => CreateLoggerCore(header);
 
@@ -367,19 +383,19 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Link.Model
         protected override ILogger CreateLoggerCore(string header) => new ChildLogger(header, this);
     }
 
-    public static class ILogFactoryExtensions
+    public static class ILoggerFactoryExtensions
     {
         #region function
 
-        public static ILogger CreateCurrentClass(this ILogFactory logFactory)
+        public static ILogger CreateCurrentClass(this ILoggerFactory loggerFactory)
         {
-            return logFactory.CreateLogger(new StackFrame(1).GetMethod().DeclaringType.Name);
+            return loggerFactory.CreateLogger(new StackFrame(1).GetMethod().DeclaringType.Name);
         }
 
-        public static ILogger CreateCurrentMethod(this ILogFactory logFactory)
+        public static ILogger CreateCurrentMethod(this ILoggerFactory loggerFactory)
         {
             var method = new StackFrame(1).GetMethod();
-            return logFactory.CreateLogger($"{method.DeclaringType.Name}.{method.Name}");
+            return loggerFactory.CreateLogger($"{method.DeclaringType.Name}.{method.Name}");
         }
 
         #endregion

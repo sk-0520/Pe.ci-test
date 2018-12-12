@@ -14,10 +14,10 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Setup
 {
     public abstract class SetupBase
     {
-        public SetupBase(IDatabaseStatementLoader statementLoader, ILogFactory logFactory)
+        public SetupBase(IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
         {
             StatementLoader = statementLoader;
-            Logger = logFactory.CreateCurrentClass();
+            Logger = loggerFactory.CreateCurrentClass();
         }
 
         #region property

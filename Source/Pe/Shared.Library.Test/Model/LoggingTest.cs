@@ -25,8 +25,9 @@ namespace Shared.Library.Test.Model
             logger.Information("2");
             Assert.AreEqual("2", logger.Items.Last().Message);
 
-            var child = logger.CreateLogger("A").CreateLogger("B");
-            child.Warning("3");
+            var child1 = logger.Factory.CreateLogger("A");
+            var child2 = child1.Factory.CreateLogger("B");
+            child2.Warning("3");
 
             Assert.AreEqual("3", logger.Items.Last().Message);
         }

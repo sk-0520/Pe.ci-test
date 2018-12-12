@@ -63,7 +63,7 @@ namespace ContentTypeTextNet.Pe.Main.Model
             using(var diContainer = scopeContainerCreator.Scope()) {
                 diContainer
                     .Register<ILogger, ILogger>(DiLifecycle.Singleton, () => logger)
-                    .Register<ILogFactory, ILogFactory>(DiLifecycle.Singleton, () => logger)
+                    .Register<ILoggerFactory, ILoggerFactory>(DiLifecycle.Singleton, () => logger)
                     .Register<ViewElement.Accept.AcceptViewElement, ViewElement.Accept.AcceptViewElement>(DiLifecycle.Singleton)
                     .Register<ViewModel.Accept.AcceptViewModel, ViewModel.Accept.AcceptViewModel>(DiLifecycle.Transient)
                     .DirtyRegister<View.Accept.AcceptWindow, ViewModel.Accept.AcceptViewModel>(nameof(System.Windows.FrameworkElement.DataContext))
@@ -164,7 +164,7 @@ namespace ContentTypeTextNet.Pe.Main.Model
         DatabaseAccessorPack CreateDatabaseAccessorPack(EnvironmentParameters environmentParameters, ILogger logger)
         {
             var factoryPack = CreateDatabaseFactoryPack(environmentParameters, logger);
-            return DatabaseAccessorPack.Create(factoryPack, logger);
+            return DatabaseAccessorPack.Create(factoryPack, logger.Factory);
         }
 
         void FirstSetup(EnvironmentParameters environmentParameters, ILogger logger)
@@ -173,7 +173,7 @@ namespace ContentTypeTextNet.Pe.Main.Model
 
             var accessorPack = CreateDatabaseAccessorPack(environmentParameters, logger);
 
-            var databaseSetup = new DatabaseSetup(environmentParameters.MainSqlDirectory, logger);
+            var databaseSetup = new DatabaseSetup(environmentParameters.MainSqlDirectory, logger.Factory);
             databaseSetup.Initialize(accessorPack);
         }
 
@@ -183,7 +183,7 @@ namespace ContentTypeTextNet.Pe.Main.Model
 
             var accessorPack = CreateDatabaseAccessorPack(environmentParameters, logger);
 
-            var databaseSetup = new DatabaseSetup(environmentParameters.MainSqlDirectory, logger);
+            var databaseSetup = new DatabaseSetup(environmentParameters.MainSqlDirectory, logger.Factory);
 
             //前回実行バージョンの取得と取得失敗時に再セットアップ処理
             var lastVersion = databaseSetup.GetLastVersion(accessorPack.Main);
@@ -201,7 +201,7 @@ namespace ContentTypeTextNet.Pe.Main.Model
             var container = new DiContainer();
 
             container
-                .Register<ILogFactory, ILogFactory>(DiLifecycle.Singleton, () => logger)
+                .Register<ILoggerFactory, ILoggerFactory>(DiLifecycle.Singleton, () => logger)
                 .Register<ILogger, ApplicationLogger>(DiLifecycle.Singleton, () => logger)
             ;
 

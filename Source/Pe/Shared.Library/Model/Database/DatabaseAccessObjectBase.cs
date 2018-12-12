@@ -16,8 +16,8 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
             Logger = logger;
         }
 
-        public DatabaseAccessObjectBase(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, ILogFactory logFactory)
-            : this(commander, statementLoader, logFactory.CreateCurrentClass())
+        public DatabaseAccessObjectBase(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
+            : this(commander, statementLoader, loggerFactory.CreateCurrentClass())
         { }
 
         #region property

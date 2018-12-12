@@ -14,8 +14,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao
             : base(commander, statementLoader, logger)
         { }
 
-        public ApplicationDatabaseObjectBase(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, ILogFactory logFactory)
-            : base(commander, statementLoader, logFactory)
+        public ApplicationDatabaseObjectBase(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
+            : base(commander, statementLoader, loggerFactory)
         { }
     }
 }

@@ -18,9 +18,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database
 {
     public class DatabaseSetup : DisposerBase
     {
-        public DatabaseSetup(DirectoryInfo baseDirectory, ILogFactory logFactory)
+        public DatabaseSetup(DirectoryInfo baseDirectory, ILoggerFactory loggerFactory)
         {
-            Logger = logFactory.CreateCurrentClass();
+            Logger = loggerFactory.CreateCurrentClass();
             StatementLoader = new ApplicationDatabaseStatementLoader(baseDirectory, TimeSpan.Zero, Logger.Factory);
         }
 

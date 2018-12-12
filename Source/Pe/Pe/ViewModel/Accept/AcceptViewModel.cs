@@ -18,8 +18,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Accept
         public AcceptViewModel(AcceptViewElement model, ILogger logger)
             : base(model, logger)
         { }
-        public AcceptViewModel(AcceptViewElement model, ILogFactory logFactory)
-            : this(model, logFactory.CreateCurrentClass())
+        public AcceptViewModel(AcceptViewElement model, ILoggerFactory loggerFactory)
+            : this(model, loggerFactory.CreateCurrentClass())
         { }
 
         #region property

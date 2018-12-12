@@ -137,9 +137,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database
         public ApplicationDatabaseAccessor(IDatabaseFactory connectionCreator, ILogger logger)
             : base(connectionCreator, logger)
         { }
-        [Injection]
-        public ApplicationDatabaseAccessor(IDatabaseFactory connectionCreator, ILogFactory logFactory)
-            : this(connectionCreator, logFactory.CreateCurrentClass())
+        
+        public ApplicationDatabaseAccessor(IDatabaseFactory connectionCreator, ILoggerFactory loggerFactory)
+            : this(connectionCreator, loggerFactory.CreateCurrentClass())
         { }
 
         #region function
@@ -163,9 +163,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database
             StatementCache = new CachePool<string, string>(lifeTime);
         }
 
-        [Injection]
-        public ApplicationDatabaseStatementLoader(DirectoryInfo baseDirectory, TimeSpan lifeTime, ILogFactory logFactory)
-            : this(baseDirectory, lifeTime, logFactory.CreateCurrentClass())
+        public ApplicationDatabaseStatementLoader(DirectoryInfo baseDirectory, TimeSpan lifeTime, ILoggerFactory loggerFactory)
+            : this(baseDirectory, lifeTime, loggerFactory.CreateCurrentClass())
         { }
 
         #region property

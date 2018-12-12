@@ -64,12 +64,12 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database
 
         #region function
 
-        public static DatabaseAccessorPack Create(DatabaseFactoryPack factoryPack, ILogFactory logFactory)
+        public static DatabaseAccessorPack Create(DatabaseFactoryPack factoryPack, ILoggerFactory loggerFactory)
         {
             return new DatabaseAccessorPack(
-                new ApplicationDatabaseAccessor(factoryPack.Main, logFactory),
-                new ApplicationDatabaseAccessor(factoryPack.File, logFactory),
-                new ApplicationDatabaseAccessor(factoryPack.Temporary, logFactory)
+                new ApplicationDatabaseAccessor(factoryPack.Main, loggerFactory),
+                new ApplicationDatabaseAccessor(factoryPack.File, loggerFactory),
+                new ApplicationDatabaseAccessor(factoryPack.Temporary, loggerFactory)
             );
         }
 

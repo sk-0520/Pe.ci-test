@@ -14,8 +14,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Setup
     /// </summary>
     public class Setup_V_00_84_00_00 : SetupBase
     {
-        public Setup_V_00_84_00_00(IDatabaseStatementLoader statementLoader, ILogFactory logFactory)
-            : base(statementLoader, logFactory)
+        public Setup_V_00_84_00_00(IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
+            : base(statementLoader, loggerFactory)
         { }
 
         #region SetupBase

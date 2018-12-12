@@ -22,8 +22,8 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.ViewModel
         {
             Logger = logger;
         }
-        public ViewModelBase(ILogFactory logFactory)
-            : this(logFactory.CreateCurrentClass())
+        public ViewModelBase(ILoggerFactory loggerFactory)
+            : this(loggerFactory.CreateCurrentClass())
         { }
 
         ~ViewModelBase()
@@ -163,8 +163,8 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.ViewModel
             AttachModelEvents();
         }
 
-        public SingleModelViewModelBase(TModel model, ILogFactory logFactory)
-            : this(model, logFactory.CreateCurrentClass())
+        public SingleModelViewModelBase(TModel model, ILoggerFactory loggerFactory)
+            : this(model, loggerFactory.CreateCurrentClass())
         { }
 
 

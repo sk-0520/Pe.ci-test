@@ -13,9 +13,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.ViewElement.Accept
         public AcceptViewElement(ILogger logger)
             : base(logger)
         { }
-        [Injection]
-        public AcceptViewElement(ILogFactory logFactory)
-            : base(logFactory.CreateCurrentClass())
+
+        public AcceptViewElement(ILoggerFactory loggerFactory)
+            : base(loggerFactory.CreateCurrentClass())
         { }
 
         #region property
