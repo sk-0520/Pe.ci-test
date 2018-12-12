@@ -11,8 +11,9 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Embedded.Model
     {
         #region property
 
-        public static string CommandLineKeyUserDirectory { get; } = "user-data";
-        public static string CommandLineKeyMachineDirectory { get; } = "machine-data";
+        public static string CommandLineKeyUserDirectory { get; } = "user-dir";
+        public static string CommandLineKeyMachineDirectory { get; } = "machine-dir";
+        public static string CommandLineKeyTemporaryDirectory { get; } = "temp-dir";
 
         public static EnvironmentParameters Instance { get; private set; }
 
@@ -53,7 +54,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Embedded.Model
         /// <summary>
         /// ユーザーデータ配置ディレクトリ。
         /// </summary>
-        public DirectoryInfo UserRoamingDirectory { get; private set;}
+        public DirectoryInfo UserRoamingDirectory { get; private set; }
         /// <summary>
         /// バックアップディレクトリ。
         /// </summary>
@@ -68,10 +69,6 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Embedded.Model
         /// </summary>
         public DirectoryInfo MachineDirectory { get; private set; }
         /// <summary>
-        /// 一時ディレクトリ。
-        /// </summary>
-        public DirectoryInfo MachineTemporaryDirectory => CombineDirectory(MachineDirectory, "temp");
-        /// <summary>
         /// アーカイブディレクトリ。
         /// </summary>
         public DirectoryInfo MachineArchiveDirectory => CombineDirectory(MachineDirectory, "archive");
@@ -79,6 +76,11 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Embedded.Model
         /// アプリケーションアップデート用アーカイブ配置ディレクトリ。
         /// </summary>
         public DirectoryInfo MachineUpdateDirectory => CombineDirectory(MachineArchiveDirectory, "application");
+
+        /// <summary>
+        /// 一時ディレクトリ。
+        /// </summary>
+        public DirectoryInfo TemporaryDirectory { get; private set; }
 
         /// <summary>
         /// 設定格納DBファイル。
@@ -106,9 +108,10 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Embedded.Model
                 RootDirectory = rootDirectory,
             };
 
-            var projectName = "Pe";
+            var projectName = "Pe2";
             current.UserRoamingDirectory = current.GetDirectory(commandLine, CommandLineKeyUserDirectory, Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), projectName));
             current.MachineDirectory = current.GetDirectory(commandLine, CommandLineKeyMachineDirectory, Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), projectName));
+            current.TemporaryDirectory= current.GetDirectory(commandLine, CommandLineKeyTemporaryDirectory, Path.Combine(Path.GetTempPath(), projectName));
 
             Instance = current;
 

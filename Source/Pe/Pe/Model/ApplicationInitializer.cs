@@ -35,6 +35,7 @@ namespace ContentTypeTextNet.Pe.Main.Model
 
             commandLine.Add(longKey: EnvironmentParameters.CommandLineKeyUserDirectory, hasValue: true);
             commandLine.Add(longKey: EnvironmentParameters.CommandLineKeyMachineDirectory, hasValue: true);
+            commandLine.Add(longKey: EnvironmentParameters.CommandLineKeyTemporaryDirectory, hasValue: true);
             commandLine.Add(longKey: CommandLineKeyLog, hasValue: true);
 
             commandLine.Execute();
@@ -84,9 +85,9 @@ namespace ContentTypeTextNet.Pe.Main.Model
                 environmentParameters.UserBackupDirectory,
                 environmentParameters.UserSettingDirectory,
                 environmentParameters.MachineDirectory,
-                environmentParameters.MachineTemporaryDirectory,
                 environmentParameters.MachineArchiveDirectory,
                 environmentParameters.MachineUpdateDirectory,
+                environmentParameters.TemporaryDirectory,
             };
 
             foreach(var dir in dirs) {
