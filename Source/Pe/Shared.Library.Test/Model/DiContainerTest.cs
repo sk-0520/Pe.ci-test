@@ -204,6 +204,18 @@ namespace Shared.Library.Test.Model
         }
 
         [TestMethod]
+        public void NewTest_I1_2()
+        {
+            var dic = new DiContainer();
+            dic.Register<I1, C1>(new C1());
+
+            var i1 = dic.New<I1>();
+            Assert.AreEqual(10, i1.Func(4, 6));
+            var i1_2 = dic.New<C1>();
+            Assert.AreEqual(100, i1_2.Func(40, 60));
+        }
+
+        [TestMethod]
         public void NewTest_C1()
         {
             var dic = new DiContainer();

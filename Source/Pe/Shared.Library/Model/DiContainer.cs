@@ -154,6 +154,19 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         ;
 
         /// <summary>
+        /// シングルトンとしてオブジェクトを単純登録。
+        /// </summary>
+        /// <typeparam name="TInterface"></typeparam>
+        /// <typeparam name="TObject"></typeparam>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        IDiRegisterContainer Register<TInterface, TObject>(TObject value)
+#if !ENABLED_STRUCT
+            where TObject : class, TInterface
+#endif
+        ;
+
+        /// <summary>
         /// <see cref="IDiContainer.Inject{TObject}(TObject)"/> を行う際に <see cref="InjectionAttribute"/> を設定できないプロパティに無理やり設定する。
         /// </summary>
         /// <param name="baseType"></param>
@@ -367,7 +380,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         public static IDiContainer Instance { get; private set; }
 
         /// <summary>
-        /// 具象化 → 実体 のマッピング。
+        /// IF → 実体 のマッピング。
         /// </summary>
         protected IDictionary<Type, Type> Mapping { get; } = new Dictionary<Type, Type>();
         /// <summary>
@@ -378,7 +391,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         /// コンストラクタキャッシュ。
         /// </summary>
         protected IDictionary<Type, DiConstructorCache> Constructors { get; } = new Dictionary<Type, DiConstructorCache>();
-
+        protected IDictionary<Type, object> ObjectPool { get; } = new Dictionary<Type, object>();
         protected IList<DiDirtyMember> DirtyMembers { get; } = new List<DiDirtyMember>();
 
         #endregion
@@ -398,16 +411,22 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
             Instance = creator();
         }
 
-        protected virtual void RegisterCore(Type interfaceType, Type objectType, DiLifecycle lifecycle, DiCreator creator)
+        protected virtual void RegisterFactoryCore(Type interfaceType, Type objectType, DiLifecycle lifecycle, DiCreator creator)
         {
             Mapping.Add(interfaceType, objectType);
             Factory.Add(interfaceType, new DiFactoryWorker(lifecycle, creator, this));
         }
 
-        void RegisterSingleton(Type interfaceType, Type objectType, DiCreator creator)
+        void RegisterFactorySingleton(Type interfaceType, Type objectType, DiCreator creator)
         {
             var lazy = new Lazy<object>(() => creator());
-            RegisterCore(interfaceType, objectType, DiLifecycle.Singleton, () => lazy.Value);
+            RegisterFactoryCore(interfaceType, objectType, DiLifecycle.Singleton, () => lazy.Value);
+        }
+
+        void SimpleRegister(Type interfaceType, Type objectType, object value)
+        {
+            Mapping.Add(interfaceType, objectType);
+            ObjectPool.Add(interfaceType, value);
         }
 
         void Register(Type interfaceType, Type objectType, DiLifecycle lifecycle, DiCreator creator)
@@ -418,11 +437,11 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 
             switch(lifecycle) {
                 case DiLifecycle.Transient:
-                    RegisterCore(interfaceType, objectType, DiLifecycle.Transient, creator);
+                    RegisterFactoryCore(interfaceType, objectType, DiLifecycle.Transient, creator);
                     break;
 
                 case DiLifecycle.Singleton:
-                    RegisterSingleton(interfaceType, objectType, creator);
+                    RegisterFactorySingleton(interfaceType, objectType, creator);
                     break;
 
                 default:
@@ -499,6 +518,11 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 
         bool TryNewObject(Type objectType, IEnumerable<object> manualParameters, bool useFactoryCache, out object createdObject)
         {
+            if(ObjectPool.TryGetValue(objectType, out var poolValue)) {
+                createdObject = poolValue;
+                return true;
+            }
+
             if(useFactoryCache) {
                 // 生成可能なものはこの段階で生成
                 if(Factory.TryGetValue(objectType, out var factoryWorker)) {
@@ -544,6 +568,10 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 
         object NewCore(Type type, IEnumerable<object> manualParameters, bool useFactoryCache)
         {
+            if(ObjectPool.TryGetValue(type, out var poolValue)) {
+                return poolValue;
+            }
+
             if(TryNewObject(GetMappingType(type), manualParameters, useFactoryCache, out var raw)) {
                 return raw;
             }
@@ -553,6 +581,11 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 
         bool TryGetInstance(Type interfaceType, IEnumerable<object> manualParameters, out object value)
         {
+            if(ObjectPool.TryGetValue(interfaceType, out var poolValue)) {
+                value = poolValue;
+                return true;
+            }
+
             // 生成可能なものはこの段階で生成
             if(Factory.TryGetValue(interfaceType, out var factoryWorker)) {
                 value = factoryWorker.Create();
@@ -634,10 +667,14 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 
         #endregion
 
-        #region IDependencyInjectionContainer
+        #region IDiContainer
 
         public object Get(Type interfaceType)
         {
+            if(ObjectPool.TryGetValue(interfaceType, out var value)) {
+                return value;
+            }
+
             return Factory[interfaceType].Create();
         }
 
@@ -705,6 +742,10 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         }
 #endif
 
+        #endregion
+
+        #region IDiScopeContainerCreator
+
         public virtual IScopeDiContainer Scope()
         {
             var cloneContainer = new ScopeDiContainer();
@@ -713,6 +754,9 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
             }
             foreach(var pair in Factory) {
                 cloneContainer.Factory.Add(pair.Key, pair.Value);
+            }
+            foreach(var pair in ObjectPool) {
+                cloneContainer.ObjectPool.Add(pair.Key, pair.Value);
             }
             foreach(var pair in Constructors) {
                 cloneContainer.Constructors.Add(pair.Key, pair.Value);
@@ -754,6 +798,16 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
             return this;
         }
 
+        public IDiRegisterContainer Register<TInterface, TObject>(TObject value)
+#if !ENABLED_STRUCT
+            where TObject : class, TInterface
+#endif
+        {
+            SimpleRegister(typeof(TInterface), typeof(TObject), value);
+
+            return this;
+        }
+
         public IDiRegisterContainer DirtyRegister(Type baseType, string memberName, Type objectType)
         {
             var memberInfo = baseType.GetMember(memberName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.GetField | BindingFlags.SetField | BindingFlags.GetProperty | BindingFlags.SetProperty);
@@ -790,13 +844,13 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 
         #region DependencyInjectionContainer
 
-        protected override void RegisterCore(Type interfaceType, Type objectType, DiLifecycle lifecycle, DiCreator creator)
+        protected override void RegisterFactoryCore(Type interfaceType, Type objectType, DiLifecycle lifecycle, DiCreator creator)
         {
             if(!RegisteredTypeSet.Contains(interfaceType)) {
                 Mapping.Remove(interfaceType);
                 Factory.Remove(interfaceType);
 
-                base.RegisterCore(interfaceType, objectType, lifecycle, creator);
+                base.RegisterFactoryCore(interfaceType, objectType, lifecycle, creator);
                 RegisteredTypeSet.Add(interfaceType);
             } else {
                 throw new ArgumentException(nameof(interfaceType));
