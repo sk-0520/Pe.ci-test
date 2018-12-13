@@ -113,7 +113,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
         {
             var formattedSql = Implementation.PreFormatSql(sql);
 
-            Logger.Debug(formattedSql, param);
+            Logger.Trace(formattedSql, param);
             return BaseConnection.Query<T>(formattedSql, param, transaction?.Transaction, buffered);
         }
 
@@ -126,7 +126,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
         {
             var formattedSql = Implementation.PreFormatSql(sql);
 
-            Logger.Debug(formattedSql, param);
+            Logger.Trace(formattedSql, param);
             return BaseConnection.Query(formattedSql, param, transaction?.Transaction, buffered);
         }
 
@@ -139,7 +139,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
         {
             var formattedSql = Implementation.PreFormatSql(sql);
 
-            Logger.Debug(formattedSql, param);
+            Logger.Trace(formattedSql, param);
             return BaseConnection.Execute(formattedSql, param, transaction?.Transaction);
         }
 
@@ -152,7 +152,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
         {
             var formattedSql = Implementation.PreFormatSql(sql);
 
-            Logger.Debug(formattedSql, param);
+            Logger.Trace(formattedSql, param);
 
             var dataTable = new DataTable();
             dataTable.Load(BaseConnection.ExecuteReader(sql, param, transaction?.Transaction));
