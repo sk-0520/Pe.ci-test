@@ -2,6 +2,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Caching;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -97,7 +98,13 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         #endregion
     }
 
-    public class CachePool<TKey, TValue>: DisposerBase
+    /// <summary>
+    ///
+    /// <para>MemoryCacheで生成処理を受け取れんだろうか</para>
+    /// </summary>
+    /// <typeparam name="TKey"></typeparam>
+    /// <typeparam name="TValue"></typeparam>
+    public class CachePool<TKey, TValue> : DisposerBase
     {
         public CachePool(TimeSpan defaultLifeTime)
         {
