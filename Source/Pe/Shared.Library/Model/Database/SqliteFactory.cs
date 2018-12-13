@@ -12,29 +12,25 @@ using Dapper;
 
 namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
 {
-    public abstract class SqliteFactory : IDatabaseFactory
+    /// <summary>
+    /// booleanを制御
+    /// <para>0: 偽, 0以外: 真</para>
+    /// </summary>
+    class SqliteBooleanHandler : SqlMapper.TypeHandler<bool>
     {
-        #region define
-
-        /// <summary>
-        /// booleanを制御
-        /// <para>0: 偽, 0以外: 真</para>
-        /// </summary>
-        class SqliteBooleanHandler : SqlMapper.TypeHandler<bool>
+        public override void SetValue(IDbDataParameter parameter, bool value)
         {
-            public override void SetValue(IDbDataParameter parameter, bool value)
-            {
-                parameter.Value = value ? 1: 0;
-            }
-
-            public override bool Parse(object value)
-            {
-                return (long)value != 0;
-            }
+            parameter.Value = value ? 1 : 0;
         }
 
-        #endregion
+        public override bool Parse(object value)
+        {
+            return (long)value != 0;
+        }
+    }
 
+    public abstract class SqliteFactory : IDatabaseFactory
+    {
         static SqliteFactory()
         {
             SqlMapper.AddTypeHandler(typeof(bool), new SqliteBooleanHandler());
