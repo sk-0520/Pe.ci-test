@@ -8,7 +8,7 @@ using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Database
 {
-    public interface IApplicationPack<T>
+    public interface IApplicationPack<out T> : IDisposable
     {
         #region property
 
@@ -16,10 +16,12 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database
         T File { get; }
         T Temporary { get; }
 
+        IEnumerable<T> Items { get; }
+
         #endregion
     }
 
-    public abstract class TApplicationPackBase<TInterface, TObject> : IApplicationPack<TInterface>
+    public abstract class TApplicationPackBase<TInterface, TObject> : DisposerBase, IApplicationPack<TInterface>
         where TObject : TInterface
     {
         protected TApplicationPackBase(TObject main, TObject file, TObject temporary)
@@ -39,6 +41,32 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database
 
         public TObject Temporary { get; }
         TInterface IApplicationPack<TInterface>.Temporary => Temporary;
+
+        public IEnumerable<TObject> Items => new[] {
+            Main,
+            File,
+            Temporary,
+        };
+        IEnumerable<TInterface> IApplicationPack<TInterface>.Items => (IEnumerable<TInterface>)Items; // あっれぇ
+
+        #endregion
+
+        #region DisposerBase
+
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                if(disposing) {
+                    foreach(var item in Items) {
+                        if(item is IDisposable disposer) {
+                            disposer.Dispose();
+                        }
+                    }
+                }
+            }
+
+            base.Dispose(disposing);
+        }
 
         #endregion
     }

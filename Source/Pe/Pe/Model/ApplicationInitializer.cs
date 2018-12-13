@@ -150,12 +150,6 @@ namespace ContentTypeTextNet.Pe.Main.Model
             );
         }
 
-        DatabaseAccessorPack CreateDatabaseAccessorPack(EnvironmentParameters environmentParameters, ILogger logger)
-        {
-            var factoryPack = CreateDatabaseFactoryPack(environmentParameters, logger);
-            return DatabaseAccessorPack.Create(factoryPack, logger.Factory);
-        }
-
         void FirstSetup(EnvironmentParameters environmentParameters, ILogger logger)
         {
             logger.Information("初回セットアップ");
@@ -175,17 +169,20 @@ namespace ContentTypeTextNet.Pe.Main.Model
                 }
             }
 
-            var accessorPack = CreateDatabaseAccessorPack(environmentParameters, logger);
+            using(var factoryPack = CreateDatabaseFactoryPack(environmentParameters, logger))
+            using(var accessorPack = DatabaseAccessorPack.Create(factoryPack, logger.Factory)) {
 
-            var databaseSetup = new DatabaseSetup(environmentParameters.MainSqlDirectory, logger.Factory);
-            databaseSetup.Initialize(accessorPack);
+                var databaseSetup = new DatabaseSetup(environmentParameters.MainSqlDirectory, logger.Factory);
+                databaseSetup.Initialize(accessorPack);
+            }
         }
 
-        void NormalSetup(EnvironmentParameters environmentParameters, ILogger logger)
+        bool NormalSetup(out (DatabaseFactoryPack factory, DatabaseAccessorPack accessor) pack,EnvironmentParameters environmentParameters, ILogger logger)
         {
             logger.Information("DBセットアップ");
 
-            var accessorPack = CreateDatabaseAccessorPack(environmentParameters, logger);
+            var factoryPack = CreateDatabaseFactoryPack(environmentParameters, logger);
+            var accessorPack = DatabaseAccessorPack.Create(factoryPack, logger.Factory);
 
             var databaseSetup = new DatabaseSetup(environmentParameters.MainSqlDirectory, logger.Factory);
 
@@ -194,10 +191,17 @@ namespace ContentTypeTextNet.Pe.Main.Model
             if(lastVersion == null) {
                 logger.Error("last version is null");
                 logger.Warning("restart initialize");
-                databaseSetup.Initialize(accessorPack);
+
+                accessorPack.Dispose();
+                factoryPack.Dispose();
+                pack = default((DatabaseFactoryPack factory, DatabaseAccessorPack accessor));
+                return false;
             }
 
             databaseSetup.Migrate(accessorPack, lastVersion);
+            pack.factory = factoryPack;
+            pack.accessor = accessorPack;
+            return true;
         }
 
         void SetupContainer(EnvironmentParameters environmentParameters, ApplicationLogger logger)
@@ -237,7 +241,15 @@ namespace ContentTypeTextNet.Pe.Main.Model
                 FirstSetup(environmentParameters, logger);
             }
 
-            NormalSetup(environmentParameters, logger);
+            (DatabaseFactoryPack factory, DatabaseAccessorPack accessor) pack;
+            if(!NormalSetup(out pack, environmentParameters, logger)) {
+                // データぶっ壊れてる系
+                FirstSetup(environmentParameters, logger);
+                var retryResult = NormalSetup(out pack, environmentParameters, logger);
+                if(!retryResult) {
+                    throw new ApplicationException();
+                }
+            }
 
             SetupContainer(environmentParameters, logger);
 

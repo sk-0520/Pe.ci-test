@@ -43,14 +43,10 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Setup
         }
 
         public override void ExecuteTemporaryDefine(IDatabaseCommander commander, IReadOnlySetupDto dto)
-        {
-            throw new NotImplementedException();
-        }
+        { }
 
         public override void ExecuteTemporaryManipulate(IDatabaseTransaction transaction, IReadOnlySetupDto dto)
-        {
-            throw new NotImplementedException();
-        }
+        { }
 
         #endregion
     }
