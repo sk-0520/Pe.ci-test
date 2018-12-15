@@ -17,11 +17,11 @@ using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 namespace ContentTypeTextNet.Pe.Main.View.Startup
 {
     /// <summary>
-    /// StartupWindow.xaml の相互作用ロジック
+    /// ImportProgramsWindow.xaml の相互作用ロジック
     /// </summary>
-    public partial class StartupWindow : Window
+    public partial class ImportProgramsWindow : Window
     {
-        public StartupWindow()
+        public ImportProgramsWindow()
         {
             InitializeComponent();
         }

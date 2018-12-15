@@ -22,6 +22,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Startup
 
         public ICommand ImportProgramsCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
+                Model.ShowImportProgramsView();
             }
         ));
 
