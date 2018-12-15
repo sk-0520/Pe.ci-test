@@ -147,12 +147,14 @@
     <Compile Include="Model\Data\Dto\DtoBase.cs" />
     <Compile Include="Model\Data\Dto\SetupDto.cs" />
     <Compile Include="Model\Platform\SystemExecutor.cs" />
-    <Compile Include="Model\ViewElement\Accept\AcceptViewElement.cs" />
-    <Compile Include="Model\ViewElement\Startup\ImportProgramsViewElement.cs" />
-    <Compile Include="Model\ViewElement\Startup\StartupViewElement.cs" />
+    <Compile Include="Model\Element\Accept\AcceptElement.cs" />
+    <Compile Include="Model\Element\Startup\ImportProgramsElement.cs" />
+    <Compile Include="Model\Element\Startup\ProgramElement.cs" />
+    <Compile Include="Model\Element\Startup\StartupElement.cs" />
     <Compile Include="ViewModel\Accept\AcceptViewModel.cs" />
     <Compile Include="ViewModel\IDialogCommand.cs" />
     <Compile Include="ViewModel\Startup\ImportProgramsViewModel.cs" />
+    <Compile Include="ViewModel\Startup\ProgramViewModel.cs" />
     <Compile Include="ViewModel\Startup\StartupViewModel.cs" />
     <Compile Include="View\Accept\AcceptWindow.xaml.cs">
       <DependentUpon>AcceptWindow.xaml</DependentUpon>
@@ -171,7 +173,7 @@
     <Compile Include="Model\Database\DatabaseSetup.cs" />
     <Compile Include="Model\ApplicationInitializer.cs" />
     <Compile Include="Model\Platform\SystemWebBrowserUtility.cs" />
-    <Compile Include="Model\ViewElement\ViewElementBase.cs" />
+    <Compile Include="Model\Element\ElementBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

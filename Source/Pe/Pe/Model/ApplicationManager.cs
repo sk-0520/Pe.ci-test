@@ -31,14 +31,14 @@ namespace ContentTypeTextNet.Pe.Main.Model
             using(var diContainer = DiContainer.Instance.Scope()) {
                 var childLogger = Logger.Factory.CreateCurrentMethod();
                 diContainer
-                    .Register<ViewElement.Startup.StartupViewElement>(DiLifecycle.Singleton)
+                    .Register<Element.Startup.StartupElement>(DiLifecycle.Singleton)
                     .Register<ViewModel.Startup.StartupViewModel>(DiLifecycle.Transient)
                     .Register<ILogger, ILogger>(childLogger)
                     .Register<ILoggerFactory, ILoggerFactory>(childLogger.Factory)
                     .DirtyRegister<View.Startup.StartupWindow, ViewModel.Startup.StartupViewModel>(nameof(System.Windows.FrameworkElement.DataContext))
                 ;
 
-                var startupModel = diContainer.New<ViewElement.Startup.StartupViewElement>();
+                var startupModel = diContainer.New<Element.Startup.StartupElement>();
                 var view = diContainer.Make<View.Startup.StartupWindow>();
                 view.ShowDialog();
 

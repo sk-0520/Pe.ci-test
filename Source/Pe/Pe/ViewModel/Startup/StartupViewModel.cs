@@ -7,16 +7,22 @@ using System.Windows.Input;
 using ContentTypeTextNet.Pe.Library.Shared.Library.ViewModel;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Platform;
-using ContentTypeTextNet.Pe.Main.Model.ViewElement.Startup;
+using ContentTypeTextNet.Pe.Main.Model.Element.Startup;
 using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModel.Startup
 {
-    public class StartupViewModel : SingleModelViewModelBase<StartupViewElement>
+    public class StartupViewModel : SingleModelViewModelBase<StartupElement>
     {
-        public StartupViewModel(StartupViewElement model, ILoggerFactory loggerFactory)
+        public StartupViewModel(StartupElement model, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         { }
+
+        #region property
+
+
+
+        #endregion
 
         #region command
 

@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 
-namespace ContentTypeTextNet.Pe.Main.Model.ViewElement.Accept
+namespace ContentTypeTextNet.Pe.Main.Model.Element.Accept
 {
-    public class AcceptViewElement : ViewElementBase
+    public class AcceptElement : ElementBase
     {
-        public AcceptViewElement(ILoggerFactory loggerFactory)
+        public AcceptElement(ILoggerFactory loggerFactory)
             : base(loggerFactory)
         { }
 

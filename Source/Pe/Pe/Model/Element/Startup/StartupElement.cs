@@ -9,11 +9,11 @@ using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.View.Startup;
 using ContentTypeTextNet.Pe.Main.ViewModel.Startup;
 
-namespace ContentTypeTextNet.Pe.Main.Model.ViewElement.Startup
+namespace ContentTypeTextNet.Pe.Main.Model.Element.Startup
 {
-    public class StartupViewElement : ViewElementBase
+    public class StartupElement : ElementBase
     {
-        public StartupViewElement(ILoggerFactory loggerFactory)
+        public StartupElement(ILoggerFactory loggerFactory)
             : base(loggerFactory)
         { }
 
@@ -36,14 +36,14 @@ namespace ContentTypeTextNet.Pe.Main.Model.ViewElement.Startup
             using(var diContainer = DiContainer.Instance.Scope()) {
                 var childLogger = Logger.Factory.CreateCurrentMethod();
                 diContainer
-                    .Register<ImportProgramsViewElement>(DiLifecycle.Singleton)
+                    .Register<ImportProgramsElement>(DiLifecycle.Singleton)
                     .Register<ImportProgramsViewModel>(DiLifecycle.Transient)
                     .Register<ILogger, ILogger>(childLogger)
                     .Register<ILoggerFactory, ILoggerFactory>(childLogger.Factory)
                     .DirtyRegister<ImportProgramsWindow, ImportProgramsViewModel>(nameof(System.Windows.FrameworkElement.DataContext))
                 ;
 
-                var importProgramsModel = diContainer.New<ImportProgramsViewElement>();
+                var importProgramsModel = diContainer.New<ImportProgramsElement>();
                 var view = diContainer.Make<ImportProgramsWindow>();
                 view.ShowDialog();
             }

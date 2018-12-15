@@ -68,12 +68,12 @@ namespace ContentTypeTextNet.Pe.Main.Model
                 diContainer
                     .Register<ILogger, ILogger>(logger)
                     .Register<ILoggerFactory, ILoggerFactory>(logger.Factory)
-                    .Register<ViewElement.Accept.AcceptViewElement, ViewElement.Accept.AcceptViewElement>(DiLifecycle.Singleton)
+                    .Register<Element.Accept.AcceptElement, Element.Accept.AcceptElement>(DiLifecycle.Singleton)
                     .Register<ViewModel.Accept.AcceptViewModel, ViewModel.Accept.AcceptViewModel>(DiLifecycle.Transient)
                     .DirtyRegister<View.Accept.AcceptWindow, ViewModel.Accept.AcceptViewModel>(nameof(View.Accept.AcceptWindow.DataContext))
                 ;
 
-                var acceptModel = diContainer.New<ViewElement.Accept.AcceptViewElement>();
+                var acceptModel = diContainer.New<Element.Accept.AcceptElement>();
                 var view = diContainer.Make<View.Accept.AcceptWindow>();
                 view.ShowDialog();
 

@@ -392,10 +392,9 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Link.Model
             return loggerFactory.CreateLogger(new StackFrame(1).GetMethod().DeclaringType.Name);
         }
 
-        public static ILogger CreateCurrentMethod(this ILoggerFactory loggerFactory)
+        public static ILogger CreateCurrentMethod(this ILoggerFactory loggerFactory, [CallerMemberName] string callerMemberName=default(string))
         {
-            var method = new StackFrame(1).GetMethod();
-            return loggerFactory.CreateLogger($"{method.DeclaringType.Name}.{method.Name}");
+            return loggerFactory.CreateLogger(callerMemberName);
         }
 
         #endregion

@@ -7,28 +7,24 @@ using System.Windows.Input;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Library.ViewModel;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
-using ContentTypeTextNet.Pe.Main.Model.ViewElement.Accept;
+using ContentTypeTextNet.Pe.Main.Model.Element.Accept;
 using Prism.Commands;
 using Prism.Interactivity.InteractionRequest;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModel.Accept
 {
-    public class AcceptViewModel : SingleModelViewModelBase<AcceptViewElement>, IDialogCommand
+    public class AcceptViewModel : SingleModelViewModelBase<AcceptElement>, IDialogCommand
     {
-        public AcceptViewModel(AcceptViewElement model, ILogger logger)
+        public AcceptViewModel(AcceptElement model, ILogger logger)
             : base(model, logger)
         { }
-        public AcceptViewModel(AcceptViewElement model, ILoggerFactory loggerFactory)
+        public AcceptViewModel(AcceptElement model, ILoggerFactory loggerFactory)
             : this(model, loggerFactory.CreateCurrentClass())
         { }
 
         #region property
-        #endregion
-
-        #region property
 
         public InteractionRequest<Notification> CloseRequest { get; } = new InteractionRequest<Notification>();
-
 
         #endregion
 
