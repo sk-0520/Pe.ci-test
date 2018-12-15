@@ -83,12 +83,12 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Setup
             }
         }
 
-        protected void ExecuteSql(IDatabaseCommander commander, string sql)
+        protected void ExecuteSql(IDatabaseCommander commander, string sql, IReadOnlySetupDto dto)
         {
             var pairs = SplitMultiSql(sql);
             foreach(var pair in pairs) {
                 Logger.Information(pair.Key);
-                var result = commander.Execute(pair.Value);
+                var result = commander.Execute(pair.Value, dto);
                 Logger.Information($"result: {result}");
             }
         }

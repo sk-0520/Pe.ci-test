@@ -24,23 +24,21 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Setup
 
         public override void ExecuteMainDDL(IDatabaseCommander commander, IReadOnlySetupDto dto)
         {
-            ExecuteSql(commander, StatementLoader.LoadStatementByCurrent());
+            ExecuteSql(commander, StatementLoader.LoadStatementByCurrent(), dto);
         }
 
         public override void ExecuteMainDML(IDatabaseCommander commander, IReadOnlySetupDto dto)
         {
-            throw new NotImplementedException();
+            ExecuteSql(commander, StatementLoader.LoadStatementByCurrent(), dto);
         }
 
         public override void ExecuteFileDDL(IDatabaseCommander commander, IReadOnlySetupDto dto)
         {
-            throw new NotImplementedException();
+            ExecuteSql(commander, StatementLoader.LoadStatementByCurrent(), dto);
         }
 
         public override void ExecuteFileDML(IDatabaseCommander commander, IReadOnlySetupDto dto)
-        {
-            throw new NotImplementedException();
-        }
+        { }
 
         public override void ExecuteTemporaryDDL(IDatabaseCommander commander, IReadOnlySetupDto dto)
         { }

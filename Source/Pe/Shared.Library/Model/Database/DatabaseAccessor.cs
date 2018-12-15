@@ -46,8 +46,8 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
         IDatabaseTransaction BeginTransaction();
         IDatabaseTransaction BeginTransaction(IsolationLevel isolationLevel);
 
-        IResultFailureValue<Exception> Batch(Action<IDatabaseCommander> action);
-        IResultFailureValue<Exception> Batch(Action<IDatabaseCommander> action, IsolationLevel isolationLevel);
+        IResultFailureValue<Exception> Batch(Func<IDatabaseCommander, bool> action);
+        IResultFailureValue<Exception> Batch(Func<IDatabaseCommander, bool> action, IsolationLevel isolationLevel);
 
         #endregion
     }
@@ -90,11 +90,16 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
 
         #region function
 
-        protected virtual IResultFailureValue<Exception> BatchCore(Func<IDatabaseTransaction> transactionCreator, Action<IDatabaseCommander> action)
+        protected virtual IResultFailureValue<Exception> BatchCore(Func<IDatabaseTransaction> transactionCreator, Func<IDatabaseCommander, bool> function)
         {
             var transaction = transactionCreator();
             try {
-                action(transaction);
+                var commit = function(transaction);
+                if(commit) {
+                    transaction.Commit();
+                } else {
+                    transaction.Rollback();
+                }
                 return ResultFailureValue.Success<Exception>();
             } catch(Exception ex) {
                 transaction.Rollback();
@@ -175,14 +180,14 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
             return new DatabaseTransaction(this, isolationLevel);
         }
 
-        public IResultFailureValue<Exception> Batch(Action<IDatabaseCommander> action)
+        public IResultFailureValue<Exception> Batch(Func<IDatabaseCommander, bool> function)
         {
-            return BatchCore(() => new DatabaseTransaction(this), action);
+            return BatchCore(() => new DatabaseTransaction(this), function);
         }
 
-        public IResultFailureValue<Exception> Batch(Action<IDatabaseCommander> action, IsolationLevel isolationLevel)
+        public IResultFailureValue<Exception> Batch(Func<IDatabaseCommander, bool> function, IsolationLevel isolationLevel)
         {
-            return BatchCore(() => new DatabaseTransaction(this, isolationLevel), action);
+            return BatchCore(() => new DatabaseTransaction(this, isolationLevel), function);
         }
 
         #endregion

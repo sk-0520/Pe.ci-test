@@ -214,6 +214,12 @@
     <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\DatabaseSetup\GetLastVersion.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Setup\Setup_V_00_84_00_00\ExecuteFileDDL.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Setup\Setup_V_00_84_00_00\ExecuteMainDML.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Setup\Setup_V_00_84_00_00\ExecuteMainDDL.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

@@ -27,13 +27,23 @@ namespace Pe.Test.Model.Database
         public void BatchTest()
         {
             using(var a = new ApplicationDatabaseAccessor(new ApplicationDatabaseFactory(), new TestLogger())) {
-                var batchResult = a.Batch(c => {
+                var batchResult1 = a.Batch(c => {
                     c.Execute("create table TEST ( num integer, str text )");
                     c.Execute("insert into TEST(num, str) values (@Num, @Str)", new { Num = 1, Str = "a" });
                     c.Execute("insert into TEST(num, str) values (@Num, @Str)", new { Num = 2, Str = "b" });
                     c.Execute("insert into TEST(num, str) values (@Num, @Str)", new { Num = 3, Str = "c" });
+                    return false;
                 });
-                Assert.IsTrue(batchResult.Success, batchResult.FailureValue?.ToString());
+                Assert.IsTrue(batchResult1.Success, batchResult1.FailureValue?.ToString());
+
+                var batchResult2 = a.Batch(c => {
+                    c.Execute("create table TEST ( num integer, str text )");
+                    c.Execute("insert into TEST(num, str) values (@Num, @Str)", new { Num = 1, Str = "a" });
+                    c.Execute("insert into TEST(num, str) values (@Num, @Str)", new { Num = 2, Str = "b" });
+                    c.Execute("insert into TEST(num, str) values (@Num, @Str)", new { Num = 3, Str = "c" });
+                    return true;
+                });
+                Assert.IsTrue(batchResult2.Success, batchResult2.FailureValue?.ToString());
 
                 var maxNum = a.Query<int>("select MAX(num) from TEST").First();
                 Assert.AreNotEqual(maxNum, 1);

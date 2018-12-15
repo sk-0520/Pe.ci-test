@@ -28,7 +28,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database
 
         IDatabaseStatementLoader StatementLoader { get; }
         ILogger Logger { get; }
-        DatabaseCommonStatus CommonStatus { get; } = new DatabaseCommonStatus();
+        DatabaseCommonStatus CommonStatus { get; } = DatabaseCommonStatus.CreateUser();
 
         #endregion
 
@@ -54,6 +54,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database
 
                     Logger.Debug("DML");
                     dml(commander, dto);
+
+                    return true;
                 });
                 if(!result.Success) {
                     throw result.FailureValue;
