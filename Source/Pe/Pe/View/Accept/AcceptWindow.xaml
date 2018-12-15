@@ -7,6 +7,8 @@
   xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
   xmlns:prism="http://prismlibrary.com/"
 
+  xmlns:app="clr-namespace:ContentTypeTextNet.Pe.Main"
+
   Title="AcceptWindow"
   Width="400"
   Height="450"

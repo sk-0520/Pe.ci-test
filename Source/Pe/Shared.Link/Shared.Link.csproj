@@ -79,6 +79,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\CultureService.cs" />
     <Compile Include="Model\Disposer.cs" />
     <Compile Include="Model\Logger.cs">
       <AutoGen>True</AutoGen>

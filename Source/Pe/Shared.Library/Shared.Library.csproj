@@ -84,6 +84,7 @@
       <HintPath>..\packages\Prism.Wpf.7.1.0.431\lib\net45\Prism.Wpf.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.SQLite, Version=1.0.109.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
@@ -163,6 +164,7 @@
     <Compile Include="Model\Unmanaged\GdiWrapper.cs" />
     <Compile Include="Model\Unmanaged\GlobalAllocModel.cs" />
     <Compile Include="Model\Unmanaged\UnmanagedModelBase.cs" />
+    <Compile Include="Model\UriUtility.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\ViewModel.cs" />
     <Compile Include="ViewModel\ModelViewModelObservableCollectionManager.cs" />

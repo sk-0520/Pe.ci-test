@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
@@ -16,11 +17,12 @@ using Prism.Mvvm;
 
 namespace ContentTypeTextNet.Pe.Library.Shared.Library.ViewModel
 {
-    public abstract class ViewModelBase : BindableBase, IDisposable
+    public abstract class ViewModelBase : BindableBase, INotifyDataErrorInfo, IDisposable
     {
         public ViewModelBase(ILogger logger)
         {
             Logger = logger;
+            ErrorsContainer = new ErrorsContainer<string>(OnErrorsChanged);
         }
         public ViewModelBase(ILoggerFactory loggerFactory)
             : this(loggerFactory.CreateCurrentClass())
@@ -101,6 +103,38 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.ViewModel
 
             return command;
         }
+
+        protected void ValidateProperty(object value, [CallerMemberName] string propertyName = null)
+        {
+            var context = new ValidationContext(this) { MemberName = propertyName };
+            var validationErrors = new List<ValidationResult>();
+            if(!Validator.TryValidateProperty(value, context, validationErrors)) {
+                var errors = validationErrors.Select(error => error.ErrorMessage);
+                ErrorsContainer.SetErrors(propertyName, errors);
+            } else {
+                ErrorsContainer.ClearErrors(propertyName);
+            }
+        }
+
+        #endregion
+
+        #region INotifyDataErrorInfo
+
+        private ErrorsContainer<string> ErrorsContainer { get; }
+
+        protected void OnErrorsChanged([CallerMemberName] string propertyName = null)
+        {
+            ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
+        }
+
+        public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
+
+        public System.Collections.IEnumerable GetErrors(string propertyName)
+        {
+            return ErrorsContainer.GetErrors(propertyName);
+        }
+
+        public bool HasErrors => ErrorsContainer.HasErrors;
 
         #endregion
 
