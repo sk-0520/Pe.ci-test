@@ -73,9 +73,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database
         {
             Logger.Information($"SETUP: {setup.Version}, {setup.GetType().Name}");
 
-            ExecuteCore(accessorPack.Main, dto, setup.ExecuteMainDefine, setup.ExecuteMainManipulate);
-            ExecuteCore(accessorPack.File, dto, setup.ExecuteFileDefine, setup.ExecuteFileManipulate);
-            ExecuteCore(accessorPack.Temporary, dto, setup.ExecuteTemporaryDefine, setup.ExecuteTemporaryManipulate);
+            ExecuteCore(accessorPack.Main, dto, setup.ExecuteMainDDL, setup.ExecuteMainDML);
+            ExecuteCore(accessorPack.File, dto, setup.ExecuteFileDDL, setup.ExecuteFileDML);
+            ExecuteCore(accessorPack.Temporary, dto, setup.ExecuteTemporaryDDL, setup.ExecuteTemporaryDML);
         }
 
         public void Initialize(IDatabaseAccessorPack accessorPack)

@@ -25,27 +25,27 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Setup
         /// </summary>
         public override Version Version { get; } = new Version(99, 99, 99, 99);
 
-        public override void ExecuteMainDefine(IDatabaseCommander commander, IReadOnlySetupDto dto)
+        public override void ExecuteMainDDL(IDatabaseCommander commander, IReadOnlySetupDto dto)
         {
         }
 
-        public override void ExecuteMainManipulate(IDatabaseCommander commander, IReadOnlySetupDto dto)
+        public override void ExecuteMainDML(IDatabaseCommander commander, IReadOnlySetupDto dto)
         {
         }
 
-        public override void ExecuteFileDefine(IDatabaseCommander commander, IReadOnlySetupDto dto)
+        public override void ExecuteFileDDL(IDatabaseCommander commander, IReadOnlySetupDto dto)
         {
         }
 
-        public override void ExecuteFileManipulate(IDatabaseCommander commander, IReadOnlySetupDto dto)
+        public override void ExecuteFileDML(IDatabaseCommander commander, IReadOnlySetupDto dto)
         {
         }
 
-        public override void ExecuteTemporaryDefine(IDatabaseCommander commander, IReadOnlySetupDto dto)
+        public override void ExecuteTemporaryDDL(IDatabaseCommander commander, IReadOnlySetupDto dto)
         {
         }
 
-        public override void ExecuteTemporaryManipulate(IDatabaseCommander commander, IReadOnlySetupDto dto)
+        public override void ExecuteTemporaryDML(IDatabaseCommander commander, IReadOnlySetupDto dto)
         {
         }
 

@@ -35,14 +35,14 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Setup
 
         #region function
 
-        public abstract void ExecuteMainDefine(IDatabaseCommander commander, IReadOnlySetupDto dto);
-        public abstract void ExecuteMainManipulate(IDatabaseCommander commander, IReadOnlySetupDto dto);
+        public abstract void ExecuteMainDDL(IDatabaseCommander commander, IReadOnlySetupDto dto);
+        public abstract void ExecuteMainDML(IDatabaseCommander commander, IReadOnlySetupDto dto);
 
-        public abstract void ExecuteFileDefine(IDatabaseCommander commander, IReadOnlySetupDto dto);
-        public abstract void ExecuteFileManipulate(IDatabaseCommander commander, IReadOnlySetupDto dto);
+        public abstract void ExecuteFileDDL(IDatabaseCommander commander, IReadOnlySetupDto dto);
+        public abstract void ExecuteFileDML(IDatabaseCommander commander, IReadOnlySetupDto dto);
 
-        public abstract void ExecuteTemporaryDefine(IDatabaseCommander commander, IReadOnlySetupDto dto);
-        public abstract void ExecuteTemporaryManipulate(IDatabaseCommander commander, IReadOnlySetupDto dto);
+        public abstract void ExecuteTemporaryDDL(IDatabaseCommander commander, IReadOnlySetupDto dto);
+        public abstract void ExecuteTemporaryDML(IDatabaseCommander commander, IReadOnlySetupDto dto);
 
         protected IEnumerable<KeyValuePair<string, string>> SplitMultiSql(string sql)
         {
