@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 
@@ -114,5 +115,15 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database
         }
 
         #endregion
+    }
+
+    public interface IReadWriteLockPack : IApplicationPack<ReaderWriterLocker>
+    { }
+
+    public sealed class ReadWriteLockPack : TApplicationPackBase<ReaderWriterLocker, ApplicationReaderWriterLockerBase>, IReadWriteLockPack
+    {
+        public ReadWriteLockPack(ApplicationMainReaderWriterLocker main, ApplicationFileReaderWriterLocker file, ApplicationTemporaryReaderWriterLocker temporary)
+            : base(main, file, temporary)
+        { }
     }
 }

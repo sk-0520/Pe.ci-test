@@ -44,7 +44,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         IScopeDiContainer Scope();
     }
 
-    public interface IDiContainer: IDiScopeContainerCreator
+    public interface IDiContainer : IDiScopeContainerCreator
     {
         /// <summary>
         /// マッピングから実体を取得。
@@ -423,7 +423,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
             RegisterFactoryCore(interfaceType, objectType, DiLifecycle.Singleton, () => lazy.Value);
         }
 
-        void SimpleRegister(Type interfaceType, Type objectType, object value)
+        protected virtual void SimpleRegister(Type interfaceType, Type objectType, object value)
         {
             Mapping.Add(interfaceType, objectType);
             ObjectPool.Add(interfaceType, value);
@@ -609,7 +609,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
             }
         }
 
-        void SetMemberValue<TObject>(ref TObject target, MemberInfo memberInfo, Type  valueType)
+        void SetMemberValue<TObject>(ref TObject target, MemberInfo memberInfo, Type valueType)
         {
             switch(memberInfo.MemberType) {
                 case MemberTypes.Field:
@@ -851,6 +851,19 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
                 Factory.Remove(interfaceType);
 
                 base.RegisterFactoryCore(interfaceType, objectType, lifecycle, creator);
+                RegisteredTypeSet.Add(interfaceType);
+            } else {
+                throw new ArgumentException(nameof(interfaceType));
+            }
+        }
+
+        protected override void SimpleRegister(Type interfaceType, Type objectType, object value)
+        {
+            if(!RegisteredTypeSet.Contains(interfaceType)) {
+                Mapping.Remove(interfaceType);
+                ObjectPool.Remove(interfaceType);
+
+                base.SimpleRegister(interfaceType, objectType, value);
                 RegisteredTypeSet.Add(interfaceType);
             } else {
                 throw new ArgumentException(nameof(interfaceType));

@@ -134,6 +134,7 @@
     </Compile>
     <Compile Include="Constants.cs" />
     <Compile Include="Model\ApplicationLogger.cs" />
+    <Compile Include="Model\ApplicationReaderWriterLocker.cs" />
     <Compile Include="Model\Database\Dao\ApplicationDatabaseObjectBase.cs" />
     <Compile Include="Model\Database\Setup\SetupBase.cs" />
     <Compile Include="Model\Database\Setup\Setup_V_99_99_99_99.cs" />

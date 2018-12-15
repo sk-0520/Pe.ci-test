@@ -36,6 +36,10 @@ namespace ContentTypeTextNet.Pe.Main.Model
             Logger = DiContainer.Instance.Get<ILoggerFactory>().CreateCurrentClass();
             Logger.Debug("初期化完了");
 
+            if(initializer.IsFirstStartup) {
+                // 初期登録の画面を表示
+            }
+
             return true;
         }
 

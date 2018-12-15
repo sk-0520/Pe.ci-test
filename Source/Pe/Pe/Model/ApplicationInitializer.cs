@@ -20,6 +20,8 @@ namespace ContentTypeTextNet.Pe.Main.Model
 
         string CommandLineKeyLog { get; } = "log";
 
+        public bool IsFirstStartup { get; private set; }
+
         #endregion
 
         #region function
@@ -52,7 +54,7 @@ namespace ContentTypeTextNet.Pe.Main.Model
             return EnvironmentParameters.Initialize(new DirectoryInfo(applicationDirectory), commandLine);
         }
 
-        bool IsFirstStartup(EnvironmentParameters environmentParameters, ILogger logger)
+        bool CheckFirstStartup(EnvironmentParameters environmentParameters, ILogger logger)
         {
             var file = environmentParameters.SettingFile;
             file.Refresh();
@@ -208,11 +210,18 @@ namespace ContentTypeTextNet.Pe.Main.Model
         {
             var container = new DiContainer();
 
+            var rwlp = new ReadWriteLockPack(
+                new ApplicationMainReaderWriterLocker(),
+                new ApplicationFileReaderWriterLocker(),
+                new ApplicationTemporaryReaderWriterLocker()
+            );
+
             container
                 .Register<ILoggerFactory, ILoggerFactory>(logger.Factory)
                 .Register<ILogger, ApplicationLogger>(logger)
                 .Register<IDatabaseFactoryPack, DatabaseFactoryPack>(factory)
                 .Register<IDatabaseAccessorPack, DatabaseAccessorPack>(accessor)
+                .Register<IReadWriteLockPack, ReadWriteLockPack>(rwlp)
             ;
 
             DiContainer.Initialize(() => container);
@@ -227,8 +236,8 @@ namespace ContentTypeTextNet.Pe.Main.Model
             var logger = CreateLogger(commandLine.GetValue(CommandLineKeyLog, string.Empty));
             OutputStartupLog(logger);
 
-            var isFirstStartup = IsFirstStartup(environmentParameters, logger);
-            if(isFirstStartup) {
+            IsFirstStartup = CheckFirstStartup(environmentParameters, logger);
+            if(IsFirstStartup) {
                 logger.Information("初回実行");
                 // 設定ファイルやらなんやらを構築する前に完全初回の使用許諾を取る
                 var dialogResult = ShowAcceptView(new DiContainer(), logger);
@@ -240,7 +249,7 @@ namespace ContentTypeTextNet.Pe.Main.Model
             }
             InitializeFileSystem(environmentParameters, logger);
 
-            if(isFirstStartup) {
+            if(IsFirstStartup) {
                 FirstSetup(environmentParameters, logger);
             }
 
