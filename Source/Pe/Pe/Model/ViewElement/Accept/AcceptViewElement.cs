@@ -10,12 +10,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.ViewElement.Accept
 {
     public class AcceptViewElement : ViewElementBase
     {
-        public AcceptViewElement(ILogger logger)
-            : base(logger)
-        { }
-
         public AcceptViewElement(ILoggerFactory loggerFactory)
-            : base(loggerFactory.CreateCurrentClass())
+            : base(loggerFactory)
         { }
 
         #region property

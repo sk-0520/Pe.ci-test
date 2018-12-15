@@ -65,8 +65,8 @@ namespace ContentTypeTextNet.Pe.Main.Model
         {
             using(var diContainer = scopeContainerCreator.Scope()) {
                 diContainer
-                    .Register<ILogger, ILogger>(DiLifecycle.Singleton, () => logger)
-                    .Register<ILoggerFactory, ILoggerFactory>(DiLifecycle.Singleton, () => logger)
+                    .Register<ILogger, ILogger>(logger)
+                    .Register<ILoggerFactory, ILoggerFactory>(logger.Factory)
                     .Register<ViewElement.Accept.AcceptViewElement, ViewElement.Accept.AcceptViewElement>(DiLifecycle.Singleton)
                     .Register<ViewModel.Accept.AcceptViewModel, ViewModel.Accept.AcceptViewModel>(DiLifecycle.Transient)
                     .DirtyRegister<View.Accept.AcceptWindow, ViewModel.Accept.AcceptViewModel>(nameof(System.Windows.FrameworkElement.DataContext))
@@ -208,7 +208,7 @@ namespace ContentTypeTextNet.Pe.Main.Model
 
         void SetupContainer(EnvironmentParameters environmentParameters, DatabaseFactoryPack factory, DatabaseAccessorPack accessor, ApplicationLogger logger)
         {
-            var container = new DiContainer();
+            var container = new ApplicationDiContainer();
 
             var rwlp = new ReadWriteLockPack(
                 new ApplicationMainReaderWriterLocker(),

@@ -136,7 +136,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         /// <typeparam name="TObject"></typeparam>
         IDiRegisterContainer Register<TInterface, TObject>(DiLifecycle lifecycle)
 #if !ENABLED_STRUCT
-            where TObject : class
+            where TObject : class, TInterface
 #endif
         ;
 
@@ -149,7 +149,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         /// <param name="creator"></param>
         IDiRegisterContainer Register<TInterface, TObject>(DiLifecycle lifecycle, DiCreator creator)
 #if !ENABLED_STRUCT
-            where TObject : class
+            where TObject : class, TInterface
 #endif
         ;
 
@@ -180,7 +180,19 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
     /// 限定的なDIコンテナ。
     /// </summary>
     public interface IScopeDiContainer : IDiRegisterContainer, IDisposable
-    { }
+    {
+        /// <summary>
+        /// ただ単純な登録。
+        /// </summary>
+        /// <typeparam name="TObject"></typeparam>
+        /// <param name="lifecycle"></param>
+        /// <returns></returns>
+        IScopeDiContainer Register<TObject>(DiLifecycle lifecycle)
+#if !ENABLED_STRUCT
+            where TObject : class
+#endif
+        ;
+    }
 
     /// <summary>
     /// マッピング生成処理。
@@ -475,7 +487,9 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
                     }
                 }
 
-                if(Factory.TryGetValue(parameterInfo.ParameterType, out var factoryWorker)) {
+                if(ObjectPool.TryGetValue(parameterInfo.ParameterType, out var poolValue)) {
+                    arguments[i] = poolValue;
+                } else if(Factory.TryGetValue(parameterInfo.ParameterType, out var factoryWorker)) {
                     arguments[i] = factoryWorker.Create();
                 } else {
                     // どうしようもねぇ
@@ -774,7 +788,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 
         public IDiRegisterContainer Register<TInterface, TObject>(DiLifecycle lifecycle)
 #if !ENABLED_STRUCT
-            where TObject : class
+            where TObject : class, TInterface
 #endif
         {
             var interfaceType = typeof(TInterface);
@@ -790,7 +804,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 
         public IDiRegisterContainer Register<TInterface, TObject>(DiLifecycle lifecycle, DiCreator creator)
 #if !ENABLED_STRUCT
-            where TObject : class
+            where TObject : class, TInterface
 #endif
         {
             Register(typeof(TInterface), typeof(TObject), lifecycle, creator);
@@ -842,7 +856,22 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 
         #endregion
 
-        #region DependencyInjectionContainer
+        #region IScopeDiContainer
+
+        public IScopeDiContainer Register<TObject>(DiLifecycle lifecycle)
+#if !ENABLED_STRUCT
+            where TObject : class
+#endif
+        {
+            base.Register<TObject, TObject>(lifecycle);
+
+            return this;
+        }
+
+
+        #endregion
+
+        #region DiContainer
 
         protected override void RegisterFactoryCore(Type interfaceType, Type objectType, DiLifecycle lifecycle, DiCreator creator)
         {

@@ -235,12 +235,14 @@ namespace Shared.Library.Test.Model
             Assert.AreEqual(4, c1.Func(2, 2));
         }
 
+#if false
         [TestMethod]
         public void NewTest_C1toI1()
         {
             var dic = new DiContainer();
             Assert.ThrowsException<ArgumentException>(() => dic.Register<C1, I1>(DiLifecycle.Transient));
         }
+#endif
 
         [TestMethod]
         public void NewTest_C2()
@@ -351,7 +353,7 @@ namespace Shared.Library.Test.Model
         }
 #endif
 
-        #region nest
+#region nest
 
         interface INest1
         {
@@ -466,7 +468,7 @@ namespace Shared.Library.Test.Model
             Assert.IsTrue(root.Nest4 == root.Nest1.Nest2.Nest3.Nest4);
         }
 
-        #endregion
+#endregion
 
         class CScopeA : I1
         {
