@@ -204,15 +204,18 @@ namespace ContentTypeTextNet.Pe.Main.Model
             return true;
         }
 
-        void SetupContainer(EnvironmentParameters environmentParameters, ApplicationLogger logger)
+        void SetupContainer(EnvironmentParameters environmentParameters, DatabaseFactoryPack factory, DatabaseAccessorPack accessor, ApplicationLogger logger)
         {
             var container = new DiContainer();
 
             container
-                .Register<ILoggerFactory, ILoggerFactory>(DiLifecycle.Singleton, () => logger)
-                .Register<ILogger, ApplicationLogger>(DiLifecycle.Singleton, () => logger)
+                .Register<ILoggerFactory, ILoggerFactory>(logger.Factory)
+                .Register<ILogger, ApplicationLogger>(logger)
+                .Register<IDatabaseFactoryPack, DatabaseFactoryPack>(factory)
+                .Register<IDatabaseAccessorPack, DatabaseAccessorPack>(accessor)
             ;
 
+            DiContainer.Initialize(() => container);
         }
 
         public bool Initialize(IEnumerable<string> arguments)
@@ -251,9 +254,9 @@ namespace ContentTypeTextNet.Pe.Main.Model
                 }
             }
 
-            SetupContainer(environmentParameters, logger);
+            SetupContainer(environmentParameters, pack.factory, pack.accessor, logger);
 
-            return false;
+            return true;
         }
 
         #endregion
