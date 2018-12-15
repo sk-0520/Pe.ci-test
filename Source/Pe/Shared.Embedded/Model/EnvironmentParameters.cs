@@ -89,7 +89,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Embedded.Model
         /// <summary>
         /// ファイル格納DBファイル。
         /// </summary>
-        public FileInfo FileFile => CombineFile(MachineDirectory, "file.sqlite3");
+        public FileInfo FileFile => CombineFile(UserSettingDirectory, "file.sqlite3");
 
         #endregion
 

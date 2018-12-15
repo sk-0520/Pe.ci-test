@@ -17,9 +17,12 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database
 {
     public class ApplicationDatabaseFactory : SqliteFactory
     {
+        #region define
+        #endregion
+
         public ApplicationDatabaseFactory()
         {
-            var builder = new SQLiteConnectionStringBuilder();
+            var builder = CreateCommonBuilder();
             builder.DataSource = ":memory:";
 
             ConnectionString = builder.ToString();
@@ -27,7 +30,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database
 
         public ApplicationDatabaseFactory(FileInfo file)
         {
-            var builder = new SQLiteConnectionStringBuilder();
+            var builder = CreateCommonBuilder();
             builder.DataSource = ToSafeFile(file).FullName;
 
             ConnectionString = builder.ToString();
@@ -36,20 +39,6 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database
         #region property
 
         string ConnectionString { get; }
-
-        #endregion
-
-        #region function
-
-        public static FileInfo ToSafeFile(FileInfo fileInfo)
-        {
-            // #66 を考慮
-            if(fileInfo.FullName.StartsWith(@"\\")) {
-                return new FileInfo(@"\\" + fileInfo.FullName);
-            }
-
-            return fileInfo;
-        }
 
         #endregion
 

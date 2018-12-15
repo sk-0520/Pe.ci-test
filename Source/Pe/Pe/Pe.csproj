@@ -132,6 +132,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Constants.cs" />
     <Compile Include="Model\ApplicationLogger.cs" />
     <Compile Include="Model\Database\Dao\ApplicationDatabaseObjectBase.cs" />
     <Compile Include="Model\Database\Setup\SetupBase.cs" />
@@ -198,9 +199,7 @@
       <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Setup\Setup_V_99_99_99_99\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Page Include="View\Accept\AcceptWindow.xaml">
       <SubType>Designer</SubType>
@@ -221,6 +220,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Setup\Setup_V_00_84_00_00\ExecuteMainDDL.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Setup\Setup_V_99_99_99_99\ExecuteMainDML.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

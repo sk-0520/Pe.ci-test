@@ -104,7 +104,7 @@ namespace ContentTypeTextNet.Pe.Main.Model
         ApplicationLogger CreateLogger(string outputPath, [System.Runtime.CompilerServices.CallerFilePath] string callerFilePath = default(string))
         {
             if(LogItem.ShortFileIndex == 0) {
-                var ignoreLoggerFilePath = Path.Combine("Pe2", "Source");
+                var ignoreLoggerFilePath = Path.Combine(Constants.ProjectName, "Source");
                 var ignoreLoggerFilePathIndex = callerFilePath.IndexOf(ignoreLoggerFilePath, StringComparison.OrdinalIgnoreCase);
                 LogItem.ShortFileIndex = ignoreLoggerFilePathIndex + ignoreLoggerFilePath.Length + 1/* \ の分も引いておく */;
             }

@@ -48,7 +48,6 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database.Vender.Pub
         }
     }
 
-
     public class SqliteImplementation: DatabaseImplementation
     {
         static SqliteImplementation()

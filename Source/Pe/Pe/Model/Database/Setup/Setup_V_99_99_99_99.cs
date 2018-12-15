@@ -26,16 +26,15 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Setup
         public override Version Version { get; } = new Version(99, 99, 99, 99);
 
         public override void ExecuteMainDDL(IDatabaseCommander commander, IReadOnlySetupDto dto)
-        {
-        }
+        { }
 
         public override void ExecuteMainDML(IDatabaseCommander commander, IReadOnlySetupDto dto)
         {
+            ExecuteSql(commander, StatementLoader.LoadStatementByCurrent(), dto);
         }
 
         public override void ExecuteFileDDL(IDatabaseCommander commander, IReadOnlySetupDto dto)
-        {
-        }
+        { }
 
         public override void ExecuteFileDML(IDatabaseCommander commander, IReadOnlySetupDto dto)
         {
