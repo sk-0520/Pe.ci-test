@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,5 +13,21 @@ namespace ContentTypeTextNet.Pe.Main.Model.ViewElement.Startup
         public StartupViewElement(ILoggerFactory loggerFactory)
             : base(loggerFactory)
         { }
+
+        #region function
+
+        public bool ExistsStartup()
+        {
+            var startupRegister = new StartupRegister(Logger.Factory);
+            return startupRegister.Exists();
+        }
+
+        public bool RegisterStartup()
+        {
+            var startupRegister = new StartupRegister(Logger.Factory);
+            return startupRegister.Register();
+        }
+
+        #endregion
     }
 }

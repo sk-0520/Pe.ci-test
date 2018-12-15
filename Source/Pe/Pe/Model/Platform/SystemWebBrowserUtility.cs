@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Win32;
 
-namespace ContentTypeTextNet.Pe.Main.Model
+namespace ContentTypeTextNet.Pe.Main.Model.Platform
 {
     public static class SystemWebBrowserUtility
     {

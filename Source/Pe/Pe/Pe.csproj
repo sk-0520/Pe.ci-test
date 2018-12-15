@@ -137,6 +137,7 @@
     <Compile Include="Model\ApplicationDiContainer.cs" />
     <Compile Include="Model\ApplicationLogger.cs" />
     <Compile Include="Model\ApplicationReaderWriterLocker.cs" />
+    <Compile Include="Model\StartupRegister.cs" />
     <Compile Include="Model\Database\Dao\ApplicationDatabaseObjectBase.cs" />
     <Compile Include="Model\Database\Setup\SetupBase.cs" />
     <Compile Include="Model\Database\Setup\Setup_V_99_99_99_99.cs" />
@@ -145,6 +146,7 @@
     <Compile Include="Model\Data\Dto\CommonDto.cs" />
     <Compile Include="Model\Data\Dto\DtoBase.cs" />
     <Compile Include="Model\Data\Dto\SetupDto.cs" />
+    <Compile Include="Model\Platform\SystemExecutor.cs" />
     <Compile Include="Model\ViewElement\Accept\AcceptViewElement.cs" />
     <Compile Include="Model\ViewElement\Startup\StartupViewElement.cs" />
     <Compile Include="ViewModel\Accept\AcceptViewModel.cs" />
@@ -163,7 +165,7 @@
     <Compile Include="Model\Database\ApplicationPack.cs" />
     <Compile Include="Model\Database\DatabaseSetup.cs" />
     <Compile Include="Model\ApplicationInitializer.cs" />
-    <Compile Include="Model\SystemWebBrowserUtility.cs" />
+    <Compile Include="Model\Platform\SystemWebBrowserUtility.cs" />
     <Compile Include="Model\ViewElement\ViewElementBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

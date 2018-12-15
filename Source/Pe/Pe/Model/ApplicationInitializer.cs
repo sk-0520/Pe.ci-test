@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Library.Shared.Embedded.Model;
@@ -69,7 +70,7 @@ namespace ContentTypeTextNet.Pe.Main.Model
                     .Register<ILoggerFactory, ILoggerFactory>(logger.Factory)
                     .Register<ViewElement.Accept.AcceptViewElement, ViewElement.Accept.AcceptViewElement>(DiLifecycle.Singleton)
                     .Register<ViewModel.Accept.AcceptViewModel, ViewModel.Accept.AcceptViewModel>(DiLifecycle.Transient)
-                    .DirtyRegister<View.Accept.AcceptWindow, ViewModel.Accept.AcceptViewModel>(nameof(System.Windows.FrameworkElement.DataContext))
+                    .DirtyRegister<View.Accept.AcceptWindow, ViewModel.Accept.AcceptViewModel>(nameof(View.Accept.AcceptWindow.DataContext))
                 ;
 
                 var acceptModel = diContainer.New<ViewElement.Accept.AcceptViewElement>();
@@ -103,7 +104,7 @@ namespace ContentTypeTextNet.Pe.Main.Model
             }
         }
 
-        ApplicationLogger CreateLogger(string outputPath, [System.Runtime.CompilerServices.CallerFilePath] string callerFilePath = default(string))
+        ApplicationLogger CreateLogger(string outputPath, [CallerFilePath] string callerFilePath = default(string))
         {
             if(LogItem.ShortFileIndex == 0) {
                 var ignoreLoggerFilePath = Path.Combine(Constants.ProjectName, "Source");
