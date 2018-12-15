@@ -133,7 +133,8 @@
     <Compile Include="Model\Database\DatabaseFactory.cs" />
     <Compile Include="Model\Database\DatabaseStatementLoader.cs" />
     <Compile Include="Model\Database\DatabaseTransaction.cs" />
-    <Compile Include="Model\Database\SqliteFactory.cs" />
+    <Compile Include="Model\Database\Vender\Public\SQLite\SqliteFactory.cs" />
+    <Compile Include="Model\Database\Vender\Public\SQLite\SqliteImplementation.cs" />
     <Compile Include="Model\Data\DataBase.cs" />
     <Compile Include="Model\Data\TransferBase.cs" />
     <Compile Include="Model\DialogFilter.cs" />

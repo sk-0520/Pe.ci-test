@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using Dapper;
 
-namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
+namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database.Vender.Public.SQLite
 {
     /// <summary>
     /// booleanを制御
@@ -42,7 +42,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
 
         public virtual IDbDataAdapter CreateDataAdapter() => new SQLiteDataAdapter();
 
-        public abstract IDatabaseImplementation CreateImplementation();
+        public virtual IDatabaseImplementation CreateImplementation() => new SqliteImplementation();
 
         #endregion
 

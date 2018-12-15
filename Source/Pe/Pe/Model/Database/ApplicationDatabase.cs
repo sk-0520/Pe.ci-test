@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Library.Shared.Embedded.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database;
+using ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database.Vender.Public.SQLite;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Database
@@ -61,7 +62,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database
         #endregion
     }
 
-    public class ApplicationDatabaseImplementation : DatabaseImplementation
+    public class ApplicationDatabaseImplementation : SqliteImplementation
     {
         #region property
 
@@ -137,7 +138,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database
         public ApplicationDatabaseAccessor(IDatabaseFactory connectionCreator, ILogger logger)
             : base(connectionCreator, logger)
         { }
-        
+
         public ApplicationDatabaseAccessor(IDatabaseFactory connectionCreator, ILoggerFactory loggerFactory)
             : this(connectionCreator, loggerFactory.CreateCurrentClass())
         { }

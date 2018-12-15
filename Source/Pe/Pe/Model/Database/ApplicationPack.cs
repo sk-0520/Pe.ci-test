@@ -8,6 +8,13 @@ using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Database
 {
+    public enum Pack
+    {
+        Main,
+        File,
+        Temporary,
+    }
+
     public interface IApplicationPack<out T> : IDisposable
     {
         #region property
@@ -16,7 +23,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database
         T File { get; }
         T Temporary { get; }
 
-        IEnumerable<T> Items { get; }
+        IReadOnlyList<T> Items { get; }
+
+        T this[Pack index] { get; }
 
         #endregion
     }
@@ -42,12 +51,15 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database
         public TObject Temporary { get; }
         TInterface IApplicationPack<TInterface>.Temporary => Temporary;
 
-        public IEnumerable<TObject> Items => new[] {
+        public IReadOnlyList<TObject> Items => new[] {
             Main,
             File,
             Temporary,
         };
-        IEnumerable<TInterface> IApplicationPack<TInterface>.Items => (IEnumerable<TInterface>)Items; // あっれぇ
+        IReadOnlyList<TInterface> IApplicationPack<TInterface>.Items => (IReadOnlyList<TInterface>)Items; // あっれぇ
+
+        public TObject this[Pack index] => Items[(int)index];
+        TInterface IApplicationPack<TInterface>.this[Pack index] => this[index];
 
         #endregion
 

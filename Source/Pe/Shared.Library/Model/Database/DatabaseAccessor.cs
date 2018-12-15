@@ -32,6 +32,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
         #region property
 
         IDbConnection BaseConnection { get; }
+        IDatabaseFactory DatabaseFactory { get; }
 
         #endregion
 

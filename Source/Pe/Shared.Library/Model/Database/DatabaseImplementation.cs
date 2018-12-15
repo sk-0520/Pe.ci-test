@@ -8,6 +8,13 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
 {
     public interface IDatabaseImplementation
     {
+        #region
+
+        bool SupportedTransactionDDL { get; }
+        bool SupportedTransactionDML { get; }
+
+        #endregion
+
         #region function
 
         object GetNullValue(Type type);
@@ -41,7 +48,11 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
 
         #endregion
 
-        #region IDatabaseNullChecker
+        #region IDatabaseImplementation
+
+        public virtual bool SupportedTransactionDDL { get; } = false;
+        public virtual bool SupportedTransactionDML { get; } = true;
+
 
         public virtual object GetNullValue(Type type)
         {

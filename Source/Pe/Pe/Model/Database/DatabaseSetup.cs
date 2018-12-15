@@ -45,14 +45,27 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database
             return result;
         }
 
-        void ExecuteCore(IDatabaseAccessor accessor, IReadOnlySetupDto dto, Action<IDatabaseCommander, IReadOnlySetupDto> ddl, Action<IDatabaseTransaction, IReadOnlySetupDto> dml)
+        void ExecuteCore(IDatabaseAccessor accessor, IReadOnlySetupDto dto, Action<IDatabaseCommander, IReadOnlySetupDto> ddl, Action<IDatabaseCommander, IReadOnlySetupDto> dml)
         {
-            Logger.Debug("DDL");
-            ddl(accessor, dto);
+            if(accessor.DatabaseFactory.CreateImplementation().SupportedTransactionDDL) {
+                var result = accessor.Batch(commander => {
+                    Logger.Debug("DDL");
+                    ddl(commander, dto);
 
-            Logger.Debug("DML");
-            using(var tran = accessor.BeginTransaction()) {
-                dml(tran, dto);
+                    Logger.Debug("DML");
+                    dml(commander, dto);
+                });
+                if(!result.Success) {
+                    throw result.FailureValue;
+                }
+            } else {
+                Logger.Debug("DDL");
+                ddl(accessor, dto);
+
+                Logger.Debug("DML");
+                using(var tran = accessor.BeginTransaction()) {
+                    dml(tran, dto);
+                }
             }
         }
 

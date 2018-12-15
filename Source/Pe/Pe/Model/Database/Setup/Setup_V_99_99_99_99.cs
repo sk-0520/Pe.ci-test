@@ -29,7 +29,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Setup
         {
         }
 
-        public override void ExecuteMainManipulate(IDatabaseTransaction transaction, IReadOnlySetupDto dto)
+        public override void ExecuteMainManipulate(IDatabaseCommander commander, IReadOnlySetupDto dto)
         {
         }
 
@@ -37,7 +37,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Setup
         {
         }
 
-        public override void ExecuteFileManipulate(IDatabaseTransaction transaction, IReadOnlySetupDto dto)
+        public override void ExecuteFileManipulate(IDatabaseCommander commander, IReadOnlySetupDto dto)
         {
         }
 
@@ -45,7 +45,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Setup
         {
         }
 
-        public override void ExecuteTemporaryManipulate(IDatabaseTransaction transaction, IReadOnlySetupDto dto)
+        public override void ExecuteTemporaryManipulate(IDatabaseCommander commander, IReadOnlySetupDto dto)
         {
         }
 
