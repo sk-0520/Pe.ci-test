@@ -137,6 +137,7 @@
     <Compile Include="Model\Database\Vender\Public\SQLite\SqliteImplementation.cs" />
     <Compile Include="Model\Data\DataBase.cs" />
     <Compile Include="Model\Data\TransferBase.cs" />
+    <Compile Include="Model\DateTimeUtility.cs" />
     <Compile Include="Model\DialogFilter.cs" />
     <Compile Include="Model\EncodingUtility.cs" />
     <Compile Include="Model\FreezableUtility.cs" />

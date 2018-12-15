@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 using ContentTypeTextNet.Pe.Main.Model.Data.Dto;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Data
@@ -32,7 +33,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data
             };
         }
 
-        void WriteCreateCore(IWritableCreateDto dto, DateTime timestamp)
+        void WriteCreateCore(IWritableCreateDto dto, [Timestamp(DateTimeKind.Utc)] DateTime timestamp)
         {
             dto.CreatedAccount = Account;
             dto.CreatedTimestamp = timestamp;
@@ -42,10 +43,10 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data
 
         public void WriteCreate(IWritableCreateDto dto)
         {
-            WriteCreateCore(dto, DateTime.Now);
+            WriteCreateCore(dto, DateTime.UtcNow);
         }
 
-        void WriteUpdateCore(IWritableUpdateDto dto, DateTime timestamp)
+        void WriteUpdateCore(IWritableUpdateDto dto, [Timestamp(DateTimeKind.Utc)] DateTime timestamp)
         {
             dto.UpdatedAccount = Account;
             dto.UpdatedTimestamp = timestamp;
@@ -55,12 +56,12 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data
 
         public void WriteUpdate(IWritableUpdateDto dto)
         {
-            WriteUpdateCore(dto, DateTime.Now);
+            WriteUpdateCore(dto, DateTime.UtcNow);
         }
 
         public void WriteCommon(IWritableCommonDto dto)
         {
-            var timestamp = DateTime.Now;
+            var timestamp = DateTime.UtcNow;
 
             WriteCreateCore(dto, timestamp);
             WriteUpdateCore(dto, timestamp);
