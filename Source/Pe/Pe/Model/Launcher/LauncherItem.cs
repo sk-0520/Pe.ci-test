@@ -29,7 +29,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Launcher
         #region property
 
         public string Command { get; set; }
-        public string CommandOption { get; set; }
+        public string Option { get; set; }
         public string WorkDirectoryPath { get; set; }
 
         #endregion

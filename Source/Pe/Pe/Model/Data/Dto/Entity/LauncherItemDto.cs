@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ContentTypeTextNet.Pe.Main.Model.Data.Dto
+namespace ContentTypeTextNet.Pe.Main.Model.Data.Dto.Entity
 {
     public interface IReadOnlyLauncherItemRowDto : IReadOnlyRowDtoBase
     {
@@ -15,7 +15,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data.Dto
         string Name { get; }
         string Kind { get; }
         string Command { get; }
-        string CommandOption { get; }
+        string Option { get; }
         string WorkDirectory { get; }
         string IconPath { get; }
         long IconIndex { get; }
@@ -41,7 +41,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data.Dto
         public string Name { get; set; }
         public string Kind { get; set; }
         public string Command { get; set; }
-        public string CommandOption { get; set; }
+        public string Option { get; set; }
         public string WorkDirectory { get; set; }
         public string IconPath { get; set; }
         public long IconIndex { get; set; }

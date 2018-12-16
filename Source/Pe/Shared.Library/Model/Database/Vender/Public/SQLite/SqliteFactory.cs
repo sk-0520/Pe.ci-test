@@ -31,7 +31,8 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database.Vender.Pub
         protected static SQLiteConnectionStringBuilder CreateCommonBuilder()
         {
             return new SQLiteConnectionStringBuilder() {
-                DateTimeKind = DateTimeKind.Utc
+                DateTimeKind = DateTimeKind.Utc,
+                BinaryGUID = false,
             };
         }
 

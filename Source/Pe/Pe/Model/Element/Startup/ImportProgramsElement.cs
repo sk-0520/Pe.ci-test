@@ -10,6 +10,7 @@ using ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Applications;
 using ContentTypeTextNet.Pe.Main.Model.Database.Dao;
+using ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Model.Launcher;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Element.Startup
@@ -97,13 +98,16 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Startup
 
             using(DatabaseBarrier.Locker.WaitWriteByDefaultTimeout())
             using(var transaction = DatabaseBarrier.Accessor.BeginTransaction()) {
-                //var launcherItemsDao = new LauncherItemsDao(transaction, )
+                var launcherItemsDao = new LauncherItemsDao(transaction, StatementLoader, Logger.Factory);
                 // ap ファイルからランチャーデータ作って
                 // db ランチャーアイテム突っ込んで
                 // db タグ突っ込んで
                 // db グループ作る
                 foreach(var importItem in importItems) {
+                    launcherItemsDao.InsertSimpleNew(importItem.Data);
                 }
+
+                transaction.Commit();
             }
 
         }

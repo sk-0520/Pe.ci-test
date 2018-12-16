@@ -47,7 +47,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Launcher
             if(loadShortcut && PathUtility.IsShortcut(expandedPath)) {
                 using(var shortcut = new ShortcutFile(expandedPath)) {
                     result.Command.Command = shortcut.TargetPath;
-                    result.Command.CommandOption = shortcut.Arguments;
+                    result.Command.Option = shortcut.Arguments;
                     result.Command.WorkDirectoryPath =  shortcut.WorkingDirectory;
 
                     result.Icon.Path = shortcut.IconPath;

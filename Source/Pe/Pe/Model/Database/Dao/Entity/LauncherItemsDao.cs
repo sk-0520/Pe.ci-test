@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
+using ContentTypeTextNet.Pe.Main.Model.Data;
+using ContentTypeTextNet.Pe.Main.Model.Data.Dto.Entity;
 using ContentTypeTextNet.Pe.Main.Model.Launcher;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
@@ -18,9 +20,40 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
 
         #region function
 
-        void InsertSimpleNew(LauncherItemSimpleNewData data)
+        LauncherItemRowDto ConvertFromData(LauncherItemSimpleNewData data)
         {
+            var kindEnumTransfer = new EnumTransfer<LauncherItemKind>();
+            var permissionEnumTransfer = new EnumTransfer<LauncherItemPermission>();
 
+            var dto = new LauncherItemRowDto() {
+                LauncherItemId = data.LauncherItemId,
+                Name = data.Name,
+                Kind = kindEnumTransfer.To(data.Kind),
+                Command = data.Command.Command,
+                Option = data.Command.Option,
+                WorkDirectory = data.Command.WorkDirectoryPath,
+                IconPath = data.Icon.Path,
+                IconIndex = data.Icon.Index,
+                IsEnabledCommandLauncher = data.IsEnabledCommandLauncher,
+                IsEnabledCustomEnvVar = data.IsEnabledCustomEnvVar,
+                IsEnabledStandardOutput = data.StandardStream.IsEnabledStandardOutput,
+                IsEnabledStandardInput = data.StandardStream.IsEnabledStandardInput,
+                Permission = permissionEnumTransfer.To( data.Permission),
+                CredentId = Guid.Empty,
+                Note = data.Note,
+            };
+
+            var status = DatabaseCommonStatus.CreateUser();
+            status.WriteCommon(dto);
+
+            return dto;
+        }
+
+        public void InsertSimpleNew(LauncherItemSimpleNewData data)
+        {
+            var sql = StatementLoader.LoadStatementByCurrent();
+            var dto = ConvertFromData(data);
+            Commander.Execute(sql, dto);
         }
 
         #endregion

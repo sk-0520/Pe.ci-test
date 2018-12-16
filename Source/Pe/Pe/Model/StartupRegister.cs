@@ -66,7 +66,11 @@ namespace ContentTypeTextNet.Pe.Main.Model
                 shortcut.TargetPath = assemblyPath;
                 shortcut.WorkingDirectory = Path.GetDirectoryName(assemblyPath);
                 shortcut.IconPath = assemblyPath;
+#if DEBUG || BETA
+                Logger.Information("skip!");
+#else
                 shortcut.Save(startupShortcutPath);
+#endif
             }
 
             // 古いスタートアップが存在すれば破棄しておく
@@ -82,6 +86,6 @@ namespace ContentTypeTextNet.Pe.Main.Model
             return true;
         }
 
-        #endregion
+#endregion
     }
 }
