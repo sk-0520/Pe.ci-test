@@ -87,6 +87,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\ChunkTest.cs" />
+    <Compile Include="Model\Database\EnumTransferTest.cs" />
     <Compile Include="Model\DiContainerTest.cs" />
     <Compile Include="Model\EnumUtilityTest.cs" />
     <Compile Include="Model\LoggingTest.cs" />
