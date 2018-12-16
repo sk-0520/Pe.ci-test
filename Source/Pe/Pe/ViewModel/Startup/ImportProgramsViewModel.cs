@@ -9,6 +9,7 @@ using ContentTypeTextNet.Pe.Library.Shared.Library.ViewModel;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Element.Startup;
 using Prism.Commands;
+using Prism.Interactivity.InteractionRequest;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModel.Startup
 {
@@ -24,8 +25,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Startup
 
         #region property
 
+        public InteractionRequest<Notification> CloseRequest { get; } = new InteractionRequest<Notification>();
+
         ActionModelViewModelObservableCollectionManager<ProgramElement, ProgramViewModel> ProgramCollection { get; }
         public ObservableCollection<ProgramViewModel> ProgramItems => ProgramCollection.ViewModels;
+
+
 
         #endregion
 
@@ -34,6 +39,18 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Startup
         public ICommand ViewLoadedCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
                 Model.LoadProgramsAsync().ConfigureAwait(false);
+            }
+        ));
+
+        public ICommand CloseCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                CloseRequest.Raise(new Notification());
+            }
+        ));
+
+        public ICommand ImportCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                Model.ImportAsync().ConfigureAwait(false);
             }
         ));
 
