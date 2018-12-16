@@ -139,7 +139,14 @@ namespace ContentTypeTextNet.Pe.Main.Model.Applications
         #endregion
     }
 
-    public sealed class DatabaseBarrier : IDatabaseBarrier
+    public interface IMainDatabaseBarrier : IDatabaseBarrier
+    { }
+    public interface IFileDatabaseBarrier : IDatabaseBarrier
+    { }
+    public interface ITemporaryDatabaseBarrier : IDatabaseBarrier
+    { }
+
+    public sealed class DatabaseBarrier : IMainDatabaseBarrier, IFileDatabaseBarrier, ITemporaryDatabaseBarrier
     {
         public DatabaseBarrier(IDatabaseAccessor accessor, ReaderWriterLocker locker)
         {
@@ -154,4 +161,5 @@ namespace ContentTypeTextNet.Pe.Main.Model.Applications
 
         #endregion
     }
+
 }

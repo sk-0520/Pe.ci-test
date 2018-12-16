@@ -180,7 +180,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Applications
             }
         }
 
-        bool NormalSetup(out (DatabaseFactoryPack factory, DatabaseAccessorPack accessor) pack,EnvironmentParameters environmentParameters, ILogger logger)
+        bool NormalSetup(out (DatabaseFactoryPack factory, DatabaseAccessorPack accessor) pack, EnvironmentParameters environmentParameters, ILogger logger)
         {
             logger.Information("DBセットアップ");
 
@@ -222,6 +222,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Applications
                 .Register<ILogger, ApplicationLogger>(logger)
                 .Register<IDatabaseFactoryPack, DatabaseFactoryPack>(factory)
                 .Register<IDatabaseAccessorPack, DatabaseAccessorPack>(accessor)
+                .Register<IMainDatabaseBarrier, DatabaseBarrier>(new DatabaseBarrier(accessor.Main, rwlp.Main))
+                .Register<IFileDatabaseBarrier, DatabaseBarrier>(new DatabaseBarrier(accessor.File, rwlp.File))
+                .Register<ITemporaryDatabaseBarrier, DatabaseBarrier>(new DatabaseBarrier(accessor.Temporary, rwlp.Temporary))
                 .Register<IReadWriteLockPack, ReadWriteLockPack>(rwlp)
             ;
 

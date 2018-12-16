@@ -7,17 +7,21 @@ using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
+using ContentTypeTextNet.Pe.Main.Model.Applications;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Element.Startup
 {
     public class ImportProgramsElement : ElementBase
     {
-        public ImportProgramsElement(ILoggerFactory loggerFactory)
+        public ImportProgramsElement(IMainDatabaseBarrier databaseBarrier, ILoggerFactory loggerFactory)
             : base(loggerFactory)
-        { }
+        {
+            DatabaseBarrier = databaseBarrier;
+        }
 
         #region property
 
+        IDatabaseBarrier DatabaseBarrier { get; }
         public ObservableCollection<ProgramElement> ProgramItems { get; } = new ObservableCollection<ProgramElement>();
 
         #endregion
