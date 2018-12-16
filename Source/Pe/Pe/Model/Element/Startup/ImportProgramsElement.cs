@@ -9,6 +9,7 @@ using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Applications;
 using ContentTypeTextNet.Pe.Main.Model.Database.Dao;
+using ContentTypeTextNet.Pe.Main.Model.Launcher;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Element.Startup
 {
@@ -78,10 +79,18 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Startup
 
         void Import()
         {
+            var launcherCreator = new LauncherCreator(Logger.Factory);
+
             var importItems = ProgramItems
                 .Where(i => i.IsImport)
+                .Select(i => new {
+                    Data = launcherCreator.FromFile(i.FileInfo, true),
+                    Tags = launcherCreator.GetTags(i.FileInfo).ToList(),
+                })
                 .ToList()
             ;
+
+            var group = launcherCreator.CreateGroupData("@GROUP");
 
             // ap ファイルからランチャーデータ作って
             // db ランチャーアイテム突っ込んで
