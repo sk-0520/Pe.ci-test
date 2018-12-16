@@ -62,7 +62,7 @@ namespace ContentTypeTextNet.Pe.Main.Model
             return !file.Exists;
         }
 
-        bool ShowAcceptView(IDiScopeContainerCreator scopeContainerCreator, ILogger logger)
+        bool ShowAcceptView(IDiScopeContainerFactory scopeContainerCreator, ILogger logger)
         {
             using(var diContainer = scopeContainerCreator.Scope()) {
                 diContainer
