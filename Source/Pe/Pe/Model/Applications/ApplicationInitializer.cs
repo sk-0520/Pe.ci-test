@@ -217,6 +217,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Applications
             container
                 .Register<ILoggerFactory, ILoggerFactory>(logger.Factory)
                 .Register<ILogger, ApplicationLogger>(logger)
+                .Register<IDatabaseStatementLoader, ApplicationDatabaseStatementLoader>(new ApplicationDatabaseStatementLoader(environmentParameters.MainSqlDirectory, TimeSpan.FromSeconds(30), logger.Factory))
                 .Register<IDatabaseFactoryPack, DatabaseFactoryPack>(factory)
                 .Register<IDatabaseAccessorPack, DatabaseAccessorPack>(accessor)
                 .Register<IMainDatabaseBarrier, DatabaseBarrier>(new DatabaseBarrier(accessor.Main, rwlp.Main))

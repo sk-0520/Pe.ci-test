@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
+using ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Applications;
 using ContentTypeTextNet.Pe.Main.Model.Database.Dao;
@@ -15,15 +16,17 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Startup
 {
     public class ImportProgramsElement : ElementBase
     {
-        public ImportProgramsElement(IMainDatabaseBarrier databaseBarrier, ILoggerFactory loggerFactory)
+        public ImportProgramsElement(IMainDatabaseBarrier databaseBarrier, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             DatabaseBarrier = databaseBarrier;
+            StatementLoader = statementLoader;
         }
 
         #region property
 
         IDatabaseBarrier DatabaseBarrier { get; }
+        IDatabaseStatementLoader StatementLoader { get; }
         public ObservableCollection<ProgramElement> ProgramItems { get; } = new ObservableCollection<ProgramElement>();
 
         #endregion
@@ -92,13 +95,15 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Startup
 
             var group = launcherCreator.CreateGroupData("@GROUP");
 
-            // ap ファイルからランチャーデータ作って
-            // db ランチャーアイテム突っ込んで
-            // db タグ突っ込んで
-            // db グループ作る
-            // ap アイコン読み込んで
-            // db アイコン突っ込む
-            foreach(var importItem in importItems) {
+            using(DatabaseBarrier.Locker.WaitWriteByDefaultTimeout())
+            using(var transaction = DatabaseBarrier.Accessor.BeginTransaction()) {
+                //var launcherItemsDao = new LauncherItemsDao(transaction, )
+                // ap ファイルからランチャーデータ作って
+                // db ランチャーアイテム突っ込んで
+                // db タグ突っ込んで
+                // db グループ作る
+                foreach(var importItem in importItems) {
+                }
             }
 
         }
