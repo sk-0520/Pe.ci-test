@@ -137,6 +137,7 @@
     <Compile Include="Model\Applications\ApplicationDiContainer.cs" />
     <Compile Include="Model\Applications\ApplicationLogger.cs" />
     <Compile Include="Model\Applications\ApplicationReaderWriterLocker.cs" />
+    <Compile Include="Model\Data\Dto\LauncherItemDto.cs" />
     <Compile Include="Model\StartupRegister.cs" />
     <Compile Include="Model\Database\Dao\ApplicationDatabaseObjectBase.cs" />
     <Compile Include="Model\Database\Setup\SetupBase.cs" />

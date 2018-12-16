@@ -113,4 +113,10 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data.Dto
 
         #endregion
     }
+
+    public interface IReadOnlyRowDtoBase : IReadOnlyCommonDto
+    { }
+
+    public abstract class RowDtoBase : CommonDtoBase, IReadOnlyRowDtoBase
+    { }
 }
