@@ -30,22 +30,28 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
 
     /// <summary>
     /// Dapper で enum (の文字列)を扱えるように変換する。
+    /// <para>キャッシュとかは気が向けば。。。</para>
     /// </summary>
-    public class EnumTransfer<TEnumMember>
-        where TEnumMember : struct /*, Enum*/
+    public class EnumTransfer<TEnum>
+        where TEnum : struct /*, Enum*/
     {
+        public EnumTransfer()
+        {
+            Debug.Assert(EnumType.IsEnum);
+
+        }
+
         #region property
+
+        Type EnumType { get; } = typeof(TEnum);
 
         #endregion
 
         #region function
 
-        public string To(TEnumMember member)
+        public string To(TEnum member)
         {
-            var enumType = typeof(TEnumMember);
-            Debug.Assert(enumType.IsEnum);
-
-            var fieldInfo = enumType.GetField(member.ToString());
+            var fieldInfo = EnumType.GetField(member.ToString());
 
             var attribute = fieldInfo.GetCustomAttribute<EnumTransferAttribute>();
             if(attribute != null) {
@@ -69,6 +75,38 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
             }
 
             return builder.ToString();
+        }
+
+        public TEnum From(string value)
+        {
+            if(string.IsNullOrWhiteSpace(value)) {
+                return default(TEnum);
+            }
+
+            var fieldItem = EnumType.GetFields()
+                .Select(f => new { Field = f, Attribute = f.GetCustomAttribute<EnumTransferAttribute>() })
+                .Where(i => i.Attribute != null)
+                .FirstOrDefault(i => i.Attribute.Value == value)
+            ;
+            if(fieldItem != null) {
+                foreach(var enumMember in Enum.GetValues(EnumType)) {
+                    if(enumMember.ToString() == fieldItem.Field.Name) {
+                        return (TEnum)enumMember;
+                    }
+                }
+            }
+
+
+            var memberValue = value
+                .Replace("-", "")
+                .ToLower()
+            ;
+
+            if(Enum.TryParse<TEnum>(memberValue, true, out var result)) {
+                return result;
+            }
+
+            return default(TEnum);
         }
 
         #endregion
