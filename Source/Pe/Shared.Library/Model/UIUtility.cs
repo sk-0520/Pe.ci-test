@@ -10,6 +10,9 @@ using ContentTypeTextNet.Library.PInvoke.Windows;
 
 namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 {
+    /// <summary>
+    /// WPF における UI をサポート。
+    /// </summary>
     public static class UIUtility
     {
         /// <summary>

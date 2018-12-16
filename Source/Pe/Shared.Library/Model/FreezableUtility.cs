@@ -7,6 +7,9 @@ using System.Windows;
 
 namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 {
+    /// <summary>
+    /// <see cref="Freezable"/>に対するあれ。
+    /// </summary>
     public static class FreezableUtility
     {
         /// <summary>

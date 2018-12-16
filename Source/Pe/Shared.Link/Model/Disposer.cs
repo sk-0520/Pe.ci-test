@@ -9,10 +9,21 @@ using System.Xml.Serialization;
 
 namespace ContentTypeTextNet.Pe.Library.Shared.Link.Model
 {
+    public interface IDisposer: IDisposable
+    {
+        #region propert
+
+        /// <summary>
+        /// <see cref="IDisposable.Dispose"/>されたか。
+        /// </summary>
+        bool IsDisposed { get; }
+
+        #endregion
+    }
     /// <summary>
     /// <see cref="IDisposable.Dispose"/>をサポートする基底クラス。
     /// </summary>
-    public abstract class DisposerBase : IDisposable
+    public abstract class DisposerBase : IDisposer, IDisposable
     {
         ~DisposerBase()
         {

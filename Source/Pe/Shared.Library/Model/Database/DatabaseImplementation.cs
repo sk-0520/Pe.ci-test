@@ -6,22 +6,53 @@ using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
 {
+    /// <summary>
+    /// データベース実装依存処理。
+    /// </summary>
     public interface IDatabaseImplementation
     {
         #region
 
+        /// <summary>
+        /// DDLのトランザクションが有効か。
+        /// </summary>
         bool SupportedTransactionDDL { get; }
+        /// <summary>
+        /// DMLのトランザクションが有効か。
+        /// </summary>
         bool SupportedTransactionDML { get; }
 
         #endregion
 
         #region function
 
+        /// <summary>
+        /// 指定の型がデータベース実装にて null 判定される値の取得。
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
         object GetNullValue(Type type);
+        /// <summary>
+        /// 指定の型がデータベース実装にてnull 判定される値の取得。
+        /// <para><see cref="GetNullValue(Type)"/>のラッパー。</para>
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         T GetNullValue<T>();
 
+        /// <summary>
+        /// データベース実装における null 判定実施。
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         bool IsNull(object value);
-
+        /// <summary>
+        /// データベース実装における null 判定実施。
+        /// <para><see cref="IsNull(object)"/>のラッパー。</para>
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="value"></param>
+        /// <returns></returns>
         bool IsNull<T>(T? value)
             where T : struct
         ;

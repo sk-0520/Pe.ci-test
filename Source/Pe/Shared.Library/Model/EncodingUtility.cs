@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 {
+    /// <summary>
+    /// エンコーディング。。。
+    /// <para>現状 規格上でも怪しいけど実運用上無視できない utf-8n のためだけのクラス。</para>
+    /// </summary>
     public class EncodingUtility
     {
         #region property

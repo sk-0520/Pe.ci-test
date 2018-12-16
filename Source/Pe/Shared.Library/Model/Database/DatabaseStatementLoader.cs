@@ -10,7 +10,7 @@ using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
 {
     /// <summary>
-    /// DBに対する実行文を取得する。
+    /// データベースに対する実行文を取得する。
     /// <para>SQLだわな。</para>
     /// </summary>
     public interface IDatabaseStatementLoader

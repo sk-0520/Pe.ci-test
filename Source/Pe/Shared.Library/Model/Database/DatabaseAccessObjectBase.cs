@@ -7,6 +7,9 @@ using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 
 namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
 {
+    /// <summary>
+    /// だお！
+    /// </summary>
     public abstract class DatabaseAccessObjectBase
     {
         public DatabaseAccessObjectBase(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, ILogger logger)
@@ -22,8 +25,17 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
 
         #region property
 
+        /// <summary>
+        /// データベース文。
+        /// </summary>
         protected IDatabaseCommander Commander { get; }
+        /// <summary>
+        /// データベース文の読み込みストア。
+        /// </summary>
         protected IDatabaseStatementLoader StatementLoader { get; }
+        /// <summary>
+        /// ログ出力担当。
+        /// </summary>
         protected ILogger Logger { get; }
 
         #endregion

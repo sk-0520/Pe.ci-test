@@ -7,6 +7,10 @@ using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 
 namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Unmanaged
 {
+    /// <summary>
+    /// 非マネージドオブジェクトをマネージドオブジェクトとして扱う。
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public abstract class UnmanagedModelBase<T> : RawModel<T>
     {
         public UnmanagedModelBase(T rawObject)

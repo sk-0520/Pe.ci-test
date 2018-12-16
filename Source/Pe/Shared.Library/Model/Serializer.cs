@@ -9,11 +9,20 @@ using System.Xml;
 
 namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 {
+    /// <summary>
+    /// シリアライズ・デシリアライズ処理を統括。
+    /// </summary>
     public abstract class SerializerBase
     {
         #region property
 
+        /// <summary>
+        /// 文字列の場合のエンコーディング。
+        /// </summary>
         public Encoding Encoding { get; set; } = Encoding.UTF8;
+        /// <summary>
+        /// バッファサイズ。
+        /// </summary>
         public int BufferSize { get; set; } = 4 * 1024;
 
         #endregion

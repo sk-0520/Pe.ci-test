@@ -9,6 +9,9 @@ using ContentTypeTextNet.Library.PInvoke.Windows;
 
 namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Unmanaged
 {
+    /// <summary>
+    /// Windows 万歳な GDI 系オブジェクトを扱う。
+    /// </summary>
     public abstract class GdiObjectBase : UnmanagedHandleModelBase, IMakeBitmapSource
     {
         public GdiObjectBase(IntPtr hHandle)

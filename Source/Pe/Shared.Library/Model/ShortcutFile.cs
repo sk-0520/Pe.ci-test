@@ -9,6 +9,9 @@ using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 
 namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 {
+    /// <summary>
+    /// ショートカットファイルの読み書き。
+    /// </summary>
     public class ShortcutFile : DisposerBase
     {
         #region define

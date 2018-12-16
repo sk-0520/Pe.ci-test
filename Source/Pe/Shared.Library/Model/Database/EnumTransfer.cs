@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
 {
+    /// <summary>
+    /// enum の属性設定にて <see cref="EnumTransfer{TEnum}"/> を制御する。
+    /// </summary>
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = false)]
     public class EnumTransferAttribute : Attribute
     {
@@ -29,7 +32,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
     }
 
     /// <summary>
-    /// Dapper で enum (の文字列)を扱えるように変換する。
+    /// <see cref="Dapper"/> で enum (の文字列)を扱えるように変換する。
     /// <para>キャッシュとかは気が向けば。。。</para>
     /// </summary>
     public class EnumTransfer<TEnum>
@@ -38,7 +41,6 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
         public EnumTransfer()
         {
             Debug.Assert(EnumType.IsEnum);
-
         }
 
         #region property

@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 {
+    /// <summary>
+    /// foreche でくるくる回ってるよ！
+    /// </summary>
     public interface ICounter
     {
         #region property
@@ -22,6 +25,9 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         #endregion
     }
 
+    /// <summary>
+    /// forech でくるくる回るよ！
+    /// </summary>
     public class Counter : ICounter, IEnumerable<ICounter>
     {
         public Counter(int maxCount)

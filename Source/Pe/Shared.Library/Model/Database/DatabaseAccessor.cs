@@ -12,10 +12,21 @@ using Dapper;
 
 namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
 {
+    /// <summary>
+    /// データベースとの会話用インターフェイス。
+    /// </summary>
     public interface IDatabaseCommander
     {
         #region function
 
+        /// <summary>
+        /// 指定の型で問い合わせ。
+        /// </summary>
+        /// <typeparam name="T">問い合わせ型</typeparam>
+        /// <param name="sql">データベース文。</param>
+        /// <param name="param"><paramref name="sql"/>に対するパラメータ。</param>
+        /// <param name="buffered"><see cref="Dapper.SqlMapper.Query"/>のbufferd</param>
+        /// <returns></returns>
         IEnumerable<T> Query<T>(string sql, object param = null, bool buffered = true);
 
         IEnumerable<dynamic> Query(string sql, object param = null, bool buffered = true);

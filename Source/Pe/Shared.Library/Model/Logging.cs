@@ -46,7 +46,8 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
     }
 
     /// <summary>
-    /// ログを扱う側へログ情報を安全になんやかんやする。
+    /// ログを扱う側へ非同期でログ情報を安全になんやかんやする。
+    /// <para>渡される側は単一スレッドを保証する(それがどのスレッドかまでは面倒見ない)</para>
     /// </summary>
     public abstract class AsyncLoggerBase : LoggerBase, IDisposable
     {
@@ -115,7 +116,9 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         }
 
         /// <summary>
-        ///
+        /// 単一のスレッドにて渡されたデータをなんやかんやする。
+        /// <para>少なくともログ生成スレッドとは異なる。</para>
+        /// <para>本処理は単一スレッドにて呼び出されるので呼び出され側は好きにすればいいけどそれが GUI スレッドでないのは間違いないよ。</para>
         /// </summary>
         /// <param name="logItems">古い順。</param>
         protected abstract void PutItems(IReadOnlyList<LogItem> logItems);

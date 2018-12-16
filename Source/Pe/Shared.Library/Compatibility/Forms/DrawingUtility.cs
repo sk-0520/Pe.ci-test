@@ -12,6 +12,9 @@ using Drawing = System.Drawing;
 
 namespace ContentTypeTextNet.Pe.Library.Shared.Library.Compatibility.Forms
 {
+    /// <summary>
+    /// <see cref="System.Drawing"/> のラッパー。
+    /// </summary>
     public static class DrawingUtility
     {
         public static Drawing.Size Convert(Size size)
