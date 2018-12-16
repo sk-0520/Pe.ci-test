@@ -85,6 +85,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Startup
         {
             var launcherCreator = new LauncherCreator(Logger.Factory);
 
+            // ap ファイルからランチャーデータ作って
             var importItems = ProgramItems
                 .Where(i => i.IsImport)
                 .Select(i => new {
@@ -99,13 +100,12 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Startup
             using(DatabaseBarrier.Locker.WaitWriteByDefaultTimeout())
             using(var transaction = DatabaseBarrier.Accessor.BeginTransaction()) {
                 var launcherItemsDao = new LauncherItemsDao(transaction, StatementLoader, Logger.Factory);
-                // ap ファイルからランチャーデータ作って
                 // db ランチャーアイテム突っ込んで
-                // db タグ突っ込んで
-                // db グループ作る
                 foreach(var importItem in importItems) {
                     launcherItemsDao.InsertSimpleNew(importItem.Data);
                 }
+                // db タグ突っ込んで
+                // db グループ作る
 
                 transaction.Commit();
             }

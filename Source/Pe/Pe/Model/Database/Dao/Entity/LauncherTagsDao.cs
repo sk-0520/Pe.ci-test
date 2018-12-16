@@ -15,6 +15,12 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
         { }
 
         #region function
+
+        void InsertTags(Guid launcherItemId, IEnumerable<string> words)
+        {
+
+        }
+
         #endregion
     }
 }
