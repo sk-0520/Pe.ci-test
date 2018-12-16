@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Applications;
+using ContentTypeTextNet.Pe.Main.Model.Database.Dao;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Element.Startup
 {
@@ -81,6 +82,15 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Startup
                 .Where(i => i.IsImport)
                 .ToList()
             ;
+
+            // ap ファイルからランチャーデータ作って
+            // db ランチャーアイテム突っ込んで
+            // db タグ突っ込んで
+            // db グループ作る
+            // ap アイコン読み込んで
+            // db アイコン突っ込む
+            foreach(var importItem in importItems) {
+            }
 
         }
 
