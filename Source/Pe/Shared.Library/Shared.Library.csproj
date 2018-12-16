@@ -142,6 +142,7 @@
     <Compile Include="Model\DateTimeUtility.cs" />
     <Compile Include="Model\DialogFilter.cs" />
     <Compile Include="Model\EncodingUtility.cs" />
+    <Compile Include="Model\FileUtility.cs" />
     <Compile Include="Model\FreezableUtility.cs" />
     <Compile Include="Model\IconLoader.cs" />
     <Compile Include="Model\IMakeBitmapSource.cs" />
