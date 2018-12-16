@@ -66,11 +66,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Applications
         {
             using(var diContainer = scopeContainerCreator.Scope()) {
                 diContainer
-                    .Register<ILogger, ILogger>(logger)
-                    .Register<ILoggerFactory, ILoggerFactory>(logger.Factory)
-                    .Register<Element.Accept.AcceptElement, Element.Accept.AcceptElement>(DiLifecycle.Singleton)
-                    .Register<ViewModel.Accept.AcceptViewModel, ViewModel.Accept.AcceptViewModel>(DiLifecycle.Transient)
-                    .DirtyRegister<View.Accept.AcceptWindow, ViewModel.Accept.AcceptViewModel>(nameof(View.Accept.AcceptWindow.DataContext))
+                    .RegisterLogger(logger)
+                    .RegisterMvvm<Element.Accept.AcceptElement, ViewModel.Accept.AcceptViewModel, View.Accept.AcceptWindow>()
                 ;
 
                 var acceptModel = diContainer.New<Element.Accept.AcceptElement>();

@@ -30,13 +30,9 @@ namespace ContentTypeTextNet.Pe.Main.Model
         void ShowStartupView()
         {
             using(var diContainer = DiContainer.Instance.Scope()) {
-                var childLogger = Logger.Factory.CreateCurrentMethod();
                 diContainer
-                    .Register<Element.Startup.StartupElement>(DiLifecycle.Singleton)
-                    .Register<ViewModel.Startup.StartupViewModel>(DiLifecycle.Transient)
-                    .Register<ILogger, ILogger>(childLogger)
-                    .Register<ILoggerFactory, ILoggerFactory>(childLogger.Factory)
-                    .DirtyRegister<View.Startup.StartupWindow, ViewModel.Startup.StartupViewModel>(nameof(System.Windows.FrameworkElement.DataContext))
+                    .RegisterLogger(Logger)
+                    .RegisterMvvm<Element.Startup.StartupElement, ViewModel.Startup.StartupViewModel, View.Startup.StartupWindow>()
                 ;
 
                 var startupModel = diContainer.New<Element.Startup.StartupElement>();
