@@ -13,7 +13,7 @@ using ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Database;
 
-namespace ContentTypeTextNet.Pe.Main.Model
+namespace ContentTypeTextNet.Pe.Main.Model.Applications
 {
     public class ApplicationInitializer
     {

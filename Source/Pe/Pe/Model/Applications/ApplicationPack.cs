@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
+using ContentTypeTextNet.Pe.Main.Model.Database;
 
-namespace ContentTypeTextNet.Pe.Main.Model.Database
+namespace ContentTypeTextNet.Pe.Main.Model.Applications
 {
     public enum Pack
     {
@@ -125,5 +126,32 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database
         public ReadWriteLockPack(ApplicationMainReaderWriterLocker main, ApplicationFileReaderWriterLocker file, ApplicationTemporaryReaderWriterLocker temporary)
             : base(main, file, temporary)
         { }
+    }
+
+
+    public interface IDatabaseBarrier
+    {
+        #region property
+
+        IDatabaseAccessor Accessor { get; }
+        ReaderWriterLocker Locker { get; }
+
+        #endregion
+    }
+
+    public sealed class DatabaseBarrier : IDatabaseBarrier
+    {
+        public DatabaseBarrier(IDatabaseAccessor accessor, ReaderWriterLocker locker)
+        {
+            Accessor = accessor;
+            Locker = locker;
+        }
+
+        #region IDatabaseBarrier
+
+        public IDatabaseAccessor Accessor { get; }
+        public ReaderWriterLocker Locker { get; }
+
+        #endregion
     }
 }

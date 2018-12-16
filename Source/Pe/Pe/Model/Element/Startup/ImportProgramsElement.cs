@@ -48,17 +48,19 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Startup
                 Environment.GetFolderPath(Environment.SpecialFolder.StartMenu),
                 Environment.GetFolderPath(Environment.SpecialFolder.Programs),
             };
-            var files = dirPaths
+            var elements = dirPaths
                 .Select(s => new DirectoryInfo(s))
                 .SelectMany(d => GetFiles(d))
                 .Where(f => PathUtility.IsShortcut(f.Name) || PathUtility.IsProgram(f.Name))
                 .GroupBy(f => f.Name)
                 .OrderBy(g => g.Key)
                 .Select(g => g.First())
+                .Select(f => new ProgramElement(f, Logger.Factory) {
+                    IsImport = true,
+                })
             ;
 
-            foreach(var file in files) {
-                var element = new ProgramElement(file, Logger.Factory);
+            foreach(var element in elements) {
                 ProgramItems.Add(element);
             }
 
@@ -68,6 +70,21 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Startup
         {
             return Task.Run(() => LoadPrograms());
         }
+
+        void Import()
+        {
+            var importItems = ProgramItems
+                .Where(i => i.IsImport)
+                .ToList()
+            ;
+
+        }
+
+        public Task ImportAsync()
+        {
+            return Task.Run(() => Import());
+        }
+
 
         #endregion
     }

@@ -134,9 +134,9 @@
     </Compile>
     <Compile Include="Constants.cs" />
     <Compile Include="CultureService.cs" />
-    <Compile Include="Model\ApplicationDiContainer.cs" />
-    <Compile Include="Model\ApplicationLogger.cs" />
-    <Compile Include="Model\ApplicationReaderWriterLocker.cs" />
+    <Compile Include="Model\Applications\ApplicationDiContainer.cs" />
+    <Compile Include="Model\Applications\ApplicationLogger.cs" />
+    <Compile Include="Model\Applications\ApplicationReaderWriterLocker.cs" />
     <Compile Include="Model\StartupRegister.cs" />
     <Compile Include="Model\Database\Dao\ApplicationDatabaseObjectBase.cs" />
     <Compile Include="Model\Database\Setup\SetupBase.cs" />
@@ -169,9 +169,9 @@
   <ItemGroup>
     <Compile Include="Model\ApplicationManager.cs" />
     <Compile Include="Model\Database\ApplicationDatabase.cs" />
-    <Compile Include="Model\Database\ApplicationPack.cs" />
+    <Compile Include="Model\Applications\ApplicationPack.cs" />
     <Compile Include="Model\Database\DatabaseSetup.cs" />
-    <Compile Include="Model\ApplicationInitializer.cs" />
+    <Compile Include="Model\Applications\ApplicationInitializer.cs" />
     <Compile Include="Model\Platform\SystemWebBrowserUtility.cs" />
     <Compile Include="Model\Element\ElementBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
