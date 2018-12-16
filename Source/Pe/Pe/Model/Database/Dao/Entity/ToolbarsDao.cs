@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 
-namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao
+namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
 {
-    public class CredentsDto : ApplicationDatabaseAccessor
+    public class ToolbarsDao : ApplicationDatabaseAccessor
     {
-        public CredentsDto(IDatabaseFactory connectionCreator, ILoggerFactory loggerFactory)
+        public ToolbarsDao(IDatabaseFactory connectionCreator, ILoggerFactory loggerFactory)
             : base(connectionCreator, loggerFactory)
         { }
 

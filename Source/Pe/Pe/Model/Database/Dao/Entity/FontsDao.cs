@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 
-namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao
+namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
 {
-    public class LauncherEnvVarsDao : ApplicationDatabaseAccessor
+    public class FontsDao : ApplicationDatabaseAccessor
     {
-        public LauncherEnvVarsDao(IDatabaseFactory connectionCreator, ILoggerFactory loggerFactory)
+        public FontsDao(IDatabaseFactory connectionCreator, ILoggerFactory loggerFactory)
             : base(connectionCreator, loggerFactory)
         { }
 

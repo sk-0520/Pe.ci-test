@@ -137,18 +137,18 @@
     <Compile Include="Model\Applications\ApplicationDiContainer.cs" />
     <Compile Include="Model\Applications\ApplicationLogger.cs" />
     <Compile Include="Model\Applications\ApplicationReaderWriterLocker.cs" />
-    <Compile Include="Model\Database\Dao\FontsDao.cs" />
-    <Compile Include="Model\Database\Dao\CredentsDto.cs" />
-    <Compile Include="Model\Database\Dao\NoteFilesDao.cs" />
-    <Compile Include="Model\Database\Dao\NoteContentsDao.cs" />
-    <Compile Include="Model\Database\Dao\NotesDao.cs" />
-    <Compile Include="Model\Database\Dao\ToolbarsDao.cs" />
-    <Compile Include="Model\Database\Dao\LauncherGroupItemsDao.cs" />
-    <Compile Include="Model\Database\Dao\LauncherGroupsDao.cs" />
-    <Compile Include="Model\Database\Dao\LauncherItemsDao.cs" />
-    <Compile Include="Model\Database\Dao\LauncherEnvVarsDao.cs" />
-    <Compile Include="Model\Database\Dao\LauncherItemHistoriesDao.cs" />
-    <Compile Include="Model\Database\Dao\LauncherTagsDao.cs" />
+    <Compile Include="Model\Database\Dao\Entity\FontsDao.cs" />
+    <Compile Include="Model\Database\Dao\Entity\CredentsDto.cs" />
+    <Compile Include="Model\Database\Dao\Entity\NoteFilesDao.cs" />
+    <Compile Include="Model\Database\Dao\Entity\NoteContentsDao.cs" />
+    <Compile Include="Model\Database\Dao\Entity\NotesDao.cs" />
+    <Compile Include="Model\Database\Dao\Entity\ToolbarsDao.cs" />
+    <Compile Include="Model\Database\Dao\Entity\LauncherGroupItemsDao.cs" />
+    <Compile Include="Model\Database\Dao\Entity\LauncherGroupsDao.cs" />
+    <Compile Include="Model\Database\Dao\Entity\LauncherItemsDao.cs" />
+    <Compile Include="Model\Database\Dao\Entity\LauncherEnvVarsDao.cs" />
+    <Compile Include="Model\Database\Dao\Entity\LauncherItemHistoriesDao.cs" />
+    <Compile Include="Model\Database\Dao\Entity\LauncherTagsDao.cs" />
     <Compile Include="Model\Data\Dto\LauncherItemDto.cs" />
     <Compile Include="Model\Launcher\LauncherItem.cs" />
     <Compile Include="Model\Launcher\LauncherCreator.cs" />
@@ -247,7 +247,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\LauncherItemsDao\InsertSimpleNew.sql" />
+    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherItemsDao\InsertSimpleNew.sql" />
     <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\DatabaseSetup\ExistsVersionTable.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
