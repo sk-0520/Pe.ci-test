@@ -78,6 +78,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Launcher
 
         public Guid LauncherItemId { get; set; }
 
+        public string Code { get; set; }
         public string Name { get; set; }
 
         public LauncherItemKind Kind { get; set; }

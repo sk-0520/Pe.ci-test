@@ -12,6 +12,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data.Dto.Entity
 
         Guid LauncherItemId { get; }
 
+        string Code { get; }
         string Name { get; }
         string Kind { get; }
         string Command { get; }
@@ -32,12 +33,13 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data.Dto.Entity
         #endregion
     }
 
-    public class LauncherItemRowDto : RowDtoBase
+    public class LauncherItemRowDto : RowDtoBase, IReadOnlyLauncherItemRowDto
     {
         #region IReadOnlyLauncherItemRowDto
 
         public Guid LauncherItemId { get; set; }
 
+        public string Code { get; set; }
         public string Name { get; set; }
         public string Kind { get; set; }
         public string Command { get; set; }

@@ -46,6 +46,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Launcher
             };
             if(loadShortcut && PathUtility.IsShortcut(expandedPath)) {
                 using(var shortcut = new ShortcutFile(expandedPath)) {
+                    result.Code = Path.GetFileNameWithoutExtension(shortcut.TargetPath);
+
                     result.Command.Command = shortcut.TargetPath;
                     result.Command.Option = shortcut.Arguments;
                     result.Command.WorkDirectoryPath =  shortcut.WorkingDirectory;
@@ -57,6 +59,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Launcher
 
                 }
             } else {
+                result.Code = Path.GetFileNameWithoutExtension(file.Name);
                 result.Command.Command = file.FullName;
             }
 

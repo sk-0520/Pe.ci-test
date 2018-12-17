@@ -27,6 +27,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
 
             var dto = new LauncherItemRowDto() {
                 LauncherItemId = data.LauncherItemId,
+                Code = data.Code,
                 Name = data.Name,
                 Kind = kindEnumTransfer.To(data.Kind),
                 Command = data.Command.Command,
@@ -47,6 +48,12 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             status.WriteCommon(dto);
 
             return dto;
+        }
+
+        public IEnumerable<string> SelectFuzzyCodes(string baseCode)
+        {
+            var sql = StatementLoader.LoadStatementByCurrent();
+            return Commander.Query<string>(sql, new { BaseCode = baseCode });
         }
 
         public void InsertSimpleNew(LauncherItemSimpleNewData data)

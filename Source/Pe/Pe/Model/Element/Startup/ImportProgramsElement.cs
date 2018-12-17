@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Pe.Library.Shared.Embedded.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
@@ -102,6 +103,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Startup
                 var launcherItemsDao = new LauncherItemsDao(transaction, StatementLoader, Logger.Factory);
                 // db ランチャーアイテム突っ込んで
                 foreach(var importItem in importItems) {
+                    var codes = launcherItemsDao.SelectFuzzyCodes(importItem.Data.Code);
+                    importItem.Data.Code = TextUtility.ToUnique(importItem.Data.Code, codes, StringComparison.OrdinalIgnoreCase, (s, n) => $"{s}-{n}");
                     launcherItemsDao.InsertSimpleNew(importItem.Data);
                 }
                 // db タグ突っ込んで
