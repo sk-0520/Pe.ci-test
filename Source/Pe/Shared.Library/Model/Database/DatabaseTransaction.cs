@@ -88,6 +88,21 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
             return DatabaseAccessor.Query(sql, param, this, buffered);
         }
 
+        public T QueryFirst<T>(string sql, object param = null)
+        {
+            return DatabaseAccessor.QueryFirst<T>(sql, param, this);
+        }
+
+        public T QueryFirstOrDefault<T>(string sql, object param = null)
+        {
+            return DatabaseAccessor.QueryFirstOrDefault<T>(sql, param, this);
+        }
+
+        public T QuerySingle<T>(string sql, object param = null)
+        {
+            return DatabaseAccessor.QuerySingle<T>(sql, param, this);
+        }
+
         public int Execute(string sql, object param = null)
         {
             return DatabaseAccessor.Execute(sql, param, this);

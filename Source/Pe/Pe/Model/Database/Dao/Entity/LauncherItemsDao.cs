@@ -20,12 +20,12 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
 
         #region function
 
-        LauncherItemRowDto ConvertFromData(LauncherItemSimpleNewData data)
+        LauncherItemsRowDto ConvertFromData(LauncherItemSimpleNewData data)
         {
             var kindEnumTransfer = new EnumTransfer<LauncherItemKind>();
             var permissionEnumTransfer = new EnumTransfer<LauncherItemPermission>();
 
-            var dto = new LauncherItemRowDto() {
+            var dto = new LauncherItemsRowDto() {
                 LauncherItemId = data.LauncherItemId,
                 Code = data.Code,
                 Name = data.Name,

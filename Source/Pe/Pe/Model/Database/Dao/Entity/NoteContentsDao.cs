@@ -8,10 +8,10 @@ using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
 {
-    public class NoteContentsDao : ApplicationDatabaseAccessor
+    public class NoteContentsDao : ApplicationDatabaseObjectBase
     {
-        public NoteContentsDao(IDatabaseFactory connectionCreator, ILoggerFactory loggerFactory)
-            : base(connectionCreator, loggerFactory)
+        public NoteContentsDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
+            : base(commander, statementLoader, loggerFactory)
         { }
 
         #region function

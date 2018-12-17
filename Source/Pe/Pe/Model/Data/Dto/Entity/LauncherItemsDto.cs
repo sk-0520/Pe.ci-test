@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Data.Dto.Entity
 {
-    public interface IReadOnlyLauncherItemRowDto : IReadOnlyRowDtoBase
+    public interface IReadOnlyLauncherItemsRowDto : IReadOnlyRowDtoBase
     {
         #region property
 
@@ -33,7 +33,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data.Dto.Entity
         #endregion
     }
 
-    public class LauncherItemRowDto : RowDtoBase, IReadOnlyLauncherItemRowDto
+    public class LauncherItemsRowDto : RowDtoBase, IReadOnlyLauncherItemsRowDto
     {
         #region IReadOnlyLauncherItemRowDto
 

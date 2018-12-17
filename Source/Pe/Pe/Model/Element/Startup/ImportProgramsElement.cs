@@ -89,9 +89,10 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Startup
             // ap ファイルからランチャーデータ作って
             var importItems = ProgramItems
                 .Where(i => i.IsImport)
+                .Select(i => launcherCreator.FromFile(i.FileInfo, true))
                 .Select(i => new {
-                    Data = launcherCreator.FromFile(i.FileInfo, true),
-                    Tags = launcherCreator.GetTags(i.FileInfo).ToList(),
+                    Data = i,
+                    Tags = launcherCreator.GetTags(new FileInfo(i.Command.Command)).ToList(),
                 })
                 .ToList()
             ;
@@ -101,14 +102,23 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Startup
             using(DatabaseBarrier.Locker.WaitWriteByDefaultTimeout())
             using(var transaction = DatabaseBarrier.Accessor.BeginTransaction()) {
                 var launcherItemsDao = new LauncherItemsDao(transaction, StatementLoader, Logger.Factory);
+                var launcherTagsDao = new LauncherTagsDao(transaction, StatementLoader, Logger.Factory);
                 // db ランチャーアイテム突っ込んで
                 foreach(var importItem in importItems) {
                     var codes = launcherItemsDao.SelectFuzzyCodes(importItem.Data.Code);
                     importItem.Data.Code = TextUtility.ToUnique(importItem.Data.Code, codes, StringComparison.OrdinalIgnoreCase, (s, n) => $"{s}-{n}");
                     launcherItemsDao.InsertSimpleNew(importItem.Data);
+
+                    // db タグ突っ込んで
+                    launcherTagsDao.InsertNewTags(importItem.Data.LauncherItemId, importItem.Tags);
                 }
-                // db タグ突っ込んで
+
                 // db グループ作る
+                var launcherGroupsDao = new LauncherGroupsDao(transaction, StatementLoader, Logger.Factory);
+                launcherGroupsDao.InsertNewGroup(group);
+
+                var launcherGroupItemsDao = new LauncherGroupItemsDao(transaction, StatementLoader, Logger.Factory);
+                launcherGroupItemsDao.InsertNewItems(group.LauncherGroupId, importItems.Select(i => i.Data.LauncherItemId));
 
                 transaction.Commit();
             }

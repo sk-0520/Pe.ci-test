@@ -31,6 +31,10 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
 
         IEnumerable<dynamic> Query(string sql, object param = null, bool buffered = true);
 
+        T QueryFirst<T>(string sql, object param = null);
+        T QueryFirstOrDefault<T>(string sql, object param = null);
+        T QuerySingle<T>(string sql, object param = null);
+
         int Execute(string sql, object param = null);
 
         DataTable GetDataTable(string sql, object param = null);
@@ -38,7 +42,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
         #endregion
     }
 
-    public interface IDatabaseAccessor: IDatabaseCommander
+    public interface IDatabaseAccessor : IDatabaseCommander
     {
         #region property
 
@@ -51,6 +55,11 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
 
         IEnumerable<T> Query<T>(string sql, object param, IDatabaseTransaction transaction, bool buffered);
         IEnumerable<dynamic> Query(string sql, object param, IDatabaseTransaction transaction, bool buffered);
+
+        T QueryFirst<T>(string sql, object param, IDatabaseTransaction transaction);
+        T QueryFirstOrDefault<T>(string sql, object param, IDatabaseTransaction transaction);
+        T QuerySingle<T>(string sql, object param, IDatabaseTransaction transaction);
+
         int Execute(string sql, object param, IDatabaseTransaction transaction);
         DataTable GetDataTable(string sql, object param, IDatabaseTransaction transaction);
 
@@ -150,6 +159,45 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
         public IEnumerable<dynamic> Query(string sql, object param = null, bool buffered = true)
         {
             return Query(sql, param, null, buffered);
+        }
+
+        public virtual T QueryFirst<T>(string sql, object param, IDatabaseTransaction transaction)
+        {
+            var formattedSql = Implementation.PreFormatSql(sql);
+
+            Logger.Trace(formattedSql, param);
+            return BaseConnection.QueryFirst<T>(formattedSql, param, transaction?.Transaction);
+        }
+
+        public virtual T QueryFirst<T>(string sql, object param = null)
+        {
+            return QueryFirst<T>(sql, param);
+        }
+
+        public virtual T QueryFirstOrDefault<T>(string sql, object param, IDatabaseTransaction transaction)
+        {
+            var formattedSql = Implementation.PreFormatSql(sql);
+
+            Logger.Trace(formattedSql, param);
+            return BaseConnection.QueryFirstOrDefault<T>(formattedSql, param, transaction?.Transaction);
+        }
+
+        public T QueryFirstOrDefault<T>(string sql, object param = null)
+        {
+            return QueryFirstOrDefault<T>(sql, param, null);
+        }
+
+        public virtual T QuerySingle<T>(string sql, object param, IDatabaseTransaction transaction)
+        {
+            var formattedSql = Implementation.PreFormatSql(sql);
+
+            Logger.Trace(formattedSql, param);
+            return BaseConnection.QuerySingle<T>(formattedSql, param, transaction?.Transaction);
+        }
+
+        public virtual T QuerySingle<T>(string sql, object param = null)
+        {
+            return QuerySingle<T>(sql, param);
         }
 
         public virtual int Execute(string sql, object param, IDatabaseTransaction transaction)
