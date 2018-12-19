@@ -6,6 +6,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 
 // 勉強がてら作ってみる。
 
@@ -203,7 +204,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
     /// <summary>
     /// マッピング生成キャッシュ。
     /// </summary>
-    public sealed class DiFactoryWorker
+    public sealed class DiFactoryWorker : DisposerBase
     {
         public DiFactoryWorker(DiLifecycle lifecycle, DiCreator creator, object bind)
         {
@@ -216,11 +217,42 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         public DiLifecycle Lifecycle { get; }
         DiCreator Creator { get; }
 
+        bool CreatedSingleton { get; set; }
+
         #endregion
 
         #region function
 
-        public object Create() => Creator();
+        public object Create()
+        {
+            var result = Creator();
+
+            if(Lifecycle == DiLifecycle.Singleton) {
+                CreatedSingleton = true;
+            }
+
+            return result;
+        }
+
+        #endregion
+
+        #region DisposerBase
+
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                if(disposing) {
+                    if(CreatedSingleton) {
+                        var createdObject = Create();
+                        if(createdObject is IDisposable disposer) {
+                            disposer.Dispose();
+                        }
+                    }
+                }
+            }
+
+            base.Dispose(disposing);
+        }
 
         #endregion
     }
@@ -381,7 +413,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
     /// <summary>
     /// DI コンテナ。
     /// </summary>
-    public class DiContainer : IDiRegisterContainer
+    public class DiContainer : DisposerBase, IDiRegisterContainer
     {
         #region property
 
@@ -846,6 +878,23 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 
 
         #endregion
+
+        #region DisposerBase
+
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                if(disposing) {
+                    foreach(var factory in Factory.Values) {
+                        factory.Dispose();
+                    }
+                }
+            }
+
+            base.Dispose(disposing);
+        }
+
+        #endregion
     }
 
     class ScopeDiContainer : DiContainer, IScopeDiContainer
@@ -902,38 +951,21 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         #endregion
 
         // 自動生成にしても日本語がすごい
-        #region IDisposable Support
+        #region IDisposable
 
-        private bool disposedValue = false; // 重複する呼び出しを検出するには
-
-        protected virtual void Dispose(bool disposing)
+        protected override void Dispose(bool disposing)
         {
-            if(!this.disposedValue) {
+            if(IsDisposed) {
                 if(disposing) {
-                    // TODO: マネージド状態を破棄します (マネージド オブジェクト)。
+                    foreach(var type in RegisteredTypeSet) {
+                        Factory[type].Dispose();
+                    }
                 }
-
-                // TODO: アンマネージド リソース (アンマネージド オブジェクト) を解放し、下のファイナライザーをオーバーライドします。
-                // TODO: 大きなフィールドを null に設定します。
-
-                this.disposedValue = true;
             }
+
+            base.Dispose(disposing);
         }
 
-        // TODO: 上の Dispose(bool disposing) にアンマネージド リソースを解放するコードが含まれる場合にのみ、ファイナライザーをオーバーライドします。
-        // ~ScopeDependencyInjectionContainer() {
-        //   // このコードを変更しないでください。クリーンアップ コードを上の Dispose(bool disposing) に記述します。
-        //   Dispose(false);
-        // }
-
-        // このコードは、破棄可能なパターンを正しく実装できるように追加されました。
-        public void Dispose()
-        {
-            // このコードを変更しないでください。クリーンアップ コードを上の Dispose(bool disposing) に記述します。
-            Dispose(true);
-            // TODO: 上のファイナライザーがオーバーライドされる場合は、次の行のコメントを解除してください。
-            // GC.SuppressFinalize(this);
-        }
         #endregion
     }
 }
