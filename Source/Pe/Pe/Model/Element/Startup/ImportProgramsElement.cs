@@ -16,10 +16,10 @@ using ContentTypeTextNet.Pe.Main.Model.Launcher;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Element.Startup
 {
-    public class ImportProgramsElement : ElementBase
+    public class ImportProgramsElement : ContextElementBase
     {
-        public ImportProgramsElement(IMainDatabaseBarrier databaseBarrier, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
-            : base(loggerFactory)
+        public ImportProgramsElement(IMainDatabaseBarrier databaseBarrier, IDatabaseStatementLoader statementLoader, IDiContainer diContainer, ILoggerFactory loggerFactory)
+            : base(diContainer, loggerFactory)
         {
             DatabaseBarrier = databaseBarrier;
             StatementLoader = statementLoader;

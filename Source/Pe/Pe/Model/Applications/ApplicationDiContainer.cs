@@ -22,6 +22,13 @@ namespace ContentTypeTextNet.Pe.Main.Model.Applications
     {
         #region function
 
+        public static IScopeDiContainer CreateChildContainer(this IDiScopeContainerFactory @this)
+        {
+            var scopeDiContainer = @this.Scope();
+            scopeDiContainer.Register<IDiContainer, IScopeDiContainer>(scopeDiContainer);
+            return scopeDiContainer;
+        }
+
         public static IDiRegisterContainer RegisterLogger(this IDiRegisterContainer @this, ILogger parentLogger, [CallerMemberName] string callerMemberName = default(string))
         {
             var logger = parentLogger.Factory.CreateLogger(callerMemberName);

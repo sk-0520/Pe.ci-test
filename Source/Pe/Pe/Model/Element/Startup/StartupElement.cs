@@ -6,15 +6,16 @@ using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
+using ContentTypeTextNet.Pe.Main.Model.Applications;
 using ContentTypeTextNet.Pe.Main.View.Startup;
 using ContentTypeTextNet.Pe.Main.ViewModel.Startup;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Element.Startup
 {
-    public class StartupElement : ElementBase
+    public class StartupElement : ContextElementBase
     {
-        public StartupElement(ILoggerFactory loggerFactory)
-            : base(loggerFactory)
+        public StartupElement(IDiContainer diContainer, ILoggerFactory loggerFactory)
+            : base(diContainer, loggerFactory)
         { }
 
         #region function
@@ -33,14 +34,11 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Startup
 
         public void ShowImportProgramsView()
         {
-            using(var diContainer = DiContainer.Instance.Scope()) {
+            using(var diContainer = ServiceLocator.CreateChildContainer()) {
                 var childLogger = Logger.Factory.CreateCurrentMethod();
                 diContainer
-                    .Register<ImportProgramsElement>(DiLifecycle.Singleton)
-                    .Register<ImportProgramsViewModel>(DiLifecycle.Transient)
-                    .Register<ILogger, ILogger>(childLogger)
-                    .Register<ILoggerFactory, ILoggerFactory>(childLogger.Factory)
-                    .DirtyRegister<ImportProgramsWindow, ImportProgramsViewModel>(nameof(System.Windows.FrameworkElement.DataContext))
+                    .RegisterLogger(childLogger)
+                    .RegisterMvvm<ImportProgramsElement, ImportProgramsViewModel, ImportProgramsWindow>()
                 ;
 
                 var importProgramsModel = diContainer.New<ImportProgramsElement>();

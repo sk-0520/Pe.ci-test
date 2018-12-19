@@ -22,6 +22,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Applications
         string CommandLineKeyLog { get; } = "log";
 
         public bool IsFirstStartup { get; private set; }
+        public ApplicationDiContainer DiContainer { get; private set; }
+        public ApplicationLogger Logger { get; private set; }
 
         #endregion
 
@@ -64,7 +66,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Applications
 
         bool ShowAcceptView(IDiScopeContainerFactory scopeContainerCreator, ILogger logger)
         {
-            using(var diContainer = scopeContainerCreator.Scope()) {
+            using(var diContainer = scopeContainerCreator.CreateChildContainer()) {
                 diContainer
                     .RegisterLogger(logger)
                     .RegisterMvvm<Element.Accept.AcceptElement, ViewModel.Accept.AcceptViewModel, View.Accept.AcceptWindow>()
@@ -204,7 +206,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Applications
             return true;
         }
 
-        void SetupContainer(EnvironmentParameters environmentParameters, DatabaseFactoryPack factory, DatabaseAccessorPack accessor, ApplicationLogger logger)
+        ApplicationDiContainer SetupContainer(EnvironmentParameters environmentParameters, DatabaseFactoryPack factory, DatabaseAccessorPack accessor, ApplicationLogger logger)
         {
             var container = new ApplicationDiContainer();
 
@@ -217,6 +219,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Applications
             container
                 .Register<ILoggerFactory, ILoggerFactory>(logger.Factory)
                 .Register<ILogger, ApplicationLogger>(logger)
+                .Register<IDiContainer, ApplicationDiContainer>(container)
                 .Register<IDatabaseStatementLoader, ApplicationDatabaseStatementLoader>(new ApplicationDatabaseStatementLoader(environmentParameters.MainSqlDirectory, TimeSpan.FromSeconds(30), logger.Factory))
                 .Register<IDatabaseFactoryPack, DatabaseFactoryPack>(factory)
                 .Register<IDatabaseAccessorPack, DatabaseAccessorPack>(accessor)
@@ -226,7 +229,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Applications
                 .Register<IReadWriteLockPack, ReadWriteLockPack>(rwlp)
             ;
 
-            DiContainer.Initialize(() => container);
+            ApplicationDiContainer.Initialize(() => container);
+
+            return container;
         }
 
         public bool Initialize(IEnumerable<string> arguments)
@@ -265,7 +270,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Applications
                 }
             }
 
-            SetupContainer(environmentParameters, pack.factory, pack.accessor, logger);
+            DiContainer = SetupContainer(environmentParameters, pack.factory, pack.accessor, logger);
+            Logger = logger;
 
             return true;
         }

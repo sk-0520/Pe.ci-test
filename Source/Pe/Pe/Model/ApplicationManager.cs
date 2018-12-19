@@ -21,6 +21,9 @@ namespace ContentTypeTextNet.Pe.Main.Model
 
         #region property
 
+        ApplicationLogger ApplicationLogger { get; set; }
+        ApplicationDiContainer ApplicationDiContainer { get; set; }
+
         ILogger Logger { get; set; }
 
         #endregion
@@ -29,7 +32,7 @@ namespace ContentTypeTextNet.Pe.Main.Model
 
         void ShowStartupView()
         {
-            using(var diContainer = DiContainer.Instance.Scope()) {
+            using(var diContainer = ApplicationDiContainer.CreateChildContainer()) {
                 diContainer
                     .RegisterLogger(Logger)
                     .RegisterMvvm<Element.Startup.StartupElement, ViewModel.Startup.StartupViewModel, View.Startup.StartupWindow>()
@@ -49,7 +52,10 @@ namespace ContentTypeTextNet.Pe.Main.Model
                 return false;
             }
 
-            Logger = DiContainer.Instance.Get<ILoggerFactory>().CreateCurrentClass();
+            ApplicationLogger = initializer.Logger;
+            ApplicationDiContainer = initializer.DiContainer;
+
+            Logger = ApplicationLogger.Factory.CreateCurrentClass();
             Logger.Debug("初期化完了");
 
             if(initializer.IsFirstStartup||true) {

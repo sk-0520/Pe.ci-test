@@ -8,10 +8,10 @@ using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Element.Accept
 {
-    public class AcceptElement : ElementBase
+    public class AcceptElement : ContextElementBase
     {
-        public AcceptElement(ILoggerFactory loggerFactory)
-            : base(loggerFactory)
+        public AcceptElement(IDiContainer diContainer, ILoggerFactory loggerFactory)
+            : base(diContainer, loggerFactory)
         { }
 
         #region property
