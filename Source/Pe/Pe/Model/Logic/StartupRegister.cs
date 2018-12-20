@@ -9,7 +9,7 @@ using ContentTypeTextNet.Pe.Library.Shared.Embedded.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 
-namespace ContentTypeTextNet.Pe.Main.Model
+namespace ContentTypeTextNet.Pe.Main.Model.Logic
 {
     public class StartupRegister
     {

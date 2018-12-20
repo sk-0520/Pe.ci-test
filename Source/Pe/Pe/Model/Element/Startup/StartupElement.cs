@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Applications;
+using ContentTypeTextNet.Pe.Main.Model.Logic;
 using ContentTypeTextNet.Pe.Main.View.Startup;
 using ContentTypeTextNet.Pe.Main.ViewModel.Startup;
 
