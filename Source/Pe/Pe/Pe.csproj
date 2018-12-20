@@ -185,7 +185,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\ApplicationManager.cs" />
+    <Compile Include="Model\Manager\ApplicationManager.cs" />
     <Compile Include="Model\Database\ApplicationDatabase.cs" />
     <Compile Include="Model\Applications\ApplicationPack.cs" />
     <Compile Include="Model\Database\DatabaseSetup.cs" />

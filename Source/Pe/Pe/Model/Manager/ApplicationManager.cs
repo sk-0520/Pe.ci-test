@@ -12,7 +12,7 @@ using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Applications;
 
-namespace ContentTypeTextNet.Pe.Main.Model
+namespace ContentTypeTextNet.Pe.Main.Model.Manager
 {
     public class ApplicationManager
     {

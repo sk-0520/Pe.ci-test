@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using ContentTypeTextNet.Pe.Main.Model;
+using ContentTypeTextNet.Pe.Main.Model.Manager;
 
 namespace ContentTypeTextNet.Pe.Main
 {
