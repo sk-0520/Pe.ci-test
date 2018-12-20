@@ -15,7 +15,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Launcher
     {
         public LauncherCreator(ILoggerFactory loggerFactory)
         {
-            Logger = loggerFactory.CreateCurrentClass();
+            Logger = loggerFactory.CreateTartget(GetType());
         }
 
         #region property

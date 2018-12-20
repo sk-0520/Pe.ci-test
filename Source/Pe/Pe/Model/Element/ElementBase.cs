@@ -18,7 +18,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element
         { }
 
         public ElementBase(ILoggerFactory loggerFactory)
-            : this(loggerFactory.CreateCurrentClass())
+            : base(loggerFactory)
         { }
     }
 

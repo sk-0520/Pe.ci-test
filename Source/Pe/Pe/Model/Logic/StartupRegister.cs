@@ -11,11 +11,11 @@ using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Logic
 {
-    public class StartupRegister
+    public sealed class StartupRegister
     {
         public StartupRegister(ILoggerFactory loggerFactory)
         {
-            Logger = loggerFactory.CreateCurrentClass();
+            Logger = loggerFactory.CreateTartget(GetType());
         }
 
         #region property

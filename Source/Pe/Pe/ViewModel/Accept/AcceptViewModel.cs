@@ -15,11 +15,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Accept
 {
     public class AcceptViewModel : SingleModelViewModelBase<AcceptElement>, IDialogCommand
     {
-        public AcceptViewModel(AcceptElement model, ILogger logger)
-            : base(model, logger)
-        { }
         public AcceptViewModel(AcceptElement model, ILoggerFactory loggerFactory)
-            : this(model, loggerFactory.CreateCurrentClass())
+            : base(model, loggerFactory)
         { }
 
         #region property

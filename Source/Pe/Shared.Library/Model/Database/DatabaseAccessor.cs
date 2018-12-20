@@ -283,7 +283,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
         { }
 
         public DatabaseAccessor(IDatabaseFactory connectionFactory, ILoggerFactory loggerFactory)
-            : base(connectionFactory, loggerFactory.CreateCurrentClass())
+            : base(connectionFactory, loggerFactory)
         { }
 
         #region proeprty

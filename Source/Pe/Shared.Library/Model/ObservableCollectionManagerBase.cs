@@ -48,34 +48,34 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 
         #region function
 
-        protected abstract void AddItemsCore(IReadOnlyList<T> newItems);
+        protected abstract void AddItemsImple(IReadOnlyList<T> newItems);
         void AddItems(IReadOnlyList<T> newItems)
         {
-            AddItemsCore(newItems);
+            AddItemsImple(newItems);
         }
 
-        protected abstract void RemoveItemsCore(IReadOnlyList<T> oldItems, int oldStartingIndex);
+        protected abstract void RemoveItemsImpl(IReadOnlyList<T> oldItems, int oldStartingIndex);
         void RemoveItems(IReadOnlyList<T> oldItems, int oldStartingIndex)
         {
-            RemoveItemsCore(oldItems, oldStartingIndex);
+            RemoveItemsImpl(oldItems, oldStartingIndex);
         }
 
-        protected abstract void ReplaceItemsCore(IReadOnlyList<T> newItems, IReadOnlyList<T> oldItems);
+        protected abstract void ReplaceItemsImpl(IReadOnlyList<T> newItems, IReadOnlyList<T> oldItems);
         void ReplaceItems(IReadOnlyList<T> newItems, IReadOnlyList<T> oldItems)
         {
-            ReplaceItemsCore(newItems, oldItems);
+            ReplaceItemsImpl(newItems, oldItems);
         }
 
-        protected abstract void MoveItemsCore(int newStartingIndex, int oldStartingIndex);
+        protected abstract void MoveItemsImpl(int newStartingIndex, int oldStartingIndex);
         void MoveItems(int newStartingIndex, int oldStartingIndex)
         {
-            MoveItemsCore(newStartingIndex, oldStartingIndex);
+            MoveItemsImpl(newStartingIndex, oldStartingIndex);
         }
 
-        protected abstract void ResetItemsCore();
+        protected abstract void ResetItemsImpl();
         void ResetItems()
         {
-            ResetItemsCore();
+            ResetItemsImpl();
         }
 
         IReadOnlyList<T> ConvertList(IList list)

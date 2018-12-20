@@ -16,7 +16,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
         public ManagerBase(IDiContainer diContainer, ILoggerFactory loggerFactory)
         {
             DiContainer = diContainer;
-            Logger = loggerFactory.CreateLogger(GetType().Name);
+            Logger = loggerFactory.CreateTartget(GetType());
         }
 
         #region property

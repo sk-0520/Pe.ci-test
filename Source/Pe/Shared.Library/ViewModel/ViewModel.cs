@@ -226,23 +226,23 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.ViewModel
             return SetPropertyValue(Model, value, targetMemberName, notifyPropertyName);
         }
 
-        protected virtual void AttachModelEventsCore()
+        protected virtual void AttachModelEventsImpl()
         { }
 
         protected void AttachModelEvents()
         {
             if(Model != null) {
-                AttachModelEventsCore();
+                AttachModelEventsImpl();
             }
         }
 
-        protected virtual void DetachModelEventsCore()
+        protected virtual void DetachModelEventsImpl()
         { }
 
         protected void DetachModelEvents()
         {
             if(Model != null) {
-                DetachModelEventsCore();
+                DetachModelEventsImpl();
             }
         }
 

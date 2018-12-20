@@ -129,7 +129,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database
         { }
 
         public ApplicationDatabaseAccessor(IDatabaseFactory connectionCreator, ILoggerFactory loggerFactory)
-            : this(connectionCreator, loggerFactory.CreateCurrentClass())
+            : base(connectionCreator, loggerFactory)
         { }
 
         #region function
