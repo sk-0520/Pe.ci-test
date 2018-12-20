@@ -26,9 +26,12 @@ namespace ContentTypeTextNet.Pe.Main
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
+
             if(!ApplicationManager.Startup(this, e)) {
                 Shutdown();
             }
+
+            ApplicationManager.Execute();
         }
 
         #endregion

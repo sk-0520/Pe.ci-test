@@ -14,7 +14,7 @@ using ContentTypeTextNet.Pe.Main.Model.Applications;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Manager
 {
-    public class ApplicationManager
+    public class ApplicationManager: DisposerBase
     {
         public ApplicationManager()
         { }
@@ -64,6 +64,26 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
             }
 
             return true;
+        }
+
+        public void Execute()
+        {
+            Logger.Information("がんばる！");
+        }
+
+        #endregion
+
+        #region DisposerBase
+
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                if(disposing) {
+                    //...
+                }
+            }
+
+            base.Dispose(disposing);
         }
 
         #endregion

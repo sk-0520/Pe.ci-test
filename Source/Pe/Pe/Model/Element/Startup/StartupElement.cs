@@ -36,9 +36,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Startup
         public void ShowImportProgramsView()
         {
             using(var diContainer = ServiceLocator.CreateChildContainer()) {
-                var childLogger = Logger.Factory.CreateCurrentMethod();
                 diContainer
-                    .RegisterLogger(childLogger)
+                    .RegisterLogger(Logger)
                     .RegisterMvvm<ImportProgramsElement, ImportProgramsViewModel, ImportProgramsWindow>()
                 ;
 
