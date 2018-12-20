@@ -17,7 +17,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Setup
         public SetupBase(IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
         {
             StatementLoader = statementLoader;
-            Logger = loggerFactory.CreateCurrentClass();
+            Logger = loggerFactory.CreateTartget(GetType());
         }
 
         #region property

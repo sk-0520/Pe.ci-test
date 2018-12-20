@@ -78,11 +78,9 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
     /// </summary>
     public class DatabaseAccessor : DisposerBase, IDatabaseAccessor
     {
-        public DatabaseAccessor(IDatabaseFactory databaseFactory, ILogger logger)
+        DatabaseAccessor(IDatabaseFactory databaseFactory)
         {
             DatabaseFactory = databaseFactory;
-
-            Logger = logger;
 
             LazyConnection = new Lazy<IDbConnection>(() => {
                 var con = DatabaseFactory.CreateConnection();
@@ -93,9 +91,17 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
             LazyImplementation = new Lazy<IDatabaseImplementation>(DatabaseFactory.CreateImplementation);
         }
 
+        public DatabaseAccessor(IDatabaseFactory databaseFactory, ILogger logger)
+            :this(databaseFactory)
+        {
+            Logger = logger;
+        }
+
         public DatabaseAccessor(IDatabaseFactory databaseFactory, ILoggerFactory loggerFactory)
-            : this(databaseFactory, loggerFactory.CreateCurrentClass())
-        { }
+            : this(databaseFactory)
+        {
+            Logger = loggerFactory.CreateTartget(GetType());
+        }
 
         #region property
 

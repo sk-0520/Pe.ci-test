@@ -33,8 +33,10 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.ViewModel
             ViewModels = new ObservableCollection<TViewModel>(Collection.Select(m => ToViewModelCore(m)));
         }
         public ModelViewModelObservableCollectionManagerBase(ObservableCollection<TModel> collection, ILoggerFactory loggerFactory)
-            : this(collection, loggerFactory.CreateCurrentClass())
-        { }
+            : base(collection, loggerFactory)
+        {
+            ViewModels = new ObservableCollection<TViewModel>(Collection.Select(m => ToViewModelCore(m)));
+        }
 
         #region property
 

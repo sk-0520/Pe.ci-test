@@ -101,8 +101,9 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         }
 
         public IconLoader(ILoggerFactory loggerFactory)
-            :this(loggerFactory.CreateCurrentClass())
-        { }
+        {
+            Logger = loggerFactory.CreateTartget(GetType());
+        }
 
         #region property
 

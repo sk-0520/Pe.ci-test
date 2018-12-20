@@ -19,14 +19,21 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.ViewModel
 {
     public abstract class ViewModelBase : BindableBase, INotifyDataErrorInfo, IDisposable
     {
-        public ViewModelBase(ILogger logger)
+        ViewModelBase()
         {
-            Logger = logger;
             ErrorsContainer = new ErrorsContainer<string>(OnErrorsChanged);
         }
+
+        public ViewModelBase(ILogger logger)
+            :this()
+        {
+            Logger = logger;
+        }
         public ViewModelBase(ILoggerFactory loggerFactory)
-            : this(loggerFactory.CreateCurrentClass())
-        { }
+            : this()
+        {
+            Logger = loggerFactory.CreateTartget(GetType());
+        }
 
         ~ViewModelBase()
         {
@@ -198,8 +205,12 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.ViewModel
         }
 
         public SingleModelViewModelBase(TModel model, ILoggerFactory loggerFactory)
-            : this(model, loggerFactory.CreateCurrentClass())
-        { }
+            : base(loggerFactory)
+        {
+            Model = model;
+
+            AttachModelEvents();
+        }
 
 
         #region property

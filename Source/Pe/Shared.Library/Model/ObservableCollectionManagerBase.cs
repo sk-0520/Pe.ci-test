@@ -29,8 +29,15 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         }
 
         public ObservableCollectionManagerBase(ObservableCollection<T> collection, ILoggerFactory loggerFactory)
-            : this(collection, loggerFactory.CreateCurrentClass())
-        { }
+            : base(loggerFactory)
+        {
+            if(collection == null) {
+                throw new ArgumentNullException(nameof(collection));
+            }
+
+            Collection = collection;
+            Collection.CollectionChanged += Collection_CollectionChanged;
+        }
 
 
         #region property

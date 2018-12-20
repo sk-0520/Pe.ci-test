@@ -61,8 +61,9 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         }
 
         public BindModelBase(ILoggerFactory loggerFactory)
-            : this(loggerFactory.CreateCurrentClass())
-        { }
+        {
+            Logger = loggerFactory.CreateTartget(GetType());
+        }
 
         ~BindModelBase()
         {
