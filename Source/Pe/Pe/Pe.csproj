@@ -165,6 +165,7 @@
     <Compile Include="Model\Data\Dto\DtoBase.cs" />
     <Compile Include="Model\Data\Dto\SetupDto.cs" />
     <Compile Include="Model\Manager\ManagerBase.cs" />
+    <Compile Include="Model\Manager\WindowManager.cs" />
     <Compile Include="Model\Platform\SystemExecutor.cs" />
     <Compile Include="Model\Element\Accept\AcceptElement.cs" />
     <Compile Include="Model\Element\Startup\ImportProgramsElement.cs" />

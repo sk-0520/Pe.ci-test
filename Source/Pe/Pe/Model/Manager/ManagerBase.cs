@@ -14,13 +14,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
     public class ManagerBase : DisposerBase
     {
         public ManagerBase(IDiContainer diContainer, ILoggerFactory loggerFactory)
-            : this(diContainer, loggerFactory.CreateCurrentClass())
-        { }
-
-        public ManagerBase(IDiContainer diContainer, ILogger logger)
         {
             DiContainer = diContainer;
-            Logger = logger;
+            Logger = loggerFactory.CreateLogger(GetType().Name);
         }
 
         #region property

@@ -12,6 +12,7 @@ using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Database;
+using ContentTypeTextNet.Pe.Main.Model.Manager;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Applications
 {
@@ -24,6 +25,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Applications
         public bool IsFirstStartup { get; private set; }
         public ApplicationDiContainer DiContainer { get; private set; }
         public ApplicationLogger Logger { get; private set; }
+
+        public WindowManager WindowManager { get; private set; }
 
         #endregion
 
@@ -234,6 +237,13 @@ namespace ContentTypeTextNet.Pe.Main.Model.Applications
             return container;
         }
 
+        WindowManager SetupWindowManager(IDiContainer diContainer)
+        {
+            var manager = diContainer.Make<WindowManager>();
+
+            return manager;
+        }
+
         public bool Initialize(IEnumerable<string> arguments)
         {
             InitializeEnvironmentVariable();
@@ -272,6 +282,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Applications
 
             DiContainer = SetupContainer(environmentParameters, pack.factory, pack.accessor, logger);
             Logger = logger;
+            WindowManager = SetupWindowManager(DiContainer);
 
             return true;
         }

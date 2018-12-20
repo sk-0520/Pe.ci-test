@@ -26,6 +26,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
 
         ILogger Logger { get; set; }
 
+        WindowManager WindowManager { get; set; }
+
         #endregion
 
         #region function
@@ -54,6 +56,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
 
             ApplicationLogger = initializer.Logger;
             ApplicationDiContainer = initializer.DiContainer;
+            WindowManager = initializer.WindowManager;
 
             Logger = ApplicationLogger.Factory.CreateCurrentClass();
             Logger.Debug("初期化完了");
