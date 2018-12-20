@@ -12,16 +12,22 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
     /// </summary>
     public abstract class DatabaseAccessObjectBase
     {
-        public DatabaseAccessObjectBase(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, ILogger logger)
+        DatabaseAccessObjectBase(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader)
         {
             Commander = commander;
             StatementLoader = statementLoader;
+        }
+
+        public DatabaseAccessObjectBase(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, ILogger logger)
+        {
             Logger = logger;
         }
 
         public DatabaseAccessObjectBase(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
-            : this(commander, statementLoader, loggerFactory.CreateCurrentClass())
-        { }
+            : this(commander, statementLoader)
+        {
+            Logger = loggerFactory.CreateTartget(GetType());
+        }
 
         #region property
 

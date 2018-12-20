@@ -387,6 +387,11 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Link.Model
     {
         #region function
 
+        public static ILogger CreateTartget(this ILoggerFactory loggerFactory, Type type)
+        {
+            return loggerFactory.CreateLogger(type.Name);
+        }
+
         public static ILogger CreateCurrentClass(this ILoggerFactory loggerFactory)
         {
             return loggerFactory.CreateLogger(new StackFrame(1).GetMethod().DeclaringType.Name);
