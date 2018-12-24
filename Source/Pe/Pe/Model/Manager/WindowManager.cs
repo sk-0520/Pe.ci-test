@@ -9,6 +9,17 @@ using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Manager
 {
+    public enum WindowKind
+    {
+        Accept,
+        Startup,
+        ImportPrograms,
+        LauncherToolbar,
+        LauncherCommand,
+        LauncherCustomInput,
+        LauncherEdit
+    }
+
     public class WindowItem
     {
         public WindowItem(Window window)
@@ -33,6 +44,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
         #endregion
 
         #region function
+
         #endregion
     }
 }

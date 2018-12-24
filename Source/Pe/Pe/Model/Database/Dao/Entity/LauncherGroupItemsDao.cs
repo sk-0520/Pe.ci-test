@@ -24,18 +24,16 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             return Commander.QuerySingle<long>(sql, new { LauncherGroupId = groupId });
         }
 
-        public void InsertNewItems(Guid groupId, IEnumerable<Guid> itemIds)
+        public void InsertNewItems(Guid groupId, IEnumerable<Guid> itemIds, long startSort, int sortStep)
         {
             var status = DatabaseCommonStatus.CreateUser();
             var sql = StatementLoader.LoadStatementByCurrent();
-            var step = 10;
-            var counter = 1;
-            var currentMaxSort = SelectMaxSort(groupId);
+            var counter = 0;
             foreach(var itemId in itemIds) {
                 var dto = new LauncherGroupItemsRowDto() {
                     LauncherGroupId = groupId,
                     LauncherItemId = itemId,
-                    Sort = currentMaxSort + (step * (counter++)),
+                    Sort = startSort + (sortStep * (counter++)),
                 };
                 status.WriteCommon(dto);
                 Commander.Execute(sql, dto);

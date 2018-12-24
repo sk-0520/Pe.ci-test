@@ -14,6 +14,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data.Dto.Entity
         public string Name { get; set; }
         public string ImageName { get; set; }
         public string ImageColor { get; set; }
+        public long Sort { get; set; }
 
         #endregion
     }

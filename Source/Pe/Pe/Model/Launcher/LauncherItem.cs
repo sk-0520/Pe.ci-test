@@ -68,6 +68,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Launcher
         public string Name { get; set; }
         public LauncherGroupImageName ImageName { get; set; }
         public Color ImageColor { get; set; }
+        public long Sort { get; set; }
 
         #endregion
     }

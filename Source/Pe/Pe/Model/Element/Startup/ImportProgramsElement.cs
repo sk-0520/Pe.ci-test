@@ -115,10 +115,14 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Startup
 
                 // db グループ作る
                 var launcherGroupsDao = new LauncherGroupsDao(transaction, StatementLoader, Logger.Factory);
+                var groupStep = 10;
+                group.Sort = launcherGroupsDao.SelectMaxSort() + groupStep;
                 launcherGroupsDao.InsertNewGroup(group);
 
                 var launcherGroupItemsDao = new LauncherGroupItemsDao(transaction, StatementLoader, Logger.Factory);
-                launcherGroupItemsDao.InsertNewItems(group.LauncherGroupId, importItems.Select(i => i.Data.LauncherItemId));
+                var currentMaxSort = launcherGroupItemsDao.SelectMaxSort(group.LauncherGroupId);
+                var itemStep = 10;
+                launcherGroupItemsDao.InsertNewItems(group.LauncherGroupId, importItems.Select(i => i.Data.LauncherItemId), currentMaxSort + itemStep, itemStep);
 
                 transaction.Commit();
             }

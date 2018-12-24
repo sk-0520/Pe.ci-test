@@ -28,6 +28,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
                 Name = data.Name,
                 ImageName = imgNameEnumTransfer.To(data.ImageName),
                 ImageColor = data.ImageColor.ToString(),
+                Sort = data.Sort,
             };
 
             var status = DatabaseCommonStatus.CreateUser();
@@ -35,6 +36,12 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
 
             return dto;
 
+        }
+
+        public long SelectMaxSort()
+        {
+            var sql = StatementLoader.LoadStatementByCurrent();
+            return Commander.QuerySingle<long>(sql);
         }
 
         public void InsertNewGroup(LauncherGroupData data)
