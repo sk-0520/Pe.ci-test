@@ -15,9 +15,11 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
         Startup,
         ImportPrograms,
         LauncherToolbar,
-        LauncherCommand,
-        LauncherCustomInput,
-        LauncherEdit
+        LauncherExecute,
+        LauncherCustomize,
+        Command,
+        Note,
+        Screen,
     }
 
     public class WindowItem
