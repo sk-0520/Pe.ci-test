@@ -423,9 +423,9 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
             }
         }
 
-        #region static
+        #region property
 
-        public static int LargeObjectHeapSize { get; set; } = 85 * 1024;
+        public static int LargeObjectHeapSize { get; set; } = 85 * 1000;
 
         #endregion
     }
