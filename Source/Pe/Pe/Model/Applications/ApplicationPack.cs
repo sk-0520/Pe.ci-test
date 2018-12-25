@@ -129,37 +129,5 @@ namespace ContentTypeTextNet.Pe.Main.Model.Applications
     }
 
 
-    public interface IDatabaseBarrier
-    {
-        #region property
-
-        IDatabaseAccessor Accessor { get; }
-        ReaderWriterLocker Locker { get; }
-
-        #endregion
-    }
-
-    public interface IMainDatabaseBarrier : IDatabaseBarrier
-    { }
-    public interface IFileDatabaseBarrier : IDatabaseBarrier
-    { }
-    public interface ITemporaryDatabaseBarrier : IDatabaseBarrier
-    { }
-
-    public sealed class DatabaseBarrier : IMainDatabaseBarrier, IFileDatabaseBarrier, ITemporaryDatabaseBarrier
-    {
-        public DatabaseBarrier(IDatabaseAccessor accessor, ReaderWriterLocker locker)
-        {
-            Accessor = accessor;
-            Locker = locker;
-        }
-
-        #region IDatabaseBarrier
-
-        public IDatabaseAccessor Accessor { get; }
-        public ReaderWriterLocker Locker { get; }
-
-        #endregion
-    }
 
 }

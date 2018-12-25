@@ -18,7 +18,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Applications
         #endregion
     }
 
-    public static class IDiRegisterContainerExtensionx
+    public static class IDiRegisterContainerExtensions
     {
         #region function
 

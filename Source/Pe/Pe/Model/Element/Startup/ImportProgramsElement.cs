@@ -27,7 +27,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Startup
 
         #region property
 
-        IDatabaseBarrier DatabaseBarrier { get; }
+        IApplicationDatabaseBarrier DatabaseBarrier { get; }
         IDatabaseStatementLoader StatementLoader { get; }
         public ObservableCollection<ProgramElement> ProgramItems { get; } = new ObservableCollection<ProgramElement>();
 
@@ -99,8 +99,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Startup
 
             var group = launcherCreator.CreateGroupData("@GROUP");
 
-            using(DatabaseBarrier.Locker.WaitWriteByDefaultTimeout())
-            using(var transaction = DatabaseBarrier.Accessor.BeginTransaction()) {
+            using(var transaction = DatabaseBarrier.WaitWrite()) {
                 var launcherItemsDao = new LauncherItemsDao(transaction, StatementLoader, Logger.Factory);
                 var launcherTagsDao = new LauncherTagsDao(transaction, StatementLoader, Logger.Factory);
                 // db ランチャーアイテム突っ込んで
@@ -126,7 +125,6 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Startup
 
                 transaction.Commit();
             }
-
         }
 
         public Task ImportAsync()

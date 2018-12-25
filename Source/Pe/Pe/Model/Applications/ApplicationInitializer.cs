@@ -226,9 +226,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Applications
                 .Register<IDatabaseStatementLoader, ApplicationDatabaseStatementLoader>(new ApplicationDatabaseStatementLoader(environmentParameters.MainSqlDirectory, TimeSpan.FromSeconds(30), logger.Factory))
                 .Register<IDatabaseFactoryPack, DatabaseFactoryPack>(factory)
                 .Register<IDatabaseAccessorPack, DatabaseAccessorPack>(accessor)
-                .Register<IMainDatabaseBarrier, DatabaseBarrier>(new DatabaseBarrier(accessor.Main, rwlp.Main))
-                .Register<IFileDatabaseBarrier, DatabaseBarrier>(new DatabaseBarrier(accessor.File, rwlp.File))
-                .Register<ITemporaryDatabaseBarrier, DatabaseBarrier>(new DatabaseBarrier(accessor.Temporary, rwlp.Temporary))
+                .Register<IMainDatabaseBarrier, ApplicationDatabaseBarrier>(new ApplicationDatabaseBarrier(accessor.Main, rwlp.Main))
+                .Register<IFileDatabaseBarrier, ApplicationDatabaseBarrier>(new ApplicationDatabaseBarrier(accessor.File, rwlp.File))
+                .Register<ITemporaryDatabaseBarrier, ApplicationDatabaseBarrier>(new ApplicationDatabaseBarrier(accessor.Temporary, rwlp.Temporary))
                 .Register<IReadWriteLockPack, ReadWriteLockPack>(rwlp)
             ;
 

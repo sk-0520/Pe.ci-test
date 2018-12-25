@@ -137,6 +137,7 @@
     <Compile Include="Model\Applications\ApplicationDiContainer.cs" />
     <Compile Include="Model\Applications\ApplicationLogger.cs" />
     <Compile Include="Model\Applications\ApplicationReaderWriterLocker.cs" />
+    <Compile Include="Model\Applications\ApplicationDatabaseBarrier.cs" />
     <Compile Include="Model\Database\Dao\Entity\FontsDao.cs" />
     <Compile Include="Model\Database\Dao\Entity\CredentsDao.cs" />
     <Compile Include="Model\Database\Dao\Entity\NoteFilesDao.cs" />
