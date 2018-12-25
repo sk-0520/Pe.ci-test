@@ -11,10 +11,30 @@ using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Applications
 {
+    public class LogEventArgs: EventArgs
+    {
+        public LogEventArgs(LogItem logItem)
+        {
+            LogItem = logItem;
+        }
+
+        #region property
+
+        LogItem LogItem { get; }
+
+        #endregion
+    }
+
     public class ApplicationLogger : AsyncLoggerBase
     {
         public ApplicationLogger()
         { }
+
+        #region event
+
+        public event EventHandler<LogEventArgs> ReceivedLog;
+
+        #endregion
 
         #region property
 
@@ -38,10 +58,21 @@ namespace ContentTypeTextNet.Pe.Main.Model.Applications
             }
         }
 
+        void OnReceivedLog(LogItem logItem)
+        {
+            if(ReceivedLog == null) {
+                return;
+            }
+
+            var eventArgs = new LogEventArgs(logItem);
+            ReceivedLog(this, eventArgs);
+        }
+
         void Write(LogItem logItem)
         {
             WriteConsole(logItem);
             WriteTextWriters(logItem);
+            OnReceivedLog(logItem);
         }
 
         public void AttachWriter(TextWriter writer)
