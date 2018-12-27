@@ -74,12 +74,14 @@ namespace ContentTypeTextNet.Pe.Main.Model.Applications
                     .RegisterLogger(logger)
                     .RegisterMvvm<Element.Accept.AcceptElement, ViewModel.Accept.AcceptViewModel, View.Accept.AcceptWindow>()
                 ;
+                using(var windowManager = new WindowManager(diContainer, logger.Factory)) {
+                    var acceptModel = diContainer.New<Element.Accept.AcceptElement>();
+                    var view = diContainer.Make<View.Accept.AcceptWindow>();
+                    windowManager.Register(new WindowItem(acceptModel, view));
+                    view.ShowDialog();
 
-                var acceptModel = diContainer.New<Element.Accept.AcceptElement>();
-                var view = diContainer.Make<View.Accept.AcceptWindow>();
-                view.ShowDialog();
-
-                return acceptModel.Accepted;
+                    return acceptModel.Accepted;
+                }
             }
         }
 

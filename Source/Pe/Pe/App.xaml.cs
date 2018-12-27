@@ -29,6 +29,7 @@ namespace ContentTypeTextNet.Pe.Main
 
             if(!ApplicationManager.Startup(this, e)) {
                 Shutdown();
+                return;
             }
 
             ApplicationManager.Execute();
