@@ -25,14 +25,16 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
 
     public class WindowItem
     {
-        public WindowItem(ElementBase element, Window window)
+        public WindowItem(WindowKind windowKind, ElementBase element, Window window)
         {
+            WindowKind = windowKind;
             Window = window;
             Element = element;
         }
 
         #region property
 
+        WindowKind WindowKind { get; }
         public ElementBase Element { get; }
         public Window Window { get; }
 

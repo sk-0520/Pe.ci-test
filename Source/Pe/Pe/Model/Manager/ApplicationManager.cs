@@ -43,7 +43,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
                 var view = diContainer.Make<View.Startup.StartupWindow>();
 
                 var windowManager = diContainer.Get<IWindowManager>();
-                windowManager.Register(new WindowItem(startupModel, view));
+                windowManager.Register(new WindowItem(WindowKind.Startup, startupModel, view));
 
                 view.ShowDialog();
 

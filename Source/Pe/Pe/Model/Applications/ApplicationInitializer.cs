@@ -77,7 +77,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Applications
                 using(var windowManager = new WindowManager(diContainer, logger.Factory)) {
                     var acceptModel = diContainer.New<Element.Accept.AcceptElement>();
                     var view = diContainer.Make<View.Accept.AcceptWindow>();
-                    windowManager.Register(new WindowItem(acceptModel, view));
+                    windowManager.Register(new WindowItem(WindowKind.Accept, acceptModel, view));
                     view.ShowDialog();
 
                     return acceptModel.Accepted;

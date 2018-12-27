@@ -13,22 +13,26 @@ using ContentTypeTextNet.Pe.Main.Model.Applications;
 using ContentTypeTextNet.Pe.Main.Model.Database.Dao;
 using ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Model.Launcher;
+using ContentTypeTextNet.Pe.Main.Model.Manager;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Element.Startup
 {
     public class ImportProgramsElement : ContextElementBase
     {
-        public ImportProgramsElement(IMainDatabaseBarrier databaseBarrier, IDatabaseStatementLoader statementLoader, IDiContainer diContainer, ILoggerFactory loggerFactory)
+        public ImportProgramsElement(IMainDatabaseBarrier databaseBarrier, IDatabaseStatementLoader statementLoader, IWindowManager windowManager, IDiContainer diContainer, ILoggerFactory loggerFactory)
             : base(diContainer, loggerFactory)
         {
             DatabaseBarrier = databaseBarrier;
             StatementLoader = statementLoader;
+            WindowManager = windowManager;
         }
 
         #region property
 
         IApplicationDatabaseBarrier DatabaseBarrier { get; }
         IDatabaseStatementLoader StatementLoader { get; }
+        IWindowManager WindowManager { get; }
+
         public ObservableCollection<ProgramElement> ProgramItems { get; } = new ObservableCollection<ProgramElement>();
 
         #endregion

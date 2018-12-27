@@ -16,9 +16,17 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Startup
 {
     public class StartupElement : ContextElementBase
     {
-        public StartupElement(IDiContainer diContainer, ILoggerFactory loggerFactory)
+        public StartupElement(IWindowManager windowManager, IDiContainer diContainer, ILoggerFactory loggerFactory)
             : base(diContainer, loggerFactory)
-        { }
+        {
+            WindowManager = windowManager;
+        }
+
+        #region property
+
+        IWindowManager WindowManager { get; }
+
+        #endregion
 
         #region function
 
@@ -44,8 +52,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Startup
                 var importProgramsModel = diContainer.New<ImportProgramsElement>();
                 var view = diContainer.Make<ImportProgramsWindow>();
 
-                var windowManager = diContainer.Get<IWindowManager>();
-                windowManager.Register(new WindowItem(importProgramsModel, view));
+                WindowManager.Register(new WindowItem(WindowKind.ImportPrograms, importProgramsModel, view));
 
                 view.ShowDialog();
             }
