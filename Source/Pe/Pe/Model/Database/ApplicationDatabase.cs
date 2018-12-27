@@ -5,6 +5,7 @@ using System.Data.SQLite;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Library.Shared.Embedded.Model;
@@ -201,6 +202,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database
             return LoadStatementCore(key);
         }
 
+        [MethodImpl(MethodImplOptions.NoInlining)]
         public override string LoadStatementByCurrent()
         {
             var member = GetCurrentMember();
