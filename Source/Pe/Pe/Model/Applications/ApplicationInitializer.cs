@@ -239,7 +239,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Applications
             return container;
         }
 
-        WindowManager SetupWindowManager(IDiContainer diContainer)
+        WindowManager SetupWindowManager(IDiRegisterContainer diContainer)
         {
             var manager = diContainer.Make<WindowManager>();
 
@@ -285,6 +285,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Applications
             DiContainer = SetupContainer(environmentParameters, pack.factory, pack.accessor, logger);
             Logger = logger;
             WindowManager = SetupWindowManager(DiContainer);
+
 
             return true;
         }

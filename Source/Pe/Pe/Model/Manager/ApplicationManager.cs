@@ -14,7 +14,7 @@ using ContentTypeTextNet.Pe.Main.Model.Applications;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Manager
 {
-    public class ApplicationManager: DisposerBase
+    public class ApplicationManager : DisposerBase
     {
         public ApplicationManager()
         { }
@@ -39,12 +39,23 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
                     .RegisterLogger(Logger)
                     .RegisterMvvm<Element.Startup.StartupElement, ViewModel.Startup.StartupViewModel, View.Startup.StartupWindow>()
                 ;
-
                 var startupModel = diContainer.New<Element.Startup.StartupElement>();
                 var view = diContainer.Make<View.Startup.StartupWindow>();
+
+                var windowManager = diContainer.Get<IWindowManager>();
+                windowManager.Register(new WindowItem(startupModel, view));
+
                 view.ShowDialog();
 
             }
+        }
+
+        void RegisterManagers()
+        {
+            Debug.Assert(ApplicationDiContainer != null);
+
+            ApplicationDiContainer.Register<IWindowManager, WindowManager>(WindowManager);
+
         }
 
         public bool Startup(App app, StartupEventArgs e)
@@ -58,10 +69,12 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
             ApplicationDiContainer = initializer.DiContainer;
             WindowManager = initializer.WindowManager;
 
+            RegisterManagers();
+
             Logger = ApplicationLogger.Factory.CreateCurrentClass();
             Logger.Debug("初期化完了");
 
-            if(initializer.IsFirstStartup||true) {
+            if(initializer.IsFirstStartup || true) {
                 // 初期登録の画面を表示
                 ShowStartupView();
             }

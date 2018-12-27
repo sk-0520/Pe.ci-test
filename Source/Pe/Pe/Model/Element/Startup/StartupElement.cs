@@ -8,6 +8,7 @@ using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Applications;
 using ContentTypeTextNet.Pe.Main.Model.Logic;
+using ContentTypeTextNet.Pe.Main.Model.Manager;
 using ContentTypeTextNet.Pe.Main.View.Startup;
 using ContentTypeTextNet.Pe.Main.ViewModel.Startup;
 
@@ -40,9 +41,12 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Startup
                     .RegisterLogger(Logger)
                     .RegisterMvvm<ImportProgramsElement, ImportProgramsViewModel, ImportProgramsWindow>()
                 ;
-
                 var importProgramsModel = diContainer.New<ImportProgramsElement>();
                 var view = diContainer.Make<ImportProgramsWindow>();
+
+                var windowManager = diContainer.Get<IWindowManager>();
+                windowManager.Register(new WindowItem(importProgramsModel, view));
+
                 view.ShowDialog();
             }
         }
