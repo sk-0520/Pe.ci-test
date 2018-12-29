@@ -5,8 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
+using ContentTypeTextNet.Pe.Library.Shared.Library.ViewModel;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Element;
+using ContentTypeTextNet.Pe.Main.ViewModel;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Manager
 {
@@ -25,17 +27,17 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
 
     public class WindowItem
     {
-        public WindowItem(WindowKind windowKind, ElementBase element, Window window)
+        public WindowItem(WindowKind windowKind, Window window)
         {
             WindowKind = windowKind;
             Window = window;
-            Element = element;
+            ViewModel = (ViewModelBase)Window.DataContext;
         }
 
         #region property
 
         WindowKind WindowKind { get; }
-        public ElementBase Element { get; }
+        public ViewModelBase ViewModel { get; }
         public Window Window { get; }
 
         /// <summary>
@@ -102,8 +104,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
             Logger.Debug($"ウィンドウ破棄前: {window}");
 
             var item = Items.First(i => i.Window == window);
-            if(item is IWindowElement windowElement) {
-                windowElement.OnClosingView(e);
+            if(item is IWindowNotify windowNotify) {
+                windowNotify.OnClosingView(e);
             }
         }
 
@@ -123,8 +125,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
             if(item.CloseToDataContextNull) {
                 item.Window.DataContext = null;
             }
-            if(item is IWindowElement windowElement) {
-                windowElement.OnClosedView();
+            if(item is IWindowNotify windowNotify) {
+                windowNotify.OnClosedView();
             }
         }
 
