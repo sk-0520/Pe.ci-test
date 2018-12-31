@@ -17,7 +17,7 @@ using Prism.Mvvm;
 
 namespace ContentTypeTextNet.Pe.Library.Shared.Library.ViewModel
 {
-    public abstract class ViewModelBase : BindableBase, INotifyDataErrorInfo, IDisposable
+    public abstract class ViewModelBase : BindableBase, INotifyDataErrorInfo, IDisposable, IDisposer
     {
         ViewModelBase()
         {
