@@ -90,7 +90,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
                 return false;
             }
 
-            item.Window.Closing += Window_Closing;
+            if(item.ViewModel is IWindowNotify windowNotify) {
+                item.Window.Closing += Window_Closing;
+            }
             item.Window.Closed += Window_Closed;
 
             return true;
@@ -104,7 +106,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
             Logger.Debug($"ウィンドウ破棄前: {window}");
 
             var item = Items.First(i => i.Window == window);
-            if(item is IWindowNotify windowNotify) {
+            if(item.ViewModel is IWindowNotify windowNotify) {
                 windowNotify.OnClosingView(e);
             }
         }
@@ -125,7 +127,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
             if(item.CloseToDataContextNull) {
                 item.Window.DataContext = null;
             }
-            if(item is IWindowNotify windowNotify) {
+            if(item.ViewModel is IWindowNotify windowNotify) {
                 windowNotify.OnClosedView();
             }
         }
