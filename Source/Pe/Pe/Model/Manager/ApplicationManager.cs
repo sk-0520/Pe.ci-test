@@ -86,12 +86,22 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
             return true;
         }
 
-        public void Execute(FrameworkElement notifyIcon)
+        public ManagerViewModel CreateViewModel()
+        {
+            var viewModel = new ManagerViewModel(this, Logger.Factory);
+            return viewModel;
+        }
+
+        public void Execute()
         {
             Logger.Information("がんばる！");
+        }
 
-            var viewModel = new ManagerViewModel(this, Logger.Factory);
-            notifyIcon.DataContext = viewModel;
+        public void Exit()
+        {
+            Logger.Information("おわる！");
+
+            Application.Current.Shutdown();
         }
 
         #endregion

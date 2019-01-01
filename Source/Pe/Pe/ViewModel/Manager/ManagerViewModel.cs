@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using ContentTypeTextNet.Pe.Library.Shared.Library.ViewModel;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Logic;
 using ContentTypeTextNet.Pe.Main.Model.Manager;
+using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModel.Manager
 {
@@ -24,13 +26,25 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Manager
 
         #endregion
 
+        #region command
+
+        public ICommand ExitCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                ApplicationManager.Exit();
+            }
+        ));
+
+        #endregion
+
+        #region function
+        #endregion
+
         #region IBuildStatus
 
         public BuildType BuildType => BuildStatus.BuildType;
 
         public Version Version => BuildStatus.Version;
         public string Revision => BuildStatus.Revision;
-
 
         #endregion
     }

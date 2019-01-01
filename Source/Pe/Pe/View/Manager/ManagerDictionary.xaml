@@ -5,10 +5,14 @@
   xmlns:Taskbar="http://www.hardcodet.net/taskbar"
 
 >
-
+  <ContextMenu x:Key="ContextMenu">
+    <MenuItem Header="exit" Command="{Binding ExitCommand}" />
+  </ContextMenu>
+  
   <Taskbar:TaskbarIcon
     x:Key="root"
     Tag="{Binding DataContext,RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}"
+    ContextMenu="{StaticResource ContextMenu}"
   >
     <Taskbar:TaskbarIcon.Style>
       <Style TargetType="Taskbar:TaskbarIcon">

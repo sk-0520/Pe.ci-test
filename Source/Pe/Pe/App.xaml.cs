@@ -33,8 +33,11 @@ namespace ContentTypeTextNet.Pe.Main
                 return;
             }
 
+            var viewModel = ApplicationManager.CreateViewModel();
             var notifyIcon = (Hardcodet.Wpf.TaskbarNotification.TaskbarIcon)FindResource("root");
-            ApplicationManager.Execute(notifyIcon);
+            notifyIcon.DataContext = viewModel;
+
+            ApplicationManager.Execute();
         }
 
         #endregion
