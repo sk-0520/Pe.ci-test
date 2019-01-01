@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using ContentTypeTextNet.Pe.Main.Model;
 using ContentTypeTextNet.Pe.Main.Model.Manager;
+using ContentTypeTextNet.Pe.Main.ViewModel.Manager;
 
 namespace ContentTypeTextNet.Pe.Main
 {
@@ -32,7 +33,8 @@ namespace ContentTypeTextNet.Pe.Main
                 return;
             }
 
-            ApplicationManager.Execute();
+            var notifyIcon = (Hardcodet.Wpf.TaskbarNotification.TaskbarIcon)FindResource("root");
+            ApplicationManager.Execute(notifyIcon);
         }
 
         #endregion

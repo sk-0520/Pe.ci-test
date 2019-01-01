@@ -27,6 +27,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Applications
         public ApplicationLogger Logger { get; private set; }
 
         public WindowManager WindowManager { get; private set; }
+        public NotifyManager NotifyManager { get; private set; }
 
         #endregion
 
@@ -246,6 +247,13 @@ namespace ContentTypeTextNet.Pe.Main.Model.Applications
             return manager;
         }
 
+        NotifyManager SetupNotifyManager(IDiRegisterContainer diContainer)
+        {
+            var manager = diContainer.Make<NotifyManager>();
+
+            return manager;
+        }
+
         public bool Initialize(IEnumerable<string> arguments)
         {
             InitializeEnvironmentVariable();
@@ -285,7 +293,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Applications
             DiContainer = SetupContainer(environmentParameters, pack.factory, pack.accessor, logger);
             Logger = logger;
             WindowManager = SetupWindowManager(DiContainer);
-
+            NotifyManager = SetupNotifyManager(DiContainer);
 
             return true;
         }

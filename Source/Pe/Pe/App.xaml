@@ -5,7 +5,11 @@
 
   ShutdownMode="OnExplicitShutdown"
 >
-    <Application.Resources>
-
-    </Application.Resources>
+  <Application.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/VIew/Manager/ManagerDictionary.xaml" />
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+  </Application.Resources>
 </Application>

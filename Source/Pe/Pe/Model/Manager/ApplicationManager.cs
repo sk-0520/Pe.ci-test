@@ -11,6 +11,7 @@ using ContentTypeTextNet.Pe.Library.Shared.Embedded.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Applications;
+using ContentTypeTextNet.Pe.Main.ViewModel.Manager;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Manager
 {
@@ -27,6 +28,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
         ILogger Logger { get; set; }
 
         WindowManager WindowManager { get; set; }
+        NotifyManager NotifyManager { get; set; }
 
         #endregion
 
@@ -55,6 +57,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
             Debug.Assert(ApplicationDiContainer != null);
 
             ApplicationDiContainer.Register<IWindowManager, WindowManager>(WindowManager);
+            ApplicationDiContainer.Register<INotifyManager, NotifyManager>(NotifyManager);
 
         }
 
@@ -68,13 +71,14 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
             ApplicationLogger = initializer.Logger;
             ApplicationDiContainer = initializer.DiContainer;
             WindowManager = initializer.WindowManager;
+            NotifyManager = initializer.NotifyManager;
 
             RegisterManagers();
 
             Logger = ApplicationLogger.Factory.CreateCurrentClass();
             Logger.Debug("初期化完了");
 
-            if(initializer.IsFirstStartup || true) {
+            if(initializer.IsFirstStartup) {
                 // 初期登録の画面を表示
                 ShowStartupView();
             }
@@ -82,9 +86,12 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
             return true;
         }
 
-        public void Execute()
+        public void Execute(FrameworkElement notifyIcon)
         {
             Logger.Information("がんばる！");
+
+            var viewModel = new ManagerViewModel(this, Logger.Factory);
+            notifyIcon.DataContext = viewModel;
         }
 
         #endregion
