@@ -95,6 +95,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
         public void Execute()
         {
             Logger.Information("がんばる！");
+
+            // ツールバーの生成
+            // ノートの生成
         }
 
         public void Exit()
