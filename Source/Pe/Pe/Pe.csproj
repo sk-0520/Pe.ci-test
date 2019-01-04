@@ -158,6 +158,7 @@
     <Compile Include="Model\Data\Dto\Entity\LauncherGroupsDto.cs" />
     <Compile Include="Model\Data\Dto\Entity\LauncherItemsDto.cs" />
     <Compile Include="Model\Data\Dto\Entity\LauncherTagsDto.cs" />
+    <Compile Include="Model\Element\Toolbar\LauncherToolbarElement.cs" />
     <Compile Include="Model\Launcher\LauncherItem.cs" />
     <Compile Include="Model\Launcher\LauncherCreator.cs" />
     <Compile Include="Model\Logic\StartupRegister.cs" />
@@ -169,6 +170,7 @@
     <Compile Include="Model\Data\Dto\CommonDto.cs" />
     <Compile Include="Model\Data\Dto\DtoBase.cs" />
     <Compile Include="Model\Data\Dto\SetupDto.cs" />
+    <Compile Include="Model\Manager\LauncherToolbarManager.cs" />
     <Compile Include="Model\Manager\ManagerBase.cs" />
     <Compile Include="Model\Manager\NotifyManager.cs" />
     <Compile Include="Model\Manager\WindowManager.cs" />
@@ -188,6 +190,7 @@
     <Compile Include="View\Accept\AcceptWindow.xaml.cs">
       <DependentUpon>AcceptWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Extend\AppDesktopToolbarExtend.cs" />
     <Compile Include="View\Startup\ImportProgramsWindow.xaml.cs">
       <DependentUpon>ImportProgramsWindow.xaml</DependentUpon>
     </Compile>

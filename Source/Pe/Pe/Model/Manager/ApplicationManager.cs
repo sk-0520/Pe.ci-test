@@ -28,6 +28,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
         ILogger Logger { get; set; }
 
         WindowManager WindowManager { get; set; }
+        LauncherToolbarManager LauncherToolbarManager { get; set; }
         NotifyManager NotifyManager { get; set; }
 
         #endregion
@@ -57,6 +58,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
             Debug.Assert(ApplicationDiContainer != null);
 
             ApplicationDiContainer.Register<IWindowManager, WindowManager>(WindowManager);
+            ApplicationDiContainer.Register<ILauncherToolbarManager, LauncherToolbarManager>(LauncherToolbarManager);
             ApplicationDiContainer.Register<INotifyManager, NotifyManager>(NotifyManager);
 
         }
@@ -71,6 +73,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
             ApplicationLogger = initializer.Logger;
             ApplicationDiContainer = initializer.DiContainer;
             WindowManager = initializer.WindowManager;
+            LauncherToolbarManager = initializer.LauncherToolbarManager;
             NotifyManager = initializer.NotifyManager;
 
             RegisterManagers();
