@@ -27,7 +27,6 @@ namespace ContentTypeTextNet.Pe.Main.Model.Applications
         public ApplicationLogger Logger { get; private set; }
 
         public WindowManager WindowManager { get; private set; }
-        public LauncherToolbarManager LauncherToolbarManager { get; private set; }
         public NotifyManager NotifyManager { get; private set; }
 
         #endregion
@@ -248,13 +247,6 @@ namespace ContentTypeTextNet.Pe.Main.Model.Applications
             return manager;
         }
 
-        LauncherToolbarManager SetupLauncherToolbarManager(IDiRegisterContainer diContainer)
-        {
-            var manager = diContainer.Make<LauncherToolbarManager>();
-
-            return manager;
-        }
-
         NotifyManager SetupNotifyManager(IDiRegisterContainer diContainer)
         {
             var manager = diContainer.Make<NotifyManager>();
@@ -301,7 +293,6 @@ namespace ContentTypeTextNet.Pe.Main.Model.Applications
             DiContainer = SetupContainer(environmentParameters, pack.factory, pack.accessor, logger);
             Logger = logger;
             WindowManager = SetupWindowManager(DiContainer);
-            LauncherToolbarManager = SetupLauncherToolbarManager(DiContainer);
             NotifyManager = SetupNotifyManager(DiContainer);
 
             return true;

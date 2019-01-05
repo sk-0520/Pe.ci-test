@@ -36,7 +36,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
 
         #region property
 
-        WindowKind WindowKind { get; }
+        public WindowKind WindowKind { get; }
         public ViewModelBase ViewModel { get; }
         public Window Window { get; }
 
@@ -58,6 +58,13 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
         /// <param name="item"></param>
         /// <returns>登録の成功・失敗。</returns>
         bool Register(WindowItem item);
+
+        /// <summary>
+        /// ウィンドウアイテムを取得。
+        /// </summary>
+        /// <param name="kind"></param>
+        /// <returns></returns>
+        IEnumerable<WindowItem> GetWindowItems(WindowKind kind);
 
         #endregion
     }
@@ -96,6 +103,11 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
             item.Window.Closed += Window_Closed;
 
             return true;
+        }
+
+        public IEnumerable<WindowItem> GetWindowItems(WindowKind kind)
+        {
+            return Items.Where(i => i.WindowKind == kind);
         }
 
         #endregion

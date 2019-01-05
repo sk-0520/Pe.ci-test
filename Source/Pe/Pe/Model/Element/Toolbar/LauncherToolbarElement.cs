@@ -15,6 +15,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Toolbar
         { }
 
         #region property
+
         #endregion
     }
 }

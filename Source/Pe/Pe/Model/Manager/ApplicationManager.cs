@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -8,9 +9,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using ContentTypeTextNet.Pe.Library.Shared.Embedded.Model;
+using ContentTypeTextNet.Pe.Library.Shared.Library.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Applications;
+using ContentTypeTextNet.Pe.Main.Model.Element.Toolbar;
+using ContentTypeTextNet.Pe.Main.Model.Launcher;
 using ContentTypeTextNet.Pe.Main.ViewModel.Manager;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Manager
@@ -28,8 +32,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
         ILogger Logger { get; set; }
 
         WindowManager WindowManager { get; set; }
-        LauncherToolbarManager LauncherToolbarManager { get; set; }
         NotifyManager NotifyManager { get; set; }
+
+        IList<LauncherToolbarElement> LauncherToolbars { get; } = new ObservableCollection<LauncherToolbarElement>();
 
         #endregion
 
@@ -58,7 +63,6 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
             Debug.Assert(ApplicationDiContainer != null);
 
             ApplicationDiContainer.Register<IWindowManager, WindowManager>(WindowManager);
-            ApplicationDiContainer.Register<ILauncherToolbarManager, LauncherToolbarManager>(LauncherToolbarManager);
             ApplicationDiContainer.Register<INotifyManager, NotifyManager>(NotifyManager);
 
         }
@@ -73,7 +77,6 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
             ApplicationLogger = initializer.Logger;
             ApplicationDiContainer = initializer.DiContainer;
             WindowManager = initializer.WindowManager;
-            LauncherToolbarManager = initializer.LauncherToolbarManager;
             NotifyManager = initializer.NotifyManager;
 
             RegisterManagers();
@@ -95,11 +98,27 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
             return viewModel;
         }
 
+        LauncherToolbarElement CreateLauncherToolbarElement(Screen screen)
+        {
+            var element = ApplicationDiContainer.Make<LauncherToolbarElement>();
+            return element;
+        }
+
+        void BuildLauncherToolbars()
+        {
+            var screens = Screen.AllScreens;
+            foreach(var screen in screens) {
+                var element = CreateLauncherToolbarElement(screen);
+            }
+        }
+
         public void Execute()
         {
             Logger.Information("がんばる！");
 
             // ツールバーの生成
+            BuildLauncherToolbars();
+
             // ノートの生成
         }
 
