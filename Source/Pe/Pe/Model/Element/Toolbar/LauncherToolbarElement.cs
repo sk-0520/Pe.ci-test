@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
+using ContentTypeTextNet.Pe.Main.View.Extend;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Element.Toolbar
 {
@@ -14,8 +15,5 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Toolbar
             : base(diContainer, loggerFactory)
         { }
 
-        #region property
-
-        #endregion
     }
 }

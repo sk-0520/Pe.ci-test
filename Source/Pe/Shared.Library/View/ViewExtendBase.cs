@@ -16,12 +16,15 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.View
         public ViewExtendBase(TView view, TExtendData extendData, ILoggerFactory loggerFactory)
         {
             View = view;
+            ExtendData = extendData;
+            Logger = loggerFactory.CreateTartget(GetType());
         }
 
         #region property
 
         protected TView View { get; private set; }
         protected TExtendData ExtendData { get; private set; }
+        protected ILogger Logger { get; }
 
         #endregion
 

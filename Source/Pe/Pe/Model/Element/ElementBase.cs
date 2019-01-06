@@ -26,7 +26,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element
     /// <summary>
     /// <see cref="ElementBase"/>と同じだけど結構な長寿で DI コンテナを持ち運ぶ気持ち最上位なモデル。
     /// </summary>
-    public abstract class ContextElementBase: ElementBase
+    public abstract class ContextElementBase: ElementBase, ILoggerFactory
     {
         public ContextElementBase(IDiContainer diContainer, ILogger logger)
             : base(logger)
@@ -41,6 +41,12 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element
         #region property
 
         protected IDiContainer ServiceLocator { get; }
+
+        #endregion
+
+        #region ILoggerFactory
+
+        public ILogger CreateLogger(string header) => Logger.Factory.CreateLogger(header);
 
         #endregion
     }

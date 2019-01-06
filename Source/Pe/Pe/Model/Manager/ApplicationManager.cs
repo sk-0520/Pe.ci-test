@@ -15,7 +15,9 @@ using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Applications;
 using ContentTypeTextNet.Pe.Main.Model.Element.Toolbar;
 using ContentTypeTextNet.Pe.Main.Model.Launcher;
+using ContentTypeTextNet.Pe.Main.View.Toolbar;
 using ContentTypeTextNet.Pe.Main.ViewModel.Manager;
+using ContentTypeTextNet.Pe.Main.ViewModel.Toolbar;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Manager
 {
@@ -104,11 +106,29 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
             return element;
         }
 
+        LauncherToolbarWindow CreateLauncherToolbarWindow(LauncherToolbarElement element)
+        {
+            var viewModel = new LauncherToolbarViewModel(element, element);
+            var window = ApplicationDiContainer.Make<LauncherToolbarWindow>();
+            viewModel.AppDesktopToolbarExtend = new View.Extend.AppDesktopToolbarExtend(window, viewModel, viewModel);
+            window.DataContext = viewModel;
+
+            return window;
+        }
+
         void BuildLauncherToolbars()
         {
+            var windowManager = ApplicationDiContainer.Get<IWindowManager>();
+
             var screens = Screen.AllScreens;
             foreach(var screen in screens) {
                 var element = CreateLauncherToolbarElement(screen);
+                var window = CreateLauncherToolbarWindow(element);
+
+                LauncherToolbars.Add(element);
+                windowManager.Register(new WindowItem(WindowKind.LauncherToolbar, window));
+
+                window.Show();
             }
         }
 
