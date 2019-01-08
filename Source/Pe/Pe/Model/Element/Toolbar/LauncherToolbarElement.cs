@@ -15,5 +15,13 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Toolbar
             : base(diContainer, loggerFactory)
         { }
 
+        #region property
+
+        public bool IsVisible { get; set; }
+
+        #endregion
+
+        #region function
+        #endregion
     }
 }
