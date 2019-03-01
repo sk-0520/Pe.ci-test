@@ -91,7 +91,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Embedded.Model
         /// 引数からコマンドライン分解。
         /// </summary>
         /// <param name="arguments">コマンドライン引数。</param>
-        /// <param name="firstIsProgram"><see cref="arguments"/>の先頭はプログラム名か。<para>Main関数だと含まれてて、<see cref="Environment.GetCommandLineArgs()"/>だと含まれてない的な。</para></param>
+        /// <param name="firstIsProgram"><see cref="arguments"/>の先頭はプログラム名か。<para>Main関数だと含まれず、<see cref="Environment.GetCommandLineArgs()"/>だと含まれてる的な。</para></param>
         public CommandLine(IEnumerable<string> arguments, bool firstIsProgram = false)
         {
             if(firstIsProgram) {
