@@ -11,9 +11,9 @@ using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Launcher
 {
-    public class LauncherCreator
+    public class LauncherFactory
     {
-        public LauncherCreator(ILoggerFactory loggerFactory)
+        public LauncherFactory(ILoggerFactory loggerFactory)
         {
             Logger = loggerFactory.CreateTartget(GetType());
         }

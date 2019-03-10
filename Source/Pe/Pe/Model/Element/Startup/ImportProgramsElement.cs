@@ -88,20 +88,20 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Startup
 
         void Import()
         {
-            var launcherCreator = new LauncherCreator(Logger.Factory);
+            var launcherFactory = new LauncherFactory(Logger.Factory);
 
             // ap ファイルからランチャーデータ作って
             var importItems = ProgramItems
                 .Where(i => i.IsImport)
-                .Select(i => launcherCreator.FromFile(i.FileInfo, true))
+                .Select(i => launcherFactory.FromFile(i.FileInfo, true))
                 .Select(i => new {
                     Data = i,
-                    Tags = launcherCreator.GetTags(new FileInfo(i.Command.Command)).ToList(),
+                    Tags = launcherFactory.GetTags(new FileInfo(i.Command.Command)).ToList(),
                 })
                 .ToList()
             ;
 
-            var group = launcherCreator.CreateGroupData("@GROUP");
+            var group = launcherFactory.CreateGroupData("@GROUP");
 
             using(var transaction = DatabaseBarrier.WaitWrite()) {
                 var launcherItemsDao = new LauncherItemsDao(transaction, StatementLoader, Logger.Factory);

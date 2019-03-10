@@ -160,7 +160,7 @@
     <Compile Include="Model\Data\Dto\Entity\LauncherTagsDto.cs" />
     <Compile Include="Model\Element\Toolbar\LauncherToolbarElement.cs" />
     <Compile Include="Model\Launcher\LauncherItem.cs" />
-    <Compile Include="Model\Launcher\LauncherCreator.cs" />
+    <Compile Include="Model\Launcher\LauncherFactory.cs" />
     <Compile Include="Model\Logic\StartupRegister.cs" />
     <Compile Include="Model\Database\Dao\ApplicationDatabaseObjectBase.cs" />
     <Compile Include="Model\Database\Setup\SetupBase.cs" />
