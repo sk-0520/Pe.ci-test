@@ -47,7 +47,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Applications
             commandLine.Add(longKey: EnvironmentParameters.CommandLineKeyTemporaryDirectory, hasValue: true);
             commandLine.Add(longKey: CommandLineKeyLog, hasValue: true);
 
-            commandLine.Execute();
+            commandLine.Parse();
 
             return commandLine;
         }

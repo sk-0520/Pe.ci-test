@@ -86,7 +86,7 @@ namespace Shared.Embedded.Test.Model
             var commandLine = new CommandLine(args, false);
             var commanadKey = commandLine.Add(shortKey, longKey, true);
 
-            Assert.IsTrue(commandLine.Execute());
+            Assert.IsTrue(commandLine.Parse());
             var value = commandLine.Values[commanadKey];
             Assert.IsTrue(value.First == result);
         }
@@ -101,7 +101,7 @@ namespace Shared.Embedded.Test.Model
             var commandLine = new CommandLine(args, false);
             var commanadKey = commandLine.Add(shortKey, longKey, false);
 
-            Assert.IsTrue(commandLine.Execute());
+            Assert.IsTrue(commandLine.Parse());
             var has = commandLine.Switch.Contains(commanadKey);
             Assert.IsTrue(has == result);
         }

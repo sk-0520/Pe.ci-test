@@ -7,6 +7,9 @@ using System.Text;
 
 namespace ContentTypeTextNet.Pe.Library.Shared.Embedded.Model
 {
+    /// <summary>
+    /// コマンドラインのキー。
+    /// </summary>
     internal class CommandLineKey
     {
         #region define
@@ -25,34 +28,75 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Embedded.Model
 
         #region property
 
+        /// <summary>
+        /// 短いキー。
+        /// <para>一文字。</para>
+        /// </summary>
         public char ShortKey { get; }
+        /// <summary>
+        /// 長いキー。
+        /// <para><see cref="ShortKey"/>の長ーい文字列。</para>
+        /// </summary>
         public string LongKey { get; }
+        /// <summary>
+        /// 値を持つか。
+        /// </summary>
         public bool HasValue { get; }
+        /// <summary>
+        /// コマンドラインの説明。
+        /// </summary>
         public string Description { get; }
 
+        /// <summary>
+        /// 有効な<see cref="ShortKey"/>か。
+        /// </summary>
         public bool IsEnabledShortKey => ShortKey != EmptyShortKey;
+        /// <summary>
+        /// 有効な<see cref="LongKey"/>か。
+        /// </summary>
         public bool IsEnabledLongKey => !string.IsNullOrEmpty(LongKey);
 
         #endregion
     }
 
+    /// <summary>
+    /// コマンドラインの値。
+    /// </summary>
     internal interface ICommandLineValue
     {
         #region property
 
+        /// <summary>
+        /// 値一覧。
+        /// </summary>
         IReadOnlyList<string> Items { get; }
+        /// <summary>
+        /// 最初の値。
+        /// </summary>
         string First { get; }
 
         #endregion
     }
 
+    /// <summary>
+    /// コマンドラインの値。
+    /// </summary>
     internal class CommandLineValue : ICommandLineValue
     {
         #region ICommandLineValue
 
+        /// <summary>
+        /// <see cref="ICommandLineValue.Items"/>
+        /// </summary>
         public List<string> Items { get; } = new List<string>();
+        /// <summary>
+        /// <see cref="ICommandLineValue.Items"/>
+        /// </summary>
         IReadOnlyList<string> ICommandLineValue.Items => Items;
 
+        /// <summary>
+        /// <see cref="ICommandLineValue.First"/>
+        /// </summary>
         public string First => Items.First();
 
         #endregion
@@ -82,6 +126,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Embedded.Model
     {
         /// <summary>
         /// <para><see cref="Environment.GetCommandLineArgs()"/>からコマンドライン分解。</para>
+        /// <para><see cref="ProgramName"/>を含む。</para>
         /// </summary>
         public CommandLine()
             : this(Environment.GetCommandLineArgs(), true)
@@ -115,21 +160,51 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Embedded.Model
         /// </summary>
         public IReadOnlyList<string> Arguments { get; }
 
+        /// <summary>
+        /// 解析が完了したか。
+        /// </summary>
         public bool IsParsed { get; private set; }
 
+        /// <summary>
+        /// キーアイテム一覧。
+        /// </summary>
         private List<CommandLineKey> KeyItems { get; } = new List<CommandLineKey>();
+        /// <summary>
+        /// キーアイテム一覧。
+        /// </summary>
         public IReadOnlyList<CommandLineKey> Keys => KeyItems;
 
+        /// <summary>
+        /// 値一覧。
+        /// </summary>
         private Dictionary<CommandLineKey, ICommandLineValue> ValueItems { get; } = new Dictionary<CommandLineKey, ICommandLineValue>();
+        /// <summary>
+        /// 値一覧。
+        /// </summary>
         public IReadOnlyDictionary<CommandLineKey, ICommandLineValue> Values => ValueItems;
 
+        /// <summary>
+        /// スイッチ一覧。
+        /// </summary>
         private HashSet<CommandLineKey> SwitchItems { get; } = new HashSet<CommandLineKey>();
+        /// <summary>
+        /// スイッチ一覧。
+        /// </summary>
         public IReadOnlyCollection<CommandLineKey> Switch => SwitchItems;
 
+        /// <summary>
+        /// 不明アイテム一覧。
+        /// </summary>
         private List<string> UnknownItems { get; } = new List<string>();
+        /// <summary>
+        /// 不明アイテム一覧。
+        /// </summary>
         public IReadOnlyList<string> Unknowns => UnknownItems;
 
-        public Exception Exception { get; private set; }
+        /// <summary>
+        /// 解析時例外。
+        /// </summary>
+        public Exception ParseException { get; private set; }
 
         #endregion
 
@@ -141,6 +216,11 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Embedded.Model
             return key;
         }
 
+        /// <summary>
+        /// コマンドラインキーの追加。
+        /// </summary>
+        /// <param name="key">キー情報。</param>
+        /// <returns>追加したキー。</returns>
         public CommandLineKey Add(CommandLineKey key)
         {
             if(key == null) {
@@ -166,6 +246,14 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Embedded.Model
             return AddCore(key);
         }
 
+        /// <summary>
+        /// コマンドラインキーの追加。
+        /// </summary>
+        /// <param name="shortKey">短いキー。</param>
+        /// <param name="longKey">長いキー。</param>
+        /// <param name="hasValue">値を持つか。</param>
+        /// <param name="description">説明。</param>
+        /// <returns>追加したキー。</returns>
         public CommandLineKey Add(char shortKey = CommandLineKey.EmptyShortKey, string longKey = "", bool hasValue = false, string description = "")
         {
             var value = new CommandLineKey(shortKey, longKey, hasValue, description);
@@ -216,7 +304,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Embedded.Model
             UnknownItems.Add(value);
         }
 
-        private bool ExecuteCore()
+        private bool ParseCore()
         {
             try {
                 var map = new[] {
@@ -274,23 +362,32 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Embedded.Model
                 }
                 return true;
             } catch(Exception ex) {
-                Exception = ex;
+                ParseException = ex;
                 return false;
             }
         }
 
-        public bool Execute()
+        /// <summary>
+        /// 解析処理実行。
+        /// </summary>
+        /// <returns></returns>
+        public bool Parse()
         {
             if(IsParsed) {
                 throw new InvalidOperationException();
             }
 
-            var result = ExecuteCore();
+            var result = ParseCore();
             IsParsed = true;
 
             return result;
         }
 
+        /// <summary>
+        /// 短いキーから値取得。
+        /// </summary>
+        /// <param name="shortKey"></param>
+        /// <returns>取得した値。取得できない場合は null 。</returns>
         public CommandLineKey GetKey(char shortKey)
         {
             return KeyItems
@@ -300,6 +397,11 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Embedded.Model
             ;
         }
 
+        /// <summary>
+        /// 長いキーから値取得。
+        /// </summary>
+        /// <param name="shortKey"></param>
+        /// <returns>取得した値。取得できない場合は null 。</returns>
         public CommandLineKey GetKey(string longKey)
         {
             return KeyItems
@@ -344,14 +446,32 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Embedded.Model
 
         #region property
 
+        /// <summary>
+        /// 短いキー。
+        /// <para>一文字。</para>
+        /// </summary>
         public char ShortKey { get; }
+        /// <summary>
+        /// 長いキー。
+        /// <para><see cref="ShortKey"/>の長ーい文字列。</para>
+        /// </summary>
         public string LongKey { get; }
-        public string Description { get; }
+        /// <summary>
+        /// 値を持つか。
+        /// </summary>
         public bool HasValue { get; }
+        /// <summary>
+        /// コマンドラインの説明。
+        /// </summary>
+        public string Description { get; }
 
         #endregion
     }
 
+    /// <summary>
+    /// コマンドラインをデータ構造にマッピング。
+    /// </summary>
+    /// <typeparam name="TData"></typeparam>
     internal class CommandLineConverter<TData>
     {
         public CommandLineConverter(CommandLine commandLine, TData data)
@@ -447,14 +567,14 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Embedded.Model
             throw new NotImplementedException();
         }
 
-        public bool Mapping()
+        protected bool MappingCore()
         {
             var type = Data.GetType();
             var attributeMap = GetPropertyAttributeMapping(type);
 
             var keyMap = SetPropertyKeyMapping(CommandLine, attributeMap);
             try {
-                if(CommandLine.Execute()) {
+                if(CommandLine.Parse()) {
                     foreach(var pair in keyMap) {
                         if(pair.Value.HasValue) {
                             // 値取得
@@ -477,6 +597,43 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Embedded.Model
                 Exception = ex;
                 return false;
             }
+        }
+
+        public virtual bool Mapping()
+        {
+            return MappingCore();
+        }
+
+        #endregion
+    }
+
+    sealed internal class CommandLineSimpleConverter<TData>: CommandLineConverter<TData>
+        where TData: new()
+    {
+        public CommandLineSimpleConverter(CommandLine commandLine)
+            : base(commandLine, new TData())
+        { }
+
+        #region function
+
+        public TData GetMappingData()
+        {
+            var result = MappingCore();
+            if(!result) {
+                return default(TData);
+            }
+
+            return Data;
+        }
+
+
+        #endregion
+
+        #region CommandLineConverter
+
+        public override bool Mapping()
+        {
+            throw new NotSupportedException();
         }
 
         #endregion
