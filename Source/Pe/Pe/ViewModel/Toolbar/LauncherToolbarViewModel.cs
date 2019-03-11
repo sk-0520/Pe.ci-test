@@ -85,40 +85,31 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Toolbar
             get => Model.DisplaySize;
             set => SetModelValue(value);
         }
-        /// <summary>
-        /// 隠れているバーのサイズ。
-        /// <para><see cref="AppDesktopToolbarPosition"/>の各辺に対応</para>
-        /// </summary>
-        public Size HiddenSize
-        {
-            get => Model.HiddenSize;
-            set => SetModelValue(value);
-        }
 
         /// <summary>
         /// 表示中の論理バーサイズ。
         /// </summary>
         [PixelKind(Px.Logical)]
-        public Rect ShowLogicalBarArea
+        public Rect DisplayBarArea
         {
-            get => Model.ShowLogicalBarArea;
+            get => Model.DisplayBarArea;
             set => SetModelValue(value);
         }
         /// <summary>
         /// 隠れた状態のバー論理サイズ。
         /// </summary>
         [PixelKind(Px.Logical)]
-        public double HideWidth
+        public Size HiddenSize
         {
-            get => Model.HideWidth;
+            get => Model.HiddenSize;
         }
         /// <summary>
         /// 表示中の隠れたバーの論理領域。
         /// </summary>
         [PixelKind(Px.Logical)]
-        public Rect HideLogicalBarArea
+        public Rect HiddenBarArea
         {
-            get => Model.HideLogicalBarArea;
+            get => Model.HiddenBarArea;
             set => SetModelValue(value);
         }
 

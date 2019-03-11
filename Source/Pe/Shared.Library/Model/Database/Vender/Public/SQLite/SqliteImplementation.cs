@@ -39,12 +39,33 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database.Vender.Pub
         {
             var s = (string)value;
             if(s != null) {
-                if(Version.TryParse(s, out var ver)) {
-                    return ver;
+                if(Version.TryParse(s, out var ret)) {
+                    return ret;
                 }
             }
 
             return null;
+        }
+    }
+
+    class SqliteGuidHandler : SqlMapper.TypeHandler<Guid>
+    {
+        public override void SetValue(IDbDataParameter parameter, Guid value)
+        {
+            // 00000000-0000-0000-0000-000000000000
+            parameter.Value = value.ToString("D");
+        }
+
+        public override Guid Parse(object value)
+        {
+            var s = (string)value;
+            if(s != null) {
+                if(Guid.TryParse(s, out var ret)) {
+                    return ret;
+                }
+            }
+
+            return Guid.Empty;
         }
     }
 
@@ -54,6 +75,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database.Vender.Pub
         {
             SqlMapper.AddTypeHandler(typeof(bool), new SqliteBooleanHandler());
             SqlMapper.AddTypeHandler(typeof(Version), new SqliteVersionHandler());
+            SqlMapper.AddTypeHandler(typeof(Guid), new SqliteGuidHandler());
         }
 
         #region DatabaseImplementation

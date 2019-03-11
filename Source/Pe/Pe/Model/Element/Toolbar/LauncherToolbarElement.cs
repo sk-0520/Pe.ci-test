@@ -6,20 +6,32 @@ using System.Threading.Tasks;
 using System.Windows;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
+using ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
+using ContentTypeTextNet.Pe.Main.Model.Applications;
+using ContentTypeTextNet.Pe.Main.Model.Data.Dto.Entity;
+using ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity;
+using ContentTypeTextNet.Pe.Main.Model.Logic;
 using ContentTypeTextNet.Pe.Main.View.Extend;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Element.Toolbar
 {
     public class LauncherToolbarElement : ContextElementBase, IAppDesktopToolbarExtendData
     {
-        public LauncherToolbarElement(Screen dockScreen, IDiContainer diContainer, ILoggerFactory loggerFactory)
+        public LauncherToolbarElement(Screen dockScreen, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, IDiContainer diContainer, ILoggerFactory loggerFactory)
             : base(diContainer, loggerFactory)
         {
             DockScreen = dockScreen;
+            MainDatabaseBarrier = mainDatabaseBarrier;
+            StatementLoader = statementLoader;
+            IdFactory = idFactory;
         }
 
         #region property
+
+        IMainDatabaseBarrier MainDatabaseBarrier { get; }
+        IDatabaseStatementLoader StatementLoader { get; }
+        IIdFactory IdFactory { get; }
 
         /// <summary>
         /// 表示されているか。
@@ -44,9 +56,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Toolbar
         public Thickness ButtonPadding { get; private set; }
 
         /// <summary>
-        /// テキストを表示するか。
+        /// アイコンのみを表示するか。
         /// </summary>
-        public bool IsTextVisible { get; private set; }
+        public bool IsIconOnly { get; private set; }
 
         /// <summary>
         /// テキスト表示の際の表示幅。
@@ -57,6 +69,63 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Toolbar
         #endregion
 
         #region function
+
+        /// <summary>
+        /// <see cref="DockScreen"/> から近しい ツールバー設定を読み込む。
+        /// </summary>
+        /// <param name="rows"></param>
+        /// <returns>見つかったツールバー。見つからない場合は<see cref="Guid.Empty"/>を返す。</returns>
+        Guid FindMaybeToolbarId(IEnumerable<ToolbarsScreenRowDto> rows)
+        {
+            foreach(var row in rows) {
+                if(row.Screen == DockScreen.DeviceName) {
+                    return row.ToolbarId;
+                }
+
+                var deviceBounds = DockScreen.DeviceBounds;
+                // 完全一致パターン: ドライバ更新でも大抵は大丈夫だと思う
+                if(row.X == deviceBounds.X && row.Y == deviceBounds.Y && row.Width == deviceBounds.Width && row.Height == deviceBounds.Height) {
+                    return row.ToolbarId;
+                }
+            }
+
+            return Guid.Empty;
+        }
+
+        Guid GetToolbarId()
+        {
+            using(var commander = MainDatabaseBarrier.WaitRead()) {
+                var dao = new ToolbarsDao(commander, StatementLoader, Logger.Factory);
+                var screenToolbars = dao.SelectAllToolbars().ToList();
+                var toolbarId = FindMaybeToolbarId(screenToolbars);
+                return toolbarId;
+            }
+        }
+
+        Guid CreateToolbar()
+        {
+            var toolbarId = IdFactory.CreateToolbarId();
+            Logger.Debug($"new toolbar: {toolbarId}");
+
+            using(var commander = MainDatabaseBarrier.WaitWrite()) {
+                var dao = new ToolbarsDao(commander, StatementLoader, Logger.Factory);
+                dao.InsertNewToolbar(toolbarId, DockScreen);
+
+                commander.Commit();
+            }
+
+            return toolbarId;
+        }
+
+        public void Initialize()
+        {
+            Logger.Information($"initialize {DockScreen.DeviceName}:{DockScreen.DeviceBounds}, {nameof(DockScreen.Primary)}: {DockScreen.Primary}");
+
+            var toolbarId = GetToolbarId();
+            if(toolbarId == Guid.Empty) {
+                toolbarId = CreateToolbar();
+            }
+        }
 
         #endregion
 
@@ -89,28 +158,22 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Toolbar
         /// </summary>
         [PixelKind(Px.Logical)]
         public Size DisplaySize { get; set; }
-        /// <summary>
-        /// 隠れているバーのサイズ。
-        /// <para><see cref="AppDesktopToolbarPosition"/>の各辺に対応</para>
-        /// </summary>
-        [PixelKind(Px.Logical)]
-        public Size HiddenSize { get; set; }
 
         /// <summary>
         /// 表示中の論理バーサイズ。
         /// </summary>
         [PixelKind(Px.Logical)]
-        public Rect ShowLogicalBarArea { get; set; }
+        public Rect DisplayBarArea { get; set; }
         /// <summary>
         /// 隠れた状態のバー論理サイズ。
         /// </summary>
         [PixelKind(Px.Logical)]
-        public double HideWidth { get; }
+        public Size HiddenSize { get; }
         /// <summary>
         /// 表示中の隠れたバーの論理領域。
         /// </summary>
         [PixelKind(Px.Logical)]
-        public Rect HideLogicalBarArea { get; set; }
+        public Rect HiddenBarArea { get; set; }
 
         /// <summary>
         /// フルスクリーンウィンドウが存在するか。

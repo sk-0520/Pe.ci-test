@@ -29,7 +29,7 @@ namespace ContentTypeTextNet.Pe.Main.View.Extend
     public static class AppDesktopToolbarPositionUtility
     {
         /// <summary>
-        /// ABEへ変換。
+        /// <see cref="ABE"/> へ変換。
         /// </summary>
         /// <param name="toolbarPosition"></param>
         /// <returns></returns>
@@ -46,7 +46,7 @@ namespace ContentTypeTextNet.Pe.Main.View.Extend
         }
 
         /// <summary>
-        /// DesktopDockTypeへ変換。
+        /// <see cref="AppDesktopToolbarPosition"/> へ変換。
         /// </summary>
         /// <param name="abe"></param>
         /// <returns></returns>
@@ -95,27 +95,24 @@ namespace ContentTypeTextNet.Pe.Main.View.Extend
         [PixelKind(Px.Logical)]
         Size DisplaySize { get; set; }
         /// <summary>
-        /// 隠れているバーのサイズ。
+        /// 表示中の論理バーサイズ。
+        /// <para><see cref="AppDesktopToolbarExtend"/>で設定されるためユーザーコードで変更は行わないこと。</para>
+        /// </summary>
+        [PixelKind(Px.Logical)]
+        Rect DisplayBarArea { get; set; }
+
+        /// <summary>
+        /// 隠れた状態のバー論理サイズ。
         /// <para><see cref="AppDesktopToolbarPosition"/>の各辺に対応</para>
         /// </summary>
         [PixelKind(Px.Logical)]
-        Size HiddenSize { get; set; }
-
-        /// <summary>
-        /// 表示中の論理バーサイズ。
-        /// </summary>
-        [PixelKind(Px.Logical)]
-        Rect ShowLogicalBarArea { get; set; }
-        /// <summary>
-        /// 隠れた状態のバー論理サイズ。
-        /// </summary>
-        [PixelKind(Px.Logical)]
-        double HideWidth { get; }
+        Size HiddenSize { get; }
         /// <summary>
         /// 表示中の隠れたバーの論理領域。
+        /// <para><see cref="AppDesktopToolbarExtend"/>で設定されるためユーザーコードで変更は行わないこと。</para>
         /// </summary>
         [PixelKind(Px.Logical)]
-        Rect HideLogicalBarArea { get; set; }
+        Rect HiddenBarArea { get; set; }
 
 
         /// <summary>
@@ -150,7 +147,6 @@ namespace ContentTypeTextNet.Pe.Main.View.Extend
 
     public class AppDesktopToolbarStateChangeEventArgs : AppDesktopToolbarEventArgs
     { }
-
 
     public class AppDesktopToolbarExtend : WndProcExtendBase<Window, IAppDesktopToolbarExtendData>
     {
@@ -253,10 +249,13 @@ namespace ContentTypeTextNet.Pe.Main.View.Extend
 
         bool RegisterAppbar()
         {
+            Debug.Assert(CallbackMessage == 0);
+
             CallbackMessage = NativeMethods.RegisterWindowMessage(MessageString);
 
-            var appBar = new APPBARDATA(GetWindowHandle());
-            appBar.uCallbackMessage = CallbackMessage;
+            var appBar = new APPBARDATA(GetWindowHandle()) {
+                uCallbackMessage = CallbackMessage
+            };
 
             var registResult = NativeMethods.SHAppBarMessage(ABM.ABM_NEW, ref appBar);
 
@@ -271,8 +270,10 @@ namespace ContentTypeTextNet.Pe.Main.View.Extend
             }
             var appBar = new APPBARDATA(GetWindowHandle());
             var unregistResult = NativeMethods.SHAppBarMessage(ABM.ABM_REMOVE, ref appBar);
+
             CallbackMessage = 0;
             ExtendData.IsDocking = false;
+
             return unregistResult.ToInt32() != 0;
         }
 
@@ -348,8 +349,9 @@ namespace ContentTypeTextNet.Pe.Main.View.Extend
 
         public IntPtr ExistsHideWindow(AppDesktopToolbarPosition dockType)
         {
-            var appBar = new APPBARDATA(GetWindowHandle());
-            appBar.uEdge = AppDesktopToolbarPositionUtility.ToABE(dockType);
+            var appBar = new APPBARDATA(GetWindowHandle()) {
+                uEdge = AppDesktopToolbarPositionUtility.ToABE(dockType)
+            };
             var nowWnd = NativeMethods.SHAppBarMessage(ABM.ABM_GETAUTOHIDEBAR, ref appBar);
 
             return nowWnd;
@@ -359,9 +361,10 @@ namespace ContentTypeTextNet.Pe.Main.View.Extend
         {
             ExtendData.ToolbarPosition = dockType;
 
-            var appBar = new APPBARDATA(GetWindowHandle());
-            appBar.uEdge = AppDesktopToolbarPositionUtility.ToABE(dockType);
-            appBar.rc = PodStructUtility.Convert(CalcWantBarArea(dockType));
+            var appBar = new APPBARDATA(GetWindowHandle()) {
+                uEdge = AppDesktopToolbarPositionUtility.ToABE(dockType),
+                rc = PodStructUtility.Convert(CalcWantBarArea(dockType))
+            };
             TuneSystemBarArea(ref appBar);
 
             bool autoHideResult = false;
@@ -385,7 +388,7 @@ namespace ContentTypeTextNet.Pe.Main.View.Extend
             }
 
             NativeMethods.MoveWindow(GetWindowHandle(), appBar.rc.X, appBar.rc.Y, appBar.rc.Width, appBar.rc.Height, false);
-            ExtendData.ShowLogicalBarArea = logicalWindowBounds;//PodStructUtility.Convert(appBar.rc);
+            ExtendData.DisplayBarArea = logicalWindowBounds;//PodStructUtility.Convert(appBar.rc);
 
             if(ExtendData.IsAutoHide) {
                 StartHideWait();
@@ -400,7 +403,7 @@ namespace ContentTypeTextNet.Pe.Main.View.Extend
         void ResizeShowDeviceBarArea()
         {
             if(View != null && ExtendData != null) {
-                var deviceArea = UIUtility.ToDevicePixel(View, ExtendData.ShowLogicalBarArea);
+                var deviceArea = UIUtility.ToDevicePixel(View, ExtendData.DisplayBarArea);
                 NativeMethods.MoveWindow(GetWindowHandle(), (int)deviceArea.X, (int)deviceArea.Y, (int)deviceArea.Width, (int)deviceArea.Height, true);
                 ExtendData.IsHiding = false;
                 WindowsUtility.ShowNoActiveForeground(GetWindowHandle());
@@ -554,7 +557,7 @@ namespace ContentTypeTextNet.Pe.Main.View.Extend
             var deviceCursolPosition = MouseUtility.GetDevicePosition();
             var logicalCursolPosition = UIUtility.ToLogicalPixel(View, deviceCursolPosition);
 
-            if(!force && ExtendData.ShowLogicalBarArea.Contains(logicalCursolPosition)) {
+            if(!force && ExtendData.DisplayBarArea.Contains(logicalCursolPosition)) {
                 return;
             }
 
@@ -567,27 +570,27 @@ namespace ContentTypeTextNet.Pe.Main.View.Extend
             switch(ExtendData.ToolbarPosition) {
                 case AppDesktopToolbarPosition.Top:
                     logicalHideArea.Width = logicalScreenArea.Width;
-                    logicalHideArea.Height = ExtendData.HideWidth;
+                    logicalHideArea.Height = ExtendData.HiddenSize.Height;
                     logicalHideArea.X = logicalScreenArea.X;
                     logicalHideArea.Y = logicalScreenArea.Y;
                     break;
 
                 case AppDesktopToolbarPosition.Bottom:
                     logicalHideArea.Width = logicalScreenArea.Width;
-                    logicalHideArea.Height = ExtendData.HideWidth;
+                    logicalHideArea.Height = ExtendData.HiddenSize.Height;
                     logicalHideArea.X = logicalScreenArea.X;
                     logicalHideArea.Y = logicalScreenArea.Height - logicalHideArea.Height;
                     break;
 
                 case AppDesktopToolbarPosition.Left:
-                    logicalHideArea.Width = ExtendData.HideWidth;
+                    logicalHideArea.Width = ExtendData.HiddenSize.Width;
                     logicalHideArea.Height = logicalScreenArea.Height;
                     logicalHideArea.X = logicalScreenArea.X;
                     logicalHideArea.Y = logicalScreenArea.Y;
                     break;
 
                 case AppDesktopToolbarPosition.Right:
-                    logicalHideArea.Width = ExtendData.HideWidth;
+                    logicalHideArea.Width = ExtendData.HiddenSize.Width;
                     logicalHideArea.Height = logicalScreenArea.Height;
                     logicalHideArea.X = logicalScreenArea.Right - logicalHideArea.Width;
                     logicalHideArea.Y = logicalScreenArea.Y;
@@ -631,7 +634,7 @@ namespace ContentTypeTextNet.Pe.Main.View.Extend
             if(prevVisibility == Visibility.Visible) {
 
                 ExtendData.IsHiding = true;
-                ExtendData.HideLogicalBarArea = UIUtility.ToLogicalPixel(View, logicalHideArea);
+                ExtendData.HiddenBarArea = UIUtility.ToLogicalPixel(View, logicalHideArea);
 
                 var deviceHideArea = UIUtility.ToDevicePixel(View, logicalHideArea);
                 if(animation) {
@@ -658,9 +661,11 @@ namespace ContentTypeTextNet.Pe.Main.View.Extend
         protected override void Dispose(bool disposing)
         {
             if(!IsDisposed) {
-                View.IsVisibleChanged -= View_IsVisibleChanged;
-                View.MouseEnter -= View_MouseEnter;
-                View.MouseLeave -= View_MouseLeave;
+                if(disposing) {
+                    View.IsVisibleChanged -= View_IsVisibleChanged;
+                    View.MouseEnter -= View_MouseEnter;
+                    View.MouseLeave -= View_MouseLeave;
+                }
             }
             base.Dispose(disposing);
         }

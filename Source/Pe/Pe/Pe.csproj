@@ -158,9 +158,11 @@
     <Compile Include="Model\Data\Dto\Entity\LauncherGroupsDto.cs" />
     <Compile Include="Model\Data\Dto\Entity\LauncherItemsDto.cs" />
     <Compile Include="Model\Data\Dto\Entity\LauncherTagsDto.cs" />
+    <Compile Include="Model\Data\Dto\Entity\ToolbarsDto.cs" />
     <Compile Include="Model\Element\Toolbar\LauncherToolbarElement.cs" />
     <Compile Include="Model\Launcher\LauncherItem.cs" />
     <Compile Include="Model\Launcher\LauncherFactory.cs" />
+    <Compile Include="Model\Logic\IdFactory.cs" />
     <Compile Include="Model\Logic\StartupRegister.cs" />
     <Compile Include="Model\Database\Dao\ApplicationDatabaseObjectBase.cs" />
     <Compile Include="Model\Database\Setup\SetupBase.cs" />
@@ -294,6 +296,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherTagsDao\InsertNewTags.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\ToolbarsDao\InsertNewToolbar.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\ToolbarsDao\SelectAllToolbars.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\DatabaseSetup\ExistsVersionTable.sql">
