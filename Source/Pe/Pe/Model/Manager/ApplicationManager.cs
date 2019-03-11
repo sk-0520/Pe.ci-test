@@ -100,9 +100,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
             return viewModel;
         }
 
-        LauncherToolbarElement CreateLauncherToolbarElement(Screen screen)
+        LauncherToolbarElement CreateLauncherToolbarElement(Screen dockScreen)
         {
-            var element = ApplicationDiContainer.Make<LauncherToolbarElement>();
+            var element = ApplicationDiContainer.Make<LauncherToolbarElement>(new[] { dockScreen });
             return element;
         }
 

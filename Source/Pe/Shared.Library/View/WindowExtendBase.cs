@@ -33,11 +33,11 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.View
 
     }
 
-    public class WinProcExtendBase<TWindow, TExtendData> : WindowExtendBase<TWindow, TExtendData>
+    public class WndProcExtendBase<TWindow, TExtendData> : WindowExtendBase<TWindow, TExtendData>
         where TWindow : Window
         where TExtendData : INotifyPropertyChanged
     {
-        public WinProcExtendBase(TWindow view, TExtendData extendData, ILoggerFactory loggerFactory)
+        public WndProcExtendBase(TWindow view, TExtendData extendData, ILoggerFactory loggerFactory)
             : base(view, extendData, loggerFactory)
         {
             if(View.IsLoaded) {
@@ -59,10 +59,10 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.View
         {
             var handle = GetWindowHandle();
             HwndSource = HwndSource.FromHwnd(handle);
-            HwndSource.AddHook(WinProc);
+            HwndSource.AddHook(WndProc);
         }
 
-        protected virtual IntPtr WinProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        protected virtual IntPtr WndProc(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
             return IntPtr.Zero;
         }

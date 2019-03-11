@@ -39,36 +39,103 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Toolbar
         /// <summary>
         /// ツールバー位置。
         /// </summary>
-        public AppDesktopToolbarPosition ToolbarPosition { get; set; }
+        public AppDesktopToolbarPosition ToolbarPosition
+        {
+            get => Model.ToolbarPosition;
+            set => SetModelValue(value);
+        }
+
+        /// <summary>
+        /// ドッキング中か。
+        /// </summary>
+        public bool IsDocking
+        {
+            get => Model.IsDocking;
+            set => SetModelValue(value);
+        }
+
         /// <summary>
         /// 自動的に隠すか。
         /// </summary>
-        public bool IsAutoHide { get; set; }
+        public bool IsAutoHide
+        {
+            get => Model.IsAutoHide;
+            set => SetModelValue(value);
+        }
         /// <summary>
         /// 隠れているか。
         /// </summary>
-        public bool IsHiding { get; set; }
+        public bool IsHiding
+        {
+            get => Model.IsHiding;
+            set => SetModelValue(value);
+        }
         /// <summary>
         /// 自動的に隠れるまでの時間。
         /// </summary>
-        public TimeSpan AutoHideTime { get; set; }
+        public TimeSpan AutoHideTime => Model.AutoHideTime;
 
         /// <summary>
         /// 表示中のサイズ。
         /// <para><see cref="AppDesktopToolbarPosition"/>の各辺に対応</para>
         /// </summary>
         [PixelKind(Px.Logical)]
-        public Rect DisplaySize { get; set; }
+        public Size DisplaySize
+        {
+            get => Model.DisplaySize;
+            set => SetModelValue(value);
+        }
         /// <summary>
         /// 隠れているバーのサイズ。
         /// <para><see cref="AppDesktopToolbarPosition"/>の各辺に対応</para>
         /// </summary>
-        public Rect HiddenSize { get; set; }
+        public Size HiddenSize
+        {
+            get => Model.HiddenSize;
+            set => SetModelValue(value);
+        }
+
+        /// <summary>
+        /// 表示中の論理バーサイズ。
+        /// </summary>
+        [PixelKind(Px.Logical)]
+        public Rect ShowLogicalBarArea
+        {
+            get => Model.ShowLogicalBarArea;
+            set => SetModelValue(value);
+        }
+        /// <summary>
+        /// 隠れた状態のバー論理サイズ。
+        /// </summary>
+        [PixelKind(Px.Logical)]
+        public double HideWidth
+        {
+            get => Model.HideWidth;
+        }
+        /// <summary>
+        /// 表示中の隠れたバーの論理領域。
+        /// </summary>
+        [PixelKind(Px.Logical)]
+        public Rect HideLogicalBarArea
+        {
+            get => Model.HideLogicalBarArea;
+            set => SetModelValue(value);
+        }
+
+        /// <summary>
+        /// フルスクリーンウィンドウが存在するか。
+        /// </summary>
+        public bool ExistsFullScreenWindow
+        {
+            get => Model.ExistsFullScreenWindow;
+            set => SetModelValue(value);
+        }
+
 
         /// <summary>
         /// 対象ディスプレイ。
         /// </summary>
-        public Screen DockScreen { get; set; }
+        public Screen DockScreen => Model.DockScreen;
 
         #endregion
 
