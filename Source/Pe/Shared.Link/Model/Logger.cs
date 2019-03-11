@@ -392,14 +392,17 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Link.Model
             return loggerFactory.CreateLogger(type.Name);
         }
 
+        [Obsolete]
         public static ILogger CreateCurrentClass(this ILoggerFactory loggerFactory)
         {
             return loggerFactory.CreateLogger(new StackFrame(1).GetMethod().DeclaringType.Name);
         }
 
-        public static ILogger CreateCurrentMethod(this ILoggerFactory loggerFactory, [CallerMemberName] string callerMemberName=default(string))
+        [Obsolete]
+        public static ILogger CreateCurrentMethod(this ILoggerFactory loggerFactory)
         {
-            return loggerFactory.CreateLogger(callerMemberName);
+            var method = new StackFrame(1).GetMethod();
+            return loggerFactory.CreateLogger($"{method.DeclaringType.Name}.{method.Name}");
         }
 
         #endregion

@@ -41,8 +41,10 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         }
 
         public DataAccessModelBase(IDatabaseCommander databaseCommander, ILoggerFactory loggerFactory)
-            : this(databaseCommander, loggerFactory.CreateCurrentClass())
-        { }
+        {
+            DatabaseCommander = databaseCommander;
+            Logger = loggerFactory.CreateTartget(GetType());
+        }
 
 
         #region property

@@ -35,8 +35,10 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element
         }
 
         public ContextElementBase(IDiContainer diContainer, ILoggerFactory loggerFactory)
-            : this(diContainer, loggerFactory.CreateCurrentClass())
-        { }
+            : base(loggerFactory)
+        {
+            ServiceLocator = diContainer;
+        }
 
         #region property
 

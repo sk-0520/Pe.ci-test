@@ -117,6 +117,11 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Toolbar
             return toolbarId;
         }
 
+        void LoadToolbar(Guid toolbarId)
+        {
+            Logger.Information($"toolbar id: {toolbarId}");
+        }
+
         public void Initialize()
         {
             Logger.Information($"initialize {DockScreen.DeviceName}:{DockScreen.DeviceBounds}, {nameof(DockScreen.Primary)}: {DockScreen.Primary}");
@@ -125,6 +130,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Toolbar
             if(toolbarId == Guid.Empty) {
                 toolbarId = CreateToolbar();
             }
+            LoadToolbar(toolbarId);
         }
 
         #endregion

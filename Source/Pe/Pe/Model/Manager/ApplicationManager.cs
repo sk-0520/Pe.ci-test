@@ -83,7 +83,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
 
             RegisterManagers();
 
-            Logger = ApplicationLogger.Factory.CreateCurrentClass();
+            Logger = ApplicationLogger.Factory.CreateTartget(GetType());
             Logger.Debug("初期化完了");
 
             if(initializer.IsFirstStartup) {

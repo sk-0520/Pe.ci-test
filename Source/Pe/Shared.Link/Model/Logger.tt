@@ -297,11 +297,18 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Link.Model
     {
         #region function
 
+        public static ILogger CreateTartget(this ILoggerFactory loggerFactory, Type type)
+        {
+            return loggerFactory.CreateLogger(type.Name);
+        }
+
+        [Obsolete]
         public static ILogger CreateCurrentClass(this ILoggerFactory loggerFactory)
         {
             return loggerFactory.CreateLogger(new StackFrame(1).GetMethod().DeclaringType.Name);
         }
 
+        [Obsolete]
         public static ILogger CreateCurrentMethod(this ILoggerFactory loggerFactory)
         {
             var method = new StackFrame(1).GetMethod();

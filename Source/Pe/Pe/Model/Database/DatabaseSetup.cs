@@ -21,7 +21,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database
     {
         public DatabaseSetup(DirectoryInfo baseDirectory, ILoggerFactory loggerFactory)
         {
-            Logger = loggerFactory.CreateCurrentClass();
+            Logger = loggerFactory.CreateTartget(GetType());
             StatementLoader = new ApplicationDatabaseStatementLoader(baseDirectory, TimeSpan.Zero, Logger.Factory);
         }
 

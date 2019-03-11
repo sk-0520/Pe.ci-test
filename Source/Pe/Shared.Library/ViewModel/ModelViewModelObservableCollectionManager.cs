@@ -151,7 +151,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.ViewModel
             : base(collection, logger)
         { }
         public ActionModelViewModelObservableCollectionManager(ObservableCollection<TModel> collection, ILoggerFactory loggerFactory)
-            : base(collection, loggerFactory.CreateCurrentClass())
+            : base(collection, loggerFactory)
         { }
 
 

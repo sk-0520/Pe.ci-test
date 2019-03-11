@@ -40,8 +40,9 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
         }
 
         public DatabaseStatementLoaderBase(ILoggerFactory loggerFactory)
-            : this(loggerFactory.CreateCurrentClass())
-        { }
+        {
+            Logger = loggerFactory.CreateTartget(GetType());
+        }
 
         #region property
 

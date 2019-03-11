@@ -155,8 +155,11 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database
         }
 
         public ApplicationDatabaseStatementLoader(DirectoryInfo baseDirectory, TimeSpan lifeTime, ILoggerFactory loggerFactory)
-            : this(baseDirectory, lifeTime, loggerFactory.CreateCurrentClass())
-        { }
+            : base(loggerFactory)
+        {
+            BaseDirectory = baseDirectory;
+            StatementCache = new CachePool<string, string>(lifeTime);
+        }
 
         #region property
 
