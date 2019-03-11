@@ -13,18 +13,20 @@ using ContentTypeTextNet.Pe.Main.Model.Applications;
 using ContentTypeTextNet.Pe.Main.Model.Database.Dao;
 using ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Model.Launcher;
+using ContentTypeTextNet.Pe.Main.Model.Logic;
 using ContentTypeTextNet.Pe.Main.Model.Manager;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Element.Startup
 {
     public class ImportProgramsElement : ContextElementBase
     {
-        public ImportProgramsElement(IMainDatabaseBarrier databaseBarrier, IDatabaseStatementLoader statementLoader, IWindowManager windowManager, IDiContainer diContainer, ILoggerFactory loggerFactory)
+        public ImportProgramsElement(IMainDatabaseBarrier databaseBarrier, IDatabaseStatementLoader statementLoader, IWindowManager windowManager, IIdFactory idFactory,IDiContainer diContainer, ILoggerFactory loggerFactory)
             : base(diContainer, loggerFactory)
         {
             DatabaseBarrier = databaseBarrier;
             StatementLoader = statementLoader;
             WindowManager = windowManager;
+            IdFactory = idFactory;
         }
 
         #region property
@@ -32,6 +34,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Startup
         IApplicationDatabaseBarrier DatabaseBarrier { get; }
         IDatabaseStatementLoader StatementLoader { get; }
         IWindowManager WindowManager { get; }
+        IIdFactory IdFactory { get; }
 
         public ObservableCollection<ProgramElement> ProgramItems { get; } = new ObservableCollection<ProgramElement>();
 
@@ -88,7 +91,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Startup
 
         void Import()
         {
-            var launcherFactory = new LauncherFactory(Logger.Factory);
+            var launcherFactory = new LauncherFactory(IdFactory, Logger.Factory);
 
             // ap ファイルからランチャーデータ作って
             var importItems = ProgramItems

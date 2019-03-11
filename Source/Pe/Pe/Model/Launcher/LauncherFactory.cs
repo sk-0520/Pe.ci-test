@@ -8,18 +8,21 @@ using System.Threading.Tasks;
 using System.Windows.Media;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
+using ContentTypeTextNet.Pe.Main.Model.Logic;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Launcher
 {
     public class LauncherFactory
     {
-        public LauncherFactory(ILoggerFactory loggerFactory)
+        public LauncherFactory(IIdFactory idFactory, ILoggerFactory loggerFactory)
         {
+            IdFactory = idFactory;
             Logger = loggerFactory.CreateTartget(GetType());
         }
 
         #region property
 
+        IIdFactory IdFactory { get; }
         ILogger Logger { get; }
 
         #endregion
@@ -40,7 +43,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Launcher
             var isShortCut = PathUtility.IsShortcut(expandedPath);
 
             var result = new LauncherItemSimpleNewData() {
-                LauncherItemId = Guid.NewGuid(),
+                LauncherItemId = IdFactory.CreateLauncherItemId(),
                 Kind = LauncherItemKind.File,
                 Name = FileUtility.GetName(expandedPath),
             };
@@ -80,7 +83,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Launcher
         public LauncherGroupData CreateGroupData(string name)
         {
             return new LauncherGroupData() {
-                LauncherGroupId = Guid.NewGuid(),
+                LauncherGroupId = IdFactory.CreateLauncherGroupId(),
                 Name = name,
                 ImageName = LauncherGroupImageName.Directory,
                 ImageColor = Colors.Yellow,
