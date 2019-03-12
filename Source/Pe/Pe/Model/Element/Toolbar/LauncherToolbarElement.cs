@@ -120,6 +120,10 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Toolbar
         void LoadToolbar(Guid toolbarId)
         {
             Logger.Information($"toolbar id: {toolbarId}");
+
+            ToolbarPosition = AppDesktopToolbarPosition.Right;
+            DisplaySize = new Size(40, 40);
+            HiddenSize = new Size(4, 4);
         }
 
         public void Initialize()
@@ -174,7 +178,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Toolbar
         /// 隠れた状態のバー論理サイズ。
         /// </summary>
         [PixelKind(Px.Logical)]
-        public Size HiddenSize { get; }
+        public Size HiddenSize { get; private set; }
         /// <summary>
         /// 表示中の隠れたバーの論理領域。
         /// </summary>

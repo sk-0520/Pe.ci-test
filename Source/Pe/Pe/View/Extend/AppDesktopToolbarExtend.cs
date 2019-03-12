@@ -401,7 +401,8 @@ namespace ContentTypeTextNet.Pe.Main.View.Extend
 
         void ResizeShowDeviceBarArea()
         {
-            if(View != null && ExtendData != null) {
+            //if(View != null && ExtendData != null) {
+            if(IsEnabledWindowHandle) {
                 var deviceArea = UIUtility.ToDevicePixel(View, ExtendData.DisplayBarArea);
                 NativeMethods.MoveWindow(WindowHandle, (int)deviceArea.X, (int)deviceArea.Y, (int)deviceArea.Width, (int)deviceArea.Height, true);
                 ExtendData.IsHiding = false;
@@ -429,13 +430,13 @@ namespace ContentTypeTextNet.Pe.Main.View.Extend
             }
 
             // 登録済みであればいったん解除
-            var needResist = true;
+            var needResistor = true;
             if(ExtendData.IsDocking) {
                 if(ExtendData.ToolbarPosition != toolbarPosition || ExtendData.IsAutoHide) {
                     UnregisterAppbar();
-                    needResist = true;
+                    needResistor = true;
                 } else {
-                    needResist = false;
+                    needResistor = false;
                 }
             }
             ExtendData.IsHiding = false;
@@ -449,7 +450,7 @@ namespace ContentTypeTextNet.Pe.Main.View.Extend
             //}
 
             // 登録
-            if(needResist) {
+            if(needResistor) {
                 RegisterAppbar();
             }
 
