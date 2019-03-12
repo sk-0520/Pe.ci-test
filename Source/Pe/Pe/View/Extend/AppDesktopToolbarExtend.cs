@@ -170,7 +170,6 @@ namespace ContentTypeTextNet.Pe.Main.View.Extend
         public AppDesktopToolbarExtend(Window view, IAppDesktopToolbarExtendData extendData, ILoggerFactory loggerFactory)
             : base(view, extendData, loggerFactory)
         {
-            View.IsVisibleChanged += View_IsVisibleChanged;
             View.MouseEnter += View_MouseEnter;
             View.MouseLeave += View_MouseLeave;
 
@@ -253,7 +252,7 @@ namespace ContentTypeTextNet.Pe.Main.View.Extend
 
             CallbackMessage = NativeMethods.RegisterWindowMessage(MessageString);
 
-            var appBar = new APPBARDATA(GetWindowHandle()) {
+            var appBar = new APPBARDATA(WindowHandle) {
                 uCallbackMessage = CallbackMessage
             };
 
@@ -268,7 +267,7 @@ namespace ContentTypeTextNet.Pe.Main.View.Extend
                 DockingDispatcherOperation.Abort();
                 DockingDispatcherOperation = null;
             }
-            var appBar = new APPBARDATA(GetWindowHandle());
+            var appBar = new APPBARDATA(WindowHandle);
             var unregistResult = NativeMethods.SHAppBarMessage(ABM.ABM_REMOVE, ref appBar);
 
             CallbackMessage = 0;
@@ -349,7 +348,7 @@ namespace ContentTypeTextNet.Pe.Main.View.Extend
 
         public IntPtr ExistsHideWindow(AppDesktopToolbarPosition dockType)
         {
-            var appBar = new APPBARDATA(GetWindowHandle()) {
+            var appBar = new APPBARDATA(WindowHandle) {
                 uEdge = AppDesktopToolbarPositionUtility.ToABE(dockType)
             };
             var nowWnd = NativeMethods.SHAppBarMessage(ABM.ABM_GETAUTOHIDEBAR, ref appBar);
@@ -361,7 +360,7 @@ namespace ContentTypeTextNet.Pe.Main.View.Extend
         {
             ExtendData.ToolbarPosition = dockType;
 
-            var appBar = new APPBARDATA(GetWindowHandle()) {
+            var appBar = new APPBARDATA(WindowHandle) {
                 uEdge = AppDesktopToolbarPositionUtility.ToABE(dockType),
                 rc = PodStructUtility.Convert(CalcWantBarArea(dockType))
             };
@@ -370,7 +369,7 @@ namespace ContentTypeTextNet.Pe.Main.View.Extend
             bool autoHideResult = false;
             if(autoHide) {
                 var hideWnd = ExistsHideWindow(dockType);
-                if(hideWnd == IntPtr.Zero || hideWnd == GetWindowHandle()) {
+                if(hideWnd == IntPtr.Zero || hideWnd == WindowHandle) {
                     // 自動的に隠す
                     var result = NativeMethods.SHAppBarMessage(ABM.ABM_SETAUTOHIDEBAR, ref appBar);
                     autoHideResult = result.ToInt32() != 0;
@@ -387,7 +386,7 @@ namespace ContentTypeTextNet.Pe.Main.View.Extend
                 var appbarResult = NativeMethods.SHAppBarMessage(ABM.ABM_SETPOS, ref appBar);
             }
 
-            NativeMethods.MoveWindow(GetWindowHandle(), appBar.rc.X, appBar.rc.Y, appBar.rc.Width, appBar.rc.Height, false);
+            NativeMethods.MoveWindow(WindowHandle, appBar.rc.X, appBar.rc.Y, appBar.rc.Width, appBar.rc.Height, false);
             ExtendData.DisplayBarArea = logicalWindowBounds;//PodStructUtility.Convert(appBar.rc);
 
             if(ExtendData.IsAutoHide) {
@@ -404,9 +403,9 @@ namespace ContentTypeTextNet.Pe.Main.View.Extend
         {
             if(View != null && ExtendData != null) {
                 var deviceArea = UIUtility.ToDevicePixel(View, ExtendData.DisplayBarArea);
-                NativeMethods.MoveWindow(GetWindowHandle(), (int)deviceArea.X, (int)deviceArea.Y, (int)deviceArea.Width, (int)deviceArea.Height, true);
+                NativeMethods.MoveWindow(WindowHandle, (int)deviceArea.X, (int)deviceArea.Y, (int)deviceArea.Width, (int)deviceArea.Height, true);
                 ExtendData.IsHiding = false;
-                WindowsUtility.ShowNoActiveForeground(GetWindowHandle());
+                WindowsUtility.ShowNoActiveForeground(WindowHandle);
             }
         }
 
@@ -646,7 +645,7 @@ namespace ContentTypeTextNet.Pe.Main.View.Extend
                 } else {
                     //NativeMethods.MoveWindow(Handle, (int)deviceHideArea.X, (int)deviceHideArea.Y, (int)deviceHideArea.Width, (int)deviceHideArea.Height, true);
                 }
-                NativeMethods.MoveWindow(GetWindowHandle(), (int)deviceHideArea.X, (int)deviceHideArea.Y, (int)deviceHideArea.Width, (int)deviceHideArea.Height, true);
+                NativeMethods.MoveWindow(WindowHandle, (int)deviceHideArea.X, (int)deviceHideArea.Y, (int)deviceHideArea.Width, (int)deviceHideArea.Height, true);
                 //View.Width = logicalHideArea.Width;
                 //View.Measure(logicalHideArea.Size);
                 //View.Arrange(new Rect(0, 0, logicalHideArea.Width, logicalHideArea.Height));
@@ -673,6 +672,18 @@ namespace ContentTypeTextNet.Pe.Main.View.Extend
         #endregion
 
         #region WindowsViewExtendBase
+
+        protected override void InitializedWindowHandleImpl()
+        {
+            base.InitializedWindowHandleImpl();
+
+            View.IsVisibleChanged += View_IsVisibleChanged;
+
+            if(View.IsVisible) {
+                Docking(ExtendData.ToolbarPosition, ExtendData.IsAutoHide);
+            }
+
+        }
 
         protected override IntPtr WndProc(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
@@ -740,6 +751,10 @@ namespace ContentTypeTextNet.Pe.Main.View.Extend
 
         void View_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
+            if(!IsEnabledWindowHandle) {
+                return;
+            }
+
             if(e.NewValue != e.OldValue) {
                 var isVisible = (bool)e.NewValue;
                 if(isVisible) {
@@ -754,12 +769,14 @@ namespace ContentTypeTextNet.Pe.Main.View.Extend
 
         void TimerAutoHide_Tick(object sender, EventArgs e)
         {
-            if(View != null && ExtendData != null) {
-                if(ExtendData.IsDocking) {
-                    HideView(false);
-                } else {
-                    AutoHideTimer.Stop();
-                }
+            if(!IsEnabledWindowHandle) {
+                return;
+            }
+
+            if(ExtendData.IsDocking) {
+                HideView(false);
+            } else {
+                AutoHideTimer.Stop();
             }
         }
 

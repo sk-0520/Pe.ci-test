@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Interop;
+using ContentTypeTextNet.Library.PInvoke.Windows;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Compatibility.Windows;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 
@@ -49,21 +51,42 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.View
 
         #region property
 
+        protected bool IsEnabledWindowHandle { get; private set; }
+
         protected HwndSource HwndSource { get; private set; }
+
+        protected IntPtr WindowHandle { get; private set; }
 
         #endregion
 
         #region function
 
+        protected virtual void InitializedWindowHandleImpl()
+        { }
+
+        void InitializedWindowHandle()
+        {
+            Debug.Assert(WindowHandle.ToInt32() != 0);
+
+            InitializedWindowHandleImpl();
+        }
+
         void AttachHwndSource()
         {
-            var handle = GetWindowHandle();
-            HwndSource = HwndSource.FromHwnd(handle);
+            WindowHandle = GetWindowHandle();
+            IsEnabledWindowHandle = true;
+            HwndSource = HwndSource.FromHwnd(WindowHandle);
             HwndSource.AddHook(WndProc);
+
+            InitializedWindowHandle();
         }
 
         protected virtual IntPtr WndProc(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
+            if(msg == (int)WM.WM_DESTROY) {
+                IsEnabledWindowHandle = false;
+            }
+
             return IntPtr.Zero;
         }
 
