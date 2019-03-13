@@ -13,15 +13,15 @@ using ContentTypeTextNet.Pe.Library.Shared.Library.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Applications;
-using ContentTypeTextNet.Pe.Main.Model.Element.Toolbar;
+using ContentTypeTextNet.Pe.Main.Model.Element;
+using ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar;
 using ContentTypeTextNet.Pe.Main.Model.Launcher;
-using ContentTypeTextNet.Pe.Main.View.Toolbar;
+using ContentTypeTextNet.Pe.Main.View.LauncherToolbar;
 using ContentTypeTextNet.Pe.Main.ViewModel.Manager;
-using ContentTypeTextNet.Pe.Main.ViewModel.Toolbar;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Manager
 {
-    public class ApplicationManager : DisposerBase
+    public partial class ApplicationManager : DisposerBase, IOrderManager, INotifyManager
     {
         public ApplicationManager()
         { }
@@ -34,7 +34,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
         ILogger Logger { get; set; }
 
         WindowManager WindowManager { get; set; }
-        NotifyManager NotifyManager { get; set; }
+        OrderManagerIml OrderManager { get; set; }
+        NotifyManagerImpl NotifyManager { get; set; }
 
         IList<LauncherToolbarElement> LauncherToolbars { get; } = new ObservableCollection<LauncherToolbarElement>();
 
@@ -65,7 +66,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
             Debug.Assert(ApplicationDiContainer != null);
 
             ApplicationDiContainer.Register<IWindowManager, WindowManager>(WindowManager);
-            ApplicationDiContainer.Register<INotifyManager, NotifyManager>(NotifyManager);
+            ApplicationDiContainer.Register<IOrderManager, IOrderManager>(this);
+            ApplicationDiContainer.Register<INotifyManager, INotifyManager>(this);
 
         }
 
@@ -79,7 +81,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
             ApplicationLogger = initializer.Logger;
             ApplicationDiContainer = initializer.DiContainer;
             WindowManager = initializer.WindowManager;
-            NotifyManager = initializer.NotifyManager;
+            OrderManager = ApplicationDiContainer.Make<OrderManagerIml>(); //initializer.OrderManager;
+            NotifyManager = ApplicationDiContainer.Make<NotifyManagerImpl>();//initializer.NotifyManager;
 
             RegisterManagers();
 
@@ -100,37 +103,20 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
             return viewModel;
         }
 
-        LauncherToolbarElement CreateLauncherToolbarElement(Screen dockScreen)
+        IReadOnlyList<IWindowShowStarter> BuildLauncherToolbars()
         {
-            var element = ApplicationDiContainer.Make<LauncherToolbarElement>(new[] { dockScreen });
-            element.Initialize();
-            return element;
-        }
-
-        LauncherToolbarWindow CreateLauncherToolbarWindow(LauncherToolbarElement element)
-        {
-            var viewModel = new LauncherToolbarViewModel(element, element);
-            var window = ApplicationDiContainer.Make<LauncherToolbarWindow>();
-            viewModel.AppDesktopToolbarExtend = new View.Extend.AppDesktopToolbarExtend(window, viewModel, viewModel);
-            window.DataContext = viewModel;
-
-            return window;
-        }
-
-        void BuildLauncherToolbars()
-        {
-            var windowManager = ApplicationDiContainer.Get<IWindowManager>();
-
             var screens = Screen.AllScreens;
+            var result = new List<IWindowShowStarter>(screens.Length);
+
             foreach(var screen in screens) {
-                var element = CreateLauncherToolbarElement(screen);
-                var window = CreateLauncherToolbarWindow(element);
+                var element = (LauncherToolbarElement)CreateElement(new OrderElementParameter<Screen>(ElementKind.LauncherToolbar, screen));
 
                 LauncherToolbars.Add(element);
-                windowManager.Register(new WindowItem(WindowKind.LauncherToolbar, window));
 
-                window.Show();
+                result.Add(element);
             }
+
+            return result;
         }
 
         public void Execute()
@@ -138,9 +124,18 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
             Logger.Information("がんばる！");
 
             // ツールバーの生成
-            BuildLauncherToolbars();
+            var toolbarWindowStaters = BuildLauncherToolbars();
 
             // ノートの生成
+
+            var windowStaters = toolbarWindowStaters
+                .Concat(Enumerable.Empty<IWindowShowStarter>())
+                .Where(i => i.CanStartShowWindow)
+                .ToList()
+            ;
+            foreach(var windowStater in windowStaters) {
+                windowStater.StartShowWindow();
+            }
         }
 
         public void Exit()
@@ -150,6 +145,27 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
             Application.Current.Shutdown();
         }
 
+        #endregion
+
+        #region IOrderManager
+
+        public ElementBase CreateElement(OrderElementParameter parameter)
+        {
+            return OrderManager.CreateElement(parameter);
+        }
+
+        public WindowItem CreateWindow(OrderWindowParameter parameter)
+        {
+            var windowItem = OrderManager.CreateWindow(parameter);
+
+            WindowManager.Register(windowItem);
+
+            return windowItem;
+        }
+
+        #endregion
+
+        #region INotifyManager
         #endregion
 
         #region DisposerBase

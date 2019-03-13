@@ -14,7 +14,6 @@ using ContentTypeTextNet.Pe.Library.Shared.Library.CompatibleWindows;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Library.View;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
-using ContentTypeTextNet.Pe.Main.Model.Element.Toolbar;
 
 namespace ContentTypeTextNet.Pe.Main.View.Extend
 {

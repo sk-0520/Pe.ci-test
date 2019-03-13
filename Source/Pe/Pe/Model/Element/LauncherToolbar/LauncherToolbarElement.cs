@@ -12,16 +12,20 @@ using ContentTypeTextNet.Pe.Main.Model.Applications;
 using ContentTypeTextNet.Pe.Main.Model.Data.Dto.Entity;
 using ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Model.Logic;
+using ContentTypeTextNet.Pe.Main.Model.Manager;
 using ContentTypeTextNet.Pe.Main.View.Extend;
 
-namespace ContentTypeTextNet.Pe.Main.Model.Element.Toolbar
+namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
 {
-    public class LauncherToolbarElement : ContextElementBase, IAppDesktopToolbarExtendData
+    public class LauncherToolbarElement : ContextElementBase, IAppDesktopToolbarExtendData, IWindowShowStarter
     {
-        public LauncherToolbarElement(Screen dockScreen, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, IDiContainer diContainer, ILoggerFactory loggerFactory)
+        public LauncherToolbarElement(Screen dockScreen, IOrderManager orderManager, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, IDiContainer diContainer, ILoggerFactory loggerFactory)
             : base(diContainer, loggerFactory)
         {
             DockScreen = dockScreen;
+
+            OrderManager = orderManager;
+            NotifyManager = notifyManager;
             MainDatabaseBarrier = mainDatabaseBarrier;
             StatementLoader = statementLoader;
             IdFactory = idFactory;
@@ -29,14 +33,18 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Toolbar
 
         #region property
 
+        IOrderManager OrderManager { get; }
+        INotifyManager NotifyManager { get; }
         IMainDatabaseBarrier MainDatabaseBarrier { get; }
         IDatabaseStatementLoader StatementLoader { get; }
         IIdFactory IdFactory { get; }
 
+        bool ViewCreated { get; set; }
+
         /// <summary>
         /// 表示されているか。
         /// </summary>
-        public bool IsVisible { get; set; }
+        public bool IsVisible { get; set; } = true;
 
         /// <summary>
         /// 表示アイコンサイズ。
@@ -135,6 +143,29 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Toolbar
                 toolbarId = CreateToolbar();
             }
             LoadToolbar(toolbarId);
+        }
+
+        #endregion
+
+        #region IWindowShowStarter
+
+        public bool CanStartShowWindow
+        {
+            get
+            {
+                if(ViewCreated) {
+                    return false;
+                }
+
+                return IsVisible;
+            }
+        }
+
+        public void StartShowWindow()
+        {
+            var parameter = new OrderWindowParameter(WindowKind.LauncherToolbar, this);
+            var windowItem = OrderManager.CreateWindow(parameter);
+            ViewCreated = true;
         }
 
         #endregion

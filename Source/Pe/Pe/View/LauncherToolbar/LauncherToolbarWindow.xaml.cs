@@ -14,7 +14,7 @@ using System.Windows.Shapes;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 
-namespace ContentTypeTextNet.Pe.Main.View.Toolbar
+namespace ContentTypeTextNet.Pe.Main.View.LauncherToolbar
 {
     /// <summary>
     /// LauncherToolbarWindow.xaml の相互作用ロジック

@@ -12,13 +12,18 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
     /// <summary>
     /// 何かしらをずっと管理してる長老。
     /// </summary>
-    public class ManagerBase : ContextElementBase
+    public class ManagerBase : DisposerBase
     {
         public ManagerBase(IDiContainer diContainer, ILoggerFactory loggerFactory)
-            :base(diContainer, loggerFactory)
-        { }
+        {
+            DiContainer = diContainer;
+            Logger = loggerFactory.CreateTartget(GetType());
+        }
 
         #region property
+
+        protected IDiContainer DiContainer { get; }
+        protected ILogger Logger { get; }
 
         #endregion
     }

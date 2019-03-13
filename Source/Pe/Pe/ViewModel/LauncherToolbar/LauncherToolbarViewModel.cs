@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,16 +9,14 @@ using ContentTypeTextNet.Pe.Library.Shared.Library.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Library.ViewModel;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
-using ContentTypeTextNet.Pe.Main.Model.Element.Toolbar;
+using ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar;
+using ContentTypeTextNet.Pe.Main.Model.Manager;
 using ContentTypeTextNet.Pe.Main.View.Extend;
 
-namespace ContentTypeTextNet.Pe.Main.ViewModel.Toolbar
+namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar
 {
-    public class LauncherToolbarViewModel : SingleModelViewModelBase<LauncherToolbarElement>, IAppDesktopToolbarExtendData, ILoggerFactory
+    public class LauncherToolbarViewModel : SingleModelViewModelBase<LauncherToolbarElement>, IAppDesktopToolbarExtendData, ILoggerFactory, IWindowNotify
     {
-        #region variable
-        #endregion
-
         public LauncherToolbarViewModel(LauncherToolbarElement model, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         { }
@@ -25,6 +24,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Toolbar
         #region property
 
         public AppDesktopToolbarExtend AppDesktopToolbarExtend { get; set; }
+
+        public bool IsVisible
+        {
+            get => Model.IsVisible;
+            set => SetModelValue(value);
+        }
 
         #endregion
 
@@ -133,6 +138,26 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Toolbar
         #region ILoggerFactory
 
         public ILogger CreateLogger(string header) => Logger.Factory.CreateLogger(header);
+
+        #endregion
+
+        #region IWindowNotify
+
+        public void OnLoadedView(Window window)
+        {
+            if(!IsVisible) {
+                window.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        public void OnClosedView()
+        {
+        }
+
+        public void OnClosingView(CancelEventArgs e)
+        {
+        }
+
 
         #endregion
     }

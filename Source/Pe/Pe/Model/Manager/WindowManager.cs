@@ -98,6 +98,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
             }
 
             if(item.ViewModel is IWindowNotify windowNotify) {
+                item.Window.Loaded += Window_Loaded;
                 item.Window.Closing += Window_Closing;
             }
             item.Window.Closed += Window_Closed;
@@ -111,6 +112,18 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
         }
 
         #endregion
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            var window = (Window)sender;
+            Logger.Debug($"ウィンドウ生成: {window}");
+
+            var item = Items.First(i => i.Window == window);
+            if(item.ViewModel is IWindowNotify windowNotify) {
+                windowNotify.OnLoadedView(window);
+            }
+        }
+
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {

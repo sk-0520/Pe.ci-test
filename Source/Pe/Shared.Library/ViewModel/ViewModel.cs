@@ -25,7 +25,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.ViewModel
         }
 
         public ViewModelBase(ILogger logger)
-            :this()
+            : this()
         {
             Logger = logger;
         }
@@ -258,6 +258,55 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.ViewModel
             base.Dispose(disposing);
             Model = null;
         }
+
+        #endregion
+    }
+
+    public class SimpleDataViewModel<TData> : ViewModelBase
+    {
+        #region variable
+
+        TData _data;
+
+        #endregion
+
+        public SimpleDataViewModel(ILogger logger)
+            : this(default(TData), logger)
+        { }
+
+        public SimpleDataViewModel(ILoggerFactory loggerFactory)
+            : this(default(TData), loggerFactory)
+        { }
+
+        public SimpleDataViewModel(TData data, ILogger logger)
+            : base(logger)
+        {
+            Data = data;
+        }
+
+        public SimpleDataViewModel(TData data, ILoggerFactory loggerFactory)
+            : base(loggerFactory)
+        {
+            Data = data;
+        }
+
+        #region property
+
+        public TData Data
+        {
+            get => this._data;
+            set => SetProperty(ref this._data, value);
+        }
+
+        #endregion
+    }
+
+    public static class SimpleDataViewModel
+    {
+        #region function
+
+        public static SimpleDataViewModel<TData> Create<TData>(TData data, ILogger logger) => new SimpleDataViewModel<TData>(data, logger);
+        public static SimpleDataViewModel<TData> Create<TData>(TData data, ILoggerFactory loggerFactory) => new SimpleDataViewModel<TData>(data, loggerFactory);
 
         #endregion
     }

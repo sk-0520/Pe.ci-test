@@ -159,7 +159,8 @@
     <Compile Include="Model\Data\Dto\Entity\LauncherItemsDto.cs" />
     <Compile Include="Model\Data\Dto\Entity\LauncherTagsDto.cs" />
     <Compile Include="Model\Data\Dto\Entity\ToolbarsDto.cs" />
-    <Compile Include="Model\Element\Toolbar\LauncherToolbarElement.cs" />
+    <Compile Include="Model\Element\IWindowShowStarter.cs" />
+    <Compile Include="Model\Element\LauncherToolbar\LauncherToolbarElement.cs" />
     <Compile Include="Model\Launcher\LauncherItem.cs" />
     <Compile Include="Model\Launcher\LauncherFactory.cs" />
     <Compile Include="Model\Logic\IdFactory.cs" />
@@ -174,6 +175,7 @@
     <Compile Include="Model\Data\Dto\SetupDto.cs" />
     <Compile Include="Model\Manager\ManagerBase.cs" />
     <Compile Include="Model\Manager\NotifyManager.cs" />
+    <Compile Include="Model\Manager\OrderManager.cs" />
     <Compile Include="Model\Manager\WindowManager.cs" />
     <Compile Include="Model\Platform\SystemExecutor.cs" />
     <Compile Include="Model\Element\Accept\AcceptElement.cs" />
@@ -188,7 +190,7 @@
     <Compile Include="ViewModel\Startup\ImportProgramsViewModel.cs" />
     <Compile Include="ViewModel\Startup\ProgramViewModel.cs" />
     <Compile Include="ViewModel\Startup\StartupViewModel.cs" />
-    <Compile Include="ViewModel\Toolbar\LauncherToolbarViewModel.cs" />
+    <Compile Include="ViewModel\LauncherToolbar\LauncherToolbarViewModel.cs" />
     <Compile Include="View\Accept\AcceptWindow.xaml.cs">
       <DependentUpon>AcceptWindow.xaml</DependentUpon>
     </Compile>
@@ -199,7 +201,7 @@
     <Compile Include="View\Startup\StartupWindow.xaml.cs">
       <DependentUpon>StartupWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Toolbar\LauncherToolbarWindow.xaml.cs">
+    <Compile Include="View\LauncherToolbar\LauncherToolbarWindow.xaml.cs">
       <DependentUpon>LauncherToolbarWindow.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -271,7 +273,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Toolbar\LauncherToolbarWindow.xaml">
+    <Page Include="View\LauncherToolbar\LauncherToolbarWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

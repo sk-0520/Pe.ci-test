@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModel
 {
@@ -13,6 +14,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel
     public interface IWindowNotify
     {
         #region function
+
+        /// <summary>
+        /// ウィンドウが生成された。
+        /// </summary>
+        void OnLoadedView(Window window);
 
         /// <summary>
         /// ウィンドウが閉じられようとしている。
