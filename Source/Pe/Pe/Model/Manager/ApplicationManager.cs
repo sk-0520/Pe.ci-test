@@ -103,7 +103,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
             return viewModel;
         }
 
-        IReadOnlyList<IWindowShowStarter> BuildLauncherToolbars()
+        IReadOnlyList<IWindowShowStarter> CreateLauncherToolbars()
         {
             var screens = Screen.AllScreens;
             var result = new List<IWindowShowStarter>(screens.Length);
@@ -124,7 +124,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
             Logger.Information("がんばる！");
 
             // ツールバーの生成
-            var toolbarWindowStaters = BuildLauncherToolbars();
+            var toolbarWindowStaters = CreateLauncherToolbars();
 
             // ノートの生成
 

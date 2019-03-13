@@ -39,7 +39,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
         IDatabaseStatementLoader StatementLoader { get; }
         IIdFactory IdFactory { get; }
 
-        bool ViewCreated { get; set; }
+        OneTimeFlagSetter ViewCreated { get; } = new OneTimeFlagSetter();
 
         /// <summary>
         /// 表示されているか。
@@ -153,7 +153,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
         {
             get
             {
-                if(ViewCreated) {
+                if(ViewCreated.Value) {
                     return false;
                 }
 
@@ -165,7 +165,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
         {
             var parameter = new OrderWindowParameter(WindowKind.LauncherToolbar, this);
             var windowItem = OrderManager.CreateWindow(parameter);
-            ViewCreated = true;
+            ViewCreated.Value = true;
         }
 
         #endregion
