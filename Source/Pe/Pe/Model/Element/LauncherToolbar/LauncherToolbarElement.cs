@@ -166,24 +166,37 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
             var parameter = new OrderWindowParameter(WindowKind.LauncherToolbar, this);
             var windowItem = OrderManager.CreateWindow(parameter);
             ViewCreated.Value = true;
+            ToolbarPosition = AppDesktopToolbarPosition.Top;
         }
 
         #endregion
 
         #region IAppDesktopToolbarExtendData
 
+        AppDesktopToolbarPosition _ToolbarPosition;
         /// <summary>
         /// ツールバー位置。
         /// </summary>
-        public AppDesktopToolbarPosition ToolbarPosition { get; set; }
+        public AppDesktopToolbarPosition ToolbarPosition
+        {
+            get => this._ToolbarPosition;
+            set => SetProperty(ref this._ToolbarPosition, value);
+        }
         /// <summary>
         /// ドッキング中か。
         /// </summary>
         public bool IsDocking { get; set; }
+
+        bool _IsAutoHide;
         /// <summary>
         /// 自動的に隠すか。
         /// </summary>
-        public bool IsAutoHide { get; set; }
+        public bool IsAutoHide
+        {
+            get => this._IsAutoHide;
+            set => SetProperty(ref this._IsAutoHide, value);
+        }
+
         /// <summary>
         /// 隠れているか。
         /// </summary>
@@ -216,10 +229,15 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
         [PixelKind(Px.Logical)]
         public Rect HiddenBarArea { get; set; }
 
+        bool _ExistsFullScreenWindow;
         /// <summary>
         /// フルスクリーンウィンドウが存在するか。
         /// </summary>
-        public bool ExistsFullScreenWindow { get; set; }
+        public bool ExistsFullScreenWindow
+        {
+            get => this._ExistsFullScreenWindow;
+            set => SetProperty(ref this._ExistsFullScreenWindow, value);
+        }
 
 
         /// <summary>

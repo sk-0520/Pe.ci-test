@@ -11,6 +11,16 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Link.Model
 {
     public interface IDisposer: IDisposable
     {
+        #region event
+
+        /// <summary>
+        /// <see cref="IDisposable.Dispose"/>時に呼び出されるイベント。
+        /// <para>呼び出し時点では<see cref="IsDisposed"/>は偽のまま。</para>
+        /// </summary>
+        event EventHandler Disposing;
+
+        #endregion
+
         #region propert
 
         /// <summary>

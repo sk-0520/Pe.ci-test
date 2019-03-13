@@ -13,9 +13,9 @@ using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 
 namespace ContentTypeTextNet.Pe.Library.Shared.Library.View
 {
-    public class WindowExtendBase<TWindow, TExtendData> : ViewExtendBase<TWindow, TExtendData>
+    public abstract class WindowExtendBase<TWindow, TExtendData> : ViewExtendBase<TWindow, TExtendData>
         where TWindow : Window
-        where TExtendData : INotifyPropertyChanged
+        where TExtendData : IExtendData
     {
         public WindowExtendBase(TWindow view, TExtendData extendData, ILoggerFactory loggerFactory)
             : base(view, extendData, loggerFactory)
@@ -35,9 +35,9 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.View
 
     }
 
-    public class WndProcExtendBase<TWindow, TExtendData> : WindowExtendBase<TWindow, TExtendData>
+    public abstract class WndProcExtendBase<TWindow, TExtendData> : WindowExtendBase<TWindow, TExtendData>
         where TWindow : Window
-        where TExtendData : INotifyPropertyChanged
+        where TExtendData : IExtendData
     {
         public WndProcExtendBase(TWindow view, TExtendData extendData, ILoggerFactory loggerFactory)
             : base(view, extendData, loggerFactory)

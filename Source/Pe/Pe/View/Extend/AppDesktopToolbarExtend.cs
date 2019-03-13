@@ -62,7 +62,7 @@ namespace ContentTypeTextNet.Pe.Main.View.Extend
         }
     }
 
-    public interface IAppDesktopToolbarExtendData : INotifyPropertyChanged
+    public interface IAppDesktopToolbarExtendData : IExtendData
     {
         #region property
 
@@ -183,6 +183,13 @@ namespace ContentTypeTextNet.Pe.Main.View.Extend
         DispatcherTimer AutoHideTimer { get; set; }
         DispatcherOperation DockingDispatcherOperation { get; set; }
         DispatcherOperation HiddenDispatcherOperation { get; set; }
+
+        bool NowWorking { get; set; }
+
+        ISet<string> DockingTriggerPropertyNames { get; } = new HashSet<string>(new[] {
+            nameof(IAppDesktopToolbarExtendData.IsAutoHide),
+            nameof(IAppDesktopToolbarExtendData.ToolbarPosition),
+        });
 
         #endregion
 
@@ -672,6 +679,22 @@ namespace ContentTypeTextNet.Pe.Main.View.Extend
         #endregion
 
         #region WindowsViewExtendBase
+
+        protected override void ChangedExtendProperty(string propertyName)
+        {
+            if(NowWorking) {
+                return;
+            }
+
+            if(DockingTriggerPropertyNames.Contains(propertyName)) {
+                NowWorking = true;
+                try {
+                    DockingFromProperty();
+                } finally {
+                    NowWorking = false;
+                }
+            }
+        }
 
         protected override void InitializedWindowHandleImpl()
         {
