@@ -4,11 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Compatibility.Forms;
+using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Data;
 using ContentTypeTextNet.Pe.Main.Model.Data.Dto.Entity;
 using ContentTypeTextNet.Pe.Main.Model.Launcher;
+using ContentTypeTextNet.Pe.Main.View.Extend;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
 {
@@ -34,6 +36,28 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             return data;
         }
 
+        LauncherToolbarsDisplayData ConvertFromDto(LauncherToolbarsDisplayRowDto dto)
+        {
+            var toolbarPositionTransfer = new EnumTransfer<AppDesktopToolbarPosition>();
+            var IconScaleTransfer = new EnumTransfer<IconScale>();
+
+            var result = new LauncherToolbarsDisplayData() {
+                LauncherToolbarId = dto.LauncherToolbarId,
+                LauncherGroupId = dto.LauncherGroupId,
+                ToolbarPosition = toolbarPositionTransfer.From(dto.PositionKind),
+                IconScale = IconScaleTransfer.From(dto.IconKind),
+                FontId = dto.FontId,
+                AutoHideTimeout = ToTimespan(dto.AutoHideTimeout),
+                TextWidth = dto.TextWidth,
+                IsVisible = dto.IsVisible,
+                IsTopmost = dto.IsTopmost,
+                IsAutoHide = dto.IsAutoHide,
+                IsIconOnly = dto.IsIconOnly,
+            };
+
+            return result;
+        }
+
         public IEnumerable<LauncherToolbarsScreenData> SelectAllToolbars()
         {
             var sql = StatementLoader.LoadStatementByCurrent();
@@ -42,9 +66,15 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             ;
         }
 
-        public LauncherToolbarsDisplayData SelectDisplayData(Guid launcherToolbar)
+        public LauncherToolbarsDisplayData SelectDisplayData(Guid launcherToolbarId)
         {
-            throw new NotImplementedException();
+            var sql = StatementLoader.LoadStatementByCurrent();
+            var param = new {
+                LauncherToolbarId = launcherToolbarId,
+            };
+            var dto = Commander.QuerySingle<LauncherToolbarsDisplayRowDto>(sql, param);
+            var data = ConvertFromDto(dto);
+            return data;
         }
 
         public bool InsertNewToolbar(Guid toolbarId, Screen screen)

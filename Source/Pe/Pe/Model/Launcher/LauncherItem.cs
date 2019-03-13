@@ -131,7 +131,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Launcher
 
         public Guid LauncherToolbarId { get; set; }
         public Guid LauncherGroupId { get; set; }
-        public AppDesktopToolbarPosition PositionKind { get; set; }
+        public AppDesktopToolbarPosition ToolbarPosition { get; set; }
         public IconScale IconScale { get; set; }
         public Guid FontId { get; set; }
         public TimeSpan AutoHideTimeout { get; set; }

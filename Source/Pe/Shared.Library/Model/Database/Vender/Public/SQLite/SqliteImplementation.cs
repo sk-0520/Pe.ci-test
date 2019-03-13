@@ -24,6 +24,14 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database.Vender.Pub
 
         public override bool Parse(object value)
         {
+            if(value == null) {
+                return false;
+            }
+
+            if(value.GetType() == typeof(bool)) {
+                return (bool)value;
+            }
+
             return (long)value != 0;
         }
     }

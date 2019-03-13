@@ -34,7 +34,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data.Dto.Entity
         public Guid LauncherToolbarId { get; set; }
         public Guid LauncherGroupId { get; set; }
         public string PositionKind { get; set; }
-        public long IconKind { get; set; }
+        public string IconKind { get; set; }
         public Guid FontId { get; set; }
         public string AutoHideTimeout { get; set; }
         public long TextWidth { get; set; }

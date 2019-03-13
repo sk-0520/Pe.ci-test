@@ -685,6 +685,9 @@ namespace ContentTypeTextNet.Pe.Main.View.Extend
             if(NowWorking) {
                 return;
             }
+            if(View.IsVisible) {
+                return;
+            }
 
             if(DockingTriggerPropertyNames.Contains(propertyName)) {
                 NowWorking = true;

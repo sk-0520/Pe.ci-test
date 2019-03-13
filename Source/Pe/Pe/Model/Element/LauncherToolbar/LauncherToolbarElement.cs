@@ -120,11 +120,20 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
             return toolbarId;
         }
 
-        void LoadLauncherToolbar(Guid toolbarId)
+        void LoadLauncherToolbar(Guid launcherToolbarId)
         {
-            Logger.Information($"toolbar id: {toolbarId}");
+            Logger.Information($"toolbar id: {launcherToolbarId}");
 
-            ToolbarPosition = AppDesktopToolbarPosition.Right;
+            LauncherToolbarsDisplayData displayData;
+            using(var commander = MainDatabaseBarrier.WaitRead()) {
+                var dao = new LauncherToolbarsDao(commander, StatementLoader, Logger.Factory);
+                displayData = dao.SelectDisplayData(launcherToolbarId);
+            }
+            // ねむい　途中
+            IconScale = displayData.IconScale;
+            ToolbarPosition = displayData.ToolbarPosition;
+            IsVisible = displayData.IsVisible;
+
             DisplaySize = new Size(40, 40);
             HiddenSize = new Size(4, 4);
         }
