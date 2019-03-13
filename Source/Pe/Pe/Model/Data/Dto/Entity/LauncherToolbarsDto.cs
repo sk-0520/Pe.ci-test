@@ -7,21 +7,21 @@ using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Data.Dto.Entity
 {
-    public class ToolbarsScreenRowDto : CommonDtoBase
+    public class LauncherToolbarsScreenRowDto : CommonDtoBase
     {
         #region property
 
-        public Guid ToolbarId { get; set; }
+        public Guid LauncherToolbarId { get; set; }
 
-        public string Screen { get; set; }
+        public string ScreenName { get; set; }
         [PixelKind(Px.Device)]
-        public long X { get; set; }
+        public long ScreenX { get; set; }
         [PixelKind(Px.Device)]
-        public long Y { get; set; }
+        public long ScreenY { get; set; }
         [PixelKind(Px.Device)]
-        public long Width { get; set; }
+        public long ScreenWidth { get; set; }
         [PixelKind(Px.Device)]
-        public long Height { get; set; }
+        public long ScreenHeight { get; set; }
 
         #endregion
     }

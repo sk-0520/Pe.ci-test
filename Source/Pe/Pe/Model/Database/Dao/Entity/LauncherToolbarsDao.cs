@@ -11,30 +11,30 @@ using ContentTypeTextNet.Pe.Main.Model.Data.Dto.Entity;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
 {
-    public class ToolbarsDao : ApplicationDatabaseObjectBase
+    public class LauncherToolbarsDao : ApplicationDatabaseObjectBase
     {
-        public ToolbarsDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
+        public LauncherToolbarsDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
             : base(commander, statementLoader, loggerFactory)
         { }
 
         #region function
 
-        public IEnumerable<ToolbarsScreenRowDto> SelectAllToolbars()
+        public IEnumerable<LauncherToolbarsScreenRowDto> SelectAllToolbars()
         {
             var sql = StatementLoader.LoadStatementByCurrent();
-            return Commander.Query<ToolbarsScreenRowDto>(sql);
+            return Commander.Query<LauncherToolbarsScreenRowDto>(sql);
         }
 
         public bool InsertNewToolbar(Guid toolbarId, Screen screen)
         {
             var sql = StatementLoader.LoadStatementByCurrent();
-            var dto = new ToolbarsScreenRowDto() {
-                ToolbarId = toolbarId,
-                Screen = screen.DeviceName,
-                X = (long)screen.DeviceBounds.X,
-                Y = (long)screen.DeviceBounds.Y,
-                Width = (long)screen.DeviceBounds.Width,
-                Height = (long)screen.DeviceBounds.Height,
+            var dto = new LauncherToolbarsScreenRowDto() {
+                LauncherToolbarId = toolbarId,
+                ScreenName = screen.DeviceName,
+                ScreenX = (long)screen.DeviceBounds.X,
+                ScreenY = (long)screen.DeviceBounds.Y,
+                ScreenWidth = (long)screen.DeviceBounds.Width,
+                ScreenHeight = (long)screen.DeviceBounds.Height,
             };
 
             var status = DatabaseCommonStatus.CreateUser();

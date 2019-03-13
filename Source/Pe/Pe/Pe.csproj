@@ -147,7 +147,7 @@
     <Compile Include="Model\Database\Dao\Entity\NoteFilesDao.cs" />
     <Compile Include="Model\Database\Dao\Entity\NoteContentsDao.cs" />
     <Compile Include="Model\Database\Dao\Entity\NotesDao.cs" />
-    <Compile Include="Model\Database\Dao\Entity\ToolbarsDao.cs" />
+    <Compile Include="Model\Database\Dao\Entity\LauncherToolbarsDao.cs" />
     <Compile Include="Model\Database\Dao\Entity\LauncherGroupItemsDao.cs" />
     <Compile Include="Model\Database\Dao\Entity\LauncherGroupsDao.cs" />
     <Compile Include="Model\Database\Dao\Entity\LauncherItemsDao.cs" />
@@ -158,7 +158,7 @@
     <Compile Include="Model\Data\Dto\Entity\LauncherGroupsDto.cs" />
     <Compile Include="Model\Data\Dto\Entity\LauncherItemsDto.cs" />
     <Compile Include="Model\Data\Dto\Entity\LauncherTagsDto.cs" />
-    <Compile Include="Model\Data\Dto\Entity\ToolbarsDto.cs" />
+    <Compile Include="Model\Data\Dto\Entity\LauncherToolbarsDto.cs" />
     <Compile Include="Model\Element\IWindowShowStarter.cs" />
     <Compile Include="Model\Element\LauncherToolbar\LauncherToolbarElement.cs" />
     <Compile Include="Model\Launcher\LauncherItem.cs" />
@@ -300,10 +300,10 @@
     <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherTagsDao\InsertNewTags.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\ToolbarsDao\InsertNewToolbar.sql">
+    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherToolbarsDao\InsertNewToolbar.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\ToolbarsDao\SelectAllToolbars.sql">
+    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherToolbarsDao\SelectAllToolbars.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\DatabaseSetup\ExistsVersionTable.sql">

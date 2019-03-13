@@ -13,7 +13,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
 
         Guid CreateLauncherItemId();
         Guid CreateCredentId();
-        Guid CreateToolbarId();
+        Guid CreateLauncherToolbarId();
         Guid CreateFontId();
         Guid CreateLauncherGroupId();
         Guid CreateNoteId();
@@ -39,7 +39,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
 
         public Guid CreateLauncherItemId() => Guid.NewGuid();
         public Guid CreateCredentId() => Guid.NewGuid();
-        public Guid CreateToolbarId() => Guid.NewGuid();
+        public Guid CreateLauncherToolbarId() => Guid.NewGuid();
         public Guid CreateFontId() => Guid.NewGuid();
         public Guid CreateLauncherGroupId() => Guid.NewGuid();
         public Guid CreateNoteId() => Guid.NewGuid();

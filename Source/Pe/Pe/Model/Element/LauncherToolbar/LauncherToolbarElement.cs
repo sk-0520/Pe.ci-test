@@ -83,40 +83,40 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
         /// </summary>
         /// <param name="rows"></param>
         /// <returns>見つかったツールバー。見つからない場合は<see cref="Guid.Empty"/>を返す。</returns>
-        Guid FindMaybeToolbarId(IEnumerable<ToolbarsScreenRowDto> rows)
+        Guid FindMaybeToolbarId(IEnumerable<LauncherToolbarsScreenRowDto> rows)
         {
             foreach(var row in rows) {
-                if(row.Screen == DockScreen.DeviceName) {
-                    return row.ToolbarId;
+                if(row.ScreenName == DockScreen.DeviceName) {
+                    return row.LauncherToolbarId;
                 }
 
                 var deviceBounds = DockScreen.DeviceBounds;
                 // 完全一致パターン: ドライバ更新でも大抵は大丈夫だと思う
-                if(row.X == deviceBounds.X && row.Y == deviceBounds.Y && row.Width == deviceBounds.Width && row.Height == deviceBounds.Height) {
-                    return row.ToolbarId;
+                if(row.ScreenX == deviceBounds.X && row.ScreenY == deviceBounds.Y && row.ScreenWidth == deviceBounds.Width && row.ScreenHeight == deviceBounds.Height) {
+                    return row.LauncherToolbarId;
                 }
             }
 
             return Guid.Empty;
         }
 
-        Guid GetToolbarId()
+        Guid GetLauncherToolbarId()
         {
             using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var dao = new ToolbarsDao(commander, StatementLoader, Logger.Factory);
+                var dao = new LauncherToolbarsDao(commander, StatementLoader, Logger.Factory);
                 var screenToolbars = dao.SelectAllToolbars().ToList();
-                var toolbarId = FindMaybeToolbarId(screenToolbars);
-                return toolbarId;
+                var LauncherToolbarId = FindMaybeToolbarId(screenToolbars);
+                return LauncherToolbarId;
             }
         }
 
-        Guid CreateToolbar()
+        Guid CreateLauncherToolbar()
         {
-            var toolbarId = IdFactory.CreateToolbarId();
+            var toolbarId = IdFactory.CreateLauncherToolbarId();
             Logger.Debug($"new toolbar: {toolbarId}");
 
             using(var commander = MainDatabaseBarrier.WaitWrite()) {
-                var dao = new ToolbarsDao(commander, StatementLoader, Logger.Factory);
+                var dao = new LauncherToolbarsDao(commander, StatementLoader, Logger.Factory);
                 dao.InsertNewToolbar(toolbarId, DockScreen);
 
                 commander.Commit();
@@ -125,7 +125,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
             return toolbarId;
         }
 
-        void LoadToolbar(Guid toolbarId)
+        void LoadLauncherToolbar(Guid toolbarId)
         {
             Logger.Information($"toolbar id: {toolbarId}");
 
@@ -138,11 +138,11 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
         {
             Logger.Information($"initialize {DockScreen.DeviceName}:{DockScreen.DeviceBounds}, {nameof(DockScreen.Primary)}: {DockScreen.Primary}");
 
-            var toolbarId = GetToolbarId();
-            if(toolbarId == Guid.Empty) {
-                toolbarId = CreateToolbar();
+            var LauncherToolbarId = GetLauncherToolbarId();
+            if(LauncherToolbarId == Guid.Empty) {
+                LauncherToolbarId = CreateLauncherToolbar();
             }
-            LoadToolbar(toolbarId);
+            LoadLauncherToolbar(LauncherToolbarId);
         }
 
         #endregion
