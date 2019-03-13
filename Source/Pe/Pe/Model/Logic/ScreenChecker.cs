@@ -14,13 +14,13 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
 
         string ScreenName { get; }
         [PixelKind(Px.Device)]
-        long ScreenX { get; }
+        long X { get; }
         [PixelKind(Px.Device)]
-        long ScreenY { get; }
+        long Y { get; }
         [PixelKind(Px.Device)]
-        long ScreenWidth { get; }
+        long Width { get; }
         [PixelKind(Px.Device)]
-        long ScreenHeight { get; }
+        long Height { get; }
 
         #endregion
     }
@@ -37,7 +37,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
 
             var deviceBounds = screen.DeviceBounds;
             // 完全一致パターン: ドライバ更新でも大抵は大丈夫だと思う
-            if(data.ScreenX == deviceBounds.X && data.ScreenY == deviceBounds.Y && data.ScreenWidth == deviceBounds.Width && data.ScreenHeight == deviceBounds.Height) {
+            if(data.X == deviceBounds.X && data.Y == deviceBounds.Y && data.Width == deviceBounds.Width && data.Height == deviceBounds.Height) {
                 return true;
             }
 

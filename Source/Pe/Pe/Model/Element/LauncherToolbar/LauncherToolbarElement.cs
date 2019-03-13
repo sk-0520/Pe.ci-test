@@ -11,6 +11,7 @@ using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Applications;
 using ContentTypeTextNet.Pe.Main.Model.Data.Dto.Entity;
 using ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity;
+using ContentTypeTextNet.Pe.Main.Model.Launcher;
 using ContentTypeTextNet.Pe.Main.Model.Logic;
 using ContentTypeTextNet.Pe.Main.Model.Manager;
 using ContentTypeTextNet.Pe.Main.View.Extend;
@@ -83,7 +84,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
         /// </summary>
         /// <param name="rows"></param>
         /// <returns>見つかったツールバー。見つからない場合は<see cref="Guid.Empty"/>を返す。</returns>
-        Guid FindMaybeToolbarId(IEnumerable<LauncherToolbarsScreenRowDto> rows)
+        Guid FindMaybeToolbarId(IEnumerable<LauncherToolbarsScreenData> rows)
         {
             var screenChecker = new ScreenChecker();
             var row = rows.FirstOrDefault(r => screenChecker.FindMaybe(DockScreen, r));
@@ -160,7 +161,6 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
             var parameter = new OrderWindowParameter(WindowKind.LauncherToolbar, this);
             var windowItem = OrderManager.CreateWindow(parameter);
             ViewCreated.Value = true;
-            ToolbarPosition = AppDesktopToolbarPosition.Top;
         }
 
         #endregion

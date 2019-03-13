@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
+using ContentTypeTextNet.Pe.Main.Model.Logic;
+using ContentTypeTextNet.Pe.Main.View.Extend;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Launcher
 {
@@ -96,6 +98,48 @@ namespace ContentTypeTextNet.Pe.Main.Model.Launcher
         public LauncherItemPermission Permission { get; set; }
 
         public string Note { get; set; }
+
+        #endregion
+    }
+
+    public class LauncherToolbarsScreenData : DataBase, IScreenData
+    {
+        #region property
+
+        public Guid LauncherToolbarId { get; set; }
+
+        #endregion
+
+        #region IScreenData
+
+        public string ScreenName { get; set; }
+        [PixelKind(Px.Device)]
+        public long X { get; set; }
+        [PixelKind(Px.Device)]
+        public long Y { get; set; }
+        [PixelKind(Px.Device)]
+        public long Width { get; set; }
+        [PixelKind(Px.Device)]
+        public long Height { get; set; }
+
+        #endregion
+    }
+
+    public class LauncherToolbarsDisplayData: DataBase
+    {
+        #region property
+
+        public Guid LauncherToolbarId { get; set; }
+        public Guid LauncherGroupId { get; set; }
+        public AppDesktopToolbarPosition PositionKind { get; set; }
+        public IconScale IconScale { get; set; }
+        public Guid FontId { get; set; }
+        public TimeSpan AutoHideTimeout { get; set; }
+        public long TextWidth { get; set; }
+        public bool IsVisible { get; set; }
+        public bool IsTopmost { get; set; }
+        public bool IsAutoHide { get; set; }
+        public bool IsIconOnly { get; set; }
 
         #endregion
     }

@@ -17,5 +17,19 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao
         public ApplicationDatabaseObjectBase(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
             : base(commander, statementLoader, loggerFactory)
         { }
+
+        #region function
+
+        protected string FromTimespan(TimeSpan timespan)
+        {
+            return timespan.ToString();
+        }
+
+        protected TimeSpan ToTimespan(string raw)
+        {
+            return TimeSpan.Parse(raw);
+        }
+
+        #endregion
     }
 }

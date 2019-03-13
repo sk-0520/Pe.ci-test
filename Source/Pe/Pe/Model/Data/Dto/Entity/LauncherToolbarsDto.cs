@@ -8,13 +8,11 @@ using ContentTypeTextNet.Pe.Main.Model.Logic;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Data.Dto.Entity
 {
-    public class LauncherToolbarsScreenRowDto : CommonDtoBase, IScreenData
+    public class LauncherToolbarsScreenRowDto : CommonDtoBase
     {
         #region property
 
         public Guid LauncherToolbarId { get; set; }
-
-        #region IScreenData
 
         public string ScreenName { get; set; }
         [PixelKind(Px.Device)]
@@ -27,6 +25,23 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data.Dto.Entity
         public long ScreenHeight { get; set; }
 
         #endregion
+    }
+
+    public class LauncherToolbarsDisplayRowDto : CommonDtoBase
+    {
+        #region property
+
+        public Guid LauncherToolbarId { get; set; }
+        public Guid LauncherGroupId { get; set; }
+        public string PositionKind { get; set; }
+        public long IconKind { get; set; }
+        public Guid FontId { get; set; }
+        public string AutoHideTimeout { get; set; }
+        public long TextWidth { get; set; }
+        public bool IsVisible { get; set; }
+        public bool IsTopmost { get; set; }
+        public bool IsAutoHide { get; set; }
+        public bool IsIconOnly { get; set; }
 
         #endregion
     }

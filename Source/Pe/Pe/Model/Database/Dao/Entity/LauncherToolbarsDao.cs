@@ -8,6 +8,7 @@ using ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Data;
 using ContentTypeTextNet.Pe.Main.Model.Data.Dto.Entity;
+using ContentTypeTextNet.Pe.Main.Model.Launcher;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
 {
@@ -19,10 +20,31 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
 
         #region function
 
-        public IEnumerable<LauncherToolbarsScreenRowDto> SelectAllToolbars()
+        LauncherToolbarsScreenData ConvertFromDto(LauncherToolbarsScreenRowDto dto)
+        {
+            var data = new LauncherToolbarsScreenData() {
+                LauncherToolbarId = dto.LauncherToolbarId,
+                ScreenName = dto.ScreenName,
+                X = dto.ScreenX,
+                Y = dto.ScreenY,
+                Height = dto.ScreenHeight,
+                Width = dto.ScreenWidth,
+            };
+
+            return data;
+        }
+
+        public IEnumerable<LauncherToolbarsScreenData> SelectAllToolbars()
         {
             var sql = StatementLoader.LoadStatementByCurrent();
-            return Commander.Query<LauncherToolbarsScreenRowDto>(sql);
+            return Commander.Query<LauncherToolbarsScreenRowDto>(sql)
+                .Select(i => ConvertFromDto(i))
+            ;
+        }
+
+        public LauncherToolbarsDisplayData SelectDisplayData(Guid launcherToolbar)
+        {
+            throw new NotImplementedException();
         }
 
         public bool InsertNewToolbar(Guid toolbarId, Screen screen)
