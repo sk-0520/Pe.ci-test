@@ -54,6 +54,31 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.ViewModel
         protected abstract void MoveItemsKindImpl(ObservableCollectionKind kind, int newStartingIndex, int oldStartingIndex);
         protected abstract void ResetItemsKindImpl(ObservableCollectionKind kind, IReadOnlyList<TViewModel> oldViewModels);
 
+        public int IndexOf(TModel model) => Collection.IndexOf(model);
+        public int IndexOf(TViewModel viewModel) => ViewModels.IndexOf(viewModel);
+
+        public TModel GetModel(TViewModel viewModel)
+        {
+            var index = IndexOf(viewModel);
+
+            if(index == -1) {
+                return default(TModel);
+            }
+
+            return Collection[index];
+        }
+
+        public TViewModel GetViewModel(TModel model)
+        {
+            var index = IndexOf(model);
+
+            if(index == -1) {
+                return default(TViewModel);
+            }
+
+            return ViewModels[index];
+        }
+
         #endregion
 
         #region ObservableManager
