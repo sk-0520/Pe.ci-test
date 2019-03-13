@@ -164,6 +164,7 @@
     <Compile Include="Model\Launcher\LauncherItem.cs" />
     <Compile Include="Model\Launcher\LauncherFactory.cs" />
     <Compile Include="Model\Logic\IdFactory.cs" />
+    <Compile Include="Model\Logic\ScreenChecker.cs" />
     <Compile Include="Model\Logic\StartupRegister.cs" />
     <Compile Include="Model\Database\Dao\ApplicationDatabaseObjectBase.cs" />
     <Compile Include="Model\Database\Setup\SetupBase.cs" />

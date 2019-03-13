@@ -85,16 +85,10 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
         /// <returns>見つかったツールバー。見つからない場合は<see cref="Guid.Empty"/>を返す。</returns>
         Guid FindMaybeToolbarId(IEnumerable<LauncherToolbarsScreenRowDto> rows)
         {
-            foreach(var row in rows) {
-                if(row.ScreenName == DockScreen.DeviceName) {
-                    return row.LauncherToolbarId;
-                }
-
-                var deviceBounds = DockScreen.DeviceBounds;
-                // 完全一致パターン: ドライバ更新でも大抵は大丈夫だと思う
-                if(row.ScreenX == deviceBounds.X && row.ScreenY == deviceBounds.Y && row.ScreenWidth == deviceBounds.Width && row.ScreenHeight == deviceBounds.Height) {
-                    return row.LauncherToolbarId;
-                }
+            var screenChecker = new ScreenChecker();
+            var row = rows.FirstOrDefault(r => screenChecker.FindMaybe(DockScreen, r));
+            if(row != null) {
+                return row.LauncherToolbarId;
             }
 
             return Guid.Empty;
