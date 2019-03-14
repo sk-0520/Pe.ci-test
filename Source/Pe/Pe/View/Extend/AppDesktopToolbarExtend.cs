@@ -85,7 +85,7 @@ namespace ContentTypeTextNet.Pe.Main.View.Extend
         /// <summary>
         /// 自動的に隠れるまでの時間。
         /// </summary>
-        TimeSpan AutoHideTime { get; }
+        TimeSpan AutoHideTimeout { get; }
 
         /// <summary>
         /// 表示中のサイズ。
@@ -485,7 +485,7 @@ namespace ContentTypeTextNet.Pe.Main.View.Extend
             Debug.Assert(ExtendData.IsAutoHide);
 
             if(!AutoHideTimer.IsEnabled) {
-                AutoHideTimer.Interval = ExtendData.AutoHideTime;
+                AutoHideTimer.Interval = ExtendData.AutoHideTimeout;
                 AutoHideTimer.Start();
             }
         }

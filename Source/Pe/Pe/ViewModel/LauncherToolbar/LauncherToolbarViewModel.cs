@@ -78,7 +78,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar
         /// <summary>
         /// 自動的に隠れるまでの時間。
         /// </summary>
-        public TimeSpan AutoHideTime => Model.AutoHideTime;
+        public TimeSpan AutoHideTimeout => Model.AutoHideTimeout;
 
         /// <summary>
         /// 表示中のサイズ。

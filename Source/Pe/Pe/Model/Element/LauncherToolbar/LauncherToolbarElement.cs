@@ -20,6 +20,12 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
 {
     public class LauncherToolbarElement : ContextElementBase, IAppDesktopToolbarExtendData, IWindowShowStarter
     {
+        #region variable
+
+        bool _isTopmodst;
+
+        #endregion
+
         public LauncherToolbarElement(Screen dockScreen, IOrderManager orderManager, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, IDiContainer diContainer, ILoggerFactory loggerFactory)
             : base(diContainer, loggerFactory)
         {
@@ -74,6 +80,12 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
         /// </summary>
         [PixelKind(Px.Logical)]
         public double TextWidth { get; private set; }
+
+        public bool IsTopmodst
+        {
+            get => this._isTopmodst;
+            set => SetProperty(ref this._isTopmodst, value);
+        }
 
         #endregion
 
@@ -131,11 +143,22 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
             }
             // ねむい　途中
             IconScale = displayData.IconScale;
-            ToolbarPosition = displayData.ToolbarPosition;
-            IsVisible = displayData.IsVisible;
+            TextWidth = displayData.TextWidth;
+            IsIconOnly = displayData.IsIconOnly;
+            IsTopmodst = displayData.IsTopmost;
+            IsAutoHide = displayData.IsAutoHide;
+            AutoHideTimeout =  displayData.AutoHideTimeout;
 
             DisplaySize = new Size(40, 40);
             HiddenSize = new Size(4, 4);
+
+            ToolbarPosition = displayData.ToolbarPosition;
+            IsVisible = displayData.IsVisible;
+        }
+
+        Size GetDisplaySize(Thickness buttonPaddin, IconScale iconScale, Thickness iconMargin, bool isIconOnly, double textWidth)
+        {
+            throw new NotImplementedException();
         }
 
         public void Initialize()
@@ -207,7 +230,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
         /// <summary>
         /// 自動的に隠れるまでの時間。
         /// </summary>
-        public TimeSpan AutoHideTime { get; private set; }
+        public TimeSpan AutoHideTimeout { get; private set; }
 
         /// <summary>
         /// 表示中のサイズ。
