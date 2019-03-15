@@ -15,7 +15,7 @@ using ContentTypeTextNet.Pe.Main.View.Extend;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar
 {
-    public class LauncherToolbarViewModel : SingleModelViewModelBase<LauncherToolbarElement>, IAppDesktopToolbarExtendData, ILoggerFactory, IWindowNotify
+    public class LauncherToolbarViewModel : SingleModelViewModelBase<LauncherToolbarElement>, IAppDesktopToolbarExtendData, ILoggerFactory, IViewLifecycleReceiver
     {
         public LauncherToolbarViewModel(LauncherToolbarElement model, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
@@ -141,21 +141,21 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar
 
         #endregion
 
-        #region IWindowNotify
+        #region IViewLifecycleReceiver
 
-        public void OnLoadedView(Window window)
+        public void ReceiveViewLoaded(Window window)
         {
             if(!IsVisible) {
                 window.Visibility = Visibility.Collapsed;
             }
         }
 
-        public void OnClosingView(CancelEventArgs e)
+        public void ReceiveViewClosing(CancelEventArgs e)
         {
             e.Cancel = !Model.ReceiveViewClosing();
         }
 
-        public void OnClosedView()
+        public void ReceiveViewClosed()
         {
             Model.ReceiveViewClosed();
         }

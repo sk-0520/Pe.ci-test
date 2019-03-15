@@ -97,7 +97,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
                 return false;
             }
 
-            if(item.ViewModel is IWindowNotify windowNotify) {
+            if(item.ViewModel is IViewLifecycleReceiver viewLifecycleReceiver) {
                 item.Window.Loaded += Window_Loaded;
                 item.Window.Closing += Window_Closing;
             }
@@ -119,8 +119,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
             Logger.Debug($"ウィンドウ生成: {window}");
 
             var item = Items.First(i => i.Window == window);
-            if(item.ViewModel is IWindowNotify windowNotify) {
-                windowNotify.OnLoadedView(window);
+            if(item.ViewModel is IViewLifecycleReceiver viewLifecycleReceiver) {
+                viewLifecycleReceiver.ReceiveViewLoaded(window);
             }
         }
 
@@ -131,8 +131,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
             Logger.Debug($"ウィンドウ破棄前: {window}");
 
             var item = Items.First(i => i.Window == window);
-            if(item.ViewModel is IWindowNotify windowNotify) {
-                windowNotify.OnClosingView(e);
+            if(item.ViewModel is IViewLifecycleReceiver viewLifecycleReceiver) {
+                viewLifecycleReceiver.ReceiveViewClosing(e);
             }
         }
 
@@ -152,8 +152,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
             if(item.CloseToDataContextNull) {
                 item.Window.DataContext = null;
             }
-            if(item.ViewModel is IWindowNotify windowNotify) {
-                windowNotify.OnClosedView();
+            if(item.ViewModel is IViewLifecycleReceiver viewLifecycleReceiver) {
+                viewLifecycleReceiver.ReceiveViewClosed();
             }
         }
 
