@@ -17,6 +17,7 @@ using ContentTypeTextNet.Pe.Main.Model.Applications;
 using ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Model.Element;
 using ContentTypeTextNet.Pe.Main.Model.Element.LauncherGroup;
+using ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem;
 using ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar;
 using ContentTypeTextNet.Pe.Main.Model.Launcher;
 using ContentTypeTextNet.Pe.Main.View.LauncherToolbar;
@@ -120,7 +121,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
 
             var result = new List<LauncherGroupElement>(launcherGroupIds.Count);
             foreach(var launcherGroupId in launcherGroupIds) {
-                var element = (LauncherGroupElement)CreateElement(new OrderLauncherGroupElementParameter(launcherGroupId));
+                var element = CreateLauncherGroupElement(launcherGroupId);
                 result.Add(element);
             }
 
@@ -133,7 +134,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
             var result = new List<LauncherToolbarElement>(screens.Length);
 
             foreach(var screen in screens) {
-                var element = (LauncherToolbarElement)CreateElement(new OrderLauncherToolbarElementParameter(screen, launcherGroups));
+                var element = CreateLauncherToolbarElement(screen, launcherGroups);
                 result.Add(element);
             }
 
@@ -175,14 +176,24 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
 
         #region IOrderManager
 
-        public ElementBase CreateElement(OrderElementParameter parameter)
+        public LauncherGroupElement CreateLauncherGroupElement(Guid launcherGroupId)
         {
-            return OrderManager.CreateElement(parameter);
+            return OrderManager.CreateLauncherGroupElement(launcherGroupId);
+        }
+        public LauncherToolbarElement CreateLauncherToolbarElement(Screen dockScreen, ObservableCollection<LauncherGroupElement> launcherGroups)
+        {
+            return OrderManager.CreateLauncherToolbarElement(dockScreen, launcherGroups);
         }
 
-        public WindowItem CreateWindow(OrderWindowParameter parameter)
+        public LauncherItemElement GetOrCreateLauncherItemElement(Guid launcherItemId)
         {
-            var windowItem = OrderManager.CreateWindow(parameter);
+            return OrderManager.GetOrCreateLauncherItemElement(launcherItemId);
+        }
+
+
+        public WindowItem CreateLauncherToolbarWindow(LauncherToolbarElement element)
+        {
+            var windowItem = OrderManager.CreateLauncherToolbarWindow(element);
 
             WindowManager.Register(windowItem);
 

@@ -216,8 +216,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
 
         public void StartView()
         {
-            var parameter = new OrderWindowParameter(WindowKind.LauncherToolbar, this);
-            var windowItem = OrderManager.CreateWindow(parameter);
+            var windowItem = OrderManager.CreateLauncherToolbarWindow(this);
             ViewCreated = true;
         }
 

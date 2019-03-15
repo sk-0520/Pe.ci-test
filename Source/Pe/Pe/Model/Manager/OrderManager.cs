@@ -12,6 +12,7 @@ using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Applications;
 using ContentTypeTextNet.Pe.Main.Model.Element;
 using ContentTypeTextNet.Pe.Main.Model.Element.LauncherGroup;
+using ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem;
 using ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar;
 using ContentTypeTextNet.Pe.Main.Model.Launcher;
 using ContentTypeTextNet.Pe.Main.View.Extend;
@@ -20,27 +21,6 @@ using ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Manager
 {
-    public enum ElementKind
-    {
-        LauncherGroup,
-        LauncherToolbar,
-    }
-
-    public class OrderElementParameter
-    {
-        public OrderElementParameter(ElementKind elementKind)
-        {
-            ElementKind = elementKind;
-        }
-
-        #region property
-
-        public ElementKind ElementKind { get; }
-
-        #endregion
-    }
-
-
     public class OrderWindowParameter
     {
         public OrderWindowParameter(WindowKind windowKind, ElementBase element)
@@ -61,8 +41,11 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
     {
         #region function
 
-        ElementBase CreateElement(OrderElementParameter parameter);
-        WindowItem CreateWindow(OrderWindowParameter parameter);
+        LauncherGroupElement CreateLauncherGroupElement(Guid launcherGroupId);
+        LauncherToolbarElement CreateLauncherToolbarElement(Screen dockScreen, ObservableCollection<LauncherGroupElement> launcherGroups);
+        LauncherItemElement GetOrCreateLauncherItemElement(Guid launcherItemId);
+
+        WindowItem CreateLauncherToolbarWindow(LauncherToolbarElement element);
 
         #endregion
     }
@@ -75,36 +58,38 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
                 : base(diContainer, loggerFactory)
             { }
 
-            #region function
+            #region property
 
-            LauncherGroupElement CreateLauncherGroupElementCore(Guid launcherGroupId)
+            Dictionary<Guid, LauncherItemElement> LauncherItems { get; } = new Dictionary<Guid, LauncherItemElement>();
+
+            #endregion
+
+            #region function
+            #endregion
+
+            #region IOrderManager
+
+            public LauncherGroupElement CreateLauncherGroupElement(Guid launcherGroupId)
             {
                 var element = DiContainer.Make<LauncherGroupElement>(new object[] { launcherGroupId });
                 element.Initialize();
                 return element;
             }
 
-            LauncherGroupElement CreateLauncherGroupElement(OrderElementParameter parameter)
-            {
-                var args = (OrderLauncherGroupElementParameter)parameter;
-                return CreateLauncherGroupElementCore(args.LauncherGroupId);
-            }
-
-
-            LauncherToolbarElement CreateLauncherToolbarElementCore(Screen dockScreen, ObservableCollection<LauncherGroupElement> launcherGroups)
+            public LauncherToolbarElement CreateLauncherToolbarElement(Screen dockScreen, ObservableCollection<LauncherGroupElement> launcherGroups)
             {
                 var element = DiContainer.Make<LauncherToolbarElement>(new object[] { dockScreen, launcherGroups });
                 element.Initialize();
                 return element;
             }
 
-            LauncherToolbarElement CreateLauncherToolbarElement(OrderElementParameter parameter)
+            public LauncherItemElement GetOrCreateLauncherItemElement(Guid launcherItemId)
             {
-                var args = (OrderLauncherToolbarElementParameter)parameter;
-                return CreateLauncherToolbarElementCore(args.Screen, args.LauncherGroups);
+                return null;
             }
 
-            LauncherToolbarWindow CreateLauncherToolbarWindow(LauncherToolbarElement element)
+
+            public WindowItem CreateLauncherToolbarWindow(LauncherToolbarElement element)
             {
                 var viewModel = DiContainer.UsingTemporaryContainer(c => {
                     c.Register<ILoggerFactory, ILoggerFactory>(element);
@@ -118,45 +103,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
                 });
                 window.DataContext = viewModel;
 
-                return window;
-            }
-
-            Window BuildWindow(OrderWindowParameter parameter)
-            {
-                switch(parameter.WindowKind) {
-                    case WindowKind.LauncherToolbar:
-                        return CreateLauncherToolbarWindow((LauncherToolbarElement)parameter.Element);
-
-                    default:
-                        throw new NotImplementedException();
-                }
-            }
-
-            #endregion
-
-            #region IOrderManager
-
-            public ElementBase CreateElement(OrderElementParameter parameter)
-            {
-                switch(parameter.ElementKind) {
-                    case ElementKind.LauncherGroup:
-                        return CreateLauncherGroupElement(parameter);
-
-                    case ElementKind.LauncherToolbar:
-                        return CreateLauncherToolbarElement(parameter);
-
-                    default:
-                        throw new NotImplementedException();
-
-                }
-            }
-
-            public WindowItem CreateWindow(OrderWindowParameter parameter)
-            {
-                var window = BuildWindow(parameter);
-                var windowItem = new WindowItem(parameter.WindowKind, window);
-
-                return windowItem;
+                return new WindowItem(WindowKind.LauncherToolbar, window);
             }
 
             #endregion
