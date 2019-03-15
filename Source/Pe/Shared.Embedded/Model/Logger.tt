@@ -1,0 +1,349 @@
+<#@ template  debug="true" hostSpecific="true" language="C#" #>
+<#@ output extension=".cs" #>
+<#@ Assembly Name="System.Core" #>
+<#@ Assembly Name="System.Windows.Forms" #>
+<#@ import namespace="System" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Diagnostics" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Collections" #>
+<#@ import namespace="System.Collections.Generic" #>
+
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Threading;
+using System.Text;
+using System.Threading.Tasks;
+using System.Reflection;
+
+namespace ContentTypeTextNet.Pe.Library.Shared.Embedded.Model
+{
+<#
+#>
+
+    [Flags]
+    public enum LogKind
+    {
+<# foreach(var logKindItem in logKindItems) { #>
+        <#= logKindItem.Key #>,
+<# } #>
+
+        All = Trace | Debug | Information | Warning | Error | Fatal,
+    }
+
+    public struct Caller
+    {
+        #region variable
+
+        public readonly string memberName;
+        public readonly string filePath;
+        public readonly int lineNumber;
+
+        #endregion
+
+        public Caller(<#= callerArg #>)
+        {
+            this.memberName = callerMemberName;
+            this.filePath = callerFilePath;
+            this.lineNumber = callerLineNumber;
+        }
+    }
+
+    public class LogItem
+    {
+        public LogItem(DateTime timestamp, LogKind kind, string header, string message, string detail, Caller caller, int skipFrame)
+        {
+            Timestamp = timestamp;
+            Kind = kind;
+            Header = header;
+            Message = message;
+            Detail = detail;
+            Caller = caller;
+
+            StackTrace = new StackTrace(skipFrame + 1, true);
+            Thread = Thread.CurrentThread;
+            Assembly = Assembly.GetCallingAssembly();
+        }
+
+        #region property
+
+        public static int ShortFileIndex { get; set; }
+
+        public DateTime Timestamp { get; }
+        public LogKind Kind { get; }
+        public string Header { get; }
+        public string Message { get; }
+        public string Detail { get; }
+        public Caller Caller { get; }
+
+        public StackTrace StackTrace { get; }
+        public Thread Thread  { get; }
+        public Assembly Assembly { get; }
+
+        public bool HasDetail => Detail != null;
+
+        //TODO
+        public string ShortFilePath => Caller.filePath.Substring(ShortFileIndex);
+
+        #endregion
+    }
+
+
+    public interface ILoggerFactory
+    {
+        ILogger CreateLogger(string header);
+    }
+
+    public interface ILogger
+    {
+        string Header { get; }
+        ILoggerFactory Factory { get; }
+
+<# foreach(var logKindItem in logKindItems) { #>
+        bool IsEnabled<#= logKindItem.Key #> { get; }
+<# } #>
+
+<# foreach(var logKindItem in logKindItems) { #>
+        void <#= logKindItem.Key #>(string message, <#= callerArg #>);
+        //void <#= logKindItem.Key #>(string message, string detail, <#= callerArg #>);
+        void <#= logKindItem.Key #>(string message, object detail, <#= callerArg #>);
+        void <#= logKindItem.Key #>(Exception exception, <#= callerArg #>);
+<# } #>
+
+        void Put(LogKind kind, string message, string detail, <#= callerArg #>);
+    }
+
+    public class LoggerFactory: ILoggerFactory
+    {
+        public LoggerFactory(LoggerBase logger)
+        {
+            Logger = logger;
+        }
+
+        #region property
+
+        LoggerBase Logger { get; }
+
+        #endregion
+
+
+        #region ILoggerFactory
+
+        public ILogger CreateLogger(string header) => Logger.CreateLogger(header);
+
+        #endregion
+    }
+
+    public abstract class LoggerBase : ILogger
+    {
+        public LoggerBase()
+        { }
+
+        public LoggerBase(string header)
+        {
+            CurrentHeader = header;
+        }
+
+        protected LoggerBase(string header, LoggerBase parentLogger)
+        {
+            CurrentHeader = header;
+            ParentLogger = parentLogger;
+        }
+
+        #region property
+
+        protected LoggerBase ParentLogger { get; }
+        protected string CurrentHeader { get; }
+
+        #endregion
+
+        #region function
+
+        public virtual void SetEnabled(LogKind logKinds)
+        {
+<# foreach(var logKindItem in logKindItems) { #>
+            if(logKinds.HasFlag(LogKind.<#= logKindItem.Key #>)) {
+                IsEnabled<#= logKindItem.Key #> = true;
+            }
+<# } #>
+        }
+        public virtual void SetDisabled(LogKind logKinds)
+        {
+<# foreach(var logKindItem in logKindItems) { #>
+            if(logKinds.HasFlag(LogKind.<#= logKindItem.Key #>)) {
+                IsEnabled<#= logKindItem.Key #> = false;
+            }
+<# } #>
+        }
+
+        protected abstract void PutCore(LogItem logItem);
+
+        #endregion
+
+        #region ILogger
+
+        public string Header
+        {
+            get
+            {
+                string separator = "/";
+
+                if(ParentLogger == null) {
+                    return separator;
+                }
+
+                if(ParentLogger.Header == separator) {
+                    return separator + CurrentHeader;
+                }
+
+                return ParentLogger.Header + separator + CurrentHeader;
+            }
+        }
+<# foreach(var logKindItem in logKindItems) { #>
+        public virtual bool IsEnabled<#= logKindItem.Key #> { get; protected set; }
+<# } #>
+        public ILoggerFactory Factory => new LoggerFactory(this);
+
+        protected void Put(LogItem logItem)
+        {
+            if(ParentLogger != null) {
+                ParentLogger.Put(logItem);
+            } else {
+                switch(logItem.Kind) {
+<# foreach(var logKindItem in logKindItems) { #>
+                    case LogKind.<#= logKindItem.Key #>:
+                        if(!IsEnabled<#= logKindItem.Key #>) {
+                            return;
+                        }
+                        break;
+<# } #>
+                    default:
+                        throw new NotImplementedException();
+                }
+                PutCore(logItem);
+            }
+        }
+        protected abstract ILogger CreateLoggerCore(string header);
+
+<# foreach(var logKindItem in logKindItems) { #>
+        public void <#= logKindItem.Key #>(string message, <#= callerArg #>) => <#= PutMessage(logKindItem.Key) #>
+        //public void <#= logKindItem.Key #>(string message, string detail, <#= callerArg #>) => <#= PutDetail(logKindItem.Key) #>
+        public void <#= logKindItem.Key #>(string message, object detail, <#= callerArg #>) => <#= PutDetail(logKindItem.Key) #>
+        public void <#= logKindItem.Key #>(Exception exception, <#= callerArg #>) => <#= PutException(logKindItem.Key) #>
+
+<# } #>
+        public void Put(LogKind kind, string message, string detail, <#= callerArg #>) => Put(new LogItem(DateTime.Now, kind, Header, message, detail, <#= callerParam #>, 1));
+
+        #endregion
+
+        #region ILoggerFactory
+
+        public ILogger CreateLogger(string header) => CreateLoggerCore(header);
+
+        #endregion
+    }
+
+    public sealed class NullLogger: LoggerBase
+    {
+        protected override void PutCore(LogItem logItem)
+        { }
+
+        protected override ILogger CreateLoggerCore(string header) => new NullLogger();
+    }
+
+    public sealed class ChildLogger: LoggerBase
+    {
+        public ChildLogger(string header, LoggerBase parentLogger)
+            : base(header, parentLogger)
+        { }
+
+        protected override void PutCore(LogItem logItem)
+        {
+            throw new NotSupportedException();
+        }
+
+        protected override ILogger CreateLoggerCore(string header) => new ChildLogger(header, this);
+    }
+
+    public class TestLogger : LoggerBase
+    {
+        public TestLogger()
+            : base()
+        {
+<# foreach(var logKindItem in logKindItems) { #>
+            IsEnabled<#= logKindItem.Key #> = true;
+<# } #>
+        }
+
+        protected override void PutCore(LogItem logItem)
+        {
+            var header = $"{DateTime.Now:yyyy-MM-ddTHH:mm:ss} {Header}[{logItem.Kind}] ";
+            var headerIndent = new string(' ', header.Length);
+            Console.WriteLine($"{header}{logItem.Message} <{logItem.Caller.memberName}>");
+            if(logItem.HasDetail) {
+                Console.WriteLine($"{headerIndent}{logItem.Detail}");
+            }
+            Console.WriteLine($"{headerIndent}{logItem.Caller.filePath}({logItem.Caller.lineNumber})");
+            Console.WriteLine($"{headerIndent}{nameof(logItem.Assembly)}: {logItem.Assembly}, {nameof(logItem.Thread)}: {logItem.Thread}");
+        }
+
+        protected override ILogger CreateLoggerCore(string header) => new ChildLogger(header, this);
+    }
+
+    public static class ILoggerFactoryExtensions
+    {
+        #region function
+
+        public static ILogger CreateTartget(this ILoggerFactory loggerFactory, Type type)
+        {
+            return loggerFactory.CreateLogger(type.Name);
+        }
+
+        [Obsolete]
+        public static ILogger CreateCurrentClass(this ILoggerFactory loggerFactory)
+        {
+            return loggerFactory.CreateLogger(new StackFrame(1).GetMethod().DeclaringType.Name);
+        }
+
+        [Obsolete]
+        public static ILogger CreateCurrentMethod(this ILoggerFactory loggerFactory)
+        {
+            var method = new StackFrame(1).GetMethod();
+            return loggerFactory.CreateLogger($"{method.DeclaringType.Name}.{method.Name}");
+        }
+
+        #endregion
+    }
+
+}
+
+<#+
+    class LogKindItem
+    {
+        public string Key { get; set; }
+    }
+    IEnumerable<LogKindItem> logKindItems = new [] {
+        new LogKindItem() { Key = "Trace", },
+        new LogKindItem() { Key = "Debug", },
+        new LogKindItem() { Key = "Information", },
+        new LogKindItem() { Key = "Warning", },
+        new LogKindItem() { Key = "Error", },
+        new LogKindItem() { Key = "Fatal", },
+    };
+
+    string callerArg = "[CallerLineNumber] int callerLineNumber = 0, [CallerFilePath] string callerFilePath = \"\", [CallerMemberName] string callerMemberName = \"\"";
+    string callerParam = "new Caller(callerLineNumber, callerFilePath, callerMemberName)";
+
+    string PutMessage(string kind) {
+        return "Put(new LogItem(DateTime.Now, LogKind." + kind + ", Header, message, null, " + callerParam + ", 1));";
+    }
+    string PutDetail(string kind) {
+        return "Put(new LogItem(DateTime.Now, LogKind." + kind + ", Header, message, detail?.ToString(), " + callerParam + ", 1));";
+    }
+    string PutException(string kind) {
+        return "Put(new LogItem(DateTime.Now, LogKind." + kind + ", Header, exception.Message, exception.ToString(), " + callerParam + ", 1));";
+    }
+#>

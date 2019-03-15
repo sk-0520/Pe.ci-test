@@ -10,7 +10,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Embedded.Model
     /// <summary>
     /// コマンドラインのキー。
     /// </summary>
-    internal class CommandLineKey
+    public class CommandLineKey
     {
         #region define
 
@@ -62,7 +62,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Embedded.Model
     /// <summary>
     /// コマンドラインの値。
     /// </summary>
-    internal interface ICommandLineValue
+    public interface ICommandLineValue
     {
         #region property
 
@@ -81,7 +81,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Embedded.Model
     /// <summary>
     /// コマンドラインの値。
     /// </summary>
-    internal class CommandLineValue : ICommandLineValue
+    public class CommandLineValue : ICommandLineValue
     {
         #region ICommandLineValue
 
@@ -122,7 +122,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Embedded.Model
     /// <para>-switch</para>
     /// <para>--switch</para>
     /// </summary>
-    internal class CommandLine
+    public class CommandLine
     {
         /// <summary>
         /// <para><see cref="Environment.GetCommandLineArgs()"/>からコマンドライン分解。</para>
@@ -414,7 +414,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Embedded.Model
         #endregion
     }
 
-    internal static class CommandLineExtensions
+    public static class CommandLineExtensions
     {
         #region function
 
@@ -434,7 +434,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Embedded.Model
     }
 
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
-    internal class CommandLineAttribute : Attribute
+    public class CommandLineAttribute : Attribute
     {
         public CommandLineAttribute(char shortKey = CommandLineKey.EmptyShortKey, string longKey = "", string description = "", bool hasValue = true)
         {
@@ -472,7 +472,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Embedded.Model
     /// コマンドラインをデータ構造にマッピング。
     /// </summary>
     /// <typeparam name="TData"></typeparam>
-    internal class CommandLineConverter<TData>
+    public class CommandLineConverter<TData>
     {
         public CommandLineConverter(CommandLine commandLine, TData data)
         {
@@ -607,7 +607,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Embedded.Model
         #endregion
     }
 
-    sealed internal class CommandLineSimpleConverter<TData>: CommandLineConverter<TData>
+    sealed public class CommandLineSimpleConverter<TData>: CommandLineConverter<TData>
         where TData: new()
     {
         public CommandLineSimpleConverter(CommandLine commandLine)

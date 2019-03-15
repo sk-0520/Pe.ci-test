@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.Pe.Library.Shared.Embedded.Model
 {
-    internal static class TextUtility
+    public static class TextUtility
     {
         #region function
 

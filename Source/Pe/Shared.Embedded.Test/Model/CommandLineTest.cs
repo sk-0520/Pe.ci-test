@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Library.Shared.Embedded.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Shared.Embedded.Test.Model
+namespace ContentTypeTextNet.Pe.Library.Shared.Embedded.Test.Model
 {
     [TestClass]
     public class CommandLineTest

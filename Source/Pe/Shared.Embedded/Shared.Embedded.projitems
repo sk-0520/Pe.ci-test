@@ -11,7 +11,16 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Model\AssemblyResolveHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\CommandLine.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Disposer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\EnvironmentParameters.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Logger.cs">
+      <DependentUpon>Logger.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Model\TextUtility.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="$(MSBuildThisFileDirectory)Model\Logger.tt" />
   </ItemGroup>
 </Project>

@@ -7,7 +7,7 @@ using System.Text;
 
 namespace ContentTypeTextNet.Pe.Library.Shared.Embedded.Model
 {
-    internal class EnvironmentParameters
+    public class EnvironmentParameters
     {
         #region property
 

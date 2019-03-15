@@ -112,12 +112,6 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\Shared.Link\Model\Disposer.cs">
-      <Link>Link\Model\Disposer.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared.Link\Model\Logger.cs">
-      <Link>Link\Model\Logger.cs</Link>
-    </Compile>
     <Compile Include="Compatibility\Forms\CompatibleFormWindow.cs" />
     <Compile Include="Compatibility\Forms\DrawingUtility.cs" />
     <Compile Include="Compatibility\Forms\FolderBrowserDialog.cs" />
