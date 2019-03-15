@@ -57,6 +57,11 @@ namespace ContentTypeTextNet.Pe.Main.Model.Launcher
         #endregion
     }
 
+    public enum LauncherGroupKind
+    {
+        Normal,
+    }
+
     public enum LauncherGroupImageName
     {
         Directory,
@@ -68,6 +73,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Launcher
 
         public Guid LauncherGroupId { get; set; }
         public string Name { get; set; }
+        public LauncherGroupKind Kind { get; set; }
         public LauncherGroupImageName ImageName { get; set; }
         public Color ImageColor { get; set; }
         public long Sort { get; set; }

@@ -13,7 +13,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element
     /// <summary>
     /// DataContext にあてる VM のモデルになる基底クラス。
     /// </summary>
-    public abstract class ElementBase : BindModelBase
+    public abstract class ElementBase : BindModelBase, ILoggerFactory
     {
         public ElementBase(ILogger logger)
             : base(logger)
@@ -22,13 +22,30 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element
         public ElementBase(ILoggerFactory loggerFactory)
             : base(loggerFactory)
         { }
+
+        #region function
+
+        protected abstract void InitializeImpl();
+
+        public void Initialize()
+        {
+            InitializeImpl();
+        }
+
+        #endregion
+
+        #region ILoggerFactory
+
+        public ILogger CreateLogger(string header) => Logger.Factory.CreateLogger(header);
+
+        #endregion
     }
 
     /// <summary>
     /// <see cref="ElementBase"/>と同じだけど結構な長寿で DI コンテナを持ち運ぶ気持ち最上位なモデル。
     /// <para>わっけ分からんくなりそうなので極力使用しないこと！</para>
     /// </summary>
-    public abstract class ContextElementBase : ElementBase, ILoggerFactory
+    public abstract class ContextElementBase : ElementBase
     {
         public ContextElementBase(IDiContainer diContainer, ILogger logger)
             : base(logger)
@@ -58,13 +75,6 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element
 
             return childServiceLocator;
         }
-
-
-        #endregion
-
-        #region ILoggerFactory
-
-        public ILogger CreateLogger(string header) => Logger.Factory.CreateLogger(header);
 
         #endregion
     }

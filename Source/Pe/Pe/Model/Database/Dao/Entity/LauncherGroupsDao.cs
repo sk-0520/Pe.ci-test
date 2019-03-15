@@ -22,12 +22,14 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
         LauncherGroupsRowDto ConvertFromData(LauncherGroupData data)
         {
             var imgNameEnumTransfer = new EnumTransfer<LauncherGroupImageName>();
+            var launcherGroupKindTransfer = new EnumTransfer<LauncherGroupKind>();
 
             var dto = new LauncherGroupsRowDto() {
                 LauncherGroupId = data.LauncherGroupId,
+                Kind = launcherGroupKindTransfer.To(data.Kind),
                 Name = data.Name,
                 ImageName = imgNameEnumTransfer.To(data.ImageName),
-                ImageColor = data.ImageColor.ToString(),
+                ImageColor = FromColor(data.ImageColor),
                 Sort = data.Sort,
             };
 
@@ -38,10 +40,45 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
 
         }
 
+        LauncherGroupData ConvertFromDto(LauncherGroupsRowDto dto)
+        {
+            var imgNameEnumTransfer = new EnumTransfer<LauncherGroupImageName>();
+            var launcherGroupKindTransfer = new EnumTransfer<LauncherGroupKind>();
+
+            var data = new LauncherGroupData() {
+                LauncherGroupId = dto.LauncherGroupId,
+                Name = dto.Name,
+                Kind = launcherGroupKindTransfer.From(dto.Kind),
+                ImageName = imgNameEnumTransfer.From(dto.ImageName),
+                ImageColor = ToColor(dto.ImageColor),
+                Sort = dto.Sort,
+            };
+
+            return data;
+        }
+
         public long SelectMaxSort()
         {
             var sql = StatementLoader.LoadStatementByCurrent();
             return Commander.QuerySingle<long>(sql);
+        }
+
+        public IEnumerable<Guid> SelectAllLauncherGroupIds()
+        {
+            var sql = StatementLoader.LoadStatementByCurrent();
+            return Commander.Query<Guid>(sql);
+        }
+
+        public LauncherGroupData SelectLauncherGroup(Guid launcherGroupId)
+        {
+            var sql = StatementLoader.LoadStatementByCurrent();
+            var param = new {
+                LauncherGroupId = launcherGroupId,
+            };
+            var dto = Commander.QuerySingle<LauncherGroupsRowDto>(sql, param);
+            var data = ConvertFromDto(dto);
+
+            return data;
         }
 
         public void InsertNewGroup(LauncherGroupData data)

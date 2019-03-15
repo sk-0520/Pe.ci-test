@@ -22,5 +22,14 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Accept
 
         #region function
         #endregion
+
+        #region ContextElementBase
+
+        protected override void InitializeImpl()
+        {
+            Logger.Trace("not impl");
+        }
+
+        #endregion
     }
 }

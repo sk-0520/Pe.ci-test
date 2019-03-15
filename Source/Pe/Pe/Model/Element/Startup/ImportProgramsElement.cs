@@ -141,5 +141,15 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Startup
 
 
         #endregion
+
+        #region ContextElementBase
+
+        protected override void InitializeImpl()
+        {
+            Logger.Trace("not impl");
+        }
+
+        #endregion
+
     }
 }

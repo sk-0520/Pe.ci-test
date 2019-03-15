@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 
@@ -28,6 +29,18 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao
         protected TimeSpan ToTimespan(string raw)
         {
             return TimeSpan.Parse(raw);
+        }
+
+        protected string FromColor(Color color)
+        {
+            return color.ToString();
+        }
+
+        protected Color ToColor(string raw)
+        {
+            var colorConverter = new ColorConverter();
+            var color = (Color)colorConverter.ConvertFrom(raw);
+            return color;
         }
 
         #endregion

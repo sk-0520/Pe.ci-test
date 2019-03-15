@@ -85,6 +85,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Launcher
             return new LauncherGroupData() {
                 LauncherGroupId = IdFactory.CreateLauncherGroupId(),
                 Name = name,
+                Kind = LauncherGroupKind.Normal,
                 ImageName = LauncherGroupImageName.Directory,
                 ImageColor = Colors.Yellow,
             };

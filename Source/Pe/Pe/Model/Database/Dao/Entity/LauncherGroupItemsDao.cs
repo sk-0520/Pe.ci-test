@@ -24,6 +24,13 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             return Commander.QuerySingle<long>(sql, new { LauncherGroupId = groupId });
         }
 
+        public IEnumerable<Guid> SelectAllLauncherGroupItemIds()
+        {
+            var sql = StatementLoader.LoadStatementByCurrent();
+            return Commander.Query<Guid>(sql);
+        }
+
+
         public void InsertNewItems(Guid groupId, IEnumerable<Guid> itemIds, long startSort, int sortStep)
         {
             var status = DatabaseCommonStatus.CreateUser();

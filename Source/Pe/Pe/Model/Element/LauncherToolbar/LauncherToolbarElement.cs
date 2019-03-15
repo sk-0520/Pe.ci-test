@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +12,7 @@ using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Applications;
 using ContentTypeTextNet.Pe.Main.Model.Data.Dto.Entity;
 using ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity;
+using ContentTypeTextNet.Pe.Main.Model.Element.LauncherGroup;
 using ContentTypeTextNet.Pe.Main.Model.Launcher;
 using ContentTypeTextNet.Pe.Main.Model.Logic;
 using ContentTypeTextNet.Pe.Main.Model.Manager;
@@ -26,10 +28,11 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
 
         #endregion
 
-        public LauncherToolbarElement(Screen dockScreen, IOrderManager orderManager, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, IDiContainer diContainer, ILoggerFactory loggerFactory)
+        public LauncherToolbarElement(Screen dockScreen, ObservableCollection<LauncherGroupElement> launcherGroups, IOrderManager orderManager, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, IDiContainer diContainer, ILoggerFactory loggerFactory)
             : base(diContainer, loggerFactory)
         {
             DockScreen = dockScreen;
+            LauncherGroups = launcherGroups;
 
             OrderManager = orderManager;
             NotifyManager = notifyManager;
@@ -45,6 +48,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
         IMainDatabaseBarrier MainDatabaseBarrier { get; }
         IDatabaseStatementLoader StatementLoader { get; }
         IIdFactory IdFactory { get; }
+
+        public ObservableCollection<LauncherGroupElement> LauncherGroups { get; }
 
         bool ViewCreated { get; set; }
 
@@ -110,7 +115,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
         Guid GetLauncherToolbarId()
         {
             using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var dao = new LauncherToolbarsDao(commander, StatementLoader, Logger.Factory);
+                var dao = new LauncherToolbarsDao(commander, StatementLoader, this);
                 var screenToolbars = dao.SelectAllToolbars().ToList();
                 var LauncherToolbarId = FindMaybeToolbarId(screenToolbars);
                 return LauncherToolbarId;
@@ -123,7 +128,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
             Logger.Debug($"create toolbar: {toolbarId}");
 
             using(var commander = MainDatabaseBarrier.WaitWrite()) {
-                var dao = new LauncherToolbarsDao(commander, StatementLoader, Logger.Factory);
+                var dao = new LauncherToolbarsDao(commander, StatementLoader, this);
                 dao.InsertNewToolbar(toolbarId, DockScreen);
 
                 commander.Commit();
@@ -138,7 +143,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
 
             LauncherToolbarsDisplayData displayData;
             using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var dao = new LauncherToolbarsDao(commander, StatementLoader, Logger.Factory);
+                var dao = new LauncherToolbarsDao(commander, StatementLoader, this);
                 displayData = dao.SelectDisplayData(launcherToolbarId);
             }
             // ねむい　途中
@@ -161,7 +166,11 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
             throw new NotImplementedException();
         }
 
-        public void Initialize()
+        #endregion
+
+        #region ContextElementBase
+
+        override protected void InitializeImpl()
         {
             Logger.Information($"initialize {DockScreen.DeviceName}:{DockScreen.DeviceBounds}, {nameof(DockScreen.Primary)}: {DockScreen.Primary}");
 

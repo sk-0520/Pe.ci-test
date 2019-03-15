@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,7 +11,9 @@ using ContentTypeTextNet.Pe.Library.Shared.Library.ViewModel;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Applications;
 using ContentTypeTextNet.Pe.Main.Model.Element;
+using ContentTypeTextNet.Pe.Main.Model.Element.LauncherGroup;
 using ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar;
+using ContentTypeTextNet.Pe.Main.Model.Launcher;
 using ContentTypeTextNet.Pe.Main.View.Extend;
 using ContentTypeTextNet.Pe.Main.View.LauncherToolbar;
 using ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar;
@@ -19,13 +22,16 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
 {
     public enum ElementKind
     {
+        LauncherGroup,
         LauncherToolbar,
     }
 
     public class OrderElementParameter
     {
         public OrderElementParameter(ElementKind elementKind)
-        { }
+        {
+            ElementKind = elementKind;
+        }
 
         #region property
 
@@ -34,20 +40,6 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
         #endregion
     }
 
-    public class OrderElementParameter<TParameter> : OrderElementParameter
-    {
-        public OrderElementParameter(ElementKind elementKind, TParameter parameter)
-            : base(elementKind)
-        {
-            Parameter = parameter;
-        }
-
-        #region property
-
-        public TParameter Parameter { get; }
-
-        #endregion
-    }
 
     public class OrderWindowParameter
     {
@@ -85,17 +77,31 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
 
             #region function
 
-            LauncherToolbarElement CreateLauncherToolbarElement(OrderElementParameter parameter)
+            LauncherGroupElement CreateLauncherGroupElementCore(Guid launcherGroupId)
             {
-                var args = (OrderElementParameter<Screen>)parameter;
-                return CreateLauncherToolbarElement(args.Parameter);
-            }
-
-            LauncherToolbarElement CreateLauncherToolbarElement(Screen dockScreen)
-            {
-                var element = DiContainer.Make<LauncherToolbarElement>(new[] { dockScreen });
+                var element = DiContainer.Make<LauncherGroupElement>(new object[] { launcherGroupId });
                 element.Initialize();
                 return element;
+            }
+
+            LauncherGroupElement CreateLauncherGroupElement(OrderElementParameter parameter)
+            {
+                var args = (OrderLauncherGroupElementParameter)parameter;
+                return CreateLauncherGroupElementCore(args.LauncherGroupId);
+            }
+
+
+            LauncherToolbarElement CreateLauncherToolbarElementCore(Screen dockScreen, ObservableCollection<LauncherGroupElement> launcherGroups)
+            {
+                var element = DiContainer.Make<LauncherToolbarElement>(new object[] { dockScreen, launcherGroups });
+                element.Initialize();
+                return element;
+            }
+
+            LauncherToolbarElement CreateLauncherToolbarElement(OrderElementParameter parameter)
+            {
+                var args = (OrderLauncherToolbarElementParameter)parameter;
+                return CreateLauncherToolbarElementCore(args.Screen, args.LauncherGroups);
             }
 
             LauncherToolbarWindow CreateLauncherToolbarWindow(LauncherToolbarElement element)
@@ -133,6 +139,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
             public ElementBase CreateElement(OrderElementParameter parameter)
             {
                 switch(parameter.ElementKind) {
+                    case ElementKind.LauncherGroup:
+                        return CreateLauncherGroupElement(parameter);
+
                     case ElementKind.LauncherToolbar:
                         return CreateLauncherToolbarElement(parameter);
 

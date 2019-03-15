@@ -161,8 +161,9 @@
     <Compile Include="Model\Data\Dto\Entity\LauncherToolbarsDto.cs" />
     <Compile Include="Model\Element\IViewCloseReceiver.cs" />
     <Compile Include="Model\Element\IViewShowStarter.cs" />
+    <Compile Include="Model\Element\LauncherGroup\LauncherGroupElement.cs" />
     <Compile Include="Model\Element\LauncherToolbar\LauncherToolbarElement.cs" />
-    <Compile Include="Model\Launcher\LauncherItem.cs" />
+    <Compile Include="Model\Launcher\LauncherData.cs" />
     <Compile Include="Model\Launcher\LauncherFactory.cs" />
     <Compile Include="Model\Logic\IdFactory.cs" />
     <Compile Include="Model\Logic\ScreenChecker.cs" />
@@ -177,6 +178,7 @@
     <Compile Include="Model\Data\Dto\SetupDto.cs" />
     <Compile Include="Model\Manager\ManagerBase.cs" />
     <Compile Include="Model\Manager\NotifyManager.cs" />
+    <Compile Include="Model\Manager\OrderElementParameter.cs" />
     <Compile Include="Model\Manager\OrderManager.cs" />
     <Compile Include="Model\Manager\WindowManager.cs" />
     <Compile Include="Model\Platform\SystemExecutor.cs" />
@@ -285,6 +287,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherGroupItemsDao\InsertNewItems.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherGroupsDao\SelectLauncherGroup.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherGroupsDao\SelectAllLauncherGroupIds.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherGroupsDao\SelectMaxSort.sql">

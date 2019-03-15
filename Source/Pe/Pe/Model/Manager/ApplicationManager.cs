@@ -11,9 +11,12 @@ using System.Windows;
 using ContentTypeTextNet.Pe.Library.Shared.Embedded.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
+using ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Applications;
+using ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Model.Element;
+using ContentTypeTextNet.Pe.Main.Model.Element.LauncherGroup;
 using ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar;
 using ContentTypeTextNet.Pe.Main.Model.Launcher;
 using ContentTypeTextNet.Pe.Main.View.LauncherToolbar;
@@ -37,7 +40,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
         OrderManagerIml OrderManager { get; set; }
         NotifyManagerImpl NotifyManager { get; set; }
 
-        IList<LauncherToolbarElement> LauncherToolbars { get; } = new ObservableCollection<LauncherToolbarElement>();
+        ObservableCollection<LauncherGroupElement> LauncherGroups { get; } = new ObservableCollection<LauncherGroupElement>();
+        ObservableCollection<LauncherToolbarElement> LauncherToolbars { get; } = new ObservableCollection<LauncherToolbarElement>();
 
         #endregion
 
@@ -103,16 +107,33 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
             return viewModel;
         }
 
-        IReadOnlyList<IViewShowStarter> CreateLauncherToolbars()
+        IReadOnlyList<LauncherGroupElement> CreateLauncherGroups()
+        {
+            var barrier = ApplicationDiContainer.Make<IMainDatabaseBarrier>();
+            var statementLoader = ApplicationDiContainer.Make<IDatabaseStatementLoader>();
+
+            IList<Guid> launcherGroupIds;
+            using(var commander = barrier.WaitRead()) {
+                var dao = ApplicationDiContainer.Make<LauncherGroupsDao>(new object[] { commander });
+                launcherGroupIds = dao.SelectAllLauncherGroupIds().ToList();
+            }
+
+            var result = new List<LauncherGroupElement>(launcherGroupIds.Count);
+            foreach(var launcherGroupId in launcherGroupIds) {
+                var element = (LauncherGroupElement)CreateElement(new OrderLauncherGroupElementParameter(launcherGroupId));
+                result.Add(element);
+            }
+
+            return result;
+        }
+
+        IReadOnlyList<LauncherToolbarElement> CreateLauncherToolbars(ObservableCollection<LauncherGroupElement> launcherGroups)
         {
             var screens = Screen.AllScreens;
-            var result = new List<IViewShowStarter>(screens.Length);
+            var result = new List<LauncherToolbarElement>(screens.Length);
 
             foreach(var screen in screens) {
-                var element = (LauncherToolbarElement)CreateElement(new OrderElementParameter<Screen>(ElementKind.LauncherToolbar, screen));
-
-                LauncherToolbars.Add(element);
-
+                var element = (LauncherToolbarElement)CreateElement(new OrderLauncherToolbarElementParameter(screen, launcherGroups));
                 result.Add(element);
             }
 
@@ -123,18 +144,23 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
         {
             Logger.Information("がんばる！");
 
+            // グループ構築
+            var launcherGroups = CreateLauncherGroups();
+            LauncherGroups.AddRange(launcherGroups);
+
             // ツールバーの生成
-            var toolbarWindowStaters = CreateLauncherToolbars();
+            var launcherToolbars = CreateLauncherToolbars(LauncherGroups);
+            LauncherToolbars.AddRange(launcherToolbars);
 
             // ノートの生成
 
-            var viewStaters = toolbarWindowStaters
+            var viewShowStaters = launcherToolbars
                 .Concat(Enumerable.Empty<IViewShowStarter>())
                 .Where(i => i.CanStartShowView)
                 .ToList()
             ;
-            foreach(var viewStater in viewStaters) {
-                viewStater.StartView();
+            foreach(var viewShowStater in viewShowStaters) {
+                viewShowStater.StartView();
             }
         }
 
