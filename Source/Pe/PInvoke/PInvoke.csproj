@@ -13,20 +13,6 @@
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <OutputPath>$(SolutionDir)..\..\Output\$(Configuration)\$(Platform)\$(SolutionName)\lib</OutputPath>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <DocumentationFile>ContentTypeTextNet.PInvoke.xml</DocumentationFile>
-    <NoWarn>CS1591,RECS0154</NoWarn>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <OutputPath>$(SolutionDir)..\..\Output\$(Configuration)\$(Platform)\$(SolutionName)\lib</OutputPath>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <DocumentationFile>ContentTypeTextNet.PInvoke.xml</DocumentationFile>
-    <NoWarn>CS1591,RECS0154</NoWarn>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>$(SolutionDir)..\..\Output\$(Configuration)\$(Platform)\$(SolutionName)\lib</OutputPath>
