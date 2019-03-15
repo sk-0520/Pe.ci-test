@@ -165,6 +165,8 @@
     <Compile Include="Model\Element\LauncherToolbar\LauncherToolbarElement.cs" />
     <Compile Include="Model\Launcher\LauncherData.cs" />
     <Compile Include="Model\Launcher\LauncherFactory.cs" />
+    <Compile Include="Model\Logic\Designer\DesignerBase.cs" />
+    <Compile Include="Model\Logic\Designer\LauncherToolbarDesigner.cs" />
     <Compile Include="Model\Logic\IdFactory.cs" />
     <Compile Include="Model\Logic\ScreenChecker.cs" />
     <Compile Include="Model\Logic\StartupRegister.cs" />

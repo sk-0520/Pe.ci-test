@@ -15,6 +15,7 @@ using ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Model.Element.LauncherGroup;
 using ContentTypeTextNet.Pe.Main.Model.Launcher;
 using ContentTypeTextNet.Pe.Main.Model.Logic;
+using ContentTypeTextNet.Pe.Main.Model.Logic.Designer;
 using ContentTypeTextNet.Pe.Main.Model.Manager;
 using ContentTypeTextNet.Pe.Main.View.Extend;
 
@@ -25,10 +26,11 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
         #region variable
 
         bool _isTopmodst;
+        LauncherGroupElement _selectedLauncherGroup;
 
         #endregion
 
-        public LauncherToolbarElement(Screen dockScreen, ObservableCollection<LauncherGroupElement> launcherGroups, IOrderManager orderManager, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, IDiContainer diContainer, ILoggerFactory loggerFactory)
+        public LauncherToolbarElement(Screen dockScreen, ObservableCollection<LauncherGroupElement> launcherGroups, IOrderManager orderManager, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, ILauncherToolbarDesigner launcherToolbarDesigner, IDiContainer diContainer, ILoggerFactory loggerFactory)
             : base(diContainer, loggerFactory)
         {
             DockScreen = dockScreen;
@@ -39,6 +41,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
             MainDatabaseBarrier = mainDatabaseBarrier;
             StatementLoader = statementLoader;
             IdFactory = idFactory;
+            LauncherToolbarDesigner = launcherToolbarDesigner;
         }
 
         #region property
@@ -48,15 +51,18 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
         IMainDatabaseBarrier MainDatabaseBarrier { get; }
         IDatabaseStatementLoader StatementLoader { get; }
         IIdFactory IdFactory { get; }
+        ILauncherToolbarDesigner LauncherToolbarDesigner { get; }
 
         public ObservableCollection<LauncherGroupElement> LauncherGroups { get; }
+
+        public Guid LauncherToolbarId { get; private set; }
 
         bool ViewCreated { get; set; }
 
         /// <summary>
         /// 表示されているか。
         /// </summary>
-        public bool IsVisible { get; set; } = true;
+        public bool IsVisible { get; set; }
 
         /// <summary>
         /// 表示アイコンサイズ。
@@ -67,12 +73,14 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
         /// アイコンの余白。
         /// <para>CSS の margin と同じ考え方。</para>
         /// </summary>
+        [PixelKind(Px.Logical)]
         public Thickness IconMargin { get; private set; }
 
         /// <summary>
         /// ボタンの詰め領域。
         /// <para>CSS の padding と同じ考え方。</para>
         /// </summary>
+        [PixelKind(Px.Logical)]
         public Thickness ButtonPadding { get; private set; }
 
         /// <summary>
@@ -91,6 +99,13 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
             get => this._isTopmodst;
             set => SetProperty(ref this._isTopmodst, value);
         }
+
+        public LauncherGroupElement SelectedLauncherGroup
+        {
+            get => SelectedLauncherGroup;
+            set => SetProperty(ref this._selectedLauncherGroup, value);
+        }
+
 
         #endregion
 
@@ -137,33 +152,33 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
             return toolbarId;
         }
 
-        void LoadLauncherToolbar(Guid launcherToolbarId)
+        void UpdateDesign()
         {
-            Logger.Information($"toolbar id: {launcherToolbarId}");
+            ButtonPadding = LauncherToolbarDesigner.GetButtonPadding(ToolbarPosition, IconScale);
+            IconMargin = LauncherToolbarDesigner.GetIconMargin(ToolbarPosition, IconScale, IsIconOnly, TextWidth);
+            DisplaySize = LauncherToolbarDesigner.GetDisplaySize(ButtonPadding, IconMargin, IconScale, IsIconOnly, TextWidth);
+            HiddenSize = LauncherToolbarDesigner.GetHiddenSize(ButtonPadding, IconMargin, IconScale, IsIconOnly, TextWidth);
+        }
+
+        void LoadLauncherToolbar()
+        {
+            Logger.Information($"toolbar id: {LauncherToolbarId}");
 
             LauncherToolbarsDisplayData displayData;
             using(var commander = MainDatabaseBarrier.WaitRead()) {
                 var dao = new LauncherToolbarsDao(commander, StatementLoader, this);
-                displayData = dao.SelectDisplayData(launcherToolbarId);
+                displayData = dao.SelectDisplayData(LauncherToolbarId);
             }
-            // ねむい　途中
+
             IconScale = displayData.IconScale;
             TextWidth = displayData.TextWidth;
             IsIconOnly = displayData.IsIconOnly;
             IsTopmodst = displayData.IsTopmost;
             IsAutoHide = displayData.IsAutoHide;
-            AutoHideTimeout =  displayData.AutoHideTimeout;
-
-            DisplaySize = new Size(40, 40);
-            HiddenSize = new Size(4, 4);
-
+            AutoHideTimeout = displayData.AutoHideTimeout;
             ToolbarPosition = displayData.ToolbarPosition;
             IsVisible = displayData.IsVisible;
-        }
 
-        Size GetDisplaySize(Thickness buttonPaddin, IconScale iconScale, Thickness iconMargin, bool isIconOnly, double textWidth)
-        {
-            throw new NotImplementedException();
         }
 
         #endregion
@@ -174,11 +189,13 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
         {
             Logger.Information($"initialize {DockScreen.DeviceName}:{DockScreen.DeviceBounds}, {nameof(DockScreen.Primary)}: {DockScreen.Primary}");
 
-            var LauncherToolbarId = GetLauncherToolbarId();
-            if(LauncherToolbarId == Guid.Empty) {
-                LauncherToolbarId = CreateLauncherToolbar();
+            var launcherToolbarId = GetLauncherToolbarId();
+            if(launcherToolbarId == Guid.Empty) {
+                launcherToolbarId = CreateLauncherToolbar();
             }
-            LoadLauncherToolbar(LauncherToolbarId);
+            LauncherToolbarId = launcherToolbarId;
+            LoadLauncherToolbar();
+            UpdateDesign();
         }
 
         #endregion

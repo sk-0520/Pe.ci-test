@@ -13,6 +13,7 @@ using ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Database;
 using ContentTypeTextNet.Pe.Main.Model.Logic;
+using ContentTypeTextNet.Pe.Main.Model.Logic.Designer;
 using ContentTypeTextNet.Pe.Main.Model.Manager;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Applications
@@ -236,6 +237,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Applications
                 .Register<ITemporaryDatabaseBarrier, ApplicationDatabaseBarrier>(new ApplicationDatabaseBarrier(accessor.Temporary, rwlp.Temporary))
                 .Register<IReadWriteLockPack, ReadWriteLockPack>(rwlp)
                 .Register<IIdFactory, IdFactory>(DiLifecycle.Transient)
+                .Register<ILauncherToolbarDesigner, LauncherToolbarDesigner>(DiLifecycle.Transient)
             ;
 
             ApplicationDiContainer.Initialize(() => container);
