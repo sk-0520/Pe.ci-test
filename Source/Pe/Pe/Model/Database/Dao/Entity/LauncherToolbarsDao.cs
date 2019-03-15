@@ -45,7 +45,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
                 LauncherToolbarId = dto.LauncherToolbarId,
                 LauncherGroupId = dto.LauncherGroupId,
                 ToolbarPosition = toolbarPositionTransfer.From(dto.PositionKind),
-                IconScale = IconScaleTransfer.From(dto.IconKind),
+                IconScale = IconScaleTransfer.From(dto.IconScale),
                 FontId = dto.FontId,
                 AutoHideTimeout = ToTimespan(dto.AutoHideTimeout),
                 TextWidth = dto.TextWidth,
