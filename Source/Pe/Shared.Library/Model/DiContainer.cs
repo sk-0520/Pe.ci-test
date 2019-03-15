@@ -511,7 +511,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
                 var parameterInfo = parameterInfos[i];
                 // 入力パラメータを優先して設定
                 if(manualParameterItems.Count != 0) {
-                    var item = manualParameterItems.FirstOrDefault(p => p.Key == parameterInfo.ParameterType);
+                    var item = manualParameterItems.FirstOrDefault(p => p.Key == parameterInfo.ParameterType || parameterInfo.ParameterType.IsAssignableFrom(p.Key));
                     if(item.Key != default(Type)) {
                         arguments[i] = item.Value;
                         manualParameterItems.Remove(item);

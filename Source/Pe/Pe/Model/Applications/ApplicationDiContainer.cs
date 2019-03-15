@@ -51,6 +51,13 @@ namespace ContentTypeTextNet.Pe.Main.Model.Applications
             ;
         }
 
+        public static TResult UsingTemporaryContainer<TResult>(this IDiScopeContainerFactory @this, Func<IDiRegisterContainer, TResult> func)
+        {
+            using(var container = CreateChildContainer(@this)) {
+                return func(container);
+            }
+        }
+
         #endregion
     }
 }

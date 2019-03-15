@@ -8,8 +8,10 @@ using ContentTypeTextNet.Pe.Library.Shared.Library.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Library.ViewModel;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
+using ContentTypeTextNet.Pe.Main.Model.Applications;
 using ContentTypeTextNet.Pe.Main.Model.Element;
 using ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar;
+using ContentTypeTextNet.Pe.Main.View.Extend;
 using ContentTypeTextNet.Pe.Main.View.LauncherToolbar;
 using ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar;
 
@@ -98,9 +100,16 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
 
             LauncherToolbarWindow CreateLauncherToolbarWindow(LauncherToolbarElement element)
             {
-                var viewModel = new LauncherToolbarViewModel(element, element);
+                var viewModel = DiContainer.UsingTemporaryContainer(c => {
+                    c.Register<ILoggerFactory, ILoggerFactory>(element);
+                    return c.Make<LauncherToolbarViewModel>(new[] { element, });
+                });
                 var window = DiContainer.Make<LauncherToolbarWindow>();
-                viewModel.AppDesktopToolbarExtend = new View.Extend.AppDesktopToolbarExtend(window, viewModel, viewModel);
+                viewModel.AppDesktopToolbarExtend = DiContainer.UsingTemporaryContainer(c => {
+                    c.Register<IAppDesktopToolbarExtendData, LauncherToolbarViewModel>(viewModel);
+                    c.Register<ILoggerFactory, ILoggerFactory>(viewModel);
+                    return c.Make<AppDesktopToolbarExtend>(new object[] { window, viewModel, });
+                });
                 window.DataContext = viewModel;
 
                 return window;
