@@ -18,7 +18,7 @@ using ContentTypeTextNet.Pe.Main.View.Extend;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
 {
-    public class LauncherToolbarElement : ContextElementBase, IAppDesktopToolbarExtendData, IWindowShowStarter
+    public class LauncherToolbarElement : ContextElementBase, IAppDesktopToolbarExtendData, IViewShowStarter, IViewCloseReceiver
     {
         #region variable
 
@@ -46,7 +46,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
         IDatabaseStatementLoader StatementLoader { get; }
         IIdFactory IdFactory { get; }
 
-        OneTimeFlagSetter ViewCreated { get; } = new OneTimeFlagSetter();
+        bool ViewCreated { get; set; }
 
         /// <summary>
         /// 表示されているか。
@@ -120,7 +120,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
         Guid CreateLauncherToolbar()
         {
             var toolbarId = IdFactory.CreateLauncherToolbarId();
-            Logger.Debug($"new toolbar: {toolbarId}");
+            Logger.Debug($"create toolbar: {toolbarId}");
 
             using(var commander = MainDatabaseBarrier.WaitWrite()) {
                 var dao = new LauncherToolbarsDao(commander, StatementLoader, Logger.Factory);
@@ -174,13 +174,13 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
 
         #endregion
 
-        #region IWindowShowStarter
+        #region IViewShowStarter
 
-        public bool CanStartShowWindow
+        public bool CanStartShowView
         {
             get
             {
-                if(ViewCreated.Value) {
+                if(ViewCreated) {
                     return false;
                 }
 
@@ -188,12 +188,27 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
             }
         }
 
-        public void StartShowWindow()
+        public void StartView()
         {
             var parameter = new OrderWindowParameter(WindowKind.LauncherToolbar, this);
             var windowItem = OrderManager.CreateWindow(parameter);
-            ViewCreated.Value = true;
+            ViewCreated = true;
         }
+
+        #endregion
+
+        #region IViewCloseReceiver
+
+        public bool ReceiveViewClosing()
+        {
+            return true;
+        }
+
+        public void ReceiveViewClosed()
+        {
+            ViewCreated = false;
+        }
+
 
         #endregion
 

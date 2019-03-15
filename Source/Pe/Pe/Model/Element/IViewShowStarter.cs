@@ -6,17 +6,17 @@ using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Element
 {
-    public interface IWindowShowStarter
+    public interface IViewShowStarter
     {
         #region property
 
-        bool CanStartShowWindow { get; }
+        bool CanStartShowView { get; }
 
         #endregion
 
         #region function
 
-        void StartShowWindow();
+        void StartView();
 
         #endregion
     }

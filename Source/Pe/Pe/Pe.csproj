@@ -159,7 +159,8 @@
     <Compile Include="Model\Data\Dto\Entity\LauncherItemsDto.cs" />
     <Compile Include="Model\Data\Dto\Entity\LauncherTagsDto.cs" />
     <Compile Include="Model\Data\Dto\Entity\LauncherToolbarsDto.cs" />
-    <Compile Include="Model\Element\IWindowShowStarter.cs" />
+    <Compile Include="Model\Element\IViewCloseReceiver.cs" />
+    <Compile Include="Model\Element\IViewShowStarter.cs" />
     <Compile Include="Model\Element\LauncherToolbar\LauncherToolbarElement.cs" />
     <Compile Include="Model\Launcher\LauncherItem.cs" />
     <Compile Include="Model\Launcher\LauncherFactory.cs" />

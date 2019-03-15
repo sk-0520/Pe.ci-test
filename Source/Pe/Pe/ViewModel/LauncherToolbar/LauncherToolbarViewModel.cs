@@ -150,12 +150,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar
             }
         }
 
-        public void OnClosedView()
-        {
-        }
-
         public void OnClosingView(CancelEventArgs e)
         {
+            e.Cancel = !Model.ReceiveViewClosing();
+        }
+
+        public void OnClosedView()
+        {
+            Model.ReceiveViewClosed();
         }
 
 

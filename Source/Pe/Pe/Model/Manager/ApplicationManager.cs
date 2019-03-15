@@ -103,10 +103,10 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
             return viewModel;
         }
 
-        IReadOnlyList<IWindowShowStarter> CreateLauncherToolbars()
+        IReadOnlyList<IViewShowStarter> CreateLauncherToolbars()
         {
             var screens = Screen.AllScreens;
-            var result = new List<IWindowShowStarter>(screens.Length);
+            var result = new List<IViewShowStarter>(screens.Length);
 
             foreach(var screen in screens) {
                 var element = (LauncherToolbarElement)CreateElement(new OrderElementParameter<Screen>(ElementKind.LauncherToolbar, screen));
@@ -128,13 +128,13 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
 
             // ノートの生成
 
-            var windowStaters = toolbarWindowStaters
-                .Concat(Enumerable.Empty<IWindowShowStarter>())
-                .Where(i => i.CanStartShowWindow)
+            var viewStaters = toolbarWindowStaters
+                .Concat(Enumerable.Empty<IViewShowStarter>())
+                .Where(i => i.CanStartShowView)
                 .ToList()
             ;
-            foreach(var windowStater in windowStaters) {
-                windowStater.StartShowWindow();
+            foreach(var viewStater in viewStaters) {
+                viewStater.StartView();
             }
         }
 
