@@ -39,13 +39,13 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
         LauncherToolbarsDisplayData ConvertFromDto(LauncherToolbarsDisplayRowDto dto)
         {
             var toolbarPositionTransfer = new EnumTransfer<AppDesktopToolbarPosition>();
-            var IconScaleTransfer = new EnumTransfer<IconScale>();
+            var iconScaleTransfer = new EnumTransfer<IconScale>();
 
             var result = new LauncherToolbarsDisplayData() {
                 LauncherToolbarId = dto.LauncherToolbarId,
                 LauncherGroupId = dto.LauncherGroupId,
                 ToolbarPosition = toolbarPositionTransfer.From(dto.PositionKind),
-                IconScale = IconScaleTransfer.From(dto.IconScale),
+                IconScale = iconScaleTransfer.From(dto.IconScale),
                 FontId = dto.FontId,
                 AutoHideTimeout = ToTimespan(dto.AutoHideTimeout),
                 TextWidth = dto.TextWidth,

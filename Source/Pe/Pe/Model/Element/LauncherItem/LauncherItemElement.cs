@@ -36,7 +36,6 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem
         public string Code { get; private set; }
         public LauncherItemKind Kind { get; private set; }
         public LauncherCommandData Command { get; private set; } = LauncherCommandData.None;
-        public IconData Icon { get; private set; } = IconData.None;
         public bool IsEnabledCommandLauncher { get; private set; }
         public string Note { get; private set; }
         #endregion
@@ -53,7 +52,6 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem
                 Code = data.Code;
                 Kind = data.Kind;
                 Command = data.Command;
-                Icon = data.Icon;
                 IsEnabledCommandLauncher = data.IsEnabledCommandLauncher;
                 Note = data.Note;
             }

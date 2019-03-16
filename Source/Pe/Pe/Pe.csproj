@@ -134,6 +134,7 @@
     <Compile Include="Model\Applications\ApplicationDatabaseBarrier.cs" />
     <Compile Include="Model\Database\Dao\Entity\FontsDao.cs" />
     <Compile Include="Model\Database\Dao\Entity\CredentsDao.cs" />
+    <Compile Include="Model\Database\Dao\Entity\LauncherItemIconsDao.cs" />
     <Compile Include="Model\Database\Dao\Entity\NoteFilesDao.cs" />
     <Compile Include="Model\Database\Dao\Entity\NoteContentsDao.cs" />
     <Compile Include="Model\Database\Dao\Entity\NotesDao.cs" />
@@ -155,6 +156,8 @@
     <Compile Include="Model\Element\IViewCloseReceiver.cs" />
     <Compile Include="Model\Element\IViewShowStarter.cs" />
     <Compile Include="Model\Element\LauncherGroup\LauncherGroupElement.cs" />
+    <Compile Include="Model\Element\LauncherIcon\LauncherIconLoader.cs" />
+    <Compile Include="Model\Element\LauncherIcon\LauncherIconElement.cs" />
     <Compile Include="Model\Element\LauncherItem\LauncherItemElement.cs" />
     <Compile Include="Model\Element\LauncherToolbar\LauncherToolbarElement.cs" />
     <Compile Include="Model\Launcher\LauncherData.cs" />
@@ -297,6 +300,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherGroupsDao\InsertNewGroup.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherItemIconsDao\SelectImageBinary.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherItemsDao\SelectLauncherItem.sql">

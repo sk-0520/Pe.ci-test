@@ -133,8 +133,6 @@ namespace ContentTypeTextNet.Pe.Main.Model.Launcher
 
         public LauncherCommandData Command { get; set; } = new LauncherCommandData();
 
-        public IconData Icon { get; set; } = new IconData();
-
         public bool IsEnabledCommandLauncher { get; set; }
 
         public string Note { get; set; }

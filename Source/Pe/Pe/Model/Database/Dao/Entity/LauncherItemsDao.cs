@@ -66,9 +66,6 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             data.Command.Option = dto.Option;
             data.Command.WorkDirectoryPath = dto.WorkDirectory;
 
-            data.Icon.Path = dto.IconPath;
-            data.Icon.Index = (int)Math.Min(0, Math.Max(dto.IconIndex, int.MaxValue));
-
             return data;
         }
 
