@@ -6,14 +6,23 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Database.Tune;
+using ContentTypeTextNet.Pe.Main.Model.Logic;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Database.Tuner
 {
     public class Tuner_LauncherGroups: TunerBase
     {
-        public Tuner_LauncherGroups(IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
+        public Tuner_LauncherGroups(IIdFactory idFactory, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
             : base(statementLoader, loggerFactory)
-        { }
+        {
+            IdFactory = idFactory;
+        }
+
+        #region property
+
+        IIdFactory IdFactory { get; }
+
+        #endregion
 
         #region TunerBase
 
@@ -27,6 +36,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Tuner
         {
             var sql = StatementLoader.LoadStatementByCurrent();
             var param = GetCommonDto();
+            param["LauncherGroupId"] = IdFactory.CreateLauncherGroupId();
             param["Name"] = "@name";
             return commander.Execute(sql, param);
         }

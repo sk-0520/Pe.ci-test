@@ -217,7 +217,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Applications
 
             databaseSetupper.Migrate(accessorPack, lastVersion);
 
-            var tuner = new DatabaseTuner(accessorPack, statementLoader, logger.Factory);
+            var tuner = new DatabaseTuner(new IdFactory(logger.Factory), accessorPack, statementLoader, logger.Factory);
             tuner.Tune();
 
             pack.factory = factoryPack;

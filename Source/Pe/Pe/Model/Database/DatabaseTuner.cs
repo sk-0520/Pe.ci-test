@@ -9,19 +9,22 @@ using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Applications;
 using ContentTypeTextNet.Pe.Main.Model.Database.Tune;
 using ContentTypeTextNet.Pe.Main.Model.Database.Tuner;
+using ContentTypeTextNet.Pe.Main.Model.Logic;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Database
 {
     public class DatabaseTuner
     {
-        public DatabaseTuner(IDatabaseAccessorPack accessorPack, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
+        public DatabaseTuner(IIdFactory idFactory, IDatabaseAccessorPack accessorPack, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
         {
+            IdFactory = idFactory;
             AccessorPack = accessorPack;
             StatementLoader = statementLoader;
             Logger = loggerFactory.CreateTartget(GetType());
         }
 
         #region property
+        IIdFactory IdFactory { get; }
         IDatabaseAccessorPack AccessorPack { get; }
         IDatabaseStatementLoader StatementLoader { get; }
         ILogger Logger { get; }
@@ -43,7 +46,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database
         void TuneMain()
         {
             var tuners = new TunerBase[] {
-                new Tuner_LauncherGroups(StatementLoader, Logger.Factory),
+                new Tuner_LauncherGroups(IdFactory, StatementLoader, Logger.Factory),
             };
             TuneImpl(AccessorPack.Main, tuners);
         }
