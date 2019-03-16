@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -60,7 +61,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
 
             #region property
 
-            Dictionary<Guid, LauncherItemElement> LauncherItems { get; } = new Dictionary<Guid, LauncherItemElement>();
+            ConcurrentDictionary<Guid, LauncherItemElement> LauncherItems { get; } = new ConcurrentDictionary<Guid, LauncherItemElement>();
 
             #endregion
 
@@ -85,7 +86,11 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
 
             public LauncherItemElement GetOrCreateLauncherItemElement(Guid launcherItemId)
             {
-                return null;
+                return LauncherItems.GetOrAdd(launcherItemId, launcherItemIdKey => {
+                    var element = DiContainer.Make<LauncherItemElement>(new object[] { launcherItemIdKey });
+                    element.Initialize();
+                    return element;
+                });
             }
 
 

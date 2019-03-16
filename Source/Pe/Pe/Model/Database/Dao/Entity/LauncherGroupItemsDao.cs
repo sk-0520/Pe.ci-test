@@ -30,6 +30,14 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             return Commander.Query<Guid>(sql);
         }
 
+        public IEnumerable<Guid> SelectLauncherItemIds(Guid launcherGroupId)
+        {
+            var sql = StatementLoader.LoadStatementByCurrent();
+            var param = new {
+                LauncherGroupId = launcherGroupId,
+            };
+            return Commander.Query<Guid>(sql, param);
+        }
 
         public void InsertNewItems(Guid groupId, IEnumerable<Guid> itemIds, long startSort, int sortStep)
         {

@@ -44,10 +44,13 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherGroup
         public Color ImageColor { get; private set; }
         public long Sort { get; private set; }
 
+        List<Guid> LauncherItemIds { get; } = new List<Guid>();
 
         #endregion
 
         #region function
+
+        public IReadOnlyList<Guid> GetLauncherItemIds() => LauncherItemIds.ToList();
 
         void LoadGroup()
         {
@@ -64,6 +67,32 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherGroup
             Sort = data.Sort;
         }
 
+        IEnumerable<Guid> GetLauncherItemsForNormal()
+        {
+            using(var commander = MainDatabaseBarrier.WaitRead()) {
+                var dao = new LauncherGroupItemsDao(commander, StatementLoader, this);
+                return dao.SelectLauncherItemIds(LauncherGroupId);
+            }
+        }
+
+        IEnumerable<Guid> GetLauncherItems()
+        {
+            switch(Kind) {
+                case LauncherGroupKind.Normal:
+                    return GetLauncherItemsForNormal();
+
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+
+        void LoadLauncherItems()
+        {
+            var items = GetLauncherItems();
+            LauncherItemIds.Clear();
+            LauncherItemIds.AddRange(items);
+        }
+
         #endregion
 
         #region ElementBase
@@ -71,6 +100,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherGroup
         protected override void InitializeImpl()
         {
             LoadGroup();
+            LoadLauncherItems();
         }
 
         #endregion

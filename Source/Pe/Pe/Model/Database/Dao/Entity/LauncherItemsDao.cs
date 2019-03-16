@@ -50,10 +50,43 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             return dto;
         }
 
+        LauncherItemData ConvertFromDto(LauncherItemsRowDto dto)
+        {
+            var kindEnumTransfer = new EnumTransfer<LauncherItemKind>();
+
+            var data = new LauncherItemData() {
+                LauncherItemId = dto.LauncherItemId,
+                Name = dto.Name,
+                Code = dto.Code,
+                Kind = kindEnumTransfer.From(dto.Kind),
+                IsEnabledCommandLauncher= dto.IsEnabledCommandLauncher,
+                Note = dto.Note,
+            };
+            data.Command.Command = dto.Command;
+            data.Command.Option = dto.Option;
+            data.Command.WorkDirectoryPath = dto.WorkDirectory;
+
+            data.Icon.Path = dto.IconPath;
+            data.Icon.Index = (int)Math.Min(0, Math.Max(dto.IconIndex, int.MaxValue));
+
+            return data;
+        }
+
         public IEnumerable<string> SelectFuzzyCodes(string baseCode)
         {
             var sql = StatementLoader.LoadStatementByCurrent();
             return Commander.Query<string>(sql, new { BaseCode = baseCode });
+        }
+
+        public LauncherItemData SelectLauncherItem(Guid launcherItemId)
+        {
+            var sql = StatementLoader.LoadStatementByCurrent();
+            var param = new {
+                LauncherItemId = launcherItemId,
+            };
+            var dto = Commander.QuerySingle<LauncherItemsRowDto>(sql, param);
+            var data = ConvertFromDto(dto);
+            return data;
         }
 
         public void InsertSimpleNew(LauncherItemSimpleNewData data)

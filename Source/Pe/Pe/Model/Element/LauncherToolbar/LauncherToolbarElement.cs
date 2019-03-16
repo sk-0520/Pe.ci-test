@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +14,7 @@ using ContentTypeTextNet.Pe.Main.Model.Applications;
 using ContentTypeTextNet.Pe.Main.Model.Data.Dto.Entity;
 using ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Model.Element.LauncherGroup;
+using ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem;
 using ContentTypeTextNet.Pe.Main.Model.Launcher;
 using ContentTypeTextNet.Pe.Main.Model.Logic;
 using ContentTypeTextNet.Pe.Main.Model.Logic.Designer;
@@ -53,11 +55,13 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
         IIdFactory IdFactory { get; }
         ILauncherToolbarDesigner LauncherToolbarDesigner { get; }
 
-        public ObservableCollection<LauncherGroupElement> LauncherGroups { get; }
+        public ObservableCollection<LauncherGroupElement> LauncherGroups { get; } = new ObservableCollection<LauncherGroupElement>();
 
         public Guid LauncherToolbarId { get; private set; }
 
         bool ViewCreated { get; set; }
+
+        public ObservableCollection<LauncherItemElement> LauncherItems { get; } = new ObservableCollection<LauncherItemElement>();
 
         /// <summary>
         /// 表示されているか。
@@ -102,7 +106,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
 
         public LauncherGroupElement SelectedLauncherGroup
         {
-            get => SelectedLauncherGroup;
+            get => this._selectedLauncherGroup;
             set => SetProperty(ref this._selectedLauncherGroup, value);
         }
 
@@ -185,9 +189,25 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
             ;
         }
 
+        IEnumerable<LauncherItemElement> GetLauncherItems()
+        {
+            Debug.Assert(SelectedLauncherGroup != null);
+
+            var launcherItemIds = SelectedLauncherGroup.GetLauncherItemIds();
+            var result = new List<LauncherItemElement>(launcherItemIds.Count);
+
+            foreach(var launcherItemId in launcherItemIds) {
+                var element = OrderManager.GetOrCreateLauncherItemElement(launcherItemId);
+                result.Add(element);
+            }
+
+            return result;
+        }
+
         void LoadLauncherItems()
         {
-
+            var items = GetLauncherItems();
+            LauncherItems.SetRange(items);
         }
 
         #endregion

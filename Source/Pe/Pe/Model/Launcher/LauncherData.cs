@@ -14,6 +14,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Launcher
 
     public enum LauncherItemKind
     {
+        Unknown,
         File,
         Command,
         Application,
@@ -30,6 +31,12 @@ namespace ContentTypeTextNet.Pe.Main.Model.Launcher
     {
         #region property
 
+        public static LauncherCommandData None { get; } = new LauncherCommandData() {
+            Command = string.Empty,
+            Option = string.Empty,
+            WorkDirectoryPath = string.Empty,
+        };
+
         public string Command { get; set; }
         public string Option { get; set; }
         public string WorkDirectoryPath { get; set; }
@@ -40,6 +47,11 @@ namespace ContentTypeTextNet.Pe.Main.Model.Launcher
     public class IconData : DataBase
     {
         #region property
+
+        public static IconData None { get; } = new IconData() {
+            Path = string.Empty,
+            Index = 0,
+        };
 
         public string Path { get; set; }
         public int Index { get; set; }
@@ -67,7 +79,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Launcher
         Directory,
     }
 
-    public class LauncherGroupData: DataBase
+    public class LauncherGroupData : DataBase
     {
         #region property
 
@@ -108,6 +120,28 @@ namespace ContentTypeTextNet.Pe.Main.Model.Launcher
         #endregion
     }
 
+    public class LauncherItemData : DataBase
+    {
+        #region property
+
+        public Guid LauncherItemId { get; set; }
+
+        public string Code { get; set; }
+        public string Name { get; set; }
+
+        public LauncherItemKind Kind { get; set; }
+
+        public LauncherCommandData Command { get; set; } = new LauncherCommandData();
+
+        public IconData Icon { get; set; } = new IconData();
+
+        public bool IsEnabledCommandLauncher { get; set; }
+
+        public string Note { get; set; }
+
+        #endregion
+    }
+
     public class LauncherToolbarsScreenData : DataBase, IScreenData
     {
         #region property
@@ -131,7 +165,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Launcher
         #endregion
     }
 
-    public class LauncherToolbarsDisplayData: DataBase
+    public class LauncherToolbarsDisplayData : DataBase
     {
         #region property
 
