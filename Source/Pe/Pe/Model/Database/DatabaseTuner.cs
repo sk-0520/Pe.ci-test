@@ -8,6 +8,7 @@ using ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Applications;
 using ContentTypeTextNet.Pe.Main.Model.Database.Tune;
+using ContentTypeTextNet.Pe.Main.Model.Database.Tuner;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Database
 {
@@ -29,7 +30,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database
 
         #region function
 
-        void TuneImpl(IDatabaseAccessor accessor, IEnumerable<TuneBase> tuners)
+        void TuneImpl(IDatabaseAccessor accessor, IEnumerable<TunerBase> tuners)
         {
             using(var transaction = accessor.BeginTransaction()) {
                 foreach(var tuner in tuners) {
@@ -41,15 +42,15 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database
 
         void TuneMain()
         {
-            var tuners = new TuneBase[] {
-
+            var tuners = new TunerBase[] {
+                new Tuner_LauncherGroups(StatementLoader, Logger.Factory),
             };
             TuneImpl(AccessorPack.Main, tuners);
         }
 
         void TuneFile()
         {
-            var tuners = new TuneBase[] {
+            var tuners = new TunerBase[] {
 
             };
             TuneImpl(AccessorPack.File, tuners);

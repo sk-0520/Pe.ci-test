@@ -133,7 +133,8 @@
     <Compile Include="Model\Database\Dao\Entity\LauncherItemHistoriesDao.cs" />
     <Compile Include="Model\Database\Dao\Entity\LauncherTagsDao.cs" />
     <Compile Include="Model\Database\DatabaseTuner.cs" />
-    <Compile Include="Model\Database\Tuner\TuneBase.cs" />
+    <Compile Include="Model\Database\Tuner\TunerBase.cs" />
+    <Compile Include="Model\Database\Tuner\Tuner_LauncherGroups.cs" />
     <Compile Include="Model\Data\Dto\Entity\LauncherGroupItemsDto.cs" />
     <Compile Include="Model\Data\Dto\Entity\LauncherGroupsDto.cs" />
     <Compile Include="Model\Data\Dto\Entity\LauncherItemsDto.cs" />
@@ -317,6 +318,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Setupper\Setupper_V_99_99_99_99\ExecuteMainDML.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Tuner\Tuner_LauncherGroups\InsertEmptyGroup.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Tuner\Tuner_LauncherGroups\ExistsRows.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Resource Include="Resources\Icon\NotifyIcon\App-beta.ico" />
