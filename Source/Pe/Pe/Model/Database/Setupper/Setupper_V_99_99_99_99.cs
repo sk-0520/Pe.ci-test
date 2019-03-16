@@ -7,14 +7,14 @@ using ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Data.Dto;
 
-namespace ContentTypeTextNet.Pe.Main.Model.Database.Setup
+namespace ContentTypeTextNet.Pe.Main.Model.Database.Setupper
 {
     /// <summary>
     /// マイグレーションの最後に実行される。
     /// </summary>
-    public class Setup_V_99_99_99_99 : SetupBase
+    public class Setupper_V_99_99_99_99 : SetupperBase
     {
-        public Setup_V_99_99_99_99(IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
+        public Setupper_V_99_99_99_99(IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
             : base(statementLoader, loggerFactory)
         { }
 

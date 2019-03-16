@@ -132,6 +132,8 @@
     <Compile Include="Model\Database\Dao\Entity\LauncherEnvVarsDao.cs" />
     <Compile Include="Model\Database\Dao\Entity\LauncherItemHistoriesDao.cs" />
     <Compile Include="Model\Database\Dao\Entity\LauncherTagsDao.cs" />
+    <Compile Include="Model\Database\DatabaseTuner.cs" />
+    <Compile Include="Model\Database\Tuner\TuneBase.cs" />
     <Compile Include="Model\Data\Dto\Entity\LauncherGroupItemsDto.cs" />
     <Compile Include="Model\Data\Dto\Entity\LauncherGroupsDto.cs" />
     <Compile Include="Model\Data\Dto\Entity\LauncherItemsDto.cs" />
@@ -150,9 +152,9 @@
     <Compile Include="Model\Logic\ScreenChecker.cs" />
     <Compile Include="Model\Logic\StartupRegister.cs" />
     <Compile Include="Model\Database\Dao\ApplicationDatabaseObjectBase.cs" />
-    <Compile Include="Model\Database\Setup\SetupBase.cs" />
-    <Compile Include="Model\Database\Setup\Setup_V_99_99_99_99.cs" />
-    <Compile Include="Model\Database\Setup\Setup_V_00_84_00_00.cs" />
+    <Compile Include="Model\Database\Setupper\SetupperBase.cs" />
+    <Compile Include="Model\Database\Setupper\Setupper_V_99_99_99_99.cs" />
+    <Compile Include="Model\Database\Setupper\Setupper_V_00_84_00_00.cs" />
     <Compile Include="Model\Data\DatabaseCommonStatus.cs" />
     <Compile Include="Model\Data\Dto\CommonDto.cs" />
     <Compile Include="Model\Data\Dto\DtoBase.cs" />
@@ -193,7 +195,7 @@
     <Compile Include="Model\Manager\ApplicationManager.cs" />
     <Compile Include="Model\Database\ApplicationDatabase.cs" />
     <Compile Include="Model\Applications\ApplicationPack.cs" />
-    <Compile Include="Model\Database\DatabaseSetup.cs" />
+    <Compile Include="Model\Database\DatabaseSetupper.cs" />
     <Compile Include="Model\Applications\ApplicationInitializer.cs" />
     <Compile Include="Model\Platform\SystemWebBrowserUtility.cs" />
     <Compile Include="Model\Element\ElementBase.cs" />
@@ -299,22 +301,22 @@
     <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherToolbarsDao\SelectAllToolbars.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\DatabaseSetup\ExistsVersionTable.sql">
+    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\DatabaseSetupper\ExistsVersionTable.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\DatabaseSetup\GetLastVersion.sql">
+    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\DatabaseSetupper\GetLastVersion.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Setup\Setup_V_00_84_00_00\ExecuteFileDDL.sql">
+    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Setupper\Setupper_V_00_84_00_00\ExecuteFileDDL.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Setup\Setup_V_00_84_00_00\ExecuteMainDML.sql">
+    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Setupper\Setupper_V_00_84_00_00\ExecuteMainDML.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Setup\Setup_V_00_84_00_00\ExecuteMainDDL.sql">
+    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Setupper\Setupper_V_00_84_00_00\ExecuteMainDDL.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Setup\Setup_V_99_99_99_99\ExecuteMainDML.sql">
+    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Setupper\Setupper_V_99_99_99_99\ExecuteMainDML.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Resource Include="Resources\Icon\NotifyIcon\App-beta.ico" />

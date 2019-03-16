@@ -7,14 +7,14 @@ using ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Data.Dto;
 
-namespace ContentTypeTextNet.Pe.Main.Model.Database.Setup
+namespace ContentTypeTextNet.Pe.Main.Model.Database.Setupper
 {
     /// <summary>
     /// 誰が何と言おうと新生初期バージョン。
     /// </summary>
-    public class Setup_V_00_84_00_00 : SetupBase
+    public class Setupper_V_00_84_00_00 : SetupperBase
     {
-        public Setup_V_00_84_00_00(IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
+        public Setupper_V_00_84_00_00(IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
             : base(statementLoader, loggerFactory)
         { }
 

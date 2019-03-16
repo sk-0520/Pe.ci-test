@@ -161,6 +161,11 @@ namespace ContentTypeTextNet.Pe.Main.Model.Applications
             );
         }
 
+        IDatabaseStatementLoader GetStatementLoader(EnvironmentParameters environmentParameters, ILoggerFactory loggerFactory)
+        {
+            return new ApplicationDatabaseStatementLoader(environmentParameters.MainSqlDirectory, TimeSpan.Zero, loggerFactory);
+        }
+
         void FirstSetup(EnvironmentParameters environmentParameters, ILogger logger)
         {
             logger.Information("初回セットアップ");
@@ -182,9 +187,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Applications
 
             using(var factoryPack = CreateDatabaseFactoryPack(environmentParameters, logger))
             using(var accessorPack = DatabaseAccessorPack.Create(factoryPack, logger.Factory)) {
-
-                var databaseSetup = new DatabaseSetup(environmentParameters.MainSqlDirectory, logger.Factory);
-                databaseSetup.Initialize(accessorPack);
+                var statementLoader = GetStatementLoader(environmentParameters, logger.Factory);
+                var databaseSetupper = new DatabaseSetupper(statementLoader, logger.Factory);
+                databaseSetupper.Initialize(accessorPack);
             }
         }
 
@@ -195,10 +200,11 @@ namespace ContentTypeTextNet.Pe.Main.Model.Applications
             var factoryPack = CreateDatabaseFactoryPack(environmentParameters, logger);
             var accessorPack = DatabaseAccessorPack.Create(factoryPack, logger.Factory);
 
-            var databaseSetup = new DatabaseSetup(environmentParameters.MainSqlDirectory, logger.Factory);
+            var statementLoader = GetStatementLoader(environmentParameters, logger.Factory);
+            var databaseSetupper = new DatabaseSetupper(statementLoader, logger.Factory);
 
             //前回実行バージョンの取得と取得失敗時に再セットアップ処理
-            var lastVersion = databaseSetup.GetLastVersion(accessorPack.Main);
+            var lastVersion = databaseSetupper.GetLastVersion(accessorPack.Main);
             if(lastVersion == null) {
                 logger.Error("last version is null");
                 logger.Warning("restart initialize");
@@ -209,7 +215,11 @@ namespace ContentTypeTextNet.Pe.Main.Model.Applications
                 return false;
             }
 
-            databaseSetup.Migrate(accessorPack, lastVersion);
+            databaseSetupper.Migrate(accessorPack, lastVersion);
+
+            var tuner = new DatabaseTuner(accessorPack, statementLoader, logger.Factory);
+            tuner.Tune();
+
             pack.factory = factoryPack;
             pack.accessor = accessorPack;
             return true;

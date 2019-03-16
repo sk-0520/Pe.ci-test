@@ -13,16 +13,16 @@ using ContentTypeTextNet.Pe.Main.Model.Applications;
 using ContentTypeTextNet.Pe.Main.Model.Data;
 using ContentTypeTextNet.Pe.Main.Model.Data.Dto;
 using ContentTypeTextNet.Pe.Main.Model.Database.Dao;
-using ContentTypeTextNet.Pe.Main.Model.Database.Setup;
+using ContentTypeTextNet.Pe.Main.Model.Database.Setupper;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Database
 {
-    public class DatabaseSetup : DisposerBase
+    public class DatabaseSetupper
     {
-        public DatabaseSetup(DirectoryInfo baseDirectory, ILoggerFactory loggerFactory)
+        public DatabaseSetupper(IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
         {
+            StatementLoader = statementLoader;
             Logger = loggerFactory.CreateTartget(GetType());
-            StatementLoader = new ApplicationDatabaseStatementLoader(baseDirectory, TimeSpan.Zero, Logger.Factory);
         }
 
         #region property
@@ -72,13 +72,13 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database
             }
         }
 
-        void Execute(IDatabaseAccessorPack accessorPack, IReadOnlySetupDto dto, SetupBase setup)
+        void Execute(IDatabaseAccessorPack accessorPack, IReadOnlySetupDto dto, SetupperBase setupper)
         {
-            Logger.Information($"SETUP: {setup.Version}, {setup.GetType().Name}");
+            Logger.Information($"SETUP: {setupper.Version}, {setupper.GetType().Name}");
 
-            ExecuteCore(accessorPack.Main, dto, setup.ExecuteMainDDL, setup.ExecuteMainDML);
-            ExecuteCore(accessorPack.File, dto, setup.ExecuteFileDDL, setup.ExecuteFileDML);
-            ExecuteCore(accessorPack.Temporary, dto, setup.ExecuteTemporaryDDL, setup.ExecuteTemporaryDML);
+            ExecuteCore(accessorPack.Main, dto, setupper.ExecuteMainDDL, setupper.ExecuteMainDML);
+            ExecuteCore(accessorPack.File, dto, setupper.ExecuteFileDDL, setupper.ExecuteFileDML);
+            ExecuteCore(accessorPack.Temporary, dto, setupper.ExecuteTemporaryDDL, setupper.ExecuteTemporaryDML);
         }
 
         public void Initialize(IDatabaseAccessorPack accessorPack)
@@ -86,7 +86,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database
             Logger.Information("init");
 
             var dto = CreateSetupDto(new Version(0, 0, 0, 0));
-            var setup = new Setup_V_00_84_00_00(StatementLoader, Logger.Factory);
+            var setup = new Setupper_V_00_84_00_00(StatementLoader, Logger.Factory);
 
             Execute(accessorPack, dto, setup);
         }
@@ -97,14 +97,14 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database
 
             var dto = CreateSetupDto(lastVersion);
 
-            var setups = new SetupBase[] {
+            var setuppers = new SetupperBase[] {
                 // これ最後
-                new Setup_V_99_99_99_99(StatementLoader, Logger.Factory),
+                new Setupper_V_99_99_99_99(StatementLoader, Logger.Factory),
             };
 
-            foreach(var setup in setups) {
-                if(lastVersion < setup.Version) {
-                    Execute(accessorPack, dto, setup);
+            foreach(var setupper in setuppers) {
+                if(lastVersion < setupper.Version) {
+                    Execute(accessorPack, dto, setupper);
                 }
             }
         }

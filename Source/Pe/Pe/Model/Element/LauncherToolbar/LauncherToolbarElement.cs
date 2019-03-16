@@ -179,6 +179,15 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
             ToolbarPosition = displayData.ToolbarPosition;
             IsVisible = displayData.IsVisible;
 
+            SelectedLauncherGroup = LauncherGroups
+                .FirstOrDefault(i => i.LauncherGroupId == displayData.LauncherGroupId)
+                ?? LauncherGroups.First()
+            ;
+        }
+
+        void LoadLauncherItems()
+        {
+
         }
 
         #endregion
@@ -195,6 +204,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
             }
             LauncherToolbarId = launcherToolbarId;
             LoadLauncherToolbar();
+            LoadLauncherItems();
             UpdateDesign();
         }
 
