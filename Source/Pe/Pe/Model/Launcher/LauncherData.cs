@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
+using ContentTypeTextNet.Pe.Main.Model.Data;
 using ContentTypeTextNet.Pe.Main.Model.Logic;
 using ContentTypeTextNet.Pe.Main.View.Extend;
 
@@ -40,21 +41,6 @@ namespace ContentTypeTextNet.Pe.Main.Model.Launcher
         public string Command { get; set; }
         public string Option { get; set; }
         public string WorkDirectoryPath { get; set; }
-
-        #endregion
-    }
-
-    public class IconData : DataBase
-    {
-        #region property
-
-        public static IconData None { get; } = new IconData() {
-            Path = string.Empty,
-            Index = 0,
-        };
-
-        public string Path { get; set; }
-        public int Index { get; set; }
 
         #endregion
     }
