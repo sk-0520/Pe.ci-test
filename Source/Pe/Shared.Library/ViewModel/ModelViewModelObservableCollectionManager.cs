@@ -30,6 +30,17 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.ViewModel
         where TModel : BindModelBase
         where TViewModel : ViewModelBase
     {
+        public ModelViewModelObservableCollectionManagerBase(ReadOnlyObservableCollection<TModel> collection, ILogger logger)
+            : base(collection, logger)
+        {
+            ViewModels = new ObservableCollection<TViewModel>(Collection.Select(m => ToViewModelImpl(m)));
+        }
+        public ModelViewModelObservableCollectionManagerBase(ReadOnlyObservableCollection<TModel> collection, ILoggerFactory loggerFactory)
+            : base(collection, loggerFactory)
+        {
+            ViewModels = new ObservableCollection<TViewModel>(Collection.Select(m => ToViewModelImpl(m)));
+        }
+
         public ModelViewModelObservableCollectionManagerBase(ObservableCollection<TModel> collection, ILogger logger)
             : base(collection, logger)
         {
@@ -62,7 +73,6 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.ViewModel
             return CollectionViewSource.GetDefaultView(ViewModels);
         }
 
-        public int IndexOf(TModel model) => Collection.IndexOf(model);
         public int IndexOf(TViewModel viewModel) => ViewModels.IndexOf(viewModel);
 
         public TModel GetModel(TViewModel viewModel)
@@ -186,10 +196,16 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.ViewModel
 
         #endregion
 
+        public ActionModelViewModelObservableCollectionManager(ReadOnlyObservableCollection<TModel> collection, ILogger logger)
+            : base(collection, logger)
+        { }
+        public ActionModelViewModelObservableCollectionManager(ReadOnlyObservableCollection<TModel> collection, ILoggerFactory loggerFactory)
+            : base(collection, loggerFactory)
+        { }
+
         public ActionModelViewModelObservableCollectionManager(ObservableCollection<TModel> collection, ILogger logger)
             : base(collection, logger)
         { }
-
         public ActionModelViewModelObservableCollectionManager(ObservableCollection<TModel> collection, ILoggerFactory loggerFactory)
             : base(collection, loggerFactory)
         { }

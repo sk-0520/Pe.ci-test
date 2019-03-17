@@ -15,20 +15,21 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
     /// <see cref="ObservableCollection"/> の変更通知を受け取ってなんかする人。
     /// <para>管理者が誰かもうワケわからんことになるのです。</para>
     /// </summary>
-    public abstract class ObservableCollectionManagerBase<T> : BindModelBase
+    public abstract class ObservableCollectionManagerBase<TValue> : BindModelBase
     {
-        public ObservableCollectionManagerBase(ObservableCollection<T> collection, ILogger logger)
-            : base(logger)
+        protected ObservableCollectionManagerBase(IReadOnlyList<TValue> collection, INotifyCollectionChanged collectionNotifyCollectionChanged, ILogger logger)
+              : base(logger)
         {
             if(collection == null) {
                 throw new ArgumentNullException(nameof(collection));
             }
 
             Collection = collection;
-            Collection.CollectionChanged += Collection_CollectionChanged;
+            CollectionNotifyCollectionChanged = collectionNotifyCollectionChanged;
+            CollectionNotifyCollectionChanged.CollectionChanged += Collection_CollectionChanged;
         }
 
-        public ObservableCollectionManagerBase(ObservableCollection<T> collection, ILoggerFactory loggerFactory)
+        protected ObservableCollectionManagerBase(IReadOnlyList<TValue> collection, INotifyCollectionChanged collectionNotifyCollectionChanged, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             if(collection == null) {
@@ -36,32 +37,50 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
             }
 
             Collection = collection;
-            Collection.CollectionChanged += Collection_CollectionChanged;
+            CollectionNotifyCollectionChanged = collectionNotifyCollectionChanged;
+            CollectionNotifyCollectionChanged.CollectionChanged += Collection_CollectionChanged;
         }
+
+        public ObservableCollectionManagerBase(ReadOnlyObservableCollection<TValue> collection, ILogger logger)
+            : this(collection, collection, logger)
+        { }
+
+        public ObservableCollectionManagerBase(ReadOnlyObservableCollection<TValue> collection, ILoggerFactory loggerFactory)
+            : this(collection, collection, loggerFactory)
+        { }
+
+        public ObservableCollectionManagerBase(ObservableCollection<TValue> collection, ILogger logger)
+            : this(collection, collection, logger)
+        { }
+
+        public ObservableCollectionManagerBase(ObservableCollection<TValue> collection, ILoggerFactory loggerFactory)
+            : this(collection, collection, loggerFactory)
+        { }
 
 
         #region property
 
-        protected ObservableCollection<T> Collection { get; private set; }
+        protected IReadOnlyList<TValue> Collection { get; private set; }
+        protected INotifyCollectionChanged CollectionNotifyCollectionChanged { get; private set; }
 
         #endregion
 
         #region function
 
-        protected abstract void AddItemsImple(IReadOnlyList<T> newItems);
-        void AddItems(IReadOnlyList<T> newItems)
+        protected abstract void AddItemsImple(IReadOnlyList<TValue> newItems);
+        void AddItems(IReadOnlyList<TValue> newItems)
         {
             AddItemsImple(newItems);
         }
 
-        protected abstract void RemoveItemsImpl(IReadOnlyList<T> oldItems, int oldStartingIndex);
-        void RemoveItems(IReadOnlyList<T> oldItems, int oldStartingIndex)
+        protected abstract void RemoveItemsImpl(IReadOnlyList<TValue> oldItems, int oldStartingIndex);
+        void RemoveItems(IReadOnlyList<TValue> oldItems, int oldStartingIndex)
         {
             RemoveItemsImpl(oldItems, oldStartingIndex);
         }
 
-        protected abstract void ReplaceItemsImpl(IReadOnlyList<T> newItems, IReadOnlyList<T> oldItems);
-        void ReplaceItems(IReadOnlyList<T> newItems, IReadOnlyList<T> oldItems)
+        protected abstract void ReplaceItemsImpl(IReadOnlyList<TValue> newItems, IReadOnlyList<TValue> oldItems);
+        void ReplaceItems(IReadOnlyList<TValue> newItems, IReadOnlyList<TValue> oldItems)
         {
             ReplaceItemsImpl(newItems, oldItems);
         }
@@ -78,9 +97,9 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
             ResetItemsImpl();
         }
 
-        IReadOnlyList<T> ConvertList(IList list)
+        IReadOnlyList<TValue> ConvertList(IList list)
         {
-            return list.Cast<T>().ToList();
+            return list.Cast<TValue>().ToList();
         }
 
         protected virtual void CollectionChanged(NotifyCollectionChangedEventArgs e)
@@ -111,6 +130,22 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
             }
         }
 
+        public int IndexOf(TValue value)
+        {
+            if(Collection is IList<TValue> list) {
+                return list.IndexOf(value);
+            }
+
+            var items = Collection.Select((v, i) => (value: v, index: i));
+            foreach(var item in items) {
+                if(object.Equals(item.value, value)) {
+                    return item.index;
+                }
+            }
+
+            return -1;
+        }
+
         #endregion
 
         #region ModelBase
@@ -119,7 +154,8 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         {
             if(!IsDisposed) {
                 if(disposing) {
-                    Collection.CollectionChanged -= Collection_CollectionChanged;
+                    CollectionNotifyCollectionChanged.CollectionChanged -= Collection_CollectionChanged;
+                    CollectionNotifyCollectionChanged = null;
                 }
                 Collection = null;
             }

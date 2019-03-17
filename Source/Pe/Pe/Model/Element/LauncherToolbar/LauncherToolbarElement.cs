@@ -55,7 +55,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
         IIdFactory IdFactory { get; }
         ILauncherToolbarDesigner LauncherToolbarDesigner { get; }
 
-        public ObservableCollection<LauncherGroupElement> LauncherGroups { get; } = new ObservableCollection<LauncherGroupElement>();
+        public ObservableCollection<LauncherGroupElement> LauncherGroups { get; }
 
         public Guid LauncherToolbarId { get; private set; }
 
