@@ -9,13 +9,14 @@ using ContentTypeTextNet.Pe.Main.Model.Logic;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModel.IconViewer
 {
-    public class IconViewerViewModel<TModel> : SingleModelViewModelBase<TModel>
-        where TModel : IconImageLoaderBase
+    public class IconViewerViewModel : SingleModelViewModelBase<IconImageLoaderBase>
     {
-        public IconViewerViewModel(TModel model, ILogger logger) : base(model, logger)
+        public IconViewerViewModel(IconImageLoaderBase model, ILogger logger)
+            : base(model, logger)
         { }
 
-        public IconViewerViewModel(TModel model, ILoggerFactory loggerFactory) : base(model, loggerFactory)
+        public IconViewerViewModel(IconImageLoaderBase model, ILoggerFactory loggerFactory)
+            : base(model, loggerFactory)
         { }
 
         #region property

@@ -41,7 +41,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
 
         #region property
 
-        protected IconScale IconScale { get; }
+        public IconScale IconScale { get; }
 
         public IconImageLoadState IconImageLoadState
         {

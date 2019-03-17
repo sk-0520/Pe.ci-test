@@ -9,13 +9,17 @@ using ContentTypeTextNet.Pe.Main.Model.Element.LauncherIcon;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherIcon
 {
-    public class LauncherIconViewModel : SingleModelViewModelBase<LauncherIconElement>
+    public class LauncherIconViewModel : ContentTypeTextNet.Pe.Library.Shared.Library.ViewModel.SingleModelViewModelBase<ContentTypeTextNet.Pe.Main.Model.Element.LauncherIcon.LauncherIconElement>
     {
         public LauncherIconViewModel(LauncherIconElement model, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
-        { }
+        {
+        }
 
         #region property
+
+        public ContentTypeTextNet.Pe.Main.ViewModel.IconViewer.IconViewerViewModel Small { get; }
+
         #endregion
 
         #region command
