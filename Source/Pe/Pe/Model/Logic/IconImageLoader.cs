@@ -13,7 +13,7 @@ using ContentTypeTextNet.Pe.Main.Model.Launcher;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Logic
 {
-    public enum IconLoadState
+    public enum IconImageLoadState
     {
         None,
         Loading,
@@ -25,7 +25,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
     {
         #region variable
 
-        IconLoadState _iconLoadState;
+        IconImageLoadState _iconImageLoadState;
 
         #endregion
 
@@ -43,10 +43,10 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
 
         protected IconScale IconScale { get; }
 
-        public IconLoadState IconLoadState
+        public IconImageLoadState IconImageLoadState
         {
-            get => this._iconLoadState;
-            set => SetProperty(ref this._iconLoadState, value);
+            get => this._iconImageLoadState;
+            set => SetProperty(ref this._iconImageLoadState, value);
         }
 
         #endregion
@@ -71,14 +71,14 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
 
         public async Task<BitmapSource> LoadAsync()
         {
-            IconLoadState = IconLoadState.Loading;
+            IconImageLoadState = IconImageLoadState.Loading;
             try {
                 var iconImage = await LoadImplAsync();
-                IconLoadState = IconLoadState.Error;
+                IconImageLoadState = IconImageLoadState.Error;
                 return iconImage;
             } catch(Exception ex) {
                 Logger.Error(ex);
-                IconLoadState = IconLoadState.Error;
+                IconImageLoadState = IconImageLoadState.Error;
                 throw;
             }
         }
