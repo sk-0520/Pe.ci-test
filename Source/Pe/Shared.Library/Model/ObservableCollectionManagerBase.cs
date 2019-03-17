@@ -17,7 +17,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
     /// </summary>
     public abstract class ObservableCollectionManagerBase<TValue> : BindModelBase
     {
-        protected ObservableCollectionManagerBase(IReadOnlyList<TValue> collection, INotifyCollectionChanged collectionNotifyCollectionChanged, ILogger logger)
+        private ObservableCollectionManagerBase(IReadOnlyList<TValue> collection, INotifyCollectionChanged collectionNotifyCollectionChanged, ILogger logger)
               : base(logger)
         {
             if(collection == null) {
@@ -29,7 +29,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
             CollectionNotifyCollectionChanged.CollectionChanged += Collection_CollectionChanged;
         }
 
-        protected ObservableCollectionManagerBase(IReadOnlyList<TValue> collection, INotifyCollectionChanged collectionNotifyCollectionChanged, ILoggerFactory loggerFactory)
+        private ObservableCollectionManagerBase(IReadOnlyList<TValue> collection, INotifyCollectionChanged collectionNotifyCollectionChanged, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             if(collection == null) {
