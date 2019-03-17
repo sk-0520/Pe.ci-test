@@ -27,6 +27,7 @@
     <ContextMenu ItemsSource="{Binding LauncherGroupItems}" />
   </Window.ContextMenu>
   <Grid>
-
+    <ItemsControl ItemsSource="{Binding LauncherItems}">
+    </ItemsControl>
   </Grid>
 </Window>

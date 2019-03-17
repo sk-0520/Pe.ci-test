@@ -10,10 +10,12 @@ using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Library.ViewModel;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Element.LauncherGroup;
+using ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem;
 using ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar;
 using ContentTypeTextNet.Pe.Main.Model.Manager;
 using ContentTypeTextNet.Pe.Main.View.Extend;
 using ContentTypeTextNet.Pe.Main.ViewModel.LauncherGroup;
+using ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar
 {
@@ -26,6 +28,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar
                 ToViewModel = (m) => new LauncherGroupViewModel(m, Logger.Factory),
             };
             LauncherGroupItems = LauncherGroupCollection.GetCollectionView();
+
+            LauncherItemCollection = new ActionModelViewModelObservableCollectionManager<LauncherItemElement, LauncherItemViewModel>(Model.LauncherItems, Logger.Factory) {
+                ToViewModel = (m) => new LauncherItemViewModel(m, Logger.Factory),
+            };
+            LauncherItems = LauncherItemCollection.GetCollectionView();
         }
 
         #region property
@@ -40,6 +47,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar
 
         ModelViewModelObservableCollectionManagerBase<LauncherGroupElement, LauncherGroupViewModel> LauncherGroupCollection { get; }
         public ICollectionView LauncherGroupItems { get; }
+
+        ModelViewModelObservableCollectionManagerBase<LauncherItemElement, LauncherItemViewModel> LauncherItemCollection { get; }
+        public ICollectionView LauncherItems { get; }
 
         #endregion
 
