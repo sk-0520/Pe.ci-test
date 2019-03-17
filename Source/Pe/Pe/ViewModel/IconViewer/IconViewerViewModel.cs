@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 using ContentTypeTextNet.Pe.Library.Shared.Library.ViewModel;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Logic;
@@ -21,12 +22,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.IconViewer
 
         #region property
 
-        ISet<string> PropertyNames { get; } = new HashSet<string>(new[] {
-            nameof(IconImageLoadState),
-        });
+        IReadOnlyDictionary<string, IReadOnlyList<string>> PropertyNames { get; } = new Dictionary<string, IReadOnlyList<string>>() {
+            [nameof(IconImageLoadState)] = new[] { nameof(IconImageLoadState) },
+        };
 
         public IconImageLoadState IconImageLoadState => Model.IconImageLoadState;
 
+        public ImageSource ImageSource { get; private set; }
 
         #endregion
 
@@ -56,8 +58,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.IconViewer
 
         private void Model_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if(PropertyNames.Contains(e.PropertyName)) {
-                RaisePropertyChanged(e.PropertyName);
+            if(PropertyNames.TryGetValue(e.PropertyName, out var propertyNames)) {
+                foreach(var propertyName in propertyNames) {
+                    RaisePropertyChanged(propertyName);
+                }
             }
         }
 
