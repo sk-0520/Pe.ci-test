@@ -39,7 +39,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar
         }
 
         ModelViewModelObservableCollectionManagerBase<LauncherGroupElement, LauncherGroupViewModel> LauncherGroupCollection { get; }
-        ICollectionView LauncherGroupItems { get; }
+        public ICollectionView LauncherGroupItems { get; }
 
         #endregion
 

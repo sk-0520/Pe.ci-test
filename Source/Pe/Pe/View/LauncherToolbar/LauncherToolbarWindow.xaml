@@ -1,4 +1,5 @@
 <Window
+  x:Name="root"
   x:Class="ContentTypeTextNet.Pe.Main.View.LauncherToolbar.LauncherToolbarWindow"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -22,6 +23,9 @@
   <Window.Visibility>
     <Binding Path="IsVisible" Converter="{StaticResource BooleanToVisibilityConverter}"/>
   </Window.Visibility>
+  <Window.ContextMenu>
+    <ContextMenu ItemsSource="{Binding LauncherGroupItems}" />
+  </Window.ContextMenu>
   <Grid>
 
   </Grid>
