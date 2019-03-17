@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Library.Shared.Library.ViewModel;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Element.LauncherIcon;
+using ContentTypeTextNet.Pe.Main.ViewModel.IconViewer;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherIcon
 {
-    public class LauncherIconViewModel : ContentTypeTextNet.Pe.Library.Shared.Library.ViewModel.SingleModelViewModelBase<ContentTypeTextNet.Pe.Main.Model.Element.LauncherIcon.LauncherIconElement>
+    public class LauncherIconViewModel : SingleModelViewModelBase<LauncherIconElement>
     {
         public LauncherIconViewModel(LauncherIconElement model, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
@@ -18,7 +19,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherIcon
 
         #region property
 
-        public ContentTypeTextNet.Pe.Main.ViewModel.IconViewer.IconViewerViewModel Small { get; }
+        public IconViewerViewModel Small { get; }
 
         #endregion
 
