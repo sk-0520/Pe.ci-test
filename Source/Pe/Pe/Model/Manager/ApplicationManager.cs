@@ -128,7 +128,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
             return result;
         }
 
-        IReadOnlyList<LauncherToolbarElement> CreateLauncherToolbars(ObservableCollection<LauncherGroupElement> launcherGroups)
+        IReadOnlyList<LauncherToolbarElement> CreateLauncherToolbars(ReadOnlyObservableCollection<LauncherGroupElement> launcherGroups)
         {
             var screens = Screen.AllScreens;
             var result = new List<LauncherToolbarElement>(screens.Length);
@@ -150,7 +150,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
             LauncherGroups.AddRange(launcherGroups);
 
             // ツールバーの生成
-            var launcherToolbars = CreateLauncherToolbars(LauncherGroups);
+            var launcherToolbars = CreateLauncherToolbars(new ReadOnlyObservableCollection<LauncherGroupElement>(LauncherGroups));
             LauncherToolbars.AddRange(launcherToolbars);
 
             // ノートの生成
@@ -180,7 +180,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
         {
             return OrderManager.CreateLauncherGroupElement(launcherGroupId);
         }
-        public LauncherToolbarElement CreateLauncherToolbarElement(Screen dockScreen, ObservableCollection<LauncherGroupElement> launcherGroups)
+        public LauncherToolbarElement CreateLauncherToolbarElement(Screen dockScreen, ReadOnlyObservableCollection<LauncherGroupElement> launcherGroups)
         {
             return OrderManager.CreateLauncherToolbarElement(dockScreen, launcherGroups);
         }

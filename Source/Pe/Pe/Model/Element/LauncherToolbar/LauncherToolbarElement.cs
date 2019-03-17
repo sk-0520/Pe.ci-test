@@ -32,7 +32,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
 
         #endregion
 
-        public LauncherToolbarElement(Screen dockScreen, ObservableCollection<LauncherGroupElement> launcherGroups, IOrderManager orderManager, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, ILauncherToolbarDesigner launcherToolbarDesigner, IDiContainer diContainer, ILoggerFactory loggerFactory)
+        public LauncherToolbarElement(Screen dockScreen, ReadOnlyObservableCollection<LauncherGroupElement> launcherGroups, IOrderManager orderManager, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, ILauncherToolbarDesigner launcherToolbarDesigner, IDiContainer diContainer, ILoggerFactory loggerFactory)
             : base(diContainer, loggerFactory)
         {
             DockScreen = dockScreen;
@@ -55,7 +55,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
         IIdFactory IdFactory { get; }
         ILauncherToolbarDesigner LauncherToolbarDesigner { get; }
 
-        public ObservableCollection<LauncherGroupElement> LauncherGroups { get; }
+        public ReadOnlyObservableCollection<LauncherGroupElement> LauncherGroups { get; }
 
         public Guid LauncherToolbarId { get; private set; }
 

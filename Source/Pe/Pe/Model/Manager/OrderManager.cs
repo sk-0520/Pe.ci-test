@@ -43,7 +43,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
         #region function
 
         LauncherGroupElement CreateLauncherGroupElement(Guid launcherGroupId);
-        LauncherToolbarElement CreateLauncherToolbarElement(Screen dockScreen, ObservableCollection<LauncherGroupElement> launcherGroups);
+        LauncherToolbarElement CreateLauncherToolbarElement(Screen dockScreen, ReadOnlyObservableCollection<LauncherGroupElement> launcherGroups);
         LauncherItemElement GetOrCreateLauncherItemElement(Guid launcherItemId);
 
         WindowItem CreateLauncherToolbarWindow(LauncherToolbarElement element);
@@ -77,7 +77,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
                 return element;
             }
 
-            public LauncherToolbarElement CreateLauncherToolbarElement(Screen dockScreen, ObservableCollection<LauncherGroupElement> launcherGroups)
+            public LauncherToolbarElement CreateLauncherToolbarElement(Screen dockScreen, ReadOnlyObservableCollection<LauncherGroupElement> launcherGroups)
             {
                 var element = DiContainer.Make<LauncherToolbarElement>(new object[] { dockScreen, launcherGroups });
                 element.Initialize();
