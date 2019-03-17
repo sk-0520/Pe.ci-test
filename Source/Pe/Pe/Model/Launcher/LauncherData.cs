@@ -59,6 +59,18 @@ namespace ContentTypeTextNet.Pe.Main.Model.Launcher
         #endregion
     }
 
+    public class LauncherIconData: DataBase
+    {
+        #region property
+
+        public LauncherItemKind Kind { get; set; }
+
+        public IconData Command { get; set; } = IconData.None;
+        public IconData Icon { get; set; } = IconData.None;
+
+        #endregion
+    }
+
     public class StandardStreamData : DataBase
     {
         #region proeprty
