@@ -2,10 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Data;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 
@@ -53,6 +56,11 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.ViewModel
         protected abstract void ReplaceItemsKindImpl(ObservableCollectionKind kind, IReadOnlyList<TModel> newModels, IReadOnlyList<TModel> oldModels, IReadOnlyList<TViewModel> newViewModels, IReadOnlyList<TViewModel> oldViewModels);
         protected abstract void MoveItemsKindImpl(ObservableCollectionKind kind, int newStartingIndex, int oldStartingIndex);
         protected abstract void ResetItemsKindImpl(ObservableCollectionKind kind, IReadOnlyList<TViewModel> oldViewModels);
+
+        public ICollectionView GetCollectionView()
+        {
+            return CollectionViewSource.GetDefaultView(ViewModels);
+        }
 
         public int IndexOf(TModel model) => Collection.IndexOf(model);
         public int IndexOf(TViewModel viewModel) => ViewModels.IndexOf(viewModel);
@@ -172,17 +180,40 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.ViewModel
 
         #endregion
 
+        #region variable
+
+        ToViewModelDelegate _toViewModel;
+
+        #endregion
+
         public ActionModelViewModelObservableCollectionManager(ObservableCollection<TModel> collection, ILogger logger)
             : base(collection, logger)
         { }
+
         public ActionModelViewModelObservableCollectionManager(ObservableCollection<TModel> collection, ILoggerFactory loggerFactory)
             : base(collection, loggerFactory)
         { }
 
-
         #region property
 
-        public ToViewModelDelegate ToViewModel { get; set; }
+        IList<TModel> StockModels { get; set; } = new List<TModel>();
+
+        public ToViewModelDelegate ToViewModel
+        {
+            get => this._toViewModel;
+            set
+            {
+                this._toViewModel = value;
+                if(this._toViewModel != null && StockModels.Count != 0) {
+                    Debug.Assert(ViewModels.Count == StockModels.Count);
+                    for(var i = 0; i < StockModels.Count; i++) {
+                        ViewModels[i] = this._toViewModel(StockModels[i]);
+                    }
+                    StockModels.Clear();
+                    StockModels = null;
+                }
+            }
+        }
         public AddItemsKindDelegate AddItems { get; set; }
         public RemoveItemsKindDelegate RemoveItems { get; set; }
         public ReplaceItemsKindDelegate ReplaceItems { get; set; }
@@ -195,7 +226,12 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.ViewModel
 
         protected override TViewModel ToViewModelImpl(TModel model)
         {
-            return ToViewModel(model);
+            if(ToViewModel != null) {
+                return ToViewModel(model);
+            }
+
+            StockModels.Add(model);
+            return default(TViewModel);
         }
 
         protected override void AddItemsKindImpl(ObservableCollectionKind kind, IReadOnlyList<TModel> newModels, IReadOnlyList<TViewModel> newViewModels)

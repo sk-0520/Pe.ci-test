@@ -9,9 +9,11 @@ using ContentTypeTextNet.Pe.Library.Shared.Library.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Library.ViewModel;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
+using ContentTypeTextNet.Pe.Main.Model.Element.LauncherGroup;
 using ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar;
 using ContentTypeTextNet.Pe.Main.Model.Manager;
 using ContentTypeTextNet.Pe.Main.View.Extend;
+using ContentTypeTextNet.Pe.Main.ViewModel.LauncherGroup;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar
 {
@@ -19,7 +21,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar
     {
         public LauncherToolbarViewModel(LauncherToolbarElement model, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
-        { }
+        {
+            LauncherGroupCollection = new ActionModelViewModelObservableCollectionManager<LauncherGroupElement, LauncherGroupViewModel>(Model.LauncherGroups, Logger.Factory) {
+                ToViewModel = (m) => new LauncherGroupViewModel(m, Logger.Factory),
+            };
+            LauncherGroupItems = LauncherGroupCollection.GetCollectionView();
+        }
 
         #region property
 
@@ -30,6 +37,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar
             get => Model.IsVisible;
             set => SetModelValue(value);
         }
+
+        ModelViewModelObservableCollectionManagerBase<LauncherGroupElement, LauncherGroupViewModel> LauncherGroupCollection { get; }
+        ICollectionView LauncherGroupItems { get; }
 
         #endregion
 
