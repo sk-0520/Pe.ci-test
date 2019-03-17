@@ -188,6 +188,9 @@
     <Compile Include="Model\Logic\BuildStatus.cs" />
     <Compile Include="ViewModel\IDialogCommand.cs" />
     <Compile Include="ViewModel\IViewLifecycleReceiver.cs" />
+    <Compile Include="ViewModel\LauncherGroup\LauncherGroupViewModel.cs" />
+    <Compile Include="ViewModel\LauncherIcon\LauncherIconViewModel.cs" />
+    <Compile Include="ViewModel\LauncherItem\LauncherItemViewModel.cs" />
     <Compile Include="ViewModel\Manager\ManagerViewModel.cs" />
     <Compile Include="ViewModel\Startup\ImportProgramsViewModel.cs" />
     <Compile Include="ViewModel\Startup\ProgramViewModel.cs" />
