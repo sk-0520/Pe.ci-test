@@ -19,6 +19,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Launcher
         File,
         Command,
         Application,
+        Separator,
     }
 
     public enum LauncherItemPermission
@@ -45,7 +46,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Launcher
         #endregion
     }
 
-    public class LauncherIconData: DataBase
+    public class LauncherIconData : DataBase
     {
         #region property
 

@@ -195,7 +195,11 @@
     <Compile Include="ViewModel\IViewLifecycleReceiver.cs" />
     <Compile Include="ViewModel\LauncherGroup\LauncherGroupViewModel.cs" />
     <Compile Include="ViewModel\LauncherIcon\LauncherIconViewModel.cs" />
-    <Compile Include="ViewModel\LauncherItem\LauncherItemViewModel.cs" />
+    <Compile Include="ViewModel\LauncherItem\LauncherApplicationItemViewModel.cs" />
+    <Compile Include="ViewModel\LauncherItem\LauncherCommandItemViewModel.cs" />
+    <Compile Include="ViewModel\LauncherItem\LauncherFileItemViewModel.cs" />
+    <Compile Include="ViewModel\LauncherItem\LauncherItemViewModelBase.cs" />
+    <Compile Include="ViewModel\LauncherItem\LauncherSeparatorItemViewModel.cs" />
     <Compile Include="ViewModel\Manager\ManagerViewModel.cs" />
     <Compile Include="ViewModel\RunningStatusViewModel.cs" />
     <Compile Include="ViewModel\Startup\ImportProgramsViewModel.cs" />

@@ -29,8 +29,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar
             };
             LauncherGroupItems = LauncherGroupCollection.GetCollectionView();
 
-            LauncherItemCollection = new ActionModelViewModelObservableCollectionManager<LauncherItemElement, LauncherItemViewModel>(Model.LauncherItems, Logger.Factory) {
-                ToViewModel = (m) => new LauncherItemViewModel(m, Logger.Factory),
+            LauncherItemCollection = new ActionModelViewModelObservableCollectionManager<LauncherItemElement, LauncherItemViewModelBase>(Model.LauncherItems, Logger.Factory) {
+                ToViewModel = (m) => LauncherItemViewModelFactory.Create(m, Logger.Factory),
             };
             LauncherItems = LauncherItemCollection.GetCollectionView();
         }
@@ -50,7 +50,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar
         ModelViewModelObservableCollectionManagerBase<LauncherGroupElement, LauncherGroupViewModel> LauncherGroupCollection { get; }
         public ICollectionView LauncherGroupItems { get; }
 
-        ModelViewModelObservableCollectionManagerBase<LauncherItemElement, LauncherItemViewModel> LauncherItemCollection { get; }
+        ModelViewModelObservableCollectionManagerBase<LauncherItemElement, LauncherItemViewModelBase> LauncherItemCollection { get; }
         public ICollectionView LauncherItems { get; }
 
         #endregion

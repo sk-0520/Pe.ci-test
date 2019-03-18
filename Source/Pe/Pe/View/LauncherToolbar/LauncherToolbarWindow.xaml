@@ -30,29 +30,44 @@
   </Window.ContextMenu>
   <Grid>
     <ItemsControl ItemsSource="{Binding LauncherItems}">
+      <ItemsControl.ItemsPanel>
+        <ItemsPanelTemplate>
+          <StackPanel />
+        </ItemsPanelTemplate>
+      </ItemsControl.ItemsPanel>
       <ItemsControl.ItemTemplate>
         <DataTemplate>
+          <DataTemplate.Resources>
+            <Style TargetType="app_main_view:ImageViewerControl">
+              <Style.Triggers>
+                <DataTrigger Binding="{Binding DataContext.IconScale, ElementName=root}" Value="Small">
+                  <Setter Property="IconViewer" Value="{Binding Icon.Small}" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding DataContext.IconScale, ElementName=root}" Value="Normal">
+                  <Setter Property="IconViewer" Value="{Binding Icon.Normal}" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding DataContext.IconScale, ElementName=root}" Value="Big">
+                  <Setter Property="IconViewer" Value="{Binding Icon.Big}" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding DataContext.IconScale, ElementName=root}" Value="Large">
+                  <Setter Property="IconViewer" Value="{Binding Icon.Large}" />
+                </DataTrigger>
+              </Style.Triggers>
+            </Style>
+          </DataTemplate.Resources>
           <Border Margin="1" BorderBrush="Red" BorderThickness="1">
-            <app_main_view:ImageViewerControl>
-              <app_main_view:ImageViewerControl.Style>
-                <Style TargetType="app_main_view:ImageViewerControl">
-                  <Style.Triggers>
-                    <DataTrigger Binding="{Binding DataContext.IconScale, ElementName=root}" Value="Small">
-                      <Setter Property="IconViewer" Value="{Binding Icon.Small}" />
-                    </DataTrigger>
-                    <DataTrigger Binding="{Binding DataContext.IconScale, ElementName=root}" Value="Normal">
-                      <Setter Property="IconViewer" Value="{Binding Icon.Normal}" />
-                    </DataTrigger>
-                    <DataTrigger Binding="{Binding DataContext.IconScale, ElementName=root}" Value="Big">
-                      <Setter Property="IconViewer" Value="{Binding Icon.Big}" />
-                    </DataTrigger>
-                    <DataTrigger Binding="{Binding DataContext.IconScale, ElementName=root}" Value="Large">
-                      <Setter Property="IconViewer" Value="{Binding Icon.Large}" />
-                    </DataTrigger>
-                  </Style.Triggers>
-                </Style>
-              </app_main_view:ImageViewerControl.Style>
-            </app_main_view:ImageViewerControl>
+            <ContentControl>
+              <Control.Template>
+                <ControlTemplate TargetType="ContentControl">
+                  <Button>
+                    <ContentPresenter Content="{TemplateBinding Content}" />
+                  </Button>
+                </ControlTemplate>
+              </Control.Template>
+              <ContentControl.Content>
+                <app_main_view:ImageViewerControl />
+              </ContentControl.Content>
+            </ContentControl>
           </Border>
         </DataTemplate>
       </ItemsControl.ItemTemplate>
