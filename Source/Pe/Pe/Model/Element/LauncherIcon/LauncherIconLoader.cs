@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media.Imaging;
 using ContentTypeTextNet.Pe.Library.Shared.Embedded.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
@@ -41,15 +42,34 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherIcon
 
         #region function
 
-        BitmapSource ToImage(byte[] binary)
+        BitmapSource ToImage(IReadOnlyList<byte[]> imageBynaryItems)
         {
-            throw new NotImplementedException();
+            using(var stream = new BinaryChunkedStream()) {
+                using(var writer = new BinaryWriter(new KeepStream(stream))) {
+                    foreach(var imageBinary in imageBynaryItems) {
+                        writer.Write(imageBinary);
+                    }
+                }
+                stream.Position = 0;
+                BitmapSource iconImage = null;
+                Application.Current.Dispatcher.Invoke(() => {
+                    var bitmap = new BitmapImage();
+                    bitmap.BeginInit();
+                    bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                    bitmap.StreamSource = stream;
+                    bitmap.EndInit();
+                    iconImage = bitmap;
+                    FreezableUtility.SafeFreeze(iconImage);
+                });
+                return iconImage;
+
+            }
         }
 
         Task<ResultSuccessValue<BitmapSource>> LoadExistsImageAsync()
         {
             return Task.Run(() => {
-                byte[] imageBinary;
+                IReadOnlyList<byte[]> imageBinary;
                 using(var commander = FileDatabaseBarrier.WaitRead()) {
                     var dao = new LauncherItemIconsDao(commander, StatementLoader, Logger.Factory);
                     imageBinary = dao.SelectImageBinary(LauncherItemId, IconScale);

@@ -19,7 +19,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
 
         #region function
 
-        public byte[] SelectImageBinary(Guid launcherItemId, IconScale iconScale)
+        public IReadOnlyList<byte[]> SelectImageBinary(Guid launcherItemId, IconScale iconScale)
         {
             var iconScaleTransfer = new EnumTransfer<IconScale>();
 
@@ -28,7 +28,12 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
                 LauncherItemId = launcherItemId,
                 IconScale = iconScaleTransfer.To(iconScale),
             };
-            return Commander.QueryFirstOrDefault<byte[]>(sql, param);
+            var rows = Commander.Query<byte[]>(sql, param);
+            if(rows != null) {
+                return rows.ToArray();
+            }
+
+            return null;
         }
 
         public int InsertImageBinary(Guid launcherItemId, IconScale iconScale, IEnumerable<byte> imageBinary)
