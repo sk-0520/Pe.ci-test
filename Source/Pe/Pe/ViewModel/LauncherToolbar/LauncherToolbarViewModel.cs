@@ -45,6 +45,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar
             set => SetModelValue(value);
         }
 
+        public IconScale IconScale => Model.IconScale;
+
         ModelViewModelObservableCollectionManagerBase<LauncherGroupElement, LauncherGroupViewModel> LauncherGroupCollection { get; }
         public ICollectionView LauncherGroupItems { get; }
 

@@ -4,6 +4,8 @@
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 
+  xmlns:app_main_view="clr-namespace:ContentTypeTextNet.Pe.Main.View"
+
   Title="LauncherToolbarWindow"
   Height="450"
   Width="800"
@@ -28,6 +30,32 @@
   </Window.ContextMenu>
   <Grid>
     <ItemsControl ItemsSource="{Binding LauncherItems}">
+      <ItemsControl.ItemTemplate>
+        <DataTemplate>
+          <Border Margin="1" BorderBrush="Red" BorderThickness="1">
+            <app_main_view:ImageViewerControl>
+              <app_main_view:ImageViewerControl.Style>
+                <Style TargetType="app_main_view:ImageViewerControl">
+                  <Style.Triggers>
+                    <DataTrigger Binding="{Binding DataContext.IconScale, ElementName=root}" Value="Small">
+                      <Setter Property="IconViewer" Value="{Binding Icon.Small}" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding DataContext.IconScale, ElementName=root}" Value="Normal">
+                      <Setter Property="IconViewer" Value="{Binding Icon.Normal}" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding DataContext.IconScale, ElementName=root}" Value="Big">
+                      <Setter Property="IconViewer" Value="{Binding Icon.Big}" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding DataContext.IconScale, ElementName=root}" Value="Large">
+                      <Setter Property="IconViewer" Value="{Binding Icon.Large}" />
+                    </DataTrigger>
+                  </Style.Triggers>
+                </Style>
+              </app_main_view:ImageViewerControl.Style>
+            </app_main_view:ImageViewerControl>
+          </Border>
+        </DataTemplate>
+      </ItemsControl.ItemTemplate>
     </ItemsControl>
   </Grid>
 </Window>

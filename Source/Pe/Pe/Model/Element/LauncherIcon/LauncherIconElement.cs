@@ -22,7 +22,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherIcon
             StatementLoader = statementLoader;
 
             IconImageLoaders = EnumUtility.GetMembers<IconScale>()
-                .Select(i => new LauncherIconLoader(LauncherItemId, i, mainDatabaseBarrier, FileDatabaseBarrier, StatementLoader, Logger.Factory))
+                .Select(i => new LauncherIconLoader(LauncherItemId, i, MainDatabaseBarrier, FileDatabaseBarrier, StatementLoader, Logger.Factory))
                 .ToDictionary(k => k.IconScale, v => v)
             ;
         }

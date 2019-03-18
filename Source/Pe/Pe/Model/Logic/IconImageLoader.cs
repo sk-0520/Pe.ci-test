@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 using ContentTypeTextNet.Pe.Library.Shared.Embedded.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
@@ -13,72 +16,68 @@ using ContentTypeTextNet.Pe.Main.Model.Launcher;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Logic
 {
-    public enum IconImageLoadState
-    {
-        None,
-        Loading,
-        Loaded,
-        Error,
-    }
-
     public abstract class IconImageLoaderBase : BindModelBase
     {
-        #region variable
-
-        IconImageLoadState _iconImageLoadState;
-
-        #endregion
-
-        public IconImageLoaderBase(IconScale iconScale, ILogger logger) : base(logger)
+        public IconImageLoaderBase(IconScale iconScale, ILogger logger)
+            : base(logger)
         {
             IconScale = iconScale;
+            RunningStatusImpl = new RunningStatus(Logger.Factory);
         }
 
-        public IconImageLoaderBase(IconScale iconScale, ILoggerFactory loggerFactory) : base(loggerFactory)
+        public IconImageLoaderBase(IconScale iconScale, ILoggerFactory loggerFactory)
+            : base(loggerFactory)
         {
             IconScale = iconScale;
+            RunningStatusImpl = new RunningStatus(Logger.Factory);
         }
 
         #region property
 
         public IconScale IconScale { get; }
 
-        public IconImageLoadState IconImageLoadState
-        {
-            get => this._iconImageLoadState;
-            set => SetProperty(ref this._iconImageLoadState, value);
-        }
+        RunningStatus RunningStatusImpl { get; }
+        public IRunningStatus RunningStatus => RunningStatusImpl;
 
         #endregion
 
         #region function
 
-        protected BitmapSource GetIconImage(IconData iconData)
+        protected Task<BitmapSource> GetIconImageAsync(IconData iconData, CancellationToken cancellationToken)
         {
             var path = TextUtility.SafeTrim(iconData.Path);
             var expandedPath = Environment.ExpandEnvironmentVariables(path);
-            if(!File.Exists(expandedPath)) {
-                return null;
-            }
 
-            var iconLoader = new IconLoader(Logger.Factory);
-            var iconImage = iconLoader.Load(expandedPath, IconScale, iconData.Index);
+            return Task.Run(() => {
+                if(!File.Exists(expandedPath)) {
+                    return null;
+                }
 
-            return iconImage;
+                var iconLoader = new IconLoader(Logger.Factory);
+                BitmapSource iconImage = null;
+                Application.Current.Dispatcher.Invoke(() => {
+                    iconImage = iconLoader.Load(expandedPath, IconScale, iconData.Index);
+                });
+                return iconImage;
+            });
         }
 
-        protected abstract Task<BitmapSource> LoadImplAsync();
+        protected abstract Task<BitmapSource> LoadImplAsync(CancellationToken cancellationToken);
 
-        public async Task<BitmapSource> LoadAsync()
+        public async Task<BitmapSource> LoadAsync(CancellationToken cancellationToken)
         {
-            IconImageLoadState = IconImageLoadState.Loading;
+            RunningStatusImpl.State = RunningState.Running;
             try {
-                var iconImage = await LoadImplAsync();
-                IconImageLoadState = IconImageLoadState.Error;
+                var iconImage = await LoadImplAsync(cancellationToken);
+                RunningStatusImpl.State = RunningState.End;
                 return iconImage;
+            } catch(OperationCanceledException ex) {
+                Logger.Warning(ex);
+                RunningStatusImpl.State = RunningState.Cancel;
+                throw;
             } catch(Exception ex) {
                 Logger.Error(ex);
-                IconImageLoadState = IconImageLoadState.Error;
+                RunningStatusImpl.State = RunningState.Error;
                 throw;
             }
         }

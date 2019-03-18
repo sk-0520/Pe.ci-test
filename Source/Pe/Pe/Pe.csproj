@@ -196,6 +196,7 @@
     <Compile Include="ViewModel\LauncherIcon\LauncherIconViewModel.cs" />
     <Compile Include="ViewModel\LauncherItem\LauncherItemViewModel.cs" />
     <Compile Include="ViewModel\Manager\ManagerViewModel.cs" />
+    <Compile Include="ViewModel\RunningStatusViewModel.cs" />
     <Compile Include="ViewModel\Startup\ImportProgramsViewModel.cs" />
     <Compile Include="ViewModel\Startup\ProgramViewModel.cs" />
     <Compile Include="ViewModel\Startup\StartupViewModel.cs" />
@@ -204,6 +205,9 @@
       <DependentUpon>AcceptWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Extend\AppDesktopToolbarExtend.cs" />
+    <Compile Include="View\ImageViewerControl.xaml.cs">
+      <DependentUpon>ImageViewerControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Startup\ImportProgramsWindow.xaml.cs">
       <DependentUpon>ImportProgramsWindow.xaml</DependentUpon>
     </Compile>
@@ -267,6 +271,10 @@
   <ItemGroup />
   <ItemGroup>
     <Page Include="View\Accept\AcceptWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ImageViewerControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

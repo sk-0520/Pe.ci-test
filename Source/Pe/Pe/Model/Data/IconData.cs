@@ -13,11 +13,6 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data
     {
         #region property
 
-        public static IconData None { get; } = new IconData() {
-            Path = string.Empty,
-            Index = 0,
-        };
-
         public string Path { get; set; }
         public int Index { get; set; }
 

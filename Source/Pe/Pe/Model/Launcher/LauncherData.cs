@@ -51,8 +51,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Launcher
 
         public LauncherItemKind Kind { get; set; }
 
-        public IconData Command { get; set; } = IconData.None;
-        public IconData Icon { get; set; } = IconData.None;
+        public IconData Command { get; set; } = new IconData();
+        public IconData Icon { get; set; } = new IconData();
 
         #endregion
     }

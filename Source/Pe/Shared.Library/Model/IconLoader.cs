@@ -42,7 +42,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
     /// <summary>
     /// <see cref="IconScale"/>に対する拡張処理。
     /// </summary>
-    public static class IconScaleExtension
+    public static class IconScaleExtensions
     {
         /// <summary>
         /// 横幅を求める。

@@ -7,6 +7,7 @@ using ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Applications;
 using ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity;
+using ContentTypeTextNet.Pe.Main.Model.Element.LauncherIcon;
 using ContentTypeTextNet.Pe.Main.Model.Launcher;
 using ContentTypeTextNet.Pe.Main.Model.Manager;
 
@@ -14,14 +15,17 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem
 {
     public class LauncherItemElement : ElementBase
     {
-        public LauncherItemElement(Guid launcherItemId, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
+        public LauncherItemElement(Guid launcherItemId, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             LauncherItemId = launcherItemId;
 
             NotifyManager = notifyManager;
             MainDatabaseBarrier = mainDatabaseBarrier;
+            FileDatabaseBarrier = fileDatabaseBarrier;
             StatementLoader = statementLoader;
+
+            Icon = new LauncherIconElement(LauncherItemId, MainDatabaseBarrier, FileDatabaseBarrier, StatementLoader, this);
         }
 
         #region property
@@ -30,6 +34,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem
 
         INotifyManager NotifyManager { get; }
         IMainDatabaseBarrier MainDatabaseBarrier { get; }
+        IFileDatabaseBarrier FileDatabaseBarrier { get; }
         IDatabaseStatementLoader StatementLoader { get; }
 
         public string Name { get; private set; }
@@ -38,6 +43,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem
         public LauncherCommandData Command { get; private set; } = LauncherCommandData.None;
         public bool IsEnabledCommandLauncher { get; private set; }
         public string Note { get; private set; }
+
+        public LauncherIconElement Icon { get; }
+
         #endregion
 
         #region function

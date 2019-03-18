@@ -195,7 +195,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.ViewModel
     }
 
     public abstract class SingleModelViewModelBase<TModel> : ViewModelBase
-        where TModel : BindModelBase
+        where TModel : INotifyPropertyChanged
     {
         public SingleModelViewModelBase(TModel model, ILogger logger)
             : base(logger)
@@ -257,7 +257,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.ViewModel
                 DetachModelEvents();
             }
             base.Dispose(disposing);
-            Model = null;
+            Model = default(TModel);
         }
 
         #endregion

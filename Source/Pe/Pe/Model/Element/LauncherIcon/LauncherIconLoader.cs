@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 using ContentTypeTextNet.Pe.Library.Shared.Embedded.Model;
@@ -44,19 +45,22 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherIcon
             throw new NotImplementedException();
         }
 
-        (bool exists, BitmapSource image) LoadExistsImage()
+        Task<ResultSuccessValue<BitmapSource>> LoadExistsImageAsync()
         {
-            byte[] imageBinary;
-            using(var commander = FileDatabaseBarrier.WaitRead()) {
-                var dao = new LauncherItemIconsDao(commander, StatementLoader, Logger.Factory);
-                imageBinary = dao.SelectImageBinary(LauncherItemId, IconScale);
-            }
+            return Task.Run(() => {
+                byte[] imageBinary;
+                using(var commander = FileDatabaseBarrier.WaitRead()) {
+                    var dao = new LauncherItemIconsDao(commander, StatementLoader, Logger.Factory);
+                    imageBinary = dao.SelectImageBinary(LauncherItemId, IconScale);
+                }
 
-            if(imageBinary != null) {
+                if(imageBinary == null) {
+                    return ResultSuccessValue.Failure<BitmapSource>();
+                }
                 var image = ToImage(imageBinary);
-            }
 
-            return (false, null);
+                return ResultSuccessValue.Success(image);
+            });
         }
 
         LauncherIconData GetIconData()
@@ -67,19 +71,19 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherIcon
             }
         }
 
-        BitmapSource GetIconImageCore(LauncherItemKind kind, IconData iconData)
+        Task<BitmapSource> GetImageCoreAsync(LauncherItemKind kind, IconData iconData, CancellationToken cancellationToken)
         {
-            return GetIconImage(iconData);
+            return GetIconImageAsync(iconData, cancellationToken);
         }
 
-        BitmapSource GetIconImage(LauncherIconData launcherIconData)
+        async Task<BitmapSource> GetImageAsync(LauncherIconData launcherIconData, CancellationToken cancellationToken)
         {
-            var iconImage = GetIconImageCore(launcherIconData.Kind, launcherIconData.Icon);
+            var iconImage = await GetImageCoreAsync(launcherIconData.Kind, launcherIconData.Icon, cancellationToken).ConfigureAwait(false);
             if(iconImage != null) {
                 return iconImage;
             }
 
-            var commandImage = GetIconImageCore(launcherIconData.Kind, launcherIconData.Command);
+            var commandImage = await GetImageCoreAsync(launcherIconData.Kind, launcherIconData.Command, cancellationToken).ConfigureAwait(false);
             if(commandImage != null) {
                 return commandImage;
             }
@@ -88,23 +92,23 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherIcon
             return null;
         }
 
-        void SaveIconImage(BitmapSource iconImage)
+        void SaveImage(BitmapSource iconImage)
         {
 
         }
 
-        Task<BitmapSource> MakeImageAsync()
+        async Task<BitmapSource> MakeImageAsync(CancellationToken cancellationToken)
         {
             // アイコンパス取得
             var launcherIconData = GetIconData();
 
             // アイコン取得
-            var iconImage = GetIconImage(launcherIconData);
+            var iconImage = await GetImageAsync(launcherIconData, cancellationToken).ConfigureAwait(false);
 
             // データ書き込み(失敗してもアイコンが取得できてるならOK)
-            SaveIconImage(iconImage);
+            SaveImage(iconImage);
 
-            return Task.FromResult(iconImage);
+            return iconImage;
         }
 
 
@@ -112,14 +116,14 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherIcon
 
         #region IconImageLoaderBase
 
-        protected override async Task<BitmapSource> LoadImplAsync()
+        protected override async Task<BitmapSource> LoadImplAsync(CancellationToken cancellationToken)
         {
-            var existisResult = LoadExistsImage();
-            if(existisResult.exists) {
-                return existisResult.image;
+            var existisResult = await LoadExistsImageAsync().ConfigureAwait(false);
+            if(existisResult.Success) {
+                return existisResult.SuccessValue;
             }
 
-            var image = await MakeImageAsync().ConfigureAwait(false);
+            var image = await MakeImageAsync(cancellationToken).ConfigureAwait(false);
             return image;
         }
 

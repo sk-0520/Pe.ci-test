@@ -125,6 +125,7 @@
     <Compile Include="Model\ICommandExtensions.cs" />
     <Compile Include="Model\CollectionExtensions.cs" />
     <Compile Include="Model\OneTimeSetter.cs" />
+    <Compile Include="Model\RunningStatus.cs" />
     <Compile Include="Model\Timestamp.cs" />
     <Compile Include="Model\DialogFilter.cs" />
     <Compile Include="Model\EncodingUtility.cs" />
