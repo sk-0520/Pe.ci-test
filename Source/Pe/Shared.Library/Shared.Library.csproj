@@ -123,7 +123,7 @@
     <Compile Include="Model\Data\DataBase.cs" />
     <Compile Include="Model\Data\TransferBase.cs" />
     <Compile Include="Model\ICommandExtensions.cs" />
-    <Compile Include="Model\CollectionExtensions.cs" />
+    <Compile Include="Model\BasicExtensions.cs" />
     <Compile Include="Model\OneTimeSetter.cs" />
     <Compile Include="Model\RunningStatus.cs" />
     <Compile Include="Model\Timestamp.cs" />

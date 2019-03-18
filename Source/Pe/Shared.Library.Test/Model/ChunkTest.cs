@@ -365,24 +365,13 @@ namespace Shared.Library.Test.Model
             foreach(var item in items) {
                 list.Add(item);
             }
-            var bins = list.GetAllValues(chunkSize);
+            var bins = list.GroupSplit(chunkSize);
 
             Assert.AreEqual(resultCount, bins.Count());
             Assert.AreEqual(chunkSize, bins.First().Count());
             Assert.AreEqual(resultLastLength, bins.Last().Count());
             var binArray = bins.SelectMany(i => i).ToArray();
             CollectionAssert.AreEqual(items, binArray);
-        }
-
-        [TestMethod]
-        public void GetAllValues_Exception_Test()
-        {
-            var items = Enumerable.Range(0, 10).ToArray();
-            var list = new ChunkedList<int>(3, 3);
-            foreach(var item in items) {
-                list.Add(item);
-            }
-            Assert.ThrowsException<ArgumentOutOfRangeException>(() => list.GetAllValues(11));
         }
 
     }

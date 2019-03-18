@@ -7,6 +7,18 @@ using System.Collections.ObjectModel;
 
 namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 {
+    public static class IEnumerableExtensions
+    {
+        public static IEnumerable<IEnumerable<T>> GroupSplit<T>(this IEnumerable<T> @this, int splitCount)
+        {
+            return @this
+                 .Select((v, i) => (value: v, index: i))
+                .GroupBy(i => i.index / splitCount)
+                .Select(g => g.Select(i => i.value))
+            ;
+        }
+    }
+
     public static class CollectionExtensions
     {
         /// <summary>

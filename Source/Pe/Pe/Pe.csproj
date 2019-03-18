@@ -149,6 +149,7 @@
     <Compile Include="Model\Database\DatabaseTuner.cs" />
     <Compile Include="Model\Database\Tuner\TunerBase.cs" />
     <Compile Include="Model\Database\Tuner\Tuner_LauncherGroups.cs" />
+    <Compile Include="Model\Data\Dto\Entity\LauncherItemIconsDto.cs" />
     <Compile Include="Model\Data\IconData.cs" />
     <Compile Include="Model\Data\Dto\Entity\LauncherGroupItemsDto.cs" />
     <Compile Include="Model\Data\Dto\Entity\LauncherGroupsDto.cs" />
@@ -315,6 +316,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherGroupsDao\InsertNewGroup.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherItemIconsDao\DeleteImageBinary.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherItemIconsDao\InsertImageBinary.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherItemIconsDao\SelectImageBinary.sql">

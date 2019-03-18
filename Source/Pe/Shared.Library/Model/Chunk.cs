@@ -270,19 +270,6 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
             Count = Math.Max(Count, destinationIndex + sourceIndex + sourceDataLength);
         }
 
-        public IEnumerable<IEnumerable<T>> GetAllValues(int chunkSize)
-        {
-            if(Count < chunkSize) {
-                throw new ArgumentOutOfRangeException();
-            }
-
-            return this
-                .Select((v, i) => (value:v, index:i))
-                .GroupBy(i => i.index / chunkSize)
-                .Select(g => g.Select(i => i.value))
-            ;
-        }
-
         #endregion
 
         #region IReadOnlyList
@@ -438,14 +425,14 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 
         #region property
 
-        public static int LargeObjectHeapSize { get; set; } = 85 * 1000;
+        public static int LargeObjectHeapSize { get; } = 85 * 1000;
+        public static int DefaultChunkSize { get; } = 80 * 1024;
+
+        public int ChunkSize { get; } = DefaultChunkSize;
 
         #endregion
 
         #region function
-
-        public IEnumerable<IEnumerable<byte>> GetAllValues() => GetAllValues(LargeObjectHeapSize);
-
 
         #endregion
     }
@@ -453,7 +440,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
     public class BinaryChunkedStream : Stream
     {
         public BinaryChunkedStream()
-            : this(new BinaryChunkedList(Capacity, ItemCapacity))
+            : this(new BinaryChunkedList(Capacity, BinaryChunkedList.DefaultChunkSize))
         { }
 
         public BinaryChunkedStream(BinaryChunkedList binaryChunkedList)
@@ -463,8 +450,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 
         #region property
 
-        public static int Capacity { get; set; } = 255;
-        public static int ItemCapacity { get; set; } = 80 * 1024;
+        public static int Capacity { get; } = 255;
 
         public BinaryChunkedList BinaryChunkedList { get; }
 

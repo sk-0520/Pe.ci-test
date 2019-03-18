@@ -59,7 +59,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data.Dto
         #endregion
     }
 
-    public abstract class CreateDtoBase : IReadOnlyCreateDto
+    public abstract class CreateDtoBase : IReadOnlyCreateDto, IWritableCreateDto
     {
         #region IReadOnlyCreateDto
 
@@ -71,7 +71,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data.Dto
 
         #endregion
     }
-    public abstract class UpdateDtoBase : IReadOnlyUpdateDto
+    public abstract class UpdateDtoBase : IReadOnlyUpdateDto, IWritableUpdateDto
     {
         #region IReadOnlyUpdateDto
 

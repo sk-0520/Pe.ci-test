@@ -111,33 +111,10 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherIcon
                 }
 #endif
                 using(var commander = FileDatabaseBarrier.WaitWrite()) {
-                    var iconScaleTransfer = new EnumTransfer<IconScale>();
-
-                    var param = new {
-                        LauncherItemId = LauncherItemId,
-                        IconScale = IconScale,
-                        Image = default(byte[]),
-                    };
-                    commander.Execute(@"
-insert into
-    LauncherItemIcons
-    (
-        [LauncherItemId],
-        [IconScale],
-        [Image],
-
-        [CreatedTimestamp],[CreatedAccount],[CreatedProgramName],[CreatedProgramVersion],
-        [UpdatedTimestamp],[UpdatedAccount],[UpdatedProgramName],[UpdatedProgramVersion],[UpdatedCount]
-    )
-    values
-    (
-    @LauncherItemId, @IconScale, @Image,
-    CURRENT_TIMESTAMP, '', '', '',
-    CURRENT_TIMESTAMP, '', '', '', 0
-    )
-",
-                        param
-);
+                    var dao = new LauncherItemIconsDao(commander, StatementLoader, Logger.Factory);
+                    dao.DeleteImageBinary(LauncherItemId, IconScale);
+                    dao.InsertImageBinary(LauncherItemId, IconScale, stream.BinaryChunkedList);
+                    commander.Commit();
                 }
             }
 
