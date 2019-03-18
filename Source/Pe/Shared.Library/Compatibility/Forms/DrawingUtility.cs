@@ -53,7 +53,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Compatibility.Forms
             return (float)(wpfFontSize / 96.0 * 72.0);
         }
 
-        public static ImageSource ImageSourceFromIcon(Drawing.Icon icon)
+        public static BitmapSource ImageSourceFromIcon(Drawing.Icon icon)
         {
             var result = Imaging.CreateBitmapSourceFromHIcon(
                 icon.Handle,
@@ -63,15 +63,21 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Compatibility.Forms
             return result;
         }
 
-        public static ImageSource ImageSourceFromBinaryIcon(byte[] binayIcon, Size iconSize)
+        public static BitmapSource ImageSourceFromBinaryIcon(byte[] binayIcon, Size iconSize)
         {
             using(var ms = new MemoryStream(binayIcon)) {
-                var size = new Drawing.Size((int)iconSize.Width, (int)iconSize.Height);
-                using(var icon = new Drawing.Icon(ms, size)) {
-                    return ImageSourceFromIcon(icon);
-                }
+                return ImageSourceFromBinaryStreamIcon(ms, iconSize);
             }
         }
+
+        public static BitmapSource ImageSourceFromBinaryStreamIcon(Stream streamIcon, Size iconSize)
+        {
+            var size = new Drawing.Size((int)iconSize.Width, (int)iconSize.Height);
+            using(var icon = new Drawing.Icon(streamIcon, size)) {
+                return ImageSourceFromIcon(icon);
+            }
+        }
+
 
         public static Color Convert(Drawing.Color color)
         {
