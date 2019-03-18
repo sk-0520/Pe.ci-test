@@ -212,6 +212,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
                     }
                     //Debug.WriteLine("totalSize = {0}", totalSize);
 
+                    // TODO:BinaryChunkedStreamがまともに動くなら切り替える
                     using(var stream = new BinaryWriter(new MemoryStream(totalSize))) {
                         stream.Write(binaryGroupIconData, 0, sizeofICONDIR);
 

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -92,8 +93,54 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherIcon
             return null;
         }
 
+        void WriteStream(BitmapSource iconImage, Stream stream)
+        {
+            var encoder = new PngBitmapEncoder();
+            encoder.Frames.Add(BitmapFrame.Create(iconImage));
+            encoder.Save(stream);
+        }
+
         void SaveImage(BitmapSource iconImage)
         {
+            using(var stream = new BinaryChunkedStream()) {
+                WriteStream(iconImage, stream);
+#if DEBUG
+                using(var debugStream = new MemoryStream()) {
+                    WriteStream(iconImage, debugStream);
+                    Debug.Assert(stream.Position == debugStream.Position, $"{nameof(stream)}: {stream.Length}, {nameof(debugStream)}: {debugStream.Length}");
+                }
+#endif
+                using(var commander = FileDatabaseBarrier.WaitWrite()) {
+                    var iconScaleTransfer = new EnumTransfer<IconScale>();
+
+                    var param = new {
+                        LauncherItemId = LauncherItemId,
+                        IconScale = IconScale,
+                        Image = stream,
+                    };
+                    commander.Execute(@"
+insert into
+    LauncherItemIcons
+    (
+        [LauncherItemId],
+        [IconScale],
+        [Image],
+
+        [CreatedTimestamp],[CreatedAccount],[CreatedProgramName],[CreatedProgramVersion],
+        [UpdatedTimestamp],[UpdatedAccount],[UpdatedProgramName],[UpdatedProgramVersion],[UpdatedCount]
+    )
+    values
+    (
+    @LauncherItemId, @IconScale, @Image,
+    CURRENT_TIMESTAMP, '', '', '',
+    CURRENT_TIMESTAMP, '', '', '', 0
+    )
+",
+                        param
+);
+                }
+            }
+
 
         }
 

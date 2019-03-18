@@ -57,6 +57,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
                 BitmapSource iconImage = null;
                 Application.Current.Dispatcher.Invoke(() => {
                     iconImage = iconLoader.Load(expandedPath, IconScale, iconData.Index);
+                    FreezableUtility.SafeFreeze(iconImage);
                 });
                 return iconImage;
             });
