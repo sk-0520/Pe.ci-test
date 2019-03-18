@@ -144,7 +144,7 @@ namespace Shared.Library.Test.Model
             list.Add(40);
             list.Add(50);
             list.Add(60);
-            Assert.AreEqual(2*3, list.Count);
+            Assert.AreEqual(2 * 3, list.Count);
 
             list.Add(70);
             Assert.AreEqual(2 * 3 + 1, list.Count);
@@ -230,7 +230,7 @@ namespace Shared.Library.Test.Model
         {
             var array = Enumerable.Range(0, 100).ToArray();
 
-            foreach(var (cap, item) in new[] { (5,3), (1,1), (100, 1), (1, 100) }) {
+            foreach(var (cap, item) in new[] { (5, 3), (1, 1), (100, 1), (1, 100) }) {
                 var listAll = new ChunkedList<int>(cap, item);
                 listAll.CopyFrom(0, array, 0, array.Length);
                 Assert.AreEqual(array.Length, listAll.Count);
@@ -344,6 +344,47 @@ namespace Shared.Library.Test.Model
                 Assert.AreEqual(items[i], list[i]);
             }
         }
+
+        [TestMethod]
+        [DataRow(50, 10, 500, 10)]
+        [DataRow(100, 5, 500, 5)]
+        [DataRow(10, 1, 10, 1)]
+        [DataRow(5, 2, 10, 2)]
+        [DataRow(4, 1, 10, 3)]
+        [DataRow(3, 2, 10, 4)]
+        [DataRow(2, 5, 10, 5)]
+        [DataRow(2, 4, 10, 6)]
+        [DataRow(2, 3, 10, 7)]
+        [DataRow(2, 2, 10, 8)]
+        [DataRow(2, 1, 10, 9)]
+        [DataRow(1, 10, 10, 10)]
+        public void GetAllValuesTest(int resultCount, int resultLastLength, int dataSize, int chunkSize)
+        {
+            var items = Enumerable.Range(0, dataSize).ToArray();
+            var list = new ChunkedList<int>(3, 3);
+            foreach(var item in items) {
+                list.Add(item);
+            }
+            var bins = list.GetAllValues(chunkSize);
+
+            Assert.AreEqual(resultCount, bins.Count());
+            Assert.AreEqual(chunkSize, bins.First().Count());
+            Assert.AreEqual(resultLastLength, bins.Last().Count());
+            var binArray = bins.SelectMany(i => i).ToArray();
+            CollectionAssert.AreEqual(items, binArray);
+        }
+
+        [TestMethod]
+        public void GetAllValues_Exception_Test()
+        {
+            var items = Enumerable.Range(0, 10).ToArray();
+            var list = new ChunkedList<int>(3, 3);
+            foreach(var item in items) {
+                list.Add(item);
+            }
+            Assert.ThrowsException<ArgumentOutOfRangeException>(() => list.GetAllValues(11));
+        }
+
     }
 
     [TestClass]
@@ -382,9 +423,9 @@ namespace Shared.Library.Test.Model
                 var b = array.Skip(40).Take(30).ToArray();
                 CollectionAssert.AreEqual(a, b);
 
-                stream.Write(array, 30, 255-30);
-                var a2 = stream.BinaryChunkedList.Skip(30).Take(255-30).ToArray();
-                var b2 = array.Skip(30).Take(255-30).ToArray();
+                stream.Write(array, 30, 255 - 30);
+                var a2 = stream.BinaryChunkedList.Skip(30).Take(255 - 30).ToArray();
+                var b2 = array.Skip(30).Take(255 - 30).ToArray();
                 CollectionAssert.AreEqual(a2, b2);
             }
         }

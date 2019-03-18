@@ -116,7 +116,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherIcon
                     var param = new {
                         LauncherItemId = LauncherItemId,
                         IconScale = IconScale,
-                        Image = stream,
+                        Image = default(byte[]),
                     };
                     commander.Execute(@"
 insert into
