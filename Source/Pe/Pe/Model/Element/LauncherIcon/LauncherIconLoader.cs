@@ -75,7 +75,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherIcon
                     imageBinary = dao.SelectImageBinary(LauncherItemId, IconScale);
                 }
 
-                if(imageBinary == null) {
+                if(imageBinary.Count == 0) {
                     return ResultSuccessValue.Failure<BitmapSource>();
                 }
                 var image = ToImage(imageBinary);
