@@ -23,6 +23,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
 
         #region property
 
+        public string Name => Model.Name;
+        public string Note => Model.Note;
         public LauncherIconViewModel Icon { get; }
 
         #endregion

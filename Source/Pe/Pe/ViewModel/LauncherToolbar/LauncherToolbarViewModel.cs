@@ -39,19 +39,31 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar
 
         public AppDesktopToolbarExtend AppDesktopToolbarExtend { get; set; }
 
+        public IconScale IconScale => Model.IconScale;
+        public Thickness ButtonPadding => Model.ButtonPadding;
+        public Thickness IconMargin => Model.IconMargin;
+        public bool IsIconOnly => Model.IsIconOnly;
+        public double TextWidth => Model.TextWidth;
+
         public bool IsVisible
         {
             get => Model.IsVisible;
             set => SetModelValue(value);
         }
 
-        public IconScale IconScale => Model.IconScale;
+        public bool IsTopmodst
+        {
+            get => Model.IsTopmodst;
+            set => SetModelValue(value);
+        }
+
 
         ModelViewModelObservableCollectionManagerBase<LauncherGroupElement, LauncherGroupViewModel> LauncherGroupCollection { get; }
         public ICollectionView LauncherGroupItems { get; }
 
         ModelViewModelObservableCollectionManagerBase<LauncherItemElement, LauncherItemViewModelBase> LauncherItemCollection { get; }
         public ICollectionView LauncherItems { get; }
+
 
         #endregion
 
