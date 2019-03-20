@@ -14,6 +14,7 @@ using ContentTypeTextNet.Pe.Main.Model.Applications;
 using ContentTypeTextNet.Pe.Main.Model.Data.Dto.Entity;
 using ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Model.Element.LauncherGroup;
+using ContentTypeTextNet.Pe.Main.Model.Element.LauncherIcon;
 using ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem;
 using ContentTypeTextNet.Pe.Main.Model.Launcher;
 using ContentTypeTextNet.Pe.Main.Model.Logic;
@@ -32,7 +33,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
 
         #endregion
 
-        public LauncherToolbarElement(Screen dockScreen, ReadOnlyObservableCollection<LauncherGroupElement> launcherGroups, IOrderManager orderManager, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, ILauncherToolbarDesigner launcherToolbarDesigner, IDiContainer diContainer, ILoggerFactory loggerFactory)
+        public LauncherToolbarElement(Screen dockScreen, ReadOnlyObservableCollection<LauncherGroupElement> launcherGroups, IOrderManager orderManager, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, ILauncherToolbarDesigner launcherToolbarDesigner, IApplicationIconImageLoaders applicationIconImageLoaders, IDiContainer diContainer, ILoggerFactory loggerFactory)
             : base(diContainer, loggerFactory)
         {
             DockScreen = dockScreen;
@@ -44,6 +45,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
             StatementLoader = statementLoader;
             IdFactory = idFactory;
             LauncherToolbarDesigner = launcherToolbarDesigner;
+            ApplicationIconImageLoaders = applicationIconImageLoaders;
         }
 
         #region property
@@ -54,6 +56,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
         IDatabaseStatementLoader StatementLoader { get; }
         IIdFactory IdFactory { get; }
         ILauncherToolbarDesigner LauncherToolbarDesigner { get; }
+        public IApplicationIconImageLoaders ApplicationIconImageLoaders { get; }
 
         public ReadOnlyObservableCollection<LauncherGroupElement> LauncherGroups { get; }
 

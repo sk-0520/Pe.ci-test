@@ -5,6 +5,7 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 
   xmlns:app_main_view="clr-namespace:ContentTypeTextNet.Pe.Main.View"
+  xmlns:app_main_view_lt="clr-namespace:ContentTypeTextNet.Pe.Main.View.LauncherToolbar"
   xmlns:app_main_viewmode_launcheritem="clr-namespace:ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem"
 
   Title="LauncherToolbarWindow"
@@ -25,7 +26,7 @@
   <Window.Resources>
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
-    <Style TargetType="app_main_view:ImageViewerControl">
+    <!--<Style TargetType="app_main_view:ImageViewerControl">
       <Style.Triggers>
         <DataTrigger Binding="{Binding DataContext.IconScale, ElementName=root}" Value="Small">
           <Setter Property="IconViewer" Value="{Binding Icon.Small}" />
@@ -40,30 +41,43 @@
           <Setter Property="IconViewer" Value="{Binding Icon.Large}" />
         </DataTrigger>
       </Style.Triggers>
+    </Style>-->
+
+    <Style TargetType="app_main_view_lt:LauncherContentControl">
+      <Style.Triggers>
+        <DataTrigger Binding="{Binding DataContext.IconScale, ElementName=root}" Value="Small">
+          <Setter Property="IconViewer" Value="{Binding Icon.Small}" />
+        </DataTrigger>
+        <DataTrigger Binding="{Binding DataContext.IconScale, ElementName=root}" Value="Normal">
+          <Setter Property="IconViewer" Value="{Binding Icon.Normal}" />
+        </DataTrigger>
+        <DataTrigger Binding="{Binding DataContext.IconScale, ElementName=root}" Value="Big">
+          <Setter Property="IconViewer" Value="{Binding Icon.Big}" />
+        </DataTrigger>
+        <DataTrigger Binding="{Binding DataContext.IconScale, ElementName=root}" Value="Large">
+          <Setter Property="IconViewer" Value="{Binding Icon.Large}" />
+        </DataTrigger>
+      </Style.Triggers>
+      <Setter Property="IconMargin" Value="{Binding DataContext.IconMargin, ElementName=root, Mode=OneTime}" />
+      <Setter Property="IsIconOnly" Value="{Binding DataContext.IsIconOnly, ElementName=root}" />
+      <Setter Property="TextWidth" Value="{Binding DataContext.TextWidth, ElementName=root, Mode=OneTime}" />
     </Style>
 
-    <Grid x:Key="Content" x:Shared="false">
-      <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="Auto" />
-        <ColumnDefinition Width="Auto" />
-      </Grid.ColumnDefinitions>
+    <ControlTemplate x:Key="LauncherItemTemplate" TargetType="ContentControl">
+      <Border Padding="{Binding DataContext.ButtonPadding, ElementName=root, Mode=OneTime}">
+        <ContentPresenter
+          Content="{TemplateBinding Content}"
+        />
+      </Border>
+    </ControlTemplate>
 
-      <app_main_view:ImageViewerControl Grid.Column="0" Margin="{Binding DataContext.IconMargin, ElementName=root, Mode=OneTime}" />
-      <TextBlock Grid.Column="1">
-        <TextBlock.Style>
-          <Style TargetType="TextBlock">
-            <Style.Triggers>
-              <DataTrigger Binding="{Binding DataContext.IsIconOnly, ElementName=root}" Value="False">
-                <Setter Property="Visibility" Value="Visible" />
-                <Setter Property="Width" Value="{Binding DataContext.TextWidth, ElementName=root, Mode=OneTime}" />
-                <Setter Property="Text" Value="{Binding Name, Mode=OneTime}" />
-              </DataTrigger>
-            </Style.Triggers>
-            <Setter Property="Visibility" Value="Collapsed" />
-          </Style>
-        </TextBlock.Style>
-      </TextBlock>
-    </Grid>
+    <!-- ファイル -->
+    <DataTemplate DataType="{x:Type app_main_viewmode_launcheritem:LauncherFileItemViewModel}">
+      <Button Template="{StaticResource LauncherItemTemplate}">
+        <app_main_view_lt:LauncherContentControl Title="{Binding Name, Mode=OneTime}" />
+      </Button>
+    </DataTemplate>
+
   </Window.Resources>
   <Window.Visibility>
     <Binding Path="IsVisible" Converter="{StaticResource BooleanToVisibilityConverter}"/>
@@ -71,24 +85,21 @@
   <Window.ContextMenu>
     <ContextMenu ItemsSource="{Binding LauncherGroupItems}" />
   </Window.ContextMenu>
-  <Grid>
-    <ItemsControl ItemsSource="{Binding LauncherItems}">
-      <ItemsControl.Resources>
+  <DockPanel>
 
-      </ItemsControl.Resources>
+    <ToggleButton DockPanel.Dock="Top" Template="{StaticResource LauncherItemTemplate}">
+      <app_main_view_lt:LauncherContentControl
+        Title="pe"
+      />
+    </ToggleButton>
+
+    <ItemsControl ItemsSource="{Binding LauncherItems}">
       <ItemsControl.ItemsPanel>
         <ItemsPanelTemplate>
           <StackPanel />
         </ItemsPanelTemplate>
       </ItemsControl.ItemsPanel>
-      <ItemsControl.ItemTemplate>
-        <!-- ファイル -->
-        <DataTemplate DataType="{x:Type app_main_viewmode_launcheritem:LauncherFileItemViewModel}">
-          <Button Margin="0" Padding="{Binding DataContext.ButtonPadding, ElementName=root, Mode=OneTime}">
-            <ContentControl Content="{StaticResource Content}" />
-          </Button>
-        </DataTemplate>
-      </ItemsControl.ItemTemplate>
     </ItemsControl>
-  </Grid>
+
+  </DockPanel>
 </Window>

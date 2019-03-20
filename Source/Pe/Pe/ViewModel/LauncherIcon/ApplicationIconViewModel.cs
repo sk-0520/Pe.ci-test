@@ -6,32 +6,21 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Library.ViewModel;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
+using ContentTypeTextNet.Pe.Main.Model.Applications;
 using ContentTypeTextNet.Pe.Main.Model.Element.LauncherIcon;
 using ContentTypeTextNet.Pe.Main.ViewModel.IconViewer;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherIcon
 {
-    public interface ILauncherIconViewModel
+    public class ApplicationIconViewModel : ViewModelBase, ILauncherIconViewModel
     {
-        #region property
-
-        IconViewerViewModel Small { get; }
-        IconViewerViewModel Normal { get; }
-        IconViewerViewModel Big { get; }
-        IconViewerViewModel Large { get; }
-
-        #endregion
-    }
-
-    public class LauncherIconViewModel : SingleModelViewModelBase<LauncherIconElement>
-    {
-        public LauncherIconViewModel(LauncherIconElement model, ILoggerFactory loggerFactory)
-            : base(model, loggerFactory)
+        public ApplicationIconViewModel(IApplicationIconImageLoaders applicationIconImageLoaders, ILoggerFactory loggerFactory)
+            : base(loggerFactory)
         {
-            Small = new IconViewerViewModel(Model.IconImageLoaders[IconScale.Small], Logger.Factory);
-            Normal = new IconViewerViewModel(Model.IconImageLoaders[IconScale.Normal], Logger.Factory);
-            Big = new IconViewerViewModel(Model.IconImageLoaders[IconScale.Big], Logger.Factory);
-            Large = new IconViewerViewModel(Model.IconImageLoaders[IconScale.Large], Logger.Factory);
+            Small = new IconViewerViewModel(applicationIconImageLoaders.IconImageLoaders[IconScale.Small], Logger.Factory);
+            Normal = new IconViewerViewModel(applicationIconImageLoaders.IconImageLoaders[IconScale.Normal], Logger.Factory);
+            Big = new IconViewerViewModel(applicationIconImageLoaders.IconImageLoaders[IconScale.Big], Logger.Factory);
+            Large = new IconViewerViewModel(applicationIconImageLoaders.IconImageLoaders[IconScale.Large], Logger.Factory);
         }
 
         #region property

@@ -54,8 +54,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
                 case LauncherItemKind.Command:
                     return new LauncherCommandItemViewModel(model, loggerFactory);
 
-                case LauncherItemKind.Application:
-                    return new LauncherApplicationItemViewModel(model, loggerFactory);
+                case LauncherItemKind.Embedded:
+                    return new LauncherEmbeddedItemViewModel(model, loggerFactory);
 
                 case LauncherItemKind.Separator:
                     return new LauncherSeparatorItemViewModel(model, loggerFactory);

@@ -160,6 +160,7 @@
     <Compile Include="Model\Element\IViewCloseReceiver.cs" />
     <Compile Include="Model\Element\IViewShowStarter.cs" />
     <Compile Include="Model\Element\LauncherGroup\LauncherGroupElement.cs" />
+    <Compile Include="Model\Applications\ApplicationIconImageLoader.cs" />
     <Compile Include="Model\Element\LauncherIcon\LauncherIconLoader.cs" />
     <Compile Include="Model\Element\LauncherIcon\LauncherIconElement.cs" />
     <Compile Include="Model\Element\LauncherItem\LauncherItemElement.cs" />
@@ -195,8 +196,9 @@
     <Compile Include="ViewModel\IDialogCommand.cs" />
     <Compile Include="ViewModel\IViewLifecycleReceiver.cs" />
     <Compile Include="ViewModel\LauncherGroup\LauncherGroupViewModel.cs" />
+    <Compile Include="ViewModel\LauncherIcon\ApplicationIconViewModel.cs" />
     <Compile Include="ViewModel\LauncherIcon\LauncherIconViewModel.cs" />
-    <Compile Include="ViewModel\LauncherItem\LauncherApplicationItemViewModel.cs" />
+    <Compile Include="ViewModel\LauncherItem\LauncherEmbeddedItemViewModel.cs" />
     <Compile Include="ViewModel\LauncherItem\LauncherCommandItemViewModel.cs" />
     <Compile Include="ViewModel\LauncherItem\LauncherFileItemViewModel.cs" />
     <Compile Include="ViewModel\LauncherItem\LauncherItemViewModelBase.cs" />
@@ -213,6 +215,9 @@
     <Compile Include="View\Extend\AppDesktopToolbarExtend.cs" />
     <Compile Include="View\ImageViewerControl.xaml.cs">
       <DependentUpon>ImageViewerControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\LauncherToolbar\LauncherContentControl.xaml.cs">
+      <DependentUpon>LauncherContentControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Startup\ImportProgramsWindow.xaml.cs">
       <DependentUpon>ImportProgramsWindow.xaml</DependentUpon>
@@ -281,6 +286,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\ImageViewerControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\LauncherToolbar\LauncherContentControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

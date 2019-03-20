@@ -18,7 +18,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Launcher
         Unknown,
         File,
         Command,
-        Application,
+        Embedded,
         Separator,
     }
 

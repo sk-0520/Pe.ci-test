@@ -34,7 +34,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherIcon
         IFileDatabaseBarrier FileDatabaseBarrier { get; }
         IDatabaseStatementLoader StatementLoader { get; }
 
-        public IDictionary<IconScale, LauncherIconLoader> IconImageLoaders { get; }
+        public IReadOnlyDictionary<IconScale, LauncherIconLoader> IconImageLoaders { get; }
 
         #endregion
 

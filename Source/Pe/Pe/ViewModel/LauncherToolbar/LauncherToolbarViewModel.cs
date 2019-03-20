@@ -15,6 +15,7 @@ using ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar;
 using ContentTypeTextNet.Pe.Main.Model.Manager;
 using ContentTypeTextNet.Pe.Main.View.Extend;
 using ContentTypeTextNet.Pe.Main.ViewModel.LauncherGroup;
+using ContentTypeTextNet.Pe.Main.ViewModel.LauncherIcon;
 using ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar
@@ -33,6 +34,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar
                 ToViewModel = (m) => LauncherItemViewModelFactory.Create(m, Logger.Factory),
             };
             LauncherItems = LauncherItemCollection.GetCollectionView();
+
+            Icon = new ApplicationIconViewModel(Model.ApplicationIconImageLoaders, Logger.Factory);
         }
 
         #region property
@@ -44,6 +47,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar
         public Thickness IconMargin => Model.IconMargin;
         public bool IsIconOnly => Model.IsIconOnly;
         public double TextWidth => Model.TextWidth;
+
+        public ApplicationIconViewModel Icon { get; }
 
         public bool IsVisible
         {

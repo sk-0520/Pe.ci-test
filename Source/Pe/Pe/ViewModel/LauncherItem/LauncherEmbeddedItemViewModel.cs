@@ -1,11 +1,11 @@
-﻿using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
+using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
 {
-    public class LauncherApplicationItemViewModel : LauncherItemViewModelBase
+    public class LauncherEmbeddedItemViewModel : LauncherItemViewModelBase
     {
-        public LauncherApplicationItemViewModel(LauncherItemElement model, ILoggerFactory loggerFactory)
+        public LauncherEmbeddedItemViewModel(LauncherItemElement model, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         { }
 
