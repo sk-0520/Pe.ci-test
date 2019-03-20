@@ -17,28 +17,29 @@
       <ColumnDefinition Width="Auto" />
     </Grid.ColumnDefinitions>
 
-    <app_main_view:ImageViewerControl Grid.Column="0" IconViewer="{Binding IconViewer, ElementName=root}" Margin="{Binding IconMargin, ElementName=root}">
-      <!--
-      <app_main_view:ImageViewerControl.Style>
-        <Style TargetType="app_main_view:ImageViewerControl">
+    <ContentControl x:Name="content" Grid.Column="0" Margin="{Binding IconMargin, ElementName=root}">
+      <ContentControl.Style>
+        <Style TargetType="ContentControl">
           <Style.Triggers>
-            <DataTrigger Binding="{Binding IconScale, ElementName=root}" Value="Small">
-              <Setter Property="IconViewer" Value="{Binding Icon.Small}" />
+            <DataTrigger Binding="{Binding IconImage, ElementName=root}" Value="{x:Null}">
+              <Setter Property="Content">
+                <Setter.Value>
+                  <!-- 実体化用のダミー要素 -->
+                  <Border>
+                    <app_main_view:ImageViewerControl IconViewer="{Binding IconViewer, ElementName=root}"  />
+                  </Border>
+                </Setter.Value>
+              </Setter>
             </DataTrigger>
-            <DataTrigger Binding="{Binding IconScale, ElementName=root}" Value="Normal">
-              <Setter Property="IconViewer" Value="{Binding Icon.Normal}" />
-            </DataTrigger>
-            <DataTrigger Binding="{Binding IconScale, ElementName=root}" Value="Big">
-              <Setter Property="IconViewer" Value="{Binding Icon.Big}" />
-            </DataTrigger>
-            <DataTrigger Binding="{Binding IconScale, ElementName=root}" Value="Large">
-              <Setter Property="IconViewer" Value="{Binding Icon.Large}" />
+            <DataTrigger Binding="{Binding IconViewer, ElementName=root}" Value="{x:Null}">
+              <Setter Property="Content" Value="{Binding IconImage, ElementName=root}" />
+              <Setter Property="Width" Value="{Binding IconScale, ElementName=root}" />
+              <Setter Property="Height" Value="{Binding IconHeight, ElementName=root}" />
             </DataTrigger>
           </Style.Triggers>
         </Style>
-      </app_main_view:ImageViewerControl.Style>
-      -->
-    </app_main_view:ImageViewerControl>
+      </ContentControl.Style>
+    </ContentControl>
     <TextBlock Grid.Column="1">
       <TextBlock.Style>
         <Style TargetType="TextBlock">

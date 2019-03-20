@@ -26,23 +26,6 @@
   <Window.Resources>
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
-    <!--<Style TargetType="app_main_view:ImageViewerControl">
-      <Style.Triggers>
-        <DataTrigger Binding="{Binding DataContext.IconScale, ElementName=root}" Value="Small">
-          <Setter Property="IconViewer" Value="{Binding Icon.Small}" />
-        </DataTrigger>
-        <DataTrigger Binding="{Binding DataContext.IconScale, ElementName=root}" Value="Normal">
-          <Setter Property="IconViewer" Value="{Binding Icon.Normal}" />
-        </DataTrigger>
-        <DataTrigger Binding="{Binding DataContext.IconScale, ElementName=root}" Value="Big">
-          <Setter Property="IconViewer" Value="{Binding Icon.Big}" />
-        </DataTrigger>
-        <DataTrigger Binding="{Binding DataContext.IconScale, ElementName=root}" Value="Large">
-          <Setter Property="IconViewer" Value="{Binding Icon.Large}" />
-        </DataTrigger>
-      </Style.Triggers>
-    </Style>-->
-
     <Style TargetType="app_main_view_lt:LauncherContentControl">
       <Style.Triggers>
         <DataTrigger Binding="{Binding DataContext.IconScale, ElementName=root}" Value="Small">
@@ -90,6 +73,8 @@
     <ToggleButton DockPanel.Dock="Top" Template="{StaticResource LauncherItemTemplate}">
       <app_main_view_lt:LauncherContentControl
         Title="pe"
+        IconImage="💩"
+        IconViewer="{x:Null}"
       />
     </ToggleButton>
 
