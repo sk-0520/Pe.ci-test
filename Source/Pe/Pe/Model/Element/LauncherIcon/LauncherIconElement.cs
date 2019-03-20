@@ -13,7 +13,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherIcon
 {
     public class LauncherIconElement : ElementBase
     {
-        public LauncherIconElement(Guid launcherItemId, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
+        public LauncherIconElement(Guid launcherItemId, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             LauncherItemId = launcherItemId;
@@ -22,7 +22,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherIcon
             StatementLoader = statementLoader;
 
             IconImageLoaders = EnumUtility.GetMembers<IconScale>()
-                .Select(i => new LauncherIconLoader(LauncherItemId, i, MainDatabaseBarrier, FileDatabaseBarrier, StatementLoader, Logger.Factory))
+                .Select(i => new LauncherIconLoader(LauncherItemId, i, MainDatabaseBarrier, FileDatabaseBarrier, StatementLoader, dispatcherWapper, Logger.Factory))
                 .ToDictionary(k => k.IconScale, v => v)
             ;
         }

@@ -18,23 +18,26 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
 {
     public abstract class IconImageLoaderBase : BindModelBase
     {
-        public IconImageLoaderBase(IconScale iconScale, ILogger logger)
+        public IconImageLoaderBase(IconScale iconScale, IDispatcherWapper dispatcherWapper, ILogger logger)
             : base(logger)
         {
             IconScale = iconScale;
+            DispatcherWapper = dispatcherWapper;
             RunningStatusImpl = new RunningStatus(Logger.Factory);
         }
 
-        public IconImageLoaderBase(IconScale iconScale, ILoggerFactory loggerFactory)
+        public IconImageLoaderBase(IconScale iconScale, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             IconScale = iconScale;
+            DispatcherWapper = dispatcherWapper;
             RunningStatusImpl = new RunningStatus(Logger.Factory);
         }
 
         #region property
 
         public IconScale IconScale { get; }
+        protected IDispatcherWapper DispatcherWapper { get; }
 
         RunningStatus RunningStatusImpl { get; }
         public IRunningStatus RunningStatus => RunningStatusImpl;
@@ -55,7 +58,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
 
                 var iconLoader = new IconLoader(Logger.Factory);
                 BitmapSource iconImage = null;
-                Application.Current.Dispatcher.Invoke(() => {
+                DispatcherWapper.Invoke(() => {
                     iconImage = iconLoader.Load(expandedPath, IconScale, iconData.Index);
                     FreezableUtility.SafeFreeze(iconImage);
                 });

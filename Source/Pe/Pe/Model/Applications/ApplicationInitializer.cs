@@ -246,6 +246,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Applications
                 .Register<IFileDatabaseBarrier, ApplicationDatabaseBarrier>(new ApplicationDatabaseBarrier(accessor.File, rwlp.File))
                 .Register<ITemporaryDatabaseBarrier, ApplicationDatabaseBarrier>(new ApplicationDatabaseBarrier(accessor.Temporary, rwlp.Temporary))
                 .Register<IReadWriteLockPack, ReadWriteLockPack>(rwlp)
+                .Register<IDispatcherWapper, ApplicationDispatcherWapper>(DiLifecycle.Transient)
                 .Register<IIdFactory, IdFactory>(DiLifecycle.Transient)
                 .Register<ILauncherToolbarDesigner, LauncherToolbarDesigner>(DiLifecycle.Transient)
             ;

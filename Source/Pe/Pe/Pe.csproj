@@ -130,6 +130,7 @@
     <Compile Include="Constants.cs" />
     <Compile Include="CultureService.cs" />
     <Compile Include="Model\Applications\ApplicationDiContainer.cs" />
+    <Compile Include="Model\Applications\ApplicationDispatcherWapper.cs" />
     <Compile Include="Model\Applications\ApplicationLogger.cs" />
     <Compile Include="Model\Applications\ApplicationReaderWriterLocker.cs" />
     <Compile Include="Model\Applications\ApplicationDatabaseBarrier.cs" />

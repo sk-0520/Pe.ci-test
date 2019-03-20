@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Applications;
@@ -15,7 +16,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem
 {
     public class LauncherItemElement : ElementBase
     {
-        public LauncherItemElement(Guid launcherItemId, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
+        public LauncherItemElement(Guid launcherItemId, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             LauncherItemId = launcherItemId;
@@ -25,7 +26,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem
             FileDatabaseBarrier = fileDatabaseBarrier;
             StatementLoader = statementLoader;
 
-            Icon = new LauncherIconElement(LauncherItemId, MainDatabaseBarrier, FileDatabaseBarrier, StatementLoader, this);
+            Icon = new LauncherIconElement(LauncherItemId, MainDatabaseBarrier, FileDatabaseBarrier, StatementLoader, dispatcherWapper, this);
         }
 
         #region property

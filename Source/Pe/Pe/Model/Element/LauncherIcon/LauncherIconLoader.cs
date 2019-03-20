@@ -22,8 +22,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherIcon
 {
     public class LauncherIconLoader : IconImageLoaderBase
     {
-        public LauncherIconLoader(Guid launcherItemId, IconScale iconScale, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
-            : base(iconScale, loggerFactory)
+        public LauncherIconLoader(Guid launcherItemId, IconScale iconScale, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
+            : base(iconScale, dispatcherWapper, loggerFactory)
         {
             LauncherItemId = launcherItemId;
             MainDatabaseBarrier = mainDatabaseBarrier;
@@ -52,7 +52,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherIcon
                 }
                 stream.Position = 0;
                 BitmapSource iconImage = null;
-                Application.Current.Dispatcher.Invoke(() => {
+                DispatcherWapper.Invoke(() => {
                     var bitmap = new BitmapImage();
                     bitmap.BeginInit();
                     bitmap.CacheOption = BitmapCacheOption.OnLoad;
