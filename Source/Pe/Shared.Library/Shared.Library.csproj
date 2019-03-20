@@ -158,6 +158,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\ViewModel.cs" />
     <Compile Include="ViewModel\ModelViewModelObservableCollectionManager.cs" />
+    <Compile Include="View\Converter\IconScaleToWidthConverter.cs" />
+    <Compile Include="View\Converter\IconScaleToHeightConverter.cs" />
     <Compile Include="View\WindowExtendBase.cs" />
     <Compile Include="View\ViewExtendBase.cs" />
   </ItemGroup>

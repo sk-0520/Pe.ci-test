@@ -78,13 +78,13 @@
       />
     </ToggleButton>
 
-    <ItemsControl ItemsSource="{Binding LauncherItems}">
+    <!--<ItemsControl ItemsSource="{Binding LauncherItems}">
       <ItemsControl.ItemsPanel>
         <ItemsPanelTemplate>
           <StackPanel />
         </ItemsPanelTemplate>
       </ItemsControl.ItemsPanel>
-    </ItemsControl>
+    </ItemsControl>-->
 
   </DockPanel>
 </Window>
