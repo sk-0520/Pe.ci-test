@@ -21,6 +21,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Model\TextUtility.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="$(MSBuildThisFileDirectory)Model\Logger.tt" />
+    <None Include="$(MSBuildThisFileDirectory)Model\Logger.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
   </ItemGroup>
 </Project>

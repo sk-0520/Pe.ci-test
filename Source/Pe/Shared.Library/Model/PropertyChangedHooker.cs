@@ -38,6 +38,17 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
     {
         public HookItem(string notifyPropertyName, IEnumerable<string> raisePropertyNames, IEnumerable<ICommand> raiseCommands, Action callback)
         {
+            NotifyPropertyName = notifyPropertyName;
+
+            if(raisePropertyNames != null) {
+                RaisePropertyNames = raisePropertyNames.ToList();
+            }
+
+            if(raiseCommands != null) {
+                RaiseCommands = raiseCommands.ToList();
+            }
+
+            Callback = callback;
         }
 
         #region IReadOnlyHookItem
@@ -128,10 +139,10 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
             return hookItem;
         }
 
-        public IReadOnlyHookItem AddHook(HookItem HookItem)
+        public IReadOnlyHookItem AddHook(HookItem hookItem)
         {
-            if(HookItem == null) {
-                throw new ArgumentNullException(nameof(HookItem));
+            if(hookItem == null) {
+                throw new ArgumentNullException(nameof(hookItem));
             }
 
             return AddHookCore(hookItem);

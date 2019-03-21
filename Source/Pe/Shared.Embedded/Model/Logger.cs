@@ -381,6 +381,14 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Link.Model
         }
 
         protected override ILogger CreateLoggerCore(string header) => new ChildLogger(header, this);
+
+        /// <summary>
+        /// テスト用のロガーを作成。
+        /// </summary>
+        public static ILogger Create(Type type, [CallerMemberName] string callerMemberName = null, [CallerLineNumber] int callerLineNumber = -1)
+        {
+            return new TestLogger().Factory.CreateLogger($"{type.Name}.{callerMemberName}({callerLineNumber})");
+        }
     }
 
     public static class ILoggerFactoryExtensions
