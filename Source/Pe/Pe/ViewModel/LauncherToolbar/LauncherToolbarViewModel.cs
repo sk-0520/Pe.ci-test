@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -23,13 +24,19 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar
 {
     public class LauncherToolbarViewModel : SingleModelViewModelBase<LauncherToolbarElement>, IAppDesktopToolbarExtendData, ILoggerFactory, IViewLifecycleReceiver
     {
+        #region variable
+
+        LauncherItemViewModelBase _contextMenuOpendItem;
+
+        #endregion
+
         public LauncherToolbarViewModel(LauncherToolbarElement model, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         {
             LauncherGroupCollection = new ActionModelViewModelObservableCollectionManager<LauncherGroupElement, LauncherGroupViewModel>(Model.LauncherGroups, Logger.Factory) {
                 ToViewModel = (m) => new LauncherGroupViewModel(m, Logger.Factory),
             };
-            LauncherGroupItems = LauncherGroupCollection.GetCollectionView();
+            LauncherGroupItems = LauncherGroupCollection.ViewModels;
 
             LauncherItemCollection = new ActionModelViewModelObservableCollectionManager<LauncherItemElement, LauncherItemViewModelBase>(Model.LauncherItems, Logger.Factory) {
                 ToViewModel = (m) => LauncherItemViewModelFactory.Create(m, Logger.Factory),
@@ -59,14 +66,20 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar
             set => SetModelValue(value);
         }
 
-        public bool IsOpendAppMenu {
+        public bool IsOpendAppMenu
+        {
             get => Model.IsOpendAppMenu;
             set => SetModelValue(value);
         }
 
+        public LauncherItemViewModelBase ContextMenuOpendItem
+        {
+            get => this._contextMenuOpendItem;
+            set => SetProperty(ref this._contextMenuOpendItem, value);
+        }
 
         ModelViewModelObservableCollectionManagerBase<LauncherGroupElement, LauncherGroupViewModel> LauncherGroupCollection { get; }
-        public ICollectionView LauncherGroupItems { get; }
+        public ObservableCollection<LauncherGroupViewModel> LauncherGroupItems { get; }
 
         ModelViewModelObservableCollectionManagerBase<LauncherItemElement, LauncherItemViewModelBase> LauncherItemCollection { get; }
         public ICollectionView LauncherItems { get; }

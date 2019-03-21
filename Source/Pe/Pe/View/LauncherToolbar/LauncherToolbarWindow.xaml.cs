@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
+using ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem;
+using ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar;
 
 namespace ContentTypeTextNet.Pe.Main.View.LauncherToolbar
 {
@@ -32,6 +34,29 @@ namespace ContentTypeTextNet.Pe.Main.View.LauncherToolbar
         ILogger Logger { get; set; }
 
         #endregion
+
+        #region function
+
+        LauncherToolbarViewModel ViewModel => (LauncherToolbarViewModel)DataContext;
+
+        #endregion
+
+        private void ContentPresenter_ContextMenuOpening(object sender, ContextMenuEventArgs e)
+        {
+
+            if(e.Source is LauncherContentControl control) {
+                if(((Control)control.Parent).DataContext is LauncherItemViewModelBase launcherItem) {
+                    //ViewModel.ContextMenuOpendItem = launcherItem;
+                    //((FrameworkElement)sender).ContextMenu.DataContext = launcherItem;
+                }
+            }
+        }
+
+        private void ContentPresenter_ContextMenuClosing(object sender, ContextMenuEventArgs e)
+        {
+            ViewModel.ContextMenuOpendItem = null;
+            //((FrameworkElement)sender).ContextMenu.DataContext = null;
+        }
 
     }
 }

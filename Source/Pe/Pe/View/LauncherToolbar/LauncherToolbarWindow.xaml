@@ -33,6 +33,23 @@
     <cttn_lib_shared_lib_view_converter:IconScaleToWidthConverter x:Key="IconScaleToWidthConverter" />
     <cttn_lib_shared_lib_view_converter:IconScaleToHeightConverter x:Key="IconScaleToHeightConverter" />
 
+    <Style x:Key="DropMenu" TargetType="Popup" BasedOn="{StaticResource PopupMenu}">
+      <Style.Triggers>
+        <DataTrigger Binding="{Binding DataContext.ToolbarPosition, ElementName=root}" Value="Left">
+          <Setter Property="Placement" Value="Right" />
+        </DataTrigger>
+        <DataTrigger Binding="{Binding DataContext.ToolbarPosition, ElementName=root}" Value="Right">
+          <Setter Property="Placement" Value="Left" />
+        </DataTrigger>
+        <DataTrigger Binding="{Binding DataContext.ToolbarPosition, ElementName=root}" Value="Top">
+          <Setter Property="Placement" Value="Bottom" />
+        </DataTrigger>
+        <DataTrigger Binding="{Binding DataContext.ToolbarPosition, ElementName=root}" Value="Bottom">
+          <Setter Property="Placement" Value="Top" />
+        </DataTrigger>
+      </Style.Triggers>
+    </Style>
+    
     <Style TargetType="app_main_view_lt:LauncherContentControl">
       <Style.Triggers>
         <DataTrigger Binding="{Binding DataContext.IconScale, ElementName=root}" Value="Small">
@@ -68,22 +85,6 @@
       </Button>
     </DataTemplate>
 
-    <Style x:Key="DropMenu" TargetType="Popup" BasedOn="{StaticResource PopupMenu}">
-      <Style.Triggers>
-        <DataTrigger Binding="{Binding DataContext.ToolbarPosition, ElementName=root}" Value="Left">
-          <Setter Property="Placement" Value="Right" />
-        </DataTrigger>
-        <DataTrigger Binding="{Binding DataContext.ToolbarPosition, ElementName=root}" Value="Right">
-          <Setter Property="Placement" Value="Left" />
-        </DataTrigger>
-        <DataTrigger Binding="{Binding DataContext.ToolbarPosition, ElementName=root}" Value="Top">
-          <Setter Property="Placement" Value="Bottom" />
-        </DataTrigger>
-        <DataTrigger Binding="{Binding DataContext.ToolbarPosition, ElementName=root}" Value="Bottom">
-          <Setter Property="Placement" Value="Top" />
-        </DataTrigger>
-      </Style.Triggers>
-    </Style>
 
   </Window.Resources>
   <Window.Visibility>
@@ -174,30 +175,34 @@
     </ToggleButton>
 
     <ItemsControl ItemsSource="{Binding LauncherItems}">
-      <ItemsControl.ContextMenu>
-        <ContextMenu>
-          <MenuItem Header="exec" />
-          <MenuItem Header="ex exec" />
-          <Separator />
-          <MenuItem Header="open dir" />
-          <MenuItem Header="open work" />
-          <Separator />
-          <MenuItem Header="copy command" />
-          <MenuItem Header="copy dir" />
-          <MenuItem Header="copy work" />
-          <Separator />
-          <MenuItem Header="groups" ItemsSource="{Binding LauncherGroupItems}">
-            <MenuItem.ItemTemplate>
-              <DataTemplate>
-                <MenuItem Header="{Binding}" />
+      <ItemsControl.Resources>
+        <CollectionViewSource x:Key="LauncherGroupItems" Source="{Binding DataContext.LauncherGroupItems, ElementName=root}" />
+        <ContextMenu  x:Key="ItemContextMenu">
+          <ContextMenu.ItemsSource>
+            <CompositeCollection>
+              <TextBlock Text="{Binding}" />
+              <MenuItem Header="exec" />
+              <MenuItem Header="ex exec" />
+              <Separator />
+              <MenuItem Header="open dir" />
+              <MenuItem Header="open work" />
+              <Separator />
+              <MenuItem Header="copy command" />
+              <MenuItem Header="copy dir" />
+              <MenuItem Header="copy work" />
+              <Separator />
+              <CollectionContainer Collection="{Binding Source={StaticResource LauncherGroupItems}}" />
+            </CompositeCollection>
 
-              </DataTemplate>
-            </MenuItem.ItemTemplate>
-          </MenuItem>
+          </ContextMenu.ItemsSource>
         </ContextMenu>
 
-
-      </ItemsControl.ContextMenu>
+        <Style TargetType="ContentPresenter">
+          <EventSetter Event="ContextMenuOpening" Handler="ContentPresenter_ContextMenuOpening" />
+          <EventSetter Event="ContextMenuClosing" Handler="ContentPresenter_ContextMenuClosing" />
+          <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}" />
+        </Style>
+      </ItemsControl.Resources>
       <ItemsControl.ItemsPanel>
         <ItemsPanelTemplate>
           <StackPanel />
