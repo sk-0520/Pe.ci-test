@@ -56,8 +56,8 @@
     <ControlTemplate x:Key="LauncherItemTemplate" TargetType="ContentControl">
       <Border Background="Transparent" Padding="{Binding DataContext.ButtonPadding, ElementName=root, Mode=OneTime}">
         <ContentPresenter
-          Content="{TemplateBinding Content}"
-        />
+            Content="{TemplateBinding Content}"
+          />
       </Border>
     </ControlTemplate>
 
@@ -94,7 +94,25 @@
   </Window.ContextMenu>
   <DockPanel>
 
-    <ToggleButton x:Name="appButton" DockPanel.Dock="Top" IsChecked="{Binding IsOpendAppMenu}" Template="{StaticResource LauncherItemTemplate}" IsEnabled="{Binding IsOpen, ElementName=appPopup, Converter={StaticResource LogicalNotConverter}}">
+    <ToggleButton x:Name="appButton" IsChecked="{Binding IsOpendAppMenu}" Template="{StaticResource LauncherItemTemplate}" IsEnabled="{Binding IsOpen, ElementName=appPopup, Converter={StaticResource LogicalNotConverter}}">
+      <ToggleButton.Style>
+        <Style TargetType="ToggleButton">
+          <Style.Triggers>
+            <DataTrigger Binding="{Binding DataContext.ToolbarPosition, ElementName=root}" Value="Left">
+              <Setter Property="DockPanel.Dock" Value="Top" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding DataContext.ToolbarPosition, ElementName=root}" Value="Right">
+              <Setter Property="DockPanel.Dock" Value="Top" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding DataContext.ToolbarPosition, ElementName=root}" Value="Top">
+              <Setter Property="DockPanel.Dock" Value="Left" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding DataContext.ToolbarPosition, ElementName=root}" Value="Bottom">
+              <Setter Property="DockPanel.Dock" Value="Left" />
+            </DataTrigger>
+          </Style.Triggers>
+        </Style>
+      </ToggleButton.Style>
       <Grid>
         <app_main_view_lt:LauncherContentControl Title="pe" >
           <app_main_view_lt:LauncherContentControl.Icon>
@@ -110,54 +128,76 @@
         </app_main_view_lt:LauncherContentControl>
         <Popup x:Name="appPopup" Style="{StaticResource DropMenu}" IsOpen="{Binding IsChecked, ElementName=appButton}">
           <Border>
-            <ScrollViewer>
-              <StackPanel>
-                <TextBlock>position</TextBlock>
-                <Grid>
-                  <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                  </Grid.ColumnDefinitions>
-                  <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                  </Grid.RowDefinitions>
+            <StackPanel>
+              <TextBlock>position</TextBlock>
+              <Grid>
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition />
+                  <ColumnDefinition />
+                  <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                  <RowDefinition />
+                  <RowDefinition />
+                  <RowDefinition />
+                </Grid.RowDefinitions>
 
-                  <ToggleButton Grid.Row="1" Grid.Column="0">left</ToggleButton>
-                  <ToggleButton Grid.Row="0" Grid.Column="1">top</ToggleButton>
-                  <ToggleButton Grid.Row="1" Grid.Column="2">right</ToggleButton>
-                  <ToggleButton Grid.Row="2" Grid.Column="1">bottom</ToggleButton>
+                <Button Grid.Row="1" Grid.Column="0">left</Button>
+                <Button Grid.Row="0" Grid.Column="1">top</Button>
+                <Button Grid.Row="1" Grid.Column="2">right</Button>
+                <Button Grid.Row="2" Grid.Column="1">bottom</Button>
 
-                </Grid>
+              </Grid>
 
-                <Separator />
+              <Separator />
 
-                <MenuItem Header="topmost" />
-                <MenuItem Header="auto hide" />
+              <MenuItem Header="topmost" />
+              <MenuItem Header="auto hide" />
 
-                <Separator />
+              <Separator />
 
-                <MenuItem Header="close" />
+              <MenuItem Header="close" />
 
-                <Separator />
+              <Separator />
 
-                <ItemsControl ItemsSource="{Binding LauncherGroupItems}">
-                  <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                      <MenuItem Header="{Binding}" />
-                    </DataTemplate>
-                  </ItemsControl.ItemTemplate>
-                </ItemsControl>
-              </StackPanel>
-            </ScrollViewer>
+              <ItemsControl ItemsSource="{Binding LauncherGroupItems}">
+                <ItemsControl.ItemTemplate>
+                  <DataTemplate>
+                    <MenuItem Header="{Binding}" />
+                  </DataTemplate>
+                </ItemsControl.ItemTemplate>
+              </ItemsControl>
+            </StackPanel>
           </Border>
         </Popup>
       </Grid>
     </ToggleButton>
 
     <ItemsControl ItemsSource="{Binding LauncherItems}">
+      <ItemsControl.ContextMenu>
+        <ContextMenu>
+          <MenuItem Header="exec" />
+          <MenuItem Header="ex exec" />
+          <Separator />
+          <MenuItem Header="open dir" />
+          <MenuItem Header="open work" />
+          <Separator />
+          <MenuItem Header="copy command" />
+          <MenuItem Header="copy dir" />
+          <MenuItem Header="copy work" />
+          <Separator />
+          <MenuItem Header="groups" ItemsSource="{Binding LauncherGroupItems}">
+            <MenuItem.ItemTemplate>
+              <DataTemplate>
+                <MenuItem Header="{Binding}" />
+
+              </DataTemplate>
+            </MenuItem.ItemTemplate>
+          </MenuItem>
+        </ContextMenu>
+
+
+      </ItemsControl.ContextMenu>
       <ItemsControl.ItemsPanel>
         <ItemsPanelTemplate>
           <StackPanel />
