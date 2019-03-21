@@ -29,8 +29,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
     {
         #region variable
 
-        bool _isTopmodst;
+        bool _isTopmost;
         LauncherGroupElement _selectedLauncherGroup;
+        bool _isOpendAppMenu;
 
         #endregion
 
@@ -102,10 +103,10 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
         [PixelKind(Px.Logical)]
         public double TextWidth { get; private set; }
 
-        public bool IsTopmodst
+        public bool IsTopmost
         {
-            get => this._isTopmodst;
-            set => SetProperty(ref this._isTopmodst, value);
+            get => this._isTopmost;
+            set => SetProperty(ref this._isTopmost, value);
         }
 
         public LauncherGroupElement SelectedLauncherGroup
@@ -114,6 +115,11 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
             set => SetProperty(ref this._selectedLauncherGroup, value);
         }
 
+        public bool IsOpendAppMenu
+        {
+            get => this._isOpendAppMenu;
+            set => SetProperty(ref this._isOpendAppMenu, value);
+        }
 
         #endregion
 
@@ -181,7 +187,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
             IconScale = displayData.IconScale;
             TextWidth = displayData.TextWidth;
             IsIconOnly = displayData.IsIconOnly;
-            IsTopmodst = displayData.IsTopmost;
+            IsTopmost = displayData.IsTopmost;
             IsAutoHide = displayData.IsAutoHide;
             AutoHideTimeout = displayData.AutoHideTimeout;
             ToolbarPosition = displayData.ToolbarPosition;

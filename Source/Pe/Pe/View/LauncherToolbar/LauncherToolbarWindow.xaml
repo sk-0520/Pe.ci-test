@@ -21,13 +21,15 @@
   ResizeMode="NoResize"
   ShowInTaskbar="False"
 
-  Topmost="{Binding IsTopmodst}"
+  Topmost="{Binding IsTopmost}"
 
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   mc:Ignorable="d"
 >
   <Window.Resources>
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+
+    <cttn_lib_shared_lib_view_converter:LogicalNotConverter x:Key="LogicalNotConverter" />
     <cttn_lib_shared_lib_view_converter:IconScaleToWidthConverter x:Key="IconScaleToWidthConverter" />
     <cttn_lib_shared_lib_view_converter:IconScaleToHeightConverter x:Key="IconScaleToHeightConverter" />
 
@@ -52,7 +54,7 @@
     </Style>
 
     <ControlTemplate x:Key="LauncherItemTemplate" TargetType="ContentControl">
-      <Border Padding="{Binding DataContext.ButtonPadding, ElementName=root, Mode=OneTime}">
+      <Border Background="Transparent" Padding="{Binding DataContext.ButtonPadding, ElementName=root, Mode=OneTime}">
         <ContentPresenter
           Content="{TemplateBinding Content}"
         />
@@ -66,6 +68,23 @@
       </Button>
     </DataTemplate>
 
+    <Style x:Key="DropMenu" TargetType="Popup" BasedOn="{StaticResource PopupMenu}">
+      <Style.Triggers>
+        <DataTrigger Binding="{Binding DataContext.ToolbarPosition, ElementName=root}" Value="Left">
+          <Setter Property="Placement" Value="Right" />
+        </DataTrigger>
+        <DataTrigger Binding="{Binding DataContext.ToolbarPosition, ElementName=root}" Value="Right">
+          <Setter Property="Placement" Value="Left" />
+        </DataTrigger>
+        <DataTrigger Binding="{Binding DataContext.ToolbarPosition, ElementName=root}" Value="Top">
+          <Setter Property="Placement" Value="Bottom" />
+        </DataTrigger>
+        <DataTrigger Binding="{Binding DataContext.ToolbarPosition, ElementName=root}" Value="Bottom">
+          <Setter Property="Placement" Value="Top" />
+        </DataTrigger>
+      </Style.Triggers>
+    </Style>
+
   </Window.Resources>
   <Window.Visibility>
     <Binding Path="IsVisible" Converter="{StaticResource BooleanToVisibilityConverter}"/>
@@ -75,19 +94,67 @@
   </Window.ContextMenu>
   <DockPanel>
 
-    <ToggleButton DockPanel.Dock="Top" Template="{StaticResource LauncherItemTemplate}">
-      <app_main_view_lt:LauncherContentControl Title="pe" >
-        <app_main_view_lt:LauncherContentControl.Icon>
-          <ContentControl
-            Style="{StaticResource NormalIcon}"
-            Content="{StaticResource Image-HamburgerMenu}"
-            Width="{Binding IconScale, Converter={StaticResource IconScaleToWidthConverter}}"
-            Height="{Binding IconScale, Converter={StaticResource IconScaleToHeightConverter}}"
-            Background="Black"
-            Foreground="Gray"
-          />
-        </app_main_view_lt:LauncherContentControl.Icon>
-      </app_main_view_lt:LauncherContentControl>
+    <ToggleButton x:Name="appButton" DockPanel.Dock="Top" IsChecked="{Binding IsOpendAppMenu}" Template="{StaticResource LauncherItemTemplate}" IsEnabled="{Binding IsOpen, ElementName=appPopup, Converter={StaticResource LogicalNotConverter}}">
+      <Grid>
+        <app_main_view_lt:LauncherContentControl Title="pe" >
+          <app_main_view_lt:LauncherContentControl.Icon>
+            <ContentControl
+              Style="{StaticResource NormalIcon}"
+              Content="{StaticResource Image-HamburgerMenu}"
+              Width="{Binding IconScale, Converter={StaticResource IconScaleToWidthConverter}}"
+              Height="{Binding IconScale, Converter={StaticResource IconScaleToHeightConverter}}"
+              Background="Black"
+              Foreground="Gray"
+            />
+          </app_main_view_lt:LauncherContentControl.Icon>
+        </app_main_view_lt:LauncherContentControl>
+        <Popup x:Name="appPopup" Style="{StaticResource DropMenu}" IsOpen="{Binding IsChecked, ElementName=appButton}">
+          <Border>
+            <ScrollViewer>
+              <StackPanel>
+                <TextBlock>position</TextBlock>
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                  </Grid.ColumnDefinitions>
+                  <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                  </Grid.RowDefinitions>
+
+                  <ToggleButton Grid.Row="1" Grid.Column="0">left</ToggleButton>
+                  <ToggleButton Grid.Row="0" Grid.Column="1">top</ToggleButton>
+                  <ToggleButton Grid.Row="1" Grid.Column="2">right</ToggleButton>
+                  <ToggleButton Grid.Row="2" Grid.Column="1">bottom</ToggleButton>
+
+                </Grid>
+
+                <Separator />
+
+                <MenuItem Header="topmost" />
+                <MenuItem Header="auto hide" />
+
+                <Separator />
+
+                <MenuItem Header="close" />
+
+                <Separator />
+
+                <ItemsControl ItemsSource="{Binding LauncherGroupItems}">
+                  <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                      <MenuItem Header="{Binding}" />
+                    </DataTemplate>
+                  </ItemsControl.ItemTemplate>
+                </ItemsControl>
+              </StackPanel>
+            </ScrollViewer>
+          </Border>
+        </Popup>
+      </Grid>
     </ToggleButton>
 
     <ItemsControl ItemsSource="{Binding LauncherItems}">

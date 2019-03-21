@@ -53,9 +53,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar
             set => SetModelValue(value);
         }
 
-        public bool IsTopmodst
+        public bool IsTopmost
         {
-            get => Model.IsTopmodst;
+            get => Model.IsTopmost;
+            set => SetModelValue(value);
+        }
+
+        public bool IsOpendAppMenu {
+            get => Model.IsOpendAppMenu;
             set => SetModelValue(value);
         }
 
