@@ -73,18 +73,17 @@
     <ToggleButton DockPanel.Dock="Top" Template="{StaticResource LauncherItemTemplate}">
       <app_main_view_lt:LauncherContentControl
         Title="pe"
-        IconImage="💩"
         IconViewer="{x:Null}"
       />
     </ToggleButton>
 
-    <!--<ItemsControl ItemsSource="{Binding LauncherItems}">
+    <ItemsControl ItemsSource="{Binding LauncherItems}">
       <ItemsControl.ItemsPanel>
         <ItemsPanelTemplate>
           <StackPanel />
         </ItemsPanelTemplate>
       </ItemsControl.ItemsPanel>
-    </ItemsControl>-->
+    </ItemsControl>
 
   </DockPanel>
 </Window>

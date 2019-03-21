@@ -12,39 +12,13 @@
   d:DesignWidth="60"
   d:DesignHeight="60"
 >
-  <UserControl.Resources>
-    <cttn_lib_shared_lib_view_converter:IconScaleToHeightConverter x:Key="IconScaleToHeightConverter" />
-    <cttn_lib_shared_lib_view_converter:IconScaleToWidthConverter x:Key="IconScaleToWidthConverter" />
-  </UserControl.Resources>
   <Grid>
     <Grid.ColumnDefinitions>
       <ColumnDefinition Width="Auto" />
       <ColumnDefinition Width="Auto" />
     </Grid.ColumnDefinitions>
 
-    <ContentControl x:Name="content" Grid.Column="0" Margin="{Binding IconMargin, ElementName=root}">
-      <ContentControl.Style>
-        <Style TargetType="ContentControl">
-          <Style.Triggers>
-            <DataTrigger Binding="{Binding IconImage, ElementName=root}" Value="{x:Null}">
-              <Setter Property="Content">
-                <Setter.Value>
-                  <!-- 実体化用のダミー要素 -->
-                  <Border>
-                    <app_main_view:ImageViewerControl IconViewer="{Binding IconViewer, ElementName=root}"  />
-                  </Border>
-                </Setter.Value>
-              </Setter>
-            </DataTrigger>
-            <DataTrigger Binding="{Binding IconViewer, ElementName=root}" Value="{x:Null}">
-              <Setter Property="Content" Value="{Binding IconImage, ElementName=root}" />
-              <Setter Property="Width" Value="{Binding IconScale, ElementName=root, Converter={StaticResource IconScaleToWidthConverter}, Mode=OneWay}" />
-              <Setter Property="Height" Value="{Binding IconScale, ElementName=root, Converter={StaticResource IconScaleToHeightConverter}, Mode=OneWay}" />
-            </DataTrigger>
-          </Style.Triggers>
-        </Style>
-      </ContentControl.Style>
-    </ContentControl>
+    <app_main_view:ImageViewerControl Grid.Column="0" IconViewer="{Binding IconViewer, ElementName=root}" Margin="{Binding IconMargin, ElementName=root}" />
     <TextBlock Grid.Column="1">
       <TextBlock.Style>
         <Style TargetType="TextBlock">

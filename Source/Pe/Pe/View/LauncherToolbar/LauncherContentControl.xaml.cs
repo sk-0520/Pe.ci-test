@@ -53,32 +53,6 @@ namespace ContentTypeTextNet.Pe.Main.View.LauncherToolbar
 
         #endregion
 
-        #region IconImage
-
-        public static readonly DependencyProperty IconImageProperty = DependencyProperty.Register(
-            nameof(IconImage),
-            typeof(object),
-            typeof(LauncherContentControl),
-            new FrameworkPropertyMetadata(
-                default(object),
-                new PropertyChangedCallback(OnIconImageChanged)
-            )
-        );
-
-        public object IconImage
-        {
-            get { return GetValue(IconImageProperty); }
-            set { SetValue(IconImageProperty, value); }
-        }
-
-        private static void OnIconImageChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if(d is LauncherContentControl control) {
-            }
-        }
-
-        #endregion
-
         #region IconMargin
 
         public static readonly DependencyProperty IconMarginProperty = DependencyProperty.Register(
@@ -98,32 +72,6 @@ namespace ContentTypeTextNet.Pe.Main.View.LauncherToolbar
         }
 
         private static void OnIconMarginChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if(d is LauncherContentControl control) {
-            }
-        }
-
-        #endregion
-
-        #region IconScale
-
-        public static readonly DependencyProperty IconScaleProperty = DependencyProperty.Register(
-            nameof(IconScale),
-            typeof(IconScale),
-            typeof(LauncherContentControl),
-            new FrameworkPropertyMetadata(
-                default(IconScale),
-                new PropertyChangedCallback(OnIconScaleChanged)
-            )
-        );
-
-        public IconScale IconScale
-        {
-            get { return (IconScale)GetValue(IconScaleProperty); }
-            set { SetValue(IconScaleProperty, value); }
-        }
-
-        private static void OnIconScaleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if(d is LauncherContentControl control) {
             }
