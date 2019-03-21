@@ -27,25 +27,25 @@ namespace ContentTypeTextNet.Pe.Main.View.LauncherToolbar
             InitializeComponent();
         }
 
-        #region IconViewer
+        #region Icon
 
-        public static readonly DependencyProperty IconViewerProperty = DependencyProperty.Register(
-            nameof(IconViewer),
-            typeof(IconViewerViewModel),
+        public static readonly DependencyProperty IconProperty = DependencyProperty.Register(
+            nameof(Icon),
+            typeof(object),
             typeof(LauncherContentControl),
             new FrameworkPropertyMetadata(
-                default(IconViewerViewModel),
-                new PropertyChangedCallback(OnIconViewerChanged)
+                default(object),
+                new PropertyChangedCallback(OnIconChanged)
             )
         );
 
-        public IconViewerViewModel IconViewer
+        public object Icon
         {
-            get { return (IconViewerViewModel)GetValue(IconViewerProperty); }
-            set { SetValue(IconViewerProperty, value); }
+            get { return (object)GetValue(IconProperty); }
+            set { SetValue(IconProperty, value); }
         }
 
-        private static void OnIconViewerChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnIconChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if(d is LauncherContentControl control) {
             }

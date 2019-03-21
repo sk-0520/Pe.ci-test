@@ -197,7 +197,6 @@
     <Compile Include="ViewModel\IDialogCommand.cs" />
     <Compile Include="ViewModel\IViewLifecycleReceiver.cs" />
     <Compile Include="ViewModel\LauncherGroup\LauncherGroupViewModel.cs" />
-    <Compile Include="ViewModel\LauncherIcon\ApplicationIconViewModel.cs" />
     <Compile Include="ViewModel\LauncherIcon\LauncherIconViewModel.cs" />
     <Compile Include="ViewModel\LauncherItem\LauncherEmbeddedItemViewModel.cs" />
     <Compile Include="ViewModel\LauncherItem\LauncherCommandItemViewModel.cs" />

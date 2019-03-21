@@ -35,8 +35,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar
                 ToViewModel = (m) => LauncherItemViewModelFactory.Create(m, Logger.Factory),
             };
             LauncherItems = LauncherItemCollection.GetCollectionView();
-
-            Icon = new ApplicationIconViewModel(Model.ImagePainter.GetIconImageLoaderPack(TargetIcon.LauncherToolbarMain), Logger.Factory);
         }
 
         #region property
@@ -48,8 +46,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar
         public Thickness IconMargin => Model.IconMargin;
         public bool IsIconOnly => Model.IsIconOnly;
         public double TextWidth => Model.TextWidth;
-
-        public ApplicationIconViewModel Icon { get; }
 
         public bool IsVisible
         {

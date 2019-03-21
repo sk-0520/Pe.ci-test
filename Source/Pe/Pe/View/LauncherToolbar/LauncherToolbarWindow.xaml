@@ -4,6 +4,9 @@
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 
+
+  xmlns:cttn_lib_shared_lib_view_converter="clr-namespace:ContentTypeTextNet.Pe.Library.Shared.Library.View.Converter;assembly=Shared.Library"
+
   xmlns:app_main_view="clr-namespace:ContentTypeTextNet.Pe.Main.View"
   xmlns:app_main_view_lt="clr-namespace:ContentTypeTextNet.Pe.Main.View.LauncherToolbar"
   xmlns:app_main_viewmode_launcheritem="clr-namespace:ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem"
@@ -25,20 +28,22 @@
 >
   <Window.Resources>
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    <cttn_lib_shared_lib_view_converter:IconScaleToWidthConverter x:Key="IconScaleToWidthConverter" />
+    <cttn_lib_shared_lib_view_converter:IconScaleToHeightConverter x:Key="IconScaleToHeightConverter" />
 
     <Style TargetType="app_main_view_lt:LauncherContentControl">
       <Style.Triggers>
         <DataTrigger Binding="{Binding DataContext.IconScale, ElementName=root}" Value="Small">
-          <Setter Property="IconViewer" Value="{Binding Icon.Small}" />
+          <Setter Property="Icon" Value="{Binding Icon.Small}" />
         </DataTrigger>
         <DataTrigger Binding="{Binding DataContext.IconScale, ElementName=root}" Value="Normal">
-          <Setter Property="IconViewer" Value="{Binding Icon.Normal}" />
+          <Setter Property="Icon" Value="{Binding Icon.Normal}" />
         </DataTrigger>
         <DataTrigger Binding="{Binding DataContext.IconScale, ElementName=root}" Value="Big">
-          <Setter Property="IconViewer" Value="{Binding Icon.Big}" />
+          <Setter Property="Icon" Value="{Binding Icon.Big}" />
         </DataTrigger>
         <DataTrigger Binding="{Binding DataContext.IconScale, ElementName=root}" Value="Large">
-          <Setter Property="IconViewer" Value="{Binding Icon.Large}" />
+          <Setter Property="Icon" Value="{Binding Icon.Large}" />
         </DataTrigger>
       </Style.Triggers>
       <Setter Property="IconMargin" Value="{Binding DataContext.IconMargin, ElementName=root, Mode=OneTime}" />
@@ -71,10 +76,16 @@
   <DockPanel>
 
     <ToggleButton DockPanel.Dock="Top" Template="{StaticResource LauncherItemTemplate}">
-      <app_main_view_lt:LauncherContentControl
-        Title="pe"
-        IconViewer="{x:Null}"
-      />
+      <app_main_view_lt:LauncherContentControl Title="pe">
+        <app_main_view_lt:LauncherContentControl.Icon>
+          <TextBlock
+            Width="{Binding IconScale, Converter={StaticResource IconScaleToWidthConverter}}"
+            Height="{Binding IconScale, Converter={StaticResource IconScaleToHeightConverter}}"
+          >
+            💩
+          </TextBlock>
+        </app_main_view_lt:LauncherContentControl.Icon>
+      </app_main_view_lt:LauncherContentControl>
     </ToggleButton>
 
     <ItemsControl ItemsSource="{Binding LauncherItems}">
