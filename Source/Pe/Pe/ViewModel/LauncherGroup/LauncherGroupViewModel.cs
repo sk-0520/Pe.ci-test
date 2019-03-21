@@ -16,6 +16,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherGroup
         { }
 
         #region property
+
+        public int RowIndex { get; set; }
+
         #endregion
 
         #region command
