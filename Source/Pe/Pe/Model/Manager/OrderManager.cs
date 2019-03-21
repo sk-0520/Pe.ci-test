@@ -13,9 +13,11 @@ using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Applications;
 using ContentTypeTextNet.Pe.Main.Model.Element;
 using ContentTypeTextNet.Pe.Main.Model.Element.LauncherGroup;
+using ContentTypeTextNet.Pe.Main.Model.Element.LauncherIcon;
 using ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem;
 using ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar;
 using ContentTypeTextNet.Pe.Main.Model.Launcher;
+using ContentTypeTextNet.Pe.Main.Model.Logic;
 using ContentTypeTextNet.Pe.Main.View.Extend;
 using ContentTypeTextNet.Pe.Main.View.LauncherToolbar;
 using ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar;
@@ -87,12 +89,19 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
             public LauncherItemElement GetOrCreateLauncherItemElement(Guid launcherItemId)
             {
                 return LauncherItems.GetOrAdd(launcherItemId, launcherItemIdKey => {
-                    var element = DiContainer.Make<LauncherItemElement>(new object[] { launcherItemIdKey });
-                    element.Initialize();
-                    return element;
+
+                    var launcherIconImageLoaders = EnumUtility.GetMembers<IconScale>()
+                        .Select(i => DiContainer.Make<LauncherIconLoader>(new object[] { launcherItemId, i }))
+                    ;
+                    var iconImageLoaderPack = new IconImageLoaderPack(launcherIconImageLoaders);
+
+                    var launcherIconElement = DiContainer.Make<LauncherIconElement>(new object[] { launcherItemId, iconImageLoaderPack });
+
+                    var launcherItemElement = DiContainer.Make<LauncherItemElement>(new object[] { launcherItemIdKey, launcherIconElement });
+                    launcherItemElement.Initialize();
+                    return launcherItemElement;
                 });
             }
-
 
             public WindowItem CreateLauncherToolbarWindow(LauncherToolbarElement element)
             {

@@ -78,6 +78,18 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         }
     }
 
+    public interface IIconPack<TValue>
+    {
+        #region property
+
+        TValue Small { get; }
+        TValue Normal { get; }
+        TValue Big { get; }
+        TValue Large { get; }
+
+        #endregion
+    }
+
 
     public class IconLoader
     {

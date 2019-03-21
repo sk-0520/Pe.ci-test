@@ -181,6 +181,8 @@
     <Compile Include="Model\Data\Dto\CommonDto.cs" />
     <Compile Include="Model\Data\Dto\DtoBase.cs" />
     <Compile Include="Model\Data\Dto\SetupDto.cs" />
+    <Compile Include="Model\Logic\Painter\ImagePainter.cs" />
+    <Compile Include="Model\Logic\Painter\PainterBase.cs" />
     <Compile Include="Model\Manager\ManagerBase.cs" />
     <Compile Include="Model\Manager\NotifyManager.cs" />
     <Compile Include="Model\Manager\OrderManager.cs" />

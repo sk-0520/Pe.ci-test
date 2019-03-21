@@ -16,17 +16,16 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem
 {
     public class LauncherItemElement : ElementBase
     {
-        public LauncherItemElement(Guid launcherItemId, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
+        public LauncherItemElement(Guid launcherItemId, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, LauncherIconElement launcherIconElement, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             LauncherItemId = launcherItemId;
 
             NotifyManager = notifyManager;
             MainDatabaseBarrier = mainDatabaseBarrier;
-            FileDatabaseBarrier = fileDatabaseBarrier;
             StatementLoader = statementLoader;
 
-            Icon = new LauncherIconElement(LauncherItemId, MainDatabaseBarrier, FileDatabaseBarrier, StatementLoader, dispatcherWapper, this);
+            Icon = launcherIconElement;
         }
 
         #region property

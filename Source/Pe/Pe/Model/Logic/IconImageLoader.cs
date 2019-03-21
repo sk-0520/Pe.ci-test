@@ -88,4 +88,25 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
 
         #endregion
     }
+
+    public class IconImageLoaderPack: IIconPack<IconImageLoaderBase>
+    {
+        public IconImageLoaderPack(IEnumerable<IconImageLoaderBase> iconImageLoaders)
+        {
+            var map = iconImageLoaders.ToDictionary(i => i.IconScale, i => i);
+            Small = map[IconScale.Small];
+            Normal = map[IconScale.Normal];
+            Big = map[IconScale.Big];
+            Large = map[IconScale.Large];
+        }
+
+        #region property
+
+        public IconImageLoaderBase Small { get; }
+        public IconImageLoaderBase Normal { get; }
+        public IconImageLoaderBase Big { get; }
+        public IconImageLoaderBase Large { get; }
+
+        #endregion
+    }
 }

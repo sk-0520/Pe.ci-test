@@ -23,30 +23,33 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherIcon
         #endregion
     }
 
-    public class LauncherIconViewModel : SingleModelViewModelBase<LauncherIconElement>
+    public class LauncherIconViewModel : SingleModelViewModelBase<LauncherIconElement>, IIconPack<IconViewerViewModel>
     {
         public LauncherIconViewModel(LauncherIconElement model, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         {
-            Small = new IconViewerViewModel(Model.IconImageLoaders[IconScale.Small], Logger.Factory);
-            Normal = new IconViewerViewModel(Model.IconImageLoaders[IconScale.Normal], Logger.Factory);
-            Big = new IconViewerViewModel(Model.IconImageLoaders[IconScale.Big], Logger.Factory);
-            Large = new IconViewerViewModel(Model.IconImageLoaders[IconScale.Large], Logger.Factory);
+            Small = new IconViewerViewModel(Model.IconImageLoaderPack.Small, Logger.Factory);
+            Normal = new IconViewerViewModel(Model.IconImageLoaderPack.Normal, Logger.Factory);
+            Big = new IconViewerViewModel(Model.IconImageLoaderPack.Big, Logger.Factory);
+            Large = new IconViewerViewModel(Model.IconImageLoaderPack.Large, Logger.Factory);
         }
 
         #region property
-
-        public IconViewerViewModel Small { get; }
-        public IconViewerViewModel Normal { get; }
-        public IconViewerViewModel Big { get; }
-        public IconViewerViewModel Large { get; }
-
         #endregion
 
         #region command
         #endregion
 
         #region function
+        #endregion
+
+        #region IIconPack
+
+        public IconViewerViewModel Small { get; }
+        public IconViewerViewModel Normal { get; }
+        public IconViewerViewModel Big { get; }
+        public IconViewerViewModel Large { get; }
+
         #endregion
 
         #region SingleModelViewModelBase
