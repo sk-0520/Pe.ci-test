@@ -49,7 +49,7 @@
         </DataTrigger>
       </Style.Triggers>
     </Style>
-    
+
     <Style TargetType="app_main_view_lt:LauncherContentControl">
       <Style.Triggers>
         <DataTrigger Binding="{Binding DataContext.IconScale, ElementName=root}" Value="Small">
@@ -78,9 +78,30 @@
       </Border>
     </ControlTemplate>
 
+    <ContextMenu x:Key="ItemContextMenu">
+      <ContextMenu.Resources>
+        <CollectionViewSource x:Key="LauncherGroupItems" Source="{Binding DataContext.LauncherGroupItems, Source={x:Reference root}}" />
+      </ContextMenu.Resources>
+      <ContextMenu.ItemsSource>
+        <CompositeCollection>
+          <MenuItem Header="exec" />
+          <MenuItem Header="ex exec" />
+          <Separator />
+          <MenuItem Header="open dir" />
+          <MenuItem Header="open work" />
+          <Separator />
+          <MenuItem Header="copy command" />
+          <MenuItem Header="copy dir" />
+          <MenuItem Header="copy work" />
+          <Separator />
+          <CollectionContainer Collection="{Binding Source={StaticResource LauncherGroupItems}}" />
+        </CompositeCollection>
+      </ContextMenu.ItemsSource>
+    </ContextMenu>
+
     <!-- ファイル -->
     <DataTemplate DataType="{x:Type app_main_viewmode_launcheritem:LauncherFileItemViewModel}">
-      <Button Template="{StaticResource LauncherItemTemplate}">
+      <Button ContextMenu="{StaticResource ItemContextMenu}" Template="{StaticResource LauncherItemTemplate}">
         <app_main_view_lt:LauncherContentControl Title="{Binding Name, Mode=OneTime}" />
       </Button>
     </DataTemplate>
@@ -176,8 +197,8 @@
 
     <ItemsControl ItemsSource="{Binding LauncherItems}">
       <ItemsControl.Resources>
-        <CollectionViewSource x:Key="LauncherGroupItems" Source="{Binding DataContext.LauncherGroupItems, ElementName=root}" />
-        <ContextMenu  x:Key="ItemContextMenu">
+        <!--<CollectionViewSource x:Key="LauncherGroupItems" Source="{Binding DataContext.LauncherGroupItems, ElementName=root}" />
+        <ContextMenu x:Key="ItemContextMenu">
           <ContextMenu.ItemsSource>
             <CompositeCollection>
               <TextBlock Text="{Binding}" />
@@ -201,7 +222,7 @@
           <EventSetter Event="ContextMenuOpening" Handler="ContentPresenter_ContextMenuOpening" />
           <EventSetter Event="ContextMenuClosing" Handler="ContentPresenter_ContextMenuClosing" />
           <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}" />
-        </Style>
+        </Style>-->
       </ItemsControl.Resources>
       <ItemsControl.ItemsPanel>
         <ItemsPanelTemplate>
