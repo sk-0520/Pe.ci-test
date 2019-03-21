@@ -160,7 +160,6 @@
     <Compile Include="Model\Element\IViewCloseReceiver.cs" />
     <Compile Include="Model\Element\IViewShowStarter.cs" />
     <Compile Include="Model\Element\LauncherGroup\LauncherGroupElement.cs" />
-    <Compile Include="Model\Applications\ApplicationIconImageLoader.cs" />
     <Compile Include="Model\Element\LauncherIcon\LauncherIconLoader.cs" />
     <Compile Include="Model\Element\LauncherIcon\LauncherIconElement.cs" />
     <Compile Include="Model\Element\LauncherItem\LauncherItemElement.cs" />
@@ -281,7 +280,9 @@
       <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Resources\Icon\Theme\Default\" />
+  </ItemGroup>
   <ItemGroup>
     <Page Include="View\Accept\AcceptWindow.xaml">
       <SubType>Designer</SubType>

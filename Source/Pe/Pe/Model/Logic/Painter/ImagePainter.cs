@@ -10,7 +10,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic.Theme
 {
     public enum TargetIcon
     {
-        LauncherMain,
+        LauncherToolbarMain,
     }
 
     public interface IIconImagePainter
@@ -23,7 +23,10 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic.Theme
         #endregion
     }
 
-    public abstract class ImagePainterBase : PainterBase, IIconImagePainter
+    public interface IImagePainter: IIconImagePainter
+    { }
+
+    public abstract class ImagePainterBase : PainterBase, IImagePainter
     {
         public ImagePainterBase(IDispatcherWapper dispatcherWapper, ILogger logger)
             : base(dispatcherWapper, logger)
@@ -32,7 +35,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic.Theme
             : base(dispatcherWapper, loggerFactory)
         { }
 
-        #region IIconImagePainter
+        #region IImagePainter
 
         public abstract IconImageLoaderBase GetIconImageLoader(TargetIcon targetIcon, IconScale iconScale);
         public IconImageLoaderPack GetIconImageLoaderPack(TargetIcon targetIcon)

@@ -14,6 +14,7 @@ using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Database;
 using ContentTypeTextNet.Pe.Main.Model.Logic;
 using ContentTypeTextNet.Pe.Main.Model.Logic.Designer;
+using ContentTypeTextNet.Pe.Main.Model.Logic.Theme;
 using ContentTypeTextNet.Pe.Main.Model.Manager;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Applications
@@ -247,8 +248,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Applications
                 .Register<ITemporaryDatabaseBarrier, ApplicationDatabaseBarrier>(new ApplicationDatabaseBarrier(accessor.Temporary, rwlp.Temporary))
                 .Register<IReadWriteLockPack, ReadWriteLockPack>(rwlp)
                 .Register<IDispatcherWapper, ApplicationDispatcherWapper>(DiLifecycle.Transient)
-                .Register<IApplicationIconImageLoaders, ApplicationIconImageLoaders>(DiLifecycle.Transient)
                 .Register<IIdFactory, IdFactory>(DiLifecycle.Transient)
+                .Register<IImagePainter, ImagePainter>(DiLifecycle.Transient)
                 .Register<ILauncherToolbarDesigner, LauncherToolbarDesigner>(DiLifecycle.Transient)
             ;
 

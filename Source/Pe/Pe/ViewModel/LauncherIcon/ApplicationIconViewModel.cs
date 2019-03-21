@@ -8,19 +8,20 @@ using ContentTypeTextNet.Pe.Library.Shared.Library.ViewModel;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Applications;
 using ContentTypeTextNet.Pe.Main.Model.Element.LauncherIcon;
+using ContentTypeTextNet.Pe.Main.Model.Logic;
 using ContentTypeTextNet.Pe.Main.ViewModel.IconViewer;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherIcon
 {
-    public class ApplicationIconViewModel : ViewModelBase, ILauncherIconViewModel
+    public class ApplicationIconViewModel : ViewModelBase, IIconPack<IconViewerViewModel>
     {
-        public ApplicationIconViewModel(IApplicationIconImageLoaders applicationIconImageLoaders, ILoggerFactory loggerFactory)
+        public ApplicationIconViewModel(IconImageLoaderPack iconImageLoaderPack, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
-            Small = new IconViewerViewModel(applicationIconImageLoaders.IconImageLoaders[IconScale.Small], Logger.Factory);
-            Normal = new IconViewerViewModel(applicationIconImageLoaders.IconImageLoaders[IconScale.Normal], Logger.Factory);
-            Big = new IconViewerViewModel(applicationIconImageLoaders.IconImageLoaders[IconScale.Big], Logger.Factory);
-            Large = new IconViewerViewModel(applicationIconImageLoaders.IconImageLoaders[IconScale.Large], Logger.Factory);
+            Small = new IconViewerViewModel(iconImageLoaderPack.Small, Logger.Factory);
+            Normal = new IconViewerViewModel(iconImageLoaderPack.Normal, Logger.Factory);
+            Big = new IconViewerViewModel(iconImageLoaderPack.Big, Logger.Factory);
+            Large = new IconViewerViewModel(iconImageLoaderPack.Large, Logger.Factory);
         }
 
         #region property

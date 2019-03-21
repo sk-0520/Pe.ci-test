@@ -19,6 +19,7 @@ using ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem;
 using ContentTypeTextNet.Pe.Main.Model.Launcher;
 using ContentTypeTextNet.Pe.Main.Model.Logic;
 using ContentTypeTextNet.Pe.Main.Model.Logic.Designer;
+using ContentTypeTextNet.Pe.Main.Model.Logic.Theme;
 using ContentTypeTextNet.Pe.Main.Model.Manager;
 using ContentTypeTextNet.Pe.Main.View.Extend;
 
@@ -33,7 +34,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
 
         #endregion
 
-        public LauncherToolbarElement(Screen dockScreen, ReadOnlyObservableCollection<LauncherGroupElement> launcherGroups, IOrderManager orderManager, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, ILauncherToolbarDesigner launcherToolbarDesigner, IApplicationIconImageLoaders applicationIconImageLoaders, IDiContainer diContainer, ILoggerFactory loggerFactory)
+        public LauncherToolbarElement(Screen dockScreen, ReadOnlyObservableCollection<LauncherGroupElement> launcherGroups, IOrderManager orderManager, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, ILauncherToolbarDesigner launcherToolbarDesigner, IImagePainter imagePainter, IDiContainer diContainer, ILoggerFactory loggerFactory)
             : base(diContainer, loggerFactory)
         {
             DockScreen = dockScreen;
@@ -45,7 +46,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
             StatementLoader = statementLoader;
             IdFactory = idFactory;
             LauncherToolbarDesigner = launcherToolbarDesigner;
-            ApplicationIconImageLoaders = applicationIconImageLoaders;
+            ImagePainter = imagePainter;
         }
 
         #region property
@@ -56,7 +57,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
         IDatabaseStatementLoader StatementLoader { get; }
         IIdFactory IdFactory { get; }
         ILauncherToolbarDesigner LauncherToolbarDesigner { get; }
-        public IApplicationIconImageLoaders ApplicationIconImageLoaders { get; }
+        public IImagePainter ImagePainter { get; }
 
         public ReadOnlyObservableCollection<LauncherGroupElement> LauncherGroups { get; }
 

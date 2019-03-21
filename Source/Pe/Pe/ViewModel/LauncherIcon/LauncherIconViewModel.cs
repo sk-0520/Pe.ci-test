@@ -11,18 +11,6 @@ using ContentTypeTextNet.Pe.Main.ViewModel.IconViewer;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherIcon
 {
-    public interface ILauncherIconViewModel
-    {
-        #region property
-
-        IconViewerViewModel Small { get; }
-        IconViewerViewModel Normal { get; }
-        IconViewerViewModel Big { get; }
-        IconViewerViewModel Large { get; }
-
-        #endregion
-    }
-
     public class LauncherIconViewModel : SingleModelViewModelBase<LauncherIconElement>, IIconPack<IconViewerViewModel>
     {
         public LauncherIconViewModel(LauncherIconElement model, ILoggerFactory loggerFactory)

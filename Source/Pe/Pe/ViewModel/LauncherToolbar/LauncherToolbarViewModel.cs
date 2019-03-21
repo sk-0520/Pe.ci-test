@@ -12,6 +12,7 @@ using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Element.LauncherGroup;
 using ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem;
 using ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar;
+using ContentTypeTextNet.Pe.Main.Model.Logic.Theme;
 using ContentTypeTextNet.Pe.Main.Model.Manager;
 using ContentTypeTextNet.Pe.Main.View.Extend;
 using ContentTypeTextNet.Pe.Main.ViewModel.LauncherGroup;
@@ -35,7 +36,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar
             };
             LauncherItems = LauncherItemCollection.GetCollectionView();
 
-            Icon = new ApplicationIconViewModel(Model.ApplicationIconImageLoaders, Logger.Factory);
+            Icon = new ApplicationIconViewModel(Model.ImagePainter.GetIconImageLoaderPack(TargetIcon.LauncherToolbarMain), Logger.Factory);
         }
 
         #region property
