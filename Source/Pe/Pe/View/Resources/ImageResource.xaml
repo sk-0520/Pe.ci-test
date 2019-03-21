@@ -1,0 +1,8 @@
+<ResourceDictionary
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+>
+  <!-- https://materialdesignicons.com/icon/menu-->
+  <Geometry x:Key="Image-HamburgerMenu">M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z</Geometry>
+
+</ResourceDictionary>

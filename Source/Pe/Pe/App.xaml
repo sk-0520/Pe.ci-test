@@ -8,7 +8,10 @@
   <Application.Resources>
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="/VIew/Manager/ManagerDictionary.xaml" />
+        <ResourceDictionary Source="/VIew/Resources/Theme/General.xaml" />
+
+        <ResourceDictionary Source="/VIew/Resources/ImageResource.xaml" />
+        <ResourceDictionary Source="/VIew/Resources/ManagerResource.xaml" />
       </ResourceDictionary.MergedDictionaries>
     </ResourceDictionary>
   </Application.Resources>

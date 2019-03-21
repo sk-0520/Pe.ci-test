@@ -76,14 +76,17 @@
   <DockPanel>
 
     <ToggleButton DockPanel.Dock="Top" Template="{StaticResource LauncherItemTemplate}">
-      <app_main_view_lt:LauncherContentControl Title="pe">
+      <app_main_view_lt:LauncherContentControl Title="pe" >
         <app_main_view_lt:LauncherContentControl.Icon>
-          <TextBlock
+          <Border
             Width="{Binding IconScale, Converter={StaticResource IconScaleToWidthConverter}}"
             Height="{Binding IconScale, Converter={StaticResource IconScaleToHeightConverter}}"
           >
-            💩
-          </TextBlock>
+            <ContentControl
+              Style="{StaticResource NormalIcon}"
+              Content="{StaticResource Image-HamburgerMenu}"
+            />
+          </Border>
         </app_main_view_lt:LauncherContentControl.Icon>
       </app_main_view_lt:LauncherContentControl>
     </ToggleButton>

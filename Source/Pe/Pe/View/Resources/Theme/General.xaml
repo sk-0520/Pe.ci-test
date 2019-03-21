@@ -1,0 +1,51 @@
+<ResourceDictionary
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:sys="clr-namespace:System;assembly=mscorlib"
+>
+  <sys:Double x:Key="Icon-Size-Small">16</sys:Double>
+  <sys:Double x:Key="Icon-Size-Normal">32</sys:Double>
+  <sys:Double x:Key="Icon-Size-Big">64</sys:Double>
+  <sys:Double x:Key="Icon-Stroke-Small">1</sys:Double>
+  <sys:Double x:Key="Icon-Stroke-Normal">1</sys:Double>
+  <sys:Double x:Key="Icon-Stroke-Big">1</sys:Double>
+
+
+  <Style x:Key="SmallIcon" TargetType="ContentControl">
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="ContentControl">
+          <Viewbox Width="{StaticResource Icon-Size-Small}" Height="{StaticResource Icon-Size-Small}">
+            <Canvas Width="{StaticResource Icon-Size-Small}" Height="{StaticResource Icon-Size-Small}">
+              <Path
+                Data="{TemplateBinding Content}"
+                Fill="{TemplateBinding Background}"
+                Stroke="{TemplateBinding Foreground}"
+                StrokeThickness="{StaticResource Icon-Stroke-Small}"
+              />
+            </Canvas>
+          </Viewbox>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+  <Style x:Key="NormalIcon" TargetType="ContentControl">
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="ContentControl">
+          <Viewbox Width="{StaticResource Icon-Size-Normal}" Height="{StaticResource Icon-Size-Normal}">
+            <Canvas Width="24" Height="24">
+              <Path
+                Data="{TemplateBinding Content}"
+                Fill="{TemplateBinding Background}"
+                Stroke="{TemplateBinding Foreground}"
+                StrokeThickness="{StaticResource Icon-Stroke-Normal}"
+              />
+            </Canvas>
+          </Viewbox>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+</ResourceDictionary>
