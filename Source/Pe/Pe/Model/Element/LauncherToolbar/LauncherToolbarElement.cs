@@ -220,6 +220,13 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
             LauncherItems.SetRange(items);
         }
 
+        public void ChangeToolbarPosition(AppDesktopToolbarPosition toolbarPosition)
+        {
+            ToolbarPosition = toolbarPosition;
+            UpdateDesign();
+            IsOpendAppMenu = false;
+        }
+
         #endregion
 
         #region ContextElementBase

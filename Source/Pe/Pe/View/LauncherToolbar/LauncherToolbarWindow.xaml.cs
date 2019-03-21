@@ -40,23 +40,5 @@ namespace ContentTypeTextNet.Pe.Main.View.LauncherToolbar
         LauncherToolbarViewModel ViewModel => (LauncherToolbarViewModel)DataContext;
 
         #endregion
-
-        private void ContentPresenter_ContextMenuOpening(object sender, ContextMenuEventArgs e)
-        {
-
-            if(e.Source is LauncherContentControl control) {
-                if(((Control)control.Parent).DataContext is LauncherItemViewModelBase launcherItem) {
-                    //ViewModel.ContextMenuOpendItem = launcherItem;
-                    //((FrameworkElement)sender).ContextMenu.DataContext = launcherItem;
-                }
-            }
-        }
-
-        private void ContentPresenter_ContextMenuClosing(object sender, ContextMenuEventArgs e)
-        {
-            ViewModel.ContextMenuOpendItem = null;
-            //((FrameworkElement)sender).ContextMenu.DataContext = null;
-        }
-
     }
 }

@@ -111,9 +111,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
                 });
                 var window = DiContainer.Make<LauncherToolbarWindow>();
                 viewModel.AppDesktopToolbarExtend = DiContainer.UsingTemporaryContainer(c => {
-                    c.Register<IAppDesktopToolbarExtendData, LauncherToolbarViewModel>(viewModel);
                     c.Register<ILoggerFactory, ILoggerFactory>(viewModel);
-                    return c.Make<AppDesktopToolbarExtend>(new object[] { window, viewModel, });
+                    return c.Make<AppDesktopToolbarExtend>(new object[] { window, element, });
                 });
                 window.DataContext = viewModel;
 

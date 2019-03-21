@@ -9,7 +9,8 @@
 
   xmlns:app_main_view="clr-namespace:ContentTypeTextNet.Pe.Main.View"
   xmlns:app_main_view_lt="clr-namespace:ContentTypeTextNet.Pe.Main.View.LauncherToolbar"
-  xmlns:app_main_viewmode_launcheritem="clr-namespace:ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem"
+  xmlns:app_main_viewmode_litem="clr-namespace:ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem"
+  xmlns:app_main_view_ex="clr-namespace:ContentTypeTextNet.Pe.Main.View.Extend"
 
   Title="LauncherToolbarWindow"
   Height="450"
@@ -72,9 +73,7 @@
 
     <ControlTemplate x:Key="LauncherItemTemplate" TargetType="ContentControl">
       <Border Background="Transparent" Padding="{Binding DataContext.ButtonPadding, ElementName=root, Mode=OneTime}">
-        <ContentPresenter
-            Content="{TemplateBinding Content}"
-          />
+        <ContentPresenter Content="{TemplateBinding Content}" />
       </Border>
     </ControlTemplate>
 
@@ -100,7 +99,7 @@
     </ContextMenu>
 
     <!-- ファイル -->
-    <DataTemplate DataType="{x:Type app_main_viewmode_launcheritem:LauncherFileItemViewModel}">
+    <DataTemplate DataType="{x:Type app_main_viewmode_litem:LauncherFileItemViewModel}">
       <Button ContextMenu="{StaticResource ItemContextMenu}" Template="{StaticResource LauncherItemTemplate}">
         <app_main_view_lt:LauncherContentControl Title="{Binding Name, Mode=OneTime}" />
       </Button>
@@ -164,10 +163,10 @@
                   <RowDefinition />
                 </Grid.RowDefinitions>
 
-                <Button Grid.Row="1" Grid.Column="0">left</Button>
-                <Button Grid.Row="0" Grid.Column="1">top</Button>
-                <Button Grid.Row="1" Grid.Column="2">right</Button>
-                <Button Grid.Row="2" Grid.Column="1">bottom</Button>
+                <Button Grid.Row="1" Grid.Column="0" Command="{Binding ChangeToolbarPositionCommand}" CommandParameter="{x:Static app_main_view_ex:AppDesktopToolbarPosition.Left}">left</Button>
+                <Button Grid.Row="0" Grid.Column="1" Command="{Binding ChangeToolbarPositionCommand}" CommandParameter="{x:Static app_main_view_ex:AppDesktopToolbarPosition.Top}">top</Button>
+                <Button Grid.Row="1" Grid.Column="2" Command="{Binding ChangeToolbarPositionCommand}" CommandParameter="{x:Static app_main_view_ex:AppDesktopToolbarPosition.Right}">right</Button>
+                <Button Grid.Row="2" Grid.Column="1" Command="{Binding ChangeToolbarPositionCommand}" CommandParameter="{x:Static app_main_view_ex:AppDesktopToolbarPosition.Bottom}">bottom</Button>
 
               </Grid>
 

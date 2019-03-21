@@ -62,26 +62,26 @@ namespace ContentTypeTextNet.Pe.Main.View.Extend
         }
     }
 
-    public interface IAppDesktopToolbarExtendData : IExtendData
+    public interface IReadOnlyAppDesktopToolbarExtendData
     {
         #region property
 
         /// <summary>
         /// ツールバー位置。
         /// </summary>
-        AppDesktopToolbarPosition ToolbarPosition { get; set; }
+        AppDesktopToolbarPosition ToolbarPosition { get; }
         /// <summary>
         /// ドッキング中か。
         /// </summary>
-        bool IsDocking { get; set; }
+        bool IsDocking { get; }
         /// <summary>
         /// 自動的に隠すか。
         /// </summary>
-        bool IsAutoHide { get; set; }
+        bool IsAutoHide { get; }
         /// <summary>
         /// 隠れているか。
         /// </summary>
-        bool IsHiding { get; set; }
+        bool IsHiding { get; }
         /// <summary>
         /// 自動的に隠れるまでの時間。
         /// </summary>
@@ -92,13 +92,13 @@ namespace ContentTypeTextNet.Pe.Main.View.Extend
         /// <para><see cref="AppDesktopToolbarPosition"/>の各辺に対応</para>
         /// </summary>
         [PixelKind(Px.Logical)]
-        Size DisplaySize { get; set; }
+        Size DisplaySize { get; }
         /// <summary>
         /// 表示中の論理バーサイズ。
         /// <para><see cref="AppDesktopToolbarExtend"/>で設定されるためユーザーコードで変更は行わないこと。</para>
         /// </summary>
         [PixelKind(Px.Logical)]
-        Rect DisplayBarArea { get; set; }
+        Rect DisplayBarArea { get; }
 
         /// <summary>
         /// 隠れた状態のバー論理サイズ。
@@ -111,18 +111,84 @@ namespace ContentTypeTextNet.Pe.Main.View.Extend
         /// <para><see cref="AppDesktopToolbarExtend"/>で設定されるためユーザーコードで変更は行わないこと。</para>
         /// </summary>
         [PixelKind(Px.Logical)]
-        Rect HiddenBarArea { get; set; }
+        Rect HiddenBarArea { get; }
 
 
         /// <summary>
         /// フルスクリーンウィンドウが存在するか。
         /// </summary>
-        bool ExistsFullScreenWindow { get; set; }
+        bool ExistsFullScreenWindow { get; }
 
         /// <summary>
         /// 対象ディスプレイ。
         /// </summary>
         Screen DockScreen { get; }
+
+        #endregion
+    }
+
+    public interface IAppDesktopToolbarExtendData : IExtendData, IReadOnlyAppDesktopToolbarExtendData
+    {
+        #region property
+
+        /// <summary>
+        /// ツールバー位置。
+        /// </summary>
+        new AppDesktopToolbarPosition ToolbarPosition { get; set; }
+
+        /// <summary>
+        /// ドッキング中か。
+        /// </summary>
+        new bool IsDocking { get; set; }
+        /// <summary>
+        /// 自動的に隠すか。
+        /// </summary>
+        new bool IsAutoHide { get; set; }
+        /// <summary>
+        /// 隠れているか。
+        /// </summary>
+        new bool IsHiding { get; set; }
+        ///// <summary>
+        ///// 自動的に隠れるまでの時間。
+        ///// </summary>
+        //new TimeSpan AutoHideTimeout { get; }
+
+        /// <summary>
+        /// 表示中のサイズ。
+        /// <para><see cref="AppDesktopToolbarPosition"/>の各辺に対応</para>
+        /// </summary>
+        [PixelKind(Px.Logical)]
+        new Size DisplaySize { get; set; }
+        /// <summary>
+        /// 表示中の論理バーサイズ。
+        /// <para><see cref="AppDesktopToolbarExtend"/>で設定されるためユーザーコードで変更は行わないこと。</para>
+        /// </summary>
+        [PixelKind(Px.Logical)]
+        new Rect DisplayBarArea { get; set; }
+
+        ///// <summary>
+        ///// 隠れた状態のバー論理サイズ。
+        ///// <para><see cref="AppDesktopToolbarPosition"/>の各辺に対応</para>
+        ///// </summary>
+        //[PixelKind(Px.Logical)]
+        //new Size HiddenSize { get; }
+        /// <summary>
+        /// 表示中の隠れたバーの論理領域。
+        /// <para><see cref="AppDesktopToolbarExtend"/>で設定されるためユーザーコードで変更は行わないこと。</para>
+        /// </summary>
+        [PixelKind(Px.Logical)]
+        new Rect HiddenBarArea { get; set; }
+
+
+        /// <summary>
+        /// フルスクリーンウィンドウが存在するか。
+        /// </summary>
+        new bool ExistsFullScreenWindow { get; set; }
+
+        ///// <summary>
+        ///// 対象ディスプレイ。
+        ///// </summary>
+        //new Screen DockScreen { get; }
 
         #endregion
     }
@@ -685,7 +751,7 @@ namespace ContentTypeTextNet.Pe.Main.View.Extend
             if(NowWorking) {
                 return;
             }
-            if(View.IsVisible) {
+            if(!View.IsVisible) {
                 return;
             }
 
