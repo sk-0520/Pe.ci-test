@@ -38,8 +38,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic.Designer
         [return: PixelKind(Px.Logical)]
         public Thickness GetIconMargin(AppDesktopToolbarPosition toolbarPosition, IconScale iconScale, bool isIconOnly, [PixelKind(Px.Logical)] double textWidth)
         {
-            //return new Thickness(2);
-            return new Thickness(0);
+            return new Thickness(2);
         }
 
         [return: PixelKind(Px.Logical)]

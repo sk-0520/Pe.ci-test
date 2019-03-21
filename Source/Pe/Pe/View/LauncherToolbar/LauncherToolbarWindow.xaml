@@ -46,9 +46,9 @@
           <Setter Property="Icon" Value="{Binding Icon.Large}" />
         </DataTrigger>
       </Style.Triggers>
-      <Setter Property="IconMargin" Value="{Binding DataContext.IconMargin, ElementName=root, Mode=OneTime}" />
+      <Setter Property="IconMargin" Value="{Binding DataContext.IconMargin, ElementName=root}" />
       <Setter Property="IsIconOnly" Value="{Binding DataContext.IsIconOnly, ElementName=root}" />
-      <Setter Property="TextWidth" Value="{Binding DataContext.TextWidth, ElementName=root, Mode=OneTime}" />
+      <Setter Property="TextWidth" Value="{Binding DataContext.TextWidth, ElementName=root}" />
     </Style>
 
     <ControlTemplate x:Key="LauncherItemTemplate" TargetType="ContentControl">
@@ -78,15 +78,14 @@
     <ToggleButton DockPanel.Dock="Top" Template="{StaticResource LauncherItemTemplate}">
       <app_main_view_lt:LauncherContentControl Title="pe" >
         <app_main_view_lt:LauncherContentControl.Icon>
-          <Border
+          <ContentControl
+            Style="{StaticResource NormalIcon}"
+            Content="{StaticResource Image-HamburgerMenu}"
             Width="{Binding IconScale, Converter={StaticResource IconScaleToWidthConverter}}"
             Height="{Binding IconScale, Converter={StaticResource IconScaleToHeightConverter}}"
-          >
-            <ContentControl
-              Style="{StaticResource NormalIcon}"
-              Content="{StaticResource Image-HamburgerMenu}"
-            />
-          </Border>
+            Background="Black"
+            Foreground="Gray"
+          />
         </app_main_view_lt:LauncherContentControl.Icon>
       </app_main_view_lt:LauncherContentControl>
     </ToggleButton>
