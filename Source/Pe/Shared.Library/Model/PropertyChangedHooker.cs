@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -423,7 +424,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 
         public static void AddProperties(this PropertyChangedHooker @this, Type type)
         {
-            var properties = type.GetProperties();
+            var properties = type.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
             foreach(var property in properties) {
                 @this.AddHook(property.Name);
             }

@@ -32,29 +32,33 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar
 
         #endregion
 
-        public LauncherToolbarViewModel(LauncherToolbarElement model, ILoggerFactory loggerFactory)
+        public LauncherToolbarViewModel(LauncherToolbarElement model, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         {
+            DispatcherWapper = dispatcherWapper;
+
             LauncherGroupCollection = new ActionModelViewModelObservableCollectionManager<LauncherGroupElement, LauncherGroupViewModel>(Model.LauncherGroups, Logger.Factory) {
                 ToViewModel = (m) => new LauncherGroupViewModel(m, Logger.Factory),
             };
             LauncherGroupItems = LauncherGroupCollection.ViewModels;
 
             LauncherItemCollection = new ActionModelViewModelObservableCollectionManager<LauncherItemElement, LauncherItemViewModelBase>(Model.LauncherItems, Logger.Factory) {
-                ToViewModel = (m) => LauncherItemViewModelFactory.Create(m, Logger.Factory),
+                ToViewModel = (m) => LauncherItemViewModelFactory.Create(m, DispatcherWapper, Logger.Factory),
             };
             LauncherItems = LauncherItemCollection.GetCollectionView();
+
+
+            PropertyChangedHooker = new PropertyChangedHooker(DispatcherWapper, Logger.Factory);
+            PropertyChangedHooker.AddProperties<IReadOnlyAppDesktopToolbarExtendData>();
+            PropertyChangedHooker.AddHook(nameof(LauncherToolbarElement.ToolbarPosition), ChangeToolbarPositionCommand);
+            PropertyChangedHooker.AddHook(nameof(LauncherToolbarElement.IsOpendAppMenu), nameof(IsOpendAppMenu));
         }
 
         #region property
 
-        IReadOnlyDictionary<string, IReadOnlyList<string>> PropertyNames { get; } = new Dictionary<string, IReadOnlyList<string>>() {
-            [nameof(LauncherToolbarElement.ToolbarPosition)] = new[] { nameof(ToolbarPosition) },
-            [nameof(LauncherToolbarElement.IsOpendAppMenu)] = new[] { nameof(IsOpendAppMenu) },
-        };
-
-
         public AppDesktopToolbarExtend AppDesktopToolbarExtend { get; set; }
+        IDispatcherWapper DispatcherWapper { get; }
+        PropertyChangedHooker PropertyChangedHooker { get; }
 
         public IconScale IconScale => Model.IconScale;
         public Thickness ButtonPadding => Model.ButtonPadding;
@@ -221,11 +225,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar
 
         private void Model_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if(PropertyNames.TryGetValue(e.PropertyName, out var propertyNames)) {
-                foreach(var propertyName in propertyNames) {
-                    RaisePropertyChanged(propertyName);
-                }
-            }
+            PropertyChangedHooker.Execute(e, RaisePropertyChanged);
         }
 
     }

@@ -15,10 +15,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
 {
     public abstract class LauncherItemViewModelBase : SingleModelViewModelBase<LauncherItemElement>
     {
-        public LauncherItemViewModelBase(LauncherItemElement model, ILoggerFactory loggerFactory)
+        public LauncherItemViewModelBase(LauncherItemElement model, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         {
-            Icon = new LauncherIconViewModel(model.Icon, Logger.Factory);
+            Icon = new LauncherIconViewModel(model.Icon, dispatcherWapper, Logger.Factory);
         }
 
         #region property
@@ -45,20 +45,20 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
     {
         #region function
 
-        public static LauncherItemViewModelBase Create(LauncherItemElement model, ILoggerFactory loggerFactory)
+        public static LauncherItemViewModelBase Create(LauncherItemElement model, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
         {
             switch(model.Kind) {
                 case LauncherItemKind.File:
-                    return new LauncherFileItemViewModel(model, loggerFactory);
+                    return new LauncherFileItemViewModel(model, dispatcherWapper, loggerFactory);
 
                 case LauncherItemKind.Command:
-                    return new LauncherCommandItemViewModel(model, loggerFactory);
+                    return new LauncherCommandItemViewModel(model, dispatcherWapper, loggerFactory);
 
                 case LauncherItemKind.Embedded:
-                    return new LauncherEmbeddedItemViewModel(model, loggerFactory);
+                    return new LauncherEmbeddedItemViewModel(model, dispatcherWapper, loggerFactory);
 
                 case LauncherItemKind.Separator:
-                    return new LauncherSeparatorItemViewModel(model, loggerFactory);
+                    return new LauncherSeparatorItemViewModel(model, dispatcherWapper, loggerFactory);
 
                 default:
                     throw new NotImplementedException();

@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using ContentTypeTextNet.Pe.Library.Shared.Embedded.Model;
+using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 
 namespace ContentTypeTextNet.Pe.Library.Shared.Library.View
@@ -27,12 +28,8 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.View
             ExtendData.Disposing += ExtendData_Disposing;
             ExtendData.PropertyChanged += ExtendData_PropertyChanged;
 
-            var extendDataType = typeof(TExtendData);
-            var extendDataProps = extendDataType
-                .GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
-                .Select(p => p.Name)
-            ;
-            PropertyNames = new HashSet<string>(extendDataProps);
+            PropertyChangedHooker = new PropertyChangedHooker(new DispatcherWapper(View.Dispatcher, Logger.Factory), Logger.Factory);
+            PropertyChangedHooker.AddProperties<TExtendData>();
         }
 
         #region property
@@ -41,7 +38,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.View
         protected TExtendData ExtendData { get; private set; }
         protected ILogger Logger { get; }
 
-        protected ISet<string> PropertyNames { get; }
+        protected PropertyChangedHooker PropertyChangedHooker { get; }
 
         #endregion
 
@@ -74,9 +71,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.View
 
         private void ExtendData_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if(PropertyNames.Contains(e.PropertyName)) {
-                ChangedExtendProperty(e.PropertyName);
-            }
+            PropertyChangedHooker.Execute(e, ChangedExtendProperty);
         }
     }
 }

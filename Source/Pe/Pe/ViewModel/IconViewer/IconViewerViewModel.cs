@@ -20,23 +20,18 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.IconViewer
 
         #endregion
 
-        public IconViewerViewModel(IconImageLoaderBase model, ILogger logger)
-            : base(model, logger)
-        {
-            RunningStatus = new RunningStatusViewModel(Model.RunningStatus, Logger.Factory);
-        }
-
-        public IconViewerViewModel(IconImageLoaderBase model, ILoggerFactory loggerFactory)
+        public IconViewerViewModel(IconImageLoaderBase model, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         {
             RunningStatus = new RunningStatusViewModel(Model.RunningStatus, Logger.Factory);
+
+            PropertyChangedHooker = new PropertyChangedHooker(dispatcherWapper, Logger.Factory);
+            PropertyChangedHooker.AddHook(nameof(RunningStatus), nameof(RunningStatus), nameof(ImageSource));
         }
 
         #region property
 
-        IReadOnlyDictionary<string, IReadOnlyList<string>> PropertyNames { get; } = new Dictionary<string, IReadOnlyList<string>>() {
-            [nameof(RunningStatus)] = new[] { nameof(RunningStatus), nameof(ImageSource) },
-        };
+        PropertyChangedHooker PropertyChangedHooker { get; }
 
         public RunningStatusViewModel RunningStatus { get; }
 
@@ -89,11 +84,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.IconViewer
 
         private void Model_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if(PropertyNames.TryGetValue(e.PropertyName, out var propertyNames)) {
-                foreach(var propertyName in propertyNames) {
-                    RaisePropertyChanged(propertyName);
-                }
-            }
+            PropertyChangedHooker.Execute(e, RaisePropertyChanged);
         }
 
     }
