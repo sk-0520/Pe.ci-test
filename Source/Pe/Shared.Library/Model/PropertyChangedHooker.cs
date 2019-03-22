@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Library.Shared.Embedded.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
+using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 {
@@ -76,12 +77,13 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         #endregion
     }
 
-    class HookCache
+    class HookItemCache
     {
-        public HookCache(IEnumerable<string> raisePropertyNames, IEnumerable<ICommand> raiseCommands, IEnumerable<Action> callbacks)
+        public HookItemCache(IEnumerable<string> raisePropertyNames, IEnumerable<ICommand> raiseCommands, IEnumerable<DelegateCommandBase> raiseDelegateCommands, IEnumerable<Action> callbacks)
         {
             RaisePropertyNames = raisePropertyNames.ToList();
             RaiseCommands = raiseCommands.ToList();
+            RaiseDelegateCommands = raiseDelegateCommands.ToList();
             Callbacks = callbacks.ToList();
         }
 
@@ -89,6 +91,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 
         public IReadOnlyList<string> RaisePropertyNames { get; }
         public IReadOnlyList<ICommand> RaiseCommands { get; }
+        public IReadOnlyList<DelegateCommandBase> RaiseDelegateCommands { get; }
         public IReadOnlyList<Action> Callbacks { get; }
 
         #endregion
@@ -99,21 +102,24 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
     /// </summary>
     public class PropertyChangedHooker : DisposerBase
     {
-        public PropertyChangedHooker(ILogger logger)
+        public PropertyChangedHooker(IDispatcherWapper dispatcherWapper, ILogger logger)
         {
+            DispatcherWapper = dispatcherWapper;
             Logger = logger;
         }
-        public PropertyChangedHooker(ILoggerFactory loggerFactory)
+        public PropertyChangedHooker(IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
         {
+            DispatcherWapper = dispatcherWapper;
             Logger = loggerFactory.CreateTartget(GetType());
         }
 
         #region property
 
+        protected IDispatcherWapper DispatcherWapper { get; }
         protected ILogger Logger { get; }
 
         protected IDictionary<string, List<HookItem>> Hookers { get; } = new Dictionary<string, List<HookItem>>();
-        IDictionary<string, HookCache> Cache { get; } = new Dictionary<string, HookCache>();
+        IDictionary<string, HookItemCache> Cache { get; } = new Dictionary<string, HookItemCache>();
 
         #endregion
 
@@ -154,6 +160,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
                 };
                 Hookers.Add(hookItem.NotifyPropertyName, newItems);
             }
+            Cache.Remove(hookItem.NotifyPropertyName);
 
             return hookItem;
         }
@@ -309,20 +316,120 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
             return AddHookCore(hookItem);
         }
 
-        public bool Do(string noifyPropertyName, Action<string> raiser)
+        HookItemCache MakeCache(IEnumerable<IReadOnlyHookItem> hookItems)
         {
+            var commands = hookItems
+                .Where(i => i.RaiseCommands != null)
+                .SelectMany(i => i.RaiseCommands)
+                .ToList()
+            ;
+
+            var result = new HookItemCache(
+                hookItems.Where(i => i.RaisePropertyNames != null).SelectMany(i => i.RaisePropertyNames),
+                commands.Where(i => !(i is DelegateCommandBase)),
+                commands.OfType<DelegateCommandBase>(),
+                hookItems.Where(i => i.Callback != null).Select(i => i.Callback)
+            );
+
+            return result;
+        }
+
+        bool ExecutePropertyies(IReadOnlyList<string> raisePropertyNames, Action<string> raiser)
+        {
+            if(raisePropertyNames.Count == 0) {
+                return false;
+            }
+
+            DispatcherWapper.Invoke(() => {
+                foreach(var raisePropertyName in raisePropertyNames) {
+                    raiser(raisePropertyName);
+                }
+            });
+
+            return true;
+        }
+        bool ExecuteCommands(IReadOnlyList<ICommand> raiseCommands, IReadOnlyList<DelegateCommandBase> raiseDelegateCommands)
+        {
+            if(raiseCommands.Count == 0 && raiseDelegateCommands.Count == 0) {
+                return false;
+            }
+
+            DispatcherWapper.Invoke(() => {
+                foreach(var raiseCommand in raiseDelegateCommands) {
+                    raiseCommand.RaiseCanExecuteChanged();
+                }
+            });
+
+            if(raiseCommands.Count != 0) {
+                // 個別にやる方法はわからん
+                DispatcherWapper.Invoke(() => {
+                    CommandManager.InvalidateRequerySuggested();
+                });
+            }
+
+            return true;
+        }
+        bool ExecuteCallback(IReadOnlyList<Action> callbacks)
+        {
+            if(callbacks.Count == 0) {
+                return false;
+            }
+
+            DispatcherWapper.Begin(() => {
+                foreach(var callback in callbacks) {
+                    callback();
+                }
+            });
+
+            return true;
+        }
+
+        bool ExecuteCache(HookItemCache hookItemCache, Action<string> raiser)
+        {
+            var property = ExecutePropertyies(hookItemCache.RaisePropertyNames, raiser);
+            var command = ExecuteCommands(hookItemCache.RaiseCommands, hookItemCache.RaiseDelegateCommands);
+            var callback = ExecuteCallback(hookItemCache.Callbacks);
+
+            return property || command || callback;
+        }
+
+        public bool Execute(string noifyPropertyName, Action<string> raiser)
+        {
+
+            if(!Hookers.TryGetValue(noifyPropertyName, out var hookItems)) {
+                return false;
+            }
+
             if(raiser == null) {
                 throw new ArgumentNullException(nameof(raiser));
             }
 
-            if(Hookers.TryGetValue(noifyPropertyName, out var items)) {
-                // つなげる処理を書きたいのよ
+            if(!Cache.TryGetValue(noifyPropertyName, out var hookItemCache)) {
+                hookItemCache = MakeCache(hookItems);
+                Cache.Add(noifyPropertyName, hookItemCache);
             }
 
-            return false;
+            return ExecuteCache(hookItemCache, raiser);
         }
 
-        public bool Do(PropertyChangedEventArgs e, Action<string> raiser) => Do(e.PropertyName, raiser);
+        public bool Execute(PropertyChangedEventArgs e, Action<string> raiser) => Execute(e.PropertyName, raiser);
+
+        #endregion
+    }
+
+    public static class PropertyChangedHookerExtensions
+    {
+        #region function
+
+        public static void AddProperties(this PropertyChangedHooker @this, Type type)
+        {
+            var properties = type.GetProperties();
+            foreach(var property in properties) {
+                @this.AddHook(property.Name);
+            }
+        }
+        public static void AddProperties<Type>(this PropertyChangedHooker @this) => AddProperties(@this, typeof(Type));
+
 
         #endregion
     }
