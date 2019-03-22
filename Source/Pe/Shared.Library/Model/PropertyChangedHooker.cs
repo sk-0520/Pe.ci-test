@@ -76,6 +76,24 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         #endregion
     }
 
+    class HookCache
+    {
+        public HookCache(IEnumerable<string> raisePropertyNames, IEnumerable<ICommand> raiseCommands, IEnumerable<Action> callbacks)
+        {
+            RaisePropertyNames = raisePropertyNames.ToList();
+            RaiseCommands = raiseCommands.ToList();
+            Callbacks = callbacks.ToList();
+        }
+
+        #region property
+
+        public IReadOnlyList<string> RaisePropertyNames { get; }
+        public IReadOnlyList<ICommand> RaiseCommands { get; }
+        public IReadOnlyList<Action> Callbacks { get; }
+
+        #endregion
+    }
+
     /// <summary>
     /// <see cref="INotifyPropertyChanged.PropertyChanged"/> を受けて何かを更新する ViewModel でよく使うあれな処理の管理役。
     /// </summary>
@@ -95,6 +113,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         protected ILogger Logger { get; }
 
         protected IDictionary<string, List<HookItem>> Hookers { get; } = new Dictionary<string, List<HookItem>>();
+        IDictionary<string, HookCache> Cache { get; } = new Dictionary<string, HookCache>();
 
         #endregion
 
