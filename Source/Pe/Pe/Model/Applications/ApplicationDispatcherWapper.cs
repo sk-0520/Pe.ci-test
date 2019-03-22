@@ -16,12 +16,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Applications
     public class ApplicationDispatcherWapper : DispatcherWapper
     {
         public ApplicationDispatcherWapper(ILogger logger)
-            : base(Application.Current.Dispatcher, logger)
+            : base(Application.Current.Dispatcher)
         { }
 
-        public ApplicationDispatcherWapper(ILoggerFactory loggerFactory)
-            : base(Application.Current.Dispatcher, loggerFactory)
-        {
-        }
     }
 }

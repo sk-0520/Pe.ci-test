@@ -31,21 +31,14 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 
     public class DispatcherWapper : IDispatcherWapper
     {
-        public DispatcherWapper(Dispatcher current, ILogger logger)
+        public DispatcherWapper(Dispatcher current)
         {
             Current = current;
-            Logger = logger;
-        }
-        public DispatcherWapper(Dispatcher current, ILoggerFactory loggerFactory)
-        {
-            Current = current;
-            Logger = loggerFactory.CreateTartget(GetType());
         }
 
         #region property
 
         protected Dispatcher Current { get; }
-        protected ILogger Logger { get; }
 
         #endregion
 
@@ -108,5 +101,12 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         }
 
         #endregion
+    }
+
+    public sealed class CurrentDispatcherWapper: DispatcherWapper
+    {
+        public CurrentDispatcherWapper()
+            : base(Dispatcher.CurrentDispatcher)
+        { }
     }
 }
