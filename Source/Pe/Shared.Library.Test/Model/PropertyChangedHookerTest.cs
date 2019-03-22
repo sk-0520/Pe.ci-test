@@ -27,5 +27,17 @@ namespace Shared.Library.Test.Model
             Assert.AreEqual("A", result.NotifyPropertyName);
             Assert.AreEqual("A", result.RaisePropertyNames[0]);
         }
+
+        [TestMethod]
+        public void AddHook_3_Test()
+        {
+            var pch = new PropertyChangedHooker(TestLogger.Create(GetType()));
+            Assert.ThrowsException<ArgumentException>(() => pch.AddHook(default(string), default(string)));
+            Assert.ThrowsException<ArgumentException>(() => pch.AddHook("A", default(string)));
+            Assert.ThrowsException<ArgumentException>(() => pch.AddHook(default(string), "B"));
+            var result = pch.AddHook("a", "b");
+            Assert.AreEqual("a", result.NotifyPropertyName);
+            Assert.AreEqual("b", result.RaisePropertyNames[0]);
+        }
     }
 }
