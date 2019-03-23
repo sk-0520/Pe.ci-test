@@ -11,7 +11,7 @@ using ContentTypeTextNet.Pe.Main.Model.Launcher;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
 {
-    public class LauncherGroupsDao : ApplicationDatabaseObjectBase
+    public class LauncherGroupsDao : EntityDaoBase
     {
         public LauncherGroupsDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
             : base(commander, statementLoader, loggerFactory)

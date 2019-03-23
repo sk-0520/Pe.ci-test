@@ -8,7 +8,7 @@ using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
 {
-    public class NotesDao : ApplicationDatabaseObjectBase
+    public class NotesDao : EntityDaoBase
     {
         public NotesDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
             : base(commander, statementLoader, loggerFactory)

@@ -8,7 +8,7 @@ using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
 {
-    public class FontsDao : ApplicationDatabaseObjectBase
+    public class FontsDao : EntityDaoBase
     {
         public FontsDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
             : base(commander, statementLoader, loggerFactory)

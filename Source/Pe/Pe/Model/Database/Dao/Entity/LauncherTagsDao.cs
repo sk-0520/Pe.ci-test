@@ -10,7 +10,7 @@ using ContentTypeTextNet.Pe.Main.Model.Data.Dto.Entity;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
 {
-    public class LauncherTagsDao : ApplicationDatabaseObjectBase
+    public class LauncherTagsDao : EntityDaoBase
     {
         public LauncherTagsDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
             : base(commander, statementLoader, loggerFactory)

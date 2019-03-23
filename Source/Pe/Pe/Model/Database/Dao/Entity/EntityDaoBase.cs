@@ -8,13 +8,13 @@ using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
 {
-    public class CredentsDao : EntityDaoBase
+    public abstract class EntityDaoBase : ApplicationDatabaseObjectBase
     {
-        public CredentsDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
+        public EntityDaoBase(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, ILogger logger)
+            : base(commander, statementLoader, logger)
+        { }
+        public EntityDaoBase(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
             : base(commander, statementLoader, loggerFactory)
         { }
-
-        #region function
-        #endregion
     }
 }

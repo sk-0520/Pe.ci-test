@@ -8,7 +8,7 @@ using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
 {
-    public class LauncherEnvVarsDao : ApplicationDatabaseObjectBase
+    public class LauncherEnvVarsDao : EntityDaoBase
     {
         public LauncherEnvVarsDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
             : base(commander, statementLoader, loggerFactory)
