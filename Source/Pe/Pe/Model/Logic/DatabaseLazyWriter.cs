@@ -64,7 +64,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
 
         Timer LazyTimer { get; }
 
-        // ConcurrentQueue 使うことも考えたけどどうせタイマーのロックあるし普通版
+        //ConcurrentQueue 使うことも考えたけどどうせタイマーのロックあるし普通版
+        //TODO: Queue である必要あんのか？
         Queue<LazyStockItem> StockItems { get; } = new Queue<LazyStockItem>();
 
         #endregion
