@@ -77,7 +77,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
         }
         void StartTimer()
         {
-            LazyTimer.Change(TimeSpan.Zero, WaitTime);
+            LazyTimer.Change(WaitTime, Timeout.InfiniteTimeSpan);
         }
 
         public void Stock(Action<IDatabaseCommander> action)
@@ -116,6 +116,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
             lock(this._timerLocker) {
                 StopTimer();
                 items = StockItems.ToArray();
+                StockItems.Clear();
             }
 
             if(items.Length == 0) {

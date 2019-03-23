@@ -48,6 +48,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
             IdFactory = idFactory;
             LauncherToolbarDesigner = launcherToolbarDesigner;
             ImagePainter = imagePainter;
+
+            MainDatabaseLazyWriter = new DatabaseLazyWriter(MainDatabaseBarrier, Constants.Config.LauncherToolbarMainDatabaseLazyWriterWaitTime, this);
         }
 
         #region property
@@ -59,6 +61,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
         IIdFactory IdFactory { get; }
         ILauncherToolbarDesigner LauncherToolbarDesigner { get; }
         public IImagePainter ImagePainter { get; }
+
+        DatabaseLazyWriter MainDatabaseLazyWriter { get; }
 
         public ReadOnlyObservableCollection<LauncherGroupElement> LauncherGroups { get; }
 
@@ -225,6 +229,11 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
             ToolbarPosition = toolbarPosition;
             UpdateDesign();
             IsOpendAppMenu = false;
+
+            MainDatabaseLazyWriter.Stock(c => {
+                var dao = new LauncherToolbarsDao(c, StatementLoader, this);
+                dao.UpdateToolbarPosition(LauncherToolbarId, ToolbarPosition);
+            });
         }
 
         #endregion

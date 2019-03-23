@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.Pe.Main
 {
-    public static class Constants
+    public static partial class Constants
     {
         #region property
 

@@ -95,6 +95,20 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             return Commander.Execute(sql, dto) == 1;
         }
 
+        public bool UpdateToolbarPosition(Guid launcherToolbarId, AppDesktopToolbarPosition toolbarPosition)
+        {
+            var toolbarPositionTransfer = new EnumTransfer<AppDesktopToolbarPosition>();
+
+            var sql = StatementLoader.LoadStatementByCurrent();
+
+            var status = DatabaseCommonStatus.CreateUser();
+            var param = status.CreateMap();
+            param["LauncherToolbarId"] = launcherToolbarId;
+            param["PositionKind"] = toolbarPositionTransfer.To(toolbarPosition);
+
+            return Commander.Execute(sql, param) == 1;
+        }
+
         #endregion
     }
 }

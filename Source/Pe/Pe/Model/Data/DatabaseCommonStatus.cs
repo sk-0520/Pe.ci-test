@@ -11,6 +11,13 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data
 {
     public class DatabaseCommonStatus
     {
+        #region define
+
+        class CommonDtoImpl: CommonDtoBase
+        { }
+
+        #endregion
+
         #region property
 
         public string Account { get; set; }
@@ -65,6 +72,20 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data
 
             WriteCreateCore(dto, timestamp);
             WriteUpdateCore(dto, timestamp);
+        }
+
+        public IDictionary<string, object> CreateMap()
+        {
+            var result = new Dictionary<string, object>();
+
+            var commonDto = new CommonDtoImpl();
+            WriteCommon(commonDto);
+            foreach(var propertyInfo in commonDto.GetType().GetProperties()) {
+                var value = propertyInfo.GetValue(commonDto);
+                result.Add(propertyInfo.Name, value);
+            }
+
+            return result;
         }
 
         #endregion
