@@ -14,6 +14,18 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             : base(commander, statementLoader, loggerFactory)
         { }
 
+        #region property
+
+        public static class Column
+        {
+            #region property
+
+
+            #endregion
+        }
+
+        #endregion
+
         #region function
         #endregion
     }

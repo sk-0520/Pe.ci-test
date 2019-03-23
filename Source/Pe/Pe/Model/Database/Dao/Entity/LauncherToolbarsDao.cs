@@ -20,6 +20,20 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             : base(commander, statementLoader, loggerFactory)
         { }
 
+        #region property
+
+        public static class Column
+        {
+            #region property
+
+            public static string LauncherToolbarId { get; } = "LauncherToolbarId";
+            public static string PositionKind { get; } = "PositionKind";
+
+            #endregion
+        }
+
+        #endregion
+
         #region function
 
         LauncherToolbarsScreenData ConvertFromDto(LauncherToolbarsScreenRowDto dto)
@@ -103,8 +117,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
 
             var status = DatabaseCommonStatus.CreateUser();
             var param = status.CreateMap();
-            param["LauncherToolbarId"] = launcherToolbarId;
-            param["PositionKind"] = toolbarPositionTransfer.To(toolbarPosition);
+            param[Column.LauncherToolbarId] = launcherToolbarId;
+            param[Column.PositionKind] = toolbarPositionTransfer.To(toolbarPosition);
 
             return Commander.Execute(sql, param) == 1;
         }
