@@ -330,7 +330,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="doc\license\pe\Pe.txt">
+    <Resource Include="doc\license\Pe\Pe.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherGroupItemsDao\SelectLauncherItemIds.sql">
