@@ -103,14 +103,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar
 
         public ICommand ChangeToolbarPositionCommand => GetOrCreateCommand(() => new DelegateCommand<AppDesktopToolbarPosition?>(
             o => {
-                if(!o.HasValue) {
-                    Logger.Warning($"パラメータが null, {nameof(AppDesktopToolbarPosition)} を期待");
-                    return;
-                }
-
                 Model.ChangeToolbarPosition(o.Value);
             },
             o => o.HasValue && o.Value != ToolbarPosition
+        ));
+
+        public ICommand SwitchTopmostCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                Model.ChangeTopmost(!Model.IsTopmost);
+            }
         ));
 
         #endregion

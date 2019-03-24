@@ -237,6 +237,16 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
             });
         }
 
+        public void ChangeTopmost(bool isTopmost)
+        {
+            IsTopmost = isTopmost;
+
+            MainDatabaseLazyWriter.Stock(c => {
+                var dao = new LauncherToolbarsDao(c, StatementLoader, this);
+                dao.UpdatTopmost(LauncherToolbarId, IsTopmost, DatabaseCommonStatus.CreateCurrentAccount());
+            });
+        }
+
         #endregion
 
         #region ContextElementBase

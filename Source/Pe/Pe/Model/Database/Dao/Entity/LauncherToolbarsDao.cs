@@ -28,6 +28,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
 
             public static string LauncherToolbarId { get; } = "LauncherToolbarId";
             public static string PositionKind { get; } = "PositionKind";
+            public static string IsTopmost { get; } = "IsTopmost";
 
             #endregion
         }
@@ -117,6 +118,17 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             var param = commonStatus.CreateCommonDtoMapping();
             param[Column.LauncherToolbarId] = launcherToolbarId;
             param[Column.PositionKind] = toolbarPositionTransfer.To(toolbarPosition);
+
+            return Commander.Execute(sql, param) == 1;
+        }
+
+        public bool UpdatTopmost(Guid launcherToolbarId, bool isTopmost, IDatabaseCommonStatus commonStatus)
+        {
+            var sql = StatementLoader.LoadStatementByCurrent();
+
+            var param = commonStatus.CreateCommonDtoMapping();
+            param[Column.LauncherToolbarId] = launcherToolbarId;
+            param[Column.IsTopmost] = isTopmost;
 
             return Commander.Execute(sql, param) == 1;
         }

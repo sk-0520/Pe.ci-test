@@ -172,7 +172,7 @@
 
               <Separator />
 
-              <MenuItem Header="topmost" />
+              <MenuItem Header="topmost" Command="{Binding SwitchTopmostCommand}" />
               <MenuItem Header="auto hide" />
 
               <Separator />
