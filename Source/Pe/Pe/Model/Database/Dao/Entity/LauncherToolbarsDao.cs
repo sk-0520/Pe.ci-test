@@ -91,7 +91,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             return data;
         }
 
-        public bool InsertNewToolbar(Guid toolbarId, Screen screen, DatabaseCommonStatus commonStatus)
+        public bool InsertNewToolbar(Guid toolbarId, Screen screen, IDatabaseCommonStatus commonStatus)
         {
             var sql = StatementLoader.LoadStatementByCurrent();
             var dto = new LauncherToolbarsScreenRowDto() {
@@ -108,7 +108,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             return Commander.Execute(sql, dto) == 1;
         }
 
-        public bool UpdateToolbarPosition(Guid launcherToolbarId, AppDesktopToolbarPosition toolbarPosition, DatabaseCommonStatus commonStatus)
+        public bool UpdateToolbarPosition(Guid launcherToolbarId, AppDesktopToolbarPosition toolbarPosition, IDatabaseCommonStatus commonStatus)
         {
             var toolbarPositionTransfer = new EnumTransfer<AppDesktopToolbarPosition>();
 

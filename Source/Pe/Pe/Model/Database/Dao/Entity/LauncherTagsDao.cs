@@ -30,7 +30,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
 
         #region function
 
-        public void InsertNewTags(Guid launcherItemId, IEnumerable<string> tags, DatabaseCommonStatus commonStatus)
+        public void InsertNewTags(Guid launcherItemId, IEnumerable<string> tags, IDatabaseCommonStatus commonStatus)
         {
             var sql = StatementLoader.LoadStatementByCurrent();
             foreach(var tag in tags) {

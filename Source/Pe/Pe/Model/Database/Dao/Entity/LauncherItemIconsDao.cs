@@ -48,7 +48,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             return null;
         }
 
-        public int InsertImageBinary(Guid launcherItemId, IconScale iconScale, IEnumerable<byte> imageBinary, DatabaseCommonStatus commonStatus)
+        public int InsertImageBinary(Guid launcherItemId, IconScale iconScale, IEnumerable<byte> imageBinary, IDatabaseCommonStatus commonStatus)
         {
             var iconScaleTransfer = new EnumTransfer<IconScale>();
 

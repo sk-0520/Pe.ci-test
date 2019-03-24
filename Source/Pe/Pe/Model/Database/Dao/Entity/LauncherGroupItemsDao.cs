@@ -51,7 +51,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             return Commander.Query<Guid>(sql, param);
         }
 
-        public void InsertNewItems(Guid groupId, IEnumerable<Guid> itemIds, long startSort, int sortStep, DatabaseCommonStatus commonStatus)
+        public void InsertNewItems(Guid groupId, IEnumerable<Guid> itemIds, long startSort, int sortStep, IDatabaseCommonStatus commonStatus)
         {
             var sql = StatementLoader.LoadStatementByCurrent();
             var counter = 0;

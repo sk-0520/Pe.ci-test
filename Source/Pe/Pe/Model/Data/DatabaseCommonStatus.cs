@@ -9,7 +9,19 @@ using ContentTypeTextNet.Pe.Main.Model.Data.Dto;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Data
 {
-    public class DatabaseCommonStatus
+    public interface IDatabaseCommonStatus
+    {
+        #region function
+
+        void WriteCreate(IWritableCreateDto dto);
+        void WriteUpdate(IWritableUpdateDto dto);
+        void WriteCommon(IWritableCommonDto dto);
+        IDictionary<string, object> CreateCommonDtoMapping();
+
+        #endregion
+    }
+
+    public class DatabaseCommonStatus: IDatabaseCommonStatus
     {
         #region define
 
@@ -48,17 +60,22 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data
             dto.CreatedProgramVersion = ProgramVersion;
         }
 
-        public void WriteCreate(IWritableCreateDto dto)
-        {
-            WriteCreateCore(dto, DateTime.UtcNow);
-        }
-
         void WriteUpdateCore(IWritableUpdateDto dto, [Timestamp(DateTimeKind.Utc)] DateTime timestamp)
         {
             dto.UpdatedAccount = Account;
             dto.UpdatedTimestamp = timestamp;
             dto.UpdatedProgramName = ProgramName;
             dto.UpdatedProgramVersion = ProgramVersion;
+        }
+
+
+        #endregion
+
+        #region IDatabaseCommonStatus
+
+        public void WriteCreate(IWritableCreateDto dto)
+        {
+            WriteCreateCore(dto, DateTime.UtcNow);
         }
 
         public void WriteUpdate(IWritableUpdateDto dto)
