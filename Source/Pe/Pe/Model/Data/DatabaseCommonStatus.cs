@@ -28,7 +28,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data
 
         #region function
 
-        public static DatabaseCommonStatus CreateUser()
+        public static DatabaseCommonStatus CreateCurrentAccount()
         {
             var assembly = Assembly.GetExecutingAssembly();
             var assemblyName = assembly.GetName();
@@ -74,7 +74,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data
             WriteUpdateCore(dto, timestamp);
         }
 
-        public IDictionary<string, object> CreateMap()
+        public IDictionary<string, object> CreateCommonDtoMapping()
         {
             var result = new Dictionary<string, object>();
 

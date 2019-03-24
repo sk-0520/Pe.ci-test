@@ -17,8 +17,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Tune
             StatementLoader = statementLoader;
             Logger = loggerFactory.CreateTartget(GetType());
 
-            var commonStatus = DatabaseCommonStatus.CreateUser();
-            TuneCommonDtoSource = commonStatus.CreateMap();
+            var commonStatus = DatabaseCommonStatus.CreateCurrentAccount();
+            TuneCommonDtoSource = commonStatus.CreateCommonDtoMapping();
         }
 
         #region property

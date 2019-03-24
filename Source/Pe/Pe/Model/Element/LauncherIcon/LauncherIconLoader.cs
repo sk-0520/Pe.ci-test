@@ -133,7 +133,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherIcon
                 using(var commander = FileDatabaseBarrier.WaitWrite()) {
                     var dao = new LauncherItemIconsDao(commander, StatementLoader, Logger.Factory);
                     dao.DeleteImageBinary(LauncherItemId, IconScale);
-                    dao.InsertImageBinary(LauncherItemId, IconScale, stream.BinaryChunkedList);
+                    dao.InsertImageBinary(LauncherItemId, IconScale, stream.BinaryChunkedList, DatabaseCommonStatus.CreateCurrentAccount());
                     commander.Commit();
                 }
             }

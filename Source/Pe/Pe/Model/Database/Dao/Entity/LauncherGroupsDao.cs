@@ -31,7 +31,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
 
         #region function
 
-        LauncherGroupsRowDto ConvertFromData(LauncherGroupData data)
+        LauncherGroupsRowDto ConvertFromData(LauncherGroupData data, DatabaseCommonStatus commonStatus)
         {
             var imgNameEnumTransfer = new EnumTransfer<LauncherGroupImageName>();
             var launcherGroupKindTransfer = new EnumTransfer<LauncherGroupKind>();
@@ -45,8 +45,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
                 Sort = data.Sort,
             };
 
-            var status = DatabaseCommonStatus.CreateUser();
-            status.WriteCommon(dto);
+            commonStatus.WriteCommon(dto);
 
             return dto;
 
@@ -93,10 +92,10 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             return data;
         }
 
-        public void InsertNewGroup(LauncherGroupData data)
+        public void InsertNewGroup(LauncherGroupData data, DatabaseCommonStatus commonStatus)
         {
             var sql = StatementLoader.LoadStatementByCurrent();
-            var dto = ConvertFromData(data);
+            var dto = ConvertFromData(data, commonStatus);
             Commander.Execute(sql, dto);
         }
 

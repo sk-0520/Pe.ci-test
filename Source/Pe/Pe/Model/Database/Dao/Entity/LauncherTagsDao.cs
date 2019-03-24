@@ -30,16 +30,15 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
 
         #region function
 
-        public void InsertNewTags(Guid launcherItemId, IEnumerable<string> tags)
+        public void InsertNewTags(Guid launcherItemId, IEnumerable<string> tags, DatabaseCommonStatus commonStatus)
         {
-            var status = DatabaseCommonStatus.CreateUser();
             var sql = StatementLoader.LoadStatementByCurrent();
             foreach(var tag in tags) {
                 var dto = new LauncherTagsRowDto() {
                     LauncherItemId = launcherItemId,
                     TagName = tag,
                 };
-                status.WriteCommon(dto);
+                commonStatus.WriteCommon(dto);
                 Commander.Execute(sql, dto);
             }
         }

@@ -29,7 +29,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database
 
         IDatabaseStatementLoader StatementLoader { get; }
         ILogger Logger { get; }
-        DatabaseCommonStatus CommonStatus { get; } = DatabaseCommonStatus.CreateUser();
+        DatabaseCommonStatus CommonStatus { get; } = DatabaseCommonStatus.CreateCurrentAccount();
 
         #endregion
 

@@ -32,7 +32,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
 
         #region function
 
-        LauncherItemsRowDto ConvertFromData(LauncherItemSimpleNewData data)
+        LauncherItemsRowDto ConvertFromData(LauncherItemSimpleNewData data, DatabaseCommonStatus commonStatus)
         {
             var kindEnumTransfer = new EnumTransfer<LauncherItemKind>();
             var permissionEnumTransfer = new EnumTransfer<LauncherItemPermission>();
@@ -56,8 +56,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
                 Note = data.Note,
             };
 
-            var status = DatabaseCommonStatus.CreateUser();
-            status.WriteCommon(dto);
+            commonStatus.WriteCommon(dto);
 
             return dto;
         }
@@ -126,10 +125,10 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             return data;
         }
 
-        public void InsertSimpleNew(LauncherItemSimpleNewData data)
+        public void InsertSimpleNew(LauncherItemSimpleNewData data, DatabaseCommonStatus commonStatus)
         {
             var sql = StatementLoader.LoadStatementByCurrent();
-            var dto = ConvertFromData(data);
+            var dto = ConvertFromData(data, commonStatus);
             Commander.Execute(sql, dto);
         }
 

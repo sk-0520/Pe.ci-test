@@ -91,7 +91,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             return data;
         }
 
-        public bool InsertNewToolbar(Guid toolbarId, Screen screen)
+        public bool InsertNewToolbar(Guid toolbarId, Screen screen, DatabaseCommonStatus commonStatus)
         {
             var sql = StatementLoader.LoadStatementByCurrent();
             var dto = new LauncherToolbarsScreenRowDto() {
@@ -103,20 +103,18 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
                 ScreenHeight = (long)screen.DeviceBounds.Height,
             };
 
-            var status = DatabaseCommonStatus.CreateUser();
-            status.WriteCommon(dto);
+            commonStatus.WriteCommon(dto);
 
             return Commander.Execute(sql, dto) == 1;
         }
 
-        public bool UpdateToolbarPosition(Guid launcherToolbarId, AppDesktopToolbarPosition toolbarPosition)
+        public bool UpdateToolbarPosition(Guid launcherToolbarId, AppDesktopToolbarPosition toolbarPosition, DatabaseCommonStatus commonStatus)
         {
             var toolbarPositionTransfer = new EnumTransfer<AppDesktopToolbarPosition>();
 
             var sql = StatementLoader.LoadStatementByCurrent();
 
-            var status = DatabaseCommonStatus.CreateUser();
-            var param = status.CreateMap();
+            var param = commonStatus.CreateCommonDtoMapping();
             param[Column.LauncherToolbarId] = launcherToolbarId;
             param[Column.PositionKind] = toolbarPositionTransfer.To(toolbarPosition);
 

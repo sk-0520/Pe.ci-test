@@ -11,6 +11,7 @@ using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Applications;
+using ContentTypeTextNet.Pe.Main.Model.Data;
 using ContentTypeTextNet.Pe.Main.Model.Data.Dto.Entity;
 using ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Model.Element.LauncherGroup;
@@ -162,7 +163,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
 
             using(var commander = MainDatabaseBarrier.WaitWrite()) {
                 var dao = new LauncherToolbarsDao(commander, StatementLoader, this);
-                dao.InsertNewToolbar(toolbarId, DockScreen);
+                dao.InsertNewToolbar(toolbarId, DockScreen, DatabaseCommonStatus.CreateCurrentAccount());
 
                 commander.Commit();
             }
@@ -232,7 +233,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
 
             MainDatabaseLazyWriter.Stock(c => {
                 var dao = new LauncherToolbarsDao(c, StatementLoader, this);
-                dao.UpdateToolbarPosition(LauncherToolbarId, ToolbarPosition);
+                dao.UpdateToolbarPosition(LauncherToolbarId, ToolbarPosition, DatabaseCommonStatus.CreateCurrentAccount());
             });
         }
 

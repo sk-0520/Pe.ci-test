@@ -51,9 +51,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             return Commander.Query<Guid>(sql, param);
         }
 
-        public void InsertNewItems(Guid groupId, IEnumerable<Guid> itemIds, long startSort, int sortStep)
+        public void InsertNewItems(Guid groupId, IEnumerable<Guid> itemIds, long startSort, int sortStep, DatabaseCommonStatus commonStatus)
         {
-            var status = DatabaseCommonStatus.CreateUser();
             var sql = StatementLoader.LoadStatementByCurrent();
             var counter = 0;
             foreach(var itemId in itemIds) {
@@ -62,7 +61,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
                     LauncherItemId = itemId,
                     Sort = startSort + (sortStep * (counter++)),
                 };
-                status.WriteCommon(dto);
+                commonStatus.WriteCommon(dto);
                 Commander.Execute(sql, dto);
             }
         }

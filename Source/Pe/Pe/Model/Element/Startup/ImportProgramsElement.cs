@@ -10,6 +10,7 @@ using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Applications;
+using ContentTypeTextNet.Pe.Main.Model.Data;
 using ContentTypeTextNet.Pe.Main.Model.Database.Dao;
 using ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Model.Launcher;
@@ -113,22 +114,22 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Startup
                 foreach(var importItem in importItems) {
                     var codes = launcherItemsDao.SelectFuzzyCodes(importItem.Data.Code);
                     importItem.Data.Code = TextUtility.ToUnique(importItem.Data.Code, codes, StringComparison.OrdinalIgnoreCase, (s, n) => $"{s}-{n}");
-                    launcherItemsDao.InsertSimpleNew(importItem.Data);
+                    launcherItemsDao.InsertSimpleNew(importItem.Data, DatabaseCommonStatus.CreateCurrentAccount());
 
                     // db タグ突っ込んで
-                    launcherTagsDao.InsertNewTags(importItem.Data.LauncherItemId, importItem.Tags);
+                    launcherTagsDao.InsertNewTags(importItem.Data.LauncherItemId, importItem.Tags, DatabaseCommonStatus.CreateCurrentAccount());
                 }
 
                 // db グループ作る
                 var launcherGroupsDao = new LauncherGroupsDao(transaction, StatementLoader, Logger.Factory);
                 var groupStep = 10;
                 group.Sort = launcherGroupsDao.SelectMaxSort() + groupStep;
-                launcherGroupsDao.InsertNewGroup(group);
+                launcherGroupsDao.InsertNewGroup(group, DatabaseCommonStatus.CreateCurrentAccount());
 
                 var launcherGroupItemsDao = new LauncherGroupItemsDao(transaction, StatementLoader, Logger.Factory);
                 var currentMaxSort = launcherGroupItemsDao.SelectMaxSort(group.LauncherGroupId);
                 var itemStep = 10;
-                launcherGroupItemsDao.InsertNewItems(group.LauncherGroupId, importItems.Select(i => i.Data.LauncherItemId), currentMaxSort + itemStep, itemStep);
+                launcherGroupItemsDao.InsertNewItems(group.LauncherGroupId, importItems.Select(i => i.Data.LauncherItemId), currentMaxSort + itemStep, itemStep, DatabaseCommonStatus.CreateCurrentAccount());
 
                 transaction.Commit();
             }

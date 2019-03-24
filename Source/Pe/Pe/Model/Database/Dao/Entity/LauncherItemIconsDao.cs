@@ -48,20 +48,19 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             return null;
         }
 
-        public int InsertImageBinary(Guid launcherItemId, IconScale iconScale, IEnumerable<byte> imageBinary)
+        public int InsertImageBinary(Guid launcherItemId, IconScale iconScale, IEnumerable<byte> imageBinary, DatabaseCommonStatus commonStatus)
         {
             var iconScaleTransfer = new EnumTransfer<IconScale>();
 
             var sql = StatementLoader.LoadStatementByCurrent();
             var binaryImageItems = imageBinary.GroupSplit(80 * 1024).ToArray();
-            var status = DatabaseCommonStatus.CreateUser();
             var dto = new LauncherItemIconsDto() {
                 LauncherItemId = launcherItemId,
                 IconScale = iconScaleTransfer.To(iconScale),
             };
             var resultCount = 0;
             for(var i = 0; i < binaryImageItems.Length; i++) {
-                status.WriteCreate(dto);
+                commonStatus.WriteCreate(dto);
                 dto.Sequence = i;
                 dto.Image = binaryImageItems[i].ToArray();
                 resultCount += Commander.Execute(sql, dto);
