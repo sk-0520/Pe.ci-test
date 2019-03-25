@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
@@ -57,8 +58,12 @@ namespace ContentTypeTextNet.Pe.Main.Model.Launcher
 
                     result.Icon.Path = shortcut.IconPath;
                     result.Icon.Index = shortcut.IconIndex;
-
-                    result.Note = shortcut.Description;
+                    try {
+                        result.Note = shortcut.Description;
+                    } catch(COMException ex) {
+                        Logger.Warning($"{expandedPath}");
+                        Logger.Warning(ex);
+                    }
 
                 }
             } else {

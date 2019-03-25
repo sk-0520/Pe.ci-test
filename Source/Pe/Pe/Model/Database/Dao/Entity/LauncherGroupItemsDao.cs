@@ -12,8 +12,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
 {
     public class LauncherGroupItemsDao : EntityDaoBase
     {
-        public LauncherGroupItemsDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
-            : base(commander, statementLoader, loggerFactory)
+        public LauncherGroupItemsDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+            : base(commander, statementLoader, implementation, loggerFactory)
         { }
 
         #region property

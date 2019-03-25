@@ -8,25 +8,6 @@ using ContentTypeTextNet.Pe.Main.Model.Logic;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Data.Dto.Entity
 {
-    public class LauncherToolbarsScreenRowDto : CommonDtoBase
-    {
-        #region property
-
-        public Guid LauncherToolbarId { get; set; }
-
-        public string ScreenName { get; set; }
-        [PixelKind(Px.Device)]
-        public long ScreenX { get; set; }
-        [PixelKind(Px.Device)]
-        public long ScreenY { get; set; }
-        [PixelKind(Px.Device)]
-        public long ScreenWidth { get; set; }
-        [PixelKind(Px.Device)]
-        public long ScreenHeight { get; set; }
-
-        #endregion
-    }
-
     public class LauncherToolbarsDisplayRowDto : CommonDtoBase
     {
         #region property

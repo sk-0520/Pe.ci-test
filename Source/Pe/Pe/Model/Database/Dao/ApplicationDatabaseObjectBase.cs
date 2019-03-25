@@ -11,12 +11,12 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao
 {
     public abstract class ApplicationDatabaseObjectBase : DatabaseAccessObjectBase
     {
-        public ApplicationDatabaseObjectBase(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, ILogger logger)
-            : base(commander, statementLoader, logger)
+        public ApplicationDatabaseObjectBase(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILogger logger)
+            : base(commander, statementLoader, implementation, logger)
         { }
 
-        public ApplicationDatabaseObjectBase(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
-            : base(commander, statementLoader, loggerFactory)
+        public ApplicationDatabaseObjectBase(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+            : base(commander, statementLoader, implementation, loggerFactory)
         { }
 
         #region function

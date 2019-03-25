@@ -11,11 +11,11 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
 {
     public abstract class EntityDaoBase : ApplicationDatabaseObjectBase
     {
-        public EntityDaoBase(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, ILogger logger)
-            : base(commander, statementLoader, logger)
+        public EntityDaoBase(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILogger logger)
+            : base(commander, statementLoader, implementation, logger)
         { }
-        public EntityDaoBase(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
-            : base(commander, statementLoader, loggerFactory)
+        public EntityDaoBase(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+            : base(commander, statementLoader, implementation, loggerFactory)
         { }
 
         #region property

@@ -137,6 +137,7 @@
     <Compile Include="Model\Applications\ApplicationLogger.cs" />
     <Compile Include="Model\Applications\ApplicationReaderWriterLocker.cs" />
     <Compile Include="Model\Applications\ApplicationDatabaseBarrier.cs" />
+    <Compile Include="Model\Database\Dao\Application\ApplicationLauncherToolbarsDao.cs" />
     <Compile Include="Model\Database\Dao\Entity\EntityDaoBase.cs" />
     <Compile Include="Model\Database\Dao\Entity\FontsDao.cs" />
     <Compile Include="Model\Database\Dao\Entity\CredentsDao.cs" />
@@ -151,10 +152,13 @@
     <Compile Include="Model\Database\Dao\Entity\LauncherEnvVarsDao.cs" />
     <Compile Include="Model\Database\Dao\Entity\LauncherItemHistoriesDao.cs" />
     <Compile Include="Model\Database\Dao\Entity\LauncherTagsDao.cs" />
+    <Compile Include="Model\Database\Dao\Entity\ScreensDao.cs" />
     <Compile Include="Model\Database\DatabaseTuner.cs" />
     <Compile Include="Model\Database\Tuner\TunerBase.cs" />
     <Compile Include="Model\Database\Tuner\Tuner_LauncherGroups.cs" />
+    <Compile Include="Model\Data\Dto\Application\LauncherToolbarsScreenRowDto.cs" />
     <Compile Include="Model\Data\Dto\Entity\LauncherItemIconsDto.cs" />
+    <Compile Include="Model\Data\Dto\Entity\ScreensDto.cs" />
     <Compile Include="Model\Data\IconData.cs" />
     <Compile Include="Model\Data\Dto\Entity\LauncherGroupItemsDto.cs" />
     <Compile Include="Model\Data\Dto\Entity\LauncherGroupsDto.cs" />
@@ -390,7 +394,13 @@
     <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherToolbarsDao\SelectDisplayData.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherToolbarsDao\SelectAllToolbars.sql">
+    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Application\ApplicationLauncherToolbarsDao\SelectAllToolbars.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\ScreensDao\InsertScreen.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\ScreensDao\SelectExistsScreen.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\DatabaseSetupper\ExistsVersionTable.sql">

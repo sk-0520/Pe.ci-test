@@ -10,8 +10,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
 {
     public class NoteContentsDao : EntityDaoBase
     {
-        public NoteContentsDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
-            : base(commander, statementLoader, loggerFactory)
+        public NoteContentsDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+            : base(commander, statementLoader, implementation, loggerFactory)
         { }
 
         #region property

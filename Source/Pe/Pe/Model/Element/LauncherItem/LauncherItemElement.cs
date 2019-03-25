@@ -16,7 +16,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem
 {
     public class LauncherItemElement : ElementBase
     {
-        public LauncherItemElement(Guid launcherItemId, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, LauncherIconElement launcherIconElement, ILoggerFactory loggerFactory)
+        public LauncherItemElement(Guid launcherItemId, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, LauncherIconElement launcherIconElement, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             LauncherItemId = launcherItemId;
@@ -24,6 +24,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem
             NotifyManager = notifyManager;
             MainDatabaseBarrier = mainDatabaseBarrier;
             StatementLoader = statementLoader;
+            Implementation = implementation;
 
             Icon = launcherIconElement;
         }
@@ -36,6 +37,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem
         IMainDatabaseBarrier MainDatabaseBarrier { get; }
         IFileDatabaseBarrier FileDatabaseBarrier { get; }
         IDatabaseStatementLoader StatementLoader { get; }
+        IDatabaseImplementation Implementation { get; }
 
         public string Name { get; private set; }
         public string Code { get; private set; }
@@ -53,7 +55,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem
         void LoadLauncherItem()
         {
             using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var dao = new LauncherItemsDao(commander, StatementLoader, this);
+                var dao = new LauncherItemsDao(commander, StatementLoader, Implementation, this);
                 var data = dao.SelectLauncherItem(LauncherItemId);
 
                 Name = data.Name;

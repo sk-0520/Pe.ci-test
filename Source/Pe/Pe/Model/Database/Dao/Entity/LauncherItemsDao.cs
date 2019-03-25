@@ -14,8 +14,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
 {
     public class LauncherItemsDao : EntityDaoBase
     {
-        public LauncherItemsDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
-            : base(commander, statementLoader, loggerFactory)
+        public LauncherItemsDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+            : base(commander, statementLoader, implementation , loggerFactory)
         { }
 
         #region property
@@ -53,7 +53,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
                 IsEnabledStandardInput = data.StandardStream.IsEnabledStandardInput,
                 Permission = permissionEnumTransfer.To( data.Permission),
                 CredentId = Guid.Empty,
-                Note = data.Note,
+                Note = Implementation.IsNull(data.Note) ? Implementation.GetNullValue<string>(): data.Note,
             };
 
             commonStatus.WriteCommon(dto);

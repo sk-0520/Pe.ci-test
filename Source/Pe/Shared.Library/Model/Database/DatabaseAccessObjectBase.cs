@@ -12,19 +12,21 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
     /// </summary>
     public abstract class DatabaseAccessObjectBase
     {
-        DatabaseAccessObjectBase(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader)
+        DatabaseAccessObjectBase(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation)
         {
             Commander = commander;
             StatementLoader = statementLoader;
+            Implementation = implementation;
         }
 
-        public DatabaseAccessObjectBase(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, ILogger logger)
+        public DatabaseAccessObjectBase(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILogger logger)
+            : this(commander, statementLoader, implementation)
         {
             Logger = logger;
         }
 
-        public DatabaseAccessObjectBase(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
-            : this(commander, statementLoader)
+        public DatabaseAccessObjectBase(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+            : this(commander, statementLoader, implementation)
         {
             Logger = loggerFactory.CreateTartget(GetType());
         }
@@ -39,6 +41,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
         /// データベース文の読み込みストア。
         /// </summary>
         protected IDatabaseStatementLoader StatementLoader { get; }
+        protected IDatabaseImplementation Implementation { get; }
         /// <summary>
         /// ログ出力担当。
         /// </summary>

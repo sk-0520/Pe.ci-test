@@ -17,7 +17,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherGroup
 {
     public class LauncherGroupElement : ElementBase
     {
-        public LauncherGroupElement(Guid launcherGroupId, IOrderManager orderManager, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, ILoggerFactory loggerFactory)
+        public LauncherGroupElement(Guid launcherGroupId, IOrderManager orderManager, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, IIdFactory idFactory, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             LauncherGroupId = launcherGroupId;
@@ -26,6 +26,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherGroup
             NotifyManager = notifyManager;
             MainDatabaseBarrier = mainDatabaseBarrier;
             StatementLoader = statementLoader;
+            Implementation = implementation;
             IdFactory = idFactory;
         }
 
@@ -34,6 +35,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherGroup
         INotifyManager NotifyManager { get; }
         IMainDatabaseBarrier MainDatabaseBarrier { get; }
         IDatabaseStatementLoader StatementLoader { get; }
+        IDatabaseImplementation Implementation { get; }
         IIdFactory IdFactory { get; }
 
         public Guid LauncherGroupId { get; }
@@ -56,7 +58,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherGroup
         {
             LauncherGroupData data;
             using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var dao = new LauncherGroupsDao(commander, StatementLoader, this);
+                var dao = new LauncherGroupsDao(commander, StatementLoader, Implementation, this);
                 data = dao.SelectLauncherGroup(LauncherGroupId);
             }
 
@@ -70,7 +72,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherGroup
         IEnumerable<Guid> GetLauncherItemsForNormal()
         {
             using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var dao = new LauncherGroupItemsDao(commander, StatementLoader, this);
+                var dao = new LauncherGroupItemsDao(commander, StatementLoader, Implementation, this);
                 return dao.SelectLauncherItemIds(LauncherGroupId);
             }
         }

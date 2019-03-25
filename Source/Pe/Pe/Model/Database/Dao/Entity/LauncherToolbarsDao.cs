@@ -16,8 +16,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
 {
     public class LauncherToolbarsDao : EntityDaoBase
     {
-        public LauncherToolbarsDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
-            : base(commander, statementLoader, loggerFactory)
+        public LauncherToolbarsDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+            : base(commander, statementLoader, implementation, loggerFactory)
         { }
 
         #region property
@@ -27,6 +27,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             #region property
 
             public static string LauncherToolbarId { get; } = "LauncherToolbarId";
+            public static string ScreenName { get; } = "ScreenName";
             public static string PositionKind { get; } = "PositionKind";
             public static string IsTopmost { get; } = "IsTopmost";
 
@@ -37,19 +38,6 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
 
         #region function
 
-        LauncherToolbarsScreenData ConvertFromDto(LauncherToolbarsScreenRowDto dto)
-        {
-            var data = new LauncherToolbarsScreenData() {
-                LauncherToolbarId = dto.LauncherToolbarId,
-                ScreenName = dto.ScreenName,
-                X = dto.ScreenX,
-                Y = dto.ScreenY,
-                Height = dto.ScreenHeight,
-                Width = dto.ScreenWidth,
-            };
-
-            return data;
-        }
 
         LauncherToolbarsDisplayData ConvertFromDto(LauncherToolbarsDisplayRowDto dto)
         {
@@ -73,14 +61,6 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             return result;
         }
 
-        public IEnumerable<LauncherToolbarsScreenData> SelectAllToolbars()
-        {
-            var sql = StatementLoader.LoadStatementByCurrent();
-            return Commander.Query<LauncherToolbarsScreenRowDto>(sql)
-                .Select(i => ConvertFromDto(i))
-            ;
-        }
-
         public LauncherToolbarsDisplayData SelectDisplayData(Guid launcherToolbarId)
         {
             var sql = StatementLoader.LoadStatementByCurrent();
@@ -92,21 +72,15 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             return data;
         }
 
-        public bool InsertNewToolbar(Guid toolbarId, Screen screen, IDatabaseCommonStatus commonStatus)
+        public bool InsertNewToolbar(Guid toolbarId, string screenName, IDatabaseCommonStatus commonStatus)
         {
             var sql = StatementLoader.LoadStatementByCurrent();
-            var dto = new LauncherToolbarsScreenRowDto() {
-                LauncherToolbarId = toolbarId,
-                ScreenName = screen.DeviceName,
-                ScreenX = (long)screen.DeviceBounds.X,
-                ScreenY = (long)screen.DeviceBounds.Y,
-                ScreenWidth = (long)screen.DeviceBounds.Width,
-                ScreenHeight = (long)screen.DeviceBounds.Height,
-            };
 
-            commonStatus.WriteCommon(dto);
+            var param = commonStatus.CreateCommonDtoMapping();
+            param[Column.LauncherToolbarId] = toolbarId;
+            param[Column.ScreenName] = screenName;
 
-            return Commander.Execute(sql, dto) == 1;
+            return Commander.Execute(sql, param) == 1;
         }
 
         public bool UpdateToolbarPosition(Guid launcherToolbarId, AppDesktopToolbarPosition toolbarPosition, IDatabaseCommonStatus commonStatus)
