@@ -13,10 +13,11 @@ namespace ContentTypeTextNet.Pe.Main.Model.Applications
 {
     public sealed class ApplicationDatabaseBarrierTransaction : DisposerBase, IDatabaseTransaction
     {
-        public ApplicationDatabaseBarrierTransaction(IDisposable locker, IDatabaseTransaction transaction)
+        public ApplicationDatabaseBarrierTransaction(IDisposable locker, IDatabaseTransaction transaction, IDatabaseImplementation implementation)
         {
             Locker = locker;
             Transaction = transaction;
+            Implementation = implementation;
         }
 
         #region property
@@ -25,6 +26,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Applications
         IDatabaseTransaction Transaction { get; }
 
         IDbTransaction IDatabaseTransaction.Transaction => Transaction.Transaction;
+
+        public IDatabaseImplementation Implementation { get; }
 
         #endregion
 
@@ -138,7 +141,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Applications
         {
             var locker = Locker.WaitWriteByDefaultTimeout();
             var commander = Accessor.BeginTransaction();
-            var result = new ApplicationDatabaseBarrierTransaction(locker, commander);
+            var result = new ApplicationDatabaseBarrierTransaction(locker, commander, Accessor.DatabaseFactory.CreateImplementation());
             return result;
         }
 
@@ -146,7 +149,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Applications
         {
             var locker = Locker.WaitWriteByDefaultTimeout();
             var commander = Accessor.BeginTransaction();
-            var result = new ApplicationDatabaseBarrierTransaction(locker, commander);
+            var result = new ApplicationDatabaseBarrierTransaction(locker, commander, Accessor.DatabaseFactory.CreateImplementation());
             return result;
         }
 

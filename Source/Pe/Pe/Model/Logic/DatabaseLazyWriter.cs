@@ -15,14 +15,14 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
 {
     public class LazyStockItem
     {
-        public LazyStockItem(Action<IDatabaseCommander> action)
+        public LazyStockItem(Action<ApplicationDatabaseBarrierTransaction> action)
         {
             Action = action;
         }
 
         #region property
 
-        public Action<IDatabaseCommander> Action { get; }
+        public Action<ApplicationDatabaseBarrierTransaction> Action { get; }
         [Timestamp(DateTimeKind.Unspecified)]
         public DateTime StockTimestamp { get; } = DateTime.UtcNow;
 
@@ -81,7 +81,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
             LazyTimer.Change(WaitTime, Timeout.InfiniteTimeSpan);
         }
 
-        public void Stock(Action<IDatabaseCommander> action)
+        public void Stock(Action<ApplicationDatabaseBarrierTransaction> action)
         {
             ThrowIfDisposed();
 

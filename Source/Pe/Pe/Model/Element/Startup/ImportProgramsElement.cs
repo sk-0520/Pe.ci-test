@@ -21,12 +21,11 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Startup
 {
     public class ImportProgramsElement : ContextElementBase
     {
-        public ImportProgramsElement(IMainDatabaseBarrier databaseBarrier, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, IWindowManager windowManager, IIdFactory idFactory, IDiContainer diContainer, ILoggerFactory loggerFactory)
+        public ImportProgramsElement(IMainDatabaseBarrier databaseBarrier, IDatabaseStatementLoader statementLoader, IWindowManager windowManager, IIdFactory idFactory, IDiContainer diContainer, ILoggerFactory loggerFactory)
             : base(diContainer, loggerFactory)
         {
             DatabaseBarrier = databaseBarrier;
             StatementLoader = statementLoader;
-            Implementation = implementation;
             WindowManager = windowManager;
             IdFactory = idFactory;
         }
@@ -35,7 +34,6 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Startup
 
         IApplicationDatabaseBarrier DatabaseBarrier { get; }
         IDatabaseStatementLoader StatementLoader { get; }
-        IDatabaseImplementation Implementation { get; }
         IWindowManager WindowManager { get; }
         IIdFactory IdFactory { get; }
 
@@ -110,8 +108,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Startup
             var group = launcherFactory.CreateGroupData("@GROUP");
 
             using(var transaction = DatabaseBarrier.WaitWrite()) {
-                var launcherItemsDao = new LauncherItemsDao(transaction, StatementLoader, Implementation, Logger.Factory);
-                var launcherTagsDao = new LauncherTagsDao(transaction, StatementLoader, Implementation, Logger.Factory);
+                var launcherItemsDao = new LauncherItemsDao(transaction, StatementLoader, transaction.Implementation, Logger.Factory);
+                var launcherTagsDao = new LauncherTagsDao(transaction, StatementLoader, transaction.Implementation, Logger.Factory);
                 // db ランチャーアイテム突っ込んで
                 foreach(var importItem in importItems) {
                     var codes = launcherItemsDao.SelectFuzzyCodes(importItem.Data.Code);
@@ -123,12 +121,12 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Startup
                 }
 
                 // db グループ作る
-                var launcherGroupsDao = new LauncherGroupsDao(transaction, StatementLoader, Implementation, Logger.Factory);
+                var launcherGroupsDao = new LauncherGroupsDao(transaction, StatementLoader, transaction.Implementation, Logger.Factory);
                 var groupStep = 10;
                 group.Sort = launcherGroupsDao.SelectMaxSort() + groupStep;
                 launcherGroupsDao.InsertNewGroup(group, DatabaseCommonStatus.CreateCurrentAccount());
 
-                var launcherGroupItemsDao = new LauncherGroupItemsDao(transaction, StatementLoader, Implementation, Logger.Factory);
+                var launcherGroupItemsDao = new LauncherGroupItemsDao(transaction, StatementLoader, transaction.Implementation, Logger.Factory);
                 var currentMaxSort = launcherGroupItemsDao.SelectMaxSort(group.LauncherGroupId);
                 var itemStep = 10;
                 launcherGroupItemsDao.InsertNewItems(group.LauncherGroupId, importItems.Select(i => i.Data.LauncherItemId), currentMaxSort + itemStep, itemStep, DatabaseCommonStatus.CreateCurrentAccount());

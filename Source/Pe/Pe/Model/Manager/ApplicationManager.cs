@@ -115,7 +115,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
 
             IList<Guid> launcherGroupIds;
             using(var commander = barrier.WaitRead()) {
-                var dao = ApplicationDiContainer.Make<LauncherGroupsDao>(new object[] { commander });
+                var dao = ApplicationDiContainer.Make<LauncherGroupsDao>(new object[] { commander, commander.Implementation });
                 launcherGroupIds = dao.SelectAllLauncherGroupIds().ToList();
             }
 
