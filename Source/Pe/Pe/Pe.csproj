@@ -137,40 +137,41 @@
     <Compile Include="Model\Applications\ApplicationLogger.cs" />
     <Compile Include="Model\Applications\ApplicationReaderWriterLocker.cs" />
     <Compile Include="Model\Applications\ApplicationDatabaseBarrier.cs" />
-    <Compile Include="Model\Database\Dao\Application\ApplicationLauncherItemDao.cs" />
-    <Compile Include="Model\Database\Dao\Application\ApplicationLauncherToolbarDao.cs" />
+    <Compile Include="Model\Database\Dao\Domain\DomainDaoBase.cs" />
+    <Compile Include="Model\Database\Dao\Domain\LauncherItemDomainDao.cs" />
+    <Compile Include="Model\Database\Dao\Domain\LauncherToolbarDomainDao.cs" />
     <Compile Include="Model\Database\Dao\Entity\EntityDaoBase.cs" />
-    <Compile Include="Model\Database\Dao\Entity\FontsDao.cs" />
-    <Compile Include="Model\Database\Dao\Entity\CredentsDao.cs" />
-    <Compile Include="Model\Database\Dao\Entity\LauncherCommandsDao.cs" />
-    <Compile Include="Model\Database\Dao\Entity\LauncherDirectoriesDao.cs" />
-    <Compile Include="Model\Database\Dao\Entity\LauncherDirectoryItemsDao.cs" />
-    <Compile Include="Model\Database\Dao\Entity\LauncherFilesDao.cs" />
-    <Compile Include="Model\Database\Dao\Entity\LauncherItemIconsDao.cs" />
-    <Compile Include="Model\Database\Dao\Entity\NoteFilesDao.cs" />
-    <Compile Include="Model\Database\Dao\Entity\NoteContentsDao.cs" />
-    <Compile Include="Model\Database\Dao\Entity\NotesDao.cs" />
-    <Compile Include="Model\Database\Dao\Entity\LauncherToolbarsDao.cs" />
-    <Compile Include="Model\Database\Dao\Entity\LauncherGroupItemsDao.cs" />
-    <Compile Include="Model\Database\Dao\Entity\LauncherGroupsDao.cs" />
-    <Compile Include="Model\Database\Dao\Entity\LauncherItemsDao.cs" />
-    <Compile Include="Model\Database\Dao\Entity\LauncherEnvVarsDao.cs" />
-    <Compile Include="Model\Database\Dao\Entity\LauncherItemHistoriesDao.cs" />
-    <Compile Include="Model\Database\Dao\Entity\LauncherTagsDao.cs" />
-    <Compile Include="Model\Database\Dao\Entity\ScreensDao.cs" />
+    <Compile Include="Model\Database\Dao\Entity\FontsEntityDao.cs" />
+    <Compile Include="Model\Database\Dao\Entity\CredentsEntityDao.cs" />
+    <Compile Include="Model\Database\Dao\Entity\LauncherCommandsEntityDao.cs" />
+    <Compile Include="Model\Database\Dao\Entity\LauncherDirectoriesEntityDao.cs" />
+    <Compile Include="Model\Database\Dao\Entity\LauncherDirectoryItemsEntityDao.cs" />
+    <Compile Include="Model\Database\Dao\Entity\LauncherFilesEntityDao.cs" />
+    <Compile Include="Model\Database\Dao\Entity\LauncherItemIconsEntityDao.cs" />
+    <Compile Include="Model\Database\Dao\Entity\NoteFilesEntityDao.cs" />
+    <Compile Include="Model\Database\Dao\Entity\NoteContentsEntityDao.cs" />
+    <Compile Include="Model\Database\Dao\Entity\NotesEntityDao.cs" />
+    <Compile Include="Model\Database\Dao\Entity\LauncherToolbarsEntityDao.cs" />
+    <Compile Include="Model\Database\Dao\Entity\LauncherGroupItemsEntityDao.cs" />
+    <Compile Include="Model\Database\Dao\Entity\LauncherGroupsEntityDao.cs" />
+    <Compile Include="Model\Database\Dao\Entity\LauncherItemsEntityDao.cs" />
+    <Compile Include="Model\Database\Dao\Entity\LauncherEnvVarsEntityDao.cs" />
+    <Compile Include="Model\Database\Dao\Entity\LauncherItemHistoriesEntityDao.cs" />
+    <Compile Include="Model\Database\Dao\Entity\LauncherTagsEntityDao.cs" />
+    <Compile Include="Model\Database\Dao\Entity\ScreensEntityDao.cs" />
     <Compile Include="Model\Database\DatabaseTuner.cs" />
     <Compile Include="Model\Database\Tuner\TunerBase.cs" />
     <Compile Include="Model\Database\Tuner\Tuner_LauncherGroups.cs" />
-    <Compile Include="Model\Data\Dto\Application\LauncherItemIconRowDto.cs" />
-    <Compile Include="Model\Data\Dto\Application\LauncherToolbarScreenRowDto.cs" />
-    <Compile Include="Model\Data\Dto\Entity\LauncherItemIconsDto.cs" />
-    <Compile Include="Model\Data\Dto\Entity\ScreensDto.cs" />
+    <Compile Include="Model\Data\Dto\Domain\LauncherItemIconRowDto.cs" />
+    <Compile Include="Model\Data\Dto\Domain\LauncherToolbarScreenRowDto.cs" />
+    <Compile Include="Model\Data\Dto\Entity\LauncherItemIconsEntityDto.cs" />
+    <Compile Include="Model\Data\Dto\Entity\ScreensEntityDto.cs" />
     <Compile Include="Model\Data\IconData.cs" />
-    <Compile Include="Model\Data\Dto\Entity\LauncherGroupItemsDto.cs" />
-    <Compile Include="Model\Data\Dto\Entity\LauncherGroupsDto.cs" />
-    <Compile Include="Model\Data\Dto\Entity\LauncherItemsDto.cs" />
-    <Compile Include="Model\Data\Dto\Entity\LauncherTagsDto.cs" />
-    <Compile Include="Model\Data\Dto\Entity\LauncherToolbarsDto.cs" />
+    <Compile Include="Model\Data\Dto\Entity\LauncherGroupItemsEntityDto.cs" />
+    <Compile Include="Model\Data\Dto\Entity\LauncherGroupsEntityDto.cs" />
+    <Compile Include="Model\Data\Dto\Entity\LauncherItemsEntityDto.cs" />
+    <Compile Include="Model\Data\Dto\Entity\LauncherTagsEntityDto.cs" />
+    <Compile Include="Model\Data\Dto\Entity\LauncherToolbarsEntityDto.cs" />
     <Compile Include="Model\Element\IViewCloseReceiver.cs" />
     <Compile Include="Model\Element\IViewShowStarter.cs" />
     <Compile Include="Model\Element\LauncherGroup\LauncherGroupElement.cs" />
@@ -301,9 +302,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherCommandsDao\" />
-    <Folder Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherDirectoriesDao\" />
-    <Folder Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherDirectoryItemsDao\" />
+    <Folder Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherCommandsEntityDao\" />
+    <Folder Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherDirectoriesEntityDao\" />
+    <Folder Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherDirectoryItemsEntityDao\" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="View\Accept\AcceptWindow.xaml">
@@ -347,73 +348,73 @@
     <Resource Include="doc\license\Pe\Pe.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherFilesDao\InsertSimple.sql">
+    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherFilesEntityDao\InsertSimple.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherGroupItemsDao\SelectLauncherItemIds.sql">
+    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherGroupItemsEntityDao\SelectLauncherItemIds.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherGroupItemsDao\SelectMaxSort.sql">
+    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherGroupItemsEntityDao\SelectMaxSort.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherGroupItemsDao\InsertNewItems.sql">
+    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherGroupItemsEntityDao\InsertNewItems.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherGroupsDao\SelectLauncherGroup.sql">
+    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherGroupsEntityDao\SelectLauncherGroup.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherGroupsDao\SelectAllLauncherGroupIds.sql">
+    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherGroupsEntityDao\SelectAllLauncherGroupIds.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherGroupsDao\SelectMaxSort.sql">
+    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherGroupsEntityDao\SelectMaxSort.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherGroupsDao\InsertNewGroup.sql">
+    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherGroupsEntityDao\InsertNewGroup.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherItemIconsDao\DeleteImageBinary.sql">
+    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherItemIconsEntityDao\DeleteImageBinary.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherItemIconsDao\InsertImageBinary.sql">
+    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherItemIconsEntityDao\InsertImageBinary.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherItemIconsDao\SelectImageBinary.sql">
+    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherItemIconsEntityDao\SelectImageBinary.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Application\ApplicationLauncherItemDao\SelectIcon.sql">
+    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Domain\LauncherItemDao\SelectIcon.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherItemsDao\SelectLauncherItem.sql">
+    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherItemsEntityDao\SelectLauncherItem.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherItemsDao\SelectFuzzyCodes.sql">
+    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherItemsEntityDao\SelectFuzzyCodes.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherItemsDao\InsertItem.sql">
+    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherItemsEntityDao\InsertItem.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherTagsDao\InsertNewTags.sql">
+    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherTagsEntityDao\InsertNewTags.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherToolbarsDao\UpdatTopmost.sql">
+    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherToolbarsEntityDao\UpdatTopmost.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherToolbarsDao\UpdateToolbarPosition.sql">
+    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherToolbarsEntityDao\UpdateToolbarPosition.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherToolbarsDao\InsertNewToolbar.sql">
+    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherToolbarsEntityDao\InsertNewToolbar.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherToolbarsDao\SelectDisplayData.sql">
+    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherToolbarsEntityDao\SelectDisplayData.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Application\ApplicationLauncherToolbarDao\SelectAllToolbars.sql">
+    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Domain\LauncherToolbarDao\SelectAllToolbars.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\ScreensDao\InsertScreen.sql">
+    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\ScreensEntityDao\InsertScreen.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\ScreensDao\SelectExistsScreen.sql">
+    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\ScreensEntityDao\SelectExistsScreen.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\DatabaseSetupper\ExistsVersionTable.sql">

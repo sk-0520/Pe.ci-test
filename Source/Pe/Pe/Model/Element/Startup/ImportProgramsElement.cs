@@ -108,9 +108,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Startup
             var group = launcherFactory.CreateGroupData("@GROUP");
 
             using(var transaction = DatabaseBarrier.WaitWrite()) {
-                var launcherItemsDao = new LauncherItemsDao(transaction, StatementLoader, transaction.Implementation, Logger.Factory);
-                var launcherTagsDao = new LauncherTagsDao(transaction, StatementLoader, transaction.Implementation, Logger.Factory);
-                var launcherFilesDao = new LauncherFilesDao(transaction, StatementLoader, transaction.Implementation, Logger.Factory);
+                var launcherItemsDao = new LauncherItemsEntityDao(transaction, StatementLoader, transaction.Implementation, Logger.Factory);
+                var launcherTagsDao = new LauncherTagsEntityDao(transaction, StatementLoader, transaction.Implementation, Logger.Factory);
+                var launcherFilesDao = new LauncherFilesEntityDao(transaction, StatementLoader, transaction.Implementation, Logger.Factory);
                 foreach(var importItem in importItems) {
                     // db ランチャーアイテム突っ込んで
                     var codes = launcherItemsDao.SelectFuzzyCodes(importItem.Data.Code);
@@ -132,12 +132,12 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Startup
                 }
 
                 // db グループ作る
-                var launcherGroupsDao = new LauncherGroupsDao(transaction, StatementLoader, transaction.Implementation, Logger.Factory);
+                var launcherGroupsDao = new LauncherGroupsEntityDao(transaction, StatementLoader, transaction.Implementation, Logger.Factory);
                 var groupStep = 10;
                 group.Sort = launcherGroupsDao.SelectMaxSort() + groupStep;
                 launcherGroupsDao.InsertNewGroup(group, DatabaseCommonStatus.CreateCurrentAccount());
 
-                var launcherGroupItemsDao = new LauncherGroupItemsDao(transaction, StatementLoader, transaction.Implementation, Logger.Factory);
+                var launcherGroupItemsDao = new LauncherGroupItemsEntityDao(transaction, StatementLoader, transaction.Implementation, Logger.Factory);
                 var currentMaxSort = launcherGroupItemsDao.SelectMaxSort(group.LauncherGroupId);
                 var itemStep = 10;
                 launcherGroupItemsDao.InsertNewItems(group.LauncherGroupId, importItems.Select(i => i.Data.LauncherItemId), currentMaxSort + itemStep, itemStep, DatabaseCommonStatus.CreateCurrentAccount());

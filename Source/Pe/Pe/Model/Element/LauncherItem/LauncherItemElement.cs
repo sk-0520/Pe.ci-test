@@ -52,7 +52,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem
         void LoadLauncherItem()
         {
             using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var launcherItemsDao = new LauncherItemsDao(commander, StatementLoader, commander.Implementation, this);
+                var launcherItemsDao = new LauncherItemsEntityDao(commander, StatementLoader, commander.Implementation, this);
                 var launcherItemData = launcherItemsDao.SelectLauncherItem(LauncherItemId);
 
                 Name = launcherItemData.Name;

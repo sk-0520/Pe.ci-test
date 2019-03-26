@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ContentTypeTextNet.Pe.Main.Model.Data.Dto.Application
+namespace ContentTypeTextNet.Pe.Main.Model.Data.Dto.Domain
 {
     public interface IReadOnlyLauncherItemsIconRowDto : IReadOnlyRowDtoBase
     {

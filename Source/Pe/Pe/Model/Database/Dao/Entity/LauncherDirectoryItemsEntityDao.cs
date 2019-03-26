@@ -8,9 +8,9 @@ using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
 {
-    public class LauncherDirectoryItemsDao : EntityDaoBase
+    public class LauncherDirectoryItemsEntityDao : EntityDaoBase
     {
-        public LauncherDirectoryItemsDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+        public LauncherDirectoryItemsEntityDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
          : base(commander, statementLoader, implementation, loggerFactory)
         { }
 

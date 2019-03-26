@@ -5,14 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
-using ContentTypeTextNet.Pe.Main.Model.Data.Dto.Application;
+using ContentTypeTextNet.Pe.Main.Model.Data.Dto.Domain;
 using ContentTypeTextNet.Pe.Main.Model.Launcher;
 
-namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Application
+namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Domain
 {
-    public class ApplicationLauncherItemDao : ApplicationDatabaseObjectBase
+    public class LauncherItemDomainDao : DomainDaoBase
     {
-        public ApplicationLauncherItemDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+        public LauncherItemDomainDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
             : base(commander, statementLoader, implementation, loggerFactory)
         { }
 

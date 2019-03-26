@@ -11,9 +11,9 @@ using ContentTypeTextNet.Pe.Main.Model.Data.Dto.Entity;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
 {
-    public class LauncherItemIconsDao : EntityDaoBase
+    public class LauncherItemIconsEntityDao : EntityDaoBase
     {
-        public LauncherItemIconsDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+        public LauncherItemIconsEntityDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
             : base(commander, statementLoader, implementation, loggerFactory)
         { }
 
