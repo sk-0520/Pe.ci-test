@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
+using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Library.ViewModel;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Element.LauncherGroup;
@@ -20,7 +22,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherGroup
 
         public int RowIndex { get; set; }
 
+        public string Name => Model.Name;
         public LauncherGroupImageName ImageName => Model.ImageName;
+        public Color ImageColor => Model.ImageColor;
 
         #endregion
 
@@ -31,6 +35,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherGroup
         #endregion
 
         #region SingleModelViewModelBase
+
+
         #endregion
     }
 }
