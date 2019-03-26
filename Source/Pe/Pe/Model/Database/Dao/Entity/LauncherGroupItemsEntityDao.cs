@@ -10,9 +10,9 @@ using ContentTypeTextNet.Pe.Main.Model.Data.Dto.Entity;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
 {
-    public class LauncherGroupItemsDao : EntityDaoBase
+    public class LauncherGroupItemsEntityDao : EntityDaoBase
     {
-        public LauncherGroupItemsDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+        public LauncherGroupItemsEntityDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
             : base(commander, statementLoader, implementation, loggerFactory)
         { }
 

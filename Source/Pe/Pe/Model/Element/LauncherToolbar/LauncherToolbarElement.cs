@@ -13,7 +13,7 @@ using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Applications;
 using ContentTypeTextNet.Pe.Main.Model.Data;
 using ContentTypeTextNet.Pe.Main.Model.Data.Dto.Entity;
-using ContentTypeTextNet.Pe.Main.Model.Database.Dao.Application;
+using ContentTypeTextNet.Pe.Main.Model.Database.Dao.Domain;
 using ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Model.Element.LauncherGroup;
 using ContentTypeTextNet.Pe.Main.Model.Element.LauncherIcon;
@@ -150,7 +150,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
         Guid GetLauncherToolbarId()
         {
             using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var dao = new ApplicationLauncherToolbarsDao(commander, StatementLoader, commander.Implementation, this);
+                var dao = new LauncherToolbarDomainDao(commander, StatementLoader, commander.Implementation, this);
                 var screenToolbars = dao.SelectAllToolbars().ToList();
                 var LauncherToolbarId = FindMaybeToolbarId(screenToolbars);
                 return LauncherToolbarId;
@@ -163,10 +163,10 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
             Logger.Debug($"create toolbar: {toolbarId}");
 
             using(var commander = MainDatabaseBarrier.WaitWrite()) {
-                var toolbarsDao = new LauncherToolbarsDao(commander, StatementLoader, commander.Implementation, this);
+                var toolbarsDao = new LauncherToolbarsEntityDao(commander, StatementLoader, commander.Implementation, this);
                 toolbarsDao.InsertNewToolbar(toolbarId, DockScreen.DeviceName, DatabaseCommonStatus.CreateCurrentAccount());
 
-                var screensDao = new ScreensDao(commander, StatementLoader, commander.Implementation, this);
+                var screensDao = new ScreensEntityDao(commander, StatementLoader, commander.Implementation, this);
                 if(!screensDao.SelectExistsScreen(DockScreen.DeviceName)) {
                     screensDao.InsertScreen(DockScreen, DatabaseCommonStatus.CreateCurrentAccount());
                 }
@@ -191,7 +191,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
 
             LauncherToolbarsDisplayData displayData;
             using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var dao = new LauncherToolbarsDao(commander, StatementLoader, commander.Implementation, this);
+                var dao = new LauncherToolbarsEntityDao(commander, StatementLoader, commander.Implementation, this);
                 displayData = dao.SelectDisplayData(LauncherToolbarId);
             }
 
@@ -238,7 +238,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
             IsOpendAppMenu = false;
 
             MainDatabaseLazyWriter.Stock(c => {
-                var dao = new LauncherToolbarsDao(c, StatementLoader, c.Implementation, this);
+                var dao = new LauncherToolbarsEntityDao(c, StatementLoader, c.Implementation, this);
                 dao.UpdateToolbarPosition(LauncherToolbarId, ToolbarPosition, DatabaseCommonStatus.CreateCurrentAccount());
             });
         }
@@ -248,7 +248,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
             IsTopmost = isTopmost;
 
             MainDatabaseLazyWriter.Stock(c => {
-                var dao = new LauncherToolbarsDao(c, StatementLoader, c.Implementation, this);
+                var dao = new LauncherToolbarsEntityDao(c, StatementLoader, c.Implementation, this);
                 dao.UpdatTopmost(LauncherToolbarId, IsTopmost, DatabaseCommonStatus.CreateCurrentAccount());
             });
         }

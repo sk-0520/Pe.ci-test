@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 
-namespace ContentTypeTextNet.Pe.Main.Model.Data.Dto.Application
+namespace ContentTypeTextNet.Pe.Main.Model.Data.Dto.Domain
 {
-    public class LauncherToolbarsScreenRowDto : CommonDtoBase
+    public class LauncherToolbarScreenRowDto : CommonDtoBase
     {
         #region property
 

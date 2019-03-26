@@ -14,9 +14,9 @@ using ContentTypeTextNet.Pe.Main.View.Extend;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
 {
-    public class LauncherToolbarsDao : EntityDaoBase
+    public class LauncherToolbarsEntityDao : EntityDaoBase
     {
-        public LauncherToolbarsDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+        public LauncherToolbarsEntityDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
             : base(commander, statementLoader, implementation, loggerFactory)
         { }
 

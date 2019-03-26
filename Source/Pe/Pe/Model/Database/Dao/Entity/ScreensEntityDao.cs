@@ -11,9 +11,9 @@ using ContentTypeTextNet.Pe.Main.Model.Data.Dto.Entity;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
 {
-    public class ScreensDao : EntityDaoBase
+    public class ScreensEntityDao : EntityDaoBase
     {
-        public ScreensDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+        public ScreensEntityDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
             : base(commander, statementLoader, implementation, loggerFactory)
         { }
 

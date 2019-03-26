@@ -56,7 +56,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherGroup
         {
             LauncherGroupData data;
             using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var dao = new LauncherGroupsDao(commander, StatementLoader, commander.Implementation, this);
+                var dao = new LauncherGroupsEntityDao(commander, StatementLoader, commander.Implementation, this);
                 data = dao.SelectLauncherGroup(LauncherGroupId);
             }
 
@@ -70,7 +70,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherGroup
         IEnumerable<Guid> GetLauncherItemsForNormal()
         {
             using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var dao = new LauncherGroupItemsDao(commander, StatementLoader, commander.Implementation, this);
+                var dao = new LauncherGroupItemsEntityDao(commander, StatementLoader, commander.Implementation, this);
                 return dao.SelectLauncherItemIds(LauncherGroupId);
             }
         }

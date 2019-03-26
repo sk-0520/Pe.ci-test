@@ -12,9 +12,9 @@ using ContentTypeTextNet.Pe.Main.Model.Launcher;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
 {
-    public class LauncherItemsDao : EntityDaoBase
+    public class LauncherItemsEntityDao : EntityDaoBase
     {
-        public LauncherItemsDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+        public LauncherItemsEntityDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
             : base(commander, statementLoader, implementation , loggerFactory)
         { }
 
@@ -32,7 +32,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
 
         #region function
 
-        LauncherItemsRowDto ConvertFromData(LauncherItemSimpleNewData data, IDatabaseCommonStatus commonStatus)
+        LauncherItemsRowDto ConvertFromData(LauncherItemData data, IDatabaseCommonStatus commonStatus)
         {
             var kindEnumTransfer = new EnumTransfer<LauncherItemKind>();
             var permissionEnumTransfer = new EnumTransfer<LauncherItemPermission>();
@@ -42,17 +42,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
                 Code = data.Code,
                 Name = data.Name,
                 Kind = kindEnumTransfer.To(data.Kind),
-                Command = data.Command.Command,
-                Option = data.Command.Option,
-                WorkDirectory = data.Command.WorkDirectoryPath,
                 IconPath = data.Icon.Path,
                 IconIndex = data.Icon.Index,
                 IsEnabledCommandLauncher = data.IsEnabledCommandLauncher,
-                IsEnabledCustomEnvVar = data.IsEnabledCustomEnvVar,
-                IsEnabledStandardOutput = data.StandardStream.IsEnabledStandardOutput,
-                IsEnabledStandardInput = data.StandardStream.IsEnabledStandardInput,
-                Permission = permissionEnumTransfer.To( data.Permission),
-                CredentId = Guid.Empty,
                 Note = Implementation.IsNull(data.Note) ? Implementation.GetNullValue<string>(): data.Note,
             };
 
@@ -73,26 +65,6 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
                 IsEnabledCommandLauncher= dto.IsEnabledCommandLauncher,
                 Note = dto.Note,
             };
-            data.Command.Command = dto.Command;
-            data.Command.Option = dto.Option;
-            data.Command.WorkDirectoryPath = dto.WorkDirectory;
-
-            return data;
-        }
-
-        LauncherIconData ConvertFromDto(IReadOnlyLauncherItemsIconRowDto dto)
-        {
-            var kindEnumTransfer = new EnumTransfer<LauncherItemKind>();
-
-            var data = new LauncherIconData() {
-                Kind = kindEnumTransfer.From(dto.Kind),
-            };
-
-            data.Command.Path = dto.CommandPath;
-            data.Command.Index = (int)Math.Min(0, Math.Max(dto.CommandIndex, int.MaxValue));
-
-            data.Icon.Path = dto.IconPath;
-            data.Icon.Index = (int)Math.Min(0, Math.Max(dto.IconIndex, int.MaxValue));
 
             return data;
         }
@@ -114,18 +86,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             return data;
         }
 
-        public LauncherIconData SelectIcon(Guid launcherItemId)
-        {
-            var sql = StatementLoader.LoadStatementByCurrent();
-            var param = new {
-                LauncherItemId = launcherItemId,
-            };
-            var dto = Commander.QuerySingle<LauncherItemsIconRowDto>(sql, param);
-            var data = ConvertFromDto(dto);
-            return data;
-        }
-
-        public void InsertSimpleNew(LauncherItemSimpleNewData data, IDatabaseCommonStatus commonStatus)
+        public void InsertItem(LauncherItemData data, IDatabaseCommonStatus commonStatus)
         {
             var sql = StatementLoader.LoadStatementByCurrent();
             var dto = ConvertFromData(data, commonStatus);

@@ -40,7 +40,6 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem
         public string Name { get; private set; }
         public string Code { get; private set; }
         public LauncherItemKind Kind { get; private set; }
-        public LauncherCommandData Command { get; private set; } = LauncherCommandData.None;
         public bool IsEnabledCommandLauncher { get; private set; }
         public string Note { get; private set; }
 
@@ -53,15 +52,14 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem
         void LoadLauncherItem()
         {
             using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var dao = new LauncherItemsDao(commander, StatementLoader, commander.Implementation, this);
-                var data = dao.SelectLauncherItem(LauncherItemId);
+                var launcherItemsDao = new LauncherItemsEntityDao(commander, StatementLoader, commander.Implementation, this);
+                var launcherItemData = launcherItemsDao.SelectLauncherItem(LauncherItemId);
 
-                Name = data.Name;
-                Code = data.Code;
-                Kind = data.Kind;
-                Command = data.Command;
-                IsEnabledCommandLauncher = data.IsEnabledCommandLauncher;
-                Note = data.Note;
+                Name = launcherItemData.Name;
+                Code = launcherItemData.Code;
+                Kind = launcherItemData.Kind;
+                IsEnabledCommandLauncher = launcherItemData.IsEnabledCommandLauncher;
+                Note = launcherItemData.Note;
             }
         }
 

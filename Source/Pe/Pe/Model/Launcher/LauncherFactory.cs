@@ -36,20 +36,21 @@ namespace ContentTypeTextNet.Pe.Main.Model.Launcher
         /// <param name="file"></param>
         /// <param name="loadShortcut">ショートカットの内容を使用するか。</param>
         /// <returns></returns>
-        public LauncherItemSimpleNewData FromFile(FileInfo file, bool loadShortcut)
+        public LauncherFileItemData FromFile(FileInfo file, bool loadShortcut)
         {
             var expandedPath = Environment.ExpandEnvironmentVariables(file.FullName);
 
             var isProgram = PathUtility.IsProgram(expandedPath);
             var isShortCut = PathUtility.IsShortcut(expandedPath);
 
-            var result = new LauncherItemSimpleNewData() {
+            var result = new LauncherFileItemData() {
                 LauncherItemId = IdFactory.CreateLauncherItemId(),
-                Kind = LauncherItemKind.File,
+                //TODO: 名称取得
                 Name = FileUtility.GetName(expandedPath),
             };
             if(loadShortcut && PathUtility.IsShortcut(expandedPath)) {
                 using(var shortcut = new ShortcutFile(expandedPath)) {
+                    //TODO: コード取得
                     result.Code = Path.GetFileNameWithoutExtension(shortcut.TargetPath);
 
                     result.Command.Command = shortcut.TargetPath;
