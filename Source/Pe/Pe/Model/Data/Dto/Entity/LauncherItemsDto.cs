@@ -45,29 +45,5 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data.Dto.Entity
         #endregion
     }
 
-    public interface IReadOnlyLauncherItemsIconRowDto: IReadOnlyRowDtoBase
-    {
-        #region property
 
-        string Kind { get; }
-        string CommandPath { get; }
-        long CommandIndex { get; }
-        string IconPath { get; }
-        long IconIndex { get; }
-
-        #endregion
-    }
-
-    public class LauncherItemsIconRowDto : RowDtoBase, IReadOnlyLauncherItemsIconRowDto
-    {
-        #region IReadOnlyLauncherItemsIconRowDto
-
-        public string Kind { get; set; }
-        public string CommandPath { get; set; }
-        public long CommandIndex { get; set; }
-        public string IconPath { get; set; }
-        public long IconIndex { get; set; }
-
-        #endregion
-    }
 }

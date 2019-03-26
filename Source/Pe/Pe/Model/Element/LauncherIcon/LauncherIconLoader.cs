@@ -14,6 +14,7 @@ using ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Applications;
 using ContentTypeTextNet.Pe.Main.Model.Data;
+using ContentTypeTextNet.Pe.Main.Model.Database.Dao.Application;
 using ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Model.Launcher;
 using ContentTypeTextNet.Pe.Main.Model.Logic;
@@ -87,7 +88,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherIcon
         LauncherIconData GetIconData()
         {
             using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var dao = new LauncherItemsDao(commander, StatementLoader, commander.Implementation, Logger.Factory);
+                var dao = new ApplicationLauncherItemDao(commander, StatementLoader, commander.Implementation, Logger.Factory);
                 return dao.SelectIcon(LauncherItemId);
             }
         }

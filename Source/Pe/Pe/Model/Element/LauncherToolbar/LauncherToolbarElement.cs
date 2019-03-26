@@ -150,7 +150,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
         Guid GetLauncherToolbarId()
         {
             using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var dao = new ApplicationLauncherToolbarsDao(commander, StatementLoader, commander.Implementation, this);
+                var dao = new ApplicationLauncherToolbarDao(commander, StatementLoader, commander.Implementation, this);
                 var screenToolbars = dao.SelectAllToolbars().ToList();
                 var LauncherToolbarId = FindMaybeToolbarId(screenToolbars);
                 return LauncherToolbarId;

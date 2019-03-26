@@ -69,23 +69,6 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             return data;
         }
 
-        LauncherIconData ConvertFromDto(IReadOnlyLauncherItemsIconRowDto dto)
-        {
-            var kindEnumTransfer = new EnumTransfer<LauncherItemKind>();
-
-            var data = new LauncherIconData() {
-                Kind = kindEnumTransfer.From(dto.Kind),
-            };
-
-            data.Command.Path = dto.CommandPath;
-            data.Command.Index = (int)Math.Min(0, Math.Max(dto.CommandIndex, int.MaxValue));
-
-            data.Icon.Path = dto.IconPath;
-            data.Icon.Index = (int)Math.Min(0, Math.Max(dto.IconIndex, int.MaxValue));
-
-            return data;
-        }
-
         public IEnumerable<string> SelectFuzzyCodes(string baseCode)
         {
             var sql = StatementLoader.LoadStatementByCurrent();
@@ -99,17 +82,6 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
                 LauncherItemId = launcherItemId,
             };
             var dto = Commander.QuerySingle<LauncherItemsRowDto>(sql, param);
-            var data = ConvertFromDto(dto);
-            return data;
-        }
-
-        public LauncherIconData SelectIcon(Guid launcherItemId)
-        {
-            var sql = StatementLoader.LoadStatementByCurrent();
-            var param = new {
-                LauncherItemId = launcherItemId,
-            };
-            var dto = Commander.QuerySingle<LauncherItemsIconRowDto>(sql, param);
             var data = ConvertFromDto(dto);
             return data;
         }

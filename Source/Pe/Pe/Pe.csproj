@@ -137,7 +137,8 @@
     <Compile Include="Model\Applications\ApplicationLogger.cs" />
     <Compile Include="Model\Applications\ApplicationReaderWriterLocker.cs" />
     <Compile Include="Model\Applications\ApplicationDatabaseBarrier.cs" />
-    <Compile Include="Model\Database\Dao\Application\ApplicationLauncherToolbarsDao.cs" />
+    <Compile Include="Model\Database\Dao\Application\ApplicationLauncherItemDao.cs" />
+    <Compile Include="Model\Database\Dao\Application\ApplicationLauncherToolbarDao.cs" />
     <Compile Include="Model\Database\Dao\Entity\EntityDaoBase.cs" />
     <Compile Include="Model\Database\Dao\Entity\FontsDao.cs" />
     <Compile Include="Model\Database\Dao\Entity\CredentsDao.cs" />
@@ -160,7 +161,8 @@
     <Compile Include="Model\Database\DatabaseTuner.cs" />
     <Compile Include="Model\Database\Tuner\TunerBase.cs" />
     <Compile Include="Model\Database\Tuner\Tuner_LauncherGroups.cs" />
-    <Compile Include="Model\Data\Dto\Application\LauncherToolbarsScreenRowDto.cs" />
+    <Compile Include="Model\Data\Dto\Application\LauncherItemIconRowDto.cs" />
+    <Compile Include="Model\Data\Dto\Application\LauncherToolbarScreenRowDto.cs" />
     <Compile Include="Model\Data\Dto\Entity\LauncherItemIconsDto.cs" />
     <Compile Include="Model\Data\Dto\Entity\ScreensDto.cs" />
     <Compile Include="Model\Data\IconData.cs" />
@@ -378,7 +380,7 @@
     <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherItemIconsDao\SelectImageBinary.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherItemsDao\SelectIcon.sql">
+    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Application\ApplicationLauncherItemDao\SelectIcon.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherItemsDao\SelectLauncherItem.sql">
@@ -405,7 +407,7 @@
     <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherToolbarsDao\SelectDisplayData.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Application\ApplicationLauncherToolbarsDao\SelectAllToolbars.sql">
+    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Application\ApplicationLauncherToolbarDao\SelectAllToolbars.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\ScreensDao\InsertScreen.sql">

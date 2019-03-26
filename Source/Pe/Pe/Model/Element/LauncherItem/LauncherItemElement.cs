@@ -52,14 +52,14 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem
         void LoadLauncherItem()
         {
             using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var dao = new LauncherItemsDao(commander, StatementLoader, commander.Implementation, this);
-                var data = dao.SelectLauncherItem(LauncherItemId);
+                var launcherItemsDao = new LauncherItemsDao(commander, StatementLoader, commander.Implementation, this);
+                var launcherItemData = launcherItemsDao.SelectLauncherItem(LauncherItemId);
 
-                Name = data.Name;
-                Code = data.Code;
-                Kind = data.Kind;
-                IsEnabledCommandLauncher = data.IsEnabledCommandLauncher;
-                Note = data.Note;
+                Name = launcherItemData.Name;
+                Code = launcherItemData.Code;
+                Kind = launcherItemData.Kind;
+                IsEnabledCommandLauncher = launcherItemData.IsEnabledCommandLauncher;
+                Note = launcherItemData.Note;
             }
         }
 

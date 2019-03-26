@@ -10,15 +10,15 @@ using ContentTypeTextNet.Pe.Main.Model.Launcher;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Application
 {
-    public class ApplicationLauncherToolbarsDao : ApplicationDatabaseObjectBase
+    public class ApplicationLauncherToolbarDao : ApplicationDatabaseObjectBase
     {
-        public ApplicationLauncherToolbarsDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+        public ApplicationLauncherToolbarDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
             : base(commander, statementLoader, implementation, loggerFactory)
         { }
 
         #region function
 
-        LauncherToolbarsScreenData ConvertFromDto(LauncherToolbarsScreenRowDto dto)
+        LauncherToolbarsScreenData ConvertFromDto(LauncherToolbarScreenRowDto dto)
         {
             var data = new LauncherToolbarsScreenData() {
                 LauncherToolbarId = dto.LauncherToolbarId,
@@ -35,7 +35,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Application
         public IEnumerable<LauncherToolbarsScreenData> SelectAllToolbars()
         {
             var sql = StatementLoader.LoadStatementByCurrent();
-            return Commander.Query<LauncherToolbarsScreenRowDto>(sql)
+            return Commander.Query<LauncherToolbarScreenRowDto>(sql)
                 .Select(i => ConvertFromDto(i))
             ;
         }

@@ -7,7 +7,7 @@ using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Data.Dto.Application
 {
-    public class LauncherToolbarsScreenRowDto : CommonDtoBase
+    public class LauncherToolbarScreenRowDto : CommonDtoBase
     {
         #region property
 
