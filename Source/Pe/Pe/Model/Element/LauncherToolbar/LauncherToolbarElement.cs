@@ -241,12 +241,13 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
             MainDatabaseLazyWriter.Stock(c => {
                 var dao = new LauncherToolbarsEntityDao(c, StatementLoader, c.Implementation, this);
                 dao.UpdateToolbarPosition(LauncherToolbarId, ToolbarPosition, DatabaseCommonStatus.CreateCurrentAccount());
-            });
+            }, UniqueKeyPool.Get());
         }
 
         public void ChangeTopmost(bool isTopmost)
         {
             IsTopmost = isTopmost;
+            IsOpendAppMenu = false;
 
             MainDatabaseLazyWriter.Stock(c => {
                 var dao = new LauncherToolbarsEntityDao(c, StatementLoader, c.Implementation, this);
@@ -270,6 +271,17 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
             LoadLauncherToolbar();
             LoadLauncherItems();
             UpdateDesign();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                if(disposing) {
+                    MainDatabaseLazyWriter.Dispose();
+                }
+            }
+
+            base.Dispose(disposing);
         }
 
         #endregion

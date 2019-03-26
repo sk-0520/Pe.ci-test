@@ -52,6 +52,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar
             PropertyChangedHooker.AddProperties<IReadOnlyAppDesktopToolbarExtendData>();
             PropertyChangedHooker.AddHook(nameof(LauncherToolbarElement.ToolbarPosition), ChangeToolbarPositionCommand);
             PropertyChangedHooker.AddHook(nameof(LauncherToolbarElement.IsOpendAppMenu), nameof(IsOpendAppMenu));
+            PropertyChangedHooker.AddHook(nameof(LauncherToolbarElement.IsTopmost), nameof(IsTopmost));
         }
 
         #region property
@@ -75,7 +76,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar
         public bool IsTopmost
         {
             get => Model.IsTopmost;
-            set => SetModelValue(value);
         }
 
         public bool IsOpendAppMenu

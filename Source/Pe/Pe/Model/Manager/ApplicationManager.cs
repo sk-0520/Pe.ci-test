@@ -165,9 +165,40 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
             }
         }
 
+        void CloseToolbars()
+        {
+            var toolbars = WindowManager.GetWindowItems(WindowKind.LauncherToolbar).ToList();
+            foreach(var toolbar in toolbars) {
+                toolbar.Window.Close();
+            }
+        }
+
+        void CloseViews()
+        {
+            CloseToolbars();
+        }
+
+        void DisposeToolbarElements()
+        {
+            foreach(var toolbar in LauncherToolbars) {
+                toolbar.Dispose();
+            }
+            LauncherToolbars.Clear();
+        }
+
+        void DisposeElements()
+        {
+            DisposeToolbarElements();
+        }
+
         public void Exit()
         {
             Logger.Information("おわる！");
+
+            CloseViews();
+            DisposeElements();
+
+            Dispose();
 
             Application.Current.Shutdown();
         }
