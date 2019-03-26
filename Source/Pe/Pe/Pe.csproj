@@ -141,6 +141,10 @@
     <Compile Include="Model\Database\Dao\Entity\EntityDaoBase.cs" />
     <Compile Include="Model\Database\Dao\Entity\FontsDao.cs" />
     <Compile Include="Model\Database\Dao\Entity\CredentsDao.cs" />
+    <Compile Include="Model\Database\Dao\Entity\LauncherCommandsDao.cs" />
+    <Compile Include="Model\Database\Dao\Entity\LauncherDirectoriesDao.cs" />
+    <Compile Include="Model\Database\Dao\Entity\LauncherDirectoryItemsDao.cs" />
+    <Compile Include="Model\Database\Dao\Entity\LauncherFilesDao.cs" />
     <Compile Include="Model\Database\Dao\Entity\LauncherItemIconsDao.cs" />
     <Compile Include="Model\Database\Dao\Entity\NoteFilesDao.cs" />
     <Compile Include="Model\Database\Dao\Entity\NoteContentsDao.cs" />
@@ -294,7 +298,12 @@
       <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherCommandsDao\" />
+    <Folder Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherDirectoriesDao\" />
+    <Folder Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherDirectoryItemsDao\" />
+    <Folder Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherFilesDao\" />
+  </ItemGroup>
   <ItemGroup>
     <Page Include="View\Accept\AcceptWindow.xaml">
       <SubType>Designer</SubType>
