@@ -76,7 +76,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Launcher
 
     public enum LauncherGroupImageName
     {
-        Directory,
+        DirectoryNormal,
+        DirectoryOpen,
     }
 
     public class LauncherGroupData : DataBase

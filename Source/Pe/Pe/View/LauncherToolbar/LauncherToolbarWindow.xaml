@@ -79,6 +79,35 @@
       </Border>
     </ControlTemplate>
 
+    <Style x:Key="GroupMenuItem" TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+      <Style.Triggers>
+        <DataTrigger Binding="{Binding ImageName}" Value="DirectoryNormal">
+          <Setter Property="Icon">
+            <Setter.Value>
+              <ContentControl
+                Style="{StaticResource SmallIcon}"
+                Content="{StaticResource Image-LauncherGroup-Directory-Open}"
+                Background="Red"
+                Foreground="Gray"
+              />
+            </Setter.Value>
+          </Setter>
+        </DataTrigger>
+        <DataTrigger Binding="{Binding ImageName}" Value="DirectoryOpen">
+          <Setter Property="Icon">
+            <Setter.Value>
+              <ContentControl
+                Style="{StaticResource SmallIcon}"
+                Content="{StaticResource Image-LauncherGroup-Directory-Open}"
+                Background="Red"
+                Foreground="Gray"
+              />
+            </Setter.Value>
+          </Setter>
+        </DataTrigger>
+      </Style.Triggers>
+    </Style>
+
     <ContextMenu x:Key="ItemContextMenu">
       <ContextMenu.Resources>
         <CollectionViewSource x:Key="LauncherGroupItems" Source="{Binding DataContext.LauncherGroupItems, Source={x:Reference root}}" />
@@ -119,7 +148,7 @@
     <Binding Path="IsVisible" Converter="{StaticResource BooleanToVisibilityConverter}"/>
   </Window.Visibility>
   <Window.ContextMenu>
-    <ContextMenu ItemsSource="{Binding LauncherGroupItems}" />
+    <ContextMenu ItemsSource="{Binding LauncherGroupItems}" ItemContainerStyle="{StaticResource GroupMenuItem}" />
   </Window.ContextMenu>
   <DockPanel>
 

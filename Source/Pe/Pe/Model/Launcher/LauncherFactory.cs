@@ -92,7 +92,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Launcher
                 LauncherGroupId = IdFactory.CreateLauncherGroupId(),
                 Name = name,
                 Kind = LauncherGroupKind.Normal,
-                ImageName = LauncherGroupImageName.Directory,
+                ImageName = LauncherGroupImageName.DirectoryNormal,
                 ImageColor = Colors.Yellow,
             };
         }
