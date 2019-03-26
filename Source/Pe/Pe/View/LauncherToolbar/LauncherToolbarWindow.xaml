@@ -172,8 +172,8 @@
 
               <Separator />
 
-              <MenuItem Header="topmost" Command="{Binding SwitchTopmostCommand}" IsChecked="{Binding IsTopmost, Mode=OneWay}" />
-              <MenuItem Header="auto hide" />
+              <MenuItem Header="topmost" IsChecked="{Binding IsTopmost, Mode=OneWay}" Command="{Binding SwitchTopmostCommand}" />
+              <MenuItem Header="auto hide" IsChecked="{Binding IsAutoHide, Mode=OneWay}" Command="{Binding SwitchAutoHideCommand}" />
 
               <Separator />
 

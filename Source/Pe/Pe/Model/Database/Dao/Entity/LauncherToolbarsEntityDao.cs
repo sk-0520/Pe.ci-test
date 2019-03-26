@@ -30,6 +30,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             public static string ScreenName { get; } = "ScreenName";
             public static string PositionKind { get; } = "PositionKind";
             public static string IsTopmost { get; } = "IsTopmost";
+            public static string IsAutoHide { get; } = "IsAutoHide";
 
             #endregion
         }
@@ -96,13 +97,24 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             return Commander.Execute(sql, param) == 1;
         }
 
-        public bool UpdatTopmost(Guid launcherToolbarId, bool isTopmost, IDatabaseCommonStatus commonStatus)
+        public bool UpdatIsTopmost(Guid launcherToolbarId, bool isTopmost, IDatabaseCommonStatus commonStatus)
         {
             var sql = StatementLoader.LoadStatementByCurrent();
 
             var param = commonStatus.CreateCommonDtoMapping();
             param[Column.LauncherToolbarId] = launcherToolbarId;
             param[Column.IsTopmost] = isTopmost;
+
+            return Commander.Execute(sql, param) == 1;
+        }
+
+        public bool UpdatIsAutoHide(Guid launcherToolbarId, bool isAutoHide, DatabaseCommonStatus commonStatus)
+        {
+            var sql = StatementLoader.LoadStatementByCurrent();
+
+            var param = commonStatus.CreateCommonDtoMapping();
+            param[Column.LauncherToolbarId] = launcherToolbarId;
+            param[Column.IsAutoHide] = isAutoHide;
 
             return Commander.Execute(sql, param) == 1;
         }

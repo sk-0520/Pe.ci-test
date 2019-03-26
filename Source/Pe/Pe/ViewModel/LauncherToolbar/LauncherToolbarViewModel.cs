@@ -53,6 +53,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar
             PropertyChangedHooker.AddHook(nameof(LauncherToolbarElement.ToolbarPosition), ChangeToolbarPositionCommand);
             PropertyChangedHooker.AddHook(nameof(LauncherToolbarElement.IsOpendAppMenu), nameof(IsOpendAppMenu));
             PropertyChangedHooker.AddHook(nameof(LauncherToolbarElement.IsTopmost), nameof(IsTopmost));
+            PropertyChangedHooker.AddHook(nameof(LauncherToolbarElement.IsAutoHide), nameof(IsAutoHide));
         }
 
         #region property
@@ -111,6 +112,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar
         public ICommand SwitchTopmostCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
                 Model.ChangeTopmost(!Model.IsTopmost);
+            }
+        ));
+
+        public ICommand SwitchAutoHideCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                Model.ChangeAutoHide(!Model.IsAutoHide);
             }
         ));
 

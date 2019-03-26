@@ -459,6 +459,9 @@ namespace ContentTypeTextNet.Pe.Main.View.Extend
             }
 
             NativeMethods.MoveWindow(WindowHandle, appBar.rc.X, appBar.rc.Y, appBar.rc.Width, appBar.rc.Height, false);
+            if(ExtendData.IsAutoHide) {
+                ExtendData.HiddenBarArea = logicalWindowBounds;
+            }
             ExtendData.DisplayBarArea = logicalWindowBounds;//PodStructUtility.Convert(appBar.rc);
 
             if(ExtendData.IsAutoHide) {
@@ -484,7 +487,7 @@ namespace ContentTypeTextNet.Pe.Main.View.Extend
 
         public void DockingFromProperty()
         {
-            DockingFromParameter(ExtendData.ToolbarPosition, ExtendData.IsAutoHide);
+            Docking(ExtendData.ToolbarPosition, ExtendData.IsAutoHide);
         }
 
         /// <summary>
@@ -623,13 +626,13 @@ namespace ContentTypeTextNet.Pe.Main.View.Extend
 
             AutoHideTimer.Stop();
 
-            //var deviceCursolPosition = new POINT();
-            //NativeMethods.GetCursorPos(out deviceCursolPosition);
-            //var logicalCursolPosition = UIUtility.ToLogicalPixel(View, PodStructUtility.Convert(deviceCursolPosition));
-            var deviceCursolPosition = MouseUtility.GetDevicePosition();
-            var logicalCursolPosition = UIUtility.ToLogicalPixel(View, deviceCursolPosition);
-
-            if(!force && ExtendData.DisplayBarArea.Contains(logicalCursolPosition)) {
+            //var deviceCursorPosition = new POINT();
+            //NativeMethods.GetCursorPos(out deviceCursorPosition);
+            //var logicalCursorPosition = UIUtility.ToLogicalPixel(View, PodStructUtility.Convert(deviceCursorPosition));
+            var deviceCursorPosition = MouseUtility.GetDevicePosition();
+            var logicalCursorPosition = UIUtility.ToLogicalPixel(View, deviceCursorPosition);
+            
+            if(!force && ExtendData.DisplayBarArea.Contains(logicalCursorPosition)) {
                 return;
             }
 

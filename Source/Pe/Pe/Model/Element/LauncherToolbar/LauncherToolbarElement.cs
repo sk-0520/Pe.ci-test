@@ -251,7 +251,18 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
 
             MainDatabaseLazyWriter.Stock(c => {
                 var dao = new LauncherToolbarsEntityDao(c, StatementLoader, c.Implementation, this);
-                dao.UpdatTopmost(LauncherToolbarId, IsTopmost, DatabaseCommonStatus.CreateCurrentAccount());
+                dao.UpdatIsTopmost(LauncherToolbarId, IsTopmost, DatabaseCommonStatus.CreateCurrentAccount());
+            }, UniqueKeyPool.Get());
+        }
+
+        public void ChangeAutoHide(bool isAutoHide)
+        {
+            IsAutoHide = isAutoHide;
+            IsOpendAppMenu = false;
+
+            MainDatabaseLazyWriter.Stock(c => {
+                var dao = new LauncherToolbarsEntityDao(c, StatementLoader, c.Implementation, this);
+                dao.UpdatIsAutoHide(LauncherToolbarId, IsAutoHide, DatabaseCommonStatus.CreateCurrentAccount());
             }, UniqueKeyPool.Get());
         }
 
