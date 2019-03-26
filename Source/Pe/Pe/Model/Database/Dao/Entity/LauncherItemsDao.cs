@@ -32,7 +32,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
 
         #region function
 
-        LauncherItemsRowDto ConvertFromData(LauncherItemSimpleNewData data, IDatabaseCommonStatus commonStatus)
+        LauncherItemsRowDto ConvertFromData(LauncherItemData data, IDatabaseCommonStatus commonStatus)
         {
             var kindEnumTransfer = new EnumTransfer<LauncherItemKind>();
             var permissionEnumTransfer = new EnumTransfer<LauncherItemPermission>();
@@ -42,17 +42,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
                 Code = data.Code,
                 Name = data.Name,
                 Kind = kindEnumTransfer.To(data.Kind),
-                Command = data.Command.Command,
-                Option = data.Command.Option,
-                WorkDirectory = data.Command.WorkDirectoryPath,
                 IconPath = data.Icon.Path,
                 IconIndex = data.Icon.Index,
                 IsEnabledCommandLauncher = data.IsEnabledCommandLauncher,
-                IsEnabledCustomEnvVar = data.IsEnabledCustomEnvVar,
-                IsEnabledStandardOutput = data.StandardStream.IsEnabledStandardOutput,
-                IsEnabledStandardInput = data.StandardStream.IsEnabledStandardInput,
-                Permission = permissionEnumTransfer.To( data.Permission),
-                CredentId = Guid.Empty,
                 Note = Implementation.IsNull(data.Note) ? Implementation.GetNullValue<string>(): data.Note,
             };
 
@@ -73,9 +65,6 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
                 IsEnabledCommandLauncher= dto.IsEnabledCommandLauncher,
                 Note = dto.Note,
             };
-            data.Command.Command = dto.Command;
-            data.Command.Option = dto.Option;
-            data.Command.WorkDirectoryPath = dto.WorkDirectory;
 
             return data;
         }
@@ -125,7 +114,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             return data;
         }
 
-        public void InsertSimpleNew(LauncherItemSimpleNewData data, IDatabaseCommonStatus commonStatus)
+        public void InsertItem(LauncherItemData data, IDatabaseCommonStatus commonStatus)
         {
             var sql = StatementLoader.LoadStatementByCurrent();
             var dto = ConvertFromData(data, commonStatus);

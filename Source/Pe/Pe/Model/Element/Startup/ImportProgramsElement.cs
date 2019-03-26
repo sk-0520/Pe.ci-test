@@ -110,11 +110,22 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Startup
             using(var transaction = DatabaseBarrier.WaitWrite()) {
                 var launcherItemsDao = new LauncherItemsDao(transaction, StatementLoader, transaction.Implementation, Logger.Factory);
                 var launcherTagsDao = new LauncherTagsDao(transaction, StatementLoader, transaction.Implementation, Logger.Factory);
-                // db ランチャーアイテム突っ込んで
+                var launcherFilesDao = new LauncherFilesDao(transaction, StatementLoader, transaction.Implementation, Logger.Factory);
                 foreach(var importItem in importItems) {
+                    // db ランチャーアイテム突っ込んで
                     var codes = launcherItemsDao.SelectFuzzyCodes(importItem.Data.Code);
                     importItem.Data.Code = TextUtility.ToUnique(importItem.Data.Code, codes, StringComparison.OrdinalIgnoreCase, (s, n) => $"{s}-{n}");
-                    launcherItemsDao.InsertSimpleNew(importItem.Data, DatabaseCommonStatus.CreateCurrentAccount());
+                    launcherItemsDao.InsertItem(importItem.Data, DatabaseCommonStatus.CreateCurrentAccount());
+
+                    // ランチャー種別で突っ込むデータ追加して
+                    switch(importItem.Data.Kind) {
+                        case LauncherItemKind.File:
+                            launcherFilesDao.InsertSimple(importItem.Data.LauncherItemId, importItem.Data.Command, DatabaseCommonStatus.CreateCurrentAccount());
+                            break;
+
+                        default:
+                            throw new NotImplementedException();
+                    }
 
                     // db タグ突っ込んで
                     launcherTagsDao.InsertNewTags(importItem.Data.LauncherItemId, importItem.Tags, DatabaseCommonStatus.CreateCurrentAccount());

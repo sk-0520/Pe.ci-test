@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -92,33 +93,6 @@ namespace ContentTypeTextNet.Pe.Main.Model.Launcher
         #endregion
     }
 
-    public class LauncherItemSimpleNewData : DataBase
-    {
-        #region property
-
-        public Guid LauncherItemId { get; set; }
-
-        public string Code { get; set; }
-        public string Name { get; set; }
-
-        public LauncherItemKind Kind { get; set; }
-
-        public LauncherCommandData Command { get; set; } = new LauncherCommandData();
-
-        public IconData Icon { get; set; } = new IconData();
-
-        public bool IsEnabledCommandLauncher { get; set; }
-        public bool IsEnabledCustomEnvVar { get; set; }
-
-        public StandardStreamData StandardStream { get; set; } = new StandardStreamData();
-
-        public LauncherItemPermission Permission { get; set; }
-
-        public string Note { get; set; }
-
-        #endregion
-    }
-
     public class LauncherItemData : DataBase
     {
         #region property
@@ -128,13 +102,36 @@ namespace ContentTypeTextNet.Pe.Main.Model.Launcher
         public string Code { get; set; }
         public string Name { get; set; }
 
-        public LauncherItemKind Kind { get; set; }
+        public virtual LauncherItemKind Kind { get; set; }
 
-        public LauncherCommandData Command { get; set; } = new LauncherCommandData();
+        public IconData Icon { get; set; } = new IconData();
 
         public bool IsEnabledCommandLauncher { get; set; }
 
         public string Note { get; set; }
+
+        #endregion
+    }
+
+    public class LauncherFileItemData : LauncherItemData
+    {
+        #region property
+
+        public LauncherCommandData Command { get; set; } = new LauncherCommandData();
+
+        #endregion
+
+        #region LauncherItemData
+
+        public override LauncherItemKind Kind
+        {
+            get => LauncherItemKind.File;
+            set
+            {
+                Debug.Assert(false);
+                base.Kind = value;
+            }
+        }
 
         #endregion
     }
