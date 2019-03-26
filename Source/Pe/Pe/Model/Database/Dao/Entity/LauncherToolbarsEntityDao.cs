@@ -31,6 +31,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             public static string PositionKind { get; } = "PositionKind";
             public static string IsTopmost { get; } = "IsTopmost";
             public static string IsAutoHide { get; } = "IsAutoHide";
+            public static string IsVisible { get; } = "IsVisible";
 
             #endregion
         }
@@ -118,6 +119,18 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
 
             return Commander.Execute(sql, param) == 1;
         }
+
+        public bool UpdatIsVisible(Guid launcherToolbarId, bool isVisible, DatabaseCommonStatus commonStatus)
+        {
+            var sql = StatementLoader.LoadStatementByCurrent();
+
+            var param = commonStatus.CreateCommonDtoMapping();
+            param[Column.LauncherToolbarId] = launcherToolbarId;
+            param[Column.IsVisible] = isVisible;
+
+            return Commander.Execute(sql, param) == 1;
+        }
+
 
         #endregion
     }

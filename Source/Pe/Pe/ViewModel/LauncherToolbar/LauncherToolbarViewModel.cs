@@ -21,6 +21,7 @@ using ContentTypeTextNet.Pe.Main.ViewModel.LauncherGroup;
 using ContentTypeTextNet.Pe.Main.ViewModel.LauncherIcon;
 using ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem;
 using Prism.Commands;
+using Prism.Interactivity.InteractionRequest;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar
 {
@@ -97,6 +98,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar
         ModelViewModelObservableCollectionManagerBase<LauncherItemElement, LauncherItemViewModelBase> LauncherItemCollection { get; }
         public ICollectionView LauncherItems { get; }
 
+        public InteractionRequest<Notification> CloseRequest { get; } = new InteractionRequest<Notification>();
 
         #endregion
 
@@ -120,6 +122,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar
                 Model.ChangeAutoHide(!Model.IsAutoHide);
             }
         ));
+
+        public ICommand CloseCommand => GetOrCreateCommand(() => new DelegateCommand(
+             () => {
+                 Model.ChangeVisible(false);
+
+                 var notification = new Notification();
+                 CloseRequest.Raise(notification);
+             }
+         ));
 
         #endregion
 

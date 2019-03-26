@@ -266,6 +266,17 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
             }, UniqueKeyPool.Get());
         }
 
+        public void ChangeVisible(bool isVisible)
+        {
+            IsVisible = false;
+            IsOpendAppMenu = false;
+
+            MainDatabaseLazyWriter.Stock(c => {
+                var dao = new LauncherToolbarsEntityDao(c, StatementLoader, c.Implementation, this);
+                dao.UpdatIsVisible(LauncherToolbarId, IsVisible, DatabaseCommonStatus.CreateCurrentAccount());
+            }, UniqueKeyPool.Get());
+        }
+
         #endregion
 
         #region ContextElementBase

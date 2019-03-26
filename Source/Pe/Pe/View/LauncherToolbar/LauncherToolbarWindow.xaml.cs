@@ -15,6 +15,8 @@ using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem;
 using ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar;
+using Prism.Commands;
+using Prism.Interactivity.InteractionRequest;
 
 namespace ContentTypeTextNet.Pe.Main.View.LauncherToolbar
 {
@@ -32,6 +34,23 @@ namespace ContentTypeTextNet.Pe.Main.View.LauncherToolbar
 
         [Injection]
         ILogger Logger { get; set; }
+
+        #endregion
+
+        #region command
+
+        ICommand _CloseCommand;
+        public ICommand CloseCommand
+        {
+            get
+            {
+                return this._CloseCommand ?? (this._CloseCommand = new DelegateCommand<InteractionRequestedEventArgs>(
+                    o => {
+                        Close();
+                    }
+                ));
+            }
+        }
 
         #endregion
 

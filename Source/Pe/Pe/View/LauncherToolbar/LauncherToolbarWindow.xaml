@@ -4,6 +4,8 @@
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 
+  xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+  xmlns:prism="http://prismlibrary.com/"
 
   xmlns:cttn_lib_shared_lib_view_converter="clr-namespace:ContentTypeTextNet.Pe.Library.Shared.Library.View.Converter;assembly=Shared.Library"
 
@@ -107,6 +109,12 @@
 
 
   </Window.Resources>
+  <i:Interaction.Triggers>
+    <prism:InteractionRequestTrigger SourceObject="{Binding CloseRequest}">
+      <prism:InvokeCommandAction Command="{Binding CloseCommand ,ElementName=root}" />
+    </prism:InteractionRequestTrigger>
+  </i:Interaction.Triggers>
+
   <Window.Visibility>
     <Binding Path="IsVisible" Converter="{StaticResource BooleanToVisibilityConverter}"/>
   </Window.Visibility>
@@ -177,7 +185,7 @@
 
               <Separator />
 
-              <MenuItem Header="close" />
+              <MenuItem Header="close" Command="{Binding CloseCommand}" />
 
               <Separator />
 
