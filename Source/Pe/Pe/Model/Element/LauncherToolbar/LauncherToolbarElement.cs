@@ -65,6 +65,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
         public IImagePainter ImagePainter { get; }
 
         DatabaseLazyWriter MainDatabaseLazyWriter { get; }
+        UniqueKeyPool UniqueKeyPool { get; } = new UniqueKeyPool();
 
         public ReadOnlyObservableCollection<LauncherGroupElement> LauncherGroups { get; }
 
@@ -250,7 +251,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
             MainDatabaseLazyWriter.Stock(c => {
                 var dao = new LauncherToolbarsEntityDao(c, StatementLoader, c.Implementation, this);
                 dao.UpdatTopmost(LauncherToolbarId, IsTopmost, DatabaseCommonStatus.CreateCurrentAccount());
-            });
+            }, UniqueKeyPool.Get());
         }
 
         #endregion

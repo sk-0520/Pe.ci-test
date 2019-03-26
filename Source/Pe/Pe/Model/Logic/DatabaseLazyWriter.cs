@@ -1,7 +1,9 @@
 using System;
+using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,7 +15,7 @@ using ContentTypeTextNet.Pe.Main.Model.Applications;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Logic
 {
-    public class LazyStockItem
+    class LazyStockItem
     {
         public LazyStockItem(Action<ApplicationDatabaseBarrierTransaction> action)
         {
@@ -25,6 +27,33 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
         public Action<ApplicationDatabaseBarrierTransaction> Action { get; }
         [Timestamp(DateTimeKind.Unspecified)]
         public DateTime StockTimestamp { get; } = DateTime.UtcNow;
+
+        #endregion
+    }
+
+    public class UniqueKeyPool
+    {
+        public UniqueKeyPool()
+        { }
+
+        #region property
+
+        ConcurrentDictionary<string, object> Pool { get; } = new ConcurrentDictionary<string, object>();
+
+        #endregion
+
+        #region function
+
+        public object Get([CallerMemberName] string callerMemberName = default(string), [CallerLineNumber] int callerLineNumber = -1)
+        {
+            var sb = new StringBuilder(callerMemberName.Length + 1 + callerLineNumber);
+            sb.Append(callerMemberName);
+            sb.Append('.');
+            sb.Append(callerLineNumber);
+
+            var result = Pool.GetOrAdd(sb.ToString(), k => new object());
+            return result;
+        }
 
         #endregion
     }
@@ -64,9 +93,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
 
         Timer LazyTimer { get; }
 
-        //ConcurrentQueue 使うことも考えたけどどうせタイマーのロックあるし普通版
-        //TODO: Queue である必要あんのか？
-        Queue<LazyStockItem> StockItems { get; } = new Queue<LazyStockItem>();
+        IList<LazyStockItem> StockItems { get; } = new List<LazyStockItem>();
+        IDictionary<object, LazyStockItem> UniqueItems { get; } = new Dictionary<object, LazyStockItem>();
 
         #endregion
 
@@ -81,17 +109,45 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
             LazyTimer.Change(WaitTime, Timeout.InfiniteTimeSpan);
         }
 
-        public void Stock(Action<ApplicationDatabaseBarrierTransaction> action)
+        void StockCore(Action<ApplicationDatabaseBarrierTransaction> action, object uniqueKey)
         {
-            ThrowIfDisposed();
-
             lock(this._timerLocker) {
                 StopTimer();
 
-                StockItems.Enqueue(new LazyStockItem(action));
+                // 既に登録されている処理が存在する場合は破棄しておく
+                if(uniqueKey != null) {
+                    if(UniqueItems.TryGetValue(uniqueKey, out var stockedItem)) {
+                        Logger.Trace($"待機処理破棄: {stockedItem.StockTimestamp} {uniqueKey.GetHashCode()}");
+                        StockItems.Remove(stockedItem);
+                        UniqueItems.Remove(uniqueKey);
+                    }
+                }
+
+                var item = new LazyStockItem(action);
+                StockItems.Add(item);
+                if(uniqueKey != null) {
+                    UniqueItems.Add(uniqueKey, item);
+                }
 
                 StartTimer();
             }
+        }
+
+        public void Stock(Action<ApplicationDatabaseBarrierTransaction> action, object uniqueKey)
+        {
+            if(uniqueKey == null) {
+                throw new ArgumentNullException(nameof(uniqueKey));
+            }
+
+            ThrowIfDisposed();
+
+            StockCore(action, uniqueKey);
+        }
+
+        public void Stock(Action<ApplicationDatabaseBarrierTransaction> action)
+        {
+            ThrowIfDisposed();
+            StockCore(action, null);
         }
 
         void LazyCallback(object state)
@@ -99,7 +155,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
             Flush();
         }
 
-        void FlushCore(IEnumerable<LazyStockItem> stockItems)
+        void FlushCore(LazyStockItem[] stockItems)
         {
             using(var transaction = DatabaseBarrier.WaitWrite()) {
                 foreach(var stockItem in stockItems) {
@@ -118,6 +174,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
                 StopTimer();
                 items = StockItems.ToArray();
                 StockItems.Clear();
+                UniqueItems.Clear();
             }
 
             if(items.Length == 0) {

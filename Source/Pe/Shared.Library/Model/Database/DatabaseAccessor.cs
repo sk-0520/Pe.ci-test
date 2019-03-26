@@ -13,13 +13,8 @@ using Dapper;
 
 namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
 {
-    /// <summary>
-    /// データベースとの会話用インターフェイス。
-    /// </summary>
-    public interface IDatabaseCommander
+    public interface IDatabaseReader
     {
-        #region function
-
         /// <summary>
         /// 指定の型で問い合わせ。
         /// </summary>
@@ -36,12 +31,19 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
         T QueryFirstOrDefault<T>(string sql, object param = null);
         T QuerySingle<T>(string sql, object param = null);
 
-        int Execute(string sql, object param = null);
-
         DataTable GetDataTable(string sql, object param = null);
-
-        #endregion
     }
+
+    public interface IDatabaseWriter
+    {
+        int Execute(string sql, object param = null);
+    }
+
+    /// <summary>
+    /// データベースとの会話用インターフェイス。
+    /// </summary>
+    public interface IDatabaseCommander: IDatabaseReader, IDatabaseWriter
+    { }
 
     public interface IDatabaseAccessor : IDatabaseCommander
     {

@@ -381,7 +381,7 @@
     <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherItemIconsEntityDao\SelectImageBinary.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Domain\LauncherItemDao\SelectIcon.sql">
+    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Domain\LauncherItemDomainDao\SelectIcon.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherItemsEntityDao\SelectLauncherItem.sql">
@@ -408,7 +408,7 @@
     <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherToolbarsEntityDao\SelectDisplayData.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Domain\LauncherToolbarDao\SelectAllToolbars.sql">
+    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Domain\LauncherToolbarDomainDao\SelectAllToolbars.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\ScreensEntityDao\InsertScreen.sql">
