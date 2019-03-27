@@ -8,9 +8,9 @@
   <Application.Resources>
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="/VIew/Resources/Theme/General.xaml" />
+        <ResourceDictionary Source="/VIew/Resources/Theme/General/General.xaml" />
+        <ResourceDictionary Source="/VIew/Resources/Theme/General/ImageResource.xaml" />
 
-        <ResourceDictionary Source="/VIew/Resources/ImageResource.xaml" />
         <ResourceDictionary Source="/VIew/Resources/ManagerResource.xaml" />
       </ResourceDictionary.MergedDictionaries>
     </ResourceDictionary>

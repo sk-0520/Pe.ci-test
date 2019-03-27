@@ -80,7 +80,7 @@
       </Border>
     </ControlTemplate>
 
-    <Style x:Shared="False"  x:Key="GroupMenuItem" TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+    <Style x:Key="GroupMenuItem" TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
       <Setter Property="Header" Value="{Binding Name}" />
       <Setter Property="Icon" Value="{Binding GroupIcon}" />
     </Style>
@@ -127,12 +127,7 @@
     <Binding Path="IsVisible" Converter="{StaticResource BooleanToVisibilityConverter}"/>
   </Window.Visibility>
   <Window.ContextMenu>
-    <!--<ContextMenu ItemsSource="{Binding LauncherGroupItems}" ItemContainerStyle="{StaticResource GroupMenuItem}" />-->
-    <ContextMenu ItemsSource="{Binding LauncherGroupItems}">
-      <ContextMenu.ItemContainerStyle>
-        <Style TargetType="MenuItem" BasedOn="{StaticResource GroupMenuItem}"/>
-      </ContextMenu.ItemContainerStyle>
-    </ContextMenu>
+    <ContextMenu ItemsSource="{Binding LauncherGroupItems}" ItemContainerStyle="{StaticResource GroupMenuItem}" />
   </Window.ContextMenu>
   <DockPanel>
 
@@ -159,7 +154,7 @@
         <app_main_view_lt:LauncherContentControl Title="pe" >
           <app_main_view_lt:LauncherContentControl.Icon>
             <ContentControl
-              Style="{StaticResource NormalIcon}"
+              Template="{StaticResource NormalIcon}"
               Content="{StaticResource Image-HamburgerMenu}"
               Width="{Binding IconScale, Converter={StaticResource IconScaleToWidthConverter}}"
               Height="{Binding IconScale, Converter={StaticResource IconScaleToHeightConverter}}"
@@ -218,34 +213,6 @@
 
 
     <ItemsControl ItemsSource="{Binding LauncherItems}">
-      <ItemsControl.Resources>
-        <!--<CollectionViewSource x:Key="LauncherGroupItems" Source="{Binding DataContext.LauncherGroupItems, ElementName=root}" />
-        <ContextMenu x:Key="ItemContextMenu">
-          <ContextMenu.ItemsSource>
-            <CompositeCollection>
-              <TextBlock Text="{Binding}" />
-              <MenuItem Header="exec" />
-              <MenuItem Header="ex exec" />
-              <Separator />
-              <MenuItem Header="open dir" />
-              <MenuItem Header="open work" />
-              <Separator />
-              <MenuItem Header="copy command" />
-              <MenuItem Header="copy dir" />
-              <MenuItem Header="copy work" />
-              <Separator />
-              <CollectionContainer Collection="{Binding Source={StaticResource LauncherGroupItems}}" />
-            </CompositeCollection>
-
-          </ContextMenu.ItemsSource>
-        </ContextMenu>
-
-        <Style TargetType="ContentPresenter">
-          <EventSetter Event="ContextMenuOpening" Handler="ContentPresenter_ContextMenuOpening" />
-          <EventSetter Event="ContextMenuClosing" Handler="ContentPresenter_ContextMenuClosing" />
-          <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}" />
-        </Style>-->
-      </ItemsControl.Resources>
       <ItemsControl.ItemsPanel>
         <ItemsPanelTemplate>
           <StackPanel />

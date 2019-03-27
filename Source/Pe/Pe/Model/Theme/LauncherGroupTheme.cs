@@ -37,6 +37,24 @@ namespace ContentTypeTextNet.Pe.Main.Model.Designer
 
         #endregion
 
+        #region function
+
+        string GetResourceKey(LauncherGroupImageName imageName)
+        {
+            switch(imageName) {
+                case LauncherGroupImageName.DirectoryNormal:
+                    return "Image-LauncherGroup-Directory-Normal";
+
+                case LauncherGroupImageName.DirectoryOpen:
+                    return "Image-LauncherGroup-Directory-Open";
+
+                default:
+                    throw new NotSupportedException();
+            }
+        }
+
+        #endregion
+
         #region ILauncherGroupTheme
 
         public FrameworkElement CreateGroupImage(LauncherGroupImageName imageName, Color imageColor, IconScale iconScale)
@@ -53,11 +71,13 @@ namespace ContentTypeTextNet.Pe.Main.Model.Designer
 
                     var path = new Path();
                     using(Initializer.BeginInitialize(path)) {
-                        var geometry = (PathGeometry)Application.Current.Resources["Image-LauncherGroup-Directory-Normal"];
+                        var resourceKey = GetResourceKey(imageName);
+                        var geometry = (Geometry)Application.Current.Resources[resourceKey];
                         path.Data = geometry;
                         path.Fill = new SolidColorBrush(imageColor);
                         path.Stroke = new SolidColorBrush( MediaUtility.GetAutoColor(imageColor));
                         path.StrokeThickness = 1;
+                        FreezableUtility.SafeFreeze(geometry);
                     }
                     canvas.Children.Add(path);
                 }

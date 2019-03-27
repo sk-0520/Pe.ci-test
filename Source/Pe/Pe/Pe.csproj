@@ -323,11 +323,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Resources\ImageResource.xaml">
+    <Page Include="View\Resources\Theme\General\ImageResource.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Resources\Theme\General.xaml">
+    <Page Include="View\Resources\Theme\General\General.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
