@@ -3,14 +3,14 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 >
   <!-- https://materialdesignicons.com/icon/menu-->
-  <Geometry x:Key="Image-HamburgerMenu">M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z</Geometry>
+  <PathGeometry  x:Key="Image-HamburgerMenu">M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z</PathGeometry>
 
   <!--#region LauncherGroup -->
 
   <!-- https://materialdesignicons.com/icon/folder -->
-  <Geometry x:Key="Image-LauncherGroup-Directory-Normal">M10,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V8C22,6.89 21.1,6 20,6H12L10,4Z</Geometry>
+  <PathGeometry x:Shared="False" x:Key="Image-LauncherGroup-Directory-Normal" Figures="M10,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V8C22,6.89 21.1,6 20,6H12L10,4Z" />
   <!-- https://materialdesignicons.com/icon/folder-open -->
-  <Geometry x:Key="Image-LauncherGroup-Directory-Open">M19,20H4C2.89,20 2,19.1 2,18V6C2,4.89 2.89,4 4,4H10L12,6H19A2,2 0 0,1 21,8H21L4,8V18L6.14,10H23.21L20.93,18.5C20.7,19.37 19.92,20 19,20Z</Geometry>
+  <PathGeometry  x:Shared="False"  x:Key="Image-LauncherGroup-Directory-Open" Figures="M19,20H4C2.89,20 2,19.1 2,18V6C2,4.89 2.89,4 4,4H10L12,6H19A2,2 0 0,1 21,8H21L4,8V18L6.14,10H23.21L20.93,18.5C20.7,19.37 19.92,20 19,20Z" />
 
   <!--#endregion -->
 

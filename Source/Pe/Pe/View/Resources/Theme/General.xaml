@@ -53,6 +53,23 @@
     </Setter>
   </Style>
 
+  <ControlTemplate x:Shared="False"  x:Key="SmallIcon2" TargetType="ContentControl">
+    <Border BorderBrush="Red">
+      <Viewbox Width="{StaticResource Icon-Size-Small}" Height="{StaticResource Icon-Size-Small}">
+        <Canvas Width="{StaticResource Icon-Size-Small}" Height="{StaticResource Icon-Size-Small}">
+          <Path
+          Data="{TemplateBinding Content}"
+          Fill="{TemplateBinding Background}"
+          Stroke="{TemplateBinding Foreground}"
+          StrokeThickness="{StaticResource Icon-Stroke-Small}"
+        />
+        </Canvas>
+      </Viewbox>
+
+    </Border>
+  </ControlTemplate>
+
+
   <Style TargetType="MenuItem">
     <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
     <Setter Property="VerticalContentAlignment" Value="Stretch"/>

@@ -11,10 +11,10 @@ using ContentTypeTextNet.Pe.Library.Shared.Library.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Library.ViewModel;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
+using ContentTypeTextNet.Pe.Main.Model.Designer;
 using ContentTypeTextNet.Pe.Main.Model.Element.LauncherGroup;
 using ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem;
 using ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar;
-using ContentTypeTextNet.Pe.Main.Model.Logic.Theme;
 using ContentTypeTextNet.Pe.Main.Model.Manager;
 using ContentTypeTextNet.Pe.Main.View.Extend;
 using ContentTypeTextNet.Pe.Main.ViewModel.LauncherGroup;
@@ -33,13 +33,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar
 
         #endregion
 
-        public LauncherToolbarViewModel(LauncherToolbarElement model, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
+        public LauncherToolbarViewModel(LauncherToolbarElement model, IDispatcherWapper dispatcherWapper, ILauncherGroupTheme launcherGroupTheme, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         {
             DispatcherWapper = dispatcherWapper;
+            LauncherGroupTheme = launcherGroupTheme;
 
             LauncherGroupCollection = new ActionModelViewModelObservableCollectionManager<LauncherGroupElement, LauncherGroupViewModel>(Model.LauncherGroups, Logger.Factory) {
-                ToViewModel = (m) => new LauncherGroupViewModel(m, Logger.Factory),
+                ToViewModel = (m) => new LauncherGroupViewModel(m, LauncherGroupTheme, Logger.Factory),
             };
             LauncherGroupItems = LauncherGroupCollection.ViewModels;
 
@@ -61,6 +62,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar
 
         public AppDesktopToolbarExtend AppDesktopToolbarExtend { get; set; }
         IDispatcherWapper DispatcherWapper { get; }
+        ILauncherGroupTheme LauncherGroupTheme { get; }
         PropertyChangedHooker PropertyChangedHooker { get; }
 
         public IconScale IconScale => Model.IconScale;

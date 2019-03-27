@@ -182,8 +182,9 @@
     <Compile Include="Model\Launcher\LauncherData.cs" />
     <Compile Include="Model\Launcher\LauncherFactory.cs" />
     <Compile Include="Model\Logic\DatabaseLazyWriter.cs" />
-    <Compile Include="Model\Logic\Designer\DesignerBase.cs" />
-    <Compile Include="Model\Logic\Designer\LauncherToolbarDesigner.cs" />
+    <Compile Include="Model\Theme\LauncherGroupTheme.cs" />
+    <Compile Include="Model\Theme\ThemeBase.cs" />
+    <Compile Include="Model\Theme\LauncherToolbarTheme.cs" />
     <Compile Include="Model\Logic\IconImageLoader.cs" />
     <Compile Include="Model\Logic\IdFactory.cs" />
     <Compile Include="Model\Logic\ScreenChecker.cs" />
@@ -196,8 +197,6 @@
     <Compile Include="Model\Data\Dto\CommonDto.cs" />
     <Compile Include="Model\Data\Dto\DtoBase.cs" />
     <Compile Include="Model\Data\Dto\SetupDto.cs" />
-    <Compile Include="Model\Logic\Painter\ImagePainter.cs" />
-    <Compile Include="Model\Logic\Painter\PainterBase.cs" />
     <Compile Include="Model\Manager\ManagerBase.cs" />
     <Compile Include="Model\Manager\NotifyManager.cs" />
     <Compile Include="Model\Manager\OrderManager.cs" />
@@ -305,6 +304,7 @@
     <Folder Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherCommandsEntityDao\" />
     <Folder Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherDirectoriesEntityDao\" />
     <Folder Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherDirectoryItemsEntityDao\" />
+    <Folder Include="View\Converter\" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="View\Accept\AcceptWindow.xaml">

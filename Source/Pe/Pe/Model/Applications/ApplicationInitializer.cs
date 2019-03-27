@@ -12,9 +12,8 @@ using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Database;
+using ContentTypeTextNet.Pe.Main.Model.Designer;
 using ContentTypeTextNet.Pe.Main.Model.Logic;
-using ContentTypeTextNet.Pe.Main.Model.Logic.Designer;
-using ContentTypeTextNet.Pe.Main.Model.Logic.Theme;
 using ContentTypeTextNet.Pe.Main.Model.Manager;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Applications
@@ -249,8 +248,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Applications
                 .Register<IReadWriteLockPack, ReadWriteLockPack>(rwlp)
                 .Register<IDispatcherWapper, ApplicationDispatcherWapper>(DiLifecycle.Transient)
                 .Register<IIdFactory, IdFactory>(DiLifecycle.Transient)
-                .Register<IImagePainter, ImagePainter>(DiLifecycle.Transient)
-                .Register<ILauncherToolbarDesigner, LauncherToolbarDesigner>(DiLifecycle.Transient)
+                .Register<ILauncherToolbarTheme, LauncherToolbarTheme>(DiLifecycle.Transient)
+                .Register<ILauncherGroupTheme, LauncherGroupTheme>(DiLifecycle.Transient)
             ;
 
             ApplicationDiContainer.Initialize(() => container);

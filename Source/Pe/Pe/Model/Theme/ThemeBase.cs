@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 using System.Windows;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 
-namespace ContentTypeTextNet.Pe.Main.Model.Logic.Designer
+namespace ContentTypeTextNet.Pe.Main.Model.Designer
 {
-    public abstract class DesignerBase
+    public abstract class ThemeBase
     {
-        public DesignerBase(ILogger logger)
+        public ThemeBase(ILogger logger)
         {
             Logger = logger;
         }
 
-        public DesignerBase(ILoggerFactory loggerFactory)
+        public ThemeBase(ILoggerFactory loggerFactory)
         {
             Logger = loggerFactory.CreateTartget(GetType());
         }

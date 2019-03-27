@@ -36,6 +36,7 @@
     <cttn_lib_shared_lib_view_converter:IconScaleToWidthConverter x:Key="IconScaleToWidthConverter" />
     <cttn_lib_shared_lib_view_converter:IconScaleToHeightConverter x:Key="IconScaleToHeightConverter" />
 
+
     <Style x:Key="DropMenu" TargetType="Popup" BasedOn="{StaticResource PopupMenu}">
       <Style.Triggers>
         <DataTrigger Binding="{Binding DataContext.ToolbarPosition, ElementName=root}" Value="Left">
@@ -79,41 +80,9 @@
       </Border>
     </ControlTemplate>
 
-    <Style x:Key="GroupMenuItem" TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
-      <Style.Resources>
-        <Style x:Key="GroupIcon" TargetType="ContentControl" BasedOn="{StaticResource SmallIcon }">
-          <Setter Property="Background">
-            <Setter.Value>
-              <SolidColorBrush Color="{Binding ImageColor}" />
-            </Setter.Value>
-          </Setter>
-          <Setter Property="Foreground" Value="Gray" />
-        </Style>
-      </Style.Resources>
-      <Style.Triggers>
-        <DataTrigger Binding="{Binding ImageName}" Value="DirectoryNormal">
-          <Setter Property="Icon">
-            <Setter.Value>
-              <ContentControl
-                Style="{StaticResource GroupIcon}"
-                Content="{StaticResource Image-LauncherGroup-Directory-Open}"
-              />
-            </Setter.Value>
-          </Setter>
-        </DataTrigger>
-        <DataTrigger Binding="{Binding ImageName}" Value="DirectoryOpen">
-          <Setter Property="Icon">
-            <Setter.Value>
-              <ContentControl
-                Style="{StaticResource GroupIcon}"
-                Content="{StaticResource Image-LauncherGroup-Directory-Open}"
-              />
-            </Setter.Value>
-          </Setter>
-        </DataTrigger>
-      </Style.Triggers>
+    <Style x:Shared="False"  x:Key="GroupMenuItem" TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
       <Setter Property="Header" Value="{Binding Name}" />
-
+      <Setter Property="Icon" Value="{Binding GroupIcon}" />
     </Style>
 
     <ContextMenu x:Key="ItemContextMenu">
@@ -138,12 +107,13 @@
       </ContextMenu.ItemsSource>
     </ContextMenu>
 
-    <!-- ファイル -->
+    <!--#region ファイル -->
     <DataTemplate DataType="{x:Type app_main_viewmode_litem:LauncherFileItemViewModel}">
       <Button ContextMenu="{StaticResource ItemContextMenu}" Template="{StaticResource LauncherItemTemplate}">
         <app_main_view_lt:LauncherContentControl Title="{Binding Name, Mode=OneTime}" />
       </Button>
     </DataTemplate>
+    <!--#endregion -->
 
 
   </Window.Resources>
@@ -159,9 +129,9 @@
   <Window.ContextMenu>
     <!--<ContextMenu ItemsSource="{Binding LauncherGroupItems}" ItemContainerStyle="{StaticResource GroupMenuItem}" />-->
     <ContextMenu ItemsSource="{Binding LauncherGroupItems}">
-      <ContextMenu.Resources>
-        <Style x:Shared="False"  TargetType="MenuItem" BasedOn="{StaticResource GroupMenuItem}"/>
-      </ContextMenu.Resources>
+      <ContextMenu.ItemContainerStyle>
+        <Style TargetType="MenuItem" BasedOn="{StaticResource GroupMenuItem}"/>
+      </ContextMenu.ItemContainerStyle>
     </ContextMenu>
   </Window.ContextMenu>
   <DockPanel>
@@ -244,6 +214,8 @@
         </Popup>
       </Grid>
     </ToggleButton>
+
+
 
     <ItemsControl ItemsSource="{Binding LauncherItems}">
       <ItemsControl.Resources>

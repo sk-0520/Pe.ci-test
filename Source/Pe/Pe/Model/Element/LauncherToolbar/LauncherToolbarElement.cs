@@ -15,13 +15,12 @@ using ContentTypeTextNet.Pe.Main.Model.Data;
 using ContentTypeTextNet.Pe.Main.Model.Data.Dto.Entity;
 using ContentTypeTextNet.Pe.Main.Model.Database.Dao.Domain;
 using ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity;
+using ContentTypeTextNet.Pe.Main.Model.Designer;
 using ContentTypeTextNet.Pe.Main.Model.Element.LauncherGroup;
 using ContentTypeTextNet.Pe.Main.Model.Element.LauncherIcon;
 using ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem;
 using ContentTypeTextNet.Pe.Main.Model.Launcher;
 using ContentTypeTextNet.Pe.Main.Model.Logic;
-using ContentTypeTextNet.Pe.Main.Model.Logic.Designer;
-using ContentTypeTextNet.Pe.Main.Model.Logic.Theme;
 using ContentTypeTextNet.Pe.Main.Model.Manager;
 using ContentTypeTextNet.Pe.Main.View.Extend;
 
@@ -37,7 +36,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
 
         #endregion
 
-        public LauncherToolbarElement(Screen dockScreen, ReadOnlyObservableCollection<LauncherGroupElement> launcherGroups, IOrderManager orderManager, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, ILauncherToolbarDesigner launcherToolbarDesigner, IImagePainter imagePainter, IDiContainer diContainer, ILoggerFactory loggerFactory)
+        public LauncherToolbarElement(Screen dockScreen, ReadOnlyObservableCollection<LauncherGroupElement> launcherGroups, IOrderManager orderManager, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, ILauncherToolbarTheme launcherToolbarTheme, IDiContainer diContainer, ILoggerFactory loggerFactory)
             : base(diContainer, loggerFactory)
         {
             DockScreen = dockScreen;
@@ -48,8 +47,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
             MainDatabaseBarrier = mainDatabaseBarrier;
             StatementLoader = statementLoader;
             IdFactory = idFactory;
-            LauncherToolbarDesigner = launcherToolbarDesigner;
-            ImagePainter = imagePainter;
+            LauncherToolbarTheme = launcherToolbarTheme;
 
             MainDatabaseLazyWriter = new DatabaseLazyWriter(MainDatabaseBarrier, Constants.Config.LauncherToolbarMainDatabaseLazyWriterWaitTime, this);
         }
@@ -61,8 +59,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
         IMainDatabaseBarrier MainDatabaseBarrier { get; }
         IDatabaseStatementLoader StatementLoader { get; }
         IIdFactory IdFactory { get; }
-        ILauncherToolbarDesigner LauncherToolbarDesigner { get; }
-        public IImagePainter ImagePainter { get; }
+        ILauncherToolbarTheme LauncherToolbarTheme { get; }
 
         DatabaseLazyWriter MainDatabaseLazyWriter { get; }
         UniqueKeyPool UniqueKeyPool { get; } = new UniqueKeyPool();
@@ -180,10 +177,10 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
 
         void UpdateDesign()
         {
-            ButtonPadding = LauncherToolbarDesigner.GetButtonPadding(ToolbarPosition, IconScale);
-            IconMargin = LauncherToolbarDesigner.GetIconMargin(ToolbarPosition, IconScale, IsIconOnly, TextWidth);
-            DisplaySize = LauncherToolbarDesigner.GetDisplaySize(ButtonPadding, IconMargin, IconScale, IsIconOnly, TextWidth);
-            HiddenSize = LauncherToolbarDesigner.GetHiddenSize(ButtonPadding, IconMargin, IconScale, IsIconOnly, TextWidth);
+            ButtonPadding = LauncherToolbarTheme.GetButtonPadding(ToolbarPosition, IconScale);
+            IconMargin = LauncherToolbarTheme.GetIconMargin(ToolbarPosition, IconScale, IsIconOnly, TextWidth);
+            DisplaySize = LauncherToolbarTheme.GetDisplaySize(ButtonPadding, IconMargin, IconScale, IsIconOnly, TextWidth);
+            HiddenSize = LauncherToolbarTheme.GetHiddenSize(ButtonPadding, IconMargin, IconScale, IsIconOnly, TextWidth);
         }
 
         void LoadLauncherToolbar()

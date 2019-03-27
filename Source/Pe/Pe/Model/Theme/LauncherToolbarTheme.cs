@@ -8,9 +8,9 @@ using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.View.Extend;
 
-namespace ContentTypeTextNet.Pe.Main.Model.Logic.Designer
+namespace ContentTypeTextNet.Pe.Main.Model.Designer
 {
-    public interface ILauncherToolbarDesigner
+    public interface ILauncherToolbarTheme
     {
         #region function
 
@@ -27,9 +27,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic.Designer
         #endregion
     }
 
-    public class LauncherToolbarDesigner : DesignerBase, ILauncherToolbarDesigner
+    public class LauncherToolbarTheme : ThemeBase, ILauncherToolbarTheme
     {
-        public LauncherToolbarDesigner(ILoggerFactory loggerFactory)
+        public LauncherToolbarTheme(ILoggerFactory loggerFactory)
             : base(loggerFactory)
         { }
 
