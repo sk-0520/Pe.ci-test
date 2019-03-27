@@ -84,7 +84,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar
         }
 
         public LauncherToolbarIconDirection IconDirection => Model.IconDirection;
-        public bool IsReverse => Model.IsReverse;
 
         public bool IsOpendAppMenu
         {

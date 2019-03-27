@@ -24,7 +24,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data.Dto.Entity
         public bool IsTopmost { get; set; }
         public bool IsAutoHide { get; set; }
         public bool IsIconOnly { get; set; }
-        public bool IsReverse { get; set; }
+
         #endregion
     }
 }
