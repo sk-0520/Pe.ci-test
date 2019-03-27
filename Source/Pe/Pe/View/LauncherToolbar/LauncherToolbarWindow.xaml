@@ -88,19 +88,22 @@
     <ContextMenu x:Key="ItemContextMenu">
       <ContextMenu.Resources>
         <CollectionViewSource x:Key="LauncherGroupItems" Source="{Binding DataContext.LauncherGroupItems, Source={x:Reference root}}" />
-        <!--<Style TargetType="MenuItem" BasedOn="{StaticResource GroupMenuItem}" />-->
+        <!-- グループメニューアイテムのスタイルを上書きする普通のメニュー -->
+        <Style x:Key="LauncherMenuItem" TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}" />
+        <!-- CollectionContainer で使用するグループメニューアイテム -->
+        <Style TargetType="MenuItem" BasedOn="{StaticResource GroupMenuItem}" />
       </ContextMenu.Resources>
       <ContextMenu.ItemsSource>
         <CompositeCollection>
-          <MenuItem Header="exec" />
-          <MenuItem Header="ex exec" />
+          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="exec" />
+          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="ex exec" />
           <Separator />
-          <MenuItem Header="open dir" />
-          <MenuItem Header="open work" />
+          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="open dir" />
+          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="open work" />
           <Separator />
-          <MenuItem Header="copy command" />
-          <MenuItem Header="copy dir" />
-          <MenuItem Header="copy work" />
+          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="copy command" />
+          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="copy dir" />
+          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="copy work" />
           <Separator />
           <CollectionContainer Collection="{Binding Source={StaticResource LauncherGroupItems}}" />
         </CompositeCollection>
@@ -200,7 +203,7 @@
               <ItemsControl ItemsSource="{Binding LauncherGroupItems}">
                 <ItemsControl.ItemTemplate>
                   <DataTemplate>
-                    <MenuItem Header="{Binding}" />
+                    <MenuItem Style="{StaticResource GroupMenuItem}" />
                   </DataTemplate>
                 </ItemsControl.ItemTemplate>
               </ItemsControl>
