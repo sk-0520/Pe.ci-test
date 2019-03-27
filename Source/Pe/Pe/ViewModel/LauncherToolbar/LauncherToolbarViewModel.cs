@@ -15,6 +15,7 @@ using ContentTypeTextNet.Pe.Main.Model.Designer;
 using ContentTypeTextNet.Pe.Main.Model.Element.LauncherGroup;
 using ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem;
 using ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar;
+using ContentTypeTextNet.Pe.Main.Model.Launcher;
 using ContentTypeTextNet.Pe.Main.Model.Manager;
 using ContentTypeTextNet.Pe.Main.View.Extend;
 using ContentTypeTextNet.Pe.Main.ViewModel.LauncherGroup;
@@ -81,6 +82,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar
         {
             get => Model.IsTopmost;
         }
+
+        public LauncherToolbarIconDirection IconDirection => Model.IconDirection;
+        public bool IsReverse => Model.IsReverse;
 
         public bool IsOpendAppMenu
         {

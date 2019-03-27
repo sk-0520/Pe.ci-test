@@ -45,11 +45,13 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
         {
             var toolbarPositionTransfer = new EnumTransfer<AppDesktopToolbarPosition>();
             var iconScaleTransfer = new EnumTransfer<IconScale>();
+            var iconDirectionTransfer = new EnumTransfer<LauncherToolbarIconDirection>();
 
             var result = new LauncherToolbarsDisplayData() {
                 LauncherToolbarId = dto.LauncherToolbarId,
                 LauncherGroupId = dto.LauncherGroupId,
                 ToolbarPosition = toolbarPositionTransfer.From(dto.PositionKind),
+                IconDirection = iconDirectionTransfer.From(dto.Direction),
                 IconScale = iconScaleTransfer.From(dto.IconScale),
                 FontId = dto.FontId,
                 AutoHideTimeout = ToTimespan(dto.AutoHideTimeout),

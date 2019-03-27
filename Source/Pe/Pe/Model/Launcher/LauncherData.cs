@@ -30,6 +30,13 @@ namespace ContentTypeTextNet.Pe.Main.Model.Launcher
         Another,
     }
 
+    public enum LauncherToolbarIconDirection
+    {
+        LeftTop,
+        Center,
+        RightBottom,
+    }
+
     public class LauncherCommandData : DataBase
     {
         #region property
@@ -167,6 +174,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Launcher
         public Guid LauncherToolbarId { get; set; }
         public Guid LauncherGroupId { get; set; }
         public AppDesktopToolbarPosition ToolbarPosition { get; set; }
+        public LauncherToolbarIconDirection IconDirection { get; set; }
         public IconScale IconScale { get; set; }
         public Guid FontId { get; set; }
         public TimeSpan AutoHideTimeout { get; set; }
@@ -175,6 +183,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Launcher
         public bool IsTopmost { get; set; }
         public bool IsAutoHide { get; set; }
         public bool IsIconOnly { get; set; }
+        public bool IsReverse { get; set; }
 
         #endregion
     }

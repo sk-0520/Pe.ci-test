@@ -31,6 +31,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
         #region variable
 
         bool _isTopmost;
+        bool _isReverse;
+        LauncherToolbarIconDirection _iconDirection;
         LauncherGroupElement _selectedLauncherGroup;
         bool _isOpendAppMenu;
 
@@ -112,6 +114,17 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
             get => this._isTopmost;
             set => SetProperty(ref this._isTopmost, value);
         }
+        public bool IsReverse
+        {
+            get => this._isReverse;
+            set => SetProperty(ref this._isReverse, value);
+        }
+
+        public LauncherToolbarIconDirection IconDirection
+        {
+            get => this._iconDirection;
+            set => SetProperty(ref this._iconDirection, value);
+        }
 
         public LauncherGroupElement SelectedLauncherGroup
         {
@@ -149,7 +162,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
         {
             using(var commander = MainDatabaseBarrier.WaitRead()) {
                 var dao = new LauncherToolbarDomainDao(commander, StatementLoader, commander.Implementation, this);
-                var screenToolbars = dao.SelectAllToolbars().ToList();
+                var screenToolbars = dao.SelectAllScreenToolbars().ToList();
                 var LauncherToolbarId = FindMaybeToolbarId(screenToolbars);
                 return LauncherToolbarId;
             }
@@ -201,6 +214,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
             AutoHideTimeout = displayData.AutoHideTimeout;
             ToolbarPosition = displayData.ToolbarPosition;
             IsVisible = displayData.IsVisible;
+            IsReverse = displayData.IsReverse;
+            IconDirection = displayData.IconDirection;
 
             SelectedLauncherGroup = LauncherGroups
                 .FirstOrDefault(i => i.LauncherGroupId == displayData.LauncherGroupId)

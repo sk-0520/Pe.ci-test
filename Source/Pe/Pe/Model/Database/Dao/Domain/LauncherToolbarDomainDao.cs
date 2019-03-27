@@ -32,7 +32,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Domain
             return data;
         }
 
-        public IEnumerable<LauncherToolbarsScreenData> SelectAllToolbars()
+        public IEnumerable<LauncherToolbarsScreenData> SelectAllScreenToolbars()
         {
             var sql = StatementLoader.LoadStatementByCurrent();
             return Commander.Query<LauncherToolbarScreenRowDto>(sql)

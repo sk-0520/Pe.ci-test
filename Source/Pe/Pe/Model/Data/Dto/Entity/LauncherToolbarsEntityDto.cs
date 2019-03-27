@@ -15,6 +15,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data.Dto.Entity
         public Guid LauncherToolbarId { get; set; }
         public Guid LauncherGroupId { get; set; }
         public string PositionKind { get; set; }
+        public string Direction { get; set; }
         public string IconScale { get; set; }
         public Guid FontId { get; set; }
         public string AutoHideTimeout { get; set; }
@@ -23,7 +24,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data.Dto.Entity
         public bool IsTopmost { get; set; }
         public bool IsAutoHide { get; set; }
         public bool IsIconOnly { get; set; }
-
+        public bool IsReverse { get; set; }
         #endregion
     }
 }

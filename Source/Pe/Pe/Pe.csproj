@@ -414,7 +414,7 @@
     <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherToolbarsEntityDao\SelectDisplayData.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Domain\LauncherToolbarDomainDao\SelectAllToolbars.sql">
+    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Domain\LauncherToolbarDomainDao\SelectAllScreenToolbars.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\ScreensEntityDao\InsertScreen.sql">
