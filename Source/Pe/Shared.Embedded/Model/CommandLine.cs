@@ -430,6 +430,16 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Embedded.Model
             return defaultValue;
         }
 
+        public static bool ExistsSwitch(this CommandLine @this, string key)
+        {
+            var commandLineKey = @this.GetKey(key);
+            if(commandLineKey != null) {
+                return @this.Switch.Contains(commandLineKey);
+            }
+
+            return false;
+        }
+
         #endregion
     }
 

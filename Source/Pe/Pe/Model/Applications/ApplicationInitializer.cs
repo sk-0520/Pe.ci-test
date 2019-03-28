@@ -23,6 +23,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Applications
         #region property
 
         string CommandLineKeyLog { get; } = "log";
+        string CommandLineSwitchForceLog { get; } = "force-log";
 
         public bool IsFirstStartup { get; private set; }
         public ApplicationDiContainer DiContainer { get; private set; }
@@ -49,6 +50,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Applications
             commandLine.Add(longKey: EnvironmentParameters.CommandLineKeyMachineDirectory, hasValue: true);
             commandLine.Add(longKey: EnvironmentParameters.CommandLineKeyTemporaryDirectory, hasValue: true);
             commandLine.Add(longKey: CommandLineKeyLog, hasValue: true);
+            commandLine.Add(longKey: CommandLineSwitchForceLog, hasValue: false);
 
             commandLine.Parse();
 
@@ -112,7 +114,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Applications
             }
         }
 
-        ApplicationLogger CreateLogger(string outputPath, [CallerFilePath] string callerFilePath = default(string))
+        ApplicationLogger CreateLogger(string outputPath, bool createDirectory, [CallerFilePath] string callerFilePath = default(string))
         {
             if(LogItem.ShortFileIndex == 0) {
                 var ignoreLoggerFilePath = Path.Combine(Constants.ProjectName, "Source");
@@ -132,6 +134,18 @@ namespace ContentTypeTextNet.Pe.Main.Model.Applications
             // ログ出力(ファイル・ディレクトリが存在しなければ終了で構わない)
             if(!string.IsNullOrWhiteSpace(outputPath)) {
                 var expandedOutputPath = Environment.ExpandEnvironmentVariables(outputPath);
+
+                if(createDirectory) {
+                    var fileName = Path.GetFileName(expandedOutputPath);
+                    if(fileName.IndexOf('.') == -1) {
+                        // 拡張子がなければディレクトリ指定と決めつけ
+                        Directory.CreateDirectory(expandedOutputPath);
+                    } else {
+                        var parentDir = Path.GetDirectoryName(expandedOutputPath);
+                        Directory.CreateDirectory(parentDir);
+                    }
+                }
+
                 // ディレクトリ指定であればタイムスタンプ付きでファイル生成
                 string filePath = expandedOutputPath;
                 if(Directory.Exists(expandedOutputPath)) {
@@ -286,7 +300,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Applications
 
             var commandLine = CreateCommandLine(arguments);
             var environmentParameters = InitializeEnvironment(commandLine);
-            var logger = CreateLogger(commandLine.GetValue(CommandLineKeyLog, string.Empty));
+            
+            var logger = CreateLogger(commandLine.GetValue(CommandLineKeyLog, string.Empty), commandLine.ExistsSwitch(CommandLineSwitchForceLog));
             OutputStartupLog(logger);
 
             IsFirstStartup = CheckFirstStartup(environmentParameters, logger);
