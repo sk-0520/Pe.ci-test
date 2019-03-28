@@ -27,5 +27,12 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 
             return result;
         }
+
+        public static TFreezable GetSafeFreeze<TFreezable>(TFreezable freezable)
+            where TFreezable: Freezable
+        {
+            SafeFreeze(freezable);
+            return freezable;
+        }
     }
 }

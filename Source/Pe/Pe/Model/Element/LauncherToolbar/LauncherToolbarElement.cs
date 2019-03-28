@@ -30,6 +30,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
     {
         #region variable
 
+        bool _isVisible;
         bool _isTopmost;
         LauncherToolbarIconDirection _iconDirection;
         LauncherGroupElement _selectedLauncherGroup;
@@ -76,7 +77,11 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
         /// <summary>
         /// 表示されているか。
         /// </summary>
-        public bool IsVisible { get; set; }
+        public bool IsVisible
+        {
+            get => this._isVisible;
+            private set => SetProperty(ref this._isVisible, value);
+        }
 
         /// <summary>
         /// 表示アイコンサイズ。

@@ -19,7 +19,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Designer
     {
         #region function
 
-        FrameworkElement CreateGroupImage(LauncherGroupImageName imageName, Color imageColor, IconScale small);
+        DependencyObject CreateGroupImage(LauncherGroupImageName imageName, Color imageColor, IconScale iconScale);
 
         #endregion
     }
@@ -54,11 +54,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Designer
             }
         }
 
-        #endregion
-
-        #region ILauncherGroupTheme
-
-        public FrameworkElement CreateGroupImage(LauncherGroupImageName imageName, Color imageColor, IconScale iconScale)
+        DependencyObject CreateGroupImageCore(LauncherGroupImageName imageName, Color imageColor, IconScale iconScale)
         {
             var viewBox = new Viewbox();
             using(Initializer.BeginInitialize(viewBox)) {
@@ -74,11 +70,11 @@ namespace ContentTypeTextNet.Pe.Main.Model.Designer
                     using(Initializer.BeginInitialize(path)) {
                         var resourceKey = GetResourceKey(imageName);
                         var geometry = (Geometry)Application.Current.Resources[resourceKey];
-                        path.Data = geometry;
-                        path.Fill = new SolidColorBrush(imageColor);
-                        path.Stroke = new SolidColorBrush( MediaUtility.GetAutoColor(imageColor));
-                        path.StrokeThickness = 1;
                         FreezableUtility.SafeFreeze(geometry);
+                        path.Data = geometry;
+                        path.Fill = FreezableUtility.GetSafeFreeze(new SolidColorBrush(imageColor));
+                        path.Stroke = FreezableUtility.GetSafeFreeze(new SolidColorBrush(MediaUtility.GetAutoColor(imageColor)));
+                        path.StrokeThickness = 1;
                     }
                     canvas.Children.Add(path);
                 }
@@ -86,6 +82,15 @@ namespace ContentTypeTextNet.Pe.Main.Model.Designer
             }
 
             return viewBox;
+        }
+
+        #endregion
+
+        #region ILauncherGroupTheme
+
+        public DependencyObject CreateGroupImage(LauncherGroupImageName imageName, Color imageColor, IconScale iconScale)
+        {
+            return DispatcherWapper.Get(() => CreateGroupImageCore(imageName, imageColor, iconScale));
         }
 
         #endregion

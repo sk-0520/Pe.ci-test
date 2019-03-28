@@ -6,7 +6,19 @@
 
 >
   <ContextMenu x:Key="ContextMenu">
-    <MenuItem Header="toolbar" ItemsSource="{Binding LauncherToolbarItems}"></MenuItem>
+    <MenuItem Header="toolbar" ItemsSource="{Binding LauncherToolbarItems}">
+      <MenuItem.ItemContainerStyle>
+        <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+          <Style.Triggers>
+            <DataTrigger Binding="{Binding IsVisible}" Value="True">
+              <Setter Property="FontWeight" Value="Bold" />
+              <Setter Property="Effect" Value="{StaticResource Effect-Strong}" />
+            </DataTrigger>
+          </Style.Triggers>
+          <Setter Property="Icon" Value="{Binding ToolbarIcon}" />
+        </Style>
+      </MenuItem.ItemContainerStyle>
+    </MenuItem>
     <MenuItem Header="exit" Command="{Binding ExitCommand}" />
   </ContextMenu>
 

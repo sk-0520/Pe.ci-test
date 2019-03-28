@@ -135,7 +135,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
             var screens = Screen.AllScreens;
             var result = new List<LauncherToolbarElement>(screens.Length);
 
-            foreach(var screen in screens) {
+            foreach(var screen in screens.OrderByDescending(i => i.Primary)) {
                 var element = CreateLauncherToolbarElement(screen, launcherGroups);
                 result.Add(element);
             }
