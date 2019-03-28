@@ -58,6 +58,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar
             PropertyChangedHooker.AddHook(nameof(IAppDesktopToolbarExtendData.IsAutoHide), nameof(IsAutoHide));
             PropertyChangedHooker.AddHook(nameof(LauncherToolbarElement.IsOpendAppMenu), nameof(IsOpendAppMenu));
             PropertyChangedHooker.AddHook(nameof(LauncherToolbarElement.IsTopmost), nameof(IsTopmost));
+            PropertyChangedHooker.AddHook(nameof(LauncherToolbarElement.SelectedLauncherGroup), nameof(SelectedLauncherGroup));
         }
 
         #region property
@@ -108,6 +109,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar
 
         public bool IsVerticalLayout => ToolbarPosition == AppDesktopToolbarPosition.Left || ToolbarPosition == AppDesktopToolbarPosition.Right;
 
+        public LauncherGroupViewModel SelectedLauncherGroup
+        {
+            get => LauncherGroupCollection.GetViewModel(Model.SelectedLauncherGroup);
+        }
+
         #endregion
 
         #region command
@@ -139,6 +145,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar
                  CloseRequest.Raise(notification);
              }
          ));
+
+        public ICommand  ChangeLauncherGroupCommand => GetOrCreateCommand(() => new DelegateCommand<LauncherGroupViewModel>(
+            o => {
+                var groupModel = LauncherGroupCollection.GetModel(o);
+                Model.ChangeLauncherGroup(groupModel);
+            }
+        ));
+
 
         #endregion
 

@@ -83,6 +83,9 @@
     <Style x:Key="GroupMenuItem" TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
       <Setter Property="Header" Value="{Binding Name}" />
       <Setter Property="Icon" Value="{Binding GroupIcon}" />
+      <!-- ElementName指定だと System.Windows.Data Error: 4 でコマンド動かないので x:Reference を使用 -->
+      <Setter Property="Command" Value="{Binding DataContext.ChangeLauncherGroupCommand, Source={x:Reference root}}" />
+      <Setter Property="CommandParameter" Value="{Binding}" />
     </Style>
 
     <ContextMenu x:Key="ItemContextMenu">

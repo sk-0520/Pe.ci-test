@@ -182,6 +182,15 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
             return toolbarId;
         }
 
+        public void ChangeLauncherGroup(LauncherGroupElement launcherGroup)
+        {
+            SelectedLauncherGroup = launcherGroup;
+            if(IsOpendAppMenu) {
+                IsOpendAppMenu = false;
+            }
+            LoadLauncherItems();
+        }
+
         void UpdateDesign()
         {
             ButtonPadding = LauncherToolbarTheme.GetButtonPadding(ToolbarPosition, IconScale);
