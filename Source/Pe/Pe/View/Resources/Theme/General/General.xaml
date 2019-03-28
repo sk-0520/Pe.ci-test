@@ -49,6 +49,31 @@
     <Setter Property="VerticalContentAlignment" Value="Stretch"/>
   </Style>
 
+  <Style x:Key="MenuHeaderItem" TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="MenuItem">
+          <Border Padding="2,4">
+            <StackPanel
+              Orientation="Horizontal"
+              Background="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}"
+              TextElement.Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}"
+              TextElement.FontWeight="Bold"
+              TextElement.FontSize="9"
+              Margin="0"
+            >
+              <ContentControl Content="{TemplateBinding Icon}" />
+              <Label Content="{TemplateBinding Header}" Foreground="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}"/>
+            </StackPanel>
+          </Border>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+    <Setter Property="IsEnabled" Value="False" />
+    <Setter Property="IsHitTestVisible" Value="False" />
+    <!--<Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}" />-->
+  </Style>
+
   <Style x:Key="PopupMenuBorder" TargetType="Border">
     <Setter Property="BorderThickness" Value="1" />
     <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" />

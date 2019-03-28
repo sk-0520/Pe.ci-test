@@ -112,16 +112,20 @@
       </ContextMenu.Resources>
       <ContextMenu.ItemsSource>
         <CompositeCollection>
+          <MenuItem Style="{StaticResource MenuHeaderItem}" Header="execute" />
           <MenuItem Style="{StaticResource LauncherMenuItem}" Header="exec" />
           <MenuItem Style="{StaticResource LauncherMenuItem}" Header="ex exec" />
-          <Separator />
+
+          <MenuItem Style="{StaticResource MenuHeaderItem}" Header="open" />
           <MenuItem Style="{StaticResource LauncherMenuItem}" Header="open dir" />
           <MenuItem Style="{StaticResource LauncherMenuItem}" Header="open work" />
-          <Separator />
+
+          <MenuItem Style="{StaticResource MenuHeaderItem}" Header="copy" />
           <MenuItem Style="{StaticResource LauncherMenuItem}" Header="copy command" />
           <MenuItem Style="{StaticResource LauncherMenuItem}" Header="copy dir" />
           <MenuItem Style="{StaticResource LauncherMenuItem}" Header="copy work" />
-          <Separator />
+
+          <MenuItem Style="{StaticResource MenuHeaderItem}" Header="group" />
           <CollectionContainer Collection="{Binding Source={StaticResource LauncherGroupItems}}" />
         </CompositeCollection>
       </ContextMenu.ItemsSource>
@@ -254,7 +258,7 @@
         <Popup x:Name="appPopup" Style="{StaticResource DropMenu}" IsOpen="{Binding IsChecked, ElementName=appButton}">
           <Border>
             <StackPanel>
-              <TextBlock>position</TextBlock>
+              <MenuItem Style="{StaticResource MenuHeaderItem}" Header="position" />
               <Grid>
                 <Grid.ColumnDefinitions>
                   <ColumnDefinition />
@@ -283,7 +287,7 @@
 
               <MenuItem Header="close" Command="{Binding CloseCommand}" />
 
-              <Separator />
+              <MenuItem Style="{StaticResource MenuHeaderItem}" Header="group" />
 
               <ItemsControl ItemsSource="{Binding LauncherGroupItems}">
                 <ItemsControl.ItemTemplate>
