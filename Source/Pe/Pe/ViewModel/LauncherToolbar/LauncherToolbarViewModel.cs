@@ -34,10 +34,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar
 
         #endregion
 
-        public LauncherToolbarViewModel(LauncherToolbarElement model, IDispatcherWapper dispatcherWapper, ILauncherGroupTheme launcherGroupTheme, ILoggerFactory loggerFactory)
+        public LauncherToolbarViewModel(LauncherToolbarElement model, ILauncherToolbarTheme launcherToolbarTheme, IDispatcherWapper dispatcherWapper, ILauncherGroupTheme launcherGroupTheme, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         {
             DispatcherWapper = dispatcherWapper;
+            LauncherToolbarTheme = launcherToolbarTheme;
             LauncherGroupTheme = launcherGroupTheme;
 
             LauncherGroupCollection = new ActionModelViewModelObservableCollectionManager<LauncherGroupElement, LauncherGroupViewModel>(Model.LauncherGroups, Logger.Factory) {
@@ -65,6 +66,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar
 
         public AppDesktopToolbarExtend AppDesktopToolbarExtend { get; set; }
         IDispatcherWapper DispatcherWapper { get; }
+        ILauncherToolbarTheme LauncherToolbarTheme { get; }
         ILauncherGroupTheme LauncherGroupTheme { get; }
         PropertyChangedHooker PropertyChangedHooker { get; }
 
@@ -114,6 +116,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar
             get => LauncherGroupCollection.GetViewModel(Model.SelectedLauncherGroup);
         }
 
+        public DependencyObject ToolbarPositionLeftIcon => CreateToolbarPositionIcon(AppDesktopToolbarPosition.Left);
+        public DependencyObject ToolbarPositionTopIcon => CreateToolbarPositionIcon(AppDesktopToolbarPosition.Top);
+        public DependencyObject ToolbarPositionRightIcon => CreateToolbarPositionIcon(AppDesktopToolbarPosition.Right);
+        public DependencyObject ToolbarPositionBottomIcon => CreateToolbarPositionIcon(AppDesktopToolbarPosition.Bottom);
+
         #endregion
 
         #region command
@@ -157,6 +164,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar
         #endregion
 
         #region function
+
+        DependencyObject CreateToolbarPositionIcon(AppDesktopToolbarPosition toolbarPosition)
+        {
+            return LauncherToolbarTheme.CreateToolbarPositionImage(toolbarPosition, IconScale.Small);
+        }
+
         #endregion
 
         #region IAppDesktopToolbarExtendData

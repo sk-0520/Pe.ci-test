@@ -28,6 +28,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Designer
         Size GetHiddenSize([PixelKind(Px.Logical)] Thickness buttonPadding, [PixelKind(Px.Logical)] Thickness iconMargin, IconScale iconScale, bool isIconOnly, [PixelKind(Px.Logical)] double textWidth);
 
         DependencyObject CreateToolbarImage(Screen currentScreen, IReadOnlyList<Screen> allScreens, IconScale iconScale);
+        DependencyObject CreateToolbarPositionImage(AppDesktopToolbarPosition toolbarPosition, IconScale iconScale);
 
         #endregion
     }
@@ -95,6 +96,63 @@ namespace ContentTypeTextNet.Pe.Main.Model.Designer
             return canvas;
         }
 
+        DependencyObject CreateToolbarPositionImageCore(AppDesktopToolbarPosition toolbarPosition, IconScale iconScale)
+        {
+            var drawSize = iconScale.ToSize();
+            var strongSize = new Size(0.2f, 0.3f);
+            //using(var targetGraphics = CreateGraphics()) {
+            //	var image = new Bitmap(imageSize.Width, imageSize.Height, targetGraphics);
+            var drawArea = new Rect();
+            switch(toolbarPosition) {
+
+                case AppDesktopToolbarPosition.Left:
+                    drawArea.Width = (int)(drawSize.Width * strongSize.Width);
+                    drawArea.Height = drawSize.Height;
+                    drawArea.X = 0;
+                    drawArea.Y = drawSize.Height / 2 - drawArea.Height / 2;
+                    break;
+
+                case AppDesktopToolbarPosition.Right:
+                    drawArea.Width = (int)(drawSize.Width * strongSize.Width);
+                    drawArea.Height = drawSize.Height;
+                    drawArea.X = drawSize.Width - drawArea.Width;
+                    drawArea.Y = drawSize.Height / 2 - drawArea.Height / 2;
+                    break;
+
+                case AppDesktopToolbarPosition.Top:
+                    drawArea.Width = drawSize.Width;
+                    drawArea.Height = (int)(drawSize.Height * strongSize.Height);
+                    drawArea.X = drawSize.Width / 2 - drawArea.Width / 2;
+                    drawArea.Y = 0;
+                    break;
+
+                case AppDesktopToolbarPosition.Bottom:
+                    drawArea.Width = drawSize.Width;
+                    drawArea.Height = (int)(drawSize.Height * strongSize.Height);
+                    drawArea.X = drawSize.Width / 2 - drawArea.Width / 2;
+                    drawArea.Y = drawSize.Height - drawArea.Height;
+                    break;
+
+                default:
+                    throw new NotImplementedException();
+            }
+
+
+            var screenElement = CreateBox(GetMenuImageColor(false, false), GetMenuImageColor(true, false), drawSize);
+            var toolbarElement = CreateBox(GetMenuImageColor(false, true), GetMenuImageColor(true, true), drawArea.Size);
+
+            var canvas = new Canvas() {
+                Width = drawSize.Width,
+                Height = drawSize.Height,
+            };
+            canvas.Children.Add(screenElement);
+            canvas.Children.Add(toolbarElement);
+            Canvas.SetLeft(toolbarElement, drawArea.Location.X);
+            Canvas.SetTop(toolbarElement, drawArea.Location.Y);
+
+            return canvas;
+        }
+
         #endregion
 
         #region ILauncherToolbarDesigner
@@ -130,6 +188,12 @@ namespace ContentTypeTextNet.Pe.Main.Model.Designer
         {
             return DispatcherWapper.Get(() => CreateToolbarImageCore(currentScreen, allScreens, iconScale));
         }
+
+        public DependencyObject CreateToolbarPositionImage(AppDesktopToolbarPosition toolbarPosition, IconScale iconScale)
+        {
+            return DispatcherWapper.Get(() => CreateToolbarPositionImageCore(toolbarPosition, iconScale));
+        }
+
 
         #endregion
     }

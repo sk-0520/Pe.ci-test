@@ -36,7 +36,7 @@
     <cttn_lib_shared_lib_view_converter:IconScaleToWidthConverter x:Key="IconScaleToWidthConverter" />
     <cttn_lib_shared_lib_view_converter:IconScaleToHeightConverter x:Key="IconScaleToHeightConverter" />
     <cttn_lib_shared_lib_view_converter:LogicalMultiEqualConverter x:Key="LogicalMultiEqualConverter" />
-    
+
 
     <Style x:Key="DropMenu" TargetType="Popup" BasedOn="{StaticResource PopupMenu}">
       <Style.Triggers>
@@ -267,10 +267,10 @@
                   <RowDefinition />
                 </Grid.RowDefinitions>
 
-                <Button Grid.Row="1" Grid.Column="0" Command="{Binding ChangeToolbarPositionCommand}" CommandParameter="{x:Static app_main_view_ex:AppDesktopToolbarPosition.Left}">left</Button>
-                <Button Grid.Row="0" Grid.Column="1" Command="{Binding ChangeToolbarPositionCommand}" CommandParameter="{x:Static app_main_view_ex:AppDesktopToolbarPosition.Top}">top</Button>
-                <Button Grid.Row="1" Grid.Column="2" Command="{Binding ChangeToolbarPositionCommand}" CommandParameter="{x:Static app_main_view_ex:AppDesktopToolbarPosition.Right}">right</Button>
-                <Button Grid.Row="2" Grid.Column="1" Command="{Binding ChangeToolbarPositionCommand}" CommandParameter="{x:Static app_main_view_ex:AppDesktopToolbarPosition.Bottom}">bottom</Button>
+                <Button Grid.Row="1" Grid.Column="0" Command="{Binding ChangeToolbarPositionCommand}" CommandParameter="{x:Static app_main_view_ex:AppDesktopToolbarPosition.Left}" Content="{Binding ToolbarPositionLeftIcon}"></Button>
+                <Button Grid.Row="0" Grid.Column="1" Command="{Binding ChangeToolbarPositionCommand}" CommandParameter="{x:Static app_main_view_ex:AppDesktopToolbarPosition.Top}" Content="{Binding ToolbarPositionTopIcon}"></Button>
+                <Button Grid.Row="1" Grid.Column="2" Command="{Binding ChangeToolbarPositionCommand}" CommandParameter="{x:Static app_main_view_ex:AppDesktopToolbarPosition.Right}" Content="{Binding ToolbarPositionRightIcon}"></Button>
+                <Button Grid.Row="2" Grid.Column="1" Command="{Binding ChangeToolbarPositionCommand}" CommandParameter="{x:Static app_main_view_ex:AppDesktopToolbarPosition.Bottom}" Content="{Binding ToolbarPositionBottomIcon}"></Button>
 
               </Grid>
 
