@@ -30,6 +30,12 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.ViewModel
         where TModel : BindModelBase
         where TViewModel : ViewModelBase
     {
+        #region variable
+
+        ReadOnlyObservableCollection<TViewModel> _readOnlyViewModels;
+
+        #endregion
+
         public ModelViewModelObservableCollectionManagerBase(ReadOnlyObservableCollection<TModel> collection, ILogger logger)
             : base(collection, logger)
         {
@@ -55,6 +61,10 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.ViewModel
         #region property
 
         public ObservableCollection<TViewModel> ViewModels { get; private set; }
+        public ReadOnlyObservableCollection<TViewModel> ReadOnlyViewModels
+        {
+            get => this._readOnlyViewModels ?? (this._readOnlyViewModels = new ReadOnlyObservableCollection<TViewModel>(ViewModels));
+        }
 
         #endregion
 

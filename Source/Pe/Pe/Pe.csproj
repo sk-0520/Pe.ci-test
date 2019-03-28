@@ -218,6 +218,7 @@
     <Compile Include="ViewModel\LauncherItem\LauncherFileItemViewModel.cs" />
     <Compile Include="ViewModel\LauncherItem\LauncherItemViewModelBase.cs" />
     <Compile Include="ViewModel\LauncherItem\LauncherSeparatorItemViewModel.cs" />
+    <Compile Include="ViewModel\LauncherToolbar\LauncherToolbarNotifyAreaViewModel.cs" />
     <Compile Include="ViewModel\Manager\ManagerViewModel.cs" />
     <Compile Include="ViewModel\RunningStatusViewModel.cs" />
     <Compile Include="ViewModel\Startup\ImportProgramsViewModel.cs" />
@@ -319,7 +320,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Resources\ManagerResource.xaml">
+    <Page Include="View\ManagerResource.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

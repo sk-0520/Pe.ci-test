@@ -6,9 +6,10 @@
 
 >
   <ContextMenu x:Key="ContextMenu">
+    <MenuItem Header="toolbar" ItemsSource="{Binding LauncherToolbarItems}"></MenuItem>
     <MenuItem Header="exit" Command="{Binding ExitCommand}" />
   </ContextMenu>
-  
+
   <Taskbar:TaskbarIcon
     x:Key="root"
     Tag="{Binding DataContext,RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}"

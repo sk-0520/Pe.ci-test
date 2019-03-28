@@ -1,13 +1,16 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Library.Shared.Library.ViewModel;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
+using ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar;
 using ContentTypeTextNet.Pe.Main.Model.Logic;
 using ContentTypeTextNet.Pe.Main.Model.Manager;
+using ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar;
 using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModel.Manager
@@ -18,11 +21,17 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Manager
             : base(loggerFactory)
         {
             ApplicationManager = applicationManager;
+
+            LauncherToolbarCollection = ApplicationManager.GetLauncherNotifyCollection();
+            LauncherToolbarItems = LauncherToolbarCollection.ReadOnlyViewModels;
         }
 
         #region property
 
         ApplicationManager ApplicationManager { get; }
+
+        ActionModelViewModelObservableCollectionManager<LauncherToolbarElement, LauncherToolbarNotifyAreaViewModel> LauncherToolbarCollection { get; }
+        public ReadOnlyObservableCollection<LauncherToolbarNotifyAreaViewModel> LauncherToolbarItems { get; }
 
         #endregion
 

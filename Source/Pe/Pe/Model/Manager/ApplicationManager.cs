@@ -12,6 +12,7 @@ using ContentTypeTextNet.Pe.Library.Shared.Embedded.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database;
+using ContentTypeTextNet.Pe.Library.Shared.Library.ViewModel;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Applications;
 using ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity;
@@ -21,6 +22,7 @@ using ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem;
 using ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar;
 using ContentTypeTextNet.Pe.Main.Model.Launcher;
 using ContentTypeTextNet.Pe.Main.View.LauncherToolbar;
+using ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar;
 using ContentTypeTextNet.Pe.Main.ViewModel.Manager;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Manager
@@ -139,6 +141,13 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
             }
 
             return result;
+        }
+
+        public ActionModelViewModelObservableCollectionManager<LauncherToolbarElement, LauncherToolbarNotifyAreaViewModel> GetLauncherNotifyCollection() {
+            var collection = new ActionModelViewModelObservableCollectionManager<LauncherToolbarElement, LauncherToolbarNotifyAreaViewModel>(LauncherToolbars, Logger.Factory) {
+                ToViewModel = m => ApplicationDiContainer.Make<LauncherToolbarNotifyAreaViewModel>(new[] { m })
+            };
+            return collection;
         }
 
         public void Execute()
