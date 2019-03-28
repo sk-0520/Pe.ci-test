@@ -112,6 +112,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Startup
                 var launcherItemsDao = new LauncherItemsEntityDao(transaction, StatementLoader, transaction.Implementation, Logger.Factory);
                 var launcherTagsDao = new LauncherTagsEntityDao(transaction, StatementLoader, transaction.Implementation, Logger.Factory);
                 var launcherFilesDao = new LauncherFilesEntityDao(transaction, StatementLoader, transaction.Implementation, Logger.Factory);
+
+                //TODO: db 今現在グループが一つでランチャーアイテムが登録されていなければ消してしまって
+
                 foreach(var importItem in importItems) {
                     // db ランチャーアイテム突っ込んで
                     var codes = launcherItemsDao.SelectFuzzyCodes(importItem.Data.Code);
