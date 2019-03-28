@@ -287,7 +287,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
 
         public void ChangeVisible(bool isVisible)
         {
-            IsVisible = false;
+            IsVisible = isVisible;
             IsOpendAppMenu = false;
 
             MainDatabaseLazyWriter.Stock(c => {

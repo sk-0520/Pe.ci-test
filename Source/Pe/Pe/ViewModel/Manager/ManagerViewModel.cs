@@ -37,6 +37,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Manager
 
         #region command
 
+
+
         public ICommand ExitCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
                 ApplicationManager.Exit();

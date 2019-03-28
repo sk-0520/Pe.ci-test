@@ -17,6 +17,8 @@
           </Style.Triggers>
           <Setter Property="Icon" Value="{Binding ToolbarIcon}" />
           <Setter Property="Header" Value="{Binding DisplayName}" />
+          <Setter Property="Command" Value="{Binding SwitchToolbarCommand}" />
+          <Setter Property="CommandParameter" Value="{Binding}" />
         </Style>
       </MenuItem.ItemContainerStyle>
     </MenuItem>
