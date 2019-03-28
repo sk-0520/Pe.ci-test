@@ -53,10 +53,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar
 
             PropertyChangedHooker = new PropertyChangedHooker(DispatcherWapper, Logger.Factory);
             PropertyChangedHooker.AddProperties<IReadOnlyAppDesktopToolbarExtendData>();
-            PropertyChangedHooker.AddHook(nameof(LauncherToolbarElement.ToolbarPosition), ChangeToolbarPositionCommand);
+            PropertyChangedHooker.AddHook(nameof(IAppDesktopToolbarExtendData.ToolbarPosition), nameof(IsVerticalLayout));
+            PropertyChangedHooker.AddHook(nameof(IAppDesktopToolbarExtendData.ToolbarPosition), ChangeToolbarPositionCommand);
+            PropertyChangedHooker.AddHook(nameof(IAppDesktopToolbarExtendData.IsAutoHide), nameof(IsAutoHide));
             PropertyChangedHooker.AddHook(nameof(LauncherToolbarElement.IsOpendAppMenu), nameof(IsOpendAppMenu));
             PropertyChangedHooker.AddHook(nameof(LauncherToolbarElement.IsTopmost), nameof(IsTopmost));
-            PropertyChangedHooker.AddHook(nameof(LauncherToolbarElement.IsAutoHide), nameof(IsAutoHide));
         }
 
         #region property
@@ -104,6 +105,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar
         public ICollectionView LauncherItems { get; }
 
         public InteractionRequest<Notification> CloseRequest { get; } = new InteractionRequest<Notification>();
+
+        public bool IsVerticalLayout => ToolbarPosition == AppDesktopToolbarPosition.Left || ToolbarPosition == AppDesktopToolbarPosition.Right;
 
         #endregion
 

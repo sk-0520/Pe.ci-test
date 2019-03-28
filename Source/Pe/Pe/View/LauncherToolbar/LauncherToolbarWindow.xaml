@@ -163,10 +163,10 @@
         <Style TargetType="ToggleButton">
           <Style.Triggers>
 
-            <!--#region Left -->
+            <!--#region Left Right -->
             <MultiDataTrigger>
               <MultiDataTrigger.Conditions>
-                <Condition Binding="{Binding DataContext.ToolbarPosition, ElementName=root}" Value="Left" />
+                <Condition Binding="{Binding DataContext.IsVerticalLayout, ElementName=root}" Value="True" />
                 <Condition Binding="{Binding DataContext.IconDirection, ElementName=root}" Value="LeftTop" />
               </MultiDataTrigger.Conditions>
               <Setter Property="Grid.Row" Value="0" />
@@ -174,16 +174,16 @@
             </MultiDataTrigger>
             <MultiDataTrigger>
               <MultiDataTrigger.Conditions>
-                <Condition Binding="{Binding DataContext.ToolbarPosition, ElementName=root}" Value="Left" />
+                <Condition Binding="{Binding DataContext.IsVerticalLayout, ElementName=root}" Value="True" />
                 <Condition Binding="{Binding DataContext.IconDirection, ElementName=root}" Value="Center" />
               </MultiDataTrigger.Conditions>
               <Setter Property="Grid.Row" Value="0" />
               <Setter Property="Grid.Column" Value="2" />
-              <Setter Property="VerticalAlignment" Value="Bottom" />
+              <!--<Setter Property="VerticalAlignment" Value="Bottom" />-->
             </MultiDataTrigger>
             <MultiDataTrigger>
               <MultiDataTrigger.Conditions>
-                <Condition Binding="{Binding DataContext.ToolbarPosition, ElementName=root}" Value="Left" />
+                <Condition Binding="{Binding DataContext.IsVerticalLayout, ElementName=root}" Value="True" />
                 <Condition Binding="{Binding DataContext.IconDirection, ElementName=root}" Value="RightBottom" />
               </MultiDataTrigger.Conditions>
               <Setter Property="Grid.Row" Value="4" />
@@ -191,33 +191,33 @@
             </MultiDataTrigger>
             <!--#endregion-->
 
-            <!--#region Right -->
+            <!--#region Top Bottom -->
             <MultiDataTrigger>
               <MultiDataTrigger.Conditions>
-                <Condition Binding="{Binding DataContext.ToolbarPosition, ElementName=root}" Value="Right" />
+                <Condition Binding="{Binding DataContext.IsVerticalLayout, ElementName=root}" Value="False" />
                 <Condition Binding="{Binding DataContext.IconDirection, ElementName=root}" Value="LeftTop" />
               </MultiDataTrigger.Conditions>
-              <Setter Property="Grid.Row" Value="0" />
-              <Setter Property="Grid.Column" Value="2" />
+              <Setter Property="Grid.Row" Value="2" />
+              <Setter Property="Grid.Column" Value="0" />
             </MultiDataTrigger>
             <MultiDataTrigger>
               <MultiDataTrigger.Conditions>
-                <Condition Binding="{Binding DataContext.ToolbarPosition, ElementName=root}" Value="Right" />
+                <Condition Binding="{Binding DataContext.IsVerticalLayout, ElementName=root}" Value="False" />
                 <Condition Binding="{Binding DataContext.IconDirection, ElementName=root}" Value="Center" />
               </MultiDataTrigger.Conditions>
-              <Setter Property="Grid.Row" Value="0" />
-              <Setter Property="Grid.Column" Value="2" />
-              <Setter Property="VerticalAlignment" Value="Bottom" />
+              <Setter Property="Grid.Row" Value="2" />
+              <Setter Property="Grid.Column" Value="0" />
             </MultiDataTrigger>
             <MultiDataTrigger>
               <MultiDataTrigger.Conditions>
-                <Condition Binding="{Binding DataContext.ToolbarPosition, ElementName=root}" Value="Right" />
+                <Condition Binding="{Binding DataContext.IsVerticalLayout, ElementName=root}" Value="False" />
                 <Condition Binding="{Binding DataContext.IconDirection, ElementName=root}" Value="RightBottom" />
               </MultiDataTrigger.Conditions>
-              <Setter Property="Grid.Row" Value="4" />
-              <Setter Property="Grid.Column" Value="2" />
+              <Setter Property="Grid.Row" Value="2" />
+              <Setter Property="Grid.Column" Value="4" />
             </MultiDataTrigger>
             <!--#endregion-->
+
           </Style.Triggers>
         </Style>
       </ToggleButton.Style>
@@ -295,55 +295,55 @@
       <ItemsControl ItemsSource="{Binding LauncherItems}">
         <ItemsControl.ItemsPanel>
           <ItemsPanelTemplate>
-            <DockPanel>
+            <DockPanel LastChildFill="False">
               <DockPanel.Style>
                 <Style TargetType="DockPanel">
                   <Style.Triggers>
-                    <!--#region Left -->
+                    <!--#region Left Right -->
                     <MultiDataTrigger>
                       <MultiDataTrigger.Conditions>
-                        <Condition Binding="{Binding DataContext.ToolbarPosition, ElementName=root}" Value="Left" />
+                        <Condition Binding="{Binding DataContext.IsVerticalLayout, ElementName=root}" Value="True" />
                         <Condition Binding="{Binding DataContext.IconDirection, ElementName=root}" Value="LeftTop" />
                       </MultiDataTrigger.Conditions>
                       <Setter Property="VerticalAlignment" Value="Top" />
                     </MultiDataTrigger>
                     <MultiDataTrigger>
                       <MultiDataTrigger.Conditions>
-                        <Condition Binding="{Binding DataContext.ToolbarPosition, ElementName=root}" Value="Left" />
+                        <Condition Binding="{Binding DataContext.IsVerticalLayout, ElementName=root}" Value="True" />
                         <Condition Binding="{Binding DataContext.IconDirection, ElementName=root}" Value="Center" />
                       </MultiDataTrigger.Conditions>
                       <Setter Property="VerticalAlignment" Value="Center" />
                     </MultiDataTrigger>
                     <MultiDataTrigger>
                       <MultiDataTrigger.Conditions>
-                        <Condition Binding="{Binding DataContext.ToolbarPosition, ElementName=root}" Value="Left" />
+                        <Condition Binding="{Binding DataContext.IsVerticalLayout, ElementName=root}" Value="True" />
                         <Condition Binding="{Binding DataContext.IconDirection, ElementName=root}" Value="RightBottom" />
                       </MultiDataTrigger.Conditions>
                       <Setter Property="VerticalAlignment" Value="Bottom" />
                     </MultiDataTrigger>
                     <!--#endregion-->
 
-                    <!--#region Right -->
+                    <!--#region Top Bottom -->
                     <MultiDataTrigger>
                       <MultiDataTrigger.Conditions>
-                        <Condition Binding="{Binding DataContext.ToolbarPosition, ElementName=root}" Value="Right" />
+                        <Condition Binding="{Binding DataContext.IsVerticalLayout, ElementName=root}" Value="False" />
                         <Condition Binding="{Binding DataContext.IconDirection, ElementName=root}" Value="LeftTop" />
                       </MultiDataTrigger.Conditions>
-                      <Setter Property="VerticalAlignment" Value="Top" />
+                      <Setter Property="HorizontalAlignment" Value="Left" />
                     </MultiDataTrigger>
                     <MultiDataTrigger>
                       <MultiDataTrigger.Conditions>
-                        <Condition Binding="{Binding DataContext.ToolbarPosition, ElementName=root}" Value="Right" />
+                        <Condition Binding="{Binding DataContext.IsVerticalLayout, ElementName=root}" Value="False" />
                         <Condition Binding="{Binding DataContext.IconDirection, ElementName=root}" Value="Center" />
                       </MultiDataTrigger.Conditions>
-                      <Setter Property="VerticalAlignment" Value="Center" />
+                      <Setter Property="HorizontalAlignment" Value="Center" />
                     </MultiDataTrigger>
                     <MultiDataTrigger>
                       <MultiDataTrigger.Conditions>
-                        <Condition Binding="{Binding DataContext.ToolbarPosition, ElementName=root}" Value="Right" />
+                        <Condition Binding="{Binding DataContext.IsVerticalLayout, ElementName=root}" Value="False" />
                         <Condition Binding="{Binding DataContext.IconDirection, ElementName=root}" Value="RightBottom" />
                       </MultiDataTrigger.Conditions>
-                      <Setter Property="VerticalAlignment" Value="Bottom" />
+                      <Setter Property="HorizontalAlignment" Value="Right" />
                     </MultiDataTrigger>
                     <!--#endregion-->
                   </Style.Triggers>
@@ -355,53 +355,54 @@
         <ItemsControl.ItemContainerStyle>
           <Style TargetType="ContentPresenter">
             <Style.Triggers>
-              <!--#region Left -->
+              <!--#region Left Right -->
               <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
-                  <Condition Binding="{Binding DataContext.ToolbarPosition, ElementName=root}" Value="Left" />
+                  <Condition Binding="{Binding DataContext.IsVerticalLayout, ElementName=root}" Value="True" />
                   <Condition Binding="{Binding DataContext.IconDirection, ElementName=root}" Value="LeftTop" />
                 </MultiDataTrigger.Conditions>
                 <Setter Property="DockPanel.Dock" Value="Top" />
               </MultiDataTrigger>
               <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
-                  <Condition Binding="{Binding DataContext.ToolbarPosition, ElementName=root}" Value="Left" />
+                  <Condition Binding="{Binding DataContext.IsVerticalLayout, ElementName=root}" Value="True" />
                   <Condition Binding="{Binding DataContext.IconDirection, ElementName=root}" Value="Center" />
                 </MultiDataTrigger.Conditions>
                 <Setter Property="DockPanel.Dock" Value="Top" />
               </MultiDataTrigger>
               <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
-                  <Condition Binding="{Binding DataContext.ToolbarPosition, ElementName=root}" Value="Left" />
+                  <Condition Binding="{Binding DataContext.IsVerticalLayout, ElementName=root}" Value="True" />
                   <Condition Binding="{Binding DataContext.IconDirection, ElementName=root}" Value="RightBottom" />
                 </MultiDataTrigger.Conditions>
                 <Setter Property="DockPanel.Dock" Value="Bottom" />
               </MultiDataTrigger>
               <!--#endregion-->
 
-              <!--#region Right -->
+              <!--#region Top Bottom -->
               <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
-                  <Condition Binding="{Binding DataContext.ToolbarPosition, ElementName=root}" Value="Right" />
+                  <Condition Binding="{Binding DataContext.IsVerticalLayout, ElementName=root}" Value="False" />
                   <Condition Binding="{Binding DataContext.IconDirection, ElementName=root}" Value="LeftTop" />
                 </MultiDataTrigger.Conditions>
-                <Setter Property="DockPanel.Dock" Value="Top" />
+                <Setter Property="DockPanel.Dock" Value="Left" />
               </MultiDataTrigger>
               <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
-                  <Condition Binding="{Binding DataContext.ToolbarPosition, ElementName=root}" Value="Right" />
+                  <Condition Binding="{Binding DataContext.IsVerticalLayout, ElementName=root}" Value="False" />
                   <Condition Binding="{Binding DataContext.IconDirection, ElementName=root}" Value="Center" />
                 </MultiDataTrigger.Conditions>
-                <Setter Property="DockPanel.Dock" Value="Top" />
+                <Setter Property="DockPanel.Dock" Value="Left" />
               </MultiDataTrigger>
               <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
-                  <Condition Binding="{Binding DataContext.ToolbarPosition, ElementName=root}" Value="Right" />
+                  <Condition Binding="{Binding DataContext.IsVerticalLayout, ElementName=root}" Value="False" />
                   <Condition Binding="{Binding DataContext.IconDirection, ElementName=root}" Value="RightBottom" />
                 </MultiDataTrigger.Conditions>
-                <Setter Property="DockPanel.Dock" Value="Bottom" />
+                <Setter Property="DockPanel.Dock" Value="Right" />
               </MultiDataTrigger>
               <!--#endregion-->
+
             </Style.Triggers>
           </Style>
         </ItemsControl.ItemContainerStyle>
