@@ -150,7 +150,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 
         protected virtual string GetIndent(int nest)
         {
-            return new string('-', nest) + ">";
+            return new string('-', nest) + "> ";
         }
         protected virtual string GetMemberValue(ObjectDumpItem dumpItem)
         {
@@ -164,10 +164,8 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
                 writer.Write(GetIndent(nest));
                 writer.WriteLine(GetMemberValue(dumpItem));
 
-                if(dumpItem.Children.Count != 0) {
-                    foreach(var childItem in dumpItem.Children) {
-                        Write(childItem, nest + 1);
-                    }
+                foreach(var childItem in dumpItem.Children) {
+                    Write(childItem, nest + 1);
                 }
             }
 
