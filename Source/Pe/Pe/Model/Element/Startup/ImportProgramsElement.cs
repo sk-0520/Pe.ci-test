@@ -98,6 +98,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Startup
             var importItems = ProgramItems
                 .Where(i => i.IsImport)
                 .Select(i => launcherFactory.FromFile(i.FileInfo, true))
+                .Where(i => !string.IsNullOrWhiteSpace(i.Command.Command)) // 共有ドライブとかね
                 .Select(i => new {
                     Data = i,
                     Tags = launcherFactory.GetTags(new FileInfo(i.Command.Command)).ToList(),
