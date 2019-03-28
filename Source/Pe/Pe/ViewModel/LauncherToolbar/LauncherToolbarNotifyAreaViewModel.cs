@@ -10,6 +10,7 @@ using ContentTypeTextNet.Pe.Library.Shared.Library.ViewModel;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Designer;
 using ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar;
+using ContentTypeTextNet.Pe.Main.Model.Logic;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar
 {
@@ -30,7 +31,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar
         PropertyChangedHooker PropertyChangedHooker { get; }
 
         public DependencyObject ToolbarIcon => LauncherToolbarTheme.CreateToolbarImage(Model.DockScreen, Screen.AllScreens, IconScale.Small);
-
+        public string DisplayName
+        {
+            get
+            {
+                var screenOperator = new ScreenOperator(Logger.Factory);
+                return screenOperator.GetName(Model.DockScreen);
+            }
+        }
         public bool IsVisible => Model.IsVisible;
 
         #endregion

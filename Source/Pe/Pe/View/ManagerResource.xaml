@@ -16,6 +16,7 @@
             </DataTrigger>
           </Style.Triggers>
           <Setter Property="Icon" Value="{Binding ToolbarIcon}" />
+          <Setter Property="Header" Value="{Binding DisplayName}" />
         </Style>
       </MenuItem.ItemContainerStyle>
     </MenuItem>
