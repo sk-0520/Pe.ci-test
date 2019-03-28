@@ -37,7 +37,7 @@
     </Viewbox>
   </ControlTemplate>
 
-  <DropShadowEffect x:Key="CheckEffect"
+  <DropShadowEffect x:Key="Effect-Strong"
     Color="{DynamicResource {x:Static SystemColors.MenuHighlightColorKey}}"
     ShadowDepth="0"
     BlurRadius="8"
