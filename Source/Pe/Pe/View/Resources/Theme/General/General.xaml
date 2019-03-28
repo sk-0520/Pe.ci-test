@@ -27,15 +27,21 @@
   <ControlTemplate x:Key="NormalIcon" TargetType="ContentControl">
     <Viewbox Width="{StaticResource Icon-Size-Normal}" Height="{StaticResource Icon-Size-Normal}">
       <Canvas Width="24" Height="24">
-          <Path
+        <Path
           Data="{TemplateBinding Content}"
           Fill="{TemplateBinding Background}"
           Stroke="{TemplateBinding Foreground}"
           StrokeThickness="{StaticResource Icon-Stroke-Normal}"
         />
-        </Canvas>
-      </Viewbox>
+      </Canvas>
+    </Viewbox>
   </ControlTemplate>
+
+  <DropShadowEffect x:Key="CheckEffect"
+    Color="{DynamicResource {x:Static SystemColors.MenuHighlightColorKey}}"
+    ShadowDepth="0"
+    BlurRadius="8"
+  />
 
 
   <Style TargetType="MenuItem">

@@ -35,7 +35,8 @@
     <cttn_lib_shared_lib_view_converter:LogicalNotConverter x:Key="LogicalNotConverter" />
     <cttn_lib_shared_lib_view_converter:IconScaleToWidthConverter x:Key="IconScaleToWidthConverter" />
     <cttn_lib_shared_lib_view_converter:IconScaleToHeightConverter x:Key="IconScaleToHeightConverter" />
-
+    <cttn_lib_shared_lib_view_converter:LogicalMultiEqualConverter x:Key="LogicalMultiEqualConverter" />
+    
 
     <Style x:Key="DropMenu" TargetType="Popup" BasedOn="{StaticResource PopupMenu}">
       <Style.Triggers>
@@ -81,9 +82,25 @@
     </ControlTemplate>
 
     <Style x:Key="GroupMenuItem" TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+      <!-- ElementName指定だと System.Windows.Data Error: 4 で動かないので x:Reference を使用 -->
+      <Style.Triggers>
+        <DataTrigger Value="True">
+          <DataTrigger.Binding>
+            <MultiBinding Converter="{StaticResource LogicalMultiEqualConverter}">
+              <Binding Path="DataContext.SelectedLauncherGroup" Source="{x:Reference root}" />
+              <Binding Path="." />
+            </MultiBinding>
+          </DataTrigger.Binding>
+          <Setter Property="FontWeight" Value="Bold" />
+          <Setter Property="Icon">
+            <Setter.Value>
+              <ContentControl Content="{Binding GroupIcon}" Effect="{StaticResource CheckEffect}" />
+            </Setter.Value>
+          </Setter>
+        </DataTrigger>
+      </Style.Triggers>
       <Setter Property="Header" Value="{Binding Name}" />
       <Setter Property="Icon" Value="{Binding GroupIcon}" />
-      <!-- ElementName指定だと System.Windows.Data Error: 4 でコマンド動かないので x:Reference を使用 -->
       <Setter Property="Command" Value="{Binding DataContext.ChangeLauncherGroupCommand, Source={x:Reference root}}" />
       <Setter Property="CommandParameter" Value="{Binding}" />
     </Style>

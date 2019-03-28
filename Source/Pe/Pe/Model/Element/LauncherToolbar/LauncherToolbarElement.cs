@@ -184,10 +184,10 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
 
         public void ChangeLauncherGroup(LauncherGroupElement launcherGroup)
         {
-            SelectedLauncherGroup = launcherGroup;
             if(IsOpendAppMenu) {
                 IsOpendAppMenu = false;
             }
+            SelectedLauncherGroup = launcherGroup;
             LoadLauncherItems();
         }
 

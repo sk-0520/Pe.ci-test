@@ -16,6 +16,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherGroup
 {
     public class LauncherGroupViewModel : SingleModelViewModelBase<LauncherGroupElement>
     {
+        #region variable
+
+        bool _isSelected;
+
+        #endregion
+
         public LauncherGroupViewModel(LauncherGroupElement model, ILauncherGroupTheme launcherGroupTheme, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         {
@@ -26,7 +32,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherGroup
 
         public int RowIndex { get; set; }
         ILauncherGroupTheme LauncherGroupTheme { get; }
-
+        public bool IsSelected
+        {
+            get => this._isSelected;
+            set => SetProperty(ref this._isSelected, value);
+        }
         public string Name => Model.Name;
         public LauncherGroupImageName ImageName => Model.ImageName;
         public Color ImageColor => Model.ImageColor;
