@@ -77,6 +77,7 @@
     <Compile Include="Model\EnumUtilityTest.cs" />
     <Compile Include="Model\LoggingTest.cs" />
     <Compile Include="Model\MediaUtilityTest.cs" />
+    <Compile Include="Model\ObjectDumperTest.cs" />
     <Compile Include="Model\OneTimeSetterTest.cs" />
     <Compile Include="Model\RangeTest.cs" />
     <Compile Include="Model\ReaderWriterLockerTest.cs" />

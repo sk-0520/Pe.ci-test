@@ -126,6 +126,7 @@
     <Compile Include="Model\DispatcherWapper.cs" />
     <Compile Include="Model\ICommandExtensions.cs" />
     <Compile Include="Model\BasicExtensions.cs" />
+    <Compile Include="Model\ObjectDumper.cs" />
     <Compile Include="Model\OneTimeSetter.cs" />
     <Compile Include="Model\PropertyChangedHooker.cs" />
     <Compile Include="Model\RunningStatus.cs" />

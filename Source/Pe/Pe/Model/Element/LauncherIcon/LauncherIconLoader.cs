@@ -149,9 +149,12 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherIcon
 
             // アイコン取得
             var iconImage = await GetImageAsync(launcherIconData, cancellationToken).ConfigureAwait(false);
-
-            // データ書き込み(失敗してもアイコンが取得できてるならOK)
-            SaveImage(iconImage);
+            if(iconImage != null) {
+                // データ書き込み(失敗してもアイコンが取得できてるならOK)
+                SaveImage(iconImage);
+            } else {
+                Logger.Warning($"アイコン取得失敗: {LauncherItemId}", ObjectDumper.GetDumpString(launcherIconData));
+            }
 
             return iconImage;
         }
