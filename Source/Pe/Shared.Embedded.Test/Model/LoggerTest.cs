@@ -30,14 +30,14 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Embedded.Test.Model
             logger.PutAction = logItem => {
                 Assert.AreEqual(logItem.Kind, LogKind.Debug);
                 Assert.AreEqual(logItem.Message, "message");
-                Assert.AreEqual(logItem.Caller.memberName, nameof(PutTest));
+                Assert.AreEqual(logItem.Caller.MemberName, nameof(PutTest));
             };
             logger.Debug("message");
 
             logger.PutAction = logItem => {
                 Assert.AreEqual(logItem.Kind, LogKind.Error);
                 Assert.AreEqual(logItem.Message, "message2");
-                Assert.AreEqual(logItem.Caller.memberName, nameof(PutTest));
+                Assert.AreEqual(logItem.Caller.MemberName, nameof(PutTest));
             };
             logger.Error("message2");
 

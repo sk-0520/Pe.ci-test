@@ -225,7 +225,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
             buffer.Append(' ');
             buffer.AppendFormat("{0}", logItem.Kind);
             buffer.Append(' ');
-            buffer.AppendFormat("<{0}>", logItem.Caller.memberName);
+            buffer.AppendFormat("<{0}>", logItem.Caller.MemberName);
             buffer.Append(logItem.Message);
 
             return logItem.ToString();
@@ -242,17 +242,17 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
             buffer.Append(logItem.Message);
             buffer.Append(' ');
             buffer.Append('[');
-            buffer.Append(logItem.Thread.ManagedThreadId);
+            buffer.Append(logItem.Caller.Thread.ManagedThreadId);
             buffer.Append(']');
             buffer.Append(' ');
             buffer.Append(logItem.Header);
             buffer.Append(' ');
-            buffer.AppendFormat("<{0}.{1}>", logItem.StackTrace.GetFrame(0).GetMethod().DeclaringType.Name, logItem.Caller.memberName);
+            buffer.AppendFormat("<{0}.{1}>", logItem.StackTrace.GetFrame(0).GetMethod().DeclaringType.Name, logItem.Caller.MemberName);
             buffer.Append(' ');
             //var detailIndentWidth = buffer.Length;
 
             buffer.Append(logItem.ShortFilePath);
-            buffer.AppendFormat("({0})", logItem.Caller.lineNumber);
+            buffer.AppendFormat("({0})", logItem.Caller.LineNumber);
 
             if(logItem.HasDetail) {
                 //var indent = new string(' ', detailIndentWidth);
@@ -284,12 +284,12 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
                 "{0}[{1}] {2} <{3}({4})> , Thread: {5}/{6}, Assembly: {7}",
                 item.Timestamp.ToString("yyyy-MM-ddTHH:mm:ss.fff"),
                 item.Kind.ToString().ToUpper().Substring(0, 1),
-                item.Caller.memberName,
+                item.Caller.MemberName,
                 item.ShortFilePath,
-                item.Caller.lineNumber,
-                item.Thread.ManagedThreadId,
-                item.Thread.ThreadState,
-                item.Assembly.GetName()
+                item.Caller.LineNumber,
+                item.Caller.Thread.ManagedThreadId,
+                item.Caller.Thread.ThreadState,
+                item.Caller.Assembly.GetName()
             );
 
             var detailIndent = "\t";
