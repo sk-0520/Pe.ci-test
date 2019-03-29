@@ -20,6 +20,7 @@ using ContentTypeTextNet.Pe.Main.Model.Element;
 using ContentTypeTextNet.Pe.Main.Model.Element.LauncherGroup;
 using ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem;
 using ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar;
+using ContentTypeTextNet.Pe.Main.Model.Element.Note;
 using ContentTypeTextNet.Pe.Main.Model.Launcher;
 using ContentTypeTextNet.Pe.Main.View.LauncherToolbar;
 using ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar;
@@ -45,6 +46,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
 
         ObservableCollection<LauncherGroupElement> LauncherGroups { get; } = new ObservableCollection<LauncherGroupElement>();
         ObservableCollection<LauncherToolbarElement> LauncherToolbars { get; } = new ObservableCollection<LauncherToolbarElement>();
+        ObservableCollection<NoteElement> Notes { get; } = new ObservableCollection<NoteElement>();
 
         #endregion
 
@@ -143,6 +145,26 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
             return result;
         }
 
+        IReadOnlyList<NoteElement> CreateNotes()
+        {
+            var barrier = ApplicationDiContainer.Make<IMainDatabaseBarrier>();
+            var statementLoader = ApplicationDiContainer.Make<IDatabaseStatementLoader>();
+
+            IList<Guid> noteIds;
+            using(var commander = barrier.WaitRead()) {
+                var dao = ApplicationDiContainer.Make<NotesEntityDao>(new object[] { commander, commander.Implementation });
+                noteIds = dao.SelectAllNoteIds().ToList();
+            }
+
+            var result = new List<NoteElement>(noteIds.Count);
+            foreach(var noteId in noteIds) {
+                var element = CreateNoteElement(noteId);
+                result.Add(element);
+            }
+
+            return result;
+        }
+
         public ActionModelViewModelObservableCollectionManager<LauncherToolbarElement, LauncherToolbarNotifyAreaViewModel> GetLauncherNotifyCollection() {
             var collection = new ActionModelViewModelObservableCollectionManager<LauncherToolbarElement, LauncherToolbarNotifyAreaViewModel>(LauncherToolbars, Logger.Factory) {
                 ToViewModel = m => ApplicationDiContainer.Make<LauncherToolbarNotifyAreaViewModel>(new[] { m })
@@ -163,6 +185,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
             LauncherToolbars.AddRange(launcherToolbars);
 
             // ノートの生成
+            var notes = CreateNotes();
+            Notes.AddRange(notes);
 
             var viewShowStaters = launcherToolbars
                 .Concat(Enumerable.Empty<IViewShowStarter>())
@@ -228,6 +252,11 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
         public LauncherItemElement GetOrCreateLauncherItemElement(Guid launcherItemId)
         {
             return OrderManager.GetOrCreateLauncherItemElement(launcherItemId);
+        }
+
+        public NoteElement CreateNoteElement(Guid noteId)
+        {
+            return OrderManager.CreateNoteElement(noteId);
         }
 
 

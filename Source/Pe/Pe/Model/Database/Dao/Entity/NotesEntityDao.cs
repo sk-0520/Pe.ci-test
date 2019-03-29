@@ -27,6 +27,12 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
         #endregion
 
         #region function
+
+        public IEnumerable<Guid> SelectAllNoteIds()
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
     }
 }

@@ -180,10 +180,12 @@
     <Compile Include="Model\Element\LauncherIcon\LauncherIconElement.cs" />
     <Compile Include="Model\Element\LauncherItem\LauncherItemElement.cs" />
     <Compile Include="Model\Element\LauncherToolbar\LauncherToolbarElement.cs" />
+    <Compile Include="Model\Element\Note\NoteElement.cs" />
     <Compile Include="Model\Launcher\LauncherData.cs" />
     <Compile Include="Model\Launcher\LauncherFactory.cs" />
     <Compile Include="Model\Logic\DatabaseLazyWriter.cs" />
     <Compile Include="Model\Logic\ScreenOperator.cs" />
+    <Compile Include="Model\Note\NoteData.cs" />
     <Compile Include="Model\Theme\LauncherGroupTheme.cs" />
     <Compile Include="Model\Theme\ThemeBase.cs" />
     <Compile Include="Model\Theme\LauncherToolbarTheme.cs" />

@@ -16,6 +16,7 @@ using ContentTypeTextNet.Pe.Main.Model.Element.LauncherGroup;
 using ContentTypeTextNet.Pe.Main.Model.Element.LauncherIcon;
 using ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem;
 using ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar;
+using ContentTypeTextNet.Pe.Main.Model.Element.Note;
 using ContentTypeTextNet.Pe.Main.Model.Launcher;
 using ContentTypeTextNet.Pe.Main.Model.Logic;
 using ContentTypeTextNet.Pe.Main.View.Extend;
@@ -47,6 +48,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
         LauncherGroupElement CreateLauncherGroupElement(Guid launcherGroupId);
         LauncherToolbarElement CreateLauncherToolbarElement(Screen dockScreen, ReadOnlyObservableCollection<LauncherGroupElement> launcherGroups);
         LauncherItemElement GetOrCreateLauncherItemElement(Guid launcherItemId);
+        NoteElement CreateNoteElement(Guid noteId);
 
         WindowItem CreateLauncherToolbarWindow(LauncherToolbarElement element);
 
@@ -103,6 +105,11 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
                 });
             }
 
+            public NoteElement CreateNoteElement(Guid noteId)
+            {
+                return null;
+            }
+            
             public WindowItem CreateLauncherToolbarWindow(LauncherToolbarElement element)
             {
                 var viewModel = DiContainer.UsingTemporaryContainer(c => {
