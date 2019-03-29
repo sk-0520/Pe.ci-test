@@ -75,6 +75,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
         void LoadNote()
         {
             IsVisible = true;
+            //TODO: あればそれを読み込んでなければ作る
         }
 
         #endregion
