@@ -9,16 +9,23 @@ using System.Windows.Shapes;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 
-namespace ContentTypeTextNet.Pe.Main.Model.Designer
+namespace ContentTypeTextNet.Pe.Main.Model.Theme
 {
     public abstract class ThemeBase
     {
-        public ThemeBase(ILogger logger)
+        ThemeBase(IDispatcherWapper dispatcherWapper)
+        {
+            DispatcherWapper = dispatcherWapper;
+        }
+
+        public ThemeBase(IDispatcherWapper dispatcherWapper, ILogger logger)
+            :this(dispatcherWapper)
         {
             Logger = logger;
         }
 
-        public ThemeBase(ILoggerFactory loggerFactory)
+        public ThemeBase(IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
+            :this(dispatcherWapper)
         {
             Logger = loggerFactory.CreateTartget(GetType());
         }
@@ -26,6 +33,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Designer
         #region property
 
         protected ILogger Logger { get; }
+        protected IDispatcherWapper DispatcherWapper { get; }
 
         #endregion
 

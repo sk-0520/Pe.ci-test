@@ -15,6 +15,7 @@ using ContentTypeTextNet.Pe.Main.Model.Database;
 using ContentTypeTextNet.Pe.Main.Model.Designer;
 using ContentTypeTextNet.Pe.Main.Model.Logic;
 using ContentTypeTextNet.Pe.Main.Model.Manager;
+using ContentTypeTextNet.Pe.Main.Model.Theme;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Applications
 {
@@ -264,6 +265,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Applications
                 .Register<IIdFactory, IdFactory>(DiLifecycle.Transient)
                 .Register<ILauncherToolbarTheme, LauncherToolbarTheme>(DiLifecycle.Transient)
                 .Register<ILauncherGroupTheme, LauncherGroupTheme>(DiLifecycle.Transient)
+                .Register<INoteTheme, NoteTheme>(DiLifecycle.Transient)
             ;
 
             ApplicationDiContainer.Initialize(() => container);

@@ -36,6 +36,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         static IReadOnlyList<ObjectDumpItem> EmptyChildren { get; } = new ObjectDumpItem[0];
 
         public ISet<Type> IgnoreNestedMembers { get; } = new HashSet<Type>() {
+            typeof(bool),
             typeof(char),
             typeof(byte),
             typeof(short),

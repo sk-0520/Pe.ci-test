@@ -88,7 +88,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Compatibility.Forms
         /// </summary>
         /// <param name="point"></param>
         /// <returns></returns>
-        public static Screen FromDevicePoint(Point point)
+        public static Screen FromDevicePoint([PixelKind(Px.Device)] Point point)
         {
             var drawingPoint = DrawingUtility.Convert(point);
             var formScreen = WinForms.Screen.FromPoint(drawingPoint);

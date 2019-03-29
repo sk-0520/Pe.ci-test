@@ -22,6 +22,14 @@
         </Style>
       </MenuItem.ItemContainerStyle>
     </MenuItem>
+    <MenuItem Header="note">
+      <MenuItem Header="create" Command="{Binding CreateNoteCommand}" />
+      <MenuItem Header="compact" />
+      <MenuItem Header="topmost" />
+      <Separator />
+      <MenuItem Header="show" />
+      <MenuItem Header="hidden" />
+    </MenuItem>
     <MenuItem Header="exit" Command="{Binding ExitCommand}" />
   </ContextMenu>
 

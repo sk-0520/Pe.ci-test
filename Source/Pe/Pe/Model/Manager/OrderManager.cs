@@ -48,7 +48,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
         LauncherGroupElement CreateLauncherGroupElement(Guid launcherGroupId);
         LauncherToolbarElement CreateLauncherToolbarElement(Screen dockScreen, ReadOnlyObservableCollection<LauncherGroupElement> launcherGroups);
         LauncherItemElement GetOrCreateLauncherItemElement(Guid launcherItemId);
-        NoteElement CreateNoteElement(Guid noteId);
+        NoteElement CreateNoteElement(Guid noteId, Screen screen);
 
         WindowItem CreateLauncherToolbarWindow(LauncherToolbarElement element);
 
@@ -105,11 +105,13 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
                 });
             }
 
-            public NoteElement CreateNoteElement(Guid noteId)
+            public NoteElement CreateNoteElement(Guid noteId, Screen screen)
             {
-                return null;
+                var element = DiContainer.Build<NoteElement>(noteId, screen);
+                element.Initialize();
+                return element;
             }
-            
+
             public WindowItem CreateLauncherToolbarWindow(LauncherToolbarElement element)
             {
                 var viewModel = DiContainer.UsingTemporaryContainer(c => {

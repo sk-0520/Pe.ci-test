@@ -22,6 +22,7 @@ using ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem;
 using ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar;
 using ContentTypeTextNet.Pe.Main.Model.Element.Note;
 using ContentTypeTextNet.Pe.Main.Model.Launcher;
+using ContentTypeTextNet.Pe.Main.Model.Logic;
 using ContentTypeTextNet.Pe.Main.View.LauncherToolbar;
 using ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar;
 using ContentTypeTextNet.Pe.Main.ViewModel.Manager;
@@ -44,9 +45,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
         OrderManagerIml OrderManager { get; set; }
         NotifyManagerImpl NotifyManager { get; set; }
 
-        ObservableCollection<LauncherGroupElement> LauncherGroups { get; } = new ObservableCollection<LauncherGroupElement>();
-        ObservableCollection<LauncherToolbarElement> LauncherToolbars { get; } = new ObservableCollection<LauncherToolbarElement>();
-        ObservableCollection<NoteElement> Notes { get; } = new ObservableCollection<NoteElement>();
+        ObservableCollection<LauncherGroupElement> LauncherGroupElements { get; } = new ObservableCollection<LauncherGroupElement>();
+        ObservableCollection<LauncherToolbarElement> LauncherToolbarElements { get; } = new ObservableCollection<LauncherToolbarElement>();
+        ObservableCollection<NoteElement> NoteElements { get; } = new ObservableCollection<NoteElement>();
 
         #endregion
 
@@ -112,7 +113,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
             return viewModel;
         }
 
-        IReadOnlyList<LauncherGroupElement> CreateLauncherGroups()
+        IReadOnlyList<LauncherGroupElement> CreateLauncherGroupElements()
         {
             var barrier = ApplicationDiContainer.Make<IMainDatabaseBarrier>();
             var statementLoader = ApplicationDiContainer.Make<IDatabaseStatementLoader>();
@@ -132,7 +133,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
             return result;
         }
 
-        IReadOnlyList<LauncherToolbarElement> CreateLauncherToolbars(ReadOnlyObservableCollection<LauncherGroupElement> launcherGroups)
+        IReadOnlyList<LauncherToolbarElement> CreateLauncherToolbarElements(ReadOnlyObservableCollection<LauncherGroupElement> launcherGroups)
         {
             var screens = Screen.AllScreens;
             var result = new List<LauncherToolbarElement>(screens.Length);
@@ -145,7 +146,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
             return result;
         }
 
-        IReadOnlyList<NoteElement> CreateNotes()
+        IReadOnlyList<NoteElement> CreateNoteElements()
         {
             var barrier = ApplicationDiContainer.Make<IMainDatabaseBarrier>();
             var statementLoader = ApplicationDiContainer.Make<IDatabaseStatementLoader>();
@@ -158,7 +159,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
 
             var result = new List<NoteElement>(noteIds.Count);
             foreach(var noteId in noteIds) {
-                var element = CreateNoteElement(noteId);
+                var element = CreateNoteElement(noteId, null);
                 result.Add(element);
             }
 
@@ -166,10 +167,19 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
         }
 
         public ActionModelViewModelObservableCollectionManager<LauncherToolbarElement, LauncherToolbarNotifyAreaViewModel> GetLauncherNotifyCollection() {
-            var collection = new ActionModelViewModelObservableCollectionManager<LauncherToolbarElement, LauncherToolbarNotifyAreaViewModel>(LauncherToolbars, Logger.Factory) {
+            var collection = new ActionModelViewModelObservableCollectionManager<LauncherToolbarElement, LauncherToolbarNotifyAreaViewModel>(LauncherToolbarElements, Logger.Factory) {
                 ToViewModel = m => ApplicationDiContainer.Make<LauncherToolbarNotifyAreaViewModel>(new[] { m })
             };
             return collection;
+        }
+
+        public void CreateNote(Screen dockScreen)
+        {
+            var idFactory = ApplicationDiContainer.Build<IIdFactory>();
+            var noteId = idFactory.CreateNoteId();
+            Logger.Information($"new note id: {noteId}", ObjectDumper.GetDumpString(dockScreen));
+            var noteElement = CreateNoteElement(noteId, dockScreen);
+
         }
 
         public void Execute()
@@ -177,16 +187,16 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
             Logger.Information("がんばる！");
 
             // グループ構築
-            var launcherGroups = CreateLauncherGroups();
-            LauncherGroups.AddRange(launcherGroups);
+            var launcherGroups = CreateLauncherGroupElements();
+            LauncherGroupElements.AddRange(launcherGroups);
 
             // ツールバーの生成
-            var launcherToolbars = CreateLauncherToolbars(new ReadOnlyObservableCollection<LauncherGroupElement>(LauncherGroups));
-            LauncherToolbars.AddRange(launcherToolbars);
+            var launcherToolbars = CreateLauncherToolbarElements(new ReadOnlyObservableCollection<LauncherGroupElement>(LauncherGroupElements));
+            LauncherToolbarElements.AddRange(launcherToolbars);
 
             // ノートの生成
-            var notes = CreateNotes();
-            Notes.AddRange(notes);
+            var notes = CreateNoteElements();
+            NoteElements.AddRange(notes);
 
             var viewShowStaters = launcherToolbars
                 .Concat(Enumerable.Empty<IViewShowStarter>())
@@ -213,10 +223,10 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
 
         void DisposeToolbarElements()
         {
-            foreach(var toolbar in LauncherToolbars) {
+            foreach(var toolbar in LauncherToolbarElements) {
                 toolbar.Dispose();
             }
-            LauncherToolbars.Clear();
+            LauncherToolbarElements.Clear();
         }
 
         void DisposeElements()
@@ -254,9 +264,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
             return OrderManager.GetOrCreateLauncherItemElement(launcherItemId);
         }
 
-        public NoteElement CreateNoteElement(Guid noteId)
+        public NoteElement CreateNoteElement(Guid noteId, Screen screen)
         {
-            return OrderManager.CreateNoteElement(noteId);
+            return OrderManager.CreateNoteElement(noteId, screen);
         }
 
 

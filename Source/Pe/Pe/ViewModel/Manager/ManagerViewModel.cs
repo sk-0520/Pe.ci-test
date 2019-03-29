@@ -5,6 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using ContentTypeTextNet.Library.PInvoke.Windows;
+using ContentTypeTextNet.Pe.Library.Shared.Library.Compatibility.Forms;
+using ContentTypeTextNet.Pe.Library.Shared.Library.CompatibleWindows;
 using ContentTypeTextNet.Pe.Library.Shared.Library.ViewModel;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar;
@@ -38,6 +41,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Manager
         #region command
 
 
+        public ICommand CreateNoteCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                NativeMethods.GetCursorPos(out var rawCursorPosition);
+                var deviceCursorPosition = PodStructUtility.Convert(rawCursorPosition);
+                var currentScreen = Screen.FromDevicePoint(deviceCursorPosition);
+
+                ApplicationManager.CreateNote(currentScreen);
+            }
+        ));
 
         public ICommand ExitCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {

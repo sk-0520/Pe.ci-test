@@ -9,6 +9,7 @@ using System.Windows.Media;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
+using ContentTypeTextNet.Pe.Main.Model.Theme;
 using ContentTypeTextNet.Pe.Main.View.Extend;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Designer
@@ -36,15 +37,10 @@ namespace ContentTypeTextNet.Pe.Main.Model.Designer
     public class LauncherToolbarTheme : ThemeBase, ILauncherToolbarTheme
     {
         public LauncherToolbarTheme(IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
-            : base(loggerFactory)
-        {
-            DispatcherWapper = dispatcherWapper;
-        }
+            : base(dispatcherWapper, loggerFactory)
+        { }
 
         #region property
-
-        IDispatcherWapper DispatcherWapper { get; }
-
         #endregion
 
         #region function
