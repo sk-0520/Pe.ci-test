@@ -47,7 +47,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Manager
                 var deviceCursorPosition = PodStructUtility.Convert(rawCursorPosition);
                 var currentScreen = Screen.FromDevicePoint(deviceCursorPosition);
 
-                ApplicationManager.CreateNote(currentScreen);
+                var noteElement = ApplicationManager.CreateNote(currentScreen);
+                noteElement.StartView();
             }
         ));
 

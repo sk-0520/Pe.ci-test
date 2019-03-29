@@ -21,7 +21,9 @@ using ContentTypeTextNet.Pe.Main.Model.Launcher;
 using ContentTypeTextNet.Pe.Main.Model.Logic;
 using ContentTypeTextNet.Pe.Main.View.Extend;
 using ContentTypeTextNet.Pe.Main.View.LauncherToolbar;
+using ContentTypeTextNet.Pe.Main.View.Note;
 using ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar;
+using ContentTypeTextNet.Pe.Main.ViewModel.Note;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Manager
 {
@@ -51,7 +53,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
         NoteElement CreateNoteElement(Guid noteId, Screen screen);
 
         WindowItem CreateLauncherToolbarWindow(LauncherToolbarElement element);
-
+        WindowItem CreateNoteWindow(NoteElement element);
         #endregion
     }
 
@@ -128,6 +130,17 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
                 return new WindowItem(WindowKind.LauncherToolbar, window);
             }
 
+            public WindowItem CreateNoteWindow(NoteElement element)
+            {
+                var viewModel = DiContainer.UsingTemporaryContainer(c => {
+                    c.Register<ILoggerFactory, ILoggerFactory>(element);
+                    return c.Build<NoteViewModel>(element);
+                });
+                var window = DiContainer.Build<NoteWindow>();
+                window.DataContext = viewModel;
+
+                return new WindowItem(WindowKind.Note, window);
+            }
             #endregion
 
         }

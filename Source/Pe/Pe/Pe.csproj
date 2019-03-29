@@ -225,6 +225,7 @@
     <Compile Include="ViewModel\LauncherItem\LauncherSeparatorItemViewModel.cs" />
     <Compile Include="ViewModel\LauncherToolbar\LauncherToolbarNotifyAreaViewModel.cs" />
     <Compile Include="ViewModel\Manager\ManagerViewModel.cs" />
+    <Compile Include="ViewModel\Note\NoteViewModel.cs" />
     <Compile Include="ViewModel\RunningStatusViewModel.cs" />
     <Compile Include="ViewModel\Startup\ImportProgramsViewModel.cs" />
     <Compile Include="ViewModel\Startup\ProgramViewModel.cs" />
@@ -239,6 +240,9 @@
     </Compile>
     <Compile Include="View\LauncherToolbar\LauncherContentControl.xaml.cs">
       <DependentUpon>LauncherContentControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Note\NoteWindow.xaml.cs">
+      <DependentUpon>NoteWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Startup\ImportProgramsWindow.xaml.cs">
       <DependentUpon>ImportProgramsWindow.xaml</DependentUpon>
@@ -326,6 +330,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\ManagerResource.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Note\NoteWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

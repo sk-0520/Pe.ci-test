@@ -173,13 +173,14 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
             return collection;
         }
 
-        public void CreateNote(Screen dockScreen)
+        public NoteElement CreateNote(Screen dockScreen)
         {
             var idFactory = ApplicationDiContainer.Build<IIdFactory>();
             var noteId = idFactory.CreateNoteId();
             Logger.Information($"new note id: {noteId}", ObjectDumper.GetDumpString(dockScreen));
             var noteElement = CreateNoteElement(noteId, dockScreen);
 
+            return noteElement;
         }
 
         public void Execute()
@@ -273,6 +274,15 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
         public WindowItem CreateLauncherToolbarWindow(LauncherToolbarElement element)
         {
             var windowItem = OrderManager.CreateLauncherToolbarWindow(element);
+
+            WindowManager.Register(windowItem);
+
+            return windowItem;
+        }
+
+        public WindowItem CreateNoteWindow(NoteElement element)
+        {
+            var windowItem = OrderManager.CreateNoteWindow(element);
 
             WindowManager.Register(windowItem);
 

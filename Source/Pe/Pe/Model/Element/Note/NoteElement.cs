@@ -7,23 +7,27 @@ using ContentTypeTextNet.Pe.Library.Shared.Library.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Applications;
+using ContentTypeTextNet.Pe.Main.Model.Manager;
 using ContentTypeTextNet.Pe.Main.Model.Theme;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
 {
-    public class NoteElement : ElementBase
+    public class NoteElement : ElementBase, IViewShowStarter, IViewCloseReceiver
     {
         #region variable
 
+        bool _isVisible;
+        bool _isTopmost;
         Screen _dockScreen;
 
         #endregion
 
-        public NoteElement(Guid noteId, Screen dockScreen, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, INoteTheme noteTheme, ILoggerFactory loggerFactory)
+        public NoteElement(Guid noteId, Screen dockScreen, IOrderManager orderManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, INoteTheme noteTheme, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             NoteId = noteId;
             this._dockScreen = dockScreen; // プロパティは静かに暮らしたい
+            OrderManager = orderManager;
             MainDatabaseBarrier = mainDatabaseBarrier;
             FileDatabaseBarrier = fileDatabaseBarrier;
             StatementLoader = statementLoader;
@@ -42,18 +46,35 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
             get => this._dockScreen;
             private set => SetProperty(ref this._dockScreen, value);
         }
+        IOrderManager OrderManager { get; }
         IMainDatabaseBarrier MainDatabaseBarrier { get; }
         IFileDatabaseBarrier FileDatabaseBarrier { get; }
         IDatabaseStatementLoader StatementLoader { get; }
         INoteTheme NoteTheme { get; }
 
+        bool ViewCreated { get; set; }
+
+        public bool IsTopmost
+        {
+            get => this._isTopmost;
+            private set => SetProperty(ref this._isTopmost, value);
+        }
+
+        /// <summary>
+        /// 表示されているか。
+        /// </summary>
+        public bool IsVisible
+        {
+            get => this._isVisible;
+            set => SetProperty(ref this._isVisible, value);
+        }
         #endregion
 
         #region function
 
         void LoadNote()
         {
-
+            IsVisible = true;
         }
 
         #endregion
@@ -66,5 +87,43 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
         }
 
         #endregion
+
+        #region IViewShowStarter
+
+        public bool CanStartShowView
+        {
+            get
+            {
+                if(ViewCreated) {
+                    return false;
+                }
+
+                return IsVisible;
+            }
+        }
+
+        public void StartView()
+        {
+            var windowItem = OrderManager.CreateNoteWindow(this);
+            ViewCreated = true;
+        }
+
+        #endregion
+
+        #region IWindowCloseReceiver
+
+        public bool ReceiveViewClosing()
+        {
+            return true;
+        }
+
+        public void ReceiveViewClosed()
+        {
+            ViewCreated = false;
+        }
+
+
+        #endregion
+
     }
 }
