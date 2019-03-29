@@ -45,7 +45,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
                 IconPath = data.Icon.Path,
                 IconIndex = data.Icon.Index,
                 IsEnabledCommandLauncher = data.IsEnabledCommandLauncher,
-                Note = Implementation.IsNull(data.Note) ? Implementation.GetNullValue<string>(): data.Note,
+                Note = Implementation.ToNullValue(data.Note),
             };
 
             commonStatus.WriteCommon(dto);

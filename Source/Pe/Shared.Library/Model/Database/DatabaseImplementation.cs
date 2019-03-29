@@ -67,6 +67,33 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
         #endregion
     }
 
+    public static class IDatabaseImplementationExtensions
+    {
+        #region function
+
+        /// <summary>
+        /// 対象DBに対して null であれば DB 用の null として、そうでなければ <paramref name="value"/> をそのまま使用する。
+        /// </summary>
+        /// <typeparam name="TValue"></typeparam>
+        /// <param name="this"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static TValue ToNullValue<TValue>(this IDatabaseImplementation @this, TValue value)
+        {
+            if(@this == null) {
+                throw new ArgumentNullException(nameof(@this));
+            }
+
+            if(@this.IsNull(value)) {
+                return @this.GetNullValue<TValue>();
+            }
+
+            return value;
+        }
+
+        #endregion
+    }
+
     public class DatabaseImplementation : IDatabaseImplementation
     {
         #region function
