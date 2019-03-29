@@ -59,5 +59,16 @@ namespace ContentTypeTextNet.Pe.Main.View.LauncherToolbar
         LauncherToolbarViewModel ViewModel => (LauncherToolbarViewModel)DataContext;
 
         #endregion
+
+        #region Window
+
+        protected override void OnSourceInitialized(EventArgs e)
+        {
+            base.OnSourceInitialized(e);
+
+            UIUtility.SetToolWindowStyle(this, false, false);
+        }
+
+        #endregion
     }
 }

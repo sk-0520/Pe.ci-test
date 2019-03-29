@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
 using ContentTypeTextNet.Library.PInvoke.Windows;
+using ContentTypeTextNet.Pe.Library.Shared.Library.Compatibility.Windows;
 
 namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 {
@@ -226,22 +227,27 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
             );
         }
 
-        public static void SetStyleToolWindow(Window window, bool enabledMax, bool enabledMin)
+        /// <summary>
+        /// ツールウィンドウにする。
+        /// </summary>
+        /// <param name="window">対象ウィンドウ。</param>
+        /// <param name="enabledMaximizeBox">最大化ボタンを有効にするか。</param>
+        /// <param name="enabledMinimizeBox">最小化ボタンを有効にするか。</param>
+        public static void SetToolWindowStyle(Window window, bool enabledMaximizeBox, bool enabledMinimizeBox)
         {
-            var helper = new WindowInteropHelper(window);
-            var hWnd = helper.Handle;
+            var hWnd = HandleUtility.GetWindowHandle(window);
 
             int exStyle = (int)WindowsUtility.GetWindowLong(hWnd, (int)GWL.GWL_EXSTYLE);
             exStyle |= (int)WS_EX.WS_EX_TOOLWINDOW;
             WindowsUtility.SetWindowLong(hWnd, (int)GWL.GWL_EXSTYLE, (IntPtr)exStyle);
 
-            if(!enabledMax || !enabledMin) {
+            if(!enabledMaximizeBox || !enabledMinimizeBox) {
                 var style = (int)WindowsUtility.GetWindowLong(hWnd, (int)GWL.GWL_STYLE);
                 WS ws = (WS)0;
-                if(!enabledMax) {
+                if(!enabledMaximizeBox) {
                     ws |= WS.WS_MAXIMIZEBOX;
                 }
-                if(!enabledMin) {
+                if(!enabledMinimizeBox) {
                     ws |= WS.WS_MINIMIZEBOX;
                 }
                 style &= ~(int)ws;
