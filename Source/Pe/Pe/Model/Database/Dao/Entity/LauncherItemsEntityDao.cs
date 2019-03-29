@@ -41,7 +41,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
                 LauncherItemId = data.LauncherItemId,
                 Code = data.Code,
                 Name = data.Name,
-                Kind = kindEnumTransfer.To(data.Kind),
+                Kind = kindEnumTransfer.ToText(data.Kind),
                 IconPath = data.Icon.Path,
                 IconIndex = data.Icon.Index,
                 IsEnabledCommandLauncher = data.IsEnabledCommandLauncher,
@@ -61,7 +61,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
                 LauncherItemId = dto.LauncherItemId,
                 Name = dto.Name,
                 Code = dto.Code,
-                Kind = kindEnumTransfer.From(dto.Kind),
+                Kind = kindEnumTransfer.ToEnum(dto.Kind),
                 IsEnabledCommandLauncher= dto.IsEnabledCommandLauncher,
                 Note = dto.Note,
             };

@@ -50,9 +50,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             var result = new LauncherToolbarsDisplayData() {
                 LauncherToolbarId = dto.LauncherToolbarId,
                 LauncherGroupId = dto.LauncherGroupId,
-                ToolbarPosition = toolbarPositionTransfer.From(dto.PositionKind),
-                IconDirection = iconDirectionTransfer.From(dto.Direction),
-                IconScale = iconScaleTransfer.From(dto.IconScale),
+                ToolbarPosition = toolbarPositionTransfer.ToEnum(dto.PositionKind),
+                IconDirection = iconDirectionTransfer.ToEnum(dto.Direction),
+                IconScale = iconScaleTransfer.ToEnum(dto.IconScale),
                 FontId = dto.FontId,
                 AutoHideTimeout = ToTimespan(dto.AutoHideTimeout),
                 TextWidth = dto.TextWidth,
@@ -95,7 +95,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
 
             var param = commonStatus.CreateCommonDtoMapping();
             param[Column.LauncherToolbarId] = launcherToolbarId;
-            param[Column.PositionKind] = toolbarPositionTransfer.To(toolbarPosition);
+            param[Column.PositionKind] = toolbarPositionTransfer.ToText(toolbarPosition);
 
             return Commander.Execute(sql, param) == 1;
         }

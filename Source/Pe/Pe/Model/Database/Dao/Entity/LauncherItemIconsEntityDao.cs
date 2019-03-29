@@ -38,7 +38,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             var sql = StatementLoader.LoadStatementByCurrent();
             var param = new {
                 LauncherItemId = launcherItemId,
-                IconScale = iconScaleTransfer.To(iconScale),
+                IconScale = iconScaleTransfer.ToText(iconScale),
             };
             var rows = Commander.Query<byte[]>(sql, param);
             if(rows != null) {
@@ -56,7 +56,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             var binaryImageItems = imageBinary.GroupSplit(80 * 1024).ToArray();
             var dto = new LauncherItemIconsDto() {
                 LauncherItemId = launcherItemId,
-                IconScale = iconScaleTransfer.To(iconScale),
+                IconScale = iconScaleTransfer.ToText(iconScale),
             };
             var resultCount = 0;
             for(var i = 0; i < binaryImageItems.Length; i++) {
@@ -76,7 +76,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             var sql = StatementLoader.LoadStatementByCurrent();
             var param = new {
                 LauncherItemId = launcherItemId,
-                IconScale = iconScaleTransfer.To(iconScale),
+                IconScale = iconScaleTransfer.ToText(iconScale),
             };
             return Commander.Execute(sql, param);
         }

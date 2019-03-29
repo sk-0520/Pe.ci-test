@@ -30,9 +30,9 @@ namespace Shared.Library.Test.Model.Database
         {
             var test = "test-enum";
             var enumTransfer = new EnumTransfer<A>();
-            Assert.AreEqual(test, enumTransfer.To(A.TestEnum));
-            Assert.AreEqual(test, enumTransfer.To(A.testEnum));
-            Assert.AreEqual(test, enumTransfer.To(A.TEStENUm));
+            Assert.AreEqual(test, enumTransfer.ToText(A.TestEnum));
+            Assert.AreEqual(test, enumTransfer.ToText(A.testEnum));
+            Assert.AreEqual(test, enumTransfer.ToText(A.TEStENUm));
         }
 
         [TestMethod]
@@ -40,9 +40,9 @@ namespace Shared.Library.Test.Model.Database
         {
             var test = "abc";
             var enumTransfer = new EnumTransfer<B>();
-            Assert.AreEqual(test, enumTransfer.To(B.TestEnum));
-            Assert.AreEqual(test, enumTransfer.To(B.testEnum));
-            Assert.AreEqual(test, enumTransfer.To(B.TEStENUm));
+            Assert.AreEqual(test, enumTransfer.ToText(B.TestEnum));
+            Assert.AreEqual(test, enumTransfer.ToText(B.testEnum));
+            Assert.AreEqual(test, enumTransfer.ToText(B.TEStENUm));
         }
 
         enum C
@@ -56,17 +56,17 @@ namespace Shared.Library.Test.Model.Database
         public void FromTest_C()
         {
             var enumTransfer = new EnumTransfer<C>();
-            Assert.AreEqual(C.TestMember1, enumTransfer.From("testmember1"));
-            Assert.AreEqual(C.TestMember2, enumTransfer.From("testmember2"));
-            Assert.AreEqual(C.TestMember3, enumTransfer.From("testmember3"));
+            Assert.AreEqual(C.TestMember1, enumTransfer.ToEnum("testmember1"));
+            Assert.AreEqual(C.TestMember2, enumTransfer.ToEnum("testmember2"));
+            Assert.AreEqual(C.TestMember3, enumTransfer.ToEnum("testmember3"));
 
-            Assert.AreEqual(C.TestMember1, enumTransfer.From("test-member-1"));
-            Assert.AreEqual(C.TestMember2, enumTransfer.From("test-member-2"));
-            Assert.AreEqual(C.TestMember3, enumTransfer.From("test-member-3"));
+            Assert.AreEqual(C.TestMember1, enumTransfer.ToEnum("test-member-1"));
+            Assert.AreEqual(C.TestMember2, enumTransfer.ToEnum("test-member-2"));
+            Assert.AreEqual(C.TestMember3, enumTransfer.ToEnum("test-member-3"));
 
-            Assert.AreEqual(C.TestMember1, enumTransfer.From("TestMember1"));
-            Assert.AreEqual(C.TestMember2, enumTransfer.From("TestMember2"));
-            Assert.AreEqual(C.TestMember3, enumTransfer.From("TestMember3"));
+            Assert.AreEqual(C.TestMember1, enumTransfer.ToEnum("TestMember1"));
+            Assert.AreEqual(C.TestMember2, enumTransfer.ToEnum("TestMember2"));
+            Assert.AreEqual(C.TestMember3, enumTransfer.ToEnum("TestMember3"));
         }
 
         enum D
@@ -83,21 +83,21 @@ namespace Shared.Library.Test.Model.Database
         public void FromTest_D()
         {
             var enumTransfer = new EnumTransfer<D>();
-            Assert.AreEqual(D.TestMember1, enumTransfer.From("test1"));
-            Assert.AreEqual(D.TestMember2, enumTransfer.From("TEST2"));
-            Assert.AreEqual(D.TestMember3, enumTransfer.From("3"));
+            Assert.AreEqual(D.TestMember1, enumTransfer.ToEnum("test1"));
+            Assert.AreEqual(D.TestMember2, enumTransfer.ToEnum("TEST2"));
+            Assert.AreEqual(D.TestMember3, enumTransfer.ToEnum("3"));
 
-            Assert.AreEqual(D.TestMember1, enumTransfer.From("testmember1"));
-            Assert.AreEqual(D.TestMember2, enumTransfer.From("testmember2"));
-            Assert.AreEqual(D.TestMember3, enumTransfer.From("testmember3"));
+            Assert.AreEqual(D.TestMember1, enumTransfer.ToEnum("testmember1"));
+            Assert.AreEqual(D.TestMember2, enumTransfer.ToEnum("testmember2"));
+            Assert.AreEqual(D.TestMember3, enumTransfer.ToEnum("testmember3"));
 
-            Assert.AreEqual(D.TestMember1, enumTransfer.From("test-member-1"));
-            Assert.AreEqual(D.TestMember2, enumTransfer.From("test-member-2"));
-            Assert.AreEqual(D.TestMember3, enumTransfer.From("test-member-3"));
+            Assert.AreEqual(D.TestMember1, enumTransfer.ToEnum("test-member-1"));
+            Assert.AreEqual(D.TestMember2, enumTransfer.ToEnum("test-member-2"));
+            Assert.AreEqual(D.TestMember3, enumTransfer.ToEnum("test-member-3"));
 
-            Assert.AreEqual(D.TestMember1, enumTransfer.From("TestMember1"));
-            Assert.AreEqual(D.TestMember2, enumTransfer.From("TestMember2"));
-            Assert.AreEqual(D.TestMember3, enumTransfer.From("TestMember3"));
+            Assert.AreEqual(D.TestMember1, enumTransfer.ToEnum("TestMember1"));
+            Assert.AreEqual(D.TestMember2, enumTransfer.ToEnum("TestMember2"));
+            Assert.AreEqual(D.TestMember3, enumTransfer.ToEnum("TestMember3"));
         }
 
         enum E
@@ -112,10 +112,10 @@ namespace Shared.Library.Test.Model.Database
         public void FromTest_E()
         {
             var enumTransfer = new EnumTransfer<E>();
-            Assert.AreEqual(E.A, enumTransfer.From(enumTransfer.To(E.A)));
-            Assert.AreEqual(E.B, enumTransfer.From(enumTransfer.To(E.B)));
-            Assert.AreEqual(E.C, enumTransfer.From(enumTransfer.To(E.C)));
-            Assert.AreEqual(E.D, enumTransfer.From(enumTransfer.To(E.D)));
+            Assert.AreEqual(E.A, enumTransfer.ToEnum(enumTransfer.ToText(E.A)));
+            Assert.AreEqual(E.B, enumTransfer.ToEnum(enumTransfer.ToText(E.B)));
+            Assert.AreEqual(E.C, enumTransfer.ToEnum(enumTransfer.ToText(E.C)));
+            Assert.AreEqual(E.D, enumTransfer.ToEnum(enumTransfer.ToText(E.D)));
         }
 
 

@@ -51,7 +51,12 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
 
         #region function
 
-        public string To(TEnum member)
+        /// <summary>
+        /// enum 値をそれっぽい文字列に変換。
+        /// </summary>
+        /// <param name="member"></param>
+        /// <returns></returns>
+        public string ToText(TEnum member)
         {
             var fieldInfo = EnumType.GetField(member.ToString());
 
@@ -79,7 +84,12 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
             return builder.ToString();
         }
 
-        public TEnum From(string value)
+        /// <summary>
+        /// DB の値を enum 値に変換。
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public TEnum ToEnum(string value)
         {
             if(string.IsNullOrWhiteSpace(value)) {
                 return default(TEnum);

@@ -38,9 +38,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
 
             var dto = new LauncherGroupsRowDto() {
                 LauncherGroupId = data.LauncherGroupId,
-                Kind = launcherGroupKindTransfer.To(data.Kind),
+                Kind = launcherGroupKindTransfer.ToText(data.Kind),
                 Name = data.Name,
-                ImageName = imgNameEnumTransfer.To(data.ImageName),
+                ImageName = imgNameEnumTransfer.ToText(data.ImageName),
                 ImageColor = FromColor(data.ImageColor),
                 Sort = data.Sort,
             };
@@ -59,8 +59,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             var data = new LauncherGroupData() {
                 LauncherGroupId = dto.LauncherGroupId,
                 Name = dto.Name,
-                Kind = launcherGroupKindTransfer.From(dto.Kind),
-                ImageName = imgNameEnumTransfer.From(dto.ImageName),
+                Kind = launcherGroupKindTransfer.ToEnum(dto.Kind),
+                ImageName = imgNameEnumTransfer.ToEnum(dto.ImageName),
                 ImageColor = ToColor(dto.ImageColor),
                 Sort = dto.Sort,
             };

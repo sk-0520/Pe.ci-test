@@ -23,7 +23,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Domain
             var kindEnumTransfer = new EnumTransfer<LauncherItemKind>();
 
             var data = new LauncherIconData() {
-                Kind = kindEnumTransfer.From(dto.Kind),
+                Kind = kindEnumTransfer.ToEnum(dto.Kind),
             };
 
             data.Command.Path = dto.CommandPath;
