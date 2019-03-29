@@ -30,7 +30,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
 
         public IEnumerable<Guid> SelectAllNoteIds()
         {
-            throw new NotImplementedException();
+            var sql = StatementLoader.LoadStatementByCurrent();
+            return Commander.Query<Guid>(sql);
         }
 
         #endregion
