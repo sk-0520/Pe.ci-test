@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Applications;
+using ContentTypeTextNet.Pe.Main.Model.Data;
+using ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Model.Manager;
+using ContentTypeTextNet.Pe.Main.Model.Note;
 using ContentTypeTextNet.Pe.Main.Model.Theme;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
@@ -72,10 +76,59 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
 
         #region function
 
+        NoteData GetNoteData()
+        {
+            using(var commander = MainDatabaseBarrier.WaitRead()) {
+                var dao = new NotesEntityDao(commander, StatementLoader, commander.Implementation, Logger.Factory);
+                return dao.SelectNote(NoteId);
+            }
+        }
+
+        NoteData CreateNoteData()
+        {
+            DockScreen = DockScreen ?? Screen.PrimaryScreen;
+
+            var noteData = new NoteData() {
+                NoteId = NoteId,
+                FontId = Guid.Empty,
+                Title = DateTime.Now.ToString(), //TODO: タイトル
+                BackgroundColor = Colors.Yellow,
+                ForegdoundColor = Colors.Black,
+                ScreenName = DockScreen.DeviceName,
+                IsCompact = false,
+                IsLocked = false,
+                IsTopmost = false,
+                IsVisible = true,
+                LayoutKind = NoteLayoutKind.Absolute,
+                TextWrap = true,
+                ContentKind = NoteContentKind.Plain,
+            };
+
+            using(var commander = MainDatabaseBarrier.WaitWrite()) {
+
+                var notesEntityDao = new NotesEntityDao(commander, StatementLoader, commander.Implementation, Logger.Factory);
+                notesEntityDao.InsertNewNote(noteData, DatabaseCommonStatus.CreateCurrentAccount());
+
+                var notesLayoutDao = new NoteLayoutsEntityDao(commander, StatementLoader, commander.Implementation, Logger.Factory);
+
+                var screenEntityDao = new ScreensEntityDao(commander, StatementLoader, commander.Implementation, Logger.Factory);
+                if(!screenEntityDao.SelectExistsScreen(DockScreen.DeviceName)) {
+                    screenEntityDao.InsertScreen(DockScreen, DatabaseCommonStatus.CreateCurrentAccount());
+                }
+            }
+
+            throw new NotImplementedException();
+        }
+
         void LoadNote()
         {
+            //あればそれを読み込んでなければ作る
+            var noteData = GetNoteData();
+            if(noteData == null) {
+                noteData = CreateNoteData();
+            }
+
             IsVisible = true;
-            //TODO: あればそれを読み込んでなければ作る
         }
 
         #endregion

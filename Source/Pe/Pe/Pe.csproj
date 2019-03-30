@@ -180,6 +180,7 @@
     <Compile Include="Model\Database\Dao\Entity\LauncherItemIconsEntityDao.cs" />
     <Compile Include="Model\Database\Dao\Entity\NoteFilesEntityDao.cs" />
     <Compile Include="Model\Database\Dao\Entity\NoteContentsEntityDao.cs" />
+    <Compile Include="Model\Database\Dao\Entity\NoteLayoutsEntityDao.cs" />
     <Compile Include="Model\Database\Dao\Entity\NotesEntityDao.cs" />
     <Compile Include="Model\Database\Dao\Entity\LauncherToolbarsEntityDao.cs" />
     <Compile Include="Model\Database\Dao\Entity\LauncherGroupItemsEntityDao.cs" />
@@ -344,6 +345,7 @@
     <Folder Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherCommandsEntityDao\" />
     <Folder Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherDirectoriesEntityDao\" />
     <Folder Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherDirectoryItemsEntityDao\" />
+    <Folder Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\NoteLayoutsEntityDao\" />
     <Folder Include="View\Converter\" />
   </ItemGroup>
   <ItemGroup>

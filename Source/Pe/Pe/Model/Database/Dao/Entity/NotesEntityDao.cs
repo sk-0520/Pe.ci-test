@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
+using ContentTypeTextNet.Pe.Main.Model.Data;
 using ContentTypeTextNet.Pe.Main.Model.Data.Dto.Entity;
 using ContentTypeTextNet.Pe.Main.Model.Note;
 
@@ -36,6 +37,12 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             throw new NotImplementedException();
         }
 
+        NotesEntityDto ConvertFromData(NoteData data, IDatabaseCommonStatus commonStatus)
+        {
+            throw new NotImplementedException();
+
+        }
+
         public IEnumerable<Guid> SelectAllNoteIds()
         {
             var sql = StatementLoader.LoadStatementByCurrent();
@@ -55,6 +62,13 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             }
 
             return ConvertFromDto(dto);
+        }
+
+        public bool InsertNewNote(NoteData noteData, IDatabaseCommonStatus commonStatus)
+        {
+            var sql = StatementLoader.LoadStatementByCurrent();
+            var param = ConvertFromData(noteData, commonStatus);
+            return Commander.Execute(sql, param) == 1;
         }
 
         #endregion
