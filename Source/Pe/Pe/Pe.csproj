@@ -195,6 +195,7 @@
     <Compile Include="Model\Data\Dto\Domain\LauncherItemIconRowDto.cs" />
     <Compile Include="Model\Data\Dto\Domain\LauncherToolbarScreenRowDto.cs" />
     <Compile Include="Model\Data\Dto\Entity\LauncherItemIconsEntityDto.cs" />
+    <Compile Include="Model\Data\Dto\Entity\NotesEntityDto.cs" />
     <Compile Include="Model\Data\Dto\Entity\ScreensEntityDto.cs" />
     <Compile Include="Model\Data\IconData.cs" />
     <Compile Include="Model\Data\Dto\Entity\LauncherGroupItemsEntityDto.cs" />

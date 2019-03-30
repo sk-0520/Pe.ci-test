@@ -3,41 +3,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Media;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 
-namespace ContentTypeTextNet.Pe.Main.Model.Note
+namespace ContentTypeTextNet.Pe.Main.Model.Data.Dto.Entity
 {
-    public enum NoteLayoutKind
-    {
-        Absolute,
-        Relative
-    }
-
-    public enum NoteContentKind
-    {
-        Plain,
-        Rtf,
-    }
-
-    public class NoteData : DataBase
+    public class NotesEntityDto : CommonDtoBase
     {
         #region property
 
         public Guid NoteId { get; set; }
-        public string ScreenName { get; set; }
         public string Title { get; set; }
-        public NoteLayoutKind LayoutKind { get; set; }
+        public string ScreenName { get; set; }
+        public string LayoutKind { get; set; }
         public bool IsVisible { get; set; }
-
         public Guid FontId { get; set; }
-        public Color ForegdoundColor { get; set; }
-        public Color BackgroundColor { get; set; }
+        public string ForegdoundColor { get; set; }
+        public string BackgroundColor { get; set; }
         public bool IsLocked { get; set; }
         public bool IsTopmost { get; set; }
         public bool IsCompact { get; set; }
         public bool TextWrap { get; set; }
-        public NoteContentKind ContentKind { get; set; }
+        public string ContentKind { get; set; }
+
         #endregion
     }
 }

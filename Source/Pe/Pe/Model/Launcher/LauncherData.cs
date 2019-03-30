@@ -41,12 +41,6 @@ namespace ContentTypeTextNet.Pe.Main.Model.Launcher
     {
         #region property
 
-        public static LauncherCommandData None { get; } = new LauncherCommandData() {
-            Command = string.Empty,
-            Option = string.Empty,
-            WorkDirectoryPath = string.Empty,
-        };
-
         public string Command { get; set; }
         public string Option { get; set; }
         public string WorkDirectoryPath { get; set; }

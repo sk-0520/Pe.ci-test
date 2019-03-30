@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
+using ContentTypeTextNet.Pe.Main.Model.Data.Dto.Entity;
+using ContentTypeTextNet.Pe.Main.Model.Note;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
 {
@@ -20,6 +22,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
         {
             #region property
 
+            public static string NoteId { get; } = "NoteId";
 
             #endregion
         }
@@ -28,10 +31,30 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
 
         #region function
 
+        NoteData ConvertFromDto(NotesEntityDto dto)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<Guid> SelectAllNoteIds()
         {
             var sql = StatementLoader.LoadStatementByCurrent();
             return Commander.Query<Guid>(sql);
+        }
+
+        //SelectExistsScreen
+        public NoteData SelectNote(Guid noteId)
+        {
+            var sql = StatementLoader.LoadStatementByCurrent();
+            var param = new {
+                NoteId = noteId,
+            };
+            var dto = Commander.QueryFirstOrDefault<NotesEntityDto>(sql, param);
+            if(dto == null) {
+                return null;
+            }
+
+            return ConvertFromDto(dto);
         }
 
         #endregion
