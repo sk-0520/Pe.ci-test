@@ -1,0 +1,15 @@
+{
+  "name": "pe-documents",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.pug",
+  "scripts": {
+    "watch": "parcel watch --public-url . ./index.pug"
+  },
+  "author": "",
+  "license": "GPLv3",
+  "devDependencies": {
+    "parcel-bundler": "^1.12.3",
+    "pug": "^2.0.3"
+  }
+}

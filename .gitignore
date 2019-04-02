@@ -23,3 +23,5 @@ Thumbs.db
 .vs/
 *.tss
 *.lnk
+node_modules/
+/Source/Documents/dist
