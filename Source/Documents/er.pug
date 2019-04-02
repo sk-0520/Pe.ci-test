@@ -4,13 +4,10 @@ html
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
         meta(http-equiv="X-UA-Compatible", content="ie=edge")
         title ER
-        script(src="er.ts")
     body
-
-h1 ER図
-
-textarea 
-    include ../Pe/Pe/etc/sql/ContentTypeTextNet.Pe.Main/Model/Database/Setupper/Setupper_V_00_84_00_00/ExecuteMainDDL.sql
-
-
-    
+        h1 ER図
+        div#view-table
+        textarea#raw-sql
+            -//include ../Pe/Pe/etc/sql/ContentTypeTextNet.Pe.Main/Model/Database/Setupper/Setupper_V_00_84_00_00/ExecuteMainDDL.sql
+            include ExecuteMainDDL.sql
+        script(src="er.ts")

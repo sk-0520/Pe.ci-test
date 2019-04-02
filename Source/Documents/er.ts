@@ -6,12 +6,15 @@ interface BlockElement {
 }
 
 class TableSqlBlock {
-    sql: string;
+    sqlLines: Array<string>;
     blockElement: BlockElement;
 
     constructor(sql: string, tableElement: BlockElement) {
-        this.sql = sql;
+        this.sqlLines = sql.split(/\r?\n/);
         this.blockElement = tableElement;
+    }
+
+    public build() {
     }
 }
 
@@ -24,7 +27,7 @@ class ErManager {
         this.rawSqlElement = rawSqlElement;
     }
 
-    public import() {
+    public build() {
         const blockFactory = () => {
             const rootElement = document.createElement('div') as HTMLDivElement;
             const titleElement = document.createElement('h3') as HTMLHeadingElement;
@@ -40,14 +43,17 @@ class ErManager {
                 table: tableElement,
             } as BlockElement;
         };
-        var sqlBlocks = this.rawSqlElement.value.split(/^\s*;\s*\\/);
+        var sqlBlocks = this.rawSqlElement.value.split(/^\s*;\s*$/gm);
         this.tableSqlItems = sqlBlocks.map(s => new TableSqlBlock(s, blockFactory()));
+        for(const item of this.tableSqlItems) {
+            item.build();
+        }
     }
 }
 
-const sqlLoader = new ErManager(
+const erManager = new ErManager(
     document.getElementById('view-table') as HTMLDivElement,
     document.getElementById('raw-sql') as HTMLTextAreaElement
 );
-sqlLoader.import();
+erManager.build();
 
