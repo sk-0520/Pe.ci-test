@@ -140,7 +140,6 @@ class Entity {
 
     convertRowLines(markdownTableLines: ReadonlyArray<string>): ReadonlyArray<ReadonlyArray<string>> {
         var rows = markdownTableLines.slice(2);
-        alert(rows);
         return rows
             .map(i => i.replace(/(^\|)|(|$)/, ''))
             .map(i => i.split('|').map(s => s.trim()))
@@ -168,8 +167,15 @@ class Entity {
         getInputElementByName(clonedTemplate, 'name-logical').value = columns[LayoutColumn.LogicalColumnName];
         getInputElementByName(clonedTemplate, 'name-physical').value = columns[LayoutColumn.PhysicalColumnName];
 
-        getSelectElementByName(clonedTemplate, 'data-logical').value = columns[LayoutColumn.LogicalType];
-        //getSelectElementByName(clonedTemplate, 'data-logical').value = columns[LayoutColumn.LogicalType];
+        var logicalDataElement = getSelectElementByName(clonedTemplate, 'data-logical');
+        var physicalDataElement = getInputElementByName(clonedTemplate, 'data-physical'); // 一方通行イベントで使うのでキャプチャしとく。メモリは無限
+        logicalDataElement.value = columns[LayoutColumn.LogicalType];
+        logicalDataElement.addEventListener('change', ev => {
+            var physicalValue = DatabaseTypeMap.get(logicalDataElement.value);
+            physicalDataElement.value = physicalValue || 'なんかデータ変';
+        });
+        logicalDataElement.dispatchEvent(new Event('change'));
+
         getSelectElementByName(clonedTemplate, 'data-clr').value = columns[LayoutColumn.ClrType];
         
         getInputElementByName(clonedTemplate, 'check').value = columns[LayoutColumn.CheckConstraint];
