@@ -11,7 +11,7 @@ interface EntityDefine {
     index: ReadonlyArray<string>;
 }
 
-const DatabaseTypeMap = new Map<string, string>([
+const DatabaseTypeMap = new Map([
     // 通常
     ['integer', 'integer'],
     ['real', 'real'],
@@ -22,14 +22,14 @@ const DatabaseTypeMap = new Map<string, string>([
     ['boolean', 'integer'],
 ]) as ReadonlyMap<string, string>;
 
-const ClrMapping = [
-    'System.String',
-    'System.Int64',
-    'System.DateTime',
-    'System.Guid',
-    'System.Byte[]',
-    'System.Version',
-] as ReadonlyArray<string>;
+const ClrMap = new Map([
+    ['integer',  new Set([ 'System.Int64' ])],
+    ['real',     new Set([ 'System.Decimal', 'System.Single', 'System.Double' ])],
+    ['text',     new Set([ 'System.String', 'System.Guid', 'System.Version' ])],
+    ['blob',     new Set([ 'System.Byte[]' ])],
+    ['datetime', new Set([ 'System.DateTime', 'System.String' ])],
+    ['boolean',  new Set([ 'System.Boolean', 'System.Int64' ])],
+]) as ReadonlyMap<string, ReadonlySet<string>>;
 
 enum LayoutColumn {
     PrimaryKey = 0,
@@ -202,14 +202,33 @@ class Entity {
 
         var logicalDataElement = getSelectElementByName(clonedTemplate, LayoutBlockName.LogicalType);
         var physicalDataElement = getInputElementByName(clonedTemplate, LayoutBlockName.PhysicalType); // 一方通行イベントで使うのでキャプチャしとく。メモリは無限
+        var clrDataElement = getSelectElementByName(clonedTemplate, LayoutBlockName.ClrType);
         logicalDataElement.value = columns[LayoutColumn.LogicalType];
+        clrDataElement.value = columns[LayoutColumn.ClrType];
         logicalDataElement.addEventListener('change', ev => {
             var physicalValue = DatabaseTypeMap.get(logicalDataElement.value);
             physicalDataElement.value = physicalValue || 'なんかデータ変';
+
+            // CLR に対して Pe で出来る範囲で型を限定
+            var optionElements = clrDataElement.querySelectorAll('option');
+            var selectedElement: HTMLOptionElement|null = null;
+            var firstEnabledElement:HTMLOptionElement|null = null;
+            for(var optionElement of optionElements) {
+                var clrValues = ClrMap.get(logicalDataElement.value)!;
+                optionElement.disabled = !clrValues.has(optionElement.value);
+                if(!optionElement.disabled && !firstEnabledElement) {
+                    firstEnabledElement = optionElement;
+                }
+                if(optionElement.selected) {
+                    selectedElement = optionElement;
+                }
+            }
+            if(selectedElement && selectedElement.disabled) {
+                firstEnabledElement!.selected = true;
+            }
         });
         logicalDataElement.dispatchEvent(new Event('change'));
 
-        getSelectElementByName(clonedTemplate, LayoutBlockName.ClrType).value = columns[LayoutColumn.ClrType];
         
         getInputElementByName(clonedTemplate, LayoutBlockName.CheckConstraint).value = columns[LayoutColumn.CheckConstraint];
         getInputElementByName(clonedTemplate, LayoutBlockName.Comment).value = columns[LayoutColumn.Comment];
