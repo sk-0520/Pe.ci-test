@@ -261,11 +261,17 @@ class Entity {
 
 class EntityRelationManager {
     viewElement: HTMLDivElement;
+    commandElement: HTMLDivElement;
     defineElement:  HTMLTextAreaElement;
+    sqlElement:  HTMLTextAreaElement;
 
-    constructor(viewElement: HTMLDivElement, defineElement: HTMLTextAreaElement) {
+    entities: Array<Entity> = [];
+
+    constructor(viewElement: HTMLDivElement, commandElement: HTMLDivElement, defineElement: HTMLTextAreaElement, sqlElement: HTMLTextAreaElement) {
         this.viewElement = viewElement;
+        this.commandElement = commandElement;
         this.defineElement = defineElement;
+        this.sqlElement = sqlElement;
     }
 
     createBlockElements(): BlockElements {
@@ -281,7 +287,27 @@ class EntityRelationManager {
         return block;
     }
 
+    buildCommand(parentElement: HTMLDivElement) {
+        var indexTemplate = document.getElementById('template-command') as HTMLTemplateElement;
+        var clonedTemplate = document.importNode(indexTemplate.content, true);
+
+        // var importElement = clonedTemplate.querySelector('[name="command-import"]') as HTMLButtonElement;
+        // importElement.addEventListener('click', ev => {
+        //     this.reset();
+        //     this.build();
+        // });
+
+        var exportElement = clonedTemplate.querySelector('[name="command-export"]') as HTMLButtonElement;
+        exportElement.addEventListener('click', ev => {
+            //TODO
+        });
+
+        parentElement.appendChild(clonedTemplate);
+    }
+
     public build() {
+        this.buildCommand(this.commandElement);
+
         var defines = this.defineElement.value.split('___');
         defines.shift();
 
@@ -290,14 +316,25 @@ class EntityRelationManager {
             var entity = new Entity(blockElements);
             entity.build(define);
 
+            this.entities.push(entity);
+            
             this.viewElement.appendChild(blockElements.root);
         }
     }
+
+    reset() {
+        this.entities = [];
+        this.viewElement.textContent = '';
+        this.commandElement.textContent = '';
+    }
+
 }
 
 const erMain = new EntityRelationManager(
     document.getElementById('view-main') as HTMLDivElement,
-    document.getElementById('define-main') as HTMLTextAreaElement
+    document.getElementById('command-main') as HTMLDivElement,
+    document.getElementById('define-main') as HTMLTextAreaElement,
+    document.getElementById('sql-main') as HTMLTextAreaElement
 );
 erMain.build();
 

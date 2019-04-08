@@ -11,6 +11,11 @@ html
                 div(name="block-layout")
                 div(name="block-index")
 
+        template#template-command
+            ul
+                li
+                    button(name="command-export") export
+
         template#template-table
             h3
                 input(type="text", name="table-name")
@@ -108,13 +113,17 @@ html
         section
             h2 Main
             div#view-main
+            div#command-main
             textarea#define-main
                 include er-main.md
+            textarea#sql-main
 
         section
             h2 File
             div#view-file
+            div#command-file
             textarea#define-file
                 -//include er-main.md
+            textarea#sql-file
 
         script(src="er.ts")
