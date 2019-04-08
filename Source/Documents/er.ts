@@ -43,11 +43,39 @@ enum LayoutColumn {
     Comment = 8,
 }
 
+enum TableBlockName {
+    TableName = 'table-name',
+}
+
+enum LayoutBlockName {
+    PrimaryKey = 'pk',
+    NotNull = 'nn',
+    ForeignKey = 'fk',
+    ForeignKeyTable = 'fk-table',
+    ForeignKeyColumn = 'fk-column',
+    LogicalColumnName = 'name-logical',
+    PhysicalColumnName = 'name-physical',
+    LogicalType = 'data-logical',
+    PhysicalType = 'data-physical',
+    ClrType = 'data-clr',
+    CheckConstraint = 'check',
+    Comment = 'comment',
+}
+
+enum IndexBlockName {
+    ColumnName = 'c',
+    UniqueKey = 'uk',
+    Columns = 'columns'
+}
+
+function getElementByName(node: ParentNode, name: string): HTMLElement {
+    return node.querySelector('[name="' + name + '"]') as HTMLElement;
+}
 function getInputElementByName(node: ParentNode, name: string): HTMLInputElement {
-    return node.querySelector('[name="' + name + '"]') as HTMLInputElement;
+    return getElementByName(node, name) as HTMLInputElement;
 }
 function getSelectElementByName(node: ParentNode, name: string): HTMLSelectElement {
-    return node.querySelector('[name="' + name + '"]') as HTMLSelectElement;
+    return getElementByName(node, name)  as HTMLSelectElement;
 }
 
 function isCheckMark(value: string) {
@@ -154,7 +182,7 @@ class Entity {
         var tableTemplate = document.getElementById('template-table') as HTMLTemplateElement;
         var clonedTemplate = document.importNode(tableTemplate.content, true);
 
-        var tableNameElement = getInputElementByName(clonedTemplate, 'table-name');
+        var tableNameElement = getInputElementByName(clonedTemplate, TableBlockName.TableName);
         tableNameElement.value = tableName;
 
         parentElement.appendChild(clonedTemplate);
@@ -164,16 +192,16 @@ class Entity {
         var layoutRowTemplate = document.getElementById('template-layout-row') as HTMLTemplateElement;
         var clonedTemplate = document.importNode(layoutRowTemplate.content, true);
 
-        getInputElementByName(clonedTemplate, 'pk').checked = isCheckMark(columns[LayoutColumn.PrimaryKey]);
-        getInputElementByName(clonedTemplate, 'nn').checked = isCheckMark(columns[LayoutColumn.NotNull]);
+        getInputElementByName(clonedTemplate, LayoutBlockName.PrimaryKey).checked = isCheckMark(columns[LayoutColumn.PrimaryKey]);
+        getInputElementByName(clonedTemplate, LayoutBlockName.NotNull).checked = isCheckMark(columns[LayoutColumn.NotNull]);
 
-        getInputElementByName(clonedTemplate, 'fk').value = columns[LayoutColumn.ForeignKey];
+        getInputElementByName(clonedTemplate, LayoutBlockName.ForeignKey).value = columns[LayoutColumn.ForeignKey];
 
-        getInputElementByName(clonedTemplate, 'name-logical').value = columns[LayoutColumn.LogicalColumnName];
-        getInputElementByName(clonedTemplate, 'name-physical').value = columns[LayoutColumn.PhysicalColumnName];
+        getInputElementByName(clonedTemplate, LayoutBlockName.LogicalColumnName).value = columns[LayoutColumn.LogicalColumnName];
+        getInputElementByName(clonedTemplate, LayoutBlockName.PhysicalColumnName).value = columns[LayoutColumn.PhysicalColumnName];
 
-        var logicalDataElement = getSelectElementByName(clonedTemplate, 'data-logical');
-        var physicalDataElement = getInputElementByName(clonedTemplate, 'data-physical'); // 一方通行イベントで使うのでキャプチャしとく。メモリは無限
+        var logicalDataElement = getSelectElementByName(clonedTemplate, LayoutBlockName.LogicalType);
+        var physicalDataElement = getInputElementByName(clonedTemplate, LayoutBlockName.PhysicalType); // 一方通行イベントで使うのでキャプチャしとく。メモリは無限
         logicalDataElement.value = columns[LayoutColumn.LogicalType];
         logicalDataElement.addEventListener('change', ev => {
             var physicalValue = DatabaseTypeMap.get(logicalDataElement.value);
@@ -181,10 +209,10 @@ class Entity {
         });
         logicalDataElement.dispatchEvent(new Event('change'));
 
-        getSelectElementByName(clonedTemplate, 'data-clr').value = columns[LayoutColumn.ClrType];
+        getSelectElementByName(clonedTemplate, LayoutBlockName.ClrType).value = columns[LayoutColumn.ClrType];
         
-        getInputElementByName(clonedTemplate, 'check').value = columns[LayoutColumn.CheckConstraint];
-        getInputElementByName(clonedTemplate, 'comment').value = columns[LayoutColumn.Comment];
+        getInputElementByName(clonedTemplate, LayoutBlockName.CheckConstraint).value = columns[LayoutColumn.CheckConstraint];
+        getInputElementByName(clonedTemplate, LayoutBlockName.Comment).value = columns[LayoutColumn.Comment];
         
         return clonedTemplate;
     }
@@ -207,7 +235,7 @@ class Entity {
         var indexRowColumnTemplate = document.getElementById('template-index-row-column') as HTMLTemplateElement;
         var clonedTemplate = document.importNode(indexRowColumnTemplate.content, true);
 
-        getInputElementByName(clonedTemplate, 'c').value = column;
+        getInputElementByName(clonedTemplate, IndexBlockName.ColumnName).value = column;
 
         return clonedTemplate;
     }
@@ -216,9 +244,9 @@ class Entity {
         var indexRowTemplate = document.getElementById('template-index-row') as HTMLTemplateElement;
         var clonedTemplate = document.importNode(indexRowTemplate.content, true);
 
-        getInputElementByName(clonedTemplate, 'uk').checked = isUnique;
+        getInputElementByName(clonedTemplate, IndexBlockName.Columns).checked = isUnique;
 
-        var columnsElement = clonedTemplate.querySelector('[name="columns"]')!;
+        var columnsElement = getElementByName(clonedTemplate, IndexBlockName.Columns);
         for(var column of columns) {
             var columnElement = this.createIndexRowColumnNode(column);
             columnsElement.appendChild(columnElement);
@@ -252,10 +280,14 @@ class Entity {
             layout: lines.slice(index.layout.head, index.layout.tail),
             index: lines.slice(index.index.head, index.index.tail)
         });
-        
+
         this.buildTable(this.blockElements.table, define.table);
         this.buildLayout(this.blockElements.layout, this.convertRowLines(define.layout));
         this.buildIndex(this.blockElements.index, this.convertRowLines(define.index));
+    }
+
+    public getTableName(): string {
+        return getInputElementByName(this.blockElements.table, TableBlockName.TableName).value;
     }
 }
 
