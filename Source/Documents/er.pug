@@ -16,6 +16,7 @@ html
                 input(type="text", name="table-name")
 
         template#template-layout
+            h4 Layout
             table
                 thead
                     tr
@@ -30,6 +31,10 @@ html
                         th チェック制約
                         th コメント
                 tbody
+                tfoot
+                    tr
+                        td(colspan="10")
+                            button(name="add") add column
 
         template#template-layout-row
             tr(name="layout-row-root")
@@ -72,24 +77,31 @@ html
                     input(type="text", name="comment")
 
         template#template-index
+            h4 Index
             table
                 thead
                     tr
                         th UK
                         th カラム
+                tbody
+                tfoot
+                    tr
+                        td(colspan="2")
+                            button(name="add") add index
+
 
         template#template-index-row
             tr(name="index-row-root")
                 td 
                     input(type="checkbox", name="uk")
                 td
-                    ul(name="columns")
-                    button(name="add")
+                    ol(name="columns")
         
         template#template-index-row-column
             li(name="index-row-column-root")
+                input(type="hidden", name="c")
                 select(name="column")
-                button(name="delete")
+                button(name="delete") delete
 
     body
         h1 ER図
@@ -98,5 +110,11 @@ html
             div#view-main
             textarea#define-main
                 include er-main.md
-        
+
+        section
+            h2 File
+            div#view-file
+            textarea#define-file
+                -//include er-main.md
+
         script(src="er.ts")

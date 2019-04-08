@@ -50,7 +50,7 @@ function getSelectElementByName(node: ParentNode, name: string): HTMLSelectEleme
     return node.querySelector('[name="' + name + '"]') as HTMLSelectElement;
 }
 
-function isLayoutCheck(value: string) {
+function isCheckMark(value: string) {
     return value === 'o';
 }
 
@@ -139,10 +139,15 @@ class Entity {
     }
 
     convertRowLines(markdownTableLines: ReadonlyArray<string>): ReadonlyArray<ReadonlyArray<string>> {
-        var rows = markdownTableLines.slice(2);
-        return rows
+        var rows = markdownTableLines
             .map(i => i.replace(/(^\|)|(|$)/, ''))
             .map(i => i.split('|').map(s => s.trim()))
+        ;
+        if(2 < rows.length) {
+            return rows.slice(2);
+        }
+
+        return [];
     }
 
     buildTable(parentElement: HTMLDivElement, tableName: string) {
@@ -159,8 +164,8 @@ class Entity {
         var layoutRowTemplate = document.getElementById('template-layout-row') as HTMLTemplateElement;
         var clonedTemplate = document.importNode(layoutRowTemplate.content, true);
 
-        getInputElementByName(clonedTemplate, 'pk').checked = isLayoutCheck(columns[LayoutColumn.PrimaryKey]);
-        getInputElementByName(clonedTemplate, 'nn').checked = isLayoutCheck(columns[LayoutColumn.NotNull]);
+        getInputElementByName(clonedTemplate, 'pk').checked = isCheckMark(columns[LayoutColumn.PrimaryKey]);
+        getInputElementByName(clonedTemplate, 'nn').checked = isCheckMark(columns[LayoutColumn.NotNull]);
 
         getInputElementByName(clonedTemplate, 'fk').value = columns[LayoutColumn.ForeignKey];
 
@@ -184,15 +189,54 @@ class Entity {
         return clonedTemplate;
     }
 
-    buildLayout(parentElement: HTMLDivElement, layoutDefine: ReadonlyArray<string>) {
+    buildLayout(parentElement: HTMLDivElement, layoutRows: ReadonlyArray<ReadonlyArray<string>>) {
         var layoutTemplate = document.getElementById('template-layout') as HTMLTemplateElement;
         var clonedTemplate = document.importNode(layoutTemplate.content, true);
 
         var rowsElement = clonedTemplate.querySelector('tbody') as HTMLElement;
         
-        var layoutRows = this.convertRowLines(layoutDefine);
         for(var layoutRow of layoutRows) {
             var rowElement = this.createLayoutRowNode(layoutRow);
+            rowsElement.appendChild(rowElement)
+        }
+
+        parentElement.appendChild(clonedTemplate);
+    }
+
+    createIndexRowColumnNode(column: string): Node {
+        var indexRowColumnTemplate = document.getElementById('template-index-row-column') as HTMLTemplateElement;
+        var clonedTemplate = document.importNode(indexRowColumnTemplate.content, true);
+
+        getInputElementByName(clonedTemplate, 'c').value = column;
+
+        return clonedTemplate;
+    }
+
+    createIndexRowNode(isUnique: boolean, columns: ReadonlyArray<string>): Node {
+        var indexRowTemplate = document.getElementById('template-index-row') as HTMLTemplateElement;
+        var clonedTemplate = document.importNode(indexRowTemplate.content, true);
+
+        getInputElementByName(clonedTemplate, 'uk').checked = isUnique;
+
+        var columnsElement = clonedTemplate.querySelector('[name="columns"]')!;
+        for(var column of columns) {
+            var columnElement = this.createIndexRowColumnNode(column);
+            columnsElement.appendChild(columnElement);
+        }
+
+        return clonedTemplate;
+    }
+
+    buildIndex(parentElement: HTMLDivElement, indexRows: ReadonlyArray<ReadonlyArray<string>>) {
+        var indexTemplate = document.getElementById('template-index') as HTMLTemplateElement;
+        var clonedTemplate = document.importNode(indexTemplate.content, true);
+
+        var rowsElement = clonedTemplate.querySelector('tbody') as HTMLElement;
+        
+        for(var indexRow of indexRows) {
+            var isUnique = isCheckMark(indexRow[0]);
+            var columns = indexRow[1].split(',').map(s => s.trim());
+            var rowElement = this.createIndexRowNode(isUnique, columns);
             rowsElement.appendChild(rowElement)
         }
 
@@ -210,7 +254,8 @@ class Entity {
         });
         
         this.buildTable(this.blockElements.table, define.table);
-        this.buildLayout(this.blockElements.layout, define.layout);
+        this.buildLayout(this.blockElements.layout, this.convertRowLines(define.layout));
+        this.buildIndex(this.blockElements.index, this.convertRowLines(define.index));
     }
 }
 
