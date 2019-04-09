@@ -3,7 +3,7 @@ html
 		meta(charset="UTF-8")
 		meta(name="viewport", content="width=device-width, initial-scale=1.0")
 		meta(http-equiv="X-UA-Compatible", content="ie=edge")
-		title ER
+		title テーブル
 
 
 		template#template-block
@@ -113,13 +113,13 @@ html
 				button(name="delete") delete
 
 	body
-		h1 ER図
+		h1 テーブル図
 		section
 			h2 Main
 			div#view-main
 			div#command-main
 			textarea#define-main
-				include er-main.md
+				include table-main.md
 			textarea#sql-main
 
 		section
@@ -127,7 +127,7 @@ html
 			div#view-file
 			div#command-file
 			textarea#define-file
-				-//include er-main.md
+				-//include table-file.md
 			textarea#sql-file
 
-		script(src="er.ts")
+		script(src="table.ts")
