@@ -50,6 +50,7 @@ enum TableBlockName {
 enum LayoutBlockName {
 	PrimaryKey = 'pk',
 	NotNull = 'nn',
+	ForeignKeyRoot = 'fk-root',
 	ForeignKey = 'fk',
 	ForeignKeyTable = 'fk-table',
 	ForeignKeyColumn = 'fk-column',
@@ -78,19 +79,24 @@ function getSelectElementByName(node: ParentNode, name: string): HTMLSelectEleme
 	return getElementByName(node, name) as HTMLSelectElement;
 }
 
+function getElementsByName(node: ParentNode, name: string): NodeListOf<HTMLElement> {
+	return node.querySelectorAll('[name="' + name + '"]');
+}
+
+
 function isCheckMark(value: string) {
 	return value === 'o';
 }
 
 class Entity {
-	readonly tableNamePrefix = '## ';
-	blockElements: BlockElements;
+	private readonly tableNamePrefix = '## ';
+	private blockElements: BlockElements;
 
 	constructor(blockElements: BlockElements) {
 		this.blockElements = blockElements;
 	}
 
-	getIndex(lines: ReadonlyArray<string>) {
+	private getIndex(lines: ReadonlyArray<string>) {
 		var regLayout = /^###\s*layout\s*/;
 		var regIndex = /^###\s*index\s*/;
 
@@ -149,14 +155,14 @@ class Entity {
 		throw 'はい、定義ミス';
 	}
 
-	trimMarkdownTable(lines: ReadonlyArray<string>): ReadonlyArray<string> {
+	private trimMarkdownTable(lines: ReadonlyArray<string>): ReadonlyArray<string> {
 		return lines
 			.map(s => s.trim())
 			.filter(s => s.startsWith('|') && s.endsWith('|'))
 			;
 	}
 
-	trimDefine(rawDefine: EntityDefine): EntityDefine {
+	private trimDefine(rawDefine: EntityDefine): EntityDefine {
 		var result = {
 			table: rawDefine.table.substr(this.tableNamePrefix.length),
 			layout: this.trimMarkdownTable(rawDefine.layout),
@@ -166,7 +172,7 @@ class Entity {
 		return result;
 	}
 
-	convertRowLines(markdownTableLines: ReadonlyArray<string>): ReadonlyArray<ReadonlyArray<string>> {
+	private convertRowLines(markdownTableLines: ReadonlyArray<string>): ReadonlyArray<ReadonlyArray<string>> {
 		var rows = markdownTableLines
 			.map(i => i.replace(/(^\|)|(|$)/, ''))
 			.map(i => i.split('|').map(s => s.trim()))
@@ -178,7 +184,7 @@ class Entity {
 		return [];
 	}
 
-	buildTable(parentElement: HTMLDivElement, tableName: string) {
+	private buildTable(parentElement: HTMLDivElement, tableName: string) {
 		var tableTemplate = document.getElementById('template-table') as HTMLTemplateElement;
 		var clonedTemplate = document.importNode(tableTemplate.content, true);
 
@@ -188,7 +194,7 @@ class Entity {
 		parentElement.appendChild(clonedTemplate);
 	}
 
-	createLayoutRowNode(columns: ReadonlyArray<string>): Node {
+	private createLayoutRowNode(columns: ReadonlyArray<string>): Node {
 		var layoutRowTemplate = document.getElementById('template-layout-row') as HTMLTemplateElement;
 		var clonedTemplate = document.importNode(layoutRowTemplate.content, true);
 
@@ -245,7 +251,7 @@ class Entity {
 		return clonedTemplate;
 	}
 
-	buildLayout(parentElement: HTMLDivElement, layoutRows: ReadonlyArray<ReadonlyArray<string>>) {
+	private buildLayout(parentElement: HTMLDivElement, layoutRows: ReadonlyArray<ReadonlyArray<string>>) {
 		var layoutTemplate = document.getElementById('template-layout') as HTMLTemplateElement;
 		var clonedTemplate = document.importNode(layoutTemplate.content, true);
 
@@ -259,7 +265,7 @@ class Entity {
 		parentElement.appendChild(clonedTemplate);
 	}
 
-	createIndexRowColumnNode(column: string): Node {
+	private createIndexRowColumnNode(column: string): Node {
 		var indexRowColumnTemplate = document.getElementById('template-index-row-column') as HTMLTemplateElement;
 		var clonedTemplate = document.importNode(indexRowColumnTemplate.content, true);
 
@@ -268,7 +274,7 @@ class Entity {
 		return clonedTemplate;
 	}
 
-	createIndexRowNode(isUnique: boolean, columns: ReadonlyArray<string>): Node {
+	private createIndexRowNode(isUnique: boolean, columns: ReadonlyArray<string>): Node {
 		var indexRowTemplate = document.getElementById('template-index-row') as HTMLTemplateElement;
 		var clonedTemplate = document.importNode(indexRowTemplate.content, true);
 
@@ -283,7 +289,7 @@ class Entity {
 		return clonedTemplate;
 	}
 
-	buildIndex(parentElement: HTMLDivElement, indexRows: ReadonlyArray<ReadonlyArray<string>>) {
+	private buildIndex(parentElement: HTMLDivElement, indexRows: ReadonlyArray<ReadonlyArray<string>>) {
 		var indexTemplate = document.getElementById('template-index') as HTMLTemplateElement;
 		var clonedTemplate = document.importNode(indexTemplate.content, true);
 
@@ -317,6 +323,31 @@ class Entity {
 	public getTableName(): string {
 		return getInputElementByName(this.blockElements.table, TableBlockName.TableName).value;
 	}
+
+	private buildForeignKeyTable(parentElement: HTMLElement, tableNames: ReadonlyArray<string>) {
+		for(var tableName of tableNames) {
+			var optionElement = document.createElement('option') as HTMLOptionElement;
+			optionElement.value = tableName;
+			optionElement.textContent = tableName;
+
+			parentElement.appendChild(optionElement);
+		}
+	}
+
+	public buildEntities(tableNames: ReadonlyArray<string>, entities: ReadonlyArray<Entity>) {
+		var foreignKeyRootElements = getElementsByName(this.blockElements.layout, LayoutBlockName.ForeignKeyRoot);
+		for(var foreignKeyRootElement of foreignKeyRootElements) {
+
+			var tableElement = getSelectElementByName(foreignKeyRootElement, LayoutBlockName.ForeignKeyTable);
+			var columnElement = getSelectElementByName(foreignKeyRootElement, LayoutBlockName.ForeignKeyColumn);
+
+			this.buildForeignKeyTable(tableElement, tableNames);
+
+			var kfElement = getElementByName(foreignKeyRootElement, LayoutBlockName.ForeignKey);
+
+		}
+	}
+
 }
 
 class EntityRelationManager {
@@ -334,7 +365,7 @@ class EntityRelationManager {
 		this.sqlElement = sqlElement;
 	}
 
-	createBlockElements(): BlockElements {
+	private createBlockElements(): BlockElements {
 		var blockTemplate = document.getElementById('template-block') as HTMLTemplateElement;
 		var clonedTemplate = document.importNode(blockTemplate.content, true);
 		var block = {
@@ -347,7 +378,7 @@ class EntityRelationManager {
 		return block;
 	}
 
-	buildCommand(parentElement: HTMLDivElement) {
+	private buildCommand(parentElement: HTMLDivElement) {
 		var indexTemplate = document.getElementById('template-command') as HTMLTemplateElement;
 		var clonedTemplate = document.importNode(indexTemplate.content, true);
 
@@ -365,6 +396,26 @@ class EntityRelationManager {
 		parentElement.appendChild(clonedTemplate);
 	}
 
+	private getTableNames(entities: ReadonlyArray<Entity>, firstIsEntity: boolean): ReadonlyArray<string> {
+		var tableNames = entities
+			.map(i => i.getTableName())
+			.sort()
+		;
+		if(firstIsEntity) {
+			tableNames.unshift('');
+		}
+
+		return tableNames;
+	}
+
+	private buildEntityMapping(entities: ReadonlyArray<Entity>) {
+		var tableNames = this.getTableNames(entities, true);
+
+		for(var entity of entities) {
+			entity.buildEntities(tableNames, entities);
+		}
+	}
+
 	public build() {
 		this.buildCommand(this.commandElement);
 
@@ -380,6 +431,8 @@ class EntityRelationManager {
 
 			this.viewElement.appendChild(blockElements.root);
 		}
+
+		this.buildEntityMapping(this.entities);
 	}
 
 	reset() {
