@@ -59,3 +59,4 @@ ___
 | UK | カラム(CSV) |
 |:--:|:------------|
 | o  | Code        |
+| o  | UpdatedProgramName, Code, Note        |

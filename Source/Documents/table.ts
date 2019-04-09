@@ -63,12 +63,16 @@ enum LayoutBlockName {
 	ClrType = 'data-clr',
 	CheckConstraint = 'check',
 	Comment = 'comment',
+	Delete = 'delete',
 }
 
 enum IndexBlockName {
+	IndexRowRoot = 'index-row-root',
+	IndexRowColumnRoot = 'index-row-column-root',
 	ColumnName = 'c',
 	UniqueKey = 'uk',
-	Columns = 'columns'
+	Columns = 'columns',
+	Column = 'column',
 }
 
 function getElementByName(node: ParentNode, name: string): HTMLElement {
@@ -364,7 +368,7 @@ class Entity {
 		}
 	}
 
-	public buildEntities(entities: ReadonlyArray<Entity>) {
+	private buildEntityForeignKey(entities: ReadonlyArray<Entity>){
 		var foreignKeyRootElements = getElementsByName(this.blockElements.layout, LayoutBlockName.ForeignKeyRoot);
 		for(var foreignKeyRootElement of foreignKeyRootElements) {
 
@@ -412,6 +416,29 @@ class Entity {
 			}
 			kfElement.value = '';
 		}
+	}
+
+	private buildEntityIndex() {
+		var columnNames = this.getColumnNames();
+		var indexRowRootElements = getElementsByName(this.blockElements.index, IndexBlockName.IndexRowRoot);
+		for(var indexRowRootElement of indexRowRootElements) {
+			var columnsElements = getSelectElementsByName(indexRowRootElement, IndexBlockName.Column);
+			for(var columnsElement of columnsElements) {
+				for(var columnName of columnNames) {
+					var optionElement = document.createElement('option');
+					optionElement.value = columnName;
+					optionElement.textContent = columnName;
+
+					columnsElement.appendChild(optionElement);
+				}
+				columnsElement.value = getInputElementByName(columnsElement.parentElement!, IndexBlockName.ColumnName).value;
+			}
+		}
+	}
+
+	public buildEntities(entities: ReadonlyArray<Entity>) {
+		this.buildEntityForeignKey(entities);
+		this.buildEntityIndex();
 	}
 
 }
