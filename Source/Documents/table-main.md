@@ -36,7 +36,7 @@ ___
 |:--:|:--:|:---|:-------------|:-------------------------|:-------------|:----------------|:-------------|:---------|
 | o  | o  |    |              | LauncherItemId           | text         | System.Guid     |              |          |
 |    | o  |    |              | CreatedTimestamp         | datetime     | System.DateTime |              | UTC      |
-|    | o  |    |              | CreatedAccount           | text         | System.String   |              |          |
+|    | o  |  AppSystems.Key  |              | CreatedAccount           | text         | System.String   |              |          |
 |    | o  |    |              | CreatedProgramName       | text         | System.String   |              |          |
 |    | o  |    |              | CreatedProgramVersion    | text         | System.Version  |              |          |
 |    | o  |    |              | UpdatedTimestamp         | datetime     | System.DateTime |              | UTC      |

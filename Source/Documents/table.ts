@@ -1,3 +1,5 @@
+// カラム名変更とか追加とか削除とかはキッツいので手動対応
+
 interface BlockElements {
 	root: HTMLDivElement;
 	table: HTMLDivElement;
@@ -81,6 +83,12 @@ function getSelectElementByName(node: ParentNode, name: string): HTMLSelectEleme
 
 function getElementsByName(node: ParentNode, name: string): NodeListOf<HTMLElement> {
 	return node.querySelectorAll('[name="' + name + '"]');
+}
+function getInputElementsByName(node: ParentNode, name: string): NodeListOf<HTMLInputElement> {
+	return getElementsByName(node, name) as NodeListOf<HTMLInputElement>;
+}
+function getSelectElementsByName(node: ParentNode, name: string): NodeListOf<HTMLSelectElement> {
+	return getElementsByName(node, name) as NodeListOf<HTMLSelectElement>;
 }
 
 
@@ -324,7 +332,8 @@ class Entity {
 		return getInputElementByName(this.blockElements.table, TableBlockName.TableName).value;
 	}
 
-	private buildForeignKeyTable(parentElement: HTMLElement, tableNames: ReadonlyArray<string>) {
+	private buildForeignKeyTable(parentElement: HTMLSelectElement, tableNames: ReadonlyArray<string>) {
+		parentElement.appendChild(document.createElement('option'));
 		for(var tableName of tableNames) {
 			var optionElement = document.createElement('option') as HTMLOptionElement;
 			optionElement.value = tableName;
@@ -334,17 +343,69 @@ class Entity {
 		}
 	}
 
-	public buildEntities(tableNames: ReadonlyArray<string>, entities: ReadonlyArray<Entity>) {
+	public getColumnNames(): ReadonlyArray<string> {
+		var columnElements = getInputElementsByName(this.blockElements.layout, LayoutBlockName.PhysicalColumnName);
+		var result = new Array<string>();
+		for(var columnElement of columnElements) {
+			result.push(columnElement.value);
+		}
+		return result;
+	}
+
+	private buildForeignKeyColumns(parentElement: HTMLSelectElement, targetEntity: Entity) {
+		parentElement.textContent = '';
+
+		var columnNames = targetEntity.getColumnNames();
+		for(var columnName of columnNames) {
+			var optionElement = document.createElement('option');
+			optionElement.value = columnName;
+			optionElement.textContent = columnName;
+			parentElement.appendChild(optionElement);
+		}
+	}
+
+	public buildEntities(entities: ReadonlyArray<Entity>) {
 		var foreignKeyRootElements = getElementsByName(this.blockElements.layout, LayoutBlockName.ForeignKeyRoot);
 		for(var foreignKeyRootElement of foreignKeyRootElements) {
 
 			var tableElement = getSelectElementByName(foreignKeyRootElement, LayoutBlockName.ForeignKeyTable);
 			var columnElement = getSelectElementByName(foreignKeyRootElement, LayoutBlockName.ForeignKeyColumn);
 
-			this.buildForeignKeyTable(tableElement, tableNames);
+			var targetEntities = entities
+				.filter(i => i !== this)
+			;
 
-			var kfElement = getElementByName(foreignKeyRootElement, LayoutBlockName.ForeignKey);
+			var targetTableNames = targetEntities
+				.map(i => i.getTableName())
+				.sort()
+			;
 
+			this.buildForeignKeyTable(tableElement, targetTableNames);
+			tableElement.addEventListener('change', ev => {
+				var targetEntity = targetEntities
+					.find(i => i.getTableName() === tableElement.value)
+				;
+				if(targetEntity) {
+					this.buildForeignKeyColumns(columnElement, targetEntity);
+				} else {
+					columnElement.textContent = '';
+				}
+			});
+
+			var kfElement = getInputElementByName(foreignKeyRootElement, LayoutBlockName.ForeignKey);
+			if(kfElement.value) {
+				var v = kfElement.value.split('.');
+				var kfPair = {
+					table: v[0].trim(),
+					column: v[1].trim(),
+				};
+				tableElement.value = kfPair.table;
+				tableElement.dispatchEvent(new Event('change'));
+				columnElement.value = kfPair.column;
+			} else {
+				tableElement.dispatchEvent(new Event('change'));
+			}
+			kfElement.value = '';
 		}
 	}
 
@@ -396,23 +457,9 @@ class EntityRelationManager {
 		parentElement.appendChild(clonedTemplate);
 	}
 
-	private getTableNames(entities: ReadonlyArray<Entity>, firstIsEntity: boolean): ReadonlyArray<string> {
-		var tableNames = entities
-			.map(i => i.getTableName())
-			.sort()
-		;
-		if(firstIsEntity) {
-			tableNames.unshift('');
-		}
-
-		return tableNames;
-	}
-
 	private buildEntityMapping(entities: ReadonlyArray<Entity>) {
-		var tableNames = this.getTableNames(entities, true);
-
 		for(var entity of entities) {
-			entity.buildEntities(tableNames, entities);
+			entity.buildEntities(entities);
 		}
 	}
 
