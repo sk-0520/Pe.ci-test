@@ -192,8 +192,17 @@ class Entity {
 		var layoutRowTemplate = document.getElementById('template-layout-row') as HTMLTemplateElement;
 		var clonedTemplate = document.importNode(layoutRowTemplate.content, true);
 
-		getInputElementByName(clonedTemplate, LayoutBlockName.PrimaryKey).checked = isCheckMark(columns[LayoutColumn.PrimaryKey]);
-		getInputElementByName(clonedTemplate, LayoutBlockName.NotNull).checked = isCheckMark(columns[LayoutColumn.NotNull]);
+		var primaryElement = getInputElementByName(clonedTemplate, LayoutBlockName.PrimaryKey);
+		var notNullElement = getInputElementByName(clonedTemplate, LayoutBlockName.NotNull)
+		primaryElement.checked = isCheckMark(columns[LayoutColumn.PrimaryKey]);
+		notNullElement.checked = isCheckMark(columns[LayoutColumn.NotNull]);
+		primaryElement.addEventListener('change', ev => {
+			notNullElement.disabled = primaryElement.checked;
+			if(primaryElement.checked) {
+				notNullElement.checked =true;
+			}
+		});
+		primaryElement.dispatchEvent(new Event('change'));
 
 		getInputElementByName(clonedTemplate, LayoutBlockName.ForeignKey).value = columns[LayoutColumn.ForeignKey];
 
