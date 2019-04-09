@@ -33,6 +33,20 @@ const ClrMap = new Map([
 	['boolean', new Set(['System.Boolean', 'System.Int64'])],
 ]) as ReadonlyMap<string, ReadonlySet<string>>;
 
+const CommonCreatedColumns = [
+	'CreatedTimestamp',
+	'CreatedAccount',
+	'CreatedProgramName',
+	'CreatedProgramVersion',
+] as ReadonlyArray<string>;
+const CommonUpdatedColumns = [
+	'UpdatedTimestamp',
+	'UpdatedAccount',
+	'UpdatedProgramName',
+	'UpdatedProgramVersion',
+	'UpdatedCount',
+] as ReadonlyArray<string>;
+
 enum LayoutColumn {
 	PrimaryKey = 0,
 	NotNull = 1,
@@ -290,7 +304,7 @@ class Entity {
 		var indexRowTemplate = document.getElementById('template-index-row') as HTMLTemplateElement;
 		var clonedTemplate = document.importNode(indexRowTemplate.content, true);
 
-		getInputElementByName(clonedTemplate, IndexBlockName.Columns).checked = isUnique;
+		getInputElementByName(clonedTemplate, IndexBlockName.UniqueKey).checked = isUnique;
 
 		var columnsElement = getElementByName(clonedTemplate, IndexBlockName.Columns);
 		for (var column of columns) {
@@ -347,10 +361,23 @@ class Entity {
 		}
 	}
 
-	public getColumnNames(): ReadonlyArray<string> {
+	public getColumnNames(ignoreCommonColumn: boolean): ReadonlyArray<string> {
+		var isIgnoreColumn = (s:string) => {
+			if(CommonCreatedColumns.some(i => i === s)) {
+				return true;
+			}
+			if(CommonUpdatedColumns.some(i => i === s)) {
+				return true;
+			}
+
+			return false;
+		}
 		var columnElements = getInputElementsByName(this.blockElements.layout, LayoutBlockName.PhysicalColumnName);
 		var result = new Array<string>();
 		for(var columnElement of columnElements) {
+			if(ignoreCommonColumn && isIgnoreColumn(columnElement.value)) {
+					continue;
+			}
 			result.push(columnElement.value);
 		}
 		return result;
@@ -359,7 +386,7 @@ class Entity {
 	private buildForeignKeyColumns(parentElement: HTMLSelectElement, targetEntity: Entity) {
 		parentElement.textContent = '';
 
-		var columnNames = targetEntity.getColumnNames();
+		var columnNames = targetEntity.getColumnNames(true);
 		for(var columnName of columnNames) {
 			var optionElement = document.createElement('option');
 			optionElement.value = columnName;
@@ -419,7 +446,7 @@ class Entity {
 	}
 
 	private buildEntityIndex() {
-		var columnNames = this.getColumnNames();
+		var columnNames = this.getColumnNames(true);
 		var indexRowRootElements = getElementsByName(this.blockElements.index, IndexBlockName.IndexRowRoot);
 		for(var indexRowRootElement of indexRowRootElements) {
 			var columnsElements = getSelectElementsByName(indexRowRootElement, IndexBlockName.Column);
