@@ -1,391 +1,391 @@
 interface BlockElements {
-    root: HTMLDivElement;
-    table: HTMLDivElement;
-    layout: HTMLDivElement;
-    index: HTMLDivElement;
+	root: HTMLDivElement;
+	table: HTMLDivElement;
+	layout: HTMLDivElement;
+	index: HTMLDivElement;
 }
 
 interface EntityDefine {
-    table: string;
-    layout: ReadonlyArray<string>;
-    index: ReadonlyArray<string>;
+	table: string;
+	layout: ReadonlyArray<string>;
+	index: ReadonlyArray<string>;
 }
 
 const DatabaseTypeMap = new Map([
-    // 通常
-    ['integer', 'integer'],
-    ['real', 'real'],
-    ['text', 'text'],
-    ['blob', 'blob'],
-    // 意味だけ
-    ['datetime', 'text'],
-    ['boolean', 'integer'],
+	// 通常
+	['integer', 'integer'],
+	['real', 'real'],
+	['text', 'text'],
+	['blob', 'blob'],
+	// 意味だけ
+	['datetime', 'text'],
+	['boolean', 'integer'],
 ]) as ReadonlyMap<string, string>;
 
 const ClrMap = new Map([
-    ['integer',  new Set([ 'System.Int64' ])],
-    ['real',     new Set([ 'System.Decimal', 'System.Single', 'System.Double' ])],
-    ['text',     new Set([ 'System.String', 'System.Guid', 'System.Version' ])],
-    ['blob',     new Set([ 'System.Byte[]' ])],
-    ['datetime', new Set([ 'System.DateTime', 'System.String' ])],
-    ['boolean',  new Set([ 'System.Boolean', 'System.Int64' ])],
+	['integer', new Set(['System.Int64'])],
+	['real', new Set(['System.Decimal', 'System.Single', 'System.Double'])],
+	['text', new Set(['System.String', 'System.Guid', 'System.Version'])],
+	['blob', new Set(['System.Byte[]'])],
+	['datetime', new Set(['System.DateTime', 'System.String'])],
+	['boolean', new Set(['System.Boolean', 'System.Int64'])],
 ]) as ReadonlyMap<string, ReadonlySet<string>>;
 
 enum LayoutColumn {
-    PrimaryKey = 0,
-    NotNull = 1,
-    ForeignKey = 2,
-    LogicalColumnName = 3,
-    PhysicalColumnName = 4,
-    LogicalType = 5,
-    ClrType = 6,
-    CheckConstraint = 7,
-    Comment = 8,
+	PrimaryKey = 0,
+	NotNull = 1,
+	ForeignKey = 2,
+	LogicalColumnName = 3,
+	PhysicalColumnName = 4,
+	LogicalType = 5,
+	ClrType = 6,
+	CheckConstraint = 7,
+	Comment = 8,
 }
 
 enum TableBlockName {
-    TableName = 'table-name',
+	TableName = 'table-name',
 }
 
 enum LayoutBlockName {
-    PrimaryKey = 'pk',
-    NotNull = 'nn',
-    ForeignKey = 'fk',
-    ForeignKeyTable = 'fk-table',
-    ForeignKeyColumn = 'fk-column',
-    LogicalColumnName = 'name-logical',
-    PhysicalColumnName = 'name-physical',
-    LogicalType = 'data-logical',
-    PhysicalType = 'data-physical',
-    ClrType = 'data-clr',
-    CheckConstraint = 'check',
-    Comment = 'comment',
+	PrimaryKey = 'pk',
+	NotNull = 'nn',
+	ForeignKey = 'fk',
+	ForeignKeyTable = 'fk-table',
+	ForeignKeyColumn = 'fk-column',
+	LogicalColumnName = 'name-logical',
+	PhysicalColumnName = 'name-physical',
+	LogicalType = 'data-logical',
+	PhysicalType = 'data-physical',
+	ClrType = 'data-clr',
+	CheckConstraint = 'check',
+	Comment = 'comment',
 }
 
 enum IndexBlockName {
-    ColumnName = 'c',
-    UniqueKey = 'uk',
-    Columns = 'columns'
+	ColumnName = 'c',
+	UniqueKey = 'uk',
+	Columns = 'columns'
 }
 
 function getElementByName(node: ParentNode, name: string): HTMLElement {
-    return node.querySelector('[name="' + name + '"]') as HTMLElement;
+	return node.querySelector('[name="' + name + '"]') as HTMLElement;
 }
 function getInputElementByName(node: ParentNode, name: string): HTMLInputElement {
-    return getElementByName(node, name) as HTMLInputElement;
+	return getElementByName(node, name) as HTMLInputElement;
 }
 function getSelectElementByName(node: ParentNode, name: string): HTMLSelectElement {
-    return getElementByName(node, name)  as HTMLSelectElement;
+	return getElementByName(node, name) as HTMLSelectElement;
 }
 
 function isCheckMark(value: string) {
-    return value === 'o';
+	return value === 'o';
 }
 
 class Entity {
-    readonly tableNamePrefix = '## ';
-    blockElements: BlockElements;
+	readonly tableNamePrefix = '## ';
+	blockElements: BlockElements;
 
-    constructor(blockElements: BlockElements) {
-        this.blockElements = blockElements;
-    }
+	constructor(blockElements: BlockElements) {
+		this.blockElements = blockElements;
+	}
 
-    getIndex(lines: ReadonlyArray<string>) {
-        var regLayout = /^###\s*layout\s*/;
-        var regIndex  = /^###\s*index\s*/;
+	getIndex(lines: ReadonlyArray<string>) {
+		var regLayout = /^###\s*layout\s*/;
+		var regIndex = /^###\s*index\s*/;
 
-        enum State {
-            Table,
-            Layout,
-            Index,
-        };
+		enum State {
+			Table,
+			Layout,
+			Index,
+		};
 
-        var state = State.Table;
+		var state = State.Table;
 
-        var lineIndex = {
-            table: -1,
-            layout: {
-                head: -1,
-                tail: -1
-            },
-            index: {
-                head: -1,
-                tail: -1
-            }
-        };
+		var lineIndex = {
+			table: -1,
+			layout: {
+				head: -1,
+				tail: -1
+			},
+			index: {
+				head: -1,
+				tail: -1
+			}
+		};
 
-        for(var i = 0; i < lines.length; i++) {
-            var line = lines[i];
+		for (var i = 0; i < lines.length; i++) {
+			var line = lines[i];
 
-            switch(state) {
-                case State.Table:
-                    if(line.startsWith(this.tableNamePrefix)) {
-                        lineIndex.table = i;
-                        state = State.Layout;
-                    }
-                    break;
+			switch (state) {
+				case State.Table:
+					if (line.startsWith(this.tableNamePrefix)) {
+						lineIndex.table = i;
+						state = State.Layout;
+					}
+					break;
 
-                case State.Layout:
-                    if(regLayout.test(line)) {
-                        lineIndex.layout.head = i + 1;
-                        state = State.Index;
-                    }
-                    break;
-                    
-                case State.Index:
-                    if(regIndex.test(line)) {
-                        lineIndex.layout.tail = i;
-                        lineIndex.index.head = i + 1;
-                        lineIndex.index.tail = lines.length;
-                        return lineIndex;
-                    }
-                    break;
-             
-                default:
-                    throw 'こねーよ！';
-            }
-        }
+				case State.Layout:
+					if (regLayout.test(line)) {
+						lineIndex.layout.head = i + 1;
+						state = State.Index;
+					}
+					break;
 
-        throw 'はい、定義ミス';
-    }
+				case State.Index:
+					if (regIndex.test(line)) {
+						lineIndex.layout.tail = i;
+						lineIndex.index.head = i + 1;
+						lineIndex.index.tail = lines.length;
+						return lineIndex;
+					}
+					break;
 
-    trimMarkdownTable(lines: ReadonlyArray<string>): ReadonlyArray<string> {
-        return lines
-            .map(s => s.trim())
-            .filter(s => s.startsWith('|') && s.endsWith('|'))
-        ;
-    }
+				default:
+					throw 'こねーよ！';
+			}
+		}
 
-    trimDefine(rawDefine: EntityDefine): EntityDefine {
-        var result = {
-            table: rawDefine.table.substr(this.tableNamePrefix.length),
-            layout: this.trimMarkdownTable(rawDefine.layout),
-            index: this.trimMarkdownTable(rawDefine.index),
-        } as EntityDefine;
+		throw 'はい、定義ミス';
+	}
 
-        return result;
-    }
+	trimMarkdownTable(lines: ReadonlyArray<string>): ReadonlyArray<string> {
+		return lines
+			.map(s => s.trim())
+			.filter(s => s.startsWith('|') && s.endsWith('|'))
+			;
+	}
 
-    convertRowLines(markdownTableLines: ReadonlyArray<string>): ReadonlyArray<ReadonlyArray<string>> {
-        var rows = markdownTableLines
-            .map(i => i.replace(/(^\|)|(|$)/, ''))
-            .map(i => i.split('|').map(s => s.trim()))
-        ;
-        if(2 < rows.length) {
-            return rows.slice(2);
-        }
+	trimDefine(rawDefine: EntityDefine): EntityDefine {
+		var result = {
+			table: rawDefine.table.substr(this.tableNamePrefix.length),
+			layout: this.trimMarkdownTable(rawDefine.layout),
+			index: this.trimMarkdownTable(rawDefine.index),
+		} as EntityDefine;
 
-        return [];
-    }
+		return result;
+	}
 
-    buildTable(parentElement: HTMLDivElement, tableName: string) {
-        var tableTemplate = document.getElementById('template-table') as HTMLTemplateElement;
-        var clonedTemplate = document.importNode(tableTemplate.content, true);
+	convertRowLines(markdownTableLines: ReadonlyArray<string>): ReadonlyArray<ReadonlyArray<string>> {
+		var rows = markdownTableLines
+			.map(i => i.replace(/(^\|)|(|$)/, ''))
+			.map(i => i.split('|').map(s => s.trim()))
+			;
+		if (2 < rows.length) {
+			return rows.slice(2);
+		}
 
-        var tableNameElement = getInputElementByName(clonedTemplate, TableBlockName.TableName);
-        tableNameElement.value = tableName;
+		return [];
+	}
 
-        parentElement.appendChild(clonedTemplate);
-    }
+	buildTable(parentElement: HTMLDivElement, tableName: string) {
+		var tableTemplate = document.getElementById('template-table') as HTMLTemplateElement;
+		var clonedTemplate = document.importNode(tableTemplate.content, true);
 
-    createLayoutRowNode(columns: ReadonlyArray<string>): Node {
-        var layoutRowTemplate = document.getElementById('template-layout-row') as HTMLTemplateElement;
-        var clonedTemplate = document.importNode(layoutRowTemplate.content, true);
+		var tableNameElement = getInputElementByName(clonedTemplate, TableBlockName.TableName);
+		tableNameElement.value = tableName;
 
-        getInputElementByName(clonedTemplate, LayoutBlockName.PrimaryKey).checked = isCheckMark(columns[LayoutColumn.PrimaryKey]);
-        getInputElementByName(clonedTemplate, LayoutBlockName.NotNull).checked = isCheckMark(columns[LayoutColumn.NotNull]);
+		parentElement.appendChild(clonedTemplate);
+	}
 
-        getInputElementByName(clonedTemplate, LayoutBlockName.ForeignKey).value = columns[LayoutColumn.ForeignKey];
+	createLayoutRowNode(columns: ReadonlyArray<string>): Node {
+		var layoutRowTemplate = document.getElementById('template-layout-row') as HTMLTemplateElement;
+		var clonedTemplate = document.importNode(layoutRowTemplate.content, true);
 
-        getInputElementByName(clonedTemplate, LayoutBlockName.LogicalColumnName).value = columns[LayoutColumn.LogicalColumnName];
-        getInputElementByName(clonedTemplate, LayoutBlockName.PhysicalColumnName).value = columns[LayoutColumn.PhysicalColumnName];
+		getInputElementByName(clonedTemplate, LayoutBlockName.PrimaryKey).checked = isCheckMark(columns[LayoutColumn.PrimaryKey]);
+		getInputElementByName(clonedTemplate, LayoutBlockName.NotNull).checked = isCheckMark(columns[LayoutColumn.NotNull]);
 
-        var logicalDataElement = getSelectElementByName(clonedTemplate, LayoutBlockName.LogicalType);
-        var physicalDataElement = getInputElementByName(clonedTemplate, LayoutBlockName.PhysicalType); // 一方通行イベントで使うのでキャプチャしとく。メモリは無限
-        var clrDataElement = getSelectElementByName(clonedTemplate, LayoutBlockName.ClrType);
-        logicalDataElement.value = columns[LayoutColumn.LogicalType];
-        clrDataElement.value = columns[LayoutColumn.ClrType];
-        logicalDataElement.addEventListener('change', ev => {
-            var physicalValue = DatabaseTypeMap.get(logicalDataElement.value);
-            physicalDataElement.value = physicalValue || 'なんかデータ変';
+		getInputElementByName(clonedTemplate, LayoutBlockName.ForeignKey).value = columns[LayoutColumn.ForeignKey];
 
-            // CLR に対して Pe で出来る範囲で型を限定
-            var optionElements = clrDataElement.querySelectorAll('option');
-            var selectedElement: HTMLOptionElement|null = null;
-            var firstEnabledElement:HTMLOptionElement|null = null;
-            for(var optionElement of optionElements) {
-                var clrValues = ClrMap.get(logicalDataElement.value)!;
-                optionElement.disabled = !clrValues.has(optionElement.value);
-                if(!optionElement.disabled && !firstEnabledElement) {
-                    firstEnabledElement = optionElement;
-                }
-                if(optionElement.selected) {
-                    selectedElement = optionElement;
-                }
-            }
-            if(selectedElement && selectedElement.disabled) {
-                firstEnabledElement!.selected = true;
-            }
-        });
-        logicalDataElement.dispatchEvent(new Event('change'));
+		getInputElementByName(clonedTemplate, LayoutBlockName.LogicalColumnName).value = columns[LayoutColumn.LogicalColumnName];
+		getInputElementByName(clonedTemplate, LayoutBlockName.PhysicalColumnName).value = columns[LayoutColumn.PhysicalColumnName];
 
-        
-        getInputElementByName(clonedTemplate, LayoutBlockName.CheckConstraint).value = columns[LayoutColumn.CheckConstraint];
-        getInputElementByName(clonedTemplate, LayoutBlockName.Comment).value = columns[LayoutColumn.Comment];
-        
-        return clonedTemplate;
-    }
+		var logicalDataElement = getSelectElementByName(clonedTemplate, LayoutBlockName.LogicalType);
+		var physicalDataElement = getInputElementByName(clonedTemplate, LayoutBlockName.PhysicalType); // 一方通行イベントで使うのでキャプチャしとく。メモリは無限
+		var clrDataElement = getSelectElementByName(clonedTemplate, LayoutBlockName.ClrType);
+		logicalDataElement.value = columns[LayoutColumn.LogicalType];
+		clrDataElement.value = columns[LayoutColumn.ClrType];
+		logicalDataElement.addEventListener('change', ev => {
+			var physicalValue = DatabaseTypeMap.get(logicalDataElement.value);
+			physicalDataElement.value = physicalValue || 'なんかデータ変';
 
-    buildLayout(parentElement: HTMLDivElement, layoutRows: ReadonlyArray<ReadonlyArray<string>>) {
-        var layoutTemplate = document.getElementById('template-layout') as HTMLTemplateElement;
-        var clonedTemplate = document.importNode(layoutTemplate.content, true);
+			// CLR に対して Pe で出来る範囲で型を限定
+			var optionElements = clrDataElement.querySelectorAll('option');
+			var selectedElement: HTMLOptionElement | null = null;
+			var firstEnabledElement: HTMLOptionElement | null = null;
+			for (var optionElement of optionElements) {
+				var clrValues = ClrMap.get(logicalDataElement.value)!;
+				optionElement.disabled = !clrValues.has(optionElement.value);
+				if (!optionElement.disabled && !firstEnabledElement) {
+					firstEnabledElement = optionElement;
+				}
+				if (optionElement.selected) {
+					selectedElement = optionElement;
+				}
+			}
+			if (selectedElement && selectedElement.disabled) {
+				firstEnabledElement!.selected = true;
+			}
+		});
+		logicalDataElement.dispatchEvent(new Event('change'));
 
-        var rowsElement = clonedTemplate.querySelector('tbody') as HTMLElement;
-        
-        for(var layoutRow of layoutRows) {
-            var rowElement = this.createLayoutRowNode(layoutRow);
-            rowsElement.appendChild(rowElement)
-        }
 
-        parentElement.appendChild(clonedTemplate);
-    }
+		getInputElementByName(clonedTemplate, LayoutBlockName.CheckConstraint).value = columns[LayoutColumn.CheckConstraint];
+		getInputElementByName(clonedTemplate, LayoutBlockName.Comment).value = columns[LayoutColumn.Comment];
 
-    createIndexRowColumnNode(column: string): Node {
-        var indexRowColumnTemplate = document.getElementById('template-index-row-column') as HTMLTemplateElement;
-        var clonedTemplate = document.importNode(indexRowColumnTemplate.content, true);
+		return clonedTemplate;
+	}
 
-        getInputElementByName(clonedTemplate, IndexBlockName.ColumnName).value = column;
+	buildLayout(parentElement: HTMLDivElement, layoutRows: ReadonlyArray<ReadonlyArray<string>>) {
+		var layoutTemplate = document.getElementById('template-layout') as HTMLTemplateElement;
+		var clonedTemplate = document.importNode(layoutTemplate.content, true);
 
-        return clonedTemplate;
-    }
+		var rowsElement = clonedTemplate.querySelector('tbody') as HTMLElement;
 
-    createIndexRowNode(isUnique: boolean, columns: ReadonlyArray<string>): Node {
-        var indexRowTemplate = document.getElementById('template-index-row') as HTMLTemplateElement;
-        var clonedTemplate = document.importNode(indexRowTemplate.content, true);
+		for (var layoutRow of layoutRows) {
+			var rowElement = this.createLayoutRowNode(layoutRow);
+			rowsElement.appendChild(rowElement)
+		}
 
-        getInputElementByName(clonedTemplate, IndexBlockName.Columns).checked = isUnique;
+		parentElement.appendChild(clonedTemplate);
+	}
 
-        var columnsElement = getElementByName(clonedTemplate, IndexBlockName.Columns);
-        for(var column of columns) {
-            var columnElement = this.createIndexRowColumnNode(column);
-            columnsElement.appendChild(columnElement);
-        }
+	createIndexRowColumnNode(column: string): Node {
+		var indexRowColumnTemplate = document.getElementById('template-index-row-column') as HTMLTemplateElement;
+		var clonedTemplate = document.importNode(indexRowColumnTemplate.content, true);
 
-        return clonedTemplate;
-    }
+		getInputElementByName(clonedTemplate, IndexBlockName.ColumnName).value = column;
 
-    buildIndex(parentElement: HTMLDivElement, indexRows: ReadonlyArray<ReadonlyArray<string>>) {
-        var indexTemplate = document.getElementById('template-index') as HTMLTemplateElement;
-        var clonedTemplate = document.importNode(indexTemplate.content, true);
+		return clonedTemplate;
+	}
 
-        var rowsElement = clonedTemplate.querySelector('tbody') as HTMLElement;
-        
-        for(var indexRow of indexRows) {
-            var isUnique = isCheckMark(indexRow[0]);
-            var columns = indexRow[1].split(',').map(s => s.trim());
-            var rowElement = this.createIndexRowNode(isUnique, columns);
-            rowsElement.appendChild(rowElement)
-        }
+	createIndexRowNode(isUnique: boolean, columns: ReadonlyArray<string>): Node {
+		var indexRowTemplate = document.getElementById('template-index-row') as HTMLTemplateElement;
+		var clonedTemplate = document.importNode(indexRowTemplate.content, true);
 
-        parentElement.appendChild(clonedTemplate);
-    }
+		getInputElementByName(clonedTemplate, IndexBlockName.Columns).checked = isUnique;
 
-    public build(rawDefine: string) {
-        var lines = rawDefine.split(/\r?\n/mg);
-        var index = this.getIndex(lines);
+		var columnsElement = getElementByName(clonedTemplate, IndexBlockName.Columns);
+		for (var column of columns) {
+			var columnElement = this.createIndexRowColumnNode(column);
+			columnsElement.appendChild(columnElement);
+		}
 
-        var define = this.trimDefine({
-            table: lines[index.table],
-            layout: lines.slice(index.layout.head, index.layout.tail),
-            index: lines.slice(index.index.head, index.index.tail)
-        });
+		return clonedTemplate;
+	}
 
-        this.buildTable(this.blockElements.table, define.table);
-        this.buildLayout(this.blockElements.layout, this.convertRowLines(define.layout));
-        this.buildIndex(this.blockElements.index, this.convertRowLines(define.index));
-    }
+	buildIndex(parentElement: HTMLDivElement, indexRows: ReadonlyArray<ReadonlyArray<string>>) {
+		var indexTemplate = document.getElementById('template-index') as HTMLTemplateElement;
+		var clonedTemplate = document.importNode(indexTemplate.content, true);
 
-    public getTableName(): string {
-        return getInputElementByName(this.blockElements.table, TableBlockName.TableName).value;
-    }
+		var rowsElement = clonedTemplate.querySelector('tbody') as HTMLElement;
+
+		for (var indexRow of indexRows) {
+			var isUnique = isCheckMark(indexRow[0]);
+			var columns = indexRow[1].split(',').map(s => s.trim());
+			var rowElement = this.createIndexRowNode(isUnique, columns);
+			rowsElement.appendChild(rowElement)
+		}
+
+		parentElement.appendChild(clonedTemplate);
+	}
+
+	public build(rawDefine: string) {
+		var lines = rawDefine.split(/\r?\n/mg);
+		var index = this.getIndex(lines);
+
+		var define = this.trimDefine({
+			table: lines[index.table],
+			layout: lines.slice(index.layout.head, index.layout.tail),
+			index: lines.slice(index.index.head, index.index.tail)
+		});
+
+		this.buildTable(this.blockElements.table, define.table);
+		this.buildLayout(this.blockElements.layout, this.convertRowLines(define.layout));
+		this.buildIndex(this.blockElements.index, this.convertRowLines(define.index));
+	}
+
+	public getTableName(): string {
+		return getInputElementByName(this.blockElements.table, TableBlockName.TableName).value;
+	}
 }
 
 class EntityRelationManager {
-    viewElement: HTMLDivElement;
-    commandElement: HTMLDivElement;
-    defineElement:  HTMLTextAreaElement;
-    sqlElement:  HTMLTextAreaElement;
+	viewElement: HTMLDivElement;
+	commandElement: HTMLDivElement;
+	defineElement: HTMLTextAreaElement;
+	sqlElement: HTMLTextAreaElement;
 
-    entities: Array<Entity> = [];
+	entities: Array<Entity> = [];
 
-    constructor(viewElement: HTMLDivElement, commandElement: HTMLDivElement, defineElement: HTMLTextAreaElement, sqlElement: HTMLTextAreaElement) {
-        this.viewElement = viewElement;
-        this.commandElement = commandElement;
-        this.defineElement = defineElement;
-        this.sqlElement = sqlElement;
-    }
+	constructor(viewElement: HTMLDivElement, commandElement: HTMLDivElement, defineElement: HTMLTextAreaElement, sqlElement: HTMLTextAreaElement) {
+		this.viewElement = viewElement;
+		this.commandElement = commandElement;
+		this.defineElement = defineElement;
+		this.sqlElement = sqlElement;
+	}
 
-    createBlockElements(): BlockElements {
-        var blockTemplate = document.getElementById('template-block') as HTMLTemplateElement;
-        var clonedTemplate = document.importNode(blockTemplate.content, true);
-        var block = {
-            root: clonedTemplate.querySelector('[name="block-root"]'),
-            table: clonedTemplate.querySelector('[name="block-table"]'),
-            layout:clonedTemplate.querySelector('[name="block-layout"]'),
-            index:  clonedTemplate.querySelector('[name="block-index"]'),
-        } as BlockElements;
+	createBlockElements(): BlockElements {
+		var blockTemplate = document.getElementById('template-block') as HTMLTemplateElement;
+		var clonedTemplate = document.importNode(blockTemplate.content, true);
+		var block = {
+			root: clonedTemplate.querySelector('[name="block-root"]'),
+			table: clonedTemplate.querySelector('[name="block-table"]'),
+			layout: clonedTemplate.querySelector('[name="block-layout"]'),
+			index: clonedTemplate.querySelector('[name="block-index"]'),
+		} as BlockElements;
 
-        return block;
-    }
+		return block;
+	}
 
-    buildCommand(parentElement: HTMLDivElement) {
-        var indexTemplate = document.getElementById('template-command') as HTMLTemplateElement;
-        var clonedTemplate = document.importNode(indexTemplate.content, true);
+	buildCommand(parentElement: HTMLDivElement) {
+		var indexTemplate = document.getElementById('template-command') as HTMLTemplateElement;
+		var clonedTemplate = document.importNode(indexTemplate.content, true);
 
-        // var importElement = clonedTemplate.querySelector('[name="command-import"]') as HTMLButtonElement;
-        // importElement.addEventListener('click', ev => {
-        //     this.reset();
-        //     this.build();
-        // });
+		// var importElement = clonedTemplate.querySelector('[name="command-import"]') as HTMLButtonElement;
+		// importElement.addEventListener('click', ev => {
+		// 	this.reset();
+		// 	this.build();
+		// });
 
-        var exportElement = clonedTemplate.querySelector('[name="command-export"]') as HTMLButtonElement;
-        exportElement.addEventListener('click', ev => {
-            //TODO
-        });
+		var exportElement = clonedTemplate.querySelector('[name="command-export"]') as HTMLButtonElement;
+		exportElement.addEventListener('click', ev => {
+			//TODO
+		});
 
-        parentElement.appendChild(clonedTemplate);
-    }
+		parentElement.appendChild(clonedTemplate);
+	}
 
-    public build() {
-        this.buildCommand(this.commandElement);
+	public build() {
+		this.buildCommand(this.commandElement);
 
-        var defines = this.defineElement.value.split('___');
-        defines.shift();
+		var defines = this.defineElement.value.split('___');
+		defines.shift();
 
-        for(var define of defines) {
-            var blockElements = this.createBlockElements();
-            var entity = new Entity(blockElements);
-            entity.build(define);
+		for (var define of defines) {
+			var blockElements = this.createBlockElements();
+			var entity = new Entity(blockElements);
+			entity.build(define);
 
-            this.entities.push(entity);
-            
-            this.viewElement.appendChild(blockElements.root);
-        }
-    }
+			this.entities.push(entity);
 
-    reset() {
-        this.entities = [];
-        this.viewElement.textContent = '';
-        this.commandElement.textContent = '';
-    }
+			this.viewElement.appendChild(blockElements.root);
+		}
+	}
+
+	reset() {
+		this.entities = [];
+		this.viewElement.textContent = '';
+		this.commandElement.textContent = '';
+	}
 
 }
 
 const erMain = new EntityRelationManager(
-    document.getElementById('view-main') as HTMLDivElement,
-    document.getElementById('command-main') as HTMLDivElement,
-    document.getElementById('define-main') as HTMLTextAreaElement,
-    document.getElementById('sql-main') as HTMLTextAreaElement
+	document.getElementById('view-main') as HTMLDivElement,
+	document.getElementById('command-main') as HTMLDivElement,
+	document.getElementById('define-main') as HTMLTextAreaElement,
+	document.getElementById('sql-main') as HTMLTextAreaElement
 );
 erMain.build();
 
