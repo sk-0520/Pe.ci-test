@@ -382,13 +382,18 @@ class Entity {
 
 			this.buildForeignKeyTable(tableElement, targetTableNames);
 			tableElement.addEventListener('change', ev => {
+				var currentTableElement = (ev.srcElement as HTMLSelectElement);
+				var currentColumnElement =  getSelectElementByName(currentTableElement.parentElement!, LayoutBlockName.ForeignKeyColumn);
 				var targetEntity = targetEntities
-					.find(i => i.getTableName() === tableElement.value)
+					.find(i => i.getTableName() == currentTableElement.value)
 				;
+
 				if(targetEntity) {
-					this.buildForeignKeyColumns(columnElement, targetEntity);
+					currentColumnElement.disabled = false;
+					this.buildForeignKeyColumns(currentColumnElement, targetEntity);
 				} else {
-					columnElement.textContent = '';
+					currentColumnElement.disabled = true;
+					currentColumnElement.textContent = '';
 				}
 			});
 
