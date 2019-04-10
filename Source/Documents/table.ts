@@ -25,13 +25,13 @@ const DatabaseTypeMap = new Map([
 ]) as ReadonlyMap<string, string>;
 
 const ClrMap = new Map([
-	['integer', new Set(['System.Int64'])],
-	['real', new Set(['System.Decimal', 'System.Single', 'System.Double'])],
-	['text', new Set(['System.String', 'System.Guid', 'System.Version'])],
-	['blob', new Set(['System.Byte[]'])],
-	['datetime', new Set(['System.DateTime', 'System.String'])],
-	['boolean', new Set(['System.Boolean', 'System.Int64'])],
-]) as ReadonlyMap<string, ReadonlySet<string>>;
+	['integer', ['System.Int64']],
+	['real', ['System.Decimal', 'System.Single', 'System.Double']],
+	['text', ['System.String', 'System.Guid', 'System.Version']],
+	['blob', ['System.Byte[]']],
+	['datetime', ['System.DateTime', 'System.String']],
+	['boolean', ['System.Boolean', 'System.Int64']],
+]) as ReadonlyMap<string, ReadonlyArray<string>>;
 
 const CommonCreatedColumns = [
 	'CreatedTimestamp',
@@ -253,19 +253,21 @@ class Entity {
 			// CLR に対して Pe で出来る範囲で型を限定
 			var optionElements = clrDataElement.querySelectorAll('option');
 			var selectedElement: HTMLOptionElement | null = null;
-			var firstEnabledElement: HTMLOptionElement | null = null;
+			var defaultElement: HTMLOptionElement | null = null;
 			for (var optionElement of optionElements) {
 				var clrValues = ClrMap.get(logicalDataElement.value)!;
-				optionElement.disabled = !clrValues.has(optionElement.value);
-				if (!optionElement.disabled && !firstEnabledElement) {
-					firstEnabledElement = optionElement;
+				optionElement.disabled = !clrValues.some(i => i === optionElement.value);
+				if (!optionElement.disabled && !defaultElement) {
+					if(clrValues[0] === optionElement.value) {
+						defaultElement = optionElement;
+					}
 				}
 				if (optionElement.selected) {
 					selectedElement = optionElement;
 				}
 			}
 			if (selectedElement && selectedElement.disabled) {
-				firstEnabledElement!.selected = true;
+				defaultElement!.selected = true;
 			}
 		});
 		logicalDataElement.dispatchEvent(new Event('change'));
