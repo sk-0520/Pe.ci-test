@@ -64,6 +64,7 @@ enum TableBlockName {
 }
 
 enum LayoutBlockName {
+	LayoutRowRoot = 'layout-row-root',
 	PrimaryKey = 'pk',
 	NotNull = 'nn',
 	ForeignKeyRoot = 'fk-root',
@@ -264,7 +265,13 @@ class Entity {
 		getElementByName<HTMLInputElement>(clonedTemplate, LayoutBlockName.CheckConstraint).value = columns[LayoutColumn.CheckConstraint];
 		getElementByName<HTMLInputElement>(clonedTemplate, LayoutBlockName.Comment).value = columns[LayoutColumn.Comment];
 
-		getElementByName<HTMLButtonElement>(clonedTemplate, LayoutBlockName.Delete)
+		getElementByName<HTMLButtonElement>(clonedTemplate, LayoutBlockName.Delete).addEventListener('click', ev => {
+			var element = ev.srcElement as HTMLElement;
+			while(element.getAttribute('name') !== LayoutBlockName.LayoutRowRoot) {
+				element = element.parentElement as HTMLElement;
+			}
+			element.remove();
+		});
 
 		return clonedTemplate;
 	}
