@@ -336,7 +336,7 @@ class Entity {
 		parentElement.appendChild(clonedTemplate);
 	}
 
-	private createIndexRowColumnNode(column: string): Node {
+	private createIndexRowColumnNode(column: string) {
 		var indexRowColumnTemplate = document.getElementById('template-index-row-column') as HTMLTemplateElement;
 		var clonedTemplate = document.importNode(indexRowColumnTemplate.content, true);
 
@@ -356,6 +356,15 @@ class Entity {
 			var columnElement = this.createIndexRowColumnNode(column);
 			columnsElement.appendChild(columnElement);
 		}
+
+		getElementByName<HTMLButtonElement>(clonedTemplate, IndexBlockName.ColumnAdd).addEventListener('click', ev => {
+			var columnElement = this.createIndexRowColumnNode(this.getColumnNames(true)[0]);
+			columnsElement.appendChild(columnElement);
+
+			var columnNames = this.getColumnNames(true);
+			var targetElement = getElementByName<HTMLSelectElement>(columnsElement.lastElementChild!, IndexBlockName.Column)
+			this.setIndexColumnNames(targetElement, columnNames);
+		});
 
 		return clonedTemplate;
 	}
