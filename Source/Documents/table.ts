@@ -380,6 +380,11 @@ class Entity {
 			this.setIndexColumnNames(targetElement, columnNames);
 		});
 
+		getElementByName<HTMLButtonElement>(clonedTemplate, IndexBlockName.DeleteIndex).addEventListener('click', ev => {
+			var parent = getClosest(ev.srcElement as HTMLElement, e => e.getAttribute('name') === IndexBlockName.IndexRowRoot);
+			parent!.remove();
+		});
+
 		return clonedTemplate;
 	}
 
