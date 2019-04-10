@@ -1,3 +1,5 @@
+import { stringLiteral } from "babel-types";
+
 // カラム名変更とか追加とか削除とかはキッツいので手動対応
 
 interface BlockElements {
@@ -617,7 +619,7 @@ class EntityRelationManager {
 
 		var exportElement = clonedTemplate.querySelector('[name="command-export"]') as HTMLButtonElement;
 		exportElement.addEventListener('click', ev => {
-			//TODO
+			this.export();
 		});
 
 		parentElement.appendChild(clonedTemplate);
@@ -654,6 +656,46 @@ class EntityRelationManager {
 		this.commandElement.textContent = '';
 	}
 
+	private exportTable(tableElement: HTMLElement): string {
+		var tableNameElement = getElementByName<HTMLInputElement>(tableElement, TableBlockName.TableName);
+		return tableNameElement.value;
+	}
+
+	private exportLayout(tableName: string, layoutElement: HTMLElement) {
+		var rowElements = getElementsByName<HTMLInputElement>(layoutElement, LayoutBlockName.LayoutRowRoot);
+
+		var markdownColumns = new Array<string>();
+		var databaseColumns = new Array<string>();
+
+		var primaryKeys = new Array<string>();
+		var foreingKeys = new Map<string, Array<{column:string, targetColumn:string}>>();
+		for(var rowElement of rowElements) {
+			var isPrimary = getElementByName<HTMLInputElement>(rowElement, LayoutBlockName.PrimaryKey).checked;
+			var isNotNull = getElementByName<HTMLInputElement>(rowElement, LayoutBlockName.NotNull).checked;
+			var columnName = getElementByName<HTMLInputElement>(rowElement, LayoutBlockName.LogicalColumnName).value;
+			var logicalName = getElementByName<HTMLInputElement>(rowElement, LayoutBlockName.PhysicalColumnName).value;
+			var databaseType = getElementByName<HTMLSelectElement>(rowElement, LayoutBlockName.LogicalType).value;
+			var clrType = getElementByName<HTMLSelectElement>(rowElement, LayoutBlockName.ClrType).value;
+			var checke = getElementByName<HTMLInputElement>(rowElement, LayoutBlockName.CheckConstraint).value;
+			var comment = getElementByName<HTMLInputElement>(rowElement, LayoutBlockName.Comment).value;
+
+
+
+		}
+	}
+
+	private exportBlock(blockElement: HTMLElement) {
+		var tableBlockElement = getElementByName<HTMLInputElement>(blockElement, 'block-table');
+		var tableName = this.exportTable(tableBlockElement);
+
+		var layoutElement = getElementByName<HTMLInputElement>(blockElement, 'block-layout');
+		var layouts = this.exportLayout(tableName, layoutElement);
+	}
+
+	private export() {
+		var blockRoots = getElementsByName(this.viewElement, 'block-root');
+		[...blockRoots].map(i => this.exportBlock(i));
+	}
 }
 
 const erMain = new EntityRelationManager(
