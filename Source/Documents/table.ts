@@ -65,6 +65,7 @@ enum TableBlockName {
 
 enum LayoutBlockName {
 	LayoutRowRoot = 'layout-row-root',
+	LayoutRowAdd = 'add',
 	PrimaryKey = 'pk',
 	NotNull = 'nn',
 	ForeignKeyRoot = 'fk-root',
@@ -106,6 +107,7 @@ function isCheckMark(value: string) {
 class Entity {
 	private readonly tableNamePrefix = '## ';
 	private blockElements: BlockElements;
+	private entities: ReadonlyArray<Entity> = [];
 
 	constructor(blockElements: BlockElements) {
 		this.blockElements = blockElements;
@@ -209,7 +211,7 @@ class Entity {
 		parentElement.appendChild(clonedTemplate);
 	}
 
-	private createLayoutRowNode(columns: ReadonlyArray<string>): Node {
+	private createLayoutRowNode(columns: ReadonlyArray<string>) {
 		var layoutRowTemplate = document.getElementById('template-layout-row') as HTMLTemplateElement;
 		var clonedTemplate = document.importNode(layoutRowTemplate.content, true);
 
@@ -276,6 +278,27 @@ class Entity {
 		return clonedTemplate;
 	}
 
+	private createEmptyLayout(): ReadonlyArray<string> {
+		var defaultDatabaseType = 'integer';
+
+		var map = new Map<LayoutColumn, string>([
+			[LayoutColumn.PrimaryKey, ''],
+			[LayoutColumn.NotNull, ''],
+			[LayoutColumn.ForeignKey, ''],
+			[LayoutColumn.LogicalColumnName, ''],
+			[LayoutColumn.PhysicalColumnName, ''],
+			[LayoutColumn.LogicalType, defaultDatabaseType],
+			[LayoutColumn.ClrType, ClrMap.get(defaultDatabaseType)![0]],
+			[LayoutColumn.CheckConstraint, ''],
+			[LayoutColumn.Comment, ''],
+		]);
+
+		return [ ...map.keys() ]
+			.sort()
+			.map(i => map.get(i)!)
+		;
+	}
+
 	private buildLayout(parentElement: HTMLDivElement, layoutRows: ReadonlyArray<ReadonlyArray<string>>) {
 		var layoutTemplate = document.getElementById('template-layout') as HTMLTemplateElement;
 		var clonedTemplate = document.importNode(layoutTemplate.content, true);
@@ -286,6 +309,25 @@ class Entity {
 			var rowElement = this.createLayoutRowNode(layoutRow);
 			rowsElement.appendChild(rowElement)
 		}
+
+		getElementByName<HTMLButtonElement>(clonedTemplate, LayoutBlockName.LayoutRowAdd).addEventListener('click', ev => {
+			var element = ev.srcElement as HTMLElement;
+			while(element.tagName !== 'TABLE') {
+				element = element.parentElement as HTMLElement;
+			}
+
+			var emptyLayout = this.createEmptyLayout();
+			var rowElement = this.createLayoutRowNode(emptyLayout);
+
+			rowsElement.appendChild(rowElement);
+			var newRowElement = rowsElement.lastElementChild as HTMLElement;
+			var tableElement = getElementByName<HTMLSelectElement>(newRowElement, LayoutBlockName.ForeignKeyTable);
+			var targetEntities = this.filterMyself(this.entities);
+			var targetTableNames = this.getTableNamesFromEntities(targetEntities);
+			this.buildForeignKeyTable(tableElement, targetTableNames);
+			tableElement.addEventListener('change', ev => this.changedTableElement(ev, targetEntities));
+		});
+
 
 		parentElement.appendChild(clonedTemplate);
 	}
@@ -394,6 +436,37 @@ class Entity {
 		}
 	}
 
+	private filterMyself(entities: ReadonlyArray<Entity>): ReadonlyArray<Entity> {
+		var targetEntities = entities
+			.filter(i => i !== this)
+		;
+
+		return targetEntities;
+	}
+
+	private getTableNamesFromEntities(entities: ReadonlyArray<Entity>) {
+		return entities
+			.map(i => i.getTableName())
+			.sort()
+		;
+	}
+
+	private changedTableElement(ev: Event, targetEntities: ReadonlyArray<Entity>) {
+		var currentTableElement = (ev.srcElement as HTMLSelectElement);
+		var currentColumnElement =  getElementByName<HTMLSelectElement>(currentTableElement.parentElement!, LayoutBlockName.ForeignKeyColumn);
+		var targetEntity = targetEntities
+			.find(i => i.getTableName() == currentTableElement.value)
+		;
+
+		if(targetEntity) {
+			currentColumnElement.disabled = false;
+			this.buildForeignKeyColumns(currentColumnElement, targetEntity);
+		} else {
+			currentColumnElement.disabled = true;
+			currentColumnElement.textContent = '';
+		}
+	}
+
 	private buildEntityForeignKey(entities: ReadonlyArray<Entity>){
 		var foreignKeyRootElements = getElementsByName(this.blockElements.layout, LayoutBlockName.ForeignKeyRoot);
 		for(var foreignKeyRootElement of foreignKeyRootElements) {
@@ -401,31 +474,11 @@ class Entity {
 			var tableElement = getElementByName<HTMLSelectElement>(foreignKeyRootElement, LayoutBlockName.ForeignKeyTable);
 			var columnElement = getElementByName<HTMLSelectElement>(foreignKeyRootElement, LayoutBlockName.ForeignKeyColumn);
 
-			var targetEntities = entities
-				.filter(i => i !== this)
-			;
-
-			var targetTableNames = targetEntities
-				.map(i => i.getTableName())
-				.sort()
-			;
+			var targetEntities = this.filterMyself(entities);
+			var targetTableNames = this.getTableNamesFromEntities(targetEntities);
 
 			this.buildForeignKeyTable(tableElement, targetTableNames);
-			tableElement.addEventListener('change', ev => {
-				var currentTableElement = (ev.srcElement as HTMLSelectElement);
-				var currentColumnElement =  getElementByName<HTMLSelectElement>(currentTableElement.parentElement!, LayoutBlockName.ForeignKeyColumn);
-				var targetEntity = targetEntities
-					.find(i => i.getTableName() == currentTableElement.value)
-				;
-
-				if(targetEntity) {
-					currentColumnElement.disabled = false;
-					this.buildForeignKeyColumns(currentColumnElement, targetEntity);
-				} else {
-					currentColumnElement.disabled = true;
-					currentColumnElement.textContent = '';
-				}
-			});
+			tableElement.addEventListener('change', ev => this.changedTableElement(ev, targetEntities));
 
 			var kfElement = getElementByName<HTMLInputElement>(foreignKeyRootElement, LayoutBlockName.ForeignKey);
 			if(kfElement.value) {
@@ -463,7 +516,8 @@ class Entity {
 	}
 
 	public buildEntities(entities: ReadonlyArray<Entity>) {
-		this.buildEntityForeignKey(entities);
+		this.entities = entities;
+		this.buildEntityForeignKey(this.entities);
 		this.buildEntityIndex();
 	}
 
