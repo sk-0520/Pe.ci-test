@@ -110,12 +110,14 @@ html
 					input(type="checkbox", name="uk")
 				td
 					ol(name="columns")
+					button(name="delete-col") add
+					button(name="delete") delete
 
 		template#template-index-row-column
 			li(name="index-row-column-root")
 				input(type="hidden", name="c")
 				select(name="column")
-				button(name="delete") delete
+				button(name="delete-col") delete
 
 	body
 		h1 テーブル図

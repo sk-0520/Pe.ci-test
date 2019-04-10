@@ -84,11 +84,15 @@ enum LayoutBlockName {
 
 enum IndexBlockName {
 	IndexRowRoot = 'index-row-root',
+	IndexRowAdd = 'add',
+	ColumnAdd = 'add-col',
 	IndexRowColumnRoot = 'index-row-column-root',
 	ColumnName = 'c',
 	UniqueKey = 'uk',
 	Columns = 'columns',
 	Column = 'column',
+	DeleteColumn = 'delete-col',
+	DeleteIndex = 'delete',
 }
 
 function getElementByName<THTMLElement extends HTMLElement>(node: ParentNode, name: string): THTMLElement {
@@ -369,6 +373,15 @@ class Entity {
 			rowsElement.appendChild(rowElement)
 		}
 
+		getElementByName<HTMLButtonElement>(clonedTemplate, IndexBlockName.IndexRowAdd).addEventListener('click', ev => {
+			var rowElement = this.createIndexRowNode(false, [this.getColumnNames(true)[0]]);
+			rowsElement.appendChild(rowElement);
+
+			var columnElement = getElementByName<HTMLSelectElement>(rowsElement.lastElementChild!, IndexBlockName.Column);
+			var columnNames = this.getColumnNames(true);
+			this.setIndexColumnNames(columnElement, columnNames);
+		});
+
 		parentElement.appendChild(clonedTemplate);
 	}
 
@@ -497,12 +510,23 @@ class Entity {
 		}
 	}
 
+	private setIndexColumnNames(parentElement: HTMLSelectElement, columnNames: ReadonlyArray<string>) {
+		for(var columnName of columnNames) {
+			var optionElement = document.createElement('option');
+			optionElement.value = columnName;
+			optionElement.textContent = columnName;
+
+			parentElement.appendChild(optionElement);
+		}
+}
+
 	private buildEntityIndex() {
 		var columnNames = this.getColumnNames(true);
 		var indexRowRootElements = getElementsByName(this.blockElements.index, IndexBlockName.IndexRowRoot);
 		for(var indexRowRootElement of indexRowRootElements) {
 			var columnsElements = getElementsByName<HTMLSelectElement>(indexRowRootElement, IndexBlockName.Column);
 			for(var columnsElement of columnsElements) {
+				/*
 				for(var columnName of columnNames) {
 					var optionElement = document.createElement('option');
 					optionElement.value = columnName;
@@ -510,6 +534,8 @@ class Entity {
 
 					columnsElement.appendChild(optionElement);
 				}
+				*/
+				this.setIndexColumnNames(columnsElement, columnNames);
 				columnsElement.value = getElementByName<HTMLInputElement>(columnsElement.parentElement!, IndexBlockName.ColumnName).value;
 			}
 		}
