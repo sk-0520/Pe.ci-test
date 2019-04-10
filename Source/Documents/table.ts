@@ -89,24 +89,12 @@ enum IndexBlockName {
 	Column = 'column',
 }
 
-function getElementByName(node: ParentNode, name: string): HTMLElement {
-	return node.querySelector('[name="' + name + '"]') as HTMLElement;
-}
-function getInputElementByName(node: ParentNode, name: string): HTMLInputElement {
-	return getElementByName(node, name) as HTMLInputElement;
-}
-function getSelectElementByName(node: ParentNode, name: string): HTMLSelectElement {
-	return getElementByName(node, name) as HTMLSelectElement;
+function getElementByName<THTMLElement extends HTMLElement>(node: ParentNode, name: string): THTMLElement {
+	return node.querySelector('[name="' + name + '"]') as THTMLElement;
 }
 
-function getElementsByName(node: ParentNode, name: string): NodeListOf<HTMLElement> {
+function getElementsByName<THTMLElement extends HTMLElement>(node: ParentNode, name: string): NodeListOf<THTMLElement> {
 	return node.querySelectorAll('[name="' + name + '"]');
-}
-function getInputElementsByName(node: ParentNode, name: string): NodeListOf<HTMLInputElement> {
-	return getElementsByName(node, name) as NodeListOf<HTMLInputElement>;
-}
-function getSelectElementsByName(node: ParentNode, name: string): NodeListOf<HTMLSelectElement> {
-	return getElementsByName(node, name) as NodeListOf<HTMLSelectElement>;
 }
 
 
@@ -214,7 +202,7 @@ class Entity {
 		var tableTemplate = document.getElementById('template-table') as HTMLTemplateElement;
 		var clonedTemplate = document.importNode(tableTemplate.content, true);
 
-		var tableNameElement = getInputElementByName(clonedTemplate, TableBlockName.TableName);
+		var tableNameElement = getElementByName<HTMLInputElement>(clonedTemplate, TableBlockName.TableName);
 		tableNameElement.value = tableName;
 
 		parentElement.appendChild(clonedTemplate);
@@ -224,8 +212,8 @@ class Entity {
 		var layoutRowTemplate = document.getElementById('template-layout-row') as HTMLTemplateElement;
 		var clonedTemplate = document.importNode(layoutRowTemplate.content, true);
 
-		var primaryElement = getInputElementByName(clonedTemplate, LayoutBlockName.PrimaryKey);
-		var notNullElement = getInputElementByName(clonedTemplate, LayoutBlockName.NotNull)
+		var primaryElement = getElementByName<HTMLInputElement>(clonedTemplate, LayoutBlockName.PrimaryKey);
+		var notNullElement = getElementByName<HTMLInputElement>(clonedTemplate, LayoutBlockName.NotNull)
 		primaryElement.checked = isCheckMark(columns[LayoutColumn.PrimaryKey]);
 		notNullElement.checked = isCheckMark(columns[LayoutColumn.NotNull]);
 		primaryElement.addEventListener('change', ev => {
@@ -236,14 +224,14 @@ class Entity {
 		});
 		primaryElement.dispatchEvent(new Event('change'));
 
-		getInputElementByName(clonedTemplate, LayoutBlockName.ForeignKey).value = columns[LayoutColumn.ForeignKey];
+		getElementByName<HTMLInputElement>(clonedTemplate, LayoutBlockName.ForeignKey).value = columns[LayoutColumn.ForeignKey];
 
-		getInputElementByName(clonedTemplate, LayoutBlockName.LogicalColumnName).value = columns[LayoutColumn.LogicalColumnName];
-		getInputElementByName(clonedTemplate, LayoutBlockName.PhysicalColumnName).value = columns[LayoutColumn.PhysicalColumnName];
+		getElementByName<HTMLInputElement>(clonedTemplate, LayoutBlockName.LogicalColumnName).value = columns[LayoutColumn.LogicalColumnName];
+		getElementByName<HTMLInputElement>(clonedTemplate, LayoutBlockName.PhysicalColumnName).value = columns[LayoutColumn.PhysicalColumnName];
 
-		var logicalDataElement = getSelectElementByName(clonedTemplate, LayoutBlockName.LogicalType);
-		var physicalDataElement = getInputElementByName(clonedTemplate, LayoutBlockName.PhysicalType); // 一方通行イベントで使うのでキャプチャしとく。メモリは無限
-		var clrDataElement = getSelectElementByName(clonedTemplate, LayoutBlockName.ClrType);
+		var logicalDataElement = getElementByName<HTMLSelectElement>(clonedTemplate, LayoutBlockName.LogicalType);
+		var physicalDataElement = getElementByName<HTMLInputElement>(clonedTemplate, LayoutBlockName.PhysicalType); // 一方通行イベントで使うのでキャプチャしとく。メモリは無限
+		var clrDataElement = getElementByName<HTMLSelectElement>(clonedTemplate, LayoutBlockName.ClrType);
 		logicalDataElement.value = columns[LayoutColumn.LogicalType];
 		clrDataElement.value = columns[LayoutColumn.ClrType];
 		logicalDataElement.addEventListener('change', ev => {
@@ -273,8 +261,10 @@ class Entity {
 		logicalDataElement.dispatchEvent(new Event('change'));
 
 
-		getInputElementByName(clonedTemplate, LayoutBlockName.CheckConstraint).value = columns[LayoutColumn.CheckConstraint];
-		getInputElementByName(clonedTemplate, LayoutBlockName.Comment).value = columns[LayoutColumn.Comment];
+		getElementByName<HTMLInputElement>(clonedTemplate, LayoutBlockName.CheckConstraint).value = columns[LayoutColumn.CheckConstraint];
+		getElementByName<HTMLInputElement>(clonedTemplate, LayoutBlockName.Comment).value = columns[LayoutColumn.Comment];
+
+		getElementByName<HTMLButtonElement>(clonedTemplate, LayoutBlockName.Delete)
 
 		return clonedTemplate;
 	}
@@ -297,7 +287,7 @@ class Entity {
 		var indexRowColumnTemplate = document.getElementById('template-index-row-column') as HTMLTemplateElement;
 		var clonedTemplate = document.importNode(indexRowColumnTemplate.content, true);
 
-		getInputElementByName(clonedTemplate, IndexBlockName.ColumnName).value = column;
+		getElementByName<HTMLInputElement>(clonedTemplate, IndexBlockName.ColumnName).value = column;
 
 		return clonedTemplate;
 	}
@@ -306,7 +296,7 @@ class Entity {
 		var indexRowTemplate = document.getElementById('template-index-row') as HTMLTemplateElement;
 		var clonedTemplate = document.importNode(indexRowTemplate.content, true);
 
-		getInputElementByName(clonedTemplate, IndexBlockName.UniqueKey).checked = isUnique;
+		getElementByName<HTMLInputElement>(clonedTemplate, IndexBlockName.UniqueKey).checked = isUnique;
 
 		var columnsElement = getElementByName(clonedTemplate, IndexBlockName.Columns);
 		for (var column of columns) {
@@ -349,7 +339,7 @@ class Entity {
 	}
 
 	public getTableName(): string {
-		return getInputElementByName(this.blockElements.table, TableBlockName.TableName).value;
+		return getElementByName<HTMLInputElement>(this.blockElements.table, TableBlockName.TableName).value;
 	}
 
 	private buildForeignKeyTable(parentElement: HTMLSelectElement, tableNames: ReadonlyArray<string>) {
@@ -374,7 +364,7 @@ class Entity {
 
 			return false;
 		}
-		var columnElements = getInputElementsByName(this.blockElements.layout, LayoutBlockName.PhysicalColumnName);
+		var columnElements = getElementsByName<HTMLInputElement>(this.blockElements.layout, LayoutBlockName.PhysicalColumnName);
 		var result = new Array<string>();
 		for(var columnElement of columnElements) {
 			if(ignoreCommonColumn && isIgnoreColumn(columnElement.value)) {
@@ -401,8 +391,8 @@ class Entity {
 		var foreignKeyRootElements = getElementsByName(this.blockElements.layout, LayoutBlockName.ForeignKeyRoot);
 		for(var foreignKeyRootElement of foreignKeyRootElements) {
 
-			var tableElement = getSelectElementByName(foreignKeyRootElement, LayoutBlockName.ForeignKeyTable);
-			var columnElement = getSelectElementByName(foreignKeyRootElement, LayoutBlockName.ForeignKeyColumn);
+			var tableElement = getElementByName<HTMLSelectElement>(foreignKeyRootElement, LayoutBlockName.ForeignKeyTable);
+			var columnElement = getElementByName<HTMLSelectElement>(foreignKeyRootElement, LayoutBlockName.ForeignKeyColumn);
 
 			var targetEntities = entities
 				.filter(i => i !== this)
@@ -416,7 +406,7 @@ class Entity {
 			this.buildForeignKeyTable(tableElement, targetTableNames);
 			tableElement.addEventListener('change', ev => {
 				var currentTableElement = (ev.srcElement as HTMLSelectElement);
-				var currentColumnElement =  getSelectElementByName(currentTableElement.parentElement!, LayoutBlockName.ForeignKeyColumn);
+				var currentColumnElement =  getElementByName<HTMLSelectElement>(currentTableElement.parentElement!, LayoutBlockName.ForeignKeyColumn);
 				var targetEntity = targetEntities
 					.find(i => i.getTableName() == currentTableElement.value)
 				;
@@ -430,7 +420,7 @@ class Entity {
 				}
 			});
 
-			var kfElement = getInputElementByName(foreignKeyRootElement, LayoutBlockName.ForeignKey);
+			var kfElement = getElementByName<HTMLInputElement>(foreignKeyRootElement, LayoutBlockName.ForeignKey);
 			if(kfElement.value) {
 				var v = kfElement.value.split('.');
 				var kfPair = {
@@ -451,7 +441,7 @@ class Entity {
 		var columnNames = this.getColumnNames(true);
 		var indexRowRootElements = getElementsByName(this.blockElements.index, IndexBlockName.IndexRowRoot);
 		for(var indexRowRootElement of indexRowRootElements) {
-			var columnsElements = getSelectElementsByName(indexRowRootElement, IndexBlockName.Column);
+			var columnsElements = getElementsByName<HTMLSelectElement>(indexRowRootElement, IndexBlockName.Column);
 			for(var columnsElement of columnsElements) {
 				for(var columnName of columnNames) {
 					var optionElement = document.createElement('option');
@@ -460,7 +450,7 @@ class Entity {
 
 					columnsElement.appendChild(optionElement);
 				}
-				columnsElement.value = getInputElementByName(columnsElement.parentElement!, IndexBlockName.ColumnName).value;
+				columnsElement.value = getElementByName<HTMLInputElement>(columnsElement.parentElement!, IndexBlockName.ColumnName).value;
 			}
 		}
 	}
