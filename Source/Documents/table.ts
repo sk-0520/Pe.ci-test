@@ -103,6 +103,16 @@ function getElementsByName<THTMLElement extends HTMLElement>(node: ParentNode, n
 	return node.querySelectorAll('[name="' + name + '"]');
 }
 
+function getClosest(element: HTMLElement, func: (target: HTMLElement) => boolean): HTMLElement | null {
+	while(element.parentElement) {
+		if(func(element.parentElement)) {
+			return element.parentElement;
+		}
+
+		element = element.parentElement;
+	}
+	return null;
+}
 
 function isCheckMark(value: string) {
 	return value === 'o';
@@ -341,6 +351,10 @@ class Entity {
 		var clonedTemplate = document.importNode(indexRowColumnTemplate.content, true);
 
 		getElementByName<HTMLInputElement>(clonedTemplate, IndexBlockName.ColumnName).value = column;
+		getElementByName<HTMLButtonElement>(clonedTemplate, IndexBlockName.DeleteColumn).addEventListener('click', ev => {
+			var parent = getClosest(ev.srcElement as HTMLElement, e => e.getAttribute('name') === IndexBlockName.IndexRowColumnRoot);
+			parent!.remove();
+		});
 
 		return clonedTemplate;
 	}
