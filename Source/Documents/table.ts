@@ -1,5 +1,3 @@
-import { stringLiteral } from "babel-types";
-
 // カラム名変更とか追加とか削除とかはキッツいので手動対応
 
 interface BlockElements {
@@ -13,6 +11,30 @@ interface EntityDefine {
 	table: string;
 	layout: ReadonlyArray<string>;
 	index: ReadonlyArray<string>;
+}
+
+interface RowData {
+	isPrimary: boolean,
+	isNotNull: boolean,
+	foreignTable: string,
+	foreignColumn: string,
+	columnName: string,
+	logicalName: string,
+	databaseType: string,
+	clrType: string,
+	check: string,
+	comment: string,
+}
+
+interface ExportData {
+	markdown: string,
+	database: string,
+}
+
+enum MarkdownTablePosition {
+	left,
+	center,
+	right
 }
 
 const DatabaseTypeMap = new Map([
@@ -60,6 +82,26 @@ enum LayoutColumn {
 	CheckConstraint = 7,
 	Comment = 8,
 }
+
+const LayoutMarkdownHeaders = function() {
+	var map = new Map<LayoutColumn, string>([
+		[LayoutColumn.PrimaryKey, 'PK'],
+		[LayoutColumn.NotNull, 'NN'],
+		[LayoutColumn.ForeignKey, 'FK'],
+		[LayoutColumn.LogicalColumnName, '論理カラム名'],
+		[LayoutColumn.PhysicalColumnName, '物理カラム名'],
+		[LayoutColumn.LogicalType, '論理データ型'],
+		[LayoutColumn.ClrType, 'マッピング型'],
+		[LayoutColumn.CheckConstraint, 'チェック制約'],
+		[LayoutColumn.Comment, 'コメント'],
+	]);
+	return [ ...map.keys() ]
+		.sort()
+		.map(i => map.get(i)!)
+	;
+}();
+
+const IndexMarkdownHeaders = ['UK', 'カラム(CSV)'];
 
 enum TableBlockName {
 	TableName = 'table-name',
@@ -118,6 +160,9 @@ function getClosest(element: HTMLElement, func: (target: HTMLElement) => boolean
 
 function isCheckMark(value: string) {
 	return value === 'o';
+}
+function toCheckMark(value: boolean) {
+	return value ? 'o': '';
 }
 
 class Entity {
@@ -661,27 +706,150 @@ class EntityRelationManager {
 		return tableNameElement.value;
 	}
 
-	private exportLayout(tableName: string, layoutElement: HTMLElement) {
-		var rowElements = getElementsByName<HTMLInputElement>(layoutElement, LayoutBlockName.LayoutRowRoot);
+	private getRowData(rowElement: HTMLTableRowElement): RowData {
+		var data = {
+			isPrimary: getElementByName<HTMLInputElement>(rowElement, LayoutBlockName.PrimaryKey).checked,
+			isNotNull: getElementByName<HTMLInputElement>(rowElement, LayoutBlockName.NotNull).checked,
+			foreignTable: '',
+			foreignColumn: '',
+			columnName: getElementByName<HTMLInputElement>(rowElement, LayoutBlockName.PhysicalColumnName).value,
+			logicalName: getElementByName<HTMLInputElement>(rowElement, LayoutBlockName.LogicalColumnName).value,
+			databaseType: getElementByName<HTMLSelectElement>(rowElement, LayoutBlockName.LogicalType).value,
+			clrType: getElementByName<HTMLSelectElement>(rowElement, LayoutBlockName.ClrType).value,
+			check: getElementByName<HTMLInputElement>(rowElement, LayoutBlockName.CheckConstraint).value,
+			comment: getElementByName<HTMLInputElement>(rowElement, LayoutBlockName.Comment).value,
+		} as RowData;
 
-		var markdownColumns = new Array<string>();
+		var ft = getElementByName<HTMLInputElement>(rowElement, LayoutBlockName.ForeignKeyTable).value
+		var fc = getElementByName<HTMLInputElement>(rowElement, LayoutBlockName.ForeignKeyColumn).value
+		if(ft.length && fc.length) {
+			data.foreignTable = ft;
+			data.foreignColumn = fc;
+		}
+
+		return data;
+	}
+
+	private toLayoutMarkdown(row: RowData): ReadonlyArray<string> {
+		var map = new Map<LayoutColumn, string>([
+			[LayoutColumn.PrimaryKey, toCheckMark(row.isPrimary)],
+			[LayoutColumn.NotNull, toCheckMark(row.isNotNull)],
+			[LayoutColumn.ForeignKey, row.foreignTable.length && row.foreignColumn.length ? `${row.foreignTable}.${row.foreignColumn}`: ''],
+			[LayoutColumn.LogicalColumnName, row.logicalName],
+			[LayoutColumn.PhysicalColumnName, row.columnName],
+			[LayoutColumn.LogicalType, row.databaseType],
+			[LayoutColumn.ClrType, row.clrType],
+			[LayoutColumn.CheckConstraint, row.check],
+			[LayoutColumn.Comment, row.comment],
+		]);
+		return [ ...map.keys() ]
+			.sort()
+			.map(i => map.get(i)!)
+		;
+	}
+
+	private toLayoutDatabase(row: RowData): string {
+		var sql = '';
+		if(row.logicalName.length || row.comment.length) {
+			sql += `-- ${row.logicalName}`;
+			if(row.logicalName.length) {
+				sql += ' ';
+			}
+			sql += row.comment;
+			sql += "\r\n";
+		}
+
+		sql += `[${row.columnName}] ${row.databaseType}`;
+		if(row.isNotNull) {
+			sql += " not null";
+		}
+
+		return sql;
+	}
+
+	private toMarkdown(header: ReadonlyArray<string>, positions: Map<number, MarkdownTablePosition>, contents: ReadonlyArray<ReadonlyArray<string>>) {
+		var lines = new Array<string>();
+		lines.push('|' + header.join('|') + '|');
+		var sep = '|'
+		for(var i = 0; i < lines.length; i++) {
+			var position = positions.get(i)
+			switch(position) {
+				case MarkdownTablePosition.center:
+				case MarkdownTablePosition.right:
+				case MarkdownTablePosition.left:
+				default:
+			}
+			sep += '---';
+			sep += '|';
+		}
+		lines.push(sep);
+
+		for(var content of contents) {
+			lines.push('|' + content.join('|') + '|');
+		}
+
+		return lines.join("\r\n");
+	}
+
+	private exportLayout(tableName: string, layoutElement: HTMLElement):ExportData {
+		var rowElements = getElementsByName<HTMLTableRowElement>(layoutElement, LayoutBlockName.LayoutRowRoot);
+
+		var markdownColumns = new Array<ReadonlyArray<string>>();
 		var databaseColumns = new Array<string>();
 
 		var primaryKeys = new Array<string>();
 		var foreingKeys = new Map<string, Array<{column:string, targetColumn:string}>>();
 		for(var rowElement of rowElements) {
-			var isPrimary = getElementByName<HTMLInputElement>(rowElement, LayoutBlockName.PrimaryKey).checked;
-			var isNotNull = getElementByName<HTMLInputElement>(rowElement, LayoutBlockName.NotNull).checked;
-			var columnName = getElementByName<HTMLInputElement>(rowElement, LayoutBlockName.LogicalColumnName).value;
-			var logicalName = getElementByName<HTMLInputElement>(rowElement, LayoutBlockName.PhysicalColumnName).value;
-			var databaseType = getElementByName<HTMLSelectElement>(rowElement, LayoutBlockName.LogicalType).value;
-			var clrType = getElementByName<HTMLSelectElement>(rowElement, LayoutBlockName.ClrType).value;
-			var checke = getElementByName<HTMLInputElement>(rowElement, LayoutBlockName.CheckConstraint).value;
-			var comment = getElementByName<HTMLInputElement>(rowElement, LayoutBlockName.Comment).value;
+			var rowData = this.getRowData(rowElement);
 
+			var layoutRow = this.toLayoutMarkdown(rowData);
+			markdownColumns.push(layoutRow);
 
+			var databaseCol = this.toLayoutDatabase(rowData);
+			databaseColumns.push(databaseCol);
 
+			if(rowData.isPrimary) {
+				primaryKeys.push(rowData.columnName);
+			}
+			if(rowData.foreignTable.length && rowData.foreignColumn.length) {
+				if(!foreingKeys.has(rowData.foreignTable)) {
+					foreingKeys.set(rowData.foreignTable, new Array<{column:string, targetColumn:string}>());
+				}
+				var table = foreingKeys.get(rowData.foreignTable)!;
+				table.push({column: rowData.columnName, targetColumn: rowData.foreignColumn});
+			}
 		}
+
+		var exportData = {
+			markdown: this.toMarkdown(
+				LayoutMarkdownHeaders,
+				new Map([
+					[LayoutColumn.PrimaryKey, MarkdownTablePosition.center]
+				]),
+				markdownColumns
+			),
+			database: '',
+		} as ExportData;
+
+		var sql = `create table ${tableName} (\r\n`;
+		sql += "\t" + databaseColumns.join(",\r\n\t");
+		if(primaryKeys.length) {
+			sql += ",\r\n";
+			sql += "\tprimary key(\r\n"
+			sql += "\t\t" + primaryKeys.join(",\r\n\t\t")
+			sql += "\r\n\t)";
+		};
+		if(foreingKeys.size) {
+			for(var [targetTableName, column] of foreingKeys) {
+				sql += ",\r\n";
+				sql += `\tforeign key(${column.map(i => i.column).join(', ')}) references ${targetTableName}(${column.map(i => i.targetColumn).join(', ')})`
+			}
+		}
+		sql += "\r\n)";
+
+		exportData.database = sql;
+
+		return exportData;
 	}
 
 	private exportBlock(blockElement: HTMLElement) {
@@ -689,7 +857,8 @@ class EntityRelationManager {
 		var tableName = this.exportTable(tableBlockElement);
 
 		var layoutElement = getElementByName<HTMLInputElement>(blockElement, 'block-layout');
-		var layouts = this.exportLayout(tableName, layoutElement);
+		var layout = this.exportLayout(tableName, layoutElement);
+		alert(layout.database);
 	}
 
 	private export() {
