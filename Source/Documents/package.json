@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.pug",
   "scripts": {
-    "watch": "parcel watch --public-url . ./index.pug"
+	"watch": "parcel watch --public-url . ./index.pug",
+	"build": "parcel build --no-content-hash --public-url . ./index.pug"
   },
   "author": "",
   "license": "GPLv3",
