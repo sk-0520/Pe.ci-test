@@ -917,18 +917,18 @@ class EntityRelationManager {
 			database: '',
 		} as ExportData;
 
-		var sql = `create table ${tableName} (\r\n`;
+		var sql = `create table [${tableName}] (\r\n`;
 		sql += "\t" + databaseColumns.join(",\r\n\t");
 		if(primaryKeys.length) {
 			sql += ",\r\n";
 			sql += "\tprimary key(\r\n"
-			sql += "\t\t" + primaryKeys.join(",\r\n\t\t")
+			sql += "\t\t" + primaryKeys.map(i => `[${i}]`).join(",\r\n\t\t")
 			sql += "\r\n\t)";
 		};
 		if(foreingKeys.size) {
 			for(var [targetTableName, column] of foreingKeys) {
 				sql += ",\r\n";
-				sql += `\tforeign key(${column.map(i => i.column).join(', ')}) references ${targetTableName}(${column.map(i => i.targetColumn).join(', ')})`
+				sql += `\tforeign key(${column.map(i => `[${i.column}]`).join(', ')}) references [${targetTableName}](${column.map(i => `[${i.targetColumn}]`).join(', ')})`
 			}
 		}
 		sql += "\r\n)\r\n";
@@ -963,10 +963,10 @@ class EntityRelationManager {
 			sql += " unique";
 		}
 		sql += " index";
-		sql += ` idx_${tableName}_${counter}`;
+		sql += ` [idx_${tableName}_${counter}]`;
 		sql += " on";
 		sql += ` ${tableName}(\r\n`;
-		sql += row.columns.map(i => `\t${i}`).join(",\r\n") + "\r\n";
+		sql += row.columns.map(i => `\t[${i}]`).join(",\r\n") + "\r\n";
 		sql += ")\r\n";
 		sql += ";\r\n";
 
