@@ -13,7 +13,7 @@ interface EntityDefine {
 	index: ReadonlyArray<string>;
 }
 
-interface RowData {
+interface LayoutRowData {
 	isPrimary: boolean,
 	isNotNull: boolean,
 	foreignTable: string,
@@ -24,6 +24,11 @@ interface RowData {
 	clrType: string,
 	check: string,
 	comment: string,
+}
+
+interface IndexRowData {
+	isUnique: boolean,
+	columns: Array<string>;
 }
 
 interface ExportData {
@@ -706,7 +711,7 @@ class EntityRelationManager {
 		return tableNameElement.value;
 	}
 
-	private getRowData(rowElement: HTMLTableRowElement): RowData {
+	private getLayoutRowData(rowElement: HTMLTableRowElement): LayoutRowData {
 		var data = {
 			isPrimary: getElementByName<HTMLInputElement>(rowElement, LayoutBlockName.PrimaryKey).checked,
 			isNotNull: getElementByName<HTMLInputElement>(rowElement, LayoutBlockName.NotNull).checked,
@@ -718,7 +723,7 @@ class EntityRelationManager {
 			clrType: getElementByName<HTMLSelectElement>(rowElement, LayoutBlockName.ClrType).value,
 			check: getElementByName<HTMLInputElement>(rowElement, LayoutBlockName.CheckConstraint).value,
 			comment: getElementByName<HTMLInputElement>(rowElement, LayoutBlockName.Comment).value,
-		} as RowData;
+		} as LayoutRowData;
 
 		var ft = getElementByName<HTMLInputElement>(rowElement, LayoutBlockName.ForeignKeyTable).value
 		var fc = getElementByName<HTMLInputElement>(rowElement, LayoutBlockName.ForeignKeyColumn).value
@@ -730,7 +735,7 @@ class EntityRelationManager {
 		return data;
 	}
 
-	private toLayoutMarkdown(row: RowData): ReadonlyArray<string> {
+	private toLayoutMarkdown(row: LayoutRowData): ReadonlyArray<string> {
 		var map = new Map<LayoutColumn, string>([
 			[LayoutColumn.PrimaryKey, toCheckMark(row.isPrimary)],
 			[LayoutColumn.NotNull, toCheckMark(row.isNotNull)],
@@ -748,20 +753,19 @@ class EntityRelationManager {
 		;
 	}
 
-	private toLayoutDatabase(row: RowData): string {
-		var sql = '';
+	private toLayoutDatabase(row: LayoutRowData): string {
+		var sql = `[${row.columnName}] ${row.databaseType}`;
+		if(row.isNotNull) {
+			sql += " not null";
+		}
+
 		if(row.logicalName.length || row.comment.length) {
-			sql += `-- ${row.logicalName}`;
+			sql += ` /* ${row.logicalName}`;
 			if(row.logicalName.length) {
 				sql += ' ';
 			}
 			sql += row.comment;
-			sql += "\r\n";
-		}
-
-		sql += `[${row.columnName}] ${row.databaseType}`;
-		if(row.isNotNull) {
-			sql += " not null";
+			sql += " */";
 		}
 
 		return sql;
@@ -800,7 +804,7 @@ class EntityRelationManager {
 		var primaryKeys = new Array<string>();
 		var foreingKeys = new Map<string, Array<{column:string, targetColumn:string}>>();
 		for(var rowElement of rowElements) {
-			var rowData = this.getRowData(rowElement);
+			var rowData = this.getLayoutRowData(rowElement);
 
 			var layoutRow = this.toLayoutMarkdown(rowData);
 			markdownColumns.push(layoutRow);
@@ -845,9 +849,81 @@ class EntityRelationManager {
 				sql += `\tforeign key(${column.map(i => i.column).join(', ')}) references ${targetTableName}(${column.map(i => i.targetColumn).join(', ')})`
 			}
 		}
-		sql += "\r\n)";
+		sql += "\r\n)\r\n";
+		sql += ";\r\n";
 
 		exportData.database = sql;
+
+		return exportData;
+	}
+
+	private getIndexRowData(rowElement: HTMLTableRowElement):IndexRowData {
+		var row = {
+			isUnique: getElementByName<HTMLInputElement>(rowElement, IndexBlockName.UniqueKey).checked,
+			columns: [ ...getElementsByName<HTMLInputElement>(rowElement, IndexBlockName.ColumnName)]
+				.map(i => i.value)
+			,
+		} as IndexRowData;
+
+		return row;
+	}
+
+	private toIndexMarkdown(row:IndexRowData): ReadonlyArray<string> {
+		var result = [toCheckMark(row.isUnique)];
+		result.push(...row.columns);
+		return result;
+	}
+
+	private toIndexDatabase(tableName: string, counter: number, row:IndexRowData): string {
+		var sql = `--// index: idx_${tableName}_${counter}\r\n`;
+		sql += "create";
+		if(row.isUnique) {
+			sql += " unique";
+		}
+		sql += " index";
+		sql += ` idx_${tableName}_${counter}`;
+		sql += " on";
+		sql += ` ${tableName}(\r\n`;
+		sql += row.columns.map(i => `\t${i}`).join(",\r\n") + "\r\n";
+		sql += ")\r\n";
+		sql += ";\r\n";
+
+		return sql;
+	}
+
+	private exportIndex(tableName: string, indexElement: HTMLElement):ExportData {
+		var rowElements = getElementsByName<HTMLTableRowElement>(indexElement, IndexBlockName.IndexRowRoot);
+
+		var markdownColumns = new Array<ReadonlyArray<string>>();
+		var databaseStatements = new Array<string>();
+
+		if(!rowElements.length) {
+			return {
+				markdown: '',
+				database: '',
+			} as ExportData;
+		}
+
+		var indexCounter = 1;
+		for(var rowElement of rowElements) {
+			var rowData = this.getIndexRowData(rowElement);
+
+			var markdownRow = this.toIndexMarkdown(rowData);
+			markdownColumns.push(markdownRow);
+
+			var databaseIndex = this.toIndexDatabase(tableName, indexCounter++, rowData);
+			databaseStatements.push(databaseIndex);
+		}
+		var exportData = {
+			markdown: this.toMarkdown(
+				IndexMarkdownHeaders,
+				new Map([
+					[0, MarkdownTablePosition.center]
+				]),
+				markdownColumns
+			),
+			database: databaseStatements.join("\r\n"),
+		} as ExportData;
 
 		return exportData;
 	}
@@ -858,12 +934,60 @@ class EntityRelationManager {
 
 		var layoutElement = getElementByName<HTMLInputElement>(blockElement, 'block-layout');
 		var layout = this.exportLayout(tableName, layoutElement);
-		alert(layout.database);
+
+		var indexElement = getElementByName<HTMLInputElement>(blockElement, 'block-index');
+		var index = this.exportIndex(tableName, indexElement);
+
+		return {
+			table: tableName,
+			layout: layout,
+			index: index,
+		}
 	}
 
-	private export() {
-		var blockRoots = getElementsByName(this.viewElement, 'block-root');
-		[...blockRoots].map(i => this.exportBlock(i));
+	public export() {
+		var markdowns = Array<string>();
+		var databaseTables = Array<string>();
+		var databaseIndexs = Array<string>();
+
+		var exportItems = [...getElementsByName(this.viewElement, 'block-root')]
+			.map(i => this.exportBlock(i))
+		;
+
+		for(var exportItem of exportItems) {
+			var markdown = "\r\n___\r\n\r\n";
+			markdown += `## ${exportItem.table}\r\n`;
+			markdown += "\r\n";
+
+			markdown += "### layout\r\n";
+			markdown += "\r\n";
+			markdown += exportItem.layout.markdown;
+			markdown += "\r\n";
+			markdown += "\r\n";
+
+			markdown += "### index\r\n";
+			markdown += "\r\n";
+			if(exportItem.index.markdown.length) {
+				markdown += exportItem.index.markdown;
+			} else {
+				markdown += "*NONE*";
+			}
+			markdown += "\r\n";
+			markdown += "\r\n";
+
+			markdowns.push(markdown);
+
+			var databaseTable = `--// table: ${exportItem.table}\r\n`;
+			databaseTable += exportItem.layout.database;
+
+			databaseTables.push(databaseTable);
+
+			databaseIndexs.push(exportItem.index.database);
+		}
+
+		this.defineElement.value = markdowns.join("\r\n");
+		this.sqlElement.value = databaseTables.join("\r\n") + "\r\n" + databaseIndexs.join("\r\n");
+
 	}
 }
 
@@ -874,4 +998,4 @@ const erMain = new EntityRelationManager(
 	document.getElementById('sql-main') as HTMLTextAreaElement
 );
 erMain.build();
-
+erMain.export();
