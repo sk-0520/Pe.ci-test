@@ -694,6 +694,16 @@ class EntityRelationManager {
 			this.export();
 		});
 
+		var copyDefineElement = clonedTemplate.querySelector('[name="command-copy-define"]') as HTMLButtonElement;
+		copyDefineElement.addEventListener('click', ev => {
+			this.copyDefine();
+		});
+
+		var copyDefineElement = clonedTemplate.querySelector('[name="command-copy-sql"]') as HTMLButtonElement;
+		copyDefineElement.addEventListener('click', ev => {
+			this.copySql();
+		});
+
 		parentElement.appendChild(clonedTemplate);
 	}
 
@@ -1060,6 +1070,18 @@ class EntityRelationManager {
 		this.defineElement.value = markdowns.join("\r\n");
 		this.sqlElement.value = databaseTables.join("\r\n") + "\r\n" + databaseIndexs.join("\r\n");
 
+	}
+
+	private copyElement(element: HTMLTextAreaElement) {
+		element.focus();
+		element.select();
+		document.execCommand('copy');
+	}
+	public copyDefine() {
+		this.copyElement(this.defineElement);
+	}
+	public copySql() {
+		this.copyElement(this.sqlElement);
 	}
 }
 
