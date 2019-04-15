@@ -790,6 +790,9 @@ class EntityRelationManager {
 		if(row.isNotNull) {
 			sql += " not null";
 		}
+		if(row.check.length) {
+			sql += ` check( ${row.check} )`
+		}
 
 		if(row.logicalName.length || row.comment.length) {
 			sql += ` /* ${row.logicalName}`;
