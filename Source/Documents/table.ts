@@ -170,6 +170,28 @@ function toCheckMark(value: boolean) {
 	return value ? 'o': '';
 }
 
+function countSingleChar(s: string): number {
+	if(!s || !s.length) {
+		return 0;
+	}
+	var chars = s.match(/[\uD800-\uDBFF][\uDC00-\uDFFF]|[^\uD800-\uDFFF]/g) || [];
+	var length = 0;
+	for(var c of chars) {
+		if(c.length == 1) {
+			if(!c.match(/[^\x01-\x7E]/) || !c.match(/[^\uFF65-\uFF9F]/)) {
+				length += 1;
+			}  else {
+				length += 2;
+			}
+
+		} else {
+			// もういいでしょ
+			length += 2;
+		}
+	}
+	return length;
+}
+
 class Entity {
 	private readonly tableNamePrefix = '## ';
 	private blockElements: BlockElements;
@@ -771,25 +793,74 @@ class EntityRelationManager {
 		return sql;
 	}
 
+	private getMarkdownCellSpace(data:ReadonlyArray<ReadonlyArray<string>>): ReadonlyArray<number> {
+
+		var result = new Array<number>(data[0].length).fill(0);
+
+		for(var col = 0; col < data[0].length; col++) {
+			for(var row of data) {
+				var colLength = countSingleChar(row[col]);
+				result[col] = Math.max(result[col], colLength);
+			}
+		}
+
+		return result;
+	}
+
+	private toMarkdownCell(value: string, length: number, position: MarkdownTablePosition) {
+		var valueLength = countSingleChar(value);
+
+		if(valueLength == length) {
+			return value;
+		}
+		switch(position) {
+			case MarkdownTablePosition.left:
+				return value + ' '.repeat(length - valueLength);
+
+			case MarkdownTablePosition.right:
+				return ' '.repeat(length - valueLength) + value;
+
+			case MarkdownTablePosition.center:
+			return ' '.repeat((length - valueLength) / 2) + value + ' '.repeat(((length - valueLength) / 2) + ((length - valueLength) % 2));
+		}
+	}
+
+	private toMarkdownTableCells(cells: ReadonlyArray<string>, positions: Map<number, MarkdownTablePosition>, space: ReadonlyArray<number>):ReadonlyArray<string> {
+		var result = new Array<string>(cells.length);
+		for(var i = 0; i < cells.length; i++) {
+			var position = positions.get(i) || MarkdownTablePosition.left;
+			var value = this.toMarkdownCell(cells[i], space[i], position);
+			result[i] = value;
+		}
+
+		return result;
+	}
+
 	private toMarkdown(header: ReadonlyArray<string>, positions: Map<number, MarkdownTablePosition>, contents: ReadonlyArray<ReadonlyArray<string>>) {
+		var cellSpace = this.getMarkdownCellSpace([header].concat(contents));
+
 		var lines = new Array<string>();
-		lines.push('|' + header.join('|') + '|');
+		lines.push('| ' + this.toMarkdownTableCells(header, positions, cellSpace).join(' | ') + ' |');
 		var sep = '|'
-		for(var i = 0; i < lines.length; i++) {
-			var position = positions.get(i)
+		for(var i = 0; i < header.length; i++) {
+			var position = positions.get(i) ||  MarkdownTablePosition.left;
 			switch(position) {
 				case MarkdownTablePosition.center:
+					sep += ':' + '-'.repeat(cellSpace[i]) + ':';
+					break;
 				case MarkdownTablePosition.right:
+					sep += '-'.repeat(cellSpace[i] + 1) + ':';
+					break;
 				case MarkdownTablePosition.left:
-				default:
+					sep += ':' + '-'.repeat(cellSpace[i] + 1);
+					break;
 			}
-			sep += '---';
 			sep += '|';
 		}
 		lines.push(sep);
 
 		for(var content of contents) {
-			lines.push('|' + content.join('|') + '|');
+			lines.push('| ' + this.toMarkdownTableCells(content, positions, cellSpace).join(' | ') + ' |');
 		}
 
 		return lines.join("\r\n");
@@ -828,7 +899,8 @@ class EntityRelationManager {
 			markdown: this.toMarkdown(
 				LayoutMarkdownHeaders,
 				new Map([
-					[LayoutColumn.PrimaryKey, MarkdownTablePosition.center]
+					[LayoutColumn.PrimaryKey, MarkdownTablePosition.center],
+					[LayoutColumn.NotNull, MarkdownTablePosition.center],
 				]),
 				markdownColumns
 			),
@@ -999,3 +1071,4 @@ const erMain = new EntityRelationManager(
 );
 erMain.build();
 erMain.export();
+
