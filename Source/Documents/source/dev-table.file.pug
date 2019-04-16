@@ -1,7 +1,7 @@
 extends template/_layout.pug
 
 block BLOCK_LAYOUT_VAR
-	- var VAR_LAYOUT_TITLE = 'テーブル図'
+	- var VAR_LAYOUT_TITLE = 'テーブル図: ファイル'
 
 block BLOCK_LAYOUT_HEAD
 	include template/_dev-table.pug
@@ -10,13 +10,11 @@ block BLOCK_LAYOUT_HEAD_SCRIPT
 		link(rel='stylesheet' type='text/css' href='style/dev-table.scss')
 
 block BLOCK_LAYOUT_CONTENT
-	section
-		h2 File
-		div#view-file.view
-		div#command-file.command
-		textarea#define-file.define
-			include ../define/table-file.md
-		textarea#sql-file.sql
+	div#view-file.view
+	div#command-file.command
+	textarea#define-file.define
+		include ../define/table-file.md
+	textarea#sql-file.sql
 
 block BLOCK_LAYOUT_TAIL_SCRIPT
 	script(src="script/dev-table.ts")

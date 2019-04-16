@@ -1,0 +1,44 @@
+input, select, textarea {
+	font-family: monospace;
+}
+
+table {
+	border: 1px solid #444444;
+	width: 100%;
+	empty-cells: show;
+	// table-layout: fixed;
+
+	* {
+		font-size: 0.7rem;
+	}
+}
+
+.view [name='block-root'] {
+	border: 3px double #cccccc;
+
+	[name='block-table'] {
+		//
+	}
+	[name='block-layout'] {
+
+		[name="data-physical"] {
+			background: #adadad;
+			width: 4em;
+		}
+	}
+	[name='block-index'] {
+		ol {
+			list-style: none;
+			margin: 0;
+			padding: 0;
+
+			li {
+				display: inline;
+			}
+		}
+	}
+
+	+ [name='block-root'] {
+		margin-top: 3rem;
+	}
+}
