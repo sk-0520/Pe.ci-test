@@ -17,7 +17,9 @@ table {
 	border: 3px double #cccccc;
 
 	[name='block-table'] {
-		//
+		input {
+			width: 20em;
+		}
 	}
 	[name='block-layout'] {
 

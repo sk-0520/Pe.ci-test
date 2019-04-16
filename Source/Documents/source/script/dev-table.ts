@@ -975,7 +975,7 @@ class EntityRelationManager {
 		sql += " index";
 		sql += ` [idx_${tableName}_${counter}]`;
 		sql += " on";
-		sql += ` ${tableName}(\r\n`;
+		sql += ` [${tableName}](\r\n`;
 		sql += row.columns.map(i => `\t[${i}]`).join(",\r\n") + "\r\n";
 		sql += ")\r\n";
 		sql += ";\r\n";
