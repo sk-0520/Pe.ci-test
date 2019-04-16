@@ -21,7 +21,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data.Dto.Entity
         bool IsEnabledCommandLauncher { get; }
         long ExecuteCount { get; }
         DateTime LastExecuteTimestamp { get; }
-        string Note { get; }
+        string Comment { get; }
 
         #endregion
     }
@@ -40,7 +40,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data.Dto.Entity
         public bool IsEnabledCommandLauncher { get; set; }
         public long ExecuteCount { get; set; }
         public DateTime LastExecuteTimestamp { get; set; }
-        public string Note { get; set; }
+        public string Comment { get; set; }
 
         #endregion
     }

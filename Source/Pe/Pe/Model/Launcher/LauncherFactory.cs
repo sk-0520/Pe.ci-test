@@ -60,7 +60,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Launcher
                     result.Icon.Path = shortcut.IconPath;
                     result.Icon.Index = shortcut.IconIndex;
                     try {
-                        result.Note = shortcut.Description;
+                        result.Comment = shortcut.Description;
                     } catch(COMException ex) {
                         Logger.Warning($"{expandedPath}");
                         Logger.Warning(ex);

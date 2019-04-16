@@ -45,7 +45,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
                 IconPath = data.Icon.Path,
                 IconIndex = data.Icon.Index,
                 IsEnabledCommandLauncher = data.IsEnabledCommandLauncher,
-                Note = Implementation.ToNullValue(data.Note),
+                Comment = Implementation.ToNullValue(data.Comment),
             };
 
             commonStatus.WriteCommon(dto);
@@ -63,7 +63,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
                 Code = dto.Code,
                 Kind = kindEnumTransfer.ToEnum(dto.Kind),
                 IsEnabledCommandLauncher= dto.IsEnabledCommandLauncher,
-                Note = dto.Note,
+                Comment = dto.Comment,
             };
 
             return data;

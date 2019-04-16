@@ -25,6 +25,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database
         {
             var builder = CreateCommonBuilder();
             builder.DataSource = ":memory:";
+            builder.ForeignKeys = true;
 
             ConnectionString = builder.ToString();
         }
@@ -33,6 +34,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database
         {
             var builder = CreateCommonBuilder();
             builder.DataSource = ToSafeFile(file).FullName;
+            builder.ForeignKeys = true;
 
             ConnectionString = builder.ToString();
         }

@@ -41,7 +41,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem
         public string Code { get; private set; }
         public LauncherItemKind Kind { get; private set; }
         public bool IsEnabledCommandLauncher { get; private set; }
-        public string Note { get; private set; }
+        public string Comment { get; private set; }
 
         public LauncherIconElement Icon { get; }
 
@@ -59,7 +59,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem
                 Code = launcherItemData.Code;
                 Kind = launcherItemData.Kind;
                 IsEnabledCommandLauncher = launcherItemData.IsEnabledCommandLauncher;
-                Note = launcherItemData.Note;
+                Comment = launcherItemData.Comment;
             }
         }
 

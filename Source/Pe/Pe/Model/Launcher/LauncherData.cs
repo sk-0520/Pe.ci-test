@@ -110,7 +110,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Launcher
 
         public bool IsEnabledCommandLauncher { get; set; }
 
-        public string Note { get; set; }
+        public string Comment { get; set; }
 
         #endregion
     }
