@@ -683,11 +683,12 @@ class EntityRelationManager {
 		var indexTemplate = document.getElementById('template-command') as HTMLTemplateElement;
 		var clonedTemplate = document.importNode(indexTemplate.content, true);
 
-		// var importElement = clonedTemplate.querySelector('[name="command-import"]') as HTMLButtonElement;
-		// importElement.addEventListener('click', ev => {
-		// 	this.reset();
-		// 	this.build();
-		// });
+		var exportElement = clonedTemplate.querySelector('[name="command-import"]') as HTMLButtonElement;
+		exportElement.addEventListener('click', ev => {
+			this.viewElement.textContent = '';
+			this.buildCore(true);
+			this.export();
+		});
 
 		var exportElement = clonedTemplate.querySelector('[name="command-export"]') as HTMLButtonElement;
 		exportElement.addEventListener('click', ev => {
@@ -713,8 +714,10 @@ class EntityRelationManager {
 		}
 	}
 
-	public build() {
-		this.buildCommand(this.commandElement);
+	private buildCore(rebuild: boolean) {
+		if(!rebuild) {
+			this.buildCommand(this.commandElement);
+		}
 
 		var defines = this.defineElement.value.split('___');
 		defines.shift();
@@ -730,6 +733,10 @@ class EntityRelationManager {
 		}
 
 		this.buildEntityMapping(this.entities);
+	}
+
+	public build() {
+		this.buildCore(false);
 	}
 
 	reset() {
