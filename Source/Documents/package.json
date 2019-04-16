@@ -4,14 +4,15 @@
   "description": "",
   "main": "index.pug",
   "scripts": {
-    "watch": "parcel watch --public-url . ./index.pug",
-    "build": "parcel build --out-dir ../Pe/Pe/doc/help/ --no-content-hash --public-url . ./index.pug"
+    "watch": "parcel watch --public-url . ./source/index.pug",
+    "build": "parcel build --out-dir ../Pe/Pe/doc/help/ --no-content-hash --public-url . ./source/index.pug"
   },
   "author": "",
   "license": "GPLv3",
   "devDependencies": {
     "parcel-bundler": "^1.12.3",
     "pug": "^2.0.3",
+    "sass": "^1.18.0",
     "typescript": "^3.4.3"
   }
 }

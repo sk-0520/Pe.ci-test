@@ -1,0 +1,19 @@
+extends template/_layout.pug
+
+block BLOCK_LAYOUT_VAR
+	- var VAR_LAYOUT_TITLE = 'テーブル図'
+
+block BLOCK_LAYOUT_HEAD
+	include template/_dev-table.pug
+
+block BLOCK_LAYOUT_CONTENT
+	section
+		h2 File
+		div#view-file
+		div#command-file
+		textarea#define-file
+			include ../define/table-file.md
+		textarea#sql-file
+
+block BLOCK_LAYOUT_TAIL_SCRIPT
+	script(src="script/dev-table.ts")

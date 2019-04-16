@@ -1088,28 +1088,18 @@ class EntityRelationManager {
 	}
 }
 
-const er = new Map([
-	[
-		'main',
-		new EntityRelationManager(
-			document.getElementById('view-main') as HTMLDivElement,
-			document.getElementById('command-main') as HTMLDivElement,
-			document.getElementById('define-main') as HTMLTextAreaElement,
-			document.getElementById('sql-main') as HTMLTextAreaElement
-		)
-	],
-	[
-		'file',
-		new EntityRelationManager(
-			document.getElementById('view-file') as HTMLDivElement,
-			document.getElementById('command-file') as HTMLDivElement,
-			document.getElementById('define-file') as HTMLTextAreaElement,
-			document.getElementById('sql-file') as HTMLTextAreaElement
-		)
-	],
-]);
-for(const [key, value] of er) {
-	value.build();
-	value.export();
+// ぶんかつがだるい
+const baseIds = ['main', 'file'];
+for(var baseId of baseIds) {
+	var viewElement = document.getElementById(`view-${baseId}`);
+	if(viewElement) {
+		var erm = new EntityRelationManager(
+			viewElement as HTMLDivElement,
+			document.getElementById(`command-${baseId}`) as HTMLDivElement,
+			document.getElementById(`define-${baseId}`) as HTMLTextAreaElement,
+			document.getElementById(`sql-${baseId}`) as HTMLTextAreaElement
+		);
+		erm.build();
+		erm.export();
+	}
 }
-
