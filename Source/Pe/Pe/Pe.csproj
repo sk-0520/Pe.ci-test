@@ -323,6 +323,9 @@
     <None Include="doc\license\resource\Visual Studio 2017 Image Library EULA.RTF">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="doc\help\*.*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
     <None Include="Pe.user.config">
       <DependentUpon>App.config</DependentUpon>
