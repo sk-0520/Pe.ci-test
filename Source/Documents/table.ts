@@ -56,7 +56,7 @@ const DatabaseTypeMap = new Map([
 const ClrMap = new Map([
 	['integer', ['System.Int64']],
 	['real', ['System.Decimal', 'System.Single', 'System.Double']],
-	['text', ['System.String', 'System.Guid', 'System.Version']],
+	['text', ['System.String', 'System.Guid', 'System.Version', 'System.TimeSpan']],
 	['blob', ['System.Byte[]']],
 	['datetime', ['System.DateTime', 'System.String']],
 	['boolean', ['System.Boolean', 'System.Int64']],
@@ -1088,12 +1088,28 @@ class EntityRelationManager {
 	}
 }
 
-const erMain = new EntityRelationManager(
-	document.getElementById('view-main') as HTMLDivElement,
-	document.getElementById('command-main') as HTMLDivElement,
-	document.getElementById('define-main') as HTMLTextAreaElement,
-	document.getElementById('sql-main') as HTMLTextAreaElement
-);
-erMain.build();
-erMain.export();
+const er = new Map([
+	[
+		'main',
+		new EntityRelationManager(
+			document.getElementById('view-main') as HTMLDivElement,
+			document.getElementById('command-main') as HTMLDivElement,
+			document.getElementById('define-main') as HTMLTextAreaElement,
+			document.getElementById('sql-main') as HTMLTextAreaElement
+		)
+	],
+	[
+		'file',
+		new EntityRelationManager(
+			document.getElementById('view-file') as HTMLDivElement,
+			document.getElementById('command-file') as HTMLDivElement,
+			document.getElementById('define-file') as HTMLTextAreaElement,
+			document.getElementById('sql-file') as HTMLTextAreaElement
+		)
+	],
+]);
+for(const [key, value] of er) {
+	value.build();
+	value.export();
+}
 

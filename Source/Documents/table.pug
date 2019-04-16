@@ -85,6 +85,7 @@ html
 						option(value="System.Guid") Guid
 						option(value="System.DateTime") DateTime
 						option(value="System.Version") Version
+						option(value="System.TimeSpan") TimeSpan
 				td
 					input(type="text", name="check")
 				td
@@ -136,7 +137,7 @@ html
 			div#view-file
 			div#command-file
 			textarea#define-file
-				-//include table-file.md
+				include table-file.md
 			textarea#sql-file
 
 		script(src="table.ts")
