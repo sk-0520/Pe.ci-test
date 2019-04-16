@@ -5,13 +5,16 @@
   "main": "index.pug",
   "scripts": {
     "watch": "parcel watch --public-url . ./source/index.pug",
-    "build": "parcel build --out-dir ../Pe/Pe/doc/help/ --no-content-hash --public-url . ./source/index.pug"
+    "build:clean":  "rimraf ../Pe/Pe/doc/help/",
+    "build:output": "parcel build --out-dir ../Pe/Pe/doc/help/ --no-content-hash --public-url . ./source/index.pug",
+    "build": "npm run build:clean & npm run build:output"
   },
   "author": "",
   "license": "GPLv3",
   "devDependencies": {
     "parcel-bundler": "^1.12.3",
     "pug": "^2.0.3",
+    "rimraf": "^2.6.3",
     "sass": "^1.18.0",
     "typescript": "^3.4.3"
   }
