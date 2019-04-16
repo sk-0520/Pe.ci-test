@@ -1,4 +1,5 @@
-# テーブル一覧
+# メインテーブル一覧
+
 
 
 
@@ -22,7 +23,7 @@ ___
 |    | o  |    | 更新プログラムバージョン | UpdatedProgramVersion | text         | System.Version  |              |                        |
 |    | o  |    | 更新回数                 | UpdatedCount          | integer      | System.Int64    |              | 0始まり                |
 |    | o  |    | 値                       | Value                 | text         | System.String   |              |                        |
-|    | o  |    | コメント                 | Note                  | text         | System.String   |              | Peからは使用しないメモ |
+|    | o  |    | コメント                 | Comment               | text         | System.String   |              | Peからは使用しないメモ |
 
 ### index
 
@@ -56,7 +57,7 @@ ___
 |    | o  |    | コマンド入力対象         | IsEnabledCommandLauncher | boolean      | System.Boolean  |              |          |
 |    | o  |    | 使用回数                 | ExecuteCount             | integer      | System.Int64    |              |          |
 |    | o  |    | 最終仕様日時             | LastExecuteTimestamp     | datetime     | System.DateTime |              | UTC      |
-|    | o  |    | メモ                     | Note                     | text         | System.String   |              |          |
+|    | o  |    | メモ                     | Comment                  | text         | System.String   |              |          |
 
 ### index
 
@@ -179,7 +180,7 @@ ___
 |    | o  |    | パターン                 | Pattern               | text         | System.String   |              | 正規表現                     |
 |    | o  |    | 対象                     | Target                | text         | System.String   |              | ファイル・ディレクトリ・両方 |
 |    | o  |    | ホワイトリスト           | Whitelist             | boolean      | System.Boolean  |              |                              |
-|    | o  |    |                          | Sort                  | integer      | System.Int64    |              |                              |
+|    | o  |    | 並び順                   | Sort                  | integer      | System.Int64    |              |                              |
 
 ### index
 
@@ -314,12 +315,12 @@ ___
 |    | o  |    | 更新プログラム名         | UpdatedProgramName    | text         | System.String   |              |          |
 |    | o  |    | 更新プログラムバージョン | UpdatedProgramVersion | text         | System.Version  |              |          |
 |    | o  |    | 更新回数                 | UpdatedCount          | integer      | System.Int64    |              | 0始まり  |
-|    | o  |    |                          | FamilyName            | text         | System.String   |              |          |
-|    | o  |    |                          | Height                | real         | System.Double   |              |          |
-|    | o  |    |                          | Bold                  | boolean      | System.Boolean  |              |          |
-|    | o  |    |                          | Italic                | boolean      | System.Boolean  |              |          |
-|    | o  |    |                          | Underline             | boolean      | System.Boolean  |              |          |
-|    | o  |    |                          | Strike                | boolean      | System.Boolean  |              |          |
+|    | o  |    | フォントファミリー       | FamilyName            | text         | System.String   |              |          |
+|    | o  |    | 高さ                     | Height                | real         | System.Double   |              |          |
+|    | o  |    | ボールド                 | Bold                  | boolean      | System.Boolean  |              |          |
+|    | o  |    | イタリック               | Italic                | boolean      | System.Boolean  |              |          |
+|    | o  |    | 下線                     | Underline             | boolean      | System.Boolean  |              |          |
+|    | o  |    | 取り消し線               | Strike                | boolean      | System.Boolean  |              |          |
 
 ### index
 
@@ -346,10 +347,10 @@ ___
 |    | o  |    | 更新プログラムバージョン | UpdatedProgramVersion | text         | System.Version  |              |           |
 |    | o  |    | 更新回数                 | UpdatedCount          | integer      | System.Int64    |              | 0始まり   |
 |    | o  |    | グループ名               | Name                  | text         | System.String   |              |           |
-|    | o  |    |                          | Kind                  | text         | System.String   |              |           |
-|    | o  |    |                          | ImageName             | text         | System.String   |              |           |
-|    | o  |    |                          | ImageColor            | text         | System.String   |              | #AARRGGBB |
-|    | o  |    |                          | Sort                  | integer      | System.Int64    |              |           |
+|    | o  |    | グループ種別             | Kind                  | text         | System.String   |              |           |
+|    | o  |    | イメージ                 | ImageName             | text         | System.String   |              |           |
+|    | o  |    | 色                       | ImageColor            | text         | System.String   |              | #AARRGGBB |
+|    | o  |    | 並び順                   | Sort                  | integer      | System.Int64    |              |           |
 
 ### index
 
@@ -376,7 +377,7 @@ ___
 |    | o  |    | 更新回数                 | UpdatedCount          | integer      | System.Int64    |              | 0始まり  |
 |    | o  |    | ランチャーグループID     | LauncherGroupId       | text         | System.Guid     |              |          |
 |    | o  |    | ランチャーアイテムID     | LauncherItemId        | text         | System.Guid     |              |          |
-|    | o  |    |                          | Sort                  | integer      | System.Int64    |              |          |
+|    | o  |    | 並び順                   | Sort                  | integer      | System.Int64    |              |          |
 
 ### index
 
@@ -392,7 +393,7 @@ ___
 
 | PK | NN | FK | 論理カラム名             | 物理カラム名          | 論理データ型 | マッピング型    | チェック制約 | コメント |
 |:--:|:--:|:---|:-------------------------|:----------------------|:-------------|:----------------|:-------------|:---------|
-| o  | o  |    |                          | ScreenName            | text         | System.Guid     |              |          |
+| o  | o  |    | スクリーン名             | ScreenName            | text         | System.Guid     |              |          |
 |    | o  |    | 作成タイムスタンプ       | CreatedTimestamp      | datetime     | System.DateTime |              | UTC      |
 |    | o  |    | 作成ユーザー名           | CreatedAccount        | text         | System.String   |              |          |
 |    | o  |    | 作成プログラム名         | CreatedProgramName    | text         | System.String   |              |          |
@@ -402,10 +403,10 @@ ___
 |    | o  |    | 更新プログラム名         | UpdatedProgramName    | text         | System.String   |              |          |
 |    | o  |    | 更新プログラムバージョン | UpdatedProgramVersion | text         | System.Version  |              |          |
 |    | o  |    | 更新回数                 | UpdatedCount          | integer      | System.Int64    |              | 0始まり  |
-|    | o  |    |                          | ScreenX               | integer      | System.Int64    |              |          |
-|    | o  |    |                          | ScreenY               | integer      | System.Int64    |              |          |
-|    | o  |    |                          | ScreenWidth           | integer      | System.Int64    |              |          |
-|    | o  |    |                          | ScreenHeight          | integer      | System.Int64    |              |          |
+|    | o  |    | X座標                    | ScreenX               | integer      | System.Int64    |              |          |
+|    | o  |    | Y座標                    | ScreenY               | integer      | System.Int64    |              |          |
+|    | o  |    | 横幅                     | ScreenWidth           | integer      | System.Int64    |              |          |
+|    | o  |    | 高さ                     | ScreenHeight          | integer      | System.Int64    |              |          |
 
 ### index
 
@@ -431,18 +432,18 @@ ___
 |    | o  |    | 更新プログラム名         | UpdatedProgramName    | text         | System.String   |              |                                              |
 |    | o  |    | 更新プログラムバージョン | UpdatedProgramVersion | text         | System.Version  |              |                                              |
 |    | o  |    | 更新回数                 | UpdatedCount          | integer      | System.Int64    |              | 0始まり                                      |
-|    | o  |    |                          | ScreenName            | text         | System.String   |              | ドライバアップデートとかもろもろでよく変わる |
-|    | o  |    |                          | LauncherGroupId       | text         | System.Guid     |              |                                              |
-|    | o  |    |                          | PositionKind          | text         | System.String   |              | 上下左右                                     |
-|    | o  |    |                          | Direction             | text         | System.String   |              | アイコンの並びの基点                         |
-|    | o  |    |                          | IconScale             | text         | System.String   |              |                                              |
-|    | o  |    |                          | FontId                | text         | System.Guid     |              |                                              |
-|    | o  |    |                          | AutoHideTimeout       | text         | System.TimeSpan |              |                                              |
-|    | o  |    |                          | TextWidth             | integer      | System.Int64    |              |                                              |
-|    | o  |    |                          | IsVisible             | boolean      | System.Boolean  |              |                                              |
-|    | o  |    |                          | IsTopmost             | boolean      | System.Boolean  |              |                                              |
-|    | o  |    |                          | IsAutoHide            | boolean      | System.Boolean  |              |                                              |
-|    | o  |    |                          | IsIconOnly            | boolean      | System.Boolean  |              |                                              |
+|    | o  |    | スクリーン名             | ScreenName            | text         | System.String   |              | ドライバアップデートとかもろもろでよく変わる |
+|    | o  |    | ランチャーグループID     | LauncherGroupId       | text         | System.Guid     |              |                                              |
+|    | o  |    | 表示位置                 | PositionKind          | text         | System.String   |              | 上下左右                                     |
+|    | o  |    | 方向                     | Direction             | text         | System.String   |              | アイコンの並びの基点                         |
+|    | o  |    | アイコンサイズ           | IconScale             | text         | System.String   |              |                                              |
+|    | o  |    | フォント                 | FontId                | text         | System.Guid     |              |                                              |
+|    | o  |    | 自動的に隠す時間         | AutoHideTimeout       | text         | System.TimeSpan |              |                                              |
+|    | o  |    | 文字幅                   | TextWidth             | integer      | System.Int64    |              |                                              |
+|    | o  |    | 表示                     | IsVisible             | boolean      | System.Boolean  |              |                                              |
+|    | o  |    | 最前面                   | IsTopmost             | boolean      | System.Boolean  |              |                                              |
+|    | o  |    | 自動的に隠す             | IsAutoHide            | boolean      | System.Boolean  |              |                                              |
+|    | o  |    | アイコンのみ             | IsIconOnly            | boolean      | System.Boolean  |              |                                              |
 
 ### index
 
@@ -468,17 +469,17 @@ ___
 |    | o  |    | 更新プログラム名         | UpdatedProgramName    | text         | System.String   |              |                              |
 |    | o  |    | 更新プログラムバージョン | UpdatedProgramVersion | text         | System.Version  |              |                              |
 |    | o  |    | 更新回数                 | UpdatedCount          | integer      | System.Int64    |              | 0始まり                      |
-|    | o  |    |                          | Title                 | text         | System.String   |              |                              |
-|    | o  |    |                          | ScreenName            | text         | System.String   |              |                              |
-|    | o  |    |                          | LayoutKind            | text         | System.String   |              |                              |
-|    | o  |    |                          | IsVisible             | boolean      | System.Boolean  |              |                              |
+|    | o  |    | タイトル                 | Title                 | text         | System.String   |              |                              |
+|    | o  |    | スクリーン名             | ScreenName            | text         | System.String   |              |                              |
+|    | o  |    | レイアウト種別           | LayoutKind            | text         | System.String   |              |                              |
+|    | o  |    | 表示                     | IsVisible             | boolean      | System.Boolean  |              |                              |
 |    | o  |    | フォントID               | FontId                | text         | System.Guid     |              |                              |
-|    | o  |    |                          | ForegdoundColor       | text         | System.String   |              | #AARRGGBB                    |
-|    | o  |    |                          | BackgroundColor       | text         | System.String   |              | #AARRGGBB                    |
-|    | o  |    |                          | IsLocked              | boolean      | System.Boolean  |              |                              |
-|    | o  |    |                          | IsTopmost             | boolean      | System.Boolean  |              |                              |
-|    | o  |    |                          | IsCompact             | boolean      | System.Boolean  |              |                              |
-|    | o  |    |                          | TextWrap              | boolean      | System.Boolean  |              |                              |
+|    | o  |    | 前景色                   | ForegdoundColor       | text         | System.String   |              | #AARRGGBB                    |
+|    | o  |    | 背景色                   | BackgroundColor       | text         | System.String   |              | #AARRGGBB                    |
+|    | o  |    | ロック状態               | IsLocked              | boolean      | System.Boolean  |              |                              |
+|    | o  |    | 最前面                   | IsTopmost             | boolean      | System.Boolean  |              |                              |
+|    | o  |    | 最小化                   | IsCompact             | boolean      | System.Boolean  |              |                              |
+|    | o  |    | 文字列の折り返し         | TextWrap              | boolean      | System.Boolean  |              |                              |
 |    | o  |    | ノート内容種別           | ContentKind           | text         | System.String   |              | プレーン文字列 RTF, KeyValue |
 
 ### index
@@ -496,7 +497,7 @@ ___
 | PK | NN | FK | 論理カラム名             | 物理カラム名          | 論理データ型 | マッピング型    | チェック制約 | コメント                                                      |
 |:--:|:--:|:---|:-------------------------|:----------------------|:-------------|:----------------|:-------------|:--------------------------------------------------------------|
 | o  | o  |    | ノートID                 | NoteId                | text         | System.Guid     |              |                                                               |
-| o  | o  |    |                          | LayoutKind            | text         | System.String   |              |                                                               |
+| o  | o  |    | レイアウト種別           | LayoutKind            | text         | System.String   |              |                                                               |
 |    | o  |    | 作成タイムスタンプ       | CreatedTimestamp      | datetime     | System.DateTime |              | UTC                                                           |
 |    | o  |    | 作成ユーザー名           | CreatedAccount        | text         | System.String   |              |                                                               |
 |    | o  |    | 作成プログラム名         | CreatedProgramName    | text         | System.String   |              |                                                               |
@@ -506,10 +507,10 @@ ___
 |    | o  |    | 更新プログラム名         | UpdatedProgramName    | text         | System.String   |              |                                                               |
 |    | o  |    | 更新プログラムバージョン | UpdatedProgramVersion | text         | System.Version  |              |                                                               |
 |    | o  |    | 更新回数                 | UpdatedCount          | integer      | System.Int64    |              | 0始まり                                                       |
-|    | o  |    |                          | X                     | real         | System.Double   |              | 絶対: プライマリディスプレイ(0,0)基準, 相対: ディスプレイ中央 |
-|    | o  |    |                          | Y                     | real         | System.Double   |              | 絶対: プライマリディスプレイ(0,0)基準, 相対: ディスプレイ中央 |
-|    | o  |    |                          | Width                 | real         | System.Double   |              | 絶対: ウィンドウサイズ, 相対: ディスプレイ比率                |
-|    | o  |    |                          | Height                | real         | System.Double   |              | 絶対: ウィンドウサイズ, 相対: ディスプレイ比率                |
+|    | o  |    | X座標                    | X                     | real         | System.Double   |              | 絶対: プライマリディスプレイ(0,0)基準, 相対: ディスプレイ中央 |
+|    | o  |    | Y座標                    | Y                     | real         | System.Double   |              | 絶対: プライマリディスプレイ(0,0)基準, 相対: ディスプレイ中央 |
+|    | o  |    | 横幅                     | Width                 | real         | System.Double   |              | 絶対: ウィンドウサイズ, 相対: ディスプレイ比率                |
+|    | o  |    | 高さ                     | Height                | real         | System.Double   |              | 絶対: ウィンドウサイズ, 相対: ディスプレイ比率                |
 
 ### index
 
@@ -565,7 +566,7 @@ ___
 |    | o  |    | ファイル種別             | FileKind              | text         | System.String   |              | リンク, 埋め込み     |
 |    | o  |    | ファイルパス             | FilePath              | text         | System.String   |              |                      |
 |    | o  |    | 埋め込みファイルID       | NoteFileId            | text         | System.Guid     |              | 埋め込みの場合に使用 |
-|    | o  |    |                          | Sort                  | integer      | System.Int64    |              |                      |
+|    | o  |    | 並び順                   | Sort                  | integer      | System.Int64    |              |                      |
 
 ### index
 
