@@ -39,7 +39,28 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
 
         NotesEntityDto ConvertFromData(NoteData data, IDatabaseCommonStatus commonStatus)
         {
-            throw new NotImplementedException();
+            var noteLayoutKindTransfer = new EnumTransfer<NoteLayoutKind>();
+            var contentKindTransfer = new EnumTransfer<NoteContentKind>();
+
+            var result = new NotesEntityDto() {
+                NoteId = data.NoteId,
+                Title = data.Title,
+                ScreenName = data.ScreenName,
+                LayoutKind = noteLayoutKindTransfer.ToText(data.LayoutKind),
+                IsVisible = data.IsVisible,
+                FontId = data.FontId,
+                ForegdoundColor = FromColor(data.ForegdoundColor),
+                BackgroundColor = FromColor(data.BackgroundColor),
+                IsLocked = data.IsLocked,
+                IsTopmost = data.IsTopmost,
+                IsCompact = data.IsCompact,
+                TextWrap = data.TextWrap,
+                ContentKind = contentKindTransfer.ToText(data.ContentKind),
+            };
+
+            commonStatus.WriteCommon(result);
+
+            return result;
 
         }
 
