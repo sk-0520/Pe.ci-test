@@ -25,3 +25,4 @@ Thumbs.db
 *.lnk
 node_modules/
 /Source/Documents/dist
+.vscode/
