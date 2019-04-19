@@ -176,10 +176,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
                 var toolbarsDao = new LauncherToolbarsEntityDao(commander, StatementLoader, commander.Implementation, this);
                 toolbarsDao.InsertNewToolbar(toolbarId, DockScreen.DeviceName, DatabaseCommonStatus.CreateCurrentAccount());
 
-                var screensDao = new ScreensEntityDao(commander, StatementLoader, commander.Implementation, this);
-                if(!screensDao.SelectExistsScreen(DockScreen.DeviceName)) {
-                    screensDao.InsertScreen(DockScreen, DatabaseCommonStatus.CreateCurrentAccount());
-                }
+                var screenOperator = new ScreenOperator(this);
+                screenOperator.RegisterDatabase(DockScreen, commander, StatementLoader, commander.Implementation, DatabaseCommonStatus.CreateCurrentAccount());
 
                 commander.Commit();
             }

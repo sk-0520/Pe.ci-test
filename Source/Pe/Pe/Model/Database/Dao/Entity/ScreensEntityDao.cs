@@ -28,7 +28,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             return Commander.QuerySingle<bool>(sql, param);
         }
 
-        public bool InsertScreen(Screen screen, DatabaseCommonStatus commonStatus)
+        public bool InsertScreen(Screen screen, IDatabaseCommonStatus commonStatus)
         {
             var sql = StatementLoader.LoadStatementByCurrent();
             var dto = new ScreensRowDto() {

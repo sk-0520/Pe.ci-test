@@ -11,6 +11,7 @@ using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Applications;
 using ContentTypeTextNet.Pe.Main.Model.Data;
 using ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity;
+using ContentTypeTextNet.Pe.Main.Model.Logic;
 using ContentTypeTextNet.Pe.Main.Model.Manager;
 using ContentTypeTextNet.Pe.Main.Model.Note;
 using ContentTypeTextNet.Pe.Main.Model.Theme;
@@ -140,10 +141,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
                 noteContentDao.InsertNewContent(noteContent, DatabaseCommonStatus.CreateCurrentAccount());
                 */
 
-                var screenEntityDao = new ScreensEntityDao(commander, StatementLoader, commander.Implementation, Logger.Factory);
-                if(!screenEntityDao.SelectExistsScreen(DockScreen.DeviceName)) {
-                    screenEntityDao.InsertScreen(DockScreen, DatabaseCommonStatus.CreateCurrentAccount());
-                }
+                var screenOperator = new ScreenOperator(this);
+                screenOperator.RegisterDatabase(DockScreen, commander, StatementLoader, commander.Implementation, DatabaseCommonStatus.CreateCurrentAccount());
 
                 commander.Commit();
             }

@@ -8,7 +8,10 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.Library.PInvoke.Windows;
 using ContentTypeTextNet.Library.PInvoke.Windows.root.CIMV2;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Compatibility.Forms;
+using ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
+using ContentTypeTextNet.Pe.Main.Model.Data;
+using ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Logic
 {
@@ -82,6 +85,16 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
 
             //return screen.DeviceName;
             return device.DeviceString;
+        }
+
+        public bool RegisterDatabase(Screen screen, IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, IDatabaseCommonStatus databaseCommonStatus)
+        {
+            var screensDao = new ScreensEntityDao(commander, statementLoader, implementation, Logger.Factory);
+            if(!screensDao.SelectExistsScreen(screen.DeviceName)) {
+                return screensDao.InsertScreen(screen, databaseCommonStatus);
+            }
+
+            return false;
         }
 
         #endregion
