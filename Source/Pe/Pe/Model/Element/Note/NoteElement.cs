@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -104,20 +105,46 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
                 ContentKind = NoteContentKind.Plain,
             };
 
+            var noteLayout = new NoteLayoutData() {
+                NoteId = noteData.NoteId,
+                LayoutKind = noteData.LayoutKind,
+            };
+            if(noteLayout.LayoutKind == NoteLayoutKind.Absolute) {
+                noteLayout.Width = 200;
+                noteLayout.Height = 160;
+                noteLayout.X = (DockScreen.DeviceBounds.Width / 2) - (noteLayout.Width / 2);
+                noteLayout.Y = (DockScreen.DeviceBounds.Height / 2) - (noteLayout.Height / 2);
+            } else {
+                Debug.Assert(noteLayout.LayoutKind == NoteLayoutKind.Relative);
+                throw new NotImplementedException();
+            }
+
+            var noteContent = new NoteContentData() {
+                NoteId = noteData.NoteId,
+                ContentKind = noteData.ContentKind,
+                Content = string.Empty,
+            };
+
             using(var commander = MainDatabaseBarrier.WaitWrite()) {
 
                 var notesEntityDao = new NotesEntityDao(commander, StatementLoader, commander.Implementation, Logger.Factory);
                 notesEntityDao.InsertNewNote(noteData, DatabaseCommonStatus.CreateCurrentAccount());
 
                 var notesLayoutDao = new NoteLayoutsEntityDao(commander, StatementLoader, commander.Implementation, Logger.Factory);
+                notesLayoutDao.InsertNewLayout(noteLayout, DatabaseCommonStatus.CreateCurrentAccount());
+
+                var noteContentDao = new NoteContentsEntityDao(commander, StatementLoader, commander.Implementation, Logger.Factory);
+                noteContentDao.InsertNewContent(noteContent, DatabaseCommonStatus.CreateCurrentAccount());
 
                 var screenEntityDao = new ScreensEntityDao(commander, StatementLoader, commander.Implementation, Logger.Factory);
                 if(!screenEntityDao.SelectExistsScreen(DockScreen.DeviceName)) {
                     screenEntityDao.InsertScreen(DockScreen, DatabaseCommonStatus.CreateCurrentAccount());
                 }
+
+                commander.Commit();
             }
 
-            throw new NotImplementedException();
+            return noteData;
         }
 
         void LoadNote()

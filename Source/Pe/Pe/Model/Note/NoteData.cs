@@ -40,4 +40,35 @@ namespace ContentTypeTextNet.Pe.Main.Model.Note
         public NoteContentKind ContentKind { get; set; }
         #endregion
     }
+
+    public class NoteLayoutData
+    {
+        #region property
+
+        public Guid NoteId { get; set; }
+        public NoteLayoutKind LayoutKind { get; set; }
+
+        [PixelKind(Px.Device)]
+        public double X { get; set; }
+        [PixelKind(Px.Device)]
+        public double Y { get; set; }
+        [PixelKind(Px.Device)]
+        public double Width { get; set; }
+        [PixelKind(Px.Device)]
+        public double Height { get; set; }
+
+        #endregion
+    }
+
+    public class NoteContentData
+    {
+        #region property
+
+        public Guid NoteId { get; set; }
+        public NoteContentKind ContentKind { get; set; }
+
+        public string Content { get; set; }
+
+        #endregion
+    }
 }

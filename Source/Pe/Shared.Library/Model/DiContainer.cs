@@ -37,6 +37,41 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
     public class InjectionAttribute : Attribute
     { }
 
+    /// <summary>
+    /// パラメータに型判別できない(default(Object)とか)を無理やり認識させるしゃあなし対応。
+    /// </summary>
+    public struct DiDefaultParameter
+    {
+        public DiDefaultParameter(Type type)
+        {
+            Type = type;
+        }
+
+        #region property
+
+        public Type Type { get; }
+
+        #endregion
+
+        #region function
+
+        public KeyValuePair<Type, object> GetPair()
+        {
+            if(Type.IsValueType) {
+                return new KeyValuePair<Type, object>(Type, Activator.CreateInstance(Type));
+            }
+
+            return new KeyValuePair<Type, object>(Type, null);
+        }
+
+        public static DiDefaultParameter Create<T>()
+        {
+            return new DiDefaultParameter(typeof(T));
+        }
+
+        #endregion
+    }
+
     public interface IDiScopeContainerFactory
     {
         /// <summary>
@@ -503,7 +538,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         {
             var manualParameterItems = manualParameters
                 .Where(o => o != null)
-                .Select(o => new KeyValuePair<Type, object>(o.GetType(), o))
+                .Select(o => o.GetType() == typeof(DiDefaultParameter) ? ((DiDefaultParameter)o).GetPair() :  new KeyValuePair<Type, object>(o.GetType(), o))
                 .ToList()
             ;
 
@@ -580,6 +615,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 
             // コンストラクタのキャッシュを使用
             if(Constructors.TryGetValue(objectType, out var constructorCache)) {
+                //NOTE: これ生成できなければ下の処理に流した方がいいと思う
                 return TryNewObjectCore(objectType, true, constructorCache, manualParameters, out createdObject);
             }
 

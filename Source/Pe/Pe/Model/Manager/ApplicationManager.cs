@@ -159,7 +159,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
 
             var result = new List<NoteElement>(noteIds.Count);
             foreach(var noteId in noteIds) {
-                var element = CreateNoteElement(noteId, null);
+                var element = CreateNoteElement(noteId, default(Screen));
                 result.Add(element);
             }
 
@@ -199,8 +199,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
             var notes = CreateNoteElements();
             NoteElements.AddRange(notes);
 
-            var viewShowStaters = launcherToolbars
-                .Concat(Enumerable.Empty<IViewShowStarter>())
+            var viewShowStaters = Enumerable.Empty<IViewShowStarter>()
+                .Concat(launcherToolbars)
+                .Concat(notes)
                 .Where(i => i.CanStartShowView)
                 .ToList()
             ;

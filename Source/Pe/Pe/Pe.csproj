@@ -196,6 +196,8 @@
     <Compile Include="Model\Data\Dto\Domain\LauncherItemIconRowDto.cs" />
     <Compile Include="Model\Data\Dto\Domain\LauncherToolbarScreenRowDto.cs" />
     <Compile Include="Model\Data\Dto\Entity\LauncherItemIconsEntityDto.cs" />
+    <Compile Include="Model\Data\Dto\Entity\NoteContentsEntityDto.cs" />
+    <Compile Include="Model\Data\Dto\Entity\NoteLayoutsEntityDto.cs" />
     <Compile Include="Model\Data\Dto\Entity\NotesEntityDto.cs" />
     <Compile Include="Model\Data\Dto\Entity\ScreensEntityDto.cs" />
     <Compile Include="Model\Data\IconData.cs" />
@@ -348,7 +350,6 @@
     <Folder Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherCommandsEntityDao\" />
     <Folder Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherDirectoriesEntityDao\" />
     <Folder Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherDirectoryItemsEntityDao\" />
-    <Folder Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\NoteLayoutsEntityDao\" />
     <Folder Include="View\Converter\" />
   </ItemGroup>
   <ItemGroup>
@@ -464,6 +465,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Domain\LauncherToolbarDomainDao\SelectAllScreenToolbars.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\NoteContentsEntityDao\InsertNewContent.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\NoteLayoutsEntityDao\InsertNewLayout.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\NotesEntityDao\InsertNewNote.sql">

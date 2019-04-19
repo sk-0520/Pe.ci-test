@@ -109,7 +109,10 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
 
             public NoteElement CreateNoteElement(Guid noteId, Screen screen)
             {
-                var element = DiContainer.Build<NoteElement>(noteId, screen);
+                var element = screen == null
+                    ? DiContainer.Build<NoteElement>(noteId, DiDefaultParameter.Create<Screen>())
+                    : DiContainer.Build<NoteElement>(noteId, screen)
+                ;
                 element.Initialize();
                 return element;
             }
