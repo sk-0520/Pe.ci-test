@@ -98,6 +98,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
             }
 
             if(item.ViewModel is IViewLifecycleReceiver viewLifecycleReceiver) {
+                item.Window.SourceInitialized += Window_SourceInitialized;
                 item.Window.Loaded += Window_Loaded;
                 item.Window.Closing += Window_Closing;
             }
@@ -113,10 +114,25 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
 
         #endregion
 
+        private void Window_SourceInitialized(object sender, EventArgs e)
+        {
+            var window = (Window)sender;
+            Logger.Debug($"ウィンドウハンドル生成: {window}");
+
+            window.SourceInitialized -= Window_SourceInitialized;
+
+            var item = Items.First(i => i.Window == window);
+            if(item.ViewModel is IViewLifecycleReceiver viewLifecycleReceiver) {
+                viewLifecycleReceiver.ReceiveViewInitialized(window);
+            }
+        }
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             var window = (Window)sender;
-            Logger.Debug($"ウィンドウ生成: {window}");
+            Logger.Debug($"ウィンドウ生成完了: {window}");
+
+            window.Loaded -= Window_Loaded;
 
             var item = Items.First(i => i.Window == window);
             if(item.ViewModel is IViewLifecycleReceiver viewLifecycleReceiver) {

@@ -50,11 +50,39 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             return dto;
         }
 
+        NoteLayoutData ConvertFromDto(NoteLayoutsEntityDto dto)
+        {
+            var noteLayoutKindTransfer = new EnumTransfer<NoteLayoutKind>();
+
+            var data = new NoteLayoutData() {
+                NoteId = dto.NoteId,
+                LayoutKind = noteLayoutKindTransfer.ToEnum(dto.LayoutKind),
+                X = dto.X,
+                Y = dto.Y,
+                Width = dto.Width,
+                Height = dto.Height,
+            };
+
+            return data;
+        }
+
         public bool InsertNewLayout(NoteLayoutData noteLayout, IDatabaseCommonStatus databaseCommonStatus)
         {
             var sql = StatementLoader.LoadStatementByCurrent();
             var param = ConvertFromData(noteLayout, databaseCommonStatus);
             return Commander.Execute(sql, param) == 1;
+        }
+
+        public NoteLayoutData SelectLayout(Guid noteId, NoteLayoutKind layoutKind)
+        {
+            var noteLayoutKindTransfer = new EnumTransfer<NoteLayoutKind>();
+
+            var sql = StatementLoader.LoadStatementByCurrent();
+            var param = new {
+                NoteId = noteId,
+                LayoutKind = noteLayoutKindTransfer.ToText(layoutKind),
+            };
+            return Commander.QueryFirstOrDefault<NoteLayoutData>(sql, param);
         }
 
         #endregion

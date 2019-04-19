@@ -240,6 +240,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar
         #endregion
 
         #region IViewLifecycleReceiver
+        public void ReceiveViewInitialized(Window window)
+        { }
 
         public void ReceiveViewLoaded(Window window)
         {
@@ -281,6 +283,5 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar
         {
             PropertyChangedHooker.Execute(e, RaisePropertyChanged);
         }
-
     }
 }

@@ -23,6 +23,7 @@ using ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar;
 using ContentTypeTextNet.Pe.Main.Model.Element.Note;
 using ContentTypeTextNet.Pe.Main.Model.Launcher;
 using ContentTypeTextNet.Pe.Main.Model.Logic;
+using ContentTypeTextNet.Pe.Main.Model.Note;
 using ContentTypeTextNet.Pe.Main.View.LauncherToolbar;
 using ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar;
 using ContentTypeTextNet.Pe.Main.ViewModel.Manager;
@@ -159,7 +160,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
 
             var result = new List<NoteElement>(noteIds.Count);
             foreach(var noteId in noteIds) {
-                var element = CreateNoteElement(noteId, default(Screen));
+                var element = CreateNoteElement(noteId, default(Screen), NotePosition.Setting);
                 result.Add(element);
             }
 
@@ -178,7 +179,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
             var idFactory = ApplicationDiContainer.Build<IIdFactory>();
             var noteId = idFactory.CreateNoteId();
             Logger.Information($"new note id: {noteId}", ObjectDumper.GetDumpString(dockScreen));
-            var noteElement = CreateNoteElement(noteId, dockScreen);
+            var noteElement = CreateNoteElement(noteId, dockScreen, NotePosition.CenterScreen);
 
             return noteElement;
         }
@@ -266,9 +267,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
             return OrderManager.GetOrCreateLauncherItemElement(launcherItemId);
         }
 
-        public NoteElement CreateNoteElement(Guid noteId, Screen screen)
+        public NoteElement CreateNoteElement(Guid noteId, Screen screen, NotePosition notePosition)
         {
-            return OrderManager.CreateNoteElement(noteId, screen);
+            return OrderManager.CreateNoteElement(noteId, screen, notePosition);
         }
 
 

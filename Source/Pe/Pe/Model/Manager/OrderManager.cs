@@ -19,6 +19,7 @@ using ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar;
 using ContentTypeTextNet.Pe.Main.Model.Element.Note;
 using ContentTypeTextNet.Pe.Main.Model.Launcher;
 using ContentTypeTextNet.Pe.Main.Model.Logic;
+using ContentTypeTextNet.Pe.Main.Model.Note;
 using ContentTypeTextNet.Pe.Main.View.Extend;
 using ContentTypeTextNet.Pe.Main.View.LauncherToolbar;
 using ContentTypeTextNet.Pe.Main.View.Note;
@@ -50,7 +51,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
         LauncherGroupElement CreateLauncherGroupElement(Guid launcherGroupId);
         LauncherToolbarElement CreateLauncherToolbarElement(Screen dockScreen, ReadOnlyObservableCollection<LauncherGroupElement> launcherGroups);
         LauncherItemElement GetOrCreateLauncherItemElement(Guid launcherItemId);
-        NoteElement CreateNoteElement(Guid noteId, Screen screen);
+        NoteElement CreateNoteElement(Guid noteId, Screen screen, NotePosition notePosition);
 
         WindowItem CreateLauncherToolbarWindow(LauncherToolbarElement element);
         WindowItem CreateNoteWindow(NoteElement element);
@@ -107,11 +108,11 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
                 });
             }
 
-            public NoteElement CreateNoteElement(Guid noteId, Screen screen)
+            public NoteElement CreateNoteElement(Guid noteId, Screen screen, NotePosition notePosition)
             {
                 var element = screen == null
-                    ? DiContainer.Build<NoteElement>(noteId, DiDefaultParameter.Create<Screen>())
-                    : DiContainer.Build<NoteElement>(noteId, screen)
+                    ? DiContainer.Build<NoteElement>(noteId, DiDefaultParameter.Create<Screen>(), notePosition)
+                    : DiContainer.Build<NoteElement>(noteId, screen, notePosition)
                 ;
                 element.Initialize();
                 return element;

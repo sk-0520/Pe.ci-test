@@ -4,8 +4,11 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media;
+using ContentTypeTextNet.Library.PInvoke.Windows;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Compatibility.Forms;
+using ContentTypeTextNet.Pe.Library.Shared.Library.Compatibility.Windows;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Applications;
@@ -25,15 +28,20 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
 
         bool _isVisible;
         bool _isTopmost;
+        bool _isCompact;
         Screen _dockScreen;
+
+        NoteLayoutKind _noteLayoutKind;
+        NoteContentKind _noteContentKind;
 
         #endregion
 
-        public NoteElement(Guid noteId, Screen dockScreen, IOrderManager orderManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, INoteTheme noteTheme, ILoggerFactory loggerFactory)
+        public NoteElement(Guid noteId, Screen dockScreen, NotePosition notePosition, IOrderManager orderManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, INoteTheme noteTheme, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             NoteId = noteId;
             this._dockScreen = dockScreen; // プロパティは静かに暮らしたい
+            Position = notePosition;
             OrderManager = orderManager;
             MainDatabaseBarrier = mainDatabaseBarrier;
             FileDatabaseBarrier = fileDatabaseBarrier;
@@ -53,6 +61,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
             get => this._dockScreen;
             private set => SetProperty(ref this._dockScreen, value);
         }
+        public NotePosition Position { get; }
         IOrderManager OrderManager { get; }
         IMainDatabaseBarrier MainDatabaseBarrier { get; }
         IFileDatabaseBarrier FileDatabaseBarrier { get; }
@@ -66,6 +75,23 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
             get => this._isTopmost;
             private set => SetProperty(ref this._isTopmost, value);
         }
+        public bool IsCompact
+        {
+            get => this._isCompact;
+            private set => SetProperty(ref this._isCompact, value);
+        }
+
+        public NoteLayoutKind LayoutKind
+        {
+            get => this._noteLayoutKind;
+            private set => SetProperty(ref this._noteLayoutKind, value);
+        }
+        public NoteContentKind ContentKind
+        {
+            get => this._noteContentKind;
+            private set => SetProperty(ref this._noteContentKind, value);
+        }
+
 
         /// <summary>
         /// 表示されているか。
@@ -175,14 +201,20 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
         void LoadNote()
         {
             //あればそれを読み込んでなければ作る
+            //var isCreateMode = false;
             var noteData = GetNoteData();
             if(noteData == null) {
                 noteData = CreateNoteData();
+                //isCreateMode = true;
             }
 
             DockScreen = GetDockScreen(noteData.ScreenName);
 
             IsVisible = noteData.IsVisible;
+            IsCompact = noteData.IsCompact;
+            IsTopmost = noteData.IsTopmost;
+            LayoutKind = noteData.LayoutKind;
+            ContentKind = noteData.ContentKind;
         }
 
         #endregion
@@ -192,6 +224,37 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
         protected override void InitializeImpl()
         {
             LoadNote();
+        }
+
+        /// <summary>
+        /// 座標・サイズの変更。
+        /// </summary>
+        /// <param name="location"></param>
+        public void ChangeViewArea(Point location, Size size)
+        {
+
+        }
+
+        public NoteLayoutData GetLayout()
+        {
+            using(var commander = MainDatabaseBarrier.WaitWrite()) {
+                var noteLayoutsEntityDao = new NoteLayoutsEntityDao(commander, StatementLoader, commander.Implementation, Logger.Factory);
+                var layoutData = noteLayoutsEntityDao.SelectLayout(NoteId, LayoutKind);
+                if(layoutData == null) {
+                    // とりあえずダミーデータを生成しておく(なんも考えず update したい)
+                    var dummyLayout = new NoteLayoutData() {
+                        NoteId = NoteId,
+                        LayoutKind = LayoutKind,
+                        X = 0,
+                        Y = 0,
+                        Width = 0,
+                        Height = 0,
+                    };
+                    noteLayoutsEntityDao.InsertNewLayout(dummyLayout, DatabaseCommonStatus.CreateCurrentAccount());
+                    commander.Commit();
+                }
+                return layoutData;
+            }
         }
 
         #endregion
@@ -213,6 +276,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
         public void StartView()
         {
             var windowItem = OrderManager.CreateNoteWindow(this);
+
             ViewCreated = true;
         }
 
@@ -232,6 +296,5 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
 
 
         #endregion
-
     }
 }

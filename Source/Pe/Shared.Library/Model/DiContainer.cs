@@ -659,7 +659,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
                 return raw;
             }
 
-            throw new Exception($"{type}: create fail");
+            throw new Exception($"{type}: create rror");
         }
 
         bool TryGetInstance(Type interfaceType, IEnumerable<object> manualParameters, out object value)

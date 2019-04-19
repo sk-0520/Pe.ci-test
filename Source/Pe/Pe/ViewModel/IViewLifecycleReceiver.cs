@@ -15,6 +15,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel
     {
         #region function
 
+        void ReceiveViewInitialized(Window window);
+
         /// <summary>
         /// ウィンドウが生成された。
         /// </summary>

@@ -9,6 +9,13 @@ using ContentTypeTextNet.Pe.Main.Model.Logic;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Note
 {
+    public enum NotePosition
+    {
+        Setting,
+        CursorPosition,
+        CenterScreen,
+    }
+
     public enum NoteLayoutKind
     {
         Absolute,
