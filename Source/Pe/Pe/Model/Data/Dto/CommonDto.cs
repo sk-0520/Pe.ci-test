@@ -117,7 +117,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data.Dto
     public interface IReadOnlyRowDtoBase : IReadOnlyCommonDto
     { }
 
-    // なんだこの型・・・わからん、おぼえてない
+    /// <summary>
+    /// ドメイン系で使用。
+    /// </summary>
     public abstract class RowDtoBase : CommonDtoBase, IReadOnlyRowDtoBase
     { }
 }

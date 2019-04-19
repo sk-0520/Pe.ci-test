@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Data.Dto.Entity
 {
-    public class NoteLayoutsEntityDto: RowDtoBase
+    public class NoteLayoutsEntityDto: CommonDtoBase
     {
         #region property
 

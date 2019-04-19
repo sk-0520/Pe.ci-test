@@ -10,6 +10,7 @@ using ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Applications;
 using ContentTypeTextNet.Pe.Main.Model.Data;
+using ContentTypeTextNet.Pe.Main.Model.Database.Dao.Domain;
 using ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Model.Logic;
 using ContentTypeTextNet.Pe.Main.Model.Manager;
@@ -88,7 +89,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
 
         NoteData CreateNoteData()
         {
-            DockScreen = DockScreen ?? Screen.PrimaryScreen;
+            this._dockScreen = DockScreen ?? Screen.PrimaryScreen;
 
             var noteData = new NoteData() {
                 NoteId = NoteId,
@@ -150,6 +151,27 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
             return noteData;
         }
 
+        Screen GetDockScreen(string screenDeviceName)
+        {
+            IList<NoteScreenData> noteScreens;
+
+            using(var commander = MainDatabaseBarrier.WaitWrite()) {
+                var noteDomainDao = new NoteDomainDao(commander, StatementLoader, commander.Implementation, Logger.Factory);
+                noteScreens = noteDomainDao.SelectNoteScreens(NoteId).ToList();
+            }
+
+            var screens = Screen.AllScreens;
+            var screenChecker = new ScreenChecker();
+            foreach(var screen in screens) {
+                if(noteScreens.Any(i => screenChecker.FindMaybe(screen, i))) {
+                    return screen;
+                }
+            }
+
+            Logger.Warning($"該当ディスプレイ発見できず: ${screenDeviceName}");
+            return Screen.PrimaryScreen;
+        }
+
         void LoadNote()
         {
             //あればそれを読み込んでなければ作る
@@ -158,7 +180,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
                 noteData = CreateNoteData();
             }
 
-            IsVisible = true;
+            DockScreen = GetDockScreen(noteData.ScreenName);
+
+            IsVisible = noteData.IsVisible;
         }
 
         #endregion

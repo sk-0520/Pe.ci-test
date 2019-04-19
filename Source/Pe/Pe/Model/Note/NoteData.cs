@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
+using ContentTypeTextNet.Pe.Main.Model.Logic;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Note
 {
@@ -71,4 +72,28 @@ namespace ContentTypeTextNet.Pe.Main.Model.Note
 
         #endregion
     }
+
+    public class NoteScreenData : DataBase, IScreenData
+    {
+        #region property
+
+        public Guid NoteId { get; set; }
+
+        #endregion
+
+        #region IScreenData
+
+        public string ScreenName { get; set; }
+        [PixelKind(Px.Device)]
+        public long X { get; set; }
+        [PixelKind(Px.Device)]
+        public long Y { get; set; }
+        [PixelKind(Px.Device)]
+        public long Width { get; set; }
+        [PixelKind(Px.Device)]
+        public long Height { get; set; }
+
+        #endregion
+    }
+
 }
