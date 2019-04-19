@@ -105,6 +105,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
                 ContentKind = NoteContentKind.Plain,
             };
 
+            /*
             var noteLayout = new NoteLayoutData() {
                 NoteId = noteData.NoteId,
                 LayoutKind = noteData.LayoutKind,
@@ -124,17 +125,20 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
                 ContentKind = noteData.ContentKind,
                 Content = string.Empty,
             };
+            */
 
             using(var commander = MainDatabaseBarrier.WaitWrite()) {
 
                 var notesEntityDao = new NotesEntityDao(commander, StatementLoader, commander.Implementation, Logger.Factory);
                 notesEntityDao.InsertNewNote(noteData, DatabaseCommonStatus.CreateCurrentAccount());
 
+                /*
                 var notesLayoutDao = new NoteLayoutsEntityDao(commander, StatementLoader, commander.Implementation, Logger.Factory);
                 notesLayoutDao.InsertNewLayout(noteLayout, DatabaseCommonStatus.CreateCurrentAccount());
 
                 var noteContentDao = new NoteContentsEntityDao(commander, StatementLoader, commander.Implementation, Logger.Factory);
                 noteContentDao.InsertNewContent(noteContent, DatabaseCommonStatus.CreateCurrentAccount());
+                */
 
                 var screenEntityDao = new ScreensEntityDao(commander, StatementLoader, commander.Implementation, Logger.Factory);
                 if(!screenEntityDao.SelectExistsScreen(DockScreen.DeviceName)) {
