@@ -297,14 +297,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
             var message = string.Format(messageFormat, item.Message);
             var detail = item.Detail;
             if(!string.IsNullOrEmpty(detail)) {
-                var lines = TextUtility.ReadLines(detail);
-                var nexts = lines.Skip(1).Select(s => detailIndent + detailPadding + s);
-                if(nexts.Any()) {
-                    var first = detailPadding + lines.First();
-                    detail = first + Environment.NewLine + string.Join(Environment.NewLine, nexts);
-                } else {
-                    detail = detailPadding + detail;
-                }
+                detail = Environment.NewLine + string.Join(Environment.NewLine, TextUtility.ReadLines(detail).Select(s => detailIndent + detailPadding + s));
             }
             var stack = string.Join(
                 Environment.NewLine,
