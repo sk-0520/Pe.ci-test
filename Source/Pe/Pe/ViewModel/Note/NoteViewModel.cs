@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Media;
 using ContentTypeTextNet.Library.PInvoke.Windows;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Compatibility.Windows;
+using ContentTypeTextNet.Pe.Library.Shared.Library.CompatibleWindows;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Library.ViewModel;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
@@ -72,6 +73,70 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
 
         #region function
 
+        NoteLayoutData GetOrCreateLayout(NotePosition position, Visual dpiVisual)
+        {
+            if(position == Main.Model.Note.NotePosition.Setting) {
+                var settingLayout = Model.GetLayout();
+                if(settingLayout != null) {
+                    return settingLayout;
+                } else {
+                    Logger.Information($"レイアウト未取得のため対象ディスプレイ中央表示: {Model.DockScreen.DeviceName}", ObjectDumper.GetDumpString(Model.DockScreen));
+                    position = Main.Model.Note.NotePosition.CenterScreen;
+                }
+            }
+
+            //TODO: 未検証ゾーン
+            var logicalScreenSize = UIUtility.ToLogicalPixel(dpiVisual, Model.DockScreen.DeviceBounds.Size);
+            var layout = new NoteLayoutData() {
+                NoteId = Model.NoteId,
+                LayoutKind = Model.LayoutKind,
+            };
+
+            if(position == Main.Model.Note.NotePosition.CenterScreen) {
+                if(layout.LayoutKind == NoteLayoutKind.Absolute) {
+                    layout.Width = 200;
+                    layout.Height = 200;
+                    layout.X = (logicalScreenSize.Width / 2) - (layout.Width / 2);
+                    layout.Y = (logicalScreenSize.Height / 2) - (layout.Height / 2);
+                } else {
+                    Debug.Assert(layout.LayoutKind == NoteLayoutKind.Relative);
+                    layout.Width = 20;
+                    layout.Height = 20;
+                    layout.X = 0;
+                    layout.Y = 0;
+                }
+            } else {
+                Debug.Assert(position == Main.Model.Note.NotePosition.CursorPosition);
+
+                var deviceScreenBounds = Model.DockScreen.DeviceBounds;
+
+                NativeMethods.GetCursorPos(out var podPoint);
+                var deviceCursorLocation = PodStructUtility.Convert(podPoint);
+
+                var deviceScreenCursorLocation = new Point(
+                    deviceCursorLocation.X - deviceScreenBounds.X,
+                    deviceCursorLocation.Y - deviceScreenBounds.Y
+                );
+                var logicalScreenCursorLocation = UIUtility.ToLogicalPixel(dpiVisual, deviceScreenCursorLocation);
+
+                if(layout.LayoutKind == NoteLayoutKind.Absolute) {
+                    layout.Width = 200;
+                    layout.Height = 200;
+                    layout.X = logicalScreenCursorLocation.X;
+                    layout.Y = logicalScreenCursorLocation.Y;
+                } else {
+                    Debug.Assert(layout.LayoutKind == NoteLayoutKind.Relative);
+
+                    layout.Width = 20;
+                    layout.Height = 20;
+                    layout.X = deviceScreenCursorLocation.X * (deviceScreenBounds.Width / 100);
+                    layout.Y = deviceScreenCursorLocation.Y * (deviceScreenBounds.Height / 100);
+                }
+            }
+
+            return layout;
+        }
+
         void SetLayout(NoteLayoutData layout, Visual dpiVisual)
         {
             WindowLeft = layout.X;
@@ -90,37 +155,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
             var hWnd = HandleUtility.GetWindowHandle(window);
             NativeMethods.SetWindowPos(hWnd, new IntPtr((int)HWND.HWND_TOP), (int)Model.DockScreen.DeviceBounds.X, (int)Model.DockScreen.DeviceBounds.Y, 0, 0, SWP.SWP_NOSIZE);
 
-            var position = Model.Position;
-            if(position == Main.Model.Note.NotePosition.Setting) {
-                var layout = Model.GetLayout();
-                if(layout != null) {
-                    SetLayout(layout, window);
-                    return;
-                } else {
-                    Logger.Information($"レイアウト未取得のため対象ディスプレイ中央表示: {Model.DockScreen.DeviceName}", ObjectDumper.GetDumpString(Model.DockScreen));
-                    position = Main.Model.Note.NotePosition.CenterScreen;
-                }
-            }
-
-            if(position == Main.Model.Note.NotePosition.CenterScreen) {
-                var logicalScreenSize = UIUtility.ToLogicalPixel(window, Model.DockScreen.DeviceBounds.Size);
-                var layout = new NoteLayoutData() {
-                    NoteId = Model.NoteId,
-                    LayoutKind = Model.LayoutKind,
-                };
-                if(layout.LayoutKind == NoteLayoutKind.Absolute) {
-                    layout.Width = 200;
-                    layout.Height = 200;
-                    layout.X = (logicalScreenSize.Width / 2) - (layout.Width / 2);
-                    layout.Y = (logicalScreenSize.Height / 2) - (layout.Height / 2);
-                } else {
-                    Debug.Assert(layout.LayoutKind == NoteLayoutKind.Relative);
-                }
-
-                SetLayout(layout, window);
-
-            }
-
+            var layout = GetOrCreateLayout(Model.Position, window);
+            SetLayout(layout, window);
         }
 
         public void ReceiveViewLoaded(Window window)

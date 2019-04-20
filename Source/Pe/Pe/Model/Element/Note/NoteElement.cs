@@ -5,10 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media;
 using ContentTypeTextNet.Library.PInvoke.Windows;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Compatibility.Windows;
+using ContentTypeTextNet.Pe.Library.Shared.Library.CompatibleWindows;
+using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Applications;
@@ -113,9 +116,12 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
             }
         }
 
-        NoteData CreateNoteData()
+        NoteData CreateNoteData([PixelKind(Px.Device)] Point cursorLocation)
         {
             this._dockScreen = DockScreen ?? Screen.PrimaryScreen;
+            if(Position != NotePosition.Setting) {
+                this._dockScreen = Screen.FromDevicePoint(cursorLocation);
+            }
 
             var noteData = new NoteData() {
                 NoteId = NoteId,
@@ -204,7 +210,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
             //var isCreateMode = false;
             var noteData = GetNoteData();
             if(noteData == null) {
-                noteData = CreateNoteData();
+                NativeMethods.GetCursorPos(out var podPoint);
+                var deviceCursorLocation = PodStructUtility.Convert(podPoint);
+                noteData = CreateNoteData(deviceCursorLocation);
                 //isCreateMode = true;
             }
 
