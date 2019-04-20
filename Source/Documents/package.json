@@ -5,7 +5,7 @@
   "main": "index.pug",
   "scripts": {
     "watch": "parcel watch --no-autoinstall --public-url . ./source/index.pug",
-    "build:clean":  "rimraf ../Pe/Pe/doc/help/",
+    "build:clean":  "rimraf ../Pe/Pe/doc/help/*",
     "build:output": "parcel build --no-autoinstall --no-source-maps --out-dir ../Pe/Pe/doc/help/ --no-content-hash --public-url . ./source/index.pug",
     "build": "npm run build:clean & npm run build:output"
   },

@@ -56,13 +56,13 @@ namespace ContentTypeTextNet.Pe.Main.Model.Note
         public Guid NoteId { get; set; }
         public NoteLayoutKind LayoutKind { get; set; }
 
-        [PixelKind(Px.Device)]
+        [PixelKind(Px.Logical)]
         public double X { get; set; }
-        [PixelKind(Px.Device)]
+        [PixelKind(Px.Logical)]
         public double Y { get; set; }
-        [PixelKind(Px.Device)]
+        [PixelKind(Px.Logical)]
         public double Width { get; set; }
-        [PixelKind(Px.Device)]
+        [PixelKind(Px.Logical)]
         public double Height { get; set; }
 
         #endregion

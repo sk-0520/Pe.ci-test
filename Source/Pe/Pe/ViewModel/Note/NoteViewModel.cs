@@ -1,16 +1,19 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
 using ContentTypeTextNet.Library.PInvoke.Windows;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Compatibility.Windows;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Library.ViewModel;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Element.Note;
+using ContentTypeTextNet.Pe.Main.Model.Note;
 using ContentTypeTextNet.Pe.Main.Model.Theme;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
@@ -68,6 +71,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
         #endregion
 
         #region function
+
+        void SetLayout(NoteLayoutData layout, Visual dpiVisual)
+        {
+            WindowLeft = layout.X;
+            WindowTop = layout.Y;
+            WindowWidth = layout.Width;
+            WindowHeight = layout.Height;
+        }
+
         #endregion
 
         #region IViewLifecycleReceiver
@@ -82,6 +94,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
             if(position == Main.Model.Note.NotePosition.Setting) {
                 var layout = Model.GetLayout();
                 if(layout != null) {
+                    SetLayout(layout, window);
                     return;
                 } else {
                     Logger.Information($"レイアウト未取得のため対象ディスプレイ中央表示: {Model.DockScreen.DeviceName}", ObjectDumper.GetDumpString(Model.DockScreen));
@@ -91,17 +104,21 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
 
             if(position == Main.Model.Note.NotePosition.CenterScreen) {
                 var logicalScreenSize = UIUtility.ToLogicalPixel(window, Model.DockScreen.DeviceBounds.Size);
-                var rect = new Rect() {
-                    Width = 200,
-                    Height = 200,
+                var layout = new NoteLayoutData() {
+                    NoteId = Model.NoteId,
+                    LayoutKind = Model.LayoutKind,
                 };
-                rect.X = (logicalScreenSize.Width / 2) - (rect.Width / 2);
-                rect.Y = (logicalScreenSize.Height / 2) - (rect.Height / 2);
+                if(layout.LayoutKind == NoteLayoutKind.Absolute) {
+                    layout.Width = 200;
+                    layout.Height = 200;
+                    layout.X = (logicalScreenSize.Width / 2) - (layout.Width / 2);
+                    layout.Y = (logicalScreenSize.Height / 2) - (layout.Height / 2);
+                } else {
+                    Debug.Assert(layout.LayoutKind == NoteLayoutKind.Relative);
+                }
 
-                WindowLeft = rect.X;
-                WindowTop = rect.Y;
-                WindowWidth = rect.Width;
-                WindowHeight = rect.Height;
+                SetLayout(layout, window);
+
             }
 
         }
