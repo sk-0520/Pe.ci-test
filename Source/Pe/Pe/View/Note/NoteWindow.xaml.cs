@@ -33,5 +33,19 @@ namespace ContentTypeTextNet.Pe.Main.View.Note
 
         #endregion
 
+        #region function
+        #endregion
+
+        #region Window
+
+        protected override void OnSourceInitialized(EventArgs e)
+        {
+            base.OnSourceInitialized(e);
+
+            UIUtility.SetToolWindowStyle(this, false, false);
+        }
+
+        #endregion
+
     }
 }
