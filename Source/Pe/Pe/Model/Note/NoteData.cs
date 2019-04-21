@@ -28,6 +28,13 @@ namespace ContentTypeTextNet.Pe.Main.Model.Note
         Rtf,
     }
 
+    [Flags]
+    public enum ViewAreaChangeTarget
+    {
+        Location = 0b0000_0001,
+        Suze = 0b0000_0010,
+    }
+
     public class NoteData : DataBase
     {
         #region property

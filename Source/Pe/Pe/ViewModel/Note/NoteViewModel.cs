@@ -73,12 +73,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
 
         #region function
 
-        NoteLayoutData GetOrCreateLayout(NotePosition position, Visual dpiVisual)
+        (bool isCreated, NoteLayoutData layout) GetOrCreateLayout(NotePosition position, Visual dpiVisual)
         {
             if(position == Main.Model.Note.NotePosition.Setting) {
                 var settingLayout = Model.GetLayout();
                 if(settingLayout != null) {
-                    return settingLayout;
+                    return (false, settingLayout);
                 } else {
                     Logger.Information($"レイアウト未取得のため対象ディスプレイ中央表示: {Model.DockScreen.DeviceName}", ObjectDumper.GetDumpString(Model.DockScreen));
                     position = Main.Model.Note.NotePosition.CenterScreen;
@@ -134,7 +134,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
                 }
             }
 
-            return layout;
+            return (true, layout);
         }
 
         void SetLayout(NoteLayoutData layout, Visual dpiVisual)
@@ -155,8 +155,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
             var hWnd = HandleUtility.GetWindowHandle(window);
             NativeMethods.SetWindowPos(hWnd, new IntPtr((int)HWND.HWND_TOP), (int)Model.DockScreen.DeviceBounds.X, (int)Model.DockScreen.DeviceBounds.Y, 0, 0, SWP.SWP_NOSIZE);
 
-            var layout = GetOrCreateLayout(Model.Position, window);
-            SetLayout(layout, window);
+            var layoutValue = GetOrCreateLayout(Model.Position, window);
+            if(layoutValue.isCreated) {
+                Model.SaveLayout(layoutValue.layout);
+            }
+            SetLayout(layoutValue.layout, window);
         }
 
         public void ReceiveViewLoaded(Window window)

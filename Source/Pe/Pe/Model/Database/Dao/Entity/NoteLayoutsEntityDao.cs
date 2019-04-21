@@ -66,13 +66,6 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             return data;
         }
 
-        public bool InsertNewLayout(NoteLayoutData noteLayout, IDatabaseCommonStatus databaseCommonStatus)
-        {
-            var sql = StatementLoader.LoadStatementByCurrent();
-            var param = ConvertFromData(noteLayout, databaseCommonStatus);
-            return Commander.Execute(sql, param) == 1;
-        }
-
         public NoteLayoutData SelectLayout(Guid noteId, NoteLayoutKind layoutKind)
         {
             var noteLayoutKindTransfer = new EnumTransfer<NoteLayoutKind>();
@@ -83,6 +76,31 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
                 LayoutKind = noteLayoutKindTransfer.ToText(layoutKind),
             };
             return Commander.QueryFirstOrDefault<NoteLayoutData>(sql, param);
+        }
+        public bool SelectExistsLayout(Guid noteId, NoteLayoutKind layoutKind)
+        {
+            var noteLayoutKindTransfer = new EnumTransfer<NoteLayoutKind>();
+
+            var sql = StatementLoader.LoadStatementByCurrent();
+            var param = new {
+                NoteId = noteId,
+                LayoutKind = noteLayoutKindTransfer.ToText(layoutKind),
+            };
+            return Commander.QuerySingle<bool>(sql, param);
+        }
+
+        public bool InsertLayout(NoteLayoutData noteLayout, IDatabaseCommonStatus databaseCommonStatus)
+        {
+            var sql = StatementLoader.LoadStatementByCurrent();
+            var param = ConvertFromData(noteLayout, databaseCommonStatus);
+            return Commander.Execute(sql, param) == 1;
+        }
+
+        public bool UpdateLayout(NoteLayoutData noteLayout, IDatabaseCommonStatus databaseCommonStatus)
+        {
+            var sql = StatementLoader.LoadStatementByCurrent();
+            var param = ConvertFromData(noteLayout, databaseCommonStatus);
+            return Commander.Execute(sql, param) == 1;
         }
 
         #endregion

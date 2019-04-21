@@ -236,32 +236,40 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
 
         /// <summary>
         /// 座標・サイズの変更。
+        /// <para>各種算出済みの値。</para>
         /// </summary>
         /// <param name="location"></param>
-        public void ChangeViewArea(Point location, Size size)
+        public void ChangeViewArea(ViewAreaChangeTarget viewAreaChangeTargets, Point location, Size size)
         {
 
         }
 
         public NoteLayoutData GetLayout()
         {
-            using(var commander = MainDatabaseBarrier.WaitWrite()) {
+            using(var commander = MainDatabaseBarrier.WaitRead()) {
                 var noteLayoutsEntityDao = new NoteLayoutsEntityDao(commander, StatementLoader, commander.Implementation, Logger.Factory);
                 var layoutData = noteLayoutsEntityDao.SelectLayout(NoteId, LayoutKind);
-                if(layoutData == null) {
-                    // とりあえずダミーデータを生成しておく(なんも考えず update したい)
-                    var dummyLayout = new NoteLayoutData() {
-                        NoteId = NoteId,
-                        LayoutKind = LayoutKind,
-                        X = 0,
-                        Y = 0,
-                        Width = 0,
-                        Height = 0,
-                    };
-                    noteLayoutsEntityDao.InsertNewLayout(dummyLayout, DatabaseCommonStatus.CreateCurrentAccount());
-                    commander.Commit();
-                }
                 return layoutData;
+            }
+        }
+
+        public void SaveLayout(NoteLayoutData layout)
+        {
+            if(layout == null) {
+                throw new ArgumentNullException(nameof(layout));
+            }
+            if(layout.NoteId != NoteId) {
+                throw new ArgumentException($"{nameof(layout)}.{nameof(layout.NoteId)}");
+            }
+
+            using(var commander = MainDatabaseBarrier.WaitWrite()) {
+                var noteLayoutsEntityDao = new NoteLayoutsEntityDao(commander, StatementLoader, commander.Implementation, Logger.Factory);
+                if(noteLayoutsEntityDao.SelectExistsLayout(layout.NoteId, layout.LayoutKind)) {
+                    noteLayoutsEntityDao.UpdateLayout(layout, DatabaseCommonStatus.CreateCurrentAccount());
+                } else {
+                    noteLayoutsEntityDao.InsertLayout(layout, DatabaseCommonStatus.CreateCurrentAccount());
+                }
+                commander.Commit();
             }
         }
 
