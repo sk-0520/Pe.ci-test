@@ -17,6 +17,9 @@
   <Window.Resources>
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
   </Window.Resources>
+  <WindowChrome.WindowChrome>
+    <WindowChrome />
+  </WindowChrome.WindowChrome>
   <Window.Visibility>
     <Binding Path="IsVisible" Converter="{StaticResource BooleanToVisibilityConverter}"/>
   </Window.Visibility>
