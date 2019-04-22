@@ -38,12 +38,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
             NoteTheme = noteTheme;
             DispatcherWapper = dispatcherWapper;
 
-            CaptionForeground = new SimpleDataViewModel<Brush>(Logger.Factory);
-            CaptionBackground = new SimpleDataViewModel<Brush>(Logger.Factory);
-            ResizeGripWidth = new SimpleDataViewModel<double>(Logger.Factory);
-            ResizeGripHeight = new SimpleDataViewModel<double>(Logger.Factory);
-            ResizeGripImage = new SimpleDataViewModel<DependencyObject>(Logger.Factory);
-
             PropertyChangedHooker = new PropertyChangedHooker(dispatcherWapper, Logger.Factory);
             PropertyChangedHooker.AddHook(nameof(Model.IsVisible), nameof(IsVisible));
             PropertyChangedHooker.AddHook(nameof(Model.IsTopmost), nameof(IsTopmost));
@@ -90,12 +84,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
         public Brush CaptionBackgroundNoneBrush => NoteTheme.GetCaptionBackgroundBrush(NoteCaptionButtonState.None, ColorPair.Create(Model.ForegroundColor, Model.BackgroundColor));
         public Brush CaptionBackgroundOverBrush => NoteTheme.GetCaptionBackgroundBrush(NoteCaptionButtonState.Over, ColorPair.Create(Model.ForegroundColor, Model.BackgroundColor));
         public Brush CaptionBackgroundPressedBrush => NoteTheme.GetCaptionBackgroundBrush(NoteCaptionButtonState.Pressed, ColorPair.Create(Model.ForegroundColor, Model.BackgroundColor));
-        public SimpleDataViewModel<Brush> CaptionForeground { get; }
-        public SimpleDataViewModel<Brush> CaptionBackground { get; }
+        public Brush CaptionForeground { get; private set; }
+        public Brush CaptionBackground { get; private set; }
         public Brush ContentBackground => NoteTheme.GetContentBrush(ColorPair.Create(Model.ForegroundColor, Model.BackgroundColor));
-        public SimpleDataViewModel<double> ResizeGripWidth { get; }
-        public SimpleDataViewModel<double> ResizeGripHeight { get; }
-        public SimpleDataViewModel<DependencyObject> ResizeGripImage { get; }
+        public DependencyObject ResizeGripImage => NoteTheme.GetResizeGripImage(ColorPair.Create(Model.ForegroundColor, Model.BackgroundColor));
 
         public DependencyObject CaptionCompactEnabledImage => NoteTheme.GetCaptionImage(NoteCaption.Compact, true, ColorPair.Create(Model.ForegroundColor, Model.BackgroundColor));
         public DependencyObject CaptionCompactDisabledImage => NoteTheme.GetCaptionImage(NoteCaption.Compact, false, ColorPair.Create(Model.ForegroundColor, Model.BackgroundColor));
@@ -198,25 +190,17 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
         {
             DispatcherWapper.Invoke(() => {
                 var pair = NoteTheme.GetCaptionBrush(ColorPair.Create(Model.ForegroundColor, Model.BackgroundColor));
-                CaptionForeground.Data = pair.Foreground;
-                CaptionBackground.Data = pair.Background;
-            });
-        }
+                CaptionForeground = pair.Foreground;
+                CaptionBackground = pair.Background;
 
-        void ApplyResizeGrip()
-        {
-            /*
-            var size = NoteTheme.GetResizeGripSize();
-            ResizeGripWidth.Data = size.Width;
-            ResizeGripHeight.Data = size.Height;
-            */
-            ResizeGripImage.Data = NoteTheme.GetResizeGripImage(ColorPair.Create(Model.ForegroundColor, Model.BackgroundColor));
+                RaisePropertyChanged(nameof(CaptionForeground));
+                RaisePropertyChanged(nameof(CaptionBackground));
+            });
         }
 
         void ApplyTheme()
         {
             ApplyCaptionBrush();
-            ApplyResizeGrip();
         }
 
         #endregion
