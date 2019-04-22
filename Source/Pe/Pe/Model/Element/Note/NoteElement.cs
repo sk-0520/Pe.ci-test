@@ -306,6 +306,10 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
 
         #region IWindowCloseReceiver
 
+        public bool ReceiveViewUserClosing()
+        {
+            return true;
+        }
         public bool ReceiveViewClosing()
         {
             return true;

@@ -24,6 +24,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel
 
         /// <summary>
         /// ウィンドウが閉じられようとしている。
+        /// <para><see cref="ReceiveViewClosing"/>と違い、操作ユーザーが閉じる場合に呼ばれる。</para>
+        /// </summary>
+        /// <param name="e">キャンセルするかどうか。</param>
+        void ReceiveViewUserClosing(CancelEventArgs e);
+
+        /// <summary>
+        /// ウィンドウが閉じられようとしている。
+        /// <para><see cref="ReceiveViewUserClosing"/>と違い、操作ユーザー以外が閉じる場合(シャットダウンとかかなぁ)でも呼ばれる。</para>
         /// </summary>
         /// <param name="e">キャンセルするかどうか。</param>
         void ReceiveViewClosing(CancelEventArgs e);

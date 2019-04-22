@@ -250,6 +250,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar
             }
         }
 
+        public void ReceiveViewUserClosing(CancelEventArgs e)
+        {
+            e.Cancel = !Model.ReceiveViewUserClosing();
+        }
+
+
         public void ReceiveViewClosing(CancelEventArgs e)
         {
             e.Cancel = !Model.ReceiveViewClosing();

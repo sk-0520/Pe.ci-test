@@ -1,9 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Interop;
+using ContentTypeTextNet.Library.PInvoke.Windows;
+using ContentTypeTextNet.Pe.Library.Shared.Library.Compatibility.Windows;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Library.ViewModel;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
@@ -79,6 +83,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
 
         ISet<WindowItem> Items { get; } = new HashSet<WindowItem>();
         ISet<Window> Windows { get; } = new HashSet<Window>();
+        IDictionary<WindowItem, HwndSource> WindowHandleSources { get; } = new Dictionary<WindowItem, HwndSource>();
 
         #endregion
 
@@ -112,6 +117,34 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
             return Items.Where(i => i.WindowKind == kind);
         }
 
+        private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        {
+            switch(msg) {
+                case (int)WM.WM_SYSCOMMAND: {
+                        if(WindowsUtility.ConvertSCFromWParam(wParam) == SC.SC_CLOSE) {
+                            var e = new CancelEventArgs(false);
+
+                            var item = Items.First(i => HandleUtility.GetWindowHandle(i.Window) == hwnd);
+
+                            Logger.Debug($"ウィンドウ破棄前(ユーザー操作): {item.Window}, {hwnd.ToInt64():x16}");
+                            if(item.ViewModel is IViewLifecycleReceiver viewLifecycleReceiver) {
+                                viewLifecycleReceiver.ReceiveViewUserClosing(e);
+                            }
+
+                            if(e.Cancel) {
+                                handled = true;
+                            }
+                        }
+                    }
+                    break;
+
+                default:
+                    break;
+            }
+
+            return IntPtr.Zero;
+        }
+
         #endregion
 
         private void Window_SourceInitialized(object sender, EventArgs e)
@@ -123,6 +156,11 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
 
             var item = Items.First(i => i.Window == window);
             if(item.ViewModel is IViewLifecycleReceiver viewLifecycleReceiver) {
+                var hWnd = HandleUtility.GetWindowHandle(window);
+                var hWndSource = HwndSource.FromHwnd(hWnd);
+                hWndSource.AddHook(WndProc);
+                WindowHandleSources.Add(item, hWndSource);
+
                 viewLifecycleReceiver.ReceiveViewInitialized(window);
             }
         }
@@ -140,8 +178,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
             }
         }
 
-
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void Window_Closing(object sender, CancelEventArgs e)
         {
             var window = (Window)sender;
             Logger.Debug($"ウィンドウ破棄前: {window}");

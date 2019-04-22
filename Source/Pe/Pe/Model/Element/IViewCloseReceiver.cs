@@ -11,6 +11,11 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element
         #region function
 
         /// <summary>
+        /// ビューがユーザーにより閉じられようとしている。
+        /// </summary>
+        /// <returns>真: 閉じれる。 偽: キャンセル。</returns>
+        bool ReceiveViewUserClosing();
+        /// <summary>
         /// ビューが閉じられようとしている。
         /// </summary>
         /// <returns>真: 閉じれる。 偽: キャンセル。</returns>

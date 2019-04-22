@@ -347,8 +347,12 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
 
         #endregion
 
-        #region IWindowCloseReceiver
+        #region IViewCloseReceiver
 
+        public bool ReceiveViewUserClosing()
+        {
+            return true;
+        }
         public bool ReceiveViewClosing()
         {
             return true;
