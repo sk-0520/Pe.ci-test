@@ -261,10 +261,18 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
         public void SwitchCompact()
         {
             IsCompact = !IsCompact;
+            MainDatabaseLazyWriter.Stock(c => {
+                var notesEntityDao = new NotesEntityDao(c, StatementLoader, c.Implementation, Logger.Factory);
+                notesEntityDao.UpdateCompact(NoteId, IsCompact, DatabaseCommonStatus.CreateCurrentAccount());
+            }, UniqueKeyPool.Get());
         }
         public void SwitchTopmost()
         {
             IsTopmost = !IsTopmost;
+            MainDatabaseLazyWriter.Stock(c => {
+                var notesEntityDao = new NotesEntityDao(c, StatementLoader, c.Implementation, Logger.Factory);
+                notesEntityDao.UpdateTopmost(NoteId, IsTopmost, DatabaseCommonStatus.CreateCurrentAccount());
+            }, UniqueKeyPool.Get());
         }
 
         /// <summary>
@@ -285,7 +293,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
                     Height = size.Height,
                 };
                 noteLayoutsEntityDao.UpdatePickupLayout(layout, viewAreaChangeTargets.HasFlag(ViewAreaChangeTarget.Location), viewAreaChangeTargets.HasFlag(ViewAreaChangeTarget.Suze), DatabaseCommonStatus.CreateCurrentAccount());
-            }, UniqueKeyPool);
+            }, UniqueKeyPool.Get());
 
         }
 

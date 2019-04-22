@@ -15,6 +15,7 @@
   AllowsTransparency="True"
   WindowStyle="None"
   Topmost="{Binding IsTopmost}"
+  MinHeight="{Binding MinHeight}"
 
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   mc:Ignorable="d"
@@ -28,19 +29,32 @@
       True="Collapsed"
       False="Visible"
     />
+
+    <WindowChrome x:Key="NormalWindowChrome"
+      ResizeBorderThickness="{Binding BorderThickness}"
+      CaptionHeight="{Binding CaptionHeight}"
+    />
+    <WindowChrome x:Key="CompactWindowChrome"
+      ResizeBorderThickness="0"
+      CaptionHeight="{Binding MinHeight}"
+    />
+    <WindowChrome x:Key="LockWindowChrome" />
   </Window.Resources>
   <Window.Style>
     <Style TargetType="Window" BasedOn="{StaticResource {x:Type Window}}">
       <Style.Triggers>
+        <MultiDataTrigger>
+          <MultiDataTrigger.Conditions>
+            <Condition Binding="{Binding IsCompact}" Value="True" />
+            <Condition Binding="{Binding IsLocked}" Value="False" />
+          </MultiDataTrigger.Conditions>
+          <Setter Property="WindowChrome.WindowChrome" Value="{StaticResource CompactWindowChrome}" />
+        </MultiDataTrigger>
+        <DataTrigger Binding="{Binding IsLocked}" Value="True">
+          <Setter Property="WindowChrome.WindowChrome" Value="{StaticResource LockWindowChrome}" />
+        </DataTrigger>
       </Style.Triggers>
-      <Setter Property="WindowChrome.WindowChrome">
-        <Setter.Value>
-          <WindowChrome
-            ResizeBorderThickness="10"
-            CaptionHeight="20"
-          />
-        </Setter.Value>
-      </Setter>
+      <Setter Property="WindowChrome.WindowChrome" Value="{StaticResource NormalWindowChrome}" />
     </Style>
   </Window.Style>
   <Window.Visibility>
@@ -61,6 +75,7 @@
           <Grid.Resources>
             <Style x:Key="CaptionButton" TargetType="ButtonBase">
               <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />
+              <Setter Property="Visibility" Value="{Binding IsLocked, Converter={StaticResource FalseToVisibilityConverter}}" />
               <Setter Property="Template">
                 <Setter.Value>
                   <ControlTemplate TargetType="Button">
@@ -116,19 +131,34 @@
           <Button Grid.Column="3" Style="{StaticResource CaptionButton}" Content="{Binding CaptionCloseImage}" Command="{x:Static SystemCommands.CloseWindowCommand}" CommandParameter="{Binding ElementName=root}" />
         </Grid>
 
-        <Grid Grid.Row="1" Background="{Binding ContentBackground}" Visibility="{Binding IsCompact, Converter={StaticResource FalseToVisibilityConverter}}">
+        <Grid Grid.Row="1" Background="{Binding ContentBackground}" >
           <Grid x:Name="content">
 
           </Grid>
         </Grid>
       </Grid>
     </Border>
-    <ContentControl
+    <Border
       VerticalAlignment="Bottom"
       HorizontalAlignment="Right"
       WindowChrome.ResizeGripDirection="BottomRight"
-      Content="{Binding ResizeGripImage}"
-    />
+      Background="Transparent"
+    >
+      <ContentControl Content="{Binding ResizeGripImage}">
+        <ContentControl.Style>
+          <Style TargetType="ContentControl" BasedOn="{StaticResource {x:Type ContentControl}}">
+            <Style.Triggers>
+              <DataTrigger Binding="{Binding IsCompact}" Value="True">
+                <Setter Property="Visibility" Value="Collapsed" />
+              </DataTrigger>
+              <DataTrigger Binding="{Binding IsLocked}" Value="True">
+                <Setter Property="Visibility" Value="Collapsed" />
+              </DataTrigger>
+            </Style.Triggers>
+          </Style>
+        </ContentControl.Style>
+      </ContentControl>
+    </Border>
 
 
   </Grid>

@@ -24,6 +24,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             #region property
 
             public static string NoteId { get; } = "NoteId";
+            public static string IsCompact { get; } = "IsCompact";
+            public static string IsTopmost { get; } = "IsTopmost";
+            public static string IsLocked { get; } = "IsLocked";
 
             #endregion
         }
@@ -108,6 +111,24 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
         {
             var sql = StatementLoader.LoadStatementByCurrent();
             var param = ConvertFromData(noteData, commonStatus);
+            return Commander.Execute(sql, param) == 1;
+        }
+
+        public bool UpdateCompact(Guid noteId, bool isCompact, IDatabaseCommonStatus databaseCommonStatus)
+        {
+            var sql = StatementLoader.LoadStatementByCurrent();
+            var param = databaseCommonStatus.CreateCommonDtoMapping();
+            param[Column.NoteId] = noteId;
+            param[Column.IsCompact] = isCompact;
+            return Commander.Execute(sql, param) == 1;
+        }
+
+        public bool UpdateTopmost(Guid noteId, bool isTopmost, IDatabaseCommonStatus databaseCommonStatus)
+        {
+            var sql = StatementLoader.LoadStatementByCurrent();
+            var param = databaseCommonStatus.CreateCommonDtoMapping();
+            param[Column.NoteId] = noteId;
+            param[Column.IsTopmost] = isTopmost;
             return Commander.Execute(sql, param) == 1;
         }
 

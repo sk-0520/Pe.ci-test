@@ -101,6 +101,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
                 }
             }
         }
+        double NormalWindowHeight { get; set; }
         public double WindowHeight
         {
             get => this._windowHeight;
@@ -129,13 +130,25 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
         public DependencyObject CaptionTopmostDisabledImage => NoteTheme.GetCaptionImage(NoteCaption.Topmost, false, ColorPair.Create(Model.ForegroundColor, Model.BackgroundColor));
 
         public DependencyObject CaptionCloseImage => NoteTheme.GetCaptionImage(NoteCaption.Close, false, ColorPair.Create(Model.ForegroundColor, Model.BackgroundColor));
+
+        public double MinHeight => CaptionHeight + BorderThickness.Top + BorderThickness.Bottom;
         #endregion
 
         #region command
 
         public ICommand SwitchCompactCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
+                if(!IsCompact) {
+                    NormalWindowHeight = WindowHeight;
+                }
                 Model.SwitchCompact();
+                // レイアウト変更(高さ)通知を抑制
+                if(!IsCompact) {
+                    this._windowHeight = NormalWindowHeight;
+                } else {
+                    this._windowHeight = 0;
+                }
+                RaisePropertyChanged(nameof(WindowHeight));
             }
         ));
         public ICommand SwitchTopmostCommand => GetOrCreateCommand(() => new DelegateCommand(
@@ -217,7 +230,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
             WindowLeft = layout.X;
             WindowTop = layout.Y;
             WindowWidth = layout.Width;
-            WindowHeight = layout.Height;
+            NormalWindowHeight = layout.Height;
+            if(IsCompact) {
+                WindowHeight = 0;
+            } else {
+                WindowHeight = NormalWindowHeight;
+            }
         }
 
         void ApplyCaptionBrush()
