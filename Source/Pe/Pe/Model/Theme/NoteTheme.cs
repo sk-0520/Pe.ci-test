@@ -19,6 +19,13 @@ namespace ContentTypeTextNet.Pe.Main.Model.Theme
         Close,
     }
 
+    public enum NoteCaptionButtonState
+    {
+        None,
+        Over,
+        Pressed,
+    }
+
     public interface INoteTheme
     {
         #region function
@@ -37,6 +44,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Theme
         IReadOnlyColorPair<Brush> GetCaptionBrush(IReadOnlyColorPair<Color> baseColor);
         Brush GetBorderBrush(IReadOnlyColorPair<Color> baseColor);
         Brush GetContentBrush(IReadOnlyColorPair<Color> baseColor);
+        Brush GetCaptionBackgroundBrush(NoteCaptionButtonState buttonState, IReadOnlyColorPair<Color> baseColor);
 
         DependencyObject GetCaptionImage(NoteCaption noteCaption, bool isEnabled, IReadOnlyColorPair<Color> baseColor);
         DependencyObject GetResizeGripImage(IReadOnlyColorPair<Color> baseColor);
@@ -195,6 +203,24 @@ namespace ContentTypeTextNet.Pe.Main.Model.Theme
             });
             var gradation = new LinearGradientBrush(collection, new Point(0, 0), new Point(0, 1));
             return FreezableUtility.GetSafeFreeze(gradation);
+        }
+
+        public Brush GetCaptionBackgroundBrush(NoteCaptionButtonState buttonState, IReadOnlyColorPair<Color> baseColor)
+        {
+            // TODO: 色調整
+            switch(buttonState) {
+                case NoteCaptionButtonState.None:
+                    return FreezableUtility.GetSafeFreeze(Brushes.Transparent);
+
+                case NoteCaptionButtonState.Over:
+                    return FreezableUtility.GetSafeFreeze(Brushes.Lime);
+
+                case NoteCaptionButtonState.Pressed:
+                    return FreezableUtility.GetSafeFreeze(Brushes.Red);
+
+                default:
+                    throw new NotImplementedException();
+            }
         }
 
         public DependencyObject GetCaptionImage(NoteCaption noteCaption, bool isEnabled, IReadOnlyColorPair<Color> baseColor)

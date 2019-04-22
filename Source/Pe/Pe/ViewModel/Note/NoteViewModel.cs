@@ -87,6 +87,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
         public double CaptionHeight => NoteTheme.GetCaptionHeight();
         public Brush BorderBrush => NoteTheme.GetBorderBrush(ColorPair.Create(Model.ForegroundColor, Model.BackgroundColor));
         public Thickness BorderThickness => NoteTheme.GetBorderThickness();
+        public Brush CaptionBackgroundNoneBrush => NoteTheme.GetCaptionBackgroundBrush(NoteCaptionButtonState.None, ColorPair.Create(Model.ForegroundColor, Model.BackgroundColor));
+        public Brush CaptionBackgroundOverBrush => NoteTheme.GetCaptionBackgroundBrush(NoteCaptionButtonState.Over, ColorPair.Create(Model.ForegroundColor, Model.BackgroundColor));
+        public Brush CaptionBackgroundPressedBrush => NoteTheme.GetCaptionBackgroundBrush(NoteCaptionButtonState.Pressed, ColorPair.Create(Model.ForegroundColor, Model.BackgroundColor));
         public SimpleDataViewModel<Brush> CaptionForeground { get; }
         public SimpleDataViewModel<Brush> CaptionBackground { get; }
         public Brush ContentBackground => NoteTheme.GetContentBrush(ColorPair.Create(Model.ForegroundColor, Model.BackgroundColor));

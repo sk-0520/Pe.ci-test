@@ -53,6 +53,23 @@
           <Grid.Resources>
             <Style x:Key="CaptionButton" TargetType="ButtonBase">
               <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />
+              <Setter Property="Template">
+                <Setter.Value>
+                  <ControlTemplate TargetType="Button">
+                    <Border x:Name="parent" Background="{Binding CaptionBackgroundNoneBrush}">
+                      <ContentPresenter x:Name="content" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                      <Trigger Property="IsMouseOver" Value="True">
+                        <Setter TargetName="parent" Property="Background" Value="{Binding CaptionBackgroundOverBrush}" />
+                      </Trigger>
+                      <Trigger Property="IsPressed" Value="True">
+                        <Setter TargetName="parent" Property="Background" Value="{Binding CaptionBackgroundPressedBrush}" />
+                      </Trigger>
+                    </ControlTemplate.Triggers>
+                  </ControlTemplate>
+                </Setter.Value>
+              </Setter>
             </Style>
           </Grid.Resources>
 
