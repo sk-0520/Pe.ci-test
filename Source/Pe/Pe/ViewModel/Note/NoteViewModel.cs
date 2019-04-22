@@ -54,9 +54,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
 
         #region property
 
+        bool CanLayoutNotify { get; set; }
+
         INoteTheme NoteTheme { get; }
         IDispatcherWapper DispatcherWapper { get; }
         PropertyChangedHooker PropertyChangedHooker { get; }
+
+        IDpiScaleOutputor DpiScaleOutputor { get; set; }
 
         DispatcherTimer WindowAreaChangedTimer { get; }
 
@@ -144,7 +148,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
 
         #region function
 
-        (bool isCreated, NoteLayoutData layout) GetOrCreateLayout(NotePosition position, Visual dpiVisual)
+        (bool isCreated, NoteLayoutData layout) GetOrCreateLayout(NotePosition position)
         {
             if(position == Main.Model.Note.NotePosition.Setting) {
                 var settingLayout = Model.GetLayout();
@@ -157,7 +161,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
             }
 
             //TODO: 未検証ゾーン
-            var logicalScreenSize = UIUtility.ToLogicalPixel(Model.DockScreen.DeviceBounds.Size, dpiVisual);
+            var logicalScreenSize = UIUtility.ToLogicalPixel(Model.DockScreen.DeviceBounds.Size, DpiScaleOutputor);
             var layout = new NoteLayoutData() {
                 NoteId = Model.NoteId,
                 LayoutKind = Model.LayoutKind,
@@ -188,7 +192,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
                     deviceCursorLocation.X - deviceScreenBounds.X,
                     deviceCursorLocation.Y - deviceScreenBounds.Y
                 );
-                var logicalScreenCursorLocation = UIUtility.ToLogicalPixel(deviceScreenCursorLocation, dpiVisual);
+                var logicalScreenCursorLocation = UIUtility.ToLogicalPixel(deviceScreenCursorLocation, DpiScaleOutputor);
 
                 if(layout.LayoutKind == NoteLayoutKind.Absolute) {
                     layout.Width = 200;
@@ -208,7 +212,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
             return (true, layout);
         }
 
-        void SetLayout(NoteLayoutData layout, Visual dpiVisual)
+        void SetLayout(NoteLayoutData layout)
         {
             WindowLeft = layout.X;
             WindowTop = layout.Y;
@@ -235,8 +239,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
 
         void DelayNotifyWindowAreaChange()
         {
+            if(!CanLayoutNotify) {
+                Logger.Trace($"モデルへの位置・サイズ通知抑制 無効: {Model.NoteId}, {WindowAreaChangedTimer.Interval}");
+                return;
+            }
+
             if(WindowAreaChangedTimer.IsEnabled) {
-                Logger.Debug($"モデルへの位置・サイズ通知抑制: {Model.NoteId}, {WindowAreaChangedTimer.Interval}");
+                Logger.Trace($"モデルへの位置・サイズ通知抑制: {Model.NoteId}, {WindowAreaChangedTimer.Interval}");
                 WindowAreaChangedTimer.Stop();
             }
             WindowAreaChangedTimer.Start();
@@ -251,11 +260,23 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
             var size = new Size();
 
             if(Model.LayoutKind == NoteLayoutKind.Absolute) {
+                viewAreaChangeTargets |= ViewAreaChangeTarget.Location;
+                var logicalScreenLocation = UIUtility.ToLogicalPixel(Model.DockScreen.DeviceBounds.Location, DpiScaleOutputor);
+                location.X = WindowLeft - logicalScreenLocation.X;
+                location.Y = WindowTop - logicalScreenLocation.Y;
+            } else {
+                Debug.Assert(Model.LayoutKind == NoteLayoutKind.Relative);
             }
 
             // 最小化中はウィンドウサイズに対して何もしない
             if(!IsCompact) {
-
+                if(Model.LayoutKind == NoteLayoutKind.Absolute) {
+                    viewAreaChangeTargets |= ViewAreaChangeTarget.Suze;
+                    size.Width = WindowWidth;
+                    size.Height = WindowHeight;
+                } else {
+                    Debug.Assert(Model.LayoutKind == NoteLayoutKind.Relative);
+                }
             }
 
             Model.ChangeViewArea(viewAreaChangeTargets, location, size);
@@ -272,13 +293,18 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
             var hWnd = HandleUtility.GetWindowHandle(window);
             NativeMethods.SetWindowPos(hWnd, new IntPtr((int)HWND.HWND_TOP), (int)Model.DockScreen.DeviceBounds.X, (int)Model.DockScreen.DeviceBounds.Y, 0, 0, SWP.SWP_NOSIZE);
 
-            var layoutValue = GetOrCreateLayout(Model.Position, window);
+            DpiScaleOutputor = window as IDpiScaleOutputor ?? new EmptyDpiScaleOutputor();
+
+            var layoutValue = GetOrCreateLayout(Model.Position);
             if(layoutValue.isCreated) {
                 Model.SaveLayout(layoutValue.layout);
             }
-            SetLayout(layoutValue.layout, window);
+
+            SetLayout(layoutValue.layout);
 
             ApplyTheme();
+
+            CanLayoutNotify = true;
         }
 
         public void ReceiveViewLoaded(Window window)

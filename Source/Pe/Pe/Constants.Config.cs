@@ -14,6 +14,7 @@ namespace ContentTypeTextNet.Pe.Main
             #region property
 
             public static TimeSpan LauncherToolbarMainDatabaseLazyWriterWaitTime { get; } = TimeSpan.Parse(ConfigurationManager.AppSettings["launcher-toolbar-main-database-lazy-writer-wait-time"]);
+            public static TimeSpan NoteMainDatabaseLazyWriterWaitTime { get; } = TimeSpan.Parse(ConfigurationManager.AppSettings["note-main-database-lazy-writer-wait-time"]);
 
             #endregion
         }

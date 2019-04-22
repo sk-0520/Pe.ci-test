@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Data;
@@ -24,6 +25,11 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             #region property
 
             public static string NoteId { get; } = "NoteId";
+            public static string LayoutKind { get; } = "LayoutKind";
+            public static string X { get; } = "X";
+            public static string Y { get; } = "Y";
+            public static string Width { get; } = "Width";
+            public static string Height { get; } = "Height";
 
             #endregion
         }
@@ -100,6 +106,22 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
         {
             var sql = StatementLoader.LoadStatementByCurrent();
             var param = ConvertFromData(noteLayout, databaseCommonStatus);
+            return Commander.Execute(sql, param) == 1;
+        }
+        public bool UpdatePickupLayout(NoteLayoutData noteLayout, bool isEnabledLocation, bool isEnabledSize, IDatabaseCommonStatus databaseCommonStatus)
+        {
+            var noteLayoutKindTransfer = new EnumTransfer<NoteLayoutKind>();
+
+            var sql = StatementLoader.LoadStatementByCurrent();
+            var param = databaseCommonStatus.CreateCommonDtoMapping();
+            param[Column.NoteId] = noteLayout.NoteId;
+            param[Column.LayoutKind] = noteLayoutKindTransfer.ToText(noteLayout.LayoutKind);
+            param[Column.X] = noteLayout.X;
+            param[Column.Y] = noteLayout.Y;
+            param[Column.Width] = noteLayout.Width;
+            param[Column.Height] = noteLayout.Height;
+            param[nameof(isEnabledLocation)] = isEnabledLocation;
+            param[nameof(isEnabledSize)] = isEnabledSize;
             return Commander.Execute(sql, param) == 1;
         }
 

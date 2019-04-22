@@ -55,6 +55,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
             FileDatabaseBarrier = fileDatabaseBarrier;
             StatementLoader = statementLoader;
             NoteTheme = noteTheme;
+
+            MainDatabaseLazyWriter = new DatabaseLazyWriter(MainDatabaseBarrier, Constants.Config.NoteMainDatabaseLazyWriterWaitTime, this);
         }
 
         #region property
@@ -75,6 +77,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
         IFileDatabaseBarrier FileDatabaseBarrier { get; }
         IDatabaseStatementLoader StatementLoader { get; }
         INoteTheme NoteTheme { get; }
+
+        DatabaseLazyWriter MainDatabaseLazyWriter { get; }
+        UniqueKeyPool UniqueKeyPool { get; } = new UniqueKeyPool();
 
         bool ViewCreated { get; set; }
 
@@ -262,15 +267,6 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
             IsTopmost = !IsTopmost;
         }
 
-        #endregion
-
-        #region ElementBase
-
-        protected override void InitializeImpl()
-        {
-            LoadNote();
-        }
-
         /// <summary>
         /// 座標・サイズの変更。
         /// <para>各種算出済みの値。</para>
@@ -278,6 +274,18 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
         /// <param name="location"></param>
         public void ChangeViewArea(ViewAreaChangeTarget viewAreaChangeTargets, Point location, Size size)
         {
+            MainDatabaseLazyWriter.Stock(c => {
+                var noteLayoutsEntityDao = new NoteLayoutsEntityDao(c, StatementLoader, c.Implementation, Logger.Factory);
+                var layout = new NoteLayoutData() {
+                    NoteId = NoteId,
+                    LayoutKind = LayoutKind,
+                    X = location.X,
+                    Y = location.Y,
+                    Width = size.Width,
+                    Height = size.Height,
+                };
+                noteLayoutsEntityDao.UpdatePickupLayout(layout, viewAreaChangeTargets.HasFlag(ViewAreaChangeTarget.Location), viewAreaChangeTargets.HasFlag(ViewAreaChangeTarget.Suze), DatabaseCommonStatus.CreateCurrentAccount());
+            }, UniqueKeyPool);
 
         }
 
@@ -308,6 +316,26 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
                 }
                 commander.Commit();
             }
+        }
+
+        #endregion
+
+        #region ElementBase
+
+        protected override void InitializeImpl()
+        {
+            LoadNote();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                if(disposing) {
+                    MainDatabaseLazyWriter.Dispose();
+                }
+            }
+
+            base.Dispose(disposing);
         }
 
         #endregion

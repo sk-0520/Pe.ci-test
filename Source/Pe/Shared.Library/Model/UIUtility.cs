@@ -20,6 +20,15 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         #endregion
     }
 
+    public sealed class EmptyDpiScaleOutputor : IDpiScaleOutputor
+    {
+        #region IDpiScaleOutputor
+
+        public Point GetDpiScale() => new Point(1, 1);
+
+        #endregion
+    }
+
     /// <summary>
     /// WPF における UI をサポート。
     /// </summary>
