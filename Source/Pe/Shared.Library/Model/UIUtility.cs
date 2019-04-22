@@ -11,6 +11,15 @@ using ContentTypeTextNet.Pe.Library.Shared.Library.Compatibility.Windows;
 
 namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 {
+    public interface IDpiScaleOutputor
+    {
+        #region function
+
+        Point GetDpiScale();
+
+        #endregion
+    }
+
     /// <summary>
     /// WPF における UI をサポート。
     /// </summary>
@@ -107,11 +116,6 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
             }
         }
 
-        /// <summary>
-        /// http://grabacr.net/archives/1105
-        /// </summary>
-        /// <param name="visual"></param>
-        /// <returns></returns>
         public static Point GetDpiScale(Visual visual)
         {
             var source = PresentationSource.FromVisual(visual);
@@ -126,39 +130,13 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         }
 
         [return: PixelKind(Px.Device)]
-        public static double ToDevicePixelFromX(Visual visual, double x)
-        {
-            var dpiScale = GetDpiScale(visual);
-
-            return x * dpiScale.X;
-        }
+        public static double ToDevicePixel([PixelKind(Px.Logical)] double value, double dpiScale) => value * dpiScale;
 
         [return: PixelKind(Px.Logical)]
-        public static double ToLogicalPixelX(Visual visual, double x)
-        {
-            var dpiScale = GetDpiScale(visual);
-
-            return x / dpiScale.X;
-        }
+        public static double ToLogicalPixel([PixelKind(Px.Device)] double value, double dpiScale) => value / dpiScale;
 
         [return: PixelKind(Px.Device)]
-        public static double ToDevicePixelFromY(Visual visual, double y)
-        {
-            var dpiScale = GetDpiScale(visual);
-
-            return y * dpiScale.Y;
-        }
-
-        [return: PixelKind(Px.Logical)]
-        public static double ToLogicalPixelY(Visual visual, double y)
-        {
-            var dpiScale = GetDpiScale(visual);
-
-            return y / dpiScale.Y;
-        }
-
-        [return: PixelKind(Px.Device)]
-        public static Point ToDevicePixel(Visual visual, Point point)
+        public static Point ToDevicePixel([PixelKind(Px.Logical)] Point point, Visual visual)
         {
             var dpiScale = GetDpiScale(visual);
 
@@ -169,43 +147,47 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         }
 
         [return: PixelKind(Px.Logical)]
-        public static Point ToLogicalPixel(Visual visual, Point point)
+        public static Point ToLogicalPixel([PixelKind(Px.Device)] Point point, Point dpiScale)
         {
-            var dpiScale = GetDpiScale(visual);
-
             return new Point(
                 point.X / dpiScale.X,
                 point.Y / dpiScale.Y
             );
         }
+        [return: PixelKind(Px.Logical)]
+        public static Point ToLogicalPixel([PixelKind(Px.Device)] Point point, IDpiScaleOutputor dpiScaleOutputor) => ToLogicalPixel(point, dpiScaleOutputor.GetDpiScale());
+        [return: PixelKind(Px.Logical)]
+        public static Point ToLogicalPixel([PixelKind(Px.Device)] Point point, Visual visual) => ToLogicalPixel(point, GetDpiScale(visual));
 
         [return: PixelKind(Px.Device)]
-        public static Size ToDevicePixel(Visual visual, Size size)
+        public static Size ToDevicePixel([PixelKind(Px.Logical)] Size size, Point dpiScale)
         {
-            var dpiScale = GetDpiScale(visual);
-
             return new Size(
                 size.Width * dpiScale.X,
                 size.Height * dpiScale.Y
             );
         }
+        [return: PixelKind(Px.Device)]
+        public static Size ToDevicePixel([PixelKind(Px.Logical)] Size size, IDpiScaleOutputor dpiScaleOutputor) => ToDevicePixel(size, dpiScaleOutputor.GetDpiScale());
+        [return: PixelKind(Px.Device)]
+        public static Size ToDevicePixel([PixelKind(Px.Logical)] Size size, Visual visual) => ToDevicePixel(size, GetDpiScale(visual));
 
         [return: PixelKind(Px.Logical)]
-        public static Size ToLogicalPixel(Visual visual, Size size)
+        public static Size ToLogicalPixel([PixelKind(Px.Device)] Size size, Point dpiScale)
         {
-            var dpiScale = GetDpiScale(visual);
-
             return new Size(
                 size.Width / dpiScale.X,
                 size.Height / dpiScale.Y
             );
         }
+        [return: PixelKind(Px.Logical)]
+        public static Size ToLogicalPixel([PixelKind(Px.Device)] Size size, IDpiScaleOutputor dpiScaleOutputor) => ToLogicalPixel(size, dpiScaleOutputor.GetDpiScale());
+        [return: PixelKind(Px.Logical)]
+        public static Size ToLogicalPixel([PixelKind(Px.Device)] Size size, Visual visual) => ToLogicalPixel(size, GetDpiScale(visual));
 
         [return: PixelKind(Px.Device)]
-        public static Rect ToDevicePixel(Visual visual, Rect rect)
+        public static Rect ToDevicePixel([PixelKind(Px.Logical)] Rect rect, Point dpiScale)
         {
-            var dpiScale = GetDpiScale(visual);
-
             return new Rect(
                 rect.X * dpiScale.X,
                 rect.Y * dpiScale.Y,
@@ -213,12 +195,14 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
                 rect.Height * dpiScale.Y
             );
         }
+        [return: PixelKind(Px.Device)]
+        public static Rect ToDevicePixel([PixelKind(Px.Logical)] Rect rect, IDpiScaleOutputor dpiScaleOutputor) => ToDevicePixel(rect, dpiScaleOutputor.GetDpiScale());
+        [return: PixelKind(Px.Device)]
+        public static Rect ToDevicePixel([PixelKind(Px.Logical)] Rect rect, Visual visual) => ToDevicePixel(rect, GetDpiScale(visual));
 
         [return: PixelKind(Px.Logical)]
-        public static Rect ToLogicalPixel(Visual visual, Rect rect)
+        public static Rect ToLogicalPixel([PixelKind(Px.Device)] Rect rect, Point dpiScale)
         {
-            var dpiScale = GetDpiScale(visual);
-
             return new Rect(
                 rect.X / dpiScale.X,
                 rect.Y / dpiScale.Y,
@@ -226,6 +210,10 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
                 rect.Height / dpiScale.Y
             );
         }
+        [return: PixelKind(Px.Logical)]
+        public static Rect ToLogicalPixel([PixelKind(Px.Device)] Rect rect, IDpiScaleOutputor dpiScaleOutputor) => ToLogicalPixel(rect, dpiScaleOutputor.GetDpiScale());
+        [return: PixelKind(Px.Logical)]
+        public static Rect ToLogicalPixel([PixelKind(Px.Device)] Rect rect, Visual visual) => ToLogicalPixel(rect, GetDpiScale(visual));
 
         /// <summary>
         /// ツールウィンドウにする。

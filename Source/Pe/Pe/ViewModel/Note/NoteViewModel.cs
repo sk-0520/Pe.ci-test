@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Threading;
 using ContentTypeTextNet.Library.PInvoke.Windows;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Compatibility.Windows;
 using ContentTypeTextNet.Pe.Library.Shared.Library.CompatibleWindows;
@@ -38,6 +39,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
             NoteTheme = noteTheme;
             DispatcherWapper = dispatcherWapper;
 
+            WindowAreaChangedTimer = new DispatcherTimer() {
+                Interval = TimeSpan.FromSeconds(1),
+            };
+            WindowAreaChangedTimer.Tick += WindowAreaChangedTimer_Tick;
+
             PropertyChangedHooker = new PropertyChangedHooker(dispatcherWapper, Logger.Factory);
             PropertyChangedHooker.AddHook(nameof(Model.IsVisible), nameof(IsVisible));
             PropertyChangedHooker.AddHook(nameof(Model.IsTopmost), nameof(IsTopmost));
@@ -45,11 +51,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
             PropertyChangedHooker.AddHook(nameof(Model.IsLocked), nameof(IsLocked));
         }
 
+
         #region property
 
         INoteTheme NoteTheme { get; }
         IDispatcherWapper DispatcherWapper { get; }
         PropertyChangedHooker PropertyChangedHooker { get; }
+
+        DispatcherTimer WindowAreaChangedTimer { get; }
 
         public bool IsVisible => Model.IsVisible;
 
@@ -60,22 +69,43 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
         public double WindowLeft
         {
             get => this._windowLeft;
-            set => SetProperty(ref this._windowLeft, value);
+            set
+            {
+                if(SetProperty(ref this._windowLeft, value)) {
+                    DelayNotifyWindowAreaChange();
+                }
+            }
         }
         public double WindowTop
         {
             get => this._windowTop;
-            set => SetProperty(ref this._windowTop, value);
+            set
+            {
+                if(SetProperty(ref this._windowTop, value)) {
+                    DelayNotifyWindowAreaChange();
+                }
+            }
         }
+
         public double WindowWidth
         {
             get => this._windowWidth;
-            set => SetProperty(ref this._windowWidth, value);
+            set
+            {
+                if(SetProperty(ref this._windowWidth, value)) {
+                    DelayNotifyWindowAreaChange();
+                }
+            }
         }
         public double WindowHeight
         {
             get => this._windowHeight;
-            set => SetProperty(ref this._windowHeight, value);
+            set
+            {
+                if(SetProperty(ref this._windowHeight, value)) {
+                    DelayNotifyWindowAreaChange();
+                }
+            }
         }
 
         public double CaptionHeight => NoteTheme.GetCaptionHeight();
@@ -127,7 +157,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
             }
 
             //TODO: 未検証ゾーン
-            var logicalScreenSize = UIUtility.ToLogicalPixel(dpiVisual, Model.DockScreen.DeviceBounds.Size);
+            var logicalScreenSize = UIUtility.ToLogicalPixel(Model.DockScreen.DeviceBounds.Size, dpiVisual);
             var layout = new NoteLayoutData() {
                 NoteId = Model.NoteId,
                 LayoutKind = Model.LayoutKind,
@@ -158,7 +188,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
                     deviceCursorLocation.X - deviceScreenBounds.X,
                     deviceCursorLocation.Y - deviceScreenBounds.Y
                 );
-                var logicalScreenCursorLocation = UIUtility.ToLogicalPixel(dpiVisual, deviceScreenCursorLocation);
+                var logicalScreenCursorLocation = UIUtility.ToLogicalPixel(deviceScreenCursorLocation, dpiVisual);
 
                 if(layout.LayoutKind == NoteLayoutKind.Absolute) {
                     layout.Width = 200;
@@ -202,6 +232,35 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
         {
             ApplyCaptionBrush();
         }
+
+        void DelayNotifyWindowAreaChange()
+        {
+            if(WindowAreaChangedTimer.IsEnabled) {
+                Logger.Debug($"モデルへの位置・サイズ通知抑制: {Model.NoteId}, {WindowAreaChangedTimer.Interval}");
+                WindowAreaChangedTimer.Stop();
+            }
+            WindowAreaChangedTimer.Start();
+        }
+
+        void DelayNotifyWindowAreaChanged()
+        {
+            Logger.Debug($"モデルへの位置・サイズ通知抑制: {Model.NoteId}, {WindowAreaChangedTimer.Interval}");
+
+            var viewAreaChangeTargets = ViewAreaChangeTarget.None;
+            var location = new Point();
+            var size = new Size();
+
+            if(Model.LayoutKind == NoteLayoutKind.Absolute) {
+            }
+
+            // 最小化中はウィンドウサイズに対して何もしない
+            if(!IsCompact) {
+
+            }
+
+            Model.ChangeViewArea(viewAreaChangeTargets, location, size);
+        }
+
 
         #endregion
 
@@ -263,9 +322,16 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
         }
 
         #endregion
+
         private void Model_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             PropertyChangedHooker.Execute(e, RaisePropertyChanged);
+        }
+
+        private void WindowAreaChangedTimer_Tick(object sender, EventArgs e)
+        {
+            WindowAreaChangedTimer.Stop();
+            DelayNotifyWindowAreaChanged();
         }
 
     }

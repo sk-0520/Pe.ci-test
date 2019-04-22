@@ -45,7 +45,7 @@
     <Border BorderBrush="{Binding BorderBrush}" BorderThickness="{Binding BorderThickness}">
       <Grid>
         <Grid.RowDefinitions>
-          <RowDefinition Height="20" />
+          <RowDefinition Height="{Binding CaptionHeight}" />
           <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 

@@ -202,9 +202,10 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
             var item = Items.First(i => i.Window == window);
             Items.Remove(item);
 
-            var hWndSource = WindowHandleSources[item];
-            WindowHandleSources.Remove(item);
-            hWndSource.Dispose();
+            if(WindowHandleSources.TryGetValue(item, out var hWndSource)) {
+                WindowHandleSources.Remove(item);
+                hWndSource.Dispose();
+            }
 
             if(item.CloseToDataContextNull) {
                 item.Window.DataContext = null;

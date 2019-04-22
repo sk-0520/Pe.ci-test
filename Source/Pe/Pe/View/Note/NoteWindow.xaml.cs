@@ -19,7 +19,7 @@ namespace ContentTypeTextNet.Pe.Main.View.Note
     /// <summary>
     /// NoteWindow.xaml の相互作用ロジック
     /// </summary>
-    public partial class NoteWindow : Window
+    public partial class NoteWindow : Window, IDpiScaleOutputor
     {
         public NoteWindow()
         {
@@ -44,6 +44,12 @@ namespace ContentTypeTextNet.Pe.Main.View.Note
 
             UIUtility.SetToolWindowStyle(this, false, false);
         }
+
+        #endregion
+
+        #region IDpiScaleOutputor
+
+        public Point GetDpiScale() => UIUtility.GetDpiScale(this);
 
         #endregion
 

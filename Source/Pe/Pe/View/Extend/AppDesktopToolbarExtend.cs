@@ -358,7 +358,7 @@ namespace ContentTypeTextNet.Pe.Main.View.Extend
         {
             var deviceDesktopArea = ExtendData.DockScreen.DeviceBounds;
 
-            var deviceBarSize = UIUtility.ToDevicePixel(View, ExtendData.DisplaySize);
+            var deviceBarSize = UIUtility.ToDevicePixel(ExtendData.DisplaySize, View);
 
             double top, left, width, height;
 
@@ -393,7 +393,7 @@ namespace ContentTypeTextNet.Pe.Main.View.Extend
         /// <param name="appBar"></param>
         void TuneSystemBarArea(ref APPBARDATA appBar)
         {
-            var deviceBarSize = UIUtility.ToDevicePixel(View, ExtendData.DisplaySize);
+            var deviceBarSize = UIUtility.ToDevicePixel(ExtendData.DisplaySize, View);
             NativeMethods.SHAppBarMessage(ABM.ABM_QUERYPOS, ref appBar);
 
             switch(appBar.uEdge) {
@@ -452,7 +452,7 @@ namespace ContentTypeTextNet.Pe.Main.View.Extend
             ExtendData.IsAutoHide = autoHideResult;
 
             var deviceWindowBounds = PodStructUtility.Convert(appBar.rc);
-            var logicalWindowBounds = UIUtility.ToLogicalPixel(View, deviceWindowBounds);
+            var logicalWindowBounds = UIUtility.ToLogicalPixel(deviceWindowBounds, View);
 
             if(!autoHideResult) {
                 var appbarResult = NativeMethods.SHAppBarMessage(ABM.ABM_SETPOS, ref appBar);
@@ -478,7 +478,7 @@ namespace ContentTypeTextNet.Pe.Main.View.Extend
         {
             //if(View != null && ExtendData != null) {
             if(IsEnabledWindowHandle) {
-                var deviceArea = UIUtility.ToDevicePixel(View, ExtendData.DisplayBarArea);
+                var deviceArea = UIUtility.ToDevicePixel(ExtendData.DisplayBarArea, View);
                 NativeMethods.MoveWindow(WindowHandle, (int)deviceArea.X, (int)deviceArea.Y, (int)deviceArea.Width, (int)deviceArea.Height, true);
                 ExtendData.IsHiding = false;
                 WindowsUtility.ShowNoActiveForeground(WindowHandle);
@@ -630,7 +630,7 @@ namespace ContentTypeTextNet.Pe.Main.View.Extend
             //NativeMethods.GetCursorPos(out deviceCursorPosition);
             //var logicalCursorPosition = UIUtility.ToLogicalPixel(View, PodStructUtility.Convert(deviceCursorPosition));
             var deviceCursorPosition = MouseUtility.GetDevicePosition();
-            var logicalCursorPosition = UIUtility.ToLogicalPixel(View, deviceCursorPosition);
+            var logicalCursorPosition = UIUtility.ToLogicalPixel(deviceCursorPosition, View);
             
             if(!force && ExtendData.DisplayBarArea.Contains(logicalCursorPosition)) {
                 return;
@@ -639,7 +639,7 @@ namespace ContentTypeTextNet.Pe.Main.View.Extend
             //ExtendData.HideSize
             //ExtendData.DockScreen.DeviceBounds.Location
 
-            var logicalScreenArea = UIUtility.ToLogicalPixel(View, ExtendData.DockScreen.DeviceBounds);
+            var logicalScreenArea = UIUtility.ToLogicalPixel(ExtendData.DockScreen.DeviceBounds, View);
             Rect logicalHideArea = new Rect();
 
             switch(ExtendData.ToolbarPosition) {
@@ -709,9 +709,9 @@ namespace ContentTypeTextNet.Pe.Main.View.Extend
             if(prevVisibility == Visibility.Visible) {
 
                 ExtendData.IsHiding = true;
-                ExtendData.HiddenBarArea = UIUtility.ToLogicalPixel(View, logicalHideArea);
+                ExtendData.HiddenBarArea = UIUtility.ToLogicalPixel(logicalHideArea, View);
 
-                var deviceHideArea = UIUtility.ToDevicePixel(View, logicalHideArea);
+                var deviceHideArea = UIUtility.ToDevicePixel(logicalHideArea, View);
                 if(animation) {
                     //var animateTime = (int)ExtendData.HiddenAnimateTime.TotalMilliseconds;
                     //var animateFlag = ToAW(ExtendData.DockType, false);

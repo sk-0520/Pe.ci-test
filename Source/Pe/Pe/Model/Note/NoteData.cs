@@ -31,6 +31,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Note
     [Flags]
     public enum ViewAreaChangeTarget
     {
+        None = 0,
         Location = 0b0000_0001,
         Suze = 0b0000_0010,
     }
