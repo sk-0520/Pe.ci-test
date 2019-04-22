@@ -183,23 +183,12 @@ namespace ContentTypeTextNet.Pe.Main.Model.Theme
                 <GradientStop Color="#20101010" Offset="1"/>
             </LinearGradientBrush>
             */
-            var headColor = Color.FromArgb(0xa0, 0xff, 0xff, 0xff);
             var tailColor = Color.FromArgb(0x20, 0x10, 0x10, 0x10);
             var collection = new GradientStopCollection(new[] {
-                new GradientStop(Color.FromArgb(
-                    baseColor.Background.A,
-                    (byte)(baseColor.Background.R + (headColor.R - baseColor.Background.R) * (headColor.A / 255.0)),
-                    (byte)(baseColor.Background.G + (headColor.G - baseColor.Background.G) * (headColor.A / 255.0)),
-                    (byte)(baseColor.Background.B + (headColor.B - baseColor.Background.B) * (headColor.A / 255.0))
-                ), 0),
+                new GradientStop(MediaUtility.AddColor(baseColor.Background, Color.FromArgb(0xa0, 0xff, 0xff, 0xff)), 0),
                 new GradientStop(baseColor.Background, 0.4),
                 new GradientStop(baseColor.Background, 0.8),
-                new GradientStop(Color.FromArgb(
-                    baseColor.Background.A,
-                    (byte)(baseColor.Background.R + (tailColor.R - baseColor.Background.R) * (tailColor.A / 255.0)),
-                    (byte)(baseColor.Background.G + (tailColor.G - baseColor.Background.G) * (tailColor.A / 255.0)),
-                    (byte)(baseColor.Background.B + (tailColor.B - baseColor.Background.B) * (tailColor.A / 255.0))
-                ), 1),
+                new GradientStop(MediaUtility.AddColor(baseColor.Background, Color.FromArgb(0x20, 0x10, 0x10, 0x10)), 1),
             });
             var gradation = new LinearGradientBrush(collection, new Point(0, 0), new Point(0, 1));
             return FreezableUtility.GetSafeFreeze(gradation);

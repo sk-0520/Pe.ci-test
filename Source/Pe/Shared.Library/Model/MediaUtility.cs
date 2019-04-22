@@ -114,6 +114,16 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
             return value;
         }
 
+        public static Color AddColor(Color baseColor, Color plusColor)
+        {
+            return Color.FromArgb(
+                baseColor.A,
+                (byte)(baseColor.R + (plusColor.R - baseColor.R) * (plusColor.A / 255.0)),
+                (byte)(baseColor.G + (plusColor.G - baseColor.G) * (plusColor.A / 255.0)),
+                (byte)(baseColor.B + (plusColor.B - baseColor.B) * (plusColor.A / 255.0))
+            );
+        }
+
         /// <summary>
         /// 指定ビットマップソースから全ピクセル情報を取得。
         /// </summary>
