@@ -37,9 +37,9 @@
   <Window.Visibility>
     <Binding Path="IsVisible" Converter="{StaticResource BooleanToVisibilityConverter}"/>
   </Window.Visibility>
-  <!--<Window.CommandBindings>
-    <CommandBinding Command="{x:Static SystemCommands.CloseWindowCommand}" CanExecute="{Binding CloseCommand.CanExecute}" Executed="{Binding CloseCommand.Execute}" />
-  </Window.CommandBindings>-->
+  <Window.CommandBindings>
+    <CommandBinding Command="{x:Static SystemCommands.CloseWindowCommand}" CanExecute="CloseWindowCommand_CanExecute" Executed="CloseWindowCommand_Executed" />
+  </Window.CommandBindings>
   <Grid>
     <Border BorderBrush="Red" BorderThickness="10">
       <Grid>
@@ -54,14 +54,14 @@
               <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />
             </Style>
           </Grid.Resources>
-          
+
           <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto"/>
           </Grid.ColumnDefinitions>
-          
+
           <TextBlock Grid.Column="0" Text="{Binding Title, ElementName=root}" />
           <Button Grid.Column="1" Style="{StaticResource CaptionButton}" Content="_" />
           <Button Grid.Column="2" Style="{StaticResource CaptionButton}" Content="T" />

@@ -47,5 +47,14 @@ namespace ContentTypeTextNet.Pe.Main.View.Note
 
         #endregion
 
+        private void CloseWindowCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
+        private void CloseWindowCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            SystemCommands.CloseWindow(this);
+        }
     }
 }
