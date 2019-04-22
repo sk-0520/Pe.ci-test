@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Threading;
 using ContentTypeTextNet.Library.PInvoke.Windows;
@@ -31,6 +32,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
         double _windowWidth;
         double _windowHeight;
 
+        bool _titleEditMode;
+        string _editingTile;
+
         #endregion
 
         public NoteViewModel(NoteElement model, INoteTheme noteTheme, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
@@ -49,6 +53,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
             PropertyChangedHooker.AddHook(nameof(Model.IsTopmost), nameof(IsTopmost));
             PropertyChangedHooker.AddHook(nameof(Model.IsCompact), nameof(IsCompact));
             PropertyChangedHooker.AddHook(nameof(Model.IsLocked), nameof(IsLocked));
+            PropertyChangedHooker.AddHook(nameof(Model.Title), nameof(Title));
         }
 
 
@@ -61,6 +66,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
         PropertyChangedHooker PropertyChangedHooker { get; }
 
         IDpiScaleOutputor DpiScaleOutputor { get; set; }
+        IDisposable WindowHandleSource { get; set; }
 
         DispatcherTimer WindowAreaChangedTimer { get; }
 
@@ -113,6 +119,19 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
             }
         }
 
+        public bool TitleEditMode
+        {
+            get => this._titleEditMode;
+            set => SetProperty(ref this._titleEditMode, value);
+        }
+        public string EditingTitle
+        {
+            get => this._editingTile;
+            set => SetProperty(ref this._editingTile, value);
+        }
+
+        public string Title => Model.Title;
+
         public double CaptionHeight => NoteTheme.GetCaptionHeight();
         public Brush BorderBrush => NoteTheme.GetBorderBrush(ColorPair.Create(Model.ForegroundColor, Model.BackgroundColor));
         public Thickness BorderThickness => NoteTheme.GetBorderThickness();
@@ -156,6 +175,20 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
                 Model.SwitchTopmost();
             }
         ));
+
+        public ICommand CancelTitleEditCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                TitleEditMode = false;
+                EditingTitle = string.Empty;
+            }
+        ));
+        public ICommand SaveTitleEditCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                TitleEditMode = false;
+                Model.ChangeTitle(EditingTitle);
+            }
+        ));
+
 
         #endregion
 
@@ -300,6 +333,21 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
             Model.ChangeViewArea(viewAreaChangeTargets, location, size);
         }
 
+        private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        {
+            switch(msg) {
+                case (int)WM.WM_NCLBUTTONDBLCLK:
+                    if(WindowsUtility.ConvertHTFromWParam(wParam) == HT.HTCAPTION) {
+                        EditingTitle = Title;
+                        TitleEditMode = true;
+                    }
+                    break;
+
+                default:
+                    break;
+            }
+            return IntPtr.Zero;
+        }
 
         #endregion
 
@@ -310,6 +358,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
             // 各ディスプレイのDPIで事故らないように原点をディスプレイへ移動してウィンドウ位置・サイズをいい感じに頑張る
             var hWnd = HandleUtility.GetWindowHandle(window);
             NativeMethods.SetWindowPos(hWnd, new IntPtr((int)HWND.HWND_TOP), (int)Model.DockScreen.DeviceBounds.X, (int)Model.DockScreen.DeviceBounds.Y, 0, 0, SWP.SWP_NOSIZE);
+
+            // タイトルバーのダブルクリックを拾う必要がある
+            var hWndSource = HwndSource.FromHwnd(hWnd);
+            hWndSource.AddHook(WndProc);
+            WindowHandleSource = hWndSource;
 
             DpiScaleOutputor = window as IDpiScaleOutputor ?? new EmptyDpiScaleOutputor();
 

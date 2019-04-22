@@ -27,6 +27,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             public static string IsCompact { get; } = "IsCompact";
             public static string IsTopmost { get; } = "IsTopmost";
             public static string IsLocked { get; } = "IsLocked";
+            public static string Title { get; } = "Title";
 
             #endregion
         }
@@ -129,6 +130,15 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             var param = databaseCommonStatus.CreateCommonDtoMapping();
             param[Column.NoteId] = noteId;
             param[Column.IsTopmost] = isTopmost;
+            return Commander.Execute(sql, param) == 1;
+        }
+
+        public bool UpdateTitle(Guid noteId, string title, IDatabaseCommonStatus databaseCommonStatus)
+        {
+            var sql = StatementLoader.LoadStatementByCurrent();
+            var param = databaseCommonStatus.CreateCommonDtoMapping();
+            param[Column.NoteId] = noteId;
+            param[Column.Title] = title;
             return Commander.Execute(sql, param) == 1;
         }
 

@@ -34,6 +34,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
         bool _isCompact;
         bool _isLocked;
         bool _textWrap;
+        string _title;
         Screen _dockScreen;
 
         NoteLayoutKind _noteLayoutKind;
@@ -102,6 +103,11 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
         {
             get => this._textWrap;
             private set => SetProperty(ref this._textWrap, value);
+        }
+        public string Title
+        {
+            get => this._title;
+            private set => SetProperty(ref this._title, value);
         }
 
         public NoteLayoutKind LayoutKind
@@ -252,6 +258,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
             IsCompact = noteData.IsCompact;
             IsTopmost = noteData.IsTopmost;
             TextWrap = noteData.TextWrap;
+            Title = noteData.Title;
             LayoutKind = noteData.LayoutKind;
             ContentKind = noteData.ContentKind;
             ForegroundColor = noteData.ForegdoundColor;
@@ -272,6 +279,15 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
             MainDatabaseLazyWriter.Stock(c => {
                 var notesEntityDao = new NotesEntityDao(c, StatementLoader, c.Implementation, Logger.Factory);
                 notesEntityDao.UpdateTopmost(NoteId, IsTopmost, DatabaseCommonStatus.CreateCurrentAccount());
+            }, UniqueKeyPool.Get());
+        }
+
+        public void ChangeTitle(string editingTitle)
+        {
+            Title = editingTitle;
+            MainDatabaseLazyWriter.Stock(c => {
+                var notesEntityDao = new NotesEntityDao(c, StatementLoader, c.Implementation, Logger.Factory);
+                notesEntityDao.UpdateTitle(NoteId, Title, DatabaseCommonStatus.CreateCurrentAccount());
             }, UniqueKeyPool.Get());
         }
 

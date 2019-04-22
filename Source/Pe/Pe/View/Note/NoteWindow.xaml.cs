@@ -62,5 +62,14 @@ namespace ContentTypeTextNet.Pe.Main.View.Note
         {
             SystemCommands.CloseWindow(this);
         }
+
+        private void Title_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if((bool)e.NewValue) {
+                var textbox = (TextBox)sender;
+                textbox.SelectAll();
+                textbox.Focus();
+            }
+        }
     }
 }
