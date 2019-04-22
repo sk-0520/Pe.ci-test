@@ -34,7 +34,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Designer
         #endregion
     }
 
-    public class LauncherToolbarTheme : ThemeBase, ILauncherToolbarTheme
+    internal class LauncherToolbarTheme : ThemeBase, ILauncherToolbarTheme
     {
         public LauncherToolbarTheme(IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
             : base(dispatcherWapper, loggerFactory)

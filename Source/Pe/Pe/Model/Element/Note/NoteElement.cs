@@ -33,10 +33,14 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
         bool _isTopmost;
         bool _isCompact;
         bool _isLocked;
+        bool _textWrap;
         Screen _dockScreen;
 
         NoteLayoutKind _noteLayoutKind;
         NoteContentKind _noteContentKind;
+
+        Color _foregroundColor;
+        Color _backegroundColor;
 
         #endregion
 
@@ -89,6 +93,11 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
             get => this._isLocked;
             private set => SetProperty(ref this._isLocked, value);
         }
+        public bool TextWrap
+        {
+            get => this._textWrap;
+            private set => SetProperty(ref this._textWrap, value);
+        }
 
         public NoteLayoutKind LayoutKind
         {
@@ -101,6 +110,16 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
             private set => SetProperty(ref this._noteContentKind, value);
         }
 
+        public Color ForegroundColor
+        {
+            get => this._foregroundColor;
+            private set => SetProperty(ref this._foregroundColor, value);
+        }
+        public Color BackgroundColor
+        {
+            get => this._backegroundColor;
+            private set => SetProperty(ref this._backegroundColor, value);
+        }
 
         /// <summary>
         /// 表示されているか。
@@ -227,8 +246,20 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
             IsVisible = noteData.IsVisible;
             IsCompact = noteData.IsCompact;
             IsTopmost = noteData.IsTopmost;
+            TextWrap = noteData.TextWrap;
             LayoutKind = noteData.LayoutKind;
             ContentKind = noteData.ContentKind;
+            ForegroundColor = noteData.ForegdoundColor;
+            BackgroundColor = noteData.BackgroundColor;
+        }
+
+        public void SwitchCompact()
+        {
+            IsCompact = !IsCompact;
+        }
+        public void SwitchTopmost()
+        {
+            IsTopmost = !IsTopmost;
         }
 
         #endregion

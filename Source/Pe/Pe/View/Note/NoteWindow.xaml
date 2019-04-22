@@ -11,6 +11,7 @@
   Height="{Binding WindowHeight, Mode=TwoWay}"
   AllowsTransparency="True"
   WindowStyle="None"
+  Topmost="{Binding IsTopmost}"
 
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   mc:Ignorable="d"
@@ -41,14 +42,14 @@
     <CommandBinding Command="{x:Static SystemCommands.CloseWindowCommand}" CanExecute="CloseWindowCommand_CanExecute" Executed="CloseWindowCommand_Executed" />
   </Window.CommandBindings>
   <Grid>
-    <Border BorderBrush="Red" BorderThickness="10">
+    <Border BorderBrush="{Binding BorderBrush}" BorderThickness="{Binding BorderThickness}">
       <Grid>
         <Grid.RowDefinitions>
           <RowDefinition Height="20" />
           <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0" Background="Yellow">
+        <Grid Grid.Row="0" Background="{Binding CaptionBackground.Data}">
           <Grid.Resources>
             <Style x:Key="CaptionButton" TargetType="ButtonBase">
               <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />
@@ -62,26 +63,46 @@
             <ColumnDefinition Width="Auto"/>
           </Grid.ColumnDefinitions>
 
-          <TextBlock Grid.Column="0" Text="{Binding Title, ElementName=root}" />
-          <Button Grid.Column="1" Style="{StaticResource CaptionButton}" Content="_" />
-          <Button Grid.Column="2" Style="{StaticResource CaptionButton}" Content="T" />
-          <Button Grid.Column="3" Style="{StaticResource CaptionButton}" Content="X" Command="{x:Static SystemCommands.CloseWindowCommand}" CommandParameter="{Binding ElementName=root}" />
+          <TextBlock Grid.Column="0" Text="{Binding Title, ElementName=root}" Foreground="{Binding CaptionForeground.Data}" />
+          <Button Grid.Column="1" Command="{Binding SwitchCompactCommand}">
+            <Button.Style>
+              <Style TargetType="Button" BasedOn="{StaticResource CaptionButton}">
+                <Style.Triggers>
+                  <DataTrigger Binding="{Binding IsCompact}" Value="True">
+                    <Setter Property="Content" Value="{Binding CaptionCompactEnabledImage}" />
+                  </DataTrigger>
+                </Style.Triggers>
+                <Setter Property="Content" Value="{Binding CaptionCompactDisabledImage}" />
+              </Style>
+            </Button.Style>
+          </Button>
+          <Button Grid.Column="2" Command="{Binding SwitchTopmostCommand}">
+            <Button.Style>
+              <Style TargetType="Button" BasedOn="{StaticResource CaptionButton}">
+                <Style.Triggers>
+                  <DataTrigger Binding="{Binding IsTopmost}" Value="True">
+                    <Setter Property="Content" Value="{Binding CaptionTopmostEnabledImage}" />
+                  </DataTrigger>
+                </Style.Triggers>
+                <Setter Property="Content" Value="{Binding CaptionTopmostDisabledImage}" />
+              </Style>
+            </Button.Style>
+          </Button>
+          <Button Grid.Column="3" Style="{StaticResource CaptionButton}" Content="{Binding CaptionCloseImage}" Command="{x:Static SystemCommands.CloseWindowCommand}" CommandParameter="{Binding ElementName=root}" />
         </Grid>
 
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="1" Background="{Binding ContentBackground}">
           <Grid x:Name="content">
 
           </Grid>
         </Grid>
       </Grid>
     </Border>
-    <Border
-      Background="Green"
-      Width="20"
-      Height="20"
+    <ContentControl
       VerticalAlignment="Bottom"
       HorizontalAlignment="Right"
       WindowChrome.ResizeGripDirection="BottomRight"
+      Content="{Binding ResizeGripImage.Data}"
     />
 
 

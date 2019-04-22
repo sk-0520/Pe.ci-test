@@ -25,7 +25,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Designer
         #endregion
     }
 
-    public class LauncherGroupTheme : ThemeBase, ILauncherGroupTheme
+    internal class LauncherGroupTheme : ThemeBase, ILauncherGroupTheme
     {
         public LauncherGroupTheme(IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
             : base(dispatcherWapper, loggerFactory)

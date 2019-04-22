@@ -36,6 +36,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
             : base(model, loggerFactory)
         {
             NoteTheme = noteTheme;
+            DispatcherWapper = dispatcherWapper;
+
+            CaptionForeground = new SimpleDataViewModel<Brush>(Logger.Factory);
+            CaptionBackground = new SimpleDataViewModel<Brush>(Logger.Factory);
+            ResizeGripWidth = new SimpleDataViewModel<double>(Logger.Factory);
+            ResizeGripHeight = new SimpleDataViewModel<double>(Logger.Factory);
+            ResizeGripImage = new SimpleDataViewModel<DependencyObject>(Logger.Factory);
 
             PropertyChangedHooker = new PropertyChangedHooker(dispatcherWapper, Logger.Factory);
             PropertyChangedHooker.AddHook(nameof(Model.IsVisible), nameof(IsVisible));
@@ -47,7 +54,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
         #region property
 
         INoteTheme NoteTheme { get; }
-
+        IDispatcherWapper DispatcherWapper { get; }
         PropertyChangedHooker PropertyChangedHooker { get; }
 
         public bool IsVisible => Model.IsVisible;
@@ -77,12 +84,34 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
             set => SetProperty(ref this._windowHeight, value);
         }
 
+        public double CaptionHeight => NoteTheme.GetCaptionHeight();
+        public Brush BorderBrush => NoteTheme.GetBorderBrush(ColorPair.Create(Model.ForegroundColor, Model.BackgroundColor));
+        public Thickness BorderThickness => NoteTheme.GetBorderThickness();
+        public SimpleDataViewModel<Brush> CaptionForeground { get; }
+        public SimpleDataViewModel<Brush> CaptionBackground { get; }
+        public Brush ContentBackground => NoteTheme.GetContentBrush(ColorPair.Create(Model.ForegroundColor, Model.BackgroundColor));
+        public SimpleDataViewModel<double> ResizeGripWidth { get; }
+        public SimpleDataViewModel<double> ResizeGripHeight { get; }
+        public SimpleDataViewModel<DependencyObject> ResizeGripImage { get; }
+
+        public DependencyObject CaptionCompactEnabledImage => NoteTheme.GetCaptionImage(NoteCaption.Compact, true, ColorPair.Create(Model.ForegroundColor, Model.BackgroundColor));
+        public DependencyObject CaptionCompactDisabledImage => NoteTheme.GetCaptionImage(NoteCaption.Compact, false, ColorPair.Create(Model.ForegroundColor, Model.BackgroundColor));
+        public DependencyObject CaptionTopmostEnabledImage => NoteTheme.GetCaptionImage(NoteCaption.Topmost, true, ColorPair.Create(Model.ForegroundColor, Model.BackgroundColor));
+        public DependencyObject CaptionTopmostDisabledImage => NoteTheme.GetCaptionImage(NoteCaption.Topmost, false, ColorPair.Create(Model.ForegroundColor, Model.BackgroundColor));
+
+        public DependencyObject CaptionCloseImage => NoteTheme.GetCaptionImage(NoteCaption.Close, false, ColorPair.Create(Model.ForegroundColor, Model.BackgroundColor));
         #endregion
 
         #region command
 
-        public ICommand CloseCommand => GetOrCreateCommand(() => new DelegateCommand(
+        public ICommand SwitchCompactCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
+                Model.SwitchCompact();
+            }
+        ));
+        public ICommand SwitchTopmostCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                Model.SwitchTopmost();
             }
         ));
 
@@ -162,6 +191,31 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
             WindowHeight = layout.Height;
         }
 
+        void ApplyCaptionBrush()
+        {
+            DispatcherWapper.Invoke(() => {
+                var pair = NoteTheme.GetCaptionBrush(ColorPair.Create(Model.ForegroundColor, Model.BackgroundColor));
+                CaptionForeground.Data = pair.Foreground;
+                CaptionBackground.Data = pair.Background;
+            });
+        }
+
+        void ApplyResizeGrip()
+        {
+            /*
+            var size = NoteTheme.GetResizeGripSize();
+            ResizeGripWidth.Data = size.Width;
+            ResizeGripHeight.Data = size.Height;
+            */
+            ResizeGripImage.Data = NoteTheme.GetResizeGripImage(ColorPair.Create(Model.ForegroundColor, Model.BackgroundColor));
+        }
+
+        void ApplyTheme()
+        {
+            ApplyCaptionBrush();
+            ApplyResizeGrip();
+        }
+
         #endregion
 
         #region IViewLifecycleReceiver
@@ -177,6 +231,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
                 Model.SaveLayout(layoutValue.layout);
             }
             SetLayout(layoutValue.layout, window);
+
+            ApplyTheme();
         }
 
         public void ReceiveViewLoaded(Window window)
@@ -202,6 +258,28 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
         }
 
         #endregion
+
+        #region SingleModelViewModelBase
+
+        protected override void AttachModelEventsImpl()
+        {
+            base.AttachModelEventsImpl();
+
+            Model.PropertyChanged += Model_PropertyChanged;
+        }
+
+        protected override void DetachModelEventsImpl()
+        {
+            base.DetachModelEventsImpl();
+
+            Model.PropertyChanged -= Model_PropertyChanged;
+        }
+
+        #endregion
+        private void Model_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            PropertyChangedHooker.Execute(e, RaisePropertyChanged);
+        }
 
     }
 }
