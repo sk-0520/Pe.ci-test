@@ -37,7 +37,9 @@
   <Window.Visibility>
     <Binding Path="IsVisible" Converter="{StaticResource BooleanToVisibilityConverter}"/>
   </Window.Visibility>
-
+  <!--<Window.CommandBindings>
+    <CommandBinding Command="{x:Static SystemCommands.CloseWindowCommand}" CanExecute="{Binding CloseCommand.CanExecute}" Executed="{Binding CloseCommand.Execute}" />
+  </Window.CommandBindings>-->
   <Grid>
     <Border BorderBrush="Red" BorderThickness="10">
       <Grid>
@@ -47,16 +49,23 @@
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0" Background="Yellow">
+          <Grid.Resources>
+            <Style x:Key="CaptionButton" TargetType="ButtonBase">
+              <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />
+            </Style>
+          </Grid.Resources>
+          
           <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto"/>
           </Grid.ColumnDefinitions>
+          
           <TextBlock Grid.Column="0" Text="{Binding Title, ElementName=root}" />
-          <Button Grid.Column="1" Content="_" />
-          <Button Grid.Column="2" Content="T" />
-          <Button Grid.Column="3" Content="X" />
+          <Button Grid.Column="1" Style="{StaticResource CaptionButton}" Content="_" />
+          <Button Grid.Column="2" Style="{StaticResource CaptionButton}" Content="T" />
+          <Button Grid.Column="3" Style="{StaticResource CaptionButton}" Content="X" Command="{x:Static SystemCommands.CloseWindowCommand}" CommandParameter="{Binding ElementName=root}" />
         </Grid>
 
         <Grid Grid.Row="1">

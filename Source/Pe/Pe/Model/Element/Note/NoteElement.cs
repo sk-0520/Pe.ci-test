@@ -32,6 +32,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
         bool _isVisible;
         bool _isTopmost;
         bool _isCompact;
+        bool _isLocked;
         Screen _dockScreen;
 
         NoteLayoutKind _noteLayoutKind;
@@ -82,6 +83,11 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
         {
             get => this._isCompact;
             private set => SetProperty(ref this._isCompact, value);
+        }
+        public bool IsLocked
+        {
+            get => this._isLocked;
+            private set => SetProperty(ref this._isLocked, value);
         }
 
         public NoteLayoutKind LayoutKind

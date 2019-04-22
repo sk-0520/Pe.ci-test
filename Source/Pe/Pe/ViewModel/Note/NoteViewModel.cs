@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media;
 using ContentTypeTextNet.Library.PInvoke.Windows;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Compatibility.Windows;
@@ -16,6 +17,7 @@ using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Element.Note;
 using ContentTypeTextNet.Pe.Main.Model.Note;
 using ContentTypeTextNet.Pe.Main.Model.Theme;
+using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
 {
@@ -30,20 +32,29 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
 
         #endregion
 
-        public NoteViewModel(NoteElement model, INoteTheme noteTheme, ILoggerFactory loggerFactory)
+        public NoteViewModel(NoteElement model, INoteTheme noteTheme, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         {
             NoteTheme = noteTheme;
+
+            PropertyChangedHooker = new PropertyChangedHooker(dispatcherWapper, Logger.Factory);
+            PropertyChangedHooker.AddHook(nameof(Model.IsVisible), nameof(IsVisible));
+            PropertyChangedHooker.AddHook(nameof(Model.IsTopmost), nameof(IsTopmost));
+            PropertyChangedHooker.AddHook(nameof(Model.IsCompact), nameof(IsCompact));
+            PropertyChangedHooker.AddHook(nameof(Model.IsLocked), nameof(IsLocked));
         }
 
         #region property
 
         INoteTheme NoteTheme { get; }
 
+        PropertyChangedHooker PropertyChangedHooker { get; }
+
         public bool IsVisible => Model.IsVisible;
 
         public bool IsTopmost => Model.IsTopmost;
         public bool IsCompact => Model.IsCompact;
+        public bool IsLocked => Model.IsLocked;
 
         public double WindowLeft
         {
@@ -69,6 +80,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
         #endregion
 
         #region command
+
+        public ICommand CloseCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+            }
+        ));
+
         #endregion
 
         #region function
