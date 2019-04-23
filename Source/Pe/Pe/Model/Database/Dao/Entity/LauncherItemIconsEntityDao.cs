@@ -35,12 +35,12 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
         {
             var iconScaleTransfer = new EnumTransfer<IconScale>();
 
-            var sql = StatementLoader.LoadStatementByCurrent();
+            var statement = StatementLoader.LoadStatementByCurrent();
             var param = new {
                 LauncherItemId = launcherItemId,
                 IconScale = iconScaleTransfer.ToText(iconScale),
             };
-            var rows = Commander.Query<byte[]>(sql, param);
+            var rows = Commander.Query<byte[]>(statement, param);
             if(rows != null) {
                 return rows.ToArray();
             }
@@ -52,7 +52,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
         {
             var iconScaleTransfer = new EnumTransfer<IconScale>();
 
-            var sql = StatementLoader.LoadStatementByCurrent();
+            var statement = StatementLoader.LoadStatementByCurrent();
             var binaryImageItems = imageBinary.GroupSplit(80 * 1024).ToArray();
             var dto = new LauncherItemIconsDto() {
                 LauncherItemId = launcherItemId,
@@ -63,7 +63,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
                 commonStatus.WriteCreate(dto);
                 dto.Sequence = i;
                 dto.Image = binaryImageItems[i].ToArray();
-                resultCount += Commander.Execute(sql, dto);
+                resultCount += Commander.Execute(statement, dto);
             }
 
             return resultCount;
@@ -73,12 +73,12 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
         {
             var iconScaleTransfer = new EnumTransfer<IconScale>();
 
-            var sql = StatementLoader.LoadStatementByCurrent();
+            var statement = StatementLoader.LoadStatementByCurrent();
             var param = new {
                 LauncherItemId = launcherItemId,
                 IconScale = iconScaleTransfer.ToText(iconScale),
             };
-            return Commander.Execute(sql, param);
+            return Commander.Execute(statement, param);
         }
 
         #endregion

@@ -11,7 +11,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
     /// </summary>
     public interface IDatabaseImplementation
     {
-        #region
+        #region property
 
         /// <summary>
         /// DDLのトランザクションが有効か。
@@ -58,11 +58,11 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
         ;
 
         /// <summary>
-        /// SQL 実行前に実行する SQL に対して変換処理を実行。
+        /// 文実行前に実行する文に対して変換処理を実行。
         /// </summary>
-        /// <param name="sql"></param>
+        /// <param name="statement"></param>
         /// <returns></returns>
-        string PreFormatSql(string sql);
+        string PreFormatStatement(string statement);
 
         #endregion
     }
@@ -137,7 +137,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
             return IsNull(value.Value);
         }
 
-        public virtual string PreFormatSql(string sql) => sql;
+        public virtual string PreFormatStatement(string statement) => statement;
 
 
         #endregion

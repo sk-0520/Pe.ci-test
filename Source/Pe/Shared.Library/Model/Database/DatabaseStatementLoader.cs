@@ -46,7 +46,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
 
         #region property
 
-        ILogger Logger { get; }
+         protected ILogger Logger { get; }
 
         #endregion
 

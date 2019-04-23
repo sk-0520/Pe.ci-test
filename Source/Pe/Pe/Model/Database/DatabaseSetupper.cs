@@ -111,8 +111,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database
 
         bool ExistsVersionTable(IDatabaseAccessor mainAccessor)
         {
-            var sql = StatementLoader.LoadStatementByCurrent();
-            return mainAccessor.Query<bool>(sql, null, false).FirstOrDefault();
+            var statement = StatementLoader.LoadStatementByCurrent();
+            return mainAccessor.Query<bool>(statement, null, false).FirstOrDefault();
         }
 
         public Version GetLastVersion(IDatabaseAccessor mainAccessor)
@@ -122,8 +122,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database
                 return null;
             }
 
-            var sql = StatementLoader.LoadStatementByCurrent();
-            return mainAccessor.Query<Version>(sql, null, false).FirstOrDefault();
+            var statement = StatementLoader.LoadStatementByCurrent();
+            return mainAccessor.Query<Version>(statement, null, false).FirstOrDefault();
         }
 
         #endregion

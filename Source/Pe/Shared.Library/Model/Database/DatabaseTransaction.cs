@@ -53,7 +53,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
 
         public DatabaseTransaction(IDatabaseAccessor databaseAccessor, IsolationLevel isolationLevel)
         {
-            DatabaseAccessor = DatabaseAccessor;
+            DatabaseAccessor = databaseAccessor;
             Transaction = DatabaseAccessor.BaseConnection.BeginTransaction(isolationLevel);
         }
 
@@ -79,39 +79,39 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
             Transaction.Rollback();
         }
 
-        public IEnumerable<T> Query<T>(string sql, object param = null, bool buffered = true)
+        public IEnumerable<T> Query<T>(string statement, object parameter = null, bool buffered = true)
         {
-            return DatabaseAccessor.Query<T>(sql, param, this, buffered);
+            return DatabaseAccessor.Query<T>(statement, parameter, this, buffered);
         }
 
-        public IEnumerable<dynamic> Query(string sql, object param = null, bool buffered = true)
+        public IEnumerable<dynamic> Query(string statement, object parameter = null, bool buffered = true)
         {
-            return DatabaseAccessor.Query(sql, param, this, buffered);
+            return DatabaseAccessor.Query(statement, parameter, this, buffered);
         }
 
-        public T QueryFirst<T>(string sql, object param = null)
+        public T QueryFirst<T>(string statement, object parameter = null)
         {
-            return DatabaseAccessor.QueryFirst<T>(sql, param, this);
+            return DatabaseAccessor.QueryFirst<T>(statement, parameter, this);
         }
 
-        public T QueryFirstOrDefault<T>(string sql, object param = null)
+        public T QueryFirstOrDefault<T>(string statement, object parameter = null)
         {
-            return DatabaseAccessor.QueryFirstOrDefault<T>(sql, param, this);
+            return DatabaseAccessor.QueryFirstOrDefault<T>(statement, parameter, this);
         }
 
-        public T QuerySingle<T>(string sql, object param = null)
+        public T QuerySingle<T>(string statement, object parameter = null)
         {
-            return DatabaseAccessor.QuerySingle<T>(sql, param, this);
+            return DatabaseAccessor.QuerySingle<T>(statement, parameter, this);
         }
 
-        public int Execute(string sql, object param = null)
+        public int Execute(string statement, object parameter = null)
         {
-            return DatabaseAccessor.Execute(sql, param, this);
+            return DatabaseAccessor.Execute(statement, parameter, this);
         }
 
-        public DataTable GetDataTable(string sql, object param = null)
+        public DataTable GetDataTable(string statement, object parameter = null)
         {
-            return DatabaseAccessor.GetDataTable(sql, param, this);
+            return DatabaseAccessor.GetDataTable(statement, parameter, this);
         }
 
         #endregion

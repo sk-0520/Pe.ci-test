@@ -36,14 +36,14 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
 
         public bool InsertSimple(Guid launcherItemId, LauncherCommandData data, IDatabaseCommonStatus commonStatus)
         {
-            var sql = StatementLoader.LoadStatementByCurrent();
+            var statement = StatementLoader.LoadStatementByCurrent();
             var param = commonStatus.CreateCommonDtoMapping();
             param[Column.LauncherItemId] = launcherItemId;
             param[Column.Command] = data.Command;
             param[Column.Option] = data.Option;
             param[Column.WorkDirectory] = data.WorkDirectoryPath;
 
-            return Commander.Execute(sql, param) == 1;
+            return Commander.Execute(statement, param) == 1;
         }
 
         #endregion

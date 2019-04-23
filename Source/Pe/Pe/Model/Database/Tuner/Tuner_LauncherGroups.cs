@@ -28,17 +28,17 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Tuner
 
         bool ExistsRows(IDatabaseCommander commander)
         {
-            var sql = StatementLoader.LoadStatementByCurrent();
-            return commander.QuerySingle<bool>(sql, GetCommonDto());
+            var statement = StatementLoader.LoadStatementByCurrent();
+            return commander.QuerySingle<bool>(statement, GetCommonDto());
         }
 
         int InsertEmptyGroup(IDatabaseCommander commander)
         {
-            var sql = StatementLoader.LoadStatementByCurrent();
+            var statement = StatementLoader.LoadStatementByCurrent();
             var param = GetCommonDto();
             param["LauncherGroupId"] = IdFactory.CreateLauncherGroupId();
             param["Name"] = "@name";
-            return commander.Execute(sql, param);
+            return commander.Execute(statement, param);
         }
 
         protected override void TuneImpl(IDatabaseCommander commander)

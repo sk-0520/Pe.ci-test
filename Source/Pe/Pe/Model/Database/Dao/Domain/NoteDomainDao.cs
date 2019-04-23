@@ -34,11 +34,11 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Domain
 
         public IEnumerable<NoteScreenData> SelectNoteScreens(Guid noteId)
         {
-            var sql = StatementLoader.LoadStatementByCurrent();
+            var statement = StatementLoader.LoadStatementByCurrent();
             var param = new {
                 NoteId = noteId,
             };
-            return Commander.Query<NoteScreenRowDto>(sql, param)
+            return Commander.Query<NoteScreenRowDto>(statement, param)
                 .Select(i => ConvertFromDto(i))
             ;
         }

@@ -36,39 +36,39 @@ namespace ContentTypeTextNet.Pe.Main.Model.Applications
 
         #region IDatabaseTransaction
 
-        public int Execute(string sql, object param = null)
+        public int Execute(string statement, object param = null)
         {
-            return Transaction.Execute(sql, param);
+            return Transaction.Execute(statement, param);
         }
 
-        public DataTable GetDataTable(string sql, object param = null)
+        public DataTable GetDataTable(string statement, object param = null)
         {
-            return Transaction.GetDataTable(sql, param);
+            return Transaction.GetDataTable(statement, param);
         }
 
-        public IEnumerable<T> Query<T>(string sql, object param = null, bool buffered = true)
+        public IEnumerable<T> Query<T>(string statement, object param = null, bool buffered = true)
         {
-            return Transaction.Query<T>(sql, param, buffered);
+            return Transaction.Query<T>(statement, param, buffered);
         }
 
-        public IEnumerable<dynamic> Query(string sql, object param = null, bool buffered = true)
+        public IEnumerable<dynamic> Query(string statement, object param = null, bool buffered = true)
         {
-            return Transaction.Query(sql, param, buffered);
+            return Transaction.Query(statement, param, buffered);
         }
 
-        public T QueryFirst<T>(string sql, object param = null)
+        public T QueryFirst<T>(string statement, object param = null)
         {
-            return Transaction.QueryFirst<T>(sql, param);
+            return Transaction.QueryFirst<T>(statement, param);
         }
 
-        public T QueryFirstOrDefault<T>(string sql, object param = null)
+        public T QueryFirstOrDefault<T>(string statement, object param = null)
         {
-            return Transaction.QueryFirstOrDefault<T>(sql, param);
+            return Transaction.QueryFirstOrDefault<T>(statement, param);
         }
 
-        public T QuerySingle<T>(string sql, object param = null)
+        public T QuerySingle<T>(string statement, object param = null)
         {
-            return Transaction.QuerySingle<T>(sql, param);
+            return Transaction.QuerySingle<T>(statement, param);
         }
 
         public void Commit()

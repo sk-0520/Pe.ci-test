@@ -32,14 +32,14 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
 
         public void InsertNewTags(Guid launcherItemId, IEnumerable<string> tags, IDatabaseCommonStatus commonStatus)
         {
-            var sql = StatementLoader.LoadStatementByCurrent();
+            var statement = StatementLoader.LoadStatementByCurrent();
             foreach(var tag in tags) {
                 var dto = new LauncherTagsRowDto() {
                     LauncherItemId = launcherItemId,
                     TagName = tag,
                 };
                 commonStatus.WriteCommon(dto);
-                Commander.Execute(sql, dto);
+                Commander.Execute(statement, dto);
             }
         }
 

@@ -67,70 +67,70 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
 
         public LauncherToolbarsDisplayData SelectDisplayData(Guid launcherToolbarId)
         {
-            var sql = StatementLoader.LoadStatementByCurrent();
+            var statement = StatementLoader.LoadStatementByCurrent();
             var param = new {
                 LauncherToolbarId = launcherToolbarId,
             };
-            var dto = Commander.QuerySingle<LauncherToolbarsDisplayRowDto>(sql, param);
+            var dto = Commander.QuerySingle<LauncherToolbarsDisplayRowDto>(statement, param);
             var data = ConvertFromDto(dto);
             return data;
         }
 
         public bool InsertNewToolbar(Guid toolbarId, string screenName, IDatabaseCommonStatus commonStatus)
         {
-            var sql = StatementLoader.LoadStatementByCurrent();
+            var statement = StatementLoader.LoadStatementByCurrent();
 
             var param = commonStatus.CreateCommonDtoMapping();
             param[Column.LauncherToolbarId] = toolbarId;
             param[Column.ScreenName] = screenName;
 
-            return Commander.Execute(sql, param) == 1;
+            return Commander.Execute(statement, param) == 1;
         }
 
         public bool UpdateToolbarPosition(Guid launcherToolbarId, AppDesktopToolbarPosition toolbarPosition, IDatabaseCommonStatus commonStatus)
         {
             var toolbarPositionTransfer = new EnumTransfer<AppDesktopToolbarPosition>();
 
-            var sql = StatementLoader.LoadStatementByCurrent();
+            var statement = StatementLoader.LoadStatementByCurrent();
 
             var param = commonStatus.CreateCommonDtoMapping();
             param[Column.LauncherToolbarId] = launcherToolbarId;
             param[Column.PositionKind] = toolbarPositionTransfer.ToText(toolbarPosition);
 
-            return Commander.Execute(sql, param) == 1;
+            return Commander.Execute(statement, param) == 1;
         }
 
         public bool UpdatIsTopmost(Guid launcherToolbarId, bool isTopmost, IDatabaseCommonStatus commonStatus)
         {
-            var sql = StatementLoader.LoadStatementByCurrent();
+            var statement = StatementLoader.LoadStatementByCurrent();
 
             var param = commonStatus.CreateCommonDtoMapping();
             param[Column.LauncherToolbarId] = launcherToolbarId;
             param[Column.IsTopmost] = isTopmost;
 
-            return Commander.Execute(sql, param) == 1;
+            return Commander.Execute(statement, param) == 1;
         }
 
         public bool UpdatIsAutoHide(Guid launcherToolbarId, bool isAutoHide, DatabaseCommonStatus commonStatus)
         {
-            var sql = StatementLoader.LoadStatementByCurrent();
+            var statement = StatementLoader.LoadStatementByCurrent();
 
             var param = commonStatus.CreateCommonDtoMapping();
             param[Column.LauncherToolbarId] = launcherToolbarId;
             param[Column.IsAutoHide] = isAutoHide;
 
-            return Commander.Execute(sql, param) == 1;
+            return Commander.Execute(statement, param) == 1;
         }
 
         public bool UpdatIsVisible(Guid launcherToolbarId, bool isVisible, DatabaseCommonStatus commonStatus)
         {
-            var sql = StatementLoader.LoadStatementByCurrent();
+            var statement = StatementLoader.LoadStatementByCurrent();
 
             var param = commonStatus.CreateCommonDtoMapping();
             param[Column.LauncherToolbarId] = launcherToolbarId;
             param[Column.IsVisible] = isVisible;
 
-            return Commander.Execute(sql, param) == 1;
+            return Commander.Execute(statement, param) == 1;
         }
 
 

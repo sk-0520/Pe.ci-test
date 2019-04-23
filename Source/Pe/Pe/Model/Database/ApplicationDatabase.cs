@@ -112,11 +112,11 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database
             return value.Equals(GetNullValue(value.GetType()));
         }
 
-        public override string PreFormatSql(string sql)
+        public override string PreFormatStatement(string statement)
         {
             return string.Join(
                 Environment.NewLine,
-                TextUtility.ReadLines(sql)
+                TextUtility.ReadLines(statement)
                     .Select(s => s.Trim())
                     .SkipWhile(s => IsIgnoreStatement(s))
             );

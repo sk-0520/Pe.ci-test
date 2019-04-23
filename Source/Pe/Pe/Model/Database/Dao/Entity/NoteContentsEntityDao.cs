@@ -48,9 +48,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
 
         public bool InsertNewContent(NoteContentData data, IDatabaseCommonStatus databaseCommonStatus)
         {
-            var sql = StatementLoader.LoadStatementByCurrent();
+            var statement = StatementLoader.LoadStatementByCurrent();
             var param = ConvertFromData(data, databaseCommonStatus);
-            return Commander.Execute(sql, param) == 1;
+            return Commander.Execute(statement, param) == 1;
         }
 
         #endregion

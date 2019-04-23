@@ -37,11 +37,11 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Domain
 
         public LauncherIconData SelectIcon(Guid launcherItemId)
         {
-            var sql = StatementLoader.LoadStatementByCurrent();
+            var statement = StatementLoader.LoadStatementByCurrent();
             var param = new {
                 LauncherItemId = launcherItemId,
             };
-            var dto = Commander.QuerySingle<LauncherItemIconRowDto>(sql, param);
+            var dto = Commander.QuerySingle<LauncherItemIconRowDto>(statement, param);
             var data = ConvertFromDto(dto);
             return data;
         }

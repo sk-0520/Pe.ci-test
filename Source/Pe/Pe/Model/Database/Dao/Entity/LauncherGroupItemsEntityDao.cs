@@ -32,28 +32,28 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
 
         public long SelectMaxSort(Guid groupId)
         {
-            var sql = StatementLoader.LoadStatementByCurrent();
-            return Commander.QuerySingle<long>(sql, new { LauncherGroupId = groupId });
+            var statement = StatementLoader.LoadStatementByCurrent();
+            return Commander.QuerySingle<long>(statement, new { LauncherGroupId = groupId });
         }
 
         public IEnumerable<Guid> SelectAllLauncherGroupItemIds()
         {
-            var sql = StatementLoader.LoadStatementByCurrent();
-            return Commander.Query<Guid>(sql);
+            var statement = StatementLoader.LoadStatementByCurrent();
+            return Commander.Query<Guid>(statement);
         }
 
         public IEnumerable<Guid> SelectLauncherItemIds(Guid launcherGroupId)
         {
-            var sql = StatementLoader.LoadStatementByCurrent();
+            var statement = StatementLoader.LoadStatementByCurrent();
             var param = new {
                 LauncherGroupId = launcherGroupId,
             };
-            return Commander.Query<Guid>(sql, param);
+            return Commander.Query<Guid>(statement, param);
         }
 
         public void InsertNewItems(Guid groupId, IEnumerable<Guid> itemIds, long startSort, int sortStep, IDatabaseCommonStatus commonStatus)
         {
-            var sql = StatementLoader.LoadStatementByCurrent();
+            var statement = StatementLoader.LoadStatementByCurrent();
             var counter = 0;
             foreach(var itemId in itemIds) {
                 var dto = new LauncherGroupItemsRowDto() {
@@ -62,7 +62,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
                     Sort = startSort + (sortStep * (counter++)),
                 };
                 commonStatus.WriteCommon(dto);
-                Commander.Execute(sql, dto);
+                Commander.Execute(statement, dto);
             }
         }
 

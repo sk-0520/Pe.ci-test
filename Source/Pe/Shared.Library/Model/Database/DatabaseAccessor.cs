@@ -19,24 +19,24 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
         /// 指定の型で問い合わせ。
         /// </summary>
         /// <typeparam name="T">問い合わせ型</typeparam>
-        /// <param name="sql">データベース文。</param>
-        /// <param name="param"><paramref name="sql"/>に対するパラメータ。</param>
-        /// <param name="buffered"><see cref="Dapper.SqlMapper.Query"/>のbufferd</param>
+        /// <parameter name="statement">データベース文。</parameter>
+        /// <parameter name="parameter"><paramref name="statement"/>に対するパラメータ。</parameter>
+        /// <parameter name="buffered"><see cref="Dapper.SqlMapper.Query"/>のbufferd</parameter>
         /// <returns></returns>
-        IEnumerable<T> Query<T>(string sql, object param = null, bool buffered = true);
+        IEnumerable<T> Query<T>(string statement, object parameter = null, bool buffered = true);
 
-        IEnumerable<dynamic> Query(string sql, object param = null, bool buffered = true);
+        IEnumerable<dynamic> Query(string statement, object parameter = null, bool buffered = true);
 
-        T QueryFirst<T>(string sql, object param = null);
-        T QueryFirstOrDefault<T>(string sql, object param = null);
-        T QuerySingle<T>(string sql, object param = null);
+        T QueryFirst<T>(string statement, object parameter = null);
+        T QueryFirstOrDefault<T>(string statement, object parameter = null);
+        T QuerySingle<T>(string statement, object parameter = null);
 
-        DataTable GetDataTable(string sql, object param = null);
+        DataTable GetDataTable(string statement, object parameter = null);
     }
 
     public interface IDatabaseWriter
     {
-        int Execute(string sql, object param = null);
+        int Execute(string statement, object parameter = null);
     }
 
     /// <summary>
@@ -56,15 +56,15 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
 
         #region function
 
-        IEnumerable<T> Query<T>(string sql, object param, IDatabaseTransaction transaction, bool buffered);
-        IEnumerable<dynamic> Query(string sql, object param, IDatabaseTransaction transaction, bool buffered);
+        IEnumerable<T> Query<T>(string statement, object parameter, IDatabaseTransaction transaction, bool buffered);
+        IEnumerable<dynamic> Query(string statement, object parameter, IDatabaseTransaction transaction, bool buffered);
 
-        T QueryFirst<T>(string sql, object param, IDatabaseTransaction transaction);
-        T QueryFirstOrDefault<T>(string sql, object param, IDatabaseTransaction transaction);
-        T QuerySingle<T>(string sql, object param, IDatabaseTransaction transaction);
+        T QueryFirst<T>(string statement, object parameter, IDatabaseTransaction transaction);
+        T QueryFirstOrDefault<T>(string statement, object parameter, IDatabaseTransaction transaction);
+        T QuerySingle<T>(string statement, object parameter, IDatabaseTransaction transaction);
 
-        int Execute(string sql, object param, IDatabaseTransaction transaction);
-        DataTable GetDataTable(string sql, object param, IDatabaseTransaction transaction);
+        int Execute(string statement, object parameter, IDatabaseTransaction transaction);
+        DataTable GetDataTable(string statement, object parameter, IDatabaseTransaction transaction);
 
         IDatabaseTransaction BeginTransaction();
         IDatabaseTransaction BeginTransaction(IsolationLevel isolationLevel);
@@ -119,7 +119,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
 
         #region function
 
-        protected virtual IResultFailureValue<Exception> BatchCore(Func<IDatabaseTransaction> transactionCreator, Func<IDatabaseCommander, bool> function)
+        protected virtual IResultFailureValue<Exception> BatchImpl(Func<IDatabaseTransaction> transactionCreator, Func<IDatabaseCommander, bool> function)
         {
             var transaction = transactionCreator();
             try {
@@ -136,6 +136,11 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
             }
         }
 
+        protected virtual void LoggingStatement(string statement, object parameter)
+        {
+            Logger.Trace(statement, parameter);
+        }
+
         #endregion
 
         #region IDatabaseAccessor
@@ -144,98 +149,92 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
 
         public virtual IDbConnection BaseConnection => LazyConnection.Value;
 
-        public virtual IEnumerable<T> Query<T>(string sql, object param, IDatabaseTransaction transaction, bool buffered)
+        public virtual IEnumerable<T> Query<T>(string statement, object parameter, IDatabaseTransaction transaction, bool buffered)
         {
-            var formattedSql = Implementation.PreFormatSql(sql);
-
-            Logger.Trace(formattedSql, param);
-            return BaseConnection.Query<T>(formattedSql, param, transaction?.Transaction, buffered);
+            var formattedStatement = Implementation.PreFormatStatement(statement);
+            LoggingStatement(formattedStatement, parameter);
+            return BaseConnection.Query<T>(formattedStatement, parameter, transaction?.Transaction, buffered);
         }
 
-        public IEnumerable<T> Query<T>(string sql, object param = null, bool buffered = true)
+        public IEnumerable<T> Query<T>(string statement, object parameter = null, bool buffered = true)
         {
-            return Query<T>(sql, param, null, buffered);
+            return Query<T>(statement, parameter, null, buffered);
         }
 
-        public virtual IEnumerable<dynamic> Query(string sql, object param, IDatabaseTransaction transaction, bool buffered)
+        public virtual IEnumerable<dynamic> Query(string statement, object parameter, IDatabaseTransaction transaction, bool buffered)
         {
-            var formattedSql = Implementation.PreFormatSql(sql);
-
-            Logger.Trace(formattedSql, param);
-            return BaseConnection.Query(formattedSql, param, transaction?.Transaction, buffered);
+            var formattedStatement = Implementation.PreFormatStatement(statement);
+            LoggingStatement(formattedStatement, parameter);
+            return BaseConnection.Query(formattedStatement, parameter, transaction?.Transaction, buffered);
         }
 
-        public IEnumerable<dynamic> Query(string sql, object param = null, bool buffered = true)
+        public IEnumerable<dynamic> Query(string statement, object parameter = null, bool buffered = true)
         {
-            return Query(sql, param, null, buffered);
+            return Query(statement, parameter, null, buffered);
         }
 
-        public virtual T QueryFirst<T>(string sql, object param, IDatabaseTransaction transaction)
+        public virtual T QueryFirst<T>(string statement, object parameter, IDatabaseTransaction transaction)
         {
-            var formattedSql = Implementation.PreFormatSql(sql);
-
-            Logger.Trace(formattedSql, param);
-            return BaseConnection.QueryFirst<T>(formattedSql, param, transaction?.Transaction);
+            var formattedStatement = Implementation.PreFormatStatement(statement);
+            LoggingStatement(formattedStatement, parameter);
+            return BaseConnection.QueryFirst<T>(formattedStatement, parameter, transaction?.Transaction);
         }
 
-        public virtual T QueryFirst<T>(string sql, object param = null)
+        public virtual T QueryFirst<T>(string statement, object parameter = null)
         {
-            return QueryFirst<T>(sql, param);
+            return QueryFirst<T>(statement, parameter);
         }
 
-        public virtual T QueryFirstOrDefault<T>(string sql, object param, IDatabaseTransaction transaction)
+        public virtual T QueryFirstOrDefault<T>(string statement, object parameter, IDatabaseTransaction transaction)
         {
-            var formattedSql = Implementation.PreFormatSql(sql);
-
-            Logger.Trace(formattedSql, param);
-            return BaseConnection.QueryFirstOrDefault<T>(formattedSql, param, transaction?.Transaction);
+            var formattedStatement = Implementation.PreFormatStatement(statement);
+            LoggingStatement(formattedStatement, parameter);
+            return BaseConnection.QueryFirstOrDefault<T>(formattedStatement, parameter, transaction?.Transaction);
         }
 
-        public T QueryFirstOrDefault<T>(string sql, object param = null)
+        public T QueryFirstOrDefault<T>(string statement, object parameter = null)
         {
-            return QueryFirstOrDefault<T>(sql, param, null);
+            return QueryFirstOrDefault<T>(statement, parameter, null);
         }
 
-        public virtual T QuerySingle<T>(string sql, object param, IDatabaseTransaction transaction)
+        public virtual T QuerySingle<T>(string statement, object parameter, IDatabaseTransaction transaction)
         {
-            var formattedSql = Implementation.PreFormatSql(sql);
-
-            Logger.Trace(formattedSql, param);
-            return BaseConnection.QuerySingle<T>(formattedSql, param, transaction?.Transaction);
+            var formattedStatement = Implementation.PreFormatStatement(statement);
+            LoggingStatement(formattedStatement, parameter);
+            return BaseConnection.QuerySingle<T>(formattedStatement, parameter, transaction?.Transaction);
         }
 
-        public virtual T QuerySingle<T>(string sql, object param = null)
+        public virtual T QuerySingle<T>(string statement, object parameter = null)
         {
-            return QuerySingle<T>(sql, param);
+            return QuerySingle<T>(statement, parameter);
         }
 
-        public virtual int Execute(string sql, object param, IDatabaseTransaction transaction)
+        public virtual int Execute(string statement, object parameter, IDatabaseTransaction transaction)
         {
-            var formattedSql = Implementation.PreFormatSql(sql);
-
-            Logger.Trace(formattedSql, param);
-            return BaseConnection.Execute(formattedSql, param, transaction?.Transaction);
+            var formattedStatement = Implementation.PreFormatStatement(statement);
+            LoggingStatement(formattedStatement, parameter);
+            return BaseConnection.Execute(formattedStatement, parameter, transaction?.Transaction);
         }
 
-        public int Execute(string sql, object param = null)
+        public int Execute(string statement, object parameter = null)
         {
-            return Execute(sql, param, null);
+            return Execute(statement, parameter, null);
         }
 
-        public virtual DataTable GetDataTable(string sql, object param, IDatabaseTransaction transaction)
+        public virtual DataTable GetDataTable(string statement, object parameter, IDatabaseTransaction transaction)
         {
-            var formattedSql = Implementation.PreFormatSql(sql);
+            var formattedStatement = Implementation.PreFormatStatement(statement);
 
-            Logger.Trace(formattedSql, param);
+            LoggingStatement(formattedStatement, parameter);
 
             var dataTable = new DataTable();
-            dataTable.Load(BaseConnection.ExecuteReader(sql, param, transaction?.Transaction));
+            dataTable.Load(BaseConnection.ExecuteReader(statement, parameter, transaction?.Transaction));
             return dataTable;
         }
 
-        public DataTable GetDataTable(string sql, object param = null)
+        public DataTable GetDataTable(string statement, object parameter = null)
         {
-            return GetDataTable(sql, param, null);
+            return GetDataTable(statement, parameter, null);
         }
 
         public virtual IDatabaseTransaction BeginTransaction()
@@ -250,12 +249,12 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
 
         public IResultFailureValue<Exception> Batch(Func<IDatabaseCommander, bool> function)
         {
-            return BatchCore(() => new DatabaseTransaction(this), function);
+            return BatchImpl(() => new DatabaseTransaction(this), function);
         }
 
         public IResultFailureValue<Exception> Batch(Func<IDatabaseCommander, bool> function, IsolationLevel isolationLevel)
         {
-            return BatchCore(() => new DatabaseTransaction(this, isolationLevel), function);
+            return BatchImpl(() => new DatabaseTransaction(this, isolationLevel), function);
         }
 
         #endregion

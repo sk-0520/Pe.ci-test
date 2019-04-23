@@ -71,26 +71,26 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
 
         public IEnumerable<string> SelectFuzzyCodes(string baseCode)
         {
-            var sql = StatementLoader.LoadStatementByCurrent();
-            return Commander.Query<string>(sql, new { BaseCode = baseCode });
+            var statement = StatementLoader.LoadStatementByCurrent();
+            return Commander.Query<string>(statement, new { BaseCode = baseCode });
         }
 
         public LauncherItemData SelectLauncherItem(Guid launcherItemId)
         {
-            var sql = StatementLoader.LoadStatementByCurrent();
+            var statement = StatementLoader.LoadStatementByCurrent();
             var param = new {
                 LauncherItemId = launcherItemId,
             };
-            var dto = Commander.QuerySingle<LauncherItemsRowDto>(sql, param);
+            var dto = Commander.QuerySingle<LauncherItemsRowDto>(statement, param);
             var data = ConvertFromDto(dto);
             return data;
         }
 
         public void InsertItem(LauncherItemData data, IDatabaseCommonStatus commonStatus)
         {
-            var sql = StatementLoader.LoadStatementByCurrent();
+            var statement = StatementLoader.LoadStatementByCurrent();
             var dto = ConvertFromData(data, commonStatus);
-            Commander.Execute(sql, dto);
+            Commander.Execute(statement, dto);
         }
 
         #endregion

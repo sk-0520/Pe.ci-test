@@ -70,23 +70,23 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
 
         public long SelectMaxSort()
         {
-            var sql = StatementLoader.LoadStatementByCurrent();
-            return Commander.QuerySingle<long>(sql);
+            var statement = StatementLoader.LoadStatementByCurrent();
+            return Commander.QuerySingle<long>(statement);
         }
 
         public IEnumerable<Guid> SelectAllLauncherGroupIds()
         {
-            var sql = StatementLoader.LoadStatementByCurrent();
-            return Commander.Query<Guid>(sql);
+            var statement = StatementLoader.LoadStatementByCurrent();
+            return Commander.Query<Guid>(statement);
         }
 
         public LauncherGroupData SelectLauncherGroup(Guid launcherGroupId)
         {
-            var sql = StatementLoader.LoadStatementByCurrent();
+            var statement = StatementLoader.LoadStatementByCurrent();
             var param = new {
                 LauncherGroupId = launcherGroupId,
             };
-            var dto = Commander.QuerySingle<LauncherGroupsRowDto>(sql, param);
+            var dto = Commander.QuerySingle<LauncherGroupsRowDto>(statement, param);
             var data = ConvertFromDto(dto);
 
             return data;
@@ -94,9 +94,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
 
         public void InsertNewGroup(LauncherGroupData data, IDatabaseCommonStatus commonStatus)
         {
-            var sql = StatementLoader.LoadStatementByCurrent();
+            var statement = StatementLoader.LoadStatementByCurrent();
             var dto = ConvertFromData(data, commonStatus);
-            Commander.Execute(sql, dto);
+            Commander.Execute(statement, dto);
         }
 
         #endregion

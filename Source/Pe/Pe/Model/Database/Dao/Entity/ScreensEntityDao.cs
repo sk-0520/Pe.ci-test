@@ -21,16 +21,16 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
 
         public bool SelectExistsScreen(string screenName)
         {
-            var sql = StatementLoader.LoadStatementByCurrent();
+            var statement = StatementLoader.LoadStatementByCurrent();
             var param = new {
                 ScreenName = screenName,
             };
-            return Commander.QuerySingle<bool>(sql, param);
+            return Commander.QuerySingle<bool>(statement, param);
         }
 
         public bool InsertScreen(Screen screen, IDatabaseCommonStatus commonStatus)
         {
-            var sql = StatementLoader.LoadStatementByCurrent();
+            var statement = StatementLoader.LoadStatementByCurrent();
             var dto = new ScreensRowDto() {
                 ScreenName = screen.DeviceName,
                 ScreenX = (long)screen.DeviceBounds.X,
@@ -40,7 +40,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             };
             commonStatus.WriteCommon(dto);
 
-            return Commander.Execute(sql, dto) == 1;
+            return Commander.Execute(statement, dto) == 1;
         }
 
         #endregion

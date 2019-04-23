@@ -76,43 +76,43 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
         {
             var noteLayoutKindTransfer = new EnumTransfer<NoteLayoutKind>();
 
-            var sql = StatementLoader.LoadStatementByCurrent();
+            var statement = StatementLoader.LoadStatementByCurrent();
             var param = new {
                 NoteId = noteId,
                 LayoutKind = noteLayoutKindTransfer.ToText(layoutKind),
             };
-            return Commander.QueryFirstOrDefault<NoteLayoutData>(sql, param);
+            return Commander.QueryFirstOrDefault<NoteLayoutData>(statement, param);
         }
         public bool SelectExistsLayout(Guid noteId, NoteLayoutKind layoutKind)
         {
             var noteLayoutKindTransfer = new EnumTransfer<NoteLayoutKind>();
 
-            var sql = StatementLoader.LoadStatementByCurrent();
+            var statement = StatementLoader.LoadStatementByCurrent();
             var param = new {
                 NoteId = noteId,
                 LayoutKind = noteLayoutKindTransfer.ToText(layoutKind),
             };
-            return Commander.QuerySingle<bool>(sql, param);
+            return Commander.QuerySingle<bool>(statement, param);
         }
 
         public bool InsertLayout(NoteLayoutData noteLayout, IDatabaseCommonStatus databaseCommonStatus)
         {
-            var sql = StatementLoader.LoadStatementByCurrent();
+            var statement = StatementLoader.LoadStatementByCurrent();
             var param = ConvertFromData(noteLayout, databaseCommonStatus);
-            return Commander.Execute(sql, param) == 1;
+            return Commander.Execute(statement, param) == 1;
         }
 
         public bool UpdateLayout(NoteLayoutData noteLayout, IDatabaseCommonStatus databaseCommonStatus)
         {
-            var sql = StatementLoader.LoadStatementByCurrent();
+            var statement = StatementLoader.LoadStatementByCurrent();
             var param = ConvertFromData(noteLayout, databaseCommonStatus);
-            return Commander.Execute(sql, param) == 1;
+            return Commander.Execute(statement, param) == 1;
         }
         public bool UpdatePickupLayout(NoteLayoutData noteLayout, bool isEnabledLocation, bool isEnabledSize, IDatabaseCommonStatus databaseCommonStatus)
         {
             var noteLayoutKindTransfer = new EnumTransfer<NoteLayoutKind>();
 
-            var sql = StatementLoader.LoadStatementByCurrent();
+            var statement = StatementLoader.LoadStatementByCurrent();
             var param = databaseCommonStatus.CreateCommonDtoMapping();
             param[Column.NoteId] = noteLayout.NoteId;
             param[Column.LayoutKind] = noteLayoutKindTransfer.ToText(noteLayout.LayoutKind);
@@ -122,7 +122,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             param[Column.Height] = noteLayout.Height;
             param[nameof(isEnabledLocation)] = isEnabledLocation;
             param[nameof(isEnabledSize)] = isEnabledSize;
-            return Commander.Execute(sql, param) == 1;
+            return Commander.Execute(statement, param) == 1;
         }
 
         #endregion

@@ -89,18 +89,18 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
 
         public IEnumerable<Guid> SelectAllNoteIds()
         {
-            var sql = StatementLoader.LoadStatementByCurrent();
-            return Commander.Query<Guid>(sql);
+            var statement = StatementLoader.LoadStatementByCurrent();
+            return Commander.Query<Guid>(statement);
         }
 
         //SelectExistsScreen
         public NoteData SelectNote(Guid noteId)
         {
-            var sql = StatementLoader.LoadStatementByCurrent();
+            var statement = StatementLoader.LoadStatementByCurrent();
             var param = new {
                 NoteId = noteId,
             };
-            var dto = Commander.QueryFirstOrDefault<NotesEntityDto>(sql, param);
+            var dto = Commander.QueryFirstOrDefault<NotesEntityDto>(statement, param);
             if(dto == null) {
                 return null;
             }
@@ -110,36 +110,36 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
 
         public bool InsertNewNote(NoteData noteData, IDatabaseCommonStatus commonStatus)
         {
-            var sql = StatementLoader.LoadStatementByCurrent();
+            var statement = StatementLoader.LoadStatementByCurrent();
             var param = ConvertFromData(noteData, commonStatus);
-            return Commander.Execute(sql, param) == 1;
+            return Commander.Execute(statement, param) == 1;
         }
 
         public bool UpdateCompact(Guid noteId, bool isCompact, IDatabaseCommonStatus databaseCommonStatus)
         {
-            var sql = StatementLoader.LoadStatementByCurrent();
+            var statement = StatementLoader.LoadStatementByCurrent();
             var param = databaseCommonStatus.CreateCommonDtoMapping();
             param[Column.NoteId] = noteId;
             param[Column.IsCompact] = isCompact;
-            return Commander.Execute(sql, param) == 1;
+            return Commander.Execute(statement, param) == 1;
         }
 
         public bool UpdateTopmost(Guid noteId, bool isTopmost, IDatabaseCommonStatus databaseCommonStatus)
         {
-            var sql = StatementLoader.LoadStatementByCurrent();
+            var statement = StatementLoader.LoadStatementByCurrent();
             var param = databaseCommonStatus.CreateCommonDtoMapping();
             param[Column.NoteId] = noteId;
             param[Column.IsTopmost] = isTopmost;
-            return Commander.Execute(sql, param) == 1;
+            return Commander.Execute(statement, param) == 1;
         }
 
         public bool UpdateTitle(Guid noteId, string title, IDatabaseCommonStatus databaseCommonStatus)
         {
-            var sql = StatementLoader.LoadStatementByCurrent();
+            var statement = StatementLoader.LoadStatementByCurrent();
             var param = databaseCommonStatus.CreateCommonDtoMapping();
             param[Column.NoteId] = noteId;
             param[Column.Title] = title;
-            return Commander.Execute(sql, param) == 1;
+            return Commander.Execute(statement, param) == 1;
         }
 
         #endregion
