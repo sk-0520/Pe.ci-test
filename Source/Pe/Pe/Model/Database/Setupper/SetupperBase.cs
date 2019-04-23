@@ -44,7 +44,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Setupper
         public abstract void ExecuteTemporaryDDL(IDatabaseCommander commander, IReadOnlySetupDto dto);
         public abstract void ExecuteTemporaryDML(IDatabaseCommander commander, IReadOnlySetupDto dto);
 
-        protected IEnumerable<KeyValuePair<string, string>> SplitMultiSql(string statement)
+        protected IEnumerable<KeyValuePair<string, string>> SplitMultiStatement(string statement)
         {
             var linePairs = TextUtility.ReadLines(statement)
                 .Select((s, i) => new { Line = s, Index = i })
@@ -83,9 +83,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Setupper
             }
         }
 
-        protected void ExecuteSql(IDatabaseCommander commander, string statement, IReadOnlySetupDto dto)
+        protected void ExecuteStatement(IDatabaseCommander commander, string statement, IReadOnlySetupDto dto)
         {
-            var pairs = SplitMultiSql(statement);
+            var pairs = SplitMultiStatement(statement);
             foreach(var pair in pairs) {
                 Logger.Information(pair.Key);
                 var result = commander.Execute(pair.Value, dto);

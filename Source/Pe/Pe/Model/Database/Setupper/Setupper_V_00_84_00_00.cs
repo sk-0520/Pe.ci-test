@@ -24,17 +24,17 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Setupper
 
         public override void ExecuteMainDDL(IDatabaseCommander commander, IReadOnlySetupDto dto)
         {
-            ExecuteSql(commander, StatementLoader.LoadStatementByCurrent(), dto);
+            ExecuteStatement(commander, StatementLoader.LoadStatementByCurrent(), dto);
         }
 
         public override void ExecuteMainDML(IDatabaseCommander commander, IReadOnlySetupDto dto)
         {
-            ExecuteSql(commander, StatementLoader.LoadStatementByCurrent(), dto);
+            ExecuteStatement(commander, StatementLoader.LoadStatementByCurrent(), dto);
         }
 
         public override void ExecuteFileDDL(IDatabaseCommander commander, IReadOnlySetupDto dto)
         {
-            ExecuteSql(commander, StatementLoader.LoadStatementByCurrent(), dto);
+            ExecuteStatement(commander, StatementLoader.LoadStatementByCurrent(), dto);
         }
 
         public override void ExecuteFileDML(IDatabaseCommander commander, IReadOnlySetupDto dto)

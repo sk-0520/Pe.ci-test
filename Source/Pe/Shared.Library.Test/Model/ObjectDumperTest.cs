@@ -99,5 +99,23 @@ namespace Shared.Library.Test.Model
             Assert.AreEqual(3, items.First(i => i.MemberInfo.Name == nameof(Nest3.NotNullNest2)).Children.First(i => i.MemberInfo.Name == nameof(Nest2.NotNull)).Children.First(i => i.MemberInfo.Name == nameof(Simple.PublicF)).Value);
 
         }
+
+        [TestMethod]
+        public void DictionaryTest()
+        {
+            var od = new ObjectDumper();
+            var dic = new Dictionary<string, object>() {
+                ["a"] = 1,
+                ["b"] = "2",
+                ["c"] = 0.3m
+            };
+
+            try {
+                var items = od.Dump(dic);
+                Assert.IsTrue(true);
+            } catch(StackOverflowException ex) {
+                Assert.Fail(ex.Message);
+            }
+        }
     }
 }

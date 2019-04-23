@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -28,6 +29,38 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         #endregion
     }
 
+    class DummyInfo : MemberInfo
+    {
+        public DummyInfo(string name, Type declaringType, Type reflectedType)
+        {
+            Name = name;
+            DeclaringType = declaringType;
+            ReflectedType = reflectedType;
+        }
+
+        public override MemberTypes MemberType => MemberTypes.Field | MemberTypes.Property;
+
+        public override string Name { get; }
+
+        public override Type DeclaringType { get; }
+
+        public override Type ReflectedType { get; }
+
+        public override object[] GetCustomAttributes(bool inherit)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override object[] GetCustomAttributes(Type attributeType, bool inherit)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool IsDefined(Type attributeType, bool inherit)
+        {
+            throw new NotImplementedException();
+        }
+    }
 
     public class ObjectDumper
     {
@@ -49,6 +82,11 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
             typeof(double),
             typeof(decimal),
             typeof(string),
+            typeof(DateTime),
+            typeof(DateTimeOffset),
+            typeof(TimeSpan),
+            typeof(Version),
+            typeof(Guid),
         };
 
         #endregion
@@ -90,10 +128,45 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
             }
         }
 
+        int GetNextNest(int nest) => nest < 0 ? -1 : nest - 1;
+
+        IReadOnlyList<ObjectDumpItem> DumpDictionary(IDictionary dictionary, int nest, bool ignoreAutoMember)
+        {
+            var result = new List<ObjectDumpItem>(dictionary.Count);
+            var dictionaryType = dictionary.GetType();
+            foreach(var key in dictionary.Keys) {
+
+                var target = dictionary[key];
+                if(target == null) {
+                    var item = new ObjectDumpItem(new DummyInfo(key.ToString(), typeof(object), dictionaryType), target, EmptyChildren);
+                    result.Add(item);
+                } else {
+                    var targetType = target.GetType();
+                    if(IgnoreNestedMembers.Contains(targetType)) {
+                        var item = new ObjectDumpItem(new DummyInfo(key.ToString(), targetType, dictionaryType), target, EmptyChildren);
+                        result.Add(item);
+                    } else {
+                        var item = new ObjectDumpItem(new DummyInfo(key.ToString(), targetType, dictionaryType), key, DumpCore(target, GetNextNest(nest), ignoreAutoMember));
+                        result.Add(item);
+                    }
+                }
+            }
+
+            return result;
+        }
+
         IReadOnlyList<ObjectDumpItem> DumpCore(object target, int nest, bool ignoreAutoMember)
         {
             if(nest == 0) {
                 return EmptyChildren;
+            }
+
+            switch(target) {
+                case IDictionary dic:
+                    return DumpDictionary(dic, nest, ignoreAutoMember);
+
+                default:
+                    break;
             }
 
             var members = target.GetType().GetMembers(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.GetField | BindingFlags.GetProperty);
@@ -102,11 +175,16 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
                 if(!CanGetValue(member, ignoreAutoMember)) {
                     continue;
                 }
+                if(member is IEnumerable seq) {
+                    continue;
+                }
 
                 var memberValue = GetMemberValue(target, member);
                 var children = EmptyChildren;
                 if(memberValue != null && !IgnoreNestedMembers.Contains(memberValue.GetType())) {
-                    children = DumpCore(memberValue, nest < 0 ? -1 : nest - 1, ignoreAutoMember);
+                    if(!(memberValue is IEnumerable)) {
+                        children = DumpCore(memberValue, GetNextNest(nest), ignoreAutoMember);
+                    }
                 }
 
                 var item = new ObjectDumpItem(member, memberValue, children);

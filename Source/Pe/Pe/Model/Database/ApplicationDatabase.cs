@@ -139,6 +139,14 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database
 
         #endregion
 
+        #region DatabaseAccessor
+
+        protected override void LoggingStatement(string statement, object parameter)
+        {
+            Logger.Trace(statement, ObjectDumper.GetDumpString(parameter));
+        }
+
+        #endregion
     }
 
     public class ApplicationDatabaseStatementLoader : DatabaseStatementLoaderBase
