@@ -5,6 +5,7 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 
   xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+  xmlns:prism="http://prismlibrary.com/"
 
   xmlns:cttn_lib_shared_lib_view_converter="clr-namespace:ContentTypeTextNet.Pe.Library.Shared.Library.View.Converter;assembly=Shared.Library"
 
@@ -44,8 +45,11 @@
   </Window.Resources>
   <i:Interaction.Triggers>
     <i:EventTrigger EventName="Deactivated">
-      <i:InvokeCommandAction Command="{Binding SaveTitleEditCommand}" />
+      <i:InvokeCommandAction Command="{Binding SaveTitleEditCommand}" CommandParameter="{Binding ElementName=inputTitle}" />
     </i:EventTrigger>
+    <prism:InteractionRequestTrigger SourceObject="{Binding TitleEditStartRequest}">
+      <prism:InvokeCommandAction Command="{Binding TitleEditStartCommand ,ElementName=root}" />
+    </prism:InteractionRequestTrigger>
   </i:Interaction.Triggers>
   <Window.Style>
     <Style TargetType="Window" BasedOn="{StaticResource {x:Type Window}}">
@@ -110,17 +114,36 @@
             <ColumnDefinition Width="Auto"/>
           </Grid.ColumnDefinitions>
 
-          <!-- 良かれと思って ContentControl で切り替えうようにしたんだけどイベント周りが魑魅魍魎になったので表示非表示で切り替えることとした -->
-          <TextBlock Grid.Column="0" Text="{Binding Title}" Foreground="{Binding CaptionForeground}" />
-          <TextBox Grid.Column="0" IsVisibleChanged="Title_IsVisibleChanged" WindowChrome.IsHitTestVisibleInChrome="True" Text="{Binding EditingTitle, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding TitleEditMode, Converter={StaticResource BooleanToVisibilityConverter}}">
+          <TextBox x:Name="inputTitle" Grid.Column="0" Background="Transparent" BorderThickness="0" Foreground="{Binding CaptionForeground}" >
             <i:Interaction.Triggers>
               <i:EventTrigger EventName="LostFocus">
-                <i:InvokeCommandAction Command="{Binding SaveTitleEditCommand}" />
+                <i:InvokeCommandAction Command="{Binding SaveTitleEditCommand}" CommandParameter="{Binding ElementName=inputTitle}" />
               </i:EventTrigger>
             </i:Interaction.Triggers>
+            <TextBox.Style>
+              <Style TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
+                <Style.Triggers>
+                  <DataTrigger Binding="{Binding TitleEditMode}" Value="True">
+                    <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />
+                    <Setter Property="IsReadOnly" Value="False" />
+                    <Setter Property="UndoLimit" Value="-1" />
+                    <Setter Property="Focusable" Value="True" />
+                    <Setter Property="Text" Value="{Binding EditingTitle, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <Setter Property="CaretBrush" Value="{Binding Foreground, RelativeSource={RelativeSource Mode=Self}}" />
+                  </DataTrigger>
+                </Style.Triggers>
+                <Setter Property="IsReadOnly" Value="True" />
+                <Setter Property="UndoLimit" Value="0" />
+                <Setter Property="Focusable" Value="False" />
+                <Setter Property="Text" Value="{Binding Title, Mode=OneWay}" />
+                <Setter Property="IsReadOnlyCaretVisible" Value="False" />
+                <Setter Property="CaretBrush" Value="Transparent" />
+                <Setter Property="IsInactiveSelectionHighlightEnabled" Value="False" />
+              </Style>
+            </TextBox.Style>
             <TextBox.InputBindings>
-              <KeyBinding Key="Esc" Command="{Binding CancelTitleEditCommand}" />
-              <KeyBinding Key="Return" Command="{Binding SaveTitleEditCommand}" />
+              <KeyBinding Key="Esc" Command="{Binding CancelTitleEditCommand}" CommandParameter="{Binding ElementName=inputTitle}" />
+              <KeyBinding Key="Return" Command="{Binding SaveTitleEditCommand}" CommandParameter="{Binding ElementName=inputTitle}" />
             </TextBox.InputBindings>
           </TextBox>
 

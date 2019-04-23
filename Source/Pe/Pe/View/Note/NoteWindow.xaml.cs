@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
+using Prism.Commands;
+using Prism.Interactivity.InteractionRequest;
 
 namespace ContentTypeTextNet.Pe.Main.View.Note
 {
@@ -30,6 +32,24 @@ namespace ContentTypeTextNet.Pe.Main.View.Note
 
         [Injection]
         ILogger Logger { get; set; }
+
+        #endregion
+
+        #region command
+
+        ICommand _TitleEditStartCommand;
+        public ICommand TitleEditStartCommand
+        {
+            get
+            {
+                return this._TitleEditStartCommand ?? (this._TitleEditStartCommand = new DelegateCommand<InteractionRequestedEventArgs>(
+                    o => {
+                        this.inputTitle.Focus();
+                        this.inputTitle.SelectAll();
+                    }
+                ));
+            }
+        }
 
         #endregion
 
@@ -53,6 +73,8 @@ namespace ContentTypeTextNet.Pe.Main.View.Note
 
         #endregion
 
+
+
         private void CloseWindowCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = true;
@@ -63,13 +85,6 @@ namespace ContentTypeTextNet.Pe.Main.View.Note
             SystemCommands.CloseWindow(this);
         }
 
-        private void Title_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            if((bool)e.NewValue) {
-                var textbox = (TextBox)sender;
-                textbox.SelectAll();
-                textbox.Focus();
-            }
-        }
+
     }
 }

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
@@ -20,6 +21,7 @@ using ContentTypeTextNet.Pe.Main.Model.Element.Note;
 using ContentTypeTextNet.Pe.Main.Model.Note;
 using ContentTypeTextNet.Pe.Main.Model.Theme;
 using Prism.Commands;
+using Prism.Interactivity.InteractionRequest;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
 {
@@ -58,6 +60,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
 
 
         #region property
+
+        public InteractionRequest<Notification> TitleEditStartRequest { get; } = new InteractionRequest<Notification>();
 
         bool CanLayoutNotify { get; set; }
 
@@ -122,7 +126,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
         public bool TitleEditMode
         {
             get => this._titleEditMode;
-            set => SetProperty(ref this._titleEditMode, value);
+            set
+            {
+                if(SetProperty(ref this._titleEditMode, value)) {
+                    if(TitleEditMode) {
+                        TitleEditStartRequest.Raise(new Notification());
+                    }
+                }
+            }
         }
         public string EditingTitle
         {
@@ -176,18 +187,20 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
             }
         ));
 
-        public ICommand CancelTitleEditCommand => GetOrCreateCommand(() => new DelegateCommand(
-            () => {
+        public ICommand CancelTitleEditCommand => GetOrCreateCommand(() => new DelegateCommand<TextBox>(
+            o => {
                 TitleEditMode = false;
                 EditingTitle = string.Empty;
+                o.Select(0, 0);
             }
         ));
-        public ICommand SaveTitleEditCommand => GetOrCreateCommand(() => new DelegateCommand(
-            () => {
+        public ICommand SaveTitleEditCommand => GetOrCreateCommand(() => new DelegateCommand<TextBox>(
+            o => {
                 TitleEditMode = false;
                 Model.ChangeTitle(EditingTitle);
+                o.Select(0, 0);
             },
-            () => TitleEditMode
+            o => TitleEditMode
         ));
 
 
@@ -339,8 +352,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
             switch(msg) {
                 case (int)WM.WM_NCLBUTTONDBLCLK:
                     if(WindowsUtility.ConvertHTFromWParam(wParam) == HT.HTCAPTION) {
-                        EditingTitle = Title;
-                        TitleEditMode = true;
+                        if(!IsLocked) {
+                            EditingTitle = Title;
+                            TitleEditMode = true;
+                        }
                     }
                     break;
 
