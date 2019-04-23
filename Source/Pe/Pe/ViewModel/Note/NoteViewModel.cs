@@ -434,6 +434,22 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
             Model.PropertyChanged -= Model_PropertyChanged;
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                if(disposing) {
+                    WindowHandleSource?.Dispose();
+                    PropertyChangedHooker.Dispose();
+                }
+                if(WindowAreaChangedTimer.IsEnabled) {
+                    WindowAreaChangedTimer.Stop();
+                    DelayNotifyWindowAreaChanged();
+                }
+            }
+
+            base.Dispose(disposing);
+        }
+
         #endregion
 
         private void Model_PropertyChanged(object sender, PropertyChangedEventArgs e)

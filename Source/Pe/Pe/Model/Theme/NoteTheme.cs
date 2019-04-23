@@ -183,7 +183,6 @@ namespace ContentTypeTextNet.Pe.Main.Model.Theme
                 <GradientStop Color="#20101010" Offset="1"/>
             </LinearGradientBrush>
             */
-            var tailColor = Color.FromArgb(0x20, 0x10, 0x10, 0x10);
             var collection = new GradientStopCollection(new[] {
                 new GradientStop(MediaUtility.AddColor(baseColor.Background, Color.FromArgb(0xa0, 0xff, 0xff, 0xff)), 0),
                 new GradientStop(baseColor.Background, 0.4),
