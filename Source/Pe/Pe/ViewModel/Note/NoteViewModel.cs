@@ -46,7 +46,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
             DispatcherWapper = dispatcherWapper;
 
             WindowAreaChangedTimer = new DispatcherTimer() {
-                Interval = TimeSpan.FromSeconds(1),
+                Interval = TimeSpan.FromSeconds(0.5),
             };
             WindowAreaChangedTimer.Tick += WindowAreaChangedTimer_Tick;
 

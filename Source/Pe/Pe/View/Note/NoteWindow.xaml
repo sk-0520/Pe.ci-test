@@ -11,10 +11,10 @@
 
 
   Title="NoteWindow"
-  Left="{Binding WindowLeft, Mode=TwoWay}"
-  Top="{Binding WindowTop, Mode=TwoWay}"
-  Width="{Binding WindowWidth, Mode=TwoWay}"
-  Height="{Binding WindowHeight, Mode=TwoWay}"
+  Left="{Binding WindowLeft, Mode=TwoWay, Delay=500}"
+  Top="{Binding WindowTop, Mode=TwoWay, Delay=500}"
+  Width="{Binding WindowWidth, Mode=TwoWay, Delay=500}"
+  Height="{Binding WindowHeight, Mode=TwoWay, Delay=500}"
   AllowsTransparency="True"
   WindowStyle="None"
   Topmost="{Binding IsTopmost}"
