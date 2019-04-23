@@ -284,6 +284,11 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
 
         public void ChangeTitle(string editingTitle)
         {
+            if(Title == editingTitle) {
+                Logger.Debug("同一タイトルのため書き込み抑制");
+                return;
+            }
+
             Title = editingTitle;
             MainDatabaseLazyWriter.Stock(c => {
                 var notesEntityDao = new NotesEntityDao(c, StatementLoader, c.Implementation, Logger.Factory);

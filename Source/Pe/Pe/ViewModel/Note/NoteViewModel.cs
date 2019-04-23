@@ -186,7 +186,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
             () => {
                 TitleEditMode = false;
                 Model.ChangeTitle(EditingTitle);
-            }
+            },
+            () => TitleEditMode
         ));
 
 

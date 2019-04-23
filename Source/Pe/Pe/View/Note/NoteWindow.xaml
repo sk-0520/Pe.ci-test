@@ -42,6 +42,11 @@
     />
     <WindowChrome x:Key="LockWindowChrome" />
   </Window.Resources>
+  <i:Interaction.Triggers>
+    <i:EventTrigger EventName="Deactivated">
+      <i:InvokeCommandAction Command="{Binding SaveTitleEditCommand}" />
+    </i:EventTrigger>
+  </i:Interaction.Triggers>
   <Window.Style>
     <Style TargetType="Window" BasedOn="{StaticResource {x:Type Window}}">
       <Style.Triggers>
