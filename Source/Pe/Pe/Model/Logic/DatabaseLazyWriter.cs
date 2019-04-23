@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -138,6 +139,11 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
             if(uniqueKey == null) {
                 throw new ArgumentNullException(nameof(uniqueKey));
             }
+#if DEBUG
+            if(uniqueKey is UniqueKeyPool) {
+                Debug.Assert(false, $"完全な事故: {nameof(UniqueKeyPool)}.{nameof(UniqueKeyPool.Get)} を使用していない可能性あり");
+            }
+#endif
 
             ThrowIfDisposed();
 

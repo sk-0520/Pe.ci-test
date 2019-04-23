@@ -110,6 +110,7 @@
             <ColumnDefinition Width="Auto"/>
           </Grid.ColumnDefinitions>
 
+          <!-- 良かれと思って ContentControl で切り替えうようにしたんだけどイベント周りが魑魅魍魎になったので表示非表示で切り替えることとした -->
           <TextBlock Grid.Column="0" Text="{Binding Title}" Foreground="{Binding CaptionForeground}" />
           <TextBox Grid.Column="0" IsVisibleChanged="Title_IsVisibleChanged" WindowChrome.IsHitTestVisibleInChrome="True" Text="{Binding EditingTitle, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding TitleEditMode, Converter={StaticResource BooleanToVisibilityConverter}}">
             <i:Interaction.Triggers>
