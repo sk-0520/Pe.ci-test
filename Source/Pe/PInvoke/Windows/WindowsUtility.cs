@@ -1,4 +1,4 @@
-﻿/*
+/*
 This file is part of PInvoke.
 
 PInvoke is free software: you can redistribute it and/or modify
@@ -241,6 +241,11 @@ namespace ContentTypeTextNet.Library.PInvoke.Windows
                 0, 0,
                 SWP.SWP_NOMOVE | SWP.SWP_NOSIZE
             );
+        }
+
+        public static IntPtr ToIntPtr(HWND hWnd)
+        {
+            return new IntPtr((int)hWnd);
         }
 
         #endregion

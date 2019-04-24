@@ -1,4 +1,4 @@
-﻿/*
+/*
 This file is part of PInvoke.
 
 PInvoke is free software: you can redistribute it and/or modify
@@ -333,7 +333,8 @@ namespace ContentTypeTextNet.Library.PInvoke.Windows
         HWND_BOTTOM = 1,
         HWND_TOPMOST = -1,
         HWND_NOTOPMOST = -2,
-        HWND_BROADCAST = 0xffff
+        HWND_BROADCAST = 0xffff,
+        HWND_MESSAGE = -3,
     }
 
     /// <summary>

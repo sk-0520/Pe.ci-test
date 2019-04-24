@@ -8,6 +8,8 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Interop;
+using ContentTypeTextNet.Library.PInvoke.Windows;
 using ContentTypeTextNet.Pe.Library.Shared.Embedded.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
@@ -49,6 +51,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
         ObservableCollection<LauncherGroupElement> LauncherGroupElements { get; } = new ObservableCollection<LauncherGroupElement>();
         ObservableCollection<LauncherToolbarElement> LauncherToolbarElements { get; } = new ObservableCollection<LauncherToolbarElement>();
         ObservableCollection<NoteElement> NoteElements { get; } = new ObservableCollection<NoteElement>();
+
+        HwndSource MessageWindowHandleSource { get; set; }
 
         #endregion
 
@@ -95,6 +99,14 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
             OrderManager = ApplicationDiContainer.Make<OrderManagerIml>(); //initializer.OrderManager;
             NotifyManager = ApplicationDiContainer.Make<NotifyManagerImpl>();//initializer.NotifyManager;
 
+            MessageWindowHandleSource = new HwndSource(new HwndSourceParameters(nameof(MessageWindowHandleSource)) {
+                Width = 0,
+                Height = 0,
+                WindowStyle = (int)WindowStyle.None,
+                //ParentWindow = WindowsUtility.ToIntPtr(HWND.HWND_MESSAGE),
+                HwndSourceHook = MessageWindowProc,
+            });
+
             RegisterManagers();
 
             Logger = ApplicationLogger.Factory.CreateTartget(GetType());
@@ -107,6 +119,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
 
             return true;
         }
+
 
         public ManagerViewModel CreateViewModel()
         {
@@ -302,7 +315,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
         {
             if(!IsDisposed) {
                 if(disposing) {
-                    //...
+                    MessageWindowHandleSource?.Dispose();
                 }
             }
 

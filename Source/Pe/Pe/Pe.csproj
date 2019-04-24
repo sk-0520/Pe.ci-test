@@ -220,6 +220,7 @@
     <Compile Include="Model\Launcher\LauncherFactory.cs" />
     <Compile Include="Model\Logic\DatabaseLazyWriter.cs" />
     <Compile Include="Model\Logic\ScreenOperator.cs" />
+    <Compile Include="Model\Manager\ApplicationManager.MessageWindow.cs" />
     <Compile Include="Model\Note\NoteData.cs" />
     <Compile Include="Model\Theme\LauncherGroupTheme.cs" />
     <Compile Include="Model\Theme\NoteTheme.cs" />
