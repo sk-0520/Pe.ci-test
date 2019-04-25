@@ -60,9 +60,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
 
     partial class ApplicationManager
     {
-        class OrderManagerIml : ManagerBase, IOrderManager
+        class OrderManagerImpl : ManagerBase, IOrderManager
         {
-            public OrderManagerIml(IDiContainer diContainer, ILoggerFactory loggerFactory)
+            public OrderManagerImpl(IDiContainer diContainer, ILoggerFactory loggerFactory)
                 : base(diContainer, loggerFactory)
             { }
 

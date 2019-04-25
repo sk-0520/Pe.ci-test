@@ -45,7 +45,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
         ILogger Logger { get; set; }
 
         WindowManager WindowManager { get; set; }
-        OrderManagerIml OrderManager { get; set; }
+        OrderManagerImpl OrderManager { get; set; }
         NotifyManagerImpl NotifyManager { get; set; }
 
         ObservableCollection<LauncherGroupElement> LauncherGroupElements { get; } = new ObservableCollection<LauncherGroupElement>();
@@ -96,7 +96,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
             ApplicationLogger = initializer.Logger;
             ApplicationDiContainer = initializer.DiContainer;
             WindowManager = initializer.WindowManager;
-            OrderManager = ApplicationDiContainer.Make<OrderManagerIml>(); //initializer.OrderManager;
+            OrderManager = ApplicationDiContainer.Make<OrderManagerImpl>(); //initializer.OrderManager;
             NotifyManager = ApplicationDiContainer.Make<NotifyManagerImpl>();//initializer.NotifyManager;
 
             MessageWindowHandleSource = new HwndSource(new HwndSourceParameters(nameof(MessageWindowHandleSource)) {
