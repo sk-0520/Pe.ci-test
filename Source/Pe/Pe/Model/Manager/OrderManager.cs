@@ -44,6 +44,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
         #endregion
     }
 
+    /// <summary>
+    /// アプリケーションに対して指示発行を受け付ける役所。
+    /// </summary>
     public interface IOrderManager
     {
         #region function

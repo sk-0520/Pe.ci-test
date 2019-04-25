@@ -9,6 +9,9 @@ using ContentTypeTextNet.Pe.Main.Model.Element;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Manager
 {
+    /// <summary>
+    /// アプリケーションからの通知を発行する。
+    /// </summary>
     public interface INotifyManager
     {
         #region function
