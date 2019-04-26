@@ -7,6 +7,8 @@
   xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
   xmlns:prism="http://prismlibrary.com/"
 
+  xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+
   xmlns:cttn_lib_shared_lib_view_converter="clr-namespace:ContentTypeTextNet.Pe.Library.Shared.Library.View.Converter;assembly=Shared.Library"
 
 
