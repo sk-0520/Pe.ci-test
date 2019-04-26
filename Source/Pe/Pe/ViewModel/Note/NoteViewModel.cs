@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
@@ -162,6 +163,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
         public DependencyObject CaptionCloseImage => NoteTheme.GetCaptionImage(NoteCaption.Close, false, ColorPair.Create(Model.ForegroundColor, Model.BackgroundColor));
 
         public double MinHeight => CaptionHeight + BorderThickness.Top + BorderThickness.Bottom;
+
+        public ObservableCollection<Color> StandardColors { get; set; } = new ObservableCollection<Color>(new [] {
+            Colors.White,
+            Colors.Black,
+            Colors.Red,
+            Colors.Lime,
+            Colors.Blue,
+        });
         #endregion
 
         #region command

@@ -11,7 +11,6 @@
 
   xmlns:cttn_lib_shared_lib_view_converter="clr-namespace:ContentTypeTextNet.Pe.Library.Shared.Library.View.Converter;assembly=Shared.Library"
 
-
   Title="NoteWindow"
   Left="{Binding WindowLeft, Mode=TwoWay, Delay=500}"
   Top="{Binding WindowTop, Mode=TwoWay, Delay=500}"
@@ -205,7 +204,8 @@
       </ContentControl>
     </Border>
 
-    <Popup>
+    <!-- IsOpen="{Binding IsActive, ElementName=root, Mode=OneWay}" -->
+    <Popup Placement="Left" PlacementTarget="{Binding ElementName=root}" IsOpen="True" >
       <Border Style="{StaticResource PopupMenuBorder}">
         <Grid>
           <StackPanel>
@@ -238,6 +238,23 @@
                 </Grid>
 
                 <Grid>
+                  <Grid.Resources>
+                    <Style TargetType="xctk:ColorPicker" BasedOn="{StaticResource {x:Type xctk:ColorPicker}}">
+                      <Setter Property="Focusable" Value="False" />
+                      <Setter Property="UsingAlphaChannel" Value="False" />
+                      <Setter Property="ColorMode" Value="ColorCanvas" />
+                      <Setter Property="DisplayColorAndName" Value="False" />
+                      <Setter Property="ShowTabHeaders" Value="True" />
+                      <Setter Property="ShowAvailableColors" Value="True" />
+                      <Setter Property="AvailableColorsSortingMode" Value="HueSaturationBrightness" />
+                      <Setter Property="ShowDropDownButton" Value="True" />
+                      <Setter Property="ShowStandardColors" Value="False" />
+                      <Setter Property="StandardButtonHeader" Value="pallet" />
+                      <Setter Property="AdvancedButtonHeader" Value="custom" />
+                      <Setter Property="AvailableColorsHeader" Value="colors" />
+                      <Setter Property="DisplayColorTooltip" Value="False" />
+                    </Style>
+                  </Grid.Resources>
                   <Grid.RowDefinitions>
                     <RowDefinition />
                     <RowDefinition />
@@ -248,10 +265,10 @@
                   </Grid.ColumnDefinitions>
 
                   <Label Grid.Row="0" Grid.Column="0">foreground</Label>
-                  <Control Grid.Row="0" Grid.Column="1" />
+                  <xctk:ColorPicker Grid.Row="0" Grid.Column="1" />
 
                   <Label Grid.Row="1" Grid.Column="0">background</Label>
-                  <Control Grid.Row="1" Grid.Column="1" />
+                  <xctk:ColorPicker Grid.Row="1" Grid.Column="1" />
                 </Grid>
 
                 <Grid>
