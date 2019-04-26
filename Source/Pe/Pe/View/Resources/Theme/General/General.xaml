@@ -75,10 +75,14 @@
   </Style>
 
   <Style x:Key="PopupMenuBorder" TargetType="Border">
-    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="TextElement.Foreground" Value="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}" />
+    <Setter Property="TextElement.FontFamily" Value="{DynamicResource {x:Static SystemFonts.MenuFontFamilyKey}}" />
+    <Setter Property="TextElement.FontSize" Value="{DynamicResource {x:Static SystemFonts.MenuFontSizeKey}}" />
+    <Setter Property="TextElement.FontStyle" Value="{DynamicResource {x:Static SystemFonts.MenuFontStyleKey}}" />
     <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" />
-    <Setter Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.MenuBarColor}}" />
     <Setter Property="Padding" Value="4" />
+    <Setter Property="BorderThickness" Value="1" />
   </Style>
 
   <Style x:Key="PopupMenu" TargetType="Popup">
@@ -104,6 +108,5 @@
       </Setter.Value>
     </Setter>
   </Style>
-
 
 </ResourceDictionary>

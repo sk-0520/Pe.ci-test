@@ -22,8 +22,8 @@
 
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   mc:Ignorable="d"
-  d:DesignWidth="200"
-  d:DesignHeight="200"
+  d:DesignWidth="100"
+  d:DesignHeight="100"
 >
   <Window.Resources>
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
@@ -203,6 +203,106 @@
       </ContentControl>
     </Border>
 
+    <Popup>
+      <Border Style="{StaticResource PopupMenuBorder}">
+        <Grid>
+          <StackPanel>
+            <GroupBox Style="{StaticResource HeaderGroupBox}" Header="input">
+              <Grid>
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition />
+                  <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <Button Grid.Column="0" Content="title" />
+                <Button Grid.Column="1" Content="content" />
+              </Grid>
+            </GroupBox>
+
+            <GroupBox Style="{StaticResource HeaderGroupBox}" Header="format">
+              <StackPanel Grid.IsSharedSizeScope="True">
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="FromatLabel" />
+                    <ColumnDefinition Width="*" />
+                  </Grid.ColumnDefinitions>
+
+                  <Label Grid.Column="0">kind</Label>
+                  <StackPanel Grid.Column="1" Orientation="Horizontal">
+                    <RadioButton Content="plain" />
+                    <RadioButton Content="rtf" />
+                    <RadioButton Content="link" />
+                  </StackPanel>
+                </Grid>
+
+                <Grid>
+                  <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                  </Grid.RowDefinitions>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="FromatLabel" />
+                    <ColumnDefinition Width="*" />
+                  </Grid.ColumnDefinitions>
+
+                  <Label Grid.Row="0" Grid.Column="0">foreground</Label>
+                  <Control Grid.Row="0" Grid.Column="1" />
+
+                  <Label Grid.Row="1" Grid.Column="0">background</Label>
+                  <Control Grid.Row="1" Grid.Column="1" />
+                </Grid>
+
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="FromatLabel" />
+                    <ColumnDefinition Width="*" />
+                  </Grid.ColumnDefinitions>
+
+                  <Label Grid.Column="0">font</Label>
+                  <Control Grid.Column="1" />
+                </Grid>
+
+              </StackPanel>
+            </GroupBox>
+
+            <GroupBox Style="{StaticResource HeaderGroupBox}" Header="status">
+              <StackPanel>
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                  </Grid.ColumnDefinitions>
+
+                  <CheckBox Grid.Column="0" Content="lock" />
+                  <CheckBox Grid.Column="1" Content="small" />
+                  <CheckBox Grid.Column="2" Content="topmost" />
+                </Grid>
+                <CheckBox Grid.Column="2" Content="topmost" />
+              </StackPanel>
+            </GroupBox>
+
+            <GroupBox Style="{StaticResource HeaderGroupBox}" Header="operation">
+              <StackPanel>
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                  </Grid.ColumnDefinitions>
+
+                  <Button Grid.Column="0" Content="copy" />
+                  <Button Grid.Column="1" Content="close" />
+                  <Button Grid.Column="2" Content="remove" />
+                </Grid>
+
+              </StackPanel>
+            </GroupBox>
+          </StackPanel>
+        </Grid>
+      </Border>
+
+    </Popup>
 
   </Grid>
 </Window>
