@@ -92,5 +92,18 @@
     <Setter Property="Focusable" Value="False" />
   </Style>
 
+  <Style x:Key="HeaderGroupBox" TargetType="GroupBox" BasedOn="{StaticResource {x:Type GroupBox}}">
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="GroupBox">
+          <StackPanel>
+            <ContentPresenter Margin="4" ContentSource="Header" RecognizesAccessKey="True" />
+            <ContentPresenter />
+          </StackPanel>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
 
 </ResourceDictionary>

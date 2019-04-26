@@ -278,6 +278,9 @@
     <Compile Include="View\LauncherToolbar\LauncherContentControl.xaml.cs">
       <DependentUpon>LauncherContentControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Note\NoteCustomizeWindow.xaml.cs">
+      <DependentUpon>NoteCustomizeWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Note\NoteWindow.xaml.cs">
       <DependentUpon>NoteWindow.xaml</DependentUpon>
     </Compile>
@@ -370,6 +373,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\ManagerResource.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Note\NoteCustomizeWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

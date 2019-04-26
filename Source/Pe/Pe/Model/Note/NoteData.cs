@@ -26,6 +26,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Note
     {
         Plain,
         Rtf,
+        Link,
     }
 
     [Flags]
