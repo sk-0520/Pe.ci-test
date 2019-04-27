@@ -90,6 +90,10 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database.Vender.Pub
 
         public override bool SupportedTransactionDDL { get; } = true;
 
+        public override string ToStatementTableName(string tableName) => "[" + tableName + "]";
+        public override string ToStatementColumnName(string columnName) => "[" + columnName + "]";
+        public override string ToStatementParameterName(string parameterName, int index) => "@" + parameterName;
+
         #endregion
     }
 }

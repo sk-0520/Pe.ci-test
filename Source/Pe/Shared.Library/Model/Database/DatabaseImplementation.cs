@@ -64,6 +64,10 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
         /// <returns></returns>
         string PreFormatStatement(string statement);
 
+        string ToStatementTableName(string tableName);
+        string ToStatementColumnName(string columnName);
+        string ToStatementParameterName(string parameterName, int index);
+
         #endregion
     }
 
@@ -139,6 +143,9 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
 
         public virtual string PreFormatStatement(string statement) => statement;
 
+        public virtual string ToStatementTableName(string tableName) => tableName;
+        public virtual string ToStatementColumnName(string columnName) => columnName;
+        public virtual string ToStatementParameterName(string parameterName, int index) => "@" + parameterName;
 
         #endregion
     }
