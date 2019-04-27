@@ -64,7 +64,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             return result;
         }
 
-        public int ExecuteUpdate(DatabaseUpdateStatementBuilder builder)
+        protected int ExecuteUpdate(DatabaseUpdateStatementBuilder builder)
         {
             var statement = builder.BuildStatement();
             var param = builder.Parameters;
