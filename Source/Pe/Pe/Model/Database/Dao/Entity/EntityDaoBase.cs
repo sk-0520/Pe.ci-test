@@ -32,8 +32,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             "UpdatedAccount",
             "UpdatedProgramName",
             "UpdatedProgramVersion",
-            "UpdatedCount",
+            UpdatedCount,
         };
+        protected static string UpdatedCount { get; } = "UpdatedCount";
 
         public virtual string TableName
         {
@@ -53,12 +54,16 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
         {
             var result = new DatabaseUpdateStatementBuilder(Implementation, Logger.Factory);
             result.SetTable(TableName);
-            foreach(var ignoreColumn in CommonCreateColumns.Concat(CommonUpdateColumns)) {
+            foreach(var ignoreColumn in CommonUpdateColumns.Where(i => i != UpdatedCount)) {
                 result.AddIgnoreWhere(ignoreColumn);
             }
             var mapping = databaseCommonStatus.CreateCommonDtoMapping();
             foreach(var pair in mapping) {
-                result.AddValue(pair.Key, pair.Value);
+                if(pair.Key == UpdatedCount) {
+                    result.AddPlain(UpdatedCount, $"{Implementation.ToStatementColumnName(UpdatedCount)} + 1");
+                } else if(CommonUpdateColumns.Contains(pair.Key)) {
+                    result.AddValue(pair.Key, pair.Value);
+                }
             }
 
             return result;

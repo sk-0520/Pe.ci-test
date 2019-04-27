@@ -59,6 +59,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
 
         ISet<string> UpdateColumns { get; } = new HashSet<string>();
         ISet<string> KeyColumns { get; } = new HashSet<string>();
+        ISet<string> PlainValues { get; } = new HashSet<string>();
 
         ISet<string> IgnoreWhereParameters { get; } = new HashSet<string>();
 
@@ -88,6 +89,16 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
             return this;
         }
 
+        public DatabaseUpdateStatementBuilder AddPlain(string column, string value)
+        {
+            UpdateColumns.Add(column);
+            ParametersImpl.Add(column, value);
+            PlainValues.Add(column);
+            IgnoreWhereParameters.Add(column);
+
+            return this;
+        }
+
         public DatabaseUpdateStatementBuilder AddIgnoreWhere(string column)
         {
             IgnoreWhereParameters.Add(column);
@@ -107,12 +118,17 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
             sb.Append('\t');
             sb.AppendLine(Implementation.ToStatementTableName(TableName));
 
+            var parameterIndex = 0;
             sb.AppendLine("set");
             foreach(var item in ParametersImpl.Keys.Select((k, i) => (index: i, key: k))) {
                 sb.Append('\t');
                 sb.Append(Implementation.ToStatementColumnName(item.key));
                 sb.Append('=');
-                sb.Append(Implementation.ToStatementParameterName(item.key, item.index));
+                if(PlainValues.Contains(item.key)) {
+                    sb.Append(Parameters[item.key]);
+                } else {
+                    sb.Append(Implementation.ToStatementParameterName(item.key, parameterIndex++));
+                }
                 if(item.index + 1 != ParametersImpl.Count) {
                     sb.Append(',');
                 }
@@ -121,7 +137,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
 
             sb.AppendLine("where");
             var enabledWhereItems = ParametersImpl.Keys.Except(IgnoreWhereParameters).ToList();
-            var keyItems = enabledWhereItems.Intersect(KeyColumns).Select(i => (column:i, equal: true));
+            var keyItems = enabledWhereItems.Intersect(KeyColumns).Select(i => (column: i, equal: true));
             var paramItems = enabledWhereItems.Except(KeyColumns).Select(i => (column: i, equal: false));
             var whereItems = keyItems.Concat(paramItems).ToArray();
             for(var i = 0; i < whereItems.Length; i++) {
@@ -133,7 +149,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
                 } else {
                     sb.Append("!=");
                 }
-                sb.Append(Implementation.ToStatementParameterName(whereItem.column, i + ParametersImpl.Count + 1));
+                sb.Append(Implementation.ToStatementParameterName(whereItem.column, parameterIndex++));
                 sb.AppendLine();
 
                 if(i + 1 != whereItems.Length) {
