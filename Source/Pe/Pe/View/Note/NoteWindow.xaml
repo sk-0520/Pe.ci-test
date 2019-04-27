@@ -10,6 +10,7 @@
   xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
 
   xmlns:cttn_lib_shared_lib_view_converter="clr-namespace:ContentTypeTextNet.Pe.Library.Shared.Library.View.Converter;assembly=Shared.Library"
+  xmlns:app_view="clr-namespace:ContentTypeTextNet.Pe.Main.View"
 
   Title="NoteWindow"
   Left="{Binding WindowLeft, Mode=TwoWay, Delay=500}"
@@ -278,7 +279,7 @@
                   </Grid.ColumnDefinitions>
 
                   <Label Grid.Column="0">font</Label>
-                  <Control Grid.Column="1" />
+                  <app_view:FontSelectControl Grid.Column="1" />
                 </Grid>
 
               </StackPanel>

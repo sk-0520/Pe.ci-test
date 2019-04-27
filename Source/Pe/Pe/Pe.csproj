@@ -275,6 +275,10 @@
     <Compile Include="View\Accept\AcceptWindow.xaml.cs">
       <DependentUpon>AcceptWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Converter\FontFamilyToNameConverter.cs" />
+    <Compile Include="View\FontSelectControl.xaml.cs">
+      <DependentUpon>FontSelectControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Extend\AppDesktopToolbarExtend.cs" />
     <Compile Include="View\ImageViewerControl.xaml.cs">
       <DependentUpon>ImageViewerControl.xaml</DependentUpon>
@@ -358,10 +362,13 @@
     <Folder Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherCommandsEntityDao\" />
     <Folder Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherDirectoriesEntityDao\" />
     <Folder Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherDirectoryItemsEntityDao\" />
-    <Folder Include="View\Converter\" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="View\Accept\AcceptWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\FontSelectControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
