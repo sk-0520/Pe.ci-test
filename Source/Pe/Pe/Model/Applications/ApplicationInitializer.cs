@@ -266,6 +266,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Applications
                 .Register<ILauncherToolbarTheme, LauncherToolbarTheme>(DiLifecycle.Transient)
                 .Register<ILauncherGroupTheme, LauncherGroupTheme>(DiLifecycle.Transient)
                 .Register<INoteTheme, NoteTheme>(DiLifecycle.Transient)
+                .Register<IFontTheme, FontTheme>(DiLifecycle.Transient)
             ;
 
             ApplicationDiContainer.Initialize(() => container);
@@ -302,7 +303,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Applications
 
             var commandLine = CreateCommandLine(arguments);
             var environmentParameters = InitializeEnvironment(commandLine);
-            
+
             var logger = CreateLogger(commandLine.GetValue(CommandLineKeyLog, string.Empty), commandLine.ExistsSwitch(CommandLineSwitchForceLog));
             OutputStartupLog(logger);
 

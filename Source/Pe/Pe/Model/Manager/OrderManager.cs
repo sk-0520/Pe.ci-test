@@ -25,6 +25,7 @@ using ContentTypeTextNet.Pe.Main.View.LauncherToolbar;
 using ContentTypeTextNet.Pe.Main.View.Note;
 using ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar;
 using ContentTypeTextNet.Pe.Main.ViewModel.Note;
+using ContentTypeTextNet.Pe.Main.Model.Element.Font;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Manager
 {
@@ -55,6 +56,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
         LauncherToolbarElement CreateLauncherToolbarElement(Screen dockScreen, ReadOnlyObservableCollection<LauncherGroupElement> launcherGroups);
         LauncherItemElement GetOrCreateLauncherItemElement(Guid launcherItemId);
         NoteElement CreateNoteElement(Guid noteId, Screen screen, NotePosition notePosition);
+        FontElement CreateFontElement(Guid fontId);
 
         WindowItem CreateLauncherToolbarWindow(LauncherToolbarElement element);
         WindowItem CreateNoteWindow(NoteElement element);
@@ -117,6 +119,13 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
                     ? DiContainer.Build<NoteElement>(noteId, DiDefaultParameter.Create<Screen>(), notePosition)
                     : DiContainer.Build<NoteElement>(noteId, screen, notePosition)
                 ;
+                element.Initialize();
+                return element;
+            }
+
+            public FontElement CreateFontElement(Guid fontId)
+            {
+                var element = DiContainer.Build<FontElement>(fontId);
                 element.Initialize();
                 return element;
             }

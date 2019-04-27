@@ -29,6 +29,7 @@ using ContentTypeTextNet.Pe.Main.Model.Data;
 using ContentTypeTextNet.Pe.Main.View.LauncherToolbar;
 using ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar;
 using ContentTypeTextNet.Pe.Main.ViewModel.Manager;
+using ContentTypeTextNet.Pe.Main.Model.Element.Font;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Manager
 {
@@ -285,6 +286,10 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
             return OrderManager.CreateNoteElement(noteId, screen, notePosition);
         }
 
+        public FontElement CreateFontElement(Guid fontId)
+        {
+            return OrderManager.CreateFontElement(fontId);
+        }
 
         public WindowItem CreateLauncherToolbarWindow(LauncherToolbarElement element)
         {

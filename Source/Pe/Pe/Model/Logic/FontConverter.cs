@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 
@@ -62,6 +63,33 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
 
             return fontFamily.Source;
         }
+
+        public bool IsBold(FontWeight fontWeight)
+        {
+            return FontWeights.Normal.ToOpenTypeWeight() < fontWeight.ToOpenTypeWeight();
+        }
+
+        public bool IsItalic(FontStyle fontStyle)
+        {
+            return FontStyles.Normal != fontStyle;
+        }
+
+        public FontWeight ToWeight(bool bold)
+        {
+            return bold
+                ? FontWeights.Bold
+                : FontWeights.Normal
+            ;
+        }
+
+        public FontStyle ToStyle(bool italic)
+        {
+            return italic
+                ? FontStyles.Normal
+                : FontStyles.Italic
+            ;
+        }
+
 
         #endregion
     }

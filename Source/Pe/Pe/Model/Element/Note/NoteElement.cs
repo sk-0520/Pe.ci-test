@@ -18,6 +18,7 @@ using ContentTypeTextNet.Pe.Main.Model.Applications;
 using ContentTypeTextNet.Pe.Main.Model.Data;
 using ContentTypeTextNet.Pe.Main.Model.Database.Dao.Domain;
 using ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity;
+using ContentTypeTextNet.Pe.Main.Model.Element.Font;
 using ContentTypeTextNet.Pe.Main.Model.Logic;
 using ContentTypeTextNet.Pe.Main.Model.Manager;
 using ContentTypeTextNet.Pe.Main.Model.Theme;
@@ -77,9 +78,12 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
         IFileDatabaseBarrier FileDatabaseBarrier { get; }
         IDatabaseStatementLoader StatementLoader { get; }
         INoteTheme NoteTheme { get; }
+        public FontElement FontElement { get; private set; }
 
         DatabaseLazyWriter MainDatabaseLazyWriter { get; }
         UniqueKeyPool UniqueKeyPool { get; } = new UniqueKeyPool();
+
+        public FontElement Font { get; private set; }
 
         bool ViewCreated { get; set; }
 
@@ -250,6 +254,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
                 noteData = CreateNoteData(deviceCursorLocation);
                 //isCreateMode = true;
             }
+            FontElement = OrderManager.CreateFontElement(noteData.FontId);
 
             DockScreen = GetDockScreen(noteData.ScreenName);
 

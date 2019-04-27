@@ -201,6 +201,7 @@
     <Compile Include="Model\Data\Dto\Domain\LauncherItemIconRowDto.cs" />
     <Compile Include="Model\Data\Dto\Domain\LauncherToolbarScreenRowDto.cs" />
     <Compile Include="Model\Data\Dto\Domain\NoteDomainRowDto.cs" />
+    <Compile Include="Model\Data\Dto\Entity\FontsEntityDto.cs" />
     <Compile Include="Model\Data\Dto\Entity\LauncherItemIconsEntityDto.cs" />
     <Compile Include="Model\Data\Dto\Entity\NoteContentsEntityDto.cs" />
     <Compile Include="Model\Data\Dto\Entity\NoteLayoutsEntityDto.cs" />
@@ -213,6 +214,7 @@
     <Compile Include="Model\Data\Dto\Entity\LauncherItemsEntityDto.cs" />
     <Compile Include="Model\Data\Dto\Entity\LauncherTagsEntityDto.cs" />
     <Compile Include="Model\Data\Dto\Entity\LauncherToolbarsEntityDto.cs" />
+    <Compile Include="Model\Element\Font\FontElement.cs" />
     <Compile Include="Model\Element\IViewCloseReceiver.cs" />
     <Compile Include="Model\Element\IViewShowStarter.cs" />
     <Compile Include="Model\Element\LauncherGroup\LauncherGroupElement.cs" />
@@ -228,6 +230,7 @@
     <Compile Include="Model\Logic\ScreenOperator.cs" />
     <Compile Include="Model\Manager\ApplicationManager.MessageWindow.cs" />
     <Compile Include="Model\Data\NoteData.cs" />
+    <Compile Include="Model\Theme\FontTheme.cs" />
     <Compile Include="Model\Theme\LauncherGroupTheme.cs" />
     <Compile Include="Model\Theme\NoteTheme.cs" />
     <Compile Include="Model\Theme\Theme.cs" />
@@ -416,6 +419,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Domain\NoteDomainDao\SelectNoteScreens.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\FontsEntityDao\SelectFont.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherFilesEntityDao\InsertSimple.sql">

@@ -27,12 +27,14 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data
         /// フォントを斜体にするか。
         /// </summary>
         bool Italic { get; }
+        bool Underline { get; }
+        bool LineThrough { get; }
 
         #endregion
     }
 
     [Serializable, DataContract]
-    public class FontData: IReadOnlyFontData
+    public class FontData : IReadOnlyFontData
     {
         #region IReadOnlyFontData
 
@@ -56,6 +58,11 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data
         /// </summary>
         [DataMember]
         public bool Italic { get; set; }
+
+        [DataMember]
+        public bool Underline { get; set; }
+        [DataMember]
+        public bool LineThrough { get; set; }
 
         #endregion
     }
