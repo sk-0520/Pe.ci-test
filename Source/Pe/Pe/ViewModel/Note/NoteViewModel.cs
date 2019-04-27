@@ -51,6 +51,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
             };
             WindowAreaChangedTimer.Tick += WindowAreaChangedTimer_Tick;
 
+            Font = new NoteFontViewModel(Model.FontElement, DispatcherWapper, Logger.Factory);
+
             PropertyChangedHooker = new PropertyChangedHooker(dispatcherWapper, Logger.Factory);
             PropertyChangedHooker.AddHook(nameof(Model.IsVisible), nameof(IsVisible));
             PropertyChangedHooker.AddHook(nameof(Model.IsTopmost), nameof(IsTopmost));
@@ -74,6 +76,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
         IDisposable WindowHandleSource { get; set; }
 
         DispatcherTimer WindowAreaChangedTimer { get; }
+
+        public NoteFontViewModel Font { get; }
 
         public bool IsVisible => Model.IsVisible;
 

@@ -279,7 +279,10 @@
                   </Grid.ColumnDefinitions>
 
                   <Label Grid.Column="0">font</Label>
-                  <app_view:FontSelectControl Grid.Column="1" />
+                  <app_view:FontSelectControl
+                    Grid.Column="1"
+                    SelectedFontFamily="{Binding Font.FontFamily}"
+                  />
                 </Grid>
 
               </StackPanel>

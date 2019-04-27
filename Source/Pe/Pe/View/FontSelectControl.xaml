@@ -17,7 +17,7 @@
     <app_view_converter:FontFamilyToNameConverter x:Key="FontFamilyToNameConverter" />
   </UserControl.Resources>
   <StackPanel Orientation="Vertical">
-    <ComboBox x:Name="listFont" SelectedValue="{Binding FamilyName, ElementName=root}" SelectedValuePath="Source" ItemsSource="{Binding ItemsSource, ElementName=root}">
+    <ComboBox x:Name="listFont" SelectedValue="{Binding SelectedFontFamily, ElementName=root}" SelectedValuePath="Source" ItemsSource="{Binding ItemsSource, ElementName=root}">
       <ComboBox.ItemsPanel>
         <ItemsPanelTemplate>
           <!-- TODO: サイズ固定-->

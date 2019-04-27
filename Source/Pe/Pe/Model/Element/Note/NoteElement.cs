@@ -83,8 +83,6 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
         DatabaseLazyWriter MainDatabaseLazyWriter { get; }
         UniqueKeyPool UniqueKeyPool { get; } = new UniqueKeyPool();
 
-        public FontElement Font { get; private set; }
-
         bool ViewCreated { get; set; }
 
         public bool IsTopmost
@@ -254,7 +252,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
                 noteData = CreateNoteData(deviceCursorLocation);
                 //isCreateMode = true;
             }
-            FontElement = OrderManager.CreateFontElement(noteData.FontId);
+
+            FontElement = OrderManager.CreateFontElement(noteData.FontId, UpdateFontId);
 
             DockScreen = GetDockScreen(noteData.ScreenName);
 
@@ -267,6 +266,12 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
             ContentKind = noteData.ContentKind;
             ForegroundColor = noteData.ForegdoundColor;
             BackgroundColor = noteData.BackgroundColor;
+        }
+
+        void UpdateFontId(FontElement fontElement, IDatabaseCommander commander, IDatabaseImplementation implementation)
+        {
+            var notesEntityDao = new NotesEntityDao(commander, StatementLoader, implementation, Logger.Factory);
+            notesEntityDao.UpdateFontId(NoteId, fontElement.FontId, DatabaseCommonStatus.CreateCurrentAccount());
         }
 
         public void SwitchCompact()
@@ -365,6 +370,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
             if(!IsDisposed) {
                 if(disposing) {
                     MainDatabaseLazyWriter.Dispose();
+                    FontElement?.Dispose();
                 }
             }
 

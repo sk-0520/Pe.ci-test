@@ -22,6 +22,13 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
         {
             #region property
 
+            public static string FontId { get; } = "FontId";
+            public static string FamilyName { get; } = "FamilyName";
+            public static string Height { get; } = "Height";
+            public static string Bold { get; } = "Bold";
+            public static string Italic { get; } = "Italic";
+            public static string Underline { get; } = "Underline";
+            public static string Strike { get; } = "Strike";
 
             #endregion
         }
@@ -44,6 +51,21 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             return data;
         }
 
+        FontsRowDto ConvertFromData(IReadOnlyFontData data, IDatabaseCommonStatus databaseCommonStatus)
+        {
+            var dto = new FontsRowDto() {
+                FamilyName = data.Family,
+                Height = data.Size,
+                Bold = data.Bold,
+                Italic = data.Italic,
+                Underline = data.Underline,
+                Strike = data.LineThrough,
+            };
+            databaseCommonStatus.WriteCommon(dto);
+
+            return dto;
+        }
+
         public FontData SelectFont(Guid fontId)
         {
             var statement = StatementLoader.LoadStatementByCurrent();
@@ -56,6 +78,23 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             }
 
             return null;
+        }
+
+        public bool InsertFont(Guid fontId, FontData fontData, IDatabaseCommonStatus databaseCommonStatus)
+        {
+            var statement = StatementLoader.LoadStatementByCurrent();
+            var param = ConvertFromData(fontData, databaseCommonStatus);
+            param.FontId = fontId;
+            return Commander.Execute(statement, param) == 1;
+        }
+
+        public bool UpdateFontFamily(Guid fontId, string fontFamily, IDatabaseCommonStatus databaseCommonStatus)
+        {
+            var statement = StatementLoader.LoadStatementByCurrent();
+            var param = databaseCommonStatus.CreateCommonDtoMapping();
+            param[Column.FontId] = fontId;
+            param[Column.FamilyName] = fontFamily;
+            return Commander.Execute(statement, param) == 1;
         }
 
         #endregion

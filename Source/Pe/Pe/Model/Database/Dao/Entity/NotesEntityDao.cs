@@ -27,6 +27,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             public static string IsTopmost { get; } = "IsTopmost";
             public static string IsLocked { get; } = "IsLocked";
             public static string Title { get; } = "Title";
+            public static string FontId { get; } = "FontId";
 
             #endregion
         }
@@ -138,6 +139,15 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             var param = databaseCommonStatus.CreateCommonDtoMapping();
             param[Column.NoteId] = noteId;
             param[Column.Title] = title;
+            return Commander.Execute(statement, param) == 1;
+        }
+
+        public bool UpdateFontId(Guid noteId, Guid fontId, IDatabaseCommonStatus databaseCommonStatus)
+        {
+            var statement = StatementLoader.LoadStatementByCurrent();
+            var param = databaseCommonStatus.CreateCommonDtoMapping();
+            param[Column.NoteId] = noteId;
+            param[Column.FontId] = fontId;
             return Commander.Execute(statement, param) == 1;
         }
 

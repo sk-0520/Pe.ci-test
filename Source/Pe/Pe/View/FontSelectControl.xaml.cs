@@ -29,28 +29,28 @@ namespace ContentTypeTextNet.Pe.Main.View
 
         #region FamilyNameProperty
 
-        public static readonly DependencyProperty FamilyNameProperty = DependencyProperty.Register(
-            nameof(FamilyName),
+        public static readonly DependencyProperty SelectedFontFamilyProperty = DependencyProperty.Register(
+            nameof(SelectedFontFamily),
             typeof(FontFamily),
             typeof(FontSelectControl),
             new FrameworkPropertyMetadata(
                 SystemFonts.MessageFontFamily,
                 FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
-                new PropertyChangedCallback(OnFamilyNameChanged)
+                new PropertyChangedCallback(OnSelectedFontFamilyChanged)
             )
         );
 
-        public FontFamily FamilyName
+        public FontFamily SelectedFontFamily
         {
-            get { return (FontFamily)GetValue(FamilyNameProperty); }
-            set { SetValue(FamilyNameProperty, value); }
+            get { return (FontFamily)GetValue(SelectedFontFamilyProperty); }
+            set { SetValue(SelectedFontFamilyProperty, value); }
         }
 
-        static void OnFamilyNameChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        static void OnSelectedFontFamilyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var ctrl = d as FontSelectControl;
             if(ctrl != null) {
-                ctrl.FamilyName = (FontFamily)e.NewValue;
+                ctrl.SelectedFontFamily = (FontFamily)e.NewValue;
             }
         }
 

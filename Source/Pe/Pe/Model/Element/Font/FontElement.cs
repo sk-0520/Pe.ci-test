@@ -16,6 +16,8 @@ using ContentTypeTextNet.Pe.Main.Model.Theme;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Element.Font
 {
+    public delegate void ParentUpdater(FontElement fontElement, IDatabaseCommander commander, IDatabaseImplementation implementation);
+
     public class FontElement : ElementBase
     {
         #region variable
@@ -27,23 +29,30 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Font
 
         #endregion
 
-        public FontElement(Guid fontId, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, IFontTheme fontTheme, IIdFactory idFactory, ILoggerFactory loggerFactory)
+        public FontElement(Guid fontId, ParentUpdater parentUpdater, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, IFontTheme fontTheme, IIdFactory idFactory, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             FontId = fontId;
+            ParentUpdater = parentUpdater;
             MainDatabaseBarrier = mainDatabaseBarrier;
             StatementLoader = statementLoader;
             FontTheme = fontTheme;
             IdFactory = idFactory;
+
+            MainDatabaseLazyWriter = new DatabaseLazyWriter(MainDatabaseBarrier, Constants.Config.LauncherToolbarMainDatabaseLazyWriterWaitTime, Logger.Factory);
         }
 
         #region property
 
         public Guid FontId { get; private set; }
+        ParentUpdater ParentUpdater { get; }
         IMainDatabaseBarrier MainDatabaseBarrier { get; }
         IDatabaseStatementLoader StatementLoader { get; }
         IFontTheme FontTheme { get; }
         IIdFactory IdFactory { get; }
+
+        DatabaseLazyWriter MainDatabaseLazyWriter { get; }
+        UniqueKeyPool UniqueKeyPool { get; } = new UniqueKeyPool();
 
         public FontFamily FontFamily
         {
@@ -99,6 +108,41 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Font
             FontStyle = fc.ToStyle(data.Italic);
         }
 
+        void CreateAndSaveFontId(IDatabaseCommander commander, IDatabaseImplementation implementation)
+        {
+            var fontId = IdFactory.CreateFontId();
+            var fontConverter = new FontConverter(Logger.Factory);
+
+            var fontData = new FontData() {
+                Family = fontConverter.GetOriginalFontFamilyName(FontFamily),
+                Size = FontSize,
+                Bold = fontConverter.IsBold(FontWeight),
+                Italic = fontConverter.IsItalic(FontStyle),
+            };
+
+            var dao = new FontsEntityDao(commander, StatementLoader, implementation, Logger.Factory);
+            dao.InsertFont(fontId, fontData, DatabaseCommonStatus.CreateCurrentAccount());
+
+            FontId = fontId;
+            RaisePropertyChanged(nameof(FontId));
+
+            ParentUpdater(this, commander, implementation);
+        }
+
+        public void ChangeFontFamily(FontFamily fontFamily)
+        {
+            FontFamily = fontFamily;
+            MainDatabaseLazyWriter.Stock(c => {
+                if(IsDefaultFont) {
+                    CreateAndSaveFontId(c, c.Implementation);
+                }
+
+                var fontConverter = new FontConverter(Logger.Factory);
+                var dao = new FontsEntityDao(c, StatementLoader, c.Implementation, Logger.Factory);
+                dao.UpdateFontFamily(FontId, fontConverter.GetOriginalFontFamilyName(FontFamily), DatabaseCommonStatus.CreateCurrentAccount());
+            });
+        }
+
         #endregion
 
         #region ElementBase
@@ -106,6 +150,17 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Font
         protected override void InitializeImpl()
         {
             LoadFont();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                if(disposing) {
+                    MainDatabaseLazyWriter.Dispose();
+                }
+            }
+
+            base.Dispose(disposing);
         }
 
         #endregion

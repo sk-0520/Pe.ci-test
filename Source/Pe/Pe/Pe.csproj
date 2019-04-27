@@ -259,6 +259,7 @@
     <Compile Include="Model\Element\Startup\StartupElement.cs" />
     <Compile Include="ViewModel\Accept\AcceptViewModel.cs" />
     <Compile Include="Model\Logic\BuildStatus.cs" />
+    <Compile Include="ViewModel\Font\FontViewModel.cs" />
     <Compile Include="ViewModel\IconViewer\IconViewerViewModel.cs" />
     <Compile Include="ViewModel\IDialogCommand.cs" />
     <Compile Include="ViewModel\IViewLifecycleReceiver.cs" />
@@ -271,6 +272,7 @@
     <Compile Include="ViewModel\LauncherItem\LauncherSeparatorItemViewModel.cs" />
     <Compile Include="ViewModel\LauncherToolbar\LauncherToolbarNotifyAreaViewModel.cs" />
     <Compile Include="ViewModel\Manager\ManagerViewModel.cs" />
+    <Compile Include="ViewModel\Note\NoteFontViewModel.cs" />
     <Compile Include="ViewModel\Note\NoteViewModel.cs" />
     <Compile Include="ViewModel\RunningStatusViewModel.cs" />
     <Compile Include="ViewModel\Startup\ImportProgramsViewModel.cs" />
@@ -421,6 +423,12 @@
     <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Domain\NoteDomainDao\SelectNoteScreens.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\FontsEntityDao\UpdateFontFamily.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\FontsEntityDao\InsertFont.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\FontsEntityDao\SelectFont.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -521,6 +529,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\NotesEntityDao\UpdateTitle.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\NotesEntityDao\UpdateFontId.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\NotesEntityDao\UpdateTopmost.sql">
