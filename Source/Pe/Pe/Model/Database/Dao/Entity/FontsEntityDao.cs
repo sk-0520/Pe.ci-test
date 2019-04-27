@@ -97,6 +97,14 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             return Commander.Execute(statement, param) == 1;
         }
 
+        public bool UpdateBold(Guid fontId, bool isBold, IDatabaseCommonStatus databaseCommonStatus)
+        {
+            var builder = CreateUpdateBuilder(databaseCommonStatus);
+            builder.AddKey(Column.FontId, fontId);
+            builder.AddValue(Column.Bold, isBold);
+            return ExecuteUpdate(builder) == 1;
+        }
+
         #endregion
     }
 }

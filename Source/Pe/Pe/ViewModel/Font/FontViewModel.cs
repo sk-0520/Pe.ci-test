@@ -10,6 +10,7 @@ using ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database;
 using ContentTypeTextNet.Pe.Library.Shared.Library.ViewModel;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Element.Font;
+using ContentTypeTextNet.Pe.Main.Model.Logic;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModel.Font
 {
@@ -19,10 +20,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Font
             : base(model, loggerFactory)
         {
             PropertyChangedHooker = new PropertyChangedHooker(dispatcherWapper, Logger.Factory);
-            PropertyChangedHooker.AddHook(nameof(Model.FontFamily), nameof(FontFamily));
+            PropertyChangedHooker.AddHook(nameof(Model.FamilyName), nameof(FontFamily));
             PropertyChangedHooker.AddHook(nameof(Model.FontSize), nameof(FontSize));
-            PropertyChangedHooker.AddHook(nameof(Model.FontStyle), nameof(FontStyle));
-            PropertyChangedHooker.AddHook(nameof(Model.FontWeight), nameof(FontWeight));
+            PropertyChangedHooker.AddHook(nameof(Model.IsItalic), new[] { nameof(IsItalic), nameof(FontStyle) });
+            PropertyChangedHooker.AddHook(nameof(Model.IsBold), new[] { nameof(IsBold), nameof(FontWeight) });
         }
 
         #region property
@@ -32,14 +33,45 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Font
 
         public FontFamily FontFamily
         {
-            get => Model.FontFamily;
-            set => Model.ChangeFontFamily(value);
+            get
+            {
+                var fc = new FontConverter(Logger.Factory);
+                return fc.MakeFontFamily(Model.FamilyName, SystemFonts.MessageFontFamily);
+            }
+            set
+            {
+                var fc = new FontConverter(Logger.Factory);
+                Model.ChangeFamilyName(fc.GetOriginalFontFamilyName(value));
+            }
         }
 
         public double FontSize => Model.FontSize;
-        public FontStyle FontStyle => Model.FontStyle;
-        public FontWeight FontWeight => Model.FontWeight;
+        public FontStyle FontStyle
+        {
+            get
+            {
+                var fc = new FontConverter(Logger.Factory);
+                return fc.ToStyle(Model.IsItalic);
+            }
+        }
+        public FontWeight FontWeight
+        {
+            get
+            {
+                var fc = new FontConverter(Logger.Factory);
+                return fc.ToWeight(Model.IsBold);
+            }
+        }
 
+        public bool IsBold
+        {
+            get => Model.IsBold;
+            set => Model.ChangeBold(value);
+        }
+        public bool IsItalic
+        {
+            get => Model.IsItalic;
+        }
 
         #endregion
 

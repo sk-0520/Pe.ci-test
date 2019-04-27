@@ -282,6 +282,7 @@
                   <app_view:FontSelectControl
                     Grid.Column="1"
                     SelectedFontFamily="{Binding Font.FontFamily}"
+                    IsBold="{Binding Font.IsBold}"
                   />
                 </Grid>
 

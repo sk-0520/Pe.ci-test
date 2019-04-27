@@ -22,9 +22,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Font
     {
         #region variable
 
-        FontFamily _fontFamily;
-        FontStyle _fontStyle;
-        FontWeight _FontWeight;
+        string _familyName;
+        bool _isItalic;
+        bool _isBold;
         double _fontSize;
 
         #endregion
@@ -54,20 +54,21 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Font
         DatabaseLazyWriter MainDatabaseLazyWriter { get; }
         UniqueKeyPool UniqueKeyPool { get; } = new UniqueKeyPool();
 
-        public FontFamily FontFamily
+        public string FamilyName
         {
-            get => this._fontFamily;
-            private set => SetProperty(ref this._fontFamily, value);
+            get => this._familyName;
+            private set => SetProperty(ref this._familyName, value);
         }
-        public FontStyle FontStyle
+
+        public bool IsItalic
         {
-            get => this._fontStyle;
-            private set => SetProperty(ref this._fontStyle, value);
+            get => this._isItalic;
+            private set => SetProperty(ref this._isItalic, value);
         }
-        public FontWeight FontWeight
+        public bool IsBold
         {
-            get => this._FontWeight;
-            private set => SetProperty(ref this._FontWeight, value);
+            get => this._isBold;
+            private set => SetProperty(ref this._isBold, value);
         }
         public double FontSize
         {
@@ -102,10 +103,10 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Font
             Debug.Assert(data != null);
 
             var fc = new FontConverter(Logger.Factory);
-            FontFamily = fc.MakeFontFamily(data.Family, SystemFonts.MessageFontFamily);
+            FamilyName = data.Family;
             FontSize = data.Size;
-            FontWeight = fc.ToWeight(data.Bold);
-            FontStyle = fc.ToStyle(data.Italic);
+            IsBold = data.Bold;
+            IsItalic = data.Italic;
         }
 
         void CreateAndSaveFontId(IDatabaseCommander commander, IDatabaseImplementation implementation)
@@ -114,10 +115,10 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Font
             var fontConverter = new FontConverter(Logger.Factory);
 
             var fontData = new FontData() {
-                Family = fontConverter.GetOriginalFontFamilyName(FontFamily),
+                Family = FamilyName,
                 Size = FontSize,
-                Bold = fontConverter.IsBold(FontWeight),
-                Italic = fontConverter.IsItalic(FontStyle),
+                Bold = IsBold,
+                Italic = IsItalic,
             };
 
             var dao = new FontsEntityDao(commander, StatementLoader, implementation, Logger.Factory);
@@ -129,17 +130,29 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Font
             ParentUpdater(this, commander, implementation);
         }
 
-        public void ChangeFontFamily(FontFamily fontFamily)
+        public void ChangeFamilyName(string familyName)
         {
-            FontFamily = fontFamily;
+            FamilyName = familyName;
             MainDatabaseLazyWriter.Stock(c => {
                 if(IsDefaultFont) {
                     CreateAndSaveFontId(c, c.Implementation);
                 }
 
-                var fontConverter = new FontConverter(Logger.Factory);
                 var dao = new FontsEntityDao(c, StatementLoader, c.Implementation, Logger.Factory);
-                dao.UpdateFontFamily(FontId, fontConverter.GetOriginalFontFamilyName(FontFamily), DatabaseCommonStatus.CreateCurrentAccount());
+                dao.UpdateFontFamily(FontId, FamilyName, DatabaseCommonStatus.CreateCurrentAccount());
+            });
+        }
+
+        public void ChangeBold(bool isBold)
+        {
+            IsBold = isBold;
+            MainDatabaseLazyWriter.Stock(c => {
+                if(IsDefaultFont) {
+                    CreateAndSaveFontId(c, c.Implementation);
+                }
+
+                var dao = new FontsEntityDao(c, StatementLoader, c.Implementation, Logger.Factory);
+                dao.UpdateBold(FontId, IsBold, DatabaseCommonStatus.CreateCurrentAccount());
             });
         }
 

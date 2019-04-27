@@ -27,7 +27,7 @@ namespace ContentTypeTextNet.Pe.Main.View
             InitializeComponent();
         }
 
-        #region FamilyNameProperty
+        #region SelectedFontFamilyProperty
 
         public static readonly DependencyProperty SelectedFontFamilyProperty = DependencyProperty.Register(
             nameof(SelectedFontFamily),
