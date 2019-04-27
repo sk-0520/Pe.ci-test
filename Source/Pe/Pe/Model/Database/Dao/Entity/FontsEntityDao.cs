@@ -88,13 +88,12 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             return Commander.Execute(statement, param) == 1;
         }
 
-        public bool UpdateFontFamily(Guid fontId, string fontFamily, IDatabaseCommonStatus databaseCommonStatus)
+        public bool UpdateFamilyName(Guid fontId, string familyName, IDatabaseCommonStatus databaseCommonStatus)
         {
-            var statement = StatementLoader.LoadStatementByCurrent();
-            var param = databaseCommonStatus.CreateCommonDtoMapping();
-            param[Column.FontId] = fontId;
-            param[Column.FamilyName] = fontFamily;
-            return Commander.Execute(statement, param) == 1;
+            var builder = CreateUpdateBuilder(databaseCommonStatus);
+            builder.AddKey(Column.FontId, fontId);
+            builder.AddValue(Column.FamilyName, familyName);
+            return ExecuteUpdate(builder) == 1;
         }
 
         public bool UpdateBold(Guid fontId, bool isBold, IDatabaseCommonStatus databaseCommonStatus)

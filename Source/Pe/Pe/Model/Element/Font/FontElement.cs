@@ -139,7 +139,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Font
                 }
 
                 var dao = new FontsEntityDao(c, StatementLoader, c.Implementation, Logger.Factory);
-                dao.UpdateFontFamily(FontId, FamilyName, DatabaseCommonStatus.CreateCurrentAccount());
+                dao.UpdateFamilyName(FontId, FamilyName, DatabaseCommonStatus.CreateCurrentAccount());
             });
         }
 

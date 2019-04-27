@@ -141,6 +141,11 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
             Logger.Trace(statement, parameter);
         }
 
+        protected virtual void LoggingExecuteResult(int result, [Timestamp(DateTimeKind.Local)] DateTime startTime, [Timestamp(DateTimeKind.Local)] DateTime endTime)
+        {
+            Logger.Trace($"result: {result}, {endTime - startTime}", new { startTime, endTime });
+        }
+
         #endregion
 
         #region IDatabaseAccessor
@@ -213,7 +218,10 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
         {
             var formattedStatement = Implementation.PreFormatStatement(statement);
             LoggingStatement(formattedStatement, parameter);
-            return BaseConnection.Execute(formattedStatement, parameter, transaction?.Transaction);
+            var startTime = DateTime.Now;
+            var result = BaseConnection.Execute(formattedStatement, parameter, transaction?.Transaction);
+            LoggingExecuteResult(result, startTime, DateTime.Now);
+            return result;
         }
 
         public int Execute(string statement, object parameter = null)
