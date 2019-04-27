@@ -145,6 +145,10 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
         {
             Logger.Trace($"result: {result}, {endTime - startTime}", new { startTime, endTime });
         }
+        protected virtual void LoggingDataTable(DataTable table, [Timestamp(DateTimeKind.Local)] DateTime startTime, [Timestamp(DateTimeKind.Local)] DateTime endTime)
+        {
+            Logger.Trace($"table: {table.TableName} -> {table.Columns.Count} * {table.Rows.Count}, {endTime - startTime}", new { startTime, endTime });
+        }
 
         #endregion
 
@@ -236,7 +240,9 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
             LoggingStatement(formattedStatement, parameter);
 
             var dataTable = new DataTable();
+            var startTime = DateTime.Now;
             dataTable.Load(BaseConnection.ExecuteReader(statement, parameter, transaction?.Transaction));
+            LoggingDataTable(dataTable, startTime, DateTime.Now);
             return dataTable;
         }
 
