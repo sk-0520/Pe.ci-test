@@ -19,7 +19,7 @@ using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Library.ViewModel;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Element.Note;
-using ContentTypeTextNet.Pe.Main.Model.Note;
+using ContentTypeTextNet.Pe.Main.Model.Data;
 using ContentTypeTextNet.Pe.Main.Model.Theme;
 using Prism.Commands;
 using Prism.Interactivity.InteractionRequest;
@@ -219,13 +219,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
 
         (bool isCreated, NoteLayoutData layout) GetOrCreateLayout(NotePosition position)
         {
-            if(position == Main.Model.Note.NotePosition.Setting) {
+            if(position == NotePosition.Setting) {
                 var settingLayout = Model.GetLayout();
                 if(settingLayout != null) {
                     return (false, settingLayout);
                 } else {
                     Logger.Information($"レイアウト未取得のため対象ディスプレイ中央表示: {Model.DockScreen.DeviceName}", ObjectDumper.GetDumpString(Model.DockScreen));
-                    position = Main.Model.Note.NotePosition.CenterScreen;
+                    position = NotePosition.CenterScreen;
                 }
             }
 
@@ -236,7 +236,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
                 LayoutKind = Model.LayoutKind,
             };
 
-            if(position == Main.Model.Note.NotePosition.CenterScreen) {
+            if(position == NotePosition.CenterScreen) {
                 if(layout.LayoutKind == NoteLayoutKind.Absolute) {
                     layout.Width = 200;
                     layout.Height = 200;
@@ -250,7 +250,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
                     layout.Y = 0;
                 }
             } else {
-                Debug.Assert(position == Main.Model.Note.NotePosition.CursorPosition);
+                Debug.Assert(position == NotePosition.CursorPosition);
 
                 var deviceScreenBounds = Model.DockScreen.DeviceBounds;
 

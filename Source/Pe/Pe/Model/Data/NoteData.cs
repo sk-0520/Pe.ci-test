@@ -7,7 +7,7 @@ using System.Windows.Media;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 using ContentTypeTextNet.Pe.Main.Model.Logic;
 
-namespace ContentTypeTextNet.Pe.Main.Model.Note
+namespace ContentTypeTextNet.Pe.Main.Model.Data
 {
     public enum NotePosition
     {

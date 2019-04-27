@@ -11,7 +11,7 @@ using ContentTypeTextNet.Pe.Main.Model.Data;
 using ContentTypeTextNet.Pe.Main.Model.Logic;
 using ContentTypeTextNet.Pe.Main.View.Extend;
 
-namespace ContentTypeTextNet.Pe.Main.Model.Launcher
+namespace ContentTypeTextNet.Pe.Main.Model.Data
 {
 
     public enum LauncherItemKind
