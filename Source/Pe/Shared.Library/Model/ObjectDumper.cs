@@ -138,15 +138,15 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 
                 var target = dictionary[key];
                 if(target == null) {
-                    var item = new ObjectDumpItem(new DummyInfo(key.ToString(), typeof(object), dictionaryType), target, EmptyChildren);
+                    var item = new ObjectDumpItem(new DummyInfo(key.ToString(), dictionaryType, typeof(object)), target, EmptyChildren);
                     result.Add(item);
                 } else {
                     var targetType = target.GetType();
                     if(IgnoreNestedMembers.Contains(targetType)) {
-                        var item = new ObjectDumpItem(new DummyInfo(key.ToString(), targetType, dictionaryType), target, EmptyChildren);
+                        var item = new ObjectDumpItem(new DummyInfo(key.ToString(), dictionaryType, targetType), target, EmptyChildren);
                         result.Add(item);
                     } else {
-                        var item = new ObjectDumpItem(new DummyInfo(key.ToString(), targetType, dictionaryType), key, DumpCore(target, GetNextNest(nest), ignoreAutoMember));
+                        var item = new ObjectDumpItem(new DummyInfo(key.ToString(), dictionaryType, targetType), key, DumpCore(target, GetNextNest(nest), ignoreAutoMember));
                         result.Add(item);
                     }
                 }
