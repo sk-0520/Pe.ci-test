@@ -22,6 +22,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
         { }
 
         #region property
+
+        public NoteContentKind Kind => Model.ContentKind;
+
         #endregion
 
         #region command
