@@ -11,7 +11,7 @@
 
   xmlns:app_main_view="clr-namespace:ContentTypeTextNet.Pe.Main.View"
   xmlns:app_main_view_lt="clr-namespace:ContentTypeTextNet.Pe.Main.View.LauncherToolbar"
-  xmlns:app_main_viewmode_litem="clr-namespace:ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem"
+  xmlns:app_main_viewmode_item="clr-namespace:ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem"
   xmlns:app_main_view_ex="clr-namespace:ContentTypeTextNet.Pe.Main.View.Extend"
 
   Title="LauncherToolbarWindow"
@@ -132,7 +132,7 @@
     </ContextMenu>
 
     <!--#region ファイル -->
-    <DataTemplate DataType="{x:Type app_main_viewmode_litem:LauncherFileItemViewModel}">
+    <DataTemplate DataType="{x:Type app_main_viewmode_item:LauncherFileItemViewModel}">
       <Button ContextMenu="{StaticResource ItemContextMenu}" Template="{StaticResource LauncherItemTemplate}">
         <app_main_view_lt:LauncherContentControl Title="{Binding Name, Mode=OneTime}" />
       </Button>
