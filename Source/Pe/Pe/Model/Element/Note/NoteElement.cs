@@ -141,6 +141,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
             get => this._isVisible;
             set => SetProperty(ref this._isVisible, value);
         }
+
+
         #endregion
 
         #region function
@@ -152,6 +154,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
                 return dao.SelectNote(NoteId);
             }
         }
+
 
         NoteData CreateNoteData([PixelKind(Px.Device)] Point cursorLocation)
         {
@@ -165,7 +168,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
                 FontId = Guid.Empty,
                 Title = DateTime.Now.ToString(), //TODO: タイトル
                 BackgroundColor = Colors.Yellow,
-                ForegdoundColor = Colors.Black,
+                ForegroundColor = Colors.Black,
                 ScreenName = DockScreen.DeviceName,
                 IsCompact = false,
                 IsLocked = false,
@@ -264,7 +267,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
             Title = noteData.Title;
             LayoutKind = noteData.LayoutKind;
             ContentKind = noteData.ContentKind;
-            ForegroundColor = noteData.ForegdoundColor;
+            ForegroundColor = noteData.ForegroundColor;
             BackgroundColor = noteData.BackgroundColor;
         }
 
@@ -325,6 +328,22 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
                 noteLayoutsEntityDao.UpdatePickupLayout(layout, viewAreaChangeTargets.HasFlag(ViewAreaChangeTarget.Location), viewAreaChangeTargets.HasFlag(ViewAreaChangeTarget.Suze), DatabaseCommonStatus.CreateCurrentAccount());
             }, UniqueKeyPool.Get());
 
+        }
+        public void ChangeForegroundColor(Color color)
+        {
+            ForegroundColor = color;
+            MainDatabaseLazyWriter.Stock(c => {
+                var notesEntityDao = new NotesEntityDao(c, StatementLoader, c.Implementation, Logger.Factory);
+                notesEntityDao.UpdateForegroundColor(NoteId, ForegroundColor, DatabaseCommonStatus.CreateCurrentAccount());
+            }, UniqueKeyPool.Get());
+        }
+        public void ChangeBackgroundColor(Color color)
+        {
+            BackgroundColor = color;
+            MainDatabaseLazyWriter.Stock(c => {
+                var notesEntityDao = new NotesEntityDao(c, StatementLoader, c.Implementation, Logger.Factory);
+                notesEntityDao.UpdateBackgroundColor(NoteId, BackgroundColor, DatabaseCommonStatus.CreateCurrentAccount());
+            }, UniqueKeyPool.Get());
         }
 
         public NoteLayoutData GetLayout()

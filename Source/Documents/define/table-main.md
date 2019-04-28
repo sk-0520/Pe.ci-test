@@ -473,7 +473,7 @@ ___
 |    | o  |    | レイアウト種別           | LayoutKind            | text         | System.String   |              |                              |
 |    | o  |    | 表示                     | IsVisible             | boolean      | System.Boolean  |              |                              |
 |    | o  |    | フォントID               | FontId                | text         | System.Guid     |              |                              |
-|    | o  |    | 前景色                   | ForegdoundColor       | text         | System.String   |              | #AARRGGBB                    |
+|    | o  |    | 前景色                   | ForegroundColor       | text         | System.String   |              | #AARRGGBB                    |
 |    | o  |    | 背景色                   | BackgroundColor       | text         | System.String   |              | #AARRGGBB                    |
 |    | o  |    | ロック状態               | IsLocked              | boolean      | System.Boolean  |              |                              |
 |    | o  |    | 最前面                   | IsTopmost             | boolean      | System.Boolean  |              |                              |

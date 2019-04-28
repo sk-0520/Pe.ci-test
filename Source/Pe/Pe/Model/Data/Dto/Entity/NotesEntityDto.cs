@@ -17,7 +17,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data.Dto.Entity
         public string LayoutKind { get; set; }
         public bool IsVisible { get; set; }
         public Guid FontId { get; set; }
-        public string ForegdoundColor { get; set; }
+        public string ForegroundColor { get; set; }
         public string BackgroundColor { get; set; }
         public bool IsLocked { get; set; }
         public bool IsTopmost { get; set; }

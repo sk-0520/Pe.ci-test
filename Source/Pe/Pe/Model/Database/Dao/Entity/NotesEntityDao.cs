@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Data;
 using ContentTypeTextNet.Pe.Main.Model.Data.Dto.Entity;
+using ContentTypeTextNet.Pe.Main.Model.Theme;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
 {
@@ -28,6 +30,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             public static string IsLocked { get; } = "IsLocked";
             public static string Title { get; } = "Title";
             public static string FontId { get; } = "FontId";
+            public static string ForegroundColor { get; } = "ForegroundColor";
+            public static string BackgroundColor { get; } = "BackgroundColor";
+
 
             #endregion
         }
@@ -48,7 +53,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
                 LayoutKind = noteLayoutKindTransfer.ToEnum(dto.LayoutKind),
                 IsVisible = dto.IsVisible,
                 FontId = dto.FontId,
-                ForegdoundColor = ToColor(dto.ForegdoundColor),
+                ForegroundColor = ToColor(dto.ForegroundColor),
                 BackgroundColor = ToColor(dto.BackgroundColor),
                 IsLocked = dto.IsLocked,
                 IsTopmost = dto.IsTopmost,
@@ -72,7 +77,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
                 LayoutKind = noteLayoutKindTransfer.ToText(data.LayoutKind),
                 IsVisible = data.IsVisible,
                 FontId = data.FontId,
-                ForegdoundColor = FromColor(data.ForegdoundColor),
+                ForegroundColor = FromColor(data.ForegroundColor),
                 BackgroundColor = FromColor(data.BackgroundColor),
                 IsLocked = data.IsLocked,
                 IsTopmost = data.IsTopmost,
@@ -149,6 +154,21 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             param[Column.NoteId] = noteId;
             param[Column.FontId] = fontId;
             return Commander.Execute(statement, param) == 1;
+        }
+
+        public bool UpdateForegroundColor(Guid noteId, Color color, IDatabaseCommonStatus databaseCommonStatus)
+        {
+            var builder = CreateUpdateBuilder(databaseCommonStatus);
+            builder.AddKey(Column.NoteId, noteId);
+            builder.AddValue(Column.ForegroundColor, FromColor(color));
+            return ExecuteUpdate(builder) == 1;
+        }
+        public bool UpdateBackgroundColor(Guid noteId, Color color, IDatabaseCommonStatus databaseCommonStatus)
+        {
+            var builder = CreateUpdateBuilder(databaseCommonStatus);
+            builder.AddKey(Column.NoteId, noteId);
+            builder.AddValue(Column.BackgroundColor, FromColor(color));
+            return ExecuteUpdate(builder) == 1;
         }
 
         #endregion

@@ -60,6 +60,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
             PropertyChangedHooker.AddHook(nameof(Model.IsCompact), nameof(IsCompact));
             PropertyChangedHooker.AddHook(nameof(Model.IsLocked), nameof(IsLocked));
             PropertyChangedHooker.AddHook(nameof(Model.Title), nameof(Title));
+            PropertyChangedHooker.AddHook(nameof(Model.ForegroundColor), () => ApplyTheme());
+            PropertyChangedHooker.AddHook(nameof(Model.BackgroundColor), () => ApplyTheme());
         }
 
 
@@ -147,35 +149,40 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
             set => SetProperty(ref this._editingTile, value);
         }
 
+        public Color ForegroundColor
+        {
+            get => Model.ForegroundColor;
+            set => Model.ChangeForegroundColor(value);
+        }
+        public Color BackgroundColor
+        {
+            get => Model.BackgroundColor;
+            set => Model.ChangeBackgroundColor(value);
+        }
+
         public string Title => Model.Title;
 
         public double CaptionHeight => NoteTheme.GetCaptionHeight();
-        public Brush BorderBrush => NoteTheme.GetBorderBrush(ColorPair.Create(Model.ForegroundColor, Model.BackgroundColor));
+        public Brush BorderBrush => NoteTheme.GetBorderBrush(GetColorPair());
         public Thickness BorderThickness => NoteTheme.GetBorderThickness();
-        public Brush CaptionBackgroundNoneBrush => NoteTheme.GetCaptionBackgroundBrush(NoteCaptionButtonState.None, ColorPair.Create(Model.ForegroundColor, Model.BackgroundColor));
-        public Brush CaptionBackgroundOverBrush => NoteTheme.GetCaptionBackgroundBrush(NoteCaptionButtonState.Over, ColorPair.Create(Model.ForegroundColor, Model.BackgroundColor));
-        public Brush CaptionBackgroundPressedBrush => NoteTheme.GetCaptionBackgroundBrush(NoteCaptionButtonState.Pressed, ColorPair.Create(Model.ForegroundColor, Model.BackgroundColor));
+        public Brush CaptionBackgroundNoneBrush => NoteTheme.GetCaptionBackgroundBrush(NoteCaptionButtonState.None, GetColorPair());
+        public Brush CaptionBackgroundOverBrush => NoteTheme.GetCaptionBackgroundBrush(NoteCaptionButtonState.Over, GetColorPair());
+        public Brush CaptionBackgroundPressedBrush => NoteTheme.GetCaptionBackgroundBrush(NoteCaptionButtonState.Pressed, GetColorPair());
         public Brush CaptionForeground { get; private set; }
         public Brush CaptionBackground { get; private set; }
-        public Brush ContentBackground => NoteTheme.GetContentBrush(ColorPair.Create(Model.ForegroundColor, Model.BackgroundColor));
-        public DependencyObject ResizeGripImage => NoteTheme.GetResizeGripImage(ColorPair.Create(Model.ForegroundColor, Model.BackgroundColor));
+        public Brush ContentBackground => NoteTheme.GetContentBrush(GetColorPair());
+        public DependencyObject ResizeGripImage => NoteTheme.GetResizeGripImage(GetColorPair());
 
-        public DependencyObject CaptionCompactEnabledImage => NoteTheme.GetCaptionImage(NoteCaption.Compact, true, ColorPair.Create(Model.ForegroundColor, Model.BackgroundColor));
-        public DependencyObject CaptionCompactDisabledImage => NoteTheme.GetCaptionImage(NoteCaption.Compact, false, ColorPair.Create(Model.ForegroundColor, Model.BackgroundColor));
-        public DependencyObject CaptionTopmostEnabledImage => NoteTheme.GetCaptionImage(NoteCaption.Topmost, true, ColorPair.Create(Model.ForegroundColor, Model.BackgroundColor));
-        public DependencyObject CaptionTopmostDisabledImage => NoteTheme.GetCaptionImage(NoteCaption.Topmost, false, ColorPair.Create(Model.ForegroundColor, Model.BackgroundColor));
+        public DependencyObject CaptionCompactEnabledImage => NoteTheme.GetCaptionImage(NoteCaption.Compact, true, GetColorPair());
+        public DependencyObject CaptionCompactDisabledImage => NoteTheme.GetCaptionImage(NoteCaption.Compact, false, GetColorPair());
+        public DependencyObject CaptionTopmostEnabledImage => NoteTheme.GetCaptionImage(NoteCaption.Topmost, true, GetColorPair());
+        public DependencyObject CaptionTopmostDisabledImage => NoteTheme.GetCaptionImage(NoteCaption.Topmost, false, GetColorPair());
 
-        public DependencyObject CaptionCloseImage => NoteTheme.GetCaptionImage(NoteCaption.Close, false, ColorPair.Create(Model.ForegroundColor, Model.BackgroundColor));
+        public DependencyObject CaptionCloseImage => NoteTheme.GetCaptionImage(NoteCaption.Close, false, GetColorPair());
 
         public double MinHeight => CaptionHeight + BorderThickness.Top + BorderThickness.Bottom;
 
-        public ObservableCollection<Color> StandardColors { get; set; } = new ObservableCollection<Color>(new [] {
-            Colors.White,
-            Colors.Black,
-            Colors.Red,
-            Colors.Lime,
-            Colors.Blue,
-        });
+
         #endregion
 
         #region command
@@ -299,21 +306,55 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
             }
         }
 
-        void ApplyCaptionBrush()
+        void ApplyCaption()
         {
-            DispatcherWapper.Invoke(() => {
-                var pair = NoteTheme.GetCaptionBrush(ColorPair.Create(Model.ForegroundColor, Model.BackgroundColor));
-                CaptionForeground = pair.Foreground;
-                CaptionBackground = pair.Background;
+            var pair = NoteTheme.GetCaptionBrush(GetColorPair());
+            CaptionForeground = pair.Foreground;
+            CaptionBackground = pair.Background;
 
-                RaisePropertyChanged(nameof(CaptionForeground));
-                RaisePropertyChanged(nameof(CaptionBackground));
-            });
+            var propertyNames = new[] {
+                nameof(CaptionForeground),
+                nameof(CaptionBackground),
+                nameof(CaptionCompactEnabledImage),
+                nameof(CaptionCompactDisabledImage),
+                nameof(CaptionTopmostEnabledImage),
+                nameof(CaptionTopmostDisabledImage),
+                nameof(CaptionCloseImage),
+            };
+            foreach(var propertyName in propertyNames) {
+                RaisePropertyChanged(propertyName);
+            }
+        }
+
+        void ApplyBorder()
+        {
+            var propertyNames = new[] {
+                nameof(BorderBrush),
+                nameof(BorderThickness),
+                nameof(ResizeGripImage),
+            };
+            foreach(var propertyName in propertyNames) {
+                RaisePropertyChanged(propertyName);
+            }
+        }
+
+        void ApplyContent()
+        {
+            var propertyNames = new[] {
+                nameof(ContentBackground),
+            };
+            foreach(var propertyName in propertyNames) {
+                RaisePropertyChanged(propertyName);
+            }
         }
 
         void ApplyTheme()
         {
-            ApplyCaptionBrush();
+            DispatcherWapper.Begin(() => {
+                ApplyCaption();
+                ApplyBorder();
+                ApplyContent();
+            }, DispatcherPriority.Render);
         }
 
         void DelayNotifyWindowAreaChange()
@@ -360,6 +401,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
 
             Model.ChangeViewArea(viewAreaChangeTargets, location, size);
         }
+
+        IReadOnlyColorPair<Color> GetColorPair() => ColorPair.Create(Model.ForegroundColor, Model.BackgroundColor);
 
         private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {

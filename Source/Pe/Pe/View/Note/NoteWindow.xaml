@@ -266,10 +266,10 @@
                   </Grid.ColumnDefinitions>
 
                   <Label Grid.Row="0" Grid.Column="0">foreground</Label>
-                  <xctk:ColorPicker Grid.Row="0" Grid.Column="1" />
+                  <xctk:ColorPicker Grid.Row="0" Grid.Column="1" SelectedColor="{Binding ForegroundColor}" />
 
                   <Label Grid.Row="1" Grid.Column="0">background</Label>
-                  <xctk:ColorPicker Grid.Row="1" Grid.Column="1" />
+                  <xctk:ColorPicker Grid.Row="1" Grid.Column="1" SelectedColor="{Binding BackgroundColor}" />
                 </Grid>
 
                 <Grid>
