@@ -28,6 +28,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             public static string IsCompact { get; } = "IsCompact";
             public static string IsTopmost { get; } = "IsTopmost";
             public static string IsLocked { get; } = "IsLocked";
+            public static string TextWrap { get; } = "TextWrap";
             public static string Title { get; } = "Title";
             public static string FontId { get; } = "FontId";
             public static string ForegroundColor { get; } = "ForegroundColor";
@@ -143,6 +144,14 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             var builder = CreateUpdateBuilder(databaseCommonStatus);
             builder.AddKey(Column.NoteId, noteId);
             builder.AddValue(Column.IsLocked, isLocked);
+            return ExecuteUpdate(builder) == 1;
+        }
+
+        public bool UpdateTextWrap(Guid noteId, bool textWrap, IDatabaseCommonStatus databaseCommonStatus)
+        {
+            var builder = CreateUpdateBuilder(databaseCommonStatus);
+            builder.AddKey(Column.NoteId, noteId);
+            builder.AddValue(Column.TextWrap, textWrap);
             return ExecuteUpdate(builder) == 1;
         }
 

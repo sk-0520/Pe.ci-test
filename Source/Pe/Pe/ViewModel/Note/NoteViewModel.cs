@@ -59,6 +59,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
             PropertyChangedHooker.AddHook(nameof(Model.IsTopmost), nameof(IsTopmost));
             PropertyChangedHooker.AddHook(nameof(Model.IsCompact), nameof(IsCompact));
             PropertyChangedHooker.AddHook(nameof(Model.IsLocked), nameof(IsLocked));
+            PropertyChangedHooker.AddHook(nameof(Model.TextWrap), nameof(TextWrap));
             PropertyChangedHooker.AddHook(nameof(Model.Title), nameof(Title));
             PropertyChangedHooker.AddHook(nameof(Model.ForegroundColor), () => ApplyTheme());
             PropertyChangedHooker.AddHook(nameof(Model.BackgroundColor), () => ApplyTheme());
@@ -87,6 +88,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
         public bool IsTopmost => Model.IsTopmost;
         public bool IsCompact => Model.IsCompact;
         public bool IsLocked => Model.IsLocked;
+        public bool TextWrap => Model.TextWrap;
 
         public double WindowLeft
         {
@@ -211,6 +213,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
         public ICommand SwitchLockCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
                 Model.SwitchLock();
+            }
+        ));
+
+        public ICommand SwitchTextWrapCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                Model.SwitchTextWrap();
             }
         ));
 

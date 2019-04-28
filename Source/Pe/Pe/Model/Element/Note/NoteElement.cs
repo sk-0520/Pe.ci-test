@@ -304,6 +304,15 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
             }, UniqueKeyPool.Get());
         }
 
+        public void SwitchTextWrap()
+        {
+            TextWrap = !TextWrap;
+            MainDatabaseLazyWriter.Stock(c => {
+                var notesEntityDao = new NotesEntityDao(c, StatementLoader, c.Implementation, Logger.Factory);
+                notesEntityDao.UpdateTextWrap(NoteId, TextWrap, DatabaseCommonStatus.CreateCurrentAccount());
+            }, UniqueKeyPool.Get());
+        }
+
         public void ChangeTitle(string editingTitle)
         {
             if(Title == editingTitle) {
