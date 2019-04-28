@@ -189,14 +189,14 @@
         </Grid>
 
         <Grid Grid.Row="1" Background="{Binding ContentBackground}">
+          <Grid.Resources>
+            <!--#region テキスト -->
+            <DataTemplate DataType="{x:Type app_main_viewmodel_note:NotePlainContentViewModel}">
+              <TextBlock>text</TextBlock>
+            </DataTemplate>
+            <!--#endregion -->
+          </Grid.Resources>
           <ContentControl x:Name="content" Content="{Binding Content}">
-            <ContentControl.Resources>
-              <!--#region テキスト -->
-              <DataTemplate DataType="{x:Type app_main_viewmodel_note:NotePlainContentViewModel}">
-                <TextBlock>text</TextBlock>
-              </DataTemplate>
-              <!--#endregion -->
-            </ContentControl.Resources>
           </ContentControl>
         </Grid>
       </Grid>

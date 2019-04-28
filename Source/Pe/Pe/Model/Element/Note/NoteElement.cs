@@ -421,6 +421,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
         {
             var prevContentKind = ContentKind;
             ContentKind = contentKind;
+            ContentElement = OrderManager.CreateNoteContentElement(this);
             MainDatabaseLazyWriter.Stock(c => {
                 var notesEntityDao = new NotesEntityDao(c, StatementLoader, c.Implementation, Logger.Factory);
                 notesEntityDao.UpdateContentKind(NoteId, ContentKind, DatabaseCommonStatus.CreateCurrentAccount());

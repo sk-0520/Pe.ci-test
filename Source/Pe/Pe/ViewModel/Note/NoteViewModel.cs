@@ -68,9 +68,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
             PropertyChangedHooker.AddHook(nameof(Model.Title), nameof(Title));
             PropertyChangedHooker.AddHook(nameof(Model.ForegroundColor), () => ApplyTheme());
             PropertyChangedHooker.AddHook(nameof(Model.BackgroundColor), () => ApplyTheme());
-            PropertyChangedHooker.AddHook(nameof(Model.ContentElement), nameof(Content));
+            PropertyChangedHooker.AddHook(nameof(Model.ContentKind), () => ChangeContent());
         }
-
 
         #region property
 
@@ -194,6 +193,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
                 } else {
                     Model.ChangeContentKind(value);
                 }
+                ChangeContent();
             }
         }
 
@@ -491,6 +491,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
         }
 
         IReadOnlyColorPair<Color> GetColorPair() => ColorPair.Create(Model.ForegroundColor, Model.BackgroundColor);
+
+        void ChangeContent()
+        {
+            Content = NoteContentViewModelFactory.Create(Model.ContentElement, Logger.Factory);
+        }
 
         private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
