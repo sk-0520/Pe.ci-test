@@ -261,6 +261,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
             DockScreen = GetDockScreen(noteData.ScreenName);
 
             IsVisible = noteData.IsVisible;
+            IsLocked = noteData.IsLocked;
             IsCompact = noteData.IsCompact;
             IsTopmost = noteData.IsTopmost;
             TextWrap = noteData.TextWrap;
@@ -291,6 +292,15 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
             MainDatabaseLazyWriter.Stock(c => {
                 var notesEntityDao = new NotesEntityDao(c, StatementLoader, c.Implementation, Logger.Factory);
                 notesEntityDao.UpdateTopmost(NoteId, IsTopmost, DatabaseCommonStatus.CreateCurrentAccount());
+            }, UniqueKeyPool.Get());
+        }
+
+        public void SwitchLock()
+        {
+            IsLocked = !IsLocked;
+            MainDatabaseLazyWriter.Stock(c => {
+                var notesEntityDao = new NotesEntityDao(c, StatementLoader, c.Implementation, Logger.Factory);
+                notesEntityDao.UpdateLock(NoteId, IsLocked, DatabaseCommonStatus.CreateCurrentAccount());
             }, UniqueKeyPool.Get());
         }
 

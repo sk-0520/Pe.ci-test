@@ -208,6 +208,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
             }
         ));
 
+        public ICommand SwitchLockCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                Model.SwitchLock();
+            }
+        ));
+
         public ICommand CancelTitleEditCommand => GetOrCreateCommand(() => new DelegateCommand<TextBox>(
             o => {
                 TitleEditMode = false;

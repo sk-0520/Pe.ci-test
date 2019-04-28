@@ -43,7 +43,10 @@
       ResizeBorderThickness="0"
       CaptionHeight="{Binding MinHeight}"
     />
-    <WindowChrome x:Key="LockWindowChrome" />
+    <WindowChrome x:Key="LockWindowChrome"
+      ResizeBorderThickness="0"
+      CaptionHeight="0"
+    />
   </Window.Resources>
   <i:Interaction.Triggers>
     <i:EventTrigger EventName="Deactivated">
@@ -302,7 +305,7 @@
                     <ColumnDefinition />
                   </Grid.ColumnDefinitions>
 
-                  <CheckBox Grid.Column="0" Content="lock" />
+                  <CheckBox Grid.Column="0" Content="lock" IsChecked="{Binding IsLocked, Mode=OneWay}" Command="{Binding SwitchLockCommand}" />
                   <CheckBox Grid.Column="1" Content="small" IsChecked="{Binding IsCompact, Mode=OneWay}" Command="{Binding SwitchCompactCommand}" />
                   <CheckBox Grid.Column="2" Content="topmost" IsChecked="{Binding IsTopmost, Mode=OneWay}" Command="{Binding SwitchTopmostCommand}" />
                 </Grid>

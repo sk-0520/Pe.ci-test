@@ -138,6 +138,14 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             return Commander.Execute(statement, param) == 1;
         }
 
+        public bool UpdateLock(Guid noteId, bool isLocked, IDatabaseCommonStatus databaseCommonStatus)
+        {
+            var builder = CreateUpdateBuilder(databaseCommonStatus);
+            builder.AddKey(Column.NoteId, noteId);
+            builder.AddValue(Column.IsLocked, isLocked);
+            return ExecuteUpdate(builder) == 1;
+        }
+
         public bool UpdateTitle(Guid noteId, string title, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = StatementLoader.LoadStatementByCurrent();
