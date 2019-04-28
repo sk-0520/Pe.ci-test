@@ -135,6 +135,10 @@
                     <Setter Property="Focusable" Value="True" />
                     <Setter Property="Text" Value="{Binding EditingTitle, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     <Setter Property="CaretBrush" Value="{Binding Foreground, RelativeSource={RelativeSource Mode=Self}}" />
+                    <Setter Property="Cursor" Value="IBeam" />
+                  </DataTrigger>
+                  <DataTrigger Binding="{Binding IsLocked}" Value="True">
+                    <Setter Property="Cursor" Value="Arrow" />
                   </DataTrigger>
                 </Style.Triggers>
                 <Setter Property="IsReadOnly" Value="True" />
