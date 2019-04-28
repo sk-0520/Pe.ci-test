@@ -23,6 +23,7 @@ using ContentTypeTextNet.Pe.Main.Model.Data;
 using ContentTypeTextNet.Pe.Main.Model.Theme;
 using Prism.Commands;
 using Prism.Interactivity.InteractionRequest;
+using ContentTypeTextNet.Pe.Main.ViewModel.Font;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
 {
@@ -77,7 +78,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
 
         DispatcherTimer WindowAreaChangedTimer { get; }
 
-        public NoteFontViewModel Font { get; }
+        public FontViewModel Font { get; }
 
         public bool IsVisible => Model.IsVisible;
 

@@ -104,6 +104,23 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             return ExecuteUpdate(builder) == 1;
         }
 
+        public bool UpdateItalic(Guid fontId, bool isItalic, IDatabaseCommonStatus databaseCommonStatus)
+        {
+            var builder = CreateUpdateBuilder(databaseCommonStatus);
+            builder.AddKey(Column.FontId, fontId);
+            builder.AddValue(Column.IsItalic, isItalic);
+            return ExecuteUpdate(builder) == 1;
+        }
+
+        public bool UpdateHeight(Guid fontId, double height, IDatabaseCommonStatus databaseCommonStatus)
+        {
+            var builder = CreateUpdateBuilder(databaseCommonStatus);
+            builder.AddKey(Column.FontId, fontId);
+            builder.AddValue(Column.Height, height);
+            return ExecuteUpdate(builder) == 1;
+        }
+
+
         #endregion
     }
 }

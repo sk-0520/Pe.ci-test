@@ -283,6 +283,10 @@
                     Grid.Column="1"
                     SelectedFontFamily="{Binding Font.FontFamily}"
                     IsBold="{Binding Font.IsBold}"
+                    IsItalic="{Binding Font.IsItalic}"
+                    Size="{Binding Font.Size}"
+                    SizeMinimum="{Binding Font.MinimumSize}"
+                    SizeMaximum="{Binding Font.MaximumSize}"
                   />
                 </Grid>
 

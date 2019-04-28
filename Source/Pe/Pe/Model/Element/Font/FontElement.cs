@@ -25,7 +25,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Font
         string _familyName;
         bool _isItalic;
         bool _isBold;
-        double _fontSize;
+        double _size;
 
         #endregion
 
@@ -70,10 +70,10 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Font
             get => this._isBold;
             private set => SetProperty(ref this._isBold, value);
         }
-        public double FontSize
+        public double Size
         {
-            get => this._fontSize;
-            private set => SetProperty(ref this._fontSize, value);
+            get => this._size;
+            private set => SetProperty(ref this._size, value);
         }
 
         public bool IsDefaultFont => FontId == Guid.Empty;
@@ -104,7 +104,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Font
 
             var fc = new FontConverter(Logger.Factory);
             FamilyName = data.FamilyName;
-            FontSize = data.Size;
+            Size = data.Size;
             IsBold = data.IsBold;
             IsItalic = data.IsItalic;
         }
@@ -116,7 +116,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Font
 
             var fontData = new FontData() {
                 FamilyName = FamilyName,
-                Size = FontSize,
+                Size = Size,
                 IsBold = IsBold,
                 IsItalic = IsItalic,
             };
@@ -140,7 +140,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Font
 
                 var dao = new FontsEntityDao(c, StatementLoader, c.Implementation, Logger.Factory);
                 dao.UpdateFamilyName(FontId, FamilyName, DatabaseCommonStatus.CreateCurrentAccount());
-            });
+            }, UniqueKeyPool.Get());
         }
 
         public void ChangeBold(bool isBold)
@@ -153,7 +153,33 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Font
 
                 var dao = new FontsEntityDao(c, StatementLoader, c.Implementation, Logger.Factory);
                 dao.UpdateBold(FontId, IsBold, DatabaseCommonStatus.CreateCurrentAccount());
-            });
+            }, UniqueKeyPool.Get());
+        }
+
+        public void ChangeItalic(bool isItalic)
+        {
+            IsItalic = isItalic;
+            MainDatabaseLazyWriter.Stock(c => {
+                if(IsDefaultFont) {
+                    CreateAndSaveFontId(c, c.Implementation);
+                }
+
+                var dao = new FontsEntityDao(c, StatementLoader, c.Implementation, Logger.Factory);
+                dao.UpdateItalic(FontId, isItalic, DatabaseCommonStatus.CreateCurrentAccount());
+            }, UniqueKeyPool.Get());
+        }
+
+        public void ChangeSize(double size)
+        {
+            Size = size;
+            MainDatabaseLazyWriter.Stock(c => {
+                if(IsDefaultFont) {
+                    CreateAndSaveFontId(c, c.Implementation);
+                }
+
+                var dao = new FontsEntityDao(c, StatementLoader, c.Implementation, Logger.Factory);
+                dao.UpdateHeight(FontId, Size, DatabaseCommonStatus.CreateCurrentAccount());
+            }, UniqueKeyPool.Get());
         }
 
         #endregion

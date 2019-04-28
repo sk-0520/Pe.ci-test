@@ -21,7 +21,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Font
         {
             PropertyChangedHooker = new PropertyChangedHooker(dispatcherWapper, Logger.Factory);
             PropertyChangedHooker.AddHook(nameof(Model.FamilyName), nameof(FontFamily));
-            PropertyChangedHooker.AddHook(nameof(Model.FontSize), nameof(FontSize));
+            PropertyChangedHooker.AddHook(nameof(Model.Size), nameof(FontSize));
             PropertyChangedHooker.AddHook(nameof(Model.IsItalic), new[] { nameof(IsItalic), nameof(FontStyle) });
             PropertyChangedHooker.AddHook(nameof(Model.IsBold), new[] { nameof(IsBold), nameof(FontWeight) });
         }
@@ -45,7 +45,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Font
             }
         }
 
-        public double FontSize => Model.FontSize;
+        public double FontSize => Model.Size;
         public FontStyle FontStyle
         {
             get
@@ -71,8 +71,17 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Font
         public bool IsItalic
         {
             get => Model.IsItalic;
+            set => Model.ChangeItalic(value);
         }
 
+        public double Size
+        {
+            get => Model.Size;
+            set => Model.ChangeSize(value);
+        }
+
+        public virtual double MinimumSize => 6;
+        public virtual double MaximumSize => 72;
         #endregion
 
         #region SingleModelViewModelBase
