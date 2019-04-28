@@ -37,8 +37,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
         string _title;
         Screen _dockScreen;
 
-        NoteLayoutKind _noteLayoutKind;
-        NoteContentKind _noteContentKind;
+        NoteLayoutKind _layoutKind;
+        NoteContentKind _contentKind;
 
         Color _foregroundColor;
         Color _backegroundColor;
@@ -113,13 +113,13 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
 
         public NoteLayoutKind LayoutKind
         {
-            get => this._noteLayoutKind;
-            private set => SetProperty(ref this._noteLayoutKind, value);
+            get => this._layoutKind;
+            private set => SetProperty(ref this._layoutKind, value);
         }
         public NoteContentKind ContentKind
         {
-            get => this._noteContentKind;
-            private set => SetProperty(ref this._noteContentKind, value);
+            get => this._contentKind;
+            private set => SetProperty(ref this._contentKind, value);
         }
 
         public Color ForegroundColor
@@ -362,6 +362,15 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
             MainDatabaseLazyWriter.Stock(c => {
                 var notesEntityDao = new NotesEntityDao(c, StatementLoader, c.Implementation, Logger.Factory);
                 notesEntityDao.UpdateBackgroundColor(NoteId, BackgroundColor, DatabaseCommonStatus.CreateCurrentAccount());
+            }, UniqueKeyPool.Get());
+        }
+
+        public void ChangeContentKind(NoteContentKind contentKind)
+        {
+            ContentKind = contentKind;
+            MainDatabaseLazyWriter.Stock(c => {
+                var notesEntityDao = new NotesEntityDao(c, StatementLoader, c.Implementation, Logger.Factory);
+                notesEntityDao.UpdateContentKind(NoteId, ContentKind, DatabaseCommonStatus.CreateCurrentAccount());
             }, UniqueKeyPool.Get());
         }
 

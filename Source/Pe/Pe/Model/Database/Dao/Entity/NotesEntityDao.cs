@@ -33,6 +33,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             public static string FontId { get; } = "FontId";
             public static string ForegroundColor { get; } = "ForegroundColor";
             public static string BackgroundColor { get; } = "BackgroundColor";
+            public static string ContentKind { get; } = "ContentKind";
 
 
             #endregion
@@ -187,6 +188,17 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             builder.AddValue(Column.BackgroundColor, FromColor(color));
             return ExecuteUpdate(builder) == 1;
         }
+
+        public bool UpdateContentKind(Guid noteId, NoteContentKind contentKind, IDatabaseCommonStatus databaseCommonStatus)
+        {
+            var noteContentKindTansfer = new EnumTransfer<NoteContentKind>();
+
+            var builder = CreateUpdateBuilder(databaseCommonStatus);
+            builder.AddKey(Column.NoteId, noteId);
+            builder.AddValue(Column.ContentKind, noteContentKindTansfer.ToText(contentKind));
+            return ExecuteUpdate(builder) == 1;
+        }
+
 
         #endregion
     }

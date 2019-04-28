@@ -11,6 +11,7 @@
 
   xmlns:cttn_lib_shared_lib_view_converter="clr-namespace:ContentTypeTextNet.Pe.Library.Shared.Library.View.Converter;assembly=Shared.Library"
   xmlns:app_view="clr-namespace:ContentTypeTextNet.Pe.Main.View"
+  xmlns:app_model_data="clr-namespace:ContentTypeTextNet.Pe.Main.Model.Data"
 
   Title="NoteWindow"
   Left="{Binding WindowLeft, Mode=TwoWay, Delay=500}"
@@ -34,6 +35,7 @@
       True="Collapsed"
       False="Visible"
     />
+    <cttn_lib_shared_lib_view_converter:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
 
     <WindowChrome x:Key="NormalWindowChrome"
       ResizeBorderThickness="{Binding BorderThickness}"
@@ -239,9 +241,9 @@
 
                   <Label Grid.Column="0">kind</Label>
                   <StackPanel Grid.Column="1" Orientation="Horizontal">
-                    <RadioButton Content="plain" />
-                    <RadioButton Content="rtf" />
-                    <RadioButton Content="link" />
+                    <RadioButton Content="plain" IsChecked="{Binding ContentKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_model_data:NoteContentKind.Plain}}" />
+                    <RadioButton Content="rtf"   IsChecked="{Binding ContentKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_model_data:NoteContentKind.Rtf}}"  />
+                    <RadioButton Content="link"  IsChecked="{Binding ContentKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_model_data:NoteContentKind.Link}}"  />
                   </StackPanel>
                 </Grid>
 

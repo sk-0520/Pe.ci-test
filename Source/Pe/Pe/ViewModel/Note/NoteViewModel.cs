@@ -164,6 +164,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
 
         public string Title => Model.Title;
 
+        public NoteContentKind ContentKind
+        {
+            get => Model.ContentKind;
+            set => Model.ChangeContentKind(value);
+        }
+
+        public NoteLayoutKind LayoutKind => Model.LayoutKind;
+
         public double CaptionHeight => NoteTheme.GetCaptionHeight();
         public Brush BorderBrush => NoteTheme.GetBorderBrush(GetColorPair());
         public Thickness BorderThickness => NoteTheme.GetBorderThickness();
@@ -183,7 +191,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
         public DependencyObject CaptionCloseImage => NoteTheme.GetCaptionImage(NoteCaption.Close, false, GetColorPair());
 
         public double MinHeight => CaptionHeight + BorderThickness.Top + BorderThickness.Bottom;
-
 
         #endregion
 
@@ -237,7 +244,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
             },
             o => TitleEditMode
         ));
-
 
         #endregion
 
