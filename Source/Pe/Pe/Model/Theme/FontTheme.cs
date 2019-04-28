@@ -49,9 +49,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Theme
 
                 case FontTarget.NoteContent:
                     return new FontData() {
-                        Family = fc.GetOriginalFontFamilyName(SystemFonts.MessageFontFamily),
-                        Bold = fc.IsBold(SystemFonts.MessageFontWeight),
-                        Italic = fc.IsItalic(SystemFonts.MessageFontStyle),
+                        FamilyName = fc.GetOriginalFontFamilyName(SystemFonts.MessageFontFamily),
+                        IsBold = fc.IsBold(SystemFonts.MessageFontWeight),
+                        IsItalic = fc.IsItalic(SystemFonts.MessageFontStyle),
                         Size = SystemFonts.MessageFontSize,
                     };
 

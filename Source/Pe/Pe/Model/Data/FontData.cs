@@ -14,7 +14,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data
         /// <summary>
         /// フォント名。
         /// </summary>
-        string Family { get; }
+        string FamilyName { get; }
         /// <summary>
         /// フォントサイズ。
         /// </summary>
@@ -22,13 +22,13 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data
         /// <summary>
         /// フォントを太字にするか。
         /// </summary>
-        bool Bold { get; }
+        bool IsBold { get; }
         /// <summary>
         /// フォントを斜体にするか。
         /// </summary>
-        bool Italic { get; }
-        bool Underline { get; }
-        bool LineThrough { get; }
+        bool IsItalic { get; }
+        bool IsUnderline { get; }
+        bool IsStrikeThrough { get; }
 
         #endregion
     }
@@ -42,7 +42,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data
         /// フォント名。
         /// </summary>
         [DataMember]
-        public string Family { get; set; }
+        public string FamilyName { get; set; }
         /// <summary>
         /// フォントサイズ。
         /// </summary>
@@ -52,17 +52,17 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data
         /// フォントを太字にするか。
         /// </summary>
         [DataMember]
-        public bool Bold { get; set; }
+        public bool IsBold { get; set; }
         /// <summary>
         /// フォントを斜体にするか。
         /// </summary>
         [DataMember]
-        public bool Italic { get; set; }
+        public bool IsItalic { get; set; }
 
         [DataMember]
-        public bool Underline { get; set; }
+        public bool IsUnderline { get; set; }
         [DataMember]
-        public bool LineThrough { get; set; }
+        public bool IsStrikeThrough { get; set; }
 
         #endregion
     }

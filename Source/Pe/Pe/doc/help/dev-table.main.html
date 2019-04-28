@@ -316,10 +316,10 @@ ___
 |    | o  |    | 更新回数                 | UpdatedCount          | integer      | System.Int64    |              | 0始まり  |
 |    | o  |    | フォントファミリー       | FamilyName            | text         | System.String   |              |          |
 |    | o  |    | 高さ                     | Height                | real         | System.Double   |              |          |
-|    | o  |    | ボールド                 | Bold                  | boolean      | System.Boolean  |              |          |
-|    | o  |    | イタリック               | Italic                | boolean      | System.Boolean  |              |          |
-|    | o  |    | 下線                     | Underline             | boolean      | System.Boolean  |              |          |
-|    | o  |    | 取り消し線               | Strike                | boolean      | System.Boolean  |              |          |
+|    | o  |    | ボールド                 | IsBold                | boolean      | System.Boolean  |              |          |
+|    | o  |    | イタリック               | IsItalic              | boolean      | System.Boolean  |              |          |
+|    | o  |    | 下線                     | IsUnderline           | boolean      | System.Boolean  |              |          |
+|    | o  |    | 取り消し線               | IsStrikeThrough       | boolean      | System.Boolean  |              |          |
 
 ### index
 

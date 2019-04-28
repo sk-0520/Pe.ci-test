@@ -25,10 +25,10 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             public static string FontId { get; } = "FontId";
             public static string FamilyName { get; } = "FamilyName";
             public static string Height { get; } = "Height";
-            public static string Bold { get; } = "Bold";
-            public static string Italic { get; } = "Italic";
-            public static string Underline { get; } = "Underline";
-            public static string Strike { get; } = "Strike";
+            public static string IsBold { get; } = "IsBold";
+            public static string IsItalic { get; } = "IsItalic";
+            public static string IsUnderline { get; } = "IsUnderline";
+            public static string IsStrikeThrough { get; } = "IsStrikeThrough";
 
             #endregion
         }
@@ -40,12 +40,12 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
         FontData ConvertFromDto(FontsRowDto dto)
         {
             var data = new FontData() {
-                Family = dto.FamilyName,
+                FamilyName = dto.FamilyName,
                 Size = dto.Height,
-                Bold = dto.Bold,
-                Italic = dto.Italic,
-                Underline = dto.Underline,
-                LineThrough = dto.Strike,
+                IsBold = dto.IsBold,
+                IsItalic = dto.IsItalic,
+                IsUnderline = dto.IsUnderline,
+                IsStrikeThrough = dto.IsStrikeThrough,
             };
 
             return data;
@@ -54,12 +54,12 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
         FontsRowDto ConvertFromData(IReadOnlyFontData data, IDatabaseCommonStatus databaseCommonStatus)
         {
             var dto = new FontsRowDto() {
-                FamilyName = data.Family,
+                FamilyName = data.FamilyName,
                 Height = data.Size,
-                Bold = data.Bold,
-                Italic = data.Italic,
-                Underline = data.Underline,
-                Strike = data.LineThrough,
+                IsBold = data.IsBold,
+                IsItalic = data.IsItalic,
+                IsUnderline = data.IsUnderline,
+                IsStrikeThrough = data.IsStrikeThrough,
             };
             databaseCommonStatus.WriteCommon(dto);
 
@@ -100,7 +100,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
         {
             var builder = CreateUpdateBuilder(databaseCommonStatus);
             builder.AddKey(Column.FontId, fontId);
-            builder.AddValue(Column.Bold, isBold);
+            builder.AddValue(Column.IsBold, isBold);
             return ExecuteUpdate(builder) == 1;
         }
 

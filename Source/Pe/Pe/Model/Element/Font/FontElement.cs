@@ -103,10 +103,10 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Font
             Debug.Assert(data != null);
 
             var fc = new FontConverter(Logger.Factory);
-            FamilyName = data.Family;
+            FamilyName = data.FamilyName;
             FontSize = data.Size;
-            IsBold = data.Bold;
-            IsItalic = data.Italic;
+            IsBold = data.IsBold;
+            IsItalic = data.IsItalic;
         }
 
         void CreateAndSaveFontId(IDatabaseCommander commander, IDatabaseImplementation implementation)
@@ -115,10 +115,10 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Font
             var fontConverter = new FontConverter(Logger.Factory);
 
             var fontData = new FontData() {
-                Family = FamilyName,
+                FamilyName = FamilyName,
                 Size = FontSize,
-                Bold = IsBold,
-                Italic = IsItalic,
+                IsBold = IsBold,
+                IsItalic = IsItalic,
             };
 
             var dao = new FontsEntityDao(commander, StatementLoader, implementation, Logger.Factory);
