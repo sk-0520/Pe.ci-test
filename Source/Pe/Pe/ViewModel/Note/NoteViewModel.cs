@@ -42,6 +42,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
 
         bool _showContentKindChangeConfim;
         NoteContentKind _changingContentKind;
+        NoteContentViewModelBase _content;
 
         #endregion
 
@@ -67,6 +68,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
             PropertyChangedHooker.AddHook(nameof(Model.Title), nameof(Title));
             PropertyChangedHooker.AddHook(nameof(Model.ForegroundColor), () => ApplyTheme());
             PropertyChangedHooker.AddHook(nameof(Model.BackgroundColor), () => ApplyTheme());
+            PropertyChangedHooker.AddHook(nameof(Model.ContentElement), nameof(Content));
         }
 
 
@@ -87,6 +89,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
         DispatcherTimer WindowAreaChangedTimer { get; }
 
         public FontViewModel Font { get; }
+
+        public NoteContentViewModelBase Content
+        {
+            get => this._content;
+            private set => SetProperty(ref this._content, value);
+        }
 
         public bool IsVisible => Model.IsVisible;
 

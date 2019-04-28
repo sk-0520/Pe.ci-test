@@ -36,13 +36,19 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
         #endregion
 
         #region function
+
+        void LoadContent()
+        {
+
+        }
+
         #endregion
 
         #region ElementBase
 
         protected override void InitializeImpl()
         {
-            throw new NotImplementedException();
+            LoadContent();
         }
 
         #endregion

@@ -286,6 +286,11 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
             return OrderManager.CreateNoteElement(noteId, screen, notePosition);
         }
 
+        public NoteContentElement CreateNoteContentElement(NoteElement noteElement)
+        {
+            return OrderManager.CreateNoteContentElement(noteElement);
+        }
+
         public FontElement CreateFontElement(Guid fontId, ParentUpdater parentUpdater)
         {
             return OrderManager.CreateFontElement(fontId, parentUpdater);

@@ -43,6 +43,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
         Color _foregroundColor;
         Color _backegroundColor;
 
+        NoteContentElement _contentElement;
+
         #endregion
 
         public NoteElement(Guid noteId, Screen dockScreen, NotePosition notePosition, IOrderManager orderManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, INoteTheme noteTheme, ILoggerFactory loggerFactory)
@@ -142,6 +144,11 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
             set => SetProperty(ref this._isVisible, value);
         }
 
+        public NoteContentElement ContentElement
+        {
+            get => this._contentElement;
+            set => SetProperty(ref this._contentElement, value);
+        }
 
         #endregion
 
@@ -247,16 +254,12 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
         void LoadNote()
         {
             //あればそれを読み込んでなければ作る
-            //var isCreateMode = false;
             var noteData = GetNoteData();
             if(noteData == null) {
                 NativeMethods.GetCursorPos(out var podPoint);
                 var deviceCursorLocation = PodStructUtility.Convert(podPoint);
                 noteData = CreateNoteData(deviceCursorLocation);
-                //isCreateMode = true;
             }
-
-            FontElement = OrderManager.CreateFontElement(noteData.FontId, UpdateFontId);
 
             DockScreen = GetDockScreen(noteData.ScreenName);
 
@@ -270,6 +273,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
             ContentKind = noteData.ContentKind;
             ForegroundColor = noteData.ForegroundColor;
             BackgroundColor = noteData.BackgroundColor;
+
+            FontElement = OrderManager.CreateFontElement(noteData.FontId, UpdateFontId);
+            ContentElement = OrderManager.CreateNoteContentElement(this);
         }
 
         void UpdateFontId(FontElement fontElement, IDatabaseCommander commander, IDatabaseImplementation implementation)

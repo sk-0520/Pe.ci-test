@@ -57,8 +57,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
         LauncherToolbarElement CreateLauncherToolbarElement(Screen dockScreen, ReadOnlyObservableCollection<LauncherGroupElement> launcherGroups);
         LauncherItemElement GetOrCreateLauncherItemElement(Guid launcherItemId);
         NoteElement CreateNoteElement(Guid noteId, Screen screen, NotePosition notePosition);
+        NoteContentElement CreateNoteContentElement(NoteElement noteElement);
         FontElement CreateFontElement(Guid fontId, ParentUpdater parentUpdater);
-
         WindowItem CreateLauncherToolbarWindow(LauncherToolbarElement element);
         WindowItem CreateNoteWindow(NoteElement element);
         #endregion
@@ -120,6 +120,13 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
                     ? DiContainer.Build<NoteElement>(noteId, DiDefaultParameter.Create<Screen>(), notePosition)
                     : DiContainer.Build<NoteElement>(noteId, screen, notePosition)
                 ;
+                element.Initialize();
+                return element;
+            }
+
+            public NoteContentElement CreateNoteContentElement(NoteElement noteElement)
+            {
+                var element = DiContainer.Build<NoteContentElement>(noteElement);
                 element.Initialize();
                 return element;
             }
