@@ -24,10 +24,11 @@ using ContentTypeTextNet.Pe.Main.Model.Theme;
 using Prism.Commands;
 using Prism.Interactivity.InteractionRequest;
 using ContentTypeTextNet.Pe.Main.ViewModel.Font;
+using ContentTypeTextNet.Pe.Main.Model.Logic;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
 {
-    public class NoteViewModel : SingleModelViewModelBase<NoteElement>, IViewLifecycleReceiver
+    public class NoteViewModel : SingleModelViewModelBase<NoteElement>, IViewLifecycleReceiver, IFlush
     {
         #region variable
 
@@ -173,10 +174,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
             get => Model.ContentKind;
             set
             {
-                if(!Model.CanChangeContentKind(ContentKind)) {
+                // DB みてあれこれ判断するので止めてるやつを全部実施, プロパティでやるにはでっかいなぁと思うがまぁいいでしょ ;)
+                Flush();
+                Model.Flush();
+
+                if(!Model.CanChangeContentKind(value)) {
                     // 単純変換が出来ない場合はあれやこれや頑張る
                     ChangingContentKind = value;
-                    CanLoadContentKind = Model.HasContent(ChangingContentKind);
+                    CanLoadContentKind = Model.HasContentKind(ChangingContentKind);
                     ShowContentKindChangeConfim = true;
                 } else {
                     Model.ChangeContentKind(value);
@@ -573,13 +578,22 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
                     WindowHandleSource?.Dispose();
                     PropertyChangedHooker.Dispose();
                 }
-                if(WindowAreaChangedTimer.IsEnabled) {
-                    WindowAreaChangedTimer.Stop();
-                    DelayNotifyWindowAreaChanged();
-                }
+                Flush();
             }
 
             base.Dispose(disposing);
+        }
+
+        #endregion
+
+        #region IFlush
+
+        public void Flush()
+        {
+            if(WindowAreaChangedTimer.IsEnabled) {
+                WindowAreaChangedTimer.Stop();
+                DelayNotifyWindowAreaChanged();
+            }
         }
 
         #endregion

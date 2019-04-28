@@ -25,7 +25,7 @@ using ContentTypeTextNet.Pe.Main.Model.Theme;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
 {
-    public class NoteElement : ElementBase, IViewShowStarter, IViewCloseReceiver
+    public class NoteElement : ElementBase, IViewShowStarter, IViewCloseReceiver, IFlush
     {
         #region variable
 
@@ -365,12 +365,36 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
             }, UniqueKeyPool.Get());
         }
 
-        public bool CanChangeContentKind(NoteContentKind contentKind)
+        /// <summary>
+        /// 単純にコンテンツ種別変更が可能であるかをチェック。
+        /// <para>ほぼ空っぽ状態じゃないと無理。</para>
+        /// </summary>
+        /// <param name="targetContentKind"></param>
+        /// <returns></returns>
+        public bool CanChangeContentKind(NoteContentKind targetContentKind)
         {
+            // どうでもいいやつ
+            if(targetContentKind == ContentKind) {
+                return true;
+            }
+
+            // 変換後データが存在すればもう無理
+            if(HasContentKind(targetContentKind)) {
+                Logger.Debug($"変換後データあり: {NoteId}, {targetContentKind}");
+                return false;
+            }
+
+            // 文字列からRTFはOK
+            if(ContentKind == NoteContentKind.Plain && targetContentKind == NoteContentKind.Rtf) {
+                Logger.Debug($"暗黙変換可能: {NoteId}, {targetContentKind}");
+                return true;
+            }
+
+            // それ以外はもう無理でしょ
             return false;
         }
 
-        public bool HasContent(NoteContentKind contentKind)
+        public bool HasContentKind(NoteContentKind contentKind)
         {
             using(var commander = MainDatabaseBarrier.WaitRead()) {
                 var dao = new NoteContentsEntityDao(commander, StatementLoader, commander.Implementation, Logger.Factory);
@@ -445,6 +469,15 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
             }
 
             base.Dispose(disposing);
+        }
+
+        #endregion
+
+        #region IFlush
+
+        public void Flush()
+        {
+            MainDatabaseLazyWriter.Flush();
         }
 
         #endregion

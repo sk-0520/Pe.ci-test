@@ -59,7 +59,16 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
         #endregion
     }
 
-    public class DatabaseLazyWriter : DisposerBase
+    public interface IFlush
+    {
+        #region function
+
+        void Flush();
+
+        #endregion
+    }
+
+    public class DatabaseLazyWriter : DisposerBase, IFlush
     {
         #region variable
 
@@ -171,6 +180,10 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
             }
         }
 
+        #endregion
+
+        #region IFlush
+
         public void Flush()
         {
             ThrowIfDisposed();
@@ -190,8 +203,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
             FlushCore(items);
         }
 
-
         #endregion
+
 
         #region DisposerBase
 
