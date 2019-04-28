@@ -652,6 +652,7 @@ class Entity {
 }
 
 class EntityRelationManager {
+	filterElemenet: HTMLDivElement;
 	viewElement: HTMLDivElement;
 	commandElement: HTMLDivElement;
 	defineElement: HTMLTextAreaElement;
@@ -659,7 +660,8 @@ class EntityRelationManager {
 
 	entities: Array<Entity> = [];
 
-	constructor(viewElement: HTMLDivElement, commandElement: HTMLDivElement, defineElement: HTMLTextAreaElement, sqlElement: HTMLTextAreaElement) {
+	constructor(filterElemenet: HTMLDivElement, viewElement: HTMLDivElement, commandElement: HTMLDivElement, defineElement: HTMLTextAreaElement, sqlElement: HTMLTextAreaElement) {
+		this.filterElemenet = filterElemenet;
 		this.viewElement = viewElement;
 		this.commandElement = commandElement;
 		this.defineElement = defineElement;
@@ -679,9 +681,43 @@ class EntityRelationManager {
 		return block;
 	}
 
+	private buildFilter(parentElement: HTMLDivElement) {
+		var filterTemplate = document.getElementById('template-filter') as HTMLTemplateElement;
+		var clonedTemplate = document.importNode(filterTemplate.content, true);
+
+		var tableFilterElement = getElementByName<HTMLInputElement>(clonedTemplate, 'table-filter');
+
+		tableFilterElement.addEventListener('input', ev => {
+			const elements = getElementsByName<HTMLDivElement>(this.viewElement, 'block-root');
+			var inputValue = tableFilterElement.value.trim().toLowerCase();
+			var reg = function() {
+				try {
+					if(inputValue.indexOf('/') === 0) {
+						return new RegExp(inputValue.substr(1));
+					}
+					var headPattern = "^\\s*" + inputValue.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+					return new RegExp(headPattern);
+				} catch {
+					return RegExp('');
+				}
+			}();
+
+			for(const element of elements) {
+				const tableName = getElementByName<HTMLInputElement>(element, TableBlockName.TableName).value.trim().toLowerCase();
+				if(reg.test(tableName)) {
+					element.style.display = 'block';
+				} else {
+					element.style.display = 'none';
+				}
+			}
+		});
+
+		parentElement.appendChild(clonedTemplate);
+	}
+
 	private buildCommand(parentElement: HTMLDivElement) {
-		var indexTemplate = document.getElementById('template-command') as HTMLTemplateElement;
-		var clonedTemplate = document.importNode(indexTemplate.content, true);
+		var commandTemplate = document.getElementById('template-command') as HTMLTemplateElement;
+		var clonedTemplate = document.importNode(commandTemplate.content, true);
 
 		var exportElement = clonedTemplate.querySelector('[name="command-import"]') as HTMLButtonElement;
 		exportElement.addEventListener('click', ev => {
@@ -733,6 +769,8 @@ class EntityRelationManager {
 		}
 
 		this.buildEntityMapping(this.entities);
+
+		this.buildFilter(this.filterElemenet);
 	}
 
 	public build() {
@@ -740,6 +778,7 @@ class EntityRelationManager {
 	}
 
 	reset() {
+		this.filterElemenet.textContent = '';
 		this.entities = [];
 		this.viewElement.textContent = '';
 		this.commandElement.textContent = '';
@@ -1101,6 +1140,7 @@ for(var baseId of baseIds) {
 	var viewElement = document.getElementById(`view-${baseId}`);
 	if(viewElement) {
 		var erm = new EntityRelationManager(
+			document.getElementById(`filter-${baseId}`) as HTMLDivElement,
 			viewElement as HTMLDivElement,
 			document.getElementById(`command-${baseId}`) as HTMLDivElement,
 			document.getElementById(`define-${baseId}`) as HTMLTextAreaElement,
