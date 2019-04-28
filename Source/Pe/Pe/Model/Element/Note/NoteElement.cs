@@ -385,7 +385,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
             }
 
             // 文字列からRTFはOK
-            if(ContentKind == NoteContentKind.Plain && targetContentKind == NoteContentKind.Rtf) {
+            if(ContentKind == NoteContentKind.Plain && targetContentKind == NoteContentKind.RichText) {
                 Logger.Debug($"暗黙変換可能: {NoteId}, {targetContentKind}");
                 return true;
             }

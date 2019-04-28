@@ -25,7 +25,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data
     public enum NoteContentKind
     {
         Plain,
-        Rtf,
+        RichText,
         Link,
     }
 

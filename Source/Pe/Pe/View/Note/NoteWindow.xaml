@@ -247,7 +247,7 @@
                   <Label Grid.Column="0">kind</Label>
                   <StackPanel Grid.Column="1" Orientation="Horizontal">
                     <RadioButton Content="plain" IsChecked="{Binding ContentKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_model_data:NoteContentKind.Plain}}" />
-                    <RadioButton Content="rtf"   IsChecked="{Binding ContentKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_model_data:NoteContentKind.Rtf}}"  />
+                    <RadioButton Content="rtf"   IsChecked="{Binding ContentKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_model_data:NoteContentKind.RichText}}"  />
                     <RadioButton Content="link"  IsChecked="{Binding ContentKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_model_data:NoteContentKind.Link}}"  />
                   </StackPanel>
                 </Grid>

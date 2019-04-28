@@ -41,7 +41,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
                 case NoteContentKind.Plain:
                     return new NotePlainContentViewModel(model, loggerFactory);
 
-                case NoteContentKind.Rtf:
+                case NoteContentKind.RichText:
                     return new NoteRichTextContentViewModel(model, loggerFactory);
 
                 case NoteContentKind.Link:
