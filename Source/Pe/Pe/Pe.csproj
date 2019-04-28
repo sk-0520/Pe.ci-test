@@ -222,6 +222,7 @@
     <Compile Include="Model\Element\LauncherIcon\LauncherIconElement.cs" />
     <Compile Include="Model\Element\LauncherItem\LauncherItemElement.cs" />
     <Compile Include="Model\Element\LauncherToolbar\LauncherToolbarElement.cs" />
+    <Compile Include="Model\Element\Note\NoteContentElement.cs" />
     <Compile Include="Model\Element\Note\NoteElement.cs" />
     <Compile Include="Model\Data\LauncherData.cs" />
     <Compile Include="Model\Launcher\LauncherFactory.cs" />
@@ -230,6 +231,7 @@
     <Compile Include="Model\Logic\ScreenOperator.cs" />
     <Compile Include="Model\Manager\ApplicationManager.MessageWindow.cs" />
     <Compile Include="Model\Data\NoteData.cs" />
+    <Compile Include="Model\Note\NoteContentFactory.cs" />
     <Compile Include="Model\Theme\FontTheme.cs" />
     <Compile Include="Model\Theme\LauncherGroupTheme.cs" />
     <Compile Include="Model\Theme\NoteTheme.cs" />
@@ -272,7 +274,11 @@
     <Compile Include="ViewModel\LauncherItem\LauncherSeparatorItemViewModel.cs" />
     <Compile Include="ViewModel\LauncherToolbar\LauncherToolbarNotifyAreaViewModel.cs" />
     <Compile Include="ViewModel\Manager\ManagerViewModel.cs" />
+    <Compile Include="ViewModel\Note\NoteContentViewModelBase.cs" />
     <Compile Include="ViewModel\Note\NoteFontViewModel.cs" />
+    <Compile Include="ViewModel\Note\NoteLinkContentViewModel.cs" />
+    <Compile Include="ViewModel\Note\NotePlainContentViewModel.cs" />
+    <Compile Include="ViewModel\Note\NoteRichTextContentViewModel.cs" />
     <Compile Include="ViewModel\Note\NoteViewModel.cs" />
     <Compile Include="ViewModel\RunningStatusViewModel.cs" />
     <Compile Include="ViewModel\Startup\ImportProgramsViewModel.cs" />
