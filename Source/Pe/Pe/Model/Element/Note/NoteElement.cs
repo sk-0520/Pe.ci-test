@@ -365,8 +365,31 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
             }, UniqueKeyPool.Get());
         }
 
+        public bool CanChangeContentKind(NoteContentKind contentKind)
+        {
+            return false;
+        }
+
+        public bool HasContent(NoteContentKind contentKind)
+        {
+            using(var commander = MainDatabaseBarrier.WaitRead()) {
+                var dao = new NoteContentsEntityDao(commander, StatementLoader, commander.Implementation, Logger.Factory);
+                return dao.SelectExistsContent(NoteId, contentKind);
+            }
+        }
+
+        public void ConvertContentKind(NoteContentKind fromKind, NoteContentKind toKind)
+        {
+
+        }
+        public void CreateContentKind(NoteContentKind contentKind)
+        {
+
+        }
+
         public void ChangeContentKind(NoteContentKind contentKind)
         {
+            var prevContentKind = ContentKind;
             ContentKind = contentKind;
             MainDatabaseLazyWriter.Stock(c => {
                 var notesEntityDao = new NotesEntityDao(c, StatementLoader, c.Implementation, Logger.Factory);

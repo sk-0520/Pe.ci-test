@@ -39,6 +39,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
         bool _titleEditMode;
         string _editingTile;
 
+        bool _showContentKindChangeConfim;
+        NoteContentKind _changingContentKind;
+
         #endregion
 
         public NoteViewModel(NoteElement model, INoteTheme noteTheme, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
@@ -69,6 +72,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
         #region property
 
         public InteractionRequest<Notification> TitleEditStartRequest { get; } = new InteractionRequest<Notification>();
+        public InteractionRequest<FileSaveDialogNotification> SelectLinkFileRequest { get; } = new InteractionRequest<FileSaveDialogNotification>();
 
         bool CanLayoutNotify { get; set; }
 
@@ -167,11 +171,22 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
         public NoteContentKind ContentKind
         {
             get => Model.ContentKind;
-            set => Model.ChangeContentKind(value);
+            set
+            {
+                if(!Model.CanChangeContentKind(ContentKind)) {
+                    // 単純変換が出来ない場合はあれやこれや頑張る
+                    ChangingContentKind = value;
+                    CanLoadContentKind = Model.HasContent(ChangingContentKind);
+                    ShowContentKindChangeConfim = true;
+                } else {
+                    Model.ChangeContentKind(value);
+                }
+            }
         }
 
         public NoteLayoutKind LayoutKind => Model.LayoutKind;
 
+        #region theme
         public double CaptionHeight => NoteTheme.GetCaptionHeight();
         public Brush BorderBrush => NoteTheme.GetBorderBrush(GetColorPair());
         public Thickness BorderThickness => NoteTheme.GetBorderThickness();
@@ -189,8 +204,27 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
         public DependencyObject CaptionTopmostDisabledImage => NoteTheme.GetCaptionImage(NoteCaption.Topmost, false, GetColorPair());
 
         public DependencyObject CaptionCloseImage => NoteTheme.GetCaptionImage(NoteCaption.Close, false, GetColorPair());
-
         public double MinHeight => CaptionHeight + BorderThickness.Top + BorderThickness.Bottom;
+
+        #endregion
+
+        #region content kind changing
+        public NoteContentKind ChangingContentKind
+        {
+            get => this._changingContentKind;
+            set => SetProperty(ref this._changingContentKind, value);
+        }
+
+        public bool ShowContentKindChangeConfim
+        {
+            get => this._showContentKindChangeConfim;
+            set => SetProperty(ref this._showContentKindChangeConfim, value);
+        }
+
+        bool CanLoadContentKind { get; set; }
+
+        #endregion
+
 
         #endregion
 
@@ -245,6 +279,27 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
             o => TitleEditMode
         ));
 
+        public ICommand ContentKindChangeConvertCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                ShowContentKindChangeConfim = false;
+            }
+        ));
+        public ICommand ContentKindChangeLoadCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                ShowContentKindChangeConfim = false;
+            },
+            () => CanLoadContentKind
+        ));
+        public ICommand ContentKindChangeCreateCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                ShowContentKindChangeConfim = false;
+            }
+        ));
+        public ICommand ContentKindChangeCancelCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                ShowContentKindChangeConfim = false;
+            }
+        ));
         #endregion
 
         #region function

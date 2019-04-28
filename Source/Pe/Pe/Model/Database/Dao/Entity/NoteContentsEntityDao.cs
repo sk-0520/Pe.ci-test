@@ -44,6 +44,15 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             return dto;
         }
 
+        public bool SelectExistsContent(Guid noteId, NoteContentKind contentKind)
+        {
+            var statement = StatementLoader.LoadStatementByCurrent();
+            var param = new {
+                NoteId = noteId,
+                ContentKind = contentKind,
+            };
+            return Commander.QueryFirst<bool>(statement, param);
+        }
 
         public bool InsertNewContent(NoteContentData data, IDatabaseCommonStatus databaseCommonStatus)
         {
