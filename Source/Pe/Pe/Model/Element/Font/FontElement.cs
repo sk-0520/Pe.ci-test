@@ -130,56 +130,41 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Font
             ParentUpdater(this, commander, implementation);
         }
 
-        public void ChangeFamilyName(string familyName)
+        void UpdateValue(Action<FontsEntityDao, IDatabaseCommonStatus> updater, object uniqueKey)
         {
-            FamilyName = familyName;
             MainDatabaseLazyWriter.Stock(c => {
                 if(IsDefaultFont) {
                     CreateAndSaveFontId(c, c.Implementation);
                 }
 
                 var dao = new FontsEntityDao(c, StatementLoader, c.Implementation, Logger.Factory);
-                dao.UpdateFamilyName(FontId, FamilyName, DatabaseCommonStatus.CreateCurrentAccount());
-            }, UniqueKeyPool.Get());
+                updater(dao, DatabaseCommonStatus.CreateCurrentAccount());
+            }, uniqueKey);
+
+        }
+
+        public void ChangeFamilyName(string familyName)
+        {
+            FamilyName = familyName;
+            UpdateValue((d, s) => d.UpdateFamilyName(FontId, FamilyName, s), UniqueKeyPool.Get());
         }
 
         public void ChangeBold(bool isBold)
         {
             IsBold = isBold;
-            MainDatabaseLazyWriter.Stock(c => {
-                if(IsDefaultFont) {
-                    CreateAndSaveFontId(c, c.Implementation);
-                }
-
-                var dao = new FontsEntityDao(c, StatementLoader, c.Implementation, Logger.Factory);
-                dao.UpdateBold(FontId, IsBold, DatabaseCommonStatus.CreateCurrentAccount());
-            }, UniqueKeyPool.Get());
+            UpdateValue((d, s) => d.UpdateBold(FontId, IsBold, s), UniqueKeyPool.Get());
         }
 
         public void ChangeItalic(bool isItalic)
         {
             IsItalic = isItalic;
-            MainDatabaseLazyWriter.Stock(c => {
-                if(IsDefaultFont) {
-                    CreateAndSaveFontId(c, c.Implementation);
-                }
-
-                var dao = new FontsEntityDao(c, StatementLoader, c.Implementation, Logger.Factory);
-                dao.UpdateItalic(FontId, isItalic, DatabaseCommonStatus.CreateCurrentAccount());
-            }, UniqueKeyPool.Get());
+            UpdateValue((d, s) => d.UpdateItalic(FontId, IsItalic, s), UniqueKeyPool.Get());
         }
 
         public void ChangeSize(double size)
         {
             Size = size;
-            MainDatabaseLazyWriter.Stock(c => {
-                if(IsDefaultFont) {
-                    CreateAndSaveFontId(c, c.Implementation);
-                }
-
-                var dao = new FontsEntityDao(c, StatementLoader, c.Implementation, Logger.Factory);
-                dao.UpdateHeight(FontId, Size, DatabaseCommonStatus.CreateCurrentAccount());
-            }, UniqueKeyPool.Get());
+            UpdateValue((d, s) => d.UpdateHeight(FontId, Size, s), UniqueKeyPool.Get());
         }
 
         #endregion
