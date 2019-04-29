@@ -344,6 +344,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
         ));
         public DelegateCommand ContentKindChangeLoadCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
+                Model.ChangeContentKind(ChangingContentKind);
                 ShowContentKindChangeConfim = false;
             },
             () => CanLoadContentKind
