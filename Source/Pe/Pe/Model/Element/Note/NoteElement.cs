@@ -477,6 +477,27 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
             if(contentKind == NoteContentKind.Link && linkData == null) {
                 throw new ArgumentNullException(nameof(linkData));
             }
+
+            var noteContentConverter = new NoteContentConverter(Logger.Factory);
+
+            var contentData = new NoteContentData() {
+                NoteId = NoteId,
+                ContentKind = contentKind,
+                Content = contentKind == NoteContentKind.Link
+                    ? noteContentConverter.ToLinkSettingString(linkData)
+                    : string.Empty
+                ,
+            };
+            using(var commander = MainDatabaseBarrier.WaitWrite()) {
+                var notesEntityDao = new NoteContentsEntityDao(commander, StatementLoader, commander.Implementation, Logger.Factory);
+                if(notesEntityDao.SelectExistsContent(contentData.NoteId, contentData.ContentKind)) {
+                    notesEntityDao.UpdateContent(contentData, DatabaseCommonStatus.CreateCurrentAccount());
+                } else {
+                    notesEntityDao.InsertNewContent(contentData, DatabaseCommonStatus.CreateCurrentAccount());
+                }
+
+                commander.Commit();
+            }
         }
 
         public void ChangeContentKind(NoteContentKind contentKind)

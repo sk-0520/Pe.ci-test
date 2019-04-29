@@ -81,5 +81,13 @@ namespace ContentTypeTextNet.Pe.Main.Model.Note
             }
         }
 
+        public string ToLinkSettingString(NoteLinkContentData linkData)
+        {
+            var serializer = new XmlDataContractSerializer();
+            using(var stream = new MemoryStream()) {
+                serializer.Save(linkData, stream);
+                return Encoding.GetString(stream.ToArray());
+            }
+        }
     }
 }
