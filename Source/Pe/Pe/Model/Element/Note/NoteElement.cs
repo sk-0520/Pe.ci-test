@@ -424,7 +424,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
                 case NoteContentKind.Plain:
                     switch(toKind) {
                         case NoteContentKind.RichText:
-                            return noteContentConverter.ToRichText(fromRawContent, FontElement.FontData, ForegroundColor, DispatcherWapper);
+                            return DispatcherWapper.Get(() => noteContentConverter.ToRichText(fromRawContent, FontElement.FontData, ForegroundColor));
 
                         case NoteContentKind.Plain:
                         default:

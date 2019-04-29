@@ -190,12 +190,7 @@
 
         <Grid Grid.Row="1" Background="{Binding ContentBackground}">
           <Grid.Resources>
-            <Style x:Key="ContentTextBox" TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
-              <Style.Triggers>
-                <DataTrigger Binding="{Binding DataContext.TextWrap, ElementName=root}" Value="True">
-                  <Setter Property="TextWrapping" Value="Wrap" />
-                </DataTrigger>
-              </Style.Triggers>
+            <Style x:Key="TextBoxBase" TargetType="TextBoxBase">
               <Setter Property="Background" Value="Transparent" />
               <Setter Property="BorderThickness" Value="0" />
               <Setter Property="AcceptsReturn" Value="True" />
@@ -206,13 +201,29 @@
               <Setter Property="FontWeight" Value="{Binding DataContext.Font.FontWeight, ElementName=root}" />
               <Setter Property="Foreground" Value="{Binding DataContext.ContentForeground, ElementName=root}" />
             </Style>
+            <Style x:Key="ContentTextBox" TargetType="TextBox" BasedOn="{StaticResource TextBoxBase}">
+              <Style.Triggers>
+                <DataTrigger Binding="{Binding DataContext.TextWrap, ElementName=root}" Value="True">
+                  <Setter Property="TextWrapping" Value="Wrap" />
+                </DataTrigger>
+              </Style.Triggers>
+              <!--<Setter Property="Background" Value="Transparent" />
+              <Setter Property="BorderThickness" Value="0" />
+              <Setter Property="AcceptsReturn" Value="True" />
+              <Setter Property="IsReadOnly" Value="{Binding DataContext.IsLocked, ElementName=root}" />
+              <Setter Property="FontFamily" Value="{Binding DataContext.Font.FontFamily, ElementName=root}" />
+              <Setter Property="FontSize" Value="{Binding DataContext.Font.FontSize, ElementName=root}" />
+              <Setter Property="FontStyle" Value="{Binding DataContext.Font.FontStyle, ElementName=root}" />
+              <Setter Property="FontWeight" Value="{Binding DataContext.Font.FontWeight, ElementName=root}" />
+              <Setter Property="Foreground" Value="{Binding DataContext.ContentForeground, ElementName=root}" />-->
+            </Style>
 
             <!--#region テキスト -->
             <DataTemplate DataType="{x:Type app_main_viewmodel_note:NotePlainContentViewModel}">
-              <TextBox Style="{StaticResource ContentTextBox}" Text="{Binding Content, UpdateSourceTrigger=PropertyChanged}">
+              <TextBox x:Name="control" Style="{StaticResource ContentTextBox}" Text="{Binding Content, UpdateSourceTrigger=PropertyChanged, Delay=1000}">
                 <i:Interaction.Triggers>
                   <i:EventTrigger EventName="Loaded">
-                    <i:InvokeCommandAction Command="{Binding LoadedCommand}" />
+                    <i:InvokeCommandAction Command="{Binding LoadedCommand}" CommandParameter="{Binding ElementName=control}" />
                   </i:EventTrigger>
                 </i:Interaction.Triggers>
               </TextBox>
@@ -221,7 +232,20 @@
 
             <!--#region リッチテキスト -->
             <DataTemplate DataType="{x:Type app_main_viewmodel_note:NoteRichTextContentViewModel}">
-              <TextBox />
+              <!-- ViewModel 側でイベント制御 -->
+              <RichTextBox x:Name="control">
+                <i:Interaction.Triggers>
+                  <i:EventTrigger EventName="Loaded">
+                    <i:InvokeCommandAction Command="{Binding LoadedCommand}" CommandParameter="{Binding ElementName=control}" />
+                  </i:EventTrigger>
+                </i:Interaction.Triggers>
+                <RichTextBox.Style>
+                  <Style TargetType="RichTextBox" BasedOn="{StaticResource TextBoxBase}">
+                    <Style.Triggers>
+                    </Style.Triggers>
+                  </Style>
+                </RichTextBox.Style>
+              </RichTextBox>
             </DataTemplate>
             <!--#endregion -->
 

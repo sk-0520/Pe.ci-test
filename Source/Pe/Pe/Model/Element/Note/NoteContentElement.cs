@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Documents;
+using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Applications;
 using ContentTypeTextNet.Pe.Main.Model.Data;
 using ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Model.Logic;
+using ContentTypeTextNet.Pe.Main.Model.Note;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
 {
@@ -17,7 +20,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
         #region variable
         #endregion
 
-        public NoteContentElement(Guid noteId, NoteContentKind contentKind, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
+        public NoteContentElement(Guid noteId, NoteContentKind contentKind, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             NoteId = noteId;
@@ -25,6 +28,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
 
             MainDatabaseBarrier = mainDatabaseBarrier;
             StatementLoader = statementLoader;
+
+            DispatcherWapper = dispatcherWapper;
 
             MainDatabaseLazyWriter = new DatabaseLazyWriter(MainDatabaseBarrier, Constants.Config.NoteContentMainDatabaseLazyWriterWaitTime, this);
         }
@@ -36,7 +41,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
 
         IMainDatabaseBarrier MainDatabaseBarrier { get; }
         IDatabaseStatementLoader StatementLoader { get; }
-
+        IDispatcherWapper DispatcherWapper { get; }
         DatabaseLazyWriter MainDatabaseLazyWriter { get; }
         UniqueKeyPool UniqueKeyPool { get; } = new UniqueKeyPool();
 
@@ -92,9 +97,51 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
             return LoadRawContent();
         }
 
+        public FlowDocument LoadRichTextContent()
+        {
+            if(ContentKind != NoteContentKind.RichText) {
+                throw new InvalidOperationException();
+            }
+
+            var contentConverter = new NoteContentConverter(Logger.Factory);
+
+            if(!Exists()) {
+                var document = DispatcherWapper.Get(() => {
+                    var doc = new FlowDocument();
+                    return doc;
+                });
+                var content = contentConverter.ToXamlString(document);
+                CreateNewContent(content);
+                // 作ったやつを返すだけなので別に。
+                return document;
+            }
+
+            var rawContent = LoadRawContent();
+            return DispatcherWapper.Get(() => {
+                return contentConverter.ToXamlDocument(rawContent);
+            });
+        }
+
         public void ChangePlainContent(string content)
         {
             if(ContentKind != NoteContentKind.Plain) {
+                throw new InvalidOperationException();
+            }
+
+            MainDatabaseLazyWriter.Stock(c => {
+                var dao = new NoteContentsEntityDao(c, StatementLoader, c.Implementation, Logger.Factory);
+                var data = new NoteContentData() {
+                    NoteId = NoteId,
+                    ContentKind = ContentKind,
+                    Content = content,
+                };
+                dao.UpdateContent(data, DatabaseCommonStatus.CreateCurrentAccount());
+            }, UniqueKeyPool.Get());
+        }
+
+        public void ChangeRichTextContent(string content)
+        {
+            if(ContentKind != NoteContentKind.RichText) {
                 throw new InvalidOperationException();
             }
 

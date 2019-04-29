@@ -27,27 +27,49 @@ namespace ContentTypeTextNet.Pe.Main.Model.Note
 
         ILogger Logger { get; }
         public Encoding Encoding { get; set; } = Encoding.UTF8;
+        public string RichTextFormat { get; set; } = DataFormats.Xaml;
 
         #endregion
 
-        public string ToRichText(string plainText, FontData fontData, Color foregroundColor, IDispatcherWapper dispatcherWapper)
+        public string ToRichText(string plainText, FontData fontData, Color foregroundColor)
         {
             var document = new FlowDocument();
-            var fontConverter = new FontConverter(Logger.Factory);
-            document.FontFamily = fontConverter.MakeFontFamily(fontData.FamilyName, SystemFonts.MessageFontFamily);
-            document.FontSize = fontData.Size;
-            document.FontWeight = fontConverter.ToWeight(fontData.IsBold);
-            document.FontStyle = fontConverter.ToStyle(fontData.IsItalic);
-            document.Foreground = dispatcherWapper.Get(() => FreezableUtility.GetSafeFreeze(new SolidColorBrush(foregroundColor)));
+            using(Initializer.BeginInitialize(document)) {
+                var fontConverter = new FontConverter(Logger.Factory);
+                document.FontFamily = fontConverter.MakeFontFamily(fontData.FamilyName, SystemFonts.MessageFontFamily);
+                document.FontSize = fontData.Size;
+                document.FontWeight = fontConverter.ToWeight(fontData.IsBold);
+                document.FontStyle = fontConverter.ToStyle(fontData.IsItalic);
+                document.Foreground = FreezableUtility.GetSafeFreeze(new SolidColorBrush(foregroundColor));
 
-            document.Blocks.Add(new Paragraph(new Run(plainText)));
+                document.Blocks.Add(new Paragraph(new Run(plainText)));
+            }
 
+            return ToXamlString(document);
+        }
 
+        public string ToXamlString(FlowDocument document)
+        {
             var range = new TextRange(document.ContentStart, document.ContentEnd);
             using(var stream = new MemoryStream()) {
-                range.Save(stream, DataFormats.Xaml);
-                return Encoding.GetString(stream.ToArray());
+                range.Save(stream, RichTextFormat);
+                var contentValue = Encoding.GetString(stream.ToArray());
+                return contentValue;
             }
+        }
+
+        public FlowDocument ToXamlDocument(string content)
+        {
+            var document = new FlowDocument();
+            using(Initializer.BeginInitialize(document)) {
+                var range = new TextRange(document.ContentStart, document.ContentEnd);
+                using(var stream = new MemoryStream(Encoding.GetBytes(content))) {
+                    stream.Seek(0, SeekOrigin.Begin);
+                    range.Load(stream, RichTextFormat);
+                }
+            }
+
+            return document;
         }
 
     }

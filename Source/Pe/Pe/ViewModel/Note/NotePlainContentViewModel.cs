@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
+using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Element.Note;
 
@@ -16,12 +18,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
 
         #endregion
 
-        public NotePlainContentViewModel(NoteContentElement model, ILogger logger)
-            : base(model, logger)
+        public NotePlainContentViewModel(NoteContentElement model, IDispatcherWapper dispatcherWapper, ILogger logger)
+            : base(model, dispatcherWapper, logger)
         { }
 
-        public NotePlainContentViewModel(NoteContentElement model, ILoggerFactory loggerFactory)
-            : base(model, loggerFactory)
+        public NotePlainContentViewModel(NoteContentElement model, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
+            : base(model, dispatcherWapper, loggerFactory)
         { }
 
         #region property
@@ -32,7 +34,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
             set
             {
                 if(SetProperty(ref this._content, value)) {
-                    Model.ChangePlainContent(Content);
+                    if(CanVisible) {
+                        Model.ChangePlainContent(Content);
+                    }
                 }
             }
         }
@@ -47,7 +51,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
 
         #region NoteContentViewModelBase
 
-        protected override Task LoadContentAsync()
+        protected override Task LoadContentAsync(Control control)
         {
             return Task.Run(() => {
                 var content = Model.LoadPlainContent();

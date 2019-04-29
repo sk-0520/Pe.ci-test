@@ -68,6 +68,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
             PropertyChangedHooker.AddHook(nameof(Model.Title), nameof(Title));
             PropertyChangedHooker.AddHook(nameof(Model.ForegroundColor), () => ApplyTheme());
             PropertyChangedHooker.AddHook(nameof(Model.BackgroundColor), () => ApplyTheme());
+            PropertyChangedHooker.AddHook(nameof(Model.ContentKind), nameof(ContentKind));
+            PropertyChangedHooker.AddHook(nameof(Model.ContentElement), nameof(Content));
         }
 
         #region property
@@ -96,7 +98,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
                     if(this._content != null) {
                         this._content.Dispose();
                     }
-                    this._content = NoteContentViewModelFactory.Create(Model.ContentElement, Logger.Factory);
+                    this._content = NoteContentViewModelFactory.Create(Model.ContentElement, DispatcherWapper, Logger.Factory);
                 }
 
                 return this._content;
