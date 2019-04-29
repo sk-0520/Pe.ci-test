@@ -210,12 +210,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
         public double CaptionHeight => NoteTheme.GetCaptionHeight();
         public Brush BorderBrush => NoteTheme.GetBorderBrush(GetColorPair());
         public Thickness BorderThickness => NoteTheme.GetBorderThickness();
-        public Brush CaptionBackgroundNoneBrush => NoteTheme.GetCaptionBackgroundBrush(NoteCaptionButtonState.None, GetColorPair());
-        public Brush CaptionBackgroundOverBrush => NoteTheme.GetCaptionBackgroundBrush(NoteCaptionButtonState.Over, GetColorPair());
-        public Brush CaptionBackgroundPressedBrush => NoteTheme.GetCaptionBackgroundBrush(NoteCaptionButtonState.Pressed, GetColorPair());
+        public Brush CaptionBackgroundNoneBrush => NoteTheme.GetCaptionButtonBackgroundBrush(NoteCaptionButtonState.None, GetColorPair());
+        public Brush CaptionBackgroundOverBrush => NoteTheme.GetCaptionButtonBackgroundBrush(NoteCaptionButtonState.Over, GetColorPair());
+        public Brush CaptionBackgroundPressedBrush => NoteTheme.GetCaptionButtonBackgroundBrush(NoteCaptionButtonState.Pressed, GetColorPair());
         public Brush CaptionForeground { get; private set; }
         public Brush CaptionBackground { get; private set; }
-        public Brush ContentBackground => NoteTheme.GetContentBrush(GetColorPair());
+        public Brush ContentBackground { get; private set; }
+        public Brush ContentForeground { get; private set; }
+
         public DependencyObject ResizeGripImage => NoteTheme.GetResizeGripImage(GetColorPair());
 
         public DependencyObject CaptionCompactEnabledImage => NoteTheme.GetCaptionImage(NoteCaption.Compact, true, GetColorPair());
@@ -403,13 +405,19 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
 
         void ApplyCaption()
         {
-            var pair = NoteTheme.GetCaptionBrush(GetColorPair());
-            CaptionForeground = pair.Foreground;
-            CaptionBackground = pair.Background;
+            var captionPair = NoteTheme.GetCaptionBrush(GetColorPair());
+            CaptionForeground = captionPair.Foreground;
+            CaptionBackground = captionPair.Background;
+
+            var contentPair = NoteTheme.GetContentBrush(GetColorPair());
+            ContentForeground = contentPair.Foreground;
+            ContentBackground = contentPair.Background;
 
             var propertyNames = new[] {
                 nameof(CaptionForeground),
                 nameof(CaptionBackground),
+                nameof(ContentForeground),
+                nameof(ContentBackground),
                 nameof(CaptionCompactEnabledImage),
                 nameof(CaptionCompactDisabledImage),
                 nameof(CaptionTopmostEnabledImage),

@@ -200,6 +200,11 @@
               <Setter Property="BorderThickness" Value="0" />
               <Setter Property="AcceptsReturn" Value="True" />
               <Setter Property="IsReadOnly" Value="{Binding DataContext.IsLocked, ElementName=root}" />
+              <Setter Property="FontFamily" Value="{Binding DataContext.Font.FontFamily, ElementName=root}" />
+              <Setter Property="FontSize" Value="{Binding DataContext.Font.FontSize, ElementName=root}" />
+              <Setter Property="FontStyle" Value="{Binding DataContext.Font.FontStyle, ElementName=root}" />
+              <Setter Property="FontWeight" Value="{Binding DataContext.Font.FontWeight, ElementName=root}" />
+              <Setter Property="Foreground" Value="{Binding DataContext.ContentForeground, ElementName=root}" />
             </Style>
 
             <!--#region テキスト -->

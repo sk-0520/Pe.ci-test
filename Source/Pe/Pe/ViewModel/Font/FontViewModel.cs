@@ -21,7 +21,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Font
         {
             PropertyChangedHooker = new PropertyChangedHooker(dispatcherWapper, Logger.Factory);
             PropertyChangedHooker.AddHook(nameof(Model.FamilyName), nameof(FontFamily));
-            PropertyChangedHooker.AddHook(nameof(Model.Size), nameof(FontSize));
+            PropertyChangedHooker.AddHook(nameof(Model.Size), new[] { nameof(Size), nameof(FontSize) });
             PropertyChangedHooker.AddHook(nameof(Model.IsItalic), new[] { nameof(IsItalic), nameof(FontStyle) });
             PropertyChangedHooker.AddHook(nameof(Model.IsBold), new[] { nameof(IsBold), nameof(FontWeight) });
         }

@@ -85,8 +85,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
         public FontStyle ToStyle(bool italic)
         {
             return italic
-                ? FontStyles.Normal
-                : FontStyles.Italic
+                ? FontStyles.Italic
+                : FontStyles.Normal
             ;
         }
 

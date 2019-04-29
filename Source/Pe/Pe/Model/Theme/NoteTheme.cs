@@ -43,8 +43,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Theme
 
         IReadOnlyColorPair<Brush> GetCaptionBrush(IReadOnlyColorPair<Color> baseColor);
         Brush GetBorderBrush(IReadOnlyColorPair<Color> baseColor);
-        Brush GetContentBrush(IReadOnlyColorPair<Color> baseColor);
-        Brush GetCaptionBackgroundBrush(NoteCaptionButtonState buttonState, IReadOnlyColorPair<Color> baseColor);
+        IReadOnlyColorPair<Brush> GetContentBrush(IReadOnlyColorPair<Color> baseColor);
+        Brush GetCaptionButtonBackgroundBrush(NoteCaptionButtonState buttonState, IReadOnlyColorPair<Color> baseColor);
 
         DependencyObject GetCaptionImage(NoteCaption noteCaption, bool isEnabled, IReadOnlyColorPair<Color> baseColor);
         DependencyObject GetResizeGripImage(IReadOnlyColorPair<Color> baseColor);
@@ -172,7 +172,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Theme
             return FreezableUtility.GetSafeFreeze(new SolidColorBrush(baseColor.Background));
         }
 
-        public Brush GetContentBrush(IReadOnlyColorPair<Color> baseColor)
+        public IReadOnlyColorPair<Brush> GetContentBrush(IReadOnlyColorPair<Color> baseColor)
         {
             /*
             旧PeではXAML上でこれをかけ合わせてた
@@ -190,10 +190,13 @@ namespace ContentTypeTextNet.Pe.Main.Model.Theme
                 new GradientStop(MediaUtility.AddColor(baseColor.Background, Color.FromArgb(0x20, 0x10, 0x10, 0x10)), 1),
             });
             var gradation = new LinearGradientBrush(collection, new Point(0, 0), new Point(0, 1));
-            return FreezableUtility.GetSafeFreeze(gradation);
+            return ColorPair.Create<Brush>(
+                FreezableUtility.GetSafeFreeze(new SolidColorBrush(baseColor.Foreground)),
+                FreezableUtility.GetSafeFreeze(gradation)
+            );
         }
 
-        public Brush GetCaptionBackgroundBrush(NoteCaptionButtonState buttonState, IReadOnlyColorPair<Color> baseColor)
+        public Brush GetCaptionButtonBackgroundBrush(NoteCaptionButtonState buttonState, IReadOnlyColorPair<Color> baseColor)
         {
             // TODO: 色調整
             switch(buttonState) {
