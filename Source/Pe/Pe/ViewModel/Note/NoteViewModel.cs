@@ -321,12 +321,22 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
                                 FilePath = c.ResponseFilePaths.First(),
                                 RefreshTime = TimeSpan.FromSeconds(1),//TODO: なんだこれ
                             };
+
+                            Flush();
+                            Model.Flush();
+
                             Model.ConvertContentKind(ContentKind, ChangingContentKind, data);
+                            Model.ChangeContentKind(ChangingContentKind);
                             ShowContentKindChangeConfim = false;
                         }
                     });
                 } else {
+                    //TODO: 関数化
+                    Flush();
+                    Model.Flush();
+
                     Model.ConvertContentKind(ContentKind, ChangingContentKind, null);
+                    Model.ChangeContentKind(ChangingContentKind);
                     ShowContentKindChangeConfim = false;
                 }
             }

@@ -58,7 +58,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Note
             }
         }
 
-        public FlowDocument ToXamlDocument(string content)
+        public FlowDocument ToFlowDocument(string content)
         {
             var document = new FlowDocument();
             using(Initializer.BeginInitialize(document)) {
@@ -70,6 +70,15 @@ namespace ContentTypeTextNet.Pe.Main.Model.Note
             }
 
             return document;
+        }
+
+        public string ToPlain(string rtfText)
+        {
+            using(var formRichTextBox = new System.Windows.Forms.RichTextBox() {
+                Rtf = rtfText
+            }) {
+                return formRichTextBox.Text;
+            }
         }
 
     }

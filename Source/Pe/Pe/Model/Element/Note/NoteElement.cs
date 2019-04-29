@@ -427,6 +427,16 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
                             throw new NotImplementedException();
                     }
 
+                case NoteContentKind.RichText:
+                    switch(toKind) {
+                        case NoteContentKind.Plain:
+                            return noteContentConverter.ToPlain(fromRawContent);
+
+                        case NoteContentKind.RichText:
+                        default:
+                            throw new NotImplementedException();
+                    }
+
                 default:
                     throw new NotImplementedException();
             }

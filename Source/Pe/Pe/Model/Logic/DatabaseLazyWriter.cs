@@ -203,13 +203,13 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
 
         #region IFlush
 
-        public void Flush()
+        void Flush(bool disposing)
         {
-            ThrowIfDisposed();
-
             LazyStockItem[] items;
             lock(this._timerLocker) {
-                StopTimer();
+                if(disposing) {
+                    StopTimer();
+                }
                 items = StockItems.ToArray();
                 StockItems.Clear();
                 UniqueItems.Clear();
@@ -222,6 +222,12 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
             FlushCore(items);
         }
 
+        public void Flush()
+        {
+            ThrowIfDisposed();
+            Flush(true);
+        }
+
         #endregion
 
 
@@ -230,8 +236,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
         protected override void Dispose(bool disposing)
         {
             if(!IsDisposed) {
-                Flush();
-
+                Flush(disposing);
                 if(disposing) {
                     LazyTimer.Dispose();
                 }
