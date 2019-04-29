@@ -7,16 +7,22 @@ using ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Applications;
 using ContentTypeTextNet.Pe.Main.Model.Data;
+using ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Model.Logic;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
 {
     public class NoteContentElement: ElementBase
     {
-        public NoteContentElement(NoteElement noteElement, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
+        #region variable
+        #endregion
+
+        public NoteContentElement(Guid noteId, NoteContentKind contentKind, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
-            NoteElement = noteElement;
+            NoteId = noteId;
+            ContentKind = contentKind;
+
             MainDatabaseBarrier = mainDatabaseBarrier;
             StatementLoader = statementLoader;
 
@@ -25,21 +31,24 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
 
         #region property
 
-        protected NoteElement NoteElement { get; }
-        protected IMainDatabaseBarrier MainDatabaseBarrier { get; }
-        protected IDatabaseStatementLoader StatementLoader { get; }
+        public Guid NoteId { get; }
+        public NoteContentKind ContentKind { get; }
 
-        protected DatabaseLazyWriter MainDatabaseLazyWriter { get; }
+        IMainDatabaseBarrier MainDatabaseBarrier { get; }
+        IDatabaseStatementLoader StatementLoader { get; }
 
-        public NoteContentKind ContentKind => NoteElement.ContentKind;
+        DatabaseLazyWriter MainDatabaseLazyWriter { get; }
 
         #endregion
 
         #region function
 
-        void LoadContent()
+        public bool Exists()
         {
-
+            using(var commander = MainDatabaseBarrier.WaitRead()) {
+                var dao = new NoteContentsEntityDao(commander, StatementLoader, commander.Implementation, Logger.Factory);
+                return dao.SelectExistsContent(NoteId, ContentKind);
+            }
         }
 
         #endregion
@@ -48,7 +57,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
 
         protected override void InitializeImpl()
         {
-            LoadContent();
+            // この子は遅延読み込みさせたいのです
         }
 
         #endregion

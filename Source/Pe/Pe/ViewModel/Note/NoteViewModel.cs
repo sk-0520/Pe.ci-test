@@ -196,7 +196,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
                 if(!Model.CanChangeContentKind(value)) {
                     // 単純変換が出来ない場合はあれやこれや頑張る
                     ChangingContentKind = value;
-                    CanLoadContentKind = Model.HasContentKind(ChangingContentKind);
+                    CanLoadContentKind = Model.ExistsContentKind(ChangingContentKind);
                     ShowContentKindChangeConfim = true;
                 } else {
                     Model.ChangeContentKind(value);

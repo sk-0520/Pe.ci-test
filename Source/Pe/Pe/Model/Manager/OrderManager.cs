@@ -57,7 +57,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
         LauncherToolbarElement CreateLauncherToolbarElement(Screen dockScreen, ReadOnlyObservableCollection<LauncherGroupElement> launcherGroups);
         LauncherItemElement GetOrCreateLauncherItemElement(Guid launcherItemId);
         NoteElement CreateNoteElement(Guid noteId, Screen screen, NotePosition notePosition);
-        NoteContentElement CreateNoteContentElement(NoteElement noteElement);
+        NoteContentElement CreateNoteContentElement(Guid noteId, NoteContentKind contentKind);
         FontElement CreateFontElement(Guid fontId, ParentUpdater parentUpdater);
         WindowItem CreateLauncherToolbarWindow(LauncherToolbarElement element);
         WindowItem CreateNoteWindow(NoteElement element);
@@ -124,9 +124,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
                 return element;
             }
 
-            public NoteContentElement CreateNoteContentElement(NoteElement noteElement)
+            public NoteContentElement CreateNoteContentElement(Guid noteId, NoteContentKind contentKind)
             {
-                var element = DiContainer.Build<NoteContentElement>(noteElement);
+                var element = DiContainer.Build<NoteContentElement>(noteId, contentKind);
                 element.Initialize();
                 return element;
             }

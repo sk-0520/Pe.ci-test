@@ -147,7 +147,13 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
         public NoteContentElement ContentElement
         {
             get => this._contentElement;
-            set => SetProperty(ref this._contentElement, value);
+            set
+            {
+                var prev = this._contentElement;
+                if(SetProperty(ref this._contentElement, value)) {
+                    prev.Dispose();
+                }
+            }
         }
 
         #endregion
@@ -275,7 +281,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
             BackgroundColor = noteData.BackgroundColor;
 
             FontElement = OrderManager.CreateFontElement(noteData.FontId, UpdateFontId);
-            ContentElement = OrderManager.CreateNoteContentElement(this);
+            ContentElement = OrderManager.CreateNoteContentElement(NoteId, ContentKind);
         }
 
         void UpdateFontId(FontElement fontElement, IDatabaseCommander commander, IDatabaseImplementation implementation)
@@ -385,7 +391,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
             }
 
             // 変換後データが存在すればもう無理
-            if(HasContentKind(targetContentKind)) {
+            if(ExistsContentKind(targetContentKind)) {
                 Logger.Debug($"変換後データあり: {NoteId}, {targetContentKind}");
                 return false;
             }
@@ -400,7 +406,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
             return false;
         }
 
-        public bool HasContentKind(NoteContentKind contentKind)
+        public bool ExistsContentKind(NoteContentKind contentKind)
         {
             using(var commander = MainDatabaseBarrier.WaitRead()) {
                 var dao = new NoteContentsEntityDao(commander, StatementLoader, commander.Implementation, Logger.Factory);
@@ -421,7 +427,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
         {
             var prevContentKind = ContentKind;
             ContentKind = contentKind;
-            ContentElement = OrderManager.CreateNoteContentElement(this);
+            ContentElement = OrderManager.CreateNoteContentElement(NoteId, ContentKind);
             MainDatabaseLazyWriter.Stock(c => {
                 var notesEntityDao = new NotesEntityDao(c, StatementLoader, c.Implementation, Logger.Factory);
                 notesEntityDao.UpdateContentKind(NoteId, ContentKind, DatabaseCommonStatus.CreateCurrentAccount());
