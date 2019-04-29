@@ -10,6 +10,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
 {
     public class NotePlainContentViewModel : NoteContentViewModelBase
     {
+        #region variable
+
+        string _content;
+
+        #endregion
+
         public NotePlainContentViewModel(NoteContentElement model, ILogger logger)
             : base(model, logger)
         { }
@@ -19,6 +25,18 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
         { }
 
         #region property
+
+        public string Content
+        {
+            get => this._content;
+            set
+            {
+                if(SetProperty(ref this._content, value)) {
+                    Model.ChangePlainContent(Content);
+                }
+            }
+        }
+
         #endregion
 
         #region command
@@ -28,6 +46,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
         #endregion
 
         #region NoteContentViewModelBase
+
+        protected override Task LoadContentAsync()
+        {
+            return Task.Run(() => {
+                var content = Model.LoadPlainContent();
+                Content = content;
+            });
+        }
+
         #endregion
     }
 }

@@ -76,7 +76,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
                 NoteId = data.NoteId,
                 Title = data.Title,
                 ScreenName = data.ScreenName,
-                LayoutKind = noteLayoutKindTransfer.ToText(data.LayoutKind),
+                LayoutKind = noteLayoutKindTransfer.ToString(data.LayoutKind),
                 IsVisible = data.IsVisible,
                 FontId = data.FontId,
                 ForegroundColor = FromColor(data.ForegroundColor),
@@ -85,7 +85,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
                 IsTopmost = data.IsTopmost,
                 IsCompact = data.IsCompact,
                 TextWrap = data.TextWrap,
-                ContentKind = contentKindTransfer.ToText(data.ContentKind),
+                ContentKind = contentKindTransfer.ToString(data.ContentKind),
             };
 
             commonStatus.WriteCommon(result);
@@ -195,7 +195,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
 
             var builder = CreateUpdateBuilder(databaseCommonStatus);
             builder.AddKey(Column.NoteId, noteId);
-            builder.AddValue(Column.ContentKind, noteContentKindTansfer.ToText(contentKind));
+            builder.AddValue(Column.ContentKind, noteContentKindTansfer.ToString(contentKind));
             return ExecuteUpdate(builder) == 1;
         }
 

@@ -37,9 +37,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
 
             var dto = new LauncherGroupsRowDto() {
                 LauncherGroupId = data.LauncherGroupId,
-                Kind = launcherGroupKindTransfer.ToText(data.Kind),
+                Kind = launcherGroupKindTransfer.ToString(data.Kind),
                 Name = data.Name,
-                ImageName = imgNameEnumTransfer.ToText(data.ImageName),
+                ImageName = imgNameEnumTransfer.ToString(data.ImageName),
                 ImageColor = FromColor(data.ImageColor),
                 Sort = data.Sort,
             };

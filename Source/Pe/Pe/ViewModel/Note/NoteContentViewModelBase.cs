@@ -3,16 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Library.ViewModel;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Data;
 using ContentTypeTextNet.Pe.Main.Model.Element.Note;
+using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
 {
     public abstract class NoteContentViewModelBase : SingleModelViewModelBase<NoteContentElement>
     {
+        #region variable
+
+        bool _canVisible;
+
+        #endregion
+
         public NoteContentViewModelBase(NoteContentElement model, ILogger logger)
             : base(model, logger)
         { }
@@ -25,12 +33,40 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
 
         public NoteContentKind Kind => Model.ContentKind;
 
+        public bool CanVisible
+        {
+            get => this._canVisible;
+            private set => SetProperty(ref this._canVisible, value);
+        }
+
         #endregion
 
         #region command
+
+        public ICommand LoadedCommand => GetOrCreateCommand(() => new DelegateCommand(
+            async () => {
+                if(CanVisible) {
+                    return;
+                }
+                try {
+                    Logger.Debug("読み込み開始");
+                    await LoadContentAsync();
+                    Logger.Debug("読み込み終了");
+                    CanVisible = true;
+                } catch(Exception ex) {
+                    Logger.Debug("読み込み失敗");
+                    Logger.Error(ex);
+                    throw; // 投げなくてもいいかも
+                }
+            }
+        ));
+
         #endregion
 
         #region function
+
+        protected abstract Task LoadContentAsync();
+
         #endregion
     }
 

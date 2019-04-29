@@ -43,7 +43,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
 
             var dto = new NoteLayoutsEntityDto() {
                 NoteId = data.NoteId,
-                LayoutKind = noteLayoutKindTransfer.ToText(data.LayoutKind),
+                LayoutKind = noteLayoutKindTransfer.ToString(data.LayoutKind),
                 X = data.X,
                 Y = data.Y,
                 Width = data.Width,
@@ -78,7 +78,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             var statement = StatementLoader.LoadStatementByCurrent();
             var param = new {
                 NoteId = noteId,
-                LayoutKind = noteLayoutKindTransfer.ToText(layoutKind),
+                LayoutKind = noteLayoutKindTransfer.ToString(layoutKind),
             };
             return Commander.QueryFirstOrDefault<NoteLayoutData>(statement, param);
         }
@@ -89,7 +89,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             var statement = StatementLoader.LoadStatementByCurrent();
             var param = new {
                 NoteId = noteId,
-                LayoutKind = noteLayoutKindTransfer.ToText(layoutKind),
+                LayoutKind = noteLayoutKindTransfer.ToString(layoutKind),
             };
             return Commander.QuerySingle<bool>(statement, param);
         }
@@ -114,7 +114,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             var statement = StatementLoader.LoadStatementByCurrent();
             var param = databaseCommonStatus.CreateCommonDtoMapping();
             param[Column.NoteId] = noteLayout.NoteId;
-            param[Column.LayoutKind] = noteLayoutKindTransfer.ToText(noteLayout.LayoutKind);
+            param[Column.LayoutKind] = noteLayoutKindTransfer.ToString(noteLayout.LayoutKind);
             param[Column.X] = noteLayout.X;
             param[Column.Y] = noteLayout.Y;
             param[Column.Width] = noteLayout.Width;

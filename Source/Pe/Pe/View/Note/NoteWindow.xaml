@@ -190,14 +190,63 @@
 
         <Grid Grid.Row="1" Background="{Binding ContentBackground}">
           <Grid.Resources>
+            <Style x:Key="ContentTextBox" TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
+              <Style.Triggers>
+                <DataTrigger Binding="{Binding DataContext.TextWrap, ElementName=root}" Value="True">
+                  <Setter Property="TextWrapping" Value="Wrap" />
+                </DataTrigger>
+              </Style.Triggers>
+              <Setter Property="Background" Value="Transparent" />
+              <Setter Property="BorderThickness" Value="0" />
+              <Setter Property="AcceptsReturn" Value="True" />
+              <Setter Property="IsReadOnly" Value="{Binding DataContext.IsLocked, ElementName=root}" />
+            </Style>
+
             <!--#region テキスト -->
             <DataTemplate DataType="{x:Type app_main_viewmodel_note:NotePlainContentViewModel}">
-              <TextBlock>text</TextBlock>
+              <TextBox Style="{StaticResource ContentTextBox}" Text="{Binding Content, UpdateSourceTrigger=PropertyChanged}">
+                <i:Interaction.Triggers>
+                  <i:EventTrigger EventName="Loaded">
+                    <i:InvokeCommandAction Command="{Binding LoadedCommand}" />
+                  </i:EventTrigger>
+                </i:Interaction.Triggers>
+              </TextBox>
+            </DataTemplate>
+            <!--#endregion -->
+
+            <!--#region リッチテキスト -->
+            <DataTemplate DataType="{x:Type app_main_viewmodel_note:NoteRichTextContentViewModel}">
+              <TextBox />
+            </DataTemplate>
+            <!--#endregion -->
+
+            <!--#region リンク -->
+            <DataTemplate DataType="{x:Type app_main_viewmodel_note:NoteLinkContentViewModel}">
+              <TextBox />
             </DataTemplate>
             <!--#endregion -->
           </Grid.Resources>
-          <ContentControl x:Name="content" Content="{Binding Content}">
+          <!--<ContentControl x:Name="content" Content="{Binding Content}" Visibility="{Binding Content.CanVisible, Converter={StaticResource BooleanToVisibilityConverter}}" />-->
+          <!--<Grid Visibility="{Binding Content.CanVisible, Converter={StaticResource FalseToVisibilityConverter}}">
+            <TextBlock>busy</TextBlock>
+          </Grid>-->
+          <ContentControl x:Name="content">
+            <ContentControl.Style>
+              <Style TargetType="ContentControl">
+                <Style.Triggers>
+                  <DataTrigger Binding="{Binding IsCompact}" Value="True">
+                    <Setter Property="Content" Value="💩" />
+                  </DataTrigger>
+                  <DataTrigger Binding="{Binding IsCompact}" Value="False">
+                    <Setter Property="Content" Value="{Binding Content}" />
+                  </DataTrigger>
+                </Style.Triggers>
+              </Style>
+            </ContentControl.Style>
           </ContentControl>
+          <Grid Visibility="{Binding Content.CanVisible, Converter={StaticResource FalseToVisibilityConverter}}">
+            <TextBlock>busy</TextBlock>
+          </Grid>
         </Grid>
       </Grid>
     </Border>

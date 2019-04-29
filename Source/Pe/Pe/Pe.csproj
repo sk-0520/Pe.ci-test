@@ -503,7 +503,13 @@
     <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Domain\LauncherToolbarDomainDao\SelectAllScreenToolbars.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\NoteContentsEntityDao\UpdateContent.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\NoteContentsEntityDao\InsertNewContent.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\NoteContentsEntityDao\SelectFullContent.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\NoteContentsEntityDao\SelectExistsContent.sql">

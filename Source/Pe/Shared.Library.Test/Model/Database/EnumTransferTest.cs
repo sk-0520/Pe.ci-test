@@ -30,9 +30,9 @@ namespace Shared.Library.Test.Model.Database
         {
             var test = "test-enum";
             var enumTransfer = new EnumTransfer<A>();
-            Assert.AreEqual(test, enumTransfer.ToText(A.TestEnum));
-            Assert.AreEqual(test, enumTransfer.ToText(A.testEnum));
-            Assert.AreEqual(test, enumTransfer.ToText(A.TEStENUm));
+            Assert.AreEqual(test, enumTransfer.ToString(A.TestEnum));
+            Assert.AreEqual(test, enumTransfer.ToString(A.testEnum));
+            Assert.AreEqual(test, enumTransfer.ToString(A.TEStENUm));
         }
 
         [TestMethod]
@@ -40,9 +40,9 @@ namespace Shared.Library.Test.Model.Database
         {
             var test = "abc";
             var enumTransfer = new EnumTransfer<B>();
-            Assert.AreEqual(test, enumTransfer.ToText(B.TestEnum));
-            Assert.AreEqual(test, enumTransfer.ToText(B.testEnum));
-            Assert.AreEqual(test, enumTransfer.ToText(B.TEStENUm));
+            Assert.AreEqual(test, enumTransfer.ToString(B.TestEnum));
+            Assert.AreEqual(test, enumTransfer.ToString(B.testEnum));
+            Assert.AreEqual(test, enumTransfer.ToString(B.TEStENUm));
         }
 
         enum C
@@ -112,10 +112,10 @@ namespace Shared.Library.Test.Model.Database
         public void FromTest_E()
         {
             var enumTransfer = new EnumTransfer<E>();
-            Assert.AreEqual(E.A, enumTransfer.ToEnum(enumTransfer.ToText(E.A)));
-            Assert.AreEqual(E.B, enumTransfer.ToEnum(enumTransfer.ToText(E.B)));
-            Assert.AreEqual(E.C, enumTransfer.ToEnum(enumTransfer.ToText(E.C)));
-            Assert.AreEqual(E.D, enumTransfer.ToEnum(enumTransfer.ToText(E.D)));
+            Assert.AreEqual(E.A, enumTransfer.ToEnum(enumTransfer.ToString(E.A)));
+            Assert.AreEqual(E.B, enumTransfer.ToEnum(enumTransfer.ToString(E.B)));
+            Assert.AreEqual(E.C, enumTransfer.ToEnum(enumTransfer.ToString(E.C)));
+            Assert.AreEqual(E.D, enumTransfer.ToEnum(enumTransfer.ToString(E.D)));
         }
 
 

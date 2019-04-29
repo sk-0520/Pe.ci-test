@@ -94,7 +94,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
 
             var param = commonStatus.CreateCommonDtoMapping();
             param[Column.LauncherToolbarId] = launcherToolbarId;
-            param[Column.PositionKind] = toolbarPositionTransfer.ToText(toolbarPosition);
+            param[Column.PositionKind] = toolbarPositionTransfer.ToString(toolbarPosition);
 
             return Commander.Execute(statement, param) == 1;
         }

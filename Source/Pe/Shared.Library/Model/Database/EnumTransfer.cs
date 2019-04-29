@@ -56,7 +56,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
         /// </summary>
         /// <param name="member"></param>
         /// <returns></returns>
-        public string ToText(TEnum member)
+        public string ToString(TEnum member)
         {
             var fieldInfo = EnumType.GetField(member.ToString());
 

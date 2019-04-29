@@ -40,7 +40,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
                 LauncherItemId = data.LauncherItemId,
                 Code = data.Code,
                 Name = data.Name,
-                Kind = kindEnumTransfer.ToText(data.Kind),
+                Kind = kindEnumTransfer.ToString(data.Kind),
                 IconPath = data.Icon.Path,
                 IconIndex = data.Icon.Index,
                 IsEnabledCommandLauncher = data.IsEnabledCommandLauncher,

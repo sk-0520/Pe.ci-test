@@ -151,7 +151,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
             {
                 var prev = this._contentElement;
                 if(SetProperty(ref this._contentElement, value)) {
-                    prev.Dispose();
+                    prev?.Dispose();
                 }
             }
         }

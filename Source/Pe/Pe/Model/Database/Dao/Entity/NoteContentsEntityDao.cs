@@ -35,7 +35,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
 
             var dto = new NoteContentsEntityDto() {
                 NoteId = data.NoteId,
-                ContentKind = noteContentKindTransfer.ToText(data.ContentKind),
+                ContentKind = noteContentKindTransfer.ToString(data.ContentKind),
                 Content = data.Content,
             };
 
@@ -46,15 +46,36 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
 
         public bool SelectExistsContent(Guid noteId, NoteContentKind contentKind)
         {
+            var noteContentKindTransfer = new EnumTransfer<NoteContentKind>();
+
             var statement = StatementLoader.LoadStatementByCurrent();
             var param = new {
                 NoteId = noteId,
-                ContentKind = contentKind,
+                ContentKind = noteContentKindTransfer.ToString(contentKind),
             };
             return Commander.QueryFirst<bool>(statement, param);
         }
 
+        public string SelectFullContent(Guid noteId, NoteContentKind contentKind)
+        {
+            var noteContentKindTransfer = new EnumTransfer<NoteContentKind>();
+
+            var statement = StatementLoader.LoadStatementByCurrent();
+            var param = new {
+                NoteId = noteId,
+                ContentKind = noteContentKindTransfer.ToString(contentKind),
+            };
+            return Commander.QueryFirst<string>(statement, param);
+        }
+
         public bool InsertNewContent(NoteContentData data, IDatabaseCommonStatus databaseCommonStatus)
+        {
+            var statement = StatementLoader.LoadStatementByCurrent();
+            var param = ConvertFromData(data, databaseCommonStatus);
+            return Commander.Execute(statement, param) == 1;
+        }
+
+        public bool UpdateContent(NoteContentData data, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = StatementLoader.LoadStatementByCurrent();
             var param = ConvertFromData(data, databaseCommonStatus);

@@ -28,6 +28,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
         #endregion
 
         #region NoteContentViewModelBase
+        protected override Task LoadContentAsync()
+        {
+            throw new NotImplementedException();
+        }
         #endregion
     }
 }
