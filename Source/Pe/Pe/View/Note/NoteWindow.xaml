@@ -61,6 +61,9 @@
     <prism:InteractionRequestTrigger SourceObject="{Binding TitleEditStartRequest}">
       <prism:InvokeCommandAction Command="{Binding TitleEditStartCommand ,ElementName=root}" />
     </prism:InteractionRequestTrigger>
+    <prism:InteractionRequestTrigger SourceObject="{Binding SelectLinkFileRequest}">
+      <prism:InvokeCommandAction Command="{Binding SelectLinkFileCommand ,ElementName=root}" />
+    </prism:InteractionRequestTrigger>
   </i:Interaction.Triggers>
   <Window.Style>
     <Style TargetType="Window" BasedOn="{StaticResource {x:Type Window}}">
@@ -315,8 +318,8 @@
     <!--#endregion -->
 
     <!--#region 編集-->
-    <!-- IsOpen="{Binding IsActive, ElementName=root, Mode=OneWay}" -->
-    <Popup x:Name="popup" Placement="Left" PlacementTarget="{Binding ElementName=root}" IsOpen="True" >
+    <!--  -->
+    <Popup x:Name="popup" Placement="Left" PlacementTarget="{Binding ElementName=root}" IsOpen="{Binding IsActive, ElementName=root, Mode=OneWay}" >
       <Border Style="{StaticResource PopupMenuBorder}">
         <Grid>
           <!--#region 通常編集-->

@@ -25,9 +25,18 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         #endregion
     }
 
-    public class FileSaveDialogNotification: CancelNotification
+    public class FileDialogNotification : CancelNotification
+    {
+        public string[] ResponseFilePaths { get; set; }
+        public DialogFilterList Filter { get; } = new DialogFilterList();
+        public bool ShowExtensions { get; set; }
+    }
+
+    public class FileSaveDialogNotification: FileDialogNotification
     {
         #region property
+
+
         #endregion
     }
 }

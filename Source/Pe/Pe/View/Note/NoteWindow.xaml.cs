@@ -15,6 +15,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
+using ContentTypeTextNet.Pe.Main.Model.Note;
+using Microsoft.WindowsAPICodePack.Dialogs;
+using Microsoft.WindowsAPICodePack.Dialogs.Controls;
 using Prism.Commands;
 using Prism.Interactivity.InteractionRequest;
 
@@ -29,7 +32,8 @@ namespace ContentTypeTextNet.Pe.Main.View.Note
         {
             InitializeComponent();
 
-            Language = XmlLanguage.GetLanguage(CultureInfo.CurrentUICulture.Name);
+            // あとで考える
+            //Language = XmlLanguage.GetLanguage(CultureInfo.CurrentUICulture.Name);
         }
 
         #region property
@@ -58,6 +62,56 @@ namespace ContentTypeTextNet.Pe.Main.View.Note
             }
         }
 
+        ICommand _SelectLinkFileCommand;
+        public ICommand SelectLinkFileCommand
+        {
+            get
+            {
+                return this._SelectLinkFileCommand ?? (this._SelectLinkFileCommand = new DelegateCommand<InteractionRequestedEventArgs>(
+                    o => {
+                        var context = (NoteLinkSelectNotification)o.Context;
+                        //TODO: 共通化
+                        var filters = context.Filter.Select(i => {
+                            var filter = new CommonFileDialogFilter() {
+                                DisplayName = i.Display,
+                            };
+                            foreach(var wildcard in i.Wildcard) {
+                                var index = wildcard.IndexOf('.');
+                                if(index != -1) {
+                                    filter.Extensions.Add(wildcard.Substring(index + 1));
+                                } else {
+                                    filter.Extensions.Add(wildcard);
+                                }
+                            }
+                            filter.ShowExtensions = context.ShowExtensions;
+                            return filter;
+                        });
+                        var dialog = new CommonSaveFileDialog();
+                        //TODO: メモ量程度には合わせたい
+                        var encodings = new CommonFileDialogComboBox();
+                        encodings.Items.Add(new CommonFileDialogComboBoxItem("plain"));
+
+                        dialog.Controls.Add(encodings);
+                        foreach(var filter in filters) {
+                            dialog.Filters.Add(filter);
+                        }
+
+                        using(dialog) {
+                            var popupIsOpen = this.popup.IsOpen;
+                            if(popupIsOpen) {
+                                this.popup.Visibility = Visibility.Collapsed;
+                            }
+                            var result = dialog.ShowDialog();
+                            context.ResponseIsCancel = result != CommonFileDialogResult.Ok;
+                            if(popupIsOpen) {
+                                this.popup.Visibility = Visibility.Visible;
+                            }
+                        }
+                        o.Callback();
+                    }
+                ));
+            }
+        }
         #endregion
 
         #region function

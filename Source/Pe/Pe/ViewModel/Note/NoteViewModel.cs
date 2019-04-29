@@ -25,6 +25,7 @@ using Prism.Commands;
 using Prism.Interactivity.InteractionRequest;
 using ContentTypeTextNet.Pe.Main.ViewModel.Font;
 using ContentTypeTextNet.Pe.Main.Model.Logic;
+using ContentTypeTextNet.Pe.Main.Model.Note;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
 {
@@ -75,7 +76,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
         #region property
 
         public InteractionRequest<Notification> TitleEditStartRequest { get; } = new InteractionRequest<Notification>();
-        public InteractionRequest<FileSaveDialogNotification> SelectLinkFileRequest { get; } = new InteractionRequest<FileSaveDialogNotification>();
+        public InteractionRequest<NoteLinkSelectNotification> SelectLinkFileRequest { get; } = new InteractionRequest<NoteLinkSelectNotification>();
 
         bool CanLayoutNotify { get; set; }
 
@@ -308,7 +309,26 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
 
         public ICommand ContentKindChangeConvertCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-                ShowContentKindChangeConfim = false;
+                if(ChangingContentKind == NoteContentKind.Link) {
+                    var context = new NoteLinkSelectNotification();
+                    context.Filter.Add(new DialogFilterItem("text", "*.txt", "*.md"));
+                    context.Filter.Add(new DialogFilterItem("all", "*.*"));
+
+                    SelectLinkFileRequest.Raise(context, c => {
+                        if(!c.ResponseIsCancel) {
+                            var data = new NoteLinkContentData() {
+                                EncodingName = c.ResponseEncoding.WebName,
+                                FilePath = c.ResponseFilePaths.First(),
+                                RefreshTime = TimeSpan.FromSeconds(1),//TODO: なんだこれ
+                            };
+                            Model.ConvertContentKind(ContentKind, ChangingContentKind, data);
+                            ShowContentKindChangeConfim = false;
+                        }
+                    });
+                } else {
+                    Model.ConvertContentKind(ContentKind, ChangingContentKind, null);
+                    ShowContentKindChangeConfim = false;
+                }
             }
         ));
         public ICommand ContentKindChangeLoadCommand => GetOrCreateCommand(() => new DelegateCommand(
