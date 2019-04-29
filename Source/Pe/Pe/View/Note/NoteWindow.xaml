@@ -280,18 +280,6 @@
         <Grid>
           <!--#region 通常編集-->
           <StackPanel IsEnabled="{Binding ShowContentKindChangeConfim, Converter={StaticResource LogicalNotConverter}}">
-            <GroupBox Style="{StaticResource HeaderGroupBox}" Header="input">
-              <Grid>
-                <Grid.ColumnDefinitions>
-                  <ColumnDefinition />
-                  <ColumnDefinition />
-                </Grid.ColumnDefinitions>
-
-                <Button Grid.Column="0" Content="title" />
-                <Button Grid.Column="1" Content="content" />
-              </Grid>
-            </GroupBox>
-
             <GroupBox Style="{StaticResource HeaderGroupBox}" Header="format">
               <StackPanel Grid.IsSharedSizeScope="True">
                 <Grid>
