@@ -77,6 +77,10 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
         #endregion
 
         public DatabaseLazyWriter(IApplicationDatabaseBarrier databaseBarrier, TimeSpan waitTime, ILoggerFactory loggerFactory)
+            : this(databaseBarrier, waitTime, TimeSpan.FromSeconds(1), loggerFactory)
+        { }
+
+        public DatabaseLazyWriter(IApplicationDatabaseBarrier databaseBarrier, TimeSpan waitTime, TimeSpan pauseRetryTime, ILoggerFactory loggerFactory)
         {
             if(databaseBarrier == null) {
                 throw new ArgumentNullException(nameof(databaseBarrier));
@@ -90,6 +94,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
 
             DatabaseBarrier = databaseBarrier;
             WaitTime = waitTime;
+            PauseRetryTime = pauseRetryTime;
             Logger = loggerFactory.CreateTartget(GetType());
 
             LazyTimer = new Timer(LazyCallback);
@@ -99,12 +104,15 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
 
         IApplicationDatabaseBarrier DatabaseBarrier { get; }
         TimeSpan WaitTime { get; }
+        TimeSpan PauseRetryTime { get; }
         ILogger Logger { get; }
 
         Timer LazyTimer { get; }
 
         IList<LazyStockItem> StockItems { get; } = new List<LazyStockItem>();
         IDictionary<object, LazyStockItem> UniqueItems { get; } = new Dictionary<object, LazyStockItem>();
+
+        public bool IsPausing { get; private set; }
 
         #endregion
 
@@ -116,7 +124,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
         }
         void StartTimer()
         {
-            LazyTimer.Change(WaitTime, Timeout.InfiniteTimeSpan);
+            LazyTimer.Change(WaitTime, PauseRetryTime);
         }
 
         void StockCore(Action<ApplicationDatabaseBarrierTransaction> action, object uniqueKey)
@@ -167,6 +175,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
 
         void LazyCallback(object state)
         {
+            if(IsPausing) {
+                return;
+            }
             Flush();
         }
 
@@ -178,6 +189,14 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
                 }
                 transaction.Commit();
             }
+        }
+
+        public IDisposer Pause()
+        {
+            IsPausing = true;
+            return new ActionDisposer(() => {
+                IsPausing = false;
+            });
         }
 
         #endregion

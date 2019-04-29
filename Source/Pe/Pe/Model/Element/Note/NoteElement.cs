@@ -48,7 +48,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
 
         #endregion
 
-        public NoteElement(Guid noteId, Screen dockScreen, NotePosition notePosition, IOrderManager orderManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, INoteTheme noteTheme, ILoggerFactory loggerFactory)
+        public NoteElement(Guid noteId, Screen dockScreen, NotePosition notePosition, IOrderManager orderManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, IDispatcherWapper dispatcherWapper, INoteTheme noteTheme, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             NoteId = noteId;
@@ -58,6 +58,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
             MainDatabaseBarrier = mainDatabaseBarrier;
             FileDatabaseBarrier = fileDatabaseBarrier;
             StatementLoader = statementLoader;
+            DispatcherWapper = dispatcherWapper;
             NoteTheme = noteTheme;
 
             MainDatabaseLazyWriter = new DatabaseLazyWriter(MainDatabaseBarrier, Constants.Config.NoteMainDatabaseLazyWriterWaitTime, this);
@@ -80,6 +81,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
         IMainDatabaseBarrier MainDatabaseBarrier { get; }
         IFileDatabaseBarrier FileDatabaseBarrier { get; }
         IDatabaseStatementLoader StatementLoader { get; }
+        IDispatcherWapper DispatcherWapper { get; }
         INoteTheme NoteTheme { get; }
         public FontElement FontElement { get; private set; }
 
@@ -422,7 +424,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
                 case NoteContentKind.Plain:
                     switch(toKind) {
                         case NoteContentKind.RichText:
-                            return noteContentConverter.ToRichText(fromRawContent, null, Colors.Red);
+                            return noteContentConverter.ToRichText(fromRawContent, FontElement.FontData, ForegroundColor, DispatcherWapper);
 
                         case NoteContentKind.Plain:
                         default:
@@ -443,22 +445,24 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
                 throw new ArgumentNullException(nameof(linkData));
             }
 
-            var fromRawContent = ContentElement.LoadRawContent();
-            var convertedContent = ConvertContent(fromKind, fromRawContent, toKind, linkData);
-            var contentData = new NoteContentData() {
-                NoteId = NoteId,
-                ContentKind = toKind,
-                Content = convertedContent,
-            };
-            using(var commander = MainDatabaseBarrier.WaitWrite()) {
-                var notesEntityDao = new NoteContentsEntityDao(commander, StatementLoader, commander.Implementation, Logger.Factory);
-                if(notesEntityDao.SelectExistsContent(contentData.NoteId, contentData.ContentKind)) {
-                    notesEntityDao.UpdateContent(contentData, DatabaseCommonStatus.CreateCurrentAccount());
-                } else {
-                    notesEntityDao.InsertNewContent(contentData, DatabaseCommonStatus.CreateCurrentAccount());
-                }
+            using(MainDatabaseLazyWriter.Pause()) {
+                var fromRawContent = ContentElement.LoadRawContent();
+                var convertedContent = ConvertContent(fromKind, fromRawContent, toKind, linkData);
+                var contentData = new NoteContentData() {
+                    NoteId = NoteId,
+                    ContentKind = toKind,
+                    Content = convertedContent,
+                };
+                using(var commander = MainDatabaseBarrier.WaitWrite()) {
+                    var notesEntityDao = new NoteContentsEntityDao(commander, StatementLoader, commander.Implementation, Logger.Factory);
+                    if(notesEntityDao.SelectExistsContent(contentData.NoteId, contentData.ContentKind)) {
+                        notesEntityDao.UpdateContent(contentData, DatabaseCommonStatus.CreateCurrentAccount());
+                    } else {
+                        notesEntityDao.InsertNewContent(contentData, DatabaseCommonStatus.CreateCurrentAccount());
+                    }
 
-                commander.Commit();
+                    commander.Commit();
+                }
             }
         }
 

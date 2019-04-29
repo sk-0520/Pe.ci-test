@@ -78,6 +78,17 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Font
 
         public bool IsDefaultFont => FontId == Guid.Empty;
 
+        public FontData FontData => new FontData() {
+            FamilyName = FamilyName,
+            Size = Size,
+            IsBold = IsBold,
+            IsItalic = IsItalic,
+            IsUnderline = false,
+            IsStrikeThrough = false,
+        };
+
+
+
         #endregion
 
         #region function
