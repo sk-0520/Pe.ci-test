@@ -14,7 +14,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
     {
         #region variable
 
-        string _content;
+        string _rtfContent;
 
         #endregion
 
@@ -28,15 +28,16 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
 
         #region property
 
-        //RichTextBox Control { get; set; }
-        public string Content
+        Xceed.Wpf.Toolkit.RichTextBox Control { get; set; }
+
+        public string RtfContent
         {
-            get => this._content;
+            get => this._rtfContent;
             set
             {
-                if(SetProperty(ref this._content, value)) {
+                if(SetProperty(ref this._rtfContent, value)) {
                     if(CanVisible) {
-                        Model.ChangeRichTextContent(Content);
+                        Model.ChangeRichTextContent(RtfContent);
                     }
                 }
             }
@@ -51,23 +52,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
         #endregion
 
         #region NoteContentViewModelBase
+
         protected override Task LoadContentAsync(Control control)
         {
-            /*
-            Control = (RichTextBox)control;
+            Control = (Xceed.Wpf.Toolkit.RichTextBox)control;
+
             return Task.Run(() => {
-                var document = Model.LoadRichTextContent();
-                DispatcherWapper.Invoke(() => {
-                    Control.Document = document;
-                });
-            });
-            */
-            return Task.Run(() => {
-                var document = Model.LoadRichTextContent();
-                DispatcherWapper.Invoke(() => {
-                    //Control.Document = document;
-                });
-                Content = document;
+                var content = Model.LoadRichTextContent();
+                RtfContent = content;
             });
         }
         #endregion

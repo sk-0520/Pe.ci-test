@@ -103,28 +103,12 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
                 throw new InvalidOperationException();
             }
 
-            var contentConverter = new NoteContentConverter(Logger.Factory);
-
             if(!Exists()) {
-                /*
-                var document = DispatcherWapper.Get(() => {
-                    var doc = new FlowDocument();
-                    return doc;
-                });
-                var content = contentConverter.ToXamlString(document);
+                var content = @"{\rtf1}";
                 CreateNewContent(content);
-                // 作ったやつを返すだけなので別に。
-                return document;
-                */
-                CreateNewContent(string.Empty);
+                return content;
             }
 
-            /*
-            var rawContent = LoadRawContent();
-            return DispatcherWapper.Get(() => {
-                return contentConverter.ToXamlDocument(rawContent);
-            });
-            */
             return LoadRawContent();
         }
 

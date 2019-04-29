@@ -150,13 +150,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
         public NoteContentElement ContentElement
         {
             get => this._contentElement;
-            set
-            {
-                var prev = this._contentElement;
-                if(SetProperty(ref this._contentElement, value)) {
-                    prev?.Dispose();
-                }
-            }
+            private set => SetProperty(ref this._contentElement, value);
         }
 
         #endregion
@@ -284,7 +278,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
             BackgroundColor = noteData.BackgroundColor;
 
             FontElement = OrderManager.CreateFontElement(noteData.FontId, UpdateFontId);
+            var oldContentElement = ContentElement;
             ContentElement = OrderManager.CreateNoteContentElement(NoteId, ContentKind);
+            oldContentElement?.Dispose();
         }
 
         void UpdateFontId(FontElement fontElement, IDatabaseCommander commander, IDatabaseImplementation implementation)
@@ -477,7 +473,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
         {
             var prevContentKind = ContentKind;
             ContentKind = contentKind;
+            var oldContentElement = ContentElement;
             ContentElement = OrderManager.CreateNoteContentElement(NoteId, ContentKind);
+            oldContentElement?.Dispose();
             MainDatabaseLazyWriter.Stock(c => {
                 var notesEntityDao = new NotesEntityDao(c, StatementLoader, c.Implementation, Logger.Factory);
                 notesEntityDao.UpdateContentKind(NoteId, ContentKind, DatabaseCommonStatus.CreateCurrentAccount());

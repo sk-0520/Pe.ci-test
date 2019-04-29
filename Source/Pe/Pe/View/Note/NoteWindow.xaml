@@ -246,12 +246,17 @@
                   </Style>
                 </RichTextBox.Style>
               </RichTextBox>-->
-              <xctk:RichTextBox x:Name="control" Text="{Binding Content, UpdateSourceTrigger=PropertyChanged, Delay=1000}">
+              <xctk:RichTextBox x:Name="control" Text="{Binding RtfContent, UpdateSourceTrigger=PropertyChanged, Delay=2000}">
                 <i:Interaction.Triggers>
                   <i:EventTrigger EventName="Loaded">
                     <i:InvokeCommandAction Command="{Binding LoadedCommand}" CommandParameter="{Binding ElementName=control}" />
                   </i:EventTrigger>
                 </i:Interaction.Triggers>
+                <xctk:RichTextBox.Style>
+                  <Style TargetType="xctk:RichTextBox" BasedOn="{StaticResource TextBoxBase}">
+                    <Style.Triggers />
+                  </Style>
+                </xctk:RichTextBox.Style>
                 <xctk:RichTextBox.TextFormatter>
                   <xctk:RtfFormatter />
                 </xctk:RichTextBox.TextFormatter>

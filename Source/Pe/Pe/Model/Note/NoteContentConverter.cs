@@ -27,7 +27,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Note
 
         ILogger Logger { get; }
         public Encoding Encoding { get; set; } = Encoding.UTF8;
-        public string RichTextFormat { get; set; } = DataFormats.Xaml;
+        public string RichTextFormat { get; set; } = DataFormats.Rtf;
 
         #endregion
 
@@ -45,10 +45,10 @@ namespace ContentTypeTextNet.Pe.Main.Model.Note
                 document.Blocks.Add(new Paragraph(new Run(plainText)));
             }
 
-            return ToXamlString(document);
+            return ToRtfString(document);
         }
 
-        public string ToXamlString(FlowDocument document)
+        public string ToRtfString(FlowDocument document)
         {
             var range = new TextRange(document.ContentStart, document.ContentEnd);
             using(var stream = new MemoryStream()) {
