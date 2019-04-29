@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
@@ -112,4 +113,18 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data
         #endregion
     }
 
+    [Serializable, DataContract]
+    public class NoteLinkContentData
+    {
+        #region property
+
+        [DataMember]
+        public string FilePath { get; set; }
+        [DataMember]
+        public string EncodingName { get; set; }
+        [DataMember]
+        public TimeSpan RefreshTime { get; set; }
+
+        #endregion
+    }
 }

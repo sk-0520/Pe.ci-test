@@ -21,6 +21,7 @@ using ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Model.Element.Font;
 using ContentTypeTextNet.Pe.Main.Model.Logic;
 using ContentTypeTextNet.Pe.Main.Model.Manager;
+using ContentTypeTextNet.Pe.Main.Model.Note;
 using ContentTypeTextNet.Pe.Main.Model.Theme;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
@@ -414,13 +415,58 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
             }
         }
 
-        public void ConvertContentKind(NoteContentKind fromKind, NoteContentKind toKind)
+        string ConvertContent(NoteContentKind fromKind, string fromRawContent, NoteContentKind toKind, NoteLinkContentData linkData)
         {
+            var noteContentConverter = new NoteContentConverter(Logger.Factory);
+            switch(fromKind) {
+                case NoteContentKind.Plain:
+                    switch(toKind) {
+                        case NoteContentKind.RichText:
+                            return noteContentConverter.ToRichText(fromRawContent, null, Colors.Red);
 
+                        case NoteContentKind.Plain:
+                        default:
+                            throw new NotImplementedException();
+                    }
+
+                default:
+                    throw new NotImplementedException();
+            }
         }
-        public void CreateContentKind(NoteContentKind contentKind)
-        {
 
+        public void ConvertContentKind(NoteContentKind fromKind, NoteContentKind toKind, NoteLinkContentData linkData)
+        {
+            if(fromKind == toKind) {
+                throw new ArgumentException($"{nameof(fromKind)} == {nameof(toKind)}");
+            }
+            if(toKind == NoteContentKind.Link && linkData == null) {
+                throw new ArgumentNullException(nameof(linkData));
+            }
+
+            var fromRawContent = ContentElement.LoadRawContent();
+            var convertedContent = ConvertContent(fromKind, fromRawContent, toKind, linkData);
+            var contentData = new NoteContentData() {
+                NoteId = NoteId,
+                ContentKind = toKind,
+                Content = convertedContent,
+            };
+            using(var commander = MainDatabaseBarrier.WaitWrite()) {
+                var notesEntityDao = new NoteContentsEntityDao(commander, StatementLoader, commander.Implementation, Logger.Factory);
+                if(notesEntityDao.SelectExistsContent(contentData.NoteId, contentData.ContentKind)) {
+                    notesEntityDao.UpdateContent(contentData, DatabaseCommonStatus.CreateCurrentAccount());
+                } else {
+                    notesEntityDao.InsertNewContent(contentData, DatabaseCommonStatus.CreateCurrentAccount());
+                }
+
+                commander.Commit();
+            }
+        }
+
+        public void CreateContentKind(NoteContentKind contentKind, NoteLinkContentData linkData)
+        {
+            if(contentKind == NoteContentKind.Link && linkData == null) {
+                throw new ArgumentNullException(nameof(linkData));
+            }
         }
 
         public void ChangeContentKind(NoteContentKind contentKind)

@@ -199,6 +199,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
                     CanLoadContentKind = Model.ExistsContentKind(ChangingContentKind);
                     ShowContentKindChangeConfim = true;
                 } else {
+                    // 変換するがユーザー選択は不要
+                    Debug.Assert(value != NoteContentKind.Link);
+                    Model.ConvertContentKind(ContentKind, value, null);
                     Model.ChangeContentKind(value);
                 }
             }

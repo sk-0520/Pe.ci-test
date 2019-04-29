@@ -67,6 +67,14 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
             }
         }
 
+        public string LoadRawContent()
+        {
+            using(var commander = MainDatabaseBarrier.WaitRead()) {
+                var dao = new NoteContentsEntityDao(commander, StatementLoader, commander.Implementation, Logger.Factory);
+                return dao.SelectFullContent(NoteId, ContentKind);
+            }
+        }
+
         public string LoadPlainContent()
         {
             if(ContentKind != NoteContentKind.Plain) {
@@ -81,10 +89,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
                 return content;
             }
 
-            using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var dao = new NoteContentsEntityDao(commander, StatementLoader, commander.Implementation, Logger.Factory);
-                return dao.SelectFullContent(NoteId, ContentKind);
-            }
+            return LoadRawContent();
         }
 
         public void ChangePlainContent(string content)
