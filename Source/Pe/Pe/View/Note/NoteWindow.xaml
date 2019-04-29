@@ -233,7 +233,7 @@
             <!--#region リッチテキスト -->
             <DataTemplate DataType="{x:Type app_main_viewmodel_note:NoteRichTextContentViewModel}">
               <!-- ViewModel 側でイベント制御 -->
-              <RichTextBox x:Name="control">
+              <!--<RichTextBox x:Name="control">
                 <i:Interaction.Triggers>
                   <i:EventTrigger EventName="Loaded">
                     <i:InvokeCommandAction Command="{Binding LoadedCommand}" CommandParameter="{Binding ElementName=control}" />
@@ -245,7 +245,17 @@
                     </Style.Triggers>
                   </Style>
                 </RichTextBox.Style>
-              </RichTextBox>
+              </RichTextBox>-->
+              <xctk:RichTextBox x:Name="control" Text="{Binding Content, UpdateSourceTrigger=PropertyChanged, Delay=1000}">
+                <i:Interaction.Triggers>
+                  <i:EventTrigger EventName="Loaded">
+                    <i:InvokeCommandAction Command="{Binding LoadedCommand}" CommandParameter="{Binding ElementName=control}" />
+                  </i:EventTrigger>
+                </i:Interaction.Triggers>
+                <xctk:RichTextBox.TextFormatter>
+                  <xctk:RtfFormatter />
+                </xctk:RichTextBox.TextFormatter>
+              </xctk:RichTextBox>
             </DataTemplate>
             <!--#endregion -->
 

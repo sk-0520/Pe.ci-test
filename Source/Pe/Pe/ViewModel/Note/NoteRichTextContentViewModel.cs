@@ -13,6 +13,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
     public class NoteRichTextContentViewModel: NoteContentViewModelBase
     {
         #region variable
+
+        string _content;
+
         #endregion
 
         public NoteRichTextContentViewModel(NoteContentElement model, IDispatcherWapper dispatcherWapper, ILogger logger)
@@ -25,7 +28,19 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
 
         #region property
 
-        RichTextBox Control { get; set; }
+        //RichTextBox Control { get; set; }
+        public string Content
+        {
+            get => this._content;
+            set
+            {
+                if(SetProperty(ref this._content, value)) {
+                    if(CanVisible) {
+                        Model.ChangeRichTextContent(Content);
+                    }
+                }
+            }
+        }
 
         #endregion
 
@@ -38,12 +53,21 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
         #region NoteContentViewModelBase
         protected override Task LoadContentAsync(Control control)
         {
+            /*
             Control = (RichTextBox)control;
             return Task.Run(() => {
                 var document = Model.LoadRichTextContent();
                 DispatcherWapper.Invoke(() => {
                     Control.Document = document;
                 });
+            });
+            */
+            return Task.Run(() => {
+                var document = Model.LoadRichTextContent();
+                DispatcherWapper.Invoke(() => {
+                    //Control.Document = document;
+                });
+                Content = document;
             });
         }
         #endregion

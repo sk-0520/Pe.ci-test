@@ -93,7 +93,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
         #endregion
         private void Control_Unloaded(object sender, System.Windows.RoutedEventArgs e)
         {
-            Model.Flush();
             DetachControl();
             CanVisible = false;
         }

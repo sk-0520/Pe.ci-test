@@ -97,7 +97,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
             return LoadRawContent();
         }
 
-        public FlowDocument LoadRichTextContent()
+        public string LoadRichTextContent()
         {
             if(ContentKind != NoteContentKind.RichText) {
                 throw new InvalidOperationException();
@@ -106,6 +106,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
             var contentConverter = new NoteContentConverter(Logger.Factory);
 
             if(!Exists()) {
+                /*
                 var document = DispatcherWapper.Get(() => {
                     var doc = new FlowDocument();
                     return doc;
@@ -114,12 +115,17 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
                 CreateNewContent(content);
                 // 作ったやつを返すだけなので別に。
                 return document;
+                */
+                CreateNewContent(string.Empty);
             }
 
+            /*
             var rawContent = LoadRawContent();
             return DispatcherWapper.Get(() => {
                 return contentConverter.ToXamlDocument(rawContent);
             });
+            */
+            return LoadRawContent();
         }
 
         public void ChangePlainContent(string content)
