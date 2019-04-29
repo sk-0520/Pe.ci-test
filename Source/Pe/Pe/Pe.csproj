@@ -227,6 +227,8 @@
     <Compile Include="Model\Element\Note\NoteElement.cs" />
     <Compile Include="Model\Data\LauncherData.cs" />
     <Compile Include="Model\Launcher\LauncherFactory.cs" />
+    <Compile Include="Model\Logic\CodePack\CommonFileDialogExtensions.cs" />
+    <Compile Include="Model\Logic\CodePack\FileDialogFilterConverter.cs" />
     <Compile Include="Model\Logic\DatabaseLazyWriter.cs" />
     <Compile Include="Model\Logic\FontConverter.cs" />
     <Compile Include="Model\Logic\ScreenOperator.cs" />
