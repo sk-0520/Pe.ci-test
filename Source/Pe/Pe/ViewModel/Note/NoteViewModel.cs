@@ -200,6 +200,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
                     // 単純変換が出来ない場合はあれやこれや頑張る
                     ChangingContentKind = value;
                     CanLoadContentKind = Model.ExistsContentKind(ChangingContentKind);
+                    DispatcherWapper.Invoke(() => ContentKindChangeLoadCommand.RaiseCanExecuteChanged());
                     ShowContentKindChangeConfim = true;
                 } else {
                     // 変換するがユーザー選択は不要
@@ -341,7 +342,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
                 }
             }
         ));
-        public ICommand ContentKindChangeLoadCommand => GetOrCreateCommand(() => new DelegateCommand(
+        public DelegateCommand ContentKindChangeLoadCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
                 ShowContentKindChangeConfim = false;
             },
