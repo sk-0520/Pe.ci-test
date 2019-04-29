@@ -33,6 +33,9 @@ namespace ContentTypeTextNet.Pe.Main.View.Note
         [Injection]
         ILogger Logger { get; set; }
 
+        PopupAttacher PopupAttacher { get; set; }
+
+
         #endregion
 
         #region command
@@ -63,6 +66,13 @@ namespace ContentTypeTextNet.Pe.Main.View.Note
             base.OnSourceInitialized(e);
 
             UIUtility.SetToolWindowStyle(this, false, false);
+            PopupAttacher = new PopupAttacher(this, this.popup);
+        }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            base.OnClosed(e);
+            PopupAttacher?.Dispose();
         }
 
         #endregion

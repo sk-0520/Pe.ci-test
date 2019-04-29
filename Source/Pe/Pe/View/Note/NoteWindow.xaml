@@ -280,7 +280,7 @@
 
     <!--#region 編集-->
     <!-- IsOpen="{Binding IsActive, ElementName=root, Mode=OneWay}" -->
-    <Popup Placement="Left" PlacementTarget="{Binding ElementName=root}" IsOpen="True" >
+    <Popup x:Name="popup" Placement="Left" PlacementTarget="{Binding ElementName=root}" IsOpen="True" >
       <Border Style="{StaticResource PopupMenuBorder}">
         <Grid>
           <!--#region 通常編集-->
