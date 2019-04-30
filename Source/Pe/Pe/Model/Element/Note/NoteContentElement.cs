@@ -151,14 +151,6 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
             }
         }
 
-        public string LoadLinkContent(NoteLinkContentData linkData)
-        {
-            var filePath = Environment.ExpandEnvironmentVariables(linkData.FilePath?.Trim() ?? string.Empty);
-            var file = new FileInfo(filePath);
-            var encoding = EncodingUtility.Parse(linkData.EncodingName);
-            return LoadLinkContent(file, encoding);
-        }
-
         public NoteLinkContentWatcher StartLinkWatch(NoteLinkContentData linkData)
         {
             if(LinkWatcher == null) {

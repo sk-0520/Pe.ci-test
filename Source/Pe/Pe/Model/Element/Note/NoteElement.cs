@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -413,6 +414,23 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
             }
         }
 
+        bool WriteLinkContent(NoteLinkContentData linkData, string content)
+        {
+            try {
+                var fileInfo = linkData.ToFileInfo();
+                using(var stream = fileInfo.Open(System.IO.FileMode.Truncate, System.IO.FileAccess.ReadWrite, System.IO.FileShare.Read)) {
+                    using(var writer = new StreamWriter(stream, linkData.ToEncoding())) {
+                        writer.Write(content);
+                    }
+                }
+                return true;
+            } catch(Exception ex) {
+                Logger.Error(ex);
+            }
+
+            return false;
+        }
+
         string ConvertContent(NoteContentKind fromKind, string fromRawContent, NoteContentKind toKind, NoteLinkContentData linkData)
         {
             var noteContentConverter = new NoteContentConverter(Logger.Factory);
@@ -421,6 +439,11 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
                     switch(toKind) {
                         case NoteContentKind.RichText:
                             return DispatcherWapper.Get(() => noteContentConverter.ToRichText(fromRawContent, FontElement.FontData, ForegroundColor));
+
+                        case NoteContentKind.Link: {
+                                WriteLinkContent(linkData, fromRawContent);
+                                return noteContentConverter.ToLinkSettingString(linkData);
+                            }
 
                         case NoteContentKind.Plain:
                         default:
@@ -432,6 +455,12 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
                         case NoteContentKind.Plain:
                             return noteContentConverter.ToPlain(fromRawContent);
 
+                        case NoteContentKind.Link: {
+                                var content = noteContentConverter.ToPlain(fromRawContent);
+                                WriteLinkContent(linkData, content);
+                                return noteContentConverter.ToLinkSettingString(linkData);
+                            }
+
                         case NoteContentKind.RichText:
                         default:
                             throw new NotImplementedException();
@@ -440,10 +469,10 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
                 case NoteContentKind.Link: {
                         var linkSetting = noteContentConverter.ToLinkSetting(fromRawContent);
                         try {
-                            var linkContent = ContentElement.LoadLinkContent(linkSetting);
+                            var linkContent = ContentElement.LoadLinkContent(linkSetting.ToFileInfo(), linkSetting.ToEncoding());
                             switch(toKind) {
                                 case NoteContentKind.Plain:
-                                    return noteContentConverter.ToPlain(linkContent);
+                                    return linkContent;
 
                                 case NoteContentKind.RichText:
                                     return noteContentConverter.ToRichText(linkContent, FontElement.FontData, ForegroundColor);

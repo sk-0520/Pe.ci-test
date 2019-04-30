@@ -82,7 +82,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
             return Task.Run(() => {
                 LinkData = Model.LoadLinkSetting();
                 try {
-                    var content = Model.LoadLinkContent(LinkData);
+                    var content = Model.LoadLinkContent(LinkData.ToFileInfo(), LinkData.ToEncoding());
                     Content = content;
                     LinkWatcher = Model.StartLinkWatch(LinkData);
                     LinkWatcher.NoteContentChanged += LinkWatcher_NoteContentChanged;

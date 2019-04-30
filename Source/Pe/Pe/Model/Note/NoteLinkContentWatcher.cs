@@ -62,8 +62,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Note
             get
             {
                 if(this._file == null) {
-                    var filePath = Environment.ExpandEnvironmentVariables(LinkData.FilePath?.Trim() ?? string.Empty);
-                    this._file = new FileInfo(filePath);
+                    this._file = LinkData.ToFileInfo();
                 }
 
                 return this._file;
@@ -75,7 +74,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Note
             get
             {
                 if(this._encoding == null) {
-                    this._encoding = EncodingUtility.Parse(LinkData.EncodingName);
+                    this._encoding = LinkData.ToEncoding();
                 }
 
                 return this._encoding;
