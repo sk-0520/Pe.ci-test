@@ -283,6 +283,7 @@
     <Compile Include="ViewModel\Note\NoteContentViewModelBase.cs" />
     <Compile Include="ViewModel\Note\NoteFontViewModel.cs" />
     <Compile Include="ViewModel\Note\NoteLinkContentViewModel.cs" />
+    <Compile Include="ViewModel\Note\NoteNotifyAreaViewModel.cs" />
     <Compile Include="ViewModel\Note\NotePlainContentViewModel.cs" />
     <Compile Include="ViewModel\Note\NoteRichTextContentViewModel.cs" />
     <Compile Include="ViewModel\Note\NoteViewModel.cs" />

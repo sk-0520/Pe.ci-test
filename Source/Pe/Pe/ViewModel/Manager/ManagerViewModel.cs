@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,9 +12,11 @@ using ContentTypeTextNet.Pe.Library.Shared.Library.CompatibleWindows;
 using ContentTypeTextNet.Pe.Library.Shared.Library.ViewModel;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar;
+using ContentTypeTextNet.Pe.Main.Model.Element.Note;
 using ContentTypeTextNet.Pe.Main.Model.Logic;
 using ContentTypeTextNet.Pe.Main.Model.Manager;
 using ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar;
+using ContentTypeTextNet.Pe.Main.ViewModel.Note;
 using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModel.Manager
@@ -27,6 +30,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Manager
 
             LauncherToolbarCollection = ApplicationManager.GetLauncherNotifyCollection();
             LauncherToolbarItems = LauncherToolbarCollection.ReadOnlyViewModels;
+
+            NoteCollection = ApplicationManager.GetNoteCollection();
+            VisibleNoteItems = NoteCollection.CreateCollectionView();
+            HiddenNoteItems = NoteCollection.CreateCollectionView();
+            VisibleNoteItems.Filter = o => ((NoteNotifyAreaViewModel)o).IsVisible;
+            HiddenNoteItems.Filter = o => !((NoteNotifyAreaViewModel)o).IsVisible;
         }
 
         #region property
@@ -36,6 +45,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Manager
         ActionModelViewModelObservableCollectionManager<LauncherToolbarElement, LauncherToolbarNotifyAreaViewModel> LauncherToolbarCollection { get; }
         public ReadOnlyObservableCollection<LauncherToolbarNotifyAreaViewModel> LauncherToolbarItems { get; }
 
+        ModelViewModelObservableCollectionManagerBase<NoteElement, NoteNotifyAreaViewModel> NoteCollection { get; }
+        public ICollectionView VisibleNoteItems { get; }
+        public ICollectionView HiddenNoteItems { get; }
         #endregion
 
         #region command

@@ -28,8 +28,8 @@
       <MenuItem Header="compact" />
       <MenuItem Header="topmost" Command="{Binding MoveFrontAllNotesCommand}" />
       <Separator />
-      <MenuItem Header="show" />
-      <MenuItem Header="hidden" />
+      <MenuItem Header="show" ItemsSource="{Binding VisibleNoteItems}" />
+      <MenuItem Header="hidden" ItemsSource="{Binding HiddenNoteItems}" />
     </MenuItem>
     <MenuItem Header="exit" Command="{Binding ExitCommand}" />
   </ContextMenu>

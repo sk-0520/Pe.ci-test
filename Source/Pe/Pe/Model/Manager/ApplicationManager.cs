@@ -31,6 +31,7 @@ using ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar;
 using ContentTypeTextNet.Pe.Main.ViewModel.Manager;
 using ContentTypeTextNet.Pe.Main.Model.Element.Font;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Compatibility.Windows;
+using ContentTypeTextNet.Pe.Main.ViewModel.Note;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Manager
 {
@@ -189,12 +190,22 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
             return collection;
         }
 
+        public ModelViewModelObservableCollectionManagerBase<NoteElement, NoteNotifyAreaViewModel> GetNoteCollection()
+        {
+            var collection = new ActionModelViewModelObservableCollectionManager<NoteElement, NoteNotifyAreaViewModel>(NoteElements, Logger.Factory) {
+                ToViewModel = m => ApplicationDiContainer.Make<NoteNotifyAreaViewModel>(new[] { m })
+            };
+            return collection;
+        }
+
         public NoteElement CreateNote(Screen dockScreen)
         {
             var idFactory = ApplicationDiContainer.Build<IIdFactory>();
             var noteId = idFactory.CreateNoteId();
             Logger.Information($"new note id: {noteId}", ObjectDumper.GetDumpString(dockScreen));
             var noteElement = CreateNoteElement(noteId, dockScreen, NotePosition.CenterScreen);
+
+            NoteElements.Add(noteElement);
 
             return noteElement;
         }

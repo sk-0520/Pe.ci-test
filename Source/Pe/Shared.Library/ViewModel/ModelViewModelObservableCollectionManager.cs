@@ -83,6 +83,13 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.ViewModel
             return CollectionViewSource.GetDefaultView(ViewModels);
         }
 
+        public ICollectionView CreateCollectionView()
+        {
+            return new CollectionViewSource() {
+                Source = ViewModels
+            }.View;
+        }
+
         public int IndexOf(TViewModel viewModel) => ViewModels.IndexOf(viewModel);
 
         public TModel GetModel(TViewModel viewModel)
