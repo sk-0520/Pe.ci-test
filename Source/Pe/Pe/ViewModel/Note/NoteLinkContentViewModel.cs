@@ -33,7 +33,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
 
         protected override Task LoadContentAsync(Control control)
         {
-            throw new NotImplementedException();
+            return Task.Run(() => {
+                var setting = Model.LoadLinkSetting();
+            });
         }
 
         #endregion

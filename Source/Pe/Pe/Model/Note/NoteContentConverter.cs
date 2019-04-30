@@ -89,5 +89,18 @@ namespace ContentTypeTextNet.Pe.Main.Model.Note
                 return Encoding.GetString(stream.ToArray());
             }
         }
+        public NoteLinkContentData ToLinkSetting(string rawSetting)
+        {
+            var serializer = new XmlDataContractSerializer();
+            using(var stream = new MemoryStream()) {
+                var e = new UTF8Encoding(false);
+                using(var writer = new StreamWriter(stream, e)) {
+                    writer.Write(rawSetting);
+                    writer.Flush();
+                    stream.Seek(0, SeekOrigin.Begin);
+                    return serializer.Load<NoteLinkContentData>(stream);
+                }
+            }
+        }
     }
 }

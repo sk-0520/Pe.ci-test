@@ -235,6 +235,7 @@
     <Compile Include="Model\Manager\ApplicationManager.MessageWindow.cs" />
     <Compile Include="Model\Data\NoteData.cs" />
     <Compile Include="Model\Note\NoteContentConverter.cs" />
+    <Compile Include="Model\Note\NoteContentFactory.cs" />
     <Compile Include="Model\Note\NoteLinkSelectNotification.cs" />
     <Compile Include="Model\Theme\FontTheme.cs" />
     <Compile Include="Model\Theme\LauncherGroupTheme.cs" />

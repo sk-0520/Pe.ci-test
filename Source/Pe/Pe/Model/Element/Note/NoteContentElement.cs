@@ -15,7 +15,7 @@ using ContentTypeTextNet.Pe.Main.Model.Note;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
 {
-    public class NoteContentElement: ElementBase, IFlush
+    public class NoteContentElement : ElementBase, IFlush
     {
         #region variable
         #endregion
@@ -88,7 +88,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
 
             if(!Exists()) {
                 // 存在しなければこのタイミングで生成
-                var content = string.Empty;
+                var factory = new NoteContentFactory();
+                var content = factory.CreatePlain();
                 CreateNewContent(content);
                 // 作ったやつを返すだけなので別に。
                 return content;
@@ -104,12 +105,34 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
             }
 
             if(!Exists()) {
-                var content = @"{\rtf1}";
+                var factory = new NoteContentFactory();
+                var content = factory.CreateRichText();
                 CreateNewContent(content);
                 return content;
             }
 
             return LoadRawContent();
+        }
+
+        public NoteLinkContentData LoadLinkSetting()
+        {
+            if(ContentKind != NoteContentKind.Link) {
+                throw new InvalidOperationException();
+            }
+
+            var converter = new NoteContentConverter(Logger.Factory);
+
+            if(!Exists()) {
+                var factory = new NoteContentFactory();
+                var setting = factory.CreateLink();
+
+                var content = converter.ToLinkSettingString(setting);
+                CreateNewContent(content);
+                return setting;
+            }
+
+            var rawSetting = LoadRawContent();
+            return converter.ToLinkSetting(rawSetting);
         }
 
         public void ChangePlainContent(string content)

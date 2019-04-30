@@ -71,26 +71,7 @@ namespace ContentTypeTextNet.Pe.Main.View.Note
                 return this._SelectLinkFileCommand ?? (this._SelectLinkFileCommand = new DelegateCommand<InteractionRequestedEventArgs>(
                     o => {
                         var context = (NoteLinkSelectNotification)o.Context;
-                        var dialog = new CommonSaveFileDialog();
-                        dialog.SetFilters(context.Filter, true, Logger.Factory);
-                        //TODO: メモ量程度には合わせたい
-                        var encodings = new CommonFileDialogComboBox();
-                        encodings.Items.Add(new CommonFileDialogComboBoxItem("plain"));
-
-                        dialog.Controls.Add(encodings);
-
-                        using(dialog) {
-                            var popupIsOpen = this.popup.IsOpen;
-                            if(popupIsOpen) {
-                                this.popup.Visibility = Visibility.Collapsed;
-                            }
-                            var result = dialog.ShowDialog();
-                            context.ResponseIsCancel = result != CommonFileDialogResult.Ok;
-                            if(popupIsOpen) {
-                                this.popup.Visibility = Visibility.Visible;
-                            }
-                        }
-                        o.Callback();
+                        SelectLinkFile(context, o.Callback);
                     }
                 ));
             }
@@ -98,6 +79,49 @@ namespace ContentTypeTextNet.Pe.Main.View.Note
         #endregion
 
         #region function
+
+        void SelectLinkFile(NoteLinkSelectNotification context, Action callback)
+        {
+            var dialog = new CommonSaveFileDialog() {
+                EnsurePathExists = true,
+                EnsureValidNames = true,
+            };
+
+            dialog.SetFilters(context.Filter, true, Logger.Factory);
+
+            //TODO: メモ帳程度には合わせたい
+            var encodings = new[] {
+                Encoding.UTF8,
+                Encoding.Unicode,
+                Encoding.UTF32,
+                Encoding.Default,
+            };
+            var encodingControl = new CommonFileDialogComboBox();
+            foreach(var encoding in encodings) {
+                var item = new CommonFileDialogComboBoxItem(encoding.EncodingName);
+                encodingControl.Items.Add(item);
+            }
+            encodingControl.SelectedIndex = 0;
+
+            dialog.Controls.Add(encodingControl);
+
+            using(dialog) {
+                var popupIsOpen = this.popup.IsOpen;
+                if(popupIsOpen) {
+                    this.popup.Visibility = Visibility.Collapsed;
+                }
+                var result = dialog.ShowDialog();
+                context.ResponseIsCancel = result != CommonFileDialogResult.Ok;
+                context.ResponseEncoding = encodings[encodingControl.SelectedIndex];
+                context.ResponseFilePaths = new[] { dialog.FileName };
+                if(popupIsOpen) {
+                    this.popup.Visibility = Visibility.Visible;
+                }
+            }
+
+            callback();
+        }
+
         #endregion
 
         #region Window
