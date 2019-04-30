@@ -310,36 +310,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
 
         public ICommand ContentKindChangeConvertCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-                if(ChangingContentKind == NoteContentKind.Link) {
-                    var context = new NoteLinkSelectNotification();
-                    context.Filter.Add(new DialogFilterItem("text", "*.txt", "*.md"));
-                    context.Filter.Add(new DialogFilterItem("all", "*.*"));
-
-                    SelectLinkFileRequest.Raise(context, c => {
-                        if(!c.ResponseIsCancel) {
-                            var data = new NoteLinkContentData() {
-                                EncodingName = c.ResponseEncoding.WebName,
-                                FilePath = c.ResponseFilePaths.First(),
-                                RefreshTime = TimeSpan.FromSeconds(1),//TODO: なんだこれ
-                            };
-
-                            Flush();
-                            Model.Flush();
-
-                            Model.ConvertContentKind(ContentKind, ChangingContentKind, data);
-                            Model.ChangeContentKind(ChangingContentKind);
-                            ShowContentKindChangeConfim = false;
-                        }
-                    });
-                } else {
-                    //TODO: 関数化
+                DoActionOrSelectLinkData(data => {
                     Flush();
                     Model.Flush();
 
-                    Model.ConvertContentKind(ContentKind, ChangingContentKind, null);
+                    Model.ConvertContentKind(ContentKind, ChangingContentKind, data);
                     Model.ChangeContentKind(ChangingContentKind);
                     ShowContentKindChangeConfim = false;
-                }
+                });
             }
         ));
         public DelegateCommand ContentKindChangeLoadCommand => GetOrCreateCommand(() => new DelegateCommand(
@@ -351,32 +329,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
         ));
         public ICommand ContentKindChangeCreateCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-                if(ChangingContentKind == NoteContentKind.Link) {
-                    var context = new NoteLinkSelectNotification();
-                    context.Filter.Add(new DialogFilterItem("text", "*.txt", "*.md"));
-                    context.Filter.Add(new DialogFilterItem("all", "*.*"));
+                DoActionOrSelectLinkData(data => {
+                    Flush();
+                    Model.Flush();
 
-                    SelectLinkFileRequest.Raise(context, c => {
-                        if(!c.ResponseIsCancel) {
-                            var data = new NoteLinkContentData() {
-                                EncodingName = c.ResponseEncoding.WebName,
-                                FilePath = c.ResponseFilePaths.First(),
-                                RefreshTime = TimeSpan.FromSeconds(1),//TODO: なんだこれ
-                            };
-
-                            Flush();
-                            Model.Flush();
-
-                            Model.CreateContentKind(ChangingContentKind, data);
-                            Model.ChangeContentKind(ChangingContentKind);
-                            ShowContentKindChangeConfim = false;
-                        }
-                    });
-                } else {
-                    Model.CreateContentKind(ChangingContentKind, null);
+                    Model.CreateContentKind(ChangingContentKind, data);
                     Model.ChangeContentKind(ChangingContentKind);
                     ShowContentKindChangeConfim = false;
-                }
+                });
             }
         ));
         public ICommand ContentKindChangeCancelCommand => GetOrCreateCommand(() => new DelegateCommand(
@@ -568,6 +528,28 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
         }
 
         IReadOnlyColorPair<Color> GetColorPair() => ColorPair.Create(Model.ForegroundColor, Model.BackgroundColor);
+
+        void DoActionOrSelectLinkData(Action<NoteLinkContentData> action)
+        {
+            if(ChangingContentKind == NoteContentKind.Link) {
+                var context = new NoteLinkSelectNotification();
+                context.Filter.Add(new DialogFilterItem("text", "*.txt", "*.md"));
+                context.Filter.Add(new DialogFilterItem("all", "*.*"));
+
+                SelectLinkFileRequest.Raise(context, c => {
+                    if(!c.ResponseIsCancel) {
+                        var data = new NoteLinkContentData() {
+                            EncodingName = c.ResponseEncoding.WebName,
+                            FilePath = c.ResponseFilePaths.First(),
+                            RefreshTime = TimeSpan.FromSeconds(1),//TODO: なんだこれ
+                        };
+                        action(data);
+                    }
+                });
+            } else {
+                action(null);
+            }
+        }
 
         private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
