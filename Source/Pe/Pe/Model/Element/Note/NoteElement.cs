@@ -437,6 +437,27 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
                             throw new NotImplementedException();
                     }
 
+                case NoteContentKind.Link: {
+                        var linkSetting = noteContentConverter.ToLinkSetting(fromRawContent);
+                        try {
+                            var linkContent = ContentElement.LoadLinkContent(linkSetting);
+                            switch(toKind) {
+                                case NoteContentKind.Plain:
+                                    return noteContentConverter.ToPlain(linkContent);
+
+                                case NoteContentKind.RichText:
+                                    return noteContentConverter.ToRichText(linkContent, FontElement.FontData, ForegroundColor);
+
+                                case NoteContentKind.Link:
+                                default:
+                                    throw new NotImplementedException();
+                            }
+                        } catch(Exception ex) {
+                            Logger.Error(ex);
+                        }
+                        return string.Empty;
+                    }
+
                 default:
                     throw new NotImplementedException();
             }

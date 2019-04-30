@@ -121,7 +121,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Note
 
         public void Stop()
         {
-            FileSystemWatcher.EnableRaisingEvents = false;
+            if(FileSystemWatcher != null) {
+                FileSystemWatcher.EnableRaisingEvents = false;
+            }
         }
 
         #endregion
