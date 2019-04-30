@@ -215,7 +215,6 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
 
         public void Flush()
         {
-            ThrowIfDisposed();
             Flush(true);
         }
 
