@@ -89,10 +89,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
         }
 
         protected abstract Task LoadContentAsync(Control control);
+        protected abstract void UnloadContent();
 
         #endregion
         private void Control_Unloaded(object sender, System.Windows.RoutedEventArgs e)
         {
+            UnloadContent();
             DetachControl();
             CanVisible = false;
         }

@@ -75,14 +75,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
 
         #region NoteContentViewModelBase
 
-        protected override void DetachModelEventsImpl()
-        {
-            base.DetachModelEventsImpl();
-            if(LinkWatcher != null) {
-                LinkWatcher.NoteContentChanged -= LinkWatcher_NoteContentChanged;
-            }
-        }
-
         protected override Task LoadContentAsync(Control control)
         {
             IllegalMessage = string.Empty;
@@ -100,6 +92,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
                     IllegalMessage = ex.Message;
                 }
             });
+        }
+        protected override void UnloadContent()
+        {
+            if(LinkWatcher!=null) {
+                LinkWatcher.Stop();
+                LinkWatcher.NoteContentChanged -= LinkWatcher_NoteContentChanged;
+                LinkWatcher.Dispose();
+                LinkWatcher = null;
+            }
         }
 
         #endregion

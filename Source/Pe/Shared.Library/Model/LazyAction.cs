@@ -49,8 +49,10 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
             if(disposing) {
                 Timer.Stop();
             }
-            Logger.Debug($"[{LazyName}] 実行");
-            Action();
+            if(Action != null) {
+                Logger.Debug($"[{LazyName}] 実行");
+                Action();
+            }
             Action = null;
         }
 

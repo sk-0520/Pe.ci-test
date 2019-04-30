@@ -59,6 +59,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
             });
         }
 
+        protected override void UnloadContent()
+        { }
+
         #endregion
     }
 }

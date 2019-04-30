@@ -62,6 +62,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
                 RtfContent = content;
             });
         }
+
+        protected override void UnloadContent()
+        { }
+
         #endregion
     }
 }
