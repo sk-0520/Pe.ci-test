@@ -91,14 +91,15 @@ namespace ContentTypeTextNet.Pe.Main.View.Note
 
             //TODO: メモ帳程度には合わせたい
             var encodings = new[] {
-                Encoding.UTF8,
+                EncodingUtility.UTF8n,
                 Encoding.Unicode,
                 Encoding.UTF32,
                 Encoding.Default,
+                Encoding.UTF8,
             };
             var encodingControl = new CommonFileDialogComboBox();
             foreach(var encoding in encodings) {
-                var item = new CommonFileDialogComboBoxItem(encoding.EncodingName);
+                var item = new CommonFileDialogComboBoxItem(EncodingUtility.ToString(encoding));
                 encodingControl.Items.Add(item);
             }
             encodingControl.SelectedIndex = 0;
@@ -112,8 +113,10 @@ namespace ContentTypeTextNet.Pe.Main.View.Note
                 }
                 var result = dialog.ShowDialog();
                 context.ResponseIsCancel = result != CommonFileDialogResult.Ok;
-                context.ResponseEncoding = encodings[encodingControl.SelectedIndex];
-                context.ResponseFilePaths = new[] { dialog.FileName };
+                if(!context.ResponseIsCancel) {
+                    context.ResponseEncoding = encodings[encodingControl.SelectedIndex];
+                    context.ResponseFilePaths = new[] { dialog.FileName };
+                }
                 if(popupIsOpen) {
                     this.popup.Visibility = Visibility.Visible;
                 }

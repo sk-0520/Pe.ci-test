@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Documents;
+using System.Windows.Threading;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
@@ -32,6 +34,12 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
             DispatcherWapper = dispatcherWapper;
 
             MainDatabaseLazyWriter = new DatabaseLazyWriter(MainDatabaseBarrier, Constants.Config.NoteContentMainDatabaseLazyWriterWaitTime, this);
+
+            LinkContentChangedTimer = new DispatcherTimer() {
+                Interval = TimeSpan.FromSeconds(5),
+            };
+            LinkContentChangedTimer.Tick += LinkContentChangedTimer_Tick; ;
+
         }
 
         #region property
@@ -44,6 +52,10 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
         IDispatcherWapper DispatcherWapper { get; }
         DatabaseLazyWriter MainDatabaseLazyWriter { get; }
         UniqueKeyPool UniqueKeyPool { get; } = new UniqueKeyPool();
+
+        NoteLinkContentWatcher LinkWatcher { get; set; }
+        DispatcherTimer LinkContentChangedTimer { get; }
+        string ChangingLinkContent { get; set; }
 
         #endregion
 
@@ -135,6 +147,38 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
             return converter.ToLinkSetting(rawSetting);
         }
 
+        string LoadLinkContentCore(FileInfo file, Encoding encoding)
+        {
+            using(var stream = new FileStream(file.FullName, FileMode.OpenOrCreate, FileAccess.Read, FileShare.ReadWrite)) {
+                var reader = new StreamReader(stream, encoding);
+                return reader.ReadToEnd();
+            }
+        }
+
+        public string LoadLinkContent(NoteLinkContentData linkData)
+        {
+            var filePath = Environment.ExpandEnvironmentVariables(linkData.FilePath?.Trim() ?? string.Empty);
+            var file = new FileInfo(filePath);
+            var encoding = EncodingUtility.Parse(linkData.EncodingName);
+            return LoadLinkContentCore(file, encoding);
+        }
+
+        public NoteLinkContentWatcher StartLinkWatch(NoteLinkContentData linkData)
+        {
+            if(LinkWatcher == null) {
+                LinkWatcher = new NoteLinkContentWatcher(linkData, Logger.Factory);
+            }
+            LinkWatcher.Start();
+            return LinkWatcher;
+        }
+
+        public void StopLinkWatch()
+        {
+            if(LinkWatcher != null) {
+                LinkWatcher.Stop();
+            }
+        }
+
         public void ChangePlainContent(string content)
         {
             if(ContentKind != NoteContentKind.Plain) {
@@ -169,6 +213,46 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
             }, UniqueKeyPool.Get());
         }
 
+        void DelayLinkContentChange(string content)
+        {
+            ChangingLinkContent = content;
+            if(LinkContentChangedTimer.IsEnabled) {
+                LinkContentChangedTimer.Stop();
+            }
+            LinkContentChangedTimer.Start();
+        }
+        void DelayLinkContentChanged()
+        {
+            LinkContentChangedTimer.Stop();
+
+            LinkWatcher.Stop();
+            using(var stream = new FileStream(LinkWatcher.File.FullName, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.Read)) {
+                using(var writer = new StreamWriter(stream, LinkWatcher.Encoding)) {
+                    writer.Write(ChangingLinkContent);
+                }
+            }
+            LinkWatcher.Start();
+        }
+
+        public void ChangeLinkContent(string content)
+        {
+            if(ContentKind != NoteContentKind.Link) {
+                throw new InvalidOperationException();
+            }
+            if(LinkWatcher == null) {
+                throw new InvalidOperationException();
+            }
+
+            DelayLinkContentChange(content);
+        }
+
+        void DisposeLinkWatcher()
+        {
+            if(LinkWatcher != null) {
+                LinkWatcher.Dispose();
+            }
+        }
+
         #endregion
 
         #region ElementBase
@@ -177,6 +261,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
         {
             if(!IsDisposed) {
                 Flush();
+                DisposeLinkWatcher();
             }
 
             base.Dispose(disposing);
@@ -194,8 +279,14 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
         public void Flush()
         {
             MainDatabaseLazyWriter.Flush();
+            DelayLinkContentChanged();
         }
 
         #endregion
+
+        private void LinkContentChangedTimer_Tick(object sender, EventArgs e)
+        {
+            DelayLinkContentChanged();
+        }
     }
 }

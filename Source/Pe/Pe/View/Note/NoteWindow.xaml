@@ -260,13 +260,18 @@
 
             <!--#region リンク -->
             <DataTemplate DataType="{x:Type app_main_viewmodel_note:NoteLinkContentViewModel}">
-              <TextBox x:Name="control" Style="{StaticResource ContentTextBox}" Text="{Binding Content, UpdateSourceTrigger=PropertyChanged, Delay=1000}">
-                <i:Interaction.Triggers>
-                  <i:EventTrigger EventName="Loaded">
-                    <i:InvokeCommandAction Command="{Binding LoadedCommand}" CommandParameter="{Binding ElementName=control}" />
-                  </i:EventTrigger>
-                </i:Interaction.Triggers>
-              </TextBox>
+              <Grid>
+                <TextBox x:Name="control" Style="{StaticResource ContentTextBox}" Text="{Binding Content, UpdateSourceTrigger=PropertyChanged, Delay=1000}">
+                  <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Loaded">
+                      <i:InvokeCommandAction Command="{Binding LoadedCommand}" CommandParameter="{Binding ElementName=control}" />
+                    </i:EventTrigger>
+                  </i:Interaction.Triggers>
+                </TextBox>
+                <Border Visibility="{Binding HasIllegalMessage, Converter={StaticResource BooleanToVisibilityConverter}}">
+                  <TextBlock Text="{Binding IllegalMessage}" />
+                </Border>
+              </Grid>
             </DataTemplate>
             <!--#endregion -->
           </Grid.Resources>

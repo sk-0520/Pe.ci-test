@@ -25,9 +25,12 @@ namespace ContentTypeTextNet.Pe.Main.Model.Note
         public string CreateRichText() => @"{\rtf1}";
 
         public NoteLinkContentData CreateLink() => new NoteLinkContentData() {
-            EncodingName = Encoding.WebName,
+            EncodingName = EncodingUtility.ToString(Encoding),
             FilePath = string.Empty,
-            RefreshTime = TimeSpan.FromSeconds(1),
+            DelayTime = TimeSpan.FromSeconds(1),
+            BufferSize = 1024 * 4,
+            IsEnabledRefresh = false,
+            RefreshTime = TimeSpan.FromMinutes(5),
         };
 
         #endregion

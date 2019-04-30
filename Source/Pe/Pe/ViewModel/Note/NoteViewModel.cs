@@ -538,11 +538,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
 
                 SelectLinkFileRequest.Raise(context, c => {
                     if(!c.ResponseIsCancel) {
-                        var data = new NoteLinkContentData() {
-                            EncodingName = c.ResponseEncoding.WebName,
-                            FilePath = c.ResponseFilePaths.First(),
-                            RefreshTime = TimeSpan.FromSeconds(1),//TODO: なんだこれ
-                        };
+                        var contentFactory = new NoteContentFactory();
+                        var data = contentFactory.CreateLink();
+
+                        data.EncodingName = c.ResponseEncoding.WebName;
+                        data.FilePath = c.ResponseFilePaths.First();
+
                         action(data);
                     }
                 });
