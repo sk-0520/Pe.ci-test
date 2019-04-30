@@ -40,7 +40,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
             set
             {
                 if(SetProperty(ref this._content, value)) {
-                    if(CanVisible && !HasIllegalMessage) {
+                    if(CanVisible && !HasIllegalMessage && IsEnabledRaiseContentChange) {
                         Model.ChangeLinkContent(Content);
                     }
                 }
@@ -60,6 +60,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
 
         public bool HasIllegalMessage { get; set; }
         NoteLinkContentWatcher LinkWatcher { get; set; }
+
+        bool IsEnabledRaiseContentChange { get; set; }
 
         #endregion
 
@@ -92,6 +94,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
                     Content = content;
                     LinkWatcher = Model.StartLinkWatch(LinkData);
                     LinkWatcher.NoteContentChanged += LinkWatcher_NoteContentChanged;
+                    IsEnabledRaiseContentChange = true;
                 } catch(Exception ex) {
                     Logger.Error(ex);
                     IllegalMessage = ex.Message;
@@ -99,13 +102,20 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
             });
         }
 
-
-
-
         #endregion
+
         private void LinkWatcher_NoteContentChanged(object sender, NoteContentChangedEventArgs e)
         {
-            throw new NotImplementedException();
+            try {
+                var content = Model.LoadLinkContent(e.File, e.Encoding);
+                IsEnabledRaiseContentChange = false;
+                Content = content;
+            } catch(Exception ex) {
+                Logger.Error(ex);
+                IllegalMessage = ex.Message;
+            } finally {
+                IsEnabledRaiseContentChange = true;
+            }
         }
     }
 }

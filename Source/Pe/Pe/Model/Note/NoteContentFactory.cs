@@ -27,7 +27,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Note
         public NoteLinkContentData CreateLink() => new NoteLinkContentData() {
             EncodingName = EncodingUtility.ToString(Encoding),
             FilePath = string.Empty,
-            DelayTime = TimeSpan.FromSeconds(1),
+            DelayTime = TimeSpan.FromSeconds(5),
             BufferSize = 1024 * 4,
             IsEnabledRefresh = false,
             RefreshTime = TimeSpan.FromMinutes(5),

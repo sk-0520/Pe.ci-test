@@ -149,6 +149,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data
         public TimeSpan RefreshTime { get; set; }
         /// <summary>
         /// そもそも取りこぼしを考慮するか。
+        /// <para>将来用。</para>
         /// </summary>
         [DataMember]
         public bool IsEnabledRefresh { get; set; }

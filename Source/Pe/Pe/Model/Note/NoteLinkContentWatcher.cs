@@ -13,11 +13,18 @@ namespace ContentTypeTextNet.Pe.Main.Model.Note
 {
     public class NoteContentChangedEventArgs : EventArgs
     {
+        public NoteContentChangedEventArgs(FileInfo file, Encoding encoding, bool isRefresh)
+        {
+            File = file;
+            Encoding = encoding;
+            IsRefresh = isRefresh;
+        }
+
         #region property
 
-        bool IsRefresh { get; }
         public FileInfo File { get; }
         public Encoding Encoding { get; }
+        public bool IsRefresh { get; }
 
         #endregion
     }
@@ -41,6 +48,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Note
         {
             LinkData = linkData;
             Logger = loggerFactory.CreateTartget(GetType());
+
+            DelayWatcher = new LazyAction(File.Name, linkData.DelayTime, Logger.Factory);
         }
 
         #region property
@@ -73,6 +82,10 @@ namespace ContentTypeTextNet.Pe.Main.Model.Note
             }
         }
 
+        FileSystemWatcher FileSystemWatcher { get; set; }
+
+        LazyAction DelayWatcher { get; }
+
         #endregion
 
         #region function
@@ -82,16 +95,58 @@ namespace ContentTypeTextNet.Pe.Main.Model.Note
             NoteContentChanged?.Invoke(this, e);
         }
 
+        void DisposeFileSystemWatcher()
+        {
+            if(FileSystemWatcher != null) {
+                FileSystemWatcher.Changed -= FileSystemWatcher_Changed;
+                FileSystemWatcher.Dispose();
+            }
+        }
+
         public void Start()
         {
+            if(FileSystemWatcher == null) {
+                FileSystemWatcher = new FileSystemWatcher() {
+                    Path = File.DirectoryName,
+                    Filter = File.Name,
+                    IncludeSubdirectories = false,
+                    InternalBufferSize = LinkData.BufferSize,
+                    NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.Size
+                };
+                FileSystemWatcher.Changed += FileSystemWatcher_Changed;
+            }
 
+            FileSystemWatcher.EnableRaisingEvents = true;
         }
 
         public void Stop()
         {
-
+            FileSystemWatcher.EnableRaisingEvents = false;
         }
 
         #endregion
+
+        #region DisposerBase
+
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                DisposeFileSystemWatcher();
+                FileSystemWatcher = null;
+                DelayWatcher.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #endregion
+
+        private void FileSystemWatcher_Changed(object sender, FileSystemEventArgs e)
+        {
+            DelayWatcher.DelayAction(() => {
+                var args = new NoteContentChangedEventArgs(File, Encoding, false);
+                OnNoteContentChanged(args);
+            });
+        }
+
     }
 }

@@ -143,7 +143,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
             return converter.ToLinkSetting(rawSetting);
         }
 
-        string LoadLinkContentCore(FileInfo file, Encoding encoding)
+        public string LoadLinkContent(FileInfo file, Encoding encoding)
         {
             using(var stream = new FileStream(file.FullName, FileMode.OpenOrCreate, FileAccess.Read, FileShare.ReadWrite)) {
                 var reader = new StreamReader(stream, encoding);
@@ -156,7 +156,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
             var filePath = Environment.ExpandEnvironmentVariables(linkData.FilePath?.Trim() ?? string.Empty);
             var file = new FileInfo(filePath);
             var encoding = EncodingUtility.Parse(linkData.EncodingName);
-            return LoadLinkContentCore(file, encoding);
+            return LoadLinkContent(file, encoding);
         }
 
         public NoteLinkContentWatcher StartLinkWatch(NoteLinkContentData linkData)
