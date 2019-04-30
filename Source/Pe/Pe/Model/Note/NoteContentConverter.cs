@@ -26,7 +26,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Note
         #region property
 
         ILogger Logger { get; }
-        public Encoding Encoding { get; set; } = Encoding.UTF8;
+        public Encoding Encoding { get; set; } = EncodingUtility.UTF8n;
         public string RichTextFormat { get; set; } = DataFormats.Rtf;
 
         #endregion
@@ -93,8 +93,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Note
         {
             var serializer = new XmlDataContractSerializer();
             using(var stream = new MemoryStream()) {
-                var e = new UTF8Encoding(false);
-                using(var writer = new StreamWriter(stream, e)) {
+                using(var writer = new StreamWriter(stream, Encoding)) {
                     writer.Write(rawSetting);
                     writer.Flush();
                     stream.Seek(0, SeekOrigin.Begin);

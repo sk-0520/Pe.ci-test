@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 using ContentTypeTextNet.Pe.Main.Model.Data;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Note
@@ -12,7 +13,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Note
     {
         #region property
 
-        public Encoding Encoding { get; set; } = Encoding.UTF8;
+        public Encoding Encoding { get; set; } = EncodingUtility.UTF8n;
         public string RichTextFormat { get; set; } = DataFormats.Rtf;
 
         #endregion

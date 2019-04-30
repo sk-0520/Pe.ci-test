@@ -14,6 +14,8 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
     {
         #region property
 
+        public static string UTF8nName => "utf-8n";
+
         public static Encoding UTF8n => new UTF8Encoding(false);
 
         #endregion
@@ -22,11 +24,22 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 
         public static Encoding Parse(string encodingName)
         {
-            if(encodingName == "utf-8n") {
+            if(encodingName == UTF8nName) {
                 return UTF8n;
             }
 
             return Encoding.GetEncoding(encodingName);
+        }
+
+        public static string ToString(Encoding encoding)
+        {
+            if(encoding is UTF8Encoding utf8) {
+                if(utf8.GetPreamble().Length == 0) {
+                    return UTF8nName;
+                }
+            }
+
+            return encoding.WebName;
         }
 
         #endregion
