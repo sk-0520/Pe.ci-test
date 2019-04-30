@@ -30,6 +30,7 @@ using ContentTypeTextNet.Pe.Main.View.LauncherToolbar;
 using ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar;
 using ContentTypeTextNet.Pe.Main.ViewModel.Manager;
 using ContentTypeTextNet.Pe.Main.Model.Element.Font;
+using ContentTypeTextNet.Pe.Library.Shared.Library.Compatibility.Windows;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Manager
 {
@@ -198,14 +199,16 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
             return noteElement;
         }
 
-        public void MoveFrontAllNote()
+        public void MoveFrontAllNotes()
         {
-            var notes = NoteElements
-                .Where(i => i.IsVisible)
-                .Where(i => !i.IsTopmost)
+            var noteItems = WindowManager.GetWindowItems(WindowKind.Note)
+                .Where(i => !i.Window.IsTabStop)
+                .Where(i => i.Window.IsVisible)
                 .ToList()
             ;
-            foreach(var note in notes) {
+            foreach(var noteItem in noteItems) {
+                var hWnd = HandleUtility.GetWindowHandle(noteItem.Window);
+                WindowsUtility.ShowNoActiveForeground(hWnd);
             }
         }
 

@@ -24,8 +24,9 @@
     </MenuItem>
     <MenuItem Header="note">
       <MenuItem Header="create" Command="{Binding CreateNoteCommand}" />
+      <Separator />
       <MenuItem Header="compact" />
-      <MenuItem Header="topmost" Command="{Binding MoveFrontAllNoteCommand}" />
+      <MenuItem Header="topmost" Command="{Binding MoveFrontAllNotesCommand}" />
       <Separator />
       <MenuItem Header="show" />
       <MenuItem Header="hidden" />
