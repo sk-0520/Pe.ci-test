@@ -59,15 +59,6 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
         #endregion
     }
 
-    public interface IFlush
-    {
-        #region function
-
-        void Flush();
-
-        #endregion
-    }
-
     public class DatabaseLazyWriter : DisposerBase, IFlush
     {
         #region variable

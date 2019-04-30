@@ -127,6 +127,8 @@
     <Compile Include="Model\DispatcherWapper.cs" />
     <Compile Include="Model\ICommandExtensions.cs" />
     <Compile Include="Model\BasicExtensions.cs" />
+    <Compile Include="Model\IFlush.cs" />
+    <Compile Include="Model\LazyAction.cs" />
     <Compile Include="Model\Notifications.cs" />
     <Compile Include="Model\ObjectDumper.cs" />
     <Compile Include="Model\OneTimeSetter.cs" />

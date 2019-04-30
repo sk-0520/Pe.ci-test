@@ -35,10 +35,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
 
             MainDatabaseLazyWriter = new DatabaseLazyWriter(MainDatabaseBarrier, Constants.Config.NoteContentMainDatabaseLazyWriterWaitTime, this);
 
-            LinkContentChangedTimer = new DispatcherTimer() {
-                Interval = TimeSpan.FromSeconds(5),
-            };
-            LinkContentChangedTimer.Tick += LinkContentChangedTimer_Tick; ;
+            LinkContentLazyChanger = new LazyAction(nameof(LinkContentLazyChanger), TimeSpan.FromSeconds(5), Logger.Factory);
 
         }
 
@@ -54,8 +51,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
         UniqueKeyPool UniqueKeyPool { get; } = new UniqueKeyPool();
 
         NoteLinkContentWatcher LinkWatcher { get; set; }
-        DispatcherTimer LinkContentChangedTimer { get; }
-        string ChangingLinkContent { get; set; }
+        LazyAction LinkContentLazyChanger { get; }
 
         #endregion
 
@@ -215,23 +211,17 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
 
         void DelayLinkContentChange(string content)
         {
-            ChangingLinkContent = content;
-            if(LinkContentChangedTimer.IsEnabled) {
-                LinkContentChangedTimer.Stop();
-            }
-            LinkContentChangedTimer.Start();
-        }
-        void DelayLinkContentChanged()
-        {
-            LinkContentChangedTimer.Stop();
+            LinkContentLazyChanger.DelayAction(() => {
+                LinkWatcher.Stop();
 
-            LinkWatcher.Stop();
-            using(var stream = new FileStream(LinkWatcher.File.FullName, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.Read)) {
-                using(var writer = new StreamWriter(stream, LinkWatcher.Encoding)) {
-                    writer.Write(ChangingLinkContent);
+                using(var stream = new FileStream(LinkWatcher.File.FullName, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.Read)) {
+                    using(var writer = new StreamWriter(stream, LinkWatcher.Encoding)) {
+                        writer.Write(content);
+                    }
                 }
-            }
-            LinkWatcher.Start();
+
+                LinkWatcher.Start();
+            });
         }
 
         public void ChangeLinkContent(string content)
@@ -262,6 +252,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
             if(!IsDisposed) {
                 Flush();
                 DisposeLinkWatcher();
+                if(disposing) {
+                    LinkContentLazyChanger.Dispose();
+                }
             }
 
             base.Dispose(disposing);
@@ -279,14 +272,10 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
         public void Flush()
         {
             MainDatabaseLazyWriter.Flush();
-            DelayLinkContentChanged();
+            LinkContentLazyChanger.Flush();
         }
 
         #endregion
 
-        private void LinkContentChangedTimer_Tick(object sender, EventArgs e)
-        {
-            DelayLinkContentChanged();
-        }
     }
 }
