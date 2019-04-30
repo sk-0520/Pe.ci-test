@@ -198,6 +198,17 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
             return noteElement;
         }
 
+        public void MoveFrontAllNote()
+        {
+            var notes = NoteElements
+                .Where(i => i.IsVisible)
+                .Where(i => !i.IsTopmost)
+                .ToList()
+            ;
+            foreach(var note in notes) {
+            }
+        }
+
         public void Execute()
         {
             Logger.Information("がんばる！");

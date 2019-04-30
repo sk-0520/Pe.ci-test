@@ -52,6 +52,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Manager
             }
         ));
 
+        public ICommand MoveFrontAllNoteCommand => GetOrCreateCommand(() => new DelegateCommand(
+             () => {
+                 ApplicationManager.MoveFrontAllNote();
+             }
+         ));
+
         public ICommand ExitCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
                 ApplicationManager.Exit();
