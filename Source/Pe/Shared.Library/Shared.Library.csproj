@@ -131,6 +131,7 @@
     <Compile Include="Model\ObjectDumper.cs" />
     <Compile Include="Model\OneTimeSetter.cs" />
     <Compile Include="Model\PropertyChangedHooker.cs" />
+    <Compile Include="Model\RtfConverter.cs" />
     <Compile Include="Model\RunningStatus.cs" />
     <Compile Include="Model\Timestamp.cs" />
     <Compile Include="Model\DialogFilter.cs" />

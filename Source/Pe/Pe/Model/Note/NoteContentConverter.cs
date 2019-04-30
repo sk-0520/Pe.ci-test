@@ -74,11 +74,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Note
 
         public string ToPlain(string rtfText)
         {
-            using(var formRichTextBox = new System.Windows.Forms.RichTextBox() {
-                Rtf = rtfText
-            }) {
-                return formRichTextBox.Text;
-            }
+            var converter = new RtfConverter();
+            return converter.ToString(rtfText);
         }
 
         public string ToLinkSettingString(NoteLinkContentData linkData)
