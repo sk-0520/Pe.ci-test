@@ -351,6 +351,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
 
         public bool ReceiveViewUserClosing()
         {
+            ChangeVisible(false);
             return true;
         }
         public bool ReceiveViewClosing()

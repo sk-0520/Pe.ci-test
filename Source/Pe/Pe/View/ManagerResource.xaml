@@ -22,14 +22,14 @@
         </Style>
       </MenuItem.ItemContainerStyle>
     </MenuItem>
-    <MenuItem Header="note">
+    <MenuItem Header="note" IsSubmenuOpen="{Binding IsOpenNoteMenu, Mode=OneWayToSource}">
       <MenuItem Header="create" Command="{Binding CreateNoteCommand}" />
       <Separator />
       <MenuItem Header="compact" />
       <MenuItem Header="topmost" Command="{Binding MoveFrontAllNotesCommand}" />
       <Separator />
-      <MenuItem Header="show" ItemsSource="{Binding VisibleNoteItems}" />
-      <MenuItem Header="hidden" ItemsSource="{Binding HiddenNoteItems}" />
+      <MenuItem Header="show" ItemsSource="{Binding NoteVisibleItems}" />
+      <MenuItem Header="hidden" ItemsSource="{Binding NoteHiddenItems}" />
     </MenuItem>
     <MenuItem Header="exit" Command="{Binding ExitCommand}" />
   </ContextMenu>

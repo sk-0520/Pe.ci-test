@@ -25,6 +25,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             #region property
 
             public static string NoteId { get; } = "NoteId";
+            public static string IsVisible { get; } = "IsVisible";
             public static string IsCompact { get; } = "IsCompact";
             public static string IsTopmost { get; } = "IsTopmost";
             public static string IsLocked { get; } = "IsLocked";
@@ -196,6 +197,14 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             var builder = CreateUpdateBuilder(databaseCommonStatus);
             builder.AddKey(Column.NoteId, noteId);
             builder.AddValue(Column.ContentKind, noteContentKindTansfer.ToString(contentKind));
+            return ExecuteUpdate(builder) == 1;
+        }
+
+        public bool UpdateVisible(Guid noteId, bool isVisible, IDatabaseCommonStatus databaseCommonStatus)
+        {
+            var builder = CreateUpdateBuilder(databaseCommonStatus);
+            builder.AddKey(Column.NoteId, noteId);
+            builder.AddValue(Column.IsVisible, isVisible);
             return ExecuteUpdate(builder) == 1;
         }
 

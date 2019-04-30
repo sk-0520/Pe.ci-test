@@ -562,6 +562,14 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
                 notesEntityDao.UpdateContentKind(NoteId, ContentKind, DatabaseCommonStatus.CreateCurrentAccount());
             }, UniqueKeyPool.Get());
         }
+        public void ChangeVisible(bool isVisible)
+        {
+            IsVisible = isVisible;
+            MainDatabaseLazyWriter.Stock(c => {
+                var notesEntityDao = new NotesEntityDao(c, StatementLoader, c.Implementation, Logger.Factory);
+                notesEntityDao.UpdateVisible(NoteId, IsVisible, DatabaseCommonStatus.CreateCurrentAccount());
+            }, UniqueKeyPool.Get());
+        }
 
         public NoteLayoutData GetLayout()
         {
@@ -651,6 +659,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
 
         public bool ReceiveViewUserClosing()
         {
+            ChangeVisible(false);
             return true;
         }
         public bool ReceiveViewClosing()

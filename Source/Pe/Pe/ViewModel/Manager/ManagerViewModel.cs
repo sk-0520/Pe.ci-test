@@ -23,6 +23,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Manager
 {
     public class ManagerViewModel : ViewModelBase, IBuildStatus
     {
+        #region property
+
+        bool _isOpenNoteMenu;
+
+        #endregion
+
         public ManagerViewModel(ApplicationManager applicationManager, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
@@ -32,10 +38,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Manager
             LauncherToolbarItems = LauncherToolbarCollection.ReadOnlyViewModels;
 
             NoteCollection = ApplicationManager.GetNoteCollection();
-            VisibleNoteItems = NoteCollection.CreateCollectionView();
-            HiddenNoteItems = NoteCollection.CreateCollectionView();
-            VisibleNoteItems.Filter = o => ((NoteNotifyAreaViewModel)o).IsVisible;
-            HiddenNoteItems.Filter = o => !((NoteNotifyAreaViewModel)o).IsVisible;
+            NoteVisibleItems = NoteCollection.CreateCollectionView();
+            NoteHiddenItems = NoteCollection.CreateCollectionView();
+            NoteVisibleItems.Filter = o => ((NoteNotifyAreaViewModel)o).IsVisible;
+            NoteHiddenItems.Filter = o => !((NoteNotifyAreaViewModel)o).IsVisible;
         }
 
         #region property
@@ -46,8 +52,24 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Manager
         public ReadOnlyObservableCollection<LauncherToolbarNotifyAreaViewModel> LauncherToolbarItems { get; }
 
         ModelViewModelObservableCollectionManagerBase<NoteElement, NoteNotifyAreaViewModel> NoteCollection { get; }
-        public ICollectionView VisibleNoteItems { get; }
-        public ICollectionView HiddenNoteItems { get; }
+        public ICollectionView NoteVisibleItems { get; }
+        public ICollectionView NoteHiddenItems { get; }
+
+
+        public bool IsOpenNoteMenu
+        {
+            get => this._isOpenNoteMenu;
+            set
+            {
+                if(SetProperty(ref this._isOpenNoteMenu, value)) {
+                    if(IsOpenNoteMenu) {
+                        NoteVisibleItems.Refresh();
+                        NoteHiddenItems.Refresh();
+                    }
+                }
+            }
+        }
+
         #endregion
 
         #region command
