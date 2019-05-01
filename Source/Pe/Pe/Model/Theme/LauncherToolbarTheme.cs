@@ -88,12 +88,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Designer
                     canvas.Children.Add(element);
                 }
 
-                //TODO: 強調しんどい。。。
                 if(isStrong) {
                     var effect = (Effect)Application.Current.Resources["Effect-Strong"];
                     canvas.Effect = effect;
-                } else {
-                    canvas.Effect = null;
                 }
             }
             //var result = ImageUtility.MakeBitmapBitmapSourceDefualtDpi(canvas);

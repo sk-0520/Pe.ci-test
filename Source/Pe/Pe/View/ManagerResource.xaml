@@ -31,7 +31,6 @@
           </DataTrigger>
         </Style.Triggers>
         <Setter Property="Header" Value="{Binding MenuHeader}" />
-        <!--<Setter Property="app_main_view_attached:Strong.IsStrong" Value="{Binding MenuIsChecked, Mode=OneWay}" />-->
         <Setter Property="Command" Value="{Binding MenuCommand}" />
         <Setter Property="CommandParameter" Value="{Binding}" />
       </Style>

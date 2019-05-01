@@ -27,7 +27,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar
             WindowManager = windowManager;
 
             PropertyChangedHooker = new PropertyChangedHooker(dispatcherWapper, Logger.Factory);
-            PropertyChangedHooker.AddHook(nameof(LauncherToolbarElement.IsVisible), nameof(MenuIsChecked));
+            PropertyChangedHooker.AddHook(nameof(LauncherToolbarElement.IsVisible), new[] { nameof(MenuIsChecked), nameof(MenuIcon) });
         }
 
         #region property
