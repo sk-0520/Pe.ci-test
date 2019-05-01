@@ -49,6 +49,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Theme
         DependencyObject GetCaptionImage(NoteCaption noteCaption, bool isEnabled, IReadOnlyColorPair<Color> baseColor);
         DependencyObject GetResizeGripImage(IReadOnlyColorPair<Color> baseColor);
 
+        DependencyObject GetIconImage(IconScale iconScale, bool isCompact, bool isLocked, IReadOnlyColorPair<Color> baseColor);
+
         #endregion
     }
 
@@ -249,6 +251,12 @@ namespace ContentTypeTextNet.Pe.Main.Model.Theme
             return viewBox;
         }
 
+        public DependencyObject GetIconImage(IconScale iconScale, bool isCompact, bool isLocked, IReadOnlyColorPair<Color> baseColor)
+        {
+            var size = new Size(iconScale.ToWidth(), isCompact ? iconScale.ToHeight() / 2 : iconScale.ToHeight());
+            var box = CreateBox(baseColor.Foreground, baseColor.Background, size);
+            return box;
+        }
 
         #endregion
     }

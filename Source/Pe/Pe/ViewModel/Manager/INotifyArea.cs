@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModel.Manager
 {
@@ -19,10 +20,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Manager
         /// </summary>
         string MenuHeader { get; }
         /// <summary>
-        /// 通知領域 メニュー キー。
-        /// <para>どうしてたっけなぁ。</para>
+        /// 通知領域 メニュー アクセスキーを持つか。
         /// </summary>
-        string MenuKeys { get; }
+        bool MenuHeaderHasAccessKey { get; }
+        /// <summary>
+        /// 通知領域 メニュー キー。
+        /// </summary>
+        KeyGesture MenuKeyGesture { get; }
         /// <summary>
         /// 通知領域 メニューアイコン。
         /// </summary>
@@ -40,6 +44,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Manager
         /// 通知領域 メニュー チェック状態。
         /// </summary>
         bool MenuIsChecked { get; }
+
+        /// <summary>
+        /// 通知領域 メニュー 選択
+        /// </summary>
+        ICommand MenuCommand { get; }
 
         #endregion
     }

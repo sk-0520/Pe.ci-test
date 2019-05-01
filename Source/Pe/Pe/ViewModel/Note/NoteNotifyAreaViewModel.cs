@@ -3,19 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Input;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Library.ViewModel;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Element.Note;
+using ContentTypeTextNet.Pe.Main.Model.Manager;
 using ContentTypeTextNet.Pe.Main.Model.Theme;
+using ContentTypeTextNet.Pe.Main.ViewModel.Manager;
+using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
 {
-    public class NoteNotifyAreaViewModel : SingleModelViewModelBase<NoteElement>
+    public class NoteNotifyAreaViewModel : SingleModelViewModelBase<NoteElement>, INotifyArea
     {
-        public NoteNotifyAreaViewModel(NoteElement model, IDispatcherWapper dispatcherWapper, INoteTheme noteTheme, ILoggerFactory loggerFactory)
+        public NoteNotifyAreaViewModel(NoteElement model, IWindowManager windowManager, IDispatcherWapper dispatcherWapper, INoteTheme noteTheme, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         {
+            WindowManager = windowManager;
             DispatcherWapper = dispatcherWapper;
             NoteTheme = noteTheme;
 
@@ -25,6 +31,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
 
         #region property
 
+        IWindowManager WindowManager { get; }
         IDispatcherWapper DispatcherWapper { get; }
         INoteTheme NoteTheme { get; }
 
@@ -55,6 +62,34 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
 
             Model.PropertyChanged -= Model_PropertyChanged;
         }
+
+        #endregion
+
+        #region INotifyArea
+
+        public string MenuHeader => Model.Title;
+        public bool MenuHeaderHasAccessKey { get; } = false;
+        public KeyGesture MenuKeyGesture { get; }
+        public DependencyObject MenuIcon => DispatcherWapper.Get(() => NoteTheme.GetIconImage(IconScale.Small, Model.IsCompact, Model.IsLocked, ColorPair.Create(Model.ForegroundColor, Model.BackgroundColor)));
+        public bool MenuHasIcon { get; } = true;
+        public bool MenuIsEnabled { get; } = true;
+        public bool MenuIsChecked { get; } = false;
+
+        public ICommand MenuCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                var isVisible = IsVisible;
+                Model.ChangeVisible(!isVisible);
+                if(!isVisible) {
+                    Model.StartView();
+                } else {
+                    var target = WindowManager.GetWindowItems(WindowKind.Note)
+                       .First(i => ((NoteViewModel)i.ViewModel).NoteId == Model.NoteId)
+                    ;
+                    target.Window.Close();
+                }
+            },
+            () => MenuIsEnabled
+        ));
 
         #endregion
 

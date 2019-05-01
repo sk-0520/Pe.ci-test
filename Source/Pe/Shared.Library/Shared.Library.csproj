@@ -168,6 +168,7 @@
     <Compile Include="ViewModel\ModelViewModelObservableCollectionManager.cs" />
     <Compile Include="View\Converter\BooleanConverter.cs" />
     <Compile Include="View\Converter\EnumToBooleanConverter.cs" />
+    <Compile Include="View\Converter\EscapeAccessKeyConverter.cs" />
     <Compile Include="View\Converter\IconScaleToWidthConverter.cs" />
     <Compile Include="View\Converter\IconScaleToHeightConverter.cs" />
     <Compile Include="View\Converter\LogicalIsNotNullConverter.cs" />

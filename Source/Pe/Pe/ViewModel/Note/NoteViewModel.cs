@@ -89,6 +89,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
 
         DispatcherTimer WindowAreaChangedTimer { get; }
 
+        public Guid NoteId => Model.NoteId;
+
         public FontViewModel Font { get; }
 
         public NoteContentViewModelBase Content
@@ -360,7 +362,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
             //TODO: 未検証ゾーン
             var logicalScreenSize = UIUtility.ToLogicalPixel(Model.DockScreen.DeviceBounds.Size, DpiScaleOutputor);
             var layout = new NoteLayoutData() {
-                NoteId = Model.NoteId,
+                NoteId = NoteId,
                 LayoutKind = Model.LayoutKind,
             };
 
