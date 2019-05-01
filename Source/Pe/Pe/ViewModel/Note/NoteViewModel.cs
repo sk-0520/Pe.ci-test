@@ -194,7 +194,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
             {
                 // DB みてあれこれ判断するので止めてるやつを全部実施, プロパティでやるにはでっかいなぁと思うがまぁいいでしょ ;)
                 Flush();
-                Model.Flush();
 
                 if(!Model.CanChangeContentKind(value)) {
                     // 単純変換が出来ない場合はあれやこれや頑張る
@@ -312,7 +311,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
             () => {
                 DoActionOrSelectLinkData(data => {
                     Flush();
-                    Model.Flush();
 
                     Model.ConvertContentKind(ContentKind, ChangingContentKind, data);
                     Model.ChangeContentKind(ChangingContentKind);
@@ -331,7 +329,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
             () => {
                 DoActionOrSelectLinkData(data => {
                     Flush();
-                    Model.Flush();
 
                     Model.CreateContentKind(ChangingContentKind, data);
                     Model.ChangeContentKind(ChangingContentKind);
@@ -642,11 +639,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
         protected override void Dispose(bool disposing)
         {
             if(!IsDisposed) {
+                Flush();
                 if(disposing) {
                     WindowHandleSource?.Dispose();
                     PropertyChangedHooker.Dispose();
                 }
-                Flush();
             }
 
             base.Dispose(disposing);
@@ -662,6 +659,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
                 WindowAreaChangedTimer.Stop();
                 DelayNotifyWindowAreaChanged();
             }
+
+            Model.SafeFlush();
         }
 
         #endregion

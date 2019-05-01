@@ -612,9 +612,11 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
         protected override void Dispose(bool disposing)
         {
             if(!IsDisposed) {
+                Flush();
                 if(disposing) {
                     MainDatabaseLazyWriter.Dispose();
                     FontElement?.Dispose();
+                    ContentElement?.Dispose();
                 }
             }
 
@@ -627,7 +629,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
 
         public void Flush()
         {
-            MainDatabaseLazyWriter.Flush();
+            FontElement.SafeFlush();
+            ContentElement.SafeFlush();
+            MainDatabaseLazyWriter.SafeFlush();
         }
 
         #endregion

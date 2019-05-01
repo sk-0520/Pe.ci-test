@@ -26,7 +26,7 @@ using ContentTypeTextNet.Pe.Main.View.Extend;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
 {
-    public class LauncherToolbarElement : ContextElementBase, IAppDesktopToolbarExtendData, IViewShowStarter, IViewCloseReceiver
+    public class LauncherToolbarElement : ContextElementBase, IAppDesktopToolbarExtendData, IViewShowStarter, IViewCloseReceiver, IFlushable
     {
         #region variable
 
@@ -315,12 +315,22 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
         protected override void Dispose(bool disposing)
         {
             if(!IsDisposed) {
+                Flush();
                 if(disposing) {
                     MainDatabaseLazyWriter.Dispose();
                 }
             }
 
             base.Dispose(disposing);
+        }
+
+        #endregion
+
+        #region IFlushable
+
+        public void Flush()
+        {
+            MainDatabaseLazyWriter.SafeFlush();
         }
 
         #endregion

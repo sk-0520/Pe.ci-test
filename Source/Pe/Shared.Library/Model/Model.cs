@@ -56,7 +56,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         #endregion
     }
 
-    public abstract class BindModelBase : BindableBase, IDisposable
+    public abstract class BindModelBase : BindableBase, IDisposable, IDisposer
     {
         public BindModelBase(ILogger logger)
         {

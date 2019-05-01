@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Pe.Library.Shared.Embedded.Model;
 
 namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 {
@@ -19,6 +20,28 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         /// <para><see cref="IDisposable.Dispose(false)"/>でも実施できるように実装するのが努力目標。</para>
         /// </summary>
         void Flush();
+
+        #endregion
+    }
+
+    public static class IFlushableExtensions
+    {
+        #region function
+
+        public static bool SafeFlush<T>(this T @this)
+            where T: IDisposer, IFlushable
+        {
+            if(@this == null) {
+                return false;
+            }
+
+            if(@this.IsDisposed) {
+                return false;
+            }
+
+            @this.Flush();
+            return true;
+        }
 
         #endregion
     }

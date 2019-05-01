@@ -183,7 +183,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
             return result;
         }
 
-        public ActionModelViewModelObservableCollectionManager<LauncherToolbarElement, LauncherToolbarNotifyAreaViewModel> GetLauncherNotifyCollection() {
+        public ActionModelViewModelObservableCollectionManager<LauncherToolbarElement, LauncherToolbarNotifyAreaViewModel> GetLauncherNotifyCollection()
+        {
             var collection = new ActionModelViewModelObservableCollectionManager<LauncherToolbarElement, LauncherToolbarNotifyAreaViewModel>(LauncherToolbarElements, Logger.Factory) {
                 ToViewModel = m => ApplicationDiContainer.Make<LauncherToolbarNotifyAreaViewModel>(new[] { m })
             };
@@ -250,30 +251,43 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
             }
         }
 
-        void CloseToolbars()
+        void CloseViewsCore(WindowKind windowKind)
         {
-            var toolbars = WindowManager.GetWindowItems(WindowKind.LauncherToolbar).ToList();
-            foreach(var toolbar in toolbars) {
-                toolbar.Window.Close();
+            var windowItems = WindowManager.GetWindowItems(windowKind).ToList();
+            foreach(var windowItem in windowItems) {
+                windowItem.Window.Close();
             }
         }
+
+        void CloseLauncherToolbarViews() => CloseViewsCore(WindowKind.LauncherToolbar);
+
+        void CloseNoteViews() => CloseViewsCore(WindowKind.Note);
 
         void CloseViews()
         {
-            CloseToolbars();
+            CloseLauncherToolbarViews();
+            CloseNoteViews();
         }
 
-        void DisposeToolbarElements()
+        void DisposeElementsCore<TElement>(ICollection<TElement> elements)
+            where TElement : ElementBase
         {
-            foreach(var toolbar in LauncherToolbarElements) {
-                toolbar.Dispose();
+            foreach(var element in elements) {
+                element.Dispose();
             }
-            LauncherToolbarElements.Clear();
+            elements.Clear();
         }
+
+        void DisposeLauncherToolbarElements() => DisposeElementsCore(LauncherToolbarElements);
+        void DisposeLauncherGroupElements() => DisposeElementsCore(LauncherGroupElements);
+        void DisposeNoteElements() => DisposeElementsCore(NoteElements);
+
 
         void DisposeElements()
         {
-            DisposeToolbarElements();
+            DisposeLauncherToolbarElements();
+            DisposeLauncherGroupElements();
+            DisposeNoteElements();
         }
 
         public void Exit()
@@ -281,7 +295,6 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
             Logger.Information("おわる！");
 
             CloseViews();
-            DisposeElements();
 
             Dispose();
 
@@ -350,7 +363,15 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
         {
             if(!IsDisposed) {
                 if(disposing) {
+                    CloseViews();
+                    DisposeElements();
+
                     MessageWindowHandleSource?.Dispose();
+
+                    WindowManager.Dispose();
+                    NotifyManager.Dispose();
+                    OrderManager.Dispose();
+                    NotifyManager.Dispose();
                 }
             }
 

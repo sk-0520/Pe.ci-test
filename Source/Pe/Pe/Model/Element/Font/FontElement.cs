@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
+using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Applications;
@@ -18,7 +19,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Font
 {
     public delegate void ParentUpdater(FontElement fontElement, IDatabaseCommander commander, IDatabaseImplementation implementation);
 
-    public class FontElement : ElementBase
+    public class FontElement : ElementBase, IFlushable
     {
         #region variable
 
@@ -180,6 +181,15 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Font
 
         #endregion
 
+        #region IFlushable
+
+        public void Flush()
+        {
+            MainDatabaseLazyWriter.SafeFlush();
+        }
+
+        #endregion
+
         #region ElementBase
 
         protected override void InitializeImpl()
@@ -190,6 +200,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Font
         protected override void Dispose(bool disposing)
         {
             if(!IsDisposed) {
+                Flush();
                 if(disposing) {
                     MainDatabaseLazyWriter.Dispose();
                 }

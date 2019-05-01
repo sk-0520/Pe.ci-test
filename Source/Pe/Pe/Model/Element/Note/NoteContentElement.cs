@@ -263,8 +263,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
 
         public void Flush()
         {
-            MainDatabaseLazyWriter.Flush();
-            LinkContentLazyChanger.Flush();
+            LinkContentLazyChanger.SafeFlush();
+            MainDatabaseLazyWriter.SafeFlush();
         }
 
         #endregion
