@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using ContentTypeTextNet.Library.PInvoke.Windows;
+using ContentTypeTextNet.Pe.Library.Shared.Library.Compatibility.Windows;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Library.ViewModel;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
@@ -77,15 +79,16 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
 
         public ICommand MenuCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-                var isVisible = IsVisible;
-                Model.ChangeVisible(!isVisible);
-                if(!isVisible) {
-                    Model.StartView();
-                } else {
+                if(IsVisible) {
                     var target = WindowManager.GetWindowItems(WindowKind.Note)
                        .First(i => ((NoteViewModel)i.ViewModel).NoteId == Model.NoteId)
                     ;
-                    target.Window.Close();
+                    var hWnd = HandleUtility.GetWindowHandle(target.Window);
+                    WindowsUtility.ShowActive(hWnd);
+                    //target.Window.Activate();
+                } else {
+                    Model.ChangeVisible(true);
+                    Model.StartView();
                 }
             },
             () => MenuIsEnabled
