@@ -296,6 +296,7 @@
     <Compile Include="View\Accept\AcceptWindow.xaml.cs">
       <DependentUpon>AcceptWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Attached\Strong.cs" />
     <Compile Include="View\Converter\FontFamilyToNameConverter.cs" />
     <Compile Include="View\FontSelectControl.xaml.cs">
       <DependentUpon>FontSelectControl.xaml</DependentUpon>

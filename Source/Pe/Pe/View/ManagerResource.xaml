@@ -6,6 +6,7 @@
 
   xmlns:cttn_lib_shared_lib_view_converter="clr-namespace:ContentTypeTextNet.Pe.Library.Shared.Library.View.Converter;assembly=Shared.Library"
   xmlns:app_main_viewmodel_manager="clr-namespace:ContentTypeTextNet.Pe.Main.ViewModel.Manager"
+  xmlns:app_main_view_attached="clr-namespace:ContentTypeTextNet.Pe.Main.View.Attached"
 >
   <ContextMenu x:Key="ContextMenu">
     <ContextMenu.Resources>
@@ -19,10 +20,18 @@
           <DataTrigger Binding="{Binding MenuHasIcon}" Value="True">
             <Setter Property="Icon" Value="{Binding MenuIcon}" />
             <Setter Property="IsCheckable" Value="False" />
+            <Setter Property="IsChecked" Value="False" />
+          </DataTrigger>
+          <DataTrigger Binding="{Binding MenuHasIcon}" Value="False">
+            <Setter Property="IsCheckable" Value="True" />
+            <Setter Property="IsChecked" Value="{Binding MenuIsChecked, Mode=OneWay}" />
+          </DataTrigger>
+          <DataTrigger Binding="{Binding MenuIsChecked}" Value="True">
+            <Setter Property="FontWeight" Value="Bold" />
           </DataTrigger>
         </Style.Triggers>
         <Setter Property="Header" Value="{Binding MenuHeader}" />
-        <Setter Property="IsChecked" Value="{Binding MenuIsChecked, Mode=OneWay}" />
+        <!--<Setter Property="app_main_view_attached:Strong.IsStrong" Value="{Binding MenuIsChecked, Mode=OneWay}" />-->
         <Setter Property="Command" Value="{Binding MenuCommand}" />
         <Setter Property="CommandParameter" Value="{Binding}" />
       </Style>

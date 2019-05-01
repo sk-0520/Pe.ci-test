@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Media.Effects;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
@@ -28,7 +29,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Designer
         [return: PixelKind(Px.Logical)]
         Size GetHiddenSize([PixelKind(Px.Logical)] Thickness buttonPadding, [PixelKind(Px.Logical)] Thickness iconMargin, IconScale iconScale, bool isIconOnly, [PixelKind(Px.Logical)] double textWidth);
 
-        DependencyObject CreateToolbarImage(Screen currentScreen, IReadOnlyList<Screen> allScreens, IconScale iconScale);
+        DependencyObject CreateToolbarImage(Screen currentScreen, IReadOnlyList<Screen> allScreens, IconScale iconScale, bool isStrong);
         DependencyObject CreateToolbarPositionImage(AppDesktopToolbarPosition toolbarPosition, IconScale iconScale);
 
         #endregion
@@ -45,7 +46,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Designer
 
         #region function
 
-        DependencyObject CreateToolbarImageCore(Screen currentScreen, IReadOnlyList<Screen> allScreens, IconScale iconScale)
+        DependencyObject CreateToolbarImageCore(Screen currentScreen, IReadOnlyList<Screen> allScreens, IconScale iconScale, bool isStrong)
         {
             var basePos = new Point(Math.Abs(allScreens.Min(s => s.DeviceBounds.Left)), Math.Abs(allScreens.Min(s => s.DeviceBounds.Top)));
             var drawSize = iconScale.ToSize();
@@ -85,6 +86,14 @@ namespace ContentTypeTextNet.Pe.Main.Model.Designer
                     Canvas.SetLeft(element, drawArea.X);
                     Canvas.SetTop(element, drawArea.Y);
                     canvas.Children.Add(element);
+                }
+
+                //TODO: 強調しんどい。。。
+                if(isStrong) {
+                    var effect = (Effect)Application.Current.Resources["Effect-Strong"];
+                    canvas.Effect = effect;
+                } else {
+                    canvas.Effect = null;
                 }
             }
             //var result = ImageUtility.MakeBitmapBitmapSourceDefualtDpi(canvas);
@@ -180,9 +189,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Designer
             return new Size(4, 4);
         }
 
-        public DependencyObject CreateToolbarImage(Screen currentScreen, IReadOnlyList<Screen> allScreens, IconScale iconScale)
+        public DependencyObject CreateToolbarImage(Screen currentScreen, IReadOnlyList<Screen> allScreens, IconScale iconScale, bool isStrong)
         {
-            return DispatcherWapper.Get(() => CreateToolbarImageCore(currentScreen, allScreens, iconScale));
+            return DispatcherWapper.Get(() => CreateToolbarImageCore(currentScreen, allScreens, iconScale, isStrong));
         }
 
         public DependencyObject CreateToolbarPositionImage(AppDesktopToolbarPosition toolbarPosition, IconScale iconScale)
