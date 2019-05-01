@@ -17,7 +17,7 @@ using ContentTypeTextNet.Pe.Main.Model.Note;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
 {
-    public class NoteContentElement : ElementBase, IFlush
+    public class NoteContentElement : ElementBase, IFlushable
     {
         #region variable
         #endregion

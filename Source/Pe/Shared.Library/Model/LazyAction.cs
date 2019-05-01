@@ -9,7 +9,7 @@ using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 
 namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 {
-    public class LazyAction: DisposerBase, IFlush
+    public class LazyAction: DisposerBase, IFlushable
     {
         public LazyAction(string lazyName, TimeSpan lazyTime, ILoggerFactory loggerFactory)
         {

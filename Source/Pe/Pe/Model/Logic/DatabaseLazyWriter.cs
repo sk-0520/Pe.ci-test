@@ -59,7 +59,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
         #endregion
     }
 
-    public class DatabaseLazyWriter : DisposerBase, IFlush
+    public class DatabaseLazyWriter : DisposerBase, IFlushable
     {
         #region variable
 

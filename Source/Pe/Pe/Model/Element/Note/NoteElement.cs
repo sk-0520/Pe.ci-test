@@ -27,7 +27,7 @@ using ContentTypeTextNet.Pe.Main.Model.Theme;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
 {
-    public class NoteElement : ElementBase, IViewShowStarter, IViewCloseReceiver, IFlush
+    public class NoteElement : ElementBase, IViewShowStarter, IViewCloseReceiver, IFlushable
     {
         #region variable
 
