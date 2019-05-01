@@ -28,8 +28,8 @@
       </Style>
     </ContextMenu.Resources>
 
-    <MenuItem Header="toolbar" ItemsSource="{Binding LauncherToolbarItems}">
-      <MenuItem.ItemContainerStyle>
+    <MenuItem Header="toolbar" ItemsSource="{Binding LauncherToolbarItems}" ItemContainerStyle="{StaticResource INotifyAreaMenuItem}" >
+      <!--<MenuItem.ItemContainerStyle>
         <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
           <Style.Triggers>
             <DataTrigger Binding="{Binding IsVisible}" Value="True">
@@ -42,7 +42,7 @@
           <Setter Property="Command" Value="{Binding SwitchToolbarCommand}" />
           <Setter Property="CommandParameter" Value="{Binding}" />
         </Style>
-      </MenuItem.ItemContainerStyle>
+      </MenuItem.ItemContainerStyle>-->
     </MenuItem>
     <MenuItem Header="note" IsSubmenuOpen="{Binding IsOpenNoteMenu, Mode=OneWayToSource}">
       <MenuItem Header="create" Command="{Binding CreateNoteCommand}" />

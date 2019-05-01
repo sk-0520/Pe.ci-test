@@ -23,47 +23,25 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar
             : base(model, loggerFactory)
         {
             LauncherToolbarTheme = launcherToolbarTheme;
+            DispatcherWapper = dispatcherWapper;
             WindowManager = windowManager;
 
             PropertyChangedHooker = new PropertyChangedHooker(dispatcherWapper, Logger.Factory);
-            PropertyChangedHooker.AddHook(nameof(LauncherToolbarElement.IsVisible), nameof(IsVisible));
+            PropertyChangedHooker.AddHook(nameof(LauncherToolbarElement.IsVisible), nameof(MenuIsChecked));
         }
 
         #region property
 
         ILauncherToolbarTheme LauncherToolbarTheme { get; }
         IWindowManager WindowManager { get; }
+        IDispatcherWapper DispatcherWapper { get; }
         PropertyChangedHooker PropertyChangedHooker { get; }
 
-        public DependencyObject ToolbarIcon => LauncherToolbarTheme.CreateToolbarImage(Model.DockScreen, Screen.AllScreens, IconScale.Small);
-        public string DisplayName
-        {
-            get
-            {
-                var screenOperator = new ScreenOperator(Logger.Factory);
-                return screenOperator.GetName(Model.DockScreen);
-            }
-        }
-        public bool IsVisible => Model.IsVisible;
 
         #endregion
 
         #region command
 
-        public ICommand SwitchToolbarCommand => GetOrCreateCommand(() => new DelegateCommand(
-             () => {
-                 var isVisible = IsVisible;
-                 Model.ChangeVisible(!isVisible);
-                 if(!isVisible) {
-                     Model.StartView();
-                 } else {
-                     var target = WindowManager.GetWindowItems(WindowKind.LauncherToolbar)
-                        .First(i => ((LauncherToolbarViewModel)i.ViewModel).DockScreen.DeviceName == Model.DockScreen.DeviceName)
-                     ;
-                     target.Window.Close();
-                 }
-             }
-         ));
         #endregion
 
         #region function
@@ -84,6 +62,40 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar
 
             Model.PropertyChanged -= Model_PropertyChanged;
         }
+
+        #endregion
+
+        #region INotifyArea
+
+        public string MenuHeader
+        {
+            get
+            {
+                var screenOperator = new ScreenOperator(Logger.Factory);
+                return screenOperator.GetName(Model.DockScreen);
+            }
+        }
+        public bool MenuHeaderHasAccessKey { get; } = false;
+        public KeyGesture MenuKeyGesture { get; }
+        public DependencyObject MenuIcon => DispatcherWapper.Get(() => LauncherToolbarTheme.CreateToolbarImage(Model.DockScreen, Screen.AllScreens, IconScale.Small));
+        public bool MenuHasIcon { get; } = true;
+        public bool MenuIsEnabled { get; } = true;
+        public bool MenuIsChecked => Model.IsVisible;
+
+        public ICommand MenuCommand => GetOrCreateCommand(() => new DelegateCommand(
+             () => {
+                 var isVisible = Model.IsVisible;
+                 Model.ChangeVisible(!isVisible);
+                 if(!isVisible) {
+                     Model.StartView();
+                 } else {
+                     var target = WindowManager.GetWindowItems(WindowKind.LauncherToolbar)
+                        .First(i => ((LauncherToolbarViewModel)i.ViewModel).DockScreen.DeviceName == Model.DockScreen.DeviceName)
+                     ;
+                     target.Window.Close();
+                 }
+             }
+         ));
 
         #endregion
 
