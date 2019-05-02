@@ -51,6 +51,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
         OrderManagerImpl OrderManager { get; set; }
         NotifyManagerImpl NotifyManager { get; set; }
         StatusManager StatusManager { get; set; }
+        ClipboardManager ClipboardManager { get; set; }
 
         ObservableCollection<LauncherGroupElement> LauncherGroupElements { get; } = new ObservableCollection<LauncherGroupElement>();
         ObservableCollection<LauncherToolbarElement> LauncherToolbarElements { get; } = new ObservableCollection<LauncherToolbarElement>();
@@ -88,7 +89,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
             ApplicationDiContainer.Register<IOrderManager, IOrderManager>(this);
             ApplicationDiContainer.Register<INotifyManager, INotifyManager>(this);
             ApplicationDiContainer.Register<IStatusManager, IStatusManager>(StatusManager);
-
+            ApplicationDiContainer.Register<IClipboardManager, ClipboardManager>(ClipboardManager);
         }
 
         public bool Startup(App app, StartupEventArgs e)
@@ -104,6 +105,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
             OrderManager = ApplicationDiContainer.Make<OrderManagerImpl>(); //initializer.OrderManager;
             NotifyManager = ApplicationDiContainer.Make<NotifyManagerImpl>();//initializer.NotifyManager;
             StatusManager = initializer.StatusManager;
+            ClipboardManager = initializer.ClipboardManager;
 
             MessageWindowHandleSource = new HwndSource(new HwndSourceParameters(nameof(MessageWindowHandleSource)) {
                 Width = 0,
@@ -391,6 +393,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
 
                     WindowManager.Dispose();
                     StatusManager.Dispose();
+                    ClipboardManager.Dispose();
                 }
             }
 

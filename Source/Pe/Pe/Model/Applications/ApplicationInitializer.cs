@@ -34,6 +34,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Applications
         //public OrderManager OrderManager { get; private set; }
         //public NotifyManager NotifyManager { get; private set; }
         public StatusManager StatusManager { get; private set; }
+        public ClipboardManager ClipboardManager { get; private set; }
 
         #endregion
 
@@ -305,6 +306,13 @@ namespace ContentTypeTextNet.Pe.Main.Model.Applications
             return manager;
         }
 
+        ClipboardManager SetupClipboardManager(IDiRegisterContainer diContainer)
+        {
+            var manager = diContainer.Build<ClipboardManager>();
+
+            return manager;
+        }
+
         public bool Initialize(IEnumerable<string> arguments)
         {
             InitializeEnvironmentVariable();
@@ -348,6 +356,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Applications
             //OrderManager = SetupOrderManager(DiContainer);
             //NotifyManager = SetupNotifyManager(DiContainer);
             StatusManager = SetupStatusManager(DiContainer);
+            ClipboardManager = SetupClipboardManager(DiContainer);
 
             return true;
         }
