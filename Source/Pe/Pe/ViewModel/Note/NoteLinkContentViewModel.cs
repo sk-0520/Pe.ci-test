@@ -4,12 +4,16 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Data;
 using ContentTypeTextNet.Pe.Main.Model.Element.Note;
+using ContentTypeTextNet.Pe.Main.Model.Manager;
 using ContentTypeTextNet.Pe.Main.Model.Note;
+using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
 {
@@ -22,12 +26,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
 
         #endregion
 
-        public NoteLinkContentViewModel(NoteContentElement model, IDispatcherWapper dispatcherWapper, ILogger logger)
-            : base(model, dispatcherWapper, logger)
+        public NoteLinkContentViewModel(NoteContentElement model, IClipboardManager clipboardManager, IDispatcherWapper dispatcherWapper, ILogger logger)
+            : base(model, clipboardManager, dispatcherWapper, logger)
         { }
 
-        public NoteLinkContentViewModel(NoteContentElement model, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
-            : base(model, dispatcherWapper, loggerFactory)
+        public NoteLinkContentViewModel(NoteContentElement model, IClipboardManager clipboardManager, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
+            : base(model, clipboardManager, dispatcherWapper, loggerFactory)
         { }
 
         #region property
@@ -95,12 +99,33 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
         }
         protected override void UnloadContent()
         {
-            if(LinkWatcher!=null) {
+            if(LinkWatcher != null) {
                 LinkWatcher.Stop();
                 LinkWatcher.NoteContentChanged -= LinkWatcher_NoteContentChanged;
                 LinkWatcher.Dispose();
                 LinkWatcher = null;
             }
+        }
+
+        protected override IDataObject GetContentData()
+        {
+            var data = new DataObject();
+            if(CanVisible && !HasIllegalMessage) {
+                data.SetText(Content, TextDataFormat.UnicodeText);
+            } else if(HasIllegalMessage) {
+                Logger.Warning($"{Model.NoteId}: {HasIllegalMessage}");
+                data.SetText(IllegalMessage, TextDataFormat.UnicodeText);
+            } else {
+                try {
+                    var value = Model.LoadLinkContent(LinkData.ToFileInfo(), LinkData.ToEncoding());
+                    data.SetText(value, TextDataFormat.UnicodeText);
+                } catch(Exception ex) {
+                    Logger.Error(ex);
+                    data.SetText(ex.ToString(), TextDataFormat.UnicodeText);
+                }
+            }
+
+            return data;
         }
 
         #endregion

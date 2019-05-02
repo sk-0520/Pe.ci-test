@@ -26,6 +26,7 @@ using Prism.Interactivity.InteractionRequest;
 using ContentTypeTextNet.Pe.Main.ViewModel.Font;
 using ContentTypeTextNet.Pe.Main.Model.Logic;
 using ContentTypeTextNet.Pe.Main.Model.Note;
+using ContentTypeTextNet.Pe.Main.Model.Manager;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
 {
@@ -47,10 +48,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
 
         #endregion
 
-        public NoteViewModel(NoteElement model, INoteTheme noteTheme, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
+        public NoteViewModel(NoteElement model, INoteTheme noteTheme, IClipboardManager clipboardManager, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         {
             NoteTheme = noteTheme;
+            ClipboardManager = clipboardManager;
             DispatcherWapper = dispatcherWapper;
 
             WindowAreaChangedTimer = new DispatcherTimer() {
@@ -90,6 +92,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
         bool CanLayoutNotify { get; set; }
 
         INoteTheme NoteTheme { get; }
+        IClipboardManager ClipboardManager { get; }
         IDispatcherWapper DispatcherWapper { get; }
         PropertyChangedHooker PropertyChangedHooker { get; }
 
@@ -110,7 +113,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
                     if(this._content != null) {
                         this._content.Dispose();
                     }
-                    this._content = NoteContentViewModelFactory.Create(Model.ContentElement, DispatcherWapper, Logger.Factory);
+                    this._content = NoteContentViewModelFactory.Create(Model.ContentElement, ClipboardManager, DispatcherWapper, Logger.Factory);
                 }
 
                 return this._content;
@@ -354,6 +357,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
                 ShowContentKindChangeConfim = false;
             }
         ));
+
         #endregion
 
         #region function

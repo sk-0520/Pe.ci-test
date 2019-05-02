@@ -453,7 +453,7 @@
                     <ColumnDefinition />
                   </Grid.ColumnDefinitions>
 
-                  <Button Grid.Column="0" Content="copy" />
+                  <Button Grid.Column="0" Content="copy" Command="{Binding Content.CopyCommand}" />
                   <Button Grid.Column="1" Content="close" Command="{x:Static SystemCommands.CloseWindowCommand}" />
                   <Button Grid.Column="2" Content="remove" />
                 </Grid>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
@@ -10,6 +11,7 @@ using ContentTypeTextNet.Pe.Library.Shared.Library.ViewModel;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Data;
 using ContentTypeTextNet.Pe.Main.Model.Element.Note;
+using ContentTypeTextNet.Pe.Main.Model.Manager;
 using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
@@ -22,21 +24,24 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
 
         #endregion
 
-        public NoteContentViewModelBase(NoteContentElement model, IDispatcherWapper dispatcherWapper, ILogger logger)
+        public NoteContentViewModelBase(NoteContentElement model, IClipboardManager clipboardManager, IDispatcherWapper dispatcherWapper, ILogger logger)
             : base(model, logger)
         {
+            ClipboardManager = clipboardManager;
             DispatcherWapper = dispatcherWapper;
         }
 
-        public NoteContentViewModelBase(NoteContentElement model, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
+        public NoteContentViewModelBase(NoteContentElement model, IClipboardManager clipboardManager, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         {
+            ClipboardManager = clipboardManager;
             DispatcherWapper = dispatcherWapper;
         }
 
         #region property
 
         public NoteContentKind Kind => Model.ContentKind;
+        protected IClipboardManager ClipboardManager { get; }
         protected IDispatcherWapper DispatcherWapper { get; }
         public bool CanVisible
         {
@@ -71,6 +76,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
             }
         ));
 
+        public ICommand CopyCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                var data = GetContentData();
+                ClipboardManager.Set(data);
+            }
+        ));
+
         #endregion
 
         #region function
@@ -91,7 +103,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
         protected abstract Task LoadContentAsync(Control control);
         protected abstract void UnloadContent();
 
+        protected abstract IDataObject GetContentData();
+
         #endregion
+
         private void Control_Unloaded(object sender, System.Windows.RoutedEventArgs e)
         {
             UnloadContent();
@@ -104,17 +119,17 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
     {
         #region function
 
-        public static NoteContentViewModelBase Create(NoteContentElement model, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
+        public static NoteContentViewModelBase Create(NoteContentElement model, IClipboardManager clipboardManager, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
         {
             switch(model.ContentKind) {
                 case NoteContentKind.Plain:
-                    return new NotePlainContentViewModel(model, dispatcherWapper, loggerFactory);
+                    return new NotePlainContentViewModel(model, clipboardManager, dispatcherWapper, loggerFactory);
 
                 case NoteContentKind.RichText:
-                    return new NoteRichTextContentViewModel(model, dispatcherWapper, loggerFactory);
+                    return new NoteRichTextContentViewModel(model, clipboardManager, dispatcherWapper, loggerFactory);
 
                 case NoteContentKind.Link:
-                    return new NoteLinkContentViewModel(model, dispatcherWapper, loggerFactory);
+                    return new NoteLinkContentViewModel(model, clipboardManager, dispatcherWapper, loggerFactory);
 
                 default:
                     throw new NotImplementedException();
