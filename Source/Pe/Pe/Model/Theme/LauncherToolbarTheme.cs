@@ -29,8 +29,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Designer
         [return: PixelKind(Px.Logical)]
         Size GetHiddenSize([PixelKind(Px.Logical)] Thickness buttonPadding, [PixelKind(Px.Logical)] Thickness iconMargin, IconScale iconScale, bool isIconOnly, [PixelKind(Px.Logical)] double textWidth);
 
-        DependencyObject CreateToolbarImage(Screen currentScreen, IReadOnlyList<Screen> allScreens, IconScale iconScale, bool isStrong);
-        DependencyObject CreateToolbarPositionImage(AppDesktopToolbarPosition toolbarPosition, IconScale iconScale);
+        DependencyObject GetToolbarImage(Screen currentScreen, IReadOnlyList<Screen> allScreens, IconScale iconScale, bool isStrong);
+        DependencyObject GetToolbarPositionImage(AppDesktopToolbarPosition toolbarPosition, IconScale iconScale);
 
         #endregion
     }
@@ -46,7 +46,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Designer
 
         #region function
 
-        DependencyObject CreateToolbarImageCore(Screen currentScreen, IReadOnlyList<Screen> allScreens, IconScale iconScale, bool isStrong)
+        DependencyObject GetToolbarImageCore(Screen currentScreen, IReadOnlyList<Screen> allScreens, IconScale iconScale, bool isStrong)
         {
             var basePos = new Point(Math.Abs(allScreens.Min(s => s.DeviceBounds.Left)), Math.Abs(allScreens.Min(s => s.DeviceBounds.Top)));
             var drawSize = iconScale.ToSize();
@@ -97,7 +97,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Designer
             return canvas;
         }
 
-        DependencyObject CreateToolbarPositionImageCore(AppDesktopToolbarPosition toolbarPosition, IconScale iconScale)
+        DependencyObject GetToolbarPositionImageCore(AppDesktopToolbarPosition toolbarPosition, IconScale iconScale)
         {
             var drawSize = iconScale.ToSize();
             var strongSize = new Size(0.2f, 0.3f);
@@ -185,14 +185,14 @@ namespace ContentTypeTextNet.Pe.Main.Model.Designer
             return new Size(4, 4);
         }
 
-        public DependencyObject CreateToolbarImage(Screen currentScreen, IReadOnlyList<Screen> allScreens, IconScale iconScale, bool isStrong)
+        public DependencyObject GetToolbarImage(Screen currentScreen, IReadOnlyList<Screen> allScreens, IconScale iconScale, bool isStrong)
         {
-            return DispatcherWapper.Get(() => CreateToolbarImageCore(currentScreen, allScreens, iconScale, isStrong));
+            return GetToolbarImageCore(currentScreen, allScreens, iconScale, isStrong);
         }
 
-        public DependencyObject CreateToolbarPositionImage(AppDesktopToolbarPosition toolbarPosition, IconScale iconScale)
+        public DependencyObject GetToolbarPositionImage(AppDesktopToolbarPosition toolbarPosition, IconScale iconScale)
         {
-            return DispatcherWapper.Get(() => CreateToolbarPositionImageCore(toolbarPosition, iconScale));
+            return GetToolbarPositionImageCore(toolbarPosition, iconScale);
         }
 
 

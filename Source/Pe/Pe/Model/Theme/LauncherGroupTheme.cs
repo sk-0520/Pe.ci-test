@@ -21,7 +21,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Designer
     {
         #region function
 
-        DependencyObject CreateGroupImage(LauncherGroupImageName imageName, Color imageColor, IconScale iconScale, bool isStrong);
+        DependencyObject GetGroupImage(LauncherGroupImageName imageName, Color imageColor, IconScale iconScale, bool isStrong);
 
         #endregion
     }
@@ -51,7 +51,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Designer
             }
         }
 
-        DependencyObject CreateGroupImageCore(LauncherGroupImageName imageName, Color imageColor, IconScale iconScale, bool isStrong)
+        DependencyObject GetGroupImageCore(LauncherGroupImageName imageName, Color imageColor, IconScale iconScale, bool isStrong)
         {
             var viewBox = new Viewbox();
             using(Initializer.BeginInitialize(viewBox)) {
@@ -88,9 +88,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Designer
 
         #region ILauncherGroupTheme
 
-        public DependencyObject CreateGroupImage(LauncherGroupImageName imageName, Color imageColor, IconScale iconScale, bool isStrong)
+        public DependencyObject GetGroupImage(LauncherGroupImageName imageName, Color imageColor, IconScale iconScale, bool isStrong)
         {
-            return DispatcherWapper.Get(() => CreateGroupImageCore(imageName, imageColor, iconScale, isStrong));
+            return GetGroupImageCore(imageName, imageColor, iconScale, isStrong);
         }
 
         #endregion

@@ -12,7 +12,7 @@ using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Theme
 {
-    public abstract class ThemeBase
+    internal abstract class ThemeBase
     {
         ThemeBase(IDispatcherWapper dispatcherWapper)
         {
@@ -34,6 +34,10 @@ namespace ContentTypeTextNet.Pe.Main.Model.Theme
         #region property
 
         protected ILogger Logger { get; }
+        /// <summary>
+        /// <see cref="DependencyObject"/>作成用のディスパッチャー。
+        /// <para>だけどまず呼び出し側で UI スレッドであることを保証するので内部的にどうこうする場合にしゃあなし使うのであって原則使用しない。</para>
+        /// </summary>
         protected IDispatcherWapper DispatcherWapper { get; }
 
         #endregion

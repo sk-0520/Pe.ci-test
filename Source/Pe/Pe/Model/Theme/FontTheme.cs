@@ -28,7 +28,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Theme
         #endregion
     }
 
-    public class FontTheme : ThemeBase, IFontTheme
+    internal class FontTheme : ThemeBase, IFontTheme
     {
         public FontTheme(IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
             : base(dispatcherWapper, loggerFactory)

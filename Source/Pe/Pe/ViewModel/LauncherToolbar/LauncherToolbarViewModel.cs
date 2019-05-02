@@ -43,7 +43,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar
             LauncherGroupTheme = launcherGroupTheme;
 
             LauncherGroupCollection = new ActionModelViewModelObservableCollectionManager<LauncherGroupElement, LauncherGroupViewModel>(Model.LauncherGroups, Logger.Factory) {
-                ToViewModel = (m) => new LauncherGroupViewModel(m, LauncherGroupTheme, Logger.Factory),
+                ToViewModel = (m) => new LauncherGroupViewModel(m, DispatcherWapper, LauncherGroupTheme, Logger.Factory),
             };
             LauncherGroupItems = LauncherGroupCollection.ViewModels;
 
@@ -168,7 +168,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar
 
         DependencyObject CreateToolbarPositionIcon(AppDesktopToolbarPosition toolbarPosition)
         {
-            return LauncherToolbarTheme.CreateToolbarPositionImage(toolbarPosition, IconScale.Small);
+            return LauncherToolbarTheme.GetToolbarPositionImage(toolbarPosition, IconScale.Small);
         }
 
         #endregion

@@ -17,22 +17,24 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherGroup
 {
     public class LauncherGroupViewModel : SingleModelViewModelBase<LauncherGroupElement>
     {
-        public LauncherGroupViewModel(LauncherGroupElement model, ILauncherGroupTheme launcherGroupTheme, ILoggerFactory loggerFactory)
+        public LauncherGroupViewModel(LauncherGroupElement model, IDispatcherWapper dispatcherWapper, ILauncherGroupTheme launcherGroupTheme, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         {
+            DispatcherWapper = dispatcherWapper;
             LauncherGroupTheme = launcherGroupTheme;
         }
 
         #region property
 
         public int RowIndex { get; set; }
+        IDispatcherWapper DispatcherWapper { get; }
         ILauncherGroupTheme LauncherGroupTheme { get; }
         public string Name => Model.Name;
         public LauncherGroupImageName ImageName => Model.ImageName;
         public Color ImageColor => Model.ImageColor;
 
-        public DependencyObject NormalGroupIcon => LauncherGroupTheme.CreateGroupImage(ImageName, ImageColor, IconScale.Small, false);
-        public DependencyObject StrongGroupIcon => LauncherGroupTheme.CreateGroupImage(ImageName, ImageColor, IconScale.Small, true);
+        public DependencyObject NormalGroupIcon => DispatcherWapper.Get(() => LauncherGroupTheme.GetGroupImage(ImageName, ImageColor, IconScale.Small, false));
+        public DependencyObject StrongGroupIcon => DispatcherWapper.Get(() => LauncherGroupTheme.GetGroupImage(ImageName, ImageColor, IconScale.Small, true));
 
         #endregion
 

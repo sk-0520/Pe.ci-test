@@ -54,7 +54,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Theme
         #endregion
     }
 
-    public class NoteTheme : ThemeBase, INoteTheme
+    internal class NoteTheme : ThemeBase, INoteTheme
     {
         public NoteTheme(IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
             : base(dispatcherWapper, loggerFactory)
