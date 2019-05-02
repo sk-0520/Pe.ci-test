@@ -33,6 +33,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Applications
         public WindowManager WindowManager { get; private set; }
         //public OrderManager OrderManager { get; private set; }
         //public NotifyManager NotifyManager { get; private set; }
+        public StatusManager StatusManager { get; private set; }
 
         #endregion
 
@@ -297,6 +298,13 @@ namespace ContentTypeTextNet.Pe.Main.Model.Applications
         }
         */
 
+        StatusManager SetupStatusManager(IDiRegisterContainer diContainer)
+        {
+            var manager = diContainer.Build<StatusManager>();
+
+            return manager;
+        }
+
         public bool Initialize(IEnumerable<string> arguments)
         {
             InitializeEnvironmentVariable();
@@ -339,6 +347,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Applications
             WindowManager = SetupWindowManager(DiContainer);
             //OrderManager = SetupOrderManager(DiContainer);
             //NotifyManager = SetupNotifyManager(DiContainer);
+            StatusManager = SetupStatusManager(DiContainer);
 
             return true;
         }

@@ -50,6 +50,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
         WindowManager WindowManager { get; set; }
         OrderManagerImpl OrderManager { get; set; }
         NotifyManagerImpl NotifyManager { get; set; }
+        StatusManager StatusManager { get; set; }
 
         ObservableCollection<LauncherGroupElement> LauncherGroupElements { get; } = new ObservableCollection<LauncherGroupElement>();
         ObservableCollection<LauncherToolbarElement> LauncherToolbarElements { get; } = new ObservableCollection<LauncherToolbarElement>();
@@ -86,6 +87,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
             ApplicationDiContainer.Register<IWindowManager, WindowManager>(WindowManager);
             ApplicationDiContainer.Register<IOrderManager, IOrderManager>(this);
             ApplicationDiContainer.Register<INotifyManager, INotifyManager>(this);
+            ApplicationDiContainer.Register<IStatusManager, IStatusManager>(StatusManager);
 
         }
 
@@ -101,6 +103,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
             WindowManager = initializer.WindowManager;
             OrderManager = ApplicationDiContainer.Make<OrderManagerImpl>(); //initializer.OrderManager;
             NotifyManager = ApplicationDiContainer.Make<NotifyManagerImpl>();//initializer.NotifyManager;
+            StatusManager = initializer.StatusManager;
 
             MessageWindowHandleSource = new HwndSource(new HwndSourceParameters(nameof(MessageWindowHandleSource)) {
                 Width = 0,
@@ -368,10 +371,11 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
 
                     MessageWindowHandleSource?.Dispose();
 
-                    WindowManager.Dispose();
                     NotifyManager.Dispose();
                     OrderManager.Dispose();
-                    NotifyManager.Dispose();
+
+                    WindowManager.Dispose();
+                    StatusManager.Dispose();
                 }
             }
 
