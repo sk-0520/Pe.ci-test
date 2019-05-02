@@ -464,7 +464,7 @@
           <!--#endregion -->
 
           <!--#region コンテンツ種別変更があんまりよくないっていう問い合わせ-->
-          <Border Background="#88cccccc" Visibility="{Binding ShowContentKindChangeConfim, Converter={StaticResource BooleanToVisibilityConverter}}">
+          <Border d:IsHidden="True"  Background="#88cccccc" Visibility="{Binding ShowContentKindChangeConfim, Converter={StaticResource BooleanToVisibilityConverter}}">
             <Grid>
               <Grid.Resources>
                 <Style x:Key="CancelBackground" TargetType="Button">
