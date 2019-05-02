@@ -92,12 +92,13 @@
             </MultiBinding>
           </DataTrigger.Binding>
           <Setter Property="FontWeight" Value="Bold" />
-          <Setter Property="Effect" Value="{StaticResource Effect-Strong}" />
+          <!--<Setter Property="Effect" Value="{StaticResource Effect-Strong}" />-->
+          <Setter Property="Icon" Value="{Binding StrongGroupIcon}" />
         </DataTrigger>
       </Style.Triggers>
       <Setter Property="Header" Value="{Binding Name}" />
 
-      <Setter Property="Icon" Value="{Binding GroupIcon}" />
+      <Setter Property="Icon" Value="{Binding NormalGroupIcon}" />
       <Setter Property="Command" Value="{Binding DataContext.ChangeLauncherGroupCommand, Source={x:Reference root}}" />
       <Setter Property="CommandParameter" Value="{Binding}" />
     </Style>

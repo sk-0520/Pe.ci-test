@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
+using System.Windows.Media.Effects;
 using System.Windows.Shapes;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
@@ -84,6 +85,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Theme
             }
             return box;
         }
+
+        protected Effect GetStrongEffect() => (Effect)Application.Current.Resources["Effect-Strong"];
+
 
         #endregion
     }

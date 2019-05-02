@@ -21,7 +21,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Designer
     {
         #region function
 
-        DependencyObject CreateGroupImage(LauncherGroupImageName imageName, Color imageColor, IconScale iconScale);
+        DependencyObject CreateGroupImage(LauncherGroupImageName imageName, Color imageColor, IconScale iconScale, bool isStrong);
 
         #endregion
     }
@@ -51,7 +51,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Designer
             }
         }
 
-        DependencyObject CreateGroupImageCore(LauncherGroupImageName imageName, Color imageColor, IconScale iconScale)
+        DependencyObject CreateGroupImageCore(LauncherGroupImageName imageName, Color imageColor, IconScale iconScale, bool isStrong)
         {
             var viewBox = new Viewbox();
             using(Initializer.BeginInitialize(viewBox)) {
@@ -74,6 +74,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Designer
                         path.StrokeThickness = 1;
                     }
                     canvas.Children.Add(path);
+                    if(isStrong) {
+                        canvas.Effect = GetStrongEffect();
+                    }
                 }
                 viewBox.Child = canvas;
             }
@@ -85,9 +88,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Designer
 
         #region ILauncherGroupTheme
 
-        public DependencyObject CreateGroupImage(LauncherGroupImageName imageName, Color imageColor, IconScale iconScale)
+        public DependencyObject CreateGroupImage(LauncherGroupImageName imageName, Color imageColor, IconScale iconScale, bool isStrong)
         {
-            return DispatcherWapper.Get(() => CreateGroupImageCore(imageName, imageColor, iconScale));
+            return DispatcherWapper.Get(() => CreateGroupImageCore(imageName, imageColor, iconScale, isStrong));
         }
 
         #endregion

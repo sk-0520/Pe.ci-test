@@ -31,7 +31,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherGroup
         public LauncherGroupImageName ImageName => Model.ImageName;
         public Color ImageColor => Model.ImageColor;
 
-        public DependencyObject GroupIcon => LauncherGroupTheme.CreateGroupImage(ImageName, ImageColor, IconScale.Small);
+        public DependencyObject NormalGroupIcon => LauncherGroupTheme.CreateGroupImage(ImageName, ImageColor, IconScale.Small, false);
+        public DependencyObject StrongGroupIcon => LauncherGroupTheme.CreateGroupImage(ImageName, ImageColor, IconScale.Small, true);
 
         #endregion
 

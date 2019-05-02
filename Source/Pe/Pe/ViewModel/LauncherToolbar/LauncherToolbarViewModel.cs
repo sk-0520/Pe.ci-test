@@ -152,14 +152,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar
                  var notification = new Notification();
                  CloseRequest.Raise(notification);
              }
-         ));
-
-        public ICommand  ChangeLauncherGroupCommand => GetOrCreateCommand(() => new DelegateCommand<LauncherGroupViewModel>(
-            o => {
-                var groupModel = LauncherGroupCollection.GetModel(o);
-                Model.ChangeLauncherGroup(groupModel);
-            }
         ));
+
+        public ICommand ChangeLauncherGroupCommand => GetOrCreateCommand(() => new DelegateCommand<LauncherGroupViewModel>(
+           o => {
+               var groupModel = LauncherGroupCollection.GetModel(o);
+               Model.ChangeLauncherGroup(groupModel);
+           }
+       ));
 
 
         #endregion

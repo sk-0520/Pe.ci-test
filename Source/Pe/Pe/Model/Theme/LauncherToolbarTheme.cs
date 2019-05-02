@@ -89,8 +89,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Designer
                 }
 
                 if(isStrong) {
-                    var effect = (Effect)Application.Current.Resources["Effect-Strong"];
-                    canvas.Effect = effect;
+                    canvas.Effect = GetStrongEffect();
                 }
             }
             //var result = ImageUtility.MakeBitmapBitmapSourceDefualtDpi(canvas);
