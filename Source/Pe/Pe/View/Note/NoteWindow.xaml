@@ -11,6 +11,8 @@
   xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
 
   xmlns:cttn_lib_shared_lib_view_converter="clr-namespace:ContentTypeTextNet.Pe.Library.Shared.Library.View.Converter;assembly=Shared.Library"
+  xmlns:cttn_lib_shared_lib_view_attached="clr-namespace:ContentTypeTextNet.Pe.Library.Shared.Library.View.Attached;assembly=Shared.Library"
+
   xmlns:app_main_view="clr-namespace:ContentTypeTextNet.Pe.Main.View"
   xmlns:app_main_model_data="clr-namespace:ContentTypeTextNet.Pe.Main.Model.Data"
   xmlns:app_main_viewmodel_note="clr-namespace:ContentTypeTextNet.Pe.Main.ViewModel.Note"
@@ -24,6 +26,7 @@
   WindowStyle="None"
   Topmost="{Binding IsTopmost}"
   MinHeight="{Binding MinHeight}"
+  AllowDrop="True"
 
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   mc:Ignorable="d"
@@ -65,6 +68,9 @@
       <prism:InvokeCommandAction Command="{Binding SelectLinkFileCommand ,ElementName=root}" />
     </prism:InteractionRequestTrigger>
   </i:Interaction.Triggers>
+  <i:Interaction.Behaviors>
+    <cttn_lib_shared_lib_view_attached:DragAndDropBehavior DragAndDrop="{Binding DragAndDrop}" />
+  </i:Interaction.Behaviors>
   <Window.Style>
     <Style TargetType="Window" BasedOn="{StaticResource {x:Type Window}}">
       <Style.Triggers>

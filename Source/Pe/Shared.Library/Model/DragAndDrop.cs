@@ -135,23 +135,27 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         #endregion
     }
 
-    public class ActionDragAndDrop : DragAndDropBase
+    public delegate bool CanDragStartDelegate(UIElement sender, MouseEventArgs e);
+    public delegate IResultSuccessValue<DragParameter> GetDragParameterDelegate(UIElement sender, MouseEventArgs e);
+    public delegate void DragAndDropDelegate(UIElement sender, DragEventArgs e);
+
+    public class DelegateDragAndDrop : DragAndDropBase
     {
-        public ActionDragAndDrop(ILogger logger)
+        public DelegateDragAndDrop(ILogger logger)
             : base(logger)
         { }
-        public ActionDragAndDrop(ILoggerFactory loggerFactory)
+        public DelegateDragAndDrop(ILoggerFactory loggerFactory)
             : base(loggerFactory)
         { }
 
         #region property
 
-        public Func<UIElement, MouseEventArgs, bool> CanDragStart { get; set; }
-        public Func<UIElement, MouseEventArgs, IResultSuccessValue<DragParameter>> GetDragParameter { get; set; }
-        public Action<UIElement, DragEventArgs> DragEnterAction { get; set; }
-        public Action<UIElement, DragEventArgs> DragLeaveAction { get; set; }
-        public Action<UIElement, DragEventArgs> DragOverAction { get; set; }
-        public Action<UIElement, DragEventArgs> DropAction { get; set; }
+        public CanDragStartDelegate CanDragStart { get; set; }
+        public GetDragParameterDelegate GetDragParameter { get; set; }
+        public DragAndDropDelegate DragEnterAction { get; set; }
+        public DragAndDropDelegate DragLeaveAction { get; set; }
+        public DragAndDropDelegate DragOverAction { get; set; }
+        public DragAndDropDelegate DropAction { get; set; }
 
         #endregion
 

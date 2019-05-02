@@ -60,6 +60,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
 
             Font = new NoteFontViewModel(Model.FontElement, DispatcherWapper, Logger.Factory);
 
+            DragAndDrop = new DelegateDragAndDrop(Logger.Factory) {
+                CanDragStart = CanDragStartFile,
+                GetDragParameter = GetDragParameterFile,
+                DragEnterAction = DragEnterAndOverFile,
+                DragOverAction = DragEnterAndOverFile,
+                DragLeaveAction = DragLeaveFile,
+                DropAction = DropFile,
+            };
+
             PropertyChangedHooker = new PropertyChangedHooker(dispatcherWapper, Logger.Factory);
             PropertyChangedHooker.AddHook(nameof(Model.IsVisible), nameof(IsVisible));
             PropertyChangedHooker.AddHook(nameof(Model.IsTopmost), nameof(IsTopmost));
@@ -214,6 +223,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
 
         public NoteLayoutKind LayoutKind => Model.LayoutKind;
 
+        public IDragAndDrop DragAndDrop { get; }
+
         #region theme
         public double CaptionHeight => NoteTheme.GetCaptionHeight();
         public Brush BorderBrush => NoteTheme.GetBorderBrush(GetColorPair());
@@ -346,6 +357,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
         #endregion
 
         #region function
+
 
         (bool isCreated, NoteLayoutData layout) GetOrCreateLayout(NotePosition position)
         {
@@ -568,6 +580,42 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
             }
             return IntPtr.Zero;
         }
+
+        #region DragAndDrop
+
+        private bool CanDragStartFile(UIElement sender, MouseEventArgs e)
+        {
+            return false;
+        }
+        private IResultSuccessValue<DragParameter> GetDragParameterFile(UIElement sender, MouseEventArgs e)
+        {
+            throw new NotSupportedException();
+        }
+
+        private void DragEnterAndOverFile(UIElement sender, DragEventArgs e)
+        {
+            e.Effects = DragDropEffects.None;
+            e.Handled = true;
+
+            if(e.Data.GetDataPresent(DataFormats.FileDrop)) {
+                e.Effects = DragDropEffects.Copy;
+            }
+        }
+
+        private void DragLeaveFile(UIElement sender, DragEventArgs e)
+        { }
+
+        private void DropFile(UIElement sender, DragEventArgs e)
+        {
+            e.Effects = DragDropEffects.None;
+            e.Handled = true;
+
+            if(e.Effects != DragDropEffects.Copy) {
+                var filePaths = (string[])e.Data.GetData(DataFormats.FileDrop);
+            }
+        }
+
+        #endregion
 
         #endregion
 
