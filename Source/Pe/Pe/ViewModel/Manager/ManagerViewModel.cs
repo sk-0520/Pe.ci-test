@@ -86,6 +86,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Manager
             }
         ));
 
+        public ICommand CompactAllNotesCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                ApplicationManager.CompactAllNotes();
+            }
+        ));
         public ICommand MoveFrontAllNotesCommand => GetOrCreateCommand(() => new DelegateCommand(
              () => {
                  ApplicationManager.MoveFrontAllNotes();

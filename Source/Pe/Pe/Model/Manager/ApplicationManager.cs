@@ -214,10 +214,25 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
             return noteElement;
         }
 
+        public void CompactAllNotes()
+        {
+            var noteItems = WindowManager.GetWindowItems(WindowKind.Note)
+                .Select(i => i.ViewModel)
+                .Cast<NoteViewModel>()
+                .Where(i => !i.IsLocked)
+                .Where(i => i.IsVisible)
+                .Where(i => !i.IsCompact)
+                .ToList()
+            ;
+            foreach(var note in noteItems) {
+                note.SwitchCompactCommand.ExecuteIfCanExecute(null);
+            }
+        }
+
         public void MoveFrontAllNotes()
         {
             var noteItems = WindowManager.GetWindowItems(WindowKind.Note)
-                .Where(i => !i.Window.IsTabStop)
+                .Where(i => !i.Window.Topmost)
                 .Where(i => i.Window.IsVisible)
                 .ToList()
             ;

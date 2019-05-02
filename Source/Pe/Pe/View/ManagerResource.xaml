@@ -55,7 +55,7 @@
     <MenuItem Header="note" IsSubmenuOpen="{Binding IsOpenNoteMenu, Mode=OneWayToSource}">
       <MenuItem Header="create" Command="{Binding CreateNoteCommand}" />
       <Separator />
-      <MenuItem Header="compact" />
+      <MenuItem Header="compact" Command="{Binding CompactAllNotesCommand}" />
       <MenuItem Header="topmost" Command="{Binding MoveFrontAllNotesCommand}" />
       <Separator />
       <MenuItem Header="show" ItemsSource="{Binding NoteVisibleItems}" ItemContainerStyle="{StaticResource INotifyAreaMenuItem}" />
