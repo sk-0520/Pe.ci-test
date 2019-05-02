@@ -9,8 +9,14 @@ using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 
 namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 {
-    public class LazyAction: DisposerBase, IFlushable
+    public class LazyAction : DisposerBase, IFlushable
     {
+        #region variable
+
+        readonly object _timerLocker = new object();
+
+        #endregion
+
         public LazyAction(string lazyName, TimeSpan lazyTime, ILoggerFactory loggerFactory)
         {
             LazyName = lazyName;
@@ -35,25 +41,29 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 
         public void DelayAction(Action action)
         {
-            if(Timer.Enabled) {
-                Timer.Stop();
-                Logger.Debug($"[{LazyName}] タイマー停止, 抑制");
+            lock(this._timerLocker) {
+                if(Timer.Enabled) {
+                    Timer.Stop();
+                    Logger.Debug($"[{LazyName}] タイマー停止, 抑制");
+                }
+                Action = action;
+                Logger.Debug($"[{LazyName}] タイマー開始");
+                Timer.Start();
             }
-            Action = action;
-            Logger.Debug($"[{LazyName}] タイマー開始");
-            Timer.Start();
         }
 
         void DoAction(bool disposing)
         {
-            if(disposing) {
-                Timer.Stop();
+            lock(this._timerLocker) {
+                if(disposing) {
+                    Timer.Stop();
+                }
+                if(Action != null) {
+                    Logger.Debug($"[{LazyName}] 実行");
+                    Action();
+                }
+                Action = null;
             }
-            if(Action != null) {
-                Logger.Debug($"[{LazyName}] 実行");
-                Action();
-            }
-            Action = null;
         }
 
         #endregion

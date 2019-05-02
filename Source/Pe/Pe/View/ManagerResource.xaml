@@ -6,7 +6,6 @@
 
   xmlns:cttn_lib_shared_lib_view_converter="clr-namespace:ContentTypeTextNet.Pe.Library.Shared.Library.View.Converter;assembly=Shared.Library"
   xmlns:app_main_viewmodel_manager="clr-namespace:ContentTypeTextNet.Pe.Main.ViewModel.Manager"
-  xmlns:app_main_view_attached="clr-namespace:ContentTypeTextNet.Pe.Main.View.Attached"
 >
   <ContextMenu x:Key="ContextMenu">
     <ContextMenu.Resources>
