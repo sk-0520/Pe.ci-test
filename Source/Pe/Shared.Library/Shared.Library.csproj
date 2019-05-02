@@ -125,6 +125,7 @@
     <Compile Include="Model\Data\DataBase.cs" />
     <Compile Include="Model\Data\TransferBase.cs" />
     <Compile Include="Model\DispatcherWapper.cs" />
+    <Compile Include="Model\DragAndDrop.cs" />
     <Compile Include="Model\ICommandExtensions.cs" />
     <Compile Include="Model\BasicExtensions.cs" />
     <Compile Include="Model\IFlushable.cs" />
@@ -166,6 +167,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\ViewModel.cs" />
     <Compile Include="ViewModel\ModelViewModelObservableCollectionManager.cs" />
+    <Compile Include="View\Attached\DragAndDropBehavior.cs" />
     <Compile Include="View\Converter\BooleanConverter.cs" />
     <Compile Include="View\Converter\EnumToBooleanConverter.cs" />
     <Compile Include="View\Converter\EscapeAccessKeyConverter.cs" />
