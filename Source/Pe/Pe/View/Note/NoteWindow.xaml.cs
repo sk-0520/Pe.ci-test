@@ -76,6 +76,24 @@ namespace ContentTypeTextNet.Pe.Main.View.Note
                 ));
             }
         }
+
+        #region command
+
+        ICommand _CloseCommand;
+        public ICommand CloseCommand
+        {
+            get
+            {
+                return this._CloseCommand ?? (this._CloseCommand = new DelegateCommand<InteractionRequestedEventArgs>(
+                    o => {
+                        Close();
+                    }
+                ));
+            }
+        }
+
+        #endregion
+
         #endregion
 
         #region function

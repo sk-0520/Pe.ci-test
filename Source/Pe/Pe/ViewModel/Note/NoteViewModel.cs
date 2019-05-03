@@ -48,10 +48,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
 
         #endregion
 
-        public NoteViewModel(NoteElement model, INoteTheme noteTheme, IClipboardManager clipboardManager, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
+        public NoteViewModel(NoteElement model, INoteTheme noteTheme, IOrderManager orderManager, IClipboardManager clipboardManager, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         {
             NoteTheme = noteTheme;
+            OrderManager = orderManager;
             ClipboardManager = clipboardManager;
             DispatcherWapper = dispatcherWapper;
 
@@ -85,6 +86,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
         }
 
         #region property
+        public InteractionRequest<Notification> CloseRequest { get; } = new InteractionRequest<Notification>();
 
         public InteractionRequest<Notification> TitleEditStartRequest { get; } = new InteractionRequest<Notification>();
         public InteractionRequest<NoteLinkSelectNotification> SelectLinkFileRequest { get; } = new InteractionRequest<NoteLinkSelectNotification>();
@@ -92,6 +94,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
         bool CanLayoutNotify { get; set; }
 
         INoteTheme NoteTheme { get; }
+        IOrderManager OrderManager { get; }
         IClipboardManager ClipboardManager { get; }
         IDispatcherWapper DispatcherWapper { get; }
         PropertyChangedHooker PropertyChangedHooker { get; }
@@ -228,6 +231,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
 
         public IDragAndDrop DragAndDrop { get; }
 
+        bool PrepareToRemove { get; set; }
+
         #region theme
         public double CaptionHeight => NoteTheme.GetCaptionHeight();
         public Brush BorderBrush => NoteTheme.GetBorderBrush(GetColorPair());
@@ -360,7 +365,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
 
         public ICommand RemoveCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-                Model.Remove();
+                PrepareToRemove = true;
+                CloseRequest.Raise(new Notification());
             }
         ));
 
@@ -676,6 +682,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
         public void ReceiveViewClosed()
         {
             Model.ReceiveViewClosed();
+
+            if(PrepareToRemove) {
+                Flush();
+                var noteId = Model.NoteId;
+                // 削除するにあたりこいつはもう呼び出せない
+                Dispose();
+                OrderManager.RemoveNoteElement(noteId);
+
+            }
         }
 
         #endregion

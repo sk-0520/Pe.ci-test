@@ -343,6 +343,16 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
         {
             return OrderManager.CreateNoteElement(noteId, screen, notePosition);
         }
+        public bool RemoveNoteElement(Guid noteId)
+        {
+            var targetElement = NoteElements.FirstOrDefault(i => i.NoteId == noteId);
+            if(targetElement == null) {
+                Logger.Warning($"ノート削除: 対象不明 {noteId}");
+                return false;
+            }
+
+            targetElement
+        }
 
         public NoteContentElement CreateNoteContentElement(Guid noteId, NoteContentKind contentKind)
         {

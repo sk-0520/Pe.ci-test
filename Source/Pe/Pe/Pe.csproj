@@ -229,6 +229,7 @@
     <Compile Include="Model\Logic\CodePack\CommonFileDialogExtensions.cs" />
     <Compile Include="Model\Logic\CodePack\FileDialogFilterConverter.cs" />
     <Compile Include="Model\Logic\DatabaseLazyWriter.cs" />
+    <Compile Include="Model\Logic\EntityRemover.cs" />
     <Compile Include="Model\Logic\FontConverter.cs" />
     <Compile Include="Model\Logic\ScreenOperator.cs" />
     <Compile Include="Model\Manager\ApplicationManager.MessageWindow.cs" />

@@ -67,6 +67,9 @@
     <prism:InteractionRequestTrigger SourceObject="{Binding SelectLinkFileRequest}">
       <prism:InvokeCommandAction Command="{Binding SelectLinkFileCommand ,ElementName=root}" />
     </prism:InteractionRequestTrigger>
+    <prism:InteractionRequestTrigger SourceObject="{Binding CloseRequest}">
+      <prism:InvokeCommandAction Command="{Binding CloseCommand ,ElementName=root}" />
+    </prism:InteractionRequestTrigger>
   </i:Interaction.Triggers>
   <i:Interaction.Behaviors>
     <cttn_lib_shared_lib_view_attached:DragAndDropBehavior DragAndDrop="{Binding DragAndDrop}" />

@@ -57,6 +57,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
         LauncherToolbarElement CreateLauncherToolbarElement(Screen dockScreen, ReadOnlyObservableCollection<LauncherGroupElement> launcherGroups);
         LauncherItemElement GetOrCreateLauncherItemElement(Guid launcherItemId);
         NoteElement CreateNoteElement(Guid noteId, Screen screen, NotePosition notePosition);
+        bool RemoveNoteElement(Guid noteId);
         NoteContentElement CreateNoteContentElement(Guid noteId, NoteContentKind contentKind);
         FontElement CreateFontElement(Guid fontId, ParentUpdater parentUpdater);
         WindowItem CreateLauncherToolbarWindow(LauncherToolbarElement element);
@@ -122,6 +123,11 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
                 ;
                 element.Initialize();
                 return element;
+            }
+
+            public bool RemoveNoteElement(Guid noteId)
+            {
+                throw new NotSupportedException($"{nameof(ApplicationManager)}.{nameof(RemoveNoteElement)}");
             }
 
             public NoteContentElement CreateNoteContentElement(Guid noteId, NoteContentKind contentKind)
