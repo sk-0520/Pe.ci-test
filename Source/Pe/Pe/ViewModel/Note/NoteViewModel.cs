@@ -358,6 +358,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Note
             }
         ));
 
+        public ICommand RemoveCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                Model.Remove();
+            }
+        ));
+
         #endregion
 
         #region function

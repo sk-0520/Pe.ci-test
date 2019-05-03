@@ -455,7 +455,39 @@
 
                   <Button Grid.Column="0" Content="copy" Command="{Binding Content.CopyCommand}" />
                   <Button Grid.Column="1" Content="close" Command="{x:Static SystemCommands.CloseWindowCommand}" />
-                  <Button Grid.Column="2" Content="remove" />
+                  <Grid Grid.Column="2">
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition />
+                      <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <ToggleButton x:Name="removeLocker" Grid.Column="0" Content="鍵">
+                      <ToggleButton.Style>
+                        <Style TargetType="ToggleButton">
+                          <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsActive, ElementName=root}" Value="False">
+                              <Setter Property="IsChecked" Value="False" />
+                            </DataTrigger>
+                            <Trigger Property="IsChecked" Value="True">
+                              <!-- 一定時間経過で非活性 -->
+                              <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                  <BeginStoryboard.Storyboard>
+                                    <Storyboard>
+                                      <BooleanAnimationUsingKeyFrames Storyboard.TargetProperty="IsChecked">
+                                        <DiscreteBooleanKeyFrame KeyTime="00:00:10" Value="False" />
+                                      </BooleanAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                  </BeginStoryboard.Storyboard>
+                                </BeginStoryboard>
+                              </Trigger.EnterActions>
+                            </Trigger>
+                          </Style.Triggers>
+                        </Style>
+                      </ToggleButton.Style>
+                    </ToggleButton>
+                    <Button Grid.Column="1" IsEnabled="{Binding IsChecked, ElementName=removeLocker}" Command="{Binding RemoveCommand}" Content="remove" />
+                  </Grid>
                 </Grid>
 
               </StackPanel>

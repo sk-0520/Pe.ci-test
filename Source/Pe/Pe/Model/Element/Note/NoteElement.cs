@@ -571,6 +571,11 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
             }, UniqueKeyPool.Get());
         }
 
+        public void Remove()
+        {
+
+        }
+
         public NoteLayoutData GetLayout()
         {
             using(var commander = MainDatabaseBarrier.WaitRead()) {
