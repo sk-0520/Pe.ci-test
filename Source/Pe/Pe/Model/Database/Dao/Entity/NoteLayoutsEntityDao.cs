@@ -124,6 +124,13 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             return Commander.Execute(statement, param) == 1;
         }
 
+        public int DeleteLayouts(Guid noteId)
+        {
+            var builder = CreateDeleteBuilder();
+            builder.AddValue(Column.NoteId, noteId);
+            return ExecuteDelete(builder);
+        }
+
         #endregion
     }
 }

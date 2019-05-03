@@ -213,28 +213,13 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
         {
             var sb = new StringBuilder();
 
-            sb.AppendLine(Implementation.GetKeywordStatement(DatabaseStatementKeyword.Delete));
+            sb.AppendLine(Implementation.GetCommonStatementKeyword(DatabaseCommonStatementKeyword.Delete));
             sb.Append('\t');
             sb.AppendLine(Implementation.ToStatementTableName(TableName));
 
             var parameterIndex = 0;
-            sb.AppendLine("set");
-            foreach(var item in ParametersImpl.Keys.Select((k, i) => (index: i, key: k))) {
-                sb.Append('\t');
-                sb.Append(Implementation.ToStatementColumnName(item.key));
-                sb.Append('=');
-                if(PlainValues.Contains(item.key)) {
-                    sb.Append(Parameters[item.key]);
-                } else {
-                    sb.Append(Implementation.ToStatementParameterName(item.key, parameterIndex++));
-                }
-                if(item.index + 1 != Parameters.Count) {
-                    sb.Append(',');
-                }
-                sb.AppendLine();
-            }
 
-            sb.AppendLine("where");
+            sb.AppendLine(Implementation.GetCommonStatementKeyword(DatabaseCommonStatementKeyword.Where));
             var whereItems = Parameters.ToArray();
             for(var i = 0; i < whereItems.Length; i++) {
                 var whereItem = whereItems[i];

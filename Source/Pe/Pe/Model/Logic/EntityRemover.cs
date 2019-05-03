@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Applications;
@@ -70,7 +71,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
             return new EntityRemoverResultItem(entityName, count);
         }
 
-        protected abstract EntityRemoverResult RemoveImpl(Pack pack, IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation);
+        protected abstract EntityRemoverResult RemoveMain(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation);
+        protected abstract EntityRemoverResult RemoveFile(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation);
+        protected abstract EntityRemoverResult RemoveTemporary(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation);
 
         public EntityRemoverResult Remove(Pack pack, IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation)
         {
@@ -87,7 +90,19 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
                 throw new ArgumentNullException(nameof(implementation));
             }
 
-            return RemoveImpl(pack, commander, statementLoader, implementation);
+            switch(pack) {
+                case Pack.Main:
+                    return RemoveMain(commander, statementLoader, implementation);
+
+                case Pack.File:
+                    return RemoveMain(commander, statementLoader, implementation);
+
+                case Pack.Temporary:
+                    return RemoveMain(commander, statementLoader, implementation);
+
+                default:
+                    throw new NotImplementedException();
+            }
         }
 
         #endregion
@@ -159,18 +174,65 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
 
         #region function
 
-        public IList<EntityRemoverResult> Execute()
+        ApplicationDatabaseBarrierTransaction BeginTransaction(Pack pack)
         {
-            var transactions = new Dictionary<Pack, IDatabaseTransaction>();
-            var mainItems = Items.Where(i => i.IsTarget(Pack.Main));
-            var mainBarrier = Barriers[Pack.Main];
-            var commander = mainBarrier.WaitWrite();
-            transactions.Add(Pack.Main, commander);
-            foreach(var item in mainItems) {
-                var entityResult = item.Remove(Pack.Main, commander, StatementLoader, commander.Implementation);
+            if(Items.Any(i => i.IsTarget(pack))) {
+                var barrier = Barriers[pack];
+                return barrier.WaitWrite();
             }
 
-            throw new NotImplementedException();
+            return null;
+        }
+
+        IEnumerable<EntityRemoverResult> ExecuteCore(Pack pack, IDatabaseCommander commander, IDatabaseImplementation implementation)
+        {
+            var items = Items.Where(i => i.IsTarget(pack));
+            foreach(var item in items) {
+                var entityResult = item.Remove(pack, commander, StatementLoader, implementation);
+                yield return entityResult;
+            }
+        }
+
+        public IList<EntityRemoverResult> Execute()
+        {
+
+            var packs = new[] {
+                Pack.Main,
+                Pack.File,
+                Pack.Temporary,
+            };
+#if DEBUG
+            Debug.Assert(EnumUtility.GetMembers<Pack>().Count() == packs.Length);
+#endif
+            var transactions = new Dictionary<Pack, ApplicationDatabaseBarrierTransaction>();
+            try {
+                var result = new List<EntityRemoverResult>();
+
+                foreach(var pack in packs) {
+                    var transaction = BeginTransaction(pack);
+                    if(transaction == null) {
+                        continue;
+                    }
+                    transactions.Add(pack, transaction);
+                    foreach(var entityResult in ExecuteCore(pack, transaction, transaction.Implementation)) {
+                        result.Add(entityResult);
+                    }
+                }
+                foreach(var transaction in transactions.Values) {
+                    transaction.Commit();
+                }
+
+                return result;
+            } catch(Exception) {
+                foreach(var transaction in transactions.Values) {
+                    transaction.Rollback();
+                }
+                throw;
+            } finally {
+                foreach(var transaction in transactions.Values) {
+                    transaction.Dispose();
+                }
+            }
         }
 
         #endregion

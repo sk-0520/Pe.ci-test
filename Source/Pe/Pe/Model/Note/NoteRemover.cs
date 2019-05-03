@@ -41,18 +41,30 @@ namespace ContentTypeTextNet.Pe.Main.Model.Note
             }
         }
 
-        protected override EntityRemoverResult RemoveImpl(Pack pack, IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation)
+        protected override EntityRemoverResult RemoveMain(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation)
         {
-            var reuslt = new EntityRemoverResult(pack);
+            var reuslt = new EntityRemoverResult(Pack.Main);
 
             var daoGroup = new EntityDeleteDaoGroup();
-            daoGroup.Add(new NotesEntityDao(commander, statementLoader, implementation, Logger.Factory), dao => dao.Delete(NoteId));
+            daoGroup.Add(new NoteContentsEntityDao(commander, statementLoader, implementation, Logger.Factory), dao => dao.DeleteContents(NoteId));
+            daoGroup.Add(new NoteLayoutsEntityDao(commander, statementLoader, implementation, Logger.Factory), dao => dao.DeleteLayouts(NoteId));
+            daoGroup.Add(new NotesEntityDao(commander, statementLoader, implementation, Logger.Factory), dao => dao.DeleteNote(NoteId));
 
             foreach(var item in daoGroup.Execute()) {
                 reuslt.Items.Add(item);
             }
 
             return reuslt;
+        }
+
+        protected override EntityRemoverResult RemoveFile(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation)
+        {
+            return new EntityRemoverResult(Pack.File);
+        }
+
+        protected override EntityRemoverResult RemoveTemporary(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation)
+        {
+            throw new NotSupportedException();
         }
 
         #endregion

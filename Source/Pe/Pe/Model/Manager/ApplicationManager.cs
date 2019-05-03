@@ -355,10 +355,20 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
             var entitiesRemover = ApplicationDiContainer.Build<EntitiesRemover>();
             entitiesRemover.Items.Add(new NoteRemover(noteId, Logger.Factory));
 
-            var reuslt = entitiesRemover.Execute();
+            try {
+                var reuslt = entitiesRemover.Execute();
+                if(reuslt.Sum(i => i.Items.Count) == 0) {
+                    Logger.Warning($"ノート削除に失敗: 対象データ不明 {noteId}");
+                    return false;
+                }
+                NoteElements.Remove(targetElement);
+                targetElement.Dispose();
+                return true;
+            } catch(Exception ex) {
+                Logger.Error($"ノート削除に失敗: {ex.Message} {noteId}", ex);
+            }
 
-            return reuslt.Sum(i => i.Items.Count) != 0;
-
+            return false;
         }
 
         public NoteContentElement CreateNoteContentElement(Guid noteId, NoteContentKind contentKind)

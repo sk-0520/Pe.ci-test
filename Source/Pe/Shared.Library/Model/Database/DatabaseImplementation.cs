@@ -6,9 +6,30 @@ using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
 {
-    public enum DatabaseStatementKeyword
+    public enum DatabaseCommonStatementKeyword
     {
+        Select,
+        Insert,
+        Update,
         Delete,
+
+        Where,
+    }
+
+    public enum DatabaseSelectStatementKeyword
+    {
+        From,
+    }
+    public enum DatabaseInsertStatementKeyword
+    {
+        Value,
+    }
+    public enum DatabaseUpdateStatementKeyword
+    {
+        Set,
+    }
+    public enum DatabaseDeleteStatementKeyword
+    {
     }
 
     /// <summary>
@@ -69,7 +90,11 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
         /// <returns></returns>
         string PreFormatStatement(string statement);
 
-        string GetKeywordStatement(DatabaseStatementKeyword keyword);
+        string GetCommonStatementKeyword(DatabaseCommonStatementKeyword keyword);
+        string GetSelectStatementKeyword(DatabaseSelectStatementKeyword keyword);
+        string GetInsertStatementKeyword(DatabaseInsertStatementKeyword keyword);
+        string GetUpdateStatementKeyword(DatabaseUpdateStatementKeyword keyword);
+        string GetDeleteStatementKeyword(DatabaseDeleteStatementKeyword keyword);
 
         string ToStatementTableName(string tableName);
         string ToStatementColumnName(string columnName);
@@ -150,16 +175,66 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
 
         public virtual string PreFormatStatement(string statement) => statement;
 
-        public virtual string GetKeywordStatement(DatabaseStatementKeyword keyword)
+        public virtual string GetCommonStatementKeyword(DatabaseCommonStatementKeyword keyword)
         {
             switch(keyword) {
-                case DatabaseStatementKeyword.Delete:
+                case DatabaseCommonStatementKeyword.Select:
                     return "delete";
+
+                case DatabaseCommonStatementKeyword.Insert:
+                    return "insert into"; // ええんか、これ
+
+                case DatabaseCommonStatementKeyword.Update:
+                    return "update";
+
+                case DatabaseCommonStatementKeyword.Delete:
+                    return "delete";
+
+                case DatabaseCommonStatementKeyword.Where:
+                    return "where";
 
                 default:
                     throw new NotImplementedException();
             }
         }
+
+        public virtual string GetSelectStatementKeyword(DatabaseSelectStatementKeyword keyword)
+        {
+            switch(keyword) {
+                case DatabaseSelectStatementKeyword.From:
+                    return "from";
+
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+        public virtual string GetInsertStatementKeyword(DatabaseInsertStatementKeyword keyword)
+        {
+            switch(keyword) {
+                case DatabaseInsertStatementKeyword.Value:
+                    return "value";
+
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+        public virtual string GetUpdateStatementKeyword(DatabaseUpdateStatementKeyword keyword)
+        {
+            switch(keyword) {
+                case DatabaseUpdateStatementKeyword.Set:
+                    return "set";
+
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+        public virtual string GetDeleteStatementKeyword(DatabaseDeleteStatementKeyword keyword)
+        {
+            throw new NotSupportedException();
+        }
+
+
+
 
         public virtual string ToStatementTableName(string tableName) => tableName;
         public virtual string ToStatementColumnName(string columnName) => columnName;

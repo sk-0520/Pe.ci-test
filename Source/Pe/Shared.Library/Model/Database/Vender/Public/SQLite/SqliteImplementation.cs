@@ -77,7 +77,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database.Vender.Pub
         }
     }
 
-    public class SqliteImplementation: DatabaseImplementation
+    public class SqliteImplementation : DatabaseImplementation
     {
         static SqliteImplementation()
         {
@@ -89,6 +89,14 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database.Vender.Pub
         #region DatabaseImplementation
 
         public override bool SupportedTransactionDDL { get; } = true;
+
+        public override string GetCommonStatementKeyword(DatabaseCommonStatementKeyword keyword)
+        {
+            if(keyword == DatabaseCommonStatementKeyword.Delete) {
+                return "delete from";
+            }
+            return base.GetCommonStatementKeyword(keyword);
+        }
 
         public override string ToStatementTableName(string tableName) => "[" + tableName + "]";
         public override string ToStatementColumnName(string columnName) => "[" + columnName + "]";

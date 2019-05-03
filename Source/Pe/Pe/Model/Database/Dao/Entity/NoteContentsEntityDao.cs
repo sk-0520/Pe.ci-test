@@ -22,6 +22,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
         {
             #region property
 
+            public static string NoteId { get; } = "NoteId";
 
             #endregion
         }
@@ -80,6 +81,13 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             var statement = StatementLoader.LoadStatementByCurrent();
             var param = ConvertFromData(data, databaseCommonStatus);
             return Commander.Execute(statement, param) == 1;
+        }
+
+        public int DeleteContents(Guid noteId)
+        {
+            var builder = CreateDeleteBuilder();
+            builder.AddValue(Column.NoteId, noteId);
+            return ExecuteDelete(builder);
         }
 
         #endregion
