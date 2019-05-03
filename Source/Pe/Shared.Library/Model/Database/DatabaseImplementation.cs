@@ -6,6 +6,11 @@ using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
 {
+    public enum DatabaseStatementKeyword
+    {
+        Delete,
+    }
+
     /// <summary>
     /// データベース実装依存処理。
     /// </summary>
@@ -63,6 +68,8 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
         /// <param name="statement"></param>
         /// <returns></returns>
         string PreFormatStatement(string statement);
+
+        string GetKeywordStatement(DatabaseStatementKeyword keyword);
 
         string ToStatementTableName(string tableName);
         string ToStatementColumnName(string columnName);
@@ -142,6 +149,17 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
         }
 
         public virtual string PreFormatStatement(string statement) => statement;
+
+        public virtual string GetKeywordStatement(DatabaseStatementKeyword keyword)
+        {
+            switch(keyword) {
+                case DatabaseStatementKeyword.Delete:
+                    return "delete";
+
+                default:
+                    throw new NotImplementedException();
+            }
+        }
 
         public virtual string ToStatementTableName(string tableName) => tableName;
         public virtual string ToStatementColumnName(string columnName) => columnName;

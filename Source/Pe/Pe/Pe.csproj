@@ -241,6 +241,7 @@
     <Compile Include="Model\Note\NoteLinkContentDataExtensions.cs" />
     <Compile Include="Model\Note\NoteLinkContentWatcher.cs" />
     <Compile Include="Model\Note\NoteLinkSelectNotification.cs" />
+    <Compile Include="Model\Note\NoteRemover.cs" />
     <Compile Include="Model\Theme\FontTheme.cs" />
     <Compile Include="Model\Theme\LauncherGroupTheme.cs" />
     <Compile Include="Model\Theme\NoteTheme.cs" />

@@ -32,6 +32,7 @@ using ContentTypeTextNet.Pe.Main.ViewModel.Manager;
 using ContentTypeTextNet.Pe.Main.Model.Element.Font;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Compatibility.Windows;
 using ContentTypeTextNet.Pe.Main.ViewModel.Note;
+using ContentTypeTextNet.Pe.Main.Model.Note;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Manager
 {
@@ -351,7 +352,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
                 return false;
             }
 
-            targetElement
+            var remover = new NoteRemover(noteId, Logger.Factory);
+
+            throw new NotImplementedException();
         }
 
         public NoteContentElement CreateNoteContentElement(Guid noteId, NoteContentKind contentKind)

@@ -163,4 +163,96 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
         #endregion
     }
 
+    public class DatabaseDeleteStatementBuilder : DatabaseStatementBuilderBase
+    {
+        public DatabaseDeleteStatementBuilder(IDatabaseImplementation implementation, ILogger logger)
+            : base(implementation, logger)
+        { }
+
+        public DatabaseDeleteStatementBuilder(IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+            : base(implementation, loggerFactory)
+        { }
+
+        #region proeprty
+        public string TableName { get; private set; }
+        ISet<string> UpdateColumns { get; } = new HashSet<string>();
+        ISet<string> PlainValues { get; } = new HashSet<string>();
+
+        #endregion
+
+        #region function
+
+        public DatabaseDeleteStatementBuilder SetTable(string tableName)
+        {
+            TableName = tableName;
+
+            return this;
+        }
+        public DatabaseDeleteStatementBuilder AddValue(string column, object value)
+        {
+            UpdateColumns.Add(column);
+            ParametersImpl.Add(column, value);
+
+            return this;
+        }
+
+        public DatabaseDeleteStatementBuilder AddPlain(string column, string value)
+        {
+            UpdateColumns.Add(column);
+            ParametersImpl.Add(column, value);
+            PlainValues.Add(column);
+
+            return this;
+        }
+
+        #endregion
+
+        #region DatabaseStatementBuilderBase
+
+        public override string BuildStatement()
+        {
+            var sb = new StringBuilder();
+
+            sb.AppendLine(Implementation.GetKeywordStatement(DatabaseStatementKeyword.Delete));
+            sb.Append('\t');
+            sb.AppendLine(Implementation.ToStatementTableName(TableName));
+
+            var parameterIndex = 0;
+            sb.AppendLine("set");
+            foreach(var item in ParametersImpl.Keys.Select((k, i) => (index: i, key: k))) {
+                sb.Append('\t');
+                sb.Append(Implementation.ToStatementColumnName(item.key));
+                sb.Append('=');
+                if(PlainValues.Contains(item.key)) {
+                    sb.Append(Parameters[item.key]);
+                } else {
+                    sb.Append(Implementation.ToStatementParameterName(item.key, parameterIndex++));
+                }
+                if(item.index + 1 != Parameters.Count) {
+                    sb.Append(',');
+                }
+                sb.AppendLine();
+            }
+
+            sb.AppendLine("where");
+            var whereItems = Parameters.ToArray();
+            for(var i = 0; i < whereItems.Length; i++) {
+                var whereItem = whereItems[i];
+                sb.Append('\t');
+                sb.Append(Implementation.ToStatementColumnName(whereItem.Key));
+                sb.Append('=');
+                sb.Append(Implementation.ToStatementParameterName(whereItem.Key, parameterIndex++));
+                sb.AppendLine();
+
+                if(i + 1 != whereItems.Length) {
+                    sb.AppendLine("\tand");
+                }
+            }
+
+            return sb.ToString();
+        }
+
+        #endregion
+
+    }
 }

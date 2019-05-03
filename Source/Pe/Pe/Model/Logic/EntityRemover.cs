@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Applications;
+using ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Logic
 {
@@ -55,40 +57,28 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
 
         protected ILogger Logger { get; }
 
-        public abstract bool TargetIsMain { get; }
-        public abstract bool TargetIsFile { get; }
-        public abstract bool TargetIsTemporary { get; }
-
         #endregion
 
         #region function
 
-        protected abstract EntityRemoverResult RemoveImpl(Pack pack, IDatabaseCommander commander, IDatabaseImplementation implementation);
+        public abstract bool IsTarget(Pack pack);
 
-        public EntityRemoverResult Remove(Pack pack, IDatabaseCommander commander, IDatabaseImplementation implementation)
+        protected EntityRemoverResultItem ExecuteRemove(string entityName, Func<int> func)
         {
-            switch(pack) {
-                case Pack.Main:
-                    if(!TargetIsMain) {
-                        throw new ArgumentException(nameof(pack));
-                    }
-                    break;
+            Debug.Assert(func != null);
+            var count = func();
+            return new EntityRemoverResultItem(entityName, count);
+        }
 
-                case Pack.File:
-                    if(!TargetIsFile) {
-                        throw new ArgumentException(nameof(pack));
-                    }
-                    break;
+        protected abstract EntityRemoverResult RemoveImpl(Pack pack, IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation);
 
-                case Pack.Temporary:
-                    if(!TargetIsTemporary) {
-                        throw new ArgumentException(nameof(pack));
-                    }
-                    break;
-
-                default:
-                    throw new NotImplementedException();
+        public EntityRemoverResult Remove(Pack pack, IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation)
+        {
+#if DEBUG
+            if(!IsTarget(pack)) {
+                throw new ArgumentException(nameof(pack));
             }
+#endif
 
             if(commander == null) {
                 throw new ArgumentNullException(nameof(commander));
@@ -97,7 +87,33 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
                 throw new ArgumentNullException(nameof(implementation));
             }
 
-            return RemoveImpl(pack, commander, implementation);
+            return RemoveImpl(pack, commander, statementLoader, implementation);
+        }
+
+        #endregion
+    }
+
+    public sealed class EntityDeleteDapGroup
+    {
+        #region property
+
+        IList<EntityDaoBase> EntityDaos { get; } = new List<EntityDaoBase>();
+        IDictionary<EntityDaoBase, IList<Func<int>>> DeleteFunctions { get; } = new Dictionary<EntityDaoBase, IList<Func<int>>>();
+
+        #endregion
+
+        #region function
+
+        public void Add<TEntityDao>(TEntityDao entityDao, Func<int> deleter)
+            where TEntityDao : EntityDaoBase
+        {
+            EntityDaos.Add(entityDao);
+            if(!DeleteFunctions.TryGetValue(entityDao, out var list)) {
+                list = new List<Func<int>>();
+                DeleteFunctions.Add(entityDao, list);
+            }
+
+            list.Add(deleter);
         }
 
         #endregion

@@ -69,7 +69,22 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             return result;
         }
 
+        protected DatabaseDeleteStatementBuilder CreateDeleteBuilder()
+        {
+            var result = new DatabaseDeleteStatementBuilder(Implementation, Logger.Factory);
+            result.SetTable(TableName);
+
+            return result;
+        }
+
         protected int ExecuteUpdate(DatabaseUpdateStatementBuilder builder)
+        {
+            var statement = builder.BuildStatement();
+            var param = builder.Parameters;
+            return Commander.Execute(statement, param);
+        }
+
+        protected int ExecuteDelete(DatabaseDeleteStatementBuilder builder)
         {
             var statement = builder.BuildStatement();
             var param = builder.Parameters;

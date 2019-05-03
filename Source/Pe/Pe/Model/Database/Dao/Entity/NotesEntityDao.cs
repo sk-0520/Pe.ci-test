@@ -208,6 +208,13 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             return ExecuteUpdate(builder) == 1;
         }
 
+        public int Delete(Guid noteId)
+        {
+            var builder = CreateDeleteBuilder();
+            builder.AddValue(Column.NoteId, noteId);
+            return ExecuteDelete(builder);
+        }
+
 
         #endregion
     }
