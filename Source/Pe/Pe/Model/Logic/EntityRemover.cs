@@ -93,7 +93,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
         #endregion
     }
 
-    public sealed class EntityDeleteDapGroup
+    public sealed class EntityDeleteDaoGroup
     {
         #region property
 
@@ -104,7 +104,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
 
         #region function
 
-        public void Add<TEntityDao>(TEntityDao entityDao, Func<int> deleter)
+        public void Add<TEntityDao>(TEntityDao entityDao, Func<TEntityDao, int> deleter)
             where TEntityDao : EntityDaoBase
         {
             EntityDaos.Add(entityDao);
@@ -113,7 +113,53 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
                 DeleteFunctions.Add(entityDao, list);
             }
 
-            list.Add(deleter);
+            list.Add(() => deleter(entityDao));
+        }
+
+        public IList<EntityRemoverResultItem> Execute()
+        {
+            var result = new List<EntityRemoverResultItem>(EntityDaos.Count);
+
+            foreach(var entityDao in EntityDaos) {
+                var funcs = DeleteFunctions[entityDao];
+                var totalCount = 0;
+                foreach(var func in funcs) {
+                    var count = func();
+                    totalCount += count;
+                }
+                result.Add(new EntityRemoverResultItem(entityDao.TableName, totalCount));
+            }
+
+            return result;
+        }
+
+        #endregion
+    }
+
+    public sealed class EntitiesRemover
+    {
+        public EntitiesRemover(IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, ITemporaryDatabaseBarrier temporaryDatabaseBarrier)
+        {
+            MainDatabaseBarrier = mainDatabaseBarrier;
+            FileDatabaseBarrier = fileDatabaseBarrier;
+            TemporaryDatabaseBarrier = temporaryDatabaseBarrier;
+        }
+
+        #region property
+
+        IMainDatabaseBarrier MainDatabaseBarrier { get; }
+        IFileDatabaseBarrier FileDatabaseBarrier { get; }
+        ITemporaryDatabaseBarrier TemporaryDatabaseBarrier { get; }
+
+        public IList<EntityRemoverBase> Items { get; } = new List<EntityRemoverBase>();
+
+        #endregion
+
+        #region function
+
+        public IList<EntityRemoverResult> Execute()
+        {
+            throw new NotImplementedException();
         }
 
         #endregion

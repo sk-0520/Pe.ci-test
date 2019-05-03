@@ -45,9 +45,12 @@ namespace ContentTypeTextNet.Pe.Main.Model.Note
         {
             var reuslt = new EntityRemoverResult(pack);
 
-            var noteEntityDao = new NotesEntityDao(commander, statementLoader, implementation, Logger.Factory);
+            var daoGroup = new EntityDeleteDaoGroup();
+            daoGroup.Add(new NotesEntityDao(commander, statementLoader, implementation, Logger.Factory), dao => dao.Delete(NoteId));
 
-            ExecuteRemove(noteEntityDao.TableName, () => noteEntityDao.Delete(NoteId));
+            foreach(var item in daoGroup.Execute()) {
+                reuslt.Items.Add(item);
+            }
 
             return reuslt;
         }

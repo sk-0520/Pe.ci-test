@@ -352,9 +352,13 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
                 return false;
             }
 
-            var remover = new NoteRemover(noteId, Logger.Factory);
+            var entitiesRemover = ApplicationDiContainer.Build<EntitiesRemover>();
+            entitiesRemover.Items.Add(new NoteRemover(noteId, Logger.Factory));
 
-            throw new NotImplementedException();
+            var reuslt = entitiesRemover.Execute();
+
+            return reuslt.Sum(i => i.Items.Count) != 0;
+
         }
 
         public NoteContentElement CreateNoteContentElement(Guid noteId, NoteContentKind contentKind)
