@@ -138,18 +138,20 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
 
     public sealed class EntitiesRemover
     {
-        public EntitiesRemover(IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, ITemporaryDatabaseBarrier temporaryDatabaseBarrier)
+        public EntitiesRemover(IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, ITemporaryDatabaseBarrier temporaryDatabaseBarrier, IDatabaseStatementLoader statementLoader)
         {
-            MainDatabaseBarrier = mainDatabaseBarrier;
-            FileDatabaseBarrier = fileDatabaseBarrier;
-            TemporaryDatabaseBarrier = temporaryDatabaseBarrier;
+            Barriers = new Dictionary<Pack, IApplicationDatabaseBarrier>() {
+                [Pack.Main] = mainDatabaseBarrier,
+                [Pack.File] = fileDatabaseBarrier,
+                [Pack.Temporary] = temporaryDatabaseBarrier,
+            };
+            StatementLoader = statementLoader;
         }
 
         #region property
 
-        IMainDatabaseBarrier MainDatabaseBarrier { get; }
-        IFileDatabaseBarrier FileDatabaseBarrier { get; }
-        ITemporaryDatabaseBarrier TemporaryDatabaseBarrier { get; }
+        IDictionary<Pack, IApplicationDatabaseBarrier> Barriers { get; }
+        IDatabaseStatementLoader StatementLoader { get; }
 
         public IList<EntityRemoverBase> Items { get; } = new List<EntityRemoverBase>();
 
@@ -159,6 +161,15 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
 
         public IList<EntityRemoverResult> Execute()
         {
+            var transactions = new Dictionary<Pack, IDatabaseTransaction>();
+            var mainItems = Items.Where(i => i.IsTarget(Pack.Main));
+            var mainBarrier = Barriers[Pack.Main];
+            var commander = mainBarrier.WaitWrite();
+            transactions.Add(Pack.Main, commander);
+            foreach(var item in mainItems) {
+                var entityResult = item.Remove(Pack.Main, commander, StatementLoader, commander.Implementation);
+            }
+
             throw new NotImplementedException();
         }
 
