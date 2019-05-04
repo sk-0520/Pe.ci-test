@@ -7,6 +7,7 @@ using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Library.ViewModel;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Data;
+using ContentTypeTextNet.Pe.Main.Model.Designer;
 using ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem;
 using ContentTypeTextNet.Pe.Main.Model.Launcher;
 using ContentTypeTextNet.Pe.Main.ViewModel.IconViewer;
@@ -16,17 +17,21 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
 {
     public abstract class LauncherItemViewModelBase : SingleModelViewModelBase<LauncherItemElement>
     {
-        public LauncherItemViewModelBase(LauncherItemElement model, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
+        public LauncherItemViewModelBase(LauncherItemElement model, IDispatcherWapper dispatcherWapper, ILauncherToolbarTheme launcherToolbarTheme, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         {
+            LauncherToolbarTheme = launcherToolbarTheme;
             Icon = new LauncherIconViewModel(model.Icon, dispatcherWapper, Logger.Factory);
         }
 
         #region property
 
+        protected ILauncherToolbarTheme LauncherToolbarTheme { get; }
+        public LauncherIconViewModel Icon { get; }
+
         public string Name => Model.Name;
         public string Comment => Model.Comment;
-        public LauncherIconViewModel Icon { get; }
+
 
         #endregion
 
@@ -46,20 +51,26 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
     {
         #region function
 
-        public static LauncherItemViewModelBase Create(LauncherItemElement model, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
+        public static LauncherItemViewModelBase Create(LauncherItemElement model, IDispatcherWapper dispatcherWapper, ILauncherToolbarTheme launcherToolbarTheme, ILoggerFactory loggerFactory)
         {
             switch(model.Kind) {
                 case LauncherItemKind.File:
-                    return new LauncherFileItemViewModel(model, dispatcherWapper, loggerFactory);
+                    return new LauncherFileItemViewModel(model, dispatcherWapper, launcherToolbarTheme, loggerFactory);
 
                 case LauncherItemKind.Command:
-                    return new LauncherCommandItemViewModel(model, dispatcherWapper, loggerFactory);
+                    return new LauncherCommandItemViewModel(model, dispatcherWapper, launcherToolbarTheme, loggerFactory);
+
+                case LauncherItemKind.Script:
+                    return new LauncherScriptItemViewModel(model, dispatcherWapper, launcherToolbarTheme, loggerFactory);
+
+                case LauncherItemKind.Directory:
+                    return new LauncherDirectoryItemViewModel(model, dispatcherWapper, launcherToolbarTheme, loggerFactory);
 
                 case LauncherItemKind.Embedded:
-                    return new LauncherEmbeddedItemViewModel(model, dispatcherWapper, loggerFactory);
+                    return new LauncherEmbeddedItemViewModel(model, dispatcherWapper, launcherToolbarTheme, loggerFactory);
 
                 case LauncherItemKind.Separator:
-                    return new LauncherSeparatorItemViewModel(model, dispatcherWapper, loggerFactory);
+                    return new LauncherSeparatorItemViewModel(model, dispatcherWapper, launcherToolbarTheme, loggerFactory);
 
                 default:
                     throw new NotImplementedException();
