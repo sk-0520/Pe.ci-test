@@ -5,11 +5,13 @@
   xmlns:Taskbar="http://www.hardcodet.net/taskbar"
 
   xmlns:cttn_lib_shared_lib_view_converter="clr-namespace:ContentTypeTextNet.Pe.Library.Shared.Library.View.Converter;assembly=Shared.Library"
+
   xmlns:app_main_viewmodel_manager="clr-namespace:ContentTypeTextNet.Pe.Main.ViewModel.Manager"
 >
   <ContextMenu x:Key="ContextMenu">
     <ContextMenu.Resources>
       <cttn_lib_shared_lib_view_converter:EscapeAccessKeyConverter x:Key="EscapeAccessKeyConverter" />
+      <cttn_lib_shared_lib_view_converter:IsNotEmptyCollectionConverter x:Key="IsNotEmptyCollectionConverter" />
 
       <Style x:Key="INotifyAreaMenuItem" TargetType="MenuItem" >
         <Style.Triggers>
@@ -52,13 +54,23 @@
       </MenuItem.ItemContainerStyle>-->
     </MenuItem>
     <MenuItem Header="note" IsSubmenuOpen="{Binding IsOpenNoteMenu, Mode=OneWayToSource}">
+      <MenuItem.Resources>
+        <Style x:Key="NoteItemsMenu" TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+          <Style.Triggers>
+            <DataTrigger Binding="{Binding ItemsSource.Count, RelativeSource={RelativeSource Mode=Self}}" Value="0">
+              <Setter Property="IsEnabled" Value="False" />
+            </DataTrigger>
+          </Style.Triggers>
+        </Style>
+      </MenuItem.Resources>
+
       <MenuItem Header="create" Command="{Binding CreateNoteCommand}" />
       <Separator />
       <MenuItem Header="compact" Command="{Binding CompactAllNotesCommand}" />
       <MenuItem Header="topmost" Command="{Binding MoveFrontAllNotesCommand}" />
       <Separator />
-      <MenuItem Header="show" ItemsSource="{Binding NoteVisibleItems}" ItemContainerStyle="{StaticResource INotifyAreaMenuItem}" />
-      <MenuItem Header="hidden" ItemsSource="{Binding NoteHiddenItems}" ItemContainerStyle="{StaticResource INotifyAreaMenuItem}" />
+      <MenuItem Header="show" ItemsSource="{Binding NoteVisibleItems}" ItemContainerStyle="{StaticResource INotifyAreaMenuItem}" Style="{StaticResource NoteItemsMenu}" />
+      <MenuItem Header="hidden" ItemsSource="{Binding NoteHiddenItems}" ItemContainerStyle="{StaticResource INotifyAreaMenuItem}" Style="{StaticResource NoteItemsMenu}" />
     </MenuItem>
     <MenuItem Header="exit" Command="{Binding ExitCommand}" />
   </ContextMenu>

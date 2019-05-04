@@ -173,6 +173,8 @@
     <Compile Include="View\Converter\EscapeAccessKeyConverter.cs" />
     <Compile Include="View\Converter\IconScaleToWidthConverter.cs" />
     <Compile Include="View\Converter\IconScaleToHeightConverter.cs" />
+    <Compile Include="View\Converter\IsEmptyCollectionConverter.cs" />
+    <Compile Include="View\Converter\IsNotEmptyCollectionConverter.cs" />
     <Compile Include="View\Converter\LogicalIsNotNullConverter.cs" />
     <Compile Include="View\Converter\LogicalIsNullConverter.cs" />
     <Compile Include="View\Converter\LogicalMultiAndConverte.cs" />
