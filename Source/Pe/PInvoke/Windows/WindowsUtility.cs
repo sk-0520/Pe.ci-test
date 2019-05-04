@@ -236,10 +236,10 @@ namespace ContentTypeTextNet.Library.PInvoke.Windows
         {
             NativeMethods.SetWindowPos(
                 hWnd,
-                new IntPtr((int)HWND.HWND_BOTTOM),
+                ToIntPtr(HWND.HWND_BOTTOM),
                 0, 0,
                 0, 0,
-                SWP.SWP_NOMOVE | SWP.SWP_NOSIZE
+                SWP.SWP_NOACTIVATE | SWP.SWP_NOMOVE | SWP.SWP_NOSIZE
             );
         }
 

@@ -91,11 +91,17 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Manager
                 ApplicationManager.CompactAllNotes();
             }
         ));
-        public ICommand MoveFrontAllNotesCommand => GetOrCreateCommand(() => new DelegateCommand(
+        public ICommand MoveZorderTopAllNotesCommand => GetOrCreateCommand(() => new DelegateCommand(
              () => {
-                 ApplicationManager.MoveFrontAllNotes();
+                 ApplicationManager.MoveZorderAllNotes(true);
              }
          ));
+
+        public ICommand MoveZorderBottomAllNotesCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                ApplicationManager.MoveZorderAllNotes(false);
+            }
+        ));
 
         public ICommand ExitCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {

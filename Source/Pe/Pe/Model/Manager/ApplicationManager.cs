@@ -232,7 +232,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
             }
         }
 
-        public void MoveFrontAllNotes()
+        public void MoveZorderAllNotes(bool isTop)
         {
             var noteItems = WindowManager.GetWindowItems(WindowKind.Note)
                 .Where(i => !i.Window.Topmost)
@@ -241,7 +241,11 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
             ;
             foreach(var noteItem in noteItems) {
                 var hWnd = HandleUtility.GetWindowHandle(noteItem.Window);
-                WindowsUtility.ShowNoActiveForeground(hWnd);
+                if(isTop) {
+                    WindowsUtility.ShowNoActiveForeground(hWnd);
+                } else {
+                    WindowsUtility.MoveZoderBttom(hWnd);
+                }
             }
         }
 
