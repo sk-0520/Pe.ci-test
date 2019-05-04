@@ -1,6 +1,6 @@
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
-using ContentTypeTextNet.Pe.Main.Model.Designer;
+using ContentTypeTextNet.Pe.Main.Model.Theme;
 using ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem

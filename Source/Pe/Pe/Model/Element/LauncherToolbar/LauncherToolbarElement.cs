@@ -15,7 +15,7 @@ using ContentTypeTextNet.Pe.Main.Model.Data;
 using ContentTypeTextNet.Pe.Main.Model.Data.Dto.Entity;
 using ContentTypeTextNet.Pe.Main.Model.Database.Dao.Domain;
 using ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity;
-using ContentTypeTextNet.Pe.Main.Model.Designer;
+using ContentTypeTextNet.Pe.Main.Model.Theme;
 using ContentTypeTextNet.Pe.Main.Model.Element.LauncherGroup;
 using ContentTypeTextNet.Pe.Main.Model.Element.LauncherIcon;
 using ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem;

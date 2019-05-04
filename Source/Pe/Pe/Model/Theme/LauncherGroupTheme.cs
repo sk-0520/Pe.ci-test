@@ -15,7 +15,7 @@ using ContentTypeTextNet.Pe.Main.Model.Launcher;
 using ContentTypeTextNet.Pe.Main.Model.Theme;
 using ContentTypeTextNet.Pe.Main.View.Extend;
 
-namespace ContentTypeTextNet.Pe.Main.Model.Designer
+namespace ContentTypeTextNet.Pe.Main.Model.Theme
 {
     public interface ILauncherGroupTheme
     {
