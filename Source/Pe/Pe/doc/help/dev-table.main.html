@@ -131,6 +131,39 @@ ___
 *NONE*
 
 
+___
+
+## LauncherScripts
+
+### layout
+
+| PK | NN | FK                           | 論理カラム名             | 物理カラム名            | 論理データ型 | マッピング型    | チェック制約 | コメント                                               |
+|:--:|:--:|:-----------------------------|:-------------------------|:------------------------|:-------------|:----------------|:-------------|:-------------------------------------------------------|
+| o  | o  | LauncherItems.LauncherItemId | ランチャーアイテムID     | LauncherItemId          | text         | System.Guid     |              |                                                        |
+|    | o  |                              | 作成タイムスタンプ       | CreatedTimestamp        | datetime     | System.DateTime |              | UTC                                                    |
+|    | o  |                              | 作成ユーザー名           | CreatedAccount          | text         | System.String   |              |                                                        |
+|    | o  |                              | 作成プログラム名         | CreatedProgramName      | text         | System.String   |              |                                                        |
+|    | o  |                              | 作成プログラムバージョン | CreatedProgramVersion   | text         | System.Version  |              |                                                        |
+|    | o  |                              | 更新タイムスタンプ       | UpdatedTimestamp        | datetime     | System.DateTime |              | UTC                                                    |
+|    | o  |                              | 更新ユーザー名           | UpdatedAccount          | text         | System.String   |              |                                                        |
+|    | o  |                              | 更新プログラム名         | UpdatedProgramName      | text         | System.String   |              |                                                        |
+|    | o  |                              | 更新プログラムバージョン | UpdatedProgramVersion   | text         | System.Version  |              |                                                        |
+|    | o  |                              | 更新回数                 | UpdatedCount            | integer      | System.Int64    |              | 0始まり                                                |
+|    | o  |                              | スクリプトエンジン       | ScriptEngine            | text         | System.String   |              |                                                        |
+|    | o  |                              | 外部エンジン             | CustomEngine            | text         | System.String   |              |                                                        |
+|    | o  |                              | スクリプト               | Script                  | text         | System.String   |              |                                                        |
+|    | o  |                              | オプション               | Option                  | text         | System.String   |              | スクリプトエンジン                                     |
+|    | o  |                              | 作業ディレクトリ         | WorkDirectory           | text         | System.String   |              |                                                        |
+|    | o  |                              | 環境変数使用             | IsEnabledCustomEnvVar   | boolean      | System.Boolean  |              |                                                        |
+|    | o  |                              | 標準出力使用             | IsEnabledStandardOutput | boolean      | System.Boolean  |              | 標準エラーも同じ扱い                                   |
+|    | o  |                              | 標準入力使用             | IsEnabledStandardInput  | boolean      | System.Boolean  |              |                                                        |
+|    | o  |                              | 実行権限                 | Permission              | text         | System.String   |              | 通常, 管理者, 別ユーザー                               |
+|    | o  |                              | 別ユーザーアカウント     | CredentId               | text         | System.Guid     |              | 実行権限が別ユーザーの場合に有効, まぁほとんど予約かな |
+
+### index
+
+*NONE*
+
 
 ___
 

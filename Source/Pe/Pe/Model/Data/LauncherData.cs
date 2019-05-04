@@ -19,6 +19,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data
         Unknown,
         File,
         Command,
+        Script,
+        Directory,
         Embedded,
         Separator,
     }
