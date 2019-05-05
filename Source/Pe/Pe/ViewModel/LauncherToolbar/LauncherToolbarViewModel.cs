@@ -32,7 +32,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar
     {
         #region variable
 
-        LauncherItemViewModelBase _contextMenuOpendItem;
+        LauncherDetailViewModelBase _contextMenuOpendItem;
 
         #endregion
 
@@ -48,7 +48,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar
             };
             LauncherGroupItems = LauncherGroupCollection.ViewModels;
 
-            LauncherItemCollection = new ActionModelViewModelObservableCollectionManager<LauncherItemElement, LauncherItemViewModelBase>(Model.LauncherItems, Logger.Factory) {
+            LauncherItemCollection = new ActionModelViewModelObservableCollectionManager<LauncherItemElement, LauncherDetailViewModelBase>(Model.LauncherItems, Logger.Factory) {
                 ToViewModel = (m) => LauncherItemViewModelFactory.Create(m, DispatcherWapper, LauncherToolbarTheme, Logger.Factory),
             };
             LauncherItems = LauncherItemCollection.GetCollectionView();
@@ -97,7 +97,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar
             set => SetModelValue(value);
         }
 
-        public LauncherItemViewModelBase ContextMenuOpendItem
+        public LauncherDetailViewModelBase ContextMenuOpendItem
         {
             get => this._contextMenuOpendItem;
             set => SetProperty(ref this._contextMenuOpendItem, value);
@@ -106,7 +106,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar
         ModelViewModelObservableCollectionManagerBase<LauncherGroupElement, LauncherGroupViewModel> LauncherGroupCollection { get; }
         public ObservableCollection<LauncherGroupViewModel> LauncherGroupItems { get; }
 
-        ModelViewModelObservableCollectionManagerBase<LauncherItemElement, LauncherItemViewModelBase> LauncherItemCollection { get; }
+        ModelViewModelObservableCollectionManagerBase<LauncherItemElement, LauncherDetailViewModelBase> LauncherItemCollection { get; }
         public ICollectionView LauncherItems { get; }
 
         public InteractionRequest<Notification> CloseRequest { get; } = new InteractionRequest<Notification>();

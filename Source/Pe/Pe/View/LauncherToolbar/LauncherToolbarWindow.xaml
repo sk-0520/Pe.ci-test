@@ -134,7 +134,7 @@
         </CompositeCollection>
       </ContextMenu.ItemsSource>
     </ContextMenu>
-    <DataTemplate DataType="{x:Type app_main_viewmode_item:LauncherFileItemViewModel}">
+    <DataTemplate DataType="{x:Type app_main_viewmode_item:LauncherFileViewModel}">
       <Button Command="{Binding ExecuteMainCommand}" ContextMenu="{StaticResource ItemContextMenu}" ContentTemplate="{StaticResource LauncherItemContentTemplate}" Template="{Binding DataContext.LauncherItemNormalButtonControlTemplate, ElementName=root}" >
         <i:Interaction.Triggers>
           <i:EventTrigger EventName="Loaded">

@@ -10,9 +10,9 @@ using ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
 {
-    public class LauncherScriptItemViewModel : LauncherItemViewModelBase
+    public class LauncherCommandViewModel : LauncherDetailViewModelBase
     {
-        public LauncherScriptItemViewModel(LauncherItemElement model, IDispatcherWapper dispatcherWapper, ILauncherToolbarTheme launcherToolbarTheme, ILoggerFactory loggerFactory)
+        public LauncherCommandViewModel(LauncherItemElement model, IDispatcherWapper dispatcherWapper, ILauncherToolbarTheme launcherToolbarTheme, ILoggerFactory loggerFactory)
             : base(model, dispatcherWapper, launcherToolbarTheme, loggerFactory)
         { }
 
@@ -26,9 +26,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
         #endregion
 
         #region LauncherItemViewModelBase
+
         protected override Task InitializeAsyncImpl() => throw new NotImplementedException();
+
         protected override Task ExecuteMainImplAsync() => throw new NotImplementedException();
+
         #endregion
     }
-
 }

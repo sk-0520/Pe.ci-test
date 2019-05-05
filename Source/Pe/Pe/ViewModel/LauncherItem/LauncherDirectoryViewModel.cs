@@ -10,9 +10,9 @@ using ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
 {
-    public class LauncherDirectoryItemViewModel : LauncherItemViewModelBase
+    public class LauncherDirectoryViewModel : LauncherDetailViewModelBase
     {
-        public LauncherDirectoryItemViewModel(LauncherItemElement model, IDispatcherWapper dispatcherWapper, ILauncherToolbarTheme launcherToolbarTheme, ILoggerFactory loggerFactory)
+        public LauncherDirectoryViewModel(LauncherItemElement model, IDispatcherWapper dispatcherWapper, ILauncherToolbarTheme launcherToolbarTheme, ILoggerFactory loggerFactory)
             : base(model, dispatcherWapper, launcherToolbarTheme, loggerFactory)
         { }
 

@@ -84,7 +84,7 @@ ___
 |    | o  |                              | 更新プログラム名         | UpdatedProgramName      | text         | System.String   |              |                                                        |
 |    | o  |                              | 更新プログラムバージョン | UpdatedProgramVersion   | text         | System.Version  |              |                                                        |
 |    | o  |                              | 更新回数                 | UpdatedCount            | integer      | System.Int64    |              | 0始まり                                                |
-|    | o  |                              | コマンド                 | Command                 | text         | System.String   |              |                                                        |
+|    | o  |                              | コマンド                 | File                    | text         | System.String   |              |                                                        |
 |    | o  |                              | コマンドオプション       | Option                  | text         | System.String   |              |                                                        |
 |    | o  |                              | 作業ディレクトリ         | WorkDirectory           | text         | System.String   |              |                                                        |
 |    | o  |                              | 環境変数使用             | IsEnabledCustomEnvVar   | boolean      | System.Boolean  |              |                                                        |
@@ -131,6 +131,7 @@ ___
 *NONE*
 
 
+
 ___
 
 ## LauncherScripts
@@ -163,6 +164,7 @@ ___
 ### index
 
 *NONE*
+
 
 
 ___

@@ -10,9 +10,9 @@ using ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
 {
-    public class LauncherSeparatorItemViewModel : LauncherItemViewModelBase
+    public class LauncherScriptViewModel : LauncherDetailViewModelBase
     {
-        public LauncherSeparatorItemViewModel(LauncherItemElement model, IDispatcherWapper dispatcherWapper, ILauncherToolbarTheme launcherToolbarTheme, ILoggerFactory loggerFactory)
+        public LauncherScriptViewModel(LauncherItemElement model, IDispatcherWapper dispatcherWapper, ILauncherToolbarTheme launcherToolbarTheme, ILoggerFactory loggerFactory)
             : base(model, dispatcherWapper, launcherToolbarTheme, loggerFactory)
         { }
 
@@ -30,4 +30,5 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
         protected override Task ExecuteMainImplAsync() => throw new NotImplementedException();
         #endregion
     }
+
 }

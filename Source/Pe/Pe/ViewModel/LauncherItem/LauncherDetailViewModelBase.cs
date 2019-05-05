@@ -17,7 +17,7 @@ using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
 {
-    public abstract class LauncherItemViewModelBase : SingleModelViewModelBase<LauncherItemElement>
+    public abstract class LauncherDetailViewModelBase : SingleModelViewModelBase<LauncherItemElement>
     {
         #region variable
 
@@ -25,7 +25,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
 
         #endregion
 
-        public LauncherItemViewModelBase(LauncherItemElement model, IDispatcherWapper dispatcherWapper, ILauncherToolbarTheme launcherToolbarTheme, ILoggerFactory loggerFactory)
+        public LauncherDetailViewModelBase(LauncherItemElement model, IDispatcherWapper dispatcherWapper, ILauncherToolbarTheme launcherToolbarTheme, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         {
             LauncherToolbarTheme = launcherToolbarTheme;
@@ -97,26 +97,26 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
     {
         #region function
 
-        public static LauncherItemViewModelBase Create(LauncherItemElement model, IDispatcherWapper dispatcherWapper, ILauncherToolbarTheme launcherToolbarTheme, ILoggerFactory loggerFactory)
+        public static LauncherDetailViewModelBase Create(LauncherItemElement model, IDispatcherWapper dispatcherWapper, ILauncherToolbarTheme launcherToolbarTheme, ILoggerFactory loggerFactory)
         {
             switch(model.Kind) {
                 case LauncherItemKind.File:
-                    return new LauncherFileItemViewModel(model, dispatcherWapper, launcherToolbarTheme, loggerFactory);
+                    return new LauncherFileViewModel(model, dispatcherWapper, launcherToolbarTheme, loggerFactory);
 
                 case LauncherItemKind.Command:
-                    return new LauncherCommandItemViewModel(model, dispatcherWapper, launcherToolbarTheme, loggerFactory);
+                    return new LauncherCommandViewModel(model, dispatcherWapper, launcherToolbarTheme, loggerFactory);
 
                 case LauncherItemKind.Script:
-                    return new LauncherScriptItemViewModel(model, dispatcherWapper, launcherToolbarTheme, loggerFactory);
+                    return new LauncherScriptViewModel(model, dispatcherWapper, launcherToolbarTheme, loggerFactory);
 
                 case LauncherItemKind.Directory:
-                    return new LauncherDirectoryItemViewModel(model, dispatcherWapper, launcherToolbarTheme, loggerFactory);
+                    return new LauncherDirectoryViewModel(model, dispatcherWapper, launcherToolbarTheme, loggerFactory);
 
                 case LauncherItemKind.Embedded:
-                    return new LauncherEmbeddedItemViewModel(model, dispatcherWapper, launcherToolbarTheme, loggerFactory);
+                    return new LauncherEmbeddedViewModel(model, dispatcherWapper, launcherToolbarTheme, loggerFactory);
 
                 case LauncherItemKind.Separator:
-                    return new LauncherSeparatorItemViewModel(model, dispatcherWapper, launcherToolbarTheme, loggerFactory);
+                    return new LauncherSeparatorViewModel(model, dispatcherWapper, launcherToolbarTheme, loggerFactory);
 
                 default:
                     throw new NotImplementedException();

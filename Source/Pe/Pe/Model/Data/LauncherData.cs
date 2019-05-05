@@ -117,7 +117,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data
         #endregion
     }
 
-    public class LauncherFileItemData : LauncherItemData
+    public sealed class LauncherFileItemData : LauncherItemData
     {
         #region property
 
@@ -139,6 +139,19 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data
 
         #endregion
     }
+
+    #region LauncherItemDetailData
+
+    public abstract class LauncherDetailDataBase
+    { }
+
+    public class LauncherFileDetailData: LauncherDetailDataBase
+    {
+        #region property
+        #endregion
+    }
+
+    #endregion
 
     public class LauncherToolbarsScreenData : DataBase, IScreenData
     {

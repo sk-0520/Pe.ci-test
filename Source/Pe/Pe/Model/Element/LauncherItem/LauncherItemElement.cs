@@ -64,7 +64,14 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem
             }
         }
 
+        public LauncherFileDetailData LoadFile()
+        {
+            using(var commander = MainDatabaseBarrier.WaitRead()) {
+                var dao = new LauncherFilesEntityDao(commander, StatementLoader, commander.Implementation, Logger.Factory);
+            }
 
+            throw new NotImplementedException();
+        }
 
         #endregion
 

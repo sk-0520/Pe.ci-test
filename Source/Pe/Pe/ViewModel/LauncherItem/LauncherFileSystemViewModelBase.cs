@@ -11,7 +11,7 @@ using ContentTypeTextNet.Pe.Main.Model.Theme;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
 {
-    public abstract class LauncherFileSystemItemViewModelBase : LauncherItemViewModelBase
+    public abstract class LauncherFileSystemViewModelBase : LauncherDetailViewModelBase
     {
         #region property
 
@@ -20,7 +20,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
 
         #endregion
 
-        public LauncherFileSystemItemViewModelBase(LauncherItemElement model, IDispatcherWapper dispatcherWapper, ILauncherToolbarTheme launcherToolbarTheme, ILoggerFactory loggerFactory)
+        public LauncherFileSystemViewModelBase(LauncherItemElement model, IDispatcherWapper dispatcherWapper, ILauncherToolbarTheme launcherToolbarTheme, ILoggerFactory loggerFactory)
             : base(model, dispatcherWapper, launcherToolbarTheme, loggerFactory)
         { }
 

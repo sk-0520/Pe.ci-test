@@ -11,9 +11,9 @@ using System.IO;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
 {
-    public class LauncherFileItemViewModel : LauncherFileSystemItemViewModelBase
+    public class LauncherFileViewModel : LauncherFileSystemViewModelBase
     {
-        public LauncherFileItemViewModel(LauncherItemElement model, IDispatcherWapper dispatcherWapper, ILauncherToolbarTheme launcherToolbarTheme, ILoggerFactory loggerFactory)
+        public LauncherFileViewModel(LauncherItemElement model, IDispatcherWapper dispatcherWapper, ILauncherToolbarTheme launcherToolbarTheme, ILoggerFactory loggerFactory)
             : base(model, dispatcherWapper, launcherToolbarTheme, loggerFactory)
         { }
 
@@ -35,7 +35,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
 
         protected override Task InitializeFileSystemAsync()
         {
-            throw new NotImplementedException();
+            var file = Model.LoadFile();
+            return Task.CompletedTask;
         }
 
 
