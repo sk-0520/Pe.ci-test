@@ -12,11 +12,19 @@ using ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem;
 using ContentTypeTextNet.Pe.Main.Model.Launcher;
 using ContentTypeTextNet.Pe.Main.ViewModel.IconViewer;
 using ContentTypeTextNet.Pe.Main.ViewModel.LauncherIcon;
+using System.Windows.Input;
+using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
 {
     public abstract class LauncherItemViewModelBase : SingleModelViewModelBase<LauncherItemElement>
     {
+        #region variable
+
+        bool _nowLoading;
+
+        #endregion
+
         public LauncherItemViewModelBase(LauncherItemElement model, IDispatcherWapper dispatcherWapper, ILauncherToolbarTheme launcherToolbarTheme, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         {
@@ -32,15 +40,53 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
         public string Name => Model.Name;
         public string Comment => Model.Comment;
 
+        public bool NowLoading
+        {
+            get => this._nowLoading;
+            set => SetProperty(ref this._nowLoading, value);
+        }
+
+        protected virtual bool CanExecuteMain => true;
+
 
         #endregion
 
         #region command
 
+        public ICommand InitializeCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                InitializeAsync();
+            }
+        ));
+
+        public ICommand ExecuteMainCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                ExecuteMainAsync();
+            },
+            () => CanExecuteMain
+        ));
 
         #endregion
 
         #region function
+
+        protected abstract Task InitializeAsyncImpl();
+
+        Task InitializeAsync()
+        {
+            return InitializeAsyncImpl();
+        }
+
+        protected abstract Task ExecuteMainImplAsync();
+
+        Task ExecuteMainAsync()
+        {
+            if(CanExecuteMain) {
+                return ExecuteMainImplAsync();
+            }
+            return Task.CompletedTask;
+        }
+
         #endregion
 
         #region SingleModelViewModelBase

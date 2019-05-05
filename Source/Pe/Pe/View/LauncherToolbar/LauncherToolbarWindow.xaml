@@ -75,12 +75,6 @@
       <Setter Property="TextWidth" Value="{Binding DataContext.TextWidth, ElementName=root}" />
     </Style>
 
-    <ControlTemplate x:Key="LauncherItemTemplate" TargetType="ContentControl">
-      <Border Background="Transparent" Padding="{Binding DataContext.ButtonPadding, ElementName=root, Mode=OneTime}">
-        <ContentPresenter Content="{TemplateBinding Content}" />
-      </Border>
-    </ControlTemplate>
-
     <Style x:Key="GroupMenuItem" TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
       <!-- ElementName指定だと System.Windows.Data Error: 4 で動かないので x:Reference を使用 -->
       <Style.Triggers>
@@ -103,6 +97,15 @@
       <Setter Property="CommandParameter" Value="{Binding}" />
     </Style>
 
+    <!--#region ランチャーアイテム-->
+
+    <DataTemplate x:Key="LauncherItemContentTemplate">
+      <Border Background="Transparent" Padding="{Binding DataContext.ButtonPadding, ElementName=root, Mode=OneTime}">
+        <ContentPresenter Content="{TemplateBinding Content}" />
+      </Border>
+    </DataTemplate>
+
+    <!--#region ファイル -->
     <ContextMenu x:Key="ItemContextMenu">
       <ContextMenu.Resources>
         <CollectionViewSource x:Key="LauncherGroupItems" Source="{Binding DataContext.LauncherGroupItems, Source={x:Reference root}}" />
@@ -114,7 +117,7 @@
       <ContextMenu.ItemsSource>
         <CompositeCollection>
           <MenuItem Style="{StaticResource MenuHeaderItem}" Header="execute" />
-          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="exec" />
+          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="exec" Command="{Binding ExecuteMainCommand}" />
           <MenuItem Style="{StaticResource LauncherMenuItem}" Header="ex exec" />
 
           <MenuItem Style="{StaticResource MenuHeaderItem}" Header="open" />
@@ -131,14 +134,19 @@
         </CompositeCollection>
       </ContextMenu.ItemsSource>
     </ContextMenu>
-
-    <!--#region ファイル -->
     <DataTemplate DataType="{x:Type app_main_viewmode_item:LauncherFileItemViewModel}">
-      <Button ContextMenu="{StaticResource ItemContextMenu}" Template="{StaticResource LauncherItemTemplate}">
+      <Button Command="{Binding ExecuteMainCommand}" ContextMenu="{StaticResource ItemContextMenu}" ContentTemplate="{StaticResource LauncherItemContentTemplate}" Template="{Binding DataContext.LauncherItemNormalButtonControlTemplate, ElementName=root}" >
+        <i:Interaction.Triggers>
+          <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding InitializeCommand}" />
+          </i:EventTrigger>
+        </i:Interaction.Triggers>
         <app_main_view_lt:LauncherContentControl Title="{Binding Name, Mode=OneTime}" />
       </Button>
     </DataTemplate>
     <!--#endregion -->
+
+    <!--#endregion-->
 
 
   </Window.Resources>
@@ -180,7 +188,7 @@
       <RowDefinition Height="Auto" />
     </Grid.RowDefinitions>
 
-    <ToggleButton x:Name="appButton" IsChecked="{Binding IsOpendAppMenu}" Template="{StaticResource LauncherItemTemplate}" IsEnabled="{Binding IsOpen, ElementName=appPopup, Converter={StaticResource LogicalNotConverter}}">
+    <ToggleButton x:Name="appButton" IsChecked="{Binding IsOpendAppMenu}" ContentTemplate="{StaticResource LauncherItemContentTemplate}" Template="{Binding DataContext.LauncherItemToggleButtonControlTemplate, ElementName=root}" IsEnabled="{Binding IsOpen, ElementName=appPopup, Converter={StaticResource LogicalNotConverter}}">
       <ToggleButton.Style>
         <Style TargetType="ToggleButton">
           <Style.Triggers>

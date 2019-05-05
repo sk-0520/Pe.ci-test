@@ -1,3 +1,8 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Theme;
@@ -21,6 +26,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
         #endregion
 
         #region LauncherItemViewModelBase
+        protected override Task InitializeAsyncImpl() => throw new NotImplementedException();
+
+        protected override Task ExecuteMainImplAsync() => throw new NotImplementedException();
         #endregion
     }
 

@@ -226,6 +226,8 @@
     <Compile Include="Model\Element\Note\NoteElement.cs" />
     <Compile Include="Model\Data\LauncherData.cs" />
     <Compile Include="Model\Launcher\LauncherFactory.cs" />
+    <Compile Include="Model\Launcher\LauncherItemLoaderBase.cs" />
+    <Compile Include="Model\Launcher\LauncherFileItemLoader.cs" />
     <Compile Include="Model\Logic\CodePack\CommonFileDialogExtensions.cs" />
     <Compile Include="Model\Logic\CodePack\FileDialogFilterConverter.cs" />
     <Compile Include="Model\Logic\DatabaseLazyWriter.cs" />
@@ -278,6 +280,7 @@
     <Compile Include="ViewModel\LauncherGroup\LauncherGroupViewModel.cs" />
     <Compile Include="ViewModel\LauncherIcon\LauncherIconViewModel.cs" />
     <Compile Include="ViewModel\LauncherItem\LauncherDirectoryItemViewModel.cs" />
+    <Compile Include="ViewModel\LauncherItem\LauncherFileSystemItemViewModelBase.cs" />
     <Compile Include="ViewModel\LauncherItem\LauncherScriptItemViewModel.cs" />
     <Compile Include="ViewModel\LauncherItem\LauncherEmbeddedItemViewModel.cs" />
     <Compile Include="ViewModel\LauncherItem\LauncherCommandItemViewModel.cs" />

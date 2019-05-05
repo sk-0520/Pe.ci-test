@@ -109,4 +109,15 @@
     </Setter>
   </Style>
 
+  <ControlTemplate x:Key="ILauncherToolbarTheme-LauncherItemNormalButton" TargetType="Button">
+    <ContentPresenter />
+    <ControlTemplate.Triggers>
+    </ControlTemplate.Triggers>
+  </ControlTemplate>
+  <ControlTemplate x:Key="ILauncherToolbarTheme-LauncherItemToggleButton" TargetType="ToggleButton">
+    <ContentPresenter />
+    <ControlTemplate.Triggers>
+    </ControlTemplate.Triggers>
+  </ControlTemplate>
+
 </ResourceDictionary>

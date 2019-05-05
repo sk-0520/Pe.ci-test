@@ -32,6 +32,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Theme
         DependencyObject GetToolbarImage(Screen currentScreen, IReadOnlyList<Screen> allScreens, IconScale iconScale, bool isStrong);
         DependencyObject GetToolbarPositionImage(AppDesktopToolbarPosition toolbarPosition, IconScale iconScale);
 
+        ControlTemplate GetLauncherItemNormalButtonControlTemplate();
+        ControlTemplate GetLauncherItemToggleButtonControlTemplate();
+
         #endregion
     }
 
@@ -195,6 +198,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Theme
             return GetToolbarPositionImageCore(toolbarPosition, iconScale);
         }
 
+        public ControlTemplate GetLauncherItemNormalButtonControlTemplate() => (ControlTemplate)Application.Current.Resources["ILauncherToolbarTheme-LauncherItemNormalButton"];
+        public ControlTemplate GetLauncherItemToggleButtonControlTemplate() => (ControlTemplate)Application.Current.Resources["ILauncherToolbarTheme-LauncherItemToggleButton"];
 
         #endregion
     }

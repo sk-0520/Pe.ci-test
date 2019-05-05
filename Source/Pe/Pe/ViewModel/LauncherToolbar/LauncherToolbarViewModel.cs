@@ -24,6 +24,7 @@ using ContentTypeTextNet.Pe.Main.ViewModel.LauncherIcon;
 using ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem;
 using Prism.Commands;
 using Prism.Interactivity.InteractionRequest;
+using System.Windows.Controls;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar
 {
@@ -121,6 +122,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar
         public DependencyObject ToolbarPositionTopIcon => CreateToolbarPositionIcon(AppDesktopToolbarPosition.Top);
         public DependencyObject ToolbarPositionRightIcon => CreateToolbarPositionIcon(AppDesktopToolbarPosition.Right);
         public DependencyObject ToolbarPositionBottomIcon => CreateToolbarPositionIcon(AppDesktopToolbarPosition.Bottom);
+
+        public ControlTemplate LauncherItemNormalButtonControlTemplate => DispatcherWapper.Get(() => LauncherToolbarTheme.GetLauncherItemNormalButtonControlTemplate());
+        public ControlTemplate LauncherItemToggleButtonControlTemplate => DispatcherWapper.Get(() => LauncherToolbarTheme.GetLauncherItemToggleButtonControlTemplate());
 
         #endregion
 
