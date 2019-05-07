@@ -22,7 +22,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             #region property
 
             public static string LauncherItemId { get; } = "LauncherItemId";
-            public static string Command { get; } = "Command";
+            public static string File { get; } = "File";
             public static string Option { get; } = "Option";
             public static string WorkDirectory { get; } = "WorkDirectory";
 
@@ -33,12 +33,12 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
 
         #region function
 
-        public bool InsertSimple(Guid launcherItemId, LauncherCommandData data, IDatabaseCommonStatus commonStatus)
+        public bool InsertSimple(Guid launcherItemId, LauncherPathExecuteData data, IDatabaseCommonStatus commonStatus)
         {
             var statement = StatementLoader.LoadStatementByCurrent();
             var param = commonStatus.CreateCommonDtoMapping();
             param[Column.LauncherItemId] = launcherItemId;
-            param[Column.Command] = data.Command;
+            param[Column.File] = data.Path;
             param[Column.Option] = data.Option;
             param[Column.WorkDirectory] = data.WorkDirectoryPath;
 

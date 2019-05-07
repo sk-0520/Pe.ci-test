@@ -54,9 +54,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Launcher
                     //TODO: コード取得
                     result.Code = Path.GetFileNameWithoutExtension(shortcut.TargetPath);
 
-                    result.Command.Command = shortcut.TargetPath;
-                    result.Command.Option = shortcut.Arguments;
-                    result.Command.WorkDirectoryPath =  shortcut.WorkingDirectory;
+                    result.PathExecute.Path = shortcut.TargetPath;
+                    result.PathExecute.Option = shortcut.Arguments;
+                    result.PathExecute.WorkDirectoryPath =  shortcut.WorkingDirectory;
 
                     result.Icon.Path = shortcut.IconPath;
                     result.Icon.Index = shortcut.IconIndex;
@@ -70,7 +70,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Launcher
                 }
             } else {
                 result.Code = Path.GetFileNameWithoutExtension(file.Name);
-                result.Command.Command = file.FullName;
+                result.PathExecute.Path = file.FullName;
             }
 
             return result;

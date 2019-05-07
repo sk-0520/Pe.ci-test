@@ -98,10 +98,10 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Startup
             var importItems = ProgramItems
                 .Where(i => i.IsImport)
                 .Select(i => launcherFactory.FromFile(i.FileInfo, true))
-                .Where(i => !string.IsNullOrWhiteSpace(i.Command.Command)) // 共有ドライブとかね
+                .Where(i => !string.IsNullOrWhiteSpace(i.PathExecute.Path)) // 共有ドライブとかね
                 .Select(i => new {
                     Data = i,
-                    Tags = launcherFactory.GetTags(new FileInfo(i.Command.Command)).ToList(),
+                    Tags = launcherFactory.GetTags(new FileInfo(i.PathExecute.Path)).ToList(),
                 })
                 .ToList()
             ;
@@ -124,7 +124,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Startup
                     // ランチャー種別で突っ込むデータ追加して
                     switch(importItem.Data.Kind) {
                         case LauncherItemKind.File:
-                            launcherFilesDao.InsertSimple(importItem.Data.LauncherItemId, importItem.Data.Command, DatabaseCommonStatus.CreateCurrentAccount());
+                            launcherFilesDao.InsertSimple(importItem.Data.LauncherItemId, importItem.Data.PathExecute, DatabaseCommonStatus.CreateCurrentAccount());
                             break;
 
                         default:

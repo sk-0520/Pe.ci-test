@@ -39,11 +39,11 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data
         RightBottom,
     }
 
-    public class LauncherCommandData : DataBase
+    public class LauncherPathExecuteData : DataBase
     {
         #region property
 
-        public string Command { get; set; }
+        public string Path { get; set; }
         public string Option { get; set; }
         public string WorkDirectoryPath { get; set; }
 
@@ -121,7 +121,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data
     {
         #region property
 
-        public LauncherCommandData Command { get; set; } = new LauncherCommandData();
+        public LauncherPathExecuteData PathExecute { get; set; } = new LauncherPathExecuteData();
 
         #endregion
 
