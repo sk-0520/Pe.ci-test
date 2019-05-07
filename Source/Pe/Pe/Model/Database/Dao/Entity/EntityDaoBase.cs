@@ -50,6 +50,14 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             }
         }
 
+        protected DatabaseSelectStatementBuilder CreateSelectBuilder()
+        {
+            var result = new DatabaseSelectStatementBuilder(Implementation, Logger.Factory);
+            result.SetTable(TableName);
+
+            return result;
+        }
+
         protected DatabaseUpdateStatementBuilder CreateUpdateBuilder(IDatabaseCommonStatus databaseCommonStatus)
         {
             var result = new DatabaseUpdateStatementBuilder(Implementation, Logger.Factory);
@@ -75,6 +83,20 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             result.SetTable(TableName);
 
             return result;
+        }
+
+        protected T SelectSingle<T>(DatabaseSelectStatementBuilder builder)
+        {
+            var statement = builder.BuildStatement();
+            var param = builder.Parameters;
+            return Commander.QuerySingle<T>(statement, param);
+        }
+
+        protected IEnumerable<T> Select<T>(DatabaseSelectStatementBuilder builder)
+        {
+            var statement = builder.BuildStatement();
+            var param = builder.Parameters;
+            return Commander.Query<T>(statement, param);
         }
 
         protected int ExecuteUpdate(DatabaseUpdateStatementBuilder builder)

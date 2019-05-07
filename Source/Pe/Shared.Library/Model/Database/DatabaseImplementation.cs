@@ -19,6 +19,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
     public enum DatabaseSelectStatementKeyword
     {
         From,
+        As,
     }
     public enum DatabaseInsertStatementKeyword
     {
@@ -179,7 +180,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
         {
             switch(keyword) {
                 case DatabaseCommonStatementKeyword.Select:
-                    return "delete";
+                    return "select";
 
                 case DatabaseCommonStatementKeyword.Insert:
                     return "insert into"; // ええんか、これ
@@ -203,6 +204,9 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
             switch(keyword) {
                 case DatabaseSelectStatementKeyword.From:
                     return "from";
+
+                case DatabaseSelectStatementKeyword.As:
+                    return "as";
 
                 default:
                     throw new NotImplementedException();

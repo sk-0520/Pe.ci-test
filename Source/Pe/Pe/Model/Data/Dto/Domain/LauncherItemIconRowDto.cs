@@ -11,8 +11,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data.Dto.Domain
         #region property
 
         string Kind { get; }
-        string CommandPath { get; }
-        long CommandIndex { get; }
+        string FilePath { get; }
+        long FileIndex { get; }
         string IconPath { get; }
         long IconIndex { get; }
 
@@ -24,8 +24,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data.Dto.Domain
         #region IReadOnlyLauncherItemsIconRowDto
 
         public string Kind { get; set; }
-        public string CommandPath { get; set; }
-        public long CommandIndex { get; set; }
+        public string FilePath { get; set; }
+        public long FileIndex { get; set; }
         public string IconPath { get; set; }
         public long IconIndex { get; set; }
 

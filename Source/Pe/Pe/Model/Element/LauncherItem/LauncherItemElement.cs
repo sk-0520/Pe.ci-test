@@ -66,11 +66,17 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem
 
         public LauncherFileDetailData LoadFile()
         {
+            LauncherPathExecuteData pathData;
             using(var commander = MainDatabaseBarrier.WaitRead()) {
                 var dao = new LauncherFilesEntityDao(commander, StatementLoader, commander.Implementation, Logger.Factory);
+                pathData = dao.SelectPath(LauncherItemId);
             }
 
-            throw new NotImplementedException();
+            var result = new LauncherFileDetailData() {
+                Raw = pathData,
+            };
+
+            return result;
         }
 
         #endregion

@@ -44,6 +44,127 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database
         #endregion
     }
 
+    public class DatabaseSelectStatementBuilder : DatabaseStatementBuilderBase
+    {
+        public DatabaseSelectStatementBuilder(IDatabaseImplementation implementation, ILogger logger)
+            : base(implementation, logger)
+        { }
+        public DatabaseSelectStatementBuilder(IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+            : base(implementation, loggerFactory)
+        { }
+        #region property
+
+        Dictionary<string, string> AliasNames { get; } = new Dictionary<string, string>();
+        IList<string> ColumnNames { get; } = new List<string>();
+
+        public string TableName { get; private set; }
+        ISet<string> PlainValues { get; } = new HashSet<string>();
+
+        #endregion
+
+        #region function
+
+        DatabaseSelectStatementBuilder AddSelectCore(string columnName, string aliasName)
+        {
+            if(string.IsNullOrWhiteSpace(columnName)) {
+                throw new ArgumentNullException(nameof(columnName));
+            }
+            if(string.IsNullOrWhiteSpace(aliasName)) {
+                throw new ArgumentNullException(nameof(aliasName));
+            }
+            if(ColumnNames.IndexOf(columnName) != -1) {
+                throw new ArgumentException($"{nameof(columnName)}: {columnName}");
+            }
+
+            ColumnNames.Add(columnName);
+            if(columnName != aliasName) {
+                AliasNames.Add(columnName, aliasName);
+            }
+
+            return this;
+        }
+
+        public DatabaseSelectStatementBuilder AddSelect(string columnName) => AddSelectCore(columnName, columnName);
+        public DatabaseSelectStatementBuilder AddSelect(string columnName, string aliasName) => AddSelectCore(columnName, aliasName);
+
+        public DatabaseSelectStatementBuilder SetTable(string tableName)
+        {
+            TableName = tableName;
+
+            return this;
+        }
+
+        public DatabaseSelectStatementBuilder AddValue(string column, object value)
+        {
+            ParametersImpl.Add(column, value);
+
+            return this;
+        }
+
+        public DatabaseSelectStatementBuilder AddPlain(string column, string value)
+        {
+            ParametersImpl.Add(column, value);
+            PlainValues.Add(column);
+
+            return this;
+        }
+
+        #endregion
+
+        #region DatabaseStatementBuilderBase
+        public override string BuildStatement()
+        {
+            var sb = new StringBuilder();
+
+            sb.AppendLine(Implementation.GetCommonStatementKeyword(DatabaseCommonStatementKeyword.Select));
+
+            var parameterIndex = 0;
+
+            foreach(var columnItem in ColumnNames.Select((n, i) => (index: i, name: n))) {
+                sb.Append('\t');
+                sb.Append(Implementation.ToStatementColumnName(columnItem.name));
+                if(AliasNames.TryGetValue(columnItem.name, out var aliasName)) {
+                    sb.Append(' ');
+                    sb.Append(Implementation.GetSelectStatementKeyword(DatabaseSelectStatementKeyword.As));
+                    sb.Append(' ');
+                }
+                if(columnItem.index + 1 != ColumnNames.Count) {
+                    sb.Append(',');
+                }
+                sb.AppendLine();
+            }
+
+            sb.AppendLine(Implementation.GetSelectStatementKeyword(DatabaseSelectStatementKeyword.From));
+            sb.Append('\t');
+            sb.AppendLine(Implementation.ToStatementTableName(TableName));
+
+            
+            sb.AppendLine(Implementation.GetCommonStatementKeyword(DatabaseCommonStatementKeyword.Where));
+            var parameterKeys = ParametersImpl.Keys.ToArray();
+            for(var i = 0; i < parameterKeys.Length; i++) {
+                var columnName = parameterKeys[i];
+                sb.Append('\t');
+                sb.Append(Implementation.ToStatementColumnName(columnName));
+                sb.Append('=');
+
+                var parameterValue = ParametersImpl[columnName];
+                if(PlainValues.Contains(columnName)) {
+                    sb.Append(columnName);
+                } else {
+                    sb.Append(Implementation.ToStatementParameterName(columnName, parameterIndex++));
+                }
+                sb.AppendLine();
+
+                if(i + 1 != parameterKeys.Length) {
+                    sb.AppendLine("\tand");
+                }
+            }
+
+            return sb.ToString();
+        }
+        #endregion
+    }
+
     public class DatabaseUpdateStatementBuilder : DatabaseStatementBuilderBase
     {
         public DatabaseUpdateStatementBuilder(IDatabaseImplementation implementation, ILogger logger)

@@ -145,9 +145,16 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data
     public abstract class LauncherDetailDataBase
     { }
 
-    public class LauncherFileDetailData: LauncherDetailDataBase
+    public class LauncherFileDetailData : LauncherDetailDataBase
     {
         #region property
+
+        public LauncherPathExecuteData Raw { get; set; }
+
+        public FileInfo File { get; set; }
+        public string Option { get; set; }
+        public DirectoryInfo WorkDirectory { get; set; }
+
         #endregion
     }
 

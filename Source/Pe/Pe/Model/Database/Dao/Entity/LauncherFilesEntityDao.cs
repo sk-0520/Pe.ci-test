@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Data;
+using ContentTypeTextNet.Pe.Main.Model.Data.Dto.Entity;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
 {
@@ -32,6 +33,31 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
         #endregion
 
         #region function
+
+        LauncherPathExecuteData ConvertFtomDto(LauncherFilesEntityPathDto dto)
+        {
+            var data = new LauncherPathExecuteData() {
+                Path = dto.File,
+                Option = dto.Option,
+                WorkDirectoryPath = dto.WorkDirectory,
+            };
+
+            return data;
+        }
+
+        public LauncherPathExecuteData SelectPath(Guid launcherItemId)
+        {
+            var builder = CreateSelectBuilder();
+            builder.AddSelect(Column.File);
+            builder.AddSelect(Column.Option);
+            builder.AddSelect(Column.WorkDirectory);
+
+            builder.AddValue(Column.LauncherItemId, launcherItemId);
+
+            var dto = SelectSingle<LauncherFilesEntityPathDto>(builder);
+            var data = ConvertFtomDto(dto);
+            return data;
+        }
 
         public bool InsertSimple(Guid launcherItemId, LauncherPathExecuteData data, IDatabaseCommonStatus commonStatus)
         {

@@ -26,8 +26,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Domain
                 Kind = kindEnumTransfer.ToEnum(dto.Kind),
             };
 
-            data.Command.Path = dto.CommandPath;
-            data.Command.Index = (int)Math.Min(0, Math.Max(dto.CommandIndex, int.MaxValue));
+            data.Command.Path = dto.FilePath;
+            data.Command.Index = (int)Math.Min(0, Math.Max(dto.FileIndex, int.MaxValue));
 
             data.Icon.Path = dto.IconPath;
             data.Icon.Index = (int)Math.Min(0, Math.Max(dto.IconIndex, int.MaxValue));
