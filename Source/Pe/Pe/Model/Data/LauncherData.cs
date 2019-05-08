@@ -151,7 +151,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data
 
         public LauncherPathExecuteData Raw { get; set; }
 
-        public FileInfo File { get; set; }
+        public FileSystemInfo FileSystem { get; set; }
+        public bool FileIsDirectory { get; set; }
         public string Option { get; set; }
         public DirectoryInfo WorkDirectory { get; set; }
 

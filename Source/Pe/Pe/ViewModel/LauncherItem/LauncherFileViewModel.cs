@@ -8,6 +8,9 @@ using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Theme;
 using ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem;
 using System.IO;
+using ContentTypeTextNet.Pe.Main.Model.Data;
+using System.Windows.Input;
+using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
 {
@@ -21,9 +24,21 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
 
         public FileInfo FileInfo => (FileInfo)FileSystemInfo;
 
+        LauncherFileDetailData Detail { get; set; }
+
+
+
         #endregion
 
         #region command
+
+        public ICommand ExecuteSimpleCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                ExecuteMainImplAsync().ConfigureAwait(false);
+            },
+            () => !NowLoading && Exists
+        ));
+
         #endregion
 
         #region function
@@ -35,21 +50,30 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
 
         protected override Task InitializeFileSystemAsync()
         {
-            var file = Model.LoadFile();
-            return Task.CompletedTask;
+            return Task.Run(() => {
+                Detail = Model.LoadFileDetail();
+                FileSystemInfo = Detail.FileSystem;
+                Exists = FileSystemInfo.Exists;
+            });
         }
 
 
-        protected override bool CanExecuteMain
-        {
-            get
-            {
-                return true;
-            }
-        }
+        protected override bool CanExecuteMain => true;
 
         protected override Task ExecuteMainImplAsync()
         {
+            if(NowLoading) {
+                Logger.Warning($"読み込み中のため抑制: {Model.LauncherItemId}, {Detail.FileSystem}");
+                return Task.CompletedTask;
+            }
+
+            if(!Detail.FileSystem.Exists) {
+                Logger.Warning($"存在しないファイル: {Model.LauncherItemId}, {Detail.FileSystem}");
+                return Task.CompletedTask;
+            }
+
+            Logger.Trace($"TODO: 起動 {Model.LauncherItemId}, {Detail.FileSystem}");
+
             return Task.CompletedTask;
         }
 
