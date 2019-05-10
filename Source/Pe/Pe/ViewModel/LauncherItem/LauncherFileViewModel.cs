@@ -22,8 +22,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
 
         #region property
 
-        public FileInfo FileInfo => (FileInfo)FileSystemInfo;
-
         LauncherFileDetailData Detail { get; set; }
 
 
@@ -32,12 +30,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
 
         #region command
 
-        public ICommand ExecuteSimpleCommand => GetOrCreateCommand(() => new DelegateCommand(
-            () => {
-                ExecuteMainImplAsync().ConfigureAwait(false);
-            },
-            () => !NowLoading && Exists
-        ));
 
         #endregion
 
@@ -52,27 +44,26 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
         {
             return Task.Run(() => {
                 Detail = Model.LoadFileDetail();
-                FileSystemInfo = Detail.FileSystem;
+                FileSystemInfo = Detail.FileSystemInfo;
                 Exists = FileSystemInfo.Exists;
             });
         }
 
 
-        protected override bool CanExecuteMain => true;
-
         protected override Task ExecuteMainImplAsync()
         {
+
             if(NowLoading) {
-                Logger.Warning($"読み込み中のため抑制: {Model.LauncherItemId}, {Detail.FileSystem}");
+                Logger.Warning($"読み込み中のため抑制: {Model.LauncherItemId}, {Detail.FileSystemInfo}");
                 return Task.CompletedTask;
             }
 
-            if(!Detail.FileSystem.Exists) {
-                Logger.Warning($"存在しないファイル: {Model.LauncherItemId}, {Detail.FileSystem}");
+            if(!Detail.FileSystemInfo.Exists) {
+                Logger.Warning($"存在しないファイル: {Model.LauncherItemId}, {Detail.FileSystemInfo}");
                 return Task.CompletedTask;
             }
 
-            Logger.Trace($"TODO: 起動 {Model.LauncherItemId}, {Detail.FileSystem}");
+            Logger.Trace($"TODO: 起動 {Model.LauncherItemId}, {Detail.FileSystemInfo}");
 
             return Task.CompletedTask;
         }

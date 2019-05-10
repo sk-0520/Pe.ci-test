@@ -117,7 +117,7 @@
       <ContextMenu.ItemsSource>
         <CompositeCollection>
           <MenuItem Style="{StaticResource MenuHeaderItem}" Header="execute" />
-          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="exec" Command="{Binding ExecuteMainCommand}" />
+          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="exec" Command="{Binding ExecuteSimpleCommand}" />
           <MenuItem Style="{StaticResource LauncherMenuItem}" Header="ex exec" />
 
           <MenuItem Style="{StaticResource MenuHeaderItem}" Header="open" />

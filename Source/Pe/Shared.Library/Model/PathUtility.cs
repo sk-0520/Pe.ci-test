@@ -165,5 +165,10 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         {
             return CreateFileNameCore(name, null, extension);
         }
+
+        public static string ExpandFilePath(string path)
+        {
+            return Environment.ExpandEnvironmentVariables(path ?? string.Empty);
+        }
     }
 }

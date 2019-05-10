@@ -39,6 +39,13 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data
         RightBottom,
     }
 
+    public enum LauncherPathKind
+    {
+        Unknown,
+        File,
+        Directory,
+    }
+
     public class LauncherPathExecuteData : DataBase
     {
         #region property
@@ -149,12 +156,11 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data
     {
         #region property
 
-        public LauncherPathExecuteData Raw { get; set; }
+        public LauncherPathExecuteData PathData { get; set; }
 
-        public FileSystemInfo FileSystem { get; set; }
-        public bool FileIsDirectory { get; set; }
-        public string Option { get; set; }
-        public DirectoryInfo WorkDirectory { get; set; }
+        public LauncherPathKind Kind { get; set; }
+
+        public FileSystemInfo FileSystemInfo { get; set; }
 
         #endregion
     }

@@ -65,29 +65,17 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem
             }
         }
 
-        LauncherFileDetailData ConvertFile(LauncherPathExecuteData data)
+        LauncherPathKind GetPathKind(string path)
         {
-            var result = new LauncherFileDetailData() {
-                Raw = data,
-                Option = data.Option,
-            };
-
-            var filePath = Environment.ExpandEnvironmentVariables(data.Path ?? string.Empty);
-            if(Directory.Exists(filePath)) {
-                result.FileSystem = new DirectoryInfo(filePath);
-                result.FileIsDirectory = Directory.Exists(result.FileSystem.FullName);
-            } else {
-                result.FileSystem = new FileInfo(filePath);
+            if(File.Exists(path)) {
+                return LauncherPathKind.File;
             }
 
-            var workDirPath = Environment.ExpandEnvironmentVariables(data.Path ?? string.Empty);
-            if(result.FileIsDirectory || string.IsNullOrWhiteSpace(workDirPath)) {
-                result.WorkDirectory = new DirectoryInfo(Path.GetDirectoryName(result.FileSystem.FullName));
-            } else {
-                result.WorkDirectory = new DirectoryInfo(workDirPath);
+            if(Directory.Exists(path)) {
+                return LauncherPathKind.Directory;
             }
 
-            return result;
+            return LauncherPathKind.Unknown;
         }
 
         public LauncherFileDetailData LoadFileDetail()
@@ -98,10 +86,28 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem
                 pathData = dao.SelectPath(LauncherItemId);
             }
 
-            var result = ConvertFile(pathData);
+            var expandedPath = PathUtility.ExpandFilePath(pathData.Path);
+            var kind = GetPathKind(expandedPath);
+            var result = new LauncherFileDetailData() {
+                PathData = pathData,
+                Kind = kind,
+            };
+            switch(result.Kind) {
+                case LauncherPathKind.File:
+                    result.FileSystemInfo = new FileInfo(expandedPath);
+                    break;
 
-            result.FileSystem.Refresh();
-            result.WorkDirectory.Refresh();
+                case LauncherPathKind.Directory:
+                    result.FileSystemInfo = new DirectoryInfo(expandedPath);
+                    break;
+
+                case LauncherPathKind.Unknown:
+                    result.FileSystemInfo = new EmptyFileSystemInfo(expandedPath);
+                    break;
+
+                default:
+                    throw new NotImplementedException();
+            }
 
             return result;
         }

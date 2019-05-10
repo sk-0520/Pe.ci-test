@@ -4,10 +4,12 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem;
 using ContentTypeTextNet.Pe.Main.Model.Theme;
+using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
 {
@@ -46,6 +48,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
         #endregion
 
         #region command
+
+        public ICommand ExecuteSimpleCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                ExecuteMainImplAsync().ConfigureAwait(false);
+            },
+            () => !NowLoading && Exists
+        ));
+
+
         #endregion
 
         #region function
@@ -57,6 +68,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
         #endregion
 
         #region LauncherItemViewModelBase
+
+        /// <summary>
+        /// NOTE: こいつは CanExecute を意図的に固定。
+        /// <para><see cref="ExecuteMainCommand"/>と<see cref="ExecuteSimpleCommand"/>で分けておかないとツールバー右クリックでアイテムのメニューが出なくなる気がする</para>
+        /// </summary>
+        protected override bool CanExecuteMain => true;
 
         protected override Task InitializeAsyncImpl()
         {
