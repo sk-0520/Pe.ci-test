@@ -105,7 +105,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherIcon
                 return iconImage;
             }
 
-            var commandImage = await GetImageCoreAsync(launcherIconData.Kind, launcherIconData.Command, cancellationToken).ConfigureAwait(false);
+            var commandImage = await GetImageCoreAsync(launcherIconData.Kind, launcherIconData.Path, cancellationToken).ConfigureAwait(false);
             if(commandImage != null) {
                 return commandImage;
             }

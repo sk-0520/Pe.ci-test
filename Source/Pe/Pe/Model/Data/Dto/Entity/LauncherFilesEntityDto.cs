@@ -19,5 +19,19 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data.Dto.Entity
         #endregion
     }
 
+    public class LauncherFilesEntityDto: CommonDtoBase
+    {
+        #region property
+
+        public string File { get; set; }
+        public string Option { get; set; }
+        public string WorkDirectory { get; set; }
+
+        public bool IsEnabledCustomEnvVar { get; set; }
+        public bool IsEnabledStandardIo { get; set; }
+        public bool RunAdministrator { get; set; }
+
+        #endregion
+    }
 
 }

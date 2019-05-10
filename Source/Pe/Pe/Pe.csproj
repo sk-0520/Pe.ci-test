@@ -202,6 +202,7 @@
     <Compile Include="Model\Data\Dto\Domain\LauncherToolbarScreenRowDto.cs" />
     <Compile Include="Model\Data\Dto\Domain\NoteDomainRowDto.cs" />
     <Compile Include="Model\Data\Dto\Entity\FontsEntityDto.cs" />
+    <Compile Include="Model\Data\Dto\Entity\LauncherEnvVarsEntityDto.cs" />
     <Compile Include="Model\Data\Dto\Entity\LauncherItemIconsEntityDto.cs" />
     <Compile Include="Model\Data\Dto\Entity\LauncherFilesEntityDto.cs" />
     <Compile Include="Model\Data\Dto\Entity\NoteContentsEntityDto.cs" />

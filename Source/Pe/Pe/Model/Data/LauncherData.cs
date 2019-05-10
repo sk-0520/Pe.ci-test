@@ -39,13 +39,70 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data
         Directory,
     }
 
-    public class LauncherPathExecuteData : DataBase
+    public enum LauncherEnvironmentVariableKind
+    {
+        Update,
+        Remove,
+    }
+
+    public interface ILauncherExecutePath
     {
         #region property
+
+        string Path { get; set; }
+        string Option { get; set; }
+        string WorkDirectoryPath { get; set; }
+
+        #endregion
+    }
+
+    public interface ILauncherExecuteCustom
+    {
+        #region property
+
+        bool IsEnabledCustomEnvironmentVariable { get; set; }
+        bool IsEnabledStandardInputOutput { get; set; }
+        bool RunAdministrator { get; set; }
+        #endregion
+    }
+
+    public class LauncherPathExecuteData : DataBase, ILauncherExecutePath
+    {
+        #region ILauncherExecutePath
 
         public string Path { get; set; }
         public string Option { get; set; }
         public string WorkDirectoryPath { get; set; }
+
+        #endregion
+    }
+
+    public class LauncherFileData : DataBase, ILauncherExecutePath, ILauncherExecuteCustom
+    {
+        #region ILauncherExecutePath
+
+        public string Path { get; set; }
+        public string Option { get; set; }
+        public string WorkDirectoryPath { get; set; }
+
+        #endregion
+
+        #region ILauncherExecuteCustom
+
+        public bool IsEnabledCustomEnvironmentVariable { get; set; }
+        public bool IsEnabledStandardInputOutput { get; set; }
+        public bool RunAdministrator { get; set; }
+
+        #endregion
+    }
+
+    public class LauncherEnvironmentVariableItem
+    {
+        #region property
+
+        public LauncherEnvironmentVariableKind Kind { get; set; }
+        public string Name { get; set; }
+        public string Value { get; set; }
 
         #endregion
     }
@@ -56,7 +113,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data
 
         public LauncherItemKind Kind { get; set; }
 
-        public IconData Command { get; set; } = new IconData();
+        public IconData Path { get; set; } = new IconData();
         public IconData Icon { get; set; } = new IconData();
 
         #endregion

@@ -82,8 +82,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem
         {
             LauncherPathExecuteData pathData;
             using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var dao = new LauncherFilesEntityDao(commander, StatementLoader, commander.Implementation, Logger.Factory);
-                pathData = dao.SelectPath(LauncherItemId);
+                var launcherFilesEntityDao = new LauncherFilesEntityDao(commander, StatementLoader, commander.Implementation, Logger.Factory);
+                pathData = launcherFilesEntityDao.SelectPath(LauncherItemId);
             }
 
             var expandedPath = PathUtility.ExpandFilePath(pathData.Path);
@@ -114,10 +114,23 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem
 
         LauncherExecuteResult ExecuteFile()
         {
-            var launcherExecutor = new LauncherExecutor(Logger.Factory);
+            LauncherFileData fileData;
+            IList<LauncherEnvironmentVariableItem> envItems;
             using(var commander = MainDatabaseBarrier.WaitRead()) {
-                throw new NotImplementedException();
+                var launcherFilesEntityDao = new LauncherFilesEntityDao(commander, StatementLoader, commander.Implementation, Logger.Factory);
+                fileData = launcherFilesEntityDao.SelectFile(LauncherItemId);
+                if(fileData.IsEnabledCustomEnvironmentVariable) {
+                    var launcherEnvVarsEntityDao = new LauncherEnvVarsEntityDao(commander, StatementLoader, commander.Implementation, Logger.Factory);
+                    envItems = launcherEnvVarsEntityDao.SelectItems(LauncherItemId).ToList();
+                } else {
+                    envItems = new List<LauncherEnvironmentVariableItem>();
+                }
             }
+
+            var launcherExecutor = new LauncherExecutor(Logger.Factory);
+            var result = launcherExecutor.Execute(fileData, envItems);
+
+            return result;
         }
 
         public LauncherExecuteResult Execute()

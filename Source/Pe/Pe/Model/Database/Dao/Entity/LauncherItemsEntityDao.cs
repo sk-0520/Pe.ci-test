@@ -84,6 +84,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             return data;
         }
 
+
         public void InsertItem(LauncherItemData data, IDatabaseCommonStatus commonStatus)
         {
             var statement = StatementLoader.LoadStatementByCurrent();

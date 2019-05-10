@@ -27,6 +27,10 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             public static string Option { get; } = "Option";
             public static string WorkDirectory { get; } = "WorkDirectory";
 
+            public static string IsEnabledCustomEnvVar { get; } = "IsEnabledCustomEnvVar";
+            public static string IsEnabledStandardIo { get; } = "IsEnabledStandardIo";
+            public static string RunAdministrator { get; } = "RunAdministrator";
+
             #endregion
         }
 
@@ -34,12 +38,26 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
 
         #region function
 
-        LauncherPathExecuteData ConvertFtomDto(LauncherFilesEntityPathDto dto)
+        LauncherPathExecuteData ConvertFromDto(LauncherFilesEntityPathDto dto)
         {
             var data = new LauncherPathExecuteData() {
                 Path = dto.File,
                 Option = dto.Option,
                 WorkDirectoryPath = dto.WorkDirectory,
+            };
+
+            return data;
+        }
+
+        LauncherFileData ConvertFromDto(LauncherFilesEntityDto dto)
+        {
+            var data = new LauncherFileData() {
+                Path = dto.File,
+                Option = dto.Option,
+                WorkDirectoryPath = dto.WorkDirectory,
+                IsEnabledCustomEnvironmentVariable = dto.IsEnabledCustomEnvVar,
+                IsEnabledStandardInputOutput = dto.IsEnabledStandardIo,
+                RunAdministrator = dto.RunAdministrator,
             };
 
             return data;
@@ -55,7 +73,24 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             builder.AddValue(Column.LauncherItemId, launcherItemId);
 
             var dto = SelectSingle<LauncherFilesEntityPathDto>(builder);
-            var data = ConvertFtomDto(dto);
+            var data = ConvertFromDto(dto);
+            return data;
+        }
+
+        public LauncherFileData SelectFile(Guid launcherItemId)
+        {
+            var builder = CreateSelectBuilder();
+            builder.AddSelect(Column.File);
+            builder.AddSelect(Column.Option);
+            builder.AddSelect(Column.WorkDirectory);
+            builder.AddSelect(Column.IsEnabledCustomEnvVar);
+            builder.AddSelect(Column.IsEnabledStandardIo);
+            builder.AddSelect(Column.RunAdministrator);
+
+            builder.AddValue(Column.LauncherItemId, launcherItemId);
+
+            var dto = SelectSingle<LauncherFilesEntityDto>(builder);
+            var data = ConvertFromDto(dto);
             return data;
         }
 
