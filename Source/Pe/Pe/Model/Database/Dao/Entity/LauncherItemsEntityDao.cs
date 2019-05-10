@@ -34,7 +34,6 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
         LauncherItemsRowDto ConvertFromData(LauncherItemData data, IDatabaseCommonStatus commonStatus)
         {
             var kindEnumTransfer = new EnumTransfer<LauncherItemKind>();
-            var permissionEnumTransfer = new EnumTransfer<LauncherItemPermission>();
 
             var dto = new LauncherItemsRowDto() {
                 LauncherItemId = data.LauncherItemId,

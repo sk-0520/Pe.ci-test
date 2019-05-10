@@ -52,20 +52,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
 
         protected override Task ExecuteMainImplAsync()
         {
-
             if(NowLoading) {
                 Logger.Warning($"読み込み中のため抑制: {Model.LauncherItemId}, {Detail.FileSystemInfo}");
                 return Task.CompletedTask;
             }
 
-            if(!Detail.FileSystemInfo.Exists) {
-                Logger.Warning($"存在しないファイル: {Model.LauncherItemId}, {Detail.FileSystemInfo}");
-                return Task.CompletedTask;
-            }
-
-            Logger.Trace($"TODO: 起動 {Model.LauncherItemId}, {Detail.FileSystemInfo}");
-
-            return Task.CompletedTask;
+            Logger.Trace($"TODO: 起動準備 {Model.LauncherItemId}, {Detail.FileSystemInfo}");
+            return Task.Run(() => {
+                Model.Execute();
+            });
         }
 
         #endregion

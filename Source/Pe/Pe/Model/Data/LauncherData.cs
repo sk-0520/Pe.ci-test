@@ -25,13 +25,6 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data
         Separator,
     }
 
-    public enum LauncherItemPermission
-    {
-        Normal,
-        Administrator,
-        Another,
-    }
-
     public enum LauncherToolbarIconDirection
     {
         LeftTop,

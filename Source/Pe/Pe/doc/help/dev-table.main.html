@@ -56,7 +56,7 @@ ___
 |    | o  |    | コマンド入力対象         | IsEnabledCommandLauncher | boolean      | System.Boolean  |              |          |
 |    | o  |    | 使用回数                 | ExecuteCount             | integer      | System.Int64    |              |          |
 |    | o  |    | 最終仕様日時             | LastExecuteTimestamp     | datetime     | System.DateTime |              | UTC      |
-|    | o  |    | メモ                     | Comment                  | text         | System.String   |              |          |
+|    | o  |    | コメント                 | Comment                  | text         | System.String   |              |          |
 
 ### index
 
@@ -72,26 +72,24 @@ ___
 
 ### layout
 
-| PK | NN | FK                           | 論理カラム名             | 物理カラム名            | 論理データ型 | マッピング型    | チェック制約 | コメント                                               |
-|:--:|:--:|:-----------------------------|:-------------------------|:------------------------|:-------------|:----------------|:-------------|:-------------------------------------------------------|
-| o  | o  | LauncherItems.LauncherItemId | ランチャーアイテムID     | LauncherItemId          | text         | System.Guid     |              |                                                        |
-|    | o  |                              | 作成タイムスタンプ       | CreatedTimestamp        | datetime     | System.DateTime |              | UTC                                                    |
-|    | o  |                              | 作成ユーザー名           | CreatedAccount          | text         | System.String   |              |                                                        |
-|    | o  |                              | 作成プログラム名         | CreatedProgramName      | text         | System.String   |              |                                                        |
-|    | o  |                              | 作成プログラムバージョン | CreatedProgramVersion   | text         | System.Version  |              |                                                        |
-|    | o  |                              | 更新タイムスタンプ       | UpdatedTimestamp        | datetime     | System.DateTime |              | UTC                                                    |
-|    | o  |                              | 更新ユーザー名           | UpdatedAccount          | text         | System.String   |              |                                                        |
-|    | o  |                              | 更新プログラム名         | UpdatedProgramName      | text         | System.String   |              |                                                        |
-|    | o  |                              | 更新プログラムバージョン | UpdatedProgramVersion   | text         | System.Version  |              |                                                        |
-|    | o  |                              | 更新回数                 | UpdatedCount            | integer      | System.Int64    |              | 0始まり                                                |
-|    | o  |                              | コマンド                 | File                    | text         | System.String   |              |                                                        |
-|    | o  |                              | コマンドオプション       | Option                  | text         | System.String   |              |                                                        |
-|    | o  |                              | 作業ディレクトリ         | WorkDirectory           | text         | System.String   |              |                                                        |
-|    | o  |                              | 環境変数使用             | IsEnabledCustomEnvVar   | boolean      | System.Boolean  |              |                                                        |
-|    | o  |                              | 標準出力使用             | IsEnabledStandardOutput | boolean      | System.Boolean  |              | 標準エラーも同じ扱い                                   |
-|    | o  |                              | 標準入力使用             | IsEnabledStandardInput  | boolean      | System.Boolean  |              |                                                        |
-|    | o  |                              | 実行権限                 | Permission              | text         | System.String   |              | 通常, 管理者, 別ユーザー                               |
-|    | o  |                              | 別ユーザーアカウント     | CredentId               | text         | System.Guid     |              | 実行権限が別ユーザーの場合に有効, まぁほとんど予約かな |
+| PK | NN | FK                           | 論理カラム名             | 物理カラム名          | 論理データ型 | マッピング型    | チェック制約 | コメント |
+|:--:|:--:|:-----------------------------|:-------------------------|:----------------------|:-------------|:----------------|:-------------|:---------|
+| o  | o  | LauncherItems.LauncherItemId | ランチャーアイテムID     | LauncherItemId        | text         | System.Guid     |              |          |
+|    | o  |                              | 作成タイムスタンプ       | CreatedTimestamp      | datetime     | System.DateTime |              | UTC      |
+|    | o  |                              | 作成ユーザー名           | CreatedAccount        | text         | System.String   |              |          |
+|    | o  |                              | 作成プログラム名         | CreatedProgramName    | text         | System.String   |              |          |
+|    | o  |                              | 作成プログラムバージョン | CreatedProgramVersion | text         | System.Version  |              |          |
+|    | o  |                              | 更新タイムスタンプ       | UpdatedTimestamp      | datetime     | System.DateTime |              | UTC      |
+|    | o  |                              | 更新ユーザー名           | UpdatedAccount        | text         | System.String   |              |          |
+|    | o  |                              | 更新プログラム名         | UpdatedProgramName    | text         | System.String   |              |          |
+|    | o  |                              | 更新プログラムバージョン | UpdatedProgramVersion | text         | System.Version  |              |          |
+|    | o  |                              | 更新回数                 | UpdatedCount          | integer      | System.Int64    |              | 0始まり  |
+|    | o  |                              | コマンド                 | File                  | text         | System.String   |              |          |
+|    | o  |                              | コマンドオプション       | Option                | text         | System.String   |              |          |
+|    | o  |                              | 作業ディレクトリ         | WorkDirectory         | text         | System.String   |              |          |
+|    | o  |                              | 環境変数使用             | IsEnabledCustomEnvVar | boolean      | System.Boolean  |              |          |
+|    | o  |                              | 標準入出力使用           | IsEnabledStandardIo   | boolean      | System.Boolean  |              |          |
+|    | o  |                              | 管理者実行               | RunAdministrator      | boolean      | System.Boolean  |              |          |
 
 ### index
 
@@ -105,26 +103,24 @@ ___
 
 ### layout
 
-| PK | NN | FK                           | 論理カラム名             | 物理カラム名            | 論理データ型 | マッピング型    | チェック制約 | コメント                                               |
-|:--:|:--:|:-----------------------------|:-------------------------|:------------------------|:-------------|:----------------|:-------------|:-------------------------------------------------------|
-| o  | o  | LauncherItems.LauncherItemId | ランチャーアイテムID     | LauncherItemId          | text         | System.Guid     |              |                                                        |
-|    | o  |                              | 作成タイムスタンプ       | CreatedTimestamp        | datetime     | System.DateTime |              | UTC                                                    |
-|    | o  |                              | 作成ユーザー名           | CreatedAccount          | text         | System.String   |              |                                                        |
-|    | o  |                              | 作成プログラム名         | CreatedProgramName      | text         | System.String   |              |                                                        |
-|    | o  |                              | 作成プログラムバージョン | CreatedProgramVersion   | text         | System.Version  |              |                                                        |
-|    | o  |                              | 更新タイムスタンプ       | UpdatedTimestamp        | datetime     | System.DateTime |              | UTC                                                    |
-|    | o  |                              | 更新ユーザー名           | UpdatedAccount          | text         | System.String   |              |                                                        |
-|    | o  |                              | 更新プログラム名         | UpdatedProgramName      | text         | System.String   |              |                                                        |
-|    | o  |                              | 更新プログラムバージョン | UpdatedProgramVersion   | text         | System.Version  |              |                                                        |
-|    | o  |                              | 更新回数                 | UpdatedCount            | integer      | System.Int64    |              | 0始まり                                                |
-|    | o  |                              | コマンド                 | Command                 | text         | System.String   |              |                                                        |
-|    | o  |                              | コマンドオプション       | Option                  | text         | System.String   |              |                                                        |
-|    | o  |                              | 作業ディレクトリ         | WorkDirectory           | text         | System.String   |              |                                                        |
-|    | o  |                              | 環境変数使用             | IsEnabledCustomEnvVar   | boolean      | System.Boolean  |              |                                                        |
-|    | o  |                              | 標準出力使用             | IsEnabledStandardOutput | boolean      | System.Boolean  |              | 標準エラーも同じ扱い                                   |
-|    | o  |                              | 標準入力使用             | IsEnabledStandardInput  | boolean      | System.Boolean  |              |                                                        |
-|    | o  |                              | 実行権限                 | Permission              | text         | System.String   |              | 通常, 管理者, 別ユーザー                               |
-|    | o  |                              | 別ユーザーアカウント     | CredentId               | text         | System.Guid     |              | 実行権限が別ユーザーの場合に有効, まぁほとんど予約かな |
+| PK | NN | FK                           | 論理カラム名             | 物理カラム名          | 論理データ型 | マッピング型    | チェック制約 | コメント |
+|:--:|:--:|:-----------------------------|:-------------------------|:----------------------|:-------------|:----------------|:-------------|:---------|
+| o  | o  | LauncherItems.LauncherItemId | ランチャーアイテムID     | LauncherItemId        | text         | System.Guid     |              |          |
+|    | o  |                              | 作成タイムスタンプ       | CreatedTimestamp      | datetime     | System.DateTime |              | UTC      |
+|    | o  |                              | 作成ユーザー名           | CreatedAccount        | text         | System.String   |              |          |
+|    | o  |                              | 作成プログラム名         | CreatedProgramName    | text         | System.String   |              |          |
+|    | o  |                              | 作成プログラムバージョン | CreatedProgramVersion | text         | System.Version  |              |          |
+|    | o  |                              | 更新タイムスタンプ       | UpdatedTimestamp      | datetime     | System.DateTime |              | UTC      |
+|    | o  |                              | 更新ユーザー名           | UpdatedAccount        | text         | System.String   |              |          |
+|    | o  |                              | 更新プログラム名         | UpdatedProgramName    | text         | System.String   |              |          |
+|    | o  |                              | 更新プログラムバージョン | UpdatedProgramVersion | text         | System.Version  |              |          |
+|    | o  |                              | 更新回数                 | UpdatedCount          | integer      | System.Int64    |              | 0始まり  |
+|    | o  |                              | コマンド                 | Command               | text         | System.String   |              |          |
+|    | o  |                              | コマンドオプション       | Option                | text         | System.String   |              |          |
+|    | o  |                              | 作業ディレクトリ         | WorkDirectory         | text         | System.String   |              |          |
+|    | o  |                              | 環境変数使用             | IsEnabledCustomEnvVar | boolean      | System.Boolean  |              |          |
+|    | o  |                              | 標準入出力使用           | IsEnabledStandardIo   | boolean      | System.Boolean  |              |          |
+|    | o  |                              | 管理者実行               | RunAdministrator      | boolean      | System.Boolean  |              |          |
 
 ### index
 
@@ -138,28 +134,26 @@ ___
 
 ### layout
 
-| PK | NN | FK                           | 論理カラム名             | 物理カラム名            | 論理データ型 | マッピング型    | チェック制約 | コメント                                               |
-|:--:|:--:|:-----------------------------|:-------------------------|:------------------------|:-------------|:----------------|:-------------|:-------------------------------------------------------|
-| o  | o  | LauncherItems.LauncherItemId | ランチャーアイテムID     | LauncherItemId          | text         | System.Guid     |              |                                                        |
-|    | o  |                              | 作成タイムスタンプ       | CreatedTimestamp        | datetime     | System.DateTime |              | UTC                                                    |
-|    | o  |                              | 作成ユーザー名           | CreatedAccount          | text         | System.String   |              |                                                        |
-|    | o  |                              | 作成プログラム名         | CreatedProgramName      | text         | System.String   |              |                                                        |
-|    | o  |                              | 作成プログラムバージョン | CreatedProgramVersion   | text         | System.Version  |              |                                                        |
-|    | o  |                              | 更新タイムスタンプ       | UpdatedTimestamp        | datetime     | System.DateTime |              | UTC                                                    |
-|    | o  |                              | 更新ユーザー名           | UpdatedAccount          | text         | System.String   |              |                                                        |
-|    | o  |                              | 更新プログラム名         | UpdatedProgramName      | text         | System.String   |              |                                                        |
-|    | o  |                              | 更新プログラムバージョン | UpdatedProgramVersion   | text         | System.Version  |              |                                                        |
-|    | o  |                              | 更新回数                 | UpdatedCount            | integer      | System.Int64    |              | 0始まり                                                |
-|    | o  |                              | スクリプトエンジン       | ScriptEngine            | text         | System.String   |              |                                                        |
-|    | o  |                              | 外部エンジン             | CustomEngine            | text         | System.String   |              |                                                        |
-|    | o  |                              | スクリプト               | Script                  | text         | System.String   |              |                                                        |
-|    | o  |                              | オプション               | Option                  | text         | System.String   |              | スクリプトエンジン                                     |
-|    | o  |                              | 作業ディレクトリ         | WorkDirectory           | text         | System.String   |              |                                                        |
-|    | o  |                              | 環境変数使用             | IsEnabledCustomEnvVar   | boolean      | System.Boolean  |              |                                                        |
-|    | o  |                              | 標準出力使用             | IsEnabledStandardOutput | boolean      | System.Boolean  |              | 標準エラーも同じ扱い                                   |
-|    | o  |                              | 標準入力使用             | IsEnabledStandardInput  | boolean      | System.Boolean  |              |                                                        |
-|    | o  |                              | 実行権限                 | Permission              | text         | System.String   |              | 通常, 管理者, 別ユーザー                               |
-|    | o  |                              | 別ユーザーアカウント     | CredentId               | text         | System.Guid     |              | 実行権限が別ユーザーの場合に有効, まぁほとんど予約かな |
+| PK | NN | FK                           | 論理カラム名             | 物理カラム名          | 論理データ型 | マッピング型    | チェック制約 | コメント           |
+|:--:|:--:|:-----------------------------|:-------------------------|:----------------------|:-------------|:----------------|:-------------|:-------------------|
+| o  | o  | LauncherItems.LauncherItemId | ランチャーアイテムID     | LauncherItemId        | text         | System.Guid     |              |                    |
+|    | o  |                              | 作成タイムスタンプ       | CreatedTimestamp      | datetime     | System.DateTime |              | UTC                |
+|    | o  |                              | 作成ユーザー名           | CreatedAccount        | text         | System.String   |              |                    |
+|    | o  |                              | 作成プログラム名         | CreatedProgramName    | text         | System.String   |              |                    |
+|    | o  |                              | 作成プログラムバージョン | CreatedProgramVersion | text         | System.Version  |              |                    |
+|    | o  |                              | 更新タイムスタンプ       | UpdatedTimestamp      | datetime     | System.DateTime |              | UTC                |
+|    | o  |                              | 更新ユーザー名           | UpdatedAccount        | text         | System.String   |              |                    |
+|    | o  |                              | 更新プログラム名         | UpdatedProgramName    | text         | System.String   |              |                    |
+|    | o  |                              | 更新プログラムバージョン | UpdatedProgramVersion | text         | System.Version  |              |                    |
+|    | o  |                              | 更新回数                 | UpdatedCount          | integer      | System.Int64    |              | 0始まり            |
+|    | o  |                              | スクリプトエンジン       | ScriptEngine          | text         | System.String   |              |                    |
+|    | o  |                              | 外部エンジン             | CustomEngine          | text         | System.String   |              |                    |
+|    | o  |                              | スクリプト               | Script                | text         | System.String   |              |                    |
+|    | o  |                              | オプション               | Option                | text         | System.String   |              | スクリプトエンジン |
+|    | o  |                              | 作業ディレクトリ         | WorkDirectory         | text         | System.String   |              |                    |
+|    | o  |                              | 環境変数使用             | IsEnabledCustomEnvVar | boolean      | System.Boolean  |              |                    |
+|    | o  |                              | 標準入出力使用           | IsEnabledStandardIo   | boolean      | System.Boolean  |              |                    |
+|    | o  |                              | 管理者実行               | RunAdministrator      | boolean      | System.Boolean  |              |                    |
 
 ### index
 
@@ -228,21 +222,21 @@ ___
 
 ### layout
 
-| PK | NN | FK                           | 論理カラム名             | 物理カラム名          | 論理データ型 | マッピング型    | チェック制約 | コメント              |
-|:--:|:--:|:-----------------------------|:-------------------------|:----------------------|:-------------|:----------------|:-------------|:----------------------|
-| o  | o  | LauncherItems.LauncherItemId | ランチャーアイテムID     | LauncherItemId        | text         | System.Guid     |              |                       |
-| o  | o  |                              | 環境変数名               | EnvName               | text         | System.String   |              |                       |
-|    | o  |                              | 作成タイムスタンプ       | CreatedTimestamp      | datetime     | System.DateTime |              | UTC                   |
-|    | o  |                              | 作成ユーザー名           | CreatedAccount        | text         | System.String   |              |                       |
-|    | o  |                              | 作成プログラム名         | CreatedProgramName    | text         | System.String   |              |                       |
-|    | o  |                              | 作成プログラムバージョン | CreatedProgramVersion | text         | System.Version  |              |                       |
-|    | o  |                              | 更新タイムスタンプ       | UpdatedTimestamp      | datetime     | System.DateTime |              | UTC                   |
-|    | o  |                              | 更新ユーザー名           | UpdatedAccount        | text         | System.String   |              |                       |
-|    | o  |                              | 更新プログラム名         | UpdatedProgramName    | text         | System.String   |              |                       |
-|    | o  |                              | 更新プログラムバージョン | UpdatedProgramVersion | text         | System.Version  |              |                       |
-|    | o  |                              | 更新回数                 | UpdatedCount          | integer      | System.Int64    |              | 0始まり               |
-|    | o  |                              | 使用種別                 | Kind                  | text         | System.String   |              | 追加, 置き換え, 削除  |
-|    | o  |                              | 環境変数値               | EnvValue              | text         | System.String   |              | 追加, 置き換え で使用 |
+| PK | NN | FK                           | 論理カラム名             | 物理カラム名          | 論理データ型 | マッピング型    | チェック制約 | コメント             |
+|:--:|:--:|:-----------------------------|:-------------------------|:----------------------|:-------------|:----------------|:-------------|:---------------------|
+| o  | o  | LauncherItems.LauncherItemId | ランチャーアイテムID     | LauncherItemId        | text         | System.Guid     |              |                      |
+| o  | o  |                              | 環境変数名               | EnvName               | text         | System.String   |              |                      |
+|    | o  |                              | 作成タイムスタンプ       | CreatedTimestamp      | datetime     | System.DateTime |              | UTC                  |
+|    | o  |                              | 作成ユーザー名           | CreatedAccount        | text         | System.String   |              |                      |
+|    | o  |                              | 作成プログラム名         | CreatedProgramName    | text         | System.String   |              |                      |
+|    | o  |                              | 作成プログラムバージョン | CreatedProgramVersion | text         | System.Version  |              |                      |
+|    | o  |                              | 更新タイムスタンプ       | UpdatedTimestamp      | datetime     | System.DateTime |              | UTC                  |
+|    | o  |                              | 更新ユーザー名           | UpdatedAccount        | text         | System.String   |              |                      |
+|    | o  |                              | 更新プログラム名         | UpdatedProgramName    | text         | System.String   |              |                      |
+|    | o  |                              | 更新プログラムバージョン | UpdatedProgramVersion | text         | System.Version  |              |                      |
+|    | o  |                              | 更新回数                 | UpdatedCount          | integer      | System.Int64    |              | 0始まり              |
+|    | o  |                              | 使用種別                 | Kind                  | text         | System.String   |              | 追加/置き換え, 削除  |
+|    | o  |                              | 環境変数値               | EnvValue              | text         | System.String   |              | 追加/置き換え で使用 |
 
 ### index
 
@@ -297,33 +291,6 @@ ___
 |    | o  |                              | 履歴種別                 | Kind                  | text         | System.String   |              | オプション, 作業ディレクトリ |
 |    | o  |                              | 値                       | Value                 | text         | System.String   |              |                              |
 |    | o  |                              | 最終使用日時             | LastExecuteTimestamp  | datetime     | System.DateTime |              |                              |
-
-### index
-
-*NONE*
-
-
-
-___
-
-## Credents
-
-### layout
-
-| PK | NN | FK | 論理カラム名             | 物理カラム名          | 論理データ型 | マッピング型    | チェック制約 | コメント                                                                             |
-|:--:|:--:|:---|:-------------------------|:----------------------|:-------------|:----------------|:-------------|:-------------------------------------------------------------------------------------|
-| o  | o  |    | 資格情報ID               | CredentId             | text         | System.Guid     |              |                                                                                      |
-|    | o  |    | 作成タイムスタンプ       | CreatedTimestamp      | datetime     | System.DateTime |              | UTC                                                                                  |
-|    | o  |    | 作成ユーザー名           | CreatedAccount        | text         | System.String   |              |                                                                                      |
-|    | o  |    | 作成プログラム名         | CreatedProgramName    | text         | System.String   |              |                                                                                      |
-|    | o  |    | 作成プログラムバージョン | CreatedProgramVersion | text         | System.Version  |              |                                                                                      |
-|    | o  |    | 更新タイムスタンプ       | UpdatedTimestamp      | datetime     | System.DateTime |              | UTC                                                                                  |
-|    | o  |    | 更新ユーザー名           | UpdatedAccount        | text         | System.String   |              |                                                                                      |
-|    | o  |    | 更新プログラム名         | UpdatedProgramName    | text         | System.String   |              |                                                                                      |
-|    | o  |    | 更新プログラムバージョン | UpdatedProgramVersion | text         | System.Version  |              |                                                                                      |
-|    | o  |    | 更新回数                 | UpdatedCount          | integer      | System.Int64    |              | 0始まり                                                                              |
-|    | o  |    | 名前                     | Name                  | text         | System.String   |              |                                                                                      |
-|    | o  |    | パスワード               | Password              | text         | System.String   |              | DB上でパスワードの保護までは行わない。アプリ側でマスタパスワードを基に暗号化する方針 |
 
 ### index
 
@@ -528,23 +495,23 @@ ___
 
 ### layout
 
-| PK | NN | FK | 論理カラム名             | 物理カラム名          | 論理データ型 | マッピング型    | チェック制約 | コメント                                       |
-|:--:|:--:|:---|:-------------------------|:----------------------|:-------------|:----------------|:-------------|:-----------------------------------------------|
-| o  | o  |    | ノートID                 | NoteId                | text         | System.Guid     |              |                                                |
-| o  | o  |    | レイアウト種別           | LayoutKind            | text         | System.String   |              |                                                |
-|    | o  |    | 作成タイムスタンプ       | CreatedTimestamp      | datetime     | System.DateTime |              | UTC                                            |
-|    | o  |    | 作成ユーザー名           | CreatedAccount        | text         | System.String   |              |                                                |
-|    | o  |    | 作成プログラム名         | CreatedProgramName    | text         | System.String   |              |                                                |
-|    | o  |    | 作成プログラムバージョン | CreatedProgramVersion | text         | System.Version  |              |                                                |
-|    | o  |    | 更新タイムスタンプ       | UpdatedTimestamp      | datetime     | System.DateTime |              | UTC                                            |
-|    | o  |    | 更新ユーザー名           | UpdatedAccount        | text         | System.String   |              |                                                |
-|    | o  |    | 更新プログラム名         | UpdatedProgramName    | text         | System.String   |              |                                                |
-|    | o  |    | 更新プログラムバージョン | UpdatedProgramVersion | text         | System.Version  |              |                                                |
-|    | o  |    | 更新回数                 | UpdatedCount          | integer      | System.Int64    |              | 0始まり                                        |
-|    | o  |    | X座標                    | X                     | real         | System.Double   |              | 絶対: ディスプレイ基準, 相対: ディスプレイ中央 |
-|    | o  |    | Y座標                    | Y                     | real         | System.Double   |              | 絶対: ディスプレイ基準, 相対: ディスプレイ中央 |
-|    | o  |    | 横幅                     | Width                 | real         | System.Double   |              | 絶対: ウィンドウサイズ, 相対: ディスプレイ比率 |
-|    | o  |    | 高さ                     | Height                | real         | System.Double   |              | 絶対: ウィンドウサイズ, 相対: ディスプレイ比率 |
+| PK | NN | FK           | 論理カラム名             | 物理カラム名          | 論理データ型 | マッピング型    | チェック制約 | コメント                                       |
+|:--:|:--:|:-------------|:-------------------------|:----------------------|:-------------|:----------------|:-------------|:-----------------------------------------------|
+| o  | o  | Notes.NoteId | ノートID                 | NoteId                | text         | System.Guid     |              |                                                |
+| o  | o  |              | レイアウト種別           | LayoutKind            | text         | System.String   |              |                                                |
+|    | o  |              | 作成タイムスタンプ       | CreatedTimestamp      | datetime     | System.DateTime |              | UTC                                            |
+|    | o  |              | 作成ユーザー名           | CreatedAccount        | text         | System.String   |              |                                                |
+|    | o  |              | 作成プログラム名         | CreatedProgramName    | text         | System.String   |              |                                                |
+|    | o  |              | 作成プログラムバージョン | CreatedProgramVersion | text         | System.Version  |              |                                                |
+|    | o  |              | 更新タイムスタンプ       | UpdatedTimestamp      | datetime     | System.DateTime |              | UTC                                            |
+|    | o  |              | 更新ユーザー名           | UpdatedAccount        | text         | System.String   |              |                                                |
+|    | o  |              | 更新プログラム名         | UpdatedProgramName    | text         | System.String   |              |                                                |
+|    | o  |              | 更新プログラムバージョン | UpdatedProgramVersion | text         | System.Version  |              |                                                |
+|    | o  |              | 更新回数                 | UpdatedCount          | integer      | System.Int64    |              | 0始まり                                        |
+|    | o  |              | X座標                    | X                     | real         | System.Double   |              | 絶対: ディスプレイ基準, 相対: ディスプレイ中央 |
+|    | o  |              | Y座標                    | Y                     | real         | System.Double   |              | 絶対: ディスプレイ基準, 相対: ディスプレイ中央 |
+|    | o  |              | 横幅                     | Width                 | real         | System.Double   |              | 絶対: ウィンドウサイズ, 相対: ディスプレイ比率 |
+|    | o  |              | 高さ                     | Height                | real         | System.Double   |              | 絶対: ウィンドウサイズ, 相対: ディスプレイ比率 |
 
 ### index
 

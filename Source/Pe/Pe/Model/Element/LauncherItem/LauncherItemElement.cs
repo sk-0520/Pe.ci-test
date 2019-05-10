@@ -112,6 +112,25 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem
             return result;
         }
 
+        LauncherExecuteResult ExecuteFile()
+        {
+            var launcherExecutor = new LauncherExecutor(Logger.Factory);
+            using(var commander = MainDatabaseBarrier.WaitRead()) {
+                throw new NotImplementedException();
+            }
+        }
+
+        public LauncherExecuteResult Execute()
+        {
+            switch(Kind) {
+                case LauncherItemKind.File:
+                    return ExecuteFile();
+
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+
         #endregion
 
         #region ElementBase
