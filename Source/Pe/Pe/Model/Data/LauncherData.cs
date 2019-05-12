@@ -45,7 +45,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data
         Remove,
     }
 
-    public interface ILauncherExecutePath
+    public interface ILauncherExecutePathParameter
     {
         #region property
 
@@ -56,7 +56,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data
         #endregion
     }
 
-    public interface ILauncherExecuteCustom
+    public interface ILauncherExecuteCustomParameter
     {
         #region property
 
@@ -66,9 +66,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data
         #endregion
     }
 
-    public class LauncherPathExecuteData : DataBase, ILauncherExecutePath
+    public class LauncherExecutePathData : DataBase, ILauncherExecutePathParameter
     {
-        #region ILauncherExecutePath
+        #region ILauncherExecutePathParameter
 
         public string Path { get; set; }
         public string Option { get; set; }
@@ -77,9 +77,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data
         #endregion
     }
 
-    public class LauncherFileData : DataBase, ILauncherExecutePath, ILauncherExecuteCustom
+    public class LauncherFileData : DataBase, ILauncherExecutePathParameter, ILauncherExecuteCustomParameter
     {
-        #region ILauncherExecutePath
+        #region ILauncherExecutePathParameter
 
         public string Path { get; set; }
         public string Option { get; set; }
@@ -87,7 +87,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data
 
         #endregion
 
-        #region ILauncherExecuteCustom
+        #region ILauncherExecuteCustomParameter
 
         public bool IsEnabledCustomEnvironmentVariable { get; set; }
         public bool IsEnabledStandardInputOutput { get; set; }
@@ -178,7 +178,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data
     {
         #region property
 
-        public LauncherPathExecuteData PathExecute { get; set; } = new LauncherPathExecuteData();
+        public LauncherExecutePathData PathExecute { get; set; } = new LauncherExecutePathData();
 
         #endregion
 
@@ -206,7 +206,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data
     {
         #region property
 
-        public LauncherPathExecuteData PathData { get; set; }
+        public LauncherExecutePathData PathData { get; set; }
 
         public LauncherPathKind Kind { get; set; }
 

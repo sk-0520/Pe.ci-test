@@ -18,11 +18,12 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem
 {
     public class LauncherItemElement : ElementBase
     {
-        public LauncherItemElement(Guid launcherItemId, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, LauncherIconElement launcherIconElement, ILoggerFactory loggerFactory)
+        public LauncherItemElement(Guid launcherItemId, IOrderManager orderManager, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, LauncherIconElement launcherIconElement, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             LauncherItemId = launcherItemId;
 
+            OrderManager = orderManager;
             NotifyManager = notifyManager;
             MainDatabaseBarrier = mainDatabaseBarrier;
             StatementLoader = statementLoader;
@@ -34,6 +35,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem
 
         public Guid LauncherItemId { get; }
 
+        IOrderManager OrderManager { get; }
         INotifyManager NotifyManager { get; }
         IMainDatabaseBarrier MainDatabaseBarrier { get; }
         IFileDatabaseBarrier FileDatabaseBarrier { get; }
@@ -80,7 +82,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem
 
         public LauncherFileDetailData LoadFileDetail()
         {
-            LauncherPathExecuteData pathData;
+            LauncherExecutePathData pathData;
             using(var commander = MainDatabaseBarrier.WaitRead()) {
                 var launcherFilesEntityDao = new LauncherFilesEntityDao(commander, StatementLoader, commander.Implementation, Logger.Factory);
                 pathData = launcherFilesEntityDao.SelectPath(LauncherItemId);
@@ -112,6 +114,12 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem
             return result;
         }
 
+        IList<LauncherEnvironmentVariableItem> GetEnvironmentVariableItems(IDatabaseCommander commander, IDatabaseImplementation implementation)
+        {
+            var launcherEnvVarsEntityDao = new LauncherEnvVarsEntityDao(commander, StatementLoader, implementation, Logger.Factory);
+            return launcherEnvVarsEntityDao.SelectItems(LauncherItemId).ToList();
+        }
+
         LauncherExecuteResult ExecuteFile()
         {
             LauncherFileData fileData;
@@ -120,15 +128,14 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem
                 var launcherFilesEntityDao = new LauncherFilesEntityDao(commander, StatementLoader, commander.Implementation, Logger.Factory);
                 fileData = launcherFilesEntityDao.SelectFile(LauncherItemId);
                 if(fileData.IsEnabledCustomEnvironmentVariable) {
-                    var launcherEnvVarsEntityDao = new LauncherEnvVarsEntityDao(commander, StatementLoader, commander.Implementation, Logger.Factory);
-                    envItems = launcherEnvVarsEntityDao.SelectItems(LauncherItemId).ToList();
+                    envItems = GetEnvironmentVariableItems(commander, commander.Implementation);
                 } else {
                     envItems = new List<LauncherEnvironmentVariableItem>();
                 }
             }
 
-            var launcherExecutor = new LauncherExecutor(Logger.Factory);
-            var result = launcherExecutor.Execute(fileData, envItems);
+            var launcherExecutor = new LauncherExecutor(OrderManager, Logger.Factory);
+            var result = launcherExecutor.Execute(fileData, fileData, envItems);
 
             return result;
         }

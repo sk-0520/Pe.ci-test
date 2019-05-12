@@ -38,9 +38,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
 
         #region function
 
-        LauncherPathExecuteData ConvertFromDto(LauncherFilesEntityPathDto dto)
+        LauncherExecutePathData ConvertFromDto(LauncherFilesEntityPathDto dto)
         {
-            var data = new LauncherPathExecuteData() {
+            var data = new LauncherExecutePathData() {
                 Path = dto.File,
                 Option = dto.Option,
                 WorkDirectoryPath = dto.WorkDirectory,
@@ -63,7 +63,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             return data;
         }
 
-        public LauncherPathExecuteData SelectPath(Guid launcherItemId)
+        public LauncherExecutePathData SelectPath(Guid launcherItemId)
         {
             var builder = CreateSelectBuilder();
             builder.AddSelect(Column.File);
@@ -94,7 +94,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             return data;
         }
 
-        public bool InsertSimple(Guid launcherItemId, LauncherPathExecuteData data, IDatabaseCommonStatus commonStatus)
+        public bool InsertSimple(Guid launcherItemId, LauncherExecutePathData data, IDatabaseCommonStatus commonStatus)
         {
             var statement = StatementLoader.LoadStatementByCurrent();
             var param = commonStatus.CreateCommonDtoMapping();
