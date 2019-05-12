@@ -27,6 +27,10 @@ using ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar;
 using ContentTypeTextNet.Pe.Main.ViewModel.Note;
 using ContentTypeTextNet.Pe.Main.Model.Element.Font;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database;
+using ContentTypeTextNet.Pe.Main.Model.Element.StandardInputOutput;
+using System.Diagnostics;
+using ContentTypeTextNet.Pe.Main.ViewModel.StandardInputOutput;
+using ContentTypeTextNet.Pe.Main.View.StandardInputOutput;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Manager
 {
@@ -60,8 +64,13 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
         bool RemoveNoteElement(Guid noteId);
         NoteContentElement CreateNoteContentElement(Guid noteId, NoteContentKind contentKind);
         FontElement CreateFontElement(Guid fontId, ParentUpdater parentUpdater);
+
+        StandardInputOutputElement CreateStandardInputOutputElement(string id, Process process);
+
         WindowItem CreateLauncherToolbarWindow(LauncherToolbarElement element);
         WindowItem CreateNoteWindow(NoteElement element);
+        WindowItem CreateStandardInputOutputWindow(StandardInputOutputElement element);
+
         #endregion
     }
 
@@ -144,6 +153,14 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
                 return element;
             }
 
+            public StandardInputOutputElement CreateStandardInputOutputElement(string id, Process process)
+            {
+                var element = DiContainer.Build<StandardInputOutputElement>(id, process);
+                element.Initialize();
+                return element;
+            }
+
+
             public WindowItem CreateLauncherToolbarWindow(LauncherToolbarElement element)
             {
                 var viewModel = DiContainer.UsingTemporaryContainer(c => {
@@ -170,6 +187,18 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
                 window.DataContext = viewModel;
 
                 return new WindowItem(WindowKind.Note, window);
+            }
+
+            public WindowItem CreateStandardInputOutputWindow(StandardInputOutputElement element)
+            {
+                var viewModel = DiContainer.UsingTemporaryContainer(c => {
+                    c.Register<ILoggerFactory, ILoggerFactory>(element);
+                    return c.Build<StandardInputOutputViewModel>(element);
+                });
+                var window = DiContainer.Build<StandardInputOutputWindow>();
+                window.DataContext = viewModel;
+
+                return new WindowItem(WindowKind.StandardInputOutput, window);
             }
             #endregion
 

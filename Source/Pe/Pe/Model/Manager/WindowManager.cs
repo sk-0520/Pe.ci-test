@@ -24,6 +24,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
         LauncherToolbar,
         LauncherExecute,
         LauncherCustomize,
+        StandardInputOutput,
         Command,
         Note,
         Screen,

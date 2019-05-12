@@ -34,6 +34,7 @@ namespace ContentTypeTextNet.Pe.Main.View.LauncherToolbar
 
         [Injection]
         ILogger Logger { get; set; }
+        LauncherToolbarViewModel ViewModel => (LauncherToolbarViewModel)DataContext;
 
         #endregion
 
@@ -55,8 +56,6 @@ namespace ContentTypeTextNet.Pe.Main.View.LauncherToolbar
         #endregion
 
         #region function
-
-        LauncherToolbarViewModel ViewModel => (LauncherToolbarViewModel)DataContext;
 
         #endregion
 

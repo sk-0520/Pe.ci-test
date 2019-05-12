@@ -227,6 +227,7 @@
     <Compile Include="Model\Element\Note\NoteContentElement.cs" />
     <Compile Include="Model\Element\Note\NoteElement.cs" />
     <Compile Include="Model\Data\LauncherData.cs" />
+    <Compile Include="Model\Element\StandardInputOutput\StandardInputOutputElement.cs" />
     <Compile Include="Model\Launcher\EmptyFileSystemInfo.cs" />
     <Compile Include="Model\Launcher\LauncherExecutor.cs" />
     <Compile Include="Model\Launcher\LauncherFactory.cs" />
@@ -300,6 +301,7 @@
     <Compile Include="ViewModel\Note\NoteRichTextContentViewModel.cs" />
     <Compile Include="ViewModel\Note\NoteViewModel.cs" />
     <Compile Include="ViewModel\RunningStatusViewModel.cs" />
+    <Compile Include="ViewModel\StandardInputOutput\StandardInputOutputViewModel.cs" />
     <Compile Include="ViewModel\Startup\ImportProgramsViewModel.cs" />
     <Compile Include="ViewModel\Startup\ProgramViewModel.cs" />
     <Compile Include="ViewModel\Startup\StartupViewModel.cs" />
@@ -322,6 +324,9 @@
       <DependentUpon>NoteWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\PopupAttacher.cs" />
+    <Compile Include="View\StandardInputOutput\StandardInputOutputWindow.xaml.cs">
+      <DependentUpon>StandardInputOutputWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Startup\ImportProgramsWindow.xaml.cs">
       <DependentUpon>ImportProgramsWindow.xaml</DependentUpon>
     </Compile>
@@ -395,6 +400,7 @@
     <Folder Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherCommandsEntityDao\" />
     <Folder Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherDirectoriesEntityDao\" />
     <Folder Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherDirectoryItemsEntityDao\" />
+    <Folder Include="Model\StandardInputOutput\" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="View\Accept\AcceptWindow.xaml">
@@ -426,6 +432,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Resources\Theme\General\General.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\StandardInputOutput\StandardInputOutputWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -117,6 +117,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Launcher
 
             //旧処理
             if(streamWatch) {
+                var stdioElement = OrderManager.CreateStandardInputOutputElement($"{result.Process.StartInfo.FileName}", process);
                 //    var streamData = new StreamData(launcherItem, screen, process);
                 //    streamWindow = (LauncherItemStreamWindow)appSender.SendCreateWindow(WindowKind.LauncherStream, streamData, null);
                 //    streamWindow.ViewModel.Start();

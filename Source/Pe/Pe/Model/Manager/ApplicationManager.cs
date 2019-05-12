@@ -33,6 +33,7 @@ using ContentTypeTextNet.Pe.Main.Model.Element.Font;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Compatibility.Windows;
 using ContentTypeTextNet.Pe.Main.ViewModel.Note;
 using ContentTypeTextNet.Pe.Main.Model.Note;
+using ContentTypeTextNet.Pe.Main.Model.Element.StandardInputOutput;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Manager
 {
@@ -57,6 +58,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
         ObservableCollection<LauncherGroupElement> LauncherGroupElements { get; } = new ObservableCollection<LauncherGroupElement>();
         ObservableCollection<LauncherToolbarElement> LauncherToolbarElements { get; } = new ObservableCollection<LauncherToolbarElement>();
         ObservableCollection<NoteElement> NoteElements { get; } = new ObservableCollection<NoteElement>();
+        ObservableCollection<StandardInputOutputElement> StandardInputOutputs { get; } = new ObservableCollection<StandardInputOutputElement>();
 
         HwndSource MessageWindowHandleSource { get; set; }
 
@@ -385,6 +387,13 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
             return OrderManager.CreateFontElement(fontId, parentUpdater);
         }
 
+        public StandardInputOutputElement CreateStandardInputOutputElement(string id, Process process)
+        {
+            var element = OrderManager.CreateStandardInputOutputElement(id, process);
+            StandardInputOutputs.Add(element);
+            return element;
+        }
+
         public WindowItem CreateLauncherToolbarWindow(LauncherToolbarElement element)
         {
             var windowItem = OrderManager.CreateLauncherToolbarWindow(element);
@@ -402,6 +411,16 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
 
             return windowItem;
         }
+
+        public WindowItem CreateStandardInputOutputWindow(StandardInputOutputElement element)
+        {
+            var windowItem = OrderManager.CreateStandardInputOutputWindow(element);
+
+            WindowManager.Register(windowItem);
+
+            return windowItem;
+        }
+
 
         #endregion
 
