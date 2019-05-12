@@ -136,7 +136,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem
             }
 
             var launcherExecutor = new LauncherExecutor(OrderManager, Logger.Factory);
-            var result = launcherExecutor.Execute(fileData, fileData, envItems, screen);
+            var result = launcherExecutor.Execute(Kind, fileData, fileData, envItems, screen);
 
             return result;
         }
