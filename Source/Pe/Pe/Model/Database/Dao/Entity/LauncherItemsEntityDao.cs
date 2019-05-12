@@ -23,6 +23,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
         {
             #region property
 
+            public static string LauncherItemId { get; } = "LauncherItemId";
 
             #endregion
         }
@@ -84,12 +85,20 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             return data;
         }
 
-
         public void InsertItem(LauncherItemData data, IDatabaseCommonStatus commonStatus)
         {
             var statement = StatementLoader.LoadStatementByCurrent();
             var dto = ConvertFromData(data, commonStatus);
             Commander.Execute(statement, dto);
+        }
+
+        public bool UpdateIncrement(Guid launcherItemId, IDatabaseCommonStatus databaseCommonStatus)
+        {
+            var statement = StatementLoader.LoadStatementByCurrent();
+            var param = databaseCommonStatus.CreateCommonDtoMapping();
+            param[Column.LauncherItemId] = launcherItemId;
+
+            return Commander.Execute(statement, param) == 1;
         }
 
         #endregion

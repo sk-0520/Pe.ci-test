@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -144,13 +145,26 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem
         public ILauncherExecuteResult Execute(Screen screen)
         {
             try {
+                ILauncherExecuteResult result;
                 switch(Kind) {
                     case LauncherItemKind.File:
-                        return ExecuteFile(screen);
+                        result = ExecuteFile(screen);
+                        break;
 
                     default:
                         throw new NotImplementedException();
                 }
+
+                Debug.Assert(result != null);
+
+                using(var commander = MainDatabaseBarrier.WaitWrite()) {
+                    var dao = new LauncherItemsEntityDao(commander, StatementLoader, commander.Implementation, Logger.Factory);
+                    dao.UpdateIncrement(LauncherItemId, DatabaseCommonStatus.CreateCurrentAccount());
+                    commander.Commit();
+                }
+
+                return result;
+
             } catch(Exception ex) {
                 Logger.Error(ex);
                 return new LauncherExecuteResult() {

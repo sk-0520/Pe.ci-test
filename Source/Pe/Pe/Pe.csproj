@@ -501,6 +501,9 @@
     <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Domain\LauncherItemDomainDao\SelectIcon.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherItemsEntityDao\UpdateIncrement.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\Entity\LauncherItemsEntityDao\SelectLauncherItem.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
