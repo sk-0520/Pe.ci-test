@@ -121,7 +121,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem
             return launcherEnvVarsEntityDao.SelectItems(LauncherItemId).ToList();
         }
 
-        LauncherExecuteResult ExecuteFile(Screen screen)
+        ILauncherExecuteResult ExecuteFile(Screen screen)
         {
             LauncherFileData fileData;
             IList<LauncherEnvironmentVariableItem> envItems;
@@ -141,14 +141,23 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem
             return result;
         }
 
-        public LauncherExecuteResult Execute(Screen screen)
+        public ILauncherExecuteResult Execute(Screen screen)
         {
-            switch(Kind) {
-                case LauncherItemKind.File:
-                    return ExecuteFile(screen);
+            try {
+                switch(Kind) {
+                    case LauncherItemKind.File:
+                        return ExecuteFile(screen);
 
-                default:
-                    throw new NotImplementedException();
+                    default:
+                        throw new NotImplementedException();
+                }
+            } catch(Exception ex) {
+                Logger.Error(ex);
+                return new LauncherExecuteResult() {
+                    Success = false,
+                    FailureType = ex.GetType(),
+                    FailureValue = ex,
+                };
             }
         }
 

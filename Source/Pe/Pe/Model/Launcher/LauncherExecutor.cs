@@ -13,16 +13,34 @@ using ContentTypeTextNet.Pe.Main.Model.Manager;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Launcher
 {
-    public class LauncherExecuteResult
+    public interface ILauncherExecuteResult : IResultFailureValue<Exception>
     {
         #region property
+
+        LauncherItemKind Kind { get; }
+
+        Process Process { get; }
+
+        #endregion
+    }
+
+    public class LauncherExecuteResult : ILauncherExecuteResult
+    {
+        #region ILauncherExecuteResult
 
         public LauncherItemKind Kind { get; set; }
 
         public Process Process { get; set; }
 
+        public bool Success { get; set; }
+
+        public Type FailureType { get; set; }
+
+        public Exception FailureValue { get; set; }
+
         #endregion
     }
+
 
     public class LauncherExecutor
     {
@@ -41,7 +59,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Launcher
 
         #region function
 
-        LauncherExecuteResult ExecuteFilePath(LauncherItemKind kind, ILauncherExecutePathParameter pathParameter, ILauncherExecuteCustomParameter customParameter, IEnumerable<LauncherEnvironmentVariableItem> environmentVariableItems, Screen screen)
+        ILauncherExecuteResult ExecuteFilePath(LauncherItemKind kind, ILauncherExecutePathParameter pathParameter, ILauncherExecuteCustomParameter customParameter, IEnumerable<LauncherEnvironmentVariableItem> environmentVariableItems, Screen screen)
         {
             var process = new Process();
             var startInfo = process.StartInfo;
@@ -99,9 +117,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Launcher
 
             //旧処理
             if(streamWatch) {
-            //    var streamData = new StreamData(launcherItem, screen, process);
-            //    streamWindow = (LauncherItemStreamWindow)appSender.SendCreateWindow(WindowKind.LauncherStream, streamData, null);
-            //    streamWindow.ViewModel.Start();
+                //    var streamData = new StreamData(launcherItem, screen, process);
+                //    streamWindow = (LauncherItemStreamWindow)appSender.SendCreateWindow(WindowKind.LauncherStream, streamData, null);
+                //    streamWindow.ViewModel.Start();
             }
 
             process.Start();
@@ -112,7 +130,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Launcher
             return result;
         }
 
-        public LauncherExecuteResult Execute(LauncherItemKind kind, ILauncherExecutePathParameter pathParameter, ILauncherExecuteCustomParameter customParameter, IEnumerable<LauncherEnvironmentVariableItem> environmentVariableItems, Screen screen)
+        public ILauncherExecuteResult Execute(LauncherItemKind kind, ILauncherExecutePathParameter pathParameter, ILauncherExecuteCustomParameter customParameter, IEnumerable<LauncherEnvironmentVariableItem> environmentVariableItems, Screen screen)
         {
             if(pathParameter == null) {
                 throw new ArgumentNullException(nameof(pathParameter));
