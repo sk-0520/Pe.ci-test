@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Pe.Library.Shared.Library.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
@@ -120,7 +121,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem
             return launcherEnvVarsEntityDao.SelectItems(LauncherItemId).ToList();
         }
 
-        LauncherExecuteResult ExecuteFile()
+        LauncherExecuteResult ExecuteFile(Screen screen)
         {
             LauncherFileData fileData;
             IList<LauncherEnvironmentVariableItem> envItems;
@@ -135,16 +136,16 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem
             }
 
             var launcherExecutor = new LauncherExecutor(OrderManager, Logger.Factory);
-            var result = launcherExecutor.Execute(fileData, fileData, envItems);
+            var result = launcherExecutor.Execute(fileData, fileData, envItems, screen);
 
             return result;
         }
 
-        public LauncherExecuteResult Execute()
+        public LauncherExecuteResult Execute(Screen screen)
         {
             switch(Kind) {
                 case LauncherItemKind.File:
-                    return ExecuteFile();
+                    return ExecuteFile(screen);
 
                 default:
                     throw new NotImplementedException();

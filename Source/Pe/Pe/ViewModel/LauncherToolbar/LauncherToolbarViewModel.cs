@@ -49,7 +49,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar
             LauncherGroupItems = LauncherGroupCollection.ViewModels;
 
             LauncherItemCollection = new ActionModelViewModelObservableCollectionManager<LauncherItemElement, LauncherDetailViewModelBase>(Model.LauncherItems, Logger.Factory) {
-                ToViewModel = (m) => LauncherItemViewModelFactory.Create(m, DispatcherWapper, LauncherToolbarTheme, Logger.Factory),
+                ToViewModel = (m) => LauncherItemViewModelFactory.Create(m, DockScreen, DispatcherWapper, LauncherToolbarTheme, Logger.Factory),
             };
             LauncherItems = LauncherItemCollection.GetCollectionView();
 

@@ -11,13 +11,14 @@ using System.IO;
 using ContentTypeTextNet.Pe.Main.Model.Data;
 using System.Windows.Input;
 using Prism.Commands;
+using ContentTypeTextNet.Pe.Library.Shared.Library.Compatibility.Forms;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
 {
     public class LauncherFileViewModel : LauncherFileSystemViewModelBase
     {
-        public LauncherFileViewModel(LauncherItemElement model, IDispatcherWapper dispatcherWapper, ILauncherToolbarTheme launcherToolbarTheme, ILoggerFactory loggerFactory)
-            : base(model, dispatcherWapper, launcherToolbarTheme, loggerFactory)
+        public LauncherFileViewModel(LauncherItemElement model, Screen screen, IDispatcherWapper dispatcherWapper, ILauncherToolbarTheme launcherToolbarTheme, ILoggerFactory loggerFactory)
+            : base(model, screen, dispatcherWapper, launcherToolbarTheme, loggerFactory)
         { }
 
         #region property
@@ -59,7 +60,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
 
             Logger.Trace($"TODO: 起動準備 {Model.LauncherItemId}, {Detail.FileSystemInfo}");
             return Task.Run(() => {
-                Model.Execute();
+                Model.Execute(Screen);
             });
         }
 
