@@ -175,6 +175,11 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem
             }
         }
 
+        public ILauncherExecuteResult ExecuteExtension(Screen screen)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
 
         #region ElementBase
