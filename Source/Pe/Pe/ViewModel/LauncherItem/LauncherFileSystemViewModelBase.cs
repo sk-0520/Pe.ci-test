@@ -18,8 +18,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
     {
         #region property
 
-        bool _exists;
         FileSystemInfo _fileSystemInfo;
+        bool _exists;
+        bool _existsParentDirectory;
 
         #endregion
 
@@ -28,11 +29,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
         { }
 
         #region property
-        public bool Exists
-        {
-            get => this._exists;
-            set => SetProperty(ref this._exists, value);
-        }
 
         public FileSystemInfo FileSystemInfo
         {
@@ -45,6 +41,19 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
             }
         }
 
+        public bool Exists
+        {
+            get => this._exists;
+            set => SetProperty(ref this._exists, value);
+        }
+
+        public bool ExistsParentDirectory
+        {
+            get => this._existsParentDirectory;
+            set => SetProperty(ref this._existsParentDirectory, value);
+        }
+
+
 
         #endregion
 
@@ -55,6 +64,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
                 ExecuteMainImplAsync().ConfigureAwait(false);
             },
             () => !NowLoading && Exists
+        ));
+
+        public ICommand OpenParentDirectoryCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                throw new NotImplementedException();
+            },
+            () => !NowLoading && ExistsParentDirectory
         ));
 
 
@@ -80,6 +96,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
         {
             NowLoading = true;
             return InitializeFileSystemAsync().ContinueWith(_ => {
+                Exists = FileSystemInfo.Exists;
+                ExistsParentDirectory = Directory.Exists(FileSystemInfo.FullName);
                 NowLoading = false;
             });
         }

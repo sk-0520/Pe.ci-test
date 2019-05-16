@@ -121,7 +121,7 @@
           <MenuItem Style="{StaticResource LauncherMenuItem}" Header="ex exec" />
 
           <MenuItem Style="{StaticResource MenuHeaderItem}" Header="open" />
-          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="open dir" />
+          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="open dir" Command="{Binding OpenParentDirectoryCommand}" />
           <MenuItem Style="{StaticResource LauncherMenuItem}" Header="open work" />
 
           <MenuItem Style="{StaticResource MenuHeaderItem}" Header="copy" />

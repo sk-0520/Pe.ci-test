@@ -46,7 +46,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
             return Task.Run(() => {
                 Detail = Model.LoadFileDetail();
                 FileSystemInfo = Detail.FileSystemInfo;
-                Exists = FileSystemInfo.Exists;
             });
         }
 
