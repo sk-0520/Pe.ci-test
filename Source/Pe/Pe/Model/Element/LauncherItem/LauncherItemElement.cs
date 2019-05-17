@@ -167,17 +167,32 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem
 
             } catch(Exception ex) {
                 Logger.Error(ex);
-                return new LauncherExecuteResult() {
-                    Success = false,
-                    FailureType = ex.GetType(),
-                    FailureValue = ex,
-                };
+                return LauncherExecuteResult.Error(ex);
             }
         }
 
         public ILauncherExecuteResult ExecuteExtension(Screen screen)
         {
             throw new NotImplementedException();
+        }
+
+        public ILauncherExecuteResult OpenParentDirectory()
+        {
+            if(!(Kind == LauncherItemKind.File || Kind == LauncherItemKind.Directory)) {
+                throw new InvalidOperationException($"{Kind}");
+            }
+
+            LauncherExecutePathData pathData;
+            using(var commander = MainDatabaseBarrier.WaitRead()) {
+                var launcherFilesEntityDao = new LauncherFilesEntityDao(commander, StatementLoader, commander.Implementation, Logger.Factory);
+                pathData = launcherFilesEntityDao.SelectPath(LauncherItemId);
+            }
+
+            var launcherExecutor = new LauncherExecutor(OrderManager, Logger.Factory);
+            var result = launcherExecutor.OpenParentDirectory(Kind, pathData);
+
+            return result;
+
         }
 
         #endregion

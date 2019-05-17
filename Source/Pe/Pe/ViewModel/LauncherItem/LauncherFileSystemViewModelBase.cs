@@ -9,6 +9,7 @@ using ContentTypeTextNet.Pe.Library.Shared.Library.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem;
+using ContentTypeTextNet.Pe.Main.Model.Manager;
 using ContentTypeTextNet.Pe.Main.Model.Theme;
 using Prism.Commands;
 
@@ -68,7 +69,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
 
         public ICommand OpenParentDirectoryCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-                throw new NotImplementedException();
+                Model.OpenParentDirectory();
             },
             () => !NowLoading && ExistsParentDirectory
         ));

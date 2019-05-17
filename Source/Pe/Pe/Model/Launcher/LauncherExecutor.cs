@@ -26,6 +26,19 @@ namespace ContentTypeTextNet.Pe.Main.Model.Launcher
 
     public class LauncherExecuteResult : ILauncherExecuteResult
     {
+        #region function
+
+        public static LauncherExecuteResult Error(Exception ex)
+        {
+            return new LauncherExecuteResult() {
+                Success = false,
+                FailureType = ex.GetType(),
+                FailureValue = ex,
+            };
+        }
+
+        #endregion
+
         #region ILauncherExecuteResult
 
         public LauncherItemKind Kind { get; set; }
@@ -146,9 +159,31 @@ namespace ContentTypeTextNet.Pe.Main.Model.Launcher
             return ExecuteFilePath(kind, pathParameter, customParameter, environmentVariableItems, screen);
         }
 
+        public ILauncherExecuteResult OpenParentDirectory(LauncherItemKind kind, ILauncherExecutePathParameter pathParameter)
+        {
+            if(pathParameter == null) {
+                throw new ArgumentNullException(nameof(pathParameter));
+            }
+
+            var path = PathUtility.ExpandFilePath(pathParameter.Path);
+            var parentDirPath = Path.GetDirectoryName(path);
+            try {
+                var process = Process.Start(parentDirPath);
+                var result = new LauncherExecuteResult() {
+                    Kind = kind,
+                    Process = process,
+                };
+
+                return result;
+            } catch(Exception ex) {
+                Logger.Error(ex);
+                return LauncherExecuteResult.Error(ex);
+            }
+        }
+
         #endregion
 
-        #region property
+        #region 
         #endregion
     }
 }
