@@ -52,7 +52,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
             var expandedPath = Environment.ExpandEnvironmentVariables(path);
 
             return Task.Run(() => {
-                if(!File.Exists(expandedPath)) {
+                if(!FileUtility.Exists(expandedPath)) {
                     return null;
                 }
 
