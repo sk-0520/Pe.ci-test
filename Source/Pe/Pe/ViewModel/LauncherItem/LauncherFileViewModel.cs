@@ -25,8 +25,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
 
         LauncherFileDetailData Detail { get; set; }
 
-
-
         #endregion
 
         #region command
@@ -46,6 +44,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
             return Task.Run(() => {
                 Detail = Model.LoadFileDetail();
                 FileSystemInfo = Detail.FileSystemInfo;
+
+                var workingDirectoryPath = Environment.ExpandEnvironmentVariables(Detail.PathData.WorkDirectoryPath ?? string.Empty);
+                //ExistsWorkingDirectory = true;//PathUtility.Equals??(workingDirectoryPath, Path.GetDirectoryName(FileSystemInfo.FullName));
+                if(Directory.Exists(workingDirectoryPath)) {
+                    ExistsWorkingDirectory = true;
+                }
+
             });
         }
 

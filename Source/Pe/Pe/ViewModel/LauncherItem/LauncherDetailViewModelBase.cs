@@ -18,6 +18,32 @@ using ContentTypeTextNet.Pe.Library.Shared.Library.Compatibility.Forms;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
 {
+    public interface ILauncherFilePath
+    {
+        #region property
+
+        bool ExistsPath { get; }
+        bool CanExecutePath { get; }
+        bool CanCopyPath { get; }
+
+        bool ExistsParentDirectory { get; }
+        bool CanOpenParentDirectory { get; }
+        bool CanCopyParentDirectory { get; }
+
+        #endregion
+    }
+
+    public interface ILauncherWorkingDirectoryPath
+    {
+        #region property
+
+        bool ExistsWorkingDirectory { get; }
+        bool CanOpenWorkingDirectory { get; }
+        bool CanCopyWorkingDirectory { get; }
+
+        #endregion
+    }
+
     public abstract class LauncherDetailViewModelBase : SingleModelViewModelBase<LauncherItemElement>
     {
         #region variable

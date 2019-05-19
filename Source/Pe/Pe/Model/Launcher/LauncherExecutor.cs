@@ -181,9 +181,30 @@ namespace ContentTypeTextNet.Pe.Main.Model.Launcher
             }
         }
 
+        public ILauncherExecuteResult OpenWorkingDirectory(LauncherItemKind kind, ILauncherExecutePathParameter pathParameter)
+        {
+            if(pathParameter == null) {
+                throw new ArgumentNullException(nameof(pathParameter));
+            }
+
+            var path = PathUtility.ExpandFilePath(pathParameter.WorkDirectoryPath);
+            try {
+                var process = Process.Start(path);
+                var result = new LauncherExecuteResult() {
+                    Kind = kind,
+                    Process = process,
+                };
+
+                return result;
+            } catch(Exception ex) {
+                Logger.Error(ex);
+                return LauncherExecuteResult.Error(ex);
+            }
+        }
+
         #endregion
 
-        #region 
+        #region
         #endregion
     }
 }

@@ -195,6 +195,25 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem
 
         }
 
+        public ILauncherExecuteResult OpenWorkingDirectory()
+        {
+            if(!(Kind == LauncherItemKind.File || Kind == LauncherItemKind.Directory)) {
+                throw new InvalidOperationException($"{Kind}");
+            }
+
+            LauncherExecutePathData pathData;
+            using(var commander = MainDatabaseBarrier.WaitRead()) {
+                var launcherFilesEntityDao = new LauncherFilesEntityDao(commander, StatementLoader, commander.Implementation, Logger.Factory);
+                pathData = launcherFilesEntityDao.SelectPath(LauncherItemId);
+            }
+
+            var launcherExecutor = new LauncherExecutor(OrderManager, Logger.Factory);
+            var result = launcherExecutor.OpenWorkingDirectory(Kind, pathData);
+
+            return result;
+
+        }
+
         #endregion
 
         #region ElementBase

@@ -15,13 +15,15 @@ using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
 {
-    public abstract class LauncherFileSystemViewModelBase : LauncherDetailViewModelBase
+    public abstract class LauncherFileSystemViewModelBase : LauncherDetailViewModelBase, ILauncherFilePath, ILauncherWorkingDirectoryPath
     {
-        #region property
+        #region variable
 
         FileSystemInfo _fileSystemInfo;
-        bool _exists;
+
+        bool _existsPath;
         bool _existsParentDirectory;
+        bool _existsWorkingDirectory;
 
         #endregion
 
@@ -42,20 +44,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
             }
         }
 
-        public bool Exists
-        {
-            get => this._exists;
-            set => SetProperty(ref this._exists, value);
-        }
-
-        public bool ExistsParentDirectory
-        {
-            get => this._existsParentDirectory;
-            set => SetProperty(ref this._existsParentDirectory, value);
-        }
-
-
-
         #endregion
 
         #region command
@@ -64,7 +52,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
             () => {
                 ExecuteMainImplAsync().ConfigureAwait(false);
             },
-            () => !NowLoading && Exists
+            () => !NowLoading && ExistsPath
         ));
 
         public ICommand OpenParentDirectoryCommand => GetOrCreateCommand(() => new DelegateCommand(
@@ -74,6 +62,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
             () => !NowLoading && ExistsParentDirectory
         ));
 
+        public ICommand OpenWorkingDirectoryCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                Model.OpenWorkingDirectory();
+            },
+            () => !NowLoading && ExistsWorkingDirectory
+        ));
 
         #endregion
 
@@ -82,6 +76,41 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
         protected abstract void RaiseFileSystemInfoChanged();
 
         protected abstract Task InitializeFileSystemAsync();
+
+        #endregion
+
+        #region ILauncherFilePath
+
+        public bool ExistsPath
+        {
+            get => this._existsPath;
+            protected set => SetProperty(ref this._existsPath, value);
+        }
+
+        public bool CanExecutePath => ExistsPath;
+        public bool CanCopyPath => ExistsPath;
+
+        public bool ExistsParentDirectory
+        {
+            get => this._existsParentDirectory;
+            protected set => SetProperty(ref this._existsParentDirectory, value);
+        }
+        public bool CanOpenParentDirectory => ExistsParentDirectory;
+        public bool CanCopyParentDirectory => ExistsParentDirectory;
+
+        #endregion
+
+        #region ILauncherWorkingDirectoryPath
+
+        public bool ExistsWorkingDirectory
+        {
+            get => this._existsWorkingDirectory;
+            protected set => SetProperty(ref this._existsWorkingDirectory, value);
+        }
+
+        public bool CanOpenWorkingDirectory => ExistsWorkingDirectory;
+        public bool CanCopyWorkingDirectory => ExistsWorkingDirectory;
+
 
         #endregion
 
@@ -97,8 +126,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
         {
             NowLoading = true;
             return InitializeFileSystemAsync().ContinueWith(_ => {
-                Exists = FileSystemInfo.Exists;
-                ExistsParentDirectory = Directory.Exists(FileSystemInfo.FullName);
+                ExistsPath = FileSystemInfo.Exists;
+                ExistsParentDirectory = Directory.Exists(Path.GetDirectoryName(FileSystemInfo.FullName));
                 NowLoading = false;
             });
         }
