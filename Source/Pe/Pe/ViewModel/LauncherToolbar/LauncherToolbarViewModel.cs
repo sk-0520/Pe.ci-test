@@ -162,6 +162,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherToolbar
            o => {
                var groupModel = LauncherGroupCollection.GetModel(o);
                Model.ChangeLauncherGroup(groupModel);
+               LauncherItems.Refresh();
            }
        ));
 

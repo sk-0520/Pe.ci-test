@@ -17,7 +17,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
     {
         #region function
 
-        void Set(IDataObject data);
+        bool Set(IDataObject data);
 
         #endregion
     }
@@ -36,7 +36,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
 
         #region IClipboardManager
 
-        public void Set(IDataObject data)
+        public bool Set(IDataObject data)
         {
             if(data == null) {
                 throw new ArgumentNullException(nameof(data));
@@ -44,8 +44,10 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
 
             try {
                 Clipboard.SetDataObject(data);
+                return true;
             } catch(Exception ex) {
                 Logger.Error(ex);
+                return false;
             }
         }
 
