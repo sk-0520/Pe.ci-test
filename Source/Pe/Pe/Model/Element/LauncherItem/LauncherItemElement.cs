@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database;
@@ -20,12 +21,13 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem
 {
     public class LauncherItemElement : ElementBase
     {
-        public LauncherItemElement(Guid launcherItemId, IOrderManager orderManager, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, LauncherIconElement launcherIconElement, ILoggerFactory loggerFactory)
+        public LauncherItemElement(Guid launcherItemId, IOrderManager orderManager, IClipboardManager clipboardManager, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, LauncherIconElement launcherIconElement, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             LauncherItemId = launcherItemId;
 
             OrderManager = orderManager;
+            ClipboardManager = clipboardManager;
             NotifyManager = notifyManager;
             MainDatabaseBarrier = mainDatabaseBarrier;
             StatementLoader = statementLoader;
@@ -38,6 +40,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem
         public Guid LauncherItemId { get; }
 
         IOrderManager OrderManager { get; }
+        IClipboardManager ClipboardManager { get; }
         INotifyManager NotifyManager { get; }
         IMainDatabaseBarrier MainDatabaseBarrier { get; }
         IFileDatabaseBarrier FileDatabaseBarrier { get; }
@@ -176,8 +179,10 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem
             throw new NotImplementedException();
         }
 
-        ILauncherExecutePathParameter GetExecuteFilePath()
+        ILauncherExecutePathParameter GetExecutePath()
         {
+            Debug.Assert(Kind == LauncherItemKind.File || Kind == LauncherItemKind.Directory);
+
             using(var commander = MainDatabaseBarrier.WaitRead()) {
                 var launcherFilesEntityDao = new LauncherFilesEntityDao(commander, StatementLoader, commander.Implementation, Logger.Factory);
                 return launcherFilesEntityDao.SelectPath(LauncherItemId);
@@ -190,7 +195,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem
                 throw new InvalidOperationException($"{Kind}");
             }
 
-            var pathData = GetExecuteFilePath();
+            var pathData = GetExecutePath();
 
             var launcherExecutor = new LauncherExecutor(OrderManager, Logger.Factory);
             var result = launcherExecutor.OpenParentDirectory(Kind, pathData);
@@ -205,7 +210,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem
                 throw new InvalidOperationException($"{Kind}");
             }
 
-            var pathData = GetExecuteFilePath();
+            var pathData = GetExecutePath();
 
             var launcherExecutor = new LauncherExecutor(OrderManager, Logger.Factory);
             var result = launcherExecutor.OpenWorkingDirectory(Kind, pathData);
@@ -216,18 +221,38 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem
 
         public void CopyExecutePath()
         {
-            throw new NotImplementedException();
+            var pathData = GetExecutePath();
+            var data = new DataObject();
+            var value = pathData.Path;
+            data.SetText(value, TextDataFormat.UnicodeText);
+            ClipboardManager.Set(data);
         }
 
         public void CopyParentDirectory()
         {
-            throw new NotImplementedException();
+            var pathData = GetExecutePath();
+            var data = new DataObject();
+            var value = Path.GetDirectoryName(pathData.Path);
+            data.SetText(value, TextDataFormat.UnicodeText);
+            ClipboardManager.Set(data);
         }
 
+        public void CopyOption()
+        {
+            var pathData = GetExecutePath();
+            var data = new DataObject();
+            var value = pathData.Option;
+            data.SetText(value, TextDataFormat.UnicodeText);
+            ClipboardManager.Set(data);
+        }
 
         public void CopyWorkingDirectory()
         {
-            throw new NotImplementedException();
+            var pathData = GetExecutePath();
+            var data = new DataObject();
+            var value = pathData.WorkDirectoryPath;
+            data.SetText(value, TextDataFormat.UnicodeText);
+            ClipboardManager.Set(data);
         }
 
         #endregion

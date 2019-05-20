@@ -118,13 +118,14 @@
         <CompositeCollection>
           <MenuItem Style="{StaticResource MenuHeaderItem}" Header="execute" />
           <MenuItem Style="{StaticResource LauncherMenuItem}" Header="exec" Command="{Binding ExecuteSimpleCommand}" />
-          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="ex exec" />
+          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="ex exec" Command="{Binding ExecuteExtendsCommand}" />
 
           <MenuItem Style="{StaticResource MenuHeaderItem}" Header="open" />
           <MenuItem Style="{StaticResource LauncherMenuItem}" Header="open dir" Command="{Binding OpenParentDirectoryCommand}" />
           <MenuItem Style="{StaticResource LauncherMenuItem}" Header="open work" Command="{Binding OpenWorkingDirectoryCommand}" />
 
           <MenuItem Style="{StaticResource MenuHeaderItem}" Header="copy" />
+          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="copy option" Command="{Binding CopyOptionCommand}" />
           <MenuItem Style="{StaticResource LauncherMenuItem}" Header="copy path" Command="{Binding CopyExecutePathCommand}" />
           <MenuItem Style="{StaticResource LauncherMenuItem}" Header="copy dir" Command="{Binding CopyParentDirectoryCommand}" />
           <MenuItem Style="{StaticResource LauncherMenuItem}" Header="copy work" Command="{Binding CopyWorkingDirectoryCommand}" />

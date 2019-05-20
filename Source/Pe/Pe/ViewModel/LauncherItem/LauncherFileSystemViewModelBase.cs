@@ -28,6 +28,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
         bool _canOpenParentDirectory;
         bool _canCopyParentDirectory;
 
+        bool _canCopyOption;
+
         bool _existsWorkingDirectory;
         bool _canOpenWorkingDirectory;
         bool _canCopyWorkingDirectory;
@@ -69,6 +71,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
             () => !NowLoading && CanOpenParentDirectory
         ));
 
+        public ICommand CopyOptionCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                Model.CopyOption();
+            },
+            () => !NowLoading && CanCopyOption
+        ));
         public ICommand CopyExecutePathCommand => GetOrCreateCommand(() => new DelegateCommand(
               () => {
                   Model.CopyExecutePath();
@@ -92,7 +100,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
         ));
         public ICommand CopyWorkingDirectoryCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-                Model.OpenWorkingDirectory();
+                Model.CopyWorkingDirectory();
             },
             () => !NowLoading && CanCopyWorkingDirectory
         ));
@@ -137,6 +145,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
         {
             get => this._canCopyParentDirectory;
             protected set => SetProperty(ref this._canCopyParentDirectory, value);
+        }
+
+        public bool CanCopyOption
+        {
+            get => this._canCopyOption;
+            protected set => SetProperty(ref this._canCopyOption, value);
         }
 
         #endregion

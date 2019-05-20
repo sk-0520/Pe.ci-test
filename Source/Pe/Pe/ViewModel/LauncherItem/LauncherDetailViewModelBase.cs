@@ -30,6 +30,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
         bool CanOpenParentDirectory { get; }
         bool CanCopyParentDirectory { get; }
 
+        bool CanCopyOption { get; }
+
         #endregion
     }
 

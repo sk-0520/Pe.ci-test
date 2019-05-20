@@ -58,6 +58,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
                         ExistsWorkingDirectory = true;
                     }
                 }
+                CanCopyOption = !string.IsNullOrEmpty(Detail.PathData.Option);
             });
         }
 
