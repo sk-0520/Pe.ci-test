@@ -24,6 +24,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
         #region property
 
         LauncherFileDetailData Detail { get; set; }
+        bool DelayWaiting { get; set; }
 
         #endregion
 
@@ -39,9 +40,33 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
         #endregion
 
         #region function
+
+        void StartDelayExecute()
+        {
+            if(DelayWaiting) {
+                Logger.Warning($"抑制待機中: {Model.LauncherItemId}");
+                return;
+            }
+            DelayWaiting = true;
+
+            if(!NowLoading) {
+                ExecuteMainAsync();
+            } else {
+                PropertyChanged += LauncherFileViewModel_PropertyChanged;
+            }
+        }
+
+
         #endregion
 
         #region LauncherItemViewModelBase
+
+        protected override void DetachModelEventsImpl()
+        {
+            base.DetachModelEventsImpl();
+
+            PropertyChanged -= LauncherFileViewModel_PropertyChanged;
+        }
 
         protected override void RaiseFileSystemInfoChanged() => RaisePropertyChanged(nameof(FileInfo));
 
@@ -66,7 +91,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
         protected override Task ExecuteMainImplAsync()
         {
             if(NowLoading) {
-                Logger.Warning($"読み込み中のため抑制: {Model.LauncherItemId}, {Detail.FileSystemInfo}");
+                Logger.Warning($"読み込み中のため抑制: {Model.LauncherItemId}");
+                StartDelayExecute();
                 return Task.CompletedTask;
             }
 
@@ -77,5 +103,16 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
         }
 
         #endregion
+
+        void LauncherFileViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if(e.PropertyName == nameof(NowLoading)) {
+                if(NowLoading) {
+                    PropertyChanged -= LauncherFileViewModel_PropertyChanged;
+                    DelayWaiting = false;
+                    ExecuteMainAsync();
+                }
+            }
+        }
     }
 }

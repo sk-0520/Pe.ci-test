@@ -28,7 +28,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
 
         #region LauncherItemViewModelBase
 
-        protected override Task InitializeAsyncImpl() => throw new NotImplementedException();
+        protected override Task InitializeImplAsync() => throw new NotImplementedException();
 
         protected override Task ExecuteMainImplAsync() => throw new NotImplementedException();
 

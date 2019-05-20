@@ -101,16 +101,16 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
 
         #region function
 
-        protected abstract Task InitializeAsyncImpl();
+        protected abstract Task InitializeImplAsync();
 
         Task InitializeAsync()
         {
-            return InitializeAsyncImpl();
+            return InitializeImplAsync();
         }
 
         protected abstract Task ExecuteMainImplAsync();
 
-        Task ExecuteMainAsync()
+        protected Task ExecuteMainAsync()
         {
             if(CanExecuteMain) {
                 return ExecuteMainImplAsync();

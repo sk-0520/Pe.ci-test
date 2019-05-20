@@ -185,7 +185,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
         /// </summary>
         protected override bool CanExecuteMain => true;
 
-        protected override Task InitializeAsyncImpl()
+        protected override Task InitializeImplAsync()
         {
             NowLoading = true;
             return InitializeFileSystemAsync().ContinueWith(_ => {
