@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Library.PInvoke.Windows;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
@@ -200,6 +201,16 @@ namespace ContentTypeTextNet.Pe.Main.Model.Launcher
                 Logger.Error(ex);
                 return LauncherExecuteResult.Error(ex);
             }
+        }
+
+        public void ShowProperty(ILauncherExecutePathParameter pathParameter)
+        {
+            if(pathParameter == null) {
+                throw new ArgumentNullException(nameof(pathParameter));
+            }
+
+            var path = PathUtility.ExpandFilePath(pathParameter.Path);
+            NativeMethods.SHObjectProperties(IntPtr.Zero, SHOP.SHOP_FILEPATH, path, string.Empty);
         }
 
         #endregion

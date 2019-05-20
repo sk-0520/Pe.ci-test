@@ -21,6 +21,12 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem
 {
     public class LauncherItemElement : ElementBase
     {
+        #region variable
+
+        bool _nowCustomize;
+
+        #endregion
+
         public LauncherItemElement(Guid launcherItemId, IOrderManager orderManager, IClipboardManager clipboardManager, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, LauncherIconElement launcherIconElement, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
@@ -39,12 +45,12 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem
 
         public Guid LauncherItemId { get; }
 
-        IOrderManager OrderManager { get; }
-        IClipboardManager ClipboardManager { get; }
-        INotifyManager NotifyManager { get; }
-        IMainDatabaseBarrier MainDatabaseBarrier { get; }
-        IFileDatabaseBarrier FileDatabaseBarrier { get; }
-        IDatabaseStatementLoader StatementLoader { get; }
+        protected IOrderManager OrderManager { get; }
+        protected IClipboardManager ClipboardManager { get; }
+        protected INotifyManager NotifyManager { get; }
+        protected IMainDatabaseBarrier MainDatabaseBarrier { get; }
+        protected IFileDatabaseBarrier FileDatabaseBarrier { get; }
+        protected IDatabaseStatementLoader StatementLoader { get; }
 
         public string Name { get; private set; }
         public string Code { get; private set; }
@@ -53,6 +59,12 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem
         public string Comment { get; private set; }
 
         public LauncherIconElement Icon { get; }
+
+        public virtual bool NowCustomizing
+        {
+            get => this._nowCustomize;
+            private set => SetProperty(ref this._nowCustomize, value);
+        }
 
         #endregion
 
@@ -253,6 +265,31 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem
             var value = pathData.WorkDirectoryPath;
             data.SetText(value, TextDataFormat.UnicodeText);
             ClipboardManager.Set(data);
+        }
+
+        public void OpenCustomizeView(Screen screen)
+        {
+            if(NowCustomizing) {
+                Logger.Warning($"現在編集中: {LauncherItemId}");
+                return;
+            }
+
+            //TODO: 確定時の処理
+            NowCustomizing = true;
+            var element = OrderManager.CreateCustomizeLauncherItemElement(LauncherItemId, Icon, screen);
+            element.StartView();
+        }
+
+        public void ShowProperty()
+        {
+            if(!(Kind == LauncherItemKind.File || Kind == LauncherItemKind.Directory)) {
+                throw new InvalidOperationException($"{Kind}");
+            }
+
+            var pathData = GetExecutePath();
+
+            var launcherExecutor = new LauncherExecutor(OrderManager, Logger.Factory);
+            launcherExecutor.ShowProperty(pathData);
         }
 
         #endregion

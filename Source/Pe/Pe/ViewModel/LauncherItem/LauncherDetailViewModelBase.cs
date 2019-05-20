@@ -97,6 +97,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
             () => CanExecuteMain
         ));
 
+        public ICommand CustomizeCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                Model.OpenCustomizeView(Screen);
+            }
+        ));
+
         #endregion
 
         #region function

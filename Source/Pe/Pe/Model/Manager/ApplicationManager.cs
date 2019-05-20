@@ -34,6 +34,8 @@ using ContentTypeTextNet.Pe.Library.Shared.Library.Compatibility.Windows;
 using ContentTypeTextNet.Pe.Main.ViewModel.Note;
 using ContentTypeTextNet.Pe.Main.Model.Note;
 using ContentTypeTextNet.Pe.Main.Model.Element.StandardInputOutput;
+using ContentTypeTextNet.Pe.Main.Model.Element.LauncherIcon;
+using ContentTypeTextNet.Pe.Main.Model.Element.CustomizeLauncherItem;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Manager
 {
@@ -346,6 +348,11 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
             return OrderManager.GetOrCreateLauncherItemElement(launcherItemId);
         }
 
+        public CustomizeLauncherItemElement CreateCustomizeLauncherItemElement(Guid launcherItemId, LauncherIconElement iconElement, Screen screen)
+        {
+            return OrderManager.CreateCustomizeLauncherItemElement(launcherItemId, iconElement, screen);
+        }
+
         public NoteElement CreateNoteElement(Guid noteId, Screen screen, NotePosition notePosition)
         {
             return OrderManager.CreateNoteElement(noteId, screen, notePosition);
@@ -397,6 +404,15 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
         public WindowItem CreateLauncherToolbarWindow(LauncherToolbarElement element)
         {
             var windowItem = OrderManager.CreateLauncherToolbarWindow(element);
+
+            WindowManager.Register(windowItem);
+
+            return windowItem;
+        }
+
+        public WindowItem CreateCustomizeLauncherItemWindow(CustomizeLauncherItemElement element)
+        {
+            var windowItem = OrderManager.CreateCustomizeLauncherItemWindow(element);
 
             WindowManager.Register(windowItem);
 

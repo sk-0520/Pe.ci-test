@@ -222,6 +222,7 @@
     <Compile Include="Model\Element\LauncherGroup\LauncherGroupElement.cs" />
     <Compile Include="Model\Element\LauncherIcon\LauncherIconLoader.cs" />
     <Compile Include="Model\Element\LauncherIcon\LauncherIconElement.cs" />
+    <Compile Include="Model\Element\CustomizeLauncherItem\CustomizeLauncherItemElement.cs" />
     <Compile Include="Model\Element\LauncherItem\LauncherItemElement.cs" />
     <Compile Include="Model\Element\LauncherToolbar\LauncherToolbarElement.cs" />
     <Compile Include="Model\Element\Note\NoteContentElement.cs" />
@@ -282,6 +283,7 @@
     <Compile Include="ViewModel\IViewLifecycleReceiver.cs" />
     <Compile Include="ViewModel\LauncherGroup\LauncherGroupViewModel.cs" />
     <Compile Include="ViewModel\LauncherIcon\LauncherIconViewModel.cs" />
+    <Compile Include="ViewModel\CustomizeLauncherItem\CustomizeLauncherItemViewModel.cs" />
     <Compile Include="ViewModel\LauncherItem\LauncherDirectoryViewModel.cs" />
     <Compile Include="ViewModel\LauncherItem\LauncherFileSystemViewModelBase.cs" />
     <Compile Include="ViewModel\LauncherItem\LauncherScriptViewModel.cs" />
@@ -310,6 +312,9 @@
       <DependentUpon>AcceptWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Converter\FontFamilyToNameConverter.cs" />
+    <Compile Include="View\CustomizeLauncherItem\CustomizeLauncherItemWindow.xaml.cs">
+      <DependentUpon>CustomizeLauncherItemWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\FontSelectControl.xaml.cs">
       <DependentUpon>FontSelectControl.xaml</DependentUpon>
     </Compile>
@@ -404,6 +409,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="View\Accept\AcceptWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\CustomizeLauncherItem\CustomizeLauncherItemWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -105,6 +105,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
             () => !NowLoading && CanCopyWorkingDirectory
         ));
 
+        public ICommand ShowPropertyCommand => GetOrCreateCommand(() => new DelegateCommand(
+             () => {
+                 Model.ShowProperty();
+             },
+             () => !NowLoading && CanExecutePath
+         ));
+
         #endregion
 
         #region function
