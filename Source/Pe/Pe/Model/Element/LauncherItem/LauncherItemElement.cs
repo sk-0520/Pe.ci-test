@@ -171,7 +171,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem
             }
         }
 
-        public ILauncherExecuteResult ExecuteExtension(Screen screen)
+        public ILauncherExecuteResult ExecuteExtends(Screen screen)
         {
             throw new NotImplementedException();
         }
@@ -212,6 +212,22 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem
 
             return result;
 
+        }
+
+        public void CopyExecutePath()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CopyParentDirectory()
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public void CopyWorkingDirectory()
+        {
+            throw new NotImplementedException();
         }
 
         #endregion

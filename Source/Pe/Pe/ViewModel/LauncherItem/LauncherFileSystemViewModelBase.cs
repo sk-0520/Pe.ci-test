@@ -22,8 +22,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
         FileSystemInfo _fileSystemInfo;
 
         bool _existsPath;
+        bool _canExecutePath;
+
         bool _existsParentDirectory;
+        bool _canOpenParentDirectory;
+        bool _canCopyParentDirectory;
+
         bool _existsWorkingDirectory;
+        bool _canOpenWorkingDirectory;
+        bool _canCopyWorkingDirectory;
 
         #endregion
 
@@ -52,21 +59,42 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
             () => {
                 ExecuteMainImplAsync().ConfigureAwait(false);
             },
-            () => !NowLoading && ExistsPath
+            () => !NowLoading && CanExecutePath
         ));
 
         public ICommand OpenParentDirectoryCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
                 Model.OpenParentDirectory();
             },
-            () => !NowLoading && ExistsParentDirectory
+            () => !NowLoading && CanOpenParentDirectory
         ));
+
+        public ICommand CopyExecutePathCommand => GetOrCreateCommand(() => new DelegateCommand(
+              () => {
+                  Model.CopyExecutePath();
+              },
+              () => !NowLoading && CanCopyPath
+          ));
+
+        public ICommand CopyParentDirectoryCommand => GetOrCreateCommand(() => new DelegateCommand(
+             () => {
+                 Model.CopyParentDirectory();
+             },
+             () => !NowLoading && CanCopyParentDirectory
+         ));
+
 
         public ICommand OpenWorkingDirectoryCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
                 Model.OpenWorkingDirectory();
             },
-            () => !NowLoading && ExistsWorkingDirectory
+            () => !NowLoading && CanOpenWorkingDirectory
+        ));
+        public ICommand CopyWorkingDirectoryCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                Model.OpenWorkingDirectory();
+            },
+            () => !NowLoading && CanCopyWorkingDirectory
         ));
 
         #endregion
@@ -87,16 +115,29 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
             protected set => SetProperty(ref this._existsPath, value);
         }
 
-        public bool CanExecutePath => ExistsPath;
-        public bool CanCopyPath => ExistsPath;
+        public bool CanExecutePath
+        {
+            get => this._canExecutePath;
+            protected set => SetProperty(ref this._canExecutePath, value);
+        }
+        public bool CanCopyPath { get; } = true;
 
         public bool ExistsParentDirectory
         {
             get => this._existsParentDirectory;
             protected set => SetProperty(ref this._existsParentDirectory, value);
         }
-        public bool CanOpenParentDirectory => ExistsParentDirectory;
-        public bool CanCopyParentDirectory => ExistsParentDirectory;
+        public bool CanOpenParentDirectory
+        {
+            get => this._canOpenParentDirectory;
+            protected set => SetProperty(ref this._canOpenParentDirectory, value);
+        }
+
+        public bool CanCopyParentDirectory
+        {
+            get => this._canCopyParentDirectory;
+            protected set => SetProperty(ref this._canCopyParentDirectory, value);
+        }
 
         #endregion
 
@@ -108,8 +149,16 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
             protected set => SetProperty(ref this._existsWorkingDirectory, value);
         }
 
-        public bool CanOpenWorkingDirectory => ExistsWorkingDirectory;
-        public bool CanCopyWorkingDirectory => ExistsWorkingDirectory;
+        public bool CanOpenWorkingDirectory
+        {
+            get => this._canOpenWorkingDirectory;
+            protected set => SetProperty(ref this._canOpenWorkingDirectory, value);
+        }
+        public bool CanCopyWorkingDirectory
+        {
+            get => this._canCopyWorkingDirectory;
+            protected set => SetProperty(ref this._canCopyWorkingDirectory, value);
+        }
 
 
         #endregion
@@ -127,7 +176,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
             NowLoading = true;
             return InitializeFileSystemAsync().ContinueWith(_ => {
                 ExistsPath = FileSystemInfo.Exists;
-                ExistsParentDirectory = Directory.Exists(Path.GetDirectoryName(FileSystemInfo.FullName));
+                CanExecutePath = ExistsPath;
+
+                var parentDirectoryPath = Path.GetDirectoryName(FileSystemInfo.FullName);
+                ExistsParentDirectory = Directory.Exists(parentDirectoryPath);
+                CanOpenParentDirectory = ExistsParentDirectory;
+                CanCopyParentDirectory = true; //TODO: ドライブとか
+
                 NowLoading = false;
             });
         }

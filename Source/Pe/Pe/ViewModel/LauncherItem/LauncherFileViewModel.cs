@@ -29,6 +29,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
 
         #region command
 
+        public ICommand ExecuteExtendsCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                Model.ExecuteExtends(Screen);
+            },
+            () => !NowLoading && CanExecutePath
+        ));
 
         #endregion
 
@@ -46,11 +52,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
                 FileSystemInfo = Detail.FileSystemInfo;
 
                 var workingDirectoryPath = Environment.ExpandEnvironmentVariables(Detail.PathData.WorkDirectoryPath ?? string.Empty);
-                //ExistsWorkingDirectory = true;//PathUtility.Equals??(workingDirectoryPath, Path.GetDirectoryName(FileSystemInfo.FullName));
-                if(Directory.Exists(workingDirectoryPath)) {
-                    ExistsWorkingDirectory = true;
+                if(!string.IsNullOrWhiteSpace(workingDirectoryPath)) {
+                    CanCopyWorkingDirectory = true;
+                    if(Directory.Exists(workingDirectoryPath)) {
+                        ExistsWorkingDirectory = true;
+                    }
                 }
-
             });
         }
 

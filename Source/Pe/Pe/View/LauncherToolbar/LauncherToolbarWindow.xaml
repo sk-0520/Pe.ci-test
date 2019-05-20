@@ -122,12 +122,12 @@
 
           <MenuItem Style="{StaticResource MenuHeaderItem}" Header="open" />
           <MenuItem Style="{StaticResource LauncherMenuItem}" Header="open dir" Command="{Binding OpenParentDirectoryCommand}" />
-          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="open work" />
+          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="open work" Command="{Binding OpenWorkingDirectoryCommand}" />
 
           <MenuItem Style="{StaticResource MenuHeaderItem}" Header="copy" />
-          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="copy command" />
-          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="copy dir" />
-          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="copy work" />
+          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="copy path" Command="{Binding CopyExecutePathCommand}" />
+          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="copy dir" Command="{Binding CopyParentDirectoryCommand}" />
+          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="copy work" Command="{Binding CopyWorkingDirectoryCommand}" />
 
           <MenuItem Style="{StaticResource MenuHeaderItem}" Header="group" />
           <CollectionContainer Collection="{Binding Source={StaticResource LauncherGroupItems}}" />
