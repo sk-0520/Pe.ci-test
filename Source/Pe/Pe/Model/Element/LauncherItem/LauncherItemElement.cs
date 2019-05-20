@@ -176,17 +176,21 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem
             throw new NotImplementedException();
         }
 
+        ILauncherExecutePathParameter GetExecuteFilePath()
+        {
+            using(var commander = MainDatabaseBarrier.WaitRead()) {
+                var launcherFilesEntityDao = new LauncherFilesEntityDao(commander, StatementLoader, commander.Implementation, Logger.Factory);
+                return launcherFilesEntityDao.SelectPath(LauncherItemId);
+            }
+        }
+
         public ILauncherExecuteResult OpenParentDirectory()
         {
             if(!(Kind == LauncherItemKind.File || Kind == LauncherItemKind.Directory)) {
                 throw new InvalidOperationException($"{Kind}");
             }
 
-            LauncherExecutePathData pathData;
-            using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var launcherFilesEntityDao = new LauncherFilesEntityDao(commander, StatementLoader, commander.Implementation, Logger.Factory);
-                pathData = launcherFilesEntityDao.SelectPath(LauncherItemId);
-            }
+            var pathData = GetExecuteFilePath();
 
             var launcherExecutor = new LauncherExecutor(OrderManager, Logger.Factory);
             var result = launcherExecutor.OpenParentDirectory(Kind, pathData);
@@ -201,11 +205,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem
                 throw new InvalidOperationException($"{Kind}");
             }
 
-            LauncherExecutePathData pathData;
-            using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var launcherFilesEntityDao = new LauncherFilesEntityDao(commander, StatementLoader, commander.Implementation, Logger.Factory);
-                pathData = launcherFilesEntityDao.SelectPath(LauncherItemId);
-            }
+            var pathData = GetExecuteFilePath();
 
             var launcherExecutor = new LauncherExecutor(OrderManager, Logger.Factory);
             var result = launcherExecutor.OpenWorkingDirectory(Kind, pathData);
