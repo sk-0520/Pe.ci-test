@@ -200,11 +200,6 @@ ___
 |    | o  |                              | 作成ユーザー名           | CreatedAccount        | text         | System.String   |              |                              |
 |    | o  |                              | 作成プログラム名         | CreatedProgramName    | text         | System.String   |              |                              |
 |    | o  |                              | 作成プログラムバージョン | CreatedProgramVersion | text         | System.Version  |              |                              |
-|    | o  |                              | 更新タイムスタンプ       | UpdatedTimestamp      | datetime     | System.DateTime |              | UTC                          |
-|    | o  |                              | 更新ユーザー名           | UpdatedAccount        | text         | System.String   |              |                              |
-|    | o  |                              | 更新プログラム名         | UpdatedProgramName    | text         | System.String   |              |                              |
-|    | o  |                              | 更新プログラムバージョン | UpdatedProgramVersion | text         | System.Version  |              |                              |
-|    | o  |                              | 更新回数                 | UpdatedCount          | integer      | System.Int64    |              | 0始まり                      |
 |    | o  |                              | パターン                 | Pattern               | text         | System.String   |              | 正規表現                     |
 |    | o  |                              | 対象                     | Target                | text         | System.String   |              | ファイル・ディレクトリ・両方 |
 |    | o  |                              | ホワイトリスト           | Whitelist             | boolean      | System.Boolean  |              |                              |
@@ -230,11 +225,6 @@ ___
 |    | o  |                              | 作成ユーザー名           | CreatedAccount        | text         | System.String   |              |                      |
 |    | o  |                              | 作成プログラム名         | CreatedProgramName    | text         | System.String   |              |                      |
 |    | o  |                              | 作成プログラムバージョン | CreatedProgramVersion | text         | System.Version  |              |                      |
-|    | o  |                              | 更新タイムスタンプ       | UpdatedTimestamp      | datetime     | System.DateTime |              | UTC                  |
-|    | o  |                              | 更新ユーザー名           | UpdatedAccount        | text         | System.String   |              |                      |
-|    | o  |                              | 更新プログラム名         | UpdatedProgramName    | text         | System.String   |              |                      |
-|    | o  |                              | 更新プログラムバージョン | UpdatedProgramVersion | text         | System.Version  |              |                      |
-|    | o  |                              | 更新回数                 | UpdatedCount          | integer      | System.Int64    |              | 0始まり              |
 |    | o  |                              | 使用種別                 | Kind                  | text         | System.String   |              | 追加/置き換え, 削除  |
 |    | o  |                              | 環境変数値               | EnvValue              | text         | System.String   |              | 追加/置き換え で使用 |
 
@@ -258,11 +248,6 @@ ___
 |    | o  |                              | 作成ユーザー名           | CreatedAccount        | text         | System.String   |              |          |
 |    | o  |                              | 作成プログラム名         | CreatedProgramName    | text         | System.String   |              |          |
 |    | o  |                              | 作成プログラムバージョン | CreatedProgramVersion | text         | System.Version  |              |          |
-|    | o  |                              | 更新タイムスタンプ       | UpdatedTimestamp      | datetime     | System.DateTime |              | UTC      |
-|    | o  |                              | 更新ユーザー名           | UpdatedAccount        | text         | System.String   |              |          |
-|    | o  |                              | 更新プログラム名         | UpdatedProgramName    | text         | System.String   |              |          |
-|    | o  |                              | 更新プログラムバージョン | UpdatedProgramVersion | text         | System.Version  |              |          |
-|    | o  |                              | 更新回数                 | UpdatedCount          | integer      | System.Int64    |              | 0始まり  |
 
 ### index
 
@@ -282,11 +267,6 @@ ___
 |    | o  |                              | 作成ユーザー名           | CreatedAccount        | text         | System.String   |              |                              |
 |    | o  |                              | 作成プログラム名         | CreatedProgramName    | text         | System.String   |              |                              |
 |    | o  |                              | 作成プログラムバージョン | CreatedProgramVersion | text         | System.Version  |              |                              |
-|    | o  |                              | 更新タイムスタンプ       | UpdatedTimestamp      | datetime     | System.DateTime |              | UTC                          |
-|    | o  |                              | 更新ユーザー名           | UpdatedAccount        | text         | System.String   |              |                              |
-|    | o  |                              | 更新プログラム名         | UpdatedProgramName    | text         | System.String   |              |                              |
-|    | o  |                              | 更新プログラムバージョン | UpdatedProgramVersion | text         | System.Version  |              |                              |
-|    | o  |                              | 更新回数                 | UpdatedCount          | integer      | System.Int64    |              | 0始まり                      |
 |    | o  | LauncherItems.LauncherItemId | ランチャーアイテムID     | LauncherItemId        | text         | System.Guid     |              |                              |
 |    | o  |                              | 履歴種別                 | Kind                  | text         | System.String   |              | オプション, 作業ディレクトリ |
 |    | o  |                              | 値                       | Value                 | text         | System.String   |              |                              |
@@ -371,11 +351,6 @@ ___
 |    | o  |                                | 作成ユーザー名           | CreatedAccount        | text         | System.String   |              |          |
 |    | o  |                                | 作成プログラム名         | CreatedProgramName    | text         | System.String   |              |          |
 |    | o  |                                | 作成プログラムバージョン | CreatedProgramVersion | text         | System.Version  |              |          |
-|    | o  |                                | 更新タイムスタンプ       | UpdatedTimestamp      | datetime     | System.DateTime |              | UTC      |
-|    | o  |                                | 更新ユーザー名           | UpdatedAccount        | text         | System.String   |              |          |
-|    | o  |                                | 更新プログラム名         | UpdatedProgramName    | text         | System.String   |              |          |
-|    | o  |                                | 更新プログラムバージョン | UpdatedProgramVersion | text         | System.Version  |              |          |
-|    | o  |                                | 更新回数                 | UpdatedCount          | integer      | System.Int64    |              | 0始まり  |
 |    | o  | LauncherGroups.LauncherGroupId | ランチャーグループID     | LauncherGroupId       | text         | System.Guid     |              |          |
 |    | o  | LauncherItems.LauncherItemId   | ランチャーアイテムID     | LauncherItemId        | text         | System.Guid     |              |          |
 |    | o  |                                | 並び順                   | Sort                  | integer      | System.Int64    |              |          |
