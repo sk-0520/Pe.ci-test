@@ -108,7 +108,6 @@
     <Compile Include="Compatibility\Windows\IWindowsHandle.cs" />
     <Compile Include="Compatibility\Windows\MouseUtility.cs" />
     <Compile Include="Compatibility\Windows\PodStructUtility.cs" />
-    <Compile Include="Model\AsyncDelegateCommand.cs" />
     <Compile Include="Model\CachePool.cs" />
     <Compile Include="Model\CastUtility.cs" />
     <Compile Include="Model\Chunk.cs" />
