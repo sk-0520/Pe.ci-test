@@ -51,6 +51,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
         #region variable
 
         bool _nowLoading;
+        bool _nowMainExecuting;
 
         #endregion
 
@@ -74,10 +75,18 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
         public bool NowLoading
         {
             get => this._nowLoading;
-            set => SetProperty(ref this._nowLoading, value);
+            private set => SetProperty(ref this._nowLoading, value);
         }
 
+        public bool NowMainExecuting
+        {
+            get => this._nowMainExecuting;
+            set => SetProperty(ref this._nowMainExecuting, value);
+        }
+
+
         protected virtual bool CanExecuteMain => true;
+
 
 
         #endregion
@@ -111,7 +120,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
 
         Task InitializeAsync()
         {
-            return InitializeImplAsync();
+            NowLoading = true;
+            return InitializeImplAsync().ContinueWith(_ => {
+                NowLoading = false;
+            });
         }
 
         protected abstract Task ExecuteMainImplAsync();
@@ -119,7 +131,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
         protected Task ExecuteMainAsync()
         {
             if(CanExecuteMain) {
-                return ExecuteMainImplAsync();
+                NowMainExecuting = true;
+                return ExecuteMainImplAsync().ContinueWith(_ => {
+                    NowMainExecuting = false;
+                });
             }
             return Task.CompletedTask;
         }

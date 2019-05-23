@@ -59,7 +59,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
 
         public ICommand ExecuteSimpleCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-                ExecuteMainImplAsync().ConfigureAwait(false);
+                ExecuteMainAsync().ConfigureAwait(false);
             },
             () => !NowLoading && CanExecutePath
         ));
@@ -194,7 +194,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
 
         protected override Task InitializeImplAsync()
         {
-            NowLoading = true;
             return InitializeFileSystemAsync().ContinueWith(_ => {
                 ExistsPath = FileSystemInfo.Exists;
                 CanExecutePath = ExistsPath;
@@ -203,8 +202,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.LauncherItem
                 ExistsParentDirectory = Directory.Exists(parentDirectoryPath);
                 CanOpenParentDirectory = ExistsParentDirectory;
                 CanCopyParentDirectory = true; //TODO: ドライブとか
-
-                NowLoading = false;
             });
         }
 
