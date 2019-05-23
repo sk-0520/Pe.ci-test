@@ -3,6 +3,8 @@
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 
+  xmlns:app_view_customize_launcher_item="clr-namespace:ContentTypeTextNet.Pe.Main.View.CustomizeLauncherItem"
+
   Title="CustomizeLauncherItemWindow"
   Width="800"
   Height="450"
@@ -15,6 +17,6 @@
   </Window.Resources>
 
   <Grid>
-
+    <app_view_customize_launcher_item:CustomizeLauncherItemControl Item="{Binding}" />
   </Grid>
 </Window>

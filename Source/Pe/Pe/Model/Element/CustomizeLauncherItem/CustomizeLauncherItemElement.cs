@@ -46,7 +46,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.CustomizeLauncherItem
 
         protected override void InitializeImpl()
         {
-
+            base.InitializeImpl();
         }
 
         #endregion
