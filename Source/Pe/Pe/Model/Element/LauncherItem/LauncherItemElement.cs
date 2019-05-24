@@ -45,12 +45,12 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem
 
         public Guid LauncherItemId { get; }
 
-        protected IOrderManager OrderManager { get; }
-        protected IClipboardManager ClipboardManager { get; }
-        protected INotifyManager NotifyManager { get; }
-        protected IMainDatabaseBarrier MainDatabaseBarrier { get; }
-        protected IFileDatabaseBarrier FileDatabaseBarrier { get; }
-        protected IDatabaseStatementLoader StatementLoader { get; }
+        IOrderManager OrderManager { get; }
+        IClipboardManager ClipboardManager { get; }
+        INotifyManager NotifyManager { get; }
+        IMainDatabaseBarrier MainDatabaseBarrier { get; }
+        IFileDatabaseBarrier FileDatabaseBarrier { get; }
+        IDatabaseStatementLoader StatementLoader { get; }
 
         public string Name { get; private set; }
         public string Code { get; private set; }

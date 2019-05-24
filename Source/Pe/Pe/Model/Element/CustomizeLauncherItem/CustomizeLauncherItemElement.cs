@@ -7,13 +7,15 @@ using ContentTypeTextNet.Pe.Library.Shared.Library.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database;
 using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 using ContentTypeTextNet.Pe.Main.Model.Applications;
+using ContentTypeTextNet.Pe.Main.Model.Data;
+using ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Model.Element.LauncherIcon;
 using ContentTypeTextNet.Pe.Main.Model.Element.LauncherItem;
 using ContentTypeTextNet.Pe.Main.Model.Manager;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Element.CustomizeLauncherItem
 {
-    public class CustomizeLauncherItemElement : LauncherItemElement, IViewShowStarter, IViewCloseReceiver
+    public class CustomizeLauncherItemElement : ElementBase, IViewShowStarter, IViewCloseReceiver
     {
         #region variable
 
@@ -22,10 +24,30 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.CustomizeLauncherItem
         #endregion
 
         public CustomizeLauncherItemElement(Guid launcherItemId, Screen screen, IOrderManager orderManager, IClipboardManager clipboardManager, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, LauncherIconElement launcherIconElement, ILoggerFactory loggerFactory)
-            : base(launcherItemId, orderManager, clipboardManager, notifyManager, mainDatabaseBarrier, statementLoader, launcherIconElement, loggerFactory)
-        { }
+            : base(loggerFactory)
+        {
+            LauncherItemId = launcherItemId;
+
+            OrderManager = orderManager;
+            ClipboardManager = clipboardManager;
+            NotifyManager = notifyManager;
+            MainDatabaseBarrier = mainDatabaseBarrier;
+            StatementLoader = statementLoader;
+
+            Icon = launcherIconElement;
+        }
 
         #region property
+
+        public Guid LauncherItemId { get; }
+
+        IOrderManager OrderManager { get; }
+        IClipboardManager ClipboardManager { get; }
+        INotifyManager NotifyManager { get; }
+        IMainDatabaseBarrier MainDatabaseBarrier { get; }
+        IFileDatabaseBarrier FileDatabaseBarrier { get; }
+        IDatabaseStatementLoader StatementLoader { get; }
+        public LauncherIconElement Icon { get; }
 
         bool ViewCreated { get; set; }
 
@@ -35,18 +57,33 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.CustomizeLauncherItem
             private set => SetProperty(ref this._isVisible, value);
         }
 
+        public string Name { get; private set; }
+        public string Code { get; private set; }
+        public LauncherItemKind Kind { get; private set; }
+
         #endregion
 
         #region function
+
+        void LoadLauncherItem()
+        {
+            using(var commander = MainDatabaseBarrier.WaitRead()) {
+                var launcherItemsDao = new LauncherItemsEntityDao(commander, StatementLoader, commander.Implementation, this);
+                var launcherItemData = launcherItemsDao.SelectLauncherItem(LauncherItemId);
+
+                Name = launcherItemData.Name;
+                Code = launcherItemData.Code;
+                Kind = launcherItemData.Kind;
+            }
+        }
+
         #endregion
 
-        #region LauncherItemElement
-
-        public override bool NowCustomizing => true;
+        #region ElementBase
 
         protected override void InitializeImpl()
         {
-            base.InitializeImpl();
+            LoadLauncherItem();
         }
 
         #endregion
