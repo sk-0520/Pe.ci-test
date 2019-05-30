@@ -5,12 +5,12 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Shared.Library.Test.Model
 {
     [TestClass]
-    public class TextMatcherTestTest
+    public class TextConverterTest
     {
         [TestMethod]
         public void ConvertHiraganaToKatakaTest_Test()
         {
-            var textMatcher = new TextMatcher();
+            var textMatcher = new TextConverter();
             Assert.ThrowsException<ArgumentNullException>(() => textMatcher.ConvertHiraganaToKataka(null));
         }
 
@@ -34,7 +34,7 @@ namespace Shared.Library.Test.Model
         [DataRow("ヵヶ", "ゕゖ")]
         public void ConvertHiraganaToKatakaTest_Normal(string test, string input)
         {
-            var textMatcher = new TextMatcher();
+            var textMatcher = new TextConverter();
             var result = textMatcher.ConvertHiraganaToKataka(input);
             Assert.AreEqual(test, result);
         }
@@ -43,7 +43,7 @@ namespace Shared.Library.Test.Model
         [TestMethod]
         public void ConvertKatakaToHiraganaTest_Null()
         {
-            var textMatcher = new TextMatcher();
+            var textMatcher = new TextConverter();
             Assert.ThrowsException<ArgumentNullException>(() => textMatcher.ConvertKatakaToHiragana(null));
         }
 
@@ -67,7 +67,7 @@ namespace Shared.Library.Test.Model
         [DataRow("ゕゖ", "ヵヶ")]
         public void ConvertKatakaToHiraganaTest_Normal(string test, string input)
         {
-            var textMatcher = new TextMatcher();
+            var textMatcher = new TextConverter();
             var result = textMatcher.ConvertKatakaToHiragana(input);
             Assert.AreEqual(test, result);
         }
@@ -75,7 +75,7 @@ namespace Shared.Library.Test.Model
         [TestMethod]
         public void ConvertHankakuKatakanaToZenkakuKatakanaTest_Null()
         {
-            var textMatcher = new TextMatcher();
+            var textMatcher = new TextConverter();
             Assert.ThrowsException<ArgumentNullException>(() => textMatcher.ConvertHankakuKatakanaToZenkakuKatakana(null));
         }
 
@@ -110,7 +110,7 @@ namespace Shared.Library.Test.Model
         [DataRow("ア゚ﾟ", "ｱﾟﾟ")]
         public void ConvertHankakuKatakanaToZenkakuKatakanaTest_Normal(string test, string input)
         {
-            var textMatcher = new TextMatcher();
+            var textMatcher = new TextConverter();
             var result = textMatcher.ConvertHankakuKatakanaToZenkakuKatakana(input);
             Assert.AreEqual(test, result);
         }
@@ -118,7 +118,7 @@ namespace Shared.Library.Test.Model
         [TestMethod]
         public void ConvertZenkakuKatakanaToHankakuKatakanaTest_Null()
         {
-            var textMatcher = new TextMatcher();
+            var textMatcher = new TextConverter();
             Assert.ThrowsException<ArgumentNullException>(() => textMatcher.ConvertZenkakuKatakanaToHankakuKatakana(null));
         }
 
@@ -154,7 +154,7 @@ namespace Shared.Library.Test.Model
 //        [DataRow("ｱﾟﾟ", "ア゚ﾟ")]
         public void ConvertZenkakuKatakanaToHankakuKatakanaTest_Normal(string test, string input)
         {
-            var textMatcher = new TextMatcher();
+            var textMatcher = new TextConverter();
             var result = textMatcher.ConvertZenkakuKatakanaToHankakuKatakana(input);
             Assert.AreEqual(test, result);
         }

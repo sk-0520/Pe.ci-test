@@ -13,7 +13,7 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
     ///
     /// </summary>
     /// <remarks>http://www.unicode.org/Public/UNIDATA/Blocks.txt</remarks>
-    public class TextMatcher
+    public class TextConverter
     {
         #region variable
 

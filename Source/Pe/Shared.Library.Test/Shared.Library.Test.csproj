@@ -84,7 +84,7 @@
     <Compile Include="Model\CounterTest.cs" />
     <Compile Include="Model\PathUtilityTest.cs" />
     <Compile Include="Model\PropertyChangedHookerTest.cs" />
-    <Compile Include="Model\TextMatcherTest.cs" />
+    <Compile Include="Model\TextConverterTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
