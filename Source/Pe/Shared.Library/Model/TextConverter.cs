@@ -487,6 +487,26 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
                 } else if(DakutenKatakanaFullToHalfMap.TryGetValue(currentText[0], out var dakuten)) {
                     resultBuffer.Append(dakuten);
                 }
+            } else {
+                var map = new Dictionary<char, char>() {
+                    ['\u309A'] = 'ﾟ',
+                    ['\u3099'] = 'ﾞ',
+                };
+                foreach(var pair in map) {
+                    var index = currentText.IndexOf(pair.Key);
+                    if(index != -1) {
+                        var s = currentText.Substring(0, index);
+                        if(s.Length == 1) {
+                            if(KatakanaFullToHalfMap.TryGetValue(s[0], out var normal)) {
+                                resultBuffer.Append(normal);
+                            } else if(DakutenKatakanaFullToHalfMap.TryGetValue(s[0], out var dakuten)) {
+                                resultBuffer.Append(dakuten);
+                            }
+                            resultBuffer.Append(pair.Value);
+                            break;
+                        }
+                    }
+                }
             }
 
             return 0;

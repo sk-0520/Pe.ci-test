@@ -147,11 +147,10 @@ namespace Shared.Library.Test.Model
         [DataRow("ｳﾞ", "ヴ")]
         [DataRow("ﾞ", "ﾞ")]
         [DataRow("ﾟ", "ﾟ")]
-        // これどうしようかねぇ
-//        [DataRow("ｱﾞ", "ア゙")]
-//        [DataRow("ｱﾟ", "ア゚")]
-//        [DataRow("ｱﾞﾞ", "ア゙ﾞ")]
-//        [DataRow("ｱﾟﾟ", "ア゚ﾟ")]
+        [DataRow("ｱﾞ", "ア゙")]
+        [DataRow("ｱﾟ", "ア゚")]
+        [DataRow("ｱﾞﾞ", "ア゙ﾞ")]
+        [DataRow("ｱﾟﾟ", "ア゚ﾟ")]
         public void ConvertZenkakuKatakanaToHankakuKatakanaTest_Normal(string test, string input)
         {
             var textMatcher = new TextConverter();
