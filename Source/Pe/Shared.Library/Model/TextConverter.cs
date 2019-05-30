@@ -15,6 +15,22 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
     /// <remarks>http://www.unicode.org/Public/UNIDATA/Blocks.txt</remarks>
     public class TextConverter
     {
+        #region define
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="characterBlocks"></param>
+        /// <param name="currentIndex"></param>
+        /// <param name="isLastIndex"></param>
+        /// <param name="currentText"></param>
+        /// <param name="buffer"></param>
+        /// <param name="appendBuffer"><param name="buffer">への書き込みを行ったか。書き込んでいない場合次の奴に処理をまわす。</param>
+        /// <returns>次回読み飛ばし数。<param name="appendBuffer" />が真の場合に使用される</returns>
+        protected delegate int TextConvertDelegate(IReadOnlyList<string> characterBlocks, int currentIndex, bool isLastIndex, string currentText, StringBuilder buffer, out bool appendBuffer);
+
+        #endregion
+
         #region variable
 
         Dictionary<char, char> _halfwidthKatakanaDakutenMap;
@@ -279,29 +295,63 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         protected virtual bool IsHalfwidthKatakanaDakutenParent(char c) => ('ｶ' <= c && c <= 'ｺ') || ('ｻ' <= c && c <= 'ｿ') || ('ﾀ' <= c && c <= 'ﾄ') || ('ﾊ' <= c && c <= 'ﾎ') || (c == 'ｳ');
         protected virtual bool IsHalfwidthKatakanaHandakutenParent(char c) => ('ﾊ' <= c && c <= 'ﾎ');
 
-        string ConvertCore(string input, Func<string, bool> checker, Action<StringBuilder, string> appender)
+
+        string ConvertCore(string input, IEnumerable<TextConvertDelegate> converters)
         {
             var sb = new StringBuilder(input.Length);
-            foreach(var s in TextUtility.GetCharacters(input)) {
-                if(checker(s)) {
-                    appender(sb, s);
-                } else {
-                    sb.Append(s);
+            var chars = TextUtility.GetCharacters(input).ToArray();
+            for(var i = 0; i < chars.Length; i++) {
+                var isLastIndex = i == chars.Length - 1;
+                var appendBuffer = false;
+                var skip = 0;
+                foreach(var converter in converters) {
+                    skip = converter(chars, i, isLastIndex, chars[i], sb, out appendBuffer);
+                    if(appendBuffer) {
+                        break;
+                    }
                 }
+                if(!appendBuffer) {
+                    sb.Append(chars[i]);
+                }
+                i += skip;
             }
 
             return sb.ToString();
         }
 
-        string ConvertCore(string input, Func<string, bool> checker, Func<string, char> converter)
-        {
-            return ConvertCore(input, checker, (sb, s) => sb.Append(converter(s)));
-        }
-        string ConvertCore(string input, Func<string, bool> checker, Func<string, string> converter)
-        {
-            return ConvertCore(input, checker, (sb, s) => sb.Append(converter(s)));
-        }
+        //string ConvertCore(string input, Func<string, bool> checker, Action<StringBuilder, string> appender)
+        //{
+        //    var sb = new StringBuilder(input.Length);
+        //    foreach(var s in TextUtility.GetCharacters(input)) {
+        //        if(checker(s)) {
+        //            appender(sb, s);
+        //        } else {
+        //            sb.Append(s);
+        //        }
+        //    }
 
+        //    return sb.ToString();
+        //}
+
+        //string ConvertCore(string input, Func<string, bool> checker, Func<string, char> converter)
+        //{
+        //    return ConvertCore(input, checker, (sb, s) => sb.Append(converter(s)));
+        //}
+        //string ConvertCore(string input, Func<string, bool> checker, Func<string, string> converter)
+        //{
+        //    return ConvertCore(input, checker, (sb, s) => sb.Append(converter(s)));
+        //}
+
+        int ConvertHiraganaToKatakaCore(IReadOnlyList<string> characterBlocks, int currentIndex, bool isLastIndex, string currentText, StringBuilder buffer, out bool appendBuffer)
+        {
+            appendBuffer = false;
+            if(currentText.Length == 1 && IsHiragana(currentText[0])) {
+                buffer.Append((char)(currentText[0] + 'ァ' - 'ぁ'));
+                appendBuffer = true;
+            }
+
+            return 0;
+        }
         /// <summary>
         /// 平仮名からカタカナへ変換。
         /// </summary>
@@ -313,7 +363,21 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
                 throw new ArgumentNullException(nameof(input));
             }
 
-            return ConvertCore(input, s => s.Length == 1 && IsHiragana(s[0]), s => (char)(s[0] + 'ァ' - 'ぁ'));
+            return ConvertCore(input, new TextConvertDelegate[] {
+                ConvertHiraganaToKatakaCore
+            });
+            //return ConvertCore(input, s => s.Length == 1 && IsHiragana(s[0]), s => (char)(s[0] + 'ァ' - 'ぁ'));
+        }
+
+        int ConvertKatakaToHiraganaCore(IReadOnlyList<string> characterBlocks, int currentIndex, bool isLastIndex, string currentText, StringBuilder buffer, out bool appendBuffer)
+        {
+            appendBuffer = false;
+            if(currentText.Length == 1 && IsKatakana(currentText[0])) {
+                buffer.Append((char)(currentText[0] + 'ぁ' - 'ァ'));
+                appendBuffer = true;
+            }
+
+            return 0;
         }
 
         /// <summary>
@@ -327,10 +391,75 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
                 throw new ArgumentNullException(nameof(input));
             }
 
-            return ConvertCore(input, s => s.Length == 1 && IsKatakana(s[0]), s => (char)(s[0] + 'ぁ' - 'ァ'));
+            return ConvertCore(input, new TextConvertDelegate[] {
+                ConvertKatakaToHiraganaCore
+            });
+            //return ConvertCore(input, s => s.Length == 1 && IsKatakana(s[0]), s => (char)(s[0] + 'ぁ' - 'ァ'));
         }
 
 
+
+        int ConvertHankakuKatakanaToZenkakuKatakanaCore(IReadOnlyList<string> characterBlocks, int currentIndex, bool isLastIndex, string currentText, StringBuilder buffer, out bool appendBuffer)
+        {
+            var last = isLastIndex;
+            var s = currentText;
+            var sb = buffer;
+            var chars = characterBlocks;
+            var i = currentIndex;
+            var skip = 0;
+            if(s.Length == 1 && IsHalfwidthKatakana(s[0])) {
+                if(last) {
+                    if(HalfwidthKatakanaDakutenRange.IsIn(s[0])) {
+                        switch(s[0]) {
+                            case 'ﾞ':
+                                sb.Append('ﾞ');
+                                break;
+
+                            case 'ﾟ':
+                                sb.Append('ﾟ');
+                                break;
+
+                            default:
+                                throw new NotImplementedException();
+                        }
+                    } else {
+                        sb.Append(KatakanaHalfToFullMap[s[0]]);
+                    }
+                } else if(chars[i + 1].Length == 1 && HalfwidthKatakanaDakutenRange.IsIn(chars[i + 1][0])) {
+                    // 合体する必要あるかも！
+                    switch(chars[i + 1][0]) {
+                        case 'ﾟ':
+                            if(IsHalfwidthKatakanaHandakutenParent(s[0])) {
+                                sb.Append(HalfwidthKatakanaHandakutenMap[s[0]]);
+                            } else {
+                                sb.Append(KatakanaHalfToFullMap[s[0]]);
+                                sb.Append('\u309A'); // 結合文字
+                            }
+                            break;
+
+                        case 'ﾞ':
+                            if(IsHalfwidthKatakanaDakutenParent(s[0])) {
+                                sb.Append(HalfwidthKatakanaDakutenMap[s[0]]);
+                            } else {
+                                sb.Append(KatakanaHalfToFullMap[s[0]]);
+                                sb.Append('\u3099'); // 結合文字
+                            }
+                            break;
+
+                        default:
+                            throw new NotImplementedException();
+                    }
+                    skip = 1;
+                } else {
+                    sb.Append(KatakanaHalfToFullMap[s[0]]);
+                }
+                appendBuffer = true;
+            } else {
+                appendBuffer = false;
+            }
+
+            return skip;
+        }
 
         /// <summary>
         /// 半角カタカナを全角カタカナに変換。
@@ -343,63 +472,84 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
                 throw new ArgumentNullException(nameof(input));
             }
 
-            var sb = new StringBuilder(input.Length);
-            var chars = TextUtility.GetCharacters(input).ToArray();
-            for(var i = 0; i < chars.Length; i++) {
-                var last = i == chars.Length - 1;
-                var s = chars[i];
-                if(s.Length == 1 && IsHalfwidthKatakana(s[0])) {
-                    if(last) {
-                        if(HalfwidthKatakanaDakutenRange.IsIn(s[0])) {
-                            switch(s[0]) {
-                                case 'ﾞ':
-                                    sb.Append('ﾞ');
-                                    break;
+            return ConvertCore(input, new TextConvertDelegate[] {
+                ConvertHankakuKatakanaToZenkakuKatakanaCore
+            });
 
-                                case 'ﾟ':
-                                    sb.Append('ﾟ');
-                                    break;
+            //var sb = new StringBuilder(input.Length);
+            //var chars = TextUtility.GetCharacters(input).ToArray();
+            //for(var i = 0; i < chars.Length; i++) {
+            //    var last = i == chars.Length - 1;
+            //    var s = chars[i];
+            //    if(s.Length == 1 && IsHalfwidthKatakana(s[0])) {
+            //        if(last) {
+            //            if(HalfwidthKatakanaDakutenRange.IsIn(s[0])) {
+            //                switch(s[0]) {
+            //                    case 'ﾞ':
+            //                        sb.Append('ﾞ');
+            //                        break;
 
-                                default:
-                                    throw new NotImplementedException();
-                            }
-                        } else {
-                            sb.Append(KatakanaHalfToFullMap[s[0]]);
-                        }
-                    } else if(chars[i + 1].Length == 1 && HalfwidthKatakanaDakutenRange.IsIn(chars[i + 1][0])) {
-                        // 合体する必要あるかも！
-                        switch(chars[i + 1][0]) {
-                            case 'ﾟ':
-                                if(IsHalfwidthKatakanaHandakutenParent(s[0])) {
-                                    sb.Append(HalfwidthKatakanaHandakutenMap[s[0]]);
-                                } else {
-                                    sb.Append(KatakanaHalfToFullMap[s[0]]);
-                                    sb.Append('\u309A'); // 結合文字
-                                }
-                                break;
+            //                    case 'ﾟ':
+            //                        sb.Append('ﾟ');
+            //                        break;
 
-                            case 'ﾞ':
-                                if(IsHalfwidthKatakanaDakutenParent(s[0])) {
-                                    sb.Append(HalfwidthKatakanaDakutenMap[s[0]]);
-                                } else {
-                                    sb.Append(KatakanaHalfToFullMap[s[0]]);
-                                    sb.Append('\u3099'); // 結合文字
-                                }
-                                break;
+            //                    default:
+            //                        throw new NotImplementedException();
+            //                }
+            //            } else {
+            //                sb.Append(KatakanaHalfToFullMap[s[0]]);
+            //            }
+            //        } else if(chars[i + 1].Length == 1 && HalfwidthKatakanaDakutenRange.IsIn(chars[i + 1][0])) {
+            //            // 合体する必要あるかも！
+            //            switch(chars[i + 1][0]) {
+            //                case 'ﾟ':
+            //                    if(IsHalfwidthKatakanaHandakutenParent(s[0])) {
+            //                        sb.Append(HalfwidthKatakanaHandakutenMap[s[0]]);
+            //                    } else {
+            //                        sb.Append(KatakanaHalfToFullMap[s[0]]);
+            //                        sb.Append('\u309A'); // 結合文字
+            //                    }
+            //                    break;
 
-                            default:
-                                throw new NotImplementedException();
-                        }
-                        i += 1;
-                    } else {
-                        sb.Append(KatakanaHalfToFullMap[s[0]]);
-                    }
-                } else {
-                    sb.Append(s);
+            //                case 'ﾞ':
+            //                    if(IsHalfwidthKatakanaDakutenParent(s[0])) {
+            //                        sb.Append(HalfwidthKatakanaDakutenMap[s[0]]);
+            //                    } else {
+            //                        sb.Append(KatakanaHalfToFullMap[s[0]]);
+            //                        sb.Append('\u3099'); // 結合文字
+            //                    }
+            //                    break;
+
+            //                default:
+            //                    throw new NotImplementedException();
+            //            }
+            //            i += 1;
+            //        } else {
+            //            sb.Append(KatakanaHalfToFullMap[s[0]]);
+            //        }
+            //    } else {
+            //        sb.Append(s);
+            //    }
+            //}
+
+            //return sb.ToString();
+        }
+
+
+        int ConvertZenkakuKatakanaToHankakuKatakanaCore(IReadOnlyList<string> characterBlocks, int currentIndex, bool isLastIndex, string currentText, StringBuilder buffer, out bool appendBuffer)
+        {
+            appendBuffer = false;
+            if(currentText.Length == 1) {
+                if(KatakanaFullToHalfMap.TryGetValue(currentText[0], out var normal)) {
+                    buffer.Append(normal);
+                    appendBuffer = true;
+                } else if(DakutenKatakanaFullToHalfMap.TryGetValue(currentText[0], out var dakuten)) {
+                    buffer.Append(dakuten);
+                    appendBuffer = true;
                 }
             }
 
-            return sb.ToString();
+            return 0;
         }
 
         public string ConvertZenkakuKatakanaToHankakuKatakana(string input)
@@ -408,22 +558,26 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
                 throw new ArgumentNullException(nameof(input));
             }
 
-            var sb = new StringBuilder(input.Length);
-            foreach(var s in TextUtility.GetCharacters(input)) {
-                if(s.Length == 1) {
-                    if(KatakanaFullToHalfMap.TryGetValue(s[0], out var normal)) {
-                        sb.Append(normal);
-                    } else if(DakutenKatakanaFullToHalfMap.TryGetValue(s[0], out var dakuten)) {
-                        sb.Append(dakuten);
-                    } else {
-                        sb.Append(s);
-                    }
-                } else {
-                    sb.Append(s);
-                }
-            }
+            return ConvertCore(input, new TextConvertDelegate[] {
+                ConvertZenkakuKatakanaToHankakuKatakanaCore
+            });
 
-            return sb.ToString();
+            //var sb = new StringBuilder(input.Length);
+            //foreach(var s in TextUtility.GetCharacters(input)) {
+            //    if(s.Length == 1) {
+            //        if(KatakanaFullToHalfMap.TryGetValue(s[0], out var normal)) {
+            //            sb.Append(normal);
+            //        } else if(DakutenKatakanaFullToHalfMap.TryGetValue(s[0], out var dakuten)) {
+            //            sb.Append(dakuten);
+            //        } else {
+            //            sb.Append(s);
+            //        }
+            //    } else {
+            //        sb.Append(s);
+            //    }
+            //}
+
+            //return sb.ToString();
         }
         #endregion
     }
