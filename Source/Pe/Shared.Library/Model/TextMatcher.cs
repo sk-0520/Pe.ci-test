@@ -19,6 +19,8 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 
         Dictionary<char, char> _halfwidthKatakanaDakutenMap;
         Dictionary<char, char> _halfwidthKatakanaHandakutenMap;
+        IDictionary<char, char> _katakanaFullToHalfMap;
+        IDictionary<char, string> _dakutenKatakanaFullToHalfMap;
         #endregion
 
         #region property
@@ -89,6 +91,115 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
             }
         }
 
+        protected virtual IDictionary<char, char> KatakanaFullToHalfMap
+        {
+            get
+            {
+                if(this._katakanaFullToHalfMap == null) {
+                    this._katakanaFullToHalfMap = new Dictionary<char, char>() {
+                        ['ア'] = 'ｱ',
+                        ['イ'] = 'ｲ',
+                        ['ウ'] = 'ｳ',
+                        ['エ'] = 'ｴ',
+                        ['オ'] = 'ｵ',
+                        ['カ'] = 'ｶ',
+                        ['キ'] = 'ｷ',
+                        ['ク'] = 'ｸ',
+                        ['ケ'] = 'ｹ',
+                        ['コ'] = 'ｺ',
+                        ['サ'] = 'ｻ',
+                        ['シ'] = 'ｼ',
+                        ['ス'] = 'ｽ',
+                        ['セ'] = 'ｾ',
+                        ['ソ'] = 'ｿ',
+                        ['タ'] = 'ﾀ',
+                        ['チ'] = 'ﾁ',
+                        ['ツ'] = 'ﾂ',
+                        ['テ'] = 'ﾃ',
+                        ['ト'] = 'ﾄ',
+                        ['ナ'] = 'ﾅ',
+                        ['ニ'] = 'ﾆ',
+                        ['ヌ'] = 'ﾇ',
+                        ['ネ'] = 'ﾈ',
+                        ['ノ'] = 'ﾉ',
+                        ['ハ'] = 'ﾊ',
+                        ['ヒ'] = 'ﾋ',
+                        ['フ'] = 'ﾌ',
+                        ['ヘ'] = 'ﾍ',
+                        ['ホ'] = 'ﾎ',
+                        ['マ'] = 'ﾏ',
+                        ['ミ'] = 'ﾐ',
+                        ['ム'] = 'ﾑ',
+                        ['メ'] = 'ﾒ',
+                        ['モ'] = 'ﾓ',
+                        ['ヤ'] = 'ﾔ',
+                        ['ユ'] = 'ﾕ',
+                        ['ヨ'] = 'ﾖ',
+                        ['ラ'] = 'ﾗ',
+                        ['リ'] = 'ﾘ',
+                        ['ル'] = 'ﾙ',
+                        ['レ'] = 'ﾚ',
+                        ['ロ'] = 'ﾛ',
+                        ['ワ'] = 'ﾜ',
+                        ['ヰ'] = 'ｲ',
+                        ['ヱ'] = 'ｴ',
+                        ['ヲ'] = 'ｦ',
+                        ['ン'] = 'ﾝ',
+                        ['ァ'] = 'ｧ',
+                        ['ィ'] = 'ｨ',
+                        ['ゥ'] = 'ｩ',
+                        ['ェ'] = 'ｪ',
+                        ['ォ'] = 'ｫ',
+                        ['ャ'] = 'ｬ',
+                        ['ュ'] = 'ｭ',
+                        ['ョ'] = 'ｮ',
+                        ['ﾞ'] = 'ﾞ',
+                        ['ﾟ'] = 'ﾟ',
+                    };
+                }
+
+                return this._katakanaFullToHalfMap;
+            }
+        }
+
+        protected virtual IDictionary<char, string> DakutenKatakanaFullToHalfMap
+        {
+            get
+            {
+                if(this._dakutenKatakanaFullToHalfMap == null) {
+                    this._dakutenKatakanaFullToHalfMap = new Dictionary<char, string>() {
+                        ['ガ'] = "ｶﾞ",
+                        ['ギ'] = "ｷﾞ",
+                        ['グ'] = "ｸﾞ",
+                        ['ゲ'] = "ｹﾞ",
+                        ['ゴ'] = "ｺﾞ",
+                        ['ザ'] = "ｻﾞ",
+                        ['ジ'] = "ｼﾞ",
+                        ['ズ'] = "ｽﾞ",
+                        ['ゼ'] = "ｾﾞ",
+                        ['ゾ'] = "ｿﾞ",
+                        ['ダ'] = "ﾀﾞ",
+                        ['ヂ'] = "ﾁﾞ",
+                        ['ヅ'] = "ﾂﾞ",
+                        ['デ'] = "ﾃﾞ",
+                        ['ド'] = "ﾄﾞ",
+                        ['バ'] = "ﾊﾞ",
+                        ['ビ'] = "ﾋﾞ",
+                        ['ブ'] = "ﾌﾞ",
+                        ['ベ'] = "ﾍﾞ",
+                        ['ボ'] = "ﾎﾞ",
+                        ['パ'] = "ﾊﾟ",
+                        ['ピ'] = "ﾋﾟ",
+                        ['プ'] = "ﾌﾟ",
+                        ['ペ'] = "ﾍﾟ",
+                        ['ポ'] = "ﾎﾟ",
+                        ['ヴ'] = "ｳﾞ",
+                    };
+                }
+
+                return this._dakutenKatakanaFullToHalfMap;
+            }
+        }
         #endregion
 
         #region function
@@ -271,6 +382,30 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
                         i += 1;
                     } else {
                         sb.Append(normalMap[s[0]]);
+                    }
+                } else {
+                    sb.Append(s);
+                }
+            }
+
+            return sb.ToString();
+        }
+
+        public string ConvertZenkakuKatakanaToHankakuKatakana(string input)
+        {
+            if(input == null) {
+                throw new ArgumentNullException(nameof(input));
+            }
+
+            var sb = new StringBuilder(input.Length);
+            foreach(var s in TextUtility.GetCharacters(input)) {
+                if(s.Length == 1) {
+                    if(KatakanaFullToHalfMap.TryGetValue(s[0], out var normal)) {
+                        sb.Append(normal);
+                    } else if(DakutenKatakanaFullToHalfMap.TryGetValue(s[0], out var dakuten)) {
+                        sb.Append(dakuten);
+                    } else {
+                        sb.Append(s);
                     }
                 } else {
                     sb.Append(s);

@@ -41,7 +41,7 @@ namespace Shared.Library.Test.Model
 
 
         [TestMethod]
-        public void ConvertKatakaToHiragana_Test_Null()
+        public void ConvertKatakaToHiraganaTest_Null()
         {
             var textMatcher = new TextMatcher();
             Assert.ThrowsException<ArgumentNullException>(() => textMatcher.ConvertKatakaToHiragana(null));
@@ -65,7 +65,7 @@ namespace Shared.Library.Test.Model
         [DataRow("ぁぃぅぇぉ", "ァィゥェォ")]
         [DataRow("ゃゅょ", "ャュョ")]
         [DataRow("ゕゖ", "ヵヶ")]
-        public void ConvertKatakaToHiragana_Normal(string test, string input)
+        public void ConvertKatakaToHiraganaTest_Normal(string test, string input)
         {
             var textMatcher = new TextMatcher();
             var result = textMatcher.ConvertKatakaToHiragana(input);
@@ -73,7 +73,7 @@ namespace Shared.Library.Test.Model
         }
 
         [TestMethod]
-        public void ConvertHankakuKatakanaToZenkakuKatakana_Null()
+        public void ConvertHankakuKatakanaToZenkakuKatakanaTest_Null()
         {
             var textMatcher = new TextMatcher();
             Assert.ThrowsException<ArgumentNullException>(() => textMatcher.ConvertHankakuKatakanaToZenkakuKatakana(null));
@@ -108,12 +108,55 @@ namespace Shared.Library.Test.Model
         [DataRow("ア゚", "ｱﾟ")]
         [DataRow("ア゙ﾞ", "ｱﾞﾞ")]
         [DataRow("ア゚ﾟ", "ｱﾟﾟ")]
-        public void ConvertHankakuKatakanaToZenkakuKatakana_Normal(string test, string input)
+        public void ConvertHankakuKatakanaToZenkakuKatakanaTest_Normal(string test, string input)
         {
             var textMatcher = new TextMatcher();
             var result = textMatcher.ConvertHankakuKatakanaToZenkakuKatakana(input);
             Assert.AreEqual(test, result);
         }
 
+        [TestMethod]
+        public void ConvertZenkakuKatakanaToHankakuKatakanaTest_Null()
+        {
+            var textMatcher = new TextMatcher();
+            Assert.ThrowsException<ArgumentNullException>(() => textMatcher.ConvertZenkakuKatakanaToHankakuKatakana(null));
+        }
+
+        [TestMethod]
+        [DataRow("", "")]
+        [DataRow("a", "a")]
+        [DataRow("あ", "あ")]
+        [DataRow("ｱ", "ア")]
+        [DataRow("ｱｲｳｴｵ", "アイウエオ")]
+        [DataRow("ｶｷｸｹｺ", "カキクケコ")]
+        [DataRow("ｻｼｽｾｿ", "サシスセソ")]
+        [DataRow("ﾀﾁﾂﾃﾄ", "タチツテト")]
+        [DataRow("ﾅﾆﾇﾈﾉ", "ナニヌネノ")]
+        [DataRow("ﾊﾋﾌﾍﾎ", "ハヒフヘホ")]
+        [DataRow("ﾏﾐﾑﾒﾓ", "マミムメモ")]
+        [DataRow("ﾔﾕﾖ", "ヤユヨ")]
+        [DataRow("ﾗﾘﾙﾚﾛ", "ラリルレロ")]
+        [DataRow("ﾜｦﾝ", "ワヲン")]
+        [DataRow("ｧｨｩｪｫ", "ァィゥェォ")]
+        [DataRow("ｬｭｮ", "ャュョ")]
+        [DataRow("ｶﾞｷﾞｸﾞｹﾞｺﾞ", "ガギグゲゴ")]
+        [DataRow("ｻﾞｼﾞｽﾞｾﾞｿﾞ", "ザジズゼゾ")]
+        [DataRow("ﾀﾞﾁﾞﾂﾞﾃﾞﾄﾞ", "ダヂヅデド")]
+        [DataRow("ﾊﾞﾋﾞﾌﾞﾍﾞﾎﾞ", "バビブベボ")]
+        [DataRow("ﾊﾟﾋﾟﾌﾟﾍﾟﾎﾟ", "パピプペポ")]
+        [DataRow("ｳﾞ", "ヴ")]
+        [DataRow("ﾞ", "ﾞ")]
+        [DataRow("ﾟ", "ﾟ")]
+        // これどうしようかねぇ
+//        [DataRow("ｱﾞ", "ア゙")]
+//        [DataRow("ｱﾟ", "ア゚")]
+//        [DataRow("ｱﾞﾞ", "ア゙ﾞ")]
+//        [DataRow("ｱﾟﾟ", "ア゚ﾟ")]
+        public void ConvertZenkakuKatakanaToHankakuKatakanaTest_Normal(string test, string input)
+        {
+            var textMatcher = new TextMatcher();
+            var result = textMatcher.ConvertZenkakuKatakanaToHankakuKatakana(input);
+            Assert.AreEqual(test, result);
+        }
     }
 }
