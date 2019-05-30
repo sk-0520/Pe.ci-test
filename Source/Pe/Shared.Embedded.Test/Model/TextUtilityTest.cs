@@ -95,6 +95,25 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Embedded.Test.Model
         }
 
         [TestMethod]
+        [DataRow(0, "")]
+        [DataRow(1, "a")]
+        [DataRow(1, "あ")]
+        [DataRow(1, "亜")]
+        [DataRow(2, "ab")]
+        [DataRow(2, "あい")]
+        [DataRow(2, "亜伊")]
+        [DataRow(5, "ァｲu工ぉ")]
+        [DataRow(1, "〇")]
+        [DataRow(1, "⛄")]
+        [DataRow(1, "🐎")]
+        [DataRow(2, "🐎🐎")]
+        public void GetCharactersText(int count, string text)
+        {
+            var chars = TextUtility.GetCharacters(text);
+            Assert.AreEqual(count, chars.Count());
+        }
+
+        [TestMethod]
         [DataRow("", "")]
         [DataRow("", null)]
         [DataRow("a", " a")]

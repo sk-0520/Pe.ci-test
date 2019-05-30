@@ -139,6 +139,14 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Embedded.Model
             return si.LengthInTextElements;
         }
 
+        public static IEnumerable<string> GetCharacters(string s)
+        {
+            var textElements = StringInfo.GetTextElementEnumerator(s);
+            while(textElements.MoveNext()) {
+                yield return (string)textElements.Current;
+            }
+        }
+
         public static string SafeTrim(string s)
         {
             if(s == null) {

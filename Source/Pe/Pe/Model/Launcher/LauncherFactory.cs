@@ -98,6 +98,11 @@ namespace ContentTypeTextNet.Pe.Main.Model.Launcher
             };
         }
 
+        public string ToCode(string source)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
     }
 }
