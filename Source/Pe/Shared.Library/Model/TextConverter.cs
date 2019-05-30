@@ -9,6 +9,44 @@ using ContentTypeTextNet.Pe.Library.Shared.Embedded.Model;
 
 namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 {
+    public interface IResultBuffer
+    {
+        #region function
+
+        void Append(char c);
+        void Append(string s);
+
+        #endregion
+    }
+
+    internal class ResultBuffer : IResultBuffer
+    {
+        public ResultBuffer(StringBuilder buffer)
+        {
+            Buffer = buffer;
+        }
+
+        #region property
+
+        StringBuilder Buffer { get; }
+        public bool IsAppend { get; private set; }
+        #endregion
+
+        #region IResultBuffer
+        public void Append(char c)
+        {
+            Buffer.Append(c);
+            IsAppend = true;
+        }
+
+        public void Append(string s)
+        {
+            Buffer.Append(s);
+            IsAppend = true;
+        }
+        #endregion
+    }
+
     /// <summary>
     ///
     /// </summary>
@@ -24,10 +62,9 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         /// <param name="currentIndex"></param>
         /// <param name="isLastIndex"></param>
         /// <param name="currentText"></param>
-        /// <param name="buffer"></param>
-        /// <param name="appendBuffer"><param name="buffer">への書き込みを行ったか。書き込んでいない場合次の奴に処理をまわす。</param>
-        /// <returns>次回読み飛ばし数。<param name="appendBuffer" />が真の場合に使用される</returns>
-        protected delegate int TextConvertDelegate(IReadOnlyList<string> characterBlocks, int currentIndex, bool isLastIndex, string currentText, StringBuilder buffer, out bool appendBuffer);
+        /// <param name="resultBuffer"></param>
+        /// <returns>次回読み飛ばし数。<param name="resultBuffer" />に書き込んだ場合にのみ使用される。</returns>
+        protected delegate int TextConvertDelegate(IReadOnlyList<string> characterBlocks, int currentIndex, bool isLastIndex, string currentText, IResultBuffer resultBuffer);
 
         #endregion
 
@@ -302,15 +339,15 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
             var chars = TextUtility.GetCharacters(input).ToArray();
             for(var i = 0; i < chars.Length; i++) {
                 var isLastIndex = i == chars.Length - 1;
-                var appendBuffer = false;
                 var skip = 0;
+                var resultBuffer = new ResultBuffer(sb);
                 foreach(var converter in converters) {
-                    skip = converter(chars, i, isLastIndex, chars[i], sb, out appendBuffer);
-                    if(appendBuffer) {
+                    skip = converter(chars, i, isLastIndex, chars[i], resultBuffer);
+                    if(resultBuffer.IsAppend) {
                         break;
                     }
                 }
-                if(!appendBuffer) {
+                if(!resultBuffer.IsAppend) {
                     sb.Append(chars[i]);
                 }
                 i += skip;
@@ -342,12 +379,10 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         //    return ConvertCore(input, checker, (sb, s) => sb.Append(converter(s)));
         //}
 
-        int ConvertHiraganaToKatakaCore(IReadOnlyList<string> characterBlocks, int currentIndex, bool isLastIndex, string currentText, StringBuilder buffer, out bool appendBuffer)
+        int ConvertHiraganaToKatakaCore(IReadOnlyList<string> characterBlocks, int currentIndex, bool isLastIndex, string currentText, IResultBuffer resultBuffer)
         {
-            appendBuffer = false;
             if(currentText.Length == 1 && IsHiragana(currentText[0])) {
-                buffer.Append((char)(currentText[0] + 'ァ' - 'ぁ'));
-                appendBuffer = true;
+                resultBuffer.Append((char)(currentText[0] + 'ァ' - 'ぁ'));
             }
 
             return 0;
@@ -369,12 +404,10 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
             //return ConvertCore(input, s => s.Length == 1 && IsHiragana(s[0]), s => (char)(s[0] + 'ァ' - 'ぁ'));
         }
 
-        int ConvertKatakaToHiraganaCore(IReadOnlyList<string> characterBlocks, int currentIndex, bool isLastIndex, string currentText, StringBuilder buffer, out bool appendBuffer)
+        int ConvertKatakaToHiraganaCore(IReadOnlyList<string> characterBlocks, int currentIndex, bool isLastIndex, string currentText, IResultBuffer resultBuffer)
         {
-            appendBuffer = false;
             if(currentText.Length == 1 && IsKatakana(currentText[0])) {
-                buffer.Append((char)(currentText[0] + 'ぁ' - 'ァ'));
-                appendBuffer = true;
+                resultBuffer.Append((char)(currentText[0] + 'ぁ' - 'ァ'));
             }
 
             return 0;
@@ -399,11 +432,10 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 
 
 
-        int ConvertHankakuKatakanaToZenkakuKatakanaCore(IReadOnlyList<string> characterBlocks, int currentIndex, bool isLastIndex, string currentText, StringBuilder buffer, out bool appendBuffer)
+        int ConvertHankakuKatakanaToZenkakuKatakanaCore(IReadOnlyList<string> characterBlocks, int currentIndex, bool isLastIndex, string currentText, IResultBuffer resultBuffer)
         {
             var last = isLastIndex;
             var s = currentText;
-            var sb = buffer;
             var chars = characterBlocks;
             var i = currentIndex;
             var skip = 0;
@@ -412,37 +444,37 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
                     if(HalfwidthKatakanaDakutenRange.IsIn(s[0])) {
                         switch(s[0]) {
                             case 'ﾞ':
-                                sb.Append('ﾞ');
+                                resultBuffer.Append('ﾞ');
                                 break;
 
                             case 'ﾟ':
-                                sb.Append('ﾟ');
+                                resultBuffer.Append('ﾟ');
                                 break;
 
                             default:
                                 throw new NotImplementedException();
                         }
                     } else {
-                        sb.Append(KatakanaHalfToFullMap[s[0]]);
+                        resultBuffer.Append(KatakanaHalfToFullMap[s[0]]);
                     }
                 } else if(chars[i + 1].Length == 1 && HalfwidthKatakanaDakutenRange.IsIn(chars[i + 1][0])) {
                     // 合体する必要あるかも！
                     switch(chars[i + 1][0]) {
                         case 'ﾟ':
                             if(IsHalfwidthKatakanaHandakutenParent(s[0])) {
-                                sb.Append(HalfwidthKatakanaHandakutenMap[s[0]]);
+                                resultBuffer.Append(HalfwidthKatakanaHandakutenMap[s[0]]);
                             } else {
-                                sb.Append(KatakanaHalfToFullMap[s[0]]);
-                                sb.Append('\u309A'); // 結合文字
+                                resultBuffer.Append(KatakanaHalfToFullMap[s[0]]);
+                                resultBuffer.Append('\u309A'); // 結合文字
                             }
                             break;
 
                         case 'ﾞ':
                             if(IsHalfwidthKatakanaDakutenParent(s[0])) {
-                                sb.Append(HalfwidthKatakanaDakutenMap[s[0]]);
+                                resultBuffer.Append(HalfwidthKatakanaDakutenMap[s[0]]);
                             } else {
-                                sb.Append(KatakanaHalfToFullMap[s[0]]);
-                                sb.Append('\u3099'); // 結合文字
+                                resultBuffer.Append(KatakanaHalfToFullMap[s[0]]);
+                                resultBuffer.Append('\u3099'); // 結合文字
                             }
                             break;
 
@@ -451,11 +483,8 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
                     }
                     skip = 1;
                 } else {
-                    sb.Append(KatakanaHalfToFullMap[s[0]]);
+                    resultBuffer.Append(KatakanaHalfToFullMap[s[0]]);
                 }
-                appendBuffer = true;
-            } else {
-                appendBuffer = false;
             }
 
             return skip;
@@ -536,16 +565,13 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         }
 
 
-        int ConvertZenkakuKatakanaToHankakuKatakanaCore(IReadOnlyList<string> characterBlocks, int currentIndex, bool isLastIndex, string currentText, StringBuilder buffer, out bool appendBuffer)
+        int ConvertZenkakuKatakanaToHankakuKatakanaCore(IReadOnlyList<string> characterBlocks, int currentIndex, bool isLastIndex, string currentText, IResultBuffer resultBuffer)
         {
-            appendBuffer = false;
             if(currentText.Length == 1) {
                 if(KatakanaFullToHalfMap.TryGetValue(currentText[0], out var normal)) {
-                    buffer.Append(normal);
-                    appendBuffer = true;
+                    resultBuffer.Append(normal);
                 } else if(DakutenKatakanaFullToHalfMap.TryGetValue(currentText[0], out var dakuten)) {
-                    buffer.Append(dakuten);
-                    appendBuffer = true;
+                    resultBuffer.Append(dakuten);
                 }
             }
 
