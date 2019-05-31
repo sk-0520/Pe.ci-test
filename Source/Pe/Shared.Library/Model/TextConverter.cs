@@ -527,6 +527,23 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
                 ConvertZenkakuKatakanaToHankakuKatakanaCore
             });
         }
+
+        int ConvertAsciiAlphabetToZenkakuAlphabetCore(IReadOnlyList<string> characterBlocks, int currentIndex, bool isLastIndex, string currentText, IResultBuffer resultBuffer)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string ConvertAsciiAlphabetToZenkakuAlphabet(string input)
+        {
+            if(input == null) {
+                throw new ArgumentNullException(nameof(input));
+            }
+
+            return ConvertCore(input, new TextConvertDelegate[] {
+                ConvertAsciiAlphabetToZenkakuAlphabetCore
+            });
+        }
+
         #endregion
     }
 }

@@ -157,5 +157,12 @@ namespace Shared.Library.Test.Model
             var result = textMatcher.ConvertZenkakuKatakanaToHankakuKatakana(input);
             Assert.AreEqual(test, result);
         }
+
+        [TestMethod]
+        public void ConvertAsciiAlphabetToZenkakuAlphabetTest_Null()
+        {
+            var textMatcher = new TextConverter();
+            Assert.ThrowsException<ArgumentNullException>(() => textMatcher.ConvertAsciiAlphabetToZenkakuAlphabet(null));
+        }
     }
 }
