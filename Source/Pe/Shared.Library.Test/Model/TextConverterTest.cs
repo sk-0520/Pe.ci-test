@@ -164,5 +164,21 @@ namespace Shared.Library.Test.Model
             var textMatcher = new TextConverter();
             Assert.ThrowsException<ArgumentNullException>(() => textMatcher.ConvertAsciiAlphabetToZenkakuAlphabet(null));
         }
+
+        [TestMethod]
+        [DataRow("", "")]
+        [DataRow("ａ", "a")]
+        [DataRow("Ａ", "A")]
+        [DataRow("1", "1")]
+        [DataRow("１", "１")]
+        [DataRow("ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ", "abcdefghijklmnopqrstuvwxyz")]
+        [DataRow("ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ", "ABCDEFGHIJKLMNOPQRSTUVWXYZ")]
+        public void ConvertAsciiAlphabetToZenkakuAlphabet_Normal(string test, string input)
+        {
+            var textMatcher = new TextConverter();
+            var result = textMatcher.ConvertAsciiAlphabetToZenkakuAlphabet(input);
+            Assert.AreEqual(test, result);
+        }
+
     }
 }

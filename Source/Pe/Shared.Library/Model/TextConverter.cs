@@ -332,6 +332,12 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         protected virtual bool IsHalfwidthKatakanaDakutenParent(char c) => ('ｶ' <= c && c <= 'ｺ') || ('ｻ' <= c && c <= 'ｿ') || ('ﾀ' <= c && c <= 'ﾄ') || ('ﾊ' <= c && c <= 'ﾎ') || (c == 'ｳ');
         protected virtual bool IsHalfwidthKatakanaHandakutenParent(char c) => ('ﾊ' <= c && c <= 'ﾎ');
 
+        protected virtual bool IsAsciiAlphabetUpper(char c) => ('A' <= c && c <= 'Z');
+        protected virtual bool IsAsciiAlphabetLower(char c) => ('a' <= c && c <= 'z');
+        protected virtual bool IsAsciiAlphabet(char c) => IsAsciiAlphabetUpper(c) || IsAsciiAlphabetLower(c);
+        protected virtual bool IsFullAlphabetUpper(char c) => ('Ａ' <= c && c <= 'Ｚ');
+        protected virtual bool IsFullAlphabetLower(char c) => ('ａ' <= c && c <= 'ｚ');
+        protected virtual bool IsFullAlphabet(char c) => IsFullAlphabetUpper(c) || IsFullAlphabetLower(c);
 
         string ConvertCore(string input, IEnumerable<TextConvertDelegate> converters)
         {
@@ -530,7 +536,19 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
 
         int ConvertAsciiAlphabetToZenkakuAlphabetCore(IReadOnlyList<string> characterBlocks, int currentIndex, bool isLastIndex, string currentText, IResultBuffer resultBuffer)
         {
-            throw new NotImplementedException();
+            if(currentText.Length == 1) {
+                var c = currentText[0];
+                if(IsAsciiAlphabet(c)) {
+                    if(IsAsciiAlphabetUpper(c)) {
+                        resultBuffer.Append((char)(c - 'A' + 'Ａ'));
+                    } else {
+                        Debug.Assert(IsAsciiAlphabetLower(c));
+                        resultBuffer.Append((char)(c - 'a' + 'ａ'));
+                    }
+                }
+            }
+
+            return 0;
         }
 
         public string ConvertAsciiAlphabetToZenkakuAlphabet(string input)
