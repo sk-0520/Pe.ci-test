@@ -202,5 +202,47 @@ namespace Shared.Library.Test.Model
             Assert.AreEqual(test, result);
         }
 
+        [TestMethod]
+        public void ConvertAsciiDigitToZenkakuDigitTest_Null()
+        {
+            var textMatcher = new TextConverter();
+            Assert.ThrowsException<ArgumentNullException>(() => textMatcher.ConvertAsciiDigitToZenkakuDigit(null));
+        }
+
+        [TestMethod]
+        [DataRow("", "")]
+        [DataRow("ａ", "ａ")]
+        [DataRow("Ａ", "Ａ")]
+        [DataRow("１", "1")]
+        [DataRow("１", "１")]
+        [DataRow("０１２３４５６７８９", "0123456789")]
+        public void ConvertAsciiDigitToZenkakuDigitTest_Normal(string test, string input)
+        {
+            var textMatcher = new TextConverter();
+            var result = textMatcher.ConvertAsciiDigitToZenkakuDigit(input);
+            Assert.AreEqual(test, result);
+        }
+
+        [TestMethod]
+        public void ConvertZenkakuDigitToAsciiDigitTest_Null()
+        {
+            var textMatcher = new TextConverter();
+            Assert.ThrowsException<ArgumentNullException>(() => textMatcher.ConvertZenkakuDigitToAsciiDigit(null));
+        }
+
+        [TestMethod]
+        [DataRow("", "")]
+        [DataRow("ａ", "ａ")]
+        [DataRow("Ａ", "Ａ")]
+        [DataRow("1", "1")]
+        [DataRow("1", "１")]
+        [DataRow("0123456789", "０１２３４５６７８９")]
+        public void ConvertZenkakuDigitToAsciiDigitTest_Normal(string test, string input)
+        {
+            var textMatcher = new TextConverter();
+            var result = textMatcher.ConvertZenkakuDigitToAsciiDigit(input);
+            Assert.AreEqual(test, result);
+        }
+
     }
 }

@@ -339,6 +339,9 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
         protected virtual bool IsFullAlphabetLower(char c) => ('ａ' <= c && c <= 'ｚ');
         protected virtual bool IsFullAlphabet(char c) => IsFullAlphabetUpper(c) || IsFullAlphabetLower(c);
 
+        protected virtual bool IsAsciiDigit(char c) => ('0' <= c && c <= '9');
+        protected virtual bool IsFullDigit(char c) => ('０' <= c && c <= '９');
+
         string ConvertCore(string input, IEnumerable<TextConvertDelegate> converters)
         {
             var sb = new StringBuilder(input.Length);
@@ -551,6 +554,11 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
             return 0;
         }
 
+        /// <summary>
+        /// 半角アルファベットを全角アルファベットに変換。
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns>半角アルファベット以外はそのまま。</returns>
         public string ConvertAsciiAlphabetToZenkakuAlphabet(string input)
         {
             if(input == null) {
@@ -579,6 +587,11 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
             return 0;
         }
 
+        /// <summary>
+        /// 全角アルファベットを半角アルファベットに変換。
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns>全角アルファベット以外はそのまま。</returns>
         public string ConvertZenkakuAlphabetToAsciiAlphabet(string input)
         {
             if(input == null) {
@@ -589,6 +602,63 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
                 ConvertZenkakuAlphabetToAsciiAlphabetCore
             });
         }
+
+        int ConvertAsciiDigitToZenkakuDigitCore(IReadOnlyList<string> characterBlocks, int currentIndex, bool isLastIndex, string currentText, IResultBuffer resultBuffer)
+        {
+            if(currentText.Length == 1) {
+                var c = currentText[0];
+                if(IsAsciiDigit(c)) {
+                    resultBuffer.Append((char)(c - '0' + '０'));
+                }
+            }
+
+            return 0;
+        }
+
+        /// <summary>
+        /// 半角数値を全角数値に変換。
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns>半角数値以外はそのまま。</returns>
+        public string ConvertAsciiDigitToZenkakuDigit(string input)
+        {
+            if(input == null) {
+                throw new ArgumentNullException(nameof(input));
+            }
+
+            return ConvertCore(input, new TextConvertDelegate[] {
+                ConvertAsciiDigitToZenkakuDigitCore
+            });
+        }
+
+        int ConvertZenkakuDigitToAsciiDigitCore(IReadOnlyList<string> characterBlocks, int currentIndex, bool isLastIndex, string currentText, IResultBuffer resultBuffer)
+        {
+            if(currentText.Length == 1) {
+                var c = currentText[0];
+                if(IsFullDigit(c)) {
+                    resultBuffer.Append((char)(c - '０' + '0'));
+                }
+            }
+
+            return 0;
+        }
+
+        /// <summary>
+        /// 全角数値を半角数値に変換。
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns>全角数値以外はそのまま。</returns>
+        public string ConvertZenkakuDigitToAsciiDigit(string input)
+        {
+            if(input == null) {
+                throw new ArgumentNullException(nameof(input));
+            }
+
+            return ConvertCore(input, new TextConvertDelegate[] {
+                ConvertZenkakuDigitToAsciiDigitCore
+            });
+        }
+
         #endregion
     }
 }
