@@ -512,6 +512,11 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
             return 0;
         }
 
+        /// <summary>
+        /// 全角カタカナを半角カタカナに変換。
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns>全角カタカナ以外はそのまま。</returns>
         public string ConvertZenkakuKatakanaToHankakuKatakana(string input)
         {
             if(input == null) {
