@@ -562,6 +562,33 @@ namespace ContentTypeTextNet.Pe.Library.Shared.Library.Model
             });
         }
 
+        int ConvertZenkakuAlphabetToAsciiAlphabetCore(IReadOnlyList<string> characterBlocks, int currentIndex, bool isLastIndex, string currentText, IResultBuffer resultBuffer)
+        {
+            if(currentText.Length == 1) {
+                var c = currentText[0];
+                if(IsFullAlphabet(c)) {
+                    if(IsFullAlphabetUpper(c)) {
+                        resultBuffer.Append((char)(c - 'Ａ' + 'A'));
+                    } else {
+                        Debug.Assert(IsFullAlphabetLower(c));
+                        resultBuffer.Append((char)(c - 'ａ' + 'a'));
+                    }
+                }
+            }
+
+            return 0;
+        }
+
+        public string ConvertZenkakuAlphabetToAsciiAlphabet(string input)
+        {
+            if(input == null) {
+                throw new ArgumentNullException(nameof(input));
+            }
+
+            return ConvertCore(input, new TextConvertDelegate[] {
+                ConvertZenkakuAlphabetToAsciiAlphabetCore
+            });
+        }
         #endregion
     }
 }

@@ -173,10 +173,32 @@ namespace Shared.Library.Test.Model
         [DataRow("１", "１")]
         [DataRow("ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ", "abcdefghijklmnopqrstuvwxyz")]
         [DataRow("ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ", "ABCDEFGHIJKLMNOPQRSTUVWXYZ")]
-        public void ConvertAsciiAlphabetToZenkakuAlphabet_Normal(string test, string input)
+        public void ConvertAsciiAlphabetToZenkakuAlphabetTest_Normal(string test, string input)
         {
             var textMatcher = new TextConverter();
             var result = textMatcher.ConvertAsciiAlphabetToZenkakuAlphabet(input);
+            Assert.AreEqual(test, result);
+        }
+
+        [TestMethod]
+        public void ConvertZenkakuAlphabetToAsciiAlphabetTest_Null()
+        {
+            var textMatcher = new TextConverter();
+            Assert.ThrowsException<ArgumentNullException>(() => textMatcher.ConvertZenkakuAlphabetToAsciiAlphabet(null));
+        }
+
+        [TestMethod]
+        [DataRow("", "")]
+        [DataRow("a", "ａ")]
+        [DataRow("A", "Ａ")]
+        [DataRow("1", "1")]
+        [DataRow("１", "１")]
+        [DataRow("abcdefghijklmnopqrstuvwxyz", "ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ")]
+        [DataRow("ABCDEFGHIJKLMNOPQRSTUVWXYZ", "ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ")]
+        public void ConvertZenkakuAlphabetToAsciiAlphabetTest_Normal(string test, string input)
+        {
+            var textMatcher = new TextConverter();
+            var result = textMatcher.ConvertZenkakuAlphabetToAsciiAlphabet(input);
             Assert.AreEqual(test, result);
         }
 
