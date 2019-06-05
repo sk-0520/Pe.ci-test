@@ -70,6 +70,23 @@
 
         </GroupBox>
       </DataTemplate>
+
+      <DataTemplate DataType="{x:Type app_viewmodel_customize_launcher_item:CustomizeLauncherFileViewModel}">
+        <GroupBox Style="{StaticResource HeaderGroupBox}" Header="file">
+          <StackPanel>
+            <Grid>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Style="{StaticResource LabelDefinition}" />
+                <ColumnDefinition Style="{StaticResource ContentDefinition}" />
+              </Grid.ColumnDefinitions>
+
+              <Label Grid.Column="{StaticResource LabelColumn}" Content="path" />
+              <TextBox Grid.Column="{StaticResource ContentColumn}"  />
+            </Grid>
+
+          </StackPanel>
+        </GroupBox>
+      </DataTemplate>
     </ItemsControl.Resources>
   </ItemsControl>
 
