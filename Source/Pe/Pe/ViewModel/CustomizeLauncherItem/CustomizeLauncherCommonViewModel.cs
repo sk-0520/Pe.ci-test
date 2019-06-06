@@ -17,6 +17,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.CustomizeLauncherItem
         string _name;
         string _code;
 
+        string _iconPath;
+
         #endregion
 
         public CustomizeLauncherCommonViewModel(CustomizeLauncherItemElement model, ILoggerFactory loggerFactory)
@@ -27,6 +29,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.CustomizeLauncherItem
 
         public Guid LauncherItemId => Model.LauncherItemId;
         public LauncherItemKind Kind => Model.Kind;
+        public IconData IconData => Model.IconData;
 
         public string Name
         {
@@ -38,6 +41,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.CustomizeLauncherItem
             get => this._code;
             set => SetProperty(ref this._code, value);
         }
+        public string IconPath
+        {
+            get => this._iconPath;
+            set => SetProperty(ref this._iconPath, value);
+        }
+
 
         #endregion
 
@@ -54,6 +63,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.CustomizeLauncherItem
         {
             Name = Model.Name;
             Code = Model.Code;
+            IconPath = IconData.ToString();
         }
 
         #endregion

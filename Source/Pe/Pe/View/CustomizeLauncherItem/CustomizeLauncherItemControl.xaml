@@ -67,6 +67,16 @@
               <TextBox Grid.Column="{StaticResource ContentColumn}" Text="{Binding Code}" />
             </Grid>
 
+            <Grid>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Style="{StaticResource LabelDefinition}" />
+                <ColumnDefinition Style="{StaticResource ContentDefinition}" />
+              </Grid.ColumnDefinitions>
+
+              <Label Grid.Column="{StaticResource LabelColumn}" Content="icon" />
+              <TextBox Grid.Column="{StaticResource ContentColumn}" Text="{Binding IconPath}" />
+            </Grid>
+
           </StackPanel>
 
         </GroupBox>

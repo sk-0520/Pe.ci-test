@@ -61,6 +61,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.CustomizeLauncherItem
         public string Code { get; private set; }
         public LauncherItemKind Kind { get; private set; }
 
+        public IconData IconData { get; private set; }
+
         #endregion
 
         #region function
@@ -74,6 +76,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.CustomizeLauncherItem
                 Name = launcherItemData.Name;
                 Code = launcherItemData.Code;
                 Kind = launcherItemData.Kind;
+                IconData = launcherItemData.Icon;
             }
         }
 
