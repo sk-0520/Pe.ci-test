@@ -27,7 +27,9 @@ namespace ContentTypeTextNet.Pe.Main
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-
+#if DEBUG
+            DebugStartup();
+#endif
             if(!ApplicationManager.Startup(this, e)) {
                 Shutdown();
                 return;

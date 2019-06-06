@@ -278,6 +278,10 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
             foreach(var viewShowStater in viewShowStaters) {
                 viewShowStater.StartView();
             }
+
+#if DEBUG
+            DebugExecute();
+#endif
         }
 
         void CloseViewsCore(WindowKind windowKind)
