@@ -92,6 +92,13 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             return Commander.QuerySingle<T>(statement, param);
         }
 
+        protected T SelectFirst<T>(DatabaseSelectStatementBuilder builder)
+        {
+            var statement = builder.BuildStatement();
+            var param = builder.Parameters;
+            return Commander.QueryFirst<T>(statement, param);
+        }
+
         protected IEnumerable<T> Select<T>(DatabaseSelectStatementBuilder builder)
         {
             var statement = builder.BuildStatement();

@@ -77,6 +77,14 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.CustomizeLauncherItem
             }
         }
 
+        public LauncherFileData LoadFileData()
+        {
+            using(var commander = MainDatabaseBarrier.WaitRead()) {
+                var dao = new LauncherFilesEntityDao(commander, StatementLoader, commander.Implementation, Logger.Factory);
+                return dao.SelectFile(LauncherItemId);
+            }
+        }
+
         #endregion
 
         #region ElementBase

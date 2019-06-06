@@ -23,6 +23,7 @@
       <sys:Int32 x:Key="LabelColumn">0</sys:Int32>
       <sys:Int32 x:Key="ContentColumn">1</sys:Int32>
 
+      <!--#region 共通 -->
       <DataTemplate DataType="{x:Type app_viewmodel_customize_launcher_item:CustomizeLauncherCommonViewModel}">
         <GroupBox Style="{StaticResource HeaderGroupBox}" Header="common">
           <StackPanel>
@@ -70,7 +71,9 @@
 
         </GroupBox>
       </DataTemplate>
+      <!--#endregion-->
 
+      <!--#region ファイル -->
       <DataTemplate DataType="{x:Type app_viewmodel_customize_launcher_item:CustomizeLauncherFileViewModel}">
         <GroupBox Style="{StaticResource HeaderGroupBox}" Header="file">
           <StackPanel>
@@ -81,12 +84,49 @@
               </Grid.ColumnDefinitions>
 
               <Label Grid.Column="{StaticResource LabelColumn}" Content="path" />
-              <TextBox Grid.Column="{StaticResource ContentColumn}"  />
+              <TextBox Grid.Column="{StaticResource ContentColumn}" Text="{Binding Path}" />
+            </Grid>
+
+            <Grid>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Style="{StaticResource LabelDefinition}" />
+                <ColumnDefinition Style="{StaticResource ContentDefinition}" />
+              </Grid.ColumnDefinitions>
+
+              <Label Grid.Column="{StaticResource LabelColumn}" Content="option" />
+              <TextBox Grid.Column="{StaticResource ContentColumn}" Text="{Binding Option}" />
+            </Grid>
+
+            <Grid>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Style="{StaticResource LabelDefinition}" />
+                <ColumnDefinition Style="{StaticResource ContentDefinition}" />
+              </Grid.ColumnDefinitions>
+
+              <Label Grid.Column="{StaticResource LabelColumn}" Content="dir" />
+              <TextBox Grid.Column="{StaticResource ContentColumn}" Text="{Binding WorkingDirectoryPath}" />
+            </Grid>
+
+            <Grid>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Style="{StaticResource LabelDefinition}" />
+                <ColumnDefinition Style="{StaticResource ContentDefinition}" />
+              </Grid.ColumnDefinitions>
+
+              <Label Grid.Column="{StaticResource LabelColumn}" Content="othes" />
+              <StackPanel Grid.Column="{StaticResource ContentColumn}">
+                <CheckBox IsChecked="{Binding IsEnabledCustomEnvironmentVariable}" Content="env" />
+                <CheckBox IsChecked="{Binding IsEnabledStandardInputOutput}" Content="stdio" />
+                <CheckBox IsChecked="{Binding RunAdministrator}" Content="admin" />
+              </StackPanel>
             </Grid>
 
           </StackPanel>
         </GroupBox>
       </DataTemplate>
+      <!--#endregion-->
+
+
     </ItemsControl.Resources>
   </ItemsControl>
 

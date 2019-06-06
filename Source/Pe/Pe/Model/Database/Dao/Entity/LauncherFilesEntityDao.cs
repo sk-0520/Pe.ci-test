@@ -89,7 +89,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
 
             builder.AddValue(Column.LauncherItemId, launcherItemId);
 
-            var dto = SelectSingle<LauncherFilesEntityDto>(builder);
+            var dto = SelectFirst<LauncherFilesEntityDto>(builder);
             var data = ConvertFromDto(dto);
             return data;
         }
