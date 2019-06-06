@@ -52,5 +52,31 @@ namespace ContentTypeTextNet.Pe.Main.View.CustomizeLauncherItem
 
         #endregion
 
+        #region function
+
+        void SetSyntaxHighlighting(ICSharpCode.AvalonEdit.TextEditor editor, System.IO.Stream stream)
+        {
+            var instance = global::ICSharpCode.AvalonEdit.Highlighting.HighlightingManager.Instance;
+            using(var reader = new System.Xml.XmlTextReader(stream)) {
+                var define = global::ICSharpCode.AvalonEdit.Highlighting.Xshd.HighlightingLoader.Load(reader, instance);
+                editor.SyntaxHighlighting = define;
+            }
+        }
+
+        #endregion
+
+        private void EnvUpdateEditor_Loaded(object sender, RoutedEventArgs e)
+        {
+            using(var stream = new System.IO.MemoryStream(Encoding.UTF8.GetBytes(Properties.Resources.File_EnvironmentVariable_Update))) {
+                SetSyntaxHighlighting((ICSharpCode.AvalonEdit.TextEditor)sender, stream);
+            }
+        }
+
+        private void EnvRemoveEditor_Loaded(object sender, RoutedEventArgs e)
+        {
+            using(var stream = new System.IO.MemoryStream(Encoding.UTF8.GetBytes(Properties.Resources.File_EnvironmentVariable_Remove))) {
+                SetSyntaxHighlighting((ICSharpCode.AvalonEdit.TextEditor)sender, stream);
+            }
+        }
     }
 }

@@ -19,7 +19,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
     // または Visual Studio のようなツールを使用して自動生成されました。
     // メンバーを追加または削除するには、.ResX ファイルを編集して、/str オプションと共に
     // ResGen を実行し直すか、または VS プロジェクトをビルドし直します。
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resources {
@@ -57,6 +57,41 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+        ///&lt;SyntaxDefinition xmlns=&quot;http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008&quot; name=&quot;EnvVar_Remove&quot;&gt;
+        ///
+        ///&lt;/SyntaxDefinition&gt;
+        /// に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string File_EnvironmentVariable_Remove {
+            get {
+                return ResourceManager.GetString("File_EnvironmentVariable_Remove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+        ///&lt;SyntaxDefinition xmlns=&quot;http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008&quot; name=&quot;EnvVar_Update&quot;&gt;
+        ///	&lt;Color name=&quot;Key&quot; fontWeight=&quot;bold&quot; foreground=&quot;Blue&quot; /&gt;
+        ///	&lt;Color name=&quot;Variable&quot; foreground=&quot;Maroon&quot; /&gt;
+        ///	&lt;RuleSet ignoreCase=&quot;true&quot;&gt;
+        ///		&lt;Rule color=&quot;NumberLiteral&quot;&gt;
+        ///			$
+        ///			\s*
+        ///			\w+
+        ///		&lt;/Rule&gt;
+        ///
+        ///	&lt;/RuleSet&gt;
+        ///&lt;/SyntaxDefinition&gt;
+        /// に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string File_EnvironmentVariable_Update {
+            get {
+                return ResourceManager.GetString("File_EnvironmentVariable_Update", resourceCulture);
             }
         }
     }

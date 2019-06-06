@@ -58,7 +58,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.CustomizeLauncherItem
             switch(Model.Kind) {
                 case LauncherItemKind.File:
                     yield return new CustomizeLauncherFileViewModel(Model, Logger.Factory);
+                    yield return new CustomizeLauncherEnvironmentVariableViewModel(Model, Logger.Factory);
                     break;
+
+                default:
+                    throw new NotImplementedException();
             }
         }
 

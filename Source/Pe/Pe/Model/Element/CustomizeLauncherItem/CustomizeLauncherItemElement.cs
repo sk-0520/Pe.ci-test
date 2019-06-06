@@ -62,6 +62,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.CustomizeLauncherItem
         public LauncherItemKind Kind { get; private set; }
 
         public IconData IconData { get; private set; }
+        public string Comment { get; private set; }
 
         #endregion
 
@@ -77,6 +78,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.CustomizeLauncherItem
                 Code = launcherItemData.Code;
                 Kind = launcherItemData.Kind;
                 IconData = launcherItemData.Icon;
+                Comment = launcherItemData.Comment;
             }
         }
 
@@ -85,6 +87,14 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.CustomizeLauncherItem
             using(var commander = MainDatabaseBarrier.WaitRead()) {
                 var dao = new LauncherFilesEntityDao(commander, StatementLoader, commander.Implementation, Logger.Factory);
                 return dao.SelectFile(LauncherItemId);
+            }
+        }
+
+        public IReadOnlyCollection<LauncherEnvironmentVariableItem> LoadEnvironmentVariableItems()
+        {
+            using(var commander = MainDatabaseBarrier.WaitRead()) {
+                var dao = new LauncherEnvVarsEntityDao(commander, StatementLoader, commander.Implementation, Logger.Factory);
+                return dao.SelectItems(LauncherItemId).ToList();
             }
         }
 

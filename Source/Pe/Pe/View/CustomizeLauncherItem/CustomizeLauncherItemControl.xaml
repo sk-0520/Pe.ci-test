@@ -136,6 +136,76 @@
       </DataTemplate>
       <!--#endregion-->
 
+      <!--#region コマンド -->
+      <!--#endregion -->
+
+      <!--#region スクリプト -->
+      <!--#endregion -->
+
+      <!--#region ディレクトリ -->
+      <!--#endregion -->
+
+      <!--#region 組み込み -->
+      <!--#endregion -->
+
+      <!--#region アドイン -->
+      <!--#endregion -->
+
+      <!--#region セパレータ(いるか？) -->
+      <!--#endregion -->
+
+      <!--#region 環境変数 -->
+      <DataTemplate DataType="{x:Type app_viewmodel_customize_launcher_item:CustomizeLauncherEnvironmentVariableViewModel}" xmlns:sharpdevelop_avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit">
+        <GroupBox Style="{StaticResource HeaderGroupBox}" Header="env" >
+          <GroupBox.Resources>
+            <Style TargetType="sharpdevelop_avalonedit:TextEditor">
+              <Setter Property="ShowLineNumbers" Value="True" />
+              <Setter Property="HorizontalScrollBarVisibility" Value="Auto" />
+              <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
+              <Setter Property="Options">
+                <Setter.Value>
+                  <sharpdevelop_avalonedit:TextEditorOptions
+                    EnableEmailHyperlinks="False"
+                    EnableHyperlinks="False"
+                    EnableVirtualSpace="False"
+                  />
+                </Setter.Value>
+              </Setter>
+            </Style>
+          </GroupBox.Resources>
+          <Grid>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Style="{StaticResource LabelDefinition}" />
+              <ColumnDefinition Style="{StaticResource ContentDefinition}" />
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="1">
+              <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="150" />
+              </Grid.RowDefinitions>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+              </Grid.ColumnDefinitions>
+
+              <Label Grid.Row="0" Grid.Column="0" Content="update" />
+              <sharpdevelop_avalonedit:TextEditor x:Name="envUpdateEditor" Grid.Row="1" Grid.Column="0" Document="{Binding UpdateTextDocument}" Loaded="EnvUpdateEditor_Loaded" />
+
+              <Label Grid.Row="0" Grid.Column="1" Content="remove" />
+              <sharpdevelop_avalonedit:TextEditor x:Name="envRemoveEditor" Grid.Row="1" Grid.Column="1" Document="{Binding RemoveTextDocument}" Loaded="EnvRemoveEditor_Loaded" />
+            </Grid>
+          </Grid>
+        </GroupBox>
+      </DataTemplate>
+      <!--#endregion -->
+
+      <!--#region タグ -->
+      <!--#endregion -->
+
+      <!--#region コメント -->
+      <!--#endregion -->
+
 
     </ItemsControl.Resources>
   </ItemsControl>

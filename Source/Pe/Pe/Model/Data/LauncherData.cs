@@ -22,6 +22,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data
         Script,
         Directory,
         Embedded,
+        Addin,
         Separator,
     }
 
