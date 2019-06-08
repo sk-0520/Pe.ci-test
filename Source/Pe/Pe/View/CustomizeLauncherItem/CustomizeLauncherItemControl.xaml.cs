@@ -67,14 +67,21 @@ namespace ContentTypeTextNet.Pe.Main.View.CustomizeLauncherItem
 
         private void EnvUpdateEditor_Loaded(object sender, RoutedEventArgs e)
         {
-            using(var stream = new System.IO.MemoryStream(Encoding.UTF8.GetBytes(Properties.Resources.File_EnvironmentVariable_Update))) {
+            using(var stream = new System.IO.MemoryStream(Encoding.UTF8.GetBytes(Properties.Resources.File_Highlighting_EnvironmentVariable_Update))) {
                 SetSyntaxHighlighting((ICSharpCode.AvalonEdit.TextEditor)sender, stream);
             }
         }
 
         private void EnvRemoveEditor_Loaded(object sender, RoutedEventArgs e)
         {
-            using(var stream = new System.IO.MemoryStream(Encoding.UTF8.GetBytes(Properties.Resources.File_EnvironmentVariable_Remove))) {
+            using(var stream = new System.IO.MemoryStream(Encoding.UTF8.GetBytes(Properties.Resources.File_Highlighting_EnvironmentVariable_Remove))) {
+                SetSyntaxHighlighting((ICSharpCode.AvalonEdit.TextEditor)sender, stream);
+            }
+        }
+
+        private void TagEditor_Loaded(object sender, RoutedEventArgs e)
+        {
+            using(var stream = new System.IO.MemoryStream(Encoding.UTF8.GetBytes(Properties.Resources.File_Highlighting_Tag))) {
                 SetSyntaxHighlighting((ICSharpCode.AvalonEdit.TextEditor)sender, stream);
             }
         }

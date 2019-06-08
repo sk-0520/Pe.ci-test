@@ -64,6 +64,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.CustomizeLauncherItem
                 default:
                     throw new NotImplementedException();
             }
+
+            yield return new CustomizeLauncherTagViewModel(Model, Logger.Factory);
         }
 
         #endregion

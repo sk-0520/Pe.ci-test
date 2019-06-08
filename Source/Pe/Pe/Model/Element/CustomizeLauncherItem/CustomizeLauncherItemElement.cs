@@ -98,6 +98,14 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.CustomizeLauncherItem
             }
         }
 
+        public IReadOnlyCollection<string> LoadTags()
+        {
+            using(var commander = MainDatabaseBarrier.WaitRead()) {
+                var dao = new LauncherTagsEntityDao(commander, StatementLoader, commander.Implementation, Logger.Factory);
+                return dao.SelectTags(LauncherItemId).ToList();
+            }
+        }
+
         #endregion
 
         #region ElementBase

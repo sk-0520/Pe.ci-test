@@ -13,7 +13,10 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
 
         void DebugExecute()
         {
-
+            var i = LauncherToolbarElements.First().LauncherItems.FirstOrDefault();
+            if(i != null) {
+                i.OpenCustomizeView(Library.Shared.Library.Compatibility.Forms.Screen.PrimaryScreen);
+            }
         }
 
         #endregion

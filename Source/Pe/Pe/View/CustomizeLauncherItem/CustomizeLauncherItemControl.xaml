@@ -5,6 +5,8 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:sys="clr-namespace:System;assembly=mscorlib"
 
+  xmlns:sharpdevelop_avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
+
   xmlns:app_viewmodel_customize_launcher_item="clr-namespace:ContentTypeTextNet.Pe.Main.ViewModel.CustomizeLauncherItem"
 
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -22,6 +24,7 @@
       </Style>
       <sys:Int32 x:Key="LabelColumn">0</sys:Int32>
       <sys:Int32 x:Key="ContentColumn">1</sys:Int32>
+      <sys:Double x:Key="MultiLineBaseHeight">150</sys:Double>
 
       <!--#region 共通 -->
       <DataTemplate DataType="{x:Type app_viewmodel_customize_launcher_item:CustomizeLauncherCommonViewModel}">
@@ -155,7 +158,7 @@
       <!--#endregion -->
 
       <!--#region 環境変数 -->
-      <DataTemplate DataType="{x:Type app_viewmodel_customize_launcher_item:CustomizeLauncherEnvironmentVariableViewModel}" xmlns:sharpdevelop_avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit">
+      <DataTemplate DataType="{x:Type app_viewmodel_customize_launcher_item:CustomizeLauncherEnvironmentVariableViewModel}">
         <GroupBox Style="{StaticResource HeaderGroupBox}" Header="env" >
           <GroupBox.Resources>
             <Style TargetType="sharpdevelop_avalonedit:TextEditor">
@@ -173,7 +176,7 @@
               </Setter>
             </Style>
           </GroupBox.Resources>
-          <Grid>
+          <Grid Height="{StaticResource MultiLineBaseHeight}">
             <Grid.ColumnDefinitions>
               <ColumnDefinition Style="{StaticResource LabelDefinition}" />
               <ColumnDefinition Style="{StaticResource ContentDefinition}" />
@@ -182,7 +185,7 @@
             <Grid Grid.Column="1">
               <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="150" />
+                <RowDefinition Height="*" />
               </Grid.RowDefinitions>
               <Grid.ColumnDefinitions>
                 <ColumnDefinition />
@@ -201,6 +204,19 @@
       <!--#endregion -->
 
       <!--#region タグ -->
+      <DataTemplate DataType="{x:Type app_viewmodel_customize_launcher_item:CustomizeLauncherTagViewModel}">
+        <GroupBox Style="{StaticResource HeaderGroupBox}" Header="tag" >
+          <Grid Height="{StaticResource MultiLineBaseHeight}">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Style="{StaticResource LabelDefinition}" />
+              <ColumnDefinition Style="{StaticResource ContentDefinition}" />
+            </Grid.ColumnDefinitions>
+
+            <sharpdevelop_avalonedit:TextEditor x:Name="tagEditor" Grid.Row="1" Grid.Column="1" Document="{Binding TagDocument}" Loaded="TagEditor_Loaded" />
+
+          </Grid>
+        </GroupBox>
+      </DataTemplate>
       <!--#endregion -->
 
       <!--#region コメント -->

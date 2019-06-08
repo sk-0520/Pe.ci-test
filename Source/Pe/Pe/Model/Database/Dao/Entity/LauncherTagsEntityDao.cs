@@ -22,6 +22,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
         {
             #region property
 
+            public static string LauncherItemId { get; } = "LauncherItemId";
+            public static string TagName { get; } = "TagName";
 
             #endregion
         }
@@ -29,6 +31,15 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
         #endregion
 
         #region function
+
+        public IEnumerable<string> SelectTags(Guid launcherItemId)
+        {
+            var builder = CreateSelectBuilder();
+            builder.AddSelect(Column.TagName);
+            builder.AddValue(Column.LauncherItemId, launcherItemId);
+
+            return Select<string>(builder);
+        }
 
         public void InsertNewTags(Guid launcherItemId, IEnumerable<string> tags, IDatabaseCommonStatus commonStatus)
         {
