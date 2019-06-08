@@ -219,6 +219,19 @@
       <!--#endregion -->
 
       <!--#region コメント -->
+      <DataTemplate DataType="{x:Type app_viewmodel_customize_launcher_item:CustomizeLauncherCommentViewModel}">
+        <GroupBox Style="{StaticResource HeaderGroupBox}" Header="tag" >
+          <Grid Height="{StaticResource MultiLineBaseHeight}">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Style="{StaticResource LabelDefinition}" />
+              <ColumnDefinition Style="{StaticResource ContentDefinition}" />
+            </Grid.ColumnDefinitions>
+
+            <sharpdevelop_avalonedit:TextEditor Grid.Row="1" Grid.Column="1" Document="{Binding CommentDocument}" />
+
+          </Grid>
+        </GroupBox>
+      </DataTemplate>
       <!--#endregion -->
 
 

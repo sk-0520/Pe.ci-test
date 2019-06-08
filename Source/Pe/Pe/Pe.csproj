@@ -287,6 +287,7 @@
     <Compile Include="Model\Element\Startup\StartupElement.cs" />
     <Compile Include="ViewModel\Accept\AcceptViewModel.cs" />
     <Compile Include="Model\Logic\BuildStatus.cs" />
+    <Compile Include="ViewModel\CustomizeLauncherItem\CustomizeLauncherCommentViewModel.cs" />
     <Compile Include="ViewModel\CustomizeLauncherItem\CustomizeLauncherTagViewModel.cs" />
     <Compile Include="ViewModel\CustomizeLauncherItem\CustomizeLauncherEnvironmentVariableViewModel.cs" />
     <Compile Include="ViewModel\CustomizeLauncherItem\CustomizeLauncherEmbeddedViewModel.cs" />

@@ -66,6 +66,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.CustomizeLauncherItem
             }
 
             yield return new CustomizeLauncherTagViewModel(Model, Logger.Factory);
+            yield return new CustomizeLauncherCommentViewModel(Model, Logger.Factory);
         }
 
         #endregion
