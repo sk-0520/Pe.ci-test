@@ -18,7 +18,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.CustomizeLauncherItem
         string _code;
 
         string _iconPath;
-
+        bool _isEnabledCommandLauncher;
         #endregion
 
         public CustomizeLauncherCommonViewModel(CustomizeLauncherItemElement model, ILoggerFactory loggerFactory)
@@ -47,6 +47,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.CustomizeLauncherItem
             set => SetProperty(ref this._iconPath, value);
         }
 
+        public bool IsEnabledCommandLauncher
+        {
+            get => this._isEnabledCommandLauncher;
+            set => SetProperty(ref this._isEnabledCommandLauncher, value);
+        }
 
         #endregion
 
@@ -64,6 +69,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.CustomizeLauncherItem
             Name = Model.Name;
             Code = Model.Code;
             IconPath = IconData.ToString();
+            IsEnabledCommandLauncher = Model.IsEnabledCommandLauncher;
         }
 
         #endregion

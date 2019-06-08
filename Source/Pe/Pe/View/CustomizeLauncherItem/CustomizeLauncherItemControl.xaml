@@ -33,10 +33,10 @@
         <Setter Property="Options">
           <Setter.Value>
             <sharpdevelop_avalonedit:TextEditorOptions
-                    EnableEmailHyperlinks="False"
-                    EnableHyperlinks="False"
-                    EnableVirtualSpace="False"
-                  />
+              EnableEmailHyperlinks="False"
+              EnableHyperlinks="False"
+              EnableVirtualSpace="False"
+            />
           </Setter.Value>
         </Setter>
       </Style>
@@ -93,6 +93,18 @@
 
               <Label Grid.Column="{StaticResource LabelColumn}" Content="icon" />
               <TextBox Grid.Column="{StaticResource ContentColumn}" Text="{Binding IconPath}" />
+            </Grid>
+
+            <Grid>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Style="{StaticResource LabelDefinition}" />
+                <ColumnDefinition Style="{StaticResource ContentDefinition}" />
+              </Grid.ColumnDefinitions>
+
+              <Label Grid.Column="{StaticResource LabelColumn}" Content="others" />
+              <StackPanel Grid.Column="{StaticResource ContentColumn}">
+                <CheckBox IsChecked="{Binding IsEnabledCommandLauncher}" Content="command launcher" />
+              </StackPanel>
             </Grid>
 
           </StackPanel>
@@ -181,7 +193,7 @@
               <ColumnDefinition Style="{StaticResource ContentDefinition}" />
             </Grid.ColumnDefinitions>
 
-            <Grid Grid.Column="1">
+            <Grid Grid.Column="{StaticResource ContentColumn}">
               <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
@@ -211,7 +223,7 @@
               <ColumnDefinition Style="{StaticResource ContentDefinition}" />
             </Grid.ColumnDefinitions>
 
-            <sharpdevelop_avalonedit:TextEditor x:Name="tagEditor" Grid.Row="1" Grid.Column="1" Document="{Binding TagDocument}" Loaded="TagEditor_Loaded" />
+            <sharpdevelop_avalonedit:TextEditor x:Name="tagEditor" Grid.Row="1" Grid.Column="{StaticResource ContentColumn}" Document="{Binding TagDocument}" Loaded="TagEditor_Loaded" />
 
           </Grid>
         </GroupBox>
@@ -220,14 +232,14 @@
 
       <!--#region コメント -->
       <DataTemplate DataType="{x:Type app_viewmodel_customize_launcher_item:CustomizeLauncherCommentViewModel}">
-        <GroupBox Style="{StaticResource HeaderGroupBox}" Header="tag" >
+        <GroupBox Style="{StaticResource HeaderGroupBox}" Header="comment" >
           <Grid Height="{StaticResource MultiLineBaseHeight}">
             <Grid.ColumnDefinitions>
               <ColumnDefinition Style="{StaticResource LabelDefinition}" />
               <ColumnDefinition Style="{StaticResource ContentDefinition}" />
             </Grid.ColumnDefinitions>
 
-            <sharpdevelop_avalonedit:TextEditor Grid.Row="1" Grid.Column="1" Document="{Binding CommentDocument}" />
+            <sharpdevelop_avalonedit:TextEditor Grid.Row="1" Grid.Column="{StaticResource ContentColumn}" Document="{Binding CommentDocument}" />
 
           </Grid>
         </GroupBox>
