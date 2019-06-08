@@ -239,7 +239,13 @@
               <ColumnDefinition Style="{StaticResource ContentDefinition}" />
             </Grid.ColumnDefinitions>
 
-            <sharpdevelop_avalonedit:TextEditor Grid.Row="1" Grid.Column="{StaticResource ContentColumn}" Document="{Binding CommentDocument}" />
+            <TextBox
+              Grid.Column="{StaticResource ContentColumn}"
+              AcceptsReturn="True"
+              VerticalScrollBarVisibility="Auto"
+              HorizontalScrollBarVisibility="Auto"
+              Text="{Binding Comment}"
+            />
 
           </Grid>
         </GroupBox>
