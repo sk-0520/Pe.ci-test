@@ -17,6 +17,9 @@
   </Window.Resources>
 
   <Grid>
-    <app_view_customize_launcher_item:CustomizeLauncherItemControl Item="{Binding}" />
+    <ScrollViewer>
+      <app_view_customize_launcher_item:CustomizeLauncherItemControl Item="{Binding}" />
+    </ScrollViewer>
+
   </Grid>
 </Window>

@@ -26,6 +26,21 @@
       <sys:Int32 x:Key="ContentColumn">1</sys:Int32>
       <sys:Double x:Key="MultiLineBaseHeight">150</sys:Double>
 
+      <Style TargetType="sharpdevelop_avalonedit:TextEditor">
+        <Setter Property="ShowLineNumbers" Value="True" />
+        <Setter Property="HorizontalScrollBarVisibility" Value="Auto" />
+        <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
+        <Setter Property="Options">
+          <Setter.Value>
+            <sharpdevelop_avalonedit:TextEditorOptions
+                    EnableEmailHyperlinks="False"
+                    EnableHyperlinks="False"
+                    EnableVirtualSpace="False"
+                  />
+          </Setter.Value>
+        </Setter>
+      </Style>
+
       <!--#region 共通 -->
       <DataTemplate DataType="{x:Type app_viewmodel_customize_launcher_item:CustomizeLauncherCommonViewModel}">
         <GroupBox Style="{StaticResource HeaderGroupBox}" Header="common">
@@ -160,22 +175,6 @@
       <!--#region 環境変数 -->
       <DataTemplate DataType="{x:Type app_viewmodel_customize_launcher_item:CustomizeLauncherEnvironmentVariableViewModel}">
         <GroupBox Style="{StaticResource HeaderGroupBox}" Header="env" >
-          <GroupBox.Resources>
-            <Style TargetType="sharpdevelop_avalonedit:TextEditor">
-              <Setter Property="ShowLineNumbers" Value="True" />
-              <Setter Property="HorizontalScrollBarVisibility" Value="Auto" />
-              <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
-              <Setter Property="Options">
-                <Setter.Value>
-                  <sharpdevelop_avalonedit:TextEditorOptions
-                    EnableEmailHyperlinks="False"
-                    EnableHyperlinks="False"
-                    EnableVirtualSpace="False"
-                  />
-                </Setter.Value>
-              </Setter>
-            </Style>
-          </GroupBox.Resources>
           <Grid Height="{StaticResource MultiLineBaseHeight}">
             <Grid.ColumnDefinitions>
               <ColumnDefinition Style="{StaticResource LabelDefinition}" />
@@ -224,6 +223,11 @@
 
 
     </ItemsControl.Resources>
+    <ItemsControl.ItemsPanel>
+      <ItemsPanelTemplate>
+        <StackPanel />
+      </ItemsPanelTemplate>
+    </ItemsControl.ItemsPanel>
   </ItemsControl>
 
 </UserControl>
