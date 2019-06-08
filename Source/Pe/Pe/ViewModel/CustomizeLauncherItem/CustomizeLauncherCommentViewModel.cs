@@ -15,7 +15,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.CustomizeLauncherItem
     {
         #region variable
 
-        string _comment;
+        TextDocument _commentDocument;
 
         #endregion
 
@@ -25,10 +25,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.CustomizeLauncherItem
 
         #region property
 
-        public string Comment
+        public TextDocument CommentDocument
         {
-            get => this._comment;
-            set => SetProperty(ref this._comment, value);
+            get => this._commentDocument;
+            set => SetProperty(ref this._commentDocument, value);
         }
 
 
@@ -45,7 +45,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.CustomizeLauncherItem
 
         protected override void InitializeImpl()
         {
-            Comment = Model.Comment;
+            CommentDocument = new TextDocument(Model.Comment);
         }
 
         #endregion
