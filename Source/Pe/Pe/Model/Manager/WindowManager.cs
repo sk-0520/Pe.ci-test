@@ -89,6 +89,19 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
         #endregion
 
         #region function
+
+        /// <summary>
+        /// <see cref="Window.DataContext"/>に null 入れた際に死ぬやつを事前に調整。
+        /// </summary>
+        /// <param name="window"></param>
+        void ClearUnsafeElements(Window window)
+        {
+            var editors = UIUtility.FindChildren<ICSharpCode.AvalonEdit.TextEditor>(window);
+            foreach(var editor in editors) {
+                editor.Options = new ICSharpCode.AvalonEdit.TextEditorOptions();
+            }
+        }
+
         #endregion
 
         #region IWindowManager
@@ -209,6 +222,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Manager
             }
 
             if(item.CloseToDataContextNull) {
+                ClearUnsafeElements(item.Window);
                 item.Window.DataContext = null;
             }
             if(item.ViewModel is IViewLifecycleReceiver viewLifecycleReceiver) {
