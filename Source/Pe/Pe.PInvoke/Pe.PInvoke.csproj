@@ -1,13 +1,18 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
-  <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
     <Platforms>x64;x86</Platforms>
+    <UseWPF>true</UseWPF>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <WarningsAsErrors />
     <LangVersion>8.0</LangVersion>
     <NullableContextOptions>enable</NullableContextOptions>
     <RootNamespace>ContentTypeTextNet.Pe.PInvoke</RootNamespace>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Management" Version="4.5.0" />
+  </ItemGroup>
 
 </Project>
