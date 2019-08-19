@@ -75,7 +75,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         /// <returns></returns>
         public static RECT ConvertRECTFromLParam(IntPtr lParam)
         {
-            return (RECT)Marshal.PtrToStructure(lParam, typeof(RECT));
+            return (RECT)Marshal.PtrToStructure(lParam, typeof(RECT))!;
         }
 
         /// <summary>

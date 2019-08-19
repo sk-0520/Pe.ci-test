@@ -66,10 +66,12 @@ namespace ContentTypeTextNet.Pe.Common.Test.Model
             Assert.AreEqual(result, TextUtility.ReadLines(s).Count(), TextUtility.ReadLines(s).Count().ToString());
         }
 
+#if false
         public void ReadLinesTest_Null()
         {
             Assert.ThrowsException<ArgumentException>(() => TextUtility.ReadLines(default(string)));
         }
+#endif
 
         [TestMethod]
         [DataRow("a", "a", new[] { "" })]

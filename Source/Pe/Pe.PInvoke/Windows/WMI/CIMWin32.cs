@@ -7,25 +7,25 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows.root.CIMV2
     public class CIM_UserDevice: IImportWMI
     {
         public ushort? Availability { get; set; }
-        public string Caption { get; set; }
+        public string? Caption { get; set; }
         public uint? ConfigManagerErrorCode { get; set; }
         public bool? ConfigManagerUserConfig { get; set; }
-        public string CreationClassName { get; set; }
-        public string Description { get; set; }
-        public string DeviceID { get; set; }
+        public string? CreationClassName { get; set; }
+        public string? Description { get; set; }
+        public string? DeviceID { get; set; }
         public bool? ErrorCleared { get; set; }
-        public string ErrorDescription { get; set; }
+        public string? ErrorDescription { get; set; }
         public DateTime? InstallDate { get; set; }
         public bool? IsLocked { get; set; }
         public uint? LastErrorCode { get; set; }
-        public string Name { get; set; }
-        public string PNPDeviceID { get; set; }
-        public ushort[] PowerManagementCapabilities { get; set; }
+        public string? Name { get; set; }
+        public string? PNPDeviceID { get; set; }
+        public ushort[]? PowerManagementCapabilities { get; set; }
         public bool? PowerManagementSupported { get; set; }
-        public string Status { get; set; }
+        public string? Status { get; set; }
         public ushort? StatusInfo { get; set; }
-        public string SystemCreationClassName { get; set; }
-        public string SystemName { get; set; }
+        public string? SystemCreationClassName { get; set; }
+        public string? SystemName { get; set; }
 
         public virtual void Import(ManagementBaseObject obj)
         {
@@ -65,8 +65,8 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows.root.CIMV2
     {
         public uint? Bandwidth { get; set; }
         public ushort? DisplayType { get; set; }
-        public string MonitorManufacturer { get; set; }
-        public string MonitorType { get; set; }
+        public string? MonitorManufacturer { get; set; }
+        public string? MonitorType { get; set; }
         public uint? PixelsPerXLogicalInch { get; set; }
         public uint? PixelsPerYLogicalInch { get; set; }
         public uint? ScreenHeight { get; set; }

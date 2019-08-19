@@ -109,7 +109,7 @@ namespace ContentTypeTextNet.Pe.Common.Model
         public static IEnumerable<string> ReadLines(string text)
         {
             using(var reader = new StringReader(text)) {
-                string line;
+                string? line;
                 while((line = reader.ReadLine()) != null) {
                     yield return line;
                 }
@@ -122,7 +122,7 @@ namespace ContentTypeTextNet.Pe.Common.Model
                 throw new ArgumentNullException(nameof(reader));
             }
 
-            string line;
+            string? line;
             while((line = reader.ReadLine()) != null) {
                 yield return line;
             }
