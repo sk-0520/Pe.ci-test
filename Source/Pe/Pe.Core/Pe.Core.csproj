@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
@@ -12,6 +12,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Pe.Common\Pe.Common.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="WindowsBase">
+      <HintPath>C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\3.0.0-preview8-28405-07\ref\netcoreapp3.0\WindowsBase.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>
