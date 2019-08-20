@@ -10,7 +10,9 @@ namespace ContentTypeTextNet.Pe.Core.Model.Database
     /// </summary>
     public abstract class DatabaseAccessObjectBase
     {
-        DatabaseAccessObjectBase(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation)
+#pragma warning disable CS8618 // Null 非許容フィールドが初期化されていません。
+        private DatabaseAccessObjectBase(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation)
+#pragma warning restore CS8618 // Null 非許容フィールドが初期化されていません。
         {
             Commander = commander;
             StatementLoader = statementLoader;
@@ -26,7 +28,7 @@ namespace ContentTypeTextNet.Pe.Core.Model.Database
         public DatabaseAccessObjectBase(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
             : this(commander, statementLoader, implementation)
         {
-            Logger = loggerFactory.CreateTartget(GetType());
+            Logger = loggerFactory.CreateLogger(GetType());
         }
 
         #region property

@@ -23,7 +23,7 @@ namespace ContentTypeTextNet.Pe.Core.Model.Database
         public DatabaseStatementBuilderBase(IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
             : this(implementation)
         {
-            Logger = loggerFactory.CreateTartget(GetType());
+            Logger = loggerFactory.CreateLogger(GetType());
         }
 
         #region property
@@ -53,12 +53,13 @@ namespace ContentTypeTextNet.Pe.Core.Model.Database
         public DatabaseSelectStatementBuilder(IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
             : base(implementation, loggerFactory)
         { }
+
         #region property
 
         Dictionary<string, string> AliasNames { get; } = new Dictionary<string, string>();
         IList<string> ColumnNames { get; } = new List<string>();
 
-        public string TableName { get; private set; }
+        public string TableName { get; private set; } = string.Empty;
         ISet<string> PlainValues { get; } = new HashSet<string>();
 
         #endregion

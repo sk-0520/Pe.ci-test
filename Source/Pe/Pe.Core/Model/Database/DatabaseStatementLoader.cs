@@ -39,7 +39,7 @@ namespace ContentTypeTextNet.Pe.Core.Model.Database
 
         public DatabaseStatementLoaderBase(ILoggerFactory loggerFactory)
         {
-            Logger = loggerFactory.CreateTartget(GetType());
+            Logger = loggerFactory.CreateLogger(GetType());
         }
 
         #region property

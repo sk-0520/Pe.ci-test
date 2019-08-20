@@ -100,7 +100,7 @@ namespace ContentTypeTextNet.Pe.Core.Model.Database
         public DatabaseAccessor(IDatabaseFactory databaseFactory, ILoggerFactory loggerFactory)
             : this(databaseFactory)
         {
-            Logger = loggerFactory.CreateTartget(GetType());
+            Logger = loggerFactory.CreateLogger(GetType());
         }
 
         #region property

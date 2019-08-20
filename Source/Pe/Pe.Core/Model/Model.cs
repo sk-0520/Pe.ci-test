@@ -42,7 +42,7 @@ namespace ContentTypeTextNet.Pe.Core.Model
         public DataAccessModelBase(IDatabaseCommander databaseCommander, ILoggerFactory loggerFactory)
         {
             DatabaseCommander = databaseCommander;
-            Logger = loggerFactory.CreateTartget(GetType());
+            Logger = loggerFactory.CreateLogger(GetType());
         }
 
 
@@ -63,7 +63,7 @@ namespace ContentTypeTextNet.Pe.Core.Model
 
         public BindModelBase(ILoggerFactory loggerFactory)
         {
-            Logger = loggerFactory.CreateTartget(GetType());
+            Logger = loggerFactory.CreateLogger(GetType());
         }
 
         ~BindModelBase()
