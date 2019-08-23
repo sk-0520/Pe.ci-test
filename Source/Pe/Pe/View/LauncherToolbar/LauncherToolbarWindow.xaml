@@ -7,7 +7,7 @@
   xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
   xmlns:prism="http://prismlibrary.com/"
 
-  xmlns:cttn_lib_shared_lib_view_converter="clr-namespace:ContentTypeTextNet.Pe.Library.Shared.Library.View.Converter;assembly=Shared.Library"
+  xmlns:cttn_lib_shared_lib_view_converter="clr-namespace:ContentTypeTextNet.Pe.Core.View.Converter;assembly=Pe.Core"
 
   xmlns:app_main_view="clr-namespace:ContentTypeTextNet.Pe.Main.View"
   xmlns:app_main_view_lt="clr-namespace:ContentTypeTextNet.Pe.Main.View.LauncherToolbar"

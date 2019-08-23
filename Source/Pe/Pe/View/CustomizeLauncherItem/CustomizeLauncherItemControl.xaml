@@ -3,9 +3,7 @@
   x:Class="ContentTypeTextNet.Pe.Main.View.CustomizeLauncherItem.CustomizeLauncherItemControl"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-  xmlns:sys="clr-namespace:System;assembly=mscorlib"
-
-  xmlns:sharpdevelop_avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
+  xmlns:sys="clr-namespace:System;assembly=System.Runtime"
 
   xmlns:app_viewmodel_customize_launcher_item="clr-namespace:ContentTypeTextNet.Pe.Main.ViewModel.CustomizeLauncherItem"
 
@@ -26,6 +24,7 @@
       <sys:Int32 x:Key="ContentColumn">1</sys:Int32>
       <sys:Double x:Key="MultiLine-Height">50</sys:Double>
 
+      <!--
       <Style TargetType="sharpdevelop_avalonedit:TextEditor">
         <Setter Property="ShowLineNumbers" Value="True" />
         <Setter Property="HorizontalScrollBarVisibility" Value="Auto" />
@@ -41,6 +40,7 @@
           </Setter.Value>
         </Setter>
       </Style>
+      -->
 
       <!--#region 共通 -->
       <DataTemplate DataType="{x:Type app_viewmodel_customize_launcher_item:CustomizeLauncherCommonViewModel}">
@@ -205,10 +205,14 @@
               </Grid.ColumnDefinitions>
 
               <Label Grid.Row="0" Grid.Column="0" Content="update" />
+              <!--
               <sharpdevelop_avalonedit:TextEditor x:Name="envUpdateEditor" Grid.Row="1" Grid.Column="0" Document="{Binding UpdateTextDocument}" Loaded="EnvUpdateEditor_Loaded" />
+              -->
 
               <Label Grid.Row="0" Grid.Column="1" Content="remove" />
+              <!--
               <sharpdevelop_avalonedit:TextEditor x:Name="envRemoveEditor" Grid.Row="1" Grid.Column="1" Document="{Binding RemoveTextDocument}" Loaded="EnvRemoveEditor_Loaded" />
+              -->
             </Grid>
           </Grid>
         </GroupBox>
@@ -224,7 +228,9 @@
               <ColumnDefinition Style="{StaticResource ContentDefinition}" />
             </Grid.ColumnDefinitions>
 
+            <!--
             <sharpdevelop_avalonedit:TextEditor x:Name="tagEditor" Grid.Row="1" Grid.Column="{StaticResource ContentColumn}" Document="{Binding TagDocument}" Loaded="TagEditor_Loaded" />
+            -->
 
           </Grid>
         </GroupBox>
@@ -240,7 +246,9 @@
               <ColumnDefinition Style="{StaticResource ContentDefinition}" />
             </Grid.ColumnDefinitions>
 
+            <!--
             <sharpdevelop_avalonedit:TextEditor Grid.Row="1" Grid.Column="{StaticResource ContentColumn}" Document="{Binding CommentDocument}" />
+            -->
 
           </Grid>
         </GroupBox>

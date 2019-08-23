@@ -4,7 +4,7 @@
 
   xmlns:Taskbar="http://www.hardcodet.net/taskbar"
 
-  xmlns:cttn_lib_shared_lib_view_converter="clr-namespace:ContentTypeTextNet.Pe.Library.Shared.Library.View.Converter;assembly=Shared.Library"
+  xmlns:cttn_lib_shared_lib_view_converter="clr-namespace:ContentTypeTextNet.Pe.Core.View.Converter;assembly=Pe.Core"
 
   xmlns:app_main_viewmodel_manager="clr-namespace:ContentTypeTextNet.Pe.Main.ViewModel.Manager"
 >
