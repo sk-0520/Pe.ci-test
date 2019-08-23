@@ -20,4 +20,18 @@
     <ProjectReference Include="..\Pe.Core\Pe.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="doc\help\" />
+    <Folder Include="doc\license\" />
+    <Folder Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Dao\" />
+    <Folder Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\DatabaseSetupper\" />
+    <Folder Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Setupper\" />
+    <Folder Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Tuner\" />
+    <Folder Include="Model\Applications\" />
+    <Folder Include="Model\Data\" />
+    <Folder Include="View\" />
+    <Folder Include="ViewModel\" />
+    <Folder Include="Resources\" />
+  </ItemGroup>
+
 </Project>

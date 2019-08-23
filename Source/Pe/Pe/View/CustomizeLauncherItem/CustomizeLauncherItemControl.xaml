@@ -1,0 +1,259 @@
+<UserControl
+  x:Name="root"
+  x:Class="ContentTypeTextNet.Pe.Main.View.CustomizeLauncherItem.CustomizeLauncherItemControl"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:sys="clr-namespace:System;assembly=mscorlib"
+
+  xmlns:sharpdevelop_avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
+
+  xmlns:app_viewmodel_customize_launcher_item="clr-namespace:ContentTypeTextNet.Pe.Main.ViewModel.CustomizeLauncherItem"
+
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  mc:Ignorable="d"
+  d:DesignHeight="450" d:DesignWidth="800"
+>
+  <ItemsControl Grid.IsSharedSizeScope="True" ItemsSource="{Binding Item.CustomizeItems, ElementName=root}">
+    <ItemsControl.Resources>
+      <Style x:Key="LabelDefinition" TargetType="ColumnDefinition">
+        <Setter Property="Width" Value="Auto" />
+        <Setter Property="SharedSizeGroup" Value="CustomizeLauncherItemHeader" />
+      </Style>
+      <Style x:Key="ContentDefinition" TargetType="ColumnDefinition">
+        <Setter Property="Width" Value="*" />
+      </Style>
+      <sys:Int32 x:Key="LabelColumn">0</sys:Int32>
+      <sys:Int32 x:Key="ContentColumn">1</sys:Int32>
+      <sys:Double x:Key="MultiLine-Height">50</sys:Double>
+
+      <Style TargetType="sharpdevelop_avalonedit:TextEditor">
+        <Setter Property="ShowLineNumbers" Value="True" />
+        <Setter Property="HorizontalScrollBarVisibility" Value="Auto" />
+        <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
+        <Setter Property="Height" Value="{StaticResource MultiLine-Height}" />
+        <Setter Property="Options">
+          <Setter.Value>
+            <sharpdevelop_avalonedit:TextEditorOptions
+              EnableEmailHyperlinks="False"
+              EnableHyperlinks="False"
+              EnableVirtualSpace="False"
+            />
+          </Setter.Value>
+        </Setter>
+      </Style>
+
+      <!--#region 共通 -->
+      <DataTemplate DataType="{x:Type app_viewmodel_customize_launcher_item:CustomizeLauncherCommonViewModel}">
+        <GroupBox Style="{StaticResource HeaderGroupBox}" Header="common">
+          <StackPanel>
+            <Grid>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Style="{StaticResource LabelDefinition}" />
+                <ColumnDefinition Style="{StaticResource ContentDefinition}" />
+              </Grid.ColumnDefinitions>
+
+              <Label Grid.Column="{StaticResource LabelColumn}" Content="ID" />
+              <TextBox Grid.Column="{StaticResource ContentColumn}" Text="{Binding LauncherItemId, Mode=OneWay}" IsReadOnly="True" />
+            </Grid>
+
+            <Grid>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Style="{StaticResource LabelDefinition}" />
+                <ColumnDefinition Style="{StaticResource ContentDefinition}" />
+              </Grid.ColumnDefinitions>
+
+              <Label Grid.Column="{StaticResource LabelColumn}" Content="Kind" />
+              <TextBox Grid.Column="{StaticResource ContentColumn}" Text="{Binding Kind, Mode=OneWay}" IsReadOnly="True" />
+            </Grid>
+
+            <Grid>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Style="{StaticResource LabelDefinition}" />
+                <ColumnDefinition Style="{StaticResource ContentDefinition}" />
+              </Grid.ColumnDefinitions>
+
+              <Label Grid.Column="{StaticResource LabelColumn}" Content="name" />
+              <TextBox Grid.Column="{StaticResource ContentColumn}" Text="{Binding Name}" />
+            </Grid>
+
+            <Grid>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Style="{StaticResource LabelDefinition}" />
+                <ColumnDefinition Style="{StaticResource ContentDefinition}" />
+              </Grid.ColumnDefinitions>
+
+              <Label Grid.Column="{StaticResource LabelColumn}" Content="code" />
+              <TextBox Grid.Column="{StaticResource ContentColumn}" Text="{Binding Code}" />
+            </Grid>
+
+            <Grid>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Style="{StaticResource LabelDefinition}" />
+                <ColumnDefinition Style="{StaticResource ContentDefinition}" />
+              </Grid.ColumnDefinitions>
+
+              <Label Grid.Column="{StaticResource LabelColumn}" Content="icon" />
+              <TextBox Grid.Column="{StaticResource ContentColumn}" Text="{Binding IconPath}" />
+            </Grid>
+
+            <Grid>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Style="{StaticResource LabelDefinition}" />
+                <ColumnDefinition Style="{StaticResource ContentDefinition}" />
+              </Grid.ColumnDefinitions>
+
+              <Label Grid.Column="{StaticResource LabelColumn}" Content="others" />
+              <StackPanel Grid.Column="{StaticResource ContentColumn}">
+                <CheckBox IsChecked="{Binding IsEnabledCommandLauncher}" Content="command launcher" />
+              </StackPanel>
+            </Grid>
+
+          </StackPanel>
+
+        </GroupBox>
+      </DataTemplate>
+      <!--#endregion-->
+
+      <!--#region ファイル -->
+      <DataTemplate DataType="{x:Type app_viewmodel_customize_launcher_item:CustomizeLauncherFileViewModel}">
+        <GroupBox Style="{StaticResource HeaderGroupBox}" Header="file">
+          <StackPanel>
+            <Grid>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Style="{StaticResource LabelDefinition}" />
+                <ColumnDefinition Style="{StaticResource ContentDefinition}" />
+              </Grid.ColumnDefinitions>
+
+              <Label Grid.Column="{StaticResource LabelColumn}" Content="path" />
+              <TextBox Grid.Column="{StaticResource ContentColumn}" Text="{Binding Path}" />
+            </Grid>
+
+            <Grid>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Style="{StaticResource LabelDefinition}" />
+                <ColumnDefinition Style="{StaticResource ContentDefinition}" />
+              </Grid.ColumnDefinitions>
+
+              <Label Grid.Column="{StaticResource LabelColumn}" Content="option" />
+              <TextBox Grid.Column="{StaticResource ContentColumn}" Text="{Binding Option}" />
+            </Grid>
+
+            <Grid>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Style="{StaticResource LabelDefinition}" />
+                <ColumnDefinition Style="{StaticResource ContentDefinition}" />
+              </Grid.ColumnDefinitions>
+
+              <Label Grid.Column="{StaticResource LabelColumn}" Content="dir" />
+              <TextBox Grid.Column="{StaticResource ContentColumn}" Text="{Binding WorkingDirectoryPath}" />
+            </Grid>
+
+            <Grid>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Style="{StaticResource LabelDefinition}" />
+                <ColumnDefinition Style="{StaticResource ContentDefinition}" />
+              </Grid.ColumnDefinitions>
+
+              <Label Grid.Column="{StaticResource LabelColumn}" Content="othes" />
+              <StackPanel Grid.Column="{StaticResource ContentColumn}">
+                <CheckBox IsChecked="{Binding IsEnabledCustomEnvironmentVariable}" Content="env" />
+                <CheckBox IsChecked="{Binding IsEnabledStandardInputOutput}" Content="stdio" />
+                <CheckBox IsChecked="{Binding RunAdministrator}" Content="admin" />
+              </StackPanel>
+            </Grid>
+
+          </StackPanel>
+        </GroupBox>
+      </DataTemplate>
+      <!--#endregion-->
+
+      <!--#region コマンド -->
+      <!--#endregion -->
+
+      <!--#region スクリプト -->
+      <!--#endregion -->
+
+      <!--#region ディレクトリ -->
+      <!--#endregion -->
+
+      <!--#region 組み込み -->
+      <!--#endregion -->
+
+      <!--#region アドイン -->
+      <!--#endregion -->
+
+      <!--#region セパレータ(いるか？) -->
+      <!--#endregion -->
+
+      <!--#region 環境変数 -->
+      <DataTemplate DataType="{x:Type app_viewmodel_customize_launcher_item:CustomizeLauncherEnvironmentVariableViewModel}">
+        <GroupBox Style="{StaticResource HeaderGroupBox}" Header="env" >
+          <Grid>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Style="{StaticResource LabelDefinition}" />
+              <ColumnDefinition Style="{StaticResource ContentDefinition}" />
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="{StaticResource ContentColumn}">
+              <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+              </Grid.RowDefinitions>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+              </Grid.ColumnDefinitions>
+
+              <Label Grid.Row="0" Grid.Column="0" Content="update" />
+              <sharpdevelop_avalonedit:TextEditor x:Name="envUpdateEditor" Grid.Row="1" Grid.Column="0" Document="{Binding UpdateTextDocument}" Loaded="EnvUpdateEditor_Loaded" />
+
+              <Label Grid.Row="0" Grid.Column="1" Content="remove" />
+              <sharpdevelop_avalonedit:TextEditor x:Name="envRemoveEditor" Grid.Row="1" Grid.Column="1" Document="{Binding RemoveTextDocument}" Loaded="EnvRemoveEditor_Loaded" />
+            </Grid>
+          </Grid>
+        </GroupBox>
+      </DataTemplate>
+      <!--#endregion -->
+
+      <!--#region タグ -->
+      <DataTemplate DataType="{x:Type app_viewmodel_customize_launcher_item:CustomizeLauncherTagViewModel}">
+        <GroupBox Style="{StaticResource HeaderGroupBox}" Header="tag" >
+          <Grid>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Style="{StaticResource LabelDefinition}" />
+              <ColumnDefinition Style="{StaticResource ContentDefinition}" />
+            </Grid.ColumnDefinitions>
+
+            <sharpdevelop_avalonedit:TextEditor x:Name="tagEditor" Grid.Row="1" Grid.Column="{StaticResource ContentColumn}" Document="{Binding TagDocument}" Loaded="TagEditor_Loaded" />
+
+          </Grid>
+        </GroupBox>
+      </DataTemplate>
+      <!--#endregion -->
+
+      <!--#region コメント -->
+      <DataTemplate DataType="{x:Type app_viewmodel_customize_launcher_item:CustomizeLauncherCommentViewModel}">
+        <GroupBox Style="{StaticResource HeaderGroupBox}" Header="comment" >
+          <Grid>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Style="{StaticResource LabelDefinition}" />
+              <ColumnDefinition Style="{StaticResource ContentDefinition}" />
+            </Grid.ColumnDefinitions>
+
+            <sharpdevelop_avalonedit:TextEditor Grid.Row="1" Grid.Column="{StaticResource ContentColumn}" Document="{Binding CommentDocument}" />
+
+          </Grid>
+        </GroupBox>
+      </DataTemplate>
+      <!--#endregion -->
+
+
+    </ItemsControl.Resources>
+    <ItemsControl.ItemsPanel>
+      <ItemsPanelTemplate>
+        <StackPanel />
+      </ItemsPanelTemplate>
+    </ItemsControl.ItemsPanel>
+  </ItemsControl>
+
+</UserControl>

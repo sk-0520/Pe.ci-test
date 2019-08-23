@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,19 +10,28 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
+using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
 
-namespace Pe
+namespace ContentTypeTextNet.Pe.Main.View.Startup
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// StartupWindow.xaml の相互作用ロジック
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class StartupWindow : Window
     {
-        public MainWindow()
+        public StartupWindow()
         {
             InitializeComponent();
         }
+
+        #region property
+
+        [Injection]
+        ILogger Logger { get; set; }
+
+        #endregion
+
     }
 }

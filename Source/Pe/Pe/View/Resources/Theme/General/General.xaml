@@ -1,0 +1,123 @@
+<ResourceDictionary
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:sys="clr-namespace:System;assembly=mscorlib"
+>
+  <sys:Double x:Key="Icon-Size-Small">16</sys:Double>
+  <sys:Double x:Key="Icon-Size-Normal">32</sys:Double>
+  <sys:Double x:Key="Icon-Size-Big">64</sys:Double>
+  <sys:Double x:Key="Icon-Stroke-Small">1</sys:Double>
+  <sys:Double x:Key="Icon-Stroke-Normal">1</sys:Double>
+  <sys:Double x:Key="Icon-Stroke-Big">1</sys:Double>
+
+
+  <ControlTemplate x:Key="SmallIcon" TargetType="ContentControl">
+    <Viewbox Width="{StaticResource Icon-Size-Small}" Height="{StaticResource Icon-Size-Small}">
+      <Canvas Width="24" Height="24">
+        <Path
+          Data="{TemplateBinding Content}"
+          Fill="{TemplateBinding Background}"
+          Stroke="{TemplateBinding Foreground}"
+          StrokeThickness="{StaticResource Icon-Stroke-Small}"
+        />
+      </Canvas>
+    </Viewbox>
+  </ControlTemplate>
+
+  <ControlTemplate x:Key="NormalIcon" TargetType="ContentControl">
+    <Viewbox Width="{StaticResource Icon-Size-Normal}" Height="{StaticResource Icon-Size-Normal}">
+      <Canvas Width="24" Height="24">
+        <Path
+          Data="{TemplateBinding Content}"
+          Fill="{TemplateBinding Background}"
+          Stroke="{TemplateBinding Foreground}"
+          StrokeThickness="{StaticResource Icon-Stroke-Normal}"
+        />
+      </Canvas>
+    </Viewbox>
+  </ControlTemplate>
+
+  <DropShadowEffect x:Key="Effect-Strong"
+    Color="{DynamicResource {x:Static SystemColors.MenuHighlightColorKey}}"
+    ShadowDepth="0"
+    BlurRadius="8"
+  />
+
+
+  <Style TargetType="MenuItem">
+    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+    <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+  </Style>
+
+  <Style x:Key="MenuHeaderItem" TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="MenuItem">
+          <Border Padding="2,4">
+            <StackPanel
+              Orientation="Horizontal"
+              Background="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}"
+              TextElement.Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}"
+              TextElement.FontWeight="Bold"
+              TextElement.FontSize="9"
+              Margin="0"
+            >
+              <ContentControl Content="{TemplateBinding Icon}" />
+              <Label Content="{TemplateBinding Header}" Foreground="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}"/>
+            </StackPanel>
+          </Border>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+    <Setter Property="IsEnabled" Value="False" />
+    <Setter Property="IsHitTestVisible" Value="False" />
+    <!--<Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}" />-->
+  </Style>
+
+  <Style x:Key="PopupMenuBorder" TargetType="Border">
+    <Setter Property="TextElement.Foreground" Value="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}" />
+    <Setter Property="TextElement.FontFamily" Value="{DynamicResource {x:Static SystemFonts.MenuFontFamilyKey}}" />
+    <Setter Property="TextElement.FontSize" Value="{DynamicResource {x:Static SystemFonts.MenuFontSizeKey}}" />
+    <Setter Property="TextElement.FontStyle" Value="{DynamicResource {x:Static SystemFonts.MenuFontStyleKey}}" />
+    <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.MenuBarColor}}" />
+    <Setter Property="Padding" Value="4" />
+    <Setter Property="BorderThickness" Value="1" />
+  </Style>
+
+  <Style x:Key="PopupMenu" TargetType="Popup">
+    <Style.Resources>
+      <Style TargetType="Border" BasedOn="{StaticResource PopupMenuBorder}" />
+    </Style.Resources>
+    <Setter Property="HorizontalOffset" Value="1" />
+    <Setter Property="VerticalOffset" Value="1" />
+    <Setter Property="AllowsTransparency" Value="True" />
+    <Setter Property="StaysOpen" Value="False" />
+    <Setter Property="Focusable" Value="False" />
+  </Style>
+
+  <Style x:Key="HeaderGroupBox" TargetType="GroupBox" BasedOn="{StaticResource {x:Type GroupBox}}">
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="GroupBox">
+          <StackPanel>
+            <ContentPresenter Margin="4" ContentSource="Header" RecognizesAccessKey="True" />
+            <ContentPresenter />
+          </StackPanel>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+  <ControlTemplate x:Key="ILauncherToolbarTheme-LauncherItemNormalButton" TargetType="Button">
+    <ContentPresenter />
+    <ControlTemplate.Triggers>
+    </ControlTemplate.Triggers>
+  </ControlTemplate>
+  <ControlTemplate x:Key="ILauncherToolbarTheme-LauncherItemToggleButton" TargetType="ToggleButton">
+    <ContentPresenter />
+    <ControlTemplate.Triggers>
+    </ControlTemplate.Triggers>
+  </ControlTemplate>
+
+</ResourceDictionary>
