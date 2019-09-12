@@ -1,13 +1,11 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using ContentTypeTextNet.Pe.Library.Shared.Embedded.Model;
-using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
-using ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database;
-using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
+using ContentTypeTextNet.Pe.Common.Model;
+using ContentTypeTextNet.Pe.Core.Model;
+using ContentTypeTextNet.Pe.Core.Model.Database;
 using ContentTypeTextNet.Pe.Main.Model.Database;
+using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Applications
 {
@@ -128,7 +126,4 @@ namespace ContentTypeTextNet.Pe.Main.Model.Applications
             : base(main, file, temporary)
         { }
     }
-
-
-
 }

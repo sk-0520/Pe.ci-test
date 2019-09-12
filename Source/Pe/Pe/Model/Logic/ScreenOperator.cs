@@ -5,13 +5,14 @@ using System.Management;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
-using ContentTypeTextNet.Library.PInvoke.Windows;
-using ContentTypeTextNet.Library.PInvoke.Windows.root.CIMV2;
-using ContentTypeTextNet.Pe.Library.Shared.Library.Compatibility.Forms;
-using ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database;
-using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
+using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
+using ContentTypeTextNet.Pe.Core.Model;
+using ContentTypeTextNet.Pe.Core.Model.Database;
 using ContentTypeTextNet.Pe.Main.Model.Data;
 using ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity;
+using ContentTypeTextNet.Pe.PInvoke.Windows;
+using ContentTypeTextNet.Pe.PInvoke.Windows.root.CIMV2;
+using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Logic
 {
@@ -24,7 +25,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
 
         public ScreenOperator(ILoggerFactory loggerFactory)
         {
-            Logger = loggerFactory.CreateTartget(GetType());
+            Logger = loggerFactory.CreateLogger(GetType());
         }
 
         #region function
@@ -54,7 +55,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
                     try {
                         item.Import(mng);
                     } catch(Exception ex) {
-                        Logger.Warning(ex);
+                        Logger.LogWarning(ex, ex.Message);
                         continue;
                     }
 
@@ -71,9 +72,13 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
         /// <returns></returns>
         public string GetName(Screen screen)
         {
+#pragma warning disable CS8604 // Null 参照引数の可能性があります。
             foreach(var screem in GetScreens(screen.DeviceName)) {
+#pragma warning restore CS8604 // Null 参照引数の可能性があります。
                 if(!string.IsNullOrWhiteSpace(screem.Name)) {
+#pragma warning disable CS8604 // Null 参照引数の可能性があります。
                     var id = DeviceToId(screen.DeviceName);
+#pragma warning restore CS8604 // Null 参照引数の可能性があります。
                     return string.Format("{0}. {1}", id, screem.Name);
                 }
                 break;
@@ -81,7 +86,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
 
             var device = new DISPLAY_DEVICE();
             device.cb = Marshal.SizeOf(device);
+#pragma warning disable CS8604 // Null 参照引数の可能性があります。
             NativeMethods.EnumDisplayDevices(screen.DeviceName, 0, ref device, 1);
+#pragma warning restore CS8604 // Null 参照引数の可能性があります。
 
             //return screen.DeviceName;
             return device.DeviceString;
@@ -89,8 +96,10 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
 
         public bool RegisterDatabase(Screen screen, IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, IDatabaseCommonStatus databaseCommonStatus)
         {
-            var screensDao = new ScreensEntityDao(commander, statementLoader, implementation, Logger.Factory);
+            var screensDao = new ScreensEntityDao(commander, statementLoader, implementation, Lf.Create());
+#pragma warning disable CS8604 // Null 参照引数の可能性があります。
             if(!screensDao.SelectExistsScreen(screen.DeviceName)) {
+#pragma warning restore CS8604 // Null 参照引数の可能性があります。
                 return screensDao.InsertScreen(screen, databaseCommonStatus);
             }
 

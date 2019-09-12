@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using ContentTypeTextNet.Pe.Core.Model.Data;
 
 namespace ContentTypeTextNet.Pe.Core.Model.Unmanaged
 {

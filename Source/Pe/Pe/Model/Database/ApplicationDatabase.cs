@@ -7,12 +7,11 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
-using System.Threading.Tasks;
-using ContentTypeTextNet.Pe.Library.Shared.Embedded.Model;
-using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
-using ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database;
-using ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database.Vender.Public.SQLite;
-using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
+using ContentTypeTextNet.Pe.Common.Model;
+using ContentTypeTextNet.Pe.Core.Model;
+using ContentTypeTextNet.Pe.Core.Model.Database;
+using ContentTypeTextNet.Pe.Core.Model.Database.Vender.Public.SQLite;
+using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Database
 {
@@ -100,7 +99,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database
                 return value;
             }
 
+#pragma warning disable CS8603 // Null 参照戻り値である可能性があります。
             return base.GetNullValue(type);
+#pragma warning restore CS8603 // Null 参照戻り値である可能性があります。
         }
 
         public override bool IsNull(object value)
@@ -141,9 +142,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database
 
         #region DatabaseAccessor
 
-        protected override void LoggingStatement(string statement, object parameter)
+        protected override void LoggingStatement(string statement, object? parameter)
         {
-            Logger.Trace(statement, ObjectDumper.GetDumpString(parameter));
+            Logger.LogTrace(statement, ObjectDumper.GetDumpString(parameter));
         }
 
         #endregion
@@ -219,7 +220,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database
         public override string LoadStatementByCurrent()
         {
             var member = GetCurrentMember();
+#pragma warning disable CS8602 // null 参照の可能性があるものの逆参照です。
             var baseNamespace = member.DeclaringType.FullName.Substring(IgnoreNamespace.Length + 1);
+#pragma warning restore CS8602 // null 参照の可能性があるものの逆参照です。
             var key = baseNamespace + "." + member.Name;
             return LoadStatement(key);
         }

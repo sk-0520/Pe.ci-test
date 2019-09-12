@@ -4,11 +4,11 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
-using ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database;
-using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
+using ContentTypeTextNet.Pe.Core.Model;
+using ContentTypeTextNet.Pe.Core.Model.Database;
 using ContentTypeTextNet.Pe.Main.Model.Applications;
 using ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity;
+using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Logic
 {
@@ -51,7 +51,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
         }
         public EntityRemoverBase(ILoggerFactory loggerFactory)
         {
-            Logger = loggerFactory.CreateTartget(GetType());
+            Logger = loggerFactory.CreateLogger(GetType());
         }
 
         #region property
@@ -174,7 +174,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
 
         #region function
 
-        ApplicationDatabaseBarrierTransaction BeginTransaction(Pack pack)
+        ApplicationDatabaseBarrierTransaction? BeginTransaction(Pack pack)
         {
             if(Items.Any(i => i.IsTarget(pack))) {
                 var barrier = Barriers[pack];

@@ -8,11 +8,10 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using ContentTypeTextNet.Pe.Library.Shared.Embedded.Model;
-using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
-using ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database;
-using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
+using ContentTypeTextNet.Pe.Common.Model;
+using ContentTypeTextNet.Pe.Core.Model;
 using ContentTypeTextNet.Pe.Main.Model.Applications;
+using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Logic
 {
@@ -45,7 +44,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
 
         #region function
 
-        public object Get([CallerMemberName] string callerMemberName = default(string), [CallerLineNumber] int callerLineNumber = -1)
+        public object Get([CallerMemberName] string callerMemberName = "", [CallerLineNumber] int callerLineNumber = -1)
         {
             var sb = new StringBuilder(callerMemberName.Length + 1 + callerLineNumber);
             sb.Append(callerMemberName);
@@ -86,9 +85,11 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
             DatabaseBarrier = databaseBarrier;
             WaitTime = waitTime;
             PauseRetryTime = pauseRetryTime;
-            Logger = loggerFactory.CreateTartget(GetType());
+            Logger = loggerFactory.CreateLogger(GetType());
 
+#pragma warning disable CS8622 // パラメーターの型における参照型の Null 許容性が、対象のデリゲートと一致しません。
             LazyTimer = new Timer(LazyCallback);
+#pragma warning restore CS8622 // パラメーターの型における参照型の Null 許容性が、対象のデリゲートと一致しません。
         }
 
         #region property
@@ -118,7 +119,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
             LazyTimer.Change(WaitTime, PauseRetryTime);
         }
 
-        void StockCore(Action<ApplicationDatabaseBarrierTransaction> action, object uniqueKey)
+        void StockCore(Action<ApplicationDatabaseBarrierTransaction> action, object? uniqueKey)
         {
             lock(this._timerLocker) {
                 StopTimer();
@@ -126,7 +127,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
                 // 既に登録されている処理が存在する場合は破棄しておく
                 if(uniqueKey != null) {
                     if(UniqueItems.TryGetValue(uniqueKey, out var stockedItem)) {
-                        Logger.Trace($"待機処理破棄: {stockedItem.StockTimestamp} {uniqueKey.GetHashCode()}");
+                        Logger.LogTrace($"待機処理破棄: {stockedItem.StockTimestamp} {uniqueKey.GetHashCode()}");
                         StockItems.Remove(stockedItem);
                         UniqueItems.Remove(uniqueKey);
                     }

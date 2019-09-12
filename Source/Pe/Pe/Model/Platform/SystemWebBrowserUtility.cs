@@ -56,17 +56,23 @@ namespace ContentTypeTextNet.Pe.Main.Model.Platform
 
         static string GetExecutingAssemblyFileName()
         {
+#pragma warning disable CS8602 // null 参照の可能性があるものの逆参照です。
             var path = Assembly.GetEntryAssembly().Location;
+#pragma warning restore CS8602 // null 参照の可能性があるものの逆参照です。
             var name = Path.GetFileName(path);
 
+#pragma warning disable CS8603 // Null 参照戻り値である可能性があります。
             return name;
+#pragma warning restore CS8603 // Null 参照戻り値である可能性があります。
         }
 
 #if DEBUG
         static string GetDebugName(string programName)
         {
             var ext = Path.GetExtension(programName);
+#pragma warning disable CS8603 // Null 参照戻り値である可能性があります。
             return Path.ChangeExtension(programName, "vshost" + ext);
+#pragma warning restore CS8603 // Null 参照戻り値である可能性があります。
         }
 #endif
         static IEnumerable<string> GetBrowserControlUseProgram()

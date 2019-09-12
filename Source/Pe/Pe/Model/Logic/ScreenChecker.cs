@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ContentTypeTextNet.Pe.Library.Shared.Library.Compatibility.Forms;
-using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
+using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
+using ContentTypeTextNet.Pe.Core.Model;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Logic
 {
@@ -12,7 +12,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
     {
         #region property
 
-        string ScreenName { get; }
+        string? ScreenName { get; }
         [PixelKind(Px.Device)]
         long X { get; }
         [PixelKind(Px.Device)]

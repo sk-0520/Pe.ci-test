@@ -5,9 +5,8 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using ContentTypeTextNet.Pe.Library.Shared.Embedded.Model;
-using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
-using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
+using ContentTypeTextNet.Pe.Core.Model;
+using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Logic
 {
@@ -15,7 +14,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
     {
         public StartupRegister(ILoggerFactory loggerFactory)
         {
-            Logger = loggerFactory.CreateTartget(GetType());
+            Logger = loggerFactory.CreateLogger(GetType());
         }
 
         #region property
@@ -57,17 +56,19 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
                     File.Delete(startupShortcutPath);
                 }
             } catch(Exception ex) {
-                Logger.Error(ex);
+                Logger.LogError(ex, ex.Message);
                 return false;
             }
 
             var assemblyPath = Assembly.GetExecutingAssembly().Location;
             using(var shortcut = new ShortcutFile()) {
                 shortcut.TargetPath = assemblyPath;
+#pragma warning disable CS8601 // Null 参照割り当ての可能性があります。
                 shortcut.WorkingDirectory = Path.GetDirectoryName(assemblyPath);
+#pragma warning restore CS8601 // Null 参照割り当ての可能性があります。
                 shortcut.IconPath = assemblyPath;
 #if DEBUG || BETA
-                Logger.Information("skip!");
+                Logger.LogInformation("skip!");
 #else
                 shortcut.Save(startupShortcutPath);
 #endif
@@ -80,7 +81,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
                     File.Delete(oldStartupShortcutPath);
                 }
             } catch(Exception ex) {
-                Logger.Warning(ex);
+                Logger.LogWarning(ex, ex.Message);
             }
 
             return true;

@@ -1,12 +1,11 @@
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database;
-using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
+using ContentTypeTextNet.Pe.Core.Model;
+using ContentTypeTextNet.Pe.Core.Model.Database;
 using ContentTypeTextNet.Pe.Main.Model.Data;
+using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
 {
@@ -52,7 +51,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
 
         protected DatabaseSelectStatementBuilder CreateSelectBuilder()
         {
-            var result = new DatabaseSelectStatementBuilder(Implementation, Logger.Factory);
+            var result = new DatabaseSelectStatementBuilder(Implementation, Lf.Create());
             result.SetTable(TableName);
 
             return result;
@@ -60,7 +59,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
 
         protected DatabaseUpdateStatementBuilder CreateUpdateBuilder(IDatabaseCommonStatus databaseCommonStatus)
         {
-            var result = new DatabaseUpdateStatementBuilder(Implementation, Logger.Factory);
+            var result = new DatabaseUpdateStatementBuilder(Implementation, Lf.Create());
             result.SetTable(TableName);
             foreach(var ignoreColumn in CommonUpdateColumns.Where(i => i != UpdatedCount)) {
                 result.AddIgnoreWhere(ignoreColumn);
@@ -79,7 +78,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
 
         protected DatabaseDeleteStatementBuilder CreateDeleteBuilder()
         {
-            var result = new DatabaseDeleteStatementBuilder(Implementation, Logger.Factory);
+            var result = new DatabaseDeleteStatementBuilder(Implementation, Lf.Create());
             result.SetTable(TableName);
 
             return result;

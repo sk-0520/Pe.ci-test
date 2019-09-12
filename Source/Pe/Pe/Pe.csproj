@@ -27,9 +27,6 @@
     <Folder Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\DatabaseSetupper\" />
     <Folder Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Setupper\" />
     <Folder Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Tuner\" />
-    <Folder Include="Model\Applications\" />
-    <Folder Include="Model\Data\" />
-    <Folder Include="View\" />
     <Folder Include="ViewModel\" />
     <Folder Include="Resources\" />
   </ItemGroup>

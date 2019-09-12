@@ -224,7 +224,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data
 
         public Guid LauncherToolbarId { get; set; }
 
-        #endregion
+# endregionIReadOnlyData
 
         #region IScreenData
 

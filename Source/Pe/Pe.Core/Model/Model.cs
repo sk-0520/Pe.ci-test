@@ -11,48 +11,6 @@ using Prism.Mvvm;
 
 namespace ContentTypeTextNet.Pe.Core.Model
 {
-    public interface IReadOnlyData
-    { }
-
-    public interface IData : IReadOnlyData
-    { }
-
-    [Serializable, DataContract]
-    public abstract class DataBase : IData
-    { }
-
-    interface IReadOnlyTransferModel : IReadOnlyData
-    { }
-
-    interface ITransferModel : IData
-    { }
-
-    [Serializable, DataContract]
-    public abstract class TransferModelBase : DataBase, ITransferModel
-    { }
-
-    public abstract class DataAccessModelBase
-    {
-        public DataAccessModelBase(IDatabaseCommander databaseCommander, ILogger logger)
-        {
-            DatabaseCommander = databaseCommander;
-            Logger = logger;
-        }
-
-        public DataAccessModelBase(IDatabaseCommander databaseCommander, ILoggerFactory loggerFactory)
-        {
-            DatabaseCommander = databaseCommander;
-            Logger = loggerFactory.CreateLogger(GetType());
-        }
-
-
-        #region property
-
-        protected IDatabaseCommander DatabaseCommander { get; }
-        protected ILogger Logger { get; }
-
-        #endregion
-    }
 
     public abstract class BindModelBase : BindableBase, IDisposable, IDisposer
     {
@@ -138,50 +96,4 @@ namespace ContentTypeTextNet.Pe.Core.Model
 
     }
 
-    public interface IRawModel : IReadOnlyData
-    {
-        #region property
-
-        object BaseRawObject { get; }
-
-        #endregion
-    }
-
-    public interface IRawModel<T> : IData, IRawModel
-    {
-        #region property
-
-        T Raw { get; }
-
-        #endregion
-    }
-
-    public class RawModel : DisposerBase, IRawModel
-    {
-        public RawModel(object rawObject)
-        {
-            BaseRawObject = rawObject;
-        }
-
-        #region IRawModel
-
-        public object BaseRawObject { get; }
-
-        #endregion
-    }
-
-    public class RawModel<T> : RawModel, IRawModel<T>
-    {
-        public RawModel(T rawObject)
-            : base(rawObject!)
-        {
-            Raw = rawObject;
-        }
-
-        #region IRawModel
-
-        public T Raw { get; }
-
-        #endregion
-    }
 }

@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
-using ContentTypeTextNet.Pe.Library.Shared.Embedded.Model;
-using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
-using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
+using ContentTypeTextNet.Pe.Bridge.Model;
+using ContentTypeTextNet.Pe.Common.Model;
+using ContentTypeTextNet.Pe.Core.Model;
 using ContentTypeTextNet.Pe.Main.Model.Data;
-using ContentTypeTextNet.Pe.Main.Model.Launcher;
+using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Logic
 {
@@ -23,7 +23,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
         {
             IconScale = iconScale;
             DispatcherWapper = dispatcherWapper;
-            RunningStatusImpl = new RunningStatus(Logger.Factory);
+            RunningStatusImpl = new RunningStatus(Lf.Create());
         }
 
         public IconImageLoaderBase(IconScale iconScale, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
@@ -31,7 +31,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
         {
             IconScale = iconScale;
             DispatcherWapper = dispatcherWapper;
-            RunningStatusImpl = new RunningStatus(Logger.Factory);
+            RunningStatusImpl = new RunningStatus(Lf.Create());
         }
 
         #region property
@@ -46,9 +46,11 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
 
         #region function
 
-        protected Task<BitmapSource> GetIconImageAsync(IconData iconData, CancellationToken cancellationToken)
+        protected Task<BitmapSource?> GetIconImageAsync(IconData iconData, CancellationToken cancellationToken)
         {
+#pragma warning disable CS8604 // Null 参照引数の可能性があります。
             var path = TextUtility.SafeTrim(iconData.Path);
+#pragma warning restore CS8604 // Null 参照引数の可能性があります。
             var expandedPath = Environment.ExpandEnvironmentVariables(path);
 
             return Task.Run(() => {
@@ -56,8 +58,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
                     return null;
                 }
 
-                var iconLoader = new IconLoader(Logger.Factory);
-                BitmapSource iconImage = null;
+                var iconLoader = new IconLoader(Lf.Create());
+                BitmapSource? iconImage = null;
                 DispatcherWapper.Invoke(() => {
                     iconImage = iconLoader.Load(expandedPath, IconScale, iconData.Index);
                     FreezableUtility.SafeFreeze(iconImage);
@@ -76,11 +78,11 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
                 RunningStatusImpl.State = RunningState.End;
                 return iconImage;
             } catch(OperationCanceledException ex) {
-                Logger.Warning(ex);
+                Logger.LogWarning(ex, ex.Message);
                 RunningStatusImpl.State = RunningState.Cancel;
                 throw;
             } catch(Exception ex) {
-                Logger.Error(ex);
+                Logger.LogError(ex, ex.Message);
                 RunningStatusImpl.State = RunningState.Error;
                 throw;
             }

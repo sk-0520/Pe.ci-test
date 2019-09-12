@@ -1,13 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using ContentTypeTextNet.Pe.Library.Shared.Embedded.Model;
-using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
-using ContentTypeTextNet.Pe.Library.Shared.Library.Model.Database;
-using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
+using ContentTypeTextNet.Pe.Common.Model;
+using ContentTypeTextNet.Pe.Core.Model;
+using ContentTypeTextNet.Pe.Core.Model.Database;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Applications
 {
@@ -36,37 +33,37 @@ namespace ContentTypeTextNet.Pe.Main.Model.Applications
 
         #region IDatabaseTransaction
 
-        public int Execute(string statement, object param = null)
+        public int Execute(string statement, object? param = null)
         {
             return Transaction.Execute(statement, param);
         }
 
-        public DataTable GetDataTable(string statement, object param = null)
+        public DataTable GetDataTable(string statement, object? param = null)
         {
             return Transaction.GetDataTable(statement, param);
         }
 
-        public IEnumerable<T> Query<T>(string statement, object param = null, bool buffered = true)
+        public IEnumerable<T> Query<T>(string statement, object? param = null, bool buffered = true)
         {
             return Transaction.Query<T>(statement, param, buffered);
         }
 
-        public IEnumerable<dynamic> Query(string statement, object param = null, bool buffered = true)
+        public IEnumerable<dynamic> Query(string statement, object? param = null, bool buffered = true)
         {
             return Transaction.Query(statement, param, buffered);
         }
 
-        public T QueryFirst<T>(string statement, object param = null)
+        public T QueryFirst<T>(string statement, object? param = null)
         {
             return Transaction.QueryFirst<T>(statement, param);
         }
 
-        public T QueryFirstOrDefault<T>(string statement, object param = null)
+        public T QueryFirstOrDefault<T>(string statement, object? param = null)
         {
             return Transaction.QueryFirstOrDefault<T>(statement, param);
         }
 
-        public T QuerySingle<T>(string statement, object param = null)
+        public T QuerySingle<T>(string statement, object? param = null)
         {
             return Transaction.QuerySingle<T>(statement, param);
         }

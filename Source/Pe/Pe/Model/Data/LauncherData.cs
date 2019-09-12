@@ -2,18 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Media;
-using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
-using ContentTypeTextNet.Pe.Main.Model.Data;
+using ContentTypeTextNet.Pe.Core.Model;
+using ContentTypeTextNet.Pe.Core.Model.Data;
 using ContentTypeTextNet.Pe.Main.Model.Logic;
 using ContentTypeTextNet.Pe.Main.View.Extend;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Data
 {
-
     public enum LauncherItemKind
     {
         Unknown,
@@ -50,9 +47,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data
     {
         #region property
 
-        string Path { get; set; }
-        string Option { get; set; }
-        string WorkDirectoryPath { get; set; }
+        string? Path { get; set; }
+        string? Option { get; set; }
+        string? WorkDirectoryPath { get; set; }
 
         #endregion
     }
@@ -71,9 +68,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data
     {
         #region ILauncherExecutePathParameter
 
-        public string Path { get; set; }
-        public string Option { get; set; }
-        public string WorkDirectoryPath { get; set; }
+        public string? Path { get; set; }
+        public string? Option { get; set; }
+        public string? WorkDirectoryPath { get; set; }
 
         #endregion
     }
@@ -82,9 +79,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data
     {
         #region ILauncherExecutePathParameter
 
-        public string Path { get; set; }
-        public string Option { get; set; }
-        public string WorkDirectoryPath { get; set; }
+        public string? Path { get; set; }
+        public string? Option { get; set; }
+        public string? WorkDirectoryPath { get; set; }
 
         #endregion
 
@@ -102,8 +99,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data
         #region property
 
         public LauncherEnvironmentVariableKind Kind { get; set; }
-        public string Name { get; set; }
-        public string Value { get; set; }
+        public string? Name { get; set; }
+        public string? Value { get; set; }
 
         #endregion
     }
@@ -146,10 +143,10 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data
         #region property
 
         public Guid LauncherGroupId { get; set; }
-        public string Name { get; set; }
+        public string? Name { get; set; }
         public LauncherGroupKind Kind { get; set; }
         public LauncherGroupImageName ImageName { get; set; }
-        public Color ImageColor { get; set; }
+        public Color? ImageColor { get; set; }
         public long Sort { get; set; }
 
         #endregion
@@ -161,8 +158,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data
 
         public Guid LauncherItemId { get; set; }
 
-        public string Code { get; set; }
-        public string Name { get; set; }
+        public string? Code { get; set; }
+        public string? Name { get; set; }
 
         public virtual LauncherItemKind Kind { get; set; }
 
@@ -170,7 +167,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data
 
         public bool IsEnabledCommandLauncher { get; set; }
 
-        public string Comment { get; set; }
+        public string? Comment { get; set; }
 
         #endregion
     }
@@ -207,11 +204,11 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data
     {
         #region property
 
-        public LauncherExecutePathData PathData { get; set; }
+        public LauncherExecutePathData? PathData { get; set; }
 
         public LauncherPathKind Kind { get; set; }
 
-        public FileSystemInfo FileSystemInfo { get; set; }
+        public FileSystemInfo? FileSystemInfo { get; set; }
 
         #endregion
     }
@@ -228,7 +225,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data
 
         #region IScreenData
 
-        public string ScreenName { get; set; }
+        public string? ScreenName { get; set; }
         [PixelKind(Px.Device)]
         public long X { get; set; }
         [PixelKind(Px.Device)]
@@ -260,5 +257,4 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data
 
         #endregion
     }
-
 }

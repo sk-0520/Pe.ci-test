@@ -1,11 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
-using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
-using ContentTypeTextNet.Pe.Main.Model.Data.Dto;
+using ContentTypeTextNet.Pe.Core.Model;
+using ContentTypeTextNet.Pe.Main.Model.Database.Dao;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Data
 {
@@ -21,20 +19,20 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data
         #endregion
     }
 
-    public class DatabaseCommonStatus: IDatabaseCommonStatus
+    public class DatabaseCommonStatus : IDatabaseCommonStatus
     {
         #region define
 
-        class CommonDtoImpl: CommonDtoBase
+        class CommonDtoImpl : CommonDtoBase
         { }
 
         #endregion
 
         #region property
 
-        public string Account { get; set; }
-        public string ProgramName { get; set; }
-        public Version ProgramVersion { get; set; }
+        public string? Account { get; set; }
+        public string? ProgramName { get; set; }
+        public Version? ProgramVersion { get; set; }
 
         #endregion
 
@@ -99,7 +97,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data
             WriteCommon(commonDto);
             foreach(var propertyInfo in commonDto.GetType().GetProperties()) {
                 var value = propertyInfo.GetValue(commonDto);
+#pragma warning disable CS8604 // Null 参照引数の可能性があります。
                 result.Add(propertyInfo.Name, value);
+#pragma warning restore CS8604 // Null 参照引数の可能性があります。
             }
 
             return result;

@@ -5,6 +5,7 @@ using System.Text;
 using System.Windows.Media.Imaging;
 using System.Windows.Resources;
 using ContentTypeTextNet.Pe.Core.Model;
+using ContentTypeTextNet.Pe.Core.Model.Data;
 using ContentTypeTextNet.Pe.Core.Model.Unmanaged;
 using Drawing = System.Drawing;
 

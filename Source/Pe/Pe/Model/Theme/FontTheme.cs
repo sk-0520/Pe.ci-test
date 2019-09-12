@@ -5,10 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
-using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
-using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
+using ContentTypeTextNet.Pe.Bridge.Model;
+using ContentTypeTextNet.Pe.Core.Model;
 using ContentTypeTextNet.Pe.Main.Model.Data;
 using ContentTypeTextNet.Pe.Main.Model.Logic;
+using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Theme
 {
@@ -41,7 +42,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Theme
 
         public FontData GetDefaultFont(FontTarget fontTarget)
         {
-            var fc = new FontConverter(Logger.Factory);
+            var fc = new FontConverter(Lf.Create());
 
             switch(fontTarget) {
                 case FontTarget.LauncherToolbar:

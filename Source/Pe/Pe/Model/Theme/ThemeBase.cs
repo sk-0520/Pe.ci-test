@@ -7,28 +7,25 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
 using System.Windows.Shapes;
-using ContentTypeTextNet.Pe.Library.Shared.Library.Model;
-using ContentTypeTextNet.Pe.Library.Shared.Link.Model;
+using ContentTypeTextNet.Pe.Bridge.Model;
+using ContentTypeTextNet.Pe.Core.Model;
+using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Theme
 {
     internal abstract class ThemeBase
     {
-        ThemeBase(IDispatcherWapper dispatcherWapper)
-        {
-            DispatcherWapper = dispatcherWapper;
-        }
 
         public ThemeBase(IDispatcherWapper dispatcherWapper, ILogger logger)
-            :this(dispatcherWapper)
         {
+            DispatcherWapper = dispatcherWapper;
             Logger = logger;
         }
 
         public ThemeBase(IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
-            :this(dispatcherWapper)
         {
-            Logger = loggerFactory.CreateTartget(GetType());
+            DispatcherWapper = dispatcherWapper;
+            Logger = loggerFactory.CreateLogger(GetType());
         }
 
         #region property

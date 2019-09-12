@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Data
 {
@@ -14,7 +12,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data
         /// <summary>
         /// フォント名。
         /// </summary>
-        string FamilyName { get; }
+        string? FamilyName { get; }
         /// <summary>
         /// フォントサイズ。
         /// </summary>
@@ -42,7 +40,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data
         /// フォント名。
         /// </summary>
         [DataMember]
-        public string FamilyName { get; set; }
+        public string? FamilyName { get; set; }
         /// <summary>
         /// フォントサイズ。
         /// </summary>
