@@ -17,9 +17,9 @@ namespace ContentTypeTextNet.Pe.Core.Test.Model
         [DataRow("a>", "a>", "<", ">")]
         [DataRow("<a>", "[a]", "<", ">")]
         [DataRow("<a><b>", "[a][b]", "<", ">")]
-        public void ReplaceRangeTest(string src, string result, string head, string tail)
+        public void ReplacePlaceholderTest(string src, string result, string head, string tail)
         {
-            var conv = TextUtility.ReplaceRange(src, head, tail, s => "[" + s + "]");
+            var conv = TextUtility.ReplacePlaceholder(src, head, tail, s => "[" + s + "]");
             Assert.AreEqual(conv, result);
         }
 

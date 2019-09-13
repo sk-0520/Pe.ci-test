@@ -73,7 +73,7 @@ namespace ContentTypeTextNet.Pe.Core.Model
         /// <param name="tail">置き換え終了文字列。</param>
         /// <param name="dg">処理。</param>
         /// <returns></returns>
-        public static string ReplaceRange(string src, string head, string tail, Func<string, string> dg)
+        public static string ReplacePlaceholder(string src, string head, string tail, Func<string, string> dg)
         {
             var escHead = Regex.Escape(head);
             var escTail = Regex.Escape(tail);
@@ -92,7 +92,7 @@ namespace ContentTypeTextNet.Pe.Core.Model
         /// <returns></returns>
         public static string ReplaceRangeFromDictionary(string src, string head, string tail, IDictionary<string, string> map)
         {
-            return ReplaceRange(src, head, tail, s => map.ContainsKey(s) ? map[s] : head + s + tail);
+            return ReplacePlaceholder(src, head, tail, s => map.ContainsKey(s) ? map[s] : head + s + tail);
         }
         /// <summary>
         /// ${key}をvalueに置き変える。
