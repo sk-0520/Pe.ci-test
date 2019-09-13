@@ -64,7 +64,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.LauncherToolbar
         ILauncherToolbarTheme LauncherToolbarTheme { get; }
 
         DatabaseLazyWriter MainDatabaseLazyWriter { get; }
-        UniqueKeyPool UniqueKeyPool { get; } = new UniqueKeyPool();
+        UniqueObjectPool UniqueKeyPool { get; } = new UniqueObjectPool();
 
         public ReadOnlyObservableCollection<LauncherGroupElement> LauncherGroups { get; }
 

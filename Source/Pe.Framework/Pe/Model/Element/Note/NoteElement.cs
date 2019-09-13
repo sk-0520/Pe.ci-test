@@ -87,7 +87,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
         public FontElement FontElement { get; private set; }
 
         DatabaseLazyWriter MainDatabaseLazyWriter { get; }
-        UniqueKeyPool UniqueKeyPool { get; } = new UniqueKeyPool();
+        UniqueObjectPool UniqueKeyPool { get; } = new UniqueObjectPool();
 
         bool ViewCreated { get; set; }
 

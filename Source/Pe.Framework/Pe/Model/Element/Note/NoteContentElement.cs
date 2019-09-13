@@ -48,7 +48,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Note
         IDatabaseStatementLoader StatementLoader { get; }
         IDispatcherWapper DispatcherWapper { get; }
         DatabaseLazyWriter MainDatabaseLazyWriter { get; }
-        UniqueKeyPool UniqueKeyPool { get; } = new UniqueKeyPool();
+        UniqueObjectPool UniqueKeyPool { get; } = new UniqueObjectPool();
 
         NoteLinkContentWatcher LinkWatcher { get; set; }
         LazyAction LinkContentLazyChanger { get; }

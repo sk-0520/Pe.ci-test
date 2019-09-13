@@ -245,6 +245,7 @@
     <Compile Include="Model\Logic\EntityRemover.cs" />
     <Compile Include="Model\Logic\FontConverter.cs" />
     <Compile Include="Model\Logic\ScreenOperator.cs" />
+    <Compile Include="Model\Logic\UniquePool.cs" />
     <Compile Include="Model\Manager\ApplicationManager.Debug.cs">
       <DependentUpon>ApplicationManager.cs</DependentUpon>
     </Compile>

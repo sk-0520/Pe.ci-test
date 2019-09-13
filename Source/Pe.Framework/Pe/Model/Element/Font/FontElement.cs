@@ -53,7 +53,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Element.Font
         IIdFactory IdFactory { get; }
 
         DatabaseLazyWriter MainDatabaseLazyWriter { get; }
-        UniqueKeyPool UniqueKeyPool { get; } = new UniqueKeyPool();
+        UniqueObjectPool UniqueKeyPool { get; } = new UniqueObjectPool();
 
         public string FamilyName
         {

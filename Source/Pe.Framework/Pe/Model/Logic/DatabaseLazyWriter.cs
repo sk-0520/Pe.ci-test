@@ -32,33 +32,6 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
         #endregion
     }
 
-    public class UniqueKeyPool
-    {
-        public UniqueKeyPool()
-        { }
-
-        #region property
-
-        ConcurrentDictionary<string, object> Pool { get; } = new ConcurrentDictionary<string, object>();
-
-        #endregion
-
-        #region function
-
-        public object Get([CallerMemberName] string callerMemberName = default(string), [CallerLineNumber] int callerLineNumber = -1)
-        {
-            var sb = new StringBuilder(callerMemberName.Length + 1 + callerLineNumber);
-            sb.Append(callerMemberName);
-            sb.Append('.');
-            sb.Append(callerLineNumber);
-
-            var result = Pool.GetOrAdd(sb.ToString(), k => new object());
-            return result;
-        }
-
-        #endregion
-    }
-
     public class DatabaseLazyWriter : DisposerBase, IFlushable
     {
         #region variable
@@ -148,8 +121,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
                 throw new ArgumentNullException(nameof(uniqueKey));
             }
 #if DEBUG
-            if(uniqueKey is UniqueKeyPool) {
-                Debug.Assert(false, $"完全な事故: {nameof(UniqueKeyPool)}.{nameof(UniqueKeyPool.Get)} を使用していない可能性あり");
+            if(uniqueKey is UniquePool) {
+                Debug.Assert(false, $"完全な事故: {nameof(UniquePool)}.{nameof(UniquePool.Get)} を使用していない可能性あり");
             }
 #endif
 
