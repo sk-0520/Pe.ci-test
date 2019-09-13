@@ -5,7 +5,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
-using ContentTypeTextNet.Pe.Common.Model;
+using ContentTypeTextNet.Pe.Core.Model;
 
 // 勉強がてら作ってみる。
 

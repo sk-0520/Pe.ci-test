@@ -8,7 +8,6 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using ContentTypeTextNet.Pe.Common.Model;
 using ContentTypeTextNet.Pe.Core.Model;
 using ContentTypeTextNet.Pe.Main.Model.Applications;
 using Microsoft.Extensions.Logging;

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 using System.Windows;
-using ContentTypeTextNet.Pe.Common.Model;
 using ContentTypeTextNet.Pe.Core.Model;
 using Microsoft.Extensions.Logging;
 

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
@@ -20,7 +20,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Pe.Bridge\Source\Pe.Bridge\Pe.Bridge.csproj" />
-    <ProjectReference Include="..\Pe.Common\Pe.Common.csproj" />
     <ProjectReference Include="..\Pe.PInvoke\Pe.PInvoke.csproj" />
   </ItemGroup>
 

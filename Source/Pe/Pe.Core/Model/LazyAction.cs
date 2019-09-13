@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Timers;
-using ContentTypeTextNet.Pe.Common.Model;
+using ContentTypeTextNet.Pe.Core.Model;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Core.Model

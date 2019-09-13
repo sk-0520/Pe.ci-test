@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Xml.Serialization;
-using ContentTypeTextNet.Pe.Common.Model;
+using ContentTypeTextNet.Pe.Core.Model;
 using ContentTypeTextNet.Pe.Core.Model.Database;
 using Microsoft.Extensions.Logging;
 using Prism.Mvvm;

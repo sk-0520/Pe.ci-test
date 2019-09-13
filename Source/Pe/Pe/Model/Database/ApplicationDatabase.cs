@@ -7,7 +7,6 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
-using ContentTypeTextNet.Pe.Common.Model;
 using ContentTypeTextNet.Pe.Core.Model;
 using ContentTypeTextNet.Pe.Core.Model.Database;
 using ContentTypeTextNet.Pe.Core.Model.Database.Vender.Public.SQLite;

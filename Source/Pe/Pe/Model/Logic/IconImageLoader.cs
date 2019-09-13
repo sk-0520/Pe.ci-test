@@ -9,7 +9,6 @@ using System.Windows;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using ContentTypeTextNet.Pe.Bridge.Model;
-using ContentTypeTextNet.Pe.Common.Model;
 using ContentTypeTextNet.Pe.Core.Model;
 using ContentTypeTextNet.Pe.Main.Model.Data;
 using Microsoft.Extensions.Logging;

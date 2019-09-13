@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 using System.Windows;
-using ContentTypeTextNet.Pe.Common.Model;
+using ContentTypeTextNet.Pe.Core.Model;
 using WinForms = System.Windows.Forms;
 
 namespace ContentTypeTextNet.Pe.Core.Compatibility.Forms

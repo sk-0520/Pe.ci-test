@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Text;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Model;
-using ContentTypeTextNet.Pe.Common.Model;
+using ContentTypeTextNet.Pe.Core.Model;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
 

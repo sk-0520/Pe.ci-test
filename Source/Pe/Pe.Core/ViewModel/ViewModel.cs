@@ -8,7 +8,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Windows.Input;
 using System.Xml.Serialization;
-using ContentTypeTextNet.Pe.Common.Model;
+using ContentTypeTextNet.Pe.Core.Model;
 using Microsoft.Extensions.Logging;
 using Prism.Mvvm;
 

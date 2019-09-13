@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Diagnostics.Contracts;
 using System.Text;
 using System.Threading;
-using ContentTypeTextNet.Pe.Common.Model;
+using ContentTypeTextNet.Pe.Core.Model;
 
 namespace ContentTypeTextNet.Pe.Core.Model
 {

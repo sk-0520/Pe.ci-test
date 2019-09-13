@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using ContentTypeTextNet.Pe.Common.Model;
 using ContentTypeTextNet.Pe.Core.Model;
 using ContentTypeTextNet.Pe.Core.Model.Database;
 using ContentTypeTextNet.Pe.Main.Model.Database;
