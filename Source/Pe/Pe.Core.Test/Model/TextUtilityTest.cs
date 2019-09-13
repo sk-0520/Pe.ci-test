@@ -48,7 +48,27 @@ namespace ContentTypeTextNet.Pe.Core.Test.Model
                     { "d", "D" },
                     { "e", "E" },
                 };
-            Assert.AreEqual(result, TextUtility.ReplaceRangeFromDictionary(src, head, tail, map));
+            Assert.AreEqual(result, TextUtility.ReplacePlaceholderFromDictionary(src, head, tail, map));
+        }
+
+        [TestMethod]
+        [DataRow("", "")]
+        [DataRow("a", "${A}")]
+        public void ReplaceFromDictionaryTest(string result, string src)
+        {
+            var map = new Dictionary<string, string>() {
+                    { "A", "a" },
+                    { "B", "b" },
+                    { "C", "c" },
+                    { "D", "d" },
+                    { "E", "e" },
+                    { "a", "A" },
+                    { "b", "B" },
+                    { "c", "C" },
+                    { "d", "D" },
+                    { "e", "E" },
+                };
+            Assert.AreEqual(result, TextUtility.ReplaceFromDictionary(src, map));
         }
 
         [TestMethod]

@@ -90,7 +90,7 @@ namespace ContentTypeTextNet.Pe.Core.Model
         /// <param name="tail">置き換え終了文字列。</param>
         /// <param name="map">置き換え対象文字列と置き換え後文字列のペアであるコレクション。</param>
         /// <returns></returns>
-        public static string ReplaceRangeFromDictionary(string src, string head, string tail, IDictionary<string, string> map)
+        public static string ReplacePlaceholderFromDictionary(string src, string head, string tail, IDictionary<string, string> map)
         {
             return ReplacePlaceholder(src, head, tail, s => map.ContainsKey(s) ? map[s] : head + s + tail);
         }
@@ -102,7 +102,7 @@ namespace ContentTypeTextNet.Pe.Core.Model
         /// <returns></returns>
         public static string ReplaceFromDictionary(string src, IDictionary<string, string> map)
         {
-            return ReplaceRangeFromDictionary(src, "${", "}", map);
+            return ReplacePlaceholderFromDictionary(src, "${", "}", map);
         }
 
 
