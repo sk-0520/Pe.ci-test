@@ -9,21 +9,20 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Core.Model;
-using ContentTypeTextNet.Pe.Main.Model.Applications;
 using Microsoft.Extensions.Logging;
 
-namespace ContentTypeTextNet.Pe.Main.Model.Logic
+namespace ContentTypeTextNet.Pe.Core.Model.Database
 {
     class LazyStockItem
     {
-        public LazyStockItem(Action<ApplicationDatabaseBarrierTransaction> action)
+        public LazyStockItem(Action<IDatabaseTransaction> action)
         {
             Action = action;
         }
 
         #region property
 
-        public Action<ApplicationDatabaseBarrierTransaction> Action { get; }
+        public Action<IDatabaseTransaction> Action { get; }
         [Timestamp(DateTimeKind.Unspecified)]
         public DateTime StockTimestamp { get; } = DateTime.UtcNow;
 
@@ -65,11 +64,11 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
 
         #endregion
 
-        public DatabaseLazyWriter(IApplicationDatabaseBarrier databaseBarrier, TimeSpan waitTime, ILoggerFactory loggerFactory)
+        public DatabaseLazyWriter(IDatabaseBarrier databaseBarrier, TimeSpan waitTime, ILoggerFactory loggerFactory)
             : this(databaseBarrier, waitTime, TimeSpan.FromSeconds(1), loggerFactory)
         { }
 
-        public DatabaseLazyWriter(IApplicationDatabaseBarrier databaseBarrier, TimeSpan waitTime, TimeSpan pauseRetryTime, ILoggerFactory loggerFactory)
+        public DatabaseLazyWriter(IDatabaseBarrier databaseBarrier, TimeSpan waitTime, TimeSpan pauseRetryTime, ILoggerFactory loggerFactory)
         {
             if(databaseBarrier == null) {
                 throw new ArgumentNullException(nameof(databaseBarrier));
@@ -93,7 +92,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
 
         #region property
 
-        IApplicationDatabaseBarrier DatabaseBarrier { get; }
+        IDatabaseBarrier DatabaseBarrier { get; }
         TimeSpan WaitTime { get; }
         TimeSpan PauseRetryTime { get; }
         ILogger Logger { get; }
@@ -118,7 +117,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
             LazyTimer.Change(WaitTime, PauseRetryTime);
         }
 
-        void StockCore(Action<ApplicationDatabaseBarrierTransaction> action, object? uniqueKey)
+        void StockCore(Action<IDatabaseTransaction> action, object? uniqueKey)
         {
             lock(this._timerLocker) {
                 StopTimer();
@@ -142,7 +141,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
             }
         }
 
-        public void Stock(Action<ApplicationDatabaseBarrierTransaction> action, object uniqueKey)
+        public void Stock(Action<IDatabaseTransaction> action, object uniqueKey)
         {
             if(uniqueKey == null) {
                 throw new ArgumentNullException(nameof(uniqueKey));
@@ -158,7 +157,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
             StockCore(action, uniqueKey);
         }
 
-        public void Stock(Action<ApplicationDatabaseBarrierTransaction> action)
+        public void Stock(Action<IDatabaseTransaction> action)
         {
             ThrowIfDisposed();
             StockCore(action, null);
@@ -219,7 +218,6 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
         }
 
         #endregion
-
 
         #region DisposerBase
 
