@@ -69,7 +69,7 @@ namespace ContentTypeTextNet.Pe.Core.Model
         /// <param name="failReturnValue">キャスト失敗時に使用する値。</param>
         /// <param name="logger"></param>
         /// <returns>valueをTにキャストした値。失敗時はfailReturnValueが返される。</returns>
-        public static TResult GetCastValue<TResult>(object value, TResult failReturnValue, ILogger logger = null!)
+        public static TResult GetCastValue<TResult>(object value, TResult failReturnValue, ILogger? logger = null)
         {
             try {
                 return (TResult)value;

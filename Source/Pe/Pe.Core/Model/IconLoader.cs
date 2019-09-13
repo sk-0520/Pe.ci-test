@@ -129,10 +129,12 @@ namespace ContentTypeTextNet.Pe.Core.Model
         /// <param name="iconScale"></param>
         /// <param name="logger"></param>
         /// <returns></returns>
-        public BitmapSource GetThumbnailImage(string iconPath, IconScale iconScale)
+        public BitmapSource? GetThumbnailImage(string iconPath, IconScale iconScale)
         {
             try {
-                IShellItem iShellItem = null!;
+#pragma warning disable CS8600 // Null リテラルまたは Null の可能性がある値を Null 非許容型に変換しています。
+                IShellItem iShellItem = null;
+#pragma warning restore CS8600 // Null リテラルまたは Null の可能性がある値を Null 非許容型に変換しています。
                 NativeMethods.SHCreateItemFromParsingName(iconPath, IntPtr.Zero, NativeMethods.IID_IShellItem, out iShellItem);
 
                 var size = iconScale.ToSize();
@@ -147,10 +149,10 @@ namespace ContentTypeTextNet.Pe.Core.Model
                 }
             } catch(COMException ex) {
                 Logger.LogWarning(ex, ex.Message);
-                return null!;
+                return null;
             } catch(ArgumentException ex) {
                 Logger.LogWarning(ex, ex.Message);
-                return null!;
+                return null;
             }
         }
 
@@ -399,7 +401,7 @@ namespace ContentTypeTextNet.Pe.Core.Model
         /// <param name="iconIndex">アイコンインデックス。</param>
         /// <param name="logger"></param>
         /// <returns>取得したアイコン。呼び出し側で破棄が必要。</returns>
-        public BitmapSource Load(string iconPath, IconScale iconScale, int iconIndex)
+        public BitmapSource? Load(string iconPath, IconScale iconScale, int iconIndex)
         {
             // 実行形式
             var hasIcon = PathUtility.HasIconPath(iconPath);
@@ -412,7 +414,7 @@ namespace ContentTypeTextNet.Pe.Core.Model
                 result = LoadLargeIcon(iconPath, iconScale, useIconIndex, hasIcon)!;
             }
 
-            return result!;
+            return result;
         }
 
     }

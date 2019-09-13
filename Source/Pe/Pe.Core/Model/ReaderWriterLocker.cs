@@ -291,7 +291,9 @@ namespace ContentTypeTextNet.Pe.Core.Model
             if(!IsDisposed) {
                 if(disposing) {
                     Locker.Dispose();
-                    Locker = null!;
+#pragma warning disable CS8625 // null リテラルを null 非許容参照型に変換できません。
+                    Locker = null;
+#pragma warning restore CS8625 // null リテラルを null 非許容参照型に変換できません。
                 }
             }
 

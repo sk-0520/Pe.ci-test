@@ -55,7 +55,9 @@ namespace ContentTypeTextNet.Pe.Core.Model
 
         protected override void Dispose(bool disposing)
         {
-            BaseStream = null!;
+#pragma warning disable CS8625 // null リテラルを null 非許容参照型に変換できません。
+            BaseStream = null;
+#pragma warning restore CS8625 // null リテラルを null 非許容参照型に変換できません。
 
             base.Dispose(disposing);
         }

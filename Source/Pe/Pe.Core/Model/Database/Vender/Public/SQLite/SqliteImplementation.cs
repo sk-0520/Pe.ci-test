@@ -50,7 +50,9 @@ namespace ContentTypeTextNet.Pe.Core.Model.Database.Vender.Public.SQLite
                 }
             }
 
-            return null!;
+#pragma warning disable CS8603 // Null 参照戻り値である可能性があります。
+            return null;
+#pragma warning restore CS8603 // Null 参照戻り値である可能性があります。
         }
     }
 

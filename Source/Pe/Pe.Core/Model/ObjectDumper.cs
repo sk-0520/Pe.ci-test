@@ -133,8 +133,11 @@ namespace ContentTypeTextNet.Pe.Core.Model
             var result = new List<ObjectDumpItem>(dictionary.Count);
             var dictionaryType = dictionary.GetType();
             foreach(var baseKey in dictionary.Keys) {
-                var key = baseKey!;
+                if(baseKey == null) {
+                    continue;
+                }
 
+                var key = baseKey;
                 var target = dictionary[key];
                 if(target == null) {
                     var item = new ObjectDumpItem(new DummyInfo(key.ToString()!, dictionaryType, typeof(object)), null, EmptyChildren);

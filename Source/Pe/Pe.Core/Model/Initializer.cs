@@ -52,7 +52,9 @@ namespace ContentTypeTextNet.Pe.Core.Model
             if(!IsDisposed) {
                 if(Target != null) {
                     Target.EndInit();
-                    Target = null!;
+#pragma warning disable CS8625 // null リテラルを null 非許容参照型に変換できません。
+                    Target = null;
+#pragma warning restore CS8625 // null リテラルを null 非許容参照型に変換できません。
                 }
             }
 

@@ -61,7 +61,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
                 BitmapSource? iconImage = null;
                 DispatcherWapper.Invoke(() => {
                     iconImage = iconLoader.Load(expandedPath, IconScale, iconData.Index);
+#pragma warning disable CS8604 // Null 参照引数の可能性があります。
                     FreezableUtility.SafeFreeze(iconImage);
+#pragma warning restore CS8604 // Null 参照引数の可能性があります。
                 });
                 return iconImage;
             });

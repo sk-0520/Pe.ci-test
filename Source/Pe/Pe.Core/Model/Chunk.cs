@@ -193,7 +193,9 @@ namespace ContentTypeTextNet.Pe.Core.Model
             if(ChunkItemCount - 1 < chunkItemIndex) {
                 if(ChunkItemCount == ChunkItems.Count) {
                     //throw new OutOfMemoryException($"{nameof(Capacity)}: {Capacity}, {nameof(ChunkItemCount)}: {ChunkItemCount}");
-                    ChunkItems.Add(null!);
+#pragma warning disable CS8625 // null リテラルを null 非許容参照型に変換できません。
+                    ChunkItems.Add(null);
+#pragma warning restore CS8625 // null リテラルを null 非許容参照型に変換できません。
                 }
 
                 if(ChunkItems[chunkItemIndex] == null) {

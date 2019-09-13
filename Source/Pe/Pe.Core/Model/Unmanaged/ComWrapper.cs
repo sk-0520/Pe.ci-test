@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -13,7 +14,9 @@ namespace ContentTypeTextNet.Pe.Core.Model.Unmanaged
         public ComWrapper(T comObject)
             : base(comObject)
         {
-            if(!Marshal.IsComObject(Com!)) {
+            Debug.Assert(Com != null);
+
+            if(!Marshal.IsComObject(Com)) {
                 throw new ArgumentException(nameof(comObject));
             }
         }
@@ -33,7 +36,9 @@ namespace ContentTypeTextNet.Pe.Core.Model.Unmanaged
         protected override void Dispose(bool disposing)
         {
             if(!IsDisposed) {
-                Marshal.ReleaseComObject(Raw!);
+#pragma warning disable CS8604 // Null 参照引数の可能性があります。
+                Marshal.ReleaseComObject(Raw);
+#pragma warning restore CS8604 // Null 参照引数の可能性があります。
             }
 
             base.Dispose(disposing);
