@@ -22,7 +22,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
         {
             IconScale = iconScale;
             DispatcherWapper = dispatcherWapper;
-            RunningStatusImpl = new RunningStatus(Lf.Create());
+            RunningStatusImpl = new RunningStatus(Logger);
         }
 
         public IconImageLoaderBase(IconScale iconScale, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
@@ -30,7 +30,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
         {
             IconScale = iconScale;
             DispatcherWapper = dispatcherWapper;
-            RunningStatusImpl = new RunningStatus(Lf.Create());
+            RunningStatusImpl = new RunningStatus(Logger);
         }
 
         #region property
@@ -57,7 +57,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
                     return null;
                 }
 
-                var iconLoader = new IconLoader(Lf.Create());
+                var iconLoader = new IconLoader(Logger);
                 BitmapSource? iconImage = null;
                 DispatcherWapper.Invoke(() => {
                     iconImage = iconLoader.Load(expandedPath, IconScale, iconData.Index);
