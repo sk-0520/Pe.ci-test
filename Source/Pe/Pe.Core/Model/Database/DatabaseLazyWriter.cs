@@ -29,7 +29,24 @@ namespace ContentTypeTextNet.Pe.Core.Model.Database
         #endregion
     }
 
-    public class DatabaseLazyWriter : DisposerBase, IFlushable
+    public interface IDatabaseLazyWriter
+    {
+        #region property
+
+        bool IsPausing { get; }
+
+        #endregion
+
+        #region function
+
+        IDisposer Pause();
+        void Stock(Action<IDatabaseTransaction> action);
+        void Stock(Action<IDatabaseTransaction> action, object uniqueKey);
+
+        #endregion
+    }
+
+    public class DatabaseLazyWriter : DisposerBase, IFlushable, IDatabaseLazyWriter
     {
         #region variable
 
