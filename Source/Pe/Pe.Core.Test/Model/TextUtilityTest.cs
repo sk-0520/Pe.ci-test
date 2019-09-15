@@ -101,7 +101,8 @@ namespace ContentTypeTextNet.Pe.Core.Test.Model
         [DataRow("a(3)", "a", new[] { "a(5)", "a(2)", "a(4)", "a" })]
         public void ToUniqueDefaultTest(string result, string src, params string[] list)
         {
-            Assert.AreEqual(result, TextUtility.ToUniqueDefault(src, list, StringComparison.Ordinal));
+            var test = TextUtility.ToUniqueDefault(src, list, StringComparison.Ordinal);
+            Assert.AreEqual(result, test);
         }
 
         [TestMethod]
