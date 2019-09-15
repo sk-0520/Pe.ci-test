@@ -96,7 +96,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
 
         public bool RegisterDatabase(Screen screen, IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, IDatabaseCommonStatus databaseCommonStatus)
         {
-            var screensDao = new ScreensEntityDao(commander, statementLoader, implementation, Lf.Create());
+            var screensDao = new ScreensEntityDao(commander, statementLoader, implementation, Logger);
 #pragma warning disable CS8604 // Null 参照引数の可能性があります。
             if(!screensDao.SelectExistsScreen(screen.DeviceName)) {
 #pragma warning restore CS8604 // Null 参照引数の可能性があります。

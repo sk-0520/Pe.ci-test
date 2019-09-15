@@ -14,6 +14,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity
             : base(commander, statementLoader, implementation, loggerFactory)
         { }
 
+        public ScreensEntityDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILogger logger) : base(commander, statementLoader, implementation, logger)
+        { }
+
         #region function
 
         public bool SelectExistsScreen(string screenName)

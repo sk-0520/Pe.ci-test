@@ -28,7 +28,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Theme
 
         public FontData GetDefaultFont(FontTarget fontTarget)
         {
-            var fc = new FontConverter(Lf.Create());
+            var fc = new FontConverter(Logger);
 
             switch(fontTarget) {
                 case FontTarget.LauncherToolbar:
