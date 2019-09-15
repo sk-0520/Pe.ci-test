@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text;
 using ContentTypeTextNet.Pe.Core.Model;
 #if ENABLED_PRISM7
@@ -89,6 +90,9 @@ namespace ContentTypeTextNet.Pe.Core.Model
     }
 
     public interface IDiContainer : IDiScopeContainerFactory
+#if ENABLED_PRISM7
+        , IContainerProvider
+#endif
     {
         /// <summary>
         /// マッピングから実体を取得。
@@ -843,6 +847,13 @@ namespace ContentTypeTextNet.Pe.Core.Model
         {
             InjectCore(ref target);
         }
+#endif
+
+#if ENABLED_PRISM7
+        public object Resolve(Type type) => New(type);
+        public object Resolve(Type type, params (Type Type, object Instance)[] parameters) => New(type, parameters.Select(p => p.Instance));
+        public object Resolve(Type type, string name) => throw new NotSupportedException();
+        public object Resolve(Type type, string name, params (Type Type, object Instance)[] parameters) => throw new NotSupportedException();
 #endif
 
         #endregion
