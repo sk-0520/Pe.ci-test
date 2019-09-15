@@ -9,7 +9,7 @@ before_build:
   - cmd: dotnet restore Source/Pe/Pe.sln --verbosity m
 build_script:
   - cmd: dotnet build Source/Pe/Pe.sln --configuration Release --runtime win-x64 --verbosity normal
-test:
+test_script:
   - cmd: dotnet test Source/Pe/Pe.sln --configuration Release --runtime win-x64 --verbosity normal
 artifacts:
 - path: Output\
