@@ -1,3 +1,6 @@
 Include="etc\sql\ContentTypeTextNet.Pe.Main\**\*.sql"
 
 
+dotnet build Source/Pe/Pe.sln --configuration Release --runtime win-x64 --verbosity normal
+dotnet test Source/Pe/Pe.sln --configuration Release --runtime win-x64 --verbosity normal
+
