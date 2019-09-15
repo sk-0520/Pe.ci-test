@@ -1,0 +1,20 @@
+version: '{build}'
+skip_tags: true
+image: Visual Studio 2019 Preview
+configuration: Release
+platform:
+- x86
+- x64
+clone_depth: 1
+cache: Source\Pe\packages
+before_build:
+- cmd: >-
+    git submodule init
+    git submodule update
+
+    nuget restore Source\Pe\Pe.sln
+build:
+  parallel: true
+  verbosity: normal
+artifacts:
+- path: Output\
