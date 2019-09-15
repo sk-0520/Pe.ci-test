@@ -5,6 +5,8 @@ using System.Text;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
+using ContentTypeTextNet.Pe.Bridge.Model;
+using ContentTypeTextNet.Pe.Bridge.Model.Data;
 using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
 using ContentTypeTextNet.Pe.Core.Model;
@@ -14,14 +16,6 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.View.Extend
 {
-    public enum AppDesktopToolbarPosition
-    {
-        Left,
-        Top,
-        Right,
-        Bottom,
-    }
-
     public static class AppDesktopToolbarPositionUtility
     {
         /// <summary>

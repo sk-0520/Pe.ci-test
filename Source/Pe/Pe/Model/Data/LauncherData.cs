@@ -4,6 +4,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Windows.Media;
+using ContentTypeTextNet.Pe.Bridge.Model;
+using ContentTypeTextNet.Pe.Bridge.Model.Data;
 using ContentTypeTextNet.Pe.Core.Model;
 using ContentTypeTextNet.Pe.Core.Model.Data;
 using ContentTypeTextNet.Pe.Main.Model.Logic;
@@ -132,11 +134,6 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data
         Normal,
     }
 
-    public enum LauncherGroupImageName
-    {
-        DirectoryNormal,
-        DirectoryOpen,
-    }
 
     public class LauncherGroupData : DataBase
     {
@@ -246,7 +243,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Data
         public Guid LauncherGroupId { get; set; }
         public AppDesktopToolbarPosition ToolbarPosition { get; set; }
         public LauncherToolbarIconDirection IconDirection { get; set; }
-        public IconScale IconScale { get; set; }
+        public IconSize IconSize { get; set; }
         public Guid FontId { get; set; }
         public TimeSpan AutoHideTimeout { get; set; }
         public long TextWidth { get; set; }

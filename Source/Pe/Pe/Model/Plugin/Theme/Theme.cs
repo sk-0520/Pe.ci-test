@@ -3,19 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Theme
 {
-    public interface IReadOnlyColorPair<out T>
-    {
-        #region property
-
-        T Foreground { get; }
-        T Background { get; }
-
-        #endregion
-    }
-
     internal class ColorPair<T>: IReadOnlyColorPair<T>
     {
         public ColorPair(T foreground, T background)

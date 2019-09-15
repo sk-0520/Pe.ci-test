@@ -7,6 +7,8 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows;
 using System.Windows.Media.Imaging;
+using ContentTypeTextNet.Pe.Bridge.Model;
+using ContentTypeTextNet.Pe.Bridge.Model.Data;
 using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
 using ContentTypeTextNet.Pe.Core.Model.Unmanaged;
@@ -15,68 +17,6 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Core.Model
 {
-    /// <summary>
-    /// アイコンサイズ。
-    /// </summary>
-    public enum IconScale
-    {
-        /// <summary>
-        /// 16px
-        /// </summary>
-        Small = 16,
-        /// <summary>
-        /// 32px
-        /// </summary>
-        Normal = 32,
-        /// <summary>
-        /// 48px
-        /// </summary>
-        Big = 48,
-        /// <summary>
-        /// 256px
-        /// </summary>
-        Large = 256,
-    }
-
-    /// <summary>
-    /// <see cref="IconScale"/>に対する拡張処理。
-    /// </summary>
-    public static class IconScaleExtensions
-    {
-        /// <summary>
-        /// 横幅を求める。
-        /// </summary>
-        /// <param name="iconScale"></param>
-        /// <returns></returns>
-        [return: PixelKind(Px.Device)]
-        public static double ToWidth(this IconScale iconScale)
-        {
-            return (int)iconScale;
-        }
-
-        /// <summary>
-        /// 高さを求める。
-        /// </summary>
-        /// <param name="iconScale"></param>
-        /// <returns></returns>
-        [return: PixelKind(Px.Device)]
-        public static double ToHeight(this IconScale iconScale)
-        {
-            return (int)iconScale;
-        }
-
-        /// <summary>
-        /// 縦・横のサイズを求める。
-        /// </summary>
-        /// <param name="iconScale"></param>
-        /// <returns></returns>
-        [return: PixelKind(Px.Device)]
-        public static Size ToSize(this IconScale iconScale)
-        {
-            return new Size((int)iconScale, (int)iconScale);
-        }
-    }
-
     public interface IIconPack<TValue>
     {
         #region property
@@ -126,10 +66,10 @@ namespace ContentTypeTextNet.Pe.Core.Model
         /// ファイルのサムネイルを取得。
         /// </summary>
         /// <param name="iconPath"></param>
-        /// <param name="iconScale"></param>
+        /// <param name="iconSize"></param>
         /// <param name="logger"></param>
         /// <returns></returns>
-        public BitmapSource? GetThumbnailImage(string iconPath, IconScale iconScale)
+        public BitmapSource? GetThumbnailImage(string iconPath, IconSize iconSize)
         {
             try {
 #pragma warning disable CS8600 // Null リテラルまたは Null の可能性がある値を Null 非許容型に変換しています。
@@ -137,7 +77,7 @@ namespace ContentTypeTextNet.Pe.Core.Model
 #pragma warning restore CS8600 // Null リテラルまたは Null の可能性がある値を Null 非許容型に変換しています。
                 NativeMethods.SHCreateItemFromParsingName(iconPath, IntPtr.Zero, NativeMethods.IID_IShellItem, out iShellItem);
 
-                var size = iconScale.ToSize();
+                var size = iconSize.ToSize();
                 var siigbf = SIIGBF.SIIGBF_RESIZETOFIT;
                 var hResultBitmap = IntPtr.Zero;
                 using(var shellItem = new ComWrapper<IShellItem>(iShellItem)) {
@@ -266,25 +206,25 @@ namespace ContentTypeTextNet.Pe.Core.Model
         /// 16px, 32pxアイコン取得。
         /// </summary>
         /// <param name="iconPath"></param>
-        /// <param name="iconScale"></param>
+        /// <param name="iconSize"></param>
         /// <param name="iconIndex"></param>
         /// <param name="hasIcon"></param>
         /// <param name="logger"></param>
         /// <returns></returns>
-        BitmapSource? LoadNormalIcon(string iconPath, IconScale iconScale, int iconIndex, bool hasIcon)
+        BitmapSource? LoadNormalIcon(string iconPath, IconSize iconSize, int iconIndex, bool hasIcon)
         {
-            Debug.Assert(new[] { IconScale.Small, IconScale.Normal }.Any(i => i == iconScale), iconScale.ToString());
+            Debug.Assert(new[] { IconSize.Kind.Small, IconSize.Kind.Normal }.Any(i => (int)i == iconSize.Width), iconSize.ToString());
             Debug.Assert(0 <= iconIndex, iconIndex.ToString());
 
             // 16, 32 px
             if(hasIcon) {
                 var iconHandle = new IntPtr[1];
-                if(iconScale == IconScale.Small) {
+                if(iconSize.Width == (int)IconSize.Kind.Small) {
 #pragma warning disable CS8625 // null リテラルを null 非許容参照型に変換できません。
                     _ = NativeMethods.ExtractIconEx(iconPath, iconIndex, null, iconHandle, 1);
 #pragma warning restore CS8625 // null リテラルを null 非許容参照型に変換できません。
                 } else {
-                    Debug.Assert(iconScale == IconScale.Normal);
+                    Debug.Assert(iconSize.Width == (int)IconSize.Kind.Normal);
 #pragma warning disable CS8625 // null リテラルを null 非許容参照型に変換できません。
                     NativeMethods.ExtractIconEx(iconPath, iconIndex, iconHandle, null, 1);
 #pragma warning restore CS8625 // null リテラルを null 非許容参照型に変換できません。
@@ -296,9 +236,9 @@ namespace ContentTypeTextNet.Pe.Core.Model
                 }
             }
 
-            if(iconScale == IconScale.Normal) {
+            if(iconSize.Width == (int)IconSize.Kind.Normal) {
                 try {
-                    var thumbnailImage = GetThumbnailImage(iconPath, iconScale);
+                    var thumbnailImage = GetThumbnailImage(iconPath, iconSize);
                     if(thumbnailImage != null) {
                         return thumbnailImage;
                     }
@@ -309,10 +249,10 @@ namespace ContentTypeTextNet.Pe.Core.Model
 
             var fileInfo = new SHFILEINFO();
             SHGFI flag = SHGFI.SHGFI_ICON;
-            if(iconScale == IconScale.Small) {
+            if(iconSize.Width == (int)IconSize.Kind.Small) {
                 flag |= SHGFI.SHGFI_SMALLICON;
             } else {
-                Debug.Assert(iconScale == IconScale.Normal);
+                Debug.Assert(iconSize.Width == (int)IconSize.Kind.Normal);
                 flag |= SHGFI.SHGFI_LARGEICON;
             }
             var fileInfoResult = NativeMethods.SHGetFileInfo(iconPath, 0, ref fileInfo, (uint)Marshal.SizeOf(fileInfo), flag);
@@ -329,15 +269,15 @@ namespace ContentTypeTextNet.Pe.Core.Model
         /// 48px以上のアイコン取得。
         /// </summary>
         /// <param name="iconPath"></param>
-        /// <param name="iconScale"></param>
+        /// <param name="iconSize"></param>
         /// <param name="iconIndex"></param>
         /// <param name="hasIcon"></param>
         /// <param name="logger"></param>
         /// <returns></returns>
-        BitmapSource? LoadLargeIcon(string iconPath, IconScale iconScale, int iconIndex, bool hasIcon)
+        BitmapSource? LoadLargeIcon(string iconPath, IconSize iconSize, int iconIndex, bool hasIcon)
         {
             //Debug.Assert(iconScale.IsIn(IconScale.Big, IconScale.Large), iconScale.ToString());
-            Debug.Assert(new[] { IconScale.Big, IconScale.Large }.Any(i => i == iconScale), iconScale.ToString());
+            Debug.Assert(new[] { (int)IconSize.Kind.Big, (int)IconSize.Kind.Large }.Any(i => (int)i == iconSize.Width), iconSize.ToString());
             Debug.Assert(0 <= iconIndex, iconIndex.ToString());
 
             if(hasIcon) {
@@ -346,7 +286,7 @@ namespace ContentTypeTextNet.Pe.Core.Model
                     if(iconIndex < iconList.Count) {
                         var binary = iconList[iconIndex];
                         iconList.Clear();
-                        var image = (BitmapSource)DrawingUtility.ImageSourceFromBinaryIcon(binary, iconScale.ToSize());
+                        var image = (BitmapSource)DrawingUtility.ImageSourceFromBinaryIcon(binary, iconSize.ToSize());
                         return image;
                     }
                 } catch(Exception ex) {
@@ -354,12 +294,12 @@ namespace ContentTypeTextNet.Pe.Core.Model
                 }
             }
 
-            var thumbnailImage = GetThumbnailImage(iconPath, iconScale);
+            var thumbnailImage = GetThumbnailImage(iconPath, iconSize);
             if(thumbnailImage != null) {
                 return thumbnailImage;
             }
 
-            var shellImageList = iconScale == IconScale.Big ? SHIL.SHIL_EXTRALARGE : SHIL.SHIL_JUMBO;
+            var shellImageList = iconSize.Width == (int)IconSize.Kind.Big ? SHIL.SHIL_EXTRALARGE : SHIL.SHIL_JUMBO;
             var fileInfo = new SHFILEINFO() {
                 iIcon = iconIndex,
             };
@@ -397,21 +337,21 @@ namespace ContentTypeTextNet.Pe.Core.Model
         /// アイコンを取得。
         /// </summary>
         /// <param name="iconPath">対象ファイルパス。</param>
-        /// <param name="iconScale">アイコンサイズ。</param>
+        /// <param name="iconSize">アイコンサイズ。</param>
         /// <param name="iconIndex">アイコンインデックス。</param>
         /// <param name="logger"></param>
         /// <returns>取得したアイコン。呼び出し側で破棄が必要。</returns>
-        public BitmapSource? Load(string iconPath, IconScale iconScale, int iconIndex)
+        public BitmapSource? Load(string iconPath, IconSize iconSize, int iconIndex)
         {
             // 実行形式
             var hasIcon = PathUtility.HasIconPath(iconPath);
             var useIconIndex = Math.Abs(iconIndex);
 
             BitmapSource result;
-            if(iconScale == IconScale.Small || iconScale == IconScale.Normal) {
-                result = LoadNormalIcon(iconPath, iconScale, useIconIndex, hasIcon)!;
+            if(iconSize.Width == (int)IconSize.Kind.Small || iconSize.Width == (int)IconSize.Kind.Normal) {
+                result = LoadNormalIcon(iconPath, iconSize, useIconIndex, hasIcon)!;
             } else {
-                result = LoadLargeIcon(iconPath, iconScale, useIconIndex, hasIcon)!;
+                result = LoadLargeIcon(iconPath, iconSize, useIconIndex, hasIcon)!;
             }
 
             return result;

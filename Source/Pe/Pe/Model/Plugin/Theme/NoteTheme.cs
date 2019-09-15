@@ -8,53 +8,13 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using ContentTypeTextNet.Pe.Bridge.Model;
+using ContentTypeTextNet.Pe.Bridge.Model.Data;
+using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
 using ContentTypeTextNet.Pe.Core.Model;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Theme
 {
-    public enum NoteCaption
-    {
-        Compact,
-        Topmost,
-        Close,
-    }
-
-    public enum NoteCaptionButtonState
-    {
-        None,
-        Over,
-        Pressed,
-    }
-
-    public interface INoteTheme
-    {
-        #region function
-
-        [return: PixelKind(Px.Logical)]
-        double GetCaptionHeight();
-        [return: PixelKind(Px.Logical)]
-        double GetCaptionFontSize(double baseFontSize);
-        FontFamily GetCaptionFontFamily(FontFamily baseFontFamily);
-
-        [return: PixelKind(Px.Logical)]
-        Thickness GetBorderThickness();
-        [return: PixelKind(Px.Logical)]
-        Size GetResizeGripSize();
-
-        IReadOnlyColorPair<Brush> GetCaptionBrush(IReadOnlyColorPair<Color> baseColor);
-        Brush GetBorderBrush(IReadOnlyColorPair<Color> baseColor);
-        IReadOnlyColorPair<Brush> GetContentBrush(IReadOnlyColorPair<Color> baseColor);
-        Brush GetCaptionButtonBackgroundBrush(NoteCaptionButtonState buttonState, IReadOnlyColorPair<Color> baseColor);
-
-        DependencyObject GetCaptionImage(NoteCaption noteCaption, bool isEnabled, IReadOnlyColorPair<Color> baseColor);
-        DependencyObject GetResizeGripImage(IReadOnlyColorPair<Color> baseColor);
-
-        DependencyObject GetIconImage(IconScale iconScale, bool isCompact, bool isLocked, IReadOnlyColorPair<Color> baseColor);
-
-        #endregion
-    }
-
     internal class NoteTheme : ThemeBase, INoteTheme
     {
         public NoteTheme(IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
@@ -252,9 +212,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Theme
             return viewBox;
         }
 
-        public DependencyObject GetIconImage(IconScale iconScale, bool isCompact, bool isLocked, IReadOnlyColorPair<Color> baseColor)
+        public DependencyObject GetIconImage(IconSize iconSize, bool isCompact, bool isLocked, IReadOnlyColorPair<Color> baseColor)
         {
-            var size = new Size(iconScale.ToWidth(), isCompact ? iconScale.ToHeight() / 2 : iconScale.ToHeight());
+            var size = new Size(iconSize.Width, isCompact ? iconSize.Height / 2 : iconSize.Height);
             var box = CreateBox(baseColor.Foreground, baseColor.Background, size);
             return box;
         }

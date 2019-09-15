@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using ContentTypeTextNet.Pe.Bridge.Model;
 using ContentTypeTextNet.Pe.Core.Model;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Database.Dao.Entity

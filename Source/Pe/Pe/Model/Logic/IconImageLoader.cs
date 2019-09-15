@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using ContentTypeTextNet.Pe.Bridge.Model;
+using ContentTypeTextNet.Pe.Bridge.Model.Data;
 using ContentTypeTextNet.Pe.Core.Model;
 using ContentTypeTextNet.Pe.Main.Model.Data;
 using Microsoft.Extensions.Logging;
@@ -17,25 +18,25 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
 {
     public abstract class IconImageLoaderBase : BindModelBase
     {
-        public IconImageLoaderBase(IconScale iconScale, IDispatcherWapper dispatcherWapper, ILogger logger)
+        public IconImageLoaderBase(IconSize iconSIze, IDispatcherWapper dispatcherWapper, ILogger logger)
             : base(logger)
         {
-            IconScale = iconScale;
+            IconSize = iconSIze;
             DispatcherWapper = dispatcherWapper;
             RunningStatusImpl = new RunningStatus(Logger);
         }
 
-        public IconImageLoaderBase(IconScale iconScale, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
+        public IconImageLoaderBase(IconSize iconSIze, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
-            IconScale = iconScale;
+            IconSize = iconSIze;
             DispatcherWapper = dispatcherWapper;
             RunningStatusImpl = new RunningStatus(Logger);
         }
 
         #region property
 
-        public IconScale IconScale { get; }
+        public IconSize IconSize { get; }
         protected IDispatcherWapper DispatcherWapper { get; }
 
         RunningStatus RunningStatusImpl { get; }
@@ -60,7 +61,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
                 var iconLoader = new IconLoader(Logger);
                 BitmapSource? iconImage = null;
                 DispatcherWapper.Invoke(() => {
-                    iconImage = iconLoader.Load(expandedPath, IconScale, iconData.Index);
+                    iconImage = iconLoader.Load(expandedPath, IconSize, iconData.Index);
 #pragma warning disable CS8604 // Null 参照引数の可能性があります。
                     FreezableUtility.SafeFreeze(iconImage);
 #pragma warning restore CS8604 // Null 参照引数の可能性があります。
@@ -96,11 +97,11 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
     {
         public IconImageLoaderPack(IEnumerable<IconImageLoaderBase> iconImageLoaders)
         {
-            var map = iconImageLoaders.ToDictionary(i => i.IconScale, i => i);
-            Small = map[IconScale.Small];
-            Normal = map[IconScale.Normal];
-            Big = map[IconScale.Big];
-            Large = map[IconScale.Large];
+            var map = iconImageLoaders.ToDictionary(i => (IconSize.Kind)i.IconSize.Width, i => i);
+            Small = map[IconSize.Kind.Small];
+            Normal = map[IconSize.Kind.Normal];
+            Big = map[IconSize.Kind.Big];
+            Large = map[IconSize.Kind.Large];
         }
 
         #region property

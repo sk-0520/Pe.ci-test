@@ -9,6 +9,8 @@ using System.Windows.Media;
 using System.Windows.Media.Effects;
 using System.Windows.Shapes;
 using ContentTypeTextNet.Pe.Bridge.Model;
+using ContentTypeTextNet.Pe.Bridge.Model.Data;
+using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
 using ContentTypeTextNet.Pe.Core.Model;
 using ContentTypeTextNet.Pe.Main.Model.Data;
 using ContentTypeTextNet.Pe.Main.Model.Theme;
@@ -17,15 +19,6 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Theme
 {
-    public interface ILauncherGroupTheme
-    {
-        #region function
-
-        DependencyObject GetGroupImage(LauncherGroupImageName imageName, Color imageColor, IconScale iconScale, bool isStrong);
-
-        #endregion
-    }
-
     internal class LauncherGroupTheme : ThemeBase, ILauncherGroupTheme
     {
         public LauncherGroupTheme(IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
@@ -51,12 +44,12 @@ namespace ContentTypeTextNet.Pe.Main.Model.Theme
             }
         }
 
-        DependencyObject GetGroupImageCore(LauncherGroupImageName imageName, Color imageColor, IconScale iconScale, bool isStrong)
+        DependencyObject GetGroupImageCore(LauncherGroupImageName imageName, Color imageColor, IconSize iconSize, bool isStrong)
         {
             var viewBox = new Viewbox();
             using(Initializer.BeginInitialize(viewBox)) {
-                viewBox.Width = iconScale.ToWidth();
-                viewBox.Height = iconScale.ToHeight();
+                viewBox.Width = iconSize.Width;
+                viewBox.Height = iconSize.Height;
 
                 var canvas = new Canvas();
                 using(Initializer.BeginInitialize(canvas)) {
@@ -88,9 +81,9 @@ namespace ContentTypeTextNet.Pe.Main.Model.Theme
 
         #region ILauncherGroupTheme
 
-        public DependencyObject GetGroupImage(LauncherGroupImageName imageName, Color imageColor, IconScale iconScale, bool isStrong)
+        public DependencyObject GetGroupImage(LauncherGroupImageName imageName, Color imageColor, IconSize iconSize, bool isStrong)
         {
-            return GetGroupImageCore(imageName, imageColor, iconScale, isStrong);
+            return GetGroupImageCore(imageName, imageColor, iconSize, isStrong);
         }
 
         #endregion

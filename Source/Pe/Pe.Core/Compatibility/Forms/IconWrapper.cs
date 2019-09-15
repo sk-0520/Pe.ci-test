@@ -4,6 +4,7 @@ using System.IO;
 using System.Text;
 using System.Windows.Media.Imaging;
 using System.Windows.Resources;
+using ContentTypeTextNet.Pe.Bridge.Model.Data;
 using ContentTypeTextNet.Pe.Core.Model;
 using ContentTypeTextNet.Pe.Core.Model.Data;
 using ContentTypeTextNet.Pe.Core.Model.Unmanaged;
@@ -16,12 +17,12 @@ namespace ContentTypeTextNet.Pe.Core.Compatibility.Forms
     /// </summary>
     public class IconWrapper : RawModel<Drawing.Icon>, IMakeBitmapSource
     {
-        public IconWrapper(Stream stream, IconScale iconScale)
-            : base(new Drawing.Icon(stream, DrawingUtility.Convert(iconScale.ToSize())))
+        public IconWrapper(Stream stream, IconSize iconSize)
+            : base(new Drawing.Icon(stream, DrawingUtility.Convert(iconSize.ToSize())))
         { }
 
-        public IconWrapper(StreamResourceInfo streamInfo, IconScale iconScale)
-            : this(streamInfo.Stream, iconScale)
+        public IconWrapper(StreamResourceInfo streamInfo, IconSize iconSize)
+            : this(streamInfo.Stream, iconSize)
         { }
 
 

@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using ContentTypeTextNet.Pe.Bridge.Model;
+using ContentTypeTextNet.Pe.Bridge.Model.Data;
+using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
 using ContentTypeTextNet.Pe.Core.Model;
 using ContentTypeTextNet.Pe.Main.Model.Data;
 using ContentTypeTextNet.Pe.Main.Model.Logic;
@@ -13,22 +15,6 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Theme
 {
-    public enum FontTarget
-    {
-        LauncherToolbar,
-        NoteContent,
-        Command,
-    }
-
-    public interface IFontTheme
-    {
-        #region function
-
-        FontData GetDefaultFont(FontTarget fontTarget);
-
-        #endregion
-    }
-
     internal class FontTheme : ThemeBase, IFontTheme
     {
         public FontTheme(IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)

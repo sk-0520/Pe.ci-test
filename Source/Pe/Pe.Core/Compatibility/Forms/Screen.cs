@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using ContentTypeTextNet.Pe.Bridge.Model;
 using ContentTypeTextNet.Pe.Core.Model;
 using WinForms = System.Windows.Forms;
 
