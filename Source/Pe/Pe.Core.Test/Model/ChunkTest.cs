@@ -49,7 +49,7 @@ namespace ContentTypeTextNet.Pe.Core.Test.Model
         [DataRow(true, 6, new[] { 0, 1, 2, 3, 4, 5, 6 })]
         [DataRow(false, -1, new[] { 0, 1, 2, 3, 4, 5, 6 })]
         [DataRow(false, 7, new[] { 0, 1, 2, 3, 4, 5, 6 })]
-        public void ContainsTest(bool result, int value, params int[] items)
+        public void ContainsTest(bool result, int value, int[] items)
         {
             var item = new ChunkItem<int>(items.Length);
             foreach(var i in items) {
