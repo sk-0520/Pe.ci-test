@@ -42,7 +42,7 @@ namespace ContentTypeTextNet.Pe.Core.Model
         /// <para>呼び出し時点では<see cref="IsDisposed"/>は偽のまま。</para>
         /// </summary>
         [field: NonSerialized]
-        public event EventHandler Disposing;
+        public event EventHandler? Disposing;
 
         /// <summary>
         /// <see cref="IDisposable.Dispose"/>されたか。

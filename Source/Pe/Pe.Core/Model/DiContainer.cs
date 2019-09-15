@@ -459,7 +459,7 @@ namespace ContentTypeTextNet.Pe.Core.Model
         /// シングルトンなDIコンテナ。
         /// <para><see cref="Initialize"/>にて初期化が必要。</para>
         /// </summary>
-        public static IDiContainer Instance { get; private set; }
+        public static IDiContainer? Instance { get; private set; }
 
         /// <summary>
         /// IF → 実体 のマッピング。

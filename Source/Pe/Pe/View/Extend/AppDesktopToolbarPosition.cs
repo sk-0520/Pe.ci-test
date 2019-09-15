@@ -211,15 +211,15 @@ namespace ContentTypeTextNet.Pe.Main.View.Extend
         /// <summary>
         /// フルスクリーンイベント。
         /// </summary>
-        public event EventHandler<AppDesktopToolbarFullScreenEventArgs> AppDesktopToolbarFullScreen;
+        public event EventHandler<AppDesktopToolbarFullScreenEventArgs>? AppDesktopToolbarFullScreen;
         /// <summary>
         /// 位置変更時に発生。
         /// </summary>
-        public event EventHandler<AppDesktopToolbarPositionChangedEventArgs> AppDesktopToolbarPositionChanged;
+        public event EventHandler<AppDesktopToolbarPositionChangedEventArgs>? AppDesktopToolbarPositionChanged;
         /// <summary>
         /// ステータス変更。
         /// </summary>
-        public event EventHandler<AppDesktopToolbarStateChangeEventArgs> AppDesktopToolbarStateChange;
+        public event EventHandler<AppDesktopToolbarStateChangeEventArgs>? AppDesktopToolbarStateChange;
 
         #endregion
 

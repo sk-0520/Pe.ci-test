@@ -14,7 +14,7 @@ namespace ContentTypeTextNet.Pe.Core.Model
         public static string CommandLineKeyMachineDirectory { get; } = "machine-dir";
         public static string CommandLineKeyTemporaryDirectory { get; } = "temp-dir";
 
-        public static EnvironmentParameters Instance { get; private set; }
+        public static EnvironmentParameters? Instance { get; private set; }
 
 #pragma warning disable CS8618 // Null 非許容フィールドが初期化されていません。
         /// <summary>

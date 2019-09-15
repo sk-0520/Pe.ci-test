@@ -109,7 +109,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModel
             ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
         }
 
-        public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
+        public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
 
         public System.Collections.IEnumerable GetErrors(string propertyName)
         {
@@ -127,7 +127,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModel
         /// <para>呼び出し時点では<see cref="IsDisposed"/>は偽のまま。</para>
         /// </summary>
         [field: NonSerialized]
-        public event EventHandler Disposing;
+        public event EventHandler? Disposing;
 
         /// <summary>
         /// <see cref="IDisposable.Dispose"/>されたか。
