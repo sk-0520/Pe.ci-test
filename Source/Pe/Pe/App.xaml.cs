@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using ContentTypeTextNet.Pe.Main;
 
-namespace Pe.Main
+namespace ContentTypeTextNet.Pe.Main
 {
     /// <summary>
     /// Interaction logic for App.xaml
@@ -18,7 +18,7 @@ namespace Pe.Main
         {
             base.OnStartup(e);
 #if DEBUG
-            new DebugStartup().Execute();
+            DebugStartup();
 #endif
             /*
             if(!ApplicationManager.Startup(this, e)) {

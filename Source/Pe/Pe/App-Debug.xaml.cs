@@ -5,11 +5,11 @@ using System.Text;
 namespace ContentTypeTextNet.Pe.Main
 {
 #if DEBUG
-    partial class DebugStartup
+    partial class App
     {
         #region function
 
-        public void Execute()
+        void DebugStartup()
         {
         }
 

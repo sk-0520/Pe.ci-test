@@ -1,3 +1,5 @@
+#define ENABLED_PRISM7
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -6,6 +8,9 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 using ContentTypeTextNet.Pe.Core.Model;
+#if ENABLED_PRISM7
+using Prism.Ioc;
+#endif
 
 // 勉強がてら作ってみる。
 
@@ -167,6 +172,9 @@ namespace ContentTypeTextNet.Pe.Core.Model
     }
 
     public interface IDiRegisterContainer : IDiContainer
+#if ENABLED_PRISM7
+        , IContainerRegistry
+#endif
     {
         /// <summary>
         /// シンプルなマッピングを追加。
@@ -925,6 +933,28 @@ namespace ContentTypeTextNet.Pe.Core.Model
             return this;
         }
 
+#if ENABLED_PRISM7
+        public bool IsRegistered(Type type) => Mapping.ContainsKey(type);
+        public bool IsRegistered(Type type, string name) => throw new NotSupportedException();
+        public IContainerRegistry Register(Type from, Type to)
+        {
+            Register(from, to, DiLifecycle.Transient, () => NewCore(to, Enumerable.Empty<object>(), false));
+            return this;
+        }
+        public IContainerRegistry Register(Type from, Type to, string name) => throw new NotSupportedException();
+        public IContainerRegistry RegisterInstance(Type type, object instance)
+        {
+            SimpleRegister(type, instance.GetType(), instance);
+            return this;
+        }
+        public IContainerRegistry RegisterInstance(Type type, object instance, string name) => throw new NotSupportedException();
+        public IContainerRegistry RegisterSingleton(Type from, Type to)
+        {
+            Register(from, to, DiLifecycle.Singleton, () => NewCore(to, Enumerable.Empty<object>(), false));
+            return this;
+        }
+        public IContainerRegistry RegisterSingleton(Type from, Type to, string name) => throw new NotSupportedException();
+#endif
 
         #endregion
 
