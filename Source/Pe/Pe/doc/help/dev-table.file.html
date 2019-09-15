@@ -1,0 +1,47 @@
+<!DOCTYPE html><html lang="ja"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><title>テーブル図: ファイル - Pe Help</title><link rel="stylesheet" type="text/css" href="style.e0c02e61.css"><template id="template-block"><div name="block-root"><div name="block-table"></div><div name="block-layout"></div><div name="block-index"></div></div></template><template id="template-filter"><dt>テーブル</dt><dd><input name="table-filter" type="text"></dd></template><template id="template-command"><ul><li><button name="command-import">import</button><button name="command-export">export</button><button name="command-copy-define">copy define</button><button name="command-copy-sql">copy sql</button></li></ul></template><template id="template-table"><h3><label>テーブル名:<input type="text" name="table-name"></label></h3></template><template id="template-layout"><h4>Layout</h4><table><thead><tr><th>PK</th><th>NN</th><th>FK</th><th>論理名</th><th>物理名</th><th>論理型</th><th>物理型</th><th>CLR</th><th>チェック制約</th><th>コメント</th><th>削除</th></tr></thead><tbody></tbody><tfoot><tr><td colspan="10"><button name="add">add column</button></td></tr></tfoot></table></template><template id="template-layout-row"><tr name="layout-row-root"><td><input type="checkbox" name="pk"></td><td><input type="checkbox" name="nn"></td><td name="fk-root"><input type="hidden" name="fk"><select name="fk-table"></select><select name="fk-column" disabled></select></td><td><input type="text" name="name-logical"></td><td><input type="text" name="name-physical"></td><td><select name="data-logical"><optgroup label="SQLite3"><option value="integer">integer</option><option value="real">real</option><option value="text">text</option><option value="blob">blob</option></optgroup><optgroup label="affinity"><option value="datetime">datetime</option><option value="boolean">boolean</option></optgroup></select></td><td><input type="text" name="data-physical" readonly></td><td><select name="data-clr"><option value="System.String">string</option><option value="System.Int64">long</option><option value="System.Decimal">decimal</option><option value="System.Byte[]">byte[]</option><option value="System.Boolean">bool</option><option value="System.Single">float</option><option value="System.Double">double</option><option value="System.Guid">Guid</option><option value="System.DateTime">DateTime</option><option value="System.Version">Version</option><option value="System.TimeSpan">TimeSpan</option></select></td><td><input type="text" name="check"></td><td><input type="text" name="comment"></td><td><button name="delete">行削除</button></td></tr></template><template id="template-index"><h4>Index</h4><table><thead><tr><th>UK</th><th>カラム</th></tr></thead><tbody></tbody><tfoot><tr><td colspan="2"><button name="add">add index</button></td></tr></tfoot></table></template><template id="template-index-row"><tr name="index-row-root"><td><input type="checkbox" name="uk"></td><td><ol name="columns"></ol><button name="add-col">add</button><button name="delete">delete</button></td></tr></template><template id="template-index-row-column"><li name="index-row-column-root"><input type="hidden" name="c"><select name="column"></select><button name="delete-col">delete</button></li></template><link rel="stylesheet" type="text/css" href="dev-table.6180faa5.css"></head><body><div id="root"><h1>テーブル図: ファイル</h1><div id="content"><div class="filter" id="filter-file"></div><div class="view" id="view-file"></div><div class="command" id="command-file"></div><textarea class="define" id="define-file"># ファイルテーブル一覧
+
+
+___
+
+## LauncherItemIcons
+
+### layout
+
+| PK | NN | FK | 論理カラム名             | 物理カラム名          | 論理データ型 | マッピング型    | チェック制約 | コメント |
+|:--:|:--:|:---|:-------------------------|:----------------------|:-------------|:----------------|:-------------|:---------|
+| o  | o  |    | ランチャーアイテムID     | LauncherItemId        | text         | System.Guid     |              |          |
+| o  | o  |    | アイコン種別             | IconScale             | text         | System.String   |              |          |
+| o  | o  |    | 連結順序                 | Sequence              | integer      | System.Int64    |              |          |
+|    | o  |    | 作成タイムスタンプ       | CreatedTimestamp      | datetime     | System.DateTime |              | UTC      |
+|    | o  |    | 作成ユーザー名           | CreatedAccount        | text         | System.String   |              |          |
+|    | o  |    | 作成プログラム名         | CreatedProgramName    | text         | System.String   |              |          |
+|    | o  |    | 作成プログラムバージョン | CreatedProgramVersion | text         | System.Version  |              |          |
+|    |    |    | 画像                     | Image                 | blob         | System.Byte[]   |              |          |
+
+### index
+
+*NONE*
+
+
+
+___
+
+## NoteFiles
+
+### layout
+
+| PK | NN | FK | 論理カラム名             | 物理カラム名          | 論理データ型 | マッピング型    | チェック制約 | コメント |
+|:--:|:--:|:---|:-------------------------|:----------------------|:-------------|:----------------|:-------------|:---------|
+| o  | o  |    | ノート埋め込みファイルID | NoteFileId            | text         | System.Guid     |              |          |
+| o  | o  |    | 連結順序                 | Sequence              | integer      | System.Int64    |              |          |
+|    | o  |    | 作成タイムスタンプ       | CreatedTimestamp      | datetime     | System.DateTime |              | UTC      |
+|    | o  |    | 作成ユーザー名           | CreatedAccount        | text         | System.String   |              |          |
+|    | o  |    | 作成プログラム名         | CreatedProgramName    | text         | System.String   |              |          |
+|    | o  |    | 作成プログラムバージョン | CreatedProgramVersion | text         | System.Version  |              |          |
+|    |    |    | ファイル内容             | Content               | blob         | System.Byte[]   |              |          |
+
+### index
+
+*NONE*
+
+</textarea><textarea class="sql" id="sql-file"></textarea></div><header id="menu"><nav><ul><li><a href="index.html">TOP</a></li><li>DEV<ul><li><a href="dev-table.main.html">テーブル:Main</a></li><li><a href="dev-table.file.html">テーブル:File</a></li></ul></li></ul></nav></header><footer id="footer"><div>footer</div></footer></div><script src="dev-table.409a6030.js"></script></body></html>
