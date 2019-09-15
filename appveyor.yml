@@ -10,7 +10,9 @@ cache: Source\Pe\packages
 before_build:
 - cmd: >-
     git submodule init
+
     git submodule update
+
 
     nuget restore Source\Pe\Pe.sln
 build:
