@@ -53,62 +53,47 @@ namespace ContentTypeTextNet.Pe.Main.Model.Applications
             return EnvironmentParameters.Initialize(new DirectoryInfo(applicationDirectory), commandLine);
         }
 
-        ILogger CreateLogger(string outputPath, bool createDirectory, [CallerFilePath] string callerFilePath = "")
+        ILoggerFactory CreateLoggerFactory(string outputPath, bool createDirectory, [CallerFilePath] string callerFilePath = "")
         {
             var loggerFactory = new LoggerFactory();
-            //loggerFactory.AddProvider(new Microsoft.Extensions.Logging.Debug.DebugLoggerProvider());
-            //loggerFactory.AddProvider(new Microsoft.Extensions.Logging.)
-            //TODO: 場所
-            NLog.LogManager.LoadConfiguration("etc/nlog.config");
-            //new NLog.Config.LoggingConfiguration()
-            var s = NLog.LogManager.Configuration.AllTargets;
+            NLog.LogManager.LoadConfiguration(Constants.LoggingConfigFilePath);
 
             var op = new NLog.Extensions.Logging.NLogProviderOptions { CaptureMessageTemplates = true, CaptureMessageProperties = true };
             var prov = new NLog.Extensions.Logging.NLogLoggerProvider(op, NLog.LogManager.LogFactory);
             loggerFactory.AddProvider(prov);
 
-            //NLog.Extensions.Logging.ConfigSettingLayoutRenderer.DefaultConfiguration
-
             var logger = loggerFactory.CreateLogger(GetType());
-            logger.LogTrace("うんち");
-            logger.LogDebug("うんち");
-            logger.LogInformation("うんち");
-            logger.LogWarning("うんち");
-            logger.LogError("うんち");
-            return logger;
-#if false
+            logger.LogInformation("開発用ログ出力開始");
+
             // ログ出力(ファイル・ディレクトリが存在しなければ終了で構わない)
             if(!string.IsNullOrWhiteSpace(outputPath)) {
-#pragma warning disable CS8602 // null 参照の可能性があるものの逆参照です。
                 var expandedOutputPath = Environment.ExpandEnvironmentVariables(outputPath);
-#pragma warning restore CS8602 // null 参照の可能性があるものの逆参照です。
-
                 if(createDirectory) {
-#pragma warning disable CS8602 // null 参照の可能性があるものの逆参照です。
-                    var fileName = Path.GetFileName(expandedOutputPath)!;
-#pragma warning restore CS8602 // null 参照の可能性があるものの逆参照です。
-                    if(fileName.IndexOf('.') == -1) {
-                              // 拡張子がなければディレクトリ指定と決めつけ
+                    var fileName = Path.GetFileName(expandedOutputPath);
+                    if(!string.IsNullOrEmpty(fileName) && fileName.IndexOf('.') == -1) {
+                        // 拡張子がなければディレクトリ指定と決めつけ
                         Directory.CreateDirectory(expandedOutputPath);
                     } else {
                         var parentDir = Path.GetDirectoryName(expandedOutputPath);
-                        Directory.CreateDirectory(parentDir);
+                        if(!string.IsNullOrEmpty(parentDir)) {
+                            Directory.CreateDirectory(parentDir);
+                        }
                     }
                 }
 
                 // ディレクトリ指定であればタイムスタンプ付きでファイル生成
-                string filePath = expandedOutputPath;
+                var filePath = expandedOutputPath;
                 if(Directory.Exists(expandedOutputPath)) {
                     var fileName = PathUtility.AppendExtension(DateTime.Now.ToString("yyyy-MM-dd_HHmmss"), "log");
                     filePath = Path.Combine(expandedOutputPath, fileName);
                 }
-                var writer = new StreamWriter(new FileStream(filePath, FileMode.Append, FileAccess.Write, FileShare.Read), Encoding.Unicode) {
-                    AutoFlush = true,
-                };
+                NLog.LogManager.LogFactory.Configuration.Variables.Add("logfile", filePath);
+                logger.LogInformation("ファイルログ出力開始");
+            } else {
+                NLog.LogManager.LogFactory.Configuration.Variables.Add("logfile", "nul");
             }
 
-            return logger;
-#endif
+            return loggerFactory;
         }
 
         public void Initialize(App app, StartupEventArgs e)
@@ -118,8 +103,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Applications
             var commandLine = CreateCommandLine(e.Args);
             var environmentParameters = InitializeEnvironment(commandLine);
 
-            var logger = CreateLogger(commandLine.GetValue(CommandLineKeyLog, string.Empty), commandLine.ExistsSwitch(CommandLineSwitchForceLog));
-
+            var loggerFactory = CreateLoggerFactory(commandLine.GetValue(CommandLineKeyLog, string.Empty), commandLine.ExistsSwitch(CommandLineSwitchForceLog));
+            var logger = loggerFactory.CreateLogger(GetType());
         }
 
         #endregion
