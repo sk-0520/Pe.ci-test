@@ -112,8 +112,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                     .RegisterMvvm<Element.Accept.AcceptElement, ViewModel.Accept.AcceptViewModel, Views.Accept.AcceptWindow>()
                 ;
                 using(var windowManager = new WindowManager(diContainer, loggerFactory)) {
-                    var acceptModel = diContainer.New<Element.Accept.AcceptElement>();
-                    var view = diContainer.Make<Views.Accept.AcceptWindow>();
+                    var acceptModel = diContainer.Build<Element.Accept.AcceptElement>();
+                    var view = diContainer.Build<Views.Accept.AcceptWindow>();
                     windowManager.Register(new WindowItem(WindowKind.Accept, view));
                     view.ShowDialog();
 
