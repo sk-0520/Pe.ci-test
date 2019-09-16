@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows;
 using ContentTypeTextNet.Pe.Core.Model;
+using ContentTypeTextNet.Pe.Main.Model.Manager;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Model.Applications
@@ -103,23 +104,22 @@ namespace ContentTypeTextNet.Pe.Main.Model.Applications
             return !file.Exists;
         }
 
-        bool ShowAcceptView(IDiScopeContainerFactory scopeContainerCreator, ILogger logger)
+        bool ShowAcceptView(IDiScopeContainerFactory scopeContainerCreator, ILoggerFactory loggerFactory)
         {
-            //using(var diContainer = scopeContainerCreator.CreateChildContainer()) {
-            //    diContainer
-            //        .RegisterLogger(logger)
-            //        .RegisterMvvm<Element.Accept.AcceptElement, ViewModel.Accept.AcceptViewModel, View.Accept.AcceptWindow>()
-            //    ;
-            //    using(var windowManager = new WindowManager(diContainer, logger.Factory)) {
-            //        var acceptModel = diContainer.New<Element.Accept.AcceptElement>();
-            //        var view = diContainer.Make<View.Accept.AcceptWindow>();
-            //        windowManager.Register(new WindowItem(WindowKind.Accept, view));
-            //        view.ShowDialog();
+            using(var diContainer = scopeContainerCreator.CreateChildContainer()) {
+                diContainer
+                    .RegisterLogger(loggerFactory)
+                    .RegisterMvvm<Element.Accept.AcceptElement, ViewModel.Accept.AcceptViewModel, View.Accept.AcceptWindow>()
+                ;
+                using(var windowManager = new WindowManager(diContainer, loggerFactory)) {
+                    var acceptModel = diContainer.New<Element.Accept.AcceptElement>();
+                    var view = diContainer.Make<View.Accept.AcceptWindow>();
+                    windowManager.Register(new WindowItem(WindowKind.Accept, view));
+                    view.ShowDialog();
 
-            //        return acceptModel.Accepted;
-            //    }
-            //}
-            return false;
+                    return acceptModel.Accepted;
+                }
+            }
         }
 
         public bool Initialize(App app, StartupEventArgs e)
@@ -137,7 +137,7 @@ namespace ContentTypeTextNet.Pe.Main.Model.Applications
             if(IsFirstStartup) {
                 logger.LogInformation("初回実行");
                 // 設定ファイルやらなんやらを構築する前に完全初回の使用許諾を取る
-                var dialogResult = ShowAcceptView(new DiContainer(), logger);
+                var dialogResult = ShowAcceptView(new DiContainer(), loggerFactory);
                 if(!dialogResult) {
                     // 初回の使用許諾を得られなかったのでばいちゃ
                     logger.LogInformation("使用許諾得られず");

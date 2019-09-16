@@ -35,22 +35,12 @@ namespace ContentTypeTextNet.Pe.Core.ViewModel
 
         #endregion
 
-        public ModelViewModelObservableCollectionManagerBase(ReadOnlyObservableCollection<TModel> collection, ILogger logger)
-            : base(collection, logger)
-        {
-            ViewModels = new ObservableCollection<TViewModel>(Collection.Select(m => ToViewModelImpl(m)!));
-        }
         public ModelViewModelObservableCollectionManagerBase(ReadOnlyObservableCollection<TModel> collection, ILoggerFactory loggerFactory)
             : base(collection, loggerFactory)
         {
             ViewModels = new ObservableCollection<TViewModel>(Collection.Select(m => ToViewModelImpl(m))!);
         }
 
-        public ModelViewModelObservableCollectionManagerBase(ObservableCollection<TModel> collection, ILogger logger)
-            : base(collection, logger)
-        {
-            ViewModels = new ObservableCollection<TViewModel>(Collection.Select(m => ToViewModelImpl(m))!);
-        }
         public ModelViewModelObservableCollectionManagerBase(ObservableCollection<TModel> collection, ILoggerFactory loggerFactory)
             : base(collection, loggerFactory)
         {
@@ -216,16 +206,10 @@ namespace ContentTypeTextNet.Pe.Core.ViewModel
 
         #endregion
 
-        public ActionModelViewModelObservableCollectionManager(ReadOnlyObservableCollection<TModel> collection, ILogger logger)
-            : base(collection, logger)
-        { }
         public ActionModelViewModelObservableCollectionManager(ReadOnlyObservableCollection<TModel> collection, ILoggerFactory loggerFactory)
             : base(collection, loggerFactory)
         { }
 
-        public ActionModelViewModelObservableCollectionManager(ObservableCollection<TModel> collection, ILogger logger)
-            : base(collection, logger)
-        { }
         public ActionModelViewModelObservableCollectionManager(ObservableCollection<TModel> collection, ILoggerFactory loggerFactory)
             : base(collection, loggerFactory)
         { }

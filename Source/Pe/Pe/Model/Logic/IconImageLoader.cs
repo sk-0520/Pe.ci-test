@@ -18,20 +18,12 @@ namespace ContentTypeTextNet.Pe.Main.Model.Logic
 {
     public abstract class IconImageLoaderBase : BindModelBase
     {
-        public IconImageLoaderBase(IconSize iconSIze, IDispatcherWapper dispatcherWapper, ILogger logger)
-            : base(logger)
-        {
-            IconSize = iconSIze;
-            DispatcherWapper = dispatcherWapper;
-            RunningStatusImpl = new RunningStatus(Logger);
-        }
-
         public IconImageLoaderBase(IconSize iconSIze, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             IconSize = iconSIze;
             DispatcherWapper = dispatcherWapper;
-            RunningStatusImpl = new RunningStatus(Logger);
+            RunningStatusImpl = new RunningStatus(LoggerFactory);
         }
 
         #region property

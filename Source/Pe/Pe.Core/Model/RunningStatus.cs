@@ -32,10 +32,6 @@ namespace ContentTypeTextNet.Pe.Core.Model
 
         #endregion
 
-        public RunningStatus(ILogger logger)
-            : base(logger)
-        { }
-
         public RunningStatus(ILoggerFactory loggerFactory)
             : base(loggerFactory)
         { }

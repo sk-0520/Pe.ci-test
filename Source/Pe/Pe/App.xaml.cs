@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using ContentTypeTextNet.Pe.Main;
 using ContentTypeTextNet.Pe.Main.Model.Applications;
+using Prism;
 
 namespace ContentTypeTextNet.Pe.Main
 {

@@ -39,7 +39,6 @@
     <Folder Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\DatabaseSetupper\" />
     <Folder Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Setupper\" />
     <Folder Include="etc\sql\ContentTypeTextNet.Pe.Main\Model\Database\Tuner\" />
-    <Folder Include="ViewModel\" />
     <Folder Include="Resources\" />
   </ItemGroup>
 

@@ -15,18 +15,6 @@ namespace ContentTypeTextNet.Pe.Core.Model
     /// </summary>
     public abstract class ObservableCollectionManagerBase<TValue> : BindModelBase
     {
-        private ObservableCollectionManagerBase(IReadOnlyList<TValue> collection, INotifyCollectionChanged collectionNotifyCollectionChanged, ILogger logger)
-              : base(logger)
-        {
-            if(collection == null) {
-                throw new ArgumentNullException(nameof(collection));
-            }
-
-            Collection = collection;
-            CollectionNotifyCollectionChanged = collectionNotifyCollectionChanged;
-            CollectionNotifyCollectionChanged.CollectionChanged += Collection_CollectionChanged;
-        }
-
         private ObservableCollectionManagerBase(IReadOnlyList<TValue> collection, INotifyCollectionChanged collectionNotifyCollectionChanged, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
@@ -39,16 +27,8 @@ namespace ContentTypeTextNet.Pe.Core.Model
             CollectionNotifyCollectionChanged.CollectionChanged += Collection_CollectionChanged;
         }
 
-        public ObservableCollectionManagerBase(ReadOnlyObservableCollection<TValue> collection, ILogger logger)
-            : this(collection, collection, logger)
-        { }
-
         public ObservableCollectionManagerBase(ReadOnlyObservableCollection<TValue> collection, ILoggerFactory loggerFactory)
             : this(collection, collection, loggerFactory)
-        { }
-
-        public ObservableCollectionManagerBase(ObservableCollection<TValue> collection, ILogger logger)
-            : this(collection, collection, logger)
         { }
 
         public ObservableCollectionManagerBase(ObservableCollection<TValue> collection, ILoggerFactory loggerFactory)

@@ -14,14 +14,10 @@ namespace ContentTypeTextNet.Pe.Core.Model
 
     public abstract class BindModelBase : BindableBase, IDisposable, IDisposer
     {
-        public BindModelBase(ILogger logger)
-        {
-            Logger = logger;
-        }
-
         public BindModelBase(ILoggerFactory loggerFactory)
         {
             Logger = loggerFactory.CreateLogger(GetType());
+            LoggerFactory = loggerFactory;
         }
 
         ~BindModelBase()
@@ -32,6 +28,7 @@ namespace ContentTypeTextNet.Pe.Core.Model
         #region property
 
         protected ILogger Logger { get; private set; }
+        protected ILoggerFactory LoggerFactory { get; private set; }
 
         #endregion
 
