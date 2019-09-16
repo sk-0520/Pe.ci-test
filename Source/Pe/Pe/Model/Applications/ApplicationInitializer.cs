@@ -53,10 +53,10 @@ namespace ContentTypeTextNet.Pe.Main.Model.Applications
             return EnvironmentParameters.Initialize(new DirectoryInfo(applicationDirectory), commandLine);
         }
 
-        ILoggerFactory CreateLoggerFactory(string outputPath, bool createDirectory, [CallerFilePath] string callerFilePath = "")
+        ILoggerFactory CreateLoggerFactory(string logginConfigFilePath, string outputPath, bool createDirectory, [CallerFilePath] string callerFilePath = "")
         {
             var loggerFactory = new LoggerFactory();
-            NLog.LogManager.LoadConfiguration(Constants.LoggingConfigFilePath);
+            NLog.LogManager.LoadConfiguration(logginConfigFilePath);
 
             var op = new NLog.Extensions.Logging.NLogProviderOptions { CaptureMessageTemplates = true, CaptureMessageProperties = true };
             var prov = new NLog.Extensions.Logging.NLogLoggerProvider(op, NLog.LogManager.LogFactory);
@@ -103,7 +103,8 @@ namespace ContentTypeTextNet.Pe.Main.Model.Applications
             var commandLine = CreateCommandLine(e.Args);
             var environmentParameters = InitializeEnvironment(commandLine);
 
-            var loggerFactory = CreateLoggerFactory(commandLine.GetValue(CommandLineKeyLog, string.Empty), commandLine.ExistsSwitch(CommandLineSwitchForceLog));
+            var logginConfigFilePath = Path.Combine(environmentParameters.EtcDirectory.FullName, Constants.LoggingConfigFileName);
+            var loggerFactory = CreateLoggerFactory(logginConfigFilePath, commandLine.GetValue(CommandLineKeyLog, string.Empty), commandLine.ExistsSwitch(CommandLineSwitchForceLog));
             var logger = loggerFactory.CreateLogger(GetType());
         }
 

@@ -12,9 +12,7 @@ namespace ContentTypeTextNet.Pe.Main
 
         public static string ProjectName { get; } = "Pe2";
 
-        public static string ApplicationRootDirectoryPath { get; } = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!;
-        public static string EtcDirectoryPath { get; } = Path.Combine(ApplicationRootDirectoryPath, "etc");
-        public static string LoggingConfigFilePath { get; } = Path.Combine(EtcDirectoryPath, "nlog.config");
+        public static string LoggingConfigFileName { get; } = "nlog.config";
 
         #endregion
     }
