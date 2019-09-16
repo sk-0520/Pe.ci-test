@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using ContentTypeTextNet.Pe.Main;
+using ContentTypeTextNet.Pe.Main.Model.Applications;
 
 namespace ContentTypeTextNet.Pe.Main
 {
@@ -20,6 +21,8 @@ namespace ContentTypeTextNet.Pe.Main
 #if DEBUG
             DebugStartup();
 #endif
+            var initializer = new ApplicationInitializer();
+            initializer.Initialize(this, e);
             /*
             if(!ApplicationManager.Startup(this, e)) {
                 Shutdown();
@@ -32,6 +35,7 @@ namespace ContentTypeTextNet.Pe.Main
 
             ApplicationManager.Execute();
             */
+            Shutdown();
         }
     }
 }
