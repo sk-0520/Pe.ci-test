@@ -4,10 +4,10 @@ using System.IO;
 using System.Text;
 using System.Windows.Media.Imaging;
 using System.Windows.Resources;
-using ContentTypeTextNet.Pe.Bridge.Model.Data;
-using ContentTypeTextNet.Pe.Core.Model;
-using ContentTypeTextNet.Pe.Core.Model.Data;
-using ContentTypeTextNet.Pe.Core.Model.Unmanaged;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
+using ContentTypeTextNet.Pe.Core.Models;
+using ContentTypeTextNet.Pe.Core.Models.Data;
+using ContentTypeTextNet.Pe.Core.Models.Unmanaged;
 using Drawing = System.Drawing;
 
 namespace ContentTypeTextNet.Pe.Core.Compatibility.Forms

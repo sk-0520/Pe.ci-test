@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using ContentTypeTextNet.Pe.Main;
-using ContentTypeTextNet.Pe.Main.Model.Applications;
+using ContentTypeTextNet.Pe.Main.Models.Applications;
 using Prism;
 
 namespace ContentTypeTextNet.Pe.Main
