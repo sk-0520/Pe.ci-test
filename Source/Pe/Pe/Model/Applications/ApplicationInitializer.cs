@@ -96,7 +96,33 @@ namespace ContentTypeTextNet.Pe.Main.Model.Applications
             return loggerFactory;
         }
 
-        public void Initialize(App app, StartupEventArgs e)
+        bool CheckFirstStartup(EnvironmentParameters environmentParameters, ILogger logger)
+        {
+            var file = environmentParameters.SettingFile;
+            file.Refresh();
+            return !file.Exists;
+        }
+
+        bool ShowAcceptView(IDiScopeContainerFactory scopeContainerCreator, ILogger logger)
+        {
+            //using(var diContainer = scopeContainerCreator.CreateChildContainer()) {
+            //    diContainer
+            //        .RegisterLogger(logger)
+            //        .RegisterMvvm<Element.Accept.AcceptElement, ViewModel.Accept.AcceptViewModel, View.Accept.AcceptWindow>()
+            //    ;
+            //    using(var windowManager = new WindowManager(diContainer, logger.Factory)) {
+            //        var acceptModel = diContainer.New<Element.Accept.AcceptElement>();
+            //        var view = diContainer.Make<View.Accept.AcceptWindow>();
+            //        windowManager.Register(new WindowItem(WindowKind.Accept, view));
+            //        view.ShowDialog();
+
+            //        return acceptModel.Accepted;
+            //    }
+            //}
+            return false;
+        }
+
+        public bool Initialize(App app, StartupEventArgs e)
         {
             InitializeEnvironmentVariable();
 
@@ -106,6 +132,20 @@ namespace ContentTypeTextNet.Pe.Main.Model.Applications
             var logginConfigFilePath = Path.Combine(environmentParameters.EtcDirectory.FullName, Constants.LoggingConfigFileName);
             var loggerFactory = CreateLoggerFactory(logginConfigFilePath, commandLine.GetValue(CommandLineKeyLog, string.Empty), commandLine.ExistsSwitch(CommandLineSwitchForceLog));
             var logger = loggerFactory.CreateLogger(GetType());
+
+            IsFirstStartup = CheckFirstStartup(environmentParameters, logger);
+            if(IsFirstStartup) {
+                logger.LogInformation("初回実行");
+                // 設定ファイルやらなんやらを構築する前に完全初回の使用許諾を取る
+                var dialogResult = ShowAcceptView(new DiContainer(), logger);
+                if(!dialogResult) {
+                    // 初回の使用許諾を得られなかったのでばいちゃ
+                    logger.LogInformation("使用許諾得られず");
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         #endregion
