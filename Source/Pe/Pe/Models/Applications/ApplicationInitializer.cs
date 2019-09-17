@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows;
+using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using Microsoft.Extensions.Logging;
@@ -108,6 +109,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         {
             using(var diContainer = scopeContainerCreator.CreateChildContainer()) {
                 diContainer
+                    .Register<IDispatcherWapper, ApplicationDispatcherWapper>(DiLifecycle.Transient)
                     .RegisterLogger(loggerFactory)
                     .RegisterMvvm<Element.Accept.AcceptElement, ViewModel.Accept.AcceptViewModel, Views.Accept.AcceptWindow>()
                 ;
