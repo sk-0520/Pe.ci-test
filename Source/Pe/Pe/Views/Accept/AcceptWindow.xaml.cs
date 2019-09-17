@@ -32,13 +32,17 @@ namespace ContentTypeTextNet.Pe.Main.Views.Accept
         [Injection]
         ILogger? Logger { get; set; }
 
+        #endregion
+
+        #region command
+
         ICommand? _closeCommand;
         public ICommand CloseCommand
         {
             get
             {
                 if(this._closeCommand == null) {
-                    this._closeCommand = new DelegateCommand<RequestSender>(
+                    this._closeCommand = new DelegateCommand<RequestEventArgs>(
                         o => Close()
                     );
                 }
@@ -47,35 +51,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Accept
             }
         }
 
-        public MessageReceiver? CloseMessageReceiver2 { get; set; }
-        public MessageReceiver CloseMessageReceiver
-        {
-            get { return (MessageReceiver)GetValue(CloseMessageReceiverProperty); }
-            set { SetValue(CloseMessageReceiverProperty, value); }
-        }
-
-        public static readonly DependencyProperty CloseMessageReceiverProperty = DependencyProperty.Register(
-            nameof(CloseMessageReceiver),
-            typeof(MessageReceiver),
-            typeof(AcceptWindow),
-            new PropertyMetadata(default(MessageReceiver), OnChangedCloseMessageReceiverProperty)
-        );
-
-        private static void OnChangedCloseMessageReceiverProperty(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var window = (AcceptWindow)d;
-            var prev = window.CloseMessageReceiver;
-            if(prev != null) {
-
-            }
-            window.CloseMessageReceiver = (MessageReceiver)e.NewValue;
-            if(window.CloseMessageReceiver != null) {
-
-            }
-        }
-
-
-
         #endregion
+
     }
 }

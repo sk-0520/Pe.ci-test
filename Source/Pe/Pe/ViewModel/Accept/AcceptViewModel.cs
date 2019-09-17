@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Core.ViewModels;
+using ContentTypeTextNet.Pe.Core.Views;
 using ContentTypeTextNet.Pe.Main.Models.Element.Accept;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
@@ -19,6 +20,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Accept
         #region property
 
         //public InteractionRequest<Notification> CloseRequest { get; } = new InteractionRequest<Notification>();
+        public RequestSender CloseRequest { get; } = new RequestSender();
 
         #endregion
 
@@ -28,6 +30,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModel.Accept
             () => {
                 Model.Accepted = true;
                 //CloseRequest.Raise(new Notification());
+                CloseRequest.Send(() => { });
             }
         ));
         public ICommand NegativeCommand => GetOrCreateCommand(() => new DelegateCommand(
