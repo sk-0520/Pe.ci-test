@@ -8,6 +8,8 @@ using System.Text;
 using System.Windows;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
+using ContentTypeTextNet.Pe.Core.Models.Database;
+using ContentTypeTextNet.Pe.Main.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using Microsoft.Extensions.Logging;
 
@@ -124,6 +126,68 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             }
         }
 
+        void InitializeFileSystem(EnvironmentParameters environmentParameters, ILogger logger)
+        {
+            var dirs = new[] {
+                environmentParameters.UserRoamingDirectory,
+                environmentParameters.UserBackupDirectory,
+                environmentParameters.UserSettingDirectory,
+                environmentParameters.MachineDirectory,
+                environmentParameters.MachineArchiveDirectory,
+                environmentParameters.MachineUpdateDirectory,
+                environmentParameters.TemporaryDirectory,
+            };
+
+            foreach(var dir in dirs) {
+                logger.LogDebug("create {0}", dir.FullName);
+                try {
+                    dir.Create();
+                } catch(Exception ex) {
+                    logger.LogError(ex, ex.Message);
+                    throw;
+                }
+            }
+        }
+
+        DatabaseFactoryPack CreateDatabaseFactoryPack(EnvironmentParameters environmentParameters, ILogger logger)
+        {
+            return new DatabaseFactoryPack(
+                new ApplicationDatabaseFactory(environmentParameters.SettingFile),
+                new ApplicationDatabaseFactory(environmentParameters.FileFile),
+                new ApplicationDatabaseFactory()
+            );
+        }
+        IDatabaseStatementLoader GetStatementLoader(EnvironmentParameters environmentParameters, ILoggerFactory loggerFactory)
+        {
+            return new ApplicationDatabaseStatementLoader(environmentParameters.MainSqlDirectory, TimeSpan.Zero, loggerFactory);
+        }
+
+        void FirstSetup(EnvironmentParameters environmentParameters, ILoggerFactory loggerFactory, ILogger logger)
+        {
+            logger.LogInformation("初回セットアップ");
+
+            // 初回セットアップに来ている場合既に存在するデータファイルは狂っている可能性があるので破棄する
+            var deleteTartgetFiles = new[] {
+                environmentParameters.SettingFile,
+                environmentParameters.FileFile,
+            };
+            foreach(var file in deleteTartgetFiles) {
+                logger.LogDebug("delete: {0}", file.FullName);
+                file.Refresh();
+                try {
+                    file.Delete();
+                } catch(IOException ex) {
+                    logger.LogError(ex, ex.Message);
+                }
+            }
+
+            using(var factoryPack = CreateDatabaseFactoryPack(environmentParameters, logger))
+            using(var accessorPack = DatabaseAccessorPack.Create(factoryPack, loggerFactory)) {
+                var statementLoader = GetStatementLoader(environmentParameters, loggerFactory);
+                var databaseSetupper = new DatabaseSetupper(statementLoader, loggerFactory);
+                databaseSetupper.Initialize(accessorPack);
+            }
+        }
         public bool Initialize(App app, StartupEventArgs e)
         {
             InitializeEnvironmentVariable();
@@ -146,6 +210,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                     return false;
                 }
             }
+
+            InitializeFileSystem(environmentParameters, logger);
+            if(IsFirstStartup) {
+                FirstSetup(environmentParameters, loggerFactory, logger);
+            }
+
 
             return true;
         }
