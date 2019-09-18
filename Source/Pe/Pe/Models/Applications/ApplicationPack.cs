@@ -93,6 +93,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         { }
     }
 
+    public interface IDatabaseLazyWriterPack : IApplicationPack<IDatabaseLazyWriter>
+    { }
+
+    public sealed class ApplicationDatabaseLazyWriterPack : TApplicationPackBase<IDatabaseLazyWriter, ApplicationDatabaseLazyWriter>, IDatabaseLazyWriterPack
+    {
+        public ApplicationDatabaseLazyWriterPack(ApplicationDatabaseLazyWriter main, ApplicationDatabaseLazyWriter file, ApplicationDatabaseLazyWriter temporary)
+            : base(main, file, temporary)
+        { }
+    }
+
     public interface IDatabaseAccessorPack : IApplicationPack<IDatabaseAccessor>
     { }
 

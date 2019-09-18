@@ -29,7 +29,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         #endregion
     }
 
-    public interface IDatabaseLazyWriter
+    public interface IDatabaseLazyWriter: IFlushable
     {
         #region property
 
@@ -46,7 +46,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         #endregion
     }
 
-    public class DatabaseLazyWriter : DisposerBase, IFlushable, IDatabaseLazyWriter
+    public class DatabaseLazyWriter : DisposerBase, IDatabaseLazyWriter
     {
         #region variable
 
