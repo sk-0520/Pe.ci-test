@@ -38,7 +38,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
     {
         #region event
 
-        public event EventHandler<RequestEventArgs> Raised;
+        public event EventHandler<RequestEventArgs>? Raised;
 
         #endregion
 
