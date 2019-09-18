@@ -7,10 +7,13 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Database;
+using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
+using ContentTypeTextNet.Pe.Main.Models.Theme;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Applications
@@ -23,6 +26,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         string CommandLineSwitchForceLog { get; } = "force-log";
 
         public bool IsFirstStartup { get; private set; }
+
+        public ApplicationDiContainer? DiContainer { get; private set; }
+        public ILoggerFactory? LoggerFactory { get; private set; }
 
         #endregion
 
@@ -188,6 +194,72 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 databaseSetupper.Initialize(accessorPack);
             }
         }
+
+        bool NormalSetup(out (DatabaseFactoryPack factory, DatabaseAccessorPack accessor) pack, EnvironmentParameters environmentParameters, ILoggerFactory loggerFactory, ILogger logger)
+        {
+            logger.LogInformation("DBセットアップ");
+
+            var factoryPack = CreateDatabaseFactoryPack(environmentParameters, logger);
+            var accessorPack = DatabaseAccessorPack.Create(factoryPack, loggerFactory);
+
+            var statementLoader = GetStatementLoader(environmentParameters, loggerFactory);
+            var databaseSetupper = new DatabaseSetupper(statementLoader, loggerFactory);
+
+            //前回実行バージョンの取得と取得失敗時に再セットアップ処理
+            var lastVersion = databaseSetupper.GetLastVersion(accessorPack.Main);
+            if(lastVersion == null) {
+                logger.LogError("last version is null");
+                logger.LogWarning("restart initialize");
+
+                accessorPack.Dispose();
+                factoryPack.Dispose();
+                pack = default((DatabaseFactoryPack factory, DatabaseAccessorPack accessor));
+                return false;
+            }
+
+            databaseSetupper.Migrate(accessorPack, lastVersion);
+
+            var tuner = new DatabaseTuner(new IdFactory(loggerFactory), accessorPack, statementLoader, loggerFactory);
+            tuner.Tune();
+
+            pack.factory = factoryPack;
+            pack.accessor = accessorPack;
+            return true;
+        }
+
+        ApplicationDiContainer SetupContainer(EnvironmentParameters environmentParameters, DatabaseFactoryPack factory, DatabaseAccessorPack accessor, ILoggerFactory loggerFactory)
+        {
+            var container = new ApplicationDiContainer();
+
+            var rwlp = new ReadWriteLockPack(
+                new ApplicationMainReaderWriterLocker(),
+                new ApplicationFileReaderWriterLocker(),
+                new ApplicationTemporaryReaderWriterLocker()
+            );
+
+            container
+                .Register<ILoggerFactory, ILoggerFactory>(loggerFactory)
+                .Register<IDiContainer, ApplicationDiContainer>(container)
+                .Register<IDatabaseStatementLoader, ApplicationDatabaseStatementLoader>(new ApplicationDatabaseStatementLoader(environmentParameters.MainSqlDirectory, TimeSpan.FromSeconds(30), loggerFactory))
+                .Register<IDatabaseFactoryPack, DatabaseFactoryPack>(factory)
+                .Register<IDatabaseAccessorPack, DatabaseAccessorPack>(accessor)
+                .Register<IMainDatabaseBarrier, ApplicationDatabaseBarrier>(new ApplicationDatabaseBarrier(accessor.Main, rwlp.Main))
+                .Register<IFileDatabaseBarrier, ApplicationDatabaseBarrier>(new ApplicationDatabaseBarrier(accessor.File, rwlp.File))
+                .Register<ITemporaryDatabaseBarrier, ApplicationDatabaseBarrier>(new ApplicationDatabaseBarrier(accessor.Temporary, rwlp.Temporary))
+                .Register<IReadWriteLockPack, ReadWriteLockPack>(rwlp)
+                .Register<IDispatcherWapper, ApplicationDispatcherWapper>(DiLifecycle.Transient)
+                .Register<IIdFactory, IdFactory>(DiLifecycle.Transient)
+                .Register<ILauncherToolbarTheme, LauncherToolbarTheme>(DiLifecycle.Transient)
+                .Register<ILauncherGroupTheme, LauncherGroupTheme>(DiLifecycle.Transient)
+                .Register<INoteTheme, NoteTheme>(DiLifecycle.Transient)
+                .Register<IFontTheme, FontTheme>(DiLifecycle.Transient)
+            ;
+
+            ApplicationDiContainer.Initialize(() => container);
+
+            return container;
+        }
+
         public bool Initialize(App app, StartupEventArgs e)
         {
             InitializeEnvironmentVariable();
@@ -216,6 +288,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 FirstSetup(environmentParameters, loggerFactory, logger);
             }
 
+            (DatabaseFactoryPack factory, DatabaseAccessorPack accessor) pack;
+            if(!NormalSetup(out pack, environmentParameters, loggerFactory, logger)) {
+                // データぶっ壊れてる系
+                FirstSetup(environmentParameters, loggerFactory, logger);
+                var retryResult = NormalSetup(out pack, environmentParameters, loggerFactory, logger);
+                if(!retryResult) {
+                    throw new ApplicationException();
+                }
+            }
+
+            DiContainer = SetupContainer(environmentParameters, pack.factory, pack.accessor, loggerFactory);
 
             return true;
         }
