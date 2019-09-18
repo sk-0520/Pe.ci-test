@@ -174,7 +174,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         #region function
 
-        ApplicationDatabaseBarrierTransaction? BeginTransaction(Pack pack)
+        IDatabaseTransaction? BeginTransaction(Pack pack)
         {
             if(Items.Any(i => i.IsTarget(pack))) {
                 var barrier = Barriers[pack];
@@ -204,7 +204,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 #if DEBUG
             Debug.Assert(EnumUtility.GetMembers<Pack>().Count() == packs.Length);
 #endif
-            var transactions = new Dictionary<Pack, ApplicationDatabaseBarrierTransaction>();
+            var transactions = new Dictionary<Pack, IDatabaseTransaction>();
             try {
                 var result = new List<EntityRemoverResult>();
 

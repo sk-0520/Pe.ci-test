@@ -96,21 +96,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         #endregion
     }
 
-    public interface IApplicationDatabaseBarrier
+    public interface IApplicationDatabaseBarrier: IDatabaseBarrier
     {
-        #region property
+        //#region property
 
-        IDatabaseAccessor Accessor { get; }
-        ReaderWriterLocker Locker { get; }
+        //IDatabaseAccessor Accessor { get; }
+        //ReaderWriterLocker Locker { get; }
 
-        #endregion
+        //#endregion
 
-        #region function
+        //#region function
 
-        ApplicationDatabaseBarrierTransaction WaitWrite();
-        ApplicationDatabaseBarrierTransaction WaitRead();
+        //ApplicationDatabaseBarrierTransaction WaitWrite();
+        //ApplicationDatabaseBarrierTransaction WaitRead();
 
-        #endregion
+        //#endregion
     }
 
     public interface IMainDatabaseBarrier : IApplicationDatabaseBarrier
@@ -133,7 +133,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         public IDatabaseAccessor Accessor { get; }
         public ReaderWriterLocker Locker { get; }
 
-        public ApplicationDatabaseBarrierTransaction WaitWrite()
+        public IDatabaseTransaction WaitWrite()
         {
             var locker = Locker.WaitWriteByDefaultTimeout();
             var commander = Accessor.BeginTransaction();
@@ -141,7 +141,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             return result;
         }
 
-        public ApplicationDatabaseBarrierTransaction WaitRead()
+        public IDatabaseTransaction WaitRead()
         {
             var locker = Locker.WaitWriteByDefaultTimeout();
             var commander = Accessor.BeginTransaction();

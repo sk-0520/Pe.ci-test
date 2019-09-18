@@ -19,6 +19,8 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// </summary>
         IDbTransaction Transaction { get; }
 
+        IDatabaseImplementation Implementation { get; }
+
         #endregion
 
         #region function
@@ -45,12 +47,14 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         public DatabaseTransaction(IDatabaseAccessor databaseAccessor)
         {
             DatabaseAccessor = databaseAccessor;
+            Implementation = DatabaseAccessor.DatabaseFactory.CreateImplementation();
             Transaction = DatabaseAccessor.BaseConnection.BeginTransaction();
         }
 
         public DatabaseTransaction(IDatabaseAccessor databaseAccessor, IsolationLevel isolationLevel)
         {
             DatabaseAccessor = databaseAccessor;
+            Implementation = DatabaseAccessor.DatabaseFactory.CreateImplementation();
             Transaction = DatabaseAccessor.BaseConnection.BeginTransaction(isolationLevel);
         }
 
@@ -64,6 +68,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         #region IDatabaseTransaction
 
         public IDbTransaction Transaction { get; private set; }
+        public IDatabaseImplementation Implementation { get; }
 
         public void Commit()
         {
