@@ -2,11 +2,12 @@ version: '{build}'
 image: Visual Studio 2019 Preview
 skip_tags: true
 clone_depth: 1
-before_build:
-  - cmd: choco install dotnetcore-sdk --version 3.0.100-preview9-014004
-  - cmd: dotnet --version
+init:
   - cmd: git submodule init
   - cmd: git submodule update
+install:
+  - cmd: choco install dotnetcore-sdk --version 3.0.100-preview9-014004
+  - cmd: dotnet --version
 build_script:
   - cmd: dotnet build Source/Pe/Pe.sln --verbosity normal --configuration Release --runtime win-x64
 test_script:
