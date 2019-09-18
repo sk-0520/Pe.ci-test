@@ -97,21 +97,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
     }
 
     public interface IApplicationDatabaseBarrier: IDatabaseBarrier
-    {
-        //#region property
-
-        //IDatabaseAccessor Accessor { get; }
-        //ReaderWriterLocker Locker { get; }
-
-        //#endregion
-
-        //#region function
-
-        //ApplicationDatabaseBarrierTransaction WaitWrite();
-        //ApplicationDatabaseBarrierTransaction WaitRead();
-
-        //#endregion
-    }
+    { }
 
     public interface IMainDatabaseBarrier : IApplicationDatabaseBarrier
     { }

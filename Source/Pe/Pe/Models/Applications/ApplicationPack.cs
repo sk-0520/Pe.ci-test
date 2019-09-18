@@ -128,11 +128,4 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
     public interface IReadWriteLockPack : IApplicationPack<ReaderWriterLocker>
     { }
-
-    public sealed class ReadWriteLockPack : TApplicationPackBase<ReaderWriterLocker, ApplicationReaderWriterLockerBase>, IReadWriteLockPack
-    {
-        public ReadWriteLockPack(ApplicationMainReaderWriterLocker main, ApplicationFileReaderWriterLocker file, ApplicationTemporaryReaderWriterLocker temporary)
-            : base(main, file, temporary)
-        { }
-    }
 }

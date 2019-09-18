@@ -231,11 +231,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         {
             var container = new ApplicationDiContainer();
 
-            var rwlp = new ReadWriteLockPack(
-                new ApplicationMainReaderWriterLocker(),
-                new ApplicationFileReaderWriterLocker(),
-                new ApplicationTemporaryReaderWriterLocker()
-            );
+            var rwlp = new {
+                Main = new ApplicationMainReaderWriterLocker(),
+                File = new ApplicationFileReaderWriterLocker(),
+                Temporary = new ApplicationTemporaryReaderWriterLocker(),
+            };
+            var barrier = new {
+                Main = new ApplicationDatabaseBarrier(accessor.Main, rwlp.Main),
+                File = new ApplicationDatabaseBarrier(accessor.File, rwlp.File),
+                Temporary = new ApplicationDatabaseBarrier(accessor.Temporary, rwlp.Temporary),
+            };
 
             container
                 .Register<ILoggerFactory, ILoggerFactory>(loggerFactory)
@@ -243,10 +248,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 .Register<IDatabaseStatementLoader, ApplicationDatabaseStatementLoader>(new ApplicationDatabaseStatementLoader(environmentParameters.MainSqlDirectory, TimeSpan.FromSeconds(30), loggerFactory))
                 .Register<IDatabaseFactoryPack, DatabaseFactoryPack>(factory)
                 .Register<IDatabaseAccessorPack, DatabaseAccessorPack>(accessor)
-                .Register<IMainDatabaseBarrier, ApplicationDatabaseBarrier>(new ApplicationDatabaseBarrier(accessor.Main, rwlp.Main))
-                .Register<IFileDatabaseBarrier, ApplicationDatabaseBarrier>(new ApplicationDatabaseBarrier(accessor.File, rwlp.File))
-                .Register<ITemporaryDatabaseBarrier, ApplicationDatabaseBarrier>(new ApplicationDatabaseBarrier(accessor.Temporary, rwlp.Temporary))
-                .Register<IReadWriteLockPack, ReadWriteLockPack>(rwlp)
+                .Register<IMainDatabaseBarrier, ApplicationDatabaseBarrier>(barrier.Main)
+                .Register<IFileDatabaseBarrier, ApplicationDatabaseBarrier>(barrier.File)
+                .Register<ITemporaryDatabaseBarrier, ApplicationDatabaseBarrier>(barrier.Temporary)
+                .Register<IMainDatabaseLazyWriter, ApplicationDatabaseLazyWriter>(new ApplicationDatabaseLazyWriter(barrier.Main, TimeSpan.FromSeconds(3), loggerFactory))
+                .Register<IFileDatabaseLazyWriter, ApplicationDatabaseLazyWriter>(new ApplicationDatabaseLazyWriter(barrier.File, TimeSpan.FromSeconds(3), loggerFactory))
+                .Register<ITemporaryDatabaseLazyWriter, ApplicationDatabaseLazyWriter>(new ApplicationDatabaseLazyWriter(barrier.Temporary, TimeSpan.FromSeconds(3), loggerFactory))
                 .Register<IDispatcherWapper, ApplicationDispatcherWapper>(DiLifecycle.Transient)
                 .Register<IIdFactory, IdFactory>(DiLifecycle.Transient)
                 .Register<ILauncherToolbarTheme, LauncherToolbarTheme>(DiLifecycle.Transient)
