@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using ContentTypeTextNet.Pe.Core.Models.Database;
+using ContentTypeTextNet.Pe.Main.Models.Data.Dto;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao;
 using Microsoft.Extensions.Logging;
 

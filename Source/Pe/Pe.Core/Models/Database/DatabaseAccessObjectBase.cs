@@ -10,25 +10,13 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
     /// </summary>
     public abstract class DatabaseAccessObjectBase
     {
-#pragma warning disable CS8618 // Null 非許容フィールドが初期化されていません。
-        private DatabaseAccessObjectBase(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation)
-#pragma warning restore CS8618 // Null 非許容フィールドが初期化されていません。
+        public DatabaseAccessObjectBase(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
         {
+            LoggerFactory = LoggerFactory;
+            Logger = LoggerFactory.CreateLogger(GetType());
             Commander = commander;
             StatementLoader = statementLoader;
             Implementation = implementation;
-        }
-
-        public DatabaseAccessObjectBase(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILogger logger)
-            : this(commander, statementLoader, implementation)
-        {
-            Logger = logger;
-        }
-
-        public DatabaseAccessObjectBase(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
-            : this(commander, statementLoader, implementation)
-        {
-            Logger = loggerFactory.CreateLogger(GetType());
         }
 
         #region property
@@ -46,6 +34,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// ログ出力担当。
         /// </summary>
         protected ILogger Logger { get; }
+        protected ILoggerFactory LoggerFactory { get; }
 
         #endregion
 

@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
-using ContentTypeTextNet.Pe.Core.Models;
+using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using Microsoft.Extensions.Logging;
@@ -11,9 +12,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 {
     public abstract class EntityDaoBase : ApplicationDatabaseObjectBase
     {
-        public EntityDaoBase(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILogger logger)
-            : base(commander, statementLoader, implementation, logger)
-        { }
         public EntityDaoBase(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
             : base(commander, statementLoader, implementation, loggerFactory)
         { }
@@ -51,7 +49,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         protected DatabaseSelectStatementBuilder CreateSelectBuilder()
         {
-            var result = new DatabaseSelectStatementBuilder(Implementation, Logger);
+            var result = new DatabaseSelectStatementBuilder(Implementation, Logger.Factory);
             result.SetTable(TableName);
 
             return result;
@@ -59,7 +57,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         protected DatabaseUpdateStatementBuilder CreateUpdateBuilder(IDatabaseCommonStatus databaseCommonStatus)
         {
-            var result = new DatabaseUpdateStatementBuilder(Implementation, Logger);
+            var result = new DatabaseUpdateStatementBuilder(Implementation, Logger.Factory);
             result.SetTable(TableName);
             foreach(var ignoreColumn in CommonUpdateColumns.Where(i => i != UpdatedCount)) {
                 result.AddIgnoreWhere(ignoreColumn);
@@ -78,7 +76,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         protected DatabaseDeleteStatementBuilder CreateDeleteBuilder()
         {
-            var result = new DatabaseDeleteStatementBuilder(Implementation, Logger);
+            var result = new DatabaseDeleteStatementBuilder(Implementation, Logger.Factory);
             result.SetTable(TableName);
 
             return result;
