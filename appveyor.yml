@@ -2,9 +2,6 @@ version: '{build}'
 image: Visual Studio 2019 Preview
 skip_tags: true
 clone_depth: 1
-configuration:
-  - Release
-  - Debug
 platform:
   - win-x64
   - win-x86
@@ -15,8 +12,8 @@ before_build:
   - cmd: git submodule init
   - cmd: git submodule update
 build_script:
-  - cmd: dotnet build Source/Pe/Pe.sln --verbosity normal --configuration %CONFIGURATION% --runtime %PLATFORM%
+  - cmd: dotnet build Source/Pe/Pe.sln --verbosity normal --configuration Release --runtime %PLATFORM%
 test_script:
-  - cmd: dotnet test Source/Pe/Pe.sln --verbosity normal --no-build --configuration %CONFIGURATION% --runtime %PLATFORM%
+  - cmd: dotnet test Source/Pe/Pe.sln --verbosity normal --no-build --configuration Release --runtime %PLATFORM%
 artifacts:
 - path: Output\
