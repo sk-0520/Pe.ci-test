@@ -30,8 +30,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
         public static void SetRange<T>(this Collection<T> @this, IEnumerable<T> collection)
         {
             @this.Clear();
-            if(collection is List<T> list) {
-                list.AddRange(collection);
+            if(@this is List<T> list) {
+                @this.AddRange(collection);
             } else {
                 foreach(var item in collection) {
                     @this.Add(item);

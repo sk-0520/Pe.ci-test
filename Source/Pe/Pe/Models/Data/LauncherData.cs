@@ -243,7 +243,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         public Guid LauncherGroupId { get; set; }
         public AppDesktopToolbarPosition ToolbarPosition { get; set; }
         public LauncherToolbarIconDirection IconDirection { get; set; }
-        public IconSize IconSize { get; set; }
+        public IconBasicSize IconBasicSize { get; set; }
         public Guid FontId { get; set; }
         public TimeSpan AutoHideTimeout { get; set; }
         public long TextWidth { get; set; }

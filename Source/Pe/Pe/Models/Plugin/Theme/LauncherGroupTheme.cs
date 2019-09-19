@@ -44,10 +44,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Theme
             }
         }
 
-        DependencyObject GetGroupImageCore(LauncherGroupImageName imageName, Color imageColor, IconSize iconSize, bool isStrong)
+        DependencyObject GetGroupImageCore(LauncherGroupImageName imageName, Color imageColor, IconBasicSize iconBasicSize, bool isStrong)
         {
             var viewBox = new Viewbox();
             using(Initializer.BeginInitialize(viewBox)) {
+                var iconSize = new IconSize(iconBasicSize);
                 viewBox.Width = iconSize.Width;
                 viewBox.Height = iconSize.Height;
 
@@ -81,9 +82,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Theme
 
         #region ILauncherGroupTheme
 
-        public DependencyObject GetGroupImage(LauncherGroupImageName imageName, Color imageColor, IconSize iconSize, bool isStrong)
+        public DependencyObject GetGroupImage(LauncherGroupImageName imageName, Color imageColor, IconBasicSize iconBasicSize, bool isStrong)
         {
-            return GetGroupImageCore(imageName, imageColor, iconSize, isStrong);
+            return GetGroupImageCore(imageName, imageColor, iconBasicSize, isStrong);
         }
 
         #endregion

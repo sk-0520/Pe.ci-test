@@ -32,9 +32,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         #region function
 
-        public IReadOnlyList<byte[]>? SelectImageBinary(Guid launcherItemId, IconSize.Kind iconScale)
+        public IReadOnlyList<byte[]>? SelectImageBinary(Guid launcherItemId, IconBasicSize iconScale)
         {
-            var iconScaleTransfer = new EnumTransfer<IconSize.Kind>();
+            var iconScaleTransfer = new EnumTransfer<IconBasicSize>();
 
             var statement = StatementLoader.LoadStatementByCurrent();
             var param = new {
@@ -49,9 +49,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return null;
         }
 
-        public int InsertImageBinary(Guid launcherItemId, IconSize.Kind iconScale, IEnumerable<byte> imageBinary, IDatabaseCommonStatus commonStatus)
+        public int InsertImageBinary(Guid launcherItemId, IconBasicSize iconScale, IEnumerable<byte> imageBinary, IDatabaseCommonStatus commonStatus)
         {
-            var iconScaleTransfer = new EnumTransfer<IconSize.Kind>();
+            var iconScaleTransfer = new EnumTransfer<IconBasicSize>();
 
             var statement = StatementLoader.LoadStatementByCurrent();
             var binaryImageItems = imageBinary.GroupSplit(80 * 1024).ToArray();
@@ -70,14 +70,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return resultCount;
         }
 
-        public int DeleteImageBinary(Guid launcherItemId, IconSize iconSize)
+        public int DeleteImageBinary(Guid launcherItemId, IconBasicSize iconSize)
         {
-            var iconScaleTransfer = new EnumTransfer<IconSize.Kind>();
+            var iconScaleTransfer = new EnumTransfer<IconBasicSize>();
 
             var statement = StatementLoader.LoadStatementByCurrent();
             var param = new {
                 LauncherItemId = launcherItemId,
-                IconScale = iconScaleTransfer.ToString(iconSize.ToKind()),
+                IconScale = iconScaleTransfer.ToString(iconSize),
             };
             return Commander.Execute(statement, param);
         }

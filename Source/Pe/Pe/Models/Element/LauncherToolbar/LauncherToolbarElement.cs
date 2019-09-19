@@ -84,7 +84,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
         /// <summary>
         /// 表示アイコンサイズ。
         /// </summary>
-        public IconSize IconScale { get; private set; }
+        public IconBasicSize IconScale { get; private set; }
 
         /// <summary>
         /// アイコンの余白。
@@ -212,7 +212,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
                 displayData = dao.SelectDisplayData(LauncherToolbarId);
             }
 
-            IconScale = displayData.IconSize;
+            IconScale = displayData.IconBasicSize;
             TextWidth = displayData.TextWidth;
             IsIconOnly = displayData.IsIconOnly;
             IsTopmost = displayData.IsTopmost;

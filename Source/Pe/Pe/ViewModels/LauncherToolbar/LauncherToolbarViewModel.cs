@@ -75,7 +75,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
         ILauncherGroupTheme LauncherGroupTheme { get; }
         PropertyChangedHooker PropertyChangedHooker { get; }
 
-        public IconSize IconScale => Model.IconScale;
+        public IconBasicSize IconScale => Model.IconScale;
         public Thickness ButtonPadding => Model.ButtonPadding;
         public Thickness IconMargin => Model.IconMargin;
         public bool IsIconOnly => Model.IsIconOnly;

@@ -112,8 +112,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             {
                 return LauncherItems.GetOrAdd(launcherItemId, launcherItemIdKey => {
 
-                    var launcherIconImageLoaders = EnumUtility.GetMembers<IconSize.Kind>()
-                        .Select(i => DiContainer.Make<LauncherIconLoader>(new object[] { launcherItemId, new IconSize(i) }))
+                    var launcherIconImageLoaders = EnumUtility.GetMembers<IconBasicSize>()
+                        .Select(i => DiContainer.Make<LauncherIconLoader>(new object[] { launcherItemId, i }))
                     ;
                     var iconImageLoaderPack = new IconImageLoaderPack(launcherIconImageLoaders);
 

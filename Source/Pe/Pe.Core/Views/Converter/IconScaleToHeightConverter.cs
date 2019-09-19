@@ -16,7 +16,7 @@ namespace ContentTypeTextNet.Pe.Core.Views.Converter
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return ((IconSize)value).Height;
+            return (int)(IconBasicSize)value;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

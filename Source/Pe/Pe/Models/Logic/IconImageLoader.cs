@@ -18,17 +18,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 {
     public abstract class IconImageLoaderBase : BindModelBase
     {
-        public IconImageLoaderBase(IconSize iconSIze, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
+        public IconImageLoaderBase(IconBasicSize iconBasicSize, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
-            IconSize = iconSIze;
+            IconBasicSize = iconBasicSize;
             DispatcherWapper = dispatcherWapper;
             RunningStatusImpl = new RunningStatus(LoggerFactory);
         }
 
         #region property
 
-        public IconSize IconSize { get; }
+        public IconBasicSize IconBasicSize { get; }
         protected IDispatcherWapper DispatcherWapper { get; }
 
         RunningStatus RunningStatusImpl { get; }
@@ -53,7 +53,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                 var iconLoader = new IconLoader(Logger);
                 BitmapSource? iconImage = null;
                 DispatcherWapper.Invoke(() => {
-                    iconImage = iconLoader.Load(expandedPath, IconSize, iconData.Index);
+                    iconImage = iconLoader.Load(expandedPath, new IconSize(IconBasicSize), iconData.Index);
 #pragma warning disable CS8604 // Null 参照引数の可能性があります。
                     FreezableUtility.SafeFreeze(iconImage);
 #pragma warning restore CS8604 // Null 参照引数の可能性があります。
@@ -89,11 +89,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
     {
         public IconImageLoaderPack(IEnumerable<IconImageLoaderBase> iconImageLoaders)
         {
-            var map = iconImageLoaders.ToDictionary(i => (IconSize.Kind)i.IconSize.Width, i => i);
-            Small = map[IconSize.Kind.Small];
-            Normal = map[IconSize.Kind.Normal];
-            Big = map[IconSize.Kind.Big];
-            Large = map[IconSize.Kind.Large];
+            var map = iconImageLoaders.ToDictionary(i => i.IconBasicSize, i => i);
+            Small = map[IconBasicSize.Small];
+            Normal = map[IconBasicSize.Normal];
+            Big = map[IconBasicSize.Big];
+            Large = map[IconBasicSize.Large];
         }
 
         #region property
