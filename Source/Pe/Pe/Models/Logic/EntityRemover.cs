@@ -45,17 +45,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
     public abstract class EntityRemoverBase
     {
-        public EntityRemoverBase(ILogger logger)
-        {
-            Logger = logger;
-        }
         public EntityRemoverBase(ILoggerFactory loggerFactory)
         {
+            LoggerFactory = loggerFactory;
             Logger = loggerFactory.CreateLogger(GetType());
         }
 
         #region property
 
+        protected ILoggerFactory LoggerFactory { get; }
         protected ILogger Logger { get; }
 
         #endregion

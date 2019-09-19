@@ -88,7 +88,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 if(parameterResult.Success) {
                     var parameter = parameterResult.SuccessValue;
                     IsDragging = true;
+#pragma warning disable CS8602 // null 参照の可能性があるものの逆参照です。
                     DragDrop.DoDragDrop(parameter.Element, parameter.Data, parameter.Effects);
+#pragma warning restore CS8602 // null 参照の可能性があるものの逆参照です。
                     IsDragging = false;
                 }
             }

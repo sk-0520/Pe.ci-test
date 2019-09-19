@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models;
 using WinForms = System.Windows.Forms;
 
@@ -13,7 +14,7 @@ namespace ContentTypeTextNet.Pe.Core.Compatibility.Forms
     /// <see cref="System.Windows.Forms.Screen"/> 互換クラス。
     /// </summary>
     [Serializable]
-    public class Screen
+    public class Screen: IReadOnlyScreenData
     {
         #region property
 

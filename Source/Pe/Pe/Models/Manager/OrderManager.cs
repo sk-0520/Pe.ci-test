@@ -1,8 +1,35 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Text;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
+using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
+using ContentTypeTextNet.Pe.Core.Models;
+using ContentTypeTextNet.Pe.Main.Models.Applications;
+using ContentTypeTextNet.Pe.Main.Models.Data;
+using ContentTypeTextNet.Pe.Main.Models.Element;
+using ContentTypeTextNet.Pe.Main.Models.Element.CustomizeLauncherItem;
+using ContentTypeTextNet.Pe.Main.Models.Element.Font;
+using ContentTypeTextNet.Pe.Main.Models.Element.LauncherGroup;
+using ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon;
+using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar;
+using ContentTypeTextNet.Pe.Main.Models.Element.Note;
+using ContentTypeTextNet.Pe.Main.Models.Element.StandardInputOutput;
+using ContentTypeTextNet.Pe.Main.Models.Logic;
+using ContentTypeTextNet.Pe.Main.ViewModels.CustomizeLauncherItem;
+using ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar;
+using ContentTypeTextNet.Pe.Main.ViewModels.Note;
+using ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput;
+using ContentTypeTextNet.Pe.Main.Views.CustomizeLauncherItem;
+using ContentTypeTextNet.Pe.Main.Views.Extend;
+using ContentTypeTextNet.Pe.Main.Views.LauncherToolbar;
+using ContentTypeTextNet.Pe.Main.Views.Note;
+using ContentTypeTextNet.Pe.Main.Views.StandardInputOutput;
+using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
@@ -33,7 +60,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         LauncherToolbarElement CreateLauncherToolbarElement(Screen dockScreen, ReadOnlyObservableCollection<LauncherGroupElement> launcherGroups);
         LauncherItemElement GetOrCreateLauncherItemElement(Guid launcherItemId);
         CustomizeLauncherItemElement CreateCustomizeLauncherItemElement(Guid launcherItemId, LauncherIconElement iconElement, Screen screen);
-        NoteElement CreateNoteElement(Guid noteId, Screen screen, NotePosition notePosition);
+        NoteElement CreateNoteElement(Guid noteId, Screen? screen, NotePosition notePosition);
         bool RemoveNoteElement(Guid noteId);
         NoteContentElement CreateNoteContentElement(Guid noteId, NoteContentKind contentKind);
         FontElement CreateFontElement(Guid fontId, ParentUpdater parentUpdater);
@@ -85,8 +112,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             {
                 return LauncherItems.GetOrAdd(launcherItemId, launcherItemIdKey => {
 
-                    var launcherIconImageLoaders = EnumUtility.GetMembers<IconScale>()
-                        .Select(i => DiContainer.Make<LauncherIconLoader>(new object[] { launcherItemId, i }))
+                    var launcherIconImageLoaders = EnumUtility.GetMembers<IconSize.Kind>()
+                        .Select(i => DiContainer.Make<LauncherIconLoader>(new object[] { launcherItemId, new IconSize(i) }))
                     ;
                     var iconImageLoaderPack = new IconImageLoaderPack(launcherIconImageLoaders);
 
@@ -106,7 +133,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
 
 
-            public NoteElement CreateNoteElement(Guid noteId, Screen screen, NotePosition notePosition)
+            public NoteElement CreateNoteElement(Guid noteId, Screen? screen, NotePosition notePosition)
             {
                 var element = screen == null
                     ? DiContainer.Build<NoteElement>(noteId, DiDefaultParameter.Create<Screen>(), notePosition)
@@ -146,12 +173,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             public WindowItem CreateLauncherToolbarWindow(LauncherToolbarElement element)
             {
                 var viewModel = DiContainer.UsingTemporaryContainer(c => {
-                    c.Register<ILoggerFactory, ILoggerFactory>(element);
+                    //c.Register<ILoggerFactory, ILoggerFactory>(element);
                     return c.Make<LauncherToolbarViewModel>(new[] { element, });
                 });
-                var window = DiContainer.Make<LauncherToolbarWindow>();
+                var window = DiContainer.BuildView<LauncherToolbarWindow>();
                 viewModel.AppDesktopToolbarExtend = DiContainer.UsingTemporaryContainer(c => {
-                    c.Register<ILoggerFactory, ILoggerFactory>(viewModel);
+                    //c.Register<ILoggerFactory, ILoggerFactory>(viewModel);
                     return c.Make<AppDesktopToolbarExtend>(new object[] { window, element, });
                 });
                 window.DataContext = viewModel;
@@ -162,7 +189,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             public WindowItem CreateCustomizeLauncherItemWindow(CustomizeLauncherItemElement element)
             {
                 var viewModel = DiContainer.UsingTemporaryContainer(c => {
-                    c.Register<ILoggerFactory, ILoggerFactory>(element);
+                    //c.Register<ILoggerFactory, ILoggerFactory>(element);
                     return c.Build<CustomizeLauncherItemViewModel>(element);
                 });
                 var window = DiContainer.Build<CustomizeLauncherItemWindow>();
@@ -174,7 +201,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             public WindowItem CreateNoteWindow(NoteElement element)
             {
                 var viewModel = DiContainer.UsingTemporaryContainer(c => {
-                    c.Register<ILoggerFactory, ILoggerFactory>(element);
+                    //c.Register<ILoggerFactory, ILoggerFactory>(element);
                     return c.Build<NoteViewModel>(element);
                 });
                 var window = DiContainer.Build<NoteWindow>();
@@ -186,7 +213,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             public WindowItem CreateStandardInputOutputWindow(StandardInputOutputElement element)
             {
                 var viewModel = DiContainer.UsingTemporaryContainer(c => {
-                    c.Register<ILoggerFactory, ILoggerFactory>(element);
+                    //c.Register<ILoggerFactory, ILoggerFactory>(element);
                     return c.Build<StandardInputOutputViewModel>(element);
                 });
                 var window = DiContainer.Build<StandardInputOutputWindow>();

@@ -7,14 +7,10 @@ using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using Microsoft.Extensions.Logging;
 
-namespace ContentTypeTextNet.Pe.Main.ViewModel
+namespace ContentTypeTextNet.Pe.Main.ViewModels
 {
     public class RunningStatusViewModel : SingleModelViewModelBase<IRunningStatus>, IRunningStatus
     {
-        public RunningStatusViewModel(IRunningStatus model, ILogger logger)
-            : base(model, logger)
-        { }
-
         public RunningStatusViewModel(IRunningStatus model, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         { }

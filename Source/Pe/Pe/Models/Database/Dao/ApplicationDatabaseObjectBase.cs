@@ -9,10 +9,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao
 {
     public abstract class ApplicationDatabaseObjectBase : DatabaseAccessObjectBase
     {
-        public ApplicationDatabaseObjectBase(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILogger logger)
-            : base(commander, statementLoader, implementation, logger)
-        { }
-
         public ApplicationDatabaseObjectBase(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
             : base(commander, statementLoader, implementation, loggerFactory)
         { }

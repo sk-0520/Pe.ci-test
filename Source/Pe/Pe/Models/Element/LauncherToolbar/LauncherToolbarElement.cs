@@ -1,10 +1,26 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Linq;
 using System.Text;
+using System.Windows;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
+using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
 using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
+using ContentTypeTextNet.Pe.Core.Models;
+using ContentTypeTextNet.Pe.Core.Models.Database;
+using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Data;
+using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain;
+using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
+using ContentTypeTextNet.Pe.Main.Models.Element.LauncherGroup;
+using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem;
+using ContentTypeTextNet.Pe.Main.Models.Logic;
+using ContentTypeTextNet.Pe.Main.Models.Manager;
 using ContentTypeTextNet.Pe.Main.Views.Extend;
+using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
 {
@@ -15,7 +31,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
         bool _isVisible;
         bool _isTopmost;
         LauncherToolbarIconDirection _iconDirection;
-        LauncherGroupElement _selectedLauncherGroup;
+        LauncherGroupElement? _selectedLauncherGroup;
         bool _isOpendAppMenu;
 
         #endregion
@@ -33,7 +49,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
             IdFactory = idFactory;
             LauncherToolbarTheme = launcherToolbarTheme;
 
-            MainDatabaseLazyWriter = new DatabaseLazyWriter(MainDatabaseBarrier, Constants.Config.LauncherToolbarMainDatabaseLazyWriterWaitTime, this);
+            MainDatabaseLazyWriter = new DatabaseLazyWriter(MainDatabaseBarrier, Constants.Config.LauncherToolbarMainDatabaseLazyWriterWaitTime, LoggerFactory);
         }
 
         #region property
@@ -46,7 +62,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
         ILauncherToolbarTheme LauncherToolbarTheme { get; }
 
         DatabaseLazyWriter MainDatabaseLazyWriter { get; }
-        UniqueObjectPool UniqueKeyPool { get; } = new UniqueObjectPool();
+        UniqueKeyPool UniqueKeyPool { get; } = new UniqueKeyPool();
 
         public ReadOnlyObservableCollection<LauncherGroupElement> LauncherGroups { get; }
 
@@ -68,7 +84,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
         /// <summary>
         /// 表示アイコンサイズ。
         /// </summary>
-        public IconScale IconScale { get; private set; }
+        public IconSize IconScale { get; private set; }
 
         /// <summary>
         /// アイコンの余白。
@@ -107,7 +123,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
             set => SetProperty(ref this._iconDirection, value);
         }
 
-        public LauncherGroupElement SelectedLauncherGroup
+        public LauncherGroupElement? SelectedLauncherGroup
         {
             get => this._selectedLauncherGroup;
             set => SetProperty(ref this._selectedLauncherGroup, value);
@@ -142,7 +158,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
         Guid GetLauncherToolbarId()
         {
             using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var dao = new LauncherToolbarDomainDao(commander, StatementLoader, commander.Implementation, this);
+                var dao = new LauncherToolbarDomainDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
                 var screenToolbars = dao.SelectAllScreenToolbars().ToList();
                 var LauncherToolbarId = FindMaybeToolbarId(screenToolbars);
                 return LauncherToolbarId;
@@ -152,13 +168,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
         Guid CreateLauncherToolbar()
         {
             var toolbarId = IdFactory.CreateLauncherToolbarId();
-            Logger.Debug($"create toolbar: {toolbarId}");
+            Logger.LogDebug("create toolbar: {0}", toolbarId);
 
             using(var commander = MainDatabaseBarrier.WaitWrite()) {
-                var toolbarsDao = new LauncherToolbarsEntityDao(commander, StatementLoader, commander.Implementation, this);
+                var toolbarsDao = new LauncherToolbarsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+#pragma warning disable CS8604 // Null 参照引数の可能性があります。
                 toolbarsDao.InsertNewToolbar(toolbarId, DockScreen.DeviceName, DatabaseCommonStatus.CreateCurrentAccount());
+#pragma warning restore CS8604 // Null 参照引数の可能性があります。
 
-                var screenOperator = new ScreenOperator(this);
+                var screenOperator = new ScreenOperator(LoggerFactory);
                 screenOperator.RegisterDatabase(DockScreen, commander, StatementLoader, commander.Implementation, DatabaseCommonStatus.CreateCurrentAccount());
 
                 commander.Commit();
@@ -186,15 +204,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
 
         void LoadLauncherToolbar()
         {
-            Logger.Information($"toolbar id: {LauncherToolbarId}");
+            Logger.LogInformation("toolbar id: {0}", LauncherToolbarId);
 
             LauncherToolbarsDisplayData displayData;
             using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var dao = new LauncherToolbarsEntityDao(commander, StatementLoader, commander.Implementation, this);
+                var dao = new LauncherToolbarsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
                 displayData = dao.SelectDisplayData(LauncherToolbarId);
             }
 
-            IconScale = displayData.IconScale;
+            IconScale = displayData.IconSize;
             TextWidth = displayData.TextWidth;
             IsIconOnly = displayData.IsIconOnly;
             IsTopmost = displayData.IsTopmost;
@@ -238,7 +256,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
             IsOpendAppMenu = false;
 
             MainDatabaseLazyWriter.Stock(c => {
-                var dao = new LauncherToolbarsEntityDao(c, StatementLoader, c.Implementation, this);
+                var dao = new LauncherToolbarsEntityDao(c, StatementLoader, c.Implementation, LoggerFactory);
                 dao.UpdateToolbarPosition(LauncherToolbarId, ToolbarPosition, DatabaseCommonStatus.CreateCurrentAccount());
             }, UniqueKeyPool.Get());
         }
@@ -249,7 +267,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
             IsOpendAppMenu = false;
 
             MainDatabaseLazyWriter.Stock(c => {
-                var dao = new LauncherToolbarsEntityDao(c, StatementLoader, c.Implementation, this);
+                var dao = new LauncherToolbarsEntityDao(c, StatementLoader, c.Implementation, LoggerFactory);
                 dao.UpdatIsTopmost(LauncherToolbarId, IsTopmost, DatabaseCommonStatus.CreateCurrentAccount());
             }, UniqueKeyPool.Get());
         }
@@ -260,7 +278,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
             IsOpendAppMenu = false;
 
             MainDatabaseLazyWriter.Stock(c => {
-                var dao = new LauncherToolbarsEntityDao(c, StatementLoader, c.Implementation, this);
+                var dao = new LauncherToolbarsEntityDao(c, StatementLoader, c.Implementation, LoggerFactory);
                 dao.UpdatIsAutoHide(LauncherToolbarId, IsAutoHide, DatabaseCommonStatus.CreateCurrentAccount());
             }, UniqueKeyPool.Get());
         }
@@ -271,7 +289,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
             IsOpendAppMenu = false;
 
             MainDatabaseLazyWriter.Stock(c => {
-                var dao = new LauncherToolbarsEntityDao(c, StatementLoader, c.Implementation, this);
+                var dao = new LauncherToolbarsEntityDao(c, StatementLoader, c.Implementation, LoggerFactory);
                 dao.UpdatIsVisible(LauncherToolbarId, IsVisible, DatabaseCommonStatus.CreateCurrentAccount());
             }, UniqueKeyPool.Get());
         }
@@ -282,7 +300,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
 
         override protected void InitializeImpl()
         {
-            Logger.Information($"initialize {DockScreen.DeviceName}:{DockScreen.DeviceBounds}, {nameof(DockScreen.Primary)}: {DockScreen.Primary}");
+            Logger.LogInformation("initialize {0}:{1}, {2}: {3}", DockScreen.DeviceName, DockScreen.DeviceBounds, nameof(DockScreen.Primary), DockScreen.Primary);
 
             var launcherToolbarId = GetLauncherToolbarId();
             if(launcherToolbarId == Guid.Empty) {

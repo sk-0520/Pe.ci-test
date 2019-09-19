@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace ContentTypeTextNet.Pe.Main.ViewModel
+namespace ContentTypeTextNet.Pe.Main.ViewModels
 {
     public interface IDialogCommand
     {

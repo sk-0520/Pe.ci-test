@@ -29,6 +29,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
         public ApplicationDiContainer? DiContainer { get; private set; }
         public ILoggerFactory? LoggerFactory { get; private set; }
+        public WindowManager? WindowManager { get; private set; }
+        //public OrderManager OrderManager { get; private set; }
+        //public NotifyManager NotifyManager { get; private set; }
+        public StatusManager? StatusManager { get; private set; }
+        public ClipboardManager? ClipboardManager { get; private set; }
 
         #endregion
 
@@ -117,9 +122,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         {
             using(var diContainer = scopeContainerCreator.CreateChildContainer()) {
                 diContainer
+                    .Register<ILoggerFactory, ILoggerFactory>(loggerFactory)
                     .Register<IDispatcherWapper, ApplicationDispatcherWapper>(DiLifecycle.Transient)
-                    .RegisterLogger(loggerFactory)
-                    .RegisterMvvm<Element.Accept.AcceptElement, ViewModel.Accept.AcceptViewModel, Views.Accept.AcceptWindow>()
+                    .RegisterMvvm<Element.Accept.AcceptElement, ViewModels.Accept.AcceptViewModel, Views.Accept.AcceptWindow>()
                 ;
                 using(var windowManager = new WindowManager(diContainer, loggerFactory)) {
                     var acceptModel = diContainer.Build<Element.Accept.AcceptElement>();
@@ -267,6 +272,43 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             return container;
         }
 
+        WindowManager SetupWindowManager(IDiRegisterContainer diContainer)
+        {
+            var manager = diContainer.Make<WindowManager>();
+
+            return manager;
+        }
+
+        /*
+        OrderManager SetupOrderManager(IDiRegisterContainer diContainer)
+        {
+            var manager = diContainer.Make<OrderManager>();
+
+            return manager;
+        }
+
+        NotifyManager SetupNotifyManager(IDiRegisterContainer diContainer)
+        {
+            var manager = diContainer.Make<NotifyManager>();
+
+            return manager;
+        }
+        */
+
+        StatusManager SetupStatusManager(IDiRegisterContainer diContainer)
+        {
+            var manager = diContainer.Build<StatusManager>();
+
+            return manager;
+        }
+
+        ClipboardManager SetupClipboardManager(IDiRegisterContainer diContainer)
+        {
+            var manager = diContainer.Build<ClipboardManager>();
+
+            return manager;
+        }
+
         public bool Initialize(App app, StartupEventArgs e)
         {
             InitializeEnvironmentVariable();
@@ -305,7 +347,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 }
             }
 
+            LoggerFactory = loggerFactory;
             DiContainer = SetupContainer(environmentParameters, pack.factory, pack.accessor, loggerFactory);
+            WindowManager = SetupWindowManager(DiContainer);
+            //OrderManager = SetupOrderManager(DiContainer);
+            //NotifyManager = SetupNotifyManager(DiContainer);
+            StatusManager = SetupStatusManager(DiContainer);
+            ClipboardManager = SetupClipboardManager(DiContainer);
+
 
             return true;
         }

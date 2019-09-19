@@ -1,0 +1,46 @@
+<Window
+  x:Name="root"
+  x:Class="ContentTypeTextNet.Pe.Main.Views.Startup.ImportProgramsWindow"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+
+  xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+  xmlns:prism="http://prismlibrary.com/"
+  
+    xmlns:app_core_view="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core"
+
+  Title="ImportProgramsWindow"
+  Width="800"
+  Height="450"
+
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  mc:Ignorable="d"
+  >
+  <i:Interaction.Triggers>
+    <app_core_view:RequestTrigger SourceObject="{Binding CloseRequest, Mode=OneWay}">
+      <i:InvokeCommandAction Command="{Binding CloseCommand, ElementName=root}" />
+    </app_core_view:RequestTrigger>
+    <i:EventTrigger EventName="Loaded" >
+      <i:InvokeCommandAction Command="{Binding ViewLoadedCommand}" />
+    </i:EventTrigger>
+  </i:Interaction.Triggers>
+  <Grid>
+    <StackPanel>
+      <Button Command="{Binding CloseCommand}">close</Button>
+      <Button Command="{Binding ImportCommand}">import</Button>
+
+      <ListBox ItemsSource="{Binding ProgramItems}">
+        <ListBox.ItemTemplate>
+          <DataTemplate>
+            <StackPanel>
+              <CheckBox IsChecked="{Binding IsImport}" />
+              <TextBlock Text="{Binding FileName, Mode=OneTime}" />
+            </StackPanel>
+          </DataTemplate>
+        </ListBox.ItemTemplate>
+      </ListBox>
+    </StackPanel>
+
+
+  </Grid>
+</Window>

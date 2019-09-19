@@ -57,11 +57,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.CustomizeLauncherItem
 
         public string? Name { get; private set; }
         public string? Code { get; private set; }
-        public LauncherItemKind? Kind { get; private set; }
+        public LauncherItemKind Kind { get; private set; }
         public bool IsEnabledCommandLauncher { get; private set; }
 
-        public IconData IconData { get; private set; }
-        public string Comment { get; private set; }
+        public IconData? IconData { get; private set; }
+        public string? Comment { get; private set; }
 
         #endregion
 
@@ -70,7 +70,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.CustomizeLauncherItem
         void LoadLauncherItem()
         {
             using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var launcherItemsDao = new LauncherItemsEntityDao(commander, StatementLoader, commander.Implementation, this);
+                var launcherItemsDao = new LauncherItemsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
                 var launcherItemData = launcherItemsDao.SelectLauncherItem(LauncherItemId);
 
                 Name = launcherItemData.Name;
@@ -85,7 +85,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.CustomizeLauncherItem
         public LauncherFileData LoadFileData()
         {
             using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var dao = new LauncherFilesEntityDao(commander, StatementLoader, commander.Implementation, Logger.Factory);
+                var dao = new LauncherFilesEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
                 return dao.SelectFile(LauncherItemId);
             }
         }
@@ -93,7 +93,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.CustomizeLauncherItem
         public IReadOnlyCollection<LauncherEnvironmentVariableItem> LoadEnvironmentVariableItems()
         {
             using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var dao = new LauncherEnvVarsEntityDao(commander, StatementLoader, commander.Implementation, Logger.Factory);
+                var dao = new LauncherEnvVarsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
                 return dao.SelectItems(LauncherItemId).ToList();
             }
         }
@@ -101,7 +101,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.CustomizeLauncherItem
         public IReadOnlyCollection<string> LoadTags()
         {
             using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var dao = new LauncherTagsEntityDao(commander, StatementLoader, commander.Implementation, Logger.Factory);
+                var dao = new LauncherTagsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
                 return dao.SelectTags(LauncherItemId).ToList();
             }
         }

@@ -10,7 +10,7 @@ using Microsoft.Extensions.Logging;
 using Prism.Commands;
 using Prism.Services.Dialogs;
 
-namespace ContentTypeTextNet.Pe.Main.ViewModel.Accept
+namespace ContentTypeTextNet.Pe.Main.ViewModels.Accept
 {
     public class AcceptViewModel : SingleModelViewModelBase<AcceptElement>, IDialogCommand, IDialogService
     {

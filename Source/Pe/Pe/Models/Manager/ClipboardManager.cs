@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows;
+using ContentTypeTextNet.Pe.Core.Models;
+using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
@@ -41,7 +44,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 Clipboard.SetDataObject(data);
                 return true;
             } catch(Exception ex) {
-                Logger.Error(ex);
+                Logger.LogError(ex, ex.Message);
                 return false;
             }
         }

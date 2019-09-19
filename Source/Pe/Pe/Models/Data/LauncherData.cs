@@ -143,7 +143,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         public string? Name { get; set; }
         public LauncherGroupKind Kind { get; set; }
         public LauncherGroupImageName ImageName { get; set; }
-        public Color? ImageColor { get; set; }
+        public Color ImageColor { get; set; }
         public long Sort { get; set; }
 
         #endregion

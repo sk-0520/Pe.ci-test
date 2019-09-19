@@ -49,7 +49,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         protected DatabaseSelectStatementBuilder CreateSelectBuilder()
         {
-            var result = new DatabaseSelectStatementBuilder(Implementation, Logger.Factory);
+            var result = new DatabaseSelectStatementBuilder(Implementation, LoggerFactory);
             result.SetTable(TableName);
 
             return result;
@@ -57,7 +57,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         protected DatabaseUpdateStatementBuilder CreateUpdateBuilder(IDatabaseCommonStatus databaseCommonStatus)
         {
-            var result = new DatabaseUpdateStatementBuilder(Implementation, Logger.Factory);
+            var result = new DatabaseUpdateStatementBuilder(Implementation, LoggerFactory);
             result.SetTable(TableName);
             foreach(var ignoreColumn in CommonUpdateColumns.Where(i => i != UpdatedCount)) {
                 result.AddIgnoreWhere(ignoreColumn);
@@ -76,7 +76,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         protected DatabaseDeleteStatementBuilder CreateDeleteBuilder()
         {
-            var result = new DatabaseDeleteStatementBuilder(Implementation, Logger.Factory);
+            var result = new DatabaseDeleteStatementBuilder(Implementation, LoggerFactory);
             result.SetTable(TableName);
 
             return result;

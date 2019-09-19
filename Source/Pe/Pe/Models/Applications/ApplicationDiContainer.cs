@@ -26,15 +26,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             return scopeDiContainer;
         }
 
-        public static IDiRegisterContainer RegisterLogger(this IDiRegisterContainer @this, ILoggerFactory logerFactory, [CallerMemberName] string callerMemberName = "")
-        {
-            var logger = logerFactory.CreateLogger(callerMemberName);
+        //public static IDiRegisterContainer RegisterLogger(this IDiRegisterContainer @this, ILoggerFactory logerFactory, [CallerMemberName] string callerMemberName = "")
+        //{
+        //    var logger = logerFactory.CreateLogger(callerMemberName);
 
-            return @this
-                .Register<ILogger, ILogger>(logger)
-                .Register<ILoggerFactory, ILoggerFactory>(logerFactory)
-            ;
-        }
+        //    return @this
+        //        .Register<ILogger, ILogger>(logger)
+        //        .Register<ILoggerFactory, ILoggerFactory>(logerFactory)
+        //    ;
+        //}
 
         public static IDiRegisterContainer RegisterMvvm<TModel, TViewModel, TView>(this IDiRegisterContainer @this)
             where TModel : BindModelBase
@@ -44,6 +44,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             return @this
                 .Register<TModel, TModel>(DiLifecycle.Singleton)
                 .Register<TViewModel, TViewModel>(DiLifecycle.Transient)
+                .Register<ILogger, ILogger>(@this.Make<ILoggerFactory>().CreateLogger(typeof(TView)))
                 .DirtyRegister<TView, TViewModel>(nameof(FrameworkElement.DataContext))
             ;
         }
@@ -53,6 +54,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             using(var container = CreateChildContainer(@this)) {
                 return func(container);
             }
+        }
+
+        public static TView BuildView<TView>(this IDiScopeContainerFactory @this)
+#if !ENABLED_STRUCT
+            where TView : class
+#endif
+        {
+            return @this.UsingTemporaryContainer(c => {
+                c.Register<ILogger, ILogger>(c.Make<ILoggerFactory>().CreateLogger(typeof(TView)));
+                return c.Build<TView>();
+            });
         }
 
         #endregion

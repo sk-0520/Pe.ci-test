@@ -13,10 +13,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Models\Manager\ApplicationManager.MessageWindow.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Remove="nlog.config" />
   </ItemGroup>
 
@@ -40,10 +36,6 @@
     <Folder Include="doc\help\" />
     <Folder Include="doc\license\" />
     <Folder Include="Resources\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="Models\Manager\ApplicationManager.MessageWindow.cs" />
   </ItemGroup>
 
   <ItemGroup>

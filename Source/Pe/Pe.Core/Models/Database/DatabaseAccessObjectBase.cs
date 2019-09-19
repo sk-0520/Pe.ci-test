@@ -12,7 +12,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
     {
         public DatabaseAccessObjectBase(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
         {
-            LoggerFactory = LoggerFactory;
+            LoggerFactory = loggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());
             Commander = commander;
             StatementLoader = statementLoader;

@@ -52,7 +52,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element
         {
             var childServiceLocator = ServiceLocator.CreateChildContainer();
 
-            childServiceLocator.RegisterLogger(LoggerFactory);
+            //childServiceLocator.RegisterLogger(LoggerFactory);
 
             return childServiceLocator;
         }

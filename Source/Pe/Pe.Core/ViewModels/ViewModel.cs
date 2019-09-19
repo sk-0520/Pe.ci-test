@@ -16,14 +16,9 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
 {
     public abstract class ViewModelBase : BindableBase, INotifyDataErrorInfo, IDisposable, IDisposer
     {
-
-        public ViewModelBase(ILogger logger)
-        {
-            Logger = logger;
-            ErrorsContainer = new ErrorsContainer<string>(OnErrorsChanged);
-        }
         public ViewModelBase(ILoggerFactory loggerFactory)
         {
+            LoggerFactory = loggerFactory;
             Logger = loggerFactory.CreateLogger(GetType());
             ErrorsContainer = new ErrorsContainer<string>(OnErrorsChanged);
         }
@@ -35,6 +30,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
 
         #region property
 
+        protected ILoggerFactory LoggerFactory { get; }
         protected ILogger Logger { get; }
         IDictionary<string, ICommand> CommandCache { get; } = new Dictionary<string, ICommand>();
         protected IEnumerable<ICommand> Commands => CommandCache.Values;
@@ -171,14 +167,6 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
     public abstract class SingleModelViewModelBase<TModel> : ViewModelBase
         where TModel : INotifyPropertyChanged
     {
-        public SingleModelViewModelBase(TModel model, ILogger logger)
-            : base(logger)
-        {
-            Model = model;
-
-            AttachModelEvents();
-        }
-
         public SingleModelViewModelBase(TModel model, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
@@ -245,12 +233,6 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
 
         #endregion
 
-        public SimpleDataViewModel(TData data, ILogger logger)
-            : base(logger)
-        {
-            this._data = data;
-        }
-
         public SimpleDataViewModel(TData data, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
@@ -272,7 +254,6 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
     {
         #region function
 
-        public static SimpleDataViewModel<TData> Create<TData>(TData data, ILogger logger) => new SimpleDataViewModel<TData>(data, logger);
         public static SimpleDataViewModel<TData> Create<TData>(TData data, ILoggerFactory loggerFactory) => new SimpleDataViewModel<TData>(data, loggerFactory);
 
         #endregion

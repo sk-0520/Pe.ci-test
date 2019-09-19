@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace ContentTypeTextNet.Pe.Main.ViewModel
+namespace ContentTypeTextNet.Pe.Main.ViewModels
 {
     /// <summary>
     /// ウィンドウに紐づくビューモデルにてウィンドウ状態の通知を受け取る。

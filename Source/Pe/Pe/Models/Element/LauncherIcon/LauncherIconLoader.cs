@@ -70,33 +70,43 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon
             return Task.Run(() => {
                 IReadOnlyList<byte[]> imageBinary;
                 using(var commander = FileDatabaseBarrier.WaitRead()) {
-                    var dao = new LauncherItemIconsEntityDao(commander, StatementLoader, commander.Implementation, Logger.Factory);
-                    imageBinary = dao.SelectImageBinary(LauncherItemId, IconScale);
+                    var dao = new LauncherItemIconsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+#pragma warning disable CS8600 // Null リテラルまたは Null の可能性がある値を Null 非許容型に変換しています。
+                    imageBinary = dao.SelectImageBinary(LauncherItemId, IconSize.ToKind());
+#pragma warning restore CS8600 // Null リテラルまたは Null の可能性がある値を Null 非許容型に変換しています。
                 }
 
-                if(imageBinary.Count == 0) {
+                if(imageBinary != null && imageBinary.Count == 0) {
                     return ResultSuccessValue.Failure<BitmapSource>();
                 }
+#pragma warning disable CS8604 // Null 参照引数の可能性があります。
                 var image = ToImage(imageBinary);
+#pragma warning restore CS8604 // Null 参照引数の可能性があります。
 
+#pragma warning disable CS8634 // この型を、ジェネリック型またはメソッド内で型パラメーターとして使用することはできません。型引数の Null 許容性が 'class' 制約と一致しません。
+#pragma warning disable CS8619 // 値における参照型の Null 許容性が、対象の型と一致しません。
                 return ResultSuccessValue.Success(image);
+#pragma warning restore CS8619 // 値における参照型の Null 許容性が、対象の型と一致しません。
+#pragma warning restore CS8634 // この型を、ジェネリック型またはメソッド内で型パラメーターとして使用することはできません。型引数の Null 許容性が 'class' 制約と一致しません。
             });
         }
 
         LauncherIconData GetIconData()
         {
             using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var dao = new LauncherItemDomainDao(commander, StatementLoader, commander.Implementation, Logger.Factory);
+                var dao = new LauncherItemDomainDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
                 return dao.SelectIcon(LauncherItemId);
             }
         }
 
         Task<BitmapSource> GetImageCoreAsync(LauncherItemKind kind, IconData iconData, CancellationToken cancellationToken)
         {
+#pragma warning disable CS8619 // 値における参照型の Null 許容性が、対象の型と一致しません。
             return GetIconImageAsync(iconData, cancellationToken);
+#pragma warning restore CS8619 // 値における参照型の Null 許容性が、対象の型と一致しません。
         }
 
-        async Task<BitmapSource> GetImageAsync(LauncherIconData launcherIconData, CancellationToken cancellationToken)
+        async Task<BitmapSource?> GetImageAsync(LauncherIconData launcherIconData, CancellationToken cancellationToken)
         {
             var iconImage = await GetImageCoreAsync(launcherIconData.Kind, launcherIconData.Icon, cancellationToken).ConfigureAwait(false);
             if(iconImage != null) {
@@ -130,9 +140,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon
                 }
 #endif
                 using(var commander = FileDatabaseBarrier.WaitWrite()) {
-                    var dao = new LauncherItemIconsEntityDao(commander, StatementLoader, commander.Implementation, Logger.Factory);
-                    dao.DeleteImageBinary(LauncherItemId, IconScale);
-                    dao.InsertImageBinary(LauncherItemId, IconScale, stream.BinaryChunkedList, DatabaseCommonStatus.CreateCurrentAccount());
+                    var dao = new LauncherItemIconsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                    dao.DeleteImageBinary(LauncherItemId, IconSize);
+                    dao.InsertImageBinary(LauncherItemId, IconSize.ToKind(), stream.BinaryChunkedList, DatabaseCommonStatus.CreateCurrentAccount());
                     commander.Commit();
                 }
             }
@@ -140,7 +150,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon
 
         }
 
-        async Task<BitmapSource> MakeImageAsync(CancellationToken cancellationToken)
+        async Task<BitmapSource?> MakeImageAsync(CancellationToken cancellationToken)
         {
             // アイコンパス取得
             var launcherIconData = GetIconData();
@@ -151,7 +161,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon
                 // データ書き込み(失敗してもアイコンが取得できてるならOK)
                 SaveImage(iconImage);
             } else {
-                Logger.Warning($"アイコン取得失敗: {LauncherItemId}", ObjectDumper.GetDumpString(launcherIconData));
+                Logger.LogWarning("アイコン取得失敗: {0}, {1}", LauncherItemId, ObjectDumper.GetDumpString(launcherIconData));
             }
 
             return iconImage;
@@ -162,7 +172,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon
 
         #region IconImageLoaderBase
 
-        protected override async Task<BitmapSource> LoadImplAsync(CancellationToken cancellationToken)
+        protected override async Task<BitmapSource?> LoadImplAsync(CancellationToken cancellationToken)
         {
             var existisResult = await LoadExistsImageAsync().ConfigureAwait(false);
             if(existisResult.Success) {

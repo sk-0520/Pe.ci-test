@@ -1,7 +1,16 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Windows.Media;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
+using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
+using ContentTypeTextNet.Pe.Main.Models.Data;
+using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
+using ContentTypeTextNet.Pe.Main.Models.Logic;
+using ContentTypeTextNet.Pe.Main.Models.Manager;
+using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherGroup
 {
@@ -28,7 +37,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherGroup
 
         public Guid LauncherGroupId { get; }
 
-        public string Name { get; private set; }
+        public string? Name { get; private set; }
         public LauncherGroupKind Kind { get; private set; }
         public LauncherGroupImageName ImageName { get; private set; }
         public Color ImageColor { get; private set; }
@@ -46,11 +55,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherGroup
         {
             LauncherGroupData data;
             using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var dao = new LauncherGroupsEntityDao(commander, StatementLoader, commander.Implementation, this);
+                var dao = new LauncherGroupsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
                 data = dao.SelectLauncherGroup(LauncherGroupId);
             }
 
+#pragma warning disable CS8601 // Null 参照割り当ての可能性があります。
             Name = data.Name;
+#pragma warning restore CS8601 // Null 参照割り当ての可能性があります。
             Kind = data.Kind;
             ImageName = data.ImageName;
             ImageColor = data.ImageColor;
@@ -60,7 +71,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherGroup
         IEnumerable<Guid> GetLauncherItemsForNormal()
         {
             using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var dao = new LauncherGroupItemsEntityDao(commander, StatementLoader, commander.Implementation, this);
+                var dao = new LauncherGroupItemsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
                 return dao.SelectLauncherItemIds(LauncherGroupId);
             }
         }

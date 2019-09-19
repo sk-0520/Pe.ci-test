@@ -62,9 +62,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             });
         }
 
-        protected abstract Task<BitmapSource> LoadImplAsync(CancellationToken cancellationToken);
+        protected abstract Task<BitmapSource?> LoadImplAsync(CancellationToken cancellationToken);
 
-        public async Task<BitmapSource> LoadAsync(CancellationToken cancellationToken)
+        public async Task<BitmapSource?> LoadAsync(CancellationToken cancellationToken)
         {
             RunningStatusImpl.State = RunningState.Running;
             try {

@@ -17,7 +17,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     {
         #region property
 
-        Type SuccessType { get; }
+        Type? SuccessType { get; }
 
         #endregion
     }
@@ -26,25 +26,27 @@ namespace ContentTypeTextNet.Pe.Core.Models
     {
         #region property
 
-        Type FailureType { get; }
+        Type? FailureType { get; }
 
         #endregion
     }
 
     public interface IResultSuccessValue<TSuccess> : IResultSuccessValue
+        where TSuccess : class
     {
         #region property
 
-        TSuccess SuccessValue { get; }
+        TSuccess? SuccessValue { get; }
 
         #endregion
     }
 
     public interface IResultFailureValue<TFailure> : IResultFailureValue
+        where TFailure : class
     {
         #region property
 
-        TFailure FailureValue { get; }
+        TFailure? FailureValue { get; }
 
         #endregion
     }
@@ -53,6 +55,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
     { }
 
     public interface IResultValue<TSuccess, TFailure> : IResultSuccessValue<TSuccess>, IResultFailureValue<TFailure>, IResultValue
+        where TSuccess : class
+        where TFailure : class
     { }
 
     public struct Result : IResult
@@ -70,8 +74,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
     }
 
     public struct ResultSuccessValue<TSuccess> : IResultSuccessValue<TSuccess>
+        where TSuccess : class
     {
-        public ResultSuccessValue(bool success, TSuccess successValue)
+        public ResultSuccessValue(bool success, TSuccess? successValue)
         {
             Success = success;
             SuccessValue = successValue;
@@ -81,7 +86,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         public bool Success { get; }
         public Type SuccessType => typeof(TSuccess);
-        public TSuccess SuccessValue { get; }
+        public TSuccess? SuccessValue { get; }
 
         #endregion
     }
@@ -91,15 +96,15 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #region function
 
         public static ResultSuccessValue<TSuccess> Success<TSuccess>(TSuccess successValue)
+            where TSuccess : class
         {
             return new ResultSuccessValue<TSuccess>(true, successValue);
         }
 
         public static ResultSuccessValue<TSuccess> Failure<TSuccess>()
+            where TSuccess : class
         {
-#pragma warning disable CS8653 // 既定の式は、型パラメーターに null 値を導入します。
             return new ResultSuccessValue<TSuccess>(false, default);
-#pragma warning restore CS8653 // 既定の式は、型パラメーターに null 値を導入します。
         }
 
         #endregion
@@ -107,8 +112,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
     }
 
     public struct ResultFailureValue<TFailure> : IResultFailureValue<TFailure>
+        where TFailure : class
     {
-        public ResultFailureValue(bool success, TFailure failureValue)
+        public ResultFailureValue(bool success, TFailure? failureValue)
         {
             Success = success;
             FailureValue = failureValue;
@@ -118,7 +124,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         public bool Success { get; }
         public Type FailureType => typeof(TFailure);
-        public TFailure FailureValue { get; }
+        public TFailure? FailureValue { get; }
 
         #endregion
     }
@@ -128,13 +134,13 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #region function
 
         public static ResultFailureValue<TFailure> Success<TFailure>()
+            where TFailure : class
         {
-#pragma warning disable CS8653 // 既定の式は、型パラメーターに null 値を導入します。
             return new ResultFailureValue<TFailure>(true, default);
-#pragma warning restore CS8653 // 既定の式は、型パラメーターに null 値を導入します。
         }
 
         public static ResultFailureValue<TFailure> Failure<TFailure>(TFailure failureValue)
+            where TFailure : class
         {
             return new ResultFailureValue<TFailure>(false, failureValue);
         }
@@ -144,8 +150,10 @@ namespace ContentTypeTextNet.Pe.Core.Models
     }
 
     public struct ResultValue<TSuccess, TFailure> : IResultValue<TSuccess, TFailure>
+            where TSuccess : class
+            where TFailure : class
     {
-        public ResultValue(bool success, TSuccess successValue, TFailure failureValue)
+        public ResultValue(bool success, TSuccess? successValue, TFailure? failureValue)
         {
             Success = success;
             SuccessValue = successValue;
@@ -157,10 +165,10 @@ namespace ContentTypeTextNet.Pe.Core.Models
         public bool Success { get; }
 
         public Type SuccessType => typeof(TSuccess);
-        public TSuccess SuccessValue { get; }
+        public TSuccess? SuccessValue { get; }
 
         public Type FailureType => typeof(TFailure);
-        public TFailure FailureValue { get; }
+        public TFailure? FailureValue { get; }
 
         #endregion
     }

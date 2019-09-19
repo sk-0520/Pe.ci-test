@@ -53,7 +53,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 #pragma warning disable CS8604 // Null 参照引数の可能性があります。
                 IconDirection = iconDirectionTransfer.ToEnum(dto.Direction),
 #pragma warning restore CS8604 // Null 参照引数の可能性があります。
-                IconScale = iconScaleTransfer.ToEnum(dto.IconScale),
+#pragma warning disable CS8604 // Null 参照引数の可能性があります。
+                IconSize = new IconSize(iconScaleTransfer.ToEnum(dto.IconScale)),
+#pragma warning restore CS8604 // Null 参照引数の可能性があります。
                 FontId = dto.FontId,
 #pragma warning disable CS8604 // Null 参照引数の可能性があります。
                 AutoHideTimeout = ToTimespan(dto.AutoHideTimeout),

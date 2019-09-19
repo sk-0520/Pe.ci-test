@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using ContentTypeTextNet.Pe.Main;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
+using ContentTypeTextNet.Pe.Main.Models.Manager;
 using Prism;
 
 namespace ContentTypeTextNet.Pe.Main
@@ -16,6 +17,11 @@ namespace ContentTypeTextNet.Pe.Main
     /// </summary>
     public partial class App : Application
     {
+        #region property
+
+        ApplicationManager? ApplicationManager { get; set; }
+        #endregion
+
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
@@ -24,19 +30,21 @@ namespace ContentTypeTextNet.Pe.Main
 #endif
             var initializer = new ApplicationInitializer();
             initializer.Initialize(this, e);
-            /*
+
+            ApplicationManager = new ApplicationManager(initializer);
+
             if(!ApplicationManager.Startup(this, e)) {
                 Shutdown();
                 return;
             }
 
             var viewModel = ApplicationManager.CreateViewModel();
-            var notifyIcon = (Hardcodet.Wpf.TaskbarNotification.TaskbarIcon)FindResource("root");
-            notifyIcon.DataContext = viewModel;
+            //var notifyIcon = (Hardcodet.Wpf.TaskbarNotification.TaskbarIcon)FindResource("root");
+            //notifyIcon.DataContext = viewModel;
 
             ApplicationManager.Execute();
-            */
-            Shutdown();
+
+            //Shutdown();
         }
     }
 }

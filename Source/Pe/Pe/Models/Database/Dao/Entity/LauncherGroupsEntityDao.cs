@@ -59,9 +59,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var data = new LauncherGroupData() {
                 LauncherGroupId = dto.LauncherGroupId,
                 Name = dto.Name,
+#pragma warning disable CS8604 // Null 参照引数の可能性があります。
                 Kind = launcherGroupKindTransfer.ToEnum(dto.Kind),
+#pragma warning restore CS8604 // Null 参照引数の可能性があります。
+#pragma warning disable CS8604 // Null 参照引数の可能性があります。
                 ImageName = imgNameEnumTransfer.ToEnum(dto.ImageName),
+#pragma warning restore CS8604 // Null 参照引数の可能性があります。
+#pragma warning disable CS8604 // Null 参照引数の可能性があります。
                 ImageColor = ToColor(dto.ImageColor),
+#pragma warning restore CS8604 // Null 参照引数の可能性があります。
                 Sort = dto.Sort,
             };
 

@@ -18,18 +18,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 {
     public class ScreenOperator
     {
-        public ScreenOperator(ILogger logger)
-        {
-            Logger = logger;
-        }
-
         public ScreenOperator(ILoggerFactory loggerFactory)
         {
+            LoggerFactory = loggerFactory;
             Logger = loggerFactory.CreateLogger(GetType());
         }
 
-        #region function
+        #region property
 
+        ILoggerFactory LoggerFactory { get; }
         ILogger Logger { get; }
 
         #endregion
@@ -96,7 +93,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         public bool RegisterDatabase(Screen screen, IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, IDatabaseCommonStatus databaseCommonStatus)
         {
-            var screensDao = new ScreensEntityDao(commander, statementLoader, implementation, Logger);
+            var screensDao = new ScreensEntityDao(commander, statementLoader, implementation, LoggerFactory);
 #pragma warning disable CS8604 // Null 参照引数の可能性があります。
             if(!screensDao.SelectExistsScreen(screen.DeviceName)) {
 #pragma warning restore CS8604 // Null 参照引数の可能性があります。
