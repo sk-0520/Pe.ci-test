@@ -21,5 +21,5 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         #endregion
     }
-}
 #endif
+}

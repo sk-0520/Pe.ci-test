@@ -32,7 +32,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Note
     {
         #region event
 
-        public event EventHandler<NoteContentChangedEventArgs> NoteContentChanged;
+        public event EventHandler<NoteContentChangedEventArgs>? NoteContentChanged;
 
         #endregion
 
