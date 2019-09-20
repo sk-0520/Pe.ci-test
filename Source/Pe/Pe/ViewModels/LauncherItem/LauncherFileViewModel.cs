@@ -236,7 +236,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
                     }
                 }
                 CanCopyOption = !string.IsNullOrEmpty(Detail.PathData?.Option);
-            }).ContinueWith(_ => {
+
                 ExistsPath = FileUtility.Exists(Detail?.FullPath);
                 CanExecutePath = ExistsPath;
 
