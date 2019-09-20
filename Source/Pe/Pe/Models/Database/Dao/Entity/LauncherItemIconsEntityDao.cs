@@ -32,9 +32,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         #region function
 
-        public IReadOnlyList<byte[]>? SelectImageBinary(Guid launcherItemId, IconBasicSize iconScale)
+        public IReadOnlyList<byte[]>? SelectImageBinary(Guid launcherItemId, IconBox iconScale)
         {
-            var iconScaleTransfer = new EnumTransfer<IconBasicSize>();
+            var iconScaleTransfer = new EnumTransfer<IconBox>();
 
             var statement = StatementLoader.LoadStatementByCurrent();
             var param = new {
@@ -49,9 +49,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return null;
         }
 
-        public int InsertImageBinary(Guid launcherItemId, IconBasicSize iconScale, IEnumerable<byte> imageBinary, IDatabaseCommonStatus commonStatus)
+        public int InsertImageBinary(Guid launcherItemId, IconBox iconScale, IEnumerable<byte> imageBinary, IDatabaseCommonStatus commonStatus)
         {
-            var iconScaleTransfer = new EnumTransfer<IconBasicSize>();
+            var iconScaleTransfer = new EnumTransfer<IconBox>();
 
             var statement = StatementLoader.LoadStatementByCurrent();
             var binaryImageItems = imageBinary.GroupSplit(80 * 1024).ToArray();
@@ -70,9 +70,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return resultCount;
         }
 
-        public int DeleteImageBinary(Guid launcherItemId, IconBasicSize iconSize)
+        public int DeleteImageBinary(Guid launcherItemId, IconBox iconSize)
         {
-            var iconScaleTransfer = new EnumTransfer<IconBasicSize>();
+            var iconScaleTransfer = new EnumTransfer<IconBox>();
 
             var statement = StatementLoader.LoadStatementByCurrent();
             var param = new {

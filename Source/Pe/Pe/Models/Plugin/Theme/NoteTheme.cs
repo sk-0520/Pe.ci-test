@@ -212,7 +212,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Theme
             return viewBox;
         }
 
-        public DependencyObject GetIconImage(IconBasicSize iconBasicSize, bool isCompact, bool isLocked, IReadOnlyColorPair<Color> baseColor)
+        public DependencyObject GetIconImage(IconBox iconBasicSize, bool isCompact, bool isLocked, IReadOnlyColorPair<Color> baseColor)
         {
             var size = new Size((int)iconBasicSize, isCompact ? (int)iconBasicSize / 2 : (int)iconBasicSize);
             var box = CreateBox(baseColor.Foreground, baseColor.Background, size);

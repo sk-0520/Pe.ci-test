@@ -84,7 +84,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
         /// <summary>
         /// 表示アイコンサイズ。
         /// </summary>
-        public IconBasicSize IconScale { get; private set; }
+        public IconBox IconScale { get; private set; }
 
         /// <summary>
         /// アイコンの余白。

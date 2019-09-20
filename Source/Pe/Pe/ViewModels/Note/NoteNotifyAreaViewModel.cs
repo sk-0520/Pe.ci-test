@@ -75,7 +75,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         public string MenuHeader => Model.Title ?? "<からもじれつ>";
         public bool MenuHeaderHasAccessKey { get; } = false;
         public KeyGesture? MenuKeyGesture { get; }
-        public DependencyObject? MenuIcon => DispatcherWapper.Get(() => NoteTheme.GetIconImage(IconBasicSize.Small, Model.IsCompact, Model.IsLocked, ColorPair.Create(Model.ForegroundColor, Model.BackgroundColor)));
+        public DependencyObject? MenuIcon => DispatcherWapper.Get(() => NoteTheme.GetIconImage(IconBox.Small, Model.IsCompact, Model.IsLocked, ColorPair.Create(Model.ForegroundColor, Model.BackgroundColor)));
         public bool MenuHasIcon { get; } = true;
         public bool MenuIsEnabled { get; } = true;
         public bool MenuIsChecked { get; } = false;

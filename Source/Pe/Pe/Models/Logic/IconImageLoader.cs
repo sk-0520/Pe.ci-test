@@ -18,7 +18,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 {
     public abstract class IconImageLoaderBase : BindModelBase
     {
-        public IconImageLoaderBase(IconBasicSize iconBasicSize, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
+        public IconImageLoaderBase(IconBox iconBasicSize, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             IconBasicSize = iconBasicSize;
@@ -28,7 +28,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         #region property
 
-        public IconBasicSize IconBasicSize { get; }
+        public IconBox IconBasicSize { get; }
         protected IDispatcherWapper DispatcherWapper { get; }
 
         RunningStatus RunningStatusImpl { get; }
@@ -90,10 +90,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         public IconImageLoaderPack(IEnumerable<IconImageLoaderBase> iconImageLoaders)
         {
             var map = iconImageLoaders.ToDictionary(i => i.IconBasicSize, i => i);
-            Small = map[IconBasicSize.Small];
-            Normal = map[IconBasicSize.Normal];
-            Big = map[IconBasicSize.Big];
-            Large = map[IconBasicSize.Large];
+            Small = map[IconBox.Small];
+            Normal = map[IconBox.Normal];
+            Big = map[IconBox.Big];
+            Large = map[IconBox.Large];
         }
 
         #region property

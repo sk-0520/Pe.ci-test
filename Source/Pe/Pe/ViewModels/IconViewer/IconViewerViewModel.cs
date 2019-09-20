@@ -49,7 +49,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.IconViewer
             }
         }
 
-        public IconBasicSize IconScale => Model.IconBasicSize;
+        public IconBox IconScale => Model.IconBasicSize;
 
         #endregion
 

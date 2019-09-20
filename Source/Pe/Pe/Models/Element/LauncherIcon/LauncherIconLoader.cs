@@ -21,7 +21,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon
 {
     public class LauncherIconLoader : IconImageLoaderBase
     {
-        public LauncherIconLoader(Guid launcherItemId, IconBasicSize iconBasicSize, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
+        public LauncherIconLoader(Guid launcherItemId, IconBox iconBasicSize, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
             : base(iconBasicSize, dispatcherWapper, loggerFactory)
         {
             LauncherItemId = launcherItemId;

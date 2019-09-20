@@ -41,7 +41,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         LauncherToolbarsDisplayData ConvertFromDto(LauncherToolbarsDisplayRowDto dto)
         {
             var toolbarPositionTransfer = new EnumTransfer<AppDesktopToolbarPosition>();
-            var iconScaleTransfer = new EnumTransfer<IconBasicSize>();
+            var iconScaleTransfer = new EnumTransfer<IconBox>();
             var iconDirectionTransfer = new EnumTransfer<LauncherToolbarIconDirection>();
 
             var result = new LauncherToolbarsDisplayData() {
