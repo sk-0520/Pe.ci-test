@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <Platforms>x64;x86</Platforms>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsAsErrors />
+    <LangVersion>8.0</LangVersion>
+    <Nullable>enable</Nullable>
+    <RootNamespace>ContentTypeTextNet.Pe.Core</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.0.4" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Prism.Wpf" Version="7.2.0.1367" />
+    <PackageReference Include="System.Data.SQLite.Core" Version="1.0.111" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Pe.Bridge\Source\Pe.Bridge\Pe.Bridge.csproj" />
+    <ProjectReference Include="..\Pe.PInvoke\Pe.PInvoke.csproj" />
+  </ItemGroup>
+
+</Project>

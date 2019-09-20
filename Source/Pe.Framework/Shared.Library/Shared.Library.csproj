@@ -1,0 +1,208 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B022BBD8-05E8-4A43-B3ED-EA0C01624D86}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ContentTypeTextNet.Pe.Library.Shared.Library</RootNamespace>
+    <AssemblyName>Shared.Library</AssemblyName>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>$(SolutionDir)..\..\Output\$(Configuration)\$(Platform)\$(SolutionName)\lib</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>$(SolutionDir)..\..\Output\$(Configuration)\$(Platform)\$(SolutionName)\lib</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>$(SolutionDir)..\..\Output\$(Configuration)\$(Platform)\$(SolutionName)\lib</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>$(SolutionDir)..\..\Output\$(Configuration)\$(Platform)\$(SolutionName)\lib</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CommonServiceLocator, Version=2.0.4.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\CommonServiceLocator.2.0.4\lib\net47\CommonServiceLocator.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Dapper, Version=1.60.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dapper.1.60.6\lib\net451\Dapper.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="Prism, Version=7.1.0.431, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Core.7.1.0.431\lib\net45\Prism.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Prism.Wpf, Version=7.1.0.431, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Wpf.7.1.0.431\lib\net45\Prism.Wpf.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.SQLite, Version=1.0.110.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.Core.1.0.110.0\lib\net46\System.Data.SQLite.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Wpf.7.1.0.431\lib\net45\System.Windows.Interactivity.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Compatibility\Forms\CompatibleFormWindow.cs" />
+    <Compile Include="Compatibility\Forms\DrawingUtility.cs" />
+    <Compile Include="Compatibility\Forms\FolderBrowserDialog.cs" />
+    <Compile Include="Compatibility\Forms\IconWrapper.cs" />
+    <Compile Include="Compatibility\Forms\InputSender.cs" />
+    <Compile Include="Compatibility\Forms\KeyConvertUtility.cs" />
+    <Compile Include="Compatibility\Forms\Screen.cs" />
+    <Compile Include="Compatibility\Forms\SystemInformation.cs" />
+    <Compile Include="Compatibility\Windows\HandleUtility.cs" />
+    <Compile Include="Compatibility\Windows\IconDialog.cs" />
+    <Compile Include="Compatibility\Windows\IWindowsHandle.cs" />
+    <Compile Include="Compatibility\Windows\MouseUtility.cs" />
+    <Compile Include="Compatibility\Windows\PodStructUtility.cs" />
+    <Compile Include="Model\CachePool.cs" />
+    <Compile Include="Model\CastUtility.cs" />
+    <Compile Include="Model\Chunk.cs" />
+    <Compile Include="Model\Counter.cs" />
+    <Compile Include="Model\Database\DatabaseAccessObjectBase.cs" />
+    <Compile Include="Model\Database\DatabaseAccessor.cs" />
+    <Compile Include="Model\Database\DatabaseImplementation.cs" />
+    <Compile Include="Model\Database\DatabaseFactory.cs" />
+    <Compile Include="Model\Database\DatabaseStatementBuilder.cs" />
+    <Compile Include="Model\Database\DatabaseStatementLoader.cs" />
+    <Compile Include="Model\Database\DatabaseTransaction.cs" />
+    <Compile Include="Model\Database\EnumTransfer.cs" />
+    <Compile Include="Model\Database\Vender\Public\SQLite\SqliteFactory.cs" />
+    <Compile Include="Model\Database\Vender\Public\SQLite\SqliteImplementation.cs" />
+    <Compile Include="Model\Data\DataBase.cs" />
+    <Compile Include="Model\Data\TransferBase.cs" />
+    <Compile Include="Model\DispatcherWapper.cs" />
+    <Compile Include="Model\DragAndDrop.cs" />
+    <Compile Include="Model\ICommandExtensions.cs" />
+    <Compile Include="Model\BasicExtensions.cs" />
+    <Compile Include="Model\IFlushable.cs" />
+    <Compile Include="Model\LazyAction.cs" />
+    <Compile Include="Model\Notifications.cs" />
+    <Compile Include="Model\ObjectDumper.cs" />
+    <Compile Include="Model\OneTimeSetter.cs" />
+    <Compile Include="Model\PropertyChangedHooker.cs" />
+    <Compile Include="Model\RtfConverter.cs" />
+    <Compile Include="Model\RunningStatus.cs" />
+    <Compile Include="Model\TextConverter.cs" />
+    <Compile Include="Model\Timestamp.cs" />
+    <Compile Include="Model\DialogFilter.cs" />
+    <Compile Include="Model\EncodingUtility.cs" />
+    <Compile Include="Model\FileUtility.cs" />
+    <Compile Include="Model\FreezableUtility.cs" />
+    <Compile Include="Model\IconLoader.cs" />
+    <Compile Include="Model\IMakeBitmapSource.cs" />
+    <Compile Include="Model\Initializer.cs" />
+    <Compile Include="Model\Logging.cs" />
+    <Compile Include="Model\MediaUtility.cs" />
+    <Compile Include="Model\Model.cs" />
+    <Compile Include="Model\DiContainer.cs" />
+    <Compile Include="Model\EnumUtility.cs" />
+    <Compile Include="Model\KeepStream.cs" />
+    <Compile Include="Model\ObservableCollectionManagerBase.cs" />
+    <Compile Include="Model\PathUtility.cs" />
+    <Compile Include="Model\Pixel.cs" />
+    <Compile Include="Model\Range.cs" />
+    <Compile Include="Model\ReaderWriterLocker.cs" />
+    <Compile Include="Model\Result.cs" />
+    <Compile Include="Model\Serializer.cs" />
+    <Compile Include="Model\ShortcutFile.cs" />
+    <Compile Include="Model\UIUtility.cs" />
+    <Compile Include="Model\Unmanaged\ComWrapper.cs" />
+    <Compile Include="Model\Unmanaged\GdiWrapper.cs" />
+    <Compile Include="Model\Unmanaged\GlobalAllocModel.cs" />
+    <Compile Include="Model\Unmanaged\UnmanagedModelBase.cs" />
+    <Compile Include="Model\UriUtility.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\ViewModel.cs" />
+    <Compile Include="ViewModel\ModelViewModelObservableCollectionManager.cs" />
+    <Compile Include="View\Attached\DragAndDropBehavior.cs" />
+    <Compile Include="View\Converter\BooleanConverter.cs" />
+    <Compile Include="View\Converter\EnumToBooleanConverter.cs" />
+    <Compile Include="View\Converter\EscapeAccessKeyConverter.cs" />
+    <Compile Include="View\Converter\IconScaleToWidthConverter.cs" />
+    <Compile Include="View\Converter\IconScaleToHeightConverter.cs" />
+    <Compile Include="View\Converter\IsEmptyCollectionConverter.cs" />
+    <Compile Include="View\Converter\IsNotEmptyCollectionConverter.cs" />
+    <Compile Include="View\Converter\LogicalIsNotNullConverter.cs" />
+    <Compile Include="View\Converter\LogicalIsNullConverter.cs" />
+    <Compile Include="View\Converter\LogicalMultiAndConverte.cs" />
+    <Compile Include="View\Converter\LogicalMultiEqualConverter.cs" />
+    <Compile Include="View\Converter\LogicalMultiOrConverter.cs" />
+    <Compile Include="View\Converter\LogicalNotConverter.cs" />
+    <Compile Include="View\WindowExtendBase.cs" />
+    <Compile Include="View\ViewExtendBase.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PInvoke\PInvoke.csproj">
+      <Project>{13A7D6DF-6702-49CB-86F1-0980A3C1D6C6}</Project>
+      <Name>PInvoke</Name>
+      <Private>False</Private>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="..\Shared.Embedded\Shared.Embedded.projitems" Label="Shared" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\System.Data.SQLite.Core.1.0.110.0\build\net46\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.110.0\build\net46\System.Data.SQLite.Core.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>このプロジェクトは、このコンピューター上にない NuGet パッケージを参照しています。それらのパッケージをダウンロードするには、[NuGet パッケージの復元] を使用します。詳細については、http://go.microsoft.com/fwlink/?LinkID=322105 を参照してください。見つからないファイルは {0} です。</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\System.Data.SQLite.Core.1.0.110.0\build\net46\System.Data.SQLite.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.Data.SQLite.Core.1.0.110.0\build\net46\System.Data.SQLite.Core.targets'))" />
+  </Target>
+</Project>

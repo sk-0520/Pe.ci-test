@@ -1,0 +1,2295 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>PInvoke</name>
+    </assembly>
+    <members>
+        <member name="T:ContentTypeTextNet.Library.PInvoke.Windows.IMAGELISTDRAWPARAMS">
+            <summary>
+            http://pinvoke.net/default.aspx/Structures/IMAGELISTDRAWPARAMS.html
+            </summary>
+        </member>
+        <member name="T:ContentTypeTextNet.Library.PInvoke.Windows.IMAGEINFO">
+            <summary>
+            http://pinvoke.net/default.aspx/Structures/IMAGEINFO.html
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.ImageListDrawItemConstants.ILD_NORMAL">
+            <summary>
+            Draw item normally.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.ImageListDrawItemConstants.ILD_TRANSPARENT">
+            <summary>
+            Draw item transparently.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.ImageListDrawItemConstants.ILD_BLEND25">
+            <summary>
+            Draw item blended with 25% of the specified foreground colour
+            or the Highlight colour if no foreground colour specified.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.ImageListDrawItemConstants.ILD_SELECTED">
+            <summary>
+            Draw item blended with 50% of the specified foreground colour
+            or the Highlight colour if no foreground colour specified.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.ImageListDrawItemConstants.ILD_MASK">
+            <summary>
+            Draw the icon's mask
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.ImageListDrawItemConstants.ILD_IMAGE">
+            <summary>
+            Draw the icon image without using the mask
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.ImageListDrawItemConstants.ILD_ROP">
+            <summary>
+            Draw the icon using the ROP specified.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.ImageListDrawItemConstants.ILD_PRESERVEALPHA">
+            <summary>
+            Preserves the alpha channel in dest. XP only.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.ImageListDrawItemConstants.ILD_SCALE">
+            <summary>
+            Scale the image to cx, cy instead of clipping it.  XP only.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.ImageListDrawItemConstants.ILD_DPISCALE">
+            <summary>
+            Scale the image to the current DPI of the display. XP only.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.DBT.DBT_DEVICEARRIVAL">
+            <summary>
+            デバイスが使用可能
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.DBT.DBT_CONFIGCHANGECANCELED">
+            <summary>
+            設定変更要求キャンセル
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.DBT.DBT_CONFIGCHANGED">
+            <summary>
+            設定が変更された
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.DBT.DBT_CUSTOMEVENT">
+            <summary>
+            ドライバー定義のカスタムイベント
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.DBT.DBT_DEVICEQUERYREMOVE">
+            <summary>
+            デバイス停止要求
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.DBT.DBT_DEVICEQUERYREMOVEFAILED">
+            <summary>
+            デバイス停止要求失敗
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.DBT.DBT_DEVICEREMOVECOMPLETE">
+            <summary>
+            デバイスが停止
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.DBT.DBT_DEVICEREMOVEPENDING">
+            <summary>
+            デバイス停止中
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.DBT.DBT_DEVICETYPESPECIFIC">
+            <summary>
+            独自イベント発行
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.DBT.DBT_DEVNODES_CHANGED">
+            <summary>
+            デバイス状態変更
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.DBT.DBT_QUERYCHANGECONFIG">
+            <summary>
+            設定変更要求
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.DBT.DBT_USERDEFINED">
+            <summary>
+            なんだろう。ユーザー定義？
+            </summary>
+        </member>
+        <member name="T:ContentTypeTextNet.Library.PInvoke.Windows.NativeMethods">
+            <summary>
+            Description of MyClass.
+            </summary>
+        </member>
+        <member name="M:ContentTypeTextNet.Library.PInvoke.Windows.NativeMethods.DwmIsCompositionEnabled(System.Boolean@)">
+            <summary>
+            http://www.pinvoke.net/default.aspx/dwmNativeMethods.dwmiscompositionenabled
+            </summary>
+            <param name="enabled"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ContentTypeTextNet.Library.PInvoke.Windows.NativeMethods.DwmGetColorizationColor(System.UInt32@,System.Boolean@)">
+            <summary>
+            http://www.pinvoke.net/default.aspx/dwmNativeMethods.dwmgetcolorizationcolor
+            </summary>
+            <param name="ColorizationColor"></param>
+            <param name="ColorizationOpaqueBlend"></param>
+        </member>
+        <member name="M:ContentTypeTextNet.Library.PInvoke.Windows.NativeMethods.SHAppBarMessage(ContentTypeTextNet.Library.PInvoke.Windows.ABM,ContentTypeTextNet.Library.PInvoke.Windows.APPBARDATA@)">
+            <summary>
+            http://www.pinvoke.net/default.aspx/shell32/SHAppBarMessage.html
+            </summary>
+            <param name="dwMessage"></param>
+            <param name="pData"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ContentTypeTextNet.Library.PInvoke.Windows.NativeMethods.SHGetFileInfo(System.String,System.UInt32,ContentTypeTextNet.Library.PInvoke.Windows.SHFILEINFO@,System.UInt32,ContentTypeTextNet.Library.PInvoke.Windows.SHGFI)">
+            <summary>
+            http://pinvoke.net/default.aspx/shell32/SHGetFileInfo.html
+            </summary>
+            <param name="pszPath"></param>
+            <param name="dwFileAttributes"></param>
+            <param name="psfi"></param>
+            <param name="cbFileInfo"></param>
+            <param name="uFlags"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ContentTypeTextNet.Library.PInvoke.Windows.NativeMethods.SHGetImageList(System.Int32,System.Guid@,ContentTypeTextNet.Library.PInvoke.Windows.IImageList@)">
+            <summary>
+            http://pinvoke.net/default.aspx/shell32/SHGetImageList.html
+            </summary>
+            <param name="iImageList"></param>
+            <param name="riid"></param>
+            <param name="ppv"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ContentTypeTextNet.Library.PInvoke.Windows.NativeMethods.RegisterHotKey(System.IntPtr,System.Int32,ContentTypeTextNet.Library.PInvoke.Windows.MOD,System.Int32)">
+            <summary>
+            http://www.pinvoke.net/default.aspx/user32.registerhotkey
+            </summary>
+            <param name="hWnd"></param>
+            <param name="id"></param>
+            <param name="fsModifiers"></param>
+            <param name="vk"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ContentTypeTextNet.Library.PInvoke.Windows.NativeMethods.GetLastInputInfo(ContentTypeTextNet.Library.PInvoke.Windows.LASTINPUTINFO@)">
+            <summary>
+            最後に発生した入力イベントの時刻を取得します。
+            <para>これは、入力のアイドル状態を検出する場合に使うことができます。</para>
+            </summary>
+            <param name="plii">最後の入力イベントの時刻が入る、<see cref="T:ContentTypeTextNet.Library.PInvoke.Windows.LASTINPUTINFO"/> 構造体へのポインタを指定します。</param>
+            <returns>関数が成功すると、0 以外の値が返ります。関数が失敗すると、0 が返ります。</returns>
+        </member>
+        <member name="M:ContentTypeTextNet.Library.PInvoke.Windows.NativeMethods.GetTickCount">
+            <summary>
+            システムを起動した後の経過時間を、ミリ秒（ms）単位で取得します。この時間は、システムタイマの分解能による制限を受けます。システムタイマの分解能を取得するには、GetSystemTimeAdjustment 関数を使います。
+            </summary>
+            <returns>関数が成功すると、システムを起動した後の経過時間が、ミリ秒単位で返ります。</returns>
+        </member>
+        <member name="M:ContentTypeTextNet.Library.PInvoke.Windows.NativeMethods.BitBlt(System.IntPtr,System.Int32,System.Int32,System.Int32,System.Int32,System.IntPtr,System.Int32,System.Int32,ContentTypeTextNet.Library.PInvoke.Windows.ROP)">
+            <summary>
+               Performs a bit-block transfer of the color data corresponding to a
+               rectangle of pixels from the specified source device context into
+               a destination device context.
+            </summary>
+            <param name="hdc">Handle to the destination device context.</param>
+            <param name="nXDest">The leftmost x-coordinate of the destination rectangle (in pixels).</param>
+            <param name="nYDest">The topmost y-coordinate of the destination rectangle (in pixels).</param>
+            <param name="nWidth">The width of the source and destination rectangles (in pixels).</param>
+            <param name="nHeight">The height of the source and the destination rectangles (in pixels).</param>
+            <param name="hdcSrc">Handle to the source device context.</param>
+            <param name="nXSrc">The leftmost x-coordinate of the source rectangle (in pixels).</param>
+            <param name="nYSrc">The topmost y-coordinate of the source rectangle (in pixels).</param>
+            <param name="dwRop">A raster-operation code.</param>
+            <returns>
+               <c>true</c> if the operation succeedes, <c>false</c> otherwise. To get extended error information, call <see cref="M:System.Runtime.InteropServices.Marshal.GetLastWin32Error"/>.
+            </returns>
+        </member>
+        <member name="M:ContentTypeTextNet.Library.PInvoke.Windows.NativeMethods.SendMessage(System.IntPtr,ContentTypeTextNet.Library.PInvoke.Windows.WM,System.IntPtr,System.IntPtr)">
+            <summary>
+            http://www.pinvoke.net/default.aspx/user32.sendmessage
+            </summary>
+            <param name="hWnd"></param>
+            <param name="Msg"></param>
+            <param name="wParam"></param>
+            <param name="lParam"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ContentTypeTextNet.Library.PInvoke.Windows.NativeMethods.RegisterWindowMessage(System.String)">
+            <summary>
+            http://www.pinvoke.net/default.aspx/user32.registerwindowmessage
+            </summary>
+            <param name="lpString"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ContentTypeTextNet.Library.PInvoke.Windows.NativeMethods.DestroyIcon(System.IntPtr)">
+            <summary>
+            http://pinvoke.net/default.aspx/user32/DestroyIcon.html
+            </summary>
+            <param name="hIcon"></param>
+            <returns></returns>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.ABM.ABM_NEW">
+            <summary>
+            http://msdn.microsoft.com/en-us/library/windows/desktop/bb787951%28v=vs.85%29.aspx
+            </summary>
+        </member>
+        <member name="T:ContentTypeTextNet.Library.PInvoke.Windows.APPBARDATA">
+            <summary>
+            http://www.pinvoke.net/default.aspx/shell32/APPBARDATA%20.html
+            </summary>
+        </member>
+        <member name="T:ContentTypeTextNet.Library.PInvoke.Windows.SHGFI">
+            <summary>
+            http://pinvoke.net/default.aspx/Enums/FileInfoFlags.html
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SHCNE.SHCNE_ASSOCCHANGED">
+            <summary>
+            ファイルタイプの関連付けに変更された
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SHCNE.SHCNE_UPDATEDIR">
+            <summary>
+             既存のフォルダの内容が変化したが、(フォルダ名の変化はない)
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SHCNF.SHCNF_IDLIST">
+            <summary>
+             	dwItem1、dwItem2はアイテムIDリストのアドレス
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SHCNF.SHCNF_DWORD">
+            <summary>
+            dwItem1、dwItem2はDWORD値
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SHOP.SHOP_PRINTERNAME">
+            <summary>
+            lpObject points to a printer friendly name
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SHOP.SHOP_FILEPATH">
+            <summary>
+            lpObject points to a fully qualified path+file name
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SHOP.SHOP_VOLUMEGUID">
+            <summary>
+            lpObject points to a Volume GUID
+            </summary>
+        </member>
+        <member name="T:ContentTypeTextNet.Library.PInvoke.Windows.SLGP_FLAGS">
+             <summary>
+             IShellLink.GetPath fFlags: Flags that specify the type of path information to retrieve
+            
+             http://pinvoke.net/default.aspx/Enums/SLGP_FLAGS.html
+             </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SLGP_FLAGS.SLGP_SHORTPATH">
+            <summary>Retrieves the standard short (8.3 format) file name</summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SLGP_FLAGS.SLGP_UNCPRIORITY">
+            <summary>Retrieves the Universal Naming Convention (UNC) path name of the file</summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SLGP_FLAGS.SLGP_RAWPATH">
+            <summary>Retrieves the raw path name. A raw path is something that might not exist and may include environment variables that need to be expanded</summary>
+        </member>
+        <member name="T:ContentTypeTextNet.Library.PInvoke.Windows.SLR_FLAGS">
+             <summary>
+             IShellLink.Resolve fFlags
+            
+             http://www.pinvoke.net/default.aspx/Enums/SLR_FLAGS.html
+             </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SLR_FLAGS.SLR_NO_UI">
+            <summary>
+            Do not display a dialog box if the link cannot be resolved. When SLR_NO_UI is set,
+            the high-order word of fFlags can be set to a time-out value that specifies the
+            maximum amount of time to be spent resolving the link. The function returns if the
+            link cannot be resolved within the time-out duration. If the high-order word is set
+            to zero, the time-out duration will be set to the default value of 3,000 milliseconds
+            (3 seconds). To specify a value, set the high word of fFlags to the desired time-out
+            duration, in milliseconds.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SLR_FLAGS.SLR_ANY_MATCH">
+            <summary>Obsolete and no longer used</summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SLR_FLAGS.SLR_UPDATE">
+            <summary>If the link object has changed, update its path and list of identifiers.
+            If SLR_UPDATE is set, you do not need to call IPersistFile::IsDirty to determine
+            whether or not the link object has changed.</summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SLR_FLAGS.SLR_NOUPDATE">
+            <summary>Do not update the link information</summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SLR_FLAGS.SLR_NOSEARCH">
+            <summary>Do not execute the search heuristics</summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SLR_FLAGS.SLR_NOTRACK">
+            <summary>Do not use distributed link tracking</summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SLR_FLAGS.SLR_NOLINKINFO">
+            <summary>Disable distributed link tracking. By default, distributed link tracking tracks
+            removable media across multiple devices based on the volume name. It also uses the
+            Universal Naming Convention (UNC) path to track remote file systems whose drive letter
+            has changed. Setting SLR_NOLINKINFO disables both types of tracking.</summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SLR_FLAGS.SLR_INVOKE_MSI">
+            <summary>Call the Microsoft Windows Installer</summary>
+        </member>
+        <member name="T:ContentTypeTextNet.Library.PInvoke.Windows.IShellLink">
+             <summary>
+             The IShellLink interface allows Shell links to be created, modified, and resolved
+            
+             http://www.pinvoke.net/default.aspx/Interfaces/IShellLinkW.html
+             </summary>
+        </member>
+        <member name="M:ContentTypeTextNet.Library.PInvoke.Windows.IShellLink.GetPath(System.Text.StringBuilder,System.Int32,ContentTypeTextNet.Library.PInvoke.Windows.WIN32_FIND_DATA@,ContentTypeTextNet.Library.PInvoke.Windows.SLGP_FLAGS)">
+            <summary>Retrieves the path and file name of a Shell link object</summary>
+        </member>
+        <member name="M:ContentTypeTextNet.Library.PInvoke.Windows.IShellLink.GetIDList(System.IntPtr@)">
+            <summary>Retrieves the list of item identifiers for a Shell link object</summary>
+        </member>
+        <member name="M:ContentTypeTextNet.Library.PInvoke.Windows.IShellLink.SetIDList(System.IntPtr)">
+            <summary>Sets the pointer to an item identifier list (PIDL) for a Shell link object.</summary>
+        </member>
+        <member name="M:ContentTypeTextNet.Library.PInvoke.Windows.IShellLink.GetDescription(System.Text.StringBuilder,System.Int32)">
+            <summary>Retrieves the description string for a Shell link object</summary>
+        </member>
+        <member name="M:ContentTypeTextNet.Library.PInvoke.Windows.IShellLink.SetDescription(System.String)">
+            <summary>Sets the description for a Shell link object. The description can be any application-defined string</summary>
+        </member>
+        <member name="M:ContentTypeTextNet.Library.PInvoke.Windows.IShellLink.GetWorkingDirectory(System.Text.StringBuilder,System.Int32)">
+            <summary>Retrieves the name of the working directory for a Shell link object</summary>
+        </member>
+        <member name="M:ContentTypeTextNet.Library.PInvoke.Windows.IShellLink.SetWorkingDirectory(System.String)">
+            <summary>Sets the name of the working directory for a Shell link object</summary>
+        </member>
+        <member name="M:ContentTypeTextNet.Library.PInvoke.Windows.IShellLink.GetArguments(System.Text.StringBuilder,System.Int32)">
+            <summary>Retrieves the command-line arguments associated with a Shell link object</summary>
+        </member>
+        <member name="M:ContentTypeTextNet.Library.PInvoke.Windows.IShellLink.SetArguments(System.String)">
+            <summary>Sets the command-line arguments for a Shell link object</summary>
+        </member>
+        <member name="M:ContentTypeTextNet.Library.PInvoke.Windows.IShellLink.GetHotkey(System.Int16@)">
+            <summary>Retrieves the hot key for a Shell link object</summary>
+        </member>
+        <member name="M:ContentTypeTextNet.Library.PInvoke.Windows.IShellLink.SetHotkey(System.Int16)">
+            <summary>Sets a hot key for a Shell link object</summary>
+        </member>
+        <member name="M:ContentTypeTextNet.Library.PInvoke.Windows.IShellLink.GetShowCmd(System.Int32@)">
+            <summary>Retrieves the show command for a Shell link object</summary>
+        </member>
+        <member name="M:ContentTypeTextNet.Library.PInvoke.Windows.IShellLink.SetShowCmd(System.Int32)">
+            <summary>Sets the show command for a Shell link object. The show command sets the initial show state of the window.</summary>
+        </member>
+        <member name="M:ContentTypeTextNet.Library.PInvoke.Windows.IShellLink.GetIconLocation(System.Text.StringBuilder,System.Int32,System.Int32@)">
+            <summary>Retrieves the location (path and index) of the icon for a Shell link object</summary>
+        </member>
+        <member name="M:ContentTypeTextNet.Library.PInvoke.Windows.IShellLink.SetIconLocation(System.String,System.Int32)">
+            <summary>Sets the location (path and index) of the icon for a Shell link object</summary>
+        </member>
+        <member name="M:ContentTypeTextNet.Library.PInvoke.Windows.IShellLink.SetRelativePath(System.String,System.Int32)">
+            <summary>Sets the relative path to the Shell link object</summary>
+        </member>
+        <member name="M:ContentTypeTextNet.Library.PInvoke.Windows.IShellLink.Resolve(System.IntPtr,ContentTypeTextNet.Library.PInvoke.Windows.SLR_FLAGS)">
+            <summary>Attempts to find the target of a Shell link, even if it has been moved or renamed</summary>
+        </member>
+        <member name="M:ContentTypeTextNet.Library.PInvoke.Windows.IShellLink.SetPath(System.String)">
+            <summary>Sets the path and file name of a Shell link object</summary>
+        </member>
+        <member name="T:ContentTypeTextNet.Library.PInvoke.Windows.ITaskbarList3">
+             <summary>
+             Extends ITaskbarList2 by exposing methods that support the unified launching and switching taskbar button
+             functionality added in Windows 7. This functionality includes thumbnail representations and switch
+             targets based on individual tabs in a tabbed application, thumbnail toolbars, notification and
+             status overlays, and progress indicators.
+            
+             http://www.pinvoke.net/default.aspx/shell32/ITaskbarList3.html
+             </summary>
+        </member>
+        <member name="M:ContentTypeTextNet.Library.PInvoke.Windows.ITaskbarList3.HrInit">
+            <summary>
+            Initializes the taskbar list object. This method must be called before any other ITaskbarList methods can be called.
+            </summary>
+        </member>
+        <member name="M:ContentTypeTextNet.Library.PInvoke.Windows.ITaskbarList3.AddTab(System.IntPtr)">
+            <summary>
+            Adds an item to the taskbar.
+            </summary>
+            <param name="hWnd">A handle to the window to be added to the taskbar.</param>
+        </member>
+        <member name="M:ContentTypeTextNet.Library.PInvoke.Windows.ITaskbarList3.DeleteTab(System.IntPtr)">
+            <summary>
+            Deletes an item from the taskbar.
+            </summary>
+            <param name="hWnd">A handle to the window to be deleted from the taskbar.</param>
+        </member>
+        <member name="M:ContentTypeTextNet.Library.PInvoke.Windows.ITaskbarList3.ActivateTab(System.IntPtr)">
+            <summary>
+            Activates an item on the taskbar. The window is not actually activated; the window's item on the taskbar is merely displayed as active.
+            </summary>
+            <param name="hWnd">A handle to the window on the taskbar to be displayed as active.</param>
+        </member>
+        <member name="M:ContentTypeTextNet.Library.PInvoke.Windows.ITaskbarList3.SetActiveAlt(System.IntPtr)">
+            <summary>
+            Marks a taskbar item as active but does not visually activate it.
+            </summary>
+            <param name="hWnd">A handle to the window to be marked as active.</param>
+        </member>
+        <member name="M:ContentTypeTextNet.Library.PInvoke.Windows.ITaskbarList3.MarkFullscreenWindow(System.IntPtr,System.Int32)">
+            <summary>
+            Marks a window as full-screen
+            </summary>
+            <param name="hWnd"></param>
+            <param name="fFullscreen"></param>
+        </member>
+        <member name="M:ContentTypeTextNet.Library.PInvoke.Windows.ITaskbarList3.SetProgressValue(System.IntPtr,System.UInt64,System.UInt64)">
+            <summary>
+            Displays or updates a progress bar hosted in a taskbar button to show the specific percentage
+            completed of the full operation.
+            </summary>
+            <param name="hWnd">The handle of the window whose associated taskbar button is being used as
+            a progress indicator.</param>
+            <param name="ullCompleted">An application-defined value that indicates the proportion of the
+            operation that has been completed at the time the method is called.</param>
+            <param name="ullTotal">An application-defined value that specifies the value ullCompleted will
+            have when the operation is complete.</param>
+        </member>
+        <member name="M:ContentTypeTextNet.Library.PInvoke.Windows.ITaskbarList3.SetProgressState(System.IntPtr,ContentTypeTextNet.Library.PInvoke.Windows.TBPFLAG)">
+            <summary>
+            Sets the type and state of the progress indicator displayed on a taskbar button.
+            </summary>
+            <param name="hWnd">The handle of the window in which the progress of an operation is being
+            shown. This window's associated taskbar button will display the progress bar.</param>
+            <param name="tbpFlags">Flags that control the current state of the progress button. Specify
+            only one of the following flags; all states are mutually exclusive of all others.</param>
+        </member>
+        <member name="M:ContentTypeTextNet.Library.PInvoke.Windows.ITaskbarList3.RegisterTab(System.IntPtr,System.IntPtr)">
+            <summary>
+            Informs the taskbar that a new tab or document thumbnail has been provided for display in an
+            application's taskbar group flyout.
+            </summary>
+            <param name="hWndTab">Handle of the tab or document window. This value is required and cannot
+            be NULL.</param>
+            <param name="hWndMDI">Handle of the application's main window. This value tells the taskbar
+            which application's preview group to attach the new thumbnail to. This value is required and
+            cannot be NULL.</param>
+        </member>
+        <member name="M:ContentTypeTextNet.Library.PInvoke.Windows.ITaskbarList3.UnregisterTab(System.IntPtr)">
+            <summary>
+            Removes a thumbnail from an application's preview group when that tab or document is closed in the application.
+            </summary>
+            <param name="hWndTab">The handle of the tab window whose thumbnail is being removed. This is the same
+            value with which the thumbnail was registered as part the group through ITaskbarList3::RegisterTab.
+            This value is required and cannot be NULL.</param>
+        </member>
+        <member name="M:ContentTypeTextNet.Library.PInvoke.Windows.ITaskbarList3.SetTabOrder(System.IntPtr,System.IntPtr)">
+            <summary>
+            Inserts a new thumbnail into a tabbed-document interface (TDI) or multiple-document interface
+            (MDI) application's group flyout or moves an existing thumbnail to a new position in the
+            application's group.
+            </summary>
+            <param name="hWndTab">The handle of the tab window whose thumbnail is being placed. This value
+            is required, must already be registered through ITaskbarList3::RegisterTab, and cannot be NULL.</param>
+            <param name="hWndInsertBefore">The handle of the tab window whose thumbnail that hwndTab is
+            inserted to the left of. This handle must already be registered through ITaskbarList3::RegisterTab.
+            If this value is NULL, the new thumbnail is added to the end of the list.</param>
+        </member>
+        <member name="M:ContentTypeTextNet.Library.PInvoke.Windows.ITaskbarList3.SetTabActive(System.IntPtr,System.IntPtr,System.UInt32)">
+            <summary>
+            Informs the taskbar that a tab or document window has been made the active window.
+            </summary>
+            <param name="hWndTab">Handle of the active tab window. This handle must already be registered
+            through ITaskbarList3::RegisterTab. This value can be NULL if no tab is active.</param>
+            <param name="hWndMDI">Handle of the application's main window. This value tells the taskbar
+            which group the thumbnail is a member of. This value is required and cannot be NULL.</param>
+            <param name="tbatFlags">None, one, or both of the following values that specify a thumbnail
+            and peek view to use in place of a representation of the specific tab or document.</param>
+        </member>
+        <member name="M:ContentTypeTextNet.Library.PInvoke.Windows.ITaskbarList3.ThumbBarAddButtons(System.IntPtr,System.UInt32,ContentTypeTextNet.Library.PInvoke.Windows.THUMBBUTTON[])">
+            <summary>
+            Adds a thumbnail toolbar with a specified set of buttons to the thumbnail image of a window in a
+            taskbar button flyout.
+            </summary>
+            <param name="hWnd">The handle of the window whose thumbnail representation will receive the toolbar.
+            This handle must belong to the calling process.</param>
+            <param name="cButtons">The number of buttons defined in the array pointed to by pButton. The maximum
+            number of buttons allowed is 7.</param>
+            <param name="pButton">A pointer to an array of THUMBBUTTON structures. Each THUMBBUTTON defines an
+            individual button to be added to the toolbar. Buttons cannot be added or deleted later, so this must
+            be the full defined set. Buttons also cannot be reordered, so their order in the array, which is the
+            order in which they are displayed left to right, will be their permanent order.</param>
+        </member>
+        <member name="M:ContentTypeTextNet.Library.PInvoke.Windows.ITaskbarList3.ThumbBarSetImageList(System.IntPtr,System.IntPtr)">
+            <summary>
+            Specifies an image list that contains button images for a toolbar embedded in a thumbnail image of a
+            window in a taskbar button flyout.
+            </summary>
+            <param name="hWnd">The handle of the window whose thumbnail representation contains the toolbar to be
+            updated. This handle must belong to the calling process.</param>
+            <param name="himl">The handle of the image list that contains all button images to be used in the toolbar.</param>
+        </member>
+        <member name="M:ContentTypeTextNet.Library.PInvoke.Windows.ITaskbarList3.SetOverlayIcon(System.IntPtr,System.IntPtr,System.String)">
+            <summary>
+            Applies an overlay to a taskbar button to indicate application status or a notification to the user.
+            </summary>
+            <param name="hWnd">The handle of the window whose associated taskbar button receives the overlay.
+            This handle must belong to a calling process associated with the button's application and must be
+            a valid HWND or the call is ignored.</param>
+            <param name="hIcon">The handle of an icon to use as the overlay. This should be a small icon,
+            measuring 16x16 pixels at 96 dots per inch (dpi). If an overlay icon is already applied to the
+            taskbar button, that existing overlay is replaced.</param>
+            <param name="pszDescription">A pointer to a string that provides an alt text version of the
+            information conveyed by the overlay, for accessibility purposes.</param>
+        </member>
+        <member name="M:ContentTypeTextNet.Library.PInvoke.Windows.ITaskbarList3.SetThumbnailTooltip(System.IntPtr,System.String)">
+            <summary>
+            Specifies or updates the text of the tooltip that is displayed when the mouse pointer rests on an
+            individual preview thumbnail in a taskbar button flyout.
+            </summary>
+            <param name="hWnd">The handle to the window whose thumbnail displays the tooltip. This handle must
+            belong to the calling process.</param>
+            <param name="pszTip">The pointer to the text to be displayed in the tooltip. This value can be NULL,
+            in which case the title of the window specified by hwnd is used as the tooltip.</param>
+        </member>
+        <member name="M:ContentTypeTextNet.Library.PInvoke.Windows.ITaskbarList3.SetThumbnailClip(System.IntPtr,System.IntPtr)">
+            <summary>
+            Selects a portion of a window's client area to display as that window's thumbnail in the taskbar.
+            </summary>
+            <param name="hWnd">The handle to a window represented in the taskbar.</param>
+            <param name="prcClip">A pointer to a RECT structure that specifies a selection within the window's
+            client area, relative to the upper-left corner of that client area. To clear a clip that is already
+            in place and return to the default display of the thumbnail, set this parameter to NULL.</param>
+        </member>
+        <member name="T:ContentTypeTextNet.Library.PInvoke.Windows.DTT">
+            <summary>
+            http://www.pinvoke.net/default.aspx/Enums/DTT.html
+            </summary>
+        </member>
+        <member name="T:ContentTypeTextNet.Library.PInvoke.Windows.TEXTSHADOWTYPE">
+            <summary>
+            http://www.pinvoke.net/default.aspx/Enums/TEXTSHADOWTYPE.html
+            </summary>
+        </member>
+        <member name="T:ContentTypeTextNet.Library.PInvoke.Windows.DTTOPTS">
+            <summary>
+            http://www.pinvoke.net/default.aspx/Structures/DTTOPTS.html
+            </summary>
+        </member>
+        <member name="T:ContentTypeTextNet.Library.PInvoke.Windows.WIN32_FIND_DATA">
+             <summary>
+             The CharSet must match the CharSet of the corresponding PInvoke signature
+            
+             http://www.pinvoke.net/default.aspx/Structures/WIN32_FIND_DATA.html
+             </summary>
+        </member>
+        <member name="T:ContentTypeTextNet.Library.PInvoke.Windows.RECT">
+            <summary>
+            http://www.pinvoke.net/default.aspx/Structures/rect.html
+            </summary>
+        </member>
+        <member name="T:ContentTypeTextNet.Library.PInvoke.Windows.POINT">
+            <summary>
+            http://pinvoke.net/default.aspx/Structures.POINT
+            </summary>
+        </member>
+        <member name="T:ContentTypeTextNet.Library.PInvoke.Windows.WindowsUtility">
+            <summary>
+            Windows での低レベル処理用ユーティリティ。
+            </summary>
+        </member>
+        <member name="M:ContentTypeTextNet.Library.PInvoke.Windows.WindowsUtility.ConvertSCFromWParam(System.IntPtr)">
+            <summary>
+            <paramref name="wParam"/> を <see cref="T:ContentTypeTextNet.Library.PInvoke.Windows.SC"/> に変換。
+            </summary>
+            <param name="wParam"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ContentTypeTextNet.Library.PInvoke.Windows.WindowsUtility.ConvertWMSZFromWParam(System.IntPtr)">
+            <summary>
+            <paramref name="wParam"/> を <see cref="T:ContentTypeTextNet.Library.PInvoke.Windows.WMSZ"/> に変換。
+            </summary>
+            <param name="wParam"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ContentTypeTextNet.Library.PInvoke.Windows.WindowsUtility.ConvertBoolFromLParam(System.IntPtr)">
+            <summary>
+            <paramref name="lParam"/> を <see cref="T:System.Boolean"/> に変換。
+            </summary>
+            <param name="lParam"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ContentTypeTextNet.Library.PInvoke.Windows.WindowsUtility.ConvertRECTFromLParam(System.IntPtr)">
+            <summary>
+            <paramref name="lParam"/> を <see cref="T:ContentTypeTextNet.Library.PInvoke.Windows.RECT"/> に変換。
+            </summary>
+            <param name="lParam"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ContentTypeTextNet.Library.PInvoke.Windows.WindowsUtility.ConvertPOINTFromLParam(System.IntPtr)">
+            <summary>
+            <paramref name="lParam"/> を <see cref="T:ContentTypeTextNet.Library.PInvoke.Windows.POINT"/> に変換。
+            </summary>
+            <param name="lParam"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ContentTypeTextNet.Library.PInvoke.Windows.WindowsUtility.ConvertHTFromWParam(System.IntPtr)">
+            <summary>
+            <paramref name="wParam"/> を <see cref="T:ContentTypeTextNet.Library.PInvoke.Windows.HT"/> に変換。
+            </summary>
+            <param name="wParam"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ContentTypeTextNet.Library.PInvoke.Windows.WindowsUtility.ConvertHTFromLParam(System.IntPtr)">
+            <summary>
+            <paramref name="lParam"/> を <see cref="T:ContentTypeTextNet.Library.PInvoke.Windows.HT"/> に変換。
+            </summary>
+            <param name="lParam"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ContentTypeTextNet.Library.PInvoke.Windows.WindowsUtility.ConvertMODFromModifierKeys(System.Windows.Input.ModifierKeys)">
+            <summary>
+            <see cref="T:System.Windows.Input.ModifierKeys" /> を <see cref="T:ContentTypeTextNet.Library.PInvoke.Windows.WMSZ"/> に変換。
+            </summary>
+            <param name="mod"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ContentTypeTextNet.Library.PInvoke.Windows.WindowsUtility.ConvertModifierKeysFromMOD(ContentTypeTextNet.Library.PInvoke.Windows.MOD)">
+            <summary>
+            <see cref="T:ContentTypeTextNet.Library.PInvoke.Windows.MOD" /> を <see cref="T:System.Windows.Input.ModifierKeys"/> に変換。
+            </summary>
+            <param name="mod"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ContentTypeTextNet.Library.PInvoke.Windows.WindowsUtility.ConvertModifierKeysFromLParam(System.IntPtr)">
+            <summary>
+            <paramref name="lParam"/> を <see cref="T:System.Windows.Input.ModifierKeys"/> に変換。
+            </summary>
+            <param name="lParam"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ContentTypeTextNet.Library.PInvoke.Windows.WindowsUtility.ConvertKeyFromLParam(System.IntPtr)">
+            <summary>
+            <paramref name="lParam"/> を <see cref="T:System.Windows.Input.Key"/> に変換。
+            </summary>
+            <param name="lParam"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ContentTypeTextNet.Library.PInvoke.Windows.WindowsUtility.ShowNoActiveForeground(System.IntPtr)">
+            <summary>
+            アクティブ状態を変更せずに最前面に移動させる。
+            </summary>
+            <param name="hWnd"></param>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.DT.DT_CENTER">
+            <summary>
+            テキストを長方形領域内で横方向に中央揃えで表示します。
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.DT.DT_BOTTOM">
+            <summary>
+            長方形領域の下端にテキストを揃えます。DT_SINGLELINE と同時に指定しなければなりません。
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.DT.DT_CALCRECT">
+            <summary>
+            指定されたテキストを表示するために必要な長方形領域の幅と高さを調べます。複数行テキストの場合は、lpRect パラメータで指定された長方形領域の幅を使い、長方形領域の下端をテキストの最終行の下側の境界線にまで広げます。テキストを 1 行で表示する場合は、長方形領域の右端を行の最後の文字の右側の境界線に合うように変更します。どちらの場合も、DrawText 関数は、テキストの描画は行わず、整形されたテキストの高さを返します。
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.DT.DT_END_ELLIPSIS">
+            <summary>
+            文字列の最後の部分が長方形領域に納まり切らない場合、はみ出す部分が切り取られ、末尾に省略符号（...）が追加されます。文字列の最後ではない場所にある単語が長方形領域からはみ出す場合は、省略記号なしで切り取られます。
+            
+            DT_MODIFYSTRING フラグがセットされていない限り、文字列が変更されることはありません。
+            
+            DT_PATH_ELLIPSIS および DT_WORD_ELLIPSIS の説明も参照してください。
+            </summary>
+        </member>
+        <member name="T:ContentTypeTextNet.Library.PInvoke.Windows.ROP">
+            <summary>
+                Specifies a raster-operation code. These codes define how the color data for the
+                source rectangle is to be combined with the color data for the destination
+                rectangle to achieve the final color.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.ROP.SRCCOPY">
+            <summary>dest = source</summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.ROP.SRCPAINT">
+            <summary>dest = source OR dest</summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.ROP.SRCAND">
+            <summary>dest = source AND dest</summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.ROP.SRCINVERT">
+            <summary>dest = source XOR dest</summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.ROP.SRCERASE">
+            <summary>dest = source AND (NOT dest)</summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.ROP.NOTSRCCOPY">
+            <summary>dest = (NOT source)</summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.ROP.NOTSRCERASE">
+            <summary>dest = (NOT src) AND (NOT dest)</summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.ROP.MERGECOPY">
+            <summary>dest = (source AND pattern)</summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.ROP.MERGEPAINT">
+            <summary>dest = (NOT source) OR dest</summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.ROP.PATCOPY">
+            <summary>dest = pattern</summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.ROP.PATPAINT">
+            <summary>dest = DPSnoo</summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.ROP.PATINVERT">
+            <summary>dest = pattern XOR dest</summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.ROP.DSTINVERT">
+            <summary>dest = (NOT dest)</summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.ROP.BLACKNESS">
+            <summary>dest = BLACK</summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.ROP.WHITENESS">
+            <summary>dest = WHITE</summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.ROP.CAPTUREBLT">
+            <summary>
+            Capture window as seen on screen.  This includes layered windows
+            such as WPF windows with AllowsTransparency="true"
+            </summary>
+        </member>
+        <member name="T:ContentTypeTextNet.Library.PInvoke.Windows.BITMAPINFO">
+            <summary>
+            http://pinvoke.net/default.aspx/Structures/BITMAPINFO.html
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.BITMAPINFO.bmiHeader">
+            <summary>
+            A BITMAPINFOHEADER structure that contains information about the dimensions of color format.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.BITMAPINFO.bmiColors">
+            <summary>
+            An array of RGBQUAD. The elements of the array that make up the color table.
+            </summary>
+        </member>
+        <member name="T:ContentTypeTextNet.Library.PInvoke.Windows.SC">
+            <summary>
+            http://chokuto.ifdef.jp/urawaza/message/WM_SYSCOMMAND.html
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SC.SC_SIZE">
+            <summary>
+            ウィンドウサイズを変更します。
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SC.SC_MOVE">
+            <summary>
+            ウィンドウを移動します。
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SC.SC_MINIMIZE">
+            <summary>
+            ウィンドウを最小化します。
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SC.SC_MAXIMIZE">
+            <summary>
+            ウィンドウを最大化します。
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SC.SC_NEXTWINDOW">
+            <summary>
+            次のウィンドウに移動します。
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SC.SC_PREVWINDOW">
+            <summary>
+            前のウィンドウに移動します。
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SC.SC_CLOSE">
+            <summary>
+            ウィンドウをクローズします。
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SC.SC_VSCROLL">
+            <summary>
+            垂直にスクロールします。
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SC.SC_HSCROLL">
+            <summary>
+            水平にスクロールします。
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SC.SC_MOUSEMENU">
+            <summary>
+            マウスクリックによりメニューを取得します。
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SC.SC_KEYMENU">
+            <summary>
+            キー操作によりメニューを取得します。
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SC.SC_RESTORE">
+            <summary>
+            ウィンドウを元の位置とサイズに戻します。
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SC.SC_TASKLIST">
+            <summary>
+            スタートメニューを表示します。
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SC.SC_SCREENSAVE">
+            <summary>
+            system.ini の [boot] セクションで指定されたスクリーンセーバーを起動します。
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SC.SC_HOTKEY">
+            <summary>
+            アプリケーション指定のホットキーに関連付けられたウィンドウをアクティブにします。
+            lParam パラメータの下位ワードがアクティブになるウィンドウのハンドルを示します。
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SC.SC_DEFAULT">
+            <summary>
+            ユーザーがシステムメニューをダブルクリックしたことにより、デフォルトメニューアイテムを選択します。
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SC.SC_MONITORPOWER">
+            <summary>
+            ディスプレイを表示状態を設定します。このコマンドは、バッテリーを使用するコンピュータなどのパワーセブ機能をもつデバイスをサポートします。 lParam パラメータが 1 のときはディスプレイが省電力表示に移行することを示し、 2 のときはディスプレイ表示を停止しようとしていることを示します。
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SC.SC_CONTEXTHELP">
+            <summary>
+            マウスポインタをクエスチョンマークに変えます。この後にユーザーがダイアログボックス内のコントロールをクリックすると、コントロールは WM_HELP メッセージを受け取ります。
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SB.SB_HORZ">
+            <summary>
+            指定したウィンドウの標準的な水平スクロールバー内で、スクロールボックスの位置を設定します。hWnd パラメータで、ウィンドウのハンドルを指定しなければなりません。
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SB.SB_VERT">
+            <summary>
+            指定したウィンドウの標準的な垂直スクロールバー内で、スクロールボックスの位置を設定します。hWnd パラメータで、ウィンドウのハンドルを指定しなければなりません。
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SB.SB_CTL">
+            <summary>
+            スクロールバーコントロール内で、スクロールボックスの位置を設定します。hWnd パラメータで、スクロールバーコントロールのハンドルを指定しなければなりません。
+            </summary>
+        </member>
+        <member name="T:ContentTypeTextNet.Library.PInvoke.Windows.SW">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SW.SW_HIDE">
+            <summary>
+                   Hides the window and activates another window.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SW.SW_SHOWNORMAL">
+            <summary>
+                   Activates and displays a window. If the window is minimized or maximized, the system restores it to its original size and position. An application should specify this flag when displaying the window for the first time.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SW.SW_NORMAL">
+            <summary>
+                   Activates and displays a window. If the window is minimized or maximized, the system restores it to its original size and position. An application should specify this flag when displaying the window for the first time.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SW.SW_SHOWMINIMIZED">
+            <summary>
+                   Activates the window and displays it as a minimized window.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SW.SW_SHOWMAXIMIZED">
+            <summary>
+                   Activates the window and displays it as a maximized window.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SW.SW_MAXIMIZE">
+            <summary>
+                   Maximizes the specified window.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SW.SW_SHOWNOACTIVATE">
+            <summary>
+                   Displays a window in its most recent size and position. This value is similar to <see cref="F:ContentTypeTextNet.Library.PInvoke.Windows.SW.SW_SHOWNORMAL"/>, except the window is not activated.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SW.SW_SHOW">
+            <summary>
+                   Activates the window and displays it in its current size and position.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SW.SW_MINIMIZE">
+            <summary>
+                   Minimizes the specified window and activates the next top-level window in the z-order.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SW.SW_SHOWMINNOACTIVE">
+            <summary>
+                   Displays the window as a minimized window. This value is similar to <see cref="F:ContentTypeTextNet.Library.PInvoke.Windows.SW.SW_SHOWMINIMIZED"/>, except the window is not activated.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SW.SW_SHOWNA">
+            <summary>
+                   Displays the window in its current size and position. This value is similar to <see cref="F:ContentTypeTextNet.Library.PInvoke.Windows.SW.SW_SHOW"/>, except the window is not activated.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SW.SW_RESTORE">
+            <summary>
+                   Activates and displays the window. If the window is minimized or maximized, the system restores it to its original size and position. An application should specify this flag when restoring a minimized window.
+            </summary>
+        </member>
+        <member name="T:ContentTypeTextNet.Library.PInvoke.Windows.SMTO">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="T:ContentTypeTextNet.Library.PInvoke.Windows.SPI">
+            <summary>
+            SPI_ System-wide parameter - Used in SystemParametersInfo function
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETBEEP">
+            <summary>
+            Determines whether the warning beeper is on.
+            The pvParam parameter must point to a BOOL variable that receives TRUE if the beeper is on, or FALSE if it is off.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETBEEP">
+            <summary>
+            Turns the warning beeper on or off. The uiParam parameter specifies TRUE for on, or FALSE for off.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETMOUSE">
+            <summary>
+            Retrieves the two mouse threshold values and the mouse speed.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETMOUSE">
+            <summary>
+            Sets the two mouse threshold values and the mouse speed.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETBORDER">
+            <summary>
+            Retrieves the border multiplier factor that determines the width of a window's sizing border.
+            The pvParam parameter must point to an integer variable that receives this value.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETBORDER">
+            <summary>
+            Sets the border multiplier factor that determines the width of a window's sizing border.
+            The uiParam parameter specifies the new value.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETKEYBOARDSPEED">
+            <summary>
+            Retrieves the keyboard repeat-speed setting, which is a value in the range from 0 (approximately 2.5 repetitions per second)
+            through 31 (approximately 30 repetitions per second). The actual repeat rates are hardware-dependent and may vary from
+            a linear scale by as much as 20%. The pvParam parameter must point to a DWORD variable that receives the setting
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETKEYBOARDSPEED">
+            <summary>
+            Sets the keyboard repeat-speed setting. The uiParam parameter must specify a value in the range from 0
+            (approximately 2.5 repetitions per second) through 31 (approximately 30 repetitions per second).
+            The actual repeat rates are hardware-dependent and may vary from a linear scale by as much as 20%.
+            If uiParam is greater than 31, the parameter is set to 31.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_LANGDRIVER">
+            <summary>
+            Not implemented.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_ICONHORIZONTALSPACING">
+            <summary>
+            Sets or retrieves the width, in pixels, of an icon cell. The system uses this rectangle to arrange icons in large icon view.
+            To set this value, set uiParam to the new value and set pvParam to null. You cannot set this value to less than SM_CXICON.
+            To retrieve this value, pvParam must point to an integer that receives the current value.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETSCREENSAVETIMEOUT">
+            <summary>
+            Retrieves the screen saver time-out value, in seconds. The pvParam parameter must point to an integer variable that receives the value.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETSCREENSAVETIMEOUT">
+            <summary>
+            Sets the screen saver time-out value to the value of the uiParam parameter. This value is the amount of time, in seconds,
+            that the system must be idle before the screen saver activates.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETSCREENSAVEACTIVE">
+            <summary>
+            Determines whether screen saving is enabled. The pvParam parameter must point to a bool variable that receives TRUE
+            if screen saving is enabled, or FALSE otherwise.
+            Does not work for Windows 7: http://msdn.microsoft.com/en-us/library/windows/desktop/ms724947(v=vs.85).aspx
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETSCREENSAVEACTIVE">
+            <summary>
+            Sets the state of the screen saver. The uiParam parameter specifies TRUE to activate screen saving, or FALSE to deactivate it.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETGRIDGRANULARITY">
+            <summary>
+            Retrieves the current granularity value of the desktop sizing grid. The pvParam parameter must point to an integer variable
+            that receives the granularity.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETGRIDGRANULARITY">
+            <summary>
+            Sets the granularity of the desktop sizing grid to the value of the uiParam parameter.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETDESKWALLPAPER">
+            <summary>
+            Sets the desktop wallpaper. The value of the pvParam parameter determines the new wallpaper. To specify a wallpaper bitmap,
+            set pvParam to point to a null-terminated string containing the name of a bitmap file. Setting pvParam to "" removes the wallpaper.
+            Setting pvParam to SETWALLPAPER_DEFAULT or null reverts to the default wallpaper.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETDESKPATTERN">
+            <summary>
+            Sets the current desktop pattern by causing Windows to read the Pattern= setting from the WIN.INI file.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETKEYBOARDDELAY">
+            <summary>
+            Retrieves the keyboard repeat-delay setting, which is a value in the range from 0 (approximately 250 ms delay) through 3
+            (approximately 1 second delay). The actual delay associated with each value may vary depending on the hardware. The pvParam parameter must point to an integer variable that receives the setting.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETKEYBOARDDELAY">
+            <summary>
+            Sets the keyboard repeat-delay setting. The uiParam parameter must specify 0, 1, 2, or 3, where zero sets the shortest delay
+            (approximately 250 ms) and 3 sets the longest delay (approximately 1 second). The actual delay associated with each value may
+            vary depending on the hardware.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_ICONVERTICALSPACING">
+            <summary>
+            Sets or retrieves the height, in pixels, of an icon cell.
+            To set this value, set uiParam to the new value and set pvParam to null. You cannot set this value to less than SM_CYICON.
+            To retrieve this value, pvParam must point to an integer that receives the current value.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETICONTITLEWRAP">
+            <summary>
+            Determines whether icon-title wrapping is enabled. The pvParam parameter must point to a bool variable that receives TRUE
+            if enabled, or FALSE otherwise.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETICONTITLEWRAP">
+            <summary>
+            Turns icon-title wrapping on or off. The uiParam parameter specifies TRUE for on, or FALSE for off.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETMENUDROPALIGNMENT">
+            <summary>
+            Determines whether pop-up menus are left-aligned or right-aligned, relative to the corresponding menu-bar item.
+            The pvParam parameter must point to a bool variable that receives TRUE if left-aligned, or FALSE otherwise.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETMENUDROPALIGNMENT">
+            <summary>
+            Sets the alignment value of pop-up menus. The uiParam parameter specifies TRUE for right alignment, or FALSE for left alignment.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETDOUBLECLKWIDTH">
+            <summary>
+            Sets the width of the double-click rectangle to the value of the uiParam parameter.
+            The double-click rectangle is the rectangle within which the second click of a double-click must fall for it to be registered
+            as a double-click.
+            To retrieve the width of the double-click rectangle, call GetSystemMetrics with the SM_CXDOUBLECLK flag.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETDOUBLECLKHEIGHT">
+            <summary>
+            Sets the height of the double-click rectangle to the value of the uiParam parameter.
+            The double-click rectangle is the rectangle within which the second click of a double-click must fall for it to be registered
+            as a double-click.
+            To retrieve the height of the double-click rectangle, call GetSystemMetrics with the SM_CYDOUBLECLK flag.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETICONTITLELOGFONT">
+            <summary>
+            Retrieves the logical font information for the current icon-title font. The uiParam parameter specifies the size of a LOGFONT structure,
+            and the pvParam parameter must point to the LOGFONT structure to fill in.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETDOUBLECLICKTIME">
+            <summary>
+            Sets the double-click time for the mouse to the value of the uiParam parameter. The double-click time is the maximum number
+            of milliseconds that can occur between the first and second clicks of a double-click. You can also call the SetDoubleClickTime
+            function to set the double-click time. To get the current double-click time, call the GetDoubleClickTime function.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETMOUSEBUTTONSWAP">
+            <summary>
+            Swaps or restores the meaning of the left and right mouse buttons. The uiParam parameter specifies TRUE to swap the meanings
+            of the buttons, or FALSE to restore their original meanings.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETICONTITLELOGFONT">
+            <summary>
+            Sets the font that is used for icon titles. The uiParam parameter specifies the size of a LOGFONT structure,
+            and the pvParam parameter must point to a LOGFONT structure.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETFASTTASKSWITCH">
+            <summary>
+            This flag is obsolete. Previous versions of the system use this flag to determine whether ALT+TAB fast task switching is enabled.
+            For Windows 95, Windows 98, and Windows NT version 4.0 and later, fast task switching is always enabled.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETFASTTASKSWITCH">
+            <summary>
+            This flag is obsolete. Previous versions of the system use this flag to enable or disable ALT+TAB fast task switching.
+            For Windows 95, Windows 98, and Windows NT version 4.0 and later, fast task switching is always enabled.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETDRAGFULLWINDOWS">
+            <summary>
+            Sets dragging of full windows either on or off. The uiParam parameter specifies TRUE for on, or FALSE for off.
+            Windows 95:  This flag is supported only if Windows Plus! is installed. See SPI_GETWINDOWSEXTENSION.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETDRAGFULLWINDOWS">
+            <summary>
+            Determines whether dragging of full windows is enabled. The pvParam parameter must point to a BOOL variable that receives TRUE
+            if enabled, or FALSE otherwise.
+            Windows 95:  This flag is supported only if Windows Plus! is installed. See SPI_GETWINDOWSEXTENSION.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETNONCLIENTMETRICS">
+            <summary>
+            Retrieves the metrics associated with the nonclient area of nonminimized windows. The pvParam parameter must point
+            to a NONCLIENTMETRICS structure that receives the information. Set the cbSize member of this structure and the uiParam parameter
+            to sizeof(NONCLIENTMETRICS).
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETNONCLIENTMETRICS">
+            <summary>
+            Sets the metrics associated with the nonclient area of nonminimized windows. The pvParam parameter must point
+            to a NONCLIENTMETRICS structure that contains the new parameters. Set the cbSize member of this structure
+            and the uiParam parameter to sizeof(NONCLIENTMETRICS). Also, the lfHeight member of the LOGFONT structure must be a negative value.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETMINIMIZEDMETRICS">
+            <summary>
+            Retrieves the metrics associated with minimized windows. The pvParam parameter must point to a MINIMIZEDMETRICS structure
+            that receives the information. Set the cbSize member of this structure and the uiParam parameter to sizeof(MINIMIZEDMETRICS).
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETMINIMIZEDMETRICS">
+            <summary>
+            Sets the metrics associated with minimized windows. The pvParam parameter must point to a MINIMIZEDMETRICS structure
+            that contains the new parameters. Set the cbSize member of this structure and the uiParam parameter to sizeof(MINIMIZEDMETRICS).
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETICONMETRICS">
+            <summary>
+            Retrieves the metrics associated with icons. The pvParam parameter must point to an ICONMETRICS structure that receives
+            the information. Set the cbSize member of this structure and the uiParam parameter to sizeof(ICONMETRICS).
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETICONMETRICS">
+            <summary>
+            Sets the metrics associated with icons. The pvParam parameter must point to an ICONMETRICS structure that contains
+            the new parameters. Set the cbSize member of this structure and the uiParam parameter to sizeof(ICONMETRICS).
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETWORKAREA">
+            <summary>
+            Sets the size of the work area. The work area is the portion of the screen not obscured by the system taskbar
+            or by application desktop toolbars. The pvParam parameter is a pointer to a RECT structure that specifies the new work area rectangle,
+            expressed in virtual screen coordinates. In a system with multiple display monitors, the function sets the work area
+            of the monitor that contains the specified rectangle.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETWORKAREA">
+            <summary>
+            Retrieves the size of the work area on the primary display monitor. The work area is the portion of the screen not obscured
+            by the system taskbar or by application desktop toolbars. The pvParam parameter must point to a RECT structure that receives
+            the coordinates of the work area, expressed in virtual screen coordinates.
+            To get the work area of a monitor other than the primary display monitor, call the GetMonitorInfo function.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETPENWINDOWS">
+            <summary>
+            Windows Me/98/95:  Pen windows is being loaded or unloaded. The uiParam parameter is TRUE when loading and FALSE
+            when unloading pen windows. The pvParam parameter is null.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETHIGHCONTRAST">
+            <summary>
+            Retrieves information about the HighContrast accessibility feature. The pvParam parameter must point to a HIGHCONTRAST structure
+            that receives the information. Set the cbSize member of this structure and the uiParam parameter to sizeof(HIGHCONTRAST).
+            For a general discussion, see remarks.
+            Windows NT:  This value is not supported.
+            </summary>
+            <remarks>
+            There is a difference between the High Contrast color scheme and the High Contrast Mode. The High Contrast color scheme changes
+            the system colors to colors that have obvious contrast; you switch to this color scheme by using the Display Options in the control panel.
+            The High Contrast Mode, which uses SPI_GETHIGHCONTRAST and SPI_SETHIGHCONTRAST, advises applications to modify their appearance
+            for visually-impaired users. It involves such things as audible warning to users and customized color scheme
+            (using the Accessibility Options in the control panel). For more information, see HIGHCONTRAST on MSDN.
+            For more information on general accessibility features, see Accessibility on MSDN.
+            </remarks>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETHIGHCONTRAST">
+            <summary>
+            Sets the parameters of the HighContrast accessibility feature. The pvParam parameter must point to a HIGHCONTRAST structure
+            that contains the new parameters. Set the cbSize member of this structure and the uiParam parameter to sizeof(HIGHCONTRAST).
+            Windows NT:  This value is not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETKEYBOARDPREF">
+            <summary>
+            Determines whether the user relies on the keyboard instead of the mouse, and wants applications to display keyboard interfaces
+            that would otherwise be hidden. The pvParam parameter must point to a BOOL variable that receives TRUE
+            if the user relies on the keyboard; or FALSE otherwise.
+            Windows NT:  This value is not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETKEYBOARDPREF">
+            <summary>
+            Sets the keyboard preference. The uiParam parameter specifies TRUE if the user relies on the keyboard instead of the mouse,
+            and wants applications to display keyboard interfaces that would otherwise be hidden; uiParam is FALSE otherwise.
+            Windows NT:  This value is not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETSCREENREADER">
+            <summary>
+            Determines whether a screen reviewer utility is running. A screen reviewer utility directs textual information to an output device,
+            such as a speech synthesizer or Braille display. When this flag is set, an application should provide textual information
+            in situations where it would otherwise present the information graphically.
+            The pvParam parameter is a pointer to a BOOL variable that receives TRUE if a screen reviewer utility is running, or FALSE otherwise.
+            Windows NT:  This value is not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETSCREENREADER">
+            <summary>
+            Determines whether a screen review utility is running. The uiParam parameter specifies TRUE for on, or FALSE for off.
+            Windows NT:  This value is not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETANIMATION">
+            <summary>
+            Retrieves the animation effects associated with user actions. The pvParam parameter must point to an ANIMATIONINFO structure
+            that receives the information. Set the cbSize member of this structure and the uiParam parameter to sizeof(ANIMATIONINFO).
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETANIMATION">
+            <summary>
+            Sets the animation effects associated with user actions. The pvParam parameter must point to an ANIMATIONINFO structure
+            that contains the new parameters. Set the cbSize member of this structure and the uiParam parameter to sizeof(ANIMATIONINFO).
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETFONTSMOOTHING">
+            <summary>
+            Determines whether the font smoothing feature is enabled. This feature uses font antialiasing to make font curves appear smoother
+            by painting pixels at different gray levels.
+            The pvParam parameter must point to a BOOL variable that receives TRUE if the feature is enabled, or FALSE if it is not.
+            Windows 95:  This flag is supported only if Windows Plus! is installed. See SPI_GETWINDOWSEXTENSION.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETFONTSMOOTHING">
+            <summary>
+            Enables or disables the font smoothing feature, which uses font antialiasing to make font curves appear smoother
+            by painting pixels at different gray levels.
+            To enable the feature, set the uiParam parameter to TRUE. To disable the feature, set uiParam to FALSE.
+            Windows 95:  This flag is supported only if Windows Plus! is installed. See SPI_GETWINDOWSEXTENSION.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETDRAGWIDTH">
+            <summary>
+            Sets the width, in pixels, of the rectangle used to detect the start of a drag operation. Set uiParam to the new value.
+            To retrieve the drag width, call GetSystemMetrics with the SM_CXDRAG flag.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETDRAGHEIGHT">
+            <summary>
+            Sets the height, in pixels, of the rectangle used to detect the start of a drag operation. Set uiParam to the new value.
+            To retrieve the drag height, call GetSystemMetrics with the SM_CYDRAG flag.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETHANDHELD">
+            <summary>
+            Used internally; applications should not use this value.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETLOWPOWERTIMEOUT">
+            <summary>
+            Retrieves the time-out value for the low-power phase of screen saving. The pvParam parameter must point to an integer variable
+            that receives the value. This flag is supported for 32-bit applications only.
+            Windows NT, Windows Me/98:  This flag is supported for 16-bit and 32-bit applications.
+            Windows 95:  This flag is supported for 16-bit applications only.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETPOWEROFFTIMEOUT">
+            <summary>
+            Retrieves the time-out value for the power-off phase of screen saving. The pvParam parameter must point to an integer variable
+            that receives the value. This flag is supported for 32-bit applications only.
+            Windows NT, Windows Me/98:  This flag is supported for 16-bit and 32-bit applications.
+            Windows 95:  This flag is supported for 16-bit applications only.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETLOWPOWERTIMEOUT">
+            <summary>
+            Sets the time-out value, in seconds, for the low-power phase of screen saving. The uiParam parameter specifies the new value.
+            The pvParam parameter must be null. This flag is supported for 32-bit applications only.
+            Windows NT, Windows Me/98:  This flag is supported for 16-bit and 32-bit applications.
+            Windows 95:  This flag is supported for 16-bit applications only.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETPOWEROFFTIMEOUT">
+            <summary>
+            Sets the time-out value, in seconds, for the power-off phase of screen saving. The uiParam parameter specifies the new value.
+            The pvParam parameter must be null. This flag is supported for 32-bit applications only.
+            Windows NT, Windows Me/98:  This flag is supported for 16-bit and 32-bit applications.
+            Windows 95:  This flag is supported for 16-bit applications only.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETLOWPOWERACTIVE">
+            <summary>
+            Determines whether the low-power phase of screen saving is enabled. The pvParam parameter must point to a BOOL variable
+            that receives TRUE if enabled, or FALSE if disabled. This flag is supported for 32-bit applications only.
+            Windows NT, Windows Me/98:  This flag is supported for 16-bit and 32-bit applications.
+            Windows 95:  This flag is supported for 16-bit applications only.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETPOWEROFFACTIVE">
+            <summary>
+            Determines whether the power-off phase of screen saving is enabled. The pvParam parameter must point to a BOOL variable
+            that receives TRUE if enabled, or FALSE if disabled. This flag is supported for 32-bit applications only.
+            Windows NT, Windows Me/98:  This flag is supported for 16-bit and 32-bit applications.
+            Windows 95:  This flag is supported for 16-bit applications only.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETLOWPOWERACTIVE">
+            <summary>
+            Activates or deactivates the low-power phase of screen saving. Set uiParam to 1 to activate, or zero to deactivate.
+            The pvParam parameter must be null. This flag is supported for 32-bit applications only.
+            Windows NT, Windows Me/98:  This flag is supported for 16-bit and 32-bit applications.
+            Windows 95:  This flag is supported for 16-bit applications only.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETPOWEROFFACTIVE">
+            <summary>
+            Activates or deactivates the power-off phase of screen saving. Set uiParam to 1 to activate, or zero to deactivate.
+            The pvParam parameter must be null. This flag is supported for 32-bit applications only.
+            Windows NT, Windows Me/98:  This flag is supported for 16-bit and 32-bit applications.
+            Windows 95:  This flag is supported for 16-bit applications only.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETCURSORS">
+            <summary>
+            Reloads the system cursors. Set the uiParam parameter to zero and the pvParam parameter to null.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETICONS">
+            <summary>
+            Reloads the system icons. Set the uiParam parameter to zero and the pvParam parameter to null.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETDEFAULTINPUTLANG">
+            <summary>
+            Retrieves the input locale identifier for the system default input language. The pvParam parameter must point
+            to an HKL variable that receives this value. For more information, see Languages, Locales, and Keyboard Layouts on MSDN.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETDEFAULTINPUTLANG">
+            <summary>
+            Sets the default input language for the system shell and applications. The specified language must be displayable
+            using the current system character set. The pvParam parameter must point to an HKL variable that contains
+            the input locale identifier for the default language. For more information, see Languages, Locales, and Keyboard Layouts on MSDN.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETLANGTOGGLE">
+            <summary>
+            Sets the hot key set for switching between input languages. The uiParam and pvParam parameters are not used.
+            The value sets the shortcut keys in the keyboard property sheets by reading the registry again. The registry must be set before this flag is used. the path in the registry is \HKEY_CURRENT_USER\keyboard layout\toggle. Valid values are "1" = ALT+SHIFT, "2" = CTRL+SHIFT, and "3" = none.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETWINDOWSEXTENSION">
+            <summary>
+            Windows 95:  Determines whether the Windows extension, Windows Plus!, is installed. Set the uiParam parameter to 1.
+            The pvParam parameter is not used. The function returns TRUE if the extension is installed, or FALSE if it is not.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETMOUSETRAILS">
+            <summary>
+            Enables or disables the Mouse Trails feature, which improves the visibility of mouse cursor movements by briefly showing
+            a trail of cursors and quickly erasing them.
+            To disable the feature, set the uiParam parameter to zero or 1. To enable the feature, set uiParam to a value greater than 1
+            to indicate the number of cursors drawn in the trail.
+            Windows 2000/NT:  This value is not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETMOUSETRAILS">
+            <summary>
+            Determines whether the Mouse Trails feature is enabled. This feature improves the visibility of mouse cursor movements
+            by briefly showing a trail of cursors and quickly erasing them.
+            The pvParam parameter must point to an integer variable that receives a value. If the value is zero or 1, the feature is disabled.
+            If the value is greater than 1, the feature is enabled and the value indicates the number of cursors drawn in the trail.
+            The uiParam parameter is not used.
+            Windows 2000/NT:  This value is not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETSCREENSAVERRUNNING">
+            <summary>
+            Windows Me/98:  Used internally; applications should not use this flag.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SCREENSAVERRUNNING">
+            <summary>
+            Same as SPI_SETSCREENSAVERRUNNING.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETFILTERKEYS">
+            <summary>
+            Retrieves information about the FilterKeys accessibility feature. The pvParam parameter must point to a FILTERKEYS structure
+            that receives the information. Set the cbSize member of this structure and the uiParam parameter to sizeof(FILTERKEYS).
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETFILTERKEYS">
+            <summary>
+            Sets the parameters of the FilterKeys accessibility feature. The pvParam parameter must point to a FILTERKEYS structure
+            that contains the new parameters. Set the cbSize member of this structure and the uiParam parameter to sizeof(FILTERKEYS).
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETTOGGLEKEYS">
+            <summary>
+            Retrieves information about the ToggleKeys accessibility feature. The pvParam parameter must point to a TOGGLEKEYS structure
+            that receives the information. Set the cbSize member of this structure and the uiParam parameter to sizeof(TOGGLEKEYS).
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETTOGGLEKEYS">
+            <summary>
+            Sets the parameters of the ToggleKeys accessibility feature. The pvParam parameter must point to a TOGGLEKEYS structure
+            that contains the new parameters. Set the cbSize member of this structure and the uiParam parameter to sizeof(TOGGLEKEYS).
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETMOUSEKEYS">
+            <summary>
+            Retrieves information about the MouseKeys accessibility feature. The pvParam parameter must point to a MOUSEKEYS structure
+            that receives the information. Set the cbSize member of this structure and the uiParam parameter to sizeof(MOUSEKEYS).
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETMOUSEKEYS">
+            <summary>
+            Sets the parameters of the MouseKeys accessibility feature. The pvParam parameter must point to a MOUSEKEYS structure
+            that contains the new parameters. Set the cbSize member of this structure and the uiParam parameter to sizeof(MOUSEKEYS).
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETSHOWSOUNDS">
+            <summary>
+            Determines whether the Show Sounds accessibility flag is on or off. If it is on, the user requires an application
+            to present information visually in situations where it would otherwise present the information only in audible form.
+            The pvParam parameter must point to a BOOL variable that receives TRUE if the feature is on, or FALSE if it is off.
+            Using this value is equivalent to calling GetSystemMetrics (SM_SHOWSOUNDS). That is the recommended call.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETSHOWSOUNDS">
+            <summary>
+            Sets the parameters of the SoundSentry accessibility feature. The pvParam parameter must point to a SOUNDSENTRY structure
+            that contains the new parameters. Set the cbSize member of this structure and the uiParam parameter to sizeof(SOUNDSENTRY).
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETSTICKYKEYS">
+            <summary>
+            Retrieves information about the StickyKeys accessibility feature. The pvParam parameter must point to a STICKYKEYS structure
+            that receives the information. Set the cbSize member of this structure and the uiParam parameter to sizeof(STICKYKEYS).
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETSTICKYKEYS">
+            <summary>
+            Sets the parameters of the StickyKeys accessibility feature. The pvParam parameter must point to a STICKYKEYS structure
+            that contains the new parameters. Set the cbSize member of this structure and the uiParam parameter to sizeof(STICKYKEYS).
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETACCESSTIMEOUT">
+            <summary>
+            Retrieves information about the time-out period associated with the accessibility features. The pvParam parameter must point
+            to an ACCESSTIMEOUT structure that receives the information. Set the cbSize member of this structure and the uiParam parameter
+            to sizeof(ACCESSTIMEOUT).
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETACCESSTIMEOUT">
+            <summary>
+            Sets the time-out period associated with the accessibility features. The pvParam parameter must point to an ACCESSTIMEOUT
+            structure that contains the new parameters. Set the cbSize member of this structure and the uiParam parameter to sizeof(ACCESSTIMEOUT).
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETSERIALKEYS">
+            <summary>
+            Windows Me/98/95:  Retrieves information about the SerialKeys accessibility feature. The pvParam parameter must point
+            to a SERIALKEYS structure that receives the information. Set the cbSize member of this structure and the uiParam parameter
+            to sizeof(SERIALKEYS).
+            Windows Server 2003, Windows XP/2000/NT:  Not supported. The user controls this feature through the control panel.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETSERIALKEYS">
+            <summary>
+            Windows Me/98/95:  Sets the parameters of the SerialKeys accessibility feature. The pvParam parameter must point
+            to a SERIALKEYS structure that contains the new parameters. Set the cbSize member of this structure and the uiParam parameter
+            to sizeof(SERIALKEYS).
+            Windows Server 2003, Windows XP/2000/NT:  Not supported. The user controls this feature through the control panel.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETSOUNDSENTRY">
+            <summary>
+            Retrieves information about the SoundSentry accessibility feature. The pvParam parameter must point to a SOUNDSENTRY structure
+            that receives the information. Set the cbSize member of this structure and the uiParam parameter to sizeof(SOUNDSENTRY).
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETSOUNDSENTRY">
+            <summary>
+            Sets the parameters of the SoundSentry accessibility feature. The pvParam parameter must point to a SOUNDSENTRY structure
+            that contains the new parameters. Set the cbSize member of this structure and the uiParam parameter to sizeof(SOUNDSENTRY).
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETSNAPTODEFBUTTON">
+            <summary>
+            Determines whether the snap-to-default-button feature is enabled. If enabled, the mouse cursor automatically moves
+            to the default button, such as OK or Apply, of a dialog box. The pvParam parameter must point to a BOOL variable
+            that receives TRUE if the feature is on, or FALSE if it is off.
+            Windows 95:  Not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETSNAPTODEFBUTTON">
+            <summary>
+            Enables or disables the snap-to-default-button feature. If enabled, the mouse cursor automatically moves to the default button,
+            such as OK or Apply, of a dialog box. Set the uiParam parameter to TRUE to enable the feature, or FALSE to disable it.
+            Applications should use the ShowWindow function when displaying a dialog box so the dialog manager can position the mouse cursor.
+            Windows 95:  Not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETMOUSEHOVERWIDTH">
+            <summary>
+            Retrieves the width, in pixels, of the rectangle within which the mouse pointer has to stay for TrackMouseEvent
+            to generate a WM_MOUSEHOVER message. The pvParam parameter must point to a UINT variable that receives the width.
+            Windows 95:  Not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETMOUSEHOVERWIDTH">
+            <summary>
+            Retrieves the width, in pixels, of the rectangle within which the mouse pointer has to stay for TrackMouseEvent
+            to generate a WM_MOUSEHOVER message. The pvParam parameter must point to a UINT variable that receives the width.
+            Windows 95:  Not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETMOUSEHOVERHEIGHT">
+            <summary>
+            Retrieves the height, in pixels, of the rectangle within which the mouse pointer has to stay for TrackMouseEvent
+            to generate a WM_MOUSEHOVER message. The pvParam parameter must point to a UINT variable that receives the height.
+            Windows 95:  Not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETMOUSEHOVERHEIGHT">
+            <summary>
+            Sets the height, in pixels, of the rectangle within which the mouse pointer has to stay for TrackMouseEvent
+            to generate a WM_MOUSEHOVER message. Set the uiParam parameter to the new height.
+            Windows 95:  Not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETMOUSEHOVERTIME">
+            <summary>
+            Retrieves the time, in milliseconds, that the mouse pointer has to stay in the hover rectangle for TrackMouseEvent
+            to generate a WM_MOUSEHOVER message. The pvParam parameter must point to a UINT variable that receives the time.
+            Windows 95:  Not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETMOUSEHOVERTIME">
+            <summary>
+            Sets the time, in milliseconds, that the mouse pointer has to stay in the hover rectangle for TrackMouseEvent
+            to generate a WM_MOUSEHOVER message. This is used only if you pass HOVER_DEFAULT in the dwHoverTime parameter in the call to TrackMouseEvent. Set the uiParam parameter to the new time.
+            Windows 95:  Not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETWHEELSCROLLLINES">
+            <summary>
+            Retrieves the number of lines to scroll when the mouse wheel is rotated. The pvParam parameter must point
+            to a UINT variable that receives the number of lines. The default value is 3.
+            Windows 95:  Not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETWHEELSCROLLLINES">
+            <summary>
+            Sets the number of lines to scroll when the mouse wheel is rotated. The number of lines is set from the uiParam parameter.
+            The number of lines is the suggested number of lines to scroll when the mouse wheel is rolled without using modifier keys.
+            If the number is 0, then no scrolling should occur. If the number of lines to scroll is greater than the number of lines viewable,
+            and in particular if it is WHEEL_PAGESCROLL (#defined as UINT_MAX), the scroll operation should be interpreted
+            as clicking once in the page down or page up regions of the scroll bar.
+            Windows 95:  Not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETMENUSHOWDELAY">
+            <summary>
+            Retrieves the time, in milliseconds, that the system waits before displaying a shortcut menu when the mouse cursor is
+            over a submenu item. The pvParam parameter must point to a DWORD variable that receives the time of the delay.
+            Windows 95:  Not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETMENUSHOWDELAY">
+            <summary>
+            Sets uiParam to the time, in milliseconds, that the system waits before displaying a shortcut menu when the mouse cursor is
+            over a submenu item.
+            Windows 95:  Not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETSHOWIMEUI">
+            <summary>
+            Determines whether the IME status window is visible (on a per-user basis). The pvParam parameter must point to a BOOL variable
+            that receives TRUE if the status window is visible, or FALSE if it is not.
+            Windows NT, Windows 95:  This value is not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETSHOWIMEUI">
+            <summary>
+            Sets whether the IME status window is visible or not on a per-user basis. The uiParam parameter specifies TRUE for on or FALSE for off.
+            Windows NT, Windows 95:  This value is not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETMOUSESPEED">
+            <summary>
+            Retrieves the current mouse speed. The mouse speed determines how far the pointer will move based on the distance the mouse moves.
+            The pvParam parameter must point to an integer that receives a value which ranges between 1 (slowest) and 20 (fastest).
+            A value of 10 is the default. The value can be set by an end user using the mouse control panel application or
+            by an application using SPI_SETMOUSESPEED.
+            Windows NT, Windows 95:  This value is not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETMOUSESPEED">
+            <summary>
+            Sets the current mouse speed. The pvParam parameter is an integer between 1 (slowest) and 20 (fastest). A value of 10 is the default.
+            This value is typically set using the mouse control panel application.
+            Windows NT, Windows 95:  This value is not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETSCREENSAVERRUNNING">
+            <summary>
+            Determines whether a screen saver is currently running on the window station of the calling process.
+            The pvParam parameter must point to a BOOL variable that receives TRUE if a screen saver is currently running, or FALSE otherwise.
+            Note that only the interactive window station, "WinSta0", can have a screen saver running.
+            Windows NT, Windows 95:  This value is not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETDESKWALLPAPER">
+            <summary>
+            Retrieves the full path of the bitmap file for the desktop wallpaper. The pvParam parameter must point to a buffer
+            that receives a null-terminated path string. Set the uiParam parameter to the size, in characters, of the pvParam buffer. The returned string will not exceed MAX_PATH characters. If there is no desktop wallpaper, the returned string is empty.
+            Windows NT, Windows Me/98/95:  This value is not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETACTIVEWINDOWTRACKING">
+            <summary>
+            Determines whether active window tracking (activating the window the mouse is on) is on or off. The pvParam parameter must point
+            to a BOOL variable that receives TRUE for on, or FALSE for off.
+            Windows NT, Windows 95:  This value is not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETACTIVEWINDOWTRACKING">
+            <summary>
+            Sets active window tracking (activating the window the mouse is on) either on or off. Set pvParam to TRUE for on or FALSE for off.
+            Windows NT, Windows 95:  This value is not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETMENUANIMATION">
+            <summary>
+            Determines whether the menu animation feature is enabled. This master switch must be on to enable menu animation effects.
+            The pvParam parameter must point to a BOOL variable that receives TRUE if animation is enabled and FALSE if it is disabled.
+            If animation is enabled, SPI_GETMENUFADE indicates whether menus use fade or slide animation.
+            Windows NT, Windows 95:  This value is not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETMENUANIMATION">
+            <summary>
+            Enables or disables menu animation. This master switch must be on for any menu animation to occur.
+            The pvParam parameter is a BOOL variable; set pvParam to TRUE to enable animation and FALSE to disable animation.
+            If animation is enabled, SPI_GETMENUFADE indicates whether menus use fade or slide animation.
+            Windows NT, Windows 95:  This value is not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETCOMBOBOXANIMATION">
+            <summary>
+            Determines whether the slide-open effect for combo boxes is enabled. The pvParam parameter must point to a BOOL variable
+            that receives TRUE for enabled, or FALSE for disabled.
+            Windows NT, Windows 95:  This value is not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETCOMBOBOXANIMATION">
+            <summary>
+            Enables or disables the slide-open effect for combo boxes. Set the pvParam parameter to TRUE to enable the gradient effect,
+            or FALSE to disable it.
+            Windows NT, Windows 95:  This value is not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETLISTBOXSMOOTHSCROLLING">
+            <summary>
+            Determines whether the smooth-scrolling effect for list boxes is enabled. The pvParam parameter must point to a BOOL variable
+            that receives TRUE for enabled, or FALSE for disabled.
+            Windows NT, Windows 95:  This value is not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETLISTBOXSMOOTHSCROLLING">
+            <summary>
+            Enables or disables the smooth-scrolling effect for list boxes. Set the pvParam parameter to TRUE to enable the smooth-scrolling effect,
+            or FALSE to disable it.
+            Windows NT, Windows 95:  This value is not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETGRADIENTCAPTIONS">
+            <summary>
+            Determines whether the gradient effect for window title bars is enabled. The pvParam parameter must point to a BOOL variable
+            that receives TRUE for enabled, or FALSE for disabled. For more information about the gradient effect, see the GetSysColor function.
+            Windows NT, Windows 95:  This value is not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETGRADIENTCAPTIONS">
+            <summary>
+            Enables or disables the gradient effect for window title bars. Set the pvParam parameter to TRUE to enable it, or FALSE to disable it.
+            The gradient effect is possible only if the system has a color depth of more than 256 colors. For more information about
+            the gradient effect, see the GetSysColor function.
+            Windows NT, Windows 95:  This value is not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETKEYBOARDCUES">
+            <summary>
+            Determines whether menu access keys are always underlined. The pvParam parameter must point to a BOOL variable that receives TRUE
+            if menu access keys are always underlined, and FALSE if they are underlined only when the menu is activated by the keyboard.
+            Windows NT, Windows 95:  This value is not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETKEYBOARDCUES">
+            <summary>
+            Sets the underlining of menu access key letters. The pvParam parameter is a BOOL variable. Set pvParam to TRUE to always underline menu
+            access keys, or FALSE to underline menu access keys only when the menu is activated from the keyboard.
+            Windows NT, Windows 95:  This value is not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETMENUUNDERLINES">
+            <summary>
+            Same as SPI_GETKEYBOARDCUES.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETMENUUNDERLINES">
+            <summary>
+            Same as SPI_SETKEYBOARDCUES.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETACTIVEWNDTRKZORDER">
+            <summary>
+            Determines whether windows activated through active window tracking will be brought to the top. The pvParam parameter must point
+            to a BOOL variable that receives TRUE for on, or FALSE for off.
+            Windows NT, Windows 95:  This value is not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETACTIVEWNDTRKZORDER">
+            <summary>
+            Determines whether or not windows activated through active window tracking should be brought to the top. Set pvParam to TRUE
+            for on or FALSE for off.
+            Windows NT, Windows 95:  This value is not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETHOTTRACKING">
+            <summary>
+            Determines whether hot tracking of user-interface elements, such as menu names on menu bars, is enabled. The pvParam parameter
+            must point to a BOOL variable that receives TRUE for enabled, or FALSE for disabled.
+            Hot tracking means that when the cursor moves over an item, it is highlighted but not selected. You can query this value to decide
+            whether to use hot tracking in the user interface of your application.
+            Windows NT, Windows 95:  This value is not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETHOTTRACKING">
+            <summary>
+            Enables or disables hot tracking of user-interface elements such as menu names on menu bars. Set the pvParam parameter to TRUE
+            to enable it, or FALSE to disable it.
+            Hot-tracking means that when the cursor moves over an item, it is highlighted but not selected.
+            Windows NT, Windows 95:  This value is not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETMENUFADE">
+            <summary>
+            Determines whether menu fade animation is enabled. The pvParam parameter must point to a BOOL variable that receives TRUE
+            when fade animation is enabled and FALSE when it is disabled. If fade animation is disabled, menus use slide animation.
+            This flag is ignored unless menu animation is enabled, which you can do using the SPI_SETMENUANIMATION flag.
+            For more information, see AnimateWindow.
+            Windows NT, Windows Me/98/95:  This value is not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETMENUFADE">
+            <summary>
+            Enables or disables menu fade animation. Set pvParam to TRUE to enable the menu fade effect or FALSE to disable it.
+            If fade animation is disabled, menus use slide animation. he The menu fade effect is possible only if the system
+            has a color depth of more than 256 colors. This flag is ignored unless SPI_MENUANIMATION is also set. For more information,
+            see AnimateWindow.
+            Windows NT, Windows Me/98/95:  This value is not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETSELECTIONFADE">
+            <summary>
+            Determines whether the selection fade effect is enabled. The pvParam parameter must point to a BOOL variable that receives TRUE
+            if enabled or FALSE if disabled.
+            The selection fade effect causes the menu item selected by the user to remain on the screen briefly while fading out
+            after the menu is dismissed.
+            Windows NT, Windows Me/98/95:  This value is not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETSELECTIONFADE">
+            <summary>
+            Set pvParam to TRUE to enable the selection fade effect or FALSE to disable it.
+            The selection fade effect causes the menu item selected by the user to remain on the screen briefly while fading out
+            after the menu is dismissed. The selection fade effect is possible only if the system has a color depth of more than 256 colors.
+            Windows NT, Windows Me/98/95:  This value is not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETTOOLTIPANIMATION">
+            <summary>
+            Determines whether ToolTip animation is enabled. The pvParam parameter must point to a BOOL variable that receives TRUE
+            if enabled or FALSE if disabled. If ToolTip animation is enabled, SPI_GETTOOLTIPFADE indicates whether ToolTips use fade or slide animation.
+            Windows NT, Windows Me/98/95:  This value is not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETTOOLTIPANIMATION">
+            <summary>
+            Set pvParam to TRUE to enable ToolTip animation or FALSE to disable it. If enabled, you can use SPI_SETTOOLTIPFADE
+            to specify fade or slide animation.
+            Windows NT, Windows Me/98/95:  This value is not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETTOOLTIPFADE">
+            <summary>
+            If SPI_SETTOOLTIPANIMATION is enabled, SPI_GETTOOLTIPFADE indicates whether ToolTip animation uses a fade effect or a slide effect.
+             The pvParam parameter must point to a BOOL variable that receives TRUE for fade animation or FALSE for slide animation.
+             For more information on slide and fade effects, see AnimateWindow.
+            Windows NT, Windows Me/98/95:  This value is not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETTOOLTIPFADE">
+            <summary>
+            If the SPI_SETTOOLTIPANIMATION flag is enabled, use SPI_SETTOOLTIPFADE to indicate whether ToolTip animation uses a fade effect
+            or a slide effect. Set pvParam to TRUE for fade animation or FALSE for slide animation. The tooltip fade effect is possible only
+            if the system has a color depth of more than 256 colors. For more information on the slide and fade effects,
+            see the AnimateWindow function.
+            Windows NT, Windows Me/98/95:  This value is not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETCURSORSHADOW">
+            <summary>
+            Determines whether the cursor has a shadow around it. The pvParam parameter must point to a BOOL variable that receives TRUE
+            if the shadow is enabled, FALSE if it is disabled. This effect appears only if the system has a color depth of more than 256 colors.
+            Windows NT, Windows Me/98/95:  This value is not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETCURSORSHADOW">
+            <summary>
+            Enables or disables a shadow around the cursor. The pvParam parameter is a BOOL variable. Set pvParam to TRUE to enable the shadow
+            or FALSE to disable the shadow. This effect appears only if the system has a color depth of more than 256 colors.
+            Windows NT, Windows Me/98/95:  This value is not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETMOUSESONAR">
+            <summary>
+            Retrieves the state of the Mouse Sonar feature. The pvParam parameter must point to a BOOL variable that receives TRUE
+            if enabled or FALSE otherwise. For more information, see About Mouse Input on MSDN.
+            Windows 2000/NT, Windows 98/95:  This value is not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETMOUSESONAR">
+            <summary>
+            Turns the Sonar accessibility feature on or off. This feature briefly shows several concentric circles around the mouse pointer
+            when the user presses and releases the CTRL key. The pvParam parameter specifies TRUE for on and FALSE for off. The default is off.
+            For more information, see About Mouse Input.
+            Windows 2000/NT, Windows 98/95:  This value is not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETMOUSECLICKLOCK">
+            <summary>
+            Retrieves the state of the Mouse ClickLock feature. The pvParam parameter must point to a BOOL variable that receives TRUE
+            if enabled, or FALSE otherwise. For more information, see About Mouse Input.
+            Windows 2000/NT, Windows 98/95:  This value is not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETMOUSECLICKLOCK">
+            <summary>
+            Turns the Mouse ClickLock accessibility feature on or off. This feature temporarily locks down the primary mouse button
+            when that button is clicked and held down for the time specified by SPI_SETMOUSECLICKLOCKTIME. The uiParam parameter specifies
+            TRUE for on,
+            or FALSE for off. The default is off. For more information, see Remarks and About Mouse Input on MSDN.
+            Windows 2000/NT, Windows 98/95:  This value is not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETMOUSEVANISH">
+            <summary>
+            Retrieves the state of the Mouse Vanish feature. The pvParam parameter must point to a BOOL variable that receives TRUE
+            if enabled or FALSE otherwise. For more information, see About Mouse Input on MSDN.
+            Windows 2000/NT, Windows 98/95:  This value is not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETMOUSEVANISH">
+            <summary>
+            Turns the Vanish feature on or off. This feature hides the mouse pointer when the user types; the pointer reappears
+            when the user moves the mouse. The pvParam parameter specifies TRUE for on and FALSE for off. The default is off.
+            For more information, see About Mouse Input on MSDN.
+            Windows 2000/NT, Windows 98/95:  This value is not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETFLATMENU">
+            <summary>
+            Determines whether native User menus have flat menu appearance. The pvParam parameter must point to a BOOL variable
+            that returns TRUE if the flat menu appearance is set, or FALSE otherwise.
+            Windows 2000/NT, Windows Me/98/95:  This value is not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETFLATMENU">
+            <summary>
+            Enables or disables flat menu appearance for native User menus. Set pvParam to TRUE to enable flat menu appearance
+            or FALSE to disable it.
+            When enabled, the menu bar uses COLOR_MENUBAR for the menubar background, COLOR_MENU for the menu-popup background, COLOR_MENUHILIGHT
+            for the fill of the current menu selection, and COLOR_HILIGHT for the outline of the current menu selection.
+            If disabled, menus are drawn using the same metrics and colors as in Windows 2000 and earlier.
+            Windows 2000/NT, Windows Me/98/95:  This value is not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETDROPSHADOW">
+            <summary>
+            Determines whether the drop shadow effect is enabled. The pvParam parameter must point to a BOOL variable that returns TRUE
+            if enabled or FALSE if disabled.
+            Windows 2000/NT, Windows Me/98/95:  This value is not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETDROPSHADOW">
+            <summary>
+            Enables or disables the drop shadow effect. Set pvParam to TRUE to enable the drop shadow effect or FALSE to disable it.
+            You must also have CS_DROPSHADOW in the window class style.
+            Windows 2000/NT, Windows Me/98/95:  This value is not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETBLOCKSENDINPUTRESETS">
+            <summary>
+            Retrieves a BOOL indicating whether an application can reset the screensaver's timer by calling the SendInput function
+            to simulate keyboard or mouse input. The pvParam parameter must point to a BOOL variable that receives TRUE
+            if the simulated input will be blocked, or FALSE otherwise.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETBLOCKSENDINPUTRESETS">
+            <summary>
+            Determines whether an application can reset the screensaver's timer by calling the SendInput function to simulate keyboard
+            or mouse input. The uiParam parameter specifies TRUE if the screensaver will not be deactivated by simulated input,
+            or FALSE if the screensaver will be deactivated by simulated input.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETUIEFFECTS">
+            <summary>
+            Determines whether UI effects are enabled or disabled. The pvParam parameter must point to a BOOL variable that receives TRUE
+            if all UI effects are enabled, or FALSE if they are disabled.
+            Windows NT, Windows Me/98/95:  This value is not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETUIEFFECTS">
+            <summary>
+            Enables or disables UI effects. Set the pvParam parameter to TRUE to enable all UI effects or FALSE to disable all UI effects.
+            Windows NT, Windows Me/98/95:  This value is not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETFOREGROUNDLOCKTIMEOUT">
+            <summary>
+            Retrieves the amount of time following user input, in milliseconds, during which the system will not allow applications
+            to force themselves into the foreground. The pvParam parameter must point to a DWORD variable that receives the time.
+            Windows NT, Windows 95:  This value is not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETFOREGROUNDLOCKTIMEOUT">
+            <summary>
+            Sets the amount of time following user input, in milliseconds, during which the system does not allow applications
+            to force themselves into the foreground. Set pvParam to the new timeout value.
+            The calling thread must be able to change the foreground window, otherwise the call fails.
+            Windows NT, Windows 95:  This value is not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETACTIVEWNDTRKTIMEOUT">
+            <summary>
+            Retrieves the active window tracking delay, in milliseconds. The pvParam parameter must point to a DWORD variable
+            that receives the time.
+            Windows NT, Windows 95:  This value is not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETACTIVEWNDTRKTIMEOUT">
+            <summary>
+            Sets the active window tracking delay. Set pvParam to the number of milliseconds to delay before activating the window
+            under the mouse pointer.
+            Windows NT, Windows 95:  This value is not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETFOREGROUNDFLASHCOUNT">
+            <summary>
+            Retrieves the number of times SetForegroundWindow will flash the taskbar button when rejecting a foreground switch request.
+            The pvParam parameter must point to a DWORD variable that receives the value.
+            Windows NT, Windows 95:  This value is not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETFOREGROUNDFLASHCOUNT">
+            <summary>
+            Sets the number of times SetForegroundWindow will flash the taskbar button when rejecting a foreground switch request.
+            Set pvParam to the number of times to flash.
+            Windows NT, Windows 95:  This value is not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETCARETWIDTH">
+            <summary>
+            Retrieves the caret width in edit controls, in pixels. The pvParam parameter must point to a DWORD that receives this value.
+            Windows NT, Windows Me/98/95:  This value is not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETCARETWIDTH">
+            <summary>
+            Sets the caret width in edit controls. Set pvParam to the desired width, in pixels. The default and minimum value is 1.
+            Windows NT, Windows Me/98/95:  This value is not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETMOUSECLICKLOCKTIME">
+            <summary>
+            Retrieves the time delay before the primary mouse button is locked. The pvParam parameter must point to DWORD that receives
+            the time delay. This is only enabled if SPI_SETMOUSECLICKLOCK is set to TRUE. For more information, see About Mouse Input on MSDN.
+            Windows 2000/NT, Windows 98/95:  This value is not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETMOUSECLICKLOCKTIME">
+            <summary>
+            Turns the Mouse ClickLock accessibility feature on or off. This feature temporarily locks down the primary mouse button
+            when that button is clicked and held down for the time specified by SPI_SETMOUSECLICKLOCKTIME. The uiParam parameter
+            specifies TRUE for on, or FALSE for off. The default is off. For more information, see Remarks and About Mouse Input on MSDN.
+            Windows 2000/NT, Windows 98/95:  This value is not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETFONTSMOOTHINGTYPE">
+            <summary>
+            Retrieves the type of font smoothing. The pvParam parameter must point to a UINT that receives the information.
+            Windows 2000/NT, Windows Me/98/95:  This value is not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETFONTSMOOTHINGTYPE">
+            <summary>
+            Sets the font smoothing type. The pvParam parameter points to a UINT that contains either FE_FONTSMOOTHINGSTANDARD,
+            if standard anti-aliasing is used, or FE_FONTSMOOTHINGCLEARTYPE, if ClearType is used. The default is FE_FONTSMOOTHINGSTANDARD.
+            When using this option, the fWinIni parameter must be set to SPIF_SENDWININICHANGE | SPIF_UPDATEINIFILE; otherwise,
+            SystemParametersInfo fails.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETFONTSMOOTHINGCONTRAST">
+            <summary>
+            Retrieves a contrast value that is used in ClearType™ smoothing. The pvParam parameter must point to a UINT
+            that receives the information.
+            Windows 2000/NT, Windows Me/98/95:  This value is not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETFONTSMOOTHINGCONTRAST">
+            <summary>
+            Sets the contrast value used in ClearType smoothing. The pvParam parameter points to a UINT that holds the contrast value.
+            Valid contrast values are from 1000 to 2200. The default value is 1400.
+            When using this option, the fWinIni parameter must be set to SPIF_SENDWININICHANGE | SPIF_UPDATEINIFILE; otherwise,
+            SystemParametersInfo fails.
+            SPI_SETFONTSMOOTHINGTYPE must also be set to FE_FONTSMOOTHINGCLEARTYPE.
+            Windows 2000/NT, Windows Me/98/95:  This value is not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETFOCUSBORDERWIDTH">
+            <summary>
+            Retrieves the width, in pixels, of the left and right edges of the focus rectangle drawn with DrawFocusRect.
+            The pvParam parameter must point to a UINT.
+            Windows 2000/NT, Windows Me/98/95:  This value is not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETFOCUSBORDERWIDTH">
+            <summary>
+            Sets the height of the left and right edges of the focus rectangle drawn with DrawFocusRect to the value of the pvParam parameter.
+            Windows 2000/NT, Windows Me/98/95:  This value is not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETFOCUSBORDERHEIGHT">
+            <summary>
+            Retrieves the height, in pixels, of the top and bottom edges of the focus rectangle drawn with DrawFocusRect.
+            The pvParam parameter must point to a UINT.
+            Windows 2000/NT, Windows Me/98/95:  This value is not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETFOCUSBORDERHEIGHT">
+            <summary>
+            Sets the height of the top and bottom edges of the focus rectangle drawn with DrawFocusRect to the value of the pvParam parameter.
+            Windows 2000/NT, Windows Me/98/95:  This value is not supported.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_GETFONTSMOOTHINGORIENTATION">
+            <summary>
+            Not implemented.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPI.SPI_SETFONTSMOOTHINGORIENTATION">
+            <summary>
+            Not implemented.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPIF.SPIF_UPDATEINIFILE">
+            <summary>Writes the new system-wide parameter setting to the user profile.</summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPIF.SPIF_SENDCHANGE">
+            <summary>Broadcasts the WM_SETTINGCHANGE message after updating the user profile.</summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SPIF.SPIF_SENDWININICHANGE">
+            <summary>Same as SPIF_SENDCHANGE.</summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.DI.DI_COMPAT">
+            <summary>
+            ユーザーが指定したイメージではなく、システムの既定のイメージを使って、アイコンまたはカーソルを描画します。
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.DI.DI_DEFAULTSIZE">
+            <summary>
+            cxWidth と cyWidth の各パラメータで 0 が指定されている場合、アイコンまたはカーソル用のシステムメトリックの値で指定された幅と高さを使って、アイコンまたはカーソルをで描画します。cxWidth と cyWidth の各パラメータで 0 を指定し、このフラグを指定しなかった場合、この関数はリソースの実際のサイズを使います。
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.DI.DI_IMAGE">
+            <summary>
+            イメージを使ってアイコンまたはカーソルを描画します。
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.DI.DI_MASK">
+            <summary>
+            マスクを使ってアイコンまたはカーソルを描画します。
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.DI.DI_NORMAL">
+            <summary>
+            DI_IMAGE と DI_MASK の組み合わせです。
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.MK.MK_CONTROL">
+            <summary>
+            The CTRL key is down.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.MK.MK_LBUTTON">
+            <summary>
+            The left mouse button is down.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.MK.MK_MBUTTON">
+            <summary>
+            The middle mouse button is down.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.MK.MK_RBUTTON">
+            <summary>
+            The right mouse button is down.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.MK.MK_SHIFT">
+            <summary>
+            The SHIFT key is down.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.MK.MK_XBUTTON1">
+            <summary>
+            The first X button is down.
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.MK.MK_XBUTTON2">
+            <summary>
+            The second X button is down.
+            </summary>
+        </member>
+        <member name="T:ContentTypeTextNet.Library.PInvoke.Windows.WINDOWPOS">
+            <summary>
+            http://pinvoke.net/default.aspx/Structures.WINDOWPOS
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.GA.GA_PARENT">
+            <summary>
+            親ウィンドウを取得します。これには、GetParent 関数で取得されるような、オーナーウィンドウは含みません。
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.GA.GA_ROOT">
+            <summary>
+            親ウィンドウのチェーンをたどってルートウィンドウを取得します。
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.GA.GA_ROOTOWNER">
+            <summary>
+            <see cref="M:ContentTypeTextNet.Library.PInvoke.Windows.NativeMethods.GetParent(System.IntPtr)"/> 関数が返す親ウィンドウのチェーンをたどって所有されているルートウィンドウを取得します。
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SIF.SIF_PAGE">
+            <summary>
+            スクロールページを、lpsi パラメータが指す 構造体の nPage メンバに格納します。
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SIF.SIF_POS">
+            <summary>
+            スクロール位置を、lpsi パラメータが指す SCROLLINFO 構造体の nPos メンバに格納します。
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SIF.SIF_RANGE">
+            <summary>
+            スクロール範囲を、lpsi パラメータが指す SCROLLINFO 構造体の nMin と nMax の各メンバに格納します。
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SIF.SIF_TRACKPOS">
+            <summary>
+            スクロールボックス（つまみ）の現在の位置を、lpsi パラメータが指す SCROLLINFO 構造体の nTrackPos メンバに格納します。
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SW_scroll.SW_ERASE">
+            <summary>
+            SW_INVALIDATE フラグと共にこのフラグを指定すると、スクロール後、WM_ERASEBKGND メッセージをウィンドウへ送信し、新たに無効になったリージョンを消去します。
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SW_scroll.SW_INVALIDATE">
+            <summary>
+            スクロール後、hrgnUpdate パラメータが識別しているリージョンを無効にします。
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SW_scroll.SW_SCROLLCHILDREN">
+            <summary>
+            prcScroll パラメータが指す長方形と重なり合う、すべての子ウィンドウをスクロールします。dx と dy の各パラメータで指定したピクセル数だけ、子ウィンドウをスクロールします。システムは、prcScroll パラメータが指す長方形と重なる子ウィンドウへ、WM_MOVE メッセージを送信します。それらのウィンドウが移動の対象にならない場合でも、送信の対象になります。
+            </summary>
+        </member>
+        <member name="F:ContentTypeTextNet.Library.PInvoke.Windows.SW_scroll.SW_SMOOTHSCROLL">
+            <summary>
+            Windows 98 と Windows 2000：スムーズスクロールを行います。flags パラメータの HIWORD 部分で、スムーズスクロール操作を行う回数を指定します。
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -28,19 +28,7 @@ Bitbucket へログイン可能なアカウントを持っていれば課題を�
 * 開発環境以外での動作は未確認。
 
 
-## CI
+## Build
 
-都合により赤かったり404だったり。
-
- * **current** [![Build status](https://ci.appveyor.com/api/projects/status/5pxaya16d6afx9df?svg=true)](https://ci.appveyor.com/project/sk_0520/pe)
- * **mater** [![Build status](https://ci.appveyor.com/api/projects/status/5pxaya16d6afx9df/branch/master?svg=true)](https://ci.appveyor.com/project/sk_0520/pe/branch/master)
-
-まともなテストしてないから赤かったら時間とか構文エラーとかじゃないすかね。
-
-### β版
-
-[Pe-β](https://ci.appveyor.com/project/sk_0520/pe-4vo6i)
-
- * **current** [![Build status](https://ci.appveyor.com/api/projects/status/ll41wy1edp5546hn?svg=true)](https://ci.appveyor.com/project/sk_0520/pe-4vo6i)
- * **mater** [![Build status](https://ci.appveyor.com/api/projects/status/ll41wy1edp5546hn/branch/master?svg=true)](https://ci.appveyor.com/project/sk_0520/pe-4vo6i/branch/master)
-
+* current: [![Build status](https://ci.appveyor.com/api/projects/status/nrtepybkoj577bo6?svg=true)](https://ci.appveyor.com/project/sk_0520/pe2)
+* master: [![Build status](https://ci.appveyor.com/api/projects/status/nrtepybkoj577bo6/branch/master?svg=true)](https://ci.appveyor.com/project/sk_0520/pe2/branch/master)
