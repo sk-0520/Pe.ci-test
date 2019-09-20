@@ -194,7 +194,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
 
         ILauncherExecutePathParameter GetExecutePath()
         {
-            Debug.Assert(Kind == LauncherItemKind.File || Kind == LauncherItemKind.Directory);
+            Debug.Assert(Kind == LauncherItemKind.File);
 
             using(var commander = MainDatabaseBarrier.WaitRead()) {
                 var launcherFilesEntityDao = new LauncherFilesEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
@@ -204,7 +204,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
 
         public ILauncherExecuteResult OpenParentDirectory()
         {
-            if(!(Kind == LauncherItemKind.File || Kind == LauncherItemKind.Directory)) {
+            if(!(Kind == LauncherItemKind.File)) {
                 throw new InvalidOperationException($"{Kind}");
             }
 
@@ -219,7 +219,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
 
         public ILauncherExecuteResult OpenWorkingDirectory()
         {
-            if(!(Kind == LauncherItemKind.File || Kind == LauncherItemKind.Directory)) {
+            if(!(Kind == LauncherItemKind.File)) {
                 throw new InvalidOperationException($"{Kind}");
             }
 
@@ -283,7 +283,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
 
         public void ShowProperty()
         {
-            if(!(Kind == LauncherItemKind.File || Kind == LauncherItemKind.Directory)) {
+            if(!(Kind == LauncherItemKind.File)) {
                 throw new InvalidOperationException($"{Kind}");
             }
 
