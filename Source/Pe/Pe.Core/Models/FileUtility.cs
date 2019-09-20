@@ -70,8 +70,12 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
-        public static bool Exists(string path)
+        public static bool Exists(string? path)
         {
+            if(path == null) {
+                return false;
+            }
+
             return File.Exists(path) || Directory.Exists(path);
         }
 

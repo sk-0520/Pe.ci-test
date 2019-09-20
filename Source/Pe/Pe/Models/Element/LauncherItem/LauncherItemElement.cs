@@ -83,19 +83,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             }
         }
 
-        LauncherPathKind GetPathKind(string path)
-        {
-            if(File.Exists(path)) {
-                return LauncherPathKind.File;
-            }
-
-            if(Directory.Exists(path)) {
-                return LauncherPathKind.Directory;
-            }
-
-            return LauncherPathKind.Unknown;
-        }
-
         public LauncherFileDetailData LoadFileDetail()
         {
             LauncherExecutePathData pathData;
@@ -107,27 +94,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
 #pragma warning disable CS8604 // Null 参照引数の可能性があります。
             var expandedPath = PathUtility.ExpandFilePath(pathData.Path);
 #pragma warning restore CS8604 // Null 参照引数の可能性があります。
-            var kind = GetPathKind(expandedPath);
             var result = new LauncherFileDetailData() {
                 PathData = pathData,
-                Kind = kind,
+                FullPath = expandedPath,
             };
-            switch(result.Kind) {
-                case LauncherPathKind.File:
-                    result.FileSystemInfo = new FileInfo(expandedPath);
-                    break;
-
-                case LauncherPathKind.Directory:
-                    result.FileSystemInfo = new DirectoryInfo(expandedPath);
-                    break;
-
-                case LauncherPathKind.Unknown:
-                    result.FileSystemInfo = new EmptyFileSystemInfo(expandedPath);
-                    break;
-
-                default:
-                    throw new NotImplementedException();
-            }
 
             return result;
         }

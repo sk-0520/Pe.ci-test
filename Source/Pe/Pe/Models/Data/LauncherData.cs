@@ -222,10 +222,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #region property
 
         public LauncherExecutePathData? PathData { get; set; }
-
-        public LauncherPathKind Kind { get; set; }
-
-        public FileSystemInfo? FileSystemInfo { get; set; }
+        public string? FullPath { get; set; }
 
         #endregion
     }
