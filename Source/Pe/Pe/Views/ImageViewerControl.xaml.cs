@@ -51,8 +51,8 @@ namespace ContentTypeTextNet.Pe.Main.Views
         {
             if(d is ImageViewerControl control) {
                 if(e.NewValue is IconViewerViewModel iconViewer) {
-                    control.parent.Width = (int)iconViewer.IconScale;//.ToWidth();
-                    control.parent.Height = (int)iconViewer.IconScale;//.ToHeight();
+                    control.parent.Width = (int)iconViewer.IconBox;//.ToWidth();
+                    control.parent.Height = (int)iconViewer.IconBox;//.ToHeight();
                     if(control.IsLoaded) {
                         iconViewer.LoadAsync(CancellationToken.None).ConfigureAwait(false);
                     }

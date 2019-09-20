@@ -21,8 +21,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon
 {
     public class LauncherIconLoader : IconImageLoaderBase
     {
-        public LauncherIconLoader(Guid launcherItemId, IconBox iconBasicSize, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
-            : base(iconBasicSize, dispatcherWapper, loggerFactory)
+        public LauncherIconLoader(Guid launcherItemId, IconBox iconBox, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
+            : base(iconBox, dispatcherWapper, loggerFactory)
         {
             LauncherItemId = launcherItemId;
             MainDatabaseBarrier = mainDatabaseBarrier;
@@ -72,7 +72,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon
                 using(var commander = FileDatabaseBarrier.WaitRead()) {
                     var dao = new LauncherItemIconsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
 #pragma warning disable CS8600 // Null リテラルまたは Null の可能性がある値を Null 非許容型に変換しています。
-                    imageBinary = dao.SelectImageBinary(LauncherItemId, IconBasicSize);
+                    imageBinary = dao.SelectImageBinary(LauncherItemId, IconBox);
 #pragma warning restore CS8600 // Null リテラルまたは Null の可能性がある値を Null 非許容型に変換しています。
                 }
 
@@ -141,8 +141,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon
 #endif
                 using(var commander = FileDatabaseBarrier.WaitWrite()) {
                     var dao = new LauncherItemIconsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
-                    dao.DeleteImageBinary(LauncherItemId, IconBasicSize);
-                    dao.InsertImageBinary(LauncherItemId, IconBasicSize, stream.BinaryChunkedList, DatabaseCommonStatus.CreateCurrentAccount());
+                    dao.DeleteImageBinary(LauncherItemId, IconBox);
+                    dao.InsertImageBinary(LauncherItemId, IconBox, stream.BinaryChunkedList, DatabaseCommonStatus.CreateCurrentAccount());
                     commander.Commit();
                 }
             }

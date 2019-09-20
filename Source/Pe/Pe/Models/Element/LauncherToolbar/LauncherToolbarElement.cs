@@ -84,7 +84,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
         /// <summary>
         /// 表示アイコンサイズ。
         /// </summary>
-        public IconBox IconScale { get; private set; }
+        public IconBox IconBox { get; private set; }
 
         /// <summary>
         /// アイコンの余白。
@@ -196,10 +196,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
 
         void UpdateDesign()
         {
-            ButtonPadding = LauncherToolbarTheme.GetButtonPadding(ToolbarPosition, IconScale);
-            IconMargin = LauncherToolbarTheme.GetIconMargin(ToolbarPosition, IconScale, IsIconOnly, TextWidth);
-            DisplaySize = LauncherToolbarTheme.GetDisplaySize(ButtonPadding, IconMargin, IconScale, IsIconOnly, TextWidth);
-            HiddenSize = LauncherToolbarTheme.GetHiddenSize(ButtonPadding, IconMargin, IconScale, IsIconOnly, TextWidth);
+            ButtonPadding = LauncherToolbarTheme.GetButtonPadding(ToolbarPosition, IconBox);
+            IconMargin = LauncherToolbarTheme.GetIconMargin(ToolbarPosition, IconBox, IsIconOnly, TextWidth);
+            DisplaySize = LauncherToolbarTheme.GetDisplaySize(ButtonPadding, IconMargin, IconBox, IsIconOnly, TextWidth);
+            HiddenSize = LauncherToolbarTheme.GetHiddenSize(ButtonPadding, IconMargin, IconBox, IsIconOnly, TextWidth);
         }
 
         void LoadLauncherToolbar()
@@ -212,7 +212,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
                 displayData = dao.SelectDisplayData(LauncherToolbarId);
             }
 
-            IconScale = displayData.IconBasicSize;
+            IconBox = displayData.IconBox;
             TextWidth = displayData.TextWidth;
             IsIconOnly = displayData.IsIconOnly;
             IsTopmost = displayData.IsTopmost;

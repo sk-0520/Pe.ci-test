@@ -54,7 +54,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 IconDirection = iconDirectionTransfer.ToEnum(dto.Direction),
 #pragma warning restore CS8604 // Null 参照引数の可能性があります。
 #pragma warning disable CS8604 // Null 参照引数の可能性があります。
-                IconBasicSize = iconScaleTransfer.ToEnum(dto.IconScale),
+                IconBox = iconScaleTransfer.ToEnum(dto.IconScale),
 #pragma warning restore CS8604 // Null 参照引数の可能性があります。
                 FontId = dto.FontId,
 #pragma warning disable CS8604 // Null 参照引数の可能性があります。

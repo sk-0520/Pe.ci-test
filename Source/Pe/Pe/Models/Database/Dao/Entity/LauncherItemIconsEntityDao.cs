@@ -32,14 +32,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         #region function
 
-        public IReadOnlyList<byte[]>? SelectImageBinary(Guid launcherItemId, IconBox iconScale)
+        public IReadOnlyList<byte[]>? SelectImageBinary(Guid launcherItemId, IconBox iconBox)
         {
             var iconScaleTransfer = new EnumTransfer<IconBox>();
 
             var statement = StatementLoader.LoadStatementByCurrent();
             var param = new {
                 LauncherItemId = launcherItemId,
-                IconScale = iconScaleTransfer.ToString(iconScale),
+                IconScale = iconScaleTransfer.ToString(iconBox),
             };
             var rows = Commander.Query<byte[]>(statement, param);
             if(rows != null) {
@@ -49,7 +49,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return null;
         }
 
-        public int InsertImageBinary(Guid launcherItemId, IconBox iconScale, IEnumerable<byte> imageBinary, IDatabaseCommonStatus commonStatus)
+        public int InsertImageBinary(Guid launcherItemId, IconBox iconBox, IEnumerable<byte> imageBinary, IDatabaseCommonStatus commonStatus)
         {
             var iconScaleTransfer = new EnumTransfer<IconBox>();
 
@@ -57,7 +57,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var binaryImageItems = imageBinary.GroupSplit(80 * 1024).ToArray();
             var dto = new LauncherItemIconsDto() {
                 LauncherItemId = launcherItemId,
-                IconScale = iconScaleTransfer.ToString(iconScale),
+                IconScale = iconScaleTransfer.ToString(iconBox),
             };
             var resultCount = 0;
             for(var i = 0; i < binaryImageItems.Length; i++) {
@@ -70,14 +70,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return resultCount;
         }
 
-        public int DeleteImageBinary(Guid launcherItemId, IconBox iconSize)
+        public int DeleteImageBinary(Guid launcherItemId, IconBox iconBox)
         {
             var iconScaleTransfer = new EnumTransfer<IconBox>();
 
             var statement = StatementLoader.LoadStatementByCurrent();
             var param = new {
                 LauncherItemId = launcherItemId,
-                IconScale = iconScaleTransfer.ToString(iconSize),
+                IconScale = iconScaleTransfer.ToString(iconBox),
             };
             return Commander.Execute(statement, param);
         }

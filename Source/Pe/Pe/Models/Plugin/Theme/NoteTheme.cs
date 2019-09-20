@@ -212,9 +212,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Theme
             return viewBox;
         }
 
-        public DependencyObject GetIconImage(IconBox iconBasicSize, bool isCompact, bool isLocked, IReadOnlyColorPair<Color> baseColor)
+        public DependencyObject GetIconImage(IconBox iconBox, bool isCompact, bool isLocked, IReadOnlyColorPair<Color> baseColor)
         {
-            var size = new Size((int)iconBasicSize, isCompact ? (int)iconBasicSize / 2 : (int)iconBasicSize);
+            var size = new Size((int)iconBox, isCompact ? (int)iconBox / 2 : (int)iconBox);
             var box = CreateBox(baseColor.Foreground, baseColor.Background, size);
             return box;
         }

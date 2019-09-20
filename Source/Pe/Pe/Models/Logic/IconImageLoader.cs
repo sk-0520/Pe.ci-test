@@ -18,17 +18,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 {
     public abstract class IconImageLoaderBase : BindModelBase
     {
-        public IconImageLoaderBase(IconBox iconBasicSize, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
+        public IconImageLoaderBase(IconBox iconBox, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
-            IconBasicSize = iconBasicSize;
+            IconBox = iconBox;
             DispatcherWapper = dispatcherWapper;
             RunningStatusImpl = new RunningStatus(LoggerFactory);
         }
 
         #region property
 
-        public IconBox IconBasicSize { get; }
+        public IconBox IconBox { get; }
         protected IDispatcherWapper DispatcherWapper { get; }
 
         RunningStatus RunningStatusImpl { get; }
@@ -53,7 +53,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                 var iconLoader = new IconLoader(Logger);
                 BitmapSource? iconImage = null;
                 DispatcherWapper.Invoke(() => {
-                    iconImage = iconLoader.Load(expandedPath, new IconSize(IconBasicSize), iconData.Index);
+                    iconImage = iconLoader.Load(expandedPath, new IconSize(IconBox), iconData.Index);
 #pragma warning disable CS8604 // Null 参照引数の可能性があります。
                     FreezableUtility.SafeFreeze(iconImage);
 #pragma warning restore CS8604 // Null 参照引数の可能性があります。
@@ -89,7 +89,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
     {
         public IconImageLoaderPack(IEnumerable<IconImageLoaderBase> iconImageLoaders)
         {
-            var map = iconImageLoaders.ToDictionary(i => i.IconBasicSize, i => i);
+            var map = iconImageLoaders.ToDictionary(i => i.IconBox, i => i);
             Small = map[IconBox.Small];
             Normal = map[IconBox.Normal];
             Big = map[IconBox.Big];

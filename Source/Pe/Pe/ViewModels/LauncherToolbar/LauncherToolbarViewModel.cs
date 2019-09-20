@@ -75,7 +75,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
         ILauncherGroupTheme LauncherGroupTheme { get; }
         PropertyChangedHooker PropertyChangedHooker { get; }
 
-        public IconBox IconScale => Model.IconScale;
+        public IconBox IconBox => Model.IconBox;
         public Thickness ButtonPadding => Model.ButtonPadding;
         public Thickness IconMargin => Model.IconMargin;
         public bool IsIconOnly => Model.IsIconOnly;
@@ -187,7 +187,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 
         DependencyObject CreateToolbarPositionIcon(AppDesktopToolbarPosition toolbarPosition)
         {
-            return LauncherToolbarTheme.GetToolbarPositionImage(toolbarPosition, IconScale);
+            return LauncherToolbarTheme.GetToolbarPositionImage(toolbarPosition, IconBox);
         }
 
         #endregion

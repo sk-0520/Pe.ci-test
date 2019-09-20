@@ -29,10 +29,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Theme
 
         #region function
 
-        DependencyObject GetToolbarImageCore(IReadOnlyScreenData currentScreen, IReadOnlyList<IReadOnlyScreenData> allScreens, IconBox iconBasicSize, bool isStrong)
+        DependencyObject GetToolbarImageCore(IReadOnlyScreenData currentScreen, IReadOnlyList<IReadOnlyScreenData> allScreens, IconBox iconBox, bool isStrong)
         {
             var basePos = new Point(Math.Abs(allScreens.Min(s => s.DeviceBounds.Left)), Math.Abs(allScreens.Min(s => s.DeviceBounds.Top)));
-            var drawSize = new IconSize(iconBasicSize);
+            var drawSize = new IconSize(iconBox);
             var maxArea = new Rect() {
                 X = allScreens.Min(s => s.DeviceBounds.Left),
                 Y = allScreens.Min(s => s.DeviceBounds.Top)
@@ -80,9 +80,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Theme
             return canvas;
         }
 
-        DependencyObject GetToolbarPositionImageCore(AppDesktopToolbarPosition toolbarPosition, IconBox iconBasicSize)
+        DependencyObject GetToolbarPositionImageCore(AppDesktopToolbarPosition toolbarPosition, IconBox iconBox)
         {
-            var drawSize = new Size((int)iconBasicSize, (int)iconBasicSize);
+            var drawSize = new Size((int)iconBox, (int)iconBox);
             var strongSize = new Size(0.2f, 0.3f);
             //using(var targetGraphics = CreateGraphics()) {
             //	var image = new Bitmap(imageSize.Width, imageSize.Height, targetGraphics);
@@ -142,40 +142,40 @@ namespace ContentTypeTextNet.Pe.Main.Models.Theme
         #region ILauncherToolbarDesigner
 
         [return: PixelKind(Px.Logical)]
-        public Thickness GetIconMargin(AppDesktopToolbarPosition toolbarPosition, IconBox iconBasicSize, bool isIconOnly, [PixelKind(Px.Logical)] double textWidth)
+        public Thickness GetIconMargin(AppDesktopToolbarPosition toolbarPosition, IconBox iconBox, bool isIconOnly, [PixelKind(Px.Logical)] double textWidth)
         {
             return new Thickness(2);
         }
 
         [return: PixelKind(Px.Logical)]
-        public Thickness GetButtonPadding(AppDesktopToolbarPosition toolbarPosition, IconBox iconBasicSize)
+        public Thickness GetButtonPadding(AppDesktopToolbarPosition toolbarPosition, IconBox iconBox)
         {
             return new Thickness(2);
         }
 
         [return: PixelKind(Px.Logical)]
-        public Size GetDisplaySize([PixelKind(Px.Logical)] Thickness buttonPadding, [PixelKind(Px.Logical)] Thickness iconMargin, IconBox iconBasicSize, bool isIconOnly, [PixelKind(Px.Logical)] double textWidth)
+        public Size GetDisplaySize([PixelKind(Px.Logical)] Thickness buttonPadding, [PixelKind(Px.Logical)] Thickness iconMargin, IconBox iconBox, bool isIconOnly, [PixelKind(Px.Logical)] double textWidth)
         {
             return new Size(
-                GetHorizontal(buttonPadding) + GetHorizontal(iconMargin) + (int)iconBasicSize + (isIconOnly ? 0 : textWidth),
-                GetVertical(buttonPadding) + GetVertical(iconMargin) + (int)iconBasicSize
+                GetHorizontal(buttonPadding) + GetHorizontal(iconMargin) + (int)iconBox + (isIconOnly ? 0 : textWidth),
+                GetVertical(buttonPadding) + GetVertical(iconMargin) + (int)iconBox
             );
         }
 
         [return: PixelKind(Px.Logical)]
-        public Size GetHiddenSize([PixelKind(Px.Logical)] Thickness buttonPadding, [PixelKind(Px.Logical)] Thickness iconMargin, IconBox iconBasicSize, bool isIconOnly, [PixelKind(Px.Logical)] double textWidth)
+        public Size GetHiddenSize([PixelKind(Px.Logical)] Thickness buttonPadding, [PixelKind(Px.Logical)] Thickness iconMargin, IconBox iconBox, bool isIconOnly, [PixelKind(Px.Logical)] double textWidth)
         {
             return new Size(4, 4);
         }
 
-        public DependencyObject GetToolbarImage(IReadOnlyScreenData currentScreen, IReadOnlyList<IReadOnlyScreenData> allScreens, IconBox iconBasicSize, bool isStrong)
+        public DependencyObject GetToolbarImage(IReadOnlyScreenData currentScreen, IReadOnlyList<IReadOnlyScreenData> allScreens, IconBox iconBox, bool isStrong)
         {
-            return GetToolbarImageCore(currentScreen, allScreens, iconBasicSize, isStrong);
+            return GetToolbarImageCore(currentScreen, allScreens, iconBox, isStrong);
         }
 
-        public DependencyObject GetToolbarPositionImage(AppDesktopToolbarPosition toolbarPosition, IconBox iconBasicSize)
+        public DependencyObject GetToolbarPositionImage(AppDesktopToolbarPosition toolbarPosition, IconBox iconBox)
         {
-            return GetToolbarPositionImageCore(toolbarPosition, iconBasicSize);
+            return GetToolbarPositionImageCore(toolbarPosition, iconBox);
         }
 
         public ControlTemplate GetLauncherItemNormalButtonControlTemplate() => (ControlTemplate)Application.Current.Resources["ILauncherToolbarTheme-LauncherItemNormalButton"];

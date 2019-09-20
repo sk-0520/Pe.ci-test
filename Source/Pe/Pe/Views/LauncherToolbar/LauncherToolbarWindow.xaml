@@ -58,16 +58,16 @@
 
     <Style TargetType="app_main_view_lt:LauncherContentControl">
       <Style.Triggers>
-        <DataTrigger Binding="{Binding DataContext.IconScale, ElementName=root}" Value="Small">
+        <DataTrigger Binding="{Binding DataContext.IconBox, ElementName=root}" Value="Small">
           <Setter Property="Icon" Value="{Binding Icon.Small}" />
         </DataTrigger>
-        <DataTrigger Binding="{Binding DataContext.IconScale, ElementName=root}" Value="Normal">
+        <DataTrigger Binding="{Binding DataContext.IconBox, ElementName=root}" Value="Normal">
           <Setter Property="Icon" Value="{Binding Icon.Normal}" />
         </DataTrigger>
-        <DataTrigger Binding="{Binding DataContext.IconScale, ElementName=root}" Value="Big">
+        <DataTrigger Binding="{Binding DataContext.IconBox, ElementName=root}" Value="Big">
           <Setter Property="Icon" Value="{Binding Icon.Big}" />
         </DataTrigger>
-        <DataTrigger Binding="{Binding DataContext.IconScale, ElementName=root}" Value="Large">
+        <DataTrigger Binding="{Binding DataContext.IconBox, ElementName=root}" Value="Large">
           <Setter Property="Icon" Value="{Binding Icon.Large}" />
         </DataTrigger>
       </Style.Triggers>
@@ -263,8 +263,8 @@
             <ContentControl
             Template="{StaticResource NormalIcon}"
             Content="{StaticResource Image-HamburgerMenu}"
-            Width="{Binding IconScale, Converter={StaticResource IconScaleToWidthConverter}}"
-            Height="{Binding IconScale, Converter={StaticResource IconScaleToHeightConverter}}"
+            Width="{Binding IconBox, Converter={StaticResource IconScaleToWidthConverter}}"
+            Height="{Binding IconBox, Converter={StaticResource IconScaleToHeightConverter}}"
             Background="Black"
             Foreground="Gray"
           />
