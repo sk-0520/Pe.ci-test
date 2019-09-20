@@ -30,7 +30,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         #region function
 
-        public long SelectMaxSort(Guid groupId)
+        public long SelectMaxSequence(Guid groupId)
         {
             var statement = StatementLoader.LoadStatementByCurrent();
             return Commander.QuerySingle<long>(statement, new { LauncherGroupId = groupId });
@@ -59,7 +59,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 var dto = new LauncherGroupItemsRowDto() {
                     LauncherGroupId = groupId,
                     LauncherItemId = itemId,
-                    Sort = startSort + (sortStep * (counter++)),
+                    Sequence = startSort + (sortStep * (counter++)),
                 };
                 commonStatus.WriteCommon(dto);
                 Commander.Execute(statement, dto);

@@ -12,7 +12,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data.Dto.Entity
 
         public Guid LauncherGroupId { get; set; }
         public Guid LauncherItemId { get; set; }
-        public long Sort { get; set; }
+        public long Sequence { get; set; }
 
         #endregion
     }

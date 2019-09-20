@@ -42,7 +42,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 Name = data.Name,
                 ImageName = imgNameEnumTransfer.ToString(data.ImageName),
                 ImageColor = FromColor(data.ImageColor),
-                Sort = data.Sort,
+                Sequence = data.Sequence,
             };
 
             commonStatus.WriteCommon(dto);
@@ -68,13 +68,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 #pragma warning disable CS8604 // Null 参照引数の可能性があります。
                 ImageColor = ToColor(dto.ImageColor),
 #pragma warning restore CS8604 // Null 参照引数の可能性があります。
-                Sort = dto.Sort,
+                Sequence = dto.Sequence,
             };
 
             return data;
         }
 
-        public long SelectMaxSort()
+        public long SelectMaxSequence()
         {
             var statement = StatementLoader.LoadStatementByCurrent();
             return Commander.QuerySingle<long>(statement);

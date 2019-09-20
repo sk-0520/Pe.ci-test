@@ -41,7 +41,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherGroup
         public LauncherGroupKind Kind { get; private set; }
         public LauncherGroupImageName ImageName { get; private set; }
         public Color ImageColor { get; private set; }
-        public long Sort { get; private set; }
+        public long Sequence { get; private set; }
 
         List<Guid> LauncherItemIds { get; } = new List<Guid>();
 
@@ -65,7 +65,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherGroup
             Kind = data.Kind;
             ImageName = data.ImageName;
             ImageColor = data.ImageColor;
-            Sort = data.Sort;
+            Sequence = data.Sequence;
         }
 
         IEnumerable<Guid> GetLauncherItemsForNormal()

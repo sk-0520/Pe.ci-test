@@ -164,7 +164,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         public LauncherGroupKind Kind { get; set; }
         public LauncherGroupImageName ImageName { get; set; }
         public Color ImageColor { get; set; }
-        public long Sort { get; set; }
+        public long Sequence { get; set; }
 
         #endregion
     }

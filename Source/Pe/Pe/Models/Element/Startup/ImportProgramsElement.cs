@@ -139,11 +139,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
                 // db グループ作る
                 var launcherGroupsDao = new LauncherGroupsEntityDao(transaction, StatementLoader, transaction.Implementation, LoggerFactory);
                 var groupStep = 10;
-                group.Sort = launcherGroupsDao.SelectMaxSort() + groupStep;
+                group.Sequence = launcherGroupsDao.SelectMaxSequence() + groupStep;
                 launcherGroupsDao.InsertNewGroup(group, DatabaseCommonStatus.CreateCurrentAccount());
 
                 var launcherGroupItemsDao = new LauncherGroupItemsEntityDao(transaction, StatementLoader, transaction.Implementation, LoggerFactory);
-                var currentMaxSort = launcherGroupItemsDao.SelectMaxSort(group.LauncherGroupId);
+                var currentMaxSort = launcherGroupItemsDao.SelectMaxSequence(group.LauncherGroupId);
                 var itemStep = 10;
                 launcherGroupItemsDao.InsertNewItems(group.LauncherGroupId, importItems.Select(i => i.Data.LauncherItemId), currentMaxSort + itemStep, itemStep, DatabaseCommonStatus.CreateCurrentAccount());
 

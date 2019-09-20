@@ -148,7 +148,7 @@ ___
 
 ___
 
-## LauncherEnvVars
+## LauncherMergeEnvVars
 
 ### layout
 
@@ -160,7 +160,6 @@ ___
 |    | o  |                              | 作成ユーザー名           | CreatedAccount        | text         | System.String   |              |                      |
 |    | o  |                              | 作成プログラム名         | CreatedProgramName    | text         | System.String   |              |                      |
 |    | o  |                              | 作成プログラムバージョン | CreatedProgramVersion | text         | System.Version  |              |                      |
-|    | o  |                              | 使用種別                 | Kind                  | text         | System.String   |              | 追加/置き換え, 削除  |
 |    | o  |                              | 環境変数値               | EnvValue              | text         | System.String   |              | 追加/置き換え で使用 |
 
 ### index
@@ -170,6 +169,28 @@ ___
 
 
 ___
+
+## LauncherDeleteEnvVars
+
+### layout
+
+| PK | NN | FK                           | 論理カラム名             | 物理カラム名          | 論理データ型 | マッピング型    | チェック制約 | コメント             |
+|:--:|:--:|:-----------------------------|:-------------------------|:----------------------|:-------------|:----------------|:-------------|:---------------------|
+| o  | o  | LauncherItems.LauncherItemId | ランチャーアイテムID     | LauncherItemId        | text         | System.Guid     |              |                      |
+| o  | o  |                              | 環境変数名               | EnvName               | text         | System.String   |              |                      |
+|    | o  |                              | 作成タイムスタンプ       | CreatedTimestamp      | datetime     | System.DateTime |              | UTC                  |
+|    | o  |                              | 作成ユーザー名           | CreatedAccount        | text         | System.String   |              |                      |
+|    | o  |                              | 作成プログラム名         | CreatedProgramName    | text         | System.String   |              |                      |
+|    | o  |                              | 作成プログラムバージョン | CreatedProgramVersion | text         | System.Version  |              |                      |
+
+### index
+
+*NONE*
+
+
+
+___
+
 
 ## LauncherTags
 
@@ -266,7 +287,7 @@ ___
 |    | o  |    | グループ種別             | Kind                  | text         | System.String   |              |           |
 |    | o  |    | イメージ                 | ImageName             | text         | System.String   |              |           |
 |    | o  |    | 色                       | ImageColor            | text         | System.String   |              | #AARRGGBB |
-|    | o  |    | 並び順                   | Sort                  | integer      | System.Int64    |              |           |
+|    | o  |    | 並び順                   | Sequence              | integer      | System.Int64    |              |           |
 
 ### index
 
@@ -288,7 +309,7 @@ ___
 |    | o  |                                | 作成プログラムバージョン | CreatedProgramVersion | text         | System.Version  |              |          |
 |    | o  | LauncherGroups.LauncherGroupId | ランチャーグループID     | LauncherGroupId       | text         | System.Guid     |              |          |
 |    | o  | LauncherItems.LauncherItemId   | ランチャーアイテムID     | LauncherItemId        | text         | System.Guid     |              |          |
-|    | o  |                                | 並び順                   | Sort                  | integer      | System.Int64    |              |          |
+|    | o  |                                | 並び順                   | Sequence              | integer      | System.Int64    |              |          |
 
 ### index
 
@@ -477,7 +498,7 @@ ___
 |    | o  |              | ファイル種別             | FileKind              | text         | System.String   |              | リンク, 埋め込み     |
 |    | o  |              | ファイルパス             | FilePath              | text         | System.String   |              |                      |
 |    | o  |              | 埋め込みファイルID       | NoteFileId            | text         | System.Guid     |              | 埋め込みの場合に使用 |
-|    | o  |              | 並び順                   | Sort                  | integer      | System.Int64    |              |                      |
+|    | o  |              | 並び順                   | Sequence              | integer      | System.Int64    |              |                      |
 
 ### index
 
