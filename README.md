@@ -30,5 +30,5 @@ Bitbucket へログイン可能なアカウントを持っていれば課題を�
 
 ## Build
 
-* current: [![Build status](https://ci.appveyor.com/api/projects/status/nrtepybkoj577bo6?svg=true)](https://ci.appveyor.com/project/sk_0520/pe2)
+* current: [![Build status](https://ci.appveyor.com/api/projects/status/ll41wy1edp5546hn?svg=true)](https://ci.appveyor.com/project/sk_0520/pe-4vo6i)
 * master: [![Build status](https://ci.appveyor.com/api/projects/status/nrtepybkoj577bo6/branch/master?svg=true)](https://ci.appveyor.com/project/sk_0520/pe2/branch/master)

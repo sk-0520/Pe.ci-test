@@ -2,6 +2,10 @@ version: '{build}'
 image: Visual Studio 2019 Preview
 skip_tags: true
 clone_depth: 1
+environment:
+  CI: HAGE
+  BUILD_TYPE: BETA
+  BUILD_OUTPUT: FULL
 install:
   - cmd: choco install dotnetcore-sdk --version 3.0.100-preview9-014004
   - cmd: dotnet --version
