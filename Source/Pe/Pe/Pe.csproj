@@ -13,6 +13,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Resources\**" />
+    <EmbeddedResource Remove="Resources\**" />
+    <None Remove="Resources\**" />
+    <Page Remove="Resources\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="nlog.config" />
   </ItemGroup>
 
@@ -35,7 +42,6 @@
   <ItemGroup>
     <Folder Include="doc\help\" />
     <Folder Include="doc\license\" />
-    <Folder Include="Resources\" />
   </ItemGroup>
 
   <ItemGroup>

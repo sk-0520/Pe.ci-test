@@ -1,7 +1,3 @@
-# メインテーブル一覧
-
-
-
 
 ___
 
@@ -99,7 +95,7 @@ ___
 
 ___
 
-## LauncherCommands
+## LauncherStoreApps
 
 ### layout
 
@@ -115,12 +111,8 @@ ___
 |    | o  |                              | 更新プログラム名         | UpdatedProgramName    | text         | System.String   |              |          |
 |    | o  |                              | 更新プログラムバージョン | UpdatedProgramVersion | text         | System.Version  |              |          |
 |    | o  |                              | 更新回数                 | UpdatedCount          | integer      | System.Int64    |              | 0始まり  |
-|    | o  |                              | コマンド                 | Command               | text         | System.String   |              |          |
+|    | o  |                              | プロトコル・エイリアス   | ProtocolAlias         | text         | System.String   |              |          |
 |    | o  |                              | コマンドオプション       | Option                | text         | System.String   |              |          |
-|    | o  |                              | 作業ディレクトリ         | WorkDirectory         | text         | System.String   |              |          |
-|    | o  |                              | 環境変数使用             | IsEnabledCustomEnvVar | boolean      | System.Boolean  |              |          |
-|    | o  |                              | 標準入出力使用           | IsEnabledStandardIo   | boolean      | System.Boolean  |              |          |
-|    | o  |                              | 管理者実行               | RunAdministrator      | boolean      | System.Boolean  |              |          |
 
 ### index
 
@@ -130,40 +122,7 @@ ___
 
 ___
 
-## LauncherScripts
-
-### layout
-
-| PK | NN | FK                           | 論理カラム名             | 物理カラム名          | 論理データ型 | マッピング型    | チェック制約 | コメント           |
-|:--:|:--:|:-----------------------------|:-------------------------|:----------------------|:-------------|:----------------|:-------------|:-------------------|
-| o  | o  | LauncherItems.LauncherItemId | ランチャーアイテムID     | LauncherItemId        | text         | System.Guid     |              |                    |
-|    | o  |                              | 作成タイムスタンプ       | CreatedTimestamp      | datetime     | System.DateTime |              | UTC                |
-|    | o  |                              | 作成ユーザー名           | CreatedAccount        | text         | System.String   |              |                    |
-|    | o  |                              | 作成プログラム名         | CreatedProgramName    | text         | System.String   |              |                    |
-|    | o  |                              | 作成プログラムバージョン | CreatedProgramVersion | text         | System.Version  |              |                    |
-|    | o  |                              | 更新タイムスタンプ       | UpdatedTimestamp      | datetime     | System.DateTime |              | UTC                |
-|    | o  |                              | 更新ユーザー名           | UpdatedAccount        | text         | System.String   |              |                    |
-|    | o  |                              | 更新プログラム名         | UpdatedProgramName    | text         | System.String   |              |                    |
-|    | o  |                              | 更新プログラムバージョン | UpdatedProgramVersion | text         | System.Version  |              |                    |
-|    | o  |                              | 更新回数                 | UpdatedCount          | integer      | System.Int64    |              | 0始まり            |
-|    | o  |                              | スクリプトエンジン       | ScriptEngine          | text         | System.String   |              |                    |
-|    | o  |                              | 外部エンジン             | CustomEngine          | text         | System.String   |              |                    |
-|    | o  |                              | スクリプト               | Script                | text         | System.String   |              |                    |
-|    | o  |                              | オプション               | Option                | text         | System.String   |              | スクリプトエンジン |
-|    | o  |                              | 作業ディレクトリ         | WorkDirectory         | text         | System.String   |              |                    |
-|    | o  |                              | 環境変数使用             | IsEnabledCustomEnvVar | boolean      | System.Boolean  |              |                    |
-|    | o  |                              | 標準入出力使用           | IsEnabledStandardIo   | boolean      | System.Boolean  |              |                    |
-|    | o  |                              | 管理者実行               | RunAdministrator      | boolean      | System.Boolean  |              |                    |
-
-### index
-
-*NONE*
-
-
-
-___
-
-## LauncherDirectories
+## LauncherAddons
 
 ### layout
 
@@ -179,31 +138,7 @@ ___
 |    | o  |                              | 更新プログラム名         | UpdatedProgramName    | text         | System.String   |              |          |
 |    | o  |                              | 更新プログラムバージョン | UpdatedProgramVersion | text         | System.Version  |              |          |
 |    | o  |                              | 更新回数                 | UpdatedCount          | integer      | System.Int64    |              | 0始まり  |
-|    | o  |                              | ディレクトリパス         | Directory             | text         | System.String   |              |          |
-
-### index
-
-*NONE*
-
-
-
-___
-
-## LauncherDirectoryItems
-
-### layout
-
-| PK | NN | FK                           | 論理カラム名             | 物理カラム名          | 論理データ型 | マッピング型    | チェック制約 | コメント                     |
-|:--:|:--:|:-----------------------------|:-------------------------|:----------------------|:-------------|:----------------|:-------------|:-----------------------------|
-|    | o  | LauncherItems.LauncherItemId | ランチャーアイテムID     | LauncherItemId        | text         | System.Guid     |              |                              |
-|    | o  |                              | 作成タイムスタンプ       | CreatedTimestamp      | datetime     | System.DateTime |              | UTC                          |
-|    | o  |                              | 作成ユーザー名           | CreatedAccount        | text         | System.String   |              |                              |
-|    | o  |                              | 作成プログラム名         | CreatedProgramName    | text         | System.String   |              |                              |
-|    | o  |                              | 作成プログラムバージョン | CreatedProgramVersion | text         | System.Version  |              |                              |
-|    | o  |                              | パターン                 | Pattern               | text         | System.String   |              | 正規表現                     |
-|    | o  |                              | 対象                     | Target                | text         | System.String   |              | ファイル・ディレクトリ・両方 |
-|    | o  |                              | ホワイトリスト           | Whitelist             | boolean      | System.Boolean  |              |                              |
-|    | o  |                              | 並び順                   | Sort                  | integer      | System.Int64    |              |                              |
+|    | o  |                              | プラグインID             | PluginId              | text         | System.Guid     |              |          |
 
 ### index
 
@@ -231,7 +166,6 @@ ___
 ### index
 
 *NONE*
-
 
 
 

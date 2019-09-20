@@ -14,6 +14,7 @@ using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
 using Microsoft.Extensions.Logging;
 using ContentTypeTextNet.Pe.Main.Models.Data;
+using System.Diagnostics;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
 {
@@ -154,17 +155,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
                 case LauncherItemKind.File:
                     return new LauncherFileViewModel(model, screen, dispatcherWapper, launcherToolbarTheme, loggerFactory);
 
-                case LauncherItemKind.Command:
-                    return new LauncherCommandViewModel(model, screen, dispatcherWapper, launcherToolbarTheme, loggerFactory);
+                case LauncherItemKind.StoreApp:
+                    throw new NotImplementedException();
 
-                case LauncherItemKind.Script:
-                    return new LauncherScriptViewModel(model, screen, dispatcherWapper, launcherToolbarTheme, loggerFactory);
-
-                case LauncherItemKind.Directory:
-                    return new LauncherDirectoryViewModel(model, screen, dispatcherWapper, launcherToolbarTheme, loggerFactory);
-
-                case LauncherItemKind.Embedded:
-                    return new LauncherEmbeddedViewModel(model, screen, dispatcherWapper, launcherToolbarTheme, loggerFactory);
+                case LauncherItemKind.Addon:
+                    throw new NotImplementedException();
 
                 case LauncherItemKind.Separator:
                     return new LauncherSeparatorViewModel(model, screen, dispatcherWapper, launcherToolbarTheme, loggerFactory);

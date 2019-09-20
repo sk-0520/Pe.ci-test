@@ -13,15 +13,35 @@ using ContentTypeTextNet.Pe.Main.Views.Extend;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Data
 {
+    /// <summary>
+    /// ランチャーアイテム種別。
+    /// </summary>
     public enum LauncherItemKind
     {
+        /// <summary>
+        /// 💩。
+        /// </summary>
         Unknown,
+        /// <summary>
+        /// ファイルアイテム。
+        /// <para>可能な限りPATHを考慮するので旧来のコマンドに近い挙動も可能。</para>
+        /// </summary>
         File,
-        Command,
-        Script,
-        Directory,
-        Embedded,
-        Addin,
+        /// <summary>
+        /// ストアアプリ。
+        /// <para>プロトコルとかエイリアスであれこれ。</para>
+        /// <para><see cref="File"/>と違って小難しい処理は無理。</para>
+        /// </summary>
+        StoreApp,
+        /// <summary>
+        /// プラグインアイテム。
+        /// <para>プラグインのみぞ知る機能。</para>
+        /// </summary>
+        Addon,
+        /// <summary>
+        /// セパレータ。
+        /// <para>いる、これ？</para>
+        /// </summary>
         Separator,
     }
 
@@ -202,10 +222,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #region property
 
         public LauncherExecutePathData? PathData { get; set; }
-
-        public LauncherPathKind Kind { get; set; }
-
-        public FileSystemInfo? FileSystemInfo { get; set; }
+        public string? FullPath { get; set; }
 
         #endregion
     }
