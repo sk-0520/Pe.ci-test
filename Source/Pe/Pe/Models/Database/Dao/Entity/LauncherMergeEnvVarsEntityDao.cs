@@ -10,9 +10,9 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 {
-    public class LauncherEnvVarsEntityDao : EntityDaoBase
+    public class LauncherMergeEnvVarsEntityDao : EntityDaoBase
     {
-        public LauncherEnvVarsEntityDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+        public LauncherMergeEnvVarsEntityDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
             : base(commander, statementLoader, implementation, loggerFactory)
         { }
 
@@ -24,7 +24,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
             public static string LauncherItemId { get; } = "LauncherItemId";
             public static string EnvName { get; } = "EnvName";
-            public static string Kind { get; } = "Kind";
             public static string EnvValue { get; } = "EnvValue";
 
             #endregion
@@ -34,14 +33,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         #region function
 
-        LauncherEnvironmentVariableItem ConvertFromDto(LauncherEnvVarsEntityDto dto)
+        LauncherMergeEnvironmentVariableItem ConvertFromDto(LauncherEnvVarsEntityDto dto)
         {
-            var environmentVariableKindTransfer = new  EnumTransfer<LauncherEnvironmentVariableKind>();
-
-            var data = new LauncherEnvironmentVariableItem() {
-#pragma warning disable CS8604 // Null 参照引数の可能性があります。
-                Kind = environmentVariableKindTransfer.ToEnum(dto.Kind),
-#pragma warning restore CS8604 // Null 参照引数の可能性があります。
+            var data = new LauncherMergeEnvironmentVariableItem() {
                 Name = dto.EnvName,
                 Value = dto.EnvValue,
             };
@@ -49,11 +43,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return data;
         }
 
-        public IEnumerable<LauncherEnvironmentVariableItem> SelectItems(Guid launcherItemId)
+        public IEnumerable<LauncherMergeEnvironmentVariableItem> SelectItems(Guid launcherItemId)
         {
             var builder = CreateSelectBuilder();
             builder.AddSelect(Column.EnvName);
-            builder.AddSelect(Column.Kind);
             builder.AddSelect(Column.EnvValue);
 
             builder.AddValue(Column.LauncherItemId, launcherItemId);

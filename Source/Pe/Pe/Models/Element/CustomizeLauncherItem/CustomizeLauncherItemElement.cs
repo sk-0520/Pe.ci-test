@@ -90,10 +90,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.CustomizeLauncherItem
             }
         }
 
-        public IReadOnlyCollection<LauncherEnvironmentVariableItem> LoadEnvironmentVariableItems()
+        public IReadOnlyCollection<LauncherMergeEnvironmentVariableItem> LoadMergeEnvironmentVariableItems()
         {
             using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var dao = new LauncherEnvVarsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                var dao = new LauncherMergeEnvVarsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                return dao.SelectItems(LauncherItemId).ToList();
+            }
+        }
+
+        public IReadOnlyList<string> LoadDeleteEnvironmentVariableItems()
+        {
+            using(var commander = MainDatabaseBarrier.WaitRead()) {
+                var dao = new LauncherDeleteEnvVarsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
                 return dao.SelectItems(LauncherItemId).ToList();
             }
         }

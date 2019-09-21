@@ -49,16 +49,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.CustomizeLauncherItem
 
         protected override void InitializeImpl()
         {
-            var envItems = Model.LoadEnvironmentVariableItems();
+            var envItems = Model.LoadMergeEnvironmentVariableItems();
+            var envItems2 = Model.LoadDeleteEnvironmentVariableItems();
 
             var updateItems = envItems
-                .Where(i => i.Kind == LauncherEnvironmentVariableKind.Update)
                 .Select(i => $"{i.Name}={i.Value}")
             ;
 
-            var removeItems = envItems
-                .Where(i => i.Kind == LauncherEnvironmentVariableKind.Remove)
-                .Select(i => i.Name)
+            var removeItems = envItems2
+                .Select(i => i)
             ;
 
             //UpdateTextDocument = new TextDocument(string.Join(Environment.NewLine, updateItems));

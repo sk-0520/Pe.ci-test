@@ -102,28 +102,36 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             return result;
         }
 
-        IList<LauncherEnvironmentVariableItem> GetEnvironmentVariableItems(IDatabaseCommander commander, IDatabaseImplementation implementation)
+        IList<LauncherMergeEnvironmentVariableItem> GetMergeEnvironmentVariableItems(IDatabaseCommander commander, IDatabaseImplementation implementation)
         {
-            var launcherEnvVarsEntityDao = new LauncherEnvVarsEntityDao(commander, StatementLoader, implementation, LoggerFactory);
+            var launcherEnvVarsEntityDao = new LauncherMergeEnvVarsEntityDao(commander, StatementLoader, implementation, LoggerFactory);
+            return launcherEnvVarsEntityDao.SelectItems(LauncherItemId).ToList();
+        }
+        IList<string> GetDeleteEnvironmentVariableItems(IDatabaseCommander commander, IDatabaseImplementation implementation)
+        {
+            var launcherEnvVarsEntityDao = new LauncherDeleteEnvVarsEntityDao(commander, StatementLoader, implementation, LoggerFactory);
             return launcherEnvVarsEntityDao.SelectItems(LauncherItemId).ToList();
         }
 
         ILauncherExecuteResult ExecuteFile(Screen screen)
         {
             LauncherFileData fileData;
-            IList<LauncherEnvironmentVariableItem> envItems;
+            IList<LauncherMergeEnvironmentVariableItem> envMergeItems;
+            IList<string> envDeleteItems;
             using(var commander = MainDatabaseBarrier.WaitRead()) {
                 var launcherFilesEntityDao = new LauncherFilesEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
                 fileData = launcherFilesEntityDao.SelectFile(LauncherItemId);
                 if(fileData.IsEnabledCustomEnvironmentVariable) {
-                    envItems = GetEnvironmentVariableItems(commander, commander.Implementation);
+                    envMergeItems = GetMergeEnvironmentVariableItems(commander, commander.Implementation);
+                    envDeleteItems = GetDeleteEnvironmentVariableItems(commander, commander.Implementation);
                 } else {
-                    envItems = new List<LauncherEnvironmentVariableItem>();
+                    envMergeItems = new List<LauncherMergeEnvironmentVariableItem>();
+                    envDeleteItems = new List<string>();
                 }
             }
 
             var launcherExecutor = new LauncherExecutor(OrderManager, LoggerFactory);
-            var result = launcherExecutor.Execute(Kind, fileData, fileData, envItems, screen);
+            var result = launcherExecutor.Execute(Kind, fileData, fileData, envMergeItems, envDeleteItems, screen);
 
             return result;
         }

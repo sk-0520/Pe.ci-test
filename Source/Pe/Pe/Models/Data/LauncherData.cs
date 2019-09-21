@@ -59,11 +59,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         Directory,
     }
 
-    public enum LauncherEnvironmentVariableKind
-    {
-        Update,
-        Remove,
-    }
 
     public interface ILauncherExecutePathParameter
     {
@@ -116,11 +111,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
-    public class LauncherEnvironmentVariableItem
+    public class LauncherMergeEnvironmentVariableItem
     {
         #region property
 
-        public LauncherEnvironmentVariableKind Kind { get; set; }
         public string? Name { get; set; }
         public string? Value { get; set; }
 
