@@ -41,6 +41,8 @@ namespace ContentTypeTextNet.Pe.Main
             var viewModel = ApplicationManager.CreateViewModel();
             //var notifyIcon = (Hardcodet.Wpf.TaskbarNotification.TaskbarIcon)FindResource("root");
             //notifyIcon.DataContext = viewModel;
+            var notifyIcon = (Hardcodet.Wpf.TaskbarNotification.TaskbarIcon)FindResource("root");
+            notifyIcon.DataContext = viewModel;
 
             ApplicationManager.Execute();
 

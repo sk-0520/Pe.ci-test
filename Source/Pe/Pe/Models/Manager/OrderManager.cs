@@ -192,7 +192,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     //c.Register<ILoggerFactory, ILoggerFactory>(element);
                     return c.Build<CustomizeLauncherItemViewModel>(element);
                 });
-                var window = DiContainer.Build<CustomizeLauncherItemWindow>();
+                var window = DiContainer.BuildView<CustomizeLauncherItemWindow>();
                 window.DataContext = viewModel;
 
                 return new WindowItem(WindowKind.LauncherToolbar, window);
@@ -204,7 +204,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     //c.Register<ILoggerFactory, ILoggerFactory>(element);
                     return c.Build<NoteViewModel>(element);
                 });
-                var window = DiContainer.Build<NoteWindow>();
+                var window = DiContainer.BuildView<NoteWindow>();
                 window.DataContext = viewModel;
 
                 return new WindowItem(WindowKind.Note, window);
@@ -216,7 +216,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     //c.Register<ILoggerFactory, ILoggerFactory>(element);
                     return c.Build<StandardInputOutputViewModel>(element);
                 });
-                var window = DiContainer.Build<StandardInputOutputWindow>();
+                var window = DiContainer.BuildView<StandardInputOutputWindow>();
                 window.DataContext = viewModel;
 
                 return new WindowItem(WindowKind.StandardInputOutput, window);

@@ -12,15 +12,13 @@
     <RootNamespace>ContentTypeTextNet.Pe.Main</RootNamespace>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="Resources\**" />
-    <EmbeddedResource Remove="Resources\**" />
-    <None Remove="Resources\**" />
-    <Page Remove="Resources\**" />
-  </ItemGroup>
 
   <ItemGroup>
     <None Remove="nlog.config" />
+    <None Remove="Resources\Icon\App.ico" />
+    <None Remove="Resources\Icon\NotifyIcon\App-beta.ico" />
+    <None Remove="Resources\Icon\NotifyIcon\App-debug.ico" />
+    <None Remove="Resources\Icon\NotifyIcon\App-release.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -42,6 +40,13 @@
   <ItemGroup>
     <Folder Include="doc\help\" />
     <Folder Include="doc\license\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Icon\App.ico" />
+    <Resource Include="Resources\Icon\NotifyIcon\App-beta.ico" />
+    <Resource Include="Resources\Icon\NotifyIcon\App-debug.ico" />
+    <Resource Include="Resources\Icon\NotifyIcon\App-release.ico" />
   </ItemGroup>
 
   <ItemGroup>
