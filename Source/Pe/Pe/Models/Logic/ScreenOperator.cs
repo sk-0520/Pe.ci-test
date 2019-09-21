@@ -46,7 +46,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                 var id = DeviceToId(deviceName);
                 query = string.Format("SELECT * FROM Win32_DesktopMonitor where DeviceID like \"DesktopMonitor{0}\"", id);
             }
-            using(var searcher = new ManagementObjectSearcher(query)) {
+            var q = new ObjectQuery(query);
+            ManagementPath path = new ManagementPath("//./root/cimv2");
+            var ms = new ManagementScope(path);
+            using(var searcher = new ManagementObjectSearcher(ms, q)) {
                 foreach(ManagementBaseObject mng in searcher.Get()) {
                     var item = new Win32_DesktopMonitor();
                     try {
