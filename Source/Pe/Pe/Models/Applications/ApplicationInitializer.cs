@@ -256,7 +256,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 .Register<IMainDatabaseBarrier, ApplicationDatabaseBarrier>(barrier.Main)
                 .Register<IFileDatabaseBarrier, ApplicationDatabaseBarrier>(barrier.File)
                 .Register<ITemporaryDatabaseBarrier, ApplicationDatabaseBarrier>(barrier.Temporary)
-                .Register<IMainDatabaseLazyWriter, ApplicationDatabaseLazyWriter>(new ApplicationDatabaseLazyWriter(barrier.Main, TimeSpan.FromSeconds(3), loggerFactory))
+                .Register<IMainDatabaseLazyWriter, ApplicationDatabaseLazyWriter>(new ApplicationDatabaseLazyWriter(barrier.Main, TimeSpan.FromSeconds(3),  loggerFactory))
                 .Register<IFileDatabaseLazyWriter, ApplicationDatabaseLazyWriter>(new ApplicationDatabaseLazyWriter(barrier.File, TimeSpan.FromSeconds(3), loggerFactory))
                 .Register<ITemporaryDatabaseLazyWriter, ApplicationDatabaseLazyWriter>(new ApplicationDatabaseLazyWriter(barrier.Temporary, TimeSpan.FromSeconds(3), loggerFactory))
                 .Register<IDispatcherWapper, ApplicationDispatcherWapper>(DiLifecycle.Transient)

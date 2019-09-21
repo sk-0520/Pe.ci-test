@@ -50,7 +50,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 
         #endregion
 
-        public NoteElement(Guid noteId, Screen dockScreen, NotePosition notePosition, IOrderManager orderManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, IDispatcherWapper dispatcherWapper, INoteTheme noteTheme, ILoggerFactory loggerFactory)
+        public NoteElement(Guid noteId, Screen dockScreen, NotePosition notePosition, IOrderManager orderManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IMainDatabaseLazyWriter mainDatabaseLazyWriter, IDatabaseStatementLoader statementLoader, IDispatcherWapper dispatcherWapper, INoteTheme noteTheme, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             NoteId = noteId;
@@ -63,7 +63,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             DispatcherWapper = dispatcherWapper;
             NoteTheme = noteTheme;
 
-            MainDatabaseLazyWriter = new DatabaseLazyWriter(MainDatabaseBarrier, Constants.Config.NoteMainDatabaseLazyWriterWaitTime, LoggerFactory);
+            MainDatabaseLazyWriter = mainDatabaseLazyWriter;
         }
 
         #region property
@@ -87,7 +87,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
         INoteTheme NoteTheme { get; }
         public FontElement? FontElement { get; private set; }
 
-        DatabaseLazyWriter MainDatabaseLazyWriter { get; }
+        IMainDatabaseLazyWriter MainDatabaseLazyWriter { get; }
         UniqueKeyPool UniqueKeyPool { get; } = new UniqueKeyPool();
 
         bool ViewCreated { get; set; }

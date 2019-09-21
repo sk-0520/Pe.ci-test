@@ -19,12 +19,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
     public class ApplicationDatabaseLazyWriter : DatabaseLazyWriter, IMainDatabaseLazyWriter, IFileDatabaseLazyWriter, ITemporaryDatabaseLazyWriter
     {
-        public ApplicationDatabaseLazyWriter(IDatabaseBarrier databaseBarrier, TimeSpan waitTime, ILoggerFactory loggerFactory)
-            : base(databaseBarrier, waitTime, loggerFactory)
-        { }
-
-        public ApplicationDatabaseLazyWriter(IDatabaseBarrier databaseBarrier, TimeSpan waitTime, TimeSpan pauseRetryTime, ILoggerFactory loggerFactory)
-            : base(databaseBarrier, waitTime, pauseRetryTime, loggerFactory)
+        public ApplicationDatabaseLazyWriter(IDatabaseBarrier databaseBarrier, TimeSpan pauseRetryTime, ILoggerFactory loggerFactory)
+            : base(databaseBarrier, pauseRetryTime, loggerFactory)
         { }
     }
 }

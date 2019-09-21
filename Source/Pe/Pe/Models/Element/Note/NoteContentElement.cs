@@ -23,7 +23,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
         #region variable
         #endregion
 
-        public NoteContentElement(Guid noteId, NoteContentKind contentKind, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
+        public NoteContentElement(Guid noteId, NoteContentKind contentKind, IMainDatabaseBarrier mainDatabaseBarrier, IMainDatabaseLazyWriter mainDatabaseLazyWriter, IDatabaseStatementLoader statementLoader, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             NoteId = noteId;
@@ -34,7 +34,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 
             DispatcherWapper = dispatcherWapper;
 
-            MainDatabaseLazyWriter = new DatabaseLazyWriter(MainDatabaseBarrier, Constants.Config.NoteContentMainDatabaseLazyWriterWaitTime, LoggerFactory);
+            MainDatabaseLazyWriter = mainDatabaseLazyWriter;
 
             LinkContentLazyChanger = new LazyAction(nameof(LinkContentLazyChanger), TimeSpan.FromSeconds(5), LoggerFactory);
 
@@ -48,7 +48,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
         IMainDatabaseBarrier MainDatabaseBarrier { get; }
         IDatabaseStatementLoader StatementLoader { get; }
         IDispatcherWapper DispatcherWapper { get; }
-        DatabaseLazyWriter MainDatabaseLazyWriter { get; }
+        IMainDatabaseLazyWriter MainDatabaseLazyWriter { get; }
         UniqueKeyPool UniqueKeyPool { get; } = new UniqueKeyPool();
 
         NoteLinkContentWatcher? LinkWatcher { get; set; }

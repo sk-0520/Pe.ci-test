@@ -36,7 +36,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
 
         #endregion
 
-        public LauncherToolbarElement(Screen dockScreen, ReadOnlyObservableCollection<LauncherGroupElement> launcherGroups, IOrderManager orderManager, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, ILauncherToolbarTheme launcherToolbarTheme, IDiContainer diContainer, ILoggerFactory loggerFactory)
+        public LauncherToolbarElement(Screen dockScreen, ReadOnlyObservableCollection<LauncherGroupElement> launcherGroups, IOrderManager orderManager, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, IMainDatabaseLazyWriter mainDatabaseLazyWriter, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, ILauncherToolbarTheme launcherToolbarTheme, IDiContainer diContainer, ILoggerFactory loggerFactory)
             : base(diContainer, loggerFactory)
         {
             DockScreen = dockScreen;
@@ -49,7 +49,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
             IdFactory = idFactory;
             LauncherToolbarTheme = launcherToolbarTheme;
 
-            MainDatabaseLazyWriter = new DatabaseLazyWriter(MainDatabaseBarrier, Constants.Config.LauncherToolbarMainDatabaseLazyWriterWaitTime, LoggerFactory);
+            MainDatabaseLazyWriter = mainDatabaseLazyWriter;
         }
 
         #region property
@@ -61,7 +61,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
         IIdFactory IdFactory { get; }
         ILauncherToolbarTheme LauncherToolbarTheme { get; }
 
-        DatabaseLazyWriter MainDatabaseLazyWriter { get; }
+        IMainDatabaseLazyWriter MainDatabaseLazyWriter { get; }
         UniqueKeyPool UniqueKeyPool { get; } = new UniqueKeyPool();
 
         public ReadOnlyObservableCollection<LauncherGroupElement> LauncherGroups { get; }

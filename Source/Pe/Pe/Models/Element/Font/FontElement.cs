@@ -31,7 +31,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Font
 
         #endregion
 
-        public FontElement(Guid fontId, ParentUpdater parentUpdater, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, IFontTheme fontTheme, IIdFactory idFactory, ILoggerFactory loggerFactory)
+        public FontElement(Guid fontId, ParentUpdater parentUpdater, IMainDatabaseBarrier mainDatabaseBarrier, IMainDatabaseLazyWriter mainDatabaseLazyWriter, IDatabaseStatementLoader statementLoader, IFontTheme fontTheme, IIdFactory idFactory, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             FontId = fontId;
@@ -41,7 +41,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Font
             FontTheme = fontTheme;
             IdFactory = idFactory;
 
-            MainDatabaseLazyWriter = new DatabaseLazyWriter(MainDatabaseBarrier, Constants.Config.LauncherToolbarMainDatabaseLazyWriterWaitTime, LoggerFactory);
+            MainDatabaseLazyWriter = mainDatabaseLazyWriter;
         }
 
         #region property
@@ -53,7 +53,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Font
         IFontTheme FontTheme { get; }
         IIdFactory IdFactory { get; }
 
-        DatabaseLazyWriter MainDatabaseLazyWriter { get; }
+        IMainDatabaseLazyWriter MainDatabaseLazyWriter { get; }
         UniqueKeyPool UniqueKeyPool { get; } = new UniqueKeyPool();
 
         public string? FamilyName
