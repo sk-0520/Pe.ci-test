@@ -144,7 +144,61 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
 
         protected override void LoggingStatement(string statement, object? parameter)
         {
-            Logger.LogTrace(statement, ObjectDumper.GetDumpString(parameter));
+            if(!Logger.IsEnabled(LogLevel.Trace)) {
+                return;
+            }
+
+            var indent = "    ";
+
+            var lines = TextUtility.ReadLines(statement).ToList();
+            var width = (1 + (int)Math.Log10(lines.Count)).ToString();
+
+            var sb = new StringBuilder(lines.Sum(s => s.Length) * 2);
+
+            void Logging(ObjectDumpItem dumpItem, int nest)
+            {
+                var ns = new string('-', (int)(nest * 1.5)) + "->";
+                sb.Append(indent);
+                sb.Append(ns);
+                sb.Append(' ');
+                sb.Append(dumpItem.MemberInfo);
+                sb.Append('=');
+                sb.Append(dumpItem.Value);
+                sb.Append(" [");
+                sb.Append(dumpItem.MemberInfo.DeclaringType);
+                sb.Append(']');
+                sb.AppendLine();
+
+                foreach(var childItem in dumpItem.Children) {
+                    Logging(childItem, nest + 1);
+                }
+            }
+
+            sb.AppendLine(nameof(LoggingStatement));
+
+
+            sb.Append(indent);
+            sb.AppendLine("[SQL]");
+            foreach(var line in lines.Select((s, i) => (s, i))) {
+                sb.Append(indent);
+                sb.AppendFormat("{0," + width + "}: ", line.i);
+                sb.AppendLine(line.s);
+            }
+            if(parameter != null) {
+                sb.Append(indent);
+                sb.AppendLine("[PARAM]");
+
+                var od = new ObjectDumper();
+                var dumpItems = od.Dump(parameter);
+                foreach(var dumpItem in dumpItems) {
+                    Logging(dumpItem, 0);
+                }
+            }
+
+            using(Logger.BeginScope(nameof(LoggingStatement))) {
+                Logger.LogTrace(sb.ToString());
+            }
+
         }
 
         #endregion
