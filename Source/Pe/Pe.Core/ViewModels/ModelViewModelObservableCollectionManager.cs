@@ -107,7 +107,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
 
         #region ObservableManager
 
-        protected override void AddItemsImple(IReadOnlyList<TModel> newItems)
+        protected override void AddItemsImpl(IReadOnlyList<TModel> newItems)
         {
             var newViewModels = newItems
                 .Cast<TModel>()

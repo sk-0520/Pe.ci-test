@@ -45,10 +45,10 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #region function
 
-        protected abstract void AddItemsImple(IReadOnlyList<TValue> newItems);
+        protected abstract void AddItemsImpl(IReadOnlyList<TValue> newItems);
         void AddItems(IReadOnlyList<TValue> newItems)
         {
-            AddItemsImple(newItems);
+            AddItemsImpl(newItems);
         }
 
         protected abstract void RemoveItemsImpl(IReadOnlyList<TValue> oldItems, int oldStartingIndex);
