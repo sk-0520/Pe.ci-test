@@ -33,7 +33,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         #region function
 
-        LauncherMergeEnvironmentVariableItem ConvertFromDto(LauncherEnvVarsEntityDto dto)
+        LauncherMergeEnvironmentVariableItem ConvertFromDto(LauncherMergeEnvVarsEntityDto dto)
         {
             var data = new LauncherMergeEnvironmentVariableItem() {
                 Name = dto.EnvName,
@@ -51,7 +51,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
             builder.AddValue(Column.LauncherItemId, launcherItemId);
 
-            var result = Select<LauncherEnvVarsEntityDto>(builder)
+            var result = Select<LauncherMergeEnvVarsEntityDto>(builder)
                 .Select(i => ConvertFromDto(i))
             ;
             return result;

@@ -6,13 +6,12 @@ using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Data.Dto.Entity
 {
-    public class LauncherEnvVarsEntityDto: CommonDtoBase
+    public class LauncherMergeEnvVarsEntityDto: CommonDtoBase
     {
         #region property
 
         public Guid LauncherItemId { get; set; }
         public string? EnvName { get; set; }
-        public string? Kind { get; set; }
         public string? EnvValue { get; set; }
 
         #endregion
