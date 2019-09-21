@@ -7,7 +7,7 @@ environment:
   BUILD_TYPE: BETA
   BUILD_OUTPUT: FULL
 install:
-  - cmd: choco install dotnetcore-sdk --version 3.0.100-preview9-014004
+  - cmd: choco install dotnetcore-sdk --version 3.0.100-rc1-014190
   - cmd: dotnet --version
 before_build:
   - cmd: git submodule init
