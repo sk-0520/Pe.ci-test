@@ -32,34 +32,34 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         public long SelectMaxSequence(Guid groupId)
         {
-            var statement = StatementLoader.LoadStatementByCurrent();
+            var statement = LoadStatement();
             return Commander.QuerySingle<long>(statement, new { LauncherGroupId = groupId });
         }
 
         public IEnumerable<Guid> SelectAllLauncherGroupItemIds()
         {
-            var statement = StatementLoader.LoadStatementByCurrent();
+            var statement = LoadStatement();
             return Commander.Query<Guid>(statement);
         }
 
         public IEnumerable<Guid> SelectLauncherItemIds(Guid launcherGroupId)
         {
-            var statement = StatementLoader.LoadStatementByCurrent();
+            var statement = LoadStatement();
             var param = new {
                 LauncherGroupId = launcherGroupId,
             };
             return Commander.Query<Guid>(statement, param);
         }
 
-        public void InsertNewItems(Guid groupId, IEnumerable<Guid> itemIds, long startSort, int sortStep, IDatabaseCommonStatus commonStatus)
+        public void InsertNewItems(Guid groupId, IEnumerable<Guid> itemIds, long startSequence, int sortStep, IDatabaseCommonStatus commonStatus)
         {
-            var statement = StatementLoader.LoadStatementByCurrent();
+            var statement = LoadStatement();
             var counter = 0;
             foreach(var itemId in itemIds) {
                 var dto = new LauncherGroupItemsRowDto() {
                     LauncherGroupId = groupId,
                     LauncherItemId = itemId,
-                    Sequence = startSort + (sortStep * (counter++)),
+                    Sequence = startSequence + (sortStep * (counter++)),
                 };
                 commonStatus.WriteCommon(dto);
                 Commander.Execute(statement, dto);

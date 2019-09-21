@@ -21,7 +21,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         public bool SelectExistsScreen(string screenName)
         {
-            var statement = StatementLoader.LoadStatementByCurrent();
+            var statement = LoadStatement();
             var param = new {
                 ScreenName = screenName,
             };
@@ -30,7 +30,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         public bool InsertScreen(Screen screen, IDatabaseCommonStatus commonStatus)
         {
-            var statement = StatementLoader.LoadStatementByCurrent();
+            var statement = LoadStatement();
             var dto = new ScreensRowDto() {
                 ScreenName = screen.DeviceName,
                 ScreenX = (long)screen.DeviceBounds.X,

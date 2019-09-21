@@ -96,7 +96,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         public bool InsertSimple(Guid launcherItemId, LauncherExecutePathData data, IDatabaseCommonStatus commonStatus)
         {
-            var statement = StatementLoader.LoadStatementByCurrent();
+            var statement = LoadStatement();
             var param = commonStatus.CreateCommonDtoMapping();
             param[Column.LauncherItemId] = launcherItemId;
 #pragma warning disable CS8601 // Null 参照割り当ての可能性があります。

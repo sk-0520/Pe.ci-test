@@ -143,9 +143,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
                 launcherGroupsDao.InsertNewGroup(group, DatabaseCommonStatus.CreateCurrentAccount());
 
                 var launcherGroupItemsDao = new LauncherGroupItemsEntityDao(transaction, StatementLoader, transaction.Implementation, LoggerFactory);
-                var currentMaxSort = launcherGroupItemsDao.SelectMaxSequence(group.LauncherGroupId);
+                var currentMaxSequence = launcherGroupItemsDao.SelectMaxSequence(group.LauncherGroupId);
                 var itemStep = 10;
-                launcherGroupItemsDao.InsertNewItems(group.LauncherGroupId, importItems.Select(i => i.Data.LauncherItemId), currentMaxSort + itemStep, itemStep, DatabaseCommonStatus.CreateCurrentAccount());
+                launcherGroupItemsDao.InsertNewItems(group.LauncherGroupId, importItems.Select(i => i.Data.LauncherItemId), currentMaxSequence + itemStep, itemStep, DatabaseCommonStatus.CreateCurrentAccount());
 
                 transaction.Commit();
             }

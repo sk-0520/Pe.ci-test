@@ -29,7 +29,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Setupper
 
         public override void ExecuteMainDML(IDatabaseCommander commander, IReadOnlySetupDto dto)
         {
-            ExecuteStatement(commander, StatementLoader.LoadStatementByCurrent(), dto);
+            ExecuteStatement(commander, StatementLoader.LoadStatementByCurrent(GetType()), dto);
         }
 
         public override void ExecuteFileDDL(IDatabaseCommander commander, IReadOnlySetupDto dto)

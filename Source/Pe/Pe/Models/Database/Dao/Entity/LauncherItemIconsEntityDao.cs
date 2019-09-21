@@ -36,7 +36,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         {
             var iconScaleTransfer = new EnumTransfer<IconBox>();
 
-            var statement = StatementLoader.LoadStatementByCurrent();
+            var statement = LoadStatement();
             var param = new {
                 LauncherItemId = launcherItemId,
                 IconScale = iconScaleTransfer.ToString(iconBox),
@@ -53,7 +53,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         {
             var iconScaleTransfer = new EnumTransfer<IconBox>();
 
-            var statement = StatementLoader.LoadStatementByCurrent();
+            var statement = LoadStatement();
             var binaryImageItems = imageBinary.GroupSplit(80 * 1024).ToArray();
             var dto = new LauncherItemIconsDto() {
                 LauncherItemId = launcherItemId,
@@ -74,7 +74,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         {
             var iconScaleTransfer = new EnumTransfer<IconBox>();
 
-            var statement = StatementLoader.LoadStatementByCurrent();
+            var statement = LoadStatement();
             var param = new {
                 LauncherItemId = launcherItemId,
                 IconScale = iconScaleTransfer.ToString(iconBox),

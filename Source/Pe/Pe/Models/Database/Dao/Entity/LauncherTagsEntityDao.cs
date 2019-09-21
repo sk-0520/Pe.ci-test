@@ -43,7 +43,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         public void InsertNewTags(Guid launcherItemId, IEnumerable<string> tags, IDatabaseCommonStatus commonStatus)
         {
-            var statement = StatementLoader.LoadStatementByCurrent();
+            var statement = LoadStatement();
             foreach(var tag in tags) {
                 var dto = new LauncherTagsRowDto() {
                     LauncherItemId = launcherItemId,

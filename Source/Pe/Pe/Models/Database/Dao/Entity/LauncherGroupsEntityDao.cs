@@ -76,19 +76,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         public long SelectMaxSequence()
         {
-            var statement = StatementLoader.LoadStatementByCurrent();
+            var statement = LoadStatement();
             return Commander.QuerySingle<long>(statement);
         }
 
         public IEnumerable<Guid> SelectAllLauncherGroupIds()
         {
-            var statement = StatementLoader.LoadStatementByCurrent();
+            var statement = LoadStatement();
             return Commander.Query<Guid>(statement);
         }
 
         public LauncherGroupData SelectLauncherGroup(Guid launcherGroupId)
         {
-            var statement = StatementLoader.LoadStatementByCurrent();
+            var statement = LoadStatement();
             var param = new {
                 LauncherGroupId = launcherGroupId,
             };
@@ -100,7 +100,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         public void InsertNewGroup(LauncherGroupData data, IDatabaseCommonStatus commonStatus)
         {
-            var statement = StatementLoader.LoadStatementByCurrent();
+            var statement = LoadStatement();
             var dto = ConvertFromData(data, commonStatus);
             Commander.Execute(statement, dto);
         }

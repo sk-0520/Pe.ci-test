@@ -111,7 +111,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
 
         bool ExistsVersionTable(IDatabaseAccessor mainAccessor)
         {
-            var statement = StatementLoader.LoadStatementByCurrent();
+            var statement = StatementLoader.LoadStatementByCurrent(GetType());
             return mainAccessor.Query<bool>(statement, null, false).FirstOrDefault();
         }
 
@@ -122,7 +122,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
                 return null;
             }
 
-            var statement = StatementLoader.LoadStatementByCurrent();
+            var statement = StatementLoader.LoadStatementByCurrent(GetType());
             return mainAccessor.Query<Version>(statement, null, false).FirstOrDefault();
         }
 

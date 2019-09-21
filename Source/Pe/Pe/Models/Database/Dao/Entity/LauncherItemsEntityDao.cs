@@ -71,13 +71,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         public IEnumerable<string> SelectFuzzyCodes(string baseCode)
         {
-            var statement = StatementLoader.LoadStatementByCurrent();
+            var statement = LoadStatement();
             return Commander.Query<string>(statement, new { BaseCode = baseCode });
         }
 
         public LauncherItemData SelectLauncherItem(Guid launcherItemId)
         {
-            var statement = StatementLoader.LoadStatementByCurrent();
+            var statement = LoadStatement();
             var param = new {
                 LauncherItemId = launcherItemId,
             };
@@ -88,14 +88,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         public void InsertItem(LauncherItemData data, IDatabaseCommonStatus commonStatus)
         {
-            var statement = StatementLoader.LoadStatementByCurrent();
+            var statement = LoadStatement();
             var dto = ConvertFromData(data, commonStatus);
             Commander.Execute(statement, dto);
         }
 
         public bool UpdateIncrement(Guid launcherItemId, IDatabaseCommonStatus databaseCommonStatus)
         {
-            var statement = StatementLoader.LoadStatementByCurrent();
+            var statement = LoadStatement();
             var param = databaseCommonStatus.CreateCommonDtoMapping();
             param[Column.LauncherItemId] = launcherItemId;
 

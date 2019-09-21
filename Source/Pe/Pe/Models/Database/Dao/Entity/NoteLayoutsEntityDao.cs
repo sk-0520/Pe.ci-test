@@ -77,7 +77,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         {
             var noteLayoutKindTransfer = new EnumTransfer<NoteLayoutKind>();
 
-            var statement = StatementLoader.LoadStatementByCurrent();
+            var statement = LoadStatement();
             var param = new {
                 NoteId = noteId,
                 LayoutKind = noteLayoutKindTransfer.ToString(layoutKind),
@@ -88,7 +88,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         {
             var noteLayoutKindTransfer = new EnumTransfer<NoteLayoutKind>();
 
-            var statement = StatementLoader.LoadStatementByCurrent();
+            var statement = LoadStatement();
             var param = new {
                 NoteId = noteId,
                 LayoutKind = noteLayoutKindTransfer.ToString(layoutKind),
@@ -98,14 +98,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         public bool InsertLayout(NoteLayoutData noteLayout, IDatabaseCommonStatus databaseCommonStatus)
         {
-            var statement = StatementLoader.LoadStatementByCurrent();
+            var statement = LoadStatement();
             var param = ConvertFromData(noteLayout, databaseCommonStatus);
             return Commander.Execute(statement, param) == 1;
         }
 
         public bool UpdateLayout(NoteLayoutData noteLayout, IDatabaseCommonStatus databaseCommonStatus)
         {
-            var statement = StatementLoader.LoadStatementByCurrent();
+            var statement = LoadStatement();
             var param = ConvertFromData(noteLayout, databaseCommonStatus);
             return Commander.Execute(statement, param) == 1;
         }
@@ -113,7 +113,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         {
             var noteLayoutKindTransfer = new EnumTransfer<NoteLayoutKind>();
 
-            var statement = StatementLoader.LoadStatementByCurrent();
+            var statement = LoadStatement();
             var param = databaseCommonStatus.CreateCommonDtoMapping();
             param[Column.NoteId] = noteLayout.NoteId;
             param[Column.LayoutKind] = noteLayoutKindTransfer.ToString(noteLayout.LayoutKind);

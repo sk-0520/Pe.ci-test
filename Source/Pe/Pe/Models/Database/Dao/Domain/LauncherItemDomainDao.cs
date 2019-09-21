@@ -39,7 +39,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain
 
         public LauncherIconData SelectIcon(Guid launcherItemId)
         {
-            var statement = StatementLoader.LoadStatementByCurrent();
+            var statement = LoadStatement();
             var param = new {
                 LauncherItemId = launcherItemId,
             };

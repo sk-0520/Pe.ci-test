@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text;
 using Microsoft.Extensions.Logging;
 
@@ -39,6 +40,19 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         #endregion
 
         #region function
+
+        /// <summary>
+        /// <see cref="IDatabaseStatementLoader.LoadStatementByCurrent(Type, string)"/>のヘルパー巻数。
+        /// </summary>
+        /// <param name="callerMemberName"></param>
+        /// <returns></returns>
+        protected string LoadStatement([CallerMemberName] string callerMemberName = "")
+        {
+            var type = GetType();
+            return StatementLoader.LoadStatementByCurrent(type, callerMemberName);
+        }
+
+
         #endregion
     }
 }

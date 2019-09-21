@@ -226,14 +226,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
             return LoadStatementCore(key);
         }
 
-        [MethodImpl(MethodImplOptions.NoInlining)]
-        public override string LoadStatementByCurrent()
+        public override string LoadStatementByCurrent(Type callerType, [CallerMemberName] string callerMemberName = "")
         {
-            var member = GetCurrentMember();
-#pragma warning disable CS8602 // null 参照の可能性があるものの逆参照です。
-            var baseNamespace = member.DeclaringType.FullName.Substring(IgnoreNamespace.Length + 1);
-#pragma warning restore CS8602 // null 参照の可能性があるものの逆参照です。
-            var key = baseNamespace + "." + member.Name;
+            Debug.Assert(callerType.FullName != null);
+
+            var baseNamespace = callerType.FullName.Substring(IgnoreNamespace.Length + 1);
+            var key = baseNamespace + "." + callerMemberName;
             return LoadStatement(key);
         }
 

@@ -34,7 +34,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain
 
         public IEnumerable<LauncherToolbarsScreenData> SelectAllScreenToolbars()
         {
-            var statement = StatementLoader.LoadStatementByCurrent();
+            var statement = LoadStatement();
             return Commander.Query<LauncherToolbarScreenRowDto>(statement)
                 .Select(i => ConvertFromDto(i))
             ;

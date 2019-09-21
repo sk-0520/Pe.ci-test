@@ -49,7 +49,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         {
             var noteContentKindTransfer = new EnumTransfer<NoteContentKind>();
 
-            var statement = StatementLoader.LoadStatementByCurrent();
+            var statement = LoadStatement();
             var param = new {
                 NoteId = noteId,
                 ContentKind = noteContentKindTransfer.ToString(contentKind),
@@ -61,7 +61,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         {
             var noteContentKindTransfer = new EnumTransfer<NoteContentKind>();
 
-            var statement = StatementLoader.LoadStatementByCurrent();
+            var statement = LoadStatement();
             var param = new {
                 NoteId = noteId,
                 ContentKind = noteContentKindTransfer.ToString(contentKind),
@@ -71,14 +71,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         public bool InsertNewContent(NoteContentData data, IDatabaseCommonStatus databaseCommonStatus)
         {
-            var statement = StatementLoader.LoadStatementByCurrent();
+            var statement = LoadStatement();
             var param = ConvertFromData(data, databaseCommonStatus);
             return Commander.Execute(statement, param) == 1;
         }
 
         public bool UpdateContent(NoteContentData data, IDatabaseCommonStatus databaseCommonStatus)
         {
-            var statement = StatementLoader.LoadStatementByCurrent();
+            var statement = LoadStatement();
             var param = ConvertFromData(data, databaseCommonStatus);
             return Commander.Execute(statement, param) == 1;
         }

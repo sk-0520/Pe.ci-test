@@ -69,7 +69,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         public FontData? SelectFont(Guid fontId)
         {
-            var statement = StatementLoader.LoadStatementByCurrent();
+            var statement = LoadStatement();
             var param = new {
                 FontId = fontId,
             };
@@ -83,7 +83,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         public bool InsertFont(Guid fontId, FontData fontData, IDatabaseCommonStatus databaseCommonStatus)
         {
-            var statement = StatementLoader.LoadStatementByCurrent();
+            var statement = LoadStatement();
             var param = ConvertFromData(fontData, databaseCommonStatus);
             param.FontId = fontId;
             return Commander.Execute(statement, param) == 1;

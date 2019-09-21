@@ -34,7 +34,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain
 
         public IEnumerable<NoteScreenData> SelectNoteScreens(Guid noteId)
         {
-            var statement = StatementLoader.LoadStatementByCurrent();
+            var statement = LoadStatement();
             var param = new {
                 NoteId = noteId,
             };

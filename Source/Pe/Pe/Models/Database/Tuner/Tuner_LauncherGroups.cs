@@ -25,13 +25,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Tuner
 
         bool ExistsRows(IDatabaseCommander commander)
         {
-            var statement = StatementLoader.LoadStatementByCurrent();
+            var statement = StatementLoader.LoadStatementByCurrent(GetType());
             return commander.QuerySingle<bool>(statement, GetCommonDto());
         }
 
         int InsertEmptyGroup(IDatabaseCommander commander)
         {
-            var statement = StatementLoader.LoadStatementByCurrent();
+            var statement = StatementLoader.LoadStatementByCurrent(GetType());
             var param = GetCommonDto();
             param["LauncherGroupId"] = IdFactory.CreateLauncherGroupId();
             param["Name"] = "@name";
