@@ -46,10 +46,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                 var id = DeviceToId(deviceName);
                 query = string.Format("SELECT * FROM Win32_DesktopMonitor where DeviceID like \"DesktopMonitor{0}\"", id);
             }
-            var q = new ObjectQuery(query);
-            ManagementPath path = new ManagementPath("//./root/cimv2");
-            var ms = new ManagementScope(path);
-            using(var searcher = new ManagementObjectSearcher(ms, q)) {
+            //var q = new ObjectQuery(query);
+            //ManagementPath path = new ManagementPath("//./root/cimv2");
+            //var ms = new ManagementScope(default(ManagementPath)!);
+            //ms.Path.Path = "//./root/cimv2";
+            using(var searcher = new ManagementObjectSearcher(query)) {
                 foreach(ManagementBaseObject mng in searcher.Get()) {
                     var item = new Win32_DesktopMonitor();
                     try {
@@ -72,6 +73,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         /// <returns></returns>
         public string GetName(Screen screen)
         {
+            var skip = true;
+            if(skip) {
+                Logger.LogDebug("ManagementObjectSearcherがぶっ壊れてるのでスキップ");
+                return screen.DeviceName ?? screen.ToString() ?? screen.GetType().Name;
+            }
 #pragma warning disable CS8604 // Null 参照引数の可能性があります。
             foreach(var screem in GetScreens(screen.DeviceName)) {
 #pragma warning restore CS8604 // Null 参照引数の可能性があります。
