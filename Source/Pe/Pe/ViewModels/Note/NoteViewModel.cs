@@ -228,10 +228,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                     DispatcherWapper.Invoke(() => ContentKindChangeLoadCommand.RaiseCanExecuteChanged());
                     ShowContentKindChangeConfim = true;
                 } else {
-                    // 変換するがユーザー選択は不要
-                    Debug.Assert(value != NoteContentKind.Link);
-                    Model.ConvertContentKind(ContentKind, value, null);
-                    Model.ChangeContentKind(value);
+                    //// 変換するがユーザー選択は不要
+                    //Debug.Assert(value != NoteContentKind.Link);
+                    //Model.ConvertContentKind(ContentKind, value, null);
+                    //Model.ChangeContentKind(value);
                 }
             }
         }
@@ -337,6 +337,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             o => TitleEditMode
         ));
 
+        [Obsolete]
         public ICommand ContentKindChangeConvertCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
                 DoActionOrSelectLinkData(data => {
@@ -355,6 +356,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             },
             () => CanLoadContentKind
         ));
+        [Obsolete]
         public ICommand ContentKindChangeCreateCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
                 DoActionOrSelectLinkData(data => {
@@ -571,6 +573,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         IReadOnlyColorPair<Color> GetColorPair() => ColorPair.Create(Model.ForegroundColor, Model.BackgroundColor);
 
+        [Obsolete]
         void DoActionOrSelectLinkData(Action<NoteLinkContentData?> action)
         {
             if(ChangingContentKind == NoteContentKind.Link) {

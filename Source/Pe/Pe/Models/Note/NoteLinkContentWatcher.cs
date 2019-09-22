@@ -28,6 +28,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Note
         #endregion
     }
 
+        [Obsolete]
     public class NoteLinkContentWatcher : DisposerBase
     {
         #region event

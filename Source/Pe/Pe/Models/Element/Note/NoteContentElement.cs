@@ -51,6 +51,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
         IMainDatabaseLazyWriter MainDatabaseLazyWriter { get; }
         UniqueKeyPool UniqueKeyPool { get; } = new UniqueKeyPool();
 
+        [Obsolete]
         NoteLinkContentWatcher? LinkWatcher { get; set; }
         LazyAction LinkContentLazyChanger { get; }
 
@@ -74,6 +75,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
                 var data = new NoteContentData() {
                     NoteId = NoteId,
                     Content = content,
+                    //TODO: あとあとかんがえよ
+                    FilePath = string.Empty,
+                    Encoding = Encoding.UTF8,
+                    DelayTime = TimeSpan.Zero,
+                    BufferSize = 0,
+                    RefreshTime = TimeSpan.Zero,
+                    IsEnabledRefresh = true,
                 };
                 dao.InsertNewContent(data, DatabaseCommonStatus.CreateCurrentAccount());
                 commander.Commit();
@@ -122,6 +130,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             return LoadRawContent();
         }
 
+        [Obsolete]
         public NoteLinkContentData LoadLinkSetting()
         {
             if(ContentKind != NoteContentKind.Link) {
@@ -151,6 +160,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             }
         }
 
+        [Obsolete]
         public NoteLinkContentWatcher StartLinkWatch(NoteLinkContentData linkData)
         {
             if(LinkWatcher == null) {
@@ -162,9 +172,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 
         public void StopLinkWatch()
         {
-            if(LinkWatcher != null) {
-                LinkWatcher.Stop();
-            }
+            //if(LinkWatcher != null) {
+            //    LinkWatcher.Stop();
+            //}
         }
 
         public void ChangePlainContent(string? content)
@@ -178,6 +188,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
                 var data = new NoteContentData() {
                     NoteId = NoteId,
                     Content = content,
+                    //TODO: あとあとかんがえよ
+                    FilePath = string.Empty,
+                    Encoding = Encoding.UTF8,
+                    DelayTime = TimeSpan.Zero,
+                    BufferSize = 0,
+                    RefreshTime = TimeSpan.Zero,
+                    IsEnabledRefresh = true,
                 };
                 dao.UpdateContent(data, DatabaseCommonStatus.CreateCurrentAccount());
             }, UniqueKeyPool.Get());
@@ -199,6 +216,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             }, UniqueKeyPool.Get());
         }
 
+        [Obsolete]
         void DelayLinkContentChange(string content)
         {
             LinkContentLazyChanger.DelayAction(() => {
@@ -216,6 +234,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             });
         }
 
+        [Obsolete]
         public void ChangeLinkContent(string content)
         {
             if(ContentKind != NoteContentKind.Link) {
@@ -230,9 +249,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 
         void DisposeLinkWatcher()
         {
-            if(LinkWatcher != null) {
-                LinkWatcher.Dispose();
-            }
+            //if(LinkWatcher != null) {
+            //    LinkWatcher.Dispose();
+            //}
         }
 
         #endregion

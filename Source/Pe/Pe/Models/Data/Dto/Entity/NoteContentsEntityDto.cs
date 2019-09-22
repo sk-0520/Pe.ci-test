@@ -14,6 +14,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data.Dto.Entity
 
         public string? Content { get; set; }
 
+        public string? Address { get; set; }
+        public string? Encoding { get; set; }
+        public TimeSpan DelayTime { get; set; }
+        public long BufferSize { get; set; }
+        public TimeSpan RefreshTime { get; set; }
+        public bool IsEnabledRefresh { get; set; }
+
         #endregion
     }
 }

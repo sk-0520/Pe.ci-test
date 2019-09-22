@@ -417,6 +417,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             }
         }
 
+        [Obsolete]
         bool WriteLinkContent(NoteLinkContentData linkData, string content)
         {
             try {
@@ -434,6 +435,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             return false;
         }
 
+        [Obsolete]
         string ConvertContent(NoteContentKind fromKind, string fromRawContent, NoteContentKind toKind, NoteLinkContentData? linkData)
         {
             var noteContentConverter = new NoteContentConverter(LoggerFactory);
@@ -505,6 +507,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             }
         }
 
+        [Obsolete]
         public void ConvertContentKind(NoteContentKind fromKind, NoteContentKind toKind, NoteLinkContentData? linkData)
         {
             if(fromKind == toKind) {
@@ -536,6 +539,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             }
         }
 
+        [Obsolete]
         public void CreateContentKind(NoteContentKind contentKind, NoteLinkContentData? linkData)
         {
             if(contentKind == NoteContentKind.Link && linkData == null) {

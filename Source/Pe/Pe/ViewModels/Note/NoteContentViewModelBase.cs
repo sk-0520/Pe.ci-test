@@ -120,8 +120,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                 case NoteContentKind.RichText:
                     return new NoteRichTextContentViewModel(model, clipboardManager, dispatcherWapper, loggerFactory);
 
-                case NoteContentKind.Link:
-                    return new NoteLinkContentViewModel(model, clipboardManager, dispatcherWapper, loggerFactory);
+                //case NoteContentKind.Link:
+                //    return new NoteLinkContentViewModel(model, clipboardManager, dispatcherWapper, loggerFactory);
 
                 default:
                     throw new NotImplementedException();

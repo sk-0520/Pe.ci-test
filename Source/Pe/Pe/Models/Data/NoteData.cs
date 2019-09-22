@@ -26,6 +26,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     {
         Plain,
         RichText,
+        [Obsolete]
         Link,
     }
 
@@ -86,6 +87,42 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
         public string? Content { get; set; }
 
+        /// <summary>
+        /// リンク対象ファイル名。
+        /// </summary>
+        [DataMember]
+        public string? FilePath { get; set; }
+
+        /// <summary>
+        /// <see cref="FilePath"/> のエンコーディング。
+        /// </summary>
+        [DataMember]
+        public Encoding? Encoding { get; set; }
+
+        /// <summary>
+        /// ファイル変更から実際に読むまでの待機時間。
+        /// </summary>
+        [DataMember]
+        public TimeSpan DelayTime { get; set; }
+
+        /// <summary>
+        /// <see cref="System.IO.FileSystemWatcher.InternalBufferSize"/>。
+        /// </summary>
+        [DataMember]
+        public int BufferSize { get; set; }
+
+        /// <summary>
+        /// <see cref="System.IO.FileSystemWatcher"/> で取りこぼした際の更新時間。
+        /// </summary>
+        [DataMember]
+        public TimeSpan RefreshTime { get; set; }
+        /// <summary>
+        /// そもそも取りこぼしを考慮するか。
+        /// <para>将来用。</para>
+        /// </summary>
+        [DataMember]
+        public bool IsEnabledRefresh { get; set; }
+
         #endregion
     }
 
@@ -112,6 +149,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
+    [Obsolete]
     [Serializable, DataContract]
     public class NoteLinkContentData
     {

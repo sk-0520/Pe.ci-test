@@ -82,6 +82,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Note
             return converter.ToString(rtfText);
         }
 
+        [Obsolete]
         public string ToLinkSettingString(NoteLinkContentData linkData)
         {
             var serializer = new XmlDataContractSerializer();
@@ -90,6 +91,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Note
                 return Encoding.GetString(stream.ToArray());
             }
         }
+        [Obsolete]
         public NoteLinkContentData ToLinkSetting(string rawSetting)
         {
             var serializer = new XmlDataContractSerializer();

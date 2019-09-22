@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Data.Dto.Entity;
@@ -32,11 +34,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         #region function
         private NoteContentsEntityDto ConvertFromData(NoteContentData data, IDatabaseCommonStatus databaseCommonStatus)
         {
+            Debug.Assert(data.Encoding != null);
+
             var noteContentKindTransfer = new EnumTransfer<NoteContentKind>();
 
             var dto = new NoteContentsEntityDto() {
                 NoteId = data.NoteId,
                 Content = data.Content,
+                Address = data.FilePath,
+                Encoding = EncodingUtility.ToString(data.Encoding),
+                DelayTime = data.DelayTime,
+                BufferSize = data.BufferSize,
+                RefreshTime = data.RefreshTime,
+                IsEnabledRefresh = data.IsEnabledRefresh,
             };
 
             databaseCommonStatus.WriteCommon(dto);

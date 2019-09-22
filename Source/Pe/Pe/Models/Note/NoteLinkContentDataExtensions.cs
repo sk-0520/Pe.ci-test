@@ -13,12 +13,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Note
     {
         #region function
 
+        [Obsolete]
         public static FileInfo ToFileInfo(this NoteLinkContentData @this)
         {
             var filePath = Environment.ExpandEnvironmentVariables(@this.FilePath?.Trim() ?? string.Empty);
             return new FileInfo(filePath);
         }
 
+        [Obsolete]
         public static Encoding ToEncoding(this NoteLinkContentData @this)
         {
 #pragma warning disable CS8604 // Null 参照引数の可能性があります。

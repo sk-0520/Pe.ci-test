@@ -17,6 +17,7 @@ using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 {
+        [Obsolete]
     public class NoteLinkContentViewModel : NoteContentViewModelBase
     {
         #region property
@@ -32,6 +33,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         #region property
 
+        [Obsolete]
         NoteLinkContentData? LinkData { get; set; }
 
         public string? Content
@@ -61,6 +63,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         }
 
         public bool HasIllegalMessage { get; set; }
+        [Obsolete]
         NoteLinkContentWatcher? LinkWatcher { get; set; }
 
         bool IsEnabledRaiseContentChange { get; set; }
