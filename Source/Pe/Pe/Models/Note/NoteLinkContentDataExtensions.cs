@@ -9,6 +9,7 @@ using ContentTypeTextNet.Pe.Main.Models.Data;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Note
 {
+        [Obsolete]
     public static class NoteLinkContentDataExtensions
     {
         #region function
