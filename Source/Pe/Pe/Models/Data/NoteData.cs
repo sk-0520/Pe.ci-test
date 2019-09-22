@@ -55,6 +55,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         public bool IsCompact { get; set; }
         public bool TextWrap { get; set; }
         public NoteContentKind ContentKind { get; set; }
+        public bool IsLinkContent { get; set; }
         #endregion
     }
 
@@ -82,7 +83,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #region property
 
         public Guid NoteId { get; set; }
-        public NoteContentKind ContentKind { get; set; }
 
         public string? Content { get; set; }
 

@@ -11,7 +11,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data.Dto.Entity
         #region property
 
         public Guid NoteId { get; set; }
-        public string? ContentKind { get; set; }
 
         public string? Content { get; set; }
 

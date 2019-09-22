@@ -23,6 +23,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data.Dto.Entity
         public bool IsCompact { get; set; }
         public bool TextWrap { get; set; }
         public string? ContentKind { get; set; }
+        public bool IsLinkContent { get; set; }
 
         #endregion
     }

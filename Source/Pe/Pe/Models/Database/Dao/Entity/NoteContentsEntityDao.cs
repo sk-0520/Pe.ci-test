@@ -36,7 +36,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
             var dto = new NoteContentsEntityDto() {
                 NoteId = data.NoteId,
-                ContentKind = noteContentKindTransfer.ToString(data.ContentKind),
                 Content = data.Content,
             };
 
@@ -45,26 +44,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return dto;
         }
 
-        public bool SelectExistsContent(Guid noteId, NoteContentKind contentKind)
+        public bool SelectExistsContent(Guid noteId)
         {
-            var noteContentKindTransfer = new EnumTransfer<NoteContentKind>();
-
             var statement = LoadStatement();
             var param = new {
                 NoteId = noteId,
-                ContentKind = noteContentKindTransfer.ToString(contentKind),
             };
             return Commander.QueryFirst<bool>(statement, param);
         }
 
-        public string SelectFullContent(Guid noteId, NoteContentKind contentKind)
+        public string SelectFullContent(Guid noteId)
         {
-            var noteContentKindTransfer = new EnumTransfer<NoteContentKind>();
-
             var statement = LoadStatement();
             var param = new {
                 NoteId = noteId,
-                ContentKind = noteContentKindTransfer.ToString(contentKind),
             };
             return Commander.QueryFirst<string>(statement, param);
         }

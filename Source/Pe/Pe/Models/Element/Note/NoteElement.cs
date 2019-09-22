@@ -413,7 +413,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
         {
             using(var commander = MainDatabaseBarrier.WaitRead()) {
                 var dao = new NoteContentsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
-                return dao.SelectExistsContent(NoteId, contentKind);
+                return dao.SelectExistsContent(NoteId);
             }
         }
 
@@ -521,12 +521,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
                 var convertedContent = ConvertContent(fromKind, fromRawContent, toKind, linkData);
                 var contentData = new NoteContentData() {
                     NoteId = NoteId,
-                    ContentKind = toKind,
                     Content = convertedContent,
                 };
                 using(var commander = MainDatabaseBarrier.WaitWrite()) {
                     var notesEntityDao = new NoteContentsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
-                    if(notesEntityDao.SelectExistsContent(contentData.NoteId, contentData.ContentKind)) {
+                    if(notesEntityDao.SelectExistsContent(contentData.NoteId)) {
                         notesEntityDao.UpdateContent(contentData, DatabaseCommonStatus.CreateCurrentAccount());
                     } else {
                         notesEntityDao.InsertNewContent(contentData, DatabaseCommonStatus.CreateCurrentAccount());
@@ -547,7 +546,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 
             var contentData = new NoteContentData() {
                 NoteId = NoteId,
-                ContentKind = contentKind,
                 Content = contentKind == NoteContentKind.Link
 #pragma warning disable CS8604 // Null 参照引数の可能性があります。
                     ? noteContentConverter.ToLinkSettingString(linkData)
@@ -557,7 +555,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             };
             using(var commander = MainDatabaseBarrier.WaitWrite()) {
                 var notesEntityDao = new NoteContentsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
-                if(notesEntityDao.SelectExistsContent(contentData.NoteId, contentData.ContentKind)) {
+                if(notesEntityDao.SelectExistsContent(contentData.NoteId)) {
                     notesEntityDao.UpdateContent(contentData, DatabaseCommonStatus.CreateCurrentAccount());
                 } else {
                     notesEntityDao.InsertNewContent(contentData, DatabaseCommonStatus.CreateCurrentAccount());

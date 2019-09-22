@@ -62,7 +62,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
         {
             using(var commander = MainDatabaseBarrier.WaitRead()) {
                 var dao = new NoteContentsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
-                return dao.SelectExistsContent(NoteId, ContentKind);
+                return dao.SelectExistsContent(NoteId);
             }
         }
 
@@ -73,7 +73,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
                 var dao = new NoteContentsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
                 var data = new NoteContentData() {
                     NoteId = NoteId,
-                    ContentKind = ContentKind,
                     Content = content,
                 };
                 dao.InsertNewContent(data, DatabaseCommonStatus.CreateCurrentAccount());
@@ -85,7 +84,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
         {
             using(var commander = MainDatabaseBarrier.WaitRead()) {
                 var dao = new NoteContentsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
-                return dao.SelectFullContent(NoteId, ContentKind);
+                return dao.SelectFullContent(NoteId);
             }
         }
 
@@ -178,7 +177,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
                 var dao = new NoteContentsEntityDao(c, StatementLoader, c.Implementation, LoggerFactory);
                 var data = new NoteContentData() {
                     NoteId = NoteId,
-                    ContentKind = ContentKind,
                     Content = content,
                 };
                 dao.UpdateContent(data, DatabaseCommonStatus.CreateCurrentAccount());
@@ -195,7 +193,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
                 var dao = new NoteContentsEntityDao(c, StatementLoader, c.Implementation, LoggerFactory);
                 var data = new NoteContentData() {
                     NoteId = NoteId,
-                    ContentKind = ContentKind,
                     Content = content,
                 };
                 dao.UpdateContent(data, DatabaseCommonStatus.CreateCurrentAccount());

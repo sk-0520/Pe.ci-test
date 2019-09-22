@@ -95,6 +95,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 IsCompact = data.IsCompact,
                 TextWrap = data.TextWrap,
                 ContentKind = contentKindTransfer.ToString(data.ContentKind),
+                IsLinkContent = data.IsLinkContent,
             };
 
             commonStatus.WriteCommon(result);
