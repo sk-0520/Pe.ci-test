@@ -16,6 +16,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
     public enum WindowKind
     {
+        Debug,
         Accept,
         Startup,
         ImportPrograms,

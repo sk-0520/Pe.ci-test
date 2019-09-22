@@ -254,6 +254,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         public void Execute()
         {
             Logger.LogInformation("がんばる！");
+#if DEBUG
+            DebugExecuteBefore();
+#endif
 
             // グループ構築
             var launcherGroups = CreateLauncherGroupElements();
@@ -276,9 +279,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             foreach(var viewShowStater in viewShowStaters) {
                 viewShowStater.StartView();
             }
-
 #if DEBUG
-            DebugExecute();
+            DebugExecuteAfter();
 #endif
         }
 
