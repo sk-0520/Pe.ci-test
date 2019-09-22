@@ -10,7 +10,7 @@ using ContentTypeTextNet.Pe.Core.Models;
 
 namespace ContentTypeTextNet.Pe.Core.Views.Converter
 {
-    public class IconScaleToWidthConverter : IValueConverter
+    public class IconBoxToWidthConverter : IValueConverter
     {
         #region IValueConverter
 

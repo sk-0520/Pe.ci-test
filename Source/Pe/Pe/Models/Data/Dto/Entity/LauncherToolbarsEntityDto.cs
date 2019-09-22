@@ -14,7 +14,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data.Dto.Entity
         public Guid LauncherGroupId { get; set; }
         public string? PositionKind { get; set; }
         public string? Direction { get; set; }
-        public string? IconScale { get; set; }
+        public string? IconBox { get; set; }
         public Guid FontId { get; set; }
         public string? AutoHideTimeout { get; set; }
         public long TextWidth { get; set; }

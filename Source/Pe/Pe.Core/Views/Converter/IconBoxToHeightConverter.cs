@@ -10,7 +10,7 @@ using ContentTypeTextNet.Pe.Core.Models;
 
 namespace ContentTypeTextNet.Pe.Core.Views.Converter
 {
-    public class IconScaleToHeightConverter : IValueConverter
+    public class IconBoxToHeightConverter : IValueConverter
     {
         #region IValueConverter
 

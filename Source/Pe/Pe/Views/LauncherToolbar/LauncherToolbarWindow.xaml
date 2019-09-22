@@ -34,8 +34,8 @@
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
     <cttn_lib_shared_lib_view_converter:LogicalNotConverter x:Key="LogicalNotConverter" />
-    <cttn_lib_shared_lib_view_converter:IconScaleToWidthConverter x:Key="IconScaleToWidthConverter" />
-    <cttn_lib_shared_lib_view_converter:IconScaleToHeightConverter x:Key="IconScaleToHeightConverter" />
+    <cttn_lib_shared_lib_view_converter:IconBoxToWidthConverter x:Key="IconScaleToWidthConverter" />
+    <cttn_lib_shared_lib_view_converter:IconBoxToHeightConverter x:Key="IconScaleToHeightConverter" />
     <cttn_lib_shared_lib_view_converter:LogicalMultiEqualConverter x:Key="LogicalMultiEqualConverter" />
 
 

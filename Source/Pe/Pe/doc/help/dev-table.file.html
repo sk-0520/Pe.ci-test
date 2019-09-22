@@ -10,7 +10,7 @@ ___
 | PK | NN | FK | 論理カラム名             | 物理カラム名          | 論理データ型 | マッピング型    | チェック制約 | コメント |
 |:--:|:--:|:---|:-------------------------|:----------------------|:-------------|:----------------|:-------------|:---------|
 | o  | o  |    | ランチャーアイテムID     | LauncherItemId        | text         | System.Guid     |              |          |
-| o  | o  |    | アイコン種別             | IconScale             | text         | System.String   |              |          |
+| o  | o  |    | アイコン種別             | IconBox               | text         | System.String   |              |          |
 | o  | o  |    | 連結順序                 | Sequence              | integer      | System.Int64    |              |          |
 |    | o  |    | 作成タイムスタンプ       | CreatedTimestamp      | datetime     | System.DateTime |              | UTC      |
 |    | o  |    | 作成ユーザー名           | CreatedAccount        | text         | System.String   |              |          |

@@ -41,7 +41,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         LauncherToolbarsDisplayData ConvertFromDto(LauncherToolbarsDisplayRowDto dto)
         {
             var toolbarPositionTransfer = new EnumTransfer<AppDesktopToolbarPosition>();
-            var iconScaleTransfer = new EnumTransfer<IconBox>();
+            var iconBoxTransfer = new EnumTransfer<IconBox>();
             var iconDirectionTransfer = new EnumTransfer<LauncherToolbarIconDirection>();
 
             var result = new LauncherToolbarsDisplayData() {
@@ -54,7 +54,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 IconDirection = iconDirectionTransfer.ToEnum(dto.Direction),
 #pragma warning restore CS8604 // Null 参照引数の可能性があります。
 #pragma warning disable CS8604 // Null 参照引数の可能性があります。
-                IconBox = iconScaleTransfer.ToEnum(dto.IconScale),
+                IconBox = iconBoxTransfer.ToEnum(dto.IconBox),
 #pragma warning restore CS8604 // Null 参照引数の可能性があります。
                 FontId = dto.FontId,
 #pragma warning disable CS8604 // Null 参照引数の可能性があります。

@@ -11,7 +11,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data.Dto.Entity
         #region property
 
         public Guid LauncherItemId { get; set; }
-        public string? IconScale { get; set; }
+        public string? IconBox { get; set; }
         public long Sequence { get; set; }
         public byte[]? Image { get; set; }
 

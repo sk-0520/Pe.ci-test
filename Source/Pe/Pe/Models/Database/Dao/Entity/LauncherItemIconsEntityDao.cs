@@ -34,12 +34,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         public IReadOnlyList<byte[]>? SelectImageBinary(Guid launcherItemId, IconBox iconBox)
         {
-            var iconScaleTransfer = new EnumTransfer<IconBox>();
+            var iconBoxTransfer = new EnumTransfer<IconBox>();
 
             var statement = LoadStatement();
             var param = new {
                 LauncherItemId = launcherItemId,
-                IconScale = iconScaleTransfer.ToString(iconBox),
+                IconBox = iconBoxTransfer.ToString(iconBox),
             };
             var rows = Commander.Query<byte[]>(statement, param);
             if(rows != null) {
@@ -51,13 +51,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         public int InsertImageBinary(Guid launcherItemId, IconBox iconBox, IEnumerable<byte> imageBinary, IDatabaseCommonStatus commonStatus)
         {
-            var iconScaleTransfer = new EnumTransfer<IconBox>();
+            var iconBoxTransfer = new EnumTransfer<IconBox>();
 
             var statement = LoadStatement();
             var binaryImageItems = imageBinary.GroupSplit(80 * 1024).ToArray();
             var dto = new LauncherItemIconsDto() {
                 LauncherItemId = launcherItemId,
-                IconScale = iconScaleTransfer.ToString(iconBox),
+                IconBox = iconBoxTransfer.ToString(iconBox),
             };
             var resultCount = 0;
             for(var i = 0; i < binaryImageItems.Length; i++) {
@@ -72,12 +72,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         public int DeleteImageBinary(Guid launcherItemId, IconBox iconBox)
         {
-            var iconScaleTransfer = new EnumTransfer<IconBox>();
+            var iconBoxTransfer = new EnumTransfer<IconBox>();
 
             var statement = LoadStatement();
             var param = new {
                 LauncherItemId = launcherItemId,
-                IconScale = iconScaleTransfer.ToString(iconBox),
+                IconBox = iconBoxTransfer.ToString(iconBox),
             };
             return Commander.Execute(statement, param);
         }

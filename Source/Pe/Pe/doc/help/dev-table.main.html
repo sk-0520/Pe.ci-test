@@ -368,7 +368,7 @@ ___
 |    | o  |    | ランチャーグループID     | LauncherGroupId       | text         | System.Guid     |              |                                              |
 |    | o  |    | 表示位置                 | PositionKind          | text         | System.String   |              | 上下左右                                     |
 |    | o  |    | 方向                     | Direction             | text         | System.String   |              | アイコンの並びの基点                         |
-|    | o  |    | アイコンサイズ           | IconScale             | text         | System.String   |              |                                              |
+|    | o  |    | アイコンサイズ           | IconBox               | text         | System.String   |              |                                              |
 |    | o  |    | フォント                 | FontId                | text         | System.Guid     |              |                                              |
 |    | o  |    | 自動的に隠す時間         | AutoHideTimeout       | text         | System.TimeSpan |              |                                              |
 |    | o  |    | 文字幅                   | TextWidth             | integer      | System.Int64    |              |                                              |
