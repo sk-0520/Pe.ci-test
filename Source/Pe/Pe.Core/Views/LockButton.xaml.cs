@@ -27,7 +27,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
 
         public static readonly DependencyProperty LockContentProperty = DependencyProperty.Register(
             nameof(LockContent),
-            typeof(object),
+            typeof(UIElement),
             typeof(LockButton),
             new FrameworkPropertyMetadata(
                 null,
@@ -35,9 +35,9 @@ namespace ContentTypeTextNet.Pe.Core.Views
             )
         );
 
-        public object LockContent
+        public UIElement LockContent
         {
-            get { return (object)GetValue(LockContentProperty); }
+            get { return (UIElement)GetValue(LockContentProperty); }
             set { SetValue(LockContentProperty, value); }
         }
 
@@ -45,7 +45,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
         {
             var ctrl = d as LockButton;
             if(ctrl != null) {
-                ctrl.LockContent = (object)e.NewValue;
+                ctrl.LockContent = (UIElement)e.NewValue;
             }
         }
 
