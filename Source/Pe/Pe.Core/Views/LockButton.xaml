@@ -28,7 +28,8 @@
                   <BeginStoryboard.Storyboard>
                     <Storyboard>
                       <BooleanAnimationUsingKeyFrames Storyboard.TargetProperty="IsChecked">
-                        <DiscreteBooleanKeyFrame KeyTime="{Binding RestoreTime, ElementName=root}" Value="False" />
+                        <!--<DiscreteBooleanKeyFrame KeyTime="{Binding RestoreTime, ElementName=root}" Value="False" />-->
+                        <DiscreteBooleanKeyFrame KeyTime="0.00:00:10.0" Value="False" />
                       </BooleanAnimationUsingKeyFrames>
                     </Storyboard>
                   </BeginStoryboard.Storyboard>

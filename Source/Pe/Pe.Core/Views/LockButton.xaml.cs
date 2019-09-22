@@ -51,33 +51,33 @@ namespace ContentTypeTextNet.Pe.Core.Views
 
         #endregion
 
-        #region RestoreTimeProperty
+        //#region RestoreTimeProperty
 
-        public static readonly DependencyProperty RestoreTimeProperty = DependencyProperty.Register(
-            nameof(RestoreTime),
-            typeof(TimeSpan),
-            typeof(LockButton),
-            new FrameworkPropertyMetadata(
-                TimeSpan.FromSeconds(10),
-                new PropertyChangedCallback(OnRestoreTimeChanged)
-            )
-        );
+        //public static readonly DependencyProperty RestoreTimeProperty = DependencyProperty.Register(
+        //    nameof(RestoreTime),
+        //    typeof(TimeSpan),
+        //    typeof(LockButton),
+        //    new FrameworkPropertyMetadata(
+        //        TimeSpan.FromSeconds(10),
+        //        new PropertyChangedCallback(OnRestoreTimeChanged)
+        //    )
+        //);
 
-        public object RestoreTime
-        {
-            get { return (object)GetValue(RestoreTimeProperty); }
-            set { SetValue(RestoreTimeProperty, value); }
-        }
+        //public object RestoreTime
+        //{
+        //    get { return (object)GetValue(RestoreTimeProperty); }
+        //    set { SetValue(RestoreTimeProperty, value); }
+        //}
 
-        static void OnRestoreTimeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var ctrl = d as LockButton;
-            if(ctrl != null) {
-                ctrl.RestoreTime = (TimeSpan)e.NewValue;
-            }
-        }
+        //static void OnRestoreTimeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        //{
+        //    var ctrl = d as LockButton;
+        //    if(ctrl != null) {
+        //        ctrl.RestoreTime = (TimeSpan)e.NewValue;
+        //    }
+        //}
 
-        #endregion
+        //#endregion
 
     }
 }

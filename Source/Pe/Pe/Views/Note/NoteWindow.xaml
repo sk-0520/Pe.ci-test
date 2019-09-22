@@ -11,7 +11,7 @@
   xmlns:cttn_lib_shared_lib_view_converter="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Converter;assembly=Pe.Core"
   xmlns:cttn_lib_shared_lib_view_attached="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Attached;assembly=Pe.Core"
 
-    xmlns:app_core_view="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core"
+  xmlns:app_core_view="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core"
 
   xmlns:app_main_view="clr-namespace:ContentTypeTextNet.Pe.Main.Views"
   xmlns:app_main_model_data="clr-namespace:ContentTypeTextNet.Pe.Main.Models.Data"
@@ -466,6 +466,7 @@
                   <Button Grid.Column="0" Content="copy" Command="{Binding Content.CopyCommand}" />
                   <Button Grid.Column="1" Content="close" Command="{x:Static SystemCommands.CloseWindowCommand}" />
                   <Grid Grid.Column="2">
+                    <!--
                     <Grid.ColumnDefinitions>
                       <ColumnDefinition />
                       <ColumnDefinition />
@@ -479,7 +480,7 @@
                               <Setter Property="IsChecked" Value="False" />
                             </DataTrigger>
                             <Trigger Property="IsChecked" Value="True">
-                              <!-- 一定時間経過で非活性 -->
+                              --><!-- 一定時間経過で非活性 --><!--
                               <Trigger.EnterActions>
                                 <BeginStoryboard>
                                   <BeginStoryboard.Storyboard>
@@ -497,6 +498,12 @@
                       </ToggleButton.Style>
                     </ToggleButton>
                     <Button Grid.Column="1" IsEnabled="{Binding IsChecked, ElementName=removeLocker}" Command="{Binding RemoveCommand}" Content="remove" />
+                    -->
+                    <app_core_view:LockButton>
+                      <app_core_view:LockButton.LockContent>
+                        <Button Grid.Column="1" Command="{Binding RemoveCommand}" Content="remove" />
+                      </app_core_view:LockButton.LockContent>
+                    </app_core_view:LockButton>
                   </Grid>
                 </Grid>
 
