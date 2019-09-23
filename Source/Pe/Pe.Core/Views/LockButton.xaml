@@ -18,7 +18,7 @@
       <ToggleButton.Style>
         <Style TargetType="ToggleButton">
           <Style.Triggers>
-            <DataTrigger Binding="{Binding IsActive, ElementName=root}" Value="False">
+            <DataTrigger Binding="{Binding IsActive, RelativeSource={RelativeSource AncestorType=Window}}" Value="False">
               <Setter Property="IsChecked" Value="False" />
             </DataTrigger>
             <Trigger Property="IsChecked" Value="True">
