@@ -40,20 +40,20 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         LazyAction TextChangeLazyAction { get; }
 
-        public string? RtfContent
-        {
-            get => this._rtfContent;
-            set
-            {
-                if(SetProperty(ref this._rtfContent, value)) {
-                    if(CanVisible) {
-#pragma warning disable CS8604 // Null 参照引数の可能性があります。
-                        Model.ChangeRichTextContent(RtfContent);
-#pragma warning restore CS8604 // Null 参照引数の可能性があります。
-                    }
-                }
-            }
-        }
+//        public string? RtfContent
+//        {
+//            get => this._rtfContent;
+//            set
+//            {
+//                if(SetProperty(ref this._rtfContent, value)) {
+//                    if(CanVisible) {
+//#pragma warning disable CS8604 // Null 参照引数の可能性があります。
+//                        Model.ChangeRichTextContent(RtfContent);
+//#pragma warning restore CS8604 // Null 参照引数の可能性があります。
+//                    }
+//                }
+//            }
+//        }
 
         #endregion
 
@@ -101,7 +101,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         {
             var data = new DataObject();
             if(CanVisible) {
-                data.SetText(RtfContent, TextDataFormat.Rtf);
+                var noteContentConverter = new NoteContentConverter(LoggerFactory);
+                data.SetText(noteContentConverter.ToRtfString(Document), TextDataFormat.Rtf);
             } else {
                 var value = Model.LoadRichTextContent();
                 data.SetText(value, TextDataFormat.Rtf);
