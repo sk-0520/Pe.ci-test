@@ -6,17 +6,10 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Interactivity;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Core.Models;
 
 namespace ContentTypeTextNet.Pe.Core.Views
 {
-    public class RequestParameter
-    { }
-    public class RequestResponse
-    { }
-
-    public sealed class RequestSilentResponse : RequestResponse
-    { }
-
     public class RequestEventArgs : EventArgs
     {
         public RequestEventArgs(RequestParameter requestParameter, Action<RequestResponse> callback)

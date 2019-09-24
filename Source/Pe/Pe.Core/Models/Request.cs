@@ -8,6 +8,14 @@ using Prism.Interactivity.InteractionRequest;
 
 namespace ContentTypeTextNet.Pe.Core.Models
 {
+    public class RequestParameter
+    { }
+    public class RequestResponse
+    { }
+
+    public sealed class RequestSilentResponse : RequestResponse
+    { }
+
     public class CancelResponse: RequestResponse
     {
         #region property
@@ -35,6 +43,21 @@ namespace ContentTypeTextNet.Pe.Core.Models
     public class FileDialogRequestResponse : CancelResponse
     {
         public string[]? ResponseFilePaths { get; set; }
+    }
+
+    public class FileOpenDialogRequestParameter : FileDialogRequestParameter
+    {
+        #region property
+
+
+        #endregion
+    }
+    public class FileOpenDialogRequestResponse : FileDialogRequestResponse
+    {
+        #region property
+
+
+        #endregion
     }
 
     public class FileSaveDialogRequestParameter : FileDialogRequestParameter
