@@ -20,12 +20,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 {
     public class NoteRichTextContentViewModel : NoteContentViewModelBase, IFlushable
     {
-        #region variable
-
-        string? _rtfContent;
-
-        #endregion
-
         public NoteRichTextContentViewModel(NoteContentElement model, IClipboardManager clipboardManager, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
             : base(model, clipboardManager, dispatcherWapper, loggerFactory)
         {
