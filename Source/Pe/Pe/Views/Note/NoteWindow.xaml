@@ -67,6 +67,12 @@
     <app_core_view:RequestTrigger SourceObject="{Binding SelectLinkFileRequest}">
       <i:InvokeCommandAction Command="{Binding SelectLinkFileCommand ,ElementName=root}" />
     </app_core_view:RequestTrigger>
+    <app_core_view:RequestTrigger SourceObject="{Binding UnlinkRequest}">
+      <i:InvokeCommandAction Command="{Binding UnlinkCommand ,ElementName=root}" />
+    </app_core_view:RequestTrigger>
+    <app_core_view:RequestTrigger SourceObject="{Binding ChangedLinkRequest}">
+      <i:InvokeCommandAction Command="{Binding ChangedLinkCommand ,ElementName=root}" />
+    </app_core_view:RequestTrigger>
     <app_core_view:RequestTrigger SourceObject="{Binding CloseRequest}">
       <i:InvokeCommandAction Command="{Binding CloseCommand ,ElementName=root}" />
     </app_core_view:RequestTrigger>

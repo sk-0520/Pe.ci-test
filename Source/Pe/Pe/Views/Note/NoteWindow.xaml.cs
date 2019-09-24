@@ -42,6 +42,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Note
 
         PopupAttacher? PopupAttacher { get; set; }
 
+        CommandStore CommandStore { get; } = new CommandStore();
 
         #endregion
 
@@ -75,8 +76,6 @@ namespace ContentTypeTextNet.Pe.Main.Views.Note
             }
         }
 
-        #region command
-
         ICommand? _CloseCommand;
         public ICommand CloseCommand
         {
@@ -90,7 +89,17 @@ namespace ContentTypeTextNet.Pe.Main.Views.Note
             }
         }
 
-        #endregion
+        public ICommand UnlinkCommand => CommandStore.GetOrCreate(() => new DelegateCommand<RequestEventArgs>(
+            o => {
+
+            }
+        ));
+
+        public ICommand ChangedLinkCommand => CommandStore.GetOrCreate(() => new DelegateCommand<RequestEventArgs>(
+            o => {
+
+            }
+        ));
 
         #endregion
 

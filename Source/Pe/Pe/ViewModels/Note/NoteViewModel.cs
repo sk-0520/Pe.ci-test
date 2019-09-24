@@ -92,6 +92,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             CloseRequest = new RequestSender(DispatcherWapper);
             TitleEditStartRequest = new RequestSender(DispatcherWapper);
             SelectLinkFileRequest = new RequestSender(DispatcherWapper);
+
+            UnlinkRequest = new RequestSender(DispatcherWapper);
+            ChangedLinkRequest = new RequestSender(DispatcherWapper);
         }
 
         #region property
@@ -99,6 +102,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         public RequestSender TitleEditStartRequest { get; }
         public RequestSender SelectLinkFileRequest { get; }
+
+        public RequestSender UnlinkRequest { get; }
+        public RequestSender ChangedLinkRequest { get; }
 
         bool CanLayoutNotify { get; set; }
 
