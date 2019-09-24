@@ -339,16 +339,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             o => TitleEditMode
         ));
 
-        [Obsolete]
         public ICommand ContentKindChangeConvertCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-                DoActionOrSelectLinkData(data => {
-                    Flush();
+                Flush();
 
-                    Model.ConvertContentKind(ContentKind, ChangingContentKind, data);
-                    Model.ChangeContentKind(ChangingContentKind);
-                    ShowContentKindChangeConfim = false;
-                });
+                Model.ConvertContentKind(ChangingContentKind);
+                ShowContentKindChangeConfim = false;
             }
         ));
 
