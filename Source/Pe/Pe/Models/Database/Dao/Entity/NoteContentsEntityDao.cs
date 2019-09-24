@@ -34,8 +34,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         #region function
         private NoteContentsEntityDto ConvertFromData(NoteContentData data, IDatabaseCommonStatus databaseCommonStatus)
         {
-            Debug.Assert(data.Encoding != null);
-
             var noteContentKindTransfer = new EnumTransfer<NoteContentKind>();
 
             var dto = new NoteContentsEntityDto() {
@@ -44,7 +42,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 IsLink = data.IsLink,
                 Content = data.Content,
                 Address = data.FilePath,
-                Encoding = EncodingUtility.ToString(data.Encoding),
+                Encoding = data.Encoding != null ? EncodingUtility.ToString(data.Encoding): EncodingUtility.ToString(Encoding.UTF8),
                 DelayTime = data.DelayTime,
                 BufferSize = data.BufferSize,
                 RefreshTime = data.RefreshTime,

@@ -401,11 +401,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
                 return true;
             }
 
-            // 変換後データが存在すればもう無理
-            if(ExistsContentKind(targetContentKind)) {
-                Logger.LogDebug("変換後データあり: {0}, {1}", NoteId, targetContentKind);
-                return false;
-            }
+            //// 変換後データが存在すればもう無理
+            //if(ExistsContentKind(targetContentKind)) {
+            //    Logger.LogDebug("変換後データあり: {0}, {1}", NoteId, targetContentKind);
+            //    return false;
+            //}
 
             // 文字列からRTFはOK
             if(ContentKind == NoteContentKind.Plain && targetContentKind == NoteContentKind.RichText) {
@@ -547,6 +547,82 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             }
         }
 
+        string ConvertContent(NoteContentKind fromKind, string fromRawContent, NoteContentKind toKind)
+        {
+            var noteContentConverter = new NoteContentConverter(LoggerFactory);
+            switch(fromKind) {
+                case NoteContentKind.Plain:
+                    switch(toKind) {
+                        case NoteContentKind.RichText:
+#pragma warning disable CS8602 // null 参照の可能性があるものの逆参照です。
+                            return DispatcherWapper.Get(() => noteContentConverter.ToRichText(fromRawContent, FontElement.FontData, ForegroundColor));
+#pragma warning restore CS8602 // null 参照の可能性があるものの逆参照です。
+
+                        case NoteContentKind.Plain:
+                        default:
+                            throw new NotImplementedException();
+                    }
+
+                case NoteContentKind.RichText:
+                    switch(toKind) {
+                        case NoteContentKind.Plain:
+                            return noteContentConverter.ToPlain(fromRawContent);
+
+                        case NoteContentKind.RichText:
+                        default:
+                            throw new NotImplementedException();
+                    }
+
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+
+        public void ConvertContentKind(NoteContentKind toContentKind)
+        {
+            if(ContentKind == toContentKind) {
+                throw new ArgumentException($"{nameof(ContentKind)} == {nameof(toContentKind)}");
+            }
+            if(IsLink) {
+                throw new InvalidOperationException(nameof(IsLink));
+            }
+
+            var prevContentKind = ContentKind;
+            var oldContentElement = ContentElement;
+
+            using(MainDatabaseLazyWriter.Pause()) {
+#pragma warning disable CS8602 // null 参照の可能性があるものの逆参照です。
+                var fromRawContent = ContentElement.LoadRawContent();
+#pragma warning restore CS8602 // null 参照の可能性があるものの逆参照です。
+                var convertedContent = ConvertContent(ContentKind, fromRawContent, toContentKind);
+                var contentData = new NoteContentData() {
+                    NoteId = NoteId,
+                    ContentKind = toContentKind,
+                    Content = convertedContent,
+                };
+                using(var commander = MainDatabaseBarrier.WaitWrite()) {
+                    var noteContentsEntityDao = new NoteContentsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                    if(noteContentsEntityDao.SelectExistsContent(contentData.NoteId)) {
+                        noteContentsEntityDao.UpdateContent(contentData, DatabaseCommonStatus.CreateCurrentAccount());
+                    } else {
+                        noteContentsEntityDao.InsertNewContent(contentData, DatabaseCommonStatus.CreateCurrentAccount());
+                    }
+
+                    var notesEntityDao = new NotesEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                    notesEntityDao.UpdateContentKind(NoteId, ContentKind, DatabaseCommonStatus.CreateCurrentAccount());
+
+                    commander.Commit();
+                }
+            }
+
+            ContentKind = toContentKind;
+            ContentElement = OrderManager.CreateNoteContentElement(NoteId, ContentKind);
+
+            oldContentElement?.Dispose();
+
+        }
+
+
         [Obsolete]
         public void CreateContentKind(NoteContentKind contentKind, NoteLinkContentData? linkData)
         {
@@ -577,10 +653,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             }
         }
 
-        public void ChangeContentKind(NoteContentKind contentKind)
+        public void ChangeContentKind(NoteContentKind toContentKind)
         {
             var prevContentKind = ContentKind;
-            ContentKind = contentKind;
+            ContentKind = toContentKind;
             var oldContentElement = ContentElement;
             ContentElement = OrderManager.CreateNoteContentElement(NoteId, ContentKind);
             oldContentElement?.Dispose();

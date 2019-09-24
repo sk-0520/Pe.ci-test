@@ -219,20 +219,21 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             get => Model.ContentKind;
             set
             {
+                if(IsLink) {
+                    Logger.LogError("リンク中は変更できない");
+                    return;
+                }
+
                 // DB みてあれこれ判断するので止めてるやつを全部実施, プロパティでやるにはでっかいなぁと思うがまぁいいでしょ ;)
                 Flush();
 
                 if(!Model.CanChangeContentKind(value)) {
                     // 単純変換が出来ない場合はあれやこれや頑張る
                     ChangingContentKind = value;
-                    CanLoadContentKind = Model.ExistsContentKind(ChangingContentKind);
-                    DispatcherWapper.Invoke(() => ContentKindChangeLoadCommand.RaiseCanExecuteChanged());
                     ShowContentKindChangeConfim = true;
                 } else {
-                    //// 変換するがユーザー選択は不要
-                    //Debug.Assert(value != NoteContentKind.Link);
-                    //Model.ConvertContentKind(ContentKind, value, null);
-                    //Model.ChangeContentKind(value);
+                    // 変換するがユーザー選択は不要
+                    Model.ConvertContentKind(value);
                 }
             }
         }
@@ -280,7 +281,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             set => SetProperty(ref this._showContentKindChangeConfim, value);
         }
 
-        bool CanLoadContentKind { get; set; }
+        //bool CanLoadContentKind { get; set; }
 
         #endregion
 
@@ -350,25 +351,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                 });
             }
         ));
-        public DelegateCommand ContentKindChangeLoadCommand => GetOrCreateCommand(() => new DelegateCommand(
-            () => {
-                Model.ChangeContentKind(ChangingContentKind);
-                ShowContentKindChangeConfim = false;
-            },
-            () => CanLoadContentKind
-        ));
-        [Obsolete]
-        public ICommand ContentKindChangeCreateCommand => GetOrCreateCommand(() => new DelegateCommand(
-            () => {
-                DoActionOrSelectLinkData(data => {
-                    Flush();
 
-                    Model.CreateContentKind(ChangingContentKind, data);
-                    Model.ChangeContentKind(ChangingContentKind);
-                    ShowContentKindChangeConfim = false;
-                });
-            }
-        ));
         public ICommand ContentKindChangeCancelCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
                 ShowContentKindChangeConfim = false;

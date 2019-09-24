@@ -295,7 +295,7 @@
           <!--<Grid Visibility="{Binding Content.CanVisible, Converter={StaticResource FalseToVisibilityConverter}}">
             <TextBlock>busy</TextBlock>
           </Grid>-->
-          <ContentControl x:Name="content">
+          <ContentControl x:Name="content" IsEnabled="{Binding ShowContentKindChangeConfim, Converter={StaticResource LogicalNotConverter}}">
             <ContentControl.Style>
               <Style TargetType="ContentControl">
                 <Style.Triggers>
@@ -557,8 +557,6 @@
                   <Run Text="{Binding ChangingContentKind, Mode=OneWay}" />
                   </TextBlock>
                   <Button Command="{Binding ContentKindChangeConvertCommand}">convert</Button>
-                  <Button Command="{Binding ContentKindChangeLoadCommand}">load</Button>
-                  <Button Command="{Binding ContentKindChangeCreateCommand}">create</Button>
                   <Button Command="{Binding ContentKindChangeCancelCommand}">cancel</Button>
                 </StackPanel>
               </Border>
