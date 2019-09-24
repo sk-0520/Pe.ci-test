@@ -62,7 +62,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         protected override void UnloadContent()
         { }
 
-        protected override IDataObject GetContentData()
+        protected override IDataObject GetClipbordContentData()
         {
             var data = new DataObject();
             if(CanVisible) {

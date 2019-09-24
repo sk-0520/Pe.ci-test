@@ -97,7 +97,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             RichTextBox.TextChanged -= Control_TextChanged;
         }
 
-        protected override IDataObject GetContentData()
+        protected override IDataObject GetClipbordContentData()
         {
             var data = new DataObject();
             if(CanVisible) {

@@ -56,7 +56,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                     return;
                 }
 
-                AttachControl(o);
+                AttachControlCore(o);
 
                 try {
                     Logger.LogDebug("読み込み開始");
@@ -72,7 +72,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         public ICommand CopyCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-                var data = GetContentData();
+                var data = GetClipbordContentData();
                 ClipboardManager.Set(data);
             }
         ));
@@ -81,30 +81,44 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         #region function
 
-        private void AttachControl(Control o)
+        private void AttachControlCore(Control o)
         {
             Control = o;
             Control.Unloaded += Control_Unloaded;
         }
 
-        private void DetachControl()
+        private void DetachControlCore()
         {
             if(Control != null) {
                 Control.Unloaded -= Control_Unloaded;
             }
         }
 
+        /// <summary>
+        /// コンテンツが必要になった際に呼び出される。
+        /// <para>UI要素への購買処理も実施すること。</para>
+        /// </summary>
+        /// <param name="control"></param>
+        /// <returns></returns>
         protected abstract Task LoadContentAsync(Control control);
+        /// <summary>
+        /// コンテンツが不要になった際に呼び出される。
+        /// <para>UI要素への解除処理も実施すること。</para>
+        /// </summary>
         protected abstract void UnloadContent();
 
-        protected abstract IDataObject GetContentData();
+        /// <summary>
+        /// クリップボード用データの取得。
+        /// </summary>
+        /// <returns></returns>
+        protected abstract IDataObject GetClipbordContentData();
 
         #endregion
 
         private void Control_Unloaded(object sender, System.Windows.RoutedEventArgs e)
         {
             UnloadContent();
-            DetachControl();
+            DetachControlCore();
             CanVisible = false;
         }
     }
