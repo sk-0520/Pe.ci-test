@@ -112,6 +112,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         DispatcherTimer WindowAreaChangedTimer { get; }
 
         public Guid NoteId => Model.NoteId;
+        public bool IsLink => Model.IsLink;
 
         public FontViewModel Font { get; }
 
@@ -378,6 +379,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             () => {
                 PrepareToRemove = true;
                 CloseRequest.Send();
+            }
+        ));
+
+        public ICommand LinkChangeCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
             }
         ));
 

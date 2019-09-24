@@ -37,7 +37,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
         bool _isCompact;
         bool _isLocked;
         bool _textWrap;
-        bool _isLinkContent;
+        bool _isLink;
         string? _title;
         Screen _dockScreen;
 
@@ -114,10 +114,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             private set => SetProperty(ref this._textWrap, value);
         }
 
-        public bool IsLinkContent
+        public bool IsLink
         {
-            get => this._isLinkContent;
-            private set => SetProperty(ref this._isLinkContent, value);
+            get => this._isLink;
+            private set => SetProperty(ref this._isLink, value);
         }
 
         public string? Title
