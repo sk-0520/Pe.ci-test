@@ -44,6 +44,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         private Control? Control { get; set; }
 
+        public bool IsLink => Model.IsLink;
+
         #endregion
 
         #region command

@@ -47,6 +47,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         NoteContentKind _changingContentKind;
         NoteContentViewModelBase? _content;
 
+        bool _showLinkChangeConfim;
+
         #endregion
 
         public NoteViewModel(NoteElement model, INoteTheme noteTheme, IOrderManager orderManager, IClipboardManager clipboardManager, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
@@ -281,6 +283,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             set => SetProperty(ref this._showContentKindChangeConfim, value);
         }
 
+        public bool ShowLinkChangeConfim
+        {
+            get => this._showLinkChangeConfim;
+            private set => SetProperty(ref this._showLinkChangeConfim, value);
+        }
         //bool CanLoadContentKind { get; set; }
 
         #endregion
@@ -361,10 +368,30 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             }
         ));
 
+        public ICommand LinkChangeCancelCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                ShowLinkChangeConfim = false;
+            }
+        ));
+
         public ICommand LinkChangeCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                ShowLinkChangeConfim = true;
+            }
+        ));
+        public ICommand UnlinkCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
             }
         ));
+        public ICommand SaveLinkCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+            }
+        ));
+        public ICommand OpenLinkCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+            }
+        ));
+
 
         #endregion
 
