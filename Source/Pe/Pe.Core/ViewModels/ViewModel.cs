@@ -32,8 +32,9 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
 
         protected ILoggerFactory LoggerFactory { get; }
         protected ILogger Logger { get; }
-        IDictionary<string, ICommand> CommandCache { get; } = new Dictionary<string, ICommand>();
-        protected IEnumerable<ICommand> Commands => CommandCache.Values;
+        //IDictionary<string, ICommand> CommandCache { get; } = new Dictionary<string, ICommand>();
+        protected IEnumerable<ICommand> Commands => CommandStore.Commands;
+        CommandStore CommandStore { get; } = new CommandStore();
 
         #endregion
 
@@ -60,26 +61,29 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
             return false;
         }
 
-        protected TCommand GetOrCreateCommand<TCommand>(Func<TCommand> creator, [CallerMemberName] string callerMemberName = "", [CallerLineNumber] int callerLineNumber = 0)
+        protected TCommand GetOrCreateCommand<TCommand>(Func<TCommand> creator, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = 0)
             where TCommand : ICommand
         {
-            var sb = new StringBuilder();
-            sb.Append(GetType().FullName);
-            sb.Append(':');
-            sb.Append(callerMemberName);
-            sb.Append(':');
-            sb.Append(callerLineNumber);
+            //var sb = new StringBuilder();
+            //sb.Append(GetType().FullName);
+            //sb.Append(':');
+            //sb.Append(callerMemberName);
+            //sb.Append(':');
+            //sb.Append(callerFilePath.GetHashCode());
+            //sb.Append(':');
+            //sb.Append(callerLineNumber);
 
-            var key = sb.ToString();
+            //var key = sb.ToString();
 
-            if(CommandCache.TryGetValue(key, out var cahceCommand)) {
-                return (TCommand)cahceCommand;
-            }
+            //if(CommandCache.TryGetValue(key, out var cahceCommand)) {
+            //    return (TCommand)cahceCommand;
+            //}
 
-            var command = creator();
-            CommandCache.Add(key, command);
+            //var command = creator();
+            //CommandCache.Add(key, command);
 
-            return command;
+            //return command;
+            return CommandStore.GetOrCreate(creator, callerMemberName, callerFilePath, callerLineNumber);
         }
 
         protected void ValidateProperty(object value, [CallerMemberName] string propertyName = "")
