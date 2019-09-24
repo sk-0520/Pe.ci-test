@@ -174,7 +174,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
                 }
             }
 
-            sb.AppendLine(nameof(LoggingStatement));
+            var method = new StackTrace(4)?.GetFrame(0)?.GetMethod();
+            if(method != null) {
+                sb.AppendLine(method.ReflectedType!.Name + "." + method.Name);
+            } else {
+                sb.AppendLine(nameof(LoggingStatement));
+            }
 
 
             sb.Append(indent);
