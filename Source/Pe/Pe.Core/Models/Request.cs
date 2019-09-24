@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Views;
 using Prism.Interactivity.InteractionRequest;
 
@@ -74,4 +76,22 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #endregion
     }
+
+    public class RequestEventArgs : EventArgs
+    {
+        public RequestEventArgs(RequestParameter requestParameter, Action<RequestResponse> callback)
+        {
+            Parameter = requestParameter;
+            Callback = callback;
+        }
+
+        #region property
+
+        public RequestParameter Parameter { get; }
+
+        public Action<RequestResponse> Callback { get; }
+
+        #endregion
+    }
+
 }

@@ -3,30 +3,11 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Interactivity;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
 
-namespace ContentTypeTextNet.Pe.Core.Views
+namespace ContentTypeTextNet.Pe.Core.ViewModels
 {
-    public class RequestEventArgs : EventArgs
-    {
-        public RequestEventArgs(RequestParameter requestParameter, Action<RequestResponse> callback)
-        {
-            Parameter = requestParameter;
-            Callback = callback;
-        }
-
-        #region property
-
-        public RequestParameter Parameter { get; }
-
-        public Action<RequestResponse> Callback { get; }
-
-        #endregion
-    }
-
     public class RequestSender
     {
         #region event
@@ -90,27 +71,4 @@ namespace ContentTypeTextNet.Pe.Core.Views
 
         #endregion
     }
-
-    public class RequestTrigger : System.Windows.Interactivity.EventTrigger
-    {
-        public RequestTrigger()
-        { }
-
-        public RequestTrigger(string eventName)
-            : base(eventName)
-        { }
-
-        #region property
-        #endregion
-
-        #region TriggerAction
-
-        protected override string GetEventName()
-        {
-            return nameof(RequestSender.Raised);
-        }
-
-        #endregion
-    }
-
 }
