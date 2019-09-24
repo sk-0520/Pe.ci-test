@@ -45,6 +45,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
         public Guid NoteId { get; }
         public NoteContentKind ContentKind { get; }
 
+        public bool IsLink { get; private set; }
+
         IMainDatabaseBarrier MainDatabaseBarrier { get; }
         IDatabaseStatementLoader StatementLoader { get; }
         IDispatcherWapper DispatcherWapper { get; }
