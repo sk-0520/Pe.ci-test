@@ -412,7 +412,6 @@ ___
 |    | o  |    | 最小化                   | IsCompact             | boolean      | System.Boolean  |              |                    |
 |    | o  |    | 文字列の折り返し         | TextWrap              | boolean      | System.Boolean  |              |                    |
 |    | o  |    | ノート内容種別           | ContentKind           | text         | System.String   |              | プレーン文字列 RTF |
-|    | o  |    | リンク形式か             | IsLinkContent         | boolean      | System.Boolean  |              |                    |
 
 ### index
 
@@ -459,6 +458,7 @@ ___
 | PK | NN | FK           | 論理カラム名             | 物理カラム名          | 論理データ型 | マッピング型    | チェック制約 | コメント |
 |:--:|:--:|:-------------|:-------------------------|:----------------------|:-------------|:----------------|:-------------|:---------|
 | o  | o  | Notes.NoteId | ノートID                 | NoteId                | text         | System.Guid     |              |          |
+| o  | o  |              | ノート内容種別           | ContentKind           | text         | System.String   |              | プレーン文字列 RTF |
 |    | o  |              | 作成タイムスタンプ       | CreatedTimestamp      | datetime     | System.DateTime |              | UTC      |
 |    | o  |              | 作成ユーザー名           | CreatedAccount        | text         | System.String   |              |          |
 |    | o  |              | 作成プログラム名         | CreatedProgramName    | text         | System.String   |              |          |
@@ -468,6 +468,7 @@ ___
 |    | o  |              | 更新プログラム名         | UpdatedProgramName    | text         | System.String   |              |          |
 |    | o  |              | 更新プログラムバージョン | UpdatedProgramVersion | text         | System.Version  |              |          |
 |    | o  |              | 更新回数                 | UpdatedCount          | integer      | System.Int64    |              | 0始まり  |
+|    | o  |              | リンク形式か             | IsLink                | boolean      | System.Boolean  |              |                    |
 |    | o  |              | 内容                     | Content               | text         | System.String   |              |          |
 |    | o  |              | リンク先                 | Address               | text         | System.String   |              |          |
 |    | o  |              | エンコーディング         | Encoding              | text         | System.String   |              |          |

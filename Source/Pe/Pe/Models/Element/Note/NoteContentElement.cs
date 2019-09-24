@@ -74,8 +74,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
                 var dao = new NoteContentsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
                 var data = new NoteContentData() {
                     NoteId = NoteId,
+                    ContentKind = ContentKind,
                     Content = content,
                     //TODO: あとあとかんがえよ
+                    IsLink = false,
                     FilePath = string.Empty,
                     Encoding = Encoding.UTF8,
                     DelayTime = TimeSpan.Zero,

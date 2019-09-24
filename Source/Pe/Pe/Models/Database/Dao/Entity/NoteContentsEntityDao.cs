@@ -40,6 +40,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
             var dto = new NoteContentsEntityDto() {
                 NoteId = data.NoteId,
+                ContentKind = noteContentKindTransfer.ToString(data.ContentKind),
+                IsLink = data.IsLink,
                 Content = data.Content,
                 Address = data.FilePath,
                 Encoding = EncodingUtility.ToString(data.Encoding),
