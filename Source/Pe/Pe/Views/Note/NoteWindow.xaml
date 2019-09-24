@@ -270,6 +270,11 @@
                     <i:InvokeCommandAction Command="{Binding LoadedCommand}" CommandParameter="{Binding ElementName=control}" />
                   </i:EventTrigger>
                 </i:Interaction.Triggers>
+                <RichTextBox.Style>
+                  <Style TargetType="RichTextBox" BasedOn="{StaticResource TextBoxBase}">
+                    <Style.Triggers />
+                  </Style>
+                </RichTextBox.Style>
               </RichTextBox>
             </DataTemplate>
             <!--#endregion -->
