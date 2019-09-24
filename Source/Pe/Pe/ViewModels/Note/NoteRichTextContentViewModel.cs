@@ -12,12 +12,13 @@ using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Main.Models.Element.Note;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
+using ContentTypeTextNet.Pe.Main.Models.Note;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 {
-    public class NoteRichTextContentViewModel : NoteContentViewModelBase
+    public class NoteRichTextContentViewModel : NoteContentViewModelBase, IFlushable
     {
         #region variable
 
@@ -34,7 +35,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         #region property
 
         //Xceed.Wpf.Toolkit.RichTextBox Control { get; set; }
-        RichTextBox? Control { get; set; }
+        RichTextBox? RichTextBox { get; set; }
+        FlowDocument Document => RichTextBox?.Document ?? throw new NullReferenceException(nameof(RichTextBox));
+
         LazyAction TextChangeLazyAction { get; }
 
         public string? RtfContent
@@ -65,19 +68,18 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         protected override Task LoadContentAsync(Control control)
         {
             //Control = (Xceed.Wpf.Toolkit.RichTextBox)control;
-            Control = (RichTextBox)control;
+            RichTextBox = (RichTextBox)control;
 
-            Control.TextChanged += Control_TextChanged;
+            RichTextBox.TextChanged += Control_TextChanged;
 
             return Task.Run(() => {
                 var content = Model.LoadRichTextContent();
                 //RtfContent = content;
 
-                var doc = Control!.Document;
-                var range = new TextRange(doc.ContentStart, doc.ContentEnd);
-                var rtf = Encoding.UTF8.GetBytes(content);
-                using(var stream = new MemoryStream(rtf)) {
+                var noteContentConverter = new NoteContentConverter(LoggerFactory);
+                using(var stream = noteContentConverter.ToRtfStream(content)) {
                     DispatcherWapper.Invoke(() => {
+                        var range = new TextRange(Document.ContentStart, Document.ContentEnd);
                         range.Load(stream, DataFormats.Rtf);
                     });
                 }
@@ -86,11 +88,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         protected override void UnloadContent()
         {
-            if(Control == null) {
+            Flush();
+
+            if(RichTextBox == null) {
                 return;
             }
 
-            Control.TextChanged -= Control_TextChanged;
+            RichTextBox.TextChanged -= Control_TextChanged;
         }
 
         protected override IDataObject GetContentData()
@@ -108,14 +112,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         void ChangedText()
         {
-            var doc = Control!.Document;
-            var range = new TextRange(doc.ContentStart, doc.ContentEnd);
-            using(var stream = new MemoryStream()) {
-                DispatcherWapper.Invoke(() => range.Save(stream, DataFormats.Rtf));
-
-                var content = Encoding.UTF8.GetString(stream.ToArray());
+            var noteContentConverter = new NoteContentConverter(LoggerFactory);
+            DispatcherWapper.Invoke(() => {
+                var content = noteContentConverter.ToRtfString(Document);
                 Model.ChangeRichTextContent(content);
-            }
+            });
         }
 
         #endregion
@@ -125,5 +126,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             TextChangeLazyAction.DelayAction(ChangedText);
         }
 
+        #region IFlushable
+        public void Flush()
+        {
+            TextChangeLazyAction.SafeFlush();
+        }
+
+        #endregion
     }
 }

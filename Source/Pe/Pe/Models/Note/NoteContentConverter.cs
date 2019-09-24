@@ -76,6 +76,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Note
             return document;
         }
 
+        public Stream ToRtfStream(string rtf)
+        {
+            var binary = Encoding.UTF8.GetBytes(rtf);
+            var stream = new MemoryStream(binary);
+            return stream;
+        }
+
         public string ToPlain(string rtfText)
         {
             var converter = new RtfConverter();

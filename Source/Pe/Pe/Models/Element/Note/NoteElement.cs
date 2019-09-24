@@ -609,7 +609,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
                     }
 
                     var notesEntityDao = new NotesEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
-                    notesEntityDao.UpdateContentKind(NoteId, ContentKind, DatabaseCommonStatus.CreateCurrentAccount());
+                    notesEntityDao.UpdateContentKind(NoteId, toContentKind, DatabaseCommonStatus.CreateCurrentAccount());
 
                     commander.Commit();
                 }
