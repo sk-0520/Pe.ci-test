@@ -75,7 +75,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         {
             var skip = true;
             if(skip) {
-                Logger.LogDebug("ManagementObjectSearcherがぶっ壊れてるのでスキップ");
+                Logger.LogDebug("ManagementObjectSearcherがぶっ壊れてるのでスキップ: 3.0.100, 2019-09-25 19:00");
                 return screen.DeviceName ?? screen.ToString() ?? screen.GetType().Name;
             }
 #pragma warning disable CS8604 // Null 参照引数の可能性があります。
