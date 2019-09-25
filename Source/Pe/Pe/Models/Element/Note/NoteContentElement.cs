@@ -55,6 +55,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 
         [Obsolete]
         NoteLinkContentWatcher? LinkWatcher { get; set; }
+        NoteLinkWatcher? LinkWatcher2 { get; set; }
         LazyAction LinkContentLazyChanger { get; }
 
         #endregion
@@ -256,6 +257,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             //if(LinkWatcher != null) {
             //    LinkWatcher.Dispose();
             //}
+            LinkWatcher2?.Dispose();
         }
 
         #endregion

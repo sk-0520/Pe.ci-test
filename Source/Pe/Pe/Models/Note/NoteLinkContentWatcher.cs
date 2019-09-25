@@ -28,7 +28,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Note
         #endregion
     }
 
-        [Obsolete]
+    [Obsolete]
     public class NoteLinkContentWatcher : DisposerBase
     {
         #region event
@@ -148,6 +148,26 @@ namespace ContentTypeTextNet.Pe.Main.Models.Note
                 OnNoteContentChanged(args);
             });
         }
+
+    }
+
+    public class NoteLinkWatchParameter : FileWatchParameter
+    {
+        #region property
+
+        /// <summary>
+        /// 作っといてなんやけど、いるかこれ？
+        /// </summary>
+        public Encoding? Encoding { get; set; }
+        #endregion
+    }
+
+    public class NoteLinkWatcher : FileWatcher
+    {
+        public NoteLinkWatcher(NoteLinkWatchParameter noteLinkWatchParameter, ILoggerFactory loggerFactory)
+            :base(noteLinkWatchParameter, loggerFactory)
+        { }
+
 
     }
 }

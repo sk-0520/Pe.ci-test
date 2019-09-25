@@ -94,7 +94,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             SelectLinkFileRequest = new RequestSender(DispatcherWapper);
 
             UnlinkRequest = new RequestSender(DispatcherWapper);
-            ChangedLinkRequest = new RequestSender(DispatcherWapper);
+            LinkChangeRequest = new RequestSender(DispatcherWapper);
         }
 
         #region property
@@ -104,7 +104,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         public RequestSender SelectLinkFileRequest { get; }
 
         public RequestSender UnlinkRequest { get; }
-        public RequestSender ChangedLinkRequest { get; }
+        public RequestSender LinkChangeRequest { get; }
 
         bool CanLayoutNotify { get; set; }
 
@@ -391,6 +391,18 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         ));
         public ICommand SaveLinkCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
+                var parameter = new NoteLinkChangeRequestParameter();
+                var contentKindFilter = ContentKind switch
+                {
+                    NoteContentKind.Plain => new DialogFilterItem("text", "*.txt"),
+                    NoteContentKind.RichText => new DialogFilterItem("rtf", "*.rtf"),
+                    _ => throw new NotImplementedException(),
+                };
+                parameter.Filter.Add(contentKindFilter);
+                parameter.Filter.Add(new DialogFilterItem("all", "*.*"));
+                LinkChangeRequest.Send(parameter, r => {
+                    var response = (NoteLinkChangeRequestResponse)r;
+                });
             }
         ));
         public ICommand OpenLinkCommand => GetOrCreateCommand(() => new DelegateCommand(

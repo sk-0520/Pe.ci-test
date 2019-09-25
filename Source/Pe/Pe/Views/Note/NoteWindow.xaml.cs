@@ -95,8 +95,14 @@ namespace ContentTypeTextNet.Pe.Main.Views.Note
             }
         ));
 
-        public ICommand ChangedLinkCommand => CommandStore.GetOrCreate(() => new DelegateCommand<RequestEventArgs>(
+        public ICommand LinkChangeCommand => CommandStore.GetOrCreate(() => new DelegateCommand<RequestEventArgs>(
             o => {
+                var linkParameter = (NoteLinkChangeRequestParameter)o.Parameter;
+
+                var dialog = new FileSystemDialog();
+                dialog.InitialDirectory = "x:\\";
+                dialog.FileName = "X:\\cache\\MnMn\\GeckoFx\\webappsstore.sqlite-wal";
+                dialog.ShowDialog(this);
 
             }
         ));

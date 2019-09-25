@@ -39,7 +39,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     public class FileDialogRequestParameter : RequestParameter
     {
         public DialogFilterList Filter { get; } = new DialogFilterList();
-        public bool ShowExtensions { get; set; }
+        public bool ShowExtensions { get; set; } = true;
     }
 
     public class FileDialogRequestResponse : CancelResponse

@@ -8,21 +8,21 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
     partial class NativeMethods
     {
         [DllImport("shell32.dll")]
-        private static extern int SHILCreateFromPath([MarshalAs(UnmanagedType.LPWStr)] string pszPath, out IntPtr ppIdl, ref uint rgflnOut);
+        public static extern int SHILCreateFromPath([MarshalAs(UnmanagedType.LPWStr)] string pszPath, out IntPtr ppIdl, ref uint rgflnOut);
 
         [DllImport("shell32.dll")]
-        private static extern int SHCreateShellItem(IntPtr pidlParent, IntPtr psfParent, IntPtr pidl, out IShellItem ppsi);
+        public static extern int SHCreateShellItem(IntPtr pidlParent, IntPtr psfParent, IntPtr pidl, out IShellItem ppsi);
 
         [ComImport]
         [Guid("DC1C5A9C-E88A-4dde-A5A1-60F82A20AEF7")]
-        private class FileOpenDialog
+        public class FileOpenDialog
         {
         }
 
         [ComImport]
         [Guid("42f85136-db7e-439c-85f1-e4075d135fc8")]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-        private interface IFileOpenDialog
+        public interface IFileOpenDialog
         {
             [PreserveSig]
             uint Show([In] IntPtr parent); // IModalWindow
@@ -53,19 +53,6 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
             void GetSelectedItems([MarshalAs(UnmanagedType.Interface)] out IntPtr ppsai); // not fully defined
         }
 
-        public enum SIGDN : uint
-        {
-            SIGDN_DESKTOPABSOLUTEEDITING = 0x8004c000,
-            SIGDN_DESKTOPABSOLUTEPARSING = 0x80028000,
-            SIGDN_FILESYSPATH = 0x80058000,
-            SIGDN_NORMALDISPLAY = 0,
-            SIGDN_PARENTRELATIVE = 0x80080001,
-            SIGDN_PARENTRELATIVEEDITING = 0x80031001,
-            SIGDN_PARENTRELATIVEFORADDRESSBAR = 0x8007c001,
-            SIGDN_PARENTRELATIVEPARSING = 0x80018001,
-            SIGDN_URL = 0x80068000
-        }
-
         [Flags]
         public enum FOS
         {
@@ -89,6 +76,11 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
             FOS_PICKFOLDERS = 0x20,
             FOS_SHAREAWARE = 0x4000,
             FOS_STRICTFILETYPES = 4
+        }
+
+        public enum ERROR
+        {
+            ERROR_CANCELLED = 0x4C7,
         }
     }
 }

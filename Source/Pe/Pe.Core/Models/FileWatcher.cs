@@ -25,39 +25,33 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #endregion
     }
 
-    [Serializable, DataContract]
-    public class FileWatchData: DataBase
+    public class FileWatchParameter
     {
         #region property
 
         /// <summary>
         /// リンク対象ファイル名。
         /// </summary>
-        [DataMember]
         public FileInfo? File { get; set; }
 
         /// <summary>
         /// ファイル変更から実際に読むまでの待機時間。
         /// </summary>
-        [DataMember]
         public TimeSpan DelayTime { get; set; } = TimeSpan.FromMilliseconds(500);
 
         /// <summary>
         /// <see cref="System.IO.FileSystemWatcher.InternalBufferSize"/>。
         /// </summary>
-        [DataMember]
         public int BufferSize { get; set; } = 8192;
 
         /// <summary>
         /// <see cref="System.IO.FileSystemWatcher"/> で取りこぼした際の更新時間。
         /// </summary>
-        [DataMember]
         public TimeSpan RefreshTime { get; set; } = TimeSpan.FromMilliseconds(250);
         /// <summary>
         /// そもそも取りこぼしを考慮するか。
         /// <para>将来用。</para>
         /// </summary>
-        [DataMember]
         public bool IsEnabledRefresh { get; set; } = true;
 
         #endregion
@@ -67,28 +61,28 @@ namespace ContentTypeTextNet.Pe.Core.Models
     {
         #region event
 
-        public event EventHandler<FileChangedEventArgs>? NoteContentChanged;
+        public event EventHandler<FileChangedEventArgs>? FileContentChanged;
 
         #endregion
 
-        public FileWatcher(FileWatchData fileWatchData, ILoggerFactory loggerFactory)
+        public FileWatcher(FileWatchParameter watchParameter, ILoggerFactory loggerFactory)
         {
-            if(fileWatchData == null) {
-                throw new ArgumentNullException($"{nameof(fileWatchData)}");
+            if(watchParameter == null) {
+                throw new ArgumentNullException($"{nameof(watchParameter)}");
             }
-            if(fileWatchData.File == null) {
-                throw new ArgumentNullException($"{nameof(fileWatchData)}.{nameof(fileWatchData.File)}");
+            if(watchParameter.File == null) {
+                throw new ArgumentNullException($"{nameof(watchParameter)}.{nameof(watchParameter.File)}");
             }
 
-            WatchData = fileWatchData;
+            WatchParameter = watchParameter;
             Logger = loggerFactory.CreateLogger(GetType());
 
-            DelayWatcher = new LazyAction(WatchData.File.Name, fileWatchData.DelayTime, loggerFactory);
+            DelayWatcher = new LazyAction(WatchParameter.File.Name, watchParameter.DelayTime, loggerFactory);
         }
 
         #region property
 
-        public FileWatchData WatchData { get; }
+        public FileWatchParameter WatchParameter { get; }
         protected ILogger Logger { get; }
         FileSystemWatcher? FileSystemWatcher { get; set; }
 
@@ -97,9 +91,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #region function
 
-        void OnNoteContentChanged(FileChangedEventArgs e)
+        void OnFileContentChanged(FileChangedEventArgs e)
         {
-            NoteContentChanged?.Invoke(this, e);
+            FileContentChanged?.Invoke(this, e);
         }
 
         void DisposeFileSystemWatcher()
@@ -112,14 +106,14 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         public void Start()
         {
-            Debug.Assert(WatchData.File != null);
+            Debug.Assert(WatchParameter.File != null);
 
             if(FileSystemWatcher == null) {
                 FileSystemWatcher = new FileSystemWatcher() {
-                    Path = WatchData.File.DirectoryName,
-                    Filter = WatchData.File.Name,
+                    Path = WatchParameter.File.DirectoryName,
+                    Filter = WatchParameter.File.Name,
                     IncludeSubdirectories = false,
-                    InternalBufferSize = WatchData.BufferSize,
+                    InternalBufferSize = WatchParameter.BufferSize,
                     NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.Size
                 };
                 FileSystemWatcher.Changed += FileSystemWatcher_Changed;
@@ -155,7 +149,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         {
             DelayWatcher.DelayAction(() => {
                 var args = new FileChangedEventArgs(new FileInfo(e.FullPath), false);
-                OnNoteContentChanged(args);
+                OnFileContentChanged(args);
             });
         }
 

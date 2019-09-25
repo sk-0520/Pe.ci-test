@@ -5,6 +5,7 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 
   xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+  xmlns:prism="http://prismlibrary.com/"
 
   xmlns:app_core_view="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core"
 
@@ -17,7 +18,7 @@
 >
   <i:Interaction.Triggers>
     <app_core_view:RequestTrigger SourceObject="{Binding CloseRequest}">
-      <i:InvokeCommandAction Command="{Binding CloseCommand, ElementName=root}"  />
+      <prism:InvokeCommandAction Command="{Binding CloseCommand, ElementName=root}" />
     </app_core_view:RequestTrigger>
   </i:Interaction.Triggers>
   <Grid>
