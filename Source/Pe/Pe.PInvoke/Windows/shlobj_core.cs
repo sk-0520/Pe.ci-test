@@ -53,6 +53,8 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
             void GetSelectedItems([MarshalAs(UnmanagedType.Interface)] out IntPtr ppsai); // not fully defined
         }
 
+
+
         [Flags]
         public enum FOS
         {

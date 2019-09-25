@@ -99,10 +99,10 @@ namespace ContentTypeTextNet.Pe.Main.Views.Note
             o => {
                 var linkParameter = (NoteLinkChangeRequestParameter)o.Parameter;
 
-                var dialog = new FileSystemDialog();
-                dialog.InitialDirectory = "x:\\";
-                dialog.FileName = "X:\\cache\\MnMn\\GeckoFx\\webappsstore.sqlite-wal";
-                dialog.ShowDialog(this);
+                using(var dialog = new SaveFileDialog()) {
+                    dialog.FileName = "X:\\cache\\MnMn\\GeckoFx\\webappsstore.sqlite-wal";
+                    dialog.ShowDialog(this);
+                }
 
             }
         ));
