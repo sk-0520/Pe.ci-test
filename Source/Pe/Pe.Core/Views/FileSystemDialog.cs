@@ -14,7 +14,7 @@ using static ContentTypeTextNet.Pe.PInvoke.Windows.NativeMethods;
 
 namespace ContentTypeTextNet.Pe.Core.Views
 {
-    [AttributeUsage(AttributeTargets.Property)]
+    [AttributeUsage(AttributeTargets.Property, Inherited = true)]
     internal class FileSystemFosAttribute : Attribute
     {
         public FileSystemFosAttribute(FOS fos)
@@ -27,17 +27,21 @@ namespace ContentTypeTextNet.Pe.Core.Views
         #endregion
     }
 
-    public class FileSystemDialog: DisposerBase
+    public class FileSystemDialog : DisposerBase
     {
-        public FileSystemDialog()
+        public FileSystemDialog(FileOpenDialog openDialogImpl)
         {
-            var dialog = new FileOpenDialog();
-            FileOpenDialog = (IFileOpenDialog)dialog;
+            FileDialog = (IFileDialog)openDialogImpl;
+        }
+
+        public FileSystemDialog(FileSaveDialog saveDialogImpl)
+        {
+            FileDialog = (IFileDialog)saveDialogImpl;
         }
 
         #region property
 
-        IFileOpenDialog FileOpenDialog { get; }
+        IFileDialog FileDialog { get; }
 
         /// <summary>
         /// フォルダ選択を行うか。
@@ -102,7 +106,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
 
         #region function
 
-        FOS GetFos()
+        protected FOS GetFos()
         {
             var options = default(FOS);
             var type = GetType();
@@ -121,7 +125,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
             return options;
         }
 
-        ComWrapper<IShellItem>? CreateFileItem(string path)
+        protected ComWrapper<IShellItem>? CreateFileItem(string path)
         {
             IShellItem item;
             IntPtr idl;
@@ -141,16 +145,16 @@ namespace ContentTypeTextNet.Pe.Core.Views
             var cleaner = new GroupDisposer();
 
             var options = GetFos();
-            FileOpenDialog.SetOptions(options);
+            FileDialog.SetOptions(options);
 
             if(!string.IsNullOrEmpty(Title)) {
-                FileOpenDialog.SetTitle(Title);
+                FileDialog.SetTitle(Title);
             }
 
             if(!string.IsNullOrEmpty(InitialDirectory)) {
                 var item = CreateFileItem(InitialDirectory);
                 if(item != null) {
-                    FileOpenDialog.SetDefaultFolder(item.Com);
+                    FileDialog.SetDefaultFolder(item.Com);
                     cleaner.Add(item);
                 }
             }
@@ -160,15 +164,15 @@ namespace ContentTypeTextNet.Pe.Core.Views
                 if(parentDirPath != null) {
                     var item = CreateFileItem(parentDirPath);
                     if(item != null) {
-                        FileOpenDialog.SetFolder(item.Com);
+                        FileDialog.SetFolder(item.Com);
                         cleaner.Add(item);
                     }
                 }
-                FileOpenDialog.SetFileName(FileName);
+                FileDialog.SetFileName(FileName);
             }
 
 
-            var reuslt = FileOpenDialog.Show(hWnd);
+            var reuslt = FileDialog.Show(hWnd);
             if(reuslt == (uint)ERROR.ERROR_CANCELLED) {
                 return false;
             }
@@ -177,7 +181,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
             }
 
             IShellItem resultItem;
-            FileOpenDialog.GetResult(out resultItem);
+            FileDialog.GetResult(out resultItem);
             cleaner.Add(ComWrapper.Create(resultItem));
             IntPtr pszPath = IntPtr.Zero;
             resultItem.GetDisplayName(SIGDN.SIGDN_FILESYSPATH, out pszPath);
@@ -200,7 +204,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
         protected override void Dispose(bool disposing)
         {
             if(!IsDisposed) {
-                Marshal.ReleaseComObject(FileOpenDialog);
+                Marshal.ReleaseComObject(FileDialog);
             }
 
             base.Dispose(disposing);
@@ -212,15 +216,26 @@ namespace ContentTypeTextNet.Pe.Core.Views
     public class OpenFileDialog : FileSystemDialog
     {
         public OpenFileDialog()
-            : base()
+            : base(new FileOpenDialog())
         {
         }
     }
 
-    public class FolderBrowserDialog: FileSystemDialog
+    public class SaveFileDialog: FileSystemDialog
+    {
+        public SaveFileDialog()
+            : base(new FileSaveDialog())
+        {
+            CreatePrompt = false;
+            OverwritePrompt = true;
+            NoReadOnlyReturn = true;
+        }
+    }
+
+    public class FolderBrowserDialog : FileSystemDialog
     {
         public FolderBrowserDialog()
-            : base()
+            : base(new FileOpenDialog())
         {
             PickFolders = true;
             CreatePrompt = false;
