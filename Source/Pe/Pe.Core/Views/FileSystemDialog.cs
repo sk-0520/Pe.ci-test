@@ -209,17 +209,6 @@ namespace ContentTypeTextNet.Pe.Core.Views
         #endregion
     }
 
-    public class SaveFileDialog: FileSystemDialog
-    {
-        public SaveFileDialog()
-            : base()
-        {
-            CreatePrompt = false;
-            OverwritePrompt = true;
-            NoReadOnlyReturn = true;
-        }
-    }
-
     public class OpenFileDialog : FileSystemDialog
     {
         public OpenFileDialog()

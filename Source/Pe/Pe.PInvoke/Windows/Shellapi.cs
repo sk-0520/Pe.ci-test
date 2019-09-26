@@ -160,7 +160,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         /// <returns></returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
         [DllImport("shell32.dll", EntryPoint = "#727")]
-        public extern static ComResult SHGetImageList(int iImageList, ref Guid riid, out IImageList ppv);
+        public extern static HRESULT SHGetImageList(int iImageList, ref Guid riid, out IImageList ppv);
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
         [DllImport("shell32.dll", CharSet = CharSet.Auto)]

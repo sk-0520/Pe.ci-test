@@ -5,13 +5,52 @@ using System.Text;
 
 namespace ContentTypeTextNet.Pe.PInvoke.Windows
 {
+    [Flags]
+    public enum FOS
+    {
+        FOS_ALLNONSTORAGEITEMS = 0x80,
+        FOS_ALLOWMULTISELECT = 0x200,
+        FOS_CREATEPROMPT = 0x2000,
+        FOS_DEFAULTNOMINIMODE = 0x20000000,
+        FOS_DONTADDTORECENT = 0x2000000,
+        FOS_FILEMUSTEXIST = 0x1000,
+        FOS_FORCEFILESYSTEM = 0x40,
+        FOS_FORCESHOWHIDDEN = 0x10000000,
+        FOS_HIDEMRUPLACES = 0x20000,
+        FOS_HIDEPINNEDPLACES = 0x40000,
+        FOS_NOCHANGEDIR = 8,
+        FOS_NODEREFERENCELINKS = 0x100000,
+        FOS_NOREADONLYRETURN = 0x8000,
+        FOS_NOTESTFILECREATE = 0x10000,
+        FOS_NOVALIDATE = 0x100,
+        FOS_OVERWRITEPROMPT = 2,
+        FOS_PATHMUSTEXIST = 0x800,
+        FOS_PICKFOLDERS = 0x20,
+        FOS_SHAREAWARE = 0x4000,
+        FOS_STRICTFILETYPES = 4
+    }
+
+    public enum ERROR
+    {
+        ERROR_CANCELLED = 0x4C7,
+    }
+
     partial class NativeMethods
     {
+
         [DllImport("shell32.dll")]
         public static extern int SHILCreateFromPath([MarshalAs(UnmanagedType.LPWStr)] string pszPath, out IntPtr ppIdl, ref uint rgflnOut);
 
         [DllImport("shell32.dll")]
         public static extern int SHCreateShellItem(IntPtr pidlParent, IntPtr psfParent, IntPtr pidl, out IShellItem ppsi);
+
+        [ComImport, Guid("FC4801A3-2BA9-11CF-A229-00AA003D7352"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+        public interface IObjectWithSite
+        {
+            void SetSite([In] IntPtr pUnkSite);
+
+            HRESULT GetSite(ref Guid guid, out IntPtr ppvSite);
+        }
 
         [ComImport]
         [Guid("DC1C5A9C-E88A-4dde-A5A1-60F82A20AEF7")]
@@ -55,34 +94,5 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
 
 
 
-        [Flags]
-        public enum FOS
-        {
-            FOS_ALLNONSTORAGEITEMS = 0x80,
-            FOS_ALLOWMULTISELECT = 0x200,
-            FOS_CREATEPROMPT = 0x2000,
-            FOS_DEFAULTNOMINIMODE = 0x20000000,
-            FOS_DONTADDTORECENT = 0x2000000,
-            FOS_FILEMUSTEXIST = 0x1000,
-            FOS_FORCEFILESYSTEM = 0x40,
-            FOS_FORCESHOWHIDDEN = 0x10000000,
-            FOS_HIDEMRUPLACES = 0x20000,
-            FOS_HIDEPINNEDPLACES = 0x40000,
-            FOS_NOCHANGEDIR = 8,
-            FOS_NODEREFERENCELINKS = 0x100000,
-            FOS_NOREADONLYRETURN = 0x8000,
-            FOS_NOTESTFILECREATE = 0x10000,
-            FOS_NOVALIDATE = 0x100,
-            FOS_OVERWRITEPROMPT = 2,
-            FOS_PATHMUSTEXIST = 0x800,
-            FOS_PICKFOLDERS = 0x20,
-            FOS_SHAREAWARE = 0x4000,
-            FOS_STRICTFILETYPES = 4
-        }
-
-        public enum ERROR
-        {
-            ERROR_CANCELLED = 0x4C7,
-        }
     }
 }
