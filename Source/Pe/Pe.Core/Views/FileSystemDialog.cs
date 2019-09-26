@@ -14,6 +14,16 @@ using static ContentTypeTextNet.Pe.PInvoke.Windows.NativeMethods;
 
 namespace ContentTypeTextNet.Pe.Core.Views
 {
+    [ComImport]
+    [Guid("DC1C5A9C-E88A-4dde-A5A1-60F82A20AEF7")]
+    internal class FileOpenDialogImpl
+    { }
+
+    [ComImport]
+    [Guid("C0B4E2F3-BA21-4773-8DBA-335EC946EB8B")]
+    internal class FileSaveDialogImpl
+    { }
+
     [AttributeUsage(AttributeTargets.Property, Inherited = true)]
     internal class FileSystemFosAttribute : Attribute
     {
@@ -27,14 +37,14 @@ namespace ContentTypeTextNet.Pe.Core.Views
         #endregion
     }
 
-    public class FileSystemDialog : DisposerBase
+    public abstract class FileSystemDialogBase : DisposerBase
     {
-        public FileSystemDialog(FileOpenDialog openDialogImpl)
+        protected private FileSystemDialogBase(FileOpenDialogImpl openDialogImpl)
         {
             FileDialog = (IFileDialog)openDialogImpl;
         }
 
-        public FileSystemDialog(FileSaveDialog saveDialogImpl)
+        protected private FileSystemDialogBase(FileSaveDialogImpl saveDialogImpl)
         {
             FileDialog = (IFileDialog)saveDialogImpl;
         }
@@ -102,6 +112,9 @@ namespace ContentTypeTextNet.Pe.Core.Views
 
         public string InitialDirectory { get; set; } = string.Empty;
         public string FileName { get; set; } = string.Empty;
+
+        public DialogFilterList Filters { get; } = new DialogFilterList();
+
         #endregion
 
         #region function
@@ -171,6 +184,14 @@ namespace ContentTypeTextNet.Pe.Core.Views
                 FileDialog.SetFileName(FileName);
             }
 
+            var filters = Filters
+                .Select(i => new COMDLG_FILTERSPEC() { pszName = i.Display, pszSpec = string.Join(";", i.Wildcard) })
+                .ToArray()
+            ;
+            if(filters.Any()) {
+                FileDialog.SetFileTypes((uint)filters.Length, filters);
+            }
+
 
             var reuslt = FileDialog.Show(hWnd);
             if(reuslt == (uint)ERROR.ERROR_CANCELLED) {
@@ -213,18 +234,18 @@ namespace ContentTypeTextNet.Pe.Core.Views
         #endregion
     }
 
-    public class OpenFileDialog : FileSystemDialog
+    public class OpenFileDialog : FileSystemDialogBase
     {
         public OpenFileDialog()
-            : base(new FileOpenDialog())
+            : base(new FileOpenDialogImpl())
         {
         }
     }
 
-    public class SaveFileDialog: FileSystemDialog
+    public class SaveFileDialog: FileSystemDialogBase
     {
         public SaveFileDialog()
-            : base(new FileSaveDialog())
+            : base(new FileSaveDialogImpl())
         {
             CreatePrompt = false;
             OverwritePrompt = true;
@@ -232,10 +253,10 @@ namespace ContentTypeTextNet.Pe.Core.Views
         }
     }
 
-    public class FolderBrowserDialog : FileSystemDialog
+    public class FolderBrowserDialog : FileSystemDialogBase
     {
         public FolderBrowserDialog()
-            : base(new FileOpenDialog())
+            : base(new FileOpenDialogImpl())
         {
             PickFolders = true;
             CreatePrompt = false;

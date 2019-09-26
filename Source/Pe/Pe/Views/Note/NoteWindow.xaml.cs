@@ -101,6 +101,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Note
 
                 using(var dialog = new SaveFileDialog()) {
                     dialog.FileName = "X:\\cache\\MnMn\\GeckoFx\\webappsstore.sqlite-wal";
+                    dialog.Filters.SetRange(linkParameter.Filter);
                     dialog.ShowDialog(this);
                 }
 
