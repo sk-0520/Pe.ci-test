@@ -99,10 +99,51 @@ namespace ContentTypeTextNet.Pe.Main.Views.Note
             o => {
                 var linkParameter = (NoteLinkChangeRequestParameter)o.Parameter;
 
-                using(var dialog = new SaveFileDialog()) {
+                FileSystemDialogBase dialog = linkParameter.IsOpen switch
+                {
+                    true => new OpenFileDialog(),
+                    false => new SaveFileDialog(),
+                };
+                using(dialog) {
                     dialog.FileName = "X:\\cache\\MnMn\\GeckoFx\\webappsstore.sqlite-wal";
                     dialog.Filters.SetRange(linkParameter.Filter);
-                    dialog.ShowDialog(this);
+
+                    var encodings = new[] {
+                        new { Encoding = EncodingUtility.UTF8n, Display = EncodingUtility.ToString(EncodingUtility.UTF8n) },
+                        new { Encoding = Encoding.UTF8, Display = EncodingUtility.ToString(Encoding.UTF8) },
+                        new { Encoding = Encoding.Unicode, Display = EncodingUtility.ToString(Encoding.Unicode) },
+                        //TODO: 文字コードは追々かんがえるよ
+                        new { Encoding = Encoding.Unicode, Display = EncodingUtility.ToString(Encoding.Unicode) },
+                    };
+
+                    CustomizeDialogComboBox encodingList;
+                    using(dialog.Customize.Grouping("ぐるぷ")) {
+                        encodingList = dialog.Customize.AddComboBox();
+                        var index = -1;
+                        var loop = 0;
+                        var encName = EncodingUtility.ToString(linkParameter.Encoding!);
+                        foreach(var encoding in encodings) {
+                            if(index == -1 && EncodingUtility.ToString(encoding.Encoding) == encName) {
+                                index = loop;
+                            }
+                            encodingList.Items.Add(encoding.Display);
+                            loop += 1;
+                        }
+                        if(index != -1) {
+                            encodingList.SelectedIndex = index;
+                        }
+                    }
+
+                    if(dialog.ShowDialog(this).GetValueOrDefault()) {
+                        o.Callback(new NoteLinkChangeRequestResponse() {
+                            ResponseIsCancel = true,
+                        });
+                    }
+
+                    o.Callback(new NoteLinkChangeRequestResponse() {
+                        ResponseIsCancel = true,
+                        Encoding = encodings[encodingList.SelectedIndex].Encoding,
+                    });
                 }
 
             }

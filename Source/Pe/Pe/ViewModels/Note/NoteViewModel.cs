@@ -391,15 +391,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         ));
         public ICommand SaveLinkCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-                var parameter = new NoteLinkChangeRequestParameter();
-                var contentKindFilter = ContentKind switch
-                {
-                    NoteContentKind.Plain => new DialogFilterItem("text", "*.txt"),
-                    NoteContentKind.RichText => new DialogFilterItem("rtf", "*.rtf"),
-                    _ => throw new NotImplementedException(),
-                };
-                parameter.Filter.Add(contentKindFilter);
-                parameter.Filter.Add(new DialogFilterItem("all", "*.*"));
+                var parameter = CreateLinkParameter(false);
                 LinkChangeRequest.Send(parameter, r => {
                     var response = (NoteLinkChangeRequestResponse)r;
                 });
@@ -407,6 +399,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         ));
         public ICommand OpenLinkCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
+                var parameter = CreateLinkParameter(true);
+                LinkChangeRequest.Send(parameter, r => {
+                    var response = (NoteLinkChangeRequestResponse)r;
+                });
             }
         ));
 
@@ -414,6 +410,24 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         #endregion
 
         #region function
+
+        NoteLinkChangeRequestParameter CreateLinkParameter(bool isOpen)
+        {
+            var parameter = new NoteLinkChangeRequestParameter() {
+                IsOpen = isOpen,
+                Encoding = Encoding.Unicode,
+            };
+            var contentKindFilter = ContentKind switch
+            {
+                NoteContentKind.Plain => new DialogFilterItem("text", "*.txt"),
+                NoteContentKind.RichText => new DialogFilterItem("rtf", "*.rtf"),
+                _ => throw new NotImplementedException(),
+            };
+            parameter.Filter.Add(contentKindFilter);
+            parameter.Filter.Add(new DialogFilterItem("all", "*.*"));
+
+            return parameter;
+        }
 
 
         (bool isCreated, NoteLayoutData layout) GetOrCreateLayout(NotePosition position)

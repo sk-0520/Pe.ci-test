@@ -10,12 +10,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Note
         #region peoperty
 
         public bool IsOpen { get; set; }
+        public Encoding? Encoding { get; set; }
 
         #endregion
     }
     public class NoteLinkChangeRequestResponse : FileDialogRequestResponse
     {
         #region peoperty
+
+        public Encoding? Encoding { get; set; }
 
         #endregion
     }
