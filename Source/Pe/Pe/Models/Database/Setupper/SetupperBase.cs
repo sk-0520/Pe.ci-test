@@ -47,23 +47,23 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Setupper
         protected IEnumerable<KeyValuePair<string, string>> SplitMultiStatement(string statement)
         {
             var linePairs = TextUtility.ReadLines(statement)
-                .Select((s, i) => new { Line = s, Index = i })
+                .Counting()
                 .ToList()
             ;
             var titleMap = linePairs
-                .Where(i => i.Line.StartsWith(TitleMark, StringComparison.Ordinal))
+                .Where(i => i.Value.StartsWith(TitleMark, StringComparison.Ordinal))
                 .Select(i => new {
-                    i.Index,
-                    Match = TitleRegex.Match(i.Line),
+                    i.Number,
+                    Match = TitleRegex.Match(i.Value),
                 })
                 .Where(i => i.Match.Success)
                 .ToDictionary(
-                    k => k.Index,
+                    k => k.Number,
                     v => v.Match.Groups[TitleCapture].Value
                 )
             ;
             var indexItems = titleMap.Keys
-                .Concat(new[] { linePairs.Last().Index })
+                .Concat(new[] { linePairs.Last().Number })
                 .ToList()
             ;
             var indexLengthMap = new Dictionary<int, int>(titleMap.Count);
@@ -75,9 +75,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Setupper
 
             foreach(var pair in indexLengthMap) {
                 var blockLines = linePairs.GetRange(pair.Key, pair.Value);
-                var buffer = new StringBuilder(blockLines.Sum(b => b.Line.Length + 2));
+                var buffer = new StringBuilder(blockLines.Sum(b => b.Value.Length + 2));
                 foreach(var line in blockLines) {
-                    buffer.AppendLine(line.Line);
+                    buffer.AppendLine(line.Value);
                 }
                 yield return new KeyValuePair<string, string>(titleMap[pair.Key], buffer.ToString());
             }

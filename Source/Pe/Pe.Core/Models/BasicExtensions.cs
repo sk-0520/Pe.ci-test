@@ -6,15 +6,41 @@ using System.Text;
 
 namespace ContentTypeTextNet.Pe.Core.Models
 {
+    public readonly struct Counter<TNumber, TElement>
+        where TNumber : struct
+    {
+        public Counter(TNumber number, TElement element)
+        {
+            Value = element;
+            Number = number;
+        }
+
+        #region property
+
+        public readonly TElement Value { get; }
+        public readonly TNumber Number { get; }
+
+        #endregion
+    }
+
     public static class IEnumerableExtensions
     {
         public static IEnumerable<IEnumerable<T>> GroupSplit<T>(this IEnumerable<T> @this, int splitCount)
         {
             return @this
-                 .Select((v, i) => (value: v, index: i))
-                .GroupBy(i => i.index / splitCount)
-                .Select(g => g.Select(i => i.value))
+                 .Counting()
+                .GroupBy(i => i.Number / splitCount)
+                .Select(g => g.Select(i => i.Value))
             ;
+        }
+
+        public static IEnumerable<Counter<int, TElement>> Counting<TElement>(this IEnumerable<TElement> @this)
+        {
+            return @this.Select((v, i) => new Counter<int, TElement>(i, v));
+        }
+        public static IEnumerable<Counter<int, TElement>> Counting<TElement>(this IEnumerable<TElement> @this, int baseNumber)
+        {
+            return @this.Select((v, i) => new Counter<int, TElement>(i + baseNumber, v));
         }
     }
 

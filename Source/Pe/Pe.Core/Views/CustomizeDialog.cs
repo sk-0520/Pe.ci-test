@@ -112,8 +112,8 @@ namespace ContentTypeTextNet.Pe.Core.Views
         protected override void BuildImpl()
         {
             FileDialogCustomize!.AddComboBox(ControlId);
-            foreach(var item in Items.Select((v, i) => (value: v, index: i))) {
-                FileDialogCustomize!.AddControlItem(ControlId, item.index, item.value);
+            foreach(var item in Items.Counting()) {
+                FileDialogCustomize!.AddControlItem(ControlId, item.Number, item.Value);
             }
             FileDialogCustomize!.SetSelectedControlItem(ControlId, SelectedIndex);
         }

@@ -122,15 +122,15 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
             var parameterIndex = 0;
 
-            foreach(var columnItem in ColumnNames.Select((n, i) => (index: i, name: n))) {
+            foreach(var columnItem in ColumnNames.Counting()) {
                 sb.Append('\t');
-                sb.Append(Implementation.ToStatementColumnName(columnItem.name));
-                if(AliasNames.TryGetValue(columnItem.name, out var aliasName)) {
+                sb.Append(Implementation.ToStatementColumnName(columnItem.Value));
+                if(AliasNames.TryGetValue(columnItem.Value, out var aliasName)) {
                     sb.Append(' ');
                     sb.Append(Implementation.GetSelectStatementKeyword(DatabaseSelectStatementKeyword.As));
                     sb.Append(' ');
                 }
-                if(columnItem.index + 1 != ColumnNames.Count) {
+                if(columnItem.Number + 1 != ColumnNames.Count) {
                     sb.Append(',');
                 }
                 sb.AppendLine();
@@ -243,16 +243,16 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
             var parameterIndex = 0;
             sb.AppendLine("set");
-            foreach(var item in ParametersImpl.Keys.Select((k, i) => (index: i, key: k))) {
+            foreach(var item in ParametersImpl.Keys.Counting()) {
                 sb.Append('\t');
-                sb.Append(Implementation.ToStatementColumnName(item.key));
+                sb.Append(Implementation.ToStatementColumnName(item.Value));
                 sb.Append('=');
-                if(PlainValues.Contains(item.key)) {
-                    sb.Append(Parameters[item.key]);
+                if(PlainValues.Contains(item.Value)) {
+                    sb.Append(Parameters[item.Value]);
                 } else {
-                    sb.Append(Implementation.ToStatementParameterName(item.key, parameterIndex++));
+                    sb.Append(Implementation.ToStatementParameterName(item.Value, parameterIndex++));
                 }
-                if(item.index + 1 != ParametersImpl.Count) {
+                if(item.Number + 1 != ParametersImpl.Count) {
                     sb.Append(',');
                 }
                 sb.AppendLine();
