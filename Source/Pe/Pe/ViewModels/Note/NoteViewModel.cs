@@ -47,6 +47,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         NoteContentKind _changingContentKind;
         NoteContentViewModelBase? _content;
 
+        bool _showLinkChangeConfim;
+
         #endregion
 
         public NoteViewModel(NoteElement model, INoteTheme noteTheme, IOrderManager orderManager, IClipboardManager clipboardManager, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
@@ -86,17 +88,16 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             PropertyChangedHooker.AddHook(nameof(Model.BackgroundColor), () => ApplyTheme());
             PropertyChangedHooker.AddHook(nameof(Model.ContentKind), nameof(ContentKind));
             PropertyChangedHooker.AddHook(nameof(Model.ContentElement), nameof(Content));
-
-            CloseRequest = new RequestSender(DispatcherWapper);
-            TitleEditStartRequest = new RequestSender(DispatcherWapper);
-            SelectLinkFileRequest = new RequestSender(DispatcherWapper);
         }
 
         #region property
-        public RequestSender CloseRequest { get; }
+        public RequestSender CloseRequest { get; } = new RequestSender();
 
-        public RequestSender TitleEditStartRequest { get; }
-        public RequestSender SelectLinkFileRequest { get; }
+        public RequestSender TitleEditStartRequest { get; } = new RequestSender();
+        public RequestSender SelectLinkFileRequest { get; } = new RequestSender();
+
+        public RequestSender UnlinkRequest { get; } = new RequestSender();
+        public RequestSender LinkChangeRequest { get; } = new RequestSender();
 
         bool CanLayoutNotify { get; set; }
 
@@ -112,6 +113,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         DispatcherTimer WindowAreaChangedTimer { get; }
 
         public Guid NoteId => Model.NoteId;
+        public bool IsLink => Model.ContentElement?.IsLink ?? false;
+        public string? LinkPath => Model.ContentElement?.GetLinkFilePath();
 
         public FontViewModel Font { get; }
 
@@ -218,20 +221,21 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             get => Model.ContentKind;
             set
             {
+                if(IsLink) {
+                    Logger.LogError("リンク中は変更できない");
+                    return;
+                }
+
                 // DB みてあれこれ判断するので止めてるやつを全部実施, プロパティでやるにはでっかいなぁと思うがまぁいいでしょ ;)
                 Flush();
 
                 if(!Model.CanChangeContentKind(value)) {
                     // 単純変換が出来ない場合はあれやこれや頑張る
                     ChangingContentKind = value;
-                    CanLoadContentKind = Model.ExistsContentKind(ChangingContentKind);
-                    DispatcherWapper.Invoke(() => ContentKindChangeLoadCommand.RaiseCanExecuteChanged());
                     ShowContentKindChangeConfim = true;
                 } else {
                     // 変換するがユーザー選択は不要
-                    Debug.Assert(value != NoteContentKind.Link);
-                    Model.ConvertContentKind(ContentKind, value, null);
-                    Model.ChangeContentKind(value);
+                    Model.ConvertContentKind(value);
                 }
             }
         }
@@ -279,7 +283,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             set => SetProperty(ref this._showContentKindChangeConfim, value);
         }
 
-        bool CanLoadContentKind { get; set; }
+        public bool ShowLinkChangeConfim
+        {
+            get => this._showLinkChangeConfim;
+            private set => SetProperty(ref this._showLinkChangeConfim, value);
+        }
+        //bool CanLoadContentKind { get; set; }
 
         #endregion
 
@@ -339,33 +348,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         public ICommand ContentKindChangeConvertCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-                DoActionOrSelectLinkData(data => {
-                    Flush();
+                Flush();
 
-                    Model.ConvertContentKind(ContentKind, ChangingContentKind, data);
-                    Model.ChangeContentKind(ChangingContentKind);
-                    ShowContentKindChangeConfim = false;
-                });
-            }
-        ));
-        public DelegateCommand ContentKindChangeLoadCommand => GetOrCreateCommand(() => new DelegateCommand(
-            () => {
-                Model.ChangeContentKind(ChangingContentKind);
+                Model.ConvertContentKind(ChangingContentKind);
                 ShowContentKindChangeConfim = false;
-            },
-            () => CanLoadContentKind
-        ));
-        public ICommand ContentKindChangeCreateCommand => GetOrCreateCommand(() => new DelegateCommand(
-            () => {
-                DoActionOrSelectLinkData(data => {
-                    Flush();
-
-                    Model.CreateContentKind(ChangingContentKind, data);
-                    Model.ChangeContentKind(ChangingContentKind);
-                    ShowContentKindChangeConfim = false;
-                });
             }
         ));
+
         public ICommand ContentKindChangeCancelCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
                 ShowContentKindChangeConfim = false;
@@ -379,9 +368,93 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             }
         ));
 
+        public ICommand LinkChangeCancelCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                ShowLinkChangeConfim = false;
+            }
+        ));
+
+        public ICommand LinkChangeCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                ShowLinkChangeConfim = true;
+            }
+        ));
+        public ICommand UnlinkCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                Model.Unlink(false);
+                RaisePropertyChanged(nameof(IsLink));
+                RaisePropertyChanged(nameof(LinkPath));
+            },
+            () => IsLink
+        ).ObservesProperty(() => IsLink));
+
+        public ICommand DeleteCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                Model.Unlink(true);
+                RaisePropertyChanged(nameof(IsLink));
+                RaisePropertyChanged(nameof(LinkPath));
+            },
+            () => IsLink
+        ).ObservesProperty(() => IsLink));
+
+
+        public ICommand SaveLinkCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                var parameter = CreateLinkParameter(false);
+                LinkChangeRequest.Send<NoteLinkChangeRequestResponse>(parameter, r => {
+                    if(r.ResponseIsCancel) {
+                        return;
+                    }
+
+                    if(r.ResponseFilePaths != null && 0 < r.ResponseFilePaths.Length) {
+                        Model.OpenLinkContent(r.ResponseFilePaths[0], r.Encoding!, false);
+                        RaisePropertyChanged(nameof(IsLink));
+                        RaisePropertyChanged(nameof(LinkPath));
+                    }
+                });
+            },
+            () => !IsLink
+        ).ObservesProperty(() => IsLink));
+        public ICommand OpenLinkCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                var parameter = CreateLinkParameter(true);
+                LinkChangeRequest.Send<NoteLinkChangeRequestResponse>(parameter, r => {
+                    if(r.ResponseIsCancel) {
+                        return;
+                    }
+
+                    if(r.ResponseFilePaths != null && 0 < r.ResponseFilePaths.Length) {
+                        Model.OpenLinkContent(r.ResponseFilePaths[0], r.Encoding!, true);
+                        RaisePropertyChanged(nameof(IsLink));
+                        RaisePropertyChanged(nameof(LinkPath));
+                    }
+                });
+            },
+            () => !IsLink
+        ).ObservesProperty(() => IsLink));
+
+
         #endregion
 
         #region function
+
+        NoteLinkChangeRequestParameter CreateLinkParameter(bool isOpen)
+        {
+            var parameter = new NoteLinkChangeRequestParameter() {
+                IsOpen = isOpen,
+                Encoding = Encoding.UTF8,
+            };
+            var contentKindFilter = ContentKind switch
+            {
+                NoteContentKind.Plain => new DialogFilterItem("text", "txt", "*.txt"),
+                NoteContentKind.RichText => new DialogFilterItem("rtf", "rtf", "*.rtf"),
+                _ => throw new NotImplementedException(),
+            };
+            parameter.Filter.Add(contentKindFilter);
+            parameter.Filter.Add(new DialogFilterItem("all", string.Empty, "*.*"));
+
+            return parameter;
+        }
 
 
         (bool isCreated, NoteLayoutData layout) GetOrCreateLayout(NotePosition position)
@@ -571,12 +644,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         IReadOnlyColorPair<Color> GetColorPair() => ColorPair.Create(Model.ForegroundColor, Model.BackgroundColor);
 
+        [Obsolete]
         void DoActionOrSelectLinkData(Action<NoteLinkContentData?> action)
         {
             if(ChangingContentKind == NoteContentKind.Link) {
                 var context = new FileSaveDialogRequestParameter();
-                context.Filter.Add(new DialogFilterItem("text", "*.txt", "*.md"));
-                context.Filter.Add(new DialogFilterItem("all", "*.*"));
+                context.Filter.Add(new DialogFilterItem("text", string.Empty, "*.txt", "*.md"));
+                context.Filter.Add(new DialogFilterItem("all", string.Empty, "*.*"));
 
                 SelectLinkFileRequest.Send(context, c1 => {
                     var c = (NoteLinkSelectNotification)c1;

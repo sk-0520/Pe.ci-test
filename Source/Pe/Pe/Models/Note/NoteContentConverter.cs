@@ -76,12 +76,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Note
             return document;
         }
 
+        public Stream ToRtfStream(string rtf)
+        {
+            var binary = Encoding.UTF8.GetBytes(rtf);
+            var stream = new MemoryStream(binary);
+            return stream;
+        }
+
         public string ToPlain(string rtfText)
         {
             var converter = new RtfConverter();
             return converter.ToString(rtfText);
         }
 
+        [Obsolete]
         public string ToLinkSettingString(NoteLinkContentData linkData)
         {
             var serializer = new XmlDataContractSerializer();
@@ -90,6 +98,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Note
                 return Encoding.GetString(stream.ToArray());
             }
         }
+        [Obsolete]
         public NoteLinkContentData ToLinkSetting(string rawSetting)
         {
             var serializer = new XmlDataContractSerializer();

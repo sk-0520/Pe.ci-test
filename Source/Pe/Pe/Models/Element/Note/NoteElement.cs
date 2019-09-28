@@ -37,6 +37,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
         bool _isCompact;
         bool _isLocked;
         bool _textWrap;
+        bool _isLink;
         string? _title;
         Screen _dockScreen;
 
@@ -112,6 +113,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             get => this._textWrap;
             private set => SetProperty(ref this._textWrap, value);
         }
+
+        public bool IsLink
+        {
+            get => this._isLink;
+            private set => SetProperty(ref this._isLink, value);
+        }
+
         public string? Title
         {
             get => this._title;
@@ -393,11 +401,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
                 return true;
             }
 
-            // 変換後データが存在すればもう無理
-            if(ExistsContentKind(targetContentKind)) {
-                Logger.LogDebug("変換後データあり: {0}, {1}", NoteId, targetContentKind);
-                return false;
-            }
+            //// 変換後データが存在すればもう無理
+            //if(ExistsContentKind(targetContentKind)) {
+            //    Logger.LogDebug("変換後データあり: {0}, {1}", NoteId, targetContentKind);
+            //    return false;
+            //}
 
             // 文字列からRTFはOK
             if(ContentKind == NoteContentKind.Plain && targetContentKind == NoteContentKind.RichText) {
@@ -413,28 +421,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
         {
             using(var commander = MainDatabaseBarrier.WaitRead()) {
                 var dao = new NoteContentsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
-                return dao.SelectExistsContent(NoteId, contentKind);
+                return dao.SelectExistsContent(NoteId);
             }
         }
 
-        bool WriteLinkContent(NoteLinkContentData linkData, string content)
+        public void OpenLinkContent(string filePath, Encoding encoding, bool isOpen)
         {
-            try {
-                var fileInfo = linkData.ToFileInfo();
-                using(var stream = fileInfo.Open(System.IO.FileMode.Truncate, System.IO.FileAccess.ReadWrite, System.IO.FileShare.Read)) {
-                    using(var writer = new StreamWriter(stream, linkData.ToEncoding())) {
-                        writer.Write(content);
-                    }
-                }
-                return true;
-            } catch(Exception ex) {
-                Logger.LogError(ex, ex.Message);
-            }
-
-            return false;
+            ContentElement!.ChangeLink(filePath, encoding, isOpen);
         }
 
-        string ConvertContent(NoteContentKind fromKind, string fromRawContent, NoteContentKind toKind, NoteLinkContentData? linkData)
+        public void Unlink(bool isRemove)
+        {
+            ContentElement!.Unlink(isRemove);
+        }
+
+        string ConvertContent(NoteContentKind fromKind, string fromRawContent, NoteContentKind toKind)
         {
             var noteContentConverter = new NoteContentConverter(LoggerFactory);
             switch(fromKind) {
@@ -444,13 +445,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 #pragma warning disable CS8602 // null 参照の可能性があるものの逆参照です。
                             return DispatcherWapper.Get(() => noteContentConverter.ToRichText(fromRawContent, FontElement.FontData, ForegroundColor));
 #pragma warning restore CS8602 // null 参照の可能性があるものの逆参照です。
-
-                        case NoteContentKind.Link: {
-#pragma warning disable CS8604 // Null 参照引数の可能性があります。
-                                WriteLinkContent(linkData, fromRawContent);
-                                return noteContentConverter.ToLinkSettingString(linkData);
-#pragma warning restore CS8604 // Null 参照引数の可能性があります。
-                            }
 
                         case NoteContentKind.Plain:
                         default:
@@ -462,42 +456,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
                         case NoteContentKind.Plain:
                             return noteContentConverter.ToPlain(fromRawContent);
 
-                        case NoteContentKind.Link: {
-                                var content = noteContentConverter.ToPlain(fromRawContent);
-#pragma warning disable CS8604 // Null 参照引数の可能性があります。
-                                WriteLinkContent(linkData, content);
-                                return noteContentConverter.ToLinkSettingString(linkData);
-#pragma warning restore CS8604 // Null 参照引数の可能性があります。
-                            }
-
                         case NoteContentKind.RichText:
                         default:
                             throw new NotImplementedException();
-                    }
-
-                case NoteContentKind.Link: {
-                        var linkSetting = noteContentConverter.ToLinkSetting(fromRawContent);
-                        try {
-#pragma warning disable CS8602 // null 参照の可能性があるものの逆参照です。
-                            var linkContent = ContentElement.LoadLinkContent(linkSetting.ToFileInfo(), linkSetting.ToEncoding());
-#pragma warning restore CS8602 // null 参照の可能性があるものの逆参照です。
-                            switch(toKind) {
-                                case NoteContentKind.Plain:
-                                    return linkContent;
-
-                                case NoteContentKind.RichText:
-#pragma warning disable CS8602 // null 参照の可能性があるものの逆参照です。
-                                    return noteContentConverter.ToRichText(linkContent, FontElement.FontData, ForegroundColor);
-#pragma warning restore CS8602 // null 参照の可能性があるものの逆参照です。
-
-                                case NoteContentKind.Link:
-                                default:
-                                    throw new NotImplementedException();
-                            }
-                        } catch(Exception ex) {
-                            Logger.LogError(ex, ex.Message);
-                        }
-                        return string.Empty;
                     }
 
                 default:
@@ -505,80 +466,51 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             }
         }
 
-        public void ConvertContentKind(NoteContentKind fromKind, NoteContentKind toKind, NoteLinkContentData? linkData)
+        public void ConvertContentKind(NoteContentKind toContentKind)
         {
-            if(fromKind == toKind) {
-                throw new ArgumentException($"{nameof(fromKind)} == {nameof(toKind)}");
+            if(ContentKind == toContentKind) {
+                throw new ArgumentException($"{nameof(ContentKind)} == {nameof(toContentKind)}");
             }
-            if(toKind == NoteContentKind.Link && linkData == null) {
-                throw new ArgumentNullException(nameof(linkData));
+            if(IsLink) {
+                throw new InvalidOperationException(nameof(IsLink));
             }
+
+            var prevContentKind = ContentKind;
+            var oldContentElement = ContentElement;
 
             using(MainDatabaseLazyWriter.Pause()) {
 #pragma warning disable CS8602 // null 参照の可能性があるものの逆参照です。
                 var fromRawContent = ContentElement.LoadRawContent();
 #pragma warning restore CS8602 // null 参照の可能性があるものの逆参照です。
-                var convertedContent = ConvertContent(fromKind, fromRawContent, toKind, linkData);
+                var convertedContent = ConvertContent(ContentKind, fromRawContent, toContentKind);
                 var contentData = new NoteContentData() {
                     NoteId = NoteId,
-                    ContentKind = toKind,
+                    ContentKind = toContentKind,
                     Content = convertedContent,
                 };
                 using(var commander = MainDatabaseBarrier.WaitWrite()) {
-                    var notesEntityDao = new NoteContentsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
-                    if(notesEntityDao.SelectExistsContent(contentData.NoteId, contentData.ContentKind)) {
-                        notesEntityDao.UpdateContent(contentData, DatabaseCommonStatus.CreateCurrentAccount());
+                    var noteContentsEntityDao = new NoteContentsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                    if(noteContentsEntityDao.SelectExistsContent(contentData.NoteId)) {
+                        noteContentsEntityDao.UpdateContent(contentData, DatabaseCommonStatus.CreateCurrentAccount());
                     } else {
-                        notesEntityDao.InsertNewContent(contentData, DatabaseCommonStatus.CreateCurrentAccount());
+                        noteContentsEntityDao.InsertNewContent(contentData, DatabaseCommonStatus.CreateCurrentAccount());
                     }
+
+                    var notesEntityDao = new NotesEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                    notesEntityDao.UpdateContentKind(NoteId, toContentKind, DatabaseCommonStatus.CreateCurrentAccount());
 
                     commander.Commit();
                 }
             }
-        }
 
-        public void CreateContentKind(NoteContentKind contentKind, NoteLinkContentData? linkData)
-        {
-            if(contentKind == NoteContentKind.Link && linkData == null) {
-                throw new ArgumentNullException(nameof(linkData));
-            }
-
-            var noteContentConverter = new NoteContentConverter(LoggerFactory);
-
-            var contentData = new NoteContentData() {
-                NoteId = NoteId,
-                ContentKind = contentKind,
-                Content = contentKind == NoteContentKind.Link
-#pragma warning disable CS8604 // Null 参照引数の可能性があります。
-                    ? noteContentConverter.ToLinkSettingString(linkData)
-#pragma warning restore CS8604 // Null 参照引数の可能性があります。
-                    : string.Empty
-                ,
-            };
-            using(var commander = MainDatabaseBarrier.WaitWrite()) {
-                var notesEntityDao = new NoteContentsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
-                if(notesEntityDao.SelectExistsContent(contentData.NoteId, contentData.ContentKind)) {
-                    notesEntityDao.UpdateContent(contentData, DatabaseCommonStatus.CreateCurrentAccount());
-                } else {
-                    notesEntityDao.InsertNewContent(contentData, DatabaseCommonStatus.CreateCurrentAccount());
-                }
-
-                commander.Commit();
-            }
-        }
-
-        public void ChangeContentKind(NoteContentKind contentKind)
-        {
-            var prevContentKind = ContentKind;
-            ContentKind = contentKind;
-            var oldContentElement = ContentElement;
+            ContentKind = toContentKind;
             ContentElement = OrderManager.CreateNoteContentElement(NoteId, ContentKind);
+
             oldContentElement?.Dispose();
-            MainDatabaseLazyWriter.Stock(c => {
-                var notesEntityDao = new NotesEntityDao(c, StatementLoader, c.Implementation, LoggerFactory);
-                notesEntityDao.UpdateContentKind(NoteId, ContentKind, DatabaseCommonStatus.CreateCurrentAccount());
-            }, UniqueKeyPool.Get());
+
         }
+
+
         public void ChangeVisible(bool isVisible)
         {
             IsVisible = isVisible;
@@ -616,6 +548,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
                 commander.Commit();
             }
         }
+
 
         #endregion
 

@@ -24,6 +24,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Note
 
         public string CreateRichText() => @"{\rtf1}";
 
+        [Obsolete]
         public NoteLinkContentData CreateLink() => new NoteLinkContentData() {
             EncodingName = EncodingUtility.ToString(Encoding),
             FilePath = string.Empty,

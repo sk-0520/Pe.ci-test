@@ -311,7 +311,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             try {
                 var getImageListResult = NativeMethods.SHGetImageList((int)shellImageList, ref NativeMethods.IID_IImageList, out resultImageList);
 
-                if(getImageListResult == ComResult.S_OK) {
+                if(getImageListResult == HRESULT.S_OK) {
                     Debug.Assert(resultImageList != null);
                     using(var imageList = new ComWrapper<IImageList>(resultImageList)) {
                         int n = 0;

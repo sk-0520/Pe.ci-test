@@ -42,6 +42,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Note
 
         PopupAttacher? PopupAttacher { get; set; }
 
+        CommandStore CommandStore { get; } = new CommandStore();
 
         #endregion
 
@@ -75,8 +76,6 @@ namespace ContentTypeTextNet.Pe.Main.Views.Note
             }
         }
 
-        #region command
-
         ICommand? _CloseCommand;
         public ICommand CloseCommand
         {
@@ -90,7 +89,62 @@ namespace ContentTypeTextNet.Pe.Main.Views.Note
             }
         }
 
-        #endregion
+        public ICommand UnlinkCommand => CommandStore.GetOrCreate(() => new DelegateCommand<RequestEventArgs>(
+            o => {
+
+            }
+        ));
+
+        public ICommand LinkChangeCommand => CommandStore.GetOrCreate(() => new DelegateCommand<RequestEventArgs>(
+            o => {
+                var linkParameter = (NoteLinkChangeRequestParameter)o.Parameter;
+
+                FileSystemDialogBase dialog = linkParameter.IsOpen switch
+                {
+                    true => new OpenFileDialog(),
+                    false => new SaveFileDialog(),
+                };
+                using(dialog) {
+                    dialog.FileName = linkParameter.FilePath;
+                    dialog.Filters.SetRange(linkParameter.Filter);
+
+                    var encodings = new[] {
+                        CustomizeDialogComboBoxItem.Create(EncodingUtility.ToString(EncodingUtility.UTF8n), EncodingUtility.UTF8n),
+                        CustomizeDialogComboBoxItem.Create(EncodingUtility.ToString(Encoding.UTF8), Encoding.UTF8),
+                        CustomizeDialogComboBoxItem.Create(EncodingUtility.ToString(Encoding.Unicode), Encoding.Unicode),
+                        //TODO: 文字コードは追々かんがえるよ
+                        CustomizeDialogComboBoxItem.Create(EncodingUtility.ToString(Encoding.UTF32), Encoding.UTF32),
+                    };
+                    var defaultItem = encodings.FirstOrDefault(i => EncodingUtility.ToString(i.Value) == EncodingUtility.ToString(linkParameter.Encoding!));
+                    var index = Array.IndexOf(encodings, defaultItem);
+                    if(index == -1) {
+                        index = 0;
+                    }
+
+                    CustomizeDialogComboBox<Encoding> encodingComboBox;
+                    using(dialog.Customize.Grouping(nameof(Encoding))) {
+                        encodingComboBox = dialog.Customize.AddComboBox<Encoding>();
+                        foreach(var encoding in encodings) {
+                            encodingComboBox.AddItem(encoding);
+                        }
+                        encodingComboBox.SelectedIndex = index;
+                    }
+
+                    if(dialog.ShowDialog(this).GetValueOrDefault()) {
+                        o.Callback(new NoteLinkChangeRequestResponse() {
+                            ResponseIsCancel = true,
+                        });
+                    }
+
+                    o.Callback(new NoteLinkChangeRequestResponse() {
+                        ResponseIsCancel = false,
+                        ResponseFilePaths = new [] { dialog.FileName },
+                        Encoding = encodings[encodingComboBox.SelectedIndex].Value,
+                    });
+                }
+
+            }
+        ));
 
         #endregion
 

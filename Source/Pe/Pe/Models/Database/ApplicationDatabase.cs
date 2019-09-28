@@ -174,15 +174,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
                 }
             }
 
-            sb.AppendLine(nameof(LoggingStatement));
+            var method = new StackTrace(4)?.GetFrame(0)?.GetMethod();
+            if(method != null) {
+                sb.AppendLine(method.ReflectedType!.Name + "." + method.Name);
+            } else {
+                sb.AppendLine(nameof(LoggingStatement));
+            }
 
 
             sb.Append(indent);
             sb.AppendLine("[SQL]");
-            foreach(var line in lines.Select((s, i) => (s, i))) {
+            foreach(var line in lines.Counting(1)) {
                 sb.Append(indent);
-                sb.AppendFormat("{0," + width + "}: ", line.i);
-                sb.AppendLine(line.s);
+                sb.AppendFormat("{0," + width + "}: ", line.Number);
+                sb.AppendLine(line.Value);
             }
             if(parameter != null) {
                 sb.Append(indent);

@@ -34,7 +34,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             set
             {
                 if(SetProperty(ref this._content, value)) {
-                    if(CanVisible) {
+                    if(CanVisible && EnabledUpdate) {
                         Model.ChangePlainContent(Content);
                     }
                 }
@@ -54,15 +54,19 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         protected override Task LoadContentAsync(Control control)
         {
             return Task.Run(() => {
-                var content = Model.LoadPlainContent();
-                Content = content;
+                try {
+                    var content = Model.LoadPlainContent();
+                    Content = content;
+                } catch(Exception ex) {
+                    Content = ex.Message;
+                }
             });
         }
 
         protected override void UnloadContent()
         { }
 
-        protected override IDataObject GetContentData()
+        protected override IDataObject GetClipbordContentData()
         {
             var data = new DataObject();
             if(CanVisible) {

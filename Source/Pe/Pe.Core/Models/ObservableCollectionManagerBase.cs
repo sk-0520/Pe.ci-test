@@ -114,10 +114,10 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 return list.IndexOf(value);
             }
 
-            var items = Collection.Select((v, i) => (value: v, index: i));
+            var items = Collection.Counting();
             foreach(var item in items) {
-                if(object.Equals(item.value, value)) {
-                    return item.index;
+                if(object.Equals(item.Value, value)) {
+                    return item.Number;
                 }
             }
 

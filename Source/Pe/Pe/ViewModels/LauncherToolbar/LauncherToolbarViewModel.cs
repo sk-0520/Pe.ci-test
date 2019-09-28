@@ -63,8 +63,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
             PropertyChangedHooker.AddHook(nameof(LauncherToolbarElement.IsOpendAppMenu), nameof(IsOpendAppMenu));
             PropertyChangedHooker.AddHook(nameof(LauncherToolbarElement.IsTopmost), nameof(IsTopmost));
             PropertyChangedHooker.AddHook(nameof(LauncherToolbarElement.SelectedLauncherGroup), nameof(SelectedLauncherGroup));
-
-            CloseRequest = new RequestSender(DispatcherWapper);
         }
 
         #region property
@@ -112,7 +110,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
         ModelViewModelObservableCollectionManagerBase<LauncherItemElement, LauncherDetailViewModelBase> LauncherItemCollection { get; }
         public ICollectionView LauncherItems { get; }
 
-        public RequestSender CloseRequest { get; }
+        public RequestSender CloseRequest { get; } = new RequestSender();
 
         public bool IsVerticalLayout => ToolbarPosition == AppDesktopToolbarPosition.Left || ToolbarPosition == AppDesktopToolbarPosition.Right;
 

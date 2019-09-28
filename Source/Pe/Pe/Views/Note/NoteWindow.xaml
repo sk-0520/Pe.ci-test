@@ -11,7 +11,7 @@
   xmlns:cttn_lib_shared_lib_view_converter="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Converter;assembly=Pe.Core"
   xmlns:cttn_lib_shared_lib_view_attached="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Attached;assembly=Pe.Core"
 
-    xmlns:app_core_view="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core"
+  xmlns:app_core_view="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core"
 
   xmlns:app_main_view="clr-namespace:ContentTypeTextNet.Pe.Main.Views"
   xmlns:app_main_model_data="clr-namespace:ContentTypeTextNet.Pe.Main.Models.Data"
@@ -62,13 +62,19 @@
       <i:InvokeCommandAction Command="{Binding SaveTitleEditCommand}" CommandParameter="{Binding ElementName=inputTitle}" />
     </i:EventTrigger>
     <app_core_view:RequestTrigger SourceObject="{Binding TitleEditStartRequest}">
-      <i:InvokeCommandAction Command="{Binding TitleEditStartCommand ,ElementName=root}" />
+      <prism:InvokeCommandAction Command="{Binding TitleEditStartCommand ,ElementName=root}" />
     </app_core_view:RequestTrigger>
     <app_core_view:RequestTrigger SourceObject="{Binding SelectLinkFileRequest}">
-      <i:InvokeCommandAction Command="{Binding SelectLinkFileCommand ,ElementName=root}" />
+      <prism:InvokeCommandAction Command="{Binding SelectLinkFileCommand ,ElementName=root}" />
+    </app_core_view:RequestTrigger>
+    <app_core_view:RequestTrigger SourceObject="{Binding UnlinkRequest}">
+      <prism:InvokeCommandAction Command="{Binding UnlinkCommand ,ElementName=root}" />
+    </app_core_view:RequestTrigger>
+    <app_core_view:RequestTrigger SourceObject="{Binding LinkChangeRequest}">
+      <prism:InvokeCommandAction Command="{Binding LinkChangeCommand ,ElementName=root}" />
     </app_core_view:RequestTrigger>
     <app_core_view:RequestTrigger SourceObject="{Binding CloseRequest}">
-      <i:InvokeCommandAction Command="{Binding CloseCommand ,ElementName=root}" />
+      <prism:InvokeCommandAction Command="{Binding CloseCommand ,ElementName=root}" />
     </app_core_view:RequestTrigger>
   </i:Interaction.Triggers>
   <i:Interaction.Behaviors>
@@ -270,26 +276,15 @@
                     <i:InvokeCommandAction Command="{Binding LoadedCommand}" CommandParameter="{Binding ElementName=control}" />
                   </i:EventTrigger>
                 </i:Interaction.Triggers>
+                <RichTextBox.Style>
+                  <Style TargetType="RichTextBox" BasedOn="{StaticResource TextBoxBase}">
+                    <Style.Triggers />
+                  </Style>
+                </RichTextBox.Style>
               </RichTextBox>
             </DataTemplate>
             <!--#endregion -->
 
-            <!--#region リンク -->
-            <DataTemplate DataType="{x:Type app_main_viewmodel_note:NoteLinkContentViewModel}">
-              <Grid>
-                <TextBox x:Name="control" Style="{StaticResource ContentTextBox}" Text="{Binding Content, UpdateSourceTrigger=PropertyChanged, Delay=1000}">
-                  <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Loaded">
-                      <i:InvokeCommandAction Command="{Binding LoadedCommand}" CommandParameter="{Binding ElementName=control}" />
-                    </i:EventTrigger>
-                  </i:Interaction.Triggers>
-                </TextBox>
-                <Border Visibility="{Binding HasIllegalMessage, Converter={StaticResource BooleanToVisibilityConverter}}">
-                  <TextBlock Text="{Binding IllegalMessage}" />
-                </Border>
-              </Grid>
-            </DataTemplate>
-            <!--#endregion -->
           </Grid.Resources>
           <!--<ContentControl x:Name="content" Content="{Binding Content}" Visibility="{Binding Content.CanVisible, Converter={StaticResource BooleanToVisibilityConverter}}" />-->
           <!--<Grid Visibility="{Binding Content.CanVisible, Converter={StaticResource FalseToVisibilityConverter}}">
@@ -304,6 +299,12 @@
                   </DataTrigger>
                   <DataTrigger Binding="{Binding IsCompact}" Value="False">
                     <Setter Property="Content" Value="{Binding Content}" />
+                  </DataTrigger>
+                  <DataTrigger Binding="{Binding ShowContentKindChangeConfim}" Value="True">
+                    <Setter Property="IsEnabled" Value="False" />
+                  </DataTrigger>
+                  <DataTrigger Binding="{Binding ShowLinkChangeConfim}" Value="True">
+                    <Setter Property="IsEnabled" Value="False" />
                   </DataTrigger>
                 </Style.Triggers>
               </Style>
@@ -344,7 +345,19 @@
       <Border Style="{StaticResource PopupMenuBorder}">
         <Grid>
           <!--#region 通常編集-->
-          <StackPanel IsEnabled="{Binding ShowContentKindChangeConfim, Converter={StaticResource LogicalNotConverter}}">
+          <StackPanel>
+            <StackPanel.Style>
+              <Style TargetType="StackPanel">
+                <Style.Triggers>
+                  <DataTrigger Binding="{Binding ShowContentKindChangeConfim}" Value="True">
+                    <Setter Property="IsEnabled" Value="False" />
+                  </DataTrigger>
+                  <DataTrigger Binding="{Binding ShowLinkChangeConfim}" Value="True">
+                    <Setter Property="IsEnabled" Value="False" />
+                  </DataTrigger>
+                </Style.Triggers>
+              </Style>
+            </StackPanel.Style>
             <GroupBox Style="{StaticResource HeaderGroupBox}" Header="format">
               <StackPanel Grid.IsSharedSizeScope="True">
                 <Grid>
@@ -354,10 +367,21 @@
                   </Grid.ColumnDefinitions>
 
                   <Label Grid.Column="0">kind</Label>
-                  <StackPanel Grid.Column="1" Orientation="Horizontal">
+                  <StackPanel Grid.Column="1" Orientation="Horizontal" IsEnabled="{Binding IsLink, Converter={StaticResource LogicalNotConverter}}">
                     <RadioButton Content="plain" IsChecked="{Binding ContentKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_model_data:NoteContentKind.Plain}}" />
                     <RadioButton Content="rtf"   IsChecked="{Binding ContentKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_model_data:NoteContentKind.RichText}}"  />
-                    <RadioButton Content="link"  IsChecked="{Binding ContentKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_model_data:NoteContentKind.Link}}"  />
+                  </StackPanel>
+                </Grid>
+
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="FromatLabel" />
+                    <ColumnDefinition Width="*" />
+                  </Grid.ColumnDefinitions>
+
+                  <Label Grid.Column="0">link</Label>
+                  <StackPanel Grid.Column="1" Orientation="Horizontal">
+                    <Button Command="{Binding LinkChangeCommand}">state</Button>
                   </StackPanel>
                 </Grid>
 
@@ -440,7 +464,7 @@
                   <CheckBox Grid.Column="1" Content="small" IsChecked="{Binding IsCompact, Mode=OneWay}" Command="{Binding SwitchCompactCommand}" />
                   <CheckBox Grid.Column="2" Content="topmost" IsChecked="{Binding IsTopmost, Mode=OneWay}" Command="{Binding SwitchTopmostCommand}" />
                 </Grid>
-                <CheckBox Grid.Column="2" Content="text wrap" IsChecked="{Binding TextWrap, Mode=OneWay}" Command="{Binding SwitchTextWrapCommand}">
+                <CheckBox Content="text wrap" IsChecked="{Binding TextWrap, Mode=OneWay}" Command="{Binding SwitchTextWrapCommand}">
                   <CheckBox.Style>
                     <Style TargetType="CheckBox" BasedOn="{StaticResource {x:Type CheckBox}}">
                       <Style.Triggers>
@@ -466,6 +490,7 @@
                   <Button Grid.Column="0" Content="copy" Command="{Binding Content.CopyCommand}" />
                   <Button Grid.Column="1" Content="close" Command="{x:Static SystemCommands.CloseWindowCommand}" />
                   <Grid Grid.Column="2">
+                    <!--
                     <Grid.ColumnDefinitions>
                       <ColumnDefinition />
                       <ColumnDefinition />
@@ -479,7 +504,7 @@
                               <Setter Property="IsChecked" Value="False" />
                             </DataTrigger>
                             <Trigger Property="IsChecked" Value="True">
-                              <!-- 一定時間経過で非活性 -->
+                              --><!-- 一定時間経過で非活性 --><!--
                               <Trigger.EnterActions>
                                 <BeginStoryboard>
                                   <BeginStoryboard.Storyboard>
@@ -497,6 +522,12 @@
                       </ToggleButton.Style>
                     </ToggleButton>
                     <Button Grid.Column="1" IsEnabled="{Binding IsChecked, ElementName=removeLocker}" Command="{Binding RemoveCommand}" Content="remove" />
+                    -->
+                    <app_core_view:LockButton>
+                      <app_core_view:LockButton.LockContent>
+                        <Button Grid.Column="1" Command="{Binding RemoveCommand}" Content="remove" />
+                      </app_core_view:LockButton.LockContent>
+                    </app_core_view:LockButton>
                   </Grid>
                 </Grid>
 
@@ -539,8 +570,6 @@
                   <Run Text="{Binding ChangingContentKind, Mode=OneWay}" />
                   </TextBlock>
                   <Button Command="{Binding ContentKindChangeConvertCommand}">convert</Button>
-                  <Button Command="{Binding ContentKindChangeLoadCommand}">load</Button>
-                  <Button Command="{Binding ContentKindChangeCreateCommand}">create</Button>
                   <Button Command="{Binding ContentKindChangeCancelCommand}">cancel</Button>
                 </StackPanel>
               </Border>
@@ -550,6 +579,53 @@
             </Grid>
           </Border>
           <!--#endregion -->
+
+          <!--#region コンテンツ種別変更があんまりよくないっていう問い合わせ-->
+          <Border d:IsHidden="True"  Background="#88cccccc" Visibility="{Binding ShowLinkChangeConfim, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <Grid>
+              <Grid.Resources>
+                <Style x:Key="CancelBackground" TargetType="Button">
+                  <Setter Property="Template">
+                    <Setter.Value>
+                      <ControlTemplate>
+                        <Border Background="Transparent" />
+                      </ControlTemplate>
+                    </Setter.Value>
+                  </Setter>
+                </Style>
+              </Grid.Resources>
+              <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+              </Grid.RowDefinitions>
+
+              <Border
+                Grid.Row="1"
+                TextElement.Foreground="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}"
+                Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"
+                Padding="8"
+              >
+                <Grid x:Name="parent">
+                  <StackPanel Visibility="{Binding IsLink, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <Button Command="{Binding UnlinkCommand}">unlink</Button>
+                    <Button Command="{Binding DeleteCommand}">delete</Button>
+
+                    <TextBox IsReadOnly="True" Width="{Binding ActualWidth, ElementName=parent}" Text="{Binding LinkPath, Mode=OneWay}" />
+                  </StackPanel>
+                  <StackPanel Visibility="{Binding IsLink, Converter={StaticResource FalseToVisibilityConverter}}">
+                    <Button Command="{Binding SaveLinkCommand}">link(save)</Button>
+                    <Button Command="{Binding OpenLinkCommand}">link(open)</Button>
+                  </StackPanel>
+                </Grid>
+              </Border>
+
+              <Button Grid.Row="0" Style="{StaticResource CancelBackground}" Command="{Binding LinkChangeCancelCommand}" />
+              <Button Grid.Row="2" Style="{StaticResource CancelBackground}" Command="{Binding LinkChangeCancelCommand}" />
+            </Grid>
+          </Border>
+          <!--#endregion -->
+
         </Grid>
       </Border>
 

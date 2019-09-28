@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Element.Note;
@@ -29,6 +30,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         {
             ClipboardManager = clipboardManager;
             DispatcherWapper = dispatcherWapper;
+
+            PropertyChangedHooker = new PropertyChangedHooker(DispatcherWapper, LoggerFactory);
+            PropertyChangedHooker.AddHook(nameof(IsLink), nameof(IsLink));
         }
 
         #region property
@@ -44,6 +48,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         private Control? Control { get; set; }
 
+        public bool IsLink => Model.IsLink;
+
+        PropertyChangedHooker PropertyChangedHooker { get; }
+
+        protected bool EnabledUpdate { get; private set; } = true;
+
         #endregion
 
         #region command
@@ -54,7 +64,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                     return;
                 }
 
-                AttachControl(o);
+                AttachControlCore(o);
 
                 try {
                     Logger.LogDebug("読み込み開始");
@@ -70,7 +80,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         public ICommand CopyCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-                var data = GetContentData();
+                var data = GetClipbordContentData();
                 ClipboardManager.Set(data);
             }
         ));
@@ -79,32 +89,77 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         #region function
 
-        private void AttachControl(Control o)
+        private void AttachControlCore(Control o)
         {
             Control = o;
             Control.Unloaded += Control_Unloaded;
         }
 
-        private void DetachControl()
+        private void DetachControlCore()
         {
             if(Control != null) {
                 Control.Unloaded -= Control_Unloaded;
             }
         }
 
+        /// <summary>
+        /// コンテンツが必要になった際に呼び出される。
+        /// <para>UI要素への購買処理も実施すること。</para>
+        /// </summary>
+        /// <param name="control"></param>
+        /// <returns></returns>
         protected abstract Task LoadContentAsync(Control control);
+        /// <summary>
+        /// コンテンツが不要になった際に呼び出される。
+        /// <para>UI要素への解除処理も実施すること。</para>
+        /// </summary>
         protected abstract void UnloadContent();
 
-        protected abstract IDataObject GetContentData();
+        /// <summary>
+        /// クリップボード用データの取得。
+        /// </summary>
+        /// <returns></returns>
+        protected abstract IDataObject GetClipbordContentData();
+
+        #endregion
+
+        #region SingleModelViewModelBase
+
+        protected override void AttachModelEventsImpl()
+        {
+            Model.LinkContentChanged += Model_LinkContentChanged;
+        }
+
+        protected override void DetachModelEventsImpl()
+        {
+            Model.LinkContentChanged -= Model_LinkContentChanged;
+        }
 
         #endregion
 
         private void Control_Unloaded(object sender, System.Windows.RoutedEventArgs e)
         {
             UnloadContent();
-            DetachControl();
+            DetachControlCore();
             CanVisible = false;
         }
+
+        private void Model_LinkContentChanged(object? sender, EventArgs e)
+        {
+            if(Control == null) {
+                Logger.LogTrace("change ...");
+                return;
+            }
+
+            Logger.LogTrace("change!");
+            EnabledUpdate = false;
+            UnloadContent();
+            LoadContentAsync(Control).ContinueWith(t => {
+                EnabledUpdate = true;
+            }).ConfigureAwait(false);
+        }
+
+
     }
 
     public static class NoteContentViewModelFactory
@@ -120,8 +175,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                 case NoteContentKind.RichText:
                     return new NoteRichTextContentViewModel(model, clipboardManager, dispatcherWapper, loggerFactory);
 
-                case NoteContentKind.Link:
-                    return new NoteLinkContentViewModel(model, clipboardManager, dispatcherWapper, loggerFactory);
+                //case NoteContentKind.Link:
+                //    return new NoteLinkContentViewModel(model, clipboardManager, dispatcherWapper, loggerFactory);
 
                 default:
                     throw new NotImplementedException();
