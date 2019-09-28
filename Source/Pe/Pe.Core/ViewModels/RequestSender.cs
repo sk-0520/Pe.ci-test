@@ -16,16 +16,13 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
 
         #endregion
 
-        public RequestSender(IDispatcherWapper dispatcherWapper)
-        {
-            DispatcherWapper = dispatcherWapper;
-        }
+        public RequestSender()
+        { }
 
 
         #region property
-        static RequestParameter EmptyParameter { get; } = new RequestParameter();
 
-        IDispatcherWapper DispatcherWapper { get; }
+        static RequestParameter EmptyParameter { get; } = new RequestParameter();
 
         #endregion
 
@@ -46,9 +43,9 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
             OnRaised(requestParameter, callback);
         }
 
-        public Task<RequestResponse> SendAsync() => SendAsync(EmptyParameter, CancellationToken.None);
-        public Task<RequestResponse> SendAsync(RequestParameter requestParameter) => SendAsync(requestParameter, CancellationToken.None);
-        public Task<RequestResponse> SendAsync(RequestParameter requestParameter, CancellationToken token)
+        public Task<RequestResponse> SendAsync(IDispatcherWapper dispatcherWapper) => SendAsync(EmptyParameter, dispatcherWapper, CancellationToken.None);
+        public Task<RequestResponse> SendAsync(RequestParameter requestParameter, IDispatcherWapper dispatcherWapper) => SendAsync(requestParameter, dispatcherWapper, CancellationToken.None);
+        public Task<RequestResponse> SendAsync(RequestParameter requestParameter, IDispatcherWapper dispatcherWapper, CancellationToken token)
         {
             var waitEvent = new ManualResetEventSlim(false);
 
@@ -61,7 +58,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
 
             return Task.Run(() => {
                 using(waitEvent) {
-                    DispatcherWapper.Begin(() => OnRaised(requestParameter, CustomCallback));
+                    dispatcherWapper.Begin(() => OnRaised(requestParameter, CustomCallback));
                     waitEvent.Wait(token);
                 }
                 return result ?? new RequestSilentResponse();

@@ -88,23 +88,16 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             PropertyChangedHooker.AddHook(nameof(Model.BackgroundColor), () => ApplyTheme());
             PropertyChangedHooker.AddHook(nameof(Model.ContentKind), nameof(ContentKind));
             PropertyChangedHooker.AddHook(nameof(Model.ContentElement), nameof(Content));
-
-            CloseRequest = new RequestSender(DispatcherWapper);
-            TitleEditStartRequest = new RequestSender(DispatcherWapper);
-            SelectLinkFileRequest = new RequestSender(DispatcherWapper);
-
-            UnlinkRequest = new RequestSender(DispatcherWapper);
-            LinkChangeRequest = new RequestSender(DispatcherWapper);
         }
 
         #region property
-        public RequestSender CloseRequest { get; }
+        public RequestSender CloseRequest { get; } = new RequestSender();
 
-        public RequestSender TitleEditStartRequest { get; }
-        public RequestSender SelectLinkFileRequest { get; }
+        public RequestSender TitleEditStartRequest { get; } = new RequestSender();
+        public RequestSender SelectLinkFileRequest { get; } = new RequestSender();
 
-        public RequestSender UnlinkRequest { get; }
-        public RequestSender LinkChangeRequest { get; }
+        public RequestSender UnlinkRequest { get; } = new RequestSender();
+        public RequestSender LinkChangeRequest { get; } = new RequestSender();
 
         bool CanLayoutNotify { get; set; }
 

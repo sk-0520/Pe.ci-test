@@ -17,14 +17,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Accept
     {
         public AcceptViewModel(AcceptElement model, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
-        {
-            CloseRequest = new RequestSender(dispatcherWapper);
-        }
+        { }
 
         #region property
 
         //public InteractionRequest<Notification> CloseRequest { get; } = new InteractionRequest<Notification>();
-        public RequestSender CloseRequest { get; }
+        public RequestSender CloseRequest { get; } = new RequestSender();
 
         #endregion
 

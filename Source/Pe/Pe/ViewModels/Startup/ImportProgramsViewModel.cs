@@ -24,12 +24,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Startup
             ProgramCollection = new ActionModelViewModelObservableCollectionManager<ProgramElement, ProgramViewModel>(Model.ProgramItems, LoggerFactory) {
                 ToViewModel = m => new ProgramViewModel(m, LoggerFactory),
             };
-            CloseRequest = new RequestSender(dispatcherWapper);
         }
 
         #region property
 
-        public RequestSender CloseRequest { get; }
+        public RequestSender CloseRequest { get; } = new RequestSender();
 
         ActionModelViewModelObservableCollectionManager<ProgramElement, ProgramViewModel> ProgramCollection { get; }
         public ObservableCollection<ProgramViewModel> ProgramItems => ProgramCollection.ViewModels;
