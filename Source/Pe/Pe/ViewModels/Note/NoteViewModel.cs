@@ -385,16 +385,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         public ICommand SaveLinkCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
                 var parameter = CreateLinkParameter(false);
-                LinkChangeRequest.Send(parameter, r => {
-                    var response = (NoteLinkChangeRequestResponse)r;
+                LinkChangeRequest.Send<NoteLinkChangeRequestResponse>(parameter, r => {
                 });
             }
         ));
         public ICommand OpenLinkCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
                 var parameter = CreateLinkParameter(true);
-                LinkChangeRequest.Send(parameter, r => {
-                    var response = (NoteLinkChangeRequestResponse)r;
+                LinkChangeRequest.Send<NoteLinkChangeRequestResponse>(parameter, r => {
                 });
             }
         ));

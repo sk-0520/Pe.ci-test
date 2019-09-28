@@ -68,4 +68,20 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
 
         #endregion
     }
+
+    public static class RequestSenderExtensions
+    {
+        #region function
+
+        public static void Send<TRequestResponse>(this RequestSender @this, RequestParameter requestParameter, Action<TRequestResponse> callback)
+            where TRequestResponse : RequestResponse
+        {
+            @this.Send(requestParameter, r => {
+                var response = (TRequestResponse)r;
+                callback(response);
+            });
+        }
+
+        #endregion
+    }
 }
