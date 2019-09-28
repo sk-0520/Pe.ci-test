@@ -160,7 +160,25 @@ namespace ContentTypeTextNet.Pe.Core.Views
             return null;
         }
 
+        string TuneExtension(string path)
+        {
+            var dotExt = Path.GetExtension(path);
+            if(!string.IsNullOrWhiteSpace(dotExt)) {
+                return path;
+            }
 
+            if(!Filters.Any()) {
+                return path;
+            }
+
+            FileDialog.Com.GetFileTypeIndex(out var filterIndex);
+            var filter = Filters[(int)filterIndex - 1];
+            if(string.IsNullOrWhiteSpace(filter.DefaultExtension)) {
+                return path;
+            }
+
+            return PathUtility.AppendExtension(path, filter.DefaultExtension);
+        }
 
         public bool? ShowDialog(Window parent) => ShowDialog(HandleUtility.GetWindowHandle(parent));
         public bool? ShowDialog(IntPtr hWnd)
@@ -221,7 +239,12 @@ namespace ContentTypeTextNet.Pe.Core.Views
                 var path = Marshal.PtrToStringAuto(pszPath);
                 Marshal.FreeCoTaskMem(pszPath);
                 if(path != null) {
-                    FileName = path;
+                    if(PickFolders) {
+                        FileName = path;
+                    } else {
+                        FileName = TuneExtension(path);
+                    }
+
                     Customize.ChangeStatus();
                     return true;
                 }

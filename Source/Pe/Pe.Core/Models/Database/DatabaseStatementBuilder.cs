@@ -261,8 +261,9 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             sb.AppendLine("where");
             var enabledWhereItems = ParametersImpl.Keys.Except(IgnoreWhereParameters).ToList();
             var keyItems = enabledWhereItems.Intersect(KeyColumns).Select(i => (column: i, equal: true));
-            var paramItems = enabledWhereItems.Except(KeyColumns).Select(i => (column: i, equal: false));
-            var whereItems = keyItems.Concat(paramItems).ToArray();
+            //var paramItems = enabledWhereItems.Except(KeyColumns).Select(i => (column: i, equal: false));
+            //var whereItems = keyItems.Concat(paramItems).ToArray();
+            var whereItems = keyItems.ToArray();
             for(var i = 0; i < whereItems.Length; i++) {
                 var whereItem = whereItems[i];
                 sb.Append('\t');

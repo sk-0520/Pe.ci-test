@@ -443,6 +443,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             return false;
         }
 
+        public void CreateLinkContent(string filePath, Encoding encoding)
+        {
+            ContentElement!.ChangeLink(filePath, encoding);
+        }
+
         [Obsolete]
         string ConvertContent(NoteContentKind fromKind, string fromRawContent, NoteContentKind toKind, NoteLinkContentData? linkData)
         {
@@ -702,6 +707,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
                 commander.Commit();
             }
         }
+
 
         #endregion
 

@@ -115,12 +115,40 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         #endregion
 
+        #region SingleModelViewModelBase
+
+        protected override void AttachModelEventsImpl()
+        {
+            Model.LinkContentChanged += Model_LinkContentChanged;
+        }
+
+        protected override void DetachModelEventsImpl()
+        {
+            Model.LinkContentChanged -= Model_LinkContentChanged;
+        }
+
+        #endregion
+
         private void Control_Unloaded(object sender, System.Windows.RoutedEventArgs e)
         {
             UnloadContent();
             DetachControlCore();
             CanVisible = false;
         }
+
+        private void Model_LinkContentChanged(object? sender, EventArgs e)
+        {
+            if(Control == null) {
+                Logger.LogTrace("change ...");
+                return;
+            }
+
+            Logger.LogTrace("change!");
+            UnloadContent();
+            LoadContentAsync(Control).ConfigureAwait(false);
+        }
+
+
     }
 
     public static class NoteContentViewModelFactory

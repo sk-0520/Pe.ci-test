@@ -77,13 +77,37 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database.Vender.Public.SQLite
         }
     }
 
+    class SqliteTimeSpanHandler : SqlMapper.TypeHandler<TimeSpan>
+    {
+        public override void SetValue(IDbDataParameter parameter, TimeSpan value)
+        {
+            // [-][d.]hh:mm:ss[.fffffff]
+            parameter.Value = value.ToString("c");
+        }
+
+        public override TimeSpan Parse(object value)
+        {
+            var s = (string)value;
+            if(s != null) {
+                if(TimeSpan.TryParse(s, out var ret)) {
+                    return ret;
+                }
+            }
+
+            return TimeSpan.Zero;
+        }
+
+    }
+
     public class SqliteImplementation : DatabaseImplementation
     {
         static SqliteImplementation()
         {
+            SqlMapper.AddTypeMap(typeof(TimeSpan), DbType.String);
             SqlMapper.AddTypeHandler(typeof(bool), new SqliteBooleanHandler());
             SqlMapper.AddTypeHandler(typeof(Version), new SqliteVersionHandler());
             SqlMapper.AddTypeHandler(typeof(Guid), new SqliteGuidHandler());
+            SqlMapper.AddTypeHandler(typeof(TimeSpan), new SqliteTimeSpanHandler());
         }
 
         #region DatabaseImplementation

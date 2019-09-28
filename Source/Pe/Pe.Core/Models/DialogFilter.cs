@@ -17,10 +17,11 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// </summary>
         /// <param name="display">表示文字列。</param>
         /// <param name="wildcard">ワイルドカード一覧。</param>
-        public DialogFilterItem(string display, IEnumerable<string> wildcard)
+        public DialogFilterItem(string display, string defaultExtension, IEnumerable<string> wildcard)
         {
             Display = display;
             Wildcard = new List<string>(wildcard);
+            DefaultExtension = defaultExtension;
         }
 
         /// <summary>
@@ -28,8 +29,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// </summary>
         /// <param name="display">表示文字列。</param>
         /// <param name="wildcard">ワイルドカード一覧。</param>
-        public DialogFilterItem(string display, params string[] wildcard)
-            : this(display, (IEnumerable<string>)wildcard)
+        public DialogFilterItem(string display, string defaultExtension, string wildcard, params string[] wildcards)
+            : this(display, defaultExtension, new[] { wildcard }.Concat(wildcards))
         { }
 
         #region property
@@ -38,6 +39,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// フィルタリングに使用するワイルドカード一覧。
         /// </summary>
         public IReadOnlyList<string> Wildcard { get; }
+
+        public string DefaultExtension { get; }
 
         #endregion
 
@@ -70,14 +73,14 @@ namespace ContentTypeTextNet.Pe.Core.Models
     /// </summary>
     public class DialogFilterItem<TValue> : DialogFilterItem
     {
-        public DialogFilterItem(TValue value, string display, IEnumerable<string> wildcard)
-            : base(display, wildcard)
+        public DialogFilterItem(TValue value, string display, string defaultExtension, IEnumerable<string> wildcard)
+            : base(display, defaultExtension, wildcard)
         {
             Value = value;
         }
 
-        public DialogFilterItem(TValue value, string display, params string[] wildcard)
-            : base(display, wildcard)
+        public DialogFilterItem(TValue value, string display, string defaultExtension, params string[] wildcard)
+            : base(display, defaultExtension, wildcard)
         {
             Value = value;
         }

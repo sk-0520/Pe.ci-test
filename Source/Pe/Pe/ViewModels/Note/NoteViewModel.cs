@@ -386,6 +386,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             () => {
                 var parameter = CreateLinkParameter(false);
                 LinkChangeRequest.Send<NoteLinkChangeRequestResponse>(parameter, r => {
+                    if(r.ResponseFilePaths != null && 0 < r.ResponseFilePaths.Length) {
+                        Model.CreateLinkContent(r.ResponseFilePaths[0], r.Encoding!);
+                    }
                 });
             }
         ));
@@ -406,16 +409,16 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         {
             var parameter = new NoteLinkChangeRequestParameter() {
                 IsOpen = isOpen,
-                Encoding = Encoding.Unicode,
+                Encoding = Encoding.UTF8,
             };
             var contentKindFilter = ContentKind switch
             {
-                NoteContentKind.Plain => new DialogFilterItem("text", "*.txt"),
-                NoteContentKind.RichText => new DialogFilterItem("rtf", "*.rtf"),
+                NoteContentKind.Plain => new DialogFilterItem("text", "txt", "*.txt"),
+                NoteContentKind.RichText => new DialogFilterItem("rtf", "rtf", "*.rtf"),
                 _ => throw new NotImplementedException(),
             };
             parameter.Filter.Add(contentKindFilter);
-            parameter.Filter.Add(new DialogFilterItem("all", "*.*"));
+            parameter.Filter.Add(new DialogFilterItem("all", string.Empty, "*.*"));
 
             return parameter;
         }
@@ -613,8 +616,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         {
             if(ChangingContentKind == NoteContentKind.Link) {
                 var context = new FileSaveDialogRequestParameter();
-                context.Filter.Add(new DialogFilterItem("text", "*.txt", "*.md"));
-                context.Filter.Add(new DialogFilterItem("all", "*.*"));
+                context.Filter.Add(new DialogFilterItem("text", string.Empty, "*.txt", "*.md"));
+                context.Filter.Add(new DialogFilterItem("all", string.Empty, "*.*"));
 
                 SelectLinkFileRequest.Send(context, c1 => {
                     var c = (NoteLinkSelectNotification)c1;
