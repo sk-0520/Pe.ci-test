@@ -425,24 +425,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             }
         }
 
-        [Obsolete]
-        bool WriteLinkContent(NoteLinkContentData linkData, string content)
-        {
-            try {
-                var fileInfo = linkData.ToFileInfo();
-                using(var stream = fileInfo.Open(System.IO.FileMode.Truncate, System.IO.FileAccess.ReadWrite, System.IO.FileShare.Read)) {
-                    using(var writer = new StreamWriter(stream, linkData.ToEncoding())) {
-                        writer.Write(content);
-                    }
-                }
-                return true;
-            } catch(Exception ex) {
-                Logger.LogError(ex, ex.Message);
-            }
-
-            return false;
-        }
-
         public void OpenLinkContent(string filePath, Encoding encoding, bool isOpen)
         {
             ContentElement!.ChangeLink(filePath, encoding, isOpen);
@@ -451,110 +433,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
         public void Unlink(bool isRemove)
         {
             ContentElement!.Unlink(isRemove);
-        }
-
-        [Obsolete]
-        string ConvertContent(NoteContentKind fromKind, string fromRawContent, NoteContentKind toKind, NoteLinkContentData? linkData)
-        {
-            var noteContentConverter = new NoteContentConverter(LoggerFactory);
-            switch(fromKind) {
-                case NoteContentKind.Plain:
-                    switch(toKind) {
-                        case NoteContentKind.RichText:
-#pragma warning disable CS8602 // null 参照の可能性があるものの逆参照です。
-                            return DispatcherWapper.Get(() => noteContentConverter.ToRichText(fromRawContent, FontElement.FontData, ForegroundColor));
-#pragma warning restore CS8602 // null 参照の可能性があるものの逆参照です。
-
-                        case NoteContentKind.Link: {
-#pragma warning disable CS8604 // Null 参照引数の可能性があります。
-                                WriteLinkContent(linkData, fromRawContent);
-                                return noteContentConverter.ToLinkSettingString(linkData);
-#pragma warning restore CS8604 // Null 参照引数の可能性があります。
-                            }
-
-                        case NoteContentKind.Plain:
-                        default:
-                            throw new NotImplementedException();
-                    }
-
-                case NoteContentKind.RichText:
-                    switch(toKind) {
-                        case NoteContentKind.Plain:
-                            return noteContentConverter.ToPlain(fromRawContent);
-
-                        case NoteContentKind.Link: {
-                                var content = noteContentConverter.ToPlain(fromRawContent);
-#pragma warning disable CS8604 // Null 参照引数の可能性があります。
-                                WriteLinkContent(linkData, content);
-                                return noteContentConverter.ToLinkSettingString(linkData);
-#pragma warning restore CS8604 // Null 参照引数の可能性があります。
-                            }
-
-                        case NoteContentKind.RichText:
-                        default:
-                            throw new NotImplementedException();
-                    }
-
-                case NoteContentKind.Link: {
-                        var linkSetting = noteContentConverter.ToLinkSetting(fromRawContent);
-                        try {
-#pragma warning disable CS8602 // null 参照の可能性があるものの逆参照です。
-                            var linkContent = ContentElement.LoadLinkContent(linkSetting.ToFileInfo(), linkSetting.ToEncoding());
-#pragma warning restore CS8602 // null 参照の可能性があるものの逆参照です。
-                            switch(toKind) {
-                                case NoteContentKind.Plain:
-                                    return linkContent;
-
-                                case NoteContentKind.RichText:
-#pragma warning disable CS8602 // null 参照の可能性があるものの逆参照です。
-                                    return noteContentConverter.ToRichText(linkContent, FontElement.FontData, ForegroundColor);
-#pragma warning restore CS8602 // null 参照の可能性があるものの逆参照です。
-
-                                case NoteContentKind.Link:
-                                default:
-                                    throw new NotImplementedException();
-                            }
-                        } catch(Exception ex) {
-                            Logger.LogError(ex, ex.Message);
-                        }
-                        return string.Empty;
-                    }
-
-                default:
-                    throw new NotImplementedException();
-            }
-        }
-
-        [Obsolete]
-        public void ConvertContentKind(NoteContentKind fromKind, NoteContentKind toKind, NoteLinkContentData? linkData)
-        {
-            if(fromKind == toKind) {
-                throw new ArgumentException($"{nameof(fromKind)} == {nameof(toKind)}");
-            }
-            if(toKind == NoteContentKind.Link && linkData == null) {
-                throw new ArgumentNullException(nameof(linkData));
-            }
-
-            using(MainDatabaseLazyWriter.Pause()) {
-#pragma warning disable CS8602 // null 参照の可能性があるものの逆参照です。
-                var fromRawContent = ContentElement.LoadRawContent();
-#pragma warning restore CS8602 // null 参照の可能性があるものの逆参照です。
-                var convertedContent = ConvertContent(fromKind, fromRawContent, toKind, linkData);
-                var contentData = new NoteContentData() {
-                    NoteId = NoteId,
-                    Content = convertedContent,
-                };
-                using(var commander = MainDatabaseBarrier.WaitWrite()) {
-                    var notesEntityDao = new NoteContentsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
-                    if(notesEntityDao.SelectExistsContent(contentData.NoteId)) {
-                        notesEntityDao.UpdateContent(contentData, DatabaseCommonStatus.CreateCurrentAccount());
-                    } else {
-                        notesEntityDao.InsertNewContent(contentData, DatabaseCommonStatus.CreateCurrentAccount());
-                    }
-
-                    commander.Commit();
-                }
-            }
         }
 
         string ConvertContent(NoteContentKind fromKind, string fromRawContent, NoteContentKind toKind)
@@ -633,48 +511,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
         }
 
 
-        [Obsolete]
-        public void CreateContentKind(NoteContentKind contentKind, NoteLinkContentData? linkData)
-        {
-            if(contentKind == NoteContentKind.Link && linkData == null) {
-                throw new ArgumentNullException(nameof(linkData));
-            }
-
-            var noteContentConverter = new NoteContentConverter(LoggerFactory);
-
-            var contentData = new NoteContentData() {
-                NoteId = NoteId,
-                Content = contentKind == NoteContentKind.Link
-#pragma warning disable CS8604 // Null 参照引数の可能性があります。
-                    ? noteContentConverter.ToLinkSettingString(linkData)
-#pragma warning restore CS8604 // Null 参照引数の可能性があります。
-                    : string.Empty
-                ,
-            };
-            using(var commander = MainDatabaseBarrier.WaitWrite()) {
-                var notesEntityDao = new NoteContentsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
-                if(notesEntityDao.SelectExistsContent(contentData.NoteId)) {
-                    notesEntityDao.UpdateContent(contentData, DatabaseCommonStatus.CreateCurrentAccount());
-                } else {
-                    notesEntityDao.InsertNewContent(contentData, DatabaseCommonStatus.CreateCurrentAccount());
-                }
-
-                commander.Commit();
-            }
-        }
-
-        public void ChangeContentKind(NoteContentKind toContentKind)
-        {
-            var prevContentKind = ContentKind;
-            ContentKind = toContentKind;
-            var oldContentElement = ContentElement;
-            ContentElement = OrderManager.CreateNoteContentElement(NoteId, ContentKind);
-            oldContentElement?.Dispose();
-            MainDatabaseLazyWriter.Stock(c => {
-                var notesEntityDao = new NotesEntityDao(c, StatementLoader, c.Implementation, LoggerFactory);
-                notesEntityDao.UpdateContentKind(NoteId, ContentKind, DatabaseCommonStatus.CreateCurrentAccount());
-            }, UniqueKeyPool.Get());
-        }
         public void ChangeVisible(bool isVisible)
         {
             IsVisible = isVisible;

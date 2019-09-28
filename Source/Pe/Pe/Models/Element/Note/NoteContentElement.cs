@@ -66,9 +66,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
         IMainDatabaseLazyWriter MainDatabaseLazyWriter { get; }
         UniqueKeyPool UniqueKeyPool { get; } = new UniqueKeyPool();
 
-        [Obsolete]
-        NoteLinkContentWatcher? LinkWatcher { get; set; }
-        NoteLinkWatcher? LinkWatcher2 { get; set; }
+        NoteLinkWatcher? LinkWatcher { get; set; }
         LazyAction LinkContentLazyChanger { get; }
 
         #endregion
@@ -152,38 +150,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             return LoadRawContent();
         }
 
-        [Obsolete]
-        public NoteLinkContentData LoadLinkSetting()
-        {
-            if(ContentKind != NoteContentKind.Link) {
-                throw new InvalidOperationException();
-            }
-
-            var converter = new NoteContentConverter(LoggerFactory);
-
-            if(!Exists()) {
-                var factory = new NoteContentFactory();
-                var setting = factory.CreateLink();
-
-                var content = converter.ToLinkSettingString(setting);
-                CreateNewContent(content);
-                return setting;
-            }
-
-            var rawSetting = LoadRawContent();
-            return converter.ToLinkSetting(rawSetting);
-        }
-
-        [Obsolete]
-        public string LoadLinkContent(FileInfo file, Encoding encoding)
-        {
-            using(var stream = new FileStream(file.FullName, FileMode.OpenOrCreate, FileAccess.Read, FileShare.ReadWrite)) {
-                var reader = new StreamReader(stream, encoding);
-                return reader.ReadToEnd();
-            }
-        }
-
-        NoteLinkWatchParameter? GetLinkParameter() => (NoteLinkWatchParameter?)LinkWatcher2?.WatchParameter;
+        NoteLinkWatchParameter? GetLinkParameter() => (NoteLinkWatchParameter?)LinkWatcher?.WatchParameter;
 
         string LoadLinkContent()
         {
@@ -200,36 +167,23 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             }
         }
 
-        [Obsolete]
-        public NoteLinkContentWatcher StartLinkWatch(NoteLinkContentData linkData)
-        {
-            if(LinkWatcher == null) {
-                LinkWatcher = new NoteLinkContentWatcher(linkData, LoggerFactory);
-            }
-            LinkWatcher.Start();
-            return LinkWatcher;
-        }
-
         public void StartLinkWatch(NoteLinkWatchParameter noteLinkWatchParameter)
         {
-            if(LinkWatcher2 == null) {
-                LinkWatcher2 = new NoteLinkWatcher(noteLinkWatchParameter, LoggerFactory);
-                LinkWatcher2.FileContentChanged += LinkWatcher2_FileContentChanged;
+            if(LinkWatcher == null) {
+                LinkWatcher = new NoteLinkWatcher(noteLinkWatchParameter, LoggerFactory);
+                LinkWatcher.FileContentChanged += LinkWatcher2_FileContentChanged;
             }
-            LinkWatcher2.Start();
+            LinkWatcher.Start();
         }
 
         public void StopLinkWatch()
         {
-            //if(LinkWatcher != null) {
-            //    LinkWatcher.Stop();
-            //}
-            LinkWatcher2?.Stop();
+            LinkWatcher?.Stop();
         }
 
         void SaveLinkContent(string? content)
         {
-            var parameter = (NoteLinkWatchParameter?)LinkWatcher2?.WatchParameter;
+            var parameter = (NoteLinkWatchParameter?)LinkWatcher?.WatchParameter;
             if(parameter == null) {
                 Logger.LogWarning("リンクがおかしい: {0}", NoteId);
                 return;
@@ -281,46 +235,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             ChangeRawContent(ContentKind, content, UniqueKeyPool.Get());
         }
 
-        [Obsolete]
-        void DelayLinkContentChange(string content)
-        {
-            LinkContentLazyChanger.DelayAction(() => {
-#pragma warning disable CS8602 // null 参照の可能性があるものの逆参照です。
-                LinkWatcher.Stop();
-#pragma warning restore CS8602 // null 参照の可能性があるものの逆参照です。
-
-                using(var stream = new FileStream(LinkWatcher.File.FullName, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.Read)) {
-                    using(var writer = new StreamWriter(stream, LinkWatcher.Encoding)) {
-                        writer.Write(content);
-                    }
-                }
-
-                LinkWatcher.Start();
-            });
-        }
-
-        [Obsolete]
-        public void ChangeLinkContent(string content)
-        {
-            if(ContentKind != NoteContentKind.Link) {
-                throw new InvalidOperationException();
-            }
-            if(LinkWatcher == null) {
-                throw new InvalidOperationException();
-            }
-
-            DelayLinkContentChange(content);
-        }
-
         void DisposeLinkWatcher()
         {
-            //if(LinkWatcher != null) {
-            //    LinkWatcher.Dispose();
-            //}
-            if(LinkWatcher2 != null) {
-                LinkWatcher2.FileContentChanged -= LinkWatcher2_FileContentChanged;
-                LinkWatcher2.Dispose();
-                LinkWatcher2 = null;
+            if(LinkWatcher != null) {
+                LinkWatcher.FileContentChanged -= LinkWatcher2_FileContentChanged;
+                LinkWatcher.Dispose();
+                LinkWatcher = null;
             }
         }
 
