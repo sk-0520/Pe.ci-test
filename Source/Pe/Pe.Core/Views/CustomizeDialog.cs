@@ -8,7 +8,7 @@ using ContentTypeTextNet.Pe.PInvoke.Windows;
 
 namespace ContentTypeTextNet.Pe.Core.Views
 {
-    public abstract class CustomizeDialogItemBase
+    public abstract class CustomizeDialogControlBase
     {
         #region property
 
@@ -41,7 +41,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
         #endregion
     }
 
-    public class CustomizeDialogGroup : CustomizeDialogItemBase
+    public class CustomizeDialogGroup : CustomizeDialogControlBase
     {
         public CustomizeDialogGroup(string header)
         {
@@ -51,7 +51,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
         #region property
 
         public string Header { get; set; }
-        public ISet<CustomizeDialogItemBase> Controls { get; } = new HashSet<CustomizeDialogItemBase>();
+        ISet<CustomizeDialogControlBase> Controls { get; } = new HashSet<CustomizeDialogControlBase>();
 
         #endregion
 
@@ -62,9 +62,13 @@ namespace ContentTypeTextNet.Pe.Core.Views
             FileDialogCustomize!.Com.EndVisualGroup();
         }
 
+        public void AddControl(CustomizeDialogControlBase control) => Controls.Add(control);
+
+        public bool ContainsControl(CustomizeDialogControlBase control) => Controls.Contains(control);
+
         #endregion
 
-        #region CustomizeDialogItemBase
+        #region CustomizeDialogControlBase
 
         protected override void BuildImpl()
         {
@@ -74,7 +78,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
         #endregion
     }
 
-    public class CustomizeDialogLabel : CustomizeDialogItemBase
+    public class CustomizeDialogLabel : CustomizeDialogControlBase
     {
         public CustomizeDialogLabel(string label)
         {
@@ -86,7 +90,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
         public string Label { get; set; }
         #endregion
 
-        #region CustomizeDialogItemBase
+        #region CustomizeDialogControlBase
 
         protected override void BuildImpl()
         {
@@ -96,25 +100,67 @@ namespace ContentTypeTextNet.Pe.Core.Views
         #endregion
     }
 
-    public class CustomizeDialogComboBox : CustomizeDialogItemBase
+    public class CustomizeDialogComboBoxItem<TValue>
+    {
+        public CustomizeDialogComboBoxItem(string displayText, TValue value)
+        {
+            DisplayText = displayText;
+            Value = value;
+        }
+
+        #region property
+
+        public string DisplayText { get; }
+        public TValue Value { get; }
+        #endregion
+    }
+
+    public static class CustomizeDialogComboBoxItem
+    {
+        #region function
+
+        public static CustomizeDialogComboBoxItem<TValue> Create<TValue>(string displayText, TValue value)
+        {
+            return new CustomizeDialogComboBoxItem<TValue>(displayText, value);
+        }
+
+        public static CustomizeDialogComboBoxItem<TValue> Create<TValue>(TValue value)
+        {
+            return new CustomizeDialogComboBoxItem<TValue>(value!.ToString()!, value);
+        }
+
+        #endregion
+    }
+
+
+    public class CustomizeDialogComboBox<TValue> : CustomizeDialogControlBase
     {
         public CustomizeDialogComboBox()
         { }
 
         #region property
 
-        public IList<string> Items { get; } = new List<string>();
+        IList<CustomizeDialogComboBoxItem<TValue>> Items { get; } = new List<CustomizeDialogComboBoxItem<TValue>>();
         public int SelectedIndex { get; set; } = 0;
 
         #endregion
 
-        #region CustomizeDialogItemBase
+        #region function
+
+        public void AddItem(CustomizeDialogComboBoxItem<TValue> item)
+        {
+            Items.Add(item);
+        }
+
+        #endregion
+
+        #region CustomizeDialogControlBase
 
         protected override void BuildImpl()
         {
             FileDialogCustomize!.Com.AddComboBox(ControlId);
             foreach(var item in Items.Counting()) {
-                FileDialogCustomize!.Com.AddControlItem(ControlId, item.Number, item.Value);
+                FileDialogCustomize!.Com.AddControlItem(ControlId, item.Number, item.Value.DisplayText);
             }
             FileDialogCustomize!.Com.SetSelectedControlItem(ControlId, SelectedIndex);
         }
@@ -132,7 +178,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
     {
         #region property
 
-        public IList<CustomizeDialogItemBase> Controls { get; } = new List<CustomizeDialogItemBase>();
+        public IList<CustomizeDialogControlBase> Controls { get; } = new List<CustomizeDialogControlBase>();
 
         public bool NowGrouping => CurrentGroup != null;
         CustomizeDialogGroup? CurrentGroup { get; set; }
@@ -144,10 +190,10 @@ namespace ContentTypeTextNet.Pe.Core.Views
 
         #region function
 
-        private void AddControl(CustomizeDialogItemBase control)
+        private void AddControl(CustomizeDialogControlBase control)
         {
             Controls.Add(control);
-            CurrentGroup?.Controls.Add(control);
+            CurrentGroup?.AddControl(control);
         }
 
         public IDisposable Grouping(string header)
@@ -173,9 +219,9 @@ namespace ContentTypeTextNet.Pe.Core.Views
             return control;
         }
 
-        public CustomizeDialogComboBox AddComboBox()
+        public CustomizeDialogComboBox<TValue> AddComboBox<TValue>()
         {
-            var control = new CustomizeDialogComboBox();
+            var control = new CustomizeDialogComboBox<TValue>();
 
             AddControl(control);
 
@@ -196,7 +242,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
 
                 if(control is CustomizeDialogGroup group) {
                     currentGroup = group;
-                } else if(currentGroup != null && !currentGroup.Controls.Contains(control)) {
+                } else if(currentGroup != null && !currentGroup.ContainsControl(control)) {
                     currentGroup.Close();
                     currentGroup = null;
                 }

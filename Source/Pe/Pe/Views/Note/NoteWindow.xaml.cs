@@ -109,24 +109,24 @@ namespace ContentTypeTextNet.Pe.Main.Views.Note
                     dialog.Filters.SetRange(linkParameter.Filter);
 
                     var encodings = new[] {
-                        new { Encoding = EncodingUtility.UTF8n, Display = EncodingUtility.ToString(EncodingUtility.UTF8n) },
-                        new { Encoding = Encoding.UTF8, Display = EncodingUtility.ToString(Encoding.UTF8) },
-                        new { Encoding = Encoding.Unicode, Display = EncodingUtility.ToString(Encoding.Unicode) },
+                        CustomizeDialogComboBoxItem.Create(EncodingUtility.ToString(EncodingUtility.UTF8n), EncodingUtility.UTF8n),
+                        CustomizeDialogComboBoxItem.Create(EncodingUtility.ToString(Encoding.UTF8), Encoding.UTF8),
+                        CustomizeDialogComboBoxItem.Create(EncodingUtility.ToString(Encoding.Unicode), Encoding.Unicode),
                         //TODO: 文字コードは追々かんがえるよ
-                        new { Encoding = Encoding.Unicode, Display = EncodingUtility.ToString(Encoding.Unicode) },
+                        CustomizeDialogComboBoxItem.Create(EncodingUtility.ToString(Encoding.UTF32), Encoding.UTF32),
                     };
 
-                    CustomizeDialogComboBox encodingList;
+                    CustomizeDialogComboBox<Encoding> encodingList;
                     using(dialog.Customize.Grouping("ぐるぷ")) {
-                        encodingList = dialog.Customize.AddComboBox();
+                        encodingList = dialog.Customize.AddComboBox<Encoding>();
                         var index = -1;
                         var loop = 0;
                         var encName = EncodingUtility.ToString(linkParameter.Encoding!);
                         foreach(var encoding in encodings) {
-                            if(index == -1 && EncodingUtility.ToString(encoding.Encoding) == encName) {
+                            if(index == -1 && EncodingUtility.ToString(encoding.Value) == encName) {
                                 index = loop;
                             }
-                            encodingList.Items.Add(encoding.Display);
+                            encodingList.AddItem(encoding);
                             loop += 1;
                         }
                         if(index != -1) {
@@ -142,7 +142,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Note
 
                     o.Callback(new NoteLinkChangeRequestResponse() {
                         ResponseIsCancel = true,
-                        Encoding = encodings[encodingList.SelectedIndex].Encoding,
+                        Encoding = encodings[encodingList.SelectedIndex].Value,
                     });
                 }
 
