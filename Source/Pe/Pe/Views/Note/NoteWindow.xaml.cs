@@ -137,7 +137,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Note
                     }
 
                     o.Callback(new NoteLinkChangeRequestResponse() {
-                        ResponseIsCancel = true,
+                        ResponseIsCancel = false,
                         ResponseFilePaths = new [] { dialog.FileName },
                         Encoding = encodings[encodingComboBox.SelectedIndex].Value,
                     });

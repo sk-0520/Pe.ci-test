@@ -185,8 +185,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             }
 
             using(var stream = parameter.File!.Open(FileMode.Open, FileAccess.Read, FileShare.Read)) {
-                var reader = new StreamReader(stream, parameter.Encoding!);
-                return reader.ReadToEnd();
+                using(var reader = new StreamReader(stream, parameter.Encoding!)) {
+                    return reader.ReadToEnd();
+                }
             }
         }
 
@@ -228,8 +229,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             StopLinkWatch();
             using(new ActionDisposer(() => StartLinkWatch(parameter))) {
                 using(var stream = parameter.File!.Open(FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.Read)) {
-                    var writer = new StreamWriter(stream, parameter.Encoding!);
-                    writer.Write(content);
+                    using(var writer = new StreamWriter(stream, parameter.Encoding!)) {
+                        writer.Write(content);
+                    }
                 }
             }
         }
@@ -312,15 +314,24 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             }
         }
 
-        public void ChangeLink(string filePath, Encoding encoding)
+        private void OnLinkContentChanged()
+        {
+            LinkContentChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void ChangeLink(string filePath, Encoding encoding, bool isOpen)
         {
             Flush();
-            var content = LoadRawContent();
+            DisposeLinkWatcher();
 
             var path = Environment.ExpandEnvironmentVariables(filePath);
-            using(var stream = new FileStream(path, FileMode.Create, FileAccess.ReadWrite, FileShare.Read)) {
-                using(var writer = new StreamWriter(stream, encoding)) {
-                    writer.Write(content);
+
+            if(!isOpen) {
+                var content = LoadRawContent();
+                using(var stream = new FileStream(path, FileMode.Create, FileAccess.ReadWrite, FileShare.Read)) {
+                    using(var writer = new StreamWriter(stream, encoding)) {
+                        writer.Write(content);
+                    }
                 }
             }
 
@@ -339,6 +350,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 
             IsLink = true;
             StartLinkWatch(noteLinkWatchParameter);
+
+            if(isOpen) {
+                OnLinkContentChanged();
+            }
         }
 
         (bool success, bool isLink, NoteLinkWatchParameter parameter) LoadLinkWatchParameter()
@@ -419,7 +434,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 
         private void LinkWatcher2_FileContentChanged(object? sender, FileChangedEventArgs e)
         {
-            LinkContentChanged?.Invoke(this, EventArgs.Empty);
+            OnLinkContentChanged();
         }
+
     }
 }

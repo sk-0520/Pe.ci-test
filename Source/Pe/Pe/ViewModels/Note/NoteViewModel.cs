@@ -380,12 +380,25 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         ));
         public ICommand UnlinkCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-            }
-        ));
+            },
+            () => IsLink
+        ).ObservesProperty(() => IsLink));
+
+        public ICommand DeleteCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+            },
+            () => IsLink
+        ).ObservesProperty(() => IsLink));
+
+
         public ICommand SaveLinkCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
                 var parameter = CreateLinkParameter(false);
                 LinkChangeRequest.Send<NoteLinkChangeRequestResponse>(parameter, r => {
+                    if(r.ResponseIsCancel) {
+                        return;
+                    }
+
                     if(r.ResponseFilePaths != null && 0 < r.ResponseFilePaths.Length) {
                         Model.CreateLinkContent(r.ResponseFilePaths[0], r.Encoding!);
                     }
@@ -396,6 +409,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             () => {
                 var parameter = CreateLinkParameter(true);
                 LinkChangeRequest.Send<NoteLinkChangeRequestResponse>(parameter, r => {
+                    if(r.ResponseIsCancel) {
+                        return;
+                    }
+
+                    if(r.ResponseFilePaths != null && 0 < r.ResponseFilePaths.Length) {
+                        Model.OpenLinkContent(r.ResponseFilePaths[0], r.Encoding!);
+                    }
                 });
             }
         ));

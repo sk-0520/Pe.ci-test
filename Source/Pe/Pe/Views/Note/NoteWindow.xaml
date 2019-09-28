@@ -380,7 +380,7 @@
                   </Grid.ColumnDefinitions>
 
                   <Label Grid.Column="0">link</Label>
-                  <StackPanel Grid.Column="1" Orientation="Horizontal" IsEnabled="{Binding IsLink, Converter={StaticResource LogicalNotConverter}}">
+                  <StackPanel Grid.Column="1" Orientation="Horizontal">
                     <Button Command="{Binding LinkChangeCommand}">state</Button>
                   </StackPanel>
                 </Grid>
@@ -608,6 +608,8 @@
               >
                 <StackPanel>
                   <Button Command="{Binding UnlinkCommand}">unlink</Button>
+                  <Button Command="{Binding DeleteCommand}">delete</Button>
+
                   <Button Command="{Binding SaveLinkCommand}">link(save)</Button>
                   <Button Command="{Binding OpenLinkCommand}">link(open)</Button>
                 </StackPanel>

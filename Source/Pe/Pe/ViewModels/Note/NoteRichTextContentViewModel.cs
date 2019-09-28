@@ -107,11 +107,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         void ChangedText()
         {
-            var noteContentConverter = new NoteContentConverter(LoggerFactory);
-            DispatcherWapper.Invoke(() => {
-                var content = noteContentConverter.ToRtfString(Document);
-                Model.ChangeRichTextContent(content);
-            });
+            if(CanVisible && EnabledUpdate) {
+                var noteContentConverter = new NoteContentConverter(LoggerFactory);
+                DispatcherWapper.Invoke(() => {
+                    var content = noteContentConverter.ToRtfString(Document);
+                    Model.ChangeRichTextContent(content);
+                });
+            }
         }
 
         #endregion

@@ -46,6 +46,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         public bool IsLink => Model.IsLink;
 
+        protected bool EnabledUpdate { get; private set; } = true;
+
         #endregion
 
         #region command
@@ -144,8 +146,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             }
 
             Logger.LogTrace("change!");
+            EnabledUpdate = false;
             UnloadContent();
-            LoadContentAsync(Control).ConfigureAwait(false);
+            LoadContentAsync(Control).ContinueWith(t => {
+                EnabledUpdate = true;
+            }).ConfigureAwait(false);
         }
 
 

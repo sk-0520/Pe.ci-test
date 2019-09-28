@@ -445,7 +445,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 
         public void CreateLinkContent(string filePath, Encoding encoding)
         {
-            ContentElement!.ChangeLink(filePath, encoding);
+            ContentElement!.ChangeLink(filePath, encoding, false);
+        }
+
+        public void OpenLinkContent(string filePath, Encoding encoding)
+        {
+            ContentElement!.ChangeLink(filePath, encoding, true);
         }
 
         [Obsolete]
