@@ -10,6 +10,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Unmanaged
     /// 生のCOMを管理。
     /// </summary>
     public class ComWrapper<T> : UnmanagedModelBase<T>
+        where T : class
     {
         public ComWrapper(T comObject)
             : base(comObject)
@@ -28,6 +29,17 @@ namespace ContentTypeTextNet.Pe.Core.Models.Unmanaged
         #endregion
 
         #region function
+
+        public ComWrapper<TCastType> Cast<TCastType>()
+            where TCastType : class
+        {
+            var castValue = (TCastType)BaseRawObject;
+            if(castValue == null) {
+                throw new InvalidCastException($"{typeof(T).Name} -> {typeof(TCastType).Name}");
+            }
+
+            return new ComWrapper<TCastType>(castValue);
+        }
 
         #endregion
 
@@ -50,6 +62,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Unmanaged
     public static class ComWrapper
     {
         public static ComWrapper<T> Create<T>(T comObject)
+            where T : class
         {
             return new ComWrapper<T>(comObject);
         }

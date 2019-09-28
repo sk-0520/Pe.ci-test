@@ -41,20 +41,24 @@ namespace ContentTypeTextNet.Pe.Core.Views
     {
         protected private FileSystemDialogBase(FileOpenDialogImpl openDialogImpl)
         {
-            FileDialog = (IFileDialog)openDialogImpl;
-            FileDialogCustomize = (IFileDialogCustomize)openDialogImpl;
+            FileDialogImpl = new ComWrapper<object>(openDialogImpl);
+            FileDialog = FileDialogImpl.Cast<IFileDialog>();//(IFileDialog)openDialogImpl;
+            FileDialogCustomize = FileDialogImpl.Cast<IFileDialogCustomize>();
         }
 
         protected private FileSystemDialogBase(FileSaveDialogImpl saveDialogImpl)
         {
-            FileDialog = (IFileDialog)saveDialogImpl;
-            FileDialogCustomize = (IFileDialogCustomize)saveDialogImpl;
+            FileDialogImpl = new ComWrapper<object>(saveDialogImpl);
+            FileDialog = FileDialogImpl.Cast<IFileDialog>();
+            FileDialogCustomize = FileDialogImpl.Cast<IFileDialogCustomize>();
         }
 
         #region property
 
-        IFileDialog FileDialog { get; }
-        IFileDialogCustomize FileDialogCustomize { get; }
+        ComWrapper<object> FileDialogImpl { get; }
+
+        ComWrapper<IFileDialog> FileDialog { get; }
+        ComWrapper<IFileDialogCustomize> FileDialogCustomize { get; }
 
         /// <summary>
         /// フォルダ選択を行うか。
@@ -164,16 +168,16 @@ namespace ContentTypeTextNet.Pe.Core.Views
             var cleaner = new GroupDisposer();
 
             var options = GetFos();
-            FileDialog.SetOptions(options);
+            FileDialog.Com.SetOptions(options);
 
             if(!string.IsNullOrEmpty(Title)) {
-                FileDialog.SetTitle(Title);
+                FileDialog.Com.SetTitle(Title);
             }
 
             if(!string.IsNullOrEmpty(InitialDirectory)) {
                 var item = CreateFileItem(InitialDirectory);
                 if(item != null) {
-                    FileDialog.SetDefaultFolder(item.Com);
+                    FileDialog.Com.SetDefaultFolder(item.Com);
                     cleaner.Add(item);
                 }
             }
@@ -183,11 +187,11 @@ namespace ContentTypeTextNet.Pe.Core.Views
                 if(parentDirPath != null) {
                     var item = CreateFileItem(parentDirPath);
                     if(item != null) {
-                        FileDialog.SetFolder(item.Com);
+                        FileDialog.Com.SetFolder(item.Com);
                         cleaner.Add(item);
                     }
                 }
-                FileDialog.SetFileName(FileName);
+                FileDialog.Com.SetFileName(FileName);
             }
 
             var filters = Filters
@@ -195,12 +199,12 @@ namespace ContentTypeTextNet.Pe.Core.Views
                 .ToArray()
             ;
             if(filters.Any()) {
-                FileDialog.SetFileTypes((uint)filters.Length, filters);
+                FileDialog.Com.SetFileTypes((uint)filters.Length, filters);
             }
 
             Customize.Build(FileDialogCustomize);
 
-            var reuslt = FileDialog.Show(hWnd);
+            var reuslt = FileDialog.Com.Show(hWnd);
             if(reuslt == (uint)ERROR.ERROR_CANCELLED) {
                 return false;
             }
@@ -209,7 +213,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
             }
 
             IShellItem resultItem;
-            FileDialog.GetResult(out resultItem);
+            FileDialog.Com.GetResult(out resultItem);
             cleaner.Add(ComWrapper.Create(resultItem));
             IntPtr pszPath = IntPtr.Zero;
             resultItem.GetDisplayName(SIGDN.SIGDN_FILESYSPATH, out pszPath);
@@ -233,8 +237,11 @@ namespace ContentTypeTextNet.Pe.Core.Views
         protected override void Dispose(bool disposing)
         {
             if(!IsDisposed) {
-                Marshal.ReleaseComObject(FileDialogCustomize);
-                Marshal.ReleaseComObject(FileDialog);
+                if(disposing) {
+                    FileDialogCustomize.Dispose();
+                    FileDialog.Dispose();
+                    FileDialogImpl.Dispose();
+                }
             }
 
             base.Dispose(disposing);

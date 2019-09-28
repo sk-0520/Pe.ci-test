@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using ContentTypeTextNet.Pe.Core.Models;
+using ContentTypeTextNet.Pe.Core.Models.Unmanaged;
 using ContentTypeTextNet.Pe.PInvoke.Windows;
 
 namespace ContentTypeTextNet.Pe.Core.Views
@@ -13,7 +14,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
 
         public int ControlId { get; private set; }
 
-        protected IFileDialogCustomize? FileDialogCustomize { get; private set; }
+        protected ComWrapper<IFileDialogCustomize>? FileDialogCustomize { get; private set; }
 
         #endregion
 
@@ -21,7 +22,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
 
         protected abstract void BuildImpl();
 
-        public void Build(int controlId, IFileDialogCustomize fileDialogCustomize)
+        public void Build(int controlId, ComWrapper<IFileDialogCustomize> fileDialogCustomize)
         {
             ControlId = controlId;
             FileDialogCustomize = fileDialogCustomize;
@@ -58,7 +59,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
 
         public void Close()
         {
-            FileDialogCustomize!.EndVisualGroup();
+            FileDialogCustomize!.Com.EndVisualGroup();
         }
 
         #endregion
@@ -67,7 +68,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
 
         protected override void BuildImpl()
         {
-            FileDialogCustomize!.StartVisualGroup(ControlId, Header);
+            FileDialogCustomize!.Com.StartVisualGroup(ControlId, Header);
         }
 
         #endregion
@@ -89,7 +90,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
 
         protected override void BuildImpl()
         {
-            FileDialogCustomize!.SetControlLabel(ControlId, Label);
+            FileDialogCustomize!.Com.SetControlLabel(ControlId, Label);
         }
 
         #endregion
@@ -111,16 +112,16 @@ namespace ContentTypeTextNet.Pe.Core.Views
 
         protected override void BuildImpl()
         {
-            FileDialogCustomize!.AddComboBox(ControlId);
+            FileDialogCustomize!.Com.AddComboBox(ControlId);
             foreach(var item in Items.Counting()) {
-                FileDialogCustomize!.AddControlItem(ControlId, item.Number, item.Value);
+                FileDialogCustomize!.Com.AddControlItem(ControlId, item.Number, item.Value);
             }
-            FileDialogCustomize!.SetSelectedControlItem(ControlId, SelectedIndex);
+            FileDialogCustomize!.Com.SetSelectedControlItem(ControlId, SelectedIndex);
         }
 
         protected override void ChangeStatusImple()
         {
-            FileDialogCustomize!.GetSelectedControlItem(ControlId, out var index);
+            FileDialogCustomize!.Com.GetSelectedControlItem(ControlId, out var index);
             SelectedIndex = index;
         }
 
@@ -181,10 +182,10 @@ namespace ContentTypeTextNet.Pe.Core.Views
             return control;
         }
 
-        internal void Build(IFileDialogCustomize FileDialogCustomize)
+        internal void Build(ComWrapper<IFileDialogCustomize> FileDialogCustomize)
         {
             if(IsBuilded) {
-                FileDialogCustomize.ClearClientData();
+                FileDialogCustomize.Com.ClearClientData();
             }
 
             var lastControlId = 1;
