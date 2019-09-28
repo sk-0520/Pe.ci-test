@@ -27,6 +27,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
         #endregion
 
         #region variable
+
+        bool _isLink;
+
         #endregion
 
         public NoteContentElement(Guid noteId, NoteContentKind contentKind, IMainDatabaseBarrier mainDatabaseBarrier, IMainDatabaseLazyWriter mainDatabaseLazyWriter, IDatabaseStatementLoader statementLoader, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
@@ -51,7 +54,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
         public Guid NoteId { get; }
         public NoteContentKind ContentKind { get; }
 
-        public bool IsLink { get; private set; }
+        public bool IsLink
+        {
+            get => this._isLink;
+            private set => SetProperty(ref this._isLink, value);
+        }
 
         IMainDatabaseBarrier MainDatabaseBarrier { get; }
         IDatabaseStatementLoader StatementLoader { get; }
@@ -176,9 +183,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             }
         }
 
+        NoteLinkWatchParameter? GetLinkParameter() => (NoteLinkWatchParameter?)LinkWatcher2?.WatchParameter;
+
         string LoadLinkContent()
         {
-            var parameter = (NoteLinkWatchParameter?)LinkWatcher2?.WatchParameter;
+            var parameter = GetLinkParameter();
             if(parameter == null) {
                 Logger.LogWarning("リンクがおかしい: {0}", NoteId);
                 return string.Empty;
@@ -308,9 +317,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             //if(LinkWatcher != null) {
             //    LinkWatcher.Dispose();
             //}
-            if(LinkWatcher2!= null) {
+            if(LinkWatcher2 != null) {
                 LinkWatcher2.FileContentChanged -= LinkWatcher2_FileContentChanged;
                 LinkWatcher2.Dispose();
+                LinkWatcher2 = null;
             }
         }
 
@@ -356,6 +366,48 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             }
         }
 
+        public void Unlink(bool isRemove)
+        {
+            Flush();
+            var parameter = GetLinkParameter();
+            var content = LoadLinkContent();
+            DisposeLinkWatcher();
+
+            IsLink = false;
+
+            switch(ContentKind) {
+                case NoteContentKind.Plain:
+                    ChangePlainContent(content);
+                    break;
+
+                case NoteContentKind.RichText:
+                    ChangeRichTextContent(content);
+                    break;
+
+                default:
+                    throw new NotImplementedException();
+            }
+
+            using(var commander = MainDatabaseBarrier.WaitWrite()) {
+                var dao = new NoteContentsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                dao.UpdateLinkDisabled(NoteId, DatabaseCommonStatus.CreateCurrentAccount());
+
+                commander.Commit();
+            }
+
+            if(isRemove) {
+                if(parameter != null) {
+                    try {
+                        parameter.File!.Delete();
+                    } catch(Exception ex) {
+                        Logger.LogError(ex, ex.Message);
+                    }
+                } else {
+                    Logger.LogWarning("リンク情報へん: {0}", NoteId);
+                }
+            }
+        }
+
         (bool success, bool isLink, NoteLinkWatchParameter parameter) LoadLinkWatchParameter()
         {
             NoteContentData linkData;
@@ -383,6 +435,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             parameter.IsEnabledRefresh = linkData.IsEnabledRefresh;
 
             return (true, true, parameter);
+        }
+
+        public string GetLinkFilePath()
+        {
+            var parameter = GetLinkParameter();
+            return parameter?.File?.FullName ?? string.Empty;
         }
 
         #endregion

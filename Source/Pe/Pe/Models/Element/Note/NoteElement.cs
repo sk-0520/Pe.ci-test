@@ -443,14 +443,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             return false;
         }
 
-        public void CreateLinkContent(string filePath, Encoding encoding)
+        public void OpenLinkContent(string filePath, Encoding encoding, bool isOpen)
         {
-            ContentElement!.ChangeLink(filePath, encoding, false);
+            ContentElement!.ChangeLink(filePath, encoding, isOpen);
         }
 
-        public void OpenLinkContent(string filePath, Encoding encoding)
+        public void Unlink(bool isRemove)
         {
-            ContentElement!.ChangeLink(filePath, encoding, true);
+            ContentElement!.Unlink(isRemove);
         }
 
         [Obsolete]

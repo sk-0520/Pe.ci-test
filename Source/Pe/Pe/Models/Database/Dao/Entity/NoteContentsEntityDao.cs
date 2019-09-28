@@ -149,6 +149,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return ExecuteUpdate(builder) == 1;
         }
 
+        public bool UpdateLinkDisabled(Guid noteId, IDatabaseCommonStatus databaseCommonStatus)
+        {
+            var builder = CreateUpdateBuilder(databaseCommonStatus);
+
+            builder.AddKey(Column.NoteId, noteId);
+            builder.AddValue(Column.IsLink, false);
+            builder.AddValue(Column.Address, string.Empty);
+
+            return ExecuteUpdate(builder) == 1;
+        }
+
         public int DeleteContents(Guid noteId)
         {
             var builder = CreateDeleteBuilder();

@@ -606,13 +606,18 @@
                 Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"
                 Padding="8"
               >
-                <StackPanel>
-                  <Button Command="{Binding UnlinkCommand}">unlink</Button>
-                  <Button Command="{Binding DeleteCommand}">delete</Button>
+                <Grid x:Name="parent">
+                  <StackPanel Visibility="{Binding IsLink, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <Button Command="{Binding UnlinkCommand}">unlink</Button>
+                    <Button Command="{Binding DeleteCommand}">delete</Button>
 
-                  <Button Command="{Binding SaveLinkCommand}">link(save)</Button>
-                  <Button Command="{Binding OpenLinkCommand}">link(open)</Button>
-                </StackPanel>
+                    <TextBox IsReadOnly="True" Width="{Binding ActualWidth, ElementName=parent}" Text="{Binding LinkPath, Mode=OneWay}" />
+                  </StackPanel>
+                  <StackPanel Visibility="{Binding IsLink, Converter={StaticResource FalseToVisibilityConverter}}">
+                    <Button Command="{Binding SaveLinkCommand}">link(save)</Button>
+                    <Button Command="{Binding OpenLinkCommand}">link(open)</Button>
+                  </StackPanel>
+                </Grid>
               </Border>
 
               <Button Grid.Row="0" Style="{StaticResource CancelBackground}" Command="{Binding LinkChangeCancelCommand}" />

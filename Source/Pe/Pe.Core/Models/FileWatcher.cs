@@ -147,6 +147,10 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         private void FileSystemWatcher_Changed(object sender, FileSystemEventArgs e)
         {
+            if(DelayWatcher.IsDisposed) {
+                return;
+            }
+
             DelayWatcher.DelayAction(() => {
                 var args = new FileChangedEventArgs(new FileInfo(e.FullPath), false);
                 OnFileContentChanged(args);

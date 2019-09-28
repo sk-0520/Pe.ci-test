@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Element.Note;
@@ -29,6 +30,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         {
             ClipboardManager = clipboardManager;
             DispatcherWapper = dispatcherWapper;
+
+            PropertyChangedHooker = new PropertyChangedHooker(DispatcherWapper, LoggerFactory);
+            PropertyChangedHooker.AddHook(nameof(IsLink), nameof(IsLink));
         }
 
         #region property
@@ -45,6 +49,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         private Control? Control { get; set; }
 
         public bool IsLink => Model.IsLink;
+
+        PropertyChangedHooker PropertyChangedHooker { get; }
 
         protected bool EnabledUpdate { get; private set; } = true;
 

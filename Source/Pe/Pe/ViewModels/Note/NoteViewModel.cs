@@ -114,6 +114,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         public Guid NoteId => Model.NoteId;
         public bool IsLink => Model.ContentElement?.IsLink ?? false;
+        public string? LinkPath => Model.ContentElement?.GetLinkFilePath();
 
         public FontViewModel Font { get; }
 
@@ -380,12 +381,18 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         ));
         public ICommand UnlinkCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
+                Model.Unlink(false);
+                RaisePropertyChanged(nameof(IsLink));
+                RaisePropertyChanged(nameof(LinkPath));
             },
             () => IsLink
         ).ObservesProperty(() => IsLink));
 
         public ICommand DeleteCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
+                Model.Unlink(true);
+                RaisePropertyChanged(nameof(IsLink));
+                RaisePropertyChanged(nameof(LinkPath));
             },
             () => IsLink
         ).ObservesProperty(() => IsLink));
@@ -400,11 +407,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                     }
 
                     if(r.ResponseFilePaths != null && 0 < r.ResponseFilePaths.Length) {
-                        Model.CreateLinkContent(r.ResponseFilePaths[0], r.Encoding!);
+                        Model.OpenLinkContent(r.ResponseFilePaths[0], r.Encoding!, false);
+                        RaisePropertyChanged(nameof(IsLink));
+                        RaisePropertyChanged(nameof(LinkPath));
                     }
                 });
-            }
-        ));
+            },
+            () => !IsLink
+        ).ObservesProperty(() => IsLink));
         public ICommand OpenLinkCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
                 var parameter = CreateLinkParameter(true);
@@ -414,11 +424,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                     }
 
                     if(r.ResponseFilePaths != null && 0 < r.ResponseFilePaths.Length) {
-                        Model.OpenLinkContent(r.ResponseFilePaths[0], r.Encoding!);
+                        Model.OpenLinkContent(r.ResponseFilePaths[0], r.Encoding!, true);
+                        RaisePropertyChanged(nameof(IsLink));
+                        RaisePropertyChanged(nameof(LinkPath));
                     }
                 });
-            }
-        ));
+            },
+            () => !IsLink
+        ).ObservesProperty(() => IsLink));
 
 
         #endregion
