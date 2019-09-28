@@ -40,6 +40,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
     {
         public DialogFilterList Filter { get; } = new DialogFilterList();
         public bool ShowExtensions { get; set; } = true;
+
+        public string FilePath { get; set; } = string.Empty;
     }
 
     public class FileDialogRequestResponse : CancelResponse

@@ -105,7 +105,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Note
                     false => new SaveFileDialog(),
                 };
                 using(dialog) {
-                    dialog.FileName = "X:\\cache\\MnMn\\GeckoFx\\webappsstore.sqlite-wal";
+                    dialog.FileName = linkParameter.FilePath;
                     dialog.Filters.SetRange(linkParameter.Filter);
 
                     var encodings = new[] {
@@ -115,23 +115,19 @@ namespace ContentTypeTextNet.Pe.Main.Views.Note
                         //TODO: 文字コードは追々かんがえるよ
                         CustomizeDialogComboBoxItem.Create(EncodingUtility.ToString(Encoding.UTF32), Encoding.UTF32),
                     };
+                    var defaultItem = encodings.FirstOrDefault(i => EncodingUtility.ToString(i.Value) == EncodingUtility.ToString(linkParameter.Encoding!));
+                    var index = Array.IndexOf(encodings, defaultItem);
+                    if(index == -1) {
+                        index = 0;
+                    }
 
-                    CustomizeDialogComboBox<Encoding> encodingList;
-                    using(dialog.Customize.Grouping("ぐるぷ")) {
-                        encodingList = dialog.Customize.AddComboBox<Encoding>();
-                        var index = -1;
-                        var loop = 0;
-                        var encName = EncodingUtility.ToString(linkParameter.Encoding!);
+                    CustomizeDialogComboBox<Encoding> encodingComboBox;
+                    using(dialog.Customize.Grouping(nameof(Encoding))) {
+                        encodingComboBox = dialog.Customize.AddComboBox<Encoding>();
                         foreach(var encoding in encodings) {
-                            if(index == -1 && EncodingUtility.ToString(encoding.Value) == encName) {
-                                index = loop;
-                            }
-                            encodingList.AddItem(encoding);
-                            loop += 1;
+                            encodingComboBox.AddItem(encoding);
                         }
-                        if(index != -1) {
-                            encodingList.SelectedIndex = index;
-                        }
+                        encodingComboBox.SelectedIndex = index;
                     }
 
                     if(dialog.ShowDialog(this).GetValueOrDefault()) {
@@ -142,7 +138,8 @@ namespace ContentTypeTextNet.Pe.Main.Views.Note
 
                     o.Callback(new NoteLinkChangeRequestResponse() {
                         ResponseIsCancel = true,
-                        Encoding = encodings[encodingList.SelectedIndex].Value,
+                        ResponseFilePaths = new [] { dialog.FileName },
+                        Encoding = encodings[encodingComboBox.SelectedIndex].Value,
                     });
                 }
 
