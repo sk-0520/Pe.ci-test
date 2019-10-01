@@ -5,13 +5,28 @@
 
 
   Title="DebugColorPickerWindow"
-  Width="800"
-  Height="450"
+  Width="400"
+  Height="250"
+  WindowStartupLocation="CenterScreen"
 
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   mc:Ignorable="d"
 >
-  <Grid>
+  <Window.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/Pe.Core;component/Views/UpDownSliderDictionary.xaml" />
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+  </Window.Resources>
+
+  <Grid VerticalAlignment="Center">
+
+    <StackPanel>
+      <Slider x:Name="custom" Style="{StaticResource UpDownSlider}" />
+      <Separator />
+      <Slider Value="{Binding Value, ElementName=custom}" />
+    </StackPanel>
 
   </Grid>
 </Window>
