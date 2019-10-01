@@ -9,23 +9,22 @@
   Height="250"
   WindowStartupLocation="CenterScreen"
 
+  xmlns:app_core_views="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core"
+
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   mc:Ignorable="d"
 >
-  <Window.Resources>
-    <ResourceDictionary>
-      <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/Pe.Core;component/Views/UpDownSliderDictionary.xaml" />
-      </ResourceDictionary.MergedDictionaries>
-    </ResourceDictionary>
-  </Window.Resources>
 
   <Grid VerticalAlignment="Center">
 
     <StackPanel>
-      <Slider x:Name="custom" Style="{StaticResource UpDownSlider}" />
+      <app_core_views:NumericUpDown x:Name="custom" />
       <Separator />
-      <Slider Value="{Binding Value, ElementName=custom}" />
+      <Slider
+        Value="{Binding Value, ElementName=custom}"
+        Minimum="-150"
+        Maximum="+150"
+      />
     </StackPanel>
 
   </Grid>
