@@ -25,6 +25,8 @@
         Minimum="-150"
         Maximum="+150"
       />
+      <Separator />
+      <app_core_views:ColorCanvas />
     </StackPanel>
 
   </Grid>
