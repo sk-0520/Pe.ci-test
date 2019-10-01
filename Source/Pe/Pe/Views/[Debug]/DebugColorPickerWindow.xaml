@@ -18,7 +18,7 @@
   <Grid VerticalAlignment="Center">
 
     <StackPanel>
-      <app_core_views:NumericUpDown x:Name="custom" />
+      <app_core_views:NumericUpDown x:Name="custom" IsReadOnly="false" />
       <Separator />
       <Slider
         Value="{Binding Value, ElementName=custom}"

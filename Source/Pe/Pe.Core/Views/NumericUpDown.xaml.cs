@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -24,6 +25,13 @@ namespace ContentTypeTextNet.Pe.Core.Views
             InitializeComponent();
         }
 
+        #region property
+
+        Regex IntegerRegex { get; } = new Regex(@"[\+\-,0-9]");
+        Regex DecimalRegex { get; } = new Regex(@"[\+\-,0-9\.]");
+
+        #endregion
+
         #region ValueProperty
 
         public static readonly DependencyProperty ValueProperty = DependencyProperty.Register(
@@ -45,10 +53,13 @@ namespace ContentTypeTextNet.Pe.Core.Views
             var value = (decimal)e.NewValue;
 
             // 入力値は範囲内に収まるようにする
-            ctrl.Value = Math.Max(ctrl.Minimum, Math.Min(value, ctrl.Maximum));
+            var rangeValue = Math.Max(ctrl.Minimum, Math.Min(value, ctrl.Maximum));
+            ctrl.Value = Math.Round(rangeValue, ctrl.DecimalPlaces, MidpointRounding.ToEven);
 
-            ctrl.PART_UP_BUTTON.IsEnabled = ctrl.Maximum != ctrl.Value;
-            ctrl.PART_DOWN_BUTTON.IsEnabled = ctrl.Minimum != ctrl.Value;
+            if(!ctrl.IsReadOnly) {
+                ctrl.PART_UP_BUTTON.IsEnabled = ctrl.Maximum != ctrl.Value;
+                ctrl.PART_DOWN_BUTTON.IsEnabled = ctrl.Minimum != ctrl.Value;
+            }
         }
 
         #endregion
@@ -130,15 +141,93 @@ namespace ContentTypeTextNet.Pe.Core.Views
 
         #endregion
 
+        #region TextAlignmentProperty
+
+        public static readonly DependencyProperty TextAlignmentProperty = DependencyProperty.Register(
+            nameof(TextAlignment),
+            typeof(TextAlignment),
+            typeof(NumericUpDown),
+            new PropertyMetadata(TextAlignment.Right, OnTextAlignmentPropertyChanged)
+        );
+
+        public TextAlignment TextAlignment
+        {
+            get { return (TextAlignment)GetValue(TextAlignmentProperty); }
+            set { SetValue(TextAlignmentProperty, value); }
+        }
+
+        private static void OnTextAlignmentPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var ctrl = (NumericUpDown)d;
+            ctrl.TextAlignment = (TextAlignment)e.NewValue;
+        }
+
+        #endregion
+
+        #region DecimalPlacesProperty
+
+        public static readonly DependencyProperty DecimalPlacesProperty = DependencyProperty.Register(
+            nameof(DecimalPlaces),
+            typeof(int),
+            typeof(NumericUpDown),
+            new PropertyMetadata(2, OnDecimalPlacesPropertyChanged)
+        );
+
+        public int DecimalPlaces
+        {
+            get { return (int)GetValue(DecimalPlacesProperty); }
+            set { SetValue(DecimalPlacesProperty, value); }
+        }
+
+        private static void OnDecimalPlacesPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var ctrl = (NumericUpDown)d;
+            if(ctrl.DecimalPlaces < 0) {
+                throw new ArgumentOutOfRangeException(nameof(DecimalPlaces));
+            }
+            ctrl.DecimalPlaces = (int)e.NewValue;
+        }
+
+        #endregion
+
+        #region IsReadOnlyProperty
+
+        public static readonly DependencyProperty IsReadOnlyProperty = DependencyProperty.Register(
+            nameof(IsReadOnly),
+            typeof(bool),
+            typeof(NumericUpDown),
+            new PropertyMetadata(false, OnIsReadOnlyPropertyChanged)
+        );
+
+        public bool IsReadOnly
+        {
+            get { return (bool)GetValue(IsReadOnlyProperty); }
+            set { SetValue(IsReadOnlyProperty, value); }
+        }
+
+        private static void OnIsReadOnlyPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var ctrl = (NumericUpDown)d;
+            ctrl.IsReadOnly = (bool)e.NewValue;
+        }
+
+        #endregion
+
         #region function
 
         void UpValue()
         {
+            if(IsReadOnly) {
+                return;
+            }
             Value += Increment;
         }
 
         void DownValue()
         {
+            if(IsReadOnly) {
+                return;
+            }
             Value -= Increment;
         }
 
@@ -160,6 +249,47 @@ namespace ContentTypeTextNet.Pe.Core.Views
                 DownValue();
             } else {
                 UpValue();
+            }
+        }
+
+        private void PART_NUMERIC_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if(DecimalPlaces == 0) {
+                var unsafeInput = !IntegerRegex.IsMatch(e.Text);
+                if(unsafeInput) {
+                    e.Handled = true;
+                    return;
+                }
+                //TODO: 入力値との検証
+            } else {
+                var unsafeInput = !DecimalRegex.IsMatch(e.Text);
+                if(unsafeInput) {
+                    e.Handled = true;
+                    return;
+                }
+                //TODO: 入力値との検証
+            }
+        }
+
+        private void PART_NUMERIC_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.Key == Key.Up || e.Key == Key.PageUp) {
+                UpValue();
+                e.Handled = true;
+            } else if(e.Key == Key.Down || e.Key == Key.PageDown) {
+                DownValue();
+                e.Handled = true;
+            }
+        }
+
+        private void PART_NUMERIC_PreviewExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            //TODO: 値検証
+            if(e.Command == ApplicationCommands.Paste) {
+                string text = Clipboard.GetText();
+                if(!decimal.TryParse(text, out _)) {
+                    e.Handled = true;
+                }
             }
         }
     }
