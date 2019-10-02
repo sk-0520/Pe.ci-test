@@ -5,13 +5,38 @@
 
 
   Title="DebugColorPickerWindow"
-  Width="800"
-  Height="450"
+  Width="400"
+  Height="350"
+  WindowStartupLocation="CenterScreen"
+
+  xmlns:app_core_views="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core"
 
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   mc:Ignorable="d"
 >
-  <Grid>
+  <Window.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/Pe.Core;component/Views/ColorPickerDictionary.xaml" />
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+  </Window.Resources>
+
+  <Grid VerticalAlignment="Center">
+
+    <StackPanel>
+      <app_core_views:NumericUpDown x:Name="custom" IsReadOnly="false" />
+      <Separator />
+      <Slider
+        Value="{Binding Value, ElementName=custom}"
+        Minimum="-150"
+        Maximum="+150"
+      />
+      <Separator />
+      <app_core_views:ColorCanvas SelectedColor="{Binding SelectedColor,ElementName=A, Mode=TwoWay}" HasAlpha="True" />
+      <app_core_views:ColorCanvas x:Name="A" Style="{StaticResource ColorPicker}" SelectedColor="{Binding Color, Mode=TwoWay}" HasAlpha="False" />
+      <TextBlock Text="{Binding Color}" />
+    </StackPanel>
 
   </Grid>
 </Window>

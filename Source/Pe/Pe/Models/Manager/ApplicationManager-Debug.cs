@@ -21,8 +21,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         {
             Logger.LogDebug("デバッグ用前処理");
 
-            //DebugColorPicker();
-            //Exit();
+            DebugColorPicker();
+            Exit();
         }
 
         void DebugExecuteAfter()
