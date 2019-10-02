@@ -42,13 +42,13 @@
         CommandManager.PreviewExecuted="PART_NUMERIC_PreviewExecuted"
         PreviewKeyDown="PART_NUMERIC_PreviewKeyDown"
         PreviewTextInput="PART_NUMERIC_PreviewTextInput"
-        Text="{Binding Value, ElementName=root}"
+        Text="{Binding Value, ElementName=root, UpdateSourceTrigger=PropertyChanged}"
         TextAlignment="{Binding TextAlignment, ElementName=root}"
         IsReadOnly="{Binding IsReadOnly, ElementName=root}"
         MouseWheel="PART_NUMERIC_MouseWheel"
       />
 
-      <RepeatButton x:Name="PART_UP_BUTTON" Grid.Row="0" Grid.Column="1" Click="PART_UP_BUTTON_Click" >
+      <RepeatButton x:Name="PART_UP_BUTTON" Grid.Row="0" Grid.Column="1" Focusable="False" IsTabStop="False" Click="PART_UP_BUTTON_Click" >
         <!-- https://materialdesignicons.com/icon/triangle -->
         <Viewbox>
           <Canvas Width="24" Height="24">
@@ -56,7 +56,7 @@
           </Canvas>
         </Viewbox>
       </RepeatButton>
-      <RepeatButton x:Name="PART_DOWN_BUTTON" Grid.Row="1" Grid.Column="1" Click="PART_DOWN_BUTTON_Click"  >
+      <RepeatButton x:Name="PART_DOWN_BUTTON" Grid.Row="1" Grid.Column="1" Focusable="False" IsTabStop="False" Click="PART_DOWN_BUTTON_Click"  >
         <!-- https://materialdesignicons.com/icon/triangle -->
         <Viewbox RenderTransformOrigin="0.5,0.5">
           <Viewbox.RenderTransform>

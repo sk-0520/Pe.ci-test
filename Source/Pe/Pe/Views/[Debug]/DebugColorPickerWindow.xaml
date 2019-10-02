@@ -26,7 +26,7 @@
         Maximum="+150"
       />
       <Separator />
-      <app_core_views:ColorCanvas />
+      <app_core_views:ColorCanvas SelectedColor="Lime" HasAlpha="False" />
     </StackPanel>
 
   </Grid>

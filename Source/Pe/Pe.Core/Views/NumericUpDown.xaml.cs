@@ -220,7 +220,11 @@ namespace ContentTypeTextNet.Pe.Core.Views
             if(IsReadOnly) {
                 return;
             }
-            Value += Increment;
+            if(Value + Increment <= Maximum) {
+                Value += Increment;
+            } else {
+                Value = Maximum;
+            }
         }
 
         void DownValue()
@@ -228,7 +232,11 @@ namespace ContentTypeTextNet.Pe.Core.Views
             if(IsReadOnly) {
                 return;
             }
-            Value -= Increment;
+            if(Minimum <= Value - Increment) {
+                Value -= Increment;
+            } else {
+                Value = Minimum;
+            }
         }
 
         #endregion
