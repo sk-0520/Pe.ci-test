@@ -14,6 +14,13 @@
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   mc:Ignorable="d"
 >
+  <Window.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/Pe.Core;component/Views/ColorPickerDictionary.xaml" />
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+  </Window.Resources>
 
   <Grid VerticalAlignment="Center">
 
@@ -26,7 +33,9 @@
         Maximum="+150"
       />
       <Separator />
-      <app_core_views:ColorCanvas SelectedColor="Lime" HasAlpha="False" />
+      <app_core_views:ColorCanvas SelectedColor="{Binding SelectedColor,ElementName=A, Mode=TwoWay}" HasAlpha="True" />
+      <app_core_views:ColorCanvas x:Name="A" Style="{StaticResource ColorPicker}" SelectedColor="{Binding Color, Mode=TwoWay}" HasAlpha="False" />
+      <TextBlock Text="{Binding Color}" />
     </StackPanel>
 
   </Grid>

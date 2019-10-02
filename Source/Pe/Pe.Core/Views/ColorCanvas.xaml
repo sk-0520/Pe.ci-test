@@ -15,6 +15,10 @@
   <UserControl.Resources>
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
+    <Style TargetType="Border">
+      <Setter Property="Padding" Value="0" />
+    </Style>
+
     <Style x:Key="ColorElementLabel" TargetType="Border">
       <Setter Property="BorderBrush" Value="Black" />
       <Setter Property="BorderThickness" Value="1" />
