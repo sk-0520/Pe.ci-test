@@ -1,7 +1,10 @@
 <UserControl
+  x:Name="root"
   x:Class="ContentTypeTextNet.Pe.Core.Views.ColorCanvas"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+
+  xmlns:app_core_views="clr-namespace:ContentTypeTextNet.Pe.Core.Views"
 
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   mc:Ignorable="d"
@@ -10,19 +13,7 @@
 >
   <!-- https://stackoverflow.com/questions/32513387/how-to-create-a-color-canvas-for-color-picker-wpf -->
   <UserControl.Resources>
-    <Color x:Key="CurrentColor">#00FF00</Color>
-
-    <LinearGradientBrush x:Key="HueBrush" StartPoint="0,0" EndPoint="0,1">
-      <LinearGradientBrush.GradientStops>
-        <GradientStop Color="#FF0000" Offset="0" />
-        <GradientStop Color="#FFFF00" Offset="0.167" />
-        <GradientStop Color="#00FF00" Offset="0.333" />
-        <GradientStop Color="#00FFFF" Offset="0.5" />
-        <GradientStop Color="#0000FF" Offset="0.667" />
-        <GradientStop Color="#FF00FF" Offset="0.833" />
-        <GradientStop Color="#FF0000" Offset="1" />
-      </LinearGradientBrush.GradientStops>
-    </LinearGradientBrush>
+    <!--<Color x:Key="CurrentColor">#FF0000</Color>
 
     <VisualBrush x:Key="LevelSaturationBrush" TileMode="None">
       <VisualBrush.Visual>
@@ -32,7 +23,7 @@
               <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
                 <LinearGradientBrush.GradientStops>
                   <GradientStop Color="White" Offset="0" />
-                  <GradientStop Color="{DynamicResource CurrentColor}" Offset="1" />
+                  <GradientStop Color="{Binding BaseColor, ElementName=root}" Offset="1" />
                 </LinearGradientBrush.GradientStops>
               </LinearGradientBrush>
             </Rectangle.Fill>
@@ -45,18 +36,109 @@
               </LinearGradientBrush>
             </Rectangle.OpacityMask>
           </Rectangle>
+          <Rectangle Width="8" Height="8"></Rectangle>
         </Canvas>
       </VisualBrush.Visual>
-    </VisualBrush>
+    </VisualBrush>-->
   </UserControl.Resources>
   <Grid>
-    <Grid.ColumnDefinitions>
-      <ColumnDefinition Width="Auto" />
-      <ColumnDefinition Width="Auto" />
-    </Grid.ColumnDefinitions>
+    <StackPanel>
+      <Grid>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
 
-    <Rectangle Grid.Column="0" Fill="{StaticResource LevelSaturationBrush}" Width="200" Height="200" Margin="10" Stroke="Black" StrokeThickness="1" SnapsToDevicePixels="True" />
-    <Rectangle Grid.Column="1" Fill="{StaticResource HueBrush}" Width="20" Height="200" Margin="10" Stroke="Black" StrokeThickness="1" SnapsToDevicePixels="True" />
+        <!--<Rectangle x:Name="PART_HUE_AREA" Grid.Row="0" Fill="{Binding HueBrush, ElementName=root}" Width="200" Height="20" Margin="10" Stroke="Black" StrokeThickness="1" SnapsToDevicePixels="True" />-->
+        <Slider x:Name="PART_HueSlider" Grid.Row="0" Width="{Binding ActualWidth, ElementName=root}" Height="20" Minimum="0" Maximum="1" ValueChanged="PART_HueSlider_ValueChanged" >
+          <Slider.Template>
+            <ControlTemplate TargetType="Slider">
+              <Grid>
+                <Rectangle x:Name="PART_HueArea" Stroke="Black" StrokeThickness="1" SnapsToDevicePixels="True">
+                  <Rectangle.Fill>
+                    <LinearGradientBrush GradientStops="{Binding HueGradations, ElementName=root}" />
+                  </Rectangle.Fill>
+                </Rectangle>
+                <Track x:Name="PART_Track">
+                  <!-- left -->
+                  <Track.DecreaseRepeatButton>
+                    <RepeatButton Command="Slider.DecreaseLarge" Background="{x:Null}" BorderBrush="{x:Null}"/>
+                  </Track.DecreaseRepeatButton>
+
+                  <!-- right -->
+                  <Track.IncreaseRepeatButton>
+                    <RepeatButton Command="Slider.IncreaseLarge" Background="{x:Null}" BorderBrush="{x:Null}"/>
+                  </Track.IncreaseRepeatButton>
+
+                  <Track.Thumb>
+                    <Thumb />
+                  </Track.Thumb>
+                </Track>
+              </Grid>
+            </ControlTemplate>
+          </Slider.Template>
+        </Slider>
+
+        <Canvas Grid.Row="1" Width="{Binding ActualWidth, ElementName=root}" Height="80" Background="Black" SnapsToDevicePixels="True">
+          <Rectangle Width="{Binding ActualWidth, ElementName=root}" Height="80" SnapsToDevicePixels="True" Stroke="Black" StrokeThickness="1" >
+              <Rectangle.Fill>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                  <LinearGradientBrush.GradientStops>
+                    <GradientStop Color="White" Offset="0" />
+                    <GradientStop Color="{Binding BaseColor, ElementName=root}" Offset="1" />
+                  </LinearGradientBrush.GradientStops>
+                </LinearGradientBrush>
+              </Rectangle.Fill>
+              <Rectangle.OpacityMask>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                  <LinearGradientBrush.GradientStops>
+                    <GradientStop Color="#FFFFFFFF" Offset="0"/>
+                    <GradientStop Color="#00FFFFFF" Offset="1"/>
+                  </LinearGradientBrush.GradientStops>
+                </LinearGradientBrush>
+              </Rectangle.OpacityMask>
+            </Rectangle>
+
+          <Rectangle x:Name="PART_picker" Width="8" Height="8" Stroke="Black" StrokeThickness="2"></Rectangle>
+        </Canvas>
+      </Grid>
+
+      <Grid>
+        <Grid.RowDefinitions>
+          <RowDefinition />
+          <RowDefinition />
+          <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition />
+          <ColumnDefinition />
+          <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <Label Grid.Row="0" Grid.Column="0" Content="R" />
+        <Slider Grid.Row="0" Grid.Column="1" Minimum="0" Maximum="255"  />
+        <app_core_views:NumericUpDown Grid.Row="0" Grid.Column="2" />
+
+        <Label Grid.Row="1" Grid.Column="0" Content="G" />
+        <Slider Grid.Row="1" Grid.Column="1" Minimum="0" Maximum="255"  />
+        <app_core_views:NumericUpDown Grid.Row="1" Grid.Column="2" />
+
+        <Label Grid.Row="2" Grid.Column="0" Content="B" />
+        <Slider Grid.Row="2" Grid.Column="1" Minimum="0" Maximum="255"  />
+        <app_core_views:NumericUpDown Grid.Row="2" Grid.Column="2" />
+
+      </Grid>
+
+      <TextBlock>
+        <Run Text="BaseColor: " />
+        <Run Text="{Binding BaseColor, ElementName=root, Mode=OneWay}" />
+      </TextBlock>
+      <TextBlock>
+        <Run Text="Color: " />
+        <Run Text="{Binding Value, ElementName=root, Mode=OneWay}" />
+      </TextBlock>
+
+    </StackPanel>
 
   </Grid>
 </UserControl>

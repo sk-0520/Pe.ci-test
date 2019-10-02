@@ -6,7 +6,7 @@
 
   Title="DebugColorPickerWindow"
   Width="400"
-  Height="250"
+  Height="350"
   WindowStartupLocation="CenterScreen"
 
   xmlns:app_core_views="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core"
