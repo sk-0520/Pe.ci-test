@@ -8,6 +8,7 @@
   xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
   xmlns:prism="http://prismlibrary.com/"
 
+  xmlns:app_core_views="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core"
   xmlns:cttn_lib_shared_lib_view_converter="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Converter;assembly=Pe.Core"
   xmlns:cttn_lib_shared_lib_view_attached="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Attached;assembly=Pe.Core"
 
@@ -34,28 +35,35 @@
   d:DesignHeight="100"
 >
   <Window.Resources>
-    <sys:Double x:Key="DisableOpacity">0.4</sys:Double>
-    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-    <cttn_lib_shared_lib_view_converter:BooleanToVisibilityConverter
-      x:Key="FalseToVisibilityConverter"
-      True="Collapsed"
-      False="Visible"
-    />
-    <cttn_lib_shared_lib_view_converter:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
-    <cttn_lib_shared_lib_view_converter:LogicalNotConverter x:Key="LogicalNotConverter" />
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/Pe.Core;component/Views/ColorPickerDictionary.xaml" />
+      </ResourceDictionary.MergedDictionaries>
 
-    <WindowChrome x:Key="NormalWindowChrome"
-      ResizeBorderThickness="{Binding BorderThickness}"
-      CaptionHeight="{Binding CaptionHeight}"
-    />
-    <WindowChrome x:Key="CompactWindowChrome"
-      ResizeBorderThickness="0"
-      CaptionHeight="{Binding MinHeight}"
-    />
-    <WindowChrome x:Key="LockWindowChrome"
-      ResizeBorderThickness="0"
-      CaptionHeight="0"
-    />
+      <sys:Double x:Key="DisableOpacity">0.4</sys:Double>
+      <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+      <cttn_lib_shared_lib_view_converter:BooleanToVisibilityConverter
+        x:Key="FalseToVisibilityConverter"
+        True="Collapsed"
+        False="Visible"
+      />
+      <cttn_lib_shared_lib_view_converter:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
+      <cttn_lib_shared_lib_view_converter:LogicalNotConverter x:Key="LogicalNotConverter" />
+
+      <WindowChrome x:Key="NormalWindowChrome"
+        ResizeBorderThickness="{Binding BorderThickness}"
+        CaptionHeight="{Binding CaptionHeight}"
+      />
+      <WindowChrome x:Key="CompactWindowChrome"
+        ResizeBorderThickness="0"
+        CaptionHeight="{Binding MinHeight}"
+      />
+      <WindowChrome x:Key="LockWindowChrome"
+        ResizeBorderThickness="0"
+        CaptionHeight="0"
+      />
+
+    </ResourceDictionary>
   </Window.Resources>
   <i:Interaction.Triggers>
     <i:EventTrigger EventName="Deactivated">
@@ -414,9 +422,11 @@
 
                   <Label Grid.Row="0" Grid.Column="0">foreground</Label>
                   <!--<xctk:ColorPicker Grid.Row="0" Grid.Column="1" SelectedColor="{Binding ForegroundColor}" />-->
+                  <app_core_views:ColorCanvas Grid.Row="0" Grid.Column="1" Style="{StaticResource ColorPicker}" SelectedColor="{Binding ForegroundColor, Mode=TwoWay}" />
 
                   <Label Grid.Row="1" Grid.Column="0">background</Label>
                   <!--<xctk:ColorPicker Grid.Row="1" Grid.Column="1" SelectedColor="{Binding BackgroundColor}" />-->
+                  <app_core_views:ColorCanvas Grid.Row="1" Grid.Column="1" Style="{StaticResource ColorPicker}" SelectedColor="{Binding BackgroundColor, Mode=TwoWay}" />
                 </Grid>
 
                 <Grid>
