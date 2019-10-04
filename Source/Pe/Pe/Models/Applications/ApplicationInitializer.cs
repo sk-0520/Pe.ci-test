@@ -25,6 +25,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         string CommandLineKeyLog { get; } = "log";
         string CommandLineSwitchForceLog { get; } = "force-log";
 
+        string CommandLineSwitchAcceptSkip { get; } = "skip-accept";
+
         public bool IsFirstStartup { get; private set; }
 
         public ApplicationDiContainer? DiContainer { get; private set; }
@@ -53,6 +55,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             commandLine.Add(longKey: EnvironmentParameters.CommandLineKeyTemporaryDirectory, hasValue: true);
             commandLine.Add(longKey: CommandLineKeyLog, hasValue: true);
             commandLine.Add(longKey: CommandLineSwitchForceLog, hasValue: false);
+            commandLine.Add(longKey: CommandLineSwitchAcceptSkip, hasValue: false);
 
             commandLine.Parse();
 
@@ -256,7 +259,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 .Register<IMainDatabaseBarrier, ApplicationDatabaseBarrier>(barrier.Main)
                 .Register<IFileDatabaseBarrier, ApplicationDatabaseBarrier>(barrier.File)
                 .Register<ITemporaryDatabaseBarrier, ApplicationDatabaseBarrier>(barrier.Temporary)
-                .Register<IMainDatabaseLazyWriter, ApplicationDatabaseLazyWriter>(new ApplicationDatabaseLazyWriter(barrier.Main, TimeSpan.FromSeconds(3),  loggerFactory))
+                .Register<IMainDatabaseLazyWriter, ApplicationDatabaseLazyWriter>(new ApplicationDatabaseLazyWriter(barrier.Main, TimeSpan.FromSeconds(3), loggerFactory))
                 .Register<IFileDatabaseLazyWriter, ApplicationDatabaseLazyWriter>(new ApplicationDatabaseLazyWriter(barrier.File, TimeSpan.FromSeconds(3), loggerFactory))
                 .Register<ITemporaryDatabaseLazyWriter, ApplicationDatabaseLazyWriter>(new ApplicationDatabaseLazyWriter(barrier.Temporary, TimeSpan.FromSeconds(3), loggerFactory))
                 .Register<IDispatcherWapper, ApplicationDispatcherWapper>(DiLifecycle.Transient)
@@ -320,15 +323,23 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             var loggerFactory = CreateLoggerFactory(logginConfigFilePath, commandLine.GetValue(CommandLineKeyLog, string.Empty), commandLine.ExistsSwitch(CommandLineSwitchForceLog));
             var logger = loggerFactory.CreateLogger(GetType());
 
+            var skipAccept = commandLine.ExistsSwitch(CommandLineSwitchAcceptSkip);
+            if(skipAccept) {
+                logger.LogInformation("使用許諾はコマンドライン設定によりスキップ");
+            }
+
+
             IsFirstStartup = CheckFirstStartup(environmentParameters, logger);
             if(IsFirstStartup) {
                 logger.LogInformation("初回実行");
-                // 設定ファイルやらなんやらを構築する前に完全初回の使用許諾を取る
-                var dialogResult = ShowAcceptView(new DiContainer(), loggerFactory);
-                if(!dialogResult) {
-                    // 初回の使用許諾を得られなかったのでばいちゃ
-                    logger.LogInformation("使用許諾得られず");
-                    return false;
+                if(!skipAccept) {
+                    // 設定ファイルやらなんやらを構築する前に完全初回の使用許諾を取る
+                    var dialogResult = ShowAcceptView(new DiContainer(), loggerFactory);
+                    if(!dialogResult) {
+                        // 初回の使用許諾を得られなかったのでばいちゃ
+                        logger.LogInformation("使用許諾得られず");
+                        return false;
+                    }
                 }
             }
 
@@ -345,6 +356,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 if(!retryResult) {
                     throw new ApplicationException();
                 }
+            }
+
+            //TODO: バージョンアップに伴う使用許諾
+            if(!IsFirstStartup && !skipAccept) {
             }
 
             LoggerFactory = loggerFactory;
