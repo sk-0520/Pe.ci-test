@@ -8,11 +8,16 @@
   xmlns:sharpdevelop_avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
 
   xmlns:app_viewmodel_customize_launcher_item="clr-namespace:ContentTypeTextNet.Pe.Main.ViewModels.CustomizeLauncherItem"
+  xmlns:app_core_converter="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Converter;assembly=Pe.Core"
 
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   mc:Ignorable="d"
   d:DesignHeight="450" d:DesignWidth="800"
 >
+  <UserControl.Resources>
+    <app_core_converter:DoubleToParameterPercentConverter x:Key="DoubleToParameterPercentConverter" />
+  </UserControl.Resources>
+
   <ItemsControl Grid.IsSharedSizeScope="True" ItemsSource="{Binding Item.CustomizeItems, ElementName=root}">
     <ItemsControl.Resources>
       <Style x:Key="LabelDefinition" TargetType="ColumnDefinition">
@@ -32,7 +37,9 @@
         <Setter Property="HorizontalScrollBarVisibility" Value="Auto" />
         <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
         <!--<Setter Property="Height" Value="{StaticResource MultiLine-Height}" />-->
-        <Setter Property="Height" Value="50" />
+        <Setter Property="MinHeight" Value="100" />
+        <Setter Property="MaxHeight" Value="200" />
+        <Setter Property="Height" Value="{Binding Path=ActualHeight, RelativeSource={RelativeSource AncestorType=Window}, Converter={StaticResource DoubleToParameterPercentConverter}, ConverterParameter=0.25}" />
         <Setter Property="Options">
           <Setter.Value>
             <sharpdevelop_avalonedit:TextEditorOptions

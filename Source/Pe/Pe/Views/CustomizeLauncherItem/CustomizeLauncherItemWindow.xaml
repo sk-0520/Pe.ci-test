@@ -17,9 +17,19 @@
   </Window.Resources>
 
   <Grid>
-    <ScrollViewer>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="*"/>
+      <RowDefinition Height="Auto"/>
+    </Grid.RowDefinitions>
+    
+    <ScrollViewer Grid.Row="0">
       <app_view_customize_launcher_item:CustomizeLauncherItemControl Item="{Binding}" />
     </ScrollViewer>
+
+    <StackPanel Grid.Row="1" Orientation="Horizontal">
+      <Button Content="ok" />
+      <Button Content="cancel" />
+    </StackPanel>
 
   </Grid>
 </Window>
