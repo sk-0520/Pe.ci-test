@@ -9,14 +9,19 @@ namespace ContentTypeTextNet.Pe.Main.Models
     {
         #region function
 
-        public static Stream OpenSyntaxStream(string syntaxResourceName)
+        public static Stream OpenSyntaxStreamByName(string syntaxResourceName)
         {
-            var s = Properties.Resources.ResourceManager.GetString(syntaxResourceName);
-            if(s == null) {
+            var resourceValue = Properties.Resources.ResourceManager.GetString(syntaxResourceName);
+            if(resourceValue == null) {
                 throw new InvalidProgramException($"{nameof(syntaxResourceName)}: {syntaxResourceName}");
             }
 
-            var binary = Encoding.UTF8.GetBytes(s);
+            return OpenSyntaxStream(resourceValue);
+        }
+
+        public static Stream OpenSyntaxStream(string syntax)
+        {
+            var binary = Encoding.UTF8.GetBytes(syntax);
             return new MemoryStream(binary);
         }
 
