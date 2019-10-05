@@ -95,12 +95,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         /// <param name="window"></param>
         void ClearUnsafeElements(Window window)
         {
-#if false
             var editors = UIUtility.FindChildren<ICSharpCode.AvalonEdit.TextEditor>(window);
             foreach(var editor in editors) {
                 editor.Options = new ICSharpCode.AvalonEdit.TextEditorOptions();
             }
-#endif
         }
 
 #endregion

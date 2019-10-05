@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Element.CustomizeLauncherItem;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem;
+using ICSharpCode.AvalonEdit.Document;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.CustomizeLauncherItem
@@ -14,8 +15,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.CustomizeLauncherItem
     {
         #region variable
 
-        //TextDocument _updateTextDocument;
-        //TextDocument _removeTextDocument;
+        TextDocument? _updateTextDocument;
+        TextDocument? _removeTextDocument;
 
         #endregion
 
@@ -28,16 +29,16 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.CustomizeLauncherItem
 
         #region command
 
-        //public TextDocument UpdateTextDocument
-        //{
-        //    get => this._updateTextDocument;
-        //    set => SetProperty(ref this._updateTextDocument, value);
-        //}
-        //public TextDocument RemoveTextDocument
-        //{
-        //    get => this._removeTextDocument;
-        //    set => SetProperty(ref this._removeTextDocument, value);
-        //}
+        public TextDocument? UpdateTextDocument
+        {
+            get => this._updateTextDocument;
+            set => SetProperty(ref this._updateTextDocument, value);
+        }
+        public TextDocument? RemoveTextDocument
+        {
+            get => this._removeTextDocument;
+            set => SetProperty(ref this._removeTextDocument, value);
+        }
 
         #endregion
 
@@ -60,8 +61,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.CustomizeLauncherItem
                 .Select(i => i)
             ;
 
-            //UpdateTextDocument = new TextDocument(string.Join(Environment.NewLine, updateItems));
-            //RemoveTextDocument = new TextDocument(string.Join(Environment.NewLine, removeItems));
+            UpdateTextDocument = new TextDocument(string.Join(Environment.NewLine, updateItems));
+            RemoveTextDocument = new TextDocument(string.Join(Environment.NewLine, removeItems));
         }
 
         #endregion
