@@ -100,7 +100,32 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
         public string ToCode(string source)
         {
-            throw new NotImplementedException();
+            if(source == null) {
+                throw new ArgumentNullException(nameof(source));
+            }
+
+            var textConverter = new TextConverter();
+            var funcs = new Func<string, string> [] {
+                textConverter.ConvertZenkakuDigitToAsciiDigit,
+                textConverter.ConvertZenkakuAlphabetToAsciiAlphabet,
+                textConverter.ConvertHankakuKatakanaToZenkakuKatakana,
+                textConverter.ConvertKatakaToHiragana,
+                // 漢字・平仮名をなんとかする
+                s => {
+                    return s;
+                },
+                // 使用不可文字をなんとかする
+                s => {
+                    return s;
+                }
+            };
+
+            var result = source.Trim();
+            foreach(var func in funcs) {
+                result = func(result);
+            }
+
+            return result;
         }
 
         #endregion
