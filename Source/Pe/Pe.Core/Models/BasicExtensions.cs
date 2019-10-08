@@ -34,10 +34,23 @@ namespace ContentTypeTextNet.Pe.Core.Models
             ;
         }
 
+        /// <summary>
+        /// 0基点のインデックスと値ペア列挙。
+        /// </summary>
+        /// <typeparam name="TElement"></typeparam>
+        /// <param name="this"></param>
+        /// <returns></returns>
         public static IEnumerable<Counter<int, TElement>> Counting<TElement>(this IEnumerable<TElement> @this)
         {
             return @this.Select((v, i) => new Counter<int, TElement>(i, v));
         }
+        /// <summary>
+        /// 独自基点のインデックスと値ペア列挙。
+        /// </summary>
+        /// <typeparam name="TElement"></typeparam>
+        /// <param name="this"></param>
+        /// <param name="baseNumber">基点。</param>
+        /// <returns></returns>
         public static IEnumerable<Counter<int, TElement>> Counting<TElement>(this IEnumerable<TElement> @this, int baseNumber)
         {
             return @this.Select((v, i) => new Counter<int, TElement>(i + baseNumber, v));

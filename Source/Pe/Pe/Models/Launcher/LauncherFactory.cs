@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -57,7 +58,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
                     result.PathExecute.Path = shortcut.TargetPath;
                     result.PathExecute.Option = shortcut.Arguments;
-                    result.PathExecute.WorkDirectoryPath =  shortcut.WorkingDirectory;
+                    result.PathExecute.WorkDirectoryPath = shortcut.WorkingDirectory;
 
                     result.Icon.Path = shortcut.IconPath;
                     result.Icon.Index = shortcut.IconIndex;
@@ -98,25 +99,93 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             };
         }
 
+        /// <summary>
+        /// ランチャーアイテムコードを生成。
+        /// <para>
+        /// ランチャーアイテムコードはコマンドとかで使うユーザー入力可能な一意文字列で、
+        /// IME使わずにコマンド入力したいし後々のことを考えてASCIIなものだけが許容される世界を目指す。
+        /// </para>
+        /// <list type="bullet">
+        /// <item><description>ホワイトスペース, 許容できない記号は _ に変換する。</description></item>
+        /// <item><description>コントロールコードは [c-ff-ff-...] に変換する。</description></item>
+        /// <item><description>ASCII範囲外は [x-ff-ff-...] に変換する。</description></item>
+        /// <item>
+        ///     <term>許容する記号</term>
+        ///     <description>
+        ///         - . ^
+        ///         _ [ ]
+        ///     </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="source">ランチャーアイテムコードのもとになる文字列。<para>想定用途はファイル名。</para></param>
+        /// <returns></returns>
         public string ToCode(string source)
         {
             if(source == null) {
                 throw new ArgumentNullException(nameof(source));
             }
 
+            static bool IsAscii(char c) => 0x00 <= c && c <= 0x7f;
+            static void AppendBinary(string s, string head, IResultBuffer rb)
+            {
+                var currentBinary = Encoding.UTF8.GetBytes(s);
+                rb.Append('[');
+                rb.Append(head);
+                foreach(var b in currentBinary) {
+                    rb.Append('-');
+                    rb.AppendFormat("{0:x2}", b);
+                }
+                rb.Append(']');
+            }
+
             var textConverter = new TextConverter();
-            var funcs = new Func<string, string> [] {
+            var funcs = new Func<string, string>[] {
                 textConverter.ConvertZenkakuDigitToAsciiDigit,
                 textConverter.ConvertZenkakuAlphabetToAsciiAlphabet,
                 textConverter.ConvertHankakuKatakanaToZenkakuKatakana,
                 textConverter.ConvertKatakaToHiragana,
                 // 漢字・平仮名をなんとかする
                 s => {
-                    return s;
+                    return textConverter.ConvertToCustom(s, (IReadOnlyList<string> characterBlocks, int currentIndex, bool isLastIndex, string currentText, IResultBuffer resultBuffer) => {
+                        // ASCII範囲外を頑張る
+                        if(currentText.Length != 1 || !IsAscii(currentText[0])) {
+                            AppendBinary(currentText, "x", resultBuffer);
+                        }
+
+                        return 0;
+                    });
                 },
                 // 使用不可文字をなんとかする
                 s => {
-                    return s;
+                    return textConverter.ConvertToCustom(s, (IReadOnlyList<string> characterBlocks, int currentIndex, bool isLastIndex, string currentText, IResultBuffer resultBuffer) => {
+                        // ここまで来てASCII範囲外はいないでしょ・・・
+                        Debug.Assert(currentText.Length == 1);
+                        Debug.Assert(IsAscii(currentText[0]));
+
+                        var c = currentText[0];
+                        if(!char.IsLetterOrDigit(c)) {
+                            if(char.IsWhiteSpace(c)) {
+                                resultBuffer.Append('_');
+                            } else if(char.IsControl(c)) {
+                                AppendBinary(currentText, "c", resultBuffer);
+                            } else {
+                                switch(c) {
+                                    case '-':
+                                    case '.':
+                                    case '^':
+                                    case '_':
+                                    case '[':
+                                    case ']':
+                                        break;
+                                    default:
+                                        resultBuffer.Append('_');
+                                        break;
+                                }
+                            }
+                        }
+                        return 0;
+                    });
                 }
             };
 

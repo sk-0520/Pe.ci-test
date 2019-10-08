@@ -13,6 +13,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         void Append(char c);
         void Append(string s);
+        void AppendFormat(string format, object? arg);
+        void AppendFormat(string format, object? arg1, params object[]? args);
 
         #endregion
     }
@@ -42,8 +44,31 @@ namespace ContentTypeTextNet.Pe.Core.Models
             Buffer.Append(s);
             IsAppend = true;
         }
+
+        public void AppendFormat(string format, object? arg)
+        {
+            Buffer.AppendFormat(format, arg);
+            IsAppend = true;
+        }
+        public void AppendFormat(string format, object? arg1, params object[]? args)
+        {
+            Buffer.AppendFormat(format, arg1, args);
+            IsAppend = true;
+        }
+
         #endregion
     }
+
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="characterBlocks">入力文字列全体の文字単位分割。</param>
+    /// <param name="currentIndex">今処理すべき <seealso cref="characterBlocks"/>のインデックス。</param>
+    /// <param name="isLastIndex">現在処理は最終インデックスか</param>
+    /// <param name="currentText">今処理する文字列。<seealso cref="characterBlocks"/>[<seealso cref="currentIndex"/>]と同じ</param>
+    /// <param name="resultBuffer">変換後文字列。格納された場合はそのまま、格納しない場合は<param name="resultBuffer" />に書き込んだ場合にのみ使用される。<seealso cref="currentText"/>が格納される。</param>
+    /// <returns>次回読み飛ばし数。0で次文字列へ進んでいく。</returns>
+    public delegate int TextConvertDelegate(IReadOnlyList<string> characterBlocks, int currentIndex, bool isLastIndex, string currentText, IResultBuffer resultBuffer);
 
     /// <summary>
     ///
@@ -51,21 +76,6 @@ namespace ContentTypeTextNet.Pe.Core.Models
     /// <remarks>http://www.unicode.org/Public/UNIDATA/Blocks.txt</remarks>
     public class TextConverter
     {
-        #region define
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="characterBlocks"></param>
-        /// <param name="currentIndex"></param>
-        /// <param name="isLastIndex"></param>
-        /// <param name="currentText"></param>
-        /// <param name="resultBuffer"></param>
-        /// <returns>次回読み飛ばし数。<param name="resultBuffer" />に書き込んだ場合にのみ使用される。</returns>
-        protected delegate int TextConvertDelegate(IReadOnlyList<string> characterBlocks, int currentIndex, bool isLastIndex, string currentText, IResultBuffer resultBuffer);
-
-        #endregion
-
         #region variable
 
         Dictionary<char, char>? _halfwidthKatakanaDakutenMap;
@@ -340,7 +350,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         protected virtual bool IsAsciiDigit(char c) => ('0' <= c && c <= '9');
         protected virtual bool IsFullDigit(char c) => ('０' <= c && c <= '９');
 
-        string ConvertCore(string input, IEnumerable<TextConvertDelegate> converters)
+        protected string ConvertCore(string input, IEnumerable<TextConvertDelegate> converters)
         {
             var sb = new StringBuilder(input.Length);
             var chars = TextUtility.GetCharacters(input).ToArray();
@@ -654,6 +664,19 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
             return ConvertCore(input, new TextConvertDelegate[] {
                 ConvertZenkakuDigitToAsciiDigitCore
+            });
+        }
+
+        /// <summary>
+        /// もう好きにせぇや。
+        /// </summary>
+        /// <param name="input"></param>
+        /// <param name="converter"></param>
+        /// <returns></returns>
+        public string ConvertToCustom(string input, TextConvertDelegate converter)
+        {
+            return ConvertCore(input, new TextConvertDelegate[] {
+                converter
             });
         }
 
