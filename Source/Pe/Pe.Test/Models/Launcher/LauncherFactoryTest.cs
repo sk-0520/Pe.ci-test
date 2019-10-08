@@ -31,7 +31,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Launcher
         [DataRow("a_a", "a a")]
         [DataRow("a_a", "a\ra")]
         [DataRow("a.a", "a.a")]
-        [DataRow("a.a", "a,a")]
+        [DataRow("a_a", "a,a")]
         [DataRow("a[c-7f]a", "a\u007fa")]
         [DataRow("[x-e3-81-82]", "ア")] // 全角から平仮名になる
         [DataRow("[x-e3-81-82]", "ｱ")] // 半角から全角になって平仮名になる
