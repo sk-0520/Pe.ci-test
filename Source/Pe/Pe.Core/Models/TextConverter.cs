@@ -83,6 +83,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
         IDictionary<char, char>? _katakanaHalfToFullMap;
         IDictionary<char, char>? _katakanaFullToHalfMap;
         IDictionary<char, string>? _dakutenKatakanaFullToHalfMap;
+
+        IDictionary<char, string>? _hiraganaToRomeMap;
         #endregion
 
         #region property
@@ -330,6 +332,72 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 return this._dakutenKatakanaFullToHalfMap;
             }
         }
+
+        protected virtual IDictionary<char, string> HiraganaToRomeMap
+        {
+            get
+            {
+                return this._hiraganaToRomeMap ??= new Dictionary<char, string>() {
+                    ['あ'] = "a",
+                    ['い'] = "i",
+                    ['う'] = "u",
+                    ['え'] = "e",
+                    ['お'] = "o",
+                    ['か'] = "ka",
+                    ['き'] = "ki",
+                    ['く'] = "ku",
+                    ['け'] = "ke",
+                    ['こ'] = "ko",
+                    ['さ'] = "sa",
+                    ['し'] = "si",
+                    ['す'] = "su",
+                    ['せ'] = "se",
+                    ['そ'] = "so",
+                    ['た'] = "ta",
+                    ['ち'] = "ti",
+                    ['つ'] = "tu",
+                    ['て'] = "te",
+                    ['と'] = "to",
+                    ['な'] = "na",
+                    ['に'] = "ni",
+                    ['ぬ'] = "nu",
+                    ['ね'] = "ne",
+                    ['の'] = "no",
+                    ['は'] = "ha",
+                    ['ひ'] = "hi",
+                    ['ふ'] = "hu",
+                    ['へ'] = "he",
+                    ['ほ'] = "ho",
+                    ['ま'] = "ma",
+                    ['み'] = "mi",
+                    ['む'] = "mu",
+                    ['め'] = "me",
+                    ['も'] = "mo",
+                    ['や'] = "ya",
+                    //['ゐ'] = "",
+                    ['ゆ'] = "yu",
+                    //['ゑ'] = "",
+                    ['よ'] = "yo",
+                    ['ら'] = "ra",
+                    ['り'] = "ri",
+                    ['る'] = "ru",
+                    ['れ'] = "re",
+                    ['ろ'] = "ro",
+                    ['わ'] = "wa",
+                    ['を'] = "wo",
+                    ['ん'] = "n",
+                    ['ぁ'] = "xa",
+                    ['ぃ'] = "xi",
+                    ['ぅ'] = "xu",
+                    ['ぇ'] = "xe",
+                    ['ぉ'] = "xo",
+                    ['ゃ'] = "xya",
+                    ['ゅ'] = "xyu",
+                    ['ょ'] = "xyo",
+                };
+            }
+        }
+
         #endregion
 
         #region function
@@ -664,6 +732,34 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
             return ConvertCore(input, new TextConvertDelegate[] {
                 ConvertZenkakuDigitToAsciiDigitCore
+            });
+        }
+
+        int ConvertHiraganaToAsciiRomeCore(IReadOnlyList<string> characterBlocks, int currentIndex, bool isLastIndex, string currentText, IResultBuffer resultBuffer)
+        {
+            if(currentText.Length == 1) {
+                var c = currentText[0];
+                if(IsHiragana(c)) {
+                    //HiraganaToRomeMap
+                }
+            }
+
+            return 0;
+        }
+
+        /// <summary>
+        /// 平仮名をローマ字(半角アルファベット)に変換。
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public string ConvertHiraganaToAsciiRome(string input)
+        {
+            if(input == null) {
+                throw new ArgumentNullException(nameof(input));
+            }
+
+            return ConvertCore(input, new TextConvertDelegate[] {
+                ConvertHiraganaToAsciiRomeCore
             });
         }
 

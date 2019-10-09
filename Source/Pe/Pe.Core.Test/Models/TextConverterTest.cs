@@ -246,5 +246,13 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
             Assert.AreEqual(test, result);
         }
 
+        [TestMethod]
+        [DataRow("", "")]
+        public void ConvertHiraganaToAsciiRomeTest(string test, string input)
+        {
+            var textConverter = new TextConverter();
+            var result = textConverter.ConvertHiraganaToAsciiRome(input);
+            Assert.AreEqual(test, result);
+        }
     }
 }

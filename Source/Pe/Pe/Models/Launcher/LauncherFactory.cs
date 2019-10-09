@@ -109,6 +109,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
         /// <item><description>ホワイトスペース, 許容できない記号は _ に変換する。</description></item>
         /// <item><description>コントロールコードは [c-ff-ff-...] に変換する。</description></item>
         /// <item><description>ASCII範囲外は [x-ff-ff-...] に変換する。</description></item>
+        /// <item><description>ASCII範囲外でカタカナは平仮名はローマ字に変換する。</description></item>
         /// <item>
         ///     <term>許容する記号</term>
         ///     <description>
@@ -145,6 +146,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
                 textConverter.ConvertZenkakuAlphabetToAsciiAlphabet,
                 textConverter.ConvertHankakuKatakanaToZenkakuKatakana,
                 textConverter.ConvertKatakaToHiragana,
+                textConverter.ConvertHiraganaToAsciiRome,
                 // 漢字・平仮名をなんとかする
                 s => {
                     return textConverter.ConvertToCustom(s, (IReadOnlyList<string> characterBlocks, int currentIndex, bool isLastIndex, string currentText, IResultBuffer resultBuffer) => {
