@@ -391,9 +391,35 @@ namespace ContentTypeTextNet.Pe.Core.Models
                     ['ぅ'] = "xu",
                     ['ぇ'] = "xe",
                     ['ぉ'] = "xo",
+                    ['っ'] = "xtu",
                     ['ゃ'] = "xya",
                     ['ゅ'] = "xyu",
                     ['ょ'] = "xyo",
+                    ['が'] = "a",
+                    ['ぎ'] = "i",
+                    ['ぐ'] = "u",
+                    ['げ'] = "e",
+                    ['ご'] = "o",
+                    ['ざ'] = "a",
+                    ['じ'] = "i",
+                    ['ず'] = "u",
+                    ['ぜ'] = "e",
+                    ['ぞ'] = "o",
+                    ['だ'] = "a",
+                    ['ぢ'] = "i",
+                    ['づ'] = "u",
+                    ['で'] = "e",
+                    ['ど'] = "o",
+                    ['ば'] = "a",
+                    ['び'] = "i",
+                    ['ぶ'] = "u",
+                    ['べ'] = "e",
+                    ['ぼ'] = "o",
+                    ['ぱ'] = "a",
+                    ['ぴ'] = "i",
+                    ['ぷ'] = "u",
+                    ['ぺ'] = "e",
+                    ['ぽ'] = "o",
                 };
             }
         }
@@ -740,7 +766,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
             if(currentText.Length == 1) {
                 var c = currentText[0];
                 if(IsHiragana(c)) {
-                    //HiraganaToRomeMap
+                    if(HiraganaToRomeMap.TryGetValue(c, out var s)) {
+                        resultBuffer.Append(s);
+                    }
                 }
             }
 

@@ -248,6 +248,9 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
 
         [TestMethod]
         [DataRow("", "")]
+        [DataRow("a", "あ")]
+        [DataRow("a i u e o", "あ い う え お")]
+        [DataRow("アイウエオ", "アイウエオ")]
         public void ConvertHiraganaToAsciiRomeTest(string test, string input)
         {
             var textConverter = new TextConverter();
