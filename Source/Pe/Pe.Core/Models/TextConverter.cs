@@ -85,6 +85,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         IDictionary<char, string>? _dakutenKatakanaFullToHalfMap;
 
         IDictionary<char, string>? _hiraganaToRomeMap;
+        IDictionary<string, string>? _hiraganaExToRomeMap;
         #endregion
 
         #region property
@@ -333,96 +334,130 @@ namespace ContentTypeTextNet.Pe.Core.Models
             }
         }
 
-        protected virtual IDictionary<char, string> HiraganaToRomeMap
-        {
-            get
-            {
-                return this._hiraganaToRomeMap ??= new Dictionary<char, string>() {
-                    ['あ'] = "a",
-                    ['い'] = "i",
-                    ['う'] = "u",
-                    ['え'] = "e",
-                    ['お'] = "o",
-                    ['か'] = "ka",
-                    ['き'] = "ki",
-                    ['く'] = "ku",
-                    ['け'] = "ke",
-                    ['こ'] = "ko",
-                    ['さ'] = "sa",
-                    ['し'] = "si",
-                    ['す'] = "su",
-                    ['せ'] = "se",
-                    ['そ'] = "so",
-                    ['た'] = "ta",
-                    ['ち'] = "ti",
-                    ['つ'] = "tu",
-                    ['て'] = "te",
-                    ['と'] = "to",
-                    ['な'] = "na",
-                    ['に'] = "ni",
-                    ['ぬ'] = "nu",
-                    ['ね'] = "ne",
-                    ['の'] = "no",
-                    ['は'] = "ha",
-                    ['ひ'] = "hi",
-                    ['ふ'] = "hu",
-                    ['へ'] = "he",
-                    ['ほ'] = "ho",
-                    ['ま'] = "ma",
-                    ['み'] = "mi",
-                    ['む'] = "mu",
-                    ['め'] = "me",
-                    ['も'] = "mo",
-                    ['や'] = "ya",
-                    //['ゐ'] = "",
-                    ['ゆ'] = "yu",
-                    //['ゑ'] = "",
-                    ['よ'] = "yo",
-                    ['ら'] = "ra",
-                    ['り'] = "ri",
-                    ['る'] = "ru",
-                    ['れ'] = "re",
-                    ['ろ'] = "ro",
-                    ['わ'] = "wa",
-                    ['を'] = "wo",
-                    ['ん'] = "n",
-                    ['ぁ'] = "xa",
-                    ['ぃ'] = "xi",
-                    ['ぅ'] = "xu",
-                    ['ぇ'] = "xe",
-                    ['ぉ'] = "xo",
-                    ['っ'] = "xtu",
-                    ['ゃ'] = "xya",
-                    ['ゅ'] = "xyu",
-                    ['ょ'] = "xyo",
-                    ['が'] = "a",
-                    ['ぎ'] = "i",
-                    ['ぐ'] = "u",
-                    ['げ'] = "e",
-                    ['ご'] = "o",
-                    ['ざ'] = "a",
-                    ['じ'] = "i",
-                    ['ず'] = "u",
-                    ['ぜ'] = "e",
-                    ['ぞ'] = "o",
-                    ['だ'] = "a",
-                    ['ぢ'] = "i",
-                    ['づ'] = "u",
-                    ['で'] = "e",
-                    ['ど'] = "o",
-                    ['ば'] = "a",
-                    ['び'] = "i",
-                    ['ぶ'] = "u",
-                    ['べ'] = "e",
-                    ['ぼ'] = "o",
-                    ['ぱ'] = "a",
-                    ['ぴ'] = "i",
-                    ['ぷ'] = "u",
-                    ['ぺ'] = "e",
-                    ['ぽ'] = "o",
-                };
-            }
-        }
+        protected virtual IDictionary<char, string> HiraganaToRomeMap => this._hiraganaToRomeMap ??= new Dictionary<char, string>() {
+            ['あ'] = "a",
+            ['い'] = "i",
+            ['う'] = "u",
+            ['え'] = "e",
+            ['お'] = "o",
+            ['か'] = "ka",
+            ['き'] = "ki",
+            ['く'] = "ku",
+            ['け'] = "ke",
+            ['こ'] = "ko",
+            ['さ'] = "sa",
+            ['し'] = "shi",
+            ['す'] = "su",
+            ['せ'] = "se",
+            ['そ'] = "so",
+            ['た'] = "ta",
+            ['ち'] = "chi",
+            ['つ'] = "tsu",
+            ['て'] = "te",
+            ['と'] = "to",
+            ['な'] = "na",
+            ['に'] = "ni",
+            ['ぬ'] = "nu",
+            ['ね'] = "ne",
+            ['の'] = "no",
+            ['は'] = "ha",
+            ['ひ'] = "hi",
+            ['ふ'] = "fu",
+            ['へ'] = "he",
+            ['ほ'] = "ho",
+            ['ま'] = "ma",
+            ['み'] = "mi",
+            ['む'] = "mu",
+            ['め'] = "me",
+            ['も'] = "mo",
+            ['や'] = "ya",
+            //['ゐ'] = "",
+            ['ゆ'] = "yu",
+            //['ゑ'] = "",
+            ['よ'] = "yo",
+            ['ら'] = "ra",
+            ['り'] = "ri",
+            ['る'] = "ru",
+            ['れ'] = "re",
+            ['ろ'] = "ro",
+            ['わ'] = "wa",
+            ['を'] = "wo",
+            ['ん'] = "n",
+            ['ぁ'] = "xa",
+            ['ぃ'] = "xi",
+            ['ぅ'] = "xu",
+            ['ぇ'] = "xe",
+            ['ぉ'] = "xo",
+            ['っ'] = "xtu",
+            ['ゃ'] = "xya",
+            ['ゅ'] = "xyu",
+            ['ょ'] = "xyo",
+            ['が'] = "ga",
+            ['ぎ'] = "gi",
+            ['ぐ'] = "gu",
+            ['げ'] = "ge",
+            ['ご'] = "go",
+            ['ざ'] = "za",
+            ['じ'] = "ji",
+            ['ず'] = "zu",
+            ['ぜ'] = "ze",
+            ['ぞ'] = "zo",
+            ['だ'] = "da",
+            ['ぢ'] = "di",
+            ['づ'] = "zu",
+            ['で'] = "de",
+            ['ど'] = "do",
+            ['ば'] = "ba",
+            ['び'] = "bi",
+            ['ぶ'] = "bu",
+            ['べ'] = "be",
+            ['ぼ'] = "bo",
+            ['ぱ'] = "pa",
+            ['ぴ'] = "pi",
+            ['ぷ'] = "pu",
+            ['ぺ'] = "pe",
+            ['ぽ'] = "po",
+        };
+
+        protected virtual IDictionary<string, string> HiraganaExToRomeMap => this._hiraganaExToRomeMap ??= new Dictionary<string, string>() {
+            ["いぇ"] = "ye",
+            ["うぃ"] = "wi",
+            ["うぇ"] = "we",
+            //["うぉ"] = "wo",
+            ["きゃ"] = "kya",
+            ["きゅ"] = "kyu",
+            ["きょ"] = "kyo",
+            ["ぎゃ"] = "gya",
+            ["ぎゅ"] = "gyu",
+            ["ぎょ"] = "gyo",
+            ["しゃ"] = "sha",
+            ["しゅ"] = "shu",
+            ["しょ"] = "sho",
+            ["じゃ"] = "ja",
+            ["じゅ"] = "ju",
+            ["じょ"] = "jo",
+            ["ちゃ"] = "cha",
+            ["ちゅ"] = "chu",
+            ["ちょ"] = "cho",
+            ["にゃ"] = "nya",
+            ["にゅ"] = "nyu",
+            ["にょ"] = "nyo",
+            ["ひゃ"] = "hya",
+            ["ひゅ"] = "hyu",
+            ["ひょ"] = "hyo",
+            ["びゃ"] = "bya",
+            ["びゅ"] = "byu",
+            ["びょ"] = "byo",
+            ["ぴゃ"] = "pya",
+            ["ぴゅ"] = "pyu",
+            ["ぴょ"] = "pyo",
+            ["みゃ"] = "mya",
+            ["みゅ"] = "myu",
+            ["みょ"] = "myo",
+            ["りゃ"] = "rya",
+            ["りゅ"] = "ryu",
+            ["りょ"] = "ryo",
+        };
 
         #endregion
 
@@ -763,13 +798,27 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         int ConvertHiraganaToAsciiRomeCore(IReadOnlyList<string> characterBlocks, int currentIndex, bool isLastIndex, string currentText, IResultBuffer resultBuffer)
         {
-            if(currentText.Length == 1) {
-                var c = currentText[0];
-                if(IsHiragana(c)) {
-                    if(HiraganaToRomeMap.TryGetValue(c, out var s)) {
-                        resultBuffer.Append(s);
+            if(currentText.Length != 1) {
+                return 0;
+            }
+
+            var c = currentText[0];
+            if(!IsHiragana(c)) {
+                return 0;
+            }
+
+            if(HiraganaToRomeMap.TryGetValue(c, out var s)) {
+                if(!isLastIndex) {
+                    var next = characterBlocks[currentIndex + 1];
+                    if(next.Length == 1 && IsHiragana(next[0])) {
+                        var exKey = new string(new[] { c, next[0] });
+                        if(HiraganaExToRomeMap.TryGetValue(exKey, out var exString)) {
+                            resultBuffer.Append(exString);
+                            return 1;
+                        }
                     }
                 }
+                resultBuffer.Append(s);
             }
 
             return 0;
