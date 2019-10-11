@@ -33,9 +33,8 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Launcher
         [DataRow("a.a", "a.a")]
         [DataRow("a_a", "a,a")]
         [DataRow("a[c-7f]a", "a\u007fa")]
-        //[DataRow("a", "ア")] // 全角から平仮名になる
-        //[DataRow("[x-e3-81-82]", "ア")] // 全角から平仮名になる
-        //[DataRow("[x-e3-81-82]", "ｱ")] // 半角から全角になって平仮名になる
+        [DataRow("a", "ア")] // 全角から平仮名になる
+        [DataRow("a", "ｱ")] // 半角から全角になって平仮名になる
         public void ToCodeTest(string test, string s)
         {
             var lf = new LauncherFactory(new IdFactory(Test.LoggerFactory), Test.LoggerFactory);
