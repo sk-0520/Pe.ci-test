@@ -24,17 +24,20 @@ namespace ContentTypeTextNet.Pe.Main.Views.CustomizeLauncherItem
         public CustomizeLauncherItemWindow()
         {
             InitializeComponent();
+            ScrollTuner = new ScrollTuner(this);
         }
 
         #region property
 
         [Injection]
         ILogger? Logger { get; set; }
+        ScrollTuner ScrollTuner { get; }
 
         #endregion
 
         #region Window
 
+        /*
         protected override void OnPreviewMouseWheel(MouseWheelEventArgs e)
         {
             var avalonEdit = UIUtility.GetVisualClosest<ICSharpCode.AvalonEdit.TextEditor>((DependencyObject)e.OriginalSource);
@@ -82,6 +85,12 @@ namespace ContentTypeTextNet.Pe.Main.Views.CustomizeLauncherItem
 
             base.OnMouseWheel(e);
         }
+
+        protected override void OnVisualChildrenChanged(DependencyObject visualAdded, DependencyObject visualRemoved)
+        {
+            base.OnVisualChildrenChanged(visualAdded, visualRemoved);
+        }
+        */
 
         #endregion
     }
