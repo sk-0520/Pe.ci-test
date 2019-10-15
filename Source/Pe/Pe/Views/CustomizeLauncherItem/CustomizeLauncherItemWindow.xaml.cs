@@ -24,7 +24,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.CustomizeLauncherItem
         public CustomizeLauncherItemWindow()
         {
             InitializeComponent();
-            ScrollTuner = new ScrollTuner(this);
+            ScrollTuner = new ScrollTuner(this, true);
         }
 
         #region property
@@ -37,61 +37,14 @@ namespace ContentTypeTextNet.Pe.Main.Views.CustomizeLauncherItem
 
         #region Window
 
-        /*
-        protected override void OnPreviewMouseWheel(MouseWheelEventArgs e)
+        protected override void OnClosed(EventArgs e)
         {
-            var avalonEdit = UIUtility.GetVisualClosest<ICSharpCode.AvalonEdit.TextEditor>((DependencyObject)e.OriginalSource);
-            if(avalonEdit != null) {
-                var scrollViewer = UIUtility.GetVisualClosest<System.Windows.Controls.ScrollViewer>((DependencyObject)e.OriginalSource);
-                if(scrollViewer != null) {
-                    Logger.LogDebug(e.OriginalSource.ToString());
-                    Logger.LogDebug("HorizontalOffset: {0}, ContentHorizontalOffset: {1}", scrollViewer.HorizontalOffset, scrollViewer.ContentHorizontalOffset);
-                    Logger.LogDebug("VerticalOffset: {0}, ContentVerticalOffset: {1}", scrollViewer.VerticalOffset, scrollViewer.ContentVerticalOffset);
-                    Logger.LogDebug("ScrollableHeight: {0}", scrollViewer.ScrollableHeight);
-                    if(scrollViewer.VerticalOffset == 0) {
-                        Logger.LogDebug("top");
-                        e.Handled = true;
-                    }
-                    if(scrollViewer.VerticalOffset == scrollViewer.ScrollableHeight) {
-                        Logger.LogDebug("bottom");
-                        e.Handled = true;
-                    }
-                }
-            }
+            ScrollTuner.Dispose();
 
-            base.OnPreviewMouseWheel(e);
+            base.OnClosed(e);
         }
-
-        protected override void OnMouseWheel(MouseWheelEventArgs e)
-        {
-            var avalonEdit = UIUtility.GetVisualClosest<ICSharpCode.AvalonEdit.TextEditor>((DependencyObject)e.OriginalSource);
-            if(avalonEdit != null) {
-                var scrollViewer = UIUtility.GetVisualClosest<System.Windows.Controls.ScrollViewer>((DependencyObject)e.OriginalSource);
-                if(scrollViewer != null) {
-                    Logger.LogDebug(e.OriginalSource.ToString());
-                    Logger.LogDebug("HorizontalOffset: {0}, ContentHorizontalOffset: {1}", scrollViewer.HorizontalOffset, scrollViewer.ContentHorizontalOffset);
-                    Logger.LogDebug("VerticalOffset: {0}, ContentVerticalOffset: {1}", scrollViewer.VerticalOffset, scrollViewer.ContentVerticalOffset);
-                    Logger.LogDebug("ScrollableHeight: {0}", scrollViewer.ScrollableHeight);
-                    if(scrollViewer.VerticalOffset == 0) {
-                        Logger.LogDebug("top");
-                        e.Handled = true;
-                    }
-                    if(scrollViewer.VerticalOffset == scrollViewer.ScrollableHeight) {
-                        Logger.LogDebug("bottom");
-                        e.Handled = true;
-                    }
-                }
-            }
-
-            base.OnMouseWheel(e);
-        }
-
-        protected override void OnVisualChildrenChanged(DependencyObject visualAdded, DependencyObject visualRemoved)
-        {
-            base.OnVisualChildrenChanged(visualAdded, visualRemoved);
-        }
-        */
 
         #endregion
+
     }
 }
