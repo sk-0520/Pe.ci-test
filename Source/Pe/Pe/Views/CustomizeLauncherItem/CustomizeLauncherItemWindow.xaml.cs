@@ -24,12 +24,25 @@ namespace ContentTypeTextNet.Pe.Main.Views.CustomizeLauncherItem
         public CustomizeLauncherItemWindow()
         {
             InitializeComponent();
+            ScrollTuner = new ScrollTuner(this, true);
         }
 
         #region property
 
         [Injection]
         ILogger? Logger { get; set; }
+        ScrollTuner ScrollTuner { get; }
+
+        #endregion
+
+        #region Window
+
+        protected override void OnClosed(EventArgs e)
+        {
+            ScrollTuner.Dispose();
+
+            base.OnClosed(e);
+        }
 
         #endregion
 
