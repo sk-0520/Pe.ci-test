@@ -5,12 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Element.CustomizeLauncherItem;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem;
 using Microsoft.Extensions.Logging;
+using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.CustomizeLauncherItem
 {
@@ -27,6 +29,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.CustomizeLauncherItem
         { }
 
         #region property
+
+        public RequestSender CloseRequest { get; } = new RequestSender();
 
         public List<CustomizeLauncherDetailViewModelBase> CustomizeItems
         {
@@ -46,6 +50,18 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.CustomizeLauncherItem
         #endregion
 
         #region command
+
+        public ICommand SubmitCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+            }
+        ));
+
+        public ICommand CancelCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                CloseRequest.Send();
+            }
+        ));
+
         #endregion
 
         #region function

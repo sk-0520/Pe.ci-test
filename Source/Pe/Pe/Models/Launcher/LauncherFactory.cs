@@ -54,7 +54,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             if(loadShortcut && PathUtility.IsShortcut(expandedPath)) {
                 using(var shortcut = new ShortcutFile(expandedPath)) {
                     //TODO: コード取得
-                    result.Code = Path.GetFileNameWithoutExtension(shortcut.TargetPath);
+                    result.Code = ToCode(Path.GetFileNameWithoutExtension(shortcut.TargetPath));
 
                     result.PathExecute.Path = shortcut.TargetPath;
                     result.PathExecute.Option = shortcut.Arguments;
@@ -70,7 +70,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
                 }
             } else {
-                result.Code = Path.GetFileNameWithoutExtension(file.Name);
+                result.Code = ToCode(Path.GetFileNameWithoutExtension(file.Name));
                 result.PathExecute.Path = file.FullName;
             }
 
@@ -110,6 +110,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
         /// <item><description>コントロールコードは [c-ff-ff-...] に変換する。</description></item>
         /// <item><description>ASCII範囲外は [x-ff-ff-...] に変換する。</description></item>
         /// <item><description>ASCII範囲外でカタカナは平仮名はローマ字に変換する。</description></item>
+        /// <item><description>アルファベットは機械的に小文字。</description></item>
         /// <item>
         ///     <term>許容する記号</term>
         ///     <description>
@@ -147,6 +148,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
                 textConverter.ConvertHankakuKatakanaToZenkakuKatakana,
                 textConverter.ConvertKatakaToHiragana,
                 textConverter.ConvertHiraganaToAsciiRome,
+                // 全部小文字
+                s => s.ToLowerInvariant(),
                 // 漢字・平仮名をなんとかする
                 s => {
                     return textConverter.ConvertToCustom(s, (IReadOnlyList<string> characterBlocks, int currentIndex, bool isLastIndex, string currentText, IResultBuffer resultBuffer) => {
