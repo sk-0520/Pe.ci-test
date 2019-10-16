@@ -1,8 +1,10 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using System.Text;
@@ -86,6 +88,11 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
             return CommandStore.GetOrCreate(creator, callerMemberName, callerFilePath, callerLineNumber);
         }
 
+        /// <summary>
+        /// プロパティ検証。
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="propertyName"></param>
         protected void ValidateProperty(object value, [CallerMemberName] string propertyName = "")
         {
             var context = new ValidationContext(this) { MemberName = propertyName };
@@ -96,6 +103,81 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
             } else {
                 ErrorsContainer.ClearErrors(propertyName);
             }
+        }
+
+        /// <summary>
+        /// 全プロパティ検証。
+        /// </summary>
+        protected void ValidateAllProperty()
+        {
+            var type = GetType();
+            var properties = type.GetProperties();
+            var targetProperties = properties
+                .Select(i => new { Property = i, Attribute = i.GetCustomAttribute<ValidationAttribute>() })
+                .Where(i => i.Attribute != null)
+                .Select(i => i.Property)
+                .ToList()
+            ;
+            foreach(var property in targetProperties) {
+                var rawValue = property.GetValue(this);
+                ValidateProperty(rawValue!, property.Name);
+            }
+
+            var childProperties = properties.Except(targetProperties);
+            foreach(var property in childProperties) {
+                var rawValue = property.GetValue(this);
+                switch(rawValue) {
+                    case ViewModelBase viewModel:
+                        viewModel.ValidateAllProperty();
+                        break;
+
+                    case IEnumerable enumerable:
+                        foreach(var element in enumerable.OfType<ViewModelBase>()) {
+                            element.ValidateAllProperty();
+                        }
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// ビジネスロジックの検証。
+        /// </summary>
+        protected virtual void ValidateDomain()
+        { }
+
+        protected bool Validate()
+        {
+            if(HasErrors) {
+                return false;
+            }
+
+            ValidateAllProperty();
+
+            if(HasErrors) {
+                return false;
+            }
+
+            ValidateDomain();
+
+            return !HasErrors;
+        }
+
+        protected void ClearError([CallerMemberName] string propertyName = "")
+        {
+            ErrorsContainer.ClearErrors(propertyName);
+        }
+
+        protected void AddError(string errorMessage, [CallerMemberName] string propertyName = "")
+        {
+            ErrorsContainer.SetErrors(propertyName, new[] { errorMessage });
+        }
+        protected void AddErrors(IEnumerable<string> errorMessage, [CallerMemberName] string propertyName = "")
+        {
+            ErrorsContainer.SetErrors(propertyName, errorMessage);
         }
 
         #endregion

@@ -53,6 +53,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.CustomizeLauncherItem
 
         public ICommand SubmitCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
+                if(Validate()) {
+                    CloseRequest.Send();
+                }
             }
         ));
 

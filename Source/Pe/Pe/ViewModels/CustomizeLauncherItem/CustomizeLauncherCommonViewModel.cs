@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,6 +31,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.CustomizeLauncherItem
         public LauncherItemKind Kind => Model.Kind;
         public IconData? IconData => Model.IconData;
 
+        [Required]
         public string? Name
         {
             get => this._name;
