@@ -5,10 +5,13 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:sys="http://schemas.microsoft.com/winfx/2009/xaml"
 
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+
   xmlns:sharpdevelop_avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
 
   xmlns:app_viewmodel_customize_launcher_item="clr-namespace:ContentTypeTextNet.Pe.Main.ViewModels.CustomizeLauncherItem"
   xmlns:app_core_converter="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Converter;assembly=Pe.Core"
+  xmlns:app_core_views_attached="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Attached;assembly=Pe.Core"
 
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   mc:Ignorable="d"
@@ -92,7 +95,11 @@
               </Grid.ColumnDefinitions>
 
               <Label Grid.Column="0" Content="code" />
-              <TextBox Grid.Column="1" Text="{Binding Code}" />
+              <TextBox Grid.Column="1" Text="{Binding Code}">
+                <i:Interaction.Behaviors>
+                  <app_core_views_attached:InputControlBehavior AccepPattern="[a-zA-Z0-9\-\.\^_\[\]]+" />
+                </i:Interaction.Behaviors>
+              </TextBox>
             </Grid>
 
             <Grid>
