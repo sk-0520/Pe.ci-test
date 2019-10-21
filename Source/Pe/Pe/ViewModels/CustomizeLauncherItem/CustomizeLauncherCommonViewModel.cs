@@ -40,7 +40,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.CustomizeLauncherItem
             set
             {
                 SetProperty(ref this._name, value);
-                ValidateProperty(Code);
+                ValidateProperty(value);
             }
         }
 
@@ -52,7 +52,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.CustomizeLauncherItem
             set
             {
                 SetProperty(ref this._code, value);
-                ValidateProperty(Code);
+                ValidateProperty(value);
             }
         }
         public string? IconPath
