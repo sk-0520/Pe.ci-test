@@ -29,6 +29,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
         IIdFactory IdFactory { get; }
         ILogger Logger { get; }
 
+        public static IReadOnlyCollection<char> CodeSymbols { get; } = new[] { '-', '.', '^', '_', '[', ']', };
+
         #endregion
 
         #region function
@@ -111,13 +113,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
         /// <item><description>ASCII範囲外は [x-ff-ff-...] に変換する。</description></item>
         /// <item><description>ASCII範囲外でカタカナは平仮名はローマ字に変換する。</description></item>
         /// <item><description>アルファベットは機械的に小文字。</description></item>
-        /// <item>
-        ///     <term>許容する記号</term>
-        ///     <description>
-        ///         - . ^
-        ///         _ [ ]
-        ///     </description>
-        /// </item>
+        /// <item><term>許容する記号</term><description><see cref="CodeSymbols"/>を参照</description></item>
         /// </list>
         /// </summary>
         /// <param name="source">ランチャーアイテムコードのもとになる文字列。<para>想定用途はファイル名。</para></param>
@@ -175,17 +171,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
                             } else if(char.IsControl(c)) {
                                 AppendBinary(currentText, "c", resultBuffer);
                             } else {
-                                switch(c) {
-                                    case '-':
-                                    case '.':
-                                    case '^':
-                                    case '_':
-                                    case '[':
-                                    case ']':
-                                        break;
-                                    default:
-                                        resultBuffer.Append('_');
-                                        break;
+                                if(!CodeSymbols.Contains(c)) {
+                                    resultBuffer.Append('_');
                                 }
                             }
                         }
@@ -201,6 +188,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
             return result;
         }
+
 
         #endregion
     }
