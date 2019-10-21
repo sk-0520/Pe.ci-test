@@ -93,7 +93,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
         /// </summary>
         /// <param name="value"></param>
         /// <param name="propertyName"></param>
-        protected void ValidateProperty(object value, [CallerMemberName] string propertyName = "")
+        protected void ValidateProperty(object? value, [CallerMemberName] string propertyName = "")
         {
             var context = new ValidationContext(this) { MemberName = propertyName };
             var validationErrors = new List<ValidationResult>();
