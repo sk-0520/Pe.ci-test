@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Main.Models.Element.CustomizeLauncherItem;
 using ICSharpCode.AvalonEdit.Document;
 using Microsoft.Extensions.Logging;
@@ -35,6 +36,16 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.CustomizeLauncherItem
         #endregion
 
         #region function
+
+        public IReadOnlyCollection<string> GetTagItems()
+        {
+            return TextUtility.ReadLines(TagDocument!.Text)
+                .Where(i => !string.IsNullOrWhiteSpace(i))
+                .Select(i => i.Trim())
+                .ToList()
+            ;
+        }
+
         #endregion
 
         #region CustomizeLauncherDetailViewModelBase

@@ -54,6 +54,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             }
         }
 
+        public int DeleteTagByLauncherItemId(Guid launcherItemId)
+        {
+            var builder = CreateDeleteBuilder();
+            builder.AddKey(Column.LauncherItemId, launcherItemId);
+            return ExecuteDelete(builder);
+        }
+
         #endregion
     }
 }

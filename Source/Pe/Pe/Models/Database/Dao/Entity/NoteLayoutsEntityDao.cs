@@ -129,7 +129,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         public int DeleteLayouts(Guid noteId)
         {
             var builder = CreateDeleteBuilder();
-            builder.AddValue(Column.NoteId, noteId);
+            builder.AddKey(Column.NoteId, noteId);
             return ExecuteDelete(builder);
         }
 

@@ -43,6 +43,25 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return result;
         }
 
+        public void InsertDeleteItems(Guid launcherItemId, IEnumerable<string> items, IDatabaseCommonStatus databaseCommonStatus)
+        {
+            var statement = LoadStatement();
+
+            foreach(var item in items) {
+                var param = databaseCommonStatus.CreateCommonDtoMapping();
+                param[Column.LauncherItemId] = launcherItemId;
+                param[Column.EnvName] = item;
+                Commander.Execute(statement, param);
+            }
+        }
+
+        public int DeleteDeleteItemsByLauncherItemId(Guid launcherItemId)
+        {
+            var builder = CreateDeleteBuilder();
+            builder.AddKey(Column.LauncherItemId, launcherItemId);
+            return ExecuteDelete(builder);
+        }
+
         #endregion
     }
 }

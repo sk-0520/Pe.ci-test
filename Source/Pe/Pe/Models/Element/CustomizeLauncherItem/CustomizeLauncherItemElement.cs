@@ -114,17 +114,28 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.CustomizeLauncherItem
             }
         }
 
-        public void SaveFile(LauncherItemData launcherItemData, LauncherFileData launcherFileData, IEnumerable<LauncherMergeEnvironmentVariableItem> updateEnvItems, IEnumerable<string> removeEnvItems)
+        public void SaveFile(LauncherItemData launcherItemData, LauncherFileData launcherFileData, IEnumerable<LauncherMergeEnvironmentVariableItem> updateEnvItems, IEnumerable<string> removeEnvItems, IEnumerable<string> tags)
         {
             using(var commander = MainDatabaseBarrier.WaitWrite()) {
                 var launcherItemsEntityDao = new LauncherItemsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
                 var launcherFilesEntityDao = new LauncherFilesEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
                 var launcherMergeEnvVarsEntityDao = new LauncherMergeEnvVarsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
                 var launcherDeleteEnvVarsEntityDao = new LauncherDeleteEnvVarsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                var launcherTagsEntityDao = new LauncherTagsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
 
                 launcherItemsEntityDao.UpdateCustomizeLauncherItem(launcherItemData, DatabaseCommonStatus.CreateCurrentAccount());
                 launcherFilesEntityDao.UpdateCustomizeLauncherFile(launcherItemData.LauncherItemId, launcherFileData, launcherFileData, DatabaseCommonStatus.CreateCurrentAccount());
-                //commander.Commit();
+
+                launcherMergeEnvVarsEntityDao.DeleteMergeItemsByLauncherItemId(launcherItemData.LauncherItemId);
+                launcherMergeEnvVarsEntityDao.InsertMergeItems(launcherItemData.LauncherItemId, updateEnvItems, DatabaseCommonStatus.CreateCurrentAccount());
+
+                launcherDeleteEnvVarsEntityDao.DeleteDeleteItemsByLauncherItemId(launcherItemData.LauncherItemId);
+                launcherDeleteEnvVarsEntityDao.InsertDeleteItems(launcherItemData.LauncherItemId, removeEnvItems, DatabaseCommonStatus.CreateCurrentAccount());
+
+                launcherTagsEntityDao.DeleteTagByLauncherItemId(launcherItemData.LauncherItemId);
+                launcherTagsEntityDao.InsertNewTags(launcherItemData.LauncherItemId, tags, DatabaseCommonStatus.CreateCurrentAccount());
+
+                commander.Commit();
             }
         }
 

@@ -115,7 +115,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.CustomizeLauncherItem
                     var fileData = new LauncherFileData() {
                         Path = file.Path,
                         Option = file.Option,
-                        WorkDirectoryPath = file.Path,
+                        WorkDirectoryPath = file.WorkingDirectoryPath,
                         IsEnabledCustomEnvironmentVariable = file.IsEnabledCustomEnvironmentVariable,
                         IsEnabledStandardInputOutput = file.IsEnabledStandardInputOutput,
                         RunAdministrator = file.RunAdministrator,
@@ -125,7 +125,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.CustomizeLauncherItem
                         Merge = env.GetMergeItems(),
                         Remove = env.GetRemoveItems(),
                     };
-                    Model.SaveFile(itemData, fileData, envItems.Merge, envItems.Remove);
+                    var tagItems = tag.GetTagItems();
+                    Model.SaveFile(itemData, fileData, envItems.Merge, envItems.Remove, tagItems);
                     break;
             }
 

@@ -299,8 +299,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
         #region proeprty
         public string TableName { get; private set; } = string.Empty;
-        ISet<string> UpdateColumns { get; } = new HashSet<string>();
-        ISet<string> PlainValues { get; } = new HashSet<string>();
+        ISet<string> DeleteColumns { get; } = new HashSet<string>();
 
         #endregion
 
@@ -312,19 +311,10 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
             return this;
         }
-        public DatabaseDeleteStatementBuilder AddValue(string column, object value)
+        public DatabaseDeleteStatementBuilder AddKey(string column, object value)
         {
-            UpdateColumns.Add(column);
+            DeleteColumns.Add(column);
             ParametersImpl.Add(column, value);
-
-            return this;
-        }
-
-        public DatabaseDeleteStatementBuilder AddPlain(string column, string value)
-        {
-            UpdateColumns.Add(column);
-            ParametersImpl.Add(column, value);
-            PlainValues.Add(column);
 
             return this;
         }
