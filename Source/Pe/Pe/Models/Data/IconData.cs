@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Text;
+using System.Text.RegularExpressions;
 using ContentTypeTextNet.Pe.Core.Models.Data;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Data
@@ -9,10 +10,23 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     [DataContract, Serializable]
     public class IconData : DataBase
     {
+        public IconData()
+        { }
+
+        public IconData(IconData source)
+        {
+            Path = source.Path;
+            Index = source.Index;
+        }
+
         #region property
 
         public string? Path { get; set; }
         public int Index { get; set; }
+
+        #endregion
+
+        #region function
 
         #endregion
 

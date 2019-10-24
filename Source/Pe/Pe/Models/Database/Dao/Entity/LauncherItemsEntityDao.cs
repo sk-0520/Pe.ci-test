@@ -40,7 +40,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 Code = data.Code,
                 Name = data.Name,
                 Kind = kindEnumTransfer.ToString(data.Kind),
-                IconPath = data.Icon.Path,
+                IconPath = data.Icon.Path ?? string.Empty,
                 IconIndex = data.Icon.Index,
                 IsEnabledCommandLauncher = data.IsEnabledCommandLauncher,
                 Comment = Implementation.ToNullValue(data.Comment),
@@ -86,20 +86,27 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return data;
         }
 
-        public void InsertItem(LauncherItemData data, IDatabaseCommonStatus commonStatus)
+        public void InsertLauncherItem(LauncherItemData data, IDatabaseCommonStatus commonStatus)
         {
             var statement = LoadStatement();
             var dto = ConvertFromData(data, commonStatus);
             Commander.Execute(statement, dto);
         }
 
-        public bool UpdateIncrement(Guid launcherItemId, IDatabaseCommonStatus databaseCommonStatus)
+        public bool UpdateExecuteCountIncrement(Guid launcherItemId, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
             var param = databaseCommonStatus.CreateCommonDtoMapping();
             param[Column.LauncherItemId] = launcherItemId;
 
             return Commander.Execute(statement, param) == 1;
+        }
+
+        public bool UpdateCustomizeLauncherItem(LauncherItemData data, IDatabaseCommonStatus commonStatus)
+        {
+            var statement = LoadStatement();
+            var dto = ConvertFromData(data, commonStatus);
+            return Commander.Execute(statement, dto) == 1;
         }
 
         #endregion

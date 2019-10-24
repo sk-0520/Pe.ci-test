@@ -114,6 +114,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.CustomizeLauncherItem
             }
         }
 
+        public void SaveFile(LauncherItemData launcherItemData, LauncherFileData launcherFileData, IEnumerable<LauncherMergeEnvironmentVariableItem> updateEnvItems, IEnumerable<string> removeEnvItems)
+        {
+            using(var commander = MainDatabaseBarrier.WaitWrite()) {
+                var launcherItemsEntityDao = new LauncherItemsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                var launcherFilesEntityDao = new LauncherFilesEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                var launcherMergeEnvVarsEntityDao = new LauncherMergeEnvVarsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                var launcherDeleteEnvVarsEntityDao = new LauncherDeleteEnvVarsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+
+                launcherItemsEntityDao.UpdateCustomizeLauncherItem(launcherItemData, DatabaseCommonStatus.CreateCurrentAccount());
+                launcherFilesEntityDao.UpdateCustomizeLauncherFile(launcherItemData.LauncherItemId, launcherFileData, launcherFileData, DatabaseCommonStatus.CreateCurrentAccount());
+                //commander.Commit();
+            }
+        }
+
         #endregion
 
         #region ElementBase

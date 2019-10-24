@@ -92,16 +92,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
-    public class LauncherFileData : DataBase, ILauncherExecutePathParameter, ILauncherExecuteCustomParameter
+    public class LauncherFileData : LauncherExecutePathData, ILauncherExecuteCustomParameter
     {
-        #region ILauncherExecutePathParameter
-
-        public string? Path { get; set; }
-        public string? Option { get; set; }
-        public string? WorkDirectoryPath { get; set; }
-
-        #endregion
-
         #region ILauncherExecuteCustomParameter
 
         public bool IsEnabledCustomEnvironmentVariable { get; set; }
@@ -183,28 +175,39 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
-    public sealed class LauncherFileItemData : LauncherItemData
-    {
-        #region property
+    ////TODO: これ破棄したい
+    //internal sealed class LauncherFileItemData : LauncherItemData, ILauncherExecutePathParameter, ILauncherExecuteCustomParameter
+    //{
+    //    #region ILauncherExecutePathParameter
 
-        public LauncherExecutePathData PathExecute { get; set; } = new LauncherExecutePathData();
+    //    public string? Path { get; set; }
+    //    public string? Option { get; set; }
+    //    public string? WorkDirectoryPath { get; set; }
 
-        #endregion
+    //    #endregion
 
-        #region LauncherItemData
+    //    #region ILauncherExecuteCustomParameter
 
-        public override LauncherItemKind Kind
-        {
-            get => LauncherItemKind.File;
-            set
-            {
-                Debug.Assert(false);
-                base.Kind = value;
-            }
-        }
+    //    public bool IsEnabledCustomEnvironmentVariable { get; set; }
+    //    public bool IsEnabledStandardInputOutput { get; set; }
+    //    public bool RunAdministrator { get; set; }
 
-        #endregion
-    }
+    //    #endregion
+
+    //    #region LauncherItemData
+
+    //    public override LauncherItemKind Kind
+    //    {
+    //        get => LauncherItemKind.File;
+    //        set
+    //        {
+    //            Debug.Assert(false);
+    //            base.Kind = value;
+    //        }
+    //    }
+
+    //    #endregion
+    //}
 
     #region LauncherItemDetailData
 

@@ -113,8 +113,8 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
             var type = GetType();
             var properties = type.GetProperties();
             var targetProperties = properties
-                .Select(i => new { Property = i, Attribute = i.GetCustomAttribute<ValidationAttribute>() })
-                .Where(i => i.Attribute != null)
+                .Select(i => new { Property = i, Attributes = i.GetCustomAttributes<ValidationAttribute>() })
+                .Where(i => i.Attributes != null)
                 .Select(i => i.Property)
                 .ToList()
             ;

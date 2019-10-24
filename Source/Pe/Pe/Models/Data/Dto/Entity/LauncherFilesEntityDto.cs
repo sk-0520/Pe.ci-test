@@ -10,6 +10,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data.Dto.Entity
     {
         #region property
 
+        Guid LauncherItemId { get; set; }
         public string? File { get; set; }
         public string? Option { get; set; }
         public string? WorkDirectory { get; set; }
@@ -21,6 +22,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data.Dto.Entity
     public class LauncherFilesEntityDto: CommonDtoBase
     {
         #region property
+
+        Guid LauncherItemId { get; set; }
 
         public string? File { get; set; }
         public string? Option { get; set; }

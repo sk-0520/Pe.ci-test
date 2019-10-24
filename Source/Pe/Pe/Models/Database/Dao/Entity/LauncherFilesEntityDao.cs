@@ -108,6 +108,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Commander.Execute(statement, param) == 1;
         }
 
+        public bool UpdateCustomizeLauncherFile(Guid launcherItemId, ILauncherExecutePathParameter pathParameter, ILauncherExecuteCustomParameter customParameter, IDatabaseCommonStatus commonStatus)
+        {
+            var builder = CreateUpdateBuilder(commonStatus);
+            builder.AddValue(Column.File, pathParameter.Path ?? string.Empty);
+            builder.AddValue(Column.Option, pathParameter.Option ?? string.Empty);
+            builder.AddValue(Column.WorkDirectory, pathParameter.WorkDirectoryPath ?? string.Empty);
+            builder.AddValue(Column.IsEnabledCustomEnvVar, customParameter.IsEnabledCustomEnvironmentVariable);
+            builder.AddValue(Column.IsEnabledStandardIo, customParameter.IsEnabledStandardInputOutput);
+            builder.AddValue(Column.RunAdministrator, customParameter.RunAdministrator);
+            builder.AddKey(Column.LauncherItemId, launcherItemId);
+
+            return ExecuteUpdate(builder) == 1;
+        }
+
         #endregion
     }
 }

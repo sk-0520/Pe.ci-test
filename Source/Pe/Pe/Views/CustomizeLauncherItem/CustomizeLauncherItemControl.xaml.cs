@@ -65,9 +65,9 @@ namespace ContentTypeTextNet.Pe.Main.Views.CustomizeLauncherItem
 
         #endregion
 
-        private void EnvUpdateEditor_Loaded(object sender, RoutedEventArgs e)
+        private void EnvMergeEditor_Loaded(object sender, RoutedEventArgs e)
         {
-            using(var stream = new System.IO.MemoryStream(Encoding.UTF8.GetBytes(Properties.Resources.File_Highlighting_EnvironmentVariable_Update))) {
+            using(var stream = new System.IO.MemoryStream(Encoding.UTF8.GetBytes(Properties.Resources.File_Highlighting_EnvironmentVariable_Merge))) {
                 SetSyntaxHighlighting((ICSharpCode.AvalonEdit.TextEditor)sender, stream);
             }
         }

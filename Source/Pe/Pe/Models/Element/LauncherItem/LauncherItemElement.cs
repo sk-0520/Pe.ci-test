@@ -153,7 +153,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
 
                 using(var commander = MainDatabaseBarrier.WaitWrite()) {
                     var dao = new LauncherItemsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
-                    dao.UpdateIncrement(LauncherItemId, DatabaseCommonStatus.CreateCurrentAccount());
+                    dao.UpdateExecuteCountIncrement(LauncherItemId, DatabaseCommonStatus.CreateCurrentAccount());
                     commander.Commit();
                 }
 

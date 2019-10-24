@@ -54,6 +54,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.CustomizeLauncherItem
         public ICommand SubmitCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
                 if(Validate()) {
+                    Save();
                     CloseRequest.Send();
                 }
             }
@@ -85,6 +86,49 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.CustomizeLauncherItem
 
             yield return new CustomizeLauncherTagViewModel(Model, LoggerFactory);
             yield return new CustomizeLauncherCommentViewModel(Model, LoggerFactory);
+        }
+
+        private void Save()
+        {
+
+            var common = CustomizeItems.OfType<CustomizeLauncherCommonViewModel>().First();
+            var tag = CustomizeItems.OfType<CustomizeLauncherTagViewModel>().First();
+            var comment = CustomizeItems.OfType<CustomizeLauncherCommentViewModel>().First();
+
+            switch(Model.Kind) {
+                case LauncherItemKind.File:
+                    var file = CustomizeItems.OfType<CustomizeLauncherFileViewModel>().First();
+                    var env = CustomizeItems.OfType<CustomizeLauncherEnvironmentVariableViewModel>().First();
+
+                    var itemData = new LauncherItemData() {
+                        LauncherItemId = Model.LauncherItemId,
+                        Kind = Model.Kind,
+                        Code = common.Code,
+                        Name = common.Name,
+                        IsEnabledCommandLauncher = true,
+                        Comment = comment.CommentDocument!.Text,
+                        Icon = new IconData() {
+                            Path = common.IconData!.Path,
+                            Index = common.IconData!.Index,
+                        },
+                    };
+                    var fileData = new LauncherFileData() {
+                        Path = file.Path,
+                        Option = file.Option,
+                        WorkDirectoryPath = file.Path,
+                        IsEnabledCustomEnvironmentVariable = file.IsEnabledCustomEnvironmentVariable,
+                        IsEnabledStandardInputOutput = file.IsEnabledStandardInputOutput,
+                        RunAdministrator = file.RunAdministrator,
+                    };
+
+                    var envItems = new {
+                        Merge = env.GetMergeItems(),
+                        Remove = env.GetRemoveItems(),
+                    };
+                    Model.SaveFile(itemData, fileData, envItems.Merge, envItems.Remove);
+                    break;
+            }
+
         }
 
         #endregion

@@ -62,6 +62,26 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         
         /// <summary>
         ///   &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+        ///&lt;SyntaxDefinition xmlns=&quot;http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008&quot; name=&quot;EnvVar_Update&quot;&gt;
+        ///	&lt;!--TODO:キーと値で分離--&gt;
+        ///	&lt;Color name=&quot;Key&quot; fontWeight=&quot;bold&quot; foreground=&quot;Blue&quot; /&gt;
+        ///	&lt;Color name=&quot;Variable&quot; foreground=&quot;Maroon&quot; /&gt;
+        ///	&lt;RuleSet ignoreCase=&quot;true&quot;&gt;
+        ///		&lt;Rule color=&quot;Key&quot;&gt;
+        ///			\w+
+        ///		&lt;/Rule&gt;
+        ///	&lt;/RuleSet&gt;
+        ///&lt;/SyntaxDefinition&gt;
+        /// に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string File_Highlighting_EnvironmentVariable_Merge {
+            get {
+                return ResourceManager.GetString("File_Highlighting_EnvironmentVariable_Merge", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
         ///&lt;SyntaxDefinition xmlns=&quot;http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008&quot; name=&quot;EnvVar_Remove&quot;&gt;
         ///	&lt;!--TODO:キーに限定--&gt;
         ///	&lt;Color name=&quot;Key&quot; fontWeight=&quot;bold&quot; foreground=&quot;Blue&quot; /&gt;
@@ -76,26 +96,6 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         internal static string File_Highlighting_EnvironmentVariable_Remove {
             get {
                 return ResourceManager.GetString("File_Highlighting_EnvironmentVariable_Remove", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
-        ///&lt;SyntaxDefinition xmlns=&quot;http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008&quot; name=&quot;EnvVar_Update&quot;&gt;
-        ///	&lt;!--TODO:キーと値で分離--&gt;
-        ///	&lt;Color name=&quot;Key&quot; fontWeight=&quot;bold&quot; foreground=&quot;Blue&quot; /&gt;
-        ///	&lt;Color name=&quot;Variable&quot; foreground=&quot;Maroon&quot; /&gt;
-        ///	&lt;RuleSet ignoreCase=&quot;true&quot;&gt;
-        ///		&lt;Rule color=&quot;Key&quot;&gt;
-        ///			\w+
-        ///		&lt;/Rule&gt;
-        ///	&lt;/RuleSet&gt;
-        ///&lt;/SyntaxDefinition&gt;
-        /// に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string File_Highlighting_EnvironmentVariable_Update {
-            get {
-                return ResourceManager.GetString("File_Highlighting_EnvironmentVariable_Update", resourceCulture);
             }
         }
         

@@ -36,47 +36,50 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
         #region function
 
         /// <summary>
-        ///
+        ///TODO: 分離した方がよさげ
         /// </summary>
         /// <param name="file"></param>
         /// <param name="loadShortcut">ショートカットの内容を使用するか。</param>
         /// <returns></returns>
-        public LauncherFileItemData FromFile(FileInfo file, bool loadShortcut)
+        internal (LauncherItemData item, LauncherFileData file) FromFile(FileInfo file, bool loadShortcut)
         {
             var expandedPath = Environment.ExpandEnvironmentVariables(file.FullName);
 
             var isProgram = PathUtility.IsProgram(expandedPath);
             var isShortCut = PathUtility.IsShortcut(expandedPath);
 
-            var result = new LauncherFileItemData() {
+            var itemResult = new LauncherItemData() {
                 LauncherItemId = IdFactory.CreateLauncherItemId(),
+                Kind = LauncherItemKind.File,
                 //TODO: 名称取得
                 Name = FileUtility.GetName(expandedPath),
             };
+            var fileResult = new LauncherFileData();
+
             if(loadShortcut && PathUtility.IsShortcut(expandedPath)) {
                 using(var shortcut = new ShortcutFile(expandedPath)) {
                     //TODO: コード取得
-                    result.Code = ToCode(Path.GetFileNameWithoutExtension(shortcut.TargetPath));
+                    itemResult.Code = ToCode(Path.GetFileNameWithoutExtension(shortcut.TargetPath));
 
-                    result.PathExecute.Path = shortcut.TargetPath;
-                    result.PathExecute.Option = shortcut.Arguments;
-                    result.PathExecute.WorkDirectoryPath = shortcut.WorkingDirectory;
+                    fileResult.Path = shortcut.TargetPath;
+                    fileResult.Option = shortcut.Arguments;
+                    fileResult.WorkDirectoryPath = shortcut.WorkingDirectory;
 
-                    result.Icon.Path = shortcut.IconPath;
-                    result.Icon.Index = shortcut.IconIndex;
+                    itemResult.Icon.Path = shortcut.IconPath;
+                    itemResult.Icon.Index = shortcut.IconIndex;
                     try {
-                        result.Comment = shortcut.Description;
+                        itemResult.Comment = shortcut.Description;
                     } catch(COMException ex) {
                         Logger.LogWarning(ex, "{0} {1}", ex.Message, expandedPath);
                     }
 
                 }
             } else {
-                result.Code = ToCode(Path.GetFileNameWithoutExtension(file.Name));
-                result.PathExecute.Path = file.FullName;
+                itemResult.Code = ToCode(Path.GetFileNameWithoutExtension(file.Name));
+                fileResult.Path = file.FullName;
             }
 
-            return result;
+            return (itemResult, fileResult);
         }
 
         public IEnumerable<string> GetTags(FileInfo file)

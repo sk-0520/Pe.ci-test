@@ -19,7 +19,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.CustomizeLauncherItem
         string? _name;
         string? _code;
 
-        string? _iconPath;
+        IconData? _iconData;
         bool _isEnabledCommandLauncher;
         #endregion
 
@@ -31,7 +31,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.CustomizeLauncherItem
 
         public Guid LauncherItemId => Model.LauncherItemId;
         public LauncherItemKind Kind => Model.Kind;
-        public IconData? IconData => Model.IconData;
 
         [Required]
         public string? Name
@@ -57,8 +56,16 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.CustomizeLauncherItem
         }
         public string? IconPath
         {
-            get => this._iconPath;
-            set => SetProperty(ref this._iconPath, value);
+            get => IconData!.ToString();
+        }
+        public IconData? IconData
+        {
+            get => this._iconData;
+            private set
+            {
+                SetProperty(ref this._iconData, value);
+                RaisePropertyChanged(nameof(IconPath));
+            }
         }
 
         public bool IsEnabledCommandLauncher
@@ -98,7 +105,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.CustomizeLauncherItem
         {
             Name = Model.Name;
             Code = Model.Code;
-            IconPath = IconData?.ToString();
+            IconData = new IconData() {
+                Path = Model.IconData!.Path,
+                Index = Model.IconData!.Index,
+            };
             IsEnabledCommandLauncher = Model.IsEnabledCommandLauncher;
         }
 
