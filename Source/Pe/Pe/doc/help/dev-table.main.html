@@ -148,29 +148,7 @@ ___
 
 ___
 
-## LauncherMergeEnvVars
-
-### layout
-
-| PK | NN | FK                           | 論理カラム名             | 物理カラム名          | 論理データ型 | マッピング型    | チェック制約 | コメント             |
-|:--:|:--:|:-----------------------------|:-------------------------|:----------------------|:-------------|:----------------|:-------------|:---------------------|
-| o  | o  | LauncherItems.LauncherItemId | ランチャーアイテムID     | LauncherItemId        | text         | System.Guid     |              |                      |
-| o  | o  |                              | 環境変数名               | EnvName               | text         | System.String   |              |                      |
-|    | o  |                              | 作成タイムスタンプ       | CreatedTimestamp      | datetime     | System.DateTime |              | UTC                  |
-|    | o  |                              | 作成ユーザー名           | CreatedAccount        | text         | System.String   |              |                      |
-|    | o  |                              | 作成プログラム名         | CreatedProgramName    | text         | System.String   |              |                      |
-|    | o  |                              | 作成プログラムバージョン | CreatedProgramVersion | text         | System.Version  |              |                      |
-|    | o  |                              | 環境変数値               | EnvValue              | text         | System.String   |              | 追加/置き換え で使用 |
-
-### index
-
-*NONE*
-
-
-
-___
-
-## LauncherDeleteEnvVars
+## LauncherEnvVars
 
 ### layout
 
@@ -182,6 +160,7 @@ ___
 |    | o  |                              | 作成ユーザー名           | CreatedAccount        | text         | System.String   |              |          |
 |    | o  |                              | 作成プログラム名         | CreatedProgramName    | text         | System.String   |              |          |
 |    | o  |                              | 作成プログラムバージョン | CreatedProgramVersion | text         | System.Version  |              |          |
+|    | o  |                              | 環境変数値               | EnvValue              | text         | System.String   |              |          |
 
 ### index
 
@@ -455,27 +434,27 @@ ___
 
 ### layout
 
-| PK | NN | FK           | 論理カラム名             | 物理カラム名          | 論理データ型 | マッピング型    | チェック制約 | コメント |
-|:--:|:--:|:-------------|:-------------------------|:----------------------|:-------------|:----------------|:-------------|:---------|
-| o  | o  | Notes.NoteId | ノートID                 | NoteId                | text         | System.Guid     |              |          |
+| PK | NN | FK           | 論理カラム名             | 物理カラム名          | 論理データ型 | マッピング型    | チェック制約 | コメント           |
+|:--:|:--:|:-------------|:-------------------------|:----------------------|:-------------|:----------------|:-------------|:-------------------|
+| o  | o  | Notes.NoteId | ノートID                 | NoteId                | text         | System.Guid     |              |                    |
 | o  | o  |              | ノート内容種別           | ContentKind           | text         | System.String   |              | プレーン文字列 RTF |
-|    | o  |              | 作成タイムスタンプ       | CreatedTimestamp      | datetime     | System.DateTime |              | UTC      |
-|    | o  |              | 作成ユーザー名           | CreatedAccount        | text         | System.String   |              |          |
-|    | o  |              | 作成プログラム名         | CreatedProgramName    | text         | System.String   |              |          |
-|    | o  |              | 作成プログラムバージョン | CreatedProgramVersion | text         | System.Version  |              |          |
-|    | o  |              | 更新タイムスタンプ       | UpdatedTimestamp      | datetime     | System.DateTime |              | UTC      |
-|    | o  |              | 更新ユーザー名           | UpdatedAccount        | text         | System.String   |              |          |
-|    | o  |              | 更新プログラム名         | UpdatedProgramName    | text         | System.String   |              |          |
-|    | o  |              | 更新プログラムバージョン | UpdatedProgramVersion | text         | System.Version  |              |          |
-|    | o  |              | 更新回数                 | UpdatedCount          | integer      | System.Int64    |              | 0始まり  |
+|    | o  |              | 作成タイムスタンプ       | CreatedTimestamp      | datetime     | System.DateTime |              | UTC                |
+|    | o  |              | 作成ユーザー名           | CreatedAccount        | text         | System.String   |              |                    |
+|    | o  |              | 作成プログラム名         | CreatedProgramName    | text         | System.String   |              |                    |
+|    | o  |              | 作成プログラムバージョン | CreatedProgramVersion | text         | System.Version  |              |                    |
+|    | o  |              | 更新タイムスタンプ       | UpdatedTimestamp      | datetime     | System.DateTime |              | UTC                |
+|    | o  |              | 更新ユーザー名           | UpdatedAccount        | text         | System.String   |              |                    |
+|    | o  |              | 更新プログラム名         | UpdatedProgramName    | text         | System.String   |              |                    |
+|    | o  |              | 更新プログラムバージョン | UpdatedProgramVersion | text         | System.Version  |              |                    |
+|    | o  |              | 更新回数                 | UpdatedCount          | integer      | System.Int64    |              | 0始まり            |
 |    | o  |              | リンク形式か             | IsLink                | boolean      | System.Boolean  |              |                    |
-|    | o  |              | 内容                     | Content               | text         | System.String   |              |          |
-|    | o  |              | リンク先                 | Address               | text         | System.String   |              |          |
-|    | o  |              | エンコーディング         | Encoding              | text         | System.String   |              |          |
-|    | o  |              | 変更検知後待機時間       | DelayTime             | text         | System.TimeSpan |              |          |
-|    | o  |              | 変更検知バッファサイズ   | BufferSize            | integer      | System.Int64    |              |          |
-|    | o  |              | 変更検知ミス更新時間     | RefreshTime           | text         | System.TimeSpan |              |          |
-|    | o  |              | 取りこぼしを考慮         | IsEnabledRefresh      | boolean      | System.Boolean  |              |          |
+|    | o  |              | 内容                     | Content               | text         | System.String   |              |                    |
+|    | o  |              | リンク先                 | Address               | text         | System.String   |              |                    |
+|    | o  |              | エンコーディング         | Encoding              | text         | System.String   |              |                    |
+|    | o  |              | 変更検知後待機時間       | DelayTime             | text         | System.TimeSpan |              |                    |
+|    | o  |              | 変更検知バッファサイズ   | BufferSize            | integer      | System.Int64    |              |                    |
+|    | o  |              | 変更検知ミス更新時間     | RefreshTime           | text         | System.TimeSpan |              |                    |
+|    | o  |              | 取りこぼしを考慮         | IsEnabledRefresh      | boolean      | System.Boolean  |              |                    |
 
 ### index
 
@@ -484,8 +463,6 @@ ___
 
 
 ___
-
-
 
 ## NoteFiles
 

@@ -73,7 +73,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
         #region function
 
-        ILauncherExecuteResult ExecuteFilePath(LauncherItemKind kind, ILauncherExecutePathParameter pathParameter, ILauncherExecuteCustomParameter customParameter, IEnumerable<LauncherMergeEnvironmentVariableItem> mergeEnvironmentVariableItems, IEnumerable<string> deleteEnvironmentVariableItems, Screen screen)
+        ILauncherExecuteResult ExecuteFilePath(LauncherItemKind kind, ILauncherExecutePathParameter pathParameter, ILauncherExecuteCustomParameter customParameter, IEnumerable<LauncherEnvironmentVariableData> environmentVariableItems, Screen screen)
         {
             var process = new Process();
             var startInfo = process.StartInfo;
@@ -103,13 +103,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
                 startInfo.UseShellExecute = false;
                 var envs = startInfo.EnvironmentVariables;
                 // 追加・更新
-                foreach(var item in mergeEnvironmentVariableItems) {
+                foreach(var item in environmentVariableItems.Where(i => !i.IsRemove)) {
                     envs[item.Name] = item.Value;
                 }
                 // 削除
-                foreach(var item in deleteEnvironmentVariableItems) {
-                    if(envs.ContainsKey(item)) {
-                        envs.Remove(item);
+                foreach(var item in environmentVariableItems.Where(i => i.IsRemove)) {
+                    if(envs.ContainsKey(item.Name)) {
+                        envs.Remove(item.Name);
                     }
                 }
             }
@@ -147,7 +147,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             return result;
         }
 
-        public ILauncherExecuteResult Execute(LauncherItemKind kind, ILauncherExecutePathParameter pathParameter, ILauncherExecuteCustomParameter customParameter, IEnumerable<LauncherMergeEnvironmentVariableItem> mergeEnvironmentVariableItems, IEnumerable<string> deleteEnvironmentVariableItems, Screen screen)
+        public ILauncherExecuteResult Execute(LauncherItemKind kind, ILauncherExecutePathParameter pathParameter, ILauncherExecuteCustomParameter customParameter, IEnumerable<LauncherEnvironmentVariableData> environmentVariableItems, Screen screen)
         {
             if(pathParameter == null) {
                 throw new ArgumentNullException(nameof(pathParameter));
@@ -155,11 +155,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             if(customParameter == null) {
                 throw new ArgumentNullException(nameof(customParameter));
             }
-            if(mergeEnvironmentVariableItems == null) {
-                throw new ArgumentNullException(nameof(mergeEnvironmentVariableItems));
+            if(environmentVariableItems == null) {
+                throw new ArgumentNullException(nameof(environmentVariableItems));
             }
 
-            return ExecuteFilePath(kind, pathParameter, customParameter, mergeEnvironmentVariableItems, deleteEnvironmentVariableItems, screen);
+            return ExecuteFilePath(kind, pathParameter, customParameter, environmentVariableItems, screen);
         }
 
         public ILauncherExecuteResult OpenParentDirectory(LauncherItemKind kind, ILauncherExecutePathParameter pathParameter)

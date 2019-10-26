@@ -90,21 +90,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.CustomizeLauncherItem
             }
         }
 
-        public IReadOnlyCollection<LauncherMergeEnvironmentVariableItem> LoadMergeEnvironmentVariableItems()
+        public IReadOnlyCollection<LauncherEnvironmentVariableData> LoadEnvironmentVariableItems()
         {
             using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var dao = new LauncherMergeEnvVarsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
-                return dao.SelectItems(LauncherItemId).ToList();
+                var dao = new LauncherEnvVarsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                return dao.SelectEnvVarItems(LauncherItemId).ToList();
             }
         }
 
-        public IReadOnlyList<string> LoadDeleteEnvironmentVariableItems()
-        {
-            using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var dao = new LauncherDeleteEnvVarsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
-                return dao.SelectItems(LauncherItemId).ToList();
-            }
-        }
 
         public IReadOnlyCollection<string> LoadTags()
         {
@@ -114,23 +107,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.CustomizeLauncherItem
             }
         }
 
-        public void SaveFile(LauncherItemData launcherItemData, LauncherFileData launcherFileData, IEnumerable<LauncherMergeEnvironmentVariableItem> updateEnvItems, IEnumerable<string> removeEnvItems, IEnumerable<string> tags)
+        public void SaveFile(LauncherItemData launcherItemData, LauncherFileData launcherFileData, IEnumerable<LauncherEnvironmentVariableData> environmentVariableItems, IEnumerable<string> tags)
         {
             using(var commander = MainDatabaseBarrier.WaitWrite()) {
                 var launcherItemsEntityDao = new LauncherItemsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
                 var launcherFilesEntityDao = new LauncherFilesEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
-                var launcherMergeEnvVarsEntityDao = new LauncherMergeEnvVarsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
-                var launcherDeleteEnvVarsEntityDao = new LauncherDeleteEnvVarsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                var launcherMergeEnvVarsEntityDao = new LauncherEnvVarsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
                 var launcherTagsEntityDao = new LauncherTagsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
 
                 launcherItemsEntityDao.UpdateCustomizeLauncherItem(launcherItemData, DatabaseCommonStatus.CreateCurrentAccount());
                 launcherFilesEntityDao.UpdateCustomizeLauncherFile(launcherItemData.LauncherItemId, launcherFileData, launcherFileData, DatabaseCommonStatus.CreateCurrentAccount());
 
-                launcherMergeEnvVarsEntityDao.DeleteMergeItemsByLauncherItemId(launcherItemData.LauncherItemId);
-                launcherMergeEnvVarsEntityDao.InsertMergeItems(launcherItemData.LauncherItemId, updateEnvItems, DatabaseCommonStatus.CreateCurrentAccount());
-
-                launcherDeleteEnvVarsEntityDao.DeleteDeleteItemsByLauncherItemId(launcherItemData.LauncherItemId);
-                launcherDeleteEnvVarsEntityDao.InsertDeleteItems(launcherItemData.LauncherItemId, removeEnvItems, DatabaseCommonStatus.CreateCurrentAccount());
+                launcherMergeEnvVarsEntityDao.DeleteEnvVarItemsByLauncherItemId(launcherItemData.LauncherItemId);
+                launcherMergeEnvVarsEntityDao.InsertEnvVarItems(launcherItemData.LauncherItemId, environmentVariableItems, DatabaseCommonStatus.CreateCurrentAccount());
 
                 launcherTagsEntityDao.DeleteTagByLauncherItemId(launcherItemData.LauncherItemId);
                 launcherTagsEntityDao.InsertNewTags(launcherItemData.LauncherItemId, tags, DatabaseCommonStatus.CreateCurrentAccount());

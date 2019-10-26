@@ -103,12 +103,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
-    public class LauncherMergeEnvironmentVariableItem
+    public class LauncherEnvironmentVariableData
     {
         #region property
 
         public string? Name { get; set; }
         public string? Value { get; set; }
+
+        public bool IsRemove => string.IsNullOrEmpty(Value);
 
         #endregion
     }

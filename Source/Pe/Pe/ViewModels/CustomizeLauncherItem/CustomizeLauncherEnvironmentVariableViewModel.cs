@@ -45,13 +45,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.CustomizeLauncherItem
 
         #region function
 
-        public IReadOnlyCollection<LauncherMergeEnvironmentVariableItem> GetMergeItems()
+        public IReadOnlyCollection<LauncherEnvironmentVariableData> GetMergeItems()
         {
             return TextUtility.ReadLines(MergeTextDocument!.Text)
                 .Where(i => !string.IsNullOrWhiteSpace(i))
                 .Select(i => i.Split(new char[] { '=' }, 2, StringSplitOptions.RemoveEmptyEntries).Select(i => i.Trim()).ToArray())
                 .Where(i => i.Length == 2)
-                .Select(i => new LauncherMergeEnvironmentVariableItem() { Name = i[0], Value = i[1] })
+                .Select(i => new LauncherEnvironmentVariableData() { Name = i[0], Value = i[1] })
                 .ToList()
             ;
         }
@@ -71,15 +71,16 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.CustomizeLauncherItem
 
         protected override void InitializeImpl()
         {
-            var envItems = Model.LoadMergeEnvironmentVariableItems();
-            var envItems2 = Model.LoadDeleteEnvironmentVariableItems();
+            var envItems = Model.LoadEnvironmentVariableItems();
 
             var mergeItems = envItems
+                .Where(i => !i.IsRemove)
                 .Select(i => $"{i.Name}={i.Value}")
             ;
 
-            var removeItems = envItems2
-                .Select(i => i)
+            var removeItems = envItems
+                .Where(i => i.IsRemove)
+                .Select(i => i.Name)
             ;
 
             MergeTextDocument = new TextDocument(string.Join(Environment.NewLine, mergeItems));

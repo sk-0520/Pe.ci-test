@@ -121,12 +121,20 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.CustomizeLauncherItem
                         RunAdministrator = file.RunAdministrator,
                     };
 
-                    var envItems = new {
-                        Merge = env.GetMergeItems(),
-                        Remove = env.GetRemoveItems(),
-                    };
+                    // この層でやるべきなんかねぇ
+                    var envVarItems = env.GetMergeItems().ToList();
+                    foreach(var item in env.GetRemoveItems()) {
+                        var index = envVarItems.FindIndex(i => i.Name == item);
+                        if(index != -1) {
+                            envVarItems.RemoveAt(index);
+                        }
+                        envVarItems.Add(new LauncherEnvironmentVariableData() {
+                            Name = item
+                        });
+                    }
+
                     var tagItems = tag.GetTagItems();
-                    Model.SaveFile(itemData, fileData, envItems.Merge, envItems.Remove, tagItems);
+                    Model.SaveFile(itemData, fileData, envVarItems, tagItems);
                     break;
             }
 

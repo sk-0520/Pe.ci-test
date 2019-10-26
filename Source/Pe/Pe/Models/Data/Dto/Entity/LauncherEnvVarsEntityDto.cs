@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Data.Dto.Entity
 {
-    public class LauncherMergeEnvVarsEntityDto: CommonDtoBase
+    public class LauncherEnvVarsEntityDto: CommonDtoBase
     {
         #region property
 

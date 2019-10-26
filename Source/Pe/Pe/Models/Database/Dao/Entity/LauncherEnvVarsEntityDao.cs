@@ -10,9 +10,9 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 {
-    public class LauncherMergeEnvVarsEntityDao : EntityDaoBase
+    public class LauncherEnvVarsEntityDao : EntityDaoBase
     {
-        public LauncherMergeEnvVarsEntityDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+        public LauncherEnvVarsEntityDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
             : base(commander, statementLoader, implementation, loggerFactory)
         { }
 
@@ -33,9 +33,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         #region function
 
-        LauncherMergeEnvironmentVariableItem ConvertFromDto(LauncherMergeEnvVarsEntityDto dto)
+        LauncherEnvironmentVariableData ConvertFromDto(LauncherEnvVarsEntityDto dto)
         {
-            var data = new LauncherMergeEnvironmentVariableItem() {
+            var data = new LauncherEnvironmentVariableData() {
                 Name = dto.EnvName,
                 Value = dto.EnvValue,
             };
@@ -43,12 +43,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return data;
         }
 
-        LauncherMergeEnvVarsEntityDto ConvertFromData(Guid launcherItemId, LauncherMergeEnvironmentVariableItem data, IDatabaseCommonStatus databaseCommonStatus)
+        LauncherEnvVarsEntityDto ConvertFromData(Guid launcherItemId, LauncherEnvironmentVariableData data, IDatabaseCommonStatus databaseCommonStatus)
         {
-            var dto = new LauncherMergeEnvVarsEntityDto() {
+            var dto = new LauncherEnvVarsEntityDto() {
                 LauncherItemId = launcherItemId,
                 EnvName = data.Name,
-                EnvValue = data.Value,
+                EnvValue = data.Value ?? string.Empty,
             };
 
             databaseCommonStatus.WriteCreate(dto);
@@ -56,7 +56,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return dto;
         }
 
-        public IEnumerable<LauncherMergeEnvironmentVariableItem> SelectItems(Guid launcherItemId)
+        public IEnumerable<LauncherEnvironmentVariableData> SelectEnvVarItems(Guid launcherItemId)
         {
             var builder = CreateSelectBuilder();
             builder.AddSelect(Column.EnvName);
@@ -64,13 +64,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
             builder.AddValue(Column.LauncherItemId, launcherItemId);
 
-            var result = Select<LauncherMergeEnvVarsEntityDto>(builder)
+            var result = Select<LauncherEnvVarsEntityDto>(builder)
                 .Select(i => ConvertFromDto(i))
             ;
             return result;
         }
 
-        public void InsertMergeItems(Guid launcherItemId, IEnumerable<LauncherMergeEnvironmentVariableItem> items, IDatabaseCommonStatus databaseCommonStatus)
+        public void InsertEnvVarItems(Guid launcherItemId, IEnumerable<LauncherEnvironmentVariableData> items, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
 
@@ -79,7 +79,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             }
         }
 
-        public int DeleteMergeItemsByLauncherItemId(Guid launcherItemId)
+        public int DeleteEnvVarItemsByLauncherItemId(Guid launcherItemId)
         {
             var builder = CreateDeleteBuilder();
             builder.AddKey(Column.LauncherItemId, launcherItemId);
