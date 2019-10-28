@@ -18,6 +18,12 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         }
 
         [TestMethod]
+        public void Constructor_0_Test()
+        {
+            Assert.ThrowsException<ArgumentException>(() => new ChunkItem<int>(0));
+        }
+
+        [TestMethod]
         public void AddTest()
         {
             var item = new ChunkItem<int>(3);

@@ -16,6 +16,10 @@ namespace ContentTypeTextNet.Pe.Core.Models
     {
         public ChunkItem(int size)
         {
+            if(size == 0) {
+                throw new ArgumentException(nameof(size));
+            }
+
             Items = new T[size];
         }
 
@@ -23,6 +27,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         T[] Items { get; }
 
+        /// <summary>
+        /// 予約済みサイズ。
+        /// </summary>
         public int Size => Items.Length;
 
         #endregion
@@ -77,6 +84,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         public bool IsReadOnly => false;
 
+        /// <summary>
+        /// 実際に使用しているサイズ。
+        /// </summary>
         public int Count { get; private set; }
 
         public object SyncRoot => throw new NotSupportedException();
