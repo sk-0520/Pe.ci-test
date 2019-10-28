@@ -18,9 +18,6 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #endregion
 
         #region property
-
-        public static IReadOnlyCollection<string> IconExtensions { get; } = new[] { "ico", "exe", "dll" };
-
         #endregion
 
         /// <summary>
@@ -86,7 +83,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <returns></returns>
         public static bool HasIconPath(string path)
         {
-            return HasExtensions(path, IconExtensions);
+            return HasExtensions(path, "exe", "dll");
         }
         [Obsolete("use:" + nameof(HasIconPath))]
         public static bool IsIconPath(string path)
