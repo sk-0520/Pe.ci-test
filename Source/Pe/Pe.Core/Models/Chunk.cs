@@ -37,12 +37,12 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #region function
 
-        public void CopyTo(int sourceIndex, Array destinationArray, int destinationIndex, int destinationLength)
+        public void CopyTo(int sourceIndex, T[] destinationArray, int destinationIndex, int destinationLength)
         {
             Array.Copy(Items, sourceIndex, destinationArray, destinationIndex, destinationLength);
         }
 
-        public void CopyFrom(int destinationIndex, Array sourceArray, int sourceIndex, int sourceLength)
+        public void CopyFrom(int destinationIndex, T[] sourceArray, int sourceIndex, int sourceLength)
         {
             if(destinationIndex != 0) {
                 if(Count < destinationIndex) {
@@ -117,9 +117,10 @@ namespace ContentTypeTextNet.Pe.Core.Models
         {
             CopyTo(sourceIndex, destinationArray, 0, Count - sourceIndex);
         }
-        public void CopyTo(Array destinationArray, int sourceIndex)
+
+        void ICollection.CopyTo(Array destinationArray, int sourceIndex)
         {
-            CopyTo(sourceIndex, destinationArray, 0, Count - sourceIndex);
+            CopyTo(sourceIndex, (T[])destinationArray, 0, Count - sourceIndex);
         }
 
         public IEnumerator<T> GetEnumerator()
@@ -230,7 +231,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 BlockItemCount += 1;
             }
             */
-            Debug.Assert(Blocks.Count <= chunkItemIndex);
+            Debug.Assert(chunkItemIndex <= Blocks.Count );
 
             if(Blocks.Count == chunkItemIndex) {
                 var block = CreateChunkItem();
@@ -241,7 +242,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             return Blocks[chunkItemIndex];
         }
 
-        public void CopyTo(int sourceIndex, Array destinationArray, int destinationIndex, int destinationLength)
+        public void CopyTo(int sourceIndex, T[] destinationArray, int destinationIndex, int destinationLength)
         {
             var chunkItemIndex = sourceIndex / BlockSize;
             var startSourceIndex = sourceIndex % BlockSize;
@@ -269,6 +270,21 @@ namespace ContentTypeTextNet.Pe.Core.Models
             }
         }
 
+        //public void _CopyTo(int sourceIndex, Span<T> destination, int destinationIndex, int destinationLength)
+        //{
+        //    var destinationDataLength = 0;
+        //    var startBlockIndex = sourceIndex / BlockSize;
+        //    for(var blockIndex = startBlockIndex; blockIndex < Blocks.Count; blockIndex++) {
+        //        if(blockIndex == startBlockIndex) {
+        //            var block = Blocks[blockIndex];
+        //            var index = sourceIndex - startBlockIndex * BlockSize;
+        //            block.CopyTo()
+        //            destination.CopyTo()
+        //        }
+
+        //    }
+        //}
+
         public void CopyFrom(int destinationIndex, Array sourceArray, int sourceIndex, int sourceLength)
         {
             var chunkItemIndex = destinationIndex / BlockSize;
@@ -290,7 +306,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 var chunkItem = GetOrCreateChunkItem(i);
                 chunkItem.CopyFrom(
                     startDestinationIndex,
-                    sourceArray,
+                    (T[])sourceArray,
                     sourceIndex + sourceDataLength,
                     dataLength
                 );
@@ -387,7 +403,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             var itemIndex = sourceIndex / ChunkItemCapacity;
             var startIndex = sourceIndex % ChunkItemCapacity;
             */
-            CopyTo(sourceIndex, array, 0, Count - sourceIndex);
+            CopyTo(sourceIndex, (T[])array, 0, Count - sourceIndex);
             /*
             var destAddIndex = 0;
             for(int i = 0, j = 0; i < ChunkItemCount; i++) {
