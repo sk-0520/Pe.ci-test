@@ -5,10 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Element.CustomizeLauncherItem;
 using ContentTypeTextNet.Pe.Main.Models.Launcher;
 using Microsoft.Extensions.Logging;
+using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.CustomizeLauncherItem
 {
@@ -31,6 +34,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.CustomizeLauncherItem
 
         public Guid LauncherItemId => Model.LauncherItemId;
         public LauncherItemKind Kind => Model.Kind;
+
+        public RequestSender IconSelectRequest { get; } = new RequestSender();
+        public RequestSender ImageSelectRequest { get; } = new RequestSender();
+
 
         [Required]
         public string? Name
@@ -77,6 +84,23 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.CustomizeLauncherItem
         #endregion
 
         #region command
+
+        public ICommand IconFileSelectCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                IconSelectRequest.Send();
+            }
+        ));
+        public ICommand IconImageSelectCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                ImageSelectRequest.Send();
+            }
+        ));
+        public ICommand IconClearSelectCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+
+            }
+        ));
+
         #endregion
 
         #region function

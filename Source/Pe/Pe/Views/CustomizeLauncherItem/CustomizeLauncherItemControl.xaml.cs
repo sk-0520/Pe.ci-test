@@ -12,7 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Main.ViewModels.CustomizeLauncherItem;
+using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.Views.CustomizeLauncherItem
 {
@@ -49,6 +51,28 @@ namespace ContentTypeTextNet.Pe.Main.Views.CustomizeLauncherItem
             if(d is CustomizeLauncherItemControl control) {
             }
         }
+
+        #endregion
+
+        #region property
+
+        CommandStore CommandStore { get; } = new CommandStore();
+
+        #endregion
+
+        #region command
+
+        public ICommand FileSelectCommand => CommandStore.GetOrCreate(() => new DelegateCommand<RequestEventArgs>(
+            o => {
+
+            }
+        ));
+
+        public ICommand IconSelectCommand => CommandStore.GetOrCreate(() => new DelegateCommand<RequestEventArgs>(
+            o => {
+
+            }
+        ));
 
         #endregion
 

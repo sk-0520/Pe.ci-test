@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Element.CustomizeLauncherItem;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem;
 using Microsoft.Extensions.Logging;
+using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.CustomizeLauncherItem
 {
@@ -28,6 +31,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.CustomizeLauncherItem
         { }
 
         #region property
+
+        public RequestSender FileSelectRequest { get; } = new RequestSender();
 
         public string? Path
         {
@@ -64,6 +69,40 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.CustomizeLauncherItem
         #endregion
 
         #region command
+
+        public ICommand LauncherFileSelectCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                FileSelectRequest.Send();
+            }
+        ));
+
+        public ICommand LauncherDirectorySelectCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                FileSelectRequest.Send();
+            }
+        ));
+        public ICommand OptionFileSelectCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                FileSelectRequest.Send();
+            }
+        ));
+
+        public ICommand OptionDirectorySelectCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                FileSelectRequest.Send();
+            }
+        ));
+
+        public ICommand WorkingDirectorySelectCommand => GetOrCreateCommand(() => new DelegateCommand(
+             () => {
+                 FileSelectRequest.Send();
+             }
+         ));
+        public ICommand WorkingDirectoryClearCommand => GetOrCreateCommand(() => new DelegateCommand(
+             () => {
+             }
+         ));
+
         #endregion
 
         #region function
