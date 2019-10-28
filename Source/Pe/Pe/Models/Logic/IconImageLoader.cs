@@ -34,30 +34,48 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         RunningStatus RunningStatusImpl { get; }
         public IRunningStatus RunningStatus => RunningStatusImpl;
 
+        public static IReadOnlyCollection<string> ImageFilePath { get; } = new[] { "png", "bmp", "jpeg", "jpg" };
+
         #endregion
 
         #region function
 
         protected Task<BitmapSource?> GetIconImageAsync(IconData iconData, CancellationToken cancellationToken)
         {
-#pragma warning disable CS8604 // Null 参照引数の可能性があります。
             var path = TextUtility.SafeTrim(iconData.Path);
-#pragma warning restore CS8604 // Null 参照引数の可能性があります。
             var expandedPath = Environment.ExpandEnvironmentVariables(path);
 
             return Task.Run(() => {
-                if(!FileUtility.Exists(expandedPath)) {
+                var isFile = File.Exists(expandedPath);
+                var isDir = !isFile && Directory.Exists(expandedPath);
+                if(!isFile && !isDir) {
                     return null;
                 }
 
-                var iconLoader = new IconLoader(Logger);
                 BitmapSource? iconImage = null;
-                DispatcherWapper.Invoke(() => {
-                    iconImage = iconLoader.Load(expandedPath, new IconSize(IconBox), iconData.Index);
-#pragma warning disable CS8604 // Null 参照引数の可能性があります。
-                    FreezableUtility.SafeFreeze(iconImage);
-#pragma warning restore CS8604 // Null 参照引数の可能性があります。
-                });
+
+                if(isFile && PathUtility.HasExtensions(expandedPath, ImageFilePath)) {
+                    Logger.LogDebug("画像ファイルとして読み込み {0}", expandedPath);
+                    using(var stream = new FileStream(expandedPath, FileMode.Open, FileAccess.Read, FileShare.Read)) {
+                        DispatcherWapper.Invoke(() => {
+                            var bitmapImage = new BitmapImage();
+                            using(Initializer.BeginInitialize(bitmapImage)) {
+                                bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                                bitmapImage.CreateOptions = BitmapCreateOptions.None;
+                                bitmapImage.StreamSource = stream;
+                            }
+                            iconImage = FreezableUtility.GetSafeFreeze(bitmapImage);
+                        });
+                    }
+                } else {
+                    Logger.LogDebug("アイコンファイルとして読み込み {0}", expandedPath);
+                    var iconLoader = new IconLoader(Logger);
+                    DispatcherWapper.Invoke(() => {
+                        var image = iconLoader.Load(expandedPath, new IconSize(IconBox), iconData.Index);
+                        iconImage = FreezableUtility.GetSafeFreeze(image!);
+                    });
+                }
+
                 return iconImage;
             });
         }
@@ -85,7 +103,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         #endregion
     }
 
-    public class IconImageLoaderPack: IIconPack<IconImageLoaderBase>
+    public class IconImageLoaderPack : IIconPack<IconImageLoaderBase>
     {
         public IconImageLoaderPack(IEnumerable<IconImageLoaderBase> iconImageLoaders)
         {

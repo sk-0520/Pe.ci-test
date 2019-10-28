@@ -146,7 +146,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             }
         }
 
-        public static string SafeTrim(string s)
+        public static string SafeTrim(string? s)
         {
             if(s == null) {
                 return string.Empty;

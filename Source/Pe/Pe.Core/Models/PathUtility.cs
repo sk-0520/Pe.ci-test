@@ -17,6 +17,12 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #endregion
 
+        #region property
+
+        public static IReadOnlyCollection<string> IconExtensions { get; } = new[] { "ico", "exe", "dll" };
+
+        #endregion
+
         /// <summary>
         /// パスに拡張子を追加する。
         /// </summary>
@@ -58,7 +64,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             return HasExtensions(path, extList);
         }
 
-        public static bool HasExtensions(string path, params string[] extList)
+        public static bool HasExtensions(string path, IEnumerable<string> extList)
         {
             var dotExt = Path.GetExtension(path);
             if(string.IsNullOrEmpty(dotExt)) {
@@ -71,6 +77,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 .Any(s => s == ext)
             ;
         }
+        public static bool HasExtensions(string path, params string[] extList) => HasExtensions(path, extList);
 
         /// <summary>
         /// アイコンを持つパスか。
@@ -79,7 +86,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <returns></returns>
         public static bool HasIconPath(string path)
         {
-            return HasExtensions(path, "exe", "dll");
+            return HasExtensions(path, IconExtensions);
         }
         [Obsolete("use:" + nameof(HasIconPath))]
         public static bool IsIconPath(string path)
