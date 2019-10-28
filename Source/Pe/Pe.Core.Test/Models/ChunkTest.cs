@@ -382,6 +382,20 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
     }
 
     [TestClass]
+    public class BinaryChunkedListTest
+    {
+        [TestMethod]
+        public void CopyFromTest()
+        {
+            var list = new BinaryChunkedList(255, BinaryChunkedList.DefaultChunkSize);
+            var rnd = new Random();
+            var data = Enumerable.Range(0, BinaryChunkedList.LargeObjectHeapSize * 9).Select(i => (byte)rnd.Next(0, 255)).ToArray();
+            list.CopyFrom(0, data, 0, data.Length);
+            CollectionAssert.AreEqual(data, list);
+        }
+    }
+
+    [TestClass]
     public class BinaryChunkedStreamTest
     {
         [TestMethod]
@@ -423,5 +437,6 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
                 CollectionAssert.AreEqual(a2, b2);
             }
         }
+
     }
 }
