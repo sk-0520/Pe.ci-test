@@ -26,5 +26,33 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
         {
             RunDLL("shell32.dll,Options_RunDLL 5");
         }
+
+        /// <summary>
+        /// 実行形式一覧を取得。
+        /// </summary>
+        /// <returns>*.ext の配列</returns>
+        public IReadOnlyList<string> GetSystemExecuteExtensions()
+        {
+            var dotExeExts = Environment.GetEnvironmentVariable("PATHEXT");
+            if(!string.IsNullOrEmpty(dotExeExts)) {
+                var result =  dotExeExts
+                    .Split(';')
+                    .Where(i => ".X".Length <= i.Length)
+                    .Where(i => i[0] == '.')
+                    .Select(i => i.Trim().ToLower())
+                    .OrderBy(i => i == ".exe" ? 0: 1)
+                    .ThenBy(i => i)
+                    .Select(i => "*" + i) // *.ext を生成
+                    .ToList()
+                ;
+                if(result.Any()) {
+                    // EXEが無いって事はないだろうけど実行できないしもうどうでもいい
+                    return result;
+                }
+            }
+
+            return new[] { "*.exe", "*.bat", "*.com" };
+
+        }
     }
 }

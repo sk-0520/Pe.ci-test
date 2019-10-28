@@ -4,9 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Element.CustomizeLauncherItem;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem;
+using ContentTypeTextNet.Pe.Main.Models.Launcher;
+using ContentTypeTextNet.Pe.Main.Models.Platform;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
 
@@ -72,7 +75,23 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.CustomizeLauncherItem
 
         public ICommand LauncherFileSelectCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-                FileSelectRequest.Send();
+                var parameter = new LauncherFileSelectRequestParameter() {
+                    FilePath = Environment.ExpandEnvironmentVariables(Path ?? string.Empty),
+                    IsFile = true,
+                };
+
+                var systemExecutor = new SystemExecutor();
+                var exeExts = systemExecutor.GetSystemExecuteExtensions();
+                parameter.Filter.Add(new DialogFilterItem("exe", exeExts.First(), exeExts));
+
+                parameter.Filter.Add(new DialogFilterItem("all", string.Empty, "*"));
+
+                FileSelectRequest.Send< LauncherFileSelectRequestResponse>(parameter, r => {
+                    if(r.ResponseIsCancel) {
+                        return;
+                    }
+
+                });
             }
         ));
 

@@ -207,9 +207,15 @@ namespace ContentTypeTextNet.Pe.Core.Views
                     if(item != null) {
                         FileDialog.Com.SetFolder(item.Com);
                         cleaner.Add(item);
+
+                        var fileName = Path.GetFileName(FileName);
+                        FileDialog.Com.SetFileName(fileName);
+                    } else {
+                        FileDialog.Com.SetFileName(FileName);
                     }
+                } else {
+                    FileDialog.Com.SetFileName(FileName);
                 }
-                FileDialog.Com.SetFileName(FileName);
             }
 
             var filters = Filters

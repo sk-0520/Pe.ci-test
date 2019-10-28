@@ -5,13 +5,13 @@ using ContentTypeTextNet.Pe.Core.Models;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 {
-    class LauncherRequest
-    {
-    }
     public class LauncherFileSelectRequestParameter : FileDialogRequestParameter
     {
         #region peoperty
 
+        /// <summary>
+        /// ファイルを選択するか。
+        /// </summary>
         public bool IsFile { get; set; }
 
         #endregion

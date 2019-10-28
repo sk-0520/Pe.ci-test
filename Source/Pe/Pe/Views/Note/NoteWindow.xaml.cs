@@ -132,17 +132,16 @@ namespace ContentTypeTextNet.Pe.Main.Views.Note
 
                     if(dialog.ShowDialog(this).GetValueOrDefault()) {
                         o.Callback(new NoteLinkChangeRequestResponse() {
+                            ResponseIsCancel = false,
+                            ResponseFilePaths = new[] { dialog.FileName },
+                            Encoding = encodings[encodingComboBox.SelectedIndex].Value,
+                        });
+                    } else {
+                        o.Callback(new NoteLinkChangeRequestResponse() {
                             ResponseIsCancel = true,
                         });
                     }
-
-                    o.Callback(new NoteLinkChangeRequestResponse() {
-                        ResponseIsCancel = false,
-                        ResponseFilePaths = new [] { dialog.FileName },
-                        Encoding = encodings[encodingComboBox.SelectedIndex].Value,
-                    });
                 }
-
             }
         ));
 

@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ContentTypeTextNet.Pe.Core.Models;
+using ContentTypeTextNet.Pe.Core.Views;
+using ContentTypeTextNet.Pe.Main.Models.Launcher;
 using ContentTypeTextNet.Pe.Main.ViewModels.CustomizeLauncherItem;
 using Prism.Commands;
 
@@ -64,7 +66,22 @@ namespace ContentTypeTextNet.Pe.Main.Views.CustomizeLauncherItem
 
         public ICommand FileSelectCommand => CommandStore.GetOrCreate(() => new DelegateCommand<RequestEventArgs>(
             o => {
+                var fileSelectParameter = (LauncherFileSelectRequestParameter)o.Parameter;
+                using(var dialog = new OpenFileDialog()) {
+                    dialog.FileName = fileSelectParameter.FilePath;
+                    dialog.Filters.SetRange(fileSelectParameter.Filter);
 
+                    if(dialog.ShowDialog(Window.GetWindow(this)).GetValueOrDefault()) {
+                        o.Callback(new LauncherFileSelectRequestResponse() {
+                            ResponseIsCancel = false,
+                            ResponseFilePaths = new[] { dialog.FileName },
+                        });
+                    } else {
+                        o.Callback(new LauncherFileSelectRequestResponse() {
+                            ResponseIsCancel = true,
+                        });
+                    }
+                }
             }
         ));
 
