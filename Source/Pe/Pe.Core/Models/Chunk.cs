@@ -12,9 +12,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
     /// <para>内部的に固定長で扱う。</para>
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class ChunkItem<T> : ICollection<T>, ICollection, IReadOnlyList<T>
+    public class ChunkBlock<T> : ICollection<T>, ICollection, IReadOnlyList<T>
     {
-        public ChunkItem(int size)
+        public ChunkBlock(int size)
         {
             if(size == 0) {
                 throw new ArgumentException(nameof(size));
@@ -151,28 +151,40 @@ namespace ContentTypeTextNet.Pe.Core.Models
     }
 
     /// <summary>
-    /// <see cref="ChunkItem{T}"/>のリスト。
+    /// <see cref="ChunkBlock{T}"/>のリスト。
     /// <para><see cref="CopyTo"/>, <see cref="CopyFrom"/>で力尽きた。</para>
     /// TODO: 致命的にバグってる
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public class ChunkedList<T> : ICollection<T>, ICollection, IReadOnlyList<T>
     {
-        public ChunkedList(int capacity, int itemSize)
+        public ChunkedList(int capacity, int blockSize)
         {
             Capacity = capacity;
-            ChunkItemSize = itemSize;
+            BlockSize = blockSize;
 
-            ChunkItems = new List<ChunkItem<T>>(Capacity);
+            Blocks = new List<ChunkBlock<T>>(Capacity);
         }
 
         #region property
 
-        List<ChunkItem<T>> ChunkItems { get; }
-        int ChunkItemCount { get; set; }
+        /// <summary>
+        /// ブロック要素。
+        /// </summary>
+        List<ChunkBlock<T>> Blocks { get; }
+        /// <summary>
+        /// 現在のブロック数。
+        /// </summary>
+        int BlockItemCount { get; set; }
 
+        /// <summary>
+        /// ブロック予約サイズ。
+        /// </summary>
         public int Capacity { get; }
-        public int ChunkItemSize { get; }
+        /// <summary>
+        /// 内部要素(<see cref="ChunkBlock{T}"/>)の予約サイズ。
+        /// </summary>
+        public int BlockSize { get; }
 
         #endregion
 
@@ -180,57 +192,57 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         int GetLastChunkItemIndex()
         {
-            if(ChunkItemCount == 0) {
+            if(BlockItemCount == 0) {
                 return 0;
             }
 
             var count = Count;
             var index = 0;
-            while(ChunkItemSize <= count) {
-                count -= ChunkItemSize;
+            while(BlockSize <= count) {
+                count -= BlockSize;
                 index += 1;
             }
 
-            return Count / ChunkItemSize;
+            return Count / BlockSize;
         }
 
-        protected virtual ChunkItem<T> CreateChunkItem()
+        protected virtual ChunkBlock<T> CreateChunkItem()
         {
-            return new ChunkItem<T>(ChunkItemSize);
+            return new ChunkBlock<T>(BlockSize);
         }
 
-        ChunkItem<T> GetOrCreateChunkItem(int chunkItemIndex)
+        ChunkBlock<T> GetOrCreateChunkItem(int chunkItemIndex)
         {
-            if(ChunkItemCount - 1 < chunkItemIndex) {
-                if(ChunkItemCount == ChunkItems.Count) {
+            if(BlockItemCount - 1 < chunkItemIndex) {
+                if(BlockItemCount == Blocks.Count) {
                     //throw new OutOfMemoryException($"{nameof(Capacity)}: {Capacity}, {nameof(ChunkItemCount)}: {ChunkItemCount}");
 #pragma warning disable CS8625 // null リテラルを null 非許容参照型に変換できません。
-                    ChunkItems.Add(null);
+                    Blocks.Add(null);
 #pragma warning restore CS8625 // null リテラルを null 非許容参照型に変換できません。
                 }
 
-                if(ChunkItems[chunkItemIndex] == null) {
+                if(Blocks[chunkItemIndex] == null) {
                     var item = CreateChunkItem();
-                    ChunkItems[chunkItemIndex] = item;
+                    Blocks[chunkItemIndex] = item;
                 }
-                ChunkItemCount += 1;
+                BlockItemCount += 1;
             }
 
-            return ChunkItems[chunkItemIndex];
+            return Blocks[chunkItemIndex];
         }
 
         public void CopyTo(int sourceIndex, Array destinationArray, int destinationIndex, int destinationLength)
         {
-            var chunkItemIndex = sourceIndex / ChunkItemSize;
-            var startSourceIndex = sourceIndex % ChunkItemSize;
-            var destinationCount = destinationLength / ChunkItemSize + 1;
+            var chunkItemIndex = sourceIndex / BlockSize;
+            var startSourceIndex = sourceIndex % BlockSize;
+            var destinationCount = destinationLength / BlockSize + 1;
 
             var destinationDataLength = 0;
-            for(int i = chunkItemIndex, j = 0; i < ChunkItemCount && j < destinationCount; i++) {
-                var item = ChunkItems[i];
+            for(int i = chunkItemIndex, j = 0; i < BlockItemCount && j < destinationCount; i++) {
+                var item = Blocks[i];
                 var dataLength = j == destinationCount - 1
                     ? destinationLength - destinationDataLength
-                    : ChunkItemSize - startSourceIndex
+                    : BlockSize - startSourceIndex
                 ;
 
                 item.CopyTo(
@@ -249,14 +261,14 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         public void CopyFrom(int destinationIndex, Array sourceArray, int sourceIndex, int sourceLength)
         {
-            var chunkItemIndex = destinationIndex / ChunkItemSize;
-            var startDestinationIndex = destinationIndex % ChunkItemSize;
-            var sourceCount = chunkItemIndex + sourceLength / ChunkItemSize + (sourceLength % ChunkItemSize != 0 ? 1 : 0);
+            var chunkItemIndex = destinationIndex / BlockSize;
+            var startDestinationIndex = destinationIndex % BlockSize;
+            var sourceCount = chunkItemIndex + sourceLength / BlockSize + (sourceLength % BlockSize != 0 ? 1 : 0);
             var sourceDataLength = 0;
             for(int i = chunkItemIndex, j = 0; i < sourceCount; i++) {
-                var dataLength = j == sourceCount - 1 || sourceLength < ChunkItemSize
+                var dataLength = j == sourceCount - 1 || sourceLength < BlockSize
                     ? sourceLength - sourceDataLength
-                    : ChunkItemSize - startDestinationIndex
+                    : BlockSize - startDestinationIndex
                 ;
                 if(dataLength == 0) {
                     break;
@@ -293,10 +305,10 @@ namespace ContentTypeTextNet.Pe.Core.Models
                     throw new IndexOutOfRangeException();
                 }
 
-                var chunkItemIndex = index / ChunkItemSize;
-                var workIndex = index - chunkItemIndex * ChunkItemSize;
+                var chunkItemIndex = index / BlockSize;
+                var workIndex = index - chunkItemIndex * BlockSize;
 
-                return ChunkItems[chunkItemIndex][workIndex];
+                return Blocks[chunkItemIndex][workIndex];
             }
             set
             {
@@ -304,10 +316,10 @@ namespace ContentTypeTextNet.Pe.Core.Models
                     throw new IndexOutOfRangeException();
                 }
 
-                var chunkItemIndex = index / ChunkItemSize;
-                var workIndex = index - chunkItemIndex * ChunkItemSize;
+                var chunkItemIndex = index / BlockSize;
+                var workIndex = index - chunkItemIndex * BlockSize;
 
-                ChunkItems[chunkItemIndex][workIndex] = value;
+                Blocks[chunkItemIndex][workIndex] = value;
             }
         }
 
@@ -315,6 +327,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #region ICollection
 
+        /// <summary>
+        /// 実際に使用しているサイズ。
+        /// </summary>
         public int Count { get; private set; }
 
         public bool IsReadOnly => false;
@@ -333,18 +348,18 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         public void Clear()
         {
-            for(var i = 0; i < ChunkItemCount; i++) {
-                ChunkItems[i].Clear();
+            for(var i = 0; i < BlockItemCount; i++) {
+                Blocks[i].Clear();
             }
 
-            ChunkItemCount = 0;
+            BlockItemCount = 0;
             Count = 0;
         }
 
         public bool Contains(T item)
         {
-            for(var i = 0; i < ChunkItemCount; i++) {
-                if(ChunkItems[i].Contains(item)) {
+            for(var i = 0; i < BlockItemCount; i++) {
+                if(Blocks[i].Contains(item)) {
                     return true;
                 }
             }
@@ -382,8 +397,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         public IEnumerator<T> GetEnumerator()
         {
-            for(var i = 0; i < ChunkItemCount; i++) {
-                var item = ChunkItems[i];
+            for(var i = 0; i < BlockItemCount; i++) {
+                var item = Blocks[i];
                 for(var j = 0; j < item.Count; j++) {
                     yield return item[j];
                 }
@@ -396,14 +411,14 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         public bool Remove(T item)
         {
-            for(var i = 0; i < ChunkItemCount; i++) {
-                var chunkItem = ChunkItems[i];
+            for(var i = 0; i < BlockItemCount; i++) {
+                var chunkItem = Blocks[i];
                 var chunkCount = chunkItem.Count;
                 if(chunkItem.Remove(item)) {
                     // 後ろの子らをずらす
                     var prevChunkItem = chunkItem;
-                    for(var j = i + 1; j < ChunkItemCount; j++) {
-                        var nextChunkItem = ChunkItems[j];
+                    for(var j = i + 1; j < BlockItemCount; j++) {
+                        var nextChunkItem = Blocks[j];
                         prevChunkItem.Add(nextChunkItem[0]);
                         nextChunkItem.Remove(nextChunkItem[0]);
                         prevChunkItem = nextChunkItem;
