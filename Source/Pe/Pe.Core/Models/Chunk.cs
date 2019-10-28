@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -175,7 +176,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <summary>
         /// 現在のブロック数。
         /// </summary>
-        int BlockItemCount { get; set; }
+        //int BlockItemCount { get; set; }
 
         /// <summary>
         /// ブロック予約サイズ。
@@ -192,7 +193,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         int GetLastChunkItemIndex()
         {
-            if(BlockItemCount == 0) {
+            if(Blocks.Count == 0) {
                 return 0;
             }
 
@@ -213,6 +214,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         ChunkBlock<T> GetOrCreateChunkItem(int chunkItemIndex)
         {
+            /*
             if(BlockItemCount - 1 < chunkItemIndex) {
                 if(BlockItemCount == Blocks.Count) {
                     //throw new OutOfMemoryException($"{nameof(Capacity)}: {Capacity}, {nameof(ChunkItemCount)}: {ChunkItemCount}");
@@ -227,6 +229,14 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 }
                 BlockItemCount += 1;
             }
+            */
+            Debug.Assert(Blocks.Count <= chunkItemIndex);
+
+            if(Blocks.Count == chunkItemIndex) {
+                var block = CreateChunkItem();
+                Blocks.Add(block);
+                return block;
+            }
 
             return Blocks[chunkItemIndex];
         }
@@ -238,7 +248,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             var destinationCount = destinationLength / BlockSize + 1;
 
             var destinationDataLength = 0;
-            for(int i = chunkItemIndex, j = 0; i < BlockItemCount && j < destinationCount; i++) {
+            for(int i = chunkItemIndex, j = 0; i < Blocks.Count && j < destinationCount; i++) {
                 var item = Blocks[i];
                 var dataLength = j == destinationCount - 1
                     ? destinationLength - destinationDataLength
@@ -348,17 +358,17 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         public void Clear()
         {
-            for(var i = 0; i < BlockItemCount; i++) {
+            for(var i = 0; i < Blocks.Count; i++) {
                 Blocks[i].Clear();
             }
 
-            BlockItemCount = 0;
+            Blocks.Clear();
             Count = 0;
         }
 
         public bool Contains(T item)
         {
-            for(var i = 0; i < BlockItemCount; i++) {
+            for(var i = 0; i < Blocks.Count; i++) {
                 if(Blocks[i].Contains(item)) {
                     return true;
                 }
@@ -397,7 +407,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         public IEnumerator<T> GetEnumerator()
         {
-            for(var i = 0; i < BlockItemCount; i++) {
+            for(var i = 0; i < Blocks.Count; i++) {
                 var item = Blocks[i];
                 for(var j = 0; j < item.Count; j++) {
                     yield return item[j];
@@ -411,13 +421,13 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         public bool Remove(T item)
         {
-            for(var i = 0; i < BlockItemCount; i++) {
+            for(var i = 0; i < Blocks.Count; i++) {
                 var chunkItem = Blocks[i];
                 var chunkCount = chunkItem.Count;
                 if(chunkItem.Remove(item)) {
                     // 後ろの子らをずらす
                     var prevChunkItem = chunkItem;
-                    for(var j = i + 1; j < BlockItemCount; j++) {
+                    for(var j = i + 1; j < Blocks.Count; j++) {
                         var nextChunkItem = Blocks[j];
                         prevChunkItem.Add(nextChunkItem[0]);
                         nextChunkItem.Remove(nextChunkItem[0]);
