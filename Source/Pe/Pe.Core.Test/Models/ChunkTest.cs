@@ -8,39 +8,45 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace ContentTypeTextNet.Pe.Core.Test.Models
 {
     [TestClass]
-    public class ChunkItemTest
+    public class ChunkBlockTest
     {
         [TestMethod]
         public void ConstructorTest()
         {
-            var item = new ChunkItem<int>(100);
-            Assert.AreEqual(100, item.Size);
+            var block = new ChunkBlock<int>(100);
+            Assert.AreEqual(100, block.Size);
+        }
+
+        [TestMethod]
+        public void Constructor_0_Test()
+        {
+            Assert.ThrowsException<ArgumentException>(() => new ChunkBlock<int>(0));
         }
 
         [TestMethod]
         public void AddTest()
         {
-            var item = new ChunkItem<int>(3);
-            item.Add(10);
-            Assert.AreEqual(1, item.Count);
+            var block = new ChunkBlock<int>(3);
+            block.Add(10);
+            Assert.AreEqual(1, block.Count);
 
-            item.Add(20);
-            item.Add(30);
-            Assert.ThrowsException<OutOfMemoryException>(() => item.Add(40));
+            block.Add(20);
+            block.Add(30);
+            Assert.ThrowsException<OutOfMemoryException>(() => block.Add(40));
         }
 
         [TestMethod]
         public void ClearTest()
         {
-            var item = new ChunkItem<int>(3);
-            item.Add(10);
-            Assert.AreEqual(1, item.Count);
+            var block = new ChunkBlock<int>(3);
+            block.Add(10);
+            Assert.AreEqual(1, block.Count);
 
-            item.Clear();
-            Assert.AreEqual(0, item.Count);
+            block.Clear();
+            Assert.AreEqual(0, block.Count);
 
-            item.Add(10);
-            Assert.AreEqual(1, item.Count);
+            block.Add(10);
+            Assert.AreEqual(1, block.Count);
         }
 
         [TestMethod]
@@ -51,23 +57,23 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         [DataRow(false, 7, new[] { 0, 1, 2, 3, 4, 5, 6 })]
         public void ContainsTest(bool result, int value, int[] items)
         {
-            var item = new ChunkItem<int>(items.Length);
+            var block = new ChunkBlock<int>(items.Length);
             foreach(var i in items) {
-                item.Add(i);
+                block.Add(i);
             }
-            var test = item.Contains(value);
+            var test = block.Contains(value);
             Assert.AreEqual(result, test);
         }
 
         [TestMethod]
         public void CopyToTest()
         {
-            var item = new ChunkItem<int>(2);
-            item.Add(10);
-            item.Add(20);
+            var block = new ChunkBlock<int>(2);
+            block.Add(10);
+            block.Add(20);
 
-            var array = new int[item.Size];
-            item.CopyTo(array, 0);
+            var array = new int[block.Size];
+            block.CopyTo(array, 0);
             Assert.AreEqual(2, array.Length);
             Assert.AreEqual(10, array[0]);
             Assert.AreEqual(20, array[1]);
@@ -80,49 +86,49 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
                 10, 20, 30, 40
             };
 
-            var item1 = new ChunkItem<int>(4);
-            item1.CopyFrom(0, array, 0, array.Length);
-            Assert.AreEqual(4, item1.Count);
-            CollectionAssert.AreEqual(array, item1.ToArray());
+            var block1 = new ChunkBlock<int>(4);
+            block1.CopyFrom(0, array, 0, array.Length);
+            Assert.AreEqual(4, block1.Count);
+            CollectionAssert.AreEqual(array, block1.ToArray());
 
-            var item2 = new ChunkItem<int>(4);
-            Assert.ThrowsException<ArgumentOutOfRangeException>(() => item2.CopyFrom(1, array, 1, 2));
-            item2.Add(99);
-            item2.CopyFrom(1, array, 1, 2);
-            CollectionAssert.AreEqual(new[] { 99, 20, 30 }, item2.ToArray());
+            var block2 = new ChunkBlock<int>(4);
+            Assert.ThrowsException<ArgumentOutOfRangeException>(() => block2.CopyFrom(1, array, 1, 2));
+            block2.Add(99);
+            block2.CopyFrom(1, array, 1, 2);
+            CollectionAssert.AreEqual(new[] { 99, 20, 30 }, block2.ToArray());
 
         }
 
         [TestMethod]
         public void RemoveTest()
         {
-            var item = new ChunkItem<int>(4);
-            item.Add(10);
-            item.Add(20);
-            item.Add(30);
-            item.Add(40);
+            var block = new ChunkBlock<int>(4);
+            block.Add(10);
+            block.Add(20);
+            block.Add(30);
+            block.Add(40);
 
-            Assert.IsTrue(item.Remove(40));
-            Assert.IsFalse(item.Remove(40));
-            Assert.AreEqual(3, item.Count);
+            Assert.IsTrue(block.Remove(40));
+            Assert.IsFalse(block.Remove(40));
+            Assert.AreEqual(3, block.Count);
 
-            Assert.AreEqual(10, item.ElementAt(0));
-            Assert.AreEqual(20, item.ElementAt(1));
-            Assert.AreEqual(30, item.ElementAt(2));
-            Assert.ThrowsException<ArgumentOutOfRangeException>(() => item.ElementAt(3));
+            Assert.AreEqual(10, block.ElementAt(0));
+            Assert.AreEqual(20, block.ElementAt(1));
+            Assert.AreEqual(30, block.ElementAt(2));
+            Assert.ThrowsException<ArgumentOutOfRangeException>(() => block.ElementAt(3));
 
-            item.Add(50);
-            Assert.AreEqual(50, item.ElementAt(3));
+            block.Add(50);
+            Assert.AreEqual(50, block.ElementAt(3));
 
-            item.Remove(20);
-            Assert.AreEqual(10, item.ElementAt(0));
-            Assert.AreEqual(30, item.ElementAt(1));
-            Assert.AreEqual(50, item.ElementAt(2));
+            block.Remove(20);
+            Assert.AreEqual(10, block.ElementAt(0));
+            Assert.AreEqual(30, block.ElementAt(1));
+            Assert.AreEqual(50, block.ElementAt(2));
 
-            item.Remove(10);
-            Assert.AreEqual(30, item.ElementAt(0));
-            Assert.AreEqual(50, item.ElementAt(1));
-            Assert.ThrowsException<ArgumentOutOfRangeException>(() => item.ElementAt(2));
+            block.Remove(10);
+            Assert.AreEqual(30, block.ElementAt(0));
+            Assert.AreEqual(50, block.ElementAt(1));
+            Assert.ThrowsException<ArgumentOutOfRangeException>(() => block.ElementAt(2));
 
         }
     }
@@ -376,6 +382,20 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
     }
 
     [TestClass]
+    public class BinaryChunkedListTest
+    {
+        [TestMethod]
+        public void CopyFromTest()
+        {
+            var list = new BinaryChunkedList(255, BinaryChunkedList.DefaultChunkSize);
+            var rnd = new Random();
+            var data = Enumerable.Range(0, BinaryChunkedList.LargeObjectHeapSize * 9).Select(i => (byte)rnd.Next(0, 255)).ToArray();
+            list.CopyFrom(0, data, 0, data.Length);
+            CollectionAssert.AreEqual(data, list);
+        }
+    }
+
+    [TestClass]
     public class BinaryChunkedStreamTest
     {
         [TestMethod]
@@ -417,5 +437,6 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
                 CollectionAssert.AreEqual(a2, b2);
             }
         }
+
     }
 }
