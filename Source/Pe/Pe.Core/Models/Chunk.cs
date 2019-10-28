@@ -142,7 +142,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
     /// <summary>
     /// <see cref="ChunkItem{T}"/>のリスト。
-    /// <para><see cref="CopyTo"/>, <see cref="CopyFrom"/>で力尽きた</para>
+    /// <para><see cref="CopyTo"/>, <see cref="CopyFrom"/>で力尽きた。</para>
+    /// TODO: 致命的にバグってる
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public class ChunkedList<T> : ICollection<T>, ICollection, IReadOnlyList<T>
