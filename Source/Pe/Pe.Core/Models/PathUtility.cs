@@ -55,12 +55,6 @@ namespace ContentTypeTextNet.Pe.Core.Models
             return ToSafeName(name, c => "_");
         }
 
-        [Obsolete("use: " + nameof(HasExtensions))]
-        public static bool HasExtension(string path, params string[] extList)
-        {
-            return HasExtensions(path, extList);
-        }
-
         public static bool HasExtensions(string path, IEnumerable<string> extList)
         {
             var dotExt = Path.GetExtension(path);
@@ -74,7 +68,6 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 .Any(s => s == ext)
             ;
         }
-        public static bool HasExtensions(string path, params string[] extList) => HasExtensions(path, extList);
 
         /// <summary>
         /// アイコンを持つパスか。
@@ -83,13 +76,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <returns></returns>
         public static bool HasIconPath(string path)
         {
-            return HasExtensions(path, "exe", "dll");
+            return HasExtensions(path, new[] { "exe", "dll" });
         }
-        [Obsolete("use:" + nameof(HasIconPath))]
-        public static bool IsIconPath(string path)
-        {
-            return HasIconPath(path);
-        }
+
 
         /// <summary>
         /// ショートカットか。
@@ -98,7 +87,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <returns></returns>
         public static bool IsShortcut(string path)
         {
-            return HasExtensions(path, "lnk");
+            return HasExtensions(path, new[] { "lnk" });
         }
 
         /// <summary>
@@ -108,7 +97,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <returns></returns>
         public static bool IsProgram(string path)
         {
-            return HasExtensions(path, "exe", "dll");
+            return HasExtensions(path, new[] { "exe", "dll" });
         }
 
         public static string GetTimestampFileName(DateTime dateTime)
