@@ -27,14 +27,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
     {
         #region peoperty
 
-        public bool IsFile { get; set; }
+        public string FileName { get; set; } = string.Empty;
+        public int IconIndex { get; set; }
 
         #endregion
     }
 
-    public class LauncherIconSelectRequestResponse : FileDialogRequestResponse
+    public class LauncherIconSelectRequestResponse : CancelResponse
     {
         #region peoperty
+
+        public string FileName { get; set; } = string.Empty;
+        public int IconIndex { get; set; }
+
+
         #endregion
     }
 

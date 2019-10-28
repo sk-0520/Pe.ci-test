@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Views;
 using ContentTypeTextNet.Pe.Main.Models.Launcher;
@@ -67,7 +68,12 @@ namespace ContentTypeTextNet.Pe.Main.Views.CustomizeLauncherItem
         public ICommand FileSelectCommand => CommandStore.GetOrCreate(() => new DelegateCommand<RequestEventArgs>(
             o => {
                 var fileSelectParameter = (LauncherFileSelectRequestParameter)o.Parameter;
-                using(var dialog = new OpenFileDialog()) {
+                FileSystemDialogBase dialog = fileSelectParameter.IsFile switch
+                {
+                    true => new OpenFileDialog(),
+                    false => new FolderBrowserDialog(),
+                };
+                using(dialog) {
                     dialog.FileName = fileSelectParameter.FilePath;
                     dialog.Filters.SetRange(fileSelectParameter.Filter);
 
@@ -87,7 +93,21 @@ namespace ContentTypeTextNet.Pe.Main.Views.CustomizeLauncherItem
 
         public ICommand IconSelectCommand => CommandStore.GetOrCreate(() => new DelegateCommand<RequestEventArgs>(
             o => {
-
+                var iconSelectParameter = (LauncherIconSelectRequestParameter)o.Parameter;
+                var dialog = new IconDialog();
+                dialog.IconPath = iconSelectParameter.FileName;
+                dialog.IconIndex = iconSelectParameter.IconIndex;
+                if(dialog.ShowDialog().GetValueOrDefault()) {
+                    o.Callback(new LauncherIconSelectRequestResponse() {
+                        ResponseIsCancel = false,
+                        FileName = dialog.IconPath,
+                        IconIndex = dialog.IconIndex,
+                    });
+                } else {
+                    o.Callback(new LauncherIconSelectRequestResponse() {
+                        ResponseIsCancel = true,
+                    });
+                }
             }
         ));
 

@@ -6,10 +6,13 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Element.CustomizeLauncherItem;
+using ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon;
 using ContentTypeTextNet.Pe.Main.Models.Launcher;
+using ContentTypeTextNet.Pe.Main.Models.Logic;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
 
@@ -87,17 +90,43 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.CustomizeLauncherItem
 
         public ICommand IconFileSelectCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-                IconSelectRequest.Send();
+                var parameter = new LauncherIconSelectRequestParameter() {
+                    FileName = ExpandPath(IconData?.Path),
+                    IconIndex = IconData?.Index ?? 0,
+                };
+                IconSelectRequest.Send<LauncherIconSelectRequestResponse>(parameter, r => {
+                    if(r.ResponseIsCancel) {
+                        Logger.LogTrace("cancel");
+                        return;
+                    }
+                    IconData = new IconData() {
+                        Path = r.FileName,
+                        Index = r.IconIndex,
+                    };
+                });
             }
         ));
         public ICommand IconImageSelectCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-                ImageSelectRequest.Send();
+                SelectFile(
+                    ImageSelectRequest,
+                    ExpandPath(IconData?.Path),
+                    true,
+                    new[] {
+                        new DialogFilterItem("image", string.Empty, IconImageLoaderBase.ImageFileExtensions.Select(i => "*." + i)),
+                    },
+                    r => {
+                        IconData = new IconData() {
+                            Path = r.ResponseFilePaths[0],
+                            Index = 0,
+                        };
+                    }
+                );
             }
         ));
         public ICommand IconClearSelectCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-
+                IconData = new IconData();
             }
         ));
 

@@ -60,11 +60,11 @@
       <DataTemplate DataType="{x:Type app_viewmodel_customize_launcher_item:CustomizeLauncherCommonViewModel}">
         <GroupBox Style="{StaticResource HeaderGroupBox}" Header="common">
           <i:Interaction.Triggers>
-            <app_core_views:RequestTrigger SourceObject="{Binding FileSelectRequest}">
-              <prism:InvokeCommandAction Command="{Binding FileSelectCommand ,ElementName=root}" />
-            </app_core_views:RequestTrigger>
             <app_core_views:RequestTrigger SourceObject="{Binding IconSelectRequest}">
               <prism:InvokeCommandAction Command="{Binding IconSelectCommand ,ElementName=root}" />
+            </app_core_views:RequestTrigger>
+            <app_core_views:RequestTrigger SourceObject="{Binding ImageSelectRequest}">
+              <prism:InvokeCommandAction Command="{Binding FileSelectCommand ,ElementName=root}" />
             </app_core_views:RequestTrigger>
           </i:Interaction.Triggers>
           <StackPanel>
@@ -121,11 +121,12 @@
                   <ColumnDefinition Width="*" />
                   <ColumnDefinition Width="Auto" />
                   <ColumnDefinition Width="Auto" />
+                  <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
                 <TextBox Grid.Column="0" IsReadOnly="True" Text="{Binding IconPath, Mode=OneWay}" />
-                <Button Grid.Column="1" Content="file" Command="{Binding IconFileSelectCommand}" />
-                <Button Grid.Column="2" Content="dir" Command="{Binding IconImageSelectCommand}" />
+                <Button Grid.Column="1" Content="icon" Command="{Binding IconFileSelectCommand}" />
+                <Button Grid.Column="2" Content="image" Command="{Binding IconImageSelectCommand}" />
                 <Button Grid.Column="3" Content="clear" Command="{Binding IconClearSelectCommand}" />
               </Grid>
             </Grid>
@@ -190,11 +191,13 @@
                   <ColumnDefinition Width="*" />
                   <ColumnDefinition Width="Auto" />
                   <ColumnDefinition Width="Auto" />
+                  <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
                 <TextBox Grid.Column="0" Text="{Binding Option}" />
                 <Button Grid.Column="1" Content="file" Command="{Binding OptionFileSelectCommand}" />
                 <Button Grid.Column="2" Content="dir" Command="{Binding OptionDirectorySelectCommand}" />
+                <Button Grid.Column="3" Content="clear" Command="{Binding OptionClearCommand}" />
               </Grid>
 
             </Grid>

@@ -34,7 +34,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         RunningStatus RunningStatusImpl { get; }
         public IRunningStatus RunningStatus => RunningStatusImpl;
 
-        public static IReadOnlyCollection<string> ImageFilePath { get; } = new[] { "png", "bmp", "jpeg", "jpg" };
+        public static IReadOnlyCollection<string> ImageFileExtensions { get; } = new[] { "png", "bmp", "jpeg", "jpg" };
 
         #endregion
 
@@ -54,7 +54,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
                 BitmapSource? iconImage = null;
 
-                if(isFile && PathUtility.HasExtensions(expandedPath, ImageFilePath)) {
+                if(isFile && PathUtility.HasExtensions(expandedPath, ImageFileExtensions)) {
                     Logger.LogDebug("画像ファイルとして読み込み {0}", expandedPath);
                     using(var stream = new FileStream(expandedPath, FileMode.Open, FileAccess.Read, FileShare.Read)) {
                         DispatcherWapper.Invoke(() => {

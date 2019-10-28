@@ -75,56 +75,97 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.CustomizeLauncherItem
 
         public ICommand LauncherFileSelectCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-                var parameter = new LauncherFileSelectRequestParameter() {
-                    FilePath = Environment.ExpandEnvironmentVariables(Path ?? string.Empty),
-                    IsFile = true,
-                };
-
                 var systemExecutor = new SystemExecutor();
                 var exeExts = systemExecutor.GetSystemExecuteExtensions();
-                parameter.Filter.Add(new DialogFilterItem("exe", exeExts.First(), exeExts));
 
-                parameter.Filter.Add(new DialogFilterItem("all", string.Empty, "*"));
-
-                FileSelectRequest.Send< LauncherFileSelectRequestResponse>(parameter, r => {
-                    if(r.ResponseIsCancel) {
-                        return;
+                SelectFile(
+                    FileSelectRequest,
+                    ExpandPath(Path),
+                    true,
+                    new[] {
+                        new DialogFilterItem("exe", exeExts.First(), exeExts),
+                        CreateAllFilter(),
+                    },
+                    r => {
+                        Path = r.ResponseFilePaths[0];
                     }
-
-                });
+                );
             }
         ));
 
         public ICommand LauncherDirectorySelectCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-                FileSelectRequest.Send();
+                SelectFile(
+                    FileSelectRequest,
+                    ExpandPath(Path),
+                    false,
+                    Enumerable.Empty<DialogFilterItem>(),
+                    r => {
+                        Path = r.ResponseFilePaths[0];
+                    }
+                );
             }
         ));
+
         public ICommand OptionFileSelectCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-                FileSelectRequest.Send();
+                SelectFile(
+                    FileSelectRequest,
+                    ExpandPath(Option),
+                    true,
+                    new[] { CreateAllFilter() },
+                    r => {
+                        Option = r.ResponseFilePaths[0];
+                    }
+                );
             }
         ));
 
         public ICommand OptionDirectorySelectCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-                FileSelectRequest.Send();
+                SelectFile(
+                    FileSelectRequest,
+                    ExpandPath(Option),
+                    false,
+                    Enumerable.Empty<DialogFilterItem>(),
+                    r => {
+                        Option = r.ResponseFilePaths[0];
+                    }
+                );
+            }
+        ));
+
+        public ICommand OptionClearCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                Option = string.Empty;
             }
         ));
 
         public ICommand WorkingDirectorySelectCommand => GetOrCreateCommand(() => new DelegateCommand(
              () => {
-                 FileSelectRequest.Send();
+                 SelectFile(
+                     FileSelectRequest,
+                     ExpandPath(WorkingDirectoryPath),
+                     false,
+                     Enumerable.Empty<DialogFilterItem>(),
+                     r => {
+                         WorkingDirectoryPath = r.ResponseFilePaths[0];
+                     }
+                 );
              }
          ));
+
         public ICommand WorkingDirectoryClearCommand => GetOrCreateCommand(() => new DelegateCommand(
              () => {
+                 WorkingDirectoryPath = string.Empty;
              }
          ));
 
         #endregion
 
         #region function
+
+
         #endregion
 
         #region CustomizeLauncherDetailViewModelBase

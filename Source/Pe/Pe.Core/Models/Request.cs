@@ -46,7 +46,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
     public class FileDialogRequestResponse : CancelResponse
     {
-        public string[]? ResponseFilePaths { get; set; }
+        public string[] ResponseFilePaths { get; set; } = new string[] { };
     }
 
     public class FileOpenDialogRequestParameter : FileDialogRequestParameter
