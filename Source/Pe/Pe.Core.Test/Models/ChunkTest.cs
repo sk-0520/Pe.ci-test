@@ -387,7 +387,7 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         [TestMethod]
         public void CopyFromTest()
         {
-            var list = new BinaryChunkedList(255, BinaryChunkedList.DefaultChunkSize);
+            var list = new BinaryChunkedList(255, BinaryChunkedList.DefaultBlockSize);
             var rnd = new Random();
             var data = Enumerable.Range(0, BinaryChunkedList.LargeObjectHeapSize * 9).Select(i => (byte)rnd.Next(0, 255)).ToArray();
             list.CopyFrom(0, data, 0, data.Length);
@@ -397,7 +397,7 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         [TestMethod]
         public void CopyFromTest_2()
         {
-            var list = new BinaryChunkedList(255, BinaryChunkedList.DefaultChunkSize);
+            var list = new BinaryChunkedList(255, BinaryChunkedList.DefaultBlockSize);
             var rnd = new Random();
             var buffer = 65536-1;
             var count = 30;
