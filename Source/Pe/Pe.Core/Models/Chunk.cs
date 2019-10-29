@@ -358,7 +358,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         public void CopyFrom(int destinationIndex, T[] sourceArray, int sourceIndex, int sourceLength)
         {
             var sourceDataLength = 0;
-            var blockCount = sourceLength / BlockSize;
+            var blockCount = (sourceIndex + sourceLength) / BlockSize;
             if((sourceLength % BlockSize) != 0) {
                 blockCount += 1;
             }
@@ -366,18 +366,21 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
             for(var blockIndex = startBlockIndex; blockIndex < startBlockIndex + blockCount; blockIndex++) {
                 var targetBlock = GetOrCreateBlock(blockIndex);
+                if(BlockSize - targetBlock.Count < sourceLength) {
+                    blockCount += 1;
+                }
 
                 if(blockIndex == startBlockIndex) {
                     // 最初
                     var index = destinationIndex - startBlockIndex * BlockSize;
                     var blockFreeSize = BlockSize - index;
-                    var length = Math.Min(sourceArray.Length - sourceIndex, blockFreeSize);
+                    var length = Math.Min(Math.Min(sourceArray.Length - sourceIndex, blockFreeSize), sourceLength);
                     targetBlock.CopyFrom(index, sourceArray, sourceIndex, length);
                     sourceDataLength = length;
                 } else {
                     // 最後もクソもない
                     var srcIndex = sourceDataLength + sourceIndex;
-                    var length = Math.Min(sourceArray.Length - srcIndex, BlockSize);
+                    var length = Math.Min(Math.Min(sourceArray.Length - srcIndex, BlockSize), sourceLength - sourceDataLength);
                     targetBlock.CopyFrom(0, sourceArray, srcIndex, length);
                     sourceDataLength += length;
                 }
@@ -385,7 +388,12 @@ namespace ContentTypeTextNet.Pe.Core.Models
                     break;
                 }
             }
-            Count = Math.Max(Count, destinationIndex + (sourceLength - sourceIndex));
+            //Count = Math.Max(Count, destinationIndex + (sourceLength - sourceIndex));
+            if(Blocks.Count != 0) {
+                Count = ((Blocks.Count - 1) * BlockSize) + Blocks.Last().Count;
+            } else {
+                Count = 0;
+            }
         }
 
         #endregion

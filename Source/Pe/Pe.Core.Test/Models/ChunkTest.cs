@@ -363,7 +363,7 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         [DataRow(2, 2, 10, 8)]
         [DataRow(2, 1, 10, 9)]
         [DataRow(1, 10, 10, 10)]
-        public void GetAllValuesTest(int resultCount, int resultLastLength, int dataSize, int chunkSize)
+        public void GetAllVal0uesTest(int resultCount, int resultLastLength, int dataSize, int chunkSize)
         {
             var items = Enumerable.Range(0, dataSize).ToArray();
             var list = new ChunkedList<int>(3, 3);
@@ -391,6 +391,20 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
             var rnd = new Random();
             var data = Enumerable.Range(0, BinaryChunkedList.LargeObjectHeapSize * 9).Select(i => (byte)rnd.Next(0, 255)).ToArray();
             list.CopyFrom(0, data, 0, data.Length);
+            CollectionAssert.AreEqual(data, list);
+        }
+
+        [TestMethod]
+        public void CopyFromTest_2()
+        {
+            var list = new BinaryChunkedList(255, BinaryChunkedList.DefaultChunkSize);
+            var rnd = new Random();
+            var buffer = 65536-1;
+            var count = 30;
+            var data = Enumerable.Range(0, buffer * count).Select(i => (byte)rnd.Next(0, 255)).ToArray();
+            for(var i = 0; i < count; i++) {
+                list.CopyFrom(buffer * i, data, buffer * i, buffer);
+            }
             CollectionAssert.AreEqual(data, list);
         }
     }
