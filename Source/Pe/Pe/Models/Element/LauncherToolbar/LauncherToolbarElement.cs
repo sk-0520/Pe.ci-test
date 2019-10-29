@@ -302,6 +302,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
         {
             Logger.LogInformation("initialize {0}:{1}, {2}: {3}", DockScreen.DeviceName, DockScreen.DeviceBounds, nameof(DockScreen.Primary), DockScreen.Primary);
 
+            NotifyManager.LauncherItemChanged += NotifyManager_LauncherItemChanged;
+
             var launcherToolbarId = GetLauncherToolbarId();
             if(launcherToolbarId == Guid.Empty) {
                 launcherToolbarId = CreateLauncherToolbar();
@@ -315,6 +317,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
         protected override void Dispose(bool disposing)
         {
             if(!IsDisposed) {
+                NotifyManager.LauncherItemChanged -= NotifyManager_LauncherItemChanged;
                 Flush();
                 if(disposing) {
                     MainDatabaseLazyWriter.Dispose();
@@ -453,5 +456,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
         public Screen DockScreen { get; }
 
         #endregion
+
+        private void NotifyManager_LauncherItemChanged(object? sender, LauncherItemChangedEventArgs e)
+        {
+            if(LauncherItems.Any(i => e.LauncherItemIds.Any(i2 => i.LauncherItemId == i2))) {
+                LoadLauncherItems();
+            }
+        }
+
     }
 }

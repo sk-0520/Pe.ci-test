@@ -21,7 +21,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.CustomizeLauncherItem
 
         #endregion
 
-        public CustomizeLauncherItemElement(Guid launcherItemId, Screen screen, IOrderManager orderManager, IClipboardManager clipboardManager, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, LauncherIconElement launcherIconElement, ILoggerFactory loggerFactory)
+        public CustomizeLauncherItemElement(Guid launcherItemId, Screen screen, IOrderManager orderManager, IClipboardManager clipboardManager, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, LauncherIconElement launcherIconElement, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             LauncherItemId = launcherItemId;
@@ -30,6 +30,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.CustomizeLauncherItem
             ClipboardManager = clipboardManager;
             NotifyManager = notifyManager;
             MainDatabaseBarrier = mainDatabaseBarrier;
+            FileDatabaseBarrier = fileDatabaseBarrier;
             StatementLoader = statementLoader;
 
             Icon = launcherIconElement;
@@ -43,7 +44,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.CustomizeLauncherItem
         IClipboardManager ClipboardManager { get; }
         INotifyManager NotifyManager { get; }
         IMainDatabaseBarrier MainDatabaseBarrier { get; }
-        //IFileDatabaseBarrier FileDatabaseBarrier { get; }
+        IFileDatabaseBarrier FileDatabaseBarrier { get; }
         IDatabaseStatementLoader StatementLoader { get; }
         public LauncherIconElement Icon { get; }
 
@@ -126,6 +127,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.CustomizeLauncherItem
 
                 commander.Commit();
             }
+            using(var commander = FileDatabaseBarrier.WaitWrite()) {
+                var launcherItemIconsEntityDao = new LauncherItemIconsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                launcherItemIconsEntityDao.DeleteAllSizeImageBinary(launcherItemData.LauncherItemId);
+
+                commander.Commit();
+            }
+
+            NotifyManager.SendLauncherItemChanged(new[] { LauncherItemId });
         }
 
         #endregion

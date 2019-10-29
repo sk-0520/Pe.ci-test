@@ -6,12 +6,38 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
+    public class NotifyEventArgs: EventArgs
+    { }
+
+    public class LauncherItemChangedEventArgs: NotifyEventArgs
+    {
+        public LauncherItemChangedEventArgs(IReadOnlyCollection<Guid> launcherItemIds)
+        {
+            LauncherItemIds = launcherItemIds;
+        }
+
+        #region property
+
+        public IReadOnlyCollection<Guid> LauncherItemIds { get; }
+
+        #endregion
+    }
+
     /// <summary>
     /// アプリケーションからの通知を発行する。
     /// </summary>
     public interface INotifyManager
     {
+        #region event
+
+        event EventHandler<LauncherItemChangedEventArgs>? LauncherItemChanged;
+
+        #endregion
+
         #region function
+
+        void SendLauncherItemChanged(IReadOnlyCollection<Guid> launcherItemIds);
+
         #endregion
     }
 
@@ -24,9 +50,24 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             { }
 
             #region function
+
+            void OnLauncherItemChanged(IReadOnlyCollection<Guid> launcherItemIds)
+            {
+                var e = new LauncherItemChangedEventArgs(launcherItemIds);
+                LauncherItemChanged?.Invoke(this, e);
+            }
+
             #endregion
 
             #region INotifyManager
+
+            public event EventHandler<LauncherItemChangedEventArgs>? LauncherItemChanged;
+
+            public void SendLauncherItemChanged(IReadOnlyCollection<Guid> launcherItemIds)
+            {
+                OnLauncherItemChanged(launcherItemIds);
+            }
+
             #endregion
         }
     }

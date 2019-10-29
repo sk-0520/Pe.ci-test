@@ -445,6 +445,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         #endregion
 
         #region INotifyManager
+
+        public event EventHandler<LauncherItemChangedEventArgs>? LauncherItemChanged
+        {
+            add { NotifyManager.LauncherItemChanged += value; }
+            remove { NotifyManager.LauncherItemChanged -= value; }
+        }
+
+        public void SendLauncherItemChanged(IReadOnlyCollection<Guid> launcherItemIds)
+        {
+            NotifyManager.SendLauncherItemChanged(launcherItemIds);
+        }
+
         #endregion
 
         #region DisposerBase
@@ -472,4 +484,4 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         #endregion
     }
-    }
+}

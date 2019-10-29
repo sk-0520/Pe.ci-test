@@ -63,6 +63,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 Kind = kindEnumTransfer.ToEnum(dto.Kind),
 #pragma warning restore CS8604 // Null 参照引数の可能性があります。
                 IsEnabledCommandLauncher = dto.IsEnabledCommandLauncher,
+                Icon = new IconData() {
+                    Path = dto.IconPath,
+                    Index = (int)dto.IconIndex,
+                },
                 Comment = dto.Comment,
             };
 

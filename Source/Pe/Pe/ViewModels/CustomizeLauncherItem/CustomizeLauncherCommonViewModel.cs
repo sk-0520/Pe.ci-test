@@ -158,10 +158,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.CustomizeLauncherItem
         {
             Name = Model.Name;
             Code = Model.Code;
-            IconData = new IconData() {
-                Path = Model.IconData!.Path,
-                Index = Model.IconData!.Index,
-            };
+            IconData = new IconData(Model.IconData);
             IsEnabledCommandLauncher = Model.IsEnabledCommandLauncher;
         }
 

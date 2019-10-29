@@ -13,10 +13,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         public IconData()
         { }
 
-        public IconData(IconData source)
+        public IconData(IconData? source)
         {
-            Path = source.Path;
-            Index = source.Index;
+            Path = source?.Path ?? string.Empty;
+            Index = source?.Index ?? 0;
         }
 
         #region property

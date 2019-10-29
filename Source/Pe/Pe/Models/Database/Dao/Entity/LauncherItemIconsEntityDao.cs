@@ -70,6 +70,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return resultCount;
         }
 
+        public int DeleteAllSizeImageBinary(Guid launcherItemId)
+        {
+            var statement = LoadStatement();
+            var param = new {
+                LauncherItemId = launcherItemId,
+            };
+            return Commander.Execute(statement, param);
+        }
+
         public int DeleteImageBinary(Guid launcherItemId, IconBox iconBox)
         {
             var iconBoxTransfer = new EnumTransfer<IconBox>();
