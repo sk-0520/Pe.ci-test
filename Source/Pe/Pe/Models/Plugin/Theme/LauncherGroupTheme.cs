@@ -47,18 +47,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Theme
         DependencyObject GetGroupImageCore(LauncherGroupImageName imageName, Color imageColor, IconBox iconBox, bool isStrong)
         {
             var viewBox = new Viewbox();
-            using(Initializer.BeginInitialize(viewBox)) {
+            using(Initializer.Begin(viewBox)) {
                 var iconSize = new IconSize(iconBox);
                 viewBox.Width = iconSize.Width;
                 viewBox.Height = iconSize.Height;
 
                 var canvas = new Canvas();
-                using(Initializer.BeginInitialize(canvas)) {
+                using(Initializer.Begin(canvas)) {
                     canvas.Width = 24;
                     canvas.Height = 24;
 
                     var path = new Path();
-                    using(Initializer.BeginInitialize(path)) {
+                    using(Initializer.Begin(path)) {
                         var resourceKey = GetResourceKey(imageName);
                         var geometry = (Geometry)Application.Current.Resources[resourceKey];
                         FreezableUtility.SafeFreeze(geometry);

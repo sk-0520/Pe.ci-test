@@ -46,7 +46,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Theme
             );
 
             var canvas = new Canvas();
-            using(Initializer.BeginInitialize(canvas)) {
+            using(Initializer.Begin(canvas)) {
                 canvas.Width = drawSize.Width;
                 canvas.Height = drawSize.Height;
 

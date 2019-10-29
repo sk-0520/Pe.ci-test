@@ -77,7 +77,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Theme
         public static FrameworkElement CreateBox(Color borderColor, Color fillColor, Size size)
         {
             var box = new Rectangle();
-            using(Initializer.BeginInitialize(box)) {
+            using(Initializer.Begin(box)) {
                 box.Width = size.Width;
                 box.Height = size.Height;
                 box.Stroke = FreezableUtility.GetSafeFreeze(new SolidColorBrush(borderColor));

@@ -59,7 +59,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                     using(var stream = new FileStream(expandedPath, FileMode.Open, FileAccess.Read, FileShare.Read)) {
                         DispatcherWapper.Invoke(() => {
                             var bitmapImage = new BitmapImage();
-                            using(Initializer.BeginInitialize(bitmapImage)) {
+                            using(Initializer.Begin(bitmapImage)) {
                                 bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
                                 bitmapImage.CreateOptions = BitmapCreateOptions.None;
                                 bitmapImage.StreamSource = stream;

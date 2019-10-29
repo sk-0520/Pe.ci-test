@@ -36,7 +36,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Note
         public string ToRichText(string plainText, FontData fontData, Color foregroundColor)
         {
             var document = new FlowDocument();
-            using(Initializer.BeginInitialize(document)) {
+            using(Initializer.Begin(document)) {
                 var fontConverter = new FontConverter(LoggerFactory);
 #pragma warning disable CS8604 // Null 参照引数の可能性があります。
                 document.FontFamily = fontConverter.MakeFontFamily(fontData.FamilyName, SystemFonts.MessageFontFamily);
@@ -65,7 +65,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Note
         public FlowDocument ToFlowDocument(string content)
         {
             var document = new FlowDocument();
-            using(Initializer.BeginInitialize(document)) {
+            using(Initializer.Begin(document)) {
                 var range = new TextRange(document.ContentStart, document.ContentEnd);
                 using(var stream = new MemoryStream(Encoding.GetBytes(content))) {
                     stream.Seek(0, SeekOrigin.Begin);

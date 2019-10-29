@@ -29,13 +29,13 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <para>多分こいつしか使わない。</para>
         /// </summary>
         /// <example>
-        /// using(Initializer.BeginInitialize(obj)) {
+        /// using(Initializer.Begin(obj)) {
         ///     obj.Property = xxx;
         /// }
         /// </example>
         /// <param name="target"></param>
         /// <returns></returns>
-        public static Initializer BeginInitialize(ISupportInitialize target)
+        public static Initializer Begin(ISupportInitialize target)
         {
             var result = new Initializer(target);
             result.Target.BeginInit();

@@ -55,17 +55,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Theme
         DependencyObject GetCaptionImageCore(NoteCaption noteCaption, bool isEnabled, IReadOnlyColorPair<Color> baseColor)
         {
             var viewBox = new Viewbox();
-            using(Initializer.BeginInitialize(viewBox)) {
+            using(Initializer.Begin(viewBox)) {
                 viewBox.Width = GetCaptionHeight();
                 viewBox.Height = viewBox.Width;
 
                 var canvas = new Canvas();
-                using(Initializer.BeginInitialize(canvas)) {
+                using(Initializer.Begin(canvas)) {
                     canvas.Width = 24;
                     canvas.Height = 24;
 
                     var path = new Path();
-                    using(Initializer.BeginInitialize(path)) {
+                    using(Initializer.Begin(path)) {
                         var resourceKey = GetResourceKey(noteCaption, isEnabled);
                         var geometry = (Geometry)Application.Current.Resources[resourceKey];
                         FreezableUtility.SafeFreeze(geometry);
@@ -185,17 +185,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Theme
         public DependencyObject GetResizeGripImage(IReadOnlyColorPair<Color> baseColor)
         {
             var viewBox = new Viewbox();
-            using(Initializer.BeginInitialize(viewBox)) {
+            using(Initializer.Begin(viewBox)) {
                 viewBox.Width = GetResizeGripSize().Width;
                 viewBox.Height = GetResizeGripSize().Height;
 
                 var canvas = new Canvas();
-                using(Initializer.BeginInitialize(canvas)) {
+                using(Initializer.Begin(canvas)) {
                     canvas.Width = 24;
                     canvas.Height = 24;
 
                     var path = new Path();
-                    using(Initializer.BeginInitialize(path)) {
+                    using(Initializer.Begin(path)) {
                         var resourceKey = "Image-Note-ResizeGrip";
                         var geometry = (Geometry)Application.Current.Resources[resourceKey];
                         FreezableUtility.SafeFreeze(geometry);
