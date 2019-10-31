@@ -47,15 +47,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var result = new LauncherToolbarsDisplayData() {
                 LauncherToolbarId = dto.LauncherToolbarId,
                 LauncherGroupId = dto.LauncherGroupId,
-#pragma warning disable CS8604 // Null 参照引数の可能性があります。
                 ToolbarPosition = toolbarPositionTransfer.ToEnum(dto.PositionKind),
-#pragma warning restore CS8604 // Null 参照引数の可能性があります。
-#pragma warning disable CS8604 // Null 参照引数の可能性があります。
                 IconDirection = iconDirectionTransfer.ToEnum(dto.Direction),
-#pragma warning restore CS8604 // Null 参照引数の可能性があります。
-#pragma warning disable CS8604 // Null 参照引数の可能性があります。
                 IconBox = iconBoxTransfer.ToEnum(dto.IconBox),
-#pragma warning restore CS8604 // Null 参照引数の可能性があります。
                 FontId = dto.FontId,
 #pragma warning disable CS8604 // Null 参照引数の可能性があります。
                 AutoHideTimeout = ToTimespan(dto.AutoHideTimeout),

@@ -53,9 +53,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 NoteId = dto.NoteId,
                 Title = dto.Title,
                 ScreenName = dto.ScreenName,
-#pragma warning disable CS8604 // Null 参照引数の可能性があります。
                 LayoutKind = noteLayoutKindTransfer.ToEnum(dto.LayoutKind),
-#pragma warning restore CS8604 // Null 参照引数の可能性があります。
                 IsVisible = dto.IsVisible,
                 FontId = dto.FontId,
 #pragma warning disable CS8604 // Null 参照引数の可能性があります。
@@ -68,9 +66,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 IsTopmost = dto.IsTopmost,
                 IsCompact = dto.IsCompact,
                 TextWrap = dto.TextWrap,
-#pragma warning disable CS8604 // Null 参照引数の可能性があります。
                 ContentKind = contentKindTransfer.ToEnum(dto.ContentKind),
-#pragma warning restore CS8604 // Null 参照引数の可能性があります。
             };
 
             return data;

@@ -61,9 +61,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
             var data = new NoteLayoutData() {
                 NoteId = dto.NoteId,
-#pragma warning disable CS8604 // Null 参照引数の可能性があります。
                 LayoutKind = noteLayoutKindTransfer.ToEnum(dto.LayoutKind),
-#pragma warning restore CS8604 // Null 参照引数の可能性があります。
                 X = dto.X,
                 Y = dto.Y,
                 Width = dto.Width,

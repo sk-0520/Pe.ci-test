@@ -23,9 +23,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain
             var kindEnumTransfer = new EnumTransfer<LauncherItemKind>();
 
             var data = new LauncherIconData() {
-#pragma warning disable CS8604 // Null 参照引数の可能性があります。
                 Kind = kindEnumTransfer.ToEnum(dto.Kind),
-#pragma warning restore CS8604 // Null 参照引数の可能性があります。
             };
 
             data.Path.Path = dto.FilePath;

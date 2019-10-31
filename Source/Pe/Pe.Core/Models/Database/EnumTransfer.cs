@@ -88,10 +88,10 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public TEnum ToEnum(string value)
+        public TEnum ToEnum(string? value)
         {
             if(string.IsNullOrWhiteSpace(value)) {
-                return default(TEnum);
+                return default;
             }
 
             var fieldItem = EnumType.GetFields()
