@@ -168,9 +168,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
                 throw new ArgumentNullException(nameof(pathParameter));
             }
 
-#pragma warning disable CS8604 // Null 参照引数の可能性があります。
-            var path = PathUtility.ExpandFilePath(pathParameter.Path);
-#pragma warning restore CS8604 // Null 参照引数の可能性があります。
+            var path = Environment.ExpandEnvironmentVariables(pathParameter.Path ?? string.Empty);
             var parentDirPath = Path.GetDirectoryName(path);
             try {
                 var process = Process.Start(parentDirPath);
@@ -192,9 +190,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
                 throw new ArgumentNullException(nameof(pathParameter));
             }
 
-#pragma warning disable CS8604 // Null 参照引数の可能性があります。
-            var path = PathUtility.ExpandFilePath(pathParameter.WorkDirectoryPath);
-#pragma warning restore CS8604 // Null 参照引数の可能性があります。
+            var path = Environment.ExpandEnvironmentVariables(pathParameter.WorkDirectoryPath ?? string.Empty);
             try {
                 var process = Process.Start(path);
                 var result = new LauncherExecuteResult() {
@@ -215,9 +211,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
                 throw new ArgumentNullException(nameof(pathParameter));
             }
 
-#pragma warning disable CS8604 // Null 参照引数の可能性があります。
-            var path = PathUtility.ExpandFilePath(pathParameter.Path);
-#pragma warning restore CS8604 // Null 参照引数の可能性があります。
+            var path = Environment.ExpandEnvironmentVariables(pathParameter.Path ?? string.Empty);
             NativeMethods.SHObjectProperties(IntPtr.Zero, SHOP.SHOP_FILEPATH, path, string.Empty);
         }
 

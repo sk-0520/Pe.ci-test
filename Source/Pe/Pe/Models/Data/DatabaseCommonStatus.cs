@@ -98,9 +98,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
             WriteCommon(commonDto);
             foreach(var propertyInfo in commonDto.GetType().GetProperties()) {
                 var value = propertyInfo.GetValue(commonDto);
-#pragma warning disable CS8604 // Null 参照引数の可能性があります。
-                result.Add(propertyInfo.Name, value);
-#pragma warning restore CS8604 // Null 参照引数の可能性があります。
+                result.Add(propertyInfo.Name, value!); // null は来んでしょ
             }
 
             return result;

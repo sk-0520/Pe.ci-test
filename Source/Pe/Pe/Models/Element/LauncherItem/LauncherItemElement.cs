@@ -91,9 +91,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
                 pathData = launcherFilesEntityDao.SelectPath(LauncherItemId);
             }
 
-#pragma warning disable CS8604 // Null 参照引数の可能性があります。
-            var expandedPath = PathUtility.ExpandFilePath(pathData.Path);
-#pragma warning restore CS8604 // Null 参照引数の可能性があります。
+            var expandedPath = Environment.ExpandEnvironmentVariables(pathData.Path ?? string.Empty);
             var result = new LauncherFileDetailData() {
                 PathData = pathData,
                 FullPath = expandedPath,

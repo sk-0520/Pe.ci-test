@@ -157,10 +157,5 @@ namespace ContentTypeTextNet.Pe.Core.Models
         {
             return CreateFileNameCore(name, null, extension);
         }
-
-        public static string ExpandFilePath(string path)
-        {
-            return Environment.ExpandEnvironmentVariables(path ?? string.Empty);
-        }
     }
 }

@@ -59,9 +59,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 LauncherItemId = dto.LauncherItemId,
                 Name = dto.Name,
                 Code = dto.Code,
-#pragma warning disable CS8604 // Null 参照引数の可能性があります。
                 Kind = kindEnumTransfer.ToEnum(dto.Kind),
-#pragma warning restore CS8604 // Null 参照引数の可能性があります。
                 IsEnabledCommandLauncher = dto.IsEnabledCommandLauncher,
                 Icon = new IconData() {
                     Path = dto.IconPath,
