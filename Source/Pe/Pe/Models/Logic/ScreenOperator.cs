@@ -33,12 +33,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         #region function
 
-        static string DeviceToId(string deviceName)
+        static string DeviceToId(string? deviceName)
         {
+            if(string.IsNullOrEmpty(deviceName)) {
+                return string.Empty;
+            }
+
             return new string(deviceName.Trim().SkipWhile(c => !char.IsNumber(c)).ToArray());
         }
 
-        IEnumerable<Win32_DesktopMonitor> GetScreens(string deviceName)
+        IEnumerable<Win32_DesktopMonitor> GetScreens(string? deviceName)
         {
             string query = "SELECT * FROM Win32_DesktopMonitor";
             if(!string.IsNullOrWhiteSpace(deviceName)) {
@@ -73,13 +77,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         /// <returns></returns>
         public string GetName(Screen screen)
         {
-#pragma warning disable CS8604 // Null 参照引数の可能性があります。
             foreach(var screem in GetScreens(screen.DeviceName)) {
-#pragma warning restore CS8604 // Null 参照引数の可能性があります。
                 if(!string.IsNullOrWhiteSpace(screem.Name)) {
-#pragma warning disable CS8604 // Null 参照引数の可能性があります。
                     var id = DeviceToId(screen.DeviceName);
-#pragma warning restore CS8604 // Null 参照引数の可能性があります。
                     return string.Format("{0}. {1}", id, screem.Name);
                 }
                 break;
@@ -98,9 +98,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         public bool RegisterDatabase(Screen screen, IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, IDatabaseCommonStatus databaseCommonStatus)
         {
             var screensDao = new ScreensEntityDao(commander, statementLoader, implementation, LoggerFactory);
-#pragma warning disable CS8604 // Null 参照引数の可能性があります。
             if(!screensDao.SelectExistsScreen(screen.DeviceName)) {
-#pragma warning restore CS8604 // Null 参照引数の可能性があります。
                 return screensDao.InsertScreen(screen, databaseCommonStatus);
             }
 

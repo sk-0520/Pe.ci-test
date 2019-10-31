@@ -40,6 +40,10 @@ namespace ContentTypeTextNet.Pe.Core.Models.Data
     {
         public RawModel(object rawObject)
         {
+            if(rawObject == null) {
+                throw new ArgumentNullException(nameof(rawObject));
+            }
+
             BaseRawObject = rawObject;
         }
 

@@ -41,8 +41,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon
 
         #region function
 
-        BitmapSource? ToImage(IReadOnlyList<byte[]> imageBynaryItems)
+        BitmapSource? ToImage(IReadOnlyList<byte[]>? imageBynaryItems)
         {
+            if(imageBynaryItems == null || imageBynaryItems.Count == 0) {
+                return null;
+            }
+
             using(var stream = new BinaryChunkedStream()) {
                 using(var writer = new BinaryWriter(new KeepStream(stream))) {
                     foreach(var imageBinary in imageBynaryItems) {
@@ -79,9 +83,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon
                 if(imageBinary != null && imageBinary.Count == 0) {
                     return ResultSuccessValue.Failure<BitmapSource>();
                 }
-#pragma warning disable CS8604 // Null 参照引数の可能性があります。
                 var image = ToImage(imageBinary);
-#pragma warning restore CS8604 // Null 参照引数の可能性があります。
 
 #pragma warning disable CS8634 // この型を、ジェネリック型またはメソッド内で型パラメーターとして使用することはできません。型引数の Null 許容性が 'class' 制約と一致しません。
 #pragma warning disable CS8619 // 値における参照型の Null 許容性が、対象の型と一致しません。

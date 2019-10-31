@@ -48,9 +48,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Unmanaged
         protected override void Dispose(bool disposing)
         {
             if(!IsDisposed) {
-#pragma warning disable CS8604 // Null 参照引数の可能性があります。
                 Marshal.ReleaseComObject(Raw);
-#pragma warning restore CS8604 // Null 参照引数の可能性があります。
             }
 
             base.Dispose(disposing);

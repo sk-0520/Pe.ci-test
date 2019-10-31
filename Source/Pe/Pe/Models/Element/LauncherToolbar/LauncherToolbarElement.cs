@@ -172,9 +172,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
 
             using(var commander = MainDatabaseBarrier.WaitWrite()) {
                 var toolbarsDao = new LauncherToolbarsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
-#pragma warning disable CS8604 // Null 参照引数の可能性があります。
                 toolbarsDao.InsertNewToolbar(toolbarId, DockScreen.DeviceName, DatabaseCommonStatus.CreateCurrentAccount());
-#pragma warning restore CS8604 // Null 参照引数の可能性があります。
 
                 var screenOperator = new ScreenOperator(LoggerFactory);
                 screenOperator.RegisterDatabase(DockScreen, commander, StatementLoader, commander.Implementation, DatabaseCommonStatus.CreateCurrentAccount());

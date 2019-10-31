@@ -21,14 +21,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Note
             return new FileInfo(filePath);
         }
 
-        [Obsolete]
-        public static Encoding ToEncoding(this NoteLinkContentData @this)
-        {
-#pragma warning disable CS8604 // Null 参照引数の可能性があります。
-            return EncodingUtility.Parse(@this.EncodingName);
-#pragma warning restore CS8604 // Null 参照引数の可能性があります。
-        }
-
         #endregion
     }
 }

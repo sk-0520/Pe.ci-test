@@ -34,21 +34,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         LazyAction TextChangeLazyAction { get; }
 
-//        public string? RtfContent
-//        {
-//            get => this._rtfContent;
-//            set
-//            {
-//                if(SetProperty(ref this._rtfContent, value)) {
-//                    if(CanVisible) {
-//#pragma warning disable CS8604 // Null 参照引数の可能性があります。
-//                        Model.ChangeRichTextContent(RtfContent);
-//#pragma warning restore CS8604 // Null 参照引数の可能性があります。
-//                    }
-//                }
-//            }
-//        }
-
         #endregion
 
         #region command

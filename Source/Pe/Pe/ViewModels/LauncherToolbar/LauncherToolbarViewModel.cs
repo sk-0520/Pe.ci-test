@@ -114,13 +114,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 
         public bool IsVerticalLayout => ToolbarPosition == AppDesktopToolbarPosition.Left || ToolbarPosition == AppDesktopToolbarPosition.Right;
 
-        public LauncherGroupViewModel SelectedLauncherGroup
+        public LauncherGroupViewModel? SelectedLauncherGroup
         {
-#pragma warning disable CS8603 // Null 参照戻り値である可能性があります。
 #pragma warning disable CS8604 // Null 参照引数の可能性があります。
             get => LauncherGroupCollection.GetViewModel(Model.SelectedLauncherGroup);
 #pragma warning restore CS8604 // Null 参照引数の可能性があります。
-#pragma warning restore CS8603 // Null 参照戻り値である可能性があります。
         }
 
         public DependencyObject ToolbarPositionLeftIcon => CreateToolbarPositionIcon(AppDesktopToolbarPosition.Left);

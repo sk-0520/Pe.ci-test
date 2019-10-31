@@ -19,11 +19,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         #region function
 
-        public bool SelectExistsScreen(string screenName)
+        public bool SelectExistsScreen(string? screenName)
         {
             var statement = LoadStatement();
             var param = new {
-                ScreenName = screenName,
+                ScreenName = screenName ?? string.Empty,
             };
             return Commander.QuerySingle<bool>(statement, param);
         }

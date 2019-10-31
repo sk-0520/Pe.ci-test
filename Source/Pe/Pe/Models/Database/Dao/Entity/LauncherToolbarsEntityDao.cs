@@ -75,13 +75,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return data;
         }
 
-        public bool InsertNewToolbar(Guid toolbarId, string screenName, IDatabaseCommonStatus commonStatus)
+        public bool InsertNewToolbar(Guid toolbarId, string? screenName, IDatabaseCommonStatus commonStatus)
         {
             var statement = LoadStatement();
 
             var param = commonStatus.CreateCommonDtoMapping();
             param[Column.LauncherToolbarId] = toolbarId;
-            param[Column.ScreenName] = screenName;
+            param[Column.ScreenName] = screenName ?? string.Empty;
 
             return Commander.Execute(statement, param) == 1;
         }

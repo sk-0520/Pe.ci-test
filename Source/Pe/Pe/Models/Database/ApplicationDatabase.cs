@@ -104,9 +104,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
 #pragma warning restore CS8603 // Null 参照戻り値である可能性があります。
         }
 
-        public override bool IsNull(object value)
+        public override bool IsNull(object? value)
         {
             if(base.IsNull(value)) {
+                return true;
+            }
+            if(value == null) {
                 return true;
             }
 

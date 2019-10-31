@@ -79,9 +79,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             var startInfo = process.StartInfo;
 
             // 実行パス
-#pragma warning disable CS8604 // Null 参照引数の可能性があります。
-            startInfo.FileName = Environment.ExpandEnvironmentVariables(pathParameter.Path);
-#pragma warning restore CS8604 // Null 参照引数の可能性があります。
+            startInfo.FileName = Environment.ExpandEnvironmentVariables(pathParameter.Path ?? string.Empty);
 
             // 引数
             startInfo.Arguments = pathParameter.Option;

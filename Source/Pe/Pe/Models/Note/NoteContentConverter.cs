@@ -38,9 +38,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Note
             var document = new FlowDocument();
             using(Initializer.Begin(document)) {
                 var fontConverter = new FontConverter(LoggerFactory);
-#pragma warning disable CS8604 // Null 参照引数の可能性があります。
                 document.FontFamily = fontConverter.MakeFontFamily(fontData.FamilyName, SystemFonts.MessageFontFamily);
-#pragma warning restore CS8604 // Null 参照引数の可能性があります。
                 document.FontSize = fontData.Size;
                 document.FontWeight = fontConverter.ToWeight(fontData.IsBold);
                 document.FontStyle = fontConverter.ToStyle(fontData.IsItalic);

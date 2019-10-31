@@ -107,7 +107,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Database.Dao
                 throw new NotImplementedException();
             }
 
-            public bool IsNull(object value)
+            public bool IsNull(object? value)
             {
                 throw new NotImplementedException();
             }

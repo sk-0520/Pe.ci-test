@@ -36,9 +36,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Font
             get
             {
                 var fc = new FontConverter(LoggerFactory);
-#pragma warning disable CS8604 // Null 参照引数の可能性があります。
                 return fc.MakeFontFamily(Model.FamilyName, SystemFonts.MessageFontFamily);
-#pragma warning restore CS8604 // Null 参照引数の可能性があります。
             }
             set
             {
