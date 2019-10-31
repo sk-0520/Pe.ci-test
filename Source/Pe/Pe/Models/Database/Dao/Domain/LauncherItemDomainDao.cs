@@ -27,10 +27,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain
             };
 
             data.Path.Path = dto.FilePath;
-            data.Path.Index = (int)Math.Min(0, Math.Max(dto.FileIndex, int.MaxValue));
+            data.Path.Index = ToInt(dto.FileIndex);
 
             data.Icon.Path = dto.IconPath;
-            data.Icon.Index = (int)Math.Min(0, Math.Max(dto.IconIndex, int.MaxValue));
+            data.Icon.Index = ToInt(dto.IconIndex);
 
             return data;
         }

@@ -37,6 +37,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao
             return color;
         }
 
+        protected int ToInt(long value)
+        {
+            return (int)Math.Clamp(value, int.MinValue, int.MaxValue);
+        }
+
         #endregion
     }
 }

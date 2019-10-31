@@ -76,7 +76,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 FilePath = dto.Address,
                 Encoding = dto.Encoding != null ? EncodingUtility.Parse(dto.Encoding) : Encoding.UTF8,
                 DelayTime = dto.DelayTime,
-                BufferSize = (int)dto.BufferSize,//TODO: ご安全に！
+                BufferSize = ToInt(dto.BufferSize),
                 RefreshTime = dto.RefreshTime,
                 IsEnabledRefresh = dto.IsEnabledRefresh,
             };

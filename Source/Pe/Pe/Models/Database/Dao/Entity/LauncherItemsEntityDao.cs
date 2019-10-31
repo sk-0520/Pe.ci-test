@@ -65,7 +65,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 IsEnabledCommandLauncher = dto.IsEnabledCommandLauncher,
                 Icon = new IconData() {
                     Path = dto.IconPath,
-                    Index = (int)dto.IconIndex,
+                    Index = ToInt(dto.IconIndex),
                 },
                 Comment = dto.Comment,
             };
