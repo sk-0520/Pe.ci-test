@@ -68,12 +68,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon
         Task<ResultSuccessValue<BitmapSource>> LoadExistsImageAsync()
         {
             return Task.Run(() => {
-                IReadOnlyList<byte[]> imageBinary;
+                IReadOnlyList<byte[]>? imageBinary;
                 using(var commander = FileDatabaseBarrier.WaitRead()) {
                     var dao = new LauncherItemIconsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
-#pragma warning disable CS8600 // Null リテラルまたは Null の可能性がある値を Null 非許容型に変換しています。
                     imageBinary = dao.SelectImageBinary(LauncherItemId, IconBox);
-#pragma warning restore CS8600 // Null リテラルまたは Null の可能性がある値を Null 非許容型に変換しています。
                 }
 
                 if(imageBinary != null && imageBinary.Count == 0) {
@@ -81,11 +79,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon
                 }
                 var image = ToImage(imageBinary);
 
-#pragma warning disable CS8634 // この型を、ジェネリック型またはメソッド内で型パラメーターとして使用することはできません。型引数の Null 許容性が 'class' 制約と一致しません。
-#pragma warning disable CS8619 // 値における参照型の Null 許容性が、対象の型と一致しません。
+                if(image == null) {
+                    return ResultSuccessValue.Failure<BitmapSource>();
+                }
+
                 return ResultSuccessValue.Success(image);
-#pragma warning restore CS8619 // 値における参照型の Null 許容性が、対象の型と一致しません。
-#pragma warning restore CS8634 // この型を、ジェネリック型またはメソッド内で型パラメーターとして使用することはできません。型引数の Null 許容性が 'class' 制約と一致しません。
             });
         }
 
