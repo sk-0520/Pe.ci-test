@@ -24,7 +24,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database.Vender.Public.SQLite
             return fileInfo;
         }
 
-        protected static SQLiteConnectionStringBuilder CreateCommonBuilder()
+        protected static SQLiteConnectionStringBuilder CreateConnectionBuilder()
         {
             return new SQLiteConnectionStringBuilder() {
                 DateTimeKind = DateTimeKind.Utc,

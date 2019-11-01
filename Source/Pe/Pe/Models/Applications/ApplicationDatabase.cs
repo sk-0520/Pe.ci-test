@@ -21,7 +21,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
         public ApplicationDatabaseFactory()
         {
-            var builder = CreateCommonBuilder();
+            var builder = CreateConnectionBuilder();
             builder.DataSource = ":memory:";
             builder.ForeignKeys = true;
 
@@ -30,7 +30,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
         public ApplicationDatabaseFactory(FileInfo file)
         {
-            var builder = CreateCommonBuilder();
+            var builder = CreateConnectionBuilder();
             builder.DataSource = ToSafeFile(file).FullName;
             builder.ForeignKeys = true;
 
