@@ -23,9 +23,13 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// </summary>
         public int BufferSize { get; set; } = 4 * 1024;
 
+        public Func<Stream>? InnserStreamCreator { get; set; }
+
         #endregion
 
         #region function
+
+        protected Stream CreateInnerStream() => InnserStreamCreator?.Invoke() ?? new MemoryStream(BufferSize);
 
         protected TextReader GetReader(Stream stream) => new StreamReader(stream, Encoding, true, BufferSize, true);
         protected TextWriter GetWriter(Stream stream) => new StreamWriter(stream, Encoding, BufferSize, true);
@@ -42,7 +46,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 throw new ArgumentNullException(nameof(source));
             }
 
-            using(var stream = new MemoryStream()) {
+            using(var stream = CreateInnerStream()) {
                 Save(source, stream);
                 stream.Position = 0;
                 return Load<T>(stream);
