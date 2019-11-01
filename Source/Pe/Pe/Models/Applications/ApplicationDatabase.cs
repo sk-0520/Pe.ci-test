@@ -12,7 +12,7 @@ using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Core.Models.Database.Vender.Public.SQLite;
 using Microsoft.Extensions.Logging;
 
-namespace ContentTypeTextNet.Pe.Main.Models.Database
+namespace ContentTypeTextNet.Pe.Main.Models.Applications
 {
     public class ApplicationDatabaseFactory : SqliteFactory
     {
