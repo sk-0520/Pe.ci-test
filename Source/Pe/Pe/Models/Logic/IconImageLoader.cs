@@ -56,20 +56,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
                 if(isFile && PathUtility.HasExtensions(expandedPath, ImageFileExtensions)) {
                     Logger.LogDebug("画像ファイルとして読み込み {0}", expandedPath);
+                    var imageLoader = new ImageLoader(LoggerFactory);
                     using(var stream = new FileStream(expandedPath, FileMode.Open, FileAccess.Read, FileShare.Read)) {
                         DispatcherWapper.Invoke(() => {
-                            var bitmapImage = new BitmapImage();
-                            using(Initializer.Begin(bitmapImage)) {
-                                bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
-                                bitmapImage.CreateOptions = BitmapCreateOptions.None;
-                                bitmapImage.StreamSource = stream;
-                            }
-                            iconImage = FreezableUtility.GetSafeFreeze(bitmapImage);
+                            var image = imageLoader.Load(stream);
+                            iconImage = FreezableUtility.GetSafeFreeze(image);
                         });
                     }
                 } else {
                     Logger.LogDebug("アイコンファイルとして読み込み {0}", expandedPath);
-                    var iconLoader = new IconLoader(Logger);
+                    var iconLoader = new IconLoader(LoggerFactory);
                     DispatcherWapper.Invoke(() => {
                         var image = iconLoader.Load(expandedPath, new IconSize(IconBox), iconData.Index);
                         iconImage = FreezableUtility.GetSafeFreeze(image!);

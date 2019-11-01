@@ -56,12 +56,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon
                 stream.Position = 0;
                 BitmapSource? iconImage = null;
                 DispatcherWapper.Invoke(() => {
-                    var bitmap = new BitmapImage();
-                    bitmap.BeginInit();
-                    bitmap.CacheOption = BitmapCacheOption.OnLoad;
-                    bitmap.StreamSource = stream;
-                    bitmap.EndInit();
-                    iconImage = bitmap;
+                    var imageLoader = new ImageLoader(LoggerFactory);
+                    iconImage = imageLoader.Load(stream);
                     FreezableUtility.SafeFreeze(iconImage);
                 });
                 return iconImage;
