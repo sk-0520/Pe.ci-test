@@ -12,7 +12,7 @@ namespace ContentTypeTextNet.Pe.Core.Views.Attached
         #region DragAndDropProperty
 
         public static readonly DependencyProperty DragAndDropProperty = DependencyProperty.Register(
-            "DragAndDrop",
+            nameof(DragAndDrop),
             typeof(IDragAndDrop),
             typeof(DragAndDropBehavior),
             new FrameworkPropertyMetadata(default(IDragAndDrop), new PropertyChangedCallback(OnDragAndDropChanged))
