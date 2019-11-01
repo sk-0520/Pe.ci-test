@@ -34,7 +34,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
     /// <para>キャッシュとかは気が向けば。。。</para>
     /// </summary>
     public class EnumTransfer<TEnum>
-        where TEnum : struct /*, Enum*/
+        where TEnum : struct, Enum
     {
         public EnumTransfer()
         {

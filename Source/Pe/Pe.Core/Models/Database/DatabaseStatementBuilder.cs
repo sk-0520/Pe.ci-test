@@ -8,21 +8,14 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 {
     public abstract class DatabaseStatementBuilderBase
     {
-#pragma warning disable CS8618 // Null 非許容フィールドが初期化されていません。
-        private DatabaseStatementBuilderBase(IDatabaseImplementation implementation)
-#pragma warning restore CS8618 // Null 非許容フィールドが初期化されていません。
+        public DatabaseStatementBuilderBase(IDatabaseImplementation implementation, ILogger logger)
         {
             Implementation = implementation;
-        }
-
-        public DatabaseStatementBuilderBase(IDatabaseImplementation implementation, ILogger logger)
-            : this(implementation)
-        {
             Logger = logger;
         }
         public DatabaseStatementBuilderBase(IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
-            : this(implementation)
         {
+            Implementation = implementation;
             Logger = loggerFactory.CreateLogger(GetType());
         }
 
