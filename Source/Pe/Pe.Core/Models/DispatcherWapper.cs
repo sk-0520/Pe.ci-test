@@ -50,9 +50,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             if(Dispatcher.CurrentDispatcher == Application.Current.Dispatcher) {
                 return func();
             } else {
-#pragma warning disable CS8653 // 既定の式は、型パラメーターに null 値を導入します。
-                T result = default;
-#pragma warning restore CS8653 // 既定の式は、型パラメーターに null 値を導入します。
+                T result = default!;
                 Current.Invoke(() => {
                     result = func();
                 }, dispatcherPriority, cancellationToken, timeout);
