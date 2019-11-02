@@ -1,6 +1,6 @@
 <Window
   x:Name="root"
-  x:Class="ContentTypeTextNet.Pe.Main.Views.CustomizeLauncherItem.CustomizeLauncherItemWindow"
+  x:Class="ContentTypeTextNet.Pe.Main.Views.LauncherItemCustomize.LauncherItemCustomizeWindow"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 
@@ -8,7 +8,7 @@
   xmlns:prism="http://prismlibrary.com/"
 
   xmlns:app_core_views="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core"
-  xmlns:app_view_customize_launcher_item="clr-namespace:ContentTypeTextNet.Pe.Main.Views.CustomizeLauncherItem"
+  xmlns:app_view_launcher_item_customize="clr-namespace:ContentTypeTextNet.Pe.Main.Views.LauncherItemCustomize"
 
   Title="CustomizeLauncherItemWindow"
   Width="800"
@@ -33,7 +33,7 @@
     </Grid.RowDefinitions>
 
     <ScrollViewer Grid.Row="0">
-      <app_view_customize_launcher_item:CustomizeLauncherItemControl Item="{Binding}" />
+      <app_view_launcher_item_customize:LauncherItemCustomizeControl Item="{Binding}" />
     </ScrollViewer>
 
     <StackPanel Grid.Row="1" Orientation="Horizontal">

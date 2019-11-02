@@ -5,14 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Main.Models.Data;
-using ContentTypeTextNet.Pe.Main.Models.Element.CustomizeLauncherItem;
+using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem;
 using ICSharpCode.AvalonEdit.Document;
 using Microsoft.Extensions.Logging;
 
-namespace ContentTypeTextNet.Pe.Main.ViewModels.CustomizeLauncherItem
+namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 {
-    public class CustomizeLauncherEnvironmentVariableViewModel : CustomizeLauncherDetailViewModelBase
+    public class LauncherItemCustomizeEnvironmentVariableViewModel : LauncherItemCustomizeDetailViewModelBase
     {
         #region variable
 
@@ -21,7 +21,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.CustomizeLauncherItem
 
         #endregion
 
-        public CustomizeLauncherEnvironmentVariableViewModel(CustomizeLauncherItemElement model, ILoggerFactory loggerFactory)
+        public LauncherItemCustomizeEnvironmentVariableViewModel(LauncherItemCustomizeElement model, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         { }
 

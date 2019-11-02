@@ -9,16 +9,16 @@ using System.Windows.Input;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Data;
-using ContentTypeTextNet.Pe.Main.Models.Element.CustomizeLauncherItem;
+using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon;
 using ContentTypeTextNet.Pe.Main.Models.Launcher;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
 
-namespace ContentTypeTextNet.Pe.Main.ViewModels.CustomizeLauncherItem
+namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 {
-    public class CustomizeLauncherCommonViewModel : CustomizeLauncherDetailViewModelBase
+    public class LauncherItemCustomizeCommonViewModel : LauncherItemCustomizeDetailViewModelBase
     {
         #region variable
 
@@ -29,7 +29,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.CustomizeLauncherItem
         bool _isEnabledCommandLauncher;
         #endregion
 
-        public CustomizeLauncherCommonViewModel(CustomizeLauncherItemElement model, ILoggerFactory loggerFactory)
+        public LauncherItemCustomizeCommonViewModel(LauncherItemCustomizeElement model, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         { }
 
@@ -53,7 +53,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.CustomizeLauncherItem
         }
 
         [Required]
-        [CustomValidation(typeof(CustomizeLauncherCommonViewModel), nameof(CustomizeLauncherCommonViewModel.ValidateCode))]
+        [CustomValidation(typeof(LauncherItemCustomizeCommonViewModel), nameof(LauncherItemCustomizeCommonViewModel.ValidateCode))]
         public string? Code
         {
             get => this._code;

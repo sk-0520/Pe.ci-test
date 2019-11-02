@@ -9,23 +9,23 @@ using System.Windows.Input;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Data;
-using ContentTypeTextNet.Pe.Main.Models.Element.CustomizeLauncherItem;
+using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem;
 using ContentTypeTextNet.Pe.Main.Models.Launcher;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
 
-namespace ContentTypeTextNet.Pe.Main.ViewModels.CustomizeLauncherItem
+namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 {
-    public class CustomizeLauncherItemViewModel : SingleModelViewModelBase<CustomizeLauncherItemElement>, IViewLifecycleReceiver, ILauncherItemId
+    public class LauncherItemCustomizeViewModel : SingleModelViewModelBase<LauncherItemCustomizeElement>, IViewLifecycleReceiver, ILauncherItemId
     {
         #region variable
 
-        List<CustomizeLauncherDetailViewModelBase>? _customizeItems;
+        List<LauncherItemCustomizeDetailViewModelBase>? _customizeItems;
 
         #endregion
 
-        public CustomizeLauncherItemViewModel(CustomizeLauncherItemElement model, ILoggerFactory loggerFactory)
+        public LauncherItemCustomizeViewModel(LauncherItemCustomizeElement model, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         { }
 
@@ -33,7 +33,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.CustomizeLauncherItem
 
         public RequestSender CloseRequest { get; } = new RequestSender();
 
-        public List<CustomizeLauncherDetailViewModelBase> CustomizeItems
+        public List<LauncherItemCustomizeDetailViewModelBase> CustomizeItems
         {
             get
             {
@@ -71,35 +71,35 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.CustomizeLauncherItem
 
         #region function
 
-        IEnumerable<CustomizeLauncherDetailViewModelBase> CreateCustomizeItems()
+        IEnumerable<LauncherItemCustomizeDetailViewModelBase> CreateCustomizeItems()
         {
-            yield return new CustomizeLauncherCommonViewModel(Model, LoggerFactory);
+            yield return new LauncherItemCustomizeCommonViewModel(Model, LoggerFactory);
 
             switch(Model.Kind) {
                 case LauncherItemKind.File:
-                    yield return new CustomizeLauncherFileViewModel(Model, LoggerFactory);
-                    yield return new CustomizeLauncherEnvironmentVariableViewModel(Model, LoggerFactory);
+                    yield return new LauncherItemCustomizeFileViewModel(Model, LoggerFactory);
+                    yield return new LauncherItemCustomizeEnvironmentVariableViewModel(Model, LoggerFactory);
                     break;
 
                 default:
                     throw new NotImplementedException();
             }
 
-            yield return new CustomizeLauncherTagViewModel(Model, LoggerFactory);
-            yield return new CustomizeLauncherCommentViewModel(Model, LoggerFactory);
+            yield return new LauncherItemCustomizeTagViewModel(Model, LoggerFactory);
+            yield return new LauncherItemCustomizeCommentViewModel(Model, LoggerFactory);
         }
 
         private void Save()
         {
 
-            var common = CustomizeItems.OfType<CustomizeLauncherCommonViewModel>().First();
-            var tag = CustomizeItems.OfType<CustomizeLauncherTagViewModel>().First();
-            var comment = CustomizeItems.OfType<CustomizeLauncherCommentViewModel>().First();
+            var common = CustomizeItems.OfType<LauncherItemCustomizeCommonViewModel>().First();
+            var tag = CustomizeItems.OfType<LauncherItemCustomizeTagViewModel>().First();
+            var comment = CustomizeItems.OfType<LauncherItemCustomizeCommentViewModel>().First();
 
             switch(Model.Kind) {
                 case LauncherItemKind.File:
-                    var file = CustomizeItems.OfType<CustomizeLauncherFileViewModel>().First();
-                    var env = CustomizeItems.OfType<CustomizeLauncherEnvironmentVariableViewModel>().First();
+                    var file = CustomizeItems.OfType<LauncherItemCustomizeFileViewModel>().First();
+                    var env = CustomizeItems.OfType<LauncherItemCustomizeEnvironmentVariableViewModel>().First();
 
                     var itemData = new LauncherItemData() {
                         LauncherItemId = Model.LauncherItemId,

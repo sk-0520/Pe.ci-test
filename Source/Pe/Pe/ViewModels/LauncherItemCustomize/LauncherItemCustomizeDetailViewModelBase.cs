@@ -5,15 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
-using ContentTypeTextNet.Pe.Main.Models.Element.CustomizeLauncherItem;
+using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize;
 using ContentTypeTextNet.Pe.Main.Models.Launcher;
 using Microsoft.Extensions.Logging;
 
-namespace ContentTypeTextNet.Pe.Main.ViewModels.CustomizeLauncherItem
+namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 {
-    public abstract class CustomizeLauncherDetailViewModelBase : SingleModelViewModelBase<CustomizeLauncherItemElement>, ILauncherItemId
+    public abstract class LauncherItemCustomizeDetailViewModelBase : SingleModelViewModelBase<LauncherItemCustomizeElement>, ILauncherItemId
     {
-        public CustomizeLauncherDetailViewModelBase(CustomizeLauncherItemElement model, ILoggerFactory loggerFactory)
+        public LauncherItemCustomizeDetailViewModelBase(LauncherItemCustomizeElement model, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         { }
 

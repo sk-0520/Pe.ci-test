@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
-using ContentTypeTextNet.Pe.Main.Models.Element.CustomizeLauncherItem;
+using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem;
 using ContentTypeTextNet.Pe.Main.Models.Launcher;
 using ContentTypeTextNet.Pe.Main.Models.Platform;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
 
-namespace ContentTypeTextNet.Pe.Main.ViewModels.CustomizeLauncherItem
+namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 {
-    public class CustomizeLauncherFileViewModel : CustomizeLauncherDetailViewModelBase
+    public class LauncherItemCustomizeFileViewModel : LauncherItemCustomizeDetailViewModelBase
     {
         #region variable
 
@@ -29,7 +29,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.CustomizeLauncherItem
 
         #endregion
 
-        public CustomizeLauncherFileViewModel(CustomizeLauncherItemElement model, ILoggerFactory loggerFactory)
+        public LauncherItemCustomizeFileViewModel(LauncherItemCustomizeElement model, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         { }
 

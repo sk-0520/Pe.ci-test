@@ -1,6 +1,6 @@
 <UserControl
   x:Name="root"
-  x:Class="ContentTypeTextNet.Pe.Main.Views.CustomizeLauncherItem.CustomizeLauncherItemControl"
+  x:Class="ContentTypeTextNet.Pe.Main.Views.LauncherItemCustomize.LauncherItemCustomizeControl"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:sys="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -10,7 +10,7 @@
 
   xmlns:sharpdevelop_avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
 
-  xmlns:app_viewmodel_customize_launcher_item="clr-namespace:ContentTypeTextNet.Pe.Main.ViewModels.CustomizeLauncherItem"
+  xmlns:app_viewmodel_launcher_item_customize="clr-namespace:ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize"
   xmlns:app_core_converter="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Converter;assembly=Pe.Core"
   xmlns:app_core_views_attached="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Attached;assembly=Pe.Core"
   xmlns:app_core_views="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core"
@@ -57,7 +57,7 @@
       </Style>
 
       <!--#region 共通 -->
-      <DataTemplate DataType="{x:Type app_viewmodel_customize_launcher_item:CustomizeLauncherCommonViewModel}">
+      <DataTemplate DataType="{x:Type app_viewmodel_launcher_item_customize:LauncherItemCustomizeCommonViewModel}">
         <GroupBox Style="{StaticResource HeaderGroupBox}" Header="common">
           <i:Interaction.Triggers>
             <app_core_views:RequestTrigger SourceObject="{Binding IconSelectRequest}">
@@ -150,7 +150,7 @@
       <!--#endregion-->
 
       <!--#region ファイル -->
-      <DataTemplate DataType="{x:Type app_viewmodel_customize_launcher_item:CustomizeLauncherFileViewModel}">
+      <DataTemplate DataType="{x:Type app_viewmodel_launcher_item_customize:LauncherItemCustomizeFileViewModel}">
         <GroupBox Style="{StaticResource HeaderGroupBox}" Header="file">
           <i:Interaction.Triggers>
             <app_core_views:RequestTrigger SourceObject="{Binding FileSelectRequest}">
@@ -261,7 +261,7 @@
       <!--#endregion -->
 
       <!--#region 環境変数 -->
-      <DataTemplate DataType="{x:Type app_viewmodel_customize_launcher_item:CustomizeLauncherEnvironmentVariableViewModel}">
+      <DataTemplate DataType="{x:Type app_viewmodel_launcher_item_customize:LauncherItemCustomizeEnvironmentVariableViewModel}">
         <GroupBox Style="{StaticResource HeaderGroupBox}" Header="env" >
           <Grid>
             <Grid.ColumnDefinitions>
@@ -291,7 +291,7 @@
       <!--#endregion -->
 
       <!--#region タグ -->
-      <DataTemplate DataType="{x:Type app_viewmodel_customize_launcher_item:CustomizeLauncherTagViewModel}">
+      <DataTemplate DataType="{x:Type app_viewmodel_launcher_item_customize:LauncherItemCustomizeTagViewModel}">
         <GroupBox Style="{StaticResource HeaderGroupBox}" Header="tag" >
           <Grid>
             <Grid.ColumnDefinitions>
@@ -307,7 +307,7 @@
       <!--#endregion -->
 
       <!--#region コメント -->
-      <DataTemplate DataType="{x:Type app_viewmodel_customize_launcher_item:CustomizeLauncherCommentViewModel}">
+      <DataTemplate DataType="{x:Type app_viewmodel_launcher_item_customize:LauncherItemCustomizeCommentViewModel}">
         <GroupBox Style="{StaticResource HeaderGroupBox}" Header="comment" >
           <Grid>
             <Grid.ColumnDefinitions>

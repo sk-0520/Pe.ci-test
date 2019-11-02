@@ -16,17 +16,17 @@ using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Views;
 using ContentTypeTextNet.Pe.Main.Models.Launcher;
-using ContentTypeTextNet.Pe.Main.ViewModels.CustomizeLauncherItem;
+using ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize;
 using Prism.Commands;
 
-namespace ContentTypeTextNet.Pe.Main.Views.CustomizeLauncherItem
+namespace ContentTypeTextNet.Pe.Main.Views.LauncherItemCustomize
 {
     /// <summary>
-    /// CustomizeLauncherItemControl.xaml の相互作用ロジック
+    /// LauncherItemCustomizeControl.xaml の相互作用ロジック
     /// </summary>
-    public partial class CustomizeLauncherItemControl : UserControl
+    public partial class LauncherItemCustomizeControl : UserControl
     {
-        public CustomizeLauncherItemControl()
+        public LauncherItemCustomizeControl()
         {
             InitializeComponent();
         }
@@ -35,23 +35,23 @@ namespace ContentTypeTextNet.Pe.Main.Views.CustomizeLauncherItem
 
         public static readonly DependencyProperty IconProperty = DependencyProperty.Register(
             nameof(Item),
-            typeof(CustomizeLauncherItemViewModel),
-            typeof(CustomizeLauncherItemControl),
+            typeof(LauncherItemCustomizeViewModel),
+            typeof(LauncherItemCustomizeControl),
             new FrameworkPropertyMetadata(
-                default(CustomizeLauncherItemViewModel),
+                default(LauncherItemCustomizeViewModel),
                 new PropertyChangedCallback(OnItemChanged)
             )
         );
 
-        public CustomizeLauncherItemViewModel Item
+        public LauncherItemCustomizeViewModel Item
         {
-            get { return (CustomizeLauncherItemViewModel)GetValue(IconProperty); }
+            get { return (LauncherItemCustomizeViewModel)GetValue(IconProperty); }
             set { SetValue(IconProperty, value); }
         }
 
         private static void OnItemChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if(d is CustomizeLauncherItemControl control) {
+            if(d is LauncherItemCustomizeControl control) {
             }
         }
 

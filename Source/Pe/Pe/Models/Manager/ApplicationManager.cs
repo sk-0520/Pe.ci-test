@@ -15,7 +15,7 @@ using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Models.Element;
-using ContentTypeTextNet.Pe.Main.Models.Element.CustomizeLauncherItem;
+using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize;
 using ContentTypeTextNet.Pe.Main.Models.Element.Font;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherGroup;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon;
@@ -352,7 +352,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             return OrderManager.GetOrCreateLauncherItemElement(launcherItemId);
         }
 
-        public CustomizeLauncherItemElement CreateCustomizeLauncherItemElement(Guid launcherItemId, LauncherIconElement iconElement, Screen screen)
+        public LauncherItemCustomizeElement CreateCustomizeLauncherItemElement(Guid launcherItemId, LauncherIconElement iconElement, Screen screen)
         {
             return OrderManager.CreateCustomizeLauncherItemElement(launcherItemId, iconElement, screen);
         }
@@ -414,7 +414,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             return windowItem;
         }
 
-        public WindowItem CreateCustomizeLauncherItemWindow(CustomizeLauncherItemElement element)
+        public WindowItem CreateCustomizeLauncherItemWindow(LauncherItemCustomizeElement element)
         {
             var windowItem = OrderManager.CreateCustomizeLauncherItemWindow(element);
 

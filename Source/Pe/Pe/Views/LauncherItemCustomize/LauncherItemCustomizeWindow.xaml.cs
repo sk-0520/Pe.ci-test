@@ -15,14 +15,14 @@ using ContentTypeTextNet.Pe.Core.Models;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
 
-namespace ContentTypeTextNet.Pe.Main.Views.CustomizeLauncherItem
+namespace ContentTypeTextNet.Pe.Main.Views.LauncherItemCustomize
 {
     /// <summary>
-    /// CustomizeLauncherItemWindow.xaml の相互作用ロジック
+    /// LauncherItemCustomizeWindow.xaml の相互作用ロジック
     /// </summary>
-    public partial class CustomizeLauncherItemWindow : Window
+    public partial class LauncherItemCustomizeWindow : Window
     {
-        public CustomizeLauncherItemWindow()
+        public LauncherItemCustomizeWindow()
         {
             InitializeComponent();
             ScrollTuner = new ScrollTuner(this, true);

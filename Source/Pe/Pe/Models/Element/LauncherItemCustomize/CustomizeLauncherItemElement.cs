@@ -11,9 +11,9 @@ using ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using Microsoft.Extensions.Logging;
 
-namespace ContentTypeTextNet.Pe.Main.Models.Element.CustomizeLauncherItem
+namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
 {
-    public class CustomizeLauncherItemElement : ElementBase, IViewShowStarter, IViewCloseReceiver
+    public class LauncherItemCustomizeElement : ElementBase, IViewShowStarter, IViewCloseReceiver
     {
         #region variable
 
@@ -21,7 +21,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.CustomizeLauncherItem
 
         #endregion
 
-        public CustomizeLauncherItemElement(Guid launcherItemId, Screen screen, IOrderManager orderManager, IClipboardManager clipboardManager, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, LauncherIconElement launcherIconElement, ILoggerFactory loggerFactory)
+        public LauncherItemCustomizeElement(Guid launcherItemId, Screen screen, IOrderManager orderManager, IClipboardManager clipboardManager, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, LauncherIconElement launcherIconElement, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             LauncherItemId = launcherItemId;
