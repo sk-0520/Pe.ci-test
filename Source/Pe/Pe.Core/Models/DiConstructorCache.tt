@@ -13,7 +13,7 @@ using System.Diagnostics;
 
 namespace ContentTypeTextNet.Pe.Core.Models
 {
-        partial class DiConstructorCache {
+    partial class DiConstructorCache {
         <# for(var i = 0; i < parameterCount; i++) { #>
         private delegate object DiConstructorCacheP<#= i + 1 #>(<#= string.Join(", ", Enumerable.Repeat("object p", i + 1).Select((v,i) => v + (i + 1))) #>);
         <# } #>
@@ -29,7 +29,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 <# } #>
 
                 default:
-                    Debug.WriteLine("ƒpƒ‰ƒ[ƒ^”ƒKƒ“ã‚°: {0} < {1}", <#= parameterCount #>, ParameterInfos.Count);
+                    Debug.WriteLine("ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿æ•°ã‚¬ãƒ³ä¸Šã’: {0} < {1}", <#= parameterCount #>, ParameterInfos.Count);
                     return ConstructorInfo.Invoke;
             }
         }

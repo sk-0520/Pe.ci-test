@@ -4,7 +4,7 @@ using System.Diagnostics;
 
 namespace ContentTypeTextNet.Pe.Core.Models
 {
-        partial class DiConstructorCache {
+    partial class DiConstructorCache {
                 private delegate object DiConstructorCacheP1(object p1);
                 private delegate object DiConstructorCacheP2(object p1, object p2);
                 private delegate object DiConstructorCacheP3(object p1, object p2, object p3);
