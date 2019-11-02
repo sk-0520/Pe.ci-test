@@ -1,4 +1,6 @@
 using System;
+using System.Diagnostics;
+
 
 namespace ContentTypeTextNet.Pe.Core.Models
 {
@@ -159,6 +161,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 }
                 
                 default:
+                    Debug.WriteLine("ƒpƒ‰ƒ[ƒ^”ƒKƒ“ã‚°: {0} < {1}", 30, ParameterInfos.Count);
                     return ConstructorInfo.Invoke;
             }
         }
