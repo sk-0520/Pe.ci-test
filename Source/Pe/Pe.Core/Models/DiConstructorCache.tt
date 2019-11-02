@@ -11,12 +11,11 @@ using System;
 
 namespace ContentTypeTextNet.Pe.Core.Models
 {
-    <# for(var i = 0; i < parameterCount; i++) { #>
-    delegate object DiConstructorCacheP<#= i + 1 #>(<#= string.Join(", ", Enumerable.Repeat("object p", i + 1).Select((v,i) => v + (i + 1))) #>);
-    <# } #>
+        partial class DiConstructorCache {
+        <# for(var i = 0; i < parameterCount; i++) { #>
+        private delegate object DiConstructorCacheP<#= i + 1 #>(<#= string.Join(", ", Enumerable.Repeat("object p", i + 1).Select((v,i) => v + (i + 1))) #>);
+        <# } #>
 
-
-    partial class DiConstructorCache {
         private Func<object[], object> CreateCore(object[] parameters)
         {
             switch(ParameterInfos.Count) {

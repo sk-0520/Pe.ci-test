@@ -947,7 +947,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #endregion
     }
 
-    class ScopeDiContainer : DiContainer, IScopeDiContainer
+    internal class ScopeDiContainer : DiContainer, IScopeDiContainer
     {
         #region property
 
