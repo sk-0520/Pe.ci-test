@@ -7,6 +7,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Runtime.Serialization;
 using System.Text;
 using ContentTypeTextNet.Pe.Core.Models;
 #if ENABLED_PRISM7
@@ -40,6 +41,24 @@ namespace ContentTypeTextNet.Pe.Core.Models
     [AttributeUsage(AttributeTargets.Constructor | AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false)]
     public class InjectionAttribute : Attribute
     { }
+
+    public class DiException : ApplicationException
+    {
+        public DiException()
+        { }
+
+        public DiException(string? message)
+            : base(message)
+        { }
+
+        public DiException(string? message, Exception? innerException)
+            : base(message, innerException)
+        { }
+
+        protected DiException(SerializationInfo info, StreamingContext context)
+            : base(info, context)
+        { }
+    }
 
     /// <summary>
     /// パラメータに型判別できない(default(Object)とか)を無理やり認識させるしゃあなし対応。
@@ -683,7 +702,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 return raw;
             }
 
-            throw new Exception($"{type}: create rror");
+            throw new DiException($"{type}: create rror");
         }
 
         bool TryGetInstance(Type interfaceType, IEnumerable<object> manualParameters, out object value)
@@ -724,7 +743,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                     if(TryGetInstance(valueType, Enumerable.Empty<object>(), out var fieldValue)) {
                         fieldInfo.SetValue(target, fieldValue);
                     } else {
-                        throw new Exception($"{fieldInfo}: create fail");
+                        throw new DiException($"{fieldInfo}: create fail");
                     }
                     break;
 
@@ -733,7 +752,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                     if(TryGetInstance(valueType, Enumerable.Empty<object>(), out var propertyValue)) {
                         propertyInfo.SetValue(target, propertyValue);
                     } else {
-                        throw new Exception($"{propertyInfo}: create fail");
+                        throw new DiException($"{propertyInfo}: create fail");
                     }
                     break;
 
