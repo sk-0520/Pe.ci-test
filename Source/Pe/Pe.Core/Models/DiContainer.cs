@@ -329,7 +329,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     /// <summary>
     /// コンストラクタ情報キャッシュ。
     /// </summary>
-    public sealed class DiConstructorCache
+    public sealed partial class DiConstructorCache
     {
         public DiConstructorCache(ConstructorInfo constructorInfo, IReadOnlyList<ParameterInfo> parameterInfos)
         {
@@ -391,67 +391,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
                     var lambda = Expression.Lambda<Func<object>>(newExp);
                     var creator = lambda.Compile();
                     Creator = p => creator();
-                } else if(ParameterInfos.Count < 10) {
-
-                    switch(ParameterInfos.Count) {
-                        case 1: {
-                                var creator = CreateFunction<Func<object, object>>();
-                                Creator = p => creator(p[0]);
-                            }
-                            break;
-
-                        case 2: {
-                                var creator = CreateFunction<Func<object, object, object>>();
-                                Creator = p => creator(p[0], p[1]);
-                            }
-                            break;
-
-                        case 3: {
-                                var creator = CreateFunction<Func<object, object, object, object>>();
-                                Creator = p => creator(p[0], p[1], p[2]);
-                            }
-                            break;
-
-                        case 4: {
-                                var creator = CreateFunction<Func<object, object, object, object, object>>();
-                                Creator = p => creator(p[0], p[1], p[2], p[3]);
-                            }
-                            break;
-
-                        case 5: {
-                                var creator = CreateFunction<Func<object, object, object, object, object, object>>();
-                                Creator = p => creator(p[0], p[1], p[2], p[3], p[4]);
-                            }
-                            break;
-
-                        case 6: {
-                                var creator = CreateFunction<Func<object, object, object, object, object, object, object>>();
-                                Creator = p => creator(p[0], p[1], p[2], p[3], p[4], p[5]);
-                            }
-                            break;
-
-                        case 7: {
-                                var creator = CreateFunction<Func<object, object, object, object, object, object, object, object>>();
-                                Creator = p => creator(p[0], p[1], p[2], p[3], p[4], p[5], p[6]);
-                            }
-                            break;
-
-                        case 8: {
-                                var creator = CreateFunction<Func<object, object, object, object, object, object, object, object, object>>();
-                                Creator = p => creator(p[0], p[1], p[2], p[3], p[4], p[5], p[6], p[7]);
-                            }
-                            break;
-
-                        case 9: {
-                                var creator = CreateFunction<Func<object, object, object, object, object, object, object, object, object, object>>();
-                                Creator = p => creator(p[0], p[1], p[2], p[3], p[4], p[5], p[6], p[7], p[8]);
-                            }
-                            break;
-                    }
-                }
-
-                if(Creator == null) {
-                    Creator = ConstructorInfo.Invoke;
+                } else {
+                    Creator = CreateCore(parameters);
                 }
             }
 

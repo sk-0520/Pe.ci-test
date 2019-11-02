@@ -260,7 +260,7 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
             var dic = new DiContainer();
             dic.Register<I1, C1>(DiLifecycle.Transient);
 
-            Assert.ThrowsException<Exception>(() => dic.New<C3>(new object[] { 1 }));
+            Assert.ThrowsException<DiException>(() => dic.New<C3>(new object[] { 1 }));
 
             var c3 = dic.New<C3>(new object[] { 1, 10 });
             Assert.AreEqual(11, c3.Get());
@@ -272,7 +272,7 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
             var dic = new DiContainer();
             dic.Register<I1, C1>(DiLifecycle.Transient);
 
-            Assert.ThrowsException<Exception>(() => dic.New<C4>(new object[] { 1 }));
+            Assert.ThrowsException<DiException>(() => dic.New<C4>(new object[] { 1 }));
 
             var c4 = dic.New<C4>(new object[] { 99, 1 });
             Assert.AreEqual(100, c4.Get());
