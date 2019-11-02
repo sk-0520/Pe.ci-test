@@ -14,11 +14,12 @@ using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon;
 using ContentTypeTextNet.Pe.Main.Models.Launcher;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
+using ContentTypeTextNet.Pe.Main.ViewModels.CustomizeLauncherItem;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
 {
-    public class LauncherItemElement : ElementBase
+    public class LauncherItemElement : ElementBase, ILauncherItemId
     {
         #region variable
 
@@ -26,11 +27,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
 
         #endregion
 
-        public LauncherItemElement(Guid launcherItemId, IOrderManager orderManager, IClipboardManager clipboardManager, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, LauncherIconElement launcherIconElement, ILoggerFactory loggerFactory)
+        public LauncherItemElement(Guid launcherItemId, IWindowManager windowManager, IOrderManager orderManager, IClipboardManager clipboardManager, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, LauncherIconElement launcherIconElement, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             LauncherItemId = launcherItemId;
 
+            WindowManager = windowManager;
             OrderManager = orderManager;
             ClipboardManager = clipboardManager;
             NotifyManager = notifyManager;
@@ -42,8 +44,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
 
         #region property
 
-        public Guid LauncherItemId { get; }
-
+        IWindowManager WindowManager { get; }
         IOrderManager OrderManager { get; }
         IClipboardManager ClipboardManager { get; }
         INotifyManager NotifyManager { get; }
@@ -240,11 +241,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
         {
             if(NowCustomizing) {
                 Logger.LogWarning("現在編集中: {0}", LauncherItemId);
+                //OrderManager.FlashCustomizeLauncherItem(LauncherItemId);
+                //WindowManager.Flash()
+                var items = WindowManager.GetWindowItems(WindowKind.LauncherCustomize);
+                var item = items.FirstOrDefault(i => ((ILauncherItemId)i.ViewModel).LauncherItemId == LauncherItemId);
+                if(item != null) {
+                    WindowManager.Flash(item);
+                }
                 return;
             }
 
             //TODO: 確定時の処理
             NowCustomizing = true;
+            NotifyManager.CustomizeLauncherItemExited += NotifyManager_CustomizeLauncherItemExited;
             var element = OrderManager.CreateCustomizeLauncherItemElement(LauncherItemId, Icon, screen);
             element.StartView();
         }
@@ -270,6 +279,31 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             LoadLauncherItem();
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                NotifyManager.CustomizeLauncherItemExited -= NotifyManager_CustomizeLauncherItemExited;
+            }
+
+            base.Dispose(disposing);
+        }
+
         #endregion
+
+        #region ILauncherItemId
+
+        public Guid LauncherItemId { get; }
+
+        #endregion
+
+
+        private void NotifyManager_CustomizeLauncherItemExited(object? sender, CustomizeLauncherItemExitedEventArgs e)
+        {
+            if(e.LauncherItemId == LauncherItemId) {
+                NotifyManager.CustomizeLauncherItemExited -= NotifyManager_CustomizeLauncherItemExited;
+                NowCustomizing = false;
+            }
+        }
+
     }
 }

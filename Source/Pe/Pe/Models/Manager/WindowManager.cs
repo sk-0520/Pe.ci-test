@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Windows;
 using System.Windows.Interop;
 using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
@@ -70,6 +72,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         /// <returns></returns>
         IEnumerable<WindowItem> GetWindowItems(WindowKind kind);
 
+        void Flash(WindowItem windowItem);
+
         #endregion
     }
 
@@ -101,9 +105,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
         }
 
-#endregion
+        #endregion
 
-#region IWindowManager
+        #region IWindowManager
 
         public bool Register(WindowItem item)
         {
@@ -158,7 +162,22 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             return IntPtr.Zero;
         }
 
-#endregion
+        public void Flash(WindowItem windowItem)
+        {
+            var hWnd = HandleUtility.GetWindowHandle(windowItem.Window);
+            var flashInfo = new FLASHWINFO() {
+                cbSize = (uint)Marshal.SizeOf(typeof(FLASHWINFO)),
+                hwnd = hWnd,
+                dwFlags = FLASHW.FLASHW_ALL,
+                uCount = 3,
+                dwTimeout = 0, // (uint)TimeSpan.FromSeconds(5).TotalMilliseconds,
+            };
+            NativeMethods.FlashWindowEx(ref flashInfo);
+            NativeMethods.SetForegroundWindow(hWnd);
+        }
+
+
+        #endregion
 
         private void Window_SourceInitialized(object sender, EventArgs e)
         {

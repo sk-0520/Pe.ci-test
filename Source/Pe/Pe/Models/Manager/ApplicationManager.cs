@@ -451,10 +451,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             add { NotifyManager.LauncherItemChanged += value; }
             remove { NotifyManager.LauncherItemChanged -= value; }
         }
+        public event EventHandler<CustomizeLauncherItemExitedEventArgs>? CustomizeLauncherItemExited
+        {
+            add { NotifyManager.CustomizeLauncherItemExited += value; }
+            remove { NotifyManager.CustomizeLauncherItemExited -= value; }
+        }
 
         public void SendLauncherItemChanged(IReadOnlyCollection<Guid> launcherItemIds)
         {
             NotifyManager.SendLauncherItemChanged(launcherItemIds);
+        }
+
+        public void SendCustomizeLauncherItemExited(Guid launcherItemId)
+        {
+            NotifyManager.SendCustomizeLauncherItemExited(launcherItemId);
         }
 
         #endregion

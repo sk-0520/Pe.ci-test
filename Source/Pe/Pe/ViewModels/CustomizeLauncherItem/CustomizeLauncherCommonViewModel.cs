@@ -35,7 +35,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.CustomizeLauncherItem
 
         #region property
 
-        public Guid LauncherItemId => Model.LauncherItemId;
         public LauncherItemKind Kind => Model.Kind;
 
         public RequestSender IconSelectRequest { get; } = new RequestSender();

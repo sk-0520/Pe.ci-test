@@ -23,6 +23,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         #endregion
     }
 
+    public class CustomizeLauncherItemExitedEventArgs: NotifyEventArgs
+    {
+        public CustomizeLauncherItemExitedEventArgs(Guid launcherItemId)
+        {
+            LauncherItemId = launcherItemId;
+        }
+
+        #region property
+
+        public Guid LauncherItemId { get; }
+        #endregion
+    }
+
     /// <summary>
     /// アプリケーションからの通知を発行する。
     /// </summary>
@@ -31,12 +44,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         #region event
 
         event EventHandler<LauncherItemChangedEventArgs>? LauncherItemChanged;
+        event EventHandler<CustomizeLauncherItemExitedEventArgs>? CustomizeLauncherItemExited;
 
         #endregion
 
         #region function
 
         void SendLauncherItemChanged(IReadOnlyCollection<Guid> launcherItemIds);
+        void SendCustomizeLauncherItemExited(Guid launcherItemId);
 
         #endregion
     }
@@ -57,16 +72,29 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 LauncherItemChanged?.Invoke(this, e);
             }
 
+            void OnCustomizeLauncherItemExited(Guid launcherItemId)
+            {
+                var e = new CustomizeLauncherItemExitedEventArgs(launcherItemId);
+                CustomizeLauncherItemExited?.Invoke(this, e);
+            }
+
             #endregion
 
             #region INotifyManager
 
             public event EventHandler<LauncherItemChangedEventArgs>? LauncherItemChanged;
+            public event EventHandler<CustomizeLauncherItemExitedEventArgs>? CustomizeLauncherItemExited;
 
             public void SendLauncherItemChanged(IReadOnlyCollection<Guid> launcherItemIds)
             {
                 OnLauncherItemChanged(launcherItemIds);
             }
+
+            public void SendCustomizeLauncherItemExited(Guid launcherItemId)
+            {
+                OnCustomizeLauncherItemExited(launcherItemId);
+            }
+
 
             #endregion
         }

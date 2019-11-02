@@ -15,6 +15,7 @@ using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
 using Microsoft.Extensions.Logging;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using System.Diagnostics;
+using ContentTypeTextNet.Pe.Main.Models.Launcher;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
 {
@@ -46,7 +47,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
         #endregion
     }
 
-    public abstract class LauncherDetailViewModelBase : SingleModelViewModelBase<LauncherItemElement>
+    public abstract class LauncherDetailViewModelBase : SingleModelViewModelBase<LauncherItemElement>, ILauncherItemId
     {
         #region variable
 
@@ -142,6 +143,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
         #endregion
 
         #region SingleModelViewModelBase
+        #endregion
+
+        #region ILauncherItemId
+
+        public Guid LauncherItemId => Model.LauncherItemId;
+
         #endregion
     }
 

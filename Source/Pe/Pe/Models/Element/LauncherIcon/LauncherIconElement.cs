@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using ContentTypeTextNet.Pe.Main.Models.Launcher;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon
 {
-    public class LauncherIconElement : ElementBase
+    public class LauncherIconElement : ElementBase, ILauncherItemId
     {
         public LauncherIconElement(Guid launcherItemId, IconImageLoaderPack iconImageLoaderPack, ILoggerFactory loggerFactory)
             : base(loggerFactory)
@@ -17,7 +18,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon
 
         #region property
 
-        Guid LauncherItemId { get; }
         public IconImageLoaderPack IconImageLoaderPack { get; }
         //IDatabaseStatementLoader StatementLoader { get; }
 
@@ -35,5 +35,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon
         }
 
         #endregion
+
+        #region ILauncherItemId
+
+        public Guid LauncherItemId { get; }
+
+        #endregion
+
     }
 }

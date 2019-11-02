@@ -11,12 +11,13 @@ using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Element.CustomizeLauncherItem;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem;
+using ContentTypeTextNet.Pe.Main.Models.Launcher;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.CustomizeLauncherItem
 {
-    public class CustomizeLauncherItemViewModel : SingleModelViewModelBase<CustomizeLauncherItemElement>, IViewLifecycleReceiver
+    public class CustomizeLauncherItemViewModel : SingleModelViewModelBase<CustomizeLauncherItemElement>, IViewLifecycleReceiver, ILauncherItemId
     {
         #region variable
 
@@ -142,7 +143,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.CustomizeLauncherItem
 
         #endregion
 
-        #region CustomizeLauncherItemViewModel
+        #region ILauncherItemId
+
+        public Guid LauncherItemId => Model.LauncherItemId;
+
         #endregion
 
         #region IViewLifecycleReceiver

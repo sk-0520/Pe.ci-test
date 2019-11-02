@@ -132,7 +132,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 return customizeLauncherItemElement;
             }
 
-
             public NoteElement CreateNoteElement(Guid noteId, Screen? screen, NotePosition notePosition)
             {
                 var element = screen == null
@@ -195,7 +194,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 var window = DiContainer.BuildView<CustomizeLauncherItemWindow>();
                 window.DataContext = viewModel;
 
-                return new WindowItem(WindowKind.LauncherToolbar, window);
+                return new WindowItem(WindowKind.LauncherCustomize, window);
             }
 
             public WindowItem CreateNoteWindow(NoteElement element)

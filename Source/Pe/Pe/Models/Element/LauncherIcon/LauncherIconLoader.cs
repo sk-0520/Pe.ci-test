@@ -14,12 +14,13 @@ using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
+using ContentTypeTextNet.Pe.Main.Models.Launcher;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon
 {
-    public class LauncherIconLoader : IconImageLoaderBase
+    public class LauncherIconLoader : IconImageLoaderBase, ILauncherItemId
     {
         public LauncherIconLoader(Guid launcherItemId, IconBox iconBox, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
             : base(iconBox, dispatcherWapper, loggerFactory)
@@ -32,7 +33,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon
 
         #region property
 
-        public Guid LauncherItemId { get; }
         IMainDatabaseBarrier MainDatabaseBarrier { get; }
         IFileDatabaseBarrier FileDatabaseBarrier { get; }
         IDatabaseStatementLoader StatementLoader { get; }
@@ -180,5 +180,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon
         }
 
         #endregion
+
+        #region ILauncherItemId
+
+        public Guid LauncherItemId { get; }
+
+        #endregion
+
     }
 }

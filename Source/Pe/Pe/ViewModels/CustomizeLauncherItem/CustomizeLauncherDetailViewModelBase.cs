@@ -11,7 +11,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.CustomizeLauncherItem
 {
-    public abstract class CustomizeLauncherDetailViewModelBase : SingleModelViewModelBase<CustomizeLauncherItemElement>
+    public abstract class CustomizeLauncherDetailViewModelBase : SingleModelViewModelBase<CustomizeLauncherItemElement>, ILauncherItemId
     {
         public CustomizeLauncherDetailViewModelBase(CustomizeLauncherItemElement model, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
@@ -65,6 +65,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.CustomizeLauncherItem
         #endregion
 
         #region SingleModelViewModelBase
+        #endregion
+
+        #region ILauncherItemId
+
+        public Guid LauncherItemId => Model.LauncherItemId;
+
         #endregion
     }
 }

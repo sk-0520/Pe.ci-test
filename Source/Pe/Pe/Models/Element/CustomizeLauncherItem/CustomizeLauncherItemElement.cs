@@ -185,6 +185,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.CustomizeLauncherItem
 
         public void ReceiveViewClosed()
         {
+            NotifyManager.SendCustomizeLauncherItemExited(LauncherItemId);
+
             ViewCreated = false;
         }
 

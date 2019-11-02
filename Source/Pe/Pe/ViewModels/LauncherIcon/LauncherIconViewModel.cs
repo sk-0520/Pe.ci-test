@@ -43,5 +43,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherIcon
 
         #region SingleModelViewModelBase
         #endregion
+
+        #region ILauncherItemId
+
+        public Guid LauncherItemId => Model.LauncherItemId;
+
+        #endregion
+
     }
 }
