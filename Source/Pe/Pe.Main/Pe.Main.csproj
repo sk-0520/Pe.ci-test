@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
@@ -21,12 +21,6 @@
     <None Remove="Resources\Icon\NotifyIcon\App-beta.ico" />
     <None Remove="Resources\Icon\NotifyIcon\App-debug.ico" />
     <None Remove="Resources\Icon\NotifyIcon\App-release.ico" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="etc\nlog.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -53,12 +47,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="etc\sql\ContentTypeTextNet.Pe.Main\**\*.sql">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -78,5 +66,9 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="robocopy /MIR /R:3 /S &quot;$(ProjectDir)etc&quot; &quot;$(OutDir)..\etc&quot;&#xD;&#xA;robocopy /MIR /R:3 /S &quot;$(ProjectDir)doc&quot; &quot;$(OutDir)..\doc&quot;&#xD;&#xA;if %25ERRORLEVEL%25 lss 8 exit 0" />
+  </Target>
 
 </Project>
