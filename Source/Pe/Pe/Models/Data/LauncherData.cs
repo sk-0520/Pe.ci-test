@@ -59,6 +59,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         Directory,
     }
 
+    public interface ILauncherItemId
+    {
+        #region property
+
+        Guid LauncherItemId { get; }
+
+        #endregion
+    }
 
     public interface ILauncherExecutePathParameter
     {

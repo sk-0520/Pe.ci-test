@@ -12,9 +12,6 @@
     <RootNamespace>ContentTypeTextNet.Pe.Main</RootNamespace>
     <AssemblyName>Pe</AssemblyName>
     <Version>0.84.0</Version>
-    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-    <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
-    <OutputPath>$(SolutionDir)..\..\Output\$(Configuration)\$(Platform)\$(SolutionName)</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
