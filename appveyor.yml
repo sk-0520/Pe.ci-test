@@ -23,6 +23,8 @@ build_script:
   - cmd: dotnet build   Source/Pe/Pe.sln                  --verbosity normal --configuration Release --runtime win-%PLATFORM% /p:Platform=%PLATFORM% /p:DefineConstants="%BUILD_TYPE%"
   - cmd: dotnet publish Source/Pe/Pe.Main/Pe.Main.csproj  --verbosity normal --configuration Release --runtime win-%PLATFORM% /p:Platform=%PLATFORM% /p:DefineConstants="%BUILD_TYPE%" --output Output/Release/%PLATFORM%/Pe/bin --self-contained true
   - cmd: msbuild Source/Pe.Native/Pe.Native.sln                              /p:Configuration=Release                         /p:Platform=%PLATFORM% /p:DefineConstants="%BUILD_TYPE%"
+  - cmd: robocopy /MIR /R:3 /S "Source/Pe/Pe.Main/etc" "Output/Release/%PLATFORM%/Pe/etc"
+  - cmd: robocopy /MIR /R:3 /S "Source/Pe/Pe.Main/doc" "Output/Release/%PLATFORM%/Pe/doc"
 before_test:
   - cmd: for /d %%f in (Source\Pe\*.Test) do ( cd %%f & nuget install Appveyor.TestLogger -Version 2.0.0 & cd ..\..\..\ )
 test_script:
