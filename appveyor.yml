@@ -7,16 +7,19 @@ environment:
   BUILD_TYPE: BETA
   BUILD_OUTPUT: FULL
 install:
+  - cmd: dotnet --version
   - cmd: choco install dotnetcore-sdk --version 3.0.100
   - cmd: dotnet --version
 before_build:
   - cmd: git submodule init
   - cmd: git submodule update
-  - cmd: dotnet nuget locals -l all
 build_script:
   - cmd: dotnet build   Source/Pe/Pe.sln --verbosity normal --configuration Release --runtime win-x64
-  - cmd: dotnet publish Source/Pe/Pe/Pe.csproj --verbosity normal --no-build --no-restore --configuration Release --runtime win-x64 --output Output/Release/x64/Pe --self-contained true
+  - cmd: dotnet publish Source/Pe/Pe/Pe.csproj --verbosity normal --configuration Release --runtime win-x64 --output Output/Release/x64/Pe --self-contained true
 test_script:
   - cmd: dotnet test Source/Pe/Pe.sln --verbosity normal --no-build --no-restore --configuration Release --runtime win-x64
 artifacts:
 - path: Output\
+cache:
+ - %LOCALAPPDATA%\NuGet
+ - %USERPROFILE%\.nuget
