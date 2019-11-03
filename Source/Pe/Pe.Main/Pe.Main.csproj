@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
@@ -10,7 +10,7 @@
     <LangVersion>8.0</LangVersion>
     <Nullable>enable</Nullable>
     <RootNamespace>ContentTypeTextNet.Pe.Main</RootNamespace>
-    <AssemblyName>Pe</AssemblyName>
+    <AssemblyName>Pe.Main</AssemblyName>
     <Version>0.84.0</Version>
     <ApplicationIcon>Resources\Icon\App.ico</ApplicationIcon>
   </PropertyGroup>
