@@ -21,5 +21,5 @@ test_script:
 artifacts:
 - path: Output\
 cache:
- - %LOCALAPPDATA%\NuGet
- - %USERPROFILE%\.nuget
+ - '%LOCALAPPDATA%\NuGet'
+ - '%USERPROFILE%\.nuget'
