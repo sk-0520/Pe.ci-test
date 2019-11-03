@@ -73,27 +73,27 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)..\..\Output\$(Configuration)\$(Platform)\</OutDir>
+    <OutDir>$(SolutionDir)..\..\Output\$(Configuration)\$(Platform)\Pe\</OutDir>
     <IntDir>obj\$(Configuration)\$(Platform)\</IntDir>
-    <TargetName>Pe.exe</TargetName>
+    <TargetName>Pe</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)..\..\Output\$(Configuration)\x86\</OutDir>
+    <OutDir>$(SolutionDir)..\..\Output\$(Configuration)\x86\Pe\</OutDir>
     <IntDir>obj\$(Configuration)\$(Platform)\</IntDir>
-    <TargetName>Pe.exe</TargetName>
+    <TargetName>Pe</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)..\..\Output\$(Configuration)\$(Platform)\</OutDir>
+    <OutDir>$(SolutionDir)..\..\Output\$(Configuration)\$(Platform)\Pe\</OutDir>
     <IntDir>obj\$(Configuration)\$(Platform)\</IntDir>
-    <TargetName>Pe.exe</TargetName>
+    <TargetName>Pe</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)..\..\Output\$(Configuration)\x86\</OutDir>
+    <OutDir>$(SolutionDir)..\..\Output\$(Configuration)\x86\Pe\</OutDir>
     <IntDir>obj\$(Configuration)\$(Platform)\</IntDir>
-    <TargetName>Pe.exe</TargetName>
+    <TargetName>Pe</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
