@@ -27,7 +27,7 @@ before_test:
   - cmd: nuget install Appveyor.TestLogger -Version 2.0.0
   - cmd: cd ..\..\..\
 test_script:
-  - cmd: dotnet test Source/Pe/Pe.sln --verbosity normal --no-build --no-restore --configuration Release --runtime win-x64 --test-adapter-path:. --logger:Appveyor Test
+  - cmd: dotnet test Source/Pe/Pe.sln --verbosity normal --no-build --no-restore --configuration Release --runtime win-x64 --test-adapter-path:. --logger:Appveyor
 artifacts:
 - path: Output\
 cache:
