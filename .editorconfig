@@ -89,3 +89,6 @@ charset = shift-jis
 indent_style = tab
 indent_size = 4
 
+[*.{c,h}]
+charset = utf-8-bom
+
