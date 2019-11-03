@@ -4,6 +4,18 @@ Include="etc\sql\ContentTypeTextNet.Pe.Main\**\*.sql"
 dotnet build Source/Pe/Pe.sln --configuration Release --runtime win-x64 --verbosity normal
 dotnet test Source/Pe/Pe.sln --configuration Release --runtime win-x64 --verbosity normal
 
+-------------------------------
+set CONFIGURATION=Release
+set PLATFORM=x64
+
+if [%MS_BUILD%]==[] set MS_BUILD=C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Current\Bin\MSBuild.exe
+
+dotnet build Source/Pe/Pe.sln --verbosity minimal --configuration %CONFIGURATION% --runtime win-%PLATFORM% /p:Platform=%PLATFORM% /p:DefineConstants="BETA" --output Output/%CONFIGURATION%/%PLATFORM%/Pe/bin
+rem dotnet build Source/Pe/Pe.sln --verbosity minimal --configuration %CONFIGURATION% --runtime win-x86 /p:Platform=x86
+
+"%MS_BUILD%" Source/Pe.Native/Pe.Native.sln /p:Configuration=%CONFIGURATION% /p:Platform=%PLATFORM%
+-------------------------------
+
 --accept=ok --log=X:\pe\log --force-log --user-dir=X:\pe\user --machine-dir=X:\pe\machine --temp-dir=X:\pe\temp
 
 
