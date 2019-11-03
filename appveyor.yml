@@ -21,9 +21,6 @@ build_script:
   - cmd: dotnet publish Source/Pe/Pe/Pe.csproj --verbosity normal --configuration Release --runtime win-x64 --output Output/Release/x64/Pe --self-contained true
 test_script:
   - cmd: dotnet test Source/Pe/Pe.sln --verbosity normal --no-build --no-restore --configuration Release --runtime win-x64
-test:
-  assemblies:
-    - '**\*.Test.dll'
 artifacts:
 - path: Output\
 cache:
