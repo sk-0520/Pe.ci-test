@@ -26,10 +26,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain
                 Kind = kindEnumTransfer.ToEnum(dto.Kind),
             };
 
-            data.Path.Path = dto.FilePath;
+            data.Path.Path = dto.FilePath ?? string.Empty;
             data.Path.Index = ToInt(dto.FileIndex);
 
-            data.Icon.Path = dto.IconPath;
+            data.Icon.Path = dto.IconPath ?? string.Empty;
             data.Icon.Index = ToInt(dto.IconIndex);
 
             return data;

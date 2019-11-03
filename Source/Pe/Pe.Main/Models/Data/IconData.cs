@@ -21,7 +21,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
         #region property
 
-        public string? Path { get; set; }
+        public string Path { get; set; } = string.Empty;
         public int Index { get; set; }
 
         #endregion

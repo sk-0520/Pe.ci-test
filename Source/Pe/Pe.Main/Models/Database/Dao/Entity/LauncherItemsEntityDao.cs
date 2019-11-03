@@ -62,7 +62,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 Kind = kindEnumTransfer.ToEnum(dto.Kind),
                 IsEnabledCommandLauncher = dto.IsEnabledCommandLauncher,
                 Icon = new IconData() {
-                    Path = dto.IconPath,
+                    Path = dto.IconPath ?? string.Empty,
                     Index = ToInt(dto.IconIndex),
                 },
                 Comment = dto.Comment,
