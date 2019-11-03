@@ -6,6 +6,9 @@ environment:
   CI: HAGE
   BUILD_TYPE: BETA
   BUILD_OUTPUT: FULL
+branches:
+  except:
+    - master
 install:
   - cmd: dotnet --version
   - cmd: choco install dotnetcore-sdk --version 3.0.100
