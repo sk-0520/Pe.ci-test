@@ -91,7 +91,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
                 var launcherFilesEntityDao = new LauncherFilesEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
                 pathData = launcherFilesEntityDao.SelectPath(LauncherItemId);
             }
-
+            //TODO: PATHの考慮.
             var expandedPath = Environment.ExpandEnvironmentVariables(pathData.Path ?? string.Empty);
             var result = new LauncherFileDetailData() {
                 PathData = pathData,
