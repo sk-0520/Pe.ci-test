@@ -23,3 +23,5 @@ artifacts:
 cache:
  - '%LOCALAPPDATA%\NuGet'
  - '%USERPROFILE%\.nuget'
+ - C:\ProgramData\chocolatey\bin -> appveyor.yml
+ - C:\ProgramData\chocolatey\lib -> appveyor.yml
