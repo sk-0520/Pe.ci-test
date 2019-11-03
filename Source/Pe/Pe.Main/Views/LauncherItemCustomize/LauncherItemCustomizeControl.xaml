@@ -13,6 +13,7 @@
   xmlns:app_viewmodel_launcher_item_customize="clr-namespace:ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize"
   xmlns:app_core_converter="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Converter;assembly=Pe.Core"
   xmlns:app_core_views_attached="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Attached;assembly=Pe.Core"
+  xmlns:app_core_views_selector="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Selector;assembly=Pe.Core"
   xmlns:app_core_views="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core"
 
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -173,7 +174,35 @@
                   <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
-                <TextBox Grid.Column="0" Text="{Binding Path}" />
+                <ComboBox Grid.Column="0" ScrollViewer.CanContentScroll="True" IsEditable="True" Text="{Binding Path}" ItemsSource="{Binding PathItems}" >
+                  <ComboBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                      <VirtualizingStackPanel
+                        VirtualizingStackPanel.IsVirtualizing="True"
+                        VirtualizingStackPanel.VirtualizationMode="Recycling"
+                      />
+                    </ItemsPanelTemplate>
+                  </ComboBox.ItemsPanel>
+                  <ComboBox.ItemTemplateSelector>
+                    <app_core_views_selector:ComboBoxItemTemplateSelector>
+                      <app_core_views_selector:ComboBoxItemTemplateSelector.SelectedTemplate>
+                        <DataTemplate>
+                          <TextBlock Text="{Binding Name, Mode=OneTime}"/>
+                        </DataTemplate>
+                      </app_core_views_selector:ComboBoxItemTemplateSelector.SelectedTemplate>
+
+                      <app_core_views_selector:ComboBoxItemTemplateSelector.DropDownTemplate>
+                        <DataTemplate>
+                          <StackPanel Orientation="Horizontal">
+                            <TextBlock TextDecorations="Underline"  Text="{Binding Directory.FullName, Mode=OneTime}" />
+                            <TextBlock Text=" " />
+                            <TextBlock Text="{Binding File.Name, Mode=OneTime}"/>
+                          </StackPanel>
+                        </DataTemplate>
+                      </app_core_views_selector:ComboBoxItemTemplateSelector.DropDownTemplate>
+                    </app_core_views_selector:ComboBoxItemTemplateSelector>
+                  </ComboBox.ItemTemplateSelector>
+                </ComboBox>
                 <Button Grid.Column="1" Content="file" Command="{Binding LauncherFileSelectCommand}" />
                 <Button Grid.Column="2" Content="dir" Command="{Binding LauncherDirectorySelectCommand}" />
               </Grid>

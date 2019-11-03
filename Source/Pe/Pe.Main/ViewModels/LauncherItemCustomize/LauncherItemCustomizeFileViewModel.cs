@@ -12,9 +12,11 @@ using ContentTypeTextNet.Pe.Main.Models.Launcher;
 using ContentTypeTextNet.Pe.Main.Models.Platform;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
+using System.Collections.ObjectModel;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 {
+
     public class LauncherItemCustomizeFileViewModel : LauncherItemCustomizeDetailViewModelBase
     {
         #region variable
@@ -34,6 +36,16 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
         { }
 
         #region property
+
+        /// <summary>
+        /// 最後に %PATH% を検索した時間。
+        /// </summary>
+        static DateTime LastSearch { get; set; } = DateTime.MinValue;
+        /// <summary>
+        /// 次に %PATH% を検索するまでの時間。
+        /// <para><see cref="LastSearch"/>に加算。</para>
+        /// </summary>
+        static TimeSpan NextSearch { get; } = TimeSpan.FromHours(3);
 
         public RequestSender FileSelectRequest { get; } = new RequestSender();
 
@@ -69,13 +81,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
             set => SetProperty(ref this._runAdministrator, value);
         }
 
+        public ObservableCollection<SystemExecuteItem> PathItems { get; } = new ObservableCollection<SystemExecuteItem>();
+
         #endregion
 
         #region command
 
         public ICommand LauncherFileSelectCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-                var systemExecutor = new SystemExecutor();
+                var systemExecutor = new SystemExecutor(LoggerFactory);
                 var exeExts = systemExecutor.GetSystemExecuteExtensions();
 
                 SelectFile(
@@ -179,6 +193,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
             IsEnabledCustomEnvironmentVariable = data.IsEnabledCustomEnvironmentVariable;
             IsEnabledStandardInputOutput = data.IsEnabledStandardInputOutput;
             RunAdministrator = data.RunAdministrator;
+
+            if(LastSearch + NextSearch < DateTime.Now) {
+                LastSearch = DateTime.Now;
+                var systemExecutor = new SystemExecutor(LoggerFactory);
+                var pathItems = systemExecutor.GetPathExecuteFiles();
+                PathItems.SetRange(pathItems);
+            }
+
         }
 
         #endregion
