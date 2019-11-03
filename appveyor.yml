@@ -27,7 +27,7 @@ before_test:
 test_script:
   - cmd: dotnet test Source/Pe/Pe.sln --verbosity normal --no-build --no-restore --configuration Release --runtime win-%PLATFORM% /p:Platform=%PLATFORM% --test-adapter-path:. --logger:Appveyor
 artifacts:
-- path: Output\
+- path: Output\Release\%PLATFORM%
 cache:
  - '%LOCALAPPDATA%\NuGet'
  - '%USERPROFILE%\.nuget'
