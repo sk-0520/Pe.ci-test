@@ -20,7 +20,7 @@ build_script:
   - cmd: dotnet build   Source/Pe/Pe.sln --verbosity normal --configuration Release --runtime win-x64
   - cmd: dotnet publish Source/Pe/Pe/Pe.csproj --verbosity normal --configuration Release --runtime win-x64 --output Output/Release/x64/Pe --self-contained true
 before_test:
-  - cmd: for /d  %f in (Source\Pe\*.Test) do ( cd %f & nuget install Appveyor.TestLogger -Version 2.0.0 & cd ..\..\..\ )
+  - cmd: for /d %%f in (Source\Pe\*.Test) do ( cd %%f & nuget install Appveyor.TestLogger -Version 2.0.0 & cd ..\..\..\ )
 #  - cmd: cd Source\Pe\Pe.Core.Test
 #  - cmd: nuget install Appveyor.TestLogger -Version 2.0.0
 #  - cmd: cd ..\..\..\
