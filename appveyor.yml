@@ -19,8 +19,15 @@ before_build:
 build_script:
   - cmd: dotnet build   Source/Pe/Pe.sln --verbosity normal --configuration Release --runtime win-x64
   - cmd: dotnet publish Source/Pe/Pe/Pe.csproj --verbosity normal --configuration Release --runtime win-x64 --output Output/Release/x64/Pe --self-contained true
+before_test:
+  - cmd: pushd Source/Pe/Pe.Core.Test
+  - cmd: nuget install Appveyor.TestLogger -Version 2.0.0
+  - cmd: popd
+  - cmd: pushd Source/Pe/Pe.Test
+  - cmd: nuget install Appveyor.TestLogger -Version 2.0.0
+  - cmd: popd
 test_script:
-  - cmd: dotnet test Source/Pe/Pe.sln --verbosity normal --no-build --no-restore --configuration Release --runtime win-x64
+  - cmd: dotnet test Source/Pe/Pe.sln --verbosity normal --no-build --no-restore --configuration Release --runtime win-x64 --test-adapter-path:. --logger:Appveyor Test
 artifacts:
 - path: Output\
 cache:
