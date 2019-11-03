@@ -12,6 +12,7 @@
     <RootNamespace>ContentTypeTextNet.Pe.Main</RootNamespace>
     <AssemblyName>Pe</AssemblyName>
     <Version>0.84.0</Version>
+    <ApplicationIcon>Resources\Icon\App.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>

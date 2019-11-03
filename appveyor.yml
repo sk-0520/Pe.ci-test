@@ -33,3 +33,7 @@ cache:
  - '%USERPROFILE%\.nuget'
  - C:\ProgramData\chocolatey\bin -> appveyor.yml
  - C:\ProgramData\chocolatey\lib -> appveyor.yml
+dotnet_csproj:
+  patch: true
+  file: '**\*.csproj'
+  informational_version: '%APPVEYOR_REPO_COMMIT%'
