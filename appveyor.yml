@@ -6,6 +6,9 @@ environment:
   CI: HAGE
   BUILD_TYPE: BETA
   BUILD_OUTPUT: FULL
+  matrix:
+  - RUNTIME: win-x64
+  - RUNTIME: win-x86
 branches:
   except:
     - master
@@ -17,12 +20,12 @@ before_build:
   - cmd: git submodule init
   - cmd: git submodule update
 build_script:
-  - cmd: dotnet build   Source/Pe/Pe.sln --verbosity normal --configuration Release --runtime win-x64
-  - cmd: dotnet publish Source/Pe/Pe/Pe.csproj --verbosity normal --configuration Release --runtime win-x64 --output Output/Release/x64/Pe --self-contained true
+  - cmd: dotnet build   Source/Pe/Pe.sln --verbosity normal --configuration Release --runtime %RUNTIME%
+  - cmd: dotnet publish Source/Pe/Pe/Pe.csproj --verbosity normal --configuration Release --runtime %RUNTIME% --output Output/Release/x64/Pe --self-contained true
 before_test:
   - cmd: for /d %%f in (Source\Pe\*.Test) do ( cd %%f & nuget install Appveyor.TestLogger -Version 2.0.0 & cd ..\..\..\ )
 test_script:
-  - cmd: dotnet test Source/Pe/Pe.sln --verbosity normal --no-build --no-restore --configuration Release --runtime win-x64 --test-adapter-path:. --logger:Appveyor
+  - cmd: dotnet test Source/Pe/Pe.sln --verbosity normal --no-build --no-restore --configuration Release --runtime %RUNTIME% --test-adapter-path:. --logger:Appveyor
 artifacts:
 - path: Output\
 cache:
