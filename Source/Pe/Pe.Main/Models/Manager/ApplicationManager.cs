@@ -296,8 +296,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         void CloseNoteViews() => CloseViewsCore(WindowKind.Note);
 
+        void CloseLauncherCustomizeViews() => CloseViewsCore(WindowKind.LauncherCustomize);
+
         void CloseViews()
         {
+            CloseLauncherCustomizeViews();
             CloseLauncherToolbarViews();
             CloseNoteViews();
         }
@@ -314,7 +317,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         void DisposeLauncherToolbarElements() => DisposeElementsCore(LauncherToolbarElements);
         void DisposeLauncherGroupElements() => DisposeElementsCore(LauncherGroupElements);
         void DisposeNoteElements() => DisposeElementsCore(NoteElements);
-
 
         void DisposeElements()
         {
