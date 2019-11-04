@@ -65,9 +65,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     {
         #region property
 
-        string? Path { get; set; }
-        string? Option { get; set; }
-        string? WorkDirectoryPath { get; set; }
+        string Path { get; set; }
+        string Option { get; set; }
+        string WorkDirectoryPath { get; set; }
 
         #endregion
     }
@@ -86,9 +86,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     {
         #region ILauncherExecutePathParameter
 
-        public string? Path { get; set; }
-        public string? Option { get; set; }
-        public string? WorkDirectoryPath { get; set; }
+        public string Path { get; set; } = string.Empty;
+        public string Option { get; set; } = string.Empty;
+        public string WorkDirectoryPath { get; set; } = string.Empty;
 
         #endregion
     }

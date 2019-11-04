@@ -115,9 +115,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
                         },
                     };
                     var fileData = new LauncherFileData() {
-                        Path = file.Path,
-                        Option = file.Option,
-                        WorkDirectoryPath = file.WorkingDirectoryPath,
+                        Path = file.Path ?? string.Empty,
+                        Option = file.Option ?? string.Empty,
+                        WorkDirectoryPath = file.WorkingDirectoryPath ?? string.Empty,
                         IsEnabledCustomEnvironmentVariable = file.IsEnabledCustomEnvironmentVariable,
                         IsEnabledStandardInputOutput = file.IsEnabledStandardInputOutput,
                         RunAdministrator = file.RunAdministrator,

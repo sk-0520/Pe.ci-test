@@ -41,9 +41,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         LauncherExecutePathData ConvertFromDto(LauncherFilesEntityPathDto dto)
         {
             var data = new LauncherExecutePathData() {
-                Path = dto.File,
-                Option = dto.Option,
-                WorkDirectoryPath = dto.WorkDirectory,
+                Path = dto.File ?? string.Empty,
+                Option = dto.Option ?? string.Empty,
+                WorkDirectoryPath = dto.WorkDirectory ?? string.Empty,
             };
 
             return data;
@@ -52,9 +52,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         LauncherFileData ConvertFromDto(LauncherFilesEntityDto dto)
         {
             var data = new LauncherFileData() {
-                Path = dto.File,
-                Option = dto.Option,
-                WorkDirectoryPath = dto.WorkDirectory,
+                Path = dto.File ?? string.Empty,
+                Option = dto.Option ?? string.Empty,
+                WorkDirectoryPath = dto.WorkDirectory ?? string.Empty,
                 IsEnabledCustomEnvironmentVariable = dto.IsEnabledCustomEnvVar,
                 IsEnabledStandardInputOutput = dto.IsEnabledStandardIo,
                 RunAdministrator = dto.RunAdministrator,
