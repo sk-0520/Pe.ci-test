@@ -126,4 +126,46 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
 
         #endregion
     }
+
+    public class PathExecuteFileCache
+    {
+        public PathExecuteFileCache(TimeSpan cacheTime, ILoggerFactory loggerFactory)
+        {
+            CacheTime = cacheTime;
+            LoggerFactory = loggerFactory;
+            Logger = loggerFactory.CreateLogger(GetType());
+        }
+
+        #region property
+
+        private ILoggerFactory LoggerFactory { get; }
+        private ILogger Logger { get; }
+        /// <summary>
+        /// 次に %PATH% を検索するまでの時間。
+        /// <para><see cref="LastSearch"/>に加算。</para>
+        /// </summary>
+        private TimeSpan CacheTime { get; }
+        /// <summary>
+        /// 最後に %PATH% を検索した時間。
+        /// </summary>
+        private DateTime LastSearch { get; set; } = DateTime.MinValue;
+        private List<SystemExecuteItem> PathItemsCache { get; } = new List<SystemExecuteItem>();
+
+        #endregion
+
+        #region function
+
+        public IReadOnlyList<SystemExecuteItem> GetItems()
+        {
+            if(LastSearch + CacheTime < DateTime.Now) {
+                LastSearch = DateTime.Now;
+                var systemExecutor = new SystemExecutor(LoggerFactory);
+                var pathItems = systemExecutor.GetPathExecuteFiles();
+                PathItemsCache.AddRange(pathItems);
+            }
+
+            return PathItemsCache;
+        }
+        #endregion
+    }
 }

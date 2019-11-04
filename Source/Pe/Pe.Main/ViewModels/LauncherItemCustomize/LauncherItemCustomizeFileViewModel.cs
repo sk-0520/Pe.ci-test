@@ -33,20 +33,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 
         public LauncherItemCustomizeFileViewModel(LauncherItemCustomizeElement model, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
-        { }
+        {
+            if(PathExecuteFileCache == null) {
+                PathExecuteFileCache = new PathExecuteFileCache(TimeSpan.FromHours(3), LoggerFactory);
+            }
+        }
 
         #region property
 
-        /// <summary>
-        /// 最後に %PATH% を検索した時間。
-        /// </summary>
-        static DateTime LastSearch { get; set; } = DateTime.MinValue;
-        /// <summary>
-        /// 次に %PATH% を検索するまでの時間。
-        /// <para><see cref="LastSearch"/>に加算。</para>
-        /// </summary>
-        static TimeSpan NextSearch { get; } = TimeSpan.FromHours(3);
-        private static List<SystemExecuteItem> PathItemsCache { get; } = new List<SystemExecuteItem>();
+        private static PathExecuteFileCache PathExecuteFileCache { get; set; } = null!;
 
         public RequestSender FileSelectRequest { get; } = new RequestSender();
 
@@ -195,13 +190,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
             IsEnabledStandardInputOutput = data.IsEnabledStandardInputOutput;
             RunAdministrator = data.RunAdministrator;
 
-            if(LastSearch + NextSearch < DateTime.Now) {
-                LastSearch = DateTime.Now;
-                var systemExecutor = new SystemExecutor(LoggerFactory);
-                var pathItems = systemExecutor.GetPathExecuteFiles();
-                PathItemsCache.AddRange(pathItems);
-            }
-            PathItems.SetRange(PathItemsCache.Select(i => new SystemExecuteItemViewModel(i, LoggerFactory)));
+            var pathItems = PathExecuteFileCache.GetItems();
+            PathItems.SetRange(pathItems.Select(i => new SystemExecuteItemViewModel(i, LoggerFactory)));
         }
 
         #endregion
