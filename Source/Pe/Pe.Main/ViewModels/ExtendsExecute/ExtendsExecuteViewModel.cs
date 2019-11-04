@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 using System.Windows;
+using System.Windows.Input;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute;
 using Microsoft.Extensions.Logging;
+using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
 {
@@ -21,6 +23,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
         #endregion
 
         #region command
+
+        public ICommand ExecuteCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+
+            }
+        ));
 
         #endregion
 
