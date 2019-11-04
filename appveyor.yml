@@ -16,6 +16,7 @@ install:
   - cmd: dotnet --version
   - cmd: choco install dotnetcore-sdk --version 3.0.100
   - cmd: dotnet --version
+  - cmd: set
 before_build:
   - cmd: git submodule init
   - cmd: git submodule update
