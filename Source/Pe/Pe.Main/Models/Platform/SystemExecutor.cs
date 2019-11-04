@@ -23,14 +23,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
         public DirectoryInfo Directory { get; }
         public FileInfo File { get; }
 
-        public string Name => Path.GetFileNameWithoutExtension(File.Name);
-
-        #endregion
-
-        #region object
-
-        public override string ToString() => Name;
-
         #endregion
     }
 

@@ -46,6 +46,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
         /// <para><see cref="LastSearch"/>に加算。</para>
         /// </summary>
         static TimeSpan NextSearch { get; } = TimeSpan.FromHours(3);
+        private static List<SystemExecuteItem> PathItemsCache { get; } = new List<SystemExecuteItem>();
 
         public RequestSender FileSelectRequest { get; } = new RequestSender();
 
@@ -81,7 +82,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
             set => SetProperty(ref this._runAdministrator, value);
         }
 
-        public ObservableCollection<SystemExecuteItem> PathItems { get; } = new ObservableCollection<SystemExecuteItem>();
+        public ObservableCollection<SystemExecuteItemViewModel> PathItems { get; } = new ObservableCollection<SystemExecuteItemViewModel>();
 
         #endregion
 
@@ -198,9 +199,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
                 LastSearch = DateTime.Now;
                 var systemExecutor = new SystemExecutor(LoggerFactory);
                 var pathItems = systemExecutor.GetPathExecuteFiles();
-                PathItems.SetRange(pathItems);
+                PathItemsCache.AddRange(pathItems);
             }
-
+            PathItems.SetRange(PathItemsCache.Select(i => new SystemExecuteItemViewModel(i, LoggerFactory)));
         }
 
         #endregion

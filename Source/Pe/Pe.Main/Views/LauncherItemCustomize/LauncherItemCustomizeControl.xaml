@@ -194,9 +194,9 @@
                       <app_core_views_selector:ComboBoxItemTemplateSelector.DropDownTemplate>
                         <DataTemplate>
                           <StackPanel Orientation="Horizontal">
-                            <TextBlock TextDecorations="Underline"  Text="{Binding Directory.FullName, Mode=OneTime}" />
+                            <TextBlock TextDecorations="Underline"  Text="{Binding DirectoryPath, Mode=OneTime}" />
                             <TextBlock Text=" " />
-                            <TextBlock Text="{Binding File.Name, Mode=OneTime}"/>
+                            <TextBlock Text="{Binding FileName, Mode=OneTime}"/>
                           </StackPanel>
                         </DataTemplate>
                       </app_core_views_selector:ComboBoxItemTemplateSelector.DropDownTemplate>
