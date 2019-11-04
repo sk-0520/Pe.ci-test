@@ -8,9 +8,9 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 {
-    public class SystemExecuteItemViewModel: ViewModelBase
+    public class EnvironmentPathExecuteItemViewModel: ViewModelBase
     {
-        public SystemExecuteItemViewModel(SystemExecuteItem item, ILoggerFactory loggerFactory)
+        public EnvironmentPathExecuteItemViewModel(EnvironmentPathExecuteItem item, ILoggerFactory loggerFactory)
             :base(loggerFactory)
         {
             Item = item;
@@ -18,7 +18,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 
         #region property
 
-        SystemExecuteItem Item { get; }
+        EnvironmentPathExecuteItem Item { get; }
 
         public string Name => Path.GetFileNameWithoutExtension(Item.File.Name);
         public string DirectoryPath => Item.Directory.FullName;

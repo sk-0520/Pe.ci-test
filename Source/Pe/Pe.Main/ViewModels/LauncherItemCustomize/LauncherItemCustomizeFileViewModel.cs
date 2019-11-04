@@ -37,7 +37,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 
         #region property
 
-        private static PathExecuteFileCache PathExecuteFileCache { get; } = new PathExecuteFileCache(TimeSpan.FromHours(3));
+        private static EnvironmentPathExecuteFileCache EnvironmentPathExecuteFileCache { get; } = new EnvironmentPathExecuteFileCache(TimeSpan.FromHours(3));
 
         public RequestSender FileSelectRequest { get; } = new RequestSender();
 
@@ -73,7 +73,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
             set => SetProperty(ref this._runAdministrator, value);
         }
 
-        public ObservableCollection<SystemExecuteItemViewModel> PathItems { get; } = new ObservableCollection<SystemExecuteItemViewModel>();
+        public ObservableCollection<EnvironmentPathExecuteItemViewModel> PathItems { get; } = new ObservableCollection<EnvironmentPathExecuteItemViewModel>();
 
         #endregion
 
@@ -81,8 +81,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 
         public ICommand LauncherFileSelectCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-                var systemExecutor = new SystemExecutor(LoggerFactory);
-                var exeExts = systemExecutor.GetSystemExecuteExtensions();
+                var environmentExecuteFile = new EnvironmentExecuteFile(LoggerFactory);
+                var exeExts = environmentExecuteFile.GetSystemExecuteExtensions();
 
                 SelectFile(
                     FileSelectRequest,
@@ -186,8 +186,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
             IsEnabledStandardInputOutput = data.IsEnabledStandardInputOutput;
             RunAdministrator = data.RunAdministrator;
 
-            var pathItems = PathExecuteFileCache.GetItems(LoggerFactory);
-            PathItems.SetRange(pathItems.Select(i => new SystemExecuteItemViewModel(i, LoggerFactory)));
+            var pathItems = EnvironmentPathExecuteFileCache.GetItems(LoggerFactory);
+            PathItems.SetRange(pathItems.Select(i => new EnvironmentPathExecuteItemViewModel(i, LoggerFactory)));
         }
 
         #endregion
