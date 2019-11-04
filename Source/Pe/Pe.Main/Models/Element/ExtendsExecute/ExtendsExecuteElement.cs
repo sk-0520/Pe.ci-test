@@ -37,6 +37,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute
 
         protected LauncherFileData LauncherFileData { get; set; }
         protected IReadOnlyList<LauncherEnvironmentVariableData> EnvironmentVariables { get; set; }
+        protected IReadOnlyList<LauncherHistoryData> HistoryOptions { get; set; } = new List<LauncherHistoryData>();
+        protected IReadOnlyList<LauncherHistoryData> HistoryWorkDirectories { get; set; } = new List<LauncherHistoryData>();
         protected Screen Screen { get; }
 
         IOrderManager OrderManager { get; }
@@ -137,20 +139,31 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute
 
         protected override void InitializeImpl()
         {
+            LauncherItemData launcherItem;
+            LauncherFileData fileData;
+            IEnumerable<LauncherEnvironmentVariableData> envItems;
+            IEnumerable<LauncherHistoryData> histories;
+
             using(var commander = MainDatabaseBarrier.WaitRead()) {
                 var launcherItemsEntityDao = new LauncherItemsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
                 var launcherFilesEntityDao = new LauncherFilesEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
                 var launcherEnvVarsEntityDao = new LauncherEnvVarsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                var launcherItemHistoriesEntityDao = new LauncherItemHistoriesEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
 
-                var launcherItem = launcherItemsEntityDao.SelectLauncherItem(LauncherItemId);
-                var fileData = launcherFilesEntityDao.SelectFile(LauncherItemId);
-                var envItems = launcherEnvVarsEntityDao.SelectEnvVarItems(LauncherItemId);
-
-                LauncherFileData = fileData;
-                EnvironmentVariables = envItems.ToList();
-
-                CaptionName = launcherItem.Name ?? launcherItem.Code ?? Path.GetFileNameWithoutExtension(LauncherFileData.Path) ?? LauncherItemId.ToString("D");
+                launcherItem = launcherItemsEntityDao.SelectLauncherItem(LauncherItemId);
+                fileData = launcherFilesEntityDao.SelectFile(LauncherItemId);
+                envItems = launcherEnvVarsEntityDao.SelectEnvVarItems(LauncherItemId);
+                histories = launcherItemHistoriesEntityDao.SelectHistories(LauncherItemId);
             }
+
+            LauncherFileData = fileData;
+            EnvironmentVariables = envItems.ToList();
+
+            CaptionName = launcherItem.Name ?? launcherItem.Code ?? Path.GetFileNameWithoutExtension(LauncherFileData.Path) ?? LauncherItemId.ToString("D");
+
+            var histories2 = histories.ToList();
+            HistoryOptions = histories2.Where(i => i.Kind == LauncherHistoryKind.Option).ToList();
+            HistoryWorkDirectories =  histories2.Where(i => i.Kind == LauncherHistoryKind.WorkDirectory).ToList();
         }
 
         #endregion

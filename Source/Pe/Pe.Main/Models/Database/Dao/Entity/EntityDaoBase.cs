@@ -65,9 +65,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var mapping = databaseCommonStatus.CreateCommonDtoMapping();
             foreach(var pair in mapping) {
                 if(pair.Key == UpdatedCount) {
-                    result.AddPlain(UpdatedCount, $"{Implementation.ToStatementColumnName(UpdatedCount)} + 1");
+                    result.AddPlainParameter(UpdatedCount, $"{Implementation.ToStatementColumnName(UpdatedCount)} + 1");
                 } else if(CommonUpdateColumns.Contains(pair.Key)) {
-                    result.AddValue(pair.Key, pair.Value);
+                    result.AddValueParameter(pair.Key, pair.Value);
                 }
             }
 

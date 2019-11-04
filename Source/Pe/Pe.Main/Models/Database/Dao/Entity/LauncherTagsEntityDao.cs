@@ -36,7 +36,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         {
             var builder = CreateSelectBuilder();
             builder.AddSelect(Column.TagName);
-            builder.AddValue(Column.LauncherItemId, launcherItemId);
+            builder.AddValueParameter(Column.LauncherItemId, launcherItemId);
 
             return Select<string>(builder);
         }

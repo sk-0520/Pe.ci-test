@@ -62,7 +62,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             builder.AddSelect(Column.EnvName);
             builder.AddSelect(Column.EnvValue);
 
-            builder.AddValue(Column.LauncherItemId, launcherItemId);
+            builder.AddValueParameter(Column.LauncherItemId, launcherItemId);
 
             var result = Select<LauncherEnvVarsEntityDto>(builder)
                 .Select(i => ConvertFromDto(i))

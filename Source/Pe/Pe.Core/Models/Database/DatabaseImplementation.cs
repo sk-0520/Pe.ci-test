@@ -18,6 +18,9 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
     {
         From,
         As,
+        Order,
+        OrderAsc,
+        OrderDesc,
     }
     public enum DatabaseInsertStatementKeyword
     {
@@ -207,6 +210,15 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
                 case DatabaseSelectStatementKeyword.As:
                     return "as";
+
+                case DatabaseSelectStatementKeyword.Order:
+                    return "order by";
+
+                case DatabaseSelectStatementKeyword.OrderAsc:
+                    return "asc";
+
+                case DatabaseSelectStatementKeyword.OrderDesc:
+                    return "desc";
 
                 default:
                     throw new NotImplementedException();

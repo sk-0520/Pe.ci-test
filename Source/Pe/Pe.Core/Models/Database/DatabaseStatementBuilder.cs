@@ -38,6 +38,27 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         #endregion
     }
 
+    public enum DatabaseOrder
+    {
+        Asc,
+        Desc,
+    }
+
+    public class DatabaseOrderItem
+    {
+        public DatabaseOrderItem(DatabaseOrder order, string columnName)
+        {
+            Order = order;
+            ColumnName = columnName;
+        }
+
+        #region property
+
+        public DatabaseOrder Order { get; }
+        public string ColumnName { get; }
+        #endregion
+    }
+
     public class DatabaseSelectStatementBuilder : DatabaseStatementBuilderBase
     {
         public DatabaseSelectStatementBuilder(IDatabaseImplementation implementation, ILogger logger)
@@ -54,6 +75,8 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
         public string TableName { get; private set; } = string.Empty;
         ISet<string> PlainValues { get; } = new HashSet<string>();
+
+        IList<DatabaseOrderItem> Orders { get; } = new List<DatabaseOrderItem>();
 
         #endregion
 
@@ -89,17 +112,24 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             return this;
         }
 
-        public DatabaseSelectStatementBuilder AddValue(string column, object value)
+        public DatabaseSelectStatementBuilder AddValueParameter(string column, object value)
         {
             ParametersImpl.Add(column, value);
 
             return this;
         }
 
-        public DatabaseSelectStatementBuilder AddPlain(string column, string value)
+        public DatabaseSelectStatementBuilder AddPlainParameter(string column, string value)
         {
             ParametersImpl.Add(column, value);
             PlainValues.Add(column);
+
+            return this;
+        }
+
+        public DatabaseSelectStatementBuilder AddOrder(string column, DatabaseOrder order)
+        {
+            Orders.Add(new DatabaseOrderItem(order, column));
 
             return this;
         }
@@ -155,6 +185,25 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
                 }
             }
 
+            if(Orders.Any()) {
+                sb.AppendLine(Implementation.GetSelectStatementKeyword(DatabaseSelectStatementKeyword.Order));
+                for(var i = 0; i < Orders.Count; i++) {
+                    var order = Orders[i];
+                    sb.Append("\t");
+                    sb.Append(Implementation.ToStatementColumnName(order.ColumnName));
+                    var orderKey = order.Order switch
+                    {
+                        DatabaseOrder.Asc => DatabaseSelectStatementKeyword.OrderAsc,
+                        DatabaseOrder.Desc => DatabaseSelectStatementKeyword.OrderDesc,
+                        _ => throw new NotImplementedException()
+                    };
+                    sb.Append(Implementation.GetSelectStatementKeyword(orderKey));
+                    if(i + 1 != Orders.Count) {
+                        sb.AppendLine(",");
+                    }
+                }
+            }
+
             return sb.ToString();
         }
         #endregion
@@ -197,7 +246,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
             return this;
         }
-        public DatabaseUpdateStatementBuilder AddValue(string column, object value)
+        public DatabaseUpdateStatementBuilder AddValueParameter(string column, object value)
         {
             UpdateColumns.Add(column);
             ParametersImpl.Add(column, value);
@@ -205,7 +254,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             return this;
         }
 
-        public DatabaseUpdateStatementBuilder AddPlain(string column, string value)
+        public DatabaseUpdateStatementBuilder AddPlainParameter(string column, string value)
         {
             UpdateColumns.Add(column);
             ParametersImpl.Add(column, value);

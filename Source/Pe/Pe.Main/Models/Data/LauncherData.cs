@@ -52,13 +52,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         RightBottom,
     }
 
-    public enum LauncherPathKind
-    {
-        Unknown,
-        File,
-        Directory,
-    }
-
     public interface ILauncherItemId
     {
         #region property
@@ -185,39 +178,23 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
-    ////TODO: これ破棄したい
-    //internal sealed class LauncherFileItemData : LauncherItemData, ILauncherExecutePathParameter, ILauncherExecuteCustomParameter
-    //{
-    //    #region ILauncherExecutePathParameter
+    public enum LauncherHistoryKind
+    {
+        Option,
+        WorkDirectory,
+    }
 
-    //    public string? Path { get; set; }
-    //    public string? Option { get; set; }
-    //    public string? WorkDirectoryPath { get; set; }
+    public class LauncherHistoryData
+    {
+        #region property
 
-    //    #endregion
+        public LauncherHistoryKind Kind { get; set; }
+        public string Value { get; set; } = string.Empty;
+        [Timestamp(DateTimeKind.Utc)]
+        public DateTime LastExecuteTimestamp { get; set; }
+        #endregion
 
-    //    #region ILauncherExecuteCustomParameter
-
-    //    public bool IsEnabledCustomEnvironmentVariable { get; set; }
-    //    public bool IsEnabledStandardInputOutput { get; set; }
-    //    public bool RunAdministrator { get; set; }
-
-    //    #endregion
-
-    //    #region LauncherItemData
-
-    //    public override LauncherItemKind Kind
-    //    {
-    //        get => LauncherItemKind.File;
-    //        set
-    //        {
-    //            Debug.Assert(false);
-    //            base.Kind = value;
-    //        }
-    //    }
-
-    //    #endregion
-    //}
+    }
 
     #region LauncherItemDetailData
 

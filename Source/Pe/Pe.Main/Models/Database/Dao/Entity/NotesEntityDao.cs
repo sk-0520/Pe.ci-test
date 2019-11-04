@@ -149,7 +149,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         {
             var builder = CreateUpdateBuilder(databaseCommonStatus);
             builder.AddKey(Column.NoteId, noteId);
-            builder.AddValue(Column.IsLocked, isLocked);
+            builder.AddValueParameter(Column.IsLocked, isLocked);
             return ExecuteUpdate(builder) == 1;
         }
 
@@ -157,7 +157,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         {
             var builder = CreateUpdateBuilder(databaseCommonStatus);
             builder.AddKey(Column.NoteId, noteId);
-            builder.AddValue(Column.TextWrap, textWrap);
+            builder.AddValueParameter(Column.TextWrap, textWrap);
             return ExecuteUpdate(builder) == 1;
         }
 
@@ -183,14 +183,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         {
             var builder = CreateUpdateBuilder(databaseCommonStatus);
             builder.AddKey(Column.NoteId, noteId);
-            builder.AddValue(Column.ForegroundColor, FromColor(color));
+            builder.AddValueParameter(Column.ForegroundColor, FromColor(color));
             return ExecuteUpdate(builder) == 1;
         }
         public bool UpdateBackgroundColor(Guid noteId, Color color, IDatabaseCommonStatus databaseCommonStatus)
         {
             var builder = CreateUpdateBuilder(databaseCommonStatus);
             builder.AddKey(Column.NoteId, noteId);
-            builder.AddValue(Column.BackgroundColor, FromColor(color));
+            builder.AddValueParameter(Column.BackgroundColor, FromColor(color));
             return ExecuteUpdate(builder) == 1;
         }
 
@@ -200,7 +200,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
             var builder = CreateUpdateBuilder(databaseCommonStatus);
             builder.AddKey(Column.NoteId, noteId);
-            builder.AddValue(Column.ContentKind, noteContentKindTansfer.ToString(contentKind));
+            builder.AddValueParameter(Column.ContentKind, noteContentKindTansfer.ToString(contentKind));
             return ExecuteUpdate(builder) == 1;
         }
 
@@ -208,7 +208,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         {
             var builder = CreateUpdateBuilder(databaseCommonStatus);
             builder.AddKey(Column.NoteId, noteId);
-            builder.AddValue(Column.IsVisible, isVisible);
+            builder.AddValueParameter(Column.IsVisible, isVisible);
             return ExecuteUpdate(builder) == 1;
         }
 

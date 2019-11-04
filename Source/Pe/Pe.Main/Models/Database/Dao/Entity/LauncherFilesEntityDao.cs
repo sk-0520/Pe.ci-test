@@ -70,7 +70,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             builder.AddSelect(Column.Option);
             builder.AddSelect(Column.WorkDirectory);
 
-            builder.AddValue(Column.LauncherItemId, launcherItemId);
+            builder.AddValueParameter(Column.LauncherItemId, launcherItemId);
 
             var dto = SelectSingle<LauncherFilesEntityPathDto>(builder);
             var data = ConvertFromDto(dto);
@@ -87,7 +87,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             builder.AddSelect(Column.IsEnabledStandardIo);
             builder.AddSelect(Column.RunAdministrator);
 
-            builder.AddValue(Column.LauncherItemId, launcherItemId);
+            builder.AddValueParameter(Column.LauncherItemId, launcherItemId);
 
             var dto = SelectFirst<LauncherFilesEntityDto>(builder);
             var data = ConvertFromDto(dto);
@@ -111,12 +111,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         public bool UpdateCustomizeLauncherFile(Guid launcherItemId, ILauncherExecutePathParameter pathParameter, ILauncherExecuteCustomParameter customParameter, IDatabaseCommonStatus commonStatus)
         {
             var builder = CreateUpdateBuilder(commonStatus);
-            builder.AddValue(Column.File, pathParameter.Path ?? string.Empty);
-            builder.AddValue(Column.Option, pathParameter.Option ?? string.Empty);
-            builder.AddValue(Column.WorkDirectory, pathParameter.WorkDirectoryPath ?? string.Empty);
-            builder.AddValue(Column.IsEnabledCustomEnvVar, customParameter.IsEnabledCustomEnvironmentVariable);
-            builder.AddValue(Column.IsEnabledStandardIo, customParameter.IsEnabledStandardInputOutput);
-            builder.AddValue(Column.RunAdministrator, customParameter.RunAdministrator);
+            builder.AddValueParameter(Column.File, pathParameter.Path ?? string.Empty);
+            builder.AddValueParameter(Column.Option, pathParameter.Option ?? string.Empty);
+            builder.AddValueParameter(Column.WorkDirectory, pathParameter.WorkDirectoryPath ?? string.Empty);
+            builder.AddValueParameter(Column.IsEnabledCustomEnvVar, customParameter.IsEnabledCustomEnvironmentVariable);
+            builder.AddValueParameter(Column.IsEnabledStandardIo, customParameter.IsEnabledStandardInputOutput);
+            builder.AddValueParameter(Column.RunAdministrator, customParameter.RunAdministrator);
             builder.AddKey(Column.LauncherItemId, launcherItemId);
 
             return ExecuteUpdate(builder) == 1;

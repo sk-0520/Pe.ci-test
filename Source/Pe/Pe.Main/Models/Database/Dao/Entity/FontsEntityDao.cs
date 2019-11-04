@@ -93,7 +93,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         {
             var builder = CreateUpdateBuilder(databaseCommonStatus);
             builder.AddKey(Column.FontId, fontId);
-            builder.AddValue(Column.FamilyName, familyName);
+            builder.AddValueParameter(Column.FamilyName, familyName);
             return ExecuteUpdate(builder) == 1;
         }
 
@@ -101,7 +101,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         {
             var builder = CreateUpdateBuilder(databaseCommonStatus);
             builder.AddKey(Column.FontId, fontId);
-            builder.AddValue(Column.IsBold, isBold);
+            builder.AddValueParameter(Column.IsBold, isBold);
             return ExecuteUpdate(builder) == 1;
         }
 
@@ -109,7 +109,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         {
             var builder = CreateUpdateBuilder(databaseCommonStatus);
             builder.AddKey(Column.FontId, fontId);
-            builder.AddValue(Column.IsItalic, isItalic);
+            builder.AddValueParameter(Column.IsItalic, isItalic);
             return ExecuteUpdate(builder) == 1;
         }
 
@@ -117,7 +117,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         {
             var builder = CreateUpdateBuilder(databaseCommonStatus);
             builder.AddKey(Column.FontId, fontId);
-            builder.AddValue(Column.Height, height);
+            builder.AddValueParameter(Column.Height, height);
             return ExecuteUpdate(builder) == 1;
         }
 

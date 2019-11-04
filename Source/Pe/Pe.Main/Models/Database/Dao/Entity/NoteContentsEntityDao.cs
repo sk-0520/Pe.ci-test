@@ -105,7 +105,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         public NoteContentData SelectLinkParameter(Guid noteId)
         {
             var builder = CreateSelectBuilder();
-            builder.AddValue(Column.NoteId, noteId);
+            builder.AddValueParameter(Column.NoteId, noteId);
             builder.AddSelect(Column.NoteId);
             builder.AddSelect(Column.IsLink);
             builder.AddSelect(Column.Address);
@@ -138,13 +138,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var builder = CreateUpdateBuilder(databaseCommonStatus);
 
             builder.AddKey(Column.NoteId, noteId);
-            builder.AddValue(Column.IsLink, true);
-            builder.AddValue(Column.Address, path);
-            builder.AddValue(Column.Encoding, EncodingUtility.ToString(encoding));
-            builder.AddValue(Column.DelayTime, fileWatchParameter.DelayTime);
-            builder.AddValue(Column.BufferSize, fileWatchParameter.BufferSize);
-            builder.AddValue(Column.RefreshTime, fileWatchParameter.RefreshTime);
-            builder.AddValue(Column.IsEnabledRefresh, fileWatchParameter.IsEnabledRefresh);
+            builder.AddValueParameter(Column.IsLink, true);
+            builder.AddValueParameter(Column.Address, path);
+            builder.AddValueParameter(Column.Encoding, EncodingUtility.ToString(encoding));
+            builder.AddValueParameter(Column.DelayTime, fileWatchParameter.DelayTime);
+            builder.AddValueParameter(Column.BufferSize, fileWatchParameter.BufferSize);
+            builder.AddValueParameter(Column.RefreshTime, fileWatchParameter.RefreshTime);
+            builder.AddValueParameter(Column.IsEnabledRefresh, fileWatchParameter.IsEnabledRefresh);
 
             return ExecuteUpdate(builder) == 1;
         }
@@ -154,8 +154,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var builder = CreateUpdateBuilder(databaseCommonStatus);
 
             builder.AddKey(Column.NoteId, noteId);
-            builder.AddValue(Column.IsLink, false);
-            builder.AddValue(Column.Address, string.Empty);
+            builder.AddValueParameter(Column.IsLink, false);
+            builder.AddValueParameter(Column.Address, string.Empty);
 
             return ExecuteUpdate(builder) == 1;
         }
