@@ -15,6 +15,7 @@
   xmlns:app_core_views_attached="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Attached;assembly=Pe.Core"
   xmlns:app_core_views_selector="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Selector;assembly=Pe.Core"
   xmlns:app_core_views="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core"
+  xmlns:app_view_launcher_item_customize="clr-namespace:ContentTypeTextNet.Pe.Main.Views.LauncherItemCustomize"
 
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   mc:Ignorable="d"
@@ -299,7 +300,7 @@
             </Grid.ColumnDefinitions>
 
             <Grid Grid.Column="1">
-              <Grid.RowDefinitions>
+              <!--<Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
               </Grid.RowDefinitions>
@@ -312,7 +313,8 @@
               <sharpdevelop_avalonedit:TextEditor x:Name="envMergeEditor" Grid.Row="1" Grid.Column="0" Document="{Binding MergeTextDocument}" Loaded="EnvMergeEditor_Loaded" />
 
               <Label Grid.Row="0" Grid.Column="1" Content="remove" />
-              <sharpdevelop_avalonedit:TextEditor x:Name="envRemoveEditor" Grid.Row="1" Grid.Column="1" Document="{Binding RemoveTextDocument}" Loaded="EnvRemoveEditor_Loaded" />
+              <sharpdevelop_avalonedit:TextEditor x:Name="envRemoveEditor" Grid.Row="1" Grid.Column="1" Document="{Binding RemoveTextDocument}" Loaded="EnvRemoveEditor_Loaded" />-->
+              <app_view_launcher_item_customize:EnvironmentValieableEditor MergeTextDocument="{Binding MergeTextDocument}" RemoveTextDocument="{Binding RemoveTextDocument}" />
             </Grid>
           </Grid>
         </GroupBox>
