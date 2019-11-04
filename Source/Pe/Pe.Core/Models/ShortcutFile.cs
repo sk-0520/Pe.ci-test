@@ -45,8 +45,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
             ShellLink = CreateShellLink();
 
             LazyPersistFile = new Lazy<ComWrapper<IPersistFile>>(() => {
-                var result = (IPersistFile)ShellLink.Raw;
-                return new ComWrapper<IPersistFile>(result);
+                //var result = (IPersistFile)ShellLink.Raw;
+                //return new ComWrapper<IPersistFile>(result);
+                return ShellLink.Cast<IPersistFile>();
             });
         }
 
@@ -81,13 +82,13 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 var resultBuffer = CreateStringBuffer(PathLength);
                 var findData = new WIN32_FIND_DATA();
 
-                ShellLink.Raw.GetPath(resultBuffer, resultBuffer.MaxCapacity, out findData, SLGP_FLAGS.SLGP_UNCPRIORITY);
+                ShellLink.Com.GetPath(resultBuffer, resultBuffer.MaxCapacity, out findData, SLGP_FLAGS.SLGP_UNCPRIORITY);
 
                 return resultBuffer.ToString();
             }
             set
             {
-                ShellLink.Raw.SetPath(value);
+                ShellLink.Com.SetPath(value);
             }
         }
 
@@ -100,13 +101,13 @@ namespace ContentTypeTextNet.Pe.Core.Models
             {
                 var resultBuffer = CreateStringBuffer(ArgumentLength);
 
-                ShellLink.Raw.GetArguments(resultBuffer, resultBuffer.Capacity);
+                ShellLink.Com.GetArguments(resultBuffer, resultBuffer.Capacity);
 
                 return resultBuffer.ToString();
             }
             set
             {
-                ShellLink.Raw.SetArguments(value);
+                ShellLink.Com.SetArguments(value);
             }
         }
 
@@ -119,13 +120,13 @@ namespace ContentTypeTextNet.Pe.Core.Models
             {
                 var resultBuffer = CreateStringBuffer(DescriptionLength);
 
-                ShellLink.Raw.GetDescription(resultBuffer, resultBuffer.Capacity);
+                ShellLink.Com.GetDescription(resultBuffer, resultBuffer.Capacity);
 
                 return resultBuffer.ToString();
             }
             set
             {
-                ShellLink.Raw.SetDescription(value);
+                ShellLink.Com.SetDescription(value);
             }
         }
 
@@ -138,13 +139,13 @@ namespace ContentTypeTextNet.Pe.Core.Models
             {
                 var resultBuffer = CreateStringBuffer(PathLength);
 
-                ShellLink.Raw.GetWorkingDirectory(resultBuffer, resultBuffer.MaxCapacity);
+                ShellLink.Com.GetWorkingDirectory(resultBuffer, resultBuffer.MaxCapacity);
 
                 return resultBuffer.ToString();
             }
             set
             {
-                ShellLink.Raw.SetWorkingDirectory(value);
+                ShellLink.Com.SetWorkingDirectory(value);
             }
         }
 
@@ -168,13 +169,13 @@ namespace ContentTypeTextNet.Pe.Core.Models
             {
                 int rawShowCommand;
 
-                ShellLink.Raw.GetShowCmd(out rawShowCommand);
+                ShellLink.Com.GetShowCmd(out rawShowCommand);
 
                 return (SW)rawShowCommand;
             }
             set
             {
-                ShellLink.Raw.SetShowCmd((int)value);
+                ShellLink.Com.SetShowCmd((int)value);
             }
         }
 
@@ -201,7 +202,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             var resultBuffer = CreateStringBuffer(PathLength);
             int iconIndex;
 
-            ShellLink.Raw.GetIconLocation(resultBuffer, resultBuffer.Capacity, out iconIndex);
+            ShellLink.Com.GetIconLocation(resultBuffer, resultBuffer.Capacity, out iconIndex);
 
             return new IconPathData(resultBuffer.ToString(), iconIndex);
         }
@@ -212,7 +213,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <param name="iconPath"></param>
         void SetIcon(IconPathData iconPath)
         {
-            ShellLink.Raw.SetIconLocation(iconPath.Path, iconPath.Index);
+            ShellLink.Com.SetIconLocation(iconPath.Path, iconPath.Index);
         }
 
         /// <summary>
@@ -221,7 +222,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <param name="path">保存先ショートカットパス。</param>
         public void Save(string path)
         {
-            PersistFile.Raw.Save(path, true);
+            PersistFile.Com.Save(path, true);
         }
 
         #endregion

@@ -72,16 +72,13 @@ namespace ContentTypeTextNet.Pe.Core.Models
         public BitmapSource? GetThumbnailImage(string iconPath, IconSize iconSize)
         {
             try {
-#pragma warning disable CS8600 // Null リテラルまたは Null の可能性がある値を Null 非許容型に変換しています。
-                IShellItem iShellItem = null;
-#pragma warning restore CS8600 // Null リテラルまたは Null の可能性がある値を Null 非許容型に変換しています。
-                NativeMethods.SHCreateItemFromParsingName(iconPath, IntPtr.Zero, NativeMethods.IID_IShellItem, out iShellItem);
-
+                NativeMethods.SHCreateItemFromParsingName(iconPath, IntPtr.Zero, NativeMethods.IID_IShellItem, out var iShellItem);
+                using var shellItem = ComWrapper.Create(iShellItem);
                 var size = iconSize.ToSize();
                 var siigbf = SIIGBF.SIIGBF_RESIZETOFIT;
                 var hResultBitmap = IntPtr.Zero;
-                using(var shellItem = new ComWrapper<IShellItem>(iShellItem)) {
-                    ((IShellItemImageFactory)shellItem.Com).GetImage(PodStructUtility.Convert(size), siigbf, out hResultBitmap);
+                using(var imageFactory = shellItem.Cast<IShellItemImageFactory>()) {
+                    imageFactory.Com.GetImage(PodStructUtility.Convert(size), siigbf, out hResultBitmap);
                 }
                 using(var hBitmap = new BitmapHandleWrapper(hResultBitmap)) {
                     var result = hBitmap.MakeBitmapSource();
