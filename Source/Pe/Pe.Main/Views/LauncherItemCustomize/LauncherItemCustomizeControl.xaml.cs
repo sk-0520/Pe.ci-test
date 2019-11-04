@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Views;
+using ContentTypeTextNet.Pe.Main.Models;
 using ContentTypeTextNet.Pe.Main.Models.Launcher;
 using ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize;
 using Prism.Commands;
@@ -115,35 +116,12 @@ namespace ContentTypeTextNet.Pe.Main.Views.LauncherItemCustomize
 
         #region function
 
-        void SetSyntaxHighlighting(ICSharpCode.AvalonEdit.TextEditor editor, System.IO.Stream stream)
-        {
-            var instance = global::ICSharpCode.AvalonEdit.Highlighting.HighlightingManager.Instance;
-            using(var reader = new System.Xml.XmlTextReader(stream)) {
-                var define = global::ICSharpCode.AvalonEdit.Highlighting.Xshd.HighlightingLoader.Load(reader, instance);
-                editor.SyntaxHighlighting = define;
-            }
-        }
-
         #endregion
-
-        private void EnvMergeEditor_Loaded(object sender, RoutedEventArgs e)
-        {
-            using(var stream = new System.IO.MemoryStream(Encoding.UTF8.GetBytes(Properties.Resources.File_Highlighting_EnvironmentVariable_Merge))) {
-                SetSyntaxHighlighting((ICSharpCode.AvalonEdit.TextEditor)sender, stream);
-            }
-        }
-
-        private void EnvRemoveEditor_Loaded(object sender, RoutedEventArgs e)
-        {
-            using(var stream = new System.IO.MemoryStream(Encoding.UTF8.GetBytes(Properties.Resources.File_Highlighting_EnvironmentVariable_Remove))) {
-                SetSyntaxHighlighting((ICSharpCode.AvalonEdit.TextEditor)sender, stream);
-            }
-        }
 
         private void TagEditor_Loaded(object sender, RoutedEventArgs e)
         {
-            using(var stream = new System.IO.MemoryStream(Encoding.UTF8.GetBytes(Properties.Resources.File_Highlighting_Tag))) {
-                SetSyntaxHighlighting((ICSharpCode.AvalonEdit.TextEditor)sender, stream);
+            using(var stream = ResourceUtility.OpenSyntaxStream(Properties.Resources.File_Highlighting_Tag)) {
+                AvalonEditHelper.SetSyntaxHighlightingDefault((ICSharpCode.AvalonEdit.TextEditor)sender, stream);
             }
         }
     }

@@ -11,18 +11,18 @@
   xmlns:sharpdevelop_avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
 
   xmlns:app_viewmodel_launcher_item_customize="clr-namespace:ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize"
-  xmlns:app_core_converter="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Converter;assembly=Pe.Core"
+  xmlns:app_core_views_converter="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Converter;assembly=Pe.Core"
   xmlns:app_core_views_attached="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Attached;assembly=Pe.Core"
   xmlns:app_core_views_selector="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Selector;assembly=Pe.Core"
   xmlns:app_core_views="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core"
-  xmlns:app_view_launcher_item_customize="clr-namespace:ContentTypeTextNet.Pe.Main.Views.LauncherItemCustomize"
+  xmlns:app_main_views_launcher_item_customize="clr-namespace:ContentTypeTextNet.Pe.Main.Views.LauncherItemCustomize"
 
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   mc:Ignorable="d"
   d:DesignHeight="450" d:DesignWidth="800"
 >
   <UserControl.Resources>
-    <app_core_converter:DoubleToParameterPercentConverter x:Key="DoubleToParameterPercentConverter" />
+    <app_core_views_converter:DoubleToParameterPercentConverter x:Key="DoubleToParameterPercentConverter" />
   </UserControl.Resources>
 
   <ItemsControl Grid.IsSharedSizeScope="True" ItemsSource="{Binding Item.CustomizeItems, ElementName=root}">
@@ -38,26 +38,6 @@
       <!--<sys:Int32 x:Key="LabelColumn">0</sys:Int32>
       <sys:Int32 x:Key="ContentColumn">1</sys:Int32>
       <sys:Double x:Key="MultiLine-Height">50</sys:Double>-->
-
-      <Style TargetType="sharpdevelop_avalonedit:TextEditor">
-        <Setter Property="ShowLineNumbers" Value="True" />
-        <Setter Property="HorizontalScrollBarVisibility" Value="Auto" />
-        <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
-        <!--<Setter Property="Height" Value="{StaticResource MultiLine-Height}" />-->
-        <Setter Property="MinHeight" Value="100" />
-        <Setter Property="MaxHeight" Value="200" />
-        <Setter Property="Height" Value="{Binding Path=ActualHeight, RelativeSource={RelativeSource AncestorType=Window}, Converter={StaticResource DoubleToParameterPercentConverter}, ConverterParameter=0.25}" />
-        <Setter Property="Options">
-          <Setter.Value>
-            <sharpdevelop_avalonedit:TextEditorOptions
-              EnableEmailHyperlinks="False"
-              EnableHyperlinks="False"
-              EnableVirtualSpace="False"
-            />
-          </Setter.Value>
-        </Setter>
-      </Style>
-
       <!--#region 共通 -->
       <DataTemplate DataType="{x:Type app_viewmodel_launcher_item_customize:LauncherItemCustomizeCommonViewModel}">
         <GroupBox Style="{StaticResource HeaderGroupBox}" Header="common">
@@ -300,21 +280,7 @@
             </Grid.ColumnDefinitions>
 
             <Grid Grid.Column="1">
-              <!--<Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-              </Grid.RowDefinitions>
-              <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition />
-              </Grid.ColumnDefinitions>
-
-              <Label Grid.Row="0" Grid.Column="0" Content="merge" />
-              <sharpdevelop_avalonedit:TextEditor x:Name="envMergeEditor" Grid.Row="1" Grid.Column="0" Document="{Binding MergeTextDocument}" Loaded="EnvMergeEditor_Loaded" />
-
-              <Label Grid.Row="0" Grid.Column="1" Content="remove" />
-              <sharpdevelop_avalonedit:TextEditor x:Name="envRemoveEditor" Grid.Row="1" Grid.Column="1" Document="{Binding RemoveTextDocument}" Loaded="EnvRemoveEditor_Loaded" />-->
-              <app_view_launcher_item_customize:EnvironmentValieableEditor MergeTextDocument="{Binding MergeTextDocument}" RemoveTextDocument="{Binding RemoveTextDocument}" />
+              <app_main_views_launcher_item_customize:EnvironmentValieableEditor MergeTextDocument="{Binding MergeTextDocument}" RemoveTextDocument="{Binding RemoveTextDocument}" />
             </Grid>
           </Grid>
         </GroupBox>
@@ -330,7 +296,7 @@
               <ColumnDefinition Style="{StaticResource ContentDefinition}" />
             </Grid.ColumnDefinitions>
 
-            <sharpdevelop_avalonedit:TextEditor x:Name="tagEditor" Grid.Row="1" Grid.Column="1" Document="{Binding TagDocument}" Loaded="TagEditor_Loaded" />
+            <sharpdevelop_avalonedit:TextEditor x:Name="tagEditor" Style="{StaticResource SettingEditor}" Grid.Row="1" Grid.Column="1" Document="{Binding TagDocument}" Loaded="TagEditor_Loaded" />
 
           </Grid>
         </GroupBox>
@@ -346,7 +312,7 @@
               <ColumnDefinition Style="{StaticResource ContentDefinition}" />
             </Grid.ColumnDefinitions>
 
-            <sharpdevelop_avalonedit:TextEditor Grid.Row="1" Grid.Column="1" Document="{Binding CommentDocument}" />
+            <sharpdevelop_avalonedit:TextEditor Grid.Row="1" Grid.Column="1" Style="{StaticResource SettingEditor}" Document="{Binding CommentDocument}" />
 
           </Grid>
         </GroupBox>

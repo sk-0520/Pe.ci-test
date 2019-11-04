@@ -32,7 +32,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.LauncherItemCustomize
             typeof(TextDocument),
             typeof(EnvironmentValieableEditor),
             new PropertyMetadata(
-                default(TextDocument),
+                new TextDocument(),
                 OnMergeTextDocumentChanged
             )
         );
@@ -59,7 +59,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.LauncherItemCustomize
             typeof(TextDocument),
             typeof(EnvironmentValieableEditor),
             new PropertyMetadata(
-                default(TextDocument),
+                new TextDocument(),
                 OnRemoveTextDocumentChanged
             )
         );

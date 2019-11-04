@@ -22,9 +22,9 @@
     </Grid.ColumnDefinitions>
 
     <Label Grid.Row="0" Grid.Column="0" Content="merge" />
-    <sharpdevelop_avalonedit:TextEditor x:Name="envMergeEditor" Grid.Row="1" Grid.Column="0" Document="{Binding MergeTextDocument, ElementName=root}" Loaded="EnvMergeEditor_Loaded" />
+    <sharpdevelop_avalonedit:TextEditor x:Name="envMergeEditor" Style="{StaticResource SettingEditor}" Grid.Row="1" Grid.Column="0" Document="{Binding MergeTextDocument, ElementName=root}" Loaded="EnvMergeEditor_Loaded" />
 
     <Label Grid.Row="0" Grid.Column="1" Content="remove" />
-    <sharpdevelop_avalonedit:TextEditor x:Name="envRemoveEditor" Grid.Row="1" Grid.Column="1" Document="{Binding RemoveTextDocument, ElementName=root}" Loaded="EnvRemoveEditor_Loaded" />
+    <sharpdevelop_avalonedit:TextEditor x:Name="envRemoveEditor" Style="{StaticResource SettingEditor}"  Grid.Row="1" Grid.Column="1" Document="{Binding RemoveTextDocument, ElementName=root}" Loaded="EnvRemoveEditor_Loaded" />
   </Grid>
 </UserControl>

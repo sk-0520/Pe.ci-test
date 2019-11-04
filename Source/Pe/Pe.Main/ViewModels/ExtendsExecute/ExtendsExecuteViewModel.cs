@@ -16,6 +16,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
         { }
 
         #region property
+        public RequestSender CloseRequest { get; } = new RequestSender();
 
         #endregion
 

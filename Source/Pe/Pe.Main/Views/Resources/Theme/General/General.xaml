@@ -120,4 +120,31 @@
     </ControlTemplate.Triggers>
   </ControlTemplate>
 
+  <Style
+    x:Key="SettingEditor"
+    TargetType="sharpdevelop_avalonedit:TextEditor"
+    xmlns:sharpdevelop_avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
+    xmlns:app_core_views_converter="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Converter;assembly=Pe.Core"
+  >
+    <Style.Resources>
+      <app_core_views_converter:DoubleToParameterPercentConverter x:Key="DoubleToParameterPercentConverter" />
+    </Style.Resources>
+    <Setter Property="ShowLineNumbers" Value="True" />
+    <Setter Property="HorizontalScrollBarVisibility" Value="Auto" />
+    <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
+    <!--<Setter Property="Height" Value="{StaticResource MultiLine-Height}" />-->
+    <Setter Property="MinHeight" Value="100" />
+    <Setter Property="MaxHeight" Value="200" />
+    <Setter Property="Height" Value="{Binding Path=ActualHeight, RelativeSource={RelativeSource AncestorType=Window}, Converter={StaticResource DoubleToParameterPercentConverter}, ConverterParameter=0.25}" />
+    <Setter Property="Options">
+      <Setter.Value>
+        <sharpdevelop_avalonedit:TextEditorOptions
+              EnableEmailHyperlinks="False"
+              EnableHyperlinks="False"
+              EnableVirtualSpace="False"
+            />
+      </Setter.Value>
+    </Setter>
+  </Style>
+
 </ResourceDictionary>
