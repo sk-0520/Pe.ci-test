@@ -37,7 +37,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 
         #region property
 
-        private static EnvironmentPathExecuteFileCache EnvironmentPathExecuteFileCache { get; } = new EnvironmentPathExecuteFileCache(TimeSpan.FromHours(3));
+        private static EnvironmentPathExecuteFileCache EnvironmentPathExecuteFileCache { get; } = EnvironmentPathExecuteFileCache.Instance;
 
         public RequestSender FileSelectRequest { get; } = new RequestSender();
 

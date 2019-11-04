@@ -132,6 +132,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
 
         #region property
 
+        public static EnvironmentPathExecuteFileCache Instance { get; } = new EnvironmentPathExecuteFileCache(TimeSpan.FromHours(3));
+
         /// <summary>
         /// 次に %PATH% を検索するまでの時間。
         /// <para><see cref="LastSearch"/>に加算。</para>

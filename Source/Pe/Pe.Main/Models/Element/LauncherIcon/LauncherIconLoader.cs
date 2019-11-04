@@ -37,7 +37,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon
         IMainDatabaseBarrier MainDatabaseBarrier { get; }
         IFileDatabaseBarrier FileDatabaseBarrier { get; }
         IDatabaseStatementLoader StatementLoader { get; }
-        static EnvironmentPathExecuteFileCache EnvironmentPathExecuteFileCache { get; } = new EnvironmentPathExecuteFileCache(TimeSpan.FromHours(2));
+        static EnvironmentPathExecuteFileCache EnvironmentPathExecuteFileCache { get; } = EnvironmentPathExecuteFileCache.Instance;
 
         #endregion
 
