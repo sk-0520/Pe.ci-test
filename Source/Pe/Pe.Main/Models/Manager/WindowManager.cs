@@ -19,15 +19,45 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
     public enum WindowKind
     {
         Debug,
+        /// <summary>
+        /// 使用許諾。
+        /// </summary>
         Accept,
+        /// <summary>
+        /// スタートアップ。
+        /// </summary>
         Startup,
+        /// <summary>
+        /// プログラム取り込み。
+        /// </summary>
         ImportPrograms,
+        /// <summary>
+        /// ランチャーツールバー。
+        /// </summary>
         LauncherToolbar,
+        /// <summary>
+        /// 指定して実行。
+        /// </summary>
         LauncherExecute,
+        /// <summary>
+        /// ランチャーアイテム編集。
+        /// </summary>
         LauncherCustomize,
+        /// <summary>
+        /// 標準入出力。
+        /// </summary>
         StandardInputOutput,
+        /// <summary>
+        /// コマンド。
+        /// </summary>
         Command,
+        /// <summary>
+        /// ノート。
+        /// </summary>
         Note,
+        /// <summary>
+        /// なんだこれ。。。
+        /// </summary>
         Screen,
     }
 
