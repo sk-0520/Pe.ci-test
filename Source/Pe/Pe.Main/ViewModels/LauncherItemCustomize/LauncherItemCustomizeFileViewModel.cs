@@ -82,7 +82,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
         public ICommand LauncherFileSelectCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
                 var environmentExecuteFile = new EnvironmentExecuteFile(LoggerFactory);
-                var exeExts = environmentExecuteFile.GetSystemExecuteExtensions();
+                var exeExts = environmentExecuteFile.GetSystemExecuteExtensions(true);
 
                 SelectFile(
                     FileSelectRequest,

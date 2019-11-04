@@ -42,8 +42,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
         /// <summary>
         /// 実行形式一覧を取得。
         /// </summary>
-        /// <returns>*.ext の配列</returns>
-        public IReadOnlyList<string> GetSystemExecuteExtensions()
+        /// <returns>*.ext の配列(<paramref name="addWildcard"/>が真の場合。偽なら * はつかない)</returns>
+        public IReadOnlyList<string> GetSystemExecuteExtensions(bool addWildcard)
         {
             var dotExeExts = Environment.GetEnvironmentVariable("PATHEXT");
             if(!string.IsNullOrEmpty(dotExeExts)) {
@@ -54,7 +54,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
                     .Select(i => i.Trim().ToLower())
                     .OrderBy(i => i == ".exe" ? 0 : 1)
                     .ThenBy(i => i)
-                    .Select(i => "*" + i) // *.ext を生成
+                    .Select(i => addWildcard ? "*" + i: i)
                     .ToList()
                 ;
                 if(result.Any()) {
@@ -73,9 +73,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
                 return new List<EnvironmentPathExecuteItem>();
             }
 
-            var rawExts = GetSystemExecuteExtensions()
-                .Select(i => i.Split('.', 2, StringSplitOptions.None).Last())
-                .Select(i => $"({i})")
+            var rawExts = GetSystemExecuteExtensions(false)
+                .Select(i => i.Substring(1))
+                .Select(i => $"({Regex.Escape(i)})")
             ;
 
             var extRegex = new Regex(@".*\." + string.Join("|", rawExts) + "$");
@@ -104,6 +104,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
             return result;
         }
 
+        /// <summary>
+        /// 指定したファイルが実行可能ファイルとして存在する場合に取得。
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <param name="items"></param>
+        /// <returns></returns>
+        public EnvironmentPathExecuteItem? Get(string? fileName, IReadOnlyCollection<EnvironmentPathExecuteItem> items)
+        {
+            if(string.IsNullOrWhiteSpace(fileName)) {
+                return null;
+            }
+
+            var name = Path.GetFileNameWithoutExtension(fileName);
+            return items.FirstOrDefault(i => string.Equals(name, Path.GetFileNameWithoutExtension(i.File.Name), StringComparison.OrdinalIgnoreCase));
+        }
 
         #endregion
     }

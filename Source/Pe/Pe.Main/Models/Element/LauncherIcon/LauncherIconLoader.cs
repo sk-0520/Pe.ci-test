@@ -16,6 +16,7 @@ using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Models.Launcher;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
+using ContentTypeTextNet.Pe.Main.Models.Platform;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon
@@ -36,6 +37,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon
         IMainDatabaseBarrier MainDatabaseBarrier { get; }
         IFileDatabaseBarrier FileDatabaseBarrier { get; }
         IDatabaseStatementLoader StatementLoader { get; }
+        static EnvironmentPathExecuteFileCache EnvironmentPathExecuteFileCache { get; } = new EnvironmentPathExecuteFileCache(TimeSpan.FromHours(2));
 
         #endregion
 
@@ -95,11 +97,28 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon
             }
         }
 
-        Task<BitmapSource> GetImageCoreAsync(LauncherItemKind kind, IconData iconData, CancellationToken cancellationToken)
+        Task<BitmapSource?> GetImageCoreAsync(LauncherItemKind kind, IconData iconData, CancellationToken cancellationToken)
         {
-#pragma warning disable CS8619 // 値における参照型の Null 許容性が、対象の型と一致しません。
-            return GetIconImageAsync(iconData, cancellationToken);
-#pragma warning restore CS8619 // 値における参照型の Null 許容性が、対象の型と一致しません。
+            var editIconData = new IconData() {
+                Path = Environment.ExpandEnvironmentVariables(iconData.Path),
+                Index = iconData.Index,
+            };
+
+            if(Path.IsPathFullyQualified(editIconData.Path)) {
+                return GetIconImageAsync(editIconData, cancellationToken);
+            }
+
+            var pathItems = EnvironmentPathExecuteFileCache.GetItems(LoggerFactory);
+            var environmentExecuteFile = new EnvironmentExecuteFile(LoggerFactory);
+            var pathItem = environmentExecuteFile.Get(editIconData.Path, pathItems);
+            if(pathItem == null) {
+                Logger.LogDebug("指定されたコマンドからパス取得失敗: {0}", editIconData.Path);
+                return Task.FromResult(default(BitmapSource));
+            }
+
+            editIconData.Path = pathItem.File.FullName;
+            editIconData.Index = 0;
+            return GetIconImageAsync(editIconData, cancellationToken);
         }
 
         async Task<BitmapSource?> GetImageAsync(LauncherIconData launcherIconData, CancellationToken cancellationToken)
