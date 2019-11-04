@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute;
+using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ICSharpCode.AvalonEdit.Document;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
@@ -25,19 +26,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
         public ExtendsExecuteViewModel(ExtendsExecuteElement model, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         {
-            // 重複: LauncherItemCustomizeEnvironmentVariableViewModel.InitializeImpl
-            var mergeItems = Model.EnvironmentVariables
-                .Where(i => !i.IsRemove)
-                .Select(i => $"{i.Name}={i.Value}")
-            ;
-
-            var removeItems = Model.EnvironmentVariables
-                .Where(i => i.IsRemove)
-                .Select(i => i.Name)
-            ;
-
-            this._mergeTextDocument = new TextDocument(string.Join(Environment.NewLine, mergeItems));
-            this._removeTextDocument = new TextDocument(string.Join(Environment.NewLine, removeItems));
+            var envConf = new EnvironmentVariableConfiguration(LoggerFactory);
+            this._mergeTextDocument = envConf.CreateMergeDocument(Model.EnvironmentVariables);
+            this._removeTextDocument = envConf.CreateRemoveDocument(Model.EnvironmentVariables);
         }
 
         #region property

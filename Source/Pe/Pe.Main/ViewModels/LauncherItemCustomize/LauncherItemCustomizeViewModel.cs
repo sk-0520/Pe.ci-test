@@ -14,6 +14,7 @@ using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem;
 using ContentTypeTextNet.Pe.Main.Models.Launcher;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
+using ContentTypeTextNet.Pe.Main.Models.Logic;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 {
@@ -122,17 +123,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
                         RunAdministrator = file.RunAdministrator,
                     };
 
-                    // この層でやるべきなんかねぇ
-                    var envVarItems = env.GetMergeItems().ToList();
-                    foreach(var item in env.GetRemoveItems()) {
-                        var index = envVarItems.FindIndex(i => i.Name == item);
-                        if(index != -1) {
-                            envVarItems.RemoveAt(index);
-                        }
-                        envVarItems.Add(new LauncherEnvironmentVariableData() {
-                            Name = item
-                        });
-                    }
+                    var envVarItems = env.GetEnvironmentVariableItems();
 
                     var tagItems = tag.GetTagItems();
                     Model.SaveFile(itemData, fileData, envVarItems, tagItems);

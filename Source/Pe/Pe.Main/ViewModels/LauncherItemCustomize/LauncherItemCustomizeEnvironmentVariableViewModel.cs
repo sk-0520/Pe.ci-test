@@ -9,6 +9,7 @@ using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem;
 using ICSharpCode.AvalonEdit.Document;
 using Microsoft.Extensions.Logging;
+using ContentTypeTextNet.Pe.Main.Models.Logic;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 {
@@ -45,24 +46,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 
         #region function
 
-        public IReadOnlyCollection<LauncherEnvironmentVariableData> GetMergeItems()
+        public IReadOnlyCollection<LauncherEnvironmentVariableData> GetEnvironmentVariableItems()
         {
-            return TextUtility.ReadLines(MergeTextDocument!.Text)
-                .Where(i => !string.IsNullOrWhiteSpace(i))
-                .Select(i => i.Split(new char[] { '=' }, 2, StringSplitOptions.RemoveEmptyEntries).Select(i => i.Trim()).ToArray())
-                .Where(i => i.Length == 2)
-                .Select(i => new LauncherEnvironmentVariableData() { Name = i[0], Value = i[1] })
-                .ToList()
-            ;
-        }
+            var envConf = new EnvironmentVariableConfiguration(LoggerFactory);
+            var envMergeItems = envConf.GetMergeItems(MergeTextDocument!);
+            var envRemoveItems = envConf.GetRemoveItems(RemoveTextDocument!);
+            var envVarItems = envConf.Join(envMergeItems, envRemoveItems);
 
-        public IReadOnlyCollection<string> GetRemoveItems()
-        {
-            return TextUtility.ReadLines(RemoveTextDocument!.Text)
-                .Where(i => !string.IsNullOrWhiteSpace(i))
-                .Select(i => i.Trim())
-                .ToList()
-            ;
+            return envVarItems;
         }
 
         #endregion
@@ -72,20 +63,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
         protected override void InitializeImpl()
         {
             var envItems = Model.LoadEnvironmentVariableItems();
+            var envConf = new EnvironmentVariableConfiguration(LoggerFactory);
 
-            var mergeItems = envItems
-                .Where(i => !i.IsRemove)
-                .Select(i => $"{i.Name}={i.Value}")
-            ;
-
-            var removeItems = envItems
-                .Where(i => i.IsRemove)
-                .Select(i => i.Name)
-            ;
-
-            MergeTextDocument = new TextDocument(string.Join(Environment.NewLine, mergeItems));
-            RemoveTextDocument = new TextDocument(string.Join(Environment.NewLine, removeItems));
+            MergeTextDocument = envConf.CreateMergeDocument(envItems);
+            RemoveTextDocument = envConf.CreateRemoveDocument(envItems);
         }
+
 
         #endregion
     }

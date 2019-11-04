@@ -112,7 +112,7 @@
           <Label Grid.Column="0" Content="env" />
           <StackPanel Grid.Column="1">
             <CheckBox Content="edit" />
-            <app_main_views_launcher_item_customize:EnvironmentValieableEditor />
+            <app_main_views_launcher_item_customize:EnvironmentValieableEditor MergeTextDocument="{Binding MergeTextDocument}" RemoveTextDocument="{Binding RemoveTextDocument}" />
           </StackPanel>
         </Grid>
 
