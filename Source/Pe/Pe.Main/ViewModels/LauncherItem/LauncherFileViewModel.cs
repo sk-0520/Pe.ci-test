@@ -50,7 +50,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
 
         public ICommand ExecuteExtendsCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-                Model.ExecuteExtends(Screen);
+                Model.OpenExtendsExecuteView(Screen);
             },
             () => !NowLoading && CanExecutePath
         ));

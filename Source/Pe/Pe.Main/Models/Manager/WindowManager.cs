@@ -38,7 +38,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         /// <summary>
         /// 指定して実行。
         /// </summary>
-        LauncherExecute,
+        ExtendsExecute,
         /// <summary>
         /// ランチャーアイテム編集。
         /// </summary>

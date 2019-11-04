@@ -156,9 +156,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             }
         }
 
-        public ILauncherExecuteResult ExecuteExtends(Screen screen)
+        public void OpenExtendsExecuteView(Screen screen)
         {
-            throw new NotImplementedException();
+            var element = OrderManager.CreateLauncherExtendsExecuteElement(LauncherItemId, screen);
+            element.StartView();
         }
 
         ILauncherExecutePathParameter GetExecutePath()

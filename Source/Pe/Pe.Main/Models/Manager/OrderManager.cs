@@ -30,6 +30,9 @@ using ContentTypeTextNet.Pe.Main.Views.LauncherToolbar;
 using ContentTypeTextNet.Pe.Main.Views.Note;
 using ContentTypeTextNet.Pe.Main.Views.StandardInputOutput;
 using Microsoft.Extensions.Logging;
+using ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute;
+using ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute;
+using ContentTypeTextNet.Pe.Main.Views.ExtendsExecute;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
@@ -60,6 +63,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         LauncherToolbarElement CreateLauncherToolbarElement(Screen dockScreen, ReadOnlyObservableCollection<LauncherGroupElement> launcherGroups);
         LauncherItemElement GetOrCreateLauncherItemElement(Guid launcherItemId);
         LauncherItemCustomizeElement CreateCustomizeLauncherItemElement(Guid launcherItemId, LauncherIconElement iconElement, Screen screen);
+        ExtendsExecuteElement CreateExtendsExecuteElement(LauncherFileData launcherFileData, IReadOnlyList<LauncherEnvironmentVariableData> launcherEnvironmentVariables, Screen screen);
+        LauncherExtendsExecuteElement CreateLauncherExtendsExecuteElement(Guid launcherItemId, Screen screen);
+
         NoteElement CreateNoteElement(Guid noteId, Screen? screen, NotePosition notePosition);
         bool RemoveNoteElement(Guid noteId);
         NoteContentElement CreateNoteContentElement(Guid noteId, NoteContentKind contentKind);
@@ -69,6 +75,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         WindowItem CreateLauncherToolbarWindow(LauncherToolbarElement element);
         WindowItem CreateCustomizeLauncherItemWindow(LauncherItemCustomizeElement element);
+        WindowItem CreateExtendsExecuteWindow(ExtendsExecuteElement element);
         WindowItem CreateNoteWindow(NoteElement element);
         WindowItem CreateStandardInputOutputWindow(StandardInputOutputElement element);
 
@@ -130,6 +137,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 var customizeLauncherItemElement = DiContainer.Build<LauncherItemCustomizeElement>(launcherItemId, iconElement, screen);
                 customizeLauncherItemElement.Initialize();
                 return customizeLauncherItemElement;
+            }
+
+            public ExtendsExecuteElement CreateExtendsExecuteElement(LauncherFileData launcherFileData, IReadOnlyList<LauncherEnvironmentVariableData> launcherEnvironmentVariables, Screen screen)
+            {
+                var element = DiContainer.Build<ExtendsExecuteElement>(launcherFileData, launcherEnvironmentVariables, screen);
+                return element;
+            }
+            public LauncherExtendsExecuteElement CreateLauncherExtendsExecuteElement(Guid launcherItemId, Screen screen)
+            {
+                var element = DiContainer.Build<LauncherExtendsExecuteElement>(launcherItemId, screen);
+                return element;
             }
 
             public NoteElement CreateNoteElement(Guid noteId, Screen? screen, NotePosition notePosition)
@@ -195,6 +213,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 window.DataContext = viewModel;
 
                 return new WindowItem(WindowKind.LauncherCustomize, window);
+            }
+
+            public WindowItem CreateExtendsExecuteWindow(ExtendsExecuteElement element)
+            {
+                var viewModel = DiContainer.UsingTemporaryContainer(c => {
+                    return c.Build<ExtendsExecuteViewModel>(element);
+                });
+                var window = DiContainer.BuildView<ExtendsExecuteWindow>();
+                window.DataContext = viewModel;
+
+                return new WindowItem(WindowKind.ExtendsExecute, window);
             }
 
             public WindowItem CreateNoteWindow(NoteElement element)

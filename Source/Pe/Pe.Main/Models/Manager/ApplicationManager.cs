@@ -30,6 +30,7 @@ using ContentTypeTextNet.Pe.Main.ViewModels.Manager;
 using ContentTypeTextNet.Pe.Main.ViewModels.Note;
 using ContentTypeTextNet.Pe.PInvoke.Windows;
 using Microsoft.Extensions.Logging;
+using ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
@@ -298,9 +299,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         void CloseLauncherCustomizeViews() => CloseViewsCore(WindowKind.LauncherCustomize);
 
+        void CloseExtendsExecuteViews() => CloseViewsCore(WindowKind.ExtendsExecute);
+
         void CloseViews()
         {
             CloseLauncherCustomizeViews();
+            CloseExtendsExecuteViews();
             CloseLauncherToolbarViews();
             CloseNoteViews();
         }
@@ -358,6 +362,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         {
             return OrderManager.CreateCustomizeLauncherItemElement(launcherItemId, iconElement, screen);
         }
+
+        public ExtendsExecuteElement CreateExtendsExecuteElement(LauncherFileData launcherFileData, IReadOnlyList<LauncherEnvironmentVariableData> launcherEnvironmentVariables, Screen screen)
+        {
+            return OrderManager.CreateExtendsExecuteElement(launcherFileData, launcherEnvironmentVariables, screen);
+        }
+
+        public LauncherExtendsExecuteElement CreateLauncherExtendsExecuteElement(Guid launcherItemId, Screen screen)
+        {
+            return OrderManager.CreateLauncherExtendsExecuteElement(launcherItemId, screen);
+        }
+
 
         public NoteElement CreateNoteElement(Guid noteId, Screen? screen, NotePosition notePosition)
         {
@@ -424,6 +439,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             return windowItem;
         }
+
+        public WindowItem CreateExtendsExecuteWindow(ExtendsExecuteElement element)
+        {
+            var windowItem = OrderManager.CreateExtendsExecuteWindow(element);
+
+            WindowManager.Register(windowItem);
+
+            return windowItem;
+        }
+
 
         public WindowItem CreateNoteWindow(NoteElement element)
         {

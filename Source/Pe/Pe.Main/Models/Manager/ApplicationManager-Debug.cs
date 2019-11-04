@@ -29,7 +29,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         {
             Logger.LogDebug("デバッグ用後処理");
 
-            DebugCustomize();
+            //DebugCustomize();
+            DebugExtendsExecute();
         }
 
         void DebugCustomize()
@@ -38,6 +39,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             var i = LauncherToolbarElements.First().LauncherItems.FirstOrDefault();
             if(i != null) {
                 i.OpenCustomizeView(Screen.PrimaryScreen);
+            }
+        }
+
+        void DebugExtendsExecute()
+        {
+            var i = LauncherToolbarElements.First().LauncherItems.FirstOrDefault();
+            if(i != null) {
+                i.OpenExtendsExecuteView(Screen.PrimaryScreen);
             }
         }
 
