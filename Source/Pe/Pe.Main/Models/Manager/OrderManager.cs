@@ -63,7 +63,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         LauncherToolbarElement CreateLauncherToolbarElement(Screen dockScreen, ReadOnlyObservableCollection<LauncherGroupElement> launcherGroups);
         LauncherItemElement GetOrCreateLauncherItemElement(Guid launcherItemId);
         LauncherItemCustomizeElement CreateCustomizeLauncherItemElement(Guid launcherItemId, LauncherIconElement iconElement, Screen screen);
-        ExtendsExecuteElement CreateExtendsExecuteElement(LauncherFileData launcherFileData, IReadOnlyList<LauncherEnvironmentVariableData> launcherEnvironmentVariables, Screen screen);
+        ExtendsExecuteElement CreateExtendsExecuteElement(string captionName, LauncherFileData launcherFileData, IReadOnlyList<LauncherEnvironmentVariableData> launcherEnvironmentVariables, Screen screen);
         LauncherExtendsExecuteElement CreateLauncherExtendsExecuteElement(Guid launcherItemId, Screen screen);
 
         NoteElement CreateNoteElement(Guid noteId, Screen? screen, NotePosition notePosition);
@@ -139,14 +139,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 return customizeLauncherItemElement;
             }
 
-            public ExtendsExecuteElement CreateExtendsExecuteElement(LauncherFileData launcherFileData, IReadOnlyList<LauncherEnvironmentVariableData> launcherEnvironmentVariables, Screen screen)
+            public ExtendsExecuteElement CreateExtendsExecuteElement(string captionName, LauncherFileData launcherFileData, IReadOnlyList<LauncherEnvironmentVariableData> launcherEnvironmentVariables, Screen screen)
             {
-                var element = DiContainer.Build<ExtendsExecuteElement>(launcherFileData, launcherEnvironmentVariables, screen);
+                var element = DiContainer.Build<ExtendsExecuteElement>(captionName, launcherFileData, launcherEnvironmentVariables, screen);
+                element.Initialize();
                 return element;
             }
             public LauncherExtendsExecuteElement CreateLauncherExtendsExecuteElement(Guid launcherItemId, Screen screen)
             {
                 var element = DiContainer.Build<LauncherExtendsExecuteElement>(launcherItemId, screen);
+                element.Initialize();
                 return element;
             }
 

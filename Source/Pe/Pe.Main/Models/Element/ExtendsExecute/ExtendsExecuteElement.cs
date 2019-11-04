@@ -1,9 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Text;
 using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
+using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Data;
+using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using Microsoft.Extensions.Logging;
 
@@ -17,12 +21,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute
 
         #endregion
 
-        public ExtendsExecuteElement(LauncherFileData launcherFileData, IReadOnlyList<LauncherEnvironmentVariableData> launcherEnvironmentVariables, Screen screen, IOrderManager orderManager, ILoggerFactory loggerFactory)
+        public ExtendsExecuteElement(string captionName, LauncherFileData launcherFileData, IReadOnlyList<LauncherEnvironmentVariableData> launcherEnvironmentVariables, Screen screen, IOrderManager orderManager, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
+            CaptionName = captionName;
             LauncherFileData = launcherFileData;
             EnvironmentVariables = launcherEnvironmentVariables;
             Screen = screen;
+
 
             OrderManager = orderManager;
         }
@@ -43,6 +49,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute
             private set => SetProperty(ref this._isVisible, value);
         }
 
+        public string CaptionName { get; protected set; }
+
         #endregion
 
         #region function
@@ -52,7 +60,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute
         #region ElementBase
 
         protected override void InitializeImpl()
-        { }
+        {
+            // 独立した何かなのでここでは何もしない
+        }
 
         #endregion
 
@@ -103,16 +113,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute
 
     public sealed class LauncherExtendsExecuteElement : ExtendsExecuteElement, ILauncherItemId
     {
-        public LauncherExtendsExecuteElement(Guid launcherItemId, IMainDatabaseBarrier mainDatabaseBarrier, Screen screen, IOrderManager orderManager, ILoggerFactory loggerFactory)
-            : base(new LauncherFileData(), new List<LauncherEnvironmentVariableData>(), screen, orderManager, loggerFactory)
+        public LauncherExtendsExecuteElement(Guid launcherItemId, Screen screen, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, IOrderManager orderManager, ILoggerFactory loggerFactory)
+            : base(string.Empty, new LauncherFileData(), new List<LauncherEnvironmentVariableData>(), screen, orderManager, loggerFactory)
         {
             LauncherItemId = launcherItemId;
             MainDatabaseBarrier = mainDatabaseBarrier;
+            StatementLoader = statementLoader;
         }
 
         #region property
 
         IMainDatabaseBarrier MainDatabaseBarrier { get; }
+        IDatabaseStatementLoader StatementLoader { get; }
         #endregion
 
         #region ILauncherItemId
@@ -125,7 +137,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute
 
         protected override void InitializeImpl()
         {
-            throw new NotImplementedException();
+            using(var commander = MainDatabaseBarrier.WaitRead()) {
+                var launcherItemsEntityDao = new LauncherItemsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                var launcherFilesEntityDao = new LauncherFilesEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                var launcherEnvVarsEntityDao = new LauncherEnvVarsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+
+                var launcherItem = launcherItemsEntityDao.SelectLauncherItem(LauncherItemId);
+                var fileData = launcherFilesEntityDao.SelectFile(LauncherItemId);
+                var envItems = launcherEnvVarsEntityDao.SelectEnvVarItems(LauncherItemId);
+
+                LauncherFileData = fileData;
+                EnvironmentVariables = envItems.ToList();
+
+                CaptionName = launcherItem.Name ?? launcherItem.Code ?? Path.GetFileNameWithoutExtension(LauncherFileData.Path) ?? LauncherItemId.ToString("D");
+            }
         }
 
         #endregion
