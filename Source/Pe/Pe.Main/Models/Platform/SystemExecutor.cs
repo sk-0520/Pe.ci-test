@@ -129,17 +129,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
 
     public class PathExecuteFileCache
     {
-        public PathExecuteFileCache(TimeSpan cacheTime, ILoggerFactory loggerFactory)
+        public PathExecuteFileCache(TimeSpan cacheTime)
         {
             CacheTime = cacheTime;
-            LoggerFactory = loggerFactory;
-            Logger = loggerFactory.CreateLogger(GetType());
         }
 
         #region property
 
-        private ILoggerFactory LoggerFactory { get; }
-        private ILogger Logger { get; }
         /// <summary>
         /// 次に %PATH% を検索するまでの時間。
         /// <para><see cref="LastSearch"/>に加算。</para>
@@ -155,11 +151,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
 
         #region function
 
-        public IReadOnlyList<SystemExecuteItem> GetItems()
+        public IReadOnlyList<SystemExecuteItem> GetItems(ILoggerFactory loggerFactory)
         {
             if(LastSearch + CacheTime < DateTime.Now) {
                 LastSearch = DateTime.Now;
-                var systemExecutor = new SystemExecutor(LoggerFactory);
+                var systemExecutor = new SystemExecutor(loggerFactory);
                 var pathItems = systemExecutor.GetPathExecuteFiles();
                 PathItemsCache.AddRange(pathItems);
             }

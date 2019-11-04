@@ -33,15 +33,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 
         public LauncherItemCustomizeFileViewModel(LauncherItemCustomizeElement model, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
-        {
-            if(PathExecuteFileCache == null) {
-                PathExecuteFileCache = new PathExecuteFileCache(TimeSpan.FromHours(3), LoggerFactory);
-            }
-        }
+        { }
 
         #region property
 
-        private static PathExecuteFileCache PathExecuteFileCache { get; set; } = null!;
+        private static PathExecuteFileCache PathExecuteFileCache { get; } = new PathExecuteFileCache(TimeSpan.FromHours(3));
 
         public RequestSender FileSelectRequest { get; } = new RequestSender();
 
@@ -190,7 +186,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
             IsEnabledStandardInputOutput = data.IsEnabledStandardInputOutput;
             RunAdministrator = data.RunAdministrator;
 
-            var pathItems = PathExecuteFileCache.GetItems();
+            var pathItems = PathExecuteFileCache.GetItems(LoggerFactory);
             PathItems.SetRange(pathItems.Select(i => new SystemExecuteItemViewModel(i, LoggerFactory)));
         }
 
