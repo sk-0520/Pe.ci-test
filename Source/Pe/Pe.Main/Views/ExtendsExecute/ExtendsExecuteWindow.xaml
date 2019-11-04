@@ -8,6 +8,7 @@
   xmlns:prism="http://prismlibrary.com/"
 
   xmlns:app_core_views="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core"
+  xmlns:app_core_views_selector="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Selector;assembly=Pe.Core"
   xmlns:app_main_views_launcher_item_customize="clr-namespace:ContentTypeTextNet.Pe.Main.Views.LauncherItemCustomize"
 
   SizeToContent="Height"
@@ -19,6 +20,36 @@
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   mc:Ignorable="d"
 >
+  <Window.Resources>
+    <Style x:Key="History" TargetType="ComboBox">
+      <Setter Property="IsEditable" Value="True" />
+      <Setter Property="ItemTemplateSelector">
+        <Setter.Value>
+          <app_core_views_selector:ComboBoxItemTemplateSelector>
+            <app_core_views_selector:ComboBoxItemTemplateSelector.SelectedTemplate>
+              <DataTemplate>
+                <TextBlock Text="{Binding Value, Mode=OneTime}"/>
+              </DataTemplate>
+            </app_core_views_selector:ComboBoxItemTemplateSelector.SelectedTemplate>
+
+            <app_core_views_selector:ComboBoxItemTemplateSelector.DropDownTemplate>
+              <DataTemplate>
+                <Grid Width="{Binding RelativeSource={RelativeSource AncestorType=ComboBox}, Path=ActualWidth}">
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                  </Grid.ColumnDefinitions>
+
+                  <TextBlock Grid.Column="0" Text="{Binding Value, Mode=OneTime}"/>
+                  <TextBlock Grid.Column="1" Text="{Binding Timestamp, Mode=OneTime}"/>
+                </Grid>
+              </DataTemplate>
+            </app_core_views_selector:ComboBoxItemTemplateSelector.DropDownTemplate>
+          </app_core_views_selector:ComboBoxItemTemplateSelector>
+        </Setter.Value>
+      </Setter>
+    </Style>
+  </Window.Resources>
   <i:Interaction.Triggers>
     <app_core_views:RequestTrigger SourceObject="{Binding CloseRequest}">
       <prism:InvokeCommandAction Command="{Binding CloseCommand, ElementName=root}" />
@@ -66,7 +97,7 @@
               <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <ComboBox Grid.Column="0" IsEditable="True" Text="{Binding Option}" />
+            <ComboBox Grid.Column="0" Style="{StaticResource History}" Text="{Binding Option}" ItemsSource="{Binding HistoryOptions}" />
             <Button Grid.Column="1" Content="file" />
             <Button Grid.Column="2" Content="dir" />
           </Grid>
@@ -85,7 +116,7 @@
               <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <ComboBox Grid.Column="0" IsEditable="True" Text="{Binding WorkDirectoryPath}" />
+            <ComboBox Grid.Column="0" Style="{StaticResource History}" Text="{Binding WorkDirectoryPath}" ItemsSource="{Binding HistoryWorkDirectories}" />
             <Button Grid.Column="1" Content="dir" />
           </Grid>
         </Grid>

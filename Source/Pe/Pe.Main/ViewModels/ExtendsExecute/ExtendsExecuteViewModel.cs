@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -39,6 +41,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
             this._runAdministrator = Model.LauncherFileData.RunAdministrator;
             this._isEnabledCustomEnvironmentVariable = Model.LauncherFileData.IsEnabledCustomEnvironmentVariable;
 
+            HistoryOptions = new ObservableCollection<HistoryViewModel>(Model.HistoryOptions.Select(i => new HistoryViewModel(i, CultureInfo.CurrentUICulture, loggerFactory)));
+            HistoryOptions.Insert(0, new HistoryViewModel(Model.LauncherFileData.Option, loggerFactory));
+
+            HistoryWorkDirectories = new ObservableCollection<HistoryViewModel>(Model.HistoryWorkDirectories.Select(i => new HistoryViewModel(i, CultureInfo.CurrentUICulture, loggerFactory)));
+            HistoryWorkDirectories.Insert(0, new HistoryViewModel(Model.LauncherFileData.WorkDirectoryPath, loggerFactory));
+
             var envConf = new EnvironmentVariableConfiguration(LoggerFactory);
             this._mergeTextDocument = envConf.CreateMergeDocument(Model.EnvironmentVariables);
             this._removeTextDocument = envConf.CreateRemoveDocument(Model.EnvironmentVariables);
@@ -59,6 +67,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
             get => this._workDirectoryPath;
             set => SetProperty(ref this._workDirectoryPath, value);
         }
+
+        public ObservableCollection<HistoryViewModel> HistoryOptions { get; }
+        public ObservableCollection<HistoryViewModel> HistoryWorkDirectories { get; }
 
         public bool IsEnabledStandardInputOutput
         {
