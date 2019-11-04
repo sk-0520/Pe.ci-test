@@ -35,11 +35,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute
 
         #region property
 
-        protected LauncherFileData LauncherFileData { get; set; }
-        protected IReadOnlyList<LauncherEnvironmentVariableData> EnvironmentVariables { get; set; }
-        protected IReadOnlyList<LauncherHistoryData> HistoryOptions { get; set; } = new List<LauncherHistoryData>();
-        protected IReadOnlyList<LauncherHistoryData> HistoryWorkDirectories { get; set; } = new List<LauncherHistoryData>();
-        protected Screen Screen { get; }
+        public LauncherFileData LauncherFileData { get; protected set; }
+        public IReadOnlyList<LauncherEnvironmentVariableData> EnvironmentVariables { get; protected set; }
+        public IReadOnlyList<LauncherHistoryData> HistoryOptions { get; protected set; } = new List<LauncherHistoryData>();
+        public IReadOnlyList<LauncherHistoryData> HistoryWorkDirectories { get; protected set; } = new List<LauncherHistoryData>();
+        public Screen Screen { get; }
 
         IOrderManager OrderManager { get; }
 
