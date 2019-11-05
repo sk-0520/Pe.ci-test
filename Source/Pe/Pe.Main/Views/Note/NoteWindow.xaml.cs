@@ -62,7 +62,9 @@ namespace ContentTypeTextNet.Pe.Main.Views.Note
             }
         }
 
+        [Obsolete]
         ICommand? _SelectLinkFileCommand;
+        [Obsolete]
         public ICommand SelectLinkFileCommand
         {
             get
@@ -71,6 +73,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Note
                     o => {
                         //var context = (NoteLinkSelectNotification)o.Context;
                         //SelectLinkFile(context, o.Callback);
+                        throw new NotImplementedException("Obsolete");
                     }
                 ));
             }
@@ -89,9 +92,10 @@ namespace ContentTypeTextNet.Pe.Main.Views.Note
             }
         }
 
+        [Obsolete]
         public ICommand UnlinkCommand => CommandStore.GetOrCreate(() => new DelegateCommand<RequestEventArgs>(
             o => {
-
+                throw new NotImplementedException("Obsolete");
             }
         ));
 
