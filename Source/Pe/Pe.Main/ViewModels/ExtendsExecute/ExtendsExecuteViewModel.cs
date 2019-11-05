@@ -103,6 +103,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
             set => SetProperty(ref this._removeTextDocument, value);
         }
 
+        public ObservableCollection<string> MergeErros { get; } = new ObservableCollection<string>();
+        public ObservableCollection<string> RemoveErros { get; } = new ObservableCollection<string>();
+
         #endregion
 
         #region command
@@ -168,6 +171,20 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
         }
 
         #endregion
+
+        #region SingleModelViewModelBase
+
+        protected override void ValidateDomain()
+        {
+
+            var envConf = new EnvironmentVariableConfiguration(LoggerFactory);
+
+            envConf.SetValidateCommon(MergeTextDocument!, envConf.ValidateMergeDocument, seq => AddErrors(seq, nameof(MergeTextDocument)), MergeErros);
+            envConf.SetValidateCommon(RemoveTextDocument!, envConf.ValidateRemoveDocument, seq => AddErrors(seq, nameof(RemoveTextDocument)), RemoveErros);
+        }
+
+        #endregion
+
 
         #region IViewLifecycleReceiver
 

@@ -146,7 +146,12 @@
           <Label Grid.Column="0" Content="env" />
           <StackPanel Grid.Column="1">
             <CheckBox Content="edit" IsChecked="{Binding IsEnabledCustomEnvironmentVariable}" />
-            <app_main_views_launcher_item_customize:EnvironmentValieableEditor MergeTextDocument="{Binding MergeTextDocument}" RemoveTextDocument="{Binding RemoveTextDocument}" />
+            <app_main_views_launcher_item_customize:EnvironmentValieableEditor
+              MergeTextDocument="{Binding MergeTextDocument}"
+              MergeErrorItemsSource="{Binding MergeErros}"
+              RemoveTextDocument="{Binding RemoveTextDocument}"
+              RemoveErrorItemsSource="{Binding RemoveErros}"
+            />
           </StackPanel>
         </Grid>
 
