@@ -181,17 +181,6 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
             }
         }
 
-        protected void AddValidateMessage(string message, [CallerMemberName] string propertyName = "")
-        {
-            var context = new ValidationContext(this) { MemberName = propertyName };
-            var validationErrors = new List<ValidationResult>();
-            var errors = ErrorsContainer.GetErrors(propertyName).ToList();
-            if(!errors.Contains(message)) {
-                errors.Add(message);
-                ErrorsContainer.SetErrors(propertyName, errors);
-            }
-        }
-
         /// <summary>
         /// ビジネスロジックの検証。
         /// </summary>
@@ -210,7 +199,20 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
         bool HasChildrenErros()
         {
             var v = GetValidationItems();
-            return v.childViewModels.Any(i => i.HasErrors || i.HasChildrenErros());
+            var result = v.childViewModels.Any(i => i.HasErrors || i.HasChildrenErros());
+            return result;
+        }
+
+        private void ClearAllErrors()
+        {
+            ErrorsContainer.ClearErrors();
+            var v = GetValidationItems();
+            foreach(var property in v.properties) {
+                ClearError(property.Name);
+            }
+            foreach(var viewModels in v.childViewModels) {
+                viewModels.ClearAllErrors();
+            }
         }
 
         protected bool Validate()
@@ -225,6 +227,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
                 return false;
             }
 
+            ClearAllErrors();
             ValidateAllDomain();
 
             return !HasErrors && !HasChildrenErros();
@@ -235,13 +238,31 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
             ErrorsContainer.ClearErrors(propertyName);
         }
 
-        protected void AddError(string errorMessage, [CallerMemberName] string propertyName = "")
+        protected void SetError(string errorMessage, [CallerMemberName] string propertyName = "")
         {
             ErrorsContainer.SetErrors(propertyName, new[] { errorMessage });
         }
-        protected void AddErrors(IEnumerable<string> errorMessage, [CallerMemberName] string propertyName = "")
+        protected void SetErrors(IEnumerable<string> errorMessage, [CallerMemberName] string propertyName = "")
         {
             ErrorsContainer.SetErrors(propertyName, errorMessage);
+        }
+        protected void AddError(string message, [CallerMemberName] string propertyName = "")
+        {
+            var errors = ErrorsContainer.GetErrors(propertyName).ToList();
+            if(!errors.Contains(message)) {
+                errors.Add(message);
+                ErrorsContainer.SetErrors(propertyName, errors);
+            }
+        }
+        protected void AddErrors(IEnumerable<string> messages, [CallerMemberName] string propertyName = "")
+        {
+            var errors = ErrorsContainer.GetErrors(propertyName).ToList();
+            foreach(var message in messages) {
+                if(!errors.Contains(message)) {
+                    errors.Add(message);
+                    ErrorsContainer.SetErrors(propertyName, errors);
+                }
+            }
         }
 
         #endregion

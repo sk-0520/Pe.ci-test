@@ -1,5 +1,7 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -76,6 +78,92 @@ namespace ContentTypeTextNet.Pe.Main.Views.LauncherItemCustomize
                 control.RemoveTextDocument = (TextDocument)e.NewValue;
             }
         }
+
+        #endregion
+
+        #region MergeErrorItemsSourceProperty
+
+        public static readonly DependencyProperty MergeErrorItemsSourceProperty = DependencyProperty.Register(
+            nameof(MergeErrorItemsSource),
+            typeof(IEnumerable),
+            typeof(EnvironmentValieableEditor),
+            new PropertyMetadata(
+                new PropertyChangedCallback(OnMergeErrorItemsSourcePropertyChanged)
+            )
+        );
+
+        public IEnumerable MergeErrorItemsSource
+        {
+            get { return (IEnumerable)GetValue(MergeErrorItemsSourceProperty); }
+            set { SetValue(MergeErrorItemsSourceProperty, value); }
+        }
+
+        private static void OnMergeErrorItemsSourcePropertyChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        {
+            if(sender is EnvironmentValieableEditor control) {
+                control.OnMergeErrorItemsSourceChanged((IEnumerable)e.OldValue, (IEnumerable)e.NewValue);
+            }
+        }
+
+        private void OnMergeErrorItemsSourceChanged(IEnumerable oldValue, IEnumerable newValue)
+        {
+            var oldValueINotifyCollectionChanged = oldValue as INotifyCollectionChanged;
+
+            if(null != oldValueINotifyCollectionChanged) {
+                oldValueINotifyCollectionChanged.CollectionChanged -= new NotifyCollectionChangedEventHandler(MergeErrorItemsSourceValueINotifyCollectionChanged_CollectionChanged);
+            }
+
+            var newValueINotifyCollectionChanged = newValue as INotifyCollectionChanged;
+            if(null != newValueINotifyCollectionChanged) {
+                newValueINotifyCollectionChanged.CollectionChanged += new NotifyCollectionChangedEventHandler(MergeErrorItemsSourceValueINotifyCollectionChanged_CollectionChanged);
+            }
+        }
+
+        void MergeErrorItemsSourceValueINotifyCollectionChanged_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        { }
+
+        #endregion
+
+        #region RemoveErrorItemsSourceProperty
+
+        public static readonly DependencyProperty RemoveErrorItemsSourceProperty = DependencyProperty.Register(
+            nameof(RemoveErrorItemsSource),
+            typeof(IEnumerable),
+            typeof(EnvironmentValieableEditor),
+            new PropertyMetadata(
+                new PropertyChangedCallback(OnRemoveErrorItemsSourcePropertyChanged)
+            )
+        );
+
+        public IEnumerable RemoveErrorItemsSource
+        {
+            get { return (IEnumerable)GetValue(RemoveErrorItemsSourceProperty); }
+            set { SetValue(RemoveErrorItemsSourceProperty, value); }
+        }
+
+        private static void OnRemoveErrorItemsSourcePropertyChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        {
+            if(sender is EnvironmentValieableEditor control) {
+                control.OnRemoveErrorItemsSourceChanged((IEnumerable)e.OldValue, (IEnumerable)e.NewValue);
+            }
+        }
+
+        private void OnRemoveErrorItemsSourceChanged(IEnumerable oldValue, IEnumerable newValue)
+        {
+            var oldValueINotifyCollectionChanged = oldValue as INotifyCollectionChanged;
+
+            if(null != oldValueINotifyCollectionChanged) {
+                oldValueINotifyCollectionChanged.CollectionChanged -= new NotifyCollectionChangedEventHandler(RemoveErrorItemsSourceValueINotifyCollectionChanged_CollectionChanged);
+            }
+
+            var newValueINotifyCollectionChanged = newValue as INotifyCollectionChanged;
+            if(null != newValueINotifyCollectionChanged) {
+                newValueINotifyCollectionChanged.CollectionChanged += new NotifyCollectionChangedEventHandler(RemoveErrorItemsSourceValueINotifyCollectionChanged_CollectionChanged);
+            }
+        }
+
+        void RemoveErrorItemsSourceValueINotifyCollectionChanged_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        { }
 
         #endregion
 

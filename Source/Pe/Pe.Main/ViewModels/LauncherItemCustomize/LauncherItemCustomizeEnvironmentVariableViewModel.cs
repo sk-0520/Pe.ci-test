@@ -10,6 +10,7 @@ using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem;
 using ICSharpCode.AvalonEdit.Document;
 using Microsoft.Extensions.Logging;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
+using System.Collections.ObjectModel;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 {
@@ -42,6 +43,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
             set => SetProperty(ref this._removeTextDocument, value);
         }
 
+        public ObservableCollection<string> MergeErros { get; } = new ObservableCollection<string>();
+        public ObservableCollection<string> RemoveErros { get; } = new ObservableCollection<string>();
+
         #endregion
 
         #region function
@@ -71,10 +75,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 
         protected override void ValidateDomain()
         {
+
             var envConf = new EnvironmentVariableConfiguration(LoggerFactory);
-            //var errors = envConf.ValidateMergeDocument(MergeTextDocument!);
-            AddValidateMessage("message", nameof(MergeTextDocument));
-            envConf.ValidateRemoveDocument(RemoveTextDocument!);
+
+            envConf.SetValidateCommon(MergeTextDocument!, envConf.ValidateMergeDocument, seq => AddErrors(seq, nameof(MergeTextDocument)), MergeErros);
+            envConf.SetValidateCommon(RemoveTextDocument!, envConf.ValidateRemoveDocument, seq => AddErrors(seq, nameof(RemoveTextDocument)), RemoveErros);
         }
 
         #endregion

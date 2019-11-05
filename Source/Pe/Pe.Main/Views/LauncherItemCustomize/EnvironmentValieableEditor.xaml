@@ -11,9 +11,23 @@
   d:DesignWidth="800"
   d:DesignHeight="450"
 >
+  <UserControl.Resources>
+    <!-- avalonedit の検証処理が分からん -->
+    <Style x:Key="ErrorMessages" TargetType="ItemsControl">
+      <Setter Property="ItemTemplate">
+        <Setter.Value>
+          <DataTemplate>
+            <TextBlock Text="{Binding}" />
+          </DataTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+  </UserControl.Resources>
+
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto" />
+      <RowDefinition Height="*" />
       <RowDefinition Height="*" />
     </Grid.RowDefinitions>
     <Grid.ColumnDefinitions>
@@ -21,10 +35,12 @@
       <ColumnDefinition />
     </Grid.ColumnDefinitions>
 
-    <Label Grid.Row="0" Grid.Column="0" Content="merge" />
+    <Label Grid.Row="0" Grid.Column="0" Content="merge"  />
     <sharpdevelop_avalonedit:TextEditor x:Name="envMergeEditor" Style="{StaticResource SettingEditor}" Grid.Row="1" Grid.Column="0" Document="{Binding MergeTextDocument, ElementName=root}" Loaded="EnvMergeEditor_Loaded" />
+    <ItemsControl Grid.Row="2" Grid.Column="0" Style="{StaticResource ErrorMessages}" ItemsSource="{Binding MergeErrorItemsSource, ElementName=root}" />
 
     <Label Grid.Row="0" Grid.Column="1" Content="remove" />
-    <sharpdevelop_avalonedit:TextEditor x:Name="envRemoveEditor" Style="{StaticResource SettingEditor}"  Grid.Row="1" Grid.Column="1" Document="{Binding RemoveTextDocument, ElementName=root}" Loaded="EnvRemoveEditor_Loaded" />
+    <sharpdevelop_avalonedit:TextEditor x:Name="envRemoveEditor" Style="{StaticResource SettingEditor}" Grid.Row="1" Grid.Column="1" Document="{Binding RemoveTextDocument, ElementName=root}" Loaded="EnvRemoveEditor_Loaded" />
+    <ItemsControl Grid.Row="2" Grid.Column="1" Style="{StaticResource ErrorMessages}" ItemsSource="{Binding RemoveErrorItemsSource, ElementName=root}" />
   </Grid>
 </UserControl>

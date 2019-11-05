@@ -280,7 +280,12 @@
             </Grid.ColumnDefinitions>
 
             <Grid Grid.Column="1">
-              <app_main_views_launcher_item_customize:EnvironmentValieableEditor MergeTextDocument="{Binding MergeTextDocument}" RemoveTextDocument="{Binding RemoveTextDocument}" />
+              <app_main_views_launcher_item_customize:EnvironmentValieableEditor
+                MergeTextDocument="{Binding MergeTextDocument}"
+                MergeErrorItemsSource="{Binding MergeErros}"
+                RemoveTextDocument="{Binding RemoveTextDocument}"
+                RemoveErrorItemsSource="{Binding RemoveErros}"
+              />
             </Grid>
           </Grid>
         </GroupBox>

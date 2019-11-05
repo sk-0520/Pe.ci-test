@@ -80,13 +80,27 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             return new TextDocument(string.Join(Environment.NewLine, removeItems));
         }
 
-        public void ValidateMergeDocument(TextDocument textDocument)
+        public IEnumerable<string> ValidateMergeDocument(TextDocument textDocument)
         {
-
+            yield break;
         }
 
-        public void ValidateRemoveDocument(TextDocument textDocument)
+        public IEnumerable<string> ValidateRemoveDocument(TextDocument textDocument)
         {
+            yield break;
+        }
+
+        public void SetValidateCommon(TextDocument textDocument, Func<TextDocument, IEnumerable<string>> func, Action<IEnumerable<string>> addErros, ICollection<string> collection)
+        {
+            collection.Clear();
+
+            var erros = func(textDocument!).ToList();
+            if(erros.Any()) {
+                addErros(erros);
+                foreach(var err in erros) {
+                    collection.Add(err);
+                }
+            }
 
         }
 
