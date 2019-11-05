@@ -109,7 +109,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
 
         public ICommand ExecuteCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-                CloseRequest.Send();
+                if(Validate()) {
+                    Execute();
+                    CloseRequest.Send();
+                }
             }
         ));
 
@@ -159,6 +162,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
         #endregion
 
         #region function
+
+        private void Execute()
+        {
+        }
 
         #endregion
 
