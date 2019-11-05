@@ -105,41 +105,90 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
             }
         }
 
-        /// <summary>
-        /// 全プロパティ検証。
-        /// </summary>
-        protected void ValidateAllProperty()
+        private (IReadOnlyCollection<PropertyInfo> properties, IReadOnlyCollection<ViewModelBase> childViewModels) GetValidationItems()
         {
             var type = GetType();
-            var properties = type.GetProperties();
+            var properties = type.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
             var targetProperties = properties
                 .Select(i => new { Property = i, Attributes = i.GetCustomAttributes<ValidationAttribute>() })
-                .Where(i => i.Attributes != null)
+                .Where(i => i.Attributes.Any())
                 .Select(i => i.Property)
                 .ToList()
             ;
-            foreach(var property in targetProperties) {
-                var rawValue = property.GetValue(this);
-                ValidateProperty(rawValue!, property.Name);
-            }
 
             var childProperties = properties.Except(targetProperties);
+            var childViewModels = new List<ViewModelBase>();
             foreach(var property in childProperties) {
                 var rawValue = property.GetValue(this);
                 switch(rawValue) {
                     case ViewModelBase viewModel:
-                        viewModel.ValidateAllProperty();
+                        childViewModels.Add(viewModel);
                         break;
 
                     case IEnumerable enumerable:
                         foreach(var element in enumerable.OfType<ViewModelBase>()) {
-                            element.ValidateAllProperty();
+                            childViewModels.Add(element);
                         }
                         break;
 
                     default:
                         break;
                 }
+            }
+
+            return (targetProperties, childViewModels);
+        }
+
+        /// <summary>
+        /// 全プロパティ検証。
+        /// </summary>
+        private void ValidateAllProperty()
+        {
+            var v = GetValidationItems();
+            //var type = GetType();
+            //var properties = type.GetProperties();
+            //var targetProperties = properties
+            //    .Select(i => new { Property = i, Attributes = i.GetCustomAttributes<ValidationAttribute>() })
+            //    .Where(i => i.Attributes != null)
+            //    .Select(i => i.Property)
+            //    .ToList()
+            //;
+            foreach(var property in v.properties) {
+                var rawValue = property.GetValue(this);
+                ValidateProperty(rawValue!, property.Name);
+            }
+
+            //var childProperties = properties.Except(targetProperties);
+            //foreach(var property in childProperties) {
+            //    var rawValue = property.GetValue(this);
+            //    switch(rawValue) {
+            //        case ViewModelBase viewModel:
+            //            viewModel.ValidateAllProperty();
+            //            break;
+
+            //        case IEnumerable enumerable:
+            //            foreach(var element in enumerable.OfType<ViewModelBase>()) {
+            //                element.ValidateAllProperty();
+            //            }
+            //            break;
+
+            //        default:
+            //            break;
+            //    }
+            //}
+            foreach(var childViewModel in v.childViewModels) {
+                childViewModel.ValidateAllProperty();
+            }
+        }
+
+        protected void AddValidateMessage(string message, [CallerMemberName] string propertyName = "")
+        {
+            var context = new ValidationContext(this) { MemberName = propertyName };
+            var validationErrors = new List<ValidationResult>();
+            var errors = ErrorsContainer.GetErrors(propertyName).ToList();
+            if(!errors.Contains(message)) {
+                errors.Add(message);
+                ErrorsContainer.SetErrors(propertyName, errors);
             }
         }
 
@@ -149,21 +198,36 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
         protected virtual void ValidateDomain()
         { }
 
+        private void ValidateAllDomain()
+        {
+            var v = GetValidationItems();
+            ValidateDomain();
+            foreach(var childViewModel in v.childViewModels) {
+                childViewModel.ValidateAllDomain();
+            }
+        }
+
+        bool HasChildrenErros()
+        {
+            var v = GetValidationItems();
+            return v.childViewModels.Any(i => i.HasErrors || i.HasChildrenErros());
+        }
+
         protected bool Validate()
         {
-            if(HasErrors) {
+            if(HasErrors || HasChildrenErros()) {
                 return false;
             }
 
             ValidateAllProperty();
 
-            if(HasErrors) {
+            if(HasErrors || HasChildrenErros()) {
                 return false;
             }
 
-            ValidateDomain();
+            ValidateAllDomain();
 
-            return !HasErrors;
+            return !HasErrors && !HasChildrenErros();
         }
 
         protected void ClearError([CallerMemberName] string propertyName = "")

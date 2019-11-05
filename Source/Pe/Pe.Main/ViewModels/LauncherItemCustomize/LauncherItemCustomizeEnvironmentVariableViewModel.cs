@@ -69,6 +69,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
             RemoveTextDocument = envConf.CreateRemoveDocument(envItems);
         }
 
+        protected override void ValidateDomain()
+        {
+            var envConf = new EnvironmentVariableConfiguration(LoggerFactory);
+            //var errors = envConf.ValidateMergeDocument(MergeTextDocument!);
+            AddValidateMessage("message", nameof(MergeTextDocument));
+            envConf.ValidateRemoveDocument(RemoveTextDocument!);
+        }
 
         #endregion
     }

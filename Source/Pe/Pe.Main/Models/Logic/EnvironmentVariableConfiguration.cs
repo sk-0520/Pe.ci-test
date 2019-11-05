@@ -80,6 +80,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             return new TextDocument(string.Join(Environment.NewLine, removeItems));
         }
 
+        public void ValidateMergeDocument(TextDocument textDocument)
+        {
+
+        }
+
+        public void ValidateRemoveDocument(TextDocument textDocument)
+        {
+
+        }
+
         #endregion
     }
 }

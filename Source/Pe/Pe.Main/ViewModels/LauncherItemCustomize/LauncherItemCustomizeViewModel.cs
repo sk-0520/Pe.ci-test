@@ -140,6 +140,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 
         #endregion
 
+        #region SingleModelViewModelBase
+
+
+        #endregion
+
         #region IViewLifecycleReceiver
 
         public void ReceiveViewInitialized(Window window)
