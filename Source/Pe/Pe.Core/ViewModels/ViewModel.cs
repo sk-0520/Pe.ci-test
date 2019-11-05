@@ -108,7 +108,8 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
         private (IReadOnlyCollection<PropertyInfo> properties, IReadOnlyCollection<ViewModelBase> childViewModels) GetValidationItems()
         {
             var type = GetType();
-            var properties = type.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+            //var properties = type.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+            var properties = type.GetProperties();
             var targetProperties = properties
                 .Select(i => new { Property = i, Attributes = i.GetCustomAttributes<ValidationAttribute>() })
                 .Where(i => i.Attributes.Any())
