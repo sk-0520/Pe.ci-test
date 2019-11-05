@@ -13,6 +13,7 @@ using ContentTypeTextNet.Pe.Main.Models.Platform;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
 using System.Collections.ObjectModel;
+using ContentTypeTextNet.Pe.Main.Models;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 {
@@ -84,13 +85,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
                 var environmentExecuteFile = new EnvironmentExecuteFile(LoggerFactory);
                 var exeExts = environmentExecuteFile.GetSystemExecuteExtensions(true);
 
-                SelectFile(
+                var dialogRequester = new DialogRequester(LoggerFactory);
+                dialogRequester.SelectFile(
                     FileSelectRequest,
-                    ExpandPath(Path),
+                    dialogRequester.ExpandPath(Path),
                     true,
                     new[] {
                         new DialogFilterItem("exe", exeExts.First(), exeExts),
-                        CreateAllFilter(),
+                        dialogRequester.CreateAllFilter(),
                     },
                     r => {
                         Path = r.ResponseFilePaths[0];
@@ -101,11 +103,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 
         public ICommand LauncherDirectorySelectCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-                SelectFile(
+                var dialogRequester = new DialogRequester(LoggerFactory);
+                dialogRequester.SelectDirectory(
                     FileSelectRequest,
-                    ExpandPath(Path),
-                    false,
-                    Enumerable.Empty<DialogFilterItem>(),
+                    dialogRequester.ExpandPath(Path),
                     r => {
                         Path = r.ResponseFilePaths[0];
                     }
@@ -115,11 +116,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 
         public ICommand OptionFileSelectCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-                SelectFile(
+                var dialogRequester = new DialogRequester(LoggerFactory);
+                dialogRequester.SelectFile(
                     FileSelectRequest,
-                    ExpandPath(Option),
+                    dialogRequester.ExpandPath(Option),
                     true,
-                    new[] { CreateAllFilter() },
+                    new[] { dialogRequester.CreateAllFilter() },
                     r => {
                         Option = r.ResponseFilePaths[0];
                     }
@@ -129,11 +131,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 
         public ICommand OptionDirectorySelectCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-                SelectFile(
+                var dialogRequester = new DialogRequester(LoggerFactory);
+                dialogRequester.SelectDirectory(
                     FileSelectRequest,
-                    ExpandPath(Option),
-                    false,
-                    Enumerable.Empty<DialogFilterItem>(),
+                    dialogRequester.ExpandPath(Option),
                     r => {
                         Option = r.ResponseFilePaths[0];
                     }
@@ -149,11 +150,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 
         public ICommand WorkingDirectorySelectCommand => GetOrCreateCommand(() => new DelegateCommand(
              () => {
-                 SelectFile(
+                 var dialogRequester = new DialogRequester(LoggerFactory);
+                 dialogRequester.SelectDirectory(
                      FileSelectRequest,
-                     ExpandPath(WorkingDirectoryPath),
-                     false,
-                     Enumerable.Empty<DialogFilterItem>(),
+                     dialogRequester.ExpandPath(WorkingDirectoryPath),
                      r => {
                          WorkingDirectoryPath = r.ResponseFilePaths[0];
                      }

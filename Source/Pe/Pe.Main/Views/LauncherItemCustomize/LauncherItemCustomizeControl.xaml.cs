@@ -30,6 +30,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.LauncherItemCustomize
         public LauncherItemCustomizeControl()
         {
             InitializeComponent();
+            DialogRequestReceiver = new DialogRequestReceiver(this);
         }
 
         #region Item
@@ -60,6 +61,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.LauncherItemCustomize
 
         #region property
 
+        DialogRequestReceiver DialogRequestReceiver { get; }
         CommandStore CommandStore { get; } = new CommandStore();
 
         #endregion
@@ -68,47 +70,13 @@ namespace ContentTypeTextNet.Pe.Main.Views.LauncherItemCustomize
 
         public ICommand FileSelectCommand => CommandStore.GetOrCreate(() => new DelegateCommand<RequestEventArgs>(
             o => {
-                var fileSelectParameter = (LauncherFileSelectRequestParameter)o.Parameter;
-                FileSystemDialogBase dialog = fileSelectParameter.IsFile switch
-                {
-                    true => new OpenFileDialog(),
-                    false => new FolderBrowserDialog(),
-                };
-                using(dialog) {
-                    dialog.FileName = fileSelectParameter.FilePath;
-                    dialog.Filters.SetRange(fileSelectParameter.Filter);
-
-                    if(dialog.ShowDialog(Window.GetWindow(this)).GetValueOrDefault()) {
-                        o.Callback(new LauncherFileSelectRequestResponse() {
-                            ResponseIsCancel = false,
-                            ResponseFilePaths = new[] { dialog.FileName },
-                        });
-                    } else {
-                        o.Callback(new LauncherFileSelectRequestResponse() {
-                            ResponseIsCancel = true,
-                        });
-                    }
-                }
+                DialogRequestReceiver.ReceiveFileSystemSelectDialogRequest(o);
             }
         ));
 
         public ICommand IconSelectCommand => CommandStore.GetOrCreate(() => new DelegateCommand<RequestEventArgs>(
             o => {
-                var iconSelectParameter = (LauncherIconSelectRequestParameter)o.Parameter;
-                var dialog = new IconDialog();
-                dialog.IconPath = iconSelectParameter.FileName;
-                dialog.IconIndex = iconSelectParameter.IconIndex;
-                if(dialog.ShowDialog().GetValueOrDefault()) {
-                    o.Callback(new LauncherIconSelectRequestResponse() {
-                        ResponseIsCancel = false,
-                        FileName = dialog.IconPath,
-                        IconIndex = dialog.IconIndex,
-                    });
-                } else {
-                    o.Callback(new LauncherIconSelectRequestResponse() {
-                        ResponseIsCancel = true,
-                    });
-                }
+                DialogRequestReceiver.ReceiveIconSelectDialogRequest(o);
             }
         ));
 

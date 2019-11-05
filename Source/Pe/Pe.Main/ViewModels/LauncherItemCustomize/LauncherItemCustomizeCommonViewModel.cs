@@ -15,6 +15,7 @@ using ContentTypeTextNet.Pe.Main.Models.Launcher;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
+using ContentTypeTextNet.Pe.Main.Models;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 {
@@ -89,27 +90,27 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 
         public ICommand IconFileSelectCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-                var parameter = new LauncherIconSelectRequestParameter() {
-                    FileName = ExpandPath(IconData?.Path),
-                    IconIndex = IconData?.Index ?? 0,
-                };
-                IconSelectRequest.Send<LauncherIconSelectRequestResponse>(parameter, r => {
-                    if(r.ResponseIsCancel) {
-                        Logger.LogTrace("cancel");
-                        return;
+                var dialogRequester = new DialogRequester(LoggerFactory);
+                dialogRequester.SelectIcon(
+                    IconSelectRequest,
+                    dialogRequester.ExpandPath(IconData?.Path),
+                    IconData?.Index ?? 0,
+                    r => {
+                        IconData = new IconData() {
+                            Path = r.FileName,
+                            Index = r.IconIndex,
+                        };
                     }
-                    IconData = new IconData() {
-                        Path = r.FileName,
-                        Index = r.IconIndex,
-                    };
-                });
+                );
+
             }
         ));
         public ICommand IconImageSelectCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-                SelectFile(
+                var dialogRequester = new DialogRequester(LoggerFactory);
+                dialogRequester.SelectFile(
                     ImageSelectRequest,
-                    ExpandPath(IconData?.Path),
+                    dialogRequester.ExpandPath(IconData?.Path),
                     true,
                     new[] {
                         new DialogFilterItem("image", string.Empty, IconImageLoaderBase.ImageFileExtensions.Select(i => "*." + i)),
