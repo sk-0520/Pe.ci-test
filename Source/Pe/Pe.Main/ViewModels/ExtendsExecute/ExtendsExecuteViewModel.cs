@@ -7,9 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Input;
+using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
+using ContentTypeTextNet.Pe.Main.Models;
 using ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
+using ContentTypeTextNet.Pe.Main.Models.Platform;
 using ICSharpCode.AvalonEdit.Document;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
@@ -54,6 +57,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
 
         #region property
         public RequestSender CloseRequest { get; } = new RequestSender();
+        public RequestSender FileSelectRequest { get; } = new RequestSender();
+
 
         public string ExecuteValue => Model.LauncherFileData.Path;
 
@@ -104,7 +109,50 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
 
         public ICommand ExecuteCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
+                CloseRequest.Send();
+            }
+        ));
 
+        public ICommand OptionFileSelectCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                var environmentExecuteFile = new EnvironmentExecuteFile(LoggerFactory);
+                var exeExts = environmentExecuteFile.GetSystemExecuteExtensions(true);
+
+                var dialogRequester = new DialogRequester(LoggerFactory);
+                dialogRequester.SelectFile(
+                    FileSelectRequest,
+                    dialogRequester.ExpandPath(Option),
+                    true,
+                   new[] { dialogRequester.CreateAllFilter() },
+                    r => {
+                        Option = r.ResponseFilePaths[0];
+                    }
+                );
+            }
+         ));
+        public ICommand OptionDirectorySelectCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                var dialogRequester = new DialogRequester(LoggerFactory);
+                dialogRequester.SelectDirectory(
+                    FileSelectRequest,
+                    dialogRequester.ExpandPath(Option),
+                    r => {
+                        Option = r.ResponseFilePaths[0];
+                    }
+                );
+            }
+        ));
+
+        public ICommand WorkDirectorySelectCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                var dialogRequester = new DialogRequester(LoggerFactory);
+                dialogRequester.SelectDirectory(
+                    FileSelectRequest,
+                    dialogRequester.ExpandPath(WorkDirectoryPath),
+                    r => {
+                        WorkDirectoryPath = r.ResponseFilePaths[0];
+                    }
+                );
             }
         ));
 

@@ -23,9 +23,12 @@ namespace ContentTypeTextNet.Pe.Main.Views.ExtendsExecute
         public ExtendsExecuteWindow()
         {
             InitializeComponent();
+            DialogRequestReceiver = new DialogRequestReceiver(this);
         }
 
+
         #region property
+        DialogRequestReceiver DialogRequestReceiver { get; }
 
         [Injection]
         ILogger? Logger { get; set; }
@@ -38,6 +41,12 @@ namespace ContentTypeTextNet.Pe.Main.Views.ExtendsExecute
 
         public ICommand CloseCommand => CommandStore.GetOrCreate(() => new DelegateCommand(
             () => Close()
+        ));
+
+        public ICommand FileSelectCommand => CommandStore.GetOrCreate(() => new DelegateCommand<RequestEventArgs>(
+            o => {
+                DialogRequestReceiver.ReceiveFileSystemSelectDialogRequest(o);
+            }
         ));
 
         #endregion

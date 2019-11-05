@@ -54,6 +54,9 @@
     <app_core_views:RequestTrigger SourceObject="{Binding CloseRequest}">
       <prism:InvokeCommandAction Command="{Binding CloseCommand, ElementName=root}" />
     </app_core_views:RequestTrigger>
+    <app_core_views:RequestTrigger SourceObject="{Binding FileSelectRequest}">
+      <prism:InvokeCommandAction Command="{Binding FileSelectCommand ,ElementName=root}" />
+    </app_core_views:RequestTrigger>
   </i:Interaction.Triggers>
   <Grid>
     <Grid.RowDefinitions>
@@ -98,8 +101,8 @@
             </Grid.ColumnDefinitions>
 
             <ComboBox Grid.Column="0" Style="{StaticResource History}" Text="{Binding Option}" ItemsSource="{Binding HistoryOptions}" />
-            <Button Grid.Column="1" Content="file" />
-            <Button Grid.Column="2" Content="dir" />
+            <Button Grid.Column="1" Content="file" Command="{Binding OptionFileSelectCommand}" />
+            <Button Grid.Column="2" Content="dir" Command="{Binding OptionDirectorySelectCommand}" />
           </Grid>
         </Grid>
 
@@ -117,7 +120,7 @@
             </Grid.ColumnDefinitions>
 
             <ComboBox Grid.Column="0" Style="{StaticResource History}" Text="{Binding WorkDirectoryPath}" ItemsSource="{Binding HistoryWorkDirectories}" />
-            <Button Grid.Column="1" Content="dir" />
+            <Button Grid.Column="1" Content="dir" Command="{Binding WorkDirectorySelectCommand}" />
           </Grid>
         </Grid>
 
