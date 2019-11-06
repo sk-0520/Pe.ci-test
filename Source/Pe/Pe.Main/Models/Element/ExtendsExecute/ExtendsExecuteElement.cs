@@ -190,13 +190,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute
 
                     launcherItemsEntityDao.UpdateExecuteCountIncrement(LauncherItemId, DatabaseCommonStatus.CreateCurrentAccount());
 
-                    //TODO: デフォ値の確認が足りない問題
+                    var item = launcherItemsEntityDao.SelectLauncherItem(LauncherItemId);
+                    if(item.Kind == LauncherItemKind.File) {
+                        var launcherFilesEntityDao = new LauncherFilesEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory));
+                        var launcherFileData = launcherFilesEntityDao.SelectFile(LauncherItemId);
 
-                    launcherItemHistoriesEntityDao.DeleteHistory(LauncherItemId, LauncherHistoryKind.Option, fileData.Option);
-                    launcherItemHistoriesEntityDao.InsertHistory(LauncherItemId, LauncherHistoryKind.Option, fileData.Option, DatabaseCommonStatus.CreateCurrentAccount());
+                        launcherItemHistoriesEntityDao.DeleteHistory(LauncherItemId, LauncherHistoryKind.Option, fileData.Option);
+                        if(launcherFileData.Option != fileData.Option) {
+                            launcherItemHistoriesEntityDao.InsertHistory(LauncherItemId, LauncherHistoryKind.Option, fileData.Option, DatabaseCommonStatus.CreateCurrentAccount());
+                        }
 
-                    launcherItemHistoriesEntityDao.DeleteHistory(LauncherItemId, LauncherHistoryKind.WorkDirectory, fileData.WorkDirectoryPath);
-                    launcherItemHistoriesEntityDao.InsertHistory(LauncherItemId, LauncherHistoryKind.WorkDirectory, fileData.WorkDirectoryPath, DatabaseCommonStatus.CreateCurrentAccount());
+                        launcherItemHistoriesEntityDao.DeleteHistory(LauncherItemId, LauncherHistoryKind.WorkDirectory, fileData.WorkDirectoryPath);
+                        if(launcherFileData.WorkDirectoryPath != fileData.WorkDirectoryPath) {
+                            launcherItemHistoriesEntityDao.InsertHistory(LauncherItemId, LauncherHistoryKind.WorkDirectory, fileData.WorkDirectoryPath, DatabaseCommonStatus.CreateCurrentAccount());
+                        }
+                    }
 
                     commander.Commit();
                 }
