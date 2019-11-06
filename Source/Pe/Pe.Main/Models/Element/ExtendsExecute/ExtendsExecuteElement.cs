@@ -57,6 +57,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute
 
         #region function
 
+        public virtual void Execute(LauncherFileData fileData, IReadOnlyList<LauncherEnvironmentVariableData> environmentVariables, Screen screen)
+        {
+
+        }
+
         #endregion
 
         #region ElementBase

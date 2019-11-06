@@ -5,6 +5,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Media;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
 using ContentTypeTextNet.Pe.PInvoke.Windows;
 
@@ -15,6 +16,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #region function
 
         Point GetDpiScale();
+        Screen GetOwnerScreen();
 
         #endregion
     }
@@ -24,6 +26,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #region IDpiScaleOutputor
 
         public Point GetDpiScale() => new Point(1, 1);
+        public Screen GetOwnerScreen() => Screen.PrimaryScreen;
 
         #endregion
     }

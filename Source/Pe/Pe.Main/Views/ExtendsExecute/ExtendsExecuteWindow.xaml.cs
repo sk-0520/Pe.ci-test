@@ -9,6 +9,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
+using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
 using ContentTypeTextNet.Pe.Core.Models;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
@@ -18,7 +20,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.ExtendsExecute
     /// <summary>
     /// ExtendsExecuteWindow.xaml の相互作用ロジック
     /// </summary>
-    public partial class ExtendsExecuteWindow : Window
+    public partial class ExtendsExecuteWindow : Window, IDpiScaleOutputor
     {
         public ExtendsExecuteWindow()
         {
@@ -50,6 +52,14 @@ namespace ContentTypeTextNet.Pe.Main.Views.ExtendsExecute
         ));
 
         #endregion
+
+        #region IDpiScaleOutputor
+
+        public Point GetDpiScale() => UIUtility.GetDpiScale(this);
+        public Screen GetOwnerScreen() => Screen.FromHandle(HandleUtility.GetWindowHandle(this));
+
+        #endregion
+
 
     }
 }

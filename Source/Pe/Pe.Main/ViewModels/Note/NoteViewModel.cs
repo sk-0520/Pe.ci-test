@@ -107,7 +107,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         IDispatcherWapper DispatcherWapper { get; }
         PropertyChangedHooker PropertyChangedHooker { get; }
 
-        IDpiScaleOutputor? DpiScaleOutputor { get; set; }
+        IDpiScaleOutputor DpiScaleOutputor { get; set; } = new EmptyDpiScaleOutputor();
         IDisposable? WindowHandleSource { get; set; }
 
         DispatcherTimer WindowAreaChangedTimer { get; }
@@ -740,7 +740,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             hWndSource.AddHook(WndProc);
             WindowHandleSource = hWndSource;
 
-            DpiScaleOutputor = window as IDpiScaleOutputor ?? new EmptyDpiScaleOutputor();
+            DpiScaleOutputor = (IDpiScaleOutputor)window;
 
             var layoutValue = GetOrCreateLayout(Model.Position);
             if(layoutValue.isCreated) {

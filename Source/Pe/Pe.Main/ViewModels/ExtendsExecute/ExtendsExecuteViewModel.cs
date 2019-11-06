@@ -7,9 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Input;
+using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
+using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models;
+using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Platform;
@@ -59,6 +62,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
         public RequestSender CloseRequest { get; } = new RequestSender();
         public RequestSender FileSelectRequest { get; } = new RequestSender();
 
+        IDpiScaleOutputor DpiScaleOutputor { get; set; } = new EmptyDpiScaleOutputor();
 
         public string ExecuteValue => Model.LauncherFileData.Path;
 
@@ -168,6 +172,27 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
 
         private void Execute()
         {
+            var launcherFileData = new LauncherFileData() {
+                Path = ExecuteValue,
+                Option = Option,
+                WorkDirectoryPath = WorkDirectoryPath,
+                IsEnabledCustomEnvironmentVariable = IsEnabledCustomEnvironmentVariable,
+                IsEnabledStandardInputOutput = IsEnabledStandardInputOutput,
+                RunAdministrator = RunAdministrator,
+            };
+            IReadOnlyList<LauncherEnvironmentVariableData> envItems;
+            if(launcherFileData.IsEnabledCustomEnvironmentVariable) {
+                var envConf = new EnvironmentVariableConfiguration(LoggerFactory);
+                var mergeItems = envConf.GetMergeItems(MergeTextDocument);
+                var removeItems = envConf.GetRemoveItems(RemoveTextDocument);
+                envItems = envConf.Join(mergeItems, removeItems);
+            } else {
+                envItems = new List<LauncherEnvironmentVariableData>();
+            }
+
+            var screen = DpiScaleOutputor.GetOwnerScreen();
+
+            Model.Execute(launcherFileData, envItems, screen);
         }
 
         #endregion
@@ -192,7 +217,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
         { }
 
         public void ReceiveViewLoaded(Window window)
-        { }
+        {
+            DpiScaleOutputor = (IDpiScaleOutputor)window;
+        }
 
         public void ReceiveViewUserClosing(CancelEventArgs e)
         {
