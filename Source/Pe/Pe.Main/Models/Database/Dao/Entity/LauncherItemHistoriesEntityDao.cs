@@ -63,6 +63,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             ;
         }
 
+        public bool InsertHistory(Guid launcherItemId, LauncherHistoryKind kind, string value, IDatabaseCommonStatus commonStatus)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool DeleteHistory(Guid launcherItemId, LauncherHistoryKind kind, string value)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
     }
 }

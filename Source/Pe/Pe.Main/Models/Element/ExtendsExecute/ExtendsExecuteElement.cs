@@ -8,6 +8,7 @@ using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
+using ContentTypeTextNet.Pe.Main.Models.Launcher;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using Microsoft.Extensions.Logging;
 
@@ -57,9 +58,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute
 
         #region function
 
-        public virtual void Execute(LauncherFileData fileData, IReadOnlyList<LauncherEnvironmentVariableData> environmentVariables, Screen screen)
+        public virtual ILauncherExecuteResult Execute(LauncherFileData fileData, IReadOnlyList<LauncherEnvironmentVariableData> environmentVariables, Screen screen)
         {
-
+            try {
+                var launcherExecutor = new LauncherExecutor(OrderManager, LoggerFactory);
+                var result = launcherExecutor.Execute(LauncherItemKind.File, fileData, fileData, environmentVariables, screen);
+                return result;
+            } catch(Exception ex) {
+                Logger.LogError(ex, ex.Message);
+                return LauncherExecuteResult.Error(ex);
+            }
         }
 
         #endregion
@@ -140,7 +148,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute
 
         #endregion
 
-        #region ElementBase
+        #region ExtendsExecuteElement
 
         protected override void InitializeImpl()
         {
@@ -169,6 +177,31 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute
             var histories2 = histories.ToList();
             HistoryOptions = histories2.Where(i => i.Kind == LauncherHistoryKind.Option).ToList();
             HistoryWorkDirectories =  histories2.Where(i => i.Kind == LauncherHistoryKind.WorkDirectory).ToList();
+        }
+
+        public override ILauncherExecuteResult Execute(LauncherFileData fileData, IReadOnlyList<LauncherEnvironmentVariableData> environmentVariables, Screen screen)
+        {
+            var result = base.Execute(fileData, environmentVariables, screen);
+
+            if(result.Success) {
+                using(var commander = MainDatabaseBarrier.WaitWrite()) {
+                    var launcherItemsEntityDao = new LauncherItemsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                    var launcherItemHistoriesEntityDao = new LauncherItemHistoriesEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+
+                    launcherItemsEntityDao.UpdateExecuteCountIncrement(LauncherItemId, DatabaseCommonStatus.CreateCurrentAccount());
+
+                    if(launcherItemHistoriesEntityDao.DeleteHistory(LauncherItemId, LauncherHistoryKind.Option, fileData.Option)) {
+                        launcherItemHistoriesEntityDao.InsertHistory(LauncherItemId, LauncherHistoryKind.Option, fileData.Option, DatabaseCommonStatus.CreateCurrentAccount());
+                    }
+                    if(launcherItemHistoriesEntityDao.DeleteHistory(LauncherItemId, LauncherHistoryKind.WorkDirectory, fileData.WorkDirectoryPath)) {
+                        launcherItemHistoriesEntityDao.InsertHistory(LauncherItemId, LauncherHistoryKind.WorkDirectory, fileData.WorkDirectoryPath, DatabaseCommonStatus.CreateCurrentAccount());
+                    }
+
+                    commander.Commit();
+                }
+            }
+
+            return result;
         }
 
         #endregion
