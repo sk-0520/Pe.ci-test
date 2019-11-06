@@ -9,7 +9,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data.Dto.Entity
     {
         #region property
 
-        public Guid LauncherItemId { get; }
+        public Guid LauncherItemId { get; set; }
         public string Kind { get; set; } = string.Empty;
         public string Value { get; set; } = string.Empty;
 

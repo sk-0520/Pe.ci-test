@@ -176,7 +176,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute
 
             var histories2 = histories.ToList();
             HistoryOptions = histories2.Where(i => i.Kind == LauncherHistoryKind.Option).ToList();
-            HistoryWorkDirectories =  histories2.Where(i => i.Kind == LauncherHistoryKind.WorkDirectory).ToList();
+            HistoryWorkDirectories = histories2.Where(i => i.Kind == LauncherHistoryKind.WorkDirectory).ToList();
         }
 
         public override ILauncherExecuteResult Execute(LauncherFileData fileData, IReadOnlyList<LauncherEnvironmentVariableData> environmentVariables, Screen screen)
@@ -190,12 +190,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute
 
                     launcherItemsEntityDao.UpdateExecuteCountIncrement(LauncherItemId, DatabaseCommonStatus.CreateCurrentAccount());
 
-                    if(launcherItemHistoriesEntityDao.DeleteHistory(LauncherItemId, LauncherHistoryKind.Option, fileData.Option)) {
-                        launcherItemHistoriesEntityDao.InsertHistory(LauncherItemId, LauncherHistoryKind.Option, fileData.Option, DatabaseCommonStatus.CreateCurrentAccount());
-                    }
-                    if(launcherItemHistoriesEntityDao.DeleteHistory(LauncherItemId, LauncherHistoryKind.WorkDirectory, fileData.WorkDirectoryPath)) {
-                        launcherItemHistoriesEntityDao.InsertHistory(LauncherItemId, LauncherHistoryKind.WorkDirectory, fileData.WorkDirectoryPath, DatabaseCommonStatus.CreateCurrentAccount());
-                    }
+                    //TODO: デフォ値の確認が足りない問題
+
+                    launcherItemHistoriesEntityDao.DeleteHistory(LauncherItemId, LauncherHistoryKind.Option, fileData.Option);
+                    launcherItemHistoriesEntityDao.InsertHistory(LauncherItemId, LauncherHistoryKind.Option, fileData.Option, DatabaseCommonStatus.CreateCurrentAccount());
+
+                    launcherItemHistoriesEntityDao.DeleteHistory(LauncherItemId, LauncherHistoryKind.WorkDirectory, fileData.WorkDirectoryPath);
+                    launcherItemHistoriesEntityDao.InsertHistory(LauncherItemId, LauncherHistoryKind.WorkDirectory, fileData.WorkDirectoryPath, DatabaseCommonStatus.CreateCurrentAccount());
 
                     commander.Commit();
                 }

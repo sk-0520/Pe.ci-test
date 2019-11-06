@@ -137,7 +137,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
                 //    streamWindow.ViewModel.Start();
             }
 
-            process.Start();
+            result.Success = process.Start();
             if(streamWatch) {
 
             }

@@ -65,12 +65,36 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         public bool InsertHistory(Guid launcherItemId, LauncherHistoryKind kind, string value, IDatabaseCommonStatus commonStatus)
         {
-            throw new NotImplementedException();
+            var launcherHistoryKindTransfer = new EnumTransfer<LauncherHistoryKind>();
+
+            var dto = new LauncherItemHistoriesEntityDto() {
+                LauncherItemId = launcherItemId,
+                Kind = launcherHistoryKindTransfer.ToString(kind),
+                Value = value,
+                LastExecuteTimestamp = DateTime.UtcNow,
+            };
+            commonStatus.WriteCreate(dto);
+
+            var statement = StatementLoader.LoadStatementByCurrent(GetType());
+            return Commander.Execute(statement, dto) == 1;
         }
 
         public bool DeleteHistory(Guid launcherItemId, LauncherHistoryKind kind, string value)
         {
-            throw new NotImplementedException();
+            var launcherHistoryKindTransfer = new EnumTransfer<LauncherHistoryKind>();
+
+            var dto = new LauncherItemHistoriesEntityDto() {
+                LauncherItemId = launcherItemId,
+                Kind = launcherHistoryKindTransfer.ToString(kind),
+                Value = value,
+            };
+
+            var statement = StatementLoader.LoadStatementByCurrent(GetType());
+            var result = Commander.Execute(statement, dto);
+            if(1 < result) {
+                Logger.LogWarning("削除件数がちょっとあれ: {0}", result);
+            }
+            return 0 < result;
         }
 
         #endregion
