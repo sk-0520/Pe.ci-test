@@ -192,7 +192,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute
 
                     var item = launcherItemsEntityDao.SelectLauncherItem(LauncherItemId);
                     if(item.Kind == LauncherItemKind.File) {
-                        var launcherFilesEntityDao = new LauncherFilesEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory));
+                        var launcherFilesEntityDao = new LauncherFilesEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
                         var launcherFileData = launcherFilesEntityDao.SelectFile(LauncherItemId);
 
                         launcherItemHistoriesEntityDao.DeleteHistory(LauncherItemId, LauncherHistoryKind.Option, fileData.Option);
