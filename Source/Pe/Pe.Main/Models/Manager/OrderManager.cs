@@ -71,7 +71,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         NoteContentElement CreateNoteContentElement(Guid noteId, NoteContentKind contentKind);
         FontElement CreateFontElement(Guid fontId, ParentUpdater parentUpdater);
 
-        StandardInputOutputElement CreateStandardInputOutputElement(string id, Process process);
+        StandardInputOutputElement CreateStandardInputOutputElement(string id, Process process, Screen screen);
 
         WindowItem CreateLauncherToolbarWindow(LauncherToolbarElement element);
         WindowItem CreateCustomizeLauncherItemWindow(LauncherItemCustomizeElement element);
@@ -181,9 +181,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 return element;
             }
 
-            public StandardInputOutputElement CreateStandardInputOutputElement(string id, Process process)
+            public StandardInputOutputElement CreateStandardInputOutputElement(string id, Process process, Screen screen)
             {
-                var element = DiContainer.Build<StandardInputOutputElement>(id, process);
+                var element = DiContainer.Build<StandardInputOutputElement>(id, process, screen);
                 element.Initialize();
                 return element;
             }

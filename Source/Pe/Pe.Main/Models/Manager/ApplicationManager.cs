@@ -415,9 +415,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             return OrderManager.CreateFontElement(fontId, parentUpdater);
         }
 
-        public StandardInputOutputElement CreateStandardInputOutputElement(string id, Process process)
+        public StandardInputOutputElement CreateStandardInputOutputElement(string id, Process process, Screen screen)
         {
-            var element = OrderManager.CreateStandardInputOutputElement(id, process);
+            var element = OrderManager.CreateStandardInputOutputElement(id, process, screen);
             StandardInputOutputs.Add(element);
             return element;
         }

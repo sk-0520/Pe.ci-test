@@ -20,6 +20,9 @@
   <Window.Resources>
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
   </Window.Resources>
+  <Window.Visibility>
+    <Binding Path="IsVisible" Converter="{StaticResource BooleanToVisibilityConverter}"/>
+  </Window.Visibility>
   <i:Interaction.Triggers>
     <app_core_views:RequestTrigger SourceObject="{Binding CloseRequest}">
       <prism:InvokeCommandAction Command="{Binding CloseCommand ,ElementName=root}" />

@@ -1,8 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
+using ContentTypeTextNet.Pe.Main.Models.Launcher;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using Microsoft.Extensions.Logging;
 
@@ -10,7 +13,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.StandardInputOutput
 {
     public class StandardInputOutputElement : ElementBase, IViewShowStarter, IViewCloseReceiver
     {
-        public StandardInputOutputElement(string id, IOrderManager orderManager, ILoggerFactory loggerFactory)
+        #region variable
+
+        bool _isVisible;
+
+        #endregion
+
+        public StandardInputOutputElement(string id, Process process, Screen screen, IOrderManager orderManager, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             Id = id;
@@ -25,23 +34,42 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.StandardInputOutput
 
         bool ViewCreated { get; set; }
 
+        public bool IsVisible
+        {
+            get => this._isVisible;
+            private set => SetProperty(ref this._isVisible, value);
+        }
+
         #endregion
 
         #region function
+
+        public void BeginProcess()
+        {
+        }
+
         #endregion
 
         #region ElementBase
 
         protected override void InitializeImpl()
-        {
-            throw new NotImplementedException();
-        }
+        { }
 
         #endregion
 
         #region IViewShowStarter
 
-        public bool CanStartShowView => throw new NotImplementedException();
+        public bool CanStartShowView
+        {
+            get
+            {
+                if(ViewCreated) {
+                    return false;
+                }
+
+                return IsVisible;
+            }
+        }
 
         #endregion
 
@@ -50,7 +78,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.StandardInputOutput
         public void StartView()
         {
             var windowItem = OrderManager.CreateStandardInputOutputWindow(this);
-
+            windowItem.Window.Show();
             ViewCreated = true;
         }
 

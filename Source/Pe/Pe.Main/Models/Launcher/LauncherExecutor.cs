@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Main.Models.Data;
+using ContentTypeTextNet.Pe.Main.Models.Element.StandardInputOutput;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using ContentTypeTextNet.Pe.PInvoke.Windows;
 using Microsoft.Extensions.Logging;
@@ -129,17 +130,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
                 Process = process,
             };
 
-            //旧処理
+            StandardInputOutputElement? stdioElement = null;
             if(streamWatch) {
-                var stdioElement = OrderManager.CreateStandardInputOutputElement($"{result.Process.StartInfo.FileName}", process);
-                //    var streamData = new StreamData(launcherItem, screen, process);
-                //    streamWindow = (LauncherItemStreamWindow)appSender.SendCreateWindow(WindowKind.LauncherStream, streamData, null);
-                //    streamWindow.ViewModel.Start();
+                stdioElement = OrderManager.CreateStandardInputOutputElement($"{result.Process.StartInfo.FileName}", process, screen);
+                stdioElement.StartView();
             }
 
             result.Success = process.Start();
             if(streamWatch) {
-
+                stdioElement!.BeginProcess();
             }
 
             return result;
