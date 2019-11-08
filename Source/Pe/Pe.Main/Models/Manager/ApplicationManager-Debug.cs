@@ -30,7 +30,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             Logger.LogDebug("デバッグ用後処理");
 
             //DebugCustomize();
-            DebugExtendsExecute();
+            //DebugExtendsExecute();
         }
 
         void DebugCustomize()
