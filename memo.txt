@@ -19,4 +19,11 @@ rem dotnet build Source/Pe/Pe.sln --verbosity minimal --configuration %CONFIGURA
 --accept=ok --log=X:\pe\log --force-log --user-dir=X:\pe\user --machine-dir=X:\pe\machine --temp-dir=X:\pe\temp
 
 
+----------------------------------
+Pe.Native: c#でどうこうならないやつら
+Pe: 本体
+Documents: 各種文書
+	node:v10.16.0
+	npm:6.9.0
+
 
