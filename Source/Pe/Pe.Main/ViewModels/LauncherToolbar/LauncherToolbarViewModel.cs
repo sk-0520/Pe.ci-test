@@ -26,6 +26,7 @@ using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherGroup;
 using ContentTypeTextNet.Pe.Core.Views;
 using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
+using System.Windows.Controls.Primitives;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 {
@@ -53,6 +54,23 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
                 ToViewModel = (m) => LauncherItemViewModelFactory.Create(m, DockScreen, DispatcherWapper, LauncherToolbarTheme, LoggerFactory),
             };
             LauncherItems = LauncherItemCollection.GetCollectionView();
+
+            ViewDragAndDrop = new DelegateDragAndDrop(LoggerFactory) {
+                CanDragStart = ViewCanDragStart,
+                DragEnterAction = ViewDragOrverOrEnter,
+                DragOverAction = ViewDragOrverOrEnter,
+                DragLeaveAction = ViewDragLeave,
+                DropAction = ViewDrop,
+                GetDragParameter = ViewGetDragParameter,
+            };
+            ItemDragAndDrop = new DelegateDragAndDrop(LoggerFactory) {
+                CanDragStart = ItemCanDragStart,
+                DragEnterAction = ItemDragOrverOrEnter,
+                DragOverAction = ItemDragOrverOrEnter,
+                DragLeaveAction = ItemDragLeave,
+                DropAction = ItemDrop,
+                GetDragParameter = ItemGetDragParameter,
+            };
 
 
             PropertyChangedHooker = new PropertyChangedHooker(DispatcherWapper, LoggerFactory);
@@ -113,6 +131,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
         public RequestSender CloseRequest { get; } = new RequestSender();
 
         public bool IsVerticalLayout => ToolbarPosition == AppDesktopToolbarPosition.Left || ToolbarPosition == AppDesktopToolbarPosition.Right;
+
+        public IDragAndDrop ViewDragAndDrop { get; }
+        public IDragAndDrop ItemDragAndDrop { get; }
 
         public LauncherGroupViewModel? SelectedLauncherGroup
         {
@@ -185,6 +206,71 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
         {
             return LauncherToolbarTheme.GetToolbarPositionImage(toolbarPosition, IconBox);
         }
+
+
+        private IResultSuccessValue<DragParameter> ViewGetDragParameter(UIElement sender, MouseEventArgs e) => ResultSuccessValue.Failure<DragParameter>();
+
+        private bool ViewCanDragStart(UIElement sender, MouseEventArgs e) => false;
+
+        private void ViewDragOrverOrEnter(UIElement sender, DragEventArgs e)
+        {
+            Logger.LogDebug(e.OriginalSource.ToString());
+            //var buttonBase = UIUtility.GetVisualClosest<ButtonBase>((DependencyObject)e.OriginalSource);
+            //if(buttonBase != null) {
+
+            //Logger.LogDebug(buttonBase.ToString());
+            //}
+
+            if(e.Data.GetDataPresent(DataFormats.FileDrop)) {
+                e.Effects = DragDropEffects.Copy;
+            } else if (e.Data.GetDataPresent(DataFormats.Text)) {
+
+            }
+            Logger.LogDebug("v");
+        }
+
+        private void ViewDrop(UIElement sender, DragEventArgs e)
+        {
+            Logger.LogTrace("v drop!");
+        }
+
+        private void ViewDragLeave(UIElement sender, DragEventArgs e)
+        {
+            Logger.LogTrace("v leave");
+        }
+
+        private IResultSuccessValue<DragParameter> ItemGetDragParameter(UIElement sender, MouseEventArgs e) => ResultSuccessValue.Failure<DragParameter>();
+
+        private bool ItemCanDragStart(UIElement sender, MouseEventArgs e) => false;
+
+        private void ItemDragOrverOrEnter(UIElement sender, DragEventArgs e)
+        {
+            Logger.LogDebug(e.OriginalSource.ToString());
+            //var buttonBase = UIUtility.GetVisualClosest<ButtonBase>((DependencyObject)e.OriginalSource);
+            //if(buttonBase != null) {
+
+            //Logger.LogDebug(buttonBase.ToString());
+            //}
+
+            if(e.Data.GetDataPresent(DataFormats.FileDrop)) {
+                e.Effects = DragDropEffects.Copy;
+            } else if(e.Data.GetDataPresent(DataFormats.Text)) {
+
+            }
+            Logger.LogDebug("i");
+            e.Handled = true;
+        }
+
+        private void ItemDrop(UIElement sender, DragEventArgs e)
+        {
+            Logger.LogTrace("i drop!");
+        }
+
+        private void ItemDragLeave(UIElement sender, DragEventArgs e)
+        {
+            Logger.LogTrace("i leave");
+        }
+
 
         #endregion
 

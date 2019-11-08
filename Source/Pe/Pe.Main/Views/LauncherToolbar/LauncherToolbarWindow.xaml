@@ -7,8 +7,9 @@
   xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
   xmlns:prism="http://prismlibrary.com/"
 
-  xmlns:cttn_lib_shared_lib_view_converter="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Converter;assembly=Pe.Core"
-    xmlns:app_core_view="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core"
+  xmlns:app_core_views="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core"
+  xmlns:app_core_views_converter="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Converter;assembly=Pe.Core"
+  xmlns:app_core_views_attached="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Attached;assembly=Pe.Core"
 
   xmlns:app_main_view="clr-namespace:ContentTypeTextNet.Pe.Main.Views"
   xmlns:app_main_view_lt="clr-namespace:ContentTypeTextNet.Pe.Main.Views.LauncherToolbar"
@@ -24,6 +25,7 @@
   BorderThickness="0"
   ResizeMode="NoResize"
   ShowInTaskbar="False"
+  AllowDrop="True"
 
   Topmost="{Binding IsTopmost}"
 
@@ -33,10 +35,10 @@
   <Window.Resources>
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
-    <cttn_lib_shared_lib_view_converter:LogicalNotConverter x:Key="LogicalNotConverter" />
-    <cttn_lib_shared_lib_view_converter:IconBoxToWidthConverter x:Key="IconScaleToWidthConverter" />
-    <cttn_lib_shared_lib_view_converter:IconBoxToHeightConverter x:Key="IconScaleToHeightConverter" />
-    <cttn_lib_shared_lib_view_converter:LogicalMultiEqualConverter x:Key="LogicalMultiEqualConverter" />
+    <app_core_views_converter:LogicalNotConverter x:Key="LogicalNotConverter" />
+    <app_core_views_converter:IconBoxToWidthConverter x:Key="IconScaleToWidthConverter" />
+    <app_core_views_converter:IconBoxToHeightConverter x:Key="IconScaleToHeightConverter" />
+    <app_core_views_converter:LogicalMultiEqualConverter x:Key="LogicalMultiEqualConverter" />
 
 
     <Style x:Key="DropMenu" TargetType="Popup" BasedOn="{StaticResource PopupMenu}">
@@ -102,6 +104,9 @@
 
     <DataTemplate x:Key="LauncherItemContentTemplate">
       <Border Background="Transparent" Padding="{Binding DataContext.ButtonPadding, ElementName=root, Mode=OneTime}">
+        <i:Interaction.Behaviors>
+          <app_core_views_attached:DragAndDropBehavior DragAndDrop="{Binding DataContext.ItemDragAndDrop, ElementName=root}" />
+        </i:Interaction.Behaviors>
         <ContentPresenter Content="{TemplateBinding Content}" />
       </Border>
     </DataTemplate>
@@ -157,10 +162,13 @@
 
   </Window.Resources>
   <i:Interaction.Triggers>
-    <app_core_view:RequestTrigger SourceObject="{Binding CloseRequest}">
+    <app_core_views:RequestTrigger SourceObject="{Binding CloseRequest}">
       <i:InvokeCommandAction Command="{Binding CloseCommand ,ElementName=root}" />
-    </app_core_view:RequestTrigger>
+    </app_core_views:RequestTrigger>
   </i:Interaction.Triggers>
+  <i:Interaction.Behaviors>
+    <app_core_views_attached:DragAndDropBehavior DragAndDrop="{Binding ViewDragAndDrop}" />
+  </i:Interaction.Behaviors>
 
   <Window.Visibility>
     <Binding Path="IsVisible" Converter="{StaticResource BooleanToVisibilityConverter}"/>
@@ -194,7 +202,7 @@
       <RowDefinition Height="Auto" />
     </Grid.RowDefinitions>
 
-    <ToggleButton x:Name="appButton" IsChecked="{Binding IsOpendAppMenu}" ContentTemplate="{StaticResource LauncherItemContentTemplate}" Template="{Binding DataContext.LauncherItemToggleButtonControlTemplate, ElementName=root}" IsEnabled="{Binding IsOpen, ElementName=appPopup, Converter={StaticResource LogicalNotConverter}}">
+    <ToggleButton x:Name="appButton" AllowDrop="False" IsChecked="{Binding IsOpendAppMenu}" ContentTemplate="{StaticResource LauncherItemContentTemplate}" Template="{Binding DataContext.LauncherItemToggleButtonControlTemplate, ElementName=root}" IsEnabled="{Binding IsOpen, ElementName=appPopup, Converter={StaticResource LogicalNotConverter}}">
       <ToggleButton.Style>
         <Style TargetType="ToggleButton">
           <Style.Triggers>

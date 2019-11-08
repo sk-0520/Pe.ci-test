@@ -70,6 +70,12 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #region function
 
         protected abstract bool CanDragStartImpl(UIElement sender, MouseEventArgs e);
+        /// <summary>
+        /// ドラッグした<see cref="DragParameter"/>の取得。
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <returns></returns>
         protected abstract IResultSuccessValue<DragParameter> GetDragParameterImpl(UIElement sender, MouseEventArgs e);
 
         void MouseDownCore(UIElement sender, MouseEventArgs e)
