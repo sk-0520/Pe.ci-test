@@ -112,7 +112,7 @@
     </DataTemplate>
 
     <!--#region ファイル -->
-    <ContextMenu x:Key="ItemContextMenu">
+    <ContextMenu x:Key="ItemContextMenu" IsOpen="{Binding DataContext.IsOpendItemMenu, Source={x:Reference root}}">
       <ContextMenu.Resources>
         <CollectionViewSource x:Key="LauncherGroupItems" Source="{Binding DataContext.LauncherGroupItems, Source={x:Reference root}}" />
         <!-- グループメニューアイテムのスタイルを上書きする普通のメニュー -->

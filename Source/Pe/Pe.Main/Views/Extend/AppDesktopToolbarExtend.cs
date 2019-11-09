@@ -70,6 +70,10 @@ namespace ContentTypeTextNet.Pe.Main.Views.Extend
         /// </summary>
         bool IsAutoHide { get; }
         /// <summary>
+        /// 自動的に隠す処理を一時的に中断するか。
+        /// </summary>
+        bool PausingAutoHide { get; }
+        /// <summary>
         /// 隠れているか。
         /// </summary>
         bool IsHiding { get; }
@@ -135,6 +139,10 @@ namespace ContentTypeTextNet.Pe.Main.Views.Extend
         /// 自動的に隠すか。
         /// </summary>
         new bool IsAutoHide { get; set; }
+        /// <summary>
+        /// 自動的に隠す処理を一時的に中断するか。
+        /// </summary>
+        new bool PausingAutoHide { get; set; }
         /// <summary>
         /// 隠れているか。
         /// </summary>
@@ -616,6 +624,9 @@ namespace ContentTypeTextNet.Pe.Main.Views.Extend
             if(!ExtendData.IsAutoHide) {
                 return;
             }
+            if(ExtendData.PausingAutoHide) {
+                return;
+            }
 
             AutoHideTimer.Stop();
 
@@ -759,6 +770,15 @@ namespace ContentTypeTextNet.Pe.Main.Views.Extend
                     NowWorking = false;
                 }
             }
+
+            if(propertyName == nameof(IAppDesktopToolbarExtendData.PausingAutoHide)) {
+                Logger.LogInformation($"ExtendData.PausingAutoHide = {ExtendData.PausingAutoHide}");
+                if(ExtendData.PausingAutoHide) {
+                    StopHideWait();
+                }else {
+                    StartHideWait();
+                }
+            }
         }
 
         protected override void InitializedWindowHandleImpl()
@@ -870,14 +890,14 @@ namespace ContentTypeTextNet.Pe.Main.Views.Extend
 
         void View_MouseEnter(object sender, MouseEventArgs e)
         {
-            if(ExtendData.IsAutoHide) {
+            if(ExtendData.IsAutoHide && !ExtendData.PausingAutoHide) {
                 StopHideWait();
             }
         }
 
         void View_MouseLeave(object sender, MouseEventArgs e)
         {
-            if(ExtendData.IsAutoHide) {
+            if(ExtendData.IsAutoHide && !ExtendData.PausingAutoHide) {
                 StartHideWait();
             }
         }

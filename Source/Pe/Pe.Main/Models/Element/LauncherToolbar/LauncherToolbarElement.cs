@@ -35,6 +35,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
         LauncherToolbarIconDirection _iconDirection;
         LauncherGroupElement? _selectedLauncherGroup;
         bool _isOpendAppMenu;
+        bool _isOpendItemMenu;
 
         #endregion
 
@@ -134,7 +135,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
         public bool IsOpendAppMenu
         {
             get => this._isOpendAppMenu;
-            set => SetProperty(ref this._isOpendAppMenu, value);
+            set
+            {
+                SetProperty(ref this._isOpendAppMenu, value);
+                PausingAutoHide = IsOpendAppMenu;
+            }
+        }
+        public bool IsOpendItemMenu
+        {
+            get => this._isOpendItemMenu;
+            set
+            {
+                SetProperty(ref this._isOpendItemMenu, value);
+                PausingAutoHide = IsOpendItemMenu;
+            }
         }
 
         #endregion
@@ -450,6 +464,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
         {
             get => this._IsAutoHide;
             set => SetProperty(ref this._IsAutoHide, value);
+        }
+
+        bool _PausingAutoHide;
+        /// <summary>
+        /// 自動的に隠す処理を一時的に中断するか。
+        /// </summary>
+        public bool PausingAutoHide
+        {
+            get => this._PausingAutoHide;
+            set => SetProperty(ref this._PausingAutoHide, value);
         }
 
         /// <summary>

@@ -81,6 +81,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
             PropertyChangedHooker.AddHook(nameof(IAppDesktopToolbarExtendData.ToolbarPosition), ChangeToolbarPositionCommand);
             PropertyChangedHooker.AddHook(nameof(IAppDesktopToolbarExtendData.IsAutoHide), nameof(IsAutoHide));
             PropertyChangedHooker.AddHook(nameof(LauncherToolbarElement.IsOpendAppMenu), nameof(IsOpendAppMenu));
+            PropertyChangedHooker.AddHook(nameof(LauncherToolbarElement.IsOpendItemMenu), nameof(IsOpendItemMenu));
             PropertyChangedHooker.AddHook(nameof(LauncherToolbarElement.IsTopmost), nameof(IsTopmost));
             PropertyChangedHooker.AddHook(nameof(LauncherToolbarElement.SelectedLauncherGroup), nameof(SelectedLauncherGroup));
         }
@@ -117,6 +118,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
         public bool IsOpendAppMenu
         {
             get => Model.IsOpendAppMenu;
+            set => SetModelValue(value);
+        }
+
+        public bool IsOpendItemMenu
+        {
+            get => Model.IsOpendItemMenu;
             set => SetModelValue(value);
         }
 
@@ -339,6 +346,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
         /// 自動的に隠すか。
         /// </summary>
         public bool IsAutoHide => Model.IsAutoHide;
+        /// <summary>
+        /// 自動的に隠す処理を一時的に中断するか。
+        /// </summary>
+        public bool PausingAutoHide => Model.PausingAutoHide;
         /// <summary>
         /// 隠れているか。
         /// </summary>
