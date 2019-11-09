@@ -41,7 +41,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
         /// <param name="file"></param>
         /// <param name="loadShortcut">ショートカットの内容を使用するか。</param>
         /// <returns></returns>
-        internal (LauncherItemData item, LauncherFileData file) FromFile(FileInfo file, bool loadShortcut)
+        internal LauncherFileItemData FromFile(FileInfo file, bool loadShortcut)
         {
             var expandedPath = Environment.ExpandEnvironmentVariables(file.FullName);
 
@@ -79,7 +79,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
                 fileResult.Path = file.FullName;
             }
 
-            return (itemResult, fileResult);
+            return new LauncherFileItemData(itemResult, fileResult);
         }
 
         public IEnumerable<string> GetTags(FileInfo file)
@@ -192,7 +192,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             return result;
         }
 
+        public string GetUniqueCode(string code, IReadOnlyList<string> codes)
+        {
+            return TextUtility.ToUnique(code, codes, StringComparison.OrdinalIgnoreCase, (s, n) => $"{s}-{n}");
 
+        }
         #endregion
     }
 }

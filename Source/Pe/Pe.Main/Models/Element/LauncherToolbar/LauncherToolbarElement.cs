@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -17,6 +18,7 @@ using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherGroup;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem;
+using ContentTypeTextNet.Pe.Main.Models.Launcher;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using ContentTypeTextNet.Pe.Main.Views.Extend;
@@ -299,7 +301,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
         /// <param name="expandShortcut"><paramref name="filePath"/>がショートカットの場合にショートカットの内容を登録するか</param>
         public void RegisterFile(string filePath, bool expandShortcut)
         {
+            var launcherFactory = new LauncherFactory(IdFactory, LoggerFactory);
+            var data = launcherFactory.FromFile(new FileInfo(filePath), expandShortcut);
 
+            using(var commander = MainDatabaseBarrier.WaitWrite()) {
+                var launcherItemsDao = new LauncherItemsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                var launcherTagsDao = new LauncherTagsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                var launcherFilesDao = new LauncherFilesEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+
+                var codes = launcherItemsDao.SelectFuzzyCodes(data.Item.Code).ToList();
+                data.Item.Code = launcherFactory.GetUniqueCode(data.Item.Code, codes);
+            }
         }
 
         #endregion

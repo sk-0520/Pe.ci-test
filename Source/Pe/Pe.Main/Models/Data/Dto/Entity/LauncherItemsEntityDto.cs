@@ -12,8 +12,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data.Dto.Entity
 
         Guid LauncherItemId { get; }
 
-        string? Code { get; }
-        string? Name { get; }
+        string Code { get; }
+        string Name { get; }
         string? Kind { get; }
         string? IconPath { get; }
         long IconIndex { get; }
@@ -31,8 +31,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data.Dto.Entity
 
         public Guid LauncherItemId { get; set; }
 
-        public string? Code { get; set; }
-        public string? Name { get; set; }
+        public string Code { get; set; } = string.Empty;
+        public string Name { get; set; } = string.Empty;
         public string? Kind { get; set; }
         public string? IconPath { get; set; }
         public long IconIndex { get; set; }

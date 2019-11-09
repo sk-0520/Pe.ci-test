@@ -172,7 +172,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute
             LauncherFileData = fileData;
             EnvironmentVariables = envItems.ToList();
 
-            CaptionName = launcherItem.Name ?? launcherItem.Code ?? Path.GetFileNameWithoutExtension(LauncherFileData.Path) ?? LauncherItemId.ToString("D");
+            CaptionName = launcherItem.Name; // ?? launcherItem.Code ?? Path.GetFileNameWithoutExtension(LauncherFileData.Path) ?? LauncherItemId.ToString("D");
 
             var histories2 = histories.ToList();
             HistoryOptions = histories2.Where(i => i.Kind == LauncherHistoryKind.Option).ToList();

@@ -56,8 +56,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
             private set => SetProperty(ref this._isVisible, value);
         }
 
-        public string? Name { get; private set; }
-        public string? Code { get; private set; }
+        public string Name { get; private set; } = string.Empty;
+        public string Code { get; private set; } = string.Empty;
         public LauncherItemKind Kind { get; private set; }
         public bool IsEnabledCommandLauncher { get; private set; }
 

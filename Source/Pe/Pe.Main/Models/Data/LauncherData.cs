@@ -164,8 +164,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
         public Guid LauncherItemId { get; set; }
 
-        public string? Code { get; set; }
-        public string? Name { get; set; }
+        public string Code { get; set; } = string.Empty;
+        public string Name { get; set; } = string.Empty;
 
         public virtual LauncherItemKind Kind { get; set; }
 
@@ -253,6 +253,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         public bool IsAutoHide { get; set; }
         public bool IsIconOnly { get; set; }
 
+        #endregion
+    }
+
+    internal class LauncherFileItemData: DataBase
+    {
+        public LauncherFileItemData(LauncherItemData item, LauncherFileData file)
+        {
+            Item = item;
+            File = file;
+        }
+
+        #region property
+        public LauncherItemData Item { get; }
+        public LauncherFileData File { get; }
         #endregion
     }
 }
