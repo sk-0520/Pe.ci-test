@@ -41,7 +41,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Select<string>(builder);
         }
 
-        public void InsertNewTags(Guid launcherItemId, IEnumerable<string> tags, IDatabaseCommonStatus commonStatus)
+        public void InsertTags(Guid launcherItemId, IEnumerable<string> tags, IDatabaseCommonStatus commonStatus)
         {
             var statement = LoadStatement();
             foreach(var tag in tags) {

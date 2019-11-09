@@ -37,6 +37,8 @@ namespace ContentTypeTextNet.Pe.Main.Views.LauncherToolbar
         ILogger? Logger { get; set; }
         LauncherToolbarViewModel ViewModel => (LauncherToolbarViewModel)DataContext;
 
+        CommandStore CommandStore { get; } = new CommandStore();
+
         #endregion
 
         #region command
@@ -53,6 +55,32 @@ namespace ContentTypeTextNet.Pe.Main.Views.LauncherToolbar
                 ));
             }
         }
+
+        public ICommand OpenCommonMessageDialogCommand => CommandStore.GetOrCreate(() => new DelegateCommand<RequestEventArgs>(
+            o => {
+                var parameter = (CommonMessageDialogRequestParameter)o.Parameter;
+                var result = MessageBox.Show(this, parameter.Message, parameter.Caption, parameter.Button, parameter.Icon, parameter.DefaultResult, parameter.Options);
+                var response = new YesNoResponse();
+                switch(result) {
+                    case MessageBoxResult.Yes:
+                        response.ResponseIsCancel = false;
+                        response.ResponseIsYes = true;
+                        break;
+
+                    case MessageBoxResult.No:
+                        response.ResponseIsCancel = false;
+                        response.ResponseIsYes = false;
+                        break;
+
+                    default:
+                        response.ResponseIsCancel = true;
+                        response.ResponseIsYes = false;
+                        break;
+                }
+
+                o.Callback(response);
+            }
+        ));
 
         #endregion
 

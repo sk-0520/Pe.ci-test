@@ -14,8 +14,17 @@ namespace ContentTypeTextNet.Pe.Core.Compatibility.Forms
     /// <see cref="System.Windows.Forms.Screen"/> 互換クラス。
     /// </summary>
     [Serializable]
-    public class Screen: IReadOnlyScreenData
+    public class Screen : IReadOnlyScreenData
     {
+        internal Screen(WinForms.Screen screen)
+        {
+            BitsPerPixel = screen.BitsPerPixel;
+            DeviceBounds = DrawingUtility.Convert(screen.Bounds);
+            DeviceName = screen.DeviceName;
+            Primary = screen.Primary;
+            DeviceWorkingArea = DrawingUtility.Convert(screen.WorkingArea);
+        }
+
         #region property
 
         /// <summary>
@@ -37,7 +46,7 @@ namespace ContentTypeTextNet.Pe.Core.Compatibility.Forms
         /// <summary>
         /// 1 ピクセルのデータに関連付けられているメモリのビット数を取得します。
         /// </summary>
-        public int BitsPerPixel { get; protected internal set; }
+        public int BitsPerPixel { get; }
         /// <summary>
         /// ディスプレイの範囲を取得します。
         /// </summary>
@@ -46,7 +55,7 @@ namespace ContentTypeTextNet.Pe.Core.Compatibility.Forms
         /// <summary>
         /// ディスプレイに関連付けられているデバイス名を取得します。
         /// </summary>
-        public string? DeviceName { get; protected internal set; }
+        public string DeviceName { get; protected internal set; } = string.Empty;
         /// <summary>
         /// 特定のディスプレイがプライマリ デバイスかどうかを示す値を取得します。
         /// </summary>
@@ -68,13 +77,7 @@ namespace ContentTypeTextNet.Pe.Core.Compatibility.Forms
         /// <returns></returns>
         static Screen ConvertScreen(WinForms.Screen screen)
         {
-            return new Screen() {
-                BitsPerPixel = screen.BitsPerPixel,
-                DeviceBounds = DrawingUtility.Convert(screen.Bounds),
-                DeviceName = screen.DeviceName,
-                Primary = screen.Primary,
-                DeviceWorkingArea = DrawingUtility.Convert(screen.WorkingArea),
-            };
+            return new Screen(screen);
         }
 
         static IEnumerable<Screen> GetAllScreens()

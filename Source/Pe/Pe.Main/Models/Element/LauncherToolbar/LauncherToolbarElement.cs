@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -17,6 +18,7 @@ using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherGroup;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem;
+using ContentTypeTextNet.Pe.Main.Models.Launcher;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using ContentTypeTextNet.Pe.Main.Views.Extend;
@@ -292,6 +294,53 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
             }, UniqueKeyPool.Get());
         }
 
+        /// <summary>
+        /// ファイルを現在のグループに登録する。
+        /// </summary>
+        /// <param name="filePath">対象ファイルパス。</param>
+        /// <param name="expandShortcut"><paramref name="filePath"/>がショートカットの場合にショートカットの内容を登録するか</param>
+        public void RegisterFile(string filePath, bool expandShortcut)
+        {
+            Debug.Assert(SelectedLauncherGroup != null);
+
+            var file = new FileInfo(filePath);
+            var launcherFactory = new LauncherFactory(IdFactory, LoggerFactory);
+            var data = launcherFactory.FromFile(file, expandShortcut);
+            var tags = launcherFactory.GetTags(file).ToList();
+
+            using(var commander = MainDatabaseBarrier.WaitWrite()) {
+                var launcherItemsDao = new LauncherItemsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                var launcherTagsDao = new LauncherTagsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                var launcherFilesDao = new LauncherFilesEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                var launcherGroupItemsDao = new LauncherGroupItemsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+
+                var codes = launcherItemsDao.SelectFuzzyCodes(data.Item.Code).ToList();
+                data.Item.Code = launcherFactory.GetUniqueCode(data.Item.Code, codes);
+
+                launcherItemsDao.InsertLauncherItem(data.Item, DatabaseCommonStatus.CreateCurrentAccount());
+                launcherFilesDao.InsertFile(data.Item.LauncherItemId, data.File, DatabaseCommonStatus.CreateCurrentAccount());
+                launcherTagsDao.InsertTags(data.Item.LauncherItemId, tags, DatabaseCommonStatus.CreateCurrentAccount());
+
+                var currentMaxSequence = launcherGroupItemsDao.SelectMaxSequence(SelectedLauncherGroup.LauncherGroupId);
+                launcherGroupItemsDao.InsertNewItems(SelectedLauncherGroup.LauncherGroupId, new[] { data.Item.LauncherItemId }, currentMaxSequence + launcherFactory.GroupItemsStep, launcherFactory.GroupItemsStep, DatabaseCommonStatus.CreateCurrentAccount());
+
+                commander.Commit();
+            }
+
+            NotifyManager.SendLauncherItemRegistered(SelectedLauncherGroup.LauncherGroupId, data.Item.LauncherItemId);
+        }
+
+        public void OpenExtendsExecuteView(Guid launcherItemId, string argument, Screen screen)
+        {
+            var launcherItem = LauncherItems.FirstOrDefault(i => i.LauncherItemId == launcherItemId);
+            if(launcherItem == null) {
+                Logger.LogError("指定のランチャーアイテムは存在しない: {0}", launcherItemId);
+                return;
+            }
+
+            launcherItem.OpenExtendsExecuteViewWidthArgument(argument, screen);
+        }
+
         #endregion
 
         #region ContextElementBase
@@ -301,6 +350,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
             Logger.LogInformation("initialize {0}:{1}, {2}: {3}", DockScreen.DeviceName, DockScreen.DeviceBounds, nameof(DockScreen.Primary), DockScreen.Primary);
 
             NotifyManager.LauncherItemChanged += NotifyManager_LauncherItemChanged;
+            NotifyManager.LauncherItemRegistered += NotifyManager_LauncherItemRegistered;
 
             var launcherToolbarId = GetLauncherToolbarId();
             if(launcherToolbarId == Guid.Empty) {
@@ -316,6 +366,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
         {
             if(!IsDisposed) {
                 NotifyManager.LauncherItemChanged -= NotifyManager_LauncherItemChanged;
+                NotifyManager.LauncherItemRegistered -= NotifyManager_LauncherItemRegistered;
                 Flush();
                 if(disposing) {
                     MainDatabaseLazyWriter.Dispose();
@@ -461,6 +512,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
                 LoadLauncherItems();
             }
         }
+        private void NotifyManager_LauncherItemRegistered(object? sender, LauncherItemRegisteredEventArgs e)
+        {
+            if(e.GroupId == SelectedLauncherGroup?.LauncherGroupId) {
+                var element = OrderManager.GetOrCreateLauncherItemElement(e.LauncherItemId);
+                LauncherItems.Add(element);
+            }
+        }
+
 
     }
 }

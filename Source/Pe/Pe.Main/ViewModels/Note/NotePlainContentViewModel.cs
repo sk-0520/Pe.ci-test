@@ -18,7 +18,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
     {
         #region variable
 
-        string? _content;
+        string _content = string.Empty;
 
         #endregion
 
@@ -28,7 +28,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         #region property
 
-        public string? Content
+        public string Content
         {
             get => this._content;
             set

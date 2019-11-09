@@ -82,6 +82,19 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
             });
         }
 
+        public static TResult Send<TRequestResponse, TResult>(this RequestSender @this, RequestParameter requestParameter, Func<TRequestResponse, TResult> callback)
+            where TRequestResponse : RequestResponse
+        {
+            TResult result = default!;
+
+            @this.Send(requestParameter, r => {
+                var response = (TRequestResponse)r;
+                result = callback(response);
+            });
+
+            return result;
+        }
+
         #endregion
     }
 }

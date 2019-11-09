@@ -76,11 +76,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
         ILauncherExecuteResult ExecuteFilePath(LauncherItemKind kind, ILauncherExecutePathParameter pathParameter, ILauncherExecuteCustomParameter customParameter, IEnumerable<LauncherEnvironmentVariableData> environmentVariableItems, Screen screen)
         {
+
             var process = new Process();
             var startInfo = process.StartInfo;
 
             // 実行パス
             startInfo.FileName = Environment.ExpandEnvironmentVariables(pathParameter.Path ?? string.Empty);
+            startInfo.UseShellExecute = true;
 
             // 引数
             startInfo.Arguments = pathParameter.Option;

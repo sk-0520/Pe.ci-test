@@ -33,7 +33,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         public ILoggerFactory? LoggerFactory { get; private set; }
         public WindowManager? WindowManager { get; private set; }
         //public OrderManager OrderManager { get; private set; }
-        //public NotifyManager NotifyManager { get; private set; }
+        public NotifyManager? NotifyManager { get; private set; }
         public StatusManager? StatusManager { get; private set; }
         public ClipboardManager? ClipboardManager { get; private set; }
 
@@ -291,13 +291,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             return manager;
         }
 
+        */
         NotifyManager SetupNotifyManager(IDiRegisterContainer diContainer)
         {
             var manager = diContainer.Make<NotifyManager>();
 
             return manager;
         }
-        */
 
         StatusManager SetupStatusManager(IDiRegisterContainer diContainer)
         {
@@ -367,7 +367,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             DiContainer = SetupContainer(environmentParameters, pack.factory, pack.accessor, loggerFactory);
             WindowManager = SetupWindowManager(DiContainer);
             //OrderManager = SetupOrderManager(DiContainer);
-            //NotifyManager = SetupNotifyManager(DiContainer);
+            NotifyManager = SetupNotifyManager(DiContainer);
             StatusManager = SetupStatusManager(DiContainer);
             ClipboardManager = SetupClipboardManager(DiContainer);
 

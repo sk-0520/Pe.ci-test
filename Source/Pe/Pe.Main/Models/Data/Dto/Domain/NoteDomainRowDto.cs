@@ -10,7 +10,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data.Dto.Domain
         #region property
         public Guid NoteId { get; set; }
 
-        public string? ScreenName { get; set; }
+        public string ScreenName { get; set; } = string.Empty;
         [PixelKind(Px.Device)]
         public long ScreenX { get; set; }
         [PixelKind(Px.Device)]

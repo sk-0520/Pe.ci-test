@@ -37,7 +37,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherGroup
 
         public Guid LauncherGroupId { get; }
 
-        public string? Name { get; private set; }
+        public string Name { get; private set; } = string.Empty;
         public LauncherGroupKind Kind { get; private set; }
         public LauncherGroupImageName ImageName { get; private set; }
         public Color ImageColor { get; private set; }
@@ -59,9 +59,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherGroup
                 data = dao.SelectLauncherGroup(LauncherGroupId);
             }
 
-#pragma warning disable CS8601 // Null 参照割り当ての可能性があります。
             Name = data.Name;
-#pragma warning restore CS8601 // Null 参照割り当ての可能性があります。
             Kind = data.Kind;
             ImageName = data.ImageName;
             ImageColor = data.ImageColor;

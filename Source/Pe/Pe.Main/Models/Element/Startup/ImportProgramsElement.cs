@@ -97,10 +97,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
             var importItems = ProgramItems
                 .Where(i => i.IsImport)
                 .Select(i => launcherFactory.FromFile(i.FileInfo, true))
-                .Where(i => !string.IsNullOrWhiteSpace(i.file.Path)) // 共有ドライブとかね
+                .Where(i => !string.IsNullOrWhiteSpace(i.File.Path)) // 共有ドライブとかね
                 .Select(i => new {
                     Data = i,
-                    Tags = launcherFactory.GetTags(new FileInfo(i.file.Path)).ToList(),
+                    Tags = launcherFactory.GetTags(new FileInfo(i.File.Path)).ToList(),
                 })
                 .ToList()
             ;
@@ -116,16 +116,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
 
                 foreach(var importItem in importItems) {
                     // db ランチャーアイテム突っ込んで
-#pragma warning disable CS8604 // Null 参照引数の可能性があります。
-                    var codes = launcherItemsDao.SelectFuzzyCodes(importItem.Data.item.Code);
-                    importItem.Data.item.Code = TextUtility.ToUnique(importItem.Data.item.Code, codes, StringComparison.OrdinalIgnoreCase, (s, n) => $"{s}-{n}");
-#pragma warning restore CS8604 // Null 参照引数の可能性があります。
-                    launcherItemsDao.InsertLauncherItem(importItem.Data.item, DatabaseCommonStatus.CreateCurrentAccount());
+                    var codes = launcherItemsDao.SelectFuzzyCodes(importItem.Data.Item.Code).ToList();
+                    importItem.Data.Item.Code = launcherFactory.GetUniqueCode(importItem.Data.Item.Code, codes);
+
+                    launcherItemsDao.InsertLauncherItem(importItem.Data.Item, DatabaseCommonStatus.CreateCurrentAccount());
 
                     // ランチャー種別で突っ込むデータ追加して
-                    switch(importItem.Data.item.Kind) {
+                    switch(importItem.Data.Item.Kind) {
                         case LauncherItemKind.File:
-                            launcherFilesDao.InsertSimple(importItem.Data.item.LauncherItemId, importItem.Data.file, DatabaseCommonStatus.CreateCurrentAccount());
+                            launcherFilesDao.InsertFile(importItem.Data.Item.LauncherItemId, importItem.Data.File, DatabaseCommonStatus.CreateCurrentAccount());
                             break;
 
                         default:
@@ -133,7 +132,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
                     }
 
                     // db タグ突っ込んで
-                    launcherTagsDao.InsertNewTags(importItem.Data.item.LauncherItemId, importItem.Tags, DatabaseCommonStatus.CreateCurrentAccount());
+                    launcherTagsDao.InsertTags(importItem.Data.Item.LauncherItemId, importItem.Tags, DatabaseCommonStatus.CreateCurrentAccount());
                 }
 
                 // db グループ作る
@@ -144,8 +143,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
 
                 var launcherGroupItemsDao = new LauncherGroupItemsEntityDao(transaction, StatementLoader, transaction.Implementation, LoggerFactory);
                 var currentMaxSequence = launcherGroupItemsDao.SelectMaxSequence(group.LauncherGroupId);
-                var itemStep = 10;
-                launcherGroupItemsDao.InsertNewItems(group.LauncherGroupId, importItems.Select(i => i.Data.item.LauncherItemId), currentMaxSequence + itemStep, itemStep, DatabaseCommonStatus.CreateCurrentAccount());
+                launcherGroupItemsDao.InsertNewItems(group.LauncherGroupId, importItems.Select(i => i.Data.Item.LauncherItemId), currentMaxSequence + launcherFactory.GroupItemsStep, launcherFactory.GroupItemsStep, DatabaseCommonStatus.CreateCurrentAccount());
 
                 transaction.Commit();
             }

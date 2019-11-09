@@ -26,6 +26,9 @@ using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherGroup;
 using ContentTypeTextNet.Pe.Core.Views;
 using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
+using System.Windows.Controls.Primitives;
+using System.IO;
+using ContentTypeTextNet.Pe.Main.Views.LauncherToolbar;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 {
@@ -54,6 +57,23 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
             };
             LauncherItems = LauncherItemCollection.GetCollectionView();
 
+            ViewDragAndDrop = new DelegateDragAndDrop(LoggerFactory) {
+                CanDragStart = ViewCanDragStart,
+                DragEnterAction = ViewDragOrverOrEnter,
+                DragOverAction = ViewDragOrverOrEnter,
+                DragLeaveAction = ViewDragLeave,
+                DropAction = ViewDrop,
+                GetDragParameter = ViewGetDragParameter,
+            };
+            ItemDragAndDrop = new DelegateDragAndDrop(LoggerFactory) {
+                CanDragStart = ItemCanDragStart,
+                DragEnterAction = ItemDragOrverOrEnter,
+                DragOverAction = ItemDragOrverOrEnter,
+                DragLeaveAction = ItemDragLeave,
+                DropAction = ItemDrop,
+                GetDragParameter = ItemGetDragParameter,
+            };
+
 
             PropertyChangedHooker = new PropertyChangedHooker(DispatcherWapper, LoggerFactory);
             PropertyChangedHooker.AddProperties<IReadOnlyAppDesktopToolbarExtendData>();
@@ -66,6 +86,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
         }
 
         #region property
+
+        public RequestSender ExpandShortcutFileRequest { get; } = new RequestSender();
 
         public AppDesktopToolbarExtend? AppDesktopToolbarExtend { get; set; }
         IDispatcherWapper DispatcherWapper { get; }
@@ -113,6 +135,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
         public RequestSender CloseRequest { get; } = new RequestSender();
 
         public bool IsVerticalLayout => ToolbarPosition == AppDesktopToolbarPosition.Left || ToolbarPosition == AppDesktopToolbarPosition.Right;
+
+        public IDragAndDrop ViewDragAndDrop { get; }
+        public IDragAndDrop ItemDragAndDrop { get; }
 
         public LauncherGroupViewModel? SelectedLauncherGroup
         {
@@ -184,6 +209,116 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
         DependencyObject CreateToolbarPositionIcon(AppDesktopToolbarPosition toolbarPosition)
         {
             return LauncherToolbarTheme.GetToolbarPositionImage(toolbarPosition, IconBox);
+        }
+
+        #region ViewDragAndDrop
+
+        private IResultSuccessValue<DragParameter> ViewGetDragParameter(UIElement sender, MouseEventArgs e) => ResultSuccessValue.Failure<DragParameter>();
+
+        private bool ViewCanDragStart(UIElement sender, MouseEventArgs e) => false;
+
+        private void ViewDragOrverOrEnter(UIElement sender, DragEventArgs e)
+        {
+            if(e.Data.GetDataPresent(DataFormats.FileDrop)) {
+                // ファイル登録準備
+                var filePaths = (string[])e.Data.GetData(DataFormats.FileDrop);
+                if(filePaths.Length == 1) {
+                    e.Effects = DragDropEffects.Copy;
+                    e.Handled = true;
+                }
+            }
+        }
+
+        private void ViewDrop(UIElement sender, DragEventArgs e)
+        {
+            if(e.Data.GetDataPresent(DataFormats.FileDrop)) {
+                var filePaths = (string[])e.Data.GetData(DataFormats.FileDrop);
+                if(filePaths.Length == 1) {
+                    DispatcherWapper.Begin(() => RegisterDropFile(filePaths[0]));
+                    e.Handled = true;
+                }
+            }
+        }
+
+        private void ViewDragLeave(UIElement sender, DragEventArgs e)
+        { }
+
+        #endregion
+
+        #region ItemDragAndDrop
+        private IResultSuccessValue<DragParameter> ItemGetDragParameter(UIElement sender, MouseEventArgs e) => ResultSuccessValue.Failure<DragParameter>();
+
+        private bool ItemCanDragStart(UIElement sender, MouseEventArgs e) => false;
+
+        private void ItemDragOrverOrEnter(UIElement sender, DragEventArgs e)
+        {
+            if(e.Data.GetDataPresent(DataFormats.FileDrop)) {
+                e.Effects = DragDropEffects.Move;
+            } else if(e.Data.GetDataPresent(DataFormats.UnicodeText)) {
+                e.Effects = DragDropEffects.Move;
+            }
+
+            e.Handled = true;
+        }
+
+        private void ItemDrop(UIElement sender, DragEventArgs e)
+        {
+            Guid launcherItemId = Guid.Empty;
+            var frameworkElement = (FrameworkElement)sender;
+            var launcherContentControl = (LauncherContentControl)frameworkElement.DataContext;
+            if(launcherContentControl != null) {
+                var launcherItem = (ILauncherItemId)launcherContentControl.DataContext;
+                launcherItemId = launcherItem.LauncherItemId;
+            }
+
+            if(Guid.Empty == launcherItemId) {
+                Logger.LogError("ランチャーアイテムID取得できず, {0}, {1}", sender, e);
+                return;
+            }
+
+            if(e.Data.GetDataPresent(DataFormats.FileDrop)) {
+                var filePaths = (string[])e.Data.GetData(DataFormats.FileDrop);
+                var argument = string.Join(' ', filePaths.Select(i => CommandLine.Escape(i)));
+                DispatcherWapper.Begin(() => ExecuteExtendDropData(launcherItemId, argument));
+            } else if(e.Data.GetDataPresent(DataFormats.UnicodeText)) {
+                var argument = (string)e.Data.GetData(DataFormats.UnicodeText);
+                DispatcherWapper.Begin(() => ExecuteExtendDropData(launcherItemId, argument));
+            }
+
+            e.Handled = true;
+        }
+
+        private void ItemDragLeave(UIElement sender, DragEventArgs e)
+        { }
+
+        #endregion
+
+
+        void RegisterDropFile(string path)
+        {
+            if(PathUtility.IsShortcut(path)) {
+                var request = new CommonMessageDialogRequestParameter() {
+                    Message = "d&d file is lnk",
+                    Caption = "reg type",
+                    Button = MessageBoxButton.YesNoCancel,
+                    DefaultResult = MessageBoxResult.Yes,
+                    Icon = MessageBoxImage.Question,
+                };
+                ExpandShortcutFileRequest.Send<YesNoResponse>(request, r => {
+                    if(r.ResponseIsCancel) {
+                        Logger.LogTrace("cancel");
+                        return;
+                    }
+                    Model.RegisterFile(path, r.ResponseIsYes);
+                });
+            } else {
+                Model.RegisterFile(path, false);
+            }
+        }
+
+        void ExecuteExtendDropData(Guid launcherItemId, string argument)
+        {
+            Model.OpenExtendsExecuteView(launcherItemId, argument, DockScreen);
         }
 
         #endregion

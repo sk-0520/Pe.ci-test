@@ -140,6 +140,27 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute
 
         IMainDatabaseBarrier MainDatabaseBarrier { get; }
         IDatabaseStatementLoader StatementLoader { get; }
+
+        /// <summary>
+        /// 後付けオプション設定。
+        /// <para>null を許容しているけど設定未設定の判別のみに使用するため null は設定不可。</para>
+        /// <para>設定には <see cref="SetOption(string)"/> を使用する。</para>
+        /// </summary>
+        public string? CustomOption { get; private set; }
+
+        #endregion
+
+        #region function
+
+        /// <summary>
+        /// <see cref="CustomOption"/>の設定処理。
+        /// </summary>
+        /// <param name="option"></param>
+        public void SetOption(string option)
+        {
+            CustomOption = option ?? throw new ArgumentNullException(nameof(option));
+        }
+
         #endregion
 
         #region ILauncherItemId
@@ -172,7 +193,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute
             LauncherFileData = fileData;
             EnvironmentVariables = envItems.ToList();
 
-            CaptionName = launcherItem.Name ?? launcherItem.Code ?? Path.GetFileNameWithoutExtension(LauncherFileData.Path) ?? LauncherItemId.ToString("D");
+            CaptionName = launcherItem.Name; // ?? launcherItem.Code ?? Path.GetFileNameWithoutExtension(LauncherFileData.Path) ?? LauncherItemId.ToString("D");
 
             var histories2 = histories.ToList();
             HistoryOptions = histories2.Where(i => i.Kind == LauncherHistoryKind.Option).ToList();

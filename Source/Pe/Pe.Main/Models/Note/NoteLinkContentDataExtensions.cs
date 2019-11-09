@@ -17,7 +17,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Note
         [Obsolete]
         public static FileInfo ToFileInfo(this NoteLinkContentData @this)
         {
-            var filePath = Environment.ExpandEnvironmentVariables(@this.FilePath?.Trim() ?? string.Empty);
+            var filePath = Environment.ExpandEnvironmentVariables(@this.FilePath.Trim());
             return new FileInfo(filePath);
         }
 

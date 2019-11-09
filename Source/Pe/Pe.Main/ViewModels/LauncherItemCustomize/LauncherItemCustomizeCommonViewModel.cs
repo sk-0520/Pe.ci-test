@@ -23,8 +23,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
     {
         #region variable
 
-        string? _name;
-        string? _code;
+        string _name = string.Empty;
+        string _code = string.Empty;
 
         IconData? _iconData;
         bool _isEnabledCommandLauncher;
@@ -43,7 +43,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 
 
         [Required]
-        public string? Name
+        public string Name
         {
             get => this._name;
             set
@@ -55,7 +55,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 
         [Required]
         [CustomValidation(typeof(LauncherItemCustomizeCommonViewModel), nameof(LauncherItemCustomizeCommonViewModel.ValidateCode))]
-        public string? Code
+        public string Code
         {
             get => this._code;
             set

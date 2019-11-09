@@ -105,7 +105,21 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
             Assert.IsTrue(has == result);
         }
 
-
+        [TestMethod]
+        [DataRow("", "")]
+        [DataRow("a", "a")]
+        [DataRow("a", " a")]
+        [DataRow("a", "a ")]
+        [DataRow("a", " a ")]
+        [DataRow("\"a a\"", "a a")]
+        [DataRow("a\"\"b", "a\"b")]
+        [DataRow("a\"\"\"\"\"\"b", "a\"\"\"b")]
+        [DataRow("\"a \"\"\"\"\"\" b\"", "a \"\"\" b")]
+        public void Escape(string result, string input)
+        {
+            var actual = CommandLine.Escape(input);
+            Assert.AreEqual(result, actual);
+        }
     }
 
     [TestClass]

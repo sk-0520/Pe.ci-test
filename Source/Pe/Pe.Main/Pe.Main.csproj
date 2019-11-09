@@ -13,6 +13,7 @@
     <AssemblyName>Pe.Main</AssemblyName>
     <Version>0.84.0</Version>
     <ApplicationIcon>Resources\Icon\App.ico</ApplicationIcon>
+    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
 
   <ItemGroup>

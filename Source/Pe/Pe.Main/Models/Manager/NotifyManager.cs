@@ -6,10 +6,10 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
-    public class NotifyEventArgs: EventArgs
+    public class NotifyEventArgs : EventArgs
     { }
 
-    public class LauncherItemChangedEventArgs: NotifyEventArgs
+    public class LauncherItemChangedEventArgs : NotifyEventArgs
     {
         public LauncherItemChangedEventArgs(IReadOnlyCollection<Guid> launcherItemIds)
         {
@@ -23,7 +23,24 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         #endregion
     }
 
-    public class CustomizeLauncherItemExitedEventArgs: NotifyEventArgs
+    public class LauncherItemRegisteredEventArgs : NotifyEventArgs
+    {
+        public LauncherItemRegisteredEventArgs(Guid groupId, Guid launcherItemId)
+        {
+            GroupId = groupId;
+            LauncherItemId = launcherItemId;
+        }
+
+        #region property
+
+        public Guid GroupId { get; }
+        public Guid LauncherItemId { get; }
+
+        #endregion
+    }
+
+
+    public class CustomizeLauncherItemExitedEventArgs : NotifyEventArgs
     {
         public CustomizeLauncherItemExitedEventArgs(Guid launcherItemId)
         {
@@ -44,6 +61,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         #region event
 
         event EventHandler<LauncherItemChangedEventArgs>? LauncherItemChanged;
+        event EventHandler<LauncherItemRegisteredEventArgs>? LauncherItemRegistered;
         event EventHandler<CustomizeLauncherItemExitedEventArgs>? CustomizeLauncherItemExited;
 
         #endregion
@@ -51,52 +69,61 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         #region function
 
         void SendLauncherItemChanged(IReadOnlyCollection<Guid> launcherItemIds);
+        void SendLauncherItemRegistered(Guid groupId, Guid launcherItemId);
         void SendCustomizeLauncherItemExited(Guid launcherItemId);
 
         #endregion
     }
 
-    partial class ApplicationManager
+    public class NotifyManager : ManagerBase, INotifyManager
     {
-        class NotifyManagerImpl : ManagerBase, INotifyManager
+        public NotifyManager(IDiContainer diContainer, ILoggerFactory loggerFactory)
+            : base(diContainer, loggerFactory)
+        { }
+
+        #region function
+
+        void OnLauncherItemChanged(IReadOnlyCollection<Guid> launcherItemIds)
         {
-            public NotifyManagerImpl(IDiContainer diContainer, ILoggerFactory loggerFactory)
-                : base(diContainer, loggerFactory)
-            { }
-
-            #region function
-
-            void OnLauncherItemChanged(IReadOnlyCollection<Guid> launcherItemIds)
-            {
-                var e = new LauncherItemChangedEventArgs(launcherItemIds);
-                LauncherItemChanged?.Invoke(this, e);
-            }
-
-            void OnCustomizeLauncherItemExited(Guid launcherItemId)
-            {
-                var e = new CustomizeLauncherItemExitedEventArgs(launcherItemId);
-                CustomizeLauncherItemExited?.Invoke(this, e);
-            }
-
-            #endregion
-
-            #region INotifyManager
-
-            public event EventHandler<LauncherItemChangedEventArgs>? LauncherItemChanged;
-            public event EventHandler<CustomizeLauncherItemExitedEventArgs>? CustomizeLauncherItemExited;
-
-            public void SendLauncherItemChanged(IReadOnlyCollection<Guid> launcherItemIds)
-            {
-                OnLauncherItemChanged(launcherItemIds);
-            }
-
-            public void SendCustomizeLauncherItemExited(Guid launcherItemId)
-            {
-                OnCustomizeLauncherItemExited(launcherItemId);
-            }
-
-
-            #endregion
+            var e = new LauncherItemChangedEventArgs(launcherItemIds);
+            LauncherItemChanged?.Invoke(this, e);
         }
+
+        void OnLauncherItemRegistered(Guid groupId, Guid launcherItemId)
+        {
+            var e = new LauncherItemRegisteredEventArgs(groupId, launcherItemId);
+            LauncherItemRegistered?.Invoke(this, e);
+        }
+
+        void OnCustomizeLauncherItemExited(Guid launcherItemId)
+        {
+            var e = new CustomizeLauncherItemExitedEventArgs(launcherItemId);
+            CustomizeLauncherItemExited?.Invoke(this, e);
+        }
+
+        #endregion
+
+        #region INotifyManager
+
+        public event EventHandler<LauncherItemChangedEventArgs>? LauncherItemChanged;
+        public event EventHandler<LauncherItemRegisteredEventArgs>? LauncherItemRegistered;
+        public event EventHandler<CustomizeLauncherItemExitedEventArgs>? CustomizeLauncherItemExited;
+
+        public void SendLauncherItemChanged(IReadOnlyCollection<Guid> launcherItemIds)
+        {
+            OnLauncherItemChanged(launcherItemIds);
+        }
+        public void SendLauncherItemRegistered(Guid groupId, Guid launcherItemId)
+        {
+            OnLauncherItemRegistered(groupId, launcherItemId);
+        }
+
+        public void SendCustomizeLauncherItemExited(Guid launcherItemId)
+        {
+            OnCustomizeLauncherItemExited(launcherItemId);
+        }
+
+
+        #endregion
     }
 }

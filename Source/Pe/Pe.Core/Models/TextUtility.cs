@@ -20,7 +20,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <param name="comparisonType">比較</param>
         /// <param name="dg">nullの場合はデフォルト動作</param>
         /// <returns></returns>
-        public static string ToUnique(string target, IEnumerable<string> list, StringComparison comparisonType, Func<string, int, string> dg)
+        public static string ToUnique(string target, IReadOnlyList<string> list, StringComparison comparisonType, Func<string, int, string> dg)
         {
             Debug.Assert(dg != null);
 
@@ -45,7 +45,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <param name="list"></param>
         /// <param name="comparisonType"></param>
         /// <returns>集合の中に同じものがなければtarget, 存在すればtarget(n)。</returns>
-        public static string ToUniqueDefault(string target, IEnumerable<string> list, StringComparison comparisonType)
+        public static string ToUniqueDefault(string target, IReadOnlyList<string> list, StringComparison comparisonType)
         {
             return ToUnique(target, list, comparisonType, (string source, int index) => string.Format("{0}({1})", source, index));
         }

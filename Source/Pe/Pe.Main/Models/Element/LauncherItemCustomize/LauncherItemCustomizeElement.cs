@@ -56,8 +56,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
             private set => SetProperty(ref this._isVisible, value);
         }
 
-        public string? Name { get; private set; }
-        public string? Code { get; private set; }
+        public string Name { get; private set; } = string.Empty;
+        public string Code { get; private set; } = string.Empty;
         public LauncherItemKind Kind { get; private set; }
         public bool IsEnabledCommandLauncher { get; private set; }
 
@@ -123,7 +123,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
                 launcherMergeEnvVarsEntityDao.InsertEnvVarItems(launcherItemData.LauncherItemId, environmentVariableItems, DatabaseCommonStatus.CreateCurrentAccount());
 
                 launcherTagsEntityDao.DeleteTagByLauncherItemId(launcherItemData.LauncherItemId);
-                launcherTagsEntityDao.InsertNewTags(launcherItemData.LauncherItemId, tags, DatabaseCommonStatus.CreateCurrentAccount());
+                launcherTagsEntityDao.InsertTags(launcherItemData.LauncherItemId, tags, DatabaseCommonStatus.CreateCurrentAccount());
 
                 commander.Commit();
             }
