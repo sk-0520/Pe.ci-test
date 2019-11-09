@@ -104,12 +104,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
-    public class LauncherEnvironmentVariableData
+    public class LauncherEnvironmentVariableData: DataBase
     {
         #region property
 
-        public string? Name { get; set; }
-        public string? Value { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public string Value { get; set; } = string.Empty;
 
         public bool IsRemove => string.IsNullOrEmpty(Value);
 
@@ -149,7 +149,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #region property
 
         public Guid LauncherGroupId { get; set; }
-        public string? Name { get; set; }
+        public string Name { get; set; } = string.Empty;
         public LauncherGroupKind Kind { get; set; }
         public LauncherGroupImageName ImageName { get; set; }
         public Color ImageColor { get; set; }
@@ -173,7 +173,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
         public bool IsEnabledCommandLauncher { get; set; }
 
-        public string? Comment { get; set; }
+        public string Comment { get; set; } = string.Empty;
 
         #endregion
     }
@@ -205,8 +205,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     {
         #region property
 
-        public LauncherExecutePathData? PathData { get; set; }
-        public string? FullPath { get; set; }
+        public LauncherExecutePathData PathData { get; set; } = new LauncherExecutePathData();
+        public string FullPath { get; set; } = string.Empty;
 
         #endregion
     }
@@ -223,7 +223,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
         #region IScreenData
 
-        public string? ScreenName { get; set; }
+        public string ScreenName { get; set; } = string.Empty;
         [PixelKind(Px.Device)]
         public long X { get; set; }
         [PixelKind(Px.Device)]
@@ -256,7 +256,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
-    internal class LauncherFileItemData: DataBase
+    internal class LauncherFileItemData
     {
         public LauncherFileItemData(LauncherItemData item, LauncherFileData file)
         {

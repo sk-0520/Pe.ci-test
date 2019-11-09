@@ -15,12 +15,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data.Dto.Entity
         string Code { get; }
         string Name { get; }
         string? Kind { get; }
-        string? IconPath { get; }
+        string IconPath { get; }
         long IconIndex { get; }
         bool IsEnabledCommandLauncher { get; }
         long ExecuteCount { get; }
         DateTime LastExecuteTimestamp { get; }
-        string? Comment { get; }
+        string Comment { get; }
 
         #endregion
     }
@@ -34,12 +34,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data.Dto.Entity
         public string Code { get; set; } = string.Empty;
         public string Name { get; set; } = string.Empty;
         public string? Kind { get; set; }
-        public string? IconPath { get; set; }
+        public string IconPath { get; set; } = string.Empty;
         public long IconIndex { get; set; }
         public bool IsEnabledCommandLauncher { get; set; }
         public long ExecuteCount { get; set; }
         public DateTime LastExecuteTimestamp { get; set; }
-        public string? Comment { get; set; }
+        public string Comment { get; set; } = string.Empty;
 
         #endregion
     }

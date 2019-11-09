@@ -44,8 +44,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #region property
 
         public Guid NoteId { get; set; }
-        public string? ScreenName { get; set; }
-        public string? Title { get; set; }
+        public string ScreenName { get; set; } = string.Empty;
+        public string Title { get; set; } = string.Empty;
         public NoteLayoutKind LayoutKind { get; set; }
         public bool IsVisible { get; set; }
 
@@ -87,7 +87,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
         public NoteContentKind ContentKind { get; set; }
 
-        public string? Content { get; set; }
+        public string Content { get; set; } = string.Empty;
 
         public bool IsLink { get; set; }
 
@@ -140,7 +140,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
         #region IScreenData
 
-        public string? ScreenName { get; set; }
+        public string ScreenName { get; set; } = string.Empty;
         [PixelKind(Px.Device)]
         public long X { get; set; }
         [PixelKind(Px.Device)]
@@ -163,13 +163,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         /// リンク対象ファイル名。
         /// </summary>
         [DataMember]
-        public string? FilePath { get; set; }
+        public string FilePath { get; set; } = string.Empty;
 
         /// <summary>
         /// <see cref="FilePath"/> のエンコーディング。
         /// </summary>
         [DataMember]
-        public string? EncodingName { get; set; }
+        public string EncodingName { get; set; } = string.Empty;
 
         /// <summary>
         /// ファイル変更から実際に読むまでの待機時間。

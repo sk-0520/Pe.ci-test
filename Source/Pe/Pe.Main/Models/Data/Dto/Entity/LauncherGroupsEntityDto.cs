@@ -12,7 +12,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data.Dto.Entity
 
         public Guid LauncherGroupId { get; set; }
         public string? Kind { get; set; }
-        public string? Name { get; set; }
+        public string Name { get; set; } = string.Empty;
         public string? ImageName { get; set; }
         public string? ImageColor { get; set; }
         public long Sequence { get; set; }

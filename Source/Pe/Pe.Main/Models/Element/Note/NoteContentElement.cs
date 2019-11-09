@@ -199,7 +199,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             }
         }
 
-        void ChangeRawContent(NoteContentKind contentKind, string? content, object stockKey)
+        void ChangeRawContent(NoteContentKind contentKind, string content, object stockKey)
         {
             if(IsLink) {
                 SaveLinkContent(content);
@@ -217,7 +217,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             }, stockKey);
         }
 
-        public void ChangePlainContent(string? content)
+        public void ChangePlainContent(string content)
         {
             if(ContentKind != NoteContentKind.Plain) {
                 throw new InvalidOperationException();
