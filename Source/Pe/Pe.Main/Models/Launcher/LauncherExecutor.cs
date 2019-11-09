@@ -170,7 +170,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             var path = Environment.ExpandEnvironmentVariables(pathParameter.Path ?? string.Empty);
             var parentDirPath = Path.GetDirectoryName(path);
             try {
-                var process = Process.Start(parentDirPath);
+                var process = Process.Start(new ProcessStartInfo(parentDirPath) {
+                    UseShellExecute = true,
+                });
                 var result = new LauncherExecuteResult() {
                     Kind = kind,
                     Process = process,

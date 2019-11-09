@@ -773,10 +773,12 @@ namespace ContentTypeTextNet.Pe.Main.Views.Extend
 
             if(propertyName == nameof(IAppDesktopToolbarExtendData.PausingAutoHide)) {
                 Logger.LogInformation($"ExtendData.PausingAutoHide = {ExtendData.PausingAutoHide}");
-                if(ExtendData.PausingAutoHide) {
-                    StopHideWait();
-                }else {
-                    StartHideWait();
+                if(ExtendData.IsAutoHide) {
+                    if(ExtendData.PausingAutoHide) {
+                        StopHideWait();
+                    } else {
+                        StartHideWait();
+                    }
                 }
             }
         }
