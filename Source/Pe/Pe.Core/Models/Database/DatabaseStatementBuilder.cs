@@ -209,7 +209,6 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         #endregion
     }
 
-    //BUG: こいつの作る set がおかしい。AddKeyでParametersImplを用いるのは違うんじゃないかと。
     public class DatabaseUpdateStatementBuilder : DatabaseStatementBuilderBase
     {
         public DatabaseUpdateStatementBuilder(IDatabaseImplementation implementation, ILogger logger)
@@ -286,7 +285,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
             var parameterIndex = 0;
             sb.AppendLine("set");
-            foreach(var item in ParametersImpl.Keys.Counting()) {
+            foreach(var item in UpdateColumns.Counting()) {
                 sb.Append('\t');
                 sb.Append(Implementation.ToStatementColumnName(item.Value));
                 sb.Append('=');
@@ -295,7 +294,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
                 } else {
                     sb.Append(Implementation.ToStatementParameterName(item.Value, parameterIndex++));
                 }
-                if(item.Number + 1 != ParametersImpl.Count) {
+                if(item.Number + 1 != UpdateColumns.Count) {
                     sb.Append(',');
                 }
                 sb.AppendLine();
