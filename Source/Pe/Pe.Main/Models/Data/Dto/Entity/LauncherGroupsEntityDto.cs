@@ -11,10 +11,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data.Dto.Entity
         #region property
 
         public Guid LauncherGroupId { get; set; }
-        public string? Kind { get; set; }
+        public string Kind { get; set; } = string.Empty;
         public string Name { get; set; } = string.Empty;
-        public string? ImageName { get; set; }
-        public string? ImageColor { get; set; }
+        public string ImageName { get; set; } = string.Empty;
+        public string ImageColor { get; set; } = string.Empty;
         public long Sequence { get; set; }
 
         #endregion

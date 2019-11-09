@@ -95,7 +95,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         /// リンク対象ファイル名。
         /// </summary>
         [DataMember]
-        public string? FilePath { get; set; }
+        public string FilePath { get; set; } = string.Empty;
 
         /// <summary>
         /// <see cref="FilePath"/> のエンコーディング。

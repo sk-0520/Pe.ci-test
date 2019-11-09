@@ -11,7 +11,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data.Dto.Entity
         #region property
 
         public Guid FontId { get; set; }
-        public string? FamilyName { get; set; }
+        public string FamilyName { get; set; } = string.Empty;
         public double Height { get; set; }
         public bool IsBold { get; set; }
         public bool IsItalic { get; set; }

@@ -34,7 +34,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         /// <param name="fontFamily">フォントファミリ名</param>
         /// <param name="defaultFontFamily">指定名から生成できなかった場合に代替として使用されるFontFamily。</param>
         /// <returns></returns>
-        public FontFamily MakeFontFamily(string? fontFamily, FontFamily defaultFontFamily)
+        public FontFamily MakeFontFamily(string fontFamily, FontFamily defaultFontFamily)
         {
             if(!string.IsNullOrWhiteSpace(fontFamily)) {
                 if(Fonts.SystemFontFamilies.Any(f => f.FamilyNames.Any(n => n.Value == fontFamily))) {

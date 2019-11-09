@@ -14,7 +14,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data.Dto.Entity
 
         string Code { get; }
         string Name { get; }
-        string? Kind { get; }
+        string Kind { get; }
         string IconPath { get; }
         long IconIndex { get; }
         bool IsEnabledCommandLauncher { get; }
@@ -32,7 +32,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data.Dto.Entity
 
         public string Code { get; set; } = string.Empty;
         public string Name { get; set; } = string.Empty;
-        public string? Kind { get; set; }
+        public string Kind { get; set; } = string.Empty;
         public string IconPath { get; set; } = string.Empty;
         public long IconIndex { get; set; }
         public bool IsEnabledCommandLauncher { get; set; }

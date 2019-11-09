@@ -12,11 +12,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data.Dto.Entity
 
         public Guid LauncherToolbarId { get; set; }
         public Guid LauncherGroupId { get; set; }
-        public string? PositionKind { get; set; }
-        public string? Direction { get; set; }
-        public string? IconBox { get; set; }
+        public string PositionKind { get; set; } = string.Empty;
+        public string Direction { get; set; } = string.Empty;
+        public string IconBox { get; set; } = string.Empty;
         public Guid FontId { get; set; }
-        public string? AutoHideTimeout { get; set; }
+        public string AutoHideTimeout { get; set; } = string.Empty;
         public long TextWidth { get; set; }
         public bool IsVisible { get; set; }
         public bool IsTopmost { get; set; }

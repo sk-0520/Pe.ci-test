@@ -12,7 +12,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data.Dto.Entity
         #region property
 
         public Guid NoteId { get; set; }
-        public string? LayoutKind { get; set; }
+        public string LayoutKind { get; set; } = string.Empty;
 
         [PixelKind(Px.Logical)]
         public double X { get; set; }

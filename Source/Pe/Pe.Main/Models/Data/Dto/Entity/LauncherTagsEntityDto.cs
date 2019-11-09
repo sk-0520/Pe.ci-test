@@ -11,7 +11,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data.Dto.Entity
         #region property
 
         public Guid LauncherItemId { get; set; }
-        public string? TagName { get; set; }
+        public string TagName { get; set; } = string.Empty;
 
         #endregion
     }

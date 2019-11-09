@@ -11,9 +11,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data.Dto.Entity
         #region property
 
         Guid LauncherItemId { get; set; }
-        public string? File { get; set; }
-        public string? Option { get; set; }
-        public string? WorkDirectory { get; set; }
+        public string File { get; set; } = string.Empty;
+        public string Option { get; set; } = string.Empty;
+        public string WorkDirectory { get; set; } = string.Empty;
 
 
         #endregion
@@ -25,9 +25,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data.Dto.Entity
 
         Guid LauncherItemId { get; set; }
 
-        public string? File { get; set; }
-        public string? Option { get; set; }
-        public string? WorkDirectory { get; set; }
+        public string File { get; set; } = string.Empty;
+        public string Option { get; set; } = string.Empty;
+        public string WorkDirectory { get; set; } = string.Empty;
 
         public bool IsEnabledCustomEnvVar { get; set; }
         public bool IsEnabledStandardIo { get; set; }

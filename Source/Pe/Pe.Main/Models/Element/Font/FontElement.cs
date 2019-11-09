@@ -24,7 +24,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Font
     {
         #region variable
 
-        string? _familyName;
+        string _familyName =  string.Empty;
         bool _isItalic;
         bool _isBold;
         double _size;
@@ -56,7 +56,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Font
         IMainDatabaseLazyWriter MainDatabaseLazyWriter { get; }
         UniqueKeyPool UniqueKeyPool { get; } = new UniqueKeyPool();
 
-        public string? FamilyName
+        public string FamilyName
         {
             get => this._familyName;
             private set => SetProperty(ref this._familyName, value);
