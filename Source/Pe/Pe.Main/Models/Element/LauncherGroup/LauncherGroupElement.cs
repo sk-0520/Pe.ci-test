@@ -98,10 +98,30 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherGroup
 
         protected override void InitializeImpl()
         {
+            NotifyManager.LauncherItemRegistered += NotifyManager_LauncherItemRegistered;
+
             LoadGroup();
             LoadLauncherItems();
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                NotifyManager.LauncherItemRegistered -= NotifyManager_LauncherItemRegistered;
+            }
+
+            base.Dispose(disposing);
+        }
+
         #endregion
+
+        private void NotifyManager_LauncherItemRegistered(object? sender, LauncherItemRegisteredEventArgs e)
+        {
+            if(e.GroupId == LauncherGroupId) {
+                // 自グループにアイテムが登録されたので放り込んでおく
+                LauncherItemIds.Add(e.LauncherItemId);
+            }
+        }
+
     }
 }

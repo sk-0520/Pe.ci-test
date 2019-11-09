@@ -368,9 +368,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
                 NotifyManager.LauncherItemChanged -= NotifyManager_LauncherItemChanged;
                 NotifyManager.LauncherItemRegistered -= NotifyManager_LauncherItemRegistered;
                 Flush();
-                if(disposing) {
-                    MainDatabaseLazyWriter.Dispose();
-                }
             }
 
             base.Dispose(disposing);
@@ -515,6 +512,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
         private void NotifyManager_LauncherItemRegistered(object? sender, LauncherItemRegisteredEventArgs e)
         {
             if(e.GroupId == SelectedLauncherGroup?.LauncherGroupId) {
+                // 現在表示中グループの表示を更新
                 var element = OrderManager.GetOrCreateLauncherItemElement(e.LauncherItemId);
                 LauncherItems.Add(element);
             }
