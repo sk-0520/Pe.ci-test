@@ -280,24 +280,24 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 
         #endregion
 
-        IResultSuccessValue<string> NormalizeDropPath(string path)
+
+        void RegisterDropFile(string path)
         {
             if(PathUtility.IsShortcut(path)) {
                 var request = new CommonMessageDialogRequestParameter() {
                     Message = "d&d file is lnk",
                     Caption = "reg type",
                 };
-                return ExpandShortcutFileRequest.Send<YesNoResponse, IResultSuccessValue<string>>(request, r => {
-                    return ResultSuccessValue.Success("");
+                ExpandShortcutFileRequest.Send<YesNoResponse>(request, r => {
+                    if(r.ResponseIsCancel) {
+                        Logger.LogTrace("cancel");
+                        return;
+                    }
+                    Model.RegisterFile(path, r.ResponseIsYes);
                 });
+            } else {
+                Model.RegisterFile(path, false);
             }
-
-            return ResultSuccessValue.Success(path);
-        }
-
-        void RegisterDropFile(string path)
-        {
-            var result = NormalizeDropPath(path);
         }
 
         #endregion

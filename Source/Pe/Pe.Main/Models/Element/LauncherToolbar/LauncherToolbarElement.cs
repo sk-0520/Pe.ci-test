@@ -292,6 +292,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
             }, UniqueKeyPool.Get());
         }
 
+        /// <summary>
+        /// ファイルを現在のグループに登録する。
+        /// </summary>
+        /// <param name="filePath">対象ファイルパス。</param>
+        /// <param name="expandShortcut"><paramref name="filePath"/>がショートカットの場合にショートカットの内容を登録するか</param>
+        public void RegisterFile(string filePath, bool expandShortcut)
+        {
+
+        }
+
         #endregion
 
         #region ContextElementBase
