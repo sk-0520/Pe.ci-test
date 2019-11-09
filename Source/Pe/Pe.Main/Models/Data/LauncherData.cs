@@ -104,12 +104,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
-    public class LauncherEnvironmentVariableData
+    public class LauncherEnvironmentVariableData: DataBase
     {
         #region property
 
-        public string? Name { get; set; }
-        public string? Value { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public string Value { get; set; } = string.Empty;
 
         public bool IsRemove => string.IsNullOrEmpty(Value);
 

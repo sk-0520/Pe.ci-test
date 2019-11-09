@@ -48,7 +48,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var dto = new LauncherEnvVarsEntityDto() {
                 LauncherItemId = launcherItemId,
                 EnvName = data.Name,
-                EnvValue = data.Value ?? string.Empty,
+                EnvValue = data.Value,
             };
 
             databaseCommonStatus.WriteCreate(dto);
