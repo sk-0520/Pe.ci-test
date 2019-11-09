@@ -93,7 +93,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
                     //TODO: あとあとかんがえよ
                     IsLink = false,
                     FilePath = string.Empty,
-                    Encoding = Encoding.UTF8,
+                    Encoding = EncodingConverter.DefaultEncoding,
                     DelayTime = TimeSpan.Zero,
                     BufferSize = 0,
                     RefreshTime = TimeSpan.Zero,

@@ -28,6 +28,7 @@ using ContentTypeTextNet.Pe.PInvoke.Windows;
 using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
 using ContentTypeTextNet.Pe.Main.Models.Theme;
 using ContentTypeTextNet.Pe.Main.Models.Note;
+using ContentTypeTextNet.Pe.Main.Models.Logic;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 {
@@ -442,7 +443,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         {
             var parameter = new NoteLinkChangeRequestParameter() {
                 IsOpen = isOpen,
-                Encoding = Encoding.UTF8,
+                Encoding = EncodingConverter.DefaultEncoding,
             };
             var contentKindFilter = ContentKind switch
             {
@@ -643,33 +644,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         }
 
         IReadOnlyColorPair<Color> GetColorPair() => ColorPair.Create(Model.ForegroundColor, Model.BackgroundColor);
-
-        [Obsolete]
-        void DoActionOrSelectLinkData(Action<NoteLinkContentData?> action)
-        {
-            if(ChangingContentKind == NoteContentKind.Link) {
-                var context = new FileSaveDialogRequestParameter();
-                context.Filter.Add(new DialogFilterItem("text", string.Empty, "*.txt", "*.md"));
-                context.Filter.Add(new DialogFilterItem("all", string.Empty, "*.*"));
-
-                SelectLinkFileRequest.Send(context, c1 => {
-                    var c = (NoteLinkSelectNotification)c1;
-                    if(!c.ResponseIsCancel) {
-                        var contentFactory = new NoteContentFactory();
-                        var data = contentFactory.CreateLink();
-
-#pragma warning disable CS8602 // null 参照の可能性があるものの逆参照です。
-                        data.EncodingName = c.ResponseEncoding.WebName;
-#pragma warning restore CS8602 // null 参照の可能性があるものの逆参照です。
-                        data.FilePath = c.ResponseFilePaths.First();
-
-                        action(data);
-                    }
-                });
-            } else {
-                action(null);
-            }
-        }
 
         private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {

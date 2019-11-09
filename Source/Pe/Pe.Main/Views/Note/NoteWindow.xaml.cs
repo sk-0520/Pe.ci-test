@@ -17,6 +17,7 @@ using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Views;
+using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Note;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
@@ -41,6 +42,8 @@ namespace ContentTypeTextNet.Pe.Main.Views.Note
 
         [Injection]
         ILogger? Logger { get; set; }
+        [Injection]
+        ILoggerFactory? LoggerFactory { get; set; }
 
         PopupAttacher? PopupAttacher { get; set; }
 
@@ -114,12 +117,14 @@ namespace ContentTypeTextNet.Pe.Main.Views.Note
                     dialog.FileName = linkParameter.FilePath;
                     dialog.Filters.SetRange(linkParameter.Filter);
 
+                    var encodingConverter = new EncodingConverter(LoggerFactory!);
+
                     var encodings = new[] {
-                        CustomizeDialogComboBoxItem.Create(EncodingUtility.ToString(EncodingUtility.UTF8n), EncodingUtility.UTF8n),
-                        CustomizeDialogComboBoxItem.Create(EncodingUtility.ToString(Encoding.UTF8), Encoding.UTF8),
-                        CustomizeDialogComboBoxItem.Create(EncodingUtility.ToString(Encoding.Unicode), Encoding.Unicode),
+                        CustomizeDialogComboBoxItem.Create(encodingConverter.ToString(encodingConverter.Encoding), encodingConverter.Encoding),
+                        CustomizeDialogComboBoxItem.Create(encodingConverter.ToString(Encoding.UTF8), Encoding.UTF8),
+                        CustomizeDialogComboBoxItem.Create(encodingConverter.ToString(Encoding.Unicode), Encoding.Unicode),
                         //TODO: 文字コードは追々かんがえるよ
-                        CustomizeDialogComboBoxItem.Create(EncodingUtility.ToString(Encoding.UTF32), Encoding.UTF32),
+                        CustomizeDialogComboBoxItem.Create(encodingConverter.ToString(Encoding.UTF32), Encoding.UTF32),
                     };
                     var defaultItem = encodings.FirstOrDefault(i => EncodingUtility.ToString(i.Value) == EncodingUtility.ToString(linkParameter.Encoding!));
                     var index = Array.IndexOf(encodings, defaultItem);

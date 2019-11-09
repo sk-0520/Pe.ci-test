@@ -28,7 +28,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Note
 
         ILoggerFactory LoggerFactory { get; }
         ILogger Logger { get; }
-        public Encoding Encoding { get; set; } = EncodingUtility.UTF8n;
+        public Encoding Encoding { get; set; } = EncodingConverter.DefaultEncoding;
         public string RichTextFormat { get; set; } = DataFormats.Rtf;
 
         #endregion

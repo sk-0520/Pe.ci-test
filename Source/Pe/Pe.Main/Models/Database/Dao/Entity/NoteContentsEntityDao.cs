@@ -8,6 +8,7 @@ using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Data.Dto.Entity;
+using ContentTypeTextNet.Pe.Main.Models.Logic;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
@@ -45,6 +46,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         private NoteContentsEntityDto ConvertFromData(NoteContentData data, IDatabaseCommonStatus databaseCommonStatus)
         {
             var noteContentKindTransfer = new EnumTransfer<NoteContentKind>();
+            var encodingConverter = new EncodingConverter(LoggerFactory);
 
             var dto = new NoteContentsEntityDto() {
                 NoteId = data.NoteId,
@@ -52,7 +54,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 IsLink = data.IsLink,
                 Content = data.Content,
                 Address = data.FilePath,
-                Encoding = data.Encoding != null ? EncodingUtility.ToString(data.Encoding) : EncodingUtility.ToString(Encoding.UTF8),
+                Encoding = encodingConverter.ToString(data.Encoding),
                 DelayTime = data.DelayTime,
                 BufferSize = data.BufferSize,
                 RefreshTime = data.RefreshTime,
@@ -67,6 +69,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         private NoteContentData ConvertFromDto(NoteContentsEntityDto dto)
         {
             var noteContentKindTransfer = new EnumTransfer<NoteContentKind>();
+            var encodingConverter = new EncodingConverter(LoggerFactory);
 
             var data = new NoteContentData() {
                 NoteId = dto.NoteId,
@@ -74,7 +77,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 Content = dto.Content,
                 IsLink = dto.IsLink,
                 FilePath = dto.Address,
-                Encoding = dto.Encoding != null ? EncodingUtility.Parse(dto.Encoding) : Encoding.UTF8,
+                Encoding = encodingConverter.Parse(dto.Encoding),
                 DelayTime = dto.DelayTime,
                 BufferSize = ToInt(dto.BufferSize),
                 RefreshTime = dto.RefreshTime,
@@ -136,11 +139,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         public bool UpdateLinkEnabled(Guid noteId, string path, Encoding encoding, FileWatchParameter fileWatchParameter, IDatabaseCommonStatus databaseCommonStatus)
         {
             var builder = CreateUpdateBuilder(databaseCommonStatus);
+            var encodingConverter = new EncodingConverter(LoggerFactory);
 
             builder.AddKey(Column.NoteId, noteId);
             builder.AddValueParameter(Column.IsLink, true);
             builder.AddValueParameter(Column.Address, path);
-            builder.AddValueParameter(Column.Encoding, EncodingUtility.ToString(encoding));
+            builder.AddValueParameter(Column.Encoding, encodingConverter.ToString(encoding));
             builder.AddValueParameter(Column.DelayTime, fileWatchParameter.DelayTime);
             builder.AddValueParameter(Column.BufferSize, fileWatchParameter.BufferSize);
             builder.AddValueParameter(Column.RefreshTime, fileWatchParameter.RefreshTime);

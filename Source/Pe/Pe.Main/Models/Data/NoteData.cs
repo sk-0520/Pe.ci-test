@@ -101,7 +101,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         /// <see cref="FilePath"/> のエンコーディング。
         /// </summary>
         [DataMember]
-        public Encoding? Encoding { get; set; }
+        public Encoding Encoding { get; set; } = EncodingConverter.DefaultEncoding;
 
         /// <summary>
         /// ファイル変更から実際に読むまでの待機時間。

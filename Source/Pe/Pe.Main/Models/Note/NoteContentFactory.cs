@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Main.Models.Data;
+using ContentTypeTextNet.Pe.Main.Models.Logic;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Note
 {
@@ -13,7 +14,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Note
     {
         #region property
 
-        public Encoding Encoding { get; set; } = EncodingUtility.UTF8n;
+        public Encoding Encoding { get; set; } = EncodingConverter.DefaultEncoding;
         public string RichTextFormat { get; set; } = DataFormats.Rtf;
 
         #endregion
@@ -24,15 +25,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Note
 
         public string CreateRichText() => @"{\rtf1}";
 
-        [Obsolete]
-        public NoteLinkContentData CreateLink() => new NoteLinkContentData() {
-            EncodingName = EncodingUtility.ToString(Encoding),
-            FilePath = string.Empty,
-            DelayTime = TimeSpan.FromSeconds(5),
-            BufferSize = 1024 * 4,
-            IsEnabledRefresh = false,
-            RefreshTime = TimeSpan.FromMinutes(5),
-        };
 
         #endregion
     }
