@@ -168,23 +168,29 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon
             return null;
         }
 
-        void WriteStream(BitmapSource iconImage, Stream stream)
+        Task WriteStreamAsync(BitmapSource iconImage, Stream stream)
         {
-            var encoder = new PngBitmapEncoder();
-            encoder.Frames.Add(BitmapFrame.Create(iconImage));
-            encoder.Save(stream);
+            Debug.Assert(iconImage.IsFrozen);
+
+            return Task.Run(() => {
+                var encoder = new PngBitmapEncoder();
+                encoder.Frames.Add(BitmapFrame.Create(iconImage));
+                encoder.Save(stream);
+                Dispatcher.CurrentDispatcher.InvokeShutdown();
+            });
         }
 
-        void SaveImage(BitmapSource iconImage)
+        async Task SaveImageAsync(BitmapSource iconImage)
         {
             using(var stream = new BinaryChunkedStream()) {
-                WriteStream(iconImage, stream);
+                await WriteStreamAsync(iconImage, stream);
 #if DEBUG
                 using(var debugStream = new MemoryStream()) {
-                    WriteStream(iconImage, debugStream);
+                    await WriteStreamAsync(iconImage, debugStream);
                     Debug.Assert(stream.Position == debugStream.Position, $"{nameof(stream)}: {stream.Length}, {nameof(debugStream)}: {debugStream.Length}");
                 }
 #endif
+                //TODO: ここで複数のランチャーアイテムの待ちが発生するので何回かリトライ処理入れた方がいいと思う
                 DateTime iconUpdatedTimestamp;
                 using(var commander = FileDatabaseBarrier.WaitWrite()) {
                     var dao = new LauncherItemIconsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
@@ -213,7 +219,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon
             var iconImage = await GetImageAsync(launcherIconData, true, cancellationToken).ConfigureAwait(false);
             if(iconImage != null) {
                 // データ書き込み(失敗してもアイコンが取得できてるならOK)
-                SaveImage(iconImage);
+                var _ = SaveImageAsync(iconImage);
             } else {
                 Logger.LogWarning("アイコン取得失敗: {0}, {1}", LauncherItemId, ObjectDumper.GetDumpString(launcherIconData));
             }
