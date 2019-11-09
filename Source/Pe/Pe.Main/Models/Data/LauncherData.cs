@@ -173,7 +173,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
         public bool IsEnabledCommandLauncher { get; set; }
 
-        public string? Comment { get; set; }
+        public string Comment { get; set; } = string.Empty;
 
         #endregion
     }
