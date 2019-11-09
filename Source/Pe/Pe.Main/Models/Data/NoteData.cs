@@ -163,13 +163,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         /// リンク対象ファイル名。
         /// </summary>
         [DataMember]
-        public string? FilePath { get; set; }
+        public string FilePath { get; set; } = string.Empty;
 
         /// <summary>
         /// <see cref="FilePath"/> のエンコーディング。
         /// </summary>
         [DataMember]
-        public string? EncodingName { get; set; }
+        public string EncodingName { get; set; } = string.Empty;
 
         /// <summary>
         /// ファイル変更から実際に読むまでの待機時間。
