@@ -76,7 +76,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
         /// </summary>
         public Screen DockScreen
         {
-            get => this._dockScreen ?? Screen.PrimaryScreen;
+            get => this._dockScreen ?? Screen.PrimaryScreen; //TODO: [NOTE]決定的に間違ってる気がする
             private set => SetProperty(ref this._dockScreen, value);
         }
         public NotePosition Position { get; }
