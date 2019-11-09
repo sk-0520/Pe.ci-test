@@ -149,7 +149,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #region property
 
         public Guid LauncherGroupId { get; set; }
-        public string? Name { get; set; }
+        public string Name { get; set; } = string.Empty;
         public LauncherGroupKind Kind { get; set; }
         public LauncherGroupImageName ImageName { get; set; }
         public Color ImageColor { get; set; }
