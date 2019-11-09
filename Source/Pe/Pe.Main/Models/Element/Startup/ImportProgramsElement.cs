@@ -124,7 +124,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
                     // ランチャー種別で突っ込むデータ追加して
                     switch(importItem.Data.Item.Kind) {
                         case LauncherItemKind.File:
-                            launcherFilesDao.InsertSimple(importItem.Data.Item.LauncherItemId, importItem.Data.File, DatabaseCommonStatus.CreateCurrentAccount());
+                            launcherFilesDao.InsertFile(importItem.Data.Item.LauncherItemId, importItem.Data.File, DatabaseCommonStatus.CreateCurrentAccount());
                             break;
 
                         default:
@@ -132,7 +132,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
                     }
 
                     // db タグ突っ込んで
-                    launcherTagsDao.InsertNewTags(importItem.Data.Item.LauncherItemId, importItem.Tags, DatabaseCommonStatus.CreateCurrentAccount());
+                    launcherTagsDao.InsertTags(importItem.Data.Item.LauncherItemId, importItem.Tags, DatabaseCommonStatus.CreateCurrentAccount());
                 }
 
                 // db グループ作る
@@ -143,8 +143,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
 
                 var launcherGroupItemsDao = new LauncherGroupItemsEntityDao(transaction, StatementLoader, transaction.Implementation, LoggerFactory);
                 var currentMaxSequence = launcherGroupItemsDao.SelectMaxSequence(group.LauncherGroupId);
-                var itemStep = 10;
-                launcherGroupItemsDao.InsertNewItems(group.LauncherGroupId, importItems.Select(i => i.Data.Item.LauncherItemId), currentMaxSequence + itemStep, itemStep, DatabaseCommonStatus.CreateCurrentAccount());
+                launcherGroupItemsDao.InsertNewItems(group.LauncherGroupId, importItems.Select(i => i.Data.Item.LauncherItemId), currentMaxSequence + launcherFactory.GroupItemsStep, launcherFactory.GroupItemsStep, DatabaseCommonStatus.CreateCurrentAccount());
 
                 transaction.Commit();
             }

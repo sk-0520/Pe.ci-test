@@ -34,7 +34,7 @@ using ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
-    public partial class ApplicationManager : DisposerBase, IOrderManager, INotifyManager
+    public partial class ApplicationManager : DisposerBase, IOrderManager
     {
         public ApplicationManager(ApplicationInitializer initializer)
         {
@@ -45,7 +45,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             ApplicationDiContainer = initializer.DiContainer;
             WindowManager = initializer.WindowManager;
             OrderManager = ApplicationDiContainer!.Make<OrderManagerImpl>(); //initializer.OrderManager;
-            NotifyManager = ApplicationDiContainer!.Make<NotifyManagerImpl>();//initializer.NotifyManager;
+            NotifyManager = initializer.NotifyManager;
             StatusManager = initializer.StatusManager;
             ClipboardManager = initializer.ClipboardManager;
 #pragma warning restore CS8601 // Null 参照割り当ての可能性があります。
@@ -61,7 +61,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         WindowManager WindowManager { get; set; }
         OrderManagerImpl OrderManager { get; set; }
-        NotifyManagerImpl NotifyManager { get; set; }
+        NotifyManager NotifyManager { get; set; }
         StatusManager StatusManager { get; set; }
         ClipboardManager ClipboardManager { get; set; }
 
@@ -99,8 +99,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             ApplicationDiContainer.Register<IWindowManager, WindowManager>(WindowManager);
             ApplicationDiContainer.Register<IOrderManager, IOrderManager>(this);
-            ApplicationDiContainer.Register<INotifyManager, INotifyManager>(this);
-            ApplicationDiContainer.Register<IStatusManager, IStatusManager>(StatusManager);
+            ApplicationDiContainer.Register<INotifyManager, NotifyManager>(NotifyManager);
+            ApplicationDiContainer.Register<IStatusManager, StatusManager>(StatusManager);
             ApplicationDiContainer.Register<IClipboardManager, ClipboardManager>(ClipboardManager);
         }
 
@@ -468,31 +468,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             return windowItem;
         }
 
-
-        #endregion
-
-        #region INotifyManager
-
-        public event EventHandler<LauncherItemChangedEventArgs>? LauncherItemChanged
-        {
-            add { NotifyManager.LauncherItemChanged += value; }
-            remove { NotifyManager.LauncherItemChanged -= value; }
-        }
-        public event EventHandler<CustomizeLauncherItemExitedEventArgs>? CustomizeLauncherItemExited
-        {
-            add { NotifyManager.CustomizeLauncherItemExited += value; }
-            remove { NotifyManager.CustomizeLauncherItemExited -= value; }
-        }
-
-        public void SendLauncherItemChanged(IReadOnlyCollection<Guid> launcherItemIds)
-        {
-            NotifyManager.SendLauncherItemChanged(launcherItemIds);
-        }
-
-        public void SendCustomizeLauncherItemExited(Guid launcherItemId)
-        {
-            NotifyManager.SendCustomizeLauncherItemExited(launcherItemId);
-        }
 
         #endregion
 

@@ -94,16 +94,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return data;
         }
 
-        public bool InsertSimple(Guid launcherItemId, LauncherExecutePathData data, IDatabaseCommonStatus commonStatus)
+        public bool InsertFile(Guid launcherItemId, LauncherExecutePathData data, IDatabaseCommonStatus commonStatus)
         {
             var statement = LoadStatement();
             var param = commonStatus.CreateCommonDtoMapping();
             param[Column.LauncherItemId] = launcherItemId;
-#pragma warning disable CS8601 // Null 参照割り当ての可能性があります。
             param[Column.File] = data.Path;
             param[Column.Option] = data.Option;
             param[Column.WorkDirectory] = data.WorkDirectoryPath;
-#pragma warning restore CS8601 // Null 参照割り当ての可能性があります。
 
             return Commander.Execute(statement, param) == 1;
         }
