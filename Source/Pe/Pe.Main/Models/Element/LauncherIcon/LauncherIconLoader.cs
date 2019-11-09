@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models;
@@ -127,23 +128,22 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon
         /// </summary>
         /// <param name="bitmapSource"></param>
         /// <returns></returns>
-        Task<BitmapSource> ResizeImageAsync(BitmapSource bitmapSource)
+        BitmapSource ResizeImage(BitmapSource bitmapSource)
         {
             var iconSize = new IconSize(IconBox);
 
             if(iconSize.Width < bitmapSource.PixelWidth || iconSize.Height < bitmapSource.PixelHeight) {
-                return Task.Run(() => {
-                    Logger.LogDebug("アイコンサイズを縮小: アイコン({0}x{1}), 指定({2}x{3})", bitmapSource.PixelWidth, bitmapSource.PixelHeight, iconSize.Width, iconSize.Height);
-                    var scaleX = iconSize.Width / (double)bitmapSource.PixelWidth;
-                    var scaleY = iconSize.Height / (double)bitmapSource.PixelHeight;
-                    Logger.LogTrace("scale: {0}x{1}", scaleX, scaleY);
+                Logger.LogDebug("アイコンサイズを縮小: アイコン({0}x{1}), 指定({2}x{3})", bitmapSource.PixelWidth, bitmapSource.PixelHeight, iconSize.Width, iconSize.Height);
+                var scaleX = iconSize.Width / (double)bitmapSource.PixelWidth;
+                var scaleY = iconSize.Height / (double)bitmapSource.PixelHeight;
+                Logger.LogTrace("scale: {0}x{1}", scaleX, scaleY);
+                DispatcherWapper.Get(() => {
                     var transformedBitmap = FreezableUtility.GetSafeFreeze(new TransformedBitmap(bitmapSource, new ScaleTransform(scaleX, scaleY)));
-                    //var smallImage = new WriteableBitmap(iconSize.Width, iconSize.Height, bitmapSource.DpiX, bitmapSource.DpiY, bitmapSource.Format, bitmapSource.Palette);
-                    return (BitmapSource)DispatcherWapper.Get(() => FreezableUtility.GetSafeFreeze(new WriteableBitmap(transformedBitmap)));
+                    return FreezableUtility.GetSafeFreeze(new WriteableBitmap(transformedBitmap));
                 });
             }
 
-            return Task.FromResult(bitmapSource);
+            return bitmapSource;
         }
 
         async Task<BitmapSource?> GetImageAsync(LauncherIconData launcherIconData, bool tuneSize, CancellationToken cancellationToken)
@@ -151,7 +151,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon
             var iconImage = await GetImageCoreAsync(launcherIconData.Kind, launcherIconData.Icon, cancellationToken).ConfigureAwait(false);
             if(iconImage != null) {
                 if(tuneSize) {
-                    return await ResizeImageAsync(iconImage).ConfigureAwait(false);
+                    return ResizeImage(iconImage);
                 }
                 return iconImage;
             }
@@ -159,7 +159,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon
             var commandImage = await GetImageCoreAsync(launcherIconData.Kind, launcherIconData.Path, cancellationToken).ConfigureAwait(false);
             if(commandImage != null) {
                 if(tuneSize) {
-                    return await ResizeImageAsync(commandImage).ConfigureAwait(false);
+                    return ResizeImage(commandImage);
                 }
                 return commandImage;
             }
