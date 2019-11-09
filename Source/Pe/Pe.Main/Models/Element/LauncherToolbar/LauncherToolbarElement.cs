@@ -529,8 +529,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
 
         private void NotifyManager_LauncherItemChanged(object? sender, LauncherItemChangedEventArgs e)
         {
-            if(LauncherItems.Any(i => e.LauncherItemIds.Any(i2 => i.LauncherItemId == i2))) {
-                LoadLauncherItems();
+            var launcherItem = LauncherItems.FirstOrDefault(i => i.LauncherItemId == e.LauncherItemId);
+            if(launcherItem != null) {
+                var index = LauncherItems.IndexOf(launcherItem);
+                LauncherItems.RemoveAt(index);
+                LauncherItems.Insert(index, launcherItem);
+                //LoadLauncherItems();
             }
         }
         private void NotifyManager_LauncherItemRegistered(object? sender, LauncherItemRegisteredEventArgs e)

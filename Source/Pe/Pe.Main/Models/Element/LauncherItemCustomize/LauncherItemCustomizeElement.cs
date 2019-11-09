@@ -134,7 +134,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
                 commander.Commit();
             }
 
-            NotifyManager.SendLauncherItemChanged(new[] { LauncherItemId });
+            NotifyManager.SendLauncherItemChanged(LauncherItemId);
         }
 
         #endregion

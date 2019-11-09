@@ -11,14 +11,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
     public class LauncherItemChangedEventArgs : NotifyEventArgs
     {
-        public LauncherItemChangedEventArgs(IReadOnlyCollection<Guid> launcherItemIds)
+        public LauncherItemChangedEventArgs(Guid launcherItemId)
         {
-            LauncherItemIds = launcherItemIds;
+            LauncherItemId = launcherItemId;
         }
 
         #region property
 
-        public IReadOnlyCollection<Guid> LauncherItemIds { get; }
+        public Guid LauncherItemId { get; }
 
         #endregion
     }
@@ -68,7 +68,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         #region function
 
-        void SendLauncherItemChanged(IReadOnlyCollection<Guid> launcherItemIds);
+        void SendLauncherItemChanged(Guid launcherItemIds);
         void SendLauncherItemRegistered(Guid groupId, Guid launcherItemId);
         void SendCustomizeLauncherItemExited(Guid launcherItemId);
 
@@ -83,9 +83,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         #region function
 
-        void OnLauncherItemChanged(IReadOnlyCollection<Guid> launcherItemIds)
+        void OnLauncherItemChanged(Guid launcherItemId)
         {
-            var e = new LauncherItemChangedEventArgs(launcherItemIds);
+            var e = new LauncherItemChangedEventArgs(launcherItemId);
             LauncherItemChanged?.Invoke(this, e);
         }
 
@@ -109,9 +109,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         public event EventHandler<LauncherItemRegisteredEventArgs>? LauncherItemRegistered;
         public event EventHandler<CustomizeLauncherItemExitedEventArgs>? CustomizeLauncherItemExited;
 
-        public void SendLauncherItemChanged(IReadOnlyCollection<Guid> launcherItemIds)
+        public void SendLauncherItemChanged(Guid launcherItemId)
         {
-            OnLauncherItemChanged(launcherItemIds);
+            OnLauncherItemChanged(launcherItemId);
         }
         public void SendLauncherItemRegistered(Guid groupId, Guid launcherItemId)
         {

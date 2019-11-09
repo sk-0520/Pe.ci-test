@@ -62,7 +62,8 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
         protected abstract TViewModel? ToViewModelImpl(TModel model);
 
         protected abstract void AddItemsKindImpl(ObservableCollectionKind kind, IReadOnlyList<TModel> newModels, IReadOnlyList<TViewModel> newViewModels);
-        protected abstract void RemoveItemsKindImpl(ObservableCollectionKind kind, IReadOnlyList<TModel> oldItems, int oldStartingIndex, IReadOnlyList<TViewModel> oldViewModels);
+        protected abstract void InsertItemsKindImpl(ObservableCollectionKind kind, int insertIndex, IReadOnlyList<TModel> newModels);
+        protected abstract void RemoveItemsKindImpl(ObservableCollectionKind kind, int oldStartingIndex, IReadOnlyList<TModel> oldItems, IReadOnlyList<TViewModel> oldViewModels);
         protected abstract void ReplaceItemsKindImpl(ObservableCollectionKind kind, IReadOnlyList<TModel> newModels, IReadOnlyList<TModel> oldModels, IReadOnlyList<TViewModel> newViewModels, IReadOnlyList<TViewModel> oldViewModels);
         protected abstract void MoveItemsKindImpl(ObservableCollectionKind kind, int newStartingIndex, int oldStartingIndex);
         protected abstract void ResetItemsKindImpl(ObservableCollectionKind kind, IReadOnlyList<TViewModel> oldViewModels);
@@ -122,7 +123,26 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
             AddItemsKindImpl(ObservableCollectionKind.After, newItems, newViewModels);
         }
 
-        protected override void RemoveItemsImpl(IReadOnlyList<TModel> oldItems, int oldStartingIndex)
+        protected override void InsertItemsImpl(int insertIndex, IReadOnlyList<TModel> newItems)
+        {
+            var newViewModels = newItems
+                .Cast<TModel>()
+                .Select(m => ToViewModelImpl(m)!)
+                .Counting(insertIndex)
+                .ToList()
+            ;
+
+            InsertItemsKindImpl(ObservableCollectionKind.Before, insertIndex, newItems);
+
+            foreach(var item in newViewModels) {
+                ViewModels.Insert(item.Number, item.Value);
+            }
+
+            InsertItemsKindImpl(ObservableCollectionKind.After, insertIndex, newItems);
+        }
+
+
+        protected override void RemoveItemsImpl(int oldStartingIndex, IReadOnlyList<TModel> oldItems)
         {
             var oldViewModels = ViewModels
                 .Skip(oldStartingIndex)
@@ -130,7 +150,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
                 .ToList()
             ;
 
-            RemoveItemsKindImpl(ObservableCollectionKind.Before, oldItems, oldStartingIndex, oldViewModels);
+            RemoveItemsKindImpl(ObservableCollectionKind.Before, oldStartingIndex, oldItems, oldViewModels);
 
             foreach(var counter in new Counter(oldViewModels.Count)) {
                 ViewModels.RemoveAt(oldStartingIndex);
@@ -139,7 +159,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
                 oldViewModel.Dispose();
             }
 
-            RemoveItemsKindImpl(ObservableCollectionKind.After, oldItems, oldStartingIndex, oldViewModels);
+            RemoveItemsKindImpl(ObservableCollectionKind.After, oldStartingIndex, oldItems, oldViewModels);
         }
 
         protected override void ReplaceItemsImpl(IReadOnlyList<TModel> newItems, IReadOnlyList<TModel> oldItems)
@@ -193,7 +213,8 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
 
         public delegate TViewModel ToViewModelDelegate(TModel model);
         public delegate void AddItemsKindDelegate(ObservableCollectionKind kind, IReadOnlyList<TModel> newModels, IReadOnlyList<TViewModel> newViewModels);
-        public delegate void RemoveItemsKindDelegate(ObservableCollectionKind kind, IReadOnlyList<TModel> oldItems, int oldStartingIndex, IReadOnlyList<TViewModel> oldViewModels);
+        public delegate void InsertItemsKindDelegate(ObservableCollectionKind kind, int insertIndex, IReadOnlyList<TModel> newModels);
+        public delegate void RemoveItemsKindDelegate(ObservableCollectionKind kind, int oldStartingIndex, IReadOnlyList<TModel> oldItems, IReadOnlyList<TViewModel> oldViewModels);
         public delegate void ReplaceItemsKindDelegate(ObservableCollectionKind kind, IReadOnlyList<TModel> newModels, IReadOnlyList<TModel> oldModels, IReadOnlyList<TViewModel> newViewModels, IReadOnlyList<TViewModel> oldViewModels);
         public delegate void MoveItemsKindDelegate(ObservableCollectionKind kind, int newStartingIndex, int oldStartingIndex);
         public delegate void ResetItemsKindDelegate(ObservableCollectionKind kind, IReadOnlyList<TViewModel> oldViewModels);
@@ -237,6 +258,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
             }
         }
         public AddItemsKindDelegate? AddItems { get; set; }
+        public InsertItemsKindDelegate? InsertItems { get; set; }
         public RemoveItemsKindDelegate? RemoveItems { get; set; }
         public ReplaceItemsKindDelegate? ReplaceItems { get; set; }
         public MoveItemsKindDelegate? MoveItems { get; set; }
@@ -261,9 +283,15 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
             AddItems?.Invoke(kind, newModels, newViewModels);
         }
 
-        protected override void RemoveItemsKindImpl(ObservableCollectionKind kind, IReadOnlyList<TModel> oldItems, int oldStartingIndex, IReadOnlyList<TViewModel> oldViewModels)
+        protected override void InsertItemsKindImpl(ObservableCollectionKind kind, int insertIndex, IReadOnlyList<TModel> newModels)
         {
-            RemoveItems?.Invoke(kind, oldItems, oldStartingIndex, oldViewModels);
+            InsertItems?.Invoke(kind, insertIndex, newModels);
+        }
+
+
+        protected override void RemoveItemsKindImpl(ObservableCollectionKind kind, int oldStartingIndex, IReadOnlyList<TModel> oldItems, IReadOnlyList<TViewModel> oldViewModels)
+        {
+            RemoveItems?.Invoke(kind, oldStartingIndex, oldItems, oldViewModels);
         }
 
         protected override void ReplaceItemsKindImpl(ObservableCollectionKind kind, IReadOnlyList<TModel> newModels, IReadOnlyList<TModel> oldModels, IReadOnlyList<TViewModel> newViewModels, IReadOnlyList<TViewModel> oldViewModels)

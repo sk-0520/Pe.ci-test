@@ -51,10 +51,16 @@ namespace ContentTypeTextNet.Pe.Core.Models
             AddItemsImpl(newItems);
         }
 
-        protected abstract void RemoveItemsImpl(IReadOnlyList<TValue> oldItems, int oldStartingIndex);
+        protected abstract void InsertItemsImpl(int insertIndex, IReadOnlyList<TValue> newItems);
+        void InsertItems(int insertIndex, IReadOnlyList<TValue> newItems)
+        {
+            InsertItemsImpl(insertIndex, newItems);
+        }
+
+        protected abstract void RemoveItemsImpl(int oldStartingIndex, IReadOnlyList<TValue> oldItems);
         void RemoveItems(IReadOnlyList<TValue> oldItems, int oldStartingIndex)
         {
-            RemoveItemsImpl(oldItems, oldStartingIndex);
+            RemoveItemsImpl(oldStartingIndex, oldItems);
         }
 
         protected abstract void ReplaceItemsImpl(IReadOnlyList<TValue> newItems, IReadOnlyList<TValue> oldItems);
@@ -84,7 +90,11 @@ namespace ContentTypeTextNet.Pe.Core.Models
         {
             switch(e.Action) {
                 case NotifyCollectionChangedAction.Add:
-                    AddItems(ConvertList(e.NewItems));
+                    if(e.NewStartingIndex == 0) {
+                        AddItems(ConvertList(e.NewItems));
+                    } else {
+                        InsertItems(e.NewStartingIndex, ConvertList(e.NewItems));
+                    }
                     break;
 
                 case NotifyCollectionChangedAction.Remove:
