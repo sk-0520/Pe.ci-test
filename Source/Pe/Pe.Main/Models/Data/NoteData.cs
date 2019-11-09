@@ -20,7 +20,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     public enum NoteLayoutKind
     {
         Absolute,
-        Relative
+        Relative,
     }
 
     public enum NoteContentKind
