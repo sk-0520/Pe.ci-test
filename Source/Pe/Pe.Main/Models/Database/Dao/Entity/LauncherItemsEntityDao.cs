@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Data.Dto.Entity;
@@ -23,6 +24,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             #region property
 
             public static string LauncherItemId { get; } = "LauncherItemId";
+
+            public static string LastIconUpdatedTimestamp { get; } = "LastIconUpdatedTimestamp";
 
             #endregion
         }
@@ -100,6 +103,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var statement = LoadStatement();
             var param = databaseCommonStatus.CreateCommonDtoMapping();
             param[Column.LauncherItemId] = launcherItemId;
+
+            return Commander.Execute(statement, param) == 1;
+        }
+
+        public bool UpdateLastUpdatedIconTimestamp(Guid launcherItemId, [Timestamp(DateTimeKind.Utc)] DateTime lastIconUpdatedTimestamp, IDatabaseCommonStatus databaseCommonStatus)
+        {
+            var statement = LoadStatement();
+            var param = databaseCommonStatus.CreateCommonDtoMapping();
+            param[Column.LauncherItemId] = launcherItemId;
+            param[Column.LastIconUpdatedTimestamp] = lastIconUpdatedTimestamp;
+
 
             return Commander.Execute(statement, param) == 1;
         }

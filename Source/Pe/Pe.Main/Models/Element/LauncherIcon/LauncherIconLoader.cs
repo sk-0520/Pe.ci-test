@@ -185,12 +185,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon
                     Debug.Assert(stream.Position == debugStream.Position, $"{nameof(stream)}: {stream.Length}, {nameof(debugStream)}: {debugStream.Length}");
                 }
 #endif
+                DateTime iconUpdatedTimestamp;
                 using(var commander = FileDatabaseBarrier.WaitWrite()) {
                     var dao = new LauncherItemIconsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
                     dao.DeleteImageBinary(LauncherItemId, IconBox);
                     dao.InsertImageBinary(LauncherItemId, IconBox, stream.BinaryChunkedList, DatabaseCommonStatus.CreateCurrentAccount());
                     commander.Commit();
+                    iconUpdatedTimestamp = DateTime.UtcNow;
                 }
+                using(var commander = MainDatabaseBarrier.WaitWrite()) {
+                    var dao = new LauncherItemsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                    dao.UpdateLastUpdatedIconTimestamp(LauncherItemId, iconUpdatedTimestamp, DatabaseCommonStatus.CreateCurrentAccount());
+                    commander.Commit();
+                }
+
             }
 
 

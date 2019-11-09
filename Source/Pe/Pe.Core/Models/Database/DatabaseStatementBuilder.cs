@@ -209,6 +209,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         #endregion
     }
 
+    //BUG: こいつの作る set がおかしい。AddKeyでParametersImplを用いるのは違うんじゃないかと。
     public class DatabaseUpdateStatementBuilder : DatabaseStatementBuilderBase
     {
         public DatabaseUpdateStatementBuilder(IDatabaseImplementation implementation, ILogger logger)

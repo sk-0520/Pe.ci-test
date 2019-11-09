@@ -19,7 +19,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data.Dto.Entity
         long IconIndex { get; }
         bool IsEnabledCommandLauncher { get; }
         long ExecuteCount { get; }
-        DateTime LastExecuteTimestamp { get; }
         string Comment { get; }
 
         #endregion
@@ -38,7 +37,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data.Dto.Entity
         public long IconIndex { get; set; }
         public bool IsEnabledCommandLauncher { get; set; }
         public long ExecuteCount { get; set; }
-        public DateTime LastExecuteTimestamp { get; set; }
         public string Comment { get; set; } = string.Empty;
 
         #endregion
