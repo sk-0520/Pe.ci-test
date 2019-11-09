@@ -165,6 +165,9 @@
     <app_core_views:RequestTrigger SourceObject="{Binding CloseRequest}">
       <i:InvokeCommandAction Command="{Binding CloseCommand ,ElementName=root}" />
     </app_core_views:RequestTrigger>
+    <app_core_views:RequestTrigger SourceObject="{Binding ExpandShortcutFileRequest}">
+      <prism:InvokeCommandAction Command="{Binding OpenCommonMessageDialogCommand, ElementName=root}" />
+    </app_core_views:RequestTrigger>
   </i:Interaction.Triggers>
   <i:Interaction.Behaviors>
     <app_core_views_attached:DragAndDropBehavior DragAndDrop="{Binding ViewDragAndDrop}" />

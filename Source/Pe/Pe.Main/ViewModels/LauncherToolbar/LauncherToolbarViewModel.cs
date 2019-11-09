@@ -86,7 +86,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 
         #region property
 
-        RequestSender ExpandShortcutFileRequest { get; } = new RequestSender();
+        public RequestSender ExpandShortcutFileRequest { get; } = new RequestSender();
 
         public AppDesktopToolbarExtend? AppDesktopToolbarExtend { get; set; }
         IDispatcherWapper DispatcherWapper { get; }
@@ -287,6 +287,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
                 var request = new CommonMessageDialogRequestParameter() {
                     Message = "d&d file is lnk",
                     Caption = "reg type",
+                    Button = MessageBoxButton.YesNoCancel,
+                    DefaultResult = MessageBoxResult.Yes,
+                    Icon = MessageBoxImage.Question,
                 };
                 ExpandShortcutFileRequest.Send<YesNoResponse>(request, r => {
                     if(r.ResponseIsCancel) {
