@@ -13,7 +13,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
     {
         #region property
 
-        string? ScreenName { get; }
+        string ScreenName { get; }
         [PixelKind(Px.Device)]
         long X { get; }
         [PixelKind(Px.Device)]

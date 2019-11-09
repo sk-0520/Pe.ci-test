@@ -205,8 +205,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     {
         #region property
 
-        public LauncherExecutePathData? PathData { get; set; }
-        public string? FullPath { get; set; }
+        public LauncherExecutePathData PathData { get; set; } = new LauncherExecutePathData();
+        public string FullPath { get; set; } = string.Empty;
 
         #endregion
     }
@@ -223,7 +223,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
         #region IScreenData
 
-        public string? ScreenName { get; set; }
+        public string ScreenName { get; set; } = string.Empty;
         [PixelKind(Px.Device)]
         public long X { get; set; }
         [PixelKind(Px.Device)]
@@ -256,7 +256,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
-    internal class LauncherFileItemData: DataBase
+    internal class LauncherFileItemData
     {
         public LauncherFileItemData(LauncherItemData item, LauncherFileData file)
         {
