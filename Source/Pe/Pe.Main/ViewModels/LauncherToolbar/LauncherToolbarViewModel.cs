@@ -28,6 +28,7 @@ using ContentTypeTextNet.Pe.Core.Views;
 using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using System.Windows.Controls.Primitives;
 using System.IO;
+using ContentTypeTextNet.Pe.Main.Views.LauncherToolbar;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 {
@@ -235,7 +236,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
                 if(filePaths.Length == 1) {
                     DispatcherWapper.Begin(() => RegisterDropFile(filePaths[0]));
                     e.Handled = true;
-                    Logger.LogInformation("Handled!");
                 }
             }
         }
@@ -252,31 +252,44 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 
         private void ItemDragOrverOrEnter(UIElement sender, DragEventArgs e)
         {
-            Logger.LogDebug(e.OriginalSource.ToString());
-            //var buttonBase = UIUtility.GetVisualClosest<ButtonBase>((DependencyObject)e.OriginalSource);
-            //if(buttonBase != null) {
-
-            //Logger.LogDebug(buttonBase.ToString());
-            //}
-
             if(e.Data.GetDataPresent(DataFormats.FileDrop)) {
-                e.Effects = DragDropEffects.Copy;
-            } else if(e.Data.GetDataPresent(DataFormats.Text)) {
-
+                e.Effects = DragDropEffects.Move;
+            } else if(e.Data.GetDataPresent(DataFormats.UnicodeText)) {
+                e.Effects = DragDropEffects.Move;
             }
-            Logger.LogDebug("i");
+
             e.Handled = true;
         }
 
         private void ItemDrop(UIElement sender, DragEventArgs e)
         {
-            Logger.LogTrace("i drop!");
+            Guid launcherItemId = Guid.Empty;
+            var frameworkElement = (FrameworkElement)sender;
+            var launcherContentControl = (LauncherContentControl)frameworkElement.DataContext;
+            if(launcherContentControl != null) {
+                var launcherItem = (ILauncherItemId)launcherContentControl.DataContext;
+                launcherItemId = launcherItem.LauncherItemId;
+            }
+
+            if(Guid.Empty == launcherItemId) {
+                Logger.LogError("ランチャーアイテムID取得できず, {0}, {1}", sender, e);
+                return;
+            }
+
+            if(e.Data.GetDataPresent(DataFormats.FileDrop)) {
+                var filePaths = (string[])e.Data.GetData(DataFormats.FileDrop);
+                var argument = string.Join(' ', filePaths.Select(i => CommandLine.Escape(i)));
+                DispatcherWapper.Begin(() => ExecuteExtendDropData(launcherItemId, argument));
+            } else if(e.Data.GetDataPresent(DataFormats.UnicodeText)) {
+                var argument = (string)e.Data.GetData(DataFormats.UnicodeText);
+                DispatcherWapper.Begin(() => ExecuteExtendDropData(launcherItemId, argument));
+            }
+
+            e.Handled = true;
         }
 
         private void ItemDragLeave(UIElement sender, DragEventArgs e)
-        {
-            Logger.LogTrace("i leave");
-        }
+        { }
 
         #endregion
 
@@ -301,6 +314,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
             } else {
                 Model.RegisterFile(path, false);
             }
+        }
+
+        void ExecuteExtendDropData(Guid launcherItemId, string argument)
+        {
+            Model.OpenExtendsExecuteView(launcherItemId, argument, DockScreen);
         }
 
         #endregion

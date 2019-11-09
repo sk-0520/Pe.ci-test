@@ -330,6 +330,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
             NotifyManager.SendLauncherItemRegistered(SelectedLauncherGroup.LauncherGroupId, data.Item.LauncherItemId);
         }
 
+        public void OpenExtendsExecuteView(Guid launcherItemId, string argument, Screen screen)
+        {
+            var launcherItem = LauncherItems.FirstOrDefault(i => i.LauncherItemId == launcherItemId);
+            if(launcherItem == null) {
+                Logger.LogError("指定のランチャーアイテムは存在しない: {0}", launcherItemId);
+                return;
+            }
+
+            launcherItem.OpenExtendsExecuteViewWidthArgument(argument, screen);
+        }
+
         #endregion
 
         #region ContextElementBase

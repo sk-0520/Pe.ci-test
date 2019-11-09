@@ -162,6 +162,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             element.StartView();
         }
 
+        public void OpenExtendsExecuteViewWidthArgument(string argument, Screen screen)
+        {
+            var element = OrderManager.CreateLauncherExtendsExecuteElement(LauncherItemId, screen);
+            element.SetOption(argument);
+            element.StartView();
+        }
+
         ILauncherExecutePathParameter GetExecutePath()
         {
             Debug.Assert(Kind == LauncherItemKind.File);

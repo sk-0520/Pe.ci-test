@@ -56,6 +56,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
             var envConf = new EnvironmentVariableConfiguration(LoggerFactory);
             this._mergeTextDocument = envConf.CreateMergeDocument(Model.EnvironmentVariables);
             this._removeTextDocument = envConf.CreateRemoveDocument(Model.EnvironmentVariables);
+
+            //TODO: 自家製DIのコンストラクタキャッシュ問題によるダウンキャスト
+            if(model is LauncherExtendsExecuteElement element) {
+                if(element.CustomOption != null) {
+                    this._option = element.CustomOption;
+                }
+            }
         }
 
         #region property
