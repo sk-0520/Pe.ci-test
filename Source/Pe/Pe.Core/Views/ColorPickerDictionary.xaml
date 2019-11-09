@@ -16,7 +16,7 @@
               </Border>
             </ToggleButton>
             <Popup IsOpen="{Binding IsChecked, ElementName=commandPopup}" Style="{StaticResource PopupMenu}">
-              <Border>
+              <Border Style="{StaticResource PopupMenuBorder}">
                 <app_core_views:ColorCanvas
                   Width="200"
                   SelectedColor="{Binding SelectedColor, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
