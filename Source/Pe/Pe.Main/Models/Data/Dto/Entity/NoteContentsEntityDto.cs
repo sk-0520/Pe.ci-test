@@ -12,7 +12,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data.Dto.Entity
 
         public Guid NoteId { get; set; }
         public string? ContentKind { get; set; }
-        public string? Content { get; set; }
+        public string Content { get; set; } = string.Empty;
         public bool IsLink { get; set; }
         public string? Address { get; set; }
         public string? Encoding { get; set; }

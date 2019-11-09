@@ -87,7 +87,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
         public NoteContentKind ContentKind { get; set; }
 
-        public string? Content { get; set; }
+        public string Content { get; set; } = string.Empty;
 
         public bool IsLink { get; set; }
 
