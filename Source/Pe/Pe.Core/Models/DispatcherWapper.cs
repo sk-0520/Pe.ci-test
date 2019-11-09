@@ -18,18 +18,14 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #region IDispatcherWapper
 
         public Dispatcher Dispatcher { get; }
-        public bool InvokeRequired => Dispatcher.CurrentDispatcher == Dispatcher;
 
-        public void ThrowIfInvokeRequired()
-        {
-            if(Dispatcher.CurrentDispatcher != Dispatcher) {
-                throw new InvalidOperationException($"{Dispatcher} != (running) {Dispatcher.CurrentDispatcher.Thread}");
-            }
-        }
+        public bool CheckAccess() => Dispatcher.CheckAccess();
+
+        public void VerifyAccess() => Dispatcher.VerifyAccess();
 
         public void Invoke(Action action, DispatcherPriority dispatcherPriority, CancellationToken cancellationToken, TimeSpan timeout)
         {
-            if(Dispatcher.CurrentDispatcher == Dispatcher) {
+            if(CheckAccess()) {
                 action();
             } else {
                 Dispatcher.Invoke(action, dispatcherPriority, cancellationToken, timeout);
@@ -51,7 +47,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         public T Get<T>(Func<T> func, DispatcherPriority dispatcherPriority, CancellationToken cancellationToken, TimeSpan timeout)
         {
-            if(Dispatcher.CurrentDispatcher == Application.Current.Dispatcher) {
+            if(CheckAccess()) {
                 return func();
             } else {
                 T result = default!;
