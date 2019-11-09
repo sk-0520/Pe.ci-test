@@ -27,6 +27,7 @@ using ContentTypeTextNet.Pe.Main.Models.Element.LauncherGroup;
 using ContentTypeTextNet.Pe.Core.Views;
 using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using System.Windows.Controls.Primitives;
+using System.IO;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 {
@@ -84,6 +85,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
         }
 
         #region property
+
+        RequestSender ExpandShortcutFileRequest { get; } = new RequestSender();
 
         public AppDesktopToolbarExtend? AppDesktopToolbarExtend { get; set; }
         IDispatcherWapper DispatcherWapper { get; }
@@ -207,6 +210,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
             return LauncherToolbarTheme.GetToolbarPositionImage(toolbarPosition, IconBox);
         }
 
+        #region ViewDragAndDrop
 
         private IResultSuccessValue<DragParameter> ViewGetDragParameter(UIElement sender, MouseEventArgs e) => ResultSuccessValue.Failure<DragParameter>();
 
@@ -214,31 +218,34 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 
         private void ViewDragOrverOrEnter(UIElement sender, DragEventArgs e)
         {
-            Logger.LogDebug(e.OriginalSource.ToString());
-            //var buttonBase = UIUtility.GetVisualClosest<ButtonBase>((DependencyObject)e.OriginalSource);
-            //if(buttonBase != null) {
-
-            //Logger.LogDebug(buttonBase.ToString());
-            //}
-
             if(e.Data.GetDataPresent(DataFormats.FileDrop)) {
-                e.Effects = DragDropEffects.Copy;
-            } else if (e.Data.GetDataPresent(DataFormats.Text)) {
-
+                // ファイル登録準備
+                var filePaths = (string[])e.Data.GetData(DataFormats.FileDrop);
+                if(filePaths.Length == 1) {
+                    e.Effects = DragDropEffects.Copy;
+                    e.Handled = true;
+                }
             }
-            Logger.LogDebug("v");
         }
 
         private void ViewDrop(UIElement sender, DragEventArgs e)
         {
-            Logger.LogTrace("v drop!");
+            if(e.Data.GetDataPresent(DataFormats.FileDrop)) {
+                var filePaths = (string[])e.Data.GetData(DataFormats.FileDrop);
+                if(filePaths.Length == 1) {
+                    DispatcherWapper.Begin(() => RegisterDropFile(filePaths[0]));
+                    e.Handled = true;
+                    Logger.LogInformation("Handled!");
+                }
+            }
         }
 
         private void ViewDragLeave(UIElement sender, DragEventArgs e)
-        {
-            Logger.LogTrace("v leave");
-        }
+        { }
 
+        #endregion
+
+        #region ItemDragAndDrop
         private IResultSuccessValue<DragParameter> ItemGetDragParameter(UIElement sender, MouseEventArgs e) => ResultSuccessValue.Failure<DragParameter>();
 
         private bool ItemCanDragStart(UIElement sender, MouseEventArgs e) => false;
@@ -271,6 +278,27 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
             Logger.LogTrace("i leave");
         }
 
+        #endregion
+
+        IResultSuccessValue<string> NormalizeDropPath(string path)
+        {
+            if(PathUtility.IsShortcut(path)) {
+                var request = new CommonMessageDialogRequestParameter() {
+                    Message = "d&d file is lnk",
+                    Caption = "reg type",
+                };
+                return ExpandShortcutFileRequest.Send<YesNoResponse, IResultSuccessValue<string>>(request, r => {
+                    return ResultSuccessValue.Success("");
+                });
+            }
+
+            return ResultSuccessValue.Success(path);
+        }
+
+        void RegisterDropFile(string path)
+        {
+            var result = NormalizeDropPath(path);
+        }
 
         #endregion
 

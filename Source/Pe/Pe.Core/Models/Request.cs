@@ -18,7 +18,17 @@ namespace ContentTypeTextNet.Pe.Core.Models
     public sealed class RequestSilentResponse : RequestResponse
     { }
 
-    public class CancelResponse: RequestResponse
+    public class CommonMessageDialogRequestParameter : RequestParameter
+    {
+        #region property
+
+        public string Message { get; set; } = string.Empty;
+        public string Caption { get; set; } = string.Empty;
+
+        #endregion
+    }
+
+    public class CancelResponse : RequestResponse
     {
         #region property
 
@@ -27,7 +37,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #endregion
     }
 
-    public class YesNoNotification: CancelResponse
+    public class YesNoResponse : CancelResponse
     {
         #region property
 
