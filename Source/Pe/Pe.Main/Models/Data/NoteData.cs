@@ -44,8 +44,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #region property
 
         public Guid NoteId { get; set; }
-        public string? ScreenName { get; set; }
-        public string? Title { get; set; }
+        public string ScreenName { get; set; } = string.Empty;
+        public string Title { get; set; } = string.Empty;
         public NoteLayoutKind LayoutKind { get; set; }
         public bool IsVisible { get; set; }
 

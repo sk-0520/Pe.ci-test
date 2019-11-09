@@ -38,8 +38,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
         bool _isLocked;
         bool _textWrap;
         bool _isLink;
-        string? _title;
-        Screen _dockScreen;
+        string _title = string.Empty;
+        Screen? _dockScreen;
 
         NoteLayoutKind _layoutKind;
         NoteContentKind _contentKind;
@@ -51,7 +51,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 
         #endregion
 
-        public NoteElement(Guid noteId, Screen dockScreen, NotePosition notePosition, IOrderManager orderManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IMainDatabaseLazyWriter mainDatabaseLazyWriter, IDatabaseStatementLoader statementLoader, IDispatcherWapper dispatcherWapper, INoteTheme noteTheme, ILoggerFactory loggerFactory)
+        public NoteElement(Guid noteId, Screen? dockScreen, NotePosition notePosition, IOrderManager orderManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IMainDatabaseLazyWriter mainDatabaseLazyWriter, IDatabaseStatementLoader statementLoader, IDispatcherWapper dispatcherWapper, INoteTheme noteTheme, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             NoteId = noteId;
@@ -76,7 +76,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
         /// </summary>
         public Screen DockScreen
         {
-            get => this._dockScreen;
+            get => this._dockScreen ?? Screen.PrimaryScreen;
             private set => SetProperty(ref this._dockScreen, value);
         }
         public NotePosition Position { get; }
@@ -120,7 +120,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             private set => SetProperty(ref this._isLink, value);
         }
 
-        public string? Title
+        public string Title
         {
             get => this._title;
             private set => SetProperty(ref this._title, value);
@@ -178,7 +178,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 
         NoteData CreateNoteData([PixelKind(Px.Device)] Point cursorLocation)
         {
-            this._dockScreen = DockScreen ?? Screen.PrimaryScreen;
+            this._dockScreen = this._dockScreen ?? Screen.PrimaryScreen;
             if(Position != NotePosition.Setting) {
                 this._dockScreen = Screen.FromDevicePoint(cursorLocation);
             }
@@ -189,9 +189,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
                 Title = DateTime.Now.ToString(), //TODO: タイトル
                 BackgroundColor = Colors.Yellow,
                 ForegroundColor = Colors.Black,
-#pragma warning disable CS8602 // null 参照の可能性があるものの逆参照です。
-                ScreenName = DockScreen.DeviceName,
-#pragma warning restore CS8602 // null 参照の可能性があるものの逆参照です。
+                ScreenName = this._dockScreen.DeviceName,
                 IsCompact = false,
                 IsLocked = false,
                 IsTopmost = false,
@@ -245,7 +243,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             return noteData;
         }
 
-        Screen GetDockScreen(string? screenDeviceName)
+        Screen GetDockScreen(string screenDeviceName)
         {
             IList<NoteScreenData> noteScreens;
 

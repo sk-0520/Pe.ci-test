@@ -11,8 +11,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data.Dto.Entity
         #region property
 
         public Guid NoteId { get; set; }
-        public string? Title { get; set; }
-        public string? ScreenName { get; set; }
+        public string Title { get; set; } = string.Empty;
+        public string ScreenName { get; set; } = string.Empty;
         public string? LayoutKind { get; set; }
         public bool IsVisible { get; set; }
         public Guid FontId { get; set; }
