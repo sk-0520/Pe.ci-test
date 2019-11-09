@@ -5,6 +5,7 @@ using System.IO;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
@@ -112,7 +113,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon
             var environmentExecuteFile = new EnvironmentExecuteFile(LoggerFactory);
             var pathItem = environmentExecuteFile.Get(editIconData.Path, pathItems);
             if(pathItem == null) {
-                Logger.LogDebug("指定されたコマンドからパス取得失敗: {0}", editIconData.Path);
+                Logger.LogWarning("指定されたコマンドからパス取得失敗: {0}", editIconData.Path);
                 return Task.FromResult(default(BitmapSource));
             }
 
@@ -121,15 +122,45 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon
             return GetIconImageAsync(editIconData, cancellationToken);
         }
 
-        async Task<BitmapSource?> GetImageAsync(LauncherIconData launcherIconData, CancellationToken cancellationToken)
+        /// <summary>
+        /// <see cref="IconBox"/> より大きい場合にががっと縮小する。
+        /// </summary>
+        /// <param name="bitmapSource"></param>
+        /// <returns></returns>
+        Task<BitmapSource> ResizeImageAsync(BitmapSource bitmapSource)
+        {
+            var iconSize = new IconSize(IconBox);
+
+            if(iconSize.Width < bitmapSource.PixelWidth || iconSize.Height < bitmapSource.PixelHeight) {
+                return Task.Run(() => {
+                    Logger.LogDebug("アイコンサイズを縮小: アイコン({0}x{1}), 指定({2}x{3})", bitmapSource.PixelWidth, bitmapSource.PixelHeight, iconSize.Width, iconSize.Height);
+                    var scaleX = iconSize.Width / (double)bitmapSource.PixelWidth;
+                    var scaleY = iconSize.Height / (double)bitmapSource.PixelHeight;
+                    Logger.LogTrace("scale: {0}x{1}", scaleX, scaleY);
+                    var transformedBitmap = FreezableUtility.GetSafeFreeze(new TransformedBitmap(bitmapSource, new ScaleTransform(scaleX, scaleY)));
+                    //var smallImage = new WriteableBitmap(iconSize.Width, iconSize.Height, bitmapSource.DpiX, bitmapSource.DpiY, bitmapSource.Format, bitmapSource.Palette);
+                    return (BitmapSource)DispatcherWapper.Get(() => FreezableUtility.GetSafeFreeze(new WriteableBitmap(transformedBitmap)));
+                });
+            }
+
+            return Task.FromResult(bitmapSource);
+        }
+
+        async Task<BitmapSource?> GetImageAsync(LauncherIconData launcherIconData, bool tuneSize, CancellationToken cancellationToken)
         {
             var iconImage = await GetImageCoreAsync(launcherIconData.Kind, launcherIconData.Icon, cancellationToken).ConfigureAwait(false);
             if(iconImage != null) {
+                if(tuneSize) {
+                    return await ResizeImageAsync(iconImage).ConfigureAwait(false);
+                }
                 return iconImage;
             }
 
             var commandImage = await GetImageCoreAsync(launcherIconData.Kind, launcherIconData.Path, cancellationToken).ConfigureAwait(false);
             if(commandImage != null) {
+                if(tuneSize) {
+                    return await ResizeImageAsync(commandImage).ConfigureAwait(false);
+                }
                 return commandImage;
             }
 
@@ -171,7 +202,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon
             var launcherIconData = GetIconData();
 
             // アイコン取得
-            var iconImage = await GetImageAsync(launcherIconData, cancellationToken).ConfigureAwait(false);
+            var iconImage = await GetImageAsync(launcherIconData, true, cancellationToken).ConfigureAwait(false);
             if(iconImage != null) {
                 // データ書き込み(失敗してもアイコンが取得できてるならOK)
                 SaveImage(iconImage);

@@ -12,23 +12,27 @@ namespace ContentTypeTextNet.Pe.Core.Models
     {
         public DispatcherWapper(Dispatcher current)
         {
-            Current = current;
+            Dispatcher = current;
         }
-
-        #region property
-
-        protected Dispatcher Current { get; }
-
-        #endregion
 
         #region IDispatcherWapper
 
+        public Dispatcher Dispatcher { get; }
+        public bool InvokeRequired => Dispatcher.CurrentDispatcher == Dispatcher;
+
+        public void ThrowIfInvokeRequired()
+        {
+            if(Dispatcher.CurrentDispatcher != Dispatcher) {
+                throw new InvalidOperationException($"{Dispatcher} != (running) {Dispatcher.CurrentDispatcher.Thread}");
+            }
+        }
+
         public void Invoke(Action action, DispatcherPriority dispatcherPriority, CancellationToken cancellationToken, TimeSpan timeout)
         {
-            if(Dispatcher.CurrentDispatcher == Current) {
+            if(Dispatcher.CurrentDispatcher == Dispatcher) {
                 action();
             } else {
-                Current.Invoke(action, dispatcherPriority, cancellationToken, timeout);
+                Dispatcher.Invoke(action, dispatcherPriority, cancellationToken, timeout);
             }
         }
         public void Invoke(Action action, DispatcherPriority dispatcherPriority, CancellationToken cancellationToken)
@@ -51,7 +55,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 return func();
             } else {
                 T result = default!;
-                Current.Invoke(() => {
+                Dispatcher.Invoke(() => {
                     result = func();
                 }, dispatcherPriority, cancellationToken, timeout);
                 return result;
@@ -72,11 +76,11 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         public DispatcherOperation Begin(Action action, DispatcherPriority dispatcherPriority)
         {
-            return Current.BeginInvoke(action, dispatcherPriority);
+            return Dispatcher.BeginInvoke(action, dispatcherPriority);
         }
         public DispatcherOperation Begin(Action action)
         {
-            return Current.BeginInvoke(action, DispatcherPriority.Send);
+            return Dispatcher.BeginInvoke(action, DispatcherPriority.Send);
         }
 
         #endregion
