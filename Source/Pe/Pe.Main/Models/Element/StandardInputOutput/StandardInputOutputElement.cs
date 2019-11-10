@@ -20,6 +20,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.StandardInputOutput
 
         bool _isVisible;
         bool _preparatedReceive;
+        bool _processExited;
 
         #endregion
 
@@ -30,12 +31,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.StandardInputOutput
             Process = process;
             Screen = screen;
             OrderManager = orderManager;
+
+            Process.Exited += Process_Exited;
         }
 
         #region property
 
         public string CaptionName { get; }
-        Process Process { get; }
+        public Process Process { get; }
         Screen Screen { get; }
         IOrderManager OrderManager { get; }
 
@@ -53,6 +56,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.StandardInputOutput
         {
             get => this._preparatedReceive;
             private set => SetProperty(ref this._preparatedReceive, value);
+        }
+
+        public bool ProcessExited
+        {
+            get => this._processExited;
+            private set => SetProperty(ref this._processExited, value);
         }
 
         #endregion
@@ -130,6 +139,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.StandardInputOutput
 
 
         #endregion
+
+        private void Process_Exited(object? sender, EventArgs e)
+        {
+            ProcessExited = true;
+        }
+
 
     }
 }

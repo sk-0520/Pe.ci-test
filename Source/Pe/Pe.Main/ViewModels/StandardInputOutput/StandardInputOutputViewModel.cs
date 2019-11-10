@@ -34,6 +34,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
 
             PropertyChangedHooker = new PropertyChangedHooker(DispatcherWapper, LoggerFactory);
             PropertyChangedHooker.AddHook(nameof(StandardInputOutputElement.PreparatedReceive), AttachReceiver);
+            PropertyChangedHooker.AddHook(nameof(StandardInputOutputElement.ProcessExited), nameof(ProcessExited));
         }
 
         #region property
@@ -61,6 +62,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
             get => this._wordWrap;
             set => SetProperty(ref this._wordWrap, value);
         }
+
+        public bool ProcessExited => Model.ProcessExited;
+
+
         #endregion
 
         #region function

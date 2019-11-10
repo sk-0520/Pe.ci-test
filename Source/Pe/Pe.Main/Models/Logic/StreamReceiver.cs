@@ -75,6 +75,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                         }
                     } catch(OperationCanceledException ex) {
                         Logger.LogTrace(ex, "待機終了(キャンセル)");
+                        break;
                     }
                     var readLength = readTask.Result;
                     if(readLength == 0) {
@@ -100,6 +101,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         protected override void Dispose(bool disposing)
         {
             if(!IsDisposed) {
+                if(disposing) {
+                    if(!RunningTask.IsCompleted) {
+                        CancellationTokenSource.Cancel();
+                    }
+
+                    RunningTask.Dispose();
+                    CancellationTokenSource.Dispose();
+                }
             }
 
             base.Dispose(disposing);

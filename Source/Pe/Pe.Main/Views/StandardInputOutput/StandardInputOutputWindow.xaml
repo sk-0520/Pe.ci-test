@@ -57,6 +57,7 @@
             IsReadOnly="True"
             WordWrap="{Binding WordWrap}"
             Document="{Binding TextDocument}"
+            HorizontalScrollBarVisibility="Auto"
           />
 
           <Grid Grid.Row="1">
@@ -68,6 +69,7 @@
             <ComboBox
               Grid.Column="0"
               IsEditable="True"
+              IsReadOnly="{Binding ProcessExited}"
             />
             <Button
               Grid.Column="1"
