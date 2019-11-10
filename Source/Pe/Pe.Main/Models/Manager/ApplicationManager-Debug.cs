@@ -1,11 +1,14 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
+using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Element._Debug_;
+using ContentTypeTextNet.Pe.Main.Models.Launcher;
 using ContentTypeTextNet.Pe.Main.ViewModels._Debug_;
 using ContentTypeTextNet.Pe.Main.Views._Debug_;
 using Microsoft.Extensions.Logging;
@@ -31,6 +34,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             //DebugCustomize();
             //DebugExtendsExecute();
+            DebugStdIoExecute();
         }
 
         void DebugCustomize()
@@ -48,6 +52,27 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             if(i != null) {
                 i.OpenExtendsExecuteView(Screen.PrimaryScreen);
             }
+        }
+
+        void DebugStdIoExecute()
+        {
+            var batchPath = @".\temp.bat";
+            File.WriteAllText(batchPath, @"
+echo test1
+echo test2
+ping localhost
+ping 127.0.0.1
+echo end
+            ", Encoding.GetEncoding("shift_jis"));
+            var launcherExecutor = new LauncherExecutor(OrderManager, LoggerFactory);
+            var data = new LauncherFileData() {
+                Path = batchPath,
+                //Path = "cmd",
+                //Option = "/ver",
+                IsEnabledStandardInputOutput = true,
+            };
+            var env = new List<LauncherEnvironmentVariableData>();
+            var result = launcherExecutor.Execute(LauncherItemKind.File, data, data, env, Screen.PrimaryScreen);
         }
 
         void DebugColorPicker()

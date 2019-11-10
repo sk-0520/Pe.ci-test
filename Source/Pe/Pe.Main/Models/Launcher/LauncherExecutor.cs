@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Threading;
 using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Main.Models.Data;
@@ -125,6 +126,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
                 startInfo.RedirectStandardOutput = true;
                 startInfo.RedirectStandardError = true;
                 startInfo.RedirectStandardInput = true;
+                startInfo.StandardOutputEncoding = customParameter.StandardInputOutputEncoding;
+                startInfo.StandardErrorEncoding = customParameter.StandardInputOutputEncoding;
+                startInfo.StandardInputEncoding = customParameter.StandardInputOutputEncoding;
             }
 
             var result = new LauncherExecuteResult() {
@@ -140,7 +144,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
             result.Success = process.Start();
             if(streamWatch) {
-                stdioElement!.BeginProcess();
+                stdioElement!.PreparateReceiver();
+                // 受信前に他の処理を終わらせるため少し待つ
+                Dispatcher.CurrentDispatcher.BeginInvoke(() => {
+                    stdioElement!.RunReceiver();
+                }, DispatcherPriority.ApplicationIdle);
             }
 
             return result;

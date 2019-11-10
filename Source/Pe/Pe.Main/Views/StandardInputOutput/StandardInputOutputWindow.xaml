@@ -3,6 +3,8 @@
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 
+  xmlns:sharpdevelop_avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
+
   Title="StandardInputOutputWindow"
   Width="800"
   Height="450"
@@ -17,6 +19,37 @@
     <Binding Path="IsVisible" Converter="{StaticResource BooleanToVisibilityConverter}"/>
   </Window.Visibility>
   <Grid>
+    <TabControl>
+      <TabItem Header="stdio">
+        <Grid>
+          <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+          </Grid.RowDefinitions>
 
+          <sharpdevelop_avalonedit:TextEditor
+            Grid.Row="0"
+            Document="{Binding TextDocument}"
+          />
+
+          <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="*" />
+              <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <ComboBox
+              Grid.Column="0"
+              IsEditable="True"
+            />
+            <Button
+              Grid.Column="1"
+              Content="send"
+            />
+          </Grid>
+
+        </Grid>
+      </TabItem>
+    </TabControl>
   </Grid>
 </Window>

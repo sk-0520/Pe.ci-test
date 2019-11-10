@@ -1,12 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Main.Models.Launcher;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
+using ICSharpCode.AvalonEdit.Document;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.StandardInputOutput
@@ -16,6 +18,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.StandardInputOutput
         #region variable
 
         bool _isVisible;
+        bool _preparatedReceive;
 
         #endregion
 
@@ -32,9 +35,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.StandardInputOutput
 
         public string CaptionName { get; }
         Process Process { get; }
-        ProcessStartInfo StartInfo => Process.StartInfo;
         Screen Screen { get; }
         IOrderManager OrderManager { get; }
+
+        public StreamReceiver? InputStreamReceiver { get; private set; }
 
         bool ViewCreated { get; set; }
 
@@ -44,12 +48,28 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.StandardInputOutput
             private set => SetProperty(ref this._isVisible, value);
         }
 
+        public bool PreparatedReceive
+        {
+            get => this._preparatedReceive;
+            private set => SetProperty(ref this._preparatedReceive, value);
+        }
+
         #endregion
 
         #region function
 
-        public void BeginProcess()
+        public void PreparateReceiver()
         {
+            InputStreamReceiver = new StreamReceiver(Process.StandardOutput, LoggerFactory);
+
+            PreparatedReceive = true;
+        }
+
+        public void RunReceiver()
+        {
+            Debug.Assert(PreparatedReceive);
+
+            InputStreamReceiver!.StartReceive();
         }
 
         #endregion

@@ -31,6 +31,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
         Encoding? _standardInputOutputEncoding;
         bool _runAdministrator;
 
+        EncodingViewModel? _selectedStandardInputOutputEncoding;
+
         #endregion
 
         public LauncherItemCustomizeFileViewModel(LauncherItemCustomizeElement model, ILoggerFactory loggerFactory)
@@ -74,6 +76,22 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
             get => this._standardInputOutputEncoding;
             set => SetProperty(ref this._standardInputOutputEncoding, value);
         }
+
+        #region View側未実装エンコーディング
+        // 追加でとってきた一覧取得ができない悲しみ
+        public ObservableCollection<EncodingViewModel> EncodingItems { get; } = new ObservableCollection<EncodingViewModel>();
+        public EncodingViewModel? SelectedStandardInputOutputEncoding
+        {
+            get => this._selectedStandardInputOutputEncoding;
+            set
+            {
+                SetProperty(ref this._selectedStandardInputOutputEncoding, value);
+                if(this._selectedStandardInputOutputEncoding != null) {
+                    StandardInputOutputEncoding = Encoding.GetEncoding(this._selectedStandardInputOutputEncoding.EncodingInfo.CodePage);
+                }
+            }
+        }
+        #endregion
 
         public bool RunAdministrator
         {
@@ -196,6 +214,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 
             var pathItems = EnvironmentPathExecuteFileCache.GetItems(LoggerFactory);
             PathItems.SetRange(pathItems.Select(i => new EnvironmentPathExecuteItemViewModel(i, LoggerFactory)));
+
+            var encItems = Encoding.GetEncodings().Select(i => new EncodingViewModel(i, LoggerFactory));
+            EncodingItems.SetRange(encItems);
+            SelectedStandardInputOutputEncoding = EncodingItems.FirstOrDefault(i => i.EncodingInfo.CodePage == StandardInputOutputEncoding.CodePage) ?? EncodingItems.First();
         }
 
         #endregion
