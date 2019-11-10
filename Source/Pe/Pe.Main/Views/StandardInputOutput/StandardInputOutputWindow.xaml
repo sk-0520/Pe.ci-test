@@ -35,7 +35,7 @@
 
       <Separator />
 
-      <Button Content="kill" />
+      <Button Content="kill" Command="{Binding KillCommand}" />
 
     </ToolBar>
 

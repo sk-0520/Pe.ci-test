@@ -38,6 +38,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
             PropertyChangedHooker.AddHook(nameof(StandardInputOutputElement.PreparatedReceive), AttachReceiver);
             PropertyChangedHooker.AddHook(nameof(StandardInputOutputElement.ProcessExited), nameof(ProcessExited));
             PropertyChangedHooker.AddHook(nameof(StandardInputOutputElement.ProcessExited), ClearOutputCommand);
+            PropertyChangedHooker.AddHook(nameof(StandardInputOutputElement.ProcessExited), KillCommand);
         }
 
         #region property
@@ -76,6 +77,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
                 DispatcherWapper.Invoke(() => {
                     Terminal!.Clear();
                 });
+            },
+            () => !ProcessExited
+        ));
+
+        public ICommand KillCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                Model.Kill();
             },
             () => !ProcessExited
         ));

@@ -64,17 +64,13 @@ ping localhost
 ping 127.0.0.1
 ping localhost
 ping 127.0.0.1
-ping localhost
-ping 127.0.0.1
-ping localhost
-ping 127.0.0.1
 echo end
             ", Encoding.GetEncoding("shift_jis"));
             var launcherExecutor = new LauncherExecutor(OrderManager, LoggerFactory);
             var data = new LauncherFileData() {
-                //Path = batchPath,
-                Path = "cmd",
-                Option = "/c " + batchPath,
+                Path = batchPath,
+                //Path = "cmd",
+                //Option = "/c " + batchPath,
                 IsEnabledStandardInputOutput = true,
             };
             var env = new List<LauncherEnvironmentVariableData>();

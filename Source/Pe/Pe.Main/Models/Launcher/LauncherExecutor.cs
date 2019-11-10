@@ -138,6 +138,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
             StandardInputOutputElement? stdioElement = null;
             if(streamWatch) {
+                process.EnableRaisingEvents = true;
                 stdioElement = OrderManager.CreateStandardInputOutputElement($"{result.Process.StartInfo.FileName}", process, screen);
                 stdioElement.StartView();
             }
