@@ -72,9 +72,9 @@ echo end
             ", Encoding.GetEncoding("shift_jis"));
             var launcherExecutor = new LauncherExecutor(OrderManager, LoggerFactory);
             var data = new LauncherFileData() {
-                Path = batchPath,
-                //Path = "cmd",
-                //Option = "/ver",
+                //Path = batchPath,
+                Path = "cmd",
+                Option = "/c " + batchPath,
                 IsEnabledStandardInputOutput = true,
             };
             var env = new List<LauncherEnvironmentVariableData>();

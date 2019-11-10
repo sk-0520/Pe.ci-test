@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
@@ -14,6 +15,7 @@ using ContentTypeTextNet.Pe.Main.Views.StandardInputOutput;
 using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Document;
 using Microsoft.Extensions.Logging;
+using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
 {
@@ -35,6 +37,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
             PropertyChangedHooker = new PropertyChangedHooker(DispatcherWapper, LoggerFactory);
             PropertyChangedHooker.AddHook(nameof(StandardInputOutputElement.PreparatedReceive), AttachReceiver);
             PropertyChangedHooker.AddHook(nameof(StandardInputOutputElement.ProcessExited), nameof(ProcessExited));
+            PropertyChangedHooker.AddHook(nameof(StandardInputOutputElement.ProcessExited), ClearOutputCommand);
         }
 
         #region property
@@ -67,6 +70,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
 
 
         #endregion
+
+        public ICommand ClearOutputCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                DispatcherWapper.Invoke(() => {
+                    Terminal!.Clear();
+                });
+            },
+            () => !ProcessExited
+        ));
 
         #region function
 

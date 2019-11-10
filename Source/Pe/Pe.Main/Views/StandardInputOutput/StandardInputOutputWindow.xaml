@@ -31,7 +31,7 @@
       <Separator />
 
       <Button Content="save" />
-      <Button Content="clear" />
+      <Button Content="clear" Command="{Binding ClearOutputCommand}" />
 
       <Separator />
 
