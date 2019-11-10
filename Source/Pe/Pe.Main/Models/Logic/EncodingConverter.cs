@@ -17,6 +17,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         public static Encoding DefaultEncoding { get; } = EncodingUtility.UTF8n;
 
+        public static Encoding DefaultStandardInputOutputEncoding { get; } = EncodingUtility.Parse("Shift_JIS"); // プラットフォーム固有のんがいいなぁと思う今日この頃な .net core
+
         ILogger Logger { get; }
         public Encoding Encoding { get; set; } = DefaultEncoding;
 

@@ -78,6 +78,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
         bool IsEnabledCustomEnvironmentVariable { get; set; }
         bool IsEnabledStandardInputOutput { get; set; }
+        Encoding StandardInputOutputEncoding { get; set; }
         bool RunAdministrator { get; set; }
         #endregion
     }
@@ -99,8 +100,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
         public bool IsEnabledCustomEnvironmentVariable { get; set; }
         public bool IsEnabledStandardInputOutput { get; set; }
+        public Encoding StandardInputOutputEncoding { get; set; } = EncodingConverter.DefaultStandardInputOutputEncoding;
         public bool RunAdministrator { get; set; }
-
         #endregion
     }
 

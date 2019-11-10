@@ -46,6 +46,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             Environment.SetEnvironmentVariable("PE_DESKTOP", Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory));
         }
 
+        void InitializeClr()
+        {
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+        }
+
         CommandLine CreateCommandLine(IEnumerable<string> arguments)
         {
             var commandLine = new CommandLine(arguments, false);
@@ -316,6 +321,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         public bool Initialize(App app, StartupEventArgs e)
         {
             InitializeEnvironmentVariable();
+            InitializeClr();
 
             var commandLine = CreateCommandLine(e.Args);
             var environmentParameters = InitializeEnvironment(commandLine);

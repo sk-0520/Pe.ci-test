@@ -120,6 +120,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
                         WorkDirectoryPath = file.WorkingDirectoryPath ?? string.Empty,
                         IsEnabledCustomEnvironmentVariable = file.IsEnabledCustomEnvironmentVariable,
                         IsEnabledStandardInputOutput = file.IsEnabledStandardInputOutput,
+                        StandardInputOutputEncoding = file.StandardInputOutputEncoding ?? EncodingConverter.DefaultStandardInputOutputEncoding,
                         RunAdministrator = file.RunAdministrator,
                     };
 

@@ -28,6 +28,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 
         bool _isEnabledCustomEnvironmentVariable;
         bool _isEnabledStandardInputOutput;
+        Encoding? _standardInputOutputEncoding;
         bool _runAdministrator;
 
         #endregion
@@ -68,6 +69,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
             get => this._isEnabledStandardInputOutput;
             set => SetProperty(ref this._isEnabledStandardInputOutput, value);
         }
+        public Encoding? StandardInputOutputEncoding
+        {
+            get => this._standardInputOutputEncoding;
+            set => SetProperty(ref this._standardInputOutputEncoding, value);
+        }
+
         public bool RunAdministrator
         {
             get => this._runAdministrator;
@@ -184,6 +191,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
             Option = data.Option;
             IsEnabledCustomEnvironmentVariable = data.IsEnabledCustomEnvironmentVariable;
             IsEnabledStandardInputOutput = data.IsEnabledStandardInputOutput;
+            StandardInputOutputEncoding = data.StandardInputOutputEncoding;
             RunAdministrator = data.RunAdministrator;
 
             var pathItems = EnvironmentPathExecuteFileCache.GetItems(LoggerFactory);

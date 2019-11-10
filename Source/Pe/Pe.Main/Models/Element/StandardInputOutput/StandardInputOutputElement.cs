@@ -19,17 +19,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.StandardInputOutput
 
         #endregion
 
-        public StandardInputOutputElement(string id, Process process, Screen screen, IOrderManager orderManager, ILoggerFactory loggerFactory)
+        public StandardInputOutputElement(string captionName, Process process, Screen screen, IOrderManager orderManager, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
-            Id = id;
+            CaptionName = captionName;
+            Process = process;
+            Screen = screen;
             OrderManager = orderManager;
         }
 
         #region property
 
-        public string Id { get; }
-
+        public string CaptionName { get; }
+        Process Process { get; }
+        ProcessStartInfo StartInfo => Process.StartInfo;
+        Screen Screen { get; }
         IOrderManager OrderManager { get; }
 
         bool ViewCreated { get; set; }
@@ -53,7 +57,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.StandardInputOutput
         #region ElementBase
 
         protected override void InitializeImpl()
-        { }
+        {
+        }
 
         #endregion
 

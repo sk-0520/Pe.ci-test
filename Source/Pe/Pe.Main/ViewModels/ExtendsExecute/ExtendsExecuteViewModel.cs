@@ -32,9 +32,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
         TextDocument _mergeTextDocument;
         TextDocument _removeTextDocument;
 
-        bool _isEnabledStandardInputOutput;
-        bool _runAdministrator;
         bool _isEnabledCustomEnvironmentVariable;
+        bool _isEnabledStandardInputOutput;
+        Encoding _standardInputOutputEncoding;
+        bool _runAdministrator;
         #endregion
 
         public ExtendsExecuteViewModel(ExtendsExecuteElement model, ILoggerFactory loggerFactory)
@@ -43,9 +44,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
             this._option = Model.LauncherFileData.Option;
             this._workDirectoryPath = Model.LauncherFileData.WorkDirectoryPath;
 
-            this._isEnabledStandardInputOutput = Model.LauncherFileData.IsEnabledStandardInputOutput;
-            this._runAdministrator = Model.LauncherFileData.RunAdministrator;
             this._isEnabledCustomEnvironmentVariable = Model.LauncherFileData.IsEnabledCustomEnvironmentVariable;
+            this._isEnabledStandardInputOutput = Model.LauncherFileData.IsEnabledStandardInputOutput;
+            this._standardInputOutputEncoding = Model.LauncherFileData.StandardInputOutputEncoding;
+            this._runAdministrator = Model.LauncherFileData.RunAdministrator;
 
             HistoryOptions = new ObservableCollection<HistoryViewModel>(Model.HistoryOptions.Select(i => new HistoryViewModel(i, CultureInfo.CurrentUICulture, loggerFactory)));
             HistoryOptions.Insert(0, new HistoryViewModel(Model.LauncherFileData.Option, loggerFactory));
@@ -91,6 +93,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
         {
             get => this._isEnabledStandardInputOutput;
             set => SetProperty(ref this._isEnabledStandardInputOutput, value);
+        }
+        public Encoding StandardInputOutputEncoding
+        {
+            get => this._standardInputOutputEncoding;
+            set => SetProperty(ref this._standardInputOutputEncoding, value);
         }
         public bool RunAdministrator
         {
@@ -185,6 +192,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
                 WorkDirectoryPath = WorkDirectoryPath,
                 IsEnabledCustomEnvironmentVariable = IsEnabledCustomEnvironmentVariable,
                 IsEnabledStandardInputOutput = IsEnabledStandardInputOutput,
+                StandardInputOutputEncoding = StandardInputOutputEncoding,
                 RunAdministrator = RunAdministrator,
             };
             IReadOnlyList<LauncherEnvironmentVariableData> envItems;
