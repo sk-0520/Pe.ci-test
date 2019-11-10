@@ -9,6 +9,8 @@ using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Element.StandardInputOutput;
+using ContentTypeTextNet.Pe.Main.Views.StandardInputOutput;
+using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Document;
 using Microsoft.Extensions.Logging;
 
@@ -16,6 +18,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
 {
     public class StandardInputOutputViewModel : SingleModelViewModelBase<StandardInputOutputElement>, IViewLifecycleReceiver
     {
+        #region variable
+
+        bool _isTopmost = false;
+        bool _autoScroll = true;
+        bool _wordWrap = false;
+
+        #endregion
 
         public StandardInputOutputViewModel(StandardInputOutputElement model, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
@@ -34,14 +43,32 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
 
         PropertyChangedHooker PropertyChangedHooker { get; }
 
+        TextEditor? Terminal { get; set; }
+
+        public bool IsTopmost
+        {
+            get => this._isTopmost;
+            set => SetProperty(ref this._isTopmost, value);
+        }
+        public bool AutoScroll
+        {
+            get => this._autoScroll;
+            set => SetProperty(ref this._autoScroll, value);
+        }
+        public bool WordWrap
+        {
+            get => this._wordWrap;
+            set => SetProperty(ref this._wordWrap, value);
+        }
         #endregion
 
         #region function
 
         private void AttachReceiver()
         {
-            if(Model.PreparatedReceive) {
-                Model.InputStreamReceiver!.StreamReceived += InputStreamReceiver_StreamReceived;
+            if(Model.PreparatedReceive && Model.InputStreamReceiver != null) {
+                Model.InputStreamReceiver.StreamReceived -= InputStreamReceiver_StreamReceived;
+                Model.InputStreamReceiver.StreamReceived += InputStreamReceiver_StreamReceived;
             }
         }
 
@@ -50,6 +77,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
             Logger.LogTrace(value);
             DispatcherWapper.Invoke(() => {
                 TextDocument.Insert(TextDocument.TextLength, value);
+                if(AutoScroll && Terminal != null) {
+                    Terminal.ScrollToEnd();
+                }
             });
         }
 
@@ -58,7 +88,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
         #region IViewLifecycleReceiver
 
         public void ReceiveViewInitialized(Window window)
-        { }
+        {
+            var view = (StandardInputOutputWindow)window;
+
+            Terminal = (TextEditor)view.FindName("terminal");
+        }
 
         public void ReceiveViewLoaded(Window window)
         { }

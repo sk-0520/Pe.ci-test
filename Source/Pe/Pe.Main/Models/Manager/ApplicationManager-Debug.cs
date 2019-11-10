@@ -62,6 +62,12 @@ echo test1
 echo test2
 ping localhost
 ping 127.0.0.1
+ping localhost
+ping 127.0.0.1
+ping localhost
+ping 127.0.0.1
+ping localhost
+ping 127.0.0.1
 echo end
             ", Encoding.GetEncoding("shift_jis"));
             var launcherExecutor = new LauncherExecutor(OrderManager, LoggerFactory);

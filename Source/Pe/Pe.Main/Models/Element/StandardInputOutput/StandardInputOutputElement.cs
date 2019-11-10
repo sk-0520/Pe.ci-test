@@ -60,6 +60,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.StandardInputOutput
 
         public void PreparateReceiver()
         {
+            if(Process.HasExited) {
+                Logger.LogWarning("既に終了したプロセス: id = {0}, name = {1}, exit coe = {2}, exit time = {3}", Process.Id, Process.ProcessName, Process.ExitCode, Process.ExitTime);
+                return;
+            }
+
             InputStreamReceiver = new StreamReceiver(Process.StandardOutput, LoggerFactory);
 
             PreparatedReceive = true;

@@ -9,6 +9,10 @@
   Width="800"
   Height="450"
 
+  ResizeMode="CanResizeWithGrip"
+
+  Topmost="{Binding IsTopmost}"
+
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   mc:Ignorable="d"
 >
@@ -18,7 +22,27 @@
   <Window.Visibility>
     <Binding Path="IsVisible" Converter="{StaticResource BooleanToVisibilityConverter}"/>
   </Window.Visibility>
-  <Grid>
+  <DockPanel>
+    <ToolBar DockPanel.Dock="Top">
+      <ToggleButton IsChecked="{Binding IsTopmost}" Content="topmost" />
+      <ToggleButton IsChecked="{Binding AutoScroll}"  Content="auto scroll" />
+      <ToggleButton IsChecked="{Binding WordWrap}"  Content="wrap" />
+
+      <Separator />
+
+      <Button Content="save" />
+      <Button Content="clear" />
+
+      <Separator />
+
+      <Button Content="kill" />
+
+    </ToolBar>
+
+    <StatusBar DockPanel.Dock="Bottom">
+      <Label Content="start"/>
+    </StatusBar>
+
     <TabControl>
       <TabItem Header="stdio">
         <Grid>
@@ -28,7 +52,10 @@
           </Grid.RowDefinitions>
 
           <sharpdevelop_avalonedit:TextEditor
+            x:Name="terminal"
             Grid.Row="0"
+            IsReadOnly="True"
+            WordWrap="{Binding WordWrap}"
             Document="{Binding TextDocument}"
           />
 
@@ -51,5 +78,5 @@
         </Grid>
       </TabItem>
     </TabControl>
-  </Grid>
+  </DockPanel>
 </Window>
