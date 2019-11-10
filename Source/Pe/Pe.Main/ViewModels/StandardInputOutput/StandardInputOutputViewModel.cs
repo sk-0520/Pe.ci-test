@@ -9,6 +9,7 @@ using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Element.StandardInputOutput;
+using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Views.StandardInputOutput;
 using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Document;
@@ -125,6 +126,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
         {
             if(!IsDisposed) {
                 if(disposing) {
+                    if(Model.InputStreamReceiver != null) {
+                        Model.InputStreamReceiver.StreamReceived -= InputStreamReceiver_StreamReceived;
+                    }
+
                     PropertyChangedHooker.Dispose();
                 }
             }
@@ -140,7 +145,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
             PropertyChangedHooker.Execute(e, RaisePropertyChanged);
         }
 
-        private void InputStreamReceiver_StreamReceived(object? sender, Models.Launcher.StreamReceivedEventArgs e)
+        private void InputStreamReceiver_StreamReceived(object? sender, StreamReceivedEventArgs e)
         {
             AppendOutput(e.Value, false);
         }
