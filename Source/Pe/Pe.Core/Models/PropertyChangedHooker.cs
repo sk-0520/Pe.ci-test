@@ -102,6 +102,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
     /// <summary>
     /// <see cref="INotifyPropertyChanged.PropertyChanged"/> を受けて何かを更新する ViewModel でよく使うあれな処理の管理役。
+    /// <para>基点となる <see cref="PropertyChangedEventArgs.PropertyName"/>の重複は実行時にマージ・キャッシュまで面倒を見る。</para>
     /// </summary>
     public class PropertyChangedHooker : DisposerBase
     {
