@@ -71,15 +71,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
 
         #endregion
 
-        public ICommand ClearOutputCommand => GetOrCreateCommand(() => new DelegateCommand(
-            () => {
-                DispatcherWapper.Invoke(() => {
-                    Terminal!.Clear();
-                });
-            },
-            () => !ProcessExited
-        ));
-
         #region function
 
         private void AttachReceiver()
@@ -100,6 +91,19 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
                 }
             });
         }
+
+        #endregion
+
+        #region command
+
+        public ICommand ClearOutputCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                DispatcherWapper.Invoke(() => {
+                    Terminal!.Clear();
+                });
+            },
+            () => !ProcessExited
+        ));
 
         #endregion
 
