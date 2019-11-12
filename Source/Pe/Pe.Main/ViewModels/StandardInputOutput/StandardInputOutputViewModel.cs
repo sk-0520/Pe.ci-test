@@ -41,6 +41,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
             PropertyChangedHooker.AddHook(nameof(StandardInputOutputElement.PreparatedReceive), AttachReceiver);
             PropertyChangedHooker.AddHook(nameof(StandardInputOutputElement.ProcessExited), nameof(ProcessExited));
             PropertyChangedHooker.AddHook(nameof(StandardInputOutputElement.ProcessExited), ClearOutputCommand);
+            PropertyChangedHooker.AddHook(nameof(StandardInputOutputElement.ProcessExited), SendInputCommand);
         }
 
         #region property
@@ -135,6 +136,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
                 try {
                     var value = InputValue + Environment.NewLine;
                     Model.SendInputValue(value);
+                    InputValue = string.Empty;
                 } catch(Exception ex) {
                     Logger.LogError(ex, ex.Message);
                 }
