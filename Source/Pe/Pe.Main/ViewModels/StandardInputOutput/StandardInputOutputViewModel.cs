@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
+using ContentTypeTextNet.Pe.Main.Models;
 using ContentTypeTextNet.Pe.Main.Models.Element.StandardInputOutput;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Views.StandardInputOutput;
@@ -43,6 +45,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
         #region property
 
         IDispatcherWapper DispatcherWapper { get; }
+        public RequestSender FileSelectRequest { get; } = new RequestSender();
 
         public TextDocument TextDocument { get; } = new TextDocument();
 
@@ -114,10 +117,39 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
 
         public ICommand SaveCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-
+                var dialogRequester = new DialogRequester(LoggerFactory);
+                dialogRequester.SelectFile(
+                    FileSelectRequest,
+                    string.Empty,
+                    false,
+                    new[] {
+                        new DialogFilterItem("log", "log", "*.log"),
+                        new DialogFilterItem("all", string.Empty, "*"),
+                    },
+                    r => {
+                        var path = r.ResponseFilePaths[0];
+                        try {
+                            SaveLog(path);
+                        } catch(Exception ex) {
+                            Logger.LogError(ex, ex.Message);
+                        }
+                    }
+                );
             },
             () => 0 < TextDocument.TextLength
         ));
+
+        #endregion
+
+        #region function
+
+        void SaveLog(string path)
+        {
+            Logger.LogDebug(path);
+            using var stream = new FileStream(path, FileMode.Create, FileAccess.ReadWrite, FileShare.Read);
+            using var writer = new StreamWriter(stream, Model.Process.StandardOutput.CurrentEncoding);
+            writer.WriteLine(TextDocument.Text);
+        }
 
         #endregion
 

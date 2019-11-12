@@ -1,9 +1,15 @@
 <Window
+  x:Name="root"
   x:Class="ContentTypeTextNet.Pe.Main.Views.StandardInputOutput.StandardInputOutputWindow"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 
+  xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+  xmlns:prism="http://prismlibrary.com/"
+
   xmlns:sharpdevelop_avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
+
+  xmlns:app_core_views="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core"
 
   Title="StandardInputOutputWindow"
   Width="800"
@@ -22,6 +28,11 @@
   <Window.Visibility>
     <Binding Path="IsVisible" Converter="{StaticResource BooleanToVisibilityConverter}"/>
   </Window.Visibility>
+  <i:Interaction.Triggers>
+    <app_core_views:RequestTrigger SourceObject="{Binding FileSelectRequest}">
+      <prism:InvokeCommandAction Command="{Binding FileSelectCommand ,ElementName=root}" />
+    </app_core_views:RequestTrigger>
+  </i:Interaction.Triggers>
   <DockPanel>
     <ToolBar DockPanel.Dock="Top">
       <ToggleButton IsChecked="{Binding IsTopmost}" Content="topmost" />
