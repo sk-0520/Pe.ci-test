@@ -121,6 +121,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             //StreamForm streamForm = null;
             if(customParameter.IsEnabledStandardInputOutput) {
                 streamWatch = true;
+                process.EnableRaisingEvents = true;
                 startInfo.CreateNoWindow = true;
                 startInfo.UseShellExecute = false;
                 startInfo.RedirectStandardOutput = true;
