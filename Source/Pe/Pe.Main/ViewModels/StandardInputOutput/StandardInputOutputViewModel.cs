@@ -101,16 +101,24 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
 
         public ICommand ClearOutputCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-                DispatcherWapper.Invoke(() => {
-                    Terminal!.Clear();
-                });
+                try {
+                    DispatcherWapper.Invoke(() => {
+                        Terminal!.Clear();
+                    });
+                } catch(Exception ex) {
+                    Logger.LogError(ex, ex.Message);
+                }
             },
             () => !ProcessExited
         ));
 
         public ICommand KillOutputCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-                Model.Kill();
+                try {
+                    Model.Kill();
+                } catch(Exception ex) {
+                    Logger.LogError(ex, ex.Message);
+                }
             },
             () => !ProcessExited
         ));
