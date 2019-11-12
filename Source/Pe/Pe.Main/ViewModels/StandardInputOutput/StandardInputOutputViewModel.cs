@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
@@ -17,6 +18,7 @@ using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Views.StandardInputOutput;
 using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Document;
+using ICSharpCode.AvalonEdit.Rendering;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
 
@@ -24,6 +26,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
 {
     public class StandardInputOutputViewModel : SingleModelViewModelBase<StandardInputOutputElement>, IViewLifecycleReceiver
     {
+        #region define
+
+        #endregion
+
         #region variable
 
         bool _isTopmost = false;
@@ -81,6 +87,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
             get => this._inputValue;
             set => SetProperty(ref this._inputValue, value);
         }
+
+        public Brush Foreground => new SolidColorBrush(Colors.White);
+        public Brush Background => new SolidColorBrush(Colors.Black);
+
+        public Brush NormalForegound => new SolidColorBrush(Colors.White);
+        public Brush ErrorForegound => new SolidColorBrush(Colors.Red);
 
         #endregion
 
@@ -186,8 +198,20 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
         private void AppendOutput(string value, bool isError)
         {
             Logger.LogTrace(value);
+            if(Terminal == null) {
+                Logger.LogTrace("来ちゃいけない制御フロー");
+                return;
+            }
+
             DispatcherWapper.Invoke(() => {
+                var selectionIndex = Terminal.SelectionStart;
+                var selectionLength = Terminal.SelectionLength;
+
+                var index = TextDocument.TextLength;
+                var length = value.Length;
+
                 TextDocument.Insert(TextDocument.TextLength, value);
+
                 if(AutoScroll && Terminal != null) {
                     Terminal.ScrollToEnd();
                 }

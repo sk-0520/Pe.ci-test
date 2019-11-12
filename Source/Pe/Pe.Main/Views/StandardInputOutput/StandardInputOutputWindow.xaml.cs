@@ -30,6 +30,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.StandardInputOutput
             DialogRequestReceiver = new DialogRequestReceiver(this);
         }
 
+
         #region property
 
         [Injection]

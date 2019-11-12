@@ -70,7 +70,14 @@
             WordWrap="{Binding WordWrap}"
             Document="{Binding TextDocument}"
             HorizontalScrollBarVisibility="Auto"
-          />
+            Foreground="{Binding Foreground}"
+            Background="{Binding Background}"
+          >
+            <sharpdevelop_avalonedit:TextEditor.Options>
+              <sharpdevelop_avalonedit:TextEditorOptions>
+              </sharpdevelop_avalonedit:TextEditorOptions>
+            </sharpdevelop_avalonedit:TextEditor.Options>
+          </sharpdevelop_avalonedit:TextEditor>
 
           <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
