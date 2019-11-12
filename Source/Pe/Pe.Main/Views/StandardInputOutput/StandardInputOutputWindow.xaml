@@ -81,10 +81,12 @@
               Grid.Column="0"
               IsEditable="True"
               IsReadOnly="{Binding ProcessExited}"
+              Text="{Binding InputValue, UpdateSourceTrigger=PropertyChanged}"
             />
             <Button
               Grid.Column="1"
               Content="send"
+              Command="{Binding SendInputCommand}"
             />
           </Grid>
 

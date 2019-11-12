@@ -28,6 +28,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
         bool _isTopmost = false;
         bool _autoScroll = true;
         bool _wordWrap = false;
+        string _inputValue = string.Empty;
 
         #endregion
 
@@ -71,28 +72,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
 
         public bool ProcessExited => Model.ProcessExited;
 
-
-        #endregion
-
-        #region function
-
-        private void AttachReceiver()
+        public string InputValue
         {
-            if(Model.PreparatedReceive && Model.InputStreamReceiver != null) {
-                Model.InputStreamReceiver.StreamReceived -= InputStreamReceiver_StreamReceived;
-                Model.InputStreamReceiver.StreamReceived += InputStreamReceiver_StreamReceived;
-            }
-        }
-
-        private void AppendOutput(string value, bool isError)
-        {
-            Logger.LogTrace(value);
-            DispatcherWapper.Invoke(() => {
-                TextDocument.Insert(TextDocument.TextLength, value);
-                if(AutoScroll && Terminal != null) {
-                    Terminal.ScrollToEnd();
-                }
-            });
+            get => this._inputValue;
+            set => SetProperty(ref this._inputValue, value);
         }
 
         #endregion
@@ -147,9 +130,40 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
             () => 0 < TextDocument.TextLength
         ));
 
+        public ICommand SendInputCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                try {
+                    var value = InputValue + Environment.NewLine;
+                    Model.SendInputValue(value);
+                } catch(Exception ex) {
+                    Logger.LogError(ex, ex.Message);
+                }
+            },
+            () => !ProcessExited
+        ));
+
         #endregion
 
         #region function
+
+        private void AttachReceiver()
+        {
+            if(Model.PreparatedReceive && Model.InputStreamReceiver != null) {
+                Model.InputStreamReceiver.StreamReceived -= InputStreamReceiver_StreamReceived;
+                Model.InputStreamReceiver.StreamReceived += InputStreamReceiver_StreamReceived;
+            }
+        }
+
+        private void AppendOutput(string value, bool isError)
+        {
+            Logger.LogTrace(value);
+            DispatcherWapper.Invoke(() => {
+                TextDocument.Insert(TextDocument.TextLength, value);
+                if(AutoScroll && Terminal != null) {
+                    Terminal.ScrollToEnd();
+                }
+            });
+        }
 
         void SaveLog(string path)
         {
