@@ -56,7 +56,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
 
         TextEditor? Terminal { get; set; }
 
-        public ObservableCollection<StandardInputOutputValueViewModel> InputValues { get; } = new ObservableCollection<StandardInputOutputValueViewModel>();
+        public ObservableCollection<StandardInputOutputValueViewModel> InputedValues { get; } = new ObservableCollection<StandardInputOutputValueViewModel>();
 
         public bool IsTopmost
         {
@@ -147,11 +147,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
 
                 // “ü—Í—š—ð
                 var element = new StandardInputOutputValueViewModel(rawValue, DateTime.UtcNow, LoggerFactory);
-                var item = InputValues.FirstOrDefault(i => i.Value == rawValue);
+                var item = InputedValues.FirstOrDefault(i => i.Value == rawValue);
                 if(item != null) {
-                    InputValues.Remove(item);
+                    InputedValues.Remove(item);
                 }
-                InputValues.Insert(0, element);
+                InputedValues.Insert(0, element);
             },
             () => !ProcessExited
         ));

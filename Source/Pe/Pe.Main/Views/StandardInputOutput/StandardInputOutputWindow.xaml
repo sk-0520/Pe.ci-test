@@ -83,7 +83,7 @@
               IsEditable="True"
               IsReadOnly="{Binding ProcessExited}"
               Text="{Binding InputValue, UpdateSourceTrigger=PropertyChanged}"
-              ItemsSource="{Binding InputValues}"
+              ItemsSource="{Binding InputedValues}"
             >
               <ComboBox.InputBindings>
                 <KeyBinding Key="Return" Command="{Binding SendInputCommand}" />
