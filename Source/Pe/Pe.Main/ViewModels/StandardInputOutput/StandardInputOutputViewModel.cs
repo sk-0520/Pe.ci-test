@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
@@ -54,6 +55,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
         PropertyChangedHooker PropertyChangedHooker { get; }
 
         TextEditor? Terminal { get; set; }
+
+        public ObservableCollection<StandardInputOutputValueViewModel> InputValues { get; } = new ObservableCollection<StandardInputOutputValueViewModel>();
 
         public bool IsTopmost
         {
@@ -133,13 +136,22 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
 
         public ICommand SendInputCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
+                var rawValue = InputValue;
                 try {
-                    var value = InputValue + Environment.NewLine;
+                    var value = rawValue + Environment.NewLine;
                     Model.SendInputValue(value);
                     InputValue = string.Empty;
                 } catch(Exception ex) {
                     Logger.LogError(ex, ex.Message);
                 }
+
+                // “ü—Í—š—ð
+                var element = new StandardInputOutputValueViewModel(rawValue, DateTime.UtcNow, LoggerFactory);
+                var item = InputValues.FirstOrDefault(i => i.Value == rawValue);
+                if(item != null) {
+                    InputValues.Remove(item);
+                }
+                InputValues.Insert(0, element);
             },
             () => !ProcessExited
         ));

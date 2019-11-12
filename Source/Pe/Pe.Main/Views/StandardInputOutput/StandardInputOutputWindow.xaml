@@ -10,6 +10,7 @@
   xmlns:sharpdevelop_avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
 
   xmlns:app_core_views="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core"
+  xmlns:app_core_views_selector="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Selector;assembly=Pe.Core"
 
   Title="StandardInputOutputWindow"
   Width="800"
@@ -82,10 +83,48 @@
               IsEditable="True"
               IsReadOnly="{Binding ProcessExited}"
               Text="{Binding InputValue, UpdateSourceTrigger=PropertyChanged}"
+              ItemsSource="{Binding InputValues}"
             >
               <ComboBox.InputBindings>
                 <KeyBinding Key="Return" Command="{Binding SendInputCommand}" />
               </ComboBox.InputBindings>
+              <ComboBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                  <VirtualizingStackPanel
+                        VirtualizingStackPanel.IsVirtualizing="True"
+                        VirtualizingStackPanel.VirtualizationMode="Recycling"
+                      />
+                </ItemsPanelTemplate>
+              </ComboBox.ItemsPanel>
+              <ComboBox.ItemTemplateSelector>
+                <app_core_views_selector:ComboBoxItemTemplateSelector>
+                  <app_core_views_selector:ComboBoxItemTemplateSelector.SelectedTemplate>
+                    <DataTemplate>
+                      <TextBlock Text="{Binding Value, Mode=OneTime}"/>
+                    </DataTemplate>
+                  </app_core_views_selector:ComboBoxItemTemplateSelector.SelectedTemplate>
+
+                  <app_core_views_selector:ComboBoxItemTemplateSelector.DropDownTemplate>
+                    <DataTemplate>
+                      <Grid>
+                        <Grid.ColumnDefinitions>
+                          <ColumnDefinition Width="*" />
+                          <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Text="{Binding Value, Mode=OneTime}" />
+
+                        <TextBlock Grid.Column="1">
+                          <Run Text=" (" />
+                          <Run Text="{Binding Timestamp, Mode=OneTime}"/>
+                          <Run Text=" )" />
+                        </TextBlock>
+
+                      </Grid>
+                    </DataTemplate>
+                  </app_core_views_selector:ComboBoxItemTemplateSelector.DropDownTemplate>
+                </app_core_views_selector:ComboBoxItemTemplateSelector>
+              </ComboBox.ItemTemplateSelector>
             </ComboBox>
             <Button
               Grid.Column="1"
