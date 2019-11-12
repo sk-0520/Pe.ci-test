@@ -43,6 +43,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.StandardInputOutput
         IOrderManager OrderManager { get; }
 
         public StreamReceiver? InputStreamReceiver { get; private set; }
+        public StreamReceiver? ErrorStreamReceiver { get; private set; }
 
         bool ViewCreated { get; set; }
 
@@ -76,6 +77,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.StandardInputOutput
             }
 
             InputStreamReceiver = new StreamReceiver(Process.StandardOutput, LoggerFactory);
+            ErrorStreamReceiver = new StreamReceiver(Process.StandardError, LoggerFactory);
 
             PreparatedReceive = true;
         }
@@ -85,6 +87,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.StandardInputOutput
             Debug.Assert(PreparatedReceive);
 
             InputStreamReceiver!.StartReceive();
+            ErrorStreamReceiver!.StartReceive();
         }
 
         public void Kill()

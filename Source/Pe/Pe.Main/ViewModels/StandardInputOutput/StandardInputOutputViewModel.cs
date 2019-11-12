@@ -177,6 +177,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
                 Model.InputStreamReceiver.StreamReceived -= InputStreamReceiver_StreamReceived;
                 Model.InputStreamReceiver.StreamReceived += InputStreamReceiver_StreamReceived;
             }
+            if(Model.PreparatedReceive && Model.ErrorStreamReceiver != null) {
+                Model.ErrorStreamReceiver.StreamReceived -= ErrorStreamReceiver_StreamReceived;
+                Model.ErrorStreamReceiver.StreamReceived += ErrorStreamReceiver_StreamReceived;
+            }
         }
 
         private void AppendOutput(string value, bool isError)
@@ -257,6 +261,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
                     if(Model.InputStreamReceiver != null) {
                         Model.InputStreamReceiver.StreamReceived -= InputStreamReceiver_StreamReceived;
                     }
+                    if(Model.ErrorStreamReceiver != null) {
+                        Model.ErrorStreamReceiver.StreamReceived -= ErrorStreamReceiver_StreamReceived;
+                    }
 
                     PropertyChangedHooker.Dispose();
                 }
@@ -281,6 +288,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
         private void InputStreamReceiver_StreamReceived(object? sender, StreamReceivedEventArgs e)
         {
             AppendOutput(e.Value, false);
+        }
+        private void ErrorStreamReceiver_StreamReceived(object? sender, StreamReceivedEventArgs e)
+        {
+            AppendOutput(e.Value, true);
         }
 
     }
