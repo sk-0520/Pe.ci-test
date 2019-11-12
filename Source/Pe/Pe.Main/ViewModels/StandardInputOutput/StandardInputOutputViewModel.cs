@@ -105,6 +105,20 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
             () => !ProcessExited
         ));
 
+        public ICommand KillOutputCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                Model.Kill();
+            },
+            () => !ProcessExited
+        ));
+
+        public ICommand SaveCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+
+            },
+            () => 0 < TextDocument.TextLength
+        ));
+
         #endregion
 
         #region IViewLifecycleReceiver
@@ -114,6 +128,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
             var view = (StandardInputOutputWindow)window;
 
             Terminal = (TextEditor)view.FindName("terminal");
+            Terminal.TextChanged += Terminal_TextChanged;
         }
 
         public void ReceiveViewLoaded(Window window)
@@ -123,7 +138,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
 
         public void ReceiveViewClosing(CancelEventArgs e) => Model.ReceiveViewClosing();
 
-        public void ReceiveViewClosed() => Model.ReceiveViewClosed();
+        public void ReceiveViewClosed()
+        {
+            if(Terminal != null) {
+                Terminal.TextChanged -= Terminal_TextChanged;
+            }
+
+            Model.ReceiveViewClosed();
+        }
 
         #endregion
 
@@ -164,6 +186,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
         private void Model_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             PropertyChangedHooker.Execute(e, RaisePropertyChanged);
+        }
+
+        private void Terminal_TextChanged(object? sender, EventArgs e)
+        {
+            ((DelegateCommandBase)SaveCommand).RaiseCanExecuteChanged();
         }
 
         private void InputStreamReceiver_StreamReceived(object? sender, StreamReceivedEventArgs e)

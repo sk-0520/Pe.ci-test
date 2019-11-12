@@ -30,12 +30,12 @@
 
       <Separator />
 
-      <Button Content="save" />
+      <Button Content="save" Command="{Binding SaveCommand}" />
       <Button Content="clear" Command="{Binding ClearOutputCommand}" />
 
       <Separator />
 
-      <Button Content="kill" />
+      <Button Content="kill" Command="{Binding KillOutputCommand}" />
 
     </ToolBar>
 
