@@ -145,7 +145,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
                     Logger.LogError(ex, ex.Message);
                 }
 
-                // “ü—Í—š—ð
+                if(string.IsNullOrEmpty(rawValue)) {
+                    return;
+                }
+
+                Logger.LogDebug("add: " + rawValue);
+                // å…¥åŠ›å±¥æ­´
                 var element = new StandardInputOutputValueViewModel(rawValue, DateTime.UtcNow, LoggerFactory);
                 var item = InputedValues.FirstOrDefault(i => i.Value == rawValue);
                 if(item != null) {
@@ -154,6 +159,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
                 InputedValues.Insert(0, element);
             },
             () => !ProcessExited
+        ));
+
+        public ICommand ClearInputCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                InputValue = string.Empty;
+            }
         ));
 
         #endregion
@@ -202,9 +213,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
         public void ReceiveViewLoaded(Window window)
         { }
 
-        public void ReceiveViewUserClosing(CancelEventArgs e) => Model.ReceiveViewUserClosing();
+        public void ReceiveViewUserClosing(CancelEventArgs e)
+        {
+            e.Cancel = !Model.ReceiveViewUserClosing();
+        }
 
-        public void ReceiveViewClosing(CancelEventArgs e) => Model.ReceiveViewClosing();
+        public void ReceiveViewClosing(CancelEventArgs e)
+        {
+            e.Cancel = !Model.ReceiveViewClosing();
+        }
 
         public void ReceiveViewClosed()
         {

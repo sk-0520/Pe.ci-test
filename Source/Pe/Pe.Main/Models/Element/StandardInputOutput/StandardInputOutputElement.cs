@@ -144,6 +144,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.StandardInputOutput
 
         public bool ReceiveViewUserClosing()
         {
+            if(!ProcessExited) {
+                Logger.LogWarning("実行中のプロセス: id = {0}, name = {1}", Process.Id, Process.ProcessName);
+                return false;
+            }
+
             return true;
         }
 

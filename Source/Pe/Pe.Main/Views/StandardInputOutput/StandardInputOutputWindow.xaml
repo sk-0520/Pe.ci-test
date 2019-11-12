@@ -87,6 +87,7 @@
             >
               <ComboBox.InputBindings>
                 <KeyBinding Key="Return" Command="{Binding SendInputCommand}" />
+                <KeyBinding Key="Esc" Command="{Binding ClearInputCommand}" />
               </ComboBox.InputBindings>
               <ComboBox.ItemsPanel>
                 <ItemsPanelTemplate>
