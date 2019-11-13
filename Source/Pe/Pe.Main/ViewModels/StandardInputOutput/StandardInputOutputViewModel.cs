@@ -49,6 +49,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
             PropertyChangedHooker.AddHook(nameof(StandardInputOutputElement.ProcessExited), nameof(ProcessExited));
             PropertyChangedHooker.AddHook(nameof(StandardInputOutputElement.ProcessExited), ClearOutputCommand);
             PropertyChangedHooker.AddHook(nameof(StandardInputOutputElement.ProcessExited), SendInputCommand);
+            PropertyChangedHooker.AddHook(nameof(StandardInputOutputElement.ProcessExited), KillOutputCommand);
         }
 
         #region property
@@ -81,6 +82,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
         }
 
         public bool ProcessExited => Model.ProcessExited;
+        public int ExitCode => Model.Process.ExitCode;
 
         public string InputValue
         {

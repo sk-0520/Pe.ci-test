@@ -52,7 +52,25 @@
     </ToolBar>
 
     <StatusBar DockPanel.Dock="Bottom">
-      <Label Content="start"/>
+      <Label>
+        <Label.Style>
+          <Style TargetType="Label" BasedOn="{StaticResource {x:Type Label}}">
+            <Style.Triggers>
+              <DataTrigger Binding="{Binding ProcessExited}" Value="True">
+                <Setter Property="Content">
+                  <Setter.Value>
+                    <TextBlock>
+                      <Run Text="exit code:" />
+                      <Run Text="{Binding ExitCode, Mode=OneTime}" />
+                    </TextBlock>
+                  </Setter.Value>
+                </Setter>
+              </DataTrigger>
+            </Style.Triggers>
+            <Setter Property="Content" Value="running" />
+          </Style>
+        </Label.Style>
+      </Label>
     </StatusBar>
 
     <TabControl>
