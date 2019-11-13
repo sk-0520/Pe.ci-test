@@ -80,6 +80,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         /// ウィンドウが閉じられた際に <see cref="System.Windows.Window.DataContext"/> に null を設定するか。
         /// </summary>
         public bool CloseToDataContextNull { get; set; } = true;
+        /// <summary>
+        /// ウィンドウが閉じられた際に <see cref="ViewModel"/> の <see cref="IDisposable.Dispose"/> を呼び出すか。
+        /// </summary>
+        public bool CloseToDispose { get; set; } = true;
 
         #endregion
     }
@@ -275,6 +279,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
             if(item.ViewModel is IViewLifecycleReceiver viewLifecycleReceiver) {
                 viewLifecycleReceiver.ReceiveViewClosed();
+            }
+
+            if(item.CloseToDispose) {
+                item.ViewModel.Dispose();
             }
         }
 

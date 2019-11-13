@@ -198,6 +198,18 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
             //}
         }
 
+        private void DetachReceiver()
+        {
+            if(Model.ProcessExited) {
+                if(Model.OutputStreamReceiver != null) {
+                    Model.OutputStreamReceiver.StreamReceived -= OutputStreamReceiver_StreamReceived;
+                }
+                if(Model.ErrorStreamReceiver != null) {
+                    Model.ErrorStreamReceiver.StreamReceived -= ErrorStreamReceiver_StreamReceived;
+                }
+            }
+        }
+
 
         private void AppendOutput(string value, bool isError)
         {

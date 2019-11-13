@@ -93,6 +93,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                     }
                     if(token.IsCancellationRequested) {
                         Logger.LogTrace("タスクキャンセル要求あり");
+                        // 読めるなら読んどく
+                        if(0 <= Reader.Peek()) {
+                            Logger.LogTrace("キャンセル前の一仕事");
+                            var fullValue = Reader.ReadToEnd();
+                            OnStreamReceived(fullValue);
+                        }
                         break;
                     }
                 }
