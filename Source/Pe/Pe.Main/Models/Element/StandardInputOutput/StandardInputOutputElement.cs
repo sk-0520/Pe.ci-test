@@ -48,7 +48,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.StandardInputOutput
 
         public StreamReceiver? OutputStreamReceiver { get; private set; }
         public StreamReceiver? ErrorStreamReceiver { get; private set; }
-        //public ProcessStandardOutputReceiver? ProcessStandardOutputReceiver { get; private set; }
+
+        [Obsolete]
+        public ProcessStandardOutputReceiver? ProcessStandardOutputReceiver { get; private set; }
 
         bool ViewCreated { get; set; }
 

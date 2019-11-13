@@ -40,8 +40,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         #region property
 
-        public int BufferSize { get; set; } = 1024;
-        public TimeSpan WaitTime { get; set; } = TimeSpan.FromMilliseconds(1000);
+        public int BufferSize { get; set; } = 160;
+        public TimeSpan WaitTime { get; set; } = TimeSpan.FromMilliseconds(250);
 
         StreamReader Reader { get; }
         ILogger Logger { get; }
@@ -65,39 +65,38 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                 Logger.LogTrace("start");
                 char[] buffer = new char[BufferSize];
                 var token = CancellationTokenSource.Token;
-                var init = Task.FromResult(0);
                 while(0 < Reader.Peek()) {
-                    Task<int> readTask = init;
-                    try {
-                        readTask = Reader.ReadAsync(buffer, 0, buffer.Length);
-                    } catch(Exception ex) {
-                        Logger.LogError(ex, ex.Message);
-                        continue;
-                    }
+                    var readTask = Reader.ReadAsync(buffer, 0, buffer.Length);
                     try {
                         var readWaitResult = readTask.Wait((int)WaitTime.TotalMilliseconds, token);
                         if(!readWaitResult) {
                             Logger.LogTrace("再待機");
-                            break;
+                            continue;
                         }
                     } catch(OperationCanceledException ex) {
                         Logger.LogTrace(ex, "待機終了(キャンセル)");
                         break;
                     }
+
                     var readLength = readTask.Result;
                     if(readLength == 0) {
                         Logger.LogTrace("読み込み長が 0 なんで終了");
-                        return;
+                        break;
                     }
 
                     var value = new string(buffer, 0, readLength);
                     OnStreamReceived(value);
 
                     if(Reader.EndOfStream) {
+                        Logger.LogTrace("もう読めない");
+                        break;
+                    }
+                    if(token.IsCancellationRequested) {
+                        Logger.LogTrace("タスクキャンセル要求あり");
                         break;
                     }
                 }
-                Logger.LogTrace("end");
+                Logger.LogTrace("reader end");
             });
         }
 

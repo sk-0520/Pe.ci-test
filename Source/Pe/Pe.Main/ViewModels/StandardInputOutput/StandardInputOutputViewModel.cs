@@ -220,6 +220,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
             });
         }
 
+        [Obsolete]
         private void AppendOutput(StandardOutputMode mode, string value)
         {
             Logger.LogTrace(value);
@@ -343,6 +344,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
             AppendOutput(e.Value, true);
         }
 
+        [Obsolete]
         private void ProcessStandardOutputReceiver_StandardOutputReceived(object? sender, ProcessStandardOutputReceivedEventArgs e)
         {
             AppendOutput(e.Mode, e.Value);

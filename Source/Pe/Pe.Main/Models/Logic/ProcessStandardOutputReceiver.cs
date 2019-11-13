@@ -10,11 +10,13 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Logic
 {
+    [Obsolete]
     public enum StandardOutputMode
     {
         Output,
         Error
     }
+    [Obsolete]
     public class ProcessStandardOutputReceivedEventArgs : EventArgs
     {
         public ProcessStandardOutputReceivedEventArgs(StandardOutputMode mode, string value)
@@ -31,6 +33,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         #endregion
     }
 
+    [Obsolete]
     public class StandardReader
     {
         public StandardReader(StandardOutputMode mode, StreamReader reader)
@@ -47,6 +50,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         #endregion
     }
 
+    [Obsolete]
     public class ProcessStandardOutputReceiver
     {
         #region event
