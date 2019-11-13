@@ -183,9 +183,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
 
         private void AttachReceiver()
         {
-            if(Model.PreparatedReceive && Model.InputStreamReceiver != null) {
-                Model.InputStreamReceiver.StreamReceived -= InputStreamReceiver_StreamReceived;
-                Model.InputStreamReceiver.StreamReceived += InputStreamReceiver_StreamReceived;
+            if(Model.PreparatedReceive && Model.OutputStreamReceiver != null) {
+                Model.OutputStreamReceiver.StreamReceived -= OutputStreamReceiver_StreamReceived;
+                Model.OutputStreamReceiver.StreamReceived += OutputStreamReceiver_StreamReceived;
             }
             if(Model.PreparatedReceive && Model.ErrorStreamReceiver != null) {
                 Model.ErrorStreamReceiver.StreamReceived -= ErrorStreamReceiver_StreamReceived;
@@ -280,8 +280,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
         {
             if(!IsDisposed) {
                 if(disposing) {
-                    if(Model.InputStreamReceiver != null) {
-                        Model.InputStreamReceiver.StreamReceived -= InputStreamReceiver_StreamReceived;
+                    if(Model.OutputStreamReceiver != null) {
+                        Model.OutputStreamReceiver.StreamReceived -= OutputStreamReceiver_StreamReceived;
                     }
                     if(Model.ErrorStreamReceiver != null) {
                         Model.ErrorStreamReceiver.StreamReceived -= ErrorStreamReceiver_StreamReceived;
@@ -307,7 +307,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
             ((DelegateCommandBase)SaveCommand).RaiseCanExecuteChanged();
         }
 
-        private void InputStreamReceiver_StreamReceived(object? sender, StreamReceivedEventArgs e)
+        private void OutputStreamReceiver_StreamReceived(object? sender, StreamReceivedEventArgs e)
         {
             AppendOutput(e.Value, false);
         }

@@ -42,7 +42,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.StandardInputOutput
         Screen Screen { get; }
         IOrderManager OrderManager { get; }
 
-        public StreamReceiver? InputStreamReceiver { get; private set; }
+        public StreamReceiver? OutputStreamReceiver { get; private set; }
         public StreamReceiver? ErrorStreamReceiver { get; private set; }
 
         bool ViewCreated { get; set; }
@@ -76,7 +76,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.StandardInputOutput
                 return;
             }
 
-            InputStreamReceiver = new StreamReceiver(Process.StandardOutput, LoggerFactory);
+            OutputStreamReceiver = new StreamReceiver(Process.StandardOutput, LoggerFactory);
             ErrorStreamReceiver = new StreamReceiver(Process.StandardError, LoggerFactory);
 
             PreparatedReceive = true;
@@ -86,7 +86,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.StandardInputOutput
         {
             Debug.Assert(PreparatedReceive);
 
-            //InputStreamReceiver!.StartReceive();
+            OutputStreamReceiver!.StartReceive();
             ErrorStreamReceiver!.StartReceive();
         }
 
@@ -171,6 +171,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.StandardInputOutput
         private void Process_Exited(object? sender, EventArgs e)
         {
             ProcessExited = true;
+            OutputStreamReceiver!.Dispose();
+            ErrorStreamReceiver!.Dispose();
         }
 
 
