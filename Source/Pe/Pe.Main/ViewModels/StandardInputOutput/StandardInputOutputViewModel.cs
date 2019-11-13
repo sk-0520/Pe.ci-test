@@ -62,7 +62,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
 
         TextEditor? Terminal { get; set; }
 
-        public ObservableCollection<StandardInputOutputValueViewModel> InputedValues { get; } = new ObservableCollection<StandardInputOutputValueViewModel>();
+        public ObservableCollection<StandardInputOutputHistoryViewModel> InputedHistories { get; } = new ObservableCollection<StandardInputOutputHistoryViewModel>();
 
         public bool IsTopmost
         {
@@ -88,11 +88,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
             set => SetProperty(ref this._inputValue, value);
         }
 
-        public Brush Foreground => new SolidColorBrush(Colors.White);
         public Brush Background => new SolidColorBrush(Colors.Black);
-
-        public Brush NormalForegound => new SolidColorBrush(Colors.White);
-        public Brush ErrorForegound => new SolidColorBrush(Colors.Red);
+        public Brush StandardOutputForeground => new SolidColorBrush(Colors.White);
+        public Brush StandardErrorForegound => new SolidColorBrush(Colors.Red);
 
         #endregion
 
@@ -163,12 +161,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
 
                 Logger.LogDebug("add: " + rawValue);
                 // 入力履歴
-                var element = new StandardInputOutputValueViewModel(rawValue, DateTime.UtcNow, LoggerFactory);
-                var item = InputedValues.FirstOrDefault(i => i.Value == rawValue);
+                var element = new StandardInputOutputHistoryViewModel(rawValue, DateTime.UtcNow, LoggerFactory);
+                var item = InputedHistories.FirstOrDefault(i => i.Value == rawValue);
                 if(item != null) {
-                    InputedValues.Remove(item);
+                    InputedHistories.Remove(item);
                 }
-                InputedValues.Insert(0, element);
+                InputedHistories.Insert(0, element);
             },
             () => !ProcessExited
         ));

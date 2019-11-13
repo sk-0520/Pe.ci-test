@@ -7,9 +7,9 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
 {
-    public class StandardInputOutputValueViewModel : ViewModelBase
+    public class StandardInputOutputHistoryViewModel : ViewModelBase
     {
-        public StandardInputOutputValueViewModel(string value, [Timestamp(DateTimeKind.Utc)] DateTime timestamp, ILoggerFactory loggerFactory)
+        public StandardInputOutputHistoryViewModel(string value, [Timestamp(DateTimeKind.Utc)] DateTime timestamp, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             Value = value;
