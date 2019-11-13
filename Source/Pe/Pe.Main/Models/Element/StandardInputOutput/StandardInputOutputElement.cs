@@ -46,7 +46,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.StandardInputOutput
         Screen Screen { get; }
         IOrderManager OrderManager { get; }
 
-        public StreamReceiver? InputStreamReceiver { get; private set; }
+        public StreamReceiver? OutputStreamReceiver { get; private set; }
+        public StreamReceiver? ErrorStreamReceiver { get; private set; }
+        //public ProcessStandardOutputReceiver? ProcessStandardOutputReceiver { get; private set; }
 
         bool ViewCreated { get; set; }
 
@@ -79,7 +81,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.StandardInputOutput
                 return;
             }
 
-            InputStreamReceiver = new StreamReceiver(Process.StandardOutput, LoggerFactory);
+            OutputStreamReceiver = new StreamReceiver(Process.StandardOutput, LoggerFactory);
+            ErrorStreamReceiver = new StreamReceiver(Process.StandardError, LoggerFactory);
+            //ProcessStandardOutputReceiver = new ProcessStandardOutputReceiver(Process, LoggerFactory);
 
             PreparatedReceive = true;
         }
@@ -88,7 +92,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.StandardInputOutput
         {
             Debug.Assert(PreparatedReceive);
 
-            InputStreamReceiver!.StartReceive();
+            OutputStreamReceiver!.StartReceive();
+            ErrorStreamReceiver!.StartReceive();
+            //ProcessStandardOutputReceiver!.StartReceive();
         }
 
         public void Kill()
@@ -99,6 +105,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.StandardInputOutput
             }
 
             Process.Kill();
+        }
+
+        public void SendInputValue(string value)
+        {
+            if(Process.HasExited) {
+                Logger.LogWarning("既に終了したプロセス: id = {0}, name = {1}, exit coe = {2}, exit time = {3}", Process.Id, Process.ProcessName, Process.ExitCode, Process.ExitTime);
+                return;
+            }
+
+            Process.StandardInput.Write(value);
         }
 
         #endregion
@@ -138,6 +154,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.StandardInputOutput
 
         public bool ReceiveViewUserClosing()
         {
+            if(!ProcessExited) {
+                Logger.LogWarning("実行中のプロセス: id = {0}, name = {1}", Process.Id, Process.ProcessName);
+                return false;
+            }
+
             return true;
         }
 
@@ -157,6 +178,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.StandardInputOutput
         private void Process_Exited(object? sender, EventArgs e)
         {
             ProcessExited = true;
+            OutputStreamReceiver!.Dispose();
+            ErrorStreamReceiver!.Dispose();
         }
 
 

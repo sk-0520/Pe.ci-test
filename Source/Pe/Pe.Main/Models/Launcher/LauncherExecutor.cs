@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Threading;
+using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Main.Models.Data;
@@ -60,15 +59,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
     public class LauncherExecutor
     {
-        public LauncherExecutor(IOrderManager orderManager, ILoggerFactory loggerFactory)
+        public LauncherExecutor(IOrderManager orderManager, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
         {
             Logger = loggerFactory.CreateLogger(GetType());
             OrderManager = orderManager;
+            DispatcherWapper = dispatcherWapper;
         }
 
         #region property
 
         IOrderManager OrderManager { get; }
+        IDispatcherWapper DispatcherWapper { get; }
         ILogger Logger { get; }
 
         #endregion
@@ -121,6 +122,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             //StreamForm streamForm = null;
             if(customParameter.IsEnabledStandardInputOutput) {
                 streamWatch = true;
+                process.EnableRaisingEvents = true;
                 startInfo.CreateNoWindow = true;
                 startInfo.UseShellExecute = false;
                 startInfo.RedirectStandardOutput = true;
@@ -140,14 +142,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             if(streamWatch) {
                 process.EnableRaisingEvents = true;
                 stdioElement = OrderManager.CreateStandardInputOutputElement($"{result.Process.StartInfo.FileName}", process, screen);
-                stdioElement.StartView();
+                DispatcherWapper.Invoke(() => {
+                    stdioElement.StartView();
+                });
             }
 
             result.Success = process.Start();
             if(streamWatch) {
                 stdioElement!.PreparateReceiver();
                 // 受信前に他の処理を終わらせるため少し待つ
-                Dispatcher.CurrentDispatcher.BeginInvoke(() => {
+                DispatcherWapper.Begin(() => {
                     stdioElement!.RunReceiver();
                 }, DispatcherPriority.ApplicationIdle);
             }

@@ -64,11 +64,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             RunningTask = Task.Run(() => {
                 Logger.LogTrace("start");
                 char[] buffer = new char[BufferSize];
-
-                while(true) {
-                    var readTask = Reader.ReadAsync(buffer, 0, buffer.Length);
+                var token = CancellationTokenSource.Token;
+                var init = Task.FromResult(0);
+                while(0 < Reader.Peek()) {
+                    Task<int> readTask = init;
                     try {
-                        var readWaitResult = readTask.Wait((int)WaitTime.TotalMilliseconds, CancellationTokenSource.Token);
+                        readTask = Reader.ReadAsync(buffer, 0, buffer.Length);
+                    } catch(Exception ex) {
+                        Logger.LogError(ex, ex.Message);
+                        continue;
+                    }
+                    try {
+                        var readWaitResult = readTask.Wait((int)WaitTime.TotalMilliseconds, token);
                         if(!readWaitResult) {
                             Logger.LogTrace("再待機");
                             break;
@@ -103,10 +110,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             if(!IsDisposed) {
                 if(disposing) {
                     if(!RunningTask.IsCompleted) {
-                        CancellationTokenSource.Cancel();
+                        CancellationTokenSource.Cancel(true);
                     }
 
-                    RunningTask.Dispose();
                     CancellationTokenSource.Dispose();
                 }
             }

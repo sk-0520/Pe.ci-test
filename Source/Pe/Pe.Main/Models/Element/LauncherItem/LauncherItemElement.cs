@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
@@ -27,7 +28,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
 
         #endregion
 
-        public LauncherItemElement(Guid launcherItemId, IWindowManager windowManager, IOrderManager orderManager, IClipboardManager clipboardManager, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, LauncherIconElement launcherIconElement, ILoggerFactory loggerFactory)
+        public LauncherItemElement(Guid launcherItemId, IWindowManager windowManager, IOrderManager orderManager, IClipboardManager clipboardManager, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, LauncherIconElement launcherIconElement, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             LauncherItemId = launcherItemId;
@@ -38,6 +39,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             NotifyManager = notifyManager;
             MainDatabaseBarrier = mainDatabaseBarrier;
             StatementLoader = statementLoader;
+            DispatcherWapper = dispatcherWapper;
 
             Icon = launcherIconElement;
         }
@@ -51,6 +53,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
         IMainDatabaseBarrier MainDatabaseBarrier { get; }
         IFileDatabaseBarrier? FileDatabaseBarrier { get; }
         IDatabaseStatementLoader StatementLoader { get; }
+        IDispatcherWapper DispatcherWapper { get; }
 
         public string? Name { get; private set; }
         public string? Code { get; private set; }
@@ -121,7 +124,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
                 }
             }
 
-            var launcherExecutor = new LauncherExecutor(OrderManager, LoggerFactory);
+            var launcherExecutor = new LauncherExecutor(OrderManager, DispatcherWapper, LoggerFactory);
             var result = launcherExecutor.Execute(Kind, fileData, fileData, envItems, screen);
 
             return result;
@@ -187,7 +190,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
 
             var pathData = GetExecutePath();
 
-            var launcherExecutor = new LauncherExecutor(OrderManager, LoggerFactory);
+            var launcherExecutor = new LauncherExecutor(OrderManager, DispatcherWapper, LoggerFactory);
             var result = launcherExecutor.OpenParentDirectory(Kind, pathData);
 
             return result;
@@ -202,7 +205,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
 
             var pathData = GetExecutePath();
 
-            var launcherExecutor = new LauncherExecutor(OrderManager, LoggerFactory);
+            var launcherExecutor = new LauncherExecutor(OrderManager, DispatcherWapper, LoggerFactory);
             var result = launcherExecutor.OpenWorkingDirectory(Kind, pathData);
 
             return result;
@@ -274,7 +277,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
 
             var pathData = GetExecutePath();
 
-            var launcherExecutor = new LauncherExecutor(OrderManager, LoggerFactory);
+            var launcherExecutor = new LauncherExecutor(OrderManager, DispatcherWapper, LoggerFactory);
             launcherExecutor.ShowProperty(pathData);
         }
 

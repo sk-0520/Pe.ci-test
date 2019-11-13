@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
@@ -22,7 +23,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute
 
         #endregion
 
-        public ExtendsExecuteElement(string captionName, LauncherFileData launcherFileData, IReadOnlyList<LauncherEnvironmentVariableData> launcherEnvironmentVariables, Screen screen, IOrderManager orderManager, ILoggerFactory loggerFactory)
+        public ExtendsExecuteElement(string captionName, LauncherFileData launcherFileData, IReadOnlyList<LauncherEnvironmentVariableData> launcherEnvironmentVariables, Screen screen, IOrderManager orderManager, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             CaptionName = captionName;
@@ -30,8 +31,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute
             EnvironmentVariables = launcherEnvironmentVariables;
             Screen = screen;
 
-
             OrderManager = orderManager;
+            DispatcherWapper = dispatcherWapper;
         }
 
         #region property
@@ -43,6 +44,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute
         public Screen Screen { get; }
 
         IOrderManager OrderManager { get; }
+        IDispatcherWapper DispatcherWapper { get; }
 
         bool ViewCreated { get; set; }
 
@@ -61,7 +63,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute
         public virtual ILauncherExecuteResult Execute(LauncherFileData fileData, IReadOnlyList<LauncherEnvironmentVariableData> environmentVariables, Screen screen)
         {
             try {
-                var launcherExecutor = new LauncherExecutor(OrderManager, LoggerFactory);
+                var launcherExecutor = new LauncherExecutor(OrderManager, DispatcherWapper, LoggerFactory);
                 var result = launcherExecutor.Execute(LauncherItemKind.File, fileData, fileData, environmentVariables, screen);
                 return result;
             } catch(Exception ex) {
@@ -128,8 +130,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute
 
     public sealed class LauncherExtendsExecuteElement : ExtendsExecuteElement, ILauncherItemId
     {
-        public LauncherExtendsExecuteElement(Guid launcherItemId, Screen screen, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, IOrderManager orderManager, ILoggerFactory loggerFactory)
-            : base(string.Empty, new LauncherFileData(), new List<LauncherEnvironmentVariableData>(), screen, orderManager, loggerFactory)
+        public LauncherExtendsExecuteElement(Guid launcherItemId, Screen screen, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, IOrderManager orderManager, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
+            : base(string.Empty, new LauncherFileData(), new List<LauncherEnvironmentVariableData>(), screen, orderManager, dispatcherWapper, loggerFactory)
         {
             LauncherItemId = launcherItemId;
             MainDatabaseBarrier = mainDatabaseBarrier;

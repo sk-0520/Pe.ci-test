@@ -61,16 +61,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 echo test1
 echo test2
 ping localhost
-ping 127.0.0.1
-ping localhost
-ping 127.0.0.1
+rem ping 127.0.0.1
+rem ping localhost
+rem ping 127.0.0.1
+rem ping localhost
+rem ping 127.0.0.1
+rem ping localhost
+rem ping 127.0.0.1
+test
 echo end
             ", Encoding.GetEncoding("shift_jis"));
-            var launcherExecutor = new LauncherExecutor(OrderManager, LoggerFactory);
+            var launcherExecutor = new LauncherExecutor(OrderManager, new ApplicationDispatcherWapper(), LoggerFactory);
             var data = new LauncherFileData() {
-                Path = batchPath,
-                //Path = "cmd",
-                //Option = "/c " + batchPath,
+                //Path = batchPath,
+                Path = "cmd",
+                Option = "/c " + batchPath,
                 IsEnabledStandardInputOutput = true,
             };
             var env = new List<LauncherEnvironmentVariableData>();
