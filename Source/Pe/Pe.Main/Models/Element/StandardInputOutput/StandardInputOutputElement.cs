@@ -42,8 +42,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.StandardInputOutput
         Screen Screen { get; }
         IOrderManager OrderManager { get; }
 
-        public StreamReceiver? OutputStreamReceiver { get; private set; }
-        public StreamReceiver? ErrorStreamReceiver { get; private set; }
+        //public StreamReceiver? OutputStreamReceiver { get; private set; }
+        //public StreamReceiver? ErrorStreamReceiver { get; private set; }
+        public ProcessStandardOutputReceiver? ProcessStandardOutputReceiver { get; private set; }
 
         bool ViewCreated { get; set; }
 
@@ -76,8 +77,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.StandardInputOutput
                 return;
             }
 
-            OutputStreamReceiver = new StreamReceiver(Process.StandardOutput, LoggerFactory);
-            ErrorStreamReceiver = new StreamReceiver(Process.StandardError, LoggerFactory);
+            //OutputStreamReceiver = new StreamReceiver(Process.StandardOutput, LoggerFactory);
+            //ErrorStreamReceiver = new StreamReceiver(Process.StandardError, LoggerFactory);
+            ProcessStandardOutputReceiver = new ProcessStandardOutputReceiver(Process, LoggerFactory);
 
             PreparatedReceive = true;
         }
@@ -86,8 +88,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.StandardInputOutput
         {
             Debug.Assert(PreparatedReceive);
 
-            OutputStreamReceiver!.StartReceive();
-            ErrorStreamReceiver!.StartReceive();
+            //OutputStreamReceiver!.StartReceive();
+            //ErrorStreamReceiver!.StartReceive();
+            ProcessStandardOutputReceiver!.StartReceive();
         }
 
         public void Kill()
@@ -171,8 +174,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.StandardInputOutput
         private void Process_Exited(object? sender, EventArgs e)
         {
             ProcessExited = true;
-            OutputStreamReceiver!.Dispose();
-            ErrorStreamReceiver!.Dispose();
+            //OutputStreamReceiver!.Dispose();
+            //ErrorStreamReceiver!.Dispose();
         }
 
 

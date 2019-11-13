@@ -183,17 +183,44 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
 
         private void AttachReceiver()
         {
-            if(Model.PreparatedReceive && Model.OutputStreamReceiver != null) {
-                Model.OutputStreamReceiver.StreamReceived -= OutputStreamReceiver_StreamReceived;
-                Model.OutputStreamReceiver.StreamReceived += OutputStreamReceiver_StreamReceived;
-            }
-            if(Model.PreparatedReceive && Model.ErrorStreamReceiver != null) {
-                Model.ErrorStreamReceiver.StreamReceived -= ErrorStreamReceiver_StreamReceived;
-                Model.ErrorStreamReceiver.StreamReceived += ErrorStreamReceiver_StreamReceived;
+            //if(Model.PreparatedReceive && Model.OutputStreamReceiver != null) {
+            //    Model.OutputStreamReceiver.StreamReceived -= OutputStreamReceiver_StreamReceived;
+            //    Model.OutputStreamReceiver.StreamReceived += OutputStreamReceiver_StreamReceived;
+            //}
+            //if(Model.PreparatedReceive && Model.ErrorStreamReceiver != null) {
+            //    Model.ErrorStreamReceiver.StreamReceived -= ErrorStreamReceiver_StreamReceived;
+            //    Model.ErrorStreamReceiver.StreamReceived += ErrorStreamReceiver_StreamReceived;
+            //}
+            if(Model.PreparatedReceive && Model.ProcessStandardOutputReceiver != null) {
+                Model.ProcessStandardOutputReceiver.StandardOutputReceived += ProcessStandardOutputReceiver_StandardOutputReceived;
             }
         }
 
+
         private void AppendOutput(string value, bool isError)
+        {
+            Logger.LogTrace(value);
+            if(Terminal == null) {
+                Logger.LogTrace("来ちゃいけない制御フロー");
+                return;
+            }
+
+            DispatcherWapper.Invoke(() => {
+                var selectionIndex = Terminal.SelectionStart;
+                var selectionLength = Terminal.SelectionLength;
+
+                var index = TextDocument.TextLength;
+                var length = value.Length;
+
+                TextDocument.Insert(TextDocument.TextLength, value);
+
+                if(AutoScroll && Terminal != null) {
+                    Terminal.ScrollToEnd();
+                }
+            });
+        }
+
+        private void AppendOutput(StandardOutputMode mode, string value)
         {
             Logger.LogTrace(value);
             if(Terminal == null) {
@@ -280,12 +307,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
         {
             if(!IsDisposed) {
                 if(disposing) {
-                    if(Model.OutputStreamReceiver != null) {
-                        Model.OutputStreamReceiver.StreamReceived -= OutputStreamReceiver_StreamReceived;
-                    }
-                    if(Model.ErrorStreamReceiver != null) {
-                        Model.ErrorStreamReceiver.StreamReceived -= ErrorStreamReceiver_StreamReceived;
-                    }
+                    //if(Model.OutputStreamReceiver != null) {
+                    //    Model.OutputStreamReceiver.StreamReceived -= OutputStreamReceiver_StreamReceived;
+                    //}
+                    //if(Model.ErrorStreamReceiver != null) {
+                    //    Model.ErrorStreamReceiver.StreamReceived -= ErrorStreamReceiver_StreamReceived;
+                    //}
 
                     PropertyChangedHooker.Dispose();
                 }
@@ -314,6 +341,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
         private void ErrorStreamReceiver_StreamReceived(object? sender, StreamReceivedEventArgs e)
         {
             AppendOutput(e.Value, true);
+        }
+
+        private void ProcessStandardOutputReceiver_StandardOutputReceived(object? sender, ProcessStandardOutputReceivedEventArgs e)
+        {
+            AppendOutput(e.Mode, e.Value);
         }
 
     }
