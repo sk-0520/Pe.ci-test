@@ -34,7 +34,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             //DebugCustomize();
             //DebugExtendsExecute();
-            //DebugStdIoExecute();
+            DebugStdIoExecute();
         }
 
         void DebugCustomize()
@@ -68,9 +68,10 @@ rem ping localhost
 rem ping 127.0.0.1
 rem ping localhost
 rem ping 127.0.0.1
+test
 echo end
             ", Encoding.GetEncoding("shift_jis"));
-            var launcherExecutor = new LauncherExecutor(OrderManager, LoggerFactory);
+            var launcherExecutor = new LauncherExecutor(OrderManager, new ApplicationDispatcherWapper(), LoggerFactory);
             var data = new LauncherFileData() {
                 //Path = batchPath,
                 Path = "cmd",

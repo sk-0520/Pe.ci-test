@@ -86,7 +86,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.StandardInputOutput
         {
             Debug.Assert(PreparatedReceive);
 
-            InputStreamReceiver!.StartReceive();
+            //InputStreamReceiver!.StartReceive();
             ErrorStreamReceiver!.StartReceive();
         }
 

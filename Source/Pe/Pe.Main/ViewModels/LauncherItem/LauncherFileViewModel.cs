@@ -212,9 +212,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
             }
 
             Logger.LogTrace("TODO: 起動準備 {0}, {1}", Model.LauncherItemId, Detail?.FullPath);
-            Model.Execute(Screen);
-
-            return Task.CompletedTask;
+            return Task.Run(() => {
+                Model.Execute(Screen);
+            });
         }
 
         /// <summary>
