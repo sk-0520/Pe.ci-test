@@ -87,7 +87,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
             {
                 SetProperty(ref this._selectedStandardInputOutputEncoding, value);
                 if(this._selectedStandardInputOutputEncoding != null) {
-                    StandardInputOutputEncoding = Encoding.GetEncoding(this._selectedStandardInputOutputEncoding.EncodingInfo.CodePage);
+                    StandardInputOutputEncoding = Encoding.GetEncoding(this._selectedStandardInputOutputEncoding.CodePage);
                 }
             }
         }
@@ -217,7 +217,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 
             var encItems = Encoding.GetEncodings().Select(i => new EncodingViewModel(i, LoggerFactory));
             EncodingItems.SetRange(encItems);
-            SelectedStandardInputOutputEncoding = EncodingItems.FirstOrDefault(i => i.EncodingInfo.CodePage == StandardInputOutputEncoding.CodePage) ?? EncodingItems.First();
+            SelectedStandardInputOutputEncoding = EncodingItems.FirstOrDefault(i => i.CodePage == StandardInputOutputEncoding.CodePage) ?? new EncodingViewModel(StandardInputOutputEncoding, LoggerFactory);
         }
 
         #endregion
