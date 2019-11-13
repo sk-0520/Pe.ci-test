@@ -183,17 +183,17 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
 
         private void AttachReceiver()
         {
-            //if(Model.PreparatedReceive && Model.OutputStreamReceiver != null) {
-            //    Model.OutputStreamReceiver.StreamReceived -= OutputStreamReceiver_StreamReceived;
-            //    Model.OutputStreamReceiver.StreamReceived += OutputStreamReceiver_StreamReceived;
-            //}
-            //if(Model.PreparatedReceive && Model.ErrorStreamReceiver != null) {
-            //    Model.ErrorStreamReceiver.StreamReceived -= ErrorStreamReceiver_StreamReceived;
-            //    Model.ErrorStreamReceiver.StreamReceived += ErrorStreamReceiver_StreamReceived;
-            //}
-            if(Model.PreparatedReceive && Model.ProcessStandardOutputReceiver != null) {
-                Model.ProcessStandardOutputReceiver.StandardOutputReceived += ProcessStandardOutputReceiver_StandardOutputReceived;
+            if(Model.PreparatedReceive && Model.OutputStreamReceiver != null) {
+                Model.OutputStreamReceiver.StreamReceived -= OutputStreamReceiver_StreamReceived;
+                Model.OutputStreamReceiver.StreamReceived += OutputStreamReceiver_StreamReceived;
             }
+            if(Model.PreparatedReceive && Model.ErrorStreamReceiver != null) {
+                Model.ErrorStreamReceiver.StreamReceived -= ErrorStreamReceiver_StreamReceived;
+                Model.ErrorStreamReceiver.StreamReceived += ErrorStreamReceiver_StreamReceived;
+            }
+            //if(Model.PreparatedReceive && Model.ProcessStandardOutputReceiver != null) {
+            //    Model.ProcessStandardOutputReceiver.StandardOutputReceived += ProcessStandardOutputReceiver_StandardOutputReceived;
+            //}
         }
 
 
@@ -307,12 +307,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
         {
             if(!IsDisposed) {
                 if(disposing) {
-                    //if(Model.OutputStreamReceiver != null) {
-                    //    Model.OutputStreamReceiver.StreamReceived -= OutputStreamReceiver_StreamReceived;
-                    //}
-                    //if(Model.ErrorStreamReceiver != null) {
-                    //    Model.ErrorStreamReceiver.StreamReceived -= ErrorStreamReceiver_StreamReceived;
-                    //}
+                    if(Model.OutputStreamReceiver != null) {
+                        Model.OutputStreamReceiver.StreamReceived -= OutputStreamReceiver_StreamReceived;
+                    }
+                    if(Model.ErrorStreamReceiver != null) {
+                        Model.ErrorStreamReceiver.StreamReceived -= ErrorStreamReceiver_StreamReceived;
+                    }
 
                     PropertyChangedHooker.Dispose();
                 }
