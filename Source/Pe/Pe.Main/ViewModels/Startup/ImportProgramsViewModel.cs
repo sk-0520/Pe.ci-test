@@ -59,5 +59,18 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Startup
 
         #endregion
 
+        #region SingleModelViewModelBase
+
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                if(disposing) {
+                    ProgramCollection.Dispose();
+                }
+            }
+            base.Dispose(disposing);
+        }
+
+        #endregion
     }
 }

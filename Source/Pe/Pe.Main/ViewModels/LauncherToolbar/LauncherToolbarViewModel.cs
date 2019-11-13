@@ -445,6 +445,18 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
             Model.PropertyChanged -= Model_PropertyChanged;
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                if(disposing) {
+                    LauncherItemCollection.Dispose();
+                    LauncherGroupCollection.Dispose();
+                }
+
+            }
+            base.Dispose(disposing);
+        }
+
         #endregion
 
         private void Model_PropertyChanged(object sender, PropertyChangedEventArgs e)

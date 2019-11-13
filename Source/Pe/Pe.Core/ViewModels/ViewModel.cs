@@ -290,6 +290,13 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
 
         #region IDisposable
 
+        protected void ThrowIfDisposed([CallerMemberName] string _callerMemberName = "")
+        {
+            if(IsDisposed) {
+                throw new ObjectDisposedException(_callerMemberName);
+            }
+        }
+
         /// <summary>
         /// <see cref="IDisposable.Dispose"/>時に呼び出されるイベント。
         /// <para>呼び出し時点では<see cref="IsDisposed"/>は偽のまま。</para>
