@@ -161,9 +161,45 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             }
         }
 
+        void Receive2(StandardOutputMode mode, StreamReader reader)
+        {
+            StringBuilder builder = new StringBuilder(BufferSize);
+            while(!reader.EndOfStream) {
+                if(reader.Peek() == -1) {
+                    if(builder.Length != 0) {
+                        OnStandardOutputReceived(mode, builder.ToString());
+                        builder.Clear();
+                    }
+                    Thread.Sleep(PeekTime);
+                    continue;
+                }
+                var c = reader.Read();
+                if(c == '\r' || c == '\n') {
+                    if(builder.Length != 0) {
+                        OnStandardOutputReceived(mode, builder.ToString());
+                        builder.Clear();
+                        continue;
+                    }
+                }
+
+                builder.Append((char)c);
+            }
+
+            if(builder.Length != 0) {
+                OnStandardOutputReceived(mode, builder.ToString());
+            }
+        }
+
+        private void StartReceiveCore2()
+        {
+            var token = CancellationTokenSource.Token;
+
+            Task.Run(() => Receive2(StandardOutputMode.Output, Process.StandardOutput));
+            Task.Run(() => Receive2(StandardOutputMode.Error, Process.StandardError));
+        }
         public void StartReceive()
         {
-            RunningTask = Task.Run(StartReceiveCore);
+            RunningTask = Task.Run(StartReceiveCore2);
         }
 
         #endregion
