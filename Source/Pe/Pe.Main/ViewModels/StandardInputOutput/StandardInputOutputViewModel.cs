@@ -24,6 +24,9 @@ using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
 {
+    /// <summary>
+    /// TODO: 標準出力中にまざる標準エラー処理がぐっだぐだ
+    /// </summary>
     public class StandardInputOutputViewModel : SingleModelViewModelBase<StandardInputOutputElement>, IViewLifecycleReceiver
     {
         #region define
@@ -93,6 +96,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
         public Brush Background => new SolidColorBrush(Colors.Black);
         public Brush StandardOutputForeground => new SolidColorBrush(Colors.White);
         public Brush StandardErrorForegound => new SolidColorBrush(Colors.Red);
+        StandardOutputColorizingTransformer? StandardOutputColorizingTransformer { get; set; }
 
         #endregion
 
@@ -220,13 +224,22 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
             }
 
             DispatcherWapper.Invoke(() => {
-                var selectionIndex = Terminal.SelectionStart;
-                var selectionLength = Terminal.SelectionLength;
+                var prevLine = TextDocument.Lines.Last();
+                var prevEndOffset = prevLine.EndOffset;
 
                 var index = TextDocument.TextLength;
                 var length = value.Length;
 
                 TextDocument.Insert(TextDocument.TextLength, value);
+                if(isError) {
+                    var lastLine = TextDocument.Lines.Last();
+                    var lastEndOffset = lastLine.EndOffset;
+                    if(StandardOutputColorizingTransformer == null) {
+                        StandardOutputColorizingTransformer = new StandardOutputColorizingTransformer(StandardErrorForegound);
+                        Terminal.TextArea.TextView.LineTransformers.Add(StandardOutputColorizingTransformer);
+                    }
+                    StandardOutputColorizingTransformer.Add(prevEndOffset, lastEndOffset);
+                }
 
                 if(AutoScroll && Terminal != null) {
                     Terminal.ScrollToEnd();

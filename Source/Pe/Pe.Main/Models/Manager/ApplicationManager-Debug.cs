@@ -34,7 +34,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             //DebugCustomize();
             //DebugExtendsExecute();
-            DebugStdIoExecute();
+            //DebugStdIoExecute();
         }
 
         void DebugCustomize()
