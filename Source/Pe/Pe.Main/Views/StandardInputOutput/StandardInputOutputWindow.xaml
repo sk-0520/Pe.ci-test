@@ -92,8 +92,7 @@
             Background="{Binding Background}"
           >
             <sharpdevelop_avalonedit:TextEditor.Options>
-              <sharpdevelop_avalonedit:TextEditorOptions>
-              </sharpdevelop_avalonedit:TextEditorOptions>
+              <sharpdevelop_avalonedit:TextEditorOptions/>
             </sharpdevelop_avalonedit:TextEditor.Options>
           </sharpdevelop_avalonedit:TextEditor>
 

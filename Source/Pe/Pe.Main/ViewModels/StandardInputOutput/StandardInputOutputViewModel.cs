@@ -275,6 +275,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
             var view = (StandardInputOutputWindow)window;
 
             Terminal = (TextEditor)view.FindName("terminal");
+            Terminal.TextArea.Caret.CaretBrush = Brushes.Transparent;
             Terminal.TextChanged += Terminal_TextChanged;
         }
 
@@ -352,10 +353,16 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
         private void OutputStreamReceiver_StreamReceived(object? sender, StreamReceivedEventArgs e)
         {
             AppendOutput(e.Value, false);
+            if(e.Exited) {
+                Model.OutputStreamReceiver!.StreamReceived -= OutputStreamReceiver_StreamReceived;
+            }
         }
         private void ErrorStreamReceiver_StreamReceived(object? sender, StreamReceivedEventArgs e)
         {
             AppendOutput(e.Value, true);
+            if(e.Exited) {
+                Model.ErrorStreamReceiver!.StreamReceived -= ErrorStreamReceiver_StreamReceived;
+            }
         }
 
         [Obsolete]

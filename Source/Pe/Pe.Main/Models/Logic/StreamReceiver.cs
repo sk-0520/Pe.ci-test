@@ -12,14 +12,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 {
     public class StreamReceivedEventArgs : EventArgs
     {
-        public StreamReceivedEventArgs(string value)
+        public StreamReceivedEventArgs(string value, bool exited)
         {
             Value = value;
+            Exited = exited;
         }
 
         #region property
 
         public string Value { get; }
+        public bool Exited { get; }
 
         #endregion
     }
@@ -48,14 +50,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         CancellationTokenSource CancellationTokenSource { get; } = new CancellationTokenSource();
         Task RunningTask { get; set; } = Task.CompletedTask;
+        ManualResetEventSlim LastWorkWait { get; } = new ManualResetEventSlim(false);
 
         #endregion
 
         #region function
 
-        private void OnStreamReceived(string value)
+        private void OnStreamReceived(string value, bool exited)
         {
-            var e = new StreamReceivedEventArgs(value);
+            var e = new StreamReceivedEventArgs(value, exited);
             StreamReceived?.Invoke(this, e);
         }
 
@@ -85,7 +88,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                     }
 
                     var value = new string(buffer, 0, readLength);
-                    OnStreamReceived(value);
+                    OnStreamReceived(value, false);
 
                     if(Reader.EndOfStream) {
                         Logger.LogTrace("もう読めない");
@@ -97,11 +100,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                         if(0 <= Reader.Peek()) {
                             Logger.LogTrace("キャンセル前の一仕事");
                             var fullValue = Reader.ReadToEnd();
-                            OnStreamReceived(fullValue);
+                            OnStreamReceived(fullValue, false);
                         }
                         break;
                     }
                 }
+                OnStreamReceived(string.Empty, true);
+                LastWorkWait.Set();
                 Logger.LogTrace("reader end");
             });
         }
@@ -117,6 +122,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                     if(!RunningTask.IsCompleted) {
                         CancellationTokenSource.Cancel(true);
                     }
+
+                    LastWorkWait.Wait();
+                    LastWorkWait.Dispose();
 
                     CancellationTokenSource.Dispose();
                 }
