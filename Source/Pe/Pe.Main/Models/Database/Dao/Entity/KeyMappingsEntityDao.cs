@@ -20,7 +20,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         {
             #region property
 
-            public static string KeyMappingId { get; } = "KeyMappingId";
+            public static string KeyActionId { get; } = "KeyActionId";
             public static string Sequence { get; } = "Sequence";
 
             public static string Key { get; } = "Key";

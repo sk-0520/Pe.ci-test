@@ -20,9 +20,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         {
             #region property
 
-            public static string KeyMappingId { get; } = "KeyMappingId";
-            public static string KeyActionKind { get; } = "KeyActionKind";
+            public static string KeyActionId { get; } = "KeyActionId";
+            public static string KeyActionKind { get; } = "ActionKind";
             public static string KeyActionContent { get; } = "KeyActionContent";
+            public static string KeyActionOption { get; } = "KeyActionOption";
             public static string Comment { get; } = "Comment";
 
             #endregion

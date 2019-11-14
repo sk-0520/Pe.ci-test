@@ -8,7 +8,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace ContentTypeTextNet.Pe.Main.Test.Models.KeyMapping
 {
     [TestClass]
-    public class KeyMappingConverterTest
+    public class KeyViewConverterTest
     {
         #region function
 
@@ -21,8 +21,8 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.KeyMapping
         [DataRow(Key.Return, "return")]
         public void ConvertFromStringTest(Key result, string value)
         {
-            var kmc = new KeyMappingConverter();
-            var actual = kmc.ConvertFromString(value);
+            var kvc = new KeyViewConverter();
+            var actual = kvc.ConvertFromString(value);
             Assert.AreEqual(result, actual);
         }
 
@@ -32,8 +32,8 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.KeyMapping
         [DataRow("return", Key.Return)]
         public void ConvertFromKeyTest(string result, Key value)
         {
-            var kmc = new KeyMappingConverter();
-            var actual = kmc.ConvertFromKey(value);
+            var kvc = new KeyViewConverter();
+            var actual = kvc.ConvertFromKey(value);
             Assert.AreEqual(result, actual);
         }
         #endregion

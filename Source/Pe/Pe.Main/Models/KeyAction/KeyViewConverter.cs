@@ -8,7 +8,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyMapping
     /// <summary>
     /// 主にView用のキー変換処理。
     /// </summary>
-    public class KeyMappingConverter
+    public class KeyViewConverter
     {
         #region function
 
