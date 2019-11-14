@@ -31,6 +31,10 @@ using ContentTypeTextNet.Pe.Main.ViewModels.Note;
 using ContentTypeTextNet.Pe.PInvoke.Windows;
 using Microsoft.Extensions.Logging;
 using ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute;
+using System.Threading.Tasks;
+using ContentTypeTextNet.Pe.Bridge.Models;
+using System.Threading;
+using System.Windows.Threading;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
@@ -71,6 +75,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         ObservableCollection<StandardInputOutputElement> StandardInputOutputs { get; } = new ObservableCollection<StandardInputOutputElement>();
 
         HwndSource? MessageWindowHandleSource { get; set; }
+        IDispatcherWapper? MessageWindowDispatcherWapper { get; set; }
 
         #endregion
 
@@ -110,15 +115,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             //if(!initializer.Initialize(e.Args)) {
             //    return false;
             //}
-
-            MessageWindowHandleSource = new HwndSource(new HwndSourceParameters(nameof(MessageWindowHandleSource)) {
-                Width = 0,
-                Height = 0,
-                WindowStyle = (int)WindowStyle.None,
-                //ParentWindow = WindowsUtility.ToIntPtr(HWND.HWND_MESSAGE),
-                HwndSourceHook = MessageWindowProc,
-            });
-
+            MakeMessageWindow();
             RegisterManagers();
 
             Logger = LoggerFactory.CreateLogger(GetType());
@@ -482,7 +479,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     CloseViews();
                     DisposeElements();
 
-                    MessageWindowHandleSource?.Dispose();
+                    MessageWindowDispatcherWapper?.Begin(() => {
+                        MessageWindowHandleSource?.Dispose();
+                        Dispatcher.CurrentDispatcher.InvokeShutdown();
+                    });
 
                     NotifyManager.Dispose();
                     OrderManager.Dispose();
