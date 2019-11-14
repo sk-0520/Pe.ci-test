@@ -68,8 +68,8 @@
       <Separator />
       <MenuItem Header="compact" Command="{Binding CompactAllNotesCommand}" />
       <Separator />
-      <MenuItem Header="topmost" Command="{Binding MoveZorderTopAllNotesCommand}" />
-      <MenuItem Header="bottom" Command="{Binding MoveZorderBottomAllNotesCommand}" />
+      <MenuItem Header="topmost" Command="{Binding MoveZOrderTopAllNotesCommand}" />
+      <MenuItem Header="bottom" Command="{Binding MoveZOrderBottomAllNotesCommand}" />
       <Separator />
       <MenuItem Header="show" ItemsSource="{Binding NoteVisibleItems}" ItemContainerStyle="{StaticResource INotifyAreaMenuItem}" Style="{StaticResource NoteItemsMenu}" />
       <MenuItem Header="hidden" ItemsSource="{Binding NoteHiddenItems}" ItemContainerStyle="{StaticResource INotifyAreaMenuItem}" Style="{StaticResource NoteItemsMenu}" />

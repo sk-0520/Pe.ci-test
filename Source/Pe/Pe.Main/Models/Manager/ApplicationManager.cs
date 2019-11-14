@@ -235,7 +235,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
         }
 
-        public void MoveZorderAllNotes(bool isTop)
+        public void MoveZOrderAllNotes(bool isTop)
         {
             var noteItems = WindowManager.GetWindowItems(WindowKind.Note)
                 .Where(i => !i.Window.Topmost)
@@ -300,9 +300,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         void CloseLauncherCustomizeViews() => CloseViewsCore(WindowKind.LauncherCustomize);
 
         void CloseExtendsExecuteViews() => CloseViewsCore(WindowKind.ExtendsExecute);
+        void CloseStandardInputOutputViews() => CloseViewsCore(WindowKind.StandardInputOutput);
 
         void CloseViews()
         {
+            CloseStandardInputOutputViews();
             CloseLauncherCustomizeViews();
             CloseExtendsExecuteViews();
             CloseLauncherToolbarViews();
