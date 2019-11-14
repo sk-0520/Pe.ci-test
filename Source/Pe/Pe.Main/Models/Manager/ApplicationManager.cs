@@ -75,7 +75,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         ObservableCollection<StandardInputOutputElement> StandardInputOutputs { get; } = new ObservableCollection<StandardInputOutputElement>();
 
         HwndSource? MessageWindowHandleSource { get; set; }
-        IDispatcherWapper? MessageWindowDispatcherWapper { get; set; }
+        //IDispatcherWapper? MessageWindowDispatcherWapper { get; set; }
 
         #endregion
 
@@ -479,10 +479,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     CloseViews();
                     DisposeElements();
 
-                    MessageWindowDispatcherWapper?.Begin(() => {
-                        MessageWindowHandleSource?.Dispose();
-                        Dispatcher.CurrentDispatcher.InvokeShutdown();
-                    });
+                    //MessageWindowDispatcherWapper?.Begin(() => {
+                    //    MessageWindowHandleSource?.Dispose();
+                    //    Dispatcher.CurrentDispatcher.InvokeShutdown();
+                    //});
+                    MessageWindowHandleSource?.Dispose();
 
                     NotifyManager.Dispose();
                     OrderManager.Dispose();

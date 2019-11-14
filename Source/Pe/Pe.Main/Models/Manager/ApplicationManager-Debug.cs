@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Element._Debug_;
 using ContentTypeTextNet.Pe.Main.Models.Launcher;
+using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.ViewModels._Debug_;
 using ContentTypeTextNet.Pe.Main.Views._Debug_;
 using Microsoft.Extensions.Logging;
@@ -35,6 +37,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             //DebugCustomize();
             //DebugExtendsExecute();
             //DebugStdIoExecute();
+            DebugHook();
         }
 
         void DebugCustomize()
@@ -80,6 +83,22 @@ echo end
             };
             var env = new List<LauncherEnvironmentVariableData>();
             var result = launcherExecutor.Execute(LauncherItemKind.File, data, data, env, Screen.PrimaryScreen);
+        }
+
+        KeyboradHooker? KeyboradHooker { get; set; }
+        MouseHooker? MouseHooker { get; set; }
+        void DebugHook()
+        {
+            KeyboradHooker = new KeyboradHooker(LoggerFactory);
+            KeyboradHooker.KeyDown += (sender, e) => {
+                Logger.LogTrace("UP: key = {0}, {1}", e.Key, e.kbdll);
+            };
+            KeyboradHooker.KeyUp += (sender, e) => {
+                Logger.LogTrace("DN: key = {0}, {1}", e.Key, e.kbdll);
+            };
+            KeyboradHooker.Register();
+            MouseHooker = new MouseHooker(LoggerFactory);
+            //MouseHooker.Register();
         }
 
         void DebugColorPicker()

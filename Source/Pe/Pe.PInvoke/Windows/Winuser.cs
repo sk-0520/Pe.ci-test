@@ -4,6 +4,8 @@ using System.Text;
 
 namespace ContentTypeTextNet.Pe.PInvoke.Windows
 {
+    public delegate IntPtr HookProc(int code, IntPtr wParam, IntPtr lParam);
+
     public enum WM : uint
     {
         WM_DESTROY = 0x0002,
@@ -48,12 +50,13 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         WM_NCMBUTTONUP = 0x00a8,
         WM_NCMBUTTONDBLCLK = 0x00a9,
         WM_SYSKEYDOWN = 0x0104,
+        WM_SYSKEYUP = 0x0105,
         WM_XBUTTONUP = 0x020C,
         WM_RBUTTONDOWN = 0x0204,
         WM_RBUTTONUP = 0x0205,
         WM_MOUSEMOVE = 0x0200,
-
-
+        WM_KEYDOWN = 0x0100,
+        WM_KEYUP = 0x0101,
 
     }
 
@@ -1927,6 +1930,24 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         XBUTTON2 = 0x0002
     }
 
+    public enum WH
+    {
+        WH_CALLWNDPROC = 4,
+        WH_CALLWNDPROCRET = 12,
+        WH_CBT = 5,
+        WH_DEBUG = 9,
+        WH_FOREGROUNDIDLE = 11,
+        WH_GETMESSAGE = 3,
+        WH_JOURNALPLAYBACK = 1,
+        WH_JOURNALRECORD = 0,
+        WH_KEYBOARD = 2,
+        WH_KEYBOARD_LL = 13,
+        WH_MOUSE = 7,
+        WH_MOUSE_LL = 14,
+        WH_MSGFILTER = -1,
+        WH_SHELL = 10,
+        WH_SYSMSGFILTER = 6,
+    }
 
     /// <summary>
     /// http://pinvoke.net/default.aspx/Structures.WINDOWPOS
@@ -2009,7 +2030,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         GA_ROOTOWNER = 3
     }
 
-    public enum OBJID:uint
+    public enum OBJID : uint
     {
         OBJID_HSCROLL = 0xFFFFFFFA,
         OBJID_VSCROLL = 0xFFFFFFFB,
@@ -2064,7 +2085,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
     }
 
     [Flags]
-    public enum SW_scroll: uint
+    public enum SW_scroll : uint
     {
         /// <summary>
         /// SW_INVALIDATE フラグと共にこのフラグを指定すると、スクロール後、WM_ERASEBKGND メッセージをウィンドウへ送信し、新たに無効になったリージョンを消去します。
@@ -2125,6 +2146,35 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         /// Flash continuously until the window comes to the foreground.
         /// </summary>
         FLASHW_TIMERNOFG = 12
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public class KBDLLHOOKSTRUCT
+    {
+        public uint vkCode;
+        public uint scanCode;
+        public LLKHF flags;
+        public uint time;
+        public UIntPtr dwExtraInfo;
+    }
+
+    [Flags]
+    public enum LLKHF : uint
+    {
+        LLKHF_EXTENDED = 0x01,
+        LLKHF_INJECTED = 0x10,
+        LLKHF_ALTDOWN = 0x20,
+        LLKHF_UP = 0x80,
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct MSLLHOOKSTRUCT
+    {
+        public POINT pt;
+        public int mouseData; // be careful, this must be ints, not uints (was wrong before I changed it...). regards, cmew.
+        public int flags;
+        public int time;
+        public UIntPtr dwExtraInfo;
     }
 
     partial class NativeMethods
@@ -2467,7 +2517,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         public static extern int SetScrollPos(IntPtr hWnd, SB nBar, int nPos, bool bRedraw);
 
         [DllImport("user32.dll")]
-        public static extern bool GetScrollRange(IntPtr hWnd, SB nBar, out int lpMinPos,out int lpMaxPos);
+        public static extern bool GetScrollRange(IntPtr hWnd, SB nBar, out int lpMinPos, out int lpMaxPos);
         [DllImport("user32.dll")]
         public static extern bool SetScrollRange(IntPtr hWnd, SB nBar, int nMinPos, int nMaxPos, bool bRedraw);
 
@@ -2478,7 +2528,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         public static extern int SetScrollInfo(IntPtr hwnd, SB fnBar, [In] ref SCROLLINFO lpsi, bool fRedraw);
 
 
-        [DllImport( "user32.dll", SetLastError= true, EntryPoint= "GetScrollBarInfo")]
+        [DllImport("user32.dll", SetLastError = true, EntryPoint = "GetScrollBarInfo")]
         public static extern int GetScrollBarInfo(IntPtr hWnd, OBJID idObject, ref SCROLLBARINFO psbi);
 
 
@@ -2501,6 +2551,61 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool FlashWindowEx(ref FLASHWINFO pwfi);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern IntPtr SetWindowsHookEx(WH hookType, HookProc lpfn, IntPtr hMod, uint dwThreadId);
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern bool UnhookWindowsHookEx(IntPtr hhk);
+        // <summary>
+        ///     Passes the hook information to the next hook procedure in the current hook chain. A hook procedure can call this
+        ///     function either before or after processing the hook information.
+        ///     <para>
+        ///     See [ https://msdn.microsoft.com/en-us/library/windows/desktop/ms644974%28v=vs.85%29.aspx ] for more
+        ///     information.
+        ///     </para>
+        /// </summary>
+        /// <param name="hhk">C++ ( hhk [in, optional]. Type: HHOOK )<br />This parameter is ignored. </param>
+        /// <param name="nCode">
+        ///     C++ ( nCode [in]. Type: int )<br />The hook code passed to the current hook procedure. The next
+        ///     hook procedure uses this code to determine how to process the hook information.
+        /// </param>
+        /// <param name="wParam">
+        ///     C++ ( wParam [in]. Type: WPARAM )<br />The wParam value passed to the current hook procedure. The
+        ///     meaning of this parameter depends on the type of hook associated with the current hook chain.
+        /// </param>
+        /// <param name="lParam">
+        ///     C++ ( lParam [in]. Type: LPARAM )<br />The lParam value passed to the current hook procedure. The
+        ///     meaning of this parameter depends on the type of hook associated with the current hook chain.
+        /// </param>
+        /// <returns>
+        ///     C++ ( Type: LRESULT )<br />This value is returned by the next hook procedure in the chain. The current hook
+        ///     procedure must also return this value. The meaning of the return value depends on the hook type. For more
+        ///     information, see the descriptions of the individual hook procedures.
+        /// </returns>
+        /// <remarks>
+        ///     <para>
+        ///     Hook procedures are installed in chains for particular hook types. <see cref="CallNextHookEx" /> calls the
+        ///     next hook in the chain.
+        ///     </para>
+        ///     <para>
+        ///     Calling CallNextHookEx is optional, but it is highly recommended; otherwise, other applications that have
+        ///     installed hooks will not receive hook notifications and may behave incorrectly as a result. You should call
+        ///     <see cref="CallNextHookEx" /> unless you absolutely need to prevent the notification from being seen by other
+        ///     applications.
+        ///     </para>
+        /// </remarks>
+        [DllImport("user32.dll")]
+        public static extern IntPtr CallNextHookEx(IntPtr hhk, int nCode, IntPtr wParam, IntPtr lParam);
+
+        // overload for use with LowLevelKeyboardProc
+        [DllImport("user32.dll")]
+        public static extern IntPtr CallNextHookEx(IntPtr hhk, int nCode, WM wParam, [In]KBDLLHOOKSTRUCT lParam);
+
+        // overload for use with LowLevelMouseProc
+        [DllImport("user32.dll")]
+        static extern IntPtr CallNextHookEx(IntPtr hhk, int nCode, WM wParam, [In]MSLLHOOKSTRUCT lParam);
+        [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        public static extern IntPtr GetModuleHandle(string lpModuleName);
     }
 
 

@@ -17,6 +17,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         private void MakeMessageWindow()
         {
+            /*
             var thread = new Thread(() => {
                 MessageWindowDispatcherWapper = new CurrentDispatcherWapper();
                 MessageWindowHandleSource = new HwndSource(new HwndSourceParameters(nameof(MessageWindowHandleSource)) {
@@ -30,6 +31,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             thread.SetApartmentState(ApartmentState.STA);
             thread.IsBackground = true;
             thread.Start();
+            */
+            MessageWindowHandleSource = new HwndSource(new HwndSourceParameters(nameof(MessageWindowHandleSource)) {
+                Width = 0,
+                Height = 0,
+                WindowStyle = (int)WindowStyle.None,
+                //ParentWindow = WindowsUtility.ToIntPtr(HWND.HWND_MESSAGE),
+                HwndSourceHook = MessageWindowProc,
+            });
         }
 
         private IntPtr MessageWindowProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
