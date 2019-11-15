@@ -69,22 +69,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         #endregion
     }
 
-    public enum KeyboardHookChainMode
-    {
-        /// <summary>
-        /// 通常処理。
-        /// </summary>
-        Next,
-        /// <summary>
-        /// 置き換え。
-        /// </summary>
-        Replace,
-        /// <summary>
-        /// 無効化。
-        /// </summary>
-        Cancel,
-    }
-
     public class KeyboardHookEventArgs: EventArgs
     {
         #region proeprty
@@ -104,7 +88,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         public Key Key { get; }
 
-        public KeyboardHookChainMode ChainMode { get; set; }
+        /// <summary>
+        /// 処理したか。
+        /// </summary>
+        public bool Handled { get; set; }
 
         #endregion
 
@@ -148,7 +135,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                         KeyDown?.Invoke(this, e);
                     }
 
-                    if(e.ChainMode == KeyboardHookChainMode.Cancel) {
+                    if(e.Handled) {
                         return new IntPtr(1);
                     }
                 }
