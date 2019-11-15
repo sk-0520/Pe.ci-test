@@ -32,7 +32,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         /// <para>アクション内容は起動する方法。</para>
         /// <para>アクションオプションは起動するアイテム。</para>
         /// </summary>
-        Launcher,
+        LauncherItem,
+        /// <summary>
+        /// ランチャーツールバーの処理。
+        /// <para>アクション内容は処理内容。</para>
+        /// <para>オプション内容はまちまち。</para>
+        /// </summary>
+        LauncherToolbar,
         /// <summary>
         /// ノートの処理。
         /// <para>アクション内容は処理内容。</para>
@@ -41,9 +47,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     }
 
     /// <summary>
-    /// <see cref="KeyActionKind.Launcher"/>で処理する内容。
+    /// <see cref="KeyActionKind.LauncherItem"/>で処理する内容。
     /// </summary>
-    public enum KeyActionContentLauncher
+    public enum KeyActionContentLauncherItem
     {
         /// <summary>
         /// 実行。
@@ -53,6 +59,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         /// 指定して実行。
         /// </summary>
         ExtendsExecute,
+    }
+
+    public enum KeyActionContentLauncherToolbar
+    {
+        /// <summary>
+        /// 自動的に隠すツールバーを隠す。
+        /// </summary>
+        AutoHiddenToHide,
     }
 
     /// <summary>

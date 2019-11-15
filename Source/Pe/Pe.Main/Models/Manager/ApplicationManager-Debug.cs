@@ -85,19 +85,19 @@ echo end
             var result = launcherExecutor.Execute(LauncherItemKind.File, data, data, env, Screen.PrimaryScreen);
         }
 
-        KeyboradHooker? KeyboradHooker { get; set; }
-        MouseHooker? MouseHooker { get; set; }
+        KeyboradHooker? dbgKeyboradHooker { get; set; }
+        MouseHooker? dbgMouseHooker { get; set; }
         void DebugHook()
         {
-            KeyboradHooker = new KeyboradHooker(LoggerFactory);
-            KeyboradHooker.KeyDown += (sender, e) => {
+            dbgKeyboradHooker = new KeyboradHooker(LoggerFactory);
+            dbgKeyboradHooker.KeyDown += (sender, e) => {
                 Logger.LogTrace("UP: key = {0}, {1}", e.Key, e.kbdll);
             };
-            KeyboradHooker.KeyUp += (sender, e) => {
+            dbgKeyboradHooker.KeyUp += (sender, e) => {
                 Logger.LogTrace("DN: key = {0}, {1}", e.Key, e.kbdll);
             };
-            KeyboradHooker.Register();
-            MouseHooker = new MouseHooker(LoggerFactory);
+            dbgKeyboradHooker.Register();
+            dbgMouseHooker = new MouseHooker(LoggerFactory);
             //MouseHooker.Register();
         }
 
