@@ -43,7 +43,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             //DebugExtendsExecute();
             //DebugStdIoExecute();
             //DebugHook();
-            DebugKeyAction();
+            //DebugKeyAction();
         }
 
         void DebugCustomize()

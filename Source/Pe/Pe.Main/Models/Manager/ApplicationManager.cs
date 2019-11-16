@@ -35,6 +35,7 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using System.Threading;
 using System.Windows.Threading;
+using ContentTypeTextNet.Pe.Main.Models.KeyAction;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
@@ -42,17 +43,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
     {
         public ApplicationManager(ApplicationInitializer initializer)
         {
-#pragma warning disable CS8601 // Null 参照割り当ての可能性があります。
-            LoggerFactory = initializer.LoggerFactory;
+            LoggerFactory = initializer.LoggerFactory ?? throw new ArgumentNullException(nameof(initializer) +"."+nameof(initializer.LoggerFactory));
             Logger = LoggerFactory.CreateLogger(GetType());
             IsFirstStartup = initializer.IsFirstStartup;
-            ApplicationDiContainer = initializer.DiContainer;
-            WindowManager = initializer.WindowManager;
+            ApplicationDiContainer = initializer.DiContainer ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.DiContainer));
+            WindowManager = initializer.WindowManager ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.WindowManager));
             OrderManager = ApplicationDiContainer!.Make<OrderManagerImpl>(); //initializer.OrderManager;
-            NotifyManager = initializer.NotifyManager;
-            StatusManager = initializer.StatusManager;
-            ClipboardManager = initializer.ClipboardManager;
-#pragma warning restore CS8601 // Null 参照割り当ての可能性があります。
+            NotifyManager = initializer.NotifyManager ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.NotifyManager));
+            StatusManager = initializer.StatusManager ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.StatusManager));
+            ClipboardManager = initializer.ClipboardManager ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.ClipboardManager));
+
+            KeyboradHooker = new KeyboradHooker(LoggerFactory);
+            MouseHooker = new MouseHooker(LoggerFactory);
+            KeyActionChecker = new KeyActionChecker(LoggerFactory);
+            KeyActionAssistant = new KeyActionAssistant(LoggerFactory);
+
         }
 
         #region property
@@ -76,6 +81,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         HwndSource? MessageWindowHandleSource { get; set; }
         //IDispatcherWapper? MessageWindowDispatcherWapper { get; set; }
+
+        KeyboradHooker KeyboradHooker { get; }
+        MouseHooker MouseHooker { get; }
+        KeyActionChecker KeyActionChecker { get; }
+        KeyActionAssistant KeyActionAssistant { get; }
 
         #endregion
 
@@ -255,6 +265,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 #if DEBUG
             DebugExecuteBefore();
 #endif
+            InitializeHook();
+            StartHook();
 
             // グループ構築
             var launcherGroups = CreateLauncherGroupElements();
@@ -331,6 +343,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         public void Exit()
         {
             Logger.LogInformation("おわる！");
+
+            StopHook();
+            DisposeHook();
 
             CloseViews();
 
