@@ -24,7 +24,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.KeyAction
             keyActionChecker.DisableJobs.Add(new KeyActionDisableJob(
                 new KeyActionDisableData() {
                 },
-                new KeyMappingItemData() {
+                new KeyMappingData() {
                     Key = Key.B
                 }
             ));
@@ -54,7 +54,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.KeyAction
             keyActionChecker.DisableJobs.Add(new KeyActionDisableJob(
                 new KeyActionDisableData() {
                 },
-                new KeyMappingItemData() {
+                new KeyMappingData() {
                     Key = Key.A
                 }
             ));
@@ -71,6 +71,53 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.KeyAction
             Assert.IsTrue(result3.Any());
         }
 
+        [TestMethod]
+        public void FindTest_Rplace()
+        {
+            var keyActionChecker = new KeyActionChecker(Test.LoggerFactory);
+            keyActionChecker.ReplaceJobs.Add(new KeyActionReplaceJob(
+                new KeyActionReplaceData() {
+                    ReplaceKey = Key.B,
+                },
+                new KeyMappingData() {
+                    Key = Key.A
+                }
+            ));
+            keyActionChecker.DisableJobs.Add(new KeyActionDisableJob(
+                new KeyActionDisableData() {
+                },
+                new KeyMappingData() {
+                    Key = Key.C
+                }
+            ));
+            keyActionChecker.DisableJobs.Add(new KeyActionDisableJob(
+                new KeyActionDisableData() {
+                },
+                new KeyMappingData() {
+                    Key = Key.C
+                }
+            ));
+
+            var modifierKeyStatus = new ModifierKeyStatus();
+
+            var result1 = keyActionChecker.Find(true, Key.C, modifierKeyStatus);
+            Assert.AreEqual(1, result1.Count);
+
+            var result2 = keyActionChecker.Find(true, Key.A, modifierKeyStatus);
+            Assert.AreEqual(1, result2.Count);
+
+            keyActionChecker.DisableJobs.Add(new KeyActionDisableJob(
+                new KeyActionDisableData() {
+                },
+                new KeyMappingData() {
+                    Key = Key.A
+                }
+            ));
+            var result3 = keyActionChecker.Find(true, Key.A, modifierKeyStatus);
+            Assert.AreEqual(1, result3.Count);
+            var job = (KeyActionReplaceJob)result3.First();
+            Assert.AreEqual(Key.B, keyActionChecker.ReplaceJobs[0].ActionData.ReplaceKey);
+        }
         #endregion
     }
 }

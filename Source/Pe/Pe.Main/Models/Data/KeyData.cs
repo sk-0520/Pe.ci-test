@@ -135,7 +135,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
-    public interface IReadOnlyKeyActionReplaceData: IReadOnlyKeyActionCommonData
+    public interface IReadOnlyKeyActionReplaceData : IReadOnlyKeyActionCommonData
     {
         #region property
 
@@ -147,30 +147,55 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
-    public class KeyActionReplaceData: KeyActionCommonData, IReadOnlyKeyActionReplaceData
+    public class KeyActionReplaceData : KeyActionCommonData, IReadOnlyKeyActionReplaceData
     {
         #region IReadOnlyKeyActionReplaceData
 
         /// <summary>
         /// <see cref="IReadOnlyKeyActionReplaceData.ReplaceKey"/>
         /// </summary>
-        public Key ReplaceKey { get; }
+        public Key ReplaceKey { get; set; }
         #endregion
     }
 
-    public interface IReadOnlyKeyActionDisableData: IReadOnlyKeyActionCommonData
+    public interface IReadOnlyKeyActionDisableData : IReadOnlyKeyActionCommonData
+    { }
+
+    public class KeyActionDisableData : KeyActionCommonData, IReadOnlyKeyActionDisableData
+    { }
+
+    public interface IReadOnlyKeyActionPressedData : IReadOnlyKeyActionCommonData
+    { }
+
+    public class KeyActionPressedData : KeyActionCommonData, IReadOnlyKeyActionPressedData
+    { }
+
+    public interface IReadOnlyKeyActionLauncherItemData : IReadOnlyKeyActionPressedData
     {
         #region property
         #endregion
     }
 
-    public class KeyActionDisableData : KeyActionCommonData, IReadOnlyKeyActionDisableData
+    public class KeyActionLauncherItemData : KeyActionPressedData, IReadOnlyKeyActionLauncherItemData
     {
-        #region IReadOnlyKeyActionDisableData
+        #region IReadOnlyKeyActionLauncherItemData
         #endregion
     }
 
-    public interface IReadOnlyKeyMappingItemData
+    public interface IReadOnlyKeyActionLauncherToolbarData : IReadOnlyKeyActionPressedData
+    {
+        #region property
+        #endregion
+    }
+
+    public class KeyActionLauncherToolbarData : KeyActionPressedData, IReadOnlyKeyActionLauncherToolbarData
+    {
+        #region IReadOnlyKeyActionLauncherToolbarData
+        #endregion
+    }
+
+
+    public interface IReadOnlyKeyMappingData
     {
         #region property
 
@@ -183,7 +208,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
-    public class KeyMappingItemData : IReadOnlyKeyMappingItemData
+    public class KeyMappingData : IReadOnlyKeyMappingData
     {
         #region IReadOnlyKeyMappingData
 

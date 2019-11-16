@@ -11,7 +11,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
 {
     public abstract class KeyActionJobBase
     {
-        public KeyActionJobBase(IReadOnlyKeyActionCommonData commonData, IEnumerable<IReadOnlyKeyMappingItemData> mappings)
+        public KeyActionJobBase(IReadOnlyKeyActionCommonData commonData, IEnumerable<IReadOnlyKeyMappingData> mappings)
         {
             CommonData = commonData;
             Mappings = mappings.ToList();
@@ -19,8 +19,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
 
         #region property
 
-        protected IReadOnlyKeyActionCommonData CommonData { get; }
-        protected IReadOnlyList<IReadOnlyKeyMappingItemData> Mappings { get; }
+        public IReadOnlyKeyActionCommonData CommonData { get; }
+        protected IReadOnlyList<IReadOnlyKeyMappingData> Mappings { get; }
 
         #endregion
 
@@ -39,7 +39,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
             };
         }
 
-        protected bool TestMapping(IReadOnlyKeyMappingItemData mapping, bool isDown, Key key, in ModifierKeyStatus modifierKeyStatus)
+        protected bool TestMapping(IReadOnlyKeyMappingData mapping, bool isDown, Key key, in ModifierKeyStatus modifierKeyStatus)
         {
             if(mapping.Key != key) {
                 return false;
@@ -60,13 +60,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
             return true;
         }
 
+        public abstract void Reset();
+
+        public abstract bool Check(bool isDown, Key key, in ModifierKeyStatus modifierKeyStatus);
+
         #endregion
     }
 
     public abstract class KeyActionJobBase<TActionData> : KeyActionJobBase
         where TActionData : IReadOnlyKeyActionCommonData
     {
-        public KeyActionJobBase(TActionData actionData, IEnumerable<IReadOnlyKeyMappingItemData> mappings)
+        public KeyActionJobBase(TActionData actionData, IEnumerable<IReadOnlyKeyMappingData> mappings)
             : base(actionData, mappings)
         {
             ActionData = actionData;
@@ -74,18 +78,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
 
         #region property
 
-        protected TActionData ActionData { get; }
+        public TActionData ActionData { get; }
 
         #endregion
     }
 
     public sealed class KeyActionReplaceJob : KeyActionJobBase<IReadOnlyKeyActionReplaceData>
     {
-        public KeyActionReplaceJob(IReadOnlyKeyActionReplaceData actionData, IReadOnlyKeyMappingItemData mapping)
+        public KeyActionReplaceJob(IReadOnlyKeyActionReplaceData actionData, IReadOnlyKeyMappingData mapping)
             : base(actionData, new[] { mapping })
         {
             if(ActionData.ReplaceKey == System.Windows.Input.Key.None) {
                 throw new ArgumentException(nameof(actionData) + "." + nameof(actionData.ReplaceKey));
+            }
+            if(ActionData.ReplaceKey == Mappings[0].Key) {
+                throw new ArgumentException(nameof(actionData.ReplaceKey) + " == " + nameof(IReadOnlyKeyMappingData.Key));
             }
         }
 
@@ -94,11 +101,28 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
 
         #region function
         #endregion
+
+        #region KeyActionJobBase
+
+        public override void Reset()
+        { }
+
+        public override bool Check(bool isDown, Key key, in ModifierKeyStatus modifierKeyStatus)
+        {
+            if(!isDown) {
+                return false;
+            }
+
+            var mapping = Mappings[0];
+            var result = TestMapping(mapping, isDown, key, modifierKeyStatus);
+            return result;
+        }
+        #endregion
     }
 
     public sealed class KeyActionDisableJob : KeyActionJobBase<IReadOnlyKeyActionDisableData>
     {
-        public KeyActionDisableJob(IReadOnlyKeyActionDisableData actionData, IReadOnlyKeyMappingItemData mapping)
+        public KeyActionDisableJob(IReadOnlyKeyActionDisableData actionData, IReadOnlyKeyMappingData mapping)
             : base(actionData, new[] { mapping })
         {
             if(mapping.Key == System.Windows.Input.Key.None) {
@@ -125,9 +149,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         #endregion
 
         #region function
+        #endregion
 
-        public bool Check(bool isDown, Key key, in ModifierKeyStatus modifierKeyStatus)
+        #region KeyActionJobBase
+
+        public override void Reset()
         {
+            LastCheckTimestamp = DateTime.MinValue.ToUniversalTime();
+        }
+
+        public override bool Check(bool isDown, Key key, in ModifierKeyStatus modifierKeyStatus)
+        {
+            if(!isDown) {
+                return false;
+            }
+
             var mapping = Mappings[0];
             var result = TestMapping(mapping, isDown, key, modifierKeyStatus);
             if(result) {
@@ -137,6 +173,95 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         }
 
         #endregion
+    }
+
+    public class KeyActionPressedJobBase<TActionData> : KeyActionJobBase<TActionData>
+        where TActionData : IReadOnlyKeyActionPressedData
+    {
+        public KeyActionPressedJobBase(TActionData actionData, IEnumerable<IReadOnlyKeyMappingData> mappings)
+            : base(actionData, mappings)
+        {
+            if(Mappings.Count == 0) {
+                throw new ArgumentException(nameof(mappings));
+            }
+
+            var keyIsNoneOrMods = Mappings.Counting().Where(i => i.Value.Key == Key.None || i.Value.Key.IsModifierKey()).ToList();
+            if(keyIsNoneOrMods.Any()) {
+                var errors = string.Join(", ", keyIsNoneOrMods.Select(i => $"{nameof(mappings)}[{i.Number}]"));
+                throw new ArgumentException("不正なキー設定(キー設定なし、修飾キーのみ): " + errors);
+            }
+        }
+
+        #region property
+
+        /// <summary>
+        /// 次に調べるインデックス。
+        /// </summary>
+        int NextIndex { get; set; }
+        /// <summary>
+        /// キー設定にヒットしたか。
+        /// <para><see cref="Check"/>ではあくまで今のキー設定にヒットしたかどうかを確認するのでキー設定全てに該当したかを判定するために使用する。</para>
+        /// </summary>
+        public bool IsHit { get; private set; }
+        /// <summary>
+        /// 次キー入力待ちか。
+        /// <para></para>
+        /// </summary>
+        public bool NextWaiting => 0 < NextIndex;
+
+        #endregion
+
+        #region function
+
+        #endregion
+
+        #region KeyActionJobBase
+
+        public override void Reset()
+        {
+            NextIndex = 0;
+            IsHit = false;
+        }
+
+        /// <summary>
+        /// <para>有効であるかどうかは<see cref="IsHit"/>を確認すること。</para>
+        /// </summary>
+        /// <returns></returns>
+        public override bool Check(bool isDown, Key key, in ModifierKeyStatus modifierKeyStatus)
+        {
+            if(!isDown) {
+                return false;
+            }
+
+            // 修飾キーのみは無視する
+            if(key.IsModifierKey()) {
+                return false;
+            }
+
+            var mapping = Mappings[NextIndex];
+            var result = TestMapping(mapping, isDown, key, modifierKeyStatus);
+            if(!result) {
+                Reset();
+                return false;
+            }
+            if(NextIndex + 1 == Mappings.Count) {
+                Reset();
+                IsHit = true;
+            } else {
+                NextIndex += 1;
+            }
+
+            return true;
+        }
+
+        #endregion
+    }
+
+    public sealed class KeyActionPressJob : KeyActionPressedJobBase<IReadOnlyKeyActionPressedData>
+    {
+        public KeyActionPressJob(IReadOnlyKeyActionPressedData actionData, IEnumerable<IReadOnlyKeyMappingData> mappings)
+            : base(actionData, mappings)
+        { }
     }
 
 }
