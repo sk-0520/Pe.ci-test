@@ -197,7 +197,8 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.KeyAction
         public void Constructor_Test()
         {
             Assert.ThrowsException<ArgumentException>(() => new KeyActionReplaceJob(new KeyActionReplaceData(), new KeyMappingData()));
-            Assert.ThrowsException<ArgumentException>(() => new KeyActionReplaceJob(new KeyActionReplaceData(), new KeyMappingData() { Key = Key.A }));
+            Assert.ThrowsException<ArgumentException>(() => new KeyActionReplaceJob(new KeyActionReplaceData() { ReplaceKey = Key.A }, new KeyMappingData() { Key = Key.A }));
+            Assert.ThrowsException<ArgumentException>(() => new KeyActionReplaceJob(new KeyActionReplaceData(), new KeyMappingData()));
             Assert.ThrowsException<ArgumentException>(() => new KeyActionReplaceJob(new KeyActionReplaceData() { ReplaceKey = Key.A }, new KeyMappingData() { Key = Key.A }));
             new KeyActionReplaceJob(new KeyActionReplaceData() { ReplaceKey = Key.B }, new KeyMappingData() { Key = Key.A });
             Assert.IsTrue(true);

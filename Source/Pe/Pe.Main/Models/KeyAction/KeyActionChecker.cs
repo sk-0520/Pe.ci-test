@@ -81,6 +81,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
             }
         }
 
+        public bool HasJob => DisableJobs.Any() || ReplaceJobs.Any() || PressedJobs.Any();
+
         public IList<KeyActionDisableJob> DisableJobs { get; } = new List<KeyActionDisableJob>();
         public IList<KeyActionReplaceJob> ReplaceJobs { get; } = new List<KeyActionReplaceJob>();
         public IList<KeyActionPressedJobBase<IReadOnlyKeyActionPressedData>> PressedJobs { get; } = new List<KeyActionPressedJobBase<IReadOnlyKeyActionPressedData>>();

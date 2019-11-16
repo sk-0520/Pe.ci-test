@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Input;
+using ContentTypeTextNet.Pe.Core.Models.Data;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Data
 {
@@ -89,7 +90,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     }
 
     /// <summary>
-    /// 修飾キー。
+    /// 修飾キーの左右位置。
     /// </summary>
     public enum ModifierKey
     {
@@ -125,7 +126,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
-    public class KeyActionCommonData : IReadOnlyKeyActionCommonData
+    public class KeyActionCommonData : DataBase, IReadOnlyKeyActionCommonData
     {
         #region IReadOnlyKeyActionCommonData
 
@@ -234,6 +235,24 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         public ModifierKey Control { get; set; } = ModifierKey.None;
         public ModifierKey Alt { get; set; } = ModifierKey.None;
         public ModifierKey Super { get; set; } = ModifierKey.None;
+
+        #endregion
+    }
+
+    public class KeyActionData: DataBase
+    {
+        #region function
+
+        public Guid KeyActionId { get; set; }
+        public KeyActionKind KeyActionKind { get; set; }
+        public string KeyActionContent { get; set; } = string.Empty;
+        public string KeyActionOption { get; set; } = string.Empty;
+
+        public Key Key { get; set; }
+        public ModifierKey Shift { get; set; }
+        public ModifierKey Contrl { get; set; }
+        public ModifierKey Alt { get; set; }
+        public ModifierKey Super { get; set; }
 
         #endregion
     }

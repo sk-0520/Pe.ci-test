@@ -104,6 +104,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
                 if(mods.Any(i => i != ModifierKey.None)) {
                     throw new ArgumentException("setting: any none");
                 }
+            }else if(Mapping.Key == Key.None) {
+                throw new ArgumentException(nameof(mapping) + "." + nameof(mapping.Key));
             }
         }
 

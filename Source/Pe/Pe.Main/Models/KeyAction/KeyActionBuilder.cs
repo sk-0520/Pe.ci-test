@@ -1,12 +1,98 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Windows.Input;
+using ContentTypeTextNet.Pe.Core.Models.Database;
+using ContentTypeTextNet.Pe.Main.Models.Applications;
+using ContentTypeTextNet.Pe.Main.Models.Data;
+using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain;
+using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
 {
     public class KeyActionBuilder
     {
+        public KeyActionBuilder(IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
+        {
+            MainDatabaseBarrier = mainDatabaseBarrier;
+            StatementLoader = statementLoader;
+            LoggerFactory = loggerFactory;
+            Logger = LoggerFactory.CreateLogger(GetType());
+        }
+
+        #region property
+
+        IMainDatabaseBarrier MainDatabaseBarrier { get; }
+        IDatabaseStatementLoader StatementLoader { get; }
+
+        ILoggerFactory LoggerFactory { get; }
+        ILogger Logger { get; }
+
+
+        #endregion
+
         #region function
+
+        IReadOnlyList<KeyActionData> LoadKeyActionData(KeyActionKind keyActionKind)
+        {
+            IReadOnlyList<KeyActionData> result;
+
+            using(var commander = MainDatabaseBarrier.WaitRead()) {
+                var dao = new KeyActionDomainDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                result = dao.SelectAllKeyActionsFromKind(keyActionKind).ToList();
+            }
+
+            return result;
+        }
+
+        IEnumerable<TJob> BuildJobs<TJob>(IReadOnlyList<KeyActionData> items, Func<Guid, IReadOnlyList<KeyActionData>, TJob> func)
+        {
+            var groups = items.GroupBy(i => i.KeyActionId);
+            foreach(var group in groups) {
+                var jobItems = group.ToList();
+                TJob result;
+                try {
+                    result = func(group.Key, jobItems);
+                } catch(Exception ex) {
+                    Logger.LogError(ex, ex.Message + " {0}", group.Key);
+                    continue;
+                }
+                yield return result;
+            }
+        }
+
+        KeyMappingData ConvertKeyMapping(KeyActionData data)
+        {
+            return new KeyMappingData() {
+                Key = data.Key,
+                Shift = data.Shift,
+                Control = data.Contrl,
+                Alt = data.Alt,
+                Super = data.Super,
+            };
+        }
+
+        public IEnumerable<KeyActionReplaceJob> BuildReplaceJobs()
+        {
+            var items = LoadKeyActionData(KeyActionKind.Replace);
+            return BuildJobs(items, (id, items) => {
+                if(1 < items.Count) {
+                    Logger.LogWarning("置き換え処理に不要な設定項目あり: {0}", id);
+                }
+                var keyConverter = new KeyConverter();
+                var item = items[0];
+                var data = new KeyActionReplaceData() {
+                    KeyActionId = item.KeyActionId,
+                    KeyActionKind = item.KeyActionKind,
+                    ReplaceKey = (Key)keyConverter.ConvertFromInvariantString(item.KeyActionContent),
+                };
+                var mapping = ConvertKeyMapping(item);
+
+                return new KeyActionReplaceJob(data, mapping);
+            });
+        }
+
         #endregion
     }
 }

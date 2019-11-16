@@ -66,11 +66,11 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <typeparam name="T"></typeparam>
         /// <param name="this"></param>
         /// <param name="collection"></param>
-        public static void SetRange<T>(this Collection<T> @this, IEnumerable<T> collection)
+        public static void SetRange<T>(this IList<T> @this, IEnumerable<T> collection)
         {
             @this.Clear();
             if(@this is List<T> list) {
-                @this.AddRange(collection);
+                list.AddRange(collection);
             } else {
                 foreach(var item in collection) {
                     @this.Add(item);
