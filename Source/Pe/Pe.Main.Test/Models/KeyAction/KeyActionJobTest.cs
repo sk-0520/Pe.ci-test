@@ -65,6 +65,123 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.KeyAction
             Assert.AreEqual(result, actual);
         }
 
+        [TestMethod]
+        [DataRow(true, ModifierKey.None, false, false)]
+        [DataRow(false, ModifierKey.Left, false, false)]
+        [DataRow(true, ModifierKey.Left, true, false)]
+        [DataRow(false, ModifierKey.Left, true, true)]
+        [DataRow(false, ModifierKey.Left, false, true)]
+        public void TestMappingTest_ModShift(bool result, ModifierKey mapMod, bool inputLeft, bool inputRight)
+        {
+            var job = new PublicKeyActionJob();
+
+            var mapping = new KeyMappingItemData() {
+                Key = Key.None,
+                Shift = mapMod,
+            };
+
+            var actual = job.PublicTestMapping(
+                mapping,
+                true,
+                Key.None,
+                new ModifierKeyStatus(
+                    new ModifierKeyState(inputLeft, inputRight),
+                    new ModifierKeyState(),
+                    new ModifierKeyState(),
+                    new ModifierKeyState()
+                )
+            );
+            Assert.AreEqual(result, actual);
+        }
+
+        [TestMethod]
+        [DataRow(true, ModifierKey.None, false, false)]
+        [DataRow(false, ModifierKey.Left, false, false)]
+        [DataRow(true, ModifierKey.Left, true, false)]
+        [DataRow(false, ModifierKey.Left, true, true)]
+        [DataRow(false, ModifierKey.Left, false, true)]
+        public void TestMappingTest_ModControl(bool result, ModifierKey mapMod, bool inputLeft, bool inputRight)
+        {
+            var job = new PublicKeyActionJob();
+
+            var mapping = new KeyMappingItemData() {
+                Key = Key.None,
+                Control = mapMod,
+            };
+
+            var actual = job.PublicTestMapping(
+                mapping,
+                true,
+                Key.None,
+                new ModifierKeyStatus(
+                    new ModifierKeyState(),
+                    new ModifierKeyState(inputLeft, inputRight),
+                    new ModifierKeyState(),
+                    new ModifierKeyState()
+                )
+            );
+            Assert.AreEqual(result, actual);
+        }
+
+        [TestMethod]
+        [DataRow(true, ModifierKey.None, false, false)]
+        [DataRow(false, ModifierKey.Left, false, false)]
+        [DataRow(true, ModifierKey.Left, true, false)]
+        [DataRow(false, ModifierKey.Left, true, true)]
+        [DataRow(false, ModifierKey.Left, false, true)]
+        public void TestMappingTest_ModAlt(bool result, ModifierKey mapMod, bool inputLeft, bool inputRight)
+        {
+            var job = new PublicKeyActionJob();
+
+            var mapping = new KeyMappingItemData() {
+                Key = Key.None,
+                Alt = mapMod,
+            };
+
+            var actual = job.PublicTestMapping(
+                mapping,
+                true,
+                Key.None,
+                new ModifierKeyStatus(
+                    new ModifierKeyState(),
+                    new ModifierKeyState(),
+                    new ModifierKeyState(inputLeft, inputRight),
+                    new ModifierKeyState()
+                )
+            );
+            Assert.AreEqual(result, actual);
+        }
+
+
+        [TestMethod]
+        [DataRow(true, ModifierKey.None, false, false)]
+        [DataRow(false, ModifierKey.Left, false, false)]
+        [DataRow(true, ModifierKey.Left, true, false)]
+        [DataRow(false, ModifierKey.Left, true, true)]
+        [DataRow(false, ModifierKey.Left, false, true)]
+        public void TestMappingTest_ModSuper(bool result, ModifierKey mapMod, bool inputLeft, bool inputRight)
+        {
+            var job = new PublicKeyActionJob();
+
+            var mapping = new KeyMappingItemData() {
+                Key = Key.None,
+                Super = mapMod,
+            };
+
+            var actual = job.PublicTestMapping(
+                mapping,
+                true,
+                Key.None,
+                new ModifierKeyStatus(
+                    new ModifierKeyState(),
+                    new ModifierKeyState(),
+                    new ModifierKeyState(),
+                    new ModifierKeyState(inputLeft, inputRight)
+                )
+            );
+            Assert.AreEqual(result, actual);
+        }
+
         #endregion
     }
 }

@@ -25,9 +25,34 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
 
         #region function
 
+        bool TestModifierKey(ModifierKey modifierKey, in ModifierKeyState state)
+        {
+            return modifierKey switch
+            {
+                ModifierKey.None => !state.Left && !state.Right,
+                ModifierKey.Left => state.Left && !state.Right,
+                ModifierKey.Right => !state.Left && state.Right,
+                ModifierKey.Any => state.Left || state.Right,
+                ModifierKey.All => state.Left && state.Right,
+                _ => throw new NotImplementedException(),
+            };
+        }
+
         protected bool TestMapping(IReadOnlyKeyMappingItemData mapping, bool isDown, Key key, in ModifierKeyStatus modifierKeyStatus)
         {
             if(mapping.Key != key) {
+                return false;
+            }
+            if(!TestModifierKey(mapping.Shift, modifierKeyStatus.shift)) {
+                return false;
+            }
+            if(!TestModifierKey(mapping.Control, modifierKeyStatus.contrl)) {
+                return false;
+            }
+            if(!TestModifierKey(mapping.Alt, modifierKeyStatus.alt)) {
+                return false;
+            }
+            if(!TestModifierKey(mapping.Super, modifierKeyStatus.super)) {
                 return false;
             }
 

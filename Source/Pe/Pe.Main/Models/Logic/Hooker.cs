@@ -90,14 +90,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         /// 右。
         /// </summary>
         public bool Right { get; }
-        /// <summary>
-        /// どちらか。
-        /// </summary>
-        public readonly bool Any => Left || Right;
-        /// <summary>
-        /// 両方。
-        /// </summary>
-        public readonly bool All => Left && Right;
 
         #endregion
 
@@ -105,9 +97,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         public override string ToString()
         {
-            if(Any) {
-                if(All) {
-                    return nameof(All);
+            if(Left || Right) {
+                if(Left && Right) {
+                    return "All";
                 }
                 return Left ? nameof(Left) : nameof(Right);
             }
