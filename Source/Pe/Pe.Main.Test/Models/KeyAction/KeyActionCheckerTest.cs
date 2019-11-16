@@ -6,6 +6,7 @@ using System.Windows.Input;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.KeyAction;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
+using ContentTypeTextNet.Pe.PInvoke.Windows;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ContentTypeTextNet.Pe.Main.Test.Models.KeyAction
@@ -31,16 +32,16 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.KeyAction
 
             var modifierKeyStatus = new ModifierKeyStatus();
 
-            var resultUpA = keyActionChecker.Find(false, Key.A, modifierKeyStatus);
-            var resultUpB = keyActionChecker.Find(false, Key.B, modifierKeyStatus);
-            var resultUpC = keyActionChecker.Find(false, Key.C, modifierKeyStatus);
+            var resultUpA = keyActionChecker.Find(false, Key.A, modifierKeyStatus, new KBDLLHOOKSTRUCT());
+            var resultUpB = keyActionChecker.Find(false, Key.B, modifierKeyStatus, new KBDLLHOOKSTRUCT());
+            var resultUpC = keyActionChecker.Find(false, Key.C, modifierKeyStatus, new KBDLLHOOKSTRUCT());
             Assert.IsFalse(resultUpA.Any());
             Assert.IsFalse(resultUpB.Any());
             Assert.IsFalse(resultUpC.Any());
 
-            var resultDownA = keyActionChecker.Find(true, Key.A, modifierKeyStatus);
-            var resultDownB = keyActionChecker.Find(true, Key.B, modifierKeyStatus);
-            var resultDownC = keyActionChecker.Find(true, Key.C, modifierKeyStatus);
+            var resultDownA = keyActionChecker.Find(true, Key.A, modifierKeyStatus, new KBDLLHOOKSTRUCT());
+            var resultDownB = keyActionChecker.Find(true, Key.B, modifierKeyStatus, new KBDLLHOOKSTRUCT());
+            var resultDownC = keyActionChecker.Find(true, Key.C, modifierKeyStatus, new KBDLLHOOKSTRUCT());
             Assert.IsFalse(resultDownA.Any());
             Assert.IsTrue(resultDownB.Any());
             Assert.IsFalse(resultDownC.Any());
@@ -61,18 +62,18 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.KeyAction
 
             var modifierKeyStatus = new ModifierKeyStatus();
 
-            var result1 = keyActionChecker.Find(true, Key.A, modifierKeyStatus);
+            var result1 = keyActionChecker.Find(true, Key.A, modifierKeyStatus, new KBDLLHOOKSTRUCT());
             keyActionChecker.KeyDisableToEnableTime = TimeSpan.MaxValue;
-            var result2 = keyActionChecker.Find(true, Key.A, modifierKeyStatus);
+            var result2 = keyActionChecker.Find(true, Key.A, modifierKeyStatus, new KBDLLHOOKSTRUCT());
             keyActionChecker.KeyDisableToEnableTime = TimeSpan.Zero;
-            var result3 = keyActionChecker.Find(true, Key.A, modifierKeyStatus);
+            var result3 = keyActionChecker.Find(true, Key.A, modifierKeyStatus, new KBDLLHOOKSTRUCT());
             Assert.IsTrue(result1.Any());
             Assert.IsFalse(result2.Any());
             Assert.IsTrue(result3.Any());
         }
 
         [TestMethod]
-        public void FindTest_Rplace()
+        public void FindTest_Replace()
         {
             var keyActionChecker = new KeyActionChecker(Test.LoggerFactory);
             keyActionChecker.ReplaceJobs.Add(new KeyActionReplaceJob(
@@ -100,10 +101,10 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.KeyAction
 
             var modifierKeyStatus = new ModifierKeyStatus();
 
-            var result1 = keyActionChecker.Find(true, Key.C, modifierKeyStatus);
+            var result1 = keyActionChecker.Find(true, Key.C, modifierKeyStatus, new KBDLLHOOKSTRUCT());
             Assert.AreEqual(1, result1.Count);
 
-            var result2 = keyActionChecker.Find(true, Key.A, modifierKeyStatus);
+            var result2 = keyActionChecker.Find(true, Key.A, modifierKeyStatus, new KBDLLHOOKSTRUCT());
             Assert.AreEqual(1, result2.Count);
 
             keyActionChecker.DisableJobs.Add(new KeyActionDisableJob(
@@ -113,7 +114,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.KeyAction
                     Key = Key.A
                 }
             ));
-            var result3 = keyActionChecker.Find(true, Key.A, modifierKeyStatus);
+            var result3 = keyActionChecker.Find(true, Key.A, modifierKeyStatus, new KBDLLHOOKSTRUCT());
             Assert.AreEqual(1, result3.Count);
             var job = (KeyActionReplaceJob)result3.First();
             Assert.AreEqual(Key.B, keyActionChecker.ReplaceJobs[0].ActionData.ReplaceKey);

@@ -297,20 +297,20 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.KeyAction
 
             var result4 = job.Check(true, Key.A, new ModifierKeyStatus());
             Assert.IsTrue(result4);
-            Assert.IsTrue(job.IsHit);
+            Assert.IsTrue(job.IsAllHit);
             Assert.IsFalse(job.NextWaiting);
 
             var result5 = job.Check(true, Key.B, new ModifierKeyStatus());
             Assert.IsFalse(result5);
-            Assert.IsFalse(job.IsHit);
+            Assert.IsFalse(job.IsAllHit);
             Assert.IsFalse(job.NextWaiting);
 
             var result6 = job.Check(true, Key.A, new ModifierKeyStatus());
             Assert.IsTrue(result6);
-            Assert.IsTrue(job.IsHit);
+            Assert.IsTrue(job.IsAllHit);
             Assert.IsFalse(job.NextWaiting);
             job.Reset();
-            Assert.IsFalse(job.IsHit);
+            Assert.IsFalse(job.IsAllHit);
         }
 
         [TestMethod]
@@ -325,17 +325,17 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.KeyAction
 
             var result1 = job.Check(true, Key.A, new ModifierKeyStatus());
             Assert.IsTrue(result1);
-            Assert.IsFalse(job.IsHit);
+            Assert.IsFalse(job.IsAllHit);
             Assert.IsTrue(job.NextWaiting);
 
             var result2 = job.Check(true, Key.B, new ModifierKeyStatus());
             Assert.IsTrue(result2);
-            Assert.IsFalse(job.IsHit);
+            Assert.IsFalse(job.IsAllHit);
             Assert.IsTrue(job.NextWaiting);
 
             var result3 = job.Check(true, Key.C, new ModifierKeyStatus());
             Assert.IsTrue(result3);
-            Assert.IsTrue(job.IsHit);
+            Assert.IsTrue(job.IsAllHit);
             Assert.IsFalse(job.NextWaiting);
         }
 
@@ -351,27 +351,27 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.KeyAction
 
             var result1 = job.Check(true, Key.A, new ModifierKeyStatus());
             Assert.IsTrue(result1);
-            Assert.IsFalse(job.IsHit);
+            Assert.IsFalse(job.IsAllHit);
             Assert.IsTrue(job.NextWaiting);
 
             var result2 = job.Check(true, Key.LeftShift, new ModifierKeyStatus());
             Assert.IsFalse(result2);
-            Assert.IsFalse(job.IsHit);
+            Assert.IsFalse(job.IsAllHit);
             Assert.IsTrue(job.NextWaiting);
 
             var result3 = job.Check(true, Key.B, new ModifierKeyStatus());
             Assert.IsTrue(result3);
-            Assert.IsFalse(job.IsHit);
+            Assert.IsFalse(job.IsAllHit);
             Assert.IsTrue(job.NextWaiting);
 
             var result4 = job.Check(true, Key.RightShift, new ModifierKeyStatus());
             Assert.IsFalse(result4);
-            Assert.IsFalse(job.IsHit);
+            Assert.IsFalse(job.IsAllHit);
             Assert.IsTrue(job.NextWaiting);
 
             var result5 = job.Check(true, Key.C, new ModifierKeyStatus());
             Assert.IsTrue(result5);
-            Assert.IsTrue(job.IsHit);
+            Assert.IsTrue(job.IsAllHit);
             Assert.IsFalse(job.NextWaiting);
         }
 
@@ -387,32 +387,32 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.KeyAction
 
             var result1 = job.Check(true, Key.B, new ModifierKeyStatus());
             Assert.IsFalse(result1);
-            Assert.IsFalse(job.IsHit);
+            Assert.IsFalse(job.IsAllHit);
             Assert.IsFalse(job.NextWaiting);
 
             var result2 = job.Check(true, Key.A, new ModifierKeyStatus());
             Assert.IsTrue(result2);
-            Assert.IsFalse(job.IsHit);
+            Assert.IsFalse(job.IsAllHit);
             Assert.IsTrue(job.NextWaiting);
 
             var result3 = job.Check(true, Key.C, new ModifierKeyStatus());
             Assert.IsFalse(result3);
-            Assert.IsFalse(job.IsHit);
+            Assert.IsFalse(job.IsAllHit);
             Assert.IsFalse(job.NextWaiting);
 
             var result4 = job.Check(true, Key.A, new ModifierKeyStatus());
             Assert.IsTrue(result4);
-            Assert.IsFalse(job.IsHit);
+            Assert.IsFalse(job.IsAllHit);
             Assert.IsTrue(job.NextWaiting);
 
             var result5 = job.Check(true, Key.B, new ModifierKeyStatus());
             Assert.IsTrue(result5);
-            Assert.IsFalse(job.IsHit);
+            Assert.IsFalse(job.IsAllHit);
             Assert.IsTrue(job.NextWaiting);
 
             var result6 = job.Check(true, Key.C, new ModifierKeyStatus());
             Assert.IsTrue(result6);
-            Assert.IsTrue(job.IsHit);
+            Assert.IsTrue(job.IsAllHit);
             Assert.IsFalse(job.NextWaiting);
         }
 

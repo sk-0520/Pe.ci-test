@@ -202,7 +202,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         /// キー設定にヒットしたか。
         /// <para><see cref="Check"/>ではあくまで今のキー設定にヒットしたかどうかを確認するのでキー設定全てに該当したかを判定するために使用する。</para>
         /// </summary>
-        public bool IsHit { get; private set; }
+        public bool IsAllHit { get; private set; }
         /// <summary>
         /// 次キー入力待ちか。
         /// <para></para>
@@ -220,11 +220,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         public override void Reset()
         {
             NextIndex = 0;
-            IsHit = false;
+            IsAllHit = false;
         }
 
         /// <summary>
-        /// <para>有効であるかどうかは<see cref="IsHit"/>を確認すること。</para>
+        /// <para>有効であるかどうかは<see cref="IsAllHit"/>を確認すること。</para>
         /// </summary>
         /// <returns></returns>
         public override bool Check(bool isDown, Key key, in ModifierKeyStatus modifierKeyStatus)
@@ -246,7 +246,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
             }
             if(NextIndex + 1 == Mappings.Count) {
                 Reset();
-                IsHit = true;
+                IsAllHit = true;
             } else {
                 NextIndex += 1;
             }

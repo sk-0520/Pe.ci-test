@@ -45,11 +45,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             HookHandle = IntPtr.Zero;
         }
 
-        protected virtual IntPtr HookProcedure(int code, IntPtr wParam, IntPtr lParam)
+        protected abstract IntPtr HookProcedure(int code, IntPtr wParam, IntPtr lParam);
+
+        protected IntPtr CallNextProcedure(int code, IntPtr wParam, IntPtr lParam)
         {
             Logger.LogTrace("code = {0}, wParam = {1}, lParam = {2}", code, wParam, lParam);
             return NativeMethods.CallNextHookEx(HookHandle, code, wParam, lParam);
         }
+
 
         #endregion
 
@@ -219,10 +222,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         protected override IntPtr HookProcedure(int code, IntPtr wParam, IntPtr lParam)
         {
-            if(code <= 0) {
+            if(0<=code) {
                 var message = wParam.ToInt32();
-                var isUp = message == (int)WM.WM_KEYDOWN || message == (int)WM.WM_SYSKEYDOWN;
-                var isDown = message == (int)WM.WM_KEYUP || message == (int)WM.WM_SYSKEYUP;
+                var isDown = message == (int)WM.WM_KEYDOWN || message == (int)WM.WM_SYSKEYDOWN;
+                var isUp = message == (int)WM.WM_KEYUP || message == (int)WM.WM_SYSKEYUP;
                 if(isDown || isUp) {
                     var keyEvent = isDown ? KeyDown: KeyUp;
                     if(keyEvent != null) {
@@ -230,12 +233,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                         var e = new KeyboardHookEventArgs(isDown, lParam, modifierKeyStatus);
                         keyEvent.Invoke(this, e);
                         if(e.Handled) {
+                            Logger.LogTrace("input disable: {0}, {1}", e.Key, e.modifierKeyStatus);
                             return new IntPtr(1);
                         }
                     }
                 }
             }
-            return NativeMethods.CallNextHookEx(HookHandle, code, wParam, lParam);
+            return CallNextProcedure(code, wParam, lParam);
         }
 
         #endregion
@@ -252,6 +256,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         protected override IntPtr RegisterImpl(HookProc hookProc, IntPtr moduleHandle)
         {
             return NativeMethods.SetWindowsHookEx(WH.WH_MOUSE_LL, hookProc, moduleHandle, 0);
+        }
+
+        protected override IntPtr HookProcedure(int code, IntPtr wParam, IntPtr lParam)
+        {
+            return CallNextProcedure(code, wParam, lParam);
         }
 
         #endregion

@@ -126,5 +126,8 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         public static extern bool GetProcessWorkingSetSize(IntPtr hProcess, out UIntPtr lpMinimumWorkingSetSize, out UIntPtr lpMaximumWorkingSetSize);
         [DllImport("kernel32.dll")]
         public static extern bool SetProcessWorkingSetSize(IntPtr hProcess, UIntPtr dwMinimumWorkingSetSize, UIntPtr dwMaximumWorkingSetSize);
+
+        [DllImport("kernel32.dll")]
+        public static extern uint GetLastError();
     }
 }

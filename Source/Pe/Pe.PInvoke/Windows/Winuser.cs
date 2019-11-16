@@ -1770,6 +1770,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
     [Flags]
     public enum KEYEVENTF : uint
     {
+        KEYEVENTF_KEYDOWN = 0x0000,
         KEYEVENTF_EXTENDEDKEY = 0x0001,
         KEYEVENTF_KEYUP = 0x0002,
     }
@@ -2177,6 +2178,96 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         public UIntPtr dwExtraInfo;
     }
 
+    [StructLayout(LayoutKind.Sequential)]
+    public struct KEYBDINPUT
+    {
+        public ushort wVk;
+        public ushort wScan;
+        public KEYEVENTF dwFlags;
+        public int time;
+        public UIntPtr dwExtraInfo;
+    }
+
+    [Flags]
+    public enum MOUSEEVENTF : uint
+    {
+        MOUSEEVENTF_ABSOLUTE = 0x8000,
+        MOUSEEVENTF_HWHEEL = 0x01000,
+        MOUSEEVENTF_MOVE = 0x0001,
+        MOUSEEVENTF_MOVE_NOCOALESCE = 0x2000,
+        MOUSEEVENTF_LEFTDOWN = 0x0002,
+        MOUSEEVENTF_LEFTUP = 0x0004,
+        MOUSEEVENTF_RIGHTDOWN = 0x0008,
+        MOUSEEVENTF_RIGHTUP = 0x0010,
+        MOUSEEVENTF_MIDDLEDOWN = 0x0020,
+        MOUSEEVENTF_MIDDLEUP = 0x0040,
+        MOUSEEVENTF_VIRTUALDESK = 0x4000,
+        MOUSEEVENTF_WHEEL = 0x0800,
+        MOUSEEVENTF_XDOWN = 0x0080,
+        MOUSEEVENTF_XUP = 0x0100
+    }
+    [StructLayout(LayoutKind.Sequential)]
+    public struct MOUSEINPUT
+    {
+        public int dx;
+        public int dy;
+        public int mouseData;
+        public MOUSEEVENTF dwFlags;
+        public uint time;
+        public UIntPtr dwExtraInfo;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct HARDWAREINPUT
+    {
+        public int uMsg;
+        public short wParamL;
+        public short wParamH;
+    }
+
+    public enum INPUT_type : int
+    {
+        INPUT_MOUSE = 0,
+        INPUT_KEYBOARD = 1,
+        INPUT_HARDWARE = 1,
+    }
+
+    [StructLayout(LayoutKind.Explicit)]
+    public struct INPUT
+    {
+        [FieldOffset(0)]
+        public INPUT_type type;
+        [FieldOffset(4)]
+        public MOUSEINPUT no;
+        [FieldOffset(4)]
+        public KEYBDINPUT ki;
+        [FieldOffset(4)]
+        public HARDWAREINPUT hi;
+    };
+
+    /// <summary>
+    /// https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-mouse_event
+    /// http://tokovalue.jp/function/MapVirtualKey.htm
+    /// </summary>
+    public enum MAPVK:uint
+    {
+        /// <summary>
+        /// uCode は仮想キーコードであり、スキャンコードへ変換される。左右のキーを区別しない仮想キーコードのときは、関数は左側のスキャンコードを返す。スキャンコードに変換されないときは、関数は 0 を返す。
+        /// </summary>
+        MAPVK_VK_TO_VSC = 0,
+        /// <summary>
+        /// uCode はスキャンコードであり、仮想キーコードへ変換される。この仮想キーコードは、左右のキーを区別する。変換されないときは、関数は 0 を返する。
+        /// </summary>
+        MAPVK_VSC_TO_VK = 1,
+        /// <summary>
+        /// uCode は仮想キーコードであり、戻り値の下位ワードにシフトなしの ASCII 値が格納される。デッドキー（ 分音符号）は、戻り値の上位ビットをセットすることにより明示される。変換されないときは、関数は 0 を返す。
+        /// </summary>
+        MAPVK_VK_TO_CHAR = 2,
+        /// <summary>
+        /// Windows NT/2000：uCode はスキャンコードであり、左右のキーを区別する仮想キーコードへ変換される。変換されないときは、関数は 0 を返す。
+        /// </summary>
+        MAPVK_VSC_TO_VK_EX = 3,
+    }
     partial class NativeMethods
     {
         /// <summary>
@@ -2609,6 +2700,14 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         [DllImport("user32.dll", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool GetKeyboardState(byte[] lpKeyState);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern uint SendInput(uint nInputs, [MarshalAs(UnmanagedType.LPArray), In] INPUT[] pInputs, int cbSize);
+
+        [DllImport("user32.dll")]
+        public static extern uint MapVirtualKeyEx(uint uCode, uint uMapType, IntPtr dwhkl);
+        [DllImport("user32.dll")]
+        public static extern uint MapVirtualKey(uint uCode, MAPVK uMapType);
     }
 
 

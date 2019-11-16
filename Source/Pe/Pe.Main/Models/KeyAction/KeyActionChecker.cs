@@ -6,6 +6,7 @@ using System.Windows.Input;
 using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
+using ContentTypeTextNet.Pe.PInvoke.Windows;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
@@ -39,6 +40,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
     /// </remarks>
     public class KeyActionChecker
     {
+        #region variable
+
+        uint _selfJobInputId = 1234;
+
+        #endregion
         public KeyActionChecker(ILoggerFactory loggerFactory)
         {
             Logger = loggerFactory.CreateLogger(GetType());
@@ -62,7 +68,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         /// <para>0以外の場合 <see cref="KBDLLHOOKSTRUCT.dwExtraInfo"/> を確認して同じなら弾くようにする。</para>
         /// <para>呼び出し側で制御。。。</para>
         /// </summary>
-        public int SelfJobInputId { get; set; } = 1234;
+        public uint SelfJobInputId
+        {
+            get => this._selfJobInputId;
+            set
+            {
+                if(value == 0) {
+                    throw new ArgumentException("error: 0");
+                }
+                this._selfJobInputId = value;
+
+            }
+        }
 
         public IList<KeyActionDisableJob> DisableJobs { get; } = new List<KeyActionDisableJob>();
         public IList<KeyActionReplaceJob> ReplaceJobs { get; } = new List<KeyActionReplaceJob>();
@@ -71,8 +88,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
 
         #region function
 
-        public IReadOnlyCollection<KeyActionJobBase> Find(bool isDown, Key key, in ModifierKeyStatus modifierKeyStatus)
+        public IReadOnlyCollection<KeyActionJobBase> Find(bool isDown, Key key, in ModifierKeyStatus modifierKeyStatus, in KBDLLHOOKSTRUCT kbdll)
         {
+            if(IgnoreSelfJobInput && kbdll.dwExtraInfo != UIntPtr.Zero) {
+                var extraInfo = kbdll.dwExtraInfo.ToUInt32();
+                if(extraInfo == SelfJobInputId) {
+                    Logger.LogTrace("ignore input");
+                    return new KeyActionJobBase[0];
+                }
+            }
+
             // 置き換え
             foreach(var job in ReplaceJobs) {
                 if(job.Check(isDown, key, modifierKeyStatus)) {
@@ -90,6 +115,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
                         // 一つでも無効化になれば後は不要(効果が一緒のため)
                         result.Add(job);
                         break;
+                    }
+                }
+            }
+
+            // キー入力処理
+            foreach(var job in PressedJobs) {
+                if(job.Check(isDown, key, modifierKeyStatus)) {
+                    if(job.IsAllHit) {
+                        result.Add(job);
                     }
                 }
             }
