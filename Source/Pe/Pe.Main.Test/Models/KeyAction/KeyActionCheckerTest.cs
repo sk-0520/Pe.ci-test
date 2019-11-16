@@ -74,6 +74,31 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.KeyAction
         }
 
         [TestMethod]
+        public void FindTest_DisableStopEnable()
+        {
+            var keyActionChecker = new KeyActionChecker(Test.LoggerFactory);
+            keyActionChecker.DisableJobs.Add(new KeyActionDisableJob(
+                new KeyActionDisableData() {
+                    StopEnable = true,
+                },
+                new KeyMappingData() {
+                    Key = Key.A
+                }
+            ));
+
+            var modifierKeyStatus = new ModifierKeyStatus();
+
+            var result1 = keyActionChecker.Find(true, Key.A, modifierKeyStatus, new KBDLLHOOKSTRUCT());
+            keyActionChecker.KeyDisableToEnableTime = TimeSpan.MaxValue;
+            var result2 = keyActionChecker.Find(true, Key.A, modifierKeyStatus, new KBDLLHOOKSTRUCT());
+            keyActionChecker.KeyDisableToEnableTime = TimeSpan.Zero;
+            var result3 = keyActionChecker.Find(true, Key.A, modifierKeyStatus, new KBDLLHOOKSTRUCT());
+            Assert.IsFalse(result1.Any());
+            Assert.IsFalse(result2.Any());
+            Assert.IsFalse(result3.Any());
+        }
+
+        [TestMethod]
         public void FindTest_Replace()
         {
             var keyActionChecker = new KeyActionChecker(Test.LoggerFactory);

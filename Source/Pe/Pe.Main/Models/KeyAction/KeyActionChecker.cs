@@ -110,6 +110,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
 
             // 無効化
             foreach(var job in DisableJobs) {
+                if(job.ActionData.StopEnable) {
+                    // 完全無視
+                    result.Add(job);
+                    break;
+                }
+
                 if(KeyDisableToEnableTime < now - job.LastCheckTimestamp) {
                     if(job.Check(isDown, key, modifierKeyStatus)) {
                         // 一つでも無効化になれば後は不要(効果が一緒のため)

@@ -141,6 +141,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
         /// <summary>
         /// 置き換えキー。
+        /// NOTE: IReadOnlyKeyMappingData にするか悩んだけどいいだろもう
         /// </summary>
         Key ReplaceKey { get; }
 
@@ -155,14 +156,30 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         /// <see cref="IReadOnlyKeyActionReplaceData.ReplaceKey"/>
         /// </summary>
         public Key ReplaceKey { get; set; }
+
         #endregion
     }
 
     public interface IReadOnlyKeyActionDisableData : IReadOnlyKeyActionCommonData
-    { }
+    {
+        #region property
+
+        /// <summary>
+        /// 完全に無視するか。
+        /// </summary>
+        bool StopEnable { get; }
+
+        #endregion
+    }
 
     public class KeyActionDisableData : KeyActionCommonData, IReadOnlyKeyActionDisableData
-    { }
+    {
+        #region IReadOnlyKeyActionDisableData
+
+        public bool StopEnable {get;set;}
+
+        #endregion
+    }
 
     public interface IReadOnlyKeyActionPressedData : IReadOnlyKeyActionCommonData
     { }
