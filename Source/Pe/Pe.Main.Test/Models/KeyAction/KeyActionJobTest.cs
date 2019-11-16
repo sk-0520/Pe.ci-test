@@ -43,10 +43,10 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.KeyAction
         }
 
         [TestMethod]
-        [DataRow(false, Key.None, Key.None)]
         [DataRow(false, Key.None, Key.A)]
         [DataRow(false, Key.A, Key.None)]
         [DataRow(false, Key.A, Key.B)]
+        [DataRow(true, Key.None, Key.None)] // 実運用上ないけどデータ的には正
         [DataRow(true, Key.A, Key.A)]
         public void TestMappingTest_KeyOnly(bool result, Key mapKey, Key inputKey)
         {

@@ -27,7 +27,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
 
         protected bool TestMapping(IReadOnlyKeyMappingItemData mapping, bool isDown, Key key, in ModifierKeyStatus modifierKeyStatus)
         {
-            return false;
+            if(mapping.Key != key) {
+                return false;
+            }
+
+            return true;
         }
 
         #endregion
