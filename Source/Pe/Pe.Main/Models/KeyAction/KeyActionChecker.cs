@@ -1,6 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Windows.Input;
+using ContentTypeTextNet.Pe.Main.Models.Logic;
+using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
 {
@@ -31,16 +35,37 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
     /// </remarks>
     public class KeyActionChecker
     {
-        public KeyActionChecker()
+        public KeyActionChecker(ILoggerFactory loggerFactory)
         {
-
+            Logger = loggerFactory.CreateLogger(GetType());
         }
 
         #region property
+
+        ILogger Logger { get; }
+
+        public IList<KeyActionDisableJob> DisableJobs { get; } = new List<KeyActionDisableJob>();
+        public IList<KeyActionReplaceJob> ReplaceJobs { get; } = new List<KeyActionReplaceJob>();
+
         #endregion
 
         #region function
 
+        public IReadOnlyCollection<KeyActionJobBase> Find(bool isDown, Key key, in ModifierKeyStatus modifierKeyStatus)
+        {
+            if(!isDown) {
+                return new List<KeyActionJobBase>();
+            }
+
+            var result = new List<KeyActionJobBase>();
+            foreach(var job in DisableJobs) {
+                if(job.Check(isDown, key, modifierKeyStatus)) {
+                    result.Add(job);
+                }
+            }
+
+            return result;
+        }
 
         #endregion
     }

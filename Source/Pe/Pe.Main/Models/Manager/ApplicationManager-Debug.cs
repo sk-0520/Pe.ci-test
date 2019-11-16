@@ -9,6 +9,7 @@ using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Element._Debug_;
+using ContentTypeTextNet.Pe.Main.Models.KeyAction;
 using ContentTypeTextNet.Pe.Main.Models.Launcher;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.ViewModels._Debug_;
@@ -37,7 +38,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             //DebugCustomize();
             //DebugExtendsExecute();
             //DebugStdIoExecute();
-            DebugHook();
+            //DebugHook();
         }
 
         void DebugCustomize()

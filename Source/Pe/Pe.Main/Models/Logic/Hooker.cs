@@ -176,16 +176,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         #endregion
 
-        public KeyboardHookEventArgs(bool isUp, IntPtr lParam, ModifierKeyStatus modifierKeyStatus)
+        public KeyboardHookEventArgs(bool isDown, IntPtr lParam, ModifierKeyStatus modifierKeyStatus)
         {
+            IsDown = isDown;
             this.kbdll = (KBDLLHOOKSTRUCT)Marshal.PtrToStructure(lParam, typeof(KBDLLHOOKSTRUCT))!;
-
             Key = KeyInterop.KeyFromVirtualKey((int)this.kbdll.vkCode);
             this.modifierKeyStatus = modifierKeyStatus;
         }
 
         #region property
 
+        public bool IsDown {get;}
         public Key Key { get; }
 
         /// <summary>
@@ -228,13 +229,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         {
             if(code <= 0) {
                 var message = wParam.ToInt32();
-                var isDown = message == (int)WM.WM_KEYUP || message == (int)WM.WM_SYSKEYUP;
                 var isUp = message == (int)WM.WM_KEYDOWN || message == (int)WM.WM_SYSKEYDOWN;
-                if(isUp || isDown) {
-                    var keyEvent = isUp ? KeyUp : KeyDown;
+                var isDown = message == (int)WM.WM_KEYUP || message == (int)WM.WM_SYSKEYUP;
+                if(isDown || isUp) {
+                    var keyEvent = isDown ? KeyDown: KeyUp;
                     if(keyEvent != null) {
                         var modifierKeyStatus = ModifierKeyStatus.Create();
-                        var e = new KeyboardHookEventArgs(isUp, lParam, modifierKeyStatus);
+                        var e = new KeyboardHookEventArgs(isDown, lParam, modifierKeyStatus);
                         keyEvent.Invoke(this, e);
                         if(e.Handled) {
                             return new IntPtr(1);

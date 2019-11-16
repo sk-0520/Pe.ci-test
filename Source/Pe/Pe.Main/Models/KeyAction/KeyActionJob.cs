@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Input;
 using ContentTypeTextNet.Pe.Main.Models.Data;
+using ContentTypeTextNet.Pe.Main.Models.Logic;
 
 namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
 {
@@ -22,6 +24,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         #endregion
 
         #region function
+
+        protected bool TestMapping(IReadOnlyKeyMappingItemData mapping, bool isDown, Key key, in ModifierKeyStatus modifierKeyStatus)
+        {
+            return false;
+        }
+
         #endregion
     }
 
@@ -80,6 +88,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         #endregion
 
         #region function
+
+        public bool Check(bool isDown, Key key, in ModifierKeyStatus modifierKeyStatus)
+        {
+            var mapping = Mappings[0];
+            return TestMapping(mapping, isDown, key, modifierKeyStatus);
+        }
+
         #endregion
     }
 
