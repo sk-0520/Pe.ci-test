@@ -135,6 +135,41 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
+    public interface IReadOnlyKeyActionReplaceData: IReadOnlyKeyActionCommonData
+    {
+        #region property
+
+        /// <summary>
+        /// 置き換えキー。
+        /// </summary>
+        Key ReplaceKey { get; }
+
+        #endregion
+    }
+
+    public class KeyActionReplaceData: KeyActionCommonData, IReadOnlyKeyActionReplaceData
+    {
+        #region IReadOnlyKeyActionReplaceData
+
+        /// <summary>
+        /// <see cref="IReadOnlyKeyActionReplaceData.ReplaceKey"/>
+        /// </summary>
+        public Key ReplaceKey { get; }
+        #endregion
+    }
+
+    public interface IReadOnlyKeyActionDisableData: IReadOnlyKeyActionCommonData
+    {
+        #region property
+        #endregion
+    }
+
+    public class KeyActionDisableData : KeyActionCommonData, IReadOnlyKeyActionDisableData
+    {
+        #region IReadOnlyKeyActionDisableData
+        #endregion
+    }
+
     public interface IReadOnlyKeyMappingItemData
     {
         #region property

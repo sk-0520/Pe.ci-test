@@ -91,14 +91,15 @@ echo end
         {
             dbgKeyboradHooker = new KeyboradHooker(LoggerFactory);
             dbgKeyboradHooker.KeyDown += (sender, e) => {
-                Logger.LogTrace("UP: key = {0}, {1}", e.Key, e.kbdll);
+                Logger.LogTrace("UP: key = {0}, mods = {1}, {2}", e.Key, e.modifierKeyStatus, e.kbdll);
             };
             dbgKeyboradHooker.KeyUp += (sender, e) => {
-                Logger.LogTrace("DN: key = {0}, {1}", e.Key, e.kbdll);
+                Logger.LogTrace("DW: key = {0}, mods = {1}, {2}", e.Key, e.modifierKeyStatus, e.kbdll);
             };
             dbgKeyboradHooker.Register();
+
             dbgMouseHooker = new MouseHooker(LoggerFactory);
-            //MouseHooker.Register();
+            //dbgMouseHooker.Register();
         }
 
         void DebugColorPicker()

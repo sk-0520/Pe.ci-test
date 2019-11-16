@@ -10,7 +10,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Logic
 {
-    public abstract class HookerBase: DisposerBase
+    public abstract class HookerBase : DisposerBase
     {
         public HookerBase(ILoggerFactory loggerFactory)
         {
@@ -69,19 +69,119 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         #endregion
     }
 
-    public class KeyboardHookEventArgs: EventArgs
+    /// <summary>
+    /// 修飾キーが押されているか。
+    /// </summary>
+    public readonly struct ModifierKeyState
     {
-        #region proeprty
+        public ModifierKeyState(bool left, bool right)
+        {
+            Left = left;
+            Right = right;
+        }
 
-        public KBDLLHOOKSTRUCT kbdll;
+        #region property
+
+        /// <summary>
+        /// 左。
+        /// </summary>
+        public bool Left { get; }
+        /// <summary>
+        /// 右。
+        /// </summary>
+        public bool Right { get; }
+        /// <summary>
+        /// どちらか。
+        /// </summary>
+        public readonly bool Any => Left || Right;
+        /// <summary>
+        /// 両方。
+        /// </summary>
+        public readonly bool All => Left && Right;
 
         #endregion
 
-        public KeyboardHookEventArgs(bool isUp, IntPtr lParam)
+        #region ValueType
+
+        public override string ToString()
+        {
+            if(Any) {
+                if(All) {
+                    return nameof(All);
+                }
+                return Left ? nameof(Left) : nameof(Right);
+            }
+            return "None";
+        }
+
+        #endregion
+    }
+
+    public readonly struct ModifierKeyStatus
+    {
+        #region variable
+
+        public readonly ModifierKeyState shift;
+        public readonly ModifierKeyState contrl;
+        public readonly ModifierKeyState alt;
+        public readonly ModifierKeyState super;
+
+        #endregion
+
+        public ModifierKeyStatus(ModifierKeyState shift, ModifierKeyState contrl, ModifierKeyState alt, ModifierKeyState super)
+        {
+            this.shift = shift;
+            this.contrl = contrl;
+            this.alt = alt;
+            this.super = super;
+        }
+
+
+        #region function
+
+        public static ModifierKeyStatus Create()
+        {
+            static ModifierKeyState GetModifierKeyState(Key left, Key right)
+            {
+                return new ModifierKeyState(Keyboard.IsKeyDown(left), Keyboard.IsKeyDown(right));
+            }
+
+            return new ModifierKeyStatus(
+                GetModifierKeyState(Key.LeftShift, Key.RightShift),
+                GetModifierKeyState(Key.LeftCtrl, Key.RightCtrl),
+                GetModifierKeyState(Key.LeftAlt, Key.RightAlt),
+                GetModifierKeyState(Key.LWin, Key.RWin)
+            );
+        }
+
+        #endregion
+
+        #region ValueType
+
+        public readonly override string ToString()
+        {
+            return $"shift = {this.shift}, alt = {this.alt}, ctrl = {this.contrl}, win = {this.super}";
+        }
+
+        #endregion
+
+    }
+
+    public class KeyboardHookEventArgs : EventArgs
+    {
+        #region proeprty
+
+        public readonly KBDLLHOOKSTRUCT kbdll;
+        public readonly ModifierKeyStatus modifierKeyStatus;
+
+        #endregion
+
+        public KeyboardHookEventArgs(bool isUp, IntPtr lParam, ModifierKeyStatus modifierKeyStatus)
         {
             this.kbdll = (KBDLLHOOKSTRUCT)Marshal.PtrToStructure(lParam, typeof(KBDLLHOOKSTRUCT))!;
 
             Key = KeyInterop.KeyFromVirtualKey((int)this.kbdll.vkCode);
+            this.modifierKeyStatus = modifierKeyStatus;
         }
 
         #region property
@@ -110,6 +210,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             : base(loggerFactory)
         { }
 
+        #region property
+        #endregion
+
         #region function
 
         #endregion
@@ -128,18 +231,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                 var isDown = message == (int)WM.WM_KEYUP || message == (int)WM.WM_SYSKEYUP;
                 var isUp = message == (int)WM.WM_KEYDOWN || message == (int)WM.WM_SYSKEYDOWN;
                 if(isUp || isDown) {
-                    var e = new KeyboardHookEventArgs(isUp, lParam);
-                    if(isUp) {
-                        KeyUp?.Invoke(this, e);
-                    } else {
-                        KeyDown?.Invoke(this, e);
-                    }
-
-                    if(e.Handled) {
-                        return new IntPtr(1);
+                    var keyEvent = isUp ? KeyUp : KeyDown;
+                    if(keyEvent != null) {
+                        var modifierKeyStatus = ModifierKeyStatus.Create();
+                        var e = new KeyboardHookEventArgs(isUp, lParam, modifierKeyStatus);
+                        keyEvent.Invoke(this, e);
+                        if(e.Handled) {
+                            return new IntPtr(1);
+                        }
                     }
                 }
-
             }
             return NativeMethods.CallNextHookEx(HookHandle, code, wParam, lParam);
         }
@@ -147,7 +248,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         #endregion
     }
 
-    public class MouseHooker: HookerBase
+    public class MouseHooker : HookerBase
     {
         public MouseHooker(ILoggerFactory loggerFactory)
             : base(loggerFactory)

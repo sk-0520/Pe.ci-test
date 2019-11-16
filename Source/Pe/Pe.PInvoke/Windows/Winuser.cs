@@ -2606,6 +2606,9 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         static extern IntPtr CallNextHookEx(IntPtr hhk, int nCode, WM wParam, [In]MSLLHOOKSTRUCT lParam);
         [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         public static extern IntPtr GetModuleHandle(string lpModuleName);
+        [DllImport("user32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool GetKeyboardState(byte[] lpKeyState);
     }
 
 
