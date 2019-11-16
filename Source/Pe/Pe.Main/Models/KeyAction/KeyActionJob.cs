@@ -6,9 +6,9 @@ using ContentTypeTextNet.Pe.Main.Models.Data;
 
 namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
 {
-    public abstract class KeyActionExecutorBase
+    public abstract class KeyActionJobBase
     {
-        public KeyActionExecutorBase(IReadOnlyKeyActionCommonData commonData, IEnumerable<IReadOnlyKeyMappingItemData> mappings)
+        public KeyActionJobBase(IReadOnlyKeyActionCommonData commonData, IEnumerable<IReadOnlyKeyMappingItemData> mappings)
         {
             CommonData = commonData;
             Mappings = mappings.ToList();
@@ -25,10 +25,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         #endregion
     }
 
-    public abstract class KeyActionExecutorBase<TActionData> : KeyActionExecutorBase
+    public abstract class KeyActionJobBase<TActionData> : KeyActionJobBase
         where TActionData : IReadOnlyKeyActionCommonData
     {
-        public KeyActionExecutorBase(TActionData actionData, IEnumerable<IReadOnlyKeyMappingItemData> mappings)
+        public KeyActionJobBase(TActionData actionData, IEnumerable<IReadOnlyKeyMappingItemData> mappings)
             : base(actionData, mappings)
         {
             ActionData = actionData;
@@ -41,9 +41,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         #endregion
     }
 
-    public sealed class KeyActionReplaceExecutor : KeyActionExecutorBase<IReadOnlyKeyActionReplaceData>
+    public sealed class KeyActionReplaceJob : KeyActionJobBase<IReadOnlyKeyActionReplaceData>
     {
-        public KeyActionReplaceExecutor(IReadOnlyKeyActionReplaceData actionData, IReadOnlyKeyMappingItemData mapping)
+        public KeyActionReplaceJob(IReadOnlyKeyActionReplaceData actionData, IReadOnlyKeyMappingItemData mapping)
             : base(actionData, new[] { mapping })
         {
             if(ActionData.ReplaceKey == System.Windows.Input.Key.None) {
@@ -58,9 +58,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         #endregion
     }
 
-    public sealed class KeyActionDisableExecutor : KeyActionExecutorBase<IReadOnlyKeyActionDisableData>
+    public sealed class KeyActionDisableJob : KeyActionJobBase<IReadOnlyKeyActionDisableData>
     {
-        public KeyActionDisableExecutor(IReadOnlyKeyActionDisableData actionData, IReadOnlyKeyMappingItemData mapping)
+        public KeyActionDisableJob(IReadOnlyKeyActionDisableData actionData, IReadOnlyKeyMappingItemData mapping)
             : base(actionData, new[] { mapping })
         {
             if(mapping.Key == System.Windows.Input.Key.None) {
