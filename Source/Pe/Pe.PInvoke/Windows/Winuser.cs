@@ -2229,20 +2229,23 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
     {
         INPUT_MOUSE = 0,
         INPUT_KEYBOARD = 1,
-        INPUT_HARDWARE = 1,
+        INPUT_HARDWARE = 2,
     }
 
-    [StructLayout(LayoutKind.Explicit)]
+    [StructLayout(LayoutKind.Sequential)]
     public struct INPUT
     {
-        [FieldOffset(0)]
         public INPUT_type type;
-        [FieldOffset(4)]
-        public MOUSEINPUT no;
-        [FieldOffset(4)]
-        public KEYBDINPUT ki;
-        [FieldOffset(4)]
-        public HARDWAREINPUT hi;
+        public INPUT_data data;
+    };
+
+
+    [StructLayout(LayoutKind.Explicit)]
+    public struct INPUT_data
+    {
+        [FieldOffset(0)] public MOUSEINPUT mi;
+        [FieldOffset(0)] public KEYBDINPUT ki;
+        [FieldOffset(0)] public HARDWAREINPUT hi;
     };
 
     /// <summary>

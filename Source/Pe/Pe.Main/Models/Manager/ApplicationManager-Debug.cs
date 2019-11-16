@@ -6,6 +6,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
@@ -154,18 +155,18 @@ echo end
                                 var input = new INPUT() {
                                     type = INPUT_type.INPUT_KEYBOARD,
                                 };
-                                input.ki.wVk = (ushort)replaceJob.ActionData.ReplaceKey;
-                                input.ki.wScan = (ushort)NativeMethods.MapVirtualKey(input.ki.wVk, MAPVK.MAPVK_VK_TO_VSC);
-                                input.ki.dwFlags = KEYEVENTF.KEYEVENTF_EXTENDEDKEY| KEYEVENTF.KEYEVENTF_KEYDOWN;
-                                input.ki.dwExtraInfo = new UIntPtr(dbgKeyActionChecker.SelfJobInputId);
-                                input.ki.time = 0;
+                                input.data.ki.wVk = (ushort)KeyInterop.VirtualKeyFromKey(replaceJob.ActionData.ReplaceKey);
+                                input.data.ki.wScan = (ushort)NativeMethods.MapVirtualKey(input.data.ki.wVk, MAPVK.MAPVK_VK_TO_VSC);
+                                input.data.ki.dwFlags = KEYEVENTF.KEYEVENTF_EXTENDEDKEY| KEYEVENTF.KEYEVENTF_KEYDOWN;
+                                input.data.ki.dwExtraInfo = new UIntPtr(dbgKeyActionChecker.SelfJobInputId);
+                                input.data.ki.time = 0;
 
                                 var inputs = new[] {
                                     input,
                                 };
 
                                 NativeMethods.SetLastError(0);
-                                NativeMethods.SendInput(1, inputs, Marshal.SizeOf<INPUT>());
+                                NativeMethods.SendInput(1, inputs, Marshal.SizeOf(input));
                                 var e1 = Marshal.GetLastWin32Error();
                                 var e2 = NativeMethods.GetLastError();
                                 Logger.LogDebug("last error: {0}, {1}", e1, e2);
