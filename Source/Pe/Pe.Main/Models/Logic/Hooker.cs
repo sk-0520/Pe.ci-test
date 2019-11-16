@@ -181,7 +181,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         #region property
 
-        public bool IsDown {get;}
+        public bool IsDown { get; }
         public Key Key { get; }
 
         /// <summary>
@@ -222,19 +222,36 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         protected override IntPtr HookProcedure(int code, IntPtr wParam, IntPtr lParam)
         {
-            if(0<=code) {
+            if(0 <= code) {
                 var message = wParam.ToInt32();
                 var isDown = message == (int)WM.WM_KEYDOWN || message == (int)WM.WM_SYSKEYDOWN;
                 var isUp = message == (int)WM.WM_KEYUP || message == (int)WM.WM_SYSKEYUP;
                 if(isDown || isUp) {
-                    var keyEvent = isDown ? KeyDown: KeyUp;
+                    var keyEvent = isDown ? KeyDown : KeyUp;
+                    Stopwatch? stopwatch = null;
                     if(keyEvent != null) {
+                        if(Logger.IsEnabled(LogLevel.Trace)) {
+                            stopwatch = new Stopwatch();
+                            stopwatch.Start();
+                            Logger.LogTrace("キーボード {0} フック 実装部 開始", isUp ? nameof(KeyDown) : nameof(KeyUp));
+                        }
+
                         var modifierKeyStatus = ModifierKeyStatus.Create();
                         var e = new KeyboardHookEventArgs(isDown, lParam, modifierKeyStatus);
                         keyEvent.Invoke(this, e);
                         if(e.Handled) {
-                            Logger.LogTrace("input disable: {0}, {1}", e.Key, e.modifierKeyStatus);
+                            Logger.LogTrace("入力制御: {0}, {1}, {2}", isUp ? nameof(KeyDown) : nameof(KeyUp), e.Key, e.modifierKeyStatus);
                             return new IntPtr(1);
+                        }
+
+                        if(Logger.IsEnabled(LogLevel.Trace)) {
+                            Debug.Assert(stopwatch != null);
+                            stopwatch.Stop();
+                            if(TimeSpan.FromMilliseconds(300) < stopwatch.Elapsed) {
+                                Logger.LogWarning("キーボード {0} フック 実装部 終了: {1}", isUp ? nameof(KeyDown) : nameof(KeyUp), stopwatch.Elapsed);
+                            } else {
+                                Logger.LogTrace("キーボード {0} フック 実装部 終了: {1}", isUp ? nameof(KeyDown) : nameof(KeyUp), stopwatch.Elapsed);
+                            }
                         }
                     }
                 }

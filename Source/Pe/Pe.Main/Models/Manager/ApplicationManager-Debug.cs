@@ -132,7 +132,7 @@ echo end
                     StopEnable = true,
                 },
                 new KeyMappingData() {
-                    Key = System.Windows.Input.Key.RightCtrl,
+                    Key = System.Windows.Input.Key.L,
                 }
             ));
             dbgKeyActionChecker.DisableJobs.Add(new KeyActionDisableJob(
@@ -173,7 +173,6 @@ echo end
                     e.Handled = true;
                     Task.Run(() => {
                         foreach(var job in jobs) {
-                            Logger.LogTrace("[{0}]: {1}", job.CommonData.KeyActionId, job);
                             if(job.CommonData.KeyActionKind == KeyActionKind.Replace) {
                                 var replaceJob = (KeyActionReplaceJob)job;
                                 dbgKeyActionAssistant.ExecuteReplaceJob(replaceJob, e.modifierKeyStatus);
