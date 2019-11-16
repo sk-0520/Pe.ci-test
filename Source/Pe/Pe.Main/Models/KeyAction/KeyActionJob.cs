@@ -160,9 +160,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
 
         public override bool Check(bool isDown, Key key, in ModifierKeyStatus modifierKeyStatus)
         {
-            if(!isDown) {
-                return false;
-            }
+            //if(!isDown) {
+            //    return false;
+            //}
 
             var mapping = Mappings[0];
             var result = TestMapping(mapping, isDown, key, modifierKeyStatus);
