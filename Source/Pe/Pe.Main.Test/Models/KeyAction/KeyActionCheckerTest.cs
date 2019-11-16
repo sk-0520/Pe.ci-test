@@ -93,9 +93,9 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.KeyAction
             var result2 = keyActionChecker.Find(true, Key.A, modifierKeyStatus, new KBDLLHOOKSTRUCT());
             keyActionChecker.KeyDisableToEnableTime = TimeSpan.Zero;
             var result3 = keyActionChecker.Find(true, Key.A, modifierKeyStatus, new KBDLLHOOKSTRUCT());
-            Assert.IsFalse(result1.Any());
-            Assert.IsFalse(result2.Any());
-            Assert.IsFalse(result3.Any());
+            Assert.IsTrue(result1.Any());
+            Assert.IsTrue(result2.Any());
+            Assert.IsTrue(result3.Any());
         }
 
         [TestMethod]
