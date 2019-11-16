@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Input;
+using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 
@@ -114,6 +115,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         }
 
         #region property
+
+        /// <summary>
+        /// 最後にチェック対象とした時間。
+        /// </summary>
+        [Timestamp(DateTimeKind.Utc)]
+        public DateTime LastCheckTimestamp { get; private set; } = DateTime.MinValue.ToUniversalTime();
+
         #endregion
 
         #region function
@@ -121,7 +129,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         public bool Check(bool isDown, Key key, in ModifierKeyStatus modifierKeyStatus)
         {
             var mapping = Mappings[0];
-            return TestMapping(mapping, isDown, key, modifierKeyStatus);
+            var result = TestMapping(mapping, isDown, key, modifierKeyStatus);
+            if(result) {
+                LastCheckTimestamp = DateTime.UtcNow;
+            }
+            return result;
         }
 
         #endregion

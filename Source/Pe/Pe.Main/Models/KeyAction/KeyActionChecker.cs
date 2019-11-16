@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Input;
+using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using Microsoft.Extensions.Logging;
 
@@ -44,6 +45,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
 
         ILogger Logger { get; }
 
+        /// <summary>
+        /// キー無効化処理にてこの時間内の入力に限り有効化する。
+        /// </summary>
+        public TimeSpan KeyDisableToEnableTime { get; set; } = SystemInformation.DoubleClickTime;
+
         public IList<KeyActionDisableJob> DisableJobs { get; } = new List<KeyActionDisableJob>();
         public IList<KeyActionReplaceJob> ReplaceJobs { get; } = new List<KeyActionReplaceJob>();
 
@@ -56,11 +62,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
             if(!isDown) {
                 return new List<KeyActionJobBase>();
             }
-
+            var now = DateTime.UtcNow;
             var result = new List<KeyActionJobBase>();
             foreach(var job in DisableJobs) {
-                if(job.Check(isDown, key, modifierKeyStatus)) {
-                    result.Add(job);
+                if(KeyDisableToEnableTime < now - job.LastCheckTimestamp) {
+                    if(job.Check(isDown, key, modifierKeyStatus)) {
+                        result.Add(job);
+                    }
                 }
             }
 
