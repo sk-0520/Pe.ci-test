@@ -495,23 +495,26 @@ ___
 
 ___
 
-## KeyMappings
+## KeyActions
 
 ### layout
 
-| PK | NN | FK | 論理カラム名             | 物理カラム名          | 論理データ型 | マッピング型    | チェック制約 | コメント       |
-|:--:|:--:|:---|:-------------------------|:----------------------|:-------------|:----------------|:-------------|:---------------|
-| o  | o  |    | キーマップID             | KeyMappingId          | text         | System.Guid     |              |                |
-| o  | o  |    | 並び順                   | Sequence              | integer      | System.Int64    |              |                |
-|    | o  |    | 作成タイムスタンプ       | CreatedTimestamp      | datetime     | System.DateTime |              | UTC            |
-|    | o  |    | 作成ユーザー名           | CreatedAccount        | text         | System.String   |              |                |
-|    | o  |    | 作成プログラム名         | CreatedProgramName    | text         | System.String   |              |                |
-|    | o  |    | 作成プログラムバージョン | CreatedProgramVersion | text         | System.Version  |              |                |
-|    | o  |    | キー                     | Key                   | text         | System.String   |              | キー           |
-|    | o  |    | Shiftキー                | Shift                 | text         | System.String   |              | 何れか, 左, 右 |
-|    | o  |    | Ctrlキー                 | Control               | text         | System.String   |              | 何れか, 左, 右 |
-|    | o  |    | Altキー                  | Alt                   | text         | System.String   |              | 何れか, 左, 右 |
-|    | o  |    | Winキー                  | Super                 | text         | System.String   |              | 何れか, 左, 右 |
+| PK | NN | FK | 論理カラム名             | 物理カラム名          | 論理データ型 | マッピング型    | チェック制約 | コメント             |
+|:--:|:--:|:---|:-------------------------|:----------------------|:-------------|:----------------|:-------------|:---------------------|
+| o  | o  |    | キーアクションID         | KeyActionId           | text         | System.Guid     |              |                      |
+|    | o  |    | 作成タイムスタンプ       | CreatedTimestamp      | datetime     | System.DateTime |              | UTC                  |
+|    | o  |    | 作成ユーザー名           | CreatedAccount        | text         | System.String   |              |                      |
+|    | o  |    | 作成プログラム名         | CreatedProgramName    | text         | System.String   |              |                      |
+|    | o  |    | 作成プログラムバージョン | CreatedProgramVersion | text         | System.Version  |              |                      |
+|    | o  |    | 更新タイムスタンプ       | UpdatedTimestamp      | datetime     | System.DateTime |              | UTC                  |
+|    | o  |    | 更新ユーザー名           | UpdatedAccount        | text         | System.String   |              |                      |
+|    | o  |    | 更新プログラム名         | UpdatedProgramName    | text         | System.String   |              |                      |
+|    | o  |    | 更新プログラムバージョン | UpdatedProgramVersion | text         | System.Version  |              |                      |
+|    | o  |    | 更新回数                 | UpdatedCount          | integer      | System.Int64    |              | 0始まり              |
+|    | o  |    | アクション種別           | KeyActionKind         | text         | System.String   |              | ランチャー, コマンド |
+|    | o  |    | アクション内容           | KeyActionContent      | text         | System.String   |              | アクション種別で変動 |
+|    | o  |    | オプション内容           | KeyActionOption       | text         | System.String   |              | アクション種別で変動 |
+|    | o  |    | コメント                 | Comment               | text         | System.String   |              |                      |
 
 ### index
 
@@ -521,25 +524,23 @@ ___
 
 ___
 
-## KeyActions
+## KeyMappings
 
 ### layout
 
-| PK | NN | FK                       | 論理カラム名             | 物理カラム名          | 論理データ型 | マッピング型    | チェック制約 | コメント             |
-|:--:|:--:|:-------------------------|:-------------------------|:----------------------|:-------------|:----------------|:-------------|:---------------------|
-| o  | o  | KeyMappings.KeyMappingId | キーマップID             | KeyMappingId          | text         | System.Guid     |              |                      |
-|    | o  |                          | 作成タイムスタンプ       | CreatedTimestamp      | datetime     | System.DateTime |              | UTC                  |
-|    | o  |                          | 作成ユーザー名           | CreatedAccount        | text         | System.String   |              |                      |
-|    | o  |                          | 作成プログラム名         | CreatedProgramName    | text         | System.String   |              |                      |
-|    | o  |                          | 作成プログラムバージョン | CreatedProgramVersion | text         | System.Version  |              |                      |
-|    | o  |                          | 更新タイムスタンプ       | UpdatedTimestamp      | datetime     | System.DateTime |              | UTC                  |
-|    | o  |                          | 更新ユーザー名           | UpdatedAccount        | text         | System.String   |              |                      |
-|    | o  |                          | 更新プログラム名         | UpdatedProgramName    | text         | System.String   |              |                      |
-|    | o  |                          | 更新プログラムバージョン | UpdatedProgramVersion | text         | System.Version  |              |                      |
-|    | o  |                          | 更新回数                 | UpdatedCount          | integer      | System.Int64    |              | 0始まり              |
-|    | o  |                          | アクション種別           | KeyActionKind         | text         | System.String   |              | ランチャー, コマンド |
-|    | o  |                          | アクション内容           | KeyActionContent      | text         | System.String   |              | アクション種別で変動 |
-|    | o  |                          | コメント                 | Comment               | text         | System.String   |              |                      |
+| PK | NN | FK                       | 論理カラム名             | 物理カラム名          | 論理データ型 | マッピング型    | チェック制約 | コメント       |
+|:--:|:--:|:-------------------------|:-------------------------|:----------------------|:-------------|:----------------|:-------------|:---------------|
+| o  | o  | KeyActions.KeyActionId   | キーアクションID         | KeyActionId           | text         | System.Guid     |              |                |
+| o  | o  |                          | 並び順                   | Sequence              | integer      | System.Int64    |              |                |
+|    | o  |                          | 作成タイムスタンプ       | CreatedTimestamp      | datetime     | System.DateTime |              | UTC            |
+|    | o  |                          | 作成ユーザー名           | CreatedAccount        | text         | System.String   |              |                |
+|    | o  |                          | 作成プログラム名         | CreatedProgramName    | text         | System.String   |              |                |
+|    | o  |                          | 作成プログラムバージョン | CreatedProgramVersion | text         | System.Version  |              |                |
+|    | o  |                          | キー                     | Key                   | text         | System.String   |              | キー           |
+|    | o  |                          | Shiftキー                | Shift                 | text         | System.String   |              | 何れか, 左, 右 |
+|    | o  |                          | Ctrlキー                 | Control               | text         | System.String   |              | 何れか, 左, 右 |
+|    | o  |                          | Altキー                  | Alt                   | text         | System.String   |              | 何れか, 左, 右 |
+|    | o  |                          | Winキー                  | Super                 | text         | System.String   |              | 何れか, 左, 右 |
 
 ### index
 
