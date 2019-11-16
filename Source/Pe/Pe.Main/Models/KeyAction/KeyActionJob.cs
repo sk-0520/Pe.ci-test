@@ -94,9 +94,23 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
             if(ActionData.ReplaceKey == Mappings[0].Key) {
                 throw new ArgumentException(nameof(actionData.ReplaceKey) + " == " + nameof(IReadOnlyKeyMappingData.Key));
             }
+            if(ActionData.ReplaceKey.IsModifierKey()) {
+                var mods = new[] {
+                    mapping.Shift,
+                    mapping.Alt,
+                    mapping.Control,
+                    mapping.Super,
+                };
+                if(mods.Any(i => i != ModifierKey.None)) {
+                    throw new ArgumentException("setting: any none");
+                }
+            }
         }
 
         #region property
+
+        public IReadOnlyKeyMappingData Mapping => Mappings[0];
+
         #endregion
 
         #region function
@@ -160,9 +174,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
 
         public override bool Check(bool isDown, Key key, in ModifierKeyStatus modifierKeyStatus)
         {
-            //if(!isDown) {
-            //    return false;
-            //}
+            if(!isDown) {
+                return false;
+            }
 
             var mapping = Mappings[0];
             var result = TestMapping(mapping, isDown, key, modifierKeyStatus);

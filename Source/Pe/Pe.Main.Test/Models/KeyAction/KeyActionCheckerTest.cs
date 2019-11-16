@@ -24,6 +24,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.KeyAction
             };
             keyActionChecker.DisableJobs.Add(new KeyActionDisableJob(
                 new KeyActionDisableData() {
+                    KeyActionKind = KeyActionKind.Disable,
                 },
                 new KeyMappingData() {
                     Key = Key.B

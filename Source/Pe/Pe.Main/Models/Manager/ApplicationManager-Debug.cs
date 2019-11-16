@@ -109,9 +109,13 @@ echo end
         }
 
         KeyActionChecker? dbgKeyActionChecker { get; set; }
+        KeyActionAssistant? dbgKeyActionAssistant { get; set; }
         void DebugKeyAction()
         {
             dbgKeyActionChecker = new KeyActionChecker(LoggerFactory);
+            dbgKeyActionAssistant = new KeyActionAssistant(LoggerFactory);
+            dbgKeyActionAssistant.SelfJobInputId = dbgKeyActionChecker.SelfJobInputId;
+
             dbgKeyActionChecker.DisableJobs.Add(new KeyActionDisableJob(
                 new KeyActionDisableData() {
                     KeyActionId = Guid.NewGuid(),
@@ -141,6 +145,16 @@ echo end
                     Key = System.Windows.Input.Key.LeftCtrl,
                 }
             ));
+            dbgKeyActionChecker.ReplaceJobs.Add(new KeyActionReplaceJob(
+                new KeyActionReplaceData() {
+                    KeyActionId = Guid.NewGuid(),
+                    KeyActionKind = KeyActionKind.Replace,
+                    ReplaceKey = System.Windows.Input.Key.I,
+                },
+                new KeyMappingData() {
+                    Key = System.Windows.Input.Key.U,
+                }
+            ));
 
             dbgKeyboradHooker = new KeyboradHooker(LoggerFactory);
             dbgKeyboradHooker.KeyDown += (sender, e) => {
@@ -152,30 +166,23 @@ echo end
                             Logger.LogTrace("[{0}]: {1}", job.CommonData.KeyActionId, job);
                             if(job.CommonData.KeyActionKind == KeyActionKind.Replace) {
                                 var replaceJob = (KeyActionReplaceJob)job;
-                                var input = new INPUT() {
-                                    type = INPUT_type.INPUT_KEYBOARD,
-                                };
-                                input.data.ki.wVk = (ushort)KeyInterop.VirtualKeyFromKey(replaceJob.ActionData.ReplaceKey);
-                                input.data.ki.wScan = (ushort)NativeMethods.MapVirtualKey(input.data.ki.wVk, MAPVK.MAPVK_VK_TO_VSC);
-                                input.data.ki.dwFlags = KEYEVENTF.KEYEVENTF_EXTENDEDKEY | KEYEVENTF.KEYEVENTF_KEYDOWN;
-                                input.data.ki.dwExtraInfo = new UIntPtr(dbgKeyActionChecker.SelfJobInputId);
-                                input.data.ki.time = 0;
-
-                                var inputs = new[] {
-                                    input,
-                                };
-
-                                NativeMethods.SetLastError(0);
-                                NativeMethods.SendInput(1, inputs, Marshal.SizeOf(input));
-                                var e1 = Marshal.GetLastWin32Error();
-                                var e2 = NativeMethods.GetLastError();
-                                Logger.LogDebug("last error: {0}, {1}", e1, e2);
+                                dbgKeyActionAssistant.ExecuteReplaceJob(replaceJob, e.modifierKeyStatus);
                             }
                         }
                     });
                 }
             };
             dbgKeyboradHooker.KeyUp += (sender, e) => {
+                var jobs = dbgKeyActionChecker.Find(true, e.Key, new ModifierKeyStatus(), e.kbdll);
+                Task.Run(() => {
+                    dbgKeyActionAssistant.CleanupReplaceJob(e.Key, e.modifierKeyStatus);
+
+                    foreach(var job in jobs) {
+                        // 何もやることはないハズ
+                    }
+                });
+
+                /*
                 var jobs = dbgKeyActionChecker.Find(true, e.Key, new ModifierKeyStatus(), e.kbdll);
                 if(jobs.Any()) {
                     Task.Run(() => {
@@ -205,6 +212,7 @@ echo end
                         }
                     });
                 }
+                */
             };
             dbgKeyboradHooker.Register();
         }
