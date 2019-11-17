@@ -14,12 +14,18 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// 指定の型で問い合わせ。
         /// </summary>
         /// <typeparam name="T">問い合わせ型</typeparam>
-        /// <parameter name="statement">データベース文。</parameter>
-        /// <parameter name="parameter"><paramref name="statement"/>に対するパラメータ。</parameter>
-        /// <parameter name="buffered"><see cref="Dapper.SqlMapper.Query"/>のbufferd</parameter>
+        /// <param name="statement">データベース文。</parameter>
+        /// <param name="parameter"><paramref name="statement"/>に対するパラメータ。</parameter>
+        /// <param name="buffered"><see cref="Dapper.SqlMapper.Query"/>のbufferd</parameter>
         /// <returns></returns>
         IEnumerable<T> Query<T>(string statement, object? parameter = null, bool buffered = true);
-
+        /// <summary>
+        /// 動的型で問い合わせ。
+        /// </summary>
+        /// <param name="statement">データベース文。</param>
+        /// <param name="parameter"><paramref name="statement"/>に対するパラメータ。</param>
+        /// <param name="buffered"><see cref="Dapper.SqlMapper.Query"/>のbufferd</parameter>
+        /// <returns></returns>
         IEnumerable<dynamic> Query(string statement, object? parameter = null, bool buffered = true);
 
         T QueryFirst<T>(string statement, object? parameter = null);
@@ -31,6 +37,12 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
     public interface IDatabaseWriter
     {
+        /// <summary>
+        /// insert, update, delete, select(sequence) 的なデータ変動するやつを実行。
+        /// </summary>
+        /// <param name="statement">データベース文。</parameter>
+        /// <param name="parameter"><paramref name="statement"/>に対するパラメータ。</parameter>
+        /// <returns>影響行数。</returns>
         int Execute(string statement, object? parameter = null);
     }
 
@@ -44,20 +56,50 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
     {
         #region property
 
+        /// <summary>
+        /// 接続元。
+        /// </summary>
         IDbConnection BaseConnection { get; }
+        /// <summary>
+        /// <see cref="IDatabaseFactory"/>
+        /// </summary>
         IDatabaseFactory DatabaseFactory { get; }
 
         #endregion
 
         #region function
 
+        /// <summary>
+        /// 指定の型で問い合わせ。
+        /// </summary>
+        /// <typeparam name="T">問い合わせ型</typeparam>
+        /// <param name="statement">データベース文。</parameter>
+        /// <param name="parameter"><paramref name="statement"/>に対するパラメータ。</parameter>
+        /// <param name="transaction">トランザクション。 null ならトランザクションなし。</parameter>
+        /// <param name="buffered"><see cref="Dapper.SqlMapper.Query"/>のbufferd</parameter>
+        /// <returns></returns>
         IEnumerable<T> Query<T>(string statement, object? parameter, IDatabaseTransaction? transaction, bool buffered);
+        /// <summary>
+        /// 動的型で問い合わせ。
+        /// </summary>
+        /// <param name="statement">データベース文。</param>
+        /// <param name="parameter"><paramref name="statement"/>に対するパラメータ。</param>
+        /// <param name="transaction">トランザクション。 null ならトランザクションなし。</parameter>
+        /// <param name="buffered"><see cref="Dapper.SqlMapper.Query"/>のbufferd</parameter>
+        /// <returns></returns>
         IEnumerable<dynamic> Query(string statement, object? parameter, IDatabaseTransaction? transaction, bool buffered);
 
         T QueryFirst<T>(string statement, object? parameter, IDatabaseTransaction? transaction);
         T QueryFirstOrDefault<T>(string statement, object? parameter, IDatabaseTransaction? transaction);
         T QuerySingle<T>(string statement, object? parameter, IDatabaseTransaction? transaction);
 
+        /// <summary>
+        /// insert, update, delete, select(sequence) 的なデータ変動するやつを実行。
+        /// </summary>
+        /// <param name="statement">データベース文。</parameter>
+        /// <param name="parameter"><paramref name="statement"/>に対するパラメータ。</parameter>
+        /// <param name="transaction">トランザクション。 null ならトランザクションなし。</parameter>
+        /// <returns>影響行数。</returns>
         int Execute(string statement, object? parameter, IDatabaseTransaction? transaction);
         DataTable GetDataTable(string statement, object? parameter, IDatabaseTransaction? transaction);
 
@@ -153,6 +195,9 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
         public IDatabaseFactory DatabaseFactory { get; }
 
+        /// <summary>
+        /// 接続元。
+        /// </summary>
         public virtual IDbConnection BaseConnection => LazyConnection.Value;
 
         public virtual IEnumerable<T> Query<T>(string statement, object? parameter, IDatabaseTransaction? transaction, bool buffered)
@@ -248,11 +293,20 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             return GetDataTable(statement, parameter, null);
         }
 
+        /// <summary>
+        /// トランザクション開始。
+        /// </summary>
+        /// <returns></returns>
         public virtual IDatabaseTransaction BeginTransaction()
         {
             return new DatabaseTransaction(this);
         }
 
+        /// <summary>
+        /// トランザクション開始。
+        /// </summary>
+        /// <param name="isolationLevel">トランザクションの分離レベル。</param>
+        /// <returns></returns>
         public virtual IDatabaseTransaction BeginTransaction(IsolationLevel isolationLevel)
         {
             return new DatabaseTransaction(this, isolationLevel);
@@ -301,6 +355,10 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
         #region proeprty
 
+
+        /// <summary>
+        /// 接続元。
+        /// </summary>
         public TDbConnection Connection => (TDbConnection)BaseConnection;
 
         #endregion

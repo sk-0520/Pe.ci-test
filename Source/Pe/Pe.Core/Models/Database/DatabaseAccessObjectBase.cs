@@ -23,18 +23,24 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         #region property
 
         /// <summary>
-        /// データベース文。
+        /// データベースをお話担当。
         /// </summary>
         protected IDatabaseCommander Commander { get; }
         /// <summary>
         /// データベース文の読み込みストア。
         /// </summary>
         protected IDatabaseStatementLoader StatementLoader { get; }
+        /// <summary>
+        /// データベースの実装依存専用窓口。
+        /// </summary>
         protected IDatabaseImplementation Implementation { get; }
         /// <summary>
         /// ログ出力担当。
         /// </summary>
         protected ILogger Logger { get; }
+        /// <summary>
+        /// ログ出力(<see cref="ILogger"/>)生成機構。
+        /// </summary>
         protected ILoggerFactory LoggerFactory { get; }
 
         #endregion

@@ -94,15 +94,12 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         #endregion
     }
 
+    /// <summary>
+    /// データベースに対する読み書き制御。
+    /// <para>NOTE: 役割が完全にSQLiteに合わせた挙動。</para>
+    /// </summary>
     public interface IDatabaseBarrier
     {
-        #region property
-
-        IDatabaseAccessor Accessor { get; }
-        ReaderWriterLocker Locker { get; }
-
-        #endregion
-
         #region function
 
         IDatabaseTransaction WaitWrite();
@@ -118,11 +115,17 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             Accessor = accessor;
             Locker = locker;
         }
+        #region property
+
+        protected IDatabaseAccessor Accessor { get; }
+        protected ReaderWriterLocker Locker { get; }
+
+        #endregion
 
         #region IDatabaseBarrier
 
-        public IDatabaseAccessor Accessor { get; }
-        public ReaderWriterLocker Locker { get; }
+        //public IDatabaseAccessor Accessor { get; }
+        //public ReaderWriterLocker Locker { get; }
 
         public virtual IDatabaseTransaction WaitWrite()
         {

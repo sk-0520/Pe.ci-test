@@ -12,6 +12,10 @@ namespace ContentTypeTextNet.Pe.Core.Models.Data
     public interface IData : IReadOnlyData
     { }
 
+    /// <summary>
+    /// なんかしらのデータ永続化用オブジェクト。
+    /// <para>コンストラクタのみで永続化できないかもしれんけどもうええんちゃう？</para>
+    /// </summary>
     [Serializable, DataContract]
     public abstract class DataBase : IData
     { }

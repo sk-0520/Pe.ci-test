@@ -25,6 +25,13 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
     public static class IEnumerableExtensions
     {
+        /// <summary>
+        /// <paramref name="splitCount"/>数で分割する。
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="this"></param>
+        /// <param name="splitCount"></param>
+        /// <returns></returns>
         public static IEnumerable<IEnumerable<T>> GroupSplit<T>(this IEnumerable<T> @this, int splitCount)
         {
             return @this
@@ -61,12 +68,13 @@ namespace ContentTypeTextNet.Pe.Core.Models
     {
         /// <summary>
         /// 全要素を削除してから指定コレクションを追加。
-        /// <para><see cref="Collection.Clear"/>からの<see cref="System.Collections.ObjectModel.CollectionExtensions.AddRange{T}(Collection{T}, IEnumerable{T})"/></para>
+        /// <para><see cref="Collection.Clear"/>からの<see cref="ICollection{T}.Add"/></para>
+        /// <para><see cref="ICollection{T}"/>が<see cref="List{T}"/>なら<see cref="List{T}.AddRange(IEnumerable{T})"/>する</para>
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="this"></param>
         /// <param name="collection"></param>
-        public static void SetRange<T>(this IList<T> @this, IEnumerable<T> collection)
+        public static void SetRange<T>(this ICollection<T> @this, IEnumerable<T> collection)
         {
             @this.Clear();
             if(@this is List<T> list) {
