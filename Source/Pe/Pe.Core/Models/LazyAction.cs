@@ -7,6 +7,9 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Core.Models
 {
+    /// <summary>
+    /// 遅延処理。
+    /// </summary>
     public class LazyAction : DisposerBase, IFlushable
     {
         #region variable
