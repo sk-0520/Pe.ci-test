@@ -29,11 +29,18 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
     public class DragParameter
     {
+        public DragParameter(UIElement element, DragDropEffects effects, DataObject data)
+        {
+            Element = element;
+            Effects = effects;
+            Data = data;
+        }
+
         #region property
 
-        public UIElement? Element { get; set; }
-        public DataObject? Data { get; set; }
+        public UIElement Element { get; set; }
         public DragDropEffects Effects { get; set; }
+        public DataObject Data { get; set; }
 
         #endregion
     }
@@ -93,11 +100,16 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 var parameterResult = GetDragParameterImpl(sender, e);
                 if(parameterResult.Success) {
                     var parameter = parameterResult.SuccessValue;
-                    IsDragging = true;
-#pragma warning disable CS8602 // null 参照の可能性があるものの逆参照です。
-                    DragDrop.DoDragDrop(parameter.Element, parameter.Data, parameter.Effects);
-#pragma warning restore CS8602 // null 参照の可能性があるものの逆参照です。
-                    IsDragging = false;
+                    if(parameter == null) {
+                        Logger.LogWarning(nameof(parameter) + " is null, 後続D&D処理スキップ");
+                    } else {
+                        IsDragging = true;
+                        try {
+                            DragDrop.DoDragDrop(parameter.Element, parameter.Data, parameter.Effects);
+                        } finally {
+                            IsDragging = false;
+                        }
+                    }
                 }
             }
         }

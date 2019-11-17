@@ -8,11 +8,19 @@ using ContentTypeTextNet.Pe.Bridge.Models;
 
 namespace ContentTypeTextNet.Pe.Core.Models
 {
+    /// <summary>
+    /// <see cref="Dispatcher"/>の使用をラップ。
+    /// <para><see cref="Dispatcher"/>自体は大公開しているがなんかそれっぽく楽に使いたい。</para>
+    /// </summary>
     public class DispatcherWapper : IDispatcherWapper
     {
-        public DispatcherWapper(Dispatcher current)
+        /// <summary>
+        /// <paramref name="dispatcher"/>をラップする。
+        /// </summary>
+        /// <param name="dispatcher">ラップする対象。</param>
+        public DispatcherWapper(Dispatcher dispatcher)
         {
-            Dispatcher = current;
+            Dispatcher = dispatcher;
         }
 
         #region IDispatcherWapper
@@ -82,6 +90,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #endregion
     }
 
+    /// <summary>
+    /// 生成元の<see cref="Dispatcher"/>を用いて<see cref="DispatcherWapper"/>を生成する。
+    /// </summary>
     public sealed class CurrentDispatcherWapper : DispatcherWapper
     {
         public CurrentDispatcherWapper()
