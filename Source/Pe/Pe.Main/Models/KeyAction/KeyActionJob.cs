@@ -280,4 +280,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         { }
     }
 
+    public class KeyActionLauncherItemJob : KeyActionPressedJobBase<IReadOnlyKeyActionLauncherItemData>
+    {
+        public KeyActionLauncherItemJob(IReadOnlyKeyActionLauncherItemData actionData, IEnumerable<IReadOnlyKeyMappingData> mappings)
+            : base(actionData, mappings)
+        {
+        }
+
+        #region property
+        #endregion
+    }
+
 }

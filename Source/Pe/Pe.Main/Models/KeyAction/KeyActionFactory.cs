@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Input;
+using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Data;
@@ -41,6 +42,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
             using(var commander = MainDatabaseBarrier.WaitRead()) {
                 var dao = new KeyActionDomainDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
                 result = dao.SelectAllKeyActionsFromKind(keyActionKind).ToList();
+            }
+
+            return result;
+        }
+
+        IReadOnlyList<KeyActionData> LoadKeyActionPressedData()
+        {
+            IReadOnlyList<KeyActionData> result;
+
+            var noPressedKinds = new[] { KeyActionKind.Replace, KeyActionKind.Disable };
+
+            using(var commander = MainDatabaseBarrier.WaitRead()) {
+                var dao = new KeyActionDomainDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                result = dao.SelectAllKeyActionsIgnoreKinds(noPressedKinds).ToList();
             }
 
             return result;
@@ -110,6 +125,25 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
                 var mapping = ConvertKeyMapping(item);
 
                 return new KeyActionDisableJob(data, mapping);
+            });
+        }
+
+        KeyActionLauncherItemJob CreateLauncherItemJob(IReadOnlyList<KeyActionData> items)
+        {
+            throw new Exception();
+        }
+
+        public IEnumerable<KeyActionPressedJobBase<IReadOnlyKeyActionPressedData>> CreatePressedJobs()
+        {
+            var items = LoadKeyActionPressedData();
+            return CreateJobs(items, (id, items) => {
+                var baseItem = items[0];
+                KeyActionPressedJobBase<IReadOnlyKeyActionPressedData> job = baseItem.KeyActionKind switch
+                {
+                    KeyActionKind.LauncherItem => CreateLauncherItemJob(items),
+                    _ => throw new NotImplementedException(),
+                };
+                return job;
             });
         }
 

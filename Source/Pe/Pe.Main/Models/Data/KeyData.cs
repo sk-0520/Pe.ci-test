@@ -191,12 +191,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     public interface IReadOnlyKeyActionLauncherItemData : IReadOnlyKeyActionPressedData
     {
         #region property
+
+        KeyActionContentLauncherItem LauncherItemKind { get; }
+
         #endregion
     }
 
     public class KeyActionLauncherItemData : KeyActionPressedData, IReadOnlyKeyActionLauncherItemData
     {
         #region IReadOnlyKeyActionLauncherItemData
+
+        public KeyActionContentLauncherItem LauncherItemKind { get; set; }
+
         #endregion
     }
 
@@ -241,7 +247,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
     public class KeyActionData: DataBase
     {
-        #region function
+        #region property
 
         public Guid KeyActionId { get; set; }
         public KeyActionKind KeyActionKind { get; set; }

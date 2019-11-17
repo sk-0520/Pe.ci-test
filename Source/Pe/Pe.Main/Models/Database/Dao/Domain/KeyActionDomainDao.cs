@@ -50,6 +50,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain
             ;
         }
 
+        public IEnumerable<KeyActionData> SelectAllKeyActionsIgnoreKinds(IReadOnlyCollection<KeyActionKind> ignoreKinds)
+        {
+            var keyActionKindTransfer = new EnumTransfer<KeyActionKind>();
+
+            var statement = StatementLoader.LoadStatementByCurrent(GetType());
+            var parameter = new { IgnoreKinds = ignoreKinds.Select(i => keyActionKindTransfer.ToString(i)) };
+            return Commander.Query<KeyActionRowDto>(statement, parameter)
+                .Select(i => ConvertFromDto(i))
+            ;
+        }
+
+
+
         #endregion
     }
 }
