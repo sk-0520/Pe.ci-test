@@ -85,7 +85,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
 
         public IList<KeyActionDisableJob> DisableJobs { get; } = new List<KeyActionDisableJob>();
         public IList<KeyActionReplaceJob> ReplaceJobs { get; } = new List<KeyActionReplaceJob>();
-        public IList<KeyActionPressedJobBase<IReadOnlyKeyActionPressedData>> PressedJobs { get; } = new List<KeyActionPressedJobBase<IReadOnlyKeyActionPressedData>>();
+        public IList<KeyActionPressedJobBase> PressedJobs { get; } = new List<KeyActionPressedJobBase>();
         #endregion
 
         #region function

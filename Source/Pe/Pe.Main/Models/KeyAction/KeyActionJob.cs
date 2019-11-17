@@ -191,10 +191,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         #endregion
     }
 
-    public class KeyActionPressedJobBase<TActionData> : KeyActionJobBase<TActionData>
-        where TActionData : IReadOnlyKeyActionPressedData
+    public abstract class KeyActionPressedJobBase: KeyActionJobBase<IReadOnlyKeyActionPressedData>
     {
-        public KeyActionPressedJobBase(TActionData actionData, IEnumerable<IReadOnlyKeyMappingData> mappings)
+        public KeyActionPressedJobBase(IReadOnlyKeyActionPressedData actionData, IEnumerable<IReadOnlyKeyMappingData> mappings)
             : base(actionData, mappings)
         {
             if(Mappings.Count == 0) {
@@ -226,6 +225,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         public bool NextWaiting => 0 < NextIndex;
 
         #endregion
+
 
         #region function
 
@@ -273,6 +273,33 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         #endregion
     }
 
+    public abstract class KeyActionPressedJobBase<TActionData> : KeyActionPressedJobBase
+        where TActionData : IReadOnlyKeyActionPressedData
+    {
+        public KeyActionPressedJobBase(TActionData actionData, IEnumerable<IReadOnlyKeyMappingData> mappings)
+            : base(actionData, mappings)
+        {
+            PressedData = actionData;
+
+            if(Mappings.Count == 0) {
+                throw new ArgumentException(nameof(mappings));
+            }
+
+            var keyIsNoneOrMods = Mappings.Counting().Where(i => i.Value.Key == Key.None || i.Value.Key.IsModifierKey()).ToList();
+            if(keyIsNoneOrMods.Any()) {
+                var errors = string.Join(", ", keyIsNoneOrMods.Select(i => $"{nameof(mappings)}[{i.Number}]"));
+                throw new ArgumentException("不正なキー設定(キー設定なし、修飾キーのみ): " + errors);
+            }
+        }
+
+        #region property
+
+        public TActionData PressedData { get; }
+
+        #endregion
+
+    }
+
     public sealed class KeyActionPressJob : KeyActionPressedJobBase<IReadOnlyKeyActionPressedData>
     {
         public KeyActionPressJob(IReadOnlyKeyActionPressedData actionData, IEnumerable<IReadOnlyKeyMappingData> mappings)
@@ -280,7 +307,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         { }
     }
 
-    public class KeyActionLauncherItemJob : KeyActionPressedJobBase<IReadOnlyKeyActionLauncherItemData>
+    public sealed class KeyActionLauncherItemJob : KeyActionPressedJobBase<IReadOnlyKeyActionLauncherItemData>
     {
         public KeyActionLauncherItemJob(IReadOnlyKeyActionLauncherItemData actionData, IEnumerable<IReadOnlyKeyMappingData> mappings)
             : base(actionData, mappings)

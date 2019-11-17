@@ -133,12 +133,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
             throw new Exception();
         }
 
-        public IEnumerable<KeyActionPressedJobBase<IReadOnlyKeyActionPressedData>> CreatePressedJobs()
+        public IEnumerable<KeyActionPressedJobBase> CreatePressedJobs()
         {
             var items = LoadKeyActionPressedData();
             return CreateJobs(items, (id, items) => {
                 var baseItem = items[0];
-                KeyActionPressedJobBase<IReadOnlyKeyActionPressedData> job = baseItem.KeyActionKind switch
+                KeyActionPressedJobBase job = baseItem.KeyActionKind switch
                 {
                     KeyActionKind.LauncherItem => CreateLauncherItemJob(items),
                     _ => throw new NotImplementedException(),
