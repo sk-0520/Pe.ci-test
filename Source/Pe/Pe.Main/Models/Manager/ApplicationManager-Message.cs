@@ -55,7 +55,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         {
             KeyActionAssistant.SelfJobInputId = KeyActionChecker.SelfJobInputId;
 
-            var builder = ApplicationDiContainer.Build<KeyActionBuilder>();
+            var builder = ApplicationDiContainer.Build<KeyActionFactory>();
 
             KeyboradHooker.KeyDown += KeyboradHooker_KeyDown;
             KeyboradHooker.KeyUp += KeyboradHooker_KeyUp;
@@ -65,9 +65,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         private void RebuildHook()
         {
-            var keyActionBuilder = ApplicationDiContainer.Build<KeyActionBuilder>();
-            KeyActionChecker.ReplaceJobs.SetRange(keyActionBuilder.BuildReplaceJobs());
-            
+            var keyActionFactory = ApplicationDiContainer.Build<KeyActionFactory>();
+            KeyActionChecker.ReplaceJobs.SetRange(keyActionFactory.CreateReplaceJobs());
+
 
         }
 

@@ -11,9 +11,9 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
 {
-    public class KeyActionBuilder
+    public class KeyActionFactory
     {
-        public KeyActionBuilder(IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
+        public KeyActionFactory(IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
         {
             MainDatabaseBarrier = mainDatabaseBarrier;
             StatementLoader = statementLoader;
@@ -46,7 +46,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
             return result;
         }
 
-        IEnumerable<TJob> BuildJobs<TJob>(IReadOnlyList<KeyActionData> items, Func<Guid, IReadOnlyList<KeyActionData>, TJob> func)
+        IEnumerable<TJob> CreateJobs<TJob>(IReadOnlyList<KeyActionData> items, Func<Guid, IReadOnlyList<KeyActionData>, TJob> func)
         {
             var groups = items.GroupBy(i => i.KeyActionId);
             foreach(var group in groups) {
@@ -73,10 +73,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
             };
         }
 
-        public IEnumerable<KeyActionReplaceJob> BuildReplaceJobs()
+        public IEnumerable<KeyActionReplaceJob> CreateReplaceJobs()
         {
             var items = LoadKeyActionData(KeyActionKind.Replace);
-            return BuildJobs(items, (id, items) => {
+            return CreateJobs(items, (id, items) => {
                 if(1 < items.Count) {
                     Logger.LogWarning("置き換え処理に不要な設定項目あり: {0}", id);
                 }
