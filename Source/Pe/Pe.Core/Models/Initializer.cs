@@ -18,7 +18,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #region property
 
-        public ISupportInitialize Target { get; private set; }
+        ISupportInitialize Target { get; set; }
 
         #endregion
 
@@ -52,9 +52,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             if(!IsDisposed) {
                 if(Target != null) {
                     Target.EndInit();
-#pragma warning disable CS8625 // null リテラルを null 非許容参照型に変換できません。
-                    Target = null;
-#pragma warning restore CS8625 // null リテラルを null 非許容参照型に変換できません。
+                    Target = null!;
                 }
             }
 
