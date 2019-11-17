@@ -22,7 +22,15 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
         #endregion
 
         #region function
+        /// <summary>
+        ///呼び出し元のスレッドがこの <see cref="Dispatcher"/> に関連付けられたスレッドであるかどうかを判断します。
+        /// </summary>
+        /// <remarks>https://docs.microsoft.com/ja-jp/dotnet/api/system.windows.threading.dispatcher.checkaccess?view=netframework-4.8</remarks>
+        /// <returns></returns>
         bool CheckAccess();
+        /// <summary>
+        /// 呼び出し元のスレッドがこの <see cref="Dispatcher"/> にアクセスできるかどうかを確認します。
+        /// </summary>
         void VerifyAccess();
 
         void Invoke(Action action, DispatcherPriority dispatcherPriority, CancellationToken cancellationToken, TimeSpan timeout);

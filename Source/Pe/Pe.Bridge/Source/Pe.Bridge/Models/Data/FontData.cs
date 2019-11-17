@@ -25,7 +25,13 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
         /// フォントを斜体にするか。
         /// </summary>
         bool IsItalic { get; }
+        /// <summary>
+        /// フォントに下線を設定するか。
+        /// </summary>
         bool IsUnderline { get; }
+        /// <summary>
+        /// フォントに取り消し線を設定するか。
+        /// </summary>
         bool IsStrikeThrough { get; }
 
         #endregion
@@ -57,8 +63,14 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
         [DataMember]
         public bool IsItalic { get; set; }
 
+        /// <summary>
+        /// フォントに下線を設定するか。
+        /// </summary>
         [DataMember]
         public bool IsUnderline { get; set; }
+        /// <summary>
+        /// フォントに取り消し線を設定するか。
+        /// </summary>
         [DataMember]
         public bool IsStrikeThrough { get; set; }
 

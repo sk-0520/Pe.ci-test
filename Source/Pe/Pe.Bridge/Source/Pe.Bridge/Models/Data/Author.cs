@@ -13,6 +13,9 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
         /// </summary>
         string Name { get; }
 
+        /// <summary>
+        /// 連絡先一覧。
+        /// </summary>
         IReadOnlyCollection<IContact> Contacts { get; }
 
         #endregion

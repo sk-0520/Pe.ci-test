@@ -35,7 +35,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Test.Models.Data
         public void ToIconSizeTest(IconBox result, int size)
         {
             var iconSize = new IconSize(size);
-            var test = iconSize.ToIconSize();
+            var test = iconSize.ToIconBox();
             Assert.AreEqual(result, test);
         }
     }
