@@ -18,7 +18,9 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// CRL上のトランザクション実体。
         /// </summary>
         IDbTransaction Transaction { get; }
-
+        /// <summary>
+        /// データベース実装依存。
+        /// </summary>
         IDatabaseImplementation Implementation { get; }
 
         #endregion

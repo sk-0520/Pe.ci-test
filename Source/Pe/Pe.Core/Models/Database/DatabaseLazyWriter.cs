@@ -29,10 +29,16 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         #endregion
     }
 
+    /// <summary>
+    /// データベースへの遅延書き込み。
+    /// </summary>
     public interface IDatabaseLazyWriter: IFlushable, IDisposer
     {
         #region property
 
+        /// <summary>
+        /// 停止中か。
+        /// </summary>
         bool IsPausing { get; }
 
         #endregion
@@ -52,6 +58,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// <summary>
         /// DB処理を遅延実行。
         /// <para><paramref name="uniqueKey"/>でグルーピングし、一番若い処理が実行される。</para>
+        /// <para><see cref="UniqueKeyPool"/>を用いる前提。</para>
         /// </summary>
         /// <param name="action">DB処理本体。</param>
         /// <param name="uniqueKey">一意オブジェクト。</param>

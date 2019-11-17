@@ -61,7 +61,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     }
 
     /// <summary>
-    /// パラメータに型判別できない(default(Object)とか)を無理やり認識させるしゃあなし対応。
+    /// パラメータに型判別できない(default(T)とか)を無理やり認識させるしゃあなし対応。
     /// </summary>
     public struct DiDefaultParameter
     {

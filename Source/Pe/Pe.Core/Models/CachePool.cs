@@ -99,6 +99,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     /// <summary>
     ///
     /// <para>MemoryCacheで生成処理を受け取れんだろうか</para>
+    /// <para>TODO: 時間単位でちゃんと見るべきちゃうんかなぁ</para>
     /// </summary>
     /// <typeparam name="TKey"></typeparam>
     /// <typeparam name="TValue"></typeparam>

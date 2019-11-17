@@ -17,13 +17,13 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         #region function
 
         /// <summary>
-        /// キーから文を取得。
+        /// キーからデータベース実行文を取得。
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
         string LoadStatement(string key);
         /// <summary>
-        /// 呼び出しクラス情報から文を取得する。
+        /// 呼び出しクラス情報からデータベース実行文を取得する。
         /// </summary>
         /// <returns></returns>
         string LoadStatementByCurrent(Type caller, [CallerMemberName] string callerMemberName = "");

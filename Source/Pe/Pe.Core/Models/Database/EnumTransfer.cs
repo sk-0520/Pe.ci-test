@@ -9,6 +9,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 {
     /// <summary>
     /// enum の属性設定にて <see cref="EnumTransfer{TEnum}"/> を制御する。
+    /// <para>これ Core じゃなくて Main で持つべきだろ。。。</para>
     /// </summary>
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = false)]
     public class EnumTransferAttribute : Attribute
@@ -32,6 +33,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
     /// <summary>
     /// <see cref="Dapper"/> で enum (の文字列)を扱えるように変換する。
     /// <para>キャッシュとかは気が向けば。。。</para>
+    /// <para>これ Core じゃなくて Main で持つべきだろ。。。</para>
     /// </summary>
     public class EnumTransfer<TEnum>
         where TEnum : struct, Enum
