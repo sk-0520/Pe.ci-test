@@ -240,7 +240,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         CachePool<string, string> StatementCache { get; }
 
         public int SqlFileBufferSize { get; set; } = 4096;
-        public Encoding SqlFileEncoding { get; set; } = Encoding.Unicode;
+        public Encoding SqlFileEncoding { get; set; } = Encoding.UTF8;
 
         #endregion
 
