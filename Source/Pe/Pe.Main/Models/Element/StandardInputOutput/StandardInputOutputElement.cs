@@ -143,16 +143,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.StandardInputOutput
             }
         }
 
-        #endregion
-
-        #region IViewShowStarter
-
         public void StartView()
         {
             var windowItem = OrderManager.CreateStandardInputOutputWindow(this);
             windowItem.Window.Show();
             ViewCreated = true;
         }
+
+        #endregion
+
+        #region IViewCloseReceiver
 
         public bool ReceiveViewUserClosing()
         {

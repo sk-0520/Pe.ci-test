@@ -59,6 +59,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         /// なんだこれ。。。
         /// </summary>
         Screen,
+        /// <summary>
+        /// 設定。
+        /// </summary>
+        Setting,
     }
 
     public class WindowItem

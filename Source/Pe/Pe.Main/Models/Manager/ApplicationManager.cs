@@ -36,6 +36,9 @@ using ContentTypeTextNet.Pe.Bridge.Models;
 using System.Threading;
 using System.Windows.Threading;
 using ContentTypeTextNet.Pe.Main.Models.KeyAction;
+using ContentTypeTextNet.Pe.Main.Models.Element.Setting;
+using ContentTypeTextNet.Pe.Main.ViewModels.Setting;
+using ContentTypeTextNet.Pe.Main.Views.Setting;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
@@ -352,6 +355,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             Dispose();
 
             Application.Current.Shutdown();
+        }
+
+        /// <summary>
+        /// すべてここで完結する神の所業。
+        /// </summary>
+        public void OpenSettingView()
+        {
+            using(var container = ApplicationDiContainer.Scope()) {
+                container.RegisterMvvm<SettingElement, SettingViewModel, SettingWindow>();
+                var element = container.Build<SettingElement>();
+                var view = container.Build<SettingWindow>();
+                WindowManager.Register(new WindowItem(WindowKind.Setting, view));
+                view.ShowDialog();
+            }
         }
 
         #endregion

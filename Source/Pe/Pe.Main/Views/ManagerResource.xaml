@@ -37,6 +37,9 @@
       </Style>
     </ContextMenu.Resources>
 
+    <MenuItem Header="setting" Command="{Binding OpenSettingCommand}" />
+    <Separator />
+
     <MenuItem Header="toolbar" ItemsSource="{Binding LauncherToolbarItems}" ItemContainerStyle="{StaticResource INotifyAreaMenuItem}" >
       <!--<MenuItem.ItemContainerStyle>
         <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
@@ -74,6 +77,7 @@
       <MenuItem Header="show" ItemsSource="{Binding NoteVisibleItems}" ItemContainerStyle="{StaticResource INotifyAreaMenuItem}" Style="{StaticResource NoteItemsMenu}" />
       <MenuItem Header="hidden" ItemsSource="{Binding NoteHiddenItems}" ItemContainerStyle="{StaticResource INotifyAreaMenuItem}" Style="{StaticResource NoteItemsMenu}" />
     </MenuItem>
+
     <MenuItem Header="exit" Command="{Binding ExitCommand}" />
   </ContextMenu>
 

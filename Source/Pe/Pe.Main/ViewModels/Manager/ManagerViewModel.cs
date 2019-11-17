@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
+using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar;
 using ContentTypeTextNet.Pe.Main.Models.Element.Note;
@@ -100,6 +101,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
         public ICommand MoveZOrderBottomAllNotesCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
                 ApplicationManager.MoveZOrderAllNotes(false);
+            }
+        ));
+
+        public ICommand OpenSettingCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                // めんどいし直接ビュー開くよ
+                ApplicationManager.OpenSettingView();
             }
         ));
 
