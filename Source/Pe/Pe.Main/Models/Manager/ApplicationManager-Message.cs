@@ -67,7 +67,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         {
             var keyActionFactory = ApplicationDiContainer.Build<KeyActionFactory>();
             KeyActionChecker.ReplaceJobs.SetRange(keyActionFactory.CreateReplaceJobs());
-
+            KeyActionChecker.DisableJobs.SetRange(keyActionFactory.CreateDisableJobs());
+            
 
         }
 

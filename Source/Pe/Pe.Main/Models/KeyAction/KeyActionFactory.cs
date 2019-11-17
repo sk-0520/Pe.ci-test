@@ -93,6 +93,26 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
             });
         }
 
+        public IEnumerable<KeyActionDisableJob> CreateDisableJobs()
+        {
+            var items = LoadKeyActionData(KeyActionKind.Disable);
+            return CreateJobs(items, (id, items) => {
+                if(1 < items.Count) {
+                    Logger.LogWarning("入力無効処理に不要な設定項目あり: {0}", id);
+                }
+                var keyConverter = new KeyConverter();
+                var item = items[0];
+                var data = new KeyActionDisableData() {
+                    KeyActionId = item.KeyActionId,
+                    KeyActionKind = item.KeyActionKind,
+                    StopEnable = Convert.ToBoolean(item.KeyActionContent),
+                };
+                var mapping = ConvertKeyMapping(item);
+
+                return new KeyActionDisableJob(data, mapping);
+            });
+        }
+
         #endregion
     }
 }
