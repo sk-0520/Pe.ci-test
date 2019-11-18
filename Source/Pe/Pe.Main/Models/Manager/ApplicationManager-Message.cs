@@ -72,8 +72,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             KeyActionChecker.ReplaceJobs.SetRange(keyActionFactory.CreateReplaceJobs());
             KeyActionChecker.DisableJobs.SetRange(keyActionFactory.CreateDisableJobs());
             KeyActionChecker.PressedJobs.SetRange(keyActionFactory.CreatePressedJobs());
-
-
         }
 
         private void DisposeHook()

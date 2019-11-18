@@ -562,7 +562,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             if(!IsDisposed) {
                 Flush();
                 if(disposing) {
-                    MainDatabaseLazyWriter.Dispose();
                     FontElement?.Dispose();
                     ContentElement?.Dispose();
                 }

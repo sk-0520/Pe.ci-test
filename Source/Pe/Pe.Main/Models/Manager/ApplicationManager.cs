@@ -262,15 +262,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
         }
 
-        public void Execute()
+        void ExecuteElements()
         {
-            Logger.LogInformation("がんばる！");
-#if DEBUG
-            DebugExecuteBefore();
-#endif
-            InitializeHook();
-            StartHook();
-
             // グループ構築
             var launcherGroups = CreateLauncherGroupElements();
             LauncherGroupElements.AddRange(launcherGroups);
@@ -292,6 +285,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             foreach(var viewShowStater in viewShowStaters) {
                 viewShowStater.StartView();
             }
+        }
+
+        public void Execute()
+        {
+            Logger.LogInformation("がんばる！");
+#if DEBUG
+            DebugExecuteBefore();
+#endif
+            InitializeHook();
+
+            StartHook();
+
+            ExecuteElements();
 #if DEBUG
             DebugExecuteAfter();
 #endif
@@ -351,9 +357,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             DisposeHook();
 
             CloseViews();
+            DisposeElements();
 
             Dispose();
 
+            Logger.LogInformation("ばいばい");
             Application.Current.Shutdown();
         }
 
@@ -362,12 +370,30 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         /// </summary>
         public void OpenSettingView()
         {
+            StopHook();
+
+            bool isSubmit;
             using(var container = ApplicationDiContainer.Scope()) {
                 container.RegisterMvvm<SettingElement, SettingViewModel, SettingWindow>();
                 var element = container.Build<SettingElement>();
                 var view = container.Build<SettingWindow>();
                 WindowManager.Register(new WindowItem(WindowKind.Setting, view));
                 view.ShowDialog();
+
+                isSubmit = element.IsSubmit;
+            }
+
+            if(isSubmit) {
+                Logger.LogInformation("設定適用のため現在表示要素の破棄");
+                CloseViews();
+                DisposeElements();
+
+                Logger.LogInformation("設定適用のため各要素生成");
+                RebuildHook();
+                ExecuteElements();
+            } else {
+                Logger.LogInformation("設定は保存されなかったため現在要素継続");
+                StartHook();
             }
         }
 

@@ -203,7 +203,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Font
             if(!IsDisposed) {
                 Flush();
                 if(disposing) {
-                    MainDatabaseLazyWriter.Dispose();
                 }
             }
 

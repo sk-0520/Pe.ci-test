@@ -32,7 +32,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
     /// <summary>
     /// データベースへの遅延書き込み。
     /// </summary>
-    public interface IDatabaseLazyWriter: IFlushable, IDisposer
+    public interface IDatabaseLazyWriter: IFlushable, IDisposedChackable
     {
         #region property
 

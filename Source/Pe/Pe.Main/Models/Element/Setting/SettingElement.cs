@@ -13,6 +13,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         }
 
         #region property
+
+        public bool IsSubmit { get; private set; }
+
         #endregion
 
         #region function

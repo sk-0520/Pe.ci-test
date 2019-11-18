@@ -7,7 +7,19 @@ using System.Xml.Serialization;
 
 namespace ContentTypeTextNet.Pe.Core.Models
 {
-    public interface IDisposer : IDisposable
+    public interface IDisposedChackable
+    {
+        #region propert
+
+        /// <summary>
+        /// <see cref="IDisposable.Dispose"/>されたか。
+        /// </summary>
+        bool IsDisposed { get; }
+
+        #endregion
+    }
+
+    public interface IDisposer : IDisposedChackable, IDisposable
     {
         #region event
 
@@ -16,15 +28,6 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <para>呼び出し時点では<see cref="IsDisposed"/>は偽のまま。</para>
         /// </summary>
         event EventHandler Disposing;
-
-        #endregion
-
-        #region propert
-
-        /// <summary>
-        /// <see cref="IDisposable.Dispose"/>されたか。
-        /// </summary>
-        bool IsDisposed { get; }
 
         #endregion
     }
