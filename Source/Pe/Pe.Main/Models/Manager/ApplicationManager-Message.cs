@@ -1,11 +1,14 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
+using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
+using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.KeyAction;
@@ -99,9 +102,44 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             var localModifierKeyStatus = modifierKeyStatus;
             return Task.Run(() => {
                 foreach(var job in jobs) {
-                    if(job.CommonData.KeyActionKind == KeyActionKind.Replace) {
-                        var replaceJob = (KeyActionReplaceJob)job;
-                        KeyActionAssistant.ExecuteReplaceJob(replaceJob, localModifierKeyStatus);
+                    switch(job.CommonData.KeyActionKind) {
+                        case KeyActionKind.Replace: {
+                                var replaceJob = (KeyActionReplaceJob)job;
+                                KeyActionAssistant.ExecuteReplaceJob(replaceJob, localModifierKeyStatus);
+                            }
+                            break;
+
+                        case KeyActionKind.Disable:
+                            break;
+
+
+                        case KeyActionKind.LauncherItem: {
+                                var launcherItemJob = (KeyActionLauncherItemJob)job;
+                                if(!launcherItemJob.IsAllHit) {
+                                    Logger.LogTrace("待機中: {0}", job.CommonData.KeyActionId);
+                                    break;
+                                }
+                                Logger.LogInformation("キーからの起動: アイテム = {0}, キー = {1}", launcherItemJob.PressedData.LauncherItemId, launcherItemJob.CommonData.KeyActionId);
+
+                                NativeMethods.GetCursorPos(out var podPoint);
+                                var deviceCursorLocation = PodStructUtility.Convert(podPoint);
+                                var screen = Screen.FromDevicePoint(deviceCursorLocation);
+                                var element = GetOrCreateLauncherItemElement(launcherItemJob.PressedData.LauncherItemId);
+                                switch(launcherItemJob.PressedData.LauncherItemKind) {
+                                    case KeyActionContentLauncherItem.Execute:
+                                        element.Execute(screen);
+                                        break;
+                                    case KeyActionContentLauncherItem.ExtendsExecute:
+                                        element.OpenExtendsExecuteView(screen);
+                                        break;
+                                    default:
+                                        throw new NotImplementedException();
+                                }
+                            }
+                            break;
+
+                        default:
+                            throw new NotImplementedException();
                     }
                 }
             });

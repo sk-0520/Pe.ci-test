@@ -99,6 +99,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
                     return new KeyActionJobBase[0];
                 }
             }
+            Logger.LogTrace("{0}, {1}", key, modifierKeyStatus);
 
             // 置き換え
             foreach(var job in ReplaceJobs) {
@@ -132,9 +133,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
             // キー入力処理
             foreach(var job in PressedJobs) {
                 if(job.Check(isDown, key, modifierKeyStatus)) {
-                    if(job.IsAllHit) {
-                        result.Add(job);
-                    }
+                    // なんであれ後続の入力止めるためジョブを返す(IsAllHit で実行を制御)
+                    result.Add(job);
                 }
             }
 
