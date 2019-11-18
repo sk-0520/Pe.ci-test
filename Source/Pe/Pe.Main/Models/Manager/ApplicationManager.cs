@@ -407,6 +407,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             Logger.LogDebug("遅延書き込み処理再開");
             foreach(var pair in lazyWriterItemMap) {
+                if(isSubmit) {
+                    // 確定処理の書き込みが天に召されるのでため込んでいた処理(ないはず)を消す
+                    pair.Key.ClearStock();
+                }
                 pair.Value.Dispose();
             }
         }
