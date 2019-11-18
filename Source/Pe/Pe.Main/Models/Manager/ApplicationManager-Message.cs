@@ -161,7 +161,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         private void KeyboradHooker_KeyDown(object? sender, KeyboardHookEventArgs e)
         {
-            var jobs = KeyActionChecker.Find(true, e.Key, e.modifierKeyStatus, e.kbdll);
+            var jobs = KeyActionChecker.Find(e.IsDown, e.Key, e.modifierKeyStatus, e.kbdll);
             if(0 < jobs.Count) {
                 e.Handled = true;
                 ExecuteKeyDownJobsAsync(jobs, e.modifierKeyStatus).ConfigureAwait(false);
@@ -170,7 +170,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         private void KeyboradHooker_KeyUp(object? sender, KeyboardHookEventArgs e)
         {
-            var jobs = KeyActionChecker.Find(true, e.Key, new ModifierKeyStatus(), e.kbdll);
+            var jobs = KeyActionChecker.Find(e.IsDown, e.Key, new ModifierKeyStatus(), e.kbdll);
             ExecuteKeyUpJobsAsync(jobs, e.Key, e.modifierKeyStatus).ConfigureAwait(false);
         }
 

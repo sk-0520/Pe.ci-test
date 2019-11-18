@@ -254,6 +254,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
                 return false;
             }
 
+            if(IsAllHit && !NextWaiting) {
+                // 前回ヒットしてるからリセットしてあげる必要あり（元々の想定では呼び出し側で面倒見ようと思ってたけど忘れてた）
+                Reset();
+            }
+
             var mapping = Mappings[NextIndex];
             var result = TestMapping(mapping, isDown, key, modifierKeyStatus);
             if(!result) {
