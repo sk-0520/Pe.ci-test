@@ -11,6 +11,29 @@
   mc:Ignorable="d"
 >
   <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="*" />
+      <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
 
+    <TabControl Grid.Row="0">
+      <TabItem Header="general">
+      </TabItem>
+      <TabItem Header="launcher">
+      </TabItem>
+      <TabItem Header="toolbar">
+      </TabItem>
+      <TabItem Header="note">
+      </TabItem>
+      <TabItem Header="keyboard">
+      </TabItem>
+    </TabControl>
+
+    <Grid Grid.Row="1">
+      <StackPanel Orientation="Horizontal">
+        <Button Content="ok" />
+        <Button Content="cancel" />
+      </StackPanel>
+    </Grid>
   </Grid>
 </Window>
